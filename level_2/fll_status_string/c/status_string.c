@@ -540,6 +540,18 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_dynamic_compare(name, f_status_break_s) == F_equal_to) {
+        *code = F_break;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_break_not_s) == F_equal_to) {
+        *code = F_break_not;
+
+        return F_none;
+      }
+
       if (fl_string_dynamic_compare(name, f_status_capability_s) == F_equal_to) {
         *code = F_capability;
 
@@ -708,6 +720,18 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_dynamic_compare(name, f_status_desire_s) == F_equal_to) {
+        *code = F_desire;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_desire_not_s) == F_equal_to) {
+        *code = F_desire_not;
+
+        return F_none;
+      }
+
       if (fl_string_dynamic_compare(name, f_status_device_s) == F_equal_to) {
         *code = F_device;
 
@@ -728,6 +752,30 @@ extern "C" {
 
       if (fl_string_dynamic_compare(name, f_status_disable_not_s) == F_equal_to) {
         *code = F_disable_not;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_discard_s) == F_equal_to) {
+        *code = F_discard;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_discard_not_s) == F_equal_to) {
+        *code = F_discard_not;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_drop_s) == F_equal_to) {
+        *code = F_drop;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_drop_not_s) == F_equal_to) {
+        *code = F_drop_not;
 
         return F_none;
       }
@@ -800,18 +848,6 @@ extern "C" {
 
       if (fl_string_dynamic_compare(name, f_status_encoding_not_s) == F_equal_to) {
         *code = F_encoding_not;
-
-        return F_none;
-      }
-
-      if (fl_string_dynamic_compare(name, f_status_end_s) == F_equal_to) {
-        *code = F_end;
-
-        return F_none;
-      }
-
-      if (fl_string_dynamic_compare(name, f_status_end_not_s) == F_equal_to) {
-        *code = F_end_not;
 
         return F_none;
       }
@@ -908,6 +944,18 @@ extern "C" {
 
       if (fl_string_dynamic_compare(name, f_status_exist_not_s) == F_equal_to) {
         *code = F_exist_not;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_exit_s) == F_equal_to) {
+        *code = F_exit;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_exit_not_s) == F_equal_to) {
+        *code = F_exit_not;
 
         return F_none;
       }
@@ -1020,6 +1068,18 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_dynamic_compare(name, f_status_halt_s) == F_equal_to) {
+        *code = F_halt;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_halt_not_s) == F_equal_to) {
+        *code = F_halt_not;
+
+        return F_none;
+      }
+
       if (fl_string_dynamic_compare(name, f_status_header_s) == F_equal_to) {
         *code = F_header;
 
@@ -1082,6 +1142,18 @@ extern "C" {
 
       if (fl_string_dynamic_compare(name, f_status_interrupt_not_s) == F_equal_to) {
         *code = F_interrupt_not;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_keep_s) == F_equal_to) {
+        *code = F_keep;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_keep_not_s) == F_equal_to) {
+        *code = F_keep_not;
 
         return F_none;
       }
@@ -1262,6 +1334,18 @@ extern "C" {
 
       if (fl_string_dynamic_compare(name, f_status_name_not_s) == F_equal_to) {
         *code = F_name_not;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_need_s) == F_equal_to) {
+        *code = F_need;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_need_not_s) == F_equal_to) {
+        *code = F_need_not;
 
         return F_none;
       }
@@ -1620,6 +1704,42 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_dynamic_compare(name, f_status_restart_s) == F_equal_to) {
+        *code = F_restart;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_restart_not_s) == F_equal_to) {
+        *code = F_restart_not;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_restore_s) == F_equal_to) {
+        *code = F_restore;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_restore_not_s) == F_equal_to) {
+        *code = F_restore_not;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_revert_s) == F_equal_to) {
+        *code = F_revert;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_revert_not_s) == F_equal_to) {
+        *code = F_revert_not;
+
+        return F_none;
+      }
+
       if (fl_string_dynamic_compare(name, f_status_schedule_s) == F_equal_to) {
         *code = F_schedule;
 
@@ -1692,6 +1812,18 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_dynamic_compare(name, f_status_skip_s) == F_equal_to) {
+        *code = F_skip;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_skip_not_s) == F_equal_to) {
+        *code = F_skip_not;
+
+        return F_none;
+      }
+
       if (fl_string_dynamic_compare(name, f_status_start_s) == F_equal_to) {
         *code = F_start;
 
@@ -1724,6 +1856,18 @@ extern "C" {
 
       if (fl_string_dynamic_compare(name, f_status_stop_not_s) == F_equal_to) {
         *code = F_stop_not;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_store_s) == F_equal_to) {
+        *code = F_store;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_store_not_s) == F_equal_to) {
+        *code = F_store_not;
 
         return F_none;
       }
@@ -1926,14 +2070,26 @@ extern "C" {
         return F_none;
       }
 
-      if (fl_string_dynamic_compare(name, f_status_warn_s) == F_equal_to) {
-        *code = F_warn;
+      if (fl_string_dynamic_compare(name, f_status_want_s) == F_equal_to) {
+        *code = F_want;
 
         return F_none;
       }
 
-      if (fl_string_dynamic_compare(name, f_status_warn_not_s) == F_equal_to) {
-        *code = F_warn_not;
+      if (fl_string_dynamic_compare(name, f_status_want_not_s) == F_equal_to) {
+        *code = F_want_not;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_wish_s) == F_equal_to) {
+        *code = F_wish;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_wish_not_s) == F_equal_to) {
+        *code = F_wish_not;
 
         return F_none;
       }
@@ -2557,139 +2713,141 @@ extern "C" {
 
         return F_none;
       }
-
-      if (fl_string_dynamic_compare(name, f_status_terminated_s) == F_equal_to) {
-        *code = F_terminated;
-
-        return F_none;
-      }
-
-      if (fl_string_dynamic_compare(name, f_status_terminated_not_s) == F_equal_to) {
-        *code = F_terminated_not;
-
-        return F_none;
-      }
-
-      if (fl_string_dynamic_compare(name, f_status_terminated_not_block_s) == F_equal_to) {
-        *code = F_terminated_not_block;
-
-        return F_none;
-      }
-
-      if (fl_string_dynamic_compare(name, f_status_terminated_not_eoa_s) == F_equal_to) {
-        *code = F_terminated_not_eoa;
-
-        return F_none;
-      }
-
-      if (fl_string_dynamic_compare(name, f_status_terminated_not_eof_s) == F_equal_to) {
-        *code = F_terminated_not_eof;
-
-        return F_none;
-      }
-
-      if (fl_string_dynamic_compare(name, f_status_terminated_not_eol_s) == F_equal_to) {
-        *code = F_terminated_not_eol;
-
-        return F_none;
-      }
-
-      if (fl_string_dynamic_compare(name, f_status_terminated_not_eos_s) == F_equal_to) {
-        *code = F_terminated_not_eos;
-
-        return F_none;
-      }
-
-      if (fl_string_dynamic_compare(name, f_status_terminated_not_group_s) == F_equal_to) {
-        *code = F_terminated_not_group;
-
-        return F_none;
-      }
-
-      if (fl_string_dynamic_compare(name, f_status_terminated_not_group_block_s) == F_equal_to) {
-        *code = F_terminated_not_group_block;
-
-        return F_none;
-      }
-
-      if (fl_string_dynamic_compare(name, f_status_terminated_not_group_eoa_s) == F_equal_to) {
-        *code = F_terminated_not_group_eoa;
-
-        return F_none;
-      }
-
-      if (fl_string_dynamic_compare(name, f_status_terminated_not_group_eof_s) == F_equal_to) {
-        *code = F_terminated_not_group_eof;
-
-        return F_none;
-      }
-
-      if (fl_string_dynamic_compare(name, f_status_terminated_not_group_eol_s) == F_equal_to) {
-        *code = F_terminated_not_group_eol;
-
-        return F_none;
-      }
-
-      if (fl_string_dynamic_compare(name, f_status_terminated_not_group_eos_s) == F_equal_to) {
-        *code = F_terminated_not_group_eos;
-
-        return F_none;
-      }
-
-      if (fl_string_dynamic_compare(name, f_status_terminated_not_group_stop_s) == F_equal_to) {
-        *code = F_terminated_not_group_stop;
-
-        return F_none;
-      }
-
-      if (fl_string_dynamic_compare(name, f_status_terminated_not_nest_s) == F_equal_to) {
-        *code = F_terminated_not_nest;
-
-        return F_none;
-      }
-
-      if (fl_string_dynamic_compare(name, f_status_terminated_not_nest_block_s) == F_equal_to) {
-        *code = F_terminated_not_nest_block;
-
-        return F_none;
-      }
-
-      if (fl_string_dynamic_compare(name, f_status_terminated_not_nest_eoa_s) == F_equal_to) {
-        *code = F_terminated_not_nest_eoa;
-
-        return F_none;
-      }
-
-      if (fl_string_dynamic_compare(name, f_status_terminated_not_nest_eof_s) == F_equal_to) {
-        *code = F_terminated_not_nest_eof;
-
-        return F_none;
-      }
-
-      if (fl_string_dynamic_compare(name, f_status_terminated_not_nest_eol_s) == F_equal_to) {
-        *code = F_terminated_not_nest_eol;
-
-        return F_none;
-      }
-
-      if (fl_string_dynamic_compare(name, f_status_terminated_not_nest_eos_s) == F_equal_to) {
-        *code = F_terminated_not_nest_eos;
-
-        return F_none;
-      }
-
-      if (fl_string_dynamic_compare(name, f_status_terminated_not_nest_stop_s) == F_equal_to) {
-        *code = F_terminated_not_nest_stop;
-
-        return F_none;
-      }
-
-      if (fl_string_dynamic_compare(name, f_status_terminated_not_stop_s) == F_equal_to) {
-        *code = F_terminated_not_stop;
-
-        return F_none;
-      }
     #endif // _di_f_status_buffer_
+
+    #ifndef _di_f_status_end_
+      if (fl_string_dynamic_compare(name, f_status_end_s) == F_equal_to) {
+        *code = F_end;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_end_not_s) == F_equal_to) {
+        *code = F_end_not;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_end_not_block_s) == F_equal_to) {
+        *code = F_end_not_block;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_end_not_eoa_s) == F_equal_to) {
+        *code = F_end_not_eoa;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_end_not_eof_s) == F_equal_to) {
+        *code = F_end_not_eof;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_end_not_eol_s) == F_equal_to) {
+        *code = F_end_not_eol;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_end_not_eos_s) == F_equal_to) {
+        *code = F_end_not_eos;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_end_not_group_s) == F_equal_to) {
+        *code = F_end_not_group;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_end_not_group_block_s) == F_equal_to) {
+        *code = F_end_not_group_block;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_end_not_group_eoa_s) == F_equal_to) {
+        *code = F_end_not_group_eoa;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_end_not_group_eof_s) == F_equal_to) {
+        *code = F_end_not_group_eof;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_end_not_group_eol_s) == F_equal_to) {
+        *code = F_end_not_group_eol;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_end_not_group_eos_s) == F_equal_to) {
+        *code = F_end_not_group_eos;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_end_not_group_stop_s) == F_equal_to) {
+        *code = F_end_not_group_stop;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_end_not_nest_s) == F_equal_to) {
+        *code = F_end_not_nest;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_end_not_nest_block_s) == F_equal_to) {
+        *code = F_end_not_nest_block;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_end_not_nest_eoa_s) == F_equal_to) {
+        *code = F_end_not_nest_eoa;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_end_not_nest_eof_s) == F_equal_to) {
+        *code = F_end_not_nest_eof;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_end_not_nest_eol_s) == F_equal_to) {
+        *code = F_end_not_nest_eol;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_end_not_nest_eos_s) == F_equal_to) {
+        *code = F_end_not_nest_eos;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_end_not_nest_stop_s) == F_equal_to) {
+        *code = F_end_not_nest_stop;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_end_not_stop_s) == F_equal_to) {
+        *code = F_end_not_stop;
+
+        return F_none;
+      }
+    #endif // _di_f_status_end_
 
     #ifndef _di_f_status_process_
       if (fl_string_dynamic_compare(name, f_status_process_s) == F_equal_to) {

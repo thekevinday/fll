@@ -71,10 +71,10 @@ extern "C" {
  *   F_memory_not (with error bit) on out of memory.
  *   F_number_overflow (with error bit) if the maximimum buffer size is reached.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_terminated_not_eos (with error bit) if end of buffer is reached before a closing bracket is found (object was found).
- *   F_terminated_not_nest_eos (with error bit) if end of buffer is reached while inside a nested list before a closing bracket is found (object was found).
- *   F_terminated_not_nest_stop (with error bit) if stop location is reached while inside a nested list before a closing bracket is found (object was found).
- *   F_terminated_not_stop (with error bit) if stop location is reached before a closing bracket is found (object was found).
+ *   F_end_not_eos (with error bit) if end of buffer is reached before a closing bracket is found (object was found).
+ *   F_end_not_nest_eos (with error bit) if end of buffer is reached while inside a nested list before a closing bracket is found (object was found).
+ *   F_end_not_nest_stop (with error bit) if stop location is reached while inside a nested list before a closing bracket is found (object was found).
+ *   F_end_not_stop (with error bit) if stop location is reached before a closing bracket is found (object was found).
  *   F_utf (with error bit) is returned on failure to read/process a UTF-8 character.
  *
  *   Errors (with error bit) from: fl_fss_embedded_list_content_read().

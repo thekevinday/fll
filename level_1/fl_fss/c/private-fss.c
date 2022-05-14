@@ -519,13 +519,13 @@ extern "C" {
           if (range->start >= buffer.used) {
             found->stop = buffer.used - 1;
 
-            return F_terminated_not_group_eos;
+            return F_end_not_group_eos;
           }
 
           if (range->start > range->stop) {
             found->stop = range->stop;
 
-            return F_terminated_not_group_stop;
+            return F_end_not_group_stop;
           }
 
           if (buffer.string[range->start] == quote_found) {
@@ -821,13 +821,13 @@ extern "C" {
       if (range->start >= buffer.used) {
         found->stop = buffer.used - 1;
 
-        return F_terminated_not_group_eos;
+        return F_end_not_group_eos;
       }
 
       if (range->start > range->stop) {
         found->stop = range->stop;
 
-        return F_terminated_not_group_stop;
+        return F_end_not_group_stop;
       }
     }
 

@@ -91,7 +91,7 @@ extern "C" {
 
         return status;
       }
-      else if (status == F_terminated_not_eos || status == F_terminated_not_stop || status == F_terminated_not_nest_eos || status == F_terminated_not_nest_stop) {
+      else if (status == F_end_not_eos || status == F_end_not_stop || status == F_end_not_nest_eos || status == F_end_not_nest_stop) {
 
         // If at least some valid object was found, then return F_none equivalents.
         if (nest->depth[0].used > initial_used) {

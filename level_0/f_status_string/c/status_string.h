@@ -250,6 +250,8 @@ extern "C" {
     #define F_status_body_not_s          "F_body_not"
     #define F_status_bound_s             "F_bound"
     #define F_status_bound_not_s         "F_bound_not"
+    #define F_status_break_s             "F_break"
+    #define F_status_break_not_s         "F_break_not"
     #define F_status_capability_s        "F_capability"
     #define F_status_capability_not_s    "F_capability_not"
     #define F_status_child_s             "F_child"
@@ -278,14 +280,20 @@ extern "C" {
     #define F_status_deadlock_not_s      "F_deadlock_not"
     #define F_status_descriptor_s        "F_descriptor"
     #define F_status_descriptor_not_s    "F_descriptor_not"
+    #define F_status_desire_s            "F_desire"
+    #define F_status_desire_not_s        "F_desire_not"
     #define F_status_device_s            "F_device"
     #define F_status_device_not_s        "F_device_not"
+    #define F_status_discard_s           "F_discard"
+    #define F_status_discard_not_s       "F_discard_not"
     #define F_status_disable_s           "F_disable"
     #define F_status_disable_not_s       "F_disable_not"
     #define F_status_domain_s            "F_domain"
     #define F_status_domain_not_s        "F_domain_not"
     #define F_status_done_s              "F_done"
     #define F_status_done_not_s          "F_done_not"
+    #define F_status_drop_s              "F_drop"
+    #define F_status_drop_not_s          "F_drop_not"
     #define F_status_dummy_s             "F_dummy"
     #define F_status_dummy_not_s         "F_dummy_not"
     #define F_status_empty_s             "F_empty"
@@ -294,8 +302,6 @@ extern "C" {
     #define F_status_enable_not_s        "F_enable_not"
     #define F_status_encoding_s          "F_encoding"
     #define F_status_encoding_not_s      "F_encoding_not"
-    #define F_status_end_s               "F_end"
-    #define F_status_end_not_s           "F_end_not"
     #define F_status_endian_s            "F_endian"
     #define F_status_endian_big_s        "F_endian_big"
     #define F_status_endian_little_s     "F_endian_little"
@@ -312,6 +318,8 @@ extern "C" {
     #define F_status_execute_not_s       "F_execute_not"
     #define F_status_exist_s             "F_exist"
     #define F_status_exist_not_s         "F_exist_not"
+    #define F_status_exit_s              "F_exit"
+    #define F_status_exit_not_s          "F_exit_not"
     #define F_status_failure_s           "F_failure"
     #define F_status_failure_not_s       "F_failure_not"
     #define F_status_family_s            "F_family"
@@ -330,6 +338,8 @@ extern "C" {
     #define F_status_full_not_s          "F_full_not"
     #define F_status_group_s             "F_group"
     #define F_status_group_not_s         "F_group_not"
+    #define F_status_halt_s              "F_halt"
+    #define F_status_halt_not_s          "F_halt_not"
     #define F_status_header_s            "F_header"
     #define F_status_header_not_s        "F_header_not"
     #define F_status_ignore_s            "F_ignore"
@@ -341,6 +351,8 @@ extern "C" {
     #define F_status_input_output_s      "F_input_output"
     #define F_status_interrupt_s         "F_interrupt"
     #define F_status_interrupt_not_s     "F_interrupt_not"
+    #define F_status_keep_s              "F_keep"
+    #define F_status_keep_not_s          "F_keep_not"
     #define F_status_known_s             "F_known"
     #define F_status_known_not_s         "F_known_not"
     #define F_status_last_s              "F_last"
@@ -371,6 +383,8 @@ extern "C" {
     #define F_status_mount_not_s         "F_mount_not"
     #define F_status_name_s              "F_name"
     #define F_status_name_not_s          "F_name_not"
+    #define F_status_need_s              "F_need"
+    #define F_status_need_not_s          "F_need_not"
     #define F_status_next_s              "F_next"
     #define F_status_next_not_s          "F_next_not"
     #define F_status_nice_s              "F_nice"
@@ -430,6 +444,12 @@ extern "C" {
     #define F_status_require_not_s       "F_require_not"
     #define F_status_resource_s          "F_resource"
     #define F_status_resource_not_s      "F_resource_not"
+    #define F_status_restart_s           "F_restart"
+    #define F_status_restart_not_s       "F_restart_not"
+    #define F_status_restore_s           "F_restore"
+    #define F_status_restore_not_s       "F_restore_not"
+    #define F_status_revert_s            "F_revert"
+    #define F_status_revert_not_s        "F_revert_not"
     #define F_status_schedule_s          "F_schedule"
     #define F_status_schedule_not_s      "F_schedule_not"
     #define F_status_search_s            "F_search"
@@ -440,6 +460,8 @@ extern "C" {
     #define F_status_size_not_s          "F_size_not"
     #define F_status_signal_s            "F_signal"
     #define F_status_signal_not_s        "F_signal_not"
+    #define F_status_skip_s              "F_skip"
+    #define F_status_skip_not_s          "F_skip_not"
     #define F_status_space_s             "F_space"
     #define F_status_space_not_s         "F_space_not"
     #define F_status_start_s             "F_start"
@@ -448,6 +470,8 @@ extern "C" {
     #define F_status_status_not_s        "F_status_not"
     #define F_status_stop_s              "F_stop"
     #define F_status_stop_not_s          "F_stop_not"
+    #define F_status_store_s             "F_store"
+    #define F_status_store_not_s         "F_store_not"
     #define F_status_stream_s            "F_stream"
     #define F_status_stream_not_s        "F_stream_not"
     #define F_status_string_s            "F_string"
@@ -456,6 +480,8 @@ extern "C" {
     #define F_status_string_too_small_s  "F_string_too_small"
     #define F_status_syntax_s            "F_syntax"
     #define F_status_syntax_not_s        "F_syntax_not"
+    #define F_status_terminate_s         "F_terminate"
+    #define F_status_terminate_not_s     "F_terminate_not"
     #define F_status_thread_s            "F_thread"
     #define F_status_thread_not_s        "F_thread_not"
     #define F_status_time_s              "F_time"
@@ -481,8 +507,10 @@ extern "C" {
     #define F_status_value_not_s         "F_value_not"
     #define F_status_wait_s              "F_wait"
     #define F_status_wait_not_s          "F_wait_not"
-    #define F_status_warn_s              "F_warn"
-    #define F_status_warn_not_s          "F_warn_not"
+    #define F_status_want_s              "F_want"
+    #define F_status_want_not_s          "F_want_not"
+    #define F_status_wish_s              "F_wish"
+    #define F_status_wish_not_s          "F_wish_not"
     #define F_status_world_s             "F_world"
     #define F_status_world_not_s         "F_world_not"
     #define F_status_write_s             "F_write"
@@ -502,6 +530,8 @@ extern "C" {
     #define F_status_atomic_not_s_length        12
     #define F_status_begin_s_length             7
     #define F_status_begin_not_s_length         11
+    #define F_status_break_s_length             7
+    #define F_status_break_not_s_length         11
     #define F_status_block_s_length             7
     #define F_status_block_not_s_length         11
     #define F_status_body_s_length              6
@@ -536,14 +566,20 @@ extern "C" {
     #define F_status_deadlock_not_s_length      14
     #define F_status_descriptor_s_length        12
     #define F_status_descriptor_not_s_length    16
+    #define F_status_desire_s_length            8
+    #define F_status_desire_not_s_length        12
     #define F_status_device_s_length            8
     #define F_status_device_not_s_length        12
+    #define F_status_discard_s_length           9
+    #define F_status_discard_not_s_length       13
     #define F_status_disable_s_length           9
     #define F_status_disable_not_s_length       13
     #define F_status_domain_s_length            8
     #define F_status_domain_not_s_length        12
     #define F_status_done_s_length              6
     #define F_status_done_not_s_length          10
+    #define F_status_drop_s_length              6
+    #define F_status_drop_not_s_length          10
     #define F_status_dummy_s_length             7
     #define F_status_dummy_not_s_length         11
     #define F_status_empty_s_length             7
@@ -552,8 +588,6 @@ extern "C" {
     #define F_status_enable_not_s_length        12
     #define F_status_encoding_s_length          10
     #define F_status_encoding_not_s_length      14
-    #define F_status_end_s_length               5
-    #define F_status_end_not_s_length           9
     #define F_status_endian_s_length            8
     #define F_status_endian_big_s_length        12
     #define F_status_endian_little_s_length     19
@@ -570,6 +604,8 @@ extern "C" {
     #define F_status_execute_not_s_length       13
     #define F_status_exist_s_length             7
     #define F_status_exist_not_s_length         11
+    #define F_status_exit_s_length              6
+    #define F_status_exit_not_s_length          10
     #define F_status_failure_s_length           9
     #define F_status_failure_not_s_length       13
     #define F_status_family_s_length            8
@@ -588,6 +624,8 @@ extern "C" {
     #define F_status_full_not_s_length          10
     #define F_status_group_s_length             7
     #define F_status_group_not_s_length         11
+    #define F_status_halt_s_length              6
+    #define F_status_halt_not_s_length          10
     #define F_status_header_s_length            8
     #define F_status_header_not_s_length        12
     #define F_status_ignore_s_length            8
@@ -599,6 +637,8 @@ extern "C" {
     #define F_status_input_output_s_length      14
     #define F_status_interrupt_s_length         11
     #define F_status_interrupt_not_s_length     15
+    #define F_status_keep_s_length              6
+    #define F_status_keep_not_s_length          10
     #define F_status_known_s_length             7
     #define F_status_known_not_s_length         11
     #define F_status_last_s_length              6
@@ -629,6 +669,8 @@ extern "C" {
     #define F_status_mount_not_s_length         11
     #define F_status_name_s_length              6
     #define F_status_name_not_s_length          10
+    #define F_status_need_s_length              6
+    #define F_status_need_not_s_length          10
     #define F_status_next_s_length              6
     #define F_status_next_not_s_length          10
     #define F_status_nice_s_length              6
@@ -688,6 +730,12 @@ extern "C" {
     #define F_status_require_not_s_length       13
     #define F_status_resource_s_length          10
     #define F_status_resource_not_s_length      14
+    #define F_status_restart_s_length           9
+    #define F_status_restart_not_s_length       13
+    #define F_status_restore_s_length           9
+    #define F_status_restore_not_s_length       13
+    #define F_status_revert_s_length            8
+    #define F_status_revert_not_s_length        12
     #define F_status_schedule_s_length          10
     #define F_status_schedule_not_s_length      14
     #define F_status_search_s_length            8
@@ -698,6 +746,8 @@ extern "C" {
     #define F_status_size_not_s_length          10
     #define F_status_signal_s_length            8
     #define F_status_signal_not_s_length        12
+    #define F_status_skip_s_length              6
+    #define F_status_skip_not_s_length          10
     #define F_status_space_s_length             7
     #define F_status_space_not_s_length         11
     #define F_status_start_s_length             7
@@ -706,6 +756,8 @@ extern "C" {
     #define F_status_status_not_s_length        12
     #define F_status_stop_s_length              6
     #define F_status_stop_not_s_length          10
+    #define F_status_store_s_length             7
+    #define F_status_store_not_s_length         11
     #define F_status_stream_s_length            8
     #define F_status_stream_not_s_length        12
     #define F_status_string_s_length            8
@@ -718,6 +770,8 @@ extern "C" {
     #define F_status_supported_not_s_length     15
     #define F_status_syntax_s_length            8
     #define F_status_syntax_not_s_length        12
+    #define F_status_terminate_s_length         11
+    #define F_status_terminate_not_s_length     15
     #define F_status_thread_s_length            8
     #define F_status_thread_not_s_length        12
     #define F_status_time_s_length              6
@@ -739,8 +793,10 @@ extern "C" {
     #define F_status_value_not_s_length         11
     #define F_status_wait_s_length              6
     #define F_status_wait_not_s_length          10
-    #define F_status_warn_s_length              6
-    #define F_status_warn_not_s_length          10
+    #define F_status_want_s_length              6
+    #define F_status_want_not_s_length          10
+    #define F_status_wish_s_length              6
+    #define F_status_wish_not_s_length          10
     #define F_status_world_s_length             7
     #define F_status_world_not_s_length         11
     #define F_status_write_s_length             7
@@ -766,6 +822,8 @@ extern "C" {
     extern const f_string_static_t f_status_body_not_s;
     extern const f_string_static_t f_status_bound_s;
     extern const f_string_static_t f_status_bound_not_s;
+    extern const f_string_static_t f_status_break_s;
+    extern const f_string_static_t f_status_break_not_s;
     extern const f_string_static_t f_status_capability_s;
     extern const f_string_static_t f_status_capability_not_s;
     extern const f_string_static_t f_status_child_s;
@@ -794,14 +852,20 @@ extern "C" {
     extern const f_string_static_t f_status_deadlock_not_s;
     extern const f_string_static_t f_status_descriptor_s;
     extern const f_string_static_t f_status_descriptor_not_s;
+    extern const f_string_static_t f_status_desire_s;
+    extern const f_string_static_t f_status_desire_not_s;
     extern const f_string_static_t f_status_device_s;
     extern const f_string_static_t f_status_device_not_s;
     extern const f_string_static_t f_status_disable_s;
     extern const f_string_static_t f_status_disable_not_s;
+    extern const f_string_static_t f_status_discard_s;
+    extern const f_string_static_t f_status_discard_not_s;
     extern const f_string_static_t f_status_domain_s;
     extern const f_string_static_t f_status_domain_not_s;
     extern const f_string_static_t f_status_done_s;
     extern const f_string_static_t f_status_done_not_s;
+    extern const f_string_static_t f_status_drop_s;
+    extern const f_string_static_t f_status_drop_not_s;
     extern const f_string_static_t f_status_dummy_s;
     extern const f_string_static_t f_status_dummy_not_s;
     extern const f_string_static_t f_status_empty_s;
@@ -828,6 +892,8 @@ extern "C" {
     extern const f_string_static_t f_status_execute_not_s;
     extern const f_string_static_t f_status_exist_s;
     extern const f_string_static_t f_status_exist_not_s;
+    extern const f_string_static_t f_status_exit_s;
+    extern const f_string_static_t f_status_exit_not_s;
     extern const f_string_static_t f_status_failure_s;
     extern const f_string_static_t f_status_failure_not_s;
     extern const f_string_static_t f_status_family_s;
@@ -846,6 +912,8 @@ extern "C" {
     extern const f_string_static_t f_status_full_not_s;
     extern const f_string_static_t f_status_group_s;
     extern const f_string_static_t f_status_group_not_s;
+    extern const f_string_static_t f_status_halt_s;
+    extern const f_string_static_t f_status_halt_not_s;
     extern const f_string_static_t f_status_header_s;
     extern const f_string_static_t f_status_header_not_s;
     extern const f_string_static_t f_status_ignore_s;
@@ -857,6 +925,8 @@ extern "C" {
     extern const f_string_static_t f_status_input_output_s;
     extern const f_string_static_t f_status_interrupt_s;
     extern const f_string_static_t f_status_interrupt_not_s;
+    extern const f_string_static_t f_status_keep_s;
+    extern const f_string_static_t f_status_keep_not_s;
     extern const f_string_static_t f_status_known_s;
     extern const f_string_static_t f_status_known_not_s;
     extern const f_string_static_t f_status_last_s;
@@ -887,6 +957,8 @@ extern "C" {
     extern const f_string_static_t f_status_mount_not_s;
     extern const f_string_static_t f_status_name_s;
     extern const f_string_static_t f_status_name_not_s;
+    extern const f_string_static_t f_status_need_s;
+    extern const f_string_static_t f_status_need_not_s;
     extern const f_string_static_t f_status_next_s;
     extern const f_string_static_t f_status_next_not_s;
     extern const f_string_static_t f_status_nice_s;
@@ -946,6 +1018,12 @@ extern "C" {
     extern const f_string_static_t f_status_require_not_s;
     extern const f_string_static_t f_status_resource_s;
     extern const f_string_static_t f_status_resource_not_s;
+    extern const f_string_static_t f_status_restart_s;
+    extern const f_string_static_t f_status_restart_not_s;
+    extern const f_string_static_t f_status_restore_s;
+    extern const f_string_static_t f_status_restore_not_s;
+    extern const f_string_static_t f_status_revert_s;
+    extern const f_string_static_t f_status_revert_not_s;
     extern const f_string_static_t f_status_schedule_s;
     extern const f_string_static_t f_status_schedule_not_s;
     extern const f_string_static_t f_status_search_s;
@@ -956,6 +1034,8 @@ extern "C" {
     extern const f_string_static_t f_status_size_not_s;
     extern const f_string_static_t f_status_signal_s;
     extern const f_string_static_t f_status_signal_not_s;
+    extern const f_string_static_t f_status_skip_s;
+    extern const f_string_static_t f_status_skip_not_s;
     extern const f_string_static_t f_status_space_s;
     extern const f_string_static_t f_status_space_not_s;
     extern const f_string_static_t f_status_start_s;
@@ -964,6 +1044,8 @@ extern "C" {
     extern const f_string_static_t f_status_status_not_s;
     extern const f_string_static_t f_status_stop_s;
     extern const f_string_static_t f_status_stop_not_s;
+    extern const f_string_static_t f_status_store_s;
+    extern const f_string_static_t f_status_store_not_s;
     extern const f_string_static_t f_status_stream_s;
     extern const f_string_static_t f_status_stream_not_s;
     extern const f_string_static_t f_status_string_s;
@@ -972,6 +1054,8 @@ extern "C" {
     extern const f_string_static_t f_status_string_too_small_s;
     extern const f_string_static_t f_status_syntax_s;
     extern const f_string_static_t f_status_syntax_not_s;
+    extern const f_string_static_t f_status_terminate_s;
+    extern const f_string_static_t f_status_terminate_not_s;
     extern const f_string_static_t f_status_thread_s;
     extern const f_string_static_t f_status_thread_not_s;
     extern const f_string_static_t f_status_time_s;
@@ -997,8 +1081,10 @@ extern "C" {
     extern const f_string_static_t f_status_value_not_s;
     extern const f_string_static_t f_status_wait_s;
     extern const f_string_static_t f_status_wait_not_s;
-    extern const f_string_static_t f_status_warn_s;
-    extern const f_string_static_t f_status_warn_not_s;
+    extern const f_string_static_t f_status_want_s;
+    extern const f_string_static_t f_status_want_not_s;
+    extern const f_string_static_t f_status_wish_s;
+    extern const f_string_static_t f_status_wish_not_s;
     extern const f_string_static_t f_status_world_s;
     extern const f_string_static_t f_status_world_not_s;
     extern const f_string_static_t f_status_write_s;
@@ -1244,107 +1330,63 @@ extern "C" {
   #endif // _di_f_status_number_
 
   #ifndef _di_f_status_buffer_
-    #define F_status_buffer_s                     "F_buffer"
-    #define F_status_buffer_not_s                 "F_buffer_not"
-    #define F_status_buffer_overflow_s            "F_buffer_overflow"
-    #define F_status_buffer_too_large_s           "F_buffer_too_large"
-    #define F_status_buffer_too_small_s           "F_buffer_too_small"
-    #define F_status_buffer_underflow_s           "F_buffer_underflow"
-    #define F_status_complete_not_utf_s           "F_complete_not_utf"
-    #define F_status_complete_not_utf_block_s     "F_complete_not_utf_block"
-    #define F_status_complete_not_utf_eoa_s       "F_complete_not_utf_eoa"
-    #define F_status_complete_not_utf_eof_s       "F_complete_not_utf_eof"
-    #define F_status_complete_not_utf_eol_s       "F_complete_not_utf_eol"
-    #define F_status_complete_not_utf_eos_s       "F_complete_not_utf_eos"
-    #define F_status_complete_not_utf_stop_s      "F_complete_not_utf_stop"
-    #define F_status_none_block_s                 "F_none_block"
-    #define F_status_none_eoa_s                   "F_none_eoa"
-    #define F_status_none_eof_s                   "F_none_eof"
-    #define F_status_none_eol_s                   "F_none_eol"
-    #define F_status_none_eos_s                   "F_none_eos"
-    #define F_status_none_not_s                   "F_none_not"
-    #define F_status_none_stop_s                  "F_none_stop"
-    #define F_status_data_s                       "F_data"
-    #define F_status_data_not_s                   "F_data_not"
-    #define F_status_data_not_block_s             "F_data_not_block"
-    #define F_status_data_not_eoa_s               "F_data_not_eoa"
-    #define F_status_data_not_eof_s               "F_data_not_eof"
-    #define F_status_data_not_eol_s               "F_data_not_eol"
-    #define F_status_data_not_eos_s               "F_data_not_eos"
-    #define F_status_data_not_stop_s              "F_data_not_stop"
-    #define F_status_terminated_s                 "F_terminated"
-    #define F_status_terminated_not_s             "F_terminated_not"
-    #define F_status_terminated_not_block_s       "F_terminated_not_block"
-    #define F_status_terminated_not_eoa_s         "F_terminated_not_eoa"
-    #define F_status_terminated_not_eof_s         "F_terminated_not_eof"
-    #define F_status_terminated_not_eol_s         "F_terminated_not_eol"
-    #define F_status_terminated_not_eos_s         "F_terminated_not_eos"
-    #define F_status_terminated_not_stop_s        "F_terminated_not_stop"
-    #define F_status_terminated_not_group_s       "F_terminated_not_group"
-    #define F_status_terminated_not_group_block_s "F_terminated_not_group_block"
-    #define F_status_terminated_not_group_eoa_s   "F_terminated_not_group_eoa"
-    #define F_status_terminated_not_group_eof_s   "F_terminated_not_group_eof"
-    #define F_status_terminated_not_group_eol_s   "F_terminated_not_group_eol"
-    #define F_status_terminated_not_group_eos_s   "F_terminated_not_group_eos"
-    #define F_status_terminated_not_group_stop_s  "F_terminated_not_group_stop"
-    #define F_status_terminated_not_nest_s        "F_terminated_not_nest"
-    #define F_status_terminated_not_nest_block_s  "F_terminated_not_nest_block"
-    #define F_status_terminated_not_nest_eoa_s    "F_terminated_not_nest_eoa"
-    #define F_status_terminated_not_nest_eof_s    "F_terminated_not_nest_eof"
-    #define F_status_terminated_not_nest_eol_s    "F_terminated_not_nest_eol"
-    #define F_status_terminated_not_nest_eos_s    "F_terminated_not_nest_eos"
-    #define F_status_terminated_not_nest_stop_s   "F_terminated_not_nest_stop"
+    #define F_status_buffer_s                 "F_buffer"
+    #define F_status_buffer_not_s             "F_buffer_not"
+    #define F_status_buffer_overflow_s        "F_buffer_overflow"
+    #define F_status_buffer_too_large_s       "F_buffer_too_large"
+    #define F_status_buffer_too_small_s       "F_buffer_too_small"
+    #define F_status_buffer_underflow_s       "F_buffer_underflow"
+    #define F_status_complete_not_utf_s       "F_complete_not_utf"
+    #define F_status_complete_not_utf_block_s "F_complete_not_utf_block"
+    #define F_status_complete_not_utf_eoa_s   "F_complete_not_utf_eoa"
+    #define F_status_complete_not_utf_eof_s   "F_complete_not_utf_eof"
+    #define F_status_complete_not_utf_eol_s   "F_complete_not_utf_eol"
+    #define F_status_complete_not_utf_eos_s   "F_complete_not_utf_eos"
+    #define F_status_complete_not_utf_stop_s  "F_complete_not_utf_stop"
+    #define F_status_none_block_s             "F_none_block"
+    #define F_status_none_eoa_s               "F_none_eoa"
+    #define F_status_none_eof_s               "F_none_eof"
+    #define F_status_none_eol_s               "F_none_eol"
+    #define F_status_none_eos_s               "F_none_eos"
+    #define F_status_none_not_s               "F_none_not"
+    #define F_status_none_stop_s              "F_none_stop"
+    #define F_status_data_s                   "F_data"
+    #define F_status_data_not_s               "F_data_not"
+    #define F_status_data_not_block_s         "F_data_not_block"
+    #define F_status_data_not_eoa_s           "F_data_not_eoa"
+    #define F_status_data_not_eof_s           "F_data_not_eof"
+    #define F_status_data_not_eol_s           "F_data_not_eol"
+    #define F_status_data_not_eos_s           "F_data_not_eos"
+    #define F_status_data_not_stop_s          "F_data_not_stop"
 
-    #define F_status_buffer_s_length                     8
-    #define F_status_buffer_not_s_length                 12
-    #define F_status_buffer_overflow_s_length            17
-    #define F_status_buffer_too_large_s_length           18
-    #define F_status_buffer_too_small_s_length           18
-    #define F_status_buffer_underflow_s_length           18
-    #define F_status_complete_not_utf_s_length           18
-    #define F_status_complete_not_utf_block_s_length     24
-    #define F_status_complete_not_utf_eoa_s_length       22
-    #define F_status_complete_not_utf_eof_s_length       22
-    #define F_status_complete_not_utf_eol_s_length       22
-    #define F_status_complete_not_utf_eos_s_length       22
-    #define F_status_complete_not_utf_stop_s_length      23
-    #define F_status_none_block_s_length                 12
-    #define F_status_none_eoa_s_length                   10
-    #define F_status_none_eof_s_length                   10
-    #define F_status_none_eol_s_length                   10
-    #define F_status_none_eos_s_length                   10
-    #define F_status_none_not_s_length                   10
-    #define F_status_none_stop_s_length                  11
-    #define F_status_data_s_length                       6
-    #define F_status_data_not_s_length                   10
-    #define F_status_data_not_block_s_length             16
-    #define F_status_data_not_eoa_s_length               14
-    #define F_status_data_not_eof_s_length               14
-    #define F_status_data_not_eol_s_length               14
-    #define F_status_data_not_eos_s_length               14
-    #define F_status_data_not_stop_s_length              15
-    #define F_status_terminated_s_length                 12
-    #define F_status_terminated_not_s_length             16
-    #define F_status_terminated_not_block_s_length       22
-    #define F_status_terminated_not_eoa_s_length         20
-    #define F_status_terminated_not_eof_s_length         20
-    #define F_status_terminated_not_eol_s_length         20
-    #define F_status_terminated_not_eos_s_length         20
-    #define F_status_terminated_not_stop_s_length        21
-    #define F_status_terminated_not_group_s_length       22
-    #define F_status_terminated_not_group_block_s_length 28
-    #define F_status_terminated_not_group_eoa_s_length   25
-    #define F_status_terminated_not_group_eof_s_length   25
-    #define F_status_terminated_not_group_eol_s_length   25
-    #define F_status_terminated_not_group_eos_s_length   25
-    #define F_status_terminated_not_group_stop_s_length  26
-    #define F_status_terminated_not_nest_s_length        21
-    #define F_status_terminated_not_nest_block_s_length  26
-    #define F_status_terminated_not_nest_eoa_s_length    25
-    #define F_status_terminated_not_nest_eof_s_length    25
-    #define F_status_terminated_not_nest_eol_s_length    25
-    #define F_status_terminated_not_nest_eos_s_length    25
-    #define F_status_terminated_not_nest_stop_s_length   26
+    #define F_status_buffer_s_length                 8
+    #define F_status_buffer_not_s_length             12
+    #define F_status_buffer_overflow_s_length        17
+    #define F_status_buffer_too_large_s_length       18
+    #define F_status_buffer_too_small_s_length       18
+    #define F_status_buffer_underflow_s_length       18
+    #define F_status_complete_not_utf_s_length       18
+    #define F_status_complete_not_utf_block_s_length 24
+    #define F_status_complete_not_utf_eoa_s_length   22
+    #define F_status_complete_not_utf_eof_s_length   22
+    #define F_status_complete_not_utf_eol_s_length   22
+    #define F_status_complete_not_utf_eos_s_length   22
+    #define F_status_complete_not_utf_stop_s_length  23
+    #define F_status_none_block_s_length             12
+    #define F_status_none_eoa_s_length               10
+    #define F_status_none_eof_s_length               10
+    #define F_status_none_eol_s_length               10
+    #define F_status_none_eos_s_length               10
+    #define F_status_none_not_s_length               10
+    #define F_status_none_stop_s_length              11
+    #define F_status_data_s_length                   6
+    #define F_status_data_not_s_length               10
+    #define F_status_data_not_block_s_length         16
+    #define F_status_data_not_eoa_s_length           14
+    #define F_status_data_not_eof_s_length           14
+    #define F_status_data_not_eol_s_length           14
+    #define F_status_data_not_eos_s_length           14
+    #define F_status_data_not_stop_s_length          15
 
     extern const f_string_static_t f_status_buffer_s;
     extern const f_string_static_t f_status_buffer_not_s;
@@ -1374,29 +1416,78 @@ extern "C" {
     extern const f_string_static_t f_status_data_not_eol_s;
     extern const f_string_static_t f_status_data_not_eos_s;
     extern const f_string_static_t f_status_data_not_stop_s;
-    extern const f_string_static_t f_status_terminated_s;
-    extern const f_string_static_t f_status_terminated_not_s;
-    extern const f_string_static_t f_status_terminated_not_block_s;
-    extern const f_string_static_t f_status_terminated_not_eoa_s;
-    extern const f_string_static_t f_status_terminated_not_eof_s;
-    extern const f_string_static_t f_status_terminated_not_eol_s;
-    extern const f_string_static_t f_status_terminated_not_eos_s;
-    extern const f_string_static_t f_status_terminated_not_stop_s;
-    extern const f_string_static_t f_status_terminated_not_group_s;
-    extern const f_string_static_t f_status_terminated_not_group_block_s;
-    extern const f_string_static_t f_status_terminated_not_group_eoa_s;
-    extern const f_string_static_t f_status_terminated_not_group_eof_s;
-    extern const f_string_static_t f_status_terminated_not_group_eol_s;
-    extern const f_string_static_t f_status_terminated_not_group_eos_s;
-    extern const f_string_static_t f_status_terminated_not_group_stop_s;
-    extern const f_string_static_t f_status_terminated_not_nest_s;
-    extern const f_string_static_t f_status_terminated_not_nest_block_s;
-    extern const f_string_static_t f_status_terminated_not_nest_eoa_s;
-    extern const f_string_static_t f_status_terminated_not_nest_eof_s;
-    extern const f_string_static_t f_status_terminated_not_nest_eol_s;
-    extern const f_string_static_t f_status_terminated_not_nest_eos_s;
-    extern const f_string_static_t f_status_terminated_not_nest_stop_s;
   #endif // _di_f_status_buffer_
+
+  #ifndef _di_f_status_end_
+    #define F_status_end_s                 "F_end"
+    #define F_status_end_not_s             "F_end_not"
+    #define F_status_end_not_block_s       "F_end_not_block"
+    #define F_status_end_not_eoa_s         "F_end_not_eoa"
+    #define F_status_end_not_eof_s         "F_end_not_eof"
+    #define F_status_end_not_eol_s         "F_end_not_eol"
+    #define F_status_end_not_eos_s         "F_end_not_eos"
+    #define F_status_end_not_stop_s        "F_end_not_stop"
+    #define F_status_end_not_group_s       "F_end_not_group"
+    #define F_status_end_not_group_block_s "F_end_not_group_block"
+    #define F_status_end_not_group_eoa_s   "F_end_not_group_eoa"
+    #define F_status_end_not_group_eof_s   "F_end_not_group_eof"
+    #define F_status_end_not_group_eol_s   "F_end_not_group_eol"
+    #define F_status_end_not_group_eos_s   "F_end_not_group_eos"
+    #define F_status_end_not_group_stop_s  "F_end_not_group_stop"
+    #define F_status_end_not_nest_s        "F_end_not_nest"
+    #define F_status_end_not_nest_block_s  "F_end_not_nest_block"
+    #define F_status_end_not_nest_eoa_s    "F_end_not_nest_eoa"
+    #define F_status_end_not_nest_eof_s    "F_end_not_nest_eof"
+    #define F_status_end_not_nest_eol_s    "F_end_not_nest_eol"
+    #define F_status_end_not_nest_eos_s    "F_end_not_nest_eos"
+    #define F_status_end_not_nest_stop_s   "F_end_not_nest_stop"
+
+    #define F_status_end_s_length                 5
+    #define F_status_end_not_s_length             10
+    #define F_status_end_not_block_s_length       15
+    #define F_status_end_not_eoa_s_length         13
+    #define F_status_end_not_eof_s_length         13
+    #define F_status_end_not_eol_s_length         13
+    #define F_status_end_not_eos_s_length         13
+    #define F_status_end_not_stop_s_length        14
+    #define F_status_end_not_group_s_length       15
+    #define F_status_end_not_group_block_s_length 21
+    #define F_status_end_not_group_eoa_s_length   19
+    #define F_status_end_not_group_eof_s_length   19
+    #define F_status_end_not_group_eol_s_length   19
+    #define F_status_end_not_group_eos_s_length   19
+    #define F_status_end_not_group_stop_s_length  20
+    #define F_status_end_not_nest_s_length        14
+    #define F_status_end_not_nest_block_s_length  20
+    #define F_status_end_not_nest_eoa_s_length    18
+    #define F_status_end_not_nest_eof_s_length    18
+    #define F_status_end_not_nest_eol_s_length    18
+    #define F_status_end_not_nest_eos_s_length    18
+    #define F_status_end_not_nest_stop_s_length   19
+
+    extern const f_string_static_t f_status_end_s;
+    extern const f_string_static_t f_status_end_not_s;
+    extern const f_string_static_t f_status_end_not_block_s;
+    extern const f_string_static_t f_status_end_not_eoa_s;
+    extern const f_string_static_t f_status_end_not_eof_s;
+    extern const f_string_static_t f_status_end_not_eol_s;
+    extern const f_string_static_t f_status_end_not_eos_s;
+    extern const f_string_static_t f_status_end_not_stop_s;
+    extern const f_string_static_t f_status_end_not_group_s;
+    extern const f_string_static_t f_status_end_not_group_block_s;
+    extern const f_string_static_t f_status_end_not_group_eoa_s;
+    extern const f_string_static_t f_status_end_not_group_eof_s;
+    extern const f_string_static_t f_status_end_not_group_eol_s;
+    extern const f_string_static_t f_status_end_not_group_eos_s;
+    extern const f_string_static_t f_status_end_not_group_stop_s;
+    extern const f_string_static_t f_status_end_not_nest_s;
+    extern const f_string_static_t f_status_end_not_nest_block_s;
+    extern const f_string_static_t f_status_end_not_nest_eoa_s;
+    extern const f_string_static_t f_status_end_not_nest_eof_s;
+    extern const f_string_static_t f_status_end_not_nest_eol_s;
+    extern const f_string_static_t f_status_end_not_nest_eos_s;
+    extern const f_string_static_t f_status_end_not_nest_stop_s;
+  #endif // _di_f_status_end_
 
   #ifndef _di_f_status_process_
     #define F_status_process_s          "F_process"

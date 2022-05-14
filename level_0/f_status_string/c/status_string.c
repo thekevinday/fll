@@ -97,6 +97,8 @@ extern "C" {
     const f_string_static_t f_status_body_not_s = macro_f_string_static_t_initialize(F_status_body_not_s, 0, F_status_body_not_s_length);
     const f_string_static_t f_status_bound_s = macro_f_string_static_t_initialize(F_status_bound_s, 0, F_status_bound_s_length);
     const f_string_static_t f_status_bound_not_s = macro_f_string_static_t_initialize(F_status_bound_not_s, 0, F_status_bound_not_s_length);
+    const f_string_static_t f_status_break_s = macro_f_string_static_t_initialize(F_status_break_s, 0, F_status_break_s_length);
+    const f_string_static_t f_status_break_not_s = macro_f_string_static_t_initialize(F_status_break_not_s, 0, F_status_break_not_s_length);
     const f_string_static_t f_status_capability_s = macro_f_string_static_t_initialize(F_status_capability_s, 0, F_status_capability_s_length);
     const f_string_static_t f_status_capability_not_s = macro_f_string_static_t_initialize(F_status_capability_not_s, 0, F_status_capability_not_s_length);
     const f_string_static_t f_status_child_s = macro_f_string_static_t_initialize(F_status_child_s, 0, F_status_child_s_length);
@@ -125,14 +127,20 @@ extern "C" {
     const f_string_static_t f_status_deadlock_not_s = macro_f_string_static_t_initialize(F_status_deadlock_not_s, 0, F_status_deadlock_not_s_length);
     const f_string_static_t f_status_descriptor_s = macro_f_string_static_t_initialize(F_status_descriptor_s, 0, F_status_descriptor_s_length);
     const f_string_static_t f_status_descriptor_not_s = macro_f_string_static_t_initialize(F_status_descriptor_not_s, 0, F_status_descriptor_not_s_length);
+    const f_string_static_t f_status_desire_s = macro_f_string_static_t_initialize(F_status_desire_s, 0, F_status_desire_s_length);
+    const f_string_static_t f_status_desire_not_s = macro_f_string_static_t_initialize(F_status_desire_not_s, 0, F_status_desire_not_s_length);
     const f_string_static_t f_status_device_s = macro_f_string_static_t_initialize(F_status_device_s, 0, F_status_device_s_length);
     const f_string_static_t f_status_device_not_s = macro_f_string_static_t_initialize(F_status_device_not_s, 0, F_status_device_not_s_length);
     const f_string_static_t f_status_disable_s = macro_f_string_static_t_initialize(F_status_disable_s, 0, F_status_disable_s_length);
     const f_string_static_t f_status_disable_not_s = macro_f_string_static_t_initialize(F_status_disable_not_s, 0, F_status_disable_not_s_length);
+    const f_string_static_t f_status_discard_s = macro_f_string_static_t_initialize(F_status_discard_s, 0, F_status_discard_s_length);
+    const f_string_static_t f_status_discard_not_s = macro_f_string_static_t_initialize(F_status_discard_not_s, 0, F_status_discard_not_s_length);
     const f_string_static_t f_status_domain_s = macro_f_string_static_t_initialize(F_status_domain_s, 0, F_status_domain_s_length);
     const f_string_static_t f_status_domain_not_s = macro_f_string_static_t_initialize(F_status_domain_not_s, 0, F_status_domain_not_s_length);
     const f_string_static_t f_status_done_s = macro_f_string_static_t_initialize(F_status_done_s, 0, F_status_done_s_length);
     const f_string_static_t f_status_done_not_s = macro_f_string_static_t_initialize(F_status_done_not_s, 0, F_status_done_not_s_length);
+    const f_string_static_t f_status_drop_s = macro_f_string_static_t_initialize(F_status_drop_s, 0, F_status_drop_s_length);
+    const f_string_static_t f_status_drop_not_s = macro_f_string_static_t_initialize(F_status_drop_not_s, 0, F_status_drop_not_s_length);
     const f_string_static_t f_status_dummy_s = macro_f_string_static_t_initialize(F_status_dummy_s, 0, F_status_dummy_s_length);
     const f_string_static_t f_status_dummy_not_s = macro_f_string_static_t_initialize(F_status_dummy_not_s, 0, F_status_dummy_not_s_length);
     const f_string_static_t f_status_empty_s = macro_f_string_static_t_initialize(F_status_empty_s, 0, F_status_empty_s_length);
@@ -141,8 +149,6 @@ extern "C" {
     const f_string_static_t f_status_enable_not_s = macro_f_string_static_t_initialize(F_status_enable_not_s, 0, F_status_enable_not_s_length);
     const f_string_static_t f_status_encoding_s = macro_f_string_static_t_initialize(F_status_encoding_s, 0, F_status_encoding_s_length);
     const f_string_static_t f_status_encoding_not_s = macro_f_string_static_t_initialize(F_status_encoding_not_s, 0, F_status_encoding_not_s_length);
-    const f_string_static_t f_status_end_s = macro_f_string_static_t_initialize(F_status_end_s, 0, F_status_end_s_length);
-    const f_string_static_t f_status_end_not_s = macro_f_string_static_t_initialize(F_status_end_not_s, 0, F_status_end_not_s_length);
     const f_string_static_t f_status_endian_s = macro_f_string_static_t_initialize(F_status_endian_s, 0, F_status_endian_s_length);
     const f_string_static_t f_status_endian_big_s = macro_f_string_static_t_initialize(F_status_endian_big_s, 0, F_status_endian_big_s_length);
     const f_string_static_t f_status_endian_little_s = macro_f_string_static_t_initialize(F_status_endian_little_s, 0, F_status_endian_little_s_length);
@@ -159,6 +165,8 @@ extern "C" {
     const f_string_static_t f_status_execute_not_s = macro_f_string_static_t_initialize(F_status_execute_not_s, 0, F_status_execute_not_s_length);
     const f_string_static_t f_status_exist_s = macro_f_string_static_t_initialize(F_status_exist_s, 0, F_status_exist_s_length);
     const f_string_static_t f_status_exist_not_s = macro_f_string_static_t_initialize(F_status_exist_not_s, 0, F_status_exist_not_s_length);
+    const f_string_static_t f_status_exit_s = macro_f_string_static_t_initialize(F_status_exit_s, 0, F_status_exit_s_length);
+    const f_string_static_t f_status_exit_not_s = macro_f_string_static_t_initialize(F_status_exit_not_s, 0, F_status_exit_not_s_length);
     const f_string_static_t f_status_failure_s = macro_f_string_static_t_initialize(F_status_failure_s, 0, F_status_failure_s_length);
     const f_string_static_t f_status_failure_not_s = macro_f_string_static_t_initialize(F_status_failure_not_s, 0, F_status_failure_not_s_length);
     const f_string_static_t f_status_family_s = macro_f_string_static_t_initialize(F_status_family_s, 0, F_status_family_s_length);
@@ -177,6 +185,8 @@ extern "C" {
     const f_string_static_t f_status_full_not_s = macro_f_string_static_t_initialize(F_status_full_not_s, 0, F_status_full_not_s_length);
     const f_string_static_t f_status_group_s = macro_f_string_static_t_initialize(F_status_group_s, 0, F_status_group_s_length);
     const f_string_static_t f_status_group_not_s = macro_f_string_static_t_initialize(F_status_group_not_s, 0, F_status_group_not_s_length);
+    const f_string_static_t f_status_halt_s = macro_f_string_static_t_initialize(F_status_halt_s, 0, F_status_halt_s_length);
+    const f_string_static_t f_status_halt_not_s = macro_f_string_static_t_initialize(F_status_halt_not_s, 0, F_status_halt_not_s_length);
     const f_string_static_t f_status_header_s = macro_f_string_static_t_initialize(F_status_header_s, 0, F_status_header_s_length);
     const f_string_static_t f_status_header_not_s = macro_f_string_static_t_initialize(F_status_header_not_s, 0, F_status_header_not_s_length);
     const f_string_static_t f_status_ignore_s = macro_f_string_static_t_initialize(F_status_ignore_s, 0, F_status_ignore_s_length);
@@ -188,6 +198,8 @@ extern "C" {
     const f_string_static_t f_status_input_output_s = macro_f_string_static_t_initialize(F_status_input_output_s, 0, F_status_input_output_s_length);
     const f_string_static_t f_status_interrupt_s = macro_f_string_static_t_initialize(F_status_interrupt_s, 0, F_status_interrupt_s_length);
     const f_string_static_t f_status_interrupt_not_s = macro_f_string_static_t_initialize(F_status_interrupt_not_s, 0, F_status_interrupt_not_s_length);
+    const f_string_static_t f_status_keep_s = macro_f_string_static_t_initialize(F_status_keep_s, 0, F_status_keep_s_length);
+    const f_string_static_t f_status_keep_not_s = macro_f_string_static_t_initialize(F_status_keep_not_s, 0, F_status_keep_not_s_length);
     const f_string_static_t f_status_known_s = macro_f_string_static_t_initialize(F_status_known_s, 0, F_status_known_s_length);
     const f_string_static_t f_status_known_not_s = macro_f_string_static_t_initialize(F_status_known_not_s, 0, F_status_known_not_s_length);
     const f_string_static_t f_status_last_s = macro_f_string_static_t_initialize(F_status_last_s, 0, F_status_last_s_length);
@@ -218,6 +230,8 @@ extern "C" {
     const f_string_static_t f_status_mount_not_s = macro_f_string_static_t_initialize(F_status_mount_not_s, 0, F_status_mount_not_s_length);
     const f_string_static_t f_status_name_s = macro_f_string_static_t_initialize(F_status_name_s, 0, F_status_name_s_length);
     const f_string_static_t f_status_name_not_s = macro_f_string_static_t_initialize(F_status_name_not_s, 0, F_status_name_not_s_length);
+    const f_string_static_t f_status_need_s = macro_f_string_static_t_initialize(F_status_need_s, 0, F_status_need_s_length);
+    const f_string_static_t f_status_need_not_s = macro_f_string_static_t_initialize(F_status_need_not_s, 0, F_status_need_not_s_length);
     const f_string_static_t f_status_next_s = macro_f_string_static_t_initialize(F_status_next_s, 0, F_status_next_s_length);
     const f_string_static_t f_status_next_not_s = macro_f_string_static_t_initialize(F_status_next_not_s, 0, F_status_next_not_s_length);
     const f_string_static_t f_status_nice_s = macro_f_string_static_t_initialize(F_status_nice_s, 0, F_status_nice_s_length);
@@ -277,6 +291,12 @@ extern "C" {
     const f_string_static_t f_status_require_not_s = macro_f_string_static_t_initialize(F_status_require_not_s, 0, F_status_require_not_s_length);
     const f_string_static_t f_status_resource_s = macro_f_string_static_t_initialize(F_status_resource_s, 0, F_status_resource_s_length);
     const f_string_static_t f_status_resource_not_s = macro_f_string_static_t_initialize(F_status_resource_not_s, 0, F_status_resource_not_s_length);
+    const f_string_static_t f_status_restart_s = macro_f_string_static_t_initialize(F_status_restart_s, 0, F_status_restart_s_length);
+    const f_string_static_t f_status_restart_not_s = macro_f_string_static_t_initialize(F_status_restart_not_s, 0, F_status_restart_not_s_length);
+    const f_string_static_t f_status_restore_s = macro_f_string_static_t_initialize(F_status_restore_s, 0, F_status_restore_s_length);
+    const f_string_static_t f_status_restore_not_s = macro_f_string_static_t_initialize(F_status_restore_not_s, 0, F_status_restore_not_s_length);
+    const f_string_static_t f_status_revert_s = macro_f_string_static_t_initialize(F_status_revert_s, 0, F_status_revert_s_length);
+    const f_string_static_t f_status_revert_not_s = macro_f_string_static_t_initialize(F_status_revert_not_s, 0, F_status_revert_not_s_length);
     const f_string_static_t f_status_schedule_s = macro_f_string_static_t_initialize(F_status_schedule_s, 0, F_status_schedule_s_length);
     const f_string_static_t f_status_schedule_not_s = macro_f_string_static_t_initialize(F_status_schedule_not_s, 0, F_status_schedule_not_s_length);
     const f_string_static_t f_status_search_s = macro_f_string_static_t_initialize(F_status_search_s, 0, F_status_search_s_length);
@@ -287,6 +307,8 @@ extern "C" {
     const f_string_static_t f_status_size_not_s = macro_f_string_static_t_initialize(F_status_size_not_s, 0, F_status_size_not_s_length);
     const f_string_static_t f_status_signal_s = macro_f_string_static_t_initialize(F_status_signal_s, 0, F_status_signal_s_length);
     const f_string_static_t f_status_signal_not_s = macro_f_string_static_t_initialize(F_status_signal_not_s, 0, F_status_signal_not_s_length);
+    const f_string_static_t f_status_skip_s = macro_f_string_static_t_initialize(F_status_skip_s, 0, F_status_skip_s_length);
+    const f_string_static_t f_status_skip_not_s = macro_f_string_static_t_initialize(F_status_skip_not_s, 0, F_status_skip_not_s_length);
     const f_string_static_t f_status_space_s = macro_f_string_static_t_initialize(F_status_space_s, 0, F_status_space_s_length);
     const f_string_static_t f_status_space_not_s = macro_f_string_static_t_initialize(F_status_space_not_s, 0, F_status_space_not_s_length);
     const f_string_static_t f_status_start_s = macro_f_string_static_t_initialize(F_status_start_s, 0, F_status_start_s_length);
@@ -295,6 +317,8 @@ extern "C" {
     const f_string_static_t f_status_status_not_s = macro_f_string_static_t_initialize(F_status_status_not_s, 0, F_status_status_not_s_length);
     const f_string_static_t f_status_stop_s = macro_f_string_static_t_initialize(F_status_stop_s, 0, F_status_stop_s_length);
     const f_string_static_t f_status_stop_not_s = macro_f_string_static_t_initialize(F_status_stop_not_s, 0, F_status_stop_not_s_length);
+    const f_string_static_t f_status_store_s = macro_f_string_static_t_initialize(F_status_store_s, 0, F_status_store_s_length);
+    const f_string_static_t f_status_store_not_s = macro_f_string_static_t_initialize(F_status_store_not_s, 0, F_status_store_not_s_length);
     const f_string_static_t f_status_stream_s = macro_f_string_static_t_initialize(F_status_stream_s, 0, F_status_stream_s_length);
     const f_string_static_t f_status_stream_not_s = macro_f_string_static_t_initialize(F_status_stream_not_s, 0, F_status_stream_not_s_length);
     const f_string_static_t f_status_string_s = macro_f_string_static_t_initialize(F_status_string_s, 0, F_status_string_s_length);
@@ -303,6 +327,8 @@ extern "C" {
     const f_string_static_t f_status_string_too_small_s = macro_f_string_static_t_initialize(F_status_string_too_small_s, 0, F_status_string_too_small_s_length);
     const f_string_static_t f_status_syntax_s = macro_f_string_static_t_initialize(F_status_syntax_s, 0, F_status_syntax_s_length);
     const f_string_static_t f_status_syntax_not_s = macro_f_string_static_t_initialize(F_status_syntax_not_s, 0, F_status_syntax_not_s_length);
+    const f_string_static_t f_status_terminate_s = macro_f_string_static_t_initialize(F_status_terminate_s, 0, F_status_terminate_s_length);
+    const f_string_static_t f_status_terminate_not_s = macro_f_string_static_t_initialize(F_status_terminate_not_s, 0, F_status_terminate_not_s_length);
     const f_string_static_t f_status_thread_s = macro_f_string_static_t_initialize(F_status_thread_s, 0, F_status_thread_s_length);
     const f_string_static_t f_status_thread_not_s = macro_f_string_static_t_initialize(F_status_thread_not_s, 0, F_status_thread_not_s_length);
     const f_string_static_t f_status_time_s = macro_f_string_static_t_initialize(F_status_time_s, 0, F_status_time_s_length);
@@ -328,8 +354,10 @@ extern "C" {
     const f_string_static_t f_status_value_not_s = macro_f_string_static_t_initialize(F_status_value_not_s, 0, F_status_value_not_s_length);
     const f_string_static_t f_status_wait_s = macro_f_string_static_t_initialize(F_status_wait_s, 0, F_status_wait_s_length);
     const f_string_static_t f_status_wait_not_s = macro_f_string_static_t_initialize(F_status_wait_not_s, 0, F_status_wait_not_s_length);
-    const f_string_static_t f_status_warn_s = macro_f_string_static_t_initialize(F_status_warn_s, 0, F_status_warn_s_length);
-    const f_string_static_t f_status_warn_not_s = macro_f_string_static_t_initialize(F_status_warn_not_s, 0, F_status_warn_not_s_length);
+    const f_string_static_t f_status_want_s = macro_f_string_static_t_initialize(F_status_want_s, 0, F_status_want_s_length);
+    const f_string_static_t f_status_want_not_s = macro_f_string_static_t_initialize(F_status_want_not_s, 0, F_status_want_not_s_length);
+    const f_string_static_t f_status_wish_s = macro_f_string_static_t_initialize(F_status_wish_s, 0, F_status_wish_s_length);
+    const f_string_static_t f_status_wish_not_s = macro_f_string_static_t_initialize(F_status_wish_not_s, 0, F_status_wish_not_s_length);
     const f_string_static_t f_status_world_s = macro_f_string_static_t_initialize(F_status_world_s, 0, F_status_world_s_length);
     const f_string_static_t f_status_world_not_s = macro_f_string_static_t_initialize(F_status_world_not_s, 0, F_status_world_not_s_length);
     const f_string_static_t f_status_write_s = macro_f_string_static_t_initialize(F_status_write_s, 0, F_status_write_s_length);
@@ -453,29 +481,32 @@ extern "C" {
     const f_string_static_t f_status_data_not_eol_s = macro_f_string_static_t_initialize(F_status_data_not_eol_s, 0, F_status_data_not_eol_s_length);
     const f_string_static_t f_status_data_not_eos_s = macro_f_string_static_t_initialize(F_status_data_not_eos_s, 0, F_status_data_not_eos_s_length);
     const f_string_static_t f_status_data_not_stop_s = macro_f_string_static_t_initialize(F_status_data_not_stop_s, 0, F_status_data_not_stop_s_length);
-    const f_string_static_t f_status_terminated_s = macro_f_string_static_t_initialize(F_status_terminated_s, 0, F_status_terminated_s_length);
-    const f_string_static_t f_status_terminated_not_s = macro_f_string_static_t_initialize(F_status_terminated_not_s, 0, F_status_terminated_not_s_length);
-    const f_string_static_t f_status_terminated_not_block_s = macro_f_string_static_t_initialize(F_status_terminated_not_block_s, 0, F_status_terminated_not_block_s_length);
-    const f_string_static_t f_status_terminated_not_eoa_s = macro_f_string_static_t_initialize(F_status_terminated_not_eoa_s, 0, F_status_terminated_not_eoa_s_length);
-    const f_string_static_t f_status_terminated_not_eof_s = macro_f_string_static_t_initialize(F_status_terminated_not_eof_s, 0, F_status_terminated_not_eof_s_length);
-    const f_string_static_t f_status_terminated_not_eol_s = macro_f_string_static_t_initialize(F_status_terminated_not_eol_s, 0, F_status_terminated_not_eol_s_length);
-    const f_string_static_t f_status_terminated_not_eos_s = macro_f_string_static_t_initialize(F_status_terminated_not_eos_s, 0, F_status_terminated_not_eos_s_length);
-    const f_string_static_t f_status_terminated_not_stop_s = macro_f_string_static_t_initialize(F_status_terminated_not_stop_s, 0, F_status_terminated_not_stop_s_length);
-    const f_string_static_t f_status_terminated_not_group_s = macro_f_string_static_t_initialize(F_status_terminated_not_group_s, 0, F_status_terminated_not_group_s_length);
-    const f_string_static_t f_status_terminated_not_group_block_s = macro_f_string_static_t_initialize(F_status_terminated_not_group_block_s, 0, F_status_terminated_not_group_block_s_length);
-    const f_string_static_t f_status_terminated_not_group_eoa_s = macro_f_string_static_t_initialize(F_status_terminated_not_group_eoa_s, 0, F_status_terminated_not_group_eoa_s_length);
-    const f_string_static_t f_status_terminated_not_group_eof_s = macro_f_string_static_t_initialize(F_status_terminated_not_group_eof_s, 0, F_status_terminated_not_group_eof_s_length);
-    const f_string_static_t f_status_terminated_not_group_eol_s = macro_f_string_static_t_initialize(F_status_terminated_not_group_eol_s, 0, F_status_terminated_not_group_eol_s_length);
-    const f_string_static_t f_status_terminated_not_group_eos_s = macro_f_string_static_t_initialize(F_status_terminated_not_group_eos_s, 0, F_status_terminated_not_group_eos_s_length);
-    const f_string_static_t f_status_terminated_not_group_stop_s = macro_f_string_static_t_initialize(F_status_terminated_not_group_stop_s, 0, F_status_terminated_not_group_stop_s_length);
-    const f_string_static_t f_status_terminated_not_nest_s = macro_f_string_static_t_initialize(F_status_terminated_not_nest_s, 0, F_status_terminated_not_nest_s_length);
-    const f_string_static_t f_status_terminated_not_nest_block_s = macro_f_string_static_t_initialize(F_status_terminated_not_nest_block_s, 0, F_status_terminated_not_nest_block_s_length);
-    const f_string_static_t f_status_terminated_not_nest_eoa_s = macro_f_string_static_t_initialize(F_status_terminated_not_nest_eoa_s, 0, F_status_terminated_not_nest_eoa_s_length);
-    const f_string_static_t f_status_terminated_not_nest_eof_s = macro_f_string_static_t_initialize(F_status_terminated_not_nest_eof_s, 0, F_status_terminated_not_nest_eof_s_length);
-    const f_string_static_t f_status_terminated_not_nest_eol_s = macro_f_string_static_t_initialize(F_status_terminated_not_nest_eol_s, 0, F_status_terminated_not_nest_eol_s_length);
-    const f_string_static_t f_status_terminated_not_nest_eos_s = macro_f_string_static_t_initialize(F_status_terminated_not_nest_eos_s, 0, F_status_terminated_not_nest_eos_s_length);
-    const f_string_static_t f_status_terminated_not_nest_stop_s = macro_f_string_static_t_initialize(F_status_terminated_not_nest_stop_s, 0, F_status_terminated_not_nest_stop_s_length);
   #endif // _di_f_status_buffer_
+
+  #ifndef _di_f_status_end_
+    const f_string_static_t f_status_end_s = macro_f_string_static_t_initialize(F_status_end_s, 0, F_status_end_s_length);
+    const f_string_static_t f_status_end_not_s = macro_f_string_static_t_initialize(F_status_end_not_s, 0, F_status_end_not_s_length);
+    const f_string_static_t f_status_end_not_block_s = macro_f_string_static_t_initialize(F_status_end_not_block_s, 0, F_status_end_not_block_s_length);
+    const f_string_static_t f_status_end_not_eoa_s = macro_f_string_static_t_initialize(F_status_end_not_eoa_s, 0, F_status_end_not_eoa_s_length);
+    const f_string_static_t f_status_end_not_eof_s = macro_f_string_static_t_initialize(F_status_end_not_eof_s, 0, F_status_end_not_eof_s_length);
+    const f_string_static_t f_status_end_not_eol_s = macro_f_string_static_t_initialize(F_status_end_not_eol_s, 0, F_status_end_not_eol_s_length);
+    const f_string_static_t f_status_end_not_eos_s = macro_f_string_static_t_initialize(F_status_end_not_eos_s, 0, F_status_end_not_eos_s_length);
+    const f_string_static_t f_status_end_not_stop_s = macro_f_string_static_t_initialize(F_status_end_not_stop_s, 0, F_status_end_not_stop_s_length);
+    const f_string_static_t f_status_end_not_group_s = macro_f_string_static_t_initialize(F_status_end_not_group_s, 0, F_status_end_not_group_s_length);
+    const f_string_static_t f_status_end_not_group_block_s = macro_f_string_static_t_initialize(F_status_end_not_group_block_s, 0, F_status_end_not_group_block_s_length);
+    const f_string_static_t f_status_end_not_group_eoa_s = macro_f_string_static_t_initialize(F_status_end_not_group_eoa_s, 0, F_status_end_not_group_eoa_s_length);
+    const f_string_static_t f_status_end_not_group_eof_s = macro_f_string_static_t_initialize(F_status_end_not_group_eof_s, 0, F_status_end_not_group_eof_s_length);
+    const f_string_static_t f_status_end_not_group_eol_s = macro_f_string_static_t_initialize(F_status_end_not_group_eol_s, 0, F_status_end_not_group_eol_s_length);
+    const f_string_static_t f_status_end_not_group_eos_s = macro_f_string_static_t_initialize(F_status_end_not_group_eos_s, 0, F_status_end_not_group_eos_s_length);
+    const f_string_static_t f_status_end_not_group_stop_s = macro_f_string_static_t_initialize(F_status_end_not_group_stop_s, 0, F_status_end_not_group_stop_s_length);
+    const f_string_static_t f_status_end_not_nest_s = macro_f_string_static_t_initialize(F_status_end_not_nest_s, 0, F_status_end_not_nest_s_length);
+    const f_string_static_t f_status_end_not_nest_block_s = macro_f_string_static_t_initialize(F_status_end_not_nest_block_s, 0, F_status_end_not_nest_block_s_length);
+    const f_string_static_t f_status_end_not_nest_eoa_s = macro_f_string_static_t_initialize(F_status_end_not_nest_eoa_s, 0, F_status_end_not_nest_eoa_s_length);
+    const f_string_static_t f_status_end_not_nest_eof_s = macro_f_string_static_t_initialize(F_status_end_not_nest_eof_s, 0, F_status_end_not_nest_eof_s_length);
+    const f_string_static_t f_status_end_not_nest_eol_s = macro_f_string_static_t_initialize(F_status_end_not_nest_eol_s, 0, F_status_end_not_nest_eol_s_length);
+    const f_string_static_t f_status_end_not_nest_eos_s = macro_f_string_static_t_initialize(F_status_end_not_nest_eos_s, 0, F_status_end_not_nest_eos_s_length);
+    const f_string_static_t f_status_end_not_nest_stop_s = macro_f_string_static_t_initialize(F_status_end_not_nest_stop_s, 0, F_status_end_not_nest_stop_s_length);
+  #endif // _di_f_status_end_
 
   #ifndef _di_f_status_process_
     const f_string_static_t f_status_process_s = macro_f_string_static_t_initialize(F_status_process_s, 0, F_status_process_s_length);
@@ -951,6 +982,14 @@ extern "C" {
           *name = f_status_block_not_s;
           break;
 
+        case F_break:
+          *name = f_status_break_s;
+          break;
+
+        case F_break_not:
+          *name = f_status_break_not_s;
+          break;
+
         case F_body:
           *name = f_status_body_s;
           break;
@@ -1079,6 +1118,14 @@ extern "C" {
           *name = f_status_descriptor_not_s;
           break;
 
+        case F_desire:
+          *name = f_status_desire_s;
+          break;
+
+        case F_desire_not:
+          *name = f_status_desire_not_s;
+          break;
+
         case F_device:
           *name = f_status_device_s;
           break;
@@ -1095,6 +1142,14 @@ extern "C" {
           *name = f_status_disable_not_s;
           break;
 
+        case F_discard:
+          *name = f_status_discard_s;
+          break;
+
+        case F_discard_not:
+          *name = f_status_discard_not_s;
+          break;
+
         case F_domain:
           *name = f_status_domain_s;
           break;
@@ -1109,6 +1164,14 @@ extern "C" {
 
         case F_done_not:
           *name = f_status_done_not_s;
+          break;
+
+        case F_drop:
+          *name = f_status_drop_s;
+          break;
+
+        case F_drop_not:
+          *name = f_status_drop_not_s;
           break;
 
         case F_dummy:
@@ -1141,14 +1204,6 @@ extern "C" {
 
         case F_encoding_not:
           *name = f_status_encoding_not_s;
-          break;
-
-        case F_end:
-          *name = f_status_end_s;
-          break;
-
-        case F_end_not:
-          *name = f_status_end_not_s;
           break;
 
         case F_endian:
@@ -1213,6 +1268,14 @@ extern "C" {
 
         case F_exist_not:
           *name = f_status_exist_not_s;
+          break;
+
+        case F_exit:
+          *name = f_status_exit_s;
+          break;
+
+        case F_exit_not:
+          *name = f_status_exit_not_s;
           break;
 
         case F_failure:
@@ -1285,6 +1348,14 @@ extern "C" {
 
         case F_group_not:
           *name = f_status_group_not_s;
+          break;
+
+        case F_halt:
+          *name = f_status_halt_s;
+          break;
+
+        case F_halt_not:
+          *name = f_status_halt_not_s;
           break;
 
         case F_header:
@@ -1441,6 +1512,14 @@ extern "C" {
 
         case F_name_not:
           *name = f_status_name_not_s;
+          break;
+
+        case F_need:
+          *name = f_status_need_s;
+          break;
+
+        case F_need_not:
+          *name = f_status_need_not_s;
           break;
 
         case F_next:
@@ -1667,6 +1746,30 @@ extern "C" {
           *name = f_status_resource_not_s;
           break;
 
+        case F_restart:
+          *name = f_status_restart_s;
+          break;
+
+        case F_restart_not:
+          *name = f_status_restart_not_s;
+          break;
+
+        case F_restore:
+          *name = f_status_restore_s;
+          break;
+
+        case F_restore_not:
+          *name = f_status_restore_not_s;
+          break;
+
+        case F_revert:
+          *name = f_status_revert_s;
+          break;
+
+        case F_revert_not:
+          *name = f_status_revert_not_s;
+          break;
+
         case F_schedule:
           *name = f_status_schedule_s;
           break;
@@ -1703,6 +1806,14 @@ extern "C" {
           *name = f_status_signal_not_s;
           break;
 
+        case F_skip:
+          *name = f_status_skip_s;
+          break;
+
+        case F_skip_not:
+          *name = f_status_skip_not_s;
+          break;
+
         case F_space:
           *name = f_status_space_s;
           break;
@@ -1735,6 +1846,14 @@ extern "C" {
           *name = f_status_stop_not_s;
           break;
 
+        case F_store:
+          *name = f_status_store_s;
+          break;
+
+        case F_store_not:
+          *name = f_status_store_not_s;
+          break;
+
         case F_stream:
           *name = f_status_stream_s;
           break;
@@ -1752,11 +1871,11 @@ extern "C" {
           break;
 
         case F_string_too_large:
-          *name = f_status_too_large_s;
+          *name = f_status_string_too_large_s;
           break;
 
         case F_string_too_small:
-          *name = f_status_too_small_s;
+          *name = f_status_string_too_small_s;
           break;
 
         case F_syntax:
@@ -1765,6 +1884,14 @@ extern "C" {
 
         case F_syntax_not:
           *name = f_status_syntax_not_s;
+          break;
+
+        case F_terminate:
+          *name = f_status_terminate_s;
+          break;
+
+        case F_terminate_not:
+          *name = f_status_terminate_not_s;
           break;
 
         case F_thread:
@@ -1875,12 +2002,20 @@ extern "C" {
           *name = f_status_wait_not_s;
           break;
 
-        case F_warn:
-          *name = f_status_warn_s;
+        case F_want:
+          *name = f_status_want_s;
           break;
 
-        case F_warn_not:
-          *name = f_status_warn_not_s;
+        case F_want_not:
+          *name = f_status_want_not_s;
+          break;
+
+        case F_wish:
+          *name = f_status_wish_s;
+          break;
+
+        case F_wish_not:
+          *name = f_status_wish_not_s;
           break;
 
         case F_world:
@@ -2296,95 +2431,97 @@ extern "C" {
         case F_data_not_stop:
           *name = f_status_data_not_stop_s;
           break;
-
-        case F_terminated:
-          *name = f_status_terminated_s;
-          break;
-
-        case F_terminated_not:
-          *name = f_status_terminated_not_s;
-          break;
-
-        case F_terminated_not_block:
-          *name = f_status_terminated_not_block_s;
-          break;
-
-        case F_terminated_not_eoa:
-          *name = f_status_terminated_not_eoa_s;
-          break;
-
-        case F_terminated_not_eof:
-          *name = f_status_terminated_not_eof_s;
-          break;
-
-        case F_terminated_not_eol:
-          *name = f_status_terminated_not_eol_s;
-          break;
-
-        case F_terminated_not_eos:
-          *name = f_status_terminated_not_eos_s;
-          break;
-
-        case F_terminated_not_group:
-          *name = f_status_terminated_not_group_s;
-          break;
-
-        case F_terminated_not_group_block:
-          *name = f_status_terminated_not_group_block_s;
-          break;
-
-        case F_terminated_not_group_eoa:
-          *name = f_status_terminated_not_group_eoa_s;
-          break;
-
-        case F_terminated_not_group_eof:
-          *name = f_status_terminated_not_group_eof_s;
-          break;
-
-        case F_terminated_not_group_eol:
-          *name = f_status_terminated_not_group_eol_s;
-          break;
-
-        case F_terminated_not_group_eos:
-          *name = f_status_terminated_not_group_eos_s;
-          break;
-
-        case F_terminated_not_group_stop:
-          *name = f_status_terminated_not_group_stop_s;
-          break;
-
-        case F_terminated_not_nest:
-          *name = f_status_terminated_not_nest_s;
-          break;
-
-        case F_terminated_not_nest_block:
-          *name = f_status_terminated_not_nest_block_s;
-          break;
-
-        case F_terminated_not_nest_eoa:
-          *name = f_status_terminated_not_nest_eoa_s;
-          break;
-
-        case F_terminated_not_nest_eof:
-          *name = f_status_terminated_not_nest_eof_s;
-          break;
-
-        case F_terminated_not_nest_eol:
-          *name = f_status_terminated_not_nest_eol_s;
-          break;
-
-        case F_terminated_not_nest_eos:
-          *name = f_status_terminated_not_nest_eos_s;
-          break;
-
-        case F_terminated_not_nest_stop:
-          *name = f_status_terminated_not_nest_stop_s;
-          break;
-
-        case F_terminated_not_stop:
-          *name = f_status_terminated_not_stop_s;
-          break;
       #endif // _di_f_status_buffers_
+
+      #ifndef _di_f_status_end_
+        case F_end:
+          *name = f_status_end_s;
+          break;
+
+        case F_end_not:
+          *name = f_status_end_not_s;
+          break;
+
+        case F_end_not_block:
+          *name = f_status_end_not_block_s;
+          break;
+
+        case F_end_not_eoa:
+          *name = f_status_end_not_eoa_s;
+          break;
+
+        case F_end_not_eof:
+          *name = f_status_end_not_eof_s;
+          break;
+
+        case F_end_not_eol:
+          *name = f_status_end_not_eol_s;
+          break;
+
+        case F_end_not_eos:
+          *name = f_status_end_not_eos_s;
+          break;
+
+        case F_end_not_group:
+          *name = f_status_end_not_group_s;
+          break;
+
+        case F_end_not_group_block:
+          *name = f_status_end_not_group_block_s;
+          break;
+
+        case F_end_not_group_eoa:
+          *name = f_status_end_not_group_eoa_s;
+          break;
+
+        case F_end_not_group_eof:
+          *name = f_status_end_not_group_eof_s;
+          break;
+
+        case F_end_not_group_eol:
+          *name = f_status_end_not_group_eol_s;
+          break;
+
+        case F_end_not_group_eos:
+          *name = f_status_end_not_group_eos_s;
+          break;
+
+        case F_end_not_group_stop:
+          *name = f_status_end_not_group_stop_s;
+          break;
+
+        case F_end_not_nest:
+          *name = f_status_end_not_nest_s;
+          break;
+
+        case F_end_not_nest_block:
+          *name = f_status_end_not_nest_block_s;
+          break;
+
+        case F_end_not_nest_eoa:
+          *name = f_status_end_not_nest_eoa_s;
+          break;
+
+        case F_end_not_nest_eof:
+          *name = f_status_end_not_nest_eof_s;
+          break;
+
+        case F_end_not_nest_eol:
+          *name = f_status_end_not_nest_eol_s;
+          break;
+
+        case F_end_not_nest_eos:
+          *name = f_status_end_not_nest_eos_s;
+          break;
+
+        case F_end_not_nest_stop:
+          *name = f_status_end_not_nest_stop_s;
+          break;
+
+        case F_end_not_stop:
+          *name = f_status_end_not_stop_s;
+          break;
+      #endif // _di_f_status_end_
 
       #ifndef _di_f_status_process_
         case F_process:

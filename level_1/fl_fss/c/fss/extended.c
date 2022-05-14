@@ -123,7 +123,7 @@ extern "C" {
 
         break;
       }
-      else if (status == F_terminated_not_group_eos || status == F_terminated_not_group_eos) {
+      else if (status == F_end_not_group_eos || status == F_end_not_group_eos) {
         if (content_found) {
           content_found = 2;
         }

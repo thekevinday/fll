@@ -66,8 +66,8 @@ extern "C" {
  *   F_none_stop on success after reaching stopping point (a valid object is not yet confirmed).
  *   F_data_not_eos no objects found after reaching the end of the buffer (essentially only comments are found).
  *   F_data_not_stop no data found after reaching stopping point (essentially only comments are found).
- *   F_terminated_not_group_eos if EOS was reached before the a group termination was reached.
- *   F_terminated_not_group_stop if stop point was reached before the a group termination was reached.
+ *   F_end_not_group_eos if EOS was reached before the a group termination was reached.
+ *   F_end_not_group_stop if stop point was reached before the a group termination was reached.
  *
  *   F_interrupt (with error bit) if stopping due to an interrupt.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -117,8 +117,8 @@ extern "C" {
  *   F_none_stop on success after reaching stopping point (a valid object is not yet confirmed).
  *   F_data_not_eos no objects found after reaching the end of the buffer (essentially only comments are found).
  *   F_data_not_stop no data found after reaching stopping point (essentially only comments are found).
- *   F_terminated_not_group_eos if EOS was reached before the a group termination was reached.
- *   F_terminated_not_group_stop if stop point was reached before the a group termination was reached.
+ *   F_end_not_group_eos if EOS was reached before the a group termination was reached.
+ *   F_end_not_group_stop if stop point was reached before the a group termination was reached.
  *
  *   F_interrupt (with error bit) if stopping due to an interrupt.
  *   F_parameter (with error bit) if a parameter is invalid.
