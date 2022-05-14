@@ -145,7 +145,7 @@ extern "C" {
  *   - line:     A specific Content at a given line is to be selected (Think of this as select a row for some Content).
  *   - name:     A specific Object name has been requested.
  *   - object:   The Object is to be printed.
- *   - raw:      Enable raw printing, where the quotes are printed and no delimits are applied.
+ *   - original: Enable original printing, where the quotes are printed and no delimits are applied.
  *   - select:   A specific Content at a given position is to be selected (Think of this as select a column for some Content).
  *   - total:    The total lines found and selected is printed instead of the Content.
  *   - trim:     Empty space before and after Objects and Content will not be printed (They will be trimmed).
@@ -177,7 +177,7 @@ extern "C" {
   #define fss_payload_read_data_option_line_d     0x20
   #define fss_payload_read_data_option_name_d     0x40
   #define fss_payload_read_data_option_object_d   0x80
-  #define fss_payload_read_data_option_raw_d      0x100
+  #define fss_payload_read_data_option_original_d 0x100
   #define fss_payload_read_data_option_select_d   0x200
   #define fss_payload_read_data_option_total_d    0x400
   #define fss_payload_read_data_option_trim_d     0x800

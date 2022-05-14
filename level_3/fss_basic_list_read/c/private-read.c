@@ -346,7 +346,7 @@ extern "C" {
     f_array_lengths_t *delimits_object = fss_basic_list_read_delimit_object_is(data, 0) ? &data->delimits_object : &except_none;
     f_array_lengths_t *delimits_content = fss_basic_list_read_delimit_content_is(data, 0) ? &data->delimits_content : &except_none;
 
-    if (data->option & fss_basic_list_read_data_option_raw_d) {
+    if (data->option & fss_basic_list_read_data_option_original_d) {
       delimits_object = &except_none;
       delimits_content = &except_none;
     }
@@ -391,7 +391,7 @@ extern "C" {
     f_array_lengths_t *delimits_object = fss_basic_list_read_delimit_object_is(data, 0) ? &data->delimits_object : &except_none;
     f_array_lengths_t *delimits_content = fss_basic_list_read_delimit_content_is(data, 0) ? &data->delimits_content : &except_none;
 
-    if (data->option & fss_basic_list_read_data_option_raw_d) {
+    if (data->option & fss_basic_list_read_data_option_original_d) {
       delimits_object = &except_none;
       delimits_content = &except_none;
     }
@@ -617,7 +617,7 @@ extern "C" {
     f_array_lengths_t *delimits_object = fss_basic_list_read_delimit_object_is(data, 0) ? &data->delimits_object : &except_none;
     f_array_lengths_t *delimits_content = fss_basic_list_read_delimit_content_is(data, 0) ? &data->delimits_content : &except_none;
 
-    if (data->option & fss_basic_list_read_data_option_raw_d) {
+    if (data->option & fss_basic_list_read_data_option_original_d) {
       delimits_object = &except_none;
       delimits_content = &except_none;
     }
@@ -707,8 +707,8 @@ extern "C" {
       data->option |= fss_basic_list_read_data_option_object_d;
     }
 
-    if (main->parameters.array[fss_basic_list_read_parameter_raw_e].result == f_console_result_found_e) {
-      data->option |= fss_basic_list_read_data_option_raw_d;
+    if (main->parameters.array[fss_basic_list_read_parameter_original_e].result == f_console_result_found_e) {
+      data->option |= fss_basic_list_read_data_option_original_d;
     }
 
     if (main->parameters.array[fss_basic_list_read_parameter_select_e].result == f_console_result_additional_e) {

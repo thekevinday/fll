@@ -407,7 +407,7 @@ extern "C" {
       f_array_lengths_t *delimits_object = fss_payload_read_delimit_object_is(data, 0) ? &data->delimits_object_header : &except_none;
       f_array_lengths_t *delimits_content = fss_payload_read_delimit_content_is(data, (data->option & fss_payload_read_data_option_select_d) ? data->select : 0) ? &data->delimits_content_header : &except_none;
 
-      if (data->option & fss_payload_read_data_option_raw_d) {
+      if (data->option & fss_payload_read_data_option_original_d) {
         delimits_object = &except_none;
         delimits_content = &except_none;
       }
@@ -443,7 +443,7 @@ extern "C" {
     f_array_lengths_t *delimits_content = fss_payload_read_delimit_content_is(data, 0) ? &data->delimits_content : &except_none;
     bool is_payload = F_false;
 
-    if (data->option & fss_payload_read_data_option_raw_d) {
+    if (data->option & fss_payload_read_data_option_original_d) {
       delimits_object = &except_none;
       delimits_content = &except_none;
     }
@@ -490,7 +490,7 @@ extern "C" {
     f_array_lengths_t *delimits_object = fss_payload_read_delimit_object_is(data, 0) ? &data->delimits_object : &except_none;
     f_array_lengths_t *delimits_content = fss_payload_read_delimit_content_is(data, 0) ? &data->delimits_content : &except_none;
 
-    if (data->option & fss_payload_read_data_option_raw_d) {
+    if (data->option & fss_payload_read_data_option_original_d) {
       delimits_object = &except_none;
       delimits_content = &except_none;
     }
@@ -593,7 +593,7 @@ extern "C" {
     f_array_lengths_t *delimits_object = fss_payload_read_delimit_object_is(data, 0) ? &data->delimits_object_header : &except_none;
     f_array_lengths_t *delimits_content = fss_payload_read_delimit_content_is(data, (data->option & fss_payload_read_data_option_select_d) ? data->select : 0) ? &data->delimits_content_header : &except_none;
 
-    if (data->option & fss_payload_read_data_option_raw_d) {
+    if (data->option & fss_payload_read_data_option_original_d) {
       delimits_object = &except_none;
       delimits_content = &except_none;
     }
@@ -616,13 +616,13 @@ extern "C" {
             }
           }
           else {
-            if ((data->option & fss_payload_read_data_option_raw_d) && data->quotes_object_header.array[at]) {
+            if ((data->option & fss_payload_read_data_option_original_d) && data->quotes_object_header.array[at]) {
               f_print_character_safely(data->quotes_object_header.array[at] == f_fss_quote_type_single_e ? f_fss_quote_single_s.string[0] : f_fss_quote_double_s.string[0], main->output.to.stream);
             }
 
             fss_payload_read_print_at_extended(main, i, *delimits_object, *delimits_content, data);
 
-            if ((data->option & fss_payload_read_data_option_raw_d) && data->quotes_object_header.array[at]) {
+            if ((data->option & fss_payload_read_data_option_original_d) && data->quotes_object_header.array[at]) {
               f_print_character_safely(data->quotes_object_header.array[at] == f_fss_quote_type_single_e ? f_fss_quote_single_s.string[0] : f_fss_quote_double_s.string[0], main->output.to.stream);
             }
           }
@@ -636,13 +636,13 @@ extern "C" {
           }
         }
         else {
-          if ((data->option & fss_payload_read_data_option_raw_d) && data->quotes_content_header.array[at].array[i]) {
+          if ((data->option & fss_payload_read_data_option_original_d) && data->quotes_content_header.array[at].array[i]) {
             f_print_character_safely(data->quotes_content_header.array[at].array[i] == f_fss_quote_type_single_e ? f_fss_quote_single_s.string[0] : f_fss_quote_double_s.string[0], main->output.to.stream);
           }
 
           fss_payload_read_print_at_extended(main, i, *delimits_object, *delimits_content, data);
 
-          if ((data->option & fss_payload_read_data_option_raw_d) && data->quotes_content_header.array[at].array[i]) {
+          if ((data->option & fss_payload_read_data_option_original_d) && data->quotes_content_header.array[at].array[i]) {
             f_print_character_safely(data->quotes_content_header.array[at].array[i] == f_fss_quote_type_single_e ? f_fss_quote_single_s.string[0] : f_fss_quote_double_s.string[0], main->output.to.stream);
           }
         }
@@ -847,7 +847,7 @@ extern "C" {
     f_array_lengths_t *delimits_object = fss_payload_read_delimit_object_is(data, 0) ? &data->delimits_object : &except_none;
     f_array_lengths_t *delimits_content = fss_payload_read_delimit_content_is(data, 0) ? &data->delimits_content : &except_none;
 
-    if (data->option & fss_payload_read_data_option_raw_d) {
+    if (data->option & fss_payload_read_data_option_original_d) {
       delimits_object = &except_none;
       delimits_content = &except_none;
     }
@@ -884,7 +884,7 @@ extern "C" {
     f_array_lengths_t *delimits_object = fss_payload_read_delimit_object_is(data, 0) ? &data->delimits_object_header : &except_none;
     f_array_lengths_t *delimits_content = fss_payload_read_delimit_content_is(data, (data->option & fss_payload_read_data_option_select_d) ? data->select : 0) ? &data->delimits_content_header : &except_none;
 
-    if (data->option & fss_payload_read_data_option_raw_d) {
+    if (data->option & fss_payload_read_data_option_original_d) {
       delimits_object = &except_none;
       delimits_content = &except_none;
     }
@@ -1025,8 +1025,8 @@ extern "C" {
       data->option |= fss_payload_read_data_option_object_d;
     }
 
-    if (main->parameters.array[fss_payload_read_parameter_raw_e].result == f_console_result_found_e) {
-      data->option |= fss_payload_read_data_option_raw_d;
+    if (main->parameters.array[fss_payload_read_parameter_original_e].result == f_console_result_found_e) {
+      data->option |= fss_payload_read_data_option_original_d;
     }
 
     if (main->parameters.array[fss_payload_read_parameter_select_e].result == f_console_result_additional_e) {

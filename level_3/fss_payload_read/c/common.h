@@ -88,65 +88,65 @@ extern "C" {
  * The main program parameters.
  */
 #ifndef _di_fss_payload_read_parameters_
-  #define FSS_PAYLOAD_READ_short_at_s      "a"
-  #define FSS_PAYLOAD_READ_short_content_s "c"
-  #define FSS_PAYLOAD_READ_short_columns_s "C"
-  #define FSS_PAYLOAD_READ_short_delimit_s "D"
-  #define FSS_PAYLOAD_READ_short_depth_s   "d"
-  #define FSS_PAYLOAD_READ_short_empty_s   "e"
-  #define FSS_PAYLOAD_READ_short_line_s    "l"
-  #define FSS_PAYLOAD_READ_short_name_s    "n"
-  #define FSS_PAYLOAD_READ_short_object_s  "o"
-  #define FSS_PAYLOAD_READ_short_pipe_s    "p"
-  #define FSS_PAYLOAD_READ_short_raw_s     "R"
-  #define FSS_PAYLOAD_READ_short_select_s  "s"
-  #define FSS_PAYLOAD_READ_short_total_s   "t"
-  #define FSS_PAYLOAD_READ_short_trim_s    "T"
+  #define FSS_PAYLOAD_READ_short_at_s       "a"
+  #define FSS_PAYLOAD_READ_short_content_s  "c"
+  #define FSS_PAYLOAD_READ_short_columns_s  "C"
+  #define FSS_PAYLOAD_READ_short_delimit_s  "D"
+  #define FSS_PAYLOAD_READ_short_depth_s    "d"
+  #define FSS_PAYLOAD_READ_short_empty_s    "e"
+  #define FSS_PAYLOAD_READ_short_line_s     "l"
+  #define FSS_PAYLOAD_READ_short_name_s     "n"
+  #define FSS_PAYLOAD_READ_short_object_s   "o"
+  #define FSS_PAYLOAD_READ_short_pipe_s     "p"
+  #define FSS_PAYLOAD_READ_short_original_s "O"
+  #define FSS_PAYLOAD_READ_short_select_s   "s"
+  #define FSS_PAYLOAD_READ_short_total_s    "t"
+  #define FSS_PAYLOAD_READ_short_trim_s     "T"
 
-  #define FSS_PAYLOAD_READ_long_at_s      "at"
-  #define FSS_PAYLOAD_READ_long_content_s "content"
-  #define FSS_PAYLOAD_READ_long_columns_s "columns"
-  #define FSS_PAYLOAD_READ_long_delimit_s "delimit"
-  #define FSS_PAYLOAD_READ_long_depth_s   "depth"
-  #define FSS_PAYLOAD_READ_long_empty_s   "empty"
-  #define FSS_PAYLOAD_READ_long_line_s    "line"
-  #define FSS_PAYLOAD_READ_long_name_s    "name"
-  #define FSS_PAYLOAD_READ_long_object_s  "object"
-  #define FSS_PAYLOAD_READ_long_pipe_s    "pipe"
-  #define FSS_PAYLOAD_READ_long_raw_s     "raw"
-  #define FSS_PAYLOAD_READ_long_select_s  "select"
-  #define FSS_PAYLOAD_READ_long_total_s   "total"
-  #define FSS_PAYLOAD_READ_long_trim_s    "trim"
+  #define FSS_PAYLOAD_READ_long_at_s       "at"
+  #define FSS_PAYLOAD_READ_long_content_s  "content"
+  #define FSS_PAYLOAD_READ_long_columns_s  "columns"
+  #define FSS_PAYLOAD_READ_long_delimit_s  "delimit"
+  #define FSS_PAYLOAD_READ_long_depth_s    "depth"
+  #define FSS_PAYLOAD_READ_long_empty_s    "empty"
+  #define FSS_PAYLOAD_READ_long_line_s     "line"
+  #define FSS_PAYLOAD_READ_long_name_s     "name"
+  #define FSS_PAYLOAD_READ_long_object_s   "object"
+  #define FSS_PAYLOAD_READ_long_pipe_s     "pipe"
+  #define FSS_PAYLOAD_READ_long_original_s "original"
+  #define FSS_PAYLOAD_READ_long_select_s   "select"
+  #define FSS_PAYLOAD_READ_long_total_s    "total"
+  #define FSS_PAYLOAD_READ_long_trim_s     "trim"
 
-  #define FSS_PAYLOAD_READ_short_at_s_length      1
-  #define FSS_PAYLOAD_READ_short_content_s_length 1
-  #define FSS_PAYLOAD_READ_short_columns_s_length 1
-  #define FSS_PAYLOAD_READ_short_delimit_s_length 1
-  #define FSS_PAYLOAD_READ_short_depth_s_length   1
-  #define FSS_PAYLOAD_READ_short_empty_s_length   1
-  #define FSS_PAYLOAD_READ_short_line_s_length    1
-  #define FSS_PAYLOAD_READ_short_name_s_length    1
-  #define FSS_PAYLOAD_READ_short_object_s_length  1
-  #define FSS_PAYLOAD_READ_short_pipe_s_length    1
-  #define FSS_PAYLOAD_READ_short_raw_s_length     1
-  #define FSS_PAYLOAD_READ_short_select_s_length  1
-  #define FSS_PAYLOAD_READ_short_total_s_length   1
-  #define FSS_PAYLOAD_READ_short_trim_s_length    1
+  #define FSS_PAYLOAD_READ_short_at_s_length       1
+  #define FSS_PAYLOAD_READ_short_content_s_length  1
+  #define FSS_PAYLOAD_READ_short_columns_s_length  1
+  #define FSS_PAYLOAD_READ_short_delimit_s_length  1
+  #define FSS_PAYLOAD_READ_short_depth_s_length    1
+  #define FSS_PAYLOAD_READ_short_empty_s_length    1
+  #define FSS_PAYLOAD_READ_short_line_s_length     1
+  #define FSS_PAYLOAD_READ_short_name_s_length     1
+  #define FSS_PAYLOAD_READ_short_object_s_length   1
+  #define FSS_PAYLOAD_READ_short_pipe_s_length     1
+  #define FSS_PAYLOAD_READ_short_original_s_length 1
+  #define FSS_PAYLOAD_READ_short_select_s_length   1
+  #define FSS_PAYLOAD_READ_short_total_s_length    1
+  #define FSS_PAYLOAD_READ_short_trim_s_length     1
 
-  #define FSS_PAYLOAD_READ_long_at_s_length      2
-  #define FSS_PAYLOAD_READ_long_content_s_length 7
-  #define FSS_PAYLOAD_READ_long_columns_s_length 7
-  #define FSS_PAYLOAD_READ_long_delimit_s_length 7
-  #define FSS_PAYLOAD_READ_long_depth_s_length   5
-  #define FSS_PAYLOAD_READ_long_empty_s_length   5
-  #define FSS_PAYLOAD_READ_long_line_s_length    4
-  #define FSS_PAYLOAD_READ_long_name_s_length    4
-  #define FSS_PAYLOAD_READ_long_object_s_length  6
-  #define FSS_PAYLOAD_READ_long_pipe_s_length    4
-  #define FSS_PAYLOAD_READ_long_raw_s_length     3
-  #define FSS_PAYLOAD_READ_long_select_s_length  6
-  #define FSS_PAYLOAD_READ_long_total_s_length   5
-  #define FSS_PAYLOAD_READ_long_trim_s_length    4
+  #define FSS_PAYLOAD_READ_long_at_s_length       2
+  #define FSS_PAYLOAD_READ_long_content_s_length  7
+  #define FSS_PAYLOAD_READ_long_columns_s_length  7
+  #define FSS_PAYLOAD_READ_long_delimit_s_length  7
+  #define FSS_PAYLOAD_READ_long_depth_s_length    5
+  #define FSS_PAYLOAD_READ_long_empty_s_length    5
+  #define FSS_PAYLOAD_READ_long_line_s_length     4
+  #define FSS_PAYLOAD_READ_long_name_s_length     4
+  #define FSS_PAYLOAD_READ_long_object_s_length   6
+  #define FSS_PAYLOAD_READ_long_pipe_s_length     4
+  #define FSS_PAYLOAD_READ_long_original_s_length 8
+  #define FSS_PAYLOAD_READ_long_select_s_length   6
+  #define FSS_PAYLOAD_READ_long_total_s_length    5
+  #define FSS_PAYLOAD_READ_long_trim_s_length     4
 
   extern const f_string_static_t fss_payload_read_short_at_s;
   extern const f_string_static_t fss_payload_read_short_content_s;
@@ -158,7 +158,7 @@ extern "C" {
   extern const f_string_static_t fss_payload_read_short_name_s;
   extern const f_string_static_t fss_payload_read_short_object_s;
   extern const f_string_static_t fss_payload_read_short_pipe_s;
-  extern const f_string_static_t fss_payload_read_short_raw_s;
+  extern const f_string_static_t fss_payload_read_short_original_s;
   extern const f_string_static_t fss_payload_read_short_select_s;
   extern const f_string_static_t fss_payload_read_short_total_s;
   extern const f_string_static_t fss_payload_read_short_trim_s;
@@ -173,7 +173,7 @@ extern "C" {
   extern const f_string_static_t fss_payload_read_long_name_s;
   extern const f_string_static_t fss_payload_read_long_object_s;
   extern const f_string_static_t fss_payload_read_long_pipe_s;
-  extern const f_string_static_t fss_payload_read_long_raw_s;
+  extern const f_string_static_t fss_payload_read_long_original_s;
   extern const f_string_static_t fss_payload_read_long_select_s;
   extern const f_string_static_t fss_payload_read_long_total_s;
   extern const f_string_static_t fss_payload_read_long_trim_s;
@@ -199,7 +199,7 @@ extern "C" {
     fss_payload_read_parameter_name_e,
     fss_payload_read_parameter_object_e,
     fss_payload_read_parameter_pipe_e,
-    fss_payload_read_parameter_raw_e,
+    fss_payload_read_parameter_original_e,
     fss_payload_read_parameter_select_e,
     fss_payload_read_parameter_total_e,
     fss_payload_read_parameter_trim_e,
@@ -226,7 +226,7 @@ extern "C" {
       macro_f_console_parameter_t_initialize(fss_payload_read_short_name_s.string, fss_payload_read_long_name_s.string, 0, 1, f_console_type_normal_e), \
       macro_f_console_parameter_t_initialize(fss_payload_read_short_object_s.string, fss_payload_read_long_object_s.string, 0, 0, f_console_type_normal_e), \
       macro_f_console_parameter_t_initialize(fss_payload_read_short_pipe_s.string, fss_payload_read_long_pipe_s.string, 0, 0, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(fss_payload_read_short_raw_s.string, fss_payload_read_long_raw_s.string, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(fss_payload_read_short_original_s.string, fss_payload_read_long_original_s.string, 0, 0, f_console_type_normal_e), \
       macro_f_console_parameter_t_initialize(fss_payload_read_short_select_s.string, fss_payload_read_long_select_s.string, 0, 1, f_console_type_normal_e), \
       macro_f_console_parameter_t_initialize(fss_payload_read_short_total_s.string, fss_payload_read_long_total_s.string, 0, 0, f_console_type_normal_e), \
       macro_f_console_parameter_t_initialize(fss_payload_read_short_trim_s.string, fss_payload_read_long_trim_s.string, 0, 0, f_console_type_normal_e), \

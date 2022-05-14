@@ -337,7 +337,7 @@ extern "C" {
     const fss_embedded_list_read_skip_t parents = fss_embedded_list_read_skip_t_initialize;
 
 
-    if (data->main->parameters.array[fss_embedded_list_read_parameter_raw_e].result == f_console_result_found_e) {
+    if (data->main->parameters.array[fss_embedded_list_read_parameter_original_e].result == f_console_result_found_e) {
       f_fss_delimits_t except_none = f_fss_delimits_t_initialize;
 
       return fss_embedded_list_read_main_process_for_depth(data, filename, depths, 0, line, parents, &except_none, &except_none);

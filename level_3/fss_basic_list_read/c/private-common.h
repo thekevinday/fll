@@ -137,17 +137,17 @@ extern "C" {
  * The data structure for FSS Basic Read.
  *
  * fss_basic_list_read_data_option_*:
- *   - at:      The object at the given position is being selected (Think of this as select a row for some Object).
- *   - columns: The total columns found and selected is printed instead of the Content.
- *   - content: The Content is to be printed.
- *   - empty:   Empty Content will be printed (Objects that have no Content will have their empty Content printed).
- *   - line:    A specific Content at a given line is to be selected (Think of this as select a row for some Content).
- *   - name:    A specific Object name has been requested.
- *   - object:  The Object is to be printed.
- *   - raw:     Enable raw printing, where the quotes are printed and no delimits are applied.
- *   - select:  A specific Content at a given position is to be selected (Think of this as select a column for some Content).
- *   - total:   The total lines found and selected is printed instead of the Content.
- *   - trim:    Empty space before and after Objects and Content will not be printed (They will be trimmed).
+ *   - at:       The object at the given position is being selected (Think of this as select a row for some Object).
+ *   - columns:  The total columns found and selected is printed instead of the Content.
+ *   - content:  The Content is to be printed.
+ *   - empty:    Empty Content will be printed (Objects that have no Content will have their empty Content printed).
+ *   - line:     A specific Content at a given line is to be selected (Think of this as select a row for some Content).
+ *   - name:     A specific Object name has been requested.
+ *   - object:   The Object is to be printed.
+ *   - original: Enable original printing, where the quotes are printed and no delimits are applied.
+ *   - select:   A specific Content at a given position is to be selected (Think of this as select a column for some Content).
+ *   - total:    The total lines found and selected is printed instead of the Content.
+ *   - trim:     Empty space before and after Objects and Content will not be printed (They will be trimmed).
  *
  * argv:             The argument structure in the progam data parameters for simplifying syntax.
  * options:          Bitwise flags representing parameters.
@@ -164,17 +164,17 @@ extern "C" {
  * delimits_content: The positions within the buffer representing Content character delimits.
  */
 #ifndef _di_fss_basic_list_read_data_t_
-  #define fss_basic_list_read_data_option_at_d      0x1
-  #define fss_basic_list_read_data_option_columns_d 0x2
-  #define fss_basic_list_read_data_option_content_d 0x4
-  #define fss_basic_list_read_data_option_empty_d   0x8
-  #define fss_basic_list_read_data_option_line_d    0x10
-  #define fss_basic_list_read_data_option_name_d    0x20
-  #define fss_basic_list_read_data_option_object_d  0x40
-  #define fss_basic_list_read_data_option_raw_d     0x80
-  #define fss_basic_list_read_data_option_select_d  0x100
-  #define fss_basic_list_read_data_option_total_d   0x200
-  #define fss_basic_list_read_data_option_trim_d    0x400
+  #define fss_basic_list_read_data_option_at_d       0x1
+  #define fss_basic_list_read_data_option_columns_d  0x2
+  #define fss_basic_list_read_data_option_content_d  0x4
+  #define fss_basic_list_read_data_option_empty_d    0x8
+  #define fss_basic_list_read_data_option_line_d     0x10
+  #define fss_basic_list_read_data_option_name_d     0x20
+  #define fss_basic_list_read_data_option_object_d   0x40
+  #define fss_basic_list_read_data_option_original_d 0x80
+  #define fss_basic_list_read_data_option_select_d   0x100
+  #define fss_basic_list_read_data_option_total_d    0x200
+  #define fss_basic_list_read_data_option_trim_d     0x400
 
   typedef struct {
     uint16_t option;

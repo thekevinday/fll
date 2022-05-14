@@ -18,7 +18,7 @@ extern "C" {
 
       if (data->option & fss_basic_read_data_option_object_d) {
         if (data->option & fss_basic_read_data_option_trim_d) {
-          if (data->option & fss_basic_read_data_option_raw_d) {
+          if (data->option & fss_basic_read_data_option_original_d) {
             if (data->quotes.array[at]) {
               f_print_dynamic_raw(data->quotes.array[at] == f_fss_quote_type_single_e ? f_fss_quote_single_s : f_fss_quote_double_s, main->output.to.stream);
             }
@@ -34,7 +34,7 @@ extern "C" {
           }
         }
         else {
-          if (data->option & fss_basic_read_data_option_raw_d) {
+          if (data->option & fss_basic_read_data_option_original_d) {
             if (data->quotes.array[at]) {
               f_print_dynamic_raw(data->quotes.array[at] == f_fss_quote_type_single_e ? f_fss_quote_single_s : f_fss_quote_double_s, main->output.to.stream);
             }
@@ -56,7 +56,7 @@ extern "C" {
       }
 
       if ((data->option & fss_basic_read_data_option_content_d) && data->contents.array[at].used) {
-        if (data->option & fss_basic_read_data_option_raw_d) {
+        if (data->option & fss_basic_read_data_option_original_d) {
           f_print_dynamic_partial(data->buffer, data->contents.array[at].array[0], main->output.to.stream);
         }
         else {
