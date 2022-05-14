@@ -356,7 +356,7 @@ enum {
   #define macro_f_fss_contents_t_delete_simple(contents)  macro_f_string_rangess_t_delete_simple(contents)
   #define macro_f_fss_contents_t_destroy_simple(contents) macro_f_string_rangess_t_destroy_simple(contents)
 
-  #define macro_f_fss_contents_t_increase(status, step, contents)            macro_f_string_rangess_t_increase(status, step, contents)
+  #define macro_f_fss_contents_t_increase(status, step, contents)      macro_f_string_rangess_t_increase(status, step, contents)
   #define macro_f_fss_contents_t_increase_by(status, contents, amount) macro_f_string_rangess_t_increase_by(status, contents, amount)
   #define macro_f_fss_contents_t_decrease_by(status, contents, amount) macro_f_string_rangess_t_decrease_by(status, contents, amount)
   #define macro_f_fss_contents_t_decimate_by(status, contents, amount) macro_f_string_rangess_t_decimate_by(status, contents, amount)

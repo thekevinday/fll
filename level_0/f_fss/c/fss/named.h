@@ -52,7 +52,7 @@ extern "C" {
   #define macro_f_fss_named_t_delete_simple(named)  f_fss_named_resize(0, &named);
   #define macro_f_fss_named_t_destroy_simple(named) f_fss_named_adjust(0, &named);
 
-  #define macro_f_fss_named_t_increase(status, step, named)            status = f_fss_named_increase(step, &named);
+  #define macro_f_fss_named_t_increase(status, step, named)      status = f_fss_named_increase(step, &named);
   #define macro_f_fss_named_t_increase_by(status, named, amount) status = f_fss_named_increase_by(amount, &named);
   #define macro_f_fss_named_t_decrease_by(status, named, amount) status = f_fss_named_decrease_by(amount, &named);
   #define macro_f_fss_named_t_decimate_by(status, named, amount) status = f_fss_named_decimate_by(amount, &named);
@@ -75,8 +75,8 @@ extern "C" {
 
   #define f_fss_nameds_t_initialize { 0, 0, 0 }
 
-  #define macro_f_fss_nameds_t_initialize(array, size, used) macro_f_fss_nameds_t_initialize(array, size, used)
-  #define macro_f_fss_nameds_t_initialize2(array, length)    macro_f_fss_nameds_t_initialize2(array, length)
+  #define macro_f_fss_nameds_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_fss_nameds_t_initialize2(array, length) { array, length, length }
 
   #define macro_f_fss_nameds_t_clear(nameds) macro_f_memory_structure_clear(nameds);
 

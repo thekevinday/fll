@@ -68,6 +68,9 @@ extern "C" {
 
   #define f_fss_sets_t_initialize { 0, 0, 0 }
 
+  #define macro_f_fss_sets_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_fss_sets_t_initialize2(array, length) { array, length, length }
+
   #define macro_f_fss_sets_t_clear(sets) macro_f_memory_structure_t_clear(set.objects)
 
   #define macro_f_fss_sets_t_resize(status, sets, length) status = f_fss_sets_resize(length, &sets);

@@ -51,8 +51,8 @@ extern "C" {
 
   #define f_fss_quotes_t_initialize f_uint8s_t_initialize
 
-  #define macro_f_fss_quotes_t_initialize(array, size, used) macro_f_uint8s_t_initialize(array, size, used)
-  #define macro_f_fss_quotes_t_initialize2(array, length)    macro_f_uint8s_t_initialize2(array, length)
+  #define macro_f_fss_quotes_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_fss_quotes_t_initialize2(array, length) { array, length, length }
 
   #define macro_f_fss_quotes_t_clear(quotes) macro_f_uint8s_t_clear(quotes)
 
@@ -80,8 +80,8 @@ extern "C" {
 
   #define f_fss_quotess_t_initialize f_uint8ss_t_initialize
 
-  #define macro_f_fss_quotess_t_initialize(array, size, used) macro_f_uint8ss_t_initialize(array, size, used)
-  #define macro_f_fss_quotess_t_initialize2(array, length)    macro_f_uint8ss_t_initialize2(array, length)
+  #define macro_f_fss_quotess_t_initialize(array, size, used) { array, size, used }
+  #define macro_f_fss_quotess_t_initialize2(array, length) { array, length, length }
 
   #define macro_f_fss_quotess_t_clear(quotess) macro_f_uint8ss_t_clear(quotess)
 
