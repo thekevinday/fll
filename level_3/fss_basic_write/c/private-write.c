@@ -55,7 +55,9 @@ extern "C" {
 
     fl_print_format("%r%[%QThis standard does not support end of line character '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
     fl_print_format("%[\\n%]", main->error.to.stream, main->error.notable, main->error.notable);
-    fl_print_format("%[' in objects.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+    fl_print_format("%[' (%]", main->error.to.stream, main->error.context, main->error.context);
+    fl_print_format("%[U+000A%]", main->error.to.stream, main->error.notable, main->error.notable);
+    fl_print_format("%[) in objects.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
     funlockfile(main->error.to.stream);
   }
