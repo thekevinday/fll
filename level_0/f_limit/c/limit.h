@@ -23,7 +23,8 @@
 #include <fll/level_0/memory.h>
 
 // FLL-0 control includes.
-#include <fll/level_0/limit/common.h>
+#include <fll/level_0/limit/value.h>
+#include <fll/level_0/limit/set.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -58,48 +59,6 @@ extern "C" {
 #ifndef _di_f_limit_process_
   extern f_status_t f_limit_process(const pid_t id, const int type, const f_limit_value_t * const value_next, f_limit_value_t * const value_current);
 #endif // _di_f_limit_process_
-
-/**
- * Copy the source limit sets onto the destination limit sets.
- *
- * @param source
- *   The source to append.
- * @param destination
- *   The destination the source is appended onto.
- *
- * @return
- *   F_none on success.
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_memory_structure_increase_by().
- *
- * @see f_memory_structure_increase_by()
- */
-#ifndef _di_f_limit_sets_copy_
-  extern f_status_t f_limit_sets_copy(const f_limit_sets_t source, f_limit_sets_t * const destination);
-#endif // _di_f_limit_sets_copy_
-
-/**
- * Copy the source limit values onto the destination limit values.
- *
- * @param source
- *   The source to append.
- * @param destination
- *   The destination the source is appended onto.
- *
- * @return
- *   F_none on success.
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_memory_structure_increase_by().
- *
- * @see f_memory_structure_increase_by()
- */
-#ifndef _di_f_limit_values_copy_
-  extern f_status_t f_limit_values_copy(const f_limit_values_t source, f_limit_values_t * const destination);
-#endif // _di_f_limit_values_copy_
 
 #ifdef __cplusplus
 } // extern "C"

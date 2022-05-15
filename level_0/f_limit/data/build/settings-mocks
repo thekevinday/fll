@@ -20,7 +20,7 @@ build_language c
 build_libraries -lc
 build_libraries-individual -lf_memory
 
-build_sources_library limit.c limit/set.c limit/value.c limit/private-set.c limit/private-value.c
+build_sources_library limit.c limit/set.c limit/value.c limit/private-set.c limit/private-value.c ../../tests/unit/c/mock-limit.c
 
 build_sources_headers limit.h limit/set.h limit/value.h
 
@@ -32,12 +32,6 @@ path_headers fll/level_0
 path_library_script script
 path_library_shared shared
 path_library_static static
-path_object_script script
-path_object_shared shared
-path_object_static static
-path_program_script script
-path_program_shared shared
-path_program_static static
 
 has_path_standard yes
 preserve_path_headers yes
@@ -46,10 +40,11 @@ search_exclusive yes
 search_shared yes
 search_static yes
 
-flags -O2 -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-parentheses
+flags -O0 -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-parentheses
 flags-clang -Wno-logical-op-parentheses
 flags-test -fstack-protector
 
 flags_library -fPIC
-flags_object -fPIC
-flags_program -fPIE
+
+# Inject mocks.
+flags -Wl,--wrap=prlimit

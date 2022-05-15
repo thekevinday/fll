@@ -862,7 +862,8 @@ extern "C" {
     status = f_int32s_append_all(source.groups, &destination->groups);
     if (F_status_is_error(status)) return status;
 
-    status = f_limit_sets_copy(source.limits, &destination->limits);
+    destination->limits.used = 0;
+    status = f_limit_sets_append_all(source.limits, &destination->limits);
     if (F_status_is_error(status)) return status;
 
     if (source.items.used) {

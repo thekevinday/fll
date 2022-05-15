@@ -1,0 +1,57 @@
+# fss-0001
+#
+# Builds a program that is links to the generated library and is executed to perform tests.
+#
+# Memory leaks in the test program can be checked for by running valgrind with this executable.
+#
+
+build_name test-f_limit
+
+version_major 0
+version_minor 5
+version_micro 9
+version_file major
+version_target major
+
+modes individual clang test
+modes_default individual
+
+build_compiler gcc
+build_compiler-clang clang
+build_indexer ar
+build_indexer_arguments rcs
+build_language c
+
+build_libraries -lc -lcmocka
+build_libraries-individual -lf_memory -lf_string -lf_type_array -lf_utf -lf_limit
+
+build_sources_program test-limit-process.c
+build_sources_program test-limit-sets_adjust.c test-limit-sets_append.c test-limit-sets_append_all.c test-limit-sets_decimate_by.c test-limit-sets_decrease_by.c test-limit-sets_increase.c test-limit-sets_increase_by.c test-limit-sets_resize.c
+build_sources_program test-limit-setss_adjust.c test-limit-setss_append.c test-limit-setss_append_all.c test-limit-setss_decimate_by.c test-limit-setss_decrease_by.c test-limit-setss_increase.c test-limit-setss_increase_by.c test-limit-setss_resize.c
+build_sources_program test-limit-values_adjust.c test-limit-values_append.c test-limit-values_append_all.c test-limit-values_decimate_by.c test-limit-values_decrease_by.c test-limit-values_increase.c test-limit-values_increase_by.c test-limit-values_resize.c
+build_sources_program test-limit-valuess_adjust.c test-limit-valuess_append.c test-limit-valuess_append_all.c test-limit-valuess_decimate_by.c test-limit-valuess_decrease_by.c test-limit-valuess_increase.c test-limit-valuess_increase_by.c test-limit-valuess_resize.c
+build_sources_program test-limit.c
+
+build_script no
+build_shared yes
+build_static no
+
+path_headers tests/unit/c
+path_sources tests/unit/c
+
+has_path_standard no
+preserve_path_headers yes
+
+search_exclusive yes
+search_shared yes
+search_static yes
+
+defines -Ibuild/includes
+defines_static -Lbuild/libraries/static
+defines_shared -Lbuild/libraries/shared
+
+flags -O2 -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-parentheses
+flags-clang -Wno-logical-op-parentheses
+flags-test -fstack-protector -Wall
+
+flags_program -fPIE
