@@ -160,6 +160,27 @@ extern "C" {
   extern f_status_t iki_read_substitutions_identify(iki_read_data_t * const data, f_iki_vocabulary_t *vocabulary, iki_read_substitutions_t *substitutionss) F_attribute_visibility_internal_d;
 #endif // _di_iki_read_substitutions_identify_
 
+/**
+ * Process the arguments, associating wraps with a given vocabulary.
+ *
+ * @param data
+ *   The program data.
+ * @param vocabulary
+ *   The ranges representing a vocabulary.
+ * @param wraps
+ *   An array of substitutions with each index representing an index for in the respective vocabulary array.
+ *   The replacements[].replace is used to represent the "before".
+ *   The replacements[].with is used to represent the "after".
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Status codes (with error bit) are returned on any problem.
+ */
+#ifndef _di_iki_read_wraps_identify_
+  extern f_status_t iki_read_wraps_identify(iki_read_data_t * const data, f_iki_vocabulary_t *vocabulary, iki_read_substitution_t *wraps) F_attribute_visibility_internal_d;
+#endif // _di_iki_read_wraps_identify_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

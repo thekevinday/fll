@@ -87,6 +87,7 @@ extern "C" {
   #define IKI_READ_short_substitute_s "s"
   #define IKI_READ_short_total_s      "t"
   #define IKI_READ_short_whole_s      "w"
+  #define IKI_READ_short_wrap_s       "W"
 
   #define IKI_READ_long_at_s         "at"
   #define IKI_READ_long_content_s    "content"
@@ -98,6 +99,7 @@ extern "C" {
   #define IKI_READ_long_substitute_s "substitute"
   #define IKI_READ_long_total_s      "total"
   #define IKI_READ_long_whole_s      "whole"
+  #define IKI_READ_long_wrap_s       "wrap"
 
   #define IKI_READ_short_at_s_length         1
   #define IKI_READ_short_content_s_length    1
@@ -109,6 +111,7 @@ extern "C" {
   #define IKI_READ_short_substitute_s_length 1
   #define IKI_READ_short_total_s_length      1
   #define IKI_READ_short_whole_s_length      1
+  #define IKI_READ_short_wrap_s_length       1
 
   #define IKI_READ_long_at_s_length         2
   #define IKI_READ_long_content_s_length    7
@@ -120,6 +123,7 @@ extern "C" {
   #define IKI_READ_long_substitute_s_length 10
   #define IKI_READ_long_total_s_length      5
   #define IKI_READ_long_whole_s_length      5
+  #define IKI_READ_long_wrap_s_length       4
 
   extern const f_string_static_t iki_read_short_at_s;
   extern const f_string_static_t iki_read_short_content_s;
@@ -131,6 +135,7 @@ extern "C" {
   extern const f_string_static_t iki_read_short_substitute_s;
   extern const f_string_static_t iki_read_short_total_s;
   extern const f_string_static_t iki_read_short_whole_s;
+  extern const f_string_static_t iki_read_short_wrap_s;
 
   extern const f_string_static_t iki_read_long_at_s;
   extern const f_string_static_t iki_read_long_content_s;
@@ -142,6 +147,7 @@ extern "C" {
   extern const f_string_static_t iki_read_long_substitute_s;
   extern const f_string_static_t iki_read_long_total_s;
   extern const f_string_static_t iki_read_long_whole_s;
+  extern const f_string_static_t iki_read_long_wrap_s;
 
   enum {
     iki_read_parameter_help_e,
@@ -160,10 +166,11 @@ extern "C" {
     iki_read_parameter_literal_e,
     iki_read_parameter_name_e,
     iki_read_parameter_object_e,
-    iki_read_parameter_whole_e,
     iki_read_parameter_replace_e,
     iki_read_parameter_substitute_e,
     iki_read_parameter_total_e,
+    iki_read_parameter_whole_e,
+    iki_read_parameter_wrap_e,
   };
 
   #define iki_read_console_parameter_t_initialize \
@@ -183,26 +190,33 @@ extern "C" {
       macro_f_console_parameter_t_initialize(iki_read_short_literal_s.string, iki_read_long_literal_s.string, 0, 0, f_console_type_normal_e), \
       macro_f_console_parameter_t_initialize(iki_read_short_name_s.string, iki_read_long_name_s.string, 0, 1, f_console_type_normal_e), \
       macro_f_console_parameter_t_initialize(iki_read_short_object_s.string, iki_read_long_object_s.string, 0, 0, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(iki_read_short_whole_s.string, iki_read_long_whole_s.string, 0, 0, f_console_type_normal_e), \
       macro_f_console_parameter_t_initialize(iki_read_short_replace_s.string, iki_read_long_replace_s.string, 0, 2, f_console_type_normal_e), \
       macro_f_console_parameter_t_initialize(iki_read_short_substitute_s.string, iki_read_long_substitute_s.string, 0, 3, f_console_type_normal_e), \
       macro_f_console_parameter_t_initialize(iki_read_short_total_s.string, iki_read_long_total_s.string, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(iki_read_short_whole_s.string, iki_read_long_whole_s.string, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(iki_read_short_wrap_s.string, iki_read_long_wrap_s.string, 0, 3, f_console_type_normal_e), \
     }
 
-  #define iki_read_total_parameters_d 19
+  #define iki_read_total_parameters_d 20
 #endif // _di_iki_read_parameters_
 
 #ifndef _di_iki_read_substitution_t_
-  #define IKI_READ_substitution_vocabulary_s "vocabulary"
+  #define IKI_READ_substitution_after_s      "after"
+  #define IKI_READ_substitution_before_s     "before"
   #define IKI_READ_substitution_replace_s    "replace"
+  #define IKI_READ_substitution_vocabulary_s "vocabulary"
   #define IKI_READ_substitution_with_s       "with"
 
-  #define IKI_READ_substitution_vocabulary_s_length 10
+  #define IKI_READ_substitution_after_s_length      5
+  #define IKI_READ_substitution_before_s_length     6
   #define IKI_READ_substitution_replace_s_length    7
+  #define IKI_READ_substitution_vocabulary_s_length 10
   #define IKI_READ_substitution_with_s_length       4
 
-  extern const f_string_static_t iki_read_substitution_vocabulary_s;
+  extern const f_string_static_t iki_read_substitution_after_s;
+  extern const f_string_static_t iki_read_substitution_before_s;
   extern const f_string_static_t iki_read_substitution_replace_s;
+  extern const f_string_static_t iki_read_substitution_vocabulary_s;
   extern const f_string_static_t iki_read_substitution_with_s;
 
   typedef struct {
@@ -216,10 +230,10 @@ extern "C" {
       f_string_static_t_initialize, \
     }
 
-  #define macro_iki_read_substitution_t_initialize(replace, with) \
+  #define macro_iki_read_substitution_t_initialize(replace, with, extra) \
     { \
-      macro_f_string_static_t_initialize2(replace), \
-      macro_f_string_static_t_initialize2(with), \
+      replace, \
+      with, \
     }
 #endif // _di_iki_read_substitution_t_
 
