@@ -7,6 +7,7 @@ settings:
   environment LD_LIBRARY_PATH
 
 main:
+  build settings
   build settings-tests
 
   operate ld_library_path
