@@ -389,7 +389,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     } // for
 
-    f_memory_adjust(sets->size, length, sizeof(f_fss_set_t), (void **) & sets->array);
+    status = f_memory_adjust(sets->size, length, sizeof(f_fss_set_t), (void **) & sets->array);
 
     if (F_status_is_error_not(status)) {
       sets->size = length;
