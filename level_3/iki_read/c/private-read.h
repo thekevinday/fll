@@ -116,14 +116,40 @@ extern "C" {
 #endif // _di_iki_read_process_buffer_total_
 
 /**
- * Process the arguments, associating substitions with a given vocabulary.
+ * Process the arguments, associating replacement with a given vocabulary.
+ *
+ * The replace property is not used by the --replace option parameter.
+ * The replace property is instead used to designate whether or not a match is found.
+ * The replace.string property should, therefore, never be accessed because this would likely result in an invalid read.
+ *
+ * When multiple replacements are found, only use the last specified replacement (right-most).
+ *
+ * @param data
+ *   The program data.
+ * @param vocabulary
+ *   The ranges representing a vocabulary.
+ * @param replacements
+ *   An array of replacements representing an index in the respective vocabulary array.
+ *   This sets replacements[].replace.used to F_false when there are no matches and F_true when there are matches.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Status codes (with error bit) are returned on any problem.
+ */
+#ifndef _di_iki_read_replacements_identify_
+  extern f_status_t iki_read_replacements_identify(iki_read_data_t * const data, f_iki_vocabulary_t *vocabulary, iki_read_substitution_t *replacements) F_attribute_visibility_internal_d;
+#endif // _di_iki_read_replacements_identify_
+
+/**
+ * Process the arguments, associating substitutions with a given vocabulary.
  *
  * @param data
  *   The program data.
  * @param vocabulary
  *   The ranges representing a vocabulary.
  * @param substitutionss
- *   An array of substitutionss with each index representing an index for in the respective vocabulary array.
+ *   An array of substitutions with each index representing an index for in the respective vocabulary array.
  *
  * @return
  *   F_none on success.

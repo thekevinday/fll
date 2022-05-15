@@ -7,9 +7,9 @@ IKI Specifications:
   IKI is a minimally structured WIKI-like syntax meant to be simpler than WIKI syntax.
 
   The IKI syntax provides a vocabulary name (with specific context associated with it) followed by quoted code that is associated with the given vocabulary name.
-  The vocabulary represents a list of allowed object names that may also have specific contextual meaning defined by a given IKI specification.
+  The vocabulary represents a list of allowed variable names that may also have specific contextual meaning defined by a given IKI specification.
   The variable name is considered the "Object".
-  The variable variable is considered the "Content".
+  The variable value is considered the "Content".
 
   The IKI format will use iki-0000 to represent an IKI with no explicitly defined vocabulary.
   Whereas iki-0001 and beyond represent a specific IKI vocabulary.

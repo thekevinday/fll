@@ -20,6 +20,7 @@ extern "C" {
   const f_string_static_t iki_read_short_literal_s = macro_f_string_static_t_initialize(IKI_READ_short_literal_s, 0, IKI_READ_short_literal_s_length);
   const f_string_static_t iki_read_short_name_s = macro_f_string_static_t_initialize(IKI_READ_short_name_s, 0, IKI_READ_short_name_s_length);
   const f_string_static_t iki_read_short_object_s = macro_f_string_static_t_initialize(IKI_READ_short_object_s, 0, IKI_READ_short_object_s_length);
+  const f_string_static_t iki_read_short_replace_s = macro_f_string_static_t_initialize(IKI_READ_short_replace_s, 0, IKI_READ_short_replace_s_length);
   const f_string_static_t iki_read_short_substitute_s = macro_f_string_static_t_initialize(IKI_READ_short_substitute_s, 0, IKI_READ_short_substitute_s_length);
   const f_string_static_t iki_read_short_total_s = macro_f_string_static_t_initialize(IKI_READ_short_total_s, 0, IKI_READ_short_total_s_length);
   const f_string_static_t iki_read_short_whole_s = macro_f_string_static_t_initialize(IKI_READ_short_whole_s, 0, IKI_READ_short_whole_s_length);
@@ -30,6 +31,7 @@ extern "C" {
   const f_string_static_t iki_read_long_literal_s = macro_f_string_static_t_initialize(IKI_READ_long_literal_s, 0, IKI_READ_long_literal_s_length);
   const f_string_static_t iki_read_long_name_s = macro_f_string_static_t_initialize(IKI_READ_long_name_s, 0, IKI_READ_long_name_s_length);
   const f_string_static_t iki_read_long_object_s = macro_f_string_static_t_initialize(IKI_READ_long_object_s, 0, IKI_READ_long_object_s_length);
+  const f_string_static_t iki_read_long_replace_s = macro_f_string_static_t_initialize(IKI_READ_long_replace_s, 0, IKI_READ_long_replace_s_length);
   const f_string_static_t iki_read_long_substitute_s = macro_f_string_static_t_initialize(IKI_READ_long_substitute_s, 0, IKI_READ_long_substitute_s_length);
   const f_string_static_t iki_read_long_total_s = macro_f_string_static_t_initialize(IKI_READ_long_total_s, 0, IKI_READ_long_total_s_length);
   const f_string_static_t iki_read_long_whole_s = macro_f_string_static_t_initialize(IKI_READ_long_whole_s, 0, IKI_READ_long_whole_s_length);
