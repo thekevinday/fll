@@ -1944,6 +1944,18 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_dynamic_compare(name, f_status_terminate_s) == F_equal_to) {
+        *code = F_terminate;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_terminate_not_s) == F_equal_to) {
+        *code = F_terminate_not;
+
+        return F_none;
+      }
+
       if (fl_string_dynamic_compare(name, f_status_thread_s) == F_equal_to) {
         *code = F_thread;
 
@@ -3014,6 +3026,12 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_dynamic_compare(name, f_status_file_type_fifo_s) == F_equal_to) {
+        *code = F_file_type_fifo;
+
+        return F_none;
+      }
+
       if (fl_string_dynamic_compare(name, f_status_file_type_link_s) == F_equal_to) {
         *code = F_file_type_link;
 
@@ -3432,20 +3450,38 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_dynamic_compare(name, f_status_access_granted_group_s) == F_equal_to) {
+        *code = F_access_granted_group;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_access_granted_read_s) == F_equal_to) {
+        *code = F_access_granted_read;
+
+        return F_none;
+      }
+
       if (fl_string_dynamic_compare(name, f_status_access_granted_super_s) == F_equal_to) {
         *code = F_access_granted_super;
 
         return F_none;
       }
 
+      if (fl_string_dynamic_compare(name, f_status_access_granted_user_s) == F_equal_to) {
+        *code = F_access_granted_user;
+
+        return F_none;
+      }
+
       if (fl_string_dynamic_compare(name, f_status_access_group_s) == F_equal_to) {
-        *code = F_access_mode;
+        *code = F_access_group;
 
         return F_none;
       }
 
       if (fl_string_dynamic_compare(name, f_status_access_mode_s) == F_equal_to) {
-        *code = F_access_group;
+        *code = F_access_mode;
 
         return F_none;
       }
