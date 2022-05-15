@@ -594,7 +594,7 @@ extern "C" {
 
     f_console_parameter_t *parameter = &data->main->parameters.array[iki_read_parameter_replace_e];
 
-    for (; i < parameter->values.used; i += 3) {
+    for (; i < parameter->values.used; i += 2) {
 
       index = parameter->values.array[i];
 
