@@ -11,17 +11,24 @@
 #define _TEST__F_type_array__int128ss_increase_by
 
 /**
- * Test that the function works.
- *
- * @see f_type_array_int128ss_increase_by()
- */
-extern void test__f_type_array_int128ss_increase_by__works(void **state);
-
-/**
  * Test that the function correctly fails on invalid parameter.
  *
- * @see f_type_array_int128ss_increase_by()
+ * @see f_int128ss_increase_by()
  */
 extern void test__f_type_array_int128ss_increase_by__parameter_checking(void **state);
+
+/**
+ * Test that the function returns F_data_not.
+ *
+ * @see f_int128ss_increase_by()
+ */
+extern void test__f_type_array_int128ss_increase_by__returns_data_not(void **state);
+
+/**
+ * Test that the function works.
+ *
+ * @see f_int128ss_increase_by()
+ */
+extern void test__f_type_array_int128ss_increase_by__works(void **state);
 
 #endif // _TEST__F_type_array__int128ss_increase_by

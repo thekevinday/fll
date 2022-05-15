@@ -11,24 +11,24 @@
 #define _TEST__F_type_array__uint8ss_increase
 
 /**
- * Test that the function works.
+ * Test that the function correctly fails on invalid parameter.
  *
- * @see f_type_array_uint8ss_increase()
+ * @see f_uint8ss_increase()
  */
-extern void test__f_type_array_uint8ss_increase__works(void **state);
+extern void test__f_type_array_uint8ss_increase__parameter_checking(void **state);
 
 /**
- * Test that the function returns F_data_not when asked to copy an empty structure.
+ * Test that the function returns F_data_not.
  *
- * @see f_type_array_uint8ss_increase()
+ * @see f_uint8ss_increase()
  */
 extern void test__f_type_array_uint8ss_increase__returns_data_not(void **state);
 
 /**
- * Test that the function correctly fails on invalid parameter.
+ * Test that the function works.
  *
- * @see f_type_array_uint8ss_increase()
+ * @see f_uint8ss_increase()
  */
-extern void test__f_type_array_uint8ss_increase__parameter_checking(void **state);
+extern void test__f_type_array_uint8ss_increase__works(void **state);
 
 #endif // _TEST__F_type_array__uint8ss_increase

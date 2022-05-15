@@ -11,17 +11,17 @@
 #define _TEST__F_type_array__int32s_append
 
 /**
- * Test that the function works.
- *
- * @see f_type_array_int32s_append()
- */
-extern void test__f_type_array_int32s_append__works(void **state);
-
-/**
  * Test that the function correctly fails on invalid parameter.
  *
- * @see f_type_array_int32s_append()
+ * @see f_int32s_append()
  */
 extern void test__f_type_array_int32s_append__parameter_checking(void **state);
+
+/**
+ * Test that the function works.
+ *
+ * @see f_int32s_append()
+ */
+extern void test__f_type_array_int32s_append__works(void **state);
 
 #endif // _TEST__F_type_array__int32s_append

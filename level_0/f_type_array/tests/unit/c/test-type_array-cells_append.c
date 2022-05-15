@@ -5,6 +5,17 @@
 extern "C" {
 #endif
 
+void test__f_type_array_cells_append__parameter_checking(void **state) {
+
+  const f_cell_t data = f_cell_t_initialize;
+
+  {
+    const f_status_t status = f_cells_append(data, 0);
+
+    assert_int_equal(status, F_status_set_error(F_parameter));
+  }
+}
+
 void test__f_type_array_cells_append__works(void **state) {
 
   const f_cell_t source = { .row = 1, .column = 2 };
@@ -20,17 +31,6 @@ void test__f_type_array_cells_append__works(void **state) {
   }
 
   free((void *) destination.array);
-}
-
-void test__f_type_array_cells_append__parameter_checking(void **state) {
-
-  const f_cell_t data = f_cell_t_initialize;
-
-  {
-    const f_status_t status = f_cells_append(data, 0);
-
-    assert_int_equal(status, F_status_set_error(F_parameter));
-  }
 }
 
 #ifdef __cplusplus

@@ -11,17 +11,24 @@
 #define _TEST__F_type_array__statess_decrease_by
 
 /**
- * Test that the function works.
- *
- * @see f_type_array_statess_decrease_by()
- */
-extern void test__f_type_array_statess_decrease_by__works(void **state);
-
-/**
  * Test that the function correctly fails on invalid parameter.
  *
- * @see f_type_array_statess_decrease_by()
+ * @see f_statess_decrease_by()
  */
 extern void test__f_type_array_statess_decrease_by__parameter_checking(void **state);
+
+/**
+ * Test that the function returns F_data_not.
+ *
+ * @see f_statess_decrease_by()
+ */
+extern void test__f_type_array_statess_decrease_by__returns_data_not(void **state);
+
+/**
+ * Test that the function works.
+ *
+ * @see f_statess_decrease_by()
+ */
+extern void test__f_type_array_statess_decrease_by__works(void **state);
 
 #endif // _TEST__F_type_array__statess_decrease_by

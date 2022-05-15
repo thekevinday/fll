@@ -5,6 +5,17 @@
 extern "C" {
 #endif
 
+void test__f_type_array_int64s_append__parameter_checking(void **state) {
+
+  const int64_t data = 0;
+
+  {
+    const f_status_t status = f_int64s_append(data, 0);
+
+    assert_int_equal(status, F_status_set_error(F_parameter));
+  }
+}
+
 void test__f_type_array_int64s_append__works(void **state) {
 
   const int64_t source = 3;
@@ -19,17 +30,6 @@ void test__f_type_array_int64s_append__works(void **state) {
   }
 
   free((void *) destination.array);
-}
-
-void test__f_type_array_int64s_append__parameter_checking(void **state) {
-
-  const uint64_t data = 0;
-
-  {
-    const f_status_t status = f_int64s_append(data, 0);
-
-    assert_int_equal(status, F_status_set_error(F_parameter));
-  }
 }
 
 #ifdef __cplusplus

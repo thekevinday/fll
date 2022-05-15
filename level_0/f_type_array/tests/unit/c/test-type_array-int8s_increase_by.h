@@ -11,17 +11,17 @@
 #define _TEST__F_type_array__int8s_increase_by
 
 /**
- * Test that the function works.
- *
- * @see f_type_array_int8s_increase_by()
- */
-extern void test__f_type_array_int8s_increase_by__works(void **state);
-
-/**
  * Test that the function correctly fails on invalid parameter.
  *
- * @see f_type_array_int8s_increase_by()
+ * @see f_int8s_increase_by()
  */
 extern void test__f_type_array_int8s_increase_by__parameter_checking(void **state);
+
+/**
+ * Test that the function works.
+ *
+ * @see f_int8s_increase_by()
+ */
+extern void test__f_type_array_int8s_increase_by__works(void **state);
 
 #endif // _TEST__F_type_array__int8s_increase_by

@@ -18,7 +18,7 @@
 extern void test__f_limit_setss_append__parameter_checking(void **state);
 
 /**
- * Test that the function returns F_data_not when asked to copy an empty structure.
+ * Test that the function returns F_data_not.
  *
  * @see f_limit_setss_append()
  */

@@ -11,17 +11,17 @@
 #define _TEST__F_type_array__states_append
 
 /**
- * Test that the function works.
- *
- * @see f_type_array_states_append()
- */
-extern void test__f_type_array_states_append__works(void **state);
-
-/**
  * Test that the function correctly fails on invalid parameter.
  *
- * @see f_type_array_states_append()
+ * @see f_states_append()
  */
 extern void test__f_type_array_states_append__parameter_checking(void **state);
+
+/**
+ * Test that the function works.
+ *
+ * @see f_states_append()
+ */
+extern void test__f_type_array_states_append__works(void **state);
 
 #endif // _TEST__F_type_array__states_append

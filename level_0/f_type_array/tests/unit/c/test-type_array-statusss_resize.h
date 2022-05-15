@@ -11,17 +11,17 @@
 #define _TEST__F_type_array__statusss_resize
 
 /**
- * Test that the function works.
- *
- * @see f_type_array_statusss_resize()
- */
-extern void test__f_type_array_statusss_resize__works(void **state);
-
-/**
  * Test that the function correctly fails on invalid parameter.
  *
- * @see f_type_array_statusss_resize()
+ * @see f_statusss_resize()
  */
 extern void test__f_type_array_statusss_resize__parameter_checking(void **state);
+
+/**
+ * Test that the function works.
+ *
+ * @see f_statusss_resize()
+ */
+extern void test__f_type_array_statusss_resize__works(void **state);
 
 #endif // _TEST__F_type_array__statusss_resize
