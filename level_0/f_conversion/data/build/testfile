@@ -5,6 +5,16 @@ settings:
   fail exit
 
   environment LD_LIBRARY_PATH
+  environment CMOCKA_XML_FILE CMOCKA_MESSAGE_OUTPUT CMOCKA_TEST_ABORT
+
+  # Cmcka is not fully thread-safe, set this to "1" to have cmocka call abort() on a test failure.
+  #CMOCKA_TEST_ABORT 1
+
+  # One of: STDOUT, SUBUNIT, TAP, or XML.
+  #define CMOCKA_MESSAGE_OUTPUT STDOUT
+
+  # When in "XML" output mode, output to this file rather than stdout.
+  #define CMOCKA_XML_FILE ./out.xml
 
 main:
   # Disable mocks until mocking can be fixed for this project.
