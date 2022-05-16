@@ -533,14 +533,12 @@ extern "C" {
     }
 
     // Ensure a new line is always put at the end of the program execution, unless in quiet mode.
-    if (main->error.verbosity != f_console_verbosity_quiet_e) {
-      if (F_status_is_error(status) || !data.mode) {
-        if (F_status_set_fine(status) == F_interrupt) {
-          fflush(main->output.to.stream);
-        }
-
-        fll_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
+    if (main->output.verbosity != f_console_verbosity_quiet_e) {
+      if (F_status_set_fine(status) == F_interrupt) {
+        fflush(main->output.to.stream);
       }
+
+      fll_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
     }
 
     iki_read_data_delete(&data);
