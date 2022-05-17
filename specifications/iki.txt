@@ -36,8 +36,8 @@ IKI Specifications:
     code:"\x" = any character.
     code:"\W" = any non-word character, discluding code:"_", code:"-", code:"+" (and Unicode equivalents).
     code:"\e" = an optional escape sequence of any number of backslashes, such as code:"\\".
-    code:"*" = 0 or more occurrences.
-    code:"~" = one or more occurrences, or 0 if at start of file.
+    code:"*" = zero or more occurrences.
+    code:"~" = one or more occurrences, or zero if at start of file.
 
   Before Structure\:
     code:"\x*\W~\*:*"

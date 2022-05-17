@@ -29,7 +29,7 @@ Featureless Settings Specification: 000A - Extended Reverse Mapping:
     code:"\n" = Newline.
     code:"*" = Zero or more occurrences.
     code:"+" = One or more occurrences.
-    code:"()*" = Grouping that repeats 0 or more times.
+    code:"()*" = Grouping that repeats zero or more times.
 
   Before Structure\:
     code:""
