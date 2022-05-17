@@ -1,36 +1,44 @@
-# fss-0002
+# fss-0002 iki-0000
 #
 # license: open-standard-license-1.0
 #
+# This file (assumed to be named fss-000a.txt) can be more easily read using the following iki_read commands:
+#   iki_read fss-000a.txt -w
+#
+# To read the "Featureless Settings Specification: 000A - Extended Reverse Mapping" section of this file, use this command sequence:
+#   fss_basic_list_read fss-000a.txt -cn "Featureless Settings Specification: 000A - Extended Reverse Mapping" | iki_read -w
+#
 
 Featureless Settings Specification: 000A - Extended Reverse Mapping:
-  This is based off of fss-0001 Extended, except the Object is at the end of the line.
+  This is based off of code:"fss-0001 (Extended)", except the Object is at the end of the line.
 
-  Each Object starts at the end of a line and whitespace to the left of the Object is not treated as an object.
-  Whitespace separates an Object from the Content.
+  Each Object starts at the end of a line and white space to the left of the Object is not treated as an object.
+  White space separates an Object from the Content.
   An Object may be followed by a newline, in which case means that the Object has no Content.
-  If only printing whitespace follows a valid Object, that Object is considered to have no Content.
+  If only printing white space follows a valid Object, that Object is considered to have no Content.
 
   Content exists on the same line as the Object.
   Content is represented as multiple Content columns.
-  Content columns are whitespace separated parts within the Content is terminated by the start of the Object.
+  Content columns are white space separated parts within the Content is terminated by the start of the Object.
   Any number of Content columns may exist in the Content until the Object is reached.
 
   Key\:
-    \s = whitespace, except newline.
-    \b = either whitespace or printable, except newline.
-    \q = non-whitespace or quoteded whitespace, no whitespace outside of quotes.
-    \n = newline.
-    * = 0 or more occurrences.
-    + = one or more occurrences.
-    ()* = grouping that repeats 0 or more times.
+    code:"\s" = White space, except newline.
+    code:"\b" = Either white space or printable, except newline.
+    code:"\q" = Non-white space or quoted white space, no white space outside of quotes.
+    code:"\n" = Newline.
+    code:"*" = Zero or more occurrences.
+    code:"+" = One or more occurrences.
+    code:"()*" = Grouping that repeats 0 or more times.
 
   Before Structure\:
+    code:""
 
   Structure\:
-    \s*(\s*\q+)*\s+\q+\s*\n
+    code:"\s*(\s*\q+)*\s+\q+\s*\n"
 
   After Structure\:
+    code:""
 
   Example\:
     # fss-000a

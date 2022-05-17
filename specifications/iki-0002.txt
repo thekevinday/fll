@@ -1,6 +1,12 @@
-# fss-0002
+# fss-0002 iki-0000
 #
 # license: open-standard-license-1.0
+#
+# This file (assumed to be named iki-0002.txt) can be more easily read using the following iki_read commands:
+#   iki_read iki-0002.txt -w
+#
+# To read the "IKI Specification: 0002 - Simple Script" section of this file, use this command sequence:
+#   fss_basic_list_read iki-0002.txt -cn "IKI Specification: 0002 - Simple Script" | iki_read -w
 #
 
 IKI Specification: 0002 - Simple Script:
@@ -10,12 +16,12 @@ IKI Specification: 0002 - Simple Script:
   This vocabulary may be further extended but must at least support the taxonomy defined here.
   Flexibility on interpretation is intended so that the context can be more fine-tuned and customized.
 
-  The taxonomy for the "context", "define", and "parameter" are intentionally not defined here and left open.
+  The taxonomy for the emphasis:"context", emphasis:"define", and emphasis:"parameter" are intentionally not defined here and left open.
   One utilizing this should document the taxonomy for each of these as desired.
 
   Vocabulary\:
-  - context: intended to be used for printing (or tagging) context codes before and after text, such as with color context.
-  - define: intended to be used for global properties, much like a C/C++ #define.
-  - parameter: intended to be used for parameters or variables.
+  - context: Intended to be used for printing (or tagging) context codes before and after text, such as with color context.
+  - define: Intended to be used for global properties, much like a C/C++ code:"#define".
+  - parameter: Intended to be used for parameters or variables.
 
-  See the iki.txt specification file for details on the syntax rules.
+  See the file:"iki.txt" specification file for details on the syntax rules.

@@ -1,12 +1,18 @@
-# fss-0002
+# fss-0002 iki-0000
 #
 # license: open-standard-license-1.0
 #
+# This file (assumed to be named fss-000b.txt) can be more easily read using the following iki_read commands:
+#   iki_read fss-000b.txt -w
+#
+# To read the "Featureless Settings Specification: 000B - Simple List" section of this file, use this command sequence:
+#   fss_basic_list_read fss-000b.txt -cn "Featureless Settings Specification: 000B - Simple List" | iki_read -w
+#
 
 Featureless Settings Specification: 000B - Simple List:
-  This might be similar to fss-0008 - Embedded List, except it is an fss-0003 Extended List with a (non-recursive) fss-0002 Basic List inside the Content.
+  This might be similar to code:"fss-0008 (Embedded List)", except it is an code:"fss-0003 (Extended List)" with a (non-recursive) code:"fss-0002 (Basic List)" inside the Content.
 
-  See the fss-0002.txt and fss-0003.txt specification files for details on the syntax rules.
+  See the file:"fss-0002.txt" and file:"fss-0003.txt" specification files for details on the syntax rules.
 
   Example\:
     # fss-000b

@@ -1,9 +1,15 @@
-# fss-0002
+# fss-0002 iki-0000
 #
 # license: open-standard-license-1.0
+#
+# This file (assumed to be named iki-0000.txt) can be more easily read using the following iki_read commands:
+#   iki_read iki-0000.txt -w
+#
+# To read the "IKI Specification: 0000 - Unrestricted" section of this file, use this command sequence:
+#   fss_basic_list_read iki-0000.txt -cn "IKI Specification: 0000 - Unrestricted" | iki_read -w
 #
 
 IKI Specification: 0000 - Unrestricted:
   This specification provides no restrictions on the vocabulary.
 
-  See the iki.txt specification file for details on the syntax rules.
+  See the file:"iki.txt" specification file for details on the syntax rules.

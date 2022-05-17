@@ -1,14 +1,20 @@
-# fss-0002
+# fss-0002 iki-0000
 #
 # license: open-standard-license-1.0
 #
+# This file (assumed to be named fss-0006.txt) can be more easily read using the following iki_read commands:
+#   iki_read fss-0006.txt -w
+#
+# To read the "Featureless Settings Specification: 0006 - Somewhat Extended List" section of this file, use this command sequence:
+#   fss_basic_list_read fss-0006.txt -cn "Featureless Settings Specification: 0006 - Somewhat Extended List" | iki_read -w
+#
 
 Featureless Settings Specification: 0006 - Somewhat Extended List:
-  This is a fss-0003 Extended List whose Content is then processed as fss-0000 Basic.
+  This is a code:"fss-0003 (Extended List)" whose Content is then processed as code:"fss-0000 (Basic)".
 
-  All Extended List (fss-0003) escapes are applied before any Basic (fss-0000) is identified.
+  All code:"fss-0003 (Extended List)" escapes are applied before any code:"fss-0000 (Basic)" is identified.
 
-  See the fss-0000.txt and fss-0003.txt specification files for details on the syntax rules.
+  See the file:"fss-0000.txt" and file:"fss-0003.txt" specification files for details on the syntax rules.
 
   Example\:
     # fss-0006
@@ -21,7 +27,7 @@ Featureless Settings Specification: 0006 - Somewhat Extended List:
 
     Second {
       Continues until EOS/EOF.
-      All whitespace, including newline (and leading whitespace) is "part of content."
+      All white space, including newline (and leading white space) is "part of content."
       # Valid comments are still ignored.
     }
 
@@ -43,4 +49,4 @@ Featureless Settings Specification: 0006 - Somewhat Extended List:
     1.3.1)
 
     2.1.1) until EOS/EOF.
-    2.2.1) whitespace, including newline (and leading whitespace) is "part of content."
+    2.2.1) white space, including newline (and leading white space) is "part of content."

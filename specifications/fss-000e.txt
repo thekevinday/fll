@@ -1,41 +1,46 @@
-# fss-0002
+# fss-0002 iki-0000
 #
 # license: open-standard-license-1.0
 #
+# This file (assumed to be named fss-000e.txt) can be more easily read using the following iki_read commands:
+#   iki_read fss-000e.txt -w -rr abbreviation-FLL FLL abbreviation-EOF EOF
 #
-# Note: This file is in fss-0002 format and as a result the example below has to be escaped (can potentially be confusing when reading this raw).
-#       The "header\:" in the example below is actually "header:" when processed by fss-0002.
+# To read the "Featureless Settings Specification: 000e - Payload" section of this file, use this command sequence:
+#   fss_basic_list_read fss-000e.txt -cn "Featureless Settings Specification: 000e - Payload" | iki_read -w -r abbreviation-FLL FLL abbreviation-EOF EOF
+#
 
 Featureless Settings Specification: 000e - Payload:
-  This is a fss-0002 Basic List with two required objects\:
-  1) "header".
-  2) "payload".
+  This is a code:"fss-0002 (Basic List)" with two required objects\:
+  1) emphasis:"header".
+  2) emphasis:"payload".
 
-  The header's Content is of type fss-0001 Extended.
-  The payload's Content is of any type including raw binary data.
+  The emphasis:"header"\:
+  - The emphasis:"header"'s Content is of type code:"fss-0001 (Extended)".
+  - The emphasis:"header" is recommended to have the Objects emphasis:"length", emphasis:"status", emphasis:"part", and emphasis:"total".
+  - The recommended emphasis:"length" represents the size of the emphasis:"payload".
+  - The recommended emphasis:"part" represents a single part of a set of packets for when the data being transmitted is split across multiple payloads.
+  - The recommended emphasis:"total" represents the total number of parts representing a complete data transmitted across multiple payloads.
+  - The recommended emphasis:"status" represents status codes (such as success or failure) and multiple.
+  - The Content for the recommended emphasis:"length" and emphasis:"status" are positive whole numbers (including zero) that may be in emphasis:"binary", emphasis:"octal", emphasis:"decimal", emphasis:"duodecimal", or emphasis:"hexidecimal" numerical format.
 
-  The payload is required to be the last list Object in the file.
-  The payload is recommended to have its size designated in some manner in the "header".
-  The designated size is recommended to use the fss-0001 Object "length".
-  The fss-0001 Content "part" is suggested to be used for fss-0001 Object "length" to represent a part of a set of packets intended to represent a single object spread across multiple payloads.
-  The fss-0001 Object "total" with the Content being a whole positive number is suggested to be used to represent the total number of packets that represent a whole.
-  The fss-0001 Object "part" with the Content being a whole positive number is suggested to be used to represent the number identifying which part of the whole it is.
-  The payload may contain anything, including NULL characters.
-  The payload is terminated by the EOF (end of file) character or when a some designated length is reached.
-  The length used to designate the payload size does not necessarily have to be defined in the 'header".
-  That is to say, if the payload is expected to be of some pre-defined or static length then a length does even if that length is not provided in the "header".
-  Nothing in the payload may be considered a valid list Object and therefore there will be no escaping allowed (No further fss-0002 Basic List Objects are allowed at this point).
-  Comments are not considered comments inside the payload and are instead considered part of the payload, as-is.
-  The payload may be empty (length may be zero), but the list Object "payload" must still exist.
+  The emphasis:"payload"\:
+  - The emphasis:"payload"'s Content may contain anything, including raw binary data.
+  - The emphasis:"payload" is emphasis:"required" to be the last list Object in the file.
+  - The emphasis:"payload" is recommended to have its size designated in some manner in the emphasis:"header" (such as with the recommended emphasis:"length").
+  - The emphasis:"payload" is terminated by the abbreviation-EOF:"End of File" character or by the recommended emphasis:"length" header.
+  - The emphasis:"payload" may be empty (length may be zero), but the list Object emphasis:"payload" must still exist.
+  - Nothing in the emphasis:"payload" may be considered a valid list Object by the outer code:"fss-0002 (Basic List)" and therefore escaping is unnecessary (No further processing by the outer code:"fss-0002 (Basic List)" is allowed at this point).
+  - Comments in the emphasis:"payload" are not considered comments and are instead considered part of the payload, as-is.
+  - Essentially, the emphasis:"payload" should be treated as binary data embedded in a text file.
 
-  The length and status may be in binary, octal, decimal, duodecimal, or hexidecimal numerical format.
-  The status may alternatively be represented as the status name string.
-  What the status code represents is application specific (or specific to a sub-standard) but may often be used to represent FLL status codes.
-  The status, when representing an FLL status code as a number, may contain error and warning bit.
-  The status, when representing an FLL status code as a number, the status number is binary sensitive and may not be portable across binaries or systems.
-  For FLL status codes, consider using status as a name string to ensure cross-system or cross-binary compatibility.
+  The recommended emphasis:"length" emphasis:"header" Object used to designate the emphasis:"payload" size does not necessarily have to be defined in the emphasis:"header".
+  That is to say, if the emphasis:"payload" is expected to be of some pre-defined or static length then a length does not need to be provided in the emphasis:"header".
 
-  Other than the reserved list Objects "header" and "payload" any other valid Object may be specified.
+  The recommended emphasis:"status" emphasis:"header" Object may be a string, such as code:"F_none", or a positive whole number.
+  What the status code represents is application specific (or specific to a sub-standard) but may often be used to represent abbreviation-FLL:"Featureless Linux Library" status code.
+  - The abbreviation-FLL:"Featureless Linux Library" status code is a 16-bit digit whose first two high-order bits represent emphasis:"error" and emphasis:"warning" ( representing emphasis:"signal").
+  - The abbreviation-FLL:"Featureless Linux Library" status code as a number is binary sensitive and may not be portable across binaries or systems.
+  - For best portability, consider using status as a name string to ensure cross-system or cross-binary compatibility.
 
   Example\:
     # fss-000e

@@ -1,10 +1,16 @@
-# fss-0002
+# fss-0002 iki-0000
 #
 # license: open-standard-license-1.0
 #
+# This file (assumed to be named fss-000f.txt) can be more easily read using the following iki_read commands:
+#   iki_read fss-000f.txt -w
+#
+# To read the "Featureless Settings Specification: 000f - Simple Packet" section of this file, use this command sequence:
+#   fss_basic_list_read fss-000f.txt -cn "Featureless Settings Specification: 000f - Simple Packet" | iki_read -w
+#
 
 Featureless Settings Specification: 000f - Simple Packet:
-  This is a network packet format that contains FSS-000E (Payload) within it.
+  This is a network packet format that contains code:"fss-000e (Payload)" within it.
 
   The Simple Packet structure is described in blocks, of which are structured in bytes.
 
@@ -15,12 +21,12 @@ Featureless Settings Specification: 000f - Simple Packet:
 
   The Control Block is the first block in the packet and is considered endianless.
   There exists only a single byte within the Control Block.
-  Regardless of the endianness of the packet, the leftmost bit is always the "string" or "binary" bit.
+  Regardless of the endianness of the packet, the leftmost bit is always the emphasis:"string" or emphasis:"binary" bit.
   The second bit following that bit represents the endianness bit.
 
-  The "string" or "binary" bit, a value of 0 designates that the packet is in string format and a value of 1 designates that the packet is in binary format.
+  The emphasis:"string" or emphasis:"binary" bit, a value of 0 designates that the packet is in string format and a value of 1 designates that the packet is in binary format.
   While the packet might be considered to be in string format, it is technically always in binary format due to the Control Block and Size Block.
-  This means that the bit designating the packet as a "string" packet or a "binary" packet is referring to whether or not the Payload Block is in "string" format or is in "binary" format.
+  This means that the bit designating the packet as a emphasis:"string" packet or a emphasis:"binary" packet is referring to whether or not the Payload Block is in emphasis:"string" format or is in emphasis:"binary" format.
 
   The endianness bit designates whether or not the packet is in big endian or little endian format.
   A bit value of 0 designates that this packet is in little endian and a value of 1 designates that this packet is in big endian format.
@@ -36,10 +42,12 @@ Featureless Settings Specification: 000f - Simple Packet:
   The size represents number of bytes in the file.
   The Control Block is 1 byte long and the Size Block is 4 bytes long and so the maximum available size is (2^32)-6.
 
-  The Payload Block is not defined by this standard of that that it exists and should be in FSS-000E (Payload) format.
-  The FSS-000E (Payload) may be represented in either string format or binary format.
-  The FSS-000E (Payload) may contain multiple "header"s but may only contain a single "payload".
-  With this in mind, it is recommended that only a single "header" be supported in the Payload Block.
+  The Payload Block is not defined by this standard of that that it exists and should be in code:"fss-000e (Payload)" format.
+  The code:"fss-000e (Payload)" may be represented in either string format or binary format.
+  The code:"fss-000e (Payload)" may contain multiple emphasis:"header"(s) but may only contain a single emphasis:"payload".
+  With this in mind, it is recommended that only a single emphasis:"header" be supported in the Payload Block.
+
+  See the file:"fss-000e.txt" specification file for details on the syntax rules for the Payload Block.
 
   Example Packet Structure\:
     [ Control Block ] [ Size Block                                  ] [ Payload Block         ]

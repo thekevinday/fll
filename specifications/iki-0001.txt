@@ -1,20 +1,26 @@
-# fss-0002
+# fss-0002 iki-0000
 #
 # license: open-standard-license-1.0
 #
+# This file (assumed to be named iki-0001.txt) can be more easily read using the following iki_read commands:
+#   iki_read iki-0001.txt -w -rrr abbreviation-URI URI abbreviation-URL URL abbreviation-URN URN
+#
+# To read the "IKI Specification: 0001 - Basic" section of this file, use this command sequence:
+#   fss_basic_list_read iki-0001.txt -cn "IKI Specification: 0001 - Basic" | iki_read -w -rrr abbreviation-URI URI abbreviation-URL URL abbreviation-URN URN
+#
 
 IKI Specification: 0001 - Basic:
-  This specification provides a small set of vocabulary names meant to be associated with common uses, such as e-mail addresses and URLs.
+  This specification provides a small set of vocabulary names meant to be associated with common uses, such as e-mail addresses and abbreviation-URL:"Uniform Resource Locator"s.
 
   Vocabulary\:
-  - address: any mailing address, except for e-mail and URI.
-  - code: all text contained within represent code and should be presented as such.
-  - email: any valid e-mail address.
-  - phone: any valid phone number.
-  - quote: all text within represents some quote.
-  - uri: any valid URI (allows URL and URN).
-  - url: any valid URL.
-  - urn: any valid URN.
-  - var: all text contained within represents some sort of variable.
+  - address: Any mailing address, except for e-mail and abbreviation-URI:"Uniform Resource Identifier".
+  - code: All text contained within represent code and should be presented as such.
+  - email: Any valid e-mail address.
+  - phone: Any valid phone number.
+  - quote: All text within represents some quote.
+  - uri: Any valid abbreviation-URI:"Uniform Resource Identifier" (allows abbreviation-URL:"Uniform Resource Locator" and abbreviation-URN:"Uniform Resource Name").
+  - url: Any valid abbreviation-URL:"Uniform Resource Locator".
+  - urn: Any valid abbreviation-URN:"Uniform Resource Name".
+  - var: All text contained within represents some sort of variable.
 
-  See the iki.txt specification file for details on the syntax rules.
+  See the file:"iki.txt" specification file for details on the syntax rules.

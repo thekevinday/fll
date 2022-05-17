@@ -1,37 +1,45 @@
-# fss-0002
+# fss-0002 iki-0000
 #
 # license: open-standard-license-1.0
 #
+# This file (assumed to be named fss-0009.txt) can be more easily read using the following iki_read commands:
+#   iki_read fss-0009.txt -w
+#
+# To read the "Featureless Settings Specification: 0009 - Reverse Mapping" section of this file, use this command sequence:
+#   fss_basic_list_read fss-0009.txt -cn "Featureless Settings Specification: 0009 - Reverse Mapping" | iki_read -w
+#
 
 Featureless Settings Specification: 0009 - Reverse Mapping:
-  This is based off of fss-0000 Basic, except the Object is at the end of the line.
+  This is based off of code:"fss-0000 (Basic)", except the Object is at the end of the line.
 
-  Each Object starts at the end of a line and whitespace to the left of the Object is not treated as part of the object.
-  Whitespace separates an Object from the Content.
+  Each Object starts at the end of a line and white space to the left of the Object is not treated as part of the object.
+  White space separates an Object from the Content.
   An Object may be preceded by a newline, in which case means that the Object has no Content.
-  If only printing whitespace precedes a valid Object, that Object is considered to have no Content.
+  If only printing white space precedes a valid Object, that Object is considered to have no Content.
 
   Content exists on the same line as the Object.
   Content is represented as a single Content column that begins at a newline.
-  Content column consists of everything following the first non-whitespace character at the start of the line until the Object is reached.
-  Content column includes trailing whitespace before newline is reached.
-  Content column does not include any of the whitespace between the last non-whitespace character and the start of the Object.
+  Content column consists of everything following the first non-white space character at the start of the line until the Object is reached.
+  Content column includes trailing white space before newline is reached.
+  Content column does not include any of the white space between the last non-white space character and the start of the Object.
   No delimits are supported in the Content.
 
   Key\:
-    \s = whitespace, except newline.
-    \b = either whitespace or printable, except newline.
-    \q = non-whitespace or quoted whitespace with no whitespace outside of the quotes.
-    \n = newline.
-    * = zero or more occurrences.
-    + = one or more occurrences.
+    code:"\s" = White space, except newline.
+    code:"\b" = Either white space or printable, except newline.
+    code:"\q" = Non-white space or quoted white space with no white space outside of the quotes.
+    code:"\n" = Newline.
+    code:"*" = Zero or more occurrences.
+    code:"+" = One or more occurrences.
 
   Before Structure\:
+    code:""
 
   Structure\:
-    \s*\b*\s+\q+\s*\n
+    code:"\s*\b*\s+\q+\s*\n"
 
   After Structure\:
+    code:""
 
   Example\:
     # fss-0009

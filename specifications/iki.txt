@@ -1,6 +1,12 @@
-# fss-0002
+# fss-0002 iki-0000
 #
 # license: open-standard-license-1.0
+#
+# This file (assumed to be named iki.txt) can be more easily read using the following iki_read commands:
+#   iki_read iki.txt -w
+#
+# To read the "IKI Specifications" section of this file, use this command sequence:
+#   fss_basic_list_read iki.txt -cn "IKI Specifications" | iki_read -w
 #
 
 IKI Specifications:
@@ -8,51 +14,52 @@ IKI Specifications:
 
   The IKI syntax provides a vocabulary name (with specific context associated with it) followed by quoted code that is associated with the given vocabulary name.
   The vocabulary represents a list of allowed variable names that may also have specific contextual meaning defined by a given IKI specification.
-  The variable name is considered the "Object".
-  The variable value is considered the "Content".
+  The variable name is considered the emphasis:"Object".
+  The variable value is considered the emphasis:"Content".
 
-  The IKI format will use iki-0000 to represent an IKI with no explicitly defined vocabulary.
-  Whereas iki-0001 and beyond represent a specific IKI vocabulary.
+  The IKI format will use code:"iki-0000" to represent an IKI with no explicitly defined vocabulary.
+  Whereas code:"iki-0001" and beyond represent a specific IKI vocabulary.
 
-  A potential IKI variable name starts on word (or "_", "-", "+") characters.
-  Whitespace and non-word (and non "_", "-", "+") character punctuations may not exist as part of the variable name.
-  The only Unicode dash-like characters allowed as a "dash" are those intended to connect, such as the Unicode hyphens (U+2010 and U+2011).
+  A potential IKI variable name starts on word (or code:"_", code:"-", code:"+") characters.
+  White space and non-word (and non code:"_", code:"-", code:"+") character punctuations may not exist as part of the variable name.
+  The only Unicode dash-like characters allowed as a "dash" are those intended to connect, such as the Unicode hyphens (code:"U+2010" and code:"U+2011").
 
-  Any valid IKI data may be escaped to make it treated as non-IKI data by prepending a backslash "\" before the colon ":" that is before the opening quote (single or double).
+  Any valid IKI data may be escaped to make it treated as non-IKI data by prepending a backslash code:"\" before the colon code:":" that is before the opening quote (single or double).
 
-  Unicode punctuation connector characters are supported just like "_", except when they connect outside the current line (such as U+FE33 "︳").
-  Unicode invisible punctuations (such as invisible plus: U+2064) are not considered a punctuations in this standard (because they a zero-width characters), therefore they are not to be considered a valid '_', '-', or '+' Unicode equivalents.
+  Unicode punctuation connector characters are supported just like code:"_", except when they connect outside the current line (such as code:"U+FE33" code:"︳").
+  Unicode invisible punctuations (such as invisible plus: code:"U+2064") are not considered a punctuations in this standard (because they a zero-width characters), therefore they are not to be considered a valid code:"_", code:"-", or code:"+" Unicode equivalents.
 
   Key\:
-    \o = any printable word character, including "_", "-", "+" (and Unicode equivalents).
-    \c = any character, including whitespace and non-printing, and any delimited quote (used as the opening quote) or a any quote (undelimited) not used as the opening quote.
-    \q = either a single quote (') or a double quote (").
-    \x = any character.
-    \W = any non-word character, discluding "_", "-", "+" (and Unicode equivalents).
-    \e = an optional escape sequence of any number of backslashes, such as "\".
-    * = 0 or more occurrences.
-    ~ = one or more occurrences, or 0 if at start of file.
+    code:"\o" = any printable word character, including code:"_", code:"-", code:"+" (and Unicode equivalents).
+    code:"\c" = any character, including white space and non-printing, and any delimited quote (used as the opening quote) or a any quote (undelimited) not used as the opening quote.
+    code:"\q" = either a single quote code:"'" or a double quote code:'"'.
+    code:"\x" = any character.
+    code:"\W" = any non-word character, discluding code:"_", code:"-", code:"+" (and Unicode equivalents).
+    code:"\e" = an optional escape sequence of any number of backslashes, such as code:"\\".
+    code:"*" = 0 or more occurrences.
+    code:"~" = one or more occurrences, or 0 if at start of file.
 
   Before Structure\:
-    \x*\W~\*:*
+    code:"\x*\W~\*:*"
 
   Structure\:
-    \o\e:\q\c\q
+    code:"\o\e:\q\c\q"
 
   After Structure\:
+    code:""
 
   Example\:
-    # fss-000c iki-0000
+    code:'# fss-000c iki-0000
 
     This is my sentence, anything can go here but sometimes I want to emphasis:"emphasize some text".
 
-    Other times I want to render a url such as this example url: url:'http://www.example.com/url with space/'.
+    Other times I want to render a url such as this example url: url:\'http://www.example.com/url with space/\'.
 
     There are no comments, except for maybe the FSS header (which would not resolve to any IKI syntax anyway).
 
     Quotes may be included, such as: code:"const char *string = \"My \\\"quoted\\\" C string.\";".
 
-    The following emphasis\:"is escaped to not be treated as IKI data".
+    The following emphasis\:"is escaped to not be treated as IKI data".'
 
   Objects would be\:
     1) emphasis
@@ -63,3 +70,8 @@ IKI Specifications:
     1.1) emphasize some text
     2.1) http://www.example.com/url with space/
     3.1) const char *string = "My \"quoted\" C string.";
+
+  The following are core specifications (each with a common name associated with the specification number)\:
+  - fss-0000: Unrestricted
+  - fss-0001: Basic
+  - fss-0002: Simple Script

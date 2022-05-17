@@ -1,16 +1,22 @@
-# fss-0002
+# fss-0002 iki-0000
 #
 # license: open-standard-license-1.0
 #
+# This file (assumed to be named fss-000c.txt) can be more easily read using the following iki_read commands:
+#   iki_read fss-000c.txt -w -r abbreviation-FSS FSS
+#
+# To read the "Featureless Settings Specification: 000C - IKI Text" section of this file, use this command sequence:
+#   fss_basic_list_read fss-000c.txt -cn "Featureless Settings Specification: 000C - IKI Text" | iki_read -w -r abbreviation-FSS FSS
+#
 
 Featureless Settings Specification: 000C - IKI Text:
-  The IKI specifications are separate specifications from the FSS specification.
+  The IKI specifications are separate specifications from the abbreviation-FSS:"Featureless Settings Specifications".
   This is simply a more formal way to designate that this format utilizes IKI syntax.
 
-  The IKI syntax may be used in any FSS specification.
+  The IKI syntax may be used in any abbreviation-FSS:"Featureless Settings Specifications".
   The IKI format may be added to the.
 
-  See the iki.txt specification for details on the IKI specifications.
+  See the file:"iki.txt" specification for details on the IKI specifications.
 
   Example\:
     # fss-000c iki-0000
