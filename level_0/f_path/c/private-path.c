@@ -8,9 +8,14 @@ extern "C" {
 #if !defined(_di_f_path_current_) || !defined(_di_f_path_real_)
   f_status_t private_f_path_real(const char *path, f_string_dynamic_t * const real) {
 
-    char *buffer = realpath(path, buffer);
+    // Use a static array so that realpath() does not call malloc().
+    char temporary[PATH_MAX];
 
-    if (buffer == 0) {
+    memset(temporary, 0, sizeof(char) * F_path_length_max_d);
+
+    char * const buffer = realpath(path, temporary);
+
+    if (!buffer) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EINVAL) return F_status_set_error(F_parameter);
       if (errno == EIO) return F_status_set_error(F_input_output);
