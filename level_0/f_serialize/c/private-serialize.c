@@ -5,30 +5,27 @@
 extern "C" {
 #endif
 
-#if !defined(_di_f_serialize_un_simple_find_) || !defined(_di_f_serialize_un_simple_get_)
-  f_status_t private_f_serialize_un_simple_find(const f_string_static_t serialize, const f_array_length_t index, f_string_range_t * const location) {
+#if !defined(_di_f_serialize_from_simple_get_) || !defined(_di_f_serialize_from_simple_select_)
+  f_status_t private_f_serialize_from_simple_select(const f_string_static_t source, const f_array_length_t index, f_string_range_t * const range) {
 
-    f_array_length_t i = 0;
     f_array_length_t start = 0;
     f_array_length_t current = 0;
 
     unsigned short width = 0;
 
-    for (; i < serialize.used; i += width) {
+    for (f_array_length_t i = 0; i < source.used; i += width) {
 
-      width = macro_f_utf_byte_width(serialize.string[i]);
+      width = macro_f_utf_byte_width(source.string[i]);
 
-      if (serialize.string[i] == f_serialize_simple_splitter_s.string[0]) {
+      if (source.string[i] == f_serialize_to_simple_splitter_s.string[0]) {
         if (current == index) {
           if (start == i) {
-
-            // provide an invalid start to stop range to communicate that there is no data.
-            location->start = 1;
-            location->stop = 0;
+            range->start = 1;
+            range->stop = 0;
           }
           else {
-            location->start = start;
-            location->stop = i - 1;
+            range->start = start;
+            range->stop = i - 1;
           }
 
           return F_none;
@@ -36,24 +33,32 @@ extern "C" {
 
         start = i + width;
         ++current;
+
+        // Handle case when splitter as at the end of the string, creating a new empty string.
+        if (start >= source.used && current == index) {
+          range->start = 1;
+          range->stop = 0;
+
+          return F_none;
+        }
       }
-      else if (i == serialize.used) {
+      else if (i == source.used) {
         if (current == index) {
-          location->start = start;
-          location->stop = i - 1;
+          range->start = start;
+          range->stop = i - 1;
         }
 
         return F_none_eos;
       }
 
-      if (i + width > serialize.used) {
+      if (i + width > source.used) {
         return F_status_set_error(F_complete_not_utf_eos);
       }
     } // for
 
     return F_data_not_eos;
   }
-#endif // !defined(_di_f_serialize_un_simple_find_) || !defined(_di_f_serialize_un_simple_get_)
+#endif // !defined(_di_f_serialize_from_simple_get_) || !defined(_di_f_serialize_from_simple_select_)
 
 #ifdef __cplusplus
 } // extern "C"

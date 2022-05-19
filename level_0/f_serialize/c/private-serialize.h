@@ -16,16 +16,16 @@ extern "C" {
 #endif
 
 /**
- * Private implementation of f_serialize_un_simple_get().
+ * Private implementation of f_serialize_from_simple_get().
  *
  * Intended to be shared to each of the different implementation variations.
  *
- * @param serialize
- *   A serialize string to de-serialize.
+ * @param source
+ *   A serialized string to de-serialize.
  * @param index
- *   An index position within the serialize string to get the deserialize positions of.
- * @param location
- *   A location within the serialize string representing the string at the given index.
+ *   The selected position within the serialize string to get the deserialize positions of.
+ * @param range
+ *   A range within the serialize string representing the string at the given index.
  *
  * @return
  *   F_none on success.
@@ -35,9 +35,9 @@ extern "C" {
  *   F_complete_not_utf_eos (with error bit) if end of string is reached before a complete UTF-8 character can be processed.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
-#if !defined(_di_f_serialize_un_simple_find_) || !defined(_di_f_serialize_un_simple_get_)
-  extern f_status_t private_f_serialize_un_simple_find(const f_string_static_t serialize, const f_array_length_t index, f_string_range_t * const location) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_serialize_un_simple_find_) || !defined(_di_f_serialize_un_simple_get_)
+#if !defined(_di_f_serialize_from_simple_get_) || !defined(_di_f_serialize_from_simple_select_)
+  extern f_status_t private_f_serialize_from_simple_select(const f_string_static_t source, const f_array_length_t index, f_string_range_t * const range) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_serialize_from_simple_get_) || !defined(_di_f_serialize_from_simple_select_)
 
 #ifdef __cplusplus
 } // extern "C"

@@ -5,201 +5,231 @@
 extern "C" {
 #endif
 
-#ifndef _di_f_serialize_simple_
-  f_status_t f_serialize_simple(const f_string_static_t value, f_string_dynamic_t * const serialize) {
+#ifndef _di_f_serialize_from_simple_
+  f_status_t f_serialize_from_simple(const f_string_static_t source, f_string_dynamics_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
-      if (!serialize) return F_status_set_error(F_parameter);
+      if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_status_t status = F_none;
-
-    if (serialize->used + value.used + 1 >= serialize->size) {
-      status = f_string_dynamic_resize(serialize->size + value.used + 1, serialize);
-      if (F_status_is_error(status)) return status;
-    }
-
-    if (!serialize->used) {
-      memcpy(serialize->string + serialize->used, value.string, sizeof(f_char_t) * value.used);
-      serialize->used += value.used;
-    }
-    else {
-      memcpy(serialize->string + serialize->used, f_serialize_simple_splitter_s.string, sizeof(f_char_t) * f_serialize_simple_splitter_s.used);
-      memcpy(serialize->string + serialize->used + f_serialize_simple_splitter_s.used, value.string, sizeof(f_char_t) * value.used);
-      serialize->used += value.used + 1;
-    }
-
-    return F_none;
-  }
-#endif // _di_f_serialize_simple_
-
-#ifndef _di_f_serialize_un_simple_
-  f_status_t f_serialize_un_simple(const f_string_static_t serialize, f_string_dynamics_t * const strings) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!serialize.used) return F_status_set_error(F_parameter);
-      if (!strings) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+    if (!source.used) return F_data_not;
 
     f_status_t status = F_none;
-
     f_array_length_t i = 0;
     f_array_length_t start = 0;
-
+    f_array_length_t total = 0;
     uint8_t width = 0;
 
-    while (i < serialize.used) {
+    do {
+      width = macro_f_utf_byte_width(source.string[i]);
 
-      width = macro_f_utf_byte_width(serialize.string[i]);
+      if (i + width > source.used) {
+        total = i - start;
 
-      if (serialize.string[i] == f_serialize_simple_splitter_s.string[0] || i + 1 >= serialize.used) {
-        macro_f_memory_structure_increment(status, (*strings), 1, F_memory_default_allocation_small_d, macro_f_string_dynamics_t_resize, F_array_too_large);
+        status = f_string_dynamics_increase(F_memory_default_allocation_small_d, destination);
         if (F_status_is_error(status)) return status;
 
-        if (start == i) {
-          strings->array[strings->used].used = 0;
-          ++strings->used;
-        }
-        else {
-          f_array_length_t total;
+        destination->array[destination->used].used = 0;
 
-          if (i + 1 >= serialize.used) {
-            total = (i - start) + 1;
-          }
-          else {
+        status = f_string_append(source.string + start, total, &destination->array[destination->used]);
+        if (F_status_is_error(status)) return status;
 
-            // subtract one from stop point to disclused the f_serialize_simple_splitter_s character.
-            total = ((i - 1) - start) + 1;
-          }
+        ++destination->used;
 
-          if (total > strings->array[strings->used].size) {
-            macro_f_string_dynamic_t_clear(strings->array[strings->used])
-
-            status = f_string_dynamic_resize(total, &strings->array[strings->used]);
-            if (F_status_is_error(status)) return status;
-
-            strings->array[strings->used].size = total;
-          }
-
-          memcpy(strings->array[strings->used].string, serialize.string + start, sizeof(f_char_t) * total);
-
-          strings->array[strings->used].used = total;
-          ++strings->used;
-        }
-
-        if (i + width > serialize.used) {
-          return F_status_set_error(F_complete_not_utf_eos);
-        }
-
-        start = i + width;
+        return F_complete_not_utf_eos;
       }
-      else if (i + width > serialize.used) {
-        return F_status_set_error(F_complete_not_utf_eos);
+
+      if (source.string[i] == f_serialize_to_simple_splitter_s.string[0]) {
+        total = i - start;
+
+        status = f_string_dynamics_increase(F_memory_default_allocation_small_d, destination);
+        if (F_status_is_error(status)) return status;
+
+        destination->array[destination->used].used = 0;
+
+        status = f_string_append(source.string + start, total, &destination->array[destination->used]);
+        if (F_status_is_error(status)) return status;
+
+        ++destination->used;
+        start = i + width;
+
+        // Handle case when splitter as at the end of the string, creating a new empty string.
+        if (start == source.used) {
+          status = f_string_dynamics_increase(F_memory_default_allocation_small_d, destination);
+          if (F_status_is_error(status)) return status;
+
+          destination->array[++destination->used].used = 0;
+        }
       }
 
       i += width;
-    } // while
+
+    } while (i < source.used);
+
+    if (start < source.used) {
+      total = source.used - start;
+
+      status = f_string_dynamics_increase(F_memory_default_allocation_small_d, destination);
+      if (F_status_is_error(status)) return status;
+
+      destination->array[destination->used].used = 0;
+
+      status = f_string_append(source.string + start, total, &destination->array[destination->used]);
+      if (F_status_is_error(status)) return status;
+
+      ++destination->used;
+    }
 
     return F_none;
   }
-#endif // _di_f_serialize_un_simple_
+#endif // _di_f_serialize_from_simple_
 
-#ifndef _di_f_serialize_un_simple_map_
-  f_status_t f_serialize_un_simple_map(const f_string_static_t serialize, f_string_ranges_t * const locations) {
+#ifndef _di_f_serialize_from_simple_get_
+  f_status_t f_serialize_from_simple_get(const f_string_static_t source, const f_array_length_t index, f_string_dynamic_t * const destination) {
     #ifndef _di_level_0_parameter_checking_
-      if (!serialize.used) return F_status_set_error(F_parameter);
-      if (!locations) return F_status_set_error(F_parameter);
+      if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_status_t status = F_none;
-
-    f_array_length_t i = 0;
-    f_array_length_t start = 0;
-
-    uint8_t width = 0;
-
-    for (; i < serialize.used; i += width) {
-
-      width = macro_f_utf_byte_width(serialize.string[i]);
-
-      if (serialize.string[i] == f_serialize_simple_splitter_s.string[0] || i + 1 >= serialize.used) {
-        macro_f_memory_structure_increment(status, (*locations), 1, F_memory_default_allocation_small_d, macro_f_string_ranges_t_resize, F_array_too_large);
-        if (F_status_is_error(status)) return status;
-
-        if (start == i) {
-
-          // provide an invalid start to stop range to communicate that there is no data.
-          locations->array[locations->used].start = 1;
-          locations->array[locations->used].stop = 0;
-        }
-        else if (i + 1 >= serialize.used) {
-          locations->array[locations->used].start = start;
-          locations->array[locations->used].stop = i;
-        }
-        else {
-
-          // subtract one from stop point to disclused the f_serialize_simple_splitter_s character.
-          locations->array[locations->used].start = start;
-          locations->array[locations->used].stop = i - 1;
-        }
-
-        ++locations->used;
-
-        if (i + width > serialize.used) {
-          return F_status_set_error(F_complete_not_utf_eos);
-        }
-
-        start = i + width;
-      }
-      else if (i + width > serialize.used) {
-        return F_status_set_error(F_complete_not_utf_eos);
-      }
-    } // for
-
-    return F_none;
-  }
-#endif // _di_f_serialize_un_simple_map_
-
-#ifndef _di_f_serialize_un_simple_find_
-  f_status_t f_serialize_un_simple_find(const f_string_static_t serialize, const f_array_length_t index, f_string_range_t * const range) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!serialize.used) return F_status_set_error(F_parameter);
-      if (!range) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return private_f_serialize_un_simple_find(serialize, index, range);
-  }
-#endif // _di_f_serialize_un_simple_find_
-
-#ifndef _di_f_serialize_un_simple_get_
-  f_status_t f_serialize_un_simple_get(const f_string_static_t serialize, const f_array_length_t index, f_string_dynamic_t * const dynamic) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!serialize.used) return F_status_set_error(F_parameter);
-      if (!dynamic) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+    if (!source.used) return F_data_not;
 
     f_string_range_t range = f_string_range_t_initialize;
 
-    f_status_t status = private_f_serialize_un_simple_find(serialize, index, &range);
+    f_status_t status = private_f_serialize_from_simple_select(source, index, &range);
     if (F_status_is_error(status)) return status;
 
     if (status == F_data_not_eos) {
-      dynamic->used = 0;
-
       return status;
     }
 
-    f_array_length_t total = (range.stop - range.start) + 1;
+    const f_array_length_t total = (range.stop - range.start) + 1;
 
-    if (total >= dynamic->size) {
-      const f_status_t status_allocation = f_string_dynamic_resize(total, dynamic);
+    if (range.start <= range.stop) {
+      const f_status_t status_allocation = f_string_append(source.string + range.start, total, destination);
       if (F_status_is_error(status_allocation)) return status_allocation;
     }
 
-    memcpy(dynamic->string, serialize.string + range.start, sizeof(f_char_t) * total);
-    dynamic->used = total;
-
     return status;
   }
-#endif // _di_f_serialize_un_simple_get_
+#endif // _di_f_serialize_from_simple_get_
+
+#ifndef _di_f_serialize_from_simple_range_
+  f_status_t f_serialize_from_simple_range(const f_string_static_t source, f_string_ranges_t * const ranges) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!ranges) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (!source.used) return F_data_not;
+
+    f_status_t status = F_none;
+    f_array_length_t i = 0;
+    f_array_length_t start = 0;
+    f_array_length_t total = 0;
+    uint8_t width = 0;
+
+    do {
+      width = macro_f_utf_byte_width(source.string[i]);
+
+      if (i + width > source.used) {
+        total = i - start;
+
+        status = f_string_ranges_increase(F_memory_default_allocation_small_d, ranges);
+        if (F_status_is_error(status)) return status;
+
+        if (total) {
+          ranges->array[ranges->used].start = start;
+          ranges->array[ranges->used++].stop = start + (total - 1);
+        }
+        else {
+          ranges->array[ranges->used].start = 1;
+          ranges->array[ranges->used++].stop = 0;
+        }
+
+        return F_complete_not_utf_eos;
+      }
+
+      if (source.string[i] == f_serialize_to_simple_splitter_s.string[0]) {
+        total = i - start;
+
+        status = f_string_ranges_increase(F_memory_default_allocation_small_d, ranges);
+        if (F_status_is_error(status)) return status;
+
+        if (total) {
+          ranges->array[ranges->used].start = start;
+          ranges->array[ranges->used++].stop = start + (total - 1);
+        }
+        else {
+          ranges->array[ranges->used].start = 1;
+          ranges->array[ranges->used++].stop = 0;
+        }
+
+        start = i + width;
+
+        // Handle case when splitter as at the end of the string, creating a new empty string.
+        if (start == source.used) {
+          status = f_string_ranges_increase(F_memory_default_allocation_small_d, ranges);
+          if (F_status_is_error(status)) return status;
+
+          ranges->array[ranges->used].start = 1;
+          ranges->array[ranges->used++].stop = 0;
+        }
+      }
+
+      i += width;
+
+    } while (i < source.used);
+
+    if (start < source.used) {
+      total = source.used - start;
+
+      status = f_string_ranges_increase(F_memory_default_allocation_small_d, ranges);
+      if (F_status_is_error(status)) return status;
+
+      if (total) {
+        ranges->array[ranges->used].start = start;
+        ranges->array[ranges->used++].stop = start + (total - 1);
+      }
+      else {
+        ranges->array[ranges->used].start = 1;
+        ranges->array[ranges->used++].stop = 0;
+      }
+    }
+
+    return F_none;
+  }
+#endif // _di_f_serialize_from_simple_range_
+
+#ifndef _di_f_serialize_from_simple_select_
+  f_status_t f_serialize_from_simple_select(const f_string_static_t source, const f_array_length_t index, f_string_range_t * const range) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!range) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (!source.used) return F_data_not;
+
+    return private_f_serialize_from_simple_select(source, index, range);
+  }
+#endif // _di_f_serialize_from_simple_select_
+
+#ifndef _di_f_serialize_to_simple_
+  f_status_t f_serialize_to_simple(const f_string_static_t source, f_string_dynamic_t * const destination) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!destination) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (!source.used) return F_data_not;
+
+    f_status_t status = F_none;
+
+    if (destination->used) {
+      status = f_string_dynamic_append_assure(f_serialize_to_simple_splitter_s, destination);
+      if (F_status_is_error(status)) return status;
+    }
+
+    status = f_string_dynamic_append(source, destination);
+    if (F_status_is_error(status)) return status;
+
+    return F_none;
+  }
+#endif // _di_f_serialize_to_simple_
 
 #ifdef __cplusplus
 } // extern "C"
