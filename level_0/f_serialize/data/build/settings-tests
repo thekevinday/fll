@@ -1,0 +1,53 @@
+# fss-0001
+#
+# Builds a program that is links to the generated library and is executed to perform tests.
+#
+# Memory leaks in the test program can be checked for by running valgrind with this executable.
+#
+
+build_name test-f_serialize
+
+version_major 0
+version_minor 5
+version_micro 9
+version_file major
+version_target major
+
+modes individual clang test
+modes_default individual
+
+build_compiler gcc
+build_compiler-clang clang
+build_indexer ar
+build_indexer_arguments rcs
+build_language c
+
+build_libraries -lc -lcmocka
+build_libraries-individual -lf_memory -lf_string -lf_type_array -lf_serialize
+
+build_sources_program test-serialize-from_simple.c test-serialize-from_simple_get.c test-serialize-from_simple_range.c test-serialize-from_simple_select.c test-serialize-to_simple.c
+build_sources_program test-serialize.c
+
+build_script no
+build_shared yes
+build_static no
+
+path_headers tests/unit/c
+path_sources tests/unit/c
+
+has_path_standard no
+preserve_path_headers yes
+
+search_exclusive yes
+search_shared yes
+search_static yes
+
+defines -Ibuild/includes
+defines_static -Lbuild/libraries/static
+defines_shared -Lbuild/libraries/shared
+
+flags -O2 -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-parentheses
+flags-clang -Wno-logical-op-parentheses
+flags-test -fstack-protector -Wall
+
+flags_program -fPIE
