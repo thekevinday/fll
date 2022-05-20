@@ -32,6 +32,7 @@ extern "C" {
       f_array_length_t build_libraries_length = fake_build_parameter_library_link_path_s.used + data->path_build_libraries_shared.used;
 
       f_char_t build_libraries[build_libraries_length + 1];
+      build_libraries[build_libraries_length] = 0;
 
       memcpy(build_libraries, fake_build_parameter_library_link_path_s.string, sizeof(f_char_t) * fake_build_parameter_library_link_path_s.used);
 
@@ -42,11 +43,10 @@ extern "C" {
         memcpy(build_libraries + fake_build_parameter_library_link_path_s.used, data->path_build_libraries_static.string, sizeof(f_char_t) * data->path_build_libraries_static.used);
       }
 
-      build_libraries[build_libraries_length] = 0;
-
       f_array_length_t build_includes_length = fake_build_parameter_library_include_s.used + data->path_build_includes.used;
 
       f_char_t build_includes[build_includes_length + 1];
+      build_includes[build_includes_length] = 0;
 
       memcpy(build_includes, fake_build_parameter_library_include_s.string, sizeof(f_char_t) * fake_build_parameter_library_include_s.used);
       memcpy(build_includes + fake_build_parameter_library_include_s.used, data->path_build_includes.string, sizeof(f_char_t) * data->path_build_includes.used);
