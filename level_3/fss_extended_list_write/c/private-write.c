@@ -157,7 +157,6 @@ extern "C" {
     input.size_read = 2048;
 
     f_array_length_t total = 0;
-    f_array_length_t previous = 0;
 
     f_string_range_t range = f_string_range_t_initialize;
     f_string_range_t range_ignore = f_string_range_t_initialize;

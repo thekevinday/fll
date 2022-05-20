@@ -405,7 +405,7 @@ extern "C" {
         }
 
         // Clear buffers before continuing.
-        macro_f_fss_nest_t_delete_simple(data.nest);
+        f_fss_nest_resize(0, &data.nest);
         f_string_dynamic_resize(0, &data.buffer);
       }
 
@@ -521,17 +521,17 @@ extern "C" {
           }
 
           // Clear buffers before repeating the loop.
-          macro_f_fss_nest_t_delete_simple(data.nest);
+          f_fss_nest_resize(0, &data.nest);
           data.buffer.used = 0;
         } // for
       }
 
-      macro_f_fss_nest_t_delete_simple(data.nest);
+      f_fss_nest_resize(0, &data.nest);
       f_string_dynamic_resize(0, &data.buffer);
-      macro_fss_embedded_list_read_depths_t_delete_simple(depths);
-      macro_f_fss_delimits_t_delete_simple(objects_delimits);
-      macro_f_fss_delimits_t_delete_simple(contents_delimits);
-      macro_f_fss_comments_t_delete_simple(comments);
+      fss_embedded_list_read_depths_resize(0, &depths);
+      f_array_lengths_resize(0, &objects_delimits);
+      f_array_lengths_resize(0, &contents_delimits);
+      f_string_ranges_resize(0, &comments);
     }
     else {
       fll_print_format("%r%[%QYou failed to specify one or more files.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context, f_string_eol_s);

@@ -249,7 +249,7 @@ extern "C" {
 #endif // _di_control_packet_header_flag_
 
 #ifndef _di_control_packet_header_length_
-  uint32_t control_packet_header_length(const bool is_big, const f_char_t buffer[]) {
+  uint32_t control_packet_header_length(const bool is_big, const uint8_t buffer[]) {
 
     #ifdef _is_F_endian_big
       if (is_big) {
@@ -296,8 +296,6 @@ extern "C" {
       status = f_socket_read(&data->socket, f_socket_flag_peek_d, (void *) head, &length);
       if (F_status_is_error(status)) return status;
       if (length < 5) return F_status_set_error(F_packet_not);
-
-      uint8_t contol = control_packet_header_flag(head);
 
       // Only the first two bits of the 8 Control bits are allowed to be set to 1 for this Packet.
       if (head[0] & (~(control_packet_flag_binary_d | control_packet_flag_endian_big_d))) {
@@ -785,7 +783,7 @@ extern "C" {
             }
 
             if (F_status_is_error(status)) {
-              if (append_ids[i] && main->parameters.array[append_ids[i]].result == f_console_result_additional_e || !append_hass[i]) {
+              if ((append_ids[i] && main->parameters.array[append_ids[i]].result == f_console_result_additional_e) || !append_hass[i]) {
                 fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_append", F_true);
               }
               else {

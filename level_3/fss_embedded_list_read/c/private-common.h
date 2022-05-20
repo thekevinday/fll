@@ -115,44 +115,6 @@ extern "C" {
   } fss_embedded_list_read_depths_t;
 
   #define fss_embedded_list_read_depths_t_initialize { 0, 0, 0 }
-
-  #define macro_fss_embedded_list_read_depths_t_clear(depths) macro_f_memory_structure_clear(depths)
-
-  #define macro_fss_embedded_list_read_depths_t_delete_simple(depths) \
-    depths.used = depths.size; \
-    while (depths.used > 0) { \
-      --depths.used; \
-      macro_fss_embedded_list_read_depth_t_delete_simple(depths.array[depths.used]); \
-    } \
-    if (!depths.used) macro_f_memory_structure_delete_simple(depths, fss_embedded_list_read_depth_t)
-
-  #define macro_fss_embedded_list_read_depths_t_resize(status, depths, new_length) \
-    status = F_none; \
-    if (new_length < depths.size) { \
-      f_array_length_t i = depths.size - new_length; \
-      for (; i < depths.size; ++i) { \
-        macro_fss_embedded_list_read_depth_t_delete_simple(depths.array[i]); \
-      } \
-    } \
-    if (status == F_none) status = f_memory_resize(depths.size, new_length, sizeof(fss_embedded_list_read_depth_t), (void **) & depths.array); \
-    if (status == F_none) { \
-      depths.size = new_length; \
-      if (depths.used > depths.size) depths.used = new_length; \
-    }
-
-  #define macro_fss_embedded_list_read_depths_t_adjust(status, depths, new_length) \
-    status = F_none; \
-    if (new_length < depths.size) { \
-      f_array_length_t i = depths.size - new_length; \
-      for (; i < depths.size; ++i) { \
-        macro_fss_embedded_list_read_depth_t_delete_simple(depths.array[i]); \
-      } \
-    } \
-    if (status == F_none) status = f_memory_adjust(depths.size, new_length, sizeof(fss_embedded_list_read_depth_t), (void **) & depths.array); \
-    if (status == F_none) { \
-      depths.size = new_length; \
-      if (depths.used > depths.size) depths.used = new_length; \
-    }
 #endif // _di_fss_embedded_list_read_depths_t_
 
 /**
@@ -200,6 +162,47 @@ extern "C" {
 #ifndef _di_fss_embedded_list_read_data_delete_
   extern f_status_t fss_embedded_list_read_data_delete(fss_embedded_list_read_data_t * const data) F_attribute_visibility_internal_d;
 #endif // _di_fss_embedded_list_read_data_delete_
+
+/**
+ * Deallocate depth data.
+ *
+ * @param depth
+ *   The depth data to delete.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Status codes (with error bit) are returned on any problem.
+ *
+ * @see f_string_dynamic_resize()
+ */
+#ifndef _di_fss_embedded_list_read_depth_delete_
+  extern f_status_t fss_embedded_list_read_depth_delete(fss_embedded_list_read_depth_t * const depth) F_attribute_visibility_internal_d;
+#endif // _di_fss_embedded_list_read_depth_delete_
+
+/**
+ * Resize the depth array.
+ *
+ * @param length
+ *   The new size to use.
+ * @param depths
+ *   The depth array to resize.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Errors (with error bit) from: f_memory_resize().
+ *
+ *   Errors (with error bit) from: fss_embedded_list_read_depths_increase().
+ *
+ * @see f_memory_resize()
+ *
+ * @see fss_embedded_list_read_depth_delete_simple()
+ * @see fss_embedded_list_read_depths_increase()
+ */
+#ifndef _di_fss_embedded_list_read_depths_resize_
+  extern f_status_t fss_embedded_list_read_depths_resize(const f_array_length_t length, fss_embedded_list_read_depths_t *depths) F_attribute_visibility_internal_d;
+#endif // _di_fss_embedded_list_read_depths_resize_
 
 /**
  * Print a message about a process signal being recieved, such as an interrupt signal.

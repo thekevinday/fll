@@ -339,7 +339,6 @@ extern "C" {
         }
 
         f_array_length_t i = 0;
-        f_array_length_t j = 0;
 
         for (; i < cache->object_actions.used; ++i) {
 
@@ -1294,8 +1293,6 @@ extern "C" {
     f_status_t status = F_none;
     f_status_t status_lock = F_none;
 
-    f_string_dynamics_t arguments_none = f_string_dynamics_t_initialize;
-
     controller_main_t * const main = (controller_main_t *) process->main_data;
     controller_thread_t * const thread = (controller_thread_t *) process->main_thread;
 
@@ -1310,7 +1307,6 @@ extern "C" {
     }
 
     pid_t *child = 0;
-    f_string_dynamic_t *child_pid_file = 0;
 
     {
       f_array_length_t i = 0;
@@ -1841,7 +1837,6 @@ extern "C" {
     if (F_status_is_error(status)) return status;
 
     f_array_length_t i = 0;
-    f_array_length_t j = 0;
     f_array_length_t first = 0;
     f_string_range_t range = f_string_range_t_initialize;
 
@@ -1860,26 +1855,26 @@ extern "C" {
         status = f_string_dynamic_increase_by(action.parameters.array[process->cache.expanded.used].used + controller_common_allocation_large_d, buffer);
 
         // Apply the IKI delimits.
-        for (j = 0; j < iki_data->delimits.used && iki_data->delimits.array[j] < iki_data->variable.array[0].start; ++j) {
-          action.parameters.array[process->cache.expanded.used].string[iki_data->delimits.array[j]] = f_iki_syntax_placeholder_s.string[0];
+        for (i = 0; i < iki_data->delimits.used && iki_data->delimits.array[i] < iki_data->variable.array[0].start; ++i) {
+          action.parameters.array[process->cache.expanded.used].string[iki_data->delimits.array[i]] = f_iki_syntax_placeholder_s.string[0];
         } // for
 
         if (iki_data->variable.used) {
-          for (j = 0, first = 0; j < iki_data->variable.used; ++j) {
+          for (i = 0, first = 0; i < iki_data->variable.used; ++i) {
 
             // Copy everything up to the start of the IKI variable.
-            if (first < iki_data->variable.array[j].start) {
+            if (first < iki_data->variable.array[i].start) {
               range.start = first;
-              range.stop = iki_data->variable.array[j].start - 1;
+              range.stop = iki_data->variable.array[i].start - 1;
 
               status = f_string_dynamic_partial_append_nulless(action.parameters.array[process->cache.expanded.used], range, buffer);
               if (F_status_is_error(status)) break;
             }
 
-            status = controller_rule_expand_iki(process, action.parameters.array[process->cache.expanded.used], iki_data->vocabulary.array[j], iki_data->content.array[j], buffer);
+            status = controller_rule_expand_iki(process, action.parameters.array[process->cache.expanded.used], iki_data->vocabulary.array[i], iki_data->content.array[i], buffer);
             if (F_status_is_error(status)) break;
 
-            first = iki_data->variable.array[j].stop + 1;
+            first = iki_data->variable.array[i].stop + 1;
           } // for
 
           if (F_status_is_error(status)) break;
@@ -1897,8 +1892,8 @@ extern "C" {
         }
 
         // Unapply the IKI delimits.
-        for (j = 0; j < iki_data->delimits.used && iki_data->delimits.array[j] < iki_data->variable.array[0].start; ++j) {
-          action.parameters.array[process->cache.expanded.used].string[iki_data->delimits.array[j]] = f_iki_syntax_slash_s.string[0];
+        for (i = 0; i < iki_data->delimits.used && iki_data->delimits.array[i] < iki_data->variable.array[0].start; ++i) {
+          action.parameters.array[process->cache.expanded.used].string[iki_data->delimits.array[i]] = f_iki_syntax_slash_s.string[0];
         } // for
       }
       else {
@@ -2490,7 +2485,6 @@ extern "C" {
 
     {
       f_array_length_t j = 0;
-      f_array_length_t k = 0;
       f_array_length_t id_rule = 0;
       f_array_length_t id_dependency = 0;
 
@@ -2943,7 +2937,6 @@ extern "C" {
       f_array_length_t j = 0;
 
       controller_rule_item_t *rule_item = 0;
-      controller_rule_action_t *rule_action = 0;
 
       // Copy all rule item action statuses from the rule process to the rule.
       for (i = 0; i < rule->items.used; ++i) {
@@ -3757,7 +3750,6 @@ extern "C" {
       return status;
     }
 
-    f_array_length_t path_original_length = 0;
     f_string_dynamic_t *setting_value = 0;
     f_string_dynamics_t *setting_values = 0;
     f_string_maps_t *setting_maps = 0;

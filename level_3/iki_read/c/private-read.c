@@ -604,8 +604,6 @@ extern "C" {
       return F_none;
     }
 
-    f_status_t status = F_none;
-
     f_array_length_t i = 0;
     f_array_length_t j = 0;
 
@@ -681,8 +679,6 @@ extern "C" {
     if (data->main->parameters.array[iki_read_parameter_wrap_e].result != f_console_result_additional_e) {
       return F_none;
     }
-
-    f_status_t status = F_none;
 
     f_array_length_t i = 0;
     f_array_length_t j = 0;

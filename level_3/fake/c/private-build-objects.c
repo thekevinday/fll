@@ -46,7 +46,6 @@ extern "C" {
 
     f_array_length_t i = 0;
     f_array_length_t j = 0;
-    uint8_t k = 0;
 
     for (i = 0; i < 2; ++i) {
 

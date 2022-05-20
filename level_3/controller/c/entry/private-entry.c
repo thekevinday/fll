@@ -832,9 +832,6 @@ extern "C" {
     f_status_t status = F_none;
     f_status_t status_lock = F_none;
 
-    f_array_length_t i = 0;
-    f_array_length_t j = 0;
-
     f_array_length_t at_i = 0;
     f_array_length_t at_j = 1;
 
@@ -1896,7 +1893,6 @@ extern "C" {
     cache->delimits.used = 0;
 
     f_array_length_t i = 0;
-    f_array_length_t j = 0;
     f_array_length_t line = 0;
 
     controller_entry_t *entry = is_entry ? &global.setting->entry : &global.setting->exit;

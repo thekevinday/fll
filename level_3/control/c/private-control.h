@@ -84,7 +84,7 @@ extern "C" {
  *   The 32-bit number representing the length.
  */
 #ifndef _di_control_packet_header_length_
-  extern uint32_t control_packet_header_length(const bool is_big, const f_char_t buffer[]) F_attribute_visibility_internal_d;
+  extern uint32_t control_packet_header_length(const bool is_big, const uint8_t buffer[]) F_attribute_visibility_internal_d;
 #endif // _di_control_packet_header_length_
 
 /**

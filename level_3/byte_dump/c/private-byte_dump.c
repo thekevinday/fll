@@ -17,7 +17,6 @@ extern "C" {
     int byte_get = 0;
 
     int8_t width_utf = -1;
-    int8_t width_current = 0;
     int8_t width_count = 0;
 
     byte_dump_cell_t cell = byte_dump_cell_t_initialize;
