@@ -144,9 +144,6 @@ extern "C" {
         if (status == F_true) {
           status = F_space;
         }
-        else {
-          status = F_valid_not;
-        }
       }
     }
 
