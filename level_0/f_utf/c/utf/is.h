@@ -454,6 +454,50 @@ extern "C" {
 #endif // _di_f_utf_is_punctuation_
 
 /**
+ * Check to see if the entire byte block of the character is an ASCII or UTF-8 subscript character.
+ *
+ * @param character
+ *   The character to validate.
+ *   There must be enough space allocated to compare against, as limited by width_max.
+ * @param width_max
+ *   The maximum width available for checking.
+ *   Can be anything greater than 0.
+ *
+ * @return
+ *   F_true if a UTF-8 subscript character.
+ *   F_false if not a UTF-8 subscript character.
+ *
+ *   F_complete_not_utf (with error bit set) if character is an incomplete UTF-8 sequence.
+ *   F_utf (with error bit) if Unicode is an invalid Unicode character.
+ *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
+ */
+#ifndef _di_f_utf_is_subscript_
+  extern f_status_t f_utf_is_subscript(const f_string_t character, const f_array_length_t width_max);
+#endif // _di_f_utf_is_subscript_
+
+/**
+ * Check to see if the entire byte block of the character is an ASCII or UTF-8 superscript character.
+ *
+ * @param character
+ *   The character to validate.
+ *   There must be enough space allocated to compare against, as limited by width_max.
+ * @param width_max
+ *   The maximum width available for checking.
+ *   Can be anything greater than 0.
+ *
+ * @return
+ *   F_true if a UTF-8 superscript character.
+ *   F_false if not a UTF-8 superscript character.
+ *
+ *   F_complete_not_utf (with error bit set) if character is an incomplete UTF-8 sequence.
+ *   F_utf (with error bit) if Unicode is an invalid Unicode character.
+ *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
+ */
+#ifndef _di_f_utf_is_superscript_
+  extern f_status_t f_utf_is_superscript(const f_string_t character, const f_array_length_t width_max);
+#endif // _di_f_utf_is_superscript_
+
+/**
  * Check to see if the entire byte block of the character is a surrogate UTF-8 character.
  *
  * @param character

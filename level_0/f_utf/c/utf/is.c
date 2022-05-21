@@ -565,6 +565,64 @@ extern "C" {
   }
 #endif // _di_f_utf_is_punctuation_
 
+#ifndef _di_f_utf_is_subscript_
+  f_status_t f_utf_is_subscript(const f_string_t character, const f_array_length_t width_max) {
+    #ifndef _di_level_0_parameter_checking_
+      if (width_max < 1) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (macro_f_utf_byte_width_is(*character)) {
+      if (macro_f_utf_byte_width_is(*character) > width_max) {
+        return F_status_set_error(F_complete_not_utf);
+      }
+
+      if (macro_f_utf_byte_width_is(*character) == 1) {
+        return F_status_set_error(F_utf_fragment);
+      }
+
+      f_utf_char_t character_utf = 0;
+
+      {
+        const f_status_t status = private_f_utf_char_to_character(character, width_max, &character_utf);
+        if (F_status_is_error(status)) return status;
+      }
+
+      return private_f_utf_character_is_subscript(character_utf);
+    }
+
+    return F_false;
+  }
+#endif // _di_f_utf_is_subscript_
+
+#ifndef _di_f_utf_is_superscript_
+  f_status_t f_utf_is_superscript(const f_string_t character, const f_array_length_t width_max) {
+    #ifndef _di_level_0_parameter_checking_
+      if (width_max < 1) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (macro_f_utf_byte_width_is(*character)) {
+      if (macro_f_utf_byte_width_is(*character) > width_max) {
+        return F_status_set_error(F_complete_not_utf);
+      }
+
+      if (macro_f_utf_byte_width_is(*character) == 1) {
+        return F_status_set_error(F_utf_fragment);
+      }
+
+      f_utf_char_t character_utf = 0;
+
+      {
+        const f_status_t status = private_f_utf_char_to_character(character, width_max, &character_utf);
+        if (F_status_is_error(status)) return status;
+      }
+
+      return private_f_utf_character_is_superscript(character_utf);
+    }
+
+    return F_false;
+  }
+#endif // _di_f_utf_is_superscript_
+
 #ifndef _di_f_utf_is_symbol_
   f_status_t f_utf_is_symbol(const f_string_t character, const f_array_length_t width_max) {
     #ifndef _di_level_0_parameter_checking_

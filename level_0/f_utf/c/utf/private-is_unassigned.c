@@ -40,8 +40,8 @@ extern "C" {
         return F_true;
       }
 
-      // Armenian: U+0560, U+0588, U+058B, U+058C.
-      if (character == 0xd5a00000 || character == 0xd6880000 || character == 0xd68b0000 || character == 0xd68c0000) {
+      // Armenian: U+058B, U+058C.
+      if (character == 0xd68b0000 || character == 0xd68c0000) {
         return F_true;
       }
 
@@ -55,8 +55,8 @@ extern "C" {
         return F_true;
       }
 
-      // Hebrew: U+05EB to U+05EF.
-      if (character >= 0xd7ab0000 && character <= 0xd7af0000) {
+      // Hebrew: U+05EB to U+05EE.
+      if (character >= 0xd7ab0000 && character <= 0xd7ae0000) {
         return F_true;
       }
 
@@ -75,8 +75,8 @@ extern "C" {
         return F_true;
       }
 
-      // Nko: U+07FB to U+07FF.
-      if (character >= 0xdfbb0000 && character <= 0xdfbf0000) {
+      // Nko: U+07FB to U+07FC.
+      if (character >= 0xdfbb0000 && character <= 0xdfbc0000) {
         return F_true;
       }
 
@@ -95,8 +95,18 @@ extern "C" {
         return F_true;
       }
 
-      // Arabic Extended A: U+08B5 to U+08E2.
-      if (character >= 0xe0a2b500 && character <= 0xe0a3a200) {
+      // Syriac Supplement: U+086B to U+086F.
+      if (character >= 0xe0a1ab00 && character <= 0xe0a1af00) {
+        return F_true;
+      }
+
+      // Arabic Extended B: U+088F.
+      if (character == 0xe0a28f00) {
+        return F_true;
+      }
+
+      // Arabic Extended B: U+0892 to U+0897.
+      if (character >= 0xe0a29200 && character <= 0xe0a29700) {
         return F_true;
       }
 
@@ -140,13 +150,8 @@ extern "C" {
         return F_true;
       }
 
-      // Bengali: U+09DE, U+09E4, U+09E5.
-      if (character == 0xe0a79e00 || character == 0xe0a7a400 || character == 0xe0a7a500) {
-        return F_true;
-      }
-
-      // Bengali: U+09FC to U+09FF.
-      if (character >= 0xe0a7bc00 && character <= 0xe0a7bf00) {
+      // Bengali: U+09DE, U+09E4, U+09E5, U+09FF.
+      if (character == 0xe0a79e00 || character == 0xe0a7a400 || character == 0xe0a7a500 || character == 0xe0a7bf00) {
         return F_true;
       }
 
@@ -205,8 +210,8 @@ extern "C" {
         return F_true;
       }
 
-      // Gurmukhi: U+0A76 to U+0A7F.
-      if (character >= 0xe0a9b600 && character <= 0xe0a9bf00) {
+      // Gurmukhi: U+0A77 to U+0A7F.
+      if (character >= 0xe0a9b700 && character <= 0xe0a9bf00) {
         return F_true;
       }
 
@@ -242,11 +247,6 @@ extern "C" {
 
       // Gujarati: U+0AF2 to U+0AF8.
       if (character >= 0xe0abb200 && character <= 0xe0abb800) {
-        return F_true;
-      }
-
-      // Gujarati: U+0AFA to U+0AFF.
-      if (character >= 0xe0abba00 && character <= 0xe0abbf00) {
         return F_true;
       }
 
@@ -800,8 +800,8 @@ extern "C" {
         return F_true;
       }
 
-      // Combining Diacritical Marks Extended: U+1ABF to U+1AFF.
-      if (character >= 0xe1aabf00 && character <= 0xe1abbf00) {
+      // Combining Diacritical Marks Extended: U+1ACF to U+1AFF.
+      if (character >= 0xe1ab8f00 && character <= 0xe1abbf00) {
         return F_true;
       }
 
@@ -1095,8 +1095,18 @@ extern "C" {
         return F_true;
       }
 
-      // Latin Extended-D: U+A7B8 to U+A7F6.
-      if (character >= 0xea9eb800 && character <= 0xea9fb600) {
+      // Latin Extended-D: U+A7CB to U+A7CF.
+      if (character >= 0xea9f8b00 && character <= 0xea9f8f00) {
+        return F_true;
+      }
+
+      // Latin Extended-D: U+A7D2, U+A7D4.
+      if (character == 0xea9f9200 || character == 0xea9f9400) {
+        return F_true;
+      }
+
+      // Latin Extended-D: U+A7DA to U+A7F1.
+      if (character >= 0xea9f9a00 && character <= 0xea9fb100) {
         return F_true;
       }
 

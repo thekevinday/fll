@@ -347,6 +347,36 @@ extern "C" {
   }
 #endif // _di_f_utf_character_is_punctuation_
 
+#ifndef _di_f_utf_character_is_subscript_
+  f_status_t f_utf_character_is_subscript(const f_utf_char_t character) {
+
+    if (macro_f_utf_char_t_width_is(character)) {
+      if (macro_f_utf_char_t_width_is(character) == 1) {
+        return F_status_set_error(F_utf_fragment);
+      }
+
+      return private_f_utf_character_is_subscript(character);
+    }
+
+    return F_false;
+  }
+#endif // _di_f_utf_character_is_subscript_
+
+#ifndef _di_f_utf_character_is_superscript_
+  f_status_t f_utf_character_is_superscript(const f_utf_char_t character) {
+
+    if (macro_f_utf_char_t_width_is(character)) {
+      if (macro_f_utf_char_t_width_is(character) == 1) {
+        return F_status_set_error(F_utf_fragment);
+      }
+
+      return private_f_utf_character_is_superscript(character);
+    }
+
+    return F_false;
+  }
+#endif // _di_f_utf_character_is_superscript_
+
 #ifndef _di_f_utf_character_is_symbol_
   f_status_t f_utf_character_is_symbol(const f_utf_char_t character) {
 
