@@ -192,15 +192,15 @@ extern "C" {
     #define F_utf_char_mask_char_3_d 0x00ff0000 // 0000 0000, 1111 1111, 0000 0000, 0000 0000
     #define F_utf_char_mask_char_4_d 0xff000000 // 1111 1111, 0000 0000, 0000 0000, 0000 0000
 
-    #define macro_f_utf_char_t_to_char_1(character) (((character) & F_utf_char_mask_char_1_d))        // Grab first byte.
-    #define macro_f_utf_char_t_to_char_2(character) (((character) & F_utf_char_mask_char_2_d) >> 8u)  // Grab second byte.
-    #define macro_f_utf_char_t_to_char_3(character) (((character) & F_utf_char_mask_char_3_d) >> 16u) // Grab third byte.
-    #define macro_f_utf_char_t_to_char_4(character) (((character) & F_utf_char_mask_char_4_d) >> 24u) // Grab fourth byte.
+    #define macro_f_utf_char_t_to_char_1(character) (((character) & F_utf_char_mask_char_1_d))       // Grab first byte.
+    #define macro_f_utf_char_t_to_char_2(character) (((character) & F_utf_char_mask_char_2_d) >> 8)  // Grab second byte.
+    #define macro_f_utf_char_t_to_char_3(character) (((character) & F_utf_char_mask_char_3_d) >> 16) // Grab third byte.
+    #define macro_f_utf_char_t_to_char_4(character) (((character) & F_utf_char_mask_char_4_d) >> 24) // Grab fourth byte.
 
-    #define macro_f_utf_char_t_from_char_1(character) (((character)) & F_utf_char_mask_char_1_d)        // Shift to first byte.
-    #define macro_f_utf_char_t_from_char_2(character) (((character) << 8u) & F_utf_char_mask_char_2_d)  // Shift to second byte.
-    #define macro_f_utf_char_t_from_char_3(character) (((character) << 16u) & F_utf_char_mask_char_3_d) // Shift to third byte.
-    #define macro_f_utf_char_t_from_char_4(character) (((character) << 24u) & F_utf_char_mask_char_4_d) // Shift to fourth byte.
+    #define macro_f_utf_char_t_from_char_1(character) (((character)) & F_utf_char_mask_char_1_d)       // Shift to first byte.
+    #define macro_f_utf_char_t_from_char_2(character) (((character) << 8) & F_utf_char_mask_char_2_d)  // Shift to second byte.
+    #define macro_f_utf_char_t_from_char_3(character) (((character) << 16) & F_utf_char_mask_char_3_d) // Shift to third byte.
+    #define macro_f_utf_char_t_from_char_4(character) (((character) << 24) & F_utf_char_mask_char_4_d) // Shift to fourth byte.
   #else
     #define F_utf_char_mask_byte_1_d 0xff000000 // 1111 1111, 0000 0000, 0000 0000, 0000 0000
     #define F_utf_char_mask_byte_2_d 0xffff0000 // 1111 1111, 1111 1111, 0000 0000, 0000 0000
