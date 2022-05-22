@@ -6,156 +6,6 @@
 extern "C" {
 #endif
 
-#if !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_extended_object_write_)
-  f_status_t private_fl_fss_basic_write_object_trim(const f_fss_quote_t quoted, const f_array_length_t used_start, f_state_t state, f_string_dynamic_t * const destination) {
-
-    f_status_t status = F_none;
-    f_string_range_t destination_range = macro_f_string_range_t_initialize2(destination->used);
-    f_array_length_t i = 0;
-
-    uint8_t width = 0;
-    const f_char_t quote_char = quoted == f_fss_quote_type_double_e ? f_string_ascii_quote_double_s.string[0] : f_string_ascii_quote_single_s.string[0];
-
-    // If there are any spaces, then this will be quoted so find the first non-placeholder character.
-    for (; destination_range.start < destination->used; ++destination_range.start) {
-
-      if (state.interrupt) {
-        status = state.interrupt((void *) &state, 0);
-
-        if (F_status_set_fine(status) == F_interrupt) {
-          destination->used = used_start;
-
-          return F_status_set_error(F_interrupt);
-        }
-      }
-
-      if (destination->string[destination_range.start] != f_fss_delimit_placeholder_s.string[0]) break;
-    } // for
-
-    if (destination->string[destination_range.start] == quote_char) {
-      const f_array_length_t front = destination_range.start;
-
-      for (++destination_range.start; destination_range.start < destination->used; ++destination_range.start) {
-
-        if (state.interrupt) {
-          status = state.interrupt((void *) &state, 0);
-
-          if (F_status_set_fine(status) == F_interrupt) {
-            destination->used = used_start;
-
-            return F_status_set_error(F_interrupt);
-          }
-        }
-
-        if (destination->string[destination_range.start] == f_fss_delimit_placeholder_s.string[0]) continue;
-
-        status = f_fss_is_space(state, *destination, destination_range);
-
-        if (F_status_is_error(status)) {
-          destination->used = used_start;
-
-          return status;
-        }
-
-        if (status == F_false) break;
-
-        width = macro_f_utf_byte_width(destination->string[destination_range.start]);
-
-        for (i = 0; i < width; ++i) {
-          destination->string[destination_range.start + i] = f_fss_delimit_placeholder_s.string[0];
-        } // for
-      } // for
-
-      // Find the last quote.
-      for (destination_range.start = destination->used - 1; destination_range.start > front; --destination_range.start) {
-
-        if (state.interrupt) {
-          status = state.interrupt((void *) &state, 0);
-
-          if (F_status_set_fine(status) == F_interrupt) {
-            destination->used = used_start;
-
-            return F_status_set_error(F_interrupt);
-          }
-        }
-
-        if (destination->string[destination_range.start] == quote_char) {
-          --destination_range.start;
-
-          break;
-        }
-      } // for
-
-      const f_array_length_t rear = destination_range.start + 1;
-
-      for (; destination_range.start > front; --destination_range.start) {
-
-        if (state.interrupt) {
-          status = state.interrupt((void *) &state, 0);
-
-          if (F_status_set_fine(status) == F_interrupt) {
-            destination->used = used_start;
-
-            return F_status_set_error(F_interrupt);
-          }
-        }
-
-        if (destination->string[destination_range.start] == f_fss_delimit_placeholder_s.string[0]) continue;
-
-        status = f_fss_is_space(state, *destination, destination_range);
-
-        // When going backwards, getting incomplete UTF-8 sequences is not an error.
-        if (F_status_set_fine(status) == F_complete_not_utf) continue;
-
-        if (F_status_is_error(status)) {
-          destination->used = used_start;
-
-          return status;
-        }
-
-        if (status == F_false) break;
-
-        width = macro_f_utf_byte_width(destination->string[destination_range.start]);
-
-        for (i = 0; i < width; ++i) {
-          destination->string[destination_range.start + i] = f_fss_delimit_placeholder_s.string[0];
-        } // for
-      } // for
-
-      // If there is no whitespace between the quotes, post-trimming, then remove the quotes.
-      for (destination_range.start = front; destination_range.start < rear; ++destination_range.start) {
-
-        if (state.interrupt) {
-          status = state.interrupt((void *) &state, 0);
-
-          if (F_status_set_fine(status) == F_interrupt) {
-            destination->used = used_start;
-
-            return F_status_set_error(F_interrupt);
-          }
-        }
-
-        status = f_fss_is_space(state, *destination, destination_range);
-
-        if (F_status_is_error(status)) {
-          destination->used = used_start;
-
-          return status;
-        }
-
-        if (status == F_true) break;
-      } // for
-
-      if (destination_range.start == rear) {
-        destination->string[front] = f_fss_delimit_placeholder_s.string[0];
-        destination->string[rear] = f_fss_delimit_placeholder_s.string[0];
-      }
-    }
-
-    return F_none;
-  }
-#endif // !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_extended_object_write_)
-
 #if !defined(_di_fl_fss_basic_list_content_write_) || !defined(_di_fl_fss_extended_list_content_write_) || !defined(_di_fl_fss_embedded_list_content_write_)
   f_status_t private_fl_fss_basic_list_write_add_until_end(const f_string_static_t buffer, f_state_t state, f_string_range_t * const range, f_string_dynamic_t * const destination) {
 
@@ -408,7 +258,7 @@ extern "C" {
 
         // Only the first slash before a quoted needs to be escaped (or not) as once there is a slash before a quoted, this cannot ever be a quote object.
         // This simplifies the number of slashes needed.
-        macro_f_fss_delimits_t_increase(status, state.step_small, (*delimits));
+        status = f_array_lengths_increase(state.step_small, delimits);
         if (F_status_is_error(status)) return status;
 
         delimits->array[delimits->used++] = first_slash;
@@ -569,7 +419,7 @@ extern "C" {
               range->start = first_slash;
 
               if (slash_count % 2 == 0) {
-                macro_f_fss_delimits_t_increase_by(status, (*delimits), slash_count / 2);
+                status = f_array_lengths_increase_by(slash_count / 2, delimits);
                 if (F_status_is_error(status)) return status;
 
                 while (slash_count > 0) {
@@ -657,7 +507,7 @@ extern "C" {
                 return F_fss_found_object;
               }
               else {
-                macro_f_fss_delimits_t_increase_by(status, (*delimits), (slash_count / 2) + 1);
+                status = f_array_lengths_increase_by((slash_count / 2) + 1, delimits);
                 if (F_status_is_error(status)) return status;
 
                 while (slash_count > 0) {
@@ -1251,6 +1101,156 @@ extern "C" {
     return F_none_eos;
   }
 #endif // !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_extended_object_write_) || !defined(_di_fl_fss_extended_content_write_)
+
+#if !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_extended_object_write_)
+  f_status_t private_fl_fss_basic_write_object_trim(const f_fss_quote_t quoted, const f_array_length_t used_start, f_state_t state, f_string_dynamic_t * const destination) {
+
+    f_status_t status = F_none;
+    f_string_range_t destination_range = macro_f_string_range_t_initialize2(destination->used);
+    f_array_length_t i = 0;
+
+    uint8_t width = 0;
+    const f_char_t quote_char = quoted == f_fss_quote_type_double_e ? f_string_ascii_quote_double_s.string[0] : f_string_ascii_quote_single_s.string[0];
+
+    // If there are any spaces, then this will be quoted so find the first non-placeholder character.
+    for (; destination_range.start < destination->used; ++destination_range.start) {
+
+      if (state.interrupt) {
+        status = state.interrupt((void *) &state, 0);
+
+        if (F_status_set_fine(status) == F_interrupt) {
+          destination->used = used_start;
+
+          return F_status_set_error(F_interrupt);
+        }
+      }
+
+      if (destination->string[destination_range.start] != f_fss_delimit_placeholder_s.string[0]) break;
+    } // for
+
+    if (destination->string[destination_range.start] == quote_char) {
+      const f_array_length_t front = destination_range.start;
+
+      for (++destination_range.start; destination_range.start < destination->used; ++destination_range.start) {
+
+        if (state.interrupt) {
+          status = state.interrupt((void *) &state, 0);
+
+          if (F_status_set_fine(status) == F_interrupt) {
+            destination->used = used_start;
+
+            return F_status_set_error(F_interrupt);
+          }
+        }
+
+        if (destination->string[destination_range.start] == f_fss_delimit_placeholder_s.string[0]) continue;
+
+        status = f_fss_is_space(state, *destination, destination_range);
+
+        if (F_status_is_error(status)) {
+          destination->used = used_start;
+
+          return status;
+        }
+
+        if (status == F_false) break;
+
+        width = macro_f_utf_byte_width(destination->string[destination_range.start]);
+
+        for (i = 0; i < width; ++i) {
+          destination->string[destination_range.start + i] = f_fss_delimit_placeholder_s.string[0];
+        } // for
+      } // for
+
+      // Find the last quote.
+      for (destination_range.start = destination->used - 1; destination_range.start > front; --destination_range.start) {
+
+        if (state.interrupt) {
+          status = state.interrupt((void *) &state, 0);
+
+          if (F_status_set_fine(status) == F_interrupt) {
+            destination->used = used_start;
+
+            return F_status_set_error(F_interrupt);
+          }
+        }
+
+        if (destination->string[destination_range.start] == quote_char) {
+          --destination_range.start;
+
+          break;
+        }
+      } // for
+
+      const f_array_length_t rear = destination_range.start + 1;
+
+      for (; destination_range.start > front; --destination_range.start) {
+
+        if (state.interrupt) {
+          status = state.interrupt((void *) &state, 0);
+
+          if (F_status_set_fine(status) == F_interrupt) {
+            destination->used = used_start;
+
+            return F_status_set_error(F_interrupt);
+          }
+        }
+
+        if (destination->string[destination_range.start] == f_fss_delimit_placeholder_s.string[0]) continue;
+
+        status = f_fss_is_space(state, *destination, destination_range);
+
+        // When going backwards, getting incomplete UTF-8 sequences is not an error.
+        if (F_status_set_fine(status) == F_complete_not_utf) continue;
+
+        if (F_status_is_error(status)) {
+          destination->used = used_start;
+
+          return status;
+        }
+
+        if (status == F_false) break;
+
+        width = macro_f_utf_byte_width(destination->string[destination_range.start]);
+
+        for (i = 0; i < width; ++i) {
+          destination->string[destination_range.start + i] = f_fss_delimit_placeholder_s.string[0];
+        } // for
+      } // for
+
+      // If there is no whitespace between the quotes, post-trimming, then remove the quotes.
+      for (destination_range.start = front; destination_range.start < rear; ++destination_range.start) {
+
+        if (state.interrupt) {
+          status = state.interrupt((void *) &state, 0);
+
+          if (F_status_set_fine(status) == F_interrupt) {
+            destination->used = used_start;
+
+            return F_status_set_error(F_interrupt);
+          }
+        }
+
+        status = f_fss_is_space(state, *destination, destination_range);
+
+        if (F_status_is_error(status)) {
+          destination->used = used_start;
+
+          return status;
+        }
+
+        if (status == F_true) break;
+      } // for
+
+      if (destination_range.start == rear) {
+        destination->string[front] = f_fss_delimit_placeholder_s.string[0];
+        destination->string[rear] = f_fss_delimit_placeholder_s.string[0];
+      }
+    }
+
+    return F_none;
+  }
+#endif // !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_extended_object_write_)
 
 #ifdef __cplusplus
 } // extern "C"

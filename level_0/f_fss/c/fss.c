@@ -93,7 +93,7 @@ extern "C" {
   f_status_t f_fss_fail_utf(f_state_t state, const f_status_t status) {
 
     if (F_status_is_error(status)) {
-      if (F_status_set_fine(status) == F_utf_fragment || F_status_set_fine(status) == F_complete_not_utf || F_status_set_fine(status) == F_utf) {
+      if (F_status_set_fine(status) == F_utf_fragment || F_status_set_fine(status) == F_complete_not_utf || F_status_set_fine(status) == F_utf_not) {
         if (!(state.flag & f_fss_state_flag_utf_fail_on_valid_not_e)) {
           return F_status_set_fine(status);
         }
@@ -108,7 +108,7 @@ extern "C" {
   f_status_t f_fss_fail_utf_to_false(f_state_t state, const f_status_t status) {
 
     if (F_status_is_error(status)) {
-      if (F_status_set_fine(status) == F_utf_fragment || F_status_set_fine(status) == F_complete_not_utf || F_status_set_fine(status) == F_utf) {
+      if (F_status_set_fine(status) == F_utf_fragment || F_status_set_fine(status) == F_complete_not_utf || F_status_set_fine(status) == F_utf_not) {
         if (!(state.flag & f_fss_state_flag_utf_fail_on_valid_not_e)) {
           return F_false;
         }
@@ -237,7 +237,7 @@ extern "C" {
 
         // Not enough space in buffer or in range range to process UTF-8 character.
         if (position + utf_width >= buffer->used || position + utf_width > range.stop) {
-          return f_fss_fail_utf(state, F_status_set_error(F_utf));
+          return f_fss_fail_utf(state, F_status_set_error(F_utf_not));
         }
 
         if (distance > 0) {

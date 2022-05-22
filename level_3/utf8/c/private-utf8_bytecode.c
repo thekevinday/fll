@@ -21,13 +21,13 @@ extern "C" {
       status = f_utf_unicode_to(character.string, character.used, &codepoint);
     }
     else {
-      status = F_status_set_error(F_utf);
+      status = F_status_set_error(F_utf_not);
     }
 
     if (F_status_is_error(status)) {
       status = F_status_set_fine(status);
 
-      if (status == F_failure || status == F_utf || status == F_complete_not_utf || status == F_utf_fragment || status == F_valid_not) {
+      if (status == F_failure || status == F_utf_not || status == F_complete_not_utf || status == F_utf_fragment || status == F_valid_not) {
         valid_not = F_true;
 
         utf8_print_character_invalid(data, character);
@@ -53,7 +53,7 @@ extern "C" {
     }
 
     if (valid_not || F_status_is_error(status)) {
-      return F_utf;
+      return F_utf_not;
     }
 
     return F_none;
@@ -118,7 +118,7 @@ extern "C" {
             }
           }
 
-          if (status == F_utf) {
+          if (status == F_utf_not) {
             valid = F_false;
           }
 
@@ -147,7 +147,7 @@ extern "C" {
         }
       }
 
-      if (status == F_utf) {
+      if (status == F_utf_not) {
         valid = F_false;
       }
     }

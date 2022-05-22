@@ -45,8 +45,8 @@ extern "C" {
  *   Errors (with error bit) from: f_string_append().
  *   Errors (with error bit) from: f_string_dynamic_append().
  *   Errors (with error bit) from: f_string_dynamic_resize().
- *   Errors (with error bit) from: fll_fss_extended_write_string().
- *   Errors (with error bit) from: fll_fss_payload_write_string().
+ *   Errors (with error bit) from: fll_fss_extended_write().
+ *   Errors (with error bit) from: fll_fss_payload_write().
  *
  * @see f_string_append()
  * @see f_string_dynamic_append()

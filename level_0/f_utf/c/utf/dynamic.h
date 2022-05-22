@@ -887,6 +887,7 @@ extern "C" {
  *   F_data_not_stop on success, but the range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
@@ -913,6 +914,7 @@ extern "C" {
  *   F_data_not_stop on success, but the range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
@@ -939,6 +941,7 @@ extern "C" {
  *   F_data_not_stop on success, but the range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
  *
  *   Errors (with error bit) from: f_memory_resize().
  */

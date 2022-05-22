@@ -3924,7 +3924,7 @@ extern "C" {
     }
 
     if (private_f_utf_character_is_valid(character) == F_false) {
-      return F_status_set_error(F_utf);
+      return F_status_set_error(F_utf_not);
     }
 
     // U+0000 -> U+007F (ASCII).

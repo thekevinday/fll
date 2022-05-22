@@ -62,22 +62,24 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_none_stop on success after reaching stopping point .
+ *   F_none_stop on success after reaching stopping point.
  *   F_none_eos on success after reaching the end of the buffer.
  *   F_data_not_stop no data to write due start location being greater than stop location.
  *   F_data_not_eos no data to write due start location being greater than or equal to buffer size.
  *   F_data_not_eol if there is no data to write and EOL was reached (@todo review related code and detemine what this is doing).
  *
- *   F_complete_not_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
- *   F_interrupt (with error bit) if stopping due to an interrupt.
- *   F_memory_not (with error bit) on out of memory.
- *   F_number_overflow (with error bit) if the maximimum buffer size is reached.
+ *   F_number_overflow (with error bit) if the maximum buffer size is reached.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_utf (with error bit) is returned on failure to read/process a UTF-8 character.
  *
+ *   Errors (with error bit) from: f_string_ranges_increase().
+ *   Errors (with error bit) from: f_string_rangess_increase().
+ *   Errors (with error bit) from: f_uint8s_increase().
  *   Errors (with error bit) from: fl_fss_extended_content_read().
  *   Errors (with error bit) from: fl_fss_extended_object_read().
  *
+ * @see f_string_ranges_increase()
+ * @see f_string_rangess_increase()
+ * @see f_uint8s_increase()
  * @see fl_fss_extended_content_read()
  * @see fl_fss_extended_object_read()
  */
@@ -114,21 +116,19 @@ extern "C" {
  *   F_data_not_eos no data to write due start location being greater than or equal to buffer size.
  *   F_data_not_stop no data to write due start location being greater than stop location.
  *
- *   F_complete_not_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
- *   F_interrupt (with error bit) if stopping due to an interrupt.
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_utf (with error bit) is returned on failure to read/process a UTF-8 character.
  *
+ *   Errors (with error bit) from: f_string_dynamic_increase().
  *   Errors (with error bit) from: fl_fss_extended_content_write().
  *   Errors (with error bit) from: fl_fss_extended_object_write().
  *
+ * @see f_string_dynamic_increase()
  * @see fl_fss_extended_content_write()
  * @see fl_fss_extended_object_write()
  */
-#ifndef _di_fll_fss_extended_write_string_
-  extern f_status_t fll_fss_extended_write_string(const f_string_static_t object, const f_string_statics_t contents, const f_fss_quote_t quote, f_state_t state, f_string_dynamic_t * const destination);
-#endif // _di_fll_fss_extended_write_string_
+#ifndef _di_fll_fss_extended_write_
+  extern f_status_t fll_fss_extended_write(const f_string_static_t object, const f_string_statics_t contents, const f_fss_quote_t quote, f_state_t state, f_string_dynamic_t * const destination);
+#endif // _di_fll_fss_extended_write_
 
 #ifdef __cplusplus
 } // extern "C"

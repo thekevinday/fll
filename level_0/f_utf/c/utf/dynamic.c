@@ -682,7 +682,7 @@ extern "C" {
     while (buffer.string[range->start] != f_utf_char_t_eol_s) {
 
       if (macro_f_utf_char_t_width_is(buffer.string[range->start]) == 1) {
-        return F_status_set_error(F_utf);
+        return F_status_set_error(F_utf_fragment);
       }
 
       ++range->start;
@@ -707,7 +707,7 @@ extern "C" {
     while (buffer.string[range->start] != seek_to_this) {
 
       if (macro_f_utf_char_t_width_is(buffer.string[range->start]) == 1) {
-        return F_status_set_error(F_utf);
+        return F_status_set_error(F_utf_fragment);
       }
 
       if (buffer.string[range->start] == f_utf_char_t_eol_s) return F_none_eol;
@@ -734,7 +734,7 @@ extern "C" {
     while (buffer.string[range->start] != seek_to_this) {
 
       if (macro_f_utf_char_t_width_is(buffer.string[range->start]) == 1) {
-        return F_status_set_error(F_utf);
+        return F_status_set_error(F_utf_fragment);
       }
 
       ++range->start;

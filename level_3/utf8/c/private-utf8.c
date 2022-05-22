@@ -57,7 +57,7 @@ extern "C" {
         }
       }
 
-      if (status == F_utf) {
+      if (status == F_utf_not) {
         valid = F_false;
       }
 

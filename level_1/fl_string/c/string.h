@@ -867,7 +867,7 @@ extern "C" {
  *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *   F_complete_not_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_utf (with error bit) if character is an invalid UTF-8 character.
+ *   F_utf_not (with error bit) if character is an invalid UTF-8 character.
  *
  *   Errors (with error bit) from: f_utf_char_to_character().
  *
@@ -957,7 +957,7 @@ extern "C" {
  *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *   F_complete_not_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_utf (with error bit) if character is an invalid UTF-8 character.
+ *   F_utf_not (with error bit) if character is an invalid UTF-8 character.
  *
  *   Errors (with error bit) from: f_utf_char_to_character().
  *
@@ -1005,7 +1005,7 @@ extern "C" {
  *   F_complete_not_utf (with error bit) if a character is an incomplete UTF-8 fragment.
  *   F_maybe (with error bit) if a character could be a whitespace but width is not long enough. (This is only returned for an otherwise valid FLL Identifier.)
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_utf (with error bit) if character is an invalid UTF-8 character.
+ *   F_utf_not (with error bit) if character is an invalid UTF-8 character.
  *
  *   Errors (with error bit) from: f_utf_is_whitespace().
  *   Errors (with error bit) from: f_utf_is_word().
@@ -1098,7 +1098,7 @@ extern "C" {
  *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *   F_complete_not_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_utf (with error bit) if character is an invalid UTF-8 character.
+ *   F_utf_not (with error bit) if character is an invalid UTF-8 character.
  *
  *   Errors (with error bit) from: f_utf_char_to_character().
  *
@@ -1186,7 +1186,7 @@ extern "C" {
  *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
  *   F_complete_not_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_utf (with error bit) if character is an invalid UTF-8 character.
+ *   F_utf_not (with error bit) if character is an invalid UTF-8 character.
  *
  *   Errors (with error bit) from: f_utf_char_to_character().
  *

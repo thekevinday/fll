@@ -29,8 +29,8 @@ extern "C" {
  *   F_true if a UTF-8 character.
  *   F_false if not a UTF-8 character.
  *
- *   F_utf (with error bit) if unicode is an invalid Unicode character.
- *   F_utf_fragment (with error bit) if character is an incomplete UTF-8 fragment.
+ *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
+ *   F_utf_not (with error bit) if unicode is an invalid Unicode character.
  *
  * @see f_utf_character_is_unassigned()
  * @see f_utf_is_unassigned()

@@ -95,7 +95,7 @@ extern "C" {
           prepend = &main->parameters.arguments.array[index];
         }
 
-        status = fll_fss_payload_write_string(*object, *content, trim, prepend, state, buffer);
+        status = fll_fss_payload_write(*object, *content, trim, prepend, state, buffer);
 
         if (F_status_set_fine(status) == F_none_eol) {
           fss_payload_write_error_parameter_unsupported_eol_print(main);
@@ -104,7 +104,7 @@ extern "C" {
         }
 
         if (F_status_is_error(status)) {
-          fll_error_print(main->error, F_status_set_fine(status), "fll_fss_payload_write_string", F_true);
+          fll_error_print(main->error, F_status_set_fine(status), "fll_fss_payload_write", F_true);
 
           return status;
         }

@@ -136,7 +136,7 @@ extern "C" {
       return F_false;
     }
 
-    if (status == F_utf) {
+    if (status == F_utf_not) {
       if (print.verbosity != f_console_verbosity_quiet_e) {
         flockfile(print.to.stream);
 
@@ -152,27 +152,11 @@ extern "C" {
       return F_false;
     }
 
-    if (status == F_complete_not_utf) {
-      if (print.verbosity != f_console_verbosity_quiet_e) {
-        flockfile(print.to.stream);
-
-        fl_print_format("%r%[%QInvalid UTF-8 character (truncated) found", print.to.stream, f_string_eol_s, print.context, print.prefix);
-
-        private_fll_error_print_function(print, function);
-
-        fl_print_format(".%]%r", print.to.stream, print.context, f_string_eol_s);
-
-        funlockfile(print.to.stream);
-      }
-
-      return F_false;
-    }
-
     if (status == F_utf_fragment) {
       if (print.verbosity != f_console_verbosity_quiet_e) {
         flockfile(print.to.stream);
 
-        fl_print_format("%r%[%QInvalid UTF-8 character (fragment) found", print.to.stream, f_string_eol_s, print.context, print.prefix);
+        fl_print_format("%r%[%QUTF-8 character (fragment) found", print.to.stream, f_string_eol_s, print.context, print.prefix);
 
         private_fll_error_print_function(print, function);
 

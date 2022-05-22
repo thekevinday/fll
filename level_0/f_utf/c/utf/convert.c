@@ -27,7 +27,6 @@ extern "C" {
 #ifndef _di_f_utf_char_to_char_
   f_status_t f_utf_char_to_char(const f_utf_char_t utf_character, f_string_t *character, f_array_length_t *width_max) {
     #ifndef _di_level_0_parameter_checking_
-      if (!utf_character) return F_status_set_error(F_parameter);
       if (!character) return F_status_set_error(F_parameter);
       if (!width_max) return F_status_set_error(F_parameter);
       if (!*width_max) return F_status_set_error(F_parameter);
@@ -99,7 +98,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (unicode > 0x10ffff) {
-      return F_status_set_error(F_utf);
+      return F_status_set_error(F_utf_not);
     }
 
     // U+0000 -> U+007F.
@@ -138,7 +137,6 @@ extern "C" {
 #ifndef _di_f_utf_character_unicode_string_to_
   f_status_t f_utf_character_unicode_string_to(const f_utf_string_t string, const f_array_length_t length, f_utf_char_t *unicode) {
     #ifndef _di_level_0_parameter_checking_
-      if (!string) return F_status_set_error(F_parameter);
       if (!unicode) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
@@ -217,7 +215,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (unicode > 0x10ffff) {
-      return F_status_set_error(F_utf);
+      return F_status_set_error(F_utf_not);
     }
 
     if (unicode < 0x80) {
@@ -239,7 +237,7 @@ extern "C" {
     }
     else if (unicode < 0x800) {
       if (width_max < 2) {
-        return F_status_set_error(F_utf);
+        return F_status_set_error(F_utf_not);
       }
 
       // U+0080 -> U+07FF
@@ -256,7 +254,7 @@ extern "C" {
     }
     else if (unicode < 0x10000) {
       if (width_max < 3) {
-        return F_status_set_error(F_utf);
+        return F_status_set_error(F_utf_not);
       }
 
       // U+0800 -> U+FFFF
@@ -270,7 +268,7 @@ extern "C" {
     }
     else {
       if (width_max < 4) {
-        return F_status_set_error(F_utf);
+        return F_status_set_error(F_utf_not);
       }
 
       // U+10000 -> U+10FFFF

@@ -105,7 +105,7 @@ extern "C" {
  *   F_equal_to_not when both strings do not equal.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_utf (with error bit) if a character in the string is an invalid UTF-8 character.
+ *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
  */
 #ifndef _di_fl_utf_string_dynamic_compare_
   extern f_status_t fl_utf_string_dynamic_compare(const f_utf_string_static_t string1, const f_utf_string_static_t string2);
@@ -128,7 +128,7 @@ extern "C" {
  *   F_equal_to_not when both strings do not equal.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_utf (with error bit) if a character in the string is an invalid UTF-8 character.
+ *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
  *
  *   Errors (with error bit) from: f_utf_character_is_whitespace().
  *
@@ -208,12 +208,14 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not_eos if source length is 0.
+ *   F_data_not if source length is 0.
  *   F_data_not_stop if range.start > range.stop.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_string_too_large (with error bit) if the combined string is too large.
+ *
+ *   Errors (with error bit) from: f_utf_string_append().
+ *
+ * @see f_utf_string_append()
  */
 #ifndef _di_fl_utf_string_dynamic_rip_
   extern f_status_t fl_utf_string_dynamic_rip(const f_utf_string_static_t source, const f_string_range_t range, f_utf_string_dynamic_t * const destination);
@@ -236,11 +238,14 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not_eos if source length is 0.
+ *   F_data_not if source length is 0.
  *   F_data_not_stop if range.start > range.stop.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_utf_string_append_nulless().
+ *
+ * @see f_utf_string_append_nulless()
  */
 #ifndef _di_fl_utf_string_dynamic_rip_nulless_
   extern f_status_t fl_utf_string_dynamic_rip_nulless(const f_utf_string_static_t source, const f_string_range_t range, f_utf_string_dynamic_t * const destination);
@@ -261,11 +266,11 @@ extern "C" {
  *   F_none on success.
  *   F_none_eol on success, but stopped at EOL.
  *   F_none_eos on success, but stopped at end of buffer.
- *   F_data_not_eos if buffer length is 0.
+ *   F_data_not if buffer length is 0.
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_utf (with error bit) if a character in the buffer is an invalid UTF-8 character.
+ *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
  */
 #ifndef _di_fl_utf_string_dynamic_seek_line_to_char_
   extern f_status_t fl_utf_string_dynamic_seek_line_to_char(const f_utf_string_static_t buffer, f_string_range_t * const range, const f_char_t seek_to_this);
@@ -285,11 +290,11 @@ extern "C" {
  *   F_none on success.
  *   F_none_eol on success, but stopped at EOL.
  *   F_none_eos on success, but stopped at end of buffer.
- *   F_data_not_eos if buffer length is 0.
+ *   F_data_not if buffer length is 0.
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid
- *   F_utf (with error bit) if a character in the buffer is an invalid UTF-8 character.
+ *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
  *
  *   Errors (with error bit) from: f_utf_character_is_graph().
  *
@@ -314,11 +319,11 @@ extern "C" {
  *   F_none_eol on success, but stopped at EOL.
  *   F_none_eos on success, but stopped at end of buffer.
  *   F_none_stop on success, but stopped stop location.
- *   F_data_not_eos if buffer length is 0.
+ *   F_data_not if buffer length is 0.
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_utf (with error bit) if a character in the buffer is an invalid UTF-8 character.
+ *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
  *
  *   Errors (with error bit) from: f_utf_character_is_graph().
  *
@@ -343,11 +348,11 @@ extern "C" {
  *   F_none on success.
  *   F_none_eos on success, but stopped at end of buffer.
  *   F_none_stop on success, but stopped stop location.
- *   F_data_not_eos if buffer length is 0.
+ *   F_data_not if buffer length is 0.
  *   F_data_not_stop if range.start > range.stop.
  *
- *   F_utf (with error bit) if a character in the buffer is an invalid UTF-8 character.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
  */
 #ifndef _di_fl_utf_string_dynamic_seek_to_char_
   extern f_status_t fl_utf_string_dynamic_seek_to_char(const f_utf_string_static_t buffer, f_string_range_t * const range, const f_char_t seek_to_this);
@@ -368,10 +373,10 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not_eos if source length is 0.
+ *   F_data_not if source length is 0.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
  *
  *   Errors (with error bit) from: f_utf_character_is_whitespace().
  *
@@ -398,10 +403,10 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not_eos if source length is 0.
+ *   F_data_not if source length is 0.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
  *
  *   Errors (with error bit) from: f_utf_character_is_whitespace().
  *
@@ -429,7 +434,7 @@ extern "C" {
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_utf (with error bit) if a character in the buffer is an invalid UTF-8 character.
+ *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
  */
 #ifndef _di_fl_utf_string_seek_line_to_char_
   extern f_status_t fl_utf_string_seek_line_to_char(const f_utf_string_t string, f_string_range_t * const range, const f_char_t seek_to_this);
@@ -451,11 +456,8 @@ extern "C" {
  *   F_none_eol on success, but stopped at EOL.
  *   F_data_not_stop if range.start > range.stop.
  *
- *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
- *   F_complete_not_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_utf (with error bit) if a character in the string is an invalid UTF-8 character.
+ *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
  *
  *   Errors (with error bit) from: f_utf_character_is_graph().
  *
@@ -482,11 +484,8 @@ extern "C" {
  *   F_none_stop on success, but stopped stop location.
  *   F_data_not_stop if range.start > range.stop.
  *
- *   F_complete_not_utf (with error bit) if character is an incomplete UTF-8 fragment.
- *   F_complete_not_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_utf (with error bit) if a character in the string is an invalid UTF-8 character.
+ *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
  *
  *   Errors (with error bit) from: f_utf_character_is_graph().
  *
@@ -511,10 +510,10 @@ extern "C" {
  *   F_none on success.
  *   F_none_eos on success, but stopped at end of buffer.
  *   F_none_stop on success, but stopped stop location.
- *
  *   F_data_not_stop if range.start > range.stop.
+ *
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_utf (with error bit) if a character in the buffer is an invalid UTF-8 character.
+ *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
  */
 #ifndef _di_fl_utf_string_seek_to_character_
   extern f_status_t fl_utf_string_seek_to_char(const f_utf_string_t string, f_string_range_t * const range, const f_char_t seek_to_this);

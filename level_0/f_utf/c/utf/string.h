@@ -362,8 +362,8 @@ extern "C" {
  *   F_data_not_stop on success, but the range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_utf (with error bit) if unicode is an invalid Unicode character.
- *   F_utf_fragment (with error bit) if character is an incomplete UTF-8 fragment.
+ *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
+ *   F_utf_not (with error bit) if unicode is an invalid Unicode character.
  *
  *   Errors (with error bit) from: f_memory_resize().
  */
@@ -411,8 +411,8 @@ extern "C" {
  *   F_data_not_stop if range.start > range.stop.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_utf (with error bit) if unicode is an invalid Unicode character.
- *   F_utf_fragment (with error bit) if character is an incomplete UTF-8 fragment.
+ *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
+ *   F_utf_not (with error bit) if unicode is an invalid Unicode character.
  */
 #ifndef _di_f_utf_string_seek_to_
   extern f_status_t f_utf_string_seek_to(const f_utf_string_t string, const f_utf_char_t seek_to, f_string_range_t * const range);

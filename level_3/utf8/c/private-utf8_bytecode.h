@@ -25,9 +25,9 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_utf on invalid UTF-8 (which is still "success" when verifying).
+ *   F_utf_not on invalid UTF-8 (which is still "success" when verifying).
  *
- *   F_utf (with error bit) if not verifying and
+ *   F_utf_not (with error bit) if not verifying and
  *
  *   Errors (with error bit) from: f_utf_unicode_to()
  */

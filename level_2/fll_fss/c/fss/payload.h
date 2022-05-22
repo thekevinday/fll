@@ -70,21 +70,29 @@ extern "C" {
  *   F_data_not_eos no data to write due start location being greater than or equal to buffer size.
  *   F_data_not_stop no data to write due start location being greater than stop location.
  *
- *   F_complete_not_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
+ *   F_fss_found_object_content_not (with error bit) When payload Content is missing.
  *   F_data_not_eos (with error bit) no data to write due start location being greater than or equal to buffer size, except that no "payload" is found.
  *   F_data_not_stop (with error bit) no data to write due start location being greater than stop location, except that no "payload" is found.
- *   F_interrupt (with error bit) if stopping due to an interrupt.
- *   F_memory_not (with error bit) on out of memory.
  *   F_none (with error bit) on success, except that no "payload" is found.
  *   F_none_eos (with error bit) on success after reaching the end of the buffer, except that no "payload" is found.
  *   F_none_stop (with error bit) on success after reaching stopping point, except that no "payload" is found.
- *   F_number_overflow (with error bit) if the maximimum buffer size is reached.
+ *   F_number_overflow (with error bit) if the maximum buffer size is reached.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_utf (with error bit) is returned on failure to read/process a UTF-8 character.
  *
  *   Errors (with error bit) from: fl_fss_basic_list_content_read().
  *   Errors (with error bit) from: fl_fss_basic_list_object_read().
  *
+ *   F_number_overflow (with error bit) if the maximum buffer size is reached.
+ *
+ *   Errors (with error bit) from: f_string_ranges_increase().
+ *   Errors (with error bit) from: f_string_rangess_increase().
+ *   Errors (with error bit) from: f_uint8s_increase().
+ *   Errors (with error bit) from: fl_fss_basic_list_content_read().
+ *   Errors (with error bit) from: fl_fss_basic_list_object_read().
+ *
+ * @see f_string_ranges_increase()
+ * @see f_string_rangess_increase()
+ * @see f_uint8s_increase()
  * @see fl_fss_basic_list_content_read()
  * @see fl_fss_basic_list_object_read()
  */
@@ -131,23 +139,19 @@ extern "C" {
  *   F_data_not_eos no data to write due start location being greater than or equal to buffer size.
  *   F_data_not_stop no data to write due start location being greater than stop location.
  *
- *   F_complete_not_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
- *   F_interrupt (with error bit) if stopping due to an interrupt.
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_utf (with error bit) is returned on failure to read/process a UTF-8 character.
  *
- *   Errors (with error bit) from: f_string_dynamic_increase_by().
+ *   Errors (with error bit) from: f_string_dynamic_increase().
  *   Errors (with error bit) from: fl_fss_basic_list_content_write().
  *   Errors (with error bit) from: fl_fss_basic_list_object_write().
  *
- * @see f_string_dynamic_increase_by()
+ * @see f_string_dynamic_increase()
  * @see fl_fss_basic_list_content_write()
  * @see fl_fss_basic_list_object_write()
  */
-#ifndef _di_fll_fss_payload_write_string_
-  extern f_status_t fll_fss_payload_write_string(const f_string_static_t object, const f_string_static_t content, const bool trim, const f_string_static_t *content_prepend, f_state_t state, f_string_dynamic_t * const destination);
-#endif // _di_fll_fss_payload_write_string_
+#ifndef _di_fll_fss_payload_write_
+  extern f_status_t fll_fss_payload_write(const f_string_static_t object, const f_string_static_t content, const bool trim, const f_string_static_t *content_prepend, f_state_t state, f_string_dynamic_t * const destination);
+#endif // _di_fll_fss_payload_write_
 
 #ifdef __cplusplus
 } // extern "C"

@@ -223,7 +223,7 @@ extern "C" {
       return F_data_not;
     }
 
-    f_status_t status = status = f_string_dynamics_increase_by(arguments.argc, &parameters->arguments);
+    f_status_t status = f_string_dynamics_increase_by(arguments.argc, &parameters->arguments);
     if (F_status_is_error(status)) return status;
 
     // Append the program name parameter.
@@ -383,10 +383,8 @@ extern "C" {
             }
 
             if (parameters->array[i].values_total) {
-              if (needs_value.used + parameters->array[i].values_total > needs_value.size) {
-                status = f_array_lengths_resize(needs_value.used + parameters->array[i].values_total, &needs_value);
-                if (F_status_is_error(status)) break;
-              }
+              status = f_array_lengths_increase_by(parameters->array[i].values_total, &needs_value);
+              if (F_status_is_error(status)) break;
 
               for (values = 0; values < parameters->array[i].values_total; ++values) {
                 needs_value.array[needs_value.used++] = i;

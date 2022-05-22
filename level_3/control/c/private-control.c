@@ -197,7 +197,7 @@ extern "C" {
 
     contents.used = 1;
 
-    status = fll_fss_extended_write_string(control_type_s, contents, 0, state, &data->cache.large);
+    status = fll_fss_extended_write(control_type_s, contents, 0, state, &data->cache.large);
     if (F_status_is_error(status)) return status;
 
     // Payload Header: action.
@@ -205,24 +205,24 @@ extern "C" {
       contents_array[contents.used] = data->argv[main->parameters.remaining.array[contents.used]];
     } // for
 
-    status = fll_fss_extended_write_string(control_action_s, contents, 0, state, &data->cache.large);
+    status = fll_fss_extended_write(control_action_s, contents, 0, state, &data->cache.large);
     if (F_status_is_error(status)) return status;
 
     // Payload Header: length.
     contents_array[0] = f_string_ascii_0_s;
     contents.used = 1;
 
-    status = fll_fss_extended_write_string(control_length_s, contents, 0, state, &data->cache.large);
+    status = fll_fss_extended_write(control_length_s, contents, 0, state, &data->cache.large);
     if (F_status_is_error(status)) return status;
 
     // Payload Packet: Header.
-    status = fll_fss_payload_write_string(f_fss_string_header_s, data->cache.large, F_false, 0, state, &data->cache.packet);
+    status = fll_fss_payload_write(f_fss_string_header_s, data->cache.large, F_false, 0, state, &data->cache.packet);
     if (F_status_is_error(status)) return status;
 
     // Payload Packet: Payload.
     data->cache.large.used = 0;
 
-    status = fll_fss_payload_write_string(f_fss_string_payload_s, data->cache.large, F_false, 0, state, &data->cache.packet);
+    status = fll_fss_payload_write(f_fss_string_payload_s, data->cache.large, F_false, 0, state, &data->cache.packet);
     if (F_status_is_error(status)) return status;
 
     // Construct Packet Size Block.

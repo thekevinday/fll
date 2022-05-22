@@ -110,7 +110,7 @@ extern "C" {
       fl_print_format("%]", data->main->error.to.stream, data->main->context.set.notable);
     }
 
-    if (F_status_set_fine(status) == F_utf) {
+    if (F_status_set_fine(status) == F_utf_not) {
       fl_print_format("%[', not a valid UTF-8 character sequence.%]%r", data->main->error.to.stream, data->main->context.set.error, data->main->context.set.error, f_string_eol_s);
     }
     else if (F_status_set_fine(status) == F_complete_not_utf) {
@@ -135,7 +135,7 @@ extern "C" {
     fl_print_format("%r%[%QFailed to encode Unicode codepoint '%]", data->main->error.to.stream, f_string_eol_s, data->main->context.set.error, data->main->error.prefix, data->main->context.set.error);
     fl_print_format("%[U+%_U%]", data->main->error.to.stream, data->main->context.set.notable, codepoint, data->main->context.set.notable);
 
-    if (F_status_set_fine(status) == F_utf) {
+    if (F_status_set_fine(status) == F_utf_not) {
       fl_print_format("%[', not a valid Unicode codepoint.%]%r", data->main->error.to.stream, data->main->context.set.error, data->main->context.set.error, f_string_eol_s);
     }
     else {

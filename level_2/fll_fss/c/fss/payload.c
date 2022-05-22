@@ -178,8 +178,8 @@ extern "C" {
   }
 #endif // _di_fll_fss_payload_read_
 
-#ifndef _di_fll_fss_payload_write_string_
-  f_status_t fll_fss_payload_write_string(const f_string_static_t object, const f_string_static_t content, const bool trim, const f_string_static_t *content_prepend, f_state_t state, f_string_dynamic_t * const destination) {
+#ifndef _di_fll_fss_payload_write_
+  f_status_t fll_fss_payload_write(const f_string_static_t object, const f_string_static_t content, const bool trim, const f_string_static_t *content_prepend, f_state_t state, f_string_dynamic_t * const destination) {
     #ifndef _di_level_2_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
@@ -236,7 +236,7 @@ extern "C" {
 
     return status;
   }
-#endif // _di_fll_fss_payload_write_string_
+#endif // _di_fll_fss_payload_write_
 
 #ifdef __cplusplus
 } // extern "C"

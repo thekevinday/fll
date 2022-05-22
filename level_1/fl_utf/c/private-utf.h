@@ -71,6 +71,9 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ *   Errors (with error bit) from: f_utf_character_is_whitespace()
+ *
+ * @see f_utf_character_is_whitespace()
  * @see fl_utf_string_compare_trim()
  * @see fl_utf_string_dynamic_compare_trim()
  * @see fl_utf_string_dynamic_partial_compare_trim()
@@ -95,11 +98,13 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not on success but only whitespace found.
+ *   F_data_not on success but only white space found.
  *
- *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ *   Errors (with error bit) from: f_utf_character_is_whitespace()
+ *
+ * @see f_utf_character_is_whitespace()
  * @see fl_utf_string_dynamic_rip()
  * @see fl_utf_string_rip()
  */

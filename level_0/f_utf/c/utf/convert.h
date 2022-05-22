@@ -36,8 +36,8 @@ extern "C" {
  *
  *   F_failure (with error bit) if width is not long enough to convert.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_utf (with error bit) if unicode is an invalid Unicode character.
- *   F_utf_fragment (with error bit) if character is an incomplete UTF-8 fragment.
+ *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
+ *   F_utf_not (with error bit) if unicode is an invalid Unicode character.
  */
 #ifndef _di_f_utf_char_to_char_
   extern f_status_t f_utf_char_to_char(const f_utf_char_t utf_character, f_string_t *character, f_array_length_t *width_max);
@@ -59,8 +59,8 @@ extern "C" {
  *   F_none on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_utf (with error bit) if unicode is an invalid Unicode character.
- *   F_utf_fragment (with error bit) if character is an incomplete UTF-8 fragment.
+ *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
+ *   F_utf_not (with error bit) if unicode is an invalid Unicode character.
  *
  * @see f_utf_character_is_valid()
  */
@@ -84,8 +84,8 @@ extern "C" {
  *   F_none on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_utf (with error bit) if unicode is an invalid Unicode character.
- *   F_utf_fragment (with error bit) if character is an incomplete UTF-8 fragment.
+ *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
+ *   F_utf_not (with error bit) if unicode is an invalid Unicode character.
  */
 #ifndef _di_f_utf_character_unicode_from_
   extern f_status_t f_utf_character_unicode_from(const f_utf_char_t unicode, f_utf_char_t *character);
@@ -136,8 +136,8 @@ extern "C" {
  *
  *   F_failure (with error bit) if width is not long enough to convert.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_utf (with error bit) if unicode is an invalid Unicode character.
- *   F_utf_fragment (with error bit) if character is an incomplete UTF-8 fragment.
+ *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
+ *   F_utf_not (with error bit) if unicode is an invalid Unicode character.
  */
 #ifndef _di_f_utf_char_to_character_
   extern f_status_t f_utf_char_to_character(const f_string_t character, const f_array_length_t width_max, f_utf_char_t *character_utf);
@@ -162,8 +162,8 @@ extern "C" {
  *
  *   F_failure (with error bit) if width_max is not long enough to convert.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_utf (with error bit) if unicode is an invalid Unicode character.
- *   F_utf_fragment (with error bit) if character is an incomplete UTF-8 fragment.
+ *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
+ *   F_utf_not (with error bit) if unicode is an invalid Unicode character.
  */
 #ifndef _di_f_utf_unicode_from_
   extern f_status_t f_utf_unicode_from(const f_utf_char_t unicode, const f_array_length_t width_max, f_string_t *character);
@@ -188,8 +188,8 @@ extern "C" {
  *
  *   F_failure (with error bit) if width is not long enough to convert.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_utf (with error bit) if unicode is an invalid Unicode character.
- *   F_utf_fragment (with error bit) if character is an incomplete UTF-8 fragment.
+ *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
+ *   F_utf_not (with error bit) if unicode is an invalid Unicode character.
  *
  * @see f_utf_character_is_valid()
  */

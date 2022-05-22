@@ -109,7 +109,7 @@ extern "C" {
  *   F_equal_to when both strings equal.
  *   F_equal_to_not when both strings do not equal.
  *
- *   F_utf (with error bit) if a character is not valid UTF-8.
+ *   F_utf_not (with error bit) if a character is not valid UTF-8.
  *
  *   Errors (with error bit) from: f_utf_is_whitespace().
  *
@@ -144,7 +144,7 @@ extern "C" {
  *   F_equal_to when both strings equal.
  *   F_equal_to_not when both strings do not equal.
  *
- *   F_utf (with error bit) if a character is not valid UTF-8.
+ *   F_utf_not (with error bit) if a character is not valid UTF-8.
  *
  *   Errors (with error bit) from: f_utf_is_whitespace().
  *
@@ -173,9 +173,9 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_data_not on success but only whitespace found.
+ *   F_data_not on success but only white space found.
  *
- *   F_utf (with error bit) if a character is not valid UTF-8.
+ *   F_utf_not (with error bit) if a character is not valid UTF-8.
  *
  *   Errors (with error bit) from: f_utf_is_whitespace().
  *

@@ -1237,7 +1237,7 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_maybe) {
-          return F_status_set_error(F_utf);
+          return F_status_set_error(F_utf_not);
         }
 
         return status;
@@ -1276,7 +1276,7 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_maybe) {
-          return F_status_set_error(F_utf);
+          return F_status_set_error(F_utf_not);
         }
 
         return status;
@@ -1319,7 +1319,7 @@ extern "C" {
 
           if (F_status_is_error(status)) {
             if (F_status_set_fine(status) == F_maybe) {
-              return F_status_set_error(F_utf);
+              return F_status_set_error(F_utf_not);
             }
 
             return status;
@@ -1383,7 +1383,7 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_maybe) {
-          return F_status_set_error(F_utf);
+          return F_status_set_error(F_utf_not);
         }
 
         return status;
@@ -1749,7 +1749,7 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_maybe) {
-          return F_status_set_error(F_utf);
+          return F_status_set_error(F_utf_not);
         }
 
         return status;
@@ -1959,7 +1959,7 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_maybe) {
-          return F_status_set_error(F_utf);
+          return F_status_set_error(F_utf_not);
         }
 
         return status;
@@ -2012,7 +2012,7 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_maybe) {
-          return F_status_set_error(F_utf);
+          return F_status_set_error(F_utf_not);
         }
 
         return status;
@@ -2029,7 +2029,7 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_maybe) {
-          return F_status_set_error(F_utf);
+          return F_status_set_error(F_utf_not);
         }
 
         return status;
@@ -2052,7 +2052,7 @@ extern "C" {
 
           if (F_status_is_error(status)) {
             if (F_status_set_fine(status) == F_maybe) {
-              return F_status_set_error(F_utf);
+              return F_status_set_error(F_utf_not);
             }
 
             return status;
@@ -2096,7 +2096,7 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_maybe) {
-          return F_status_set_error(F_utf);
+          return F_status_set_error(F_utf_not);
         }
 
         return status;
@@ -2290,7 +2290,7 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_maybe) {
-          return F_status_set_error(F_utf);
+          return F_status_set_error(F_utf_not);
         }
 
         return status;
@@ -2414,7 +2414,7 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_maybe) {
-          return F_status_set_error(F_utf);
+          return F_status_set_error(F_utf_not);
         }
 
         return status;

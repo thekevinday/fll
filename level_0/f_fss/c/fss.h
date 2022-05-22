@@ -142,8 +142,8 @@ extern "C" {
  *   The status code to check.
  *   This handles status codes (with error bit set):
  *   - F_complete_not_utf
- *   - F_utf
  *   - F_utf_fragment
+ *   - F_utf_not
  *
  * @return
  *   Status is either directly passed through or the error bit is removed depending on state.flag.
@@ -164,8 +164,8 @@ extern "C" {
  *   The status code to check.
  *   This handles status codes (with error bit set):
  *   - F_complete_not_utf
- *   - F_utf
  *   - F_utf_fragment
+ *   - F_utf_not
  *
  * @return
  *   Status is either directly passed through or F_false is returned depending on state.flag.
@@ -297,7 +297,7 @@ extern "C" {
  *   F_none_stop on success and stop point was reached.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_utf (with error bit) if UTF-8 cannot be fully processed (buffer or range range not long enough).
+ *   F_utf_not (with error bit) if UTF-8 cannot be fully processed (buffer or range range not long enough).
  */
 #ifndef _di_f_fss_shift_delimit_
   extern f_status_t f_fss_shift_delimit(f_state_t state, const f_string_range_t range, f_string_dynamic_t * const buffer);

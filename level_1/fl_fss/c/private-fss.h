@@ -16,40 +16,6 @@ extern "C" {
 #endif
 
 /**
- * Trim a given object used by the basic and extended object write functions.
- *
- * @param quoted
- *   If 0, then double quotes are auto-inserted, when required.
- *   Otherwise, this is the type of quote to wrap the object in when writing.
- * @param used_start
- *   The destination.used value before any operations were perfomed.
- * @param state
- *   A state for providing flags and handling interrupts during long running operations.
- *   There is no print_error().
- *   There is no functions structure.
- *   There is no data structure passed to these functions.
- *
- *   When interrupt() returns, only F_interrupt and F_interrupt_not are processed.
- *   Error bit designates an error but must be passed along with F_interrupt.
- *   All other statuses are ignored.
- * @param destination
- *   The buffer where the object is written to.
- *
- * @return
- *   F_none on success.
- *
- *   F_interrupt (with error bit) if stopping due to an interrupt.
- *
- *   Errors (with error bit) from: f_fss_is_space().
- *
- * @see fl_fss_basic_object_write()
- * @see fl_fss_extended_object_write()
- */
-#if !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_extended_object_write_)
-  extern f_status_t private_fl_fss_basic_write_object_trim(const f_fss_quote_t quoted, const f_array_length_t used_start, f_state_t state, f_string_dynamic_t * const destination) F_attribute_visibility_internal_d;
-#endif // !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_extended_object_write_)
-
-/**
  * Add all bytes to destination until stop point, buffer end, or EOL.
  *
  * @param buffer
@@ -75,10 +41,10 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_string_dynamic_increase().
  *
+ * @see f_string_dynamic_increase()
  * @see fl_fss_basic_list_content_write()
  * @see fl_fss_embedded_list_content_write()
  * @see fl_fss_extended_list_content_write()
- * @see f_string_dynamic_increase()
  */
 #if !defined(_di_fl_fss_basic_list_content_write_) || !defined(_di_fl_fss_extended_list_content_write_) || !defined(_di_fl_fss_embedded_list_content_write_)
   extern f_status_t private_fl_fss_basic_list_write_add_until_end(const f_string_static_t buffer, f_state_t state, f_string_range_t * const range, f_string_dynamic_t * const destination) F_attribute_visibility_internal_d;
@@ -108,6 +74,7 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_fss_is_space().
  *
+ * @see f_fss_is_space()
  * @see fl_fss_basic_list_object_write()
  * @see fl_fss_extended_list_object_write()
  */
@@ -161,22 +128,27 @@ extern "C" {
  *   F_end_not_group_eos if EOS was reached before the a group termination was reached.
  *   F_end_not_group_stop if stop point was reached before the a group termination was reached.
  *
- *   F_array_too_large (with error bit) if a buffer is too large.
- *   F_complete_not_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
- *   F_complete_not_utf_eos (with error bit) if the end of buffer is reached before the complete UTF-8 character can be processed.
- *   F_complete_not_utf_stop (with error bit) if the stop location is reached before the complete UTF-8 character can be processed.
  *   F_interrupt (with error bit) if stopping due to an interrupt.
- *   F_memory_not (with error bit) on out of memory.
+ *   F_none_eol (with error bit) after reaching an EOL, which is not supported by the standard.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_utf (with error bit) is returned on failure to read/process a UTF-8 character.
  *
- *   Errors (with error bit) from: f_utf_buffer_increment().
+ *   Errors (with error bit) from: f_array_lengths_increase().
+ *   Errors (with error bit) from: f_array_lengths_increase_by().
  *   Errors (with error bit) from: f_fss_is_graph().
  *   Errors (with error bit) from: f_fss_is_space().
  *   Errors (with error bit) from: f_fss_is_zero_width().
  *   Errors (with error bit) from: f_fss_skip_past_delimit().
  *   Errors (with error bit) from: f_fss_skip_past_space().
+ *   Errors (with error bit) from: f_utf_buffer_increment().
  *
+ * @see f_array_lengths_increase()
+ * @see f_array_lengths_increase_by()
+ * @see f_fss_is_graph()
+ * @see f_fss_is_space()
+ * @see f_fss_is_zero_width()
+ * @see f_fss_skip_past_delimit()
+ * @see f_fss_skip_past_space()
+ * @see f_utf_buffer_increment()
  * @see fl_fss_basic_object_read()
  * @see fl_fss_extended_object_read()
  * @see fl_fss_extended_content_read()
@@ -224,16 +196,23 @@ extern "C" {
  *   F_data_not_stop no data to write due start location being greater than stop location.
  *   F_data_not_eos no data to write due start location being greater than or equal to buffer size.
  *
- *   F_complete_not_utf (with error bit) is returned on failure to read/process a UTF-8 character due to the character being potentially incomplete.
  *   F_interrupt (with error bit) if stopping due to an interrupt.
- *   F_memory_not (with error bit) on out of memory.
  *   F_none_eol (with error bit) after reaching an EOL, which is not supported by the standard.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_string_too_large (with error bit) if appended string length is too large to store in the destination.
- *   F_utf (with error bit) is returned on failure to read/process a UTF-8 character.
  *
+ *   Errors (with error bit) from: f_fss_is_space().
+ *   Errors (with error bit) from: f_fss_skip_past_delimit().
+ *   Errors (with error bit) from: f_fss_skip_past_space().
+ *   Errors (with error bit) from: f_string_dynamic_increase().
+ *   Errors (with error bit) from: f_string_dynamic_increase_by().
  *   Errors (with error bit) from: f_utf_buffer_increment().
  *
+ * @see f_fss_is_space()
+ * @see f_fss_skip_past_delimit()
+ * @see f_fss_skip_past_space()
+ * @see f_string_dynamic_increase()
+ * @see f_string_dynamic_increase_by()
+ * @see f_utf_buffer_increment()
  * @see fl_fss_basic_object_write()
  * @see fl_fss_extended_object_write()
  * @see fl_fss_extended_content_write()
@@ -241,6 +220,41 @@ extern "C" {
 #if !defined(fl_fss_basic_object_write) || !defined(fl_fss_extended_object_write) || !defined(_di_fl_fss_extended_content_write_)
   extern f_status_t private_fl_fss_basic_write(const bool object_as, const f_string_static_t object, const f_fss_quote_t quoted, f_state_t state, f_string_range_t * const range, f_string_dynamic_t * const destination) F_attribute_visibility_internal_d;
 #endif // !defined(fl_fss_basic_object_write) || !defined(fl_fss_extended_object_write) || !defined(_di_fl_fss_extended_content_write_)
+
+/**
+ * Trim a given object used by the basic and extended object write functions.
+ *
+ * @param quoted
+ *   If 0, then double quotes are auto-inserted, when required.
+ *   Otherwise, this is the type of quote to wrap the object in when writing.
+ * @param used_start
+ *   The destination.used value before any operations were perfomed.
+ * @param state
+ *   A state for providing flags and handling interrupts during long running operations.
+ *   There is no print_error().
+ *   There is no functions structure.
+ *   There is no data structure passed to these functions.
+ *
+ *   When interrupt() returns, only F_interrupt and F_interrupt_not are processed.
+ *   Error bit designates an error but must be passed along with F_interrupt.
+ *   All other statuses are ignored.
+ * @param destination
+ *   The buffer where the object is written to.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_interrupt (with error bit) if stopping due to an interrupt.
+ *
+ *   Errors (with error bit) from: f_fss_is_space().
+ *
+ * @see f_fss_is_space()
+ * @see fl_fss_basic_object_write()
+ * @see fl_fss_extended_object_write()
+ */
+#if !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_extended_object_write_)
+  extern f_status_t private_fl_fss_basic_write_object_trim(const f_fss_quote_t quoted, const f_array_length_t used_start, f_state_t state, f_string_dynamic_t * const destination) F_attribute_visibility_internal_d;
+#endif // !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_extended_object_write_)
 
 #ifdef __cplusplus
 } // extern "C"
