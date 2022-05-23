@@ -158,6 +158,9 @@ extern "C" {
  * The byte structure is intended to be read left to right in memory regardless of system endianness.
  * This is done so that the first character (the left most) can be read naturally as a string, such as string[0] = first character.
  *
+ * On little-endian systems, the hex-string 0xff is represented as internally as 0x000000ff.
+ * This needs to be converted into the internal representation of 0xff000000 to be properly represented as a "f_utf_char_t".
+ *
  * The macro_f_utf_char_t_mask_byte_* are used to get the entire character set fo a given width.
  *
  * The macro_f_utf_char_t_mask_char_* are used to get a specific UTF-8 block as a single character range.
@@ -182,22 +185,22 @@ extern "C" {
   #define macro_f_utf_char_t_initialize(code) code
 
   #ifdef _is_F_endian_big
-    #define F_utf_char_mask_byte_1_d 0x000000ff // 0000 0000, 0000 0000, 0000 0000, 1111 1111
-    #define F_utf_char_mask_byte_2_d 0x0000ffff // 0000 0000, 0000 0000, 1111 1111, 1111 1111
-    #define F_utf_char_mask_byte_3_d 0x00ffffff // 0000 0000, 1111 1111, 1111 1111, 1111 1111
+    #define F_utf_char_mask_byte_1_d 0x000000ff // 1111 1111, 0000 0000, 0000 0000, 0000 0000
+    #define F_utf_char_mask_byte_2_d 0x0000ffff // 1111 1111, 1111 1111, 0000 0000, 0000 0000
+    #define F_utf_char_mask_byte_3_d 0x00ffffff // 1111 1111, 1111 1111, 1111 1111, 0000 0000
     #define F_utf_char_mask_byte_4_d 0xffffffff // 1111 1111, 1111 1111, 1111 1111, 1111 1111
 
-    #define F_utf_char_mask_char_1_d 0x000000ff // 0000 0000, 0000 0000, 0000 0000, 1111 1111
-    #define F_utf_char_mask_char_2_d 0x0000ff00 // 0000 0000, 0000 0000, 1111 1111, 0000 0000
-    #define F_utf_char_mask_char_3_d 0x00ff0000 // 0000 0000, 1111 1111, 0000 0000, 0000 0000
-    #define F_utf_char_mask_char_4_d 0xff000000 // 1111 1111, 0000 0000, 0000 0000, 0000 0000
+    #define F_utf_char_mask_char_1_d 0x000000ff // 1111 1111, 0000 0000, 0000 0000, 0000 0000
+    #define F_utf_char_mask_char_2_d 0x0000ff00 // 0000 0000, 1111 1111, 0000 0000, 0000 0000
+    #define F_utf_char_mask_char_3_d 0x00ff0000 // 0000 0000, 0000 0000, 1111 1111, 0000 0000
+    #define F_utf_char_mask_char_4_d 0xff000000 // 0000 0000, 0000 0000, 0000 0000, 1111 1111
 
-    #define macro_f_utf_char_t_to_char_1(character) (((character) & F_utf_char_mask_char_1_d))       // Grab first byte.
-    #define macro_f_utf_char_t_to_char_2(character) (((character) & F_utf_char_mask_char_2_d) >> 8)  // Grab second byte.
-    #define macro_f_utf_char_t_to_char_3(character) (((character) & F_utf_char_mask_char_3_d) >> 16) // Grab third byte.
-    #define macro_f_utf_char_t_to_char_4(character) (((character) & F_utf_char_mask_char_4_d) >> 24) // Grab fourth byte.
+    #define macro_f_utf_char_t_to_char_1(character) ((character) & F_utf_char_mask_char_1_d)         // Grab first byte.
+    #define macro_f_utf_char_t_to_char_2(character) (((character) & F_utf_char_mask_char_2_d) << 8)  // Grab second byte.
+    #define macro_f_utf_char_t_to_char_3(character) (((character) & F_utf_char_mask_char_3_d) << 16) // Grab third byte.
+    #define macro_f_utf_char_t_to_char_4(character) (((character) & F_utf_char_mask_char_4_d) << 24) // Grab fourth byte.
 
-    #define macro_f_utf_char_t_from_char_1(character) (((character)) & F_utf_char_mask_char_1_d)       // Shift to first byte.
+    #define macro_f_utf_char_t_from_char_1(character) ((character) & F_utf_char_mask_char_1_d)         // Shift to first byte.
     #define macro_f_utf_char_t_from_char_2(character) (((character) << 8) & F_utf_char_mask_char_2_d)  // Shift to second byte.
     #define macro_f_utf_char_t_from_char_3(character) (((character) << 16) & F_utf_char_mask_char_3_d) // Shift to third byte.
     #define macro_f_utf_char_t_from_char_4(character) (((character) << 24) & F_utf_char_mask_char_4_d) // Shift to fourth byte.
