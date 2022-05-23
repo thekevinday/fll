@@ -66,9 +66,12 @@ extern "C" {
     } // for
 
     if (F_status_is_error_not(status) && !(data->mode & utf8_mode_from_bytecode_d)) {
-      if (mode_codepoint != utf8_codepoint_mode_ready_e && mode_codepoint != utf8_codepoint_mode_end_e && mode_codepoint != utf8_codepoint_mode_bad_end_e) {
+      if (mode_codepoint != utf8_codepoint_mode_ready_e && mode_codepoint != utf8_codepoint_mode_end_e && mode_codepoint != utf8_codepoint_mode_bad_end_e && mode_codepoint != utf8_codepoint_mode_raw_end_e) {
         if (mode_codepoint == utf8_codepoint_mode_number_e) {
           mode_codepoint = utf8_codepoint_mode_end_e;
+        }
+        else if (mode_codepoint == utf8_codepoint_mode_raw_number_e) {
+          mode_codepoint = utf8_codepoint_mode_raw_end_e;
         }
         else {
           mode_codepoint = utf8_codepoint_mode_bad_end_e;
@@ -77,7 +80,12 @@ extern "C" {
 
         text.used = 0;
 
-        status = utf8_convert_codepoint(data, text, &mode_codepoint);
+        if (mode_codepoint == utf8_codepoint_mode_raw_number_e) {
+          status = utf8_convert_raw(data, text, &mode_codepoint);
+        }
+        else {
+          status = utf8_convert_codepoint(data, text, &mode_codepoint);
+        }
       }
     }
 

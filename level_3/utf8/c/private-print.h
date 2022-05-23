@@ -152,6 +152,46 @@ extern "C" {
 #endif // _di_utf8_print_error_parameter_file_to_too_many_
 
 /**
+ * Print the raw character data (binary / bytecode).
+ *
+ * @param data
+ *   The program data.
+ * @param raw
+ *   The raw string in integer format.
+ * @param width
+ *   The width the raw character represents (a value inclusively from 1 to 4).
+ */
+#ifndef _di_utf8_print_raw_bytecode_
+  extern void utf8_print_raw_bytecode(utf8_data_t * const data, const f_utf_char_t raw, const uint8_t width) F_attribute_visibility_internal_d;
+#endif // _di_utf8_print_raw_bytecode_
+
+/**
+ * Print the raw character data (codepoint).
+ *
+ * @param data
+ *   The program data.
+ * @param raw
+ *   The raw string already in codepoint format.
+ */
+#ifndef _di_utf8_print_raw_codepoint_
+  extern void utf8_print_raw_codepoint(utf8_data_t * const data, const f_string_static_t raw) F_attribute_visibility_internal_d;
+#endif // _di_utf8_print_raw_codepoint_
+
+/**
+ * Print the width or combining state of the for a raw character.
+ *
+ * @param data
+ *   The program data.
+ * @param width
+ *   The pre-calculated width.
+ *
+ * @see utf8_print_width()
+ */
+#ifndef _di_utf8_print_raw_combining_or_width_
+  extern void utf8_print_raw_combining_or_width(utf8_data_t * const data, const uint8_t width) F_attribute_visibility_internal_d;
+#endif // _di_utf8_print_raw_combining_or_width_
+
+/**
  * Print the input file section header.
  *
  * @param data

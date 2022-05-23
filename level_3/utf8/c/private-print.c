@@ -209,6 +209,113 @@ extern "C" {
   }
 #endif // _di_utf8_print_error_parameter_file_to_too_many_
 
+#ifndef _di_utf8_print_raw_bytecode_
+  void utf8_print_raw_bytecode(utf8_data_t * const data, const f_utf_char_t raw, const uint8_t width) {
+
+    if (data->main->parameters.array[utf8_parameter_strip_invalid_e].result == f_console_result_found_e) return;
+    if (data->main->parameters.array[utf8_parameter_verify_e].result == f_console_result_found_e) return;
+
+    f_string_static_t character = macro_f_string_static_t_initialize(0, 0, width);
+
+    uint8_t byte[character.used];
+    character.string = byte;
+
+    if (raw) {
+      if (width == 1) {
+        byte[0] = (uint8_t) (raw & 0xff);
+      }
+      else if (width == 2) {
+        #ifdef _is_F_endian_big
+          byte[0] = (uint8_t) (raw & 0xff);
+          byte[1] = (uint8_t) ((raw & 0xff00) << 8);
+        #else
+          byte[0] = (uint8_t) ((raw & 0xff00) >> 8);
+          byte[1] = (uint8_t) (raw & 0xff);
+        #endif // _is_F_endian_big
+      }
+      else if (width == 3) {
+        #ifdef _is_F_endian_big
+          byte[0] = (uint8_t) (raw & 0xff);
+          byte[1] = (uint8_t) ((raw & 0xff00) << 8);
+          byte[2] = (uint8_t) ((raw & 0xff0000) << 16);
+        #else
+          byte[0] = (uint8_t) ((raw & 0xff0000) >> 16);
+          byte[1] = (uint8_t) ((raw & 0xff00) >> 8);
+          byte[2] = (uint8_t) (raw & 0xff);
+        #endif // _is_F_endian_big
+      }
+      else {
+        #ifdef _is_F_endian_big
+          byte[0] = (uint8_t) (raw & 0xff);
+          byte[1] = (uint8_t) ((raw & 0xff00) << 8);
+          byte[2] = (uint8_t) ((raw & 0xff0000) << 16);
+          byte[3] = (uint8_t) ((raw & 0xff000000) << 24);
+        #else
+          byte[0] = (uint8_t) ((raw & 0xff000000) >> 24);
+          byte[1] = (uint8_t) ((raw & 0xff0000) >> 16);
+          byte[2] = (uint8_t) ((raw & 0xff00) >> 8);
+          byte[3] = (uint8_t) (raw & 0xff);
+        #endif // _is_F_endian_big
+      }
+    }
+    else {
+      memset(byte, 0, sizeof(uint8_t) * width);
+    }
+
+    fl_print_format("%r%[%r%]%r", data->file.stream, data->prepend, data->valid_not, character, data->valid_not, data->append);
+  }
+#endif // _di_utf8_print_raw_bytecode_
+
+#ifndef _di_utf8_print_raw_codepoint_
+  void utf8_print_raw_codepoint(utf8_data_t * const data, const f_string_static_t raw) {
+
+    if (data->main->parameters.array[utf8_parameter_strip_invalid_e].result == f_console_result_found_e) return;
+    if (data->main->parameters.array[utf8_parameter_verify_e].result == f_console_result_found_e) return;
+
+    fl_print_format("%r%[%r%]%r", data->file.stream, data->prepend, data->valid_not, raw, data->valid_not, data->append);
+  }
+#endif // _di_utf8_print_raw_codepoint_
+
+#ifndef _di_utf8_print_raw_combining_or_width_
+  void utf8_print_raw_combining_or_width(utf8_data_t * const data, const uint8_t width) {
+
+    if (data->main->parameters.array[utf8_parameter_strip_invalid_e].result == f_console_result_found_e) return;
+    if (data->main->parameters.array[utf8_parameter_verify_e].result == f_console_result_found_e) return;
+
+    f_status_t status = F_none;
+
+    if (data->mode & utf8_mode_to_combining_d) {
+      fl_print_format("%r%[%r%]%r", data->file.stream, data->prepend, data->valid_not, utf8_string_unknown_s, data->valid_not, data->append);
+    }
+    else if (data->mode & utf8_mode_to_width_d) {
+      const f_string_static_t *character = 0;
+
+      switch (width) {
+        case 1:
+          character = &utf8_string_width_1_s;
+          break;
+
+        case 2:
+          character = &utf8_string_width_2_s;
+          break;
+
+        case 3:
+          character = &utf8_string_width_3_s;
+          break;
+
+        case 4:
+          character = &utf8_string_width_4_s;
+          break;
+
+        default:
+          character = &utf8_string_width_0_s;
+      }
+
+      fl_print_format("%r%[%r%]%r", data->file.stream, data->prepend, data->valid_not, *character, data->valid_not, data->append);
+    }
+  }
+#endif // _di_utf8_print_raw_combining_or_width_
+
 #ifndef _di_utf8_print_section_header_file_
   void utf8_print_section_header_file(utf8_data_t * const data, const f_string_static_t name) {
 

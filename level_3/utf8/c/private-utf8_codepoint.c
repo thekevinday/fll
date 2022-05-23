@@ -26,10 +26,6 @@ extern "C" {
       } // for
     }
 
-    if (!(*mode == utf8_codepoint_mode_end_e || *mode == utf8_codepoint_mode_bad_end_e)) {
-      return F_none;
-    }
-
     if (*mode == utf8_codepoint_mode_end_e) {
       uint32_t codepoint = 0;
 
@@ -53,8 +49,8 @@ extern "C" {
       }
       else if (data->main->parameters.array[utf8_parameter_verify_e].result == f_console_result_none_e) {
         if (data->mode & utf8_mode_to_bytecode_d) {
-          f_char_t byte[5] = { 0, 0, 0, 0, 0 };
-          f_string_static_t character = macro_f_string_static_t_initialize2(byte, 5);
+          f_char_t byte[4] = { 0, 0, 0, 0 };
+          f_string_static_t character = macro_f_string_static_t_initialize(byte, 0, 4);
 
           status = f_utf_unicode_from(codepoint, 4, &character.string);
 
@@ -76,10 +72,13 @@ extern "C" {
         }
       }
     }
-    else {
+    else if (*mode == utf8_codepoint_mode_bad_end_e) {
       status = F_none;
 
       utf8_print_character_invalid(data, character);
+    }
+    else {
+      return F_none;
     }
 
     *mode = utf8_codepoint_mode_ready_e;
@@ -93,6 +92,90 @@ extern "C" {
   }
 #endif // _di_utf8_convert_codepoint_
 
+#ifndef _di_utf8_convert_raw_
+  f_status_t utf8_convert_raw(utf8_data_t * const data, const f_string_static_t character, uint8_t *mode) {
+
+    f_status_t status = F_none;
+    bool valid_not = F_false;
+
+    if (*mode != utf8_codepoint_mode_raw_end_e) {
+      if (data->text.used + character.used >= data->text.size) {
+        status = f_string_dynamic_increase_by(utf8_default_allocation_step_d, &data->text);
+        if (F_status_is_error(status)) return status;
+      }
+
+      for (f_array_length_t i = 0; i < character.used; ++i) {
+        data->text.string[data->text.used++] = character.string[i];
+      } // for
+    }
+
+    if (*mode == utf8_codepoint_mode_raw_end_e) {
+      f_utf_char_t raw = 0;
+
+      {
+        f_number_unsigned_t number = 0;
+
+        status = fl_conversion_dynamic_to_number_unsigned(data->text, &number);
+
+        raw = (f_utf_char_t) number;
+      }
+
+      if (F_status_is_error(status)) {
+        status = F_status_set_fine(status);
+
+        if (status == F_number || status == F_utf_not || status == F_complete_not_utf || status == F_utf_fragment || status == F_number_decimal || status == F_number_negative || status == F_number_positive || status == F_number_overflow) {
+          valid_not = F_true;
+
+          utf8_print_character_invalid(data, character);
+        }
+        else {
+          status = F_status_set_error(status);
+
+          utf8_print_error_decode(data, status, character);
+
+          return status;
+        }
+      }
+      else if (data->main->parameters.array[utf8_parameter_verify_e].result == f_console_result_none_e) {
+
+        // The width actually includes the leading '0x', which is not part of the width of the digit in binary form.
+        uint8_t width = data->text.used > 1 ? (data->text.used - 2) / 2 : 0;
+
+        if ((data->text.used - 2) % 2) {
+          ++width;
+        }
+
+        if (data->mode & utf8_mode_to_bytecode_d) {
+          utf8_print_raw_bytecode(data, raw, width);
+        }
+        else if (data->mode & utf8_mode_to_codepoint_d) {
+          utf8_print_raw_codepoint(data, data->text);
+        }
+        else {
+          utf8_print_raw_combining_or_width(data, width);
+        }
+      }
+    }
+    else if (*mode == utf8_codepoint_mode_bad_end_e) {
+      status = F_none;
+
+      utf8_print_character_invalid(data, character);
+    }
+    else {
+      return F_none;
+    }
+
+    *mode = utf8_codepoint_mode_ready_e;
+    data->text.used = 0;
+
+    if (valid_not || F_status_is_error(status)) {
+      return F_valid_not;
+    }
+
+    return status;
+  }
+#endif // _di_utf8_convert_raw_
+
 #ifndef _di_utf8_detect_codepoint_
   f_status_t utf8_detect_codepoint(utf8_data_t * const data, const f_string_static_t character, uint8_t *mode) {
 
@@ -104,6 +187,9 @@ extern "C" {
     f_status_t status = F_none;
 
     if (character.string[0] == f_string_ascii_u_s.string[0] || character.string[0] == f_string_ascii_U_s.string[0] || character.string[0] == f_string_ascii_plus_s.string[0]) {
+      // Do nothing.
+    }
+    else if (character.string[0] == f_string_ascii_0_s.string[0] || character.string[0] == f_string_ascii_x_s.string[0] || character.string[0] == f_string_ascii_X_s.string[0]) {
       // Do nothing.
     }
     else if (character.string[0] == f_string_ascii_space_s.string[0]) {
@@ -171,6 +257,10 @@ extern "C" {
           *mode = utf8_codepoint_mode_begin_e;
           data->text.used = 0;
         }
+        else if (character.string[0] == f_string_ascii_0_s.string[0]) {
+          *mode = utf8_codepoint_mode_raw_begin_e;
+          data->text.used = 0;
+        }
         else {
           *mode = utf8_codepoint_mode_bad_e;
         }
@@ -181,6 +271,19 @@ extern "C" {
         }
         else {
           *mode = utf8_codepoint_mode_bad_e;
+        }
+      }
+      else if (*mode == utf8_codepoint_mode_raw_begin_e) {
+        if (character.string[0] == f_string_ascii_x_s.string[0] || character.string[0] == f_string_ascii_X_s.string[0]) {
+          *mode = utf8_codepoint_mode_raw_number_e;
+        }
+        else {
+          *mode = utf8_codepoint_mode_bad_e;
+        }
+      }
+      else if (*mode == utf8_codepoint_mode_raw_number_e) {
+        if (status == F_space) {
+          *mode = utf8_codepoint_mode_raw_end_e;
         }
       }
       else if (*mode == utf8_codepoint_mode_number_e) {
@@ -205,8 +308,8 @@ extern "C" {
     f_array_length_t i = 0;
     f_array_length_t j = 0;
 
-    f_char_t block[4] = { 0, 0, 0, 0 };
-    f_string_static_t character = macro_f_string_static_t_initialize2(block, 4);
+    f_char_t block[5] = { 0, 0, 0, 0, 0 };
+    f_string_static_t character = macro_f_string_static_t_initialize(block, 0, 4);
 
     do {
       status = f_file_read_block(file, &data->buffer);
@@ -247,7 +350,15 @@ extern "C" {
             status = utf8_detect_codepoint(data, character, &mode_codepoint);
 
             if (F_status_is_fine(status) && status != F_next) {
-              status = utf8_convert_codepoint(data, character, &mode_codepoint);
+              if (mode_codepoint == utf8_codepoint_mode_raw_begin_e || mode_codepoint == utf8_codepoint_mode_raw_number_e || mode_codepoint == utf8_codepoint_mode_raw_end_e) {
+                status = utf8_convert_raw(data, character, &mode_codepoint);
+
+                // Raw mode represents an invalid Unicode sequence.
+                valid = F_false;
+              }
+              else {
+                status = utf8_convert_codepoint(data, character, &mode_codepoint);
+              }
             }
           }
 
@@ -276,7 +387,15 @@ extern "C" {
         status = utf8_detect_codepoint(data, character, &mode_codepoint);
 
         if (F_status_is_fine(status) && status != F_next) {
-          status = utf8_convert_codepoint(data, character, &mode_codepoint);
+          if (mode_codepoint == utf8_codepoint_mode_raw_begin_e || mode_codepoint == utf8_codepoint_mode_raw_number_e || mode_codepoint == utf8_codepoint_mode_raw_end_e) {
+            status = utf8_convert_raw(data, character, &mode_codepoint);
+
+            // Raw mode represents an invalid Unicode sequence.
+            valid = F_false;
+          }
+          else {
+            status = utf8_convert_codepoint(data, character, &mode_codepoint);
+          }
         }
       }
 

@@ -73,7 +73,7 @@ extern "C" {
     f_array_length_t j = 0;
 
     f_char_t block_character[4] = { 0, 0, 0, 0 };
-    f_string_static_t character = macro_f_string_static_t_initialize2(block_character, 4);
+    f_string_static_t character = macro_f_string_static_t_initialize(block_character, 0, 4);
 
     do {
       status = f_file_read_block(file, &data->buffer);

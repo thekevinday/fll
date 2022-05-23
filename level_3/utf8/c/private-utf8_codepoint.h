@@ -15,7 +15,7 @@ extern "C" {
 /**
  * Convert a codepoint character representation to another format.
  *
- * This automatically determines the output format and is also handles the verify process.
+ * This automatically determines the output format and also handles the verify process.
  *
  * @param data
  *   The program data.
@@ -28,13 +28,41 @@ extern "C" {
  *   F_none on success.
  *   F_utf_not on invalid UTF-8 (which is still "success" when verifying).
  *
- *   F_utf_not (with error bit) if not verifying and
+ *   F_utf_not (with error bit) if not verifying and the Unicode value is invalid.
  *
  *   Errors (with error bit) from: f_utf_unicode_to()
+ *
+ * @see f_utf_unicode_to()
  */
 #ifndef _di_utf8_convert_codepoint_
   extern f_status_t utf8_convert_codepoint(utf8_data_t * const data, const f_string_static_t character, uint8_t *mode) F_attribute_visibility_internal_d;
 #endif // _di_utf8_convert_codepoint_
+
+/**
+ * Convert a raw character representation (hex-digit) to another format.
+ *
+ * This automatically determines the output format and also handles the verify process.
+ *
+ * @param data
+ *   The program data.
+ * @param character
+ *   The a single character currently being processed.
+ * @param mode
+ *   The codepoint mode the text is currently in.
+ *
+ * @return
+ *   F_none on success.
+ *   F_valid_not on invalid raw (which is still "success" when verifying).
+ *
+ *   F_valid_not (with error bit) if not verifying and the raw value is invalid.
+ *
+ *   Errors (with error bit) from: f_utf_unicode_to()
+ *
+ * @see f_utf_unicode_to()
+ */
+#ifndef _di_utf8_convert_raw_
+  extern f_status_t utf8_convert_raw(utf8_data_t * const data, const f_string_static_t character, uint8_t *mode) F_attribute_visibility_internal_d;
+#endif // _di_utf8_convert_raw_
 
 /**
  * Detect a codepoint character.

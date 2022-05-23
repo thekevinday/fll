@@ -99,6 +99,8 @@ extern "C" {
   #define UTF8_string_width_0_s "0"
   #define UTF8_string_width_1_s "1"
   #define UTF8_string_width_2_s "2"
+  #define UTF8_string_width_3_s "3"
+  #define UTF8_string_width_4_s "4"
 
   #define UTF8_string_combining_is_s_length  1
   #define UTF8_string_combining_not_s_length 1
@@ -117,6 +119,8 @@ extern "C" {
   #define UTF8_string_width_0_s_length 1
   #define UTF8_string_width_1_s_length 1
   #define UTF8_string_width_2_s_length 1
+  #define UTF8_string_width_3_s_length 1
+  #define UTF8_string_width_4_s_length 1
 
   extern const f_string_static_t utf8_string_combining_is_s;
   extern const f_string_static_t utf8_string_combining_not_s;
@@ -133,6 +137,8 @@ extern "C" {
   extern const f_string_static_t utf8_string_width_0_s;
   extern const f_string_static_t utf8_string_width_1_s;
   extern const f_string_static_t utf8_string_width_2_s;
+  extern const f_string_static_t utf8_string_width_3_s;
+  extern const f_string_static_t utf8_string_width_4_s;
 
   extern const f_string_static_t utf8_string_valid_not_s;
 #endif // _di_utf8_defines_

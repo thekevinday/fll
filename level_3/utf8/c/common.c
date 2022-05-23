@@ -35,6 +35,8 @@ extern "C" {
   const f_string_static_t utf8_string_width_0_s = macro_f_string_static_t_initialize(UTF8_string_width_0_s, 0, UTF8_string_width_0_s_length);
   const f_string_static_t utf8_string_width_1_s = macro_f_string_static_t_initialize(UTF8_string_width_1_s, 0, UTF8_string_width_1_s_length);
   const f_string_static_t utf8_string_width_2_s = macro_f_string_static_t_initialize(UTF8_string_width_2_s, 0, UTF8_string_width_2_s_length);
+  const f_string_static_t utf8_string_width_3_s = macro_f_string_static_t_initialize(UTF8_string_width_3_s, 0, UTF8_string_width_3_s_length);
+  const f_string_static_t utf8_string_width_4_s = macro_f_string_static_t_initialize(UTF8_string_width_4_s, 0, UTF8_string_width_4_s_length);
 #endif // _di_utf8_defines_
 
 #ifndef _di_utf8_parameters_
