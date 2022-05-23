@@ -145,8 +145,8 @@ extern "C" {
     if (F_status_is_error(status)) return status;
     if (status == F_false) return F_status_set_error(F_directory_not);
 
-    f_string_static_t static_source = macro_f_string_static_t_initialize2(source.string, source.used);
-    f_string_static_t static_destination = macro_f_string_static_t_initialize2(destination.string, destination.used);
+    f_string_static_t static_source = macro_f_string_static_t_initialize(source.string, 0, source.used);
+    f_string_static_t static_destination = macro_f_string_static_t_initialize(destination.string, 0, destination.used);
 
     // Do not allow null termination or trailing path separators in the string's length calculation.
     {
@@ -213,8 +213,8 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    f_string_static_t static_source = macro_f_string_static_t_initialize2(source.string, source.used);
-    f_string_static_t static_destination = macro_f_string_static_t_initialize2(destination.string, destination.used);
+    f_string_static_t static_source = macro_f_string_static_t_initialize(source.string, 0, source.used);
+    f_string_static_t static_destination = macro_f_string_static_t_initialize(destination.string, 0, destination.used);
 
     // Do not allow null termination or trailing path separators in the string's length calculation.
     {
@@ -267,8 +267,8 @@ extern "C" {
     if (F_status_is_error(status)) return status;
     if (status == F_false) return F_status_set_error(F_directory_not);
 
-    f_string_static_t static_source = macro_f_string_static_t_initialize2(source.string, source.used);
-    f_string_static_t static_destination = macro_f_string_static_t_initialize2(destination.string, destination.used);
+    f_string_static_t static_source = macro_f_string_static_t_initialize(source.string, 0, source.used);
+    f_string_static_t static_destination = macro_f_string_static_t_initialize(destination.string, 0, destination.used);
 
     // Do not allow null termination or trailing path separators in the string's length calculation.
     {

@@ -1119,7 +1119,7 @@ extern "C" {
 
           const f_array_length_t id_rule_length = entry_action->parameters.array[0].used + entry_action->parameters.array[1].used + 1;
           f_char_t id_rule_name[id_rule_length + 1];
-          const f_string_static_t alias_rule = macro_f_string_static_t_initialize2(id_rule_name, id_rule_length);
+          const f_string_static_t alias_rule = macro_f_string_static_t_initialize(id_rule_name, 0, id_rule_length);
 
           memcpy(id_rule_name, entry_action->parameters.array[0].string, sizeof(f_char_t) * entry_action->parameters.array[0].used);
           memcpy(id_rule_name + entry_action->parameters.array[0].used + 1, entry_action->parameters.array[1].string, sizeof(f_char_t) * entry_action->parameters.array[1].used);
