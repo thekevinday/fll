@@ -56,9 +56,9 @@ extern "C" {
  *
  *   F_valid_not (with error bit) if not verifying and the raw value is invalid.
  *
- *   Errors (with error bit) from: f_utf_unicode_to()
+ *   Errors (with error bit) from: fl_conversion_dynamic_to_number_unsigned()
  *
- * @see f_utf_unicode_to()
+ * @see fl_conversion_dynamic_to_number_unsigned()
  */
 #ifndef _di_utf8_convert_raw_
   extern f_status_t utf8_convert_raw(utf8_data_t * const data, const f_string_static_t character, uint8_t *mode) F_attribute_visibility_internal_d;
