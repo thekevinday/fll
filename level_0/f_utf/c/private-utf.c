@@ -392,7 +392,7 @@ extern "C" {
         }
 
         // Gurmukhi: U+0A01 to U+0A03.
-        if (character >= 0xe0a88100 && character <= 0xe0a882300) {
+        if (character >= 0xe0a88100 && character <= 0xe0a88230) {
           return F_true;
         }
 
