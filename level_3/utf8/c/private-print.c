@@ -82,7 +82,7 @@ extern "C" {
         }
       }
       else if (data->main->parameters.array[utf8_parameter_strip_invalid_e].result == f_console_result_none_e && data->main->parameters.array[utf8_parameter_verify_e].result == f_console_result_none_e) {
-        fl_print_format("%r%[%r%]%r", data->file.stream, data->prepend, data->valid_not, utf8_string_unknown_s, data->valid_not, data->append);
+        utf8_print_error_combining_or_width(data);
       }
     }
     else if (data->mode & utf8_mode_to_width_d) {
@@ -90,6 +90,16 @@ extern "C" {
     }
   }
 #endif // _di_utf8_print_combining_or_width_
+
+#ifndef _di_utf8_print_error_combining_or_width_
+  void utf8_print_error_combining_or_width(utf8_data_t * const data) {
+
+    if (data->main->parameters.array[utf8_parameter_strip_invalid_e].result == f_console_result_found_e) return;
+    if (data->main->parameters.array[utf8_parameter_verify_e].result == f_console_result_found_e) return;
+
+    fl_print_format("%r%[%r%]%r", data->file.stream, data->prepend, data->valid_not, utf8_string_unknown_s, data->valid_not, data->append);
+  }
+#endif // _di_utf8_print_error_combining_or_width_
 
 #ifndef _di_utf8_print_error_decode_
   void utf8_print_error_decode(utf8_data_t * const data, const f_status_t status, const f_string_static_t character) {
@@ -285,7 +295,7 @@ extern "C" {
     f_status_t status = F_none;
 
     if (data->mode & utf8_mode_to_combining_d) {
-      fl_print_format("%r%[%r%]%r", data->file.stream, data->prepend, data->valid_not, utf8_string_unknown_s, data->valid_not, data->append);
+      utf8_print_error_combining_or_width(data);
     }
     else if (data->mode & utf8_mode_to_width_d) {
       const f_string_static_t *character = 0;
@@ -407,9 +417,38 @@ extern "C" {
       }
     }
 
-    if (data->main->parameters.array[utf8_parameter_strip_invalid_e].result == f_console_result_none_e && data->main->parameters.array[utf8_parameter_verify_e].result == f_console_result_none_e) {
-      fl_print_format("%r%[%r%]%r", data->file.stream, data->prepend, data->valid_not, utf8_string_unknown_s, data->valid_not, data->append);
+    utf8_print_error_combining_or_width(data);
+  }
+#endif // _di_utf8_print_width_
+
+#ifndef _di_utf8_print_width_codepoint_
+  void utf8_print_width_codepoint(utf8_data_t * const data, const f_string_static_t character) {
+
+    f_status_t status = f_utf_is_wide(character.string, character.used);
+
+    if (status == F_true) {
+      fl_print_format("%r%r%r", data->file.stream, data->prepend, utf8_string_width_2_s, data->append);
+
+      return;
     }
+
+    if (status == F_false) {
+      status = f_utf_is_graph(character.string, character.used);
+
+      if (status == F_true) {
+        fl_print_format("%r%r%r", data->file.stream, data->prepend, utf8_string_width_1_s, data->append);
+
+        return;
+      }
+
+      if (status == F_false) {
+        fl_print_format("%r%r%r", data->file.stream, data->prepend, utf8_string_width_0_s, data->append);
+
+        return;
+      }
+    }
+
+    utf8_print_error_combining_or_width(data);
   }
 #endif // _di_utf8_print_width_
 

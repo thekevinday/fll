@@ -69,6 +69,16 @@ extern "C" {
 #endif // _di_utf8_print_combining_or_width_
 
 /**
+ * Print an error regarding the width or combining state of a some character.
+ *
+ * @param data
+ *   The program data.
+ */
+#ifndef _di_utf8_print_error_combining_or_width_
+  extern void utf8_print_error_combining_or_width(utf8_data_t * const data) F_attribute_visibility_internal_d;
+#endif // _di_utf8_print_error_combining_or_width_
+
+/**
  * Print error message when attempt to decode the character failed.
  *
  * @param data

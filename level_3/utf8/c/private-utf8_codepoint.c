@@ -48,27 +48,34 @@ extern "C" {
         }
       }
       else if (data->main->parameters.array[utf8_parameter_verify_e].result == f_console_result_none_e) {
-        if (data->mode & utf8_mode_to_bytesequence_d) {
+        if (data->mode & utf8_mode_to_codepoint_d) {
+          utf8_print_codepoint(data, codepoint);
+        }
+        else {
           f_char_t byte[4] = { 0, 0, 0, 0 };
           f_string_static_t character = macro_f_string_static_t_initialize(byte, 0, 4);
 
           status = f_utf_unicode_from(codepoint, 4, &character.string);
 
           if (F_status_is_error(status)) {
-            utf8_print_error_encode(data, status, codepoint);
+            if (data->mode & utf8_mode_to_bytesequence_d) {
+              utf8_print_error_encode(data, status, codepoint);
+            }
+            else {
+              utf8_print_error_combining_or_width(data);
+            }
           }
-          else {
+          else if (data->mode & utf8_mode_to_bytesequence_d) {
             status = F_none;
             character.used = macro_f_utf_byte_width(character.string[0]);
 
             utf8_print_bytesequence(data, character);
           }
-        }
-        else if (data->mode & utf8_mode_to_codepoint_d) {
-          utf8_print_codepoint(data, codepoint);
-        }
-        else {
-          utf8_print_combining_or_width(data, character);
+          else {
+            status = F_none;
+
+            utf8_print_combining_or_width(data, character);
+          }
         }
       }
     }

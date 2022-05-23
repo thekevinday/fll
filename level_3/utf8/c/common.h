@@ -297,22 +297,22 @@ extern "C" {
  * Modes used to designate how to the input and output are to be processed.
  *
  * utf8_mode_from_*:
- *   - bytesequence:  The input format is bytesequence.
- *   - codepoint: The input format is codepoint (U+XXXX or U+XXXXXX).
+ *   - bytesequence: The input format is bytesequence.
+ *   - codepoint:    The input format is codepoint (U+XXXX or U+XXXXXX).
  *
  * utf8_mode_to_*:
- *   - bytesequence:  The outout format is bytesequence.
- *   - codepoint: The outout format is codepoint (U+XXXX or U+XXXXXX).
- *   - combining: The outout format is whether or not character is combining (may be used with "width").
- *   - width:     The outout format is how wide the character is (may be used with "combining").
+ *   - bytesequence: The outout format is bytesequence.
+ *   - codepoint:    The outout format is codepoint (U+XXXX or U+XXXXXX).
+ *   - combining:    The outout format is whether or not character is combining (may be used with "width").
+ *   - width:        The outout format is how wide the character is (may be used with "combining").
  */
 #ifndef _di_utf8_modes_
-  #define utf8_mode_from_bytesequence_d  0x1
-  #define utf8_mode_from_codepoint_d 0x2
-  #define utf8_mode_to_bytesequence_d    0x4
-  #define utf8_mode_to_codepoint_d   0x8
-  #define utf8_mode_to_combining_d   0x10
-  #define utf8_mode_to_width_d       0x20
+  #define utf8_mode_from_bytesequence_d 0x1
+  #define utf8_mode_from_codepoint_d    0x2
+  #define utf8_mode_to_bytesequence_d   0x4
+  #define utf8_mode_to_codepoint_d      0x8
+  #define utf8_mode_to_combining_d      0x10
+  #define utf8_mode_to_width_d          0x20
 #endif // _di_utf8_modes_
 
 #ifdef __cplusplus
