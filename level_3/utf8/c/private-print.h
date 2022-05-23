@@ -13,7 +13,7 @@ extern "C" {
 #endif
 
 /**
- * Print the bytecode character (such as '豸').
+ * Print the bytesequence character (such as '豸').
  *
  * @param data
  *   The program data.
@@ -21,12 +21,12 @@ extern "C" {
  *   The character to print.
  *   This is a string that represents a single character.
  */
-#ifndef _di_utf8_print_bytecode_
-  extern void utf8_print_bytecode(utf8_data_t * const data, const f_string_static_t character) F_attribute_visibility_internal_d;
-#endif // _di_utf8_print_bytecode_
+#ifndef _di_utf8_print_bytesequence_
+  extern void utf8_print_bytesequence(utf8_data_t * const data, const f_string_static_t character) F_attribute_visibility_internal_d;
+#endif // _di_utf8_print_bytesequence_
 
 /**
- * Print an invalid character either as a Unicode codeblock or as a bytecode.
+ * Print an invalid character either as a Unicode codeblock or as a bytesequence.
  *
  * This handles whether or not the invalid character should be printed or not based on program parameters.
  *
@@ -152,7 +152,7 @@ extern "C" {
 #endif // _di_utf8_print_error_parameter_file_to_too_many_
 
 /**
- * Print the raw character data (binary / bytecode).
+ * Print the raw character data (binary / bytesequence).
  *
  * @param data
  *   The program data.
@@ -161,9 +161,9 @@ extern "C" {
  * @param width
  *   The width the raw character represents (a value inclusively from 1 to 4).
  */
-#ifndef _di_utf8_print_raw_bytecode_
-  extern void utf8_print_raw_bytecode(utf8_data_t * const data, const f_utf_char_t raw, const uint8_t width) F_attribute_visibility_internal_d;
-#endif // _di_utf8_print_raw_bytecode_
+#ifndef _di_utf8_print_raw_bytesequence_
+  extern void utf8_print_raw_bytesequence(utf8_data_t * const data, const f_utf_char_t raw, const uint8_t width) F_attribute_visibility_internal_d;
+#endif // _di_utf8_print_raw_bytesequence_
 
 /**
  * Print the raw character data (codepoint).

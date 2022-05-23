@@ -147,37 +147,37 @@ extern "C" {
  * The main program parameters.
  */
 #ifndef _di_utf8_parameters_
-  #define UTF8_short_from_bytecode_s  "b"
-  #define UTF8_short_from_codepoint_s "c"
-  #define UTF8_short_from_file_s      "f"
+  #define UTF8_short_from_bytesequence_s "b"
+  #define UTF8_short_from_codepoint_s    "c"
+  #define UTF8_short_from_file_s         "f"
 
   #define UTF8_short_headers_s       "H"
   #define UTF8_short_separate_s      "S"
   #define UTF8_short_strip_invalid_s "s"
   #define UTF8_short_verify_s        "v"
 
-  #define UTF8_short_to_bytecode_s  "B"
-  #define UTF8_short_to_codepoint_s "C"
-  #define UTF8_short_to_combining_s "O"
-  #define UTF8_short_to_file_s      "F"
-  #define UTF8_short_to_width_s     "W"
+  #define UTF8_short_to_bytesequence_s "B"
+  #define UTF8_short_to_codepoint_s    "C"
+  #define UTF8_short_to_combining_s    "O"
+  #define UTF8_short_to_file_s         "F"
+  #define UTF8_short_to_width_s        "W"
 
-  #define UTF8_long_from_bytecode_s  "from_bytecode"
-  #define UTF8_long_from_codepoint_s "from_codepoint"
-  #define UTF8_long_from_file_s      "from_file"
+  #define UTF8_long_from_bytesequence_s "from_bytesequence"
+  #define UTF8_long_from_codepoint_s    "from_codepoint"
+  #define UTF8_long_from_file_s         "from_file"
 
   #define UTF8_long_headers_s       "headers"
   #define UTF8_long_separate_s      "separate"
   #define UTF8_long_strip_invalid_s "strip_invalid"
   #define UTF8_long_verify_s        "verify"
 
-  #define UTF8_long_to_bytecode_s  "to_bytecode"
-  #define UTF8_long_to_codepoint_s "to_codepoint"
-  #define UTF8_long_to_combining_s "to_combining"
-  #define UTF8_long_to_file_s      "to_file"
-  #define UTF8_long_to_width_s     "to_width"
+  #define UTF8_long_to_bytesequence_s "to_bytesequence"
+  #define UTF8_long_to_codepoint_s    "to_codepoint"
+  #define UTF8_long_to_combining_s    "to_combining"
+  #define UTF8_long_to_file_s         "to_file"
+  #define UTF8_long_to_width_s        "to_width"
 
-  #define UTF8_short_from_bytecode_s_length  1
+  #define UTF8_short_from_bytesequence_s_length  1
   #define UTF8_short_from_codepoint_s_length 1
   #define UTF8_short_from_file_s_length      1
 
@@ -186,28 +186,28 @@ extern "C" {
   #define UTF8_short_strip_invalid_s_length 1
   #define UTF8_short_verify_s_length        1
 
-  #define UTF8_short_to_bytecode_s_length  1
+  #define UTF8_short_to_bytesequence_s_length  1
   #define UTF8_short_to_codepoint_s_length 1
   #define UTF8_short_to_combining_s_length 1
   #define UTF8_short_to_file_s_length      1
   #define UTF8_short_to_width_s_length     1
 
-  #define UTF8_long_from_bytecode_s_length  13
-  #define UTF8_long_from_codepoint_s_length 14
-  #define UTF8_long_from_file_s_length      9
+  #define UTF8_long_from_bytesequence_s_length 17
+  #define UTF8_long_from_codepoint_s_length    14
+  #define UTF8_long_from_file_s_length         9
 
   #define UTF8_long_headers_s_length       7
   #define UTF8_long_separate_s_length      8
   #define UTF8_long_strip_invalid_s_length 13
   #define UTF8_long_verify_s_length        6
 
-  #define UTF8_long_to_bytecode_s_length  11
-  #define UTF8_long_to_codepoint_s_length 12
-  #define UTF8_long_to_combining_s_length 12
-  #define UTF8_long_to_file_s_length      7
-  #define UTF8_long_to_width_s_length     8
+  #define UTF8_long_to_bytesequence_s_length 15
+  #define UTF8_long_to_codepoint_s_length    12
+  #define UTF8_long_to_combining_s_length    12
+  #define UTF8_long_to_file_s_length         7
+  #define UTF8_long_to_width_s_length        8
 
-  extern const f_string_static_t utf8_short_from_bytecode_s;
+  extern const f_string_static_t utf8_short_from_bytesequence_s;
   extern const f_string_static_t utf8_short_from_codepoint_s;
   extern const f_string_static_t utf8_short_from_file_s;
 
@@ -216,13 +216,13 @@ extern "C" {
   extern const f_string_static_t utf8_short_strip_invalid_s;
   extern const f_string_static_t utf8_short_verify_s;
 
-  extern const f_string_static_t utf8_short_to_bytecode_s;
+  extern const f_string_static_t utf8_short_to_bytesequence_s;
   extern const f_string_static_t utf8_short_to_codepoint_s;
   extern const f_string_static_t utf8_short_to_combining_s;
   extern const f_string_static_t utf8_short_to_file_s;
   extern const f_string_static_t utf8_short_to_width_s;
 
-  extern const f_string_static_t utf8_long_from_bytecode_s;
+  extern const f_string_static_t utf8_long_from_bytesequence_s;
   extern const f_string_static_t utf8_long_from_codepoint_s;
   extern const f_string_static_t utf8_long_from_file_s;
 
@@ -231,7 +231,7 @@ extern "C" {
   extern const f_string_static_t utf8_long_strip_invalid_s;
   extern const f_string_static_t utf8_long_verify_s;
 
-  extern const f_string_static_t utf8_long_to_bytecode_s;
+  extern const f_string_static_t utf8_long_to_bytesequence_s;
   extern const f_string_static_t utf8_long_to_codepoint_s;
   extern const f_string_static_t utf8_long_to_combining_s;
   extern const f_string_static_t utf8_long_to_file_s;
@@ -248,7 +248,7 @@ extern "C" {
     utf8_parameter_verbosity_debug_e,
     utf8_parameter_version_e,
 
-    utf8_parameter_from_bytecode_e,
+    utf8_parameter_from_bytesequence_e,
     utf8_parameter_from_codepoint_e,
     utf8_parameter_from_file_e,
 
@@ -256,7 +256,7 @@ extern "C" {
     utf8_parameter_separate_e,
     utf8_parameter_strip_invalid_e,
 
-    utf8_parameter_to_bytecode_e,
+    utf8_parameter_to_bytesequence_e,
     utf8_parameter_to_codepoint_e,
     utf8_parameter_to_combining_e,
     utf8_parameter_to_file_e,
@@ -276,13 +276,13 @@ extern "C" {
       macro_f_console_parameter_t_initialize(f_console_standard_short_verbose_s.string, f_console_standard_long_verbose_s.string, 0, 0, f_console_type_inverse_e), \
       macro_f_console_parameter_t_initialize(f_console_standard_short_debug_s.string, f_console_standard_long_debug_s.string, 0, 0, f_console_type_inverse_e), \
       macro_f_console_parameter_t_initialize(f_console_standard_short_version_s.string, f_console_standard_long_version_s.string, 0, 0, f_console_type_inverse_e), \
-      macro_f_console_parameter_t_initialize(utf8_short_from_bytecode_s.string, utf8_long_from_bytecode_s.string, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(utf8_short_from_bytesequence_s.string, utf8_long_from_bytesequence_s.string, 0, 0, f_console_type_normal_e), \
       macro_f_console_parameter_t_initialize(utf8_short_from_codepoint_s.string, utf8_long_from_codepoint_s.string, 0, 0, f_console_type_normal_e), \
       macro_f_console_parameter_t_initialize(utf8_short_from_file_s.string, utf8_long_from_file_s.string, 0, 1, f_console_type_normal_e), \
       macro_f_console_parameter_t_initialize(utf8_short_headers_s.string, utf8_long_headers_s.string, 0, 0, f_console_type_normal_e), \
       macro_f_console_parameter_t_initialize(utf8_short_separate_s.string, utf8_long_headers_s.string, 0, 0, f_console_type_normal_e), \
       macro_f_console_parameter_t_initialize(utf8_short_strip_invalid_s.string, utf8_long_strip_invalid_s.string, 0, 0, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(utf8_short_to_bytecode_s.string, utf8_long_to_bytecode_s.string, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(utf8_short_to_bytesequence_s.string, utf8_long_to_bytesequence_s.string, 0, 0, f_console_type_normal_e), \
       macro_f_console_parameter_t_initialize(utf8_short_to_codepoint_s.string, utf8_long_to_codepoint_s.string, 0, 0, f_console_type_normal_e), \
       macro_f_console_parameter_t_initialize(utf8_short_to_combining_s.string, utf8_long_to_combining_s.string, 0, 0, f_console_type_normal_e), \
       macro_f_console_parameter_t_initialize(utf8_short_to_file_s.string, utf8_long_to_file_s.string, 0, 1, f_console_type_normal_e), \
@@ -297,19 +297,19 @@ extern "C" {
  * Modes used to designate how to the input and output are to be processed.
  *
  * utf8_mode_from_*:
- *   - bytecode:  The input format is bytecode.
+ *   - bytesequence:  The input format is bytesequence.
  *   - codepoint: The input format is codepoint (U+XXXX or U+XXXXXX).
  *
  * utf8_mode_to_*:
- *   - bytecode:  The outout format is bytecode.
+ *   - bytesequence:  The outout format is bytesequence.
  *   - codepoint: The outout format is codepoint (U+XXXX or U+XXXXXX).
  *   - combining: The outout format is whether or not character is combining (may be used with "width").
  *   - width:     The outout format is how wide the character is (may be used with "combining").
  */
 #ifndef _di_utf8_modes_
-  #define utf8_mode_from_bytecode_d  0x1
+  #define utf8_mode_from_bytesequence_d  0x1
   #define utf8_mode_from_codepoint_d 0x2
-  #define utf8_mode_to_bytecode_d    0x4
+  #define utf8_mode_to_bytesequence_d    0x4
   #define utf8_mode_to_codepoint_d   0x8
   #define utf8_mode_to_combining_d   0x10
   #define utf8_mode_to_width_d       0x20

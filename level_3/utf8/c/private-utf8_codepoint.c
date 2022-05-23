@@ -2,7 +2,7 @@
 #include "private-common.h"
 #include "private-print.h"
 #include "private-utf8.h"
-#include "private-utf8_bytecode.h"
+#include "private-utf8_bytesequence.h"
 #include "private-utf8_codepoint.h"
 
 #ifdef __cplusplus
@@ -48,7 +48,7 @@ extern "C" {
         }
       }
       else if (data->main->parameters.array[utf8_parameter_verify_e].result == f_console_result_none_e) {
-        if (data->mode & utf8_mode_to_bytecode_d) {
+        if (data->mode & utf8_mode_to_bytesequence_d) {
           f_char_t byte[4] = { 0, 0, 0, 0 };
           f_string_static_t character = macro_f_string_static_t_initialize(byte, 0, 4);
 
@@ -61,7 +61,7 @@ extern "C" {
             status = F_none;
             character.used = macro_f_utf_byte_width(character.string[0]);
 
-            utf8_print_bytecode(data, character);
+            utf8_print_bytesequence(data, character);
           }
         }
         else if (data->mode & utf8_mode_to_codepoint_d) {
@@ -145,8 +145,8 @@ extern "C" {
           ++width;
         }
 
-        if (data->mode & utf8_mode_to_bytecode_d) {
-          utf8_print_raw_bytecode(data, raw, width);
+        if (data->mode & utf8_mode_to_bytesequence_d) {
+          utf8_print_raw_bytesequence(data, raw, width);
         }
         else if (data->mode & utf8_mode_to_codepoint_d) {
           utf8_print_raw_codepoint(data, data->text);
@@ -343,8 +343,8 @@ extern "C" {
         } // for
 
         if (j == character.used) {
-          if (data->mode & utf8_mode_from_bytecode_d) {
-            status = utf8_convert_bytecode(data, character);
+          if (data->mode & utf8_mode_from_bytesequence_d) {
+            status = utf8_convert_bytesequence(data, character);
           }
           else {
             status = utf8_detect_codepoint(data, character, &mode_codepoint);
@@ -380,8 +380,8 @@ extern "C" {
     if (F_status_is_error_not(status) && status != F_interrupt && next == F_false) {
       character.used = j;
 
-      if (data->mode & utf8_mode_from_bytecode_d) {
-        status = utf8_convert_bytecode(data, character);
+      if (data->mode & utf8_mode_from_bytesequence_d) {
+        status = utf8_convert_bytesequence(data, character);
       }
       else {
         status = utf8_detect_codepoint(data, character, &mode_codepoint);

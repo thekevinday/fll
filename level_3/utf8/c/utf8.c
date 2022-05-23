@@ -2,7 +2,7 @@
 #include "private-common.h"
 #include "private-print.h"
 #include "private-utf8.h"
-#include "private-utf8_bytecode.h"
+#include "private-utf8_bytesequence.h"
 #include "private-utf8_codepoint.h"
 
 #ifdef __cplusplus
@@ -28,17 +28,17 @@ extern "C" {
 
     f_print_dynamic_raw(f_string_eol_s, file.stream);
 
-    fll_program_print_help_option(file, context, utf8_short_from_bytecode_s, utf8_long_from_bytecode_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " The expected input format is byte code (character data).");
-    fll_program_print_help_option(file, context, utf8_short_from_codepoint_s, utf8_long_from_codepoint_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "The expected input format is codepoint (such as U+0000).");
-    fll_program_print_help_option(file, context, utf8_short_from_file_s, utf8_long_from_file_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "     Use the given file as the input source.");
+    fll_program_print_help_option(file, context, utf8_short_from_bytesequence_s, utf8_long_from_bytesequence_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "The expected input format is byte sequence (character data).");
+    fll_program_print_help_option(file, context, utf8_short_from_codepoint_s, utf8_long_from_codepoint_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   The expected input format is codepoint (such as U+0000).");
+    fll_program_print_help_option(file, context, utf8_short_from_file_s, utf8_long_from_file_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "        Use the given file as the input source.");
 
     f_print_dynamic_raw(f_string_eol_s, file.stream);
 
-    fll_program_print_help_option(file, context, utf8_short_to_bytecode_s, utf8_long_to_bytecode_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " The output format is byte code (character data).");
-    fll_program_print_help_option(file, context, utf8_short_to_codepoint_s, utf8_long_to_codepoint_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "The output format is codepoint (such as U+0000).");
-    fll_program_print_help_option(file, context, utf8_short_to_combining_s, utf8_long_to_combining_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "The output format is to print whether or not character is combining or not.");
-    fll_program_print_help_option(file, context, utf8_short_to_file_s, utf8_long_to_file_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "     Use the given file as the output destination.");
-    fll_program_print_help_option(file, context, utf8_short_to_width_s, utf8_long_to_width_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    The output format is to print the width of a character (either 0, 1, or 2).");
+    fll_program_print_help_option(file, context, utf8_short_to_bytesequence_s, utf8_long_to_bytesequence_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "The output format is byte sequence (character data).");
+    fll_program_print_help_option(file, context, utf8_short_to_codepoint_s, utf8_long_to_codepoint_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   The output format is codepoint (such as U+0000).");
+    fll_program_print_help_option(file, context, utf8_short_to_combining_s, utf8_long_to_combining_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   The output format is to print whether or not character is combining or not.");
+    fll_program_print_help_option(file, context, utf8_short_to_file_s, utf8_long_to_file_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "        Use the given file as the output destination.");
+    fll_program_print_help_option(file, context, utf8_short_to_width_s, utf8_long_to_width_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       The output format is to print the width of a character (either 0, 1, or 2).");
 
     f_print_dynamic_raw(f_string_eol_s, file.stream);
 
@@ -49,7 +49,7 @@ extern "C" {
 
     fll_program_print_help_usage(file, context, utf8_program_name_s, utf8_program_help_parameters_s);
 
-    fl_print_format("  The default behavior is to assume the expected input is byte code from the command line to be output to the screen as codepoints.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
+    fl_print_format("  The default behavior is to assume the expected input is byte sequence from the command line to be output to the screen as codepoints.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
 
     fl_print_format("  Multiple input sources are allowed but only a single output destination is allowed.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
 
@@ -150,7 +150,7 @@ extern "C" {
 
     // Identify and prioritize from mode parameters.
     {
-      f_console_parameter_id_t ids[2] = { utf8_parameter_from_bytecode_e, utf8_parameter_from_codepoint_e };
+      f_console_parameter_id_t ids[2] = { utf8_parameter_from_bytesequence_e, utf8_parameter_from_codepoint_e };
       f_console_parameter_id_t choice = 0;
       const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 2);
 
@@ -164,16 +164,16 @@ extern "C" {
         return status;
       }
 
-      if (choice == utf8_parameter_from_bytecode_e) {
+      if (choice == utf8_parameter_from_bytesequence_e) {
         if (data.mode & utf8_mode_from_codepoint_d) {
           data.mode -= utf8_mode_from_codepoint_d;
         }
 
-        data.mode |= utf8_mode_from_bytecode_d;
+        data.mode |= utf8_mode_from_bytesequence_d;
       }
       else if (choice == utf8_parameter_from_codepoint_e) {
-        if (data.mode & utf8_mode_from_bytecode_d) {
-          data.mode -= utf8_mode_from_bytecode_d;
+        if (data.mode & utf8_mode_from_bytesequence_d) {
+          data.mode -= utf8_mode_from_bytesequence_d;
         }
 
         data.mode |= utf8_mode_from_codepoint_d;
@@ -182,7 +182,7 @@ extern "C" {
 
     // Identify and prioritize to mode parameters.
     {
-      f_console_parameter_id_t ids[4] = { utf8_parameter_to_bytecode_e, utf8_parameter_to_codepoint_e, utf8_parameter_to_combining_e, utf8_parameter_to_width_e };
+      f_console_parameter_id_t ids[4] = { utf8_parameter_to_bytesequence_e, utf8_parameter_to_codepoint_e, utf8_parameter_to_combining_e, utf8_parameter_to_width_e };
       f_console_parameter_id_t choice = 0;
       const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 4);
 
@@ -196,7 +196,7 @@ extern "C" {
         return status;
       }
 
-      if (choice == utf8_parameter_to_bytecode_e) {
+      if (choice == utf8_parameter_to_bytesequence_e) {
         if (data.mode & utf8_mode_to_codepoint_d) {
           data.mode -= utf8_mode_to_codepoint_d;
         }
@@ -209,11 +209,11 @@ extern "C" {
           data.mode -= utf8_mode_to_width_d;
         }
 
-        data.mode |= utf8_mode_to_bytecode_d;
+        data.mode |= utf8_mode_to_bytesequence_d;
       }
       else if (choice == utf8_parameter_to_codepoint_e) {
-        if (data.mode & utf8_mode_to_bytecode_d) {
-          data.mode -= utf8_mode_to_bytecode_d;
+        if (data.mode & utf8_mode_to_bytesequence_d) {
+          data.mode -= utf8_mode_to_bytesequence_d;
         }
 
         if (data.mode & utf8_mode_to_combining_d) {
@@ -227,8 +227,8 @@ extern "C" {
         data.mode |= utf8_mode_to_codepoint_d;
       }
       else if (choice == utf8_parameter_to_combining_e) {
-        if (data.mode & utf8_mode_to_bytecode_d) {
-          data.mode -= utf8_mode_to_bytecode_d;
+        if (data.mode & utf8_mode_to_bytesequence_d) {
+          data.mode -= utf8_mode_to_bytesequence_d;
         }
 
         if (data.mode & utf8_mode_to_codepoint_d) {
@@ -243,8 +243,8 @@ extern "C" {
         data.mode |= utf8_mode_to_combining_d;
       }
       else if (choice == utf8_parameter_to_width_e) {
-        if (data.mode & utf8_mode_to_bytecode_d) {
-          data.mode -= utf8_mode_to_bytecode_d;
+        if (data.mode & utf8_mode_to_bytesequence_d) {
+          data.mode -= utf8_mode_to_bytesequence_d;
         }
 
         if (data.mode & utf8_mode_to_codepoint_d) {
@@ -354,7 +354,7 @@ extern "C" {
         status = F_status_set_error(F_parameter);
       }
 
-      if (!(data.mode & utf8_mode_to_bytecode_d)) {
+      if (!(data.mode & utf8_mode_to_bytesequence_d)) {
         if (main->parameters.array[utf8_parameter_separate_e].result == f_console_result_found_e || main->parameters.array[utf8_parameter_headers_e].result == f_console_result_found_e) {
           data.prepend = utf8_string_prepend_padding_s;
           data.append = f_string_eol_s;
@@ -378,15 +378,15 @@ extern "C" {
 
         utf8_print_section_header_pipe(&data);
 
-        if (data.mode & utf8_mode_from_bytecode_d) {
-          status = utf8_process_file_bytecode(&data, file);
+        if (data.mode & utf8_mode_from_bytesequence_d) {
+          status = utf8_process_file_bytesequence(&data, file);
         }
         else {
           status = utf8_process_file_codepoint(&data, file);
         }
 
         if (F_status_is_error(status) && F_status_set_fine(status) != F_utf_fragment && F_status_set_fine(status) != F_complete_not_utf) {
-          fll_error_file_print(main->error, F_status_set_fine(status), data.mode & utf8_mode_from_bytecode_d ? "utf8_process_file_bytecode" : "utf8_process_file_codepoint", F_true, f_string_empty_s, f_file_operation_process_s, fll_error_file_type_pipe_e);
+          fll_error_file_print(main->error, F_status_set_fine(status), data.mode & utf8_mode_from_bytesequence_d ? "utf8_process_file_bytesequence" : "utf8_process_file_codepoint", F_true, f_string_empty_s, f_file_operation_process_s, fll_error_file_type_pipe_e);
         }
       }
 
@@ -420,8 +420,8 @@ extern "C" {
             break;
           }
 
-          if (data.mode & utf8_mode_from_bytecode_d) {
-            status = utf8_process_file_bytecode(&data, file);
+          if (data.mode & utf8_mode_from_bytesequence_d) {
+            status = utf8_process_file_bytesequence(&data, file);
           }
           else {
             status = utf8_process_file_codepoint(&data, file);
@@ -436,7 +436,7 @@ extern "C" {
           }
 
           if (F_status_is_error(status) && F_status_set_fine(status) != F_utf_fragment && F_status_set_fine(status) != F_complete_not_utf) {
-            fll_error_file_print(main->error, F_status_set_fine(status), data.mode & utf8_mode_from_bytecode_d ? "utf8_process_file_bytecode" : "utf8_process_file_codepoint", F_true, data.argv[index], f_file_operation_process_s, fll_error_file_type_file_e);
+            fll_error_file_print(main->error, F_status_set_fine(status), data.mode & utf8_mode_from_bytesequence_d ? "utf8_process_file_bytesequence" : "utf8_process_file_codepoint", F_true, data.argv[index], f_file_operation_process_s, fll_error_file_type_file_e);
 
             break;
           }

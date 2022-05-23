@@ -2,15 +2,15 @@
 #include "private-common.h"
 #include "private-print.h"
 #include "private-utf8.h"
-#include "private-utf8_bytecode.h"
+#include "private-utf8_bytesequence.h"
 #include "private-utf8_codepoint.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#ifndef _di_utf8_convert_bytecode_
-  f_status_t utf8_convert_bytecode(utf8_data_t * const data, const f_string_static_t character) {
+#ifndef _di_utf8_convert_bytesequence_
+  f_status_t utf8_convert_bytesequence(utf8_data_t * const data, const f_string_static_t character) {
 
     f_status_t status = F_none;
     bool valid_not = F_false;
@@ -41,8 +41,8 @@ extern "C" {
       }
     }
     else if (data->main->parameters.array[utf8_parameter_verify_e].result == f_console_result_none_e) {
-      if (data->mode & utf8_mode_to_bytecode_d) {
-        utf8_print_bytecode(data, character);
+      if (data->mode & utf8_mode_to_bytesequence_d) {
+        utf8_print_bytesequence(data, character);
       }
       else if (data->mode & utf8_mode_to_codepoint_d) {
         utf8_print_codepoint(data, codepoint);
@@ -58,10 +58,10 @@ extern "C" {
 
     return F_none;
   }
-#endif // _di_utf8_convert_bytecode_
+#endif // _di_utf8_convert_bytesequence_
 
-#ifndef _di_utf8_process_file_bytecode_
-  f_status_t utf8_process_file_bytecode(utf8_data_t * const data, const f_file_t file) {
+#ifndef _di_utf8_process_file_bytesequence_
+  f_status_t utf8_process_file_bytesequence(utf8_data_t * const data, const f_file_t file) {
 
     f_status_t status = F_none;
 
@@ -107,8 +107,8 @@ extern "C" {
         } // for
 
         if (j == character.used) {
-          if (data->mode & utf8_mode_from_bytecode_d) {
-            status = utf8_convert_bytecode(data, character);
+          if (data->mode & utf8_mode_from_bytesequence_d) {
+            status = utf8_convert_bytesequence(data, character);
           }
           else {
             status = utf8_detect_codepoint(data, character, &mode_codepoint);
@@ -136,8 +136,8 @@ extern "C" {
     if (F_status_is_error_not(status) && status != F_interrupt && next == F_false) {
       character.used = j;
 
-      if (data->mode & utf8_mode_from_bytecode_d) {
-        status = utf8_convert_bytecode(data, character);
+      if (data->mode & utf8_mode_from_bytesequence_d) {
+        status = utf8_convert_bytesequence(data, character);
       }
       else {
         status = utf8_detect_codepoint(data, character, &mode_codepoint);
@@ -160,7 +160,7 @@ extern "C" {
 
     return valid;
   }
-#endif // _di_utf8_process_file_bytecode_
+#endif // _di_utf8_process_file_bytesequence_
 
 #ifdef __cplusplus
 } // extern "C"

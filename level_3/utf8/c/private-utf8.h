@@ -26,11 +26,11 @@ extern "C" {
  *   F_false on success and contains invalid sequences.
  *   F_interrupt on (exit) signal received.
  *
- *   Errors (with error bit) from: utf8_convert_bytecode()
+ *   Errors (with error bit) from: utf8_convert_bytesequence()
  *   Errors (with error bit) from: utf8_convert_codepoint()
  *   Errors (with error bit) from: utf8_detect_codepoint()
  *
- * @see utf8_convert_bytecode()
+ * @see utf8_convert_bytesequence()
  * @see utf8_convert_codepoint()
  * @see utf8_detect_codepoint()
  * @see utf8_signal_received()

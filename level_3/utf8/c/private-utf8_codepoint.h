@@ -98,11 +98,11 @@ extern "C" {
  *   F_false on success and contains invalid sequences.
  *   F_interrupt on (exit) signal received.
  *
- *   Errors (with error bit) from: utf8_convert_bytecode()
+ *   Errors (with error bit) from: utf8_convert_bytesequence()
  *   Errors (with error bit) from: utf8_detect_codepoint()
  *
  * @see fll_program_standard_signal_received()
- * @see utf8_convert_bytecode()
+ * @see utf8_convert_bytesequence()
  * @see utf8_detect_codepoint()
  */
 #ifndef _di_utf8_process_file_codepoint_

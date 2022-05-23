@@ -6,12 +6,12 @@
 extern "C" {
 #endif
 
-#ifndef _di_utf8_print_bytecode_
-  void utf8_print_bytecode(utf8_data_t * const data, const f_string_static_t character) {
+#ifndef _di_utf8_print_bytesequence_
+  void utf8_print_bytesequence(utf8_data_t * const data, const f_string_static_t character) {
 
     fl_print_format("%r%r%r", data->file.stream, data->prepend, character, data->append);
   }
-#endif // _di_utf8_print_bytecode_
+#endif // _di_utf8_print_bytesequence_
 
 #ifndef _di_utf8_print_character_invalid_
   void utf8_print_character_invalid(utf8_data_t * const data, const f_string_static_t character) {
@@ -24,7 +24,7 @@ extern "C" {
     if ((data->mode & utf8_mode_to_combining_d) || (data->mode & utf8_mode_to_width_d)) {
       utf8_print_combining_or_width(data, character);
     }
-    else if (data->mode & utf8_mode_to_bytecode_d) {
+    else if (data->mode & utf8_mode_to_bytesequence_d) {
       fl_print_format("%r%[%r%]%r", data->file.stream, data->prepend, data->valid_not, character, data->valid_not, data->append);
     }
     else if (data->mode & utf8_mode_from_codepoint_d) {
@@ -209,8 +209,8 @@ extern "C" {
   }
 #endif // _di_utf8_print_error_parameter_file_to_too_many_
 
-#ifndef _di_utf8_print_raw_bytecode_
-  void utf8_print_raw_bytecode(utf8_data_t * const data, const f_utf_char_t raw, const uint8_t width) {
+#ifndef _di_utf8_print_raw_bytesequence_
+  void utf8_print_raw_bytesequence(utf8_data_t * const data, const f_utf_char_t raw, const uint8_t width) {
 
     if (data->main->parameters.array[utf8_parameter_strip_invalid_e].result == f_console_result_found_e) return;
     if (data->main->parameters.array[utf8_parameter_verify_e].result == f_console_result_found_e) return;
@@ -264,7 +264,7 @@ extern "C" {
 
     fl_print_format("%r%[%r%]%r", data->file.stream, data->prepend, data->valid_not, character, data->valid_not, data->append);
   }
-#endif // _di_utf8_print_raw_bytecode_
+#endif // _di_utf8_print_raw_bytesequence_
 
 #ifndef _di_utf8_print_raw_codepoint_
   void utf8_print_raw_codepoint(utf8_data_t * const data, const f_string_static_t raw) {

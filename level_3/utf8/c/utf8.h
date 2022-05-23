@@ -8,10 +8,10 @@
  * This is intendend to support Unicode 14.0.
  *
  * This is a program for handling basic UTF-8 related conversions.
- *   - Convert from UTF-8 character to bytecode.
- *   - Convert from Unicode Codepoint (such as U+0000) to bytecode.
- *   - Convert from UTF-8 bytecode to character.
- *   - Convert from UTF-8 bytecode to Unicode Codepoint (such as U+0000).
+ *   - Convert from UTF-8 character to bytesequence.
+ *   - Convert from Unicode Codepoint (such as U+0000) to bytesequence.
+ *   - Convert from UTF-8 bytesequence to character.
+ *   - Convert from UTF-8 bytesequence to Unicode Codepoint (such as U+0000).
  */
 #ifndef _utf8_h
 #define _utf8_h
