@@ -56,7 +56,7 @@ void test__f_file_link_read__fails(void **state) {
 
     const f_status_t status = f_file_link_read(path, F_true, &buffer);
 
-    assert_int_equal(F_status_set_fine(status), statuss[i]);
+    assert_int_equal(status, F_status_set_error(statuss[i]));
   } // for
 
   f_string_dynamic_resize(0, &buffer);
@@ -74,7 +74,7 @@ void test__f_file_link_read__fails(void **state) {
     {
       const f_status_t status = f_file_link_read(f_string_empty_s, F_true, 0);
 
-      assert_int_equal(F_status_set_fine(status), F_parameter);
+      assert_int_equal(status, F_status_set_error(F_parameter));
     }
 
     f_string_dynamic_resize(0, &buffer);

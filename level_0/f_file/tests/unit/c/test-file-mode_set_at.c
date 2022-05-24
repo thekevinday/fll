@@ -48,7 +48,7 @@ void test__f_file_mode_set_at__fails(void **state) {
 
     const f_status_t status = f_file_mode_set_at(0, path, mode);
 
-    assert_int_equal(F_status_set_fine(status), statuss[i]);
+    assert_int_equal(status, F_status_set_error(statuss[i]));
   } // for
 }
 

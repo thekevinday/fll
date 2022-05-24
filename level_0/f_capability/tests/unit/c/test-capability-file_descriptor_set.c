@@ -42,7 +42,7 @@ void test__f_capability_file_descriptor_set__fails(void **state) {
 
       const f_status_t status = f_capability_file_descriptor_set(descriptor, capability);
 
-      assert_int_equal(F_status_set_fine(status), statuss[i]);
+      assert_int_equal(status, F_status_set_error(statuss[i]));
     } // for
   #endif // !defined(_di_libcap_)
 }

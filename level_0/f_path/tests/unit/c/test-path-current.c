@@ -93,7 +93,7 @@ void test__f_path_current__fails(void **state) {
     {
       const f_status_t status = f_path_current(F_false, 0);
 
-      assert_int_equal(F_status_set_fine(status), F_parameter);
+      assert_int_equal(status, F_status_set_error(F_parameter));
     }
   }
 #endif // _di_level_0_parameter_checking_

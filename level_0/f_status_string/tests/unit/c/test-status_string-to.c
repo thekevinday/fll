@@ -23,7 +23,7 @@ void test__f_status_string_to__parameter_checking(void **state) {
   {
     const f_status_t status = f_status_string_to(F_false, 0);
 
-    assert_int_equal(F_status_set_fine(status), F_parameter);
+    assert_int_equal(status, F_status_set_error(F_parameter));
   }
 }
 

@@ -31,7 +31,7 @@ void test__f_capability_security_bits_get__fails(void **state) {
 
       const f_status_t status = f_capability_security_bits_get(&bits);
 
-      assert_int_equal(F_status_set_fine(status), statuss[i]);
+      assert_int_equal(status, F_status_set_error(statuss[i]));
     } // for
   #endif // !defined(_di_libcap_) && !defined(_libcap_legacy_only_)
 }
@@ -42,7 +42,7 @@ void test__f_capability_security_bits_get__fails(void **state) {
     {
       const f_status_t status = f_capability_security_bits_get(0);
 
-      assert_int_equal(F_status_set_fine(status), F_parameter);
+      assert_int_equal(status, F_status_set_error(F_parameter));
     }
   }
 #endif // _di_level_0_parameter_checking_

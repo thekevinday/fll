@@ -17,7 +17,7 @@ extern "C" {
 
       const f_status_t status = f_iki_read(the_state, 0, &range, &iki);
 
-      assert_int_equal(F_status_set_fine(status), F_parameter);
+      assert_int_equal(status, F_status_set_error(F_parameter));
     }
 
     {
@@ -25,7 +25,7 @@ extern "C" {
 
       const f_status_t status = f_iki_read(the_state, &empty, 0, &iki);
 
-      assert_int_equal(F_status_set_fine(status), F_parameter);
+      assert_int_equal(status, F_status_set_error(F_parameter));
     }
 
     {
@@ -33,7 +33,7 @@ extern "C" {
 
       const f_status_t status = f_iki_read(the_state, &empty, &range, 0);
 
-      assert_int_equal(F_status_set_fine(status), F_parameter);
+      assert_int_equal(status, F_status_set_error(F_parameter));
     }
   }
 #endif // _di_level_0_parameter_checking_
@@ -246,7 +246,7 @@ void test__f_iki_read__works(void **state) {
 
     const f_status_t status = f_iki_read(the_state, &buffers[i], &range, &iki);
 
-    assert_int_equal(F_status_set_fine(status), statuss[i]);
+    assert_int_equal(status, statuss[i]);
 
     if (matches[i] == 2) {
       const f_status_t status = f_iki_read(the_state, &buffers[i], &range, &iki);

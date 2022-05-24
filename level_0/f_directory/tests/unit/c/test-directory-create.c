@@ -52,7 +52,7 @@ void test__f_directory_create__fails(void **state) {
 
     const f_status_t status = f_directory_create(path, 0);
 
-    assert_int_equal(F_status_set_fine(status), statuss[i]);
+    assert_int_equal(status, F_status_set_error(statuss[i]));
   } // for
 }
 

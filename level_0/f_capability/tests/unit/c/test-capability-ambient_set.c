@@ -30,7 +30,7 @@ void test__f_capability_ambient_set__fails(void **state) {
 
       const f_status_t status = f_capability_ambient_set(value, flag_value);
 
-      assert_int_equal(F_status_set_fine(status), statuss[i]);
+      assert_int_equal(status, F_status_set_error(statuss[i]));
     } // for
   #endif // !defined(_di_libcap_) && !defined(_libcap_legacy_only_)
 }

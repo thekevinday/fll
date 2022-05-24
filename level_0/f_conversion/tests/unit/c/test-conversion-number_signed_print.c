@@ -55,7 +55,7 @@ void test__f_conversion_number_signed_print__fails_for_zero(void **state) {
 
       const f_status_t status = f_conversion_number_signed_print(0, data, 0);
 
-      assert_int_equal(F_status_set_fine(status), F_parameter);
+      assert_int_equal(status, F_status_set_error(F_parameter));
     }
 
     {
@@ -64,7 +64,7 @@ void test__f_conversion_number_signed_print__fails_for_zero(void **state) {
 
       const f_status_t status = f_conversion_number_signed_print(0, data, file);
 
-      assert_int_equal(F_status_set_fine(status), F_parameter);
+      assert_int_equal(status, F_status_set_error(F_parameter));
     }
   }
 #endif // _di_level_0_parameter_checking_

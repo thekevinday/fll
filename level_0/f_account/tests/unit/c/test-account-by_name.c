@@ -43,7 +43,7 @@ void test__f_account_by_name__fails(void **state) {
 
     const f_status_t status = f_account_by_name(name, &account);
 
-    assert_int_equal(F_status_set_fine(status), statuss[i]);
+    assert_int_equal(status, F_status_set_error(statuss[i]));
   } // for
 
   macro_f_account_t_delete_simple(account);
@@ -82,7 +82,7 @@ void test__f_account_by_name__not_found(void **state) {
     {
       const f_status_t status = f_account_by_name(name, 0);
 
-      assert_int_equal(F_status_set_fine(status), F_parameter);
+      assert_int_equal(status, F_status_set_error(F_parameter));
     }
   }
 #endif // _di_level_0_parameter_checking_

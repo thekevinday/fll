@@ -138,7 +138,7 @@ void test__f_file_copy__fails_for_block(void **state) {
         assert_int_equal(status, F_none);
       }
       else {
-        assert_int_equal(F_status_set_fine(status), statuss[i]);
+        assert_int_equal(status, F_status_set_error(statuss[i]));
       }
     } // for
   }
@@ -200,7 +200,7 @@ void test__f_file_copy__fails_for_block(void **state) {
         assert_int_equal(status, F_none);
       }
       else {
-        assert_int_equal(F_status_set_fine(status), statuss[i]);
+        assert_int_equal(status, F_status_set_error(statuss[i]));
       }
     } // for
   }
@@ -274,7 +274,7 @@ void test__f_file_copy__fails_for_character(void **state) {
         assert_int_equal(status, F_none);
       }
       else {
-        assert_int_equal(F_status_set_fine(status), statuss[i]);
+        assert_int_equal(status, F_status_set_error(statuss[i]));
       }
     } // for
   }
@@ -336,7 +336,7 @@ void test__f_file_copy__fails_for_character(void **state) {
         assert_int_equal(status, F_none);
       }
       else {
-        assert_int_equal(F_status_set_fine(status), statuss[i]);
+        assert_int_equal(status, F_status_set_error(statuss[i]));
       }
     } // for
   }
@@ -410,7 +410,7 @@ void test__f_file_copy__fails_for_directory(void **state) {
         assert_int_equal(status, F_none);
       }
       else {
-        assert_int_equal(F_status_set_fine(status), statuss[i]);
+        assert_int_equal(status, F_status_set_error(statuss[i]));
       }
     } // for
   }
@@ -472,7 +472,7 @@ void test__f_file_copy__fails_for_directory(void **state) {
         assert_int_equal(status, F_none);
       }
       else {
-        assert_int_equal(F_status_set_fine(status), statuss[i]);
+        assert_int_equal(status, F_status_set_error(statuss[i]));
       }
     } // for
   }
@@ -536,7 +536,7 @@ void test__f_file_copy__fails_for_fifo(void **state) {
         assert_int_equal(status, F_none);
       }
       else {
-        assert_int_equal(F_status_set_fine(status), statuss[i]);
+        assert_int_equal(status, F_status_set_error(statuss[i]));
       }
     } // for
   }
@@ -598,7 +598,7 @@ void test__f_file_copy__fails_for_fifo(void **state) {
         assert_int_equal(status, F_none);
       }
       else {
-        assert_int_equal(F_status_set_fine(status), statuss[i]);
+        assert_int_equal(status, F_status_set_error(statuss[i]));
       }
     } // for
   }
@@ -654,7 +654,7 @@ void test__f_file_copy__fails_for_link(void **state) {
 
       const f_status_t status = f_file_copy(path, path, mode, 0, 0);
 
-      assert_int_equal(F_status_set_fine(status), statuss[i]);
+      assert_int_equal(status, F_status_set_error(statuss[i]));
     } // for
   }
 
@@ -731,7 +731,7 @@ void test__f_file_copy__fails_for_link(void **state) {
         assert_int_equal(status, F_none);
       }
       else {
-        assert_int_equal(F_status_set_fine(status), statuss[i]);
+        assert_int_equal(status, F_status_set_error(statuss[i]));
       }
     } // for
   }
@@ -774,7 +774,7 @@ void test__f_file_copy__fails_for_regular(void **state) {
 
       const f_status_t status = f_file_copy(path, path, mode, 0, 0);
 
-      assert_int_equal(F_status_set_fine(status), statuss[i]);
+      assert_int_equal(status, F_status_set_error(statuss[i]));
     } // for
   }
 
@@ -845,7 +845,7 @@ void test__f_file_copy__fails_for_regular(void **state) {
 
       const f_status_t status = f_file_copy(path, path, mode, 0, 0);
 
-      assert_int_equal(F_status_set_fine(status), statuss[i]);
+      assert_int_equal(status, F_status_set_error(statuss[i]));
     } // for
   }
 
@@ -892,7 +892,7 @@ void test__f_file_copy__fails_for_regular(void **state) {
 
       const f_status_t status = f_file_copy(path, path, mode, 0, 0);
 
-      assert_int_equal(F_status_set_fine(status), statuss[i]);
+      assert_int_equal(status, F_status_set_error(statuss[i]));
     } // for
   }
 
@@ -952,7 +952,7 @@ void test__f_file_copy__fails_for_regular(void **state) {
 
       const f_status_t status = f_file_copy(path, path, mode, 0, 0);
 
-      assert_int_equal(F_status_set_fine(status), statuss[i]);
+      assert_int_equal(status, F_status_set_error(statuss[i]));
     } // for
   }
 
@@ -1035,7 +1035,7 @@ void test__f_file_copy__fails_for_regular(void **state) {
 
       const f_status_t status = f_file_copy(path, path, mode, 0, 0);
 
-      assert_int_equal(F_status_set_fine(status), statuss[i]);
+      assert_int_equal(status, F_status_set_error(statuss[i]));
     } // for
   }
 
@@ -1128,7 +1128,7 @@ void test__f_file_copy__fails_for_regular(void **state) {
 
       const f_status_t status = f_file_copy(path, path, mode, 0, 0);
 
-      assert_int_equal(F_status_set_fine(status), statuss[i]);
+      assert_int_equal(status, F_status_set_error(statuss[i]));
     } // for
   }
 
@@ -1210,7 +1210,7 @@ void test__f_file_copy__fails_for_regular(void **state) {
 
       const f_status_t status = f_file_copy(path, path, mode, 0, 0);
 
-      assert_int_equal(F_status_set_fine(status), statuss[i]);
+      assert_int_equal(status, F_status_set_error(statuss[i]));
     } // for
   }
 
@@ -1307,7 +1307,7 @@ void test__f_file_copy__fails_for_regular(void **state) {
 
       const f_status_t status = f_file_copy(path, path, mode, 0, f_file_stat_flag_exclusive_e);
 
-      assert_int_equal(F_status_set_fine(status), statuss[i]);
+      assert_int_equal(status, F_status_set_error(statuss[i]));
     } // for
   }
 }
@@ -1381,7 +1381,7 @@ void test__f_file_copy__fails_for_socket(void **state) {
         assert_int_equal(status, F_none);
       }
       else {
-        assert_int_equal(F_status_set_fine(status), statuss[i]);
+        assert_int_equal(status, F_status_set_error(statuss[i]));
       }
     } // for
   }
@@ -1444,7 +1444,7 @@ void test__f_file_copy__fails_for_socket(void **state) {
         assert_int_equal(status, F_none);
       }
       else {
-        assert_int_equal(F_status_set_fine(status), statuss[i]);
+        assert_int_equal(status, F_status_set_error(statuss[i]));
       }
     } // for
   }

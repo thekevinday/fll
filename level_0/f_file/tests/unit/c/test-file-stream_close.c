@@ -157,7 +157,7 @@ void test__f_file_stream_close__fails_for_stream(void **state) {
     {
       const f_status_t status = f_file_stream_close(F_false, 0);
 
-      assert_int_equal(F_status_set_fine(status), F_parameter);
+      assert_int_equal(status, F_status_set_error(F_parameter));
     }
   }
 #endif // _di_level_0_parameter_checking_

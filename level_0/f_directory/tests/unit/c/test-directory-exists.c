@@ -22,15 +22,15 @@ void test__f_directory_exists__fails(void **state) {
   };
 
   f_status_t statuss[] = {
-    F_access_denied,
-    F_buffer,
-    F_loop,
-    F_name,
+    F_status_set_error(F_access_denied),
+    F_status_set_error(F_buffer),
+    F_status_set_error(F_loop),
+    F_status_set_error(F_name),
     F_file_found_not,
-    F_memory_not,
+    F_status_set_error(F_memory_not),
     F_false,
-    F_number_overflow,
-    F_file_stat,
+    F_status_set_error(F_number_overflow),
+    F_status_set_error(F_file_stat),
   };
 
   for (int i = 0; i < 9; ++i) {
@@ -40,7 +40,7 @@ void test__f_directory_exists__fails(void **state) {
 
     const f_status_t status = f_directory_exists(path);
 
-    assert_int_equal(F_status_set_fine(status), statuss[i]);
+    assert_int_equal(status, statuss[i]);
   } // for
 }
 

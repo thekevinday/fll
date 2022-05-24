@@ -33,7 +33,7 @@ void test__f_environment_secure_is__fails(void **state) {
 
         const f_status_t status = f_environment_secure_is();
 
-        assert_int_equal(F_status_set_fine(status), statuss[i]);
+        assert_int_equal(status, F_status_set_error(statuss[i]));
       } // for
     }
 
@@ -69,7 +69,7 @@ void test__f_environment_secure_is__fails(void **state) {
 
         const f_status_t status = f_environment_secure_is();
 
-        assert_int_equal(F_status_set_fine(status), statuss[i]);
+        assert_int_equal(status, F_status_set_error(statuss[i]));
       } // for
     }
   #endif // _di_libcap_

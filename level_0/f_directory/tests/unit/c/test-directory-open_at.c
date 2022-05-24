@@ -59,7 +59,7 @@ void test__f_directory_open_at__fails(void **state) {
 
     const f_status_t status = f_directory_open_at(at, path, F_false, &id);
 
-    assert_int_equal(F_status_set_fine(status), statuss[i]);
+    assert_int_equal(status, F_status_set_error(statuss[i]));
   } // for
 }
 
@@ -71,7 +71,7 @@ void test__f_directory_open_at__fails(void **state) {
     {
       const f_status_t status = f_directory_open_at(0, path, 0, 0);
 
-      assert_int_equal(F_status_set_fine(status), F_parameter);
+      assert_int_equal(status, F_status_set_error(F_parameter));
     }
   }
 #endif // _di_level_0_parameter_checking_

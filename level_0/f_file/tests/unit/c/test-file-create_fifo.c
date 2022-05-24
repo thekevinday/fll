@@ -43,7 +43,7 @@ void test__f_file_create_fifo__fails(void **state) {
 
       const f_status_t status = f_file_create_fifo(path, 0);
 
-      assert_int_equal(F_status_set_fine(status), statuss[i]);
+      assert_int_equal(status, F_status_set_error(statuss[i]));
     } // for
   }
 }

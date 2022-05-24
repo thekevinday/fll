@@ -61,7 +61,7 @@ void test__f_file_touch_at__fails(void **state) {
         assert_int_equal(status, F_none);
       }
       else {
-        assert_int_equal(F_status_set_fine(status), statuss[i]);
+        assert_int_equal(status, F_status_set_error(statuss[i]));
       }
     } // for
   }
@@ -114,7 +114,7 @@ void test__f_file_touch_at__fails(void **state) {
 
       const f_status_t status = f_file_touch_at(1, path, mode, 0);
 
-      assert_int_equal(F_status_set_fine(status), statuss[i]);
+      assert_int_equal(status, F_status_set_error(statuss[i]));
     } // for
   }
 }

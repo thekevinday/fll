@@ -23,7 +23,7 @@ void test__f_console_parameter_prioritize_right__fails(void **state) {
 
     const f_status_t status = f_console_parameter_prioritize_right(parameters, choices, &decision);
 
-    assert_int_equal(F_status_set_fine(status), F_parameter);
+    assert_int_equal(status, F_status_set_error(F_parameter));
   }
 
   f_console_parameters_delete(&parameters);
@@ -38,7 +38,7 @@ void test__f_console_parameter_prioritize_right__fails(void **state) {
     {
       const f_status_t status = f_console_parameter_prioritize_right(parameters, choices, 0);
 
-      assert_int_equal(F_status_set_fine(status), F_parameter);
+      assert_int_equal(status, F_status_set_error(F_parameter));
     }
 
     {
@@ -47,7 +47,7 @@ void test__f_console_parameter_prioritize_right__fails(void **state) {
 
       const f_status_t status = f_console_parameter_prioritize_right(parameters, choices, 0);
 
-      assert_int_equal(F_status_set_fine(status), F_parameter);
+      assert_int_equal(status, F_status_set_error(F_parameter));
     }
 
     f_console_parameters_delete(&parameters);
