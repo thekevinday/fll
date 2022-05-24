@@ -187,15 +187,13 @@ extern "C" {
 /**
  * Create a new socket.
  *
- * @param socket_structure
+ * @param socket
  *   The socket structure.
  *   The socket.address may point to any valid structure, like "struct sockaddr", "struct sockaddr_un", or "struct sockaddr_in".
  *   The socket.domain must be assigned the desired domain.
  *   The socket.type must be assigned the desired type.
  *   The socket.protocol must be assigned the desired protocol.
  *   The socket.id will be updated with a file descriptor representing the created socket.
- *
- *   This is named "socket_structure" rather than "socket" due to a conflict with the function "socket()".
  *
  * @return
  *   F_none on success.
@@ -215,7 +213,7 @@ extern "C" {
  * @see socket()
  */
 #ifndef _di_f_socket_create_
-  extern f_status_t f_socket_create(f_socket_t * const socket_structure);
+  extern f_status_t f_socket_create(f_socket_t * const socket);
 #endif // _di_f_socket_create_
 
 /**
@@ -453,6 +451,7 @@ extern "C" {
  * @param header
  *   The message header.
  * @param length
+ *   (optional) The length of the buffer.
  *   This gets replaced with the value of a positive ssize_t representing the length read.
  *   Data may be lost if the amount of data read is larger than given buffer length.
  *
@@ -544,6 +543,7 @@ extern "C" {
  * @param header
  *   The message header.
  * @param length
+ *   (optional) The length of the buffer.
  *   This gets replaced with the value of a positive ssize_t representing the length send.
  *   Data may be lost if the amount of data send is larger than given buffer length.
  *

@@ -89,7 +89,12 @@ extern "C" {
 
       address->sun_family = f_socket_domain_file_d;
 
-      strncpy(address->sun_path, socket->name, sizeof(address->sun_path) - 1);
+      if (socket->name) {
+        strncpy(address->sun_path, socket->name, sizeof(address->sun_path) - 1);
+      }
+      else {
+        address->sun_path[0] = 0;
+      }
     }
 
     if (bind(socket->id, socket->address, sizeof(struct sockaddr_un)) == -1) {
@@ -225,7 +230,7 @@ extern "C" {
     if (result == -1) {
 
       // According to man pages, retrying close() after another close on error is invalid on Linux because Linux releases the descriptor before stages that cause failures.
-      if (errno != EBADF && errno != EINTR) {
+      if (action == f_socket_close_fast_e && errno != EBADF) {
         socket->id = -1;
       }
 
@@ -342,7 +347,9 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    *length = (size_t) result;
+    if (length) {
+      *length = (size_t) result;
+    }
 
     return F_none;
   }
@@ -375,7 +382,6 @@ extern "C" {
       if (errno == EPERM) return F_status_set_error(F_prohibited);
       if (errno == EPIPE) return F_status_set_error(F_pipe);
       if (errno == ETIMEDOUT) return F_status_set_error(F_time_out);
-
 
       return F_status_set_error(F_failure);
     }
@@ -422,7 +428,9 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    *length = (size_t) result;
+    if (length) {
+      *length = (size_t) result;
+    }
 
     return F_none;
   }

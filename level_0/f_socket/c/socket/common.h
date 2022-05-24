@@ -291,7 +291,7 @@ extern "C" {
  * domain:     The socket domain (protocol family).
  * flag:       Flags used for opening the file.
  * id:         File descriptor, with a value of -1 represents a closed file.
- * name:       The name of the socket, if a name is given (for UNIX sockets this represents the path).
+ * name:       The name of the socket, if a name is given (for UNIX sockets this represents the path) (Must be a NULL terminated string).
  * protocol:   The socket protocol.
  * size_read:  The default number of 1-byte characters to read at a time and is often used for the read buffer size.
  * size_write: The default number of 1-byte characters to read at a time and is often used for the write buffer size.
