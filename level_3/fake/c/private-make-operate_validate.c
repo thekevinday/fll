@@ -72,12 +72,7 @@ extern "C" {
     }
 
     if (state_process->operation == fake_make_operation_type_build_e) {
-      if (arguments.used > 1) {
-        fake_print_error_too_many_arguments(data_make);
-
-        *status = F_status_set_error(F_failure);
-      }
-      else if (arguments.used) {
+      if (arguments.used) {
         if (arguments.array[0].used) {
           f_string_static_t path_file = f_string_static_t_initialize;
           path_file.used = data_make->data->path_data_build.used + arguments.array[0].used;

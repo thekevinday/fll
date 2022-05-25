@@ -17,9 +17,14 @@ extern "C" {
  *
  * @param data
  *   The program data.
- * @param setting_file
- *   The name of the settings file to use.
- *   If setting_file.used is 0, then the default or program parameter supplied file is used.
+ * @param build_arguments
+ *   (optional) A set of custom arguments to pass to the build.
+ *   The first argument represents the name of the settings file to use.
+ *   The second and on arguments represent custom modes to use.
+ *   If build_arguments is NULL, then the default (or program supplied) settings file and modes are used.
+ *   If build_arguments.used is 0, then the default or program parameter supplied file is used.
+ *   Set the first argument used length to 0 to use the default program parameter supplied file.
+ *   Set the second argument used length to 0 without any further arguments to not use any modes.
  * @param setting
  *   All build related setting data from the build setting file are loaded into this.
  *   These setting will have any specified mode property applied.
@@ -32,7 +37,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_load_setting_
-  extern void fake_build_load_setting(fake_data_t * const data, const f_string_static_t setting_file, fake_build_setting_t * const setting, f_status_t * const status) F_attribute_visibility_internal_d;
+  extern void fake_build_load_setting(fake_data_t * const data, const f_string_statics_t * const build_arguments, fake_build_setting_t * const setting, f_status_t * const status) F_attribute_visibility_internal_d;
 #endif // _di_fake_build_load_setting_
 
 /**
@@ -69,6 +74,9 @@ extern "C" {
  *   If FALSE, do not perform certain "required" sanity checks (intended for a fakefile rather than a build settings file).
  * @param path_file
  *   The path to the buffer.
+ * @param modes_custom
+ *   (optional) When not NULL, specifies custom modes to use rather than what is provided.
+ *   This also overrides command line parameters that specify the mode.
  * @param buffer
  *   The loaded file data.
  * @param objects
@@ -95,7 +103,7 @@ extern "C" {
  * @see fll_fss_snatch_apart()
  */
 #ifndef _di_fake_build_load_setting_process_
-  extern void fake_build_load_setting_process(fake_data_t * const data, const bool checks, const f_string_static_t path_file, const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, fake_build_setting_t * const setting, f_status_t * const status) F_attribute_visibility_internal_d;
+  extern void fake_build_load_setting_process(fake_data_t * const data, const bool checks, const f_string_static_t path_file, const f_string_statics_t * const modes_custom, const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, fake_build_setting_t * const setting, f_status_t * const status) F_attribute_visibility_internal_d;
 #endif // _di_fake_build_load_setting_process_
 
 /**

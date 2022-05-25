@@ -186,6 +186,14 @@ extern "C" {
  * @param setting_file
  *   The name of the settings file to use.
  *   If setting_file.used is 0, then the default or program parameter supplied file is used.
+ * @param build_arguments
+ *   (optional) A set of custom arguments to pass to the build.
+ *   The first argument represents the name of the settings file to use.
+ *   The second and on arguments represent custom modes to use.
+ *   If build_arguments is NULL, then the default (or program supplied) settings file and modes are used.
+ *   If build_arguments.used is 0, then the default or program parameter supplied file is used.
+ *   Set the first argument used length to 0 to use the default program parameter supplied file.
+ *   Set the second argument used length to 0 without any further arguments to not use any modes.
  *
  * @return
  *   F_none on success.
@@ -193,7 +201,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_operate_
-  extern f_status_t fake_build_operate(fake_data_t * const data, const f_string_static_t setting_file) F_attribute_visibility_internal_d;
+  extern f_status_t fake_build_operate(fake_data_t * const data, const f_string_statics_t * const build_arguments) F_attribute_visibility_internal_d;
 #endif // _di_fake_build_operate_
 
 /**

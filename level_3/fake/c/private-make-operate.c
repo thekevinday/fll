@@ -258,7 +258,15 @@ extern "C" {
 
     for (; i < content.used; ++i) {
 
-      if (content.array[i].start > content.array[i].stop) continue;
+      // Skip content that is unused, but quoted content, even if empty, should remain.
+      if (content.array[i].start > content.array[i].stop) {
+
+        if (quotes.array[i]) {
+          ++arguments->used;
+        }
+
+        continue;
+      }
 
       range = content.array[i];
 

@@ -43,8 +43,8 @@ Fakefile Specification:
 
   The Section Operation Objects are\:
   - and: One or more Content. First Content is the condition or "no_dereference" (when "no_dereference", then the Second Content is the condition, etc..), remaining Content are specific to the condition.
-  - break: Zero or One Content. If specified, First content must be one of "success" or "failure".
-  - build: Zero or One Content. First Content represents file name of the settings file to use.
+  - break: Zero or one Content. If specified, First content must be one of "success" or "failure".
+  - build: Zero or more Content. First Content represents file name of the settings file to use, Second Content and on represent custom modes to use.
   - clean: Zero Content.
   - clone: Two or more Content representing paths to files.
   - compile: One or more Content as parameters to compiler.

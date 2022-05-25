@@ -99,7 +99,7 @@ extern "C" {
     }
 
     if (state_process->operation == fake_make_operation_type_build_e) {
-      *status = fake_build_operate(data_make->data, arguments.used ? arguments.array[0] : f_string_empty_s);
+      *status = fake_build_operate(data_make->data, arguments.used ? &arguments : 0);
 
       if (F_status_set_fine(*status) == F_interrupt) {
         return 0;

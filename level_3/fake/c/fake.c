@@ -302,7 +302,7 @@ extern "C" {
           }
 
           if (F_status_is_error_not(status)) {
-            status = fake_build_operate(&data, f_string_empty_s);
+            status = fake_build_operate(&data, 0);
           }
         }
         else if (data.operation == fake_operation_clean_e) {

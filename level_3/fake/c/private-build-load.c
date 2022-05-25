@@ -71,7 +71,7 @@ extern "C" {
 #endif // _di_fake_build_load_environment_
 
 #ifndef _di_fake_build_load_setting_
-  void fake_build_load_setting(fake_data_t * const data, const f_string_static_t setting_file, fake_build_setting_t * const setting, f_status_t * const status) {
+  void fake_build_load_setting(fake_data_t * const data, const f_string_statics_t * const build_arguments, fake_build_setting_t * const setting, f_status_t * const status) {
 
     if (F_status_is_error(*status)) return;
 
@@ -81,6 +81,17 @@ extern "C" {
       *status = F_status_set_error(F_interrupt);
 
       return;
+    }
+
+    const f_string_static_t setting_file = build_arguments && build_arguments->used ? build_arguments->array[0] : f_string_empty_s;
+    f_string_statics_t modes_custom = f_string_statics_t_initialize;
+    const f_string_statics_t *modes_custom_ptr = 0;
+
+    if (build_arguments && build_arguments->used > 1) {
+      modes_custom.array = build_arguments->array + 1;
+      modes_custom.used = build_arguments->used - 1;
+
+      modes_custom_ptr = &modes_custom;
     }
 
     f_string_static_t path_file = f_string_static_t_initialize;
@@ -123,7 +134,7 @@ extern "C" {
             fll_error_print(data->main->error, F_status_set_fine(*status), "f_fss_apply_delimit", F_true);
           }
           else {
-            fake_build_load_setting_process(data, F_true, setting_file.used ? path_file : data->file_data_build_settings, buffer, objects, contents, setting, status);
+            fake_build_load_setting_process(data, F_true, setting_file.used ? path_file : data->file_data_build_settings, modes_custom_ptr, buffer, objects, contents, setting, status);
           }
         }
 
@@ -177,7 +188,7 @@ extern "C" {
 #endif // _di_fake_build_load_setting_
 
 #ifndef _di_fake_build_load_setting_process_
-  void fake_build_load_setting_process(fake_data_t * const data, const bool checks, const f_string_static_t path_file, const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, fake_build_setting_t * const setting, f_status_t * const status) {
+  void fake_build_load_setting_process(fake_data_t * const data, const bool checks, const f_string_static_t path_file, const f_string_statics_t * const modes_custom, const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, fake_build_setting_t * const setting, f_status_t * const status) {
 
     if (F_status_is_error(*status) && buffer.used) return;
 
@@ -522,14 +533,18 @@ extern "C" {
       f_array_length_t i = 0;
       f_array_length_t j = 0;
 
-      // If any mode is specified, the entire defaults is replaced.
-      if (data->mode.used) {
+      // Custom modes are always used if provided, otherwise if any mode is specified, the entire defaults is replaced.
+      if (modes_custom) {
+        modes = modes_custom;
+      }
+      else if (data->mode.used) {
         modes = &data->mode;
       }
 
       for (; i < modes->used; ++i) {
 
-        found = F_false;
+        // Skip empty modes.
+        if (!modes->array[i].used) continue;
 
         for (j = 0; j < setting->modes.used; ++j) {
 

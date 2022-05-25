@@ -93,6 +93,12 @@ Fakefile Documentation:
       Accepts an optional Content that is a file name to a build settings file to use instead of the default.
       This file name is relative to the data build directory (which can be changed by -D/--data parameter).
 
+      If the optional file name Content is specified, then it also supports additional modes to use instead of the default mode.
+
+      When no additional Content after the "build" is specified, then the default (or program supplied) settings file and modes are used.
+      When the first Content after the "build" is specified as an empty string, then the default (or program supplied) settings file is used.
+      When the second Content after the "build" (and there is no third Content), then no modes are used.
+
     - break\:
       Perform an exit from the current make operation.
       This only exists the current depth.
