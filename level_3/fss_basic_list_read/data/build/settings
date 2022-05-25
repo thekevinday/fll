@@ -55,7 +55,8 @@ defines -D_libcap_legacy_only_ -D_pthread_attr_unsupported_ -D_pthread_sigqueue_
 
 flags -O2 -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-parentheses -Wno-missing-braces
 flags-clang -Wno-logical-op-parentheses
-flags-test -fstack-protector
+flags-test -O0 -fstack-protector -Wall
+flags-coverage -O0 --coverage -fprofile-abs-path -fprofile-dir=build/coverage/
 
 flags_library -fPIC
 flags_object -fPIC

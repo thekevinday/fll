@@ -11,8 +11,8 @@ version_major 0
 version_file major
 version_target major
 
-modes individual clang test
-modes_default individual
+modes individual clang test coverage
+modes_default individual test
 
 build_compiler gcc
 build_compiler-clang clang
@@ -46,5 +46,6 @@ defines_shared -Lbuild/libraries/shared
 flags -O2 -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-parentheses
 flags-clang -Wno-logical-op-parentheses
 flags-test -fstack-protector -Wall
+flags-coverage -O0 --coverage -fprofile-abs-path -fprofile-dir=build/coverage/
 
 flags_program -fPIE
