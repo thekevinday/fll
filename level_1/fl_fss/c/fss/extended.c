@@ -35,38 +35,49 @@ extern "C" {
     }
 
     const f_array_length_t delimits_used = delimits->used;
+    const f_array_length_t quotes_used = quotes ? quotes->used : 0;
 
     uint8_t content_found = 0;
-    f_fss_quote_t quoted = 0;
+    f_fss_quote_t quoted = f_fss_quote_type_none_e;
 
     while (range->start <= range->stop && range->start < buffer.used) {
 
       f_string_range_t content_partial = f_string_range_t_initialize;
 
-      quoted = 0;
+      quoted = f_fss_quote_type_none_e;
 
       status = private_fl_fss_basic_read(buffer, F_false, state, range, &content_partial, &quoted, delimits);
 
       if (status == F_fss_found_object || status == F_fss_found_object_content_not) {
+        status_allocate = f_string_ranges_increase(state.step_small, found);
 
-        if (found->used + 1 > found->size) {
-          status_allocate = f_string_ranges_increase(state.step_small, found);
+        if (F_status_is_error_not(status_allocate) && quotes) {
+          status_allocate = f_uint8s_increase(state.step_small, quotes);
+        }
 
-          if (F_status_is_fine(status_allocate) && quotes) {
-            status_allocate = f_uint8s_resize(found->size, quotes);
+        if (F_status_is_error(status_allocate)) {
+          delimits->used = delimits_used;
+
+          if (quotes) {
+            quotes->used = quotes_used;
           }
 
-          if (F_status_is_error(status_allocate)) {
-            delimits->used = delimits_used;
-
-            return status_allocate;
-          }
+          return status_allocate;
         }
 
         found->array[found->used++] = content_partial;
 
         if (quotes) {
-          quotes->array[quotes->used] = quoted == f_fss_quote_type_double_e ? f_string_ascii_quote_double_s.string[0] : f_string_ascii_quote_single_s.string[0];
+          if (quoted == f_fss_quote_type_double_e) {
+            quotes->array[quotes->used] = f_string_ascii_quote_double_s.string[0];
+          }
+          else if (quoted == f_fss_quote_type_double_e) {
+            quotes->array[quotes->used] = f_string_ascii_quote_single_s.string[0];
+          }
+          else {
+            quotes->array[quotes->used] = 0;
+          }
+
           quotes->used = found->used;
         }
 

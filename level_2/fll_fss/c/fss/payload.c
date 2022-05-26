@@ -46,7 +46,7 @@ extern "C" {
             status2 = f_string_ranges_increase(state.step_small, &contents->array[contents->used]);
             if (F_status_is_error(status2)) return status2;
 
-            ++contents->used;
+            contents->array[contents->used++].used = 0;
 
             return status;
           }

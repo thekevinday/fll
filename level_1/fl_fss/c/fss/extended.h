@@ -211,6 +211,8 @@ extern "C" {
  *   Errors (with error bit) from: f_fss_is_zero_width().
  *   Errors (with error bit) from: f_fss_skip_past_delimit().
  *   Errors (with error bit) from: f_fss_skip_past_space().
+ *   Errors (with error bit) from: f_string_ranges_increase().
+ *   Errors (with error bit) from: f_uint8s_increase().
  *   Errors (with error bit) from: f_utf_buffer_increment().
  *
  * @see f_array_lengths_increase()
@@ -220,6 +222,8 @@ extern "C" {
  * @see f_fss_is_zero_width()
  * @see f_fss_skip_past_delimit()
  * @see f_fss_skip_past_space()
+ * @see f_string_ranges_increase()
+ * @see f_uint8s_increase()
  * @see f_utf_buffer_increment()
  * @see fl_fss_basic_object_read()
  * @see fl_fss_extended_object_read()

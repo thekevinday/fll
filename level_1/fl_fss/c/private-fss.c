@@ -181,7 +181,7 @@ extern "C" {
     f_char_t quote_found = 0;
 
     if (quoted) {
-      *quoted = 0;
+      *quoted = f_fss_quote_type_none_e;
     }
 
     // Identify where the object begins.
@@ -414,6 +414,9 @@ extern "C" {
                 else if (quote_found == f_fss_delimit_quote_double_s.string[0]) {
                   *quoted = f_fss_quote_type_double_e;
                 }
+                else {
+                  *quoted = f_fss_quote_type_none_e;
+                }
               }
 
               range->start = first_slash;
@@ -570,6 +573,9 @@ extern "C" {
               }
               else if (quote_found == f_fss_delimit_quote_double_s.string[0]) {
                 *quoted = f_fss_quote_type_double_e;
+              }
+              else {
+                *quoted = f_fss_quote_type_none_e;
               }
             }
 

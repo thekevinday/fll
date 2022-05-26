@@ -20,12 +20,14 @@ extern "C" {
  * Types for FSS quote.
  *
  * f_fss_quote_type_*:
+ *   - none:   Not a quote.
  *   - single: Quote type is a single quote.
  *   - double: Quote type is a double quote.
  */
 #ifndef _di_f_fss_quote_type_
   enum {
-    f_fss_quote_type_single_e = 1,
+    f_fss_quote_type_none_e = 0,
+    f_fss_quote_type_single_e,
     f_fss_quote_type_double_e,
   };
 #endif // _di_f_fss_quote_type_

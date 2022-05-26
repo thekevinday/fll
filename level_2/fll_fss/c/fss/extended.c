@@ -58,13 +58,13 @@ extern "C" {
             status2 = f_string_ranges_increase(state.step_small, &contents->array[contents->used]);
             if (F_status_is_error(status2)) return status2;
 
-            ++contents->used;
+            contents->array[contents->used++].used = 0;
 
             if (contents_quoted) {
               status2 = f_uint8s_increase(state.step_small, &contents_quoted->array[contents_quoted->used]);
               if (F_status_is_error(status2)) return status2;
 
-              ++contents_quoted->used;
+              contents_quoted->array[contents_quoted->used++].used = 0;
             }
 
             return F_fss_found_object_content_not;
@@ -95,6 +95,7 @@ extern "C" {
             if (F_status_is_error(status2)) return status2;
 
             quoted_content = &contents_quoted->array[contents_quoted->used];
+            quoted_content->used = 0;
           }
 
           status = fl_fss_extended_content_read(buffer, state, range, &contents->array[contents->used], quoted_content, contents_delimits ? contents_delimits : objects_delimits);
