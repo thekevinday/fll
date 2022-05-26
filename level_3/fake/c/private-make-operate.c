@@ -182,8 +182,6 @@ extern "C" {
     f_array_length_t k = 0;
     f_array_length_t l = 0;
 
-    f_array_length_t used_content = 0;
-
     const f_string_static_t reserved_name[] = {
       fake_make_parameter_variable_build_s,
       fake_make_parameter_variable_color_s,
@@ -260,9 +258,16 @@ extern "C" {
 
       // Skip content that is unused, but quoted content, even if empty, should remain.
       if (content.array[i].start > content.array[i].stop) {
-
         if (quotes.array[i]) {
-          ++arguments->used;
+          *status = f_string_dynamics_increase(fake_default_allocation_small_d, arguments);
+
+          if (F_status_is_error(*status)) {
+            fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamics_increase", F_true);
+
+            break;
+          }
+
+          arguments->array[arguments->used++].used = 0;
         }
 
         continue;
@@ -285,8 +290,15 @@ extern "C" {
         data_make->buffer.string[iki_data.delimits.array[j]] = f_iki_syntax_placeholder_s.string[0];
       } // for
 
+      *status = f_string_dynamics_increase(fake_default_allocation_small_d, arguments);
+
+      if (F_status_is_error(*status)) {
+        fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamics_increase", F_true);
+
+        break;
+      }
+
       if (iki_data.variable.used) {
-        used_content = arguments->array[arguments->used].used;
 
         // Copy everything up to the start of the first IKI variable.
         if (iki_data.variable.array[0].start && content.array[i].start < iki_data.variable.array[0].start) {
@@ -367,104 +379,128 @@ extern "C" {
 
                 unmatched = F_false;
 
-                *status = f_string_dynamics_increase(fake_default_allocation_small_d, arguments);
-
-                if (F_status_is_error(*status)) {
-                  fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamics_increase", F_true);
-
-                  break;
-                }
-
-                for (l = 0; l < reserved_value[k]->used; ++l) {
-
-                  if (!reserved_value[k]->array[l].used) continue;
-
-                  if (l) {
-                    *status = f_string_dynamic_append(f_string_space_s, &arguments->array[arguments->used]);
-
-                    if (F_status_is_error(*status)) {
-                      fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamic_append", F_true);
-
-                      break;
-                    }
-                  }
-
-                  *status = f_string_dynamic_append_nulless(reserved_value[k]->array[l], &arguments->array[arguments->used]);
+                // Unquoted IKI content that are reserved words and entirely represent a single parameter should expand into separate parameters.
+                if (content.array[i].start == iki_data.variable.array[0].start && content.array[i].stop == iki_data.variable.array[0].stop && !quotes.array[i]) {
+                  *status = f_string_dynamics_increase_by(reserved_value[k]->used, arguments);
 
                   if (F_status_is_error(*status)) {
-                    fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamic_append_nulless", F_true);
+                    fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamics_increase_by", F_true);
 
                     break;
                   }
-                } // for
 
-                if (F_status_is_error(*status) || !unmatched) break;
+                  for (l = 0; l < reserved_value[k]->used; ++l) {
+
+                    if (!reserved_value[k]->array[l].used) continue;
+
+                    arguments->array[arguments->used].used = 0;
+
+                    *status = f_string_dynamic_append_nulless(reserved_value[k]->array[l], &arguments->array[arguments->used]);
+
+                    if (F_status_is_error(*status)) {
+                      fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamic_append_nulless", F_true);
+
+                      break;
+                    }
+
+                    ++arguments->used;
+                  } // for
+                }
+                else {
+                  *status = f_string_dynamics_increase(fake_default_allocation_small_d, arguments);
+
+                  if (F_status_is_error(*status)) {
+                    fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamics_increase", F_true);
+
+                    break;
+                  }
+
+                  for (l = 0; l < reserved_value[k]->used; ++l) {
+
+                    if (!reserved_value[k]->array[l].used) continue;
+
+                    if (l) {
+                      *status = f_string_dynamic_append(f_string_space_s, &arguments->array[arguments->used]);
+
+                      if (F_status_is_error(*status)) {
+                        fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamic_append", F_true);
+
+                        break;
+                      }
+                    }
+
+                    *status = f_string_dynamic_append_nulless(reserved_value[k]->array[l], &arguments->array[arguments->used]);
+
+                    if (F_status_is_error(*status)) {
+                      fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamic_append_nulless", F_true);
+
+                      break;
+                    }
+                  } // for
+                }
+
+                break;
               } // for
 
               if (F_status_is_error(*status)) break;
             }
 
-            if (unmatched && parameter->used) {
+            if (unmatched && F_status_is_error_not(*status)) {
               for (k = 0; k < parameter->used; ++k) {
 
                 // Check against IKI variable list.
-                *status = fl_string_dynamic_partial_compare_dynamic(parameter->array[k].name, data_make->buffer, iki_data.content.array[j]);
+                if (fl_string_dynamic_partial_compare_dynamic(parameter->array[k].name, data_make->buffer, iki_data.content.array[j]) != F_equal_to) {
+                  continue;
+                }
 
-                if (*status == F_equal_to) {
-                  unmatched = F_false;
+                unmatched = F_false;
 
-                  if (parameter->array[k].value.used) {
-                    if (quotes.array[i]) {
-                      for (l = 0; l < parameter->array[k].value.used; ++l) {
+                if (parameter->array[k].value.used) {
+                  if (quotes.array[i]) {
+                    for (l = 0; l < parameter->array[k].value.used; ++l) {
 
-                        if (l > 0) {
-                          *status = f_string_dynamic_append(f_string_space_s, &arguments->array[arguments->used]);
-
-                          if (F_status_is_error(*status)) {
-                            fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamic_append", F_true);
-
-                            break;
-                          }
-                        }
-
-                        *status = f_string_dynamic_append_nulless(parameter->array[k].value.array[l], &arguments->array[arguments->used]);
+                      if (l > 0) {
+                        *status = f_string_dynamic_append(f_string_space_s, &arguments->array[arguments->used]);
 
                         if (F_status_is_error(*status)) {
-                          fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamic_append_nulless", F_true);
+                          fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamic_append", F_true);
 
                           break;
                         }
-                      } // for
-                    }
-                    else {
-                      *status = f_string_dynamics_increase_by(fake_default_allocation_small_d, arguments);
+                      }
+
+                      *status = f_string_dynamic_append_nulless(parameter->array[k].value.array[l], &arguments->array[arguments->used]);
 
                       if (F_status_is_error(*status)) {
-                        fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamics_increase_by", F_true);
+                        fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamic_append_nulless", F_true);
 
                         break;
                       }
-
-                      for (l = 0; l < parameter->array[k].value.used; ++l) {
-
-                        *status = f_string_dynamic_append_nulless(parameter->array[k].value.array[l], &arguments->array[arguments->used]);
-
-                        if (F_status_is_error(*status)) {
-                          fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamic_append_nulless", F_true);
-
-                          break;
-                        }
-                      } // for
-                    }
+                    } // for
                   }
+                  else {
+                    *status = f_string_dynamics_increase_by(fake_default_allocation_small_d, arguments);
 
-                  break;
-                }
-                else if (F_status_is_error(*status)) {
-                  fll_error_print(data_make->error, F_status_set_fine(*status), "fl_string_dynamic_compare", F_true);
+                    if (F_status_is_error(*status)) {
+                      fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamics_increase_by", F_true);
 
-                  break;
+                      break;
+                    }
+
+                    for (l = 0; l < parameter->array[k].value.used; ++l) {
+
+                      *status = f_string_dynamic_append_nulless(parameter->array[k].value.array[l], &arguments->array[arguments->used]);
+
+                      if (F_status_is_error(*status)) {
+                        fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamic_append_nulless", F_true);
+
+                        break;
+                      }
+                    } // for
+                  }
                 }
+
+                break;
               } // for
             }
 
@@ -499,9 +535,17 @@ extern "C" {
             }
           }
 
-          // Make sure to copy and content between multiple IKI variables within the same content.
+          // Make sure to copy content between multiple IKI variables within the same content.
           if (j + 1 < iki_data.variable.used) {
             if (iki_data.variable.array[j].stop + 1 < iki_data.variable.array[j + 1].start && iki_data.variable.array[j + 1].stop <= content.array[i].stop) {
+              *status = f_string_dynamics_increase(fake_default_allocation_small_d, arguments);
+
+              if (F_status_is_error(*status)) {
+                fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamics_increase", F_true);
+
+                break;
+              }
+
               range.start = iki_data.variable.array[j].stop + 1;
               range.stop = iki_data.variable.array[j + 1].start - 1;
 
@@ -516,8 +560,18 @@ extern "C" {
           }
         } // for
 
+        if (F_status_is_error(*status)) break;
+
         // Copy everything after the last IKI variable to the end of the content.
         if (iki_data.variable.used && content.array[i].stop > iki_data.variable.array[iki_data.variable.used - 1].stop) {
+          *status = f_string_dynamics_increase(fake_default_allocation_small_d, arguments);
+
+          if (F_status_is_error(*status)) {
+            fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamics_increase", F_true);
+
+            break;
+          }
+
           range.start = iki_data.variable.array[iki_data.variable.used - 1].stop + 1;
           range.stop = content.array[i].stop;
 
@@ -530,8 +584,7 @@ extern "C" {
           }
         }
 
-        // Unquoted empty Content after IKI variable substitution are not used as an argument.
-        if (used_content < arguments->array[arguments->used].used || quotes.array[i]) {
+        if (!(content.array[i].start == iki_data.variable.array[0].start && content.array[i].stop == iki_data.variable.array[0].stop && !quotes.array[i])) {
           ++arguments->used;
         }
       }
