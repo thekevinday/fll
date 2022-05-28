@@ -1,5 +1,23 @@
 #include "../utf.h"
 #include "../private-utf.h"
+#include "../private-utf_alphabetic.h"
+#include "../private-utf_combining.h"
+#include "../private-utf_control.h"
+#include "../private-utf_digit.h"
+#include "../private-utf_emoji.h"
+#include "../private-utf_numeric.h"
+#include "../private-utf_phonetic.h"
+#include "../private-utf_private.h"
+#include "../private-utf_punctuation.h"
+#include "../private-utf_subscript.h"
+#include "../private-utf_superscript.h"
+#include "../private-utf_surrogate.h"
+#include "../private-utf_symbol.h"
+#include "../private-utf_valid.h"
+#include "../private-utf_whitespace.h"
+#include "../private-utf_wide.h"
+#include "../private-utf_word.h"
+#include "../private-utf_zero_width.h"
 #include "private-is_unassigned.h"
 
 #ifdef __cplusplus
@@ -21,7 +39,7 @@ extern "C" {
   }
 #endif // _di_f_utf_character_is_
 
-#ifndef _di_f_utf_character_is_alpha_
+#ifndef _di_f_utf_character_is_alphabetic_
   f_status_t f_utf_character_is_alpha(const f_utf_char_t character) {
 
     if (macro_f_utf_char_t_width_is(character)) {
@@ -29,7 +47,7 @@ extern "C" {
         return F_status_set_error(F_utf_fragment);
       }
 
-      return private_f_utf_character_is_alpha(character);
+      return private_f_utf_character_is_alphabetic(character);
     }
 
     if (isalpha(macro_f_utf_char_t_to_char_1(character))) {
@@ -38,9 +56,9 @@ extern "C" {
 
     return F_false;
   }
-#endif // _di_f_utf_character_is_alpha_
+#endif // _di_f_utf_character_is_alphabetic_
 
-#ifndef _di_f_utf_character_is_alpha_digit_
+#ifndef _di_f_utf_character_is_alphabetic_digit_
   f_status_t f_utf_character_is_alpha_digit(const f_utf_char_t character) {
 
     if (macro_f_utf_char_t_width_is(character)) {
@@ -48,7 +66,7 @@ extern "C" {
         return F_status_set_error(F_utf_fragment);
       }
 
-      return private_f_utf_character_is_alpha_digit(character);
+      return private_f_utf_character_is_alphabetic_digit(character);
     }
 
     if (isalnum(macro_f_utf_char_t_to_char_1(character))) {
@@ -57,17 +75,17 @@ extern "C" {
 
     return F_false;
   }
-#endif // _di_f_utf_character_is_alpha_digit_
+#endif // _di_f_utf_character_is_alphabetic_digit_
 
-#ifndef _di_f_utf_character_is_alpha_numeric_
-  f_status_t f_utf_character_is_alpha_numeric(const f_utf_char_t character) {
+#ifndef _di_f_utf_character_is_alphabetic_numeric_
+  f_status_t f_utf_character_is_alphabetic_numeric(const f_utf_char_t character) {
 
     if (macro_f_utf_char_t_width_is(character)) {
       if (macro_f_utf_char_t_width_is(character) == 1) {
         return F_status_set_error(F_utf_fragment);
       }
 
-      return private_f_utf_character_is_alpha_numeric(character);
+      return private_f_utf_character_is_alphabetic_numeric(character);
     }
 
     if (isalnum(macro_f_utf_char_t_to_char_1(character))) {
@@ -76,7 +94,7 @@ extern "C" {
 
     return F_false;
   }
-#endif // _di_f_utf_character_is_alpha_numeric_
+#endif // _di_f_utf_character_is_alphabetic_numeric_
 
 #ifndef _di_f_utf_character_is_ascii_
   f_status_t f_utf_character_is_ascii(const f_utf_char_t character) {

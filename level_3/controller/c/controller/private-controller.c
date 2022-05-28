@@ -776,7 +776,7 @@ extern "C" {
     f_status_t status = F_none;
 
     if (name.string[0] != '_') {
-      status = f_utf_is_alpha(name.string, name.used);
+      status = f_utf_is_alphabetic(name.string, name.used);
 
       if (F_status_is_error(status)) return status;
       if (status == F_false) return F_false;
@@ -786,7 +786,7 @@ extern "C" {
 
       if (name.string[i] == '_') continue;
 
-      status = f_utf_is_alpha_digit(name.string, name.used);
+      status = f_utf_is_alphabeticbetic_digit(name.string, name.used);
 
       if (F_status_is_error(status)) return status;
       if (status == F_false) return F_false;

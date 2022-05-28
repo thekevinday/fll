@@ -380,11 +380,11 @@ extern "C" {
  *   F_false on invalid.
  *   F_none if there is no string to validate (used = 0).
  *
- *   Errors (with error bit) from: f_utf_is_alpha().
- *   Errors (with error bit) from: f_utf_is_alpha_digit().
+ *   Errors (with error bit) from: f_utf_is_alphabetic().
+ *   Errors (with error bit) from: f_utf_is_alphabeticbetic_digit().
  *
- * @see f_utf_is_alpha()
- * @see f_utf_is_alpha_digit()
+ * @see f_utf_is_alphabetic()
+ * @see f_utf_is_alphabeticbetic_digit()
  */
 #ifndef _di_controller_validate_define_name_
   extern f_status_t controller_validate_environment_name(const f_string_static_t name) F_attribute_visibility_internal_d;

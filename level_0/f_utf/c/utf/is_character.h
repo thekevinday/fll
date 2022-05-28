@@ -50,9 +50,9 @@ extern "C" {
  *
  * @see isalpha()
  */
-#ifndef _di_f_utf_character_is_alpha_
+#ifndef _di_f_utf_character_is_alphabetic_
   extern f_status_t f_utf_character_is_alpha(const f_utf_char_t character);
-#endif // _di_f_utf_character_is_alpha_
+#endif // _di_f_utf_character_is_alphabetic_
 
 /**
  * Check to see if the entire byte block of the character is an ASCII or UTF-8 alphabetic or digit character.
@@ -73,9 +73,9 @@ extern "C" {
  *
  * @see isalnum()
  */
-#ifndef _di_f_utf_character_is_alpha_digit_
+#ifndef _di_f_utf_character_is_alphabetic_digit_
   extern f_status_t f_utf_character_is_alpha_digit(const f_utf_char_t character);
-#endif // _di_f_utf_character_is_alpha_digit_
+#endif // _di_f_utf_character_is_alphabetic_digit_
 
 /**
  * Check to see if the entire byte block of the character is an ASCII or UTF-8 alphabetic or numeric character.
@@ -94,9 +94,9 @@ extern "C" {
  *
  * @see isalnum()
  */
-#ifndef _di_f_utf_character_is_alpha_numeric_
-  extern f_status_t f_utf_character_is_alpha_numeric(const f_utf_char_t character);
-#endif // _di_f_utf_character_is_alpha_numeric_
+#ifndef _di_f_utf_character_is_alphabetic_numeric_
+  extern f_status_t f_utf_character_is_alphabetic_numeric(const f_utf_char_t character);
+#endif // _di_f_utf_character_is_alphabetic_numeric_
 
 /**
  * Check to see if the entire byte block of the character is an ASCII character.
