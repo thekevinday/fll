@@ -313,32 +313,32 @@ extern "C" {
       return private_f_utf_character_is_punctuation(character);
     }
 
-    // ASCII: '!' to '#'.
+    // ASCII: U+0021 '!' to U+0023 '#'.
     if (character > 0x20000000 && character < 0x24000000) {
       return F_true;
     }
 
-    // ASCII: '%' to '*'.
+    // ASCII: U+0025 '%' to U+002A '*'.
     if (character > 0x24000000 && character < 0x2b000000) {
       return F_true;
     }
 
-    // ASCII: ',' to '/'.
+    // ASCII: U+002C ',' to U+002F '/'.
     if (character > 0x2b000000 && character < 0x30000000) {
       return F_true;
     }
 
-    // ASCII: ':', ';', '?', or '@'.
+    // ASCII: U+003A ':', U+003B ';', U+003F '?', or U+0040 '@'.
     if (character == 0x3a000000 || character == 0x3b000000 || character == 0x3f000000 || character == 0x40000000) {
       return F_true;
     }
 
-    // ASCII: '[' to ']'.
-    if (character > 0x5a000000 && character < 0x5d000000) {
+    // ASCII: U+005B '[' to U+005D ']'.
+    if (character > 0x5a000000 && character < 0x5e000000) {
       return F_true;
     }
 
-    // ASCII: '_', '{', or '}'.
+    // ASCII: U+005F '_', U+007B '{', or U+007D '}'.
     if (character == 0x5f000000 || character == 0x7b000000 || character == 0x7d000000) {
       return F_true;
     }

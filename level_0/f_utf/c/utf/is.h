@@ -522,8 +522,6 @@ extern "C" {
 /**
  * Check to see if the entire byte block of the character is an ASCII or UTF-8 symbol character.
  *
- * @todo Incomplete, UTF-8 codes not yet checked!
- *
  * @param character
  *   The character to validate.
  *   There must be enough space allocated to compare against, as limited by width_max.

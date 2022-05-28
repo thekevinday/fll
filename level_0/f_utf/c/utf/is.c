@@ -531,32 +531,32 @@ extern "C" {
       return private_f_utf_character_is_punctuation(character_utf);
     }
 
-    // ASCII: '!' to '#'.
+    // ASCII: U+0021 '!' to U+0023 '#'.
     if (character[0] > 0x20 && character[0] < 0x24) {
       return F_true;
     }
 
-    // ASCII: '%' to '*'.
+    // ASCII: U+0025 '%' to U+002A '*'.
     if (character[0] > 0x24 && character[0] < 0x2b) {
       return F_true;
     }
 
-    // ASCII: ',' to '/'.
+    // ASCII: U+002C ',' to U+002F '/'.
     if (character[0] > 0x2b && character[0] < 0x30) {
       return F_true;
     }
 
-    // ASCII: ':', ';', '?', or '@'.
+    // ASCII: U+003A ':', U+003B ';', U+003F '?', or U+0040 '@'.
     if (character[0] == 0x3a || character[0] == 0x3b || character[0] == 0x3f || character[0] == 0x40) {
       return F_true;
     }
 
-    // ASCII: '[' to ']'.
-    if (character[0] > 0x5a && character[0] < 0x5d) {
+    // ASCII: U+005B '[' to U+005D ']'.
+    if (character[0] > 0x5a && character[0] < 0x5e) {
       return F_true;
     }
 
-    // ASCII: '_', '{', or '}'.
+    // ASCII: U+005F '_', U+007B '{', or U+007D '}'.
     if (character[0] == 0x5f || character[0] == 0x7b || character[0] == 0x7d) {
       return F_true;
     }
