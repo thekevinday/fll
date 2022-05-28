@@ -42,6 +42,7 @@ package_main() {
   local verbosity=normal
   local verbose=
   local verbose_common=
+  local result=
 
   if [[ $# -gt 0 ]] ; then
     t=$#
@@ -134,7 +135,7 @@ package_main() {
     package_cleanup
 
     return 1
-  elif [[ $operation == "build" ]] ; then
+  elif [[ $operation == "build" || $operation == "rebuild" ]] ; then
     if [[ ! -d $path_build ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
         echo -e "${c_error}ERROR: Build directory '$path_build' is invalid or missing.$c_reset"
@@ -206,6 +207,14 @@ package_main() {
       package_cleanup
 
       return 1
+    fi
+
+    if [[ $operation == "rebuild" ]] ; then
+      package_operation_clean
+
+      if [[ $failure -ne 0 ]] ; then
+        return 1
+      fi
     fi
 
     if [[ $mode_individual == "" && $mode_level == "" && $mode_monolithic == "" && $mode_program == "" ]] ; then
@@ -303,8 +312,9 @@ package_help() {
   echo
   echo -e "$c_highlight$system_name$c_reset $c_notice[${c_reset} options $c_notice]$c_reset $c_notice[${c_reset} operation $c_notice]$c_reset"
   echo -e " ${c_important}build${c_reset}         Build the package."
-  echo -e " ${c_important}dependencies${c_reset}  Rebuild all dependencies."
   echo -e " ${c_important}clean${c_reset}         Delete all built packages."
+  echo -e " ${c_important}dependencies${c_reset}  Rebuild all dependencies."
+  echo -e " ${c_important}rebuild${c_reset}       Delete all built packages then build the package."
   echo
   echo -e "${c_highlight}Options:$c_reset"
   echo -e " -${c_important}h$c_reset, --${c_important}help$c_reset      Print this help screen."
@@ -1117,24 +1127,44 @@ package_operation_clean() {
   if [[ $mode_individual == "yes" ]] ; then
     if [[ -d ${path_destination}individual ]] ; then
       rm $verbose_common -Rf ${path_destination}individual
+
+      if [[ $? -ne 0 ]] ; then
+        let failure=1
+        return
+      fi
     fi
   fi
 
   if [[ $mode_level == "yes" ]] ; then
     if [[ -d ${path_destination}level ]] ; then
       rm $verbose_common -Rf ${path_destination}level
+
+      if [[ $? -ne 0 ]] ; then
+        let failure=1
+        return
+      fi
     fi
   fi
 
   if [[ $mode_monolithic == "yes" ]] ; then
     if [[ -d ${path_destination}monolithic ]] ; then
       rm $verbose_common -Rf ${path_destination}monolithic
+
+      if [[ $? -ne 0 ]] ; then
+        let failure=1
+        return
+      fi
     fi
   fi
 
   if [[ $mode_program == "yes" ]] ; then
     if [[ -d ${path_destination}program ]] ; then
       rm $verbose_common -Rf ${path_destination}program
+
+      if [[ $? -ne 0 ]] ; then
+        let failure=1
+        return
+      fi
     fi
   fi
 }
