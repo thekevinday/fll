@@ -144,8 +144,6 @@ extern "C" {
  *
  * The NULL ASCII string can be represented by the integer 0; however, given that these are all NULL-terminated strings the NULL character is represented with a NULL termination as well.
  * The NULL ASCII string therefore has two NULLs, first the NULL represents the NULL and the second represents the NULL termination.
- *
- * @todo provide extended ASCII-characters.
  */
 #ifndef _di_string_ascii_s_
   #define F_string_ascii_0_s "0"

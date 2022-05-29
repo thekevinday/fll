@@ -6,9 +6,6 @@
  * Licenses: lgpl-2.1-or-later
  *
  * Provide means to convert one data type to another, such as a string to an integer.
- *
- * @fixme Currently these functions are very inefficient.
- *        These will be improved once I have finished studying on the matter.
  */
 #ifndef _F_conversion_h
 #define _F_conversion_h

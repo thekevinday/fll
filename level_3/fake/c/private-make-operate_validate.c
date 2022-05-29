@@ -1011,7 +1011,6 @@ extern "C" {
             f_number_unsigned_t number = 0;
             bool is_negative = F_false;
 
-            // @fixme there needs to handle converting numbers with decimals (like 1.01), perhaps operate on them as strings or provide a special processor.
             for (i = k; i < arguments.used; ++i, status_number = F_none) {
 
               if (arguments.array[i].used) {
@@ -1415,13 +1414,13 @@ extern "C" {
 
     if (!name.used) return F_none;
 
-    if (!(isalpha(name.string[0]) || name.string[0] == '_')) {
+    if (!isalpha(name.string[0]) && name.string[0] != '_') {
       return F_false;
     }
 
     for (f_array_length_t i = 1; i < name.used; ++i) {
 
-      if (!(isalnum(name.string[i]) || name.string[i] == '_')) {
+      if (!isalnum(name.string[i]) && name.string[i] != '_') {
         return F_false;
       }
     } // for

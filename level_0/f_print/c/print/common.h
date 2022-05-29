@@ -212,8 +212,6 @@ extern "C" {
 /**
  * Provide type format flags.
  *
- * @todo There may or may not be support in the future for min/max type sizes, such that "%n" = min, "%m" = max, and "%niii" = min int8_t.
- *
  * f_print_format_type_*:
  *   - character:                "c",          Type is a 1-byte unsigned character.
  *   - character_safe:           "C",          Type is a 1-byte unsigned character, where control characters and invalid UTF-8 are replaced.

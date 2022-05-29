@@ -665,7 +665,6 @@ extern "C" {
 
     state_process->condition_result = fake_condition_result_true_e;
 
-    // @fixme This needs to handle converting numbers with decimals (like 1.01), perhaps operate on them as strings or provide a special processor.
     range.start = 0;
     range.stop = arguments.array[i].used - 1;
 

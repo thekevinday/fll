@@ -8,7 +8,7 @@
  * Provides structures and data types for a file I/O.
  * Provides operations for opening/closing files.
  *
- * @fixme Currently this uses makedev(3) to create devices, which is non-standad.
+ * @fixme Currently this uses makedev(3) to create devices, which is non-standard.
  *        The documentation for mknod(2) isn't clear on how to make major/minor based block and character devices.
  *        Find out how to implement this and elliminate the use of the non-standard makedev(3) call.
  */

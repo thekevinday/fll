@@ -391,7 +391,7 @@ extern "C" {
               if (range->start > range->stop || range->start >= buffer.used) {
 
                 // EOS or EOL was reached, so it is a valid closing quoted.
-                // (for EOL, this is always TRUE, for EOS this could be false but there is no way to know this, so assume TRUE (@todo maybe none on stop?).
+                // (for EOL, this is always TRUE, for EOS this could be false but there is no way to know this, so assume TRUE.)
                 status = F_true;
               }
               else {
@@ -402,7 +402,7 @@ extern "C" {
             else {
 
               // EOS or EOL was reached, so it is a valid closing quoted.
-              // (for EOL, this is always TRUE, for EOS this could be false but there is no way to know this, so assume TRUE (@todo maybe none on stop?).
+              // (for EOL, this is always TRUE, for EOS this could be false but there is no way to know this, so assume TRUE.)
               status = F_true;
             }
 
@@ -549,7 +549,7 @@ extern "C" {
             if (range->start > range->stop || range->start >= buffer.used) {
 
               // EOS or EOL was reached, so it is a valid closing quoted.
-              // (for EOL, this is always TRUE, for EOS this could be false but there is no way to know this, so assume TRUE (@todo maybe none on stop?).
+              // (for EOL, this is always TRUE, for EOS this could be false but there is no way to know this, so assume TRUE.)
               status = F_true;
             }
             else {
@@ -560,7 +560,7 @@ extern "C" {
           else {
 
             // EOS or EOL was reached, so it is a valid closing quoted.
-            // (for EOL, this is always TRUE, for EOS this could be false but there is no way to know this, so assume TRUE (@todo maybe none on stop?).
+            // (for EOL, this is always TRUE, for EOS this could be false but there is no way to know this, so assume TRUE.)
             status = F_true;
           }
 

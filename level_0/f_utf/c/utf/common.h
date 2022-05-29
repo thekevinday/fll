@@ -7,8 +7,6 @@
  *
  * Defines common data to be used for/by project utf.
  *
- * @fixme this code probably only works on little-endian only as-is, this needs to be checked for and possibly redesign to support both big or little.
- *
  * This is auto-included by utf.h and should not need to be explicitly included.
  */
 #ifndef _F_utf_common_h

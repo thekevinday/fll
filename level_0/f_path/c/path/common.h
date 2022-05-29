@@ -70,7 +70,6 @@ extern "C" {
 
 /**
  * KFS Filesystem Paths
- * @todo outdated, needs to be updated.
  */
 #ifndef _di_path_tree_kevux_standard_
 
@@ -198,7 +197,6 @@ extern "C" {
 
 /**
  * FHS Filesystem Paths
- * @todo outdated, needs to be updated.
  */
 #ifndef _di_path_tree_hierarchy_standard_
 

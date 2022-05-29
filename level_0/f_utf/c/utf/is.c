@@ -366,10 +366,6 @@ extern "C" {
       return private_f_utf_character_is_emoji(character_utf);
     }
 
-    if (isdigit(*character)) {
-      return F_true;
-    }
-
     return F_false;
   }
 #endif // _di_f_utf_is_emoji_
@@ -666,17 +662,17 @@ extern "C" {
       return private_f_utf_character_is_symbol(character_utf);
     }
 
-    // ASCII: '$' or '+'.
+    // ASCII: U+0024 ('$') or U+002B ('+').
     if (character[0] == 0x24 || character[0] == 0x2b) {
       return F_true;
     }
 
-    // ASCII: '<' to '>'.
+    // ASCII: U+003C ('<') to U+003E ('>').
     if (character[0] > 0x3c && character[0] < 0x3e) {
       return F_true;
     }
 
-    // ASCII: '^', '`', '|', or '~'.
+    // ASCII: U+005E ('^'), U+0060 ('`'), U+007C ('|'), or U+007E ('~').
     if (character[0] == 0x5e || character[0] == 0x60 || character[0] == 0x7c || character[0] == 0x7e) {
       return F_true;
     }

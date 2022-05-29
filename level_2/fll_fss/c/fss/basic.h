@@ -62,7 +62,7 @@ extern "C" {
  *   F_none on success.
  *   F_none_eos on success after reaching the end of the buffer.
  *   F_none_stop on success after reaching stopping point.
- *   F_data_not_eol if there is no data to write and EOL was reached (@todo review related code and detemine what this is doing).
+ *   F_data_not_eol if there is no data to write and EOL was reached.
  *   F_data_not_eos no data to write due start location being greater than or equal to buffer size.
  *   F_data_not_stop no data to write due start location being greater than stop location.
  *

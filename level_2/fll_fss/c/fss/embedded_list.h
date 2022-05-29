@@ -59,7 +59,7 @@ extern "C" {
  *   F_none on success (both valid object and valid content found with start location is at end of content).
  *   F_none_eos on success after reaching the end of the buffer (both valid object and valid content found with start location is at end of buffer).
  *   F_none_stop on success after reaching stopping point (both valid object and valid content found with start location is at stop point).
- *   F_data_not_eol if there is no data to write and EOL was reached (@todo review related code and detemine what this is doing).
+ *   F_data_not_eol if there is no data to write and EOL was reached.
  *   F_data_not_eos no data to write due start location being greater than or equal to buffer size.
  *   F_data_not_stop no data to write due start location being greater than stop location.
  *   F_fss_found_object_content_not on success and object was found but no content was found (start location is at end of object).

@@ -406,9 +406,6 @@ extern "C" {
 
     f_string_dynamic_t buffer = f_string_dynamic_t_initialize;
 
-    // @todo Go through the list of Objects, if given, and confirm that payload is specified and is specified last, otherwise error out.
-    // @todo a new parameter needs to exist for specifying that a Content is a payload for cases where Object is not given (and then this needs to verify that only a single Content is given).
-
     if (F_status_is_error_not(status)) {
       f_string_dynamic_t escaped = f_string_dynamic_t_initialize;
 

@@ -45,8 +45,6 @@ extern "C" {
  * Every character after that may be alphanumeric or underscore.
  * All other characters, including Unicode characters, are invalid.
  *
- * @fixme make this UTF-8 friendly.
- *
  * @param name
  *   The variable name string to validate.
  *
