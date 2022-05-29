@@ -23,7 +23,7 @@ build_indexer_arguments rcs
 build_language c
 
 build_libraries -lc -lcmocka
-build_libraries-individual -lf_memory -lf_string -lf_type_array -lf_serialize
+build_libraries-individual -lf_memory -lf_string -lf_utf -lf_serialize
 
 build_sources_program test-serialize-from_simple.c test-serialize-from_simple_get.c test-serialize-from_simple_range.c test-serialize-from_simple_select.c test-serialize-to_simple.c
 build_sources_program test-serialize.c
