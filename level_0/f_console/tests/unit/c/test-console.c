@@ -20,11 +20,9 @@ int main(void) {
 
   const struct CMUnitTest tests[] = {
 
-    // f_console_environment_process() only returns memory failures.
     cmocka_unit_test(test__f_console_environment_process__data_not),
     cmocka_unit_test(test__f_console_environment_process__works),
 
-    // f_console_identify() doesn't return failure.
     cmocka_unit_test(test__f_console_identify__works),
 
     cmocka_unit_test(test__f_console_parameter_prioritize_left__fails),
@@ -33,7 +31,6 @@ int main(void) {
     cmocka_unit_test(test__f_console_parameter_prioritize_right__fails),
     cmocka_unit_test(test__f_console_parameter_prioritize_right__works),
 
-    // f_console_parameter_process() only returns memory failures.
     cmocka_unit_test(test__f_console_parameter_process__no_arguments_no_program),
     cmocka_unit_test(test__f_console_parameter_process__no_arguments),
     cmocka_unit_test(test__f_console_parameter_process__null_arguments),

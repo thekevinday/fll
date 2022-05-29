@@ -17,9 +17,7 @@
  *
  * @see f_conversion_number_signed_to_string()
  */
-#ifndef _di_level_0_parameter_checking_
-  extern void test__f_conversion_number_signed_to_string__parameter_checking(void **state);
-#endif // _di_level_0_parameter_checking_
+extern void test__f_conversion_number_signed_to_string__parameter_checking(void **state);
 
 /**
  * Test that function works.

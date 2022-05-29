@@ -47,27 +47,25 @@ void test__f_conversion_number_signed_print__fails_for_zero(void **state) {
   }
 }
 
-#ifndef _di_level_0_parameter_checking_
-  void test__f_conversion_number_signed_print__parameter_checking(void **state) {
+void test__f_conversion_number_signed_print__parameter_checking(void **state) {
 
-    {
-      const f_conversion_data_t data = macro_f_conversion_data_t_initialize(2, 0, 0);
+  {
+    const f_conversion_data_t data = macro_f_conversion_data_t_initialize(2, 0, 0);
 
-      const f_status_t status = f_conversion_number_signed_print(0, data, 0);
+    const f_status_t status = f_conversion_number_signed_print(0, data, 0);
 
-      assert_int_equal(status, F_status_set_error(F_parameter));
-    }
-
-    {
-      FILE *file = 0;
-      const f_conversion_data_t data = macro_f_conversion_data_t_initialize(1, 0, 0);
-
-      const f_status_t status = f_conversion_number_signed_print(0, data, file);
-
-      assert_int_equal(status, F_status_set_error(F_parameter));
-    }
+    assert_int_equal(status, F_status_set_error(F_parameter));
   }
-#endif // _di_level_0_parameter_checking_
+
+  {
+    FILE *file = 0;
+    const f_conversion_data_t data = macro_f_conversion_data_t_initialize(1, 0, 0);
+
+    const f_status_t status = f_conversion_number_signed_print(0, data, file);
+
+    assert_int_equal(status, F_status_set_error(F_parameter));
+  }
+}
 
 void test__f_conversion_number_signed_print__works(void **state) {
 

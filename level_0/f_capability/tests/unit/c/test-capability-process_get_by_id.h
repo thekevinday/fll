@@ -22,9 +22,7 @@ extern void test__f_capability_process_get_by_id__fails(void **state);
  *
  * @see f_capability_process_get_by_id()
  */
-#ifndef _di_level_0_parameter_checking_
-  extern void test__f_capability_process_get_by_id__parameter_checking(void **state);
-#endif // _di_level_0_parameter_checking_
+extern void test__f_capability_process_get_by_id__parameter_checking(void **state);
 
 /**
  * Test that function works.

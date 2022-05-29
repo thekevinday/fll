@@ -22,9 +22,7 @@ extern void test__f_capability_to_name__fails(void **state);
  *
  * @see f_capability_to_name()
  */
-#ifndef _di_level_0_parameter_checking_
-  extern void test__f_capability_to_name__parameter_checking(void **state);
-#endif // _di_level_0_parameter_checking_
+extern void test__f_capability_to_name__parameter_checking(void **state);
 
 /**
  * Test that function works.

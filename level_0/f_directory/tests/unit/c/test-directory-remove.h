@@ -22,9 +22,7 @@ extern void test__f_directory_remove__fails(void **state);
  *
  * @see f_directory_remove()
  */
-#ifndef _di_level_0_parameter_checking_
-  extern void test__f_directory_remove__parameter_checking(void **state);
-#endif // _di_level_0_parameter_checking_
+extern void test__f_directory_remove__parameter_checking(void **state);
 
 /**
  * Test that function works but the path is empty.

@@ -194,32 +194,30 @@ void test__f_file_mode_from_string__fails_basic(void **state) {
   } // for
 }
 
-#ifndef _di_level_0_parameter_checking_
-  void test__f_file_mode_from_string__parameter_checking(void **state) {
+void test__f_file_mode_from_string__parameter_checking(void **state) {
 
-    {
-      const f_status_t status = f_file_mode_from_string(f_string_empty_s, 0, 0, 0);
+  {
+    const f_status_t status = f_file_mode_from_string(f_string_empty_s, 0, 0, 0);
 
-      assert_int_equal(status, F_status_set_error(F_parameter));
-    }
-
-    {
-      f_file_mode_t mode_file = f_file_mode_t_initialize;
-
-      const f_status_t status = f_file_mode_from_string(f_string_empty_s, 0, &mode_file, 0);
-
-      assert_int_equal(status, F_status_set_error(F_parameter));
-    }
-
-    {
-      uint8_t replace = 0;
-
-      const f_status_t status = f_file_mode_from_string(f_string_empty_s, 0, 0, &replace);
-
-      assert_int_equal(status, F_status_set_error(F_parameter));
-    }
+    assert_int_equal(status, F_status_set_error(F_parameter));
   }
-#endif // _di_level_0_parameter_checking_
+
+  {
+    f_file_mode_t mode_file = f_file_mode_t_initialize;
+
+    const f_status_t status = f_file_mode_from_string(f_string_empty_s, 0, &mode_file, 0);
+
+    assert_int_equal(status, F_status_set_error(F_parameter));
+  }
+
+  {
+    uint8_t replace = 0;
+
+    const f_status_t status = f_file_mode_from_string(f_string_empty_s, 0, 0, &replace);
+
+    assert_int_equal(status, F_status_set_error(F_parameter));
+  }
+}
 
 void test__f_file_mode_from_string__returns_data_not(void **state) {
 

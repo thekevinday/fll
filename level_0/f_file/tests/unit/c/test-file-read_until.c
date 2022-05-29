@@ -49,39 +49,37 @@ void test__f_file_read_until__fails(void **state) {
   f_string_dynamic_resize(0, &buffer);
 }
 
-#ifndef _di_level_0_parameter_checking_
-  void test__f_file_read_until__parameter_checking(void **state) {
+void test__f_file_read_until__parameter_checking(void **state) {
 
-    f_file_t file = f_file_t_initialize;
-    f_string_dynamic_t buffer = f_string_dynamic_t_initialize;
+  f_file_t file = f_file_t_initialize;
+  f_string_dynamic_t buffer = f_string_dynamic_t_initialize;
 
-    file.id = 1;
+  file.id = 1;
 
-    {
-      const f_status_t status = f_file_read_until(file, 1, 0);
+  {
+    const f_status_t status = f_file_read_until(file, 1, 0);
 
-      assert_int_equal(status, F_status_set_error(F_parameter));
-    }
-
-    file.size_read = 0;
-
-    {
-      const f_status_t status = f_file_read_until(file, 1, 0);
-
-      assert_int_equal(status, F_status_set_error(F_parameter));
-    }
-
-    {
-      f_string_dynamic_t string = f_string_dynamic_t_initialize;
-
-      const f_status_t status = f_file_read_until(file, 1, &string);
-
-      assert_int_equal(status, F_status_set_error(F_parameter));
-    }
-
-    f_string_dynamic_resize(0, &buffer);
+    assert_int_equal(status, F_status_set_error(F_parameter));
   }
-#endif // _di_level_0_parameter_checking_
+
+  file.size_read = 0;
+
+  {
+    const f_status_t status = f_file_read_until(file, 1, 0);
+
+    assert_int_equal(status, F_status_set_error(F_parameter));
+  }
+
+  {
+    f_string_dynamic_t string = f_string_dynamic_t_initialize;
+
+    const f_status_t status = f_file_read_until(file, 1, &string);
+
+    assert_int_equal(status, F_status_set_error(F_parameter));
+  }
+
+  f_string_dynamic_resize(0, &buffer);
+}
 
 void test__f_file_read_until__returns_file_closed(void **state) {
 

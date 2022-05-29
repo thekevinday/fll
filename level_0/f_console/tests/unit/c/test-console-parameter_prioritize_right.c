@@ -29,30 +29,28 @@ void test__f_console_parameter_prioritize_right__fails(void **state) {
   f_console_parameters_delete(&parameters);
 }
 
-#ifndef _di_level_0_parameter_checking_
-  void test__f_console_parameter_prioritize_right__parameter_checking(void **state) {
+void test__f_console_parameter_prioritize_right__parameter_checking(void **state) {
 
-    f_console_parameters_t parameters = f_console_parameters_t_initialize;
-    f_console_parameter_ids_t choices = f_console_parameter_ids_t_initialize;
+  f_console_parameters_t parameters = f_console_parameters_t_initialize;
+  f_console_parameter_ids_t choices = f_console_parameter_ids_t_initialize;
 
-    {
-      const f_status_t status = f_console_parameter_prioritize_right(parameters, choices, 0);
+  {
+    const f_status_t status = f_console_parameter_prioritize_right(parameters, choices, 0);
 
-      assert_int_equal(status, F_status_set_error(F_parameter));
-    }
-
-    {
-      f_console_parameter_id_t ids_array[1] = { f_console_parameter_id_t_initialize };
-      choices.id = ids_array;
-
-      const f_status_t status = f_console_parameter_prioritize_right(parameters, choices, 0);
-
-      assert_int_equal(status, F_status_set_error(F_parameter));
-    }
-
-    f_console_parameters_delete(&parameters);
+    assert_int_equal(status, F_status_set_error(F_parameter));
   }
-#endif // _di_level_0_parameter_checking_
+
+  {
+    f_console_parameter_id_t ids_array[1] = { f_console_parameter_id_t_initialize };
+    choices.id = ids_array;
+
+    const f_status_t status = f_console_parameter_prioritize_right(parameters, choices, 0);
+
+    assert_int_equal(status, F_status_set_error(F_parameter));
+  }
+
+  f_console_parameters_delete(&parameters);
+}
 
 void test__f_console_parameter_prioritize_right__works(void **state) {
 

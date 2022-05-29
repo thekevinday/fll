@@ -22,9 +22,7 @@ extern void test__f_file_stream_write__fails(void **state);
  *
  * @see f_file_stream_write()
  */
-#ifndef _di_level_0_parameter_checking_
-  extern void test__f_file_stream_write__parameter_checking(void **state);
-#endif // _di_level_0_parameter_checking_
+extern void test__f_file_stream_write__parameter_checking(void **state);
 
 /**
  * Test that function works but the file stream is closed.

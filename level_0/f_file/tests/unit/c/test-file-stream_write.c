@@ -51,19 +51,17 @@ void test__f_file_stream_write__fails(void **state) {
   } // for
 }
 
-#ifndef _di_level_0_parameter_checking_
-  void test__f_file_stream_write__parameter_checking(void **state) {
+void test__f_file_stream_write__parameter_checking(void **state) {
 
-    f_file_t file = f_file_t_initialize;
-    file.size_write = 0;
+  f_file_t file = f_file_t_initialize;
+  file.size_write = 0;
 
-    {
-      const f_status_t status = f_file_stream_write(file, f_string_empty_s, 0);
+  {
+    const f_status_t status = f_file_stream_write(file, f_string_empty_s, 0);
 
-      assert_int_equal(status, F_status_set_error(F_parameter));
-    }
+    assert_int_equal(status, F_status_set_error(F_parameter));
   }
-#endif // _di_level_0_parameter_checking_
+}
 
 void test__f_file_stream_write__returns_file_closed(void **state) {
 

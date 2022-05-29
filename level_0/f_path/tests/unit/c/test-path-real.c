@@ -48,18 +48,16 @@ void test__f_path_real__fails(void **state) {
   f_string_dynamic_resize(0, &destination);
 }
 
-#ifndef _di_level_0_parameter_checking_
-  void test__f_path_real__parameter_checking(void **state) {
+void test__f_path_real__parameter_checking(void **state) {
 
-    const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
+  const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
 
-    {
-      const f_status_t status = f_path_real(path, 0);
+  {
+    const f_status_t status = f_path_real(path, 0);
 
-      assert_int_equal(status, F_status_set_error(F_parameter));
-    }
+    assert_int_equal(status, F_status_set_error(F_parameter));
   }
-#endif // _di_level_0_parameter_checking_
+}
 
 void test__f_path_real__works(void **state) {
 

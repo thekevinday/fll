@@ -20,22 +20,16 @@ int main(void) {
 
   const struct CMUnitTest tests[] = {
 
-    // f_color_load_context() only returns failures by other functions that have their own tests.
     cmocka_unit_test(test__f_color_load_context__works),
 
-    // f_color_save_1() only returns failures by other functions that have their own tests.
     cmocka_unit_test(test__f_color_save_1_works),
 
-    // f_color_save_2() only returns failures by other functions that have their own tests.
     cmocka_unit_test(test__f_color_save_2_works),
 
-    // f_color_save_3() only returns failures by other functions that have their own tests.
     cmocka_unit_test(test__f_color_save_3_works),
 
-    // f_color_save_4() only returns failures by other functions that have their own tests.
     cmocka_unit_test(test__f_color_save_4_works),
 
-    // f_color_save_5() only returns failures by other functions that have their own tests.
     cmocka_unit_test(test__f_color_save_5_works),
 
     cmocka_unit_test(test__f_color_context_delete__frees_memory),

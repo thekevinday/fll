@@ -36,18 +36,16 @@ void test__f_capability_to_name__fails(void **state) {
   #endif // !defined(_di_libcap_)
 }
 
-#ifndef _di_level_0_parameter_checking_
-  void test__f_capability_to_name__parameter_checking(void **state) {
+void test__f_capability_to_name__parameter_checking(void **state) {
 
-    const int code = CAP_CHOWN;
+  const int code = CAP_CHOWN;
 
-    {
-      const f_status_t status = f_capability_to_name(code, 0);
+  {
+    const f_status_t status = f_capability_to_name(code, 0);
 
-      assert_int_equal(status, F_status_set_error(F_parameter));
-    }
+    assert_int_equal(status, F_status_set_error(F_parameter));
   }
-#endif // _di_level_0_parameter_checking_
+}
 
 void test__f_capability_to_name__works(void **state) {
 

@@ -38,18 +38,16 @@ void test__f_capability_copy_external__fails(void **state) {
   #endif // !defined(_di_libcap_)
 }
 
-#ifndef _di_level_0_parameter_checking_
-  void test__f_capability_copy_external__parameter_checking(void **state) {
+void test__f_capability_copy_external__parameter_checking(void **state) {
 
-    f_capability_t capability = f_capability_t_initialize;
+  f_capability_t capability = f_capability_t_initialize;
 
-    {
-      const f_status_t status = f_capability_copy_external(capability, 0, 0, 0);
+  {
+    const f_status_t status = f_capability_copy_external(capability, 0, 0, 0);
 
-      assert_int_equal(status, F_status_set_error(F_parameter));
-    }
+    assert_int_equal(status, F_status_set_error(F_parameter));
   }
-#endif // _di_level_0_parameter_checking_
+}
 
 void test__f_capability_copy_external__works(void **state) {
 

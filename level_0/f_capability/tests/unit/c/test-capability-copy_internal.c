@@ -36,26 +36,24 @@ void test__f_capability_copy_internal__fails(void **state) {
   #endif // !defined(_di_libcap_)
 }
 
-#ifndef _di_level_0_parameter_checking_
-  void test__f_capability_copy_internal__parameter_checking(void **state) {
+void test__f_capability_copy_internal__parameter_checking(void **state) {
 
-    f_capability_t capability = f_capability_t_initialize;
-    int stub = 0;
-    void *external = (void *) &stub;
+  f_capability_t capability = f_capability_t_initialize;
+  int stub = 0;
+  void *external = (void *) &stub;
 
-    {
-      const f_status_t status = f_capability_copy_internal(0, &capability);
+  {
+    const f_status_t status = f_capability_copy_internal(0, &capability);
 
-      assert_int_equal(status, F_status_set_error(F_parameter));
-    }
-
-    {
-      const f_status_t status = f_capability_copy_internal(external, 0);
-
-      assert_int_equal(status, F_status_set_error(F_parameter));
-    }
+    assert_int_equal(status, F_status_set_error(F_parameter));
   }
-#endif // _di_level_0_parameter_checking_
+
+  {
+    const f_status_t status = f_capability_copy_internal(external, 0);
+
+    assert_int_equal(status, F_status_set_error(F_parameter));
+  }
+}
 
 void test__f_capability_copy_internal__works(void **state) {
 

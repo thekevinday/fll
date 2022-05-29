@@ -15,9 +15,7 @@
  *
  * @see f_path_directory_cleanup()
  */
-#ifndef _di_level_0_parameter_checking_
-  extern void test__f_path_directory_cleanup__parameter_checking(void **state);
-#endif // _di_level_0_parameter_checking_
+extern void test__f_path_directory_cleanup__parameter_checking(void **state);
 
 /**
  * Test that function works.

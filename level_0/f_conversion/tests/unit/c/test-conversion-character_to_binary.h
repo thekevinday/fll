@@ -22,9 +22,7 @@ extern void test__f_conversion_character_to_binary__fails(void **state);
  *
  * @see f_conversion_character_to_binary()
  */
-#ifndef _di_level_0_parameter_checking_
-  extern void test__f_conversion_character_to_binary__parameter_checking(void **state);
-#endif // _di_level_0_parameter_checking_
+extern void test__f_conversion_character_to_binary__parameter_checking(void **state);
 
 /**
  * Test that function works.

@@ -20,7 +20,6 @@ int main(void) {
 
   const struct CMUnitTest tests[] = {
 
-    // f_control_group_copy() only returns memory failures.
     cmocka_unit_test(test__f_control_group_copy__works),
 
     #ifndef _di_level_0_parameter_checking_

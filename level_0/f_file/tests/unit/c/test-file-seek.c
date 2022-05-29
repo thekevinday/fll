@@ -38,30 +38,28 @@ void test__f_file_seek__fails(void **state) {
   } // for
 }
 
-#ifndef _di_level_0_parameter_checking_
-  void test__f_file_seek__parameter_checking(void **state) {
+void test__f_file_seek__parameter_checking(void **state) {
 
-    off_t seeked = 0;
+  off_t seeked = 0;
 
-    {
-      const f_status_t status = f_file_seek(0, -1, 0, 0);
+  {
+    const f_status_t status = f_file_seek(0, -1, 0, 0);
 
-      assert_int_equal(status, F_status_set_error(F_parameter));
-    }
-
-    {
-      const f_status_t status = f_file_seek(0, -1, 0, &seeked);
-
-      assert_int_equal(status, F_status_set_error(F_parameter));
-    }
-
-    {
-      const f_status_t status = f_file_seek(0, 0, 0, 0);
-
-      assert_int_equal(status, F_status_set_error(F_parameter));
-    }
+    assert_int_equal(status, F_status_set_error(F_parameter));
   }
-#endif // _di_level_0_parameter_checking_
+
+  {
+    const f_status_t status = f_file_seek(0, -1, 0, &seeked);
+
+    assert_int_equal(status, F_status_set_error(F_parameter));
+  }
+
+  {
+    const f_status_t status = f_file_seek(0, 0, 0, 0);
+
+    assert_int_equal(status, F_status_set_error(F_parameter));
+  }
+}
 
 void test__f_file_seek__works(void **state) {
 

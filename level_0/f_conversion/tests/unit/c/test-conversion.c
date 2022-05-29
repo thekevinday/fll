@@ -20,19 +20,14 @@ int main(void) {
 
   const struct CMUnitTest tests[] = {
 
-    // f_conversion_character_is_binary() doesn't return failure.
     cmocka_unit_test(test__f_conversion_character_is_binary__works),
 
-    // f_conversion_character_is_decimal() doesn't return failure.
     cmocka_unit_test(test__f_conversion_character_is_decimal__works),
 
-    // f_conversion_character_is_duodecimal() doesn't return failure.
     cmocka_unit_test(test__f_conversion_character_is_duodecimal__works),
 
-    // f_conversion_character_is_hexidecimal() doesn't return failure.
     cmocka_unit_test(test__f_conversion_character_is_hexidecimal__works),
 
-    // f_conversion_character_is_octal() doesn't return failure.
     cmocka_unit_test(test__f_conversion_character_is_octal__works),
 
     cmocka_unit_test(test__f_conversion_character_to_binary__fails),
@@ -56,7 +51,6 @@ int main(void) {
     //cmocka_unit_test(test__f_conversion_number_signed_print__fails_for_zero),
     //cmocka_unit_test(test__f_conversion_number_signed_print__works),
 
-    // f_conversion_number_signed_to_string() only returns memory failures.
     cmocka_unit_test(test__f_conversion_number_signed_to_string__works),
     cmocka_unit_test(test__f_conversion_number_signed_to_string__works_for_prepend),
     cmocka_unit_test(test__f_conversion_number_signed_to_string__works_for_zero),
@@ -67,7 +61,6 @@ int main(void) {
     //cmocka_unit_test(test__f_conversion_number_unsigned_print__fails_for_zero),
     //cmocka_unit_test(test__f_conversion_number_unsigned_print__works),
 
-    // f_conversion_number_unsigned_to_string() only returns memory failures.
     cmocka_unit_test(test__f_conversion_number_unsigned_to_string__works),
     cmocka_unit_test(test__f_conversion_number_unsigned_to_string__works_for_prepend),
     cmocka_unit_test(test__f_conversion_number_unsigned_to_string__works_for_zero),

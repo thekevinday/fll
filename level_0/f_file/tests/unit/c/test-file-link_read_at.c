@@ -62,20 +62,18 @@ void test__f_file_link_read_at__fails(void **state) {
   f_string_dynamic_resize(0, &buffer);
 }
 
-#ifndef _di_level_0_parameter_checking_
-  void test__f_file_link_read_at__parameter_checking(void **state) {
+void test__f_file_link_read_at__parameter_checking(void **state) {
 
-    f_string_dynamic_t buffer = f_string_dynamic_t_initialize;
+  f_string_dynamic_t buffer = f_string_dynamic_t_initialize;
 
-    {
-      const f_status_t status = f_file_link_read_at(0, f_string_empty_s, 0, 0);
+  {
+    const f_status_t status = f_file_link_read_at(0, f_string_empty_s, 0, 0);
 
-      assert_int_equal(status, F_status_set_error(F_parameter));
-    }
-
-    f_string_dynamic_resize(0, &buffer);
+    assert_int_equal(status, F_status_set_error(F_parameter));
   }
-#endif // _di_level_0_parameter_checking_
+
+  f_string_dynamic_resize(0, &buffer);
+}
 
 void test__f_file_link_read_at__returns_data_not(void **state) {
 

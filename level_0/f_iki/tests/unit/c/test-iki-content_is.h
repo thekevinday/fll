@@ -22,9 +22,7 @@ extern void test__f_iki_content_is__returns_false(void **state);
  *
  * @see f_iki_content_is()
  */
-#ifndef _di_level_0_parameter_checking_
-  extern void test__f_iki_content_is__parameter_checking(void **state);
-#endif // _di_level_0_parameter_checking_
+extern void test__f_iki_content_is__parameter_checking(void **state);
 
 /**
  * Test that function returns F_data_not.

@@ -17,9 +17,7 @@
  *
  * @see f_color_save_2()
  */
-#ifndef _di_level_0_parameter_checking_
-  extern void test__f_color_save_2_parameter_checking(void **state);
-#endif // _di_level_0_parameter_checking_
+extern void test__f_color_save_2_parameter_checking(void **state);
 
 /**
  * Test that function works.

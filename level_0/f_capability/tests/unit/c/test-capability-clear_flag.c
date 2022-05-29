@@ -8,7 +8,7 @@ extern "C" {
 #ifndef _di_level_0_parameter_checking_
   void test__f_capability_clear_flag__parameter_checking(void **state) {
 
-  const f_capability_flag_t flag = f_capability_flag_t_initialize;
+    const f_capability_flag_t flag = f_capability_flag_t_initialize;
 
     {
       const f_status_t status = f_capability_clear_flag(flag, 0);

@@ -66,16 +66,14 @@ void test__f_account_by_id__not_found(void **state) {
   macro_f_account_t_delete_simple(account);
 }
 
-#ifndef _di_level_0_parameter_checking_
-  void test__f_account_by_id__parameter_checking(void **state) {
+void test__f_account_by_id__parameter_checking(void **state) {
 
-    {
-      const f_status_t status = f_account_by_id(0, 0);
+  {
+    const f_status_t status = f_account_by_id(0, 0);
 
-      assert_int_equal(status, F_status_set_error(F_parameter));
-    }
+    assert_int_equal(status, F_status_set_error(F_parameter));
   }
-#endif // _di_level_0_parameter_checking_
+}
 
 void test__f_account_by_id__works(void **state) {
 

@@ -22,9 +22,7 @@ extern void test__f_limit_process__fails(void **state);
  *
  * @see f_limit_process()
  */
-#ifndef _di_level_0_parameter_checking_
-  extern void test__f_limit_process__parameter_checking(void **state);
-#endif // _di_level_0_parameter_checking_
+extern void test__f_limit_process__parameter_checking(void **state);
 
 /**
  * Test that function works.

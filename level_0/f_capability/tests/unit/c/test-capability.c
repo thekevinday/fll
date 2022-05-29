@@ -79,16 +79,13 @@ int main(void) {
     cmocka_unit_test(test__f_capability_initialize__fails),
     cmocka_unit_test(test__f_capability_initialize__works),
 
-    // cap_get_mode() doesn't return failure.
     cmocka_unit_test(test__f_capability_mode_get__works),
 
-    // cap_mode_name() doesn't return failure.
     cmocka_unit_test(test__f_capability_mode_get_name__works),
 
     cmocka_unit_test(test__f_capability_mode_set__fails),
     cmocka_unit_test(test__f_capability_mode_set__works),
 
-    // cap_get_nsowner() doesn't return failure.
     cmocka_unit_test(test__f_capability_owner_get__works),
 
     cmocka_unit_test(test__f_capability_owner_set__fails),
@@ -118,13 +115,10 @@ int main(void) {
     cmocka_unit_test(test__f_capability_size__fails),
     cmocka_unit_test(test__f_capability_size__works),
 
-    // f_capability_supported() doesn't return failure.
     cmocka_unit_test(test__f_capability_supported__works),
 
-    // f_capability_supported_ambient() doesn't return failure.
     cmocka_unit_test(test__f_capability_supported_ambient__works),
 
-    // f_capability_supported_code() doesn't return failure.
     cmocka_unit_test(test__f_capability_supported_code__works),
 
     cmocka_unit_test(test__f_capability_to_name__fails),

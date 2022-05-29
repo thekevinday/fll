@@ -36,9 +36,7 @@ extern void test__f_conversion_number_signed_print__fails_for_zero(void **state)
  *
  * @see f_conversion_number_signed_print()
  */
-#ifndef _di_level_0_parameter_checking_
-  extern void test__f_conversion_number_signed_print__parameter_checking(void **state);
-#endif // _di_level_0_parameter_checking_
+extern void test__f_conversion_number_signed_print__parameter_checking(void **state);
 
 /**
  * Test that function works.

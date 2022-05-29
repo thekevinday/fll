@@ -5,19 +5,17 @@
 extern "C" {
 #endif
 
-#ifndef _di_level_0_parameter_checking_
-  void test__f_color_save_3_parameter_checking(void **state) {
+void test__f_color_save_3_parameter_checking(void **state) {
 
-    const f_color_format_t format = f_color_format_t_initialize;
-    const f_string_static_t color = macro_f_string_static_t_initialize2("color", 5);
+  const f_color_format_t format = f_color_format_t_initialize;
+  const f_string_static_t color = macro_f_string_static_t_initialize2("color", 5);
 
-    {
-      const f_status_t status = f_color_save_3(format, color, color, color, 0);
+  {
+    const f_status_t status = f_color_save_3(format, color, color, color, 0);
 
-      assert_int_equal(status, F_status_set_error(F_parameter));
-    }
+    assert_int_equal(status, F_status_set_error(F_parameter));
   }
-#endif // _di_level_0_parameter_checking_
+}
 
 void test__f_color_save_3_works(void **state) {
 

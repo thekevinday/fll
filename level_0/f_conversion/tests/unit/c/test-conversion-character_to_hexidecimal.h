@@ -22,9 +22,7 @@ extern void test__f_conversion_character_to_hexidecimal__fails(void **state);
  *
  * @see f_conversion_character_to_hexidecimal()
  */
-#ifndef _di_level_0_parameter_checking_
-  extern void test__f_conversion_character_to_hexidecimal__parameter_checking(void **state);
-#endif // _di_level_0_parameter_checking_
+extern void test__f_conversion_character_to_hexidecimal__parameter_checking(void **state);
 
 /**
  * Test that function works.

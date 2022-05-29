@@ -5,38 +5,36 @@
 extern "C" {
 #endif
 
-#ifndef _di_level_0_parameter_checking_
-  void test__f_iki_read__parameter_checking(void **state) {
+void test__f_iki_read__parameter_checking(void **state) {
 
-    const f_state_t the_state = f_state_t_initialize;
-    f_string_static_t empty = macro_f_string_static_t_initialize(f_string_empty_s.string, f_string_empty_s.size, f_string_empty_s.used);
+  const f_state_t the_state = f_state_t_initialize;
+  f_string_static_t empty = macro_f_string_static_t_initialize(f_string_empty_s.string, f_string_empty_s.size, f_string_empty_s.used);
 
-    {
-      f_string_range_t range = f_string_range_t_initialize;
-      f_iki_data_t iki = f_iki_data_t_initialize;
+  {
+    f_string_range_t range = f_string_range_t_initialize;
+    f_iki_data_t iki = f_iki_data_t_initialize;
 
-      const f_status_t status = f_iki_read(the_state, 0, &range, &iki);
+    const f_status_t status = f_iki_read(the_state, 0, &range, &iki);
 
-      assert_int_equal(status, F_status_set_error(F_parameter));
-    }
-
-    {
-      f_iki_data_t iki = f_iki_data_t_initialize;
-
-      const f_status_t status = f_iki_read(the_state, &empty, 0, &iki);
-
-      assert_int_equal(status, F_status_set_error(F_parameter));
-    }
-
-    {
-      f_string_range_t range = f_string_range_t_initialize;
-
-      const f_status_t status = f_iki_read(the_state, &empty, &range, 0);
-
-      assert_int_equal(status, F_status_set_error(F_parameter));
-    }
+    assert_int_equal(status, F_status_set_error(F_parameter));
   }
-#endif // _di_level_0_parameter_checking_
+
+  {
+    f_iki_data_t iki = f_iki_data_t_initialize;
+
+    const f_status_t status = f_iki_read(the_state, &empty, 0, &iki);
+
+    assert_int_equal(status, F_status_set_error(F_parameter));
+  }
+
+  {
+    f_string_range_t range = f_string_range_t_initialize;
+
+    const f_status_t status = f_iki_read(the_state, &empty, &range, 0);
+
+    assert_int_equal(status, F_status_set_error(F_parameter));
+  }
+}
 
 void test__f_iki_read__returns_data_not(void **state) {
 

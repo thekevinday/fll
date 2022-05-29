@@ -29,9 +29,7 @@ extern void test__f_account_name_by_id__not_found(void **state);
  *
  * @see f_account_name_by_id()
  */
-#ifndef _di_level_0_parameter_checking_
-  extern void test__f_account_name_by_id__parameter_checking(void **state);
-#endif // _di_level_0_parameter_checking_
+extern void test__f_account_name_by_id__parameter_checking(void **state);
 
 /**
  * Test that function works.

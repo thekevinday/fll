@@ -49,8 +49,6 @@ extern void test__f_memory_delete__frees_resized_memory(void **state);
  *
  * @see f_memory_delete()
  */
-#ifndef _di_level_0_parameter_checking_
-  extern void test__f_memory_delete__parameter_checking(void **state);
-#endif // _di_level_0_parameter_checking_
+extern void test__f_memory_delete__parameter_checking(void **state);
 
 #endif // _TEST__F_memory__delete

@@ -22,8 +22,6 @@ extern void test__f_console_parameters_destroy__frees_memory(void **state);
  *
  * @see f_console_parameters_destroy()
  */
-#ifndef _di_level_0_parameter_checking_
-  extern void test__f_console_parameters_destroy__parameter_checking(void **state);
-#endif // _di_level_0_parameter_checking_
+extern void test__f_console_parameters_destroy__parameter_checking(void **state);
 
 #endif // _TEST__F_console__destroy

@@ -29,8 +29,6 @@ extern void test__f_capability_copy__works(void **state);
  *
  * @see f_capability_copy()
  */
-#ifndef _di_level_0_parameter_checking_
-  extern void test__f_capability_copy__parameter_checking(void **state);
-#endif // _di_level_0_parameter_checking_
+extern void test__f_capability_copy__parameter_checking(void **state);
 
 #endif // _TEST__F_capability__copy_h

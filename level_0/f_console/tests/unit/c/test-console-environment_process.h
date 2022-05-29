@@ -24,9 +24,7 @@ extern void test__f_console_environment_process__data_not(void **state);
  *
  * @see f_console_environment_process()
  */
-#ifndef _di_level_0_parameter_checking_
-  extern void test__f_console_environment_process__parameter_checking(void **state);
-#endif // _di_level_0_parameter_checking_
+extern void test__f_console_environment_process__parameter_checking(void **state);
 
 /**
  * Test that function works.

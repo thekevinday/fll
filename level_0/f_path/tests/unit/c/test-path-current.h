@@ -22,9 +22,7 @@ extern void test__f_path_current__fails(void **state);
  *
  * @see f_path_current()
  */
-#ifndef _di_level_0_parameter_checking_
-  extern void test__f_path_current__parameter_checking(void **state);
-#endif // _di_level_0_parameter_checking_
+extern void test__f_path_current__parameter_checking(void **state);
 
 /**
  * Test that function works.

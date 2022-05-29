@@ -48,16 +48,14 @@ void test__f_conversion_character_to_hexidecimal__fails(void **state) {
   } // for
 }
 
-#ifndef _di_level_0_parameter_checking_
-  void test__f_conversion_character_to_hexidecimal__parameter_checking(void **state) {
+void test__f_conversion_character_to_hexidecimal__parameter_checking(void **state) {
 
-    {
-      const f_status_t status = f_conversion_character_to_hexidecimal(0, 0);
+  {
+    const f_status_t status = f_conversion_character_to_hexidecimal(0, 0);
 
-      assert_int_equal(status, F_status_set_error(F_parameter));
-    }
+    assert_int_equal(status, F_status_set_error(F_parameter));
   }
-#endif // _di_level_0_parameter_checking_
+}
 
 void test__f_conversion_character_to_hexidecimal__works(void **state) {
 

@@ -22,9 +22,7 @@ extern void test__f_console_parameter_prioritize_right__fails(void **state);
  *
  * @see f_console_parameter_prioritize_right()
  */
-#ifndef _di_level_0_parameter_checking_
-  extern void test__f_console_parameter_prioritize_right__parameter_checking(void **state);
-#endif // _di_level_0_parameter_checking_
+extern void test__f_console_parameter_prioritize_right__parameter_checking(void **state);
 
 /**
  * Test that function works.

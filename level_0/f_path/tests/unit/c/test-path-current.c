@@ -87,16 +87,14 @@ void test__f_path_current__fails(void **state) {
   f_string_dynamic_resize(0, &destination);
 }
 
-#ifndef _di_level_0_parameter_checking_
-  void test__f_path_current__parameter_checking(void **state) {
+void test__f_path_current__parameter_checking(void **state) {
 
-    {
-      const f_status_t status = f_path_current(F_false, 0);
+  {
+    const f_status_t status = f_path_current(F_false, 0);
 
-      assert_int_equal(status, F_status_set_error(F_parameter));
-    }
+    assert_int_equal(status, F_status_set_error(F_parameter));
   }
-#endif // _di_level_0_parameter_checking_
+}
 
 void test__f_path_current__works(void **state) {
 

@@ -370,18 +370,16 @@ void test__f_console_parameter_process__only_remaining(void **state) {
   f_console_parameters_delete(&parameters);
 }
 
-#ifndef _di_level_0_parameter_checking_
-  void test__f_console_parameter_process__parameter_checking(void **state) {
+void test__f_console_parameter_process__parameter_checking(void **state) {
 
-    const f_console_arguments_t arguments = f_console_arguments_t_initialize;
+  const f_console_arguments_t arguments = f_console_arguments_t_initialize;
 
-    {
-      const f_status_t status = f_console_parameter_process(arguments, 0);
+  {
+    const f_status_t status = f_console_parameter_process(arguments, 0);
 
-      assert_int_equal(status, F_status_set_error(F_parameter));
-    }
+    assert_int_equal(status, F_status_set_error(F_parameter));
   }
-#endif // _di_level_0_parameter_checking_
+}
 
 void test__f_console_parameter_process__works(void **state) {
 
