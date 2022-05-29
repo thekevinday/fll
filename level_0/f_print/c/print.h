@@ -59,6 +59,8 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ * @see clearerr_unlocked()
+ * @see ferror_unlocked()
  * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_
@@ -70,6 +72,8 @@ extern "C" {
  *
  * This will print NULL characters and is essentially a "raw" print.
  *
+ * This does not call clearerr_unlocked().
+ *
  * @param character
  *   The character to verify as safe or not and then print.
  * @param output
@@ -79,7 +83,7 @@ extern "C" {
  *   F_none on success.
  *   F_data_not if there is nothing to print.
  *
- *   F_output (with error bit) on failure.
+ *   F_output (with error bit) on failure (fwrite_unlocked() returns 0).
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  * @see fwrite_unlocked()
@@ -100,6 +104,8 @@ extern "C" {
  *
  * This should only be called for the first 1-byte character of a multibyte character.
  *
+ * This does not call clearerr_unlocked().
+ *
  * @param character
  *   The character to verify as safe or not and then print.
  * @param output
@@ -107,10 +113,10 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_utf on success, but character is a UTF-8 character.
  *   F_data_not if there is nothing to print.
+ *   F_utf on success, but character is a UTF-8 character.
  *
- *   F_output (with error bit) on failure.
+ *   F_output (with error bit) on failure (fwrite_unlocked() returns 0).
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  * @see fwrite_unlocked()
@@ -124,7 +130,7 @@ extern "C" {
  *
  * Control characters are converted to the Unicode control character symbols, including NULL.
  * UTF-8 sequences with a width of 1 are converted to the unknown character '�'.
- * For all other UTF-8 sequences, an empty string is returned.
+ * For all other UTF-8 sequences (including non-control character ASCII symbols), an empty string is returned.
  *
  * The returned string will either be an empty string (for characters that are already safe) or a string representing the replacement.
  * This can result in a 3-byte character being returned as a string of 3 1-bytes.
@@ -164,6 +170,8 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ * @see clearerr_unlocked()
+ * @see ferror_unlocked()
  * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_dynamic_
@@ -193,6 +201,8 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ * @see clearerr_unlocked()
+ * @see ferror_unlocked()
  * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_dynamic_partial_
@@ -224,6 +234,8 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ * @see clearerr_unlocked()
+ * @see ferror_unlocked()
  * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_dynamic_partial_raw_
@@ -258,6 +270,8 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ * @see clearerr_unlocked()
+ * @see ferror_unlocked()
  * @see fwrite_unlocked()
  *
  * @see f_utf_is_valid()
@@ -292,6 +306,8 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ * @see clearerr_unlocked()
+ * @see ferror_unlocked()
  * @see fwrite_unlocked()
  *
  * @see f_utf_is_valid()
@@ -323,6 +339,8 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ * @see clearerr_unlocked()
+ * @see ferror_unlocked()
  * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_dynamic_raw_
@@ -355,6 +373,8 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ * @see clearerr_unlocked()
+ * @see ferror_unlocked()
  * @see fwrite_unlocked()
  *
  * @see f_utf_is_valid()
@@ -387,6 +407,8 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ * @see clearerr_unlocked()
+ * @see ferror_unlocked()
  * @see fwrite_unlocked()
  *
  * @see f_utf_is_valid()
@@ -426,6 +448,8 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ * @see clearerr_unlocked()
+ * @see ferror_unlocked()
  * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_except_
@@ -457,6 +481,8 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ * @see clearerr_unlocked()
+ * @see ferror_unlocked()
  * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_except_dynamic_
@@ -490,6 +516,8 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ * @see clearerr_unlocked()
+ * @see ferror_unlocked()
  * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_dynamic_except_partial_
@@ -525,6 +553,8 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ * @see clearerr_unlocked()
+ * @see ferror_unlocked()
  * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_dynamic_except_partial_raw_
@@ -563,6 +593,8 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ * @see clearerr_unlocked()
+ * @see ferror_unlocked()
  * @see fwrite_unlocked()
  *
  * @see f_utf_is_valid()
@@ -601,6 +633,8 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ * @see clearerr_unlocked()
+ * @see ferror_unlocked()
  * @see fwrite_unlocked()
  *
  * @see f_utf_is_valid()
@@ -636,6 +670,8 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ * @see clearerr_unlocked()
+ * @see ferror_unlocked()
  * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_except_dynamic_raw_
@@ -672,6 +708,8 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ * @see clearerr_unlocked()
+ * @see ferror_unlocked()
  * @see fwrite_unlocked()
  *
  * @see f_utf_is_valid()
@@ -708,6 +746,8 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ * @see clearerr_unlocked()
+ * @see ferror_unlocked()
  * @see fwrite_unlocked()
  *
  * @see f_utf_is_valid()
@@ -719,7 +759,7 @@ extern "C" {
 /**
  * Similar to a c-library printf, except that this will only print a specific range.
  *
- * An offset is provided because the except_at/except_int positions are expected to be relative to the start position, without the offset applied.
+ * An offset is provided because the except_at/except_in positions are expected to be relative to the start position, without the offset applied.
  *
  * Will not stop at NULL.
  * Will not print NULL.
@@ -751,6 +791,8 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ * @see clearerr_unlocked()
+ * @see ferror_unlocked()
  * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_except_in_
@@ -786,6 +828,8 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ * @see clearerr_unlocked()
+ * @see ferror_unlocked()
  * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_except_in_dynamic_
@@ -823,6 +867,8 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ * @see clearerr_unlocked()
+ * @see ferror_unlocked()
  * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_dynamic_except_partial_
@@ -862,6 +908,8 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ * @see clearerr_unlocked()
+ * @see ferror_unlocked()
  * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_dynamic_except_partial_raw_
@@ -901,6 +949,8 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ * @see clearerr_unlocked()
+ * @see ferror_unlocked()
  * @see fwrite_unlocked()
  *
  * @see f_utf_is_valid()
@@ -940,6 +990,8 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ * @see clearerr_unlocked()
+ * @see ferror_unlocked()
  * @see fwrite_unlocked()
  *
  * @see f_utf_is_valid()
@@ -979,6 +1031,8 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ * @see clearerr_unlocked()
+ * @see ferror_unlocked()
  * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_except_in_dynamic_raw_
@@ -1019,6 +1073,8 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ * @see clearerr_unlocked()
+ * @see ferror_unlocked()
  * @see fwrite_unlocked()
  *
  * @see f_utf_is_valid()
@@ -1059,6 +1115,8 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ * @see clearerr_unlocked()
+ * @see ferror_unlocked()
  * @see fwrite_unlocked()
  *
  * @see f_utf_is_valid()
@@ -1070,7 +1128,7 @@ extern "C" {
 /**
  * Similar to a c-library printf, except that this will only print a specific range.
  *
- * An offset is provided because the except_at/except_int positions are expected to be relative to the start position, without the offset applied.
+ * An offset is provided because the except_at/except_in positions are expected to be relative to the start position, without the offset applied.
  *
  * Will not stop at NULL.
  * Will print NULL.
@@ -1104,6 +1162,8 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ * @see clearerr_unlocked()
+ * @see ferror_unlocked()
  * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_except_in_raw_
@@ -1118,7 +1178,7 @@ extern "C" {
  * Control characters are converted to the Unicode control character symbols, excluding NULL.
  * UTF-8 sequences with invalid widths are converted to the unknown character '�'.
  *
- * An offset is provided because the except_at/except_int positions are expected to be relative to the start position, without the offset applied.
+ * An offset is provided because the except_at/except_in positions are expected to be relative to the start position, without the offset applied.
  *
  * Will not stop at NULL.
  * Will print NULL.
@@ -1150,6 +1210,8 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ * @see clearerr_unlocked()
+ * @see ferror_unlocked()
  * @see fwrite_unlocked()
  *
  * @see f_utf_is_valid()
@@ -1164,7 +1226,7 @@ extern "C" {
  * Control characters are converted to the Unicode control character symbols, excluding NULL.
  * UTF-8 sequences with invalid widths are converted to the unknown character '�'.
  *
- * An offset is provided because the except_at/except_int positions are expected to be relative to the start position, without the offset applied.
+ * An offset is provided because the except_at/except_in positions are expected to be relative to the start position, without the offset applied.
  *
  * Will not stop at NULL.
  * Will not print NULL.
@@ -1196,6 +1258,8 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ * @see clearerr_unlocked()
+ * @see ferror_unlocked()
  * @see fwrite_unlocked()
  *
  * @see f_utf_is_valid()
@@ -1237,6 +1301,8 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ * @see clearerr_unlocked()
+ * @see ferror_unlocked()
  * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_except_raw_
@@ -1277,6 +1343,8 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ * @see clearerr_unlocked()
+ * @see ferror_unlocked()
  * @see fwrite_unlocked()
  *
  * @see f_utf_is_valid()
@@ -1317,6 +1385,8 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ * @see clearerr_unlocked()
+ * @see ferror_unlocked()
  * @see fwrite_unlocked()
  *
  * @see f_utf_is_valid()
@@ -1350,6 +1420,8 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ * @see clearerr_unlocked()
+ * @see ferror_unlocked()
  * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_raw_
@@ -1384,6 +1456,8 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ * @see clearerr_unlocked()
+ * @see ferror_unlocked()
  * @see fwrite_unlocked()
  *
  * @see f_utf_is_valid()
@@ -1413,6 +1487,8 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ * @see clearerr_unlocked()
+ * @see ferror_unlocked()
  * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_raw_terminated_
@@ -1445,6 +1521,8 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ * @see clearerr_unlocked()
+ * @see ferror_unlocked()
  * @see fwrite_unlocked()
  *
  * @see f_utf_is_valid()
@@ -1506,6 +1584,8 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ * @see clearerr_unlocked()
+ * @see ferror_unlocked()
  * @see fwrite_unlocked()
  *
  * @see f_utf_is_valid()
@@ -1535,6 +1615,8 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ * @see clearerr_unlocked()
+ * @see ferror_unlocked()
  * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_terminated_

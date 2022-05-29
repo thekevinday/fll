@@ -15,6 +15,7 @@ extern "C" {
  *   The appropriate status.
  */
 static inline f_status_t private_inline_f_print_to_error(void) {
+
   if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
   if (errno == EBADF) return F_status_set_error(F_file_descriptor);
   if (errno == EDESTADDRREQ) return F_status_set_error(F_socket_not);
@@ -37,7 +38,7 @@ static inline f_status_t private_inline_f_print_to_error(void) {
       if (id == -1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!string || !length) {
+    if (!length || !string) {
       return F_data_not;
     }
 
@@ -75,7 +76,7 @@ static inline f_status_t private_inline_f_print_to_error(void) {
       if (id == -1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.string || !buffer.used) {
+    if (!buffer.used || !buffer.string) {
       return F_data_not;
     }
 
@@ -89,7 +90,7 @@ static inline f_status_t private_inline_f_print_to_error(void) {
       if (id == -1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.string || !buffer.used || range.start > range.stop || range.start >= buffer.used) {
+    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) {
       return F_data_not;
     }
 
@@ -109,7 +110,7 @@ static inline f_status_t private_inline_f_print_to_error(void) {
       if (id == -1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.string || !buffer.used || range.start > range.stop || range.start >= buffer.used) {
+    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) {
       return F_data_not;
     }
 
@@ -123,13 +124,33 @@ static inline f_status_t private_inline_f_print_to_error(void) {
   }
 #endif // _di_f_print_to_dynamic_partial_raw_
 
+#ifndef _di_f_print_to_dynamic_partial_raw_safely_
+  f_status_t f_print_to_dynamic_partial_raw_safely(const f_string_static_t buffer, const f_string_range_t range, const int id) {
+    #ifndef _di_level_0_parameter_checking_
+      if (id == -1) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) {
+      return F_data_not;
+    }
+
+    f_array_length_t length = (range.stop - range.start) + 1;
+
+    if (length + range.start > buffer.used) {
+      length = buffer.used - range.start;
+    }
+
+    return private_f_print_to_raw_safely(buffer.string + range.start, length, id);
+  }
+#endif // _di_f_print_to_dynamic_partial_raw_safely_
+
 #ifndef _di_f_print_to_dynamic_partial_safely_
   f_status_t f_print_to_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const int id) {
     #ifndef _di_level_0_parameter_checking_
       if (id == -1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.string || !buffer.used || range.start > range.stop || range.start >= buffer.used) {
+    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) {
       return F_data_not;
     }
 
@@ -149,7 +170,7 @@ static inline f_status_t private_inline_f_print_to_error(void) {
       if (id == -1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.string || !buffer.used) {
+    if (!buffer.used || !buffer.string) {
       return F_data_not;
     }
 
@@ -157,13 +178,27 @@ static inline f_status_t private_inline_f_print_to_error(void) {
   }
 #endif // _di_f_print_to_dynamic_raw_
 
+#ifndef _di_f_print_to_dynamic_raw_safely_
+  f_status_t f_print_to_dynamic_raw_safely(const f_string_static_t buffer, const int id) {
+    #ifndef _di_level_0_parameter_checking_
+      if (id == -1) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (!buffer.used || !buffer.string) {
+      return F_data_not;
+    }
+
+    return private_f_print_to_raw_safely(buffer.string, buffer.used, id);
+  }
+#endif // _di_f_print_to_dynamic_raw_safely_
+
 #ifndef _di_f_print_to_dynamic_safely_
   f_status_t f_print_to_dynamic_safely(const f_string_static_t buffer, const int id) {
     #ifndef _di_level_0_parameter_checking_
       if (id == -1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.string || !buffer.used) {
+    if (!buffer.used || !buffer.string) {
       return F_data_not;
     }
 
@@ -172,16 +207,16 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 #endif // _di_f_print_to_dynamic_safely_
 
 #ifndef _di_f_print_to_except_
-  f_status_t f_print_to_except(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except, const int id) {
+  f_status_t f_print_to_except(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, const int id) {
     #ifndef _di_level_0_parameter_checking_
       if (id == -1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!string || !length) {
+    if (!length || !string) {
       return F_data_not;
     }
 
-    return private_f_print_to_except(string, 0, length, except, id);
+    return private_f_print_to_except(string, offset, length, except, id);
   }
 #endif // _di_f_print_to_except_
 
@@ -191,7 +226,7 @@ static inline f_status_t private_inline_f_print_to_error(void) {
       if (id == -1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.string || !buffer.used) {
+    if (!buffer.used || !buffer.string) {
       return F_data_not;
     }
 
@@ -205,7 +240,7 @@ static inline f_status_t private_inline_f_print_to_error(void) {
       if (id == -1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.string || !buffer.used || range.start > range.stop || range.start >= buffer.used) {
+    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) {
       return F_data_not;
     }
 
@@ -225,7 +260,7 @@ static inline f_status_t private_inline_f_print_to_error(void) {
       if (id == -1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.string || !buffer.used || range.start > range.stop || range.start >= buffer.used) {
+    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) {
       return F_data_not;
     }
 
@@ -239,13 +274,33 @@ static inline f_status_t private_inline_f_print_to_error(void) {
   }
 #endif // _di_f_print_to_except_dynamic_partial_raw_
 
+#ifndef _di_f_print_to_except_dynamic_partial_raw_safely_
+  f_status_t f_print_to_except_dynamic_partial_raw_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, const int id) {
+    #ifndef _di_level_0_parameter_checking_
+      if (id == -1) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) {
+      return F_data_not;
+    }
+
+    f_array_length_t length = (range.stop - range.start) + 1;
+
+    if (length + range.start > buffer.used) {
+      length = buffer.used - range.start;
+    }
+
+    return private_f_print_to_except_raw_safely(buffer.string, range.start, range.start + length, except, id);
+  }
+#endif // _di_f_print_to_except_dynamic_partial_raw_safely_
+
 #ifndef _di_f_print_to_except_dynamic_partial_safely_
   f_status_t f_print_to_except_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, const int id) {
     #ifndef _di_level_0_parameter_checking_
       if (id == -1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.string || !buffer.used || range.start > range.stop || range.start >= buffer.used) {
+    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) {
       return F_data_not;
     }
 
@@ -265,7 +320,7 @@ static inline f_status_t private_inline_f_print_to_error(void) {
       if (id == -1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.string || !buffer.used) {
+    if (!buffer.used || !buffer.string) {
       return F_data_not;
     }
 
@@ -273,13 +328,27 @@ static inline f_status_t private_inline_f_print_to_error(void) {
   }
 #endif // _di_f_print_to_except_dynamic_raw_
 
+#ifndef _di_f_print_to_except_dynamic_raw_safely_
+  f_status_t f_print_to_except_dynamic_raw_safely(const f_string_static_t buffer, const f_array_lengths_t except, const int id) {
+    #ifndef _di_level_0_parameter_checking_
+      if (id == -1) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (!buffer.used || !buffer.string) {
+      return F_data_not;
+    }
+
+    return private_f_print_to_except_raw_safely(buffer.string, 0, buffer.used, except, id);
+  }
+#endif // _di_f_print_to_except_dynamic_raw_safely_
+
 #ifndef _di_f_print_to_except_dynamic_safely_
   f_status_t f_print_to_except_dynamic_safely(const f_string_static_t buffer, const f_array_lengths_t except, const int id) {
     #ifndef _di_level_0_parameter_checking_
       if (id == -1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.string || !buffer.used) {
+    if (!buffer.used || !buffer.string) {
       return F_data_not;
     }
 
@@ -293,7 +362,7 @@ static inline f_status_t private_inline_f_print_to_error(void) {
       if (id == -1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!string || !length) {
+    if (!length || !string) {
       return F_data_not;
     }
 
@@ -319,7 +388,7 @@ static inline f_status_t private_inline_f_print_to_error(void) {
       if (id == -1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.string || !buffer.used || range.start > range.stop || range.start >= buffer.used) {
+    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) {
       return F_data_not;
     }
 
@@ -339,7 +408,7 @@ static inline f_status_t private_inline_f_print_to_error(void) {
       if (id == -1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.string || !buffer.used || range.start > range.stop || range.start >= buffer.used) {
+    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) {
       return F_data_not;
     }
 
@@ -353,13 +422,33 @@ static inline f_status_t private_inline_f_print_to_error(void) {
   }
 #endif // _di_f_print_to_except_in_dynamic_partial_raw_
 
+#ifndef _di_f_print_to_except_in_dynamic_partial_raw_safely_
+  f_status_t f_print_to_except_in_dynamic_partial_raw_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const int id) {
+    #ifndef _di_level_0_parameter_checking_
+      if (id == -1) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) {
+      return F_data_not;
+    }
+
+    f_array_length_t length = (range.stop - range.start) + 1;
+
+    if (length + range.start > buffer.used) {
+      length = buffer.used - range.start;
+    }
+
+    return private_f_print_to_except_in_raw_safely(buffer.string, range.start, range.start + length, except_at, except_in, id);
+  }
+#endif // _di_f_print_to_except_in_dynamic_partial_raw_safely_
+
 #ifndef _di_f_print_to_except_in_dynamic_partial_safely_
   f_status_t f_print_to_except_in_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const int id) {
     #ifndef _di_level_0_parameter_checking_
       if (id == -1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.string || !buffer.used || range.start > range.stop || range.start >= buffer.used) {
+    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) {
       return F_data_not;
     }
 
@@ -379,11 +468,23 @@ static inline f_status_t private_inline_f_print_to_error(void) {
       if (id == -1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.string || !buffer.used) return F_data_not;
+    if (!buffer.used || !buffer.string) return F_data_not;
 
     return private_f_print_to_except_in_raw(buffer.string, 0, buffer.used, except_at, except_in, id);
   }
 #endif // _di_f_print_to_except_in_dynamic_raw_
+
+#ifndef _di_f_print_to_except_in_dynamic_raw_safely_
+  f_status_t f_print_to_except_in_dynamic_raw_safely(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const int id) {
+    #ifndef _di_level_0_parameter_checking_
+      if (id == -1) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (!buffer.used || !buffer.string) return F_data_not;
+
+    return private_f_print_to_except_in_raw_safely(buffer.string, 0, buffer.used, except_at, except_in, id);
+  }
+#endif // _di_f_print_to_except_in_dynamic_raw_safely_
 
 #ifndef _di_f_print_to_except_in_dynamic_safely_
   f_status_t f_print_to_except_in_dynamic_safely(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const int id) {
@@ -391,7 +492,7 @@ static inline f_status_t private_inline_f_print_to_error(void) {
       if (id == -1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.string || !buffer.used) return F_data_not;
+    if (!buffer.used || !buffer.string) return F_data_not;
 
     return private_f_print_to_except_in_safely(buffer.string, 0, buffer.used, except_at, except_in, id);
   }
@@ -403,7 +504,7 @@ static inline f_status_t private_inline_f_print_to_error(void) {
       if (id == -1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!string || !length) {
+    if (!length || !string) {
       return F_data_not;
     }
 
@@ -411,13 +512,27 @@ static inline f_status_t private_inline_f_print_to_error(void) {
   }
 #endif // _di_f_print_to_except_in_raw_
 
+#ifndef _di_f_print_to_except_in_raw_safely_
+  f_status_t f_print_to_except_in_raw_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const int id) {
+    #ifndef _di_level_0_parameter_checking_
+      if (id == -1) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (!length || !string) {
+      return F_data_not;
+    }
+
+    return private_f_print_to_except_in_raw_safely(string, offset, length, except_at, except_in, id);
+  }
+#endif // _di_f_print_to_except_in_raw_safely_
+
 #ifndef _di_f_print_to_except_in_safely_
   f_status_t f_print_to_except_in_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const int id) {
     #ifndef _di_level_0_parameter_checking_
       if (id == -1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!string || !length) {
+    if (!length || !string) {
       return F_data_not;
     }
 
@@ -426,30 +541,44 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 #endif // _di_f_print_to_except_in_safely_
 
 #ifndef _di_f_print_to_except_raw_
-  f_status_t f_print_to_except_raw(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except, const int id) {
+  f_status_t f_print_to_except_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, const int id) {
     #ifndef _di_level_0_parameter_checking_
       if (id == -1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!string || !length) {
+    if (!length || !string) {
       return F_data_not;
     }
 
-    return private_f_print_to_except_raw(string, 0, length, except, id);
+    return private_f_print_to_except_raw(string, offset, length, except, id);
   }
 #endif // _di_f_print_to_except_raw_
 
-#ifndef _di_f_print_to_except_safely_
-  f_status_t f_print_to_except_safely(const f_string_t string, const f_array_length_t length, const f_array_lengths_t except, const int id) {
+#ifndef _di_f_print_to_except_raw_safely_
+  f_status_t f_print_to_except_raw_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, const int id) {
     #ifndef _di_level_0_parameter_checking_
       if (id == -1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!string || !length) {
+    if (!length || !string) {
       return F_data_not;
     }
 
-    return private_f_print_to_except_safely(string, 0, length, except, id);
+    return private_f_print_to_except_raw_safely(string, offset, length, except, id);
+  }
+#endif // _di_f_print_to_except_raw_safely_
+
+#ifndef _di_f_print_to_except_safely_
+  f_status_t f_print_to_except_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, const int id) {
+    #ifndef _di_level_0_parameter_checking_
+      if (id == -1) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (!length || !string) {
+      return F_data_not;
+    }
+
+    return private_f_print_to_except_safely(string, offset, length, except, id);
   }
 #endif // _di_f_print_to_except_safely_
 
@@ -459,13 +588,27 @@ static inline f_status_t private_inline_f_print_to_error(void) {
       if (id == -1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!string || !length) {
+    if (!length || !string) {
       return F_data_not;
     }
 
     return private_f_print_to_raw(string, length, id);
   }
 #endif // _di_f_print_to_raw_
+
+#ifndef _di_f_print_to_raw_safely_
+  f_status_t f_print_to_raw_safely(const f_string_t string, const f_array_length_t length, const int id) {
+    #ifndef _di_level_0_parameter_checking_
+      if (id == -1) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (!length || !string) {
+      return F_data_not;
+    }
+
+    return private_f_print_to_raw_safely(string, length, id);
+  }
+#endif // _di_f_print_to_raw_safely_
 
 #ifndef _di_f_print_to_raw_terminated_
   f_status_t f_print_to_raw_terminated(const f_string_t string, const int id) {
@@ -488,7 +631,7 @@ static inline f_status_t private_inline_f_print_to_error(void) {
       if (id == -1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!string || !length) {
+    if (!length || !string) {
       return F_data_not;
     }
 

@@ -54,11 +54,9 @@ static inline f_status_t private_inline_f_print_to_error(void) {
         total = 0;
       }
 
-      if (!string[i]) {
-        do {
-          ++i;
-        } while (i < length && !string[i]);
-      }
+      while (i < length && !string[i]) {
+        ++i;
+      } // while
     } // for
 
     return F_none;
@@ -78,7 +76,12 @@ static inline f_status_t private_inline_f_print_to_error(void) {
         return F_none;
       }
     }
-    else if (macro_f_utf_byte_width_is(character) > 1 || character > 0x1f) {
+    else if (macro_f_utf_byte_width_is(character) > 1) {
+      if (write(id, &character, 1) != -1) {
+        return F_utf;
+      }
+    }
+    else if (character > 0x1f) {
       if (write(id, &character, 1) != -1) {
         return F_none;
       }
@@ -420,6 +423,12 @@ static inline f_status_t private_inline_f_print_to_error(void) {
       }
     } // while
 
+    if (total) {
+      if (write(id, string + start, total) == -1) {
+        return private_inline_f_print_to_error();
+      }
+    }
+
     return F_none;
   }
 #endif // !defined(_di_f_print_to_except_in_) || !defined(_di_f_print_to_except_in_dynamic_) || !defined(_di_f_print_to_except_in_dynamic_partial_)
@@ -491,6 +500,12 @@ static inline f_status_t private_inline_f_print_to_error(void) {
         ++i;
       }
     } // while
+
+    if (total) {
+      if (write(id, string + start, total) == -1) {
+        return private_inline_f_print_to_error();
+      }
+    }
 
     return F_none;
   }
@@ -739,7 +754,7 @@ static inline f_status_t private_inline_f_print_to_error(void) {
       }
 
       // Print all NULL characters.
-      if (!string[i]) {
+      if (i < length && !string[i]) {
         start = i;
 
         do {

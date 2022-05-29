@@ -70,6 +70,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if there is nothing to print.
+ *   F_utf on success, but character is a UTF-8 character.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.

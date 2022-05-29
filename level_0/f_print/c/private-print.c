@@ -711,6 +711,19 @@ extern "C" {
       }
     } // while
 
+    if (total) {
+      count = 0;
+
+      do {
+        count += fwrite_unlocked(string + start + count, 1, total - count, output);
+
+        if (ferror_unlocked(output)) {
+          return F_status_set_error(F_output);
+        }
+
+      } while (count < total);
+    }
+
     return F_none;
   }
 #endif // !defined(_di_f_print_except_raw_) || !defined(_di_f_print_except_dynamic_raw_) || !defined(_di_f_print_except_dynamic_partial_raw_)
@@ -819,6 +832,19 @@ extern "C" {
       total += width;
       i += width;
     } // while
+
+    if (total) {
+      count = 0;
+
+      do {
+        count += fwrite_unlocked(string + start + count, 1, total - count, output);
+
+        if (ferror_unlocked(output)) {
+          return F_status_set_error(F_output);
+        }
+
+      } while (count < total);
+    }
 
     return F_none;
   }
@@ -944,6 +970,19 @@ extern "C" {
       total += width;
       i += width;
     } // while
+
+    if (total) {
+      count = 0;
+
+      do {
+        count += fwrite_unlocked(string + start + count, 1, total - count, output);
+
+        if (ferror_unlocked(output)) {
+          return F_status_set_error(F_output);
+        }
+
+      } while (count < total);
+    }
 
     return F_none;
   }

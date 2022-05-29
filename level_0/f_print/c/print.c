@@ -11,7 +11,7 @@ extern "C" {
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!string || !length) {
+    if (!length || !string) {
       return F_data_not;
     }
 
@@ -49,9 +49,14 @@ extern "C" {
         return F_none;
       }
     }
-    else if (macro_f_utf_byte_width_is(character) > 1 || character > 0x1f) {
+    else if (macro_f_utf_byte_width_is(character) > 1) {
       if (fwrite_unlocked(&character, 1, 1, output)) {
         return F_utf;
+      }
+    }
+    else if (character > 0x1f) {
+      if (fwrite_unlocked(&character, 1, 1, output)) {
+        return F_none;
       }
     }
     else {
@@ -77,7 +82,7 @@ extern "C" {
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.string || !buffer.used) {
+    if (!buffer.used || !buffer.string) {
       return F_data_not;
     }
 
@@ -91,7 +96,7 @@ extern "C" {
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.string || !buffer.used || range.start > range.stop || range.start >= buffer.used) {
+    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) {
       return F_data_not;
     }
 
@@ -111,7 +116,7 @@ extern "C" {
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.string || !buffer.used || range.start > range.stop || range.start >= buffer.used) {
+    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) {
       return F_data_not;
     }
 
@@ -131,7 +136,7 @@ extern "C" {
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.string || !buffer.used || range.start > range.stop || range.start >= buffer.used) {
+    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) {
       return F_data_not;
     }
 
@@ -151,7 +156,7 @@ extern "C" {
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.string || !buffer.used || range.start > range.stop || range.start >= buffer.used) {
+    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) {
       return F_data_not;
     }
 
@@ -171,7 +176,7 @@ extern "C" {
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.string || !buffer.used) {
+    if (!buffer.used || !buffer.string) {
       return F_data_not;
     }
 
@@ -185,7 +190,7 @@ extern "C" {
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.string || !buffer.used) {
+    if (!buffer.used || !buffer.string) {
       return F_data_not;
     }
 
@@ -199,7 +204,7 @@ extern "C" {
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.string || !buffer.used) {
+    if (!buffer.used || !buffer.string) {
       return F_data_not;
     }
 
@@ -213,7 +218,7 @@ extern "C" {
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!string || !length) {
+    if (!length || !string) {
       return F_data_not;
     }
 
@@ -227,7 +232,7 @@ extern "C" {
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.string || !buffer.used) return F_data_not;
+    if (!buffer.used || !buffer.string) return F_data_not;
 
     return private_f_print_except(buffer.string, 0, buffer.used, except, output);
   }
@@ -239,7 +244,7 @@ extern "C" {
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.string || !buffer.used || range.start > range.stop || range.start >= buffer.used) {
+    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) {
       return F_data_not;
     }
 
@@ -259,7 +264,7 @@ extern "C" {
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.string || !buffer.used || range.start > range.stop || range.start >= buffer.used) {
+    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) {
       return F_data_not;
     }
 
@@ -279,7 +284,7 @@ extern "C" {
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.string || !buffer.used || range.start > range.stop || range.start >= buffer.used) {
+    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) {
       return F_data_not;
     }
 
@@ -299,7 +304,7 @@ extern "C" {
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.string || !buffer.used || range.start > range.stop || range.start >= buffer.used) {
+    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) {
       return F_data_not;
     }
 
@@ -319,7 +324,7 @@ extern "C" {
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.string || !buffer.used) return F_data_not;
+    if (!buffer.used || !buffer.string) return F_data_not;
 
     return private_f_print_except_raw(buffer.string, 0, buffer.used, except, output);
   }
@@ -331,7 +336,7 @@ extern "C" {
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.string || !buffer.used) return F_data_not;
+    if (!buffer.used || !buffer.string) return F_data_not;
 
     return private_f_print_except_raw_safely(buffer.string, 0, buffer.used, except, output);
   }
@@ -343,7 +348,7 @@ extern "C" {
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.string || !buffer.used) return F_data_not;
+    if (!buffer.used || !buffer.string) return F_data_not;
 
     return private_f_print_except_safely(buffer.string, 0, buffer.used, except, output);
   }
@@ -355,7 +360,7 @@ extern "C" {
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!string || !length) {
+    if (!length || !string) {
       return F_data_not;
     }
 
@@ -369,7 +374,7 @@ extern "C" {
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.string || !buffer.used) return F_data_not;
+    if (!buffer.used || !buffer.string) return F_data_not;
 
     return private_f_print_except_in(buffer.string, 0, buffer.used, except_at, except_in, output);
   }
@@ -381,7 +386,7 @@ extern "C" {
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.string || !buffer.used || range.start > range.stop || range.start >= buffer.used) {
+    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) {
       return F_data_not;
     }
 
@@ -401,7 +406,7 @@ extern "C" {
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.string || !buffer.used || range.start > range.stop || range.start >= buffer.used) {
+    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) {
       return F_data_not;
     }
 
@@ -421,7 +426,7 @@ extern "C" {
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.string || !buffer.used || range.start > range.stop || range.start >= buffer.used) {
+    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) {
       return F_data_not;
     }
 
@@ -441,7 +446,7 @@ extern "C" {
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.string || !buffer.used || range.start > range.stop || range.start >= buffer.used) {
+    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) {
       return F_data_not;
     }
 
@@ -461,7 +466,7 @@ extern "C" {
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.string || !buffer.used) return F_data_not;
+    if (!buffer.used || !buffer.string) return F_data_not;
 
     return private_f_print_except_in_raw(buffer.string, 0, buffer.used, except_at, except_in, output);
   }
@@ -473,7 +478,7 @@ extern "C" {
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.string || !buffer.used) return F_data_not;
+    if (!buffer.used || !buffer.string) return F_data_not;
 
     return private_f_print_except_in_raw_safely(buffer.string, 0, buffer.used, except_at, except_in, output);
   }
@@ -485,7 +490,7 @@ extern "C" {
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.string || !buffer.used) return F_data_not;
+    if (!buffer.used || !buffer.string) return F_data_not;
 
     return private_f_print_except_in_safely(buffer.string, 0, buffer.used, except_at, except_in, output);
   }
@@ -497,7 +502,7 @@ extern "C" {
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!string || !length) {
+    if (!length || !string) {
       return F_data_not;
     }
 
@@ -511,7 +516,7 @@ extern "C" {
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!string || !length) {
+    if (!length || !string) {
       return F_data_not;
     }
 
@@ -525,7 +530,7 @@ extern "C" {
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!string || !length) {
+    if (!length || !string) {
       return F_data_not;
     }
 
@@ -539,7 +544,7 @@ extern "C" {
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!string || !length) {
+    if (!length || !string) {
       return F_data_not;
     }
 
@@ -553,7 +558,7 @@ extern "C" {
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!string || !length) {
+    if (!length || !string) {
       return F_data_not;
     }
 
@@ -567,7 +572,7 @@ extern "C" {
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!string || !length) {
+    if (!length || !string) {
       return F_data_not;
     }
 
@@ -581,7 +586,7 @@ extern "C" {
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!string || !length) {
+    if (!length || !string) {
       return F_data_not;
     }
 
@@ -595,7 +600,7 @@ extern "C" {
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!string || !length) {
+    if (!length || !string) {
       return F_data_not;
     }
 
@@ -624,7 +629,7 @@ extern "C" {
       if (!output) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!string || !length) {
+    if (!length || !string) {
       return F_data_not;
     }
 
@@ -651,10 +656,13 @@ extern "C" {
 
     f_array_length_t start = 0;
     f_array_length_t total = 0;
+    f_array_length_t count = 0;
 
     f_string_static_t safe = f_string_empty_s;
 
     uint8_t width = 0;
+
+    clearerr_unlocked(output);
 
     for (register f_array_length_t i = 0; string[i]; ) {
 
@@ -687,31 +695,50 @@ extern "C" {
 
       if (safe.used) {
         if (total) {
-          if (fwrite_unlocked(string + start, 1, total, output) < total) {
-            return F_status_set_error(F_output);
-          }
+          count = 0;
+
+          do {
+            count += fwrite_unlocked(string + start + count, 1, total - count, output);
+
+            if (ferror_unlocked(output)) {
+              return F_status_set_error(F_output);
+            }
+
+          } while (count < total);
 
           total = 0;
         }
 
-        if (fwrite_unlocked(safe.string, 1, safe.used, output) < safe.used) {
-          return F_status_set_error(F_output);
-        }
+        count = 0;
+
+        do {
+          count += fwrite_unlocked(safe.string + count, 1, safe.used - count, output);
+
+          if (ferror_unlocked(output)) {
+            return F_status_set_error(F_output);
+          }
+
+        } while (count < safe.used);
 
         i += width;
         start = i;
+
         continue;
       }
 
       if (total + width >= F_print_write_max_d) {
-        if (total) {
-          if (fwrite_unlocked(string + start, 1, total, output) < total) {
+        count = 0;
+
+        do {
+          count += fwrite_unlocked(string + start + count, 1, total - count, output);
+
+          if (ferror_unlocked(output)) {
             return F_status_set_error(F_output);
           }
 
-          total = 0;
-        }
+        } while (count < total);
 
+        total = 0;
         i += width;
         start = i - 1;
 
@@ -723,9 +750,16 @@ extern "C" {
     } // for
 
     if (total) {
-      if (fwrite_unlocked(string + start, 1, total, output) < total) {
-        return F_status_set_error(F_output);
-      }
+      count = 0;
+
+      do {
+        count += fwrite_unlocked(string + start + count, 1, total - count, output);
+
+        if (ferror_unlocked(output)) {
+          return F_status_set_error(F_output);
+        }
+
+      } while (count < total);
     }
 
     return F_none;
