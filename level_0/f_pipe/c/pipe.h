@@ -6,8 +6,6 @@
  * Licenses: lgpl-2.1-or-later
  *
  * Provides pipe functionality.
- *
- * @todo implement pipe() functionality.
  */
 #ifndef _F_pipe_h
 #define _F_pipe_h
