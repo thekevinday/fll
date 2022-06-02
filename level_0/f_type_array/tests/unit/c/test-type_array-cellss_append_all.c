@@ -5,6 +5,17 @@
 extern "C" {
 #endif
 
+void test__f_type_array_cellss_append_all__parameter_checking(void **state) {
+
+  const f_cellss_t data = f_cellss_t_initialize;
+
+  {
+    const f_status_t status = f_cellss_append_all(data, 0);
+
+    assert_int_equal(status, F_status_set_error(F_parameter));
+  }
+}
+
 void test__f_type_array_cellss_append_all__returns_data_not(void **state) {
 
   const int length = 5;
@@ -29,17 +40,6 @@ void test__f_type_array_cellss_append_all__returns_data_not(void **state) {
   }
 
   free((void *) source.array);
-}
-
-void test__f_type_array_cellss_append_all__parameter_checking(void **state) {
-
-  const f_cellss_t data = f_cellss_t_initialize;
-
-  {
-    const f_status_t status = f_cellss_append_all(data, 0);
-
-    assert_int_equal(status, F_status_set_error(F_parameter));
-  }
 }
 
 void test__f_type_array_cellss_append_all__works(void **state) {

@@ -21,6 +21,30 @@ void test__f_type_array_int8s_decimate_by__parameter_checking(void **state) {
   assert_null(data.array);
 }
 
+void test__f_type_array_int8s_decimate_by__returns_data_not(void **state) {
+
+  const int length = 5;
+  f_int8s_t data = f_int8s_t_initialize;
+
+  {
+    const f_status_t status = f_int8s_resize(length, &data);
+
+    assert_int_equal(status, F_none);
+    assert_int_equal(data.used, 0);
+    assert_int_equal(data.size, length);
+  }
+
+  {
+    const f_status_t status = f_int8s_decimate_by(0, &data);
+
+    assert_int_equal(status, F_data_not);
+    assert_int_equal(data.used, 0);
+    assert_int_equal(data.size, length);
+  }
+
+  free((void *) data.array);
+}
+
 void test__f_type_array_int8s_decimate_by__works(void **state) {
 
   const int length = 5;

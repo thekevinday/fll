@@ -17,6 +17,12 @@ int setdown(void **state) {
 int main(void) {
 
   const struct CMUnitTest tests[] = {
+    cmocka_unit_test(test__f_type_array_array_lengths_append_all__returns_data_not),
+    cmocka_unit_test(test__f_type_array_array_lengths_decimate_by__returns_data_not),
+    cmocka_unit_test(test__f_type_array_array_lengths_decrease_by__returns_data_not),
+    cmocka_unit_test(test__f_type_array_array_lengths_increase__returns_data_not),
+    cmocka_unit_test(test__f_type_array_array_lengths_increase_by__returns_data_not),
+
     cmocka_unit_test(test__f_type_array_array_lengths_adjust__works),
     cmocka_unit_test(test__f_type_array_array_lengths_append__works),
     cmocka_unit_test(test__f_type_array_array_lengths_append_all__works),
@@ -41,6 +47,12 @@ int main(void) {
     cmocka_unit_test(test__f_type_array_array_lengthss_increase__works),
     cmocka_unit_test(test__f_type_array_array_lengthss_increase_by__works),
     cmocka_unit_test(test__f_type_array_array_lengthss_resize__works),
+
+    cmocka_unit_test(test__f_type_array_cells_append_all__returns_data_not),
+    cmocka_unit_test(test__f_type_array_cells_decimate_by__returns_data_not),
+    cmocka_unit_test(test__f_type_array_cells_decrease_by__returns_data_not),
+    cmocka_unit_test(test__f_type_array_cells_increase__returns_data_not),
+    cmocka_unit_test(test__f_type_array_cells_increase_by__returns_data_not),
 
     cmocka_unit_test(test__f_type_array_cells_adjust__works),
     cmocka_unit_test(test__f_type_array_cells_append__works),
@@ -67,6 +79,12 @@ int main(void) {
     cmocka_unit_test(test__f_type_array_cellss_increase_by__works),
     cmocka_unit_test(test__f_type_array_cellss_resize__works),
 
+    cmocka_unit_test(test__f_type_array_fll_ids_append_all__returns_data_not),
+    cmocka_unit_test(test__f_type_array_fll_ids_decimate_by__returns_data_not),
+    cmocka_unit_test(test__f_type_array_fll_ids_decrease_by__returns_data_not),
+    cmocka_unit_test(test__f_type_array_fll_ids_increase__returns_data_not),
+    cmocka_unit_test(test__f_type_array_fll_ids_increase_by__returns_data_not),
+
     cmocka_unit_test(test__f_type_array_fll_ids_adjust__works),
     cmocka_unit_test(test__f_type_array_fll_ids_append__works),
     cmocka_unit_test(test__f_type_array_fll_ids_append_all__works),
@@ -91,6 +109,12 @@ int main(void) {
     cmocka_unit_test(test__f_type_array_fll_idss_increase__works),
     cmocka_unit_test(test__f_type_array_fll_idss_increase_by__works),
     cmocka_unit_test(test__f_type_array_fll_idss_resize__works),
+
+    cmocka_unit_test(test__f_type_array_int8s_append_all__returns_data_not),
+    cmocka_unit_test(test__f_type_array_int8s_decimate_by__returns_data_not),
+    cmocka_unit_test(test__f_type_array_int8s_decrease_by__returns_data_not),
+    cmocka_unit_test(test__f_type_array_int8s_increase__returns_data_not),
+    cmocka_unit_test(test__f_type_array_int8s_increase_by__returns_data_not),
 
     cmocka_unit_test(test__f_type_array_int8s_adjust__works),
     cmocka_unit_test(test__f_type_array_int8s_append__works),
@@ -117,6 +141,12 @@ int main(void) {
     cmocka_unit_test(test__f_type_array_int8ss_increase_by__works),
     cmocka_unit_test(test__f_type_array_int8ss_resize__works),
 
+    cmocka_unit_test(test__f_type_array_int16s_append_all__returns_data_not),
+    cmocka_unit_test(test__f_type_array_int16s_decimate_by__returns_data_not),
+    cmocka_unit_test(test__f_type_array_int16s_decrease_by__returns_data_not),
+    cmocka_unit_test(test__f_type_array_int16s_increase__returns_data_not),
+    cmocka_unit_test(test__f_type_array_int16s_increase_by__returns_data_not),
+
     cmocka_unit_test(test__f_type_array_int16s_adjust__works),
     cmocka_unit_test(test__f_type_array_int16s_append__works),
     cmocka_unit_test(test__f_type_array_int16s_append_all__works),
@@ -141,6 +171,12 @@ int main(void) {
     cmocka_unit_test(test__f_type_array_int16ss_increase__works),
     cmocka_unit_test(test__f_type_array_int16ss_increase_by__works),
     cmocka_unit_test(test__f_type_array_int16ss_resize__works),
+
+    cmocka_unit_test(test__f_type_array_int32s_append_all__returns_data_not),
+    cmocka_unit_test(test__f_type_array_int32s_decimate_by__returns_data_not),
+    cmocka_unit_test(test__f_type_array_int32s_decrease_by__returns_data_not),
+    cmocka_unit_test(test__f_type_array_int32s_increase__returns_data_not),
+    cmocka_unit_test(test__f_type_array_int32s_increase_by__returns_data_not),
 
     cmocka_unit_test(test__f_type_array_int32s_adjust__works),
     cmocka_unit_test(test__f_type_array_int32s_append__works),
@@ -167,6 +203,12 @@ int main(void) {
     cmocka_unit_test(test__f_type_array_int32ss_increase_by__works),
     cmocka_unit_test(test__f_type_array_int32ss_resize__works),
 
+    cmocka_unit_test(test__f_type_array_int64s_append_all__returns_data_not),
+    cmocka_unit_test(test__f_type_array_int64s_decimate_by__returns_data_not),
+    cmocka_unit_test(test__f_type_array_int64s_decrease_by__returns_data_not),
+    cmocka_unit_test(test__f_type_array_int64s_increase__returns_data_not),
+    cmocka_unit_test(test__f_type_array_int64s_increase_by__returns_data_not),
+
     cmocka_unit_test(test__f_type_array_int64s_adjust__works),
     cmocka_unit_test(test__f_type_array_int64s_append__works),
     cmocka_unit_test(test__f_type_array_int64s_append_all__works),
@@ -191,6 +233,12 @@ int main(void) {
     cmocka_unit_test(test__f_type_array_int64ss_increase__works),
     cmocka_unit_test(test__f_type_array_int64ss_increase_by__works),
     cmocka_unit_test(test__f_type_array_int64ss_resize__works),
+
+    cmocka_unit_test(test__f_type_array_int128s_append_all__returns_data_not),
+    cmocka_unit_test(test__f_type_array_int128s_decimate_by__returns_data_not),
+    cmocka_unit_test(test__f_type_array_int128s_decrease_by__returns_data_not),
+    cmocka_unit_test(test__f_type_array_int128s_increase__returns_data_not),
+    cmocka_unit_test(test__f_type_array_int128s_increase_by__returns_data_not),
 
     cmocka_unit_test(test__f_type_array_int128s_adjust__works),
     cmocka_unit_test(test__f_type_array_int128s_append__works),
@@ -217,6 +265,12 @@ int main(void) {
     cmocka_unit_test(test__f_type_array_int128ss_increase_by__works),
     cmocka_unit_test(test__f_type_array_int128ss_resize__works),
 
+    cmocka_unit_test(test__f_type_array_states_append_all__returns_data_not),
+    cmocka_unit_test(test__f_type_array_states_decimate_by__returns_data_not),
+    cmocka_unit_test(test__f_type_array_states_decrease_by__returns_data_not),
+    cmocka_unit_test(test__f_type_array_states_increase__returns_data_not),
+    cmocka_unit_test(test__f_type_array_states_increase_by__returns_data_not),
+
     cmocka_unit_test(test__f_type_array_states_adjust__works),
     cmocka_unit_test(test__f_type_array_states_append__works),
     cmocka_unit_test(test__f_type_array_states_append_all__works),
@@ -241,6 +295,12 @@ int main(void) {
     cmocka_unit_test(test__f_type_array_statess_increase__works),
     cmocka_unit_test(test__f_type_array_statess_increase_by__works),
     cmocka_unit_test(test__f_type_array_statess_resize__works),
+
+    cmocka_unit_test(test__f_type_array_statuss_append_all__returns_data_not),
+    cmocka_unit_test(test__f_type_array_statuss_decimate_by__returns_data_not),
+    cmocka_unit_test(test__f_type_array_statuss_decrease_by__returns_data_not),
+    cmocka_unit_test(test__f_type_array_statuss_increase__returns_data_not),
+    cmocka_unit_test(test__f_type_array_statuss_increase_by__returns_data_not),
 
     cmocka_unit_test(test__f_type_array_statuss_adjust__works),
     cmocka_unit_test(test__f_type_array_statuss_append__works),
@@ -267,6 +327,12 @@ int main(void) {
     cmocka_unit_test(test__f_type_array_statusss_increase_by__works),
     cmocka_unit_test(test__f_type_array_statusss_resize__works),
 
+    cmocka_unit_test(test__f_type_array_uint8s_append_all__returns_data_not),
+    cmocka_unit_test(test__f_type_array_uint8s_decimate_by__returns_data_not),
+    cmocka_unit_test(test__f_type_array_uint8s_decrease_by__returns_data_not),
+    cmocka_unit_test(test__f_type_array_uint8s_increase__returns_data_not),
+    cmocka_unit_test(test__f_type_array_uint8s_increase_by__returns_data_not),
+
     cmocka_unit_test(test__f_type_array_uint8s_adjust__works),
     cmocka_unit_test(test__f_type_array_uint8s_append__works),
     cmocka_unit_test(test__f_type_array_uint8s_append_all__works),
@@ -291,6 +357,12 @@ int main(void) {
     cmocka_unit_test(test__f_type_array_uint8ss_increase__works),
     cmocka_unit_test(test__f_type_array_uint8ss_increase_by__works),
     cmocka_unit_test(test__f_type_array_uint8ss_resize__works),
+
+    cmocka_unit_test(test__f_type_array_uint16s_append_all__returns_data_not),
+    cmocka_unit_test(test__f_type_array_uint16s_decimate_by__returns_data_not),
+    cmocka_unit_test(test__f_type_array_uint16s_decrease_by__returns_data_not),
+    cmocka_unit_test(test__f_type_array_uint16s_increase__returns_data_not),
+    cmocka_unit_test(test__f_type_array_uint16s_increase_by__returns_data_not),
 
     cmocka_unit_test(test__f_type_array_uint16s_adjust__works),
     cmocka_unit_test(test__f_type_array_uint16s_append__works),
@@ -317,6 +389,12 @@ int main(void) {
     cmocka_unit_test(test__f_type_array_uint16ss_increase_by__works),
     cmocka_unit_test(test__f_type_array_uint16ss_resize__works),
 
+    cmocka_unit_test(test__f_type_array_uint32s_append_all__returns_data_not),
+    cmocka_unit_test(test__f_type_array_uint32s_decimate_by__returns_data_not),
+    cmocka_unit_test(test__f_type_array_uint32s_decrease_by__returns_data_not),
+    cmocka_unit_test(test__f_type_array_uint32s_increase__returns_data_not),
+    cmocka_unit_test(test__f_type_array_uint32s_increase_by__returns_data_not),
+
     cmocka_unit_test(test__f_type_array_uint32s_adjust__works),
     cmocka_unit_test(test__f_type_array_uint32s_append__works),
     cmocka_unit_test(test__f_type_array_uint32s_append_all__works),
@@ -342,6 +420,12 @@ int main(void) {
     cmocka_unit_test(test__f_type_array_uint32ss_increase_by__works),
     cmocka_unit_test(test__f_type_array_uint32ss_resize__works),
 
+    cmocka_unit_test(test__f_type_array_uint64s_append_all__returns_data_not),
+    cmocka_unit_test(test__f_type_array_uint64s_decimate_by__returns_data_not),
+    cmocka_unit_test(test__f_type_array_uint64s_decrease_by__returns_data_not),
+    cmocka_unit_test(test__f_type_array_uint64s_increase__returns_data_not),
+    cmocka_unit_test(test__f_type_array_uint64s_increase_by__returns_data_not),
+
     cmocka_unit_test(test__f_type_array_uint64s_adjust__works),
     cmocka_unit_test(test__f_type_array_uint64s_append__works),
     cmocka_unit_test(test__f_type_array_uint64s_append_all__works),
@@ -366,6 +450,12 @@ int main(void) {
     cmocka_unit_test(test__f_type_array_uint64ss_increase__works),
     cmocka_unit_test(test__f_type_array_uint64ss_increase_by__works),
     cmocka_unit_test(test__f_type_array_uint64ss_resize__works),
+
+    cmocka_unit_test(test__f_type_array_uint128s_append_all__returns_data_not),
+    cmocka_unit_test(test__f_type_array_uint128s_decimate_by__returns_data_not),
+    cmocka_unit_test(test__f_type_array_uint128s_decrease_by__returns_data_not),
+    cmocka_unit_test(test__f_type_array_uint128s_increase__returns_data_not),
+    cmocka_unit_test(test__f_type_array_uint128s_increase_by__returns_data_not),
 
     cmocka_unit_test(test__f_type_array_uint128s_adjust__works),
     cmocka_unit_test(test__f_type_array_uint128s_append__works),

@@ -17,7 +17,7 @@ settings:
   #define CMOCKA_XML_FILE ./out.xml
 
 main:
-  build settings-mocks individual tests
+  build settings-mocks individual test
   build settings-tests individual test
 
   operate ld_library_path

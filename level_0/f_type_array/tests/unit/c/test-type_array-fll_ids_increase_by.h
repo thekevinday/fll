@@ -18,6 +18,13 @@
 extern void test__f_type_array_fll_ids_increase_by__parameter_checking(void **state);
 
 /**
+ * Test that the function returns F_data_not.
+ *
+ * @see f_fll_ids_increase_by()
+ */
+extern void test__f_type_array_fll_ids_increase_by__returns_data_not(void **state);
+
+/**
  * Test that the function works.
  *
  * @see f_fll_ids_increase_by()

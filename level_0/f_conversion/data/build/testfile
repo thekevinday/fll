@@ -19,7 +19,7 @@ settings:
 main:
   # Disable mocks until mocking can be fixed for this project.
   #build settings-mocks
-  build settings individual tests
+  build settings individual test
   build settings-tests individual test
 
   operate ld_library_path
