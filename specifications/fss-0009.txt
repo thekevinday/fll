@@ -15,7 +15,7 @@ Featureless Settings Specification: 0009 - Reverse Mapping:
   Each Object starts at the end of a line and white space to the left of the Object is not treated as part of the object.
   White space separates an Object from the Content.
   An Object may be preceded by a newline, in which case means that the Object has no Content.
-  If only printing white space precedes a valid Object, that Object is considered to have no Content.
+  If only printing white spaces or non-printable characters precedes a valid Object, then that Object is considered to have no Content.
 
   Content exists on the same line as the Object.
   Content is represented as a single Content column that begins at a newline.

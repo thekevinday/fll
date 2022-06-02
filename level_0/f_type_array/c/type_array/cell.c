@@ -44,9 +44,7 @@ extern "C" {
       if (!cells) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (cells->size - amount > 0) {
       return private_f_cells_adjust(cells->size - amount, cells);
@@ -62,9 +60,7 @@ extern "C" {
       if (!cells) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (cells->size - amount > 0) {
       return private_f_cells_resize(cells->size - amount, cells);
@@ -104,9 +100,7 @@ extern "C" {
       if (!cells) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (cells->used + amount > cells->size) {
       if (cells->used + amount > F_array_length_t_size_d) {
@@ -199,9 +193,7 @@ extern "C" {
       if (!cellss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (cellss->size - amount > 0) {
       return private_f_cellss_adjust(cellss->size - amount, cellss);
@@ -217,9 +209,7 @@ extern "C" {
       if (!cellss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (cellss->size - amount > 0) {
       return private_f_cellss_resize(cellss->size - amount, cellss);
@@ -259,9 +249,7 @@ extern "C" {
       if (!cellss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (cellss->used + amount > cellss->size) {
       if (cellss->used + amount > F_array_length_t_size_d) {

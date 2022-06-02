@@ -88,9 +88,7 @@ extern "C" {
       if (!datas) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (datas->size - amount > 0) {
       return private_f_iki_datas_adjust(datas->size - amount, datas);
@@ -106,9 +104,7 @@ extern "C" {
       if (!datas) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (datas->size - amount > 0) {
       return private_f_iki_datas_resize(datas->size - amount, datas);
@@ -148,9 +144,7 @@ extern "C" {
       if (!datas) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (datas->used + amount > datas->size) {
       if (datas->used + amount > F_array_length_t_size_d) {
@@ -243,9 +237,7 @@ extern "C" {
       if (!datass) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (datass->size - amount > 0) {
       return private_f_iki_datass_adjust(datass->size - amount, datass);
@@ -261,9 +253,7 @@ extern "C" {
       if (!datass) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (datass->size - amount > 0) {
       return private_f_iki_datass_resize(datass->size - amount, datass);
@@ -303,9 +293,7 @@ extern "C" {
       if (!datass) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (datass->used + amount > datass->size) {
       if (datass->used + amount > F_array_length_t_size_d) {

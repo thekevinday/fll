@@ -40,7 +40,7 @@ extern "C" {
 #endif // _di_f_utf_character_is_
 
 #ifndef _di_f_utf_character_is_alphabetic_
-  f_status_t f_utf_character_is_alpha(const f_utf_char_t character) {
+  f_status_t f_utf_character_is_alphabetic(const f_utf_char_t character) {
 
     if (macro_f_utf_char_t_width_is(character)) {
       if (macro_f_utf_char_t_width_is(character) == 1) {

@@ -44,9 +44,7 @@ extern "C" {
       if (!uint32s) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (uint32s->size - amount > 0) {
       return private_f_uint32s_adjust(uint32s->size - amount, uint32s);
@@ -62,9 +60,7 @@ extern "C" {
       if (!uint32s) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (uint32s->size - amount > 0) {
       return private_f_uint32s_resize(uint32s->size - amount, uint32s);
@@ -104,9 +100,7 @@ extern "C" {
       if (!uint32s) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (uint32s->used + amount > uint32s->size) {
       if (uint32s->used + amount > F_array_length_t_size_d) {
@@ -199,9 +193,7 @@ extern "C" {
       if (!uint32ss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (uint32ss->size - amount > 0) {
       return private_f_uint32ss_adjust(uint32ss->size - amount, uint32ss);
@@ -217,9 +209,7 @@ extern "C" {
       if (!uint32ss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (uint32ss->size - amount > 0) {
       return private_f_uint32ss_resize(uint32ss->size - amount, uint32ss);
@@ -259,9 +249,7 @@ extern "C" {
       if (!uint32ss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (uint32ss->used + amount > uint32ss->size) {
       if (uint32ss->used + amount > F_array_length_t_size_d) {

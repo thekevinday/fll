@@ -558,12 +558,14 @@ extern "C" {
       F_complete_not_utf_eof,
       F_complete_not_utf_eol,
       F_complete_not_utf_eos,
+      F_complete_not_utf_start,
       F_complete_not_utf_stop,
       F_none_block,
       F_none_eoa,
       F_none_eof,
       F_none_eol,
       F_none_eos,
+      F_none_start,
       F_none_stop,
       F_data,
       F_data_not,
@@ -572,6 +574,7 @@ extern "C" {
       F_data_not_eof,
       F_data_not_eol,
       F_data_not_eos,
+      F_data_not_start,
       F_data_not_stop,
     #endif // _di_f_status_buffer_
 
@@ -589,6 +592,7 @@ extern "C" {
       F_end_not_group_eof,
       F_end_not_group_eol,
       F_end_not_group_eos,
+      F_end_not_group_start,
       F_end_not_group_stop,
       F_end_not_nest,
       F_end_not_nest_block,
@@ -596,7 +600,9 @@ extern "C" {
       F_end_not_nest_eof,
       F_end_not_nest_eol,
       F_end_not_nest_eos,
+      F_end_not_nest_start,
       F_end_not_nest_stop,
+      F_end_not_start,
       F_end_not_stop,
     #endif // _di_f_status_end_
 

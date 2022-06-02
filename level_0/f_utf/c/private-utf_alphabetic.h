@@ -18,7 +18,7 @@ extern "C" {
 #endif
 
 /**
- * Private implementation of f_utf_character_is_alpha().
+ * Private implementation of f_utf_character_is_alphabetic().
  *
  * Intended to be shared to each of the different implementation variations.
  *
@@ -34,12 +34,12 @@ extern "C" {
  *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
  *   F_utf_not (with error bit) if unicode is an invalid Unicode character.
  *
- * @see f_utf_character_is_alpha()
+ * @see f_utf_character_is_alphabetic()
  * @see f_utf_is_alphabetic()
  */
-#if !defined(_di_f_utf_character_is_alphabetic_) || !defined(_di_f_utf_is_alphabeticbetic_)
+#if !defined(_di_f_utf_character_is_alphabetic_) || !defined(_di_f_utf_is_alphabetic_)
   extern f_status_t private_f_utf_character_is_alphabetic(const f_utf_char_t character) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_utf_character_is_alphabetic_) || !defined(_di_f_utf_is_alphabeticbetic_)
+#endif // !defined(_di_f_utf_character_is_alphabetic_) || !defined(_di_f_utf_is_alphabetic_)
 
 /**
  * Private implementation of f_utf_character_is_alphabetic_digit().
@@ -59,11 +59,11 @@ extern "C" {
  *   F_utf_not (with error bit) if unicode is an invalid Unicode character.
  *
  * @see f_utf_character_is_alphabetic_digit()
- * @see f_utf_is_alphabeticbetic_digit()
+ * @see f_utf_is_alphabetic_digit()
  */
-#if !defined(_di_f_utf_character_is_alphabetic_digit_) || !defined(_di_f_utf_is_alphabeticbetic_digit_)
+#if !defined(_di_f_utf_character_is_alphabetic_digit_) || !defined(_di_f_utf_is_alphabetic_digit_)
   extern f_status_t private_f_utf_character_is_alphabetic_digit(const f_utf_char_t character) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_utf_character_is_alphabetic_digit_) || !defined(_di_f_utf_is_alphabeticbetic_digit_)
+#endif // !defined(_di_f_utf_character_is_alphabetic_digit_) || !defined(_di_f_utf_is_alphabetic_digit_)
 
 /**
  * Private implementation of f_utf_character_is_alphabetic_numeric().
@@ -83,11 +83,11 @@ extern "C" {
  *   F_utf_not (with error bit) if unicode is an invalid Unicode character.
  *
  * @see f_utf_character_is_alphabetic_numeric()
- * @see f_utf_is_alphabeticbetic_numeric()
+ * @see f_utf_is_alphabetic_numeric()
  */
-#if !defined(_di_f_utf_character_is_alphabetic_numeric_) || !defined(_di_f_utf_is_alphabeticbetic_numeric_)
+#if !defined(_di_f_utf_character_is_alphabetic_numeric_) || !defined(_di_f_utf_is_alphabetic_numeric_)
   extern f_status_t private_f_utf_character_is_alphabetic_numeric(const f_utf_char_t character) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_utf_character_is_alphabetic_numeric_) || !defined(_di_f_utf_is_alphabeticbetic_numeric_)
+#endif // !defined(_di_f_utf_character_is_alphabetic_numeric_) || !defined(_di_f_utf_is_alphabetic_numeric_)
 
 #ifdef __cplusplus
 } // extern "C"

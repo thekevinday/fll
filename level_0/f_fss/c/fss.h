@@ -48,6 +48,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success but buffer.used is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  */
@@ -71,12 +72,13 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success but buffer.used is 0.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  */
-#ifndef _di_f_fss_apply_delimit_between_
-  extern f_status_t f_fss_apply_delimit_between(f_state_t state, const f_fss_delimits_t delimits, const f_string_range_t range, f_string_static_t * const buffer);
-#endif // _di_f_fss_apply_delimit_between_
+#ifndef _di_f_fss_apply_delimit_range_
+  extern f_status_t f_fss_apply_delimit_range(f_state_t state, const f_fss_delimits_t delimits, const f_string_range_t range, f_string_static_t * const buffer);
+#endif // _di_f_fss_apply_delimit_range_
 
 /**
  * Count the number of new lines from the buffer before the given location.
@@ -93,9 +95,12 @@ extern "C" {
  *   The position in the buffer where to start counting before.
  * @param line
  *   The total lines found leading up to but not including before.
+ *   This value is not reset and only additions are performed.
+ *   When F_data_not is returned, this value is not altered.
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success but buffer.used is 0 (line is set to 0).
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  */
@@ -116,18 +121,19 @@ extern "C" {
  *   The string to process.
  * @param range
  *   The range within the buffer to process.
- * @param before
- *   The position in the buffer where to start counting before.
  * @param line
  *   The total lines found leading up to but not including before.
+ *   This value is not reset and only additions are performed.
+ *   When F_data_not is returned, this value is not altered.
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success but the range.start is greater than buffer.used or buffer.used is 0 (line is set to 0).
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_fss_count_lines_range_
-  extern f_status_t f_fss_count_lines_range(f_state_t state, const f_string_static_t buffer, const f_string_range_t range, const f_array_length_t before, f_array_length_t * const line);
+  extern f_status_t f_fss_count_lines_range(f_state_t state, const f_string_static_t buffer, const f_string_range_t range, f_array_length_t * const line);
 #endif // _di_f_fss_count_lines_range_
 
 /**
@@ -175,6 +181,41 @@ extern "C" {
 #endif // _di_f_fss_fail_utf_to_false_
 
 /**
+ * Identify whether or not a character in the buffer is a combining (ASCII or UTF-8) character.
+ *
+ * This only checks if the given character is a combining character and does not check what this combines into.
+ *
+ * The combining characters combine from right to left.
+ * It is recommended to use this after testing for other characters, such as f_fss_is_space() or f_fss_is_graph().
+ * A combining character can follow any character, even if it is something like a control character.
+ * This is unclear behavior so a simple strategy is to assume that a combining character results in a graph for anything except a non-combining zero-width character.
+ * U+0020 followed by U+0301 would result in the combination of the two being considered a graph rather than a space.
+ * Given that NULL characters are ignored by the general FSS standard, combining characters are not considered to combine into NULL.
+ *
+ * @param state
+ *   A state for providing flags and handling interrupts during long running operations.
+ * @param buffer
+ *   The string to process.
+ * @param range
+ *   The character at the start position will be checked against the graph.
+ * @param header
+ *   The header data to populate with results of this function.
+ *
+ * @return
+ *   F_true if the character in the buffer is a combining character.
+ *   F_false if the character in the buffer is not a combining character.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_utf_is_combining().
+ *
+ * @see f_utf_is_combining()
+ */
+#ifndef _di_f_fss_is_combining_
+  extern f_status_t f_fss_is_combining(f_state_t state, const f_string_static_t buffer, const f_string_range_t range);
+#endif // _di_f_fss_is_combining_
+
+/**
  * Identify whether or not a character in the buffer is a graph (ASCII or UTF-8) character.
  *
  * @param state
@@ -201,7 +242,7 @@ extern "C" {
 #endif // _di_f_fss_is_graph_
 
 /**
- * Identify whether or not a character in the buffer is a non-zero-width whitespace or control (ASCII or UTF-8) character.
+ * Identify whether or not a character in the buffer is a non-zero-width whitespace or non-zero-width control (ASCII or UTF-8) character.
  *
  * @param state
  *   A state for providing flags and handling interrupts during long running operations.
@@ -220,16 +261,20 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_utf_is_control().
  *   Errors (with error bit) from: f_utf_is_whitespace().
+ *   Errors (with error bit) from: f_utf_is_zero_width().
  *
  * @see f_utf_is_control()
  * @see f_utf_is_whitespace()
+ * @see f_utf_is_zero_width()
  */
 #ifndef _di_f_fss_is_space_
   extern f_status_t f_fss_is_space(f_state_t state, const f_string_static_t buffer, const f_string_range_t range);
 #endif // _di_f_fss_is_space_
 
 /**
- * Identify whether or not a character in the buffer is a non-zero-width whitespace or control (ASCII or UTF-8) character.
+ * Identify whether or not a character in the buffer is a zero-width (ASCII or UTF-8) character.
+ *
+ * The NULL character (U+0000) is a zero-width character.
  *
  * @param state
  *   A state for providing flags and handling interrupts during long running operations.
@@ -241,13 +286,12 @@ extern "C" {
  *   The header data to populate with results of this function.
  *
  * @return
- *   F_true if the character in the buffer is a space character.
- *   F_false if the character in the buffer is not a space character.
+ *   F_true if the character in the buffer is a zero-width character.
+ *   F_false if the character in the buffer is not a zero-width character.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_utf_is_control().
- *   Errors (with error bit) from: f_utf_is_whitespace().
+ *   Errors (with error bit) from: f_utf_is_zero_width().
  *
  * @see f_utf_is_zero_width()
  */
@@ -257,6 +301,11 @@ extern "C" {
 
 /**
  * Seek until an EOL character is reached.
+ *
+ * This does not check the character after the EOL is reached.
+ * The character after an EOL should be checked to see if it is a combining character.
+ * Combining characters after the EOL effectively make the EOL character a non-standard EOL.
+ * For most, if not all, FSS standards, a combined EOL is not the same as a standard or normal EOL.
  *
  * @param state
  *   A state for providing flags and handling interrupts during long running operations.
@@ -268,6 +317,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success but buffer.used is 0, initial range.start is greater than range.stop, or initial range.start is greater than or equal to buffer.used.
  *   F_none_eos on success and EOS was reached.
  *   F_none_stop on success and stop point was reached.
  *
@@ -276,32 +326,6 @@ extern "C" {
 #ifndef _di_f_fss_seek_to_eol_
   extern f_status_t f_fss_seek_to_eol(f_state_t state, const f_string_dynamic_t buffer, f_string_range_t * const range);
 #endif // _di_f_fss_seek_to_eol_
-
-/**
- * Shift all of the delimit placeholders to the end of the used buffer.
- *
- * This allows one to do a printf on the dynamic string without the delimiters arbitrarily stopping the output.
- * No reallocations are performed, this will only shift characters.
- *
- * @param state
- *   A state for providing flags and handling interrupts during long running operations.
- * @param range
- *   A restriction on where within the buffer the shifting happens.
- * @param buffer
- *   The string to process.
- *   This gets updated.
- *
- * @return
- *   F_none on success.
- *   F_none_eos on success and EOS was reached.
- *   F_none_stop on success and stop point was reached.
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *   F_utf_not (with error bit) if UTF-8 cannot be fully processed (buffer or range range not long enough).
- */
-#ifndef _di_f_fss_shift_delimit_
-  extern f_status_t f_fss_shift_delimit(f_state_t state, const f_string_range_t range, f_string_dynamic_t * const buffer);
-#endif // _di_f_fss_shift_delimit_
 
 /**
  * Skip past all delimit placeholders until a non-delimit placeholder is reached.
@@ -316,6 +340,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success but buffer.used is 0, initial range.start is greater than range.stop, or initial range.start is greater than or equal to buffer.used.
  *   F_none_eos on success and EOS was reached.
  *   F_none_stop on success and stop point was reached.
  *
@@ -326,9 +351,10 @@ extern "C" {
 #endif // _di_f_fss_skip_past_delimit_
 
 /**
- * Skip past all whitespace and control characters, except newline.
+ * Skip past all white space, control characters, and zero-width characters, except newline '\n' (U+000A).
  *
- * Zero-width characters are not skipped because they might be part of a graph character, such as combining characters.
+ * If the first character in the given range is a combining character, then because this will not skip past anything.
+ * This is because combining characters apply from right to left.
  *
  * @param state
  *   A state for providing flags and handling interrupts during long running operations.
@@ -340,19 +366,22 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success but buffer.used is 0, initial range.start is greater than range.stop, or initial range.start is greater than or equal to buffer.used.
  *   F_none_eol on success and EOL was reached.
  *   F_none_eos on success and EOS was reached.
  *   F_none_stop on success and stop point was reached.
  *
- *   F_complete_not_utf (with error bit) if an incomplete UTF-8 fragment was found.
  *   F_complete_not_utf_eos (with error bit) if unable to get entire UTF-8 sequence due to EOS.
+ *   F_complete_not_utf_start (with error bit) if the first character is a combining character.
  *   F_complete_not_utf_stop (with error bit) if unable to get entire UTF-8 sequence due to stop point reached.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ *   Errors (with error bit) from: f_utf_is_combining().
  *   Errors (with error bit) from: f_utf_is_control().
  *   Errors (with error bit) from: f_utf_is_whitespace().
  *   Errors (with error bit) from: f_utf_is_zero_width().
  *
+ * @see f_utf_is_combining()
  * @see f_utf_is_control()
  * @see f_utf_is_whitespace()
  * @see f_utf_is_zero_width()
@@ -360,40 +389,6 @@ extern "C" {
 #ifndef _di_f_fss_skip_past_space_
   extern f_status_t f_fss_skip_past_space(f_state_t state, const f_string_static_t buffer, f_string_range_t * const range);
 #endif // _di_f_fss_skip_past_space_
-
-/**
- * Skip past all non-graph and non-zero-width characters (whitespace and control characters).
- *
- * Zero-width characters are not skipped because they might be part of a graph character, such as combining characters.
- *
- * @param state
- *   A state for providing flags and handling interrupts during long running operations.
- * @param buffer
- *   The string to process.
- * @param range
- *   The start and stop positions in the buffer being processed.
- *   This increments range->start.
- *
- * @return
- *   F_none on success.
- *   F_none_eol on success and EOL was reached.
- *   F_none_eos on success and EOS was reached.
- *   F_none_stop on success and stop point was reached.
- *
- *   F_complete_not_utf (with error bit) if an incomplete UTF-8 fragment was found.
- *   F_complete_not_utf_eos (with error bit) if unable to get entire UTF-8 sequence due to EOS.
- *   F_complete_not_utf_stop (with error bit) if unable to get entire UTF-8 sequence due to stop point reached.
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_utf_is_graph().
- *   Errors (with error bit) from: f_utf_is_zero_width().
- *
- * @see f_utf_is_graph()
- * @see f_utf_is_zero_width()
- */
-#ifndef _di_f_fss_skip_past_non_graph_
-  extern f_status_t f_fss_skip_past_non_graph(f_state_t state, const f_string_static_t buffer, f_string_range_t * const range);
-#endif // _di_f_fss_skip_past_non_graph_
 
 #ifdef __cplusplus
 } // extern "C"

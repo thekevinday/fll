@@ -51,9 +51,7 @@ extern "C" {
       if (!lengths) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (lengths->size - amount > 0) {
       return private_f_array_lengths_adjust(lengths->size - amount, lengths);
@@ -69,9 +67,7 @@ extern "C" {
       if (!lengths) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (lengths->size - amount > 0) {
       return private_f_array_lengths_resize(lengths->size - amount, lengths);
@@ -111,9 +107,7 @@ extern "C" {
       if (!lengths) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (lengths->used + amount > lengths->size) {
       if (lengths->used + amount > F_array_length_t_size_d) {
@@ -206,9 +200,7 @@ extern "C" {
       if (!lengthss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (lengthss->size - amount > 0) {
       return private_f_array_lengthss_adjust(lengthss->size - amount, lengthss);
@@ -224,9 +216,7 @@ extern "C" {
       if (!lengthss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (lengthss->size - amount > 0) {
       return private_f_array_lengthss_resize(lengthss->size - amount, lengthss);
@@ -266,9 +256,7 @@ extern "C" {
       if (!lengthss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (lengthss->used + amount > lengthss->size) {
       if (lengthss->used + amount > F_array_length_t_size_d) {

@@ -44,9 +44,7 @@ extern "C" {
       if (!int8s) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (int8s->size - amount > 0) {
       return private_f_int8s_adjust(int8s->size - amount, int8s);
@@ -62,9 +60,7 @@ extern "C" {
       if (!int8s) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (int8s->size - amount > 0) {
       return private_f_int8s_resize(int8s->size - amount, int8s);
@@ -104,9 +100,7 @@ extern "C" {
       if (!int8s) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (int8s->used + amount > int8s->size) {
       if (int8s->used + amount > F_array_length_t_size_d) {
@@ -199,9 +193,7 @@ extern "C" {
       if (!int8ss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (int8ss->size - amount > 0) {
       return private_f_int8ss_adjust(int8ss->size - amount, int8ss);
@@ -217,9 +209,7 @@ extern "C" {
       if (!int8ss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (int8ss->size - amount > 0) {
       return private_f_int8ss_resize(int8ss->size - amount, int8ss);
@@ -259,9 +249,7 @@ extern "C" {
       if (!int8ss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (int8ss->used + amount > int8ss->size) {
       if (int8ss->used + amount > F_array_length_t_size_d) {

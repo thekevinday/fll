@@ -21,9 +21,7 @@ extern "C" {
       if (!set) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (set->objects.size - amount > 0) {
       return private_f_fss_set_adjust(set->objects.size - amount, set);
@@ -39,9 +37,7 @@ extern "C" {
       if (!set) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (set->objects.size - amount > 0) {
       return private_f_fss_set_resize(set->objects.size - amount, set);
@@ -81,9 +77,7 @@ extern "C" {
       if (!set) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (set->objects.used + amount > set->objects.size) {
       if (set->objects.used + amount > F_array_length_t_size_d) {
@@ -123,9 +117,7 @@ extern "C" {
       if (!set_quote) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (set_quote->objects.size - amount > 0) {
       return private_f_fss_set_quote_adjust(set_quote->objects.size - amount, set_quote);
@@ -141,9 +133,7 @@ extern "C" {
       if (!set_quote) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (set_quote->objects.size - amount > 0) {
       return private_f_fss_set_quote_resize(set_quote->objects.size - amount, set_quote);
@@ -183,9 +173,7 @@ extern "C" {
       if (!set_quote) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (set_quote->objects.used + amount > set_quote->objects.size) {
       if (set_quote->objects.used + amount > F_array_length_t_size_d) {
@@ -225,9 +213,7 @@ extern "C" {
       if (!set_quotes) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (set_quotes->size - amount > 0) {
       return private_f_fss_set_quotes_adjust(set_quotes->size - amount, set_quotes);
@@ -243,9 +229,7 @@ extern "C" {
       if (!set_quotes) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (set_quotes->size - amount > 0) {
       return private_f_fss_set_quotes_resize(set_quotes->size - amount, set_quotes);
@@ -285,9 +269,7 @@ extern "C" {
       if (!set_quotes) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (set_quotes->used + amount > set_quotes->size) {
       if (set_quotes->used + amount > F_array_length_t_size_d) {
@@ -327,9 +309,7 @@ extern "C" {
       if (!sets) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (sets->size - amount > 0) {
       return private_f_fss_sets_adjust(sets->size - amount, sets);
@@ -345,9 +325,7 @@ extern "C" {
       if (!sets) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (sets->size - amount > 0) {
       return private_f_fss_sets_resize(sets->size - amount, sets);
@@ -387,9 +365,7 @@ extern "C" {
       if (!sets) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (sets->used + amount > sets->size) {
       if (sets->used + amount > F_array_length_t_size_d) {

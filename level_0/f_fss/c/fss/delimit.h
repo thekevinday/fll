@@ -22,7 +22,9 @@ extern "C" {
 #ifndef _di_f_fss_delimit_t_
   typedef f_array_length_t f_fss_delimit_t;
 
-  #define macro_f_fss_object_t_initialize(length) macro_f_string_range_t_initialize2(length)
+  #define f_fss_delimit_t_initialize f_array_length_t_initialize
+
+  #define macro_f_fss_delimit_t_initialize(delimit) macro_f_array_length_t_initialize(delimit)
 #endif // _di_f_fss_delimit_t_
 
 /**

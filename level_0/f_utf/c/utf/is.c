@@ -31,7 +31,7 @@ extern "C" {
   }
 #endif // _di_f_utf_is_
 
-#ifndef _di_f_utf_is_alphabeticbetic_
+#ifndef _di_f_utf_is_alphabetic_
   f_status_t f_utf_is_alphabetic(const f_string_t character, const f_array_length_t width_max) {
     #ifndef _di_level_0_parameter_checking_
       if (width_max < 1) return F_status_set_error(F_parameter);
@@ -62,10 +62,10 @@ extern "C" {
 
     return F_false;
   }
-#endif // _di_f_utf_is_alphabeticbetic_
+#endif // _di_f_utf_is_alphabetic_
 
-#ifndef _di_f_utf_is_alphabeticbetic_digit_
-  f_status_t f_utf_is_alphabeticbetic_digit(const f_string_t character, const f_array_length_t width_max) {
+#ifndef _di_f_utf_is_alphabetic_digit_
+  f_status_t f_utf_is_alphabetic_digit(const f_string_t character, const f_array_length_t width_max) {
     #ifndef _di_level_0_parameter_checking_
       if (width_max < 1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -95,10 +95,10 @@ extern "C" {
 
     return F_false;
   }
-#endif // _di_f_utf_is_alphabeticbetic_digit_
+#endif // _di_f_utf_is_alphabetic_digit_
 
-#ifndef _di_f_utf_is_alphabeticbetic_numeric_
-  f_status_t f_utf_is_alphabeticbetic_numeric(const f_string_t character, const f_array_length_t width_max) {
+#ifndef _di_f_utf_is_alphabetic_numeric_
+  f_status_t f_utf_is_alphabetic_numeric(const f_string_t character, const f_array_length_t width_max) {
     #ifndef _di_level_0_parameter_checking_
       if (width_max < 1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -128,7 +128,7 @@ extern "C" {
 
     return F_false;
   }
-#endif // _di_f_utf_is_alphabeticbetic_numeric_
+#endif // _di_f_utf_is_alphabetic_numeric_
 
 #ifndef _di_f_utf_is_ascii_
   f_status_t f_utf_is_ascii(const f_string_t character, const f_array_length_t width_max) {

@@ -44,9 +44,7 @@ extern "C" {
       if (!values) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (values->size - amount > 0) {
       return private_f_limit_values_adjust(values->size - amount, values);
@@ -62,9 +60,7 @@ extern "C" {
       if (!values) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (values->size - amount > 0) {
       return private_f_limit_values_resize(values->size - amount, values);
@@ -104,9 +100,7 @@ extern "C" {
       if (!values) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (values->used + amount > values->size) {
       if (values->used + amount > F_array_length_t_size_d) {
@@ -199,9 +193,7 @@ extern "C" {
       if (!valuess) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (valuess->size - amount > 0) {
       return private_f_limit_valuess_adjust(valuess->size - amount, valuess);
@@ -217,9 +209,7 @@ extern "C" {
       if (!valuess) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (valuess->size - amount > 0) {
       return private_f_limit_valuess_resize(valuess->size - amount, valuess);
@@ -259,9 +249,7 @@ extern "C" {
       if (!valuess) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (valuess->used + amount > valuess->size) {
       if (valuess->used + amount > F_array_length_t_size_d) {

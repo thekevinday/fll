@@ -21,9 +21,7 @@ extern "C" {
       if (!named) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (named->objects.size - amount > 0) {
       return private_f_fss_named_adjust(named->objects.size - amount, named);
@@ -39,9 +37,7 @@ extern "C" {
       if (!named) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (named->objects.size - amount > 0) {
       return private_f_fss_named_resize(named->objects.size - amount, named);
@@ -81,9 +77,7 @@ extern "C" {
       if (!named) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (named->objects.used + amount > named->objects.size) {
       if (named->objects.used + amount > F_array_length_t_size_d) {
@@ -123,9 +117,7 @@ extern "C" {
       if (!nameds) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (nameds->size - amount > 0) {
       return private_f_fss_nameds_adjust(nameds->size - amount, nameds);
@@ -141,9 +133,7 @@ extern "C" {
       if (!nameds) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (nameds->size - amount > 0) {
       return private_f_fss_nameds_resize(nameds->size - amount, nameds);
@@ -183,9 +173,7 @@ extern "C" {
       if (!nameds) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (nameds->used + amount > nameds->size) {
       if (nameds->used + amount > F_array_length_t_size_d) {

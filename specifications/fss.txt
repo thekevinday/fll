@@ -29,7 +29,7 @@ Featureless Settings Specifications:
 
   Objects and Contents can include any characters allowed by the specifications.
   The specification may choose how a given Object or Content are represented and parsed.
-  For example, in code:"fss-0000 (Basic)", Content is treated as a single item whereas in code:"fss-0001 (Extended)", Content is broken apart in multiple sub parts.
+  For example, in code:"fss-0000 (Basic)", Content is treated as a single item whereas in code:"fss-0001 (Extended)", Content is broken apart in multiple sub-parts.
 
   Contents may be broken up into zero or more discrete sets of Content.
   Each of these discrete sets of Content are referred to as a column.
@@ -43,9 +43,14 @@ Featureless Settings Specifications:
 
   Unless otherwise specified, all specifications are newline sensitive (code:"\n" only).
   Newline characters are only code:"\n" and are never anything else (code:"\r" is not considered newline in any manner).
+  These specifications refer to characters that have printable representation as emphasis:"printable".
+  These specifications refer to characters that have no printable representation as emphasis:"non-printable".
   White spaces characters that are printable, such as tabs and spaces, must be considered the same type for the purposes of parsing.
-  Non-printing white spaces characters (zero-width characters) are ignored, are treated as placeholders for processing, or are considered part of the appropriate character if they are Unicode combining characters (this includes zero-width punctuation characters and similar).
+  Non-printing white spaces characters (zero-width characters) are ignored, are treated as placeholders for processing with the exception of combining characters.
+  White spaces that use combining characters result in printable characters and the resulting combination is treated as not white space.
+  Zero-width characters that use combining characters are treated as non-printing characters and are skipped.
   In terms of processing, it is recommended that the code:"NULL" character is not considered the end of a string, but this is only a suggestion.
+  Any specification may chose to limit, restrict, or otherwise prohibit special Unicode characters such as combining characters or zero-width characters.
 
   Unless otherwise specified, newlines designate the potential start (or end) of an Object or Content.
 

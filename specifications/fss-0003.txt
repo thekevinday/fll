@@ -11,9 +11,9 @@
 
 Featureless Settings Specification: 0003 - Extended List:
   Each Object starts at the beginning of a line and white space to the left of the Object is not treated as an object.
-  An open-brace code:"{" followed by any white space until a newline terminates a possible valid Object.
-  An Object is not considered fully valid until a valid close-brace code:"}" is found, designating the end of the Content.
-  Non-white space may not follow the open-brace of a valid Object.
+  An open-brace code:"{" (code:"U+007B") followed by any white space until a newline terminates a possible valid Object.
+  An Object is not considered fully valid until a valid close-brace code:"}" (code:"U+007D") is found, designating the end of the Content.
+  Non-white space printable characters may not follow the open-brace of a valid Object.
 
   Content is represented as a single Content column of every line following a valid object until the end of file (or string) or until a non-delimited close-brace code:"}".
   Any Content column that could be interpreted as an end of Content must be delimited if it should be part of the Content.
@@ -32,8 +32,8 @@ Featureless Settings Specification: 0003 - Extended List:
 
   Key\:
     code:"\s" = White space, except newline.
-    code:"\o" = Any printable character, except unescaped code:"{".
-    code:"\l" = Any printable character or white space, except unescaped code:"}".
+    code:"\o" = Any printable character, except unescaped code:"{" (code:"U+007B").
+    code:"\l" = Any printable character or white space, except unescaped code:"}" (code:"U+007D").
     code:"\c" = Either white space or printable, including newline, that is not interpretable as an Object.
     code:"\n" = Newline.
     code:"*" = Zero or more occurrences.

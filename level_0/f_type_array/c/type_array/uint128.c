@@ -44,9 +44,7 @@ extern "C" {
       if (!uint128s) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (uint128s->size - amount > 0) {
       return private_f_uint128s_adjust(uint128s->size - amount, uint128s);
@@ -62,9 +60,7 @@ extern "C" {
       if (!uint128s) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (uint128s->size - amount > 0) {
       return private_f_uint128s_resize(uint128s->size - amount, uint128s);
@@ -104,9 +100,7 @@ extern "C" {
       if (!uint128s) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (uint128s->used + amount > uint128s->size) {
       if (uint128s->used + amount > F_array_length_t_size_d) {
@@ -199,9 +193,7 @@ extern "C" {
       if (!uint128ss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (uint128ss->size - amount > 0) {
       return private_f_uint128ss_adjust(uint128ss->size - amount, uint128ss);
@@ -217,9 +209,7 @@ extern "C" {
       if (!uint128ss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (uint128ss->size - amount > 0) {
       return private_f_uint128ss_resize(uint128ss->size - amount, uint128ss);
@@ -259,9 +249,7 @@ extern "C" {
       if (!uint128ss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (uint128ss->used + amount > uint128ss->size) {
       if (uint128ss->used + amount > F_array_length_t_size_d) {

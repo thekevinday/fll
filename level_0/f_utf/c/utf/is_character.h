@@ -51,7 +51,7 @@ extern "C" {
  * @see isalpha()
  */
 #ifndef _di_f_utf_character_is_alphabetic_
-  extern f_status_t f_utf_character_is_alpha(const f_utf_char_t character);
+  extern f_status_t f_utf_character_is_alphabetic(const f_utf_char_t character);
 #endif // _di_f_utf_character_is_alphabetic_
 
 /**
@@ -489,20 +489,20 @@ extern "C" {
 /**
  * Check to see if the entire byte block of the character is an ASCII or UTF-8 general space character.
  *
- * Non-printing or zero-width characters are not considered whitespace.
- * This does include line separators like '\n'.
- * This does not include phonetic spaces, like whitespace modifiers.
- * This does not include non-true whitespace characters, such as Ogham Space Mark ( ).
+ * Non-printing or zero-width characters are not considered white space.
+ * This does include line separators like '\n' (U+000A).
+ * This does not include phonetic spaces, like white space modifiers.
+ * This does not include non-true white space characters, such as Ogham Space Mark ' ' (U+1680).
  *
  * Phonetic spaces are whitespaces with additional phonetic meaning associated with them.
- * However, because they are not renderred as whitespace, they are technically not white space.
+ * However, because they are not renderred as white space, they are technically not white space.
  *
  * @param character
  *   The character to validate.
  *
  * @return
- *   F_true if a UTF-8 whitespace.
- *   F_false if not a UTF-8 whitespace.
+ *   F_true if a UTF-8 white space.
+ *   F_false if not a UTF-8 white space.
  *
  *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
  *   F_utf_not (with error bit) if unicode is an invalid Unicode character.
@@ -514,12 +514,12 @@ extern "C" {
 #endif // _di_f_utf_character_is_whitespace_
 
 /**
- * Check to see if the entire byte block of the character is an ASCII or UTF-8 whitespace modifier character.
+ * Check to see if the entire byte block of the character is an ASCII or UTF-8 white space modifier character.
  *
  * These are phonetic spaces.
  *
  * Phonetic spaces are whitespaces with additional phonetic meaning associated with them.
- * Therefore, these are valid spaces in the technical sense, even if they are not visibly whitespace.
+ * Therefore, these are valid spaces in the technical sense, even if they are not visibly white space.
  *
  * @param character
  *   The character to validate.
@@ -538,14 +538,14 @@ extern "C" {
 /**
  * Check to see if the entire byte block of the character is an other type of UTF-8 space character.
  *
- * This is a list of whitespace that are not actual whitespace (because they are graph characters) but are considered whitespace, such as Ogham Space Mark ( ).
+ * This is a list of white space that are not actual white space (because they are graph characters) but are considered white space, such as Ogham Space Mark ' ' (U+1680).
  *
  * @param character
  *   The character to validate.
  *
  * @return
- *   F_true if a UTF-8 (other) whitespace.
- *   F_false if not a UTF-8 (other) whitespace.
+ *   F_true if a UTF-8 (other) white space.
+ *   F_false if not a UTF-8 (other) white space.
  *
  *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
  *   F_utf_not (with error bit) if unicode is an invalid Unicode character.

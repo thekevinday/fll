@@ -13,7 +13,7 @@ Featureless Settings Specification: 0001 - Extended:
   Each Object starts at the beginning of a line and white space to the left of the Object is not treated as an object.
   White space separates an Object from the Content.
   An Object may be followed by a newline, in which case means that the Object has no Content.
-  If only printing white space follows a valid Object, that Object is considered to have no Content.
+  If only printing white spaces or non-printable characters follow a valid Object, then that Object is considered to have no Content.
 
   Content exists on the same line as the Object.
   Content is represented as multiple Content columns.

@@ -44,9 +44,7 @@ extern "C" {
       if (!ids) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (ids->size - amount > 0) {
       return private_f_fll_ids_adjust(ids->size - amount, ids);
@@ -62,9 +60,7 @@ extern "C" {
       if (!ids) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (ids->size - amount > 0) {
       return private_f_fll_ids_resize(ids->size - amount, ids);
@@ -104,9 +100,7 @@ extern "C" {
       if (!ids) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (ids->used + amount > ids->size) {
       if (ids->used + amount > F_array_length_t_size_d) {
@@ -199,9 +193,7 @@ extern "C" {
       if (!idss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (idss->size - amount > 0) {
       return private_f_fll_idss_adjust(idss->size - amount, idss);
@@ -217,9 +209,7 @@ extern "C" {
       if (!idss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (idss->size - amount > 0) {
       return private_f_fll_idss_resize(idss->size - amount, idss);
@@ -259,9 +249,7 @@ extern "C" {
       if (!idss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (idss->used + amount > idss->size) {
       if (idss->used + amount > F_array_length_t_size_d) {

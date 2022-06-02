@@ -526,9 +526,7 @@ extern "C" {
       if (!attributes) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (attributes->size - amount > 0) {
       return private_f_thread_attributes_resize(attributes->size - amount, attributes);
@@ -568,9 +566,7 @@ extern "C" {
       if (!attributes) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (attributes->used + amount > attributes->size) {
       if (attributes->used + amount > F_array_length_t_size_d) {
@@ -668,9 +664,7 @@ extern "C" {
       if (!attributes) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (attributes->size - amount > 0) {
       return private_f_thread_barrier_attributes_adjust(attributes->size - amount, attributes);
@@ -686,9 +680,7 @@ extern "C" {
       if (!attributes) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (attributes->size - amount > 0) {
       return private_f_thread_barrier_attributes_resize(attributes->size - amount, attributes);
@@ -728,9 +720,7 @@ extern "C" {
       if (!attributes) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (attributes->used + amount > attributes->size) {
       if (attributes->used + amount > F_array_length_t_size_d) {
@@ -812,9 +802,7 @@ extern "C" {
       if (!barriers) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (barriers->size - amount > 0) {
       return private_f_thread_barriers_adjust(barriers->size - amount, barriers);
@@ -830,9 +818,7 @@ extern "C" {
       if (!barriers) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (barriers->size - amount > 0) {
       return private_f_thread_barriers_resize(barriers->size - amount, barriers);
@@ -872,9 +858,7 @@ extern "C" {
       if (!barriers) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (barriers->used + amount > barriers->size) {
       if (barriers->used + amount > F_array_length_t_size_d) {
@@ -1068,9 +1052,7 @@ extern "C" {
       if (!attributes) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (attributes->size - amount > 0) {
       return private_f_thread_condition_attributes_adjust(attributes->size - amount, attributes);
@@ -1086,9 +1068,7 @@ extern "C" {
       if (!attributes) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (attributes->size - amount > 0) {
       return private_f_thread_condition_attributes_resize(attributes->size - amount, attributes);
@@ -1128,9 +1108,7 @@ extern "C" {
       if (!attributes) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (attributes->used + amount > attributes->size) {
       if (attributes->used + amount > F_array_length_t_size_d) {
@@ -1297,9 +1275,7 @@ extern "C" {
       if (!conditions) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (conditions->size - amount > 0) {
       return private_f_thread_conditions_resize(conditions->size - amount, conditions);
@@ -1339,9 +1315,7 @@ extern "C" {
       if (!conditions) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (conditions->used + amount > conditions->size) {
       if (conditions->used + amount > F_array_length_t_size_d) {
@@ -1547,9 +1521,7 @@ extern "C" {
       if (!keys) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (keys->size - amount > 0) {
       return private_f_thread_keys_adjust(keys->size - amount, keys);
@@ -1565,9 +1537,7 @@ extern "C" {
       if (!keys) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (keys->size - amount > 0) {
       return private_f_thread_keys_resize(keys->size - amount, keys);
@@ -1607,9 +1577,7 @@ extern "C" {
       if (!keys) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (keys->used + amount > keys->size) {
       if (keys->used + amount > F_array_length_t_size_d) {
@@ -1714,9 +1682,7 @@ extern "C" {
       if (!attributes) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (attributes->size - amount > 0) {
       return private_f_thread_lock_attributes_adjust(attributes->size - amount, attributes);
@@ -1732,9 +1698,7 @@ extern "C" {
       if (!attributes) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (attributes->size - amount > 0) {
       return private_f_thread_lock_attributes_resize(attributes->size - amount, attributes);
@@ -1774,9 +1738,7 @@ extern "C" {
       if (!attributes) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (attributes->used + amount > attributes->size) {
       if (attributes->used + amount > F_array_length_t_size_d) {
@@ -1969,9 +1931,7 @@ extern "C" {
       if (!locks) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (locks->size - amount > 0) {
       return private_f_thread_locks_adjust(locks->size - amount, locks);
@@ -1987,9 +1947,7 @@ extern "C" {
       if (!locks) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (locks->size - amount > 0) {
       return private_f_thread_locks_resize(locks->size - amount, locks);
@@ -2029,9 +1987,7 @@ extern "C" {
       if (!locks) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (locks->used + amount > locks->size) {
       if (locks->used + amount > F_array_length_t_size_d) {
@@ -2248,9 +2204,7 @@ extern "C" {
       if (!attributes) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (attributes->size - amount > 0) {
       return private_f_thread_mutex_attributes_adjust(attributes->size - amount, attributes);
@@ -2266,9 +2220,7 @@ extern "C" {
       if (!attributes) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (attributes->size - amount > 0) {
       return private_f_thread_mutex_attributes_resize(attributes->size - amount, attributes);
@@ -2308,9 +2260,7 @@ extern "C" {
       if (!attributes) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (attributes->used + amount > attributes->size) {
       if (attributes->used + amount > F_array_length_t_size_d) {
@@ -2687,9 +2637,7 @@ extern "C" {
       if (!mutexs) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (mutexs->size - amount > 0) {
       return private_f_thread_mutexs_adjust(mutexs->size - amount, mutexs);
@@ -2705,9 +2653,7 @@ extern "C" {
       if (!mutexs) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (mutexs->size - amount > 0) {
       return private_f_thread_mutexs_resize(mutexs->size - amount, mutexs);
@@ -2747,9 +2693,7 @@ extern "C" {
       if (!mutexs) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (mutexs->used + amount > mutexs->size) {
       if (mutexs->used + amount > F_array_length_t_size_d) {
@@ -2864,9 +2808,7 @@ extern "C" {
       if (!semaphores) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (semaphores->size - amount > 0) {
       return private_f_thread_semaphores_adjust(semaphores->size - amount, semaphores);
@@ -2882,9 +2824,7 @@ extern "C" {
       if (!semaphores) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (semaphores->size - amount > 0) {
       return private_f_thread_semaphores_resize(semaphores->size - amount, semaphores);
@@ -2924,9 +2864,7 @@ extern "C" {
       if (!semaphores) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (semaphores->used + amount > semaphores->size) {
       if (semaphores->used + amount > F_array_length_t_size_d) {
@@ -2966,9 +2904,7 @@ extern "C" {
       if (!sets) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (sets->size - amount > 0) {
       return private_f_thread_sets_adjust(sets->size - amount, sets);
@@ -2984,9 +2920,7 @@ extern "C" {
       if (!sets) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (sets->size - amount > 0) {
       return private_f_thread_sets_resize(sets->size - amount, sets);
@@ -3026,9 +2960,7 @@ extern "C" {
       if (!sets) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (sets->used + amount > sets->size) {
       if (sets->used + amount > F_array_length_t_size_d) {
@@ -3223,9 +3155,7 @@ extern "C" {
       if (!spins) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (spins->size - amount > 0) {
       return private_f_thread_spins_adjust(spins->size - amount, spins);
@@ -3241,9 +3171,7 @@ extern "C" {
       if (!spins) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (spins->size - amount > 0) {
       return private_f_thread_spins_resize(spins->size - amount, spins);
@@ -3283,9 +3211,7 @@ extern "C" {
       if (!spins) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (spins->used + amount > spins->size) {
       if (spins->used + amount > F_array_length_t_size_d) {

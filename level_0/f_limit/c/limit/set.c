@@ -44,9 +44,7 @@ extern "C" {
       if (!sets) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (sets->size - amount > 0) {
       return private_f_limit_sets_adjust(sets->size - amount, sets);
@@ -62,9 +60,7 @@ extern "C" {
       if (!sets) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (sets->size - amount > 0) {
       return private_f_limit_sets_resize(sets->size - amount, sets);
@@ -104,9 +100,7 @@ extern "C" {
       if (!sets) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (sets->used + amount > sets->size) {
       if (sets->used + amount > F_array_length_t_size_d) {
@@ -199,9 +193,7 @@ extern "C" {
       if (!setss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (setss->size - amount > 0) {
       return private_f_limit_setss_adjust(setss->size - amount, setss);
@@ -217,9 +209,7 @@ extern "C" {
       if (!setss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (setss->size - amount > 0) {
       return private_f_limit_setss_resize(setss->size - amount, setss);
@@ -259,9 +249,7 @@ extern "C" {
       if (!setss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (setss->used + amount > setss->size) {
       if (setss->used + amount > F_array_length_t_size_d) {

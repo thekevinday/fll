@@ -21,9 +21,7 @@ extern "C" {
       if (!items) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (items->size - amount > 0) {
       return private_f_fss_items_adjust(items->size - amount, items);
@@ -39,9 +37,7 @@ extern "C" {
       if (!items) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (items->size - amount > 0) {
       return private_f_fss_items_resize(items->size - amount, items);
@@ -81,9 +77,7 @@ extern "C" {
       if (!items) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (items->used + amount > items->size) {
       if (items->used + amount > F_array_length_t_size_d) {
@@ -123,9 +117,7 @@ extern "C" {
       if (!nest) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (nest->size - amount > 0) {
       return private_f_fss_nest_adjust(nest->size - amount, nest);
@@ -141,9 +133,7 @@ extern "C" {
       if (!nest) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (nest->size - amount > 0) {
       return private_f_fss_nest_resize(nest->size - amount, nest);
@@ -183,9 +173,7 @@ extern "C" {
       if (!nest) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (nest->used + amount > nest->size) {
       if (nest->used + amount > F_array_length_t_size_d) {
@@ -225,9 +213,7 @@ extern "C" {
       if (!nests) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (nests->size - amount > 0) {
       return private_f_fss_nests_adjust(nests->size - amount, nests);
@@ -242,6 +228,8 @@ extern "C" {
     #ifndef _di_level_0_parameter_checking_
       if (!nests) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    if (!amount) return F_data_not;
 
     if (nests->size - amount > 0) {
       return private_f_fss_nests_resize(nests->size - amount, nests);
@@ -281,9 +269,7 @@ extern "C" {
       if (!nests) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (nests->used + amount > nests->size) {
       if (nests->used + amount > F_array_length_t_size_d) {

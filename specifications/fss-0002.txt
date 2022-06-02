@@ -11,8 +11,8 @@
 
 Featureless Settings Specification: 0002 - Basic List:
   Each Object starts at the beginning of a line and white space to the left of the Object is not treated as an object.
-  A colon followed by any white space until a newline terminates a valid Object.
-  Non-white space may not follow the colon of a valid Object.
+  A colon code:":" (code:"U+003A") followed by any white space until a newline terminates a valid Object.
+  Non-white space printable characters may not follow the colon of a valid Object.
 
   Content is represented as a single Content column of every line following a valid object until the end of file (or string) or until the next valid Object is found.
   Any Content that could be interpreted as a valid Object must have the colon delimited.
@@ -24,8 +24,8 @@ Featureless Settings Specification: 0002 - Basic List:
 
   Key\:
     code:"\s" = White space, except newline.
-    code:"\o" = Any printable character, except unescaped ':'.
-    code:"\l" = Any printable character or white space, except unescaped ':'.
+    code:"\o" = Any printable character, except unescaped code:":" (code:"U+003A").
+    code:"\l" = Any printable character or white space, except unescaped code:":" (code:"U+003A").
     code:"\c" = Either white space or printable, including newline, that not interpretable as an Object.
     code:"\n" = Newline.
     code:"*" = Zero or more occurrences.

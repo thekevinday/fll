@@ -53,9 +53,9 @@ extern "C" {
  *
  * @see isalpha()
  */
-#ifndef _di_f_utf_is_alphabeticbetic_
+#ifndef _di_f_utf_is_alphabetic_
   extern f_status_t f_utf_is_alphabetic(const f_string_t character, const f_array_length_t width_max);
-#endif // _di_f_utf_is_alphabeticbetic_
+#endif // _di_f_utf_is_alphabetic_
 
 /**
  * Check to see if the entire byte block of the character is an ASCII or UTF-8 alphabet or digit character.
@@ -81,9 +81,9 @@ extern "C" {
  *
  * @see isalnum()
  */
-#ifndef _di_f_utf_is_alphabeticbetic_digit_
-  extern f_status_t f_utf_is_alphabeticbetic_digit(const f_string_t character, const f_array_length_t width_max);
-#endif // _di_f_utf_is_alphabeticbetic_digit_
+#ifndef _di_f_utf_is_alphabetic_digit_
+  extern f_status_t f_utf_is_alphabetic_digit(const f_string_t character, const f_array_length_t width_max);
+#endif // _di_f_utf_is_alphabetic_digit_
 
 /**
  * Check to see if the entire byte block of the character is an ASCII or UTF-8 alphabet or numeric character.
@@ -107,9 +107,9 @@ extern "C" {
  *
  * @see isalnum()
  */
-#ifndef _di_f_utf_is_alphabeticbetic_numeric_
-  extern f_status_t f_utf_is_alphabeticbetic_numeric(const f_string_t character, const f_array_length_t width_max);
-#endif // _di_f_utf_is_alphabeticbetic_numeric_
+#ifndef _di_f_utf_is_alphabetic_numeric_
+  extern f_status_t f_utf_is_alphabetic_numeric(const f_string_t character, const f_array_length_t width_max);
+#endif // _di_f_utf_is_alphabetic_numeric_
 
 /**
  * Check to see if the entire byte block of the character is an ASCII character.
@@ -593,13 +593,13 @@ extern "C" {
 /**
  * Check to see if the entire byte block of the character is an ASCII or UTF-8 general space character.
  *
- * Non-printing or zero-width characters are not considered whitespace.
- * This does include line separators like '\n'.
- * This does not include phonetic spaces, like whitespace modifiers.
- * This does not include non-true whitespace characters, such as Ogham Space Mark ( ).
+ * Non-printing or zero-width characters are not considered white space.
+ * This does include line separators like '\n' (U+000A).
+ * This does not include phonetic spaces, like white space modifiers.
+ * This does not include non-true white space characters, such as Ogham Space Mark ' ' (U+1680).
  *
- * Phonetic spaces are whitespaces with additional phonetic meaning associated with them.
- * However, because they are not renderred as whitespace, they are technically not white space.
+ * Phonetic spaces are white spaces with additional phonetic meaning associated with them.
+ * However, because they are not renderred as white space, they are technically not white space.
  *
  * @param character
  *   The character to validate.
@@ -609,11 +609,11 @@ extern "C" {
  *   Can be anything greater than 0.
  *
  * @return
- *   F_true if a UTF-8 whitespace.
- *   F_false if not a UTF-8 whitespace.
+ *   F_true if a UTF-8 white space.
+ *   F_false if not a UTF-8 white space.
  *
  *   F_complete_not_utf (with error bit set) if character is an incomplete UTF-8 sequence.
- *   F_maybe (with error bit) if this could be a whitespace but width is not long enough.
+ *   F_maybe (with error bit) if this could be a white space but width is not long enough.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
  *   F_utf_not (with error bit) if Unicode is an invalid Unicode character.
@@ -625,12 +625,12 @@ extern "C" {
 #endif // _di_f_utf_is_whitespace_
 
 /**
- * Check to see if the entire byte block of the character is a UTF-8 whitespace modifier character.
+ * Check to see if the entire byte block of the character is a UTF-8 white space modifier character.
  *
  * These are phonetic spaces.
  *
  * Phonetic spaces are whitespaces with additional phonetic meaning associated with them.
- * Therefore, these are valid spaces in the technical sense, even if they are not visibly whitespace.
+ * Therefore, these are valid spaces in the technical sense, even if they are not visibly white space.
  *
  * @param character
  *   The character to validate.
@@ -640,11 +640,11 @@ extern "C" {
  *   Can be anything greater than 0.
  *
  * @return
- *   F_true if a UTF-8 whitespace.
- *   F_false if not a UTF-8 whitespace.
+ *   F_true if a UTF-8 white space.
+ *   F_false if not a UTF-8 white space.
  *
  *   F_complete_not_utf (with error bit set) if character is an incomplete UTF-8 sequence.
- *   F_maybe (with error bit) if this could be a whitespace but width is not long enough.
+ *   F_maybe (with error bit) if this could be a white space but width is not long enough.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
  *   F_utf_not (with error bit) if Unicode is an invalid Unicode character.
@@ -656,7 +656,7 @@ extern "C" {
 /**
  * Check to see if the entire byte block of the character is an other type of UTF-8 space character.
  *
- * This is a list of whitespace that are not actual whitespace (because they are graph characters) but are considered whitespace, such as Ogham Space Mark ( ).
+ * This is a list of white space that are not actual white space (because they are graph characters) but are considered white space, such as Ogham Space Mark ' ' (U+1680).
  *
  * @param character
  *   The character to validate.
@@ -666,11 +666,11 @@ extern "C" {
  *   Can be anything greater than 0.
  *
  * @return
- *   F_true if a UTF-8 whitespace.
- *   F_false if not a UTF-8 whitespace.
+ *   F_true if a UTF-8 white space.
+ *   F_false if not a UTF-8 white space.
  *
  *   F_complete_not_utf (with error bit set) if character is an incomplete UTF-8 sequence.
- *   F_maybe (with error bit) if this could be a whitespace but width is not long enough.
+ *   F_maybe (with error bit) if this could be a white space but width is not long enough.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
  *   F_utf_not (with error bit) if Unicode is an invalid Unicode character.
@@ -822,11 +822,11 @@ extern "C" {
  *   Can be anything greater than 0.
  *
  * @return
- *   F_true if a UTF-8 whitespace.
- *   F_false if not a UTF-8 whitespace.
+ *   F_true if a UTF-8 white space.
+ *   F_false if not a UTF-8 white space.
  *
  *   F_complete_not_utf (with error bit set) if character is an incomplete UTF-8 sequence.
- *   F_maybe (with error bit) if this could be a whitespace but width is not long enough.
+ *   F_maybe (with error bit) if this could be a white space but width is not long enough.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
  *   F_utf_not (with error bit) if Unicode is an invalid Unicode character.

@@ -44,9 +44,7 @@ extern "C" {
       if (!uint8s) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (uint8s->size - amount > 0) {
       return private_f_uint8s_adjust(uint8s->size - amount, uint8s);
@@ -62,9 +60,7 @@ extern "C" {
       if (!uint8s) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (uint8s->size - amount > 0) {
       return private_f_uint8s_resize(uint8s->size - amount, uint8s);
@@ -104,9 +100,7 @@ extern "C" {
       if (!uint8s) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (uint8s->used + amount > uint8s->size) {
       if (uint8s->used + amount > F_array_length_t_size_d) {
@@ -199,9 +193,7 @@ extern "C" {
       if (!uint8ss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (uint8ss->size - amount > 0) {
       return private_f_uint8ss_adjust(uint8ss->size - amount, uint8ss);
@@ -217,9 +209,7 @@ extern "C" {
       if (!uint8ss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (uint8ss->size - amount > 0) {
       return private_f_uint8ss_resize(uint8ss->size - amount, uint8ss);
@@ -259,9 +249,7 @@ extern "C" {
       if (!uint8ss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (uint8ss->used + amount > uint8ss->size) {
       if (uint8ss->used + amount > F_array_length_t_size_d) {

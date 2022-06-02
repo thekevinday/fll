@@ -10,7 +10,7 @@
 #
 
 Featureless Settings Specification: 000B - Simple List:
-  This might be similar to code:"fss-0008 (Embedded List)", except it is an code:"fss-0003 (Extended List)" with a (non-recursive) code:"fss-0002 (Basic List)" inside the Content.
+  This is similar to code:"fss-0008 (Embedded List)", except that it is an code:"fss-0003 (Extended List)" with a (non-recursive) code:"fss-0002 (Basic List)" inside the Content.
 
   See the file:"fss-0002.txt" and file:"fss-0003.txt" specification files for details on the syntax rules.
 

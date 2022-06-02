@@ -44,9 +44,7 @@ extern "C" {
       if (!int128s) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (int128s->size - amount > 0) {
       return private_f_int128s_adjust(int128s->size - amount, int128s);
@@ -62,9 +60,7 @@ extern "C" {
       if (!int128s) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (int128s->size - amount > 0) {
       return private_f_int128s_resize(int128s->size - amount, int128s);
@@ -104,9 +100,7 @@ extern "C" {
       if (!int128s) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (int128s->used + amount > int128s->size) {
       if (int128s->used + amount > F_array_length_t_size_d) {
@@ -199,9 +193,7 @@ extern "C" {
       if (!int128ss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (int128ss->size - amount > 0) {
       return private_f_int128ss_adjust(int128ss->size - amount, int128ss);
@@ -217,9 +209,7 @@ extern "C" {
       if (!int128ss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (int128ss->size - amount > 0) {
       return private_f_int128ss_resize(int128ss->size - amount, int128ss);
@@ -259,9 +249,7 @@ extern "C" {
       if (!int128ss) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!amount) {
-      return F_data_not;
-    }
+    if (!amount) return F_data_not;
 
     if (int128ss->used + amount > int128ss->size) {
       if (int128ss->used + amount > F_array_length_t_size_d) {
