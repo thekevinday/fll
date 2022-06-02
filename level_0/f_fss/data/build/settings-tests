@@ -1,0 +1,65 @@
+# fss-0001
+#
+# Builds a program that is links to the generated library and is executed to perform tests.
+#
+# Memory leaks in the test program can be checked for by running valgrind with this executable.
+#
+
+build_name test-f_fss
+
+version_major 0
+version_minor 5
+version_micro 9
+version_file major
+version_target major
+
+modes individual clang test coverage
+modes_default individual test
+
+build_compiler gcc
+build_compiler-clang clang
+build_indexer ar
+build_indexer_arguments rcs
+build_language c
+
+build_libraries -lc -lcmocka
+build_libraries-individual -lf_memory -lf_string -lf_type_array -lf_utf -lf_fss
+
+build_sources_program test-fss-apply_delimit.c test-fss-apply_delimit_range.c test-fss-count_lines.c test-fss-count_lines_range.c test-fss-fail_utf.c test-fss-fail_utf_to_false.c test-fss-is_combining.c test-fss-is_graph.c test-fss-is_space.c test-fss-is_zero_width.c test-fss-seek_to_eol.c test-fss-skip_past_delimit.c test-fss-skip_past_space.c
+
+build_sources_program test-fss-items_adjust.c test-fss-items_decimate_by.c test-fss-items_decrease_by.c test-fss-items_increase.c test-fss-items_increase_by.c test-fss-items_resize.c
+build_sources_program test-fss-named_adjust.c test-fss-named_decimate_by.c test-fss-named_decrease_by.c test-fss-named_increase.c test-fss-named_increase_by.c test-fss-named_resize.c
+build_sources_program test-fss-nameds_adjust.c test-fss-nameds_decimate_by.c test-fss-nameds_decrease_by.c test-fss-nameds_increase.c test-fss-nameds_increase_by.c test-fss-nameds_resize.c
+build_sources_program test-fss-nest_adjust.c test-fss-nest_decimate_by.c test-fss-nest_decrease_by.c test-fss-nest_increase.c test-fss-nest_increase_by.c test-fss-nest_resize.c
+build_sources_program test-fss-nests_adjust.c test-fss-nests_decimate_by.c test-fss-nests_decrease_by.c test-fss-nests_increase.c test-fss-nests_increase_by.c test-fss-nests_resize.c
+build_sources_program test-fss-set_adjust.c test-fss-set_decimate_by.c test-fss-set_decrease_by.c test-fss-set_increase.c test-fss-set_increase_by.c test-fss-set_resize.c
+build_sources_program test-fss-set_quote_adjust.c test-fss-set_quote_decimate_by.c test-fss-set_quote_decrease_by.c test-fss-set_quote_increase.c test-fss-set_quote_increase_by.c test-fss-set_quote_resize.c
+build_sources_program test-fss-set_quotes_adjust.c test-fss-set_quotes_decimate_by.c test-fss-set_quotes_decrease_by.c test-fss-set_quotes_increase.c test-fss-set_quotes_increase_by.c test-fss-set_quotes_resize.c
+build_sources_program test-fss-sets_adjust.c test-fss-sets_decimate_by.c test-fss-sets_decrease_by.c test-fss-sets_increase.c test-fss-sets_increase_by.c test-fss-sets_resize.c
+
+build_sources_program test-fss.c
+
+build_script no
+build_shared yes
+build_static no
+
+path_headers tests/unit/c
+path_sources tests/unit/c
+
+has_path_standard no
+preserve_path_headers yes
+
+search_exclusive yes
+search_shared yes
+search_static yes
+
+defines -Ibuild/includes
+defines_static -Lbuild/libraries/static
+defines_shared -Lbuild/libraries/shared
+
+flags -O2 -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-parentheses
+flags-clang -Wno-logical-op-parentheses
+flags-test -fstack-protector -Wall
+flags-coverage -O0 --coverage -fprofile-abs-path -fprofile-dir=build/coverage/
+
+flags_program -fPIE
