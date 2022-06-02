@@ -1342,6 +1342,7 @@ extern "C" {
     #define F_status_complete_not_utf_eof_s   "F_complete_not_utf_eof"
     #define F_status_complete_not_utf_eol_s   "F_complete_not_utf_eol"
     #define F_status_complete_not_utf_eos_s   "F_complete_not_utf_eos"
+    #define F_status_complete_not_utf_start_s "F_complete_not_utf_start"
     #define F_status_complete_not_utf_stop_s  "F_complete_not_utf_stop"
     #define F_status_none_block_s             "F_none_block"
     #define F_status_none_eoa_s               "F_none_eoa"
@@ -1349,6 +1350,7 @@ extern "C" {
     #define F_status_none_eol_s               "F_none_eol"
     #define F_status_none_eos_s               "F_none_eos"
     #define F_status_none_not_s               "F_none_not"
+    #define F_status_none_start_s             "F_none_start"
     #define F_status_none_stop_s              "F_none_stop"
     #define F_status_data_s                   "F_data"
     #define F_status_data_not_s               "F_data_not"
@@ -1357,6 +1359,7 @@ extern "C" {
     #define F_status_data_not_eof_s           "F_data_not_eof"
     #define F_status_data_not_eol_s           "F_data_not_eol"
     #define F_status_data_not_eos_s           "F_data_not_eos"
+    #define F_status_data_not_start_s         "F_data_not_start"
     #define F_status_data_not_stop_s          "F_data_not_stop"
 
     #define F_status_buffer_s_length                 8
@@ -1371,6 +1374,7 @@ extern "C" {
     #define F_status_complete_not_utf_eof_s_length   22
     #define F_status_complete_not_utf_eol_s_length   22
     #define F_status_complete_not_utf_eos_s_length   22
+    #define F_status_complete_not_utf_start_s_length 24
     #define F_status_complete_not_utf_stop_s_length  23
     #define F_status_none_block_s_length             12
     #define F_status_none_eoa_s_length               10
@@ -1378,6 +1382,7 @@ extern "C" {
     #define F_status_none_eol_s_length               10
     #define F_status_none_eos_s_length               10
     #define F_status_none_not_s_length               10
+    #define F_status_none_start_s_length             12
     #define F_status_none_stop_s_length              11
     #define F_status_data_s_length                   6
     #define F_status_data_not_s_length               10
@@ -1386,6 +1391,7 @@ extern "C" {
     #define F_status_data_not_eof_s_length           14
     #define F_status_data_not_eol_s_length           14
     #define F_status_data_not_eos_s_length           14
+    #define F_status_data_not_start_s_length         16
     #define F_status_data_not_stop_s_length          15
 
     extern const f_string_static_t f_status_buffer_s;
@@ -1400,6 +1406,7 @@ extern "C" {
     extern const f_string_static_t f_status_complete_not_utf_eof_s;
     extern const f_string_static_t f_status_complete_not_utf_eol_s;
     extern const f_string_static_t f_status_complete_not_utf_eos_s;
+    extern const f_string_static_t f_status_complete_not_utf_start_s;
     extern const f_string_static_t f_status_complete_not_utf_stop_s;
     extern const f_string_static_t f_status_none_block_s;
     extern const f_string_static_t f_status_none_eoa_s;
@@ -1407,6 +1414,7 @@ extern "C" {
     extern const f_string_static_t f_status_none_eol_s;
     extern const f_string_static_t f_status_none_eos_s;
     extern const f_string_static_t f_status_none_not_s;
+    extern const f_string_static_t f_status_none_start_s;
     extern const f_string_static_t f_status_none_stop_s;
     extern const f_string_static_t f_status_data_s;
     extern const f_string_static_t f_status_data_not_s;
@@ -1415,6 +1423,7 @@ extern "C" {
     extern const f_string_static_t f_status_data_not_eof_s;
     extern const f_string_static_t f_status_data_not_eol_s;
     extern const f_string_static_t f_status_data_not_eos_s;
+    extern const f_string_static_t f_status_data_not_start_s;
     extern const f_string_static_t f_status_data_not_stop_s;
   #endif // _di_f_status_buffer_
 
@@ -1426,6 +1435,7 @@ extern "C" {
     #define F_status_end_not_eof_s         "F_end_not_eof"
     #define F_status_end_not_eol_s         "F_end_not_eol"
     #define F_status_end_not_eos_s         "F_end_not_eos"
+    #define F_status_end_not_start_s       "F_end_not_start"
     #define F_status_end_not_stop_s        "F_end_not_stop"
     #define F_status_end_not_group_s       "F_end_not_group"
     #define F_status_end_not_group_block_s "F_end_not_group_block"
@@ -1433,6 +1443,7 @@ extern "C" {
     #define F_status_end_not_group_eof_s   "F_end_not_group_eof"
     #define F_status_end_not_group_eol_s   "F_end_not_group_eol"
     #define F_status_end_not_group_eos_s   "F_end_not_group_eos"
+    #define F_status_end_not_group_start_s "F_end_not_group_start"
     #define F_status_end_not_group_stop_s  "F_end_not_group_stop"
     #define F_status_end_not_nest_s        "F_end_not_nest"
     #define F_status_end_not_nest_block_s  "F_end_not_nest_block"
@@ -1440,6 +1451,7 @@ extern "C" {
     #define F_status_end_not_nest_eof_s    "F_end_not_nest_eof"
     #define F_status_end_not_nest_eol_s    "F_end_not_nest_eol"
     #define F_status_end_not_nest_eos_s    "F_end_not_nest_eos"
+    #define F_status_end_not_nest_start_s  "F_end_not_nest_start"
     #define F_status_end_not_nest_stop_s   "F_end_not_nest_stop"
 
     #define F_status_end_s_length                 5
@@ -1449,6 +1461,7 @@ extern "C" {
     #define F_status_end_not_eof_s_length         13
     #define F_status_end_not_eol_s_length         13
     #define F_status_end_not_eos_s_length         13
+    #define F_status_end_not_start_s_length       15
     #define F_status_end_not_stop_s_length        14
     #define F_status_end_not_group_s_length       15
     #define F_status_end_not_group_block_s_length 21
@@ -1456,6 +1469,7 @@ extern "C" {
     #define F_status_end_not_group_eof_s_length   19
     #define F_status_end_not_group_eol_s_length   19
     #define F_status_end_not_group_eos_s_length   19
+    #define F_status_end_not_group_start_s_length 21
     #define F_status_end_not_group_stop_s_length  20
     #define F_status_end_not_nest_s_length        14
     #define F_status_end_not_nest_block_s_length  20
@@ -1463,6 +1477,7 @@ extern "C" {
     #define F_status_end_not_nest_eof_s_length    18
     #define F_status_end_not_nest_eol_s_length    18
     #define F_status_end_not_nest_eos_s_length    18
+    #define F_status_end_not_nest_start_s_length  20
     #define F_status_end_not_nest_stop_s_length   19
 
     extern const f_string_static_t f_status_end_s;
@@ -1472,6 +1487,7 @@ extern "C" {
     extern const f_string_static_t f_status_end_not_eof_s;
     extern const f_string_static_t f_status_end_not_eol_s;
     extern const f_string_static_t f_status_end_not_eos_s;
+    extern const f_string_static_t f_status_end_not_start_s;
     extern const f_string_static_t f_status_end_not_stop_s;
     extern const f_string_static_t f_status_end_not_group_s;
     extern const f_string_static_t f_status_end_not_group_block_s;
@@ -1479,6 +1495,7 @@ extern "C" {
     extern const f_string_static_t f_status_end_not_group_eof_s;
     extern const f_string_static_t f_status_end_not_group_eol_s;
     extern const f_string_static_t f_status_end_not_group_eos_s;
+    extern const f_string_static_t f_status_end_not_group_start_s;
     extern const f_string_static_t f_status_end_not_group_stop_s;
     extern const f_string_static_t f_status_end_not_nest_s;
     extern const f_string_static_t f_status_end_not_nest_block_s;
@@ -1486,6 +1503,7 @@ extern "C" {
     extern const f_string_static_t f_status_end_not_nest_eof_s;
     extern const f_string_static_t f_status_end_not_nest_eol_s;
     extern const f_string_static_t f_status_end_not_nest_eos_s;
+    extern const f_string_static_t f_status_end_not_nest_start_s;
     extern const f_string_static_t f_status_end_not_nest_stop_s;
   #endif // _di_f_status_end_
 

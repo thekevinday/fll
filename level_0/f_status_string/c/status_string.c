@@ -465,6 +465,7 @@ extern "C" {
     const f_string_static_t f_status_complete_not_utf_eof_s = macro_f_string_static_t_initialize(F_status_complete_not_utf_eof_s, 0, F_status_complete_not_utf_eof_s_length);
     const f_string_static_t f_status_complete_not_utf_eol_s = macro_f_string_static_t_initialize(F_status_complete_not_utf_eol_s, 0, F_status_complete_not_utf_eol_s_length);
     const f_string_static_t f_status_complete_not_utf_eos_s = macro_f_string_static_t_initialize(F_status_complete_not_utf_eos_s, 0, F_status_complete_not_utf_eos_s_length);
+    const f_string_static_t f_status_complete_not_utf_start_s = macro_f_string_static_t_initialize(F_status_complete_not_utf_start_s, 0, F_status_complete_not_utf_start_s_length);
     const f_string_static_t f_status_complete_not_utf_stop_s = macro_f_string_static_t_initialize(F_status_complete_not_utf_stop_s, 0, F_status_complete_not_utf_stop_s_length);
     const f_string_static_t f_status_none_block_s = macro_f_string_static_t_initialize(F_status_none_block_s, 0, F_status_none_block_s_length);
     const f_string_static_t f_status_none_eoa_s = macro_f_string_static_t_initialize(F_status_none_eoa_s, 0, F_status_none_eoa_s_length);
@@ -472,6 +473,7 @@ extern "C" {
     const f_string_static_t f_status_none_eol_s = macro_f_string_static_t_initialize(F_status_none_eol_s, 0, F_status_none_eol_s_length);
     const f_string_static_t f_status_none_eos_s = macro_f_string_static_t_initialize(F_status_none_eos_s, 0, F_status_none_eos_s_length);
     const f_string_static_t f_status_none_not_s = macro_f_string_static_t_initialize(F_status_none_not_s, 0, F_status_none_not_s_length);
+    const f_string_static_t f_status_none_start_s = macro_f_string_static_t_initialize(F_status_none_start_s, 0, F_status_none_start_s_length);
     const f_string_static_t f_status_none_stop_s = macro_f_string_static_t_initialize(F_status_none_stop_s, 0, F_status_none_stop_s_length);
     const f_string_static_t f_status_data_s = macro_f_string_static_t_initialize(F_status_data_s, 0, F_status_data_s_length);
     const f_string_static_t f_status_data_not_s = macro_f_string_static_t_initialize(F_status_data_not_s, 0, F_status_data_not_s_length);
@@ -480,6 +482,7 @@ extern "C" {
     const f_string_static_t f_status_data_not_eof_s = macro_f_string_static_t_initialize(F_status_data_not_eof_s, 0, F_status_data_not_eof_s_length);
     const f_string_static_t f_status_data_not_eol_s = macro_f_string_static_t_initialize(F_status_data_not_eol_s, 0, F_status_data_not_eol_s_length);
     const f_string_static_t f_status_data_not_eos_s = macro_f_string_static_t_initialize(F_status_data_not_eos_s, 0, F_status_data_not_eos_s_length);
+    const f_string_static_t f_status_data_not_start_s = macro_f_string_static_t_initialize(F_status_data_not_start_s, 0, F_status_data_not_start_s_length);
     const f_string_static_t f_status_data_not_stop_s = macro_f_string_static_t_initialize(F_status_data_not_stop_s, 0, F_status_data_not_stop_s_length);
   #endif // _di_f_status_buffer_
 
@@ -491,6 +494,7 @@ extern "C" {
     const f_string_static_t f_status_end_not_eof_s = macro_f_string_static_t_initialize(F_status_end_not_eof_s, 0, F_status_end_not_eof_s_length);
     const f_string_static_t f_status_end_not_eol_s = macro_f_string_static_t_initialize(F_status_end_not_eol_s, 0, F_status_end_not_eol_s_length);
     const f_string_static_t f_status_end_not_eos_s = macro_f_string_static_t_initialize(F_status_end_not_eos_s, 0, F_status_end_not_eos_s_length);
+    const f_string_static_t f_status_end_not_start_s = macro_f_string_static_t_initialize(F_status_end_not_start_s, 0, F_status_end_not_start_s_length);
     const f_string_static_t f_status_end_not_stop_s = macro_f_string_static_t_initialize(F_status_end_not_stop_s, 0, F_status_end_not_stop_s_length);
     const f_string_static_t f_status_end_not_group_s = macro_f_string_static_t_initialize(F_status_end_not_group_s, 0, F_status_end_not_group_s_length);
     const f_string_static_t f_status_end_not_group_block_s = macro_f_string_static_t_initialize(F_status_end_not_group_block_s, 0, F_status_end_not_group_block_s_length);
@@ -498,6 +502,7 @@ extern "C" {
     const f_string_static_t f_status_end_not_group_eof_s = macro_f_string_static_t_initialize(F_status_end_not_group_eof_s, 0, F_status_end_not_group_eof_s_length);
     const f_string_static_t f_status_end_not_group_eol_s = macro_f_string_static_t_initialize(F_status_end_not_group_eol_s, 0, F_status_end_not_group_eol_s_length);
     const f_string_static_t f_status_end_not_group_eos_s = macro_f_string_static_t_initialize(F_status_end_not_group_eos_s, 0, F_status_end_not_group_eos_s_length);
+    const f_string_static_t f_status_end_not_group_start_s = macro_f_string_static_t_initialize(F_status_end_not_group_start_s, 0, F_status_end_not_group_start_s_length);
     const f_string_static_t f_status_end_not_group_stop_s = macro_f_string_static_t_initialize(F_status_end_not_group_stop_s, 0, F_status_end_not_group_stop_s_length);
     const f_string_static_t f_status_end_not_nest_s = macro_f_string_static_t_initialize(F_status_end_not_nest_s, 0, F_status_end_not_nest_s_length);
     const f_string_static_t f_status_end_not_nest_block_s = macro_f_string_static_t_initialize(F_status_end_not_nest_block_s, 0, F_status_end_not_nest_block_s_length);
@@ -505,6 +510,7 @@ extern "C" {
     const f_string_static_t f_status_end_not_nest_eof_s = macro_f_string_static_t_initialize(F_status_end_not_nest_eof_s, 0, F_status_end_not_nest_eof_s_length);
     const f_string_static_t f_status_end_not_nest_eol_s = macro_f_string_static_t_initialize(F_status_end_not_nest_eol_s, 0, F_status_end_not_nest_eol_s_length);
     const f_string_static_t f_status_end_not_nest_eos_s = macro_f_string_static_t_initialize(F_status_end_not_nest_eos_s, 0, F_status_end_not_nest_eos_s_length);
+    const f_string_static_t f_status_end_not_nest_start_s = macro_f_string_static_t_initialize(F_status_end_not_nest_start_s, 0, F_status_end_not_nest_start_s_length);
     const f_string_static_t f_status_end_not_nest_stop_s = macro_f_string_static_t_initialize(F_status_end_not_nest_stop_s, 0, F_status_end_not_nest_stop_s_length);
   #endif // _di_f_status_end_
 
@@ -2829,6 +2835,11 @@ extern "C" {
 
           break;
 
+        case F_complete_not_utf_start:
+          *name = f_status_complete_not_utf_start_s;
+
+          break;
+
         case F_complete_not_utf_stop:
           *name = f_status_complete_not_utf_stop_s;
 
@@ -2856,6 +2867,11 @@ extern "C" {
 
         case F_none_eos:
           *name = f_status_none_eos_s;
+
+          break;
+
+        case F_none_start:
+          *name = f_status_none_start_s;
 
           break;
 
@@ -2896,6 +2912,11 @@ extern "C" {
 
         case F_data_not_eos:
           *name = f_status_data_not_eos_s;
+
+          break;
+
+        case F_data_not_start:
+          *name = f_status_data_not_start_s;
 
           break;
 
@@ -2971,6 +2992,11 @@ extern "C" {
 
           break;
 
+        case F_end_not_group_start:
+          *name = f_status_end_not_group_start_s;
+
+          break;
+
         case F_end_not_group_stop:
           *name = f_status_end_not_group_stop_s;
 
@@ -3006,8 +3032,18 @@ extern "C" {
 
           break;
 
+        case F_end_not_nest_start:
+          *name = f_status_end_not_nest_start_s;
+
+          break;
+
         case F_end_not_nest_stop:
           *name = f_status_end_not_nest_stop_s;
+
+          break;
+
+        case F_end_not_start:
+          *name = f_status_end_not_start_s;
 
           break;
 
