@@ -1197,6 +1197,8 @@ extern "C" {
 
     f_array_length_t i = offset;
     f_array_length_t j = 0;
+    f_array_length_t k = 0;
+    f_array_length_t previous = 0;
     f_array_length_t at = 0;
     f_array_length_t at2 = 0;
     f_array_length_t in = 0;
@@ -1204,11 +1206,11 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    // Skip past leading whitespace.
+    // Skip past leading white space.
     while (i < stop) {
 
       if (!string[i]) {
-        ++i;
+        previous = i++;
 
         continue;
       }
@@ -1218,7 +1220,7 @@ extern "C" {
       } // while
 
       if (at < except_at.used && except_at.array[at] == i) {
-        ++i;
+        previous = i++;
 
         continue;
       }
@@ -1228,6 +1230,7 @@ extern "C" {
       } // while
 
       if (in < except_in.used && except_in.array[in].start <= i && except_in.array[in].stop >= i) {
+        previous = i;
         i = except_in.array[in].stop + 1;
 
         continue;
@@ -1243,8 +1246,25 @@ extern "C" {
         return status;
       }
 
-      if (status == F_false) break;
+      if (status == F_false) {
+        status = f_utf_is_combining(string + i, stop - i);
 
+        if (F_status_is_error(status)) {
+          if (F_status_set_fine(status) == F_maybe) {
+            return F_status_set_error(F_utf_not);
+          }
+
+          return status;
+        }
+
+        if (status == F_true) {
+          i = previous;
+        }
+
+        break;
+      }
+
+      previous = i;
       i += macro_f_utf_byte_width(string[i]);
     } // while
 
@@ -1255,7 +1275,7 @@ extern "C" {
       } // while
 
       if (at < except_at.used && except_at.array[at] == i) {
-        ++i;
+        previous = i++;
 
         continue;
       }
@@ -1266,6 +1286,7 @@ extern "C" {
         } // while
 
         if (in < except_in.used && except_in.array[in].start <= i && except_in.array[in].stop >= i) {
+          previous = i;
           i = except_in.array[in].stop + 1;
 
           continue;
@@ -1282,15 +1303,16 @@ extern "C" {
         return status;
       }
 
-      // Determine if this is an end of string whitespace that needs to be trimmed.
+      // Determine if this is an end of string white space that needs to be trimmed.
       if (status == F_true || !string[i]) {
+        previous = i;
         j = i + macro_f_utf_byte_width(string[i]);
         status = F_none;
 
         while (j < stop) {
 
           if (!string[j]) {
-            ++j;
+            previous = j++;
 
             continue;
           }
@@ -1300,7 +1322,7 @@ extern "C" {
           } // while
 
           if (at2 < except_at.used && except_at.array[at2] == j) {
-            ++j;
+            previous = j++;
 
             continue;
           }
@@ -1310,12 +1332,12 @@ extern "C" {
           } // while
 
           if (in2 < except_in.used && except_in.array[in2].start <= j && except_in.array[in2].stop >= j) {
+            previous = j;
             j = except_in.array[in2].stop + 1;
 
             continue;
           }
 
-          // @todo need to also check for combining character after this.
           status = f_utf_is_whitespace(string + j, stop - j);
 
           if (F_status_is_error(status)) {
@@ -1328,12 +1350,39 @@ extern "C" {
 
           if (status == F_false && string[j]) break;
 
+          // Search for the next non-NULL character and check if it is a combining character.
+          if (status == F_true) {
+            status = F_none;
+
+            for (k = j + macro_f_utf_byte_width(string[j]); k < stop; k += macro_f_utf_byte_width(string[k])) {
+
+              if (string[k]) {
+                status = f_utf_is_combining(string + k, stop - k);
+
+                break;
+              }
+            } // while
+
+            if (status == F_true) {
+              j = k;
+
+              break;
+            }
+
+            if (k >= stop) {
+              j = k;
+
+              break;
+            }
+          }
+
+          previous = j;
           j += macro_f_utf_byte_width(string[j]);
         } // while
 
         if (j >= stop) break;
 
-        // Print all processed whitespace (note: control characters are not whitespace so no checks for this are needed).
+        // Print all processed white space (note: control characters are not white space so no checks for this are needed).
         while (i < j) {
 
           if (!string[i]) {
@@ -1376,7 +1425,7 @@ extern "C" {
         if (i >= stop) break;
 
         if (!string[i]) {
-          ++i;
+          previous = i++;
 
           continue;
         }
@@ -1404,6 +1453,7 @@ extern "C" {
         return F_status_set_error(F_output);
       }
 
+      previous = i;
       i += macro_f_utf_byte_width(string[i]);
     } // while
 
@@ -1416,6 +1466,8 @@ extern "C" {
 
     f_array_length_t i = offset;
     f_array_length_t j = 0;
+    f_array_length_t k = 0;
+    f_array_length_t previous = 0;
     f_array_length_t at = 0;
     f_array_length_t at2 = 0;
     f_array_length_t in = 0;
@@ -1423,11 +1475,11 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    // Skip past leading whitespace.
+    // Skip past leading white space.
     while (i < stop) {
 
       if (!string[i]) {
-        ++i;
+        previous = i++;
 
         continue;
       }
@@ -1437,7 +1489,7 @@ extern "C" {
       } // while
 
       if (at < except_at.used && except_at.array[at] == i) {
-        ++i;
+        previous = i++;
 
         continue;
       }
@@ -1447,16 +1499,27 @@ extern "C" {
       } // while
 
       if (in < except_in.used && except_in.array[in].start <= i && except_in.array[in].stop >= i) {
+        previous = i;
         i = except_in.array[in].stop + 1;
 
         continue;
       }
 
       status = f_utf_is_whitespace(string + i, stop - i);
+      if (F_status_is_error(status)) break;
 
-      // Consider invalid data not-whitespace.
-      if (F_status_is_error(status) || status == F_false) break;
+      if (status == F_false) {
+        status = f_utf_is_combining(string + i, stop - i);
+        if (F_status_is_error(status)) break;
 
+        if (status == F_true) {
+          i = previous;
+        }
+
+        break;
+      }
+
+      previous = i;
       i += macro_f_utf_byte_width(string[i]);
     } // while
 
@@ -1467,7 +1530,7 @@ extern "C" {
       } // while
 
       if (at < except_at.used && except_at.array[at] == i) {
-        ++i;
+        previous = i++;
 
         continue;
       }
@@ -1478,6 +1541,7 @@ extern "C" {
         } // while
 
         if (in < except_in.used && except_in.array[in].start <= i && except_in.array[in].stop >= i) {
+          previous = i;
           i = except_in.array[in].stop + 1;
 
           continue;
@@ -1486,15 +1550,16 @@ extern "C" {
 
       status = f_utf_is_whitespace(string + i, stop - i);
 
-      // Determine if this is an end of string whitespace that needs to be trimmed.
+      // Determine if this is an end of string white space that needs to be trimmed.
       if (status == F_true || !string[i]) {
+        previous = i;
         j = i + macro_f_utf_byte_width(string[i]);
         status = F_none;
 
         while (j < stop) {
 
           if (!string[j]) {
-            ++j;
+            previous = j++;
 
             continue;
           }
@@ -1504,7 +1569,7 @@ extern "C" {
           } // while
 
           if (at2 < except_at.used && except_at.array[at2] == j) {
-            ++j;
+            previous = j++;
 
             continue;
           }
@@ -1514,22 +1579,50 @@ extern "C" {
           } // while
 
           if (in2 < except_in.used && except_in.array[in2].start <= j && except_in.array[in2].stop >= j) {
+            previous = j;
             j = except_in.array[in2].stop + 1;
 
             continue;
           }
 
-          // @todo need to also check for combining character after this.
           status = f_utf_is_whitespace(string + j, stop - j);
+          if (F_status_is_error(status)) break;
 
-          if (F_status_is_error(status) || (status == F_false && string[j])) break;
+          if (status == F_false && string[j]) break;
 
+          // Search for the next non-NULL character and check if it is a combining character.
+          if (status == F_true) {
+            status = F_none;
+
+            for (k = j + macro_f_utf_byte_width(string[j]); k < stop; k += macro_f_utf_byte_width(string[k])) {
+
+              if (string[k]) {
+                status = f_utf_is_combining(string + k, stop - k);
+
+                break;
+              }
+            } // while
+
+            if (status == F_true) {
+              j = k;
+
+              break;
+            }
+
+            if (k >= stop) {
+              j = k;
+
+              break;
+            }
+          }
+
+          previous = j;
           j += macro_f_utf_byte_width(string[j]);
         } // while
 
         if (j >= stop) break;
 
-        // Print all processed whitespace (note: control characters are not whitespace so no checks for this are needed).
+        // Print all processed white space (note: control characters are not white space so no checks for this are needed).
         while (i < j) {
 
           while (at < except_at.used && except_at.array[at] < i) {
@@ -1566,6 +1659,7 @@ extern "C" {
         return F_status_set_error(F_output);
       }
 
+      previous = i;
       i += macro_f_utf_byte_width(string[i]);
     } // while
 
@@ -1578,6 +1672,8 @@ extern "C" {
 
     f_array_length_t i = offset;
     f_array_length_t j = 0;
+    f_array_length_t k = 0;
+    f_array_length_t previous = 0;
     f_array_length_t at = 0;
     f_array_length_t at2 = 0;
     f_array_length_t in = 0;
@@ -1585,11 +1681,11 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    // Skip past leading whitespace.
+    // Skip past leading white space.
     while (i < stop) {
 
       if (!string[i]) {
-        ++i;
+        previous = i++;
 
         continue;
       }
@@ -1599,7 +1695,7 @@ extern "C" {
       } // while
 
       if (at < except_at.used && except_at.array[at] == i) {
-        ++i;
+        previous = i++;
 
         continue;
       }
@@ -1609,16 +1705,27 @@ extern "C" {
       } // while
 
       if (in < except_in.used && except_in.array[in].start <= i && except_in.array[in].stop >= i) {
+        previous = i;
         i = except_in.array[in].stop + 1;
 
         continue;
       }
 
       status = f_utf_is_whitespace(string + i, stop - i);
+      if (F_status_is_error(status)) break;
 
-      // Invalid UTF will not be treated as whitespace.
-      if (F_status_is_error(status) || status == F_false) break;
+      if (status == F_false) {
+        status = f_utf_is_combining(string + i, stop - i);
+        if (F_status_is_error(status)) break;
 
+        if (status == F_true) {
+          i = previous;
+        }
+
+        break;
+      }
+
+      previous = i;
       i += macro_f_utf_byte_width(string[i]);
     } // while
 
@@ -1629,7 +1736,7 @@ extern "C" {
       } // while
 
       if (at < except_at.used && except_at.array[at] == i) {
-        ++i;
+        previous = i++;
 
         continue;
       }
@@ -1648,15 +1755,16 @@ extern "C" {
 
       status = f_utf_is_whitespace(string + i, stop - i);
 
-      // Determine if this is an end of string whitespace that needs to be trimmed.
+      // Determine if this is an end of string white space that needs to be trimmed.
       if (status == F_true || !string[i]) {
+        previous = j;
         j = i + macro_f_utf_byte_width(string[i]);
         status = F_none;
 
         while (j < stop) {
 
           if (!string[j]) {
-            ++j;
+            previous = j++;
 
             continue;
           }
@@ -1666,7 +1774,7 @@ extern "C" {
           } // while
 
           if (at2 < except_at.used && except_at.array[at2] == j) {
-            ++j;
+            previous = j++;
 
             continue;
           }
@@ -1681,17 +1789,44 @@ extern "C" {
             continue;
           }
 
-          // @todo need to also check for combining character after this.
           status = f_utf_is_whitespace(string + j, stop - j);
+          if (F_status_is_error(status)) break;
 
-          if (F_status_is_error(status) || (status == F_false && string[i])) break;
+          if (status == F_false && string[j]) break;
 
+          // Search for the next non-NULL character and check if it is a combining character.
+          if (status == F_true) {
+            status = F_none;
+
+            for (k = j + macro_f_utf_byte_width(string[j]); k < stop; k += macro_f_utf_byte_width(string[k])) {
+
+              if (string[k]) {
+                status = f_utf_is_combining(string + k, stop - k);
+
+                break;
+              }
+            } // while
+
+            if (status == F_true) {
+              j = k;
+
+              break;
+            }
+
+            if (k >= stop) {
+              j = k;
+
+              break;
+            }
+          }
+
+          previous = j;
           j += macro_f_utf_byte_width(string[j]);
         } // while
 
         if (j >= stop || status == F_true) break;
 
-        // Print all processed whitespace (note: control characters are not whitespace so no checks for this are needed).
+        // Print all processed white space (note: control characters are not white space so no checks for this are needed).
         while (i < j) {
 
           while (at < except_at.used && except_at.array[at] < i) {
@@ -1769,6 +1904,8 @@ extern "C" {
           return F_status_set_error(F_output);
         }
 
+        previous = i;
+
         if (status == F_false) {
           i += macro_f_utf_byte_width(string[i]);
         }
@@ -1783,6 +1920,7 @@ extern "C" {
         return F_status_set_error(F_output);
       }
 
+      previous = i;
       i += macro_f_utf_byte_width(string[i]);
     } // while
 
@@ -1795,6 +1933,8 @@ extern "C" {
 
     f_array_length_t i = offset;
     f_array_length_t j = 0;
+    f_array_length_t k = 0;
+    f_array_length_t previous = 0;
     f_array_length_t at = 0;
     f_array_length_t at2 = 0;
     f_array_length_t in = 0;
@@ -1802,11 +1942,11 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    // Skip past leading whitespace.
+    // Skip past leading white space.
     while (i < stop) {
 
       if (!string[i]) {
-        ++i;
+        previous = i++;
 
         continue;
       }
@@ -1816,7 +1956,7 @@ extern "C" {
       } // while
 
       if (at < except_at.used && except_at.array[at] == i) {
-        ++i;
+        previous = i++;
 
         continue;
       }
@@ -1826,16 +1966,27 @@ extern "C" {
       } // while
 
       if (in < except_in.used && except_in.array[in].start <= i && except_in.array[in].stop >= i) {
+        previous = i;
         i = except_in.array[in].stop + 1;
 
         continue;
       }
 
       status = f_utf_is_whitespace(string + i, stop - i);
+      if (F_status_is_error(status)) break;
 
-      // Invalid UTF will not be treated as whitespace.
-      if (F_status_is_error(status) || status == F_false) break;
+      if (status == F_false) {
+        status = f_utf_is_combining(string + i, stop - i);
+        if (F_status_is_error(status)) break;
 
+        if (status == F_true) {
+          i = previous;
+        }
+
+        break;
+      }
+
+      previous = i;
       i += macro_f_utf_byte_width(string[i]);
     } // while
 
@@ -1846,7 +1997,7 @@ extern "C" {
       } // while
 
       if (at < except_at.used && except_at.array[at] == i) {
-        ++i;
+        previous = i++;
 
         continue;
       }
@@ -1857,6 +2008,7 @@ extern "C" {
         } // while
 
         if (in < except_in.used && except_in.array[in].start <= i && except_in.array[in].stop >= i) {
+          previous = i;
           i = except_in.array[in].stop + 1;
 
           continue;
@@ -1865,15 +2017,16 @@ extern "C" {
 
       status = f_utf_is_whitespace(string + i, stop - i);
 
-      // Determine if this is an end of string whitespace that needs to be trimmed.
+      // Determine if this is an end of string white space that needs to be trimmed.
       if (status == F_true || !string[i]) {
+        previous = i;
         j = i + macro_f_utf_byte_width(string[i]);
         status = F_none;
 
         while (j < stop) {
 
           if (!string[j]) {
-            ++j;
+            previous = j++;
 
             continue;
           }
@@ -1883,7 +2036,7 @@ extern "C" {
           } // while
 
           if (at2 < except_at.used && except_at.array[at2] == j) {
-            ++j;
+            previous = j++;
 
             continue;
           }
@@ -1893,20 +2046,50 @@ extern "C" {
           } // while
 
           if (in2 < except_in.used && except_in.array[in2].start <= j && except_in.array[in2].stop >= j) {
+            previous = i;
             j = except_in.array[in2].stop + 1;
 
             continue;
           }
 
-          // @todo need to also check for combining character after this.
           status = f_utf_is_whitespace(string + j, stop - j);
+          if (F_status_is_error(status)) break;
 
-          if (F_status_is_error(status) || (status == F_false && string[i])) break;
+          if (status == F_false && string[j]) break;
+
+          // Search for the next non-NULL character and check if it is a combining character.
+          if (status == F_true) {
+            status = F_none;
+
+            for (k = j + macro_f_utf_byte_width(string[j]); k < stop; k += macro_f_utf_byte_width(string[k])) {
+
+              if (string[k]) {
+                status = f_utf_is_combining(string + k, stop - k);
+
+                break;
+              }
+            } // while
+
+            if (status == F_true) {
+              j = k;
+
+              break;
+            }
+
+            if (k >= stop) {
+              j = k;
+
+              break;
+            }
+          }
+
+          previous = j;
+          j += macro_f_utf_byte_width(string[j]);
         } // while
 
         if (j == stop || status == F_true || !string[i]) break;
 
-        // Print all processed whitespace (note: control characters are not whitespace so no checks for this are needed).
+        // Print all processed white space (note: control characters are not white space so no checks for this are needed).
         while (i < j) {
 
           while (at < except_at.used && except_at.array[at] < i) {
@@ -1980,6 +2163,8 @@ extern "C" {
           return F_status_set_error(F_output);
         }
 
+        previous = i;
+
         if (status == F_false) {
           i += macro_f_utf_byte_width(string[i]);
         }
@@ -1994,6 +2179,7 @@ extern "C" {
         return F_status_set_error(F_output);
       }
 
+      previous = i;
       i += macro_f_utf_byte_width(string[i]);
     } // while
 
@@ -2006,14 +2192,16 @@ extern "C" {
 
     f_array_length_t i = 0;
     f_array_length_t j = 0;
+    f_array_length_t k = 0;
+    f_array_length_t previous = 0;
 
     f_status_t status = F_none;
 
-    // Skip past leading whitespace.
+    // Skip past leading white space.
     while (i < length) {
 
       if (!string[i]) {
-        ++i;
+        previous = i++;
 
         continue;
       }
@@ -2028,8 +2216,25 @@ extern "C" {
         return status;
       }
 
-      if (status == F_false) break;
+      if (status == F_false) {
+        status = f_utf_is_combining(string + i, length - i);
 
+        if (F_status_is_error(status)) {
+          if (F_status_set_fine(status) == F_maybe) {
+            return F_status_set_error(F_utf_not);
+          }
+
+          return status;
+        }
+
+        if (status == F_true) {
+          i = previous;
+        }
+
+        break;
+      }
+
+      previous = i;
       i += macro_f_utf_byte_width(string[i]);
     } // while
 
@@ -2045,20 +2250,20 @@ extern "C" {
         return status;
       }
 
-      // Determine if this is an end of string whitespace that needs to be trimmed.
+      // Determine if this is an end of string white space that needs to be trimmed.
       if (status == F_true || !string[i]) {
+        previous = i;
         j = i + macro_f_utf_byte_width(string[i]);
         status = F_none;
 
         while (j < length) {
 
           if (!string[j]) {
-            ++j;
+            previous = j++;
 
             continue;
           }
 
-          // @todo need to also check for combining character after this.
           status = f_utf_is_whitespace(string + j, length - j);
 
           if (F_status_is_error(status)) {
@@ -2069,12 +2274,41 @@ extern "C" {
             return status;
           }
 
-          if (status == F_false && string[i]) break;
+          if (status == F_false && string[j]) break;
+
+          // Search for the next non-NULL character and check if it is a combining character.
+          if (status == F_true) {
+            status = F_none;
+
+            for (k = j + macro_f_utf_byte_width(string[j]); k < length; k += macro_f_utf_byte_width(string[k])) {
+
+              if (string[k]) {
+                status = f_utf_is_combining(string + k, length - k);
+
+                break;
+              }
+            } // while
+
+            if (status == F_true) {
+              j = k;
+
+              break;
+            }
+
+            if (k >= length) {
+              j = k;
+
+              break;
+            }
+          }
+
+          previous = j;
+          j += macro_f_utf_byte_width(string[j]);
         } // while
 
-        if (j == length) break;
+        if (j >= length) break;
 
-        // Print all processed whitespace (note: control characters are not whitespace so no checks for this are needed).
+        // Print all processed white space (note: control characters are not white space so no checks for this are needed).
         while (i < j) {
 
           if (!string[i]) {
@@ -2097,7 +2331,7 @@ extern "C" {
         if (i >= length) break;
 
         if (!string[i]) {
-          ++i;
+          previous = i++;
 
           continue;
         }
@@ -2125,6 +2359,7 @@ extern "C" {
         return F_status_set_error(F_output);
       }
 
+      previous = i;
       i += macro_f_utf_byte_width(string[i]);
     } // while
 
@@ -2137,23 +2372,37 @@ extern "C" {
 
     f_array_length_t i = 0;
     f_array_length_t j = 0;
+    f_array_length_t k = 0;
+    f_array_length_t previous = 0;
 
     f_status_t status = F_none;
 
-    // Skip past leading whitespace.
+    // Skip past leading white space.
     while (i < length) {
 
       if (!string[i]) {
-        ++i;
+        previous = i++;
 
         continue;
       }
 
       status = f_utf_is_whitespace(string + i, length - i);
 
-      // Consider invalid data not-whitespace.
-      if (F_status_is_error(status) || status == F_false) break;
+      // Consider invalid data not-white space.
+      if (F_status_is_error(status)) break;
 
+      if (status == F_false) {
+        status = f_utf_is_combining(string + i, length - i);
+        if (F_status_is_error(status)) break;
+
+        if (status == F_true) {
+          i = previous;
+        }
+
+        break;
+      }
+
+      previous = i;
       i += macro_f_utf_byte_width(string[i]);
     } // while
 
@@ -2161,28 +2410,58 @@ extern "C" {
 
       status = f_utf_is_whitespace(string + i, length - i);
 
-      // Determine if this is an end of string whitespace that needs to be trimmed.
+      // Determine if this is an end of string white space that needs to be trimmed.
       if (status == F_true || !string[i]) {
+        previous = i;
         j = i + macro_f_utf_byte_width(string[i]);
         status = F_none;
 
         while (j < length) {
 
           if (!string[j]) {
-            ++j;
+            previous = j++;
 
             continue;
           }
 
-          // @todo need to also check for combining character after this.
           status = f_utf_is_whitespace(string + j, length - j);
+          if (F_status_is_error(status)) break;
 
-          if (F_status_is_error(status) || (status == F_false && string[i])) break;
+          if (status == F_false && string[j]) break;
+
+          // Search for the next non-NULL character and check if it is a combining character.
+          if (status == F_true) {
+            status = F_none;
+
+            for (k = j + macro_f_utf_byte_width(string[j]); k < length; k += macro_f_utf_byte_width(string[k])) {
+
+              if (string[k]) {
+                status = f_utf_is_combining(string + k, length - k);
+
+                break;
+              }
+            } // while
+
+            if (status == F_true) {
+              j = k;
+
+              break;
+            }
+
+            if (k >= length) {
+              j = k;
+
+              break;
+            }
+          }
+
+          previous = j;
+          j += macro_f_utf_byte_width(string[j]);
         } // while
 
-        if (j == length) break;
+        if (j >= length) break;
 
-        // Print all processed whitespace (note: control characters are not whitespace so no checks for this are needed).
+        // Print all processed white space (note: control characters are not white space so no checks for this are needed).
         while (i < j) {
 
           if (fwrite_unlocked(string + i, 1, macro_f_utf_byte_width(string[i]), stream) < macro_f_utf_byte_width(string[i])) {
@@ -2199,6 +2478,7 @@ extern "C" {
         return F_status_set_error(F_output);
       }
 
+      previous = i;
       i += macro_f_utf_byte_width(string[i]);
     } // while
 
@@ -2211,23 +2491,37 @@ extern "C" {
 
     f_array_length_t i = 0;
     f_array_length_t j = 0;
+    f_array_length_t k = 0;
+    f_array_length_t previous = 0;
 
     f_status_t status = F_none;
 
-    // Skip past leading whitespace.
+    // Skip past leading white space.
     while (i < length) {
 
       if (!string[i]) {
-        ++i;
+        previous = i++;
 
         continue;
       }
 
       status = f_utf_is_whitespace(string + i, length - i);
 
-      // Invalid UTF will not be treated as whitespace.
-      if (F_status_is_error(status) || status == F_false) break;
+      // Consider invalid data not-white space.
+      if (F_status_is_error(status)) break;
 
+      if (status == F_false) {
+        status = f_utf_is_combining(string + i, length - i);
+        if (F_status_is_error(status)) break;
+
+        if (status == F_true) {
+          i = previous;
+        }
+
+        break;
+      }
+
+      previous = i;
       i += macro_f_utf_byte_width(string[i]);
     } // while
 
@@ -2235,27 +2529,55 @@ extern "C" {
 
       status = f_utf_is_whitespace(string + i, length - i);
 
-      // Determine if this is an end of string whitespace that needs to be trimmed.
+      // Determine if this is an end of string white space that needs to be trimmed.
       if (status == F_true || !string[i]) {
+        previous = i;
         j = i + macro_f_utf_byte_width(string[i]);
         status = F_none;
 
         while (j < length) {
 
           if (!string[j]) {
-            ++j;
+            previous = j++;
 
             continue;
           }
 
           status = f_utf_is_whitespace(string + j, length - j);
 
-          if (F_status_is_error(status) || (status == F_false && string[i])) break;
+          if (F_status_is_error(status) || (status == F_false && string[j])) break;
+
+          // Search for the next non-NULL character and check if it is a combining character.
+          if (status == F_true) {
+            k = j + macro_f_utf_byte_width(string[j]);
+
+            if (k < length && string[k]) {
+              status = f_utf_is_combining(string + k, length - k);
+
+              if (status == F_true) {
+                j = k;
+
+                break;
+              }
+
+              // Reset status.
+              status = F_true;
+
+              if (k >= length) {
+                j = k;
+
+                break;
+              }
+            }
+          }
+
+          previous = j;
+          j += macro_f_utf_byte_width(string[j]);
         } // while
 
-        if (j == length || status == F_true) break;
+        if (j >= length || status == F_true) break;
 
-        // Print all processed whitespace (note: control characters are not whitespace so no checks for this are needed).
+        // Print all processed white space (note: control characters are not white space so no checks for this are needed).
         while (i < j) {
 
           if (i + macro_f_utf_byte_width(string[i]) >= length) {
@@ -2313,6 +2635,8 @@ extern "C" {
           return F_status_set_error(F_output);
         }
 
+        previous = i;
+
         if (status == F_false) {
           i += macro_f_utf_byte_width(string[i]);
         }
@@ -2327,6 +2651,7 @@ extern "C" {
         return F_status_set_error(F_output);
       }
 
+      previous = i;
       i += macro_f_utf_byte_width(string[i]);
     } // while
 
@@ -2339,23 +2664,35 @@ extern "C" {
 
     f_array_length_t i = 0;
     f_array_length_t j = 0;
+    f_array_length_t k = 0;
+    f_array_length_t previous = 0;
 
     f_status_t status = F_none;
 
-    // Skip past leading whitespace.
+    // Skip past leading white space.
     while (i < length) {
 
       if (!string[i]) {
-        ++i;
+        previous = i++;
 
         continue;
       }
 
       status = f_utf_is_whitespace(string + i, length - i);
-
-      // Invalid UTF will not be treated as whitespace.
       if (F_status_is_error(status) || status == F_false) break;
 
+      if (status == F_false) {
+        status = f_utf_is_combining(string + i, length - i);
+        if (F_status_is_error(status)) break;
+
+        if (status == F_true) {
+          i = previous;
+        }
+
+        break;
+      }
+
+      previous = i;
       i += macro_f_utf_byte_width(string[i]);
     } // while
 
@@ -2363,28 +2700,56 @@ extern "C" {
 
       status = f_utf_is_whitespace(string + i, length - i);
 
-      // Determine if this is an end of string whitespace that needs to be trimmed.
+      // Determine if this is an end of string white space that needs to be trimmed.
       if (status == F_true || !string[i]) {
+        previous = j;
         j = i + macro_f_utf_byte_width(string[i]);
         status = F_none;
 
         while (j < length) {
 
           if (!string[j]) {
-            ++j;
+            previous = j++;
 
             continue;
           }
 
-          // @todo need to also check for combining character after this.
           status = f_utf_is_whitespace(string + j, length - j);
+          if (F_status_is_error(status)) break;
 
-          if (F_status_is_error(status) || (status == F_false && string[i])) break;
+          if (status == F_false && string[j]) break;
+
+          // Search for the next non-NULL character and check if it is a combining character.
+          if (status == F_true) {
+            k = j + macro_f_utf_byte_width(string[j]);
+
+            if (k < length && string[k]) {
+              status = f_utf_is_combining(string + k, length - k);
+
+              if (status == F_true) {
+                j = k;
+
+                break;
+              }
+
+              // Reset status.
+              status = F_true;
+
+              if (k >= length) {
+                j = k;
+
+                break;
+              }
+            }
+          }
+
+          previous = j;
+          j += macro_f_utf_byte_width(string[j]);
         } // while
 
-        if (j == length || status == F_true || !string[i]) break;
+        if (j >= length || status == F_true || !string[j]) break;
 
-        // Print all processed whitespace (note: control characters are not whitespace so no checks for this are needed).
+        // Print all processed white space (note: control characters are not white space so no checks for this are needed).
         while (i < j) {
 
           if (i + macro_f_utf_byte_width(string[i]) >= length) {
@@ -2438,6 +2803,8 @@ extern "C" {
           return F_status_set_error(F_output);
         }
 
+        previous = i;
+
         if (status == F_false) {
           i += macro_f_utf_byte_width(string[i]);
         }
@@ -2452,6 +2819,7 @@ extern "C" {
         return F_status_set_error(F_output);
       }
 
+      previous = i;
       i += macro_f_utf_byte_width(string[i]);
     } // while
 
