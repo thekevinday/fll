@@ -1193,7 +1193,7 @@ extern "C" {
 #endif // !defined(_di_fl_print_format_) || !defined(_di_fl_print_format_convert_)
 
 #if !defined(_di_fl_print_trim_except_) || !defined(_di_fl_print_trim_except_dynamic_) || !defined(_di_fl_print_trim_except_dynamic_partial_) || !defined(_di_fl_print_trim_except_in_) || !defined(_di_fl_print_trim_except_in_dynamic_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_)
-  f_status_t private_fl_print_trim_except_in(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE * const stream) {
+  f_status_t private_fl_print_trim_except_in(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE * const stream) {
 
     f_array_length_t i = offset;
     f_array_length_t j = 0;
@@ -1205,7 +1205,7 @@ extern "C" {
     f_status_t status = F_none;
 
     // Skip past leading whitespace.
-    while (i < length) {
+    while (i < stop) {
 
       if (!string[i]) {
         ++i;
@@ -1233,7 +1233,7 @@ extern "C" {
         continue;
       }
 
-      status = f_utf_is_whitespace(string + i, (length - i) + 1);
+      status = f_utf_is_whitespace(string + i, stop - i);
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_maybe) {
@@ -1248,7 +1248,7 @@ extern "C" {
       i += macro_f_utf_byte_width(string[i]);
     } // while
 
-    while (i < length) {
+    while (i < stop) {
 
       while (at < except_at.used && except_at.array[at] < i) {
         ++at;
@@ -1272,7 +1272,7 @@ extern "C" {
         }
       }
 
-      status = f_utf_is_whitespace(string + i, (length - i) + 1);
+      status = f_utf_is_whitespace(string + i, stop - i);
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_maybe) {
@@ -1282,12 +1282,12 @@ extern "C" {
         return status;
       }
 
-      // determine if this is an end of string whitespace that needs to be trimmed.
+      // Determine if this is an end of string whitespace that needs to be trimmed.
       if (status == F_true || !string[i]) {
         j = i + macro_f_utf_byte_width(string[i]);
         status = F_none;
 
-        while (j < length) {
+        while (j < stop) {
 
           if (!string[j]) {
             ++j;
@@ -1315,7 +1315,8 @@ extern "C" {
             continue;
           }
 
-          status = f_utf_is_whitespace(string + j, (length - j) + 1);
+          // @todo need to also check for combining character after this.
+          status = f_utf_is_whitespace(string + j, stop - j);
 
           if (F_status_is_error(status)) {
             if (F_status_set_fine(status) == F_maybe) {
@@ -1325,12 +1326,14 @@ extern "C" {
             return status;
           }
 
-          if (status == F_false && string[i]) break;
+          if (status == F_false && string[j]) break;
+
+          j += macro_f_utf_byte_width(string[j]);
         } // while
 
-        if (j == length) break;
+        if (j >= stop) break;
 
-        // print all processed whitespace (note: control characters are not whitespace so no checks for this are needed).
+        // Print all processed whitespace (note: control characters are not whitespace so no checks for this are needed).
         while (i < j) {
 
           if (!string[i]) {
@@ -1359,7 +1362,7 @@ extern "C" {
             continue;
           }
 
-          if (i + macro_f_utf_byte_width(string[i]) >= length) {
+          if (macro_f_utf_byte_width(string[i]) > 1 && i + macro_f_utf_byte_width(string[i]) >= stop) {
             return F_status_set_error(F_complete_not_utf_stop);
           }
 
@@ -1370,7 +1373,7 @@ extern "C" {
           i += macro_f_utf_byte_width(string[i]);
         } // while
 
-        if (i >= length) break;
+        if (i >= stop) break;
 
         if (!string[i]) {
           ++i;
@@ -1379,7 +1382,7 @@ extern "C" {
         }
       }
 
-      status = f_utf_is_valid(string + i, length - i);
+      status = f_utf_is_valid(string + i, stop - i);
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_maybe) {
@@ -1389,7 +1392,7 @@ extern "C" {
         return status;
       }
 
-      if (i + macro_f_utf_byte_width(string[i]) >= length) {
+      if (i + macro_f_utf_byte_width(string[i]) >= stop) {
         return F_status_set_error(F_complete_not_utf_stop);
       }
 
@@ -1409,7 +1412,7 @@ extern "C" {
 #endif // !defined(_di_fl_print_trim_except_) || !defined(_di_fl_print_trim_except_dynamic_) || !defined(_di_fl_print_trim_except_dynamic_partial_) || !defined(_di_fl_print_trim_except_in_) || !defined(_di_fl_print_trim_except_in_dynamic_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_)
 
 #if !defined(_di_fl_print_trim_except_raw_) || !defined(_di_fl_print_trim_except_dynamic_raw_) || !defined(_di_fl_print_trim_except_dynamic_partial_raw_) || !defined(_di_fl_print_trim_except_in_raw_) || !defined(_di_fl_print_trim_except_in_dynamic_raw_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_raw_)
-  f_status_t private_fl_print_trim_except_in_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE * const stream) {
+  f_status_t private_fl_print_trim_except_in_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE * const stream) {
 
     f_array_length_t i = offset;
     f_array_length_t j = 0;
@@ -1421,7 +1424,7 @@ extern "C" {
     f_status_t status = F_none;
 
     // Skip past leading whitespace.
-    while (i < length) {
+    while (i < stop) {
 
       if (!string[i]) {
         ++i;
@@ -1449,7 +1452,7 @@ extern "C" {
         continue;
       }
 
-      status = f_utf_is_whitespace(string + i, (length - i) + 1);
+      status = f_utf_is_whitespace(string + i, stop - i);
 
       // Consider invalid data not-whitespace.
       if (F_status_is_error(status) || status == F_false) break;
@@ -1457,7 +1460,7 @@ extern "C" {
       i += macro_f_utf_byte_width(string[i]);
     } // while
 
-    while (i < length) {
+    while (i < stop) {
 
       while (at < except_at.used && except_at.array[at] < i) {
         ++at;
@@ -1481,14 +1484,14 @@ extern "C" {
         }
       }
 
-      status = f_utf_is_whitespace(string + i, (length - i) + 1);
+      status = f_utf_is_whitespace(string + i, stop - i);
 
       // Determine if this is an end of string whitespace that needs to be trimmed.
       if (status == F_true || !string[i]) {
         j = i + macro_f_utf_byte_width(string[i]);
         status = F_none;
 
-        while (j < length) {
+        while (j < stop) {
 
           if (!string[j]) {
             ++j;
@@ -1516,14 +1519,17 @@ extern "C" {
             continue;
           }
 
-          status = f_utf_is_whitespace(string + j, (length - j) + 1);
+          // @todo need to also check for combining character after this.
+          status = f_utf_is_whitespace(string + j, stop - j);
 
-          if (F_status_is_error(status) || (status == F_false && string[i])) break;
+          if (F_status_is_error(status) || (status == F_false && string[j])) break;
+
+          j += macro_f_utf_byte_width(string[j]);
         } // while
 
-        if (j == length) break;
+        if (j >= stop) break;
 
-        // print all processed whitespace (note: control characters are not whitespace so no checks for this are needed).
+        // Print all processed whitespace (note: control characters are not whitespace so no checks for this are needed).
         while (i < j) {
 
           while (at < except_at.used && except_at.array[at] < i) {
@@ -1553,7 +1559,7 @@ extern "C" {
           i += macro_f_utf_byte_width(string[i]);
         } // while
 
-        if (i >= length) break;
+        if (i >= stop) break;
       }
 
       if (fwrite_unlocked(string + i, 1, macro_f_utf_byte_width(string[i]), stream) < macro_f_utf_byte_width(string[i])) {
@@ -1568,7 +1574,7 @@ extern "C" {
 #endif // !defined(_di_fl_print_trim_except_raw_) || !defined(_di_fl_print_trim_except_dynamic_raw_) || !defined(_di_fl_print_trim_except_dynamic_partial_raw_) || !defined(_di_fl_print_trim_except_in_raw_) || !defined(_di_fl_print_trim_except_in_dynamic_raw_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_raw_)
 
 #if !defined(_di_fl_print_trim_except_raw_safely_) || !defined(_di_fl_print_trim_except_dynamic_raw_safely_) || !defined(_di_fl_print_trim_except_dynamic_partial_raw_safely_) || !defined(_di_fl_print_trim_except_in_raw_safely_) || !defined(_di_fl_print_trim_except_in_dynamic_raw_safely_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_raw_safely_)
-  f_status_t private_fl_print_trim_except_in_raw_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE * const stream) {
+  f_status_t private_fl_print_trim_except_in_raw_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE * const stream) {
 
     f_array_length_t i = offset;
     f_array_length_t j = 0;
@@ -1580,7 +1586,7 @@ extern "C" {
     f_status_t status = F_none;
 
     // Skip past leading whitespace.
-    while (i < length) {
+    while (i < stop) {
 
       if (!string[i]) {
         ++i;
@@ -1608,7 +1614,7 @@ extern "C" {
         continue;
       }
 
-      status = f_utf_is_whitespace(string + i, (length - i) + 1);
+      status = f_utf_is_whitespace(string + i, stop - i);
 
       // Invalid UTF will not be treated as whitespace.
       if (F_status_is_error(status) || status == F_false) break;
@@ -1616,7 +1622,7 @@ extern "C" {
       i += macro_f_utf_byte_width(string[i]);
     } // while
 
-    while (i < length) {
+    while (i < stop) {
 
       while (at < except_at.used && except_at.array[at] < i) {
         ++at;
@@ -1640,14 +1646,14 @@ extern "C" {
         }
       }
 
-      status = f_utf_is_whitespace(string + i, (length - i) + 1);
+      status = f_utf_is_whitespace(string + i, stop - i);
 
       // Determine if this is an end of string whitespace that needs to be trimmed.
       if (status == F_true || !string[i]) {
         j = i + macro_f_utf_byte_width(string[i]);
         status = F_none;
 
-        while (j < length) {
+        while (j < stop) {
 
           if (!string[j]) {
             ++j;
@@ -1675,12 +1681,15 @@ extern "C" {
             continue;
           }
 
-          status = f_utf_is_whitespace(string + j, (length - j) + 1);
+          // @todo need to also check for combining character after this.
+          status = f_utf_is_whitespace(string + j, stop - j);
 
           if (F_status_is_error(status) || (status == F_false && string[i])) break;
+
+          j += macro_f_utf_byte_width(string[j]);
         } // while
 
-        if (j == length || status == F_true) break;
+        if (j >= stop || status == F_true) break;
 
         // Print all processed whitespace (note: control characters are not whitespace so no checks for this are needed).
         while (i < j) {
@@ -1705,12 +1714,12 @@ extern "C" {
             continue;
           }
 
-          if (i + macro_f_utf_byte_width(string[i]) >= length) {
+          if (i + macro_f_utf_byte_width(string[i]) >= stop) {
             if (fwrite_unlocked(f_print_sequence_unknown_s.string, 1, f_print_sequence_unknown_s.used, stream) < f_print_sequence_unknown_s.used) {
               return F_status_set_error(F_output);
             }
 
-            i = length;
+            i = stop;
             status = F_none;
 
             break;
@@ -1726,7 +1735,7 @@ extern "C" {
             continue;
           }
 
-          status = f_utf_is_valid(string + i, length - i);
+          status = f_utf_is_valid(string + i, stop - i);
 
           if (status == F_true) {
             if (fwrite_unlocked(string + i, 1, macro_f_utf_byte_width(string[i]), stream) < macro_f_utf_byte_width(string[i])) {
@@ -1742,10 +1751,10 @@ extern "C" {
           i += macro_f_utf_byte_width(string[i]);
         } // while
 
-        if (i >= length) break;
+        if (i >= stop) break;
       }
 
-      status = f_utf_is_valid(string + i, length - i);
+      status = f_utf_is_valid(string + i, stop - i);
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_maybe) {
@@ -1755,7 +1764,7 @@ extern "C" {
         return status;
       }
 
-      if (status == F_false || i + macro_f_utf_byte_width(string[i]) >= length) {
+      if (status == F_false || i + macro_f_utf_byte_width(string[i]) >= stop) {
         if (fwrite_unlocked(f_print_sequence_unknown_s.string, 1, f_print_sequence_unknown_s.used, stream) < f_print_sequence_unknown_s.used) {
           return F_status_set_error(F_output);
         }
@@ -1764,7 +1773,7 @@ extern "C" {
           i += macro_f_utf_byte_width(string[i]);
         }
         else {
-          i = length;
+          i = stop;
         }
 
         continue;
@@ -1782,7 +1791,7 @@ extern "C" {
 #endif // !defined(_di_fl_print_trim_except_raw_safely_) || !defined(_di_fl_print_trim_except_dynamic_raw_safely_) || !defined(_di_fl_print_trim_except_dynamic_partial_raw_safely_) || !defined(_di_fl_print_trim_except_in_raw_safely_) || !defined(_di_fl_print_trim_except_in_dynamic_raw_safely_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_raw_safely_)
 
 #if !defined(_di_fl_print_trim_except_safely_) || !defined(_di_fl_print_trim_except_dynamic_safely_) || !defined(_di_fl_print_trim_except_dynamic_partial_safely_) || !defined(_di_fl_print_trim_except_in_safely_) || !defined(_di_fl_print_trim_except_in_dynamic_safely_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_safely_)
-  f_status_t private_fl_print_trim_except_in_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE * const stream) {
+  f_status_t private_fl_print_trim_except_in_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE * const stream) {
 
     f_array_length_t i = offset;
     f_array_length_t j = 0;
@@ -1794,7 +1803,7 @@ extern "C" {
     f_status_t status = F_none;
 
     // Skip past leading whitespace.
-    while (i < length) {
+    while (i < stop) {
 
       if (!string[i]) {
         ++i;
@@ -1822,7 +1831,7 @@ extern "C" {
         continue;
       }
 
-      status = f_utf_is_whitespace(string + i, (length - i) + 1);
+      status = f_utf_is_whitespace(string + i, stop - i);
 
       // Invalid UTF will not be treated as whitespace.
       if (F_status_is_error(status) || status == F_false) break;
@@ -1830,7 +1839,7 @@ extern "C" {
       i += macro_f_utf_byte_width(string[i]);
     } // while
 
-    while (i < length) {
+    while (i < stop) {
 
       while (at < except_at.used && except_at.array[at] < i) {
         ++at;
@@ -1854,14 +1863,14 @@ extern "C" {
         }
       }
 
-      status = f_utf_is_whitespace(string + i, (length - i) + 1);
+      status = f_utf_is_whitespace(string + i, stop - i);
 
       // Determine if this is an end of string whitespace that needs to be trimmed.
       if (status == F_true || !string[i]) {
         j = i + macro_f_utf_byte_width(string[i]);
         status = F_none;
 
-        while (j < length) {
+        while (j < stop) {
 
           if (!string[j]) {
             ++j;
@@ -1889,12 +1898,13 @@ extern "C" {
             continue;
           }
 
-          status = f_utf_is_whitespace(string + j, (length - j) + 1);
+          // @todo need to also check for combining character after this.
+          status = f_utf_is_whitespace(string + j, stop - j);
 
           if (F_status_is_error(status) || (status == F_false && string[i])) break;
         } // while
 
-        if (j == length || status == F_true || !string[i]) break;
+        if (j == stop || status == F_true || !string[i]) break;
 
         // Print all processed whitespace (note: control characters are not whitespace so no checks for this are needed).
         while (i < j) {
@@ -1919,12 +1929,12 @@ extern "C" {
             continue;
           }
 
-          if (i + macro_f_utf_byte_width(string[i]) >= length) {
+          if (i + macro_f_utf_byte_width(string[i]) >= stop) {
             if (fwrite_unlocked(f_print_sequence_unknown_s.string, 1, f_print_sequence_unknown_s.used, stream) < f_print_sequence_unknown_s.used) {
               return F_status_set_error(F_output);
             }
 
-            i = length;
+            i = stop;
             status = F_none;
 
             break;
@@ -1936,7 +1946,7 @@ extern "C" {
             continue;
           }
 
-          status = f_utf_is_valid(string + i, length - i);
+          status = f_utf_is_valid(string + i, stop - i);
 
           if (status == F_true) {
             if (fwrite_unlocked(string + i, 1, macro_f_utf_byte_width(string[i]), stream) < macro_f_utf_byte_width(string[i])) {
@@ -1952,10 +1962,10 @@ extern "C" {
           i += macro_f_utf_byte_width(string[i]);
         } // while
 
-        if (i >= length) break;
+        if (i >= stop) break;
       }
 
-      status = f_utf_is_valid(string + i, length - i);
+      status = f_utf_is_valid(string + i, stop - i);
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_maybe) {
@@ -1965,7 +1975,7 @@ extern "C" {
         return status;
       }
 
-      if (status == F_false || i + macro_f_utf_byte_width(string[i]) >= length) {
+      if (status == F_false || i + macro_f_utf_byte_width(string[i]) >= stop) {
         if (fwrite_unlocked(f_print_sequence_unknown_s.string, 1, f_print_sequence_unknown_s.used, stream) < f_print_sequence_unknown_s.used) {
           return F_status_set_error(F_output);
         }
@@ -1974,7 +1984,7 @@ extern "C" {
           i += macro_f_utf_byte_width(string[i]);
         }
         else {
-          i = length;
+          i = stop;
         }
 
         continue;
@@ -2008,7 +2018,7 @@ extern "C" {
         continue;
       }
 
-      status = f_utf_is_whitespace(string + i, (length - i) + 1);
+      status = f_utf_is_whitespace(string + i, length - i);
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_maybe) {
@@ -2025,7 +2035,7 @@ extern "C" {
 
     while (i < length) {
 
-      status = f_utf_is_whitespace(string + i, (length - i) + 1);
+      status = f_utf_is_whitespace(string + i, length - i);
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_maybe) {
@@ -2048,7 +2058,8 @@ extern "C" {
             continue;
           }
 
-          status = f_utf_is_whitespace(string + j, (length - j) + 1);
+          // @todo need to also check for combining character after this.
+          status = f_utf_is_whitespace(string + j, length - j);
 
           if (F_status_is_error(status)) {
             if (F_status_set_fine(status) == F_maybe) {
@@ -2138,7 +2149,7 @@ extern "C" {
         continue;
       }
 
-      status = f_utf_is_whitespace(string + i, (length - i) + 1);
+      status = f_utf_is_whitespace(string + i, length - i);
 
       // Consider invalid data not-whitespace.
       if (F_status_is_error(status) || status == F_false) break;
@@ -2148,7 +2159,7 @@ extern "C" {
 
     while (i < length) {
 
-      status = f_utf_is_whitespace(string + i, (length - i) + 1);
+      status = f_utf_is_whitespace(string + i, length - i);
 
       // Determine if this is an end of string whitespace that needs to be trimmed.
       if (status == F_true || !string[i]) {
@@ -2163,7 +2174,8 @@ extern "C" {
             continue;
           }
 
-          status = f_utf_is_whitespace(string + j, (length - j) + 1);
+          // @todo need to also check for combining character after this.
+          status = f_utf_is_whitespace(string + j, length - j);
 
           if (F_status_is_error(status) || (status == F_false && string[i])) break;
         } // while
@@ -2211,7 +2223,7 @@ extern "C" {
         continue;
       }
 
-      status = f_utf_is_whitespace(string + i, (length - i) + 1);
+      status = f_utf_is_whitespace(string + i, length - i);
 
       // Invalid UTF will not be treated as whitespace.
       if (F_status_is_error(status) || status == F_false) break;
@@ -2221,7 +2233,7 @@ extern "C" {
 
     while (i < length) {
 
-      status = f_utf_is_whitespace(string + i, (length - i) + 1);
+      status = f_utf_is_whitespace(string + i, length - i);
 
       // Determine if this is an end of string whitespace that needs to be trimmed.
       if (status == F_true || !string[i]) {
@@ -2236,7 +2248,7 @@ extern "C" {
             continue;
           }
 
-          status = f_utf_is_whitespace(string + j, (length - j) + 1);
+          status = f_utf_is_whitespace(string + j, length - j);
 
           if (F_status_is_error(status) || (status == F_false && string[i])) break;
         } // while
@@ -2339,7 +2351,7 @@ extern "C" {
         continue;
       }
 
-      status = f_utf_is_whitespace(string + i, (length - i) + 1);
+      status = f_utf_is_whitespace(string + i, length - i);
 
       // Invalid UTF will not be treated as whitespace.
       if (F_status_is_error(status) || status == F_false) break;
@@ -2349,7 +2361,7 @@ extern "C" {
 
     while (i < length) {
 
-      status = f_utf_is_whitespace(string + i, (length - i) + 1);
+      status = f_utf_is_whitespace(string + i, length - i);
 
       // Determine if this is an end of string whitespace that needs to be trimmed.
       if (status == F_true || !string[i]) {
@@ -2364,7 +2376,8 @@ extern "C" {
             continue;
           }
 
-          status = f_utf_is_whitespace(string + j, (length - j) + 1);
+          // @todo need to also check for combining character after this.
+          status = f_utf_is_whitespace(string + j, length - j);
 
           if (F_status_is_error(status) || (status == F_false && string[i])) break;
         } // while
