@@ -1411,7 +1411,7 @@ extern "C" {
             continue;
           }
 
-          if (macro_f_utf_byte_width(string[i]) > 1 && i + macro_f_utf_byte_width(string[i]) >= stop) {
+          if (i + macro_f_utf_byte_width(string[i]) > stop) {
             return F_status_set_error(F_complete_not_utf_stop);
           }
 
@@ -1441,7 +1441,7 @@ extern "C" {
         return status;
       }
 
-      if (i + macro_f_utf_byte_width(string[i]) >= stop) {
+      if (i + macro_f_utf_byte_width(string[i]) > stop) {
         return F_status_set_error(F_complete_not_utf_stop);
       }
 
@@ -1849,7 +1849,7 @@ extern "C" {
             continue;
           }
 
-          if (i + macro_f_utf_byte_width(string[i]) >= stop) {
+          if (i + macro_f_utf_byte_width(string[i]) > stop) {
             if (fwrite_unlocked(f_print_sequence_unknown_s.string, 1, f_print_sequence_unknown_s.used, stream) < f_print_sequence_unknown_s.used) {
               return F_status_set_error(F_output);
             }
@@ -1899,7 +1899,7 @@ extern "C" {
         return status;
       }
 
-      if (status == F_false || i + macro_f_utf_byte_width(string[i]) >= stop) {
+      if (status == F_false || i + macro_f_utf_byte_width(string[i]) > stop) {
         if (fwrite_unlocked(f_print_sequence_unknown_s.string, 1, f_print_sequence_unknown_s.used, stream) < f_print_sequence_unknown_s.used) {
           return F_status_set_error(F_output);
         }
@@ -2112,7 +2112,7 @@ extern "C" {
             continue;
           }
 
-          if (i + macro_f_utf_byte_width(string[i]) >= stop) {
+          if (i + macro_f_utf_byte_width(string[i]) > stop) {
             if (fwrite_unlocked(f_print_sequence_unknown_s.string, 1, f_print_sequence_unknown_s.used, stream) < f_print_sequence_unknown_s.used) {
               return F_status_set_error(F_output);
             }
@@ -2158,7 +2158,7 @@ extern "C" {
         return status;
       }
 
-      if (status == F_false || i + macro_f_utf_byte_width(string[i]) >= stop) {
+      if (status == F_false || i + macro_f_utf_byte_width(string[i]) > stop) {
         if (fwrite_unlocked(f_print_sequence_unknown_s.string, 1, f_print_sequence_unknown_s.used, stream) < f_print_sequence_unknown_s.used) {
           return F_status_set_error(F_output);
         }
@@ -2317,7 +2317,7 @@ extern "C" {
             continue;
           }
 
-          if (i + macro_f_utf_byte_width(string[i]) >= length) {
+          if (i + macro_f_utf_byte_width(string[i]) > length) {
             return F_status_set_error(F_complete_not_utf_stop);
           }
 
@@ -2347,7 +2347,7 @@ extern "C" {
         return status;
       }
 
-      if (i + macro_f_utf_byte_width(string[i]) >= length) {
+      if (i + macro_f_utf_byte_width(string[i]) > length) {
         return F_status_set_error(F_complete_not_utf_stop);
       }
 
@@ -2544,8 +2544,9 @@ extern "C" {
           }
 
           status = f_utf_is_whitespace(string + j, length - j);
+          if (F_status_is_error(status)) break;
 
-          if (F_status_is_error(status) || (status == F_false && string[j])) break;
+          if (status == F_false && string[j]) break;
 
           // Search for the next non-NULL character and check if it is a combining character.
           if (status == F_true) {
@@ -2580,7 +2581,7 @@ extern "C" {
         // Print all processed white space (note: control characters are not white space so no checks for this are needed).
         while (i < j) {
 
-          if (i + macro_f_utf_byte_width(string[i]) >= length) {
+          if (i + macro_f_utf_byte_width(string[i]) > length) {
             if (fwrite_unlocked(f_print_sequence_unknown_s.string, 1, f_print_sequence_unknown_s.used, stream) < f_print_sequence_unknown_s.used) {
               return F_status_set_error(F_output);
             }
@@ -2630,7 +2631,7 @@ extern "C" {
         return status;
       }
 
-      if (status == F_false || i + macro_f_utf_byte_width(string[i]) >= length) {
+      if (status == F_false || i + macro_f_utf_byte_width(string[i]) > length) {
         if (fwrite_unlocked(f_print_sequence_unknown_s.string, 1, f_print_sequence_unknown_s.used, stream) < f_print_sequence_unknown_s.used) {
           return F_status_set_error(F_output);
         }
@@ -2752,7 +2753,7 @@ extern "C" {
         // Print all processed white space (note: control characters are not white space so no checks for this are needed).
         while (i < j) {
 
-          if (i + macro_f_utf_byte_width(string[i]) >= length) {
+          if (i + macro_f_utf_byte_width(string[i]) > length) {
             if (fwrite_unlocked(f_print_sequence_unknown_s.string, 1, f_print_sequence_unknown_s.used, stream) < f_print_sequence_unknown_s.used) {
               return F_status_set_error(F_output);
             }
@@ -2798,7 +2799,7 @@ extern "C" {
         return status;
       }
 
-      if (status == F_false || i + macro_f_utf_byte_width(string[i]) >= length) {
+      if (status == F_false || i + macro_f_utf_byte_width(string[i]) > length) {
         if (fwrite_unlocked(f_print_sequence_unknown_s.string, 1, f_print_sequence_unknown_s.used, stream) < f_print_sequence_unknown_s.used) {
           return F_status_set_error(F_output);
         }
