@@ -111,8 +111,10 @@ extern "C" {
  *
  *   F_utf_not (with error bit) if a character is not valid UTF-8.
  *
- *   Errors (with error bit) from: f_utf_is_whitespace().
+ *   F_parameter (with error bit) from: f_utf_is_combining().
+ *   F_parameter (with error bit) from: f_utf_is_whitespace().
  *
+ * @see f_utf_is_combining()
  * @see f_utf_is_whitespace()
  * @see fl_string_compare_except_trim()
  * @see fl_string_dynamic_compare_except_trim()
@@ -146,8 +148,10 @@ extern "C" {
  *
  *   F_utf_not (with error bit) if a character is not valid UTF-8.
  *
- *   Errors (with error bit) from: f_utf_is_whitespace().
+ *   F_parameter (with error bit) from: f_utf_is_combining().
+ *   F_parameter (with error bit) from: f_utf_is_whitespace().
  *
+ * @see f_utf_is_combining()
  * @see f_utf_is_whitespace()
  * @see fl_string_compare_trim()
  * @see fl_string_dynamic_compare_trim()
@@ -162,7 +166,7 @@ extern "C" {
  *
  * Intended to be shared to each of the different implementation variations.
  *
- * @param source
+ * @param string
  *   The string to rip from.
  * @param start
  *   Inclusive start point of string to rip.
@@ -177,15 +181,18 @@ extern "C" {
  *
  *   F_utf_not (with error bit) if a character is not valid UTF-8.
  *
- *   Errors (with error bit) from: f_utf_is_whitespace().
+ *   F_parameter (with error bit) from: f_utf_is_combining().
+ *   F_parameter (with error bit) from: f_utf_is_whitespace().
  *
+ * @see f_utf_is_combining()
+ * @see f_utf_is_whitespace()
  * @see fl_string_rip()
  * @see fl_string_rip_nulless()
  * @see fl_string_dynamic_partial_rip()
  * @see fl_string_dynamic_partial_rip_nulless()
  */
 #if !defined(_di_fl_string_rip_) || !defined(_di_fl_string_dynamic_partial_rip_) || !defined(_di_fl_string_rip_nulless_) || !defined(_di_fl_string_dynamic_partial_rip_nulless_)
-  extern f_status_t private_fl_string_rip_find_range(const f_string_t source, f_array_length_t * const start, f_array_length_t * const stop) F_attribute_visibility_internal_d;
+  extern f_status_t private_fl_string_rip_find_range(const f_string_t string, f_array_length_t * const start, f_array_length_t * const stop) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fl_string_rip_) || !defined(_di_fl_string_dynamic_partial_rip_) || !defined(_di_fl_string_rip_nulless_) || !defined(_di_fl_string_dynamic_partial_rip_nulless_)
 
 #ifdef __cplusplus

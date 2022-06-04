@@ -120,8 +120,10 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_utf_is_whitespace().
+ *   F_parameter (with error bit) from: f_utf_is_combining().
+ *   F_parameter (with error bit) from: f_utf_is_whitespace().
  *
+ * @see f_utf_is_combining()
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_string_compare_except_trim_
@@ -150,8 +152,10 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_utf_is_whitespace().
+ *   F_parameter (with error bit) from: f_utf_is_combining().
+ *   F_parameter (with error bit) from: f_utf_is_whitespace().
  *
+ * @see f_utf_is_combining()
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_string_compare_trim_
@@ -236,8 +240,10 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_utf_is_whitespace().
+ *   F_parameter (with error bit) from: f_utf_is_combining().
+ *   F_parameter (with error bit) from: f_utf_is_whitespace().
  *
+ * @see f_utf_is_combining()
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_string_dynamic_compare_except_string_
@@ -269,8 +275,10 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_utf_is_whitespace().
+ *   F_parameter (with error bit) from: f_utf_is_combining().
+ *   F_parameter (with error bit) from: f_utf_is_whitespace().
  *
+ * @see f_utf_is_combining()
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_string_dynamic_compare_except_trim_
@@ -306,8 +314,10 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_utf_is_whitespace().
+ *   F_parameter (with error bit) from: f_utf_is_combining().
+ *   F_parameter (with error bit) from: f_utf_is_whitespace().
  *
+ * @see f_utf_is_combining()
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_string_dynamic_compare_except_trim_string_
@@ -336,8 +346,10 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_utf_is_whitespace().
+ *   F_parameter (with error bit) from: f_utf_is_combining().
+ *   F_parameter (with error bit) from: f_utf_is_whitespace().
  *
+ * @see f_utf_is_combining()
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_string_dynamic_compare_string_
@@ -362,8 +374,10 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_utf_is_whitespace().
+ *   F_parameter (with error bit) from: f_utf_is_combining().
+ *   F_parameter (with error bit) from: f_utf_is_whitespace().
  *
+ * @see f_utf_is_combining()
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_string_dynamic_compare_trim_
@@ -392,8 +406,10 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_utf_is_whitespace().
+ *   F_parameter (with error bit) from: f_utf_is_combining().
+ *   F_parameter (with error bit) from: f_utf_is_whitespace().
  *
+ * @see f_utf_is_combining()
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_string_dynamic_compare_trim_string_
@@ -573,8 +589,10 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_utf_is_whitespace().
+ *   F_parameter (with error bit) from: f_utf_is_combining().
+ *   F_parameter (with error bit) from: f_utf_is_whitespace().
  *
+ * @see f_utf_is_combining()
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_string_dynamic_partial_compare_except_trim_
@@ -608,8 +626,10 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_utf_is_whitespace().
+ *   F_parameter (with error bit) from: f_utf_is_combining().
+ *   F_parameter (with error bit) from: f_utf_is_whitespace().
  *
+ * @see f_utf_is_combining()
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_string_dynamic_partial_compare_except_trim_dynamic_
@@ -647,8 +667,10 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_utf_is_whitespace().
+ *   F_parameter (with error bit) from: f_utf_is_combining().
+ *   F_parameter (with error bit) from: f_utf_is_whitespace().
  *
+ * @see f_utf_is_combining()
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_string_dynamic_partial_compare_except_trim_string_
@@ -702,8 +724,10 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_utf_is_whitespace().
+ *   F_parameter (with error bit) from: f_utf_is_combining().
+ *   F_parameter (with error bit) from: f_utf_is_whitespace().
  *
+ * @see f_utf_is_combining()
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_string_dynamic_partial_compare_trim_dynamic_
@@ -734,8 +758,10 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_utf_is_whitespace().
+ *   F_parameter (with error bit) from: f_utf_is_combining().
+ *   F_parameter (with error bit) from: f_utf_is_whitespace().
  *
+ * @see f_utf_is_combining()
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_string_dynamic_partial_compare_trim_string_
@@ -1007,11 +1033,13 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf_not (with error bit) if character is an invalid UTF-8 character.
  *
- *   Errors (with error bit) from: f_utf_is_whitespace().
- *   Errors (with error bit) from: f_utf_is_word().
+ *   F_parameter (with error bit) from: f_utf_is_combining().
+ *   F_parameter (with error bit) from: f_utf_is_whitespace().
+ *   F_parameter (with error bit) from: f_utf_is_word().
  *
  * @see isxdigit()
  *
+ * @see f_utf_is_combining()
  * @see f_utf_is_whitespace()
  * @see f_utf_is_word()
  */
@@ -1040,8 +1068,10 @@ extern "C" {
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_utf_is_whitespace().
+ *   F_parameter (with error bit) from: f_utf_is_combining().
+ *   F_parameter (with error bit) from: f_utf_is_whitespace().
  *
+ * @see f_utf_is_combining()
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_string_rip_
@@ -1071,8 +1101,10 @@ extern "C" {
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_utf_is_whitespace().
+ *   F_parameter (with error bit) from: f_utf_is_combining().
+ *   F_parameter (with error bit) from: f_utf_is_whitespace().
  *
+ * @see f_utf_is_combining()
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_string_rip_nulless_
@@ -1159,8 +1191,10 @@ extern "C" {
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_utf_is_whitespace().
+ *   F_parameter (with error bit) from: f_utf_is_combining().
+ *   F_parameter (with error bit) from: f_utf_is_whitespace().
  *
+ * @see f_utf_is_combining()
  * @see f_utf_is_whitespace()
  */
 #ifndef _di_fl_string_seek_line_until_graph_non_
