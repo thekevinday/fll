@@ -13,18 +13,18 @@ extern "C" {
 
     for (; i1 < stop1 && i2 < stop2; ++i1, ++i2) {
 
-      // skip past NULL in string1.
+      // Skip past NULL in string1.
       while (i1 < stop1 && !string1[i1]) ++i1;
       if (i1 == stop1) break;
 
-      // skip past NULL in string2.
+      // Skip past NULL in string2.
       while (i2 < stop2 && !string2[i2]) ++i2;
       if (i2 == stop2) break;
 
       if (string1[i1] != string2[i2]) return F_equal_to_not;
     } // for
 
-    // only return F_equal_to if all remaining characters are NULL.
+    // Only return F_equal_to if all remaining characters are NULL.
     for (; i1 < stop1; ++i1) {
       if (string1[i1] != 0) return F_equal_to_not;
     } // for
@@ -48,15 +48,15 @@ extern "C" {
 
     while (i1 < stop1 && i2 < stop2) {
 
-      // skip past NULL in string1.
+      // Skip past NULL in string1.
       while (i1 < stop1 && !string1[i1]) ++i1;
       if (i1 == stop1) break;
 
-      // skip past NULL in string2.
+      // Skip past NULL in string2.
       while (i2 < stop2 && !string2[i2]) ++i2;
       if (i2 == stop2) break;
 
-      // skip past except characters in string1.
+      // Skip past except characters in string1.
       while (e1 < except1.used && except1.array[e1] < i1) ++e1;
       if (e1 < except1.used && except1.array[e1] == i1) {
         ++i1;
@@ -64,7 +64,7 @@ extern "C" {
         continue;
       }
 
-      // skip past except characters in string2.
+      // Skip past except characters in string2.
       while (e2 < except2.used && except2.array[e2] < i2) ++e2;
       if (e2 < except2.used && except2.array[e2] == i2) {
         ++i2;
@@ -80,10 +80,10 @@ extern "C" {
       ++i2;
     } // while
 
-    // only return F_equal_to if all remaining characters are NULL or are designated to be ignored.
+    // Only return F_equal_to if all remaining characters are NULL or are designated to be ignored.
     for (; i1 < stop1; i1++) {
 
-      // skip past except characters in string1.
+      // Skip past except characters in string1.
       while (e1 < except1.used && except1.array[e1] < i1) ++e1;
       if (e1 < except1.used && except1.array[e1] == i1) continue;
 
@@ -94,7 +94,7 @@ extern "C" {
 
     for (; i2 < stop2; ++i2) {
 
-      // skip past except characters in string2.
+      // Skip past except characters in string2.
       while (e2 < except2.used && except2.array[e2] < i2) ++e2;
       if (e2 < except2.used && except2.array[e2] == i2) continue;
 
@@ -121,14 +121,14 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    // skip past leading whitespace in string1.
+    // Skip past leading whitespace in string1.
     for (; i1 < stop1; i1 += width) {
 
-      // skip past NULL in string1.
+      // Skip past NULL in string1.
       while (i1 < stop1 && !string1[i1]) ++i1;
       if (i1 == stop1) break;
 
-      // skip past except characters in string1.
+      // Skip past except characters in string1.
       while (e1 < except1.used && except1.array[e1] < i1) ++e1;
       if (e1 < except1.used && except1.array[e1] == i1) {
         width = 1;
@@ -152,14 +152,14 @@ extern "C" {
       width = macro_f_utf_byte_width(string1[i1]);
     } // for
 
-    // skip past leading whitespace in string2.
+    // Skip past leading whitespace in string2.
     for (; i2 < stop2; i2 += width) {
 
-      // skip past NULL in string2.
+      // Skip past NULL in string2.
       while (i2 < stop2 && !string2[i2]) ++i2;
       if (i2 == stop2) break;
 
-      // skip past except characters in string2.
+      // Skip past except characters in string2.
       while (e2 < except2.used && except2.array[e2] < i2) ++e2;
       if (e2 < except2.used && except2.array[e2] == i2) {
         width = 1;
@@ -187,21 +187,21 @@ extern "C" {
     f_array_length_t last2 = i2;
 
     {
-      // size1 and size2 are to represent to total number of characters after trim that are not ignored via "except".
+      // The size1 and size2 are to represent to total number of characters after trim that are not ignored via "except".
       f_array_length_t size1 = 0;
       f_array_length_t size2 = 0;
 
       f_array_length_t j = 0;
       f_array_length_t ej = e1;
 
-      // determine where the last non-whitespace is in string1.
+      // Determine where the last non-whitespace is in string1.
       for (j = i1; j < stop1; j += width) {
 
-        // skip past NULL in string1.
+        // Skip past NULL in string1.
         while (j < stop1 && !string1[j]) ++j;
         if (j == stop1) break;
 
-        // skip past except characters in string1.
+        // Skip past except characters in string1.
         while (ej < except1.used && except1.array[ej] < j) ++ej;
 
         if (ej < except1.used && except1.array[ej] == j) {
@@ -231,14 +231,14 @@ extern "C" {
 
       ej = e2;
 
-      // determine where the last non-whitespace is in string2.
+      // Determine where the last non-whitespace is in string2.
       for (j = i2; j < stop2; j += width) {
 
-        // skip past NULL in string2.
+        // Skip past NULL in string2.
         while (j < stop2 && !string2[j]) ++j;
         if (j == stop2) break;
 
-        // skip past except characters in string2.
+        // Skip past except characters in string2.
         while (ej < except2.used && except2.array[ej] < j) ++ej;
         if (ej < except2.used && except2.array[ej] == j) {
           width = 1;
@@ -271,15 +271,15 @@ extern "C" {
 
     while (i1 <= last1 && i2 <= last2) {
 
-      // skip past NULL in string1.
+      // Skip past NULL in string1.
       while (i1 <= last1 && !string1[i1]) ++i1;
       if (i1 > last1) break;
 
-      // skip past NULL in string2.
+      // Skip past NULL in string2.
       while (i2 <= last2 && !string2[i2]) ++i2;
       if (i2 > last2) break;
 
-      // skip past except characters in string1.
+      // Skip past except characters in string1.
       while (e1 < except1.used && except1.array[e1] < i1) ++e1;
 
       if (e1 < except1.used && except1.array[e1] == i1) {
@@ -288,7 +288,7 @@ extern "C" {
         continue;
       }
 
-      // skip past except characters in string2.
+      // Skip past except characters in string2.
       while (e2 < except2.used && except2.array[e2] < i2) ++e2;
 
       if (e2 < except2.used && except2.array[e2] == i2) {
@@ -305,12 +305,12 @@ extern "C" {
       ++i2;
     } // while
 
-    // only return F_equal_to if all remaining characters are NULL.
+    // Only return F_equal_to if all remaining characters are NULL.
     for (; i1 <= last1; ++i1) {
 
       if (string1[i1] != 0) {
 
-        // skip past except characters in string1.
+        // Skip past except characters in string1.
         while (e1 < except1.used && except1.array[e1] < i1) ++e1;
         if (e1 < except1.used && except1.array[e1] == i1) continue;
 
@@ -322,7 +322,7 @@ extern "C" {
 
       if (string2[i2] != 0) {
 
-        // skip past except characters in string1.
+        // Skip past except characters in string1.
         while (e2 < except2.used && except2.array[e2] < i2) ++e2;
         if (e2 < except2.used && except2.array[e2] == i2) continue;
 
