@@ -18,8 +18,13 @@ extern "C" {
           return F_true;
         }
 
-        // Latin-1 Supplement: U+00A8, U+00AF, U+00B4, U+00B8.
-        if (character == 0xc2a80000 || character == 0xc2af0000 || character == 0xc2b40000 || character == 0xc2b80000) {
+        // Latin-1 Supplement: U+00A8, U+00AC, U+00AF, U+00B1.
+        if (character == 0xc2a80000 || character == 0xc2ac0000 || character == 0xc2af0000 || character == 0xc2b10000) {
+          return F_true;
+        }
+
+        // Latin-1 Supplement: U+00B4, U+00B8, U+00D7, U+00F7.
+        if (character == 0xc2b40000 || character == 0xc2b80000 || character == 0xc3970000 || character == 0xc3b70000) {
           return F_true;
         }
       }
@@ -59,6 +64,13 @@ extern "C" {
           return F_true;
         }
       }
+      else if (macro_f_utf_char_t_to_char_1(character) == 0xcf) {
+
+        // Greek and Coptic: U+03F6.
+        if (character == 0xcfb60000) {
+          return F_true;
+        }
+      }
       else if (macro_f_utf_char_t_to_char_1(character) == 0xd6) {
 
         // Armenian: U+00A2.
@@ -68,7 +80,12 @@ extern "C" {
       }
       else if (macro_f_utf_char_t_to_char_1(character) == 0xd8) {
 
-        // Arabic: U+00A2.
+        // Arabic: U+0606 to U+0608.
+        if (character >= 0xd8860000 && character <= 0xd8880000) {
+          return F_true;
+        }
+
+        // Arabic: U+ U+060B.
         if (character == 0xd88b0000) {
           return F_true;
         }
@@ -146,8 +163,138 @@ extern "C" {
       }
       else if (macro_f_utf_char_t_to_char_1(character) == 0xe2) {
 
+        // General Punctuation: U+2044, U+2052.
+        if (character == 0xe2818400 || character == 0xe2819200) {
+          return F_true;
+        }
+
+        // Superscripts and Subscripts: U+207A, U+207C.
+        if (character == 0xe281ba00 || character == 0xe281bc00) {
+          return F_true;
+        }
+
+        // Superscripts and Subscripts: U+208A, U+208C.
+        if (character == 0xe2828a00 || character == 0xe2828c00) {
+          return F_true;
+        }
+
         // Currency Symbols: U+20A0 to U+20C0.
         if (character >= 0xe282a000 && character <= 0xe2838000) {
+          return F_true;
+        }
+
+        // Letterlike Symbols: U+2118.
+        if (character == 0xe2849800) {
+          return F_true;
+        }
+
+        // Letterlike Symbols: U+2140 to U+2144.
+        if (character >= 0xe2858000 && character <= 0xe2858400) {
+          return F_true;
+        }
+
+        // Letterlike Symbols: U+214B.
+        if (character == 0xe2858b00) {
+          return F_true;
+        }
+
+        // Arrows: U+2190 to U+2194.
+        if (character >= 0xe2869000 && character <= 0xe2869400) {
+          return F_true;
+        }
+
+        // Arrows: U+219A, U+219B, U+21A0, U+21A3.
+        if (character == 0xe2869a00 || character == 0xe2869b00 || character == 0xe286a000 || character == 0xe286a300) {
+          return F_true;
+        }
+
+        // Arrows: U+21A6, U+21AE, U+21CE, U+21CF.
+        if (character == 0xe286a600 || character == 0xe286ae00 || character == 0xe2878e00 || character == 0xe2878f00) {
+          return F_true;
+        }
+
+        // Arrows: U+21D2, U+21D4.
+        if (character == 0xe2879200 || character == 0xe2879400) {
+          return F_true;
+        }
+
+        // Arrows to Mathematical Operators: U+21F4 to U+22FF.
+        if (character >= 0xe287b400 && character <= 0xe28bbf00) {
+          return F_true;
+        }
+
+        // Miscellaneous Technical: U+2320, U+2321, U+237C.
+        if (character == 0xe28ca000 || character == 0xe28ca100 || character == 0xe28dbc00) {
+          return F_true;
+        }
+
+        // Miscellaneous Technical: U+239B to U+23B3.
+        if (character >= 0xe28e9b00 && character <= 0xe28eb300) {
+          return F_true;
+        }
+
+        // Miscellaneous Technical: U+23DC to U+23E1.
+        if (character >= 0xe28f9c00 && character <= 0xe28fa100) {
+          return F_true;
+        }
+
+        // Geometric Shapes: U+25B7 to U+25C1.
+        if (character >= 0xe296b700 && character <= 0xe2978100) {
+          return F_true;
+        }
+
+        // Geometric Shapes: U+25F8 to U+25FF.
+        if (character >= 0xe297b800 && character <= 0xe297bf00) {
+          return F_true;
+        }
+
+        // Miscellaneous Symbols: U+266F.
+        if (character == 0xe299af00) {
+          return F_true;
+        }
+
+        // Miscellaneous Mathematical Symbols-A: U+27C0 to U+27C4.
+        if (character >= 0xe29f8000 && character <= 0xe29f8400) {
+          return F_true;
+        }
+
+        // Miscellaneous Mathematical Symbols-A: U+27C7 to U+27E5.
+        if (character >= 0xe29f8700 && character <= 0xe29fa500) {
+          return F_true;
+        }
+
+        // Supplemental Arrows-A: U+27F0 to U+27FF.
+        if (character >= 0xe29fb000 && character <= 0xe29fbf00) {
+          return F_true;
+        }
+
+        // Supplemental Arrows-B to Miscellaneous Mathematical Symbols-B: U+2900 to U+2982.
+        if (character >= 0xe2a48000 && character <= 0xe2a68200) {
+          return F_true;
+        }
+
+        // Miscellaneous Mathematical Symbols-B: U+2999 to U+29D7.
+        if (character >= 0xe2a69900 && character <= 0xe2a79700) {
+          return F_true;
+        }
+
+        // Miscellaneous Mathematical Symbols-B: U+29DC to U+29FB.
+        if (character >= 0xe2a79c00 && character <= 0xe2a7bb00) {
+          return F_true;
+        }
+
+        // Miscellaneous Mathematical Symbols-B to Supplemental Mathematical Operators: U+29FE to U+2AFF.
+        if (character >= 0xe2a7be00 && character <= 0xe2abbf00) {
+          return F_true;
+        }
+
+        // Miscellaneous Symbols and Arrows: U+2B30 to U+2B44.
+        if (character >= 0xe2acb000 && character <= 0xe2ad8400) {
+          return F_true;
+        }
+
+        // Miscellaneous Symbols and Arrows: U+2B47 to U+2B4C.
+        if (character >= 0xe2ad8700 && character <= 0xe2ad8c00) {
           return F_true;
         }
       }
@@ -187,6 +334,11 @@ extern "C" {
       }
       else if (macro_f_utf_char_t_to_char_1(character) == 0xef) {
 
+        // Alphabetic Presentation Forms: U+FB29.
+        if (character == 0xefaca900) {
+          return F_true;
+        }
+
         // Arabic Presentation Forms-A: U+FBB2 to U+FBC2.
         if (character >= 0xefaeb200 && character <= 0xefaf8200) {
           return F_true;
@@ -197,18 +349,48 @@ extern "C" {
           return F_true;
         }
 
+        // Small Form Variants: U+FE62, U+FE64, U+FE65, U+FE66.
+        if (character == 0xefb9a200 || character == 0xefb9a400 || character == 0xefb9a500 || character == 0xefb9a600) {
+          return F_true;
+        }
+
         // Small Form Variants: U+FE69.
         if (character == 0xefb9a900) {
           return F_true;
         }
 
-        // Halfwidth and Fullwidth Forms: U+FF04, U+FF3E, U+FF40, U+FFE0.
-        if (character == 0xefbc8400 || character == 0xefbcbe00 || character == 0xefbd8000 || character == 0xefbfa000) {
+        // Halfwidth and Fullwidth Forms: U+FF04, U+FF0B.
+        if (character == 0xefbc8400 || character == 0xefbc8b00) {
           return F_true;
         }
 
-        // Halfwidth and Fullwidth Forms: U+FFE1, U+FFE3, U+FFE5, U+FFE6.
-        if (character == 0xefbfa100 || character == 0xefbfa300 || character == 0xefbfa500 || character == 0xefbfa600) {
+        // Halfwidth and Fullwidth Forms: U+FF1C to U+FF1E.
+        if (character >= 0xefbc9c00 && character <= 0xefbc9e00) {
+          return F_true;
+        }
+
+        // Halfwidth and Fullwidth Forms: U+FF3E, U+FF40, .
+        if (character == 0xefbcbe00 || character == 0xefbd8000) {
+          return F_true;
+        }
+
+        // Halfwidth and Fullwidth Forms: U+FFE0, U+FFE1, U+FFE3, U+FFE5.
+        if (character == 0xefbfa000 || character == 0xefbfa100 || character == 0xefbfa300 || character == 0xefbfa500) {
+          return F_true;
+        }
+
+        // Halfwidth and Fullwidth Forms: U+FFE6.
+        if (character == 0xefbfa600) {
+          return F_true;
+        }
+
+        // Halfwidth and Fullwidth Forms: U+FF5C, U+FF5E, U+FFE2.
+        if (character == 0xefbd9c00 || character == 0xefbd9e00 || character == 0xefbfa200) {
+          return F_true;
+        }
+
+        // Halfwidth and Fullwidth Forms: U+FFE9 to U+FFEC.
+        if (character >= 0xefbfa900 && character <= 0xefbfac00) {
           return F_true;
         }
       }
@@ -222,6 +404,21 @@ extern "C" {
 
         // Tamil Supplement: U+11FDD to U+11FE0.
         if (character >= 0xf091bf9d && character <= 0xf091bfa0) {
+          return F_true;
+        }
+
+        // Mathematical Alphanumeric Symbols: U+1D6C1, U+1D6FB, U+1D715, U+1D735.
+        if (character == 0xf09d9b81 || character == 0xf09d9bbb || character == 0x09d9c95 || character == 0xf09d9cb5) {
+          return F_true;
+        }
+
+        // Mathematical Alphanumeric Symbols: U+1D74F, U+1D76F, U+1D789, U+1D7A9.
+        if (character == 0xf09d9d8f || character == 0xf09d9daf || character == 0xf09d9e89 || character == 0xf09d9ea9) {
+          return F_true;
+        }
+
+        // Mathematical Alphanumeric Symbols: U+1D7C3, U+1EEF0, U+1EEF1.
+        if (character == 0xf09d9f83 || character == 0xf09ebbb0 || character == 0xf09ebbb1) {
           return F_true;
         }
       }
