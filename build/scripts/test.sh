@@ -563,7 +563,7 @@ test_operate_build_tools() {
 
     test_operate_build_project "$path_test_package_program" "$path_test_project" fake monolithic bootstrap
 
-    if [[ $failure -ne 0 ]] ; then
+    if [[ $? -ne 0 ]] ; then
       let failure=1
     fi
   fi
