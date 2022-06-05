@@ -261,8 +261,8 @@ extern "C" {
       for (j = 0; j < size; ++j) {
 
         status = fl_string_dynamic_partial_compare_trim_string(names[j].string, buffer, names[j].used, objects.array[i]);
-
         if (F_status_is_error(status)) return status;
+
         if (status == F_equal_to_not) continue;
 
         content = &contents.array[i];
