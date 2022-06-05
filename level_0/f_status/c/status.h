@@ -45,13 +45,45 @@ extern "C" {
 /**
  * Status masks.
  *
- * The f_status_t is required to be exactly 16 bits, the first two high order bits represent error and warning respectively.
+ * The f_status_t is required to be exactly 16 bits, the first two high order bits represent error and warning respectively and are called the code bits.
+ * All other bits represent the number and are called the number bits.
+ *
+ * The bits that are set are different between little endian and big endian systems.
  *
  * The F_status_set_fine() is provided to remove the error, warning, and signal bits.
  *
+ * F_status_bit_*:
+ * - error:   The bits used to represent an error.
+ * - signal:  The bits used to represent a signal (shares bits with both error and warning).
+ * - warning: The bits used to represent an warning.
+ *
+ * F_status_mask_*:
+ * - fine: The mask used to get bits without the error, signal, and warning bits.
+ * - code: The mask used to get bits with any of the error, signal, and warning bits but without the number bits
+ *
  * F_status_size_*:
- *   - max:           Maximum valid number representing a status code (without the error, signal, or warning bits).
- *   - max_with_bits: Maximum valid number representing a status code including the error, signal, or warning bits.
+ * - max:           Maximum valid number representing a status code (without the error, signal, or warning bits).
+ * - max_with_bits: Maximum valid number representing a status code including the error, signal, or warning bits.
+ *
+ * F_status_is_*:
+ * - error:   Check if the status has the error flag set.
+ * - fine:    Check if the status has no code flags set.
+ * - problem: Check if the status has either the error or warning bit set.
+ * - signal:  Check if the status has the signal flag set (represented by setting both error and warning bits).
+ * - warning: Check if the status has the warning flag set.
+ *
+ * F_status_is_*_not:
+ * - error:   Check if the status does not have the error flag set.
+ * - fine:    Check if the status does not have no code flags set.
+ * - problem: Check if the status does not have either the error or warning bit set.
+ * - signal:  Check if the status does not have the signal flag set (represented by setting both error and warning bits).
+ * - warning: Check if the status does not have the warning flag set.
+ *
+ * F_status_set_*:
+ * - error:   Set the error bit.
+ * - fine:    Clear the error and warning bits.
+ * - signal:  Set both the error and warning bits.
+ * - warning: Set the warning bit.
  */
 #ifndef _di_f_status_masks_
   #define F_status_bit_error   0x8000 // 1000 0000 0000 0000
@@ -63,19 +95,20 @@ extern "C" {
 
   #define F_status_is_error(status)   (status & F_status_bit_error)
   #define F_status_is_fine(status)    ((status & F_status_mask_code) == 0)
-  #define F_status_is_problem(status) ((status & F_status_bit_error) || (status & F_status_bit_warning))
-  #define F_status_is_signal(status)  (status & F_status_bit_signal)
+  #define F_status_is_problem(status) (status & F_status_mask_code)
+  #define F_status_is_signal(status)  ((status & F_status_bit_signal) == F_status_bit_signal)
   #define F_status_is_warning(status) (status & F_status_bit_warning)
 
   #define F_status_is_error_not(status)   ((status & F_status_bit_error) == 0)
   #define F_status_is_fine_not(status)    (status & F_status_mask_code)
-  #define F_status_is_signal_not(status)  ((status & F_status_bit_signal) == 0)
+  #define F_status_is_problem_not(status) ((status & F_status_mask_code) == 0)
+  #define F_status_is_signal_not(status)  ((status & F_status_bit_signal) != F_status_bit_signal)
   #define F_status_is_warning_not(status) ((status & F_status_bit_warning) == 0)
 
   #define F_status_set_error(status)   (status | F_status_bit_error)
+  #define F_status_set_fine(status)    (status & F_status_mask_fine)
   #define F_status_set_signal(status)  (status | F_status_bit_signal)
   #define F_status_set_warning(status) (status | F_status_bit_warning)
-  #define F_status_set_fine(status)    (status & F_status_mask_fine)
 
   #define F_status_size_max_d           0x3fff
   #define F_status_size_max_with_bits_d 0xffff
