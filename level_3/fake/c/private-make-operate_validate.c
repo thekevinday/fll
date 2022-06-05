@@ -1009,7 +1009,6 @@ extern "C" {
             f_status_t status_number = F_none;
             f_string_range_t range = f_string_range_t_initialize;
             f_number_unsigned_t number = 0;
-            bool is_negative = F_false;
 
             for (i = k; i < arguments.used; ++i, status_number = F_none) {
 

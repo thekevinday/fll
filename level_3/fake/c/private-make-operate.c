@@ -37,7 +37,6 @@ extern "C" {
     }
 
     f_status_t status = F_none;
-    f_mode_t mode = f_mode_t_initialize;
 
     f_array_lengths_t section_stack = f_array_lengths_t_initialize;
     fake_make_data_t data_make = fake_make_data_t_initialize;
