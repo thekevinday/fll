@@ -543,7 +543,7 @@ extern "C" {
         }
 
         if (status == F_false) {
-          status = f_utf_is_combining(string2 + j, (stop1 - j) + 1);
+          status = f_utf_is_combining(string2 + j, (stop2 - j) + 1);
 
           if (F_status_is_error(status)) {
             if (F_status_set_fine(status) == F_parameter) return status;
