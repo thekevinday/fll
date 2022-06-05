@@ -74,8 +74,6 @@ extern "C" {
 
     data_make.path.stack.used = 1;
 
-    macro_f_mode_t_set_default_umask(mode, data->main->umask);
-
     fake_make_load_parameters(&data_make, &status);
 
     fake_make_load_fakefile(&data_make, &status);

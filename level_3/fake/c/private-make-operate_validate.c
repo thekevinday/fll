@@ -1021,7 +1021,6 @@ extern "C" {
                 }
                 else if (arguments.array[i].string[0] == f_string_ascii_minus_s.string[0]) {
                   range.start = 1;
-                  is_negative = F_true;
                 }
 
                 if (range.start > range.stop) {
