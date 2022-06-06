@@ -12,7 +12,7 @@ bootstrap_main() {
   local public_name="Simple FLL Bootstrap Script"
   local system_name=bootstrap
   local called_name=$(basename $0)
-  local version=0.5.9
+  local version=0.5.10
 
   local grab_next=
   local do_color=dark

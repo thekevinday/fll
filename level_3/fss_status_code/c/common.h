@@ -22,11 +22,11 @@ extern "C" {
 #ifndef _di_fss_status_code_program_version_
   #define FSS_STATUS_CODE_program_version_major_s F_string_ascii_0_s
   #define FSS_STATUS_CODE_program_version_minor_s F_string_ascii_5_s
-  #define FSS_STATUS_CODE_program_version_micro_s F_string_ascii_9_s
+  #define FSS_STATUS_CODE_program_version_micro_s F_string_ascii_1_s F_string_ascii_0_s
 
   #define FSS_STATUS_CODE_program_version_major_s_length F_string_ascii_0_s_length
   #define FSS_STATUS_CODE_program_version_minor_s_length F_string_ascii_5_s_length
-  #define FSS_STATUS_CODE_program_version_micro_s_length F_string_ascii_9_s_length
+  #define FSS_STATUS_CODE_program_version_micro_s_length (F_string_ascii_1_s_length + F_string_ascii_0_s_length)
 
   #if !(defined(FSS_STATUS_CODE_program_version_nano_prefix_s) && defined(FSS_STATUS_CODE_program_version_nano_prefix_s_length))
     #define FSS_STATUS_CODE_program_version_nano_prefix_s
