@@ -102,8 +102,10 @@ test_main() {
           build_project=yes
         elif [[ $p == "-s" || $p == "--path_scripts" ]] ; then
           grab_next=path_scripts
+          path_scripts=
         elif [[ $p == "-t" || $p == "--path_test" ]] ; then
           grab_next=path_test
+          path_test=
         elif [[ $test_system == "" ]] ; then
           test_system="$p"
         else
@@ -154,7 +156,7 @@ test_main() {
     test_system=normal
   fi
 
-  if [[ $build_compiler == "" ]] ; then
+  if [[ $grab_next != "build_compiler" && $build_compiler == "" ]] ; then
     build_compiler=gcc
   fi
 
