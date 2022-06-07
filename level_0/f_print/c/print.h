@@ -86,6 +86,8 @@ extern "C" {
  *   F_output (with error bit) on failure (fwrite_unlocked() returns 0).
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ * @see clearerr_unlocked()
+ * @see ferror_unlocked()
  * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_character_
@@ -119,6 +121,8 @@ extern "C" {
  *   F_output (with error bit) on failure (fwrite_unlocked() returns 0).
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ * @see clearerr_unlocked()
+ * @see ferror_unlocked()
  * @see fwrite_unlocked()
  */
 #ifndef _di_f_print_character_safely_

@@ -26,10 +26,7 @@ extern "C" {
 
         do {
           count += fwrite_unlocked(string + i + count, 1, total - count, stream);
-
-          if (ferror_unlocked(stream)) {
-            return F_status_set_error(F_output);
-          }
+          if (ferror_unlocked(stream)) return F_status_set_error(F_output);
 
         } while (count < total);
 
@@ -90,10 +87,7 @@ extern "C" {
 
           do {
             count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-
-            if (ferror_unlocked(stream)) {
-              return F_status_set_error(F_output);
-            }
+            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
 
           } while (count < total);
 
@@ -115,10 +109,7 @@ extern "C" {
 
           do {
             count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-
-            if (ferror_unlocked(stream)) {
-              return F_status_set_error(F_output);
-            }
+            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
 
           } while (count < total);
 
@@ -160,10 +151,7 @@ extern "C" {
 
           do {
             count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-
-            if (ferror_unlocked(stream)) {
-              return F_status_set_error(F_output);
-            }
+            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
 
           } while (count < total);
 
@@ -186,10 +174,7 @@ extern "C" {
 
             do {
               count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-
-              if (ferror_unlocked(stream)) {
-                return F_status_set_error(F_output);
-              }
+              if (ferror_unlocked(stream)) return F_status_set_error(F_output);
 
             } while (count < total);
 
@@ -213,10 +198,7 @@ extern "C" {
 
           do {
             count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-
-            if (ferror_unlocked(stream)) {
-              return F_status_set_error(F_output);
-            }
+            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
 
           } while (count < total);
 
@@ -258,10 +240,7 @@ extern "C" {
 
           do {
             count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-
-            if (ferror_unlocked(stream)) {
-              return F_status_set_error(F_output);
-            }
+            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
 
           } while (count < total);
 
@@ -284,10 +263,7 @@ extern "C" {
 
             do {
               count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-
-              if (ferror_unlocked(stream)) {
-                return F_status_set_error(F_output);
-              }
+              if (ferror_unlocked(stream)) return F_status_set_error(F_output);
 
             } while (count < total);
 
@@ -309,10 +285,7 @@ extern "C" {
 
           do {
             count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-
-            if (ferror_unlocked(stream)) {
-              return F_status_set_error(F_output);
-            }
+            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
 
           } while (count < total);
 
@@ -358,10 +331,7 @@ extern "C" {
 
           do {
             count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-
-            if (ferror_unlocked(stream)) {
-              return F_status_set_error(F_output);
-            }
+            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
 
           } while (count < total);
 
@@ -384,10 +354,7 @@ extern "C" {
 
             do {
               count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-
-              if (ferror_unlocked(stream)) {
-                return F_status_set_error(F_output);
-              }
+              if (ferror_unlocked(stream)) return F_status_set_error(F_output);
 
             } while (count < total);
 
@@ -417,10 +384,7 @@ extern "C" {
 
           do {
             count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-
-            if (ferror_unlocked(stream)) {
-              return F_status_set_error(F_output);
-            }
+            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
 
           } while (count < total);
 
@@ -431,10 +395,7 @@ extern "C" {
 
         do {
           count += fwrite_unlocked(safe.string + count, 1, safe.used - count, stream);
-
-          if (ferror_unlocked(stream)) {
-            return F_status_set_error(F_output);
-          }
+          if (ferror_unlocked(stream)) return F_status_set_error(F_output);
 
         } while (count < safe.used);
 
@@ -449,10 +410,7 @@ extern "C" {
 
         do {
           count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-
-          if (ferror_unlocked(stream)) {
-            return F_status_set_error(F_output);
-          }
+          if (ferror_unlocked(stream)) return F_status_set_error(F_output);
 
         } while (count < total);
 
@@ -469,10 +427,7 @@ extern "C" {
 
       do {
         count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-
-        if (ferror_unlocked(stream)) {
-          return F_status_set_error(F_output);
-        }
+        if (ferror_unlocked(stream)) return F_status_set_error(F_output);
 
       } while (count < total);
     }
@@ -509,10 +464,7 @@ extern "C" {
 
           do {
             count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-
-            if (ferror_unlocked(stream)) {
-              return F_status_set_error(F_output);
-            }
+            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
 
           } while (count < total);
 
@@ -535,10 +487,7 @@ extern "C" {
 
           do {
             count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-
-            if (ferror_unlocked(stream)) {
-              return F_status_set_error(F_output);
-            }
+            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
 
           } while (count < total);
 
@@ -563,10 +512,7 @@ extern "C" {
 
           do {
             count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-
-            if (ferror_unlocked(stream)) {
-              return F_status_set_error(F_output);
-            }
+            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
 
           } while (count < total);
 
@@ -584,10 +530,7 @@ extern "C" {
 
           do {
             count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-
-            if (ferror_unlocked(stream)) {
-              return F_status_set_error(F_output);
-            }
+            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
 
           } while (count < total);
 
@@ -598,10 +541,7 @@ extern "C" {
 
         do {
           count += fwrite_unlocked(safe.string + count, 1, safe.used - count, stream);
-
-          if (ferror_unlocked(stream)) {
-            return F_status_set_error(F_output);
-          }
+          if (ferror_unlocked(stream)) return F_status_set_error(F_output);
 
         } while (count < safe.used);
 
@@ -616,10 +556,7 @@ extern "C" {
 
         do {
           count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-
-          if (ferror_unlocked(stream)) {
-            return F_status_set_error(F_output);
-          }
+          if (ferror_unlocked(stream)) return F_status_set_error(F_output);
 
         } while (count < total);
 
@@ -636,10 +573,7 @@ extern "C" {
 
       do {
         count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-
-        if (ferror_unlocked(stream)) {
-          return F_status_set_error(F_output);
-        }
+        if (ferror_unlocked(stream)) return F_status_set_error(F_output);
 
       } while (count < total);
     }
@@ -671,10 +605,7 @@ extern "C" {
 
           do {
             count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-
-            if (ferror_unlocked(stream)) {
-              return F_status_set_error(F_output);
-            }
+            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
 
           } while (count < total);
 
@@ -694,10 +625,7 @@ extern "C" {
 
           do {
             count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-
-            if (ferror_unlocked(stream)) {
-              return F_status_set_error(F_output);
-            }
+            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
 
           } while (count < total);
 
@@ -716,10 +644,7 @@ extern "C" {
 
       do {
         count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-
-        if (ferror_unlocked(stream)) {
-          return F_status_set_error(F_output);
-        }
+        if (ferror_unlocked(stream)) return F_status_set_error(F_output);
 
       } while (count < total);
     }
@@ -755,10 +680,7 @@ extern "C" {
 
           do {
             count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-
-            if (ferror_unlocked(stream)) {
-              return F_status_set_error(F_output);
-            }
+            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
 
           } while (count < total);
 
@@ -786,10 +708,7 @@ extern "C" {
 
           do {
             count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-
-            if (ferror_unlocked(stream)) {
-              return F_status_set_error(F_output);
-            }
+            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
 
           } while (count < total);
 
@@ -800,10 +719,7 @@ extern "C" {
 
         do {
           count += fwrite_unlocked(safe.string + count, 1, safe.used - count, stream);
-
-          if (ferror_unlocked(stream)) {
-            return F_status_set_error(F_output);
-          }
+          if (ferror_unlocked(stream)) return F_status_set_error(F_output);
 
         } while (count < safe.used);
 
@@ -818,10 +734,7 @@ extern "C" {
 
         do {
           count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-
-          if (ferror_unlocked(stream)) {
-            return F_status_set_error(F_output);
-          }
+          if (ferror_unlocked(stream)) return F_status_set_error(F_output);
 
         } while (count < total);
 
@@ -838,10 +751,7 @@ extern "C" {
 
       do {
         count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-
-        if (ferror_unlocked(stream)) {
-          return F_status_set_error(F_output);
-        }
+        if (ferror_unlocked(stream)) return F_status_set_error(F_output);
 
       } while (count < total);
     }
@@ -877,10 +787,7 @@ extern "C" {
 
           do {
             count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-
-            if (ferror_unlocked(stream)) {
-              return F_status_set_error(F_output);
-            }
+            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
 
           } while (count < total);
 
@@ -903,10 +810,7 @@ extern "C" {
 
           do {
             count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-
-            if (ferror_unlocked(stream)) {
-              return F_status_set_error(F_output);
-            }
+            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
 
           } while (count < total);
 
@@ -924,10 +828,7 @@ extern "C" {
 
           do {
             count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-
-            if (ferror_unlocked(stream)) {
-              return F_status_set_error(F_output);
-            }
+            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
 
           } while (count < total);
 
@@ -938,10 +839,7 @@ extern "C" {
 
         do {
           count += fwrite_unlocked(safe.string + count, 1, safe.used - count, stream);
-
-          if (ferror_unlocked(stream)) {
-            return F_status_set_error(F_output);
-          }
+          if (ferror_unlocked(stream)) return F_status_set_error(F_output);
 
         } while (count < safe.used);
 
@@ -956,10 +854,7 @@ extern "C" {
 
         do {
           count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-
-          if (ferror_unlocked(stream)) {
-            return F_status_set_error(F_output);
-          }
+          if (ferror_unlocked(stream)) return F_status_set_error(F_output);
 
         } while (count < total);
 
@@ -976,10 +871,7 @@ extern "C" {
 
       do {
         count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-
-        if (ferror_unlocked(stream)) {
-          return F_status_set_error(F_output);
-        }
+        if (ferror_unlocked(stream)) return F_status_set_error(F_output);
 
       } while (count < total);
     }
@@ -1000,10 +892,7 @@ extern "C" {
 
       do {
         count += fwrite_unlocked(string + count, 1, length - count, stream);
-
-        if (ferror_unlocked(stream)) {
-          return F_status_set_error(F_output);
-        }
+        if (ferror_unlocked(stream)) return F_status_set_error(F_output);
 
       } while (count < length);
     }
@@ -1015,10 +904,7 @@ extern "C" {
 
           do {
             count += fwrite_unlocked(string + count, 1, F_print_write_max_d - count, stream);
-
-            if (ferror_unlocked(stream)) {
-              return F_status_set_error(F_output);
-            }
+            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
 
           } while (count < F_print_write_max_d);
         }
@@ -1027,10 +913,7 @@ extern "C" {
 
           do {
             count += fwrite_unlocked(string + count, 1, length - total - count, stream);
-
-            if (ferror_unlocked(stream)) {
-              return F_status_set_error(F_output);
-            }
+            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
 
           } while (count < length - total);
 
@@ -1075,10 +958,7 @@ extern "C" {
 
           do {
             count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-
-            if (ferror_unlocked(stream)) {
-              return F_status_set_error(F_output);
-            }
+            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
 
           } while (count < total);
 
@@ -1089,10 +969,7 @@ extern "C" {
 
         do {
           count += fwrite_unlocked(safe.string + count, 1, safe.used - count, stream);
-
-          if (ferror_unlocked(stream)) {
-            return F_status_set_error(F_output);
-          }
+          if (ferror_unlocked(stream)) return F_status_set_error(F_output);
 
         } while (count < safe.used);
 
@@ -1107,10 +984,7 @@ extern "C" {
 
         do {
           count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-
-          if (ferror_unlocked(stream)) {
-            return F_status_set_error(F_output);
-          }
+          if (ferror_unlocked(stream)) return F_status_set_error(F_output);
 
         } while (count < total);
 
@@ -1127,10 +1001,7 @@ extern "C" {
 
       do {
         count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-
-        if (ferror_unlocked(stream)) {
-          return F_status_set_error(F_output);
-        }
+        if (ferror_unlocked(stream)) return F_status_set_error(F_output);
 
       } while (count < total);
     }
@@ -1166,10 +1037,7 @@ extern "C" {
 
           do {
             count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-
-            if (ferror_unlocked(stream)) {
-              return F_status_set_error(F_output);
-            }
+            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
 
           } while (count < total);
 
@@ -1187,10 +1055,7 @@ extern "C" {
 
           do {
             count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-
-            if (ferror_unlocked(stream)) {
-              return F_status_set_error(F_output);
-            }
+            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
 
           } while (count < total);
 
@@ -1201,10 +1066,7 @@ extern "C" {
 
         do {
           count += fwrite_unlocked(safe.string + count, 1, safe.used - count, stream);
-
-          if (ferror_unlocked(stream)) {
-            return F_status_set_error(F_output);
-          }
+          if (ferror_unlocked(stream)) return F_status_set_error(F_output);
 
         } while (count < total);
 
@@ -1219,10 +1081,7 @@ extern "C" {
 
         do {
           count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-
-          if (ferror_unlocked(stream)) {
-            return F_status_set_error(F_output);
-          }
+          if (ferror_unlocked(stream)) return F_status_set_error(F_output);
 
         } while (count < total);
 
@@ -1239,10 +1098,7 @@ extern "C" {
 
       do {
         count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-
-        if (ferror_unlocked(stream)) {
-          return F_status_set_error(F_output);
-        }
+        if (ferror_unlocked(stream)) return F_status_set_error(F_output);
 
       } while (count < total);
     }
@@ -1284,10 +1140,7 @@ extern "C" {
 
     do {
       count += fwrite_unlocked(string + count, 1, length - count, stream);
-
-      if (ferror_unlocked(stream)) {
-        return F_status_set_error(F_output);
-      }
+      if (ferror_unlocked(stream)) return F_status_set_error(F_output);
 
     } while (count < length);
 

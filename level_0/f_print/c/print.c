@@ -5,6 +5,32 @@
 extern "C" {
 #endif
 
+/**
+ * Inline helper function to reduce amount of code typed.
+ *
+ * This will keep trying to print using fwrite_unlocked() until all bytes are written or an error occurs.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_output (with error bit) on error.
+ *
+ * @see fwrite_unlocked()
+ * @see ferror_unlocked()
+ */
+static inline f_status_t private_inline_f_print_write_unlocked(const f_string_t string, const f_array_length_t total, FILE * const stream) {
+
+  f_array_length_t count = 0;
+
+  do {
+    count += fwrite_unlocked(string, sizeof(f_char_t), total - count, stream);
+    if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+
+  } while (count < total);
+
+  return F_none;
+}
+
 #ifndef _di_f_print_
   f_status_t f_print(const f_string_t string, const f_array_length_t length, FILE * const stream) {
     #ifndef _di_level_0_parameter_checking_
@@ -25,11 +51,9 @@ extern "C" {
       if (!stream) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!fwrite_unlocked(&character, 1, 1, stream)) {
-      return F_status_set_error(F_output);
-    }
+    clearerr_unlocked(stream);
 
-    return F_none;
+    return private_inline_f_print_write_unlocked((const f_string_t) &character, 1, stream);
   }
 #endif // _di_f_print_character_
 
@@ -39,33 +63,28 @@ extern "C" {
       if (!stream) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
+    clearerr_unlocked(stream);
+
     if (character == 0x7f) {
-      if (fwrite_unlocked(f_print_sequence_delete_s.string, 1, f_print_sequence_delete_s.used, stream) == f_print_sequence_delete_s.used) {
-        return F_none;
-      }
-    }
-    else if (macro_f_utf_byte_width_is(character) == 1) {
-      if (fwrite_unlocked(f_print_sequence_unknown_s.string, 1, f_print_sequence_unknown_s.used, stream) == f_print_sequence_unknown_s.used) {
-        return F_none;
-      }
-    }
-    else if (macro_f_utf_byte_width_is(character) > 1) {
-      if (fwrite_unlocked(&character, 1, 1, stream)) {
-        return F_utf;
-      }
-    }
-    else if (character > 0x1f) {
-      if (fwrite_unlocked(&character, 1, 1, stream)) {
-        return F_none;
-      }
-    }
-    else {
-      if (fwrite_unlocked(f_print_sequence_set_control_s[(unsigned int) character].string, 1, f_print_sequence_set_control_s[(unsigned int) character].used, stream) == f_print_sequence_set_control_s[(unsigned int) character].used) {
-        return F_none;
-      }
+      return private_inline_f_print_write_unlocked(f_print_sequence_delete_s.string, f_print_sequence_delete_s.used, stream);
     }
 
-    return F_status_set_error(F_output);
+    if (macro_f_utf_byte_width_is(character) == 1) {
+      return private_inline_f_print_write_unlocked(f_print_sequence_unknown_s.string, f_print_sequence_unknown_s.used, stream);
+    }
+
+    if (macro_f_utf_byte_width_is(character) > 1) {
+      const f_status_t status = private_inline_f_print_write_unlocked((const f_string_t) &character, 1, stream);
+      if (F_status_is_error(status)) return status;
+
+      return F_utf;
+    }
+
+    if (character > 0x1f) {
+      return private_inline_f_print_write_unlocked((const f_string_t) &character, 1, stream);
+    }
+
+    return private_inline_f_print_write_unlocked(f_print_sequence_set_control_s[(unsigned int) character].string, f_print_sequence_set_control_s[(unsigned int) character].used, stream);
   }
 #endif // _di_f_print_character_safely_
 
@@ -699,10 +718,7 @@ extern "C" {
 
           do {
             count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-
-            if (ferror_unlocked(stream)) {
-              return F_status_set_error(F_output);
-            }
+            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
 
           } while (count < total);
 
@@ -713,10 +729,7 @@ extern "C" {
 
         do {
           count += fwrite_unlocked(safe.string + count, 1, safe.used - count, stream);
-
-          if (ferror_unlocked(stream)) {
-            return F_status_set_error(F_output);
-          }
+          if (ferror_unlocked(stream)) return F_status_set_error(F_output);
 
         } while (count < safe.used);
 
@@ -731,10 +744,7 @@ extern "C" {
 
         do {
           count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-
-          if (ferror_unlocked(stream)) {
-            return F_status_set_error(F_output);
-          }
+          if (ferror_unlocked(stream)) return F_status_set_error(F_output);
 
         } while (count < total);
 
@@ -754,10 +764,7 @@ extern "C" {
 
       do {
         count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-
-        if (ferror_unlocked(stream)) {
-          return F_status_set_error(F_output);
-        }
+        if (ferror_unlocked(stream)) return F_status_set_error(F_output);
 
       } while (count < total);
     }
