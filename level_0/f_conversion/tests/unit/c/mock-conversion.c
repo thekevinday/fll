@@ -4,7 +4,12 @@
 extern "C" {
 #endif
 
-size_t __wrap_fwrite_unlocked(const void * const ptr, size_t size, size_t n, FILE *stream) {
+int __wrap_ferror_unlocked(FILE *stream) {
+
+  return mock_type(int);
+}
+
+size_t __wrap_fwrite_unlocked(const void * const ptr, size_t size, size_t nmemb, FILE *stream) {
 
   const bool failure = mock_type(bool);
 
@@ -12,9 +17,13 @@ size_t __wrap_fwrite_unlocked(const void * const ptr, size_t size, size_t n, FIL
     return mock_type(int);
   }
 
-  check_expected(ptr);
+  const bool check_ptr = mock_type(bool);
 
-  return n;
+  if (check_ptr) {
+    check_expected(ptr);
+  }
+
+  return nmemb;
 }
 
 #ifdef __cplusplus

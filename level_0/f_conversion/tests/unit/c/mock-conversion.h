@@ -28,7 +28,8 @@ extern "C" {
 
 const static int mock_errno_generic = 32767;
 
-extern size_t __wrap_fwrite_unlocked(const void * const ptr, size_t size, size_t n, FILE *stream);
+extern int __wrap_ferror_unlocked(FILE *stream);
+extern size_t __wrap_fwrite_unlocked(const void * const ptr, size_t size, size_t nmemb, FILE *stream);
 
 #ifdef __cplusplus
 } // extern "C"

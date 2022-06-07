@@ -45,21 +45,25 @@ int main(void) {
     cmocka_unit_test(test__f_conversion_character_to_octal__fails),
     cmocka_unit_test(test__f_conversion_character_to_octal__works),
 
-    // Currently failing for uknown reasons, it appears __wrap_fwrite_unlocked() is somehow not being wrapped properly.
-    //cmocka_unit_test(test__f_conversion_number_signed_print__fails),
-    //cmocka_unit_test(test__f_conversion_number_signed_print__fails_for_prepend),
-    //cmocka_unit_test(test__f_conversion_number_signed_print__fails_for_zero),
-    //cmocka_unit_test(test__f_conversion_number_signed_print__works),
+    cmocka_unit_test(test__f_conversion_number_signed_print__fails),
+    cmocka_unit_test(test__f_conversion_number_signed_print__fails_for_prepend),
+    cmocka_unit_test(test__f_conversion_number_signed_print__fails_for_zero),
+
+    cmocka_unit_test(test__f_conversion_number_signed_print__works),
+    cmocka_unit_test(test__f_conversion_number_signed_print__works_for_zero),
+    cmocka_unit_test(test__f_conversion_number_signed_print__works_for_zero_with_width_zero),
 
     cmocka_unit_test(test__f_conversion_number_signed_to_string__works),
     cmocka_unit_test(test__f_conversion_number_signed_to_string__works_for_prepend),
     cmocka_unit_test(test__f_conversion_number_signed_to_string__works_for_zero),
 
-    // // Currently failing for uknown reasons, it appears __wrap_fwrite_unlocked() is somehow not being wrapped properly.
-    //cmocka_unit_test(test__f_conversion_number_unsigned_print__fails),
-    //cmocka_unit_test(test__f_conversion_number_unsigned_print__fails_for_prepend),
-    //cmocka_unit_test(test__f_conversion_number_unsigned_print__fails_for_zero),
-    //cmocka_unit_test(test__f_conversion_number_unsigned_print__works),
+    cmocka_unit_test(test__f_conversion_number_unsigned_print__fails),
+    cmocka_unit_test(test__f_conversion_number_unsigned_print__fails_for_prepend),
+    cmocka_unit_test(test__f_conversion_number_unsigned_print__fails_for_zero),
+
+    cmocka_unit_test(test__f_conversion_number_unsigned_print__works),
+    cmocka_unit_test(test__f_conversion_number_unsigned_print__works_for_zero),
+    cmocka_unit_test(test__f_conversion_number_unsigned_print__works_for_zero_with_width_zero),
 
     cmocka_unit_test(test__f_conversion_number_unsigned_to_string__works),
     cmocka_unit_test(test__f_conversion_number_unsigned_to_string__works_for_prepend),

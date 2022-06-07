@@ -45,4 +45,18 @@ extern void test__f_conversion_number_unsigned_print__parameter_checking(void **
  */
 extern void test__f_conversion_number_unsigned_print__works(void **state);
 
+/**
+ * Test that function works for 0.
+ *
+ * @see f_conversion_number_unsigned_print()
+ */
+extern void test__f_conversion_number_unsigned_print__works_for_zero(void **state);
+
+/**
+ * Test that function works for 0 when width is 0.
+ *
+ * @see f_conversion_number_unsigned_print()
+ */
+extern void test__f_conversion_number_unsigned_print__works_for_zero_with_width_zero(void **state);
+
 #endif // _TEST__F_conversion_number_unsigned_print_h
