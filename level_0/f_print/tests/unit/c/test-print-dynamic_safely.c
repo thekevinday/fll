@@ -10,8 +10,9 @@ void test__f_print_dynamic_safely__fails(void **state) {
   const f_string_static_t test = macro_f_string_static_t_initialize("test", 0, 4);
 
   {
+    will_return(__wrap_fwrite_unlocked, true);
     will_return(__wrap_fwrite_unlocked, 0);
-    will_return(__wrap_ferror_unlocked, 1);
+    will_return(__wrap_ferror_unlocked, true);
 
     const f_status_t status = f_print_dynamic_safely(test, stdout);
 
@@ -44,8 +45,8 @@ void test__f_print_dynamic_safely__works(void **state) {
   const f_string_static_t test = macro_f_string_static_t_initialize("test", 0, 4);
 
   {
-    will_return(__wrap_fwrite_unlocked, test.used);
-    will_return(__wrap_ferror_unlocked, 0);
+    will_return(__wrap_fwrite_unlocked, false);
+    will_return(__wrap_ferror_unlocked, false);
 
     const f_status_t status = f_print_dynamic_safely(test, stdout);
 

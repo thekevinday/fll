@@ -10,7 +10,9 @@ void test__f_print_character__fails(void **state) {
   const f_string_static_t test = macro_f_string_static_t_initialize("test", 0, 4);
 
   {
+    will_return(__wrap_fwrite_unlocked, true);
     will_return(__wrap_fwrite_unlocked, 0);
+    will_return(__wrap_ferror_unlocked, true);
 
     const f_status_t status = f_print_character(test.string[0], stdout);
 
@@ -34,7 +36,8 @@ void test__f_print_character__works(void **state) {
   const f_string_static_t test = macro_f_string_static_t_initialize("test", 0, 4);
 
   {
-    will_return(__wrap_fwrite_unlocked, 1);
+    will_return(__wrap_fwrite_unlocked, false);
+    will_return(__wrap_ferror_unlocked, false);
 
     const f_status_t status = f_print_character(test.string[0], stdout);
 

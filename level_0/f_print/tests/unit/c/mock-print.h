@@ -30,7 +30,7 @@ const static int mock_errno_generic = 32767;
 
 extern void __wrap_clearerr_unlocked(FILE *stream);
 extern int __wrap_ferror_unlocked(FILE *stream);
-extern size_t __wrap_fwrite_unlocked(const void *ptr, size_t size, size_t n, FILE *stream);
+extern size_t __wrap_fwrite_unlocked(const void *ptr, size_t size, size_t nmemb, FILE *stream);
 extern ssize_t __wrap_write(int fd, const void *buf, size_t count);
 
 #ifdef __cplusplus

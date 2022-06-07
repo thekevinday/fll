@@ -11,8 +11,9 @@ void test__f_print_dynamic_partial_raw_safely__fails(void **state) {
   const f_string_range_t partial = macro_f_string_range_t_initialize(0, 2);
 
   {
+    will_return(__wrap_fwrite_unlocked, true);
     will_return(__wrap_fwrite_unlocked, 0);
-    will_return(__wrap_ferror_unlocked, 1);
+    will_return(__wrap_ferror_unlocked, true);
 
     const f_status_t status = f_print_dynamic_partial_raw_safely(test, partial, stdout);
 
@@ -49,8 +50,8 @@ void test__f_print_dynamic_partial_raw_safely__works(void **state) {
   const f_string_range_t partial = macro_f_string_range_t_initialize(0, 2);
 
   {
-    will_return(__wrap_fwrite_unlocked, test.used);
-    will_return(__wrap_ferror_unlocked, 0);
+    will_return(__wrap_fwrite_unlocked, false);
+    will_return(__wrap_ferror_unlocked, false);
 
     const f_status_t status = f_print_dynamic_partial_raw_safely(test, partial, stdout);
 
