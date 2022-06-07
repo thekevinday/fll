@@ -6,75 +6,76 @@ extern "C" {
 #endif
 
 #if !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
-  f_status_t private_f_conversion_digit_to_file(const f_number_unsigned_t number, const f_conversion_data_t data, const uint8_t negative, FILE * const output) {
+  f_status_t private_f_conversion_digit_to_file(const f_number_unsigned_t number, const f_conversion_data_t data, const uint8_t negative_or_zero, FILE * const stream) {
 
     int digits = 0;
 
-    for (register f_number_unsigned_t remaining = number; remaining; ++digits) {
-      remaining /= data.base;
-    } // for
-
     // A zero value should always show at least 1 zero when width is not 0.
     if (data.width && !number) {
-      ++digits;
+      digits = 1;
+    }
+    else {
+      for (register f_number_unsigned_t remaining = number; remaining; ++digits) {
+        remaining /= data.base;
+      } // for
     }
 
     if (data.width > digits) {
       if (data.flag & F_conversion_data_flag_zeros_leading_d) {
-        if (F_status_is_error(private_f_conversion_digit_to_file_prefix(data, negative, output))) {
+        if (F_status_is_error(private_f_conversion_digit_to_file_prefix(data, negative_or_zero, stream))) {
           return F_status_set_error(F_output);
         }
 
-        if (F_status_is_error(private_f_conversion_digit_to_file_pad(data, f_string_ascii_0_s, data.width - digits, output))) {
+        if (F_status_is_error(private_f_conversion_digit_to_file_pad(data, f_string_ascii_0_s, data.width - digits, stream))) {
           return F_status_set_error(F_output);
         }
 
-        if (F_status_is_error(private_f_conversion_digit_to_file_number(data, number, digits, output))) {
+        if (F_status_is_error(private_f_conversion_digit_to_file_number(data, number, digits, stream))) {
           return F_status_set_error(F_output);
         }
       }
       else if (number) {
-        if (F_status_is_error(private_f_conversion_digit_to_file_pad(data, f_string_ascii_space_s, data.width - digits, output))) {
+        if (F_status_is_error(private_f_conversion_digit_to_file_pad(data, f_string_ascii_space_s, data.width - digits, stream))) {
           return F_status_set_error(F_output);
         }
 
-        if (F_status_is_error(private_f_conversion_digit_to_file_prefix(data, negative, output))) {
+        if (F_status_is_error(private_f_conversion_digit_to_file_prefix(data, negative_or_zero, stream))) {
           return F_status_set_error(F_output);
         }
 
-        if (F_status_is_error(private_f_conversion_digit_to_file_number(data, number, digits, output))) {
+        if (F_status_is_error(private_f_conversion_digit_to_file_number(data, number, digits, stream))) {
           return F_status_set_error(F_output);
         }
       }
       else {
-        if (F_status_is_error(private_f_conversion_digit_to_file_pad(data, f_string_ascii_space_s, data.width - digits, output))) {
+        if (F_status_is_error(private_f_conversion_digit_to_file_pad(data, f_string_ascii_space_s, data.width - digits, stream))) {
           return F_status_set_error(F_output);
         }
 
-        if (F_status_is_error(private_f_conversion_digit_to_file_prefix(data, negative, output))) {
+        if (F_status_is_error(private_f_conversion_digit_to_file_prefix(data, negative_or_zero, stream))) {
           return F_status_set_error(F_output);
         }
 
-        if (F_status_is_error(private_f_conversion_digit_to_file_number(data, number, digits, output))) {
+        if (F_status_is_error(private_f_conversion_digit_to_file_number(data, number, digits, stream))) {
           return F_status_set_error(F_output);
         }
       }
     }
     else if (number) {
-      if (F_status_is_error(private_f_conversion_digit_to_file_prefix(data, negative, output))) {
+      if (F_status_is_error(private_f_conversion_digit_to_file_prefix(data, negative_or_zero, stream))) {
         return F_status_set_error(F_output);
       }
 
-      if (F_status_is_error(private_f_conversion_digit_to_file_number(data, number, digits, output))) {
+      if (F_status_is_error(private_f_conversion_digit_to_file_number(data, number, digits, stream))) {
         return F_status_set_error(F_output);
       }
     }
     else if (data.width) {
-      if (F_status_is_error(private_f_conversion_digit_to_file_prefix(data, negative, output))) {
+      if (F_status_is_error(private_f_conversion_digit_to_file_prefix(data, negative_or_zero, stream))) {
         return F_status_set_error(F_output);
       }
 
-      if (fwrite_unlocked(f_string_ascii_0_s.string, 1, f_string_ascii_0_s.used, output) < f_string_ascii_0_s.used) {
+      if (F_status_is_error(private_f_conversion_digit_to_file_number(data, number, digits, stream))) {
         return F_status_set_error(F_output);
       }
     }
@@ -84,28 +85,36 @@ extern "C" {
 #endif // !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
 
 #if !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
-  f_status_t private_f_conversion_digit_to_file_number(const f_conversion_data_t data, f_number_unsigned_t number, int digits, FILE * const output) {
+  f_status_t private_f_conversion_digit_to_file_number(const f_conversion_data_t data, f_number_unsigned_t number, int digits, FILE * const stream) {
 
-    f_number_unsigned_t power = 1;
+    f_number_unsigned_t current = 0;
+    int power = 1;
+    f_number_unsigned_t work = 0;
 
     for (register uint8_t i = 1; i < digits; ++i) {
       power *= data.base;
     } // for
 
     if (data.base == 2) {
-      f_number_unsigned_t work = 0x1 << (digits - 1);
+      work = 0x1 << (digits - 1);
 
       while (digits--) {
 
+        current = 0;
+
         if (work & number) {
-          if (fwrite_unlocked(f_string_ascii_1_s.string, 1, f_string_ascii_1_s.used, output) < f_string_ascii_1_s.used) {
-            return F_status_set_error(F_output);
-          }
+          do {
+            current += fwrite_unlocked(f_string_ascii_1_s.string + current, sizeof(f_char_t), f_string_ascii_1_s.used - current, stream);
+            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+
+          } while (current < f_string_ascii_1_s.used);
         }
         else {
-          if (fwrite_unlocked(f_string_ascii_0_s.string, 1, f_string_ascii_0_s.used, output) < f_string_ascii_0_s.used) {
-            return F_status_set_error(F_output);
-          }
+          do {
+            current += fwrite_unlocked(f_string_ascii_0_s.string + current, sizeof(f_char_t), f_string_ascii_0_s.used - current, stream);
+            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+
+          } while (current < f_string_ascii_0_s.used);
         }
 
         #ifdef _is_F_endian_big
@@ -118,10 +127,12 @@ extern "C" {
       return F_none;
     }
 
-    f_number_unsigned_t current = number;
-    f_number_unsigned_t work = 0;
+    f_char_t c = 0;
+    size_t count = 0;
 
-    for (f_char_t c = 0; digits; --digits) {
+    current = number;
+
+    for (int i = 0; i < digits; ++i) {
 
       work = current / power;
       current -= work * power;
@@ -139,9 +150,13 @@ extern "C" {
         }
       }
 
-      if (!fwrite_unlocked(&c, 1, 1, output)) {
-        return F_status_set_error(F_output);
-      }
+      count = 0;
+
+      do {
+        count += fwrite_unlocked(&c, 1, sizeof(f_char_t), stream);
+        if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+
+      } while (count < sizeof(f_char_t));
     } // for
 
     return F_none;
@@ -149,13 +164,17 @@ extern "C" {
 #endif // !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
 
 #if !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
-  f_status_t private_f_conversion_digit_to_file_pad(const f_conversion_data_t data, const f_string_static_t pad, int total, FILE * const output) {
+  f_status_t private_f_conversion_digit_to_file_pad(const f_conversion_data_t data, const f_string_static_t pad, int total, FILE * const stream) {
 
-    for (; total; --total) {
+    for (int count; total; --total) {
 
-      if (fwrite_unlocked(pad.string, 1, pad.used, output) < pad.used) {
-        return F_status_set_error(F_output);
-      }
+      count = 0;
+
+      do {
+        count += fwrite_unlocked(pad.string + count, sizeof(f_char_t), pad.used - count, stream);
+        if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+
+      } while (count < pad.used);
     } // for
 
     return F_none;
@@ -163,29 +182,49 @@ extern "C" {
 #endif // !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
 
 #if !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
-  f_status_t private_f_conversion_digit_to_file_prefix(const f_conversion_data_t data, const uint8_t negative, FILE * const output) {
+  f_status_t private_f_conversion_digit_to_file_prefix(const f_conversion_data_t data, const uint8_t negative_or_zero, FILE * const stream) {
 
-    if (negative) {
-      if (negative == 1) {
-        if (fwrite_unlocked(f_string_ascii_minus_s.string, 1, f_string_ascii_minus_s.used, output) < f_string_ascii_minus_s.used) {
-          return F_status_set_error(F_output);
+    if (negative_or_zero) {
+      if (negative_or_zero == 1) {
+        {
+          int count = 0;
+
+          do {
+            count += fwrite_unlocked(f_string_ascii_minus_s.string + count, sizeof(f_char_t), f_string_ascii_minus_s.used - count, stream);
+            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+
+          } while (count < f_string_ascii_minus_s.used);
         }
       }
     }
     else if (data.flag & F_conversion_data_flag_sign_always_d) {
-      if (fwrite_unlocked(f_string_ascii_plus_s.string, 1, f_string_ascii_plus_s.used, output) < f_string_ascii_plus_s.used) {
-        return F_status_set_error(F_output);
-      }
+      int count = 0;
+
+      do {
+        count += fwrite_unlocked(f_string_ascii_plus_s.string + count, sizeof(f_char_t), f_string_ascii_plus_s.used - count, stream);
+        if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+
+      } while (count < f_string_ascii_plus_s.used);
     }
     else if (data.flag & F_conversion_data_flag_sign_pad_d) {
-      if (fwrite_unlocked(f_string_ascii_space_s.string, 1, f_string_ascii_space_s.used, output) < f_string_ascii_space_s.used) {
-        return F_status_set_error(F_output);
-      }
+      int count = 0;
+
+      do {
+        count += fwrite_unlocked(f_string_ascii_space_s.string + count, sizeof(f_char_t), f_string_ascii_space_s.used - count, stream);
+        if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+
+      } while (count < f_string_ascii_space_s.used);
     }
 
     if (data.flag & F_conversion_data_flag_base_prepend_d) {
-      if (fwrite_unlocked(f_string_ascii_0_s.string, 1, f_string_ascii_0_s.used, output) < f_string_ascii_0_s.used) {
-        return F_status_set_error(F_output);
+      {
+        int count = 0;
+
+        do {
+          count += fwrite_unlocked(f_string_ascii_0_s.string + count, sizeof(f_char_t), f_string_ascii_0_s.used - count, stream);
+          if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+
+        } while (count < f_string_ascii_0_s.used);
       }
 
       f_char_t c = 0;
@@ -216,9 +255,13 @@ extern "C" {
       }
 
       if (c) {
-        if (!fwrite_unlocked(&c, 1, 1, output)) {
-          return F_status_set_error(F_output);
-        }
+        int count = 0;
+
+        do {
+          count += fwrite_unlocked(&c, sizeof(f_char_t), sizeof(f_char_t) - count, stream);
+          if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+
+        } while (count < sizeof(f_char_t));
       }
     }
 
@@ -227,7 +270,7 @@ extern "C" {
 #endif // !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
 
 #if !defined(_di_f_conversion_number_signed_to_string_) || !defined(_di_f_conversion_number_unsigned_to_string_)
-  f_status_t private_f_conversion_digit_to_string(const f_number_unsigned_t number, const f_conversion_data_t data, const uint8_t negative, f_string_dynamic_t * const destination) {
+  f_status_t private_f_conversion_digit_to_string(const f_number_unsigned_t number, const f_conversion_data_t data, const uint8_t negative_or_zero, f_string_dynamic_t * const destination) {
 
     int digits = 0;
 
@@ -257,27 +300,27 @@ extern "C" {
 
     if (data.width > digits) {
       if (data.flag & F_conversion_data_flag_zeros_leading_d) {
-        private_f_conversion_digit_to_string_prefix(data, negative, destination);
+        private_f_conversion_digit_to_string_prefix(data, negative_or_zero, destination);
         private_f_conversion_digit_to_string_pad(data, f_string_ascii_0_s.string[0], data.width - digits, destination);
         private_f_conversion_digit_to_string_number(data, number, digits, destination);
       }
       else if (number) {
         private_f_conversion_digit_to_string_pad(data, f_string_ascii_space_s.string[0], data.width - digits, destination);
-        private_f_conversion_digit_to_string_prefix(data, negative, destination);
+        private_f_conversion_digit_to_string_prefix(data, negative_or_zero, destination);
         private_f_conversion_digit_to_string_number(data, number, digits, destination);
       }
       else {
         private_f_conversion_digit_to_string_pad(data, f_string_ascii_space_s.string[0], data.width - digits, destination);
-        private_f_conversion_digit_to_string_prefix(data, negative, destination);
+        private_f_conversion_digit_to_string_prefix(data, negative_or_zero, destination);
         private_f_conversion_digit_to_string_number(data, number, digits, destination);
       }
     }
     else if (number) {
-      private_f_conversion_digit_to_string_prefix(data, negative, destination);
+      private_f_conversion_digit_to_string_prefix(data, negative_or_zero, destination);
       private_f_conversion_digit_to_string_number(data, number, digits, destination);
     }
     else if (data.width) {
-      private_f_conversion_digit_to_string_prefix(data, negative, destination);
+      private_f_conversion_digit_to_string_prefix(data, negative_or_zero, destination);
 
       destination->string[destination->used++] = f_string_ascii_0_s.string[0];
     }
@@ -353,10 +396,10 @@ extern "C" {
 #endif // !defined(_di_f_conversion_number_signed_to_string_) || !defined(_di_f_conversion_number_unsigned_to_string_)
 
 #if !defined(_di_f_conversion_number_signed_to_string_) || !defined(_di_f_conversion_number_unsigned_to_string_)
-  void private_f_conversion_digit_to_string_prefix(const f_conversion_data_t data, const uint8_t negative, f_string_dynamic_t * const destination) {
+  void private_f_conversion_digit_to_string_prefix(const f_conversion_data_t data, const uint8_t negative_or_zero, f_string_dynamic_t * const destination) {
 
-    if (negative) {
-      if (negative == 1) {
+    if (negative_or_zero) {
+      if (negative_or_zero == 1) {
         destination->string[destination->used++] = f_string_ascii_minus_s.string[0];
       }
       else if (data.flag & (F_conversion_data_flag_sign_always_d | F_conversion_data_flag_sign_pad_d)) {

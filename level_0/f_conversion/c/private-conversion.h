@@ -22,14 +22,13 @@ extern "C" {
  *   The number to convert.
  * @param data
  *   The settings designating how to perform the conversion.
- * @param negative
+ * @param negative_or_zero
  *   Designate that this number is to be represented as a negative number (or is zero).
  *
  *   Set this to 0 to represent a positive number.
  *   Set this to 1 to represent a negative number.
  *   Set this to 2 to represent the number 0;
- * @param output
- *
+ * @param stream
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
@@ -38,6 +37,7 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ * @see ferror_unlocked()
  * @see fwrite_unlocked()
  *
  * @see f_conversion_number_signed_print()
@@ -48,7 +48,7 @@ extern "C" {
  * @see private_f_conversion_digit_to_file_prefix()
  */
 #if !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
-  extern f_status_t private_f_conversion_digit_to_file(const f_number_unsigned_t number, const f_conversion_data_t data, const uint8_t negative, FILE * const output) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_conversion_digit_to_file(const f_number_unsigned_t number, const f_conversion_data_t data, const uint8_t negative_or_zero, FILE * const stream) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
 
 /**
@@ -62,8 +62,7 @@ extern "C" {
  *   To represent a negative number, assign the flag f_conversion_data_flag_is_negative to data.flags.
  * @param digits
  *   The number of digits the number is represented by (based on the base unit).
- * @param output
- *
+ * @param stream
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
@@ -72,13 +71,14 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ * @see ferror_unlocked()
  * @see fwrite_unlocked()
  *
  * @see f_conversion_number_signed_print()
  * @see f_conversion_number_unsigned_print()
  */
 #if !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
-  extern f_status_t private_f_conversion_digit_to_file_number(const f_conversion_data_t data, f_number_unsigned_t number, int digits, FILE * const output) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_conversion_digit_to_file_number(const f_conversion_data_t data, f_number_unsigned_t number, int digits, FILE * const stream) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
 
 /**
@@ -91,8 +91,7 @@ extern "C" {
  *   Should be either f_string_ascii_space_s or f_string_ascii_0_s.
  * @param total
  *   The total number of times to print the pad.
- * @param output
- *
+ * @param stream
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
@@ -101,13 +100,14 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ * @see ferror_unlocked()
  * @see fwrite_unlocked()
  *
  * @see f_conversion_number_signed_print()
  * @see f_conversion_number_unsigned_print()
  */
 #if !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
-  extern f_status_t private_f_conversion_digit_to_file_pad(const f_conversion_data_t data, const f_string_static_t pad, int total, FILE * const output) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_conversion_digit_to_file_pad(const f_conversion_data_t data, const f_string_static_t pad, int total, FILE * const stream) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
 
 /**
@@ -115,14 +115,13 @@ extern "C" {
  *
  * @param data
  *   The settings designating how to perform the conversion.
- * @param negative
+ * @param negative_or_zero
  *   Designate that this number is to be represented as a negative number (or is zero).
  *
  *   Set this to 0 to represent a positive number.
  *   Set this to 1 to represent a negative number.
  *   Set this to 2 to represent the number 0;
- * @param output
- *
+ * @param stream
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
@@ -131,13 +130,14 @@ extern "C" {
  *   F_output (with error bit) on failure.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ * @see ferror_unlocked()
  * @see fwrite_unlocked()
  *
  * @see f_conversion_number_signed_print()
  * @see f_conversion_number_unsigned_print()
  */
 #if !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
-  extern f_status_t private_f_conversion_digit_to_file_prefix(const f_conversion_data_t data, const uint8_t negative, FILE * const output) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_conversion_digit_to_file_prefix(const f_conversion_data_t data, const uint8_t negative_or_zero, FILE * const stream) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
 
 /**
@@ -147,14 +147,13 @@ extern "C" {
  *   The number to convert.
  * @param data
  *   The settings designating how to perform the conversion.
- * @param negative
+ * @param negative_or_zero
  *   Designate that this number is to be represented as a negative number (or is zero).
  *
  *   Set this to 0 to represent a positive number.
  *   Set this to 1 to represent a negative number.
  *   Set this to 2 to represent the number 0;
- * @param output
- *
+ * @param stream
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
@@ -170,11 +169,11 @@ extern "C" {
  * @see private_f_conversion_digit_to_string_prefix()
  */
 #if !defined(_di_f_conversion_number_signed_to_string_) || !defined(_di_f_conversion_number_unsigned_to_string_)
-  extern f_status_t private_f_conversion_digit_to_string(const f_number_unsigned_t number, const f_conversion_data_t data, const uint8_t negative, f_string_dynamic_t * const destination) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_conversion_digit_to_string(const f_number_unsigned_t number, const f_conversion_data_t data, const uint8_t negative_or_zero, f_string_dynamic_t * const destination) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_conversion_number_signed_to_string_) || !defined(_di_f_conversion_number_unsigned_to_string_)
 
 /**
- * Helper function for printing the number to the output file.
+ * Helper function for printing the number to the stream file.
  *
  * @param data
  *   The settings designating how to perform the conversion.
@@ -184,8 +183,7 @@ extern "C" {
  *   To represent a negative number, assign the flag f_conversion_data_flag_is_negative to data.flags.
  * @param digits
  *   The number of digits the number is represented by (based on the base unit).
- * @param output
- *
+ * @param stream
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @see f_conversion_number_signed_to_string()
@@ -205,9 +203,8 @@ extern "C" {
  *   Should be either f_string_ascii_space_s or f_string_ascii_0_s.
  * @param total
  *   The total number of times to print the pad.
- * @param output
- *
- *   The file stream to output to, including standard streams such as stdout and stderr.
+ * @param destination
+ *   A string buffer to write to.
  *
  * @see f_conversion_number_signed_to_string()
  * @see f_conversion_number_unsigned_to_string()
@@ -221,21 +218,20 @@ extern "C" {
  *
  * @param data
  *   The settings designating how to perform the conversion.
- * @param negative
+ * @param negative_or_zero
  *   Designate that this number is to be represented as a negative number (or is zero).
  *
  *   Set this to 0 to represent a positive number.
  *   Set this to 1 to represent a negative number.
  *   Set this to 2 to represent the number 0;
- * @param output
- *
- *   The file stream to output to, including standard streams such as stdout and stderr.
+ * @param destination
+ *   A string buffer to write to.
  *
  * @see f_conversion_number_signed_to_string()
  * @see f_conversion_number_unsigned_to_string()
  */
 #if !defined(_di_f_conversion_number_signed_to_string_) || !defined(_di_f_conversion_number_unsigned_to_string_)
-  extern void private_f_conversion_digit_to_string_prefix(const f_conversion_data_t data, const uint8_t negative, f_string_dynamic_t * const destination) F_attribute_visibility_internal_d;
+  extern void private_f_conversion_digit_to_string_prefix(const f_conversion_data_t data, const uint8_t negative_or_zero, f_string_dynamic_t * const destination) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_conversion_number_signed_to_string_) || !defined(_di_f_conversion_number_unsigned_to_string_)
 
 #ifdef __cplusplus

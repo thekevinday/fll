@@ -236,7 +236,7 @@ extern "C" {
  *   The number to convert.
  * @param data
  *   The settings designating how to perform the conversion.
- * @param output
+ * @param stream
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
@@ -250,10 +250,11 @@ extern "C" {
  *   F_output (with error bit) on any other file output error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ * @see ferror_unlocked()
  * @see fwrite_unlocked()
  */
 #ifndef _di_f_conversion_number_signed_print_
-  extern f_status_t f_conversion_number_signed_print(const f_number_signed_t number, const f_conversion_data_t data, FILE * const output);
+  extern f_status_t f_conversion_number_signed_print(const f_number_signed_t number, const f_conversion_data_t data, FILE * const stream);
 #endif // _di_f_conversion_number_signed_print_
 
 /**
@@ -300,7 +301,7 @@ extern "C" {
  *   To represent a negative number, assign the flag f_conversion_data_flag_is_negative to data.flags.
  * @param data
  *   The settings designating how to perform the conversion.
- * @param output
+ * @param stream
  *   The file stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
@@ -314,10 +315,11 @@ extern "C" {
  *   F_output (with error bit) on any other file output error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ * @see ferror_unlocked()
  * @see fwrite_unlocked()
  */
 #ifndef _di_f_conversion_number_unsigned_print_
-  extern f_status_t f_conversion_number_unsigned_print(const f_number_unsigned_t number, const f_conversion_data_t data, FILE * const output);
+  extern f_status_t f_conversion_number_unsigned_print(const f_number_unsigned_t number, const f_conversion_data_t data, FILE * const stream);
 #endif // _di_f_conversion_number_unsigned_print_
 
 /**
