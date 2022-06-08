@@ -1,0 +1,54 @@
+# fss-0001
+#
+# Builds a program that is links to the generated library and is executed to perform tests.
+#
+# Memory leaks in the test program can be checked for by running valgrind with this executable.
+#
+
+build_name test-f_signal
+
+version_major 0
+version_minor 5
+version_micro 10
+version_file major
+version_target major
+
+modes individual clang test coverage
+modes_default individual test
+
+build_compiler gcc
+build_compiler-clang clang
+build_indexer ar
+build_indexer_arguments rcs
+build_language c
+
+build_libraries -lc -lcmocka
+build_libraries-individual -lf_memory -lf_string -lf_signal
+
+build_sources_program test-signal-close.c test-signal-mask.c test-signal-open.c test-signal-queue.c test-signal-read.c test-signal-send.c test-signal-set_add.c test-signal-set_delete.c test-signal-set_empty.c test-signal-set_fill.c test-signal-set_has.c test-signal-wait.c test-signal-wait_until.c
+build_sources_program test-signal.c
+
+build_script no
+build_shared yes
+build_static no
+
+path_headers tests/unit/c
+path_sources tests/unit/c
+
+has_path_standard no
+preserve_path_headers yes
+
+search_exclusive yes
+search_shared yes
+search_static yes
+
+defines -Ibuild/includes
+defines_static -Lbuild/libraries/static
+defines_shared -Lbuild/libraries/shared
+
+flags -O2 -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-parentheses
+flags-clang -Wno-logical-op-parentheses
+flags-test -fstack-protector -Wall -Wno-missing-braces
+flags-coverage -O0 --coverage -fprofile-abs-path -fprofile-dir=build/coverage/
+
+flags_program -fPIE
