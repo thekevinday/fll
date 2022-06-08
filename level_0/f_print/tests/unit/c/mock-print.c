@@ -20,7 +20,7 @@ size_t __wrap_fwrite_unlocked(const void *ptr, size_t size, size_t nmemb, FILE *
     return mock_type(int);
   }
 
-  return nmemb;
+  return mock_type(size_t);
 }
 
 ssize_t __wrap_write(int fd, const void *buf, size_t count) {

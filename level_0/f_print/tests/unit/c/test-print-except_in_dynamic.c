@@ -56,6 +56,7 @@ void test__f_print_except_in_dynamic__works(void **state) {
     const f_string_ranges_t range = f_string_ranges_t_initialize;
 
     will_return(__wrap_fwrite_unlocked, false);
+    will_return(__wrap_fwrite_unlocked, test.used);
     will_return(__wrap_ferror_unlocked, false);
 
     const f_status_t status = f_print_except_in_dynamic(test, except, range, stdout);
@@ -72,6 +73,7 @@ void test__f_print_except_in_dynamic__works(void **state) {
     const f_string_ranges_t range = macro_f_string_ranges_t_initialize(ranges, 0, 1);
 
     will_return(__wrap_fwrite_unlocked, false);
+    will_return(__wrap_fwrite_unlocked, 1);
     will_return(__wrap_ferror_unlocked, false);
 
     const f_status_t status = f_print_except_in_dynamic(test, except, range, stdout);

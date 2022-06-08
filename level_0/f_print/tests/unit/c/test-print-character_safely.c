@@ -79,6 +79,7 @@ void test__f_print_character_safely__returns_utf(void **state) {
 
   {
     will_return(__wrap_fwrite_unlocked, false);
+    will_return(__wrap_fwrite_unlocked, test.used);
     will_return(__wrap_ferror_unlocked, false);
 
     const f_status_t status = f_print_character_safely(test.string[0], stdout);
@@ -93,6 +94,7 @@ void test__f_print_character_safely__works(void **state) {
 
   {
     will_return(__wrap_fwrite_unlocked, false);
+    will_return(__wrap_fwrite_unlocked, f_print_sequence_delete_s.used);
     will_return(__wrap_ferror_unlocked, false);
 
     const f_status_t status = f_print_character_safely((f_char_t) 0x7f, stdout);
@@ -102,6 +104,7 @@ void test__f_print_character_safely__works(void **state) {
 
   {
     will_return(__wrap_fwrite_unlocked, false);
+    will_return(__wrap_fwrite_unlocked, f_print_sequence_unknown_s.used);
     will_return(__wrap_ferror_unlocked, false);
 
     const f_status_t status = f_print_character_safely((f_char_t) F_utf_byte_1_d, stdout);
@@ -111,6 +114,7 @@ void test__f_print_character_safely__works(void **state) {
 
   {
     will_return(__wrap_fwrite_unlocked, false);
+    will_return(__wrap_fwrite_unlocked, 1);
     will_return(__wrap_ferror_unlocked, false);
 
     const f_status_t status = f_print_character_safely(test.string[0], stdout);

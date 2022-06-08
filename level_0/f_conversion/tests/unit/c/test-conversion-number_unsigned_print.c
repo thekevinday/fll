@@ -76,7 +76,7 @@ void test__f_conversion_number_unsigned_print__works(void **state) {
     const f_conversion_data_t data = macro_f_conversion_data_t_initialize(10, 0, 1);
 
     will_return(__wrap_fwrite_unlocked, false);
-    will_return(__wrap_fwrite_unlocked, true);
+    will_return(__wrap_fwrite_unlocked, 1);
     will_return(__wrap_ferror_unlocked, false);
 
     expect_string(__wrap_fwrite_unlocked, ptr, "1");
@@ -93,7 +93,7 @@ void test__f_conversion_number_unsigned_print__works_for_zero(void **state) {
     const f_conversion_data_t data = macro_f_conversion_data_t_initialize(10, 0, 1);
 
     will_return(__wrap_fwrite_unlocked, false);
-    will_return(__wrap_fwrite_unlocked, true);
+    will_return(__wrap_fwrite_unlocked, 1);
     will_return(__wrap_ferror_unlocked, false);
 
     expect_string(__wrap_fwrite_unlocked, ptr, "0");

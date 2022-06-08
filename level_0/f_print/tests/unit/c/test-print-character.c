@@ -37,6 +37,7 @@ void test__f_print_character__works(void **state) {
 
   {
     will_return(__wrap_fwrite_unlocked, false);
+    will_return(__wrap_fwrite_unlocked, test.used);
     will_return(__wrap_ferror_unlocked, false);
 
     const f_status_t status = f_print_character(test.string[0], stdout);

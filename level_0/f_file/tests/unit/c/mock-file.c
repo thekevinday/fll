@@ -175,26 +175,10 @@ FILE *__wrap_freopen(const char *pathname, const char *mode, FILE *stream) {
 
 int __wrap_feof_unlocked(FILE *stream) {
 
-  const bool failure = mock_type(bool);
-
-  if (failure) {
-    errno = mock_type(int);
-
-    return -1;
-  }
-
   return mock_type(int);
 }
 
 int __wrap_ferror_unlocked(FILE *stream) {
-
-  const bool failure = mock_type(bool);
-
-  if (failure) {
-    errno = mock_type(int);
-
-    return -1;
-  }
 
   return mock_type(int);
 }
@@ -213,6 +197,7 @@ int __wrap_fflush(FILE *stream) {
 }
 
 int __wrap_fileno(FILE *stream) {
+
   return mock_type(int);
 }
 
@@ -221,14 +206,6 @@ void __wrap_flockfile(FILE *filehandle) {
 }
 
 size_t __wrap_fread_unlocked(void *ptr, size_t size, size_t nmemb, FILE *stream) {
-
-  const bool failure = mock_type(bool);
-
-  if (failure) {
-    errno = mock_type(int);
-
-    return 0;
-  }
 
   return mock_type(int);
 }
@@ -313,12 +290,10 @@ size_t __wrap_fwrite_unlocked(const void *ptr, size_t size, size_t nmemb, FILE *
   const bool failure = mock_type(bool);
 
   if (failure) {
-    errno = mock_type(int);
-
-    return 0;
+    return mock_type(int);
   }
 
-  return mock_type(int);
+  return mock_type(size_t);
 }
 
 int __wrap_lchown(const char *pathname, uid_t owner, gid_t group) {

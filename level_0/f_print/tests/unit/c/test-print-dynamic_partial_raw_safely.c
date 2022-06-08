@@ -51,6 +51,7 @@ void test__f_print_dynamic_partial_raw_safely__works(void **state) {
 
   {
     will_return(__wrap_fwrite_unlocked, false);
+    will_return(__wrap_fwrite_unlocked, 3);
     will_return(__wrap_ferror_unlocked, false);
 
     const f_status_t status = f_print_dynamic_partial_raw_safely(test, partial, stdout);
