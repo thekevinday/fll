@@ -2211,15 +2211,7 @@ extern "C" {
       if (ferror_unlocked(file.stream)) {
         funlockfile(file.stream);
 
-        if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
-        if (errno == EBADF) return F_status_set_error(F_file_descriptor);
-        if (errno == EFAULT) return F_status_set_error(F_buffer);
-        if (errno == EINTR) return F_status_set_error(F_interrupt);
-        if (errno == EINVAL) return F_status_set_error(F_parameter);
-        if (errno == EIO) return F_status_set_error(F_input_output);
-        if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
-
-        return F_status_set_error(F_failure);
+        return F_status_set_error(F_file_read);
       }
 
       buffer->used += size_read;
@@ -2272,15 +2264,7 @@ extern "C" {
     if (ferror_unlocked(file.stream)) {
       funlockfile(file.stream);
 
-      if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
-      if (errno == EBADF) return F_status_set_error(F_file_descriptor);
-      if (errno == EFAULT) return F_status_set_error(F_buffer);
-      if (errno == EINTR) return F_status_set_error(F_interrupt);
-      if (errno == EINVAL) return F_status_set_error(F_parameter);
-      if (errno == EIO) return F_status_set_error(F_input_output);
-      if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
-
-      return F_status_set_error(F_failure);
+      return F_status_set_error(F_file_read);
     }
 
     if (size_read) {
@@ -2354,15 +2338,7 @@ extern "C" {
       if (ferror_unlocked(file.stream)) {
         funlockfile(file.stream);
 
-        if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
-        if (errno == EBADF) return F_status_set_error(F_file_descriptor);
-        if (errno == EFAULT) return F_status_set_error(F_buffer);
-        if (errno == EINTR) return F_status_set_error(F_interrupt);
-        if (errno == EINVAL) return F_status_set_error(F_parameter);
-        if (errno == EIO) return F_status_set_error(F_input_output);
-        if (errno == EISDIR) return F_status_set_error(F_file_type_directory);
-
-        return F_status_set_error(F_failure);
+        return F_status_set_error(F_file_read);
       }
 
       buffer->used += size_read;

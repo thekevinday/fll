@@ -39,6 +39,9 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_space_not (with error bit) if file system is out of space (or file system quota is reached).
  *
+ * @see close()
+ * @see fsync()
+ *
  * @see f_file_close()
  * @see f_file_copy()
  * @see f_file_stream_close()
@@ -89,6 +92,8 @@ extern "C" {
  *   F_supported_not if copying a given type of file is unsupported.
  *   F_failure (with error bit) for any other error.
  *
+ * @see open()
+ *
  * @see f_file_copy()
  * @see f_file_clone()
  */
@@ -132,6 +137,8 @@ extern "C" {
  *   F_read_only (with error bit) if file is read-only.
  *   F_space_not (with error bit) if file system is out of space (or file system quota is reached).
  *   F_failure (with error bit) for any other error.
+ *
+ * @see open()
  *
  * @see f_file_copy()
  * @see f_file_create()
@@ -179,6 +186,8 @@ extern "C" {
  *   F_space_not (with error bit) if file system is out of space (or file system quota is reached).
  *   F_failure (with error bit) for any other error.
  *
+ * @see openat()
+ *
  * @see f_file_create_at()
  */
 #if !defined(_di_f_file_create_at_)
@@ -213,6 +222,8 @@ extern "C" {
  *   F_read_only (with error bit) if file is read-only.
  *   F_space_not (with error bit) if file system is out of space (or file system quota is reached).
  *   F_failure (with error bit) for any other error.
+ *
+ * @see mkdir()
  *
  * @see f_file_copy()
  */
@@ -252,6 +263,8 @@ extern "C" {
  *   F_space_not (with error bit) if file system is out of space (or file system quota is reached).
  *   F_failure (with error bit) for any other error.
  *
+ * @see mkdirat()
+ *
  * @see f_file_copy_at()
  */
 #if !defined(_di_f_file_copy_at_)
@@ -283,6 +296,8 @@ extern "C" {
  *   F_space_not (with error bit) if file system is out of space (or file system quota is reached).
  *   F_supported_not (with error bit) for unsupported file types.
  *   F_failure (with error bit) for any other error.
+ *
+ * @see mkfifo()
  *
  * @see f_file_create_fifo()
  * @see f_file_copy()
@@ -319,6 +334,8 @@ extern "C" {
  *   F_space_not (with error bit) if file system is out of space (or file system quota is reached).
  *   F_supported_not (with error bit) for unsupported file types.
  *   F_failure (with error bit) for any other error.
+ *
+ * @see mkfifoat()
  *
  * @see f_file_create_fifo_at()
  * @see f_file_copy_at()
@@ -358,6 +375,8 @@ extern "C" {
  *   F_space_not (with error bit) if file system is out of space (or file system quota is reached).
  *   F_supported_not (with error bit) for unsupported file types.
  *   F_failure (with error bit) for any other error.
+ *
+ * @see mknod()
  *
  * @see f_file_copy()
  * @see f_file_create_device()
@@ -402,6 +421,8 @@ extern "C" {
  *   F_failure (with error bit) for any other error.
  *   F_supported_not (with error bit) for unsupported file types.
  *
+ * @see mknodat()
+ *
  * @see f_file_copy_at()
  * @see f_file_create_device_at()
  * @see f_file_create_node_at()
@@ -428,6 +449,8 @@ extern "C" {
  *   F_space_not (with error bit) if file system is out of space (or file system quota is reached).
  *   F_supported_not (with error bit) if the file system or file type does not support flushing.
  *   F_file_synchronize (with error bit) on any other failure.
+ *
+ * @see fsync()
  *
  * @see f_file_close()
  * @see f_file_copy()
@@ -466,6 +489,8 @@ extern "C" {
  *   F_prohibited (with error bit) if file system does not allow for creating or linking.
  *   F_read_only (with error bit) if file system is read-only.
  *   F_failure (with error bit) for any other error.
+ *
+ * @see symlink()
  *
  * @see f_file_copy()
  * @see f_file_link()
@@ -507,6 +532,8 @@ extern "C" {
  *   F_read_only (with error bit) if file system is read-only.
  *   F_failure (with error bit) for any other error.
  *
+ * @see symlinkat()
+ *
  * @see f_file_link_at()
  */
 #if !defined(_di_f_file_link_at_)
@@ -540,6 +567,8 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_string_too_large (with error bit) if link target path is too large for string buffer size.
  *   F_failure (with error bit) for any other error.
+ *
+ * @see readlink()
  *
  * @see f_file_copy()
  * @see f_file_link_read()
@@ -581,6 +610,8 @@ extern "C" {
  *   F_string_too_large (with error bit) if link target path is too large for string buffer size.
  *   F_failure (with error bit) for any other error.
  *
+ * @see readlinkat()
+ *
  * @see f_file_copy_at()
  * @see f_file_link_read_at()
  * @see f_string_dynamic_increase_by()
@@ -614,6 +645,8 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_read_only (with error bit) if file is read-only.
  *   F_failure (with error bit) for any other error.
+ *
+ * @see chmod()
  *
  * @see f_file_copy()
  * @see f_file_mode_set()
@@ -649,6 +682,8 @@ extern "C" {
  *   F_read_only (with error bit) if file is read-only.
  *   F_failure (with error bit) for any other error.
  *
+ * @see fchmodat()
+ *
  * @see f_file_mode_set_at()
  */
 #if !defined(_di_f_file_mode_set_at_)
@@ -676,6 +711,8 @@ extern "C" {
  *   F_file_found_not (with error bit) if the file was not found.
  *   F_file_open (with error bit) if the file is already open.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see open()
  *
  * @see f_file_copy()
  * @see f_file_open()
@@ -707,6 +744,8 @@ extern "C" {
  *   F_file_found_not (with error bit) if the file was not found.
  *   F_file_open (with error bit) if the file is already open.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see openat()
  *
  * @see f_file_open_at()
  */
@@ -745,6 +784,9 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_read_only (with error bit) if file is read-only.
  *   F_failure (with error bit) for any other error.
+ *
+ * @see chown()
+ * @see lchown()
  *
  * @see f_file_copy()
  * @see f_file_role_change()
@@ -787,6 +829,8 @@ extern "C" {
  *   F_read_only (with error bit) if file is read-only.
  *   F_failure (with error bit) for any other error.
  *
+ * @see fchownat()
+ *
  * @see f_file_role_change_at()
  */
 #if !defined(_di_f_file_role_change_at_)
@@ -817,6 +861,9 @@ extern "C" {
  *   F_name (with error bit) on path name error.
  *   F_number_overflow (with error bit) on overflow error.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see lstat()
+ * @see stat()
  *
  * @see f_file_copy()
  * @see f_file_exists()
@@ -854,6 +901,8 @@ extern "C" {
  *   F_number_overflow (with error bit) on overflow error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ * @see fstatat()
+ *
  * @see f_file_stat_at()
  * @see f_file_exists_at()
  * @see f_file_touch_at()
@@ -883,6 +932,8 @@ extern "C" {
  *   F_name (with error bit) on path name error.
  *   F_number_overflow (with error bit) on overflow error.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see fstat()
  *
  * @see f_file_size_by_id()
  * @see f_file_stat_by_id()
@@ -929,15 +980,12 @@ extern "C" {
  *   F_none on success.
  *   F_none_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
  *
- *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
- *   F_buffer (with error bit) if the buffer is invalid.
- *   F_file (with error bit) if file descriptor is in an error state.
- *   F_file_closed (with error bit) if file is not open.
- *   F_file_descriptor (with error bit) if the file descriptor is invalid.
- *   F_file_type_directory (with error bit) if file descriptor represents a directory.
- *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_file_write (with error bit) on error during file write.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see flockfile()
+ * @see fwrite_unlocked()
+ * @see funlockfile()
  *
  * @see f_file_stream_write()
  * @see f_file_stream_write_block()
@@ -976,6 +1024,8 @@ extern "C" {
  *   F_input_output (with error bit) on I/O error.
  *   F_interrupt (with error bit) if interrupt was received.
  *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see write()
  *
  * @see f_file_write()
  * @see f_file_write_block()

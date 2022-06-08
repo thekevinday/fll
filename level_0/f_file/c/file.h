@@ -2206,6 +2206,8 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  * @see flockfile()
+ * @see feof_unlocked()
+ * @see ferror_unlocked()
  * @see fread_unlocked()
  * @see funlockfile()
  */
@@ -2230,17 +2232,16 @@ extern "C" {
  *   F_none on success.
  *   F_none_eof on success and EOF was reached.
  *
- *   F_block (with error bit) if file descriptor is set to non-block and the read would result in a blocking operation.
- *   F_buffer (with error bit) if the buffer is invalid.
  *   F_error (with error bit) if the file is already in the error state at the start of this function.
- *   F_file_closed (with error bit) if file is not open.
- *   F_file_descriptor (with error bit) if the file descriptor is invalid.
- *   F_file_type_directory (with error bit) if file descriptor represents a directory.
- *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_file_closed (with error bit) if the file is closed.
+ *   F_file_read (with error bit) on file read error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ * @see feof_unlocked()
+ * @see ferror_unlocked()
+ * @see flockfile()
  * @see fread()
+ * @see funlockfile()
  */
 #ifndef _di_f_file_stream_read_block_
   extern f_status_t f_file_stream_read_block(const f_file_t file, f_string_dynamic_t * const buffer);
@@ -2269,18 +2270,15 @@ extern "C" {
  *   F_none_eof on success and EOF was reached.
  *   F_none_stop on success and total was reached.
  *
- *   F_block (with error bit) if file descriptor is set to non-block and the read would result in a blocking operation.
- *   F_buffer (with error bit) if the buffer is invalid.
  *   F_error (with error bit) if the file is already in the error state at the start of this function.
- *   F_file_closed (with error bit) if file is not open.
- *   F_file_descriptor (with error bit) if the file descriptor is invalid.
- *   F_file_type_directory (with error bit) if file descriptor represents a directory.
- *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_file_closed (with error bit) if the file is closed.
+ *   F_file_read (with error bit) on file read error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_string_dynamic_increase_by().
  *
+ * @see feof_unlocked()
+ * @see ferror_unlocked()
  * @see flockfile()
  * @see fread_unlocked()
  * @see funlockfile()
@@ -2355,23 +2353,18 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_none_eof when the file stream is at the end of the file.
  *   F_none_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
  *   F_data_not on success but buffer.used is 0.
  *
- *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
- *   F_buffer (with error bit) if the buffer is invalid.
- *   F_file_closed (with error bit) if file is not open.
- *   F_file_descriptor (with error bit) if the file descriptor is invalid.
- *   F_file_type_directory (with error bit) if file descriptor represents a directory.
- *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_file_write (with error bit) on error during file write.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   F_file_write (with error bit) on any other error.
  *
+ * @see ferror_unlocked()
  * @see flockfile()
  * @see fwrite_unlocked()
- * @see ferror_unlocked()
  * @see funlockfile()
  */
 #ifndef _di_f_file_stream_write_
@@ -2395,16 +2388,11 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_none_eof when the file stream is at the end of the file.
  *   F_none_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
  *   F_data_not on success but buffer.used is 0.
  *
- *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
- *   F_buffer (with error bit) if the buffer is invalid.
- *   F_file_closed (with error bit) if file is not open.
- *   F_file_descriptor (with error bit) if the file descriptor is invalid.
- *   F_file_type_directory (with error bit) if file descriptor represents a directory.
- *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_file_write (with error bit) on error during file write.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   F_file_write (with error bit) on any other error.
@@ -2435,17 +2423,12 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_none_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
+ *   F_none_eof when the file stream is at the end of the file.
  *   F_none_eos on success but range.stop exceeded buffer.used (only wrote up to buffer.used).
+ *   F_none_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
  *   F_data_not on success but either buffer.used or total is 0.
  *
- *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
- *   F_buffer (with error bit) if the buffer is invalid.
- *   F_file_closed (with error bit) if file is not open.
- *   F_file_descriptor (with error bit) if the file descriptor is invalid.
- *   F_file_type_directory (with error bit) if file descriptor represents a directory.
- *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_file_write (with error bit) on error during file write.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   F_file_write (with error bit) on any other error.
@@ -2479,12 +2462,7 @@ extern "C" {
  *   F_none_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
  *   F_none_eos on success but range.stop exceeded buffer.used (only wrote up to buffer.used).
  *
- *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
- *   F_buffer (with error bit) if the buffer is invalid.
- *   F_file_descriptor (with error bit) if the file descriptor is invalid.
- *   F_file_type_directory (with error bit) if file descriptor represents a directory.
- *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) if interrupt was received.
+ *   F_file_write (with error bit) on error during file write.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  * @see fwrite_unlocked()
