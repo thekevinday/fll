@@ -3983,29 +3983,6 @@ extern "C" {
 #endif // _di_f_thread_sets_resize_
 
 /**
- * Send a signal to the given thread.
- *
- * @param id
- *   The ID of the thread to signal.
- * @param signal
- *   The signal to send to the thread.
- *   If 0 is used instead of a valid signal, then instead check to see if the thread exists.
- *
- * @return
- *   F_none on success and signal is not 0.
- *   F_found on success, signal is 0, and the thread by the given ID does exist.
- *
- *   F_found_not on success, signal is 0, and the thread by the given ID does not exist.
- *   F_found_not (with error bit) if no thread by the given ID was found (and signal is not 0).
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- * @see pthread_kill()
- */
-#ifndef _di_f_thread_signal_
-  extern f_status_t f_thread_signal(const f_thread_id_t id, const int signal);
-#endif // _di_f_thread_signal_
-
-/**
  * Get or assign the current signal set in use.
  *
  * Either set or previous may be NULL but not both (at least one is required).
@@ -4032,6 +4009,29 @@ extern "C" {
 #ifndef _di_f_thread_signal_mask_
   extern f_status_t f_thread_signal_mask(const int how, const sigset_t * const next, sigset_t * const current);
 #endif // _di_f_thread_signal_mask_
+
+/**
+ * Send a signal to the given thread.
+ *
+ * @param id
+ *   The ID of the thread to signal.
+ * @param signal
+ *   The signal to send to the thread.
+ *   If 0 is used instead of a valid signal, then instead check to see if the thread exists.
+ *
+ * @return
+ *   F_none on success and signal is not 0.
+ *   F_found on success, signal is 0, and the thread by the given ID does exist.
+ *
+ *   F_found_not on success, signal is 0, and the thread by the given ID does not exist.
+ *   F_found_not (with error bit) if no thread by the given ID was found (and signal is not 0).
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see pthread_kill()
+ */
+#ifndef _di_f_thread_signal_write_
+  extern f_status_t f_thread_signal_write(const f_thread_id_t id, const int signal);
+#endif // _di_f_thread_signal_write_
 
 /**
  * Send the signal and value to the given thread.

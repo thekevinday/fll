@@ -149,7 +149,7 @@ extern "C" {
       do {
         if (!process->id_thread) break;
 
-        f_thread_signal(process->id_thread, global.thread->signal ? global.thread->signal : F_signal_termination);
+        f_thread_signal_write(process->id_thread, global.thread->signal ? global.thread->signal : F_signal_termination);
 
         controller_time(0, controller_thread_exit_process_cancel_wait_d, &time);
 

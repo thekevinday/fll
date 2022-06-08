@@ -2984,8 +2984,25 @@ extern "C" {
   }
 #endif // _di_f_thread_sets_resize_
 
-#ifndef _di_f_thread_signal_
-  f_status_t f_thread_signal(const f_thread_id_t id, const int signal) {
+#ifndef _di_f_thread_signal_mask_
+  f_status_t f_thread_signal_mask(const int how, const sigset_t *next, sigset_t * const current) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!next && !current) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (pthread_sigmask(how, next, current) < 0) {
+      if (errno == EFAULT) return F_status_set_error(F_buffer);
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_signal_mask_
+
+#ifndef _di_f_thread_signal_write_
+  f_status_t f_thread_signal_write(const f_thread_id_t id, const int signal) {
 
     const int error = pthread_kill(id, signal);
 
@@ -3007,24 +3024,7 @@ extern "C" {
 
     return F_found;
   }
-#endif // _di_f_thread_signal_
-
-#ifndef _di_f_thread_signal_mask_
-  f_status_t f_thread_signal_mask(const int how, const sigset_t *next, sigset_t * const current) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!next && !current) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (pthread_sigmask(how, next, current) < 0) {
-      if (errno == EFAULT) return F_status_set_error(F_buffer);
-      if (errno == EINVAL) return F_status_set_error(F_parameter);
-
-      return F_status_set_error(F_failure);
-    }
-
-    return F_none;
-  }
-#endif // _di_f_thread_signal_mask_
+#endif // _di_f_thread_signal_write_
 
 #if defined(_pthread_sigqueue_unsupported_) && !defined(_di_f_thread_signal_queue_)
   f_status_t f_thread_signal_queue(const f_thread_id_t id, const int signal, const union sigval value) {
