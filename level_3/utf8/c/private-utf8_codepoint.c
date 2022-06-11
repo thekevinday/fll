@@ -237,6 +237,9 @@ extern "C" {
         if (status == F_true) {
           status = F_space;
         }
+        else {
+          status = F_none;
+        }
       }
     }
 
@@ -300,7 +303,7 @@ extern "C" {
       }
     }
 
-    return F_none;
+    return status;
   }
 #endif // _di_utf8_detect_codepoint_
 
@@ -316,12 +319,37 @@ extern "C" {
     f_array_length_t j = 0;
 
     f_char_t block[5] = { 0, 0, 0, 0, 0 };
-    f_string_static_t character = macro_f_string_static_t_initialize(block, 0, 4);
+    f_string_static_t character = macro_f_string_static_t_initialize(block, 0, 0);
 
     do {
       status = f_file_read_block(file, &data->buffer);
 
-      if (status == F_none_eof && !data->buffer.used) break;
+      if (status == F_none_eof && !data->buffer.used) {
+
+        // Handle complete character, which must be explicitly set to end in this situation.
+        if (mode_codepoint == utf8_codepoint_mode_number_e || mode_codepoint == utf8_codepoint_mode_raw_number_e) {
+          if (mode_codepoint == utf8_codepoint_mode_number_e) {
+            mode_codepoint = utf8_codepoint_mode_end_e;
+
+            status = utf8_convert_codepoint(data, character, &mode_codepoint);
+          }
+          else if (mode_codepoint == utf8_codepoint_mode_raw_number_e) {
+            mode_codepoint = utf8_codepoint_mode_raw_end_e;
+
+            status = utf8_convert_raw(data, character, &mode_codepoint);
+
+            // Raw mode represents an invalid Unicode sequence.
+            valid = F_false;
+          }
+
+          j = 0;
+          next = F_true;
+          status = F_none_eof;
+          mode_codepoint = utf8_codepoint_mode_ready_e;
+        }
+
+        break;
+      }
 
       for (i = 0; F_status_is_fine(status) && i < data->buffer.used; ) {
 
@@ -349,7 +377,7 @@ extern "C" {
           character.string[j] = data->buffer.string[i];
         } // for
 
-        if (j == character.used) {
+        if (j >= character.used) {
           if (data->mode & utf8_mode_from_bytesequence_d) {
             status = utf8_convert_bytesequence(data, character);
           }
@@ -378,7 +406,6 @@ extern "C" {
         }
       } // for
 
-      i = 0;
       data->buffer.used = 0;
 
     } while (F_status_is_fine(status) && status != F_interrupt);
