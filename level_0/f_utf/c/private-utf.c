@@ -80,7 +80,7 @@ extern "C" {
     else if (macro_f_utf_char_t_width(character) == 4) {
       *unicode = (macro_f_utf_char_t_to_char_1(character) & 0x7) << 18;
       *unicode |= (macro_f_utf_char_t_to_char_2(character) & 0x3f) << 12;
-      *unicode |= (macro_f_utf_char_t_to_char_2(character) & 0x3f) << 6;
+      *unicode |= (macro_f_utf_char_t_to_char_3(character) & 0x3f) << 6;
       *unicode |= macro_f_utf_char_t_to_char_4(character) & 0x3f;
     }
 
