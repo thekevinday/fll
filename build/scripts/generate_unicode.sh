@@ -4,9 +4,15 @@
 #
 # A simple script for generating code regarding unicode values.
 # This requires the python "unicode" program.
+#
+# The following modes are supported:
+# - source: Generate C source code if condition blocks (default).
+# - test: Generate unit test byte data (in base 10) files.
+#
 
 main() {
-  local file="codes.txt"
+  local file_input="codes.txt"
+  local mode=$1
   local code=
   local sequence=
   local block=
@@ -21,7 +27,15 @@ main() {
   local u3=
   local -i i=0
 
-  for code in $(cat $file) ; do
+  if [[ $mode == "" ]] ; then
+    mode=source
+  elif [[ ! ($mode == "source" || $mode == "test") ]] ; then
+
+    # return on invalid parameter.
+    return 1
+  fi
+
+  for code in $(cat $file_input) ; do
 
     process
 
@@ -87,17 +101,30 @@ process() {
 
   block=$(unicode --color=0 $code | grep -o "^Unicode block: .*$" | sed -e 's|Unicode block:.*; ||')
 
-  sequence="0x$utf8"
-  if [[ $(echo -n "$utf8" | wc -c) -eq 2 ]] ; then
-    sequence="${sequence}000000"
-  elif [[ $(echo -n "$utf8" | wc -c) -eq 4 ]] ; then
-    sequence="${sequence}0000"
-  elif [[ $(echo -n "$utf8" | wc -c) -eq 6 ]] ; then
-    sequence="${sequence}00"
+  if [[ $mode == "source" ]] ; then
+    sequence="0x$utf8"
+
+    if [[ $(echo -n "$utf8" | wc -c) -eq 2 ]] ; then
+      sequence="${sequence}000000"
+    elif [[ $(echo -n "$utf8" | wc -c) -eq 4 ]] ; then
+      sequence="${sequence}0000"
+    elif [[ $(echo -n "$utf8" | wc -c) -eq 6 ]] ; then
+      sequence="${sequence}00"
+    fi
+  elif [[ $mode == "test" ]] ; then
+    sequence="$utf8"
   fi
 }
 
 generate() {
+  if [[ $mode == "source" ]] ; then
+    generate_source "$1"
+  elif [[ $mode == "test" ]] ; then
+    generate_test "$1"
+  fi
+}
+
+generate_source() {
   local comment=
   local condition=
   local block="$1"
@@ -127,4 +154,23 @@ generate() {
   echo "}"
 }
 
-main
+generate_test() {
+
+  if [[ $s0 != "" ]] ; then
+    printf "%llu\n" $((16#$s0))
+  fi
+
+  if [[ $s1 != "" ]] ; then
+    printf "%llu\n" $((16#$s1))
+  fi
+
+  if [[ $s2 != "" ]] ; then
+    printf "%llu\n" $((16#$s2))
+  fi
+
+  if [[ $s3 != "" ]] ; then
+    printf "%llu\n" $((16#$s3))
+  fi
+}
+
+main "$1"
