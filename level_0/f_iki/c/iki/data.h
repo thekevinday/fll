@@ -1,13 +1,13 @@
 /**
  * FLL - Level 0
  *
- * Project: Type
+ * Project: IKI
  * API Version: 0.5
  * Licenses: lgpl-2.1-or-later
  *
- * Defines data to be used for/by type (array) related functionality.
+ * Defines data to be used for/by iki related functionality.
  *
- * This is auto-included by type_array.h and should not need to be explicitly included.
+ * This is auto-included by iki.h and should not need to be explicitly included.
  */
 #ifndef _F_iki_data_h
 #define _F_iki_data_h
