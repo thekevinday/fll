@@ -4,14 +4,19 @@
 extern "C" {
 #endif
 
-FILE *data__bytesequence_file_open__symbols(void) {
-
-  return fopen("./data/tests/bytesequences/symbols-all.txt", "r");
-}
-
 FILE *data__bytesequence_file_open__private(void) {
 
   return fopen("./data/tests/bytesequences/private-all.txt", "r");
+}
+
+FILE *data__bytesequence_file_open__punctuation(void) {
+
+  return fopen("./data/tests/bytesequences/punctuation-all.txt", "r");
+}
+
+FILE *data__bytesequence_file_open__symbols(void) {
+
+  return fopen("./data/tests/bytesequences/symbols-all.txt", "r");
 }
 
 uint8_t data__bytesequence_get_line(FILE * const file, f_utf_char_t * const character) {

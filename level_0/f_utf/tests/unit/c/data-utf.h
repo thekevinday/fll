@@ -23,21 +23,6 @@ extern "C" {
 #endif
 
 /**
- * Open the "symbols" bytesequence file.
- *
- * This assumes the following:
- * - The file path is relative to the current working directory (tests are run from project root).
- * - The file path is "data/tests/bytesequences/symbols-all.txt".
- *
- * @return
- *   Non-zero on success.
- *   0 on failure.
- *
- * @see fopen()
- */
-extern FILE *data__bytesequence_file_open__symbols(void);
-
-/**
  * Open the "private use area" bytesequence file.
  *
  * This assumes the following:
@@ -51,6 +36,36 @@ extern FILE *data__bytesequence_file_open__symbols(void);
  * @see fopen()
  */
 extern FILE *data__bytesequence_file_open__private(void);
+
+/**
+ * Open the "punctuation" bytesequence file.
+ *
+ * This assumes the following:
+ * - The file path is relative to the current working directory (tests are run from project root).
+ * - The file path is "data/tests/bytesequences/punctuation-all.txt".
+ *
+ * @return
+ *   Non-zero on success.
+ *   0 on failure.
+ *
+ * @see fopen()
+ */
+extern FILE *data__bytesequence_file_open__punctuation(void);
+
+/**
+ * Open the "symbols" bytesequence file.
+ *
+ * This assumes the following:
+ * - The file path is relative to the current working directory (tests are run from project root).
+ * - The file path is "data/tests/bytesequences/symbols-all.txt".
+ *
+ * @return
+ *   Non-zero on success.
+ *   0 on failure.
+ *
+ * @see fopen()
+ */
+extern FILE *data__bytesequence_file_open__symbols(void);
 
 /**
  * Simple line reader that converts the line into a character.

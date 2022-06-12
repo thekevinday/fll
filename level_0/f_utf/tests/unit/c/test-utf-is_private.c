@@ -49,7 +49,6 @@ void test__f_utf_is_private__works(void **state) {
 
     fclose(file);
   }
-
 }
 
 #ifdef __cplusplus
