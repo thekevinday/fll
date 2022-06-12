@@ -626,8 +626,13 @@ extern "C" {
           return F_true;
         }
 
-        // Halfwidth and Fullwidth Forms: U+FFE9 to U+FFEC.
-        if (character >= 0xefbfa900 && character <= 0xefbfac00) {
+        // Halfwidth and Fullwidth Forms: U+FFE8 to U+FFEE.
+        if (character >= 0xefbfa800 && character <= 0xefbfae00) {
+          return F_true;
+        }
+
+        // Specials: U+FFFC to U+FFFD.
+        if (character == 0xefbfbc00 || character == 0xefbfbd00) {
           return F_true;
         }
       }

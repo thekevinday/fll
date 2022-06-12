@@ -668,7 +668,7 @@ extern "C" {
     }
 
     // ASCII: U+003C ('<') to U+003E ('>').
-    if (character[0] > 0x3c && character[0] < 0x3e) {
+    if (character[0] >= 0x3c && character[0] <= 0x3e) {
       return F_true;
     }
 
