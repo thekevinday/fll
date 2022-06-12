@@ -27,6 +27,7 @@ build_libraries-individual -lf_memory -lf_string -lf_utf
 
 build_sources_program test-utf-append.c test-utf-append_assure.c test-utf-append_assure_nulless.c test-utf-append_nulless.c
 build_sources_program test-utf-character_is_symbol.c test-utf-is_symbol.c
+build_sources_program test-utf-character_is_private.c test-utf-is_private.c
 build_sources_program test-utf-dynamic_adjust.c test-utf-dynamic_append.c test-utf-dynamic_append_assure.c test-utf-dynamic_append_assure_nulless.c test-utf-dynamic_append_nulless.c
 build_sources_program test-utf-dynamic_decimate_by.c test-utf-dynamic_decrease_by.c test-utf-dynamic_increase.c test-utf-dynamic_increase_by.c
 build_sources_program test-utf-dynamic_mash.c test-utf-dynamic_mash_nulless.c

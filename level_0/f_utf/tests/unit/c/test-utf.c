@@ -24,6 +24,7 @@ int main(void) {
     cmocka_unit_test(test__f_utf_append_assure_nulless__works),
     cmocka_unit_test(test__f_utf_append_nulless__works),
 
+    cmocka_unit_test(test__f_utf_character_is_private__works),
     cmocka_unit_test(test__f_utf_character_is_symbol__works),
 
     cmocka_unit_test(test__f_utf_dynamic_adjust__works),
@@ -114,6 +115,7 @@ int main(void) {
     cmocka_unit_test(test__f_utf_dynamicss_increase_by__works),
     cmocka_unit_test(test__f_utf_dynamicss_resize__works),
 
+    cmocka_unit_test(test__f_utf_is_private__works),
     cmocka_unit_test(test__f_utf_is_symbol__works),
 
     cmocka_unit_test(test__f_utf_map_multis_adjust__works),

@@ -38,6 +38,21 @@ extern "C" {
 extern FILE *data__bytesequence_file_open__symbols(void);
 
 /**
+ * Open the "private use area" bytesequence file.
+ *
+ * This assumes the following:
+ * - The file path is relative to the current working directory (tests are run from project root).
+ * - The file path is "data/tests/bytesequences/private-all.txt".
+ *
+ * @return
+ *   Non-zero on success.
+ *   0 on failure.
+ *
+ * @see fopen()
+ */
+extern FILE *data__bytesequence_file_open__private(void);
+
+/**
  * Simple line reader that converts the line into a character.
  *
  * This assumes the following:
