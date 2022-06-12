@@ -1,11 +1,11 @@
 /**
  * FLL - Level 0
  *
- * Project: Type
+ * Project: UTF
  * API Version: 0.5
  * Licenses: lgpl-2.1-or-later
  *
- * Test the array types in the type project.
+ * Test the data types in the utf project.
  */
 #ifndef _TEST__F_triples_decimate_by_h
 #define _TEST__F_triples_decimate_by_h

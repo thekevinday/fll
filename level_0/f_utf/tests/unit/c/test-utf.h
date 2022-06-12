@@ -1,11 +1,11 @@
 /**
  * FLL - Level 0
  *
- * Project: String
+ * Project: UTF
  * API Version: 0.5
  * Licenses: lgpl-2.1-or-later
  *
- * Test the string project.
+ * Test the utf project.
  */
 #ifndef _TEST__F_utf_h
 #define _TEST__F_utf_h
@@ -23,13 +23,17 @@
 #include <fll/level_0/utf.h>
 
 // Mock includes.
-//#include "mock-string.h"
+//#include "mock-utf.h"
+
+// Data includes.
+#include "data-utf.h"
 
 // Test includes.
 #include "test-utf-append.h"
 #include "test-utf-append_assure.h"
 #include "test-utf-append_assure_nulless.h"
 #include "test-utf-append_nulless.h"
+#include "test-utf-character_is_symbol.h"
 #include "test-utf-dynamic_adjust.h"
 #include "test-utf-dynamic_append.h"
 #include "test-utf-dynamic_append_assure.h"
@@ -81,6 +85,7 @@
 #include "test-utf-dynamicss_increase.h"
 #include "test-utf-dynamicss_increase_by.h"
 #include "test-utf-dynamicss_resize.h"
+#include "test-utf-is_symbol.h"
 #include "test-utf-map_multis_adjust.h"
 #include "test-utf-map_multis_append.h"
 #include "test-utf-map_multis_append_all.h"

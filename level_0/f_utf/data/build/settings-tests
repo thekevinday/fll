@@ -26,6 +26,7 @@ build_libraries -lc -lcmocka
 build_libraries-individual -lf_memory -lf_string -lf_utf
 
 build_sources_program test-utf-append.c test-utf-append_assure.c test-utf-append_assure_nulless.c test-utf-append_nulless.c
+build_sources_program test-utf-character_is_symbol.c test-utf-is_symbol.c
 build_sources_program test-utf-dynamic_adjust.c test-utf-dynamic_append.c test-utf-dynamic_append_assure.c test-utf-dynamic_append_assure_nulless.c test-utf-dynamic_append_nulless.c
 build_sources_program test-utf-dynamic_decimate_by.c test-utf-dynamic_decrease_by.c test-utf-dynamic_increase.c test-utf-dynamic_increase_by.c
 build_sources_program test-utf-dynamic_mash.c test-utf-dynamic_mash_nulless.c
@@ -46,7 +47,7 @@ build_sources_program test-utf-mish.c test-utf-mish_nulless.c
 build_sources_program test-utf-prepend.c test-utf-prepend_assure.c test-utf-prepend_assure_nulless.c test-utf-prepend_nulless.c
 build_sources_program test-utf-seek_line.c test-utf-seek_line_to.c test-utf-seek_to.c
 build_sources_program test-utf-triples_adjust.c test-utf-triples_append.c test-utf-triples_append_all.c test-utf-triples_decimate_by.c test-utf-triples_decrease_by.c test-utf-triples_increase.c test-utf-triples_increase_by.c test-utf-triples_resize.c test-utf-tripless_adjust.c test-utf-tripless_append.c test-utf-tripless_append_all.c test-utf-tripless_decimate_by.c test-utf-tripless_decrease_by.c test-utf-tripless_increase.c test-utf-tripless_increase_by.c test-utf-tripless_resize.c
-build_sources_program test-utf.c
+build_sources_program test-utf.c data-utf.c
 
 build_script no
 build_shared yes
