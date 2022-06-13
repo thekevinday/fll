@@ -9,76 +9,46 @@ extern "C" {
 #if !defined(_di_f_utf_character_is_valid_) || !defined(_di_f_utf_is_valid_)
   f_status_t private_f_utf_character_is_valid(const f_utf_char_t character) {
 
-    if (macro_f_utf_char_t_width_is(character) < 2) {
-      if (macro_f_utf_char_t_to_char_1(character) >= 0x00 && macro_f_utf_char_t_to_char_1(character) <= 0x7f) {
+    // Invalid: 11111xxx xxxxxxxx xxxxxxxx xxxxxxxx.
+    if ((macro_f_utf_char_t_to_char_1(character) & 0b11111000) == 0b11111000) {
+      return F_false;
+    }
+
+    // Valid: 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx.
+    if ((macro_f_utf_char_t_to_char_1(character) & 0b11111000) == 0b11110000) {
+      if ((macro_f_utf_char_t_to_char_2(character) & 0b11000000) == 0b10000000 && (macro_f_utf_char_t_to_char_3(character) & 0b11000000) == 0b10000000 && (macro_f_utf_char_t_to_char_4(character) & 0b11000000) == 0b10000000) {
         return F_true;
       }
 
-      return false;
+      return F_false;
     }
 
-    if (macro_f_utf_char_t_width_is(character) == 2) {
-      if (macro_f_utf_char_t_to_char_1(character) >= 0xc2 && macro_f_utf_char_t_to_char_1(character) <= 0xdf) {
-        if (macro_f_utf_char_t_to_char_2(character) >= 0x80 && macro_f_utf_char_t_to_char_2(character) <= 0xbf) {
-          return F_true;
-        }
+    // Valid: 1110xxxx 10xxxxxx 10xxxxxx ????????.
+    else if ((macro_f_utf_char_t_to_char_1(character) & 0b11110000) == 0b11100000) {
+      if ((macro_f_utf_char_t_to_char_2(character) & 0b11000000) == 0b10000000 && (macro_f_utf_char_t_to_char_3(character) & 0b11000000) == 0b10000000) {
+        return F_true;
       }
 
-      return false;
+      return F_false;
     }
 
-    if (macro_f_utf_char_t_width_is(character) == 3) {
-      if (macro_f_utf_char_t_to_char_1(character) == 0xe0) {
-        if (macro_f_utf_char_t_to_char_2(character) >= 0xa0 && macro_f_utf_char_t_to_char_2(character) <= 0xbf) {
-          if (macro_f_utf_char_t_to_char_3(character) >= 0x80 && macro_f_utf_char_t_to_char_3(character) <= 0xbf) {
-            return F_true;
-          }
-        }
-      }
-      else if ((macro_f_utf_char_t_to_char_1(character) >= 0xe1 && macro_f_utf_char_t_to_char_1(character) <= 0xec) || (macro_f_utf_char_t_to_char_1(character) >= 0xee && macro_f_utf_char_t_to_char_1(character) <= 0xef)) {
-        if (macro_f_utf_char_t_to_char_2(character) >= 0x80 && macro_f_utf_char_t_to_char_2(character) <= 0xbf) {
-          if (macro_f_utf_char_t_to_char_3(character) >= 0x80 && macro_f_utf_char_t_to_char_3(character) <= 0xbf) {
-            return F_true;
-          }
-        }
-      }
-      else if (macro_f_utf_char_t_to_char_1(character) == 0xed) {
-        if (macro_f_utf_char_t_to_char_2(character) >= 0x80 && macro_f_utf_char_t_to_char_2(character) <= 0x9f) {
-          if (macro_f_utf_char_t_to_char_3(character) >= 0x80 && macro_f_utf_char_t_to_char_3(character) <= 0xbf) {
-            return F_true;
-          }
-        }
+    // Valid: 110xxxxx 10xxxxxx ???????? ????????.
+    else if ((macro_f_utf_char_t_to_char_1(character) & 0b11100000) == 0b11000000) {
+      if ((macro_f_utf_char_t_to_char_2(character) & 0b11000000) == 0b10000000) {
+        return F_true;
       }
 
-      return false;
+      return F_false;
     }
 
-    if (macro_f_utf_char_t_to_char_1(character) == 0xf0) {
-      if (macro_f_utf_char_t_to_char_2(character) >= 0x90 && macro_f_utf_char_t_to_char_2(character) <= 0xbf) {
-        if (macro_f_utf_char_t_to_char_3(character) >= 0x80 && macro_f_utf_char_t_to_char_3(character) <= 0xbf) {
-          if (macro_f_utf_char_t_to_char_4(character) >= 0x80 && macro_f_utf_char_t_to_char_4(character) <= 0xbf) {
-            return F_true;
-          }
-        }
-      }
+    // Invalid (UTF Fragment): 10xxxxxx ???????? ???????? ????????.
+    else if ((macro_f_utf_char_t_to_char_1(character) & 0b11000000) == 0b10000000) {
+      return F_status_set_error(F_utf_fragment);
     }
-    else if (macro_f_utf_char_t_to_char_1(character) >= 0xf1 && macro_f_utf_char_t_to_char_1(character) <= 0xf3) {
-      if (macro_f_utf_char_t_to_char_2(character) >= 0x80 && macro_f_utf_char_t_to_char_2(character) <= 0xbf) {
-        if (macro_f_utf_char_t_to_char_3(character) >= 0x80 && macro_f_utf_char_t_to_char_3(character) <= 0xbf) {
-          if (macro_f_utf_char_t_to_char_4(character) >= 0x80 && macro_f_utf_char_t_to_char_4(character) <= 0xbf) {
-            return F_true;
-          }
-        }
-      }
-    }
-    else if (macro_f_utf_char_t_to_char_1(character) == 0xf4) {
-      if (macro_f_utf_char_t_to_char_2(character) >= 0x80 && macro_f_utf_char_t_to_char_2(character) <= 0x8f) {
-        if (macro_f_utf_char_t_to_char_3(character) >= 0x80 && macro_f_utf_char_t_to_char_3(character) <= 0xbf) {
-          if (macro_f_utf_char_t_to_char_4(character) >= 0x80 && macro_f_utf_char_t_to_char_4(character) <= 0xbf) {
-            return F_true;
-          }
-        }
-      }
+
+    // Valid: 0xxxxxxx ???????? ???????? ????????.
+    else if (!(macro_f_utf_char_t_to_char_1(character) & 0b10000000)) {
+      return F_true;
     }
 
     return F_false;

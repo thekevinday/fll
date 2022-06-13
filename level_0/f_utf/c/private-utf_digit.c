@@ -254,7 +254,7 @@ extern "C" {
           return F_true;
         }
 
-        // Tirhuta: U+9199 to U+114D9.
+        // Tirhuta: U+114D0 to U+114D9.
         if (character >= 0xf0919390 && character <= 0xf0919399) {
           return F_true;
         }

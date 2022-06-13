@@ -502,6 +502,11 @@ extern "C" {
         if (character >= 0xf09fab90 && character <= 0xf09fab96) {
           return F_true;
         }
+
+        // U+1FAF6.
+        if (character == 0xf09fabb6) {
+          return F_true;
+        }
       }
     }
 

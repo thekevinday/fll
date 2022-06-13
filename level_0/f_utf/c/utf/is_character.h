@@ -418,6 +418,23 @@ extern "C" {
 #endif // _di_f_utf_character_is_superscript_
 
 /**
+ * Check to see if the entire byte block of the character is a UTF-8 surrogate character.
+ *
+ * @param character
+ *   The character to validate.
+ *
+ * @return
+ *   F_true if a UTF-8 superscript character.
+ *   F_false if not a UTF-8 superscript character.
+ *
+ *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
+ *   F_utf_not (with error bit) if unicode is an invalid Unicode character.
+ */
+#ifndef _di_f_utf_character_is_surrogate_
+  extern f_status_t f_utf_character_is_surrogate(const f_utf_char_t character);
+#endif // _di_f_utf_character_is_surrogate_
+
+/**
  * Check to see if the entire byte block of the character is an ASCII or UTF-8 symbol character.
  *
  * @param character
