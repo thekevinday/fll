@@ -82,15 +82,15 @@ extern "C" {
           return F_true;
         }
 
-        // Syriac: U+0730 to U+074A.
-        if (character >= 0xdcb00000 && character <= 0xdd8a0000) {
+        // Syriac: U+0730 to U+073F.
+        if (character >= 0xdcb00000 && character <= 0xdcbf0000) {
           return F_true;
         }
       }
       else if (macro_f_utf_char_t_to_char_1(character) == 0xdd) {
 
-        // Syriac: U+0730 to U+074A.
-        if (character >= 0xdcb00000 && character <= 0xdd8a0000) {
+        // Syriac: U+0740 to U+074A.
+        if (character >= 0xdd800000 && character <= 0xdd8a0000) {
           return F_true;
         }
       }
