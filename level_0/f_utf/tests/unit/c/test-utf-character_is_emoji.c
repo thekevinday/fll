@@ -1,14 +1,14 @@
 #include "test-utf.h"
-#include "test-utf-character_is_symbol.h"
+#include "test-utf-character_is_emoji.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void test__f_utf_character_is_symbol__works(void **state) {
+void test__f_utf_character_is_emoji__works(void **state) {
 
   {
-    FILE *file = data__bytesequence_file_open__symbol();
+    FILE *file = data__bytesequence_file_open__emoji();
 
     assert_non_null(file);
 
@@ -21,7 +21,7 @@ void test__f_utf_character_is_symbol__works(void **state) {
       bytes = data__bytesequence_get_line(file, &character);
 
       if (bytes) {
-        const f_status_t status = f_utf_character_is_symbol(character);
+        const f_status_t status = f_utf_character_is_emoji(character);
 
         assert_true(status);
       }

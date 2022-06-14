@@ -26,9 +26,23 @@ build_libraries -lc -lcmocka
 build_libraries-individual -lf_memory -lf_string -lf_utf
 
 build_sources_program test-utf-append.c test-utf-append_assure.c test-utf-append_assure_nulless.c test-utf-append_nulless.c
+build_sources_program test-utf-character_is_alphabetic.c test-utf-is_alphabetic.c
+build_sources_program test-utf-character_is_combining.c test-utf-is_combining.c
+build_sources_program test-utf-character_is_control.c test-utf-is_control.c
+build_sources_program test-utf-character_is_digit.c test-utf-is_digit.c
+build_sources_program test-utf-character_is_emoji.c test-utf-is_emoji.c
+build_sources_program test-utf-character_is_numeric.c test-utf-is_numeric.c
 build_sources_program test-utf-character_is_private.c test-utf-is_private.c
 build_sources_program test-utf-character_is_punctuation.c test-utf-is_punctuation.c
+build_sources_program test-utf-character_is_subscript.c test-utf-is_subscript.c
+build_sources_program test-utf-character_is_superscript.c test-utf-is_superscript.c
+build_sources_program test-utf-character_is_surrogate.c test-utf-is_surrogate.c
 build_sources_program test-utf-character_is_symbol.c test-utf-is_symbol.c
+build_sources_program test-utf-character_is_valid.c test-utf-is_valid.c
+build_sources_program test-utf-character_is_whitespace.c test-utf-is_whitespace.c
+build_sources_program test-utf-character_is_wide.c test-utf-is_wide.c
+build_sources_program test-utf-character_is_word.c test-utf-is_word.c
+build_sources_program test-utf-character_is_zero_width.c test-utf-is_zero_width.c
 build_sources_program test-utf-dynamic_adjust.c test-utf-dynamic_append.c test-utf-dynamic_append_assure.c test-utf-dynamic_append_assure_nulless.c test-utf-dynamic_append_nulless.c
 build_sources_program test-utf-dynamic_decimate_by.c test-utf-dynamic_decrease_by.c test-utf-dynamic_increase.c test-utf-dynamic_increase_by.c
 build_sources_program test-utf-dynamic_mash.c test-utf-dynamic_mash_nulless.c

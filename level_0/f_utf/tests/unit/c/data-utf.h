@@ -23,6 +23,111 @@ extern "C" {
 #endif
 
 /**
+ * Open the "alphabetic" bytesequence file.
+ *
+ * This assumes the following:
+ * - The file path is relative to the current working directory (tests are run from project root).
+ * - The file path is "data/tests/bytesequences/alphabetic-all.txt".
+ *
+ * @return
+ *   Non-zero on success.
+ *   0 on failure.
+ *
+ * @see fopen()
+ */
+extern FILE *data__bytesequence_file_open__alphabetic(void);
+
+/**
+ * Open the "combining" bytesequence file.
+ *
+ * This assumes the following:
+ * - The file path is relative to the current working directory (tests are run from project root).
+ * - The file path is "data/tests/bytesequences/combining-all.txt".
+ *
+ * @return
+ *   Non-zero on success.
+ *   0 on failure.
+ *
+ * @see fopen()
+ */
+extern FILE *data__bytesequence_file_open__combining(void);
+
+/**
+ * Open the "control" bytesequence file.
+ *
+ * This assumes the following:
+ * - The file path is relative to the current working directory (tests are run from project root).
+ * - The file path is "data/tests/bytesequences/control-all.txt".
+ *
+ * @return
+ *   Non-zero on success.
+ *   0 on failure.
+ *
+ * @see fopen()
+ */
+extern FILE *data__bytesequence_file_open__control(void);
+
+/**
+ * Open the "digit" bytesequence file.
+ *
+ * This assumes the following:
+ * - The file path is relative to the current working directory (tests are run from project root).
+ * - The file path is "data/tests/bytesequences/digit-all.txt".
+ *
+ * @return
+ *   Non-zero on success.
+ *   0 on failure.
+ *
+ * @see fopen()
+ */
+extern FILE *data__bytesequence_file_open__digit(void);
+
+/**
+ * Open the "emoji" bytesequence file.
+ *
+ * This assumes the following:
+ * - The file path is relative to the current working directory (tests are run from project root).
+ * - The file path is "data/tests/bytesequences/emoji-all.txt".
+ *
+ * @return
+ *   Non-zero on success.
+ *   0 on failure.
+ *
+ * @see fopen()
+ */
+extern FILE *data__bytesequence_file_open__emoji(void);
+
+/**
+ * Open the "numeric" bytesequence file.
+ *
+ * This assumes the following:
+ * - The file path is relative to the current working directory (tests are run from project root).
+ * - The file path is "data/tests/bytesequences/numeric-all.txt".
+ *
+ * @return
+ *   Non-zero on success.
+ *   0 on failure.
+ *
+ * @see fopen()
+ */
+extern FILE *data__bytesequence_file_open__numeric(void);
+
+/**
+ * Open the "phonetic" bytesequence file.
+ *
+ * This assumes the following:
+ * - The file path is relative to the current working directory (tests are run from project root).
+ * - The file path is "data/tests/bytesequences/phonetic-all.txt".
+ *
+ * @return
+ *   Non-zero on success.
+ *   0 on failure.
+ *
+ * @see fopen()
+ */
+extern FILE *data__bytesequence_file_open__phonetic(void);
+
+/**
  * Open the "private use area" bytesequence file.
  *
  * This assumes the following:
@@ -53,11 +158,11 @@ extern FILE *data__bytesequence_file_open__private(void);
 extern FILE *data__bytesequence_file_open__punctuation(void);
 
 /**
- * Open the "symbols" bytesequence file.
+ * Open the "subscript" bytesequence file.
  *
  * This assumes the following:
  * - The file path is relative to the current working directory (tests are run from project root).
- * - The file path is "data/tests/bytesequences/symbols-all.txt".
+ * - The file path is "data/tests/bytesequences/subscript-all.txt".
  *
  * @return
  *   Non-zero on success.
@@ -65,7 +170,127 @@ extern FILE *data__bytesequence_file_open__punctuation(void);
  *
  * @see fopen()
  */
-extern FILE *data__bytesequence_file_open__symbols(void);
+extern FILE *data__bytesequence_file_open__subscript(void);
+
+/**
+ * Open the "superscript" bytesequence file.
+ *
+ * This assumes the following:
+ * - The file path is relative to the current working directory (tests are run from project root).
+ * - The file path is "data/tests/bytesequences/superscript-all.txt".
+ *
+ * @return
+ *   Non-zero on success.
+ *   0 on failure.
+ *
+ * @see fopen()
+ */
+extern FILE *data__bytesequence_file_open__superscript(void);
+
+/**
+ * Open the "surrogate" bytesequence file.
+ *
+ * This assumes the following:
+ * - The file path is relative to the current working directory (tests are run from project root).
+ * - The file path is "data/tests/bytesequences/surrogate-all.txt".
+ *
+ * @return
+ *   Non-zero on success.
+ *   0 on failure.
+ *
+ * @see fopen()
+ */
+extern FILE *data__bytesequence_file_open__surrogate(void);
+
+/**
+ * Open the "symbols" bytesequence file.
+ *
+ * This assumes the following:
+ * - The file path is relative to the current working directory (tests are run from project root).
+ * - The file path is "data/tests/bytesequences/symbol-all.txt".
+ *
+ * @return
+ *   Non-zero on success.
+ *   0 on failure.
+ *
+ * @see fopen()
+ */
+extern FILE *data__bytesequence_file_open__symbol(void);
+
+/**
+ * Open the "valid" bytesequence file.
+ *
+ * This assumes the following:
+ * - The file path is relative to the current working directory (tests are run from project root).
+ * - The file path is "data/tests/bytesequences/valid-all.txt".
+ *
+ * @return
+ *   Non-zero on success.
+ *   0 on failure.
+ *
+ * @see fopen()
+ */
+extern FILE *data__bytesequence_file_open__valid(void);
+
+/**
+ * Open the "whitespace" bytesequence file.
+ *
+ * This assumes the following:
+ * - The file path is relative to the current working directory (tests are run from project root).
+ * - The file path is "data/tests/bytesequences/whitespace-all.txt".
+ *
+ * @return
+ *   Non-zero on success.
+ *   0 on failure.
+ *
+ * @see fopen()
+ */
+extern FILE *data__bytesequence_file_open__whitespace(void);
+
+/**
+ * Open the "wide" bytesequence file.
+ *
+ * This assumes the following:
+ * - The file path is relative to the current working directory (tests are run from project root).
+ * - The file path is "data/tests/bytesequences/wide-all.txt".
+ *
+ * @return
+ *   Non-zero on success.
+ *   0 on failure.
+ *
+ * @see fopen()
+ */
+extern FILE *data__bytesequence_file_open__wide(void);
+
+/**
+ * Open the "word" bytesequence file.
+ *
+ * This assumes the following:
+ * - The file path is relative to the current working directory (tests are run from project root).
+ * - The file path is "data/tests/bytesequences/word-all.txt".
+ *
+ * @return
+ *   Non-zero on success.
+ *   0 on failure.
+ *
+ * @see fopen()
+ */
+extern FILE *data__bytesequence_file_open__word(void);
+
+/**
+ * Open the "zero_width" bytesequence file.
+ *
+ * This assumes the following:
+ * - The file path is relative to the current working directory (tests are run from project root).
+ * - The file path is "data/tests/bytesequences/zero_width-all.txt".
+ *
+ * @return
+ *   Non-zero on success.
+ *   0 on failure.
+ *
+ * @see fopen()
+ */
+extern FILE *data__bytesequence_file_open__zero_width(void);
 
 /**
  * Simple line reader that converts the line into a character.

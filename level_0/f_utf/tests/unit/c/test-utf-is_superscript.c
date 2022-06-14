@@ -1,14 +1,14 @@
 #include "test-utf.h"
-#include "test-utf-is_symbol.h"
+#include "test-utf-is_superscript.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void test__f_utf_is_symbol__works(void **state) {
+void test__f_utf_is_superscript__works(void **state) {
 
   {
-    FILE *file = data__bytesequence_file_open__symbol();
+    FILE *file = data__bytesequence_file_open__superscript();
 
     assert_non_null(file);
 
@@ -38,7 +38,7 @@ void test__f_utf_is_symbol__works(void **state) {
           }
         }
 
-        const f_status_t status = f_utf_is_symbol(buffer, 5);
+        const f_status_t status = f_utf_is_superscript(buffer, 5);
 
         assert_true(status);
       }
