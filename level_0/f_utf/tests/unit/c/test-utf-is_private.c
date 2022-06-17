@@ -13,7 +13,7 @@ void test__f_utf_is_private__works(void **state) {
     assert_non_null(file);
 
     f_utf_char_t character = 0;
-    int8_t bytes = 0;
+    ssize_t bytes = 0;
 
     f_array_length_t line = 0;
 
@@ -40,7 +40,7 @@ void test__f_utf_is_private__works(void **state) {
 
         const f_status_t status = f_utf_is_private(buffer, 5);
 
-        assert_true(status);
+        assert_int_equal(status, F_true);
       }
 
       ++line;

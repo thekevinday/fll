@@ -97,18 +97,18 @@ extern "C" {
         if (character >= 0xe0bca000 && character <= 0xe0bca900) {
           return F_true;
         }
+      }
+      else if (macro_f_utf_char_t_to_char_1(character) == 0xe1) {
 
         // Myanmar: U+1040 to U+1049.
-        if (character >= 0xe0818000 && character <= 0xe0818900) {
+        if (character >= 0xe1818000 && character <= 0xe1818900) {
           return F_true;
         }
 
         // Myanmar (Shan): U+1090 to U+1099.
-        if (character >= 0xe0829000 && character <= 0xe0829900) {
+        if (character >= 0xe1829000 && character <= 0xe1829900) {
           return F_true;
         }
-      }
-      else if (macro_f_utf_char_t_to_char_1(character) == 0xe1) {
 
         // Khmer: U+17E0 to U+17E9.
         if (character >= 0xe19fa000 && character <= 0xe19fa900) {

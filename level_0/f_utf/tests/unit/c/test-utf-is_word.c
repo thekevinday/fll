@@ -13,7 +13,7 @@ void test__f_utf_is_word__strict_is_false(void **state) {
     assert_non_null(file);
 
     f_utf_char_t character = 0;
-    int8_t bytes = 0;
+    ssize_t bytes = 0;
 
     f_array_length_t line = 0;
 
@@ -41,7 +41,7 @@ void test__f_utf_is_word__strict_is_false(void **state) {
         const f_status_t status = f_utf_is_word(buffer, F_false, 5);
 
         // @todo provide an array of codes that should return false when not strict.
-        assert_true(status);
+        assert_int_equal(status, F_true);
       }
 
       ++line;
@@ -60,7 +60,7 @@ void test__f_utf_is_word__strict_is_true(void **state) {
     assert_non_null(file);
 
     f_utf_char_t character = 0;
-    int8_t bytes = 0;
+    ssize_t bytes = 0;
 
     f_array_length_t line = 0;
 
@@ -87,7 +87,7 @@ void test__f_utf_is_word__strict_is_true(void **state) {
 
         const f_status_t status = f_utf_is_word(buffer, F_true, 5);
 
-        assert_true(status);
+        assert_int_equal(status, F_true);
       }
 
       ++line;

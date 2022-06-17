@@ -311,13 +311,13 @@ extern FILE *data__bytesequence_file_open__zero_width(void);
  * @return
  *   positive number on success where number represents bytes read.
  *   0 on success and end of file is reached.
- *   0 on failure.
+ *   -1 on failure.
  *
  * @see atoll()
  * @see getline()
  * @see htonl()
  */
-extern uint8_t data__bytesequence_get_line(FILE * const file, f_utf_char_t * const character);
+extern ssize_t data__bytesequence_get_line(FILE * const file, f_utf_char_t * const character);
 
 #ifdef __cplusplus
 } // extern "C"

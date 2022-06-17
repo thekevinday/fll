@@ -21,34 +21,34 @@ void test__f_utf_is_valid__works(void **state) {
 
     // Valid: 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx.
     if ((first & 0b11111000) == 0b11111000) {
-      assert_false(status);
+      assert_int_equal(status, F_false);
     }
     else if ((first & 0b11111000) == 0b11110000) {
       if ((second & 0b11000000) == 0b10000000 && (third & 0b11000000) == 0b10000000 && (fourth & 0b11000000) == 0b10000000) {
-        assert_true(status);
+        assert_int_equal(status, F_true);
       }
       else {
-        assert_false(status);
+        assert_int_equal(status, F_false);
       }
     }
 
     // Valid: 1110xxxx 10xxxxxx 10xxxxxx 00000000.
     else if ((first & 0b11110000) == 0b11100000) {
       if ((second & 0b11000000) == 0b10000000 && (third & 0b11000000) == 0b10000000) {
-        assert_true(status);
+        assert_int_equal(status, F_true);
       }
       else {
-        assert_false(status);
+        assert_int_equal(status, F_false);
       }
     }
 
     // Valid: 110xxxxx 10xxxxxx 00000000 00000000.
     else if ((first & 0b11100000) == 0b11000000) {
       if ((second & 0b11000000) == 0b10000000) {
-        assert_true(status);
+        assert_int_equal(status, F_true);
       }
       else {
-        assert_false(status);
+        assert_int_equal(status, F_false);
       }
     }
 
@@ -59,10 +59,10 @@ void test__f_utf_is_valid__works(void **state) {
 
     // Valid: 0xxxxxxx 00000000 00000000 00000000.
     else if (!(first & 0b10000000)) {
-      assert_true(status);
+      assert_int_equal(status, F_true);
     }
     else {
-      assert_false(status);
+      assert_int_equal(status, F_false);
     }
   } // for
 }

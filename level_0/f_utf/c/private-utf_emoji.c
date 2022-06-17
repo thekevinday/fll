@@ -29,7 +29,7 @@ extern "C" {
         }
 
         // Letterlike Symbols: U+2122, U+2139
-        if (character == 0xe2818900 || character == 0xe284b900) {
+        if (character == 0xe284a200 || character == 0xe284b900) {
           return F_true;
         }
 
@@ -268,243 +268,253 @@ extern "C" {
           return F_true;
         }
 
-        // U+1F0CF to U+1F171.
+        // Playing Cards: U+1F0CF to U+1F171.
         if (character >= 0xf09f8084 && character <= 0xf09f85b1) {
           return F_true;
         }
 
-        // U+1F17E, U+1F17F, U+1F18E.
+        // Enclosed Alphanumeric Supplement: U+1F17E, U+1F17F, U+1F18E.
         if (character == 0xf09f85be || character == 0xf09f85bf || character == 0xf09f868e) {
           return F_true;
         }
 
-        // U+1F191 to U+1F19A.
+        // Enclosed Alphanumeric Supplement: U+1F191 to U+1F19A.
         if (character >= 0xf09f8691 && character <= 0xf09f869a) {
           return F_true;
         }
 
-        // U+1F201, U+1F202, U+1F21A, U+1F22F.
+        // Enclosed Alphanumeric Supplement: U+1F1E6.
+        if (character == 0xf09f87a6) {
+          return F_true;
+        }
+
+        // Enclosed Ideographic Supplement: U+1F201, U+1F202, U+1F21A, U+1F22F.
         if (character == 0xf09f8881 || character == 0xf09f8882 || character == 0xf09f889a || character == 0xf09f88af) {
           return F_true;
         }
 
-        // U+1F232 to U+1F23A.
+        // Enclosed Ideographic Supplement: U+1F232 to U+1F23A.
         if (character >= 0xf09f88b2 && character <= 0xf09f88ba) {
           return F_true;
         }
 
-        // U+1F250, U+1F251.
+        // Enclosed Ideographic Supplement: U+1F250, U+1F251.
         if (character == 0xf09f8990 || character == 0xf09f8991) {
           return F_true;
         }
 
-        // U+1F300 to U+1F321.
+        // Miscellaneous Symbols and Pictographs: U+1F300 to U+1F321.
         if (character >= 0xf09f8c80 && character <= 0xf09f8ca1) {
           return F_true;
         }
 
-        // U+1F324 to U+1F393.
+        // Miscellaneous Symbols and Pictographs: U+1F324 to U+1F393.
         if (character >= 0xf09f8ca4 && character <= 0xf09f8e93) {
           return F_true;
         }
 
-        // U+1F396, U+1F397.
+        // Miscellaneous Symbols and Pictographs: U+1F396, U+1F397.
         if (character == 0xf09f8e96 || character == 0xf09f8e97) {
           return F_true;
         }
 
-        // U+1F399 to U+1F39B.
+        // Miscellaneous Symbols and Pictographs: U+1F399 to U+1F39B.
         if (character >= 0xf09f8e99 && character <= 0xf09f8e9b) {
           return F_true;
         }
 
-        // U+1F39E to U+1F3F0.
+        // Miscellaneous Symbols and Pictographs: U+1F39E to U+1F3F0.
         if (character >= 0xf09f8e9e && character <= 0xf09f8fb0) {
           return F_true;
         }
 
-        // U+1F3F3 to U+1F3F5.
+        // Miscellaneous Symbols and Pictographs: U+1F3F3 to U+1F3F5.
         if (character >= 0xf09f8fb3 && character <= 0xf09f8fb5) {
           return F_true;
         }
 
-        // U+1F3F7 to U+1F4FD.
+        // Miscellaneous Symbols and Pictographs: U+1F3F7 to U+1F4FD.
         if (character >= 0xf09f8fb7 && character <= 0xf09f93bd) {
           return F_true;
         }
 
-        // U+1F4FF to U+1F53D.
+        // Miscellaneous Symbols and Pictographs: U+1F4FF to U+1F53D.
         if (character >= 0xf09f93bf && character <= 0xf09f94bd) {
           return F_true;
         }
 
-        // U+1F549 to U+1F54E.
+        // Miscellaneous Symbols and Pictographs: U+1F549 to U+1F54E.
         if (character >= 0xf09f9589 && character <= 0xf09f958e) {
           return F_true;
         }
 
-        // U+1F550 to U+1F567.
+        // Miscellaneous Symbols and Pictographs: U+1F550 to U+1F567.
         if (character >= 0xf09f9590 && character <= 0xf09f95a7) {
           return F_true;
         }
 
-        // U+1F56F, U+1F570.
+        // Miscellaneous Symbols and Pictographs: U+1F56F, U+1F570.
         if (character == 0xf09f95af || character == 0xf09f95b0) {
           return F_true;
         }
 
-        // U+1F573 to U+1F57A.
+        // Miscellaneous Symbols and Pictographs: U+1F573 to U+1F57A.
         if (character >= 0xf09f95b3 && character <= 0xf09f95ba) {
           return F_true;
         }
 
-        // U+1F587.
+        // Miscellaneous Symbols and Pictographs: U+1F587.
         if (character == 0xf09f9687) {
           return F_true;
         }
 
-        // U+1F58A to U+1F58D.
+        // Miscellaneous Symbols and Pictographs: U+1F58A to U+1F58D.
         if (character >= 0xf09f968a && character <= 0xf09f968d) {
           return F_true;
         }
 
-        // U+1F590, U+1F595, U+1F596, U+1F5A4.
+        // Miscellaneous Symbols and Pictographs: U+1F590, U+1F595, U+1F596, U+1F5A4.
         if (character == 0xf09f9690 || character == 0xf09f9695 || character == 0xf09f9696 || character == 0xf09f96a4) {
           return F_true;
         }
 
-        // U+1F5A5, U+1F5A8, U+1F5B1, U+1F5B2.
+        // Miscellaneous Symbols and Pictographs: U+1F5A5, U+1F5A8, U+1F5B1, U+1F5B2.
         if (character == 0xf09f96a5 || character == 0xf09f96a8 || character == 0xf09f96b1 || character == 0xf09f96b2) {
           return F_true;
         }
 
-        // U+1F5BC.
+        // Miscellaneous Symbols and Pictographs: U+1F5BC.
         if (character == 0xf09f96bc) {
           return F_true;
         }
 
-        // U+1F5C2 to U+1F5C4.
+        // Miscellaneous Symbols and Pictographs: U+1F5C2 to U+1F5C4.
         if (character >= 0xf09f9782 && character <= 0xf09f9784) {
           return F_true;
         }
 
-        // U+1F5D1 to U+1F5D3.
+        // Miscellaneous Symbols and Pictographs: U+1F5D1 to U+1F5D3.
         if (character >= 0xf09f9791 && character <= 0xf09f9793) {
           return F_true;
         }
 
-        // U+1F5DC to U+1F5DE.
+        // Miscellaneous Symbols and Pictographs: U+1F5DC to U+1F5DE.
         if (character >= 0xf09f979c && character <= 0xf09f979e) {
           return F_true;
         }
 
-        // U+1F5E1, U+1F5E3, U+1F5E8, U+1F5EF.
+        // Miscellaneous Symbols and Pictographs: U+1F5E1, U+1F5E3, U+1F5E8, U+1F5EF.
         if (character == 0xf09f97a1 || character == 0xf09f97a3 || character == 0xf09f97a8 || character == 0xf09f97af) {
           return F_true;
         }
 
-        // U+1F5F3.
+        // Miscellaneous Symbols and Pictographs: U+1F5F3.
         if (character == 0xf09f97b3) {
           return F_true;
         }
 
-        // U+1F5FA to U+1F6C5.
+        // Miscellaneous Symbols and Pictographs: U+1F5FA to U+1F6C5.
         if (character >= 0xf09f97ba && character <= 0xf09f9b85) {
           return F_true;
         }
 
-        // U+1F6CB to U+1F6D2.
+        // Transport and Map Symbols: U+1F6CB to U+1F6D2.
         if (character >= 0xf09f9b8b && character <= 0xf09f9b92) {
           return F_true;
         }
 
-        // U+1F6D5 to U+1F6D7.
+        // Transport and Map Symbols: U+1F6D5 to U+1F6D7.
         if (character >= 0xf09f9b95 && character <= 0xf09f9b97) {
           return F_true;
         }
 
-        // U+1F6E0 to U+1F6E5.
+        // Transport and Map Symbols: U+1F6DD to U+1F6DF.
+        if (character >= 0xf09f9b9d && character <= 0xf09f9b9f) {
+          return F_true;
+        }
+
+        // Transport and Map Symbols: U+1F6E0 to U+1F6E5.
         if (character >= 0xf09f9ba0 && character <= 0xf09f9ba5) {
           return F_true;
         }
 
-        // U+1F6E9, U+1F6EB, U+1F6EC, U+1F6F0.
+        // Transport and Map Symbols: U+1F6E9, U+1F6EB, U+1F6EC, U+1F6F0.
         if (character == 0xf09f9ba9 || character == 0xf09f9bab || character == 0xf09f9bac || character == 0xf09f9bb0) {
           return F_true;
         }
 
-        // U+1F6F3 to U+1F6FC.
+        // Transport and Map Symbols: U+1F6F3 to U+1F6FC.
         if (character >= 0xf09f9bb3 && character <= 0xf09f9bbc) {
           return F_true;
         }
 
-        // U+1F7E0 to U+1F7EB.
+        // Geometric Shapes Extended: U+1F7E0 to U+1F7EB.
         if (character >= 0xf09f9fa0 && character <= 0xf09f9fab) {
           return F_true;
         }
 
-        // U+1F90C to U+1F93A.
+        // Geometric Shapes Extended: U+1F7F0.
+        if (character == 0xf09f9fb0) {
+          return F_true;
+        }
+
+        // Supplemental Symbols and Pictographs: U+1F90C to U+1F93A.
         if (character >= 0xf09fa48c && character <= 0xf09fa4ba) {
           return F_true;
         }
 
-        // U+1F93C to U+1F945.
+        // Supplemental Symbols and Pictographs: U+1F93C to U+1F945.
         if (character >= 0xf09fa4bc && character <= 0xf09fa585) {
           return F_true;
         }
 
-        // U+1F947 to U+1F978.
-        if (character >= 0xf09fa587 && character <= 0xf09fa5b8) {
+        // Supplemental Symbols and Pictographs to Symbols and Pictographs Extended-A: U+1F947 to U+U+1FA74.
+        if (character >= 0xf09fa587 && character <= 0xf09fa9b4) {
           return F_true;
         }
 
-        // U+1F97A to U+1F9CB.
-        if (character >= 0xf09fa5ba && character <= 0xf09fa78b) {
-          return F_true;
-        }
-
-        // U+1F9CD to U+1FA74.
-        if (character >= 0xf09fa78d && character <= 0xf09fa9b4) {
-          return F_true;
-        }
-
-        // U+1FA70 to U+1FA74.
+        // Symbols and Pictographs Extended-A: U+1FA70 to U+1FA74.
         if (character >= 0xf09fa9b0 && character <= 0xf09fa9b4) {
           return F_true;
         }
 
-        // U+1FA78 to U+1FA7A.
-        if (character >= 0xf09fa9b8 && character <= 0xf09fa9ba) {
+        // Symbols and Pictographs Extended-A: U+1FA78 to U+1FA7C.
+        if (character >= 0xf09fa9b8 && character <= 0xf09fa9bc) {
           return F_true;
         }
 
-        // U+1FA80 to U+1FA86.
+        // Symbols and Pictographs Extended-A: U+1FA80 to U+1FA86.
         if (character >= 0xf09faa80 && character <= 0xf09faa86) {
           return F_true;
         }
 
-        // U+1FA90 to U+1FAA8.
-        if (character >= 0xf09faa90 && character <= 0xf09faaa8) {
+        // Symbols and Pictographs Extended-A: U+1FA90 to U+1FAAC.
+        if (character >= 0xf09faa90 && character <= 0xf09faaac) {
           return F_true;
         }
 
-        // U+1FAB0 to U+1FAB6.
-        if (character >= 0xf09faab0 && character <= 0xf09faab6) {
+        // Symbols and Pictographs Extended-A: U+1FAB0 to U+1FABA.
+        if (character >= 0xf09faab0 && character <= 0xf09faaba) {
           return F_true;
         }
 
-        // U+1FAC0 to U+1FAC2.
-        if (character >= 0xf09fab80 && character <= 0xf09fab82) {
+        // Symbols and Pictographs Extended-A: U+1FAC0 to U+1FAC5.
+        if (character >= 0xf09fab80 && character <= 0xf09fab85) {
           return F_true;
         }
 
-        // U+1FAD0 to U+1FAD6.
-        if (character >= 0xf09fab90 && character <= 0xf09fab96) {
+        // Symbols and Pictographs Extended-A: U+1FAD0 to U+1FAD9.
+        if (character >= 0xf09fab90 && character <= 0xf09fab99) {
           return F_true;
         }
 
-        // U+1FAF6.
-        if (character == 0xf09fabb6) {
+        // Symbols and Pictographs Extended-A: U+1FAE0 to U+1FAE7.
+        if (character >= 0xf09faba0 && character <= 0xf09faba7) {
+          return F_true;
+        }
+
+        // Symbols and Pictographs Extended-A: U+1FAF0 to U+1FAF6.
+        if (character >= 0xf09fabb0 && character <= 0xf09fabb6) {
           return F_true;
         }
       }

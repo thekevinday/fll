@@ -13,17 +13,17 @@ void test__f_utf_character_is_phonetic__works(void **state) {
     assert_non_null(file);
 
     f_utf_char_t character = 0;
-    int8_t bytes = 0;
+    ssize_t bytes = 0;
 
     f_array_length_t line = 0;
 
     do {
       bytes = data__bytesequence_get_line(file, &character);
 
-      if (bytes) {
+      if (bytes > 0) {
         const f_status_t status = f_utf_character_is_phonetic(character);
 
-        assert_true(status);
+        assert_int_equal(status, F_true);
       }
 
       ++line;

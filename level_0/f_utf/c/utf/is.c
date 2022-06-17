@@ -207,7 +207,11 @@ extern "C" {
       return private_f_utf_character_is_control(character_utf);
     }
 
-    return iscntrl(*character);
+    if (iscntrl(*character)) {
+      return F_true;
+    }
+
+    return F_false;
   }
 #endif // _di_f_utf_is_control_
 

@@ -9,6 +9,15 @@ extern "C" {
 #if !defined(_di_f_utf_character_is_valid_) || !defined(_di_f_utf_is_valid_)
   f_status_t private_f_utf_character_is_valid(const f_utf_char_t character) {
 
+    // All characters with data after the width bytes is invalid.
+    if (macro_f_utf_char_t_width(character) == 2 && (macro_f_utf_char_t_to_char_3(character) || macro_f_utf_char_t_to_char_4(character))) {
+      return F_false;
+    }
+
+    if (macro_f_utf_char_t_width(character) == 3 && macro_f_utf_char_t_to_char_4(character)) {
+      return F_false;
+    }
+
     // Invalid: 11111xxx xxxxxxxx xxxxxxxx xxxxxxxx.
     if ((macro_f_utf_char_t_to_char_1(character) & 0b11111000) == 0b11111000) {
       return F_false;
@@ -47,11 +56,11 @@ extern "C" {
     }
 
     // Valid: 0xxxxxxx ???????? ???????? ????????.
-    else if (!(macro_f_utf_char_t_to_char_1(character) & 0b10000000)) {
-      return F_true;
+    else if (macro_f_utf_char_t_to_char_1(character) & 0b10000000) {
+      return F_false;
     }
 
-    return F_false;
+    return F_true;
   }
 #endif // !defined(_di_f_utf_character_is_valid_) || !defined(_di_f_utf_is_valid_)
 

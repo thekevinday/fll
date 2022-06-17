@@ -157,6 +157,8 @@ extern "C" {
  *
  * Control Code characters are the traditional control characters, such as "\n" as well as some newer Unicode ones.
  *
+ * This does not include Control format characters.
+ *
  * @param character
  *   The character to validate.
  *

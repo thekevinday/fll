@@ -462,7 +462,12 @@ extern "C" {
       return private_f_utf_character_is_valid(character);
     }
 
-    return F_true;
+    // All characters with data after the width bytes is invalid.
+    if (macro_f_utf_char_t_from_char_1(macro_f_utf_char_t_to_char_1(character)) == character) {
+      return F_true;
+    }
+
+    return F_false;
   }
 #endif // _di_f_utf_character_is_valid_
 

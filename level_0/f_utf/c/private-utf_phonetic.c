@@ -11,13 +11,8 @@ extern "C" {
 
     if (macro_f_utf_char_t_width_is(character) == 3) {
 
-      // Phonetic Extensions: U+1D00 to U+1D7F.
-      if (character >= 0xe1b48000 && character <= 0xe1b5bf00) {
-        return F_true;
-      }
-
-      // Phonetic Extensions Supplement: U+1D80 to U+1DBF.
-      if (character >= 0xe1b6bf00 && character <= 0xe1b6bf00) {
+      // Phonetic Extensions to Phonetic Extensions Supplement: U+1D00 to U+1DBF.
+      if (character >= 0xe1b48000 && character <= 0xe1b6bf00) {
         return F_true;
       }
     }

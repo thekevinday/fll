@@ -102,7 +102,7 @@ extern "C" {
       return F_true;
     }
 
-    // Shothand Format Controls: U+1BCA0 to U+1BCA3.
+    // Shorthand Format Controls: U+1BCA0 to U+1BCA3.
     if (character >= 0xf09bb2a0 && character <= 0xf09bb2a3) {
       return F_true;
     }

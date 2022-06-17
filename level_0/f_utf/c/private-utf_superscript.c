@@ -78,7 +78,7 @@ extern "C" {
           }
 
           // Unified Canadian Aboriginal Syllabics: U+14EA, U+14EB.
-          if (character == 0xe1939200 || character == 0xe193aa00) {
+          if (character == 0xe193aa00 || character == 0xe193ab00) {
             return F_true;
           }
 
@@ -143,7 +143,7 @@ extern "C" {
       else if (macro_f_utf_char_t_to_char_1(character) == 0xe2) {
 
         // Superscripts and Subscripts: U+2070, U+2071.
-        if (character == 0xe2828000 || character == 0xe2828100) {
+        if (character == 0xe281b000 || character == 0xe281b100) {
           return F_true;
         }
 

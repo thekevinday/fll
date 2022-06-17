@@ -212,7 +212,7 @@ extern "C" {
         }
 
         // Gurmukhi: U+0A01 to U+0A03.
-        if (character >= 0xe0a88100 && character <= 0xe0a88230) {
+        if (character >= 0xe0a88100 && character <= 0xe0a88300) {
           return F_true;
         }
 
@@ -754,12 +754,12 @@ extern "C" {
           return F_true;
         }
 
-        // Saurashtra: U+A8C4.
-        if (character == 0xeaa38400) {
+        // Saurashtra: U+A8C4, U+A8C5.
+        if (character == 0xeaa38400 || character == 0xeaa38500) {
           return F_true;
         }
 
-        // Devanagari Extended: U+A6F0 to U+A8F1.
+        // Devanagari Extended: U+A8E0 to U+A8F1.
         if (character >= 0xeaa3a000 && character <= 0xeaa3b100) {
           return F_true;
         }

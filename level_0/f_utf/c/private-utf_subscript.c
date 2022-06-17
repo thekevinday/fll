@@ -22,7 +22,7 @@ extern "C" {
       }
 
       // Superscripts and Subscripts: U+2090 to U+209C.
-      if (character >= 0xe2828e00 && character <= 0xe2829000) {
+      if (character >= 0xe2829000 && character <= 0xe2829c00) {
         return F_true;
       }
 

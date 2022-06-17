@@ -94,20 +94,19 @@ FILE *data__bytesequence_file_open__zero_width(void) {
   return fopen("./data/tests/bytesequences/zero_width-all.txt", "r");
 }
 
-uint8_t data__bytesequence_get_line(FILE * const file, f_utf_char_t * const character) {
+ssize_t data__bytesequence_get_line(FILE * const file, f_utf_char_t * const character) {
 
-  size_t length = 32;
+  size_t length = 0;
   char *line = 0;
 
-  const int8_t bytes = (int8_t) getline(&line, &length, file);
-  if (bytes == -1) return 0;
+  const ssize_t bytes = getline(&line, &length, file);
 
-  if (!bytes) {
+  if (bytes == -1 || !bytes) {
     if (line) {
       free(line);
     }
 
-    return 0;
+    return bytes;
   }
 
   const long long number = atoll(line);
@@ -116,13 +115,23 @@ uint8_t data__bytesequence_get_line(FILE * const file, f_utf_char_t * const char
     free(line);
   }
 
-  if (!number) return -1;
+  if (!number && bytes != 2 && line[0] != '0') return -1;
 
-  *character = (f_utf_char_t) number;
-
-  // Network order is always big-endian so take advantage of this for converting little endian integers.
   #ifdef _is_F_endian_little
-    *character = htonl(*character);
+    if ((F_utf_char_mask_byte_1_le_d & number) == number) {
+      *character = (f_utf_char_t) ((F_utf_char_mask_byte_1_le_d & number) << 24);
+    }
+    else if ((F_utf_char_mask_byte_2_le_d & number) == number) {
+      *character = (f_utf_char_t) ((F_utf_char_mask_byte_2_le_d & number) << 16);
+    }
+    else if ((F_utf_char_mask_byte_3_le_d & number) == number) {
+      *character = (f_utf_char_t) ((F_utf_char_mask_byte_3_le_d & number) << 8);
+    }
+    else if ((F_utf_char_mask_byte_4_le_d & number) == number) {
+      *character = (f_utf_char_t) ((F_utf_char_mask_byte_4_le_d & number));
+    }
+  #else
+    *character = (f_utf_char_t) number;
   #endif // _is_F_endian_little
 
   return bytes;
