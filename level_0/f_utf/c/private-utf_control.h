@@ -24,8 +24,8 @@ extern "C" {
  *
  * This expects the character width to be of at least size 2.
  *
- * @param character
- *   The character to validate.
+ * @param sequence
+ *   The byte sequence to validate as a character.
  *
  * @return
  *   F_true if a UTF-8 control character.
@@ -38,7 +38,7 @@ extern "C" {
  * @see f_utf_is_control()
  */
 #if !defined(_di_f_utf_character_is_control_) || !defined(_di_f_utf_is_control_)
-  extern f_status_t private_f_utf_character_is_control(const f_utf_char_t character) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_utf_character_is_control(const f_utf_char_t sequence) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_utf_character_is_control_) || !defined(_di_f_utf_is_control_)
 
 /**
@@ -48,8 +48,8 @@ extern "C" {
  *
  * This expects the character width to be of at least size 2.
  *
- * @param character
- *   The character to validate.
+ * @param sequence
+ *   The byte sequence to validate as a character.
  *
  * @return
  *   F_true if a UTF-8 control character.
@@ -62,7 +62,7 @@ extern "C" {
  * @see f_utf_is_control_code()
  */
 #if !defined(_di_f_utf_character_is_control_code_) || !defined(_di_f_utf_is_control_code_)
-  extern f_status_t private_f_utf_character_is_control_code(const f_utf_char_t character) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_utf_character_is_control_code(const f_utf_char_t sequence) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_utf_character_is_control_code_) || !defined(_di_f_utf_is_control_code_)
 
 /**
@@ -72,8 +72,8 @@ extern "C" {
  *
  * This expects the character width to be of at least size 2.
  *
- * @param character
- *   The character to validate.
+ * @param sequence
+ *   The byte sequence to validate as a character.
  *
  * @return
  *   F_true if a UTF-8 control character.
@@ -86,7 +86,7 @@ extern "C" {
  * @see f_utf_is_control_format()
  */
 #if !defined(_di_f_utf_character_is_control_format_) || !defined(_di_f_utf_is_control_format_)
-  extern f_status_t private_f_utf_character_is_control_format(const f_utf_char_t character) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_utf_character_is_control_format(const f_utf_char_t sequence) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_utf_character_is_control_format_) || !defined(_di_f_utf_is_control_format_)
 
 /**
@@ -96,8 +96,8 @@ extern "C" {
  *
  * This expects the character width to be of at least size 2.
  *
- * @param character
- *   The character to validate.
+ * @param sequence
+ *   The byte sequence to validate as a character.
  *
  * @return
  *   F_true if a UTF-8 control picture character.
@@ -110,7 +110,7 @@ extern "C" {
  * @see f_utf_is_control_picture()
  */
 #if !defined(_di_f_utf_character_is_control_picture_) || !defined(_di_f_utf_is_control_picture_)
-  extern f_status_t private_f_utf_character_is_control_picture(const f_utf_char_t character) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_utf_character_is_control_picture(const f_utf_char_t sequence) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_utf_character_is_control_picture_) || !defined(_di_f_utf_is_control_picture_)
 
 #ifdef __cplusplus

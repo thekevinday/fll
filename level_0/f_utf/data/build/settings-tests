@@ -37,7 +37,6 @@ build_sources_program test-utf-character_is_private.c test-utf-is_private.c
 build_sources_program test-utf-character_is_punctuation.c test-utf-is_punctuation.c
 build_sources_program test-utf-character_is_subscript.c test-utf-is_subscript.c
 build_sources_program test-utf-character_is_superscript.c test-utf-is_superscript.c
-build_sources_program test-utf-character_is_surrogate.c test-utf-is_surrogate.c
 build_sources_program test-utf-character_is_symbol.c test-utf-is_symbol.c
 build_sources_program test-utf-character_is_valid.c test-utf-is_valid.c
 build_sources_program test-utf-character_is_whitespace.c test-utf-is_whitespace.c

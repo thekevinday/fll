@@ -62,13 +62,13 @@ extern "C" {
  *   F_interrupt (with error bit) on receiving a process signal, such as an interrupt signal.
  *
  *   Errors (with error bit) from: f_string_append().
- *   Errors (with error bit) from: fl_conversion_dynamic_partial_to_number_unsigned().
+ *   Errors (with error bit) from: fl_conversion_dynamic_partial_to_unsigned_detect().
  *   Errors (with error bit) from: fl_string_dynamic_rip().
  *
  *   Errors (with error bit) from: fss_payload_read_depths_resize().
  *
  * @see f_string_append()
- * @see fl_conversion_dynamic_partial_to_number_unsigned()
+ * @see fl_conversion_dynamic_partial_to_unsigned_detect()
  * @see fl_string_dynamic_rip()
  *
  * @see fss_payload_read_depths_resize()
@@ -141,9 +141,9 @@ extern "C" {
  *   F_true on success and the parameter was found (and is valid).
  *   F_false on success and the parameter was not found.
  *
- *   Errors (with error bit) from: fl_conversion_dynamic_partial_to_number_unsigned().
+ *   Errors (with error bit) from: fl_conversion_dynamic_partial_to_unsigned_detect().
  *
- * @see fl_conversion_dynamic_partial_to_number_unsigned()
+ * @see fl_conversion_dynamic_partial_to_unsigned_detect()
  *
  * @see fss_payload_read_depths_resize()
  */

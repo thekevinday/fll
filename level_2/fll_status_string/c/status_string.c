@@ -492,14 +492,14 @@ extern "C" {
         return F_none;
       }
 
-      if (fl_string_dynamic_compare(name, f_status_body_s) == F_equal_to) {
-        *code = F_body;
+      if (fl_string_dynamic_compare(name, f_status_base_s) == F_equal_to) {
+        *code = F_base;
 
         return F_none;
       }
 
-      if (fl_string_dynamic_compare(name, f_status_body_not_s) == F_equal_to) {
-        *code = F_body_not;
+      if (fl_string_dynamic_compare(name, f_status_base_not_s) == F_equal_to) {
+        *code = F_base_not;
 
         return F_none;
       }
@@ -524,6 +524,18 @@ extern "C" {
 
       if (fl_string_dynamic_compare(name, f_status_block_not_s) == F_equal_to) {
         *code = F_block_not;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_body_s) == F_equal_to) {
+        *code = F_body;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_body_not_s) == F_equal_to) {
+        *code = F_body_not;
 
         return F_none;
       }

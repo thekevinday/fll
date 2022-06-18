@@ -21,8 +21,8 @@ extern "C" {
  *
  * This does not validate if the UTF-8 character is a valid UTF-8 character, for that use f_utf_character_is_valid().
  *
- * @param character
- *   The character to validate.
+ * @param sequence
+ *   The byte sequence to validate as a character.
  *
  * @return
  *   F_true if a UTF-8 character.
@@ -32,14 +32,14 @@ extern "C" {
  * @see f_utf_character_is_valid()
  */
 #ifndef _di_f_utf_character_is_
-  extern f_status_t f_utf_character_is(const f_utf_char_t character);
+  extern f_status_t f_utf_character_is(const f_utf_char_t sequence);
 #endif // _di_f_utf_character_is_
 
 /**
  * Check to see if the entire byte block of the character is an ASCII or UTF-8 alphabet character.
  *
- * @param character
- *   The character to validate.
+ * @param sequence
+ *   The byte sequence to validate as a character.
  *
  * @return
  *   F_true if a UTF-8 alphabet character.
@@ -51,7 +51,7 @@ extern "C" {
  * @see isalpha()
  */
 #ifndef _di_f_utf_character_is_alphabetic_
-  extern f_status_t f_utf_character_is_alphabetic(const f_utf_char_t character);
+  extern f_status_t f_utf_character_is_alphabetic(const f_utf_char_t sequence);
 #endif // _di_f_utf_character_is_alphabetic_
 
 /**
@@ -61,8 +61,8 @@ extern "C" {
  *
  * This does not include number-like, such as 1/2 (½) or superscript 2 (²).
  *
- * @param character
- *   The character to validate.
+ * @param sequence
+ *   The byte sequence to validate as a character.
  *
  * @return
  *   F_true if a UTF-8 alpha-digit character.
@@ -74,7 +74,7 @@ extern "C" {
  * @see isalnum()
  */
 #ifndef _di_f_utf_character_is_alphabetic_digit_
-  extern f_status_t f_utf_character_is_alpha_digit(const f_utf_char_t character);
+  extern f_status_t f_utf_character_is_alpha_digit(const f_utf_char_t sequence);
 #endif // _di_f_utf_character_is_alphabetic_digit_
 
 /**
@@ -82,8 +82,8 @@ extern "C" {
  *
  * Numeric characters are decimal digits, letter numbers, and number-like, such as 1/2 (½) or superscript 2 (²).
  *
- * @param character
- *   The character to validate.
+ * @param sequence
+ *   The byte sequence to validate as a character.
  *
  * @return
  *   F_true if a UTF-8 alpha-numeric character.
@@ -95,7 +95,7 @@ extern "C" {
  * @see isalnum()
  */
 #ifndef _di_f_utf_character_is_alphabetic_numeric_
-  extern f_status_t f_utf_character_is_alphabetic_numeric(const f_utf_char_t character);
+  extern f_status_t f_utf_character_is_alphabetic_numeric(const f_utf_char_t sequence);
 #endif // _di_f_utf_character_is_alphabetic_numeric_
 
 /**
@@ -103,22 +103,22 @@ extern "C" {
  *
  * This does not validate whether the UTF-8 character is valid or not.
  *
- * @param character
- *   The character to validate.
+ * @param sequence
+ *   The byte sequence to validate as a character.
  *
  * @return
  *   F_true if an ASCII character.
  *   F_false if not an ASCII character.
  */
 #ifndef _di_f_utf_character_is_ascii_
-  extern f_status_t f_utf_character_is_ascii(const f_utf_char_t character);
+  extern f_status_t f_utf_character_is_ascii(const f_utf_char_t sequence);
 #endif // _di_f_utf_character_is_ascii_
 
 /**
  * Check to see if the entire byte block of the character is a UTF-8 combining character.
  *
- * @param character
- *   The character to validate.
+ * @param sequence
+ *   The byte sequence to validate as a character.
  *
  * @return
  *   F_true if a UTF-8 combining character.
@@ -128,7 +128,7 @@ extern "C" {
  *   F_utf_not (with error bit) if unicode is an invalid Unicode character.
  */
 #ifndef _di_f_utf_character_is_combining_
-  extern f_status_t f_utf_character_is_combining(const f_utf_char_t character);
+  extern f_status_t f_utf_character_is_combining(const f_utf_char_t sequence);
 #endif // _di_f_utf_character_is_combining_
 
 /**
@@ -136,8 +136,8 @@ extern "C" {
  *
  * This includes control code and control format characters.
  *
- * @param character
- *   The character to validate.
+ * @param sequence
+ *   The byte sequence to validate as a character.
  *
  * @return
  *   F_true if a UTF-8 control character.
@@ -149,7 +149,7 @@ extern "C" {
  * @see iscntrl()
  */
 #ifndef _di_f_utf_character_is_control_
-  extern f_status_t f_utf_character_is_control(const f_utf_char_t character);
+  extern f_status_t f_utf_character_is_control(const f_utf_char_t sequence);
 #endif // _di_f_utf_character_is_control_
 
 /**
@@ -159,8 +159,8 @@ extern "C" {
  *
  * This does not include Control format characters.
  *
- * @param character
- *   The character to validate.
+ * @param sequence
+ *   The byte sequence to validate as a character.
  *
  * @return
  *   F_true if a UTF-8 control code character.
@@ -172,7 +172,7 @@ extern "C" {
  * @see iscntrl()
  */
 #ifndef _di_f_utf_character_is_control_code_
-  extern f_status_t f_utf_character_is_control_code(const f_utf_char_t character);
+  extern f_status_t f_utf_character_is_control_code(const f_utf_char_t sequence);
 #endif // _di_f_utf_character_is_control_code_
 
 /**
@@ -181,8 +181,8 @@ extern "C" {
  * Control Format characters are special characters used for formatting.
  * These are considered control characters.
  *
- * @param character
- *   The character to validate.
+ * @param sequence
+ *   The byte sequence to validate as a character.
  *
  * @return
  *   F_true if a UTF-8 control format character.
@@ -192,7 +192,7 @@ extern "C" {
  *   F_utf_not (with error bit) if unicode is an invalid Unicode character.
  */
 #ifndef _di_f_utf_character_is_control_format_
-  extern f_status_t f_utf_character_is_control_format(const f_utf_char_t character);
+  extern f_status_t f_utf_character_is_control_format(const f_utf_char_t sequence);
 #endif // _di_f_utf_character_is_control_format_
 
 /**
@@ -200,8 +200,8 @@ extern "C" {
  *
  * Control Picture characters are placeholders for special ASCII characters and therefore there are no ASCII Control Picture characters.
  *
- * @param character
- *   The character to validate.
+ * @param sequence
+ *   The byte sequence to validate as a character.
  *
  * @return
  *   F_true if a UTF-8 control picture character.
@@ -211,7 +211,7 @@ extern "C" {
  *   F_utf_not (with error bit) if unicode is an invalid Unicode character.
  */
 #ifndef _di_f_utf_character_is_control_picture_
-  extern f_status_t f_utf_character_is_control_picture(const f_utf_char_t character);
+  extern f_status_t f_utf_character_is_control_picture(const f_utf_char_t sequence);
 #endif // _di_f_utf_character_is_control_picture_
 
 /**
@@ -221,8 +221,8 @@ extern "C" {
  *
  * This does not include number-like, such as 1/2 (½) or superscript 2 (²).
  *
- * @param character
- *   The character to validate.
+ * @param sequence
+ *   The byte sequence to validate as a character.
  *
  * @return
  *   F_true if a UTF-8 digit character.
@@ -234,14 +234,14 @@ extern "C" {
  * @see isdigit()
  */
 #ifndef _di_f_utf_character_is_digit_
-  extern f_status_t f_utf_character_is_digit(const f_utf_char_t character);
+  extern f_status_t f_utf_character_is_digit(const f_utf_char_t sequence);
 #endif // _di_f_utf_character_is_digit_
 
 /**
  * Check to see if the entire byte block of the character is an ASCII or UTF-8 emoji character.
  *
- * @param character
- *   The character to validate.
+ * @param sequence
+ *   The byte sequence to validate as a character.
  *
  * @return
  *   F_true if a UTF-8 emoji character.
@@ -251,7 +251,7 @@ extern "C" {
  *   F_utf_not (with error bit) if unicode is an invalid Unicode character.
  */
 #ifndef _di_f_utf_character_is_emoji_
-  extern f_status_t f_utf_character_is_emoji(const f_utf_char_t character);
+  extern f_status_t f_utf_character_is_emoji(const f_utf_char_t sequence);
 #endif // _di_f_utf_character_is_emoji_
 
 /**
@@ -273,8 +273,8 @@ extern "C" {
  *                 %xF4 %x80-8F 2( UTF8-tail )
  *   UTF8-tail   = %x80-BF
  *
- * @param character
- *   The character to validate.
+ * @param sequence
+ *   The byte sequence to validate as a character.
  *
  * @return
  *   F_true if a UTF-8 character.
@@ -287,14 +287,14 @@ extern "C" {
  * @see f_utf_character_is_valid()
  */
 #ifndef _di_f_utf_character_is_fragment_
-  extern f_status_t f_utf_character_is_fragment(const f_utf_char_t character);
+  extern f_status_t f_utf_character_is_fragment(const f_utf_char_t sequence);
 #endif // _di_f_utf_character_is_fragment_
 
 /**
  * Check to see if the entire byte block of the character is an ASCII or UTF-8 printable character.
  *
- * @param character
- *   The character to validate.
+ * @param sequence
+ *   The byte sequence to validate as a character.
  *
  * @return
  *   F_true if a UTF-8 graph.
@@ -306,7 +306,7 @@ extern "C" {
  * @see isgraph()
  */
 #ifndef _di_f_utf_character_is_graph_
-  extern f_status_t f_utf_character_is_graph(const f_utf_char_t character);
+  extern f_status_t f_utf_character_is_graph(const f_utf_char_t sequence);
 #endif // _di_f_utf_character_is_graph_
 
 /**
@@ -314,8 +314,8 @@ extern "C" {
  *
  * Numeric characters are decimal digits, letter numbers, and number-like, such as 1/2 (½) or superscript 2 (²).
  *
- * @param character
- *   The character to validate.
+ * @param sequence
+ *   The byte sequence to validate as a character.
  *
  * @return
  *   F_true if a UTF-8 numeric character.
@@ -327,14 +327,14 @@ extern "C" {
  * @see isdigit()
  */
 #ifndef _di_f_utf_character_is_numeric_
-  extern f_status_t f_utf_character_is_numeric(const f_utf_char_t character);
+  extern f_status_t f_utf_character_is_numeric(const f_utf_char_t sequence);
 #endif // _di_f_utf_character_is_numeric_
 
 /**
  * Check to see if the entire byte block of the character is an ASCII or UTF-8 phonetic character.
  *
- * @param character
- *   The character to validate.
+ * @param sequence
+ *   The byte sequence to validate as a character.
  *
  * @return
  *   F_true if a UTF-8 phonetic character.
@@ -344,14 +344,14 @@ extern "C" {
  *   F_utf_not (with error bit) if unicode is an invalid Unicode character.
  */
 #ifndef _di_f_utf_character_is_phonetic_
-  extern f_status_t f_utf_character_is_phonetic(const f_utf_char_t character);
+  extern f_status_t f_utf_character_is_phonetic(const f_utf_char_t sequence);
 #endif // _di_f_utf_character_is_phonetic_
 
 /**
  * Check to see if the entire byte block of the character is a UTF-8 private character.
  *
- * @param character
- *   The character to validate.
+ * @param sequence
+ *   The byte sequence to validate as a character.
  *
  * @return
  *   F_true if a UTF-8 private character.
@@ -361,14 +361,14 @@ extern "C" {
  *   F_utf_not (with error bit) if unicode is an invalid Unicode character.
  */
 #ifndef _di_f_utf_character_is_private_
-  extern f_status_t f_utf_character_is_private(const f_utf_char_t character);
+  extern f_status_t f_utf_character_is_private(const f_utf_char_t sequence);
 #endif // _di_f_utf_character_is_private_
 
 /**
  * Check to see if the entire byte block of the character is an ASCII or UTF-8 punctuation character.
  *
- * @param character
- *   The character to validate.
+ * @param sequence
+ *   The byte sequence to validate as a character.
  *
  * @return
  *   F_true if a UTF-8 punctuation character.
@@ -378,7 +378,7 @@ extern "C" {
  *   F_utf_not (with error bit) if unicode is an invalid Unicode character.
  */
 #ifndef _di_f_utf_character_is_punctuation_
-  extern f_status_t f_utf_character_is_punctuation(const f_utf_char_t character);
+  extern f_status_t f_utf_character_is_punctuation(const f_utf_char_t sequence);
 #endif // _di_f_utf_character_is_punctuation_
 
 /**
@@ -386,8 +386,8 @@ extern "C" {
  *
  * This does not treat any combining character as a subscript.
  *
- * @param character
- *   The character to validate.
+ * @param sequence
+ *   The byte sequence to validate as a character.
  *
  * @return
  *   F_true if a UTF-8 subscript character.
@@ -397,7 +397,7 @@ extern "C" {
  *   F_utf_not (with error bit) if unicode is an invalid Unicode character.
  */
 #ifndef _di_f_utf_character_is_subscript_
-  extern f_status_t f_utf_character_is_subscript(const f_utf_char_t character);
+  extern f_status_t f_utf_character_is_subscript(const f_utf_char_t sequence);
 #endif // _di_f_utf_character_is_subscript_
 
 /**
@@ -405,8 +405,8 @@ extern "C" {
  *
  * This does not treat any combining character as a superscript.
  *
- * @param character
- *   The character to validate.
+ * @param sequence
+ *   The byte sequence to validate as a character.
  *
  * @return
  *   F_true if a UTF-8 superscript character.
@@ -416,31 +416,14 @@ extern "C" {
  *   F_utf_not (with error bit) if unicode is an invalid Unicode character.
  */
 #ifndef _di_f_utf_character_is_superscript_
-  extern f_status_t f_utf_character_is_superscript(const f_utf_char_t character);
+  extern f_status_t f_utf_character_is_superscript(const f_utf_char_t sequence);
 #endif // _di_f_utf_character_is_superscript_
-
-/**
- * Check to see if the entire byte block of the character is a UTF-8 surrogate character.
- *
- * @param character
- *   The character to validate.
- *
- * @return
- *   F_true if a UTF-8 superscript character.
- *   F_false if not a UTF-8 superscript character.
- *
- *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
- *   F_utf_not (with error bit) if unicode is an invalid Unicode character.
- */
-#ifndef _di_f_utf_character_is_surrogate_
-  extern f_status_t f_utf_character_is_surrogate(const f_utf_char_t character);
-#endif // _di_f_utf_character_is_surrogate_
 
 /**
  * Check to see if the entire byte block of the character is an ASCII or UTF-8 symbol character.
  *
- * @param character
- *   The character to validate.
+ * @param sequence
+ *   The byte sequence to validate as a character.
  *
  * @return
  *   F_true if a UTF-8 symbol character.
@@ -450,18 +433,18 @@ extern "C" {
  *   F_utf_not (with error bit) if unicode is an invalid Unicode character.
  */
 #ifndef _di_f_utf_character_is_symbol_
-  extern f_status_t f_utf_character_is_symbol(const f_utf_char_t character);
+  extern f_status_t f_utf_character_is_symbol(const f_utf_char_t sequence);
 #endif // _di_f_utf_character_is_symbol_
 
 /**
  * Check to see if the entire byte block of the character is a unassigned (well-formed) UTF-8 character.
  *
- * The Surrogates and Private Use are not considered unassigned.
+ * The Surrogates (which are not valid UTF-8) and Private Use are not considered unassigned.
  *
  * This does validate if the UTF-8 character is a unassigned UTF-8 character.
  * To not do this, use f_utf_character_is().
  *
- * @param character
+ * @param sequence
  *   The character to unassignedate.
  *
  * @return
@@ -475,7 +458,7 @@ extern "C" {
  * @see f_utf_character_is_fragment()
  */
 #ifndef _di_f_utf_character_is_unassigned_
-  extern f_status_t f_utf_character_is_unassigned(const f_utf_char_t character);
+  extern f_status_t f_utf_character_is_unassigned(const f_utf_char_t sequence);
 #endif // _di_f_utf_character_is_value_
 
 /**
@@ -488,21 +471,20 @@ extern "C" {
  *
  * Codes U+FDD0 to U+FDEF and any character ending in FFFE or FFFF are non-characters, and are therefore invalid.
  *
- * @param character
- *   The character to validate.
+ * @param sequence
+ *   The byte sequence to validate as a character.
  *
  * @return
  *   F_true if a UTF-8 character.
  *   F_false if not a UTF-8 character.
  *
  *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
- *   F_utf_not (with error bit) if unicode is an invalid Unicode character.
  *
  * @see f_utf_character_is()
  * @see f_utf_character_is_fragment()
  */
 #ifndef _di_f_utf_character_is_valid_
-  extern f_status_t f_utf_character_is_valid(const f_utf_char_t character);
+  extern f_status_t f_utf_character_is_valid(const f_utf_char_t sequence);
 #endif // _di_f_utf_character_is_value_
 
 /**
@@ -516,8 +498,8 @@ extern "C" {
  * Phonetic spaces are whitespaces with additional phonetic meaning associated with them.
  * However, because they are not renderred as white space, they are technically not white space.
  *
- * @param character
- *   The character to validate.
+ * @param sequence
+ *   The byte sequence to validate as a character.
  *
  * @return
  *   F_true if a UTF-8 white space.
@@ -529,7 +511,7 @@ extern "C" {
  * @see isspace()
  */
 #ifndef _di_f_utf_character_is_whitespace_
-  extern f_status_t f_utf_character_is_whitespace(const f_utf_char_t character);
+  extern f_status_t f_utf_character_is_whitespace(const f_utf_char_t sequence);
 #endif // _di_f_utf_character_is_whitespace_
 
 /**
@@ -540,8 +522,8 @@ extern "C" {
  * Phonetic spaces are whitespaces with additional phonetic meaning associated with them.
  * Therefore, these are valid spaces in the technical sense, even if they are not visibly white space.
  *
- * @param character
- *   The character to validate.
+ * @param sequence
+ *   The byte sequence to validate as a character.
  *
  * @return
  *   F_true if a UTF-8 modifier character.
@@ -551,7 +533,7 @@ extern "C" {
  *   F_utf_not (with error bit) if unicode is an invalid Unicode character.
  */
 #ifndef _di_f_utf_character_is_whitespace_modifier_
-  extern f_status_t f_utf_character_is_whitespace_modifier(const f_utf_char_t character);
+  extern f_status_t f_utf_character_is_whitespace_modifier(const f_utf_char_t sequence);
 #endif // _di_f_utf_character_is_whitespace_modifier_
 
 /**
@@ -559,8 +541,8 @@ extern "C" {
  *
  * This is a list of white space that are not actual white space (because they are graph characters) but are considered white space, such as Ogham Space Mark ' ' (U+1680).
  *
- * @param character
- *   The character to validate.
+ * @param sequence
+ *   The byte sequence to validate as a character.
  *
  * @return
  *   F_true if a UTF-8 (other) white space.
@@ -572,7 +554,7 @@ extern "C" {
  * @see isspace()
  */
 #ifndef _di_f_utf_character_is_whitespace_other_
-  extern f_status_t f_utf_character_is_whitespace_other(const f_utf_char_t character);
+  extern f_status_t f_utf_character_is_whitespace_other(const f_utf_char_t sequence);
 #endif // _di_f_utf_character_is_whitespace_other_
 
 /**
@@ -583,7 +565,7 @@ extern "C" {
  * When "wide" characters that take up either 2 characters on render.
  * When "narrow" characters that take up either 1 character on render.
  *
- * @param character
+ * @param sequence
  *   The (UTF-8) character.
  *
  * @return
@@ -595,7 +577,7 @@ extern "C" {
  *   F_utf_not (with error bit) if unicode is an invalid Unicode character.
  */
 #ifndef _di_f_utf_character_is_wide_
-  extern f_status_t f_utf_character_is_wide(const f_utf_char_t character);
+  extern f_status_t f_utf_character_is_wide(const f_utf_char_t sequence);
 #endif // _di_f_utf_character_is_wide_
 
 /**
@@ -603,8 +585,8 @@ extern "C" {
  *
  * A word character is alpha-numeric or an underscore '_'.
  *
- * @param character
- *   The character to validate.
+ * @param sequence
+ *   The byte sequence to validate as a character.
  * @param strict
  *   When TRUE, include all appropriate characters by type as per Unicode.
  *   When FALSE, non-inline punctuation connectors are not considered a character (such as U+FE33 '︳').
@@ -620,7 +602,7 @@ extern "C" {
  * @see isalnum()
  */
 #ifndef _di_f_utf_character_is_word_
-  extern f_status_t f_utf_character_is_word(const f_utf_char_t character, const bool strict);
+  extern f_status_t f_utf_character_is_word(const f_utf_char_t sequence, const bool strict);
 #endif // _di_f_utf_character_is_word_
 
 /**
@@ -633,8 +615,8 @@ extern "C" {
  * All other dash-like Unicode characters are not considered a dash here.
  * The dash here is intended for combining words, which matches the context of the Unicode "hyphen".
  *
- * @param character
- *   The character to validate.
+ * @param sequence
+ *   The byte sequence to validate as a character.
  * @param strict
  *   When TRUE, include all appropriate characters by type as per Unicode.
  *   When FALSE, non-inline punctuation connectors are not considered a character (such as U+FE33 '︳').
@@ -650,7 +632,7 @@ extern "C" {
  * @see isalnum()
  */
 #ifndef _di_f_utf_character_is_word_dash_
-  extern f_status_t f_utf_character_is_word_dash(const f_utf_char_t character, const bool strict);
+  extern f_status_t f_utf_character_is_word_dash(const f_utf_char_t sequence, const bool strict);
 #endif // _di_f_utf_character_is_word_dash_
 
 /**
@@ -665,8 +647,8 @@ extern "C" {
  *
  * This does not include zero-width punctuation, such as "invisible plus" (U+2064) (even in strict mode).
  *
- * @param character
- *   The character to validate.
+ * @param sequence
+ *   The byte sequence to validate as a character.
  * @param strict
  *   When TRUE, include all appropriate characters by type as per Unicode.
  *   When FALSE, non-inline punctuation connectors are not considered a character (such as U+FE33 '︳').
@@ -682,7 +664,7 @@ extern "C" {
  * @see isalnum()
  */
 #ifndef _di_f_utf_character_is_word_dash_plus_
-  extern f_status_t f_utf_character_is_word_dash_plus(const f_utf_char_t character, const bool strict);
+  extern f_status_t f_utf_character_is_word_dash_plus(const f_utf_char_t sequence, const bool strict);
 #endif // _di_f_utf_character_is_word_dash_plus_
 
 /**
@@ -690,8 +672,8 @@ extern "C" {
  *
  * Only characters that do not print, which are generally called zero-width.
  *
- * @param character
- *   The character to validate.
+ * @param sequence
+ *   The byte sequence to validate as a character.
  *
  * @return
  *   F_true if a UTF-8 non-printing or zero-width character.
@@ -701,7 +683,7 @@ extern "C" {
  *   F_utf_not (with error bit) if unicode is an invalid Unicode character.
  */
 #ifndef _di_f_utf_character_is_zero_width_
-  extern f_status_t f_utf_character_is_zero_width(const f_utf_char_t character);
+  extern f_status_t f_utf_character_is_zero_width(const f_utf_char_t sequence);
 #endif // _di_f_utf_character_is_zero_width_
 
 #ifdef __cplusplus

@@ -616,7 +616,7 @@ extern "C" {
     if (return_code) {
       f_string_dynamic_t number = f_string_dynamic_t_initialize;
 
-      status = f_conversion_number_signed_to_string(WEXITSTATUS(return_code), f_conversion_data_base_10_s, &number);
+      status = f_conversion_number_signed_to_string(WEXITSTATUS(return_code), f_conversion_data_base_10_c, &number);
 
       if (F_status_is_error(status)) {
         fll_error_print(data_make->error, F_status_set_fine(status), "f_conversion_number_signed_to_string", F_true);

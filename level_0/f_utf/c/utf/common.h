@@ -90,32 +90,32 @@ extern "C" {
   #define F_utf_space_separator_line_s_length      3
   #define F_utf_space_separator_paragraph_s_length 3
 
-  extern const uint8_t f_utf_space_em_s[];
-  extern const uint8_t f_utf_space_em_quad_s[];
-  extern const uint8_t f_utf_space_em_per_three_s[];
-  extern const uint8_t f_utf_space_em_per_four_s[];
-  extern const uint8_t f_utf_space_em_per_six_s[];
+  extern const f_char_t f_utf_space_em_s[];
+  extern const f_char_t f_utf_space_em_quad_s[];
+  extern const f_char_t f_utf_space_em_per_three_s[];
+  extern const f_char_t f_utf_space_em_per_four_s[];
+  extern const f_char_t f_utf_space_em_per_six_s[];
 
-  extern const uint8_t f_utf_space_en_s[];
-  extern const uint8_t f_utf_space_en_quad_s[];
+  extern const f_char_t f_utf_space_en_s[];
+  extern const f_char_t f_utf_space_en_quad_s[];
 
-  extern const uint8_t f_utf_space_line_feed_reverse_s[];
-  extern const uint8_t f_utf_space_line_next_s[];
+  extern const f_char_t f_utf_space_line_feed_reverse_s[];
+  extern const f_char_t f_utf_space_line_next_s[];
 
-  extern const uint8_t f_utf_space_medium_mathematical_s[];
+  extern const f_char_t f_utf_space_medium_mathematical_s[];
 
-  extern const uint8_t f_utf_space_no_break_s[];
-  extern const uint8_t f_utf_space_no_break_narrow_s[];
+  extern const f_char_t f_utf_space_no_break_s[];
+  extern const f_char_t f_utf_space_no_break_narrow_s[];
 
-  extern const uint8_t f_utf_space_ogham_s[];
-  extern const uint8_t f_utf_space_figure_s[];
-  extern const uint8_t f_utf_space_punctuation_s[];
-  extern const uint8_t f_utf_space_thin_s[];
-  extern const uint8_t f_utf_space_hair_s[];
-  extern const uint8_t f_utf_space_ideographic_s[];
+  extern const f_char_t f_utf_space_ogham_s[];
+  extern const f_char_t f_utf_space_figure_s[];
+  extern const f_char_t f_utf_space_punctuation_s[];
+  extern const f_char_t f_utf_space_thin_s[];
+  extern const f_char_t f_utf_space_hair_s[];
+  extern const f_char_t f_utf_space_ideographic_s[];
 
-  extern const uint8_t f_utf_space_separator_line_s[];
-  extern const uint8_t f_utf_space_separator_paragraph_s[];
+  extern const f_char_t f_utf_space_separator_line_s[];
+  extern const f_char_t f_utf_space_separator_paragraph_s[];
 #endif // _di_f_utf_space_
 
 /**
@@ -136,13 +136,13 @@ extern "C" {
   #define F_utf_substitute_open_box_s_length            3
   #define F_utf_substitute_open_box_shouldered_s_length 3
 
-  extern const uint8_t f_utf_substitute_symbol_blank_s[];
-  extern const uint8_t f_utf_substitute_symbol_space_s[];
+  extern const f_char_t f_utf_substitute_symbol_blank_s[];
+  extern const f_char_t f_utf_substitute_symbol_space_s[];
 
-  extern const uint8_t f_utf_substitute_middle_dot_s[];
+  extern const f_char_t f_utf_substitute_middle_dot_s[];
 
-  extern const uint8_t f_utf_substitute_open_box_s[];
-  extern const uint8_t f_utf_substitute_open_box_shouldered_s[];
+  extern const f_char_t f_utf_substitute_open_box_s[];
+  extern const f_char_t f_utf_substitute_open_box_shouldered_s[];
 #endif // _di_f_utf_substitute_
 
 /**
@@ -218,9 +218,9 @@ extern "C" {
   #define F_utf_char_mask_char_4_le_d 0xff000000 // 1111 1111, 0000 0000, 0000 0000, 0000 0000
 
   #define macro_f_utf_char_t_to_char_1_le(character) ((character) & F_utf_char_mask_char_1_le_d)         // Grab first byte.
-  #define macro_f_utf_char_t_to_char_2_le(character) (((character) & F_utf_char_mask_char_2_le_d) << 8)  // Grab second byte.
-  #define macro_f_utf_char_t_to_char_3_le(character) (((character) & F_utf_char_mask_char_3_le_d) << 16) // Grab third byte.
-  #define macro_f_utf_char_t_to_char_4_le(character) (((character) & F_utf_char_mask_char_4_le_d) << 24) // Grab fourth byte.
+  #define macro_f_utf_char_t_to_char_2_le(character) (((character) & F_utf_char_mask_char_2_le_d) >> 8)  // Grab second byte.
+  #define macro_f_utf_char_t_to_char_3_le(character) (((character) & F_utf_char_mask_char_3_le_d) >> 16) // Grab third byte.
+  #define macro_f_utf_char_t_to_char_4_le(character) (((character) & F_utf_char_mask_char_4_le_d) >> 24) // Grab fourth byte.
 
   #define macro_f_utf_char_t_from_char_1_le(character) ((character) & F_utf_char_mask_char_1_le_d)         // Shift to first byte.
   #define macro_f_utf_char_t_from_char_2_le(character) (((character) << 8) & F_utf_char_mask_char_2_le_d)  // Shift to second byte.

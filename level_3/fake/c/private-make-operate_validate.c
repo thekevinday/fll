@@ -1027,7 +1027,7 @@ extern "C" {
                   status_number = F_status_set_error(F_failure);
                 }
                 else {
-                  status_number = fl_conversion_dynamic_partial_to_number_unsigned(arguments.array[i], range, &number);
+                  status_number = fl_conversion_dynamic_partial_to_unsigned_detect(fl_conversion_data_base_10_c, arguments.array[i], range, &number);
                 }
               }
               else {

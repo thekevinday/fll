@@ -12,28 +12,28 @@ void test__f_utf_is_phonetic__works(void **state) {
 
     assert_non_null(file);
 
-    f_utf_char_t character = 0;
+    f_utf_char_t sequence = 0;
     ssize_t bytes = 0;
 
     f_array_length_t line = 0;
 
     do {
-      bytes = data__bytesequence_get_line(file, &character);
+      bytes = data__bytesequence_get_line(file, &sequence);
 
       if (bytes) {
-        const uint8_t width = macro_f_utf_char_t_width(character);
+        const uint8_t width = macro_f_utf_char_t_width(sequence);
         char buffer[5] = { 0, 0, 0, 0, 0 };
 
-        buffer[0] = macro_f_utf_char_t_to_char_1(character);
+        buffer[0] = macro_f_utf_char_t_to_char_1(sequence);
 
         if (width > 1) {
-          buffer[1] = macro_f_utf_char_t_to_char_2(character);
+          buffer[1] = macro_f_utf_char_t_to_char_2(sequence);
 
           if (width > 2) {
-            buffer[2] = macro_f_utf_char_t_to_char_3(character);
+            buffer[2] = macro_f_utf_char_t_to_char_3(sequence);
 
             if (width > 3) {
-              buffer[3] = macro_f_utf_char_t_to_char_4(character);
+              buffer[3] = macro_f_utf_char_t_to_char_4(sequence);
             }
           }
         }

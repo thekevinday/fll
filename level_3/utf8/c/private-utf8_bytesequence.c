@@ -10,15 +10,15 @@ extern "C" {
 #endif
 
 #ifndef _di_utf8_convert_bytesequence_
-  f_status_t utf8_convert_bytesequence(utf8_data_t * const data, const f_string_static_t character) {
+  f_status_t utf8_convert_bytesequence(utf8_data_t * const data, const f_string_static_t sequence) {
 
     f_status_t status = F_none;
     bool valid_not = F_false;
 
-    uint32_t codepoint = 0;
+    f_utf_char_t codepoint = 0;
 
-    if (character.used) {
-      status = f_utf_unicode_to(character.string, character.used, &codepoint);
+    if (sequence.used) {
+      status = f_utf_unicode_to(sequence.string, sequence.used, &codepoint);
     }
     else {
       status = F_status_set_error(F_utf_not);
@@ -30,25 +30,25 @@ extern "C" {
       if (status == F_failure || status == F_utf_not || status == F_complete_not_utf || status == F_utf_fragment || status == F_valid_not) {
         valid_not = F_true;
 
-        utf8_print_character_invalid(data, character);
+        utf8_print_character_invalid(data, sequence);
       }
       else {
         status = F_status_set_error(status);
 
-        utf8_print_error_decode(data, status, character);
+        utf8_print_error_decode(data, status, sequence);
 
         return status;
       }
     }
     else if (data->main->parameters.array[utf8_parameter_verify_e].result == f_console_result_none_e) {
       if (data->mode & utf8_mode_to_bytesequence_d) {
-        utf8_print_bytesequence(data, character);
+        utf8_print_bytesequence(data, sequence);
       }
       else if (data->mode & utf8_mode_to_codepoint_d) {
         utf8_print_codepoint(data, codepoint);
       }
       else {
-        utf8_print_combining_or_width(data, character);
+        utf8_print_combining_or_width(data, sequence);
       }
     }
 
@@ -72,8 +72,8 @@ extern "C" {
     f_array_length_t i = 0;
     f_array_length_t j = 0;
 
-    f_char_t block_character[4] = { 0, 0, 0, 0 };
-    f_string_static_t character = macro_f_string_static_t_initialize(block_character, 0, 4);
+    f_char_t block[4] = { 0, 0, 0, 0 };
+    f_string_static_t sequence = macro_f_string_static_t_initialize(block, 0, 4);
 
     do {
       status = f_file_read_block(file, &data->buffer);
@@ -98,23 +98,23 @@ extern "C" {
 
         // Get the current width only when processing a new block.
         if (next) {
-          character.used = macro_f_utf_byte_width(data->buffer.string[i]);
+          sequence.used = macro_f_utf_byte_width(data->buffer.string[i]);
           next = F_false;
         }
 
-        for (; j < character.used && i < data->buffer.used; ++j, ++i) {
-          character.string[j] = data->buffer.string[i];
+        for (; j < sequence.used && i < data->buffer.used; ++j, ++i) {
+          sequence.string[j] = data->buffer.string[i];
         } // for
 
-        if (j == character.used) {
+        if (j == sequence.used) {
           if (data->mode & utf8_mode_from_bytesequence_d) {
-            status = utf8_convert_bytesequence(data, character);
+            status = utf8_convert_bytesequence(data, sequence);
           }
           else {
-            status = utf8_detect_codepoint(data, character, &mode_codepoint);
+            status = utf8_detect_codepoint(data, sequence, &mode_codepoint);
 
             if (F_status_is_fine(status) && status != F_next) {
-              status = utf8_convert_codepoint(data, character, &mode_codepoint);
+              status = utf8_convert_codepoint(data, sequence, &mode_codepoint);
             }
           }
 
@@ -132,18 +132,18 @@ extern "C" {
 
     } while (F_status_is_fine(status) && status != F_interrupt);
 
-    // Handle last (incomplete) character when the buffer ended before the character is supposed to end.
+    // Handle last (incomplete) sequence when the buffer ended before the sequence is supposed to end.
     if (F_status_is_error_not(status) && status != F_interrupt && next == F_false) {
-      character.used = j;
+      sequence.used = j;
 
       if (data->mode & utf8_mode_from_bytesequence_d) {
-        status = utf8_convert_bytesequence(data, character);
+        status = utf8_convert_bytesequence(data, sequence);
       }
       else {
-        status = utf8_detect_codepoint(data, character, &mode_codepoint);
+        status = utf8_detect_codepoint(data, sequence, &mode_codepoint);
 
         if (F_status_is_fine(status) && status != F_next) {
-          status = utf8_convert_codepoint(data, character, &mode_codepoint);
+          status = utf8_convert_codepoint(data, sequence, &mode_codepoint);
         }
       }
 

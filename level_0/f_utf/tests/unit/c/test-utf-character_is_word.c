@@ -12,16 +12,16 @@ void test__f_utf_character_is_word__strict_is_false(void **state) {
 
     assert_non_null(file);
 
-    f_utf_char_t character = 0;
+    f_utf_char_t sequence = 0;
     ssize_t bytes = 0;
 
     f_array_length_t line = 0;
 
     do {
-      bytes = data__bytesequence_get_line(file, &character);
+      bytes = data__bytesequence_get_line(file, &sequence);
 
       if (bytes > 0) {
-        const f_status_t status = f_utf_character_is_word(character, F_false);
+        const f_status_t status = f_utf_character_is_word(sequence, F_false);
 
         // @todo provide an array of codes that should return false when not strict.
         assert_int_equal(status, F_true);
@@ -42,16 +42,16 @@ void test__f_utf_character_is_word__strict_is_true(void **state) {
 
     assert_non_null(file);
 
-    f_utf_char_t character = 0;
+    f_utf_char_t sequence = 0;
     ssize_t bytes = 0;
 
     f_array_length_t line = 0;
 
     do {
-      bytes = data__bytesequence_get_line(file, &character);
+      bytes = data__bytesequence_get_line(file, &sequence);
 
       if (bytes > 0) {
-        const f_status_t status = f_utf_character_is_word(character, F_true);
+        const f_status_t status = f_utf_character_is_word(sequence, F_true);
 
         assert_int_equal(status, F_true);
       }

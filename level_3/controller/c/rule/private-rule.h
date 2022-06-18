@@ -668,10 +668,10 @@ extern "C" {
  *
  *   F_valid_not (with error bit) on failure due to invalid value.
  *
- *   Errors (with error bit) from: fl_conversion_dynamic_partial_to_number_signed().
+ *   Errors (with error bit) from: fl_conversion_dynamic_partial_to_signed_detect().
  *
  * @see controller_rule_action_read()
- * @see fl_conversion_dynamic_partial_to_number_signed()
+ * @see fl_conversion_dynamic_partial_to_signed_detect()
  */
 #ifndef _di_controller_rule_action_read_rerun_number_
   extern f_status_t controller_rule_action_read_rerun_number(const controller_global_t global, const f_string_t name, controller_cache_t * const cache, f_array_length_t * const index, f_number_unsigned_t * const number) F_attribute_visibility_internal_d;

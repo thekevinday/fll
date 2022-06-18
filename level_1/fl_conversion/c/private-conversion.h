@@ -20,12 +20,12 @@ extern "C" {
  *
  * Intended to be shared to each of the different implementation variations.
  *
+ * @param flag
+ *   Conversion data flags.
  * @param string
  *   The string to convert.
  * @param length
  *   The length of the string to convert.
- * @param negative
- *   Set to 0 to treat string as a positive number, 1 for as a negative number.
  * @param number
  *   This will store the value of the converted string.
  *   This value is only changed on success.
@@ -41,19 +41,21 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  * @see fl_conversion_dynamic_partial_to_binary_signed()
- * @see fl_conversion_dynamic_partial_to_number_signed()
+ * @see fl_conversion_dynamic_partial_to_signed_detect()
  * @see fl_conversion_dynamic_to_binary_signed()
- * @see fl_conversion_dynamic_to_number_signed()
+ * @see fl_conversion_dynamic_to_signed_detect()
  */
-#if !defined(_di_fl_conversion_dynamic_partial_to_binary_signed_) || !defined(_di_fl_conversion_dynamic_partial_to_number_signed_) || !defined(_di_fl_conversion_dynamic_to_binary_signed_) || !defined(_di_fl_conversion_dynamic_to_number_signed_)
-  extern f_status_t private_fl_conversion_dynamic_to_binary_signed(const f_string_t string, const f_array_length_t length, const bool negative, f_number_signed_t * const number) F_attribute_visibility_internal_d;
-#endif // !defined(_di_fl_conversion_dynamic_partial_to_binary_signed_) || !defined(_di_fl_conversion_dynamic_partial_to_number_signed_) || !defined(_di_fl_conversion_dynamic_to_binary_signed_) || !defined(_di_fl_conversion_dynamic_to_number_signed_)
+#if !defined(_di_fl_conversion_dynamic_partial_to_binary_signed_) || !defined(_di_fl_conversion_dynamic_partial_to_signed_detect_) || !defined(_di_fl_conversion_dynamic_to_binary_signed_) || !defined(_di_fl_conversion_dynamic_to_signed_detect_)
+  extern f_status_t private_fl_conversion_dynamic_to_binary_signed(const uint16_t flag, const f_string_t string, const f_array_length_t length, f_number_signed_t * const number) F_attribute_visibility_internal_d;
+#endif // !defined(_di_fl_conversion_dynamic_partial_to_binary_signed_) || !defined(_di_fl_conversion_dynamic_partial_to_signed_detect_) || !defined(_di_fl_conversion_dynamic_to_binary_signed_) || !defined(_di_fl_conversion_dynamic_to_signed_detect_)
 
 /**
  * Private implementation of fl_conversion_dynamic_to_binary_unsigned().
  *
  * Intended to be shared to each of the different implementation variations.
  *
+ * @param flag
+ *   Conversion data flags.
  * @param string
  *   The string to convert.
  * @param length
@@ -72,25 +74,25 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  * @see fl_conversion_dynamic_partial_to_binary_unsigned()
- * @see fl_conversion_dynamic_partial_to_number_unsigned()
+ * @see fl_conversion_dynamic_partial_to_unsigned_detect()
  * @see fl_conversion_dynamic_to_binary_unsigned()
- * @see fl_conversion_dynamic_to_number_unsigned()
+ * @see fl_conversion_dynamic_to_unsigned_detect()
  */
-#if !defined(_di_fl_conversion_dynamic_partial_to_binary_unsigned_) || !defined(_di_fl_conversion_dynamic_partial_to_number_unsigned_) || !defined(_di_fl_conversion_dynamic_to_binary_unsigned_) || !defined(_di_fl_conversion_dynamic_to_number_unsigned_)
-  extern f_status_t private_fl_conversion_dynamic_to_binary_unsigned(const f_string_t string, const f_array_length_t length, f_number_unsigned_t * const number) F_attribute_visibility_internal_d;
-#endif // !defined(_di_fl_conversion_dynamic_partial_to_binary_unsigned_) || !defined(_di_fl_conversion_dynamic_partial_to_number_unsigned_) || !defined(_di_fl_conversion_dynamic_to_binary_unsigned_) || !defined(_di_fl_conversion_dynamic_to_number_unsigned_)
+#if !defined(_di_fl_conversion_dynamic_partial_to_binary_unsigned_) || !defined(_di_fl_conversion_dynamic_partial_to_unsigned_detect_) || !defined(_di_fl_conversion_dynamic_to_binary_unsigned_) || !defined(_di_fl_conversion_dynamic_to_unsigned_detect_)
+  extern f_status_t private_fl_conversion_dynamic_to_binary_unsigned(const uint16_t flag, const f_string_t string, const f_array_length_t length, f_number_unsigned_t * const number) F_attribute_visibility_internal_d;
+#endif // !defined(_di_fl_conversion_dynamic_partial_to_binary_unsigned_) || !defined(_di_fl_conversion_dynamic_partial_to_unsigned_detect_) || !defined(_di_fl_conversion_dynamic_to_binary_unsigned_) || !defined(_di_fl_conversion_dynamic_to_unsigned_detect_)
 
 /**
- * Private implementation of fl_conversion_dynamic_to_decimal_signed().
+ * Private implementation for converting for some given base unit.
  *
  * Intended to be shared to each of the different implementation variations.
  *
+ * @param data
+ *   Conversion data base unit and flags.
  * @param string
  *   The string to convert.
  * @param length
  *   The length of the string to convert.
- * @param negative
- *   Set to 0 to treat string as a positive number, 1 for as a negative number.
  * @param number
  *   This will store the value of the converted string.
  *   This value is only changed on success.
@@ -105,20 +107,22 @@ extern "C" {
  *   F_number_underflow (with error bit) on integer underflow.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fl_conversion_dynamic_partial_to_decimal_unsigned()
- * @see fl_conversion_dynamic_partial_to_number_unsigned()
+ * @see fl_conversion_dynamic_partial_to_unsigned()
+ * @see fl_conversion_dynamic_partial_to_unsigned_detect()
  * @see fl_conversion_dynamic_to_decimal_unsigned()
- * @see fl_conversion_dynamic_to_number_unsigned()
+ * @see fl_conversion_dynamic_to_unsigned_detect()
  */
-#if !defined(_di_fl_conversion_dynamic_partial_to_decimal_signed_) || !defined(_di_fl_conversion_dynamic_partial_to_number_signed_) || !defined(_di_fl_conversion_dynamic_to_decimal_signed_) || !defined(_di_fl_conversion_dynamic_to_number_signed_)
-  extern f_status_t private_fl_conversion_dynamic_to_decimal_signed(const f_string_t string, const f_array_length_t length, const bool negative, f_number_signed_t * const number) F_attribute_visibility_internal_d;
-#endif // !defined(_di_fl_conversion_dynamic_partial_to_decimal_signed_) || !defined(_di_fl_conversion_dynamic_partial_to_number_signed_) || !defined(_di_fl_conversion_dynamic_to_decimal_signed_) || !defined(_di_fl_conversion_dynamic_to_number_signed_)
+#if !defined(_di_fl_conversion_dynamic_partial_to_decimal_signed_) || !defined(_di_fl_conversion_dynamic_partial_to_signed_detect_) || !defined(_di_fl_conversion_dynamic_to_decimal_signed_) || !defined(_di_fl_conversion_dynamic_to_signed_detect_)
+  extern f_status_t private_fl_conversion_dynamic_to_base_signed(const fl_conversion_data_t data, const f_string_t string, const f_array_length_t length, f_number_signed_t * const number) F_attribute_visibility_internal_d;
+#endif // !defined(_di_fl_conversion_dynamic_partial_to_decimal_signed_) || !defined(_di_fl_conversion_dynamic_partial_to_signed_detect_) || !defined(_di_fl_conversion_dynamic_to_decimal_signed_) || !defined(_di_fl_conversion_dynamic_to_signed_detect_)
 
 /**
  * Private implementation of fl_conversion_dynamic_to_decimal_unsigned().
  *
  * Intended to be shared to each of the different implementation variations.
  *
+ * @param data
+ *   Conversion data base unit and flags.
  * @param string
  *   The string to convert.
  * @param length
@@ -136,214 +140,22 @@ extern "C" {
  *   F_number_overflow (with error bit) on integer overflow.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- * @see fl_conversion_dynamic_partial_to_decimal_unsigned()
- * @see fl_conversion_dynamic_partial_to_number_unsigned()
+ * @see fl_conversion_dynamic_partial_to_unsigned()
+ * @see fl_conversion_dynamic_partial_to_unsigned_detect()
  * @see fl_conversion_dynamic_to_decimal_unsigned()
- * @see fl_conversion_dynamic_to_number_unsigned()
+ * @see fl_conversion_dynamic_to_unsigned_detect()
  */
-#if !defined(_di_fl_conversion_dynamic_partial_to_decimal_unsigned_) || !defined(_di_fl_conversion_dynamic_partial_to_number_unsigned_) || !defined(_di_fl_conversion_dynamic_to_decimal_unsigned_) || !defined(_di_fl_conversion_dynamic_to_number_unsigned_)
-  extern f_status_t private_fl_conversion_dynamic_to_decimal_unsigned(const f_string_t string, const f_array_length_t length, f_number_unsigned_t * const number) F_attribute_visibility_internal_d;
-#endif // !defined(_di_fl_conversion_dynamic_partial_to_decimal_unsigned_) || !defined(_di_fl_conversion_dynamic_partial_to_number_unsigned_) || !defined(_di_fl_conversion_dynamic_to_decimal_unsigned_) || !defined(_di_fl_conversion_dynamic_to_number_unsigned_)
+#if !defined(_di_fl_conversion_dynamic_partial_to_decimal_unsigned_) || !defined(_di_fl_conversion_dynamic_partial_to_unsigned_detect_) || !defined(_di_fl_conversion_dynamic_to_decimal_unsigned_) || !defined(_di_fl_conversion_dynamic_to_unsigned_detect_)
+  extern f_status_t private_fl_conversion_dynamic_to_base_unsigned(const fl_conversion_data_t data, const f_string_t string, const f_array_length_t length, f_number_unsigned_t * const number) F_attribute_visibility_internal_d;
+#endif // !defined(_di_fl_conversion_dynamic_partial_to_decimal_unsigned_) || !defined(_di_fl_conversion_dynamic_partial_to_unsigned_detect_) || !defined(_di_fl_conversion_dynamic_to_decimal_unsigned_) || !defined(_di_fl_conversion_dynamic_to_unsigned_detect_)
 
 /**
- * Private implementation of fl_conversion_dynamic_to_duodecimal_signed().
+ * Private implementation of fl_conversion_dynamic_to_signed_detect().
  *
  * Intended to be shared to each of the different implementation variations.
  *
- * @param string
- *   The string to convert.
- * @param length
- *   The length of the string to convert.
- * @param negative
- *   Set to 0 to treat string as a positive number, 1 for as a negative number.
- * @param number
- *   This will store the value of the converted string.
- *   This value is only changed on success.
- *
- * @return
- *   F_none if the duodecimal string was converted to an signed long.
- *   F_data_not if string starts with a null (length is 0).
- *
- *   F_number (with error bit) if no conversion was made due to non-duodecimal values being found.
- *   F_number_decimal (with error bit) if number has a decimal digit.
- *   F_number_overflow (with error bit) on integer overflow.
- *   F_number_underflow (with error bit) on integer underflow.
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- * @see fl_conversion_dynamic_partial_to_duodecimal_signed()
- * @see fl_conversion_dynamic_partial_to_number_signed()
- * @see fl_conversion_dynamic_to_duodecimal_signed()
- * @see fl_conversion_dynamic_to_number_signed()
- */
-#if !defined(_di_fl_conversion_dynamic_partial_to_duodecimal_signed_) || !defined(_di_fl_conversion_dynamic_partial_to_number_signed_) || !defined(_di_fl_conversion_dynamic_to_duodecimal_signed_) || !defined(_di_fl_conversion_dynamic_to_number_signed_)
-  extern f_status_t private_fl_conversion_dynamic_to_duodecimal_signed(const f_string_t string, const f_array_length_t length, const bool negative, f_number_signed_t * const number) F_attribute_visibility_internal_d;
-#endif // !defined(_di_fl_conversion_dynamic_partial_to_duodecimal_signed_) || !defined(_di_fl_conversion_dynamic_partial_to_number_signed_) || !defined(_di_fl_conversion_dynamic_to_duodecimal_signed_) || !defined(_di_fl_conversion_dynamic_to_number_signed_)
-
-/**
- * Private implementation of fl_conversion_dynamic_to_duodecimal_unsigned().
- *
- * Intended to be shared to each of the different implementation variations.
- *
- * @param string
- *   The string to convert.
- * @param length
- *   The length of the string to convert.
- * @param number
- *   This will store the value of the converted string.
- *   This value is only changed on success.
- *
- * @return
- *   F_none if the duodecimal string was converted to an unsigned long.
- *   F_data_not if string starts with a null (length is 0).
- *
- *   F_number (with error bit) if no conversion was made due to non-duodecimal values being found.
- *   F_number_decimal (with error bit) if number has a decimal digit.
- *   F_number_overflow (with error bit) on integer overflow.
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- * @see fl_conversion_dynamic_partial_to_duodecimal_unsigned()
- * @see fl_conversion_dynamic_partial_to_number_unsigned()
- * @see fl_conversion_dynamic_to_duodecimal_unsigned()
- * @see fl_conversion_dynamic_to_number_unsigned()
- */
-#if !defined(_di_fl_conversion_dynamic_partial_to_duodecimal_unsigned_) || !defined(_di_fl_conversion_dynamic_partial_to_number_unsigned_) || !defined(_di_fl_conversion_dynamic_to_duodecimal_unsigned_) || !defined(_di_fl_conversion_dynamic_to_number_unsigned_)
-  extern f_status_t private_fl_conversion_dynamic_to_duodecimal_unsigned(const f_string_t string, const f_array_length_t length, f_number_unsigned_t * const number) F_attribute_visibility_internal_d;
-#endif // !defined(_di_fl_conversion_dynamic_partial_to_duodecimal_unsigned_) || !defined(_di_fl_conversion_dynamic_partial_to_number_unsigned_) || !defined(_di_fl_conversion_dynamic_to_duodecimal_unsigned_) || !defined(_di_fl_conversion_dynamic_to_number_unsigned_)
-
-/**
- * Private implementation of fl_conversion_dynamic_to_hexidecimal_signed().
- *
- * Intended to be shared to each of the different implementation variations.
- *
- * @param string
- *   The string to convert.
- * @param length
- *   The length of the string to convert.
- * @param negative
- *   Set to 0 to treat string as a positive number, 1 for as a negative number.
- * @param number
- *   This will store the value of the converted string.
- *   This value is only changed on success.
- *
- * @return
- *   F_none if the hexidecimal string was converted to an signed long.
- *   F_data_not if string starts with a null (length is 0).
- *
- *   F_number (with error bit) if no conversion was made due to non-hexidecimal values being found.
- *   F_number_decimal (with error bit) if number has a decimal digit.
- *   F_number_overflow (with error bit) on integer overflow.
- *   F_number_underflow (with error bit) on integer underflow.
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- * @see fl_conversion_dynamic_partial_to_hexidecimal_signed()
- * @see fl_conversion_dynamic_partial_to_number_signed()
- * @see fl_conversion_dynamic_to_hexidecimal_signed()
- * @see fl_conversion_dynamic_to_number_signed()
- */
-#if !defined(_di_fl_conversion_dynamic_partial_to_hexidecimal_signed_) || !defined(_di_fl_conversion_dynamic_partial_to_number_signed_) || !defined(_di_fl_conversion_dynamic_to_hexidecimal_signed_) || !defined(_di_fl_conversion_dynamic_to_number_signed_)
-  extern f_status_t private_fl_conversion_dynamic_to_hexidecimal_signed(const f_string_t string, const f_array_length_t length, const bool negative, f_number_signed_t * const number) F_attribute_visibility_internal_d;
-#endif // !defined(_di_fl_conversion_dynamic_partial_to_hexidecimal_signed_) || !defined(_di_fl_conversion_dynamic_partial_to_number_signed_) || !defined(_di_fl_conversion_dynamic_to_hexidecimal_signed_) || !defined(_di_fl_conversion_dynamic_to_number_signed_)
-
-/**
- * Private implementation of fl_conversion_dynamic_to_hexidecimal_unsigned().
- *
- * Intended to be shared to each of the different implementation variations.
- *
- * @param string
- *   The string to convert.
- * @param length
- *   The length of the string to convert.
- * @param number
- *   This will store the value of the converted string.
- *   This value is only changed on success.
- *
- * @return
- *   F_none if the hexidecimal string was converted to an unsigned long.
- *   F_data_not if string starts with a null (length is 0).
- *
- *   F_number (with error bit) if no conversion was made due to non-hexidecimal values being found.
- *   F_number_decimal (with error bit) if number has a decimal digit.
- *   F_number_overflow (with error bit) on integer overflow.
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- * @see fl_conversion_dynamic_partial_to_hexidecimal_unsigned()
- * @see fl_conversion_dynamic_partial_to_number_unsigned()
- * @see fl_conversion_dynamic_to_hexidecimal_unsigned()
- * @see fl_conversion_dynamic_to_number_unsigned()
- */
-#if !defined(_di_fl_conversion_dynamic_partial_to_hexidecimal_unsigned_) || !defined(_di_fl_conversion_dynamic_partial_to_number_unsigned_) || !defined(_di_fl_conversion_dynamic_to_hexidecimal_unsigned_) || !defined(_di_fl_conversion_dynamic_to_number_unsigned_)
-  extern f_status_t private_fl_conversion_dynamic_to_hexidecimal_unsigned(const f_string_t string, const f_array_length_t length, f_number_unsigned_t * const number) F_attribute_visibility_internal_d;
-#endif // !defined(_di_fl_conversion_dynamic_partial_to_hexidecimal_unsigned_) || !defined(_di_fl_conversion_dynamic_partial_to_number_unsigned_) || !defined(_di_fl_conversion_dynamic_to_hexidecimal_unsigned_) || !defined(_di_fl_conversion_dynamic_to_number_unsigned_)
-
-/**
- * Private implementation of fl_conversion_dynamic_to_octal_signed().
- *
- * Intended to be shared to each of the different implementation variations.
- *
- * @param string
- *   The string to convert.
- * @param length
- *   The length of the string to convert.
- * @param negative
- *   Set to 0 to treat string as a positive number, 1 for as a negative number.
- * @param number
- *   This will store the value of the converted string.
- *   This value is only changed on success.
- *
- * @return
- *   F_none if the octal string was converted to an signed long.
- *   F_data_not if string starts with a null (length is 0).
- *
- *   F_number (with error bit) if no conversion was made due to non-octal values being found.
- *   F_number_decimal (with error bit) if number has a decimal digit.
- *   F_number_overflow (with error bit) on integer overflow.
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- * @see fl_conversion_dynamic_partial_to_octal_signed()
- * @see fl_conversion_dynamic_partial_to_number_signed()
- * @see fl_conversion_dynamic_to_octal_signed()
- * @see fl_conversion_dynamic_to_number_signed()
- */
-#if !defined(_di_fl_conversion_dynamic_partial_to_octal_signed_) || !defined(_di_fl_conversion_dynamic_partial_to_number_signed_) || !defined(_di_fl_conversion_dynamic_to_octal_signed_) || !defined(_di_fl_conversion_dynamic_to_number_signed_)
-  extern f_status_t private_fl_conversion_dynamic_to_octal_signed(const f_string_t string, const f_array_length_t length, const bool negative, f_number_signed_t * const number) F_attribute_visibility_internal_d;
-#endif // !defined(_di_fl_conversion_dynamic_partial_to_octal_signed_) || !defined(_di_fl_conversion_dynamic_partial_to_number_signed_) || !defined(_di_fl_conversion_dynamic_to_octal_signed_) || !defined(_di_fl_conversion_dynamic_to_number_signed_)
-
-/**
- * Private implementation of fl_conversion_dynamic_to_octal_unsigned().
- *
- * Intended to be shared to each of the different implementation variations.
- *
- * @param string
- *   The string to convert.
- * @param length
- *   The length of the string to convert.
- * @param number
- *   This will store the value of the converted string.
- *   This value is only changed on success.
- *
- * @return
- *   F_none if the octal string was converted to an unsigned long.
- *   F_data_not if string starts with a null (length is 0).
- *
- *   F_number (with error bit) if no conversion was made due to non-octal values being found.
- *   F_number_decimal (with error bit) if number has a decimal digit.
- *   F_number_overflow (with error bit) on integer overflow.
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- * @see fl_conversion_dynamic_partial_to_octal_unsigned()
- * @see fl_conversion_dynamic_partial_to_number_unsigned()
- * @see fl_conversion_dynamic_to_octal_unsigned()
- * @see fl_conversion_dynamic_to_number_unsigned()
- */
-#if !defined(_di_fl_conversion_dynamic_partial_to_octal_unsigned_) || !defined(_di_fl_conversion_dynamic_partial_to_number_unsigned_) || !defined(_di_fl_conversion_dynamic_to_octal_unsigned_) || !defined(_di_fl_conversion_dynamic_to_number_unsigned_)
-  extern f_status_t private_fl_conversion_dynamic_to_octal_unsigned(const f_string_t string, const f_array_length_t length, f_number_unsigned_t * const number) F_attribute_visibility_internal_d;
-#endif // !defined(_di_fl_conversion_dynamic_partial_to_octal_unsigned_) || !defined(_di_fl_conversion_dynamic_partial_to_number_unsigned_) || !defined(_di_fl_conversion_dynamic_to_octal_unsigned_) || !defined(_di_fl_conversion_dynamic_to_number_unsigned_)
-
-/**
- * Private implementation of fl_conversion_dynamic_to_number_signed().
- *
- * Intended to be shared to each of the different implementation variations.
- *
+ * @param flag
+ *   Conversion data flags.
  * @param string
  *   The string to convert.
  * @param length
@@ -363,15 +175,18 @@ extern "C" {
  *   F_number_underflow (with error bit) on integer underflow.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
-#if !defined(_di_fl_conversion_dynamic_to_number_signed_) || !defined(_di_fl_conversion_dynamic_partial_to_number_signed_)
-  extern f_status_t private_fl_conversion_dynamic_to_number_signed(const f_string_t string, const f_array_length_t length, f_number_signed_t * const number) F_attribute_visibility_internal_d;
-#endif // !defined(_di_fl_conversion_dynamic_to_number_signed_) || !defined(_di_fl_conversion_dynamic_partial_to_number_signed_)
+#if !defined(_di_fl_conversion_dynamic_to_signed_detect_) || !defined(_di_fl_conversion_dynamic_partial_to_signed_detect_)
+  extern f_status_t private_fl_conversion_dynamic_to_signed_detect(const uint16_t flag, const f_string_t string, const f_array_length_t length, f_number_signed_t * const number) F_attribute_visibility_internal_d;
+#endif // !defined(_di_fl_conversion_dynamic_to_signed_detect_) || !defined(_di_fl_conversion_dynamic_partial_to_signed_detect_)
 
 /**
- * Private implementation of fl_conversion_dynamic_to_number_unsigned().
+ * Private implementation of fl_conversion_dynamic_to_unsigned_detect().
  *
  * Intended to be shared to each of the different implementation variations.
  *
+ * @param flag
+ *   Conversion data flags.
+ *   This auto-detects the base and negative, ignoring the base number and negative flag.
  * @param string
  *   The string to convert.
  * @param range
@@ -394,9 +209,9 @@ extern "C" {
  *
  * @see strtoull()
  */
-#if !defined(_di_fl_conversion_dynamic_to_number_unsigned_) || !defined(_di_fl_conversion_dynamic_partial_to_number_unsigned_)
-  extern f_status_t private_fl_conversion_dynamic_to_number_unsigned(const f_string_t string, const f_array_length_t length, f_number_unsigned_t * const number) F_attribute_visibility_internal_d;
-#endif // !defined(_di_fl_conversion_dynamic_to_number_unsigned_) || !defined(_di_fl_conversion_dynamic_partial_to_number_unsigned_)
+#if !defined(_di_fl_conversion_dynamic_to_unsigned_detect_) || !defined(_di_fl_conversion_dynamic_partial_to_unsigned_detect_)
+  extern f_status_t private_fl_conversion_dynamic_to_unsigned_detect(const uint16_t flag, const f_string_t string, const f_array_length_t length, f_number_unsigned_t * const number) F_attribute_visibility_internal_d;
+#endif // !defined(_di_fl_conversion_dynamic_to_unsigned_detect_) || !defined(_di_fl_conversion_dynamic_partial_to_unsigned_detect_)
 
 #ifdef __cplusplus
 } // extern "C"

@@ -429,10 +429,10 @@ extern "C" {
         range.start = 1;
       }
 
-      status = fl_conversion_dynamic_partial_to_number_unsigned(argv[index], range, &number);
+      status = fl_conversion_dynamic_partial_to_unsigned_detect(fl_conversion_data_base_10_c, argv[index], range, &number);
 
       if (F_status_is_error(status)) {
-        fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_dynamic_partial_to_number_unsigned", F_true, fss_extended_list_write_long_ignore_s, argv[index]);
+        fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_dynamic_partial_to_unsigned_detect", F_true, fss_extended_list_write_long_ignore_s, argv[index]);
 
         return status;
       }
@@ -449,10 +449,10 @@ extern "C" {
         range.start = 1;
       }
 
-      status = fl_conversion_dynamic_partial_to_number_unsigned(argv[index], range, &number);
+      status = fl_conversion_dynamic_partial_to_unsigned_detect(fl_conversion_data_base_10_c, argv[index], range, &number);
 
       if (F_status_is_error(status)) {
-        fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_dynamic_partial_to_number_unsigned", F_true, fss_extended_list_write_long_ignore_s, argv[index]);
+        fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_dynamic_partial_to_unsigned_detect", F_true, fss_extended_list_write_long_ignore_s, argv[index]);
 
         return status;
       }

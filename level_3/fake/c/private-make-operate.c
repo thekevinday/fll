@@ -632,7 +632,7 @@ extern "C" {
         if (status == F_equal_to) {
           unmatched = F_false;
 
-          status = f_conversion_number_unsigned_to_string(uint8_value[i], f_conversion_data_base_10_s, &value);
+          status = f_conversion_number_unsigned_to_string(uint8_value[i], f_conversion_data_base_10_c, &value);
 
           break;
         }

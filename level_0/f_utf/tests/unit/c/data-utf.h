@@ -188,21 +188,6 @@ extern FILE *data__bytesequence_file_open__subscript(void);
 extern FILE *data__bytesequence_file_open__superscript(void);
 
 /**
- * Open the "surrogate" bytesequence file.
- *
- * This assumes the following:
- * - The file path is relative to the current working directory (tests are run from project root).
- * - The file path is "data/tests/bytesequences/surrogate-all.txt".
- *
- * @return
- *   Non-zero on success.
- *   0 on failure.
- *
- * @see fopen()
- */
-extern FILE *data__bytesequence_file_open__surrogate(void);
-
-/**
  * Open the "symbols" bytesequence file.
  *
  * This assumes the following:

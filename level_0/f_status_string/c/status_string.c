@@ -89,6 +89,8 @@ extern "C" {
     const f_string_static_t f_status_ascii_not_s = macro_f_string_static_t_initialize(F_status_ascii_not_s, 0, F_status_ascii_not_s_length);
     const f_string_static_t f_status_atomic_s = macro_f_string_static_t_initialize(F_status_atomic_s, 0, F_status_atomic_s_length);
     const f_string_static_t f_status_atomic_not_s = macro_f_string_static_t_initialize(F_status_atomic_not_s, 0, F_status_atomic_not_s_length);
+    const f_string_static_t f_status_base_s = macro_f_string_static_t_initialize(F_status_base_s, 0, F_status_base_s_length);
+    const f_string_static_t f_status_base_not_s = macro_f_string_static_t_initialize(F_status_base_not_s, 0, F_status_base_not_s_length);
     const f_string_static_t f_status_begin_s = macro_f_string_static_t_initialize(F_status_begin_s, 0, F_status_begin_s_length);
     const f_string_static_t f_status_begin_not_s = macro_f_string_static_t_initialize(F_status_begin_not_s, 0, F_status_begin_not_s_length);
     const f_string_static_t f_status_block_s = macro_f_string_static_t_initialize(F_status_block_s, 0, F_status_block_s_length);
@@ -1043,6 +1045,16 @@ extern "C" {
 
         case F_atomic_not:
           *name = f_status_atomic_not_s;
+
+          break;
+
+        case F_base:
+          *name = f_status_base_s;
+
+          break;
+
+        case F_base_not:
+          *name = f_status_base_not_s;
 
           break;
 

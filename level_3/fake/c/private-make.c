@@ -52,7 +52,7 @@ extern "C" {
 
     f_number_unsigned_t number = 0;
 
-    f_status_t status = fl_conversion_dynamic_to_number_unsigned(buffer, &number);
+    f_status_t status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, buffer, &number);
 
     if (F_status_is_error(status)) {
       status = F_status_set_fine(status);
@@ -83,7 +83,7 @@ extern "C" {
         return F_none;
       }
 
-      fll_error_print(print, F_status_set_fine(status), "fl_conversion_dynamic_to_number_unsigned", F_true);
+      fll_error_print(print, F_status_set_fine(status), "fl_conversion_dynamic_to_unsigned_detect", F_true);
 
       return F_status_set_error(status);
     }
@@ -145,7 +145,7 @@ extern "C" {
 
     f_number_unsigned_t number = 0;
 
-    f_status_t status = fl_conversion_dynamic_to_number_unsigned(buffer, &number);
+    f_status_t status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, buffer, &number);
 
     if (F_status_is_error(status)) {
       status = F_status_set_fine(status);
@@ -176,7 +176,7 @@ extern "C" {
         return F_none;
       }
 
-      fll_error_print(print, status, "fl_conversion_dynamic_to_number_unsigned", F_true);
+      fll_error_print(print, status, "fl_conversion_dynamic_to_unsigned_detect", F_true);
 
       return F_status_set_error(status);
     }

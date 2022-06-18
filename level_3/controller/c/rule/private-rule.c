@@ -681,10 +681,10 @@ extern "C" {
       status = F_status_set_error(F_valid_not);
     }
     else {
-      status = fl_conversion_dynamic_partial_to_number_signed(cache->buffer_item, cache->content_action.array[++(*index)], &parsed);
+      status = fl_conversion_dynamic_partial_to_signed_detect(fl_conversion_data_base_10_c, cache->buffer_item, cache->content_action.array[++(*index)], &parsed);
 
       if (F_status_set_fine(status) == F_number_positive) {
-        status = fl_conversion_dynamic_partial_to_number_signed(cache->buffer_item, controller_range_after_number_sign(cache->buffer_item, cache->content_action.array[*index]), &parsed);
+        status = fl_conversion_dynamic_partial_to_signed_detect(fl_conversion_data_base_10_c, cache->buffer_item, controller_range_after_number_sign(cache->buffer_item, cache->content_action.array[*index]), &parsed);
       }
 
       if (status == F_data_not) {
@@ -3955,10 +3955,10 @@ extern "C" {
             break;
           }
 
-          status = fl_conversion_dynamic_partial_to_number_signed(cache->buffer_item, cache->content_actions.array[i].array[j], &number);
+          status = fl_conversion_dynamic_partial_to_signed_detect(fl_conversion_data_base_10_c, cache->buffer_item, cache->content_actions.array[i].array[j], &number);
 
           if (F_status_set_fine(status) == F_number_positive) {
-            status = fl_conversion_dynamic_partial_to_number_signed(cache->buffer_item, controller_range_after_number_sign(cache->buffer_item, cache->content_actions.array[i].array[j]), &number);
+            status = fl_conversion_dynamic_partial_to_signed_detect(fl_conversion_data_base_10_c, cache->buffer_item, controller_range_after_number_sign(cache->buffer_item, cache->content_actions.array[i].array[j]), &number);
 
             // Restore error on parameter problem.
             if (F_status_set_fine(status) == F_parameter) {
@@ -3987,7 +3987,7 @@ extern "C" {
               }
             }
             else {
-              controller_rule_print_error(global.thread, global.main->error, cache->action, F_status_set_fine(status), "fl_conversion_dynamic_partial_to_number_signed", F_true, F_false);
+              controller_rule_print_error(global.thread, global.main->error, cache->action, F_status_set_fine(status), "fl_conversion_dynamic_partial_to_signed_detect", F_true, F_false);
 
               status = F_status_set_error(status);
 
@@ -4349,10 +4349,10 @@ extern "C" {
 
         for (j = 1; j < 3; ++j, number = 0) {
 
-          status = fl_conversion_dynamic_partial_to_number_signed(cache->buffer_item, cache->content_actions.array[i].array[j], &number);
+          status = fl_conversion_dynamic_partial_to_signed_detect(fl_conversion_data_base_10_c, cache->buffer_item, cache->content_actions.array[i].array[j], &number);
 
           if (F_status_set_fine(status) == F_number_positive) {
-            status = fl_conversion_dynamic_partial_to_number_signed(cache->buffer_item, controller_range_after_number_sign(cache->buffer_item, cache->content_actions.array[i].array[j]), &number);
+            status = fl_conversion_dynamic_partial_to_signed_detect(fl_conversion_data_base_10_c, cache->buffer_item, controller_range_after_number_sign(cache->buffer_item, cache->content_actions.array[i].array[j]), &number);
 
             // Restore error on parameter problem.
             if (F_status_set_fine(status) == F_parameter) {
@@ -4381,7 +4381,7 @@ extern "C" {
               }
             }
             else {
-              controller_rule_print_error(global.thread, global.main->error, cache->action, F_status_set_fine(status), "fl_conversion_dynamic_partial_to_number_signed", F_true, F_false);
+              controller_rule_print_error(global.thread, global.main->error, cache->action, F_status_set_fine(status), "fl_conversion_dynamic_partial_to_signed_detect", F_true, F_false);
 
               status = F_status_set_error(status);
 
@@ -4592,10 +4592,10 @@ extern "C" {
 
           f_number_signed_t number = 0;
 
-          status = fl_conversion_dynamic_partial_to_number_signed(cache->buffer_item, cache->content_actions.array[i].array[1], &number);
+          status = fl_conversion_dynamic_partial_to_signed_detect(fl_conversion_data_base_10_c, cache->buffer_item, cache->content_actions.array[i].array[1], &number);
 
           if (F_status_set_fine(status) == F_number_positive) {
-            status = fl_conversion_dynamic_partial_to_number_signed(cache->buffer_item, controller_range_after_number_sign(cache->buffer_item, cache->content_actions.array[i].array[1]), &number);
+            status = fl_conversion_dynamic_partial_to_signed_detect(fl_conversion_data_base_10_c, cache->buffer_item, controller_range_after_number_sign(cache->buffer_item, cache->content_actions.array[i].array[1]), &number);
 
             // Restore error on parameter problem.
             if (F_status_set_fine(status) == F_parameter) {
@@ -4642,7 +4642,7 @@ extern "C" {
               }
             }
             else {
-              controller_rule_print_error(global.thread, global.main->error, cache->action, status, "fl_conversion_dynamic_partial_to_number_signed", F_true, F_false);
+              controller_rule_print_error(global.thread, global.main->error, cache->action, status, "fl_conversion_dynamic_partial_to_signed_detect", F_true, F_false);
               status = F_status_set_error(status);
 
               if (F_status_is_error_not(status_return)) {
@@ -4714,10 +4714,10 @@ extern "C" {
 
         f_number_unsigned_t number = 0;
 
-        status = fl_conversion_dynamic_partial_to_number_unsigned(cache->buffer_item, cache->content_actions.array[i].array[1], &number);
+        status = fl_conversion_dynamic_partial_to_unsigned_detect(fl_conversion_data_base_10_c, cache->buffer_item, cache->content_actions.array[i].array[1], &number);
 
         if (F_status_set_fine(status) == F_number_positive) {
-          status = fl_conversion_dynamic_partial_to_number_unsigned(cache->buffer_item, controller_range_after_number_sign(cache->buffer_item, cache->content_actions.array[i].array[1]), &number);
+          status = fl_conversion_dynamic_partial_to_unsigned_detect(fl_conversion_data_base_10_c, cache->buffer_item, controller_range_after_number_sign(cache->buffer_item, cache->content_actions.array[i].array[1]), &number);
 
           // Restore error on parameter problem.
           if (F_status_set_fine(status) == F_parameter) {
@@ -4742,7 +4742,7 @@ extern "C" {
 
             cache->action.line_action = ++cache->action.line_item;
 
-            controller_rule_print_error(global.thread, global.main->error, cache->action, status, "fl_conversion_dynamic_partial_to_number_signed", F_true, F_false);
+            controller_rule_print_error(global.thread, global.main->error, cache->action, status, "fl_conversion_dynamic_partial_to_signed_detect", F_true, F_false);
           }
 
           if (F_status_is_error_not(status_return)) {
@@ -4868,10 +4868,10 @@ extern "C" {
         else if (type == controller_rule_setting_type_nice_e) {
           f_number_signed_t number = 0;
 
-          status = fl_conversion_dynamic_partial_to_number_signed(cache->buffer_item, cache->content_actions.array[i].array[0], &number);
+          status = fl_conversion_dynamic_partial_to_signed_detect(fl_conversion_data_base_10_c, cache->buffer_item, cache->content_actions.array[i].array[0], &number);
 
           if (F_status_set_fine(status) == F_number_positive) {
-            status = fl_conversion_dynamic_partial_to_number_signed(cache->buffer_item, controller_range_after_number_sign(cache->buffer_item, cache->content_actions.array[i].array[0]), &number);
+            status = fl_conversion_dynamic_partial_to_signed_detect(fl_conversion_data_base_10_c, cache->buffer_item, controller_range_after_number_sign(cache->buffer_item, cache->content_actions.array[i].array[0]), &number);
 
             // Restore error on parameter problem.
             if (F_status_set_fine(status) == F_parameter) {
@@ -4911,7 +4911,7 @@ extern "C" {
               }
             }
             else {
-              controller_rule_print_error(global.thread, global.main->error, cache->action, status, "fl_conversion_dynamic_partial_to_number_signed", F_true, F_false);
+              controller_rule_print_error(global.thread, global.main->error, cache->action, status, "fl_conversion_dynamic_partial_to_signed_detect", F_true, F_false);
               status = F_status_set_error(status);
 
               if (F_status_is_error_not(status_return)) {

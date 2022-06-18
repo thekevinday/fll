@@ -24,7 +24,7 @@ extern "C" {
  *
  * This expects the character width to be of at least size 2.
  *
- * @param character
+ * @param sequence
  *   The (UTF-8) character.
  *
  * @return
@@ -35,7 +35,7 @@ extern "C" {
  *   F_utf_not (with error bit) if unicode is an invalid Unicode character.
  */
 #if !defined(_di_f_utf_character_is_wide_) || !defined(_di_f_utf_is_wide_)
-  extern f_status_t private_f_utf_character_is_wide(const f_utf_char_t character) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_utf_character_is_wide(const f_utf_char_t sequence) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_utf_character_is_wide_) || !defined(_di_f_utf_is_wide_)
 
 #ifdef __cplusplus

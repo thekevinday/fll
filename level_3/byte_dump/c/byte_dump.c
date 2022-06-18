@@ -263,7 +263,7 @@ extern "C" {
         const f_array_length_t index = main->parameters.array[byte_dump_parameter_width_e].values.array[main->parameters.array[byte_dump_parameter_width_e].values.used - 1];
         f_number_unsigned_t number = 0;
 
-        status = fl_conversion_dynamic_to_number_unsigned(data.argv[index], &number);
+        status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, data.argv[index], &number);
 
         if (F_status_is_error(status) || number < 1 || number >= 0xfb) {
           flockfile(main->error.to.stream);
@@ -302,7 +302,7 @@ extern "C" {
         const f_array_length_t index = main->parameters.array[byte_dump_parameter_first_e].values.array[main->parameters.array[byte_dump_parameter_first_e].values.used - 1];
         f_number_unsigned_t number = 0;
 
-        status = fl_conversion_dynamic_to_number_unsigned(data.argv[index], &number);
+        status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, data.argv[index], &number);
 
         if (F_status_is_error(status) || number > F_number_t_size_unsigned_d) {
           flockfile(main->error.to.stream);
@@ -341,7 +341,7 @@ extern "C" {
         const f_array_length_t index = main->parameters.array[byte_dump_parameter_last_e].values.array[main->parameters.array[byte_dump_parameter_last_e].values.used - 1];
         f_number_unsigned_t number = 0;
 
-        status = fl_conversion_dynamic_to_number_unsigned(data.argv[index], &number);
+        status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, data.argv[index], &number);
 
         if (F_status_is_error(status) || number < 0 || number > F_number_t_size_unsigned_d) {
           flockfile(main->error.to.stream);

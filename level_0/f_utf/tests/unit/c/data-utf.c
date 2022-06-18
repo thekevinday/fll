@@ -59,11 +59,6 @@ FILE *data__bytesequence_file_open__superscript(void) {
   return fopen("./data/tests/bytesequences/superscript-all.txt", "r");
 }
 
-FILE *data__bytesequence_file_open__surrogate(void) {
-
-  return fopen("./data/tests/bytesequences/superscript-surrogate.txt", "r");
-}
-
 FILE *data__bytesequence_file_open__symbol(void) {
 
   return fopen("./data/tests/bytesequences/symbol-all.txt", "r");

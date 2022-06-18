@@ -525,7 +525,7 @@ extern "C" {
             }
 
             if (action->status == F_none) {
-              status = fl_conversion_dynamic_to_number_unsigned(action->parameters.array[1], &action->number);
+              status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, action->parameters.array[1], &action->number);
 
               if (F_status_is_error(status) || status == F_data_not) {
                 action->number = 0;
@@ -538,7 +538,7 @@ extern "C" {
                 }
 
                 if (F_status_set_fine(status) == F_memory_not) {
-                  controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "fl_conversion_dynamic_to_number_unsigned", F_true, global.thread);
+                  controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "fl_conversion_dynamic_to_unsigned_detect", F_true, global.thread);
 
                   status_action = status;
 

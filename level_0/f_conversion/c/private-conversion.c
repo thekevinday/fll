@@ -117,11 +117,19 @@ extern "C" {
           } while (current < f_string_ascii_0_s.used);
         }
 
-        #ifdef _is_F_endian_big
+        if (data.flag & F_conversion_data_flag_endian_big_d) {
           work <<= 1;
-        #else
+        }
+        else if (data.flag & F_conversion_data_flag_endian_big_d) {
           work >>= 1;
-        #endif // _is_F_endian_big
+        }
+        else {
+          #ifdef _is_F_endian_big
+            work <<= 1;
+          #else
+            work >>= 1;
+          #endif // _is_F_endian_big
+        }
       } // while
 
       return F_none;
@@ -350,11 +358,19 @@ extern "C" {
           destination->string[destination->used++] = f_string_ascii_0_s.string[1];
         }
 
-        #ifdef _is_F_endian_big
+        if (data.flag & F_conversion_data_flag_endian_big_d) {
           work <<= 1;
-        #else
+        }
+        else if (data.flag & F_conversion_data_flag_endian_big_d) {
           work >>= 1;
-        #endif // _is_F_endian_big
+        }
+        else {
+          #ifdef _is_F_endian_big
+            work <<= 1;
+          #else
+            work >>= 1;
+          #endif // _is_F_endian_big
+        }
       } // while
 
       return;

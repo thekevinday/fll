@@ -169,7 +169,7 @@ extern "C" {
       } // for
 
       {
-        const f_status_t status = fl_conversion_dynamic_partial_to_hexidecimal_unsigned(data->name, range, &number);
+        const f_status_t status = fl_conversion_dynamic_partial_to_unsigned(fl_conversion_data_base_16_c, data->name, range, &number);
         if (F_status_is_error(status)) return status;
       }
 

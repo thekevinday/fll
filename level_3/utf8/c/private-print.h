@@ -13,32 +13,31 @@ extern "C" {
 #endif
 
 /**
- * Print the bytesequence character (such as '豸').
+ * Print the byte sequence character (such as '豸').
  *
  * @param data
  *   The program data.
- * @param character
- *   The character to print.
- *   This is a string that represents a single character.
+ * @param sequence
+ *   A byte sequences representing a single character to print.
  */
 #ifndef _di_utf8_print_bytesequence_
-  extern void utf8_print_bytesequence(utf8_data_t * const data, const f_string_static_t character) F_attribute_visibility_internal_d;
+  extern void utf8_print_bytesequence(utf8_data_t * const data, const f_string_static_t sequence) F_attribute_visibility_internal_d;
 #endif // _di_utf8_print_bytesequence_
 
 /**
- * Print an invalid character either as a Unicode codeblock or as a bytesequence.
+ * Print an invalid character either as a Unicode codeblock or as a byte sequence.
  *
  * This handles whether or not the invalid character should be printed or not based on program parameters.
  *
  * @param data
  *   The program data.
- * @param character
- *   The character block to print.
+ * @param invalid
+ *   The byte sequence string or unicode codepoint string representing a single character to print.
  *
  * @see utf8_print_combining_or_width()
  */
 #ifndef _di_utf8_print_character_invalid_
-  extern void utf8_print_character_invalid(utf8_data_t * const data, const f_string_static_t character) F_attribute_visibility_internal_d;
+  extern void utf8_print_character_invalid(utf8_data_t * const data, const f_string_static_t invalid) F_attribute_visibility_internal_d;
 #endif // _di_utf8_print_character_invalid_
 
 /**
@@ -51,7 +50,7 @@ extern "C" {
  *   This is the code that represents a single character.
  */
 #ifndef _di_utf8_print_codepoint_
-  extern void utf8_print_codepoint(utf8_data_t * const data, const uint32_t codepoint) F_attribute_visibility_internal_d;
+  extern void utf8_print_codepoint(utf8_data_t * const data, const f_utf_char_t codepoint) F_attribute_visibility_internal_d;
 #endif // _di_utf8_print_codepoint_
 
 /**
@@ -59,13 +58,13 @@ extern "C" {
  *
  * @param data
  *   The program data.
- * @param character
- *   The character block whose width or combining state is to be printed.
+ * @param sequence
+ *   A byte sequences representing a single character to print.
  *
  * @see utf8_print_width()
  */
 #ifndef _di_utf8_print_combining_or_width_
-  extern void utf8_print_combining_or_width(utf8_data_t * const data, const f_string_static_t character) F_attribute_visibility_internal_d;
+  extern void utf8_print_combining_or_width(utf8_data_t * const data, const f_string_static_t sequence) F_attribute_visibility_internal_d;
 #endif // _di_utf8_print_combining_or_width_
 
 /**
@@ -83,11 +82,11 @@ extern "C" {
  *
  * @param data
  *   The program data.
- * @param character
- *   The character that is invalid.
+ * @param invalid
+ *   The byte sequence string or unicode codepoint string representing a single character to print.
  */
 #ifndef _di_utf8_print_error_decode_
-  extern void utf8_print_error_decode(utf8_data_t * const data, const f_status_t status, const f_string_static_t character) F_attribute_visibility_internal_d;
+  extern void utf8_print_error_decode(utf8_data_t * const data, const f_status_t status, const f_string_static_t invalid) F_attribute_visibility_internal_d;
 #endif // _di_utf8_print_error_decode_
 
 /**
@@ -99,7 +98,7 @@ extern "C" {
  *   The codepoint that is invalid.
  */
 #ifndef _di_utf8_print_error_encode_
-  extern void utf8_print_error_encode(utf8_data_t * const data, const f_status_t status, const uint32_t codepoint) F_attribute_visibility_internal_d;
+  extern void utf8_print_error_encode(utf8_data_t * const data, const f_status_t status, const f_utf_char_t codepoint) F_attribute_visibility_internal_d;
 #endif // _di_utf8_print_error_encode_
 
 /**
@@ -117,7 +116,7 @@ extern "C" {
  *
  * @param data
  *   The program data.
- * @param parameter_1
+ * @param parameter
  *   The long parameter name.
  */
 #ifndef _di_utf8_print_error_no_value_
@@ -162,7 +161,7 @@ extern "C" {
 #endif // _di_utf8_print_error_parameter_file_to_too_many_
 
 /**
- * Print the raw character data (binary / bytesequence).
+ * Print the raw character data (binary / byte sequence).
  *
  * @param data
  *   The program data.
@@ -252,11 +251,11 @@ extern "C" {
  *
  * @param data
  *   The program data.
- * @param character
- *   The character block whose width is to be printed.
+ * @param sequence
+ *   A byte sequences representing a single character whose width is to be printed.
  */
 #ifndef _di_utf8_print_width_
-  extern void utf8_print_width(utf8_data_t * const data, const f_string_static_t character) F_attribute_visibility_internal_d;
+  extern void utf8_print_width(utf8_data_t * const data, const f_string_static_t sequence) F_attribute_visibility_internal_d;
 #endif // _di_utf8_print_width_
 
 #ifdef __cplusplus

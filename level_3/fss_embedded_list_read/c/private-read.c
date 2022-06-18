@@ -140,10 +140,10 @@ extern "C" {
         }
 
         if (values_type[i] == fss_embedded_list_read_parameter_depth_e || values_type[i] == fss_embedded_list_read_parameter_at_e) {
-          status = fl_conversion_dynamic_to_number_unsigned(argv[values_order[i]], &number);
+          status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, argv[values_order[i]], &number);
 
           if (F_status_is_error(status)) {
-            fll_error_parameter_integer_print(data->main->error, F_status_set_fine(status), "fl_conversion_dynamic_to_number_unsigned", F_true, fss_embedded_list_read_long_depth_s, argv[values_order[i]]);
+            fll_error_parameter_integer_print(data->main->error, F_status_set_fine(status), "fl_conversion_dynamic_to_unsigned_detect", F_true, fss_embedded_list_read_long_depth_s, argv[values_order[i]]);
 
             return status;
           }
@@ -301,10 +301,10 @@ extern "C" {
       if (data->main->parameters.array[fss_embedded_list_read_parameter_select_e].result == f_console_result_additional_e) {
         const f_array_length_t index = data->main->parameters.array[fss_embedded_list_read_parameter_select_e].values.array[data->main->parameters.array[fss_embedded_list_read_parameter_select_e].values.used - 1];
 
-        status = fl_conversion_dynamic_to_number_unsigned(data->main->parameters.arguments.array[index], &select);
+        status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, data->main->parameters.arguments.array[index], &select);
 
         if (F_status_is_error(status)) {
-          fll_error_parameter_integer_print(data->main->error, F_status_set_fine(status), "fl_conversion_dynamic_to_number_unsigned", F_true, fss_embedded_list_read_long_select_s, data->main->parameters.arguments.array[index]);
+          fll_error_parameter_integer_print(data->main->error, F_status_set_fine(status), "fl_conversion_dynamic_to_unsigned_detect", F_true, fss_embedded_list_read_long_select_s, data->main->parameters.arguments.array[index]);
 
           return status;
         }
@@ -321,10 +321,10 @@ extern "C" {
     if (data->main->parameters.array[fss_embedded_list_read_parameter_line_e].result == f_console_result_additional_e) {
       const f_array_length_t index = data->main->parameters.array[fss_embedded_list_read_parameter_line_e].values.array[data->main->parameters.array[fss_embedded_list_read_parameter_line_e].values.used - 1];
 
-      status = fl_conversion_dynamic_to_number_unsigned(data->main->parameters.arguments.array[index], &line);
+      status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, data->main->parameters.arguments.array[index], &line);
 
       if (F_status_is_error(status)) {
-        fll_error_parameter_integer_print(data->main->error, F_status_set_fine(status), "fl_conversion_dynamic_to_number_unsigned", F_true, fss_embedded_list_read_long_line_s, data->main->parameters.arguments.array[index]);
+        fll_error_parameter_integer_print(data->main->error, F_status_set_fine(status), "fl_conversion_dynamic_to_unsigned_detect", F_true, fss_embedded_list_read_long_line_s, data->main->parameters.arguments.array[index]);
 
         return status;
       }

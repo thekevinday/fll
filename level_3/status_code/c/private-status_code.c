@@ -57,7 +57,7 @@ extern "C" {
     {
       f_number_unsigned_t number = 0;
 
-      status = fl_conversion_dynamic_to_number_unsigned(value, &number);
+      status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, value, &number);
 
       if (status == F_none) {
         fl_print_format("%[invalid name%]%r", main->output.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
@@ -139,7 +139,7 @@ extern "C" {
 #ifndef _di_status_code_convert_number_
   f_status_t status_code_convert_number(fll_program_data_t * const main, const f_string_static_t value, f_number_unsigned_t *number) {
 
-    f_status_t status = fl_conversion_dynamic_to_number_unsigned(value, number);
+    f_status_t status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, value, number);
 
     if (*number > F_status_size_max_with_bits_d) {
       fl_print_format("%[out of range%]%r", main->output.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);

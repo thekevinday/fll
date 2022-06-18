@@ -217,10 +217,10 @@ extern "C" {
 
         f_number_unsigned_t number = 0;
 
-        status = fl_conversion_dynamic_to_number_unsigned(data.argv[index], &number);
+        status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, data.argv[index], &number);
 
         if (F_status_is_error(status)) {
-          fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_dynamic_to_number_unsigned", F_true, iki_read_long_at_s, data.argv[index]);
+          fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_dynamic_to_unsigned_detect", F_true, iki_read_long_at_s, data.argv[index]);
 
           status = F_status_set_error(F_parameter);
         }
@@ -254,10 +254,10 @@ extern "C" {
 
         f_number_unsigned_t number = 0;
 
-        status = fl_conversion_dynamic_to_number_unsigned(data.argv[index], &number);
+        status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, data.argv[index], &number);
 
         if (F_status_is_error(status)) {
-          fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_dynamic_to_number_unsigned", F_true, iki_read_long_line_s, data.argv[index]);
+          fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_dynamic_to_unsigned_detect", F_true, iki_read_long_line_s, data.argv[index]);
 
           status = F_status_set_error(F_parameter);
         }

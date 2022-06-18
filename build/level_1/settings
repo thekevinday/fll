@@ -22,7 +22,7 @@ build_libraries-level -lfll_0
 build_libraries-level_threadless -lfll_0
 
 build_sources_library control_group.c
-build_sources_library conversion.c private-conversion.c
+build_sources_library conversion.c private-conversion.c conversion/common.c
 build_sources_library directory.c private-directory.c
 build_sources_library environment.c
 build_sources_library private-fss.c fss/basic.c fss/basic_list.c fss/embedded_list.c fss/extended.c fss/extended_list.c
@@ -34,7 +34,7 @@ build_sources_library utf.c private-utf.c
 build_sources_library utf_file.c private-utf_file.c
 
 build_sources_headers control_group.h
-build_sources_headers conversion.h
+build_sources_headers conversion.h conversion/common.h
 build_sources_headers directory.h directory/common.h
 build_sources_headers environment.h
 build_sources_headers execute.h execute/common.h

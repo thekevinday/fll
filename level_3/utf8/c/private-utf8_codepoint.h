@@ -19,8 +19,8 @@ extern "C" {
  *
  * @param data
  *   The program data.
- * @param character
- *   The a single character currently being processed.
+ * @param unicode
+ *   A set of bytes representing a single codepoint character to process.
  * @param mode
  *   The codepoint mode the text is currently in.
  *
@@ -35,7 +35,7 @@ extern "C" {
  * @see f_utf_unicode_to()
  */
 #ifndef _di_utf8_convert_codepoint_
-  extern f_status_t utf8_convert_codepoint(utf8_data_t * const data, const f_string_static_t character, uint8_t *mode) F_attribute_visibility_internal_d;
+  extern f_status_t utf8_convert_codepoint(utf8_data_t * const data, const f_string_static_t unicode, uint8_t *mode) F_attribute_visibility_internal_d;
 #endif // _di_utf8_convert_codepoint_
 
 /**
@@ -45,8 +45,8 @@ extern "C" {
  *
  * @param data
  *   The program data.
- * @param character
- *   The a single character currently being processed.
+ * @param hex
+ *   A set of bytes representing hexidecimal digits of a character to process.
  * @param mode
  *   The codepoint mode the text is currently in.
  *
@@ -56,12 +56,12 @@ extern "C" {
  *
  *   F_valid_not (with error bit) if not verifying and the raw value is invalid.
  *
- *   Errors (with error bit) from: fl_conversion_dynamic_to_number_unsigned()
+ *   Errors (with error bit) from: fl_conversion_dynamic_to_unsigned_detect()
  *
- * @see fl_conversion_dynamic_to_number_unsigned()
+ * @see fl_conversion_dynamic_to_unsigned_detect()
  */
 #ifndef _di_utf8_convert_raw_
-  extern f_status_t utf8_convert_raw(utf8_data_t * const data, const f_string_static_t character, uint8_t *mode) F_attribute_visibility_internal_d;
+  extern f_status_t utf8_convert_raw(utf8_data_t * const data, const f_string_static_t hex, uint8_t *mode) F_attribute_visibility_internal_d;
 #endif // _di_utf8_convert_raw_
 
 /**
@@ -69,8 +69,8 @@ extern "C" {
  *
  * @param data
  *   The program data.
- * @param character
- *   The a single character to analyze.
+ * @param unicode
+ *   A set of bytes representing a single codepoint character to process.
  * @param mode
  *   Designate the mode in which the curent state is being processed.
  *
@@ -82,7 +82,7 @@ extern "C" {
  *   Errors (with error bit) from: f_utf_is_whitespace()
  */
 #ifndef _di_utf8_detect_codepoint_
-  extern f_status_t utf8_detect_codepoint(utf8_data_t * const data, const f_string_static_t character, uint8_t *mode) F_attribute_visibility_internal_d;
+  extern f_status_t utf8_detect_codepoint(utf8_data_t * const data, const f_string_static_t unicode, uint8_t *mode) F_attribute_visibility_internal_d;
 #endif // _di_utf8_detect_codepoint_
 
 /**

@@ -461,7 +461,7 @@ extern "C" {
 
               control_print_debug_packet_header_object_and_content(main, control_length_s, data->cache.large, data->cache.header_contents.array[i].array[0]);
 
-              status = fl_conversion_dynamic_partial_to_number_unsigned(data->cache.large, data->cache.header_contents.array[i].array[0], &number);
+              status = fl_conversion_dynamic_partial_to_unsigned_detect(fl_conversion_data_base_10_c, data->cache.large, data->cache.header_contents.array[i].array[0], &number);
 
               if (F_status_is_error(status)) {
                 control_print_debug_packet_message(main, "Failed to process number for %[" CONTROL_length_s "%] in the response packet, number is:", &data->cache.large, &data->cache.header_contents.array[i].array[0], &status);
@@ -489,7 +489,7 @@ extern "C" {
               control_print_debug_packet_header_object_and_content(main, control_status_s, data->cache.large, data->cache.header_contents.array[i].array[0]);
 
               // Attempt to get status as a number.
-              status = fl_conversion_dynamic_partial_to_number_unsigned(data->cache.large, data->cache.header_contents.array[i].array[0], &number);
+              status = fl_conversion_dynamic_partial_to_unsigned_detect(fl_conversion_data_base_10_c, data->cache.large, data->cache.header_contents.array[i].array[0], &number);
 
               if (F_status_set_fine(status) == F_number) {
 

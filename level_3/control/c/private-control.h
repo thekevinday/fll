@@ -111,13 +111,13 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_socket_read().
  *   Errors (with error bit) from: f_string_dynamic_increase_by().
- *   Errors (with error bit) from: fl_conversion_dynamic_partial_to_number_unsigned().
+ *   Errors (with error bit) from: fl_conversion_dynamic_partial_to_unsigned_detect().
  *   Errors (with error bit) from: fll_fss_extended_read().
  *   Errors (with error bit) from: fll_fss_basic_list_read().
  *
  * @see f_socket_read()
  * @see f_string_dynamic_increase_by()
- * @see fl_conversion_dynamic_partial_to_number_unsigned()
+ * @see fl_conversion_dynamic_partial_to_unsigned_detect()
  * @see f_fss_apply_delimit()
  * @see fll_fss_extended_read()
  * @see fll_fss_basic_list_read()

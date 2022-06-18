@@ -217,7 +217,7 @@ extern "C" {
         if (!isspace(pid_buffer.string[range.stop])) break;
       } // for
 
-      status = fl_conversion_dynamic_partial_to_decimal_unsigned(pid_buffer, range, &number);
+      status = fl_conversion_dynamic_partial_to_unsigned(fl_conversion_data_base_10_c, pid_buffer, range, &number);
 
       if (F_status_is_error_not(status) && number == pid) {
         status = f_file_remove(path);
@@ -270,7 +270,7 @@ extern "C" {
         if (!isspace(pid_buffer.string[range.stop])) break;
       } // for
 
-      status = fl_conversion_dynamic_partial_to_decimal_unsigned(pid_buffer, range, &number);
+      status = fl_conversion_dynamic_partial_to_unsigned(fl_conversion_data_base_10_c, pid_buffer, range, &number);
 
       if (F_status_is_error_not(status)) {
         *pid = (pid_t) number;
@@ -288,7 +288,7 @@ extern "C" {
 
     f_number_unsigned_t number = 0;
 
-    f_status_t status = fl_conversion_dynamic_partial_to_number_unsigned(buffer, range, &number);
+    f_status_t status = fl_conversion_dynamic_partial_to_unsigned_detect(fl_conversion_data_base_10_c, buffer, range, &number);
 
     if (F_status_is_error(status)) {
       if (F_status_set_fine(status) == F_number) {
@@ -323,7 +323,7 @@ extern "C" {
 
     f_number_unsigned_t number = 0;
 
-    f_status_t status = fl_conversion_dynamic_partial_to_number_unsigned(buffer, range, &number);
+    f_status_t status = fl_conversion_dynamic_partial_to_unsigned_detect(fl_conversion_data_base_10_c, buffer, range, &number);
 
     if (F_status_is_error(status)) {
       if (F_status_set_fine(status) == F_number) {

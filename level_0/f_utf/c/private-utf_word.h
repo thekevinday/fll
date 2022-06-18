@@ -24,8 +24,8 @@ extern "C" {
  *
  * This expects the character width to be of at least size 2.
  *
- * @param character
- *   The character to validate.
+ * @param sequence
+ *   The byte sequence to validate as a character.
  * @param strict
  *   When TRUE, include all appropriate characters by type as per Unicode.
  *   When FALSE, non-inline punctuation connectors are not considered a character (such as U+FE33 '︳').
@@ -42,7 +42,7 @@ extern "C" {
  * @see f_utf_is_word()
  */
 #if !defined(_di_f_utf_character_is_word_) || !defined(_di_f_utf_is_word_)
-  extern f_status_t private_f_utf_character_is_word(const f_utf_char_t character, const bool strict) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_utf_character_is_word(const f_utf_char_t sequence, const bool strict) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_utf_character_is_word_) || !defined(_di_f_utf_is_word_)
 
 /**
@@ -52,8 +52,8 @@ extern "C" {
  *
  * This expects the character width to be of at least size 2.
  *
- * @param character
- *   The character to validate.
+ * @param sequence
+ *   The byte sequence to validate as a character.
  * @param strict
  *   When TRUE, include all appropriate characters by type as per Unicode.
  *   When FALSE, non-inline punctuation connectors are not considered a character (such as U+FE33 '︳').
@@ -70,7 +70,7 @@ extern "C" {
  * @see f_utf_is_word_dash()
  */
 #if !defined(_di_f_utf_character_is_word_dash_) || !defined(_di_f_utf_is_word_dash_)
-  extern f_status_t private_f_utf_character_is_word_dash(const f_utf_char_t character, const bool strict) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_utf_character_is_word_dash(const f_utf_char_t sequence, const bool strict) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_utf_character_is_word_dash_) || !defined(_di_f_utf_is_word_dash_)
 
 /**
@@ -80,8 +80,8 @@ extern "C" {
  *
  * This expects the character width to be of at least size 2.
  *
- * @param character
- *   The character to validate.
+ * @param sequence
+ *   The byte sequence to validate as a character.
  * @param strict
  *   When TRUE, include all appropriate characters by type as per Unicode.
  *   When FALSE, non-inline punctuation connectors are not considered a character (such as U+FE33 '︳').
@@ -98,7 +98,7 @@ extern "C" {
  * @see f_utf_is_word_dash_plus()
  */
 #if !defined(_di_f_utf_character_is_word_dash_plus_) || !defined(_di_f_utf_is_word_dash_plus_)
-  extern f_status_t private_f_utf_character_is_word_dash_plus(const f_utf_char_t character, const bool strict) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_utf_character_is_word_dash_plus(const f_utf_char_t sequence, const bool strict) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_utf_character_is_word_dash_plus_) || !defined(_di_f_utf_is_word_dash_plus_)
 
 #ifdef __cplusplus

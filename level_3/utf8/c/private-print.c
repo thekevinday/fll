@@ -7,34 +7,34 @@ extern "C" {
 #endif
 
 #ifndef _di_utf8_print_bytesequence_
-  void utf8_print_bytesequence(utf8_data_t * const data, const f_string_static_t character) {
+  void utf8_print_bytesequence(utf8_data_t * const data, const f_string_static_t sequence) {
 
-    fl_print_format("%r%r%r", data->file.stream, data->prepend, character, data->append);
+    fl_print_format("%r%r%r", data->file.stream, data->prepend, sequence, data->append);
   }
 #endif // _di_utf8_print_bytesequence_
 
 #ifndef _di_utf8_print_character_invalid_
-  void utf8_print_character_invalid(utf8_data_t * const data, const f_string_static_t character) {
+  void utf8_print_character_invalid(utf8_data_t * const data, const f_string_static_t invalid) {
 
     if (data->main->parameters.array[utf8_parameter_strip_invalid_e].result == f_console_result_found_e) return;
     if (data->main->parameters.array[utf8_parameter_verify_e].result == f_console_result_found_e) return;
 
-    if (!character.used) return;
+    if (!invalid.used) return;
 
     if ((data->mode & utf8_mode_to_combining_d) || (data->mode & utf8_mode_to_width_d)) {
-      utf8_print_combining_or_width(data, character);
+      utf8_print_combining_or_width(data, invalid);
     }
     else if (data->mode & utf8_mode_to_bytesequence_d) {
-      fl_print_format("%r%[%r%]%r", data->file.stream, data->prepend, data->valid_not, character, data->valid_not, data->append);
+      fl_print_format("%r%[%r%]%r", data->file.stream, data->prepend, data->valid_not, invalid, data->valid_not, data->append);
     }
     else if (data->mode & utf8_mode_from_codepoint_d) {
-      fl_print_format("%r%[%Q%]%r", data->file.stream, data->prepend, data->valid_not, character, data->valid_not, data->append);
+      fl_print_format("%r%[%Q%]%r", data->file.stream, data->prepend, data->valid_not, invalid, data->valid_not, data->append);
     }
     else {
       fl_print_format("%r%[0x", data->file.stream, data->prepend, data->valid_not);
 
-      for (uint8_t i = 0; i < character.used; ++i) {
-        fl_print_format("%02_uii", data->file.stream, (uint8_t) character.string[i]);
+      for (uint8_t i = 0; i < invalid.used; ++i) {
+        fl_print_format("%02_uii", data->file.stream, (uint8_t) invalid.string[i]);
       } // for
 
       fl_print_format("%]%r", data->file.stream, data->valid_not, data->append);
@@ -43,9 +43,9 @@ extern "C" {
 #endif // _di_utf8_print_character_invalid_
 
 #ifndef _di_utf8_print_codepoint_
-  void utf8_print_codepoint(utf8_data_t * const data, const uint32_t codepoint) {
+  void utf8_print_codepoint(utf8_data_t * const data, const f_utf_char_t codepoint) {
 
-    if (codepoint < 0xffff) {
+    if (codepoint < 0x10000) {
       fl_print_format("%rU+%04_U%r", data->file.stream, data->prepend, codepoint, data->append);
     }
     else if (codepoint < 0x100000) {
@@ -58,24 +58,24 @@ extern "C" {
 #endif // _di_utf8_print_codepoint_
 
 #ifndef _di_utf8_print_combining_or_width_
-  void utf8_print_combining_or_width(utf8_data_t * const data, const f_string_static_t character) {
+  void utf8_print_combining_or_width(utf8_data_t * const data, const f_string_static_t sequence) {
 
     f_status_t status = F_none;
 
     if (data->mode & utf8_mode_to_combining_d) {
-      status = f_utf_is_combining(character.string, character.used);
+      status = f_utf_is_combining(sequence.string, sequence.used);
 
       if (status == F_true) {
         fl_print_format("%r%r%r", data->file.stream, data->prepend, utf8_string_combining_is_s, data->append);
       }
       else if (status == F_false) {
-        status = f_utf_is_private(character.string, character.used);
+        status = f_utf_is_private(sequence.string, sequence.used);
 
         if (status == F_true) {
           fl_print_format("%r%r%r", data->file.stream, data->prepend, utf8_string_unknown_s, data->append);
         }
         else if (data->mode & utf8_mode_to_width_d) {
-          utf8_print_width(data, character);
+          utf8_print_width(data, sequence);
         }
         else {
           fl_print_format("%r%r%r", data->file.stream, data->prepend, utf8_string_combining_not_s, data->append);
@@ -86,7 +86,7 @@ extern "C" {
       }
     }
     else if (data->mode & utf8_mode_to_width_d) {
-      utf8_print_width(data, character);
+      utf8_print_width(data, sequence);
     }
   }
 #endif // _di_utf8_print_combining_or_width_
@@ -102,7 +102,7 @@ extern "C" {
 #endif // _di_utf8_print_error_combining_or_width_
 
 #ifndef _di_utf8_print_error_decode_
-  void utf8_print_error_decode(utf8_data_t * const data, const f_status_t status, const f_string_static_t character) {
+  void utf8_print_error_decode(utf8_data_t * const data, const f_status_t status, const f_string_static_t invalid) {
 
     if (data->main->error.verbosity == f_console_verbosity_quiet_e) return;
     if (data->main->parameters.array[utf8_parameter_strip_invalid_e].result == f_console_result_found_e) return;
@@ -110,11 +110,11 @@ extern "C" {
 
     fl_print_format("%r%[%QFailed to decode character code '%]", data->main->error.to.stream, f_string_eol_s, data->main->context.set.error, data->main->error.prefix, data->main->context.set.error);
 
-    if (character.used) {
+    if (invalid.used) {
       fl_print_format("%[0x", data->main->error.to.stream, data->main->context.set.notable);
 
-      for (uint8_t i = 0; i < character.used; ++i) {
-        fl_print_format("%02_uii", data->main->error.to.stream, (uint8_t) character.string[i]);
+      for (uint8_t i = 0; i < invalid.used; ++i) {
+        fl_print_format("%02_uii", data->main->error.to.stream, (uint8_t) invalid.string[i]);
       } // for
 
       fl_print_format("%]", data->main->error.to.stream, data->main->context.set.notable);
@@ -138,7 +138,7 @@ extern "C" {
 #endif // _di_utf8_print_error_decode_
 
 #ifndef _di_utf8_print_error_encode_
-  void utf8_print_error_encode(utf8_data_t * const data, const f_status_t status, const uint32_t codepoint) {
+  void utf8_print_error_encode(utf8_data_t * const data, const f_status_t status, const f_utf_char_t codepoint) {
 
     if (data->main->error.verbosity == f_console_verbosity_quiet_e) return;
 
@@ -227,49 +227,32 @@ extern "C" {
 
     f_string_static_t character = macro_f_string_static_t_initialize(0, 0, width);
 
-    uint8_t byte[character.used];
+    f_char_t byte[character.used + 1];
     character.string = byte;
+    byte[character.used] = 0;
 
     if (raw) {
       if (width == 1) {
-        byte[0] = (uint8_t) (raw & 0xff);
+        byte[0] = macro_f_utf_char_t_to_char_4_be(raw);
       }
       else if (width == 2) {
-        #ifdef _is_F_endian_big
-          byte[0] = (uint8_t) (raw & 0xff);
-          byte[1] = (uint8_t) ((raw & 0xff00) << 8);
-        #else
-          byte[0] = (uint8_t) ((raw & 0xff00) >> 8);
-          byte[1] = (uint8_t) (raw & 0xff);
-        #endif // _is_F_endian_big
+        byte[0] = macro_f_utf_char_t_to_char_3_be(raw);
+        byte[1] = macro_f_utf_char_t_to_char_4_be(raw);
       }
       else if (width == 3) {
-        #ifdef _is_F_endian_big
-          byte[0] = (uint8_t) (raw & 0xff);
-          byte[1] = (uint8_t) ((raw & 0xff00) << 8);
-          byte[2] = (uint8_t) ((raw & 0xff0000) << 16);
-        #else
-          byte[0] = (uint8_t) ((raw & 0xff0000) >> 16);
-          byte[1] = (uint8_t) ((raw & 0xff00) >> 8);
-          byte[2] = (uint8_t) (raw & 0xff);
-        #endif // _is_F_endian_big
+        byte[0] = macro_f_utf_char_t_to_char_2_be(raw);
+        byte[1] = macro_f_utf_char_t_to_char_3_be(raw);
+        byte[2] = macro_f_utf_char_t_to_char_4_be(raw);
       }
       else {
-        #ifdef _is_F_endian_big
-          byte[0] = (uint8_t) (raw & 0xff);
-          byte[1] = (uint8_t) ((raw & 0xff00) << 8);
-          byte[2] = (uint8_t) ((raw & 0xff0000) << 16);
-          byte[3] = (uint8_t) ((raw & 0xff000000) << 24);
-        #else
-          byte[0] = (uint8_t) ((raw & 0xff000000) >> 24);
-          byte[1] = (uint8_t) ((raw & 0xff0000) >> 16);
-          byte[2] = (uint8_t) ((raw & 0xff00) >> 8);
-          byte[3] = (uint8_t) (raw & 0xff);
-        #endif // _is_F_endian_big
+        byte[0] = macro_f_utf_char_t_to_char_1_be(raw);
+        byte[1] = macro_f_utf_char_t_to_char_2_be(raw);
+        byte[2] = macro_f_utf_char_t_to_char_3_be(raw);
+        byte[3] = macro_f_utf_char_t_to_char_4_be(raw);
       }
     }
     else {
-      memset(byte, 0, sizeof(uint8_t) * width);
+      memset(byte, 0, sizeof(f_char_t) * width);
     }
 
     fl_print_format("%r%[%r%]%r", data->file.stream, data->prepend, data->valid_not, character, data->valid_not, data->append);
@@ -391,40 +374,9 @@ extern "C" {
 #endif // _di_utf8_print_signal_received_
 
 #ifndef _di_utf8_print_width_
-  void utf8_print_width(utf8_data_t * const data, const f_string_static_t character) {
+  void utf8_print_width(utf8_data_t * const data, const f_string_static_t sequence) {
 
-    f_status_t status = f_utf_is_wide(character.string, character.used);
-
-    if (status == F_true) {
-      fl_print_format("%r%r%r", data->file.stream, data->prepend, utf8_string_width_2_s, data->append);
-
-      return;
-    }
-
-    if (status == F_false) {
-      status = f_utf_is_graph(character.string, character.used);
-
-      if (status == F_true) {
-        fl_print_format("%r%r%r", data->file.stream, data->prepend, utf8_string_width_1_s, data->append);
-
-        return;
-      }
-
-      if (status == F_false) {
-        fl_print_format("%r%r%r", data->file.stream, data->prepend, utf8_string_width_0_s, data->append);
-
-        return;
-      }
-    }
-
-    utf8_print_error_combining_or_width(data);
-  }
-#endif // _di_utf8_print_width_
-
-#ifndef _di_utf8_print_width_codepoint_
-  void utf8_print_width_codepoint(utf8_data_t * const data, const f_string_static_t character) {
-
-    f_status_t status = f_utf_is_wide(character.string, character.used);
+    f_status_t status = f_utf_is_wide(sequence.string, sequence.used);
 
     if (status == F_true) {
       fl_print_format("%r%r%r", data->file.stream, data->prepend, utf8_string_width_2_s, data->append);
@@ -433,7 +385,7 @@ extern "C" {
     }
 
     if (status == F_false) {
-      status = f_utf_is_graph(character.string, character.used);
+      status = f_utf_is_graph(sequence.string, sequence.used);
 
       if (status == F_true) {
         fl_print_format("%r%r%r", data->file.stream, data->prepend, utf8_string_width_1_s, data->append);

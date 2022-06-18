@@ -162,10 +162,10 @@ extern "C" {
       else if (main->parameters.array[fss_identify_parameter_line_e].result == f_console_result_additional_e) {
         const f_array_length_t index = main->parameters.array[fss_identify_parameter_line_e].values.array[main->parameters.array[fss_identify_parameter_line_e].values.used - 1];
 
-        status = fl_conversion_dynamic_to_number_unsigned(data.argv[index], &data.line);
+        status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, data.argv[index], &data.line);
 
         if (F_status_is_error(status)) {
-          fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_dynamic_to_number_unsigned", F_true, fss_identify_long_line_s, data.argv[index]);
+          fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_dynamic_to_unsigned_detect", F_true, fss_identify_long_line_s, data.argv[index]);
         }
       }
     }

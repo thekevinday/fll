@@ -242,6 +242,8 @@ extern "C" {
     #define F_status_ascii_not_s         "F_ascii_not"
     #define F_status_atomic_s            "F_atomic"
     #define F_status_atomic_not_s        "F_atomic_not"
+    #define F_status_base_s              "F_base"
+    #define F_status_base_not_s          "F_base_not"
     #define F_status_begin_s             "F_begin"
     #define F_status_begin_not_s         "F_begin_not"
     #define F_status_block_s             "F_block"
@@ -528,6 +530,8 @@ extern "C" {
     #define F_status_ascii_not_s_length         11
     #define F_status_atomic_s_length            8
     #define F_status_atomic_not_s_length        12
+    #define F_status_base_s_length              6
+    #define F_status_base_not_s_length          10
     #define F_status_begin_s_length             7
     #define F_status_begin_not_s_length         11
     #define F_status_break_s_length             7
@@ -814,6 +818,8 @@ extern "C" {
     extern const f_string_static_t f_status_ascii_not_s;
     extern const f_string_static_t f_status_atomic_s;
     extern const f_string_static_t f_status_atomic_not_s;
+    extern const f_string_static_t f_status_base_s;
+    extern const f_string_static_t f_status_base_not_s;
     extern const f_string_static_t f_status_begin_s;
     extern const f_string_static_t f_status_begin_not_s;
     extern const f_string_static_t f_status_block_s;

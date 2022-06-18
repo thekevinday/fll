@@ -166,9 +166,9 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: fl_conversion_dynamic_partial_to_number_unsigned().
+ *   Errors (with error bit) from: fl_conversion_dynamic_partial_to_unsigned_detect().
  *
- * @see fl_conversion_dynamic_partial_to_number_unsigned()
+ * @see fl_conversion_dynamic_partial_to_unsigned_detect()
  */
 #ifndef _di_fake_make_operate_process_type_if_greater_if_lesser_
   extern f_status_t fake_make_operate_process_type_if_greater_if_lesser(fake_make_data_t * const data_make, const f_string_dynamics_t arguments, fake_state_process_t *state_process) F_attribute_visibility_internal_d;

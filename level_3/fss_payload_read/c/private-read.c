@@ -109,10 +109,10 @@ extern "C" {
       else {
         position_depth = main->parameters.array[fss_payload_read_parameter_depth_e].values.array[i];
 
-        status = fl_conversion_dynamic_to_number_unsigned(data->argv[position_depth], &data->depths.array[i].depth);
+        status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, data->argv[position_depth], &data->depths.array[i].depth);
 
         if (F_status_is_error(status)) {
-          fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_dynamic_to_number_unsigned", F_true, fss_payload_read_long_depth_s, data->argv[position_depth]);
+          fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_dynamic_to_unsigned_detect", F_true, fss_payload_read_long_depth_s, data->argv[position_depth]);
 
           return status;
         }
@@ -131,10 +131,10 @@ extern "C" {
 
           data->depths.array[i].index_at = main->parameters.array[fss_payload_read_parameter_at_e].values.array[position_at];
 
-          status = fl_conversion_dynamic_to_number_unsigned(data->argv[data->depths.array[i].index_at], &data->depths.array[i].value_at);
+          status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, data->argv[data->depths.array[i].index_at], &data->depths.array[i].value_at);
 
           if (F_status_is_error(status)) {
-            fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_dynamic_to_number_unsigned", F_true, fss_payload_read_long_at_s, data->argv[data->depths.array[i].index_at]);
+            fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_dynamic_to_unsigned_detect", F_true, fss_payload_read_long_at_s, data->argv[data->depths.array[i].index_at]);
 
             return status;
           }
@@ -318,10 +318,10 @@ extern "C" {
     if (main->parameters.array[parameter].result == f_console_result_additional_e) {
       const f_array_length_t index = main->parameters.array[parameter].values.array[main->parameters.array[parameter].values.used - 1];
 
-      const f_status_t status = fl_conversion_dynamic_to_number_unsigned(data->argv[index], number);
+      const f_status_t status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, data->argv[index], number);
 
       if (F_status_is_error(status)) {
-        fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_dynamic_to_number_unsigned", F_true, name, data->argv[index]);
+        fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_dynamic_to_unsigned_detect", F_true, name, data->argv[index]);
 
         return status;
       }

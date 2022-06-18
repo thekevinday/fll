@@ -447,10 +447,10 @@ extern "C" {
               ++range.start;
             }
 
-            status = fl_conversion_dynamic_partial_to_number_unsigned(data.argv[index], range, &data.delimit_depth);
+            status = fl_conversion_dynamic_partial_to_unsigned_detect(fl_conversion_data_base_10_c, data.argv[index], range, &data.delimit_depth);
 
             if (F_status_is_error(status)) {
-              fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_dynamic_partial_to_number_unsigned", F_true, fss_payload_read_long_delimit_s, data.argv[index]);
+              fll_error_parameter_integer_print(main->error, F_status_set_fine(status), "fl_conversion_dynamic_partial_to_unsigned_detect", F_true, fss_payload_read_long_delimit_s, data.argv[index]);
 
               break;
             }

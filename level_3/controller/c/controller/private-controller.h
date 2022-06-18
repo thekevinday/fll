@@ -113,7 +113,7 @@ extern "C" {
  *   Errors (with error bit) from: f_file_stream_close().
  *   Errors (with error bit) from: f_file_stream_open().
  *   Errors (with error bit) from: f_file_stream_read().
- *   Errors (with error bit) from: fl_conversion_dynamic_partial_to_decimal_unsigned()
+ *   Errors (with error bit) from: fl_conversion_dynamic_partial_to_unsigned()
  */
 #ifndef _di_controller_file_pid_delete_
   f_status_t controller_file_pid_delete(const pid_t pid, const f_string_static_t path) F_attribute_visibility_internal_d;
@@ -133,7 +133,7 @@ extern "C" {
  *   Errors (with error bit) from: f_file_stream_close().
  *   Errors (with error bit) from: f_file_stream_open().
  *   Errors (with error bit) from: f_file_stream_read().
- *   Errors (with error bit) from: fl_conversion_dynamic_partial_to_decimal_unsigned()
+ *   Errors (with error bit) from: fl_conversion_dynamic_partial_to_unsigned()
  */
 #ifndef _di_controller_file_pid_read_
   f_status_t controller_file_pid_read(const f_string_static_t path, pid_t * const pid) F_attribute_visibility_internal_d;
@@ -157,10 +157,10 @@ extern "C" {
  *   F_number_too_large (with error bit) if the given ID is too large.
  *
  *   Errors (with error bit) from: f_account_id_by_name().
- *   Errors (with error bit) from: fl_conversion_dynamic_partial_to_number_unsigned().
+ *   Errors (with error bit) from: fl_conversion_dynamic_partial_to_unsigned_detect().
  *
  * @see f_account_id_by_name()
- * @see fl_conversion_dynamic_partial_to_number_unsigned()
+ * @see fl_conversion_dynamic_partial_to_unsigned_detect()
  */
 #ifndef _di_controller_get_id_user_
   f_status_t controller_get_id_user(const f_string_static_t buffer, const f_string_range_t range, controller_cache_t * const cache, uid_t * const id) F_attribute_visibility_internal_d;
@@ -184,10 +184,10 @@ extern "C" {
  *   F_number_too_large (with error bit) if the given ID is too large.
  *
  *   Errors (with error bit) from: f_account_group_id_by_name().
- *   Errors (with error bit) from: fl_conversion_dynamic_partial_to_number_unsigned().
+ *   Errors (with error bit) from: fl_conversion_dynamic_partial_to_unsigned_detect().
  *
  * @see f_account_group_id_by_name()
- * @see fl_conversion_dynamic_partial_to_number_unsigned()
+ * @see fl_conversion_dynamic_partial_to_unsigned_detect()
  */
 #ifndef _di_controller_get_id_group_
   f_status_t controller_get_id_group(const f_string_static_t buffer, const f_string_range_t range, controller_cache_t * const cache, gid_t * const id) F_attribute_visibility_internal_d;

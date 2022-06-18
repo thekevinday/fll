@@ -24,8 +24,8 @@ extern "C" {
  *
  * This expects the character width to be of at least size 2.
  *
- * @param character
- *   The character to validate.
+ * @param sequence
+ *   The byte sequence to validate as a character.
  *
  * @return
  *   F_true if a UTF-8 digit character.
@@ -38,7 +38,7 @@ extern "C" {
  * @see f_utf_is_digit()
  */
 #if !defined(_di_f_utf_character_is_digit_) || !defined(_di_f_utf_is_digit_)
-  extern f_status_t private_f_utf_character_is_digit(const f_utf_char_t character) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_utf_character_is_digit(const f_utf_char_t sequence) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_utf_character_is_digit_) || !defined(_di_f_utf_is_digit_)
 
 #ifdef __cplusplus

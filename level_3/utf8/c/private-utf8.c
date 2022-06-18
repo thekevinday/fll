@@ -12,9 +12,7 @@ extern "C" {
 #ifndef _di_utf8_process_text_
   f_status_t utf8_process_text(utf8_data_t * const data, f_string_static_t text) {
 
-    if (!text.used) {
-      return F_true;
-    }
+    if (!text.used) return F_true;
 
     f_status_t status = F_none;
     bool valid = F_true;
@@ -112,9 +110,7 @@ extern "C" {
 #ifndef _di_utf8_process_text_width_
   void utf8_process_text_width(f_string_static_t *text) {
 
-    if (!text->string[0]) {
-      return;
-    }
+    if (!text->string[0]) return;
 
     text->used = 0;
     text->size = macro_f_utf_byte_width(text->string[0]);

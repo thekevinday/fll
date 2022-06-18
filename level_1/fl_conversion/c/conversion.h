@@ -22,23 +22,26 @@
 #include <fll/level_0/utf.h>
 #include <fll/level_0/conversion.h>
 
+// FLL-1 conversion includes.
+#include <fll/level_1/conversion/common.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 /**
- * Convert a series of positive or negative binary number characters into a f_number_signed_t.
+ * Convert a series of number characters into a f_number_signed_t.
  *
  * This will stop at one of the following: range.stop or a non-digit.
  * This will ignore NULL values.
  * This will not process signed statuses (+/-).
  *
+ * @param data
+ *   Conversion data for specifying things such as treating this as a negative number.
  * @param buffer
  *   The string to convert.
  * @param range
  *   The start/stop range to convert.
- * @param negative
- *   Set to 0 to treat string as a positive number, 1 for as a negative number.
  * @param number
  *   This will store the value of the converted string.
  *   This value is only changed on success.
@@ -47,278 +50,16 @@ extern "C" {
  *   F_none if the binary string was converted to an signed long.
  *   F_data_not if string starts with a null (length is 0).
  *
+ *   F_base_not (with error bit) if no supported or valid base unit is provided.
  *   F_number (with error bit) if no conversion was made due to non-binary values being found.
  *   F_number_decimal (with error bit) if number has a decimal digit.
  *   F_number_overflow (with error bit) on integer overflow.
  *   F_number_underflow (with error bit) on integer underflow.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
-#ifndef _di_fl_conversion_dynamic_partial_to_binary_signed_
-  extern f_status_t fl_conversion_dynamic_partial_to_binary_signed(const f_string_static_t buffer, const f_string_range_t range, const bool negative, f_number_signed_t * const number);
-#endif // _di_fl_conversion_dynamic_partial_to_binary_signed_
-
-/**
- * Convert a series of positive binary number characters into a f_number_unsigned_t.
- *
- * This will stop at one of the following: range.stop or a non-digit.
- * This will ignore NULL values.
- * This will not process signed statuses (+/-).
- *
- * @param buffer
- *   The string to convert.
- * @param range
- *   The start/stop range to convert.
- * @param number
- *   This will store the value of the converted string.
- *   This value is only changed on success.
- *
- * @return
- *   F_none if the binary string was converted to an unsigned long.
- *   F_data_not if string starts with a null (length is 0).
- *
- *   F_number (with error bit) if no conversion was made due to non-binary values being found.
- *   F_number_decimal (with error bit) if number has a decimal digit.
- *   F_number_overflow (with error bit) on integer overflow.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_fl_conversion_dynamic_partial_to_binary_unsigned_
-  extern f_status_t fl_conversion_dynamic_partial_to_binary_unsigned(const f_string_static_t buffer, const f_string_range_t range, f_number_unsigned_t * const number);
-#endif // _di_fl_conversion_dynamic_partial_to_binary_unsigned_
-
-/**
- * Convert a series of positive or negative decimal number characters into an f_number_signed_t.
- *
- * This will stop at one of the following: range.stop or a non-digit.
- * This will ignore NULL values.
- * This will not process signed statuses (+/-).
- *
- * @param buffer
- *   The string to convert.
- * @param range
- *   The start/stop range to convert.
- * @param negative
- *   Set to 0 to treat string as a positive number, 1 for as a negative number.
- * @param number
- *   This will store the value of the converted string.
- *   This value is only changed on success.
- *
- * @return
- *   F_none if the decimal string was converted to an signed long.
- *   F_data_not if string starts with a null (length is 0).
- *
- *   F_number (with error bit) if no conversion was made due to non-decimal values being found.
- *   F_number_decimal (with error bit) if number has a decimal digit.
- *   F_number_overflow (with error bit) on integer overflow.
- *   F_number_underflow (with error bit) on integer underflow.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_fl_conversion_dynamic_partial_to_decimal_signed_
-  extern f_status_t fl_conversion_dynamic_partial_to_decimal_signed(const f_string_static_t buffer, const f_string_range_t range, const bool negative, f_number_signed_t * const number);
-#endif // _di_fl_conversion_dynamic_partial_to_decimal_signed_
-
-/**
- * Convert a series of positive decimal number characters into an f_number_unsigned_t.
- *
- * This will stop at one of the following: range.stop or a non-digit.
- * This will ignore NULL values.
- * This will not process signed statuses (+/-).
- *
- * @param buffer
- *   The string to convert.
- * @param range
- *   The start/stop range to convert.
- * @param number
- *   This will store the value of the converted string.
- *   This value is only changed on success.
- *
- * @return
- *   F_none if the decimal string was converted to an unsigned long.
- *   F_data_not if string starts with a null (length is 0).
- *
- *   F_number (with error bit) if no conversion was made due to non-decimal values being found.
- *   F_number_decimal (with error bit) if number has a decimal digit.
- *   F_number_overflow (with error bit) on integer overflow.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_fl_conversion_dynamic_partial_to_decimal_unsigned_
-  extern f_status_t fl_conversion_dynamic_partial_to_decimal_unsigned(const f_string_static_t buffer, const f_string_range_t range, f_number_unsigned_t * const number);
-#endif // _di_fl_conversion_dynamic_partial_to_decimal_unsigned_
-
-/**
- * Convert a series of positive or negative duodecimal number characters into an f_number_signed_t.
- *
- * This will stop at one of the following: range.stop or a non-digit.
- * This will ignore NULL values.
- * This will not process signed statuses (+/-).
- *
- * @param buffer
- *   The string to convert.
- * @param range
- *   The start/stop range to convert.
- * @param negative
- *   Set to 0 to treat string as a positive number, 1 for as a negative number.
- * @param number
- *   This will store the value of the converted string.
- *   This value is only changed on success.
- *
- * @return
- *   F_none if the duodecimal string was converted to an signed long.
- *   F_data_not if string starts with a null (length is 0).
- *
- *   F_number (with error bit) if no conversion was made due to non-duodecimal values being found.
- *   F_number_decimal (with error bit) if number has a decimal digit.
- *   F_number_overflow (with error bit) on integer overflow.
- *   F_number_underflow (with error bit) on integer underflow.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_fl_conversion_dynamic_partial_to_duodecimal_signed_
-  extern f_status_t fl_conversion_dynamic_partial_to_duodecimal_signed(const f_string_static_t buffer, const f_string_range_t range, const bool negative, f_number_signed_t * const number);
-#endif // _di_fl_conversion_dynamic_partial_to_duodecimal_signed_
-
-/**
- * Convert a series of positive duodecimal number characters into an f_number_unsigned_t.
- *
- * This will stop at one of the following: range.stop or a non-digit.
- * This will ignore NULL values.
- * This will not process signed statuses (+/-).
- *
- * @param buffer
- *   The string to convert.
- * @param range
- *   The start/stop range to convert.
- * @param number
- *   This will store the value of the converted string.
- *   This value is only changed on success.
- *
- * @return
- *   F_none if the duodecimal string was converted to an unsigned long.
- *   F_data_not if string starts with a null (length is 0).
- *
- *   F_number (with error bit) if no conversion was made due to non-duodecimal values being found.
- *   F_number_decimal (with error bit) if number has a decimal digit.
- *   F_number_overflow (with error bit) on integer overflow.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_fl_conversion_dynamic_partial_to_duodecimal_unsigned_
-  extern f_status_t fl_conversion_dynamic_partial_to_duodecimal_unsigned(const f_string_static_t buffer, const f_string_range_t range, f_number_unsigned_t * const number);
-#endif // _di_fl_conversion_dynamic_partial_to_duodecimal_unsigned_
-
-/**
- * Convert a series of positive or negative hexidecimal number characters into an f_number_signed_t.
- *
- * This will stop at one of the following: range.stop or a non-digit.
- * This will ignore NULL values.
- * This will not process signed statuses (+/-).
- *
- * @param buffer
- *   The string to convert.
- * @param range
- *   The start/stop range to convert.
- * @param negative
- *   Set to 0 to treat string as a positive number, 1 for as a negative number.
- * @param number
- *   This will store the value of the converted string.
- *   This value is only changed on success.
- *
- * @return
- *   F_none if the hexidecimal string was converted to an signed long.
- *   F_data_not if string starts with a null (length is 0).
- *
- *   F_number (with error bit) if no conversion was made due to non-hexidecimal values being found.
- *   F_number_decimal (with error bit) if number has a decimal digit.
- *   F_number_overflow (with error bit) on integer overflow.
- *   F_number_underflow (with error bit) on integer underflow.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_fl_conversion_dynamic_partial_to_hexidecimal_signed_
-  extern f_status_t fl_conversion_dynamic_partial_to_hexidecimal_signed(const f_string_static_t buffer, const f_string_range_t range, const bool negative, f_number_signed_t * const number);
-#endif // _di_fl_conversion_dynamic_partial_to_hexidecimal_signed_
-
-/**
- * Convert a series of positive hexidecimal number characters into an f_number_unsigned_t.
- *
- * This will stop at one of the following: range.stop or a non-digit.
- * This will ignore NULL values.
- * This will not process signed statuses (+/-).
- *
- * @param buffer
- *   The string to convert.
- * @param range
- *   The start/stop range to convert.
- * @param number
- *   This will store the value of the converted string.
- *   This value is only changed on success.
- *
- * @return
- *   F_none if the hexidecimal string was converted to an unsigned long.
- *   F_data_not if string starts with a null (length is 0).
- *
- *   F_number (with error bit) if no conversion was made due to non-hexidecimal values being found.
- *   F_number_decimal (with error bit) if number has a decimal digit.
- *   F_number_overflow (with error bit) on integer overflow.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_fl_conversion_dynamic_partial_to_hexidecimal_unsigned_
-  extern f_status_t fl_conversion_dynamic_partial_to_hexidecimal_unsigned(const f_string_static_t buffer, const f_string_range_t range, f_number_unsigned_t * const number);
-#endif // _di_fl_conversion_dynamic_partial_to_hexidecimal_unsigned_
-
-/**
- * Convert a series of positive or negative octal number characters into an f_number_signed_t.
- *
- * This will stop at one of the following: range.stop or a non-digit.
- * This will ignore NULL values.
- * This will not process signed statuses (+/-).
- *
- * @param buffer
- *   The string to convert.
- * @param range
- *   The start/stop range to convert.
- * @param negative
- *   Set to 0 to treat string as a positive number, 1 for as a negative number.
- * @param number
- *   This will store the value of the converted string.
- *   This value is only changed on success.
- *
- * @return
- *   F_none if the octal string was converted to an signed long.
- *   F_data_not if string starts with a null (length is 0).
- *
- *   F_number (with error bit) if no conversion was made due to non-octal values being found.
- *   F_number_decimal (with error bit) if number has a decimal digit.
- *   F_number_overflow (with error bit) on integer overflow.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_fl_conversion_dynamic_partial_to_octal_signed_
-  extern f_status_t fl_conversion_dynamic_partial_to_octal_signed(const f_string_static_t buffer, const f_string_range_t range, const bool negative, f_number_signed_t * const number);
-#endif // _di_fl_conversion_dynamic_partial_to_octal_signed_
-
-/**
- * Convert a series of positive octal number characters into an f_number_unsigned_t.
- *
- * This will stop at one of the following: range.stop or a non-digit.
- * This will ignore NULL values.
- * This will not process signed statuses (+/-).
- *
- * @param buffer
- *   The string to convert.
- * @param range
- *   The start/stop range to convert.
- * @param number
- *   This will store the value of the converted string.
- *   This value is only changed on success.
- *
- * @return
- *   F_none if the octal string was converted to an unsigned long.
- *   F_data_not if string starts with a null (length is 0).
- *
- *   F_number (with error bit) if no conversion was made due to non-octal values being found.
- *   F_number_decimal (with error bit) if number has a decimal digit.
- *   F_number_overflow (with error bit) on integer overflow.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_fl_conversion_dynamic_partial_to_octal_unsigned_
-  extern f_status_t fl_conversion_dynamic_partial_to_octal_unsigned(const f_string_static_t buffer, const f_string_range_t range, f_number_unsigned_t * const number);
-#endif // _di_fl_conversion_dynamic_partial_to_octal_unsigned_
+#ifndef _di_fl_conversion_dynamic_partial_to_signed_
+  extern f_status_t fl_conversion_dynamic_partial_to_signed(const fl_conversion_data_t data, const f_string_static_t buffer, const f_string_range_t range, f_number_signed_t * const number);
+#endif // _di_fl_conversion_dynamic_partial_to_signed_
 
 /**
  * Convert a series of positive or negative number characters into an f_number_signed_t.
@@ -339,6 +80,8 @@ extern "C" {
  * This function is similar to strtoll(), but the behavior of error handling and special bases are different.
  * In particular, octals are specified here with '0b' prefix or '0B' prefix instead of the ridiculous '0' prefix.
  *
+ * @param data
+ *   Conversion data for specifying things such as treating this as a negative number.
  * @param buffer
  *   The string to convert.
  * @param range
@@ -351,6 +94,7 @@ extern "C" {
  *   F_none on success.
  *   F_data_not if string starts with a null (length is 0).
  *
+ *   F_base_not (with error bit) if no supported or valid base unit is provided.
  *   F_complete_not_utf (with error bit) if an incomplete UTF-8 fragment is found.
  *   F_number (with error bit) if parameter is not a number.
  *   F_number_decimal (with error bit) if number has a decimal digit.
@@ -360,9 +104,40 @@ extern "C" {
  *
  * @see strtoll()
  */
-#ifndef _di_fl_conversion_dynamic_partial_to_number_signed_
-  extern f_status_t fl_conversion_dynamic_partial_to_number_signed(const f_string_static_t buffer, const f_string_range_t range, f_number_signed_t * const number);
-#endif // _di_fl_conversion_dynamic_partial_to_number_signed_
+#ifndef _di_fl_conversion_dynamic_partial_to_signed_detect_
+  extern f_status_t fl_conversion_dynamic_partial_to_signed_detect(const fl_conversion_data_t data, const f_string_static_t buffer, const f_string_range_t range, f_number_signed_t * const number);
+#endif // _di_fl_conversion_dynamic_partial_to_signed_detect_
+
+/**
+ * Convert a series of number characters into a f_number_unsigned_t.
+ *
+ * This will stop at one of the following: range.stop or a non-digit.
+ * This will ignore NULL values.
+ * This will not process signed statuses (+/-).
+ *
+ * @param data
+ *   Conversion data for specifying things such as treating this as a negative number.
+ * @param buffer
+ *   The string to convert.
+ * @param range
+ *   The start/stop range to convert.
+ * @param number
+ *   This will store the value of the converted string.
+ *   This value is only changed on success.
+ *
+ * @return
+ *   F_none if the binary string was converted to an unsigned long.
+ *   F_data_not if string starts with a null (length is 0).
+ *
+ *   F_base_not (with error bit) if no supported or valid base unit is provided.
+ *   F_number (with error bit) if no conversion was made due to non-binary values being found.
+ *   F_number_decimal (with error bit) if number has a decimal digit.
+ *   F_number_overflow (with error bit) on integer overflow.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_fl_conversion_dynamic_partial_to_unsigned_
+  extern f_status_t fl_conversion_dynamic_partial_to_unsigned(const fl_conversion_data_t data, const f_string_static_t buffer, const f_string_range_t range, f_number_unsigned_t * const number);
+#endif // _di_fl_conversion_dynamic_partial_to_unsigned_
 
 /**
  * Convert a series of positive number characters into an f_number_unsigned_t.
@@ -384,6 +159,9 @@ extern "C" {
  * In particular, octals are specified here with '0b' prefix or '0B' prefix instead of the ridiculous '0' prefix.
  * Negative values are reported as such instead of being converted into the unsigned equivalent.
  *
+ * @param data
+ *   Conversion data for specifying things such as treating this as a negative number.
+ *   This auto-detects the base and negative, ignoring the base number and negative flag.
  * @param buffer
  *   The string to convert.
  * @param range
@@ -396,6 +174,7 @@ extern "C" {
  *   F_none on success.
  *   F_data_not if string starts with a null (length is 0).
  *
+ *   F_base_not (with error bit) if no supported or valid base unit is provided.
  *   F_complete_not_utf (with error bit) if an incomplete UTF-8 fragment is found.
  *   F_number (with error bit) if parameter is not a number.
  *   F_number_decimal (with error bit) if number has a decimal digit.
@@ -406,20 +185,21 @@ extern "C" {
  *
  * @see strtoull()
  */
-#ifndef _di_fl_conversion_dynamic_partial_to_number_unsigned_
-  extern f_status_t fl_conversion_dynamic_partial_to_number_unsigned(const f_string_static_t buffer, const f_string_range_t range, f_number_unsigned_t * const number);
-#endif // _di_fl_conversion_dynamic_partial_to_number_unsigned_
+#ifndef _di_fl_conversion_dynamic_partial_to_unsigned_detect_
+  extern f_status_t fl_conversion_dynamic_partial_to_unsigned_detect(const fl_conversion_data_t data, const f_string_static_t buffer, const f_string_range_t range, f_number_unsigned_t * const number);
+#endif // _di_fl_conversion_dynamic_partial_to_unsigned_detect_
+
 /**
- * Convert a series of positive or negative binary number characters into a f_number_signed_t.
+ * Convert a series of number characters into a f_number_signed_t.
  *
  * This will stop at one of the following: a non-digit.
  * This will ignore NULL values.
  * This will not process signed statuses (+/-).
  *
+ * @param data
+ *   Conversion data for specifying things such as treating this as a negative number.
  * @param buffer
  *   The string to convert.
- * @param negative
- *   Set to 0 to treat string as a positive number, 1 for as a negative number.
  * @param number
  *   This will store the value of the converted string.
  *   This value is only changed on success.
@@ -428,260 +208,16 @@ extern "C" {
  *   F_none if the binary string was converted to an signed long.
  *   F_data_not if string starts with a null (length is 0).
  *
+ *   F_base_not (with error bit) if no supported or valid base unit is provided.
  *   F_number (with error bit) if no conversion was made due to non-binary values being found.
  *   F_number_decimal (with error bit) if number has a decimal digit.
  *   F_number_overflow (with error bit) on integer overflow.
  *   F_number_underflow (with error bit) on integer underflow.
  *   F_parameter (with error bit) if a parameter is invalid.
  */
-#ifndef _di_fl_conversion_dynamic_to_binary_signed_
-  extern f_status_t fl_conversion_dynamic_to_binary_signed(const f_string_static_t buffer, const bool negative, f_number_signed_t * const number);
-#endif // _di_fl_conversion_dynamic_to_binary_signed_
-
-/**
- * Convert a series of positive binary number characters into a f_number_unsigned_t.
- *
- * This will stop at one of the following: a non-digit.
- * This will ignore NULL values.
- * This will not process signed statuses (+/-).
- *
- * @param buffer
- *   The string to convert.
- * @param number
- *   This will store the value of the converted string.
- *   This value is only changed on success.
- *
- * @return
- *   F_none if the binary string was converted to an unsigned long.
- *   F_data_not if string starts with a null (length is 0).
- *
- *   F_number (with error bit) if no conversion was made due to non-binary values being found.
- *   F_number_decimal (with error bit) if number has a decimal digit.
- *   F_number_overflow (with error bit) on integer overflow.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_fl_conversion_dynamic_to_binary_unsigned_
-  extern f_status_t fl_conversion_dynamic_to_binary_unsigned(const f_string_static_t buffer, f_number_unsigned_t * const number);
-#endif // _di_fl_conversion_dynamic_to_binary_unsigned_
-
-/**
- * Convert a series of positive or negative decimal number characters into an f_number_signed_t.
- *
- * This will stop at one of the following: a non-digit.
- * This will ignore NULL values.
- * This will not process signed statuses (+/-).
- *
- * @param buffer
- *   The string to convert.
- * @param negative
- *   Set to 0 to treat string as a positive number, 1 for as a negative number.
- * @param number
- *   This will store the value of the converted string.
- *   This value is only changed on success.
- *
- * @return
- *   F_none if the decimal string was converted to an signed long.
- *   F_data_not if string starts with a null (length is 0).
- *
- *   F_number (with error bit) if no conversion was made due to non-decimal values being found.
- *   F_number_decimal (with error bit) if number has a decimal digit.
- *   F_number_overflow (with error bit) on integer overflow.
- *   F_number_underflow (with error bit) on integer underflow.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_fl_conversion_dynamic_to_decimal_signed_
-  extern f_status_t fl_conversion_dynamic_to_decimal_signed(const f_string_static_t buffer, const bool negative, f_number_signed_t * const number);
-#endif // _di_fl_conversion_dynamic_to_decimal_signed_
-
-/**
- * Convert a series of positive decimal number characters into an f_number_unsigned_t.
- *
- * This will stop at one of the following: a non-digit.
- * This will ignore NULL values.
- * This will not process signed statuses (+/-).
- *
- * @param buffer
- *   The string to convert.
- * @param number
- *   This will store the value of the converted string.
- *   This value is only changed on success.
- *
- * @return
- *   F_none if the decimal string was converted to an unsigned long.
- *   F_data_not if string starts with a null (length is 0).
- *
- *   F_number (with error bit) if no conversion was made due to non-decimal values being found.
- *   F_number_decimal (with error bit) if number has a decimal digit.
- *   F_number_overflow (with error bit) on integer overflow.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_fl_conversion_dynamic_to_decimal_unsigned_
-  extern f_status_t fl_conversion_dynamic_to_decimal_unsigned(const f_string_static_t buffer, f_number_unsigned_t * const number);
-#endif // _di_fl_conversion_dynamic_to_decimal_unsigned_
-
-/**
- * Convert a series of positive or negative duodecimal number characters into an f_number_signed_t.
- *
- * This will stop at one of the following: a non-digit.
- * This will ignore NULL values.
- * This will not process signed statuses (+/-).
- *
- * @param buffer
- *   The string to convert.
- * @param negative
- *   Set to 0 to treat string as a positive number, 1 for as a negative number.
- * @param number
- *   This will store the value of the converted string.
- *   This value is only changed on success.
- *
- * @return
- *   F_none if the duodecimal string was converted to an signed long.
- *   F_data_not if string starts with a null (length is 0).
- *
- *   F_number (with error bit) if no conversion was made due to non-duodecimal values being found.
- *   F_number_decimal (with error bit) if number has a decimal digit.
- *   F_number_overflow (with error bit) on integer overflow.
- *   F_number_underflow (with error bit) on integer underflow.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_fl_conversion_dynamic_to_duodecimal_signed_
-  extern f_status_t fl_conversion_dynamic_to_duodecimal_signed(const f_string_static_t buffer, const bool negative, f_number_signed_t * const number);
-#endif // _di_fl_conversion_dynamic_to_duodecimal_signed_
-
-/**
- * Convert a series of positive duodecimal number characters into an f_number_unsigned_t.
- *
- * This will stop at one of the following: a non-digit.
- * This will ignore NULL values.
- * This will not process signed statuses (+/-).
- *
- * @param buffer
- *   The string to convert.
- * @param number
- *   This will store the value of the converted string.
- *   This value is only changed on success.
- *
- * @return
- *   F_none if the duodecimal string was converted to an unsigned long.
- *   F_data_not if string starts with a null (length is 0).
- *
- *   F_number (with error bit) if no conversion was made due to non-duodecimal values being found.
- *   F_number_decimal (with error bit) if number has a decimal digit.
- *   F_number_overflow (with error bit) on integer overflow.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_fl_conversion_dynamic_to_duodecimal_unsigned_
-  extern f_status_t fl_conversion_dynamic_to_duodecimal_unsigned(const f_string_static_t buffer, f_number_unsigned_t * const number);
-#endif // _di_fl_conversion_dynamic_to_duodecimal_unsigned_
-
-/**
- * Convert a series of positive or negative hexidecimal number characters into an f_number_signed_t.
- *
- * This will stop at one of the following: a non-digit.
- * This will ignore NULL values.
- * This will not process signed statuses (+/-).
- *
- * @param buffer
- *   The string to convert.
- * @param negative
- *   Set to 0 to treat string as a positive number, 1 for as a negative number.
- * @param number
- *   This will store the value of the converted string.
- *   This value is only changed on success.
- *
- * @return
- *   F_none if the hexidecimal string was converted to an signed long.
- *   F_data_not if string starts with a null (length is 0).
- *
- *   F_number (with error bit) if no conversion was made due to non-hexidecimal values being found.
- *   F_number_decimal (with error bit) if number has a decimal digit.
- *   F_number_overflow (with error bit) on integer overflow.
- *   F_number_underflow (with error bit) on integer underflow.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_fl_conversion_dynamic_to_hexidecimal_signed_
-  extern f_status_t fl_conversion_dynamic_to_hexidecimal_signed(const f_string_static_t buffer, const bool negative, f_number_signed_t * const number);
-#endif // _di_fl_conversion_dynamic_to_hexidecimal_signed_
-
-/**
- * Convert a series of positive hexidecimal number characters into an f_number_unsigned_t.
- *
- * This will stop at one of the following: a non-digit.
- * This will ignore NULL values.
- * This will not process signed statuses (+/-).
- *
- * @param buffer
- *   The string to convert.
- * @param number
- *   This will store the value of the converted string.
- *   This value is only changed on success.
- *
- * @return
- *   F_none if the hexidecimal string was converted to an unsigned long.
- *   F_data_not if string starts with a null (length is 0).
- *
- *   F_number (with error bit) if no conversion was made due to non-hexidecimal values being found.
- *   F_number_decimal (with error bit) if number has a decimal digit.
- *   F_number_overflow (with error bit) on integer overflow.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_fl_conversion_dynamic_to_hexidecimal_unsigned_
-  extern f_status_t fl_conversion_dynamic_to_hexidecimal_unsigned(const f_string_static_t buffer, f_number_unsigned_t * const number);
-#endif // _di_fl_conversion_dynamic_to_hexidecimal_unsigned_
-
-/**
- * Convert a series of positive or negative octal number characters into an f_number_signed_t.
- *
- * This will stop at one of the following: a non-digit.
- * This will ignore NULL values.
- * This will not process signed statuses (+/-).
- *
- * @param buffer
- *   The string to convert.
- * @param negative
- *   Set to 0 to treat string as a positive number, 1 for as a negative number.
- * @param number
- *   This will store the value of the converted string.
- *   This value is only changed on success.
- *
- * @return
- *   F_none if the octal string was converted to an signed long.
- *   F_data_not if string starts with a null (length is 0).
- *
- *   F_number (with error bit) if no conversion was made due to non-octal values being found.
- *   F_number_decimal (with error bit) if number has a decimal digit.
- *   F_number_overflow (with error bit) on integer overflow.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_fl_conversion_dynamic_to_octal_signed_
-  extern f_status_t fl_conversion_dynamic_to_octal_signed(const f_string_static_t buffer, const bool negative, f_number_signed_t * const number);
-#endif // _di_fl_conversion_dynamic_to_octal_signed_
-
-/**
- * Convert a series of positive octal number characters into an f_number_unsigned_t.
- *
- * This will stop at one of the following: a non-digit.
- * This will ignore NULL values.
- * This will not process signed statuses (+/-).
- *
- * @param buffer
- *   The string to convert.
- * @param number
- *   This will store the value of the converted string.
- *   This value is only changed on success.
- *
- * @return
- *   F_none if the octal string was converted to an unsigned long.
- *   F_data_not if string starts with a null (length is 0).
- *
- *   F_number (with error bit) if no conversion was made due to non-octal values being found.
- *   F_number_decimal (with error bit) if number has a decimal digit.
- *   F_number_overflow (with error bit) on integer overflow.
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_fl_conversion_dynamic_to_octal_unsigned_
-  extern f_status_t fl_conversion_dynamic_to_octal_unsigned(const f_string_static_t buffer, f_number_unsigned_t * const number);
-#endif // _di_fl_conversion_dynamic_to_octal_unsigned_
+#ifndef _di_fl_conversion_dynamic_to_signed_
+  extern f_status_t fl_conversion_dynamic_to_signed(const fl_conversion_data_t data, const f_string_static_t buffer, f_number_signed_t * const number);
+#endif // _di_fl_conversion_dynamic_to_signed_
 
 /**
  * Convert a series of positive or negative number characters into an f_number_signed_t.
@@ -702,6 +238,9 @@ extern "C" {
  * This function is similar to strtoll(), but the behavior of error handling and special bases are different.
  * In particular, octals are specified here with '0b' prefix or '0B' prefix instead of the ridiculous '0' prefix.
  *
+ * @param data
+ *   Conversion data for specifying things such as treating this as a negative number.
+ *   This auto-detects the base and negative, ignoring the base number and negative flag.
  * @param buffer
  *   The string to convert.
  * @param number
@@ -712,6 +251,7 @@ extern "C" {
  *   F_none on success.
  *   F_data_not if string starts with a null (length is 0).
  *
+ *   F_base_not (with error bit) if no supported or valid base unit is provided.
  *   F_complete_not_utf (with error bit) if an incomplete UTF-8 fragment is found.
  *   F_number (with error bit) if parameter is not a number.
  *   F_number_decimal (with error bit) if number has a decimal digit.
@@ -721,9 +261,38 @@ extern "C" {
  *
  * @see strtoll()
  */
-#ifndef _di_fl_conversion_dynamic_to_number_signed_
-  extern f_status_t fl_conversion_dynamic_to_number_signed(const f_string_static_t buffer, f_number_signed_t * const number);
-#endif // _di_fl_conversion_dynamic_to_number_signed_
+#ifndef _di_fl_conversion_dynamic_to_signed_detect_
+  extern f_status_t fl_conversion_dynamic_to_signed_detect(const fl_conversion_data_t data, const f_string_static_t buffer, f_number_signed_t * const number);
+#endif // _di_fl_conversion_dynamic_to_signed_detect_
+
+/**
+ * Convert a series of number characters into a f_number_unsigned_t.
+ *
+ * This will stop at one of the following: a non-digit.
+ * This will ignore NULL values.
+ * This will not process signed statuses (+/-).
+ *
+ * @param data
+ *   Conversion data for specifying things such as treating this as a negative number.
+ * @param buffer
+ *   The string to convert.
+ * @param number
+ *   This will store the value of the converted string.
+ *   This value is only changed on success.
+ *
+ * @return
+ *   F_none if the binary string was converted to an unsigned long.
+ *   F_data_not if string starts with a null (length is 0).
+ *
+ *   F_base_not (with error bit) if no supported or valid base unit is provided.
+ *   F_number (with error bit) if no conversion was made due to non-binary values being found.
+ *   F_number_decimal (with error bit) if number has a decimal digit.
+ *   F_number_overflow (with error bit) on integer overflow.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_fl_conversion_dynamic_to_unsigned_
+  extern f_status_t fl_conversion_dynamic_to_unsigned(const fl_conversion_data_t data, const f_string_static_t buffer, f_number_unsigned_t * const number);
+#endif // _di_fl_conversion_dynamic_to_unsigned_
 
 /**
  * Convert a series of positive number characters into an f_number_unsigned_t.
@@ -745,6 +314,9 @@ extern "C" {
  * In particular, octals are specified here with '0b' prefix or '0B' prefix instead of the ridiculous '0' prefix.
  * Negative values are reported as such instead of being converted into the unsigned equivalent.
  *
+ * @param data
+ *   Conversion data for specifying things such as treating this as a negative number.
+ *   This auto-detects the base and negative, ignoring the base number and negative flag.
  * @param buffer
  *   The string to convert.
  * @param number
@@ -755,6 +327,7 @@ extern "C" {
  *   F_none on success.
  *   F_data_not if string starts with a null (length is 0).
  *
+ *   F_base_not (with error bit) if no supported or valid base unit is provided.
  *   F_complete_not_utf (with error bit) if an incomplete UTF-8 fragment is found.
  *   F_number (with error bit) if parameter is not a number.
  *   F_number_decimal (with error bit) if number has a decimal digit.
@@ -765,9 +338,9 @@ extern "C" {
  *
  * @see strtoull()
  */
-#ifndef _di_fl_conversion_dynamic_to_number_unsigned_
-  extern f_status_t fl_conversion_dynamic_to_number_unsigned(const f_string_static_t buffer, f_number_unsigned_t * const number);
-#endif // _di_fl_conversion_dynamic_to_number_unsigned_
+#ifndef _di_fl_conversion_dynamic_to_unsigned_detect_
+  extern f_status_t fl_conversion_dynamic_to_unsigned_detect(const fl_conversion_data_t data, const f_string_static_t buffer, f_number_unsigned_t * const number);
+#endif // _di_fl_conversion_dynamic_to_unsigned_detect_
 
 #ifdef __cplusplus
 } // extern "C"
