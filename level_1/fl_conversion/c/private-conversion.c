@@ -381,7 +381,7 @@ extern "C" {
         if (string[j] > f_string_ascii_slash_backward_s.string[0] && string[j] < f_string_ascii_colon_s.string[0]) {
           mode = 10;
         }
-        else if (string[j] == f_string_ascii_t_s.string[0] || string[j] == f_string_ascii_t_s.string[0]) {
+        else if (string[j] == f_string_ascii_t_s.string[0] || string[j] == f_string_ascii_T_s.string[0]) {
           mode = 10;
           offset += 2;
         }
@@ -537,7 +537,7 @@ extern "C" {
         else if (string[j] > f_string_ascii_slash_backward_s.string[0] && string[j] < f_string_ascii_colon_s.string[0]) {
           mode = 10;
         }
-        else if (string[j] == f_string_ascii_t_s.string[0] || string[j] == f_string_ascii_t_s.string[0]) {
+        else if (string[j] == f_string_ascii_t_s.string[0] || string[j] == f_string_ascii_T_s.string[0]) {
           mode = 10;
           offset += 2;
         }
