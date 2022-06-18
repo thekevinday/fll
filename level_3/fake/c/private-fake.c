@@ -56,9 +56,7 @@ extern "C" {
         return 0;
       }
 
-      if (*status == F_child) {
-        return return_code;
-      }
+      if (*status == F_child) return return_code;
     }
     else {
       *status = F_status_set_error(F_file_found_not);
