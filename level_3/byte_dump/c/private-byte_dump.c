@@ -26,9 +26,9 @@ extern "C" {
     bool found_invalid_utf = F_false;
 
     // Store the current character main until it can be printed.
-    f_utf_string_dynamic_t characters = f_utf_string_dynamic_t_initialize;
-    f_utf_char_t character_array[data->width];
-    f_array_length_t character_current = 0;
+    f_utf_string_dynamic_t sequence = f_utf_string_dynamic_t_initialize;
+    f_utf_char_t block[data->width];
+    f_array_length_t current = 0;
 
     // The row starts based on the first byte starting point and how many columns of bytes are displayed per row.
     if (data->first) {
@@ -46,10 +46,10 @@ extern "C" {
       }
     }
 
-    memset(&character_array, 0, sizeof(f_utf_char_t) * data->width);
-    characters.string = character_array;
-    characters.used = 0;
-    characters.size = data->width;
+    memset(&block, 0, sizeof(f_utf_char_t) * data->width);
+    sequence.string = block;
+    sequence.used = 0;
+    sequence.size = data->width;
 
     // Record when a character is invalid.
     f_char_t invalid[data->width];
@@ -79,26 +79,26 @@ extern "C" {
           width_utf = macro_f_utf_byte_width_is(byte);
           width_count = 0;
 
-          // The character is reset, the characters.used is to be reset.
+          // The character is reset, the sequence.used is to be reset.
           if (character_reset) {
-            characters.used = 0;
+            sequence.used = 0;
             character_reset = F_false;
             memset(&invalid, 0, sizeof(f_char_t) * data->width);
           }
 
-          character_current = characters.used++;
-          invalid[character_current] = 0;
+          current = sequence.used++;
+          invalid[current] = 0;
         }
 
         // When width_count == 0, then this is that start of a new character sequence.
         if (!width_count) {
-          characters.string[character_current] = macro_f_utf_char_t_from_char_1(byte);
+          sequence.string[current] = macro_f_utf_char_t_from_char_1(byte);
           width_count = 1;
 
           // The first character in a UTF-8 sequence cannot have a width of 1.
           if (width_utf == 1) {
             found_invalid_utf = F_true;
-            invalid[character_current] = 1;
+            invalid[current] = 1;
           }
           // Process the UTF-8 character.
           else if (width_utf > 1) {
@@ -108,13 +108,13 @@ extern "C" {
         // Process a UTF-8 character fragment.
         else if (width_count < width_utf) {
           if (width_count == 1) {
-            characters.string[character_current] |= macro_f_utf_char_t_from_char_2(byte);
+            sequence.string[current] |= macro_f_utf_char_t_from_char_2(byte);
           }
           else if (width_count == 2) {
-            characters.string[character_current] |= macro_f_utf_char_t_from_char_3(byte);
+            sequence.string[current] |= macro_f_utf_char_t_from_char_3(byte);
           }
           else if (width_count == 3) {
-            characters.string[character_current] |= macro_f_utf_char_t_from_char_4(byte);
+            sequence.string[current] |= macro_f_utf_char_t_from_char_4(byte);
           }
 
           ++width_count;
@@ -124,37 +124,37 @@ extern "C" {
         }
 
         // At this point: an ASCII character is collected, the entire UTF-8 character sequence is collected, or an invalid UTF-8 was processed.
-        if (!invalid[character_current] && width_utf > 1) {
-          if (f_utf_character_is_valid(characters.string[character_current]) != F_true) {
+        if (!invalid[current] && width_utf > 1) {
+          if (f_utf_character_is_valid(sequence.string[current]) != F_true) {
             found_invalid_utf = F_true;
-            invalid[character_current] = width_utf;
+            invalid[current] = width_utf;
           }
-          else if (f_utf_character_is_unassigned(characters.string[character_current]) == F_true) {
+          else if (f_utf_character_is_unassigned(sequence.string[current]) == F_true) {
 
             // Consider unassigned invalid.
             found_invalid_utf = F_true;
-            invalid[character_current] = width_utf;
+            invalid[current] = width_utf;
           }
         }
 
         flockfile(data->main->output.to.stream);
 
-        if (byte_dump_print_character_fragment(data, characters, invalid, width_utf, 1, &previous, &cell, &offset) == F_true) {
+        if (byte_dump_print_character_fragment(data, sequence, invalid, width_utf, 1, &previous, &cell, &offset) == F_true) {
           character_reset = F_true;
         }
 
         if (width_utf > 1) {
-          if (byte_dump_print_character_fragment(data, characters, invalid, width_utf, 2, &previous, &cell, &offset) == F_true) {
+          if (byte_dump_print_character_fragment(data, sequence, invalid, width_utf, 2, &previous, &cell, &offset) == F_true) {
             character_reset = F_true;
           }
 
           if (width_utf > 2) {
-            if (byte_dump_print_character_fragment(data, characters, invalid, width_utf, 3, &previous, &cell, &offset) == F_true) {
+            if (byte_dump_print_character_fragment(data, sequence, invalid, width_utf, 3, &previous, &cell, &offset) == F_true) {
               character_reset = F_true;
             }
 
             if (width_utf > 3) {
-              if (byte_dump_print_character_fragment(data, characters, invalid, width_utf, 4, &previous, &cell, &offset) == F_true) {
+              if (byte_dump_print_character_fragment(data, sequence, invalid, width_utf, 4, &previous, &cell, &offset) == F_true) {
                 character_reset = F_true;
               }
             }
@@ -190,7 +190,7 @@ extern "C" {
 
     // Print placeholders to fill out the remaining line and then optionally print the text block.
     if (cell.column && cell.column < data->width) {
-      const uint8_t width_missing = width_utf == -1 ? 0 : width_utf - width_count;
+      const uint8_t width_missing = width_utf <= 0 ? 0 : width_utf - width_count;
 
       if (width_missing) {
         const uint8_t column_offset = data->width - cell.column;
@@ -198,24 +198,24 @@ extern "C" {
 
         // Handle incomplete character at the end of the stream.
         found_invalid_utf = F_true;
-        invalid[character_current] = width_utf;
+        invalid[current] = width_utf;
 
-        if (byte_dump_print_character_fragment(data, characters, invalid, width_utf, 1, &previous, &cell, &offset) == F_true) {
+        if (byte_dump_print_character_fragment(data, sequence, invalid, width_utf, 1, &previous, &cell, &offset) == F_true) {
           character_reset = F_true;
         }
 
         if (++width_count < width_missing) {
-          if (byte_dump_print_character_fragment(data, characters, invalid, width_utf, 2, &previous, &cell, &offset) == F_true) {
+          if (byte_dump_print_character_fragment(data, sequence, invalid, width_utf, 2, &previous, &cell, &offset) == F_true) {
             character_reset = F_true;
           }
 
           if (++width_count < width_missing) {
-            if (byte_dump_print_character_fragment(data, characters, invalid, width_utf, 3, &previous, &cell, &offset) == F_true) {
+            if (byte_dump_print_character_fragment(data, sequence, invalid, width_utf, 3, &previous, &cell, &offset) == F_true) {
               character_reset = F_true;
             }
 
             if (++width_count < width_missing) {
-              if (byte_dump_print_character_fragment(data, characters, invalid, width_utf, 4, &previous, &cell, &offset) == F_true) {
+              if (byte_dump_print_character_fragment(data, sequence, invalid, width_utf, 4, &previous, &cell, &offset) == F_true) {
                 character_reset = F_true;
               }
             }
@@ -223,7 +223,7 @@ extern "C" {
         }
 
         if (character_reset) {
-          characters.used = 0;
+          sequence.used = 0;
           memset(&invalid, 0, sizeof(f_char_t) * data->width);
 
           previous.bytes = column_offset;
@@ -299,7 +299,7 @@ extern "C" {
       } // while
 
       if (data->main->parameters.array[byte_dump_parameter_text_e].result == f_console_result_found_e) {
-        byte_dump_print_text(data, characters, invalid, &previous, &offset);
+        byte_dump_print_text(data, sequence, invalid, &previous, &offset);
       }
       else {
         f_print_dynamic_raw(f_string_eol_s, data->main->output.to.stream);
@@ -346,25 +346,25 @@ extern "C" {
 #endif // _di_byte_dump_file_
 
 #ifndef _di_byte_dump_print_character_fragment_
-  bool byte_dump_print_character_fragment(byte_dump_data_t * const data, const f_utf_string_static_t characters, const f_char_t invalid[], const uint8_t width_utf, const f_char_t byte_current, byte_dump_previous_t *previous, byte_dump_cell_t *cell, f_char_t *offset) {
+  bool byte_dump_print_character_fragment(byte_dump_data_t * const data, const f_utf_string_static_t sequence, const f_char_t invalid[], const uint8_t width_utf, const f_char_t byte_current, byte_dump_previous_t *previous, byte_dump_cell_t *cell, f_char_t *offset) {
 
     f_char_t byte = 0;
 
     bool reset = F_false;
 
-    f_array_length_t character_current = characters.used - 1;
+    f_array_length_t current = sequence.used - 1;
 
     if (byte_current == 1) {
-      byte = macro_f_utf_char_t_to_char_1(characters.string[character_current]);
+      byte = macro_f_utf_char_t_to_char_1(sequence.string[current]);
     }
     else if (byte_current == 2) {
-      byte = macro_f_utf_char_t_to_char_2(characters.string[character_current]);
+      byte = macro_f_utf_char_t_to_char_2(sequence.string[current]);
     }
     else if (byte_current == 3) {
-      byte = macro_f_utf_char_t_to_char_3(characters.string[character_current]);
+      byte = macro_f_utf_char_t_to_char_3(sequence.string[current]);
     }
     else if (byte_current == 4) {
-      byte = macro_f_utf_char_t_to_char_4(characters.string[character_current]);
+      byte = macro_f_utf_char_t_to_char_4(sequence.string[current]);
     }
 
     if (!cell->column) {
@@ -435,35 +435,35 @@ extern "C" {
     }
 
     if (cell->column < data->width) {
-      if (data->main->parameters.array[byte_dump_parameter_unicode_e].result == f_console_result_found_e && !invalid[character_current]) {
+      if (data->main->parameters.array[byte_dump_parameter_unicode_e].result == f_console_result_found_e && !invalid[current]) {
         if (byte_current == 1) {
           uint32_t unicode = 0;
 
           if (width_utf < 2) {
 
             // 1 == U+0000 -> U+007F.
-            unicode = macro_f_utf_char_t_to_char_1(characters.string[character_current]) & 0x7f;
+            unicode = macro_f_utf_char_t_to_char_1(sequence.string[current]) & 0x7f;
           }
           else if (width_utf == 2) {
 
             // 2 == U+0080 -> U+07FF.
-            unicode = (macro_f_utf_char_t_to_char_1(characters.string[character_current]) & 0x1f) << 6;
-            unicode |= macro_f_utf_char_t_to_char_2(characters.string[character_current]) & 0x3f;
+            unicode = (macro_f_utf_char_t_to_char_1(sequence.string[current]) & 0x1f) << 6;
+            unicode |= macro_f_utf_char_t_to_char_2(sequence.string[current]) & 0x3f;
           }
           else if (width_utf == 3) {
 
             // 3 == U+0800 -> U+FFFF.
-            unicode = (macro_f_utf_char_t_to_char_1(characters.string[character_current]) & 0xf) << 12;
-            unicode |= (macro_f_utf_char_t_to_char_2(characters.string[character_current]) & 0x3f) << 6;
-            unicode |= macro_f_utf_char_t_to_char_3(characters.string[character_current]) & 0x3f;
+            unicode = (macro_f_utf_char_t_to_char_1(sequence.string[current]) & 0xf) << 12;
+            unicode |= (macro_f_utf_char_t_to_char_2(sequence.string[current]) & 0x3f) << 6;
+            unicode |= macro_f_utf_char_t_to_char_3(sequence.string[current]) & 0x3f;
           }
           else if (width_utf == 4) {
 
             // 4 == U+10000 -> U+10FFFF.
-            unicode = (macro_f_utf_char_t_to_char_1(characters.string[character_current]) & 0x7) << 18;
-            unicode |= (macro_f_utf_char_t_to_char_2(characters.string[character_current]) & 0x3f) << 12;
-            unicode |= (macro_f_utf_char_t_to_char_2(characters.string[character_current]) & 0x3f) << 6;
-            unicode |= macro_f_utf_char_t_to_char_4(characters.string[character_current]) & 0x3f;
+            unicode = (macro_f_utf_char_t_to_char_1(sequence.string[current]) & 0x7) << 18;
+            unicode |= (macro_f_utf_char_t_to_char_2(sequence.string[current]) & 0x3f) << 12;
+            unicode |= (macro_f_utf_char_t_to_char_2(sequence.string[current]) & 0x3f) << 6;
+            unicode |= macro_f_utf_char_t_to_char_4(sequence.string[current]) & 0x3f;
           }
 
           if (width_utf < 4) {
@@ -475,7 +475,7 @@ extern "C" {
         }
         else {
 
-          // Pad the characters that are incomplete fragments of an already printed valid Unicode.
+          // Pad the sequence that are incomplete fragments of an already printed valid Unicode.
           f_print_terminated("         ", data->main->output.to.stream);
         }
       }
@@ -485,7 +485,7 @@ extern "C" {
             f_print_terminated("      ", data->main->output.to.stream);
           }
 
-          if (invalid[character_current]) {
+          if (invalid[current]) {
             fl_print_format(" %[%02_uii%]", data->main->output.to.stream, data->main->context.set.error, (uint8_t) byte, data->main->context.set.error);
           }
           else {
@@ -497,7 +497,7 @@ extern "C" {
             f_print_terminated("   ", data->main->output.to.stream);
           }
 
-          if (invalid[character_current]) {
+          if (invalid[current]) {
             fl_print_format(" %[%03&uii%]", data->main->output.to.stream, data->main->context.set.error, (uint8_t) byte, data->main->context.set.error);
           }
           else {
@@ -509,7 +509,7 @@ extern "C" {
             f_print_terminated("     ", data->main->output.to.stream);
           }
 
-          if (invalid[character_current]) {
+          if (invalid[current]) {
             fl_print_format(" %[%03@uii%]", data->main->output.to.stream, data->main->context.set.error, (uint8_t) byte, data->main->context.set.error);
           }
           else {
@@ -517,7 +517,7 @@ extern "C" {
           }
         }
         else if (data->mode == byte_dump_mode_binary_e) {
-          if (invalid[character_current]) {
+          if (invalid[current]) {
             fl_print_format(" %[%08!uii%]", data->main->output.to.stream, data->main->context.set.error, (uint8_t) byte, data->main->context.set.error);
           }
           else {
@@ -529,7 +529,7 @@ extern "C" {
             f_print_terminated("     ", data->main->output.to.stream);
           }
 
-          if (invalid[character_current]) {
+          if (invalid[current]) {
             fl_print_format(" %[%3uii%]", data->main->output.to.stream, data->main->context.set.error, (uint8_t) byte, data->main->context.set.error);
           }
           else {
@@ -551,7 +551,7 @@ extern "C" {
       reset = F_true;
 
       if (data->main->parameters.array[byte_dump_parameter_text_e].result == f_console_result_found_e) {
-        byte_dump_print_text(data, characters, invalid, previous, offset);
+        byte_dump_print_text(data, sequence, invalid, previous, offset);
       }
       else {
         f_print_dynamic_raw(f_string_eol_s, data->main->output.to.stream);
@@ -566,7 +566,7 @@ extern "C" {
       }
       else {
         previous->bytes = bytes;
-        previous->invalid = invalid[character_current];
+        previous->invalid = invalid[current];
       }
     }
     else {
@@ -607,7 +607,7 @@ extern "C" {
 #endif // _di_byte_dump_print_character_fragment_
 
 #ifndef _di_byte_dump_print_text_
-  void byte_dump_print_text(byte_dump_data_t * const data, const f_utf_string_static_t characters, const f_char_t invalid[], byte_dump_previous_t *previous, f_char_t *offset) {
+  void byte_dump_print_text(byte_dump_data_t * const data, const f_utf_string_static_t sequence, const f_char_t invalid[], byte_dump_previous_t *previous, f_char_t *offset) {
 
     f_char_t c = 0;
     uint8_t at = 0;
@@ -656,7 +656,7 @@ extern "C" {
       }
     }
 
-    // Print placeholders for the remaining fragments of UTF-8 characters printed on previous lines.
+    // Print placeholders for the remaining fragments of UTF-8 sequence printed on previous lines.
     if (at < data->width) {
       uint8_t bytes_overflow = 0;
 
@@ -704,9 +704,9 @@ extern "C" {
       }
     }
 
-    for (uint8_t i = 0; i < characters.used && at < data->width; ++i, ++at) {
+    for (uint8_t i = 0; i < sequence.used && at < data->width; ++i, ++at) {
 
-      c = macro_f_utf_char_t_to_char_1(characters.string[i]);
+      c = macro_f_utf_char_t_to_char_1(sequence.string[i]);
       width_utf = macro_f_utf_byte_width_is(c);
 
       if (invalid[i]) {
@@ -716,7 +716,7 @@ extern "C" {
           f_print_dynamic_raw(f_string_ascii_space_s, data->main->output.to.stream);
         }
       }
-      else if (f_utf_character_is_control(characters.string[i]) == F_true) {
+      else if (f_utf_character_is_control(sequence.string[i]) == F_true) {
         if (data->presentation == byte_dump_presentation_normal_e) {
           fl_print_format("%[%[", data->main->output.to.stream, data->main->context.set.notable, data->main->context.set.warning);
 
@@ -724,13 +724,13 @@ extern "C" {
             byte[0] = c;
 
             if (width_utf > 1) {
-              byte[1] = macro_f_utf_char_t_to_char_2(characters.string[i]);
+              byte[1] = macro_f_utf_char_t_to_char_2(sequence.string[i]);
 
               if (width_utf > 2) {
-                byte[2] = macro_f_utf_char_t_to_char_3(characters.string[i]);
+                byte[2] = macro_f_utf_char_t_to_char_3(sequence.string[i]);
 
                 if (width_utf > 3) {
-                  byte[3] = macro_f_utf_char_t_to_char_4(characters.string[i]);
+                  byte[3] = macro_f_utf_char_t_to_char_4(sequence.string[i]);
                 }
                 else {
                   byte[3] = 0;
@@ -753,7 +753,7 @@ extern "C" {
           fl_print_format("%]%]", data->main->output.to.stream, data->main->context.set.warning, data->main->context.set.notable);
 
           if (data->options & byte_dump_option_wide_d) {
-            if (f_utf_character_is_wide(characters.string[i]) != F_true) {
+            if (f_utf_character_is_wide(sequence.string[i]) != F_true) {
               f_print_dynamic_raw(f_string_ascii_space_s, data->main->output.to.stream);
             }
           }
@@ -795,7 +795,7 @@ extern "C" {
           }
         }
       }
-      else if (f_utf_character_is_whitespace(characters.string[i]) == F_true) {
+      else if (f_utf_character_is_whitespace(sequence.string[i]) == F_true) {
         if (data->main->parameters.array[byte_dump_parameter_classic_e].result == f_console_result_found_e) {
           f_print_dynamic_raw(f_string_ascii_period_s, data->main->output.to.stream);
         }
@@ -807,7 +807,7 @@ extern "C" {
           f_print_dynamic_raw(f_string_ascii_space_s, data->main->output.to.stream);
         }
       }
-      else if (f_utf_character_is_zero_width(characters.string[i]) == F_true) {
+      else if (f_utf_character_is_zero_width(sequence.string[i]) == F_true) {
         if (data->presentation == byte_dump_presentation_classic_e) {
           f_print_dynamic_raw(f_string_ascii_period_s, data->main->output.to.stream);
         }
@@ -839,18 +839,18 @@ extern "C" {
           print = F_true;
         }
         else if (width_utf == 3) {
-          if (characters.string[i] >= 0xefbfb000 && characters.string[i] <= 0xefbfbc00) {
+          if (sequence.string[i] >= 0xefbfb000 && sequence.string[i] <= 0xefbfbc00) {
 
             // Use space to represent Specials codes.
             // 0xefbfbd00 is excluded because it is printable (and is the "Replacement Character" code).
             f_print_dynamic_raw(f_string_space_s, data->main->output.to.stream);
           }
-          else if (characters.string[i] >= 0xe290a700 && characters.string[i] <= 0xe290bf00) {
+          else if (sequence.string[i] >= 0xe290a700 && sequence.string[i] <= 0xe290bf00) {
 
             // Use space to represent Control Pictues codes that are not currently defined but are reserved.
             f_print_dynamic_raw(f_string_space_s, data->main->output.to.stream);
           }
-          else if (characters.string[i] >= 0xee808000 && characters.string[i] <= 0xefa3bf00) {
+          else if (sequence.string[i] >= 0xee808000 && sequence.string[i] <= 0xefa3bf00) {
 
             // Use space to represent Private Use Area codes.
             f_print_dynamic_raw(f_string_space_s, data->main->output.to.stream);
@@ -859,17 +859,17 @@ extern "C" {
             print = F_true;
           }
         }
-        else if (characters.string[i] >= 0xf09c80a0 && characters.string[i] <= 0xf09c80bd) {
+        else if (sequence.string[i] >= 0xf09c80a0 && sequence.string[i] <= 0xf09c80bd) {
 
           // Use space to represent Variation Selectors Supplement codes.
           f_print_dynamic_raw(f_string_space_s, data->main->output.to.stream);
         }
-        else if (characters.string[i] >= 0xf3b08080 && characters.string[i] <= 0xf3bfbfbf) {
+        else if (sequence.string[i] >= 0xf3b08080 && sequence.string[i] <= 0xf3bfbfbf) {
 
           // Use space to represent Supplemental Private Use Area-A codes.
           f_print_dynamic_raw(f_string_space_s, data->main->output.to.stream);
         }
-        else if (characters.string[i] >= 0xf4808080 && characters.string[i] <= 0xf48fbfbf) {
+        else if (sequence.string[i] >= 0xf4808080 && sequence.string[i] <= 0xf48fbfbf) {
 
           // Use space to represent Supplemental Private Use Area-B codes.
           f_print_dynamic_raw(f_string_space_s, data->main->output.to.stream);
@@ -882,23 +882,23 @@ extern "C" {
           f_print_character(c, data->main->output.to.stream);
 
           if (width_utf > 1) {
-            f_print_character(macro_f_utf_char_t_to_char_2(characters.string[i]), data->main->output.to.stream);
+            f_print_character(macro_f_utf_char_t_to_char_2(sequence.string[i]), data->main->output.to.stream);
 
             if (width_utf > 2) {
-              f_print_character(macro_f_utf_char_t_to_char_3(characters.string[i]), data->main->output.to.stream);
+              f_print_character(macro_f_utf_char_t_to_char_3(sequence.string[i]), data->main->output.to.stream);
 
               if (width_utf > 3) {
-                f_print_character(macro_f_utf_char_t_to_char_4(characters.string[i]), data->main->output.to.stream);
+                f_print_character(macro_f_utf_char_t_to_char_4(sequence.string[i]), data->main->output.to.stream);
               }
             }
           }
 
-          if (f_utf_character_is_combining(characters.string[i]) == F_true) {
+          if (f_utf_character_is_combining(sequence.string[i]) == F_true) {
             f_print_dynamic_raw(f_string_space_s, data->main->output.to.stream);
           }
 
           if (data->options & byte_dump_option_wide_d) {
-            if (width_utf == 1 || f_utf_character_is_wide(characters.string[i]) != F_true) {
+            if (width_utf == 1 || f_utf_character_is_wide(sequence.string[i]) != F_true) {
               f_print_dynamic_raw(f_string_ascii_space_s, data->main->output.to.stream);
             }
           }
@@ -917,7 +917,7 @@ extern "C" {
         }
       }
 
-      // Print placeholders when using UTF-8 characters to simulate the spaces bytes used for the character.
+      // Print placeholders when using UTF-8 sequence to simulate the spaces bytes used for the character.
       if (width_utf > 1 && at + 1 < data->width) {
         if (data->main->parameters.array[byte_dump_parameter_placeholder_e].result == f_console_result_found_e) {
           if (invalid[i]) {
