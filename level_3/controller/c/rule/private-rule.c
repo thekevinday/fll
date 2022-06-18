@@ -5420,25 +5420,6 @@ extern "C" {
         continue;
       }
 
-      if (fl_string_dynamic_partial_compare_string(cache->buffer_item.string, cache->buffer_path, cache->buffer_item.used, cache->content_actions.array[i].array[1]) == F_equal_to_not) {
-
-        if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
-          controller_lock_print(global.main->error.to, global.thread);
-
-          fl_print_format("%r%[%QThe rule item action third parameter '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
-          fl_print_format("%[%/Q%]", global.main->error.to.stream, global.main->error.notable, cache->buffer_item, cache->content_actions.array[i].array[2], global.main->error.notable);
-          fl_print_format("%[' must be a base path name, such as %un '.%]", global.main->error.to.stream, global.main->error.context, cache->buffer_path.used, global.main->error.context);
-          fl_print_format("%[%Q%]", global.main->error.to.stream, cache->buffer_path, global.main->error.notable);
-          fl_print_format("%['.%]%r", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s);
-
-          controller_unlock_print_flush(global.main->error.to, global.thread);
-        }
-
-        setting_values->array[setting_values->used].used = 0;
-
-        continue;
-      }
-
       rule->ons.array[j].action = action;
 
       ++setting_values->used;
