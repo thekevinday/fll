@@ -96,7 +96,11 @@ extern "C" {
     } // for
 
     if (data.base == 2) {
-      work = 0x1 << (digits - 1);
+      #ifdef _is_F_endian_big
+        work = 0x1 >> (digits - 1);
+      #else
+        work = 0x1 << (digits - 1);
+      #endif // _is_F_endian_big
 
       while (digits--) {
 
@@ -347,7 +351,11 @@ extern "C" {
     } // for
 
     if (data.base == 2) {
-      f_number_unsigned_t work = 0x1 << (digits - 1);
+      #ifdef _is_F_endian_big
+        f_number_unsigned_t work = 0x1 >> (digits - 1);
+      #else
+        f_number_unsigned_t work = 0x1 << (digits - 1);
+      #endif // _is_F_endian_big
 
       while (digits--) {
 
