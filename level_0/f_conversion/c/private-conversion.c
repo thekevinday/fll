@@ -88,7 +88,7 @@ extern "C" {
   f_status_t private_f_conversion_digit_to_file_number(const f_conversion_data_t data, f_number_unsigned_t number, int digits, FILE * const stream) {
 
     f_number_unsigned_t current = 0;
-    int power = 1;
+    f_number_unsigned_t power = 1;
     f_number_unsigned_t work = 0;
 
     for (register uint8_t i = 1; i < digits; ++i) {
