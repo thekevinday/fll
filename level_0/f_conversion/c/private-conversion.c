@@ -91,7 +91,7 @@ extern "C" {
     f_number_unsigned_t power = 1;
     f_number_unsigned_t work = 0;
 
-    for (register uint8_t i = 1; i < digits; ++i) {
+    for (register int i = 1; i < digits; ++i) {
       power *= data.base;
     } // for
 
@@ -346,7 +346,7 @@ extern "C" {
 
     f_number_unsigned_t power = 1;
 
-    for (register uint8_t i = 1; i < digits; ++i) {
+    for (register int i = 1; i < digits; ++i) {
       power *= data.base;
     } // for
 
