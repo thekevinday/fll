@@ -20,7 +20,7 @@ void test__f_utf_is_alphabetic__works(void **state) {
     do {
       bytes = data__bytesequence_get_line(file, &sequence);
 
-      if (bytes) {
+      if (bytes > 0) {
         const uint8_t width = macro_f_utf_char_t_width(sequence);
         char buffer[5] = { 0, 0, 0, 0, 0 };
 

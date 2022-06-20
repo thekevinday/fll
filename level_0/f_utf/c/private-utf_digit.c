@@ -6,7 +6,7 @@
 extern "C" {
 #endif
 
-#if !defined(_di_f_utf_character_is_digit_) || !defined(_di_f_utf_is_digit_)
+#if !defined(_di_f_utf_character_is_alphabetic_decimal_) || !defined(_di_f_utf_is_alphabetic_decimal_) || !defined(_di_f_utf_character_is_digit_) || !defined(_di_f_utf_is_digit_)
   f_status_t private_f_utf_character_is_digit(const f_utf_char_t sequence) {
 
     if (macro_f_utf_char_t_width_is(sequence) == 2) {
@@ -160,6 +160,13 @@ extern "C" {
           return F_true;
         }
       }
+      else if (macro_f_utf_char_t_to_char_1(sequence) == 0xe2) {
+
+        // Number Forms: U+2160 to U+2188 (Roman Numerals).
+        if (sequence >= 0xe285a000 && sequence <= 0xe2868800) {
+          return F_true;
+        }
+      }
       else if (macro_f_utf_char_t_to_char_1(sequence) == 0xea) {
 
         // Vai: U+A620 to U+A629.
@@ -306,6 +313,11 @@ extern "C" {
           return F_true;
         }
 
+        // Tangsa: U+16AC0 to U+16AC9.
+        if (sequence >= 0xf096ab80 && sequence <= 0xf096ab89) {
+          return F_true;
+        }
+
         // Pahawh Hmong: U+16B50 to U+16B59.
         if (sequence >= 0xf096ad90 && sequence <= 0xf096ad99) {
           return F_true;
@@ -366,7 +378,7 @@ extern "C" {
 
     return F_false;
   }
-#endif // !defined(_di_f_utf_character_is_digit_) || !defined(_di_f_utf_is_digit_)
+#endif // !defined(_di_f_utf_character_is_alphabetic_decimal_) || !defined(_di_f_utf_is_alphabetic_decimal_) || !defined(_di_f_utf_character_is_digit_) || !defined(_di_f_utf_is_digit_)
 
 #ifdef __cplusplus
 } // extern "C"

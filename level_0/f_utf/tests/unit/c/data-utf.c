@@ -19,6 +19,11 @@ FILE *data__bytesequence_file_open__control(void) {
   return fopen("./data/tests/bytesequences/control-all.txt", "r");
 }
 
+FILE *data__bytesequence_file_open__decimal(void) {
+
+  return fopen("./data/tests/bytesequences/decimal-all.txt", "r");
+}
+
 FILE *data__bytesequence_file_open__digit(void) {
 
   return fopen("./data/tests/bytesequences/digit-all.txt", "r");
@@ -128,6 +133,29 @@ ssize_t data__bytesequence_get_line(FILE * const file, f_utf_char_t * const char
   #else
     *character = (f_utf_char_t) number;
   #endif // _is_F_endian_little
+
+  return bytes;
+}
+
+FILE *data__value_file_open__decimal(void) {
+
+  return fopen("./data/tests/values/decimal-all.txt", "r");
+}
+
+ssize_t data__value_get_line_long_long(FILE * const file, uint32_t * const value) {
+
+  size_t length = 0;
+  char *line = 0;
+
+  const ssize_t bytes = getline(&line, &length, file);
+
+  if (bytes > 0) {
+    *value = (uint32_t) atol(line);
+  }
+
+  if (line) {
+    free(line);
+  }
 
   return bytes;
 }

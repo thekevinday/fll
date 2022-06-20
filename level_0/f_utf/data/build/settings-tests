@@ -29,6 +29,7 @@ build_sources_program test-utf-append.c test-utf-append_assure.c test-utf-append
 build_sources_program test-utf-character_is_alphabetic.c test-utf-is_alphabetic.c
 build_sources_program test-utf-character_is_combining.c test-utf-is_combining.c
 build_sources_program test-utf-character_is_control.c test-utf-is_control.c
+build_sources_program test-utf-character_is_decimal.c test-utf-is_decimal.c
 build_sources_program test-utf-character_is_digit.c test-utf-is_digit.c
 build_sources_program test-utf-character_is_emoji.c test-utf-is_emoji.c
 build_sources_program test-utf-character_is_numeric.c test-utf-is_numeric.c

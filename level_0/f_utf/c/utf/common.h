@@ -146,32 +146,32 @@ extern "C" {
 #endif // _di_f_utf_substitute_
 
 /**
- * Provide a basic UTF-8 character as a single 4-byte variable.
+ * Provide a basic UTF-8 byte sequence as a single 4-byte variable.
  *
- * This is intended to be used when a single variable is desired to represent a 1-byte, 2-byte, 3-byte, or even 4-byte character.
+ * This is intended to be used when a single variable is desired to represent a 1-byte, 2-byte, 3-byte, or even 4-byte sequence.
  *
- * This "character" type is stored as a big-endian 4-byte integer (32-bits).
- * A helper function, f_utf_is_big_endian(), is provided to detect system endianness so that character arrays (uint8_t []) can be correctly processed.
+ * This byte sequence type is stored as a big-endian 4-byte integer (32-bits).
+ * A helper function, f_utf_is_big_endian(), is provided to detect system endianness so that byte sequence arrays (uint8_t []) can be correctly processed.
  *
  * The byte structure is intended to be read left to right in memory regardless of system endianness.
- * This is done so that the first character (the left most) can be read naturally as a string, such as string[0] = first character.
+ * This is done so that the first byte (the left most) can be read naturally as a string, such as string[0] = first byte.
  *
  * On little-endian systems, the hex-string 0xff is represented as internally as 0x000000ff.
  * This needs to be converted into the internal representation of 0xff000000 to be properly represented as a "f_utf_char_t".
  *
- * The macro_f_utf_char_t_mask_byte_* are used to get the entire character set fo a given width.
+ * The macro_f_utf_char_t_mask_byte_* are used to get the entire byte sequence for a given width.
  *
- * The macro_f_utf_char_t_mask_char_* are used to get a specific UTF-8 block as a single character range.
+ * The macro_f_utf_char_t_mask_char_* are used to get a specific UTF-8 block as a single byte sequence range.
  *
  * The macro_f_utf_char_t_to_char_* are used to convert a f_utf_char_t into a uint8_t, for a given 8-bit block.
  *
  * The macro_f_utf_char_t_from_char_* are used to convert a uint8_t into part of a f_utf_char_t, for a given 8-bit block.
  *
- * The macro_f_utf_char_t_width is used to determine the width of the UTF-8 character based on macro_f_utf_byte_width.
- * The macro_f_utf_char_t_width_is is used to determine the width of the UTF-8 character based on macro_f_utf_byte_width_is.
+ * The macro_f_utf_char_t_width is used to determine the width of the UTF-8 byte sequence based on macro_f_utf_byte_width.
+ * The macro_f_utf_char_t_width_is is used to determine the width of the UTF-8 byte sequence based on macro_f_utf_byte_width_is.
  *
- * The macro_f_utf_char_t_width macro determines a width of the UTF-8 character based on macro_f_utf_byte_width.
- * The macro_f_utf_char_t_width_is is identical to macro_f_utf_char_t_width, except it returns 0 when character is ASCII.
+ * The macro_f_utf_char_t_width macro determines a width of the UTF-8 byte sequence based on macro_f_utf_byte_width.
+ * The macro_f_utf_char_t_width_is is identical to macro_f_utf_char_t_width, except it returns 0 when byte sequence is ASCII.
  *
  * The macros that end in "_be" or "_le" represent "big endian" and "little endian".
  * The default macros without the "_be" should be in "big endian" because the strings are always stored as if they were "big endian" without regard to the host byte order.
@@ -196,15 +196,15 @@ extern "C" {
   #define F_utf_char_mask_char_3_be_d 0x0000ff00 // 0000 0000, 0000 0000, 1111 1111, 0000 0000
   #define F_utf_char_mask_char_4_be_d 0x000000ff // 0000 0000, 0000 0000, 0000 0000, 1111 1111
 
-  #define macro_f_utf_char_t_to_char_1_be(character) (((character) & F_utf_char_mask_char_1_be_d) >> 24) // Grab first byte.
-  #define macro_f_utf_char_t_to_char_2_be(character) (((character) & F_utf_char_mask_char_2_be_d) >> 16) // Grab second byte.
-  #define macro_f_utf_char_t_to_char_3_be(character) (((character) & F_utf_char_mask_char_3_be_d) >> 8)  // Grab third byte.
-  #define macro_f_utf_char_t_to_char_4_be(character) ((character) & F_utf_char_mask_char_4_be_d)         // Grab fourth byte.
+  #define macro_f_utf_char_t_to_char_1_be(sequence) (((sequence) & F_utf_char_mask_char_1_be_d) >> 24) // Grab first byte.
+  #define macro_f_utf_char_t_to_char_2_be(sequence) (((sequence) & F_utf_char_mask_char_2_be_d) >> 16) // Grab second byte.
+  #define macro_f_utf_char_t_to_char_3_be(sequence) (((sequence) & F_utf_char_mask_char_3_be_d) >> 8)  // Grab third byte.
+  #define macro_f_utf_char_t_to_char_4_be(sequence) ((sequence) & F_utf_char_mask_char_4_be_d)         // Grab fourth byte.
 
-  #define macro_f_utf_char_t_from_char_1_be(character) (((character) << 24) & F_utf_char_mask_char_1_be_d) // Shift to first byte.
-  #define macro_f_utf_char_t_from_char_2_be(character) (((character) << 16) & F_utf_char_mask_char_2_be_d) // Shift to second byte.
-  #define macro_f_utf_char_t_from_char_3_be(character) (((character) << 8) & F_utf_char_mask_char_3_be_d)  // Shift to third byte.
-  #define macro_f_utf_char_t_from_char_4_be(character) ((character) & F_utf_char_mask_char_4_be_d)         // Shift to fourth byte.
+  #define macro_f_utf_char_t_from_char_1_be(sequence) (((sequence) << 24) & F_utf_char_mask_char_1_be_d) // Shift to first byte.
+  #define macro_f_utf_char_t_from_char_2_be(sequence) (((sequence) << 16) & F_utf_char_mask_char_2_be_d) // Shift to second byte.
+  #define macro_f_utf_char_t_from_char_3_be(sequence) (((sequence) << 8) & F_utf_char_mask_char_3_be_d)  // Shift to third byte.
+  #define macro_f_utf_char_t_from_char_4_be(sequence) ((sequence) & F_utf_char_mask_char_4_be_d)         // Shift to fourth byte.
 
   // Little Endian.
   #define F_utf_char_mask_byte_1_le_d 0x000000ff // 0000 0000, 0000 0000, 0000 0000, 1111 1111
@@ -217,15 +217,15 @@ extern "C" {
   #define F_utf_char_mask_char_3_le_d 0x00ff0000 // 0000 0000, 1111 1111, 0000 0000, 0000 0000
   #define F_utf_char_mask_char_4_le_d 0xff000000 // 1111 1111, 0000 0000, 0000 0000, 0000 0000
 
-  #define macro_f_utf_char_t_to_char_1_le(character) ((character) & F_utf_char_mask_char_1_le_d)         // Grab first byte.
-  #define macro_f_utf_char_t_to_char_2_le(character) (((character) & F_utf_char_mask_char_2_le_d) >> 8)  // Grab second byte.
-  #define macro_f_utf_char_t_to_char_3_le(character) (((character) & F_utf_char_mask_char_3_le_d) >> 16) // Grab third byte.
-  #define macro_f_utf_char_t_to_char_4_le(character) (((character) & F_utf_char_mask_char_4_le_d) >> 24) // Grab fourth byte.
+  #define macro_f_utf_char_t_to_char_1_le(sequence) ((sequence) & F_utf_char_mask_char_1_le_d)         // Grab first byte.
+  #define macro_f_utf_char_t_to_char_2_le(sequence) (((sequence) & F_utf_char_mask_char_2_le_d) >> 8)  // Grab second byte.
+  #define macro_f_utf_char_t_to_char_3_le(sequence) (((sequence) & F_utf_char_mask_char_3_le_d) >> 16) // Grab third byte.
+  #define macro_f_utf_char_t_to_char_4_le(sequence) (((sequence) & F_utf_char_mask_char_4_le_d) >> 24) // Grab fourth byte.
 
-  #define macro_f_utf_char_t_from_char_1_le(character) ((character) & F_utf_char_mask_char_1_le_d)         // Shift to first byte.
-  #define macro_f_utf_char_t_from_char_2_le(character) (((character) << 8) & F_utf_char_mask_char_2_le_d)  // Shift to second byte.
-  #define macro_f_utf_char_t_from_char_3_le(character) (((character) << 16) & F_utf_char_mask_char_3_le_d) // Shift to third byte.
-  #define macro_f_utf_char_t_from_char_4_le(character) (((character) << 24) & F_utf_char_mask_char_4_le_d) // Shift to fourth byte.
+  #define macro_f_utf_char_t_from_char_1_le(sequence) ((sequence) & F_utf_char_mask_char_1_le_d)         // Shift to first byte.
+  #define macro_f_utf_char_t_from_char_2_le(sequence) (((sequence) << 8) & F_utf_char_mask_char_2_le_d)  // Shift to second byte.
+  #define macro_f_utf_char_t_from_char_3_le(sequence) (((sequence) << 16) & F_utf_char_mask_char_3_le_d) // Shift to third byte.
+  #define macro_f_utf_char_t_from_char_4_le(sequence) (((sequence) << 24) & F_utf_char_mask_char_4_le_d) // Shift to fourth byte.
 
   #define F_utf_char_mask_byte_1_d F_utf_char_mask_byte_1_be_d
   #define F_utf_char_mask_byte_2_d F_utf_char_mask_byte_2_be_d
@@ -237,18 +237,18 @@ extern "C" {
   #define F_utf_char_mask_char_3_d F_utf_char_mask_char_3_be_d
   #define F_utf_char_mask_char_4_d F_utf_char_mask_char_4_be_d
 
-  #define macro_f_utf_char_t_to_char_1(character) macro_f_utf_char_t_to_char_1_be(character)
-  #define macro_f_utf_char_t_to_char_2(character) macro_f_utf_char_t_to_char_2_be(character)
-  #define macro_f_utf_char_t_to_char_3(character) macro_f_utf_char_t_to_char_3_be(character)
-  #define macro_f_utf_char_t_to_char_4(character) macro_f_utf_char_t_to_char_4_be(character)
+  #define macro_f_utf_char_t_to_char_1(sequence) macro_f_utf_char_t_to_char_1_be(sequence)
+  #define macro_f_utf_char_t_to_char_2(sequence) macro_f_utf_char_t_to_char_2_be(sequence)
+  #define macro_f_utf_char_t_to_char_3(sequence) macro_f_utf_char_t_to_char_3_be(sequence)
+  #define macro_f_utf_char_t_to_char_4(sequence) macro_f_utf_char_t_to_char_4_be(sequence)
 
-  #define macro_f_utf_char_t_from_char_1(character) macro_f_utf_char_t_from_char_1_be(character)
-  #define macro_f_utf_char_t_from_char_2(character) macro_f_utf_char_t_from_char_2_be(character)
-  #define macro_f_utf_char_t_from_char_3(character) macro_f_utf_char_t_from_char_3_be(character)
-  #define macro_f_utf_char_t_from_char_4(character) macro_f_utf_char_t_from_char_4_be(character)
+  #define macro_f_utf_char_t_from_char_1(sequence) macro_f_utf_char_t_from_char_1_be(sequence)
+  #define macro_f_utf_char_t_from_char_2(sequence) macro_f_utf_char_t_from_char_2_be(sequence)
+  #define macro_f_utf_char_t_from_char_3(sequence) macro_f_utf_char_t_from_char_3_be(sequence)
+  #define macro_f_utf_char_t_from_char_4(sequence) macro_f_utf_char_t_from_char_4_be(sequence)
 
-  #define macro_f_utf_char_t_width(character)    (macro_f_utf_byte_width(macro_f_utf_char_t_to_char_1_be(character)))
-  #define macro_f_utf_char_t_width_is(character) (macro_f_utf_byte_width_is(macro_f_utf_char_t_to_char_1_be(character)))
+  #define macro_f_utf_char_t_width(sequence)    (macro_f_utf_byte_width(macro_f_utf_char_t_to_char_1_be(sequence)))
+  #define macro_f_utf_char_t_width_is(sequence) (macro_f_utf_byte_width_is(macro_f_utf_char_t_to_char_1_be(sequence)))
 #endif // _di_f_utf_char_t_
 
 /**
@@ -300,16 +300,16 @@ extern "C" {
 #endif // _di_f_utf_string_t_
 
 /**
- * Define unicode special character widths.
+ * Define unicode special byte sequence widths.
  *
  * F_utf_width_*:
  *   - none:      Designate this is not a width value or has no width (aka: NULL).
  *   - ambiguous: Characters appear in East Asian DBCS and in SBCS.
- *   - full:      Wide character that has a equivilent to a narrow character.
- *   - half:      Narrow character that has a equivilent to a wide character.
- *   - narrow:    Narrow character, without a wide equivalent.
+ *   - full:      Wide byte sequence that has a equivilent to a narrow byte sequence.
+ *   - half:      Narrow byte sequence that has a equivilent to a wide byte sequence.
+ *   - narrow:    Narrow byte sequence, without a wide equivalent.
  *   - nuetral:   Characters that do not appear in East Asian DBCS codes.
- *   - wide:      Wide character, without a narrow equivalent.
+ *   - wide:      Wide byte sequence, without a narrow equivalent.
  */
 #ifndef _di_f_utf_widths_t_
   enum {

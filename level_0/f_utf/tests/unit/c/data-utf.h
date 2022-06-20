@@ -68,6 +68,21 @@ extern FILE *data__bytesequence_file_open__combining(void);
 extern FILE *data__bytesequence_file_open__control(void);
 
 /**
+ * Open the "decimal" bytesequence file.
+ *
+ * This assumes the following:
+ * - The file path is relative to the current working directory (tests are run from project root).
+ * - The file path is "data/tests/bytesequences/decimal-all.txt".
+ *
+ * @return
+ *   Non-zero on success.
+ *   0 on failure.
+ *
+ * @see fopen()
+ */
+extern FILE *data__bytesequence_file_open__decimal(void);
+
+/**
  * Open the "digit" bytesequence file.
  *
  * This assumes the following:
@@ -286,7 +301,7 @@ extern FILE *data__bytesequence_file_open__zero_width(void);
  *
  * This should handle converting the number between big and little endian as needed.
  *
- * The input file is expected to be in base-10 so that existing standarrd functions like atoll() can be easily used.
+ * The input file is expected to be in base-10 so that existing standard functions like atoll() can be easily used.
  *
  * @param file
  *   The file stream.
@@ -300,9 +315,46 @@ extern FILE *data__bytesequence_file_open__zero_width(void);
  *
  * @see atoll()
  * @see getline()
- * @see htonl()
  */
 extern ssize_t data__bytesequence_get_line(FILE * const file, f_utf_char_t * const character);
+
+/**
+ * Open the "decimal_number" values file.
+ *
+ * This assumes the following:
+ * - The file path is relative to the current working directory (tests are run from project root).
+ * - The file path is "data/tests/values/decimal_number-all.txt".
+ *
+ * @return
+ *   Non-zero on success.
+ *   0 on failure.
+ *
+ * @see fopen()
+ */
+extern FILE *data__value_file_open__decimal(void);
+
+/**
+ * Simple line reader that converts the line into a long long.
+ *
+ * This assumes the following:
+ * - The line only contains base-10 digits as ASCII characters.
+ *
+ * The input file is expected to be in base-10 so that existing standard functions like atoll() can be easily used.
+ *
+ * @param file
+ *   The file stream.
+ * @param value
+ *   The number read from the file at the current line in the stream.
+ *
+ * @return
+ *   positive number on success where number represents bytes read.
+ *   0 on success and end of file is reached.
+ *   -1 on failure.
+ *
+ * @see atol()
+ * @see getline()
+ */
+extern ssize_t data__value_get_line_long_long(FILE * const file, uint32_t * const value);
 
 #ifdef __cplusplus
 } // extern "C"
