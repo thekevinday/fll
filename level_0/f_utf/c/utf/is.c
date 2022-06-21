@@ -97,6 +97,37 @@ extern "C" {
   }
 #endif // _di_f_utf_is_alphabetic_decimal_
 
+#ifndef _di_f_utf_is_alphabetic_digit_
+  f_status_t f_utf_is_alphabetic_digit(const f_string_t sequence, const f_array_length_t width_max) {
+    #ifndef _di_level_0_parameter_checking_
+      if (width_max < 1) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (macro_f_utf_byte_width_is(*sequence)) {
+      if (macro_f_utf_byte_width_is(*sequence) > width_max) {
+        return F_status_set_error(F_complete_not_utf);
+      }
+
+      if (macro_f_utf_byte_width_is(*sequence) == 1) {
+        return F_status_set_error(F_utf_fragment);
+      }
+
+      f_utf_char_t utf = 0;
+
+      {
+        const f_status_t status = private_f_utf_char_to_character(sequence, width_max, &utf);
+        if (F_status_is_error(status)) return status;
+      }
+
+      return private_f_utf_character_is_alphabetic_digit(utf);
+    }
+
+    if (isalnum(*sequence)) return F_true;
+
+    return F_false;
+  }
+#endif // _di_f_utf_is_alphabetic_digit_
+
 #ifndef _di_f_utf_is_alphabetic_numeric_
   f_status_t f_utf_is_alphabetic_numeric(const f_string_t sequence, const f_array_length_t width_max) {
     #ifndef _di_level_0_parameter_checking_

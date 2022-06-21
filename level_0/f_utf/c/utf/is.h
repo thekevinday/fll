@@ -102,7 +102,8 @@ extern "C" {
  *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
  *   F_utf_not (with error bit) if Unicode is an invalid Unicode character.
  *
- * @see isalnum()
+ * @see isalpha()
+ * @see isdigit()
  */
 #ifndef _di_f_utf_is_alphabetic_decimal_
   extern f_status_t f_utf_is_alphabetic_decimal(const f_string_t sequence, const f_array_length_t width_max, uint32_t * const value);
@@ -151,8 +152,7 @@ extern "C" {
  *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
  *   F_utf_not (with error bit) if Unicode is an invalid Unicode character.
  *
- * @see isalpha()
- * @see isdigit()
+ * @see isalnum()
  */
 #ifndef _di_f_utf_is_alphabetic_numeric_
   extern f_status_t f_utf_is_alphabetic_numeric(const f_string_t sequence, const f_array_length_t width_max);
