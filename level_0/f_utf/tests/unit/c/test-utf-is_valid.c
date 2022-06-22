@@ -101,7 +101,7 @@ void test__f_utf_is_valid__works(void **state) {
     if ((first & 0b11100000) == 0b11000000) {
 
       // Only first byte ranges 0xc2 or greater are valid.
-      if (second < 0xc2) {
+      if (first < 0xc2) {
         assert_int_equal(status, F_false);
 
         continue;
