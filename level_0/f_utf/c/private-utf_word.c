@@ -10,7 +10,7 @@ extern "C" {
 #if !defined(_di_f_utf_character_is_word_) || !defined(_di_f_utf_is_word_)
   f_status_t private_f_utf_character_is_word(const f_utf_char_t sequence, const bool strict) {
 
-    if (private_f_utf_character_is_alphabetic_decimal(sequence, 0)) {
+    if (private_f_utf_character_is_alphabetic_digit(sequence, 0)) {
       return F_true;
     }
 

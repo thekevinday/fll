@@ -17,7 +17,7 @@ extern "C" {
     }
 
     // Numbers are not valid status code strings.
-    if ((status = f_conversion_character_is_decimal(name.string[0])) == F_true) {
+    if ((status = f_conversion_character_is_digit(name.string[0])) == F_true) {
       return F_status_set_error(F_data);
     }
 

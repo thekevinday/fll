@@ -26,10 +26,13 @@ extern "C" {
  *
  * @param sequence
  *   The byte sequence to validate as a character.
+ * @param value
+ *   (optional) The integer representation of the sequence if the sequence represents a decimal of any base type.
+ *   Set to NULL to not use.
  *
  * @return
- *   F_true if a UTF-8 digit character.
- *   F_false if not a UTF-8 digit character.
+ *   F_true if a UTF-8 decimal character.
+ *   F_false if not a UTF-8 decimal character.
  *
  *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
  *   F_utf_not (with error bit) if unicode is an invalid Unicode character.
@@ -38,7 +41,31 @@ extern "C" {
  * @see f_utf_is_digit()
  */
 #if !defined(_di_f_utf_character_is_digit_) || !defined(_di_f_utf_is_digit_)
-  extern f_status_t private_f_utf_character_is_digit(const f_utf_char_t sequence) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_utf_character_is_digit(const f_utf_char_t sequence, uint64_t * const value) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_utf_character_is_digit_) || !defined(_di_f_utf_is_digit_)
+
+/**
+ * Helper function for handling ascii-only tests.
+ *
+ * The width is always assumed to be 1.
+ *
+ * @param character
+ *   The ASCII character to validate.
+ * @param value
+ *   (optional) The integer representation of the sequence if the sequence represents a decimal of any base type.
+ *   Set to NULL to not use.
+ *
+ * @return
+ *   F_true if a UTF-8 decimal character.
+ *   F_false if not a UTF-8 decimal character.
+ *
+ * @see isdigit()
+ *
+ * @see f_utf_character_is_digit()
+ * @see f_utf_is_digit()
+ */
+#if !defined(_di_f_utf_character_is_digit_) || !defined(_di_f_utf_is_digit_)
+  extern f_status_t private_f_utf_character_is_digit_for_ascii(const f_char_t character, uint64_t * const value) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_utf_character_is_digit_) || !defined(_di_f_utf_is_digit_)
 
 #ifdef __cplusplus

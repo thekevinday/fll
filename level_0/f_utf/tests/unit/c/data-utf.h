@@ -68,21 +68,6 @@ extern FILE *data__bytesequence_file_open__combining(void);
 extern FILE *data__bytesequence_file_open__control(void);
 
 /**
- * Open the "decimal" bytesequence file.
- *
- * This assumes the following:
- * - The file path is relative to the current working directory (tests are run from project root).
- * - The file path is "data/tests/bytesequences/decimal-all.txt".
- *
- * @return
- *   Non-zero on success.
- *   0 on failure.
- *
- * @see fopen()
- */
-extern FILE *data__bytesequence_file_open__decimal(void);
-
-/**
  * Open the "digit" bytesequence file.
  *
  * This assumes the following:
@@ -323,7 +308,7 @@ extern ssize_t data__bytesequence_get_line(FILE * const file, f_utf_char_t * con
  *
  * This assumes the following:
  * - The file path is relative to the current working directory (tests are run from project root).
- * - The file path is "data/tests/values/decimal_number-all.txt".
+ * - The file path is "data/tests/values/digit-all.txt".
  *
  * @return
  *   Non-zero on success.
@@ -331,7 +316,7 @@ extern ssize_t data__bytesequence_get_line(FILE * const file, f_utf_char_t * con
  *
  * @see fopen()
  */
-extern FILE *data__value_file_open__decimal(void);
+extern FILE *data__value_file_open__digit(void);
 
 /**
  * Simple line reader that converts the line into a long long.
@@ -351,10 +336,10 @@ extern FILE *data__value_file_open__decimal(void);
  *   0 on success and end of file is reached.
  *   -1 on failure.
  *
- * @see atol()
+ * @see atoll()
  * @see getline()
  */
-extern ssize_t data__value_get_line_long_long(FILE * const file, uint32_t * const value);
+extern ssize_t data__value_get_line_long_long(FILE * const file, uint64_t * const value);
 
 #ifdef __cplusplus
 } // extern "C"

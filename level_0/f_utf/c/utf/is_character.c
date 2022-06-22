@@ -3,7 +3,6 @@
 #include "../private-utf_alphabetic.h"
 #include "../private-utf_combining.h"
 #include "../private-utf_control.h"
-#include "../private-utf_decimal.h"
 #include "../private-utf_digit.h"
 #include "../private-utf_emoji.h"
 #include "../private-utf_numeric.h"
@@ -58,64 +57,22 @@ extern "C" {
   }
 #endif // _di_f_utf_character_is_alphabetic_
 
-#ifndef _di_f_utf_character_is_alphabetic_decimal_
-  f_status_t f_utf_character_is_alphabetic_decimal(const f_utf_char_t sequence, uint32_t * const value) {
+#ifndef _di_f_utf_character_is_alphabetic_digit_
+  f_status_t f_utf_character_is_alphabetic_digit(const f_utf_char_t sequence, uint64_t * const value) {
 
     if (macro_f_utf_char_t_width_is(sequence)) {
       if (macro_f_utf_char_t_width_is(sequence) == 1) {
         return F_status_set_error(F_utf_fragment);
       }
 
-      return private_f_utf_character_is_alphabetic_decimal(sequence, value);
+      return private_f_utf_character_is_alphabetic_digit(sequence, value);
     }
 
     if (isalpha(macro_f_utf_char_t_to_char_1(sequence))) return F_true;
 
-    if (private_f_utf_character_is_decimal_for_ascii(macro_f_utf_char_t_to_char_1(sequence), F_true, value) == F_true) {
-      return F_true;
-    }
-
-    return F_false;
-  }
-#endif // _di_f_utf_character_is_alphabetic_decimal_
-
-#ifndef _di_f_utf_character_is_alphabetic_digit_
-  f_status_t f_utf_character_is_alphabetic_digit(const f_utf_char_t sequence) {
-
-    if (macro_f_utf_char_t_width_is(sequence)) {
-      if (macro_f_utf_char_t_width_is(sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
-
-      return private_f_utf_character_is_alphabetic_digit(sequence);
-    }
-
-    if (isalnum(macro_f_utf_char_t_to_char_1(sequence))) {
-      return F_true;
-    }
-
-    return F_false;
+    return private_f_utf_character_is_digit_for_ascii(macro_f_utf_char_t_to_char_1(sequence), value);
   }
 #endif // _di_f_utf_character_is_alphabetic_digit_
-
-#ifndef _di_f_utf_character_is_alphabetic_numeric_
-  f_status_t f_utf_character_is_alphabetic_numeric(const f_utf_char_t sequence) {
-
-    if (macro_f_utf_char_t_width_is(sequence)) {
-      if (macro_f_utf_char_t_width_is(sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
-
-      return private_f_utf_character_is_alphabetic_numeric(sequence);
-    }
-
-    if (isalnum(macro_f_utf_char_t_to_char_1(sequence))) {
-      return F_true;
-    }
-
-    return F_false;
-  }
-#endif // _di_f_utf_character_is_alphabetic_numeric_
 
 #ifndef _di_f_utf_character_is_ascii_
   f_status_t f_utf_character_is_ascii(const f_utf_char_t sequence) {
@@ -214,37 +171,18 @@ extern "C" {
   }
 #endif // _di_f_utf_character_is_control_picture_
 
-#ifndef _di_f_utf_character_is_decimal_
-  f_status_t f_utf_character_is_decimal(const f_utf_char_t sequence, uint32_t * const value) {
-
-    if (macro_f_utf_char_t_width_is(sequence)) {
-      if (macro_f_utf_char_t_width_is(sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
-
-      return private_f_utf_character_is_decimal(sequence, F_false, value);
-    }
-
-    return private_f_utf_character_is_decimal_for_ascii(macro_f_utf_char_t_to_char_1(sequence), F_false, value);
-  }
-#endif // _di_f_utf_character_is_decimal_
-
 #ifndef _di_f_utf_character_is_digit_
-  f_status_t f_utf_character_is_digit(const f_utf_char_t sequence) {
+  f_status_t f_utf_character_is_digit(const f_utf_char_t sequence, uint64_t * const value) {
 
     if (macro_f_utf_char_t_width_is(sequence)) {
       if (macro_f_utf_char_t_width_is(sequence) == 1) {
         return F_status_set_error(F_utf_fragment);
       }
 
-      return private_f_utf_character_is_digit(sequence);
+      return private_f_utf_character_is_digit(sequence, value);
     }
 
-    if (isdigit(macro_f_utf_char_t_to_char_1(sequence))) {
-      return F_true;
-    }
-
-    return F_false;
+    return private_f_utf_character_is_digit_for_ascii(macro_f_utf_char_t_to_char_1(sequence), value);
   }
 #endif // _di_f_utf_character_is_digit_
 

@@ -786,7 +786,7 @@ extern "C" {
 
       if (name.string[i] == '_') continue;
 
-      status = f_utf_is_alphabetic_digit(name.string, name.used);
+      status = f_utf_is_alphabetic_digit(name.string, name.used, 0);
 
       if (F_status_is_error(status)) return status;
       if (status == F_false) return F_false;

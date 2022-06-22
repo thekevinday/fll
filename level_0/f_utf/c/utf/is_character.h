@@ -55,36 +55,21 @@ extern "C" {
 #endif // _di_f_utf_character_is_alphabetic_
 
 /**
- * Check to see if the entire byte block of the character is an ASCII or UTF-8 alphabetic or digit character.
+ * Check to see if the entire byte block of the character is an ASCII or UTF-8 alphabet or digit character.
  *
- * Decimal characters are decimal digits.
+ * Digit characters are digit of any base, such as decimal (base-10) or hexidecimal (base-16).
  *
- * This does not include number-like, such as 1/2 (½) or superscript 2 (²).
+ * This does not include fractions such as 1/2 (½) (U+00BD).
  *
- * Decimal refers to a unit of base-10.
- * To simplify the necessary code, this function automatically handles different base units if the number can be converted into a integer whose value is less than 2^16.
- * If base-10 is desired, then simply ignore values greater than 9.
- * For example, a base-16 character 'a' would result in the integer 10.
- * Just ignore the value.
- * This also processes large values such as roman numerals.
- * Roman Numerals, however conflict with the natural hexidecimal numbers.
- * To avoid this only Unicode Roman Numerals found in range U+2160 to U+2188 are treated as their respective numerals.
+ * This also processes large values such as Roman Numerals.
+ * Roman Numerals, however, conflict with traditional alphabetic characters.
+ * To avoid this only Unicode Roman Numerals found in range U+2160 to U+2188 are treated as their respective digits.
  * For example, the Roman Numeral 'Ⅿ' (U+216F) represents 1000 rather than having 'M' (U+004D) representing 1000.
- *
- * This function always returns F_true for valid decimal digits to avoid confusion between alphabetic and digits in regards to the base unit.
- * The 'F' is a character and a base-16 digit.
- * If this were to return F_false because it is greater than the requested base-12 then there would be confusion on whether or not 'F' is alphabetic.
- * If the determined digit is greater than the requested base, the 0xffff is assigned to value.
  *
  * @param sequence
  *   The byte sequence to validate as a character.
  * @param value
- *   (optional) The integer representation of the character if the character is a decimal.
- *   If specified, value is set to 0xffff to represent no known representation.
- *   If specified and is initially a value of 0, then this represents the operating normall has decimal (base-10).
- *   If specified and is initially a value from 1 to 16, then this represents operating as that base unit.
- *   For example, if value is 16, then this function will operate "is hexidecimal" rather than "is decimal".
- *   If specified and is initially a value of 0xffff, then this will grab all known integer digits.
+ *   (optional) The integer representation of the sequence if the sequence represents a decimal of any base type.
  *   Set to NULL to not use.
  *
  * @return
@@ -97,37 +82,14 @@ extern "C" {
  * @see isalpha()
  * @see isdigit()
  */
-#ifndef _di_f_utf_character_is_alphabetic_decimal_
-  extern f_status_t f_utf_character_is_alphabetic_decimal(const f_utf_char_t sequence, uint32_t * const value);
-#endif // _di_f_utf_character_is_alphabetic_decimal_
-
-/**
- * Check to see if the entire byte block of the character is an ASCII or UTF-8 alphabetic or digit character.
- *
- * Digit characters are decimal digits.
- *
- * This does not include number-like, such as 1/2 (½) or superscript 2 (²).
- *
- * @param sequence
- *   The byte sequence to validate as a character.
- *
- * @return
- *   F_true if a UTF-8 alphabetic-digit character.
- *   F_false if not a UTF-8 alphabetic-digit character.
- *
- *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
- *   F_utf_not (with error bit) if unicode is an invalid Unicode character.
- *
- * @see isalnum()
- */
 #ifndef _di_f_utf_character_is_alphabetic_digit_
-  extern f_status_t f_utf_character_is_alphabetic_digit(const f_utf_char_t sequence);
+  extern f_status_t f_utf_character_is_alphabetic_digit(const f_utf_char_t sequence, uint64_t * const value);
 #endif // _di_f_utf_character_is_alphabetic_digit_
 
 /**
  * Check to see if the entire byte block of the character is an ASCII or UTF-8 alphabetic or numeric character.
  *
- * Numeric characters are decimal digits, letter numbers, and number-like, such as 1/2 (½) or superscript 2 (²).
+ * Numeric characters are decimal digits, letter numbers, and number-like, such as 1/2 (½) (U+00BD) or superscript 2 (²) (U+00B2).
  *
  * @param sequence
  *   The byte sequence to validate as a character.
@@ -262,33 +224,21 @@ extern "C" {
 #endif // _di_f_utf_character_is_control_picture_
 
 /**
- * Check to see if the entire byte block of the character is an ASCII or UTF-8 decimal character.
+ * Check to see if the entire byte block of the character is an ASCII or UTF-8 digit character.
  *
- * Decimal characters are decimal digits.
+ * Digit characters are digit of any base, such as decimal (base-10) or hexidecimal (base-16).
  *
- * This does not include number-like, such as 1/2 (½) or superscript 2 (²).
+ * This does not include fractions such as 1/2 (½) (U+00BD).
  *
- * Decimal refers to a unit of base-10.
- * To simplify the necessary code, this function automatically handles different base units if the number can be converted into a integer whose value is less than 2^16.
- * If base-10 is desired, then simply ignore values greater than 9.
- * For example, a base-16 character 'a' would result in the integer 10.
- * Just ignore the value.
- * This also processes large values such as roman numerals.
- * Roman Numerals, however conflict with the natural hexidecimal numbers.
- * To avoid this only Unicode Roman Numerals found in range U+2160 to U+2188 are treated as their respective numerals.
+ * This also processes large values such as Roman Numerals.
+ * Roman Numerals, however, conflict with traditional alphabetic characters.
+ * To avoid this only Unicode Roman Numerals found in range U+2160 to U+2188 are treated as their respective digits.
  * For example, the Roman Numeral 'Ⅿ' (U+216F) represents 1000 rather than having 'M' (U+004D) representing 1000.
- *
- * This function only returns F_true for valid decimal digits within the requested base.
  *
  * @param sequence
  *   The byte sequence to validate as a character.
  * @param value
- *   (optional) The integer representation of the character if the character is a decimal.
- *   If specified, value is set to 0xffff to represent no known representation.
- *   If specified and is initially a value of 0, then this represents the operating normall has decimal (base-10).
- *   If specified and is initially a value from 1 to 16, then this represents operating as that base unit.
- *   For example, if value is 16, then this function will operate "is hexidecimal" rather than "is decimal".
- *   If specified and is initially a value of 0xffff, then this will grab all known integer digits.
+ *   (optional) The integer representation of the sequence if the sequence represents a decimal of any base type.
  *   Set to NULL to not use.
  *
  * @return
@@ -298,33 +248,10 @@ extern "C" {
  *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
  *   F_utf_not (with error bit) if unicode is an invalid Unicode character.
  *
- * @see isdecimal()
- */
-#ifndef _di_f_utf_character_is_decimal_
-  extern f_status_t f_utf_character_is_decimal(const f_utf_char_t sequence, uint32_t * const value);
-#endif // _di_f_utf_character_is_decimal_
-
-/**
- * Check to see if the entire byte block of the character is an ASCII or UTF-8 digit character.
- *
- * Digit characters are decimal digits.
- *
- * This does not include number-like, such as 1/2 (½) or superscript 2 (²).
- *
- * @param sequence
- *   The byte sequence to validate as a character.
- *
- * @return
- *   F_true if a UTF-8 digit character.
- *   F_false if not a UTF-8 digit character.
- *
- *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
- *   F_utf_not (with error bit) if unicode is an invalid Unicode character.
- *
  * @see isdigit()
  */
 #ifndef _di_f_utf_character_is_digit_
-  extern f_status_t f_utf_character_is_digit(const f_utf_char_t sequence);
+  extern f_status_t f_utf_character_is_digit(const f_utf_char_t sequence, uint64_t * const value);
 #endif // _di_f_utf_character_is_digit_
 
 /**
