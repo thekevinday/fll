@@ -76,8 +76,8 @@ extern "C" {
     // Valid: 110xxxxx 10xxxxxx ???????? ????????.
     if ((macro_f_utf_char_t_to_char_1(sequence) & 0b11100000) == 0b11000000) {
 
-      // Only first byte ranges 0xc3 or greater are valid.
-      if (macro_f_utf_char_t_to_char_2(sequence) < 0xc3) {
+      // Only first byte ranges 0xc2 or greater are valid.
+      if (macro_f_utf_char_t_to_char_2(sequence) < 0xc2) {
         return F_false;
       }
 
