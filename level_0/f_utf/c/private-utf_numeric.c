@@ -228,8 +228,8 @@ extern "C" {
           return F_true;
         }
 
-        // Enclosed Alphanumerics: U+24EB to U+24FF.
-        if (sequence >= 0xe293ab00 && sequence <= 0xe293bf00) {
+        // Enclosed Alphanumerics: U+24EA to U+24FF.
+        if (sequence >= 0xe293aa00 && sequence <= 0xe293bf00) {
           return F_true;
         }
 
@@ -261,7 +261,7 @@ extern "C" {
         }
 
         // Kanbun: U+3192 to U+3195.
-        if (sequence >= 0xea98a000 && sequence <= 0xea98a900) {
+        if (sequence >= 0xe3869200 && sequence <= 0xe3869500) {
           return F_true;
         }
 
@@ -289,6 +289,11 @@ extern "C" {
 
         // Vai: U+A620 to U+A629.
         if (sequence >= 0xea98a000 && sequence <= 0xea98a900) {
+          return F_true;
+        }
+
+        // Bamum: U+A6E6 to U+A6EF.
+        if (sequence >= 0xea98a000 && sequence <= 0xea9baf00) {
           return F_true;
         }
 
@@ -434,6 +439,26 @@ extern "C" {
 
         // Manichaean: U+10AEB to U+10AEF.
         if (sequence >= 0xf090abab && sequence <= 0xf090abaf) {
+          return F_true;
+        }
+
+        // Inscriptional Parthian: U+10B58 to U+10B5F.
+        if (sequence >= 0xf090ad98 && sequence <= 0xf090ad9f) {
+          return F_true;
+        }
+
+        // Inscriptional Pahlavi: U+10B78 to U+10B7F.
+        if (sequence >= 0xf090adb8 && sequence <= 0xf090adbf) {
+          return F_true;
+        }
+
+        // Psalter Pahlavi: U+10BA9 to U+10BAF.
+        if (sequence >= 0xf090aea9 && sequence <= 0xf090aeaf) {
+          return F_true;
+        }
+
+        // Old Hungarian: U+10CFA to U+10CFF.
+        if (sequence >= 0xf090b3ba && sequence <= 0xf090b3bf) {
           return F_true;
         }
 

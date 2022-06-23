@@ -42,7 +42,7 @@ void test__f_utf_is_digit__works(void **state) {
           }
         }
 
-        uint64_t value = F_type_size_max_64_unsigned_d;
+        uint64_t value = 0;
 
         const f_status_t status = f_utf_is_digit(buffer, 5, &value);
 

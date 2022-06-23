@@ -28,19 +28,17 @@ extern "C" {
 static inline f_status_t private_inline_f_utf_character_handle_digit(const f_utf_char_t sequence, const f_utf_char_t start, uint64_t * const value) {
 
   if (value) {
-    f_char_t ascii = 0;
+    f_char_t ascii = 0x30;
 
     if (macro_f_utf_char_t_width(sequence) == 2) {
-      ascii = (f_char_t) macro_f_utf_char_t_to_char_2(sequence - start);
+      ascii += (f_char_t) macro_f_utf_char_t_to_char_2(sequence - start);
     }
     else if (macro_f_utf_char_t_width(sequence) == 3) {
-      ascii = (f_char_t) macro_f_utf_char_t_to_char_3(sequence - start);
+      ascii += (f_char_t) macro_f_utf_char_t_to_char_3(sequence - start);
     }
     else if (macro_f_utf_char_t_width(sequence) == 4) {
-      ascii = (f_char_t) macro_f_utf_char_t_to_char_4(sequence - start);
+      ascii += (f_char_t) macro_f_utf_char_t_to_char_4(sequence - start);
     }
-
-    ascii += 0x30;
 
     return private_f_utf_character_is_digit_for_ascii(ascii, value);
   }
@@ -70,7 +68,17 @@ static inline f_status_t private_inline_f_utf_character_handle_digit(const f_utf
 static inline f_status_t private_inline_f_utf_character_handle_digit_from_one(const f_utf_char_t sequence, const f_utf_char_t start, uint64_t * const value) {
 
   if (value) {
-    const f_char_t ascii = ((f_char_t) macro_f_utf_char_t_to_char_3(sequence - start)) + 0x31;
+    f_char_t ascii = 0x31;
+
+    if (macro_f_utf_char_t_width(sequence) == 2) {
+      ascii += (f_char_t) macro_f_utf_char_t_to_char_2(sequence - start);
+    }
+    else if (macro_f_utf_char_t_width(sequence) == 3) {
+      ascii += (f_char_t) macro_f_utf_char_t_to_char_3(sequence - start);
+    }
+    else if (macro_f_utf_char_t_width(sequence) == 4) {
+      ascii += (f_char_t) macro_f_utf_char_t_to_char_4(sequence - start);
+    }
 
     return private_f_utf_character_is_digit_for_ascii(ascii, value);
   }
@@ -685,7 +693,7 @@ static inline f_status_t private_inline_f_utf_character_handle_digit_from_one(co
           }
 
           // Enclosed Alphanumerics: U+2474 to U+247C.
-          if (sequence <= 0xe291b400) {
+          if (sequence <= 0xe291bc00) {
             return private_inline_f_utf_character_handle_digit_from_one(sequence, 0xe291b400, value);
           }
 
@@ -717,7 +725,7 @@ static inline f_status_t private_inline_f_utf_character_handle_digit_from_one(co
           }
 
           // Enclosed Alphanumerics: U+2480.
-          if (sequence == 0xe291c000) {
+          if (sequence == 0xe2928000) {
             if (value) {
               *value = 13;
             }
@@ -726,7 +734,7 @@ static inline f_status_t private_inline_f_utf_character_handle_digit_from_one(co
           }
 
           // Enclosed Alphanumerics: U+2481.
-          if (sequence == 0xe291c100) {
+          if (sequence == 0xe2928100) {
             if (value) {
               *value = 14;
             }
@@ -735,7 +743,7 @@ static inline f_status_t private_inline_f_utf_character_handle_digit_from_one(co
           }
 
           // Enclosed Alphanumerics: U+2482.
-          if (sequence == 0xe291c200) {
+          if (sequence == 0xe2928200) {
             if (value) {
               *value = 15;
             }
@@ -744,7 +752,7 @@ static inline f_status_t private_inline_f_utf_character_handle_digit_from_one(co
           }
 
           // Enclosed Alphanumerics: U+2483.
-          if (sequence == 0xe291c300) {
+          if (sequence == 0xe2928300) {
             if (value) {
               *value = 16;
             }
@@ -753,7 +761,7 @@ static inline f_status_t private_inline_f_utf_character_handle_digit_from_one(co
           }
 
           // Enclosed Alphanumerics: U+2484.
-          if (sequence == 0xe291c400) {
+          if (sequence == 0xe2928400) {
             if (value) {
               *value = 17;
             }
@@ -762,7 +770,7 @@ static inline f_status_t private_inline_f_utf_character_handle_digit_from_one(co
           }
 
           // Enclosed Alphanumerics: U+2485.
-          if (sequence == 0xe291c500) {
+          if (sequence == 0xe2928500) {
             if (value) {
               *value = 18;
             }
@@ -771,7 +779,7 @@ static inline f_status_t private_inline_f_utf_character_handle_digit_from_one(co
           }
 
           // Enclosed Alphanumerics: U+2486.
-          if (sequence == 0xe291c600) {
+          if (sequence == 0xe2928600) {
             if (value) {
               *value = 19;
             }
@@ -780,7 +788,7 @@ static inline f_status_t private_inline_f_utf_character_handle_digit_from_one(co
           }
 
           // Enclosed Alphanumerics: U+2487.
-          if (sequence == 0xe291c700) {
+          if (sequence == 0xe2928700) {
             if (value) {
               *value = 20;
             }
@@ -1034,8 +1042,8 @@ static inline f_status_t private_inline_f_utf_character_handle_digit_from_one(co
             return F_true;
           }
 
-          // Dingbats: U+2780 to U+2789.
-          if (sequence <= 0xe29e8900) {
+          // Dingbats: U+2780 to U+2788.
+          if (sequence <= 0xe29e8800) {
             return private_inline_f_utf_character_handle_digit_from_one(sequence, 0xe29e8000, value);
           }
 
@@ -1064,7 +1072,7 @@ static inline f_status_t private_inline_f_utf_character_handle_digit_from_one(co
       else if (macro_f_utf_char_t_to_char_1(sequence) == 0xe3) {
 
         // Kanbun: U+3192 to U+3195.
-        if (sequence >= 0xe3869200 && sequence <= 0xe3869200) {
+        if (sequence >= 0xe3869200 && sequence <= 0xe3869500) {
           return private_inline_f_utf_character_handle_digit_from_one(sequence, 0xe3869200, value);
         }
 
@@ -1833,12 +1841,1271 @@ static inline f_status_t private_inline_f_utf_character_handle_digit_from_one(co
           return F_true;
         }
 
-        // @todo U+102E1 and so on..
+        // Ancient Greek Numbers: U+1018A.
+        if (sequence == 0xf090868a) {
+          if (value) {
+            *value = 0;
+          }
+
+          return F_true;
+        }
+
+        // Coptic Epact Numbers: U+102E1 to U+102FB.
+        if (sequence >= 0xf0908ba1 && sequence <= 0xf0908bbb) {
+
+          // Coptic Epact Numbers: U+102E1 to U+102E9.
+          if (sequence <= 0xf0908ba9) {
+            return private_inline_f_utf_character_handle_digit_from_one(sequence, 0xf0908ba1, value);
+          }
+
+          // Coptic Epact Numbers: U+102EA.
+          if (sequence == 0xf0908baa) {
+            if (value) {
+              *value = 10;
+            }
+
+            return F_true;
+          }
+
+          // Coptic Epact Numbers: U+102EB.
+          if (sequence == 0xf0908bab) {
+            if (value) {
+              *value = 20;
+            }
+
+            return F_true;
+          }
+
+          // Coptic Epact Numbers: U+102EC.
+          if (sequence == 0xf0908bac) {
+            if (value) {
+              *value = 30;
+            }
+
+            return F_true;
+          }
+
+          // Coptic Epact Numbers: U+102ED.
+          if (sequence == 0xf0908bad) {
+            if (value) {
+              *value = 40;
+            }
+
+            return F_true;
+          }
+
+          // Coptic Epact Numbers: U+102EE.
+          if (sequence == 0xf0908bae) {
+            if (value) {
+              *value = 50;
+            }
+
+            return F_true;
+          }
+
+          // Coptic Epact Numbers: U+102EF.
+          if (sequence == 0xf0908baf) {
+            if (value) {
+              *value = 60;
+            }
+
+            return F_true;
+          }
+
+          // Coptic Epact Numbers: U+102F0.
+          if (sequence == 0xf0908bb0) {
+            if (value) {
+              *value = 70;
+            }
+
+            return F_true;
+          }
+
+          // Coptic Epact Numbers: U+102F1.
+          if (sequence == 0xf0908bb1) {
+            if (value) {
+              *value = 80;
+            }
+
+            return F_true;
+          }
+
+          // Coptic Epact Numbers: U+102F2.
+          if (sequence == 0xf0908bb2) {
+            if (value) {
+              *value = 90;
+            }
+
+            return F_true;
+          }
+
+          // Coptic Epact Numbers: U+102F3.
+          if (sequence == 0xf0908bb3) {
+            if (value) {
+              *value = 100;
+            }
+
+            return F_true;
+          }
+
+          // Coptic Epact Numbers: U+102F4.
+          if (sequence == 0xf0908bb4) {
+            if (value) {
+              *value = 200;
+            }
+
+            return F_true;
+          }
+
+          // Coptic Epact Numbers: U+102F5.
+          if (sequence == 0xf0908bb5) {
+            if (value) {
+              *value = 300;
+            }
+
+            return F_true;
+          }
+
+          // Coptic Epact Numbers: U+102F6.
+          if (sequence == 0xf0908bb6) {
+            if (value) {
+              *value = 400;
+            }
+
+            return F_true;
+          }
+
+          // Coptic Epact Numbers: U+102F7.
+          if (sequence == 0xf0908bb7) {
+            if (value) {
+              *value = 500;
+            }
+
+            return F_true;
+          }
+
+          // Coptic Epact Numbers: U+102F8.
+          if (sequence == 0xf0908bb8) {
+            if (value) {
+              *value = 600;
+            }
+
+            return F_true;
+          }
+
+          // Coptic Epact Numbers: U+102F9.
+          if (sequence == 0xf0908bb9) {
+            if (value) {
+              *value = 700;
+            }
+
+            return F_true;
+          }
+
+          // Coptic Epact Numbers: U+102FA.
+          if (sequence == 0xf0908bba) {
+            if (value) {
+              *value = 800;
+            }
+
+            return F_true;
+          }
+
+          // Coptic Epact Numbers: U+102FB.
+          if (value) {
+            *value = 900;
+          }
+
+          return F_true;
+        }
+
+        // Old Italic: U+10320 to U+10323.
+        if (sequence >= 0xf0908ca0 && sequence <= 0xf0908ca3) {
+
+          // Old Italic: U+10320.
+          if (sequence == 0xf0908ca0) {
+            if (value) {
+              *value = 1;
+            }
+
+            return F_true;
+          }
+
+          // Old Italic: U+10321.
+          if (sequence == 0xf0908ca1) {
+            if (value) {
+              *value = 5;
+            }
+
+            return F_true;
+          }
+
+          // Old Italic: U+10322.
+          if (sequence == 0xf0908ca2) {
+            if (value) {
+              *value = 10;
+            }
+
+            return F_true;
+          }
+
+          // Old Italic: U+10323.
+          if (value) {
+            *value = 50;
+          }
+
+          return F_true;
+        }
 
         // Osmanya: U+104A0 to U+104A9.
         if (sequence >= 0xf09092a0 && sequence <= 0xf09092a9) {
           return private_inline_f_utf_character_handle_digit(sequence, 0xf09092a0, value);
         }
+
+        // Imperial Aramaic: U+10858 to U+1085F.
+        if (sequence >= 0xf090a198 && sequence <= 0xf090a19f) {
+
+          // Imperial Aramaic: U+10858.
+          if (sequence == 0xf090a198) {
+            if (value) {
+              *value = 1;
+            }
+
+            return F_true;
+          }
+
+          // Imperial Aramaic: U+10859.
+          if (sequence == 0xf090a199) {
+            if (value) {
+              *value = 2;
+            }
+
+            return F_true;
+          }
+
+          // Imperial Aramaic: U+1085a.
+          if (sequence == 0xf090a19a) {
+            if (value) {
+              *value = 3;
+            }
+
+            return F_true;
+          }
+
+          // Imperial Aramaic: U+1085b.
+          if (sequence == 0xf090a19b) {
+            if (value) {
+              *value = 10;
+            }
+
+            return F_true;
+          }
+
+          // Imperial Aramaic: U+1085c.
+          if (sequence == 0xf090a19c) {
+            if (value) {
+              *value = 20;
+            }
+
+            return F_true;
+          }
+
+          // Imperial Aramaic: U+1085d.
+          if (sequence == 0xf090a19d) {
+            if (value) {
+              *value = 100;
+            }
+
+            return F_true;
+          }
+
+          // Imperial Aramaic: U+1085e.
+          if (sequence == 0xf090a19e) {
+            if (value) {
+              *value = 1000;
+            }
+
+            return F_true;
+          }
+
+          // Imperial Aramaic: U+1085f.
+          if (value) {
+            *value = 10000;
+          }
+
+          return F_true;
+        }
+
+        // Palmyrene: U+10879 to U+1087F.
+        if (sequence >= 0xf090a1b9 && sequence <= 0xf090a1bf) {
+
+          // Palmyrene: U+10879.
+          if (sequence == 0xf090a1b9) {
+            if (value) {
+              *value = 1;
+            }
+
+            return F_true;
+          }
+
+          // Palmyrene: U+1087A.
+          if (sequence == 0xf090a1ba) {
+            if (value) {
+              *value = 2;
+            }
+
+            return F_true;
+          }
+
+          // Palmyrene: U+1087B.
+          if (sequence == 0xf090a1bb) {
+            if (value) {
+              *value = 3;
+            }
+
+            return F_true;
+          }
+
+          // Palmyrene: U+1087C.
+          if (sequence == 0xf090a1bc) {
+            if (value) {
+              *value = 4;
+            }
+
+            return F_true;
+          }
+
+          // Palmyrene: U+1087D.
+          if (sequence == 0xf090a1bd) {
+            if (value) {
+              *value = 5;
+            }
+
+            return F_true;
+          }
+
+          // Palmyrene: U+1087E.
+          if (sequence == 0xf090a1be) {
+            if (value) {
+              *value = 10;
+            }
+
+            return F_true;
+          }
+
+          // Palmyrene: U+1087F.
+          if (value) {
+            *value = 20;
+          }
+
+          return F_true;
+        }
+
+        // Nabataean: U+108A7 to U+108AF.
+        if (sequence >= 0xf090a2a7 && sequence <= 0xf090a2af) {
+
+          // Nabataean: U+108A7.
+          if (sequence == 0xf090a2a7) {
+            if (value) {
+              *value = 1;
+            }
+
+            return F_true;
+          }
+
+          // Nabataean: U+108A8.
+          if (sequence == 0xf090a2a8) {
+            if (value) {
+              *value = 2;
+            }
+
+            return F_true;
+          }
+
+          // Nabataean: U+108A9.
+          if (sequence == 0xf090a2a9) {
+            if (value) {
+              *value = 3;
+            }
+
+            return F_true;
+          }
+
+          // Nabataean: U+108AA.
+          if (sequence == 0xf090a2aa) {
+            if (value) {
+              *value = 4;
+            }
+
+            return F_true;
+          }
+
+          // Nabataean: U+108AB.
+          if (sequence == 0xf090a2ab) {
+            if (value) {
+              *value = 4;
+            }
+
+            return F_true;
+          }
+
+          // Nabataean: U+108AC.
+          if (sequence == 0xf090a2ac) {
+            if (value) {
+              *value = 5;
+            }
+
+            return F_true;
+          }
+
+          // Nabataean: U+108AD.
+          if (sequence == 0xf090a2ad) {
+            if (value) {
+              *value = 10;
+            }
+
+            return F_true;
+          }
+
+          // Nabataean: U+108AE.
+          if (sequence == 0xf090a2ae) {
+            if (value) {
+              *value = 20;
+            }
+
+            return F_true;
+          }
+
+          // Nabataean: U+108AF.
+          if (value) {
+            *value = 100;
+          }
+
+          return F_true;
+        }
+
+        // Hatran: U+108FB to U+108FF.
+        if (sequence >= 0xf090a3bb && sequence <= 0xf090a3bf) {
+
+          // Hatran: U+108FB.
+          if (sequence == 0xf090a3bb) {
+            if (value) {
+              *value = 1;
+            }
+
+            return F_true;
+          }
+
+          // Hatran: U+108FC.
+          if (sequence == 0xf090a3bc) {
+            if (value) {
+              *value = 5;
+            }
+
+            return F_true;
+          }
+
+          // Hatran: U+108FD.
+          if (sequence == 0xf090a3bd) {
+            if (value) {
+              *value = 10;
+            }
+
+            return F_true;
+          }
+
+          // Hatran: U+108FE.
+          if (sequence == 0xf090a3be) {
+            if (value) {
+              *value = 20;
+            }
+
+            return F_true;
+          }
+
+          // Hatran: U+108FF.
+          if (sequence == 0xf090a3bf) {
+            if (value) {
+              *value = 100;
+            }
+
+            return F_true;
+          }
+        }
+
+        // Phoenician: U+10916 to U+1091B.
+        if (sequence >= 0xf090a496 && sequence <= 0xf090a49b) {
+
+          // Phoenician: U+10916.
+          if (sequence == 0xf090a496) {
+            if (value) {
+              *value = 1;
+            }
+
+            return F_true;
+          }
+
+          // Phoenician: U+10917.
+          if (sequence == 0xf090a497) {
+            if (value) {
+              *value = 10;
+            }
+
+            return F_true;
+          }
+
+          // Phoenician: U+10918.
+          if (sequence == 0xf090a498) {
+            if (value) {
+              *value = 20;
+            }
+
+            return F_true;
+          }
+
+          // Phoenician: U+10919.
+          if (sequence == 0xf090a499) {
+            if (value) {
+              *value = 100;
+            }
+
+            return F_true;
+          }
+
+          // Phoenician: U+1091A.
+          if (sequence == 0xf090a49a) {
+            if (value) {
+              *value = 2;
+            }
+
+            return F_true;
+          }
+
+          // Phoenician: U+1091B.
+          if (value) {
+            *value = 3;
+          }
+
+          return F_true;
+        }
+
+        // Meroitic Cursive: U+109C0 to U+109F5.
+        if (sequence >= 0xf090a780 && sequence <= 0xf090a7b5) {
+
+          // Meroitic Cursive: U+109C0 to U+109C8.
+          if (sequence <= 0xf090a788) {
+            return private_inline_f_utf_character_handle_digit_from_one(sequence, 0xf090a780, value);
+          }
+
+          // Meroitic Cursive: U+109C9.
+          if (sequence == 0xf090a789) {
+            if (value) {
+              *value = 10;
+            }
+
+            return F_true;
+          }
+
+          // Meroitic Cursive: U+109CA.
+          if (sequence == 0xf090a78a) {
+            if (value) {
+              *value = 20;
+            }
+
+            return F_true;
+          }
+
+          // Meroitic Cursive: U+109CB.
+          if (sequence == 0xf090a78b) {
+            if (value) {
+              *value = 30;
+            }
+
+            return F_true;
+          }
+
+          // Meroitic Cursive: U+109CC.
+          if (sequence == 0xf090a78c) {
+            if (value) {
+              *value = 40;
+            }
+
+            return F_true;
+          }
+
+          // Meroitic Cursive: U+109CD.
+          if (sequence == 0xf090a78d) {
+            if (value) {
+              *value = 50;
+            }
+
+            return F_true;
+          }
+
+          // Meroitic Cursive: U+109CE.
+          if (sequence == 0xf090a78e) {
+            if (value) {
+              *value = 60;
+            }
+
+            return F_true;
+          }
+
+          // Meroitic Cursive: U+109CF.
+          if (sequence == 0xf090a78f) {
+            if (value) {
+              *value = 70;
+            }
+
+            return F_true;
+          }
+
+          // U+109D1 and U+109D2 are fractions.
+
+          // Meroitic Cursive: U+109D2.
+          if (sequence == 0xf090a792) {
+            if (value) {
+              *value = 100;
+            }
+
+            return F_true;
+          }
+
+          // Meroitic Cursive: U+109D3.
+          if (sequence == 0xf090a793) {
+            if (value) {
+              *value = 200;
+            }
+
+            return F_true;
+          }
+
+          // Meroitic Cursive: U+109D4.
+          if (sequence == 0xf090a794) {
+            if (value) {
+              *value = 300;
+            }
+
+            return F_true;
+          }
+
+          // Meroitic Cursive: U+109D5.
+          if (sequence == 0xf090a795) {
+            if (value) {
+              *value = 400;
+            }
+
+            return F_true;
+          }
+
+          // Meroitic Cursive: U+109D6.
+          if (sequence == 0xf090a796) {
+            if (value) {
+              *value = 500;
+            }
+
+            return F_true;
+          }
+
+          // Meroitic Cursive: U+109D7.
+          if (sequence == 0xf090a797) {
+            if (value) {
+              *value = 600;
+            }
+
+            return F_true;
+          }
+
+          // Meroitic Cursive: U+109D8.
+          if (sequence == 0xf090a798) {
+            if (value) {
+              *value = 700;
+            }
+
+            return F_true;
+          }
+
+          // Meroitic Cursive: U+109D9.
+          if (sequence == 0xf090a799) {
+            if (value) {
+              *value = 800;
+            }
+
+            return F_true;
+          }
+
+          // Meroitic Cursive: U+109DA.
+          if (sequence == 0xf090a79a) {
+            if (value) {
+              *value = 900;
+            }
+
+            return F_true;
+          }
+
+          // Meroitic Cursive: U+109DB.
+          if (sequence == 0xf090a79b) {
+            if (value) {
+              *value = 1000;
+            }
+
+            return F_true;
+          }
+
+          // Meroitic Cursive: U+109DC.
+          if (sequence == 0xf090a79c) {
+            if (value) {
+              *value = 2000;
+            }
+
+            return F_true;
+          }
+
+          // Meroitic Cursive: U+109DD.
+          if (sequence == 0xf090a79d) {
+            if (value) {
+              *value = 3000;
+            }
+
+            return F_true;
+          }
+
+          // Meroitic Cursive: U+109DE.
+          if (sequence == 0xf090a79e) {
+            if (value) {
+              *value = 4000;
+            }
+
+            return F_true;
+          }
+
+          // Meroitic Cursive: U+109DF.
+          if (sequence == 0xf090a79f) {
+            if (value) {
+              *value = 5000;
+            }
+
+            return F_true;
+          }
+
+          // Meroitic Cursive: U+109E0.
+          if (sequence == 0xf090a7a0) {
+            if (value) {
+              *value = 6000;
+            }
+
+            return F_true;
+          }
+
+          // Meroitic Cursive: U+109E1.
+          if (sequence == 0xf090a7a1) {
+            if (value) {
+              *value = 7000;
+            }
+
+            return F_true;
+          }
+
+          // Meroitic Cursive: U+109E2.
+          if (sequence == 0xf090a7a2) {
+            if (value) {
+              *value = 8000;
+            }
+
+            return F_true;
+          }
+
+          // Meroitic Cursive: U+109E3.
+          if (sequence == 0xf090a7a3) {
+            if (value) {
+              *value = 9000;
+            }
+
+            return F_true;
+          }
+
+          // Meroitic Cursive: U+109E4.
+          if (sequence == 0xf090a7a4) {
+            if (value) {
+              *value = 10000;
+            }
+
+            return F_true;
+          }
+
+          // Meroitic Cursive: U+109E5.
+          if (sequence == 0xf090a7a5) {
+            if (value) {
+              *value = 20000;
+            }
+
+            return F_true;
+          }
+
+          // Meroitic Cursive: U+109E6.
+          if (sequence == 0xf090a7a6) {
+            if (value) {
+              *value = 30000;
+            }
+
+            return F_true;
+          }
+
+          // Meroitic Cursive: U+109E7.
+          if (sequence == 0xf090a7a7) {
+            if (value) {
+              *value = 40000;
+            }
+
+            return F_true;
+          }
+
+          // Meroitic Cursive: U+109E8.
+          if (sequence == 0xf090a7a8) {
+            if (value) {
+              *value = 50000;
+            }
+
+            return F_true;
+          }
+
+          // Meroitic Cursive: U+109E9.
+          if (sequence == 0xf090a7a9) {
+            if (value) {
+              *value = 60000;
+            }
+
+            return F_true;
+          }
+
+          // Meroitic Cursive: U+109EA.
+          if (sequence == 0xf090a7aa) {
+            if (value) {
+              *value = 70000;
+            }
+
+            return F_true;
+          }
+
+          // Meroitic Cursive: U+109EB.
+          if (sequence == 0xf090a7ab) {
+            if (value) {
+              *value = 80000;
+            }
+
+            return F_true;
+          }
+
+          // Meroitic Cursive: U+109EC.
+          if (sequence == 0xf090a7ac) {
+            if (value) {
+              *value = 90000;
+            }
+
+            return F_true;
+          }
+
+          // Meroitic Cursive: U+109ED.
+          if (sequence == 0xf090a7ad) {
+            if (value) {
+              *value = 100000;
+            }
+
+            return F_true;
+          }
+
+          // Meroitic Cursive: U+109EE.
+          if (sequence == 0xf090a7ae) {
+            if (value) {
+              *value = 200000;
+            }
+
+            return F_true;
+          }
+
+          // Meroitic Cursive: U+109EF.
+          if (sequence == 0xf090a7af) {
+            if (value) {
+              *value = 300000;
+            }
+
+            return F_true;
+          }
+
+          // Meroitic Cursive: U+109F0.
+          if (sequence == 0xf090a7b0) {
+            if (value) {
+              *value = 400000;
+            }
+
+            return F_true;
+          }
+
+          // Meroitic Cursive: U+109F1.
+          if (sequence == 0xf090a7b1) {
+            if (value) {
+              *value = 500000;
+            }
+
+            return F_true;
+          }
+
+          // Meroitic Cursive: U+109F2.
+          if (sequence == 0xf090a7b2) {
+            if (value) {
+              *value = 600000;
+            }
+
+            return F_true;
+          }
+
+          // Meroitic Cursive: U+109F3.
+          if (sequence == 0xf090a7b3) {
+            if (value) {
+              *value = 700000;
+            }
+
+            return F_true;
+          }
+
+          // Meroitic Cursive: U+109F4.
+          if (sequence == 0xf090a7b4) {
+            if (value) {
+              *value = 800000;
+            }
+
+            return F_true;
+          }
+
+          // Meroitic Cursive: U+109F5.
+          if (sequence == 0xf090a7b5) {
+            if (value) {
+              *value = 900000;
+            }
+
+            return F_true;
+          }
+        }
+
+        // Kharoshthi: U+10A40 to U+10A47.
+        if (sequence >= 0xf090a980 && sequence <= 0xf090a987) {
+
+          // Kharoshthi: U+10A40.
+          if (sequence == 0xf090a980) {
+            if (value) {
+              *value = 1;
+            }
+
+            return F_true;
+          }
+
+          // Kharoshthi: U+10A41.
+          if (sequence == 0xf090a981) {
+            if (value) {
+              *value = 2;
+            }
+
+            return F_true;
+          }
+
+          // Kharoshthi: U+10A42.
+          if (sequence == 0xf090a982) {
+            if (value) {
+              *value = 3;
+            }
+
+            return F_true;
+          }
+
+          // Kharoshthi: U+10A43.
+          if (sequence == 0xf090a983) {
+            if (value) {
+              *value = 4;
+            }
+
+            return F_true;
+          }
+
+          // Kharoshthi: U+10A44.
+          if (sequence == 0xf090a984) {
+            if (value) {
+              *value = 10;
+            }
+
+            return F_true;
+          }
+
+          // Kharoshthi: U+10A45.
+          if (sequence == 0xf090a985) {
+            if (value) {
+              *value = 20;
+            }
+
+            return F_true;
+          }
+
+          // Kharoshthi: U+10A46.
+          if (sequence == 0xf090a986) {
+            if (value) {
+              *value = 100;
+            }
+
+            return F_true;
+          }
+
+          // Kharoshthi: U+10A47.
+          if (sequence == 0xf090a987) {
+            if (value) {
+              *value = 1000;
+            }
+
+            return F_true;
+          }
+        }
+
+        // Old South Arabian: U+10A7D.
+        if (sequence == 0xf090a9bd) {
+          if (value) {
+            *value = 1;
+          }
+
+          return F_true;
+        }
+
+        // Old South Arabian: U+10A7E.
+        if (sequence == 0xf090a9be) {
+          if (value) {
+            *value = 50;
+          }
+
+          return F_true;
+        }
+
+        // Old North Arabian: U+10A9D to U+10A9F.
+        if (sequence >= 0xf090aa9d && sequence <= 0xf090aa9f) {
+
+          // Old North Arabian: U+10A9D.
+          if (sequence == 0xf090aa9d) {
+            if (value) {
+              *value = 1;
+            }
+
+            return F_true;
+          }
+
+          // Old North Arabian: U+10A9E.
+          if (sequence == 0xf090aa9e) {
+            if (value) {
+              *value = 10;
+            }
+
+            return F_true;
+          }
+
+          // Old North Arabian: U+10A9F.
+          if (value) {
+            *value = 20;
+          }
+
+          return F_true;
+        }
+
+        // Old North Arabian: U+10AEB to U+10AEF.
+        if (sequence >= 0xf090abab && sequence <= 0xf090abaf) {
+
+          // Old North Arabian: U+10AEB.
+          if (sequence == 0xf090abab) {
+            if (value) {
+              *value = 1;
+            }
+
+            return F_true;
+          }
+
+          // Old North Arabian: U+10AEC.
+          if (sequence == 0xf090abac) {
+            if (value) {
+              *value = 5;
+            }
+
+            return F_true;
+          }
+
+          // Old North Arabian: U+10AED.
+          if (sequence == 0xf090abad) {
+            if (value) {
+              *value = 10;
+            }
+
+            return F_true;
+          }
+
+          // Old North Arabian: U+10AEE.
+          if (sequence == 0xf090abae) {
+            if (value) {
+              *value = 20;
+            }
+
+            return F_true;
+          }
+
+          // Old North Arabian: U+10AEF.
+          if (value) {
+            *value = 100;
+          }
+
+          return F_true;
+        }
+
+        // Inscriptional Parthian: U+10B58 to U+10B5F.
+        if (sequence >= 0xf090ad98 && sequence <= 0xf090ad9f) {
+
+          // Inscriptional Parthian: U+10B58.
+          if (sequence == 0xf090ad98) {
+            if (value) {
+              *value = 1;
+            }
+
+            return F_true;
+          }
+
+          // Inscriptional Parthian: U+10B59.
+          if (sequence == 0xf090ad99) {
+            if (value) {
+              *value = 2;
+            }
+
+            return F_true;
+          }
+
+          // Inscriptional Parthian: U+10B5A.
+          if (sequence == 0xf090ad9a) {
+            if (value) {
+              *value = 3;
+            }
+
+            return F_true;
+          }
+
+          // Inscriptional Parthian: U+10B5B.
+          if (sequence == 0xf090ad9b) {
+            if (value) {
+              *value = 4;
+            }
+
+            return F_true;
+          }
+
+          // Inscriptional Parthian: U+10B5C.
+          if (sequence == 0xf090ad9c) {
+            if (value) {
+              *value = 10;
+            }
+
+            return F_true;
+          }
+
+          // Inscriptional Parthian: U+10B5D.
+          if (sequence == 0xf090ad9d) {
+            if (value) {
+              *value = 20;
+            }
+
+            return F_true;
+          }
+
+          // Inscriptional Parthian: U+10B5E.
+          if (sequence == 0xf090ad9e) {
+            if (value) {
+              *value = 100;
+            }
+
+            return F_true;
+          }
+
+          // Inscriptional Parthian: U+10B5F.
+          if (value) {
+            *value = 1000;
+          }
+
+          return F_true;
+        }
+
+        // Inscriptional Pahlavi: U+10B78 to U+10B7F.
+        if (sequence >= 0xf090adb8 && sequence <= 0xf090adbf) {
+
+          // Inscriptional Pahlavi: U+10B78.
+          if (sequence == 0xf090adb8) {
+            if (value) {
+              *value = 1;
+            }
+
+            return F_true;
+          }
+
+          // Inscriptional Pahlavi: U+10B79.
+          if (sequence == 0xf090adb9) {
+            if (value) {
+              *value = 2;
+            }
+
+            return F_true;
+          }
+
+          // Inscriptional Pahlavi: U+10B7A.
+          if (sequence == 0xf090adba) {
+            if (value) {
+              *value = 3;
+            }
+
+            return F_true;
+          }
+
+          // Inscriptional Pahlavi: U+10B7B.
+          if (sequence == 0xf090adbb) {
+            if (value) {
+              *value = 4;
+            }
+
+            return F_true;
+          }
+
+          // Inscriptional Pahlavi: U+10B7C.
+          if (sequence == 0xf090adbc) {
+            if (value) {
+              *value = 10;
+            }
+
+            return F_true;
+          }
+
+          // Inscriptional Pahlavi: U+10B7D.
+          if (sequence == 0xf090adbd) {
+            if (value) {
+              *value = 20;
+            }
+
+            return F_true;
+          }
+
+          // Inscriptional Pahlavi: U+10B7E.
+          if (sequence == 0xf090adbe) {
+            if (value) {
+              *value = 100;
+            }
+
+            return F_true;
+          }
+
+          // Inscriptional Pahlavi: U+10B7F.
+          if (value) {
+            *value = 1000;
+          }
+
+          return F_true;
+        }
+
+        // @todo U+10BA9 and so on..
 
         // Hanifi Rohingya: U+10D30 to U+10D39.
         if (sequence >= 0xf090b4b0 && sequence <= 0xf090b4b9) {

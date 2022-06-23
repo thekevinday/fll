@@ -25,7 +25,7 @@ void test__f_utf_character_is_digit__works(void **state) {
       bytes_number = data__value_get_line_long_long(file_number, &number);
 
       if (bytes > 0 && bytes_number > 0) {
-        uint64_t value = F_type_size_max_64_unsigned_d;
+        uint64_t value = 0;
 
         const f_status_t status = f_utf_character_is_digit(sequence, &value);
 
