@@ -364,7 +364,7 @@ extern "C" {
     if (destination->used >= setting->path_current.used) {
       const f_string_range_t range = macro_f_string_range_t_initialize2(setting->path_current.used);
 
-      if (fl_string_dynamic_partial_compare(*destination, setting->path_current, range, range) == F_equal_to) {
+      if (fl_string_dynamic_partial_compare_string(destination->string, setting->path_current, destination->used, range) == F_equal_to) {
         f_array_length_t length = destination->used - setting->path_current.used;
 
         if (length) {
