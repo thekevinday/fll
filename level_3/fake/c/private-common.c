@@ -143,6 +143,7 @@ extern "C" {
 #endif // _di_fake_build_parameter_
 
 #ifndef _di_fake_common_
+  const f_string_static_t fake_common_file_path_access_s = macro_f_string_static_t_initialize(FAKE_common_file_path_access_s, 0, FAKE_common_file_path_access_s_length);
   const f_string_static_t fake_common_file_directory_copy_s = macro_f_string_static_t_initialize(FAKE_common_file_directory_copy_s, 0, FAKE_common_file_directory_copy_s_length);
   const f_string_static_t fake_common_file_path_change_to_s = macro_f_string_static_t_initialize(FAKE_common_file_path_change_to_s, 0, FAKE_common_file_path_change_to_s_length);
   const f_string_static_t fake_common_file_path_determine_real_s = macro_f_string_static_t_initialize(FAKE_common_file_path_determine_real_s, 0, FAKE_common_file_path_determine_real_s_length);

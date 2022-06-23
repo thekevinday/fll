@@ -510,8 +510,8 @@ extern "C" {
   }
 #endif // _di_fake_process_console_parameters_
 
-#ifndef _di_fake_validate_directories_
-  f_status_t fake_validate_parameter_directories(fake_data_t * const data) {
+#ifndef _di_fake_validate_parameter_paths_
+  f_status_t fake_validate_parameter_paths(fake_data_t * const data) {
 
     if (fll_program_standard_signal_received(data->main)) {
       fake_print_signal_received(data);
@@ -596,7 +596,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // _di_fake_validate_parameter_directories_
+#endif // _di_fake_validate_parameter_paths_
 
 #ifndef _di_fake_verbose_print_clone_
   void fake_verbose_print_clone(const f_file_t output, const f_string_static_t source, const f_string_static_t destination) {

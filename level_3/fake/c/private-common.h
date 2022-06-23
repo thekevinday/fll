@@ -950,6 +950,7 @@ extern "C" {
   #define fake_common_allocation_small_d 16
 
   #define FAKE_common_file_directory_copy_s      "copy directory"
+  #define FAKE_common_file_path_access_s         "access"
   #define FAKE_common_file_path_change_to_s      "change path to"
   #define FAKE_common_file_path_determine_real_s "determine real path of"
   #define FAKE_common_file_path_stack_s          "path stack"
@@ -961,6 +962,7 @@ extern "C" {
   #define FAKE_common_setting_list_s "list"
 
   #define FAKE_common_file_directory_copy_s_length      14
+  #define FAKE_common_file_path_access_s_length         6
   #define FAKE_common_file_path_change_to_s_length      14
   #define FAKE_common_file_path_determine_real_s_length 22
   #define FAKE_common_file_path_stack_s_length          10
@@ -972,6 +974,7 @@ extern "C" {
   #define FAKE_common_setting_list_s_length 4
 
   extern const f_string_static_t fake_common_file_directory_copy_s;
+  extern const f_string_static_t fake_common_file_path_access_s;
   extern const f_string_static_t fake_common_file_path_change_to_s;
   extern const f_string_static_t fake_common_file_path_determine_real_s;
   extern const f_string_static_t fake_common_file_path_stack_s;

@@ -264,7 +264,7 @@ extern "C" {
     }
 
     if (operations_length) {
-      bool validate_parameter_directories = F_true;
+      bool validate_parameter_paths = F_true;
 
       status = fake_process_console_parameters(&data);
 
@@ -278,69 +278,118 @@ extern "C" {
         return F_status_set_error(status);
       }
 
-      for (uint8_t i = 0; i < operations_length; ++i) {
+      {
+        uint8_t i = 0;
 
-        data.operation = operations[i];
+        // Pre-process and perform validation when "clean" is before a "build" or "make" command as a safety check.
+        for (uint8_t has_clean = F_false; i < operations_length; ++i) {
 
-        if (data.operation == fake_operation_build_e) {
-          operations_name = fake_other_operation_build_s;
-        }
-        else if (data.operation == fake_operation_clean_e) {
-          operations_name = fake_other_operation_clean_s;
-        }
-        else if (data.operation == fake_operation_make_e) {
-          operations_name = fake_other_operation_make_s;
-        }
-        else if (data.operation == fake_operation_skeleton_e) {
-          operations_name = fake_other_operation_skeleton_s;
-        }
-
-        if (data.operation == fake_operation_build_e) {
-          if (validate_parameter_directories) {
-            status = fake_validate_parameter_directories(&data);
-            validate_parameter_directories = F_false;
+          if (operations[i] == fake_operation_clean_e) {
+            has_clean = F_true;
           }
+          else if (operations[i] == fake_operation_build_e || operations[i] == fake_operation_make_e) {
 
-          if (F_status_is_error_not(status)) {
-            status = fake_build_operate(&data, 0);
-          }
-        }
-        else if (data.operation == fake_operation_clean_e) {
-          status = fake_clean_operate(&data);
+            // If the first operation is clean and a make or build operation exists, then the clean operation requires the appropriate settings file or fakefile file.
+            if (has_clean) {
+              operations_name = fake_other_operation_clean_s;
+              data.operation = operations[i];
 
-          // Reset in case next operation needs files.
-          validate_parameter_directories = F_true;
-        }
-        else if (data.operation == fake_operation_make_e) {
-          if (validate_parameter_directories) {
-            status = fake_validate_parameter_directories(&data);
-            validate_parameter_directories = F_false;
-          }
+              status = fake_validate_parameter_paths(&data);
 
-          if (F_status_is_error_not(status)) {
-            status = fake_make_operate(&data);
-            if (status == F_child) break;
-          }
-        }
-        else if (data.operation == fake_operation_skeleton_e) {
-          status = fake_skeleton_operate(&data);
+              if (F_status_is_error_not(status)) {
+                f_string_static_t *path = 0;
 
-          // Skeleton is supposed to guarantee these.
-          validate_parameter_directories = F_false;
-        }
+                if (operations[i] == fake_operation_build_e) {
+                  path = &data.file_data_build_settings;
+                }
+                else {
+                  path = &data.file_data_build_fakefile;
+                }
 
-        if (status == F_child) break;
+                status = f_file_is(*path, F_file_type_regular_d, F_false);
 
-        if (F_status_set_fine(status) == F_interrupt || !(i % fake_signal_check_short_d)) {
-          if (fll_program_standard_signal_received(main)) {
-            fake_print_signal_received(&data);
+                if (status == F_false) {
+                  status = F_status_set_error(F_file_not);
+                }
 
-            status = F_status_set_error(F_interrupt);
+                if (F_status_is_error(status)) {
+                  fll_error_file_print(data.main->error, F_status_set_fine(status), "f_file_is", F_true, *path, fake_common_file_path_access_s, fll_error_file_type_file_e);
+                }
+              }
+            }
 
             break;
           }
+        } // for
 
-          main->signal_check = 0;
+        if (F_status_is_error_not(status)) {
+          for (i = 0; i < operations_length; ++i) {
+
+            data.operation = operations[i];
+
+            if (data.operation == fake_operation_build_e) {
+              operations_name = fake_other_operation_build_s;
+            }
+            else if (data.operation == fake_operation_clean_e) {
+              operations_name = fake_other_operation_clean_s;
+            }
+            else if (data.operation == fake_operation_make_e) {
+              operations_name = fake_other_operation_make_s;
+            }
+            else if (data.operation == fake_operation_skeleton_e) {
+              operations_name = fake_other_operation_skeleton_s;
+            }
+
+            if (data.operation == fake_operation_build_e) {
+              if (validate_parameter_paths) {
+                status = fake_validate_parameter_paths(&data);
+                validate_parameter_paths = F_false;
+              }
+
+              if (F_status_is_error_not(status)) {
+                status = fake_build_operate(&data, 0);
+              }
+            }
+            else if (data.operation == fake_operation_clean_e) {
+              status = fake_clean_operate(&data);
+
+              // Reset in case next operation needs files.
+              validate_parameter_paths = F_true;
+            }
+            else if (data.operation == fake_operation_make_e) {
+              if (validate_parameter_paths) {
+                status = fake_validate_parameter_paths(&data);
+                validate_parameter_paths = F_false;
+              }
+
+              if (F_status_is_error_not(status)) {
+                status = fake_make_operate(&data);
+                if (status == F_child) break;
+              }
+            }
+            else if (data.operation == fake_operation_skeleton_e) {
+              status = fake_skeleton_operate(&data);
+
+              // Skeleton is supposed to guarantee these.
+              validate_parameter_paths = F_false;
+            }
+
+            if (status == F_child) break;
+
+            if (F_status_set_fine(status) == F_interrupt || !(i % fake_signal_check_short_d)) {
+              if (fll_program_standard_signal_received(main)) {
+                fake_print_signal_received(&data);
+
+                status = F_status_set_error(F_interrupt);
+
+                break;
+              }
+
+              main->signal_check = 0;
+            }
+
+            if (F_status_is_error(status)) break;
+          } // for
         }
 
         if (F_status_is_error(status)) {
@@ -353,10 +402,8 @@ extern "C" {
 
             funlockfile(main->error.to.stream);
           }
-
-          break;
         }
-      } // for
+      }
 
       if (main->error.verbosity != f_console_verbosity_quiet_e) {
         if (F_status_is_error(status)) {

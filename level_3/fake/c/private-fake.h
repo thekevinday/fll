@@ -89,9 +89,9 @@ extern "C" {
  *
  *   Status codes (with error bit) are returned on any problem.
  */
-#ifndef _di_fake_validate_parameter_directories_
-  extern f_status_t fake_validate_parameter_directories(fake_data_t * const data) F_attribute_visibility_internal_d;
-#endif // _di_fake_validate_parameter_directories_
+#ifndef _di_fake_validate_parameter_paths_
+  extern f_status_t fake_validate_parameter_paths(fake_data_t * const data) F_attribute_visibility_internal_d;
+#endif // _di_fake_validate_parameter_paths_
 
 /**
  * Helper function for performing a verbose print for a file clone operation.
