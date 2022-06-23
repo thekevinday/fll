@@ -94,7 +94,7 @@ extern "C" {
           break;
         }
 
-        if (f_utf_is_digit(data->name.string + i, data->name.used - i) != F_true) {
+        if (f_utf_is_digit(data->name.string + i, data->name.used - i, 0) != F_true) {
           mode = 0;
         }
       } // for
