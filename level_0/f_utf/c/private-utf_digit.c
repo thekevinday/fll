@@ -86,6 +86,126 @@ static inline f_status_t private_inline_f_utf_character_handle_digit_from_one(co
   return F_true;
 }
 
+/**
+ * Inline helper function to reduce amount of code typed.
+ *
+ * Given the value, this will conditionally convert the range into an appropriate base-10 integer from 2 to 9.
+ *
+ * This does not handle non-decimal values (non-base-10).
+ *
+ * @param sequence
+ *   The character sequence to process.
+ * @param start
+ *   An inclusive start range.
+ *   The base-10 stop range calculated from this.
+ * @param value
+ *   The value to update, if non-NULL.
+ *
+ * @return
+ *   F_true for valid digit in the requested range.
+ *   F_false, otherwise.
+ */
+static inline f_status_t private_inline_f_utf_character_handle_digit_from_two(const f_utf_char_t sequence, const f_utf_char_t start, uint64_t * const value) {
+
+  if (value) {
+    f_char_t ascii = 0x32;
+
+    if (macro_f_utf_char_t_width(sequence) == 2) {
+      ascii += (f_char_t) macro_f_utf_char_t_to_char_2(sequence - start);
+    }
+    else if (macro_f_utf_char_t_width(sequence) == 3) {
+      ascii += (f_char_t) macro_f_utf_char_t_to_char_3(sequence - start);
+    }
+    else if (macro_f_utf_char_t_width(sequence) == 4) {
+      ascii += (f_char_t) macro_f_utf_char_t_to_char_4(sequence - start);
+    }
+
+    return private_f_utf_character_is_digit_for_ascii(ascii, value);
+  }
+
+  return F_true;
+}
+
+/**
+ * Inline helper function to reduce amount of code typed.
+ *
+ * Given the value, this will conditionally convert the range into an appropriate base-10 integer from 3 to 9.
+ *
+ * This does not handle non-decimal values (non-base-10).
+ *
+ * @param sequence
+ *   The character sequence to process.
+ * @param start
+ *   An inclusive start range.
+ *   The base-10 stop range calculated from this.
+ * @param value
+ *   The value to update, if non-NULL.
+ *
+ * @return
+ *   F_true for valid digit in the requested range.
+ *   F_false, otherwise.
+ */
+static inline f_status_t private_inline_f_utf_character_handle_digit_from_three(const f_utf_char_t sequence, const f_utf_char_t start, uint64_t * const value) {
+
+  if (value) {
+    f_char_t ascii = 0x33;
+
+    if (macro_f_utf_char_t_width(sequence) == 2) {
+      ascii += (f_char_t) macro_f_utf_char_t_to_char_2(sequence - start);
+    }
+    else if (macro_f_utf_char_t_width(sequence) == 3) {
+      ascii += (f_char_t) macro_f_utf_char_t_to_char_3(sequence - start);
+    }
+    else if (macro_f_utf_char_t_width(sequence) == 4) {
+      ascii += (f_char_t) macro_f_utf_char_t_to_char_4(sequence - start);
+    }
+
+    return private_f_utf_character_is_digit_for_ascii(ascii, value);
+  }
+
+  return F_true;
+}
+
+/**
+ * Inline helper function to reduce amount of code typed.
+ *
+ * Given the value, this will conditionally convert the range into an appropriate base-10 integer from 4 to 9.
+ *
+ * This does not handle non-decimal values (non-base-10).
+ *
+ * @param sequence
+ *   The character sequence to process.
+ * @param start
+ *   An inclusive start range.
+ *   The base-10 stop range calculated from this.
+ * @param value
+ *   The value to update, if non-NULL.
+ *
+ * @return
+ *   F_true for valid digit in the requested range.
+ *   F_false, otherwise.
+ */
+static inline f_status_t private_inline_f_utf_character_handle_digit_from_four(const f_utf_char_t sequence, const f_utf_char_t start, uint64_t * const value) {
+
+  if (value) {
+    f_char_t ascii = 0x34;
+
+    if (macro_f_utf_char_t_width(sequence) == 2) {
+      ascii += (f_char_t) macro_f_utf_char_t_to_char_2(sequence - start);
+    }
+    else if (macro_f_utf_char_t_width(sequence) == 3) {
+      ascii += (f_char_t) macro_f_utf_char_t_to_char_3(sequence - start);
+    }
+    else if (macro_f_utf_char_t_width(sequence) == 4) {
+      ascii += (f_char_t) macro_f_utf_char_t_to_char_4(sequence - start);
+    }
+
+    return private_f_utf_character_is_digit_for_ascii(ascii, value);
+  }
+
+  return F_true;
+}
+
 #if !defined(_di_f_utf_character_is_alphabetic_digit_) || !defined(_di_f_utf_is_alphabetic_digit_) || !defined(_di_f_utf_character_is_digit_) || !defined(_di_f_utf_is_digit_)
   f_status_t private_f_utf_character_is_digit(const f_utf_char_t sequence, uint64_t * const value) {
 
@@ -1071,6 +1191,49 @@ static inline f_status_t private_inline_f_utf_character_handle_digit_from_one(co
       }
       else if (macro_f_utf_char_t_to_char_1(sequence) == 0xe3) {
 
+        // CJK Symbols and Punctuation: U+3007.
+        if (sequence == 0xe3808700) {
+          if (value) {
+            *value = 0;
+          }
+
+          return F_true;
+        }
+
+        // CJK Symbols and Punctuation: U+3021 to U+3029.
+        if (sequence >= 0xe380a100 && sequence <= 0xe380a900) {
+          return private_inline_f_utf_character_handle_digit_from_one(sequence, 0xe380a100, value);
+        }
+
+        // CJK Symbols and Punctuation: U+3038 to U+303A.
+        if (sequence >= 0xe380b800 && sequence <= 0xe380ba00) {
+
+          // CJK Symbols and Punctuation: U+3038.
+          if (sequence == 0xe380b800) {
+            if (value) {
+              *value = 10;
+            }
+
+            return F_true;
+          }
+
+          // CJK Symbols and Punctuation: U+3039.
+          if (sequence == 0xe380b900) {
+            if (value) {
+              *value = 20;
+            }
+
+            return F_true;
+          }
+
+          // CJK Symbols and Punctuation: U+303A.
+          if (value) {
+            *value = 30;
+          }
+
+          return F_true;
+        }
+
         // Kanbun: U+3192 to U+3195.
         if (sequence >= 0xe3869200 && sequence <= 0xe3869500) {
           return private_inline_f_utf_character_handle_digit_from_one(sequence, 0xe3869200, value);
@@ -1465,6 +1628,27 @@ static inline f_status_t private_inline_f_utf_character_handle_digit_from_one(co
           return private_inline_f_utf_character_handle_digit(sequence, 0xea98a000, value);
         }
 
+        // Bamum: U+A6E6 to U+A6EF.
+        if (sequence >= 0xea9ba600 && sequence <= 0xea9baf00) {
+
+          // Bamum: U+A6E6 to U+A6EE.
+          if (sequence <= 0xea9bae00) {
+            return private_inline_f_utf_character_handle_digit_from_one(sequence, 0xea9ba600, value);
+          }
+
+          // Enclosed CJK Letters and Months: U+A6EF.
+          if (value) {
+            *value = 0;
+          }
+
+          return F_true;
+        }
+
+        // Common Indic Number Forms: U+A830 to U+A835.
+        if (sequence >= 0xeaa0b000 && sequence <= 0xeaa0b500) {
+          return F_true;
+        }
+
         // Saurashtra: U+A8D0 to U+A8D9.
         if (sequence >= 0xeaa39000 && sequence <= 0xeaa39900) {
           return private_inline_f_utf_character_handle_digit(sequence, 0xeaa39000, value);
@@ -1841,6 +2025,478 @@ static inline f_status_t private_inline_f_utf_character_handle_digit_from_one(co
           return F_true;
         }
 
+        // Ancient Greek Numbers: U+10142 to U+10174.
+        if (sequence >= 0xf0908582 && sequence <= 0xf09085b4) {
+
+          // Ancient Greek Numbers: U+10142.
+          if (sequence == 0xf0908582) {
+            if (value) {
+              *value = 1;
+            }
+
+            return F_true;
+          }
+
+          // Ancient Greek Numbers: U+10143.
+          if (sequence == 0xf0908583) {
+            if (value) {
+              *value = 5;
+            }
+
+            return F_true;
+          }
+
+          // Ancient Greek Numbers: U+10144.
+          if (sequence == 0xf0908584) {
+            if (value) {
+              *value = 50;
+            }
+
+            return F_true;
+          }
+
+          // Ancient Greek Numbers: U+10145.
+          if (sequence == 0xf0908585) {
+            if (value) {
+              *value = 500;
+            }
+
+            return F_true;
+          }
+
+          // Ancient Greek Numbers: U+10146.
+          if (sequence == 0xf0908586) {
+            if (value) {
+              *value = 5000;
+            }
+
+            return F_true;
+          }
+
+          // Ancient Greek Numbers: U+10147.
+          if (sequence == 0xf0908587) {
+            if (value) {
+              *value = 50000;
+            }
+
+            return F_true;
+          }
+
+          // Ancient Greek Numbers: U+10148.
+          if (sequence == 0xf0908588) {
+            if (value) {
+              *value = 5;
+            }
+
+            return F_true;
+          }
+
+          // Ancient Greek Numbers: U+10149.
+          if (sequence == 0xf0908589) {
+            if (value) {
+              *value = 10;
+            }
+
+            return F_true;
+          }
+
+          // Ancient Greek Numbers: U+1014A.
+          if (sequence == 0xf090858a) {
+            if (value) {
+              *value = 50;
+            }
+
+            return F_true;
+          }
+
+          // Ancient Greek Numbers: U+1014B.
+          if (sequence == 0xf090858b) {
+            if (value) {
+              *value = 100;
+            }
+
+            return F_true;
+          }
+
+          // Ancient Greek Numbers: U+1014C.
+          if (sequence == 0xf090858c) {
+            if (value) {
+              *value = 500;
+            }
+
+            return F_true;
+          }
+
+          // Ancient Greek Numbers: U+1014D.
+          if (sequence == 0xf090858d) {
+            if (value) {
+              *value = 1000;
+            }
+
+            return F_true;
+          }
+
+          // Ancient Greek Numbers: U+1014E.
+          if (sequence == 0xf090858e) {
+            if (value) {
+              *value = 5000;
+            }
+
+            return F_true;
+          }
+
+          // Ancient Greek Numbers: U+1014F.
+          if (sequence == 0xf090858f) {
+            if (value) {
+              *value = 5;
+            }
+
+            return F_true;
+          }
+
+          // Ancient Greek Numbers: U+10150.
+          if (sequence == 0xf0908590) {
+            if (value) {
+              *value = 10;
+            }
+
+            return F_true;
+          }
+
+          // Ancient Greek Numbers: U+10151.
+          if (sequence == 0xf0908591) {
+            if (value) {
+              *value = 50;
+            }
+
+            return F_true;
+          }
+
+          // Ancient Greek Numbers: U+10152.
+          if (sequence == 0xf0908592) {
+            if (value) {
+              *value = 100;
+            }
+
+            return F_true;
+          }
+
+          // Ancient Greek Numbers: U+10153.
+          if (sequence == 0xf0908593) {
+            if (value) {
+              *value = 500;
+            }
+
+            return F_true;
+          }
+
+          // Ancient Greek Numbers: U+10154.
+          if (sequence == 0xf0908594) {
+            if (value) {
+              *value = 1000;
+            }
+
+            return F_true;
+          }
+
+          // Ancient Greek Numbers: U+10155.
+          if (sequence == 0xf0908595) {
+            if (value) {
+              *value = 10000;
+            }
+
+            return F_true;
+          }
+
+          // Ancient Greek Numbers: U+10156.
+          if (sequence == 0xf0908596) {
+            if (value) {
+              *value = 50000;
+            }
+
+            return F_true;
+          }
+
+          // Ancient Greek Numbers: U+10157.
+          if (sequence == 0xf0908597) {
+            if (value) {
+              *value = 10;
+            }
+
+            return F_true;
+          }
+
+          // Ancient Greek Numbers: U+10158.
+          if (sequence == 0xf0908598) {
+            if (value) {
+              *value = 1;
+            }
+
+            return F_true;
+          }
+
+          // Ancient Greek Numbers: U+10159.
+          if (sequence == 0xf0908599) {
+            if (value) {
+              *value = 1;
+            }
+
+            return F_true;
+          }
+
+          // Ancient Greek Numbers: U+1015A.
+          if (sequence == 0xf090859a) {
+            if (value) {
+              *value = 1;
+            }
+
+            return F_true;
+          }
+
+          // Ancient Greek Numbers: U+1015B.
+          if (sequence == 0xf090859b) {
+            if (value) {
+              *value = 2;
+            }
+
+            return F_true;
+          }
+
+          // Ancient Greek Numbers: U+1015C.
+          if (sequence == 0xf090859c) {
+            if (value) {
+              *value = 2;
+            }
+
+            return F_true;
+          }
+
+          // Ancient Greek Numbers: U+1015D.
+          if (sequence == 0xf090859d) {
+            if (value) {
+              *value = 2;
+            }
+
+            return F_true;
+          }
+
+          // Ancient Greek Numbers: U+1015E.
+          if (sequence == 0xf090859e) {
+            if (value) {
+              *value = 2;
+            }
+
+            return F_true;
+          }
+
+          // Ancient Greek Numbers: U+1015F.
+          if (sequence == 0xf090859f) {
+            if (value) {
+              *value = 5;
+            }
+
+            return F_true;
+          }
+
+          // Ancient Greek Numbers: U+10160.
+          if (sequence == 0xf09085a0) {
+            if (value) {
+              *value = 10;
+            }
+
+            return F_true;
+          }
+
+          // Ancient Greek Numbers: U+10161.
+          if (sequence == 0xf09085a1) {
+            if (value) {
+              *value = 10;
+            }
+
+            return F_true;
+          }
+
+          // Ancient Greek Numbers: U+10162.
+          if (sequence == 0xf09085a2) {
+            if (value) {
+              *value = 10;
+            }
+
+            return F_true;
+          }
+
+          // Ancient Greek Numbers: U+10163.
+          if (sequence == 0xf09085a3) {
+            if (value) {
+              *value = 10;
+            }
+
+            return F_true;
+          }
+
+          // Ancient Greek Numbers: U+10164.
+          if (sequence == 0xf09085a4) {
+            if (value) {
+              *value = 10;
+            }
+
+            return F_true;
+          }
+
+          // Ancient Greek Numbers: U+10165.
+          if (sequence == 0xf09085a5) {
+            if (value) {
+              *value = 30;
+            }
+
+            return F_true;
+          }
+
+          // Ancient Greek Numbers: U+10166.
+          if (sequence == 0xf09085a6) {
+            if (value) {
+              *value = 50;
+            }
+
+            return F_true;
+          }
+
+          // Ancient Greek Numbers: U+10167.
+          if (sequence == 0xf09085a7) {
+            if (value) {
+              *value = 50;
+            }
+
+            return F_true;
+          }
+
+          // Ancient Greek Numbers: U+10168.
+          if (sequence == 0xf09085a8) {
+            if (value) {
+              *value = 50;
+            }
+
+            return F_true;
+          }
+
+          // Ancient Greek Numbers: U+10169.
+          if (sequence == 0xf09085a9) {
+            if (value) {
+              *value = 50;
+            }
+
+            return F_true;
+          }
+
+          // Ancient Greek Numbers: U+10169.
+          if (sequence == 0xf09085a9) {
+            if (value) {
+              *value = 50;
+            }
+
+            return F_true;
+          }
+
+          // Ancient Greek Numbers: U+1016A.
+          if (sequence == 0xf09085aa) {
+            if (value) {
+              *value = 100;
+            }
+
+            return F_true;
+          }
+
+          // Ancient Greek Numbers: U+1016B.
+          if (sequence == 0xf09085ab) {
+            if (value) {
+              *value = 300;
+            }
+
+            return F_true;
+          }
+
+          // Ancient Greek Numbers: U+1016C.
+          if (sequence == 0xf09085ac) {
+            if (value) {
+              *value = 500;
+            }
+
+            return F_true;
+          }
+
+          // Ancient Greek Numbers: U+1016D.
+          if (sequence == 0xf09085ad) {
+            if (value) {
+              *value = 500;
+            }
+
+            return F_true;
+          }
+
+          // Ancient Greek Numbers: U+1016E.
+          if (sequence == 0xf09085ae) {
+            if (value) {
+              *value = 500;
+            }
+
+            return F_true;
+          }
+
+          // Ancient Greek Numbers: U+1016F.
+          if (sequence == 0xf09085af) {
+            if (value) {
+              *value = 500;
+            }
+
+            return F_true;
+          }
+
+          // Ancient Greek Numbers: U+10170.
+          if (sequence == 0xf09085b0) {
+            if (value) {
+              *value = 500;
+            }
+
+            return F_true;
+          }
+
+          // Ancient Greek Numbers: U+10171.
+          if (sequence == 0xf09085b1) {
+            if (value) {
+              *value = 1000;
+            }
+
+            return F_true;
+          }
+
+          // Ancient Greek Numbers: U+10172.
+          if (sequence == 0xf09085b2) {
+            if (value) {
+              *value = 5000;
+            }
+
+            return F_true;
+          }
+
+          // Ancient Greek Numbers: U+10173.
+          if (sequence == 0xf09085b3) {
+            if (value) {
+              *value = 5;
+            }
+
+            return F_true;
+          }
+
+          // Ancient Greek Numbers: U+10174.
+          if (sequence == 0xf09085b4) {
+            if (value) {
+              *value = 50;
+            }
+
+            return F_true;
+          }
+        }
+
         // Ancient Greek Numbers: U+1018A.
         if (sequence == 0xf090868a) {
           if (value) {
@@ -2052,6 +2708,71 @@ static inline f_status_t private_inline_f_utf_character_handle_digit_from_one(co
           // Old Italic: U+10323.
           if (value) {
             *value = 50;
+          }
+
+          return F_true;
+        }
+
+        // Gothic: U+10341.
+        if (sequence == 0xf0908d81) {
+          if (value) {
+            *value = 90;
+          }
+
+          return F_true;
+        }
+
+        // Gothic: U+1034A.
+        if (sequence == 0xf0908d8a) {
+          if (value) {
+            *value = 900;
+          }
+
+          return F_true;
+        }
+
+        // Old Persian: U+103D1 to U+103D5.
+        if (sequence >= 0xf0908f91 && sequence <= 0xf0908f95) {
+
+          // Old Persian: U+103D1.
+          if (sequence == 0xf0908f91) {
+            if (value) {
+              *value = 1;
+            }
+
+            return F_true;
+          }
+
+          // Old Persian: U+103D2.
+          if (sequence == 0xf0908f92) {
+            if (value) {
+              *value = 2;
+            }
+
+            return F_true;
+          }
+
+          // Old Persian: U+103D3.
+          if (sequence == 0xf0908f93) {
+            if (value) {
+              *value = 10;
+            }
+
+            return F_true;
+          }
+
+          // Old Persian: U+103D4.
+          if (sequence == 0xf0908f94) {
+            if (value) {
+              *value = 20;
+            }
+
+            return F_true;
+          }
+
+          // Old Persian: U+103D5.
+          if (value) {
+            *value = 100;
           }
 
           return F_true;
@@ -3105,7 +3826,481 @@ static inline f_status_t private_inline_f_utf_character_handle_digit_from_one(co
           return F_true;
         }
 
-        // @todo U+10BA9 and so on..
+        // Psalter Pahlavi: U+10BA9 to U+10BAF.
+        if (sequence >= 0xf090aea9 && sequence <= 0xf090aeaf) {
+
+          // Psalter Pahlavi: U+10BA9.
+          if (sequence == 0xf090aea9) {
+            if (value) {
+              *value = 1;
+            }
+
+            return F_true;
+          }
+
+          // Psalter Pahlavi: U+10BAA.
+          if (sequence == 0xf090aeaa) {
+            if (value) {
+              *value = 2;
+            }
+
+            return F_true;
+          }
+
+          // Psalter Pahlavi: U+10BAB.
+          if (sequence == 0xf090aeab) {
+            if (value) {
+              *value = 3;
+            }
+
+            return F_true;
+          }
+
+          // Psalter Pahlavi: U+10BAC.
+          if (sequence == 0xf090aeac) {
+            if (value) {
+              *value = 4;
+            }
+
+            return F_true;
+          }
+
+          // Psalter Pahlavi: U+10BAD.
+          if (sequence == 0xf090aead) {
+            if (value) {
+              *value = 10;
+            }
+
+            return F_true;
+          }
+
+          // Psalter Pahlavi: U+10BAE.
+          if (sequence == 0xf090aeae) {
+            if (value) {
+              *value = 20;
+            }
+
+            return F_true;
+          }
+
+          // Psalter Pahlavi: U+10BAF.
+          if (value) {
+            *value = 100;
+          }
+
+          return F_true;
+        }
+
+        // Old Hungarian: U+10CFA to U+10CFF.
+        if (sequence >= 0xf090b3ba && sequence <= 0xf090b3bf) {
+
+          // Old Hungarian: U+10CFA.
+          if (sequence == 0xf090b3ba) {
+            if (value) {
+              *value = 1;
+            }
+
+            return F_true;
+          }
+
+          // Old Hungarian: U+10CFB.
+          if (sequence == 0xf090b3bb) {
+            if (value) {
+              *value = 5;
+            }
+
+            return F_true;
+          }
+
+          // Old Hungarian: U+10CFC.
+          if (sequence == 0xf090b3bc) {
+            if (value) {
+              *value = 10;
+            }
+
+            return F_true;
+          }
+
+          // Old Hungarian: U+10CFD.
+          if (sequence == 0xf090b3bd) {
+            if (value) {
+              *value = 50;
+            }
+
+            return F_true;
+          }
+
+          // Old Hungarian: U+10CFE.
+          if (sequence == 0xf090b3be) {
+            if (value) {
+              *value = 100;
+            }
+
+            return F_true;
+          }
+
+          // Old Hungarian: U+10CFF.
+          if (value) {
+            *value = 1000;
+          }
+
+          return F_true;
+        }
+
+        // Rumi Numeral Symbols: U+10E60 to U+10E7A.
+        if (sequence >= 0xf090b9a0 && sequence <= 0xf090b9ba) {
+
+          // Rumi Numeral Symbols: U+10E60 to U+10E68.
+          if (sequence <= 0xf090b9a8) {
+            return private_inline_f_utf_character_handle_digit_from_one(sequence, 0xf090b9a0, value);
+          }
+
+          // Rumi Numeral Symbols: U+10E69.
+          if (sequence == 0xf090b9a9) {
+            if (value) {
+              *value = 10;
+            }
+
+            return F_true;
+          }
+
+          // Rumi Numeral Symbols: U+10E6A.
+          if (sequence == 0xf090b9aa) {
+            if (value) {
+              *value = 20;
+            }
+
+            return F_true;
+          }
+
+          // Rumi Numeral Symbols: U+10E6B.
+          if (sequence == 0xf090b9ab) {
+            if (value) {
+              *value = 30;
+            }
+
+            return F_true;
+          }
+
+          // Rumi Numeral Symbols: U+10E6C.
+          if (sequence == 0xf090b9ac) {
+            if (value) {
+              *value = 40;
+            }
+
+            return F_true;
+          }
+
+          // Rumi Numeral Symbols: U+10E6D.
+          if (sequence == 0xf090b9ad) {
+            if (value) {
+              *value = 50;
+            }
+
+            return F_true;
+          }
+
+          // Rumi Numeral Symbols: U+10E6E.
+          if (sequence == 0xf090b9ae) {
+            if (value) {
+              *value = 60;
+            }
+
+            return F_true;
+          }
+
+          // Rumi Numeral Symbols: U+10E6F.
+          if (sequence == 0xf090b9af) {
+            if (value) {
+              *value = 70;
+            }
+
+            return F_true;
+          }
+
+          // Rumi Numeral Symbols: U+10E70.
+          if (sequence == 0xf090b9b0) {
+            if (value) {
+              *value = 80;
+            }
+
+            return F_true;
+          }
+
+          // Rumi Numeral Symbols: U+10E71.
+          if (sequence == 0xf090b9b1) {
+            if (value) {
+              *value = 90;
+            }
+
+            return F_true;
+          }
+
+          // Rumi Numeral Symbols: U+10E72.
+          if (sequence == 0xf090b9b2) {
+            if (value) {
+              *value = 100;
+            }
+
+            return F_true;
+          }
+
+          // Rumi Numeral Symbols: U+10E73.
+          if (sequence == 0xf090b9b3) {
+            if (value) {
+              *value = 200;
+            }
+
+            return F_true;
+          }
+
+          // Rumi Numeral Symbols: U+10E74.
+          if (sequence == 0xf090b9b4) {
+            if (value) {
+              *value = 300;
+            }
+
+            return F_true;
+          }
+
+          // Rumi Numeral Symbols: U+10E75.
+          if (sequence == 0xf090b9b5) {
+            if (value) {
+              *value = 400;
+            }
+
+            return F_true;
+          }
+
+          // Rumi Numeral Symbols: U+10E76.
+          if (sequence == 0xf090b9b6) {
+            if (value) {
+              *value = 500;
+            }
+
+            return F_true;
+          }
+
+          // Rumi Numeral Symbols: U+10E77.
+          if (sequence == 0xf090b9b7) {
+            if (value) {
+              *value = 600;
+            }
+
+            return F_true;
+          }
+
+          // Rumi Numeral Symbols: U+10E78.
+          if (sequence == 0xf090b9b8) {
+            if (value) {
+              *value = 700;
+            }
+
+            return F_true;
+          }
+
+          // Rumi Numeral Symbols: U+10E79.
+          if (sequence == 0xf090b9b9) {
+            if (value) {
+              *value = 800;
+            }
+
+            return F_true;
+          }
+
+          // Rumi Numeral Symbols: U+10E7A.
+          if (value) {
+            *value = 900;
+          }
+
+          return F_true;
+        }
+
+        // Old Sogdian: U+10F1D to U+10F25.
+        if (sequence >= 0xf090bc9d && sequence <= 0xf090bca5) {
+
+          // Old Sogdian: U+10F1D.
+          if (sequence == 0xf090bc9d) {
+            if (value) {
+              *value = 1;
+            }
+
+            return F_true;
+          }
+
+          // Old Sogdian: U+10F1E.
+          if (sequence == 0xf090bc9e) {
+            if (value) {
+              *value = 2;
+            }
+
+            return F_true;
+          }
+
+          // Old Sogdian: U+10F1F.
+          if (sequence == 0xf090bc9f) {
+            if (value) {
+              *value = 3;
+            }
+
+            return F_true;
+          }
+
+          // Old Sogdian: U+10F20.
+          if (sequence == 0xf090bca0) {
+            if (value) {
+              *value = 4;
+            }
+
+            return F_true;
+          }
+
+          // Old Sogdian: U+10F21.
+          if (sequence == 0xf090bca1) {
+            if (value) {
+              *value = 5;
+            }
+
+            return F_true;
+          }
+
+          // Old Sogdian: U+10F22.
+          if (sequence == 0xf090bca2) {
+            if (value) {
+              *value = 10;
+            }
+
+            return F_true;
+          }
+
+          // Old Sogdian: U+10F23.
+          if (sequence == 0xf090bca3) {
+            if (value) {
+              *value = 20;
+            }
+
+            return F_true;
+          }
+
+          // Old Sogdian: U+10F24.
+          if (sequence == 0xf090bca4) {
+            if (value) {
+              *value = 30;
+            }
+
+            return F_true;
+          }
+
+          // Old Sogdian: U+10F25.
+          if (value) {
+            *value = 100;
+          }
+
+          return F_true;
+        }
+
+        // Sogdian: U+10F51 to U+10F54.
+        if (sequence >= 0xf090bd91 && sequence <= 0xf090bd94) {
+
+          // Sogdian: U+10F51.
+          if (sequence == 0xf090bd91) {
+            if (value) {
+              *value = 1;
+            }
+
+            return F_true;
+          }
+
+          // Sogdian: U+10F52.
+          if (sequence == 0xf090bd92) {
+            if (value) {
+              *value = 10;
+            }
+
+            return F_true;
+          }
+
+          // Sogdian: U+10F53.
+          if (sequence == 0xf090bd93) {
+            if (value) {
+              *value = 20;
+            }
+
+            return F_true;
+          }
+
+          // Sogdian: U+10F54.
+          if (value) {
+            *value = 100;
+          }
+
+          return F_true;
+        }
+
+        // Chorasmian Number: U+10FC5 to U+10FCB.
+        if (sequence >= 0xf090bf85 && sequence <= 0xf090bf8b) {
+
+          // Chorasmian Number: U+10FC5.
+          if (sequence == 0xf090bf85) {
+            if (value) {
+              *value = 1;
+            }
+
+            return F_true;
+          }
+
+          // Chorasmian Number: U+10FC6.
+          if (sequence == 0xf090bf86) {
+            if (value) {
+              *value = 2;
+            }
+
+            return F_true;
+          }
+
+          // Chorasmian Number: U+10FC7.
+          if (sequence == 0xf090bf87) {
+            if (value) {
+              *value = 3;
+            }
+
+            return F_true;
+          }
+
+          // Chorasmian Number: U+10FC8.
+          if (sequence == 0xf090bf88) {
+            if (value) {
+              *value = 4;
+            }
+
+            return F_true;
+          }
+
+          // Chorasmian Number: U+10FC9.
+          if (sequence == 0xf090bf89) {
+            if (value) {
+              *value = 10;
+            }
+
+            return F_true;
+          }
+
+          // Chorasmian Number: U+10FCA.
+          if (sequence == 0xf090bf8a) {
+            if (value) {
+              *value = 20;
+            }
+
+            return F_true;
+          }
+
+          // Chorasmian Number: U+10FCA.
+          if (value) {
+            *value = 100;
+          }
+
+          return F_true;
+        }
 
         // Hanifi Rohingya: U+10D30 to U+10D39.
         if (sequence >= 0xf090b4b0 && sequence <= 0xf090b4b9) {
@@ -3179,6 +4374,103 @@ static inline f_status_t private_inline_f_utf_character_handle_digit_from_one(co
           return private_inline_f_utf_character_handle_digit(sequence, 0xf091b190, value);
         }
 
+        // Bhaiksuki: U+11C5A to U+11C6C.
+        if (sequence >= 0xf091b19a && sequence <= 0xf091b1ac) {
+
+          // Bhaiksuki: U+11C5A to U+11C62.
+          if (sequence <= 0xf091b1a2) {
+            return private_inline_f_utf_character_handle_digit_from_one(sequence, 0xf091b19a, value);
+          }
+
+          // Bhaiksuki: U+11C63.
+          if (sequence == 0xf091b1a3) {
+            if (value) {
+              *value = 10;
+            }
+
+            return F_true;
+          }
+
+          // Bhaiksuki: U+11C64.
+          if (sequence == 0xf091b1a4) {
+            if (value) {
+              *value = 20;
+            }
+
+            return F_true;
+          }
+
+          // Bhaiksuki: U+11C65.
+          if (sequence == 0xf091b1a5) {
+            if (value) {
+              *value = 30;
+            }
+
+            return F_true;
+          }
+
+          // Bhaiksuki: U+11C66.
+          if (sequence == 0xf091b1a6) {
+            if (value) {
+              *value = 40;
+            }
+
+            return F_true;
+          }
+
+          // Bhaiksuki: U+11C67.
+          if (sequence == 0xf091b1a7) {
+            if (value) {
+              *value = 50;
+            }
+
+            return F_true;
+          }
+
+          // Bhaiksuki: U+11C68.
+          if (sequence == 0xf091b1a8) {
+            if (value) {
+              *value = 60;
+            }
+
+            return F_true;
+          }
+
+          // Bhaiksuki: U+11C69.
+          if (sequence == 0xf091b1a9) {
+            if (value) {
+              *value = 70;
+            }
+
+            return F_true;
+          }
+
+          // Bhaiksuki: U+11C6A.
+          if (sequence == 0xf091b1aa) {
+            if (value) {
+              *value = 80;
+            }
+
+            return F_true;
+          }
+
+          // Bhaiksuki: U+11C6B.
+          if (sequence == 0xf091b1ab) {
+            if (value) {
+              *value = 90;
+            }
+
+            return F_true;
+          }
+
+          // Bhaiksuki: U+11C6C.
+          if (value) {
+            *value = 100;
+          }
+
+          return F_true;
+        }
+
         // Masaram Gondi: U+11D50 to U+11D59.
         if (sequence >= 0xf091b590 && sequence <= 0xf091b599) {
           return private_inline_f_utf_character_handle_digit(sequence, 0xf091b590, value);
@@ -3187,6 +4479,815 @@ static inline f_status_t private_inline_f_utf_character_handle_digit_from_one(co
         // Gunjala Gondi: U+11DA0 to U+11DA9.
         if (sequence >= 0xf091b6a0 && sequence <= 0xf091b6a9) {
           return private_inline_f_utf_character_handle_digit(sequence, 0xf091b6a0, value);
+        }
+
+        // Brahmi: U+11052 to U+11065.
+        if (sequence >= 0xf0918192 && sequence <= 0xf09181a5) {
+
+          // Brahmi: U+11052 to U+1105A.
+          if (sequence <= 0xf091819a) {
+            return private_inline_f_utf_character_handle_digit_from_one(sequence, 0xf0918192, value);
+          }
+
+          // Brahmi: U+1105B.
+          if (sequence == 0xf091819b) {
+            if (value) {
+              *value = 10;
+            }
+
+            return F_true;
+          }
+
+          // Brahmi: U+1105C.
+          if (sequence == 0xf091819c) {
+            if (value) {
+              *value = 20;
+            }
+
+            return F_true;
+          }
+
+          // Brahmi: U+1105D.
+          if (sequence == 0xf091819d) {
+            if (value) {
+              *value = 30;
+            }
+
+            return F_true;
+          }
+
+          // Brahmi: U+1105E.
+          if (sequence == 0xf091819e) {
+            if (value) {
+              *value = 40;
+            }
+
+            return F_true;
+          }
+
+          // Brahmi: U+1105F.
+          if (sequence == 0xf091819f) {
+            if (value) {
+              *value = 50;
+            }
+
+            return F_true;
+          }
+
+          // Brahmi: U+11060.
+          if (sequence == 0xf09181a0) {
+            if (value) {
+              *value = 60;
+            }
+
+            return F_true;
+          }
+
+          // Brahmi: U+11061.
+          if (sequence == 0xf09181a1) {
+            if (value) {
+              *value = 70;
+            }
+
+            return F_true;
+          }
+
+          // Brahmi: U+11062.
+          if (sequence == 0xf09181a2) {
+            if (value) {
+              *value = 80;
+            }
+
+            return F_true;
+          }
+
+          // Brahmi: U+11063.
+          if (sequence == 0xf09181a3) {
+            if (value) {
+              *value = 90;
+            }
+
+            return F_true;
+          }
+
+          // Brahmi: U+11064.
+          if (sequence == 0xf09181a4) {
+            if (value) {
+              *value = 100;
+            }
+
+            return F_true;
+          }
+
+          // Brahmi: U+11065.
+          if (value) {
+            *value = 1000;
+          }
+
+          return F_true;
+        }
+
+        // Sinhala Archaic Numbers: U+111E1 to U+111F4.
+        if (sequence >= 0xf09187a1 && sequence <= 0xf09187b4) {
+
+          // Sinhala Archaic Numbers: U+111E1 to U+111E9.
+          if (sequence <= 0xf09187a9) {
+            return private_inline_f_utf_character_handle_digit_from_one(sequence, 0xf09187a1, value);
+          }
+
+          // Sinhala Archaic Numbers: U+111EA.
+          if (sequence == 0xf09187aa) {
+            if (value) {
+              *value = 10;
+            }
+
+            return F_true;
+          }
+
+          // Sinhala Archaic Numbers: U+111EB.
+          if (sequence == 0xf09187ab) {
+            if (value) {
+              *value = 20;
+            }
+
+            return F_true;
+          }
+
+          // Sinhala Archaic Numbers: U+111EC.
+          if (sequence == 0xf09187ac) {
+            if (value) {
+              *value = 30;
+            }
+
+            return F_true;
+          }
+
+          // Sinhala Archaic Numbers: U+111ED.
+          if (sequence == 0xf09187ad) {
+            if (value) {
+              *value = 40;
+            }
+
+            return F_true;
+          }
+
+          // Sinhala Archaic Numbers: U+111EE.
+          if (sequence == 0xf09187ae) {
+            if (value) {
+              *value = 50;
+            }
+
+            return F_true;
+          }
+
+          // Sinhala Archaic Numbers: U+111EF.
+          if (sequence == 0xf09187af) {
+            if (value) {
+              *value = 60;
+            }
+
+            return F_true;
+          }
+
+          // Sinhala Archaic Numbers: U+111F0.
+          if (sequence == 0xf09187b0) {
+            if (value) {
+              *value = 70;
+            }
+
+            return F_true;
+          }
+
+          // Sinhala Archaic Numbers: U+111F1.
+          if (sequence == 0xf09187b1) {
+            if (value) {
+              *value = 80;
+            }
+
+            return F_true;
+          }
+
+          // Sinhala Archaic Numbers: U+111F2.
+          if (sequence == 0xf09187b2) {
+            if (value) {
+              *value = 90;
+            }
+
+            return F_true;
+          }
+
+          // Sinhala Archaic Numbers: U+111F3.
+          if (sequence == 0xf09187b3) {
+            if (value) {
+              *value = 100;
+            }
+
+            return F_true;
+          }
+
+          // Sinhala Archaic Numbers: U+111F4.
+          if (value) {
+            *value = 1000;
+          }
+
+          return F_true;
+        }
+
+        // Ahom: U+1173A.
+        if (sequence == 0xf0919cba) {
+          if (value) {
+            *value = 10;
+          }
+
+          return F_true;
+        }
+
+        // Ahom: U+1173B.
+        if (sequence == 0xf0919cbb) {
+          if (value) {
+            *value = 20;
+          }
+
+          return F_true;
+        }
+
+        // Warang Citi: U+118EA to U+118F2.
+        if (sequence >= 0xf091a3aa && sequence <= 0xf091a3b2) {
+
+          // Warang Citi: U+118EA.
+          if (sequence == 0xf091a3aa) {
+            if (value) {
+              *value = 10;
+            }
+
+            return F_true;
+          }
+
+          // Warang Citi: U+118EB.
+          if (sequence == 0xf091a3ab) {
+            if (value) {
+              *value = 20;
+            }
+
+            return F_true;
+          }
+
+          // Warang Citi: U+118EC.
+          if (sequence == 0xf091a3ac) {
+            if (value) {
+              *value = 30;
+            }
+
+            return F_true;
+          }
+
+          // Warang Citi: U+118ED.
+          if (sequence == 0xf091a3ad) {
+            if (value) {
+              *value = 40;
+            }
+
+            return F_true;
+          }
+
+          // Warang Citi: U+118EE.
+          if (sequence == 0xf091a3ae) {
+            if (value) {
+              *value = 50;
+            }
+
+            return F_true;
+          }
+
+          // Warang Citi: U+118EF.
+          if (sequence == 0xf091a3af) {
+            if (value) {
+              *value = 60;
+            }
+
+            return F_true;
+          }
+
+          // Warang Citi: U+118F0.
+          if (sequence == 0xf091a3b0) {
+            if (value) {
+              *value = 70;
+            }
+
+            return F_true;
+          }
+
+          // Warang Citi: U+118F1.
+          if (sequence == 0xf091a3b1) {
+            if (value) {
+              *value = 80;
+            }
+
+            return F_true;
+          }
+
+          // Warang Citi: U+118F2.
+          if (value) {
+            *value = 90;
+          }
+
+          return F_true;
+        }
+      }
+      else if (macro_f_utf_char_t_to_char_2(sequence) == 0x92) {
+
+        // Cuneiform Numbers and Punctuation: U+12400 to U+1246E.
+        if (sequence >= 0xf0929080 && sequence <= 0xf09291ae) {
+
+          // Cuneiform Numbers and Punctuation: U+12400 to U+12407.
+          if (sequence <= 0xf0929087) {
+            return private_inline_f_utf_character_handle_digit_from_two(sequence, 0xf0929080, value);
+          }
+
+          // Cuneiform Numbers and Punctuation: U+12408 to U+1240E.
+          if (sequence <= 0xf092908e) {
+            return private_inline_f_utf_character_handle_digit_from_three(sequence, 0xf0929088, value);
+          }
+
+          // Cuneiform Numbers and Punctuation: U+1240F to U+12414.
+          if (sequence <= 0xf0929094) {
+            return private_inline_f_utf_character_handle_digit_from_four(sequence, 0xf092908f, value);
+          }
+
+          // Cuneiform Numbers and Punctuation: U+12415 to U+1241D.
+          if (sequence <= 0xf092909d) {
+            return private_inline_f_utf_character_handle_digit_from_one(sequence, 0xf0929095, value);
+          }
+
+          // Cuneiform Numbers and Punctuation: U+1241E to U+12422.
+          if (sequence <= 0xf09290a2) {
+            return private_inline_f_utf_character_handle_digit_from_one(sequence, 0xf092909e, value);
+          }
+
+          // Cuneiform Numbers and Punctuation: U+12423.
+          if (sequence == 0xf09290a3) {
+            if (value) {
+              *value = 2;
+            }
+
+            return F_true;
+          }
+
+          // Cuneiform Numbers and Punctuation: U+12424, U+12425.
+          if (sequence == 0xf09290a4 || sequence == 0xf09290a5) {
+            if (value) {
+              *value = 3;
+            }
+
+            return F_true;
+          }
+
+          // Cuneiform Numbers and Punctuation: U+12426 to U+1242B.
+          if (sequence <= 0xf09290ab) {
+            return private_inline_f_utf_character_handle_digit_from_four(sequence, 0xf09290a6, value);
+          }
+
+          // Cuneiform Numbers and Punctuation: U+1242C to U+1242E.
+          if (sequence <= 0xf09290ae) {
+            return private_inline_f_utf_character_handle_digit_from_one(sequence, 0xf09290ac, value);
+          }
+
+          // Cuneiform Numbers and Punctuation: U+1242F to U+12431.
+          if (sequence <= 0xf09290b1) {
+            return private_inline_f_utf_character_handle_digit_from_three(sequence, 0xf09290af, value);
+          }
+
+          // Cuneiform Numbers and Punctuation: U+12432.
+          if (sequence == 0xf09290b2) {
+            if (value) {
+              *value = 216000;
+            }
+
+            return F_true;
+          }
+
+          // Cuneiform Numbers and Punctuation: U+12433.
+          if (sequence == 0xf09290b3) {
+            if (value) {
+              *value = 432000;
+            }
+
+            return F_true;
+          }
+
+          // Cuneiform Numbers and Punctuation: U+12434.
+          if (sequence == 0xf09290b4) {
+            if (value) {
+              *value = 1;
+            }
+
+            return F_true;
+          }
+
+          // Cuneiform Numbers and Punctuation: U+12435.
+          if (sequence == 0xf09290b5) {
+            if (value) {
+              *value = 2;
+            }
+
+            return F_true;
+          }
+
+          // Cuneiform Numbers and Punctuation: U+12436.
+          if (sequence == 0xf09290b6) {
+            if (value) {
+              *value = 3;
+            }
+
+            return F_true;
+          }
+
+          // Cuneiform Numbers and Punctuation: U+12437.
+          if (sequence == 0xf09290b7) {
+            if (value) {
+              *value = 3;
+            }
+
+            return F_true;
+          }
+
+          // Cuneiform Numbers and Punctuation: U+12438.
+          if (sequence == 0xf09290b8) {
+            if (value) {
+              *value = 4;
+            }
+
+            return F_true;
+          }
+
+          // Cuneiform Numbers and Punctuation: U+12439.
+          if (sequence == 0xf09290b9) {
+            if (value) {
+              *value = 5;
+            }
+
+            return F_true;
+          }
+
+          // Cuneiform Numbers and Punctuation: U+1243A.
+          if (sequence == 0xf09290ba) {
+            if (value) {
+              *value = 3;
+            }
+
+            return F_true;
+          }
+
+          // Cuneiform Numbers and Punctuation: U+1243B.
+          if (sequence == 0xf09290bb) {
+            if (value) {
+              *value = 3;
+            }
+
+            return F_true;
+          }
+
+          // Cuneiform Numbers and Punctuation: U+1243C.
+          if (sequence == 0xf09290bc) {
+            if (value) {
+              *value = 4;
+            }
+
+            return F_true;
+          }
+
+          // Cuneiform Numbers and Punctuation: U+1243D.
+          if (sequence == 0xf09290bd) {
+            if (value) {
+              *value = 4;
+            }
+
+            return F_true;
+          }
+
+          // Cuneiform Numbers and Punctuation: U+1243E.
+          if (sequence == 0xf09290be) {
+            if (value) {
+              *value = 4;
+            }
+
+            return F_true;
+          }
+
+          // Cuneiform Numbers and Punctuation: U+1243F.
+          if (sequence == 0xf09290bf) {
+            if (value) {
+              *value = 4;
+            }
+
+            return F_true;
+          }
+
+          // Cuneiform Numbers and Punctuation: U+12440.
+          if (sequence == 0xf0929180) {
+            if (value) {
+              *value = 6;
+            }
+
+            return F_true;
+          }
+
+          // Cuneiform Numbers and Punctuation: U+12441.
+          if (sequence == 0xf0929181) {
+            if (value) {
+              *value = 7;
+            }
+
+            return F_true;
+          }
+
+          // Cuneiform Numbers and Punctuation: U+12442.
+          if (sequence == 0xf0929182) {
+            if (value) {
+              *value = 7;
+            }
+
+            return F_true;
+          }
+
+          // Cuneiform Numbers and Punctuation: U+12443.
+          if (sequence == 0xf0929183) {
+            if (value) {
+              *value = 7;
+            }
+
+            return F_true;
+          }
+
+          // Cuneiform Numbers and Punctuation: U+12444.
+          if (sequence == 0xf0929184) {
+            if (value) {
+              *value = 8;
+            }
+
+            return F_true;
+          }
+
+          // Cuneiform Numbers and Punctuation: U+12445.
+          if (sequence == 0xf0929185) {
+            if (value) {
+              *value = 8;
+            }
+
+            return F_true;
+          }
+
+          // Cuneiform Numbers and Punctuation: U+12446.
+          if (sequence == 0xf0929186) {
+            if (value) {
+              *value = 9;
+            }
+
+            return F_true;
+          }
+
+          // Cuneiform Numbers and Punctuation: U+12447.
+          if (sequence == 0xf0929187) {
+            if (value) {
+              *value = 9;
+            }
+
+            return F_true;
+          }
+
+          // Cuneiform Numbers and Punctuation: U+12448.
+          if (sequence == 0xf0929188) {
+            if (value) {
+              *value = 9;
+            }
+
+            return F_true;
+          }
+
+          // Cuneiform Numbers and Punctuation: U+12449.
+          if (sequence == 0xf0929189) {
+            if (value) {
+              *value = 9;
+            }
+
+            return F_true;
+          }
+
+          // Cuneiform Numbers and Punctuation: U+1244A.
+          if (sequence == 0xf092918a) {
+            if (value) {
+              *value = 2;
+            }
+
+            return F_true;
+          }
+
+          // Cuneiform Numbers and Punctuation: U+1244B.
+          if (sequence == 0xf092918b) {
+            if (value) {
+              *value = 3;
+            }
+
+            return F_true;
+          }
+
+          // Cuneiform Numbers and Punctuation: U+1244C.
+          if (sequence == 0xf092918c) {
+            if (value) {
+              *value = 4;
+            }
+
+            return F_true;
+          }
+
+          // Cuneiform Numbers and Punctuation: U+1244D.
+          if (sequence == 0xf092918d) {
+            if (value) {
+              *value = 5;
+            }
+
+            return F_true;
+          }
+
+          // Cuneiform Numbers and Punctuation: U+1244E.
+          if (sequence == 0xf092918e) {
+            if (value) {
+              *value = 6;
+            }
+
+            return F_true;
+          }
+
+          // Cuneiform Numbers and Punctuation: U+1244F.
+          if (sequence == 0xf092918f) {
+            if (value) {
+              *value = 1;
+            }
+
+            return F_true;
+          }
+
+          // Cuneiform Numbers and Punctuation: U+12450.
+          if (sequence == 0xf0929190) {
+            if (value) {
+              *value = 2;
+            }
+
+            return F_true;
+          }
+
+          // Cuneiform Numbers and Punctuation: U+12451.
+          if (sequence == 0xf0929191) {
+            if (value) {
+              *value = 3;
+            }
+
+            return F_true;
+          }
+
+          // Cuneiform Numbers and Punctuation: U+12452.
+          if (sequence == 0xf0929192) {
+            if (value) {
+              *value = 4;
+            }
+
+            return F_true;
+          }
+
+          // Cuneiform Numbers and Punctuation: U+12453.
+          if (sequence == 0xf0929193) {
+            if (value) {
+              *value = 4;
+            }
+
+            return F_true;
+          }
+
+          // Cuneiform Numbers and Punctuation: U+12454.
+          if (sequence == 0xf0929194) {
+            if (value) {
+              *value = 5;
+            }
+
+            return F_true;
+          }
+
+          // Cuneiform Numbers and Punctuation: U+12455.
+          if (sequence == 0xf0929195) {
+            if (value) {
+              *value = 5;
+            }
+
+            return F_true;
+          }
+
+          // Cuneiform Numbers and Punctuation: U+12456.
+          if (sequence == 0xf0929196) {
+            if (value) {
+              *value = 2;
+            }
+
+            return F_true;
+          }
+
+          // Cuneiform Numbers and Punctuation: U+12457.
+          if (sequence == 0xf0929197) {
+            if (value) {
+              *value = 3;
+            }
+
+            return F_true;
+          }
+
+          // Cuneiform Numbers and Punctuation: U+12458.
+          if (sequence == 0xf0929198) {
+            if (value) {
+              *value = 1;
+            }
+
+            return F_true;
+          }
+
+          // Cuneiform Numbers and Punctuation: U+12459.
+          if (sequence == 0xf0929199) {
+            if (value) {
+              *value = 2;
+            }
+
+            return F_true;
+          }
+
+          // Cuneiform Numbers and Punctuation: U+12467.
+          if (sequence == 0xf09291a7) {
+            if (value) {
+              *value = 40;
+            }
+
+            return F_true;
+          }
+
+          // Cuneiform Numbers and Punctuation: U+12468.
+          if (sequence == 0xf09291a8) {
+            if (value) {
+              *value = 50;
+            }
+
+            return F_true;
+          }
+
+          // Cuneiform Numbers and Punctuation: U+12469.
+          if (sequence == 0xf09291a9) {
+            if (value) {
+              *value = 4;
+            }
+
+            return F_true;
+          }
+
+          // Cuneiform Numbers and Punctuation: U+1246A.
+          if (sequence == 0xf09291aa) {
+            if (value) {
+              *value = 5;
+            }
+
+            return F_true;
+          }
+
+          // Cuneiform Numbers and Punctuation: U+1246B.
+          if (sequence == 0xf09291ab) {
+            if (value) {
+              *value = 6;
+            }
+
+            return F_true;
+          }
+
+          // Cuneiform Numbers and Punctuation: U+1246C.
+          if (sequence == 0xf09291ac) {
+            if (value) {
+              *value = 7;
+            }
+
+            return F_true;
+          }
+
+          // Cuneiform Numbers and Punctuation: U+1246D.
+          if (sequence == 0xf09291ad) {
+            if (value) {
+              *value = 8;
+            }
+
+            return F_true;
+          }
+
+          // Cuneiform Numbers and Punctuation: U+1246E.
+          if (sequence == 0xf09291ae) {
+            if (value) {
+              *value = 9;
+            }
+
+            return F_true;
+          }
         }
       }
       else if (macro_f_utf_char_t_to_char_2(sequence) == 0x96) {
@@ -3205,8 +5306,423 @@ static inline f_status_t private_inline_f_utf_character_handle_digit_from_one(co
         if (sequence >= 0xf096ad90 && sequence <= 0xf096ad99) {
           return private_inline_f_utf_character_handle_digit(sequence, 0xf096ad90, value);
         }
+
+        // Pahawh Hmong: U+16B5B to U+16B61.
+        if (sequence >= 0xf096ad9b && sequence <= 0xf096ada1) {
+
+          // Pahawh Hmong: U+16B5B.
+          if (sequence == 0xf096ad9b) {
+            if (value) {
+              *value = 10;
+            }
+
+            return F_true;
+          }
+
+          // Pahawh Hmong: U+16B5C.
+          if (sequence == 0xf096ad9c) {
+            if (value) {
+              *value = 100;
+            }
+
+            return F_true;
+          }
+
+          // Pahawh Hmong: U+16B5D.
+          if (sequence == 0xf096ad9d) {
+            if (value) {
+              *value = 10000;
+            }
+
+            return F_true;
+          }
+
+          // Pahawh Hmong: U+16B5E.
+          if (sequence == 0xf096ad9e) {
+            if (value) {
+              *value = 1000000;
+            }
+
+            return F_true;
+          }
+
+          // Pahawh Hmong: U+16B5F.
+          if (sequence == 0xf096ad9f) {
+            if (value) {
+              *value = 100000000;
+            }
+
+            return F_true;
+          }
+
+          // Pahawh Hmong: U+16B60.
+          if (sequence == 0xf096ada0) {
+            if (value) {
+              *value = 10000000000;
+            }
+
+            return F_true;
+          }
+
+          // Pahawh Hmong: U+16B61.
+          if (value) {
+            *value = 1000000000000;
+          }
+
+          return F_true;
+        }
+
+        // Medefaidrin: U+16E80 to U+16E96.
+        if (sequence >= 0xf096ba80 && sequence <= 0xf096ba96) {
+
+          // Medefaidrin: U+16E80 to U+16E89.
+          if (sequence <= 0xf096ba89) {
+            return private_inline_f_utf_character_handle_digit(sequence, 0xf096ba80, value);
+          }
+
+          // Medefaidrin: U+16E8A.
+          if (sequence == 0xf096ba8a) {
+            if (value) {
+              *value = 10;
+            }
+
+            return F_true;
+          }
+
+          // Medefaidrin: U+16E8B.
+          if (sequence == 0xf096ba8b) {
+            if (value) {
+              *value = 11;
+            }
+
+            return F_true;
+          }
+
+          // Medefaidrin: U+16E8C.
+          if (sequence == 0xf096ba8c) {
+            if (value) {
+              *value = 12;
+            }
+
+            return F_true;
+          }
+
+          // Medefaidrin: U+16E8D.
+          if (sequence == 0xf096ba8d) {
+            if (value) {
+              *value = 13;
+            }
+
+            return F_true;
+          }
+
+          // Medefaidrin: U+16E8E.
+          if (sequence == 0xf096ba8e) {
+            if (value) {
+              *value = 14;
+            }
+
+            return F_true;
+          }
+
+          // Medefaidrin: U+16E8F.
+          if (sequence == 0xf096ba8f) {
+            if (value) {
+              *value = 15;
+            }
+
+            return F_true;
+          }
+
+          // Medefaidrin: U+16E90.
+          if (sequence == 0xf096ba90) {
+            if (value) {
+              *value = 16;
+            }
+
+            return F_true;
+          }
+
+          // Medefaidrin: U+16E91.
+          if (sequence == 0xf096ba91) {
+            if (value) {
+              *value = 17;
+            }
+
+            return F_true;
+          }
+
+          // Medefaidrin: U+16E92.
+          if (sequence == 0xf096ba92) {
+            if (value) {
+              *value = 18;
+            }
+
+            return F_true;
+          }
+
+          // Medefaidrin: U+16E93.
+          if (sequence == 0xf096ba93) {
+            if (value) {
+              *value = 19;
+            }
+
+            return F_true;
+          }
+
+          // Medefaidrin: U+16E94 to U+16E96.
+          return private_inline_f_utf_character_handle_digit_from_one(sequence, 0xf096ba94, value);
+        }
       }
       else if (macro_f_utf_char_t_to_char_2(sequence) == 0x9d) {
+
+        // Mayan Numerals: U+1D2E0 to U+1D2F3.
+        if (sequence >= 0xf09d8ba0 && sequence <= 0xf09d8bb3) {
+
+          // Mayan Numerals: U+1D2E0 to U+1D2E9.
+          if (sequence <= 0xf09d8ba9) {
+            return private_inline_f_utf_character_handle_digit(sequence, 0xf09d8ba0, value);
+          }
+
+          // Mayan Numerals: U+1D2EA.
+          if (sequence == 0xf09d8baa) {
+            if (value) {
+              *value = 10;
+            }
+
+            return F_true;
+          }
+
+          // Mayan Numerals: U+1D2EB.
+          if (sequence == 0xf09d8bab) {
+            if (value) {
+              *value = 11;
+            }
+
+            return F_true;
+          }
+
+          // Mayan Numerals: U+1D2EC.
+          if (sequence == 0xf09d8bac) {
+            if (value) {
+              *value = 12;
+            }
+
+            return F_true;
+          }
+
+          // Mayan Numerals: U+1D2ED.
+          if (sequence == 0xf09d8bad) {
+            if (value) {
+              *value = 13;
+            }
+
+            return F_true;
+          }
+
+          // Mayan Numerals: U+1D2EE.
+          if (sequence == 0xf09d8bae) {
+            if (value) {
+              *value = 14;
+            }
+
+            return F_true;
+          }
+
+          // Mayan Numerals: U+1D2EF.
+          if (sequence == 0xf09d8baf) {
+            if (value) {
+              *value = 15;
+            }
+
+            return F_true;
+          }
+
+          // Mayan Numerals: U+1D2F0.
+          if (sequence == 0xf09d8bb0) {
+            if (value) {
+              *value = 16;
+            }
+
+            return F_true;
+          }
+
+          // Mayan Numerals: U+1D2F1.
+          if (sequence == 0xf09d8bb1) {
+            if (value) {
+              *value = 17;
+            }
+
+            return F_true;
+          }
+
+          // Mayan Numerals: U+1D2F2.
+          if (sequence == 0xf09d8bb2) {
+            if (value) {
+              *value = 18;
+            }
+
+            return F_true;
+          }
+
+          // Mayan Numerals: U+1D2F3.
+          if (value) {
+            *value = 19;
+          }
+
+          return F_true;
+        }
+
+        // Counting Rod Numerals: U+1D360 to U+1D378.
+        if (sequence >= 0xf09d8da0 && sequence <= 0xf09d8db8) {
+
+          // Counting Rod Numerals: U+1D360 to U+1D368.
+          if (sequence <= 0xf09d8da8) {
+            return private_inline_f_utf_character_handle_digit_from_one(sequence, 0xf09d8da0, value);
+          }
+
+          // Counting Rod Numerals: U+1D369.
+          if (sequence == 0xf09d8da9) {
+            if (value) {
+              *value = 10;
+            }
+
+            return F_true;
+          }
+
+          // Counting Rod Numerals: U+1D36A.
+          if (sequence == 0xf09d8daa) {
+            if (value) {
+              *value = 20;
+            }
+
+            return F_true;
+          }
+
+          // Counting Rod Numerals: U+1D36B.
+          if (sequence == 0xf09d8dab) {
+            if (value) {
+              *value = 30;
+            }
+
+            return F_true;
+          }
+
+          // Counting Rod Numerals: U+1D36C.
+          if (sequence == 0xf09d8dac) {
+            if (value) {
+              *value = 40;
+            }
+
+            return F_true;
+          }
+
+          // Counting Rod Numerals: U+1D36D.
+          if (sequence == 0xf09d8dad) {
+            if (value) {
+              *value = 50;
+            }
+
+            return F_true;
+          }
+
+          // Counting Rod Numerals: U+1D36E.
+          if (sequence == 0xf09d8dae) {
+            if (value) {
+              *value = 60;
+            }
+
+            return F_true;
+          }
+
+          // Counting Rod Numerals: U+1D36F.
+          if (sequence == 0xf09d8daf) {
+            if (value) {
+              *value = 70;
+            }
+
+            return F_true;
+          }
+
+          // Counting Rod Numerals: U+1D370.
+          if (sequence == 0xf09d8db0) {
+            if (value) {
+              *value = 80;
+            }
+
+            return F_true;
+          }
+
+          // Counting Rod Numerals: U+1D371.
+          if (sequence == 0xf09d8db1) {
+            if (value) {
+              *value = 90;
+            }
+
+            return F_true;
+          }
+
+          // Counting Rod Numerals: U+1D372.
+          if (sequence == 0xf09d8db2) {
+            if (value) {
+              *value = 1;
+            }
+
+            return F_true;
+          }
+
+          // Counting Rod Numerals: U+1D373.
+          if (sequence == 0xf09d8db3) {
+            if (value) {
+              *value = 2;
+            }
+
+            return F_true;
+          }
+
+          // Counting Rod Numerals: U+1D374.
+          if (sequence == 0xf09d8db4) {
+            if (value) {
+              *value = 3;
+            }
+
+            return F_true;
+          }
+
+          // Counting Rod Numerals: U+1D375.
+          if (sequence == 0xf09d8db5) {
+            if (value) {
+              *value = 4;
+            }
+
+            return F_true;
+          }
+
+          // Counting Rod Numerals: U+1D376.
+          if (sequence == 0xf09d8db6) {
+            if (value) {
+              *value = 5;
+            }
+
+            return F_true;
+          }
+
+          // Counting Rod Numerals: U+1D377.
+          if (sequence == 0xf09d8db7) {
+            if (value) {
+              *value = 1;
+            }
+
+            return F_true;
+          }
+
+          // Counting Rod Numerals: U+1D378.
+          if (value) {
+            *value = 5;
+          }
+
+          return F_true;
+        }
 
         // Mathematical Alphanumeric (Bold) Symbols: U+1D7CE to U+1D7D7.
         if (sequence >= 0xf09d9f8e && sequence <= 0xf09d9f97) {
@@ -3235,6 +5751,432 @@ static inline f_status_t private_inline_f_utf_character_handle_digit_from_one(co
       }
       else if (macro_f_utf_char_t_to_char_2(sequence) == 0x9e) {
 
+        // Mende Kikakui: U+1E8C7 to U+1E8CF.
+        if (sequence >= 0xf09ea387 && sequence <= 0xf09ea38f) {
+          return private_inline_f_utf_character_handle_digit_from_one(sequence, 0xf09ea387, value);
+        }
+
+        // Indic Siyaq Numbers: U+1EC71 to U+1ECB4.
+        if (sequence >= 0xf09eb1b1 && sequence <= 0xf09eb2b4) {
+
+          // Indic Siyaq Numbers: U+1EC71 to U+1EC79.
+          if (sequence <= 0xf09eb1b9) {
+            return private_inline_f_utf_character_handle_digit_from_one(sequence, 0xf09eb1b1, value);
+          }
+
+          // Indic Siyaq Numbers: U+1EC7A.
+          if (sequence == 0xf09eb1ba) {
+            if (value) {
+              *value = 10;
+            }
+
+            return F_true;
+          }
+
+          // Indic Siyaq Numbers: U+1EC7B.
+          if (sequence == 0xf09eb1bb) {
+            if (value) {
+              *value = 20;
+            }
+
+            return F_true;
+          }
+
+          // Indic Siyaq Numbers: U+1EC7C.
+          if (sequence == 0xf09eb1bc) {
+            if (value) {
+              *value = 30;
+            }
+
+            return F_true;
+          }
+
+          // Indic Siyaq Numbers: U+1EC7D.
+          if (sequence == 0xf09eb1bd) {
+            if (value) {
+              *value = 40;
+            }
+
+            return F_true;
+          }
+
+          // Indic Siyaq Numbers: U+1EC7E.
+          if (sequence == 0xf09eb1be) {
+            if (value) {
+              *value = 50;
+            }
+
+            return F_true;
+          }
+
+          // Indic Siyaq Numbers: U+1EC7F.
+          if (sequence == 0xf09eb1bf) {
+            if (value) {
+              *value = 60;
+            }
+
+            return F_true;
+          }
+
+          // Indic Siyaq Numbers: U+1EC80.
+          if (sequence == 0xf09eb280) {
+            if (value) {
+              *value = 70;
+            }
+
+            return F_true;
+          }
+
+          // Indic Siyaq Numbers: U+1EC81.
+          if (sequence == 0xf09eb281) {
+            if (value) {
+              *value = 80;
+            }
+
+            return F_true;
+          }
+
+          // Indic Siyaq Numbers: U+1EC82.
+          if (sequence == 0xf09eb282) {
+            if (value) {
+              *value = 90;
+            }
+
+            return F_true;
+          }
+
+          // Indic Siyaq Numbers: U+1EC83.
+          if (sequence == 0xf09eb283) {
+            if (value) {
+              *value = 100;
+            }
+
+            return F_true;
+          }
+
+          // Indic Siyaq Numbers: U+1EC84.
+          if (sequence == 0xf09eb284) {
+            if (value) {
+              *value = 200;
+            }
+
+            return F_true;
+          }
+
+          // Indic Siyaq Numbers: U+1EC85.
+          if (sequence == 0xf09eb285) {
+            if (value) {
+              *value = 300;
+            }
+
+            return F_true;
+          }
+
+          // Indic Siyaq Numbers: U+1EC86.
+          if (sequence == 0xf09eb286) {
+            if (value) {
+              *value = 400;
+            }
+
+            return F_true;
+          }
+
+          // Indic Siyaq Numbers: U+1EC87.
+          if (sequence == 0xf09eb287) {
+            if (value) {
+              *value = 500;
+            }
+
+            return F_true;
+          }
+
+          // Indic Siyaq Numbers: U+1EC88.
+          if (sequence == 0xf09eb288) {
+            if (value) {
+              *value = 600;
+            }
+
+            return F_true;
+          }
+
+          // Indic Siyaq Numbers: U+1EC89.
+          if (sequence == 0xf09eb289) {
+            if (value) {
+              *value = 700;
+            }
+
+            return F_true;
+          }
+
+          // Indic Siyaq Numbers: U+1EC8A.
+          if (sequence == 0xf09eb28a) {
+            if (value) {
+              *value = 800;
+            }
+
+            return F_true;
+          }
+
+          // Indic Siyaq Numbers: U+1EC8B.
+          if (sequence == 0xf09eb28b) {
+            if (value) {
+              *value = 900;
+            }
+
+            return F_true;
+          }
+
+          // Indic Siyaq Numbers: U+1EC8C.
+          if (sequence == 0xf09eb28c) {
+            if (value) {
+              *value = 1000;
+            }
+
+            return F_true;
+          }
+
+          // Indic Siyaq Numbers: U+1EC8D.
+          if (sequence == 0xf09eb28d) {
+            if (value) {
+              *value = 2000;
+            }
+
+            return F_true;
+          }
+
+          // Indic Siyaq Numbers: U+1EC8E.
+          if (sequence == 0xf09eb28e) {
+            if (value) {
+              *value = 3000;
+            }
+
+            return F_true;
+          }
+
+          // Indic Siyaq Numbers: U+1EC8F.
+          if (sequence == 0xf09eb28f) {
+            if (value) {
+              *value = 4000;
+            }
+
+            return F_true;
+          }
+
+          // Indic Siyaq Numbers: U+1EC90.
+          if (sequence == 0xf09eb290) {
+            if (value) {
+              *value = 5000;
+            }
+
+            return F_true;
+          }
+
+          // Indic Siyaq Numbers: U+1EC91.
+          if (sequence == 0xf09eb291) {
+            if (value) {
+              *value = 6000;
+            }
+
+            return F_true;
+          }
+
+          // Indic Siyaq Numbers: U+1EC92.
+          if (sequence == 0xf09eb292) {
+            if (value) {
+              *value = 7000;
+            }
+
+            return F_true;
+          }
+
+          // Indic Siyaq Numbers: U+1EC93.
+          if (sequence == 0xf09eb293) {
+            if (value) {
+              *value = 8000;
+            }
+
+            return F_true;
+          }
+
+          // Indic Siyaq Numbers: U+1EC94.
+          if (sequence == 0xf09eb294) {
+            if (value) {
+              *value = 9000;
+            }
+
+            return F_true;
+          }
+
+          // Indic Siyaq Numbers: U+1EC95.
+          if (sequence == 0xf09eb295) {
+            if (value) {
+              *value = 10000;
+            }
+
+            return F_true;
+          }
+
+          // Indic Siyaq Numbers: U+1EC96.
+          if (sequence == 0xf09eb296) {
+            if (value) {
+              *value = 20000;
+            }
+
+            return F_true;
+          }
+
+          // Indic Siyaq Numbers: U+1EC97.
+          if (sequence == 0xf09eb297) {
+            if (value) {
+              *value = 30000;
+            }
+
+            return F_true;
+          }
+
+          // Indic Siyaq Numbers: U+1EC98.
+          if (sequence == 0xf09eb298) {
+            if (value) {
+              *value = 40000;
+            }
+
+            return F_true;
+          }
+
+          // Indic Siyaq Numbers: U+1EC99.
+          if (sequence == 0xf09eb299) {
+            if (value) {
+              *value = 50000;
+            }
+
+            return F_true;
+          }
+
+          // Indic Siyaq Numbers: U+1EC9A.
+          if (sequence == 0xf09eb29a) {
+            if (value) {
+              *value = 60000;
+            }
+
+            return F_true;
+          }
+
+          // Indic Siyaq Numbers: U+1EC9B.
+          if (sequence == 0xf09eb29b) {
+            if (value) {
+              *value = 70000;
+            }
+
+            return F_true;
+          }
+
+          // Indic Siyaq Numbers: U+1EC9C.
+          if (sequence == 0xf09eb29c) {
+            if (value) {
+              *value = 80000;
+            }
+
+            return F_true;
+          }
+
+          // Indic Siyaq Numbers: U+1EC9D.
+          if (sequence == 0xf09eb29d) {
+            if (value) {
+              *value = 90000;
+            }
+
+            return F_true;
+          }
+
+          // Indic Siyaq Numbers: U+1EC9E.
+          if (sequence == 0xf09eb29e) {
+            if (value) {
+              *value = 100000;
+            }
+
+            return F_true;
+          }
+
+          // Indic Siyaq Numbers: U+1EC9F.
+          if (sequence == 0xf09eb29f) {
+            if (value) {
+              *value = 200000;
+            }
+
+            return F_true;
+          }
+
+          // Indic Siyaq Numbers: U+1ECA0.
+          if (sequence == 0xf09eb2a0) {
+            if (value) {
+              *value = 100000;
+            }
+
+            return F_true;
+          }
+
+          // Indic Siyaq Numbers: U+1ECA1.
+          if (sequence == 0xf09eb2a1) {
+            if (value) {
+              *value = 10000000;
+            }
+
+            return F_true;
+          }
+
+          // Indic Siyaq Numbers: U+1ECA2.
+          if (sequence == 0xf09eb2a2) {
+            if (value) {
+              *value = 20000000;
+            }
+
+            return F_true;
+          }
+
+          // Indic Siyaq Numbers: U+1ECA3 to U+1ECAB.
+          if (sequence <= 0xf09eb2ab) {
+            return private_inline_f_utf_character_handle_digit_from_one(sequence, 0xf09eb2a3, value);
+          }
+
+          // These are not whole numbers: U+1ECAC, U+1ECAD, U+1ECAE, U+1ECAF, and U+1ECB0.
+
+          // Indic Siyaq Numbers: U+1ECB1.
+          if (sequence == 0xf09eb2b1) {
+            if (value) {
+              *value = 1;
+            }
+
+            return F_true;
+          }
+
+          // Indic Siyaq Numbers: U+1ECB2.
+          if (sequence == 0xf09eb2b2) {
+            if (value) {
+              *value = 2;
+            }
+
+            return F_true;
+          }
+
+          // Indic Siyaq Numbers: U+1ECB3.
+          if (sequence == 0xf09eb2b3) {
+            if (value) {
+              *value = 10000;
+            }
+
+            return F_true;
+          }
+
+          // Indic Siyaq Numbers: U+1ECB4.
+          if (sequence == 0xf09eb2b4) {
+            if (value) {
+              *value = 100000;
+            }
+
+            return F_true;
+          }
+        }
+
         // Nyiakeng Puachue Hmong: U+1E140 to U+1E149.
         if (sequence >= 0xf09e8580 && sequence <= 0xf09e8589) {
           return private_inline_f_utf_character_handle_digit(sequence, 0xf09e8580, value);
@@ -3249,8 +6191,418 @@ static inline f_status_t private_inline_f_utf_character_handle_digit_from_one(co
         if (sequence >= 0xf09ea590 && sequence <= 0xf09ea599) {
           return private_inline_f_utf_character_handle_digit(sequence, 0xf09ea590, value);
         }
+
+        // Ottoman Siyaq Numbers: U+1ED01 to U+1ED3B.
+        if (sequence >= 0xf09eb481 && sequence <= 0xf09eb4bb) {
+
+          // Ottoman Siyaq Numbers: U+1ED01 to U+1ED09.
+          if (sequence <= 0xf09eb489) {
+            return private_inline_f_utf_character_handle_digit_from_one(sequence, 0xf09eb481, value);
+          }
+
+          // Ottoman Siyaq Numbers: U+1ED0A.
+          if (sequence == 0xf09eb48a) {
+            if (value) {
+              *value = 10;
+            }
+
+            return F_true;
+          }
+
+          // Ottoman Siyaq Numbers: U+1ED0B.
+          if (sequence == 0xf09eb48b) {
+            if (value) {
+              *value = 20;
+            }
+
+            return F_true;
+          }
+
+          // Ottoman Siyaq Numbers: U+1ED0C.
+          if (sequence == 0xf09eb48c) {
+            if (value) {
+              *value = 30;
+            }
+
+            return F_true;
+          }
+
+          // Ottoman Siyaq Numbers: U+1ED0D.
+          if (sequence == 0xf09eb48d) {
+            if (value) {
+              *value = 40;
+            }
+
+            return F_true;
+          }
+
+          // Ottoman Siyaq Numbers: U+1ED0E.
+          if (sequence == 0xf09eb48e) {
+            if (value) {
+              *value = 50;
+            }
+
+            return F_true;
+          }
+
+          // Ottoman Siyaq Numbers: U+1ED0F.
+          if (sequence == 0xf09eb48f) {
+            if (value) {
+              *value = 60;
+            }
+
+            return F_true;
+          }
+
+          // Ottoman Siyaq Numbers: U+1ED10.
+          if (sequence == 0xf09eb490) {
+            if (value) {
+              *value = 70;
+            }
+
+            return F_true;
+          }
+
+          // Ottoman Siyaq Numbers: U+1ED11.
+          if (sequence == 0xf09eb491) {
+            if (value) {
+              *value = 80;
+            }
+
+            return F_true;
+          }
+
+          // Ottoman Siyaq Numbers: U+1ED12.
+          if (sequence == 0xf09eb492) {
+            if (value) {
+              *value = 90;
+            }
+
+            return F_true;
+          }
+
+          // Ottoman Siyaq Numbers: U+1ED13.
+          if (sequence == 0xf09eb493) {
+            if (value) {
+              *value = 100;
+            }
+
+            return F_true;
+          }
+
+          // Ottoman Siyaq Numbers: U+1ED14.
+          if (sequence == 0xf09eb494) {
+            if (value) {
+              *value = 200;
+            }
+
+            return F_true;
+          }
+
+          // Ottoman Siyaq Numbers: U+1ED15.
+          if (sequence == 0xf09eb495) {
+            if (value) {
+              *value = 300;
+            }
+
+            return F_true;
+          }
+
+          // Ottoman Siyaq Numbers: U+1ED16.
+          if (sequence == 0xf09eb496) {
+            if (value) {
+              *value = 400;
+            }
+
+            return F_true;
+          }
+
+          // Ottoman Siyaq Numbers: U+1ED17.
+          if (sequence == 0xf09eb497) {
+            if (value) {
+              *value = 500;
+            }
+
+            return F_true;
+          }
+
+          // Ottoman Siyaq Numbers: U+1ED18.
+          if (sequence == 0xf09eb498) {
+            if (value) {
+              *value = 600;
+            }
+
+            return F_true;
+          }
+
+          // Ottoman Siyaq Numbers: U+1ED19.
+          if (sequence == 0xf09eb499) {
+            if (value) {
+              *value = 700;
+            }
+
+            return F_true;
+          }
+
+          // Ottoman Siyaq Numbers: U+1ED1A.
+          if (sequence == 0xf09eb49a) {
+            if (value) {
+              *value = 800;
+            }
+
+            return F_true;
+          }
+
+          // Ottoman Siyaq Numbers: U+1ED1B.
+          if (sequence == 0xf09eb49b) {
+            if (value) {
+              *value = 900;
+            }
+
+            return F_true;
+          }
+
+          // Ottoman Siyaq Numbers: U+1ED1C.
+          if (sequence == 0xf09eb49c) {
+            if (value) {
+              *value = 1000;
+            }
+
+            return F_true;
+          }
+
+          // Ottoman Siyaq Numbers: U+1ED1D.
+          if (sequence == 0xf09eb49d) {
+            if (value) {
+              *value = 2000;
+            }
+
+            return F_true;
+          }
+
+          // Ottoman Siyaq Numbers: U+1ED1E.
+          if (sequence == 0xf09eb49e) {
+            if (value) {
+              *value = 3000;
+            }
+
+            return F_true;
+          }
+
+          // Ottoman Siyaq Numbers: U+1ED1F.
+          if (sequence == 0xf09eb49f) {
+            if (value) {
+              *value = 4000;
+            }
+
+            return F_true;
+          }
+
+          // Ottoman Siyaq Numbers: U+1ED20.
+          if (sequence == 0xf09eb4a0) {
+            if (value) {
+              *value = 5000;
+            }
+
+            return F_true;
+          }
+
+          // Ottoman Siyaq Numbers: U+1ED21.
+          if (sequence == 0xf09eb4a1) {
+            if (value) {
+              *value = 6000;
+            }
+
+            return F_true;
+          }
+
+          // Ottoman Siyaq Numbers: U+1ED22.
+          if (sequence == 0xf09eb4a2) {
+            if (value) {
+              *value = 7000;
+            }
+
+            return F_true;
+          }
+
+          // Ottoman Siyaq Numbers: U+1ED23.
+          if (sequence == 0xf09eb4a3) {
+            if (value) {
+              *value = 8000;
+            }
+
+            return F_true;
+          }
+
+          // Ottoman Siyaq Numbers: U+1ED24.
+          if (sequence == 0xf09eb4a4) {
+            if (value) {
+              *value = 9000;
+            }
+
+            return F_true;
+          }
+
+          // Ottoman Siyaq Numbers: U+1ED25.
+          if (sequence == 0xf09eb4a5) {
+            if (value) {
+              *value = 10000;
+            }
+
+            return F_true;
+          }
+
+          // Ottoman Siyaq Numbers: U+1ED26.
+          if (sequence == 0xf09eb4a6) {
+            if (value) {
+              *value = 20000;
+            }
+
+            return F_true;
+          }
+
+          // Ottoman Siyaq Numbers: U+1ED27.
+          if (sequence == 0xf09eb4a7) {
+            if (value) {
+              *value = 30000;
+            }
+
+            return F_true;
+          }
+
+          // Ottoman Siyaq Numbers: U+1ED28.
+          if (sequence == 0xf09eb4a8) {
+            if (value) {
+              *value = 40000;
+            }
+
+            return F_true;
+          }
+
+          // Ottoman Siyaq Numbers: U+1ED29.
+          if (sequence == 0xf09eb4a9) {
+            if (value) {
+              *value = 50000;
+            }
+
+            return F_true;
+          }
+
+          // Ottoman Siyaq Numbers: U+1ED2A.
+          if (sequence == 0xf09eb4aa) {
+            if (value) {
+              *value = 60000;
+            }
+
+            return F_true;
+          }
+
+          // Ottoman Siyaq Numbers: U+1ED2B.
+          if (sequence == 0xf09eb4ab) {
+            if (value) {
+              *value = 70000;
+            }
+
+            return F_true;
+          }
+
+          // Ottoman Siyaq Numbers: U+1ED2C.
+          if (sequence == 0xf09eb4ac) {
+            if (value) {
+              *value = 80000;
+            }
+
+            return F_true;
+          }
+
+          // Ottoman Siyaq Numbers: U+1ED2D.
+          if (sequence == 0xf09eb4ad) {
+            if (value) {
+              *value = 90000;
+            }
+
+            return F_true;
+          }
+
+          // Not a whole number: U+1ED2E.
+
+          // Ottoman Siyaq Numbers: U+1ED2F to U+1ED36.
+          if (sequence >= 0xf09eb4af && sequence <= 0xf09eb4b6) {
+            return private_inline_f_utf_character_handle_digit_from_two(sequence, 0xf09eb4af, value);
+          }
+
+          // Ottoman Siyaq Numbers: U+1ED37.
+          if (sequence == 0xf09eb4b7) {
+            if (value) {
+              *value = 10;
+            }
+
+            return F_true;
+          }
+
+          // Ottoman Siyaq Numbers: U+1ED38.
+          if (sequence == 0xf09eb4b8) {
+            if (value) {
+              *value = 400;
+            }
+
+            return F_true;
+          }
+
+          // Ottoman Siyaq Numbers: U+1ED39.
+          if (sequence == 0xf09eb4b9) {
+            if (value) {
+              *value = 600;
+            }
+
+            return F_true;
+          }
+
+          // Ottoman Siyaq Numbers: U+1ED3A.
+          if (sequence == 0xf09eb4ba) {
+            if (value) {
+              *value = 2000;
+            }
+
+            return F_true;
+          }
+
+          // Ottoman Siyaq Numbers: U+1ED3B.
+          if (sequence == 0xf09eb4bb) {
+            if (value) {
+              *value = 10000;
+            }
+
+            return F_true;
+          }
+        }
       }
       else if (macro_f_utf_char_t_to_char_2(sequence) == 0x9f) {
+
+        // Enclosed Alphanumeric Supplement: U+1F100 to U+1F10C.
+        if (sequence >= 0xf09f8480 && sequence <= 0xf09f848c) {
+
+          // Enclosed Alphanumeric Supplement: U+1F100.
+          if (sequence == 0xf09f8480) {
+            if (value) {
+              *value = 0;
+            }
+
+            return F_true;
+          }
+
+          // Ottoman Siyaq Numbers: U+1ED01 to U+1F10A.
+          if (sequence <= 0xf09f848a) {
+            return private_inline_f_utf_character_handle_digit(sequence, 0xf09f8481, value);
+          }
+
+          // Enclosed Alphanumeric Supplement: U+1F10B, U+1F10C.
+          if (value) {
+            *value = 0;
+          }
+
+          return F_true;
+        }
 
         // Symbols for Legacy Computing (Segmented): U+1FBF0 to U+1FBF9.
         if (sequence >= 0xf09fafb0 && sequence <= 0xf09fafb9) {

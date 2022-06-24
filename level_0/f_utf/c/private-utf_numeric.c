@@ -372,8 +372,8 @@ extern "C" {
           return F_true;
         }
 
-        // Gothic: U+10341 to U+1034A.
-        if (sequence >= 0xf0908d81 && sequence <= 0xf0908d8a) {
+        // Gothic: U+10341, U+1034A.
+        if (sequence == 0xf0908d81 || sequence == 0xf0908d8a) {
           return F_true;
         }
 
