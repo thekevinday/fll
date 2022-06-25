@@ -74,6 +74,25 @@ extern "C" {
   }
 #endif // _di_f_utf_character_is_alphabetic_digit_
 
+#ifndef _di_f_utf_character_is_alphabetic_numeric_
+  f_status_t f_utf_character_is_alphabetic_numeric(const f_utf_char_t sequence) {
+
+    if (macro_f_utf_char_t_width_is(sequence)) {
+      if (macro_f_utf_char_t_width_is(sequence) == 1) {
+        return F_status_set_error(F_utf_fragment);
+      }
+
+      return private_f_utf_character_is_alphabetic_numeric(sequence);
+    }
+
+    if (isalnum(macro_f_utf_char_t_to_char_1(sequence))) {
+      return F_true;
+    }
+
+    return F_false;
+  }
+#endif // _di_f_utf_character_is_alphabetic_numeric_
+
 #ifndef _di_f_utf_character_is_ascii_
   f_status_t f_utf_character_is_ascii(const f_utf_char_t sequence) {
 
@@ -139,8 +158,8 @@ extern "C" {
   }
 #endif // _di_f_utf_character_is_control_code_
 
-#ifndef _di_f_utf_character_is_control_picture_
-  f_status_t character_is_control_format(const f_utf_char_t sequence) {
+#ifndef _di_f_utf_character_is_control_format_
+  f_status_t f_utf_character_is_control_format(const f_utf_char_t sequence) {
 
     if (macro_f_utf_char_t_width_is(sequence)) {
       if (macro_f_utf_char_t_width_is(sequence) == 1) {
@@ -150,7 +169,7 @@ extern "C" {
       return private_f_utf_character_is_control_format(sequence);
     }
 
-    // There are no control format characters in ASCII.
+    // There are no ASCII control formats.
     return F_false;
   }
 #endif // _di_f_utf_character_is_control_format_
@@ -496,7 +515,7 @@ extern "C" {
       return private_f_utf_character_is_word(sequence, strict);
     }
 
-    if (isalnum(macro_f_utf_char_t_to_char_1(sequence)) || sequence == f_string_ascii_underscore_s.string[0]) {
+    if (isalnum(macro_f_utf_char_t_to_char_1(sequence)) || macro_f_utf_char_t_to_char_1(sequence) == f_string_ascii_underscore_s.string[0]) {
       return F_true;
     }
 
@@ -515,7 +534,7 @@ extern "C" {
       return private_f_utf_character_is_word_dash(sequence, strict);
     }
 
-    if (isalnum(macro_f_utf_char_t_to_char_1(sequence)) || sequence == f_string_ascii_underscore_s.string[0] || sequence == f_string_ascii_minus_s.string[0]) {
+    if (isalnum(macro_f_utf_char_t_to_char_1(sequence)) || macro_f_utf_char_t_to_char_1(sequence) == f_string_ascii_underscore_s.string[0] || macro_f_utf_char_t_to_char_1(sequence) == f_string_ascii_minus_s.string[0]) {
       return F_true;
     }
 
@@ -534,7 +553,7 @@ extern "C" {
       return private_f_utf_character_is_word_dash_plus(sequence, strict);
     }
 
-    if (isalnum(macro_f_utf_char_t_to_char_1(sequence)) || sequence == f_string_ascii_underscore_s.string[0] || sequence == f_string_ascii_minus_s.string[0] || sequence == f_string_ascii_plus_s.string[0]) {
+    if (isalnum(macro_f_utf_char_t_to_char_1(sequence)) || macro_f_utf_char_t_to_char_1(sequence) == f_string_ascii_underscore_s.string[0] || macro_f_utf_char_t_to_char_1(sequence) == f_string_ascii_minus_s.string[0] || macro_f_utf_char_t_to_char_1(sequence) == f_string_ascii_plus_s.string[0]) {
       return F_true;
     }
 

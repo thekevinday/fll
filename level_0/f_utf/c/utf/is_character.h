@@ -27,6 +27,7 @@ extern "C" {
  * @return
  *   F_true if a UTF-8 character.
  *   F_false if not a UTF-8 character.
+ *
  *   F_utf_fragment if this is a UTF-8 character fragment.
  *
  * @see f_utf_character_is_valid()
@@ -586,10 +587,9 @@ extern "C" {
  *   The (UTF-8) character.
  *
  * @return
- *   F_none on success.
+ *   F_true if a UTF-8 wide character.
+ *   F_false if not a UTF-8 wide character.
  *
- *   F_failure (with error bit) if width is not long enough to convert.
- *   F_parameter (with error bit) if a parameter is invalid.
  *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
  *   F_utf_not (with error bit) if unicode is an invalid Unicode character.
  */

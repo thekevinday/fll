@@ -931,7 +931,6 @@ extern "C" {
         const f_status_t status = private_f_utf_char_to_character(sequence, width_max, &utf);
         if (F_status_is_error(status)) return status;
       }
-
       return private_f_utf_character_is_word_dash_plus(utf, strict);
     }
 

@@ -268,20 +268,26 @@ static inline f_status_t private_inline_f_utf_character_handle_digit_from_four(c
 
           // Tamil: U+0BF0.
           if (sequence == 0xe0afb000) {
-            *value = 10;
+            if (value) {
+              *value = 10;
+            }
 
             return F_true;
           }
 
           // Tamil: U+0BF1.
           if (sequence == 0xe0afb100) {
-            *value = 100;
+            if (value) {
+              *value = 100;
+            }
 
             return F_true;
           }
 
           // Tamil: U+0BF2.
-          *value = 1000;
+          if (value) {
+            *value = 1000;
+          }
 
           return F_true;
         }
@@ -296,20 +302,26 @@ static inline f_status_t private_inline_f_utf_character_handle_digit_from_four(c
 
           // Telugu: U+0C70.
           if (sequence == 0xe0afb000) {
-            *value = 10;
+            if (value) {
+              *value = 10;
+            }
 
             return F_true;
           }
 
           // Telugu: U+0C71.
           if (sequence == 0xe0afb100) {
-            *value = 100;
+            if (value) {
+              *value = 100;
+            }
 
             return F_true;
           }
 
           // Telugu: U+0C72.
-          *value = 1000;
+          if (value) {
+            *value = 1000;
+          }
 
           return F_true;
         }
@@ -366,76 +378,98 @@ static inline f_status_t private_inline_f_utf_character_handle_digit_from_four(c
 
           // Ethiopic: U+1372.
           if (sequence == 0xe18db200) {
-            *value = 10;
+            if (value) {
+              *value = 10;
+            }
 
             return F_true;
           }
 
           // Ethiopic: U+1373.
           if (sequence == 0xe18db300) {
-            *value = 20;
+            if (value) {
+              *value = 20;
+            }
 
             return F_true;
           }
 
           // Ethiopic: U+1374.
           if (sequence == 0xe18db400) {
-            *value = 30;
+            if (value) {
+              *value = 30;
+            }
 
             return F_true;
           }
 
           // Ethiopic: U+1375.
           if (sequence == 0xe18db500) {
-            *value = 40;
+            if (value) {
+              *value = 40;
+            }
 
             return F_true;
           }
 
           // Ethiopic: U+1376.
           if (sequence == 0xe18db600) {
-            *value = 50;
+            if (value) {
+              *value = 50;
+            }
 
             return F_true;
           }
 
           // Ethiopic: U+1377.
           if (sequence == 0xe18db700) {
-            *value = 60;
+            if (value) {
+              *value = 60;
+            }
 
             return F_true;
           }
 
           // Ethiopic: U+1378.
           if (sequence == 0xe18db800) {
-            *value = 70;
+            if (value) {
+              *value = 70;
+            }
 
             return F_true;
           }
 
           // Ethiopic: U+1379.
           if (sequence == 0xe18db900) {
-            *value = 80;
+            if (value) {
+              *value = 80;
+            }
 
             return F_true;
           }
 
           // Ethiopic: U+137A.
           if (sequence == 0xe18dba00) {
-            *value = 90;
+            if (value) {
+              *value = 90;
+            }
 
             return F_true;
           }
 
           // Ethiopic: U+137B.
           if (sequence == 0xe18dbb00) {
-            *value = 100;
+            if (value) {
+              *value = 100;
+            }
 
             return F_true;
           }
 
           // Ethiopic: U+137C.
-          *value = 1000;
+          if (value) {
+            *value = 1000;
+          }
 
           return F_true;
         }
@@ -445,20 +479,26 @@ static inline f_status_t private_inline_f_utf_character_handle_digit_from_four(c
 
           // Runic: U+16EE.
           if (sequence == 0xe19bae00) {
-            *value = 17;
+            if (value) {
+              *value = 17;
+            }
 
             return F_true;
           }
 
           // Runic: U+16EF.
           if (sequence == 0xe19baf00) {
-            *value = 18;
+            if (value) {
+              *value = 18;
+            }
 
             return F_true;
           }
 
           // Runic: U+16F0.
-          *value = 19;
+          if (value) {
+            *value = 19;
+          }
 
           return F_true;
         }
@@ -490,7 +530,9 @@ static inline f_status_t private_inline_f_utf_character_handle_digit_from_four(c
 
         // New Tai Lue: U+19DA.
         if (sequence == 0xe1a79a00) {
-          *value = 1;
+          if (value) {
+            *value = 1;
+          }
 
           return F_true;
         }
@@ -532,49 +574,63 @@ static inline f_status_t private_inline_f_utf_character_handle_digit_from_four(c
 
           // Superscripts and Subscripts: U+2070.
           if (sequence == 0xe281b000) {
-            *value = 0;
+            if (value) {
+              *value = 0;
+            }
 
             return F_true;
           }
 
           // Superscripts and Subscripts: U+2074.
           if (sequence == 0xe281b400) {
-            *value = 4;
+            if (value) {
+              *value = 4;
+            }
 
             return F_true;
           }
 
           // Superscripts and Subscripts: U+2075.
           if (sequence == 0xe281b500) {
-            *value = 5;
+            if (value) {
+              *value = 5;
+            }
 
             return F_true;
           }
 
           // Superscripts and Subscripts: U+2076.
           if (sequence == 0xe281b600) {
-            *value = 6;
+            if (value) {
+              *value = 6;
+            }
 
             return F_true;
           }
 
           // Superscripts and Subscripts: U+2077.
           if (sequence == 0xe281b700) {
-            *value = 7;
+            if (value) {
+              *value = 7;
+            }
 
             return F_true;
           }
 
           // Superscripts and Subscripts: U+2078.
           if (sequence == 0xe281b800) {
-            *value = 8;
+            if (value) {
+              *value = 8;
+            }
 
             return F_true;
           }
 
           // Superscripts and Subscripts: U+2079.
           if (sequence == 0xe281b900) {
-            *value = 9;
+            if (value) {
+              *value = 9;
+            }
 
             return F_true;
           }

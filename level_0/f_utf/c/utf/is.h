@@ -551,7 +551,7 @@ extern "C" {
  *   F_false if not an unassigned UTF-8 character.
  *
  *   F_complete_not_utf (with error bit set) if character is an incomplete UTF-8 sequence.
- *   F_parameter (with error bit) if a parameter is inunassigned.
+ *   F_parameter (with error bit) if a parameter is unassigned.
  *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
  *   F_utf_not (with error bit) if Unicode is an invalid Unicode character.
  */

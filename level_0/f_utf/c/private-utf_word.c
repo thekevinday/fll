@@ -37,7 +37,7 @@ extern "C" {
         if (strict) {
 
           // Halfwidth and Fullwidth Forms: U+FE33 (︳), U+FE34 (︴).
-          if (sequence == 0xefbcbf00 || sequence == 0xefbcbf00) {
+          if (sequence == 0xefb8b300 || sequence == 0xefb8b400) {
             return F_true;
           }
         }

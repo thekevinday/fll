@@ -8,6 +8,7 @@
 #include "private-utf_phonetic.h"
 #include "private-utf_punctuation.h"
 #include "private-utf_symbol.h"
+#include "private-utf_valid.h"
 #include "private-utf_whitespace.h"
 #include "private-utf_zero_width.h"
 
@@ -18,7 +19,15 @@ extern "C" {
 #if !defined(_di_f_utf_character_is_alphabetic_) || !defined(_di_f_utf_is_alphabetic_)
   f_status_t private_f_utf_character_is_alphabetic(const f_utf_char_t sequence) {
 
+    if (!private_f_utf_character_is_valid(sequence)) {
+      return F_false;
+    }
+
     if (private_f_utf_character_is_zero_width(sequence)) {
+      return F_false;
+    }
+
+    if (private_f_utf_character_is_combining(sequence)) {
       return F_false;
     }
 
@@ -66,11 +75,19 @@ extern "C" {
 #if !defined(_di_f_utf_character_is_alphabetic_digit_) || !defined(_di_f_utf_is_alphabetic_digit_)
   f_status_t private_f_utf_character_is_alphabetic_digit(const f_utf_char_t sequence, uint64_t * const value) {
 
+    if (!private_f_utf_character_is_valid(sequence)) {
+      return F_false;
+    }
+
     if (private_f_utf_character_is_digit(sequence, value)) {
       return F_true;
     }
 
     if (private_f_utf_character_is_zero_width(sequence)) {
+      return F_false;
+    }
+
+    if (private_f_utf_character_is_combining(sequence)) {
       return F_false;
     }
 
@@ -114,11 +131,19 @@ extern "C" {
 #if !defined(_di_f_utf_character_is_alphabetic_numeric_) || !defined(_di_f_utf_is_alphabetic_numeric_)
   f_status_t private_f_utf_character_is_alphabetic_numeric(const f_utf_char_t sequence) {
 
+    if (!private_f_utf_character_is_valid(sequence)) {
+      return F_false;
+    }
+
     if (private_f_utf_character_is_numeric(sequence)) {
       return F_true;
     }
 
     if (private_f_utf_character_is_zero_width(sequence)) {
+      return F_false;
+    }
+
+    if (private_f_utf_character_is_combining(sequence)) {
       return F_false;
     }
 
