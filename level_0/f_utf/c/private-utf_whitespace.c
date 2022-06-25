@@ -7,7 +7,7 @@ extern "C" {
 #endif
 
 #if !defined(_di_f_utf_character_is_whitespace_) || !defined(_di_f_utf_is_whitespace_)
-  f_status_t private_f_utf_character_is_whitespace(const f_utf_char_t sequence) {
+  f_status_t private_f_utf_character_is_whitespace(const f_utf_char_t sequence, const bool strict) {
 
     if (macro_f_utf_char_t_width_is(sequence) == 2) {
 
@@ -20,6 +20,18 @@ extern "C" {
     }
 
     if (macro_f_utf_char_t_width_is(sequence) == 3) {
+
+      if (macro_f_utf_char_t_to_char_1(sequence) == 0xe1) {
+        if (strict) {
+
+          // Ogham: U+1680 (isn't whitespace but is technically considered one: ( )).
+          if (sequence == 0xe19a8000) {
+            return F_true;
+          }
+        }
+
+        return F_false;
+      }
 
       if (macro_f_utf_char_t_to_char_1(sequence) == 0xe2) {
 
@@ -74,6 +86,18 @@ extern "C" {
     return F_false;
   }
 #endif // !defined(_di_f_utf_character_is_whitespace_other_) || !defined(_di_f_utf_is_whitespace_other_)
+
+#if !defined(_di_f_utf_character_is_whitespace_zero_width_) || !defined(_di_f_utf_is_whitespace_zero_width_)
+  f_status_t private_f_utf_character_is_whitespace_zero_width(const f_utf_char_t sequence) {
+
+    // General Punctuation: U+200B (isn't whitespace but is intentended to be interpreted as one in certain circumstances).
+    if (sequence == 0xe2808b00) {
+      return F_true;
+    }
+
+    return F_false;
+  }
+#endif // !defined(_di_f_utf_character_is_whitespace_zero_width_) || !defined(_di_f_utf_is_whitespace_zero_width_)
 
 #ifdef __cplusplus
 } // extern "C"

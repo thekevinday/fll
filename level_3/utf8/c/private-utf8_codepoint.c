@@ -203,7 +203,7 @@ extern "C" {
       status = F_space;
     }
     else if (macro_f_utf_byte_width_is(*unicode.string)) {
-      status = f_utf_is_whitespace(unicode.string, 4);
+      status = f_utf_is_whitespace(unicode.string, 4, F_true);
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_complete_not_utf || F_status_set_fine(status) == F_utf_fragment) {
@@ -223,7 +223,7 @@ extern "C" {
     }
     else {
       if (unicode.string[0] < 0x30 || unicode.string[0] > (0x39 && unicode.string[0] < 0x41) || (unicode.string[0] > 0x46 && unicode.string[0] < 0x61) || unicode.string[0] > 0x66) {
-        status = f_utf_is_whitespace(unicode.string, 4);
+        status = f_utf_is_whitespace(unicode.string, 4, F_true);
 
         if (F_status_is_error(status)) {
           if (F_status_set_fine(status) == F_complete_not_utf || F_status_set_fine(status) == F_utf_fragment) {

@@ -52,7 +52,7 @@ extern "C" {
       while (i1 < stop1 && !string1[i1]) ++i1;
       if (i1 == stop1) break;
 
-      status = f_utf_character_is_whitespace(string1[i1]);
+      status = f_utf_character_is_whitespace(string1[i1], F_false);
 
       if (F_status_is_error(status)) {
 
@@ -72,7 +72,7 @@ extern "C" {
       while (i2 < stop2 && !string2[i2]) ++i2;
       if (i2 == stop2) break;
 
-      status = f_utf_character_is_whitespace(string2[i2]);
+      status = f_utf_character_is_whitespace(string2[i2], F_false);
 
       if (F_status_is_error(status)) {
 
@@ -101,7 +101,7 @@ extern "C" {
         while (j < stop1 && !string1[j]) ++j;
         if (j == stop1) break;
 
-        status = f_utf_character_is_whitespace(string1[j]);
+        status = f_utf_character_is_whitespace(string1[j], F_false);
 
         if (F_status_is_error(status)) {
           // ignore possibly invalid UTF-8 codes.
@@ -123,7 +123,7 @@ extern "C" {
         while (j < stop2 && !string2[j]) ++j;
         if (j == stop2) break;
 
-        status = f_utf_character_is_whitespace(string2[j]);
+        status = f_utf_character_is_whitespace(string2[j], F_false);
 
         if (F_status_is_error(status)) {
 
@@ -182,7 +182,7 @@ extern "C" {
       while (*start < *stop && !source[*start]) ++(*start);
       if (*start > *stop) break;
 
-      status = f_utf_character_is_whitespace(source[*start]);
+      status = f_utf_character_is_whitespace(source[*start], F_false);
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_maybe) {
@@ -203,7 +203,7 @@ extern "C" {
       if (!source[*stop]) continue;
       if (*stop == *start) break;
 
-      status = f_utf_character_is_whitespace(source[*stop]);
+      status = f_utf_character_is_whitespace(source[*stop], F_false);
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_maybe) {
@@ -217,7 +217,7 @@ extern "C" {
     } // for
 
     if (*stop == *start) {
-      status = f_utf_character_is_whitespace(source[*stop]);
+      status = f_utf_character_is_whitespace(source[*stop], F_false);
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_maybe) {

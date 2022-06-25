@@ -449,7 +449,7 @@ extern "C" {
 
     f_array_length_t width_max = (range->stop - range->start) + 1;
 
-    while (buffer.string[range->start] == placeholder || (status = f_utf_is_whitespace(buffer.string + range->start, width_max)) == F_false) {
+    while (buffer.string[range->start] == placeholder || (status = f_utf_is_whitespace(buffer.string + range->start, width_max, F_false)) == F_false) {
 
       if (F_status_is_error(status)) return status;
 
@@ -598,7 +598,7 @@ extern "C" {
 
     for (; range->start <= range->stop; ) {
 
-      status = f_utf_is_whitespace(buffer.string + range->start, (range->stop - range->start) + 1);
+      status = f_utf_is_whitespace(buffer.string + range->start, (range->stop - range->start) + 1, F_false);
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_maybe) {
@@ -757,7 +757,7 @@ extern "C" {
 
     // The end of line, whitespace, or range stop point are the only valid stop points.
     if (range->start <= range->stop) {
-      status = f_utf_is_whitespace(buffer.string + range->start, (range->stop - range->start) + 1);
+      status = f_utf_is_whitespace(buffer.string + range->start, (range->stop - range->start) + 1, F_false);
 
       if (F_status_is_error(status)) {
         if (id) {
@@ -992,7 +992,7 @@ extern "C" {
 
     f_array_length_t width_max = (range->stop - range->start) + 1;
 
-    while (string[range->start] == placeholder || (status = f_utf_is_whitespace(string + range->start, width_max)) == F_false) {
+    while (string[range->start] == placeholder || (status = f_utf_is_whitespace(string + range->start, width_max, F_false)) == F_false) {
 
       if (F_status_is_error(status)) return status;
 

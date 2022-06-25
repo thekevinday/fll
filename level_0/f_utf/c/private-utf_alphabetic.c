@@ -44,7 +44,7 @@ extern "C" {
       return F_false;
     }
 
-    if (private_f_utf_character_is_whitespace(sequence)) {
+    if (private_f_utf_character_is_whitespace(sequence, F_true)) {
       return F_false;
     }
 
@@ -100,7 +100,7 @@ extern "C" {
       return F_false;
     }
 
-    if (private_f_utf_character_is_whitespace(sequence)) {
+    if (private_f_utf_character_is_whitespace(sequence, F_true)) {
       return F_false;
     }
 
@@ -156,7 +156,7 @@ extern "C" {
       return F_false;
     }
 
-    if (private_f_utf_character_is_whitespace(sequence)) {
+    if (private_f_utf_character_is_whitespace(sequence, F_true)) {
       return F_false;
     }
 

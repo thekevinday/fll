@@ -168,7 +168,7 @@ extern "C" {
       return status;
     }
 
-    status = f_fss_fail_utf_to_false(state, f_utf_is_whitespace(buffer.string + range.start, width_max));
+    status = f_fss_fail_utf_to_false(state, f_utf_is_whitespace(buffer.string + range.start, width_max, F_false));
 
     if (status == F_false) {
       status = f_fss_fail_utf_to_false(state, f_utf_is_control(buffer.string + range.start, width_max));
@@ -272,7 +272,7 @@ extern "C" {
         continue;
       }
 
-      status = f_fss_fail_utf_to_false(state, f_utf_is_whitespace(buffer.string + range->start, width_max));
+      status = f_fss_fail_utf_to_false(state, f_utf_is_whitespace(buffer.string + range->start, width_max, F_false));
 
       if (status == F_false) {
         status = f_fss_fail_utf_to_false(state, f_utf_is_control(buffer.string + range->start, width_max));

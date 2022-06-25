@@ -396,7 +396,7 @@ extern "C" {
         return F_false;
       }
 
-      if (private_f_utf_character_is_whitespace(utf)) {
+      if (private_f_utf_character_is_whitespace(utf, F_true)) {
         return F_false;
       }
 
@@ -727,7 +727,7 @@ extern "C" {
 #endif // _di_f_utf_is_valid_
 
 #ifndef _di_f_utf_is_whitespace_
-  f_status_t f_utf_is_whitespace(const f_string_t sequence, const f_array_length_t width_max) {
+  f_status_t f_utf_is_whitespace(const f_string_t sequence, const f_array_length_t width_max, const bool strict) {
     #ifndef _di_level_0_parameter_checking_
       if (width_max < 1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -748,7 +748,7 @@ extern "C" {
         if (F_status_is_error(status)) return status;
       }
 
-      return private_f_utf_character_is_whitespace(utf);
+      return private_f_utf_character_is_whitespace(utf, strict);
     }
 
     if (isspace(*sequence)) return F_true;
@@ -816,6 +816,36 @@ extern "C" {
     return F_false;
   }
 #endif // _di_f_utf_is_whitespace_other_
+
+#ifndef _di_f_utf_is_whitespace_zero_width_
+  f_status_t f_utf_is_whitespace_zero_width(const f_string_t sequence, const f_array_length_t width_max) {
+    #ifndef _di_level_0_parameter_checking_
+      if (width_max < 1) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (macro_f_utf_byte_width_is(*sequence)) {
+      if (macro_f_utf_byte_width_is(*sequence) > width_max) {
+        return F_status_set_error(F_complete_not_utf);
+      }
+
+      if (macro_f_utf_byte_width_is(*sequence) == 1) {
+        return F_status_set_error(F_utf_fragment);
+      }
+
+      f_utf_char_t utf = 0;
+
+      {
+        const f_status_t status = private_f_utf_char_to_character(sequence, width_max, &utf);
+        if (F_status_is_error(status)) return status;
+      }
+
+      return private_f_utf_character_is_whitespace_zero_width(utf);
+    }
+
+    // There are no ASCII whitespace zero-width.
+    return F_false;
+  }
+#endif // _di_f_utf_is_whitespace_zero_width_
 
 #ifndef _di_f_utf_is_wide_
   f_status_t f_utf_is_wide(const f_string_t sequence, const f_array_length_t width_max) {

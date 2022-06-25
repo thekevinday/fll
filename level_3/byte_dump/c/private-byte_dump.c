@@ -795,7 +795,7 @@ extern "C" {
           }
         }
       }
-      else if (f_utf_character_is_whitespace(sequence.string[i]) == F_true) {
+      else if (f_utf_character_is_whitespace(sequence.string[i], F_true) == F_true) {
         if (data->main->parameters.array[byte_dump_parameter_classic_e].result == f_console_result_found_e) {
           f_print_dynamic_raw(f_string_ascii_period_s, data->main->output.to.stream);
         }

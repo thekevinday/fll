@@ -139,7 +139,7 @@ extern "C" {
 
       width_max = (stop1 - i1) + 1;
 
-      status = f_utf_is_whitespace(string1 + i1, width_max);
+      status = f_utf_is_whitespace(string1 + i1, width_max, F_false);
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_parameter) return status;
@@ -187,7 +187,7 @@ extern "C" {
 
       width_max = (stop2 - i2) + 1;
 
-      status = f_utf_is_whitespace(string2 + i2, width_max);
+      status = f_utf_is_whitespace(string2 + i2, width_max, F_false);
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_parameter) return status;
@@ -247,7 +247,7 @@ extern "C" {
 
         width_max = (stop1 - j) + 1;
 
-        status = f_utf_is_whitespace(string1 + j, width_max);
+        status = f_utf_is_whitespace(string1 + j, width_max, F_false);
 
         if (F_status_is_error(status)) {
           if (F_status_set_fine(status) == F_parameter) return status;
@@ -304,7 +304,7 @@ extern "C" {
 
         width_max = (stop2 - j) + 1;
 
-        status = f_utf_is_whitespace(string2 + j, width_max);
+        status = f_utf_is_whitespace(string2 + j, width_max, F_false);
 
         if (F_status_is_error(status)) {
           if (F_status_set_fine(status) == F_maybe) {
@@ -407,7 +407,7 @@ extern "C" {
       while (i1 < stop1 && !string1[i1]) ++i1;
       if (i1 == stop1) break;
 
-      status = f_utf_is_whitespace(string1 + i1, (stop1 - i1) + 1);
+      status = f_utf_is_whitespace(string1 + i1, (stop1 - i1) + 1, F_false);
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_parameter) return status;
@@ -442,7 +442,7 @@ extern "C" {
       while (i2 < stop2 && !string2[i2]) ++i2;
       if (i2 == stop2) break;
 
-      status = f_utf_is_whitespace(string2 + i2, (stop2 - i2) + 1);
+      status = f_utf_is_whitespace(string2 + i2, (stop2 - i2) + 1, F_false);
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_parameter) return status;
@@ -487,7 +487,7 @@ extern "C" {
         while (j < stop1 && !string1[j]) ++j;
         if (j == stop1) break;
 
-        status = f_utf_is_whitespace(string1 + j, (stop1 - j) + 1);
+        status = f_utf_is_whitespace(string1 + j, (stop1 - j) + 1, F_false);
 
         if (F_status_is_error(status)) {
           if (F_status_set_fine(status) == F_parameter) return status;
@@ -534,7 +534,7 @@ extern "C" {
         while (j < stop2 && !string2[j]) ++j;
         if (j == stop2) break;
 
-        status = f_utf_is_whitespace(string2 + j, (stop2 - j) + 1);
+        status = f_utf_is_whitespace(string2 + j, (stop2 - j) + 1, F_false);
 
         if (F_status_is_error(status)) {
           if (F_status_set_fine(status) == F_parameter) return status;
@@ -619,7 +619,7 @@ extern "C" {
       while (*start < *stop && !string[*start]) ++(*start);
       if (*start > *stop) break;
 
-      status = f_utf_is_whitespace(string + *start, (*stop - *start) + 1);
+      status = f_utf_is_whitespace(string + *start, (*stop - *start) + 1, F_false);
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_parameter) return status;
@@ -671,7 +671,7 @@ extern "C" {
 
       if (*stop == *start) break;
 
-      status = f_utf_is_whitespace(string + *stop, (stop_original - *stop) + 1);
+      status = f_utf_is_whitespace(string + *stop, (stop_original - *stop) + 1, F_false);
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_parameter) return status;
@@ -699,7 +699,7 @@ extern "C" {
     } // for
 
     if (*stop == *start) {
-      status = f_utf_is_whitespace(string + *stop, (stop_original - *stop) + 1);
+      status = f_utf_is_whitespace(string + *stop, (stop_original - *stop) + 1, F_false);
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_parameter) return status;

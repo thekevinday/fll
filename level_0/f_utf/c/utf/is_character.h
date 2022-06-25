@@ -518,6 +518,9 @@ extern "C" {
  *
  * @param sequence
  *   The byte sequence to validate as a character.
+ * @param strict
+ *   When TRUE, include all appropriate characters by type as per Unicode.
+ *   When FALSE, non-white space characters that are treated as white space by Unicode are not treated as white space.
  *
  * @return
  *   F_true if a UTF-8 white space.
@@ -529,7 +532,7 @@ extern "C" {
  * @see isspace()
  */
 #ifndef _di_f_utf_character_is_whitespace_
-  extern f_status_t f_utf_character_is_whitespace(const f_utf_char_t sequence);
+  extern f_status_t f_utf_character_is_whitespace(const f_utf_char_t sequence, const bool strict);
 #endif // _di_f_utf_character_is_whitespace_
 
 /**
@@ -544,8 +547,8 @@ extern "C" {
  *   The byte sequence to validate as a character.
  *
  * @return
- *   F_true if a UTF-8 modifier character.
- *   F_false if not a UTF-8 modifier character.
+ *   F_true if a UTF-8 (modifier) white space character.
+ *   F_false if not a UTF-8 (modifier) white space character.
  *
  *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
  *   F_utf_not (with error bit) if unicode is an invalid Unicode character.
@@ -568,12 +571,29 @@ extern "C" {
  *
  *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
  *   F_utf_not (with error bit) if unicode is an invalid Unicode character.
- *
- * @see isspace()
  */
 #ifndef _di_f_utf_character_is_whitespace_other_
   extern f_status_t f_utf_character_is_whitespace_other(const f_utf_char_t sequence);
 #endif // _di_f_utf_character_is_whitespace_other_
+
+/**
+ * Check to see if the entire byte block of the character is an other type of UTF-8 space character.
+ *
+ * This is a list of white space that are actually zero-width space (which is not a space), such as Zero-Width Space (U+200B).
+ *
+ * @param sequence
+ *   The byte sequence to validate as a character.
+ *
+ * @return
+ *   F_true if a UTF-8 (zero-width) white space.
+ *   F_false if not a UTF-8 (zero-width) white space.
+ *
+ *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
+ *   F_utf_not (with error bit) if unicode is an invalid Unicode character.
+ */
+#ifndef _di_f_utf_character_is_whitespace_zero_width_
+  extern f_status_t f_utf_character_is_whitespace_zero_width(const f_utf_char_t sequence);
+#endif // _di_f_utf_character_is_whitespace_zero_width_
 
 /**
  * Get whether or not the UTF-8 character is a wide character on display.

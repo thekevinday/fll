@@ -344,7 +344,7 @@ extern "C" {
         if (!mode && !vector) {
           width_max = length - i;
 
-          status = f_utf_is_whitespace(string + i, width_max);
+          status = f_utf_is_whitespace(string + i, width_max, F_false);
 
           if (status == F_true) {
             offset = i + 1;
@@ -501,7 +501,7 @@ extern "C" {
         if (!mode) {
           width_max = length - i;
 
-          status = f_utf_is_whitespace(string + i, width_max);
+          status = f_utf_is_whitespace(string + i, width_max, F_false);
 
           if (status == F_true) {
             offset = i + 1;

@@ -183,7 +183,7 @@ extern "C" {
       return F_status_set_error(F_utf_fragment);
     }
 
-    while (buffer.string[range->start] == placeholder || (status = f_utf_character_is_whitespace(buffer.string[range->start])) == F_false) {
+    while (buffer.string[range->start] == placeholder || (status = f_utf_character_is_whitespace(buffer.string[range->start], F_false)) == F_false) {
 
       if (F_status_is_error(status)) return status;
       if (buffer.string[range->start] == f_utf_char_t_eol_s) return F_none_eol;

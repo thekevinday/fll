@@ -1236,7 +1236,7 @@ extern "C" {
         continue;
       }
 
-      status = f_utf_is_whitespace(string + i, stop - i);
+      status = f_utf_is_whitespace(string + i, stop - i, F_false);
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_maybe) {
@@ -1293,7 +1293,7 @@ extern "C" {
         }
       }
 
-      status = f_utf_is_whitespace(string + i, stop - i);
+      status = f_utf_is_whitespace(string + i, stop - i, F_false);
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_maybe) {
@@ -1338,7 +1338,7 @@ extern "C" {
             continue;
           }
 
-          status = f_utf_is_whitespace(string + j, stop - j);
+          status = f_utf_is_whitespace(string + j, stop - j, F_false);
 
           if (F_status_is_error(status)) {
             if (F_status_set_fine(status) == F_maybe) {
@@ -1505,7 +1505,7 @@ extern "C" {
         continue;
       }
 
-      status = f_utf_is_whitespace(string + i, stop - i);
+      status = f_utf_is_whitespace(string + i, stop - i, F_false);
       if (F_status_is_error(status)) break;
 
       if (status == F_false) {
@@ -1548,7 +1548,7 @@ extern "C" {
         }
       }
 
-      status = f_utf_is_whitespace(string + i, stop - i);
+      status = f_utf_is_whitespace(string + i, stop - i, F_false);
 
       // Determine if this is an end of string white space that needs to be trimmed.
       if (status == F_true || !string[i]) {
@@ -1585,7 +1585,7 @@ extern "C" {
             continue;
           }
 
-          status = f_utf_is_whitespace(string + j, stop - j);
+          status = f_utf_is_whitespace(string + j, stop - j, F_false);
           if (F_status_is_error(status)) break;
 
           if (status == F_false && string[j]) break;
@@ -1711,7 +1711,7 @@ extern "C" {
         continue;
       }
 
-      status = f_utf_is_whitespace(string + i, stop - i);
+      status = f_utf_is_whitespace(string + i, stop - i, F_false);
       if (F_status_is_error(status)) break;
 
       if (status == F_false) {
@@ -1753,7 +1753,7 @@ extern "C" {
         }
       }
 
-      status = f_utf_is_whitespace(string + i, stop - i);
+      status = f_utf_is_whitespace(string + i, stop - i, F_false);
 
       // Determine if this is an end of string white space that needs to be trimmed.
       if (status == F_true || !string[i]) {
@@ -1789,7 +1789,7 @@ extern "C" {
             continue;
           }
 
-          status = f_utf_is_whitespace(string + j, stop - j);
+          status = f_utf_is_whitespace(string + j, stop - j, F_false);
           if (F_status_is_error(status)) break;
 
           if (status == F_false && string[j]) break;
@@ -1972,7 +1972,7 @@ extern "C" {
         continue;
       }
 
-      status = f_utf_is_whitespace(string + i, stop - i);
+      status = f_utf_is_whitespace(string + i, stop - i, F_false);
       if (F_status_is_error(status)) break;
 
       if (status == F_false) {
@@ -2015,7 +2015,7 @@ extern "C" {
         }
       }
 
-      status = f_utf_is_whitespace(string + i, stop - i);
+      status = f_utf_is_whitespace(string + i, stop - i, F_false);
 
       // Determine if this is an end of string white space that needs to be trimmed.
       if (status == F_true || !string[i]) {
@@ -2052,7 +2052,7 @@ extern "C" {
             continue;
           }
 
-          status = f_utf_is_whitespace(string + j, stop - j);
+          status = f_utf_is_whitespace(string + j, stop - j, F_false);
           if (F_status_is_error(status)) break;
 
           if (status == F_false && string[j]) break;
@@ -2206,7 +2206,7 @@ extern "C" {
         continue;
       }
 
-      status = f_utf_is_whitespace(string + i, length - i);
+      status = f_utf_is_whitespace(string + i, length - i, F_false);
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_maybe) {
@@ -2240,7 +2240,7 @@ extern "C" {
 
     while (i < length) {
 
-      status = f_utf_is_whitespace(string + i, length - i);
+      status = f_utf_is_whitespace(string + i, length - i, F_false);
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_maybe) {
@@ -2264,7 +2264,7 @@ extern "C" {
             continue;
           }
 
-          status = f_utf_is_whitespace(string + j, length - j);
+          status = f_utf_is_whitespace(string + j, length - j, F_false);
 
           if (F_status_is_error(status)) {
             if (F_status_set_fine(status) == F_maybe) {
@@ -2386,7 +2386,7 @@ extern "C" {
         continue;
       }
 
-      status = f_utf_is_whitespace(string + i, length - i);
+      status = f_utf_is_whitespace(string + i, length - i, F_false);
 
       // Consider invalid data not-white space.
       if (F_status_is_error(status)) break;
@@ -2408,7 +2408,7 @@ extern "C" {
 
     while (i < length) {
 
-      status = f_utf_is_whitespace(string + i, length - i);
+      status = f_utf_is_whitespace(string + i, length - i, F_false);
 
       // Determine if this is an end of string white space that needs to be trimmed.
       if (status == F_true || !string[i]) {
@@ -2424,7 +2424,7 @@ extern "C" {
             continue;
           }
 
-          status = f_utf_is_whitespace(string + j, length - j);
+          status = f_utf_is_whitespace(string + j, length - j, F_false);
           if (F_status_is_error(status)) break;
 
           if (status == F_false && string[j]) break;
@@ -2505,7 +2505,7 @@ extern "C" {
         continue;
       }
 
-      status = f_utf_is_whitespace(string + i, length - i);
+      status = f_utf_is_whitespace(string + i, length - i, F_false);
 
       // Consider invalid data not-white space.
       if (F_status_is_error(status)) break;
@@ -2527,7 +2527,7 @@ extern "C" {
 
     while (i < length) {
 
-      status = f_utf_is_whitespace(string + i, length - i);
+      status = f_utf_is_whitespace(string + i, length - i, F_false);
 
       // Determine if this is an end of string white space that needs to be trimmed.
       if (status == F_true || !string[i]) {
@@ -2543,7 +2543,7 @@ extern "C" {
             continue;
           }
 
-          status = f_utf_is_whitespace(string + j, length - j);
+          status = f_utf_is_whitespace(string + j, length - j, F_false);
           if (F_status_is_error(status)) break;
 
           if (status == F_false && string[j]) break;
@@ -2679,7 +2679,7 @@ extern "C" {
         continue;
       }
 
-      status = f_utf_is_whitespace(string + i, length - i);
+      status = f_utf_is_whitespace(string + i, length - i, F_false);
       if (F_status_is_error(status) || status == F_false) break;
 
       if (status == F_false) {
@@ -2699,7 +2699,7 @@ extern "C" {
 
     while (i < length) {
 
-      status = f_utf_is_whitespace(string + i, length - i);
+      status = f_utf_is_whitespace(string + i, length - i, F_false);
 
       // Determine if this is an end of string white space that needs to be trimmed.
       if (status == F_true || !string[i]) {
@@ -2715,7 +2715,7 @@ extern "C" {
             continue;
           }
 
-          status = f_utf_is_whitespace(string + j, length - j);
+          status = f_utf_is_whitespace(string + j, length - j, F_false);
           if (F_status_is_error(status)) break;
 
           if (status == F_false && string[j]) break;

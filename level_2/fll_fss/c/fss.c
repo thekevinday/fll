@@ -76,7 +76,7 @@ extern "C" {
       return F_found_not;
     }
 
-    f_status_t status = f_utf_is_whitespace(buffer.string + range->start, (range->stop - range->start) + 1);
+    f_status_t status = f_utf_is_whitespace(buffer.string + range->start, (range->stop - range->start) + 1, F_false);
 
     if (F_status_is_error(status)) {
       if (F_status_set_fine(status) == F_maybe) {

@@ -606,6 +606,9 @@ extern "C" {
  * @param width_max
  *   The maximum width available for checking.
  *   Can be anything greater than 0.
+ * @param strict
+ *   When TRUE, include all appropriate characters by type as per Unicode.
+ *   When FALSE, non-white space characters that are treated as white space by Unicode are not treated as white space.
  *
  * @return
  *   F_true if a UTF-8 white space.
@@ -620,7 +623,7 @@ extern "C" {
  * @see isspace()
  */
 #ifndef _di_f_utf_is_whitespace_
-  extern f_status_t f_utf_is_whitespace(const f_string_t sequence, const f_array_length_t width_max);
+  extern f_status_t f_utf_is_whitespace(const f_string_t sequence, const f_array_length_t width_max, const bool strict);
 #endif // _di_f_utf_is_whitespace_
 
 /**
@@ -639,8 +642,8 @@ extern "C" {
  *   Can be anything greater than 0.
  *
  * @return
- *   F_true if a UTF-8 white space.
- *   F_false if not a UTF-8 white space.
+ *   F_true if a UTF-8 (modifier) white space.
+ *   F_false if not a UTF-8 (modifier) white space.
  *
  *   F_complete_not_utf (with error bit set) if character is an incomplete UTF-8 sequence.
  *   F_maybe (with error bit) if this could be a white space but width is not long enough.
@@ -665,8 +668,8 @@ extern "C" {
  *   Can be anything greater than 0.
  *
  * @return
- *   F_true if a UTF-8 white space.
- *   F_false if not a UTF-8 white space.
+ *   F_true if a UTF-8 (other) white space.
+ *   F_false if not a UTF-8 (other) white space.
  *
  *   F_complete_not_utf (with error bit set) if character is an incomplete UTF-8 sequence.
  *   F_maybe (with error bit) if this could be a white space but width is not long enough.
@@ -677,6 +680,32 @@ extern "C" {
 #ifndef _di_f_utf_is_whitespace_other_
   extern f_status_t f_utf_is_whitespace_other(const f_string_t sequence, const f_array_length_t width_max);
 #endif // _di_f_utf_is_whitespace_other_
+
+/**
+ * Check to see if the entire byte block of the character is an other type of UTF-8 space character.
+ *
+ * This is a list of white space that are actually zero-width space (which is not a space), such as Zero-Width Space (U+200B).
+ *
+ * @param sequence
+ *   The byte sequence to validate as a character.
+ *   There must be enough space allocated to compare against, as limited by width_max.
+ * @param width_max
+ *   The maximum width available for checking.
+ *   Can be anything greater than 0.
+ *
+ * @return
+ *   F_true if a UTF-8 (zero-width) white space.
+ *   F_false if not a UTF-8 (zero-width) white space.
+ *
+ *   F_complete_not_utf (with error bit set) if character is an incomplete UTF-8 sequence.
+ *   F_maybe (with error bit) if this could be a white space but width is not long enough.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
+ *   F_utf_not (with error bit) if Unicode is an invalid Unicode character.
+ */
+#ifndef _di_f_utf_is_whitespace_zero_width_
+  extern f_status_t f_utf_is_whitespace_zero_width(const f_string_t sequence, const f_array_length_t width_max);
+#endif // _di_f_utf_is_whitespace_zero_width_
 
 /**
  * Get whether or not the UTF-8 character is a wide character on display.
