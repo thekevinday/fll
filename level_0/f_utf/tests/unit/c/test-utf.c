@@ -24,9 +24,9 @@ int main(void) {
     cmocka_unit_test(test__f_utf_append_assure_nulless__works),
     cmocka_unit_test(test__f_utf_append_nulless__works),
 
-    //cmocka_unit_test(test__f_utf_character_is_alphabetic__works),
-    //cmocka_unit_test(test__f_utf_character_is_alphabetic_digit__works),
-    //cmocka_unit_test(test__f_utf_character_is_alphabetic_numeric__works),
+    cmocka_unit_test(test__f_utf_character_is_alphabetic__works),
+    cmocka_unit_test(test__f_utf_character_is_alphabetic_digit__works),
+    cmocka_unit_test(test__f_utf_character_is_alphabetic_numeric__works),
     cmocka_unit_test(test__f_utf_character_is_combining__works),
     cmocka_unit_test(test__f_utf_character_is_control__works),
     cmocka_unit_test(test__f_utf_character_is_digit__works),
@@ -41,10 +41,16 @@ int main(void) {
     cmocka_unit_test(test__f_utf_character_is_valid__works),
     //cmocka_unit_test(test__f_utf_character_is_whitespace__works),
     cmocka_unit_test(test__f_utf_character_is_wide__works),
-    //cmocka_unit_test(test__f_utf_character_is_zero_width__works),
+    cmocka_unit_test(test__f_utf_character_is_zero_width__works),
 
-    //cmocka_unit_test(test__f_utf_character_is_word__strict_is_false),
-    //cmocka_unit_test(test__f_utf_character_is_word__strict_is_true),
+    cmocka_unit_test(test__f_utf_character_is_word__strict_is_false),
+    cmocka_unit_test(test__f_utf_character_is_word__strict_is_true),
+
+    cmocka_unit_test(test__f_utf_character_is_word_dash__strict_is_false),
+    cmocka_unit_test(test__f_utf_character_is_word_dash__strict_is_true),
+
+    cmocka_unit_test(test__f_utf_character_is_word_dash_plus__strict_is_false),
+    cmocka_unit_test(test__f_utf_character_is_word_dash_plus__strict_is_true),
 
     cmocka_unit_test(test__f_utf_dynamic_adjust__works),
 
@@ -134,9 +140,9 @@ int main(void) {
     cmocka_unit_test(test__f_utf_dynamicss_increase_by__works),
     cmocka_unit_test(test__f_utf_dynamicss_resize__works),
 
-    //cmocka_unit_test(test__f_utf_is_alphabetic__works),
-    //cmocka_unit_test(test__f_utf_is_alphabetic_digit__works),
-    //cmocka_unit_test(test__f_utf_is_alphabetic_numeric__works),
+    cmocka_unit_test(test__f_utf_is_alphabetic__works),
+    cmocka_unit_test(test__f_utf_is_alphabetic_digit__works),
+    cmocka_unit_test(test__f_utf_is_alphabetic_numeric__works),
     cmocka_unit_test(test__f_utf_is_combining__works),
     cmocka_unit_test(test__f_utf_is_control__works),
     cmocka_unit_test(test__f_utf_is_digit__works),
@@ -151,10 +157,16 @@ int main(void) {
     cmocka_unit_test(test__f_utf_is_valid__works),
     //cmocka_unit_test(test__f_utf_is_whitespace__works),
     cmocka_unit_test(test__f_utf_is_wide__works),
-    //cmocka_unit_test(test__f_utf_is_zero_width__works),
+    cmocka_unit_test(test__f_utf_is_zero_width__works),
 
-    //cmocka_unit_test(test__f_utf_is_word__strict_is_false),
-    //cmocka_unit_test(test__f_utf_is_word__strict_is_true),
+    cmocka_unit_test(test__f_utf_is_word__strict_is_false),
+    cmocka_unit_test(test__f_utf_is_word__strict_is_true),
+
+    cmocka_unit_test(test__f_utf_is_word_dash__strict_is_false),
+    cmocka_unit_test(test__f_utf_is_word_dash__strict_is_true),
+
+    cmocka_unit_test(test__f_utf_is_word_dash_plus__strict_is_false),
+    cmocka_unit_test(test__f_utf_is_word_dash_plus__strict_is_true),
 
     cmocka_unit_test(test__f_utf_map_multis_adjust__works),
     cmocka_unit_test(test__f_utf_map_multis_append__works),

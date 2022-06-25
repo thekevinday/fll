@@ -7,15 +7,23 @@ extern "C" {
 
 void test__f_utf_character_is_valid__works(void **state) {
 
+  uint8_t first = 0;
+  uint8_t second = 0;
+  uint8_t third = 0;
+  uint8_t fourth = 0;
+  uint8_t width = 0;
+
+  f_status_t status = F_none;
+
   for (f_utf_char_t sequence = 0; sequence < UINT32_MAX; ++sequence) {
 
-    const uint8_t first = macro_f_utf_char_t_to_char_1(sequence);
-    const uint8_t second = macro_f_utf_char_t_to_char_2(sequence);
-    const uint8_t third = macro_f_utf_char_t_to_char_3(sequence);
-    const uint8_t fourth = macro_f_utf_char_t_to_char_4(sequence);
-    const uint8_t width = macro_f_utf_char_t_width_is(sequence);
+    first = macro_f_utf_char_t_to_char_1(sequence);
+    second = macro_f_utf_char_t_to_char_2(sequence);
+    third = macro_f_utf_char_t_to_char_3(sequence);
+    fourth = macro_f_utf_char_t_to_char_4(sequence);
+    width = macro_f_utf_char_t_width_is(sequence);
 
-    const f_status_t status = f_utf_character_is_valid(sequence);
+    status = f_utf_character_is_valid(sequence);
 
     // All remaining bytes after width must be zero for valid sequence.
     if (width == 0 && (second || third || fourth)) {

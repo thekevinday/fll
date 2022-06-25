@@ -263,6 +263,81 @@ extern FILE *data__bytesequence_file_open__wide(void);
 extern FILE *data__bytesequence_file_open__word(void);
 
 /**
+ * Open the "word_dash" bytesequence file.
+ *
+ * This assumes the following:
+ * - The file path is relative to the current working directory (tests are run from project root).
+ * - The file path is "data/tests/bytesequences/word_dash-all.txt".
+ *
+ * @return
+ *   Non-zero on success.
+ *   0 on failure.
+ *
+ * @see fopen()
+ */
+extern FILE *data__bytesequence_file_open__word_dash(void);
+
+/**
+ * Open the "word_dash_plus" bytesequence file.
+ *
+ * This assumes the following:
+ * - The file path is relative to the current working directory (tests are run from project root).
+ * - The file path is "data/tests/bytesequences/word_dash_plus-all.txt".
+ *
+ * @return
+ *   Non-zero on success.
+ *   0 on failure.
+ *
+ * @see fopen()
+ */
+extern FILE *data__bytesequence_file_open__word_dash_plus(void);
+
+/**
+ * Open the "word" bytesequence file, the "lax" variation.
+ *
+ * This assumes the following:
+ * - The file path is relative to the current working directory (tests are run from project root).
+ * - The file path is "data/tests/bytesequences/word-lax.txt".
+ *
+ * @return
+ *   Non-zero on success.
+ *   0 on failure.
+ *
+ * @see fopen()
+ */
+extern FILE *data__bytesequence_file_open_lax__word(void);
+
+/**
+ * Open the "word_dash" bytesequence file, the "lax" variation.
+ *
+ * This assumes the following:
+ * - The file path is relative to the current working directory (tests are run from project root).
+ * - The file path is "data/tests/bytesequences/word_dash-lax.txt".
+ *
+ * @return
+ *   Non-zero on success.
+ *   0 on failure.
+ *
+ * @see fopen()
+ */
+extern FILE *data__bytesequence_file_open_lax__word_dash(void);
+
+/**
+ * Open the "word_dash_plus" bytesequence file, the "lax" variation.
+ *
+ * This assumes the following:
+ * - The file path is relative to the current working directory (tests are run from project root).
+ * - The file path is "data/tests/bytesequences/word_dash_plus-lax.txt".
+ *
+ * @return
+ *   Non-zero on success.
+ *   0 on failure.
+ *
+ * @see fopen()
+ */
+extern FILE *data__bytesequence_file_open_lax__word_dash_plus(void);
+
+/**
  * Open the "zero_width" bytesequence file.
  *
  * This assumes the following:

@@ -27,6 +27,8 @@ build_libraries-individual -lf_memory -lf_string -lf_utf
 
 build_sources_program test-utf-append.c test-utf-append_assure.c test-utf-append_assure_nulless.c test-utf-append_nulless.c
 build_sources_program test-utf-character_is_alphabetic.c test-utf-is_alphabetic.c
+build_sources_program test-utf-character_is_alphabetic_digit.c test-utf-is_alphabetic_digit.c
+build_sources_program test-utf-character_is_alphabetic_numeric.c test-utf-is_alphabetic_numeric.c
 build_sources_program test-utf-character_is_combining.c test-utf-is_combining.c
 build_sources_program test-utf-character_is_control.c test-utf-is_control.c
 build_sources_program test-utf-character_is_digit.c test-utf-is_digit.c
@@ -42,6 +44,8 @@ build_sources_program test-utf-character_is_valid.c test-utf-is_valid.c
 build_sources_program test-utf-character_is_whitespace.c test-utf-is_whitespace.c
 build_sources_program test-utf-character_is_wide.c test-utf-is_wide.c
 build_sources_program test-utf-character_is_word.c test-utf-is_word.c
+build_sources_program test-utf-character_is_word_dash.c test-utf-is_word_dash.c
+build_sources_program test-utf-character_is_word_dash_plus.c test-utf-is_word_dash_plus.c
 build_sources_program test-utf-character_is_zero_width.c test-utf-is_zero_width.c
 build_sources_program test-utf-dynamic_adjust.c test-utf-dynamic_append.c test-utf-dynamic_append_assure.c test-utf-dynamic_append_assure_nulless.c test-utf-dynamic_append_nulless.c
 build_sources_program test-utf-dynamic_decimate_by.c test-utf-dynamic_decrease_by.c test-utf-dynamic_increase.c test-utf-dynamic_increase_by.c

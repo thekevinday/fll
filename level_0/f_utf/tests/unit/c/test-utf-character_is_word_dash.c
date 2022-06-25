@@ -1,14 +1,14 @@
 #include "test-utf.h"
-#include "test-utf-character_is_word.h"
+#include "test-utf-character_is_word_dash.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void test__f_utf_character_is_word__strict_is_false(void **state) {
+void test__f_utf_character_is_word_dash__strict_is_false(void **state) {
 
   {
-    FILE *file = data__bytesequence_file_open_lax__word();
+    FILE *file = data__bytesequence_file_open_lax__word_dash();
 
     assert_non_null(file);
 
@@ -21,7 +21,7 @@ void test__f_utf_character_is_word__strict_is_false(void **state) {
       bytes = data__bytesequence_get_line(file, &sequence);
 
       if (bytes > 0) {
-        const f_status_t status = f_utf_character_is_word(sequence, F_false);
+        const f_status_t status = f_utf_character_is_word_dash(sequence, F_false);
 
         assert_int_equal(status, F_true);
       }
@@ -34,10 +34,10 @@ void test__f_utf_character_is_word__strict_is_false(void **state) {
   }
 }
 
-void test__f_utf_character_is_word__strict_is_true(void **state) {
+void test__f_utf_character_is_word_dash__strict_is_true(void **state) {
 
   {
-    FILE *file = data__bytesequence_file_open__word();
+    FILE *file = data__bytesequence_file_open__word_dash();
 
     assert_non_null(file);
 
@@ -50,7 +50,7 @@ void test__f_utf_character_is_word__strict_is_true(void **state) {
       bytes = data__bytesequence_get_line(file, &sequence);
 
       if (bytes > 0) {
-        const f_status_t status = f_utf_character_is_word(sequence, F_true);
+        const f_status_t status = f_utf_character_is_word_dash(sequence, F_true);
 
         assert_int_equal(status, F_true);
       }

@@ -84,6 +84,31 @@ FILE *data__bytesequence_file_open__word(void) {
   return fopen("./data/tests/bytesequences/word-all.txt", "r");
 }
 
+FILE *data__bytesequence_file_open__word_dash(void) {
+
+  return fopen("./data/tests/bytesequences/word_dash-all.txt", "r");
+}
+
+FILE *data__bytesequence_file_open__word_dash_plus(void) {
+
+  return fopen("./data/tests/bytesequences/word_dash_plus-all.txt", "r");
+}
+
+FILE *data__bytesequence_file_open_lax__word(void) {
+
+  return fopen("./data/tests/bytesequences/word-lax.txt", "r");
+}
+
+FILE *data__bytesequence_file_open_lax__word_dash(void) {
+
+  return fopen("./data/tests/bytesequences/word_dash-lax.txt", "r");
+}
+
+FILE *data__bytesequence_file_open_lax__word_dash_plus(void) {
+
+  return fopen("./data/tests/bytesequences/word_dash_plus-lax.txt", "r");
+}
+
 FILE *data__bytesequence_file_open__zero_width(void) {
 
   return fopen("./data/tests/bytesequences/zero_width-all.txt", "r");
