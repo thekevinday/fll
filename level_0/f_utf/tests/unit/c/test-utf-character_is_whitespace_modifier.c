@@ -1,14 +1,14 @@
 #include "test-utf.h"
-#include "test-utf-character_is_whitespace.h"
+#include "test-utf-character_is_whitespace_modifier.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void test__f_utf_character_is_whitespace__works(void **state) {
+void test__f_utf_character_is_whitespace_modifier__works(void **state) {
 
   {
-    FILE *file = data__bytesequence_file_open__whitespace();
+    FILE *file = data__bytesequence_file_open__whitespace__modifier();
 
     assert_non_null(file);
 
@@ -21,7 +21,7 @@ void test__f_utf_character_is_whitespace__works(void **state) {
       bytes = data__bytesequence_get_line(file, &sequence);
 
       if (bytes > 0) {
-        const f_status_t status = f_utf_character_is_whitespace(sequence, F_true);
+        const f_status_t status = f_utf_character_is_whitespace_modifier(sequence);
 
         assert_int_equal(status, F_true);
       }

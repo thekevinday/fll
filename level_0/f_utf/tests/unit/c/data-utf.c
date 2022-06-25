@@ -74,6 +74,21 @@ FILE *data__bytesequence_file_open__whitespace(void) {
   return fopen("./data/tests/bytesequences/whitespace-all.txt", "r");
 }
 
+FILE *data__bytesequence_file_open__whitespace__modifier(void) {
+
+  return fopen("./data/tests/bytesequences/whitespace-modifier.txt", "r");
+}
+
+FILE *data__bytesequence_file_open__whitespace__other(void) {
+
+  return fopen("./data/tests/bytesequences/whitespace-other.txt", "r");
+}
+
+FILE *data__bytesequence_file_open__whitespace__zero_width(void) {
+
+  return fopen("./data/tests/bytesequences/whitespace-zero_width.txt", "r");
+}
+
 FILE *data__bytesequence_file_open__wide(void) {
 
   return fopen("./data/tests/bytesequences/wide-all.txt", "r");
@@ -94,17 +109,17 @@ FILE *data__bytesequence_file_open__word_dash_plus(void) {
   return fopen("./data/tests/bytesequences/word_dash_plus-all.txt", "r");
 }
 
-FILE *data__bytesequence_file_open_lax__word(void) {
+FILE *data__bytesequence_file_open__word__lax(void) {
 
   return fopen("./data/tests/bytesequences/word-lax.txt", "r");
 }
 
-FILE *data__bytesequence_file_open_lax__word_dash(void) {
+FILE *data__bytesequence_file_open__word_dash__lax(void) {
 
   return fopen("./data/tests/bytesequences/word_dash-lax.txt", "r");
 }
 
-FILE *data__bytesequence_file_open_lax__word_dash_plus(void) {
+FILE *data__bytesequence_file_open__word_dash_plus__lax(void) {
 
   return fopen("./data/tests/bytesequences/word_dash_plus-lax.txt", "r");
 }

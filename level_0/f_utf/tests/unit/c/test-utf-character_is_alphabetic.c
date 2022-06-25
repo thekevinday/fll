@@ -27,7 +27,7 @@ static inline void private__test__f_utf_character_is_alphabetic__works(const f_s
   else if (f_utf_character_is_combining(sequence)) {
     assert_int_equal(status, F_false);
   }
-  else if (f_utf_character_is_whitespace(sequence)) {
+  else if (f_utf_character_is_whitespace(sequence, F_true)) {
     assert_int_equal(status, F_false);
   }
   else if (f_utf_character_is_whitespace_modifier(sequence)) {

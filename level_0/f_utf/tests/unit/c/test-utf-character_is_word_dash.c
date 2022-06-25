@@ -8,7 +8,7 @@ extern "C" {
 void test__f_utf_character_is_word_dash__strict_is_false(void **state) {
 
   {
-    FILE *file = data__bytesequence_file_open_lax__word_dash();
+    FILE *file = data__bytesequence_file_open__word_dash__lax();
 
     assert_non_null(file);
 

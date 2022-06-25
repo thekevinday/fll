@@ -39,7 +39,10 @@ int main(void) {
     cmocka_unit_test(test__f_utf_character_is_superscript__works),
     cmocka_unit_test(test__f_utf_character_is_symbol__works),
     cmocka_unit_test(test__f_utf_character_is_valid__works),
-    //cmocka_unit_test(test__f_utf_character_is_whitespace__works),
+    cmocka_unit_test(test__f_utf_character_is_whitespace__works),
+    cmocka_unit_test(test__f_utf_character_is_whitespace_modifier__works),
+    cmocka_unit_test(test__f_utf_character_is_whitespace_other__works),
+    cmocka_unit_test(test__f_utf_character_is_whitespace_zero_width__works),
     cmocka_unit_test(test__f_utf_character_is_wide__works),
     cmocka_unit_test(test__f_utf_character_is_zero_width__works),
 
@@ -155,7 +158,10 @@ int main(void) {
     cmocka_unit_test(test__f_utf_is_superscript__works),
     cmocka_unit_test(test__f_utf_is_symbol__works),
     cmocka_unit_test(test__f_utf_is_valid__works),
-    //cmocka_unit_test(test__f_utf_is_whitespace__works),
+    cmocka_unit_test(test__f_utf_is_whitespace__works),
+    cmocka_unit_test(test__f_utf_is_whitespace_modifier__works),
+    cmocka_unit_test(test__f_utf_is_whitespace_other__works),
+    cmocka_unit_test(test__f_utf_is_whitespace_zero_width__works),
     cmocka_unit_test(test__f_utf_is_wide__works),
     cmocka_unit_test(test__f_utf_is_zero_width__works),
 

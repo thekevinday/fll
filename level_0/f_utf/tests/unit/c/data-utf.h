@@ -233,6 +233,51 @@ extern FILE *data__bytesequence_file_open__valid(void);
 extern FILE *data__bytesequence_file_open__whitespace(void);
 
 /**
+ * Open the "whitespace_modifier" bytesequence file, the "modifier" variation.
+ *
+ * This assumes the following:
+ * - The file path is relative to the current working directory (tests are run from project root).
+ * - The file path is "data/tests/bytesequences/whitespace-modifier.txt".
+ *
+ * @return
+ *   Non-zero on success.
+ *   0 on failure.
+ *
+ * @see fopen()
+ */
+extern FILE *data__bytesequence_file_open__whitespace__modifier(void);
+
+/**
+ * Open the "whitespace_other" bytesequence file, the "other" variation.
+ *
+ * This assumes the following:
+ * - The file path is relative to the current working directory (tests are run from project root).
+ * - The file path is "data/tests/bytesequences/whitespace-other.txt".
+ *
+ * @return
+ *   Non-zero on success.
+ *   0 on failure.
+ *
+ * @see fopen()
+ */
+extern FILE *data__bytesequence_file_open__whitespace__other(void);
+
+/**
+ * Open the "whitespace_zero_width" bytesequence file, the "zero_width" variation.
+ *
+ * This assumes the following:
+ * - The file path is relative to the current working directory (tests are run from project root).
+ * - The file path is "data/tests/bytesequences/whitespace-zero_width.txt".
+ *
+ * @return
+ *   Non-zero on success.
+ *   0 on failure.
+ *
+ * @see fopen()
+ */
+extern FILE *data__bytesequence_file_open__whitespace__zero_width(void);
+
+/**
  * Open the "wide" bytesequence file.
  *
  * This assumes the following:
@@ -305,7 +350,7 @@ extern FILE *data__bytesequence_file_open__word_dash_plus(void);
  *
  * @see fopen()
  */
-extern FILE *data__bytesequence_file_open_lax__word(void);
+extern FILE *data__bytesequence_file_open__word__lax(void);
 
 /**
  * Open the "word_dash" bytesequence file, the "lax" variation.
@@ -320,7 +365,7 @@ extern FILE *data__bytesequence_file_open_lax__word(void);
  *
  * @see fopen()
  */
-extern FILE *data__bytesequence_file_open_lax__word_dash(void);
+extern FILE *data__bytesequence_file_open__word_dash__lax(void);
 
 /**
  * Open the "word_dash_plus" bytesequence file, the "lax" variation.
@@ -335,7 +380,7 @@ extern FILE *data__bytesequence_file_open_lax__word_dash(void);
  *
  * @see fopen()
  */
-extern FILE *data__bytesequence_file_open_lax__word_dash_plus(void);
+extern FILE *data__bytesequence_file_open__word_dash_plus__lax(void);
 
 /**
  * Open the "zero_width" bytesequence file.

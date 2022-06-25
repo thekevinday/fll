@@ -8,7 +8,7 @@ extern "C" {
 void test__f_utf_character_is_word__strict_is_false(void **state) {
 
   {
-    FILE *file = data__bytesequence_file_open_lax__word();
+    FILE *file = data__bytesequence_file_open__word__lax();
 
     assert_non_null(file);
 

@@ -30,7 +30,7 @@ static inline void private__test__f_utf_is_alphabetic_digit__works(const f_statu
   else if (f_utf_character_is_combining(sequence) == F_true) {
     assert_int_equal(status, F_false);
   }
-  else if (f_utf_character_is_whitespace(sequence) == F_true) {
+  else if (f_utf_character_is_whitespace(sequence, F_true) == F_true) {
     assert_int_equal(status, F_false);
   }
   else if (f_utf_character_is_whitespace_modifier(sequence) == F_true) {
