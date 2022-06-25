@@ -61,9 +61,9 @@ extern "C" {
  *   F_true if character is a decimal.
  *   F_false if character is not a decimal.
  */
-#ifndef _di_f_conversion_character_is_digit_
-  extern f_status_t f_conversion_character_is_digit(const f_char_t character);
-#endif // _di_f_conversion_character_is_digit_
+#ifndef _di_f_conversion_character_is_decimal_
+  extern f_status_t f_conversion_character_is_decimal(const f_char_t character);
+#endif // _di_f_conversion_character_is_decimal_
 
 /**
  * Identify whether or not the given 1-byte character represents a duodecimal digit.

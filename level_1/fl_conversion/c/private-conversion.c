@@ -433,7 +433,7 @@ extern "C" {
         }
       }
 
-      if (f_conversion_character_is_digit(string[i]) == F_true) {
+      if (f_conversion_character_is_decimal(string[i]) == F_true) {
         mode = 10;
 
         break;
@@ -577,7 +577,7 @@ extern "C" {
         sign_found = -1;
       }
 
-      if (f_conversion_character_is_digit(string[i]) == F_true) {
+      if (f_conversion_character_is_decimal(string[i]) == F_true) {
         mode = 10;
 
         break;

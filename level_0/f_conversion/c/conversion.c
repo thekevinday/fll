@@ -16,8 +16,8 @@ extern "C" {
   }
 #endif // _di_f_conversion_character_is_binary_
 
-#ifndef _di_f_conversion_character_is_digit_
-  f_status_t f_conversion_character_is_digit(const f_char_t character) {
+#ifndef _di_f_conversion_character_is_decimal_
+  f_status_t f_conversion_character_is_decimal(const f_char_t character) {
 
     if (character > 0x2f && character < 0x3a) {
       return F_true;
@@ -25,7 +25,7 @@ extern "C" {
 
     return F_false;
   }
-#endif // _di_f_conversion_character_is_digit_
+#endif // _di_f_conversion_character_is_decimal_
 
 #ifndef _di_f_conversion_character_is_duodecimal_
   f_status_t f_conversion_character_is_duodecimal(const f_char_t character) {
