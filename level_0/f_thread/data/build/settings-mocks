@@ -1,0 +1,84 @@
+# fss-0001
+#
+# Build the project with appropriate mocks linked in via the dynamic linker's "--wrap" functionality.
+#
+# The -Wl,--wrap does not work across shared files.
+# Therefore, this file is a work-around to inject the mocks into the library for testing purposes.
+# This should exactly match the "settings" file, except for the additional "-Wl,--wrap" parts and the additional mock source file.
+#
+# The flags -o0 must be passed to prevent the compiler from optimizing away any functions being mocked (which results in the mock not happening and a real function being called).
+# Alternatively, figure out which optimization that is disabled by -o0 and have that specific optimization disabled.
+#
+
+build_name f_thread
+
+version_major 0
+version_minor 5
+version_micro 10
+version_file micro
+version_target minor
+
+modes individual clang test coverage
+modes_default individual test
+
+build_compiler gcc
+build_compiler-clang clang
+build_indexer ar
+build_indexer_arguments rcs
+build_language c
+
+build_libraries -pthread -lc
+build_libraries-individual -lf_memory -lf_string
+
+build_sources_library thread.c private-thread.c thread/attribute.c thread/barrier.c thread/barrier_attribute.c thread/condition.c thread/condition_attribute.c thread/id.c thread/key.c thread/lock.c thread/lock_attribute.c thread/mutex.c thread/mutex_attribute.c thread/once.c thread/semaphore.c thread/set.c thread/spin.c ../../tests/unit/c/mock-thread.c
+
+build_sources_headers thread.h thread/attribute.h thread/barrier.h thread/barrier_attribute.h thread/condition.h thread/condition_attribute.h thread/id.h thread/key.h thread/lock.h thread/lock_attribute.h thread/mutex.h thread/mutex_attribute.h thread/once.h thread/semaphore.h thread/set.h thread/spin.h
+
+build_script yes
+build_shared yes
+build_static no
+
+path_headers fll/level_0
+path_library_script script
+path_library_shared shared
+path_library_static static
+
+has_path_standard yes
+preserve_path_headers yes
+
+search_exclusive yes
+search_shared yes
+search_static yes
+
+#defines -D_pthread_attr_unsupported_ -D_pthread_sigqueue_unsupported_
+defines -D_pthread_sigqueue_unsupported_
+
+flags -O0 -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-parentheses
+flags-clang -Wno-logical-op-parentheses
+flags-test -fstack-protector -Wall
+flags-coverage --coverage -fprofile-abs-path -fprofile-dir=build/coverage/
+
+flags_library -fPIC
+
+# Inject mocks.
+flags -Wl,--wrap=pthread_atfork
+flags -Wl,--wrap=pthread_attr_destroy
+flags -Wl,--wrap=pthread_attr_getaffinity_np
+flags -Wl,--wrap=pthread_attr_getdetachstate
+flags -Wl,--wrap=pthread_attr_getguardsize
+flags -Wl,--wrap=pthread_attr_getinheritsched
+flags -Wl,--wrap=pthread_attr_getschedparam
+flags -Wl,--wrap=pthread_attr_init
+flags -Wl,--wrap=pthread_attr_setaffinity_np
+flags -Wl,--wrap=pthread_attr_setdetachstate
+flags -Wl,--wrap=pthread_attr_setguardsize
+flags -Wl,--wrap=pthread_attr_setinheritsched
+flags -Wl,--wrap=pthread_attr_setschedparam
+flags -Wl,--wrap=pthread_barrier_destroy
+flags -Wl,--wrap=pthread_condattr_getclock
+flags -Wl,--wrap=pthread_condattr_getpshared
+flags -Wl,--wrap=pthread_condattr_setclock
+flags -Wl,--wrap=pthread_condattr_setpshared
+flags -Wl,--wrap=pthread_getattr_default_np
+flags -Wl,--wrap=pthread_key_delete
+flags -Wl,--wrap=pthread_setattr_default_np
