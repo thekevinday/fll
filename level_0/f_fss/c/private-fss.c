@@ -345,6 +345,7 @@ extern "C" {
 
 #if !defined(_di_f_fss_set_quotes_decrease_by_) || !defined(_di_f_fss_set_quotes_increase_) || !defined(_di_f_fss_set_quotes_increase_by_) || !defined(_di_f_fss_set_quotes_resize_)
   f_status_t private_f_fss_set_quotes_resize(const f_array_length_t length, f_fss_set_quotes_t * const set_quotes) {
+
     f_status_t status = F_none;
 
     for (f_array_length_t i = length; i < set_quotes->size; ++i) {
