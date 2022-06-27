@@ -20,6 +20,7 @@ extern "C" {
 
 #if !defined(_di_f_thread_attributes_adjust_) || !defined(_di_f_thread_attributes_decimate_by_)
   f_status_t private_f_thread_attributes_adjust(const f_array_length_t length, f_thread_attributes_t * const attributes) {
+
     f_status_t status = F_none;
 
     for (f_array_length_t i = length; i < attributes->size; ++i) {
@@ -43,6 +44,7 @@ extern "C" {
 
 #if !defined(_di_f_thread_attributes_decrease_) || !defined(_di_f_thread_attributes_decrease_by_) || !defined(_di_f_thread_attributes_increase_) || !defined(_di_f_thread_attributes_increase_by_)
   f_status_t private_f_thread_attributes_resize(const f_array_length_t length, f_thread_attributes_t * const attributes) {
+
     f_status_t status = F_none;
 
     for (f_array_length_t i = length; i < attributes->size; ++i) {
@@ -68,6 +70,9 @@ extern "C" {
   f_status_t private_f_thread_barrier_delete(f_thread_barrier_t *barrier) {
 
     if (pthread_barrier_destroy(barrier)) {
+      if (errno == EBUSY) return F_status_set_error(F_busy);
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
+
       return F_status_set_error(F_failure);
     }
 
@@ -79,6 +84,7 @@ extern "C" {
 
 #if !defined(_di_f_thread_barriers_adjust_) || !defined(_di_f_thread_barriers_decimate_by_)
   f_status_t private_f_thread_barriers_adjust(const f_array_length_t length, f_thread_barriers_t * const barriers) {
+
     f_status_t status = F_none;
 
     for (f_array_length_t i = length; i < barriers->size; ++i) {
@@ -102,6 +108,7 @@ extern "C" {
 
 #if !defined(_di_f_thread_barriers_decrease_) || !defined(_di_f_thread_barriers_decrease_by_) || !defined(_di_f_thread_barriers_increase_) || !defined(_di_f_thread_barriers_increase_by_)
   f_status_t private_f_thread_barriers_resize(const f_array_length_t length, f_thread_barriers_t * const barriers) {
+
     f_status_t status = F_none;
 
     for (f_array_length_t i = length; i < barriers->size; ++i) {
@@ -138,6 +145,7 @@ extern "C" {
 
 #if !defined(_di_f_thread_barrier_attributes_adjust_) || !defined(_di_f_thread_barrier_attributes_decimate_by_)
   f_status_t private_f_thread_barrier_attributes_adjust(const f_array_length_t length, f_thread_barrier_attributes_t * const attributes) {
+
     f_status_t status = F_none;
 
     for (f_array_length_t i = length; i < attributes->size; ++i) {
@@ -161,6 +169,7 @@ extern "C" {
 
 #if !defined(_di_f_thread_barrier_attributes_decrease_) || !defined(_di_f_thread_barrier_attributes_decrease_by_) || !defined(_di_f_thread_barrier_attributes_increase_) || !defined(_di_f_thread_barrier_attributes_increase_by_)
   f_status_t private_f_thread_barrier_attributes_resize(const f_array_length_t length, f_thread_barrier_attributes_t * const attributes) {
+
     f_status_t status = F_none;
 
     for (f_array_length_t i = length; i < attributes->size; ++i) {
@@ -200,6 +209,7 @@ extern "C" {
 
 #if !defined(_di_f_thread_condition_attributes_adjust_) || !defined(_di_f_thread_condition_attributes_decimate_by_)
   f_status_t private_f_thread_condition_attributes_adjust(const f_array_length_t length, f_thread_condition_attributes_t * const attributes) {
+
     f_status_t status = F_none;
 
     for (f_array_length_t i = length; i < attributes->size; ++i) {
@@ -223,6 +233,7 @@ extern "C" {
 
 #if !defined(_di_f_thread_condition_attributes_decrease_) || !defined(_di_f_thread_condition_attributes_decrease_by_) || !defined(_di_f_thread_condition_attributes_increase_) || !defined(_di_f_thread_condition_attributes_increase_by_)
   f_status_t private_f_thread_condition_attributes_resize(const f_array_length_t length, f_thread_condition_attributes_t * const attributes) {
+
     f_status_t status = F_none;
 
     for (f_array_length_t i = length; i < attributes->size; ++i) {
@@ -262,6 +273,7 @@ extern "C" {
 
 #if !defined(_di_f_thread_conditions_adjust_) || !defined(_di_f_thread_conditions_decimate_by_)
   f_status_t private_f_thread_conditions_adjust(const f_array_length_t length, f_thread_conditions_t * const conditions) {
+
     f_status_t status = F_none;
 
     for (f_array_length_t i = length; i < conditions->size; ++i) {
@@ -285,6 +297,7 @@ extern "C" {
 
 #if !defined(_di_f_thread_conditions_decrease_) || !defined(_di_f_thread_conditions_decrease_by_) || !defined(_di_f_thread_conditions_increase_) || !defined(_di_f_thread_conditions_increase_by_)
   f_status_t private_f_thread_conditions_resize(const f_array_length_t length, f_thread_conditions_t * const conditions) {
+
     f_status_t status = F_none;
 
     for (f_array_length_t i = length; i < conditions->size; ++i) {
@@ -306,6 +319,44 @@ extern "C" {
   }
 #endif // !defined(_di_f_thread_conditions_decrease_) || !defined(_di_f_thread_conditions_decrease_by_) || !defined(_di_f_thread_conditions_increase_) || !defined(_di_f_thread_conditions_increase_by_)
 
+#if !defined(_di_f_thread_ids_adjust_) || !defined(_di_f_thread_ids_decimate_by_)
+  f_status_t private_f_thread_ids_adjust(const f_array_length_t length, f_thread_ids_t * const ids) {
+
+    f_status_t status = F_none;
+
+    for (f_array_length_t i = length; i < ids->size; ++i) {
+      memset(&ids->array[i], 0, sizeof(f_thread_id_t));
+    } // for
+
+    status = f_memory_adjust(ids->size, length, sizeof(f_thread_id_t), (void **) & ids->array);
+    if (F_status_is_error(status)) return status;
+
+    ids->size = length;
+
+    if (ids->used > ids->size) {
+      ids->used = length;
+    }
+
+    return F_none;
+  }
+#endif // !defined(_di_f_thread_ids_adjust_) || !defined(_di_f_thread_ids_decimate_by_)
+
+#if !defined(_di_f_thread_ids_decrease_) || !defined(_di_f_thread_ids_decrease_by_) || !defined(_di_f_thread_ids_increase_) || !defined(_di_f_thread_ids_increase_by_)
+  f_status_t private_f_thread_ids_resize(const f_array_length_t length, f_thread_ids_t * const ids) {
+
+    const f_status_t status = f_memory_resize(ids->size, length, sizeof(f_thread_id_t), (void **) & ids->array);
+    if (F_status_is_error(status)) return status;
+
+    ids->size = length;
+
+    if (ids->used > ids->size) {
+      ids->used = length;
+    }
+
+    return F_none;
+  }
+#endif // !defined(_di_f_thread_ids_decrease_) || !defined(_di_f_thread_ids_decrease_by_) || !defined(_di_f_thread_ids_increase_) || !defined(_di_f_thread_ids_increase_by_)
+
 #if !defined(_di_f_thread_keys_adjust_) || !defined(_di_f_thread_keys_decimate_by_) || !defined(_di_f_thread_keys_decrease_) || !defined(_di_f_thread_keys_decrease_by_) || !defined(_di_f_thread_keys_increase_) || !defined(_di_f_thread_keys_increase_by_) || !defined(_di_f_thread_keys_resize_)
   f_status_t private_f_thread_key_delete(f_thread_key_t *key) {
 
@@ -321,6 +372,7 @@ extern "C" {
 
 #if !defined(_di_f_thread_keys_adjust_) || !defined(_di_f_thread_keys_decimate_by_)
   f_status_t private_f_thread_keys_adjust(const f_array_length_t length, f_thread_keys_t * const keys) {
+
     f_status_t status = F_none;
 
     for (f_array_length_t i = length; i < keys->size; ++i) {
@@ -344,6 +396,7 @@ extern "C" {
 
 #if !defined(_di_f_thread_keys_decrease_) || !defined(_di_f_thread_keys_decrease_by_) || !defined(_di_f_thread_keys_increase_) || !defined(_di_f_thread_keys_increase_by_)
   f_status_t private_f_thread_keys_resize(const f_array_length_t length, f_thread_keys_t * const keys) {
+
     f_status_t status = F_none;
 
     for (f_array_length_t i = length; i < keys->size; ++i) {
@@ -365,68 +418,6 @@ extern "C" {
   }
 #endif // !defined(_di_f_thread_keys_decrease_) || !defined(_di_f_thread_keys_decrease_by_) || !defined(_di_f_thread_keys_increase_) || !defined(_di_f_thread_keys_increase_by_)
 
-#if !defined(_di_f_thread_locks_adjust_) || !defined(_di_f_thread_locks_decimate_by_) || !defined(_di_f_thread_locks_decrease_) || !defined(_di_f_thread_locks_decrease_by_) || !defined(_di_f_thread_locks_increase_) || !defined(_di_f_thread_locks_increase_by_) || !defined(_di_f_thread_locks_resize_)
-  f_status_t private_f_thread_lock_delete(f_thread_lock_t *lock) {
-
-    const int error = pthread_rwlock_destroy(lock);
-
-    if (error) {
-      if (error == EBUSY) return F_status_set_error(F_busy);
-      if (error == EINVAL) return F_status_set_error(F_parameter);
-
-      return F_status_set_error(F_failure);
-    }
-
-    return F_none;
-  }
-#endif // !defined(_di_f_thread_locks_adjust_) || !defined(_di_f_thread_locks_decimate_by_) || !defined(_di_f_thread_locks_decrease_) || !defined(_di_f_thread_locks_decrease_by_) || !defined(_di_f_thread_locks_increase_) || !defined(_di_f_thread_locks_increase_by_) || !defined(_di_f_thread_locks_resize_)
-
-#if !defined(_di_f_thread_locks_adjust_) || !defined(_di_f_thread_locks_decimate_by_)
-  f_status_t private_f_thread_locks_adjust(const f_array_length_t length, f_thread_locks_t * const locks) {
-    f_status_t status = F_none;
-
-    for (f_array_length_t i = length; i < locks->size; ++i) {
-
-      status = private_f_thread_lock_delete(&locks->array[i]);
-      if (F_status_is_error(status)) return status;
-    } // for
-
-    status = f_memory_adjust(locks->size, length, sizeof(f_thread_lock_t), (void **) & locks->array);
-    if (F_status_is_error(status)) return status;
-
-    locks->size = length;
-
-    if (locks->used > locks->size) {
-      locks->used = length;
-    }
-
-    return F_none;
-  }
-#endif // !defined(_di_f_thread_locks_adjust_) || !defined(_di_f_thread_locks_decimate_by_)
-
-#if !defined(_di_f_thread_locks_decrease_) || !defined(_di_f_thread_locks_decrease_by_) || !defined(_di_f_thread_locks_increase_) || !defined(_di_f_thread_locks_increase_by_)
-  f_status_t private_f_thread_locks_resize(const f_array_length_t length, f_thread_locks_t * const locks) {
-    f_status_t status = F_none;
-
-    for (f_array_length_t i = length; i < locks->size; ++i) {
-
-      status = private_f_thread_lock_delete(&locks->array[i]);
-      if (F_status_is_error(status)) return status;
-    } // for
-
-    status = f_memory_resize(locks->size, length, sizeof(f_thread_lock_t), (void **) & locks->array);
-    if (F_status_is_error(status)) return status;
-
-    locks->size = length;
-
-    if (locks->used > locks->size) {
-      locks->used = length;
-    }
-
-    return F_none;
-  }
-#endif // !defined(_di_f_thread_locks_decrease_) || !defined(_di_f_thread_locks_decrease_by_) || !defined(_di_f_thread_locks_increase_) || !defined(_di_f_thread_locks_increase_by_)
-
 #if !defined(_di_f_thread_lock_attributes_adjust_) || !defined(_di_f_thread_lock_attributes_decimate_by_) || !defined(_di_f_thread_lock_attributes_decrease_) || !defined(_di_f_thread_lock_attributes_decrease_by_) || !defined(_di_f_thread_lock_attributes_increase_) || !defined(_di_f_thread_lock_attributes_increase_by_) || !defined(_di_f_thread_lock_attributes_resize_)
   f_status_t private_f_thread_lock_attribute_delete(f_thread_lock_attribute_t *attribute) {
 
@@ -445,6 +436,7 @@ extern "C" {
 
 #if !defined(_di_f_thread_lock_attributes_adjust_) || !defined(_di_f_thread_lock_attributes_decimate_by_)
   f_status_t private_f_thread_lock_attributes_adjust(const f_array_length_t length, f_thread_lock_attributes_t * const attributes) {
+
     f_status_t status = F_none;
 
     for (f_array_length_t i = length; i < attributes->size; ++i) {
@@ -468,6 +460,7 @@ extern "C" {
 
 #if !defined(_di_f_thread_lock_attributes_decrease_) || !defined(_di_f_thread_lock_attributes_decrease_by_) || !defined(_di_f_thread_lock_attributes_increase_) || !defined(_di_f_thread_lock_attributes_increase_by_)
   f_status_t private_f_thread_lock_attributes_resize(const f_array_length_t length, f_thread_lock_attributes_t * const attributes) {
+
     f_status_t status = F_none;
 
     for (f_array_length_t i = length; i < attributes->size; ++i) {
@@ -489,6 +482,70 @@ extern "C" {
   }
 #endif // !defined(_di_f_thread_lock_attributes_decrease_) || !defined(_di_f_thread_lock_attributes_decrease_by_) || !defined(_di_f_thread_lock_attributes_increase_) || !defined(_di_f_thread_lock_attributes_increase_by_)
 
+#if !defined(_di_f_thread_locks_adjust_) || !defined(_di_f_thread_locks_decimate_by_) || !defined(_di_f_thread_locks_decrease_) || !defined(_di_f_thread_locks_decrease_by_) || !defined(_di_f_thread_locks_increase_) || !defined(_di_f_thread_locks_increase_by_) || !defined(_di_f_thread_locks_resize_)
+  f_status_t private_f_thread_lock_delete(f_thread_lock_t *lock) {
+
+    const int error = pthread_rwlock_destroy(lock);
+
+    if (error) {
+      if (error == EBUSY) return F_status_set_error(F_busy);
+      if (error == EINVAL) return F_status_set_error(F_parameter);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // !defined(_di_f_thread_locks_adjust_) || !defined(_di_f_thread_locks_decimate_by_) || !defined(_di_f_thread_locks_decrease_) || !defined(_di_f_thread_locks_decrease_by_) || !defined(_di_f_thread_locks_increase_) || !defined(_di_f_thread_locks_increase_by_) || !defined(_di_f_thread_locks_resize_)
+
+#if !defined(_di_f_thread_locks_adjust_) || !defined(_di_f_thread_locks_decimate_by_)
+  f_status_t private_f_thread_locks_adjust(const f_array_length_t length, f_thread_locks_t * const locks) {
+
+    f_status_t status = F_none;
+
+    for (f_array_length_t i = length; i < locks->size; ++i) {
+
+      status = private_f_thread_lock_delete(&locks->array[i]);
+      if (F_status_is_error(status)) return status;
+    } // for
+
+    status = f_memory_adjust(locks->size, length, sizeof(f_thread_lock_t), (void **) & locks->array);
+    if (F_status_is_error(status)) return status;
+
+    locks->size = length;
+
+    if (locks->used > locks->size) {
+      locks->used = length;
+    }
+
+    return F_none;
+  }
+#endif // !defined(_di_f_thread_locks_adjust_) || !defined(_di_f_thread_locks_decimate_by_)
+
+#if !defined(_di_f_thread_locks_decrease_) || !defined(_di_f_thread_locks_decrease_by_) || !defined(_di_f_thread_locks_increase_) || !defined(_di_f_thread_locks_increase_by_)
+  f_status_t private_f_thread_locks_resize(const f_array_length_t length, f_thread_locks_t * const locks) {
+
+    f_status_t status = F_none;
+
+    for (f_array_length_t i = length; i < locks->size; ++i) {
+
+      status = private_f_thread_lock_delete(&locks->array[i]);
+      if (F_status_is_error(status)) return status;
+    } // for
+
+    status = f_memory_resize(locks->size, length, sizeof(f_thread_lock_t), (void **) & locks->array);
+    if (F_status_is_error(status)) return status;
+
+    locks->size = length;
+
+    if (locks->used > locks->size) {
+      locks->used = length;
+    }
+
+    return F_none;
+  }
+#endif // !defined(_di_f_thread_locks_decrease_) || !defined(_di_f_thread_locks_decrease_by_) || !defined(_di_f_thread_locks_increase_) || !defined(_di_f_thread_locks_increase_by_)
+
 #if !defined(_di_f_thread_mutex_attributes_adjust_) || !defined(_di_f_thread_mutex_attributes_decimate_by_) || !defined(_di_f_thread_mutex_attributes_decrease_) || !defined(_di_f_thread_mutex_attributes_decrease_by_) || !defined(_di_f_thread_mutex_attributes_increase_) || !defined(_di_f_thread_mutex_attributes_increase_by_) || !defined(_di_f_thread_mutex_attributes_resize_)
   f_status_t private_f_thread_mutex_attribute_delete(f_thread_mutex_attribute_t *attribute) {
 
@@ -507,6 +564,7 @@ extern "C" {
 
 #if !defined(_di_f_thread_mutex_attributes_adjust_) || !defined(_di_f_thread_mutex_attributes_decimate_by_)
   f_status_t private_f_thread_mutex_attributes_adjust(const f_array_length_t length, f_thread_mutex_attributes_t * const attributes) {
+
     f_status_t status = F_none;
 
     for (f_array_length_t i = length; i < attributes->size; ++i) {
@@ -530,6 +588,7 @@ extern "C" {
 
 #if !defined(_di_f_thread_mutex_attributes_decrease_) || !defined(_di_f_thread_mutex_attributes_decrease_by_) || !defined(_di_f_thread_mutex_attributes_increase_) || !defined(_di_f_thread_mutex_attributes_increase_by_)
   f_status_t private_f_thread_mutex_attributes_resize(const f_array_length_t length, f_thread_mutex_attributes_t * const attributes) {
+
     f_status_t status = F_none;
 
     for (f_array_length_t i = length; i < attributes->size; ++i) {
@@ -569,6 +628,7 @@ extern "C" {
 
 #if !defined(_di_f_thread_mutexs_adjust_) || !defined(_di_f_thread_mutexs_decimate_by_)
   f_status_t private_f_thread_mutexs_adjust(const f_array_length_t length, f_thread_mutexs_t * const mutexs) {
+
     f_status_t status = F_none;
 
     for (f_array_length_t i = length; i < mutexs->size; ++i) {
@@ -592,6 +652,7 @@ extern "C" {
 
 #if !defined(_di_f_thread_mutexs_decrease_) || !defined(_di_f_thread_mutexs_decrease_by_) || !defined(_di_f_thread_mutexs_increase_) || !defined(_di_f_thread_mutexs_increase_by_)
   f_status_t private_f_thread_mutexs_resize(const f_array_length_t length, f_thread_mutexs_t * const mutexs) {
+
     f_status_t status = F_none;
 
     for (f_array_length_t i = length; i < mutexs->size; ++i) {
@@ -613,6 +674,44 @@ extern "C" {
   }
 #endif // !defined(_di_f_thread_mutexs_decrease_) || !defined(_di_f_thread_mutexs_decrease_by_) || !defined(_di_f_thread_mutexs_increase_) || !defined(_di_f_thread_mutexs_increase_by_)
 
+#if !defined(_di_f_thread_onces_adjust_) || !defined(_di_f_thread_onces_decimate_by_)
+  f_status_t private_f_thread_onces_adjust(const f_array_length_t length, f_thread_onces_t * const onces) {
+
+    for (f_array_length_t i = length; i < onces->size; ++i) {
+      memset(&onces->array[i], 0, sizeof(f_thread_once_t));
+    } // for
+
+    const f_status_t status = f_memory_adjust(onces->size, length, sizeof(f_thread_once_t), (void **) & onces->array);
+    if (F_status_is_error(status)) return status;
+
+    onces->size = length;
+
+    if (onces->used > onces->size) {
+      onces->used = length;
+    }
+
+    return F_none;
+  }
+#endif // !defined(_di_f_thread_onces_adjust_) || !defined(_di_f_thread_onces_decimate_by_)
+
+#if !defined(_di_f_thread_onces_decrease_) || !defined(_di_f_thread_onces_decrease_by_) || !defined(_di_f_thread_onces_increase_) || !defined(_di_f_thread_onces_increase_by_)
+  f_status_t private_f_thread_onces_resize(const f_array_length_t length, f_thread_onces_t * const onces) {
+
+    f_status_t status = F_none;
+
+    status = f_memory_resize(onces->size, length, sizeof(f_thread_once_t), (void **) & onces->array);
+    if (F_status_is_error(status)) return status;
+
+    onces->size = length;
+
+    if (onces->used > onces->size) {
+      onces->used = length;
+    }
+
+    return F_none;
+  }
+#endif // !defined(_di_f_thread_onces_decrease_) || !defined(_di_f_thread_onces_decrease_by_) || !defined(_di_f_thread_onces_increase_) || !defined(_di_f_thread_onces_increase_by_)
+
 #if !defined(_di_f_thread_semaphores_adjust_) || !defined(_di_f_thread_semaphores_decimate_by_) || !defined(_di_f_thread_semaphores_decrease_) || !defined(_di_f_thread_semaphores_decrease_by_) || !defined(_di_f_thread_semaphores_increase_) || !defined(_di_f_thread_semaphores_increase_by_) || !defined(_di_f_thread_semaphores_resize_)
   f_status_t private_f_thread_semaphore_delete(f_thread_semaphore_t *semaphore) {
 
@@ -630,6 +729,7 @@ extern "C" {
 
 #if !defined(_di_f_thread_semaphores_adjust_) || !defined(_di_f_thread_semaphores_decimate_by_)
   f_status_t private_f_thread_semaphores_adjust(const f_array_length_t length, f_thread_semaphores_t * const semaphores) {
+
     f_status_t status = F_none;
 
     for (f_array_length_t i = length; i < semaphores->size; ++i) {
@@ -654,6 +754,7 @@ extern "C" {
 
 #if !defined(_di_f_thread_semaphores_decrease_) || !defined(_di_f_thread_semaphores_decrease_by_) || !defined(_di_f_thread_semaphores_increase_) || !defined(_di_f_thread_semaphores_increase_by_)
   f_status_t private_f_thread_semaphores_resize(const f_array_length_t length, f_thread_semaphores_t * const semaphores) {
+
     f_status_t status = F_none;
 
     for (f_array_length_t i = length; i < semaphores->size; ++i) {
@@ -677,6 +778,7 @@ extern "C" {
 
 #if !defined(_di_f_thread_sets_adjust_) || !defined(_di_f_thread_sets_decimate_by_)
   f_status_t private_f_thread_sets_adjust(const f_array_length_t length, f_thread_sets_t * const sets) {
+
     f_status_t status = F_none;
 
     for (f_array_length_t i = length; i < sets->size; ++i) {
@@ -700,6 +802,7 @@ extern "C" {
 
 #if !defined(_di_f_thread_sets_decrease_) || !defined(_di_f_thread_sets_decrease_by_) || !defined(_di_f_thread_sets_increase_) || !defined(_di_f_thread_sets_increase_by_)
   f_status_t private_f_thread_sets_resize(const f_array_length_t length, f_thread_sets_t * const sets) {
+
     f_status_t status = F_none;
 
     for (f_array_length_t i = length; i < sets->size; ++i) {
@@ -739,6 +842,7 @@ extern "C" {
 
 #if !defined(_di_f_thread_spins_adjust_) || !defined(_di_f_thread_spins_decimate_by_)
   f_status_t private_f_thread_spins_adjust(const f_array_length_t length, f_thread_spins_t * const spins) {
+
     f_status_t status = F_none;
 
     for (f_array_length_t i = length; i < spins->size; ++i) {

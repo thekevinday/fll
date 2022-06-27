@@ -78,23 +78,27 @@ extern "C" {
   }
 #endif // defined(_pthread_attr_unsupported_) && !defined(_di_f_thread_attribute_affinity_set_)
 
-#ifndef _di_f_thread_attribute_clock_get_
-  f_status_t f_thread_attribute_clock_get(const f_thread_condition_attribute_t * const attribute, clockid_t * const id) {
+#ifndef _di_f_thread_attribute_condition_clock_get_
+  f_status_t f_thread_attribute_condition_clock_get(const f_thread_condition_attribute_t * const attribute, clockid_t * const id) {
     #ifndef _di_level_0_parameter_checking_
       if (!attribute) return F_status_set_error(F_parameter);
       if (!id) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (pthread_condattr_getclock(attribute, id)) {
+    const int error = pthread_condattr_getclock(attribute, id);
+
+    if (error) {
+      if (error == EINVAL) return F_status_set_error(F_parameter);
+
       return F_status_set_error(F_failure);
     }
 
     return F_none;
   }
-#endif // _di_f_thread_attribute_clock_get_
+#endif // _di_f_thread_attribute_condition_clock_get_
 
-#ifndef _di_f_thread_attribute_clock_set_
-  f_status_t f_thread_attribute_clock_set(const clockid_t id, f_thread_condition_attribute_t * const attribute) {
+#ifndef _di_f_thread_attribute_condition_clock_set_
+  f_status_t f_thread_attribute_condition_clock_set(const clockid_t id, f_thread_condition_attribute_t * const attribute) {
     #ifndef _di_level_0_parameter_checking_
       if (!attribute) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
@@ -109,7 +113,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // _di_f_thread_attribute_clock_set_
+#endif // _di_f_thread_attribute_condition_clock_set_
 
 #ifndef _di_f_thread_attribute_condition_shared_get_
   f_status_t f_thread_attribute_condition_shared_get(const f_thread_condition_attribute_t * const attribute, int * const shared) {
@@ -118,7 +122,11 @@ extern "C" {
       if (!shared) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (pthread_condattr_getpshared(attribute, shared)) {
+    const int error = pthread_condattr_getpshared(attribute, shared);
+
+    if (error) {
+      if (error == EINVAL) return F_status_set_error(F_parameter);
+
       return F_status_set_error(F_failure);
     }
 
@@ -146,6 +154,9 @@ extern "C" {
 
 #ifndef _di_f_thread_attribute_create_
   f_status_t f_thread_attribute_create(f_thread_attribute_t * const attribute) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!attribute) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
 
     const int error = pthread_attr_init(attribute);
 
@@ -186,8 +197,8 @@ extern "C" {
     const int error = pthread_setattr_default_np(attribute);
 
     if (error) {
-      if (error == ENOMEM) return F_status_set_error(F_memory_not);
       if (error == EINVAL) return F_status_set_error(F_parameter);
+      if (error == ENOMEM) return F_status_set_error(F_memory_not);
 
       return F_status_set_error(F_failure);
     }
@@ -495,101 +506,6 @@ extern "C" {
   }
 #endif // _di_f_thread_attribute_stack_size_set_
 
-#ifndef _di_f_thread_attributes_adjust_
-  f_status_t f_thread_attributes_adjust(const f_array_length_t length, f_thread_attributes_t * const attributes) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!attributes) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return private_f_thread_attributes_adjust(length, attributes);
-  }
-#endif // _di_f_thread_attributes_adjust_
-
-#ifndef _di_f_thread_attributes_decimate_by_
-  f_status_t f_thread_attributes_decimate_by(const f_array_length_t amount, f_thread_attributes_t * const attributes) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
-      if (!attributes) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (attributes->size - amount > 0) {
-      return private_f_thread_attributes_adjust(attributes->size - amount, attributes);
-    }
-
-    return private_f_thread_attributes_adjust(0, attributes);
-  }
-#endif // _di_f_thread_attributes_decimate_by_
-
-#ifndef _di_f_thread_attributes_decrease_by_
-  f_status_t f_thread_attributes_decrease_by(const f_array_length_t amount, f_thread_attributes_t * const attributes) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!attributes) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (!amount) return F_data_not;
-
-    if (attributes->size - amount > 0) {
-      return private_f_thread_attributes_resize(attributes->size - amount, attributes);
-    }
-
-    return private_f_thread_attributes_resize(0, attributes);
-  }
-#endif // _di_f_thread_attributes_decrease_by_
-
-#ifndef _di_f_thread_attributes_increase_
-  f_status_t f_thread_attributes_increase(const f_array_length_t step, f_thread_attributes_t * const attributes) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!attributes) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (step && attributes->used + 1 > attributes->size) {
-      f_array_length_t size = attributes->used + step;
-
-      if (size > F_array_length_t_size_d) {
-        if (attributes->used + 1 > F_array_length_t_size_d) {
-          return F_status_set_error(F_array_too_large);
-        }
-
-        size = F_array_length_t_size_d;
-      }
-
-      return private_f_thread_attributes_resize(size, attributes);
-    }
-
-    return F_data_not;
-  }
-#endif // _di_f_thread_attributes_increase_
-
-#ifndef _di_f_thread_attributes_increase_by_
-  f_status_t f_thread_attributes_increase_by(const f_array_length_t amount, f_thread_attributes_t * const attributes) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!attributes) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (!amount) return F_data_not;
-
-    if (attributes->used + amount > attributes->size) {
-      if (attributes->used + amount > F_array_length_t_size_d) {
-        return F_status_set_error(F_array_too_large);
-      }
-
-      return private_f_thread_attributes_resize(attributes->used + amount, attributes);
-    }
-
-    return F_data_not;
-  }
-#endif // _di_f_thread_attributes_increase_by_
-
-#ifndef _di_f_thread_attributes_resize_
-  f_status_t f_thread_attributes_resize(const f_array_length_t length, f_thread_attributes_t * const attributes) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!attributes) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return private_f_thread_attributes_resize(length, attributes);
-  }
-#endif // _di_f_thread_attributes_resize_
-
 #ifndef _di_f_thread_barrier_attribute_create_
   f_status_t f_thread_barrier_attribute_create(f_thread_barrier_attribute_t * const attribute) {
 
@@ -622,7 +538,11 @@ extern "C" {
       if (!shared) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (pthread_barrierattr_getpshared(attribute, shared)) {
+    const int error = pthread_barrierattr_getpshared(attribute, shared);
+
+    if (error) {
+      if (error == EINVAL) return F_status_set_error(F_parameter);
+
       return F_status_set_error(F_failure);
     }
 
@@ -648,108 +568,15 @@ extern "C" {
   }
 #endif // _di_f_thread_barrier_attribute_shared_set_
 
-#ifndef _di_f_thread_barrier_attributes_adjust_
-  f_status_t f_thread_barrier_attributes_adjust(const f_array_length_t length, f_thread_barrier_attributes_t * const attributes) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!attributes) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return private_f_thread_barrier_attributes_adjust(length, attributes);
-  }
-#endif // _di_f_thread_barrier_attributes_adjust_
-
-#ifndef _di_f_thread_barrier_attributes_decimate_by_
-  f_status_t f_thread_barrier_attributes_decimate_by(const f_array_length_t amount, f_thread_barrier_attributes_t * const attributes) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!attributes) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (!amount) return F_data_not;
-
-    if (attributes->size - amount > 0) {
-      return private_f_thread_barrier_attributes_adjust(attributes->size - amount, attributes);
-    }
-
-    return private_f_thread_barrier_attributes_adjust(0, attributes);
-  }
-#endif // _di_f_thread_barrier_attributes_decimate_by_
-
-#ifndef _di_f_thread_barrier_attributes_decrease_by_
-  f_status_t f_thread_barrier_attributes_decrease_by(const f_array_length_t amount, f_thread_barrier_attributes_t * const attributes) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!attributes) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (!amount) return F_data_not;
-
-    if (attributes->size - amount > 0) {
-      return private_f_thread_barrier_attributes_resize(attributes->size - amount, attributes);
-    }
-
-    return private_f_thread_barrier_attributes_resize(0, attributes);
-  }
-#endif // _di_f_thread_barrier_attributes_decrease_by_
-
-#ifndef _di_f_thread_barrier_attributes_increase_
-  f_status_t f_thread_barrier_attributes_increase(const f_array_length_t step, f_thread_barrier_attributes_t * const attributes) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!attributes) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (step && attributes->used + 1 > attributes->size) {
-      f_array_length_t size = attributes->used + step;
-
-      if (size > F_array_length_t_size_d) {
-        if (attributes->used + 1 > F_array_length_t_size_d) {
-          return F_status_set_error(F_array_too_large);
-        }
-
-        size = F_array_length_t_size_d;
-      }
-
-      return private_f_thread_barrier_attributes_resize(size, attributes);
-    }
-
-    return F_data_not;
-  }
-#endif // _di_f_thread_barrier_attributes_increase_
-
-#ifndef _di_f_thread_barrier_attributes_increase_by_
-  f_status_t f_thread_barrier_attributes_increase_by(const f_array_length_t amount, f_thread_barrier_attributes_t * const attributes) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!attributes) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (!amount) return F_data_not;
-
-    if (attributes->used + amount > attributes->size) {
-      if (attributes->used + amount > F_array_length_t_size_d) {
-        return F_status_set_error(F_array_too_large);
-      }
-
-      return private_f_thread_barrier_attributes_resize(attributes->used + amount, attributes);
-    }
-
-    return F_data_not;
-  }
-#endif // _di_f_thread_barrier_attributes_increase_by_
-
-#ifndef _di_f_thread_barrier_attributes_resize_
-  f_status_t f_thread_barrier_attributes_resize(const f_array_length_t length, f_thread_barrier_attributes_t * const attributes) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!attributes) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return private_f_thread_barrier_attributes_resize(length, attributes);
-  }
-#endif // _di_f_thread_barrier_attributes_resize_
-
 #ifndef _di_f_thread_barrier_create_
   f_status_t f_thread_barrier_create(const unsigned int count, f_thread_barrier_attribute_t * const attribute, f_thread_barrier_t * const barrier) {
 
     const int error = pthread_barrier_init(barrier, attribute, count);
 
     if (error) {
+      if (error == EAGAIN) return F_status_set_error(F_resource_not);
+      if (error == EBUSY) return F_status_set_error(F_busy);
+      if (error == EINVAL) return F_status_set_error(F_parameter);
       if (error == ENOMEM) return F_status_set_error(F_memory_not);
 
       return F_status_set_error(F_failure);
@@ -786,104 +613,9 @@ extern "C" {
   }
 #endif // _di_f_thread_barrier_wait_
 
-#ifndef _di_f_thread_barriers_adjust_
-  f_status_t f_thread_barriers_adjust(const f_array_length_t length, f_thread_barriers_t * const barriers) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!barriers) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return private_f_thread_barriers_adjust(length, barriers);
-  }
-#endif // _di_f_thread_barriers_adjust_
-
-#ifndef _di_f_thread_barriers_decimate_by_
-  f_status_t f_thread_barriers_decimate_by(const f_array_length_t amount, f_thread_barriers_t * const barriers) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!barriers) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (!amount) return F_data_not;
-
-    if (barriers->size - amount > 0) {
-      return private_f_thread_barriers_adjust(barriers->size - amount, barriers);
-    }
-
-    return private_f_thread_barriers_adjust(0, barriers);
-  }
-#endif // _di_f_thread_barriers_decimate_by_
-
-#ifndef _di_f_thread_barriers_decrease_by_
-  f_status_t f_thread_barriers_decrease_by(const f_array_length_t amount, f_thread_barriers_t * const barriers) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!barriers) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (!amount) return F_data_not;
-
-    if (barriers->size - amount > 0) {
-      return private_f_thread_barriers_resize(barriers->size - amount, barriers);
-    }
-
-    return private_f_thread_barriers_resize(0, barriers);
-  }
-#endif // _di_f_thread_barriers_decrease_by_
-
-#ifndef _di_f_thread_barriers_increase_
-  f_status_t f_thread_barriers_increase(const f_array_length_t step, f_thread_barriers_t * const barriers) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!barriers) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (step && barriers->used + 1 > barriers->size) {
-      f_array_length_t size = barriers->used + step;
-
-      if (size > F_array_length_t_size_d) {
-        if (barriers->used + 1 > F_array_length_t_size_d) {
-          return F_status_set_error(F_array_too_large);
-        }
-
-        size = F_array_length_t_size_d;
-      }
-
-      return private_f_thread_barriers_resize(size, barriers);
-    }
-
-    return F_data_not;
-  }
-#endif // _di_f_thread_barriers_increase_
-
-#ifndef _di_f_thread_barriers_increase_by_
-  f_status_t f_thread_barriers_increase_by(const f_array_length_t amount, f_thread_barriers_t * const barriers) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!barriers) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (!amount) return F_data_not;
-
-    if (barriers->used + amount > barriers->size) {
-      if (barriers->used + amount > F_array_length_t_size_d) {
-        return F_status_set_error(F_array_too_large);
-      }
-
-      return private_f_thread_barriers_resize(barriers->used + amount, barriers);
-    }
-
-    return F_data_not;
-  }
-#endif // _di_f_thread_barriers_increase_by_
-
-#ifndef _di_f_thread_barriers_resize_
-  f_status_t f_thread_barriers_resize(const f_array_length_t length, f_thread_barriers_t * const barriers) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!barriers) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return private_f_thread_barriers_resize(length, barriers);
-  }
-#endif // _di_f_thread_barriers_resize_
-
 #ifndef _di_f_thread_caller_
   f_thread_id_t f_thread_caller(void) {
+
     return pthread_self();
   }
 #endif // _di_f_thread_caller_
@@ -1036,102 +768,6 @@ extern "C" {
   }
 #endif // _di_f_thread_condition_attribute_delete_
 
-#ifndef _di_f_thread_condition_attributes_adjust_
-  f_status_t f_thread_condition_attributes_adjust(const f_array_length_t length, f_thread_condition_attributes_t * const attributes) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!attributes) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return private_f_thread_condition_attributes_adjust(length, attributes);
-  }
-#endif // _di_f_thread_condition_attributes_adjust_
-
-#ifndef _di_f_thread_condition_attributes_decimate_by_
-  f_status_t f_thread_condition_attributes_decimate_by(const f_array_length_t amount, f_thread_condition_attributes_t * const attributes) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!attributes) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (!amount) return F_data_not;
-
-    if (attributes->size - amount > 0) {
-      return private_f_thread_condition_attributes_adjust(attributes->size - amount, attributes);
-    }
-
-    return private_f_thread_condition_attributes_adjust(0, attributes);
-  }
-#endif // _di_f_thread_condition_attributes_decimate_by_
-
-#ifndef _di_f_thread_condition_attributes_decrease_by_
-  f_status_t f_thread_condition_attributes_decrease_by(const f_array_length_t amount, f_thread_condition_attributes_t * const attributes) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!attributes) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (!amount) return F_data_not;
-
-    if (attributes->size - amount > 0) {
-      return private_f_thread_condition_attributes_resize(attributes->size - amount, attributes);
-    }
-
-    return private_f_thread_condition_attributes_resize(0, attributes);
-  }
-#endif // _di_f_thread_condition_attributes_decrease_by_
-
-#ifndef _di_f_thread_condition_attributes_increase_
-  f_status_t f_thread_condition_attributes_increase(const f_array_length_t step, f_thread_condition_attributes_t * const attributes) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!attributes) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (step && attributes->used + 1 > attributes->size) {
-      f_array_length_t size = attributes->used + step;
-
-      if (size > F_array_length_t_size_d) {
-        if (attributes->used + 1 > F_array_length_t_size_d) {
-          return F_status_set_error(F_array_too_large);
-        }
-
-        size = F_array_length_t_size_d;
-      }
-
-      return private_f_thread_condition_attributes_resize(size, attributes);
-    }
-
-    return F_data_not;
-  }
-#endif // _di_f_thread_condition_attributes_increase_
-
-#ifndef _di_f_thread_condition_attributes_increase_by_
-  f_status_t f_thread_condition_attributes_increase_by(const f_array_length_t amount, f_thread_condition_attributes_t * const attributes) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!attributes) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (!amount) return F_data_not;
-
-    if (attributes->used + amount > attributes->size) {
-      if (attributes->used + amount > F_array_length_t_size_d) {
-        return F_status_set_error(F_array_too_large);
-      }
-
-      return private_f_thread_condition_attributes_resize(attributes->used + amount, attributes);
-    }
-
-    return F_data_not;
-  }
-#endif // _di_f_thread_condition_attributes_increase_by_
-
-#ifndef _di_f_thread_condition_attributes_resize_
-  f_status_t f_thread_condition_attributes_resize(const f_array_length_t length, f_thread_condition_attributes_t * const attributes) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!attributes) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return private_f_thread_condition_attributes_resize(length, attributes);
-  }
-#endif // _di_f_thread_condition_attributes_resize_
-
 #ifndef _di_f_thread_condition_create_
   f_status_t f_thread_condition_create(const f_thread_condition_attribute_t * const attribute, f_thread_condition_t * const condition) {
     #ifndef _di_level_0_parameter_checking_
@@ -1243,101 +879,6 @@ extern "C" {
     return F_none;
   }
 #endif // _di_f_thread_condition_wait_timed_
-
-#ifndef _di_f_thread_conditions_adjust_
-  f_status_t f_thread_conditions_adjust(const f_array_length_t length, f_thread_conditions_t * const conditions) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!conditions) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return private_f_thread_conditions_adjust(length, conditions);
-  }
-#endif // _di_f_thread_conditions_adjust_
-
-#ifndef _di_f_thread_conditions_decimate_by_
-  f_status_t f_thread_conditions_decimate_by(const f_array_length_t amount, f_thread_conditions_t * const conditions) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!amount) return F_status_set_error(F_parameter);
-      if (!conditions) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (conditions->size - amount > 0) {
-      return private_f_thread_conditions_adjust(conditions->size - amount, conditions);
-    }
-
-    return private_f_thread_conditions_adjust(0, conditions);
-  }
-#endif // _di_f_thread_conditions_decimate_by_
-
-#ifndef _di_f_thread_conditions_decrease_by_
-  f_status_t f_thread_conditions_decrease_by(const f_array_length_t amount, f_thread_conditions_t * const conditions) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!conditions) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (!amount) return F_data_not;
-
-    if (conditions->size - amount > 0) {
-      return private_f_thread_conditions_resize(conditions->size - amount, conditions);
-    }
-
-    return private_f_thread_conditions_resize(0, conditions);
-  }
-#endif // _di_f_thread_conditions_decrease_by_
-
-#ifndef _di_f_thread_conditions_increase_
-  f_status_t f_thread_conditions_increase(const f_array_length_t step, f_thread_conditions_t * const conditions) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!conditions) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (step && conditions->used + 1 > conditions->size) {
-      f_array_length_t size = conditions->used + step;
-
-      if (size > F_array_length_t_size_d) {
-        if (conditions->used + 1 > F_array_length_t_size_d) {
-          return F_status_set_error(F_array_too_large);
-        }
-
-        size = F_array_length_t_size_d;
-      }
-
-      return private_f_thread_conditions_resize(size, conditions);
-    }
-
-    return F_data_not;
-  }
-#endif // _di_f_thread_conditions_increase_
-
-#ifndef _di_f_thread_conditions_increase_by_
-  f_status_t f_thread_conditions_increase_by(const f_array_length_t amount, f_thread_conditions_t * const conditions) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!conditions) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (!amount) return F_data_not;
-
-    if (conditions->used + amount > conditions->size) {
-      if (conditions->used + amount > F_array_length_t_size_d) {
-        return F_status_set_error(F_array_too_large);
-      }
-
-      return private_f_thread_conditions_resize(conditions->used + amount, conditions);
-    }
-
-    return F_data_not;
-  }
-#endif // _di_f_thread_conditions_increase_by_
-
-#ifndef _di_f_thread_conditions_resize_
-  f_status_t f_thread_conditions_resize(const f_array_length_t length, f_thread_conditions_t * const conditions) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!conditions) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return private_f_thread_conditions_resize(length, conditions);
-  }
-#endif // _di_f_thread_conditions_resize_
 
 #ifndef _di_f_thread_create_
   f_status_t f_thread_create(const f_thread_attribute_t * const attribute, f_thread_id_t * const id, void *(*routine) (void *), void *argument) {
@@ -1505,102 +1046,6 @@ extern "C" {
   }
 #endif // _di_f_thread_key_set_
 
-#ifndef _di_f_thread_keys_adjust_
-  f_status_t f_thread_keys_adjust(const f_array_length_t length, f_thread_keys_t * const keys) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!keys) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return private_f_thread_keys_adjust(length, keys);
-  }
-#endif // _di_f_thread_keys_adjust_
-
-#ifndef _di_f_thread_keys_decimate_by_
-  f_status_t f_thread_keys_decimate_by(const f_array_length_t amount, f_thread_keys_t * const keys) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!keys) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (!amount) return F_data_not;
-
-    if (keys->size - amount > 0) {
-      return private_f_thread_keys_adjust(keys->size - amount, keys);
-    }
-
-    return private_f_thread_keys_adjust(0, keys);
-  }
-#endif // _di_f_thread_keys_decimate_by_
-
-#ifndef _di_f_thread_keys_decrease_by_
-  f_status_t f_thread_keys_decrease_by(const f_array_length_t amount, f_thread_keys_t * const keys) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!keys) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (!amount) return F_data_not;
-
-    if (keys->size - amount > 0) {
-      return private_f_thread_keys_resize(keys->size - amount, keys);
-    }
-
-    return private_f_thread_keys_resize(0, keys);
-  }
-#endif // _di_f_thread_keys_decrease_by_
-
-#ifndef _di_f_thread_keys_increase_
-  f_status_t f_thread_keys_increase(const f_array_length_t step, f_thread_keys_t * const keys) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!keys) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (step && keys->used + 1 > keys->size) {
-      f_array_length_t size = keys->used + step;
-
-      if (size > F_array_length_t_size_d) {
-        if (keys->used + 1 > F_array_length_t_size_d) {
-          return F_status_set_error(F_array_too_large);
-        }
-
-        size = F_array_length_t_size_d;
-      }
-
-      return private_f_thread_keys_resize(size, keys);
-    }
-
-    return F_data_not;
-  }
-#endif // _di_f_thread_keys_increase_
-
-#ifndef _di_f_thread_keys_increase_by_
-  f_status_t f_thread_keys_increase_by(const f_array_length_t amount, f_thread_keys_t * const keys) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!keys) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (!amount) return F_data_not;
-
-    if (keys->used + amount > keys->size) {
-      if (keys->used + amount > F_array_length_t_size_d) {
-        return F_status_set_error(F_array_too_large);
-      }
-
-      return private_f_thread_keys_resize(keys->used + amount, keys);
-    }
-
-    return F_data_not;
-  }
-#endif // _di_f_thread_keys_increase_by_
-
-#ifndef _di_f_thread_keys_resize_
-  f_status_t f_thread_keys_resize(const f_array_length_t length, f_thread_keys_t * const keys) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!keys) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return private_f_thread_keys_resize(length, keys);
-  }
-#endif // _di_f_thread_keys_resize_
-
 #ifndef _di_f_thread_lock_attribute_create_
   f_status_t f_thread_lock_attribute_create(f_thread_lock_attribute_t * const attribute) {
     #ifndef _di_level_0_parameter_checking_
@@ -1665,102 +1110,6 @@ extern "C" {
     return F_none;
   }
 #endif // _di_f_thread_lock_attribute_shared_set_
-
-#ifndef _di_f_thread_lock_attributes_adjust_
-  f_status_t f_thread_lock_attributes_adjust(const f_array_length_t length, f_thread_lock_attributes_t * const attributes) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!attributes) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return private_f_thread_lock_attributes_adjust(length, attributes);
-  }
-#endif // _di_f_thread_lock_attributes_adjust_
-
-#ifndef _di_f_thread_lock_attributes_decimate_by_
-  f_status_t f_thread_lock_attributes_decimate_by(const f_array_length_t amount, f_thread_lock_attributes_t * const attributes) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!attributes) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (!amount) return F_data_not;
-
-    if (attributes->size - amount > 0) {
-      return private_f_thread_lock_attributes_adjust(attributes->size - amount, attributes);
-    }
-
-    return private_f_thread_lock_attributes_adjust(0, attributes);
-  }
-#endif // _di_f_thread_lock_attributes_decimate_by_
-
-#ifndef _di_f_thread_lock_attributes_decrease_by_
-  f_status_t f_thread_lock_attributes_decrease_by(const f_array_length_t amount, f_thread_lock_attributes_t * const attributes) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!attributes) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (!amount) return F_data_not;
-
-    if (attributes->size - amount > 0) {
-      return private_f_thread_lock_attributes_resize(attributes->size - amount, attributes);
-    }
-
-    return private_f_thread_lock_attributes_resize(0, attributes);
-  }
-#endif // _di_f_thread_lock_attributes_decrease_by_
-
-#ifndef _di_f_thread_lock_attributes_increase_
-  f_status_t f_thread_lock_attributes_increase(const f_array_length_t step, f_thread_lock_attributes_t * const attributes) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!attributes) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (step && attributes->used + 1 > attributes->size) {
-      f_array_length_t size = attributes->used + step;
-
-      if (size > F_array_length_t_size_d) {
-        if (attributes->used + 1 > F_array_length_t_size_d) {
-          return F_status_set_error(F_array_too_large);
-        }
-
-        size = F_array_length_t_size_d;
-      }
-
-      return private_f_thread_lock_attributes_resize(size, attributes);
-    }
-
-    return F_data_not;
-  }
-#endif // _di_f_thread_lock_attributes_increase_
-
-#ifndef _di_f_thread_lock_attributes_increase_by_
-  f_status_t f_thread_lock_attributes_increase_by(const f_array_length_t amount, f_thread_lock_attributes_t * const attributes) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!attributes) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (!amount) return F_data_not;
-
-    if (attributes->used + amount > attributes->size) {
-      if (attributes->used + amount > F_array_length_t_size_d) {
-        return F_status_set_error(F_array_too_large);
-      }
-
-      return private_f_thread_lock_attributes_resize(attributes->used + amount, attributes);
-    }
-
-    return F_data_not;
-  }
-#endif // _di_f_thread_lock_attributes_increase_by_
-
-#ifndef _di_f_thread_lock_attributes_resize_
-  f_status_t f_thread_lock_attributes_resize(const f_array_length_t length, f_thread_lock_attributes_t * const attributes) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!attributes) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return private_f_thread_lock_attributes_resize(length, attributes);
-  }
-#endif // _di_f_thread_lock_attributes_resize_
 
 #ifndef _di_f_thread_lock_create_
   f_status_t f_thread_lock_create(const f_thread_lock_attribute_t * const attribute, f_thread_lock_t * const lock) {
@@ -1914,102 +1263,6 @@ extern "C" {
     return F_none;
   }
 #endif // _di_f_thread_lock_write_try_
-
-#ifndef _di_f_thread_locks_adjust_
-  f_status_t f_thread_locks_adjust(const f_array_length_t length, f_thread_locks_t * const locks) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!locks) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return private_f_thread_locks_adjust(length, locks);
-  }
-#endif // _di_f_thread_locks_adjust_
-
-#ifndef _di_f_thread_locks_decimate_by_
-  f_status_t f_thread_locks_decimate_by(const f_array_length_t amount, f_thread_locks_t * const locks) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!locks) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (!amount) return F_data_not;
-
-    if (locks->size - amount > 0) {
-      return private_f_thread_locks_adjust(locks->size - amount, locks);
-    }
-
-    return private_f_thread_locks_adjust(0, locks);
-  }
-#endif // _di_f_thread_locks_decimate_by_
-
-#ifndef _di_f_thread_locks_decrease_by_
-  f_status_t f_thread_locks_decrease_by(const f_array_length_t amount, f_thread_locks_t * const locks) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!locks) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (!amount) return F_data_not;
-
-    if (locks->size - amount > 0) {
-      return private_f_thread_locks_resize(locks->size - amount, locks);
-    }
-
-    return private_f_thread_locks_resize(0, locks);
-  }
-#endif // _di_f_thread_locks_decrease_by_
-
-#ifndef _di_f_thread_locks_increase_
-  f_status_t f_thread_locks_increase(const f_array_length_t step, f_thread_locks_t * const locks) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!locks) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (step && locks->used + 1 > locks->size) {
-      f_array_length_t size = locks->used + step;
-
-      if (size > F_array_length_t_size_d) {
-        if (locks->used + 1 > F_array_length_t_size_d) {
-          return F_status_set_error(F_array_too_large);
-        }
-
-        size = F_array_length_t_size_d;
-      }
-
-      return private_f_thread_locks_resize(size, locks);
-    }
-
-    return F_data_not;
-  }
-#endif // _di_f_thread_locks_increase_
-
-#ifndef _di_f_thread_locks_increase_by_
-  f_status_t f_thread_locks_increase_by(const f_array_length_t amount, f_thread_locks_t * const locks) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!locks) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (!amount) return F_data_not;
-
-    if (locks->used + amount > locks->size) {
-      if (locks->used + amount > F_array_length_t_size_d) {
-        return F_status_set_error(F_array_too_large);
-      }
-
-      return private_f_thread_locks_resize(locks->used + amount, locks);
-    }
-
-    return F_data_not;
-  }
-#endif // _di_f_thread_locks_increase_by_
-
-#ifndef _di_f_thread_locks_resize_
-  f_status_t f_thread_locks_resize(const f_array_length_t length, f_thread_locks_t * const locks) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!locks) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return private_f_thread_locks_resize(length, locks);
-  }
-#endif // _di_f_thread_locks_resize_
 
 #ifndef _di_f_thread_mutex_attribute_create_
   f_status_t f_thread_mutex_attribute_create(f_thread_mutex_attribute_t * const attribute) {
@@ -2187,102 +1440,6 @@ extern "C" {
     return F_none;
   }
 #endif // _di_f_thread_mutex_attribute_protocol_set_
-
-#ifndef _di_f_thread_mutex_attributes_adjust_
-  f_status_t f_thread_mutex_attributes_adjust(const f_array_length_t length, f_thread_mutex_attributes_t * const attributes) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!attributes) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return private_f_thread_mutex_attributes_adjust(length, attributes);
-  }
-#endif // _di_f_thread_mutex_attributes_adjust_
-
-#ifndef _di_f_thread_mutex_attributes_decimate_by_
-  f_status_t f_thread_mutex_attributes_decimate_by(const f_array_length_t amount, f_thread_mutex_attributes_t * const attributes) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!attributes) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (!amount) return F_data_not;
-
-    if (attributes->size - amount > 0) {
-      return private_f_thread_mutex_attributes_adjust(attributes->size - amount, attributes);
-    }
-
-    return private_f_thread_mutex_attributes_adjust(0, attributes);
-  }
-#endif // _di_f_thread_mutex_attributes_decimate_by_
-
-#ifndef _di_f_thread_mutex_attributes_decrease_by_
-  f_status_t f_thread_mutex_attributes_decrease_by(const f_array_length_t amount, f_thread_mutex_attributes_t * const attributes) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!attributes) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (!amount) return F_data_not;
-
-    if (attributes->size - amount > 0) {
-      return private_f_thread_mutex_attributes_resize(attributes->size - amount, attributes);
-    }
-
-    return private_f_thread_mutex_attributes_resize(0, attributes);
-  }
-#endif // _di_f_thread_mutex_attributes_decrease_by_
-
-#ifndef _di_f_thread_mutex_attributes_increase_
-  f_status_t f_thread_mutex_attributes_increase(const f_array_length_t step, f_thread_mutex_attributes_t * const attributes) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!attributes) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (step && attributes->used + 1 > attributes->size) {
-      f_array_length_t size = attributes->used + step;
-
-      if (size > F_array_length_t_size_d) {
-        if (attributes->used + 1 > F_array_length_t_size_d) {
-          return F_status_set_error(F_array_too_large);
-        }
-
-        size = F_array_length_t_size_d;
-      }
-
-      return private_f_thread_mutex_attributes_resize(size, attributes);
-    }
-
-    return F_data_not;
-  }
-#endif // _di_f_thread_mutex_attributes_increase_
-
-#ifndef _di_f_thread_mutex_attributes_increase_by_
-  f_status_t f_thread_mutex_attributes_increase_by(const f_array_length_t amount, f_thread_mutex_attributes_t * const attributes) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!attributes) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (!amount) return F_data_not;
-
-    if (attributes->used + amount > attributes->size) {
-      if (attributes->used + amount > F_array_length_t_size_d) {
-        return F_status_set_error(F_array_too_large);
-      }
-
-      return private_f_thread_mutex_attributes_resize(attributes->used + amount, attributes);
-    }
-
-    return F_data_not;
-  }
-#endif // _di_f_thread_mutex_attributes_increase_by_
-
-#ifndef _di_f_thread_mutex_attributes_resize_
-  f_status_t f_thread_mutex_attributes_resize(const f_array_length_t length, f_thread_mutex_attributes_t * const attributes) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!attributes) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return private_f_thread_mutex_attributes_resize(length, attributes);
-  }
-#endif // _di_f_thread_mutex_attributes_resize_
 
 #ifndef _di_f_thread_mutex_create_
   f_status_t f_thread_mutex_create(f_thread_mutex_attribute_t * const attribute, f_thread_mutex_t * const mutex) {
@@ -2621,102 +1778,6 @@ extern "C" {
   }
 #endif // _di_f_thread_mutex_unlock_
 
-#ifndef _di_f_thread_mutexs_adjust_
-  f_status_t f_thread_mutexs_adjust(const f_array_length_t length, f_thread_mutexs_t * const mutexs) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!mutexs) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return private_f_thread_mutexs_adjust(length, mutexs);
-  }
-#endif // _di_f_thread_mutexs_adjust_
-
-#ifndef _di_f_thread_mutexs_decimate_by_
-  f_status_t f_thread_mutexs_decimate_by(const f_array_length_t amount, f_thread_mutexs_t * const mutexs) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!mutexs) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (!amount) return F_data_not;
-
-    if (mutexs->size - amount > 0) {
-      return private_f_thread_mutexs_adjust(mutexs->size - amount, mutexs);
-    }
-
-    return private_f_thread_mutexs_adjust(0, mutexs);
-  }
-#endif // _di_f_thread_mutexs_decimate_by_
-
-#ifndef _di_f_thread_mutexs_decrease_by_
-  f_status_t f_thread_mutexs_decrease_by(const f_array_length_t amount, f_thread_mutexs_t * const mutexs) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!mutexs) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (!amount) return F_data_not;
-
-    if (mutexs->size - amount > 0) {
-      return private_f_thread_mutexs_resize(mutexs->size - amount, mutexs);
-    }
-
-    return private_f_thread_mutexs_resize(0, mutexs);
-  }
-#endif // _di_f_thread_mutexs_decrease_by_
-
-#ifndef _di_f_thread_mutexs_increase_
-  f_status_t f_thread_mutexs_increase(const f_array_length_t step, f_thread_mutexs_t * const mutexs) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!mutexs) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (step && mutexs->used + 1 > mutexs->size) {
-      f_array_length_t size = mutexs->used + step;
-
-      if (size > F_array_length_t_size_d) {
-        if (mutexs->used + 1 > F_array_length_t_size_d) {
-          return F_status_set_error(F_array_too_large);
-        }
-
-        size = F_array_length_t_size_d;
-      }
-
-      return private_f_thread_mutexs_resize(size, mutexs);
-    }
-
-    return F_data_not;
-  }
-#endif // _di_f_thread_mutexs_increase_
-
-#ifndef _di_f_thread_mutexs_increase_by_
-  f_status_t f_thread_mutexs_increase_by(const f_array_length_t amount, f_thread_mutexs_t * const mutexs) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!mutexs) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (!amount) return F_data_not;
-
-    if (mutexs->used + amount > mutexs->size) {
-      if (mutexs->used + amount > F_array_length_t_size_d) {
-        return F_status_set_error(F_array_too_large);
-      }
-
-      return private_f_thread_mutexs_resize(mutexs->used + amount, mutexs);
-    }
-
-    return F_data_not;
-  }
-#endif // _di_f_thread_mutexs_increase_by_
-
-#ifndef _di_f_thread_mutexs_resize_
-  f_status_t f_thread_mutexs_resize(const f_array_length_t length, f_thread_mutexs_t * const mutexs) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!mutexs) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return private_f_thread_mutexs_resize(length, mutexs);
-  }
-#endif // _di_f_thread_mutexs_resize_
-
 #ifndef _di_f_thread_once_
   f_status_t f_thread_once(void (*routine) (void), f_thread_once_t * const once) {
     #ifndef _di_level_0_parameter_checking_
@@ -2792,207 +1853,17 @@ extern "C" {
   }
 #endif // _di_f_thread_scheduler_priority_set_
 
-#ifndef _di_f_thread_semaphores_adjust_
-  f_status_t f_thread_semaphores_adjust(const f_array_length_t length, f_thread_semaphores_t * const semaphores) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!semaphores) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return private_f_thread_semaphores_adjust(length, semaphores);
-  }
-#endif // _di_f_thread_semaphores_adjust_
-
-#ifndef _di_f_thread_semaphores_decimate_by_
-  f_status_t f_thread_semaphores_decimate_by(const f_array_length_t amount, f_thread_semaphores_t * const semaphores) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!semaphores) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (!amount) return F_data_not;
-
-    if (semaphores->size - amount > 0) {
-      return private_f_thread_semaphores_adjust(semaphores->size - amount, semaphores);
-    }
-
-    return private_f_thread_semaphores_adjust(0, semaphores);
-  }
-#endif // _di_f_thread_semaphores_decimate_by_
-
-#ifndef _di_f_thread_semaphores_decrease_by_
-  f_status_t f_thread_semaphores_decrease_by(const f_array_length_t amount, f_thread_semaphores_t * const semaphores) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!semaphores) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (!amount) return F_data_not;
-
-    if (semaphores->size - amount > 0) {
-      return private_f_thread_semaphores_resize(semaphores->size - amount, semaphores);
-    }
-
-    return private_f_thread_semaphores_resize(0, semaphores);
-  }
-#endif // _di_f_thread_semaphores_decrease_by_
-
-#ifndef _di_f_thread_semaphores_increase_
-  f_status_t f_thread_semaphores_increase(const f_array_length_t step, f_thread_semaphores_t * const semaphores) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!semaphores) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (step && semaphores->used + 1 > semaphores->size) {
-      f_array_length_t size = semaphores->used + step;
-
-      if (size > F_array_length_t_size_d) {
-        if (semaphores->used + 1 > F_array_length_t_size_d) {
-          return F_status_set_error(F_array_too_large);
-        }
-
-        size = F_array_length_t_size_d;
-      }
-
-      return private_f_thread_semaphores_resize(size, semaphores);
-    }
-
-    return F_data_not;
-  }
-#endif // _di_f_thread_semaphores_increase_
-
-#ifndef _di_f_thread_semaphores_increase_by_
-  f_status_t f_thread_semaphores_increase_by(const f_array_length_t amount, f_thread_semaphores_t * const semaphores) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!semaphores) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (!amount) return F_data_not;
-
-    if (semaphores->used + amount > semaphores->size) {
-      if (semaphores->used + amount > F_array_length_t_size_d) {
-        return F_status_set_error(F_array_too_large);
-      }
-
-      return private_f_thread_semaphores_resize(semaphores->used + amount, semaphores);
-    }
-
-    return F_data_not;
-  }
-#endif // _di_f_thread_semaphores_increase_by_
-
-#ifndef _di_f_thread_semaphores_resize_
-  f_status_t f_thread_semaphores_resize(const f_array_length_t length, f_thread_semaphores_t * const semaphores) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!semaphores) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return private_f_thread_semaphores_resize(length, semaphores);
-  }
-#endif // _di_f_thread_semaphores_resize_
-
-#ifndef _di_f_thread_sets_adjust_
-  f_status_t f_thread_sets_adjust(const f_array_length_t length, f_thread_sets_t * const sets) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!sets) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return private_f_thread_sets_adjust(length, sets);
-  }
-#endif // _di_f_thread_sets_adjust_
-
-#ifndef _di_f_thread_sets_decimate_by_
-  f_status_t f_thread_sets_decimate_by(const f_array_length_t amount, f_thread_sets_t * const sets) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!sets) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (!amount) return F_data_not;
-
-    if (sets->size - amount > 0) {
-      return private_f_thread_sets_adjust(sets->size - amount, sets);
-    }
-
-    return private_f_thread_sets_adjust(0, sets);
-  }
-#endif // _di_f_thread_sets_decimate_by_
-
-#ifndef _di_f_thread_sets_decrease_by_
-  f_status_t f_thread_sets_decrease_by(const f_array_length_t amount, f_thread_sets_t * const sets) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!sets) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (!amount) return F_data_not;
-
-    if (sets->size - amount > 0) {
-      return private_f_thread_sets_resize(sets->size - amount, sets);
-    }
-
-    return private_f_thread_sets_resize(0, sets);
-  }
-#endif // _di_f_thread_sets_decrease_by_
-
-#ifndef _di_f_thread_sets_increase_
-  f_status_t f_thread_sets_increase(const f_array_length_t step, f_thread_sets_t * const sets) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!sets) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (step && sets->used + 1 > sets->size) {
-      f_array_length_t size = sets->used + step;
-
-      if (size > F_array_length_t_size_d) {
-        if (sets->used + 1 > F_array_length_t_size_d) {
-          return F_status_set_error(F_array_too_large);
-        }
-
-        size = F_array_length_t_size_d;
-      }
-
-      return private_f_thread_sets_resize(size, sets);
-    }
-
-    return F_data_not;
-  }
-#endif // _di_f_thread_sets_increase_
-
-#ifndef _di_f_thread_sets_increase_by_
-  f_status_t f_thread_sets_increase_by(const f_array_length_t amount, f_thread_sets_t * const sets) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!sets) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (!amount) return F_data_not;
-
-    if (sets->used + amount > sets->size) {
-      if (sets->used + amount > F_array_length_t_size_d) {
-        return F_status_set_error(F_array_too_large);
-      }
-
-      return private_f_thread_sets_resize(sets->used + amount, sets);
-    }
-
-    return F_data_not;
-  }
-#endif // _di_f_thread_sets_increase_by_
-
-#ifndef _di_f_thread_sets_resize_
-  f_status_t f_thread_sets_resize(const f_array_length_t length, f_thread_sets_t * const sets) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!sets) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return private_f_thread_sets_resize(length, sets);
-  }
-#endif // _di_f_thread_sets_resize_
-
 #ifndef _di_f_thread_signal_mask_
   f_status_t f_thread_signal_mask(const int how, const sigset_t *next, sigset_t * const current) {
     #ifndef _di_level_0_parameter_checking_
       if (!next && !current) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (pthread_sigmask(how, next, current) < 0) {
-      if (errno == EFAULT) return F_status_set_error(F_buffer);
-      if (errno == EINVAL) return F_status_set_error(F_parameter);
+    const int error = pthread_sigmask(how, next, current);
+
+    if (error) {
+      if (error == EFAULT) return F_status_set_error(F_buffer);
+      if (error == EINVAL) return F_status_set_error(F_parameter);
 
       return F_status_set_error(F_failure);
     }
@@ -3138,102 +2009,6 @@ extern "C" {
     return F_none;
   }
 #endif // _di_f_thread_spin_unlock_
-
-#ifndef _di_f_thread_spins_adjust_
-  f_status_t f_thread_spins_adjust(const f_array_length_t length, f_thread_spins_t * const spins) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!spins) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return private_f_thread_spins_adjust(length, spins);
-  }
-#endif // _di_f_thread_spins_adjust_
-
-#ifndef _di_f_thread_spins_decimate_by_
-  f_status_t f_thread_spins_decimate_by(const f_array_length_t amount, f_thread_spins_t * const spins) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!spins) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (!amount) return F_data_not;
-
-    if (spins->size - amount > 0) {
-      return private_f_thread_spins_adjust(spins->size - amount, spins);
-    }
-
-    return private_f_thread_spins_adjust(0, spins);
-  }
-#endif // _di_f_thread_spins_decimate_by_
-
-#ifndef _di_f_thread_spins_decrease_by_
-  f_status_t f_thread_spins_decrease_by(const f_array_length_t amount, f_thread_spins_t * const spins) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!spins) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (!amount) return F_data_not;
-
-    if (spins->size - amount > 0) {
-      return private_f_thread_spins_resize(spins->size - amount, spins);
-    }
-
-    return private_f_thread_spins_resize(0, spins);
-  }
-#endif // _di_f_thread_spins_decrease_by_
-
-#ifndef _di_f_thread_spins_increase_
-  f_status_t f_thread_spins_increase(const f_array_length_t step, f_thread_spins_t * const spins) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!spins) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (step && spins->used + 1 > spins->size) {
-      f_array_length_t size = spins->used + step;
-
-      if (size > F_array_length_t_size_d) {
-        if (spins->used + 1 > F_array_length_t_size_d) {
-          return F_status_set_error(F_array_too_large);
-        }
-
-        size = F_array_length_t_size_d;
-      }
-
-      return private_f_thread_spins_resize(size, spins);
-    }
-
-    return F_data_not;
-  }
-#endif // _di_f_thread_spins_increase_
-
-#ifndef _di_f_thread_spins_increase_by_
-  f_status_t f_thread_spins_increase_by(const f_array_length_t amount, f_thread_spins_t * const spins) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!spins) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (!amount) return F_data_not;
-
-    if (spins->used + amount > spins->size) {
-      if (spins->used + amount > F_array_length_t_size_d) {
-        return F_status_set_error(F_array_too_large);
-      }
-
-      return private_f_thread_spins_resize(spins->used + amount, spins);
-    }
-
-    return F_data_not;
-  }
-#endif // _di_f_thread_spins_increase_by_
-
-#ifndef _di_f_thread_spins_resize_
-  f_status_t f_thread_spins_resize(const f_array_length_t length, f_thread_spins_t * const spins) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!spins) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return private_f_thread_spins_resize(length, spins);
-  }
-#endif // _di_f_thread_spins_resize_
 
 #ifndef _di_f_thread_unlock_
   f_status_t f_thread_unlock(f_thread_lock_t * const lock) {
