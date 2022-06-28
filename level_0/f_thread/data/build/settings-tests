@@ -51,6 +51,14 @@ build_sources_program test-thread-attribute_detach_get.c test-thread-attribute_d
 build_sources_program test-thread-attribute_guard_get.c test-thread-attribute_guard_set.c
 build_sources_program test-thread-attribute_scheduler_inherit_get.c test-thread-attribute_scheduler_inherit_set.c
 build_sources_program test-thread-attribute_scheduler_parameter_get.c test-thread-attribute_scheduler_parameter_set.c
+build_sources_program test-thread-attribute_scheduler_policy_get.c test-thread-attribute_scheduler_policy_set.c
+build_sources_program test-thread-attribute_scope_get.c test-thread-attribute_scope_set.c
+build_sources_program test-thread-attribute_stack_get.c test-thread-attribute_stack_set.c
+build_sources_program test-thread-attribute_stack_size_get.c test-thread-attribute_stack_size_set.c
+build_sources_program test-thread-barrier_attribute_create.c test-thread-barrier_attribute_delete.c
+build_sources_program test-thread-barrier_attribute_shared_get.c test-thread-barrier_attribute_shared_set.c
+build_sources_program test-thread-barrier_create.c test-thread-barrier_delete.c
+build_sources_program test-thread-barrier_wait.c
 
 build_sources_program test-thread.c
 

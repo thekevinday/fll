@@ -256,6 +256,50 @@ int main(void) {
     cmocka_unit_test(test__f_thread_attribute_scheduler_parameter_set__fails),
     cmocka_unit_test(test__f_thread_attribute_scheduler_parameter_set__works),
 
+    cmocka_unit_test(test__f_thread_attribute_scheduler_policy_get__fails),
+    cmocka_unit_test(test__f_thread_attribute_scheduler_policy_get__works),
+
+    cmocka_unit_test(test__f_thread_attribute_scheduler_policy_set__fails),
+    cmocka_unit_test(test__f_thread_attribute_scheduler_policy_set__works),
+
+    cmocka_unit_test(test__f_thread_attribute_scope_get__fails),
+    cmocka_unit_test(test__f_thread_attribute_scope_get__works),
+
+    cmocka_unit_test(test__f_thread_attribute_scope_set__fails),
+    cmocka_unit_test(test__f_thread_attribute_scope_set__works),
+
+    cmocka_unit_test(test__f_thread_attribute_stack_get__fails),
+    cmocka_unit_test(test__f_thread_attribute_stack_get__works),
+
+    cmocka_unit_test(test__f_thread_attribute_stack_set__fails),
+    cmocka_unit_test(test__f_thread_attribute_stack_set__works),
+
+    cmocka_unit_test(test__f_thread_attribute_stack_size_get__fails),
+    cmocka_unit_test(test__f_thread_attribute_stack_size_get__works),
+
+    cmocka_unit_test(test__f_thread_attribute_stack_size_set__fails),
+    cmocka_unit_test(test__f_thread_attribute_stack_size_set__works),
+
+    cmocka_unit_test(test__f_thread_barrier_attribute_create__fails),
+    cmocka_unit_test(test__f_thread_barrier_attribute_create__works),
+
+    cmocka_unit_test(test__f_thread_barrier_attribute_delete__fails),
+    cmocka_unit_test(test__f_thread_barrier_attribute_delete__works),
+
+    cmocka_unit_test(test__f_thread_barrier_attribute_shared_get__fails),
+    cmocka_unit_test(test__f_thread_barrier_attribute_shared_get__works),
+
+    cmocka_unit_test(test__f_thread_barrier_attribute_shared_set__fails),
+    cmocka_unit_test(test__f_thread_barrier_attribute_shared_set__works),
+
+    cmocka_unit_test(test__f_thread_barrier_create__fails),
+    cmocka_unit_test(test__f_thread_barrier_create__works),
+
+    cmocka_unit_test(test__f_thread_barrier_delete__fails),
+    cmocka_unit_test(test__f_thread_barrier_delete__works),
+
+    cmocka_unit_test(test__f_thread_barrier_wait__works),
+
     #ifndef _di_level_0_parameter_checking_
       cmocka_unit_test(test__f_thread_attributes_adjust__parameter_checking),
       cmocka_unit_test(test__f_thread_attributes_decimate_by__parameter_checking),
@@ -392,6 +436,31 @@ int main(void) {
       cmocka_unit_test(test__f_thread_attribute_scheduler_parameter_get__parameter_checking),
       cmocka_unit_test(test__f_thread_attribute_scheduler_parameter_set__parameter_checking),
 
+      cmocka_unit_test(test__f_thread_attribute_scheduler_policy_get__parameter_checking),
+      cmocka_unit_test(test__f_thread_attribute_scheduler_policy_set__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_attribute_scope_get__parameter_checking),
+      cmocka_unit_test(test__f_thread_attribute_scope_set__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_attribute_stack_get__parameter_checking),
+      cmocka_unit_test(test__f_thread_attribute_stack_set__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_attribute_stack_size_get__parameter_checking),
+      cmocka_unit_test(test__f_thread_attribute_stack_size_set__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_barrier_attribute_create__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_barrier_attribute_delete__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_barrier_attribute_shared_get__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_barrier_attribute_shared_set__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_barrier_create__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_barrier_delete__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_barrier_wait__parameter_checking),
     #endif // _di_level_0_parameter_checking_
 
     // f_thread_user_set() doesn't use parameter checking.

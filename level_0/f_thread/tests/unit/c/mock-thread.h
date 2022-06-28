@@ -30,40 +30,41 @@ const static int mock_errno_generic = 32767;
 
 extern int __wrap_pthread_atfork(void (*prepare)(void), void (*parent)(void), void (*child)(void));
 extern int __wrap_pthread_attr_destroy(pthread_attr_t *attr);
-extern int __wrap_pthread_attr_getaffinity_np(const pthread_attr_t *__attr, size_t __cpusetsize, cpu_set_t *__cpuset);
+extern int __wrap_pthread_attr_getaffinity_np(const pthread_attr_t *attr, size_t cpusetsize, cpu_set_t *cpuset);
 extern int __wrap_pthread_attr_getdetachstate(const pthread_attr_t *attr, int *detachstate);
 extern int __wrap_pthread_attr_getguardsize(const pthread_attr_t *restrict attr, size_t *restrict guardsize);
 extern int __wrap_pthread_attr_getinheritsched(const pthread_attr_t *restrict attr, int *restrict inheritsched);
 extern int __wrap_pthread_attr_getschedparam(const pthread_attr_t *restrict attr, struct sched_param *restrict param);
-extern int __wrap_pthread_attr_init(pthread_attr_t *__attr);
-extern int __wrap_pthread_attr_setaffinity_np(pthread_t __id, size_t __cpusetsize, const cpu_set_t *__cpuset);
+extern int __wrap_pthread_attr_getschedpolicy(const pthread_attr_t *restrict attr, int *restrict policy);
+extern int __wrap_pthread_attr_getscope(const pthread_attr_t *attr, int *contentionscope);
+extern int __wrap_pthread_attr_getstack(const pthread_attr_t *attr, void **stackaddr, size_t *stacksize);
+extern int __wrap_pthread_attr_getstacksize(const pthread_attr_t *attr, size_t *stacksize);
+extern int __wrap_pthread_attr_init(pthread_attr_t *attr);
+extern int __wrap_pthread_attr_setaffinity_np(pthread_t id, size_t cpusetsize, const cpu_set_t *cpuset);
 extern int __wrap_pthread_attr_setdetachstate(pthread_attr_t *attr, int detachstate);
 extern int __wrap_pthread_attr_setguardsize(pthread_attr_t *attr, size_t guardsize);
 extern int __wrap_pthread_attr_setinheritsched(pthread_attr_t *attr, int inheritsched);
 extern int __wrap_pthread_attr_setschedparam(pthread_attr_t *restrict attr, const struct sched_param *restrict param);
-extern int __wrap_pthread_barrier_destroy(pthread_barrier_t barrier);
-extern int __wrap_pthread_condattr_getclock(const pthread_condattr_t *__restrict __attr, clockid_t *__restrict __clock_id);
-extern int __wrap_pthread_condattr_getpshared(const pthread_condattr_t *__attr, int *__pshared);
-extern int __wrap_pthread_condattr_setclock(pthread_condattr_t *__attr, clockid_t __clock_id);
-extern int __wrap_pthread_condattr_setpshared(pthread_condattr_t *__attr, int __pshared);
+extern int __wrap_pthread_attr_setschedpolicy(pthread_attr_t *attr, int policy);
+extern int __wrap_pthread_attr_setscope(pthread_attr_t *attr, int contentionscope);
+extern int __wrap_pthread_attr_setstack(pthread_attr_t *attr, void *stackaddr, size_t stacksize);
+extern int __wrap_pthread_attr_setstacksize(pthread_attr_t *attr, size_t stacksize);
+extern int __wrap_pthread_barrierattr_destroy(pthread_barrierattr_t *attr);
+extern int __wrap_pthread_barrierattr_init(pthread_barrierattr_t *attr);
+extern int __wrap_pthread_barrierattr_getpshared(const pthread_barrierattr_t *attr, int *pshared);
+extern int __wrap_pthread_barrierattr_setpshared(pthread_barrierattr_t *attr, int pshared);
+extern int __wrap_pthread_barrier_destroy(pthread_barrier_t *barrier);
+extern int __wrap_pthread_barrier_init(pthread_barrier_t *barrier, const pthread_barrierattr_t *attr, unsigned count);
+extern int __wrap_pthread_barrier_wait(pthread_barrier_t *barrier);
+extern int __wrap_pthread_condattr_getclock(const pthread_condattr_t * restrict attr, clockid_t * restrict clock_id);
+extern int __wrap_pthread_condattr_getpshared(const pthread_condattr_t *attr, int *pshared);
+extern int __wrap_pthread_condattr_setclock(pthread_condattr_t *attr, clockid_t clock_id);
+extern int __wrap_pthread_condattr_setpshared(pthread_condattr_t *attr, int pshared);
 extern int __wrap_pthread_getattr_default_np(pthread_attr_t *attr);
 extern int __wrap_pthread_key_delete(pthread_key_t key);
 extern int __wrap_pthread_setattr_default_np(const pthread_attr_t *attr);
 
 /*
-pthread_attr_getschedpolicy
-pthread_attr_setschedpolicy
-pthread_attr_getscope
-pthread_attr_setscope
-pthread_attr_getstack
-pthread_attr_setstack
-pthread_attr_getstacksize
-pthread_attr_setstacksize
-pthread_barrierattr_init
-pthread_barrierattr_getpshared
-pthread_barrierattr_setpshared
-pthread_barrier_init
-pthread_barrier_wait
 pthread_setcancelstate
 pthread_testcancel
 pthread_setcanceltype

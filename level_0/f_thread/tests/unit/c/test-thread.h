@@ -137,6 +137,21 @@
 #include "test-thread-attribute_scheduler_inherit_set.h"
 #include "test-thread-attribute_scheduler_parameter_get.h"
 #include "test-thread-attribute_scheduler_parameter_set.h"
+#include "test-thread-attribute_scheduler_policy_get.h"
+#include "test-thread-attribute_scheduler_policy_set.h"
+#include "test-thread-attribute_scope_get.h"
+#include "test-thread-attribute_scope_set.h"
+#include "test-thread-attribute_stack_get.h"
+#include "test-thread-attribute_stack_set.h"
+#include "test-thread-attribute_stack_size_get.h"
+#include "test-thread-attribute_stack_size_set.h"
+#include "test-thread-barrier_attribute_create.h"
+#include "test-thread-barrier_attribute_delete.h"
+#include "test-thread-barrier_attribute_shared_get.h"
+#include "test-thread-barrier_attribute_shared_set.h"
+#include "test-thread-barrier_create.h"
+#include "test-thread-barrier_delete.h"
+#include "test-thread-barrier_wait.h"
 
 #ifdef __cplusplus
 extern "C" {
