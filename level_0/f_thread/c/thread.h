@@ -721,9 +721,13 @@ extern "C" {
 /**
  * Create (initialize) a thread barrier structure.
  *
+ * @param count
+ *   The number of threads that must call the barrier wait function before any can successfully return.
+ * @param attribute
+ *   (optional) The default attributes to initialize the barrier to.
+ *   Set to NULL to not use (in which case the default barrier attributes are used).
  * @param barrier
- *   (optional) The barrier to set.
- *   Set to NULL to not use (in which case the default barrier is used).
+ *   The barrier to set.
  *
  * @return
  *   F_none on success.
@@ -738,7 +742,7 @@ extern "C" {
  * @see pthread_barrier_init()
  */
 #ifndef _di_f_thread_barrier_create_
-  extern f_status_t f_thread_barrier_create(const unsigned int count, f_thread_barrier_attribute_t * const attribute, f_thread_barrier_t * const barrier);
+  extern f_status_t f_thread_barrier_create(const unsigned int count, f_thread_barrier_attribute_t * const attribute, f_thread_barrier_t *barrier);
 #endif // _di_f_thread_barrier_create_
 
 /**

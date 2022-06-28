@@ -69,9 +69,11 @@ extern "C" {
 #if !defined(_di_f_thread_barriers_adjust_) || !defined(_di_f_thread_barriers_decimate_by_) || !defined(_di_f_thread_barriers_decrease_) || !defined(_di_f_thread_barriers_decrease_by_) || !defined(_di_f_thread_barriers_increase_) || !defined(_di_f_thread_barriers_increase_by_) || !defined(_di_f_thread_barriers_resize_)
   f_status_t private_f_thread_barrier_delete(f_thread_barrier_t *barrier) {
 
-    if (pthread_barrier_destroy(barrier)) {
-      if (errno == EBUSY) return F_status_set_error(F_busy);
-      if (errno == EINVAL) return F_status_set_error(F_parameter);
+    const int error = pthread_barrier_destroy(barrier);
+
+    if (error) {
+      if (error == EBUSY) return F_status_set_error(F_busy);
+      if (error == EINVAL) return F_status_set_error(F_parameter);
 
       return F_status_set_error(F_failure);
     }

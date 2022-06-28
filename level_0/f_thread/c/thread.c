@@ -437,6 +437,7 @@ extern "C" {
 #ifndef _di_f_thread_attribute_stack_get_
   f_status_t f_thread_attribute_stack_get(const f_thread_attribute_t attribute, size_t * const stack_size, void **stack) {
     #ifndef _di_level_0_parameter_checking_
+      if (!stack_size) return F_status_set_error(F_parameter);
       if (!stack) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
@@ -456,6 +457,7 @@ extern "C" {
 #ifndef _di_f_thread_attribute_stack_set_
   f_status_t f_thread_attribute_stack_set(const size_t stack_size, void * const stack, f_thread_attribute_t * const attribute) {
     #ifndef _di_level_0_parameter_checking_
+      if (!stack) return F_status_set_error(F_parameter);
       if (!attribute) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
@@ -481,6 +483,8 @@ extern "C" {
     const int error = pthread_attr_getstacksize(&attribute, stack_size);
 
     if (error) {
+      if (error == EINVAL) return F_status_set_error(F_parameter);
+
       return F_status_set_error(F_failure);
     }
 
@@ -508,6 +512,9 @@ extern "C" {
 
 #ifndef _di_f_thread_barrier_attribute_create_
   f_status_t f_thread_barrier_attribute_create(f_thread_barrier_attribute_t * const attribute) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!attribute) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
 
     const int error = pthread_barrierattr_init(attribute);
 
@@ -569,7 +576,10 @@ extern "C" {
 #endif // _di_f_thread_barrier_attribute_shared_set_
 
 #ifndef _di_f_thread_barrier_create_
-  f_status_t f_thread_barrier_create(const unsigned int count, f_thread_barrier_attribute_t * const attribute, f_thread_barrier_t * const barrier) {
+  f_status_t f_thread_barrier_create(const unsigned int count, f_thread_barrier_attribute_t * const attribute, f_thread_barrier_t *barrier) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!barrier) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
 
     const int error = pthread_barrier_init(barrier, attribute, count);
 
