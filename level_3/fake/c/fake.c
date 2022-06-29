@@ -58,7 +58,7 @@ extern "C" {
 
     fll_program_print_help_option_other(file, context, fake_other_operation_build_s, "   Build or compile the code based on build settings file.");
     fll_program_print_help_option_other(file, context, fake_other_operation_clean_s, "   Delete all build files.");
-    fll_program_print_help_option_other(file, context, fake_other_operation_make_s, "    Build or compile the code based on fakefile.");
+    fll_program_print_help_option_other(file, context, fake_other_operation_make_s, "    Build or compile the code based on fakefile (default).");
     fll_program_print_help_option_other(file, context, fake_other_operation_skeleton_s, "Build a skeleton directory structure.");
 
     fll_program_print_help_usage(file, context, fake_program_name_s, fake_program_help_parameters_s);
@@ -170,10 +170,15 @@ extern "C" {
     operations_length += main->parameters.array[fake_parameter_operation_make_e].locations.used;
     operations_length += main->parameters.array[fake_parameter_operation_skeleton_e].locations.used;
 
+    // Ensure the default operation exists.
+    if (!operations_length && !main->parameters.remaining.used) {
+      operations_length = 1;
+    }
+
     uint8_t operations[operations_length];
     f_string_static_t operations_name = f_string_static_t_initialize;
 
-    {
+    if (main->parameters.array[fake_parameter_operation_build_e].locations.used || main->parameters.array[fake_parameter_operation_clean_e].locations.used || main->parameters.array[fake_parameter_operation_make_e].locations.used || main->parameters.array[fake_parameter_operation_skeleton_e].locations.used) {
       f_array_length_t locations[operations_length];
       f_array_length_t locations_length = 0;
       f_array_length_t i = 0;
@@ -244,8 +249,16 @@ extern "C" {
         ++locations_length;
       } // for
     }
+    else if (operations_length) {
+      operations[0] = fake_operation_make_e;
+    }
+    else {
+      status = F_status_set_error(F_parameter);
 
-    status = F_none;
+      if (main->error.verbosity != f_console_verbosity_quiet_e) {
+        fll_print_format("%r%[%QYou failed to specify a valid operation.%]%r%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context, f_string_eol_s, f_string_eol_s);
+      }
+    }
 
     if (main->parameters.array[fake_parameter_help_e].result == f_console_result_found_e) {
       fake_print_help(main->output.to, main->context);
@@ -263,7 +276,7 @@ extern "C" {
       return F_none;
     }
 
-    if (operations_length) {
+    if (F_status_is_error_not(status)) {
       bool validate_parameter_paths = F_true;
 
       status = fake_process_console_parameters(&data);
@@ -417,13 +430,6 @@ extern "C" {
           fll_print_format("%rAll operations complete.%r%r", main->output.to.stream, f_string_eol_s, f_string_eol_s, f_string_eol_s);
         }
       }
-    }
-    else {
-      if (main->error.verbosity != f_console_verbosity_quiet_e) {
-        fll_print_format("%r%[%QYou failed to specify an operation.%]%r%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context, f_string_eol_s, f_string_eol_s);
-      }
-
-      status = F_status_set_error(F_parameter);
     }
 
     fake_data_delete(&data);
