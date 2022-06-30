@@ -121,54 +121,36 @@ extern "C" {
 #endif // _di_f_thread_attribute_affinity_set_
 
 /**
- * Get the clock selection thread condition attribute.
+ * Get the level of concurrency.
  *
- * @param attribute
- *   The thread condition attribute.
- * @param id
- *   The clock ID.
+ * A level of 0 designates the system to automatically choose concurrency level.
+ * Any non-zero level is considered a hint and will be followed at the systems discretion.
+ *
+ * @param level
+ *   The concurrency level.
  *
  * @return
  *   F_none on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_resource_not (with error bit) if the new level would cause the system to exceed available resources.
  *
  *   F_failure (with error bit) on any other error.
  *
- * @see pthread_condattr_getclock()
+ * @see pthread_getconcurrency()
  */
-#ifndef _di_f_thread_attribute_condition_clock_get_
-  extern f_status_t f_thread_attribute_condition_clock_get(const f_thread_condition_attribute_t * const attribute, clockid_t * const id);
-#endif // _di_f_thread_attribute_condition_clock_get_
+#ifndef _di_f_thread_attribute_concurrency_get_
+  extern f_status_t f_thread_attribute_concurrency_get(int * const level);
+#endif // _di_f_thread_attribute_concurrency_get_
 
 /**
- * Set the clock selection thread condition attribute.
+ * Set the level of concurrency.
  *
- * @param id
- *   The clock ID.
- * @param attribute
- *   The thread condition attribute.
+ * A level of 0 designates the system to automatically choose concurrency level.
+ * Any non-zero level is considered a hint and will be followed at the systems discretion.
  *
- * @return
- *   F_none on success.
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   F_failure (with error bit) on any other error.
- *
- * @see pthread_condattr_setclock()
- */
-#ifndef _di_f_thread_attribute_condition_clock_set_
-  extern f_status_t f_thread_attribute_condition_clock_set(const clockid_t id, f_thread_condition_attribute_t * const attribute);
-#endif // _di_f_thread_attribute_condition_clock_set_
-
-/**
- * Get the process shared thread condition attribute.
- *
- * @param attribute
- *   The thread condition attribute.
- * @param shared
- *   The process shared attribute value.
+ * @param level
+ *   The concurrency level.
  *
  * @return
  *   F_none on success.
@@ -177,32 +159,11 @@ extern "C" {
  *
  *   F_failure (with error bit) on any other error.
  *
- * @see pthread_condattr_getpshared()
+ * @see pthread_setconcurrency()
  */
-#ifndef _di_f_thread_attribute_condition_shared_get_
-  extern f_status_t f_thread_attribute_condition_shared_get(const f_thread_condition_attribute_t * const attribute, int * const shared);
-#endif // _di_f_thread_attribute_condition_shared_get_
-
-/**
- * Set the process shared thread condition attribute.
- *
- * @param shared
- *   The process shared attribute value.
- * @param attribute
- *   The thread condition attribute.
- *
- * @return
- *   F_none on success.
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   F_failure (with error bit) on any other error.
- *
- * @see pthread_condattr_setpshared()
- */
-#ifndef _di_f_thread_attribute_condition_shared_set_
-  extern f_status_t f_thread_attribute_condition_shared_set(const int shared, f_thread_condition_attribute_t * const attribute);
-#endif // _di_f_thread_attribute_condition_shared_set_
+#ifndef _di_f_thread_attribute_concurrency_set_
+  extern f_status_t f_thread_attribute_concurrency_set(const int level);
+#endif // _di_f_thread_attribute_concurrency_set_
 
 /**
  * Create (initialize) a thread attribute structure.
@@ -919,51 +880,6 @@ extern "C" {
 #endif // _di_f_thread_compare_
 
 /**
- * Get the level of concurrency.
- *
- * A level of 0 designates the system to automatically choose concurrency level.
- * Any non-zero level is considered a hint and will be followed at the systems discretion.
- *
- * @param level
- *   The concurrency level.
- *
- * @return
- *   F_none on success.
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *   F_resource_not (with error bit) if the new level would cause the system to exceed available resources.
- *
- *   F_failure (with error bit) on any other error.
- *
- * @see pthread_getconcurrency()
- */
-#ifndef _di_f_thread_attribute_concurrency_get_
-  extern f_status_t f_thread_attribute_concurrency_get(int * const level);
-#endif // _di_f_thread_attribute_concurrency_get_
-
-/**
- * Set the level of concurrency.
- *
- * A level of 0 designates the system to automatically choose concurrency level.
- * Any non-zero level is considered a hint and will be followed at the systems discretion.
- *
- * @param level
- *   The concurrency level.
- *
- * @return
- *   F_none on success.
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   F_failure (with error bit) on any other error.
- *
- * @see pthread_setconcurrency()
- */
-#ifndef _di_f_thread_attribute_concurrency_set_
-  extern f_status_t f_thread_attribute_concurrency_set(const int level);
-#endif // _di_f_thread_attribute_concurrency_set_
-
-/**
  * Initialize a attribute.
  *
  * @param attribute
@@ -982,6 +898,48 @@ extern "C" {
 #ifndef _di_f_thread_condition_attribute_create_
   extern f_status_t f_thread_condition_attribute_create(f_thread_condition_attribute_t * const attribute);
 #endif // _di_f_thread_condition_attribute_create_
+
+/**
+ * Get the clock selection thread condition attribute.
+ *
+ * @param attribute
+ *   The thread condition attribute.
+ * @param id
+ *   The clock ID.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   F_failure (with error bit) on any other error.
+ *
+ * @see pthread_condattr_getclock()
+ */
+#ifndef _di_f_thread_condition_attribute_clock_get_
+  extern f_status_t f_thread_condition_attribute_clock_get(const f_thread_condition_attribute_t * const attribute, clockid_t * const id);
+#endif // _di_f_thread_condition_attribute_clock_get_
+
+/**
+ * Set the clock selection thread condition attribute.
+ *
+ * @param id
+ *   The clock ID.
+ * @param attribute
+ *   The thread condition attribute.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   F_failure (with error bit) on any other error.
+ *
+ * @see pthread_condattr_setclock()
+ */
+#ifndef _di_f_thread_condition_attribute_clock_set_
+  extern f_status_t f_thread_condition_attribute_clock_set(const clockid_t id, f_thread_condition_attribute_t * const attribute);
+#endif // _di_f_thread_condition_attribute_clock_set_
 
 /**
  * Delete a thread attribute.
@@ -1005,6 +963,48 @@ extern "C" {
 #ifndef _di_f_thread_condition_attribute_delete_
   extern f_status_t f_thread_condition_attribute_delete(f_thread_condition_attribute_t *attribute);
 #endif // _di_f_thread_condition_attribute_delete_
+
+/**
+ * Get the process shared thread condition attribute.
+ *
+ * @param attribute
+ *   The thread condition attribute.
+ * @param shared
+ *   The process shared attribute value.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   F_failure (with error bit) on any other error.
+ *
+ * @see pthread_condattr_getpshared()
+ */
+#ifndef _di_f_thread_condition_attribute_shared_get_
+  extern f_status_t f_thread_condition_attribute_shared_get(const f_thread_condition_attribute_t * const attribute, int * const shared);
+#endif // _di_f_thread_condition_attribute_shared_get_
+
+/**
+ * Set the process shared thread condition attribute.
+ *
+ * @param shared
+ *   The process shared attribute value.
+ * @param attribute
+ *   The thread condition attribute.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   F_failure (with error bit) on any other error.
+ *
+ * @see pthread_condattr_setpshared()
+ */
+#ifndef _di_f_thread_condition_attribute_shared_set_
+  extern f_status_t f_thread_condition_attribute_shared_set(const int shared, f_thread_condition_attribute_t * const attribute);
+#endif // _di_f_thread_condition_attribute_shared_set_
 
 /**
  * Initialize a condition.
@@ -1051,25 +1051,6 @@ extern "C" {
 #endif // _di_f_thread_condition_delete_
 
 /**
- * Signal all threads waiting on a condition.
- *
- * @param condition
- *   The condition to broadcast the unblock signal to.
- *
- * @return
- *   F_none on success.
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   F_failure (with error bit) on any other error.
- *
- * @see pthread_cond_broadcast()
- */
-#ifndef _di_f_thread_condition_signal_all_
-  extern f_status_t f_thread_condition_signal_all(f_thread_condition_t * const condition);
-#endif // _di_f_thread_condition_signal_all_
-
-/**
  * Signal a thread waiting on a condition.
  *
  * Only a single thread waiting on this condition is signaled.
@@ -1089,6 +1070,25 @@ extern "C" {
 #ifndef _di_f_thread_condition_signal_
   extern f_status_t f_thread_condition_signal(f_thread_condition_t * const condition);
 #endif // _di_f_thread_condition_signal_
+
+/**
+ * Signal all threads waiting on a condition.
+ *
+ * @param condition
+ *   The condition to broadcast the unblock signal to.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   F_failure (with error bit) on any other error.
+ *
+ * @see pthread_cond_broadcast()
+ */
+#ifndef _di_f_thread_condition_signal_all_
+  extern f_status_t f_thread_condition_signal_all(f_thread_condition_t * const condition);
+#endif // _di_f_thread_condition_signal_all_
 
 /**
  * Wait until condition is triggered.
@@ -1578,7 +1578,7 @@ extern "C" {
  * @see pthread_rwlock_timedrdlock()
  */
 #ifndef _di_f_thread_lock_read_timed_
-  extern f_status_t f_thread_lock_read_timed(const struct timespec *timeout, f_thread_lock_t * const lock);
+  extern f_status_t f_thread_lock_read_timed(const struct timespec * const timeout, f_thread_lock_t * const lock);
 #endif // _di_f_thread_lock_read_timed_
 
 /**
@@ -1653,7 +1653,7 @@ extern "C" {
  * @see pthread_rwlock_timedwrlock()
  */
 #ifndef _di_f_thread_lock_write_timed_
-  extern f_status_t f_thread_lock_write_timed(const struct timespec *timeout, f_thread_lock_t * const lock);
+  extern f_status_t f_thread_lock_write_timed(const struct timespec * const timeout, f_thread_lock_t * const lock);
 #endif // _di_f_thread_lock_write_timed_
 
 /**
@@ -1766,6 +1766,51 @@ extern "C" {
 #endif // _di_f_thread_mutex_attribute_priority_ceiling_set_
 
 /**
+ * Get the mutex attribute protocol.
+ *
+ * @param attribute
+ *   The thread mutex attribute.
+ * @param protocol
+ *   The protocol.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_prohibited (with error bit) if not allowed to perform the operation.
+ *
+ *   F_failure (with error bit) on any other error.
+ *
+ * @see pthread_mutexattr_getprotocol()
+ */
+#ifndef _di_f_thread_mutex_attribute_protocol_get_
+  extern f_status_t f_thread_mutex_attribute_protocol_get(const f_thread_mutex_attribute_t * const attribute, int * const protocol);
+#endif // _di_f_thread_mutex_attribute_protocol_get_
+
+/**
+ * Set the mutex attribute protocol.
+ *
+ * @param protocol
+ *   The protocol.
+ * @param attribute
+ *   The thread mutex attribute.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_prohibited (with error bit) if not allowed to perform the operation.
+ *   F_supported_not (with error bit) if the protocol is not supported.
+ *
+ *   F_failure (with error bit) on any other error.
+ *
+ * @see pthread_mutexattr_setprotocol()
+ */
+#ifndef _di_f_thread_mutex_attribute_protocol_set_
+  extern f_status_t f_thread_mutex_attribute_protocol_set(const int protocol, f_thread_mutex_attribute_t * const attribute);
+#endif // _di_f_thread_mutex_attribute_protocol_set_
+
+/**
  * Get the mutex attribute process shared thread attribute.
  *
  * @param attribute
@@ -1848,51 +1893,6 @@ extern "C" {
 #ifndef _di_f_thread_mutex_attribute_type_set_
   extern f_status_t f_thread_mutex_attribute_type_set(const int type, f_thread_mutex_attribute_t * const attribute);
 #endif // _di_f_thread_mutex_attribute_type_set_
-
-/**
- * Get the mutex attribute protocol.
- *
- * @param attribute
- *   The thread mutex attribute.
- * @param protocol
- *   The protocol.
- *
- * @return
- *   F_none on success.
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *   F_prohibited (with error bit) if not allowed to perform the operation.
- *
- *   F_failure (with error bit) on any other error.
- *
- * @see pthread_mutexattr_getprotocol()
- */
-#ifndef _di_f_thread_mutex_attribute_protocol_get_
-  extern f_status_t f_thread_mutex_attribute_protocol_get(const f_thread_mutex_attribute_t * const attribute, int * const protocol);
-#endif // _di_f_thread_mutex_attribute_protocol_get_
-
-/**
- * Set the mutex attribute protocol.
- *
- * @param protocol
- *   The protocol.
- * @param attribute
- *   The thread mutex attribute.
- *
- * @return
- *   F_none on success.
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *   F_prohibited (with error bit) if not allowed to perform the operation.
- *   F_supported_not (with error bit) if the protocol is not supported.
- *
- *   F_failure (with error bit) on any other error.
- *
- * @see pthread_mutexattr_setprotocol()
- */
-#ifndef _di_f_thread_mutex_attribute_protocol_set_
-  extern f_status_t f_thread_mutex_attribute_protocol_set(const int protocol, f_thread_mutex_attribute_t * const attribute);
-#endif // _di_f_thread_mutex_attribute_protocol_set_
 
 /**
  * Create a thread mutex.
@@ -1994,7 +1994,7 @@ extern "C" {
  * @see pthread_mutex_timedlock()
  */
 #ifndef _di_f_thread_mutex_lock_timed_
-  extern f_status_t f_thread_mutex_lock_timed(const struct timespec *timeout, f_thread_mutex_t * const mutex);
+  extern f_status_t f_thread_mutex_lock_timed(const struct timespec * const timeout, f_thread_mutex_t * const mutex);
 #endif // _di_f_thread_mutex_lock_timed_
 
 /**
@@ -2373,7 +2373,7 @@ extern "C" {
  * @see sem_timedwait()
  */
 #ifndef _di_f_thread_semaphore_lock_timed_
-  extern f_status_t f_thread_semaphore_lock_timed(const struct timespec *timeout, f_thread_semaphore_t * const semaphore);
+  extern f_status_t f_thread_semaphore_lock_timed(const struct timespec * const timeout, f_thread_semaphore_t * const semaphore);
 #endif // _di_f_thread_semaphore_lock_timed_
 
 /**

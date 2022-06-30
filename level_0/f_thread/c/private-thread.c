@@ -366,7 +366,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    key = 0;
+    *key = 0;
 
     return F_none;
   }

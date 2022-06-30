@@ -78,16 +78,25 @@ extern "C" {
   }
 #endif // defined(_pthread_attr_unsupported_) && !defined(_di_f_thread_attribute_affinity_set_)
 
-#ifndef _di_f_thread_attribute_condition_clock_get_
-  f_status_t f_thread_attribute_condition_clock_get(const f_thread_condition_attribute_t * const attribute, clockid_t * const id) {
+#ifndef _di_f_thread_attribute_concurrency_get_
+  f_status_t f_thread_attribute_concurrency_get(int * const level) {
     #ifndef _di_level_0_parameter_checking_
-      if (!attribute) return F_status_set_error(F_parameter);
-      if (!id) return F_status_set_error(F_parameter);
+      if (!level) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    const int error = pthread_condattr_getclock(attribute, id);
+    *level = pthread_getconcurrency();
+
+    return F_none;
+  }
+#endif // _di_f_thread_attribute_concurrency_get_
+
+#ifndef _di_f_thread_attribute_concurrency_set_
+  f_status_t f_thread_attribute_concurrency_set(const int level) {
+
+    const int error = pthread_setconcurrency(level);
 
     if (error) {
+      if (error == EAGAIN) return F_status_set_error(F_resource_not);
       if (error == EINVAL) return F_status_set_error(F_parameter);
 
       return F_status_set_error(F_failure);
@@ -95,62 +104,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // _di_f_thread_attribute_condition_clock_get_
-
-#ifndef _di_f_thread_attribute_condition_clock_set_
-  f_status_t f_thread_attribute_condition_clock_set(const clockid_t id, f_thread_condition_attribute_t * const attribute) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!attribute) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    const int error = pthread_condattr_setclock(attribute, id);
-
-    if (error) {
-      if (error == EINVAL) return F_status_set_error(F_parameter);
-
-      return F_status_set_error(F_failure);
-    }
-
-    return F_none;
-  }
-#endif // _di_f_thread_attribute_condition_clock_set_
-
-#ifndef _di_f_thread_attribute_condition_shared_get_
-  f_status_t f_thread_attribute_condition_shared_get(const f_thread_condition_attribute_t * const attribute, int * const shared) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!attribute) return F_status_set_error(F_parameter);
-      if (!shared) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    const int error = pthread_condattr_getpshared(attribute, shared);
-
-    if (error) {
-      if (error == EINVAL) return F_status_set_error(F_parameter);
-
-      return F_status_set_error(F_failure);
-    }
-
-    return F_none;
-  }
-#endif // _di_f_thread_attribute_condition_shared_get_
-
-#ifndef _di_f_thread_attribute_condition_shared_set_
-  f_status_t f_thread_attribute_condition_shared_set(const int shared, f_thread_condition_attribute_t * const attribute) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!attribute) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    const int error = pthread_condattr_setpshared(attribute, shared);
-
-    if (error) {
-      if (error == EINVAL) return F_status_set_error(F_parameter);
-
-      return F_status_set_error(F_failure);
-    }
-
-    return F_none;
-  }
-#endif // _di_f_thread_attribute_condition_shared_set_
+#endif // _di_f_thread_attribute_concurrency_set_
 
 #ifndef _di_f_thread_attribute_create_
   f_status_t f_thread_attribute_create(f_thread_attribute_t * const attribute) {
@@ -696,6 +650,9 @@ extern "C" {
 
 #ifndef _di_f_thread_clock_get_id_
   f_status_t f_thread_clock_get_id(const f_thread_id_t id_thread, clockid_t * const id_clock) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!id_clock) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
 
     const int error = pthread_getcpuclockid(id_thread, id_clock);
 
@@ -721,33 +678,42 @@ extern "C" {
   }
 #endif // _di_f_thread_compare_
 
-#ifndef _di_f_thread_attribute_concurrency_get_
-  f_status_t f_thread_attribute_concurrency_get(int * const level) {
+#ifndef _di_f_thread_condition_attribute_clock_get_
+  f_status_t f_thread_condition_attribute_clock_get(const f_thread_condition_attribute_t * const attribute, clockid_t * const id) {
     #ifndef _di_level_0_parameter_checking_
-      if (!level) return F_status_set_error(F_parameter);
+      if (!attribute) return F_status_set_error(F_parameter);
+      if (!id) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    *level = pthread_getconcurrency();
-
-    return F_none;
-  }
-#endif // _di_f_thread_attribute_concurrency_get_
-
-#ifndef _di_f_thread_attribute_concurrency_set_
-  f_status_t f_thread_attribute_concurrency_set(const int level) {
-
-    const int error = pthread_setconcurrency(level);
+    const int error = pthread_condattr_getclock(attribute, id);
 
     if (error) {
       if (error == EINVAL) return F_status_set_error(F_parameter);
-      if (error == EAGAIN) return F_status_set_error(F_resource_not);
 
       return F_status_set_error(F_failure);
     }
 
     return F_none;
   }
-#endif // _di_f_thread_attribute_concurrency_set_
+#endif // _di_f_thread_condition_attribute_clock_get_
+
+#ifndef _di_f_thread_condition_attribute_clock_set_
+  f_status_t f_thread_condition_attribute_clock_set(const clockid_t id, f_thread_condition_attribute_t * const attribute) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!attribute) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    const int error = pthread_condattr_setclock(attribute, id);
+
+    if (error) {
+      if (error == EINVAL) return F_status_set_error(F_parameter);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_condition_attribute_clock_set_
 
 #ifndef _di_f_thread_condition_attribute_create_
   f_status_t f_thread_condition_attribute_create(f_thread_condition_attribute_t * const attribute) {
@@ -777,6 +743,43 @@ extern "C" {
     return private_f_thread_condition_attribute_delete(condition_attribute);
   }
 #endif // _di_f_thread_condition_attribute_delete_
+
+#ifndef _di_f_thread_condition_attribute_shared_get_
+  f_status_t f_thread_condition_attribute_shared_get(const f_thread_condition_attribute_t * const attribute, int * const shared) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!attribute) return F_status_set_error(F_parameter);
+      if (!shared) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    const int error = pthread_condattr_getpshared(attribute, shared);
+
+    if (error) {
+      if (error == EINVAL) return F_status_set_error(F_parameter);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_condition_attribute_shared_get_
+
+#ifndef _di_f_thread_condition_attribute_shared_set_
+  f_status_t f_thread_condition_attribute_shared_set(const int shared, f_thread_condition_attribute_t * const attribute) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!attribute) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    const int error = pthread_condattr_setpshared(attribute, shared);
+
+    if (error) {
+      if (error == EINVAL) return F_status_set_error(F_parameter);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_condition_attribute_shared_set_
 
 #ifndef _di_f_thread_condition_create_
   f_status_t f_thread_condition_create(const f_thread_condition_attribute_t * const attribute, f_thread_condition_t * const condition) {
@@ -809,24 +812,6 @@ extern "C" {
   }
 #endif // _di_f_thread_condition_delete_
 
-#ifndef _di_f_thread_condition_signal_all_
-  f_status_t f_thread_condition_signal_all(f_thread_condition_t * const condition) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!condition) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    const int error = pthread_cond_broadcast(condition);
-
-    if (error) {
-      if (error == EINVAL) return F_status_set_error(F_parameter);
-
-      return F_status_set_error(F_failure);
-    }
-
-    return F_none;
-  }
-#endif // _di_f_thread_condition_signal_all_
-
 #ifndef _di_f_thread_condition_signal_
   f_status_t f_thread_condition_signal(f_thread_condition_t * const condition) {
     #ifndef _di_level_0_parameter_checking_
@@ -844,6 +829,24 @@ extern "C" {
     return F_none;
   }
 #endif // _di_f_thread_condition_signal_
+
+#ifndef _di_f_thread_condition_signal_all_
+  f_status_t f_thread_condition_signal_all(f_thread_condition_t * const condition) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!condition) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    const int error = pthread_cond_broadcast(condition);
+
+    if (error) {
+      if (error == EINVAL) return F_status_set_error(F_parameter);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_condition_signal_all_
 
 #ifndef _di_f_thread_condition_wait_
   f_status_t f_thread_condition_wait(f_thread_condition_t * const condition, f_thread_mutex_t * const mutex) {
@@ -1162,7 +1165,6 @@ extern "C" {
       if (error == EAGAIN) return F_status_set_error(F_resource_not);
       if (error == EDEADLK) return F_status_set_error(F_deadlock);
       if (error == EINVAL) return F_status_set_error(F_parameter);
-      if (error == ETIMEDOUT) return F_time;
 
       return F_status_set_error(F_failure);
     }
@@ -1172,7 +1174,7 @@ extern "C" {
 #endif // _di_f_thread_lock_read_
 
 #ifndef _di_f_thread_lock_read_timed_
-  f_status_t f_thread_lock_read_timed(const struct timespec *timeout, f_thread_lock_t * const lock) {
+  f_status_t f_thread_lock_read_timed(const struct timespec * const timeout, f_thread_lock_t * const lock) {
     #ifndef _di_level_0_parameter_checking_
       if (!timeout) return F_status_set_error(F_parameter);
       if (!lock) return F_status_set_error(F_parameter);
@@ -1234,7 +1236,7 @@ extern "C" {
 #endif // _di_f_thread_lock_write_
 
 #ifndef _di_f_thread_lock_write_timed_
-  f_status_t f_thread_lock_write_timed(const struct timespec *timeout, f_thread_lock_t * const lock) {
+  f_status_t f_thread_lock_write_timed(const struct timespec * const timeout, f_thread_lock_t * const lock) {
     #ifndef _di_level_0_parameter_checking_
       if (!timeout) return F_status_set_error(F_parameter);
       if (!lock) return F_status_set_error(F_parameter);
@@ -1345,6 +1347,46 @@ extern "C" {
   }
 #endif // _di_f_thread_mutex_attribute_priority_ceiling_set_
 
+#ifndef _di_f_thread_mutex_attribute_protocol_get_
+  f_status_t f_thread_mutex_attribute_protocol_get(const f_thread_mutex_attribute_t * const attribute, int * const protocol) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!attribute) return F_status_set_error(F_parameter);
+      if (!protocol) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    const int error = pthread_mutexattr_getprotocol(attribute, protocol);
+
+    if (error) {
+      if (error == EINVAL) return F_status_set_error(F_parameter);
+      if (error == EPERM) return F_status_set_error(F_prohibited);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_mutex_attribute_protocol_get_
+
+#ifndef _di_f_thread_mutex_attribute_protocol_set_
+  f_status_t f_thread_mutex_attribute_protocol_set(const int protocol, f_thread_mutex_attribute_t * const attribute) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!attribute) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    const int error = pthread_mutexattr_setprotocol(attribute, protocol);
+
+    if (error) {
+      if (error == EINVAL) return F_status_set_error(F_parameter);
+      if (error == EPERM) return F_status_set_error(F_prohibited);
+      if (error == ENOTSUP) return F_status_set_error(F_supported_not);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_mutex_attribute_protocol_set_
+
 #ifndef _di_f_thread_mutex_attribute_shared_get_
   f_status_t f_thread_mutex_attribute_shared_get(const f_thread_mutex_attribute_t * const attribute, int * const shared) {
     #ifndef _di_level_0_parameter_checking_
@@ -1411,46 +1453,6 @@ extern "C" {
   }
 #endif // _di_f_thread_mutex_attribute_type_set_
 
-#ifndef _di_f_thread_mutex_attribute_protocol_get_
-  f_status_t f_thread_mutex_attribute_protocol_get(const f_thread_mutex_attribute_t * const attribute, int * const protocol) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!attribute) return F_status_set_error(F_parameter);
-      if (!protocol) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    const int error = pthread_mutexattr_getprotocol(attribute, protocol);
-
-    if (error) {
-      if (error == EINVAL) return F_status_set_error(F_parameter);
-      if (error == EPERM) return F_status_set_error(F_prohibited);
-
-      return F_status_set_error(F_failure);
-    }
-
-    return F_none;
-  }
-#endif // _di_f_thread_mutex_attribute_protocol_get_
-
-#ifndef _di_f_thread_mutex_attribute_protocol_set_
-  f_status_t f_thread_mutex_attribute_protocol_set(const int protocol, f_thread_mutex_attribute_t * const attribute) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!attribute) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    const int error = pthread_mutexattr_setprotocol(attribute, protocol);
-
-    if (error) {
-      if (error == EINVAL) return F_status_set_error(F_parameter);
-      if (error == EPERM) return F_status_set_error(F_prohibited);
-      if (error == ENOTSUP) return F_status_set_error(F_supported_not);
-
-      return F_status_set_error(F_failure);
-    }
-
-    return F_none;
-  }
-#endif // _di_f_thread_mutex_attribute_protocol_set_
-
 #ifndef _di_f_thread_mutex_create_
   f_status_t f_thread_mutex_create(f_thread_mutex_attribute_t * const attribute, f_thread_mutex_t * const mutex) {
     #ifndef _di_level_0_parameter_checking_
@@ -1504,7 +1506,7 @@ extern "C" {
 #endif // _di_f_thread_mutex_lock_
 
 #ifndef _di_f_thread_mutex_lock_timed_
-  f_status_t f_thread_mutex_lock_timed(const struct timespec *timeout, f_thread_mutex_t * const mutex) {
+  f_status_t f_thread_mutex_lock_timed(const struct timespec * const timeout, f_thread_mutex_t * const mutex) {
     #ifndef _di_level_0_parameter_checking_
       if (!timeout) return F_status_set_error(F_parameter);
       if (!mutex) return F_status_set_error(F_parameter);
@@ -1654,7 +1656,7 @@ extern "C" {
 #endif // _di_f_thread_semaphore_lock_
 
 #ifndef _di_f_thread_semaphore_lock_timed_
-  f_status_t f_thread_semaphore_lock_timed(const struct timespec *timeout, f_thread_semaphore_t * const semaphore) {
+  f_status_t f_thread_semaphore_lock_timed(const struct timespec * const timeout, f_thread_semaphore_t * const semaphore) {
     #ifndef _di_level_0_parameter_checking_
       if (!timeout) return F_status_set_error(F_parameter);
       if (!semaphore) return F_status_set_error(F_parameter);
