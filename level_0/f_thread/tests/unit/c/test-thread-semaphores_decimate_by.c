@@ -59,6 +59,10 @@ void test__f_thread_semaphores_decimate_by__works(void **state) {
   }
 
   {
+    for (uint8_t i = 0; i < length; ++i) {
+      will_return(__wrap_sem_destroy, false);
+    } // for
+
     const f_status_t status = f_thread_semaphores_decimate_by(length, &data);
 
     assert_int_equal(status, F_none);

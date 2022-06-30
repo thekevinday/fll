@@ -224,7 +224,40 @@ int __wrap_pthread_attr_setstack(pthread_attr_t *attr, void *stackaddr, size_t s
   return 0;
 }
 
-int __wrap_pthread_attr_setstacksize (pthread_attr_t *attr, size_t stacksize) {
+int __wrap_pthread_attr_setstacksize(pthread_attr_t *attr, size_t stacksize) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+int __wrap_pthread_barrier_destroy(pthread_barrier_t *barrier) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+int __wrap_pthread_barrier_init(pthread_barrier_t *barrier, const pthread_barrierattr_t *attr, unsigned count) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+int __wrap_pthread_barrier_wait(pthread_barrier_t *barrier) {
 
   const bool failure = mock_type(bool);
 
@@ -279,7 +312,7 @@ int __wrap_pthread_barrierattr_setpshared(pthread_barrierattr_t *attr, int pshar
   return 0;
 }
 
-int __wrap_pthread_barrier_destroy(pthread_barrier_t *barrier) {
+int __wrap_pthread_cancel(pthread_t pthread) {
 
   const bool failure = mock_type(bool);
 
@@ -290,7 +323,27 @@ int __wrap_pthread_barrier_destroy(pthread_barrier_t *barrier) {
   return 0;
 }
 
-int __wrap_pthread_barrier_init(pthread_barrier_t *barrier, const pthread_barrierattr_t *attr, unsigned count) {
+int __wrap_pthread_cond_broadcast(pthread_cond_t *__cond) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+int __wrap_pthread_cond_destroy(pthread_cond_t *__mutex) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+int __wrap_pthread_cond_init(pthread_cond_t *__cond, const pthread_condattr_t *__attr) {
 
   const bool failure = mock_type(bool);
 
@@ -301,7 +354,40 @@ int __wrap_pthread_barrier_init(pthread_barrier_t *barrier, const pthread_barrie
   return 0;
 }
 
-int __wrap_pthread_barrier_wait(pthread_barrier_t *barrier) {
+int __wrap_pthread_cond_signal(pthread_cond_t *__cond) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+int __wrap_pthread_cond_timedwait(pthread_cond_t *__cond, pthread_mutex_t *__mutex, const struct timespec *__abstime) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+int __wrap_pthread_cond_wait(pthread_cond_t *__cond, pthread_mutex_t *__mutex) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+int __wrap_pthread_condattr_destroy(pthread_condattr_t *__attr) {
 
   const bool failure = mock_type(bool);
 
@@ -323,7 +409,7 @@ int __wrap_pthread_condattr_getclock(const pthread_condattr_t * restrict attr, c
   return 0;
 }
 
-int __wrap_pthread_condattr_setclock(pthread_condattr_t *attr, clockid_t clock_id) {
+int __wrap_pthread_condattr_getpshared(const pthread_condattr_t *attr, int *pshared) {
 
   const bool failure = mock_type(bool);
 
@@ -334,7 +420,18 @@ int __wrap_pthread_condattr_setclock(pthread_condattr_t *attr, clockid_t clock_i
   return 0;
 }
 
-int __wrap_pthread_condattr_getpshared(const pthread_condattr_t *attr, int *pshared) {
+int __wrap_pthread_condattr_init(pthread_condattr_t *__attr) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+int __wrap_pthread_condattr_setclock(pthread_condattr_t *attr, clockid_t clock_id) {
 
   const bool failure = mock_type(bool);
 
@@ -356,7 +453,86 @@ int __wrap_pthread_condattr_setpshared(pthread_condattr_t *attr, int pshared) {
   return 0;
 }
 
+int __wrap_pthread_create(pthread_t *pthread, const pthread_attr_t  *attr, void *(*routine)(void *), void *arg) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+int __wrap_pthread_detach(pthread_t pthread) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+int __wrap_pthread_equal(pthread_t __t1, pthread_t __t2) {
+
+  return mock_type(int);
+}
+
+void __wrap_pthread_exit(void *value) {
+
+  if (value) {
+    int *v = (int *) value;
+
+    *v = mock_type(int);
+  }
+}
+
 int __wrap_pthread_getattr_default_np(pthread_attr_t *attr) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+int __wrap_pthread_getconcurrency(void) {
+
+  return mock_type(int);;
+}
+
+int __wrap_pthread_getcpuclockid(pthread_t thread, clockid_t *clock_id) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+void *__wrap_pthread_getspecific(pthread_key_t key) {
+
+  return mock_type(void *);
+}
+
+int __wrap_pthread_join(pthread_t pthread, void **value_ptr) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+int __wrap_pthread_key_create(pthread_key_t *key, void (*destructor)(void *)) {
 
   const bool failure = mock_type(bool);
 
@@ -372,6 +548,11 @@ int __wrap_pthread_key_delete(pthread_key_t key) {
   return mock_type(int);
 }
 
+pthread_t __wrap_pthread_self(void) {
+
+  return mock_type(int);
+}
+
 int __wrap_pthread_setattr_default_np(const pthread_attr_t *attr) {
 
   const bool failure = mock_type(bool);
@@ -383,7 +564,414 @@ int __wrap_pthread_setattr_default_np(const pthread_attr_t *attr) {
   return 0;
 }
 
+int __wrap_pthread_setcancelstate(int state, int *oldstate) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+int __wrap_pthread_setcanceltype(int type, int *oldtype) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+int __wrap_pthread_setconcurrency(int new_level) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+int __wrap_pthread_setspecific(pthread_key_t key, const void *value) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+void __wrap_pthread_testcancel(void) {
+}
+
+int __wrap_pthread_timedjoin_np(pthread_t thread, void **retval) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+int __wrap_pthread_tryjoin_np(pthread_t thread, void **retval, const struct timespec *abstime) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+int __wrap_pthread_rwlock_destroy(pthread_rwlock_t *rwlock) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+int __wrap_pthread_rwlock_init(pthread_rwlock_t *rwlock, const pthread_rwlockattr_t *attr) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+int __wrap_pthread_rwlock_rdlock(pthread_rwlock_t *rwlock) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+int __wrap_pthread_rwlock_timedrdlock(pthread_rwlock_t *rwlock, const struct timespec *abstime) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+int __wrap_pthread_rwlock_timedwrlock(pthread_rwlock_t *rwlock, const struct timespec *abstime) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+int __wrap_pthread_rwlock_tryrdlock(pthread_rwlock_t *rwlock) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+int __wrap_pthread_rwlock_trywrlock(pthread_rwlock_t *rwlock) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+int __wrap_pthread_rwlock_unlock(pthread_rwlock_t *rwlock) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+int __wrap_pthread_rwlock_wrlock(pthread_rwlock_t *rwlock) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+int __wrap_pthread_rwlockattr_destroy(pthread_rwlockattr_t *attr) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+int __wrap_pthread_rwlockattr_init(pthread_rwlockattr_t *attr) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+int __wrap_pthread_rwlockattr_getpshared(const pthread_rwlockattr_t *attr, int *pshared) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+int __wrap_pthread_rwlockattr_setpshared(pthread_rwlockattr_t *attr, int pshared) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+int __wrap_pthread_mutex_destroy(pthread_mutex_t *mutex) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+int __wrap_pthread_mutex_init(pthread_mutex_t *mutex, const pthread_mutexattr_t *attr) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+int __wrap_pthread_mutex_lock(pthread_mutex_t *mutex) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+int __wrap_pthread_mutex_timedlock(pthread_mutex_t *mutex, const struct timespec *timeout) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+int __wrap_pthread_mutex_trylock(pthread_mutex_t *mutex) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+int __wrap_pthread_mutex_unlock(pthread_mutex_t *mutex) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+int __wrap_pthread_mutexattr_destroy(pthread_mutexattr_t *attr) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+int __wrap_pthread_mutexattr_init(pthread_mutexattr_t *attr) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+int __wrap_pthread_mutexattr_getprioceiling(const pthread_mutexattr_t *attr, int *prioceiling) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+int __wrap_pthread_mutexattr_getprotocol(const pthread_mutexattr_t *attr, int *protocol) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+int __wrap_pthread_mutexattr_getpshared(const pthread_mutexattr_t *attr, int *pshared) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+int __wrap_pthread_mutexattr_gettype(const pthread_mutexattr_t *attr, int *kind) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+int __wrap_pthread_mutexattr_setprioceiling(pthread_mutexattr_t *attr, int prioceiling) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+int __wrap_pthread_mutexattr_setprotocol(pthread_mutexattr_t *attr, int protocol) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+int __wrap_pthread_mutexattr_setpshared(pthread_mutexattr_t *attr, int pshared) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+int __wrap_pthread_mutexattr_settype(pthread_mutexattr_t *attr, int kind) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+int __wrap_sem_destroy(sem_t *sem) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
 void stub(void) {
+}
+
+void stub_other(void *arguments) {
+}
+
+void * stub_callback(void * const arguments) {
+
+  return 0;
 }
 
 #ifdef __cplusplus

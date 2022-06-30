@@ -208,17 +208,10 @@ int main(void) {
     cmocka_unit_test(test__f_thread_attribute_affinity_set__fails),
     cmocka_unit_test(test__f_thread_attribute_affinity_set__works),
 
-    cmocka_unit_test(test__f_thread_attribute_condition_clock_get__fails),
-    cmocka_unit_test(test__f_thread_attribute_condition_clock_get__works),
+    cmocka_unit_test(test__f_thread_attribute_concurrency_get__works),
 
-    cmocka_unit_test(test__f_thread_attribute_condition_clock_set__fails),
-    cmocka_unit_test(test__f_thread_attribute_condition_clock_set__works),
-
-    cmocka_unit_test(test__f_thread_attribute_condition_shared_get__fails),
-    cmocka_unit_test(test__f_thread_attribute_condition_shared_get__works),
-
-    cmocka_unit_test(test__f_thread_attribute_condition_shared_set__fails),
-    cmocka_unit_test(test__f_thread_attribute_condition_shared_set__works),
+    cmocka_unit_test(test__f_thread_attribute_concurrency_set__fails),
+    cmocka_unit_test(test__f_thread_attribute_concurrency_set__works),
 
     cmocka_unit_test(test__f_thread_attribute_create__fails),
     cmocka_unit_test(test__f_thread_attribute_create__works),
@@ -299,6 +292,162 @@ int main(void) {
     cmocka_unit_test(test__f_thread_barrier_delete__works),
 
     cmocka_unit_test(test__f_thread_barrier_wait__works),
+
+    cmocka_unit_test(test__f_thread_caller__works),
+
+    cmocka_unit_test(test__f_thread_cancel__fails),
+    cmocka_unit_test(test__f_thread_cancel__works),
+
+    cmocka_unit_test(test__f_thread_cancel_state_set__fails),
+    cmocka_unit_test(test__f_thread_cancel_state_set__works),
+
+    cmocka_unit_test(test__f_thread_cancel_test__works),
+
+    cmocka_unit_test(test__f_thread_cancel_type_set__fails),
+    cmocka_unit_test(test__f_thread_cancel_type_set__works),
+
+    cmocka_unit_test(test__f_thread_clock_get_id__fails),
+    cmocka_unit_test(test__f_thread_clock_get_id__works),
+
+    cmocka_unit_test(test__f_thread_compare__works),
+
+    cmocka_unit_test(test__f_thread_condition_attribute_clock_get__fails),
+    cmocka_unit_test(test__f_thread_condition_attribute_clock_get__works),
+
+    cmocka_unit_test(test__f_thread_condition_attribute_clock_set__fails),
+    cmocka_unit_test(test__f_thread_condition_attribute_clock_set__works),
+
+    cmocka_unit_test(test__f_thread_condition_attribute_create__fails),
+    cmocka_unit_test(test__f_thread_condition_attribute_create__works),
+
+    cmocka_unit_test(test__f_thread_condition_attribute_delete__fails),
+    cmocka_unit_test(test__f_thread_condition_attribute_delete__works),
+
+    cmocka_unit_test(test__f_thread_condition_attribute_shared_get__fails),
+    cmocka_unit_test(test__f_thread_condition_attribute_shared_get__works),
+
+    cmocka_unit_test(test__f_thread_condition_attribute_shared_set__fails),
+    cmocka_unit_test(test__f_thread_condition_attribute_shared_set__works),
+
+    cmocka_unit_test(test__f_thread_condition_create__fails),
+    cmocka_unit_test(test__f_thread_condition_create__works),
+
+    cmocka_unit_test(test__f_thread_condition_delete__fails),
+    cmocka_unit_test(test__f_thread_condition_delete__works),
+
+    cmocka_unit_test(test__f_thread_condition_wait__fails),
+    cmocka_unit_test(test__f_thread_condition_wait__works),
+
+    cmocka_unit_test(test__f_thread_condition_wait_timed__fails),
+    cmocka_unit_test(test__f_thread_condition_wait_timed__works),
+
+    cmocka_unit_test(test__f_thread_create__fails),
+    cmocka_unit_test(test__f_thread_create__works),
+
+    cmocka_unit_test(test__f_thread_detach__fails),
+    cmocka_unit_test(test__f_thread_detach__works),
+
+    // Mocking pthread_exit() appears to still result in an exit() call and cannot be tested until this is resolved.
+    //cmocka_unit_test(test__f_thread_exit__works),
+
+    cmocka_unit_test(test__f_thread_join__fails),
+    cmocka_unit_test(test__f_thread_join__works),
+
+    cmocka_unit_test(test__f_thread_join_timed__fails),
+    cmocka_unit_test(test__f_thread_join_timed__works),
+
+    cmocka_unit_test(test__f_thread_join_try__fails),
+    cmocka_unit_test(test__f_thread_join_try__works),
+
+    cmocka_unit_test(test__f_thread_key_create__fails),
+    cmocka_unit_test(test__f_thread_key_create__works),
+
+    cmocka_unit_test(test__f_thread_key_delete__works),
+
+    cmocka_unit_test(test__f_thread_key_get__works),
+
+    cmocka_unit_test(test__f_thread_key_set__fails),
+    cmocka_unit_test(test__f_thread_key_set__works),
+
+    cmocka_unit_test(test__f_thread_lock_attribute_create__fails),
+    cmocka_unit_test(test__f_thread_lock_attribute_create__works),
+
+    cmocka_unit_test(test__f_thread_lock_attribute_delete__works),
+
+    cmocka_unit_test(test__f_thread_lock_attribute_shared_get__fails),
+    cmocka_unit_test(test__f_thread_lock_attribute_shared_get__works),
+
+    cmocka_unit_test(test__f_thread_lock_attribute_shared_set__fails),
+    cmocka_unit_test(test__f_thread_lock_attribute_shared_set__works),
+
+    cmocka_unit_test(test__f_thread_lock_create__fails),
+    cmocka_unit_test(test__f_thread_lock_create__works),
+
+    cmocka_unit_test(test__f_thread_lock_delete__fails),
+    cmocka_unit_test(test__f_thread_lock_delete__works),
+
+    cmocka_unit_test(test__f_thread_lock_read__fails),
+    cmocka_unit_test(test__f_thread_lock_read__works),
+
+    cmocka_unit_test(test__f_thread_lock_read_timed__fails),
+    cmocka_unit_test(test__f_thread_lock_read_timed__works),
+
+    cmocka_unit_test(test__f_thread_lock_read_try__fails),
+    cmocka_unit_test(test__f_thread_lock_read_try__works),
+
+    cmocka_unit_test(test__f_thread_lock_write__fails),
+    cmocka_unit_test(test__f_thread_lock_write__works),
+
+    cmocka_unit_test(test__f_thread_lock_write_timed__fails),
+    cmocka_unit_test(test__f_thread_lock_write_timed__works),
+
+    cmocka_unit_test(test__f_thread_lock_write_try__fails),
+    cmocka_unit_test(test__f_thread_lock_write_try__works),
+
+    cmocka_unit_test(test__f_thread_mutex_attribute_create__fails),
+    cmocka_unit_test(test__f_thread_mutex_attribute_create__works),
+
+    cmocka_unit_test(test__f_thread_mutex_attribute_delete__fails),
+    cmocka_unit_test(test__f_thread_mutex_attribute_delete__works),
+
+    cmocka_unit_test(test__f_thread_mutex_attribute_priority_ceiling_get__fails),
+    cmocka_unit_test(test__f_thread_mutex_attribute_priority_ceiling_get__works),
+
+    cmocka_unit_test(test__f_thread_mutex_attribute_priority_ceiling_set__fails),
+    cmocka_unit_test(test__f_thread_mutex_attribute_priority_ceiling_set__works),
+
+    cmocka_unit_test(test__f_thread_mutex_attribute_shared_get__fails),
+    cmocka_unit_test(test__f_thread_mutex_attribute_shared_get__works),
+
+    cmocka_unit_test(test__f_thread_mutex_attribute_shared_set__fails),
+    cmocka_unit_test(test__f_thread_mutex_attribute_shared_set__works),
+
+    cmocka_unit_test(test__f_thread_mutex_attribute_type_get__fails),
+    cmocka_unit_test(test__f_thread_mutex_attribute_type_get__works),
+
+    cmocka_unit_test(test__f_thread_mutex_attribute_type_set__fails),
+    cmocka_unit_test(test__f_thread_mutex_attribute_type_set__works),
+
+    cmocka_unit_test(test__f_thread_mutex_attribute_protocol_get__fails),
+    cmocka_unit_test(test__f_thread_mutex_attribute_protocol_get__works),
+
+    cmocka_unit_test(test__f_thread_mutex_attribute_protocol_set__fails),
+    cmocka_unit_test(test__f_thread_mutex_attribute_protocol_set__works),
+
+    cmocka_unit_test(test__f_thread_mutex_create__fails),
+    cmocka_unit_test(test__f_thread_mutex_create__works),
+
+    cmocka_unit_test(test__f_thread_mutex_delete__fails),
+    cmocka_unit_test(test__f_thread_mutex_delete__works),
+
+    cmocka_unit_test(test__f_thread_mutex_lock__fails),
+    cmocka_unit_test(test__f_thread_mutex_lock__works),
+
+    cmocka_unit_test(test__f_thread_mutex_lock_timed__fails),
+    cmocka_unit_test(test__f_thread_mutex_lock_timed__works),
+
+    cmocka_unit_test(test__f_thread_mutex_lock_try__fails),
+    cmocka_unit_test(test__f_thread_mutex_lock_try__works),
 
     #ifndef _di_level_0_parameter_checking_
       cmocka_unit_test(test__f_thread_attributes_adjust__parameter_checking),
@@ -411,11 +560,8 @@ int main(void) {
       cmocka_unit_test(test__f_thread_attribute_affinity_get__parameter_checking),
       cmocka_unit_test(test__f_thread_attribute_affinity_set__parameter_checking),
 
-      cmocka_unit_test(test__f_thread_attribute_condition_clock_get__parameter_checking),
-      cmocka_unit_test(test__f_thread_attribute_condition_clock_set__parameter_checking),
-
-      cmocka_unit_test(test__f_thread_attribute_condition_shared_get__parameter_checking),
-      cmocka_unit_test(test__f_thread_attribute_condition_shared_set__parameter_checking),
+      cmocka_unit_test(test__f_thread_attribute_concurrency_get__parameter_checking),
+      // f_thread_attribute_concurrency_set() doesn't use parameter checking.
 
       cmocka_unit_test(test__f_thread_attribute_create__parameter_checking),
 
@@ -461,9 +607,115 @@ int main(void) {
       cmocka_unit_test(test__f_thread_barrier_delete__parameter_checking),
 
       cmocka_unit_test(test__f_thread_barrier_wait__parameter_checking),
-    #endif // _di_level_0_parameter_checking_
 
-    // f_thread_user_set() doesn't use parameter checking.
+      // f_thread_caller() doesn't use parameter checking.
+
+      // f_thread_cancel() doesn't use parameter checking.
+
+      // f_thread_cancel_state_set() doesn't use parameter checking.
+
+      // f_thread_cancel_test() doesn't use parameter checking.
+
+      // f_thread_cancel_type_set() doesn't use parameter checking.
+
+      cmocka_unit_test(test__f_thread_clock_get_id__parameter_checking),
+
+      // f_thread_compare() doesn't use parameter checking.
+
+      cmocka_unit_test(test__f_thread_condition_attribute_clock_get__parameter_checking),
+      cmocka_unit_test(test__f_thread_condition_attribute_clock_set__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_condition_attribute_create__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_condition_attribute_delete__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_condition_attribute_shared_get__parameter_checking),
+      cmocka_unit_test(test__f_thread_condition_attribute_shared_set__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_condition_create__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_condition_signal__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_condition_signal_all__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_condition_wait__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_condition_wait_timed__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_create__parameter_checking),
+
+      // f_thread_detach() doesn't use parameter checking.
+
+      cmocka_unit_test(test__f_thread_exit__parameter_checking),
+
+      // f_thread_join() doesn't use parameter checking.
+
+      // f_thread_join_timed() doesn't use parameter checking.
+
+      // f_thread_join_try() doesn't use parameter checking.
+
+      cmocka_unit_test(test__f_thread_key_create__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_key_delete__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_key_get__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_key_set__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_lock_attribute_create__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_lock_attribute_delete__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_lock_attribute_shared_get__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_lock_attribute_shared_set__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_lock_create__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_lock_delete__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_lock_read__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_lock_read_timed__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_lock_read_try__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_lock_write__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_lock_write_timed__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_lock_write_try__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_mutex_attribute_create__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_mutex_attribute_delete__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_mutex_attribute_priority_ceiling_get__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_mutex_attribute_priority_ceiling_set__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_mutex_attribute_shared_get__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_mutex_attribute_shared_set__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_mutex_attribute_type_get__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_mutex_attribute_type_set__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_mutex_attribute_protocol_get__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_mutex_attribute_protocol_set__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_mutex_create__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_mutex_delete__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_mutex_lock__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_mutex_lock_timed__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_mutex_lock_try__parameter_checking),
+    #endif // _di_level_0_parameter_checking_
   };
 
   return cmocka_run_group_tests(tests, setup, setdown);

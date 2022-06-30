@@ -1,11 +1,11 @@
 #include "test-thread.h"
-#include "test-thread-attribute_condition_clock_get.h"
+#include "test-thread-condition_attribute_clock_get.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void test__f_thread_attribute_condition_clock_get__fails(void **state) {
+void test__f_thread_condition_attribute_clock_get__fails(void **state) {
 
   f_thread_condition_attribute_t attribute = f_thread_condition_attribute_t_initialize;
   clockid_t id;
@@ -27,24 +27,24 @@ void test__f_thread_attribute_condition_clock_get__fails(void **state) {
     will_return(__wrap_pthread_condattr_getclock, true);
     will_return(__wrap_pthread_condattr_getclock, errnos[i]);
 
-    const f_status_t status = f_thread_attribute_condition_clock_get(&attribute, &id);
+    const f_status_t status = f_thread_condition_attribute_clock_get(&attribute, &id);
 
     assert_int_equal(status, F_status_set_error(statuss[i]));
   } // for
 }
 
-void test__f_thread_attribute_condition_clock_get__parameter_checking(void **state) {
+void test__f_thread_condition_attribute_clock_get__parameter_checking(void **state) {
 
   f_thread_condition_attribute_t attribute = f_thread_condition_attribute_t_initialize;
 
   {
-    const f_status_t status = f_thread_attribute_condition_clock_get(&attribute, 0);
+    const f_status_t status = f_thread_condition_attribute_clock_get(&attribute, 0);
 
     assert_int_equal(status, F_status_set_error(F_parameter));
   }
 }
 
-void test__f_thread_attribute_condition_clock_get__works(void **state) {
+void test__f_thread_condition_attribute_clock_get__works(void **state) {
 
   f_thread_condition_attribute_t attribute = f_thread_condition_attribute_t_initialize;
   clockid_t id;
@@ -54,7 +54,7 @@ void test__f_thread_attribute_condition_clock_get__works(void **state) {
   {
     will_return(__wrap_pthread_condattr_getclock, false);
 
-    const f_status_t status = f_thread_attribute_condition_clock_get(&attribute, &id);
+    const f_status_t status = f_thread_condition_attribute_clock_get(&attribute, &id);
 
     assert_int_equal(status, F_none);
   }

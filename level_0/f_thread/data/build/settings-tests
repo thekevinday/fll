@@ -43,8 +43,7 @@ build_sources_program test-thread-spins_adjust.c test-thread-spins_decimate_by.c
 
 build_sources_program test-thread-at_fork.c
 build_sources_program test-thread-attribute_affinity_get.c test-thread-attribute_affinity_set.c
-build_sources_program test-thread-attribute_condition_clock_get.c test-thread-attribute_condition_clock_set.c
-build_sources_program test-thread-attribute_condition_shared_get.c test-thread-attribute_condition_shared_set.c
+build_sources_program test-thread-attribute_concurrency_get.c test-thread-attribute_concurrency_set.c
 build_sources_program test-thread-attribute_create.c test-thread-attribute_delete.c
 build_sources_program test-thread-attribute_default_get.c test-thread-attribute_default_set.c
 build_sources_program test-thread-attribute_detach_get.c test-thread-attribute_detach_set.c
@@ -59,6 +58,37 @@ build_sources_program test-thread-barrier_attribute_create.c test-thread-barrier
 build_sources_program test-thread-barrier_attribute_shared_get.c test-thread-barrier_attribute_shared_set.c
 build_sources_program test-thread-barrier_create.c test-thread-barrier_delete.c
 build_sources_program test-thread-barrier_wait.c
+build_sources_program test-thread-caller.c
+build_sources_program test-thread-cancel.c
+build_sources_program test-thread-cancel_state_set.c
+build_sources_program test-thread-cancel_test.c
+build_sources_program test-thread-cancel_type_set.c
+build_sources_program test-thread-clock_get_id.c
+build_sources_program test-thread-compare.c
+build_sources_program test-thread-condition_attribute_clock_get.c test-thread-condition_attribute_clock_set.c
+build_sources_program test-thread-condition_attribute_create.c test-thread-condition_attribute_delete.c
+build_sources_program test-thread-condition_attribute_shared_get.c test-thread-condition_attribute_shared_set.c
+build_sources_program test-thread-condition_create.c test-thread-condition_delete.c
+build_sources_program test-thread-condition_signal.c test-thread-condition_signal_all.c
+build_sources_program test-thread-condition_wait.c test-thread-condition_wait_timed.c
+build_sources_program test-thread-create.c
+build_sources_program test-thread-detach.c
+build_sources_program test-thread-exit.c
+build_sources_program test-thread-join.c test-thread-join_try.c test-thread-join_timed.c
+build_sources_program test-thread-key_create.c test-thread-key_delete.c
+build_sources_program test-thread-key_get.c test-thread-key_set.c
+build_sources_program test-thread-lock_attribute_create.c test-thread-lock_attribute_delete.c
+build_sources_program test-thread-lock_attribute_shared_get.c test-thread-lock_attribute_shared_set.c
+build_sources_program test-thread-lock_create.c test-thread-lock_delete.c
+build_sources_program test-thread-lock_read.c test-thread-lock_read_timed.c test-thread-lock_read_try.c
+build_sources_program test-thread-lock_write.c test-thread-lock_write_timed.c test-thread-lock_write_try.c
+build_sources_program test-thread-mutex_attribute_create.c test-thread-mutex_attribute_delete.c
+build_sources_program test-thread-mutex_attribute_priority_ceiling_get.c test-thread-mutex_attribute_priority_ceiling_set.c
+build_sources_program test-thread-mutex_attribute_shared_get.c test-thread-mutex_attribute_shared_set.c
+build_sources_program test-thread-mutex_attribute_type_get.c test-thread-mutex_attribute_type_set.c
+build_sources_program test-thread-mutex_attribute_protocol_get.c test-thread-mutex_attribute_protocol_set.c
+build_sources_program test-thread-mutex_create.c test-thread-mutex_delete.c
+build_sources_program test-thread-mutex_lock.c test-thread-mutex_lock_timed.c test-thread-mutex_lock_try.c
 
 build_sources_program test-thread.c
 

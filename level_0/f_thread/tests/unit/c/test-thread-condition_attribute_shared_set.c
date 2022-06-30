@@ -1,11 +1,11 @@
 #include "test-thread.h"
-#include "test-thread-attribute_condition_shared_set.h"
+#include "test-thread-condition_attribute_shared_set.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void test__f_thread_attribute_condition_shared_set__fails(void **state) {
+void test__f_thread_condition_attribute_shared_set__fails(void **state) {
 
   f_thread_condition_attribute_t attribute = f_thread_condition_attribute_t_initialize;
 
@@ -24,29 +24,29 @@ void test__f_thread_attribute_condition_shared_set__fails(void **state) {
     will_return(__wrap_pthread_condattr_setpshared, true);
     will_return(__wrap_pthread_condattr_setpshared, errnos[i]);
 
-    const f_status_t status = f_thread_attribute_condition_shared_set(0, &attribute);
+    const f_status_t status = f_thread_condition_attribute_shared_set(0, &attribute);
 
     assert_int_equal(status, F_status_set_error(statuss[i]));
   } // for
 }
 
-void test__f_thread_attribute_condition_shared_set__parameter_checking(void **state) {
+void test__f_thread_condition_attribute_shared_set__parameter_checking(void **state) {
 
   {
-    const f_status_t status = f_thread_attribute_condition_shared_set(0, 0);
+    const f_status_t status = f_thread_condition_attribute_shared_set(0, 0);
 
     assert_int_equal(status, F_status_set_error(F_parameter));
   }
 }
 
-void test__f_thread_attribute_condition_shared_set__works(void **state) {
+void test__f_thread_condition_attribute_shared_set__works(void **state) {
 
   f_thread_condition_attribute_t attribute = f_thread_condition_attribute_t_initialize;
 
   {
     will_return(__wrap_pthread_condattr_setpshared, false);
 
-    const f_status_t status = f_thread_attribute_condition_shared_set(0, &attribute);
+    const f_status_t status = f_thread_condition_attribute_shared_set(0, &attribute);
 
     assert_int_equal(status, F_none);
   }
