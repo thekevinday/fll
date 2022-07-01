@@ -7,7 +7,7 @@
 # Instead this provides a functional example on what commands to perform to perform the bootstrap.
 #
 # This only accepts one argument, followed by these optional arguments:
-# 1) One of "individual", "level", "monolithic", "fake-individual", "fake-level", or "fake-monolithic".
+# 1) One of "individual", "level", "monolithic", "fake-individual", "fake-level", "fake-monolithic", "programs-individual", "programs-level", or "programs-monolithic".
 # 2) Optional, may be one of: +V, +q, +n, +l, +d, --enable-shared, --enable-static, --disable-shared, --disable-static.
 # 3) Optional, may be one of: -w, --work.
 # 4) Optional, may be: clang.
@@ -78,8 +78,7 @@ if [[ ! -d $path_work ]] ; then
 fi
 
 if [[ $1 == "individual" ]] ; then
-  bash build/scripts/package.sh $verbose $color clean -i &&
-  bash build/scripts/package.sh $verbose $color build -i
+  bash build/scripts/package.sh $verbose $color rebuild -i
 
   if [[ $? -eq 0 ]] ; then
     for i in f_type f_status f_memory f_type_array f_string f_utf f_account f_capability f_color f_console f_control_group f_conversion f_directory f_environment f_execute f_file f_fss f_iki f_limit f_path f_pipe f_print f_status_string f_serialize f_signal f_socket f_thread fl_control_group fl_conversion fl_directory fl_environment fl_execute fl_fss fl_iki fl_print fl_signal fl_string fl_utf fl_utf_file fll_control_group fll_error fll_execute fll_file fll_fss fll_fss_status_string fll_iki fll_path fll_print fll_program fll_status_string ; do
@@ -99,8 +98,7 @@ if [[ $1 == "individual" ]] ; then
 fi
 
 if [[ $1 == "level" ]] ; then
-  bash build/scripts/package.sh $verbose $color clean -l &&
-  bash build/scripts/package.sh $verbose $color build -l &&
+  bash build/scripts/package.sh $verbose $color rebuild -l &&
 
   cd package/level/fll-level_0-$version/ &&
 
@@ -132,8 +130,7 @@ if [[ $1 == "level" ]] ; then
 fi
 
 if [[ $1 == "monolithic" ]] ; then
-  bash build/scripts/package.sh $verbose $color clean -m &&
-  bash build/scripts/package.sh $verbose $color build -m &&
+  bash build/scripts/package.sh $verbose $color rebuild -m &&
 
   cd package/monolithic/fll-$version/ &&
 
@@ -144,7 +141,7 @@ if [[ $1 == "monolithic" ]] ; then
   ./install.sh $verbose $color $shared $static -w $path_work
 fi
 
-# The following in an example on building the Featureless Make project (fake) from the project bootstrapped from above.
+# The following in an example on building the Featureless Make project (fake) using the project bootstrapped from above.
 if [[ $1 == "fake-individual" || $1 == "fake-level" || $1 == "fake-monolithic" ]] ; then
   if [[ $1 == "fake-individual" ]] ; then
     build_mode="individual"
@@ -154,8 +151,7 @@ if [[ $1 == "fake-individual" || $1 == "fake-level" || $1 == "fake-monolithic" ]
     build_mode="monolithic"
   fi
 
-  bash build/scripts/package.sh $verbose $color clean -p &&
-  bash build/scripts/package.sh $verbose $color build -p &&
+  bash build/scripts/package.sh $verbose $color rebuild -p &&
 
   cd package/program/fake-$version/ &&
 
@@ -164,6 +160,40 @@ if [[ $1 == "fake-individual" || $1 == "fake-level" || $1 == "fake-monolithic" ]
   ./bootstrap.sh build $verbose $color $shared $static -w $path_work -m $build_mode &&
 
   ./install.sh $verbose $color $shared $static -w $path_work
+
+# The following in an example on building all FLL program projects using the project bootstrapped from above.
+elif [[ $1 == "programs-individual" || $1 == "programs-level" || $1 == "programs-monolithic" ]] ; then
+  if [[ $1 == "programs-individual" ]] ; then
+    build_mode="individual"
+  elif [[ $1 == "programs-level" ]] ; then
+    build_mode="level"
+  elif [[ $1 == "programs-monolithic" ]] ; then
+    build_mode="monolithic"
+  fi
+
+  bash build/scripts/package.sh $verbose $color rebuild -p &&
+
+  cd package/program
+
+  if [[ $? -eq 0 ]] ; then
+
+    for i in * ; do
+
+      cd ${path_original}package/program/$i &&
+
+      ./bootstrap.sh clean $verbose $color &&
+
+      ./bootstrap.sh build $verbose $color $shared $static -w $path_work -m $build_mode &&
+
+      ./install.sh $verbose $color $shared $static -w $path_work ||
+
+      break
+    done
+  else
+    echo
+    echo "ERROR: failed to change directory to 'package/program'."
+    echo
+  fi
 elif [[ $1 != "individual" && $1 != "level" && $1 != "monolithic" ]] ; then
   echo
   echo "ERROR: '$1' is not a supported build mode."
