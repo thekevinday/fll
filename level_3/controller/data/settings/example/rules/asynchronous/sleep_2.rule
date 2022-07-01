@@ -1,4 +1,7 @@
 # fss-000d
+#
+# Note: The example setting "limit nice 1 2" may cause this rule to fail if the user has insufficient privileges granted by ulimits or some other system security measure.
+#
 
 setting:
   name "Sleep 2 Seconds."
