@@ -57,6 +57,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not if both program.used is 0 and arguments.used is 0.
  *
  *   F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
  *
@@ -106,7 +107,11 @@ extern "C" {
  *   When FALSE, this is a run operation.
  *
  * @return
- *   Status codes (with error bit) are returned on any problem.
+ *   F_data_not if arguments.used is 0.
+ *
+ *   Success results from: fake_make_operate_process_execute().
+ *
+ *   Errors (with error bit) from: fake_make_operate_process_execute().
  */
 #ifndef _di_fake_make_operate_process_run_
   extern f_status_t fake_make_operate_process_run(fake_make_data_t * const data_make, const f_string_statics_t arguments, const bool as_shell) F_attribute_visibility_internal_d;

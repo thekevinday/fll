@@ -504,6 +504,10 @@ extern "C" {
 #ifndef _di_fake_make_operate_process_execute_
   f_status_t fake_make_operate_process_execute(fake_make_data_t * const data_make, const f_string_static_t program, const f_string_statics_t arguments, const bool as_shell) {
 
+    if (!program.used && !arguments.used) {
+      return F_data_not;
+    }
+
     if (fll_program_standard_signal_received(data_make->main)) {
       fake_print_signal_received(data_make->data);
 
@@ -532,9 +536,18 @@ extern "C" {
     if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
       flockfile(data_make->main->output.to.stream);
 
-      f_print_dynamic_safely(program, data_make->main->output.to.stream);
+      f_array_length_t i = 0;
 
-      for (f_array_length_t i = 0; i < arguments.used; ++i) {
+      if (program.used) {
+        f_print_dynamic_safely(program, data_make->main->output.to.stream);
+      }
+      else {
+        i = 1;
+
+        f_print_dynamic_safely(arguments.array[0], data_make->main->output.to.stream);
+      }
+
+      for (; i < arguments.used; ++i) {
 
         if (arguments.array[i].used) {
           fll_print_format(" %Q", data_make->main->output.to.stream, arguments.array[i]);
@@ -668,10 +681,11 @@ extern "C" {
       args.used = arguments.used - 1;
       args.size = 0;
     }
+    else if (!arguments.used) {
+      return F_data_not;
+    }
 
-    const f_status_t status = fake_make_operate_process_execute(data_make, arguments.array[0], args, as_shell);
-
-    return status;
+    return fake_make_operate_process_execute(data_make, arguments.used ? arguments.array[0] : f_string_empty_s, args, as_shell);
   }
 #endif // _di_fake_make_operate_process_run_
 
