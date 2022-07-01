@@ -26,7 +26,7 @@ extern "C" {
 #ifndef _di_f_thread_semaphore_t_
   typedef sem_t f_thread_semaphore_t;
 
-  #define f_thread_semaphore_t_initialize 0
+  #define f_thread_semaphore_t_initialize { (long) 0 }
 
   #define macro_f_thread_semaphore_t_initialize(semaphore) semaphore
 

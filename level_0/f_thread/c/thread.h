@@ -1120,7 +1120,7 @@ extern "C" {
  * Wait until condition is triggered, blocking until the timeout expires.
  *
  * This is a semi-blocking operation.
- * This will block until timeout and then no longer block.
+ * This blocks until timeout and then no longer block.
  *
  * @param wait
  *   The amount of time to wait for.
@@ -1281,7 +1281,7 @@ extern "C" {
  * Try to join the given thread to the current thread, blocking until the timeout expires.
  *
  * This is a semi-blocking operation.
- * This will block until timeout and then no longer block.
+ * This blocks until timeout and then no longer block.
  *
  * @param id
  *   The ID of the thread to wait for.
@@ -1944,6 +1944,78 @@ extern "C" {
 #endif // _di_f_thread_mutex_delete_
 
 /**
+ * Get the mutex priority ceiling.
+ *
+ * @param mutex
+ *   The thread mutex.
+ * @param ceiling
+ *   The priority ceiling.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_prohibited (with error bit) if not allowed to perform the operation.
+ *
+ *   F_failure (with error bit) on any other error.
+ *
+ * @see pthread_mutex_getprioceiling()
+ */
+#ifndef _di_f_thread_mutex_priority_ceiling_get_
+  extern f_status_t f_thread_mutex_priority_ceiling_get(f_thread_mutex_t * const mutex, int * const ceiling);
+#endif // _di_f_thread_mutex_priority_ceiling_get_
+
+/**
+ * Set the mutex priority ceiling.
+ *
+ * @param ceiling
+ *   The priority ceiling.
+ * @param mutex
+ *   The thread mutex.
+ * @param previous
+ *   (optional) The previous priority ceiling.
+ *   Set to NULL to not use.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_deadlock (with error bit) if operation would cause a deadlock.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_prohibited (with error bit) if not allowed to perform the operation.
+ *   F_recover_not (with error bit) if the state protected by the mutex is not recoverable (for a "robust" mutex).
+ *   F_resource_not (with error bit) if max mutex locks is reached.
+ *   F_dead (with error bit) if the owning thread terminated while holding the mutex lock (thread is dead).
+ *
+ *   F_failure (with error bit) on any other error.
+ *
+ * @see pthread_mutex_setprioceiling()
+ */
+#ifndef _di_f_thread_mutex_priority_ceiling_set_
+  extern f_status_t f_thread_mutex_priority_ceiling_set(const int ceiling, f_thread_mutex_t * const mutex, int * const previous);
+#endif // _di_f_thread_mutex_priority_ceiling_set_
+
+/**
+ * Unlock the mutex.
+ *
+ * @param mutex
+ *   The thread mutex.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_prohibited (with error bit) if not allowed to perform the operation (possibly because mutex is not owned by current thread).
+ *   F_resource_not (with error bit) if max mutex locks is reached.
+ *
+ *   F_failure (with error bit) on any other error.
+ *
+ * @see pthread_mutex_unlock()
+ */
+#ifndef _di_f_thread_mutex_unlock_
+  extern f_status_t f_thread_mutex_unlock(f_thread_mutex_t * const mutex);
+#endif // _di_f_thread_mutex_unlock_
+
+/**
  * Lock the mutex.
  *
  * This is a blocking function.
@@ -2021,78 +2093,6 @@ extern "C" {
 #ifndef _di_f_thread_mutex_lock_try_
   extern f_status_t f_thread_mutex_lock_try(f_thread_mutex_t * const mutex);
 #endif // _di_f_thread_mutex_lock_try_
-
-/**
- * Get the mutex priority ceiling.
- *
- * @param mutex
- *   The thread mutex.
- * @param ceiling
- *   The priority ceiling.
- *
- * @return
- *   F_none on success.
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *   F_prohibited (with error bit) if not allowed to perform the operation.
- *
- *   F_failure (with error bit) on any other error.
- *
- * @see pthread_mutex_getprioceiling()
- */
-#ifndef _di_f_thread_mutex_priority_ceiling_get_
-  extern f_status_t f_thread_mutex_priority_ceiling_get(f_thread_mutex_t * const mutex, int * const ceiling);
-#endif // _di_f_thread_mutex_priority_ceiling_get_
-
-/**
- * Set the mutex priority ceiling.
- *
- * @param ceiling
- *   The priority ceiling.
- * @param mutex
- *   The thread mutex.
- * @param previous
- *   (optional) The previous priority ceiling.
- *   Set to NULL to not use.
- *
- * @return
- *   F_none on success.
- *
- *   F_deadlock (with error bit) if operation would cause a deadlock.
- *   F_parameter (with error bit) if a parameter is invalid.
- *   F_prohibited (with error bit) if not allowed to perform the operation.
- *   F_recover_not (with error bit) if the state protected by the mutex is not recoverable (for a "robust" mutex).
- *   F_resource_not (with error bit) if max mutex locks is reached.
- *   F_dead (with error bit) if the owning thread terminated while holding the mutex lock (thread is dead).
- *
- *   F_failure (with error bit) on any other error.
- *
- * @see pthread_mutex_setprioceiling()
- */
-#ifndef _di_f_thread_mutex_priority_ceiling_set_
-  extern f_status_t f_thread_mutex_priority_ceiling_set(const int ceiling, f_thread_mutex_t * const mutex, int * const previous);
-#endif // _di_f_thread_mutex_priority_ceiling_set_
-
-/**
- * Unlock the mutex.
- *
- * @param mutex
- *   The thread mutex.
- *
- * @return
- *   F_none on success.
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *   F_prohibited (with error bit) if not allowed to perform the operation (possibly because mutex is not owned by current thread).
- *   F_resource_not (with error bit) if max mutex locks is reached.
- *
- *   F_failure (with error bit) on any other error.
- *
- * @see pthread_mutex_unlock()
- */
-#ifndef _di_f_thread_mutex_unlock_
-  extern f_status_t f_thread_mutex_unlock(f_thread_mutex_t * const mutex);
-#endif // _di_f_thread_mutex_unlock_
 
 /**
  * Call the given routine only one time and never again.
@@ -2236,12 +2236,60 @@ extern "C" {
 #endif // _di_f_thread_semaphore_delete_
 
 /**
- * Create a thread (named) semaphore.
+ * Close a thread (named) semaphore file.
+ *
+ * A named semaphore should be deleted with f_thread_semephore_file_destroy().
+ *
+ * @param semaphore
+ *   The semaphore to delete.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   F_failure (with error bit) on any other error.
+ *
+ * A named semaphore should be deleted with this function or with f_thread_semephore_file_destroy().
+ *
+ * @see sem_close()
+ */
+#ifndef _di_f_thread_semaphore_file_close_
+  extern f_status_t f_thread_semaphore_file_close(f_thread_semaphore_t *semaphore);
+#endif // _di_f_thread_semaphore_file_close_
+
+/**
+ * Delete a thread (named) semaphore.
+ *
+ * This deletes the semaphore file and all processes holding this semaphore will be forcibly closed.
+ *
+ * @param name
+ *   The semaphore name to delete.
+ *
+ * @return
+ *   F_none on success.
+ *   F_file_found_not the named file was not found.
+ *
+ *   F_access_denied (with error bit) on access denied.
+ *   F_name_not (with error bit) if file name is too long.
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   F_failure (with error bit) on any other error.
+ *
+ * @see sem_unlink()
+ */
+#ifndef _di_f_thread_semaphore_file_delete_
+  extern f_status_t f_thread_semaphore_file_delete(const f_string_static_t name);
+#endif // _di_f_thread_semaphore_file_delete_
+
+/**
+ * Open or create a thread (named) semaphore file.
  *
  * @param name
  *   The semaphore file name to create.
  * @param flag
  *   The file create/open flags.
+ *   Pass the O_CREATE flag to create the semaphore file.
  * @param mode
  *   (optional) The file permissions to assign the semaphore.
  *   Ignored if O_CREAT is not used in flag.
@@ -2270,62 +2318,9 @@ extern "C" {
  *
  * @see sem_open()
  */
-#ifndef _di_f_thread_semaphore_file_create_
-  extern f_status_t f_thread_semaphore_file_create(const f_string_static_t name, const int flag, mode_t mode, unsigned int value, f_thread_semaphore_t *semaphore);
-#endif // _di_f_thread_semaphore_file_create_
-
-/**
- * Delete a thread (named) semaphore.
- *
- * A named semaphore should be deleted with this function or with f_thread_semephore_file_destroy().
- *
- * @param semaphore
- *   The semaphore to delete.
- *
- * @return
- *   F_none on success.
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   F_failure (with error bit) on any other error.
- *
- * A named semaphore should be deleted with this function or with f_thread_semephore_file_destroy().
- *
- * @see sem_close()
- *
- * @see f_thread_semaphore_file_destroy()
- */
-#ifndef _di_f_thread_semaphore_file_delete_
-  extern f_status_t f_thread_semaphore_file_delete(f_thread_semaphore_t *semaphore);
-#endif // _di_f_thread_semaphore_file_delete_
-
-/**
- * Destroy a thread (named) semaphore.
- *
- * This will immediately delete the semaphore file and all processes holding this semaphore will be forced to close.
- *
- * A named semaphore should be deleted with this function or with f_thread_semephore_file_delete().
- *
- * @param name
- *   The semaphore name to delete.
- *
- * @return
- *   F_none on success.
- *   F_file_found_not the named file was not found.
- *
- *   F_access_denied (with error bit) on access denied.
- *   F_name_not (with error bit) if file name is too long.
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   F_failure (with error bit) on any other error.
- *
- * @see sem_unlink()
- *
- * @see f_thread_semaphore_file_delete()
- */
-#ifndef _di_f_thread_semaphore_file_destroy_
-  extern f_status_t f_thread_semaphore_file_destroy(const f_string_static_t name);
-#endif // _di_f_thread_semaphore_file_destroy_
+#ifndef _di_f_thread_semaphore_file_open_
+  extern f_status_t f_thread_semaphore_file_open(const f_string_static_t name, const int flag, const mode_t mode, unsigned int value, f_thread_semaphore_t **semaphore);
+#endif // _di_f_thread_semaphore_file_open_
 
 /**
  * Lock the semaphore.
@@ -2471,29 +2466,6 @@ extern "C" {
 #endif // _di_f_thread_signal_mask_
 
 /**
- * Send a signal to the given thread.
- *
- * @param id
- *   The ID of the thread to signal.
- * @param signal
- *   The signal to send to the thread.
- *   If 0 is used instead of a valid signal, then instead check to see if the thread exists.
- *
- * @return
- *   F_none on success and signal is not 0.
- *   F_found on success, signal is 0, and the thread by the given ID does exist.
- *
- *   F_found_not on success, signal is 0, and the thread by the given ID does not exist.
- *   F_found_not (with error bit) if no thread by the given ID was found (and signal is not 0).
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- * @see pthread_kill()
- */
-#ifndef _di_f_thread_signal_write_
-  extern f_status_t f_thread_signal_write(const f_thread_id_t id, const int signal);
-#endif // _di_f_thread_signal_write_
-
-/**
  * Send the signal and value to the given thread.
  *
  * @param id
@@ -2518,6 +2490,29 @@ extern "C" {
 #ifndef _di_f_thread_signal_queue_
   extern f_status_t f_thread_signal_queue(const f_thread_id_t id, const int signal, const union sigval value);
 #endif // _di_f_thread_signal_queue_
+
+/**
+ * Send a signal to the given thread.
+ *
+ * @param id
+ *   The ID of the thread to signal.
+ * @param signal
+ *   The signal to send to the thread.
+ *   If 0 is used instead of a valid signal, then instead check to see if the thread exists.
+ *
+ * @return
+ *   F_none on success and signal is not 0.
+ *   F_found on success, signal is 0, and the thread by the given ID does exist.
+ *
+ *   F_found_not on success, signal is 0, and the thread by the given ID does not exist.
+ *   F_found_not (with error bit) if no thread by the given ID was found (and signal is not 0).
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see pthread_kill()
+ */
+#ifndef _di_f_thread_signal_write_
+  extern f_status_t f_thread_signal_write(const f_thread_id_t id, const int signal);
+#endif // _di_f_thread_signal_write_
 
 /**
  * Create a thread spin lock.

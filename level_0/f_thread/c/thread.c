@@ -1549,183 +1549,6 @@ extern "C" {
   }
 #endif // _di_f_thread_mutex_lock_try_
 
-#ifndef _di_f_thread_semaphore_create_
-  f_status_t f_thread_semaphore_create(const bool shared, const unsigned int value, f_thread_semaphore_t * const semaphore) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!semaphore) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (sem_init(semaphore, shared, value) == -1) {
-      if (errno == EINVAL) return F_status_set_error(F_parameter);
-      if (errno == ENOSYS) return F_status_set_error(F_supported_not);
-
-      return F_status_set_error(F_failure);
-    }
-
-    return F_none;
-  }
-#endif // _di_f_thread_semaphore_create_
-
-#ifndef _di_f_thread_semaphore_delete_
-  f_status_t f_thread_semaphore_delete(f_thread_semaphore_t *semaphore) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!semaphore) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    return private_f_thread_semaphore_delete(semaphore);
-  }
-#endif // _di_f_thread_semaphore_delete_
-
-#ifndef _di_f_thread_semaphore_file_create_
-  f_status_t f_thread_semaphore_file_create(const f_string_static_t name, const int flag, mode_t mode, unsigned int value, f_thread_semaphore_t *semaphore) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!semaphore) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (flag & O_CREAT) {
-      semaphore = sem_open(name.string, flag, mode, value);
-    }
-    else {
-      semaphore = sem_open(name.string, flag);
-    }
-
-    if (semaphore == SEM_FAILED) {
-      if (errno == EACCES) return F_status_set_error(F_access_denied);
-      if (errno == EEXIST) return F_status_set_error(F_file_found);
-      if (errno == EINVAL) return F_status_set_error(F_parameter);
-      if (errno == EMFILE) return F_status_set_error(F_file_descriptor_max);
-      if (errno == ENAMETOOLONG) return F_status_set_error(F_name_not);
-      if (errno == ENFILE) return F_status_set_error(F_file_open_max);
-      if (errno == ENOENT) return F_status_set_error(F_file_found_not);
-      if (errno == ENOMEM) return F_status_set_error(F_memory_not);
-
-      return F_status_set_error(F_failure);
-    }
-
-    return F_none;
-  }
-#endif // _di_f_thread_semaphore_file_create_
-
-#ifndef _di_f_thread_semaphore_file_delete_
-  f_status_t f_thread_semaphore_file_delete(f_thread_semaphore_t *semaphore) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!semaphore) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (sem_close(semaphore) == -1) {
-      if (errno == EINVAL) return F_status_set_error(F_parameter);
-
-      return F_status_set_error(F_failure);
-    }
-
-    return F_none;
-  }
-#endif // _di_f_thread_semaphore_file_delete_
-
-#ifndef _di_f_thread_semaphore_file_destroy_
-  f_status_t f_thread_semaphore_file_destroy(const f_string_static_t name) {
-
-    if (sem_unlink(name.string) == -1) {
-      if (errno == EACCES) return F_status_set_error(F_access_denied);
-      if (errno == EINVAL) return F_status_set_error(F_parameter);
-      if (errno == ENAMETOOLONG) return F_status_set_error(F_name_not);
-      if (errno == ENOENT) return F_file_found_not;
-
-      return F_status_set_error(F_failure);
-    }
-
-    return F_none;
-  }
-#endif // _di_f_thread_semaphore_file_destroy_
-
-#ifndef _di_f_thread_semaphore_lock_
-  f_status_t f_thread_semaphore_lock(f_thread_semaphore_t * const semaphore) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!semaphore) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (sem_wait(semaphore) == -1) {
-      if (errno == EINTR) return F_status_set_error(F_interrupt);
-      if (errno == EINVAL) return F_status_set_error(F_parameter);
-
-      return F_status_set_error(F_failure);
-    }
-
-    return F_none;
-  }
-#endif // _di_f_thread_semaphore_lock_
-
-#ifndef _di_f_thread_semaphore_lock_timed_
-  f_status_t f_thread_semaphore_lock_timed(const struct timespec * const timeout, f_thread_semaphore_t * const semaphore) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!timeout) return F_status_set_error(F_parameter);
-      if (!semaphore) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (sem_timedwait(semaphore, timeout) == -1) {
-      if (errno == EINTR) return F_status_set_error(F_interrupt);
-      if (errno == EINVAL) return F_status_set_error(F_parameter);
-      if (errno == ETIMEDOUT) return F_time;
-
-      return F_status_set_error(F_failure);
-    }
-
-    return F_none;
-  }
-#endif // _di_f_thread_semaphore_lock_timed_
-
-#ifndef _di_f_thread_semaphore_lock_try_
-  f_status_t f_thread_semaphore_lock_try(f_thread_semaphore_t * const semaphore) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!semaphore) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (sem_trywait(semaphore) == -1) {
-      if (errno == EAGAIN) return F_status_set_error(F_resource_not);
-      if (errno == EINTR) return F_status_set_error(F_interrupt);
-      if (errno == EINVAL) return F_status_set_error(F_parameter);
-
-      return F_status_set_error(F_failure);
-    }
-
-    return F_none;
-  }
-#endif // _di_f_thread_semaphore_lock_try_
-
-#ifndef _di_f_thread_semaphore_unlock_
-  f_status_t f_thread_semaphore_unlock(f_thread_semaphore_t * const semaphore) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!semaphore) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (sem_post(semaphore) == -1) {
-      if (errno == EOVERFLOW) return F_status_set_error(F_number_overflow);
-      if (errno == EINVAL) return F_status_set_error(F_parameter);
-
-      return F_status_set_error(F_failure);
-    }
-
-    return F_none;
-  }
-#endif // _di_f_thread_semaphore_unlock_
-
-#ifndef _di_f_thread_semaphore_value_get_
-  f_status_t f_thread_semaphore_value_get(f_thread_semaphore_t * const semaphore, int * const value) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!semaphore) return F_status_set_error(F_parameter);
-      if (!value) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    if (sem_getvalue(semaphore, value) == -1) {
-      if (errno == EINVAL) return F_status_set_error(F_parameter);
-
-      return F_status_set_error(F_failure);
-    }
-
-    return F_none;
-  }
-#endif // _di_f_thread_semaphore_value_get_
-
 #ifndef _di_f_thread_mutex_priority_ceiling_get_
   f_status_t f_thread_mutex_priority_ceiling_get(f_thread_mutex_t * const mutex, int * const ceiling) {
     #ifndef _di_level_0_parameter_checking_
@@ -1831,7 +1654,6 @@ extern "C" {
 #ifndef _di_f_thread_scheduler_parameter_set_
   f_status_t f_thread_scheduler_parameter_set(const f_thread_id_t id, const int policy, const struct sched_param * const parameter) {
     #ifndef _di_level_0_parameter_checking_
-      if (!policy) return F_status_set_error(F_parameter);
       if (!parameter) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
@@ -1865,6 +1687,183 @@ extern "C" {
   }
 #endif // _di_f_thread_scheduler_priority_set_
 
+#ifndef _di_f_thread_semaphore_create_
+  f_status_t f_thread_semaphore_create(const bool shared, const unsigned int value, f_thread_semaphore_t * const semaphore) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!semaphore) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (sem_init(semaphore, shared, value) == -1) {
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
+      if (errno == ENOSYS) return F_status_set_error(F_supported_not);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_semaphore_create_
+
+#ifndef _di_f_thread_semaphore_delete_
+  f_status_t f_thread_semaphore_delete(f_thread_semaphore_t *semaphore) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!semaphore) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return private_f_thread_semaphore_delete(semaphore);
+  }
+#endif // _di_f_thread_semaphore_delete_
+
+#ifndef _di_f_thread_semaphore_file_close_
+  f_status_t f_thread_semaphore_file_close(f_thread_semaphore_t *semaphore) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!semaphore) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (sem_close(semaphore) == -1) {
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_semaphore_file_close_
+
+#ifndef _di_f_thread_semaphore_file_delete_
+  f_status_t f_thread_semaphore_file_delete(const f_string_static_t name) {
+
+    if (sem_unlink(name.string) == -1) {
+      if (errno == EACCES) return F_status_set_error(F_access_denied);
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
+      if (errno == ENAMETOOLONG) return F_status_set_error(F_name_not);
+      if (errno == ENOENT) return F_file_found_not;
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_semaphore_file_delete_
+
+#ifndef _di_f_thread_semaphore_file_open_
+  f_status_t f_thread_semaphore_file_open(const f_string_static_t name, const int flag, const mode_t mode, unsigned int value, f_thread_semaphore_t **semaphore) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!semaphore) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (flag & O_CREAT) {
+      *semaphore = sem_open(name.string, flag, mode, value);
+    }
+    else {
+      *semaphore = sem_open(name.string, flag);
+    }
+
+    if (*semaphore == SEM_FAILED) {
+      if (errno == EACCES) return F_status_set_error(F_access_denied);
+      if (errno == EEXIST) return F_status_set_error(F_file_found);
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
+      if (errno == EMFILE) return F_status_set_error(F_file_descriptor_max);
+      if (errno == ENAMETOOLONG) return F_status_set_error(F_name_not);
+      if (errno == ENFILE) return F_status_set_error(F_file_open_max);
+      if (errno == ENOENT) return F_status_set_error(F_file_found_not);
+      if (errno == ENOMEM) return F_status_set_error(F_memory_not);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_semaphore_file_open_
+
+#ifndef _di_f_thread_semaphore_lock_
+  f_status_t f_thread_semaphore_lock(f_thread_semaphore_t * const semaphore) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!semaphore) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (sem_wait(semaphore) == -1) {
+      if (errno == EINTR) return F_status_set_error(F_interrupt);
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_semaphore_lock_
+
+#ifndef _di_f_thread_semaphore_lock_timed_
+  f_status_t f_thread_semaphore_lock_timed(const struct timespec * const timeout, f_thread_semaphore_t * const semaphore) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!timeout) return F_status_set_error(F_parameter);
+      if (!semaphore) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (sem_timedwait(semaphore, timeout) == -1) {
+      if (errno == EINTR) return F_status_set_error(F_interrupt);
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
+      if (errno == ETIMEDOUT) return F_time;
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_semaphore_lock_timed_
+
+#ifndef _di_f_thread_semaphore_lock_try_
+  f_status_t f_thread_semaphore_lock_try(f_thread_semaphore_t * const semaphore) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!semaphore) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (sem_trywait(semaphore) == -1) {
+      if (errno == EAGAIN) return F_status_set_error(F_resource_not);
+      if (errno == EINTR) return F_status_set_error(F_interrupt);
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_semaphore_lock_try_
+
+#ifndef _di_f_thread_semaphore_unlock_
+  f_status_t f_thread_semaphore_unlock(f_thread_semaphore_t * const semaphore) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!semaphore) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (sem_post(semaphore) == -1) {
+      if (errno == EOVERFLOW) return F_status_set_error(F_number_overflow);
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_semaphore_unlock_
+
+#ifndef _di_f_thread_semaphore_value_get_
+  f_status_t f_thread_semaphore_value_get(f_thread_semaphore_t * const semaphore, int * const value) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!semaphore) return F_status_set_error(F_parameter);
+      if (!value) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (sem_getvalue(semaphore, value) == -1) {
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_thread_semaphore_value_get_
+
 #ifndef _di_f_thread_signal_mask_
   f_status_t f_thread_signal_mask(const int how, const sigset_t *next, sigset_t * const current) {
     #ifndef _di_level_0_parameter_checking_
@@ -1883,6 +1882,29 @@ extern "C" {
     return F_none;
   }
 #endif // _di_f_thread_signal_mask_
+
+#if defined(_pthread_sigqueue_unsupported_) && !defined(_di_f_thread_signal_queue_)
+  f_status_t f_thread_signal_queue(const f_thread_id_t id, const int signal, const union sigval value) {
+
+    return F_status_set_error(F_implemented_not);
+  }
+#elif !defined(_di_f_thread_signal_queue_)
+  f_status_t f_thread_signal_queue(const f_thread_id_t id, const int signal, const union sigval value) {
+
+    const int error = pthread_sigqueue(id, signal, value);
+
+    if (error) {
+      if (error == EAGAIN) return F_status_set_error(F_resource_not);
+      if (error == ENOSYS) return F_status_set_error(F_supported_not);
+      if (error == EINVAL) return F_status_set_error(F_parameter);
+      if (error == ESRCH) return F_status_set_error(F_found_not);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // defined(_pthread_sigqueue_unsupported_) && !defined(_di_f_thread_signal_queue_)
 
 #ifndef _di_f_thread_signal_write_
   f_status_t f_thread_signal_write(const f_thread_id_t id, const int signal) {
@@ -1908,29 +1930,6 @@ extern "C" {
     return F_found;
   }
 #endif // _di_f_thread_signal_write_
-
-#if defined(_pthread_sigqueue_unsupported_) && !defined(_di_f_thread_signal_queue_)
-  f_status_t f_thread_signal_queue(const f_thread_id_t id, const int signal, const union sigval value) {
-
-    return F_status_set_error(F_implemented_not);
-  }
-#elif !defined(_di_f_thread_signal_queue_)
-  f_status_t f_thread_signal_queue(const f_thread_id_t id, const int signal, const union sigval value) {
-
-    const int error = pthread_sigqueue(id, signal, value);
-
-    if (error) {
-      if (error == EAGAIN) return F_status_set_error(F_resource_not);
-      if (error == ENOSYS) return F_status_set_error(F_supported_not);
-      if (error == EINVAL) return F_status_set_error(F_parameter);
-      if (error == ESRCH) return F_status_set_error(F_found_not);
-
-      return F_status_set_error(F_failure);
-    }
-
-    return F_none;
-  }
-#endif // defined(_pthread_sigqueue_unsupported_) && !defined(_di_f_thread_signal_queue_)
 
 #ifndef _di_f_thread_spin_create_
   f_status_t f_thread_spin_create(const int shared, f_thread_spin_t * const spin) {
