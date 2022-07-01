@@ -89,6 +89,18 @@ build_sources_program test-thread-mutex_attribute_type_get.c test-thread-mutex_a
 build_sources_program test-thread-mutex_attribute_protocol_get.c test-thread-mutex_attribute_protocol_set.c
 build_sources_program test-thread-mutex_create.c test-thread-mutex_delete.c
 build_sources_program test-thread-mutex_lock.c test-thread-mutex_lock_timed.c test-thread-mutex_lock_try.c
+build_sources_program test-thread-scheduler_parameter_get.c test-thread-scheduler_parameter_set.c
+build_sources_program test-thread-scheduler_priority_set.c
+build_sources_program test-thread-signal_mask.c test-thread-signal_queue.c test-thread-signal_write.c
+build_sources_program test-thread-spin_create.c test-thread-spin_delete.c
+build_sources_program test-thread-spin_lock.c test-thread-spin_lock_try.c test-thread-spin_unlock.c
+build_sources_program test-thread-mutex_priority_ceiling_get.c test-thread-mutex_priority_ceiling_set.c
+build_sources_program test-thread-once.c
+build_sources_program test-thread-semaphore_create.c test-thread-semaphore_delete.c
+build_sources_program test-thread-semaphore_file_open.c test-thread-semaphore_file_close.c test-thread-semaphore_file_delete.c
+build_sources_program test-thread-semaphore_lock.c test-thread-semaphore_lock_timed.c test-thread-semaphore_lock_try.c
+build_sources_program test-thread-semaphore_unlock.c
+build_sources_program test-thread-semaphore_value_get.c
 
 build_sources_program test-thread.c
 

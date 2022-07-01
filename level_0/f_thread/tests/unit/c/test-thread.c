@@ -449,6 +449,78 @@ int main(void) {
     cmocka_unit_test(test__f_thread_mutex_lock_try__fails),
     cmocka_unit_test(test__f_thread_mutex_lock_try__works),
 
+    cmocka_unit_test(test__f_thread_mutex_priority_ceiling_get__fails),
+    cmocka_unit_test(test__f_thread_mutex_priority_ceiling_get__works),
+
+    cmocka_unit_test(test__f_thread_mutex_priority_ceiling_set__fails),
+    cmocka_unit_test(test__f_thread_mutex_priority_ceiling_set__works),
+
+    cmocka_unit_test(test__f_thread_once__fails),
+    cmocka_unit_test(test__f_thread_once__works),
+
+    cmocka_unit_test(test__f_thread_scheduler_parameter_get__fails),
+    cmocka_unit_test(test__f_thread_scheduler_parameter_get__works),
+
+    cmocka_unit_test(test__f_thread_scheduler_parameter_set__fails),
+    cmocka_unit_test(test__f_thread_scheduler_parameter_set__works),
+
+    cmocka_unit_test(test__f_thread_scheduler_priority_set__fails),
+    cmocka_unit_test(test__f_thread_scheduler_priority_set__works),
+
+    cmocka_unit_test(test__f_thread_semaphore_create__fails),
+    cmocka_unit_test(test__f_thread_semaphore_create__works),
+
+    cmocka_unit_test(test__f_thread_semaphore_delete__fails),
+    cmocka_unit_test(test__f_thread_semaphore_delete__works),
+
+    cmocka_unit_test(test__f_thread_semaphore_file_close__fails),
+    cmocka_unit_test(test__f_thread_semaphore_file_close__works),
+
+    cmocka_unit_test(test__f_thread_semaphore_file_delete__fails),
+    cmocka_unit_test(test__f_thread_semaphore_file_delete__works),
+
+    cmocka_unit_test(test__f_thread_semaphore_file_open__fails),
+    cmocka_unit_test(test__f_thread_semaphore_file_open__works),
+
+    cmocka_unit_test(test__f_thread_semaphore_lock__fails),
+    cmocka_unit_test(test__f_thread_semaphore_lock__works),
+
+    cmocka_unit_test(test__f_thread_semaphore_lock_timed__fails),
+    cmocka_unit_test(test__f_thread_semaphore_lock_timed__works),
+
+    cmocka_unit_test(test__f_thread_semaphore_lock_try__fails),
+    cmocka_unit_test(test__f_thread_semaphore_lock_try__works),
+
+    cmocka_unit_test(test__f_thread_semaphore_unlock__fails),
+    cmocka_unit_test(test__f_thread_semaphore_unlock__works),
+
+    cmocka_unit_test(test__f_thread_semaphore_value_get__fails),
+    cmocka_unit_test(test__f_thread_semaphore_value_get__works),
+
+    cmocka_unit_test(test__f_thread_signal_mask__fails),
+    cmocka_unit_test(test__f_thread_signal_mask__works),
+
+    cmocka_unit_test(test__f_thread_signal_queue__fails),
+    cmocka_unit_test(test__f_thread_signal_queue__works),
+
+    cmocka_unit_test(test__f_thread_signal_write__fails),
+    cmocka_unit_test(test__f_thread_signal_write__works),
+
+    cmocka_unit_test(test__f_thread_spin_create__fails),
+    cmocka_unit_test(test__f_thread_spin_create__works),
+
+    cmocka_unit_test(test__f_thread_spin_delete__fails),
+    cmocka_unit_test(test__f_thread_spin_delete__works),
+
+    cmocka_unit_test(test__f_thread_spin_lock__fails),
+    cmocka_unit_test(test__f_thread_spin_lock__works),
+
+    cmocka_unit_test(test__f_thread_spin_lock_try__fails),
+    cmocka_unit_test(test__f_thread_spin_lock_try__works),
+
+    cmocka_unit_test(test__f_thread_spin_unlock__fails),
+    cmocka_unit_test(test__f_thread_spin_unlock__works),
+
     #ifndef _di_level_0_parameter_checking_
       cmocka_unit_test(test__f_thread_attributes_adjust__parameter_checking),
       cmocka_unit_test(test__f_thread_attributes_decimate_by__parameter_checking),
@@ -715,6 +787,41 @@ int main(void) {
       cmocka_unit_test(test__f_thread_mutex_lock_timed__parameter_checking),
 
       cmocka_unit_test(test__f_thread_mutex_lock_try__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_mutex_priority_ceiling_get__parameter_checking),
+      cmocka_unit_test(test__f_thread_mutex_priority_ceiling_set__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_once__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_scheduler_parameter_get__parameter_checking),
+      cmocka_unit_test(test__f_thread_scheduler_parameter_set__parameter_checking),
+      // f_thread_scheduler_priority_set() doesn't use parameter checking.
+
+      cmocka_unit_test(test__f_thread_semaphore_create__parameter_checking),
+      cmocka_unit_test(test__f_thread_semaphore_delete__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_semaphore_file_close__parameter_checking),
+      // f_thread_semaphore_file_delete() doesn't use parameter checking.
+      cmocka_unit_test(test__f_thread_semaphore_file_open__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_semaphore_lock__parameter_checking),
+      cmocka_unit_test(test__f_thread_semaphore_lock_timed__parameter_checking),
+      cmocka_unit_test(test__f_thread_semaphore_lock_try__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_semaphore_unlock__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_semaphore_value_get__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_signal_mask__parameter_checking),
+      // f_thread_signal_queue() doesn't use parameter checking.
+      // f_thread_signal_write() doesn't use parameter checking.
+
+      cmocka_unit_test(test__f_thread_spin_create__parameter_checking),
+      cmocka_unit_test(test__f_thread_spin_delete__parameter_checking),
+
+      cmocka_unit_test(test__f_thread_spin_lock__parameter_checking),
+      cmocka_unit_test(test__f_thread_spin_lock_try__parameter_checking),
+      cmocka_unit_test(test__f_thread_spin_unlock__parameter_checking),
     #endif // _di_level_0_parameter_checking_
   };
 

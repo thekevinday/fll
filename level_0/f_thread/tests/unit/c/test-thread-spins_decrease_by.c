@@ -59,6 +59,10 @@ void test__f_thread_spins_decrease_by__works(void **state) {
   }
 
   {
+    for (uint8_t i = 0; i < length; ++i) {
+      will_return(__wrap_pthread_spin_destroy, false);
+    } // for
+
     const f_status_t status = f_thread_spins_decrease_by(length, &data);
 
     assert_int_equal(status, F_none);

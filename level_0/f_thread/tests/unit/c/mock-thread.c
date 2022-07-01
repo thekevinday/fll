@@ -180,7 +180,7 @@ int __wrap_pthread_attr_setinheritsched(pthread_attr_t *attr, int inheritsched) 
   return 0;
 }
 
-int __wrap_pthread_attr_setschedparam(pthread_attr_t *restrict attr, const struct sched_param *restrict param) {
+int __wrap_pthread_attr_setschedparam(pthread_attr_t * restrict attr, const struct sched_param * restrict param) {
 
   const bool failure = mock_type(bool);
 
@@ -502,10 +502,21 @@ int __wrap_pthread_getattr_default_np(pthread_attr_t *attr) {
 
 int __wrap_pthread_getconcurrency(void) {
 
-  return mock_type(int);;
+  return mock_type(int);
 }
 
 int __wrap_pthread_getcpuclockid(pthread_t thread, clockid_t *clock_id) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+int __wrap_pthread_getschedparam(pthread_t pthread, int *policy, struct sched_param *param) {
 
   const bool failure = mock_type(bool);
 
@@ -546,6 +557,17 @@ int __wrap_pthread_key_create(pthread_key_t *key, void (*destructor)(void *)) {
 int __wrap_pthread_key_delete(pthread_key_t key) {
 
   return mock_type(int);
+}
+
+int __wrap_pthread_kill(pthread_t thread, int sig) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
 }
 
 pthread_t __wrap_pthread_self(void) {
@@ -597,7 +619,106 @@ int __wrap_pthread_setconcurrency(int new_level) {
   return 0;
 }
 
+int __wrap_pthread_setschedparam(pthread_t pthread, int policy, const struct sched_param *param) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+int __wrap_pthread_setschedprio(pthread_t thread, int prio) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
 int __wrap_pthread_setspecific(pthread_key_t key, const void *value) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+int __wrap_pthread_sigmask(int how, const sigset_t *set, sigset_t *oldset) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+int __wrap_pthread_sigqueue(pthread_t thread, int sig, const union sigval value) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+int __wrap_pthread_spin_destroy(pthread_spinlock_t *spinlock) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+int __wrap_pthread_spin_init(pthread_spinlock_t *spinlock, int pshared) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+int __wrap_pthread_spin_lock(pthread_spinlock_t *spinlock) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+int __wrap_pthread_spin_trylock(pthread_spinlock_t *spinlock) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+int __wrap_pthread_spin_unlock(pthread_spinlock_t *spinlock) {
 
   const bool failure = mock_type(bool);
 
@@ -787,6 +908,17 @@ int __wrap_pthread_mutex_destroy(pthread_mutex_t *mutex) {
   return 0;
 }
 
+int __wrap_pthread_mutex_getprioceiling(const pthread_mutex_t * restrict mutex, int *prioceiling) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
 int __wrap_pthread_mutex_init(pthread_mutex_t *mutex, const pthread_mutexattr_t *attr) {
 
   const bool failure = mock_type(bool);
@@ -799,6 +931,17 @@ int __wrap_pthread_mutex_init(pthread_mutex_t *mutex, const pthread_mutexattr_t 
 }
 
 int __wrap_pthread_mutex_lock(pthread_mutex_t *mutex) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    return mock_type(int);
+  }
+
+  return 0;
+}
+
+int __wrap_pthread_mutex_setprioceiling(pthread_mutex_t *mutex, int prioceiling, int *old_ceiling) {
 
   const bool failure = mock_type(bool);
 
@@ -952,12 +1095,142 @@ int __wrap_pthread_mutexattr_settype(pthread_mutexattr_t *attr, int kind) {
   return 0;
 }
 
-int __wrap_sem_destroy(sem_t *sem) {
+int __wrap_pthread_once(pthread_once_t *once_control, void (*init_routine)(void)) {
 
   const bool failure = mock_type(bool);
 
   if (failure) {
     return mock_type(int);
+  }
+
+  return 0;
+}
+
+int __wrap_sem_close(sem_t *sem) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    errno = mock_type(int);
+
+    return -1;
+  }
+
+  return 0;
+}
+
+int __wrap_sem_destroy(sem_t *sem) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    errno = mock_type(int);
+
+    return -1;
+  }
+
+  return 0;
+}
+
+int __wrap_sem_getvalue(sem_t * restrict sem, int * restrict sval) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    errno = mock_type(int);
+
+    return -1;
+  }
+
+  return 0;
+}
+
+int __wrap_sem_init(sem_t *sem, int pshared, unsigned int value) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    errno = mock_type(int);
+
+    return -1;
+  }
+
+  return 0;
+}
+
+sem_t *__wrap_sem_open(const char *name, int oflag, ...) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    errno = mock_type(int);
+
+    return SEM_FAILED;
+  }
+
+  return ((sem_t *) 1);
+}
+
+int __wrap_sem_post(sem_t *sem) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    errno = mock_type(int);
+
+    return -1;
+  }
+
+  return 0;
+}
+
+int __wrap_sem_timedwait(sem_t * restrict sem, const struct timespec * restrict abs_timeout) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    errno = mock_type(int);
+
+    return -1;
+  }
+
+  return 0;
+}
+
+int __wrap_sem_trywait(sem_t *sem) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    errno = mock_type(int);
+
+    return -1;
+  }
+
+  return 0;
+}
+
+int __wrap_sem_unlink(const char *name) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    errno = mock_type(int);
+
+    return -1;
+  }
+
+  return 0;
+}
+
+int __wrap_sem_wait(sem_t *sem) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    errno = mock_type(int);
+
+    return -1;
   }
 
   return 0;
