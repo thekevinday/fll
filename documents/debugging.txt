@@ -52,6 +52,6 @@ Valgrind:
 GCC's -fanalyzer (and CLang's equivalent):
   The code analyzer provided by GCC (and also CLang, through similar means) attempts to determine insecure or otherwise bad coding practices.
 
-  This focuses on the GCC -fanalzyer.
+  This focuses on the GCC -fanalyzer.
 
-  The analzyer is easily enabled by just appending "-fanalyzer" to the "flags" in data/build/settings or directly passing "-fanalyzer" to the gcc command.o
+  The analyzer is easily enabled by just appending "-fanalyzer" to the "flags" in data/build/settings or directly passing "-fanalyzer" to the gcc command.o
