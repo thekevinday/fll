@@ -107,18 +107,18 @@ extern "C" {
         current = 0;
 
         if (work & number) {
-          do {
-            current += fwrite_unlocked(f_string_ascii_1_s.string + current, sizeof(f_char_t), f_string_ascii_1_s.used - current, stream);
-            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+          while (current < f_string_ascii_1_s.used) {
 
-          } while (current < f_string_ascii_1_s.used);
+            current += fwrite_unlocked(f_string_ascii_1_s.string + current, 1, f_string_ascii_1_s.used - current, stream);
+            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+          } // while
         }
         else {
-          do {
-            current += fwrite_unlocked(f_string_ascii_0_s.string + current, sizeof(f_char_t), f_string_ascii_0_s.used - current, stream);
-            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+          while (current < f_string_ascii_0_s.used) {
 
-          } while (current < f_string_ascii_0_s.used);
+            current += fwrite_unlocked(f_string_ascii_0_s.string + current, 1, f_string_ascii_0_s.used - current, stream);
+            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+          } // while
         }
 
         if (data.flag & F_conversion_data_flag_endian_big_d) {
@@ -164,11 +164,11 @@ extern "C" {
 
       count = 0;
 
-      do {
+      while (count < sizeof(f_char_t)) {
+
         count += fwrite_unlocked(&c, 1, sizeof(f_char_t), stream);
         if (ferror_unlocked(stream)) return F_status_set_error(F_output);
-
-      } while (count < sizeof(f_char_t));
+      } // while
     } // for
 
     return F_none;
@@ -182,11 +182,11 @@ extern "C" {
 
       count = 0;
 
-      do {
-        count += fwrite_unlocked(pad.string + count, sizeof(f_char_t), pad.used - count, stream);
-        if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+      while (count < pad.used) {
 
-      } while (count < pad.used);
+        count += fwrite_unlocked(pad.string + count, 1, pad.used - count, stream);
+        if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+      } // while
     } // for
 
     return F_none;
@@ -201,79 +201,79 @@ extern "C" {
         {
           int count = 0;
 
-          do {
-            count += fwrite_unlocked(f_string_ascii_minus_s.string + count, sizeof(f_char_t), f_string_ascii_minus_s.used - count, stream);
-            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+          while (count < f_string_ascii_minus_s.used) {
 
-          } while (count < f_string_ascii_minus_s.used);
+            count += fwrite_unlocked(f_string_ascii_minus_s.string + count, 1, f_string_ascii_minus_s.used - count, stream);
+            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+          } // while
         }
       }
     }
     else if (data.flag & F_conversion_data_flag_sign_always_d) {
       int count = 0;
 
-      do {
-        count += fwrite_unlocked(f_string_ascii_plus_s.string + count, sizeof(f_char_t), f_string_ascii_plus_s.used - count, stream);
-        if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+      while (count < f_string_ascii_plus_s.used) {
 
-      } while (count < f_string_ascii_plus_s.used);
+        count += fwrite_unlocked(f_string_ascii_plus_s.string + count, 1, f_string_ascii_plus_s.used - count, stream);
+        if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+      } // while
     }
     else if (data.flag & F_conversion_data_flag_sign_pad_d) {
       int count = 0;
 
-      do {
-        count += fwrite_unlocked(f_string_ascii_space_s.string + count, sizeof(f_char_t), f_string_ascii_space_s.used - count, stream);
-        if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+      while (count < f_string_ascii_space_s.used) {
 
-      } while (count < f_string_ascii_space_s.used);
+        count += fwrite_unlocked(f_string_ascii_space_s.string + count, 1, f_string_ascii_space_s.used - count, stream);
+        if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+      } // while
     }
 
     if (data.flag & F_conversion_data_flag_base_prepend_d) {
       {
         int count = 0;
 
-        do {
-          count += fwrite_unlocked(f_string_ascii_0_s.string + count, sizeof(f_char_t), f_string_ascii_0_s.used - count, stream);
-          if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+        while (count < f_string_ascii_0_s.used) {
 
-        } while (count < f_string_ascii_0_s.used);
+          count += fwrite_unlocked(f_string_ascii_0_s.string + count, 1, f_string_ascii_0_s.used - count, stream);
+          if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+        } // while
       }
 
-      f_char_t c = 0;
+      const f_string_static_t *character = 0;
 
       switch (data.base) {
         case 2:
-          c = data.flag & F_conversion_data_flag_base_upper_d ? f_string_ascii_B_s.string[0] : f_string_ascii_b_s.string[0];
+          character = (data.flag & F_conversion_data_flag_base_upper_d) ? &f_string_ascii_B_s : &f_string_ascii_b_s;
           break;
 
         case 8:
-          c = data.flag & F_conversion_data_flag_base_upper_d ? f_string_ascii_O_s.string[0] : f_string_ascii_o_s.string[0];
+          character = (data.flag & F_conversion_data_flag_base_upper_d) ? &f_string_ascii_O_s : &f_string_ascii_o_s;
           break;
 
         case 10:
-          c = data.flag & F_conversion_data_flag_base_upper_d ? f_string_ascii_T_s.string[0] : f_string_ascii_t_s.string[0];
+          character = (data.flag & F_conversion_data_flag_base_upper_d) ? &f_string_ascii_T_s : &f_string_ascii_t_s;
           break;
 
         case 12:
-          c = data.flag & F_conversion_data_flag_base_upper_d ? f_string_ascii_D_s.string[0] : f_string_ascii_d_s.string[0];
+          character = (data.flag & F_conversion_data_flag_base_upper_d) ? &f_string_ascii_D_s : &f_string_ascii_d_s;
           break;
 
         case 16:
-          c = data.flag & F_conversion_data_flag_base_upper_d ? f_string_ascii_X_s.string[0] : f_string_ascii_x_s.string[0];
+          character = (data.flag & F_conversion_data_flag_base_upper_d) ? &f_string_ascii_X_s : &f_string_ascii_x_s;
           break;
 
         default:
           break;
       }
 
-      if (c) {
-        int count = 0;
+      if (character) {
+        f_array_length_t count = 0;
 
-        do {
-          count += fwrite_unlocked(&c, sizeof(f_char_t), sizeof(f_char_t) - count, stream);
+        while (count < character->used) {
+
+          count += fwrite_unlocked(character->string + count, 1, character->used - count, stream);
           if (ferror_unlocked(stream)) return F_status_set_error(F_output);
-
-        } while (count < sizeof(f_char_t));
+        } // while
       }
     }
 
