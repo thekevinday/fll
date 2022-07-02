@@ -363,6 +363,8 @@ extern "C" {
         case F_signal_interrupt:
         case F_signal_quit:
         case F_signal_termination:
+          main->signal_received = information.ssi_signo;
+
           return information.ssi_signo;
       }
     }
