@@ -2,7 +2,7 @@
  * FLL - Level 0
  *
  * Project: Type
- * API Version: 0.5
+ * API Version: 0.6
  * Licenses: lgpl-2.1-or-later
  *
  * Provides an extension to the Type project (f_type) that depends on f_memory (linking to the f_memory library).

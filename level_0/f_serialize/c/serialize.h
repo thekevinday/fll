@@ -2,7 +2,7 @@
  * FLL - Level 0
  *
  * Project: Serialize
- * API Version: 0.5
+ * API Version: 0.6
  * Licenses: lgpl-2.1-or-later
  *
  * Provides string processing functionality for what is to be defined as a serialize string.

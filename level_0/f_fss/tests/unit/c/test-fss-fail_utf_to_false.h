@@ -2,7 +2,7 @@
  * FLL - Level 0
  *
  * Project: FSS
- * API Version: 0.5
+ * API Version: 0.6
  * Licenses: lgpl-2.1-or-later
  *
  * Test fail utf to false in the fss project.

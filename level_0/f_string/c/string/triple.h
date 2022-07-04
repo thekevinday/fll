@@ -2,7 +2,7 @@
  * FLL - Level 0
  *
  * Project: String
- * API Version: 0.5
+ * API Version: 0.6
  * Licenses: lgpl-2.1-or-later
  *
  * Defines 3-tuple of string data called a triple (which is an ordered list of 3 strings).

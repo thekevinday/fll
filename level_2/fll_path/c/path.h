@@ -2,7 +2,7 @@
  * FLL - Level 2
  *
  * Project: Path
- * API Version: 0.5
+ * API Version: 0.6
  * Licenses: lgpl-2.1-or-later
  *
  * Provides path-related functionality.

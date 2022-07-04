@@ -3,8 +3,8 @@
 build_name f_serialize
 
 version_major 0
-version_minor 5
-version_micro 10
+version_minor 6
+version_micro 0
 version_file micro
 version_target minor
 

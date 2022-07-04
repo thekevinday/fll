@@ -2,7 +2,7 @@
  * FLL - Level 0
  *
  * Project: Type
- * API Version: 0.5
+ * API Version: 0.6
  * Licenses: lgpl-2.1-or-later
  *
  * Defines data to be used for/by type (array) related functionality.

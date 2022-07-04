@@ -2,7 +2,7 @@
  * FLL - Level 1
  *
  * Project: FSS
- * API Version: 0.5
+ * API Version: 0.6
  * Licenses: lgpl-2.1-or-later
  *
  * This is the fss-0008 implementation.

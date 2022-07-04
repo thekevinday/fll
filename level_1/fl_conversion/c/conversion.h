@@ -2,7 +2,7 @@
  * FLL - Level 0
  *
  * Project: Conversion
- * API Version: 0.5
+ * API Version: 0.6
  * Licenses: lgpl-2.1-or-later
  *
  * Provide means to convert one data type to another, such as a string to an integer.

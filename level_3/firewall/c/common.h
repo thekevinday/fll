@@ -2,7 +2,7 @@
  * FLL - Level 3
  *
  * Project: Firewall
- * API Version: 0.5
+ * API Version: 0.6
  * Licenses: lgpl-2.1-or-later
  *
  * Provides the common data structures.
@@ -21,12 +21,12 @@ extern "C" {
  */
 #ifndef _di_firewall_program_version_
   #define FIREWALL_program_version_major_s F_string_ascii_0_s
-  #define FIREWALL_program_version_minor_s F_string_ascii_5_s
-  #define FIREWALL_program_version_micro_s F_string_ascii_1_s F_string_ascii_0_s
+  #define FIREWALL_program_version_minor_s F_string_ascii_6_s
+  #define FIREWALL_program_version_micro_s F_string_ascii_0_s
 
   #define FIREWALL_program_version_major_s_length F_string_ascii_0_s_length
-  #define FIREWALL_program_version_minor_s_length F_string_ascii_5_s_length
-  #define FIREWALL_program_version_micro_s_length (F_string_ascii_1_s_length + F_string_ascii_0_s_length)
+  #define FIREWALL_program_version_minor_s_length F_string_ascii_6_s_length
+  #define FIREWALL_program_version_micro_s_length F_string_ascii_0_s_length
 
   #if !(defined(FIREWALL_program_version_nano_prefix_s) && defined(FIREWALL_program_version_nano_prefix_s_length))
     #define FIREWALL_program_version_nano_prefix_s

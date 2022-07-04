@@ -2,7 +2,7 @@
  * FLL - Level 3
  *
  * Project: Featureless Make
- * API Version: 0.5
+ * API Version: 0.6
  * Licenses: lgpl-2.1-or-later
  *
  * The Feautureless Make System (aka fake) used as a package build tool.
