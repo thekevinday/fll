@@ -29,7 +29,13 @@ extern "C" {
 
     data_make->fakefile.used = 0;
 
-    *status = fake_file_buffer(data_make->data, data_make->data->file_data_build_fakefile, &data_make->buffer);
+    if (data_make->main->process_pipe) {
+      *status = fake_pipe_buffer(data_make->data, &data_make->buffer);
+    }
+    else {
+      *status = fake_file_buffer(data_make->data, data_make->data->file_data_build_fakefile, &data_make->buffer);
+    }
+
     if (F_status_is_error(*status)) return;
 
     if (!data_make->buffer.used) {

@@ -154,6 +154,51 @@ extern "C" {
   }
 #endif // _di_fake_file_buffer_
 
+#ifndef _di_fake_pipe_buffer_
+  f_status_t fake_pipe_buffer(fake_data_t * const data, f_string_dynamic_t * const buffer) {
+
+    f_status_t status = F_none;
+    f_file_t file = f_file_t_initialize;
+
+    file.id = F_type_descriptor_input_d;
+    file.stream = F_type_input_d;
+    file.size_read = fake_default_allocation_pipe_d;
+
+    buffer->used = 0;
+    status = f_string_dynamic_increase_by(fake_common_initial_buffer_max_d, buffer);
+
+    if (F_status_is_error(status)) {
+      const f_string_static_t message = macro_f_string_static_t_initialize("allocate buffer size for", 0, 24);
+      fll_error_file_print(data->main->error, F_status_set_fine(status), "f_string_dynamic_increase_by", F_true, f_string_ascii_minus_s, message, fll_error_file_type_file_e);
+
+      f_string_dynamic_resize(0, buffer);
+
+      return status;
+    }
+
+    do {
+      if (fll_program_standard_signal_received(data->main)) {
+        f_string_dynamic_resize(0, buffer);
+
+        fake_print_signal_received(data);
+
+        return F_status_set_error(F_interrupt);
+      }
+
+      status = f_file_stream_read_block(file, buffer);
+
+    } while (F_status_is_fine(status) && status != F_interrupt && status != F_none_eof);
+
+    if (F_status_is_error(status)) {
+      fll_error_file_print(data->main->error, F_status_set_fine(status), "f_file_stream_read_block", F_true, f_string_ascii_minus_s, f_file_operation_read_s, fll_error_file_type_file_e);
+
+      f_string_dynamic_resize(0, buffer);
+    }
+
+    return status;
+  }
+#endif // _di_fake_pipe_buffer_
+
 #ifndef _di_fake_process_console_parameters_
   f_status_t fake_process_console_parameters(fake_data_t * const data) {
 
@@ -512,6 +557,11 @@ extern "C" {
 
 #ifndef _di_fake_validate_parameter_paths_
   f_status_t fake_validate_parameter_paths(fake_data_t * const data) {
+
+    // Only perform these checks when not a pipe.
+    if (data->main->process_pipe) {
+      return F_none;
+    }
 
     if (fll_program_standard_signal_received(data->main)) {
       fake_print_signal_received(data);

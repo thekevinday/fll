@@ -18,6 +18,7 @@ f_fss
 f_file
 f_iki
 f_path
+f_pipe
 f_print
 f_signal
 fl_control_group

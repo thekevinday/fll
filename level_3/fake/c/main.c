@@ -23,6 +23,10 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
   data.parameters.array = parameters;
   data.parameters.used = fake_total_parameters_d;
 
+  if (f_pipe_input_exists()) {
+    data.process_pipe = F_true;
+  }
+
   fll_program_standard_setup(&data.signal);
 
   f_file_umask_get(&data.umask);

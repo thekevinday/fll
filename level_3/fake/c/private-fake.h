@@ -60,6 +60,25 @@ extern "C" {
 #endif // _di_fake_file_buffer_
 
 /**
+ * Load the contents of the standard input pipe into the given buffer, handling all potential errors.
+ *
+ * @param data
+ *   The program data.
+ * @param buffer
+ *   A buffer containing the contents of the file.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ *
+ *   Status codes (with error bit) are returned on any problem.
+ */
+#ifndef _di_fake_pipe_buffer_
+  extern f_status_t fake_pipe_buffer(fake_data_t * const data, f_string_dynamic_t * const buffer) F_attribute_visibility_internal_d;
+#endif // _di_fake_pipe_buffer_
+
+/**
  * Validate console arguments and print any relating error messages.
  *
  * @param data

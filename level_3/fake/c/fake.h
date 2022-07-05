@@ -66,6 +66,7 @@
 #include <fll/level_0/file.h>
 #include <fll/level_0/iki.h>
 #include <fll/level_0/path.h>
+#include <fll/level_0/pipe.h>
 #include <fll/level_0/print.h>
 #include <fll/level_0/signal.h>
 

@@ -77,6 +77,9 @@ extern "C" {
     fl_print_format(" '%[%r%r ./my_fakefile%]' the fakefile at", file.stream, context.set.notable, f_console_symbol_long_enable_s, fake_long_fakefile_s, context.set.notable);
     fl_print_format(" '%[./my_fakefile%]' would be used.%r%r", file.stream, context.set.notable, context.set.notable, f_string_eol_s, f_string_eol_s);
 
+    fl_print_format("  When piping data this this program, the piped data is treated as a %[%r%].%r", file.stream, context.set.notable, fake_make_parameter_variable_fakefile_s, context.set.notable, f_string_eol_s);
+    fl_print_format("  Only the %[%r%] operation is supported when using piped data.%r%r", file.stream, context.set.notable, fake_other_operation_make_s, context.set.notable, f_string_eol_s, f_string_eol_s);
+
     funlockfile(file.stream);
 
     return F_none;
@@ -156,6 +159,18 @@ extern "C" {
         main->error.verbosity = f_console_verbosity_debug_e;
         main->warning.verbosity = f_console_verbosity_debug_e;
       }
+    }
+
+    if (main->parameters.array[fake_parameter_help_e].result == f_console_result_found_e) {
+      fake_print_help(main->output.to, main->context);
+
+      return F_none;
+    }
+
+    if (main->parameters.array[fake_parameter_version_e].result == f_console_result_found_e) {
+      fll_program_print_version(main->output.to, fake_program_version_s);
+
+      return F_none;
     }
 
     status = F_none;
@@ -252,7 +267,7 @@ extern "C" {
     else if (operations_length) {
       operations[0] = fake_operation_make_e;
     }
-    else {
+    else if (!main->process_pipe) {
       status = F_status_set_error(F_parameter);
 
       if (main->error.verbosity != f_console_verbosity_quiet_e) {
@@ -260,20 +275,20 @@ extern "C" {
       }
     }
 
-    if (main->parameters.array[fake_parameter_help_e].result == f_console_result_found_e) {
-      fake_print_help(main->output.to, main->context);
+    if (F_status_is_error_not(status) && main->process_pipe) {
+      if (operations_length > 1 || operations[0] != fake_operation_make_e) {
+        status = F_status_set_error(F_parameter);
 
-      fake_data_delete(&data);
+        if (main->error.verbosity != f_console_verbosity_quiet_e) {
+          flockfile(main->error.to.stream);
 
-      return F_none;
-    }
+          fl_print_format("%r%[%QWhen using an input pipe, only the '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+          fl_print_format("%[%r%]", main->error.to.stream, main->error.notable, fake_other_operation_make_s, main->error.notable);
+          fl_print_format("%[' operation is supported.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
-    if (main->parameters.array[fake_parameter_version_e].result == f_console_result_found_e) {
-      fll_program_print_version(main->output.to, fake_program_version_s);
-
-      fake_data_delete(&data);
-
-      return F_none;
+          funlockfile(main->error.to.stream);
+        }
+      }
     }
 
     if (F_status_is_error_not(status)) {
@@ -294,46 +309,64 @@ extern "C" {
       {
         uint8_t i = 0;
 
-        // Pre-process and perform validation when "clean" is before a "build" or "make" command as a safety check.
-        for (uint8_t has_clean = F_false; i < operations_length; ++i) {
+        if (main->process_pipe) {
+          data.file_data_build_fakefile.used = 0;
 
-          if (operations[i] == fake_operation_clean_e) {
-            has_clean = F_true;
+          status = f_string_dynamic_append(f_string_ascii_minus_s, &data.file_data_build_fakefile);
+
+          if (F_status_is_error_not(status)) {
+            data.fakefile.used = 0;
+
+            status = f_string_dynamic_append(f_string_ascii_minus_s, &data.fakefile);
           }
-          else if (operations[i] == fake_operation_build_e || operations[i] == fake_operation_make_e) {
 
-            // If the first operation is clean and a make or build operation exists, then the clean operation requires the appropriate settings file or fakefile file.
-            if (has_clean) {
-              operations_name = fake_other_operation_clean_s;
-              data.operation = operations[i];
+          if (F_status_is_error(status)) {
+            fll_error_print(data.main->error, F_status_set_fine(status), "f_string_dynamic_append", F_true);
+          }
+        }
+        else {
 
-              status = fake_validate_parameter_paths(&data);
+          // Pre-process and perform validation when "clean" is before a "build" or "make" command as a safety check.
+          for (uint8_t has_clean = F_false; i < operations_length; ++i) {
 
-              if (F_status_is_error_not(status)) {
-                f_string_static_t *path = 0;
+            if (operations[i] == fake_operation_clean_e) {
+              has_clean = F_true;
+            }
+            else if (operations[i] == fake_operation_build_e || operations[i] == fake_operation_make_e) {
 
-                if (operations[i] == fake_operation_build_e) {
-                  path = &data.file_data_build_settings;
-                }
-                else {
-                  path = &data.file_data_build_fakefile;
-                }
+              // If the first operation is clean and a make or build operation exists, then the clean operation requires the appropriate settings file or fakefile file.
+              if (has_clean) {
+                operations_name = fake_other_operation_clean_s;
+                data.operation = operations[i];
 
-                status = f_file_is(*path, F_file_type_regular_d, F_false);
+                status = fake_validate_parameter_paths(&data);
 
-                if (status == F_false) {
-                  status = F_status_set_error(F_file_not);
-                }
+                if (F_status_is_error_not(status)) {
+                  f_string_static_t *path = 0;
 
-                if (F_status_is_error(status)) {
-                  fll_error_file_print(data.main->error, F_status_set_fine(status), "f_file_is", F_true, *path, fake_common_file_path_access_s, fll_error_file_type_file_e);
+                  if (operations[i] == fake_operation_build_e) {
+                    path = &data.file_data_build_settings;
+                  }
+                  else {
+                    path = &data.file_data_build_fakefile;
+                  }
+
+                  status = f_file_is(*path, F_file_type_regular_d, F_false);
+
+                  if (status == F_false) {
+                    status = F_status_set_error(F_file_not);
+                  }
+
+                  if (F_status_is_error(status)) {
+                    fll_error_file_print(data.main->error, F_status_set_fine(status), "f_file_is", F_true, *path, fake_common_file_path_access_s, fll_error_file_type_file_e);
+                  }
                 }
               }
-            }
 
-            break;
-          }
-        } // for
+              break;
+            }
+          } // for
+        }
 
         if (F_status_is_error_not(status)) {
           for (i = 0; i < operations_length; ++i) {
@@ -419,17 +452,18 @@ extern "C" {
       }
 
       if (main->error.verbosity != f_console_verbosity_quiet_e) {
-        if (F_status_is_error(status)) {
-          if (F_status_set_fine(status) == F_interrupt) {
-            fflush(main->output.to.stream);
-          }
-
-          fll_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
-        }
-        else if (status != F_child) {
+        if (F_status_is_error_not(status) && status != F_child) {
           fll_print_format("%rAll operations complete.%r%r", main->output.to.stream, f_string_eol_s, f_string_eol_s, f_string_eol_s);
         }
       }
+    }
+
+    if (F_status_is_error(status) && main->error.verbosity != f_console_verbosity_quiet_e) {
+      if (F_status_set_fine(status) == F_interrupt) {
+        fflush(main->output.to.stream);
+      }
+
+      fll_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
     }
 
     fake_data_delete(&data);
