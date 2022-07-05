@@ -48,8 +48,8 @@ extern "C" {
     #define CONTROLLER_path_pid_s        _override_controller_path_pid_
     #define CONTROLLER_path_pid_s_length _override_controller_path_pid_length_
   #else
-    #define CONTROLLER_path_pid_s        "controller/run"
-    #define CONTROLLER_path_pid_s_length 14
+    #define CONTROLLER_path_pid_s        "./run"
+    #define CONTROLLER_path_pid_s_length 5
   #endif // defined(_override_controller_path_pid_) && defined(_override_controller_path_pid_length_)
 
   // The init pid path is a system-specific path and needs to be more easily controlled at compile time.
@@ -91,8 +91,8 @@ extern "C" {
     #define CONTROLLER_path_settings_s        _override_controller_path_settings_
     #define CONTROLLER_path_settings_s_length _override_controller_path_settings_length_
   #else
-    #define CONTROLLER_path_settings_s        "controller"
-    #define CONTROLLER_path_settings_s_length 10
+    #define CONTROLLER_path_settings_s        "./"
+    #define CONTROLLER_path_settings_s_length 2
   #endif // defined(_override_controller_path_settings_) && defined(_override_controller_path_settings_length_)
 
   // The init settings path is a system-specific path part and needs to be more easily controlled at compile time.
@@ -112,8 +112,8 @@ extern "C" {
     #define CONTROLLER_path_socket_s        _override_controller_path_socket_
     #define CONTROLLER_path_socket_s_length _override_controller_path_socket_length_
   #else
-    #define CONTROLLER_path_socket_s        "controller/run"
-    #define CONTROLLER_path_socket_s_length 14
+    #define CONTROLLER_path_socket_s        "./run"
+    #define CONTROLLER_path_socket_s_length 5
   #endif // defined(_override_controller_path_socket_) && defined(_override_controller_path_socket_length_)
 
   // The socket path is a system-specific path and needs to be more easily controlled at compile time.
