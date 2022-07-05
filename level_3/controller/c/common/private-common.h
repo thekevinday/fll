@@ -17,7 +17,6 @@ extern "C" {
 #include "private-execute_set.h"
 #include "private-lock.h"
 #include "private-rule.h"
-#include "private-task.h"
 #include "private-process.h"
 #include "private-entry.h"
 #include "private-control.h"
