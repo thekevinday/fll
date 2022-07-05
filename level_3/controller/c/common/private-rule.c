@@ -64,6 +64,7 @@ extern "C" {
     f_string_maps_resize(0, &rule->define);
     f_string_maps_resize(0, &rule->parameter);
 
+    f_string_dynamics_resize(0, &rule->engine_arguments);
     f_string_dynamics_resize(0, &rule->environment);
 
     macro_f_int32s_t_delete_simple(rule->affinity)

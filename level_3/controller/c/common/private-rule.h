@@ -261,21 +261,22 @@ extern "C" {
  * A Rule.
  *
  * controller_rule_setting_type_*:
- *   - affinity:    Setting type representing a affinity.
- *   - capability:  Setting type representing a capability.
- *   - cgroup:      Setting type representing a control group.
- *   - define:      Setting type representing a define.
- *   - engine:      Setting type representing a engine.
- *   - environment: Setting type representing a environment.
- *   - group:       Setting type representing a group.
- *   - limit:       Setting type representing a limit.
- *   - name:        Setting type representing a name.
- *   - nice:        Setting type representing a nice.
- *   - on:          Setting type representing a on.
- *   - parameter:   Setting type representing a parameter.
- *   - path:        Setting type representing a path.
- *   - scheduler:   Setting type representing a scheduler.
- *   - user:        Setting type representing a user.
+ *   - affinity:         Setting type representing a affinity.
+ *   - capability:       Setting type representing a capability.
+ *   - cgroup:           Setting type representing a control group.
+ *   - define:           Setting type representing a define.
+ *   - engine:           Setting type representing a engine.
+ *   - engine_arguments: Setting type representing a engine.
+ *   - environment:      Setting type representing a environment.
+ *   - group:            Setting type representing a group.
+ *   - limit:            Setting type representing a limit.
+ *   - name:             Setting type representing a name.
+ *   - nice:             Setting type representing a nice.
+ *   - on:               Setting type representing a on.
+ *   - parameter:        Setting type representing a parameter.
+ *   - path:             Setting type representing a path.
+ *   - scheduler:        Setting type representing a scheduler.
+ *   - user:             Setting type representing a user.
  *
  * controller_rule_has_*:
  *   - cgroup:    Has type representing a control group.
@@ -284,30 +285,31 @@ extern "C" {
  *   - scheduler: Has type representing a scheduler.
  *   - user:      Has type representing a user.
  *
- * affinity:      The cpu affinity to be used when executing the Rule.
- * alias:         The distinct ID (machine name) of the Rule, such as "service/ssh".
- * capability:    The capability setting if the Rule "has" a capability.
- * cgroup:        The control group setting if the Rule "has" a control group.
- * define:        Any defines (environment variables) made available to the Rule for IKI substitution or just as environment variables.
- * engine:        The program or path to the program of the scripting engine to use when processing scripts in this Rule.
- * environment:   All environment variables allowed to be exposed to the Rule when processing.
- * group:         The group ID if the Rule "has" a group.
- * groups:        A set of group IDs to run the process with (first specified group is the primary group).
- * has:           Bitwise set of "has" codes representing what the Rule has.
- * items:         All items associated with the Rule.
- * limits:        The cpu/resource limits to use when executing the Rule.
- * name:          A human name for the Rule (does not have to be distinct), such as "Bash Script".
- * nice:          The niceness value if the Rule "has" nice.
- * on:            A set of parameters for defining dependencies and how they are needed, wanted, or wished for.
- * parameter:     Any parameters made available to the Rule for IKI substitution.
- * path:          The path to the Rule file.
- * scheduler:     The scheduler setting if the Rule "has" a scheduler.
- * status:        A set of action-specific success/failure status of the Rule. Each index represents a controller_rule_action_type_* enum value. Index 0 represents a global status.
- * timeout_kill:  The timeout to wait relating to using a kill signal.
- * timeout_start: The timeout to wait relating to starting a process.
- * timeout_stop:  The timeout to wait relating to stopping a process.
- * timestamp:     The timestamp when the Rule was loaded.
- * user:          The User ID if the Rule "has" a user.
+ * affinity:         The cpu affinity to be used when executing the Rule.
+ * alias:            The distinct ID (machine name) of the Rule, such as "service/ssh".
+ * capability:       The capability setting if the Rule "has" a capability.
+ * cgroup:           The control group setting if the Rule "has" a control group.
+ * define:           Any defines (environment variables) made available to the Rule for IKI substitution or just as environment variables.
+ * engine:           The program or path to the program of the scripting engine to use when processing scripts in this Rule.
+ * engine_arguments: Any arguments to pass to the engine program.
+ * environment:      All environment variables allowed to be exposed to the Rule when processing.
+ * group:            The group ID if the Rule "has" a group.
+ * groups:           A set of group IDs to run the process with (first specified group is the primary group).
+ * has:              Bitwise set of "has" codes representing what the Rule has.
+ * items:            All items associated with the Rule.
+ * limits:           The cpu/resource limits to use when executing the Rule.
+ * name:             A human name for the Rule (does not have to be distinct), such as "Bash Script".
+ * nice:             The niceness value if the Rule "has" nice.
+ * on:               A set of parameters for defining dependencies and how they are needed, wanted, or wished for.
+ * parameter:        Any parameters made available to the Rule for IKI substitution.
+ * path:             The path to the Rule file.
+ * scheduler:        The scheduler setting if the Rule "has" a scheduler.
+ * status:           A set of action-specific success/failure status of the Rule. Each index represents a controller_rule_action_type_* enum value. Index 0 represents a global status.
+ * timeout_kill:     The timeout to wait relating to using a kill signal.
+ * timeout_start:    The timeout to wait relating to starting a process.
+ * timeout_stop:     The timeout to wait relating to stopping a process.
+ * timestamp:        The timestamp when the Rule was loaded.
+ * user:             The User ID if the Rule "has" a user.
  */
 #ifndef _di_controller_rule_t_
   enum {
@@ -364,6 +366,7 @@ extern "C" {
     f_string_maps_t define;
     f_string_maps_t parameter;
 
+    f_string_dynamics_t engine_arguments;
     f_string_dynamics_t environment;
 
     f_int32s_t affinity;
@@ -409,6 +412,7 @@ extern "C" {
     f_string_dynamic_t_initialize, \
     f_string_maps_t_initialize, \
     f_string_maps_t_initialize, \
+    f_string_dynamics_t_initialize, \
     f_string_dynamics_t_initialize, \
     f_int32s_t_initialize, \
     f_capability_t_initialize, \

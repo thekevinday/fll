@@ -36,7 +36,7 @@ Rule Specification:
     - "capability": One Content representing capabilities.
     - "cgroup": Two or more Content, the first Content being either "existing" or "new" and the remaining representing a valid cgroup (control group) name, must have at least 1 graph character (non white space printing character) (leading and trailing white space are trimmed off).
     - "define": Two Content, the first Content must be a case-sensitive valid environment variable name (alpha-numeric or underscore, but no leading digits).
-    - "engine": One Content representing a valid program name or path (such as "bash" or "/bin/bash").
+    - "engine": One or more Content representing a valid program name or path (such as "bash" or "/bin/bash") and any optional arguments.
     - "environment": Zero or more Content, each must be a case-sensitive valid environment variable name (alpha-numeric or underscore, but no leading digits).
     - "group": One or more Content representing group names or group ids.
     - "limit": Three Content, with the first representing a valid resource type and the second and third being a valid resource limit number (positive whole number or 0).

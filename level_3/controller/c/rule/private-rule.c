@@ -765,6 +765,7 @@ extern "C" {
 
     destination->alias.used = 0;
     destination->engine.used = 0;
+    destination->engine_arguments.used = 0;
     destination->name.used = 0;
     destination->path.used = 0;
 
@@ -778,13 +779,21 @@ extern "C" {
     destination->scheduler.policy = source.scheduler.policy;
     destination->scheduler.priority = source.scheduler.priority;
 
-    for (f_array_length_t i = 0; i < destination->ons.size; ++i) {
+    {
+      f_array_length_t i = 0;
 
-      destination->ons.array[i].action = 0;
-      destination->ons.array[i].need.used = 0;
-      destination->ons.array[i].want.used = 0;
-      destination->ons.array[i].wish.used = 0;
-    } // for
+      for (; i < destination->ons.size; ++i) {
+
+        destination->ons.array[i].action = 0;
+        destination->ons.array[i].need.used = 0;
+        destination->ons.array[i].want.used = 0;
+        destination->ons.array[i].wish.used = 0;
+      } // for
+
+      for (i = 0; i < destination->engine_arguments.size; ++i) {
+        destination->engine_arguments.array[i].used = 0;
+      } // for
+    }
 
     destination->ons.used = 0;
     destination->items.used = 0;
@@ -807,6 +816,9 @@ extern "C" {
     if (F_status_is_error(status)) return status;
 
     status = f_string_maps_append_all(source.parameter, &destination->parameter);
+    if (F_status_is_error(status)) return status;
+
+    status = f_string_dynamics_append_all(source.engine_arguments, &destination->engine_arguments);
     if (F_status_is_error(status)) return status;
 
     status = f_string_dynamics_append_all(source.environment, &destination->environment);
@@ -1128,10 +1140,10 @@ extern "C" {
 
           do {
             if (process->rule.engine.used) {
-              status = controller_rule_execute_foreground(process->rule.items.array[i].type, process->rule.engine, arguments_none, options, &execute_set, process);
+              status = controller_rule_execute_foreground(process->rule.items.array[i].type, process->rule.engine, process->rule.engine_arguments, options, &execute_set, process);
             }
             else {
-              status = controller_rule_execute_foreground(process->rule.items.array[i].type, *global.main->default_engine, arguments_none, options, &execute_set, process);
+              status = controller_rule_execute_foreground(process->rule.items.array[i].type, *global.main->default_engine, process->rule.engine_arguments, options, &execute_set, process);
             }
 
             if (status == F_child || F_status_set_fine(status) == F_lock) break;
@@ -1207,7 +1219,7 @@ extern "C" {
             }
 
             do {
-              status = controller_rule_execute_pid_with(process->rule.items.array[i].pid_file, process->rule.items.array[i].type, process->rule.engine.used ? process->rule.engine : *global.main->default_engine, arguments_none, options, process->rule.items.array[i].with, &execute_set, process);
+              status = controller_rule_execute_pid_with(process->rule.items.array[i].pid_file, process->rule.items.array[i].type, process->rule.engine.used ? process->rule.engine : *global.main->default_engine, process->rule.engine_arguments, options, process->rule.items.array[i].with, &execute_set, process);
 
               if (status == F_child || F_status_set_fine(status) == F_interrupt || F_status_set_fine(status) == F_lock) break;
               if (F_status_is_error(status) && F_status_set_fine(status) != F_failure) break;
@@ -1362,10 +1374,9 @@ extern "C" {
       }
 
       if (F_status_set_fine(status) != F_interrupt) {
-        const f_string_statics_t simulated_arguments = f_string_statics_t_initialize;
         fl_execute_parameter_t simulated_parameter = macro_fl_execute_parameter_t_initialize(execute_set->parameter.option, execute_set->parameter.wait, process->rule.has & controller_rule_has_environment_d ? execute_set->parameter.environment : 0, execute_set->parameter.signals, &f_string_empty_s);
 
-        status = fll_execute_program(*main->default_engine, simulated_arguments, &simulated_parameter, &execute_set->as, (void *) &result);
+        status = fll_execute_program(*main->default_engine, process->rule.engine_arguments, &simulated_parameter, &execute_set->as, (void *) &result);
       }
     }
     else {
@@ -3480,10 +3491,6 @@ extern "C" {
 
     bool for_item = F_true;
 
-    for (f_array_length_t i = 0; i < controller_rule_action_type__enum_size_e; ++i) {
-      rule->status[i] = F_known_not;
-    } // for
-
     rule->timeout_kill = entry->timeout_kill ? entry->timeout_kill : 0;
     rule->timeout_start = entry->timeout_start ? entry->timeout_start : 0;
     rule->timeout_stop = entry->timeout_stop ? entry->timeout_stop : 0;
@@ -3497,6 +3504,7 @@ extern "C" {
 
     rule->alias.used = 0;
     rule->engine.used = 0;
+    rule->engine_arguments.used = 0;
     rule->name.used = 0;
     rule->path.used = 0;
 
@@ -3511,10 +3519,6 @@ extern "C" {
       rule->capability = 0;
     }
 
-    for (f_array_length_t i = 0; i < rule->cgroup.groups.size; ++i) {
-      rule->cgroup.groups.array[i].used = 0;
-    } // for
-
     rule->cgroup.as_new = F_false;
     rule->cgroup.path.used = 0;
     rule->cgroup.groups.used = 0;
@@ -3526,12 +3530,6 @@ extern "C" {
 
     rule->scheduler.policy = 0;
     rule->scheduler.priority = 0;
-
-    for (f_array_length_t i = 0; i < rule->ons.size; ++i) {
-      rule->ons.array[i].need.used = 0;
-      rule->ons.array[i].want.used = 0;
-      rule->ons.array[i].wish.used = 0;
-    } // for
 
     rule->ons.used = 0;
     rule->items.used = 0;
@@ -3549,16 +3547,38 @@ extern "C" {
     cache->buffer_item.used = 0;
     cache->buffer_path.used = 0;
 
-    for (f_array_length_t i = 0; i < cache->content_items.used; ++i) {
-      cache->content_items.array[i].used = 0;
-    } // for
-
     cache->content_items.used = 0;
     cache->object_items.used = 0;
 
     cache->action.name_action.used = 0;
     cache->action.name_file.used = 0;
     cache->action.name_item.used = 0;
+
+    {
+      f_array_length_t i = 0;
+
+      for (i = 0; i < rule->cgroup.groups.size; ++i) {
+        rule->cgroup.groups.array[i].used = 0;
+      } // for
+
+      for (; i < controller_rule_action_type__enum_size_e; ++i) {
+        rule->status[i] = F_known_not;
+      } // for
+
+      for (i = 0; i < cache->content_items.used; ++i) {
+        cache->content_items.array[i].used = 0;
+      } // for
+
+      for (i = 0; i < rule->engine_arguments.size; ++i) {
+        rule->engine_arguments.array[i].used = 0;
+      } // for
+
+      for (i = 0; i < rule->ons.size; ++i) {
+        rule->ons.array[i].need.used = 0;
+        rule->ons.array[i].want.used = 0;
+        rule->ons.array[i].wish.used = 0;
+      } // for
+    }
 
     status = f_string_dynamic_append_nulless(alias, &rule->alias);
 
@@ -4422,8 +4442,8 @@ extern "C" {
           setting_value = &rule->engine;
         }
 
-        if (setting_value->used || cache->content_actions.array[i].used != 1) {
-          controller_rule_setting_read_print_error(global.main->error, "requires exactly one Content", i, line_item, global.thread, cache);
+        if (setting_value->used || !cache->content_actions.array[i].used) {
+          controller_rule_setting_read_print_error(global.main->error, "requires one or more Content", i, line_item, global.thread, cache);
 
           if (F_status_is_error_not(status_return)) {
             status_return = F_status_set_error(F_valid_not);
@@ -4435,8 +4455,27 @@ extern "C" {
         if (type == controller_rule_setting_type_name_e || type == controller_rule_setting_type_engine_e) {
           status = fl_string_dynamic_partial_rip_nulless(cache->buffer_item, cache->content_actions.array[i].array[0], setting_value);
 
+          if (type == controller_rule_setting_type_engine_e) {
+            rule->engine_arguments.used = 0;
+
+            if (cache->content_actions.array[i].used > 1) {
+              status = f_string_dynamics_increase_by(cache->content_actions.array[i].used - 1, &rule->engine_arguments);
+
+              for (j = 1; F_status_is_error_not(status) && j < cache->content_actions.array[i].used; ++j, ++rule->engine_arguments.used) {
+
+                rule->engine_arguments.array[rule->engine_arguments.used].used = 0;
+
+                status = f_string_dynamic_partial_append(cache->buffer_item, cache->content_actions.array[i].array[j], &rule->engine_arguments.array[rule->engine_arguments.used]);
+              } // for
+            }
+          }
+
           if (F_status_is_error(status)) {
             setting_value->used = 0;
+
+            if (type == controller_rule_setting_type_engine_e) {
+              rule->engine_arguments.used = 0;
+            }
 
             if (F_status_set_fine(status) == F_memory_not) {
               status_return = status;
@@ -4448,7 +4487,7 @@ extern "C" {
               status_return = status;
             }
 
-            // get the current line number within the settings item.
+            // Get the current line number within the settings item.
             cache->action.line_item = line_item;
             f_fss_count_lines(state, cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
 
@@ -4464,7 +4503,7 @@ extern "C" {
           if (status == F_false || F_status_set_fine(status) == F_complete_not_utf) {
             if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
 
-              // get the current line number within the settings item.
+              // Get the current line number within the settings item.
               cache->action.line_item = line_item;
               f_fss_count_lines(state, cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
 
@@ -5614,7 +5653,21 @@ extern "C" {
     f_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
 
     // Engine.
-    fl_print_format("  %[%r%] %Q%r", main->output.to.stream, main->context.set.important, controller_engine_s, main->context.set.important, rule.engine, f_string_eol_s);
+    if (rule.engine_arguments.used) {
+      fl_print_format("  %[%r%] %Q", main->output.to.stream, main->context.set.important, controller_engine_s, main->context.set.important, rule.engine);
+
+      for (i = 0; i < rule.engine_arguments.used; ++i) {
+
+        if (rule.engine_arguments.array[i].used) {
+          fl_print_format(" %Q", main->output.to.stream, rule.engine_arguments.array[i]);
+        }
+      } // for
+
+      fl_print_format("%r", main->output.to.stream, f_string_eol_s);
+    }
+    else {
+      fl_print_format("  %[%r%] %Q%r", main->output.to.stream, main->context.set.important, controller_engine_s, main->context.set.important, rule.engine, f_string_eol_s);
+    }
 
     // User.
     fl_print_format("  %[%r%]", main->output.to.stream, main->context.set.important, controller_user_s, main->context.set.important);

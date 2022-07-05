@@ -49,6 +49,7 @@ Rule Documentation:
   - In the case of "engine"\:
     This engine is used for both "script" and "utility" Rule Types.
     The program that engine refers to must accept a standard input pipe to be supported.
+    Additional parameters may be passed to the engine.
 
   - In the case of "group" and "user"\:
     Only users and groups that the user the controller program is being run as is allowed to use may be used.
