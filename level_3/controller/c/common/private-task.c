@@ -52,10 +52,10 @@ extern "C" {
   void controller_task_delete_simple(controller_task_t * const task) {
 
     f_string_dynamic_resize(0, &task->alias);
+    f_string_dynamic_resize(0, &task->engine);
     f_string_dynamic_resize(0, &task->help);
     f_string_dynamic_resize(0, &task->name);
     f_string_dynamic_resize(0, &task->path);
-    f_string_dynamic_resize(0, &task->script);
 
     f_string_maps_resize(0, &task->arguments);
     f_string_maps_resize(0, &task->defines);

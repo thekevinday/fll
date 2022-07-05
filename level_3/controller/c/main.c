@@ -20,6 +20,7 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
   f_file_umask_get(&data.umask);
 
+  data.default_engine = &controller_default_engine_s;
   data.default_path_setting = &controller_path_settings_s;
   data.default_path_setting_init = &controller_path_settings_init_s;
   data.default_path_pid = &controller_path_pid_s;
@@ -30,7 +31,6 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
   data.default_path_socket_init = &controller_path_socket_init_s;
   data.default_path_socket_prefix = &controller_path_socket_prefix_s;
   data.default_path_socket_suffix = &controller_path_socket_suffix_s;
-  data.default_program_script = &controller_default_program_script_s;
   data.program_name = &controller_program_name_s;
   data.program_name_long = &controller_program_name_long_s;
 

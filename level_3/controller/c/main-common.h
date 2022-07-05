@@ -150,14 +150,14 @@ extern "C" {
   #endif // defined(_override_controller_path_socket_suffix_) && defined(_override_controller_path_socket_suffix_length_)
 
   #if defined(_override_controller_default_program_script_) && defined(_override_controller_default_program_script_length_)
-    #define CONTROLLER_default_program_script_s        _override_controller_default_program_script_
-    #define CONTROLLER_default_program_script_s_length _override_controller_default_program_script_length_
+    #define CONTROLLER_default_engine_s        _override_controller_default_engine_
+    #define CONTROLLER_default_engine_s_length _override_controller_default_engine_length_
   #else
-    #define CONTROLLER_default_program_script_s        "bash"
-    #define CONTROLLER_default_program_script_s_length 4
+    #define CONTROLLER_default_engine_s        "bash"
+    #define CONTROLLER_default_engine_s_length 4
   #endif // defined(_override_controller_default_program_script_) && defined(_override_controller_default_program_script_length_)
 
-  extern const f_string_static_t controller_default_program_script_s;
+  extern const f_string_static_t controller_default_engine_s;
   extern const f_string_static_t controller_path_pid_s;
   extern const f_string_static_t controller_path_pid_init_s;
   extern const f_string_static_t controller_path_pid_prefix_s;

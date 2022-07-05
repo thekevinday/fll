@@ -57,9 +57,9 @@ extern "C" {
   void controller_rule_delete_simple(controller_rule_t * const rule) {
 
     f_string_dynamic_resize(0, &rule->alias);
+    f_string_dynamic_resize(0, &rule->engine);
     f_string_dynamic_resize(0, &rule->name);
     f_string_dynamic_resize(0, &rule->path);
-    f_string_dynamic_resize(0, &rule->script);
 
     f_string_maps_resize(0, &rule->define);
     f_string_maps_resize(0, &rule->parameter);

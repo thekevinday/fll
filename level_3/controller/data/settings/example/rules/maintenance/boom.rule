@@ -2,7 +2,7 @@
 
 setting:
   name "Explosion!"
-  script sh
+  engine sh
 
 script:
   start {

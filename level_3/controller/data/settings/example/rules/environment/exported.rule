@@ -3,7 +3,7 @@
 setting:
   name "Environment with PATH"
   environment PATH
-  script bash
+  engine bash
 
 script:
   start {

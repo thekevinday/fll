@@ -36,6 +36,7 @@ Rule Specification:
     - "capability": One Content representing capabilities.
     - "cgroup": Two or more Content, the first Content being either "existing" or "new" and the remaining representing a valid cgroup (control group) name, must have at least 1 graph character (non white space printing character) (leading and trailing white space are trimmed off).
     - "define": Two Content, the first Content must be a case-sensitive valid environment variable name (alpha-numeric or underscore, but no leading digits).
+    - "engine": One Content representing a valid program name or path (such as "bash" or "/bin/bash").
     - "environment": Zero or more Content, each must be a case-sensitive valid environment variable name (alpha-numeric or underscore, but no leading digits).
     - "group": One or more Content representing group names or group ids.
     - "limit": Three Content, with the first representing a valid resource type and the second and third being a valid resource limit number (positive whole number or 0).
@@ -45,7 +46,6 @@ Rule Specification:
     - "parameter": Two Content, the first Content must be a case-sensitive valid IKI name and the second being an IKI value.
     - "path": One Content representing a valid PATH environment string (such as "/bin:/sbin:/usr/bin").
     - "scheduler": One or Two Content representing a scheduler name and the optional numeric priority (Any whole number inclusively between 0 and 99).
-    - "script": One Content representing a valid program name or path (such as "bash" or "/bin/bash").
     - "user": One Content representing a user name or user id.
 
   The "command" and "script" Rule Types allow the following the FSS-0001 (Extended)\:

@@ -3,8 +3,8 @@
 _di_libcap_ Disable libcap support, allow for compiling and linking without libcap (-lcap).
 _libcap_legacy_only_ Disable functionality provided by later versions of libcap (2.43 and later).
 _controller_as_init_ Build the program to run as if it were "init" by default, including displaying the program name as "Init Program" or "Init". This changes the main.c file only, leaving the library shareable between both "controller" and "init".
-_override_controller_default_program_script_ Provide a custom script name string to execute (such as php).
-_override_controller_default_program_script_length_ The number of bytes representing the string in _override_controller_default_program_script_ (not including the terminating NULL).
+_override_controller_default_engine_ Provide a custom scripting engine name string to execute (such as php).
+_override_controller_default_engine_length_ The number of bytes representing the string in _override_controller_default_engine_ (not including the terminating NULL).
 _override_controller_path_pid_ Use this as the default custom directory path representing the location of the controller program pid.
 _override_controller_path_pid_init_ Provide a custom init path for the pid file rather than the default.
 _override_controller_path_pid_init_length_ The number of bytes representing the string in _override_controller_path_pid_init_ (not including the terminating NULL).

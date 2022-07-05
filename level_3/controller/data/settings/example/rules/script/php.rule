@@ -3,7 +3,7 @@
 setting:
   name "PHP script"
   environment PATH
-  script php
+  engine php
 
 script:
   start {

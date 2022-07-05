@@ -265,6 +265,7 @@ extern "C" {
  *   - capability:  Setting type representing a capability.
  *   - cgroup:      Setting type representing a control group.
  *   - define:      Setting type representing a define.
+ *   - engine:      Setting type representing a engine.
  *   - environment: Setting type representing a environment.
  *   - group:       Setting type representing a group.
  *   - limit:       Setting type representing a limit.
@@ -274,7 +275,6 @@ extern "C" {
  *   - parameter:   Setting type representing a parameter.
  *   - path:        Setting type representing a path.
  *   - scheduler:   Setting type representing a scheduler.
- *   - script:      Setting type representing a script.
  *   - user:        Setting type representing a user.
  *
  * controller_rule_has_*:
@@ -289,6 +289,7 @@ extern "C" {
  * capability:    The capability setting if the Rule "has" a capability.
  * cgroup:        The control group setting if the Rule "has" a control group.
  * define:        Any defines (environment variables) made available to the Rule for IKI substitution or just as environment variables.
+ * engine:        The program or path to the program of the scripting engine to use when processing scripts in this Rule.
  * environment:   All environment variables allowed to be exposed to the Rule when processing.
  * group:         The group ID if the Rule "has" a group.
  * groups:        A set of group IDs to run the process with (first specified group is the primary group).
@@ -301,7 +302,6 @@ extern "C" {
  * parameter:     Any parameters made available to the Rule for IKI substitution.
  * path:          The path to the Rule file.
  * scheduler:     The scheduler setting if the Rule "has" a scheduler.
- * script:        The program or path to the program of the scripting engine to use when processing scripts in this Rule.
  * status:        A set of action-specific success/failure status of the Rule. Each index represents a controller_rule_action_type_* enum value. Index 0 represents a global status.
  * timeout_kill:  The timeout to wait relating to using a kill signal.
  * timeout_start: The timeout to wait relating to starting a process.
@@ -315,6 +315,7 @@ extern "C" {
     controller_rule_setting_type_capability_e,
     controller_rule_setting_type_cgroup_e,
     controller_rule_setting_type_define_e,
+    controller_rule_setting_type_engine_e,
     controller_rule_setting_type_environment_e,
     controller_rule_setting_type_group_e,
     controller_rule_setting_type_limit_e,
@@ -324,7 +325,6 @@ extern "C" {
     controller_rule_setting_type_parameter_e,
     controller_rule_setting_type_path_e,
     controller_rule_setting_type_scheduler_e,
-    controller_rule_setting_type_script_e,
     controller_rule_setting_type_timeout_e,
     controller_rule_setting_type_user_e,
   };
@@ -357,9 +357,9 @@ extern "C" {
     f_time_spec_t timestamp;
 
     f_string_dynamic_t alias;
+    f_string_dynamic_t engine;
     f_string_dynamic_t name;
     f_string_dynamic_t path;
-    f_string_dynamic_t script;
 
     f_string_maps_t define;
     f_string_maps_t parameter;

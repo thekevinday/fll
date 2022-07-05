@@ -3,7 +3,7 @@
 setting:
   name "Python (Version 3.X) script"
   environment PATH
-  script python3
+  engine python3
 
 script:
   start {

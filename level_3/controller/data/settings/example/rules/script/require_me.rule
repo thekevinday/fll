@@ -3,7 +3,7 @@
 setting:
   name "Example script for needs, wants, and wishes."
   environment PATH
-  script sh
+  engine sh
 
 script:
   start {

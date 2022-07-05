@@ -56,6 +56,7 @@ extern "C" {
   #define CONTROLLER_define_s        "define"
   #define CONTROLLER_delay_s         "delay"
   #define CONTROLLER_disable_s       "disable"
+  #define CONTROLLER_engine_s        "engine"
   #define CONTROLLER_entry_s         "entry"
   #define CONTROLLER_entries_s       "entries"
   #define CONTROLLER_environment_s   "environment"
@@ -186,6 +187,7 @@ extern "C" {
   #define CONTROLLER_define_s_length        6
   #define CONTROLLER_delay_s_length         5
   #define CONTROLLER_disable_s_length       7
+  #define CONTROLLER_engine_s_length        6
   #define CONTROLLER_entry_s_length         5
   #define CONTROLLER_entries_s_length       7
   #define CONTROLLER_environment_s_length   11
@@ -316,6 +318,7 @@ extern "C" {
   extern const f_string_static_t controller_define_s;
   extern const f_string_static_t controller_delay_s;
   extern const f_string_static_t controller_disable_s;
+  extern const f_string_static_t controller_engine_s;
   extern const f_string_static_t controller_entry_s;
   extern const f_string_static_t controller_entries_s;
   extern const f_string_static_t controller_environment_s;

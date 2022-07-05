@@ -167,22 +167,30 @@ extern "C" {
 /**
  * The main program data.
  *
- * child:                Reserved for a child process, often representing the child return status or the child process ID.
- * context:              The color context.
- * default_path_setting: The default setting path.
- * default_path_pid:     The default PID file path.
- * default_path_socket:  The default socket file path.
- * error:                The output file for error printing.
- * as_init:              Designate whether or not this is running as an init program.
- * output:               The output file for general printing.
- * parameters:           The state of pre-defined parameters passed to the program.
- * pid:                  The PID of the program.
- * process_pipe:         Designate whether or not to process the input pipe.
- * program_name:         The name of the program.
- * program_name_long:    The long name of the program.
- * signal:               The process signal management structure.
- * umask:                The umask settings, needed for avoiding calls to umask() to read the current umask.
- * warning:              The output file for warning printing.
+ * child:                      Reserved for a child process, often representing the child return status or the child process ID.
+ * context:                    The color context.
+ * default_engine:             The default scripting engine.
+ * default_path_pid:           The default PID file path.
+ * default_path_pid_init:      The default PID file path, when run as init.
+ * default_path_pid_prefix:    The default PID file path prefix.
+ * default_path_pid_suffix:    The default PID file path suffix.
+ * default_path_setting:       The default setting path.
+ * default_path_setting_init:  The default setting path, when run as init.
+ * default_path_socket:        The default socket file path.
+ * default_path_socket_init:   The default socket file path, when run as init.
+ * default_path_socket_prefix: The default socket file path prefix.
+ * default_path_socket_suffix: The default socket file path suffix.
+ * error:                      The output file for error printing.
+ * as_init:                    Designate whether or not this is running as an init program.
+ * output:                     The output file for general printing.
+ * parameters:                 The state of pre-defined parameters passed to the program.
+ * pid:                        The PID of the program.
+ * process_pipe:               Designate whether or not to process the input pipe.
+ * program_name:               The name of the program.
+ * program_name_long:          The long name of the program.
+ * signal:                     The process signal management structure.
+ * umask:                      The umask settings, needed for avoiding calls to umask() to read the current umask.
+ * warning:                    The output file for warning printing.
  */
 #ifndef _di_controller_main_t_
   typedef struct {
@@ -201,6 +209,7 @@ extern "C" {
     mode_t umask;
     int child;
 
+    const f_string_static_t *default_engine;
     const f_string_static_t *default_path_pid;
     const f_string_static_t *default_path_pid_init;
     const f_string_static_t *default_path_pid_prefix;
@@ -211,7 +220,6 @@ extern "C" {
     const f_string_static_t *default_path_socket_init;
     const f_string_static_t *default_path_socket_prefix;
     const f_string_static_t *default_path_socket_suffix;
-    const f_string_static_t *default_program_script;
     const f_string_static_t *program_name;
     const f_string_static_t *program_name_long;
 

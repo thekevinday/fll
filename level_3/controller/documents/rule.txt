@@ -16,6 +16,7 @@ Rule Documentation:
     - "capability": Define a set of capabilities in which to use, using the capability "text" format (such as "= cap_chown+ep").
     - "cgroup": Define a cgroup (control group) in which everything within this rule executes under.
     - "define": A single environment variable name and its associated value that is automatically exposed to processes executed within this rule.
+    - "engine": An executable name of a script, such as "bash", to use for the "script" Rule Type (which likely defaults to "bash" if not specified).
     - "environment": A set of environment variables to expose to the processes executed within this rule (PATH is always exposed).
     - "group": A set of group names or IDs to execute as with the first group being the primary group and all remaining being supplementary groups.
     - "limit": Define a resource limit to use (multiple limits may be specified, but only once for each type).
@@ -24,7 +25,6 @@ Rule Documentation:
     - "on": Define a Rule Action in which a specified dependency is needed, wanted, or wished for.
     - "parameter": An IKI name and its associated value for use in this rule file.
     - "path": A single Content used to set a custom PATH environment variable value.
-    - "script": An executable name of a script, such as "bash", to use for the "script" Rule Type (which likely defaults to "bash" if not specified).
     - "scheduler": A valid name of a scheduler to use followed by an optional priority number.
     - "timeout": A set of timeouts to wait for in which to perform a set action or to consider failure.
     - "user": A single user name or ID to execute as.
@@ -45,6 +45,10 @@ Rule Documentation:
 
     All environment variables, including those defined using this, must be in the "environment" list to be exported to the executed process.
     Environment variables added here that are not added to the environment are still exposed as an IKI variable.
+
+  - In the case of "engine"\:
+    This engine is used for both "script" and "utility" Rule Types.
+    The program that engine refers to must accept a standard input pipe to be supported.
 
   - In the case of "group" and "user"\:
     Only users and groups that the user the controller program is being run as is allowed to use may be used.
@@ -99,7 +103,7 @@ Rule Documentation:
 
   The "service" Rule Type provides a "command" accompanied with a PID file (Process Identifier file).
 
-  The "script" Rule Type provides a series of lines to be executed by a (Bash) script.
+  The "script" Rule Type provides a series of lines to be executed by some engine, such as GNU Bash.
   This "script" operates in the foreground, but individual things done within the script may operate in foreground or background.
   The last return state is treated as an error, so be sure to finish the script with a return code of 0 to designate no error and any other whole number, such a 1, to designate an error.
   Therefore passing "exit 1" would return as an error and passing "exit 0" would return as a success.

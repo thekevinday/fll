@@ -31,6 +31,7 @@ extern "C" {
   const f_string_static_t controller_define_s = macro_f_string_static_t_initialize(CONTROLLER_define_s, 0, CONTROLLER_define_s_length);
   const f_string_static_t controller_delay_s = macro_f_string_static_t_initialize(CONTROLLER_delay_s, 0, CONTROLLER_delay_s_length);
   const f_string_static_t controller_disable_s = macro_f_string_static_t_initialize(CONTROLLER_disable_s, 0, CONTROLLER_disable_s_length);
+  const f_string_static_t controller_engine_s = macro_f_string_static_t_initialize(CONTROLLER_engine_s, 0, CONTROLLER_engine_s_length);
   const f_string_static_t controller_entry_s = macro_f_string_static_t_initialize(CONTROLLER_entry_s, 0, CONTROLLER_entry_s_length);
   const f_string_static_t controller_entries_s = macro_f_string_static_t_initialize(CONTROLLER_entries_s, 0, CONTROLLER_entries_s_length);
   const f_string_static_t controller_environment_s = macro_f_string_static_t_initialize(CONTROLLER_environment_s, 0, CONTROLLER_environment_s_length);

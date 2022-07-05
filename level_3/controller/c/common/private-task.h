@@ -81,11 +81,12 @@ extern "C" {
  * A Task structure.
  *
  * controller_task_setting_type_*:
- *   - affinity:    Setting type representing a affinity.
+ *   - affinity:    Setting type representing an affinity.
  *   - capability:  Setting type representing a capability.
  *   - cgroup:      Setting type representing a cgroup (control group).
  *   - define:      Setting type representing a define.
- *   - environment: Setting type representing a environment.
+ *   - engine:      Setting type representing an engine.
+ *   - environment: Setting type representing an environment.
  *   - group:       Setting type representing a group.
  *   - limit:       Setting type representing a limit.
  *   - name:        Setting type representing a name.
@@ -93,7 +94,6 @@ extern "C" {
  *   - parameter:   Setting type representing a parameter.
  *   - path:        Setting type representing a path.
  *   - scheduler:   Setting type representing a scheduler.
- *   - script:      Setting type representing a script.
  *   - user:        Setting type representing a user.
  *
  * controller_task_has_*:
@@ -109,6 +109,7 @@ extern "C" {
  * capability:  The capability setting if the Task "has" a capability.
  * cgroup:      The cgroup (control group) setting if the Task "has" a cgroup (control group).
  * define:      Any defines (environment variables) made available to the Task for IKI substitution or just as environment variables.
+ * engine:      The program or path to the program of the scripting engine to use when processing scripts in this Task.
  * environment: All environment variables allowed to be exposed to the Task when processing.
  * group:       The group ID if the Task "has" a group.
  * groups:      A set of group IDs to run the process with (first specified group is the primary group).
@@ -119,7 +120,6 @@ extern "C" {
  * parameter:   Any parameters made available to the Task for IKI substitution.
  * path:        The path to the Task file.
  * scheduler:   The scheduler setting if the Task "has" a scheduler.
- * script:      The program or path to the program of the scripting engine to use when processing scripts in this Task.
  * state:       The current active/inactive state of the Task.
  * status:      The last returned status of the Task.
  * timestamp:   The timestamp when the Task was last updated.
@@ -131,6 +131,7 @@ extern "C" {
     controller_task_setting_type_capability_e,
     controller_task_setting_type_cgroup_e,
     controller_task_setting_type_define_e,
+    controller_task_setting_type_engine_e,
     controller_task_setting_type_environment_e,
     controller_task_setting_type_group_e,
     controller_task_setting_type_limit_e,
@@ -139,7 +140,6 @@ extern "C" {
     controller_task_setting_type_parameter_e,
     controller_task_setting_type_path_e,
     controller_task_setting_type_scheduler_e,
-    controller_task_setting_type_script_e,
     controller_task_setting_type_user_e,
   };
 
@@ -163,10 +163,10 @@ extern "C" {
     f_time_spec_t timestamp;
 
     f_string_dynamic_t alias;
+    f_string_dynamic_t engine;
     f_string_dynamic_t help;
     f_string_dynamic_t name;
     f_string_dynamic_t path;
-    f_string_dynamic_t script;
 
     f_string_maps_t arguments;
     f_string_maps_t defines;

@@ -11,7 +11,7 @@ extern "C" {
 #endif // _di_controller_program_name_
 
 #ifndef _di_controller_defines_
-  const f_string_static_t controller_default_program_script_s = macro_f_string_static_t_initialize(CONTROLLER_default_program_script_s, 0, CONTROLLER_default_program_script_s_length);
+  const f_string_static_t controller_default_engine_s = macro_f_string_static_t_initialize(CONTROLLER_default_engine_s, 0, CONTROLLER_default_engine_s_length);
   const f_string_static_t controller_path_pid_s = macro_f_string_static_t_initialize(CONTROLLER_path_pid_s, 0, CONTROLLER_path_pid_s_length);
   const f_string_static_t controller_path_pid_init_s = macro_f_string_static_t_initialize(CONTROLLER_path_pid_init_s, 0, CONTROLLER_path_pid_init_s_length);
   const f_string_static_t controller_path_pid_prefix_s = macro_f_string_static_t_initialize(CONTROLLER_path_pid_prefix_s, 0, CONTROLLER_path_pid_prefix_s_length);

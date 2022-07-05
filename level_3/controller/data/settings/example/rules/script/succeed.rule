@@ -3,7 +3,7 @@
 setting:
   name "Script #1"
   environment PATH
-  script sh
+  engine sh
 
 script:
   start {

@@ -3,7 +3,7 @@
 setting:
   name "Environment set to nothing"
   environment
-  script bash
+  engine bash
 
 script:
   start {

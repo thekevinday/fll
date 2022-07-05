@@ -2,7 +2,7 @@
 
 setting:
   name "Environment default"
-  script bash
+  engine bash
 
 script:
   start {

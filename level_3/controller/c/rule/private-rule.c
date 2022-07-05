@@ -764,9 +764,9 @@ extern "C" {
     destination->timestamp.nanoseconds = source.timestamp.nanoseconds;
 
     destination->alias.used = 0;
+    destination->engine.used = 0;
     destination->name.used = 0;
     destination->path.used = 0;
-    destination->script.used = 0;
 
     destination->define.used = 0;
     destination->parameter.used = 0;
@@ -794,13 +794,13 @@ extern "C" {
     status = f_string_dynamic_append(source.alias, &destination->alias);
     if (F_status_is_error(status)) return status;
 
+    status = f_string_dynamic_append(source.engine, &destination->engine);
+    if (F_status_is_error(status)) return status;
+
     status = f_string_dynamic_append(source.name, &destination->name);
     if (F_status_is_error(status)) return status;
 
     status = f_string_dynamic_append(source.path, &destination->path);
-    if (F_status_is_error(status)) return status;
-
-    status = f_string_dynamic_append(source.script, &destination->script);
     if (F_status_is_error(status)) return status;
 
     status = f_string_maps_append_all(source.define, &destination->define);
@@ -1127,11 +1127,11 @@ extern "C" {
           }
 
           do {
-            if (process->rule.script.used) {
-              status = controller_rule_execute_foreground(process->rule.items.array[i].type, process->rule.script, arguments_none, options, &execute_set, process);
+            if (process->rule.engine.used) {
+              status = controller_rule_execute_foreground(process->rule.items.array[i].type, process->rule.engine, arguments_none, options, &execute_set, process);
             }
             else {
-              status = controller_rule_execute_foreground(process->rule.items.array[i].type, *global.main->default_program_script, arguments_none, options, &execute_set, process);
+              status = controller_rule_execute_foreground(process->rule.items.array[i].type, *global.main->default_engine, arguments_none, options, &execute_set, process);
             }
 
             if (status == F_child || F_status_set_fine(status) == F_lock) break;
@@ -1207,7 +1207,7 @@ extern "C" {
             }
 
             do {
-              status = controller_rule_execute_pid_with(process->rule.items.array[i].pid_file, process->rule.items.array[i].type, process->rule.script.used ? process->rule.script : *global.main->default_program_script, arguments_none, options, process->rule.items.array[i].with, &execute_set, process);
+              status = controller_rule_execute_pid_with(process->rule.items.array[i].pid_file, process->rule.items.array[i].type, process->rule.engine.used ? process->rule.engine : *global.main->default_engine, arguments_none, options, process->rule.items.array[i].with, &execute_set, process);
 
               if (status == F_child || F_status_set_fine(status) == F_interrupt || F_status_set_fine(status) == F_lock) break;
               if (F_status_is_error(status) && F_status_set_fine(status) != F_failure) break;
@@ -1365,7 +1365,7 @@ extern "C" {
         const f_string_statics_t simulated_arguments = f_string_statics_t_initialize;
         fl_execute_parameter_t simulated_parameter = macro_fl_execute_parameter_t_initialize(execute_set->parameter.option, execute_set->parameter.wait, process->rule.has & controller_rule_has_environment_d ? execute_set->parameter.environment : 0, execute_set->parameter.signals, &f_string_empty_s);
 
-        status = fll_execute_program(*main->default_program_script, simulated_arguments, &simulated_parameter, &execute_set->as, (void *) &result);
+        status = fll_execute_program(*main->default_engine, simulated_arguments, &simulated_parameter, &execute_set->as, (void *) &result);
       }
     }
     else {
@@ -1622,7 +1622,7 @@ extern "C" {
         const f_string_statics_t simulated_arguments = f_string_statics_t_initialize;
         fl_execute_parameter_t simulated_parameter = macro_fl_execute_parameter_t_initialize(execute_set->parameter.option, execute_set->parameter.wait, process->rule.has & controller_rule_has_environment_d ? execute_set->parameter.environment : 0, execute_set->parameter.signals, &f_string_empty_s);
 
-        status = fll_execute_program(*main->default_program_script, simulated_arguments, &simulated_parameter, &execute_set->as, (void *) &result);
+        status = fll_execute_program(*main->default_engine, simulated_arguments, &simulated_parameter, &execute_set->as, (void *) &result);
       }
     }
     else {
@@ -3496,9 +3496,9 @@ extern "C" {
     macro_f_time_spec_t_clear(rule->timestamp);
 
     rule->alias.used = 0;
+    rule->engine.used = 0;
     rule->name.used = 0;
     rule->path.used = 0;
-    rule->script.used = 0;
 
     rule->define.used = 0;
     rule->parameter.used = 0;
@@ -3817,6 +3817,9 @@ extern "C" {
       else if (fl_string_dynamic_compare(controller_define_s, cache->action.name_item) == F_equal_to) {
         type = controller_rule_setting_type_define_e;
       }
+      else if (fl_string_dynamic_compare(controller_engine_s, cache->action.name_item) == F_equal_to) {
+        type = controller_rule_setting_type_engine_e;
+      }
       else if (fl_string_dynamic_compare(controller_environment_s, cache->action.name_item) == F_equal_to) {
         type = controller_rule_setting_type_environment_e;
         empty_disallow = F_false;
@@ -3844,9 +3847,6 @@ extern "C" {
       }
       else if (fl_string_dynamic_compare(controller_scheduler_s, cache->action.name_item) == F_equal_to) {
         type = controller_rule_setting_type_scheduler_e;
-      }
-      else if (fl_string_dynamic_compare(controller_script_s, cache->action.name_item) == F_equal_to) {
-        type = controller_rule_setting_type_script_e;
       }
       else if (fl_string_dynamic_compare(controller_timeout_s, cache->action.name_item) == F_equal_to) {
         type = controller_rule_setting_type_timeout_e;
@@ -4410,7 +4410,7 @@ extern "C" {
         continue;
       }
 
-      if (type == controller_rule_setting_type_name_e || type == controller_rule_setting_type_path_e || type == controller_rule_setting_type_script_e) {
+      if (type == controller_rule_setting_type_name_e || type == controller_rule_setting_type_path_e || type == controller_rule_setting_type_engine_e) {
 
         if (type == controller_rule_setting_type_name_e) {
           setting_value = &rule->name;
@@ -4418,8 +4418,8 @@ extern "C" {
         else if (type == controller_rule_setting_type_path_e) {
           setting_value = &rule->path;
         }
-        else if (type == controller_rule_setting_type_script_e) {
-          setting_value = &rule->script;
+        else if (type == controller_rule_setting_type_engine_e) {
+          setting_value = &rule->engine;
         }
 
         if (setting_value->used || cache->content_actions.array[i].used != 1) {
@@ -4432,7 +4432,7 @@ extern "C" {
           continue;
         }
 
-        if (type == controller_rule_setting_type_name_e || type == controller_rule_setting_type_script_e) {
+        if (type == controller_rule_setting_type_name_e || type == controller_rule_setting_type_engine_e) {
           status = fl_string_dynamic_partial_rip_nulless(cache->buffer_item, cache->content_actions.array[i].array[0], setting_value);
 
           if (F_status_is_error(status)) {
@@ -4505,7 +4505,7 @@ extern "C" {
             continue;
           }
 
-          controller_rule_setting_read_print_value(global, type == controller_rule_setting_type_name_e ? controller_name_s : controller_script_s, f_string_empty_s, *setting_value, 0);
+          controller_rule_setting_read_print_value(global, type == controller_rule_setting_type_name_e ? controller_name_s : controller_engine_s, f_string_empty_s, *setting_value, 0);
         }
         else if (type == controller_rule_setting_type_path_e) {
           status = f_string_dynamic_partial_append_nulless(cache->buffer_item, cache->content_actions.array[i].array[0], setting_value);
@@ -5613,8 +5613,8 @@ extern "C" {
 
     f_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
 
-    // Script.
-    fl_print_format("  %[%r%] %Q%r", main->output.to.stream, main->context.set.important, controller_script_s, main->context.set.important, rule.script, f_string_eol_s);
+    // Engine.
+    fl_print_format("  %[%r%] %Q%r", main->output.to.stream, main->context.set.important, controller_engine_s, main->context.set.important, rule.engine, f_string_eol_s);
 
     // User.
     fl_print_format("  %[%r%]", main->output.to.stream, main->context.set.important, controller_user_s, main->context.set.important);
