@@ -45,6 +45,73 @@ void test__f_execute_status_to_status__fails(void **state) {
     if (i == F_execute_too_large) continue;
     if (i == F_execute_user) continue;
     if (i == F_execute_valid_not) continue;
+    if (i == F_execute_invoke_not) continue;
+    if (i == F_execute_found_not) continue;
+    if (i == F_execute_exit_parameter) continue;
+    if (i == F_execute_signal_hangup) continue;
+    if (i == F_execute_signal_interrupt) continue;
+    if (i == F_execute_signal_quit) continue;
+    if (i == F_execute_signal_illegal) continue;
+    if (i == F_execute_signal_trap) continue;
+    if (i == F_execute_signal_abort) continue;
+    if (i == F_execute_signal_bus_error) continue;
+    if (i == F_execute_signal_floating_point_error) continue;
+    if (i == F_execute_signal_kill) continue;
+    if (i == F_execute_signal_user_1) continue;
+    if (i == F_execute_signal_segmentation_fault) continue;
+    if (i == F_execute_signal_user_2) continue;
+    if (i == F_execute_signal_broken_pipe) continue;
+    if (i == F_execute_signal_alarm_clock) continue;
+    if (i == F_execute_signal_termination) continue;
+    if (i == F_execute_signal_stack_fault) continue;
+    if (i == F_execute_signal_child) continue;
+    if (i == F_execute_signal_continue) continue;
+    if (i == F_execute_signal_stop) continue;
+    if (i == F_execute_signal_keyboard_stop) continue;
+    if (i == F_execute_signal_tty_in) continue;
+    if (i == F_execute_signal_tty_out) continue;
+    if (i == F_execute_signal_urgent) continue;
+    if (i == F_execute_signal_cpu_limit) continue;
+    if (i == F_execute_signal_file_size_limit) continue;
+    if (i == F_execute_signal_virtual_alarm_clock) continue;
+    if (i == F_execute_signal_profile_alarm_clock) continue;
+    if (i == F_execute_signal_window_size_change) continue;
+    if (i == F_execute_signal_pollable_event) continue;
+    if (i == F_execute_signal_power_failure) continue;
+    if (i == F_execute_signal_bad_system_call) continue;
+    if (i == F_execute_signal_reserved_32) continue;
+    if (i == F_execute_signal_reserved_33) continue;
+    if (i == F_execute_signal_reserved_34) continue;
+    if (i == F_execute_signal_reserved_35) continue;
+    if (i == F_execute_signal_reserved_36) continue;
+    if (i == F_execute_signal_reserved_37) continue;
+    if (i == F_execute_signal_reserved_38) continue;
+    if (i == F_execute_signal_reserved_39) continue;
+    if (i == F_execute_signal_reserved_40) continue;
+    if (i == F_execute_signal_reserved_41) continue;
+    if (i == F_execute_signal_reserved_42) continue;
+    if (i == F_execute_signal_reserved_43) continue;
+    if (i == F_execute_signal_reserved_44) continue;
+    if (i == F_execute_signal_reserved_45) continue;
+    if (i == F_execute_signal_reserved_46) continue;
+    if (i == F_execute_signal_reserved_47) continue;
+    if (i == F_execute_signal_reserved_48) continue;
+    if (i == F_execute_signal_reserved_49) continue;
+    if (i == F_execute_signal_reserved_50) continue;
+    if (i == F_execute_signal_reserved_51) continue;
+    if (i == F_execute_signal_reserved_52) continue;
+    if (i == F_execute_signal_reserved_53) continue;
+    if (i == F_execute_signal_reserved_54) continue;
+    if (i == F_execute_signal_reserved_55) continue;
+    if (i == F_execute_signal_reserved_56) continue;
+    if (i == F_execute_signal_reserved_57) continue;
+    if (i == F_execute_signal_reserved_58) continue;
+    if (i == F_execute_signal_reserved_59) continue;
+    if (i == F_execute_signal_reserved_60) continue;
+    if (i == F_execute_signal_reserved_61) continue;
+    if (i == F_execute_signal_reserved_62) continue;
+    if (i == F_execute_signal_reserved_63) continue;
+    if (i == F_execute_signal_reserved_64) continue;
 
     const f_status_t status = f_execute_status_to_status(i);
 
@@ -90,6 +157,73 @@ void test__f_execute_status_to_status__works(void **state) {
     F_execute_too_large,
     F_execute_user,
     F_execute_valid_not,
+    F_execute_invoke_not,
+    F_execute_found_not,
+    F_execute_exit_parameter,
+    F_execute_signal_hangup,
+    F_execute_signal_interrupt,
+    F_execute_signal_quit,
+    F_execute_signal_illegal,
+    F_execute_signal_trap,
+    F_execute_signal_abort,
+    F_execute_signal_bus_error,
+    F_execute_signal_floating_point_error,
+    F_execute_signal_kill,
+    F_execute_signal_user_1,
+    F_execute_signal_segmentation_fault,
+    F_execute_signal_user_2,
+    F_execute_signal_broken_pipe,
+    F_execute_signal_alarm_clock,
+    F_execute_signal_termination,
+    F_execute_signal_stack_fault,
+    F_execute_signal_child,
+    F_execute_signal_continue,
+    F_execute_signal_stop,
+    F_execute_signal_keyboard_stop,
+    F_execute_signal_tty_in,
+    F_execute_signal_tty_out,
+    F_execute_signal_urgent,
+    F_execute_signal_cpu_limit,
+    F_execute_signal_file_size_limit,
+    F_execute_signal_virtual_alarm_clock,
+    F_execute_signal_profile_alarm_clock,
+    F_execute_signal_window_size_change,
+    F_execute_signal_pollable_event,
+    F_execute_signal_power_failure,
+    F_execute_signal_bad_system_call,
+    F_execute_signal_reserved_32,
+    F_execute_signal_reserved_33,
+    F_execute_signal_reserved_34,
+    F_execute_signal_reserved_35,
+    F_execute_signal_reserved_36,
+    F_execute_signal_reserved_37,
+    F_execute_signal_reserved_38,
+    F_execute_signal_reserved_39,
+    F_execute_signal_reserved_40,
+    F_execute_signal_reserved_41,
+    F_execute_signal_reserved_42,
+    F_execute_signal_reserved_43,
+    F_execute_signal_reserved_44,
+    F_execute_signal_reserved_45,
+    F_execute_signal_reserved_46,
+    F_execute_signal_reserved_47,
+    F_execute_signal_reserved_48,
+    F_execute_signal_reserved_49,
+    F_execute_signal_reserved_50,
+    F_execute_signal_reserved_51,
+    F_execute_signal_reserved_52,
+    F_execute_signal_reserved_53,
+    F_execute_signal_reserved_54,
+    F_execute_signal_reserved_55,
+    F_execute_signal_reserved_56,
+    F_execute_signal_reserved_57,
+    F_execute_signal_reserved_58,
+    F_execute_signal_reserved_59,
+    F_execute_signal_reserved_60,
+    F_execute_signal_reserved_61,
+    F_execute_signal_reserved_62,
+    F_execute_signal_reserved_63,
+    F_execute_signal_reserved_64,
   };
 
   const f_status_t statuss[] = {
@@ -128,9 +262,76 @@ void test__f_execute_status_to_status__works(void **state) {
     F_too_large,
     F_user,
     F_valid_not,
+    F_call_not,
+    F_found_not,
+    F_exit,
+    F_signal_hangup,
+    F_signal_interrupt,
+    F_signal_quit,
+    F_signal_illegal,
+    F_signal_trap,
+    F_signal_abort,
+    F_signal_bus_error,
+    F_signal_floating_point_error,
+    F_signal_kill,
+    F_signal_user_1,
+    F_signal_segmentation_fault,
+    F_signal_user_2,
+    F_signal_broken_pipe,
+    F_signal_alarm_clock,
+    F_signal_termination,
+    F_signal_stack_fault,
+    F_signal_child,
+    F_signal_continue,
+    F_signal_stop,
+    F_signal_keyboard_stop,
+    F_signal_tty_in,
+    F_signal_tty_out,
+    F_signal_urgent,
+    F_signal_cpu_limit,
+    F_signal_file_size_limit,
+    F_signal_virtual_alarm_clock,
+    F_signal_profile_alarm_clock,
+    F_signal_window_size_change,
+    F_signal_pollable_event,
+    F_signal_power_failure,
+    F_signal_bad_system_call,
+    F_signal_reserved_32,
+    F_signal_reserved_33,
+    F_signal_reserved_34,
+    F_signal_reserved_35,
+    F_signal_reserved_36,
+    F_signal_reserved_37,
+    F_signal_reserved_38,
+    F_signal_reserved_39,
+    F_signal_reserved_40,
+    F_signal_reserved_41,
+    F_signal_reserved_42,
+    F_signal_reserved_43,
+    F_signal_reserved_44,
+    F_signal_reserved_45,
+    F_signal_reserved_46,
+    F_signal_reserved_47,
+    F_signal_reserved_48,
+    F_signal_reserved_49,
+    F_signal_reserved_50,
+    F_signal_reserved_51,
+    F_signal_reserved_52,
+    F_signal_reserved_53,
+    F_signal_reserved_54,
+    F_signal_reserved_55,
+    F_signal_reserved_56,
+    F_signal_reserved_57,
+    F_signal_reserved_58,
+    F_signal_reserved_59,
+    F_signal_reserved_60,
+    F_signal_reserved_61,
+    F_signal_reserved_62,
+    F_signal_reserved_63,
+    F_signal_reserved_64,
   };
 
-  for (uint8_t i = 0; i < 35; ++i) {
+  for (uint8_t i = 0; i < 102; ++i) {
 
     {
       const f_status_t status = f_execute_status_to_status(status_executes[i]);

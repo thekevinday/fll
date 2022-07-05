@@ -24,6 +24,15 @@ extern "C" {
  *
  * All codes, except 0, represent an error.
  *
+ * Code 1 is used as a general error code across many programs.
+ * Code 2 is used as invalid parameters.
+ * Special code F_execute_code_middle is used as the middle point and must be less than 126.
+ * Special codes 126 to 255 are intended to match GNU Bash like exit codes.
+ * All other codes are in alphabetic order (inclusively between codes 3 to 125).
+ *
+ * Anything between F_execute_code_middle and 126 is a hole (not used for any status code).
+ * The codes in this hole are available for custom use.
+ *
  * F_execute_code_last, this is intended to designate the last code provided by level_0 execute project.
  * All code sets started by another project must start at this number + 1 with a code start map.
  *
@@ -33,6 +42,8 @@ extern "C" {
 #ifndef _di_f_execute_codes_
   enum {
     F_execute_none = 0,
+    F_execute_failure,
+    F_execute_parameter,
     F_execute_access,
     F_execute_bad,
     F_execute_buffer,
@@ -41,7 +52,6 @@ extern "C" {
     F_execute_control_group,
     F_execute_child,
     F_execute_directory_not,
-    F_execute_failure,
     F_execute_file_found_not,
     F_execute_file_type_directory,
     F_execute_fork_not,
@@ -53,7 +63,6 @@ extern "C" {
     F_execute_memory_not,
     F_execute_name_not,
     F_execute_nice,
-    F_execute_parameter,
     F_execute_pipe,
     F_execute_processor,
     F_execute_prohibited,
@@ -67,9 +76,79 @@ extern "C" {
     F_execute_too_large,
     F_execute_user,
     F_execute_valid_not,
+    F_execute_code_middle,
+
+    // Special codes for compatibility with GNU Bash like return codes.
+    F_execute_invoke_not = 126,
+    F_execute_found_not,
+    F_execute_exit_parameter,
+    F_execute_signal_hangup,
+    F_execute_signal_interrupt,
+    F_execute_signal_quit,
+    F_execute_signal_illegal,
+    F_execute_signal_trap,
+    F_execute_signal_abort,
+    F_execute_signal_bus_error,
+    F_execute_signal_floating_point_error,
+    F_execute_signal_kill,
+    F_execute_signal_user_1,
+    F_execute_signal_segmentation_fault,
+    F_execute_signal_user_2,
+    F_execute_signal_broken_pipe,
+    F_execute_signal_alarm_clock,
+    F_execute_signal_termination,
+    F_execute_signal_stack_fault,
+    F_execute_signal_child,
+    F_execute_signal_continue,
+    F_execute_signal_stop,
+    F_execute_signal_keyboard_stop,
+    F_execute_signal_tty_in,
+    F_execute_signal_tty_out,
+    F_execute_signal_urgent,
+    F_execute_signal_cpu_limit,
+    F_execute_signal_file_size_limit,
+    F_execute_signal_virtual_alarm_clock,
+    F_execute_signal_profile_alarm_clock,
+    F_execute_signal_window_size_change,
+    F_execute_signal_pollable_event,
+    F_execute_signal_power_failure,
+    F_execute_signal_bad_system_call,
+    F_execute_signal_reserved_32,
+    F_execute_signal_reserved_33,
+    F_execute_signal_reserved_34,
+    F_execute_signal_reserved_35,
+    F_execute_signal_reserved_36,
+    F_execute_signal_reserved_37,
+    F_execute_signal_reserved_38,
+    F_execute_signal_reserved_39,
+    F_execute_signal_reserved_40,
+    F_execute_signal_reserved_41,
+    F_execute_signal_reserved_42,
+    F_execute_signal_reserved_43,
+    F_execute_signal_reserved_44,
+    F_execute_signal_reserved_45,
+    F_execute_signal_reserved_46,
+    F_execute_signal_reserved_47,
+    F_execute_signal_reserved_48,
+    F_execute_signal_reserved_49,
+    F_execute_signal_reserved_50,
+    F_execute_signal_reserved_51,
+    F_execute_signal_reserved_52,
+    F_execute_signal_reserved_53,
+    F_execute_signal_reserved_54,
+    F_execute_signal_reserved_55,
+    F_execute_signal_reserved_56,
+    F_execute_signal_reserved_57,
+    F_execute_signal_reserved_58,
+    F_execute_signal_reserved_59,
+    F_execute_signal_reserved_60,
+    F_execute_signal_reserved_61,
+    F_execute_signal_reserved_62,
+    F_execute_signal_reserved_63,
+    F_execute_signal_reserved_64,
 
     // Required.
-    F_execute_code_last,
+    F_execute_code_last = 255,
   }; // enum
 #endif // _di_f_execute_codes_
 

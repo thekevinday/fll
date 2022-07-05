@@ -99,7 +99,7 @@ extern "C" {
     #define F_status_signal_reserved_63_s          "F_signal_reserved_63"
     #define F_status_signal_reserved_64_s          "F_signal_reserved_64"
 
-    #define F_status_signal_hangup_s_length             15
+    #define F_status_signal_hangup_s_length               15
     #define F_status_signal_interrupt_s_length            18
     #define F_status_signal_quit_s_length                 13
     #define F_status_signal_illegal_s_length              16
@@ -254,6 +254,8 @@ extern "C" {
     #define F_status_bound_not_s         "F_bound_not"
     #define F_status_break_s             "F_break"
     #define F_status_break_not_s         "F_break_not"
+    #define F_status_call_s              "F_call"
+    #define F_status_call_not_s          "F_call_not"
     #define F_status_capability_s        "F_capability"
     #define F_status_capability_not_s    "F_capability_not"
     #define F_status_child_s             "F_child"
@@ -391,6 +393,8 @@ extern "C" {
     #define F_status_next_not_s          "F_next_not"
     #define F_status_nice_s              "F_nice"
     #define F_status_nice_not_s          "F_nice_not"
+    #define F_status_no_s                "F_no"
+    #define F_status_no_not_s            "F_no_not"
     #define F_status_object_s            "F_object"
     #define F_status_object_not_s        "F_object_not"
     #define F_status_once_s              "F_once"
@@ -518,6 +522,8 @@ extern "C" {
     #define F_status_write_s             "F_write"
     #define F_status_write_not_s         "F_write_not"
     #define F_status_write_only_s        "F_write_only"
+    #define F_status_yes_s               "F_yes"
+    #define F_status_yes_not_s           "F_yes_not"
 
     #define F_status_none_s_length              6
     #define F_status_abort_s_length             7
@@ -542,6 +548,8 @@ extern "C" {
     #define F_status_body_not_s_length          10
     #define F_status_bound_s_length             7
     #define F_status_bound_not_s_length         11
+    #define F_status_call_s_length              6
+    #define F_status_call_not_s_length          10
     #define F_status_capability_s_length        12
     #define F_status_capability_not_s_length    16
     #define F_status_child_s_length             7
@@ -679,6 +687,8 @@ extern "C" {
     #define F_status_next_not_s_length          10
     #define F_status_nice_s_length              6
     #define F_status_nice_not_s_length          10
+    #define F_status_no_s_length                4
+    #define F_status_no_not_s_length            8
     #define F_status_object_s_length            8
     #define F_status_object_not_s_length        12
     #define F_status_once_s_length              6
@@ -806,6 +816,8 @@ extern "C" {
     #define F_status_write_s_length             7
     #define F_status_write_not_s_length         11
     #define F_status_write_only_s_length        12
+    #define F_status_yes_s_length               5
+    #define F_status_yes_not_s_length           9
 
     extern const f_string_static_t f_status_none_s;
     extern const f_string_static_t f_status_abort_s;
@@ -830,6 +842,8 @@ extern "C" {
     extern const f_string_static_t f_status_bound_not_s;
     extern const f_string_static_t f_status_break_s;
     extern const f_string_static_t f_status_break_not_s;
+    extern const f_string_static_t f_status_call_s;
+    extern const f_string_static_t f_status_call_not_s;
     extern const f_string_static_t f_status_capability_s;
     extern const f_string_static_t f_status_capability_not_s;
     extern const f_string_static_t f_status_child_s;
@@ -969,6 +983,8 @@ extern "C" {
     extern const f_string_static_t f_status_next_not_s;
     extern const f_string_static_t f_status_nice_s;
     extern const f_string_static_t f_status_nice_not_s;
+    extern const f_string_static_t f_status_no_s;
+    extern const f_string_static_t f_status_no_not_s;
     extern const f_string_static_t f_status_object_s;
     extern const f_string_static_t f_status_object_not_s;
     extern const f_string_static_t f_status_once_s;
@@ -1096,6 +1112,8 @@ extern "C" {
     extern const f_string_static_t f_status_write_s;
     extern const f_string_static_t f_status_write_not_s;
     extern const f_string_static_t f_status_write_only_s;
+    extern const f_string_static_t f_status_yes_s;
+    extern const f_string_static_t f_status_yes_not_s;
   #endif // _di_f_status_basic_
 
   #ifndef _di_f_status_return_

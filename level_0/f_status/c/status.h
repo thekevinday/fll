@@ -227,6 +227,8 @@ extern "C" {
       F_bound_not,
       F_break,
       F_break_not,
+      F_call,
+      F_call_not,
       F_capability,
       F_capability_not,
       F_child,
@@ -364,6 +366,8 @@ extern "C" {
       F_next_not,
       F_nice,
       F_nice_not,
+      F_no,
+      F_no_not,
       F_object,
       F_object_not,
       F_once,
@@ -491,6 +495,8 @@ extern "C" {
       F_write,
       F_write_not,
       F_write_only,
+      F_yes,
+      F_yes_not,
     #endif // _di_f_status_basic_
 
     #ifndef _di_f_status_return_

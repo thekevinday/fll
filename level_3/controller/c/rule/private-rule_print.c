@@ -89,7 +89,7 @@ extern "C" {
       fl_print_format("%[%Q%]", print->to.stream, print->notable, name, print->notable);
 
       if (status == F_control_group || status == F_limit || status == F_processor || status == F_schedule) {
-        fl_print_format("%[' failed due to a failure to setup the '%]%[", print->to.stream, print->context, print->context, print->notable);
+        fl_print_format("%[' failed to setup the '%]%[", print->to.stream, print->context, print->context, print->notable);
 
         if (status == F_control_group) {
           f_print_dynamic_raw(controller_cgroup_s, print->to.stream);
@@ -161,7 +161,7 @@ extern "C" {
           fl_print_format("%[' max recursion reached.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
         }
         else if (code == F_execute_memory_not) {
-          fl_print_format("%[' out of memory.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
+          fl_print_format("%[' is out of memory.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
         }
         else if (code == F_execute_name_not) {
           fl_print_format("%[' file name or path is too long.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
@@ -170,7 +170,7 @@ extern "C" {
           fl_print_format("%[' failed to setup niceness.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
         }
         else if (code == F_execute_parameter) {
-          fl_print_format("%[' invalid parameter.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
+          fl_print_format("%[' failed due to an invalid parameter.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
         }
         else if (code == F_execute_pipe) {
           fl_print_format("%[' pipe failed.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
@@ -210,6 +210,108 @@ extern "C" {
         }
         else if (code == F_execute_valid_not) {
           fl_print_format("%[' unknown ELF interpreter format.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
+        }
+        else if (code == F_execute_invoke_not) {
+          fl_print_format("%[' cannot execute command.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
+        }
+        else if (code == F_execute_found_not) {
+          fl_print_format("%[' command not found.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
+        }
+        else if (code == F_execute_found_not) {
+          fl_print_format("%[' invalid argument to exit().%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
+        }
+        else if (code == F_execute_signal_hangup) {
+          fl_print_format("%[' hang up signal received.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
+        }
+        else if (code == F_execute_signal_interrupt) {
+          fl_print_format("%[' interrupt signal received.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
+        }
+        else if (code == F_execute_signal_quit) {
+          fl_print_format("%[' quit signal received.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
+        }
+        else if (code == F_execute_signal_illegal) {
+          fl_print_format("%[' illegal signal received.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
+        }
+        else if (code == F_execute_signal_trap) {
+          fl_print_format("%[' trap signal received.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
+        }
+        else if (code == F_execute_signal_abort) {
+          fl_print_format("%[' abort signal received.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
+        }
+        else if (code == F_execute_signal_bus_error) {
+          fl_print_format("%[' bus error signal received.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
+        }
+        else if (code == F_execute_signal_floating_point_error) {
+          fl_print_format("%[' floating point error signal received.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
+        }
+        else if (code == F_execute_signal_kill) {
+          fl_print_format("%[' kill signal received.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
+        }
+        else if (code == F_execute_signal_user_1) {
+          fl_print_format("%[' user 1 signal received.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
+        }
+        else if (code == F_execute_signal_segmentation_fault) {
+          fl_print_format("%[' segmentation fault signal received.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
+        }
+        else if (code == F_execute_signal_user_2) {
+          fl_print_format("%[' user 2 signal received.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
+        }
+        else if (code == F_execute_signal_broken_pipe) {
+          fl_print_format("%[' broken pipe signal received.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
+        }
+        else if (code == F_execute_signal_alarm_clock) {
+          fl_print_format("%[' alarm clock signal received.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
+        }
+        else if (code == F_execute_signal_termination) {
+          fl_print_format("%[' terminate signal received.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
+        }
+        else if (code == F_execute_signal_stack_fault) {
+          fl_print_format("%[' stack fault signal received.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
+        }
+        else if (code == F_execute_signal_child) {
+          fl_print_format("%[' child signal received.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
+        }
+        else if (code == F_execute_signal_continue) {
+          fl_print_format("%[' continue signal received.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
+        }
+        else if (code == F_execute_signal_stop) {
+          fl_print_format("%[' stop signal received.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
+        }
+        else if (code == F_execute_signal_keyboard_stop) {
+          fl_print_format("%[' keyboard stop signal received.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
+        }
+        else if (code == F_execute_signal_tty_in) {
+          fl_print_format("%[' TTY in signal received.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
+        }
+        else if (code == F_execute_signal_tty_out) {
+          fl_print_format("%[' TTY out signal received.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
+        }
+        else if (code == F_execute_signal_urgent) {
+          fl_print_format("%[' urgent signal received.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
+        }
+        else if (code == F_execute_signal_cpu_limit) {
+          fl_print_format("%[' CPU limit signal received.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
+        }
+        else if (code == F_execute_signal_file_size_limit) {
+          fl_print_format("%[' file size signal received.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
+        }
+        else if (code == F_execute_signal_virtual_alarm_clock) {
+          fl_print_format("%[' virtual alarm clock signal received.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
+        }
+        else if (code == F_execute_signal_profile_alarm_clock) {
+          fl_print_format("%[' profile alarm clock signal received.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
+        }
+        else if (code == F_execute_signal_window_size_change) {
+          fl_print_format("%[' window size change signal received.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
+        }
+        else if (code == F_execute_signal_pollable_event) {
+          fl_print_format("%[' pollable signal received.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
+        }
+        else if (code == F_execute_signal_power_failure) {
+          fl_print_format("%[' power failure signal received.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
+        }
+        else if (code == F_execute_signal_bad_system_call) {
+          fl_print_format("%[' bad system call signal received.%]%r", print->to.stream, print->context, print->context, f_string_eol_s);
         }
         else {
           fl_print_format("%[' failed with the execute error code %]", print->to.stream, print->context, print->context);

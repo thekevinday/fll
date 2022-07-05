@@ -101,6 +101,8 @@ extern "C" {
     const f_string_static_t f_status_bound_not_s = macro_f_string_static_t_initialize(F_status_bound_not_s, 0, F_status_bound_not_s_length);
     const f_string_static_t f_status_break_s = macro_f_string_static_t_initialize(F_status_break_s, 0, F_status_break_s_length);
     const f_string_static_t f_status_break_not_s = macro_f_string_static_t_initialize(F_status_break_not_s, 0, F_status_break_not_s_length);
+    const f_string_static_t f_status_call_s = macro_f_string_static_t_initialize(F_status_call_s, 0, F_status_call_s_length);
+    const f_string_static_t f_status_call_not_s = macro_f_string_static_t_initialize(F_status_call_not_s, 0, F_status_call_not_s_length);
     const f_string_static_t f_status_capability_s = macro_f_string_static_t_initialize(F_status_capability_s, 0, F_status_capability_s_length);
     const f_string_static_t f_status_capability_not_s = macro_f_string_static_t_initialize(F_status_capability_not_s, 0, F_status_capability_not_s_length);
     const f_string_static_t f_status_child_s = macro_f_string_static_t_initialize(F_status_child_s, 0, F_status_child_s_length);
@@ -238,6 +240,8 @@ extern "C" {
     const f_string_static_t f_status_next_not_s = macro_f_string_static_t_initialize(F_status_next_not_s, 0, F_status_next_not_s_length);
     const f_string_static_t f_status_nice_s = macro_f_string_static_t_initialize(F_status_nice_s, 0, F_status_nice_s_length);
     const f_string_static_t f_status_nice_not_s = macro_f_string_static_t_initialize(F_status_nice_not_s, 0, F_status_nice_not_s_length);
+    const f_string_static_t f_status_no_s = macro_f_string_static_t_initialize(F_status_no_s, 0, F_status_no_s_length);
+    const f_string_static_t f_status_no_not_s = macro_f_string_static_t_initialize(F_status_no_not_s, 0, F_status_no_not_s_length);
     const f_string_static_t f_status_object_s = macro_f_string_static_t_initialize(F_status_object_s, 0, F_status_object_s_length);
     const f_string_static_t f_status_object_not_s = macro_f_string_static_t_initialize(F_status_object_not_s, 0, F_status_object_not_s_length);
     const f_string_static_t f_status_once_s = macro_f_string_static_t_initialize(F_status_once_s, 0, F_status_once_s_length);
@@ -365,6 +369,8 @@ extern "C" {
     const f_string_static_t f_status_write_s = macro_f_string_static_t_initialize(F_status_write_s, 0, F_status_write_s_length);
     const f_string_static_t f_status_write_not_s = macro_f_string_static_t_initialize(F_status_write_not_s, 0, F_status_write_not_s_length);
     const f_string_static_t f_status_write_only_s = macro_f_string_static_t_initialize(F_status_write_only_s, 0, F_status_write_only_s_length);
+    const f_string_static_t f_status_yes_s = macro_f_string_static_t_initialize(F_status_yes_s, 0, F_status_yes_s_length);
+    const f_string_static_t f_status_yes_not_s = macro_f_string_static_t_initialize(F_status_yes_not_s, 0, F_status_yes_not_s_length);
   #endif // _di_f_status_basic_
 
   #ifndef _di_f_status_return_
@@ -1108,6 +1114,16 @@ extern "C" {
 
           break;
 
+        case F_call:
+          *name = f_status_call_s;
+
+          break;
+
+        case F_call_not:
+          *name = f_status_call_not_s;
+
+          break;
+
         case F_capability:
           *name = f_status_capability_s;
 
@@ -1783,6 +1799,16 @@ extern "C" {
 
           break;
 
+        case F_no:
+          *name = f_status_no_s;
+
+          break;
+
+        case F_no_not:
+          *name = f_status_no_not_s;
+
+          break;
+
         case F_object:
           *name = f_status_object_s;
 
@@ -2425,6 +2451,16 @@ extern "C" {
 
         case F_write_only:
           *name = f_status_write_only_s;
+
+          break;
+
+        case F_yes:
+          *name = f_status_yes_s;
+
+          break;
+
+        case F_yes_not:
+          *name = f_status_yes_not_s;
 
           break;
       #endif // _di_f_status_basic_

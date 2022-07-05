@@ -133,6 +133,8 @@ void test__fll_status_string_from__works(void **state) {
     F_bound_not,
     F_break,
     F_break_not,
+    F_call,
+    F_call_not,
     F_capability,
     F_capability_not,
     F_child,
@@ -270,6 +272,8 @@ void test__fll_status_string_from__works(void **state) {
     F_next_not,
     F_nice,
     F_nice_not,
+    F_no,
+    F_no_not,
     F_object,
     F_object_not,
     F_once,
@@ -397,6 +401,8 @@ void test__fll_status_string_from__works(void **state) {
     F_write,
     F_write_not,
     F_write_only,
+    F_yes,
+    F_yes_not,
     F_debug,
     F_debug_not,
     F_error,
@@ -717,6 +723,8 @@ void test__fll_status_string_from__works(void **state) {
     f_status_bound_not_s,
     f_status_break_s,
     f_status_break_not_s,
+    f_status_call_s,
+    f_status_call_not_s,
     f_status_capability_s,
     f_status_capability_not_s,
     f_status_child_s,
@@ -854,6 +862,8 @@ void test__fll_status_string_from__works(void **state) {
     f_status_next_not_s,
     f_status_nice_s,
     f_status_nice_not_s,
+    f_status_no_s,
+    f_status_no_not_s,
     f_status_object_s,
     f_status_object_not_s,
     f_status_once_s,
@@ -981,6 +991,8 @@ void test__fll_status_string_from__works(void **state) {
     f_status_write_s,
     f_status_write_not_s,
     f_status_write_only_s,
+    f_status_yes_s,
+    f_status_yes_not_s,
     f_status_debug_s,
     f_status_debug_not_s,
     f_status_error_s,
@@ -1213,7 +1225,7 @@ void test__fll_status_string_from__works(void **state) {
     f_status_status_code_last_s,
   };
 
-  for (uint16_t i = 0; i < 581; ++i) {
+  for (uint16_t i = 0; i < 587; ++i) {
 
     f_status_t result = F_none;
 

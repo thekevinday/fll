@@ -564,6 +564,18 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_dynamic_compare(name, f_status_call_s) == F_equal_to) {
+        *code = F_call;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_call_not_s) == F_equal_to) {
+        *code = F_call_not;
+
+        return F_none;
+      }
+
       if (fl_string_dynamic_compare(name, f_status_capability_s) == F_equal_to) {
         *code = F_capability;
 
@@ -1386,6 +1398,18 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_dynamic_compare(name, f_status_no_s) == F_equal_to) {
+        *code = F_no;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_no_not_s) == F_equal_to) {
+        *code = F_no_not;
+
+        return F_none;
+      }
+
       if (fl_string_dynamic_compare(name, f_status_object_s) == F_equal_to) {
         *code = F_object;
 
@@ -2144,6 +2168,18 @@ extern "C" {
 
       if (fl_string_dynamic_compare(name, f_status_write_only_s) == F_equal_to) {
         *code = F_write_only;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_yes_s) == F_equal_to) {
+        *code = F_yes;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_yes_not_s) == F_equal_to) {
+        *code = F_yes_not;
 
         return F_none;
       }
