@@ -17,6 +17,8 @@ settings:
   indexer ar
   indexer_arguments rcs
 
+  environment PATH LD_LIBRARY_PATH
+
 main:
   operate bzip2
   operate bzip2recover

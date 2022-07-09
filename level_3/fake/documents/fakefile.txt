@@ -35,6 +35,7 @@ Fakefile Documentation:
       This is not auto-populated for environment variables defined in the "define" setting.
 
       When defined with no Content, then this means that no environment variables are exposed.
+      When not defined at all, then all environment variables are exposed.
       Environment variables may still be exposed if "load_build" is "true" and the build setting file defines any environment variable names.
 
     - fail\:

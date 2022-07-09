@@ -478,6 +478,8 @@ extern "C" {
     f_array_length_t i = 0;
     f_array_length_t j = 0;
 
+    data_make->setting_build.flag |= data_build_setting_flag_has_environment_e;
+
     for (; i < content->used; ++i) {
 
       status = f_string_dynamic_partial_append_nulless(data_make->buffer, content->array[i], &name_define);

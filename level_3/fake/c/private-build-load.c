@@ -17,6 +17,7 @@ extern "C" {
 
     // Reset the environment.
     for (f_array_length_t i = 0; i < environment->used; ++i) {
+
       environment->array[i].name.used = 0;
       environment->array[i].value.used = 0;
     } // for

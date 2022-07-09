@@ -812,6 +812,44 @@ extern "C" {
         data_make->setting_build.modes_default,
       };
 
+      const uint8_t dynamics_flag[] = {
+        0,                                         // build_libraries
+        0,                                         // build_libraries_shared
+        0,                                         // build_libraries_static
+        0,                                         // build_sources_headers
+        0,                                         // build_sources_headers_shared
+        0,                                         // build_sources_headers_static
+        0,                                         // build_sources_library
+        0,                                         // build_sources_library_shared
+        0,                                         // build_sources_library_static
+        0,                                         // build_sources_program
+        0,                                         // build_sources_program_shared
+        0,                                         // build_sources_program_static
+        0,                                         // build_sources_setting
+        0,                                         // build_sources_script
+        0,                                         // defines
+        0,                                         // defines_library
+        0,                                         // defines_library_shared
+        0,                                         // defines_library_static
+        0,                                         // defines_program
+        0,                                         // defines_program_shared
+        0,                                         // defines_program_static
+        0,                                         // defines_shared
+        0,                                         // defines_static
+        data_build_setting_flag_has_environment_e, // environment
+        0,                                         // flags
+        0,                                         // flags_library
+        0,                                         // flags_library_shared
+        0,                                         // flags_library_static
+        0,                                         // flags_program
+        0,                                         // flags_program_shared
+        0,                                         // flags_program_static
+        0,                                         // flags_shared
+        0,                                         // flags_static
+        0,                                         // modes
+        0,                                         // modes_default
+      };
+
       for (uint8_t i = 0; i < 35; ++i) {
 
         status = fl_string_dynamic_partial_compare_string(dynamics_name[i].string, data_make->buffer, dynamics_name[i].used, range_name);
@@ -824,6 +862,10 @@ extern "C" {
             status = f_string_dynamic_mash(f_string_space_s, dynamics_value[i].array[j], &value);
             if (F_status_is_error(status)) break;
           } // for
+
+          if (dynamics_flag[i]) {
+            data_make->setting_build.flag |= dynamics_flag[i];
+          }
 
           break;
         }

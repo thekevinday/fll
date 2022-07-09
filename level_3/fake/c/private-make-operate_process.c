@@ -478,12 +478,23 @@ extern "C" {
 
     data_make->environment.used = 0;
 
-    status = fl_environment_load_names(data_make->setting_build.environment, &data_make->environment);
+    if (data_make->setting_build.flag & data_build_setting_flag_has_environment_e) {
+      status = fl_environment_load_names(data_make->setting_build.environment, &data_make->environment);
 
-    if (F_status_is_error(status)) {
-      fll_error_print(data_make->error, F_status_set_fine(status), "fl_environment_load_names", F_true);
+      if (F_status_is_error(status)) {
+        fll_error_print(data_make->error, F_status_set_fine(status), "fl_environment_load_names", F_true);
 
-      return status;
+        return status;
+      }
+    }
+    else {
+      status = f_environment_get_all(&data_make->environment);
+
+      if (F_status_is_error(status)) {
+        fll_error_print(data_make->error, F_status_set_fine(status), "f_environment_get_all", F_true);
+
+        return status;
+      }
     }
 
     if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {

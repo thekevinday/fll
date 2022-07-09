@@ -41,6 +41,8 @@ path_sources
 has_path_standard no
 preserve_path_headers no
 
+environment PATH LD_LIBRARY_PATH
+
 defines -DHAVE_MALLOC_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_SIGNAL_H=1 -DHAVE_STRINGS_H=1 -DHAVE_GCC_THREAD_LOCAL_STORAGE=1 -DHAVE_CLOCK_REALTIME=1 -DHAVE_SIGLONGJMP=1 -DHAVE_STRSIGNAL=1
 
 flags -z now -g -fdiagnostics-color=always -Wall -Winline -O2 -Iinclude/ -std=gnu99

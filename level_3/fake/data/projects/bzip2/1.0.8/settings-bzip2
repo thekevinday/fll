@@ -34,6 +34,8 @@ path_sources
 has_path_standard no
 preserve_path_headers no
 
+environment PATH LD_LIBRARY_PATH
+
 defines -D_FILE_OFFSET_BITS=64
 
 flags -z now -g -fdiagnostics-color=always -Wall -Winline -O2

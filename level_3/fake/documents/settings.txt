@@ -269,9 +269,9 @@ Settings Documentation:
 
   - environment\:
     A collection of environment names to pass from the callers environment into the executed programs environment.
-    For security and integrity reasons, all environment variables are removed when calling user-space programs, such as "gcc".
-    There are times when someone desires that an environment variable be exposed to the user-space programs.
-    Add them here and they will be available in the environment of all user-space programs executed.
+    When provided, all environment variables are removed when calling user-space programs, such as "gcc".
+    To remove all environment variables define this with no Content.
+    When not provided, all environment variables are loaded.
 
   - flags\:
     A collection of any flag supported by the "build_compiler", such as gcc.
