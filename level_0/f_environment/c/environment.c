@@ -117,7 +117,7 @@ extern "C" {
       return F_data_not;
     }
 
-    if (setenv(name.string, value.string, replace) < 0) {
+    if (setenv(name.string, value.used ? value.string : "", replace) < 0) {
       if (errno == EINVAL) return F_status_set_error(F_parameter);
       if (errno == ENOMEM) return F_status_set_error(F_memory_not);
 
