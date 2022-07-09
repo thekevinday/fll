@@ -1,6 +1,6 @@
 # fss-0005
 
-setting:
+settings:
   control controller/run/up.socket
   pid ready
   pid_file controller/run/up.pid

@@ -1,6 +1,6 @@
 # fss-000d
 
-setting:
+settings:
   name "Serial 3"
   on start need serial s_2
   on stop need serial s_4

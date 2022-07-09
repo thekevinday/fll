@@ -3,7 +3,7 @@
 # Rule for setting the clock.
 #
 
-setting:
+settings:
   name "Setup Clock"
   capability cap_sys_time=
   nice 15

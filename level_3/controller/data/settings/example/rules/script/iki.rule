@@ -1,6 +1,6 @@
 # fss-000d
 
-setting:
+settings:
   name "IKI Variable Substitution"
   environment PATH IKI_TEST
   define IKI_TEST "This is iki data in an environment variable."

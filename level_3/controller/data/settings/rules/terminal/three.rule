@@ -6,7 +6,7 @@
 # -J = don't clear on start, good for debugging.
 # 9600 and 115200 are common frequencies.
 
-setting:
+settings:
   name "System Terminal 3"
 
 command:

@@ -1,6 +1,6 @@
 # fss-000d
 
-setting:
+settings:
   name "Environment with PATH"
   environment PATH custom_variable
   engine bash

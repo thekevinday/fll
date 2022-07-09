@@ -4,7 +4,7 @@
 # Sshd appears to require a full path.
 #
 
-setting:
+settings:
   name "SSH Service"
   nice 15
 

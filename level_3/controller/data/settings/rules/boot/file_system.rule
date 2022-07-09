@@ -3,7 +3,7 @@
 # Rule for initializing the filesystem.
 #
 
-setting:
+settings:
   name "Setup Filesystem"
 
   on start need boot root

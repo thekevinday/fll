@@ -8,10 +8,10 @@ Rule Documentation:
 
   A Rule file, such as "ssh.rule", is intended to designate what to execute.
 
-  The rule file is read top-down, except for the outer most list "setting", which is intended to store setting data for this rule.
+  The rule file is read top-down, except for the outer most list "settings", which is intended to store setting data for this rule.
   Multiple outer most list Objects may be specified and they are executed as provided, in a top-down manner.
 
-  - The "setting" Rule Type has the following FSS-0001 (Extended) Content\:
+  - The "settings" Rule Type has the following FSS-0001 (Extended) Content\:
     - "affinity": Define one or more processors to restrict this rule by with each number representing a specific processor by its id (starting at 0).
     - "capability": Define a set of capabilities in which to use, using the capability "text" format (such as "= cap_chown+ep").
     - "cgroup": Define a cgroup (control group) in which everything within this rule executes under.

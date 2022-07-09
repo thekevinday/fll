@@ -1,6 +1,6 @@
 # fss-000d
 
-setting:
+settings:
   name "PHP script"
   environment PATH
   engine php

@@ -104,7 +104,7 @@ extern "C" {
   const f_string_static_t controller_scheduler_s = macro_f_string_static_t_initialize(CONTROLLER_scheduler_s, 0, CONTROLLER_scheduler_s_length);
   const f_string_static_t controller_script_s = macro_f_string_static_t_initialize(CONTROLLER_script_s, 0, CONTROLLER_script_s_length);
   const f_string_static_t controller_service_s = macro_f_string_static_t_initialize(CONTROLLER_service_s, 0, CONTROLLER_service_s_length);
-  const f_string_static_t controller_setting_s = macro_f_string_static_t_initialize(CONTROLLER_setting_s, 0, CONTROLLER_setting_s_length);
+  const f_string_static_t controller_settings_s = macro_f_string_static_t_initialize(CONTROLLER_settings_s, 0, CONTROLLER_settings_s_length);
   const f_string_static_t controller_session_s = macro_f_string_static_t_initialize(CONTROLLER_session_s, 0, CONTROLLER_session_s_length);
   const f_string_static_t controller_session_new_s = macro_f_string_static_t_initialize(CONTROLLER_session_new_s, 0, CONTROLLER_session_new_s_length);
   const f_string_static_t controller_session_same_s = macro_f_string_static_t_initialize(CONTROLLER_session_same_s, 0, CONTROLLER_session_same_s_length);

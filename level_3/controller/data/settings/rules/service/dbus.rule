@@ -3,7 +3,7 @@
 # Rule for D-Bus service.
 #
 
-setting:
+settings:
   name "D-BUS"
   capability all=
   nice 15

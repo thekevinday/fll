@@ -131,7 +131,7 @@ extern "C" {
   #define CONTROLLER_session_s       "session"
   #define CONTROLLER_session_new_s   "session_new"
   #define CONTROLLER_session_same_s  "session_same"
-  #define CONTROLLER_setting_s       "setting"
+  #define CONTROLLER_settings_s      "settings"
   #define CONTROLLER_sigpending_s    "sigpending"
   #define CONTROLLER_show_s          "show"
   #define CONTROLLER_shutdown_s      "shutdown"
@@ -262,7 +262,7 @@ extern "C" {
   #define CONTROLLER_session_s_length       7
   #define CONTROLLER_session_new_s_length   11
   #define CONTROLLER_session_same_s_length  12
-  #define CONTROLLER_setting_s_length       7
+  #define CONTROLLER_settings_s_length      8
   #define CONTROLLER_show_s_length          4
   #define CONTROLLER_shutdown_s_length      8
   #define CONTROLLER_sigpending_s_length    10
@@ -393,7 +393,7 @@ extern "C" {
   extern const f_string_static_t controller_session_s;
   extern const f_string_static_t controller_session_new_s;
   extern const f_string_static_t controller_session_same_s;
-  extern const f_string_static_t controller_setting_s;
+  extern const f_string_static_t controller_settings_s;
   extern const f_string_static_t controller_show_s;
   extern const f_string_static_t controller_shutdown_s;
   extern const f_string_static_t controller_sigpending_s;

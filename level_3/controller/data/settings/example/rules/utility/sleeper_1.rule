@@ -1,7 +1,7 @@
 # fss-000d
 # sleeper rule whose program creates its own PID file, runs in the background, sleep for a while, removes PID file, and returns.
 
-setting:
+settings:
   name "Sleeper #1"
   nice 10
 

@@ -13,7 +13,7 @@ Entry Documentation:
   All other Basic List Objects are not executed unless either an "item" or a "failsafe" specifies a valid Item name.
   Execution of all Items are top-down.
 
-  - The "setting" item Object\:
+  - The "settings" item Object\:
     Represents Entry settings and is not an "item" that can be executed.
     A number of settings are supported, but if this Item Object is not specified, then defaults are used.
     The following settings are available: "control", "control_group", "control_mode", "control_user", "define", "mode", "parameter", "pid", "pid_file", "session", "show".

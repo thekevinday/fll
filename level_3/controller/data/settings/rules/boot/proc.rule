@@ -3,7 +3,7 @@
 # Rule for initializing the /proc filesystem.
 #
 
-setting:
+settings:
   name "Setup /proc Filesystem"
 
   on start need boot root

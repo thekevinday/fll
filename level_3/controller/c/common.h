@@ -399,18 +399,18 @@ extern "C" {
  * Codes representing rule items.
  *
  * controller_rule_item_type_*:
- *   - command: The item type represents a command operation.
- *   - script:  The item type represents a script operation.
- *   - service: The item type represents a service operation.
- *   - setting: The item type represents a setting operation.
- *   - utility: The item type represents a utility operation.
+ *   - command:  The item type represents a command operation.
+ *   - script:   The item type represents a script operation.
+ *   - service:  The item type represents a service operation.
+ *   - settings: The item type represents a setting operation.
+ *   - utility:  The item type represents a utility operation.
  */
 #ifndef _di_controller_rule_item_types_t_
   enum {
     controller_rule_item_type_command_e = 1,
     controller_rule_item_type_script_e,
     controller_rule_item_type_service_e,
-    controller_rule_item_type_setting_e,
+    controller_rule_item_type_settings_e,
     controller_rule_item_type_utility_e,
   };
 #endif // _di_controller_rule_item_types_t_

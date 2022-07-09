@@ -11,7 +11,7 @@ Exit Documentation:
 
   An Exit is a special variation or subset of an Entry.
 
-  - The "setting" Item Object\:
+  - The "settings" Item Object\:
     Represents settings and is not an "item" that can be executed.
     A number of settings are supported, but if this Item Object is not specified, then defaults are used.
     The following settings are available: "pid" and "show".

@@ -24,7 +24,7 @@ Entry Specification:
          The first Content represents the file path (without any leading/trailing slashes and without file extension).
          The second Content represent the basename of the command file.
 
-    - "setting": optional, Actions may be one of\:
+    - "settings": optional, Actions may be one of\:
       - "control": One to two Content.
         The first Content is a relative or absolute path to a socket file.
         The second Content an optional "readonly".

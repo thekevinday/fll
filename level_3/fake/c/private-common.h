@@ -193,7 +193,7 @@ extern "C" {
  * Build settings data.
  *
  * data_build_setting_flag_*:
- *   - has_environment: Designate that the "environment" is specified in the "setting" Section of the Fakefile.
+ *   - has_environment: Designate that the "environment" is specified in the "settings" Section of the Fakefile.
  *
  * flag: Flags from data_build_setting_flag_* (Not strictly part of the build settings file).
  *

@@ -438,8 +438,8 @@ extern "C" {
       return controller_rule_item_type_service_e;
     }
 
-    if (fl_string_dynamic_compare(item, controller_setting_s) == F_equal_to) {
-      return controller_rule_item_type_setting_e;
+    if (fl_string_dynamic_compare(item, controller_settings_s) == F_equal_to) {
+      return controller_rule_item_type_settings_e;
     }
 
     if (fl_string_dynamic_compare(item, controller_utility_s) == F_equal_to) {
@@ -463,8 +463,8 @@ extern "C" {
       case controller_rule_item_type_service_e:
         return controller_service_s;
 
-      case controller_rule_item_type_setting_e:
-        return controller_setting_s;
+      case controller_rule_item_type_settings_e:
+        return controller_settings_s;
 
       case controller_rule_item_type_utility_e:
         return controller_utility_s;

@@ -1171,7 +1171,7 @@ extern "C" {
 
     for (i = 0; i < process->rule.items.used && controller_thread_is_enabled_process(process, global.thread); ++i) {
 
-      if (process->rule.items.array[i].type == controller_rule_item_type_setting_e) continue;
+      if (process->rule.items.array[i].type == controller_rule_item_type_settings_e) continue;
 
       for (j = 0; j < process->rule.items.array[i].actions.used; ++j) {
 
@@ -3804,7 +3804,7 @@ extern "C" {
             break;
           }
 
-          if (fl_string_dynamic_compare(controller_setting_s, cache->action.name_item) == F_equal_to) {
+          if (fl_string_dynamic_compare(controller_settings_s, cache->action.name_item) == F_equal_to) {
             rule->items.array[rule->items.used].type = 0;
           }
           else if (fl_string_dynamic_compare(controller_command_s, cache->action.name_item) == F_equal_to) {

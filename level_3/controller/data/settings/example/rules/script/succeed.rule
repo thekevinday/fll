@@ -1,6 +1,6 @@
 # fss-000d
 
-setting:
+settings:
   name "Script #1"
   environment PATH
   engine sh

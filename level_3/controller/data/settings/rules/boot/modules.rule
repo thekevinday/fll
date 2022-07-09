@@ -3,7 +3,7 @@
 # Rule for initializing the kernel modules.
 #
 
-setting:
+settings:
   name "Setup Kernel Modules"
 
   on start need boot root

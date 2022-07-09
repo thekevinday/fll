@@ -3,7 +3,7 @@
 # Rule for executing ntpdate.
 #
 
-setting:
+settings:
   name "System Clock Using NTP Date"
   capability cap_sys_time=
   nice 15

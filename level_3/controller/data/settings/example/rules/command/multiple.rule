@@ -1,6 +1,6 @@
 # fss-000d
 
-setting:
+settings:
   name "Multiple Commands: id, whoami, date, etc.."
   capability "all="
   control_group new memory/example

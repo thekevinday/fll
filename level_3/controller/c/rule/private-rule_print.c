@@ -45,7 +45,7 @@ extern "C" {
     }
 
     if (cache.name_item.used) {
-      fl_print_format("rule %r '%]", print.to.stream, item ? controller_item_s : controller_setting_s, print.context);
+      fl_print_format("rule %r '%]", print.to.stream, item ? controller_item_s : controller_settings_s, print.context);
       fl_print_format("%[%Q%]", print.to.stream, print.notable, cache.name_item, print.notable);
       fl_print_format("%[' on line%] ", print.to.stream, print.context, print.context);
       fl_print_format("%[%un%]", print.to.stream, print.notable, cache.line_item, print.notable);

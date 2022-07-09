@@ -3,7 +3,7 @@
 # Rule for console mouse.
 #
 
-setting:
+settings:
   name "Console Mouse"
   capability all=
   nice 15

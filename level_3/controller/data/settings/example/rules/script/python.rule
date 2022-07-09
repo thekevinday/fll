@@ -1,6 +1,6 @@
 # fss-000d
 
-setting:
+settings:
   name "Python (Version 3.X) script"
   environment PATH
   engine python3

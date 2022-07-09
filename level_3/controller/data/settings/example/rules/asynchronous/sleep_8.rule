@@ -3,7 +3,7 @@
 # Note: The example setting "limit nice 1 2" may cause this rule to fail if the user has insufficient privileges granted by ulimits or some other system security measure.
 #
 
-setting:
+settings:
   name "Sleep 8 Seconds."
   nice 15
   limit nice 1 2

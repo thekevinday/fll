@@ -3,7 +3,7 @@
 # A boot to bash process.
 #
 
-setting:
+settings:
   pid disable
   show init
 

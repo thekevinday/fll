@@ -3,7 +3,7 @@
 # Rule for maintenance/failsafe console.
 #
 
-setting:
+settings:
   name "Maintenance Console"
 
 command:

@@ -1,6 +1,6 @@
 # fss-000d
 
-setting:
+settings:
   name "Create Socket Path"
 
   parameter verbose -v

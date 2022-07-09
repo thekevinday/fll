@@ -687,7 +687,7 @@ extern "C" {
           if (fl_string_dynamic_compare(controller_main_s, actions->array[cache->ats.array[at_j]].parameters.array[0]) == F_equal_to) {
             continue;
           }
-          else if (fl_string_dynamic_compare(controller_setting_s, actions->array[cache->ats.array[at_j]].parameters.array[0]) == F_equal_to) {
+          else if (fl_string_dynamic_compare(controller_settings_s, actions->array[cache->ats.array[at_j]].parameters.array[0]) == F_equal_to) {
             continue;
           }
 
@@ -1700,7 +1700,7 @@ extern "C" {
               entry->items.used = 1;
             }
           }
-          else if (fl_string_dynamic_compare(controller_setting_s, cache->action.name_item) == F_equal_to) {
+          else if (fl_string_dynamic_compare(controller_settings_s, cache->action.name_item) == F_equal_to) {
             status = controller_entry_settings_read(global, is_entry, *range, cache);
 
             continue;

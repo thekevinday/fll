@@ -3,7 +3,7 @@
 # A very basic boot process.
 #
 
-setting:
+settings:
   pid ready
   show init
 

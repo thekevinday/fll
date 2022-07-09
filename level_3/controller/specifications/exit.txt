@@ -19,7 +19,7 @@ Exit Specification:
   The Items:
     - "main": required.
 
-    - "setting": optional, Actions may be one of:
+    - "settings": optional, Actions may be one of:
       - "pid": Exactly one Content that is one of "disable", "require", or "ready".
       - "session": Exactly one Content that is one of  "new" or "same".
       - "show": Exactly one Content that is one of  "normal" or "init".

@@ -1,6 +1,6 @@
 # fss-000d
 
-setting:
+settings:
   name "Run htop"
 
 command:

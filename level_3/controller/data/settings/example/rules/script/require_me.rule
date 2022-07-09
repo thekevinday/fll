@@ -1,6 +1,6 @@
 # fss-000d
 
-setting:
+settings:
   name "Example script for needs, wants, and wishes."
   environment PATH
   engine sh

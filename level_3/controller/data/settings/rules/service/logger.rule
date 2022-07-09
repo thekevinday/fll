@@ -3,7 +3,7 @@
 # Rule for system logger service.
 #
 
-setting:
+settings:
   name "System Logger"
   capability all=
   nice 19

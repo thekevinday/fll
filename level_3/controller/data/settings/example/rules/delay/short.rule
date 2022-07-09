@@ -3,7 +3,7 @@
 # Rule for a short delay.
 #
 
-setting:
+settings:
   name "Delay for 3 seconds."
 
 script:

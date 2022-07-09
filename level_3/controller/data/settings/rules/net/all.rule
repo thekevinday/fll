@@ -3,7 +3,7 @@
 # Rule for starting all network devices.
 #
 
-setting:
+settings:
   name "System Network"
   capability cap_net_admin=
 

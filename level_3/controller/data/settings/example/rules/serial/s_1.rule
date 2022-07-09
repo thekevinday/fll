@@ -1,6 +1,6 @@
 # fss-000d
 
-setting:
+settings:
   name "Serial 1"
   on stop need serial s_2
 

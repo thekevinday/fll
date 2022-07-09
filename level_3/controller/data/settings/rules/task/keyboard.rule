@@ -3,6 +3,6 @@
 # Rule for setting the keyboard.
 #
 
-setting:
+settings:
   name "System Keyboard"
   nice 15
