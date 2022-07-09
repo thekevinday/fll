@@ -603,7 +603,7 @@ extern "C" {
 
       // If a custom --data or a custom --settings parameter is passed and uses an absolute or relative to current path, then do not check.
       if (data->main->parameters.array[fake_parameter_settings_e].result == f_console_result_additional_e) {
-        const f_array_length_t index = data->main->parameters.array[fake_parameter_fakefile_e].values.array[data->main->parameters.array[fake_parameter_fakefile_e].values.used - 1];
+        const f_array_length_t index = data->main->parameters.array[fake_parameter_settings_e].values.array[data->main->parameters.array[fake_parameter_settings_e].values.used - 1];
 
         if (f_path_is_absolute(data->main->parameters.arguments.array[index]) == F_true || f_path_is_relative_current(data->main->parameters.arguments.array[index]) == F_true) {
           parameters_required[1] = F_none;
