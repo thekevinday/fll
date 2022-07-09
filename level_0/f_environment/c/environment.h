@@ -103,6 +103,27 @@ extern "C" {
 #endif // _di_f_environment_get_
 
 /**
+ * Get all environment variables.
+ *
+ * The variables are copied into a new dynamically allocated map and is safe to alter.
+ *
+ * @param environment
+ *   An array of maps containing all available environment variable name and value pairs.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_string_maps_append().
+ *
+ * @see f_string_maps_append()
+ */
+#ifndef _di_f_environment_get_all_
+  extern f_status_t f_environment_get_all(f_string_maps_t * const environment);
+#endif // _di_f_environment_get_all_
+
+/**
  * Check to see if the environment is secure for calling getenv() safely for "secure execution".
  *
  * This is intended to closely mimic the checks secure_getenv().

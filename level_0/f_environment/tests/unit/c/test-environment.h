@@ -29,6 +29,7 @@
 #include "test-environment-clear.h"
 #include "test-environment-exists.h"
 #include "test-environment-get.h"
+#include "test-environment-get_all.h"
 #include "test-environment-secure_is.h"
 #include "test-environment-set.h"
 #include "test-environment-unset.h"

@@ -30,6 +30,8 @@ int main(void) {
     cmocka_unit_test(test__f_environment_get__returns_data_not),
     cmocka_unit_test(test__f_environment_get__works),
 
+    cmocka_unit_test(test__f_environment_get_all__works),
+
     cmocka_unit_test(test__f_environment_secure_is__fails),
     cmocka_unit_test(test__f_environment_secure_is__works),
 
@@ -45,6 +47,7 @@ int main(void) {
       // f_environment_clear() doesn't use parameter checking.
       // f_environment_exists() doesn't use parameter checking.
       cmocka_unit_test(test__f_environment_get__parameter_checking),
+      cmocka_unit_test(test__f_environment_get_all__parameter_checking),
       // f_environment_secure_is() doesn't use parameter checking.
       // f_environment_set() doesn't use parameter checking.
       // f_environment_unset() doesn't use parameter checking.

@@ -4,6 +4,9 @@
 extern "C" {
 #endif
 
+// for loading all current environment variables.
+extern char **environ;
+
 #ifndef _di_f_environment_clear_
   f_status_t f_environment_clear(void) {
 
@@ -68,6 +71,42 @@ extern "C" {
     return F_none;
   }
 #endif // _di_f_environment_get_
+
+#ifndef _di_f_environment_get_all_
+  f_status_t f_environment_get_all(f_string_maps_t * const environment) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!environment) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    f_status_t status = F_none;
+    char *at = 0;
+    f_string_map_t map = f_string_map_t_initialize;
+
+    // Copy all environment variables over when a custom define is used.
+    for (char **string = environ; *string; string++) {
+
+      map.name.string = 0;
+      map.value.string = 0;
+
+      map.name.used = 0;
+      map.value.used = 0;
+
+      at = index(*string, f_string_ascii_equal_s.string[0]);
+      if (!at || at == *string) continue;
+
+      map.name.string = *string;
+      map.name.used = at - *string;
+
+      map.value.string = at + 1;
+      map.value.used = strlen(at + 1);
+
+      status = f_string_maps_append(map, environment);
+      if (F_status_is_error(status)) return status;
+    } // for
+
+    return F_none;
+  }
+#endif // _di_f_environment_get_all_
 
 #ifndef _di_f_environment_secure_is_
   f_status_t f_environment_secure_is(void) {
