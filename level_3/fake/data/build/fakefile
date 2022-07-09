@@ -7,7 +7,7 @@ settings:
   indexer ar
   indexer_arguments rcs
 
-  environment
+  environment PATH LD_LIBRARY_PATH
 
 main:
 

@@ -46,6 +46,8 @@ search_exclusive yes
 search_shared yes
 search_static yes
 
+environment PATH LD_LIBRARY_PATH
+
 defines-clang -D_clang_not_a_compile_time_constant_workaround_
 
 flags -O2 -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-parentheses

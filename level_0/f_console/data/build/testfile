@@ -4,7 +4,7 @@ settings:
   load_build yes
   fail exit
 
-  environment LD_LIBRARY_PATH
+  environment PATH LD_LIBRARY_PATH
   environment CMOCKA_XML_FILE CMOCKA_MESSAGE_OUTPUT CMOCKA_TEST_ABORT
 
   # Cmcka is not fully thread-safe, set this to "1" to have cmocka call abort() on a test failure.
@@ -39,12 +39,12 @@ not_created:
   exit failure
 
 ld_library_path:
-  if defined environment LD_LIBRARY_PATH
+  if defined environment PATH LD_LIBRARY_PATH
   and defined parameter work
     define LD_LIBRARY_PATH 'build/libraries/shared:parameter:"work:value"libraries/shared:define:"LD_LIBRARY_PATH"'
 
   else
-  if defined environment LD_LIBRARY_PATH
+  if defined environment PATH LD_LIBRARY_PATH
     define LD_LIBRARY_PATH 'build/libraries/shared:parameter:define:"LD_LIBRARY_PATH"'
 
   else
