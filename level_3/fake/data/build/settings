@@ -28,7 +28,11 @@ build_libraries-level -lfll_2 -lfll_1 -lfll_0
 build_libraries-monolithic -lfll
 
 build_sources_library fake.c common.c
-build_sources_library private-build.c private-build-library.c private-build-load.c private-build-object.c private-build-objects.c private-build-program.c private-build-skeleton.c private-clean.c private-common.c private-make.c private-fake.c private-fake-path_generate.c private-make-load_fakefile.c private-make-load_parameters.c private-make-operate.c private-make-operate_process.c private-make-operate_process_type.c private-make-operate_validate.c private-print.c private-skeleton.c
+build_sources_library private-build.c private-build-library.c private-build-load.c private-build-object.c private-build-objects.c private-build-program.c private-build-skeleton.c
+build_sources_library private-clean.c private-common.c private-make.c private-print.c private-skeleton.c
+build_sources_library private-make-load_fakefile.c private-make-load_parameters.c
+build_sources_library private-make-operate.c private-make-operate_block.c private-make-operate_process.c private-make-operate_process_type.c private-make-operate_validate.c
+build_sources_library private-fake.c private-fake-path_generate.c
 
 build_sources_program main.c
 

@@ -1164,7 +1164,8 @@ extern "C" {
   extern const f_string_static_t fake_make_operation_touch_s;
 
   enum {
-    fake_make_operation_type_and_e = 1,
+    fake_make_operation_type_none_e = 0,
+    fake_make_operation_type_and_e,
     fake_make_operation_type_break_e,
     fake_make_operation_type_build_e,
     fake_make_operation_type_clean_e,
@@ -1580,6 +1581,8 @@ extern "C" {
  * condition_result:   The result of the currently processed condition.
  * operation:          The current operation type.
  * operation_previous: The previous operation type.
+ * success:            Current state is considered success when F_true and failure when F_false.
+ * success_block:      Current block state is considered success when F_true and failure when F_false.
  */
 #ifndef _di_fake_state_process_t_
   typedef struct {
@@ -1589,6 +1592,8 @@ extern "C" {
     uint8_t condition_result;
     uint8_t operation;
     uint8_t operation_previous;
+    uint8_t success;
+    uint8_t success_block;
   } fake_state_process_t;
 
   #define fake_state_process_t_initialize { \
@@ -1598,6 +1603,8 @@ extern "C" {
     0, \
     0, \
     0, \
+    F_true, \
+    F_true, \
   }
 #endif // _di_fake_state_process_t_
 
@@ -1606,20 +1613,16 @@ extern "C" {
  *
  * fake_condition_result_*:
  *   - none:    No if-condition is set.
- *   - if:      An if-condition is set and in use.
- *   - if_skip: An else-if-condition that is to be skipped.
- *   - next:    An if-condition completed, process the "else", if found.
- *   - skip:    An if-condition completed, skip the "else", if found.
- *   - else:    An else-condition is set and in use.
+ *   - operate: The condition passed or perform condition, process the next operation or the condition.
+ *   - skip:    The condition failed, skip the next operation.
+ *   - done:    After the condition passed, the next operation was performed, all future operations within block are skipped.
  */
 #ifndef _di_fake_state_process_block_
   enum {
     fake_state_process_block_none_e = 0,
-    fake_state_process_block_if_e,
-    fake_state_process_block_if_skip_e,
-    fake_state_process_block_next_e,
+    fake_state_process_block_operate_e,
     fake_state_process_block_skip_e,
-    fake_state_process_block_else_e,
+    fake_state_process_block_done_e,
   };
 #endif // _di_fake_state_process_block_
 

@@ -5,6 +5,7 @@
 #include "private-clean.h"
 #include "private-make.h"
 #include "private-make-operate.h"
+#include "private-make-operate_block.h"
 #include "private-make-operate_validate.h"
 #include "private-print.h"
 #include "private-skeleton.h"
@@ -407,7 +408,7 @@ extern "C" {
     }
 
     if (state_process->operation == fake_make_operation_type_else_e) {
-      if (state_process->block == fake_make_operation_if_type_else_e) {
+      if (state_process->operation_previous == fake_make_operation_type_else_e) {
         if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
           flockfile(data_make->error.to.stream);
 
@@ -769,6 +770,8 @@ extern "C" {
           return;
         }
 
+        state_process->condition_result = fake_condition_result_true_e;
+
         ++k;
 
         // Identify and convert to the appropriate if not condition.
@@ -844,7 +847,8 @@ extern "C" {
 
             return;
           }
-          else if (state_process->condition == fake_make_operation_if_type_if_equal_e || state_process->condition == fake_make_operation_if_type_if_equal_not_e) {
+
+          if (state_process->condition == fake_make_operation_if_type_if_equal_e || state_process->condition == fake_make_operation_if_type_if_equal_not_e) {
             if (arguments.used < 2 + k) {
               fake_print_error_requires_more_arguments(data_make);
 
@@ -853,10 +857,12 @@ extern "C" {
 
             return;
           }
-          else if (state_process->condition == fake_make_operation_if_type_if_exists_e || state_process->condition == fake_make_operation_if_type_if_not_exists_e) {
+
+          if (state_process->condition == fake_make_operation_if_type_if_exists_e || state_process->condition == fake_make_operation_if_type_if_not_exists_e) {
             return;
           }
-          else if (state_process->condition == fake_make_operation_if_type_if_group_e || state_process->condition == fake_make_operation_if_type_if_is_e || state_process->condition == fake_make_operation_if_type_if_mode_e || state_process->condition > fake_make_operation_if_type_if_not_exists_e && state_process->condition < fake_make_operation_if_type_if_success_e) {
+
+          if (state_process->condition == fake_make_operation_if_type_if_group_e || state_process->condition == fake_make_operation_if_type_if_is_e || state_process->condition == fake_make_operation_if_type_if_mode_e || state_process->condition > fake_make_operation_if_type_if_not_exists_e && state_process->condition < fake_make_operation_if_type_if_success_e) {
 
             if (state_process->condition == fake_make_operation_if_type_if_mode_e || state_process->condition == fake_make_operation_if_type_if_not_mode_e) {
               if (fl_string_dynamic_compare(fake_make_operation_argument_is_s, arguments.array[k]) == F_equal_to_not) {
@@ -996,8 +1002,11 @@ extern "C" {
                 }
               } // for
             }
+
+            return;
           }
-          else if (state_process->condition == fake_make_operation_if_type_if_greater_e || state_process->condition == fake_make_operation_if_type_if_greater_equal_e || state_process->condition == fake_make_operation_if_type_if_less_e || state_process->condition == fake_make_operation_if_type_if_less_equal_e) {
+
+          if (state_process->condition == fake_make_operation_if_type_if_greater_e || state_process->condition == fake_make_operation_if_type_if_greater_equal_e || state_process->condition == fake_make_operation_if_type_if_less_e || state_process->condition == fake_make_operation_if_type_if_less_equal_e) {
             if (arguments.used < 2 + k) {
               fake_print_error_requires_more_arguments(data_make);
 

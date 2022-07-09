@@ -41,8 +41,6 @@ extern "C" {
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param section_name
  *   The section name.
- * @param operation
- *   The operation being performed.
  * @param content
  *   The content array.
  * @param quoteds
@@ -55,7 +53,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_operate_expand_
-  extern void fake_make_operate_expand(fake_make_data_t * const data_make, const f_string_range_t section_name, const f_array_length_t operation, const f_fss_content_t content, const f_fss_quotes_t quoteds, f_string_dynamics_t * const arguments, f_status_t * const status) F_attribute_visibility_internal_d;
+  extern void fake_make_operate_expand(fake_make_data_t * const data_make, const f_string_range_t section_name, const f_fss_content_t content, const f_fss_quotes_t quoteds, f_string_dynamics_t * const arguments, f_status_t * const status) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_expand_
 
 /**
