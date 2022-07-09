@@ -437,7 +437,7 @@ extern "C" {
  */
 #ifndef _di_f_iki_default_allocation_step_
   #define F_iki_default_allocation_large_d F_memory_default_allocation_large_d
-  #define F_iki_default_allocation_small_d 4
+  #define F_iki_default_allocation_small_d 8
 #endif // _di_f_iki_default_allocation_step_
 
 #ifdef __cplusplus
