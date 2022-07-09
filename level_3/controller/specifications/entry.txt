@@ -25,17 +25,19 @@ Entry Specification:
          The second Content represent the basename of the command file.
 
     - "setting": optional, Actions may be one of\:
-      - "mode": Exactly one Content that is one of "program" or "service".
-      - "pid": Exactly one Content that is one of "disable", "require", or "ready".
-      - "pid_file": Exactly one Content that is a relative or absolute path to a pid file.
-      - "session": Exactly one Content that is one of "new" or "same".
-      - "show": Exactly one Content that is one of "normal" or "init".
       - "control": One to two Content.
         The first Content is a relative or absolute path to a socket file.
         The second Content an optional "readonly".
       - "control_group": Exactly one Content that is a group name or group id.
       - "control_mode": Exactly one Content that is a valid file mode.
       - "control_user": Exactly one Content that is a user name or user id.
+      - "define": Two Content, the first Content must be a case-sensitive valid environment variable name (alpha-numeric or underscore, but no leading digits).
+      - "mode": Exactly one Content that is one of "program" or "service".
+      - "parameter": Two Content, the first Content must be a case-sensitive valid IKI name and the second being an IKI value.
+      - "pid": Exactly one Content that is one of "disable", "require", or "ready".
+      - "pid_file": Exactly one Content that is a relative or absolute path to a pid file.
+      - "session": Exactly one Content that is one of "new" or "same".
+      - "show": Exactly one Content that is one of "normal" or "init".
 
     The Entry file may have any other valid Item Objects, but only the above are reserved.
 

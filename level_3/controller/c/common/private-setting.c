@@ -18,6 +18,12 @@ extern "C" {
 
     controller_control_delete_simple(&setting->control);
 
+    f_string_maps_resize(0, &setting->entry.define);
+    f_string_maps_resize(0, &setting->entry.parameter);
+
+    f_string_maps_resize(0, &setting->exit.define);
+    f_string_maps_resize(0, &setting->exit.parameter);
+
     controller_entry_items_delete_simple(&setting->entry.items);
     controller_entry_items_delete_simple(&setting->exit.items);
 

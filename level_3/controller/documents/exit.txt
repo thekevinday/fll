@@ -9,23 +9,42 @@ Exit Documentation:
   An Exit file, such as "default.exit", is intended to store a set of rules in which the controller will process on execution.
   These are used to run some set of commands, such as shutting down a system.
 
+  An Exit is a special variation or subset of an Entry.
+
   - The "setting" Item Object\:
     Represents settings and is not an "item" that can be executed.
     A number of settings are supported, but if this Item Object is not specified, then defaults are used.
     The following settings are available: "pid" and "show".
 
+    - The "define" setting\:
+      Use this to define an environment variable (this overwrites any existing environment variable with this name).
+      A define is both exported as an environment variable as well as exposed as an IKI variable.
+      Example IKI variable substitution: for "define PATH /bin:/sbin", the associated IKI variable would look like: define:"PATH".
+
+      All environment variables, including those defined using this, must be in the "environment" list in any given Rule to be exported to the executed process.
+      Environment variables added here that are not added to the environment are still exposed as an IKI variable.
+
+      This is only expanded within any Rule operated on by this Exit.
+
+    - The "parameter" setting\:
+      Use this to define an IKI variable name and value.
+      These do not conflict with environment variables and are not exposed as environment variables.
+      Example IKI variable substitution: for "parameter hello world", the associated IKI variable would look like: parameter:"hello".
+
+      This is only expanded within any Rule operated on by this Exit.
+
     - The "pid" setting\:
-      Represents how the entry pid file is generated or not.
+      Represents how the Exit PID file is generated or not.
       The following modes are supported: "disable", "require", and "ready".
-      For "disable", not pid file representing the entry is created.
-      For "require", check to see if the PID file exists for an entry at startup and then when "ready" create a pid file, display error on pid file already exists or on failure and then fail.
-      For "ready", when "ready" create a pid file, display error on failure and then fail (does not check if PID file exists).
+      For "disable", not PID file representing the Exit is created.
+      For "require", check to see if the PID file exists for an Exit at startup and then when "ready" create a PID file, display error on PID file already exists or on failure and then fail.
+      For "ready", when "ready" create a PID file, display error on failure and then fail (does not check if PID file exists).
 
     - The "show" setting\:
-      Represents the way entry processing presents information to the screen.
-      This applies only to the entry and rule processing itself and does not handle the output of programs and scripts being executed by some entry or rule.
+      Represents the way Exit processing presents information to the screen.
+      This applies only to the Exit and Rule processing itself and does not handle the output of programs and scripts being executed by some Exit or Rule.
       The following show options are supported: "normal" and "init".
-      For "normal", will not report the start or stop of some entry or rule execution but will report any errors or warnings as appropriate.
+      For "normal", will not report the start or stop of some Exit or Rule execution but will report any errors or warnings as appropriate.
       For "init", will report when starting programs and may include reporting success and failure status.
 
   - The "main" Item Object\:
@@ -85,12 +104,12 @@ Exit Documentation:
       This Item Action will process the "resume" inner Content of the named Rule.
 
     - The "ready" Action\:
-      Instructs the controller program when it is safe to perform normal tasks, such as creating the pid file.
+      Instructs the controller program when it is safe to perform normal tasks, such as creating the PID file.
       When not specified, the state is always assumed to be ready.
       For example, the controller program may be used as a full blown "init" replacement and therefore may need to mount the /var/run/ directory.
-      If the pid file is created at program start, then the /var/run/controller.pid would be written before the /var/run/ directory is ready.
-      This could be a problem, such as on a read-only file system the pid creation fails and controller bails out on error.
-      Adding "ready" essentially specifies a point in time in the Entry in which things are expected to be safe for such basic operations.
+      If the PID file is created at program start, then the /var/run/controller.pid would be written before the /var/run/ directory is ready.
+      This could be a problem, such as on a read-only file system the PID creation fails and controller bails out on error.
+      Adding "ready" essentially specifies a point in time in the Exit in which things are expected to be safe for such basic operations.
       When the optional "wait" is provided, then "ready" will wait for all currently started asynchronous processes to complete before operating.
 
     - The "start" Item Action\:
@@ -112,32 +131,32 @@ Exit Documentation:
       Each of these may only have a single one exist at a time (one "start", one "stop", and one "kill").
       Each successive "timeout" Item Action, specific to each Action Name (such as "start"), specified replaces the previously defined "timeout" Action (in a top-down manner).
       Each of these accepts a single Action Parameter that is a 0 or greater whole number representing the number of MegaTime (MT) (equivalent to milliseconds).
-      For "start", this represents the number of MegaTime to wait after starting some rule before assuming something went wrong and the rule is returned as failed.
-      For "stop", this represents the number of MegaTime to wait after stopping some rule before assuming something went wrong and the rule is returned as failed.
-      For "kill", this represents the number of MegaTime to wait after stopping some rule and that rule has not yet stopped to forcefully stop the rule (aka kill the rule).
+      For "start", this represents the number of MegaTime to wait after starting some Rule before assuming something went wrong and the Rule is returned as failed.
+      For "stop", this represents the number of MegaTime to wait after stopping some Rule before assuming something went wrong and the Rule is returned as failed.
+      For "kill", this represents the number of MegaTime to wait after stopping some Rule and that Rule has not yet stopped to forcefully stop the Rule (aka kill the Rule).
       The timeouts are generally only valid for services such as daemon services.
       A value of 0 disables this (prevents any action).
 
 Exit Rule Documentation:
-  There are multiple Entry Actions that are considered "rule" Actions.
+  There are multiple Exit Actions that are considered "rule" Actions.
   These are: "freeze", "kill", "pause", "reload", "restart", "resume", "start", "stop", and "thaw".
 
-  The "rule" Actions immediately execute a named rule file.
-    - The first Action Parameter represents the rule directory, which is a relative directory path the rule file is to be found.
+  The "rule" Actions immediately execute a named Rule file.
+    - The first Action Parameter represents the Rule directory, which is a relative directory path the Rule file is to be found.
       - Do not include leading or trailing slashes.
       - This is relative to the settings rules directory.
 
-    - The second Action Parameter represents the basename for the rule file, without the file extension.
+    - The second Action Parameter represents the base name for the Rule file, without the file extension.
       - This must not have any directory paths.
 
     - The remaining Action Parameters may be specified in any order\:
       - "asynchronous": Designates that execution will not block (wait).
-      - "require": Designates that this rule must succeed or trigger execution of failsafe.
-      - "wait": Designates that this rule will not execute until all other Actions before this (including "asynchronous" ones) finish executing (in a top-down manner).
+      - "require": Designates that this Rule must succeed or trigger execution of failsafe.
+      - "wait": Designates that this Rule will not execute until all other Actions before this (including "asynchronous" ones) finish executing (in a top-down manner).
 
-  The full path to the "rule" is relative to the settings, such that if the controller rule settings are found in "/etc/controller/rules/", then for a directory called "[directory]" and a rule basename of "[basename]", the resulting path would be: "/etc/controller/rules/[directory]/[basename].rule"
+  The full path to the "rule" is relative to the settings, such that if the controller Rule settings are found in "/etc/controller/rules/", then for a directory called "[directory]" and a Rule base name of "[base_name]", the resulting path would be: "/etc/controller/rules/[directory]/[base_name].rule"
 
   It is important to note that for any given "rule", execution within that "rule" may be internally asynchronous (even if the "rule" is synchronous).
   For example, a service that is often called a daemon will execute in the background.
-  Until that execution succeeds and the daemon goes into the background the representing rule will block.
-  After the daemon goes into the background, then the representing rule will no longer block and be fully executed.
+  Until that execution succeeds and the daemon goes into the background the representing Rule will block.
+  After the daemon goes into the background, then the representing Rule will no longer block and be fully executed.

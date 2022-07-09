@@ -2035,6 +2035,21 @@ extern "C" {
         global.setting->control.user = number;
         global.setting->control.flag |= controller_control_flag_has_user_e;
       }
+      else if (fl_string_dynamic_compare(controller_define_s, cache->action.name_action) == F_equal_to) {
+        if (cache->content_actions.array[i].used != 2) {
+          controller_entry_settings_read_print_setting_requires_exactly(global, is_entry, *cache, 1);
+
+          continue;
+        }
+
+        status = controller_entry_settings_read_map(cache->buffer_file, cache->content_actions.array[i], &entry->define);
+
+        if (F_status_is_error(status)) {
+          controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "controller_entry_settings_read_map", F_true, global.thread);
+
+          continue;
+        }
+      }
       else if (is_entry && fl_string_dynamic_compare(controller_mode_s, cache->action.name_action) == F_equal_to) {
         if (cache->content_actions.array[i].used != 1) {
           controller_entry_settings_read_print_setting_requires_exactly(global, is_entry, *cache, 1);
@@ -2050,6 +2065,21 @@ extern "C" {
         }
         else {
           controller_entry_settings_read_print_setting_unknown_action_value(global, is_entry, *cache, i);
+
+          continue;
+        }
+      }
+      else if (fl_string_dynamic_compare(controller_parameter_s, cache->action.name_action) == F_equal_to) {
+        if (cache->content_actions.array[i].used != 2) {
+          controller_entry_settings_read_print_setting_requires_exactly(global, is_entry, *cache, 1);
+
+          continue;
+        }
+
+        status = controller_entry_settings_read_map(cache->buffer_file, cache->content_actions.array[i], &entry->parameter);
+
+        if (F_status_is_error(status)) {
+          controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "controller_entry_settings_read_map", F_true, global.thread);
 
           continue;
         }
@@ -2158,6 +2188,25 @@ extern "C" {
     return status;
   }
 #endif // _di_controller_entry_settings_read_
+
+#ifndef _di_controller_entry_settings_read_map_
+  f_status_t controller_entry_settings_read_map(const f_string_static_t buffer, const f_string_ranges_t ranges, f_string_maps_t *setting_maps) {
+
+    f_status_t status = f_string_maps_increase(controller_common_allocation_small_d, setting_maps);
+    if (F_status_is_error(status)) return status;
+
+    setting_maps->array[setting_maps->used].name.used = 0;
+    setting_maps->array[setting_maps->used].value.used = 0;
+
+    status = f_string_dynamic_partial_append_nulless(buffer, ranges.array[0], &setting_maps->array[setting_maps->used].name);
+    if (F_status_is_error(status)) return status;
+
+    status = f_string_dynamic_partial_append_nulless(buffer, ranges.array[1], &setting_maps->array[setting_maps->used].value);
+    if (F_status_is_error(status)) return status;
+
+    ++setting_maps->used;
+  }
+#endif // _di_controller_entry_settings_read_map_
 
 #ifdef __cplusplus
 } // extern "C"

@@ -212,6 +212,28 @@ extern "C" {
   extern f_status_t controller_entry_settings_read(const controller_global_t global, const bool is_entry, const f_string_range_t content_range, controller_cache_t * const cache) F_attribute_visibility_internal_d;
 #endif // _di_controller_entry_settings_read_
 
+/**
+ * Load the given ranges within the buffer into the provided map.
+ *
+ * @param buffer
+ *   The buffer the ranges are associated with.
+ * @param ranges
+ *   The ranges to load from the buffer.
+ *   This expects the caller to already ensure the ranges.used = 2.
+ * @param setting_maps
+ *   The map to load the settings into.
+ *
+ * @return
+ *   Errors (with error bit) from: f_string_dynamic_partial_append_nulless().
+ *   Errors (with error bit) from: f_string_maps_increase().
+ *
+ * @see f_string_dynamic_partial_append_nulless()
+ * @see f_string_maps_increase()
+ */
+#ifndef _di_controller_entry_settings_read_map_
+  f_status_t controller_entry_settings_read_map(const f_string_static_t buffer, const f_string_ranges_t ranges, f_string_maps_t *setting_maps) F_attribute_visibility_internal_d;
+#endif // _di_controller_entry_settings_read_map_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

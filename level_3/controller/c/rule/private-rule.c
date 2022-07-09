@@ -969,7 +969,7 @@ extern "C" {
 
     const f_string_dynamics_t arguments_none = f_string_dynamics_t_initialize;
 
-    controller_execute_set_t execute_set = macro_controller_execute_set_t_initialize(0, 0, process->rule.has & controller_rule_has_environment_d ? &environment : 0, &signals, 0, fl_execute_as_t_initialize);
+    controller_execute_set_t execute_set = macro_controller_execute_set_t_initialize(0, 0, &environment, &signals, 0, fl_execute_as_t_initialize);
 
     if (process->rule.affinity.used) {
       execute_set.as.affinity = &process->rule.affinity;
@@ -1018,54 +1018,156 @@ extern "C" {
       execute_set.as.id_user = &process->rule.user;
     }
 
-    status = fl_environment_load_names(process->rule.environment, &environment);
+    if (process->rule.has & controller_rule_has_environment_d) {
+      status = fl_environment_load_names(process->rule.environment, &environment);
 
-    if (F_status_is_error(status)) {
-      controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "fl_environment_load_names", F_true);
+      if (F_status_is_error(status)) {
+        controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "fl_environment_load_names", F_true);
 
-      return status;
-    }
+        return status;
+      }
 
-    // @todo Much of this loop really should be moved into the processing stage where define names that are not in the environment are not loaded (for better performance and resource utilization).
-    // When a "define" is in the "environment", add it to the exported environments (and overwrite any existing environment variable of the same name).
-    for (i = 0; i < process->rule.define.used; ++i) {
+      // When a "define" from the entry/exit is in the "environment", add it to the exported environments (and overwrite any existing environment variable of the same name).
+      controller_entry_t *entry = 0;
 
-      for (j = 0; j < process->rule.environment.used; ++j) {
+      if (process->type == controller_process_type_entry_e) {
+        entry = &global.setting->entry;
+      }
+      else if (process->type == controller_process_type_exit_e) {
+        entry = &global.setting->exit;
+      }
 
-        if (fl_string_dynamic_compare(process->rule.define.array[i].name, process->rule.environment.array[j]) == F_equal_to) {
+      if (entry) {
+        for (i = 0; i < entry->define.used; ++i) {
 
-          for (k = 0; k < environment.used; ++k) {
+          for (j = 0; j < process->rule.environment.used; ++j) {
 
-            if (fl_string_dynamic_compare(process->rule.define.array[i].name, environment.array[k].name) == F_equal_to) {
+            if (fl_string_dynamic_compare(entry->define.array[i].name, process->rule.environment.array[j]) == F_equal_to) {
 
-              environment.array[k].value.used = 0;
+              for (k = 0; k < environment.used; ++k) {
 
-              status = f_string_dynamic_append(process->rule.define.array[i].value, &environment.array[k].value);
+                if (fl_string_dynamic_compare(entry->define.array[i].name, environment.array[k].name) == F_equal_to) {
 
-              if (F_status_is_error(status)) {
-                controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_string_dynamic_append", F_true);
+                  environment.array[k].value.used = 0;
 
-                return status;
+                  status = f_string_dynamic_append(entry->define.array[i].value, &environment.array[k].value);
+
+                  if (F_status_is_error(status)) {
+                    controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_string_dynamic_append", F_true);
+
+                    return status;
+                  }
+
+                  break;
+                }
+              } // for
+
+              if (k == environment.used) {
+                status = f_string_maps_append(entry->define.array[i], &environment);
+
+                if (F_status_is_error(status)) {
+                  controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_string_maps_append", F_true);
+
+                  return status;
+                }
               }
 
               break;
             }
           } // for
+        } // for
+      }
 
-          if (k == environment.used) {
-            status = f_string_maps_append(process->rule.define.array[i], &environment);
+      // When a "define" is in the "environment", add it to the exported environments (and overwrite any existing environment variable of the same name).
+      for (i = 0; i < process->rule.define.used; ++i) {
 
-            if (F_status_is_error(status)) {
-              controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_string_maps_append", F_true);
+        for (j = 0; j < process->rule.environment.used; ++j) {
 
-              return status;
+          if (fl_string_dynamic_compare(process->rule.define.array[i].name, process->rule.environment.array[j]) == F_equal_to) {
+
+            for (k = 0; k < environment.used; ++k) {
+
+              if (fl_string_dynamic_compare(process->rule.define.array[i].name, environment.array[k].name) == F_equal_to) {
+
+                environment.array[k].value.used = 0;
+
+                status = f_string_dynamic_append(process->rule.define.array[i].value, &environment.array[k].value);
+
+                if (F_status_is_error(status)) {
+                  controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_string_dynamic_append", F_true);
+
+                  return status;
+                }
+
+                break;
+              }
+            } // for
+
+            if (k == environment.used) {
+              status = f_string_maps_append(process->rule.define.array[i], &environment);
+
+              if (F_status_is_error(status)) {
+                controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_string_maps_append", F_true);
+
+                return status;
+              }
             }
-          }
 
-          break;
-        }
+            break;
+          }
+        } // for
       } // for
-    } // for
+    }
+    else {
+      controller_entry_t *entry = 0;
+
+      if (process->type == controller_process_type_entry_e) {
+        entry = &global.setting->entry;
+      }
+      else if (process->type == controller_process_type_exit_e) {
+        entry = &global.setting->exit;
+      }
+
+      // When a custom define is specified, it needs to be exported into the environment.
+      if (entry->define.used || process->rule.define.used) {
+
+        // Copy all environment variables over when a custom define is used.
+        status = f_environment_get_all(&environment);
+
+        if (F_status_is_error(status)) {
+          controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_environment_get_all", F_true);
+
+          return status;
+        }
+
+        for (i = 0; i < entry->define.used; ++i) {
+
+          status = f_string_maps_append(entry->define.array[i], &environment);
+
+          if (F_status_is_error(status)) {
+            controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_string_maps_append", F_true);
+
+            return status;
+          }
+        } // for
+
+        for (i = 0; i < process->rule.define.used; ++i) {
+
+          status = f_string_maps_append(process->rule.define.array[i], &environment);
+
+          if (F_status_is_error(status)) {
+            controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_string_maps_append", F_true);
+
+            return status;
+          }
+        } // for
+      }
+      else {
+
+        // When no custom environment variables are defined, just let the original environment pass through.
+        execute_set.parameter.environment = 0;
+      }
+    }
 
     for (i = 0; i < process->rule.items.used && controller_thread_is_enabled_process(process, global.thread); ++i) {
 
@@ -1941,6 +2043,24 @@ extern "C" {
       } // for
 
       if (i == process->rule.define.used) {
+        controller_entry_t * const entry = process->type == controller_process_type_entry_e ? &((controller_setting_t *) process->main_setting)->entry : &((controller_setting_t *) process->main_setting)->exit;
+
+        for (i = 0; i < entry->define.used; ++i) {
+
+            if (fl_string_dynamic_partial_compare_string(entry->define.array[i].name.string, source, entry->define.array[i].name.used, content) == F_equal_to) {
+            status = f_string_dynamic_append(entry->define.array[i].value, destination);
+            if (F_status_is_error(status)) return status;
+
+            break;
+          }
+        } // for
+
+        if (i == entry->define.used) {
+          i = process->rule.define.used;
+        }
+      }
+
+      if (i == process->rule.define.used) {
         f_string_static_t buffer = f_string_static_t_initialize;
         buffer.used = (content.stop - content.start) + 1;
 
@@ -1959,8 +2079,9 @@ extern "C" {
       }
     }
     else if (fl_string_dynamic_partial_compare_string(controller_parameter_s.string, source, controller_parameter_s.used, vocabulary) == F_equal_to) {
+      f_array_length_t i = 0;
 
-      for (f_array_length_t i = 0; i < process->rule.parameter.used; ++i) {
+      for (; i < process->rule.parameter.used; ++i) {
 
         if (fl_string_dynamic_partial_compare_string(process->rule.parameter.array[i].name.string, source, process->rule.parameter.array[i].name.used, content) == F_equal_to) {
           status = f_string_dynamic_append(process->rule.parameter.array[i].value, destination);
@@ -1969,6 +2090,20 @@ extern "C" {
           break;
         }
       } // for
+
+      if (i == process->rule.parameter.used) {
+        controller_entry_t * const entry = process->type == controller_process_type_entry_e ? &((controller_setting_t *) process->main_setting)->entry : &((controller_setting_t *) process->main_setting)->exit;
+
+        for (i = 0; i < entry->parameter.used; ++i) {
+
+            if (fl_string_dynamic_partial_compare_string(entry->parameter.array[i].name.string, source, entry->parameter.array[i].name.used, content) == F_equal_to) {
+            status = f_string_dynamic_append(entry->parameter.array[i].value, destination);
+            if (F_status_is_error(status)) return status;
+
+            break;
+          }
+        } // for
+      }
     }
     else if (fl_string_dynamic_partial_compare_string(controller_program_s.string, source, controller_program_s.used, vocabulary) == F_equal_to) {
       f_string_static_t * const argv = ((controller_main_t *) process->main_data)->parameters.arguments.array;

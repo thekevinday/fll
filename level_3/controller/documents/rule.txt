@@ -29,16 +29,16 @@ Rule Documentation:
     - "timeout": A set of timeouts to wait for in which to perform a set action or to consider failure.
     - "user": A single user name or ID to execute as.
 
-  - In the case of "capability"\:
+  - The "capability" setting\:
     If the user the controller program is run as does not have the desired capabilities already, they cannot be added.
     This essentially maintains or reduces the capabilities already available.
     Due to capabilities only being a draft in the POSIX standard, one may expect "capabilities" support may not be available and in such a case this setting will do nothing.
     If the dependent project (f_capability) does not have libcap support enabled, then capabilities will be unsupported by the compilation of this project.
 
-  - In the case of "control"\:
+  - The "control" setting\:
     The first argument is either "existing" or "new", where for "existing" the process is run inside the existing control used by the parent and when "new" the process is executed within a new control group namespace entirely.
 
-  - In the case of "define"\:
+  - The "define" setting\:
     Use this to define an environment variable (this overwrites any existing environment variable with this name).
     A define is both exported as an environment variable as well as exposed as an IKI variable.
     Example IKI variable substitution: for "define PATH /bin:/sbin", the associated IKI variable would look like: define:"PATH".
@@ -46,21 +46,21 @@ Rule Documentation:
     All environment variables, including those defined using this, must be in the "environment" list to be exported to the executed process.
     Environment variables added here that are not added to the environment are still exposed as an IKI variable.
 
-  - In the case of "engine"\:
+  - The "engine" setting\:
     This engine is used for both "script" and "utility" Rule Types.
     The program that engine refers to must accept a standard input pipe to be supported.
     Additional parameters may be passed to the engine.
 
-  - In the case of "group" and "user"\:
+  - The "group" and "user" settings\:
     Only users and groups that the user the controller program is being run as is allowed to use may be used.
 
-  - In the case of "limit"\:
+  - The "limit" setting\:
     The first parameter must be one of: "as", "core", "cpu", "data", "fsize", "locks", "memlock", "msgqueue", "nice", "nofile", "nproc", "rss", "rtprio", "rttime", "sigpending", or "stack".
     The second parameter repesents the soft limit.
     The third parameter represents the hard limit.
     This may be specified multiply times, but only once for each type.
 
-  - In the case of "on"\:
+  - The "on" setting\:
     The first parameter represents the Action the dependency exists under and must be one of: "freeze", "kill", "pause", "reload", "restart", "resume", "start", "stop", or "thaw".
     The second parameter represents how the dependency is required and must be one of: "need", "want", or "wish".
     The third parameter is a partial path to the rule file.
@@ -73,21 +73,21 @@ Rule Documentation:
 
       In the case of "want" and "wish", if the desired rule is either not found or is otherwise disabled, then this will not fail or otherwise block the wanting or wishing rule.
 
-  - In the case of "path"\:
+  - The "path" setting\:
     When specified, the PATH environment variable is automatically added to the "environment" setting.
 
-  - In the case of "parameter"\:
+  - The "parameter" setting\:
     Use this to define an IKI variable name and value.
     These do not conflict with environment variables and are not exposed as environment variables.
     Example IKI variable substitution: for "parameter hello world", the associated IKI variable would look like: parameter:"hello".
 
-  - In the case of "scheduler"\:
+  - The "scheduler" setting\:
     The valid range of the priority number is dependent on the scheduler.
     For example, non-real-time schedulers (such as "idle") only support a value of 0 whereas real-time schedulers (such as "fifo") only support an inclusive range of 1 to 99.
     Supported non-real-time schedulers are: "batch", "idle", and "other" (aka: normal/default).
     Supported real-time schedulers are: "deadline", "fifo", "round_robin".
 
-  - In the case of "timeout"\:
+  - The "timeout" setting\:
     The "timeout" Item Action provides default global settings for each of the three special situations: "kill", "start", and "stop".
     Each of these may only have a single one exist at a time (one "kill", one "start", one "stop", and one "wait").
     Each successive "timeout" Item Action, specific to each Action Name (such as "start"), specified replaces the previously defined "timeout" Action (in a top-down manner).

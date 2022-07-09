@@ -174,6 +174,8 @@ extern "C" {
  * timeout_kill:  The timeout to wait relating to using a kill signal.
  * timeout_start: The timeout to wait relating to starting a process.
  * timeout_stop:  The timeout to wait relating to stopping a process.
+ * define:        Any defines (environment variables) made available to all Rules in this entry for IKI substitution or just as environment variables.
+ * parameter:     Any parameters made available to all Rules in this entry for IKI substitution.
  * items:         The array of entry items.
  */
 #ifndef _di_controller_entry_t_
@@ -205,6 +207,9 @@ extern "C" {
     f_number_unsigned_t timeout_start;
     f_number_unsigned_t timeout_stop;
 
+    f_string_maps_t define;
+    f_string_maps_t parameter;
+
     controller_entry_items_t items;
   } controller_entry_t;
 
@@ -216,6 +221,8 @@ extern "C" {
     0, \
     0, \
     0, \
+    f_string_maps_t_initialize, \
+    f_string_maps_t_initialize, \
     controller_entry_items_t_initialize, \
   }
 #endif // _di_controller_entry_t_
