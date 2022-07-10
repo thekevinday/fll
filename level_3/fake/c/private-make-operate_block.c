@@ -32,6 +32,12 @@ extern "C" {
         state_process->success_block = F_true;
       }
     }
+    else if (state_process->operation == fake_make_operation_type_if_e) {
+
+      // This is the first if-condition, so setup the block.
+      state_process->block = fake_state_process_block_operate_e;
+      state_process->block_result = 0;
+    }
   }
 #endif // _di_fake_make_operate_block_prepare_
 
