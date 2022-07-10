@@ -167,11 +167,11 @@ extern "C" {
 
     controller_lock_print(global.main->error.to, global.thread);
 
-    fl_print_format("%r%[%QThe %s item setting '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
+    fl_print_format("%r%[%QThe %Q item setting '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
     fl_print_format("%[%Q%]", global.main->error.to.stream, global.main->error.notable, cache.action.name_action, global.main->error.notable);
     fl_print_format("%[' requires exactly %]", global.main->error.to.stream, global.main->error.context, global.main->error.context);
     fl_print_format("%[%un%]", global.main->error.to.stream, global.main->error.notable, total, global.main->error.notable);
-    fl_print_format("%[' %r.%]%r", global.main->error.to.stream, global.main->error.context, total > 1 ? controller_parameters_s : controller_parameter_s, global.main->error.context, f_string_eol_s);
+    fl_print_format("%[ Content.%]%r", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s);
 
     controller_entry_print_error_cache(is_entry, global.main->error, cache.action);
 

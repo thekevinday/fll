@@ -1895,12 +1895,13 @@ extern "C" {
     cache->delimits.used = 0;
 
     f_array_length_t i = 0;
-    f_array_length_t line = 0;
 
     controller_entry_t *entry = is_entry ? &global.setting->entry : &global.setting->exit;
     f_state_t state = f_state_t_initialize;
 
     for (; i < cache->object_actions.used; ++i) {
+
+      cache->action.line_action = 0;
 
       status = f_fss_count_lines(state, cache->buffer_file, cache->object_actions.array[i].start, &cache->action.line_action);
 
@@ -1910,7 +1911,7 @@ extern "C" {
         break;
       }
 
-      line = ++cache->action.line_action;
+      ++cache->action.line_action;
       cache->action.name_action.used = 0;
 
       status = fl_string_dynamic_partial_rip_nulless(cache->buffer_file, cache->object_actions.array[i], &cache->action.name_action);
@@ -2039,7 +2040,7 @@ extern "C" {
       }
       else if (fl_string_dynamic_compare(controller_define_s, cache->action.name_action) == F_equal_to) {
         if (cache->content_actions.array[i].used != 2) {
-          controller_entry_settings_read_print_setting_requires_exactly(global, is_entry, *cache, 1);
+          controller_entry_settings_read_print_setting_requires_exactly(global, is_entry, *cache, 2);
 
           continue;
         }
@@ -2073,7 +2074,7 @@ extern "C" {
       }
       else if (fl_string_dynamic_compare(controller_parameter_s, cache->action.name_action) == F_equal_to) {
         if (cache->content_actions.array[i].used != 2) {
-          controller_entry_settings_read_print_setting_requires_exactly(global, is_entry, *cache, 1);
+          controller_entry_settings_read_print_setting_requires_exactly(global, is_entry, *cache, 2);
 
           continue;
         }
