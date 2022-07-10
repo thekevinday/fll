@@ -43,7 +43,7 @@ extern "C" {
 #endif // _di_utf8_print_character_invalid_
 
 #ifndef _di_utf8_print_codepoint_
-  void utf8_print_codepoint(utf8_data_t * const data, const f_utf_char_t codepoint) {
+  void utf8_print_codepoint(utf8_data_t * const data, const uint32_t codepoint) {
 
     if (codepoint < 0x10000) {
       fl_print_format("%rU+%04_U%r", data->file.stream, data->prepend, codepoint, data->append);
@@ -138,7 +138,7 @@ extern "C" {
 #endif // _di_utf8_print_error_decode_
 
 #ifndef _di_utf8_print_error_encode_
-  void utf8_print_error_encode(utf8_data_t * const data, const f_status_t status, const f_utf_char_t codepoint) {
+  void utf8_print_error_encode(utf8_data_t * const data, const f_status_t status, const uint32_t codepoint) {
 
     if (data->main->error.verbosity == f_console_verbosity_quiet_e) return;
 

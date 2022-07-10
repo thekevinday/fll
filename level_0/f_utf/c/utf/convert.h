@@ -222,7 +222,7 @@ extern "C" {
  *   F_valid_not (with error bit) if string is not a valid Unicode string.
  */
 #ifndef _di_f_utf_unicode_string_to_
-  extern f_status_t f_utf_unicode_string_to(const f_string_t string, const f_array_length_t length, f_utf_char_t *unicode);
+  extern f_status_t f_utf_unicode_string_to(const f_string_t string, const f_array_length_t length, uint32_t *unicode);
 #endif // _di_f_utf_unicode_string_to_
 
 #ifdef __cplusplus

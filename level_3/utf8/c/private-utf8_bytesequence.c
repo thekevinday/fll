@@ -15,7 +15,7 @@ extern "C" {
     f_status_t status = F_none;
     bool valid_not = F_false;
 
-    f_utf_char_t codepoint = 0;
+    uint32_t codepoint = 0;
 
     if (sequence.used) {
       status = f_utf_unicode_to(sequence.string, sequence.used, &codepoint);

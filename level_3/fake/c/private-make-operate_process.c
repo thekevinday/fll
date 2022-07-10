@@ -549,7 +549,7 @@ extern "C" {
             } // for
 
             if (buffer.used > 2) {
-              f_utf_char_t codepoint = 0;
+              uint32_t codepoint = 0;
 
               status = f_utf_unicode_string_to(buffer.string, buffer.used, &codepoint);
 

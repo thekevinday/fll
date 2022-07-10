@@ -50,7 +50,7 @@ extern "C" {
  *   This is the code that represents a single character.
  */
 #ifndef _di_utf8_print_codepoint_
-  extern void utf8_print_codepoint(utf8_data_t * const data, const f_utf_char_t codepoint) F_attribute_visibility_internal_d;
+  extern void utf8_print_codepoint(utf8_data_t * const data, const uint32_t codepoint) F_attribute_visibility_internal_d;
 #endif // _di_utf8_print_codepoint_
 
 /**
@@ -98,7 +98,7 @@ extern "C" {
  *   The codepoint that is invalid.
  */
 #ifndef _di_utf8_print_error_encode_
-  extern void utf8_print_error_encode(utf8_data_t * const data, const f_status_t status, const f_utf_char_t codepoint) F_attribute_visibility_internal_d;
+  extern void utf8_print_error_encode(utf8_data_t * const data, const f_status_t status, const uint32_t codepoint) F_attribute_visibility_internal_d;
 #endif // _di_utf8_print_error_encode_
 
 /**

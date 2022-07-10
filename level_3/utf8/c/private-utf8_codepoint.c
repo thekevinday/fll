@@ -27,7 +27,7 @@ extern "C" {
     }
 
     if (*mode == utf8_codepoint_mode_end_e) {
-      f_utf_char_t codepoint = 0;
+      uint32_t codepoint = 0;
 
       status = f_utf_unicode_string_to(data->text.string, data->text.used, &codepoint);
 
