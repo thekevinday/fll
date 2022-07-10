@@ -161,6 +161,20 @@ extern "C" {
 #endif // _di_fake_print_error_too_many_arguments_
 
 /**
+ * Print an error message for when an argument is an empty string.
+ *
+ * @param data_make
+ *   All make related setting data, including data from the fakefile and the build settings file.
+ * @param index
+ *   The index of the argument that is an empty string.
+ *
+ * @see fll_print_format()
+ */
+#ifndef _di_fake_print_error_argument_empty_
+  extern void fake_print_error_argument_empty(fake_make_data_t * const data_make, const f_array_length_t index) F_attribute_visibility_internal_d;
+#endif // _di_fake_print_error_argument_empty_
+
+/**
  * Print error messages when processing some fakefile section, for a specific line and operation, and that operation failed.
  *
  * @param data

@@ -1082,6 +1082,7 @@ extern "C" {
       fake_make_operation_to_s,
       fake_make_operation_top_s,
       fake_make_operation_touch_s,
+      fake_make_operation_write_s,
     };
 
     const uint8_t operations_type[] = {
@@ -1119,6 +1120,7 @@ extern "C" {
       fake_make_operation_type_to_e,
       fake_make_operation_type_top_e,
       fake_make_operation_type_touch_e,
+      fake_make_operation_type_write_e,
     };
 
     fake_state_process_t state_process = fake_state_process_t_initialize;

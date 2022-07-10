@@ -3,6 +3,7 @@
 #include "private-fake.h"
 #include "private-clean.h"
 #include "private-make.h"
+#include "private-make-operate_process.h"
 #include "private-make-operate_process_type.h"
 #include "private-print.h"
 
@@ -1463,6 +1464,96 @@ extern "C" {
     return F_none;
   }
 #endif // _di_fake_make_operate_process_type_touch_
+
+#ifndef _di_fake_make_operate_process_type_write_
+  f_status_t fake_make_operate_process_type_write(fake_make_data_t * const data_make, const f_string_dynamics_t arguments) {
+
+    f_status_t status = F_none;
+    f_file_t file = f_file_t_initialize;
+
+    status = f_file_exists(arguments.array[0], F_true);
+
+    if (arguments.used == 1 || status == F_false) {
+      status = f_file_stream_open(arguments.array[0], f_file_open_mode_truncate_s, &file);
+
+      if (F_status_is_error(status)) {
+        if (F_status_is_error_not(fll_path_canonical(arguments.array[0], &data_make->path_cache))) {
+          fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_stream_open", F_true, data_make->path_cache, f_file_operation_open_s, fll_error_file_type_file_e);
+        }
+        else {
+          fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_stream_open", F_true, arguments.array[0], f_file_operation_open_s, fll_error_file_type_file_e);
+        }
+      }
+
+      if (F_status_is_error_not(status)) {
+
+        // Keep the stream open if there is a string to write to it.
+        if (arguments.used > 1) {
+          status = F_false;
+        }
+        else {
+          f_file_stream_close(F_true, &file);
+        }
+      }
+    }
+
+    if (F_status_is_error_not(status) && arguments.used > 1) {
+      if (status != F_false) {
+        status = f_file_stream_open(arguments.array[0], f_file_open_mode_append_s, &file);
+
+        if (F_status_is_error(status)) {
+          if (F_status_is_error_not(fll_path_canonical(arguments.array[0], &data_make->path_cache))) {
+            fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_stream_open", F_true, data_make->path_cache, f_file_operation_open_s, fll_error_file_type_file_e);
+          }
+          else {
+            fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_stream_open", F_true, arguments.array[0], f_file_operation_open_s, fll_error_file_type_file_e);
+          }
+        }
+      }
+
+      if (F_status_is_error_not(status)) {
+        for (f_array_length_t i = 1; i < arguments.used; ++i) {
+
+          status = fake_make_operate_process_buffer_escape(data_make, arguments.array[i], &data_make->cache_1);
+
+          if (F_status_is_error(status)) {
+            if (F_status_is_error_not(fll_path_canonical(arguments.array[0], &data_make->path_cache))) {
+              fll_error_file_print(data_make->error, F_status_set_fine(status), "fake_make_operate_process_buffer_escape", F_true, data_make->path_cache, f_file_operation_write_s, fll_error_file_type_file_e);
+            }
+            else {
+              fll_error_file_print(data_make->error, F_status_set_fine(status), "fake_make_operate_process_buffer_escape", F_true, arguments.array[0], f_file_operation_write_s, fll_error_file_type_file_e);
+            }
+
+            break;
+          }
+
+          status = f_file_stream_write(file, data_make->cache_1, 0);
+
+          if (F_status_is_error(status)) {
+            if (F_status_is_error_not(fll_path_canonical(arguments.array[0], &data_make->path_cache))) {
+              fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_stream_write", F_true, data_make->path_cache, f_file_operation_write_s, fll_error_file_type_file_e);
+            }
+            else {
+              fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_stream_write", F_true, arguments.array[0], f_file_operation_write_s, fll_error_file_type_file_e);
+            }
+
+            break;
+          }
+
+          if (i + 1 < arguments.used) {
+            status = f_file_stream_write(file, f_string_ascii_space_s, 0);
+          }
+        } // for
+      }
+
+      f_file_stream_close(F_true, &file);
+    }
+
+    if (F_status_is_error(status)) return status;
+
+    return F_none;
+  }
+#endif // _di_fake_make_operate_process_type_write_
 
 #ifdef __cplusplus
 } // extern "C"

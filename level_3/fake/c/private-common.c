@@ -207,6 +207,7 @@ extern "C" {
   const f_string_static_t fake_make_operation_to_s = macro_f_string_static_t_initialize(FAKE_make_operation_to_s, 0, FAKE_make_operation_to_s_length);
   const f_string_static_t fake_make_operation_top_s = macro_f_string_static_t_initialize(FAKE_make_operation_top_s, 0, FAKE_make_operation_top_s_length);
   const f_string_static_t fake_make_operation_touch_s = macro_f_string_static_t_initialize(FAKE_make_operation_touch_s, 0, FAKE_make_operation_touch_s_length);
+  const f_string_static_t fake_make_operation_write_s = macro_f_string_static_t_initialize(FAKE_make_operation_write_s, 0, FAKE_make_operation_write_s_length);
 
   const f_string_static_t fake_make_operation_argument_environment_s = macro_f_string_static_t_initialize(FAKE_make_operation_argument_environment_s, 0, FAKE_make_operation_argument_environment_s_length);
   const f_string_static_t fake_make_operation_argument_failure_s = macro_f_string_static_t_initialize(FAKE_make_operation_argument_failure_s, 0, FAKE_make_operation_argument_failure_s_length);

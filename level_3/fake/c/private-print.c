@@ -348,6 +348,22 @@ extern "C" {
   }
 #endif // _di_fake_print_error_too_many_arguments_
 
+#ifndef _di_fake_print_error_argument_empty_
+  void fake_print_error_argument_empty(fake_make_data_t * const data_make, const f_array_length_t index) {
+
+    if (data_make->error.verbosity == f_console_verbosity_quiet_e) return;
+    if (!data_make->error.to.stream) return;
+
+    flockfile(data_make->error.to.stream);
+
+    fl_print_format("%r%[%QThe %]", data_make->error.to.stream, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
+    fl_print_format("%[%un%]", data_make->error.to.stream, data_make->error.notable, index, data_make->error.notable);
+    fl_print_format("%[ argument must not be an empty string.%]%r", data_make->error.to.stream, data_make->error.context, data_make->error.context, f_string_eol_s);
+
+    funlockfile(data_make->error.to.stream);
+  }
+#endif // _di_fake_print_error_argument_empty_
+
 #ifndef _di_fake_print_message_section_operation_failed_
   void fake_print_message_section_operation_failed(fake_data_t * const data, const fl_print_t print, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name) {
 

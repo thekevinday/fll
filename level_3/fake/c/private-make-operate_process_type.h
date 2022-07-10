@@ -501,6 +501,30 @@ extern "C" {
   extern f_status_t fake_make_operate_process_type_touch(fake_make_data_t * const data_make, const f_string_dynamics_t arguments) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_touch_
 
+/**
+ * Perform the write operation process.
+ *
+ * @param data_make
+ *   All make related setting data, including data from the fakefile and the build settings file.
+ *   This resets and uses data_make.cache_1.
+ * @param arguments
+ *   The arguments for the run or shell operation.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Errors (with error bit) from: f_file_exists().
+ *   Errors (with error bit) from: f_file_stream_open().
+ *   Errors (with error bit) from: f_file_stream_write().
+ *
+ * @see f_file_exists()
+ * @see f_file_stream_open()
+ * @see f_file_stream_write()
+ */
+#ifndef _di_fake_make_operate_process_type_write_
+  extern f_status_t fake_make_operate_process_type_write(fake_make_data_t * const data_make, const f_string_dynamics_t arguments) F_attribute_visibility_internal_d;
+#endif // _di_fake_make_operate_process_type_write_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

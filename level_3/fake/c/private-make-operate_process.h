@@ -41,6 +41,52 @@ extern "C" {
 #endif // _di_fake_make_operate_process_
 
 /**
+ * Process the given string, converting escape sequences into code.
+ *
+ * The following escape sequences are supported for printing special characters:
+ *   - "\f": Form Feed.
+ *   - "\n": New Line.
+ *   - "\r": Carriage Return.
+ *   - "\t": Tab.
+ *   - "\v": Vertical Tab.
+ *   - "\\": Backslash Character (may require additional slashes in certain circumstances.)
+ *   - "\0": NULL Character.
+ *   - "\U+": Unicode Sequence (followed by a valid Unicode sequence with a minimum 4 hexidecimal digits and a maximum of 6 hexidecimal digits).
+ *   - "\U-": Terminate a Unicode Sequence, allowing for "\U+000A\U-5" to be equivalent to "\n5".
+ *
+ * If the Unicode is invalid, then nothing is copied for that character (the invalid character is skipped when printing).
+ * Example Unicodes\:
+ *   - "\U+000A": Prints a new line, equivalent to "\n".
+ *   - "\U+2E19": Prints the Unicode feather-like character "⸙".
+ *
+ * Only ASCII alpha-numeric hexidecimal digits are allowed in the Unicode sequence (upper or lower case).
+ *
+ * Invalid or unknown escape sequences are not copied.
+ *
+ * @param data_make
+ *   All make related setting data, including data from the fakefile and the build settings file.
+ * @param source
+ *   The source string to process and esacpe.
+ * @param destination
+ *   The processed and escaped string.
+ *
+ * @return
+ *   F_none on success.
+ *   F_data_not if source.used is 0.
+ *
+ *   Errors (with error bit) from: f_string_dynamic_increase_by().
+ *   Errors (with error bit) from: f_utf_unicode_from().
+ *   Errors (with error bit) from: f_utf_unicode_string_to().
+ *
+ * @see f_string_dynamic_increase_by()
+ * @see f_utf_unicode_from()
+ * @see f_utf_unicode_string_to()
+ */
+#ifndef _di_fake_make_operate_process_buffer_escape_
+  extern f_status_t fake_make_operate_process_buffer_escape(fake_make_data_t * const data_make, const f_string_static_t source, f_string_dynamic_t * const destination) F_attribute_visibility_internal_d;
+#endif // _di_fake_make_operate_process_buffer_escape_
+
+/**
  * Execute either the run operation or the shell operation.
  *
  * @param data_make

@@ -75,7 +75,8 @@ Fakefile Specification:
   - skeleton: Zero Content.
   - to: One Content. First Content is the directory path.
   - top: Zero Content.
-  - touch: Two or more Content. First content is one of "file" or "directory", remaining Content are paths to files.
+  - touch: Two or more Content. First Content is one of "file" or "directory", remaining Content are paths to files.
+  - write: One or more Content. First Content the file to write to, remaining Content represent the string to write.
 
   The "if" Section Operation conditions are\:
   - ==: Two or more Content.

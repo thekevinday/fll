@@ -441,6 +441,42 @@ Fakefile Documentation:
       The first Content must be either "file" or "directory".
       The remaining Content must be a path to the file.
 
+    - write\:
+      Write strings to a file within the project root.
+      The Content after the first Content is appended to the file.
+
+      The first Content represents the file to write to.
+      If there is no Content beyond the first, then the file is truncated (all content within the file is deleted).
+
+      In all cases, if the file does not exist, the file is created.
+
+      When only the first Content exists, this acts similar to the "touch" operation.
+      The major difference between the two is that the "touch" operation does not alter the content within the file.
+      This does alter the content within the file.
+
+      A single space is printed between each argument.
+      To preserve spaces, wrap the message in quotes (single or double).
+
+      The following escape sequences are supported for printing special characters:
+      - "\f": Form Feed.
+      - "\n": New Line.
+      - "\r": Carriage Return.
+      - "\t": Tab.
+      - "\v": Vertical Tab.
+      - "\\": Backslash Character (may require additional slashes in certain circumstances.)
+      - "\0": NULL Character.
+      - "\U+": Unicode Sequence (followed by a valid Unicode sequence with a minimum 4 hexidecimal digits and a maximum of 6 hexidecimal digits).
+      - "\U-": Terminate a Unicode Sequence, allowing for "\U+000A\U-5" to be equivalent to "\n5".
+
+      If the Unicode is invalid, then nothing is printed for that character (the invalid character is skipped when printing).
+      Example Unicodes\:
+      - "\U+000A": Prints a new line, equivalent to "\n".
+      - "\U+2E19": Prints the Unicode feather-like character "⸙".
+
+      Only ASCII alpha-numeric hexidecimal digits are allowed in the Unicode sequence (upper or lower case).
+
+      Invalid or unknown escape sequences are not printed.
+
   The IKI vocabulary context is supported and is further clarified as follows\:
   - context\:
     The context Object represents a name representing simple context or complex combination of context.

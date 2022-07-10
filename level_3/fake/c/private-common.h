@@ -1208,6 +1208,7 @@ extern "C" {
   #define FAKE_make_operation_to_s        "to"
   #define FAKE_make_operation_top_s       "top"
   #define FAKE_make_operation_touch_s     "touch"
+  #define FAKE_make_operation_write_s     "write"
 
   #define FAKE_make_operation_and_s_length       3
   #define FAKE_make_operation_break_s_length     5
@@ -1243,6 +1244,7 @@ extern "C" {
   #define FAKE_make_operation_to_s_length        2
   #define FAKE_make_operation_top_s_length       3
   #define FAKE_make_operation_touch_s_length     5
+  #define FAKE_make_operation_write_s_length     5
 
   extern const f_string_static_t fake_make_operation_and_s;
   extern const f_string_static_t fake_make_operation_break_s;
@@ -1278,6 +1280,7 @@ extern "C" {
   extern const f_string_static_t fake_make_operation_to_s;
   extern const f_string_static_t fake_make_operation_top_s;
   extern const f_string_static_t fake_make_operation_touch_s;
+  extern const f_string_static_t fake_make_operation_write_s;
 
   enum {
     fake_make_operation_type_none_e = 0,
@@ -1315,9 +1318,11 @@ extern "C" {
     fake_make_operation_type_to_e,
     fake_make_operation_type_top_e,
     fake_make_operation_type_touch_e,
+    fake_make_operation_type_write_e,
   };
 
-  #define fake_make_operation_total_d 34
+  // Total does not include "fake_make_operation_type_none_e".
+  #define fake_make_operation_total_d 35
 
   #define FAKE_make_operation_argument_environment_s    "environment"
   #define FAKE_make_operation_argument_failure_s        "failure"

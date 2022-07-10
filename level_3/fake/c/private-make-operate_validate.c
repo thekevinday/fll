@@ -1394,6 +1394,32 @@ extern "C" {
       }
     }
 
+    if (state_process->operation == fake_make_operation_type_write_e) {
+      if (arguments.used) {
+        if (!arguments.array[0].used) {
+          fake_print_error_argument_empty(data_make, 1);
+
+          *status = F_status_set_error(F_failure);
+        }
+        else {
+          *status = fake_make_assure_inside_project(data_make, arguments.array[0]);
+
+          if (F_status_is_error(*status)) {
+            fake_print_message_section_operation_path_outside(data_make->data, data_make->error, F_status_set_fine(*status), "fake_make_assure_inside_project", data_make->path_cache.used ? data_make->path_cache : arguments.array[0]);
+
+            if (F_status_set_fine(*status) == F_false) {
+              *status = F_status_set_error(F_failure);
+            }
+          }
+        }
+      }
+      else {
+        fake_print_error_requires_more_arguments(data_make);
+
+        *status = F_status_set_error(F_failure);
+      }
+    }
+
     // Note: there is nothing to validate for fake_make_operation_type_print_e.
   }
 #endif // _di_fake_make_operate_validate_

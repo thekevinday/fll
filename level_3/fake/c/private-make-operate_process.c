@@ -455,9 +455,175 @@ extern "C" {
       *status = fake_make_operate_process_type_touch(data_make, arguments);
     }
 
+    if (state_process->operation == fake_make_operation_type_write_e) {
+      *status = fake_make_operate_process_type_write(data_make, arguments);
+    }
+
     return 0;
   }
 #endif // _di_fake_make_operate_process_
+
+#ifndef _di_fake_make_operate_process_buffer_escape_
+  f_status_t fake_make_operate_process_buffer_escape(fake_make_data_t * const data_make, const f_string_static_t source, f_string_dynamic_t * const destination) {
+
+    destination->used = 0;
+
+    if (!source.used) return F_data_not;
+
+    f_status_t status = f_string_dynamic_increase_by(source.used, destination);
+    if (F_status_is_error(status)) return status;
+
+    for (f_array_length_t i = 0; i < source.used; ++i) {
+
+      // NULL characters are from delimited characters and must be skipped.
+      if (!source.string[i]) continue;
+
+      if (source.string[i] == f_string_ascii_slash_backward_s.string[0]) {
+
+        // A slash by itself at the end of the string is invalid.
+        if (++i >= source.used) break;
+
+        status = f_string_dynamic_increase_by(F_memory_default_allocation_small_d, destination);
+        if (F_status_is_error(status)) return status;
+
+        if (source.string[i] == f_string_ascii_slash_backward_s.string[0]) {
+          destination->string[destination->used++] = f_string_ascii_slash_backward_s.string[0];
+        }
+        else if (source.string[i] == f_string_ascii_n_s.string[0]) {
+          destination->string[destination->used++] = f_string_ascii_feed_line_s.string[0];
+        }
+        else if (source.string[i] == f_string_ascii_r_s.string[0]) {
+          destination->string[destination->used++] = f_string_ascii_return_carriage_s.string[0];
+        }
+        else if (source.string[i] == f_string_ascii_t_s.string[0]) {
+          destination->string[destination->used++] = f_string_ascii_tab_horizontal_s.string[0];
+        }
+        else if (source.string[i] == f_string_ascii_v_s.string[0]) {
+          destination->string[destination->used++] = f_string_ascii_tab_vertical_s.string[0];
+        }
+        else if (source.string[i] == f_string_ascii_0_s.string[0]) {
+          destination->string[destination->used++] = f_string_null_s.string[0];
+        }
+        else if (source.string[i] == f_string_ascii_U_s.string[0]) {
+
+          // At the end of the string before a \U+XXXX sequence is completed is invalid.
+          if (++i >= source.used) break;
+
+          if (source.string[i] == f_string_ascii_plus_s.string[0]) {
+
+            // At the end of the string before a \U+XXXX sequence is completed is invalid.
+            if (i + 4 >= source.used) break;
+
+            ++i;
+
+            // The max Unicode sequence length is "U+XXXXXX".
+            char buffer_string[9] = { f_string_ascii_U_s.string[0], f_string_ascii_plus_s.string[0], 0, 0, 0, 0, 0, 0, 0 };
+            f_string_static_t buffer = macro_f_string_static_t_initialize(buffer_string, 0, 2);
+
+            for (uint8_t j = 2; i < source.used && j < 8; ) {
+
+              if (!isdigit(source.string[i])) {
+                if (!(source.string[i] == f_string_ascii_A_s.string[0] ||
+                      source.string[i] == f_string_ascii_B_s.string[0] ||
+                      source.string[i] == f_string_ascii_C_s.string[0] ||
+                      source.string[i] == f_string_ascii_D_s.string[0] ||
+                      source.string[i] == f_string_ascii_E_s.string[0] ||
+                      source.string[i] == f_string_ascii_F_s.string[0])) {
+
+                  if (!(source.string[i] == f_string_ascii_a_s.string[0] ||
+                        source.string[i] == f_string_ascii_b_s.string[0] ||
+                        source.string[i] == f_string_ascii_c_s.string[0] ||
+                        source.string[i] == f_string_ascii_d_s.string[0] ||
+                        source.string[i] == f_string_ascii_e_s.string[0] ||
+                        source.string[i] == f_string_ascii_f_s.string[0])) {
+
+                    --i;
+
+                    break;
+                  }
+                }
+              }
+
+              buffer_string[j++] = source.string[i++];
+              ++buffer.used;
+            } // for
+
+            if (buffer.used > 2) {
+              f_utf_char_t codepoint = 0;
+
+              status = f_utf_unicode_string_to(buffer.string, buffer.used, &codepoint);
+
+              if (F_status_is_error(status)) {
+                status = F_status_set_fine(status);
+
+                if (!(status == F_failure || status == F_utf_not || status == F_complete_not_utf || status == F_utf_fragment || status == F_valid_not)) {
+                  status = F_status_set_error(status);
+
+                  break;
+                }
+              }
+              else {
+
+                // Reserve 4-bytes (the max size of a Unicode UTF-8 sequence).
+                status = f_string_dynamic_increase_by(4, destination);
+                if (F_status_is_error(status)) return status;
+
+                if (!codepoint) {
+                  destination->string[destination->used++] = f_string_null_s.string[0];
+                }
+                else {
+                  {
+                    f_string_t address = destination->string + destination->used;
+
+                    status = f_utf_unicode_from(codepoint, 4, &address);
+                  }
+
+                  if (F_status_is_error(status)) {
+                    destination->string[destination->used] = 0;
+                  }
+                  else {
+                    if (codepoint < 0x80) {
+                      destination->used += 1;
+                    }
+                    else if (codepoint < 0x800) {
+                      destination->used += 2;
+                    }
+                    else if (codepoint < 0x10000) {
+                      destination->used += 3;
+                    }
+                    else {
+                      destination->used += 4;
+                    }
+                  }
+                }
+              }
+            }
+          }
+          else if (source.string[i] == f_string_ascii_minus_s.string[0]) {
+
+            // The "\U-" designates the termination of a Unicode sequence.
+          }
+          else {
+
+            // No plus found, so only the "\U" is considered invalid.
+            // This character is to be printed.
+            --i;
+          }
+        }
+      }
+      else {
+        status = f_string_dynamic_increase_by(F_memory_default_allocation_small_d, destination);
+        if (F_status_is_error(status)) return status;
+
+        destination->string[destination->used++] = source.string[i];
+      }
+    } // for
+
+    if (F_status_is_error(status)) return status;
+
+    return F_none;
+  }
+#endif // _di_fake_make_operate_process_buffer_escape_
 
 #ifndef _di_fake_make_operate_process_execute_
   f_status_t fake_make_operate_process_execute(fake_make_data_t * const data_make, const f_string_static_t program, const f_string_statics_t arguments, const bool as_shell) {
