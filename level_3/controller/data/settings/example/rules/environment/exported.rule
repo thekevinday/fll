@@ -1,4 +1,7 @@
 # fss-000d
+#
+# Note: bash automatically creates PWD, SHLVL, and _ environment variables.
+#
 
 settings:
   name "Environment with PATH"
