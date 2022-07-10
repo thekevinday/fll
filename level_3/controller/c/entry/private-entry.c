@@ -1026,7 +1026,9 @@ extern "C" {
           }
           else {
             if (!failsafe && (global->main->error.verbosity == f_console_verbosity_verbose_e || entry->show == controller_entry_show_init_e) && global->main->parameters.array[controller_parameter_simulate_e].result == f_console_result_none_e) {
-              fl_print_format("%rState is now '%[%r%]'.%r", global->main->output.to.stream, f_string_eol_s, global->main->context.set.notable, controller_ready_s, global->main->context.set.notable, f_string_eol_s);
+              if (global->main->error.verbosity != f_console_verbosity_quiet_e) {
+                fl_print_format("%rState is now '%[%r%]'.%r", global->main->output.to.stream, f_string_eol_s, global->main->context.set.notable, controller_ready_s, global->main->context.set.notable, f_string_eol_s);
+              }
             }
 
             status = controller_perform_ready(global, cache, is_entry);
