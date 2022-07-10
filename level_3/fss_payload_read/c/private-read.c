@@ -938,7 +938,7 @@ extern "C" {
 
       memset(names, F_false, sizeof(bool) * data->objects.used);
 
-      // This standard should always tread selected names as trimmed.
+      // This standard should always treat selected names as trimmed.
       for (i = 0; i < data->objects.used; ++i) {
 
         if (fl_string_dynamic_partial_compare_except_trim_dynamic(data->depths.array[0].value_name, data->buffer, data->objects.array[i], except_none, data->delimits_object) == F_equal_to) {
