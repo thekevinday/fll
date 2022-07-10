@@ -1,14 +1,6 @@
 #include "fake.h"
 #include "private-common.h"
-#include "private-fake.h"
-#include "private-build.h"
-#include "private-clean.h"
 #include "private-make.h"
-#include "private-make-load_fakefile.h"
-#include "private-make-load_parameters.h"
-#include "private-make-operate.h"
-#include "private-print.h"
-#include "private-skeleton.h"
 
 #ifdef __cplusplus
 extern "C" {

@@ -8,7 +8,6 @@
 #include "private-build-objects.h"
 #include "private-build-program.h"
 #include "private-build-skeleton.h"
-#include "private-make.h"
 #include "private-print.h"
 
 #ifdef __cplusplus

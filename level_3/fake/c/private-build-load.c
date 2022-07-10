@@ -1,9 +1,7 @@
 #include "fake.h"
 #include "private-common.h"
 #include "private-fake.h"
-#include "private-build.h"
 #include "private-build-load.h"
-#include "private-make.h"
 #include "private-print.h"
 
 #ifdef __cplusplus

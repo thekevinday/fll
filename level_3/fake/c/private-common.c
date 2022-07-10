@@ -1,6 +1,5 @@
 #include "fake.h"
 #include "private-common.h"
-#include "private-print.h"
 
 #ifdef __cplusplus
 extern "C" {

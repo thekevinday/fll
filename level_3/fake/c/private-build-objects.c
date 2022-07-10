@@ -3,8 +3,6 @@
 #include "private-fake.h"
 #include "private-build.h"
 #include "private-build-objects.h"
-#include "private-make.h"
-#include "private-print.h"
 
 #ifdef __cplusplus
 extern "C" {
