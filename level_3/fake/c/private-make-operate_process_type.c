@@ -57,7 +57,7 @@ extern "C" {
         return F_status_set_error(F_failure);
       }
 
-      if (status == F_false || status == F_file_found_not) {
+      if (status == F_false || status == F_file_found_not || status == F_data_not) {
         existing = F_false;
       }
     }
@@ -361,6 +361,17 @@ extern "C" {
     f_array_length_t i = if_not ? 2 : 1;
     bool dereference = F_true;
 
+    if (i == arguments.used) {
+      if (if_not) {
+        state_process->condition_result = fake_condition_result_true_e;
+      }
+      else {
+        state_process->condition_result = fake_condition_result_false_e;
+      }
+
+      return F_none;
+    }
+
     state_process->condition_result = fake_condition_result_true_e;
 
     if (fl_string_dynamic_compare(fake_make_operation_argument_no_dereference_s, arguments.array[i]) == F_equal_to) {
@@ -388,7 +399,7 @@ extern "C" {
         }
       }
       else {
-        if (status == F_false) {
+        if (status != F_true) {
           state_process->condition_result = fake_condition_result_false_e;
 
           break;
@@ -419,6 +430,17 @@ extern "C" {
     if (fl_string_dynamic_compare(fake_make_operation_argument_no_dereference_s, arguments.array[i]) == F_equal_to) {
       ++i;
       dereference = F_false;
+    }
+
+    if (i == arguments.used) {
+      if (if_not) {
+        state_process->condition_result = fake_condition_result_true_e;
+      }
+      else {
+        state_process->condition_result = fake_condition_result_false_e;
+      }
+
+      return F_none;
     }
 
     status = F_none;
