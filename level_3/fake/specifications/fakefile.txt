@@ -84,15 +84,16 @@ Fakefile Specification:
   - >=: Two or more Content.
   - <=: Two or more Content.
   - <>: Two or more Content.
-  - defined: First Content is either "parameter" or "environment". Second or more Content are valid names, such that for "parameter" it is a valid IKI name and for "environment" it is a valid environment variable name.
+  - define: One or more Content are valid environment variable name.
   - exists: One or more Content representing the files to check the existence of.
   - failure: has no other Content.
   - group: First Content is the name of a group. Second or more Content are paths to files.
   - is: First Content is a list of "block", "character", "no_dereference", "directory", "fifo", "link", "regular" , or "socket" followed by "for" and then the Remaining Content that are paths to files.
   - mode: First Content is either "has", "is", or "no_dereference". Second Content is a valid file mode. Third or more Content are paths to files.
   - no_dereference: A non-condition inserted before any of "exists", "is", and "mode" (then the second Content is the actual condition followed by any Content associated with that condition).
-  - not: First Content is one of "defined", "exists", "group", "is", "mode", "no_dereference", or "owner" and all remaining Content are based on the First Content's "if" Section Operation Content rules.
+  - not: First Content is one of "define", "exists", "group", "is", "mode", "no_dereference", "owner", or "parameter" and all remaining Content are based on the First Content's "if" Section Operation Content rules.
   - owner: First Content is the name of an owner. Second or more Content are paths to files.
+  - parameter: One or more Content are valid IKI names.
   - success: has no other Content.
 
   The "if" Section Operation conditions and numbers\:
@@ -113,6 +114,6 @@ Fakefile Specification:
     - >=
     - <=
 
-  The "if" Section Operation condition "defined"\:
+  The "if" Section Operation condition "parameter"\:
     The following reserved words are available for parameter names: build, color, data, define, fakefile, mode, process, settings, sources, verbosity, and work.
     Each of the reserved words supports having ":option" and ":value" appended, such as: "work:value".

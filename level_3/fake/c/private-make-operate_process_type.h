@@ -113,7 +113,7 @@ extern "C" {
 #endif // _di_fake_make_operate_process_type_groups_
 
 /**
- * Perform the if defined operation process.
+ * Perform the if define operation process.
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
@@ -125,9 +125,9 @@ extern "C" {
  * @param state_process
  *   The operation process state.
  */
-#ifndef _di_fake_make_operate_process_type_if_defined_
-  extern void fake_make_operate_process_type_if_defined(fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, fake_state_process_t *state_process) F_attribute_visibility_internal_d;
-#endif // _di_fake_make_operate_process_type_if_defined_
+#ifndef _di_fake_make_operate_process_type_if_define_
+  extern void fake_make_operate_process_type_if_define(fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, fake_state_process_t *state_process) F_attribute_visibility_internal_d;
+#endif // _di_fake_make_operate_process_type_if_define_
 
 /**
  * Perform the if exists operation process.
@@ -283,6 +283,23 @@ extern "C" {
 #ifndef _di_fake_make_operate_process_type_if_owner_
   extern f_status_t fake_make_operate_process_type_if_owner(fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, fake_state_process_t *state_process) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_if_owner_
+
+/**
+ * Perform the if parameter operation process.
+ *
+ * @param data_make
+ *   All make related setting data, including data from the fakefile and the build settings file.
+ * @param arguments
+ *   The arguments for the run or shell operation.
+ * @param if_not
+ *   When TRUE, perform the if not is.
+ *   When FALSE, perform the if is.
+ * @param state_process
+ *   The operation process state.
+ */
+#ifndef _di_fake_make_operate_process_type_if_parameter_
+  extern void fake_make_operate_process_type_if_parameter(fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, fake_state_process_t *state_process) F_attribute_visibility_internal_d;
+#endif // _di_fake_make_operate_process_type_if_parameter_
 
 /**
  * Perform the mode and modes operation processes.

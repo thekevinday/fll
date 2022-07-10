@@ -1370,7 +1370,7 @@ extern "C" {
   extern const f_string_static_t fake_make_operation_argument_target_s;
   extern const f_string_static_t fake_make_operation_argument_warn_s;
 
-  #define FAKE_make_operation_argument_if_defined_s       "defined"
+  #define FAKE_make_operation_argument_if_define_s        "define"
   #define FAKE_make_operation_argument_if_equal_s         "=="
   #define FAKE_make_operation_argument_if_equal_not_s     "<>"
   #define FAKE_make_operation_argument_if_exists_s        "exists"
@@ -1385,9 +1385,10 @@ extern "C" {
   #define FAKE_make_operation_argument_if_mode_s          "mode"
   #define FAKE_make_operation_argument_if_not_s           "not"
   #define FAKE_make_operation_argument_if_owner_s         "owner"
+  #define FAKE_make_operation_argument_if_parameter_s     "parameter"
   #define FAKE_make_operation_argument_if_success_s       "success"
 
-  #define FAKE_make_operation_argument_if_defined_s_length       7
+  #define FAKE_make_operation_argument_if_define_s_length        6
   #define FAKE_make_operation_argument_if_equal_s_length         2
   #define FAKE_make_operation_argument_if_equal_not_s_length     2
   #define FAKE_make_operation_argument_if_exists_s_length        6
@@ -1402,9 +1403,10 @@ extern "C" {
   #define FAKE_make_operation_argument_if_mode_s_length          4
   #define FAKE_make_operation_argument_if_not_s_length           3
   #define FAKE_make_operation_argument_if_owner_s_length         5
+  #define FAKE_make_operation_argument_if_parameter_s_length     9
   #define FAKE_make_operation_argument_if_success_s_length       7
 
-  extern const f_string_static_t fake_make_operation_argument_if_defined_s;
+  extern const f_string_static_t fake_make_operation_argument_if_define_s;
   extern const f_string_static_t fake_make_operation_argument_if_equal_s;
   extern const f_string_static_t fake_make_operation_argument_if_equal_not_s;
   extern const f_string_static_t fake_make_operation_argument_if_exists_s;
@@ -1419,12 +1421,13 @@ extern "C" {
   extern const f_string_static_t fake_make_operation_argument_if_mode_s;
   extern const f_string_static_t fake_make_operation_argument_if_not_s;
   extern const f_string_static_t fake_make_operation_argument_if_owner_s;
+  extern const f_string_static_t fake_make_operation_argument_if_parameter_s;
   extern const f_string_static_t fake_make_operation_argument_if_success_s;
 
   enum {
     fake_make_operation_if_type_else_e = 1,
     fake_make_operation_if_type_if_e,
-    fake_make_operation_if_type_if_defined_e,
+    fake_make_operation_if_type_if_define_e,
     fake_make_operation_if_type_if_equal_e,
     fake_make_operation_if_type_if_equal_not_e,
     fake_make_operation_if_type_if_exists_e,
@@ -1437,12 +1440,14 @@ extern "C" {
     fake_make_operation_if_type_if_less_equal_e,
     fake_make_operation_if_type_if_mode_e,
     fake_make_operation_if_type_if_not_e,
-    fake_make_operation_if_type_if_not_defined_e,
+    fake_make_operation_if_type_if_not_define_e,
     fake_make_operation_if_type_if_not_exists_e,
     fake_make_operation_if_type_if_not_group_e,
     fake_make_operation_if_type_if_not_is_e,
     fake_make_operation_if_type_if_not_mode_e,
     fake_make_operation_if_type_if_not_owner_e,
+    fake_make_operation_if_type_if_not_parameter_e,
+    fake_make_operation_if_type_if_parameter_e,
     fake_make_operation_if_type_if_owner_e,
     fake_make_operation_if_type_if_success_e,
   };

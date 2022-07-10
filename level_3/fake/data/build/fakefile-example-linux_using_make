@@ -14,10 +14,10 @@ settings:
   load_build no
   fail exit
 
-  # add any desired environment variables here to expose to the run/shell environment.
+  # Add any desired environment variables here to expose to the run/shell environment.
   environment PATH
 
-  # config can be set to any valid config option, such as: menuconfig, nconfig, xconfig, gconfig, oldconfig, olddefconfig, defconfig, etc...
+  # "config" can be set to any valid config option, such as: menuconfig, nconfig, xconfig, gconfig, oldconfig, olddefconfig, defconfig, etc...
   parameter config defconfig
 
 main:

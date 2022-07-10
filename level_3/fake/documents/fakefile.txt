@@ -192,12 +192,12 @@ Fakefile Documentation:
       This is mostly relevant when "if" operation is followed by an "and" or an "or" operation.
 
       Consider the following\:
-        if defined parameter xxx
-        or defined parameter yyy
-        and defined parameter zzz
+        if parameter xxx
+        or parameter yyy
+        and parameter zzz
           print first
         else
-        if defined parameter www
+        if parameter www
           print second
         else
           print third
@@ -249,35 +249,9 @@ Fakefile Documentation:
           For example, "if <> 'a' 'b' 'c'" would test: 'a' <> 'b' && 'b' <> 'c' && 'a' <> 'c'.
           This performs only string-based comparisons.
 
-        - defined parameter/environment "some define name"\:
-          Test if one or more names are defined as a "parameter" or an "environment" variable.
-          For example, "if defined parameter verbose silent" would test if both the "verbose" and the "silent" variables are defined via the "parameter" setting.
-          For example, "if defined environment PWD SHELL" would test if both the "PWD" and the "SHELL" variables are defined via the "environment" variables.
-
-          Reserved parameters that represent program arguments, three forms are available.
-          For example, the program argument -w/--work has the reserved word "work" and has three forms:
-          1) "work".
-          2) "work:option".
-          3) "work:value".
-
-          In the case of form 1, the "if defined parameter work" would be true if the argument is passed to the program or a default is provided.
-          In the case of form 2, the "if defined parameter work:option" would be true if the argument is passed to the program.
-          In the case of form 3, the "if defined parameter work:value" would be true if the argument is passed to the program and has a non-zero value.
-
-          Some reserved parameters, such as the "verbosity", has no "value" and in this case would always return false for "if defined parameter verbosity:value".
-
-          The following are reserved parameters:
-          - build: Associated with -b/--build parameter.
-          - color: Associated with +d/++dark, +l/++light, and +n/++no_color parameters.
-          - data: Associated with -D/--data parameter.
-          - define: Associated with -d/--define parameter.
-          - fakefile: Associated with -f/--fakefile parameter.
-          - mode: Associated with -m/--mode parameter and possibly with the build settings default mode "modes_default".
-          - process: Associated with -p/--process parameter.
-          - settings: Associated with -s/--settings parameter.
-          - sources: Associated with -S/--sources parameter.
-          - verbosity: Associated with +q/++quiet, +N/++normal, +V/++verbose, and +D/++debug parameters.
-          - work: Associated with -w/--work parameter.
+        - define "some define name"\:
+          Test if one or more names are defined as an environment variable.
+          For example, "if define PWD SHELL" would test if both the "PWD" and the "SHELL" variables are defined via the environment variables.
 
         - exists "file path"\:
           Test if file exists.
@@ -304,20 +278,50 @@ Fakefile Documentation:
           This is to be immediately followed by a valid if condition as well as all appropriate valid content associated with that if condition.
 
           Only the following if conditions are supported\:
-          - defined.
+          - define.
           - exists.
           - group.
           - is.
           - mode.
           - owner.
+          - parameter.
 
           Examples\:
-          - "if not defined parameter work"
+          - "if not parameter work"
           - "if not exists documentation.txt"
 
         - owner "some mode" "some file"\:
           Test if one or more files has the given owner.
           For example, "if owner me a.txt b.txt" would test if both file a.txt and b.txt have an owner named "me".
+
+        - parameter "some parameter name"\:
+          Test if one or more names are defined as a "parameter" variable.
+          For example, "if parameter verbose silent" would test if both the "verbose" and the "silent" variables are defined via the "parameter" setting.
+
+          Reserved parameters that represent program arguments, three forms are available.
+          For example, the program argument -w/--work has the reserved word "work" and has three forms:
+          1) "work".
+          2) "work:option".
+          3) "work:value".
+
+          In the case of form 1, the "if parameter work" would be true if the argument is passed to the program or a default is provided.
+          In the case of form 2, the "if parameter work:option" would be true if the argument is passed to the program.
+          In the case of form 3, the "if parameter work:value" would be true if the argument is passed to the program and has a non-zero value.
+
+          Some reserved parameters, such as the "verbosity", has no "value" and in this case would always return false for "if parameter verbosity:value".
+
+          The following are reserved parameters:
+          - build: Associated with -b/--build parameter.
+          - color: Associated with +d/++dark, +l/++light, and +n/++no_color parameters.
+          - data: Associated with -D/--data parameter.
+          - define: Associated with -d/--define parameter.
+          - fakefile: Associated with -f/--fakefile parameter.
+          - mode: Associated with -m/--mode parameter and possibly with the build settings default mode "modes_default".
+          - process: Associated with -p/--process parameter.
+          - settings: Associated with -s/--settings parameter.
+          - sources: Associated with -S/--sources parameter.
+          - verbosity: Associated with +q/++quiet, +N/++normal, +V/++verbose, and +D/++debug parameters.
+          - work: Associated with -w/--work parameter.
 
         - succeed\:
           Test if the previous section operation succeeded.

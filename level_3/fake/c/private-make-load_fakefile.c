@@ -384,7 +384,6 @@ extern "C" {
         fake_make_setting_parameter_s,
       };
 
-
       f_string_map_multis_t *settings_value[] = {
         &define,
         &data_make->setting_make.parameter,

@@ -39,16 +39,16 @@ not_created:
   exit failure
 
 ld_library_path:
-  if defined environment PATH LD_LIBRARY_PATH
-  and defined parameter work
+  if define LD_LIBRARY_PATH
+  and parameter work
     define LD_LIBRARY_PATH 'build/libraries/shared:parameter:"work:value"libraries/shared:define:"LD_LIBRARY_PATH"'
 
   else
-  if defined environment PATH LD_LIBRARY_PATH
+  if define LD_LIBRARY_PATH
     define LD_LIBRARY_PATH 'build/libraries/shared:parameter:define:"LD_LIBRARY_PATH"'
 
   else
-  if defined parameter work
+  if parameter work
     define LD_LIBRARY_PATH 'build/libraries/shared:parameter:"work:value"libraries/shared'
 
   else

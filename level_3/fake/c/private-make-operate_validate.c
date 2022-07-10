@@ -615,7 +615,7 @@ extern "C" {
 
       if (arguments.used) {
         const f_string_static_t if_type_strings[] = {
-          fake_make_operation_argument_if_defined_s,
+          fake_make_operation_argument_if_define_s,
           fake_make_operation_argument_if_equal_s,
           fake_make_operation_argument_if_equal_not_s,
           fake_make_operation_argument_if_exists_s,
@@ -628,18 +628,20 @@ extern "C" {
           fake_make_operation_argument_if_less_equal_s,
           fake_make_operation_argument_if_mode_s,
           fake_make_operation_argument_if_not_s,
-          fake_make_operation_argument_if_defined_s, // If not defined, represented by just "defined".
-          fake_make_operation_argument_if_exists_s,  // If not exists, represented by just "exists".
-          fake_make_operation_argument_if_group_s,   // If not group, represented by just "group".
-          fake_make_operation_argument_if_is_s,      // If not is, represented by just "is".
-          fake_make_operation_argument_if_mode_s,    // If not mode, represented by just "mode".
-          fake_make_operation_argument_if_owner_s,   // If not owner, represented by just "owner".
+          fake_make_operation_argument_if_define_s,    // If not define, represented by just "define".
+          fake_make_operation_argument_if_exists_s,    // If not exists, represented by just "exists".
+          fake_make_operation_argument_if_group_s,     // If not group, represented by just "group".
+          fake_make_operation_argument_if_is_s,        // If not is, represented by just "is".
+          fake_make_operation_argument_if_mode_s,      // If not mode, represented by just "mode".
+          fake_make_operation_argument_if_owner_s,     // If not owner, represented by just "owner".
+          fake_make_operation_argument_if_parameter_s, // If not parameter, represented by just "parameter".
           fake_make_operation_argument_if_owner_s,
+          fake_make_operation_argument_if_parameter_s,
           fake_make_operation_argument_if_success_s,
         };
 
         const uint8_t if_type_codes[] = {
-          fake_make_operation_if_type_if_defined_e,
+          fake_make_operation_if_type_if_define_e,
           fake_make_operation_if_type_if_equal_e,
           fake_make_operation_if_type_if_equal_not_e,
           fake_make_operation_if_type_if_exists_e,
@@ -652,32 +654,36 @@ extern "C" {
           fake_make_operation_if_type_if_less_equal_e,
           fake_make_operation_if_type_if_mode_e,
           fake_make_operation_if_type_if_not_e,
-          fake_make_operation_if_type_if_not_defined_e,
+          fake_make_operation_if_type_if_not_define_e,
           fake_make_operation_if_type_if_not_exists_e,
           fake_make_operation_if_type_if_not_group_e,
           fake_make_operation_if_type_if_not_is_e,
           fake_make_operation_if_type_if_not_mode_e,
           fake_make_operation_if_type_if_not_owner_e,
+          fake_make_operation_if_type_if_not_parameter_e,
           fake_make_operation_if_type_if_owner_e,
+          fake_make_operation_if_type_if_parameter_e,
           fake_make_operation_if_type_if_success_e,
         };
 
         const f_string_static_t if_not_type_strings[] = {
-          fake_make_operation_argument_if_defined_s,
+          fake_make_operation_argument_if_define_s,
           fake_make_operation_argument_if_exists_s,
           fake_make_operation_argument_if_group_s,
           fake_make_operation_argument_if_is_s,
           fake_make_operation_argument_if_mode_s,
           fake_make_operation_argument_if_owner_s,
+          fake_make_operation_argument_if_parameter_s,
         };
 
         const uint8_t if_not_type_codes[] = {
-          fake_make_operation_if_type_if_not_defined_e,
+          fake_make_operation_if_type_if_not_define_e,
           fake_make_operation_if_type_if_not_exists_e,
           fake_make_operation_if_type_if_not_group_e,
           fake_make_operation_if_type_if_not_is_e,
           fake_make_operation_if_type_if_not_mode_e,
           fake_make_operation_if_type_if_not_owner_e,
+          fake_make_operation_if_type_if_not_parameter_e,
         };
 
         f_array_length_t i = 0;
@@ -702,7 +708,7 @@ extern "C" {
         }
 
         const uint8_t if_type_minimum[] = {
-          dereference ? 3 : 4, // If defined.
+          dereference ? 3 : 4, // If define.
           dereference ? 2 : 3, // If equal (==).
           dereference ? 2 : 3, // If equal not (<>).
           dereference ? 2 : 3, // If exists.
@@ -715,29 +721,32 @@ extern "C" {
           dereference ? 2 : 3, // If less equal (<=).
           dereference ? 4 : 5, // If mode.
           dereference ? 3 : 4, // If not.
-          dereference ? 5 : 6, // If not defined.
+          dereference ? 5 : 6, // If not define.
           dereference ? 3 : 4, // If not exists.
           dereference ? 4 : 5, // If not group.
           dereference ? 4 : 5, // If not is.
           dereference ? 5 : 6, // If not mode.
           dereference ? 4 : 5, // If not owner.
+          dereference ? 5 : 6, // If not parameter.
+          dereference ? 3 : 4, // If parameter.
           dereference ? 3 : 4, // If owner.
           dereference ? 1 : 2, // If success.
         };
 
         const uint8_t if_not_type_minimum[] = {
-          dereference ? 4 : 5, // If not defined.
+          dereference ? 4 : 5, // If not define.
           dereference ? 3 : 4, // If not exists.
           dereference ? 4 : 5, // If not group.
           dereference ? 4 : 5, // If not is.
           dereference ? 5 : 6, // If not mode.
           dereference ? 4 : 5, // If not owner.
+          dereference ? 4 : 5, // If not parameter.
         };
 
-        for (; i < 21; ++i) {
+        for (; i < 23; ++i) {
 
           // Skip the "if not XXX" types as they are determined later on.
-          if (i > 12 && i < 19) continue;
+          if (i > 12 && i < 21) continue;
 
           if (fl_string_dynamic_compare(if_type_strings[i], arguments.array[k]) == F_equal_to) {
             state_process->condition = if_type_codes[i];
@@ -746,7 +755,7 @@ extern "C" {
           }
         } // for
 
-        if (i == 21) {
+        if (i == 23) {
           if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
             flockfile(data_make->error.to.stream);
 
@@ -778,7 +787,7 @@ extern "C" {
             return;
           }
 
-          for (; j < 6; ++j) {
+          for (; j < 7; ++j) {
 
             if (fl_string_dynamic_compare(if_not_type_strings[j], arguments.array[k]) == F_equal_to) {
               state_process->condition = if_not_type_codes[j];
@@ -787,7 +796,7 @@ extern "C" {
             }
           } // for
 
-          if (j == 6) {
+          if (j == 7) {
             if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
               flockfile(data_make->error.to.stream);
 
@@ -806,10 +815,10 @@ extern "C" {
           }
         }
         else {
-          j = 6;
+          j = 7;
         }
 
-        if (j == 6 && arguments.used >= if_type_minimum[i] || arguments.used >= if_not_type_minimum[j]) {
+        if (j == 7 && arguments.used >= if_type_minimum[i] || arguments.used >= if_not_type_minimum[j]) {
           if (state_process->condition == fake_make_operation_if_type_if_success_e || state_process->condition == fake_make_operation_if_type_if_failure_e) {
 
             // The success and failure operations minimum is also the maximum.
@@ -817,26 +826,6 @@ extern "C" {
               fake_print_error_too_many_arguments(data_make);
 
               *status = F_status_set_error(F_failure);
-            }
-
-            return;
-          }
-
-          if (state_process->condition == fake_make_operation_if_type_if_defined_e || state_process->condition == fake_make_operation_if_type_if_not_defined_e) {
-            if (fl_string_dynamic_compare(fake_make_operation_argument_environment_s, arguments.array[k]) == F_equal_to_not) {
-              if (fl_string_dynamic_compare(fake_make_operation_argument_parameter_s, arguments.array[k]) == F_equal_to_not) {
-                if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
-                  flockfile(data_make->error.to.stream);
-
-                  fl_print_format("%r%[%QUnsupported define type '%]", data_make->error.to.stream, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
-                  fl_print_format("%[%Q%]", data_make->error.to.stream, data_make->error.notable, arguments.array[k], data_make->error.notable);
-                  fl_print_format("%['.%]%r", data_make->error.to.stream, data_make->error.context, data_make->error.context, f_string_eol_s);
-
-                  funlockfile(data_make->error.to.stream);
-                }
-
-                *status = F_status_set_error(F_failure);
-              }
             }
 
             return;
@@ -857,7 +846,6 @@ extern "C" {
           }
 
           if (state_process->condition == fake_make_operation_if_type_if_group_e || state_process->condition == fake_make_operation_if_type_if_is_e || state_process->condition == fake_make_operation_if_type_if_mode_e || state_process->condition > fake_make_operation_if_type_if_not_exists_e && state_process->condition < fake_make_operation_if_type_if_success_e) {
-
             if (state_process->condition == fake_make_operation_if_type_if_mode_e || state_process->condition == fake_make_operation_if_type_if_not_mode_e) {
               if (fl_string_dynamic_compare(fake_make_operation_argument_is_s, arguments.array[k]) == F_equal_to_not) {
                 if (fl_string_dynamic_compare(fake_make_operation_argument_has_s, arguments.array[k]) == F_equal_to_not) {

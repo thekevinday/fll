@@ -325,165 +325,34 @@ extern "C" {
   }
 #endif // _di_fake_make_operate_process_type_groups_
 
-#ifndef _di_fake_make_operate_process_type_if_defined_
-  void fake_make_operate_process_type_if_defined(fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, fake_state_process_t *state_process) {
-
-    const f_string_static_t argument = if_not ? arguments.array[2] : arguments.array[1];
-
-    const f_string_static_t reserved_name[] = {
-      fake_make_parameter_variable_build_s,
-      fake_make_parameter_variable_color_s,
-      fake_make_parameter_variable_data_s,
-      fake_make_parameter_variable_define_s,
-      fake_make_parameter_variable_fakefile_s,
-      fake_make_parameter_variable_mode_s,
-      fake_make_parameter_variable_process_s,
-      fake_make_parameter_variable_settings_s,
-      fake_make_parameter_variable_sources_s,
-      fake_make_parameter_variable_verbosity_s,
-      fake_make_parameter_variable_work_s,
-      fake_make_parameter_variable_option_build_s,
-      fake_make_parameter_variable_option_color_s,
-      fake_make_parameter_variable_option_data_s,
-      fake_make_parameter_variable_option_define_s,
-      fake_make_parameter_variable_option_fakefile_s,
-      fake_make_parameter_variable_option_mode_s,
-      fake_make_parameter_variable_option_process_s,
-      fake_make_parameter_variable_option_settings_s,
-      fake_make_parameter_variable_option_sources_s,
-      fake_make_parameter_variable_option_verbosity_s,
-      fake_make_parameter_variable_option_work_s,
-      fake_make_parameter_variable_value_build_s,
-      fake_make_parameter_variable_value_color_s,
-      fake_make_parameter_variable_value_data_s,
-      fake_make_parameter_variable_value_define_s,
-      fake_make_parameter_variable_value_fakefile_s,
-      fake_make_parameter_variable_value_mode_s,
-      fake_make_parameter_variable_value_process_s,
-      fake_make_parameter_variable_value_settings_s,
-      fake_make_parameter_variable_value_sources_s,
-      fake_make_parameter_variable_value_verbosity_s,
-      fake_make_parameter_variable_value_work_s,
-    };
-
-    const bool reserved_defined[] = {
-      data_make->data->path_build.used,
-      F_true,
-      data_make->data->path_data.used,
-      data_make->data->define.used,
-      data_make->data->fakefile.used,
-      data_make->data->mode.used,
-      data_make->data->process.used,
-      data_make->data->settings.used,
-      data_make->data->path_sources.used,
-      F_true,
-      data_make->data->path_work.used,
-      data_make->main->parameters.array[fake_parameter_path_build_e].result == f_console_result_additional_e,
-      data_make->main->parameters.array[fake_parameter_light_e].result == f_console_result_found_e || data_make->main->parameters.array[fake_parameter_dark_e].result == f_console_result_found_e || data_make->main->parameters.array[fake_parameter_no_color_e].result == f_console_result_found_e,
-      data_make->main->parameters.array[fake_parameter_path_data_e].result == f_console_result_additional_e,
-      data_make->main->parameters.array[fake_parameter_define_e].result == f_console_result_additional_e,
-      data_make->main->parameters.array[fake_parameter_fakefile_e].result == f_console_result_additional_e,
-      data_make->main->parameters.array[fake_parameter_mode_e].result == f_console_result_additional_e,
-      data_make->main->parameters.array[fake_parameter_process_e].result == f_console_result_additional_e,
-      data_make->main->parameters.array[fake_parameter_settings_e].result == f_console_result_additional_e,
-      data_make->main->parameters.array[fake_parameter_path_sources_e].result == f_console_result_additional_e,
-      data_make->main->parameters.array[fake_parameter_verbosity_quiet_e].result == f_console_result_found_e || data_make->main->parameters.array[fake_parameter_verbosity_normal_e].result == f_console_result_found_e || data_make->main->parameters.array[fake_parameter_verbosity_verbose_e].result == f_console_result_found_e || data_make->main->parameters.array[fake_parameter_verbosity_debug_e].result == f_console_result_found_e,
-      data_make->main->parameters.array[fake_parameter_path_work_e].result == f_console_result_additional_e,
-      data_make->parameter_value.build.used,
-      data_make->parameter_value.color.used,
-      data_make->parameter_value.data.used,
-      data_make->parameter_value.define.used,
-      data_make->parameter_value.fakefile.used,
-      data_make->parameter_value.mode.used,
-      data_make->parameter_value.process.used,
-      data_make->parameter_value.settings.used,
-      data_make->parameter_value.sources.used,
-      data_make->parameter_value.verbosity.used,
-      data_make->parameter_value.work.used,
-    };
-
-    if (fl_string_dynamic_compare(fake_make_operation_argument_environment_s, argument) == F_equal_to) {
-      state_process->condition_result = fake_condition_result_true_e;
-
-      if (if_not) {
-        for (f_array_length_t i = 3; i < arguments.used; ++i) {
-
-          if (f_environment_exists(arguments.array[i]) == F_true) {
-            state_process->condition_result = fake_condition_result_false_e;
-
-            break;
-          }
-        } // for
-      }
-      else {
-        for (f_array_length_t i = 2; i < arguments.used; ++i) {
-
-          if (f_environment_exists(arguments.array[i]) != F_true) {
-            state_process->condition_result = fake_condition_result_false_e;
-
-            break;
-          }
-        } // for
-      }
-
-      return;
-    }
-
-    f_array_length_t i = if_not ? 3 : 2;
-    f_array_length_t j = 0;
-
-    // 0 = unknown, 1 = fail, 2 = pass.
-    uint8_t result = 0;
+#ifndef _di_fake_make_operate_process_type_if_define_
+  void fake_make_operate_process_type_if_define(fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, fake_state_process_t *state_process) {
 
     state_process->condition_result = fake_condition_result_true_e;
 
     // Multiple properties may pass and so if any of them fail, then they all fail.
-    for (; i < arguments.used; ++i) {
+    if (if_not) {
+      for (f_array_length_t i = 2; i < arguments.used; ++i) {
 
-      for (j = 0; j < 33; ++j) {
-
-        if (fl_string_dynamic_compare(reserved_name[j], arguments.array[i]) == F_equal_to) {
-          result = reserved_defined[j] ? 2 : 1;
+        if (f_environment_exists(arguments.array[i]) == F_true) {
+          state_process->condition_result = fake_condition_result_false_e;
 
           break;
         }
       } // for
-
-      if (!result) {
-        for (j = 0; j < data_make->setting_make.parameter.used; ++j) {
-
-          if (fl_string_dynamic_compare(arguments.array[i], data_make->setting_make.parameter.array[j].name) == F_equal_to) {
-            result = 2;
-
-            break;
-          }
-        } // for
-      }
-
-      if (result < 2) {
-        result = 1;
-
-        break;
-      }
-
-      if (i + 1 < arguments.used) {
-        result = 0;
-      }
-    } // for
-
-    if (if_not) {
-      if (result < 2) {
-        state_process->condition_result = fake_condition_result_true_e;
-      }
-      else {
-        state_process->condition_result = fake_condition_result_false_e;
-      }
     }
-    else if (result < 2) {
-      state_process->condition_result = fake_condition_result_false_e;
+    else {
+      for (f_array_length_t i = 1; i < arguments.used; ++i) {
+
+        if (f_environment_exists(arguments.array[i]) != F_true) {
+          state_process->condition_result = fake_condition_result_false_e;
+
+          break;
+        }
+      } // for
     }
   }
-#endif // _di_fake_make_operate_process_type_if_defined_
+#endif // _di_fake_make_operate_process_type_if_define_
 
 #ifndef _di_fake_make_operate_process_type_if_exists_
   f_status_t fake_make_operate_process_type_if_exists(fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, fake_state_process_t *state_process) {
@@ -991,6 +860,138 @@ extern "C" {
     return F_none;
   }
 #endif // _di_fake_make_operate_process_type_if_owner_
+
+#ifndef _di_fake_make_operate_process_type_if_parameter_
+  void fake_make_operate_process_type_if_parameter(fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, fake_state_process_t *state_process) {
+
+    const f_string_static_t reserved_name[] = {
+      fake_make_parameter_variable_build_s,
+      fake_make_parameter_variable_color_s,
+      fake_make_parameter_variable_data_s,
+      fake_make_parameter_variable_define_s,
+      fake_make_parameter_variable_fakefile_s,
+      fake_make_parameter_variable_mode_s,
+      fake_make_parameter_variable_process_s,
+      fake_make_parameter_variable_settings_s,
+      fake_make_parameter_variable_sources_s,
+      fake_make_parameter_variable_verbosity_s,
+      fake_make_parameter_variable_work_s,
+      fake_make_parameter_variable_option_build_s,
+      fake_make_parameter_variable_option_color_s,
+      fake_make_parameter_variable_option_data_s,
+      fake_make_parameter_variable_option_define_s,
+      fake_make_parameter_variable_option_fakefile_s,
+      fake_make_parameter_variable_option_mode_s,
+      fake_make_parameter_variable_option_process_s,
+      fake_make_parameter_variable_option_settings_s,
+      fake_make_parameter_variable_option_sources_s,
+      fake_make_parameter_variable_option_verbosity_s,
+      fake_make_parameter_variable_option_work_s,
+      fake_make_parameter_variable_value_build_s,
+      fake_make_parameter_variable_value_color_s,
+      fake_make_parameter_variable_value_data_s,
+      fake_make_parameter_variable_value_define_s,
+      fake_make_parameter_variable_value_fakefile_s,
+      fake_make_parameter_variable_value_mode_s,
+      fake_make_parameter_variable_value_process_s,
+      fake_make_parameter_variable_value_settings_s,
+      fake_make_parameter_variable_value_sources_s,
+      fake_make_parameter_variable_value_verbosity_s,
+      fake_make_parameter_variable_value_work_s,
+    };
+
+    const bool reserved_parameter[] = {
+      data_make->data->path_build.used,
+      F_true,
+      data_make->data->path_data.used,
+      data_make->data->define.used,
+      data_make->data->fakefile.used,
+      data_make->data->mode.used,
+      data_make->data->process.used,
+      data_make->data->settings.used,
+      data_make->data->path_sources.used,
+      F_true,
+      data_make->data->path_work.used,
+      data_make->main->parameters.array[fake_parameter_path_build_e].result == f_console_result_additional_e,
+      data_make->main->parameters.array[fake_parameter_light_e].result == f_console_result_found_e || data_make->main->parameters.array[fake_parameter_dark_e].result == f_console_result_found_e || data_make->main->parameters.array[fake_parameter_no_color_e].result == f_console_result_found_e,
+      data_make->main->parameters.array[fake_parameter_path_data_e].result == f_console_result_additional_e,
+      data_make->main->parameters.array[fake_parameter_define_e].result == f_console_result_additional_e,
+      data_make->main->parameters.array[fake_parameter_fakefile_e].result == f_console_result_additional_e,
+      data_make->main->parameters.array[fake_parameter_mode_e].result == f_console_result_additional_e,
+      data_make->main->parameters.array[fake_parameter_process_e].result == f_console_result_additional_e,
+      data_make->main->parameters.array[fake_parameter_settings_e].result == f_console_result_additional_e,
+      data_make->main->parameters.array[fake_parameter_path_sources_e].result == f_console_result_additional_e,
+      data_make->main->parameters.array[fake_parameter_verbosity_quiet_e].result == f_console_result_found_e || data_make->main->parameters.array[fake_parameter_verbosity_normal_e].result == f_console_result_found_e || data_make->main->parameters.array[fake_parameter_verbosity_verbose_e].result == f_console_result_found_e || data_make->main->parameters.array[fake_parameter_verbosity_debug_e].result == f_console_result_found_e,
+      data_make->main->parameters.array[fake_parameter_path_work_e].result == f_console_result_additional_e,
+      data_make->parameter_value.build.used,
+      data_make->parameter_value.color.used,
+      data_make->parameter_value.data.used,
+      data_make->parameter_value.define.used,
+      data_make->parameter_value.fakefile.used,
+      data_make->parameter_value.mode.used,
+      data_make->parameter_value.process.used,
+      data_make->parameter_value.settings.used,
+      data_make->parameter_value.sources.used,
+      data_make->parameter_value.verbosity.used,
+      data_make->parameter_value.work.used,
+    };
+
+    f_array_length_t i = if_not ? 2 : 1;
+    f_array_length_t j = 0;
+
+    // 0 = unknown, 1 = fail, 2 = pass.
+    uint8_t result = 0;
+
+    state_process->condition_result = fake_condition_result_true_e;
+
+    // Multiple properties may pass and so if any of them fail, then they all fail.
+    for (; i < arguments.used && !result; ++i) {
+
+      for (j = 0; j < 33; ++j) {
+
+        if (fl_string_dynamic_compare(reserved_name[j], arguments.array[i]) == F_equal_to) {
+          result = reserved_parameter[j] ? 2 : 1;
+
+          break;
+        }
+      } // for
+
+      if (!result) {
+        for (j = 0; j < data_make->setting_make.parameter.used; ++j) {
+
+          if (fl_string_dynamic_compare(arguments.array[i], data_make->setting_make.parameter.array[j].name) == F_equal_to) {
+            result = 2;
+
+            break;
+          }
+        } // for
+
+        if (j == data_make->setting_make.parameter.used) {
+          result = 1;
+        }
+      }
+
+      if (result == 2 && i + 1 < arguments.used) {
+        result = 0;
+      }
+    } // for
+
+    if (if_not) {
+      if (result == 2) {
+        state_process->condition_result = fake_condition_result_false_e;
+      }
+      else {
+        state_process->condition_result = fake_condition_result_true_e;
+      }
+    }
+    else if (result == 2) {
+      state_process->condition_result = fake_condition_result_true_e;
+    }
+    else {
+      state_process->condition_result = fake_condition_result_false_e;
+    }
+  }
+#endif // _di_fake_make_operate_process_type_if_parameter_
 
 #ifndef _di_fake_make_operate_process_type_modes_
   f_status_t fake_make_operate_process_type_modes(fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool all) {

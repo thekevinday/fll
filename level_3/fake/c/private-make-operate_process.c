@@ -193,39 +193,8 @@ extern "C" {
     }
 
     if (state_process->operation == fake_make_operation_type_if_e || state_process->operation == fake_make_operation_type_and_e || state_process->operation == fake_make_operation_type_or_e) {
-      if (state_process->condition == fake_make_operation_if_type_if_success_e) {
-        if (state_process->success) {
-          state_process->condition_result = fake_condition_result_true_e;
-        }
-        else {
-          state_process->condition_result = fake_condition_result_false_e;
-        }
-      }
-      else if (state_process->condition == fake_make_operation_if_type_if_defined_e) {
-        fake_make_operate_process_type_if_defined(data_make, arguments, F_false, state_process);
-      }
-      else if (state_process->condition == fake_make_operation_if_type_if_exists_e) {
-        *status = fake_make_operate_process_type_if_exists(data_make, arguments, F_false, state_process);
-      }
-      else if (state_process->condition == fake_make_operation_if_type_if_failure_e) {
-        if (state_process->success) {
-          state_process->condition_result = fake_condition_result_false_e;
-        }
-        else {
-          state_process->condition_result = fake_condition_result_true_e;
-        }
-      }
-      else if (state_process->condition == fake_make_operation_if_type_if_group_e) {
-        *status = fake_make_operate_process_type_if_group(data_make, arguments, F_false, state_process);
-      }
-      else if (state_process->condition == fake_make_operation_if_type_if_is_e) {
-        *status = fake_make_operate_process_type_if_is(data_make, arguments, F_false, state_process);
-      }
-      else if (state_process->condition == fake_make_operation_if_type_if_mode_e) {
-        *status = fake_make_operate_process_type_if_mode(data_make, arguments, F_false, state_process);
-      }
-      else if (state_process->condition == fake_make_operation_if_type_if_not_defined_e) {
-        fake_make_operate_process_type_if_defined(data_make, arguments, F_true, state_process);
+      if (state_process->condition == fake_make_operation_if_type_if_define_e) {
+        fake_make_operate_process_type_if_define(data_make, arguments, F_false, state_process);
       }
       else if (state_process->condition == fake_make_operation_if_type_if_equal_e) {
         state_process->condition_result = fake_condition_result_true_e;
@@ -258,8 +227,34 @@ extern "C" {
           } // for
         } // for
       }
+      else if (state_process->condition == fake_make_operation_if_type_if_exists_e) {
+        *status = fake_make_operate_process_type_if_exists(data_make, arguments, F_false, state_process);
+      }
+      else if (state_process->condition == fake_make_operation_if_type_if_failure_e) {
+        if (state_process->success) {
+          state_process->condition_result = fake_condition_result_false_e;
+        }
+        else {
+          state_process->condition_result = fake_condition_result_true_e;
+        }
+      }
       else if (state_process->condition == fake_make_operation_if_type_if_greater_e || state_process->condition == fake_make_operation_if_type_if_greater_equal_e || state_process->condition == fake_make_operation_if_type_if_less_e || state_process->condition == fake_make_operation_if_type_if_less_equal_e) {
         *status = fake_make_operate_process_type_if_greater_if_lesser(data_make, arguments, state_process);
+      }
+      else if (state_process->condition == fake_make_operation_if_type_if_group_e) {
+        *status = fake_make_operate_process_type_if_group(data_make, arguments, F_false, state_process);
+      }
+      else if (state_process->condition == fake_make_operation_if_type_if_is_e) {
+        *status = fake_make_operate_process_type_if_is(data_make, arguments, F_false, state_process);
+      }
+      else if (state_process->condition == fake_make_operation_if_type_if_mode_e) {
+        *status = fake_make_operate_process_type_if_mode(data_make, arguments, F_false, state_process);
+      }
+      else if (state_process->condition == fake_make_operation_if_type_if_not_define_e) {
+        fake_make_operate_process_type_if_define(data_make, arguments, F_true, state_process);
+      }
+      else if (state_process->condition == fake_make_operation_if_type_if_not_parameter_e) {
+        fake_make_operate_process_type_if_parameter(data_make, arguments, F_true, state_process);
       }
       else if (state_process->condition == fake_make_operation_if_type_if_not_exists_e) {
         *status = fake_make_operate_process_type_if_exists(data_make, arguments, F_true, state_process);
@@ -278,6 +273,17 @@ extern "C" {
       }
       else if (state_process->condition == fake_make_operation_if_type_if_owner_e) {
         *status = fake_make_operate_process_type_if_owner(data_make, arguments, F_false, state_process);
+      }
+      else if (state_process->condition == fake_make_operation_if_type_if_parameter_e) {
+        fake_make_operate_process_type_if_parameter(data_make, arguments, F_false, state_process);
+      }
+      else if (state_process->condition == fake_make_operation_if_type_if_success_e) {
+        if (state_process->success) {
+          state_process->condition_result = fake_condition_result_true_e;
+        }
+        else {
+          state_process->condition_result = fake_condition_result_false_e;
+        }
       }
 
       if (state_process->block) {
