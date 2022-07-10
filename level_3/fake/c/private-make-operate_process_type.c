@@ -1317,6 +1317,75 @@ extern "C" {
   }
 #endif // _di_fake_make_operate_process_type_pop_
 
+#ifndef _di_fake_make_operate_process_type_print_
+  f_status_t fake_make_operate_process_type_print(fake_make_data_t * const data_make, const f_string_dynamics_t arguments) {
+
+    f_status_t status = F_none;
+
+    data_make->cache_1.used = 0;
+
+    {
+      f_array_length_t i = 0;
+
+      // Pre-allocate the cache to reduce allocations.
+      {
+        f_array_length_t total = arguments.used;
+
+        for (; i < arguments.used; ++i) {
+          total += arguments.array[i].used;
+        } // for
+
+        status = f_string_dynamic_increase_by(total, &data_make->cache_1);
+
+        if (F_status_is_error(status)) {
+          fll_error_print(data_make->error, F_status_set_fine(status), "f_file_stream_open", F_true);
+
+          return status;
+        }
+      }
+
+      for (i = 0; i < arguments.used; ++i) {
+
+        status = fake_make_operate_process_buffer_escape(data_make, arguments.array[i], &data_make->cache_1);
+
+        if (F_status_is_error(status)) {
+          fll_error_print(data_make->error, F_status_set_fine(status), "f_file_stream_open", F_true);
+
+          return status;
+        }
+
+        if (i + 1 < arguments.used) {
+          status = f_string_dynamic_increase_by(1, &data_make->cache_1);
+
+          if (F_status_is_error(status)) {
+            fll_error_print(data_make->error, F_status_set_fine(status), "f_file_stream_open", F_true);
+
+            return status;
+          }
+
+          status = f_string_dynamic_append(f_string_space_s, &data_make->cache_1);
+
+          if (F_status_is_error(status)) {
+            fll_error_print(data_make->error, F_status_set_fine(status), "f_string_dynamic_append", F_true);
+
+            return status;
+          }
+        }
+      } // for
+    }
+
+    flockfile(data_make->main->output.to.stream);
+
+    fll_print_dynamic_raw(data_make->cache_1, data_make->main->output.to.stream);
+    fll_print_dynamic_raw(f_string_space_s, data_make->main->output.to.stream);
+    fll_print_dynamic_raw(f_string_eol_s, data_make->main->output.to.stream);
+
+    funlockfile(data_make->main->output.to.stream);
+
+    return F_none;
+  }
+#endif // _di_fake_make_operate_process_type_print_
+
 #ifndef _di_fake_make_operate_process_type_to_
   f_status_t fake_make_operate_process_type_to(fake_make_data_t * const data_make, const f_string_dynamics_t arguments) {
 
@@ -1513,6 +1582,8 @@ extern "C" {
 
       if (F_status_is_error_not(status)) {
         for (f_array_length_t i = 1; i < arguments.used; ++i) {
+
+          data_make->cache_1.used = 0;
 
           status = fake_make_operate_process_buffer_escape(data_make, arguments.array[i], &data_make->cache_1);
 

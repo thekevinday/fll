@@ -396,21 +396,7 @@ extern "C" {
     }
 
     if (state_process->operation == fake_make_operation_type_print_e) {
-      flockfile(data_make->main->output.to.stream);
-
-      for (f_array_length_t i = 0; i < arguments.used; ++i) {
-
-        f_print_dynamic(arguments.array[i], data_make->main->output.to.stream);
-
-        if (i + 1 < arguments.used) {
-          f_print_dynamic_raw(f_string_space_s, data_make->main->output.to.stream);
-        }
-      } // for
-
-      f_print_dynamic_raw(f_string_space_s, data_make->main->output.to.stream);
-      f_print_dynamic_raw(f_string_eol_s, data_make->main->output.to.stream);
-
-      funlockfile(data_make->main->output.to.stream);
+      *status = fake_make_operate_process_type_print(data_make, arguments);
 
       return 0;
     }
@@ -465,8 +451,6 @@ extern "C" {
 
 #ifndef _di_fake_make_operate_process_buffer_escape_
   f_status_t fake_make_operate_process_buffer_escape(fake_make_data_t * const data_make, const f_string_static_t source, f_string_dynamic_t * const destination) {
-
-    destination->used = 0;
 
     if (!source.used) return F_data_not;
 

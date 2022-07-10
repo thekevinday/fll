@@ -69,6 +69,7 @@ extern "C" {
  *   The source string to process and esacpe.
  * @param destination
  *   The processed and escaped string.
+ *   This is appended to.
  *
  * @return
  *   F_none on success.

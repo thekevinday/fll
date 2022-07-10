@@ -18,7 +18,7 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
- *   The arguments for the run or shell operation.
+ *   The arguments for the operation.
  * @param clone
  *   If TRUE, perform a copy that is a clone (preserved timestamps, roles, and permissions).
  *   If FALSE, perforrm a normaly copy without preserving properties.
@@ -48,7 +48,7 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
- *   The arguments for the run or shell operation.
+ *   The arguments for the operation.
  * @param all
  *   If TRUE, then if the path is a directory, then recursively apply to all paths within the directory.
  *   If FALSE, then only apply to the given path.
@@ -76,7 +76,7 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
- *   The arguments for the run or shell operation.
+ *   The arguments for the operation.
  */
 #ifndef _di_fake_make_operate_process_type_fail_
   extern void fake_make_operate_process_type_fail(fake_make_data_t * const data_make, const f_string_dynamics_t arguments) F_attribute_visibility_internal_d;
@@ -88,7 +88,7 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
- *   The arguments for the run or shell operation.
+ *   The arguments for the operation.
  * @param all
  *   If TRUE, then if the path is a directory, then recursively apply to all paths within the directory.
  *   If FALSE, then only apply to the given path.
@@ -118,7 +118,7 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
- *   The arguments for the run or shell operation.
+ *   The arguments for the operation.
  * @param if_not
  *   When TRUE, perform the if not is.
  *   When FALSE, perform the if is.
@@ -138,7 +138,7 @@ extern "C" {
  *   When TRUE, perform the if not is.
  *   When FALSE, perform the if is.
  * @param arguments
- *   The arguments for the run or shell operation.
+ *   The arguments for the operation.
  * @param state_process
  *   The operation process state.
  *
@@ -159,7 +159,7 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
- *   The arguments for the run or shell operation.
+ *   The arguments for the operation.
  * @param state_process
  *   The operation process state.
  *
@@ -180,7 +180,7 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
- *   The arguments for the run or shell operation.
+ *   The arguments for the operation.
  * @param if_not
  *   When TRUE, perform the if not is.
  *   When FALSE, perform the if is.
@@ -208,7 +208,7 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
- *   The arguments for the run or shell operation.
+ *   The arguments for the operation.
  * @param if_not
  *   When TRUE, perform the if not is.
  *   When FALSE, perform the if is.
@@ -232,7 +232,7 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
- *   The arguments for the run or shell operation.
+ *   The arguments for the operation.
  * @param if_not
  *   When TRUE, perform the if not is.
  *   When FALSE, perform the if is.
@@ -262,7 +262,7 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
- *   The arguments for the run or shell operation.
+ *   The arguments for the operation.
  * @param if_not
  *   When TRUE, perform the if not is.
  *   When FALSE, perform the if is.
@@ -290,7 +290,7 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
- *   The arguments for the run or shell operation.
+ *   The arguments for the operation.
  * @param if_not
  *   When TRUE, perform the if not is.
  *   When FALSE, perform the if is.
@@ -307,7 +307,7 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
- *   The arguments for the run or shell operation.
+ *   The arguments for the operation.
  * @param all
  *   If TRUE, then if the path is a directory, then recursively apply to all paths within the directory.
  *   If FALSE, then only apply to the given path.
@@ -337,7 +337,7 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
- *   The arguments for the run or shell operation.
+ *   The arguments for the operation.
  *
  * @return
  *   F_none on success.
@@ -358,7 +358,7 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
- *   The arguments for the run or shell operation.
+ *   The arguments for the operation.
  * @param all
  *   If TRUE, then if the path is a directory, then recursively apply to all paths within the directory.
  *   If FALSE, then only apply to the given path.
@@ -388,7 +388,7 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
- *   The arguments for the run or shell operation.
+ *   The arguments for the operation.
  *
  * @return
  *   F_none on success.
@@ -414,7 +414,7 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
- *   The arguments for the run or shell operation.
+ *   The arguments for the operation.
  *
  * @return
  *   F_none on success.
@@ -432,12 +432,36 @@ extern "C" {
 #endif // _di_fake_make_operate_process_type_pop_
 
 /**
+ * Perform the print operation process.
+ *
+ * @param data_make
+ *   All make related setting data, including data from the fakefile and the build settings file.
+ *   This resets and uses data_make.cache_1.
+ * @param arguments
+ *   The arguments for print operation.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Errors (with error bit) from: fake_make_operate_process_buffer_escape().
+ *   Errors (with error bit) from: f_string_dynamic_append().
+ *   Errors (with error bit) from: f_string_dynamic_increase_by().
+ *
+ * @see fake_make_operate_process_buffer_escape()
+ * @see f_string_dynamic_append()
+ * @see f_string_dynamic_increase_by()
+ */
+#ifndef _di_fake_make_operate_process_type_print_
+  extern f_status_t fake_make_operate_process_type_print(fake_make_data_t * const data_make, const f_string_dynamics_t arguments) F_attribute_visibility_internal_d;
+#endif // _di_fake_make_operate_process_type_print_
+
+/**
  * Perform the to operation process.
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
- *   The arguments for the run or shell operation.
+ *   The arguments for the operation.
  *
  * @return
  *   F_none on success.
@@ -465,7 +489,7 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
- *   The arguments for the run or shell operation.
+ *   The arguments for the operation.
  *
  * @return
  *   F_none on success.
@@ -486,7 +510,7 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param arguments
- *   The arguments for the run or shell operation.
+ *   The arguments for the operation.
  *
  * @return
  *   F_none on success.
@@ -508,7 +532,7 @@ extern "C" {
  *   All make related setting data, including data from the fakefile and the build settings file.
  *   This resets and uses data_make.cache_1.
  * @param arguments
- *   The arguments for the run or shell operation.
+ *   The arguments for the operation.
  *
  * @return
  *   F_none on success.

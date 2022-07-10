@@ -395,9 +395,29 @@ Fakefile Documentation:
 
     - print\:
       Print the content to the output screen.
-      This always prints a newline.
+      This always prints a newline at the end.
 
       All Content is printed, and if no Content is provided, an empty line is printed.
+
+      The following escape sequences are supported for printing special characters:
+      - "\f": Form Feed.
+      - "\n": New Line.
+      - "\r": Carriage Return.
+      - "\t": Tab.
+      - "\v": Vertical Tab.
+      - "\\": Backslash Character (may require additional slashes in certain circumstances.)
+      - "\0": NULL Character.
+      - "\U+": Unicode Sequence (followed by a valid Unicode sequence with a minimum 4 hexidecimal digits and a maximum of 6 hexidecimal digits).
+      - "\U-": Terminate a Unicode Sequence, allowing for "\U+000A\U-5" to be equivalent to "\n5".
+
+      If the Unicode is invalid, then nothing is printed for that character (the invalid character is skipped when printing).
+      Example Unicodes\:
+      - "\U+000A": Prints a new line, equivalent to "\n".
+      - "\U+2E19": Prints the Unicode feather-like character "⸙".
+
+      Only ASCII alpha-numeric hexidecimal digits are allowed in the Unicode sequence (upper or lower case).
+
+      Invalid or unknown escape sequences are not printed.
 
     - run\:
       Manually execute a remote program or script.
