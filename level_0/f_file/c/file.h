@@ -2098,7 +2098,7 @@ extern "C" {
  * @param mode
  *   The file modes do use when opening, as an fopen() file mode string.
  *   Set mode.used to 0 to determine mode from file.flags (falling back to read only as a failsafe).
- *   If neither truncate nor append are not specified in write only mode, then the failsafe is to append.
+ *   If neither truncate nor append are specified in write only mode, then the failsafe is to append.
  *
  *   File Modes (fopen() file modes vs open file modes):
  *     - "r":  O_RDONLY.

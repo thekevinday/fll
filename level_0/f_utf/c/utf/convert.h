@@ -154,8 +154,9 @@ extern "C" {
  *   There must be enough space in the character buffer to handle the Unicode width.
  *   It is recommended to always have 4 characters (4 uint8_t) of space available in character.
  * @param character
- *   The (UTF-8) character.
- *   The f_utf_char_t is a 32-bit integer containing UTF-8 sequences.
+ *   The (UTF-8) character as a sequence of bytes.
+ *   This must have a length equal to the width (up to 4 characters) to be safely used.
+ *   The caller is expected to ensure this.
  *
  * @return
  *   F_none on success.
