@@ -327,7 +327,7 @@ extern "C" {
                     except_in = va_arg(apl, f_string_ranges_t);
                   }
 
-                  if (partial.start > partial.stop) {
+                  if (partial.start > partial.stop || partial.start >= value.used) {
                     *status = F_data_not;
 
                     break;
@@ -350,7 +350,7 @@ extern "C" {
                   const f_array_lengths_t except_at = f_array_lengths_t_initialize;
                   const f_string_ranges_t except_in = va_arg(apl, f_string_ranges_t);
 
-                  if (partial.start > partial.stop) {
+                  if (partial.start > partial.stop || partial.start >= value.used) {
                     *status = F_data_not;
 
                     break;
@@ -370,7 +370,7 @@ extern "C" {
                   }
                 }
                 else {
-                  if (partial.start > partial.stop) {
+                  if (partial.start > partial.stop || partial.start >= value.used) {
                     *status = F_data_not;
 
                     break;
@@ -441,7 +441,7 @@ extern "C" {
                     except_in = va_arg(apl, f_string_ranges_t);
                   }
 
-                  if (partial.start > partial.stop) {
+                  if (partial.start > partial.stop || partial.start >= value.used) {
                     *status = F_data_not;
 
                     break;
@@ -464,7 +464,7 @@ extern "C" {
                   const f_array_lengths_t except_at = f_array_lengths_t_initialize;
                   const f_string_ranges_t except_in = va_arg(apl, f_string_ranges_t);
 
-                  if (partial.start > partial.stop) {
+                  if (partial.start > partial.stop || partial.start >= value.used) {
                     *status = F_data_not;
 
                     break;
@@ -484,7 +484,7 @@ extern "C" {
                   }
                 }
                 else {
-                  if (partial.start > partial.stop) {
+                  if (partial.start > partial.stop || partial.start >= value.used) {
                     *status = F_data_not;
 
                     break;
@@ -719,7 +719,7 @@ extern "C" {
                     except_in = va_arg(apl, f_string_ranges_t);
                   }
 
-                  if (partial.start > partial.stop) {
+                  if (partial.start > partial.stop || partial.start >= value.used) {
                     *status = F_data_not;
 
                     break;
@@ -742,7 +742,7 @@ extern "C" {
                   const f_array_lengths_t except_at = f_array_lengths_t_initialize;
                   const f_string_ranges_t except_in = va_arg(apl, f_string_ranges_t);
 
-                  if (partial.start > partial.stop) {
+                  if (partial.start > partial.stop || partial.start >= value.used) {
                     *status = F_data_not;
 
                     break;
@@ -762,7 +762,7 @@ extern "C" {
                   }
                 }
                 else {
-                  if (partial.start > partial.stop) {
+                  if (partial.start > partial.stop || partial.start >= value.used) {
                     *status = F_data_not;
 
                     break;
@@ -840,7 +840,7 @@ extern "C" {
                     except_in = va_arg(apl, f_string_ranges_t);
                   }
 
-                  if (partial.start > partial.stop) {
+                  if (partial.start > partial.stop || partial.start >= value.used) {
                     *status = F_data_not;
 
                     break;
@@ -863,7 +863,7 @@ extern "C" {
                   const f_array_lengths_t except_at = f_array_lengths_t_initialize;
                   const f_string_ranges_t except_in = va_arg(apl, f_string_ranges_t);
 
-                  if (partial.start > partial.stop) {
+                  if (partial.start > partial.stop || partial.start >= value.used) {
                     *status = F_data_not;
 
                     break;
@@ -883,7 +883,7 @@ extern "C" {
                   }
                 }
                 else {
-                  if (partial.start > partial.stop) {
+                  if (partial.start > partial.stop || partial.start >= value.used) {
                     *status = F_data_not;
 
                     break;
