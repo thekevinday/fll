@@ -76,23 +76,23 @@ extern "C" {
     }
 
     if (F_status_is_error_not(status)) {
-      context->set.reset.before = &context->reset;
-      context->set.reset.after = &context->reset;
-
-      context->set.warning.before = &context->warning;
-      context->set.warning.after = &context->reset;
-
       context->set.error.before = &context->error;
       context->set.error.after = &context->reset;
 
-      context->set.title.before = &context->title;
-      context->set.title.after = &context->reset;
+      context->set.important.before = &context->important;
+      context->set.important.after = &context->reset;
+
+      context->set.normal.before = &context->normal;
+      context->set.normal.after = &context->reset;
+
+      context->set.normal_reset.before = &context->normal_reset;
+      context->set.normal_reset.after = &context->reset;
 
       context->set.notable.before = &context->notable;
       context->set.notable.after = &context->reset;
 
-      context->set.important.before = &context->important;
-      context->set.important.after = &context->reset;
+      context->set.reset.before = &context->reset;
+      context->set.reset.after = &context->reset;
 
       context->set.standout.before = &context->standout;
       context->set.standout.after = &context->reset;
@@ -100,11 +100,11 @@ extern "C" {
       context->set.success.before = &context->success;
       context->set.success.after = &context->reset;
 
-      context->set.normal.before = &context->normal;
-      context->set.normal.after = &context->reset;
+      context->set.title.before = &context->title;
+      context->set.title.after = &context->reset;
 
-      context->set.normal_reset.before = &context->normal_reset;
-      context->set.normal_reset.after = &context->reset;
+      context->set.warning.before = &context->warning;
+      context->set.warning.after = &context->reset;
     }
 
     return status;

@@ -66,18 +66,18 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    status = f_string_dynamic_resize(0, &context->reset);
+    status = f_string_dynamic_resize(0, &context->error);
 
     if (F_status_is_error_not(status)) {
-      status = f_string_dynamic_resize(0, &context->warning);
+      status = f_string_dynamic_resize(0, &context->important);
     }
 
     if (F_status_is_error_not(status)) {
-      status = f_string_dynamic_resize(0, &context->error);
+      status = f_string_dynamic_resize(0, &context->normal);
     }
 
     if (F_status_is_error_not(status)) {
-      status = f_string_dynamic_resize(0, &context->title);
+      status = f_string_dynamic_resize(0, &context->normal_reset);
     }
 
     if (F_status_is_error_not(status)) {
@@ -85,7 +85,7 @@ extern "C" {
     }
 
     if (F_status_is_error_not(status)) {
-      status = f_string_dynamic_resize(0, &context->important);
+      status = f_string_dynamic_resize(0, &context->reset);
     }
 
     if (F_status_is_error_not(status)) {
@@ -97,11 +97,11 @@ extern "C" {
     }
 
     if (F_status_is_error_not(status)) {
-      status = f_string_dynamic_resize(0, &context->normal);
+      status = f_string_dynamic_resize(0, &context->title);
     }
 
     if (F_status_is_error_not(status)) {
-      status = f_string_dynamic_resize(0, &context->normal_reset);
+      status = f_string_dynamic_resize(0, &context->warning);
     }
 
     if (F_status_is_error(status)) return status;
@@ -120,18 +120,18 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    status = f_string_dynamic_adjust(0, &context->reset);
+    status = f_string_dynamic_adjust(0, &context->error);
 
     if (F_status_is_error_not(status)) {
-      status = f_string_dynamic_adjust(0, &context->warning);
+      status = f_string_dynamic_adjust(0, &context->important);
     }
 
     if (F_status_is_error_not(status)) {
-      status = f_string_dynamic_adjust(0, &context->error);
+      status = f_string_dynamic_adjust(0, &context->normal);
     }
 
     if (F_status_is_error_not(status)) {
-      status = f_string_dynamic_adjust(0, &context->title);
+      status = f_string_dynamic_adjust(0, &context->normal_reset);
     }
 
     if (F_status_is_error_not(status)) {
@@ -139,7 +139,7 @@ extern "C" {
     }
 
     if (F_status_is_error_not(status)) {
-      status = f_string_dynamic_adjust(0, &context->important);
+      status = f_string_dynamic_adjust(0, &context->reset);
     }
 
     if (F_status_is_error_not(status)) {
@@ -151,11 +151,11 @@ extern "C" {
     }
 
     if (F_status_is_error_not(status)) {
-      status = f_string_dynamic_adjust(0, &context->normal);
+      status = f_string_dynamic_adjust(0, &context->title);
     }
 
     if (F_status_is_error_not(status)) {
-      status = f_string_dynamic_adjust(0, &context->normal_reset);
+      status = f_string_dynamic_adjust(0, &context->warning);
     }
 
     if (F_status_is_error(status)) return status;

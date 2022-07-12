@@ -111,16 +111,16 @@ extern "C" {
 #ifndef _di_fll_program_parameter_process_empty_
   void fll_program_parameter_process_empty(f_color_context_t * const context, f_color_set_t * const sets[]) {
 
-    context->set.reset = f_color_set_empty_s;
-    context->set.warning = f_color_set_empty_s;
     context->set.error = f_color_set_empty_s;
-    context->set.title = f_color_set_empty_s;
-    context->set.notable = f_color_set_empty_s;
     context->set.important = f_color_set_empty_s;
-    context->set.standout = f_color_set_empty_s;
-    context->set.success = f_color_set_empty_s;
     context->set.normal = f_color_set_empty_s;
     context->set.normal_reset = f_color_set_empty_s;
+    context->set.notable = f_color_set_empty_s;
+    context->set.reset = f_color_set_empty_s;
+    context->set.standout = f_color_set_empty_s;
+    context->set.success = f_color_set_empty_s;
+    context->set.title = f_color_set_empty_s;
+    context->set.warning = f_color_set_empty_s;
 
     if (sets) {
       for (f_array_length_t i = 0; sets[i]; ++i) {
