@@ -163,10 +163,14 @@ extern "C" {
             return status;
           }
 
-          // Apply the IKI delimits to the buffer.
-          for (f_array_length_t j = 0; j < action->ikis.array[action->ikis.used].delimits.used; ++j) {
-            action->parameters.array[action->parameters.used].string[action->ikis.array[action->ikis.used].delimits.array[j]] = f_iki_syntax_placeholder_s.string[0];
-          } // for
+          // Apply the IKI delimits to the buffer, stripping out the NULL characters.
+          status = controller_rule_action_read_delimit_apply(global, &global.thread->cache, &action->ikis.array[action->ikis.used], &action->parameters.array[action->parameters.used]);
+
+          if (F_status_is_error(status)) {
+            controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "controller_rule_action_read_delimit_apply", F_true);
+
+            return status;
+          }
         }
 
         ++action->parameters.used;
@@ -317,10 +321,14 @@ extern "C" {
               return status;
             }
 
-            // Apply the IKI delimits to the buffer.
-            for (f_array_length_t j = 0; j < actions->array[actions->used].ikis.array[0].delimits.used; ++j) {
-              actions->array[actions->used].parameters.array[0].string[actions->array[actions->used].ikis.array[0].delimits.array[j]] = f_iki_syntax_placeholder_s.string[0];
-            } // for
+            // Apply the IKI delimits to the buffer, stripping out the NULL characters.
+            status = controller_rule_action_read_delimit_apply(global, cache, &actions->array[actions->used].ikis.array[0], &actions->array[actions->used].parameters.array[0]);
+
+            if (F_status_is_error(status)) {
+              controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "controller_rule_action_read_delimit_apply", F_true);
+
+              return status;
+            }
           }
 
           actions->array[actions->used].ikis.used = 1;
@@ -632,10 +640,14 @@ extern "C" {
               return status;
             }
 
-            // Apply the IKI delimits to the buffer.
-            for (f_array_length_t j = 0; j < actions->array[actions->used].ikis.array[0].delimits.used; ++j) {
-              actions->array[actions->used].parameters.array[0].string[actions->array[actions->used].ikis.array[0].delimits.array[j]] = f_iki_syntax_placeholder_s.string[0];
-            } // for
+            // Apply the IKI delimits to the buffer, stripping out the NULL characters.
+            status = controller_rule_action_read_delimit_apply(global, cache, &actions->array[actions->used].ikis.array[0], &actions->array[actions->used].parameters.array[0]);
+
+            if (F_status_is_error(status)) {
+              controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "controller_rule_action_read_delimit_apply", F_true);
+
+              return status;
+            }
           }
 
           actions->array[actions->used].ikis.used = 1;
@@ -685,6 +697,32 @@ extern "C" {
     return status;
   }
 #endif // _di_controller_rule_action_read_
+
+#ifndef _di_controller_rule_action_read_delimit_apply_
+  f_status_t controller_rule_action_read_delimit_apply(const controller_global_t global, controller_cache_t * const cache, f_iki_data_t * const iki_data, f_string_dynamic_t * const destination) {
+
+    if (!iki_data->delimits.used) return F_none;
+
+    cache->expanded.used = 0;
+
+    f_status_t status = f_string_dynamics_increase(F_memory_default_allocation_small_d, &cache->expanded);
+    if (F_status_is_error(status)) return status;
+
+    status = f_string_dynamic_append(*destination, &cache->expanded.array[0]);
+    if (F_status_is_error(status)) return status;
+
+    for (f_array_length_t j = 0; j < iki_data->delimits.used; ++j) {
+      cache->expanded.array[0].string[iki_data->delimits.array[j]] = f_iki_syntax_placeholder_s.string[0];
+    } // for
+
+    destination->used = 0;
+
+    status = f_string_dynamic_append_nulless(cache->expanded.array[0], destination);
+    if (F_status_is_error(status)) return status;
+
+    return F_none;
+  }
+#endif // _di_controller_rule_action_read_delimit_apply_
 
 #ifndef _di_controller_rule_action_read_rerun_number_
   f_status_t controller_rule_action_read_rerun_number(const controller_global_t global, const f_string_t name, controller_cache_t * const cache, f_array_length_t * const index, f_number_unsigned_t * const number) {

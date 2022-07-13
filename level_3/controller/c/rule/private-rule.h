@@ -159,6 +159,34 @@ extern "C" {
 #endif // _di_controller_rule_action_read_
 
 /**
+ * Apply delimits and remove resulting NULL characters.
+ *
+ * @param global
+ *   The global data.
+ * @param cache
+ *   A structure for containing and caching relevant data.
+ *   This uses cache->expanded.
+ * @param iki_data
+ *   The IKI data to process.
+ * @param destination
+ *   The string to save the expanded data to.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Errors (with error bit) from: f_string_dynamic_append().
+ *   Errors (with error bit) from: f_string_dynamic_append_nulless().
+ *   Errors (with error bit) from: f_string_dynamics_increase().
+ *
+ * @see f_string_dynamic_append()
+ * @see f_string_dynamic_append_nulless()
+ * @see f_string_dynamics_increase()
+ */
+#ifndef _di_controller_rule_action_read_delimit_apply_
+  extern f_status_t controller_rule_action_read_delimit_apply(const controller_global_t global, controller_cache_t * const cache, f_iki_data_t * const iki_data, f_string_dynamic_t * const destination) F_attribute_visibility_internal_d;
+#endif // _di_controller_rule_action_read_delimit_apply_
+
+/**
  * Copy a rule, allocating new space as necessary.
  *
  * This does not do any locking or unlocking for the rule data, be sure to lock appropriately before and after calling this.
