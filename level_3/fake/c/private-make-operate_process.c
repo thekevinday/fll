@@ -488,6 +488,9 @@ extern "C" {
         else if (source.string[i] == f_string_ascii_0_s.string[0]) {
           destination->string[destination->used++] = f_string_null_s.string[0];
         }
+        else if (source.string[i] == f_string_ascii_exclamation_s.string[0]) {
+          // The "\!" designates a do nothing character.
+        }
         else if (source.string[i] == f_string_ascii_U_s.string[0]) {
 
           // At the end of the string before a \U+XXXX sequence is completed is invalid.
@@ -582,10 +585,6 @@ extern "C" {
                 }
               }
             }
-          }
-          else if (source.string[i] == f_string_ascii_minus_s.string[0]) {
-
-            // The "\U-" designates the termination of a Unicode sequence.
           }
           else {
 

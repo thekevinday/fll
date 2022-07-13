@@ -52,7 +52,7 @@ extern "C" {
  *   - "\\": Backslash Character (may require additional slashes in certain circumstances.)
  *   - "\0": NULL Character.
  *   - "\U+": Unicode Sequence (followed by a valid Unicode sequence with a minimum 4 hexidecimal digits and a maximum of 6 hexidecimal digits).
- *   - "\U-": Terminate a Unicode Sequence, allowing for "\U+000A\U-5" to be equivalent to "\n5".
+ *   - "\!": Non-printing separator, allowing for "\U+000A\ 5" to be equivalent to "\n5".
  *
  * If the Unicode is invalid, then nothing is copied for that character (the invalid character is skipped when printing).
  * Example Unicodes\:

@@ -408,7 +408,7 @@ Fakefile Documentation:
       - "\\": Backslash Character (may require additional slashes in certain circumstances.)
       - "\0": NULL Character.
       - "\U+": Unicode Sequence (followed by a valid Unicode sequence with a minimum 4 hexidecimal digits and a maximum of 6 hexidecimal digits).
-      - "\U-": Terminate a Unicode Sequence, allowing for "\U+000A\U-5" to be equivalent to "\n5".
+      - "\!": Non-printing separator, allowing for "\U+000A\!5" to be equivalent to "\n5".
 
       If the Unicode is invalid, then nothing is printed for that character (the invalid character is skipped when printing).
       Example Unicodes\:
@@ -486,7 +486,7 @@ Fakefile Documentation:
       - "\\": Backslash Character (may require additional slashes in certain circumstances.)
       - "\0": NULL Character.
       - "\U+": Unicode Sequence (followed by a valid Unicode sequence with a minimum 4 hexidecimal digits and a maximum of 6 hexidecimal digits).
-      - "\U-": Terminate a Unicode Sequence, allowing for "\U+000A\U-5" to be equivalent to "\n5".
+      - "\!": Non-printing separator, allowing for "\U+000A\!5" to be equivalent to "\n5".
 
       If the Unicode is invalid, then nothing is printed for that character (the invalid character is skipped when printing).
       Example Unicodes\:
@@ -506,9 +506,20 @@ Fakefile Documentation:
     The use of IKI in this way is acceptable but it is not perfect.
     IKI is not designed to be a replacement to markup.
     The markup <strong>Example</strong> vs the IKI context:"notable" Example context:"notable" has obvious differences in the spaces.
-    The IKI by design cannot be used like this: context:"notable"Examplecontext:"notable".
+    The IKI by design cannot be used like this: context:"notable"Examplecontext:"notable" because the word "Example" and the word "context" collide.
 
     This context will respect the programs ++light, ++dark, and ++no_color parameters.
+
+    The following context are available\:
+    - error: Designate as an error, often printed in red.
+    - important: Designate as important.
+    - normal: Explicitly designate normal text.
+    - notable: Designate as notable (similar to "strong" or "bold" in HTML).
+    - reset: Remove the context.
+    - standout: Designate to make notable (similar to "italic" or "emphasis" in HTML).
+    - success: Designate as a success, often printed in bright green.
+    - title: Designate as a title.
+    - warning: Designate as a warning, often printed in some shade of orange.
 
   - define\:
     The define Object represents environment variables passed to the program or created by the program.

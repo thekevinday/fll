@@ -1814,35 +1814,35 @@ extern "C" {
 #endif // _di_fake_skeleton_content_
 
 #ifndef _di_fake_make_context_
-  #define FAKE_make_context_reset_s     "reset"
-  #define FAKE_make_context_warning_s   "warning"
   #define FAKE_make_context_error_s     "error"
-  #define FAKE_make_context_title_s     "title"
-  #define FAKE_make_context_notable_s   "notable"
   #define FAKE_make_context_important_s "important"
+  #define FAKE_make_context_normal_s    "normal"
+  #define FAKE_make_context_notable_s   "notable"
+  #define FAKE_make_context_reset_s     "reset"
   #define FAKE_make_context_standout_s  "standout"
   #define FAKE_make_context_success_s   "success"
-  #define FAKE_make_context_normal_s    "normal"
+  #define FAKE_make_context_title_s     "title"
+  #define FAKE_make_context_warning_s   "warning"
 
-  #define FAKE_make_context_reset_s_length     5
-  #define FAKE_make_context_warning_s_length   7
   #define FAKE_make_context_error_s_length     5
-  #define FAKE_make_context_title_s_length     5
-  #define FAKE_make_context_notable_s_length   7
   #define FAKE_make_context_important_s_length 9
+  #define FAKE_make_context_normal_s_length    6
+  #define FAKE_make_context_notable_s_length   7
+  #define FAKE_make_context_reset_s_length     5
   #define FAKE_make_context_standout_s_length  8
   #define FAKE_make_context_success_s_length   7
-  #define FAKE_make_context_normal_s_length    5
+  #define FAKE_make_context_title_s_length     5
+  #define FAKE_make_context_warning_s_length   7
 
-  extern const f_string_static_t fake_make_context_reset_s;
-  extern const f_string_static_t fake_make_context_warning_s;
   extern const f_string_static_t fake_make_context_error_s;
-  extern const f_string_static_t fake_make_context_title_s;
-  extern const f_string_static_t fake_make_context_notable_s;
   extern const f_string_static_t fake_make_context_important_s;
+  extern const f_string_static_t fake_make_context_normal_s;
+  extern const f_string_static_t fake_make_context_notable_s;
+  extern const f_string_static_t fake_make_context_reset_s;
   extern const f_string_static_t fake_make_context_standout_s;
   extern const f_string_static_t fake_make_context_success_s;
-  extern const f_string_static_t fake_make_context_normal_s;
+  extern const f_string_static_t fake_make_context_title_s;
+  extern const f_string_static_t fake_make_context_warning_s;
 #endif // _di_fake_make_context_
 
 #ifndef _di_fake_file_data_build_strings_

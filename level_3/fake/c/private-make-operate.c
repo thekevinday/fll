@@ -909,27 +909,27 @@ extern "C" {
     const f_string_static_t *context = 0;
 
     const f_string_static_t context_name[] = {
-      fake_make_context_reset_s,
-      fake_make_context_warning_s,
       fake_make_context_error_s,
-      fake_make_context_title_s,
-      fake_make_context_notable_s,
       fake_make_context_important_s,
+      fake_make_context_normal_s,
+      fake_make_context_notable_s,
+      fake_make_context_reset_s,
       fake_make_context_standout_s,
       fake_make_context_success_s,
-      fake_make_context_normal_s,
+      fake_make_context_title_s,
+      fake_make_context_warning_s,
     };
 
     const f_color_set_t context_value[] = {
-      data_make->main->context.set.reset,
-      data_make->main->context.set.warning,
       data_make->main->context.set.error,
-      data_make->main->context.set.title,
-      data_make->main->context.set.notable,
       data_make->main->context.set.important,
+      data_make->main->context.set.normal,
+      data_make->main->context.set.notable,
+      data_make->main->context.set.reset,
       data_make->main->context.set.standout,
       data_make->main->context.set.success,
-      data_make->main->context.set.normal,
+      data_make->main->context.set.title,
+      data_make->main->context.set.warning,
     };
 
     for (f_array_length_t i = 0; i < 9; ++i) {

@@ -299,15 +299,15 @@ extern "C" {
 #endif // _di_fake_skeleton_content_
 
 #ifndef _di_fake_make_context_
-  const f_string_static_t fake_make_context_reset_s = macro_f_string_static_t_initialize(FAKE_make_context_reset_s, 0, FAKE_make_context_reset_s_length);
-  const f_string_static_t fake_make_context_warning_s = macro_f_string_static_t_initialize(FAKE_make_context_warning_s, 0, FAKE_make_context_warning_s_length);
   const f_string_static_t fake_make_context_error_s = macro_f_string_static_t_initialize(FAKE_make_context_error_s, 0, FAKE_make_context_error_s_length);
-  const f_string_static_t fake_make_context_title_s = macro_f_string_static_t_initialize(FAKE_make_context_title_s, 0, FAKE_make_context_title_s_length);
-  const f_string_static_t fake_make_context_notable_s = macro_f_string_static_t_initialize(FAKE_make_context_notable_s, 0, FAKE_make_context_notable_s_length);
   const f_string_static_t fake_make_context_important_s = macro_f_string_static_t_initialize(FAKE_make_context_important_s, 0, FAKE_make_context_important_s_length);
+  const f_string_static_t fake_make_context_normal_s = macro_f_string_static_t_initialize(FAKE_make_context_normal_s, 0, FAKE_make_context_normal_s_length);
+  const f_string_static_t fake_make_context_notable_s = macro_f_string_static_t_initialize(FAKE_make_context_notable_s, 0, FAKE_make_context_notable_s_length);
+  const f_string_static_t fake_make_context_reset_s = macro_f_string_static_t_initialize(FAKE_make_context_reset_s, 0, FAKE_make_context_reset_s_length);
   const f_string_static_t fake_make_context_standout_s = macro_f_string_static_t_initialize(FAKE_make_context_standout_s, 0, FAKE_make_context_standout_s_length);
   const f_string_static_t fake_make_context_success_s = macro_f_string_static_t_initialize(FAKE_make_context_success_s, 0, FAKE_make_context_success_s_length);
-  const f_string_static_t fake_make_context_normal_s = macro_f_string_static_t_initialize(FAKE_make_context_normal_s, 0, FAKE_make_context_normal_s_length);
+  const f_string_static_t fake_make_context_title_s = macro_f_string_static_t_initialize(FAKE_make_context_title_s, 0, FAKE_make_context_title_s_length);
+  const f_string_static_t fake_make_context_warning_s = macro_f_string_static_t_initialize(FAKE_make_context_warning_s, 0, FAKE_make_context_warning_s_length);
 #endif // _di_fake_make_context_
 
 #ifndef _di_fake_file_data_build_strings_
