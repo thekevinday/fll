@@ -162,6 +162,11 @@ extern "C" {
 
             return status;
           }
+
+          // Apply the IKI delimits to the buffer.
+          for (f_array_length_t j = 0; j < action->ikis.array[action->ikis.used].delimits.used; ++j) {
+            action->parameters.array[action->parameters.used].string[action->ikis.array[action->ikis.used].delimits.array[j]] = f_iki_syntax_placeholder_s.string[0];
+          } // for
         }
 
         ++action->parameters.used;
@@ -311,6 +316,11 @@ extern "C" {
 
               return status;
             }
+
+            // Apply the IKI delimits to the buffer.
+            for (f_array_length_t j = 0; j < actions->array[actions->used].ikis.array[0].delimits.used; ++j) {
+              actions->array[actions->used].parameters.array[0].string[actions->array[actions->used].ikis.array[0].delimits.array[j]] = f_iki_syntax_placeholder_s.string[0];
+            } // for
           }
 
           actions->array[actions->used].ikis.used = 1;
@@ -621,6 +631,11 @@ extern "C" {
 
               return status;
             }
+
+            // Apply the IKI delimits to the buffer.
+            for (f_array_length_t j = 0; j < actions->array[actions->used].ikis.array[0].delimits.used; ++j) {
+              actions->array[actions->used].parameters.array[0].string[actions->array[actions->used].ikis.array[0].delimits.array[j]] = f_iki_syntax_placeholder_s.string[0];
+            } // for
           }
 
           actions->array[actions->used].ikis.used = 1;
