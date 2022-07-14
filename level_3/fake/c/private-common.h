@@ -1378,7 +1378,7 @@ extern "C" {
   #define FAKE_make_operation_argument_if_define_s        "define"
   #define FAKE_make_operation_argument_if_equal_s         "=="
   #define FAKE_make_operation_argument_if_equal_not_s     "<>"
-  #define FAKE_make_operation_argument_if_exists_s        "exists"
+  #define FAKE_make_operation_argument_if_exist_s         "exist"
   #define FAKE_make_operation_argument_if_failure_s       "failure"
   #define FAKE_make_operation_argument_if_greater_s       ">"
   #define FAKE_make_operation_argument_if_greater_equal_s ">="
@@ -1396,7 +1396,7 @@ extern "C" {
   #define FAKE_make_operation_argument_if_define_s_length        6
   #define FAKE_make_operation_argument_if_equal_s_length         2
   #define FAKE_make_operation_argument_if_equal_not_s_length     2
-  #define FAKE_make_operation_argument_if_exists_s_length        6
+  #define FAKE_make_operation_argument_if_exist_s_length         5
   #define FAKE_make_operation_argument_if_failure_s_length       7
   #define FAKE_make_operation_argument_if_greater_s_length       1
   #define FAKE_make_operation_argument_if_greater_equal_s_length 2
@@ -1414,7 +1414,7 @@ extern "C" {
   extern const f_string_static_t fake_make_operation_argument_if_define_s;
   extern const f_string_static_t fake_make_operation_argument_if_equal_s;
   extern const f_string_static_t fake_make_operation_argument_if_equal_not_s;
-  extern const f_string_static_t fake_make_operation_argument_if_exists_s;
+  extern const f_string_static_t fake_make_operation_argument_if_exist_s;
   extern const f_string_static_t fake_make_operation_argument_if_failure_s;
   extern const f_string_static_t fake_make_operation_argument_if_greater_s;
   extern const f_string_static_t fake_make_operation_argument_if_greater_equal_s;
@@ -1435,7 +1435,7 @@ extern "C" {
     fake_make_operation_if_type_if_define_e,
     fake_make_operation_if_type_if_equal_e,
     fake_make_operation_if_type_if_equal_not_e,
-    fake_make_operation_if_type_if_exists_e,
+    fake_make_operation_if_type_if_exist_e,
     fake_make_operation_if_type_if_failure_e,
     fake_make_operation_if_type_if_greater_e,
     fake_make_operation_if_type_if_greater_equal_e,
@@ -1446,7 +1446,7 @@ extern "C" {
     fake_make_operation_if_type_if_mode_e,
     fake_make_operation_if_type_if_not_e,
     fake_make_operation_if_type_if_not_define_e,
-    fake_make_operation_if_type_if_not_exists_e,
+    fake_make_operation_if_type_if_not_exist_e,
     fake_make_operation_if_type_if_not_group_e,
     fake_make_operation_if_type_if_not_is_e,
     fake_make_operation_if_type_if_not_mode_e,

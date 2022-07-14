@@ -149,9 +149,9 @@ extern "C" {
  *
  * @see f_file_exists()
  */
-#ifndef _di_fake_make_operate_process_type_if_exists_
-  extern f_status_t fake_make_operate_process_type_if_exists(fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, fake_state_process_t *state_process) F_attribute_visibility_internal_d;
-#endif // _di_fake_make_operate_process_type_if_exists_
+#ifndef _di_fake_make_operate_process_type_if_exist_
+  extern f_status_t fake_make_operate_process_type_if_exist(fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, fake_state_process_t *state_process) F_attribute_visibility_internal_d;
+#endif // _di_fake_make_operate_process_type_if_exist_
 
 /**
  * Perform the if >, >=, <, and <= operation processes.

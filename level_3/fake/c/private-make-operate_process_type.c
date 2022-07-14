@@ -355,8 +355,8 @@ extern "C" {
   }
 #endif // _di_fake_make_operate_process_type_if_define_
 
-#ifndef _di_fake_make_operate_process_type_if_exists_
-  f_status_t fake_make_operate_process_type_if_exists(fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, fake_state_process_t *state_process) {
+#ifndef _di_fake_make_operate_process_type_if_exist_
+  f_status_t fake_make_operate_process_type_if_exist(fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, fake_state_process_t *state_process) {
 
     f_status_t status = F_none;
     f_array_length_t i = if_not ? 2 : 1;
@@ -412,7 +412,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // _di_fake_make_operate_process_type_if_exists_
+#endif // _di_fake_make_operate_process_type_if_exist_
 
 #ifndef _di_fake_make_operate_process_type_if_is_
   f_status_t fake_make_operate_process_type_if_is(fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, fake_state_process_t *state_process) {

@@ -618,7 +618,7 @@ extern "C" {
           fake_make_operation_argument_if_define_s,
           fake_make_operation_argument_if_equal_s,
           fake_make_operation_argument_if_equal_not_s,
-          fake_make_operation_argument_if_exists_s,
+          fake_make_operation_argument_if_exist_s,
           fake_make_operation_argument_if_failure_s,
           fake_make_operation_argument_if_greater_s,
           fake_make_operation_argument_if_greater_equal_s,
@@ -629,7 +629,7 @@ extern "C" {
           fake_make_operation_argument_if_mode_s,
           fake_make_operation_argument_if_not_s,
           fake_make_operation_argument_if_define_s,    // If not define, represented by just "define".
-          fake_make_operation_argument_if_exists_s,    // If not exists, represented by just "exists".
+          fake_make_operation_argument_if_exist_s,    // If not exist, represented by just "exist".
           fake_make_operation_argument_if_group_s,     // If not group, represented by just "group".
           fake_make_operation_argument_if_is_s,        // If not is, represented by just "is".
           fake_make_operation_argument_if_mode_s,      // If not mode, represented by just "mode".
@@ -644,7 +644,7 @@ extern "C" {
           fake_make_operation_if_type_if_define_e,
           fake_make_operation_if_type_if_equal_e,
           fake_make_operation_if_type_if_equal_not_e,
-          fake_make_operation_if_type_if_exists_e,
+          fake_make_operation_if_type_if_exist_e,
           fake_make_operation_if_type_if_failure_e,
           fake_make_operation_if_type_if_greater_e,
           fake_make_operation_if_type_if_greater_equal_e,
@@ -655,7 +655,7 @@ extern "C" {
           fake_make_operation_if_type_if_mode_e,
           fake_make_operation_if_type_if_not_e,
           fake_make_operation_if_type_if_not_define_e,
-          fake_make_operation_if_type_if_not_exists_e,
+          fake_make_operation_if_type_if_not_exist_e,
           fake_make_operation_if_type_if_not_group_e,
           fake_make_operation_if_type_if_not_is_e,
           fake_make_operation_if_type_if_not_mode_e,
@@ -668,7 +668,7 @@ extern "C" {
 
         const f_string_static_t if_not_type_strings[] = {
           fake_make_operation_argument_if_define_s,
-          fake_make_operation_argument_if_exists_s,
+          fake_make_operation_argument_if_exist_s,
           fake_make_operation_argument_if_group_s,
           fake_make_operation_argument_if_is_s,
           fake_make_operation_argument_if_mode_s,
@@ -678,7 +678,7 @@ extern "C" {
 
         const uint8_t if_not_type_codes[] = {
           fake_make_operation_if_type_if_not_define_e,
-          fake_make_operation_if_type_if_not_exists_e,
+          fake_make_operation_if_type_if_not_exist_e,
           fake_make_operation_if_type_if_not_group_e,
           fake_make_operation_if_type_if_not_is_e,
           fake_make_operation_if_type_if_not_mode_e,
@@ -711,7 +711,7 @@ extern "C" {
           dereference ? 3 : 4, // If define.
           dereference ? 2 : 3, // If equal (==).
           dereference ? 2 : 3, // If equal not (<>).
-          dereference ? 2 : 3, // If exists.
+          dereference ? 2 : 3, // If exist.
           dereference ? 1 : 2, // If failure.
           dereference ? 2 : 3, // If greater (>).
           dereference ? 2 : 3, // If greater equal (>=).
@@ -722,7 +722,7 @@ extern "C" {
           dereference ? 4 : 5, // If mode.
           dereference ? 3 : 4, // If not.
           dereference ? 5 : 6, // If not define.
-          dereference ? 3 : 4, // If not exists.
+          dereference ? 3 : 4, // If not exist.
           dereference ? 4 : 5, // If not group.
           dereference ? 4 : 5, // If not is.
           dereference ? 5 : 6, // If not mode.
@@ -735,7 +735,7 @@ extern "C" {
 
         const uint8_t if_not_type_minimum[] = {
           dereference ? 4 : 5, // If not define.
-          dereference ? 3 : 4, // If not exists.
+          dereference ? 3 : 4, // If not exist.
           dereference ? 4 : 5, // If not group.
           dereference ? 4 : 5, // If not is.
           dereference ? 5 : 6, // If not mode.
@@ -841,11 +841,11 @@ extern "C" {
             return;
           }
 
-          if (state_process->condition == fake_make_operation_if_type_if_exists_e || state_process->condition == fake_make_operation_if_type_if_not_exists_e) {
+          if (state_process->condition == fake_make_operation_if_type_if_exist_e || state_process->condition == fake_make_operation_if_type_if_not_exist_e) {
             return;
           }
 
-          if (state_process->condition == fake_make_operation_if_type_if_group_e || state_process->condition == fake_make_operation_if_type_if_is_e || state_process->condition == fake_make_operation_if_type_if_mode_e || state_process->condition > fake_make_operation_if_type_if_not_exists_e && state_process->condition < fake_make_operation_if_type_if_success_e) {
+          if (state_process->condition == fake_make_operation_if_type_if_group_e || state_process->condition == fake_make_operation_if_type_if_is_e || state_process->condition == fake_make_operation_if_type_if_mode_e || state_process->condition > fake_make_operation_if_type_if_not_exist_e && state_process->condition < fake_make_operation_if_type_if_success_e) {
             if (state_process->condition == fake_make_operation_if_type_if_mode_e || state_process->condition == fake_make_operation_if_type_if_not_mode_e) {
               if (fl_string_dynamic_compare(fake_make_operation_argument_is_s, arguments.array[k]) == F_equal_to_not) {
                 if (fl_string_dynamic_compare(fake_make_operation_argument_has_s, arguments.array[k]) == F_equal_to_not) {
@@ -965,7 +965,7 @@ extern "C" {
                     }
                   }
                 }
-                else if (state_process->condition != fake_make_operation_if_type_if_exists_e && state_process->condition != fake_make_operation_if_type_if_is_e) {
+                else if (state_process->condition != fake_make_operation_if_type_if_exist_e && state_process->condition != fake_make_operation_if_type_if_is_e) {
 
                   // The existence tests do not need to happen here for *_if_exists and *_if_is as those two types will handle performing them during the process stage.
                   status_file = f_file_exists(arguments.array[i], dereference);

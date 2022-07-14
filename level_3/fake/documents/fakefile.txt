@@ -253,9 +253,9 @@ Fakefile Documentation:
           Test if one or more names are defined as an environment variable.
           For example, "if define PWD SHELL" would test if both the "PWD" and the "SHELL" variables are defined via the environment variables.
 
-        - exists "file path"\:
+        - exist "file path"\:
           Test if file exists.
-          For example, "if exists "a.txt" "b.txt" would test if both the file a.txt and b.txt exist.
+          For example, "if exist "a.txt" "b.txt" would test if both the file a.txt and b.txt exist.
 
         - failure\:
           Test if the previous section operation failed.
@@ -279,7 +279,7 @@ Fakefile Documentation:
 
           Only the following if conditions are supported\:
           - define.
-          - exists.
+          - exist.
           - group.
           - is.
           - mode.
@@ -288,7 +288,7 @@ Fakefile Documentation:
 
           Examples\:
           - "if not parameter work"
-          - "if not exists documentation.txt"
+          - "if not exist documentation.txt"
 
         - owner "some mode" "some file"\:
           Test if one or more files has the given owner.
@@ -594,7 +594,7 @@ Fakefile Documentation:
   The default behavior is normally to dereference the link target.
 
   For example, consider a symbolic link, called "some_file", that points to a file that does not exist (which means that the link in question is a broken link).
-  The Operation "if exists some_file" would return false.
-  The Operation "if no_dereference exists some_file" would return true.
+  The Operation "if exist some_file" would return false.
+  The Operation "if no_dereference exist some_file" would return true.
   This is because the symbolic link itself, "some_file", does exist but the file it is pointing to does not.
   The "no_dereference" is ignored for conditions that do not need it.

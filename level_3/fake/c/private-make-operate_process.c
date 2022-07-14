@@ -227,8 +227,8 @@ extern "C" {
           } // for
         } // for
       }
-      else if (state_process->condition == fake_make_operation_if_type_if_exists_e) {
-        *status = fake_make_operate_process_type_if_exists(data_make, arguments, F_false, state_process);
+      else if (state_process->condition == fake_make_operation_if_type_if_exist_e) {
+        *status = fake_make_operate_process_type_if_exist(data_make, arguments, F_false, state_process);
       }
       else if (state_process->condition == fake_make_operation_if_type_if_failure_e) {
         if (state_process->success) {
@@ -256,8 +256,8 @@ extern "C" {
       else if (state_process->condition == fake_make_operation_if_type_if_not_parameter_e) {
         fake_make_operate_process_type_if_parameter(data_make, arguments, F_true, state_process);
       }
-      else if (state_process->condition == fake_make_operation_if_type_if_not_exists_e) {
-        *status = fake_make_operate_process_type_if_exists(data_make, arguments, F_true, state_process);
+      else if (state_process->condition == fake_make_operation_if_type_if_not_exist_e) {
+        *status = fake_make_operate_process_type_if_exist(data_make, arguments, F_true, state_process);
       }
       else if (state_process->condition == fake_make_operation_if_type_if_not_group_e) {
         *status = fake_make_operate_process_type_if_group(data_make, arguments, F_true, state_process);
