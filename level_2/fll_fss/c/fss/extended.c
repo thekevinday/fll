@@ -29,6 +29,8 @@ extern "C" {
       status = f_string_rangess_increase(state.step_small, contents);
       if (F_status_is_error(status)) return status;
 
+      contents->array[contents->used].used = 0;
+
       if (objects_quoted) {
         status = f_uint8s_increase(state.step_small, objects_quoted);
         if (F_status_is_error(status)) return status;
@@ -37,6 +39,8 @@ extern "C" {
       if (contents_quoted) {
         status = f_uint8ss_increase(state.step_small, contents_quoted);
         if (F_status_is_error(status)) return status;
+
+        contents_quoted->array[contents_quoted->used].used = 0;
       }
 
       do {
@@ -71,16 +75,12 @@ extern "C" {
           }
 
           if (found_data) {
-            if (range->start >= buffer.used) {
-               return F_none_eos;
-            }
+            if (range->start >= buffer.used) return F_none_eos;
 
             return F_none_stop;
           }
 
-          if (range->start >= buffer.used) {
-             return F_data_not_eos;
-          }
+          if (range->start >= buffer.used) return F_data_not_eos;
 
           return F_data_not_stop;
         }
@@ -103,7 +103,8 @@ extern "C" {
 
           break;
         }
-        else if (status == F_fss_found_object_content_not) {
+
+        if (status == F_fss_found_object_content_not) {
           found_data = F_true;
 
           break;
@@ -127,25 +128,23 @@ extern "C" {
 
         return status;
       }
-      else if (status == F_data_not_eos || status == F_data_not_stop || status == F_end_not_group_eos || status == F_end_not_group_stop) {
+
+      if (status == F_data_not_eos || status == F_data_not_stop || status == F_end_not_group_eos || status == F_end_not_group_stop) {
 
         // If at least some valid object was found, then return F_none equivelents.
         if (objects->used > initial_used) {
-          if (status == F_data_not_eos) {
-            return F_none_eos;
-          }
-
-          if (status == F_data_not_stop) {
-            return F_none_stop;
-          }
+          if (status == F_data_not_eos) return F_none_eos;
+          if (status == F_data_not_stop) return F_none_stop;
         }
 
         return status;
       }
-      else if (status != F_fss_found_object && status != F_fss_found_content && status != F_fss_found_content_not && status != F_fss_found_object_content_not && status != F_end_not_group) {
+
+      if (status != F_fss_found_object && status != F_fss_found_content && status != F_fss_found_content_not && status != F_fss_found_object_content_not && status != F_end_not_group) {
         return status;
       }
-      else if (range->start >= range->stop || range->start >= buffer.used) {
+
+      if (range->start >= range->stop || range->start >= buffer.used) {
 
         // When content is found, the range->start is incremented, if content is found at range->stop, then range->start will be > range.stop.
         if (status == F_fss_found_object || status == F_fss_found_content || status == F_fss_found_content_not || status == F_fss_found_object_content_not || status == F_end_not_group) {
@@ -162,16 +161,12 @@ extern "C" {
         }
 
         if (range->start >= buffer.used) {
-          if (status == F_end_not_group) {
-            return F_end_not_group_eos;
-          }
+          if (status == F_end_not_group) return F_end_not_group_eos;
 
           return F_none_eos;
         }
 
-        if (status == F_end_not_group) {
-          return F_end_not_group_stop;
-        }
+        if (status == F_end_not_group) return F_end_not_group_stop;
 
         return F_none_stop;
       }

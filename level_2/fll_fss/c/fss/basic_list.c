@@ -26,6 +26,8 @@ extern "C" {
       status = f_string_rangess_increase(state.step_small, contents);
       if (F_status_is_error(status)) return status;
 
+      contents->array[contents->used].used = 0;
+
       do {
         status = fl_fss_basic_list_object_read(buffer, state, range, &objects->array[objects->used], objects_delimits);
         if (F_status_is_error(status)) return status;
@@ -43,16 +45,12 @@ extern "C" {
           }
 
           if (found_data) {
-            if (range->start >= buffer.used) {
-              return F_none_eos;
-            }
+            if (range->start >= buffer.used) return F_none_eos;
 
             return F_none_stop;
           }
 
-          if (range->start >= buffer.used) {
-            return F_data_not_eos;
-          }
+          if (range->start >= buffer.used) return F_data_not_eos;
 
           return F_data_not_stop;
         }
@@ -90,13 +88,8 @@ extern "C" {
 
         // If at least some valid object was found, then return F_none equivalents.
         if (objects->used > initial_used) {
-          if (status == F_data_not_eos) {
-            return F_none_eos;
-          }
-
-          if (status == F_data_not_stop) {
-            return F_none_stop;
-          }
+          if (status == F_data_not_eos) return F_none_eos;
+          if (status == F_data_not_stop) return F_none_stop;
         }
 
         return status;
@@ -114,9 +107,7 @@ extern "C" {
           ++contents->used;
         }
 
-        if (range->start >= buffer.used) {
-          return F_none_eos;
-        }
+        if (range->start >= buffer.used) return F_none_eos;
 
         return F_none_stop;
       }

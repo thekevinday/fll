@@ -655,21 +655,15 @@ extern "C" {
     delimits->used = delimits_used;
     comments->used = comments_used;
 
-    if (F_status_is_error(status)) {
-      return status;
-    }
+    if (F_status_is_error(status)) return status;
 
     if (range->start > range->stop) {
-      if (!depth) {
-        return F_status_set_error(F_end_not_stop);
-      }
+      if (!depth) return F_status_set_error(F_end_not_stop);
 
       return F_status_set_error(F_end_not_nest_stop);
     }
 
-    if (!depth) {
-      return F_status_set_error(F_end_not_eos);
-    }
+    if (!depth) return F_status_set_error(F_end_not_eos);
 
     return F_status_set_error(F_end_not_nest_eos);
   }
@@ -814,6 +808,7 @@ extern "C" {
           }
 
           range->start = start + 1;
+
           continue;
         }
       }
@@ -854,6 +849,7 @@ extern "C" {
 
               destination->string[destination->used++] = content.string[start];
               range->start = start + 1;
+
               continue;
             }
           }
@@ -878,6 +874,7 @@ extern "C" {
 
         destination->string[destination->used++] = content.string[start];
         range->start = start + 1;
+
         continue;
       }
       else if (content.string[range->start] == f_fss_comment_s.string[0] && !has_graph) {
@@ -926,6 +923,7 @@ extern "C" {
 
     if (F_status_is_error(status)) {
       destination->used = used_start;
+
       return status;
     }
 
@@ -941,13 +939,8 @@ extern "C" {
       destination->string[destination->used++] = f_fss_embedded_list_close_end_s.string[0];
     }
 
-    if (range->start > range->stop) {
-      return F_none_stop;
-    }
-
-    if (range->start >= content.used) {
-      return F_none_eos;
-    }
+    if (range->start > range->stop) return F_none_stop;
+    if (range->start >= content.used) return F_none_eos;
 
     return F_none;
   }
@@ -974,13 +967,8 @@ extern "C" {
       return F_fss_found_object_not;
     }
 
-    if (status == F_none_eos) {
-      return F_data_not_eos;
-    }
-
-    if (status == F_none_stop) {
-      return F_data_not_stop;
-    }
+    if (status == F_none_eos) return F_data_not_eos;
+    if (status == F_none_stop) return F_data_not_stop;
 
     // Return found nothing if this line only contains white space and delimit placeholders.
     if (buffer.string[range->start] == f_fss_eol_s.string[0]) {
@@ -1004,13 +992,8 @@ extern "C" {
         return status;
       }
 
-      if (status == F_none_eos) {
-        return F_data_not_eos;
-      }
-
-      if (status == F_none_stop) {
-        return F_data_not_stop;
-      }
+      if (status == F_none_eos) return F_data_not_eos;
+      if (status == F_none_stop) return F_data_not_stop;
 
       // Move the start position to after the EOL.
       ++range->start;
@@ -1485,13 +1468,8 @@ extern "C" {
       }
     }
 
-    if (range->start > range->stop) {
-      return F_none_stop;
-    }
-
-    if (range->start >= object.used) {
-      return F_none_eos;
-    }
+    if (range->start > range->stop) return F_none_stop;
+    if (range->start >= object.used) return F_none_eos;
 
     return F_none;
   }

@@ -489,13 +489,8 @@ extern "C" {
       destination->string[destination->used++] = f_fss_extended_list_close_end_s.string[0];
     }
 
-    if (range->start > range->stop) {
-      return F_none_stop;
-    }
-
-    if (range->start >= content.used) {
-      return F_none_eos;
-    }
+    if (range->start > range->stop) return F_none_stop;
+    if (range->start >= content.used) return F_none_eos;
 
     return F_none;
   }
@@ -522,13 +517,8 @@ extern "C" {
       return F_fss_found_object_not;
     }
 
-    if (status == F_none_eos) {
-      return F_data_not_eos;
-    }
-
-    if (status == F_none_stop) {
-      return F_data_not_stop;
-    }
+    if (status == F_none_eos) return F_data_not_eos;
+    if (status == F_none_stop) return F_data_not_stop;
 
     // Return found nothing if this line only contains white space and delimit placeholders.
     if (buffer.string[range->start] == f_fss_eol_s.string[0]) {
@@ -552,13 +542,8 @@ extern "C" {
         return status;
       }
 
-      if (status == F_none_eos) {
-        return F_data_not_eos;
-      }
-
-      if (status == F_none_stop) {
-        return F_data_not_stop;
-      }
+      if (status == F_none_eos) return F_data_not_eos;
+      if (status == F_none_stop) return F_data_not_stop;
 
       // Move the start position to after the EOL.
       ++range->start;
@@ -1033,13 +1018,8 @@ extern "C" {
       }
     }
 
-    if (range->start > range->stop) {
-      return F_none_stop;
-    }
-
-    if (range->start >= object.used) {
-      return F_none_eos;
-    }
+    if (range->start > range->stop) return F_none_stop;
+    if (range->start >= object.used) return F_none_eos;
 
     return F_none;
   }

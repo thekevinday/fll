@@ -26,6 +26,8 @@ extern "C" {
       status = f_string_rangess_increase(state.step_small, contents);
       if (F_status_is_error(status)) return status;
 
+      contents->array[contents->used].used = 0;
+
       do {
         status = fl_fss_basic_list_object_read(buffer, state, range, &objects->array[objects->used], objects_delimits);
         if (F_status_is_error(status)) return status;
@@ -35,9 +37,9 @@ extern "C" {
             if (fl_string_dynamic_partial_compare_string(f_fss_string_payload_s.string, buffer, f_fss_string_payload_s.used, objects->array[objects->used]) == F_equal_to) {
               status = F_fss_found_object_content_not;
             }
-            else {
 
-              // Returning without a "payload" is an error.
+            // Returning without a "payload" is an error.
+            else {
               status = F_status_set_error(F_fss_found_object_content_not);
             }
 
@@ -53,16 +55,12 @@ extern "C" {
 
           // Returning without a "payload" is an error.
           if (found_data) {
-            if (range->start >= buffer.used) {
-              return F_status_set_error(F_none_eos);
-            }
+            if (range->start >= buffer.used) return F_status_set_error(F_none_eos);
 
             return F_status_set_error(F_none_stop);
           }
 
-          if (range->start >= buffer.used) {
-            return F_status_set_error(F_data_not_eos);
-          }
+          if (range->start >= buffer.used) return F_status_set_error(F_data_not_eos);
 
           return F_status_set_error(F_data_not_stop);
         }
@@ -107,6 +105,8 @@ extern "C" {
           status2 = f_string_ranges_increase(state.step_small, &contents->array[contents->used]);
           if (F_status_is_error(status2)) return status2;
 
+          contents->array[contents->used].used = 0;
+
           if (fl_string_dynamic_partial_compare_string(f_fss_string_payload_s.string, buffer, f_fss_string_payload_s.used, objects->array[objects->used]) == F_equal_to) {
             ++objects->used;
 
@@ -137,13 +137,8 @@ extern "C" {
         if (objects->used > initial_used) {
 
           // Returning without a "payload" is an error.
-          if (status == F_data_not_eos) {
-            return F_status_set_error(F_none_eos);
-          }
-
-          if (status == F_data_not_stop) {
-            return F_status_set_error(F_none_stop);
-          }
+          if (status == F_data_not_eos) return F_status_set_error(F_none_eos);
+          if (status == F_data_not_stop) return F_status_set_error(F_none_stop);
         }
 
         return F_status_set_error(status);
@@ -162,9 +157,7 @@ extern "C" {
         }
 
         // Returning without a "payload" is an error.
-        if (range->start >= buffer.used) {
-          return F_status_set_error(F_none_eos);
-        }
+        if (range->start >= buffer.used) return F_status_set_error(F_none_eos);
 
         return F_status_set_error(F_none_stop);
       }
@@ -206,9 +199,7 @@ extern "C" {
           if (state.interrupt) {
             status = state.interrupt((void *) &state, 0);
 
-            if (F_status_set_fine(status) == F_interrupt) {
-              return F_status_set_error(F_interrupt);
-            }
+            if (F_status_set_fine(status) == F_interrupt) return F_status_set_error(F_interrupt);
           }
 
           memcpy(destination->string + destination->used + i, content.string + i, sizeof(f_char_t) * F_fss_default_block_size_normal_d);

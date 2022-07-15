@@ -26,13 +26,8 @@ extern "C" {
       return F_fss_found_content_not;
     }
 
-    if (status == F_none_eos) {
-      return F_data_not_eos;
-    }
-
-    if (status == F_none_stop) {
-      return F_data_not_stop;
-    }
+    if (status == F_none_eos) return F_data_not_eos;
+    if (status == F_none_stop) return F_data_not_stop;
 
     const f_array_length_t delimits_used = delimits->used;
     const f_array_length_t quotes_used = quotes ? quotes->used : 0;
@@ -71,7 +66,7 @@ extern "C" {
           if (quoted == f_fss_quote_type_double_e) {
             quotes->array[quotes->used] = f_string_ascii_quote_double_s.string[0];
           }
-          else if (quoted == f_fss_quote_type_double_e) {
+          else if (quoted == f_fss_quote_type_single_e) {
             quotes->array[quotes->used] = f_string_ascii_quote_single_s.string[0];
           }
           else {
@@ -121,9 +116,7 @@ extern "C" {
     } // while
 
     if (content_found) {
-      if (content_found == 2) {
-        return status;
-      }
+      if (content_found == 2) return status;
 
       return F_fss_found_content;
     }
@@ -160,9 +153,7 @@ extern "C" {
         destination->string[destination->used++] = f_fss_extended_close_s.string[0];
       }
 
-      if (status == F_data_not_stop) {
-        return F_none_stop;
-      }
+      if (status == F_data_not_stop) return F_none_stop;
 
       return F_none_eos;
     }

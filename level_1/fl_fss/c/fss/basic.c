@@ -23,13 +23,8 @@ extern "C" {
       return F_fss_found_content_not;
     }
 
-    if (status == F_none_eos) {
-      return F_data_not_eos;
-    }
-
-    if (status == F_none_stop) {
-      return F_data_not_stop;
-    }
+    if (status == F_none_eos) return F_data_not_eos;
+    if (status == F_none_stop) return F_data_not_stop;
 
     status = f_string_ranges_increase(state.step_small, found);
     if (F_status_is_error(status)) return status;
@@ -51,16 +46,11 @@ extern "C" {
       status = f_fss_skip_past_delimit(state, buffer, range);
       if (F_status_is_error(status)) break;
 
-      if (status == F_none_eos || status == F_none_stop) {
-        return status;
-      }
-
+      if (status == F_none_eos || status == F_none_stop) return status;
       if (buffer.string[range->start] == f_fss_basic_close_s.string[0]) break;
     } // for
 
-    if (F_status_is_error(status)) {
-      return status;
-    }
+    if (F_status_is_error(status)) return status;
 
     found->array[found->used++].stop = range->start - 1;
 
@@ -93,9 +83,7 @@ extern "C" {
         destination->string[destination->used++] = f_fss_basic_close_s.string[0];
       }
 
-      if (range->start > range->stop) {
-        return F_data_not_stop;
-      }
+      if (range->start > range->stop) return F_data_not_stop;
 
       return F_data_not_eos;
     }
@@ -111,9 +99,7 @@ extern "C" {
       if (state.interrupt) {
         status = state.interrupt((void *) &state, 0);
 
-        if (F_status_set_fine(status) == F_interrupt) {
-          return F_status_set_error(F_interrupt);
-        }
+        if (F_status_set_fine(status) == F_interrupt) return F_status_set_error(F_interrupt);
       }
 
       if (content.string[range->start] == f_fss_eol_s.string[0]) {
@@ -131,9 +117,7 @@ extern "C" {
       destination->string[destination->used++] = f_fss_basic_close_s.string[0];
     }
 
-    if (range->start > range->stop) {
-      return F_none_stop;
-    }
+    if (range->start > range->stop) return F_none_stop;
 
     return F_none_eos;
   }

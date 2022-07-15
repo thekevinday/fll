@@ -31,6 +31,8 @@ extern "C" {
         status = f_fss_items_resize(state.step_small, &nest->depth[0]);
         if (F_status_is_error(status)) return status;
 
+        nest->depth[nest->used].used = 0;
+
         status = fl_fss_embedded_list_object_read(buffer, state, range, &nest->depth[0].array[nest->depth[0].used].object, objects_delimits);
         if (F_status_is_error(status)) return status;
 
@@ -42,19 +44,14 @@ extern "C" {
           }
 
           if (found_data) {
-            if (range->start >= buffer.used) {
-              return F_none_eos;
-            }
+            if (range->start >= buffer.used) return F_none_eos;
 
             return F_none_stop;
           }
-          else {
-            if (range->start >= buffer.used) {
-              return F_data_not_eos;
-            }
 
-            return F_data_not_stop;
-          }
+          if (range->start >= buffer.used) return F_data_not_eos;
+
+          return F_data_not_stop;
         }
 
         if (status == F_fss_found_object) {
@@ -76,45 +73,37 @@ extern "C" {
       if (status == F_none_eos || status == F_none_stop) {
         return status;
       }
-      else if (status == F_data_not_eos || status == F_data_not_stop) {
+
+      if (status == F_data_not_eos || status == F_data_not_stop) {
 
         // If at least some valid object was found, then return F_none equivalents.
         if (nest->depth[0].used > initial_used) {
-          if (status == F_data_not_eos) {
-            return F_none_eos;
-          }
-
-          if (status == F_data_not_stop) {
-            return F_none_stop;
-          }
+          if (status == F_data_not_eos) return F_none_eos;
+          if (status == F_data_not_stop) return F_none_stop;
         }
 
         return status;
       }
-      else if (status == F_end_not_eos || status == F_end_not_stop || status == F_end_not_nest_eos || status == F_end_not_nest_stop) {
+
+      if (status == F_end_not_eos || status == F_end_not_stop || status == F_end_not_nest_eos || status == F_end_not_nest_stop) {
 
         // If at least some valid object was found, then return F_none equivalents.
         if (nest->depth[0].used > initial_used) {
-          if (status == F_data_not_eos) {
-            return F_none_eos;
-          }
-
-          if (status == F_data_not_stop) {
-            return F_none_stop;
-          }
+          if (status == F_data_not_eos) return F_none_eos;
+          if (status == F_data_not_stop) return F_none_stop;
         }
 
         return status;
       }
-      else if (status != F_fss_found_object && status != F_fss_found_content && status != F_fss_found_content_not && status != F_fss_found_object_content_not) {
+
+      if (status != F_fss_found_object && status != F_fss_found_content && status != F_fss_found_content_not && status != F_fss_found_object_content_not) {
         return status;
       }
-      else if (range->start >= range->stop || range->start >= buffer.used) {
+
+      if (range->start >= range->stop || range->start >= buffer.used) {
 
         // When content is found, the range->start is incremented, if content is found at range->stop, then range->start will be > range.stop.
-        if (range->start >= buffer.used) {
-          return F_none_eos;
-        }
+        if (range->start >= buffer.used) return F_none_eos;
 
         return F_none_stop;
       }

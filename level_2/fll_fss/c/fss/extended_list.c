@@ -26,6 +26,8 @@ extern "C" {
       status = f_string_rangess_increase(state.step_small, contents);
       if (F_status_is_error(status)) return status;
 
+      contents->array[contents->used].used = 0;
+
       do {
         status = fl_fss_extended_list_object_read(buffer, state, range, &objects->array[objects->used], objects_delimits);
         if (F_status_is_error(status)) return status;
@@ -43,19 +45,14 @@ extern "C" {
           }
 
           if (found_data) {
-            if (range->start >= buffer.used) {
-              return F_none_eos;
-            }
+            if (range->start >= buffer.used) return F_none_eos;
 
             return F_none_stop;
           }
-          else {
-            if (range->start >= buffer.used) {
-              return F_data_not_eos;
-            }
 
-            return F_data_not_stop;
-          }
+          if (range->start >= buffer.used) return F_data_not_eos;
+
+          return F_data_not_stop;
         }
 
         if (status == F_fss_found_object) {
@@ -85,25 +82,23 @@ extern "C" {
 
         return status;
       }
-      else if (status == F_data_not_eos || status == F_data_not_stop) {
+
+      if (status == F_data_not_eos || status == F_data_not_stop) {
 
         // If at least some valid object was found, then return F_none equivalents.
         if (objects->used > initial_used) {
-          if (status == F_data_not_eos) {
-            return F_none_eos;
-          }
-
-          if (status == F_data_not_stop) {
-            return F_none_stop;
-          }
+          if (status == F_data_not_eos) return F_none_eos;
+          if (status == F_data_not_stop) return F_none_stop;
         }
 
         return status;
       }
-      else if (status != F_fss_found_object && status != F_fss_found_content && status != F_fss_found_content_not && status != F_fss_found_object_content_not) {
+
+      if (status != F_fss_found_object && status != F_fss_found_content && status != F_fss_found_content_not && status != F_fss_found_object_content_not) {
         return status;
       }
-      else if (range->start >= range->stop || range->start >= buffer.used) {
+
+      if (range->start >= range->stop || range->start >= buffer.used) {
 
         // When content is found, the range->start is incremented, if content is found at range->stop, then range->start will be > range.stop.
         if (status == F_fss_found_object || status == F_fss_found_content || status == F_fss_found_content_not || status == F_fss_found_object_content_not) {
@@ -111,9 +106,7 @@ extern "C" {
           ++contents->used;
         }
 
-        if (range->start >= buffer.used) {
-          return F_none_eos;
-        }
+        if (range->start >= buffer.used) return F_none_eos;
 
         return F_none_stop;
       }
