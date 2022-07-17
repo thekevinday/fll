@@ -106,6 +106,8 @@ extern "C" {
       data_make.error.set = &data->main->context.set;
     }
 
+    data_make.error.verbosity = data->main->output.verbosity;
+
     {
       const int result = fake_make_operate_section(&data_make, data_make.id_main, &section_stack, &status);
 
