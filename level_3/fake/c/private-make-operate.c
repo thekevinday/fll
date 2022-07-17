@@ -381,20 +381,20 @@ extern "C" {
 
                     if (!reserved_value[k]->array[l].used) continue;
 
+                    if (separate) {
+                      *status = f_string_dynamic_append(f_string_space_s, &data_make->cache_arguments.array[data_make->cache_arguments.used]);
+
+                      if (F_status_is_error(*status)) {
+                        fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamic_append", F_true);
+
+                        break;
+                      }
+                    }
+
                     *status = f_string_dynamic_append_nulless(reserved_value[k]->array[l], &data_make->cache_arguments.array[data_make->cache_arguments.used]);
 
                     if (F_status_is_error(*status)) {
                       fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamic_append_nulless", F_true);
-
-                      break;
-                    }
-
-                    ++data_make->cache_arguments.used;
-
-                    *status = f_string_dynamics_increase(fake_default_allocation_small_d, &data_make->cache_arguments);
-
-                    if (F_status_is_error(*status)) {
-                      fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamics_increase", F_true);
 
                       break;
                     }
