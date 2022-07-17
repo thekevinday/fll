@@ -368,7 +368,24 @@ extern "C" {
               data_make->cache_arguments.array[data_make->cache_arguments.used].used = 0;
 
               if (data_make->path.stack.used) {
+                *status = f_string_dynamic_increase_by(data_make->path.stack.array[0].used + f_path_separator_s.used + 1, &data_make->cache_arguments.array[data_make->cache_arguments.used]);
+
+                if (F_status_is_error(*status)) {
+                  fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamic_increase_by", F_true);
+
+                  break;
+                }
+
                 *status = f_string_dynamic_append(data_make->path.stack.array[0], &data_make->cache_arguments.array[data_make->cache_arguments.used]);
+
+                if (F_status_is_error(*status)) {
+                  fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamic_append", F_true);
+
+                  break;
+                }
+
+                // For safe path handling, always append the trailing slash.
+                *status = f_string_dynamic_append(f_path_separator_s, &data_make->cache_arguments.array[data_make->cache_arguments.used]);
 
                 if (F_status_is_error(*status)) {
                   fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamic_append", F_true);
@@ -423,15 +440,29 @@ extern "C" {
                     if (!reserved_value[k]->array[l].used) continue;
 
                     if (separate) {
-                      *status = f_string_dynamic_append(f_string_space_s, &data_make->cache_arguments.array[data_make->cache_arguments.used]);
+                      if (quotes.array[i]) {
+                        *status = f_string_dynamic_append(f_string_space_s, &data_make->cache_arguments.array[data_make->cache_arguments.used]);
 
-                      if (F_status_is_error(*status)) {
-                        fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamic_append", F_true);
+                        if (F_status_is_error(*status)) {
+                          fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamic_append", F_true);
 
-                        break;
+                          break;
+                        }
                       }
 
-                      separate = F_false;
+                      // Unquoted use separate parameters rather then being separated by a space.
+                      else {
+                        ++data_make->cache_arguments.used;
+
+                        *status = f_string_dynamics_increase(fake_default_allocation_small_d, &data_make->cache_arguments);
+
+                        if (F_status_is_error(*status)) {
+                          fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamics_increase", F_true);
+
+                          break;
+                        }
+                      }
+
                     }
 
                     *status = f_string_dynamic_append_nulless(reserved_value[k]->array[l], &data_make->cache_arguments.array[data_make->cache_arguments.used]);
@@ -441,6 +472,8 @@ extern "C" {
 
                       break;
                     }
+
+                    separate = F_true;
                   } // for
                 }
 
@@ -462,12 +495,12 @@ extern "C" {
                 separate = F_false;
 
                 if (parameter->array[k].value.used) {
-                  if (quotes.array[i]) {
-                    for (l = 0; l < parameter->array[k].value.used; ++l) {
+                  for (l = 0; l < parameter->array[k].value.used; ++l) {
 
-                      if (!parameter->array[k].value.array[l].used) continue;
+                    if (!parameter->array[k].value.array[l].used) continue;
 
-                      if (separate) {
+                    if (separate) {
+                      if (quotes.array[i]) {
                         *status = f_string_dynamic_append(f_string_space_s, &data_make->cache_arguments.array[data_make->cache_arguments.used]);
 
                         if (F_status_is_error(*status)) {
@@ -477,24 +510,8 @@ extern "C" {
                         }
                       }
 
-                      *status = f_string_dynamic_append_nulless(parameter->array[k].value.array[l], &data_make->cache_arguments.array[data_make->cache_arguments.used]);
-
-                      if (F_status_is_error(*status)) {
-                        fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamic_append_nulless", F_true);
-
-                        break;
-                      }
-
-                      separate = F_true;
-                    } // for
-                  }
-                  else {
-                    for (l = 0; l < parameter->array[k].value.used; ++l) {
-
-                      if (!parameter->array[k].value.array[l].used) continue;
-
                       // Unquoted use separate parameters rather then being separated by a space.
-                      if (separate) {
+                      else {
                         ++data_make->cache_arguments.used;
 
                         *status = f_string_dynamics_increase(fake_default_allocation_small_d, &data_make->cache_arguments);
@@ -505,18 +522,18 @@ extern "C" {
                           break;
                         }
                       }
+                    }
 
-                      *status = f_string_dynamic_append_nulless(parameter->array[k].value.array[l], &data_make->cache_arguments.array[data_make->cache_arguments.used]);
+                    *status = f_string_dynamic_append_nulless(parameter->array[k].value.array[l], &data_make->cache_arguments.array[data_make->cache_arguments.used]);
 
-                      if (F_status_is_error(*status)) {
-                        fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamic_append_nulless", F_true);
+                    if (F_status_is_error(*status)) {
+                      fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamic_append_nulless", F_true);
 
-                        break;
-                      }
+                      break;
+                    }
 
-                      separate = F_true;
-                    } // for
-                  }
+                    separate = F_true;
+                  } // for
 
                   if (F_status_is_error(*status)) break;
                 }
