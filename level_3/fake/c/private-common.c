@@ -396,7 +396,11 @@ extern "C" {
     f_string_dynamic_resize(0, &data->buffer);
     f_string_dynamic_resize(0, &data->cache_1);
     f_string_dynamic_resize(0, &data->cache_2);
-    f_string_dynamic_resize(0, &data->path_cache);
+    f_string_dynamic_resize(0, &data->cache_path);
+
+    f_string_dynamics_resize(0, &data->cache_arguments);
+
+    f_iki_data_delete(&data->cache_iki);
 
     return F_none;
   }

@@ -45,15 +45,13 @@ extern "C" {
  *   The content array.
  * @param quoteds
  *   The array of quoted associated with the content.
- * @param arguments
- *   The expanded arguments.
  * @param status
  *   The return status.
  *
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_operate_expand_
-  extern void fake_make_operate_expand(fake_make_data_t * const data_make, const f_string_range_t section_name, const f_fss_content_t content, const f_fss_quotes_t quoteds, f_string_dynamics_t * const arguments, f_status_t * const status) F_attribute_visibility_internal_d;
+  extern void fake_make_operate_expand(fake_make_data_t * const data_make, const f_string_range_t section_name, const f_fss_content_t content, const f_fss_quotes_t quoteds, f_status_t * const status) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_expand_
 
 /**
@@ -67,8 +65,6 @@ extern "C" {
  *   The quoted associated with the content.
  * @param range_name
  *   The range representing the variable content name string within the data_make->buffer.
- * @param arguments
- *   The expanded arguments.
  *
  * @return
  *   F_true on success and match expanded.
@@ -77,7 +73,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_operate_expand_context_
-  extern f_status_t fake_make_operate_expand_context(fake_make_data_t * const data_make, const f_fss_quote_t quoted, const f_string_range_t range_name, f_string_dynamics_t * const arguments) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_expand_context(fake_make_data_t * const data_make, const f_fss_quote_t quoted, const f_string_range_t range_name) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_expand_context_
 
 /**
@@ -89,8 +85,6 @@ extern "C" {
  *   The quoted associated with the content.
  * @param range_name
  *   The range representing the variable content name string within the data_make->buffer.
- * @param arguments
- *   The expanded arguments.
  *
  * @return
  *   F_true on success and match expanded.
@@ -107,7 +101,7 @@ extern "C" {
  * @see f_string_dynamics_increase()
  */
 #ifndef _di_fake_make_operate_expand_environment_
-  extern f_status_t fake_make_operate_expand_environment(fake_make_data_t * const data_make, const f_fss_quote_t quoted, const f_string_range_t range_name, f_string_dynamics_t * const arguments) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_expand_environment(fake_make_data_t * const data_make, const f_fss_quote_t quoted, const f_string_range_t range_name) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_expand_environment_
 
 /**
@@ -119,8 +113,6 @@ extern "C" {
  *   The quoted associated with the content.
  * @param range_name
  *   The range representing the variable content name string within the data_make->buffer.
- * @param arguments
- *   The expanded arguments.
  *
  * @return
  *   F_true on success and match expanded.
@@ -129,7 +121,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_operate_expand_build_
-  extern f_status_t fake_make_operate_expand_build(fake_make_data_t * const data_make, const f_fss_quote_t quoted, const f_string_range_t range_name, f_string_dynamics_t * const arguments) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_expand_build(fake_make_data_t * const data_make, const f_fss_quote_t quoted, const f_string_range_t range_name) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_expand_build_
 
 /**

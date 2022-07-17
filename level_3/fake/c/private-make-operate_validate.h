@@ -22,8 +22,6 @@ extern "C" {
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param section_name
  *   The section name.
- * @param arguments
- *   The expanded arguments.
  * @param state_process
  *   The operation and if-condition operation states.
  *   This condition will be updated by this as appropriate.
@@ -35,7 +33,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_operate_validate_
-  extern void fake_make_operate_validate(fake_make_data_t * const data_make, const f_string_range_t section_name, const f_string_dynamics_t arguments, fake_state_process_t * const state_process, f_array_lengths_t * const section_stack, f_status_t * const status) F_attribute_visibility_internal_d;
+  extern void fake_make_operate_validate(fake_make_data_t * const data_make, const f_string_range_t section_name, fake_state_process_t * const state_process, f_array_lengths_t * const section_stack, f_status_t * const status) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_validate_
 
 /**

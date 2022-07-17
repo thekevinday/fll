@@ -167,6 +167,9 @@ extern "C" {
 
           delimits.used = 0;
           content_range = list_contents.array[i].array[0];
+          data_make->fakefile.array[data_make->fakefile.used].objects.used = 0;
+          data_make->fakefile.array[data_make->fakefile.used].contents.used = 0;
+          data_make->fakefile.array[data_make->fakefile.used].quotess.used = 0;
 
           *status = fll_fss_extended_read(data_make->buffer, state, &content_range, &data_make->fakefile.array[data_make->fakefile.used].objects, &data_make->fakefile.array[data_make->fakefile.used].contents, 0, &data_make->fakefile.array[data_make->fakefile.used].quotess, &delimits, 0);
 

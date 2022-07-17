@@ -1666,7 +1666,9 @@ extern "C" {
  * buffer:           A buffer used during processing.
  * cache_1:          An additional buffer for caching purposes.
  * cache_2:          An additional buffer for caching purposes.
- * path_cache:       A buffer for path-specific caching.
+ * cache_path:       A buffer for path-specific caching.
+ * cache_arguments:  A cache for expanded arguments.
+ * cache_iki:        A cache for IKI data.
  * id_main:          Index of the "main" Section.
  * main:             The main program data.
  * data:             The Fake make program data.
@@ -1690,7 +1692,9 @@ extern "C" {
     f_string_dynamic_t buffer;
     f_string_dynamic_t cache_1;
     f_string_dynamic_t cache_2;
-    f_string_dynamic_t path_cache;
+    f_string_dynamic_t cache_path;
+    f_string_dynamics_t cache_arguments;
+    f_iki_data_t cache_iki;
 
     f_array_length_t id_main;
 
@@ -1712,6 +1716,8 @@ extern "C" {
     f_string_dynamic_t_initialize, \
     f_string_dynamic_t_initialize, \
     f_string_dynamic_t_initialize, \
+    f_string_dynamics_t_initialize, \
+    f_iki_data_t_initialize, \
     0, \
     0, \
     0, \

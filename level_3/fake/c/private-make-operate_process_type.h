@@ -17,8 +17,6 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
- * @param arguments
- *   The arguments for the operation.
  * @param clone
  *   If TRUE, perform a copy that is a clone (preserved timestamps, roles, and permissions).
  *   If FALSE, perforrm a normaly copy without preserving properties.
@@ -39,7 +37,7 @@ extern "C" {
  * @see fl_directory_copy()
  */
 #ifndef _di_fake_make_operate_process_type_copy_
-  extern f_status_t fake_make_operate_process_type_copy(fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool clone) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_process_type_copy(fake_make_data_t * const data_make, const bool clone) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_copy_
 
 /**
@@ -47,8 +45,6 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
- * @param arguments
- *   The arguments for the operation.
  * @param all
  *   If TRUE, then if the path is a directory, then recursively apply to all paths within the directory.
  *   If FALSE, then only apply to the given path.
@@ -67,7 +63,7 @@ extern "C" {
  * @see f_directory_remove_custom()
  */
 #ifndef _di_fake_make_operate_process_type_deletes_
-  extern f_status_t fake_make_operate_process_type_deletes(fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool all) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_process_type_deletes(fake_make_data_t * const data_make, const bool all) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_deletes_
 
 /**
@@ -75,11 +71,9 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
- * @param arguments
- *   The arguments for the operation.
  */
 #ifndef _di_fake_make_operate_process_type_fail_
-  extern void fake_make_operate_process_type_fail(fake_make_data_t * const data_make, const f_string_dynamics_t arguments) F_attribute_visibility_internal_d;
+  extern void fake_make_operate_process_type_fail(fake_make_data_t * const data_make) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_fail_
 
 /**
@@ -87,8 +81,6 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
- * @param arguments
- *   The arguments for the operation.
  * @param all
  *   If TRUE, then if the path is a directory, then recursively apply to all paths within the directory.
  *   If FALSE, then only apply to the given path.
@@ -109,7 +101,7 @@ extern "C" {
  * @see fake_make_get_id_group()
  */
 #ifndef _di_fake_make_operate_process_type_groups_
-  extern f_status_t fake_make_operate_process_type_groups(fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool all) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_process_type_groups(fake_make_data_t * const data_make, const bool all) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_groups_
 
 /**
@@ -117,8 +109,6 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
- * @param arguments
- *   The arguments for the operation.
  * @param if_not
  *   When TRUE, perform the if not is.
  *   When FALSE, perform the if is.
@@ -126,7 +116,7 @@ extern "C" {
  *   The operation process state.
  */
 #ifndef _di_fake_make_operate_process_type_if_define_
-  extern void fake_make_operate_process_type_if_define(fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, fake_state_process_t *state_process) F_attribute_visibility_internal_d;
+  extern void fake_make_operate_process_type_if_define(fake_make_data_t * const data_make, const bool if_not, fake_state_process_t *state_process) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_if_define_
 
 /**
@@ -137,8 +127,6 @@ extern "C" {
  * @param if_not
  *   When TRUE, perform the if not is.
  *   When FALSE, perform the if is.
- * @param arguments
- *   The arguments for the operation.
  * @param state_process
  *   The operation process state.
  *
@@ -150,7 +138,7 @@ extern "C" {
  * @see f_file_exists()
  */
 #ifndef _di_fake_make_operate_process_type_if_exist_
-  extern f_status_t fake_make_operate_process_type_if_exist(fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, fake_state_process_t *state_process) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_process_type_if_exist(fake_make_data_t * const data_make, const bool if_not, fake_state_process_t *state_process) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_if_exist_
 
 /**
@@ -158,8 +146,6 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
- * @param arguments
- *   The arguments for the operation.
  * @param state_process
  *   The operation process state.
  *
@@ -171,7 +157,7 @@ extern "C" {
  * @see fl_conversion_dynamic_partial_to_unsigned_detect()
  */
 #ifndef _di_fake_make_operate_process_type_if_greater_if_lesser_
-  extern f_status_t fake_make_operate_process_type_if_greater_if_lesser(fake_make_data_t * const data_make, const f_string_dynamics_t arguments, fake_state_process_t *state_process) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_process_type_if_greater_if_lesser(fake_make_data_t * const data_make, fake_state_process_t *state_process) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_if_greater_if_lesser_
 
 /**
@@ -179,8 +165,6 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
- * @param arguments
- *   The arguments for the operation.
  * @param if_not
  *   When TRUE, perform the if not is.
  *   When FALSE, perform the if is.
@@ -199,7 +183,7 @@ extern "C" {
  * @see fake_make_get_id_group()
  */
 #ifndef _di_fake_make_operate_process_type_if_group_
-  extern f_status_t fake_make_operate_process_type_if_group(fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, fake_state_process_t *state_process) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_process_type_if_group(fake_make_data_t * const data_make, const bool if_not, fake_state_process_t *state_process) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_if_group_
 
 /**
@@ -207,8 +191,6 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
- * @param arguments
- *   The arguments for the operation.
  * @param if_not
  *   When TRUE, perform the if not is.
  *   When FALSE, perform the if is.
@@ -223,7 +205,7 @@ extern "C" {
  * @see f_file_mode_read()
  */
 #ifndef _di_fake_make_operate_process_type_if_is_
-  extern f_status_t fake_make_operate_process_type_if_is(fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, fake_state_process_t *state_process) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_process_type_if_is(fake_make_data_t * const data_make, const bool if_not, fake_state_process_t *state_process) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_if_is_
 
 /**
@@ -231,8 +213,6 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
- * @param arguments
- *   The arguments for the operation.
  * @param if_not
  *   When TRUE, perform the if not is.
  *   When FALSE, perform the if is.
@@ -253,7 +233,7 @@ extern "C" {
  * @see fake_make_get_id_mode()
  */
 #ifndef _di_fake_make_operate_process_type_if_mode_
-  extern f_status_t fake_make_operate_process_type_if_mode(fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, fake_state_process_t *state_process) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_process_type_if_mode(fake_make_data_t * const data_make, const bool if_not, fake_state_process_t *state_process) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_if_mode_
 
 /**
@@ -261,8 +241,6 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
- * @param arguments
- *   The arguments for the operation.
  * @param if_not
  *   When TRUE, perform the if not is.
  *   When FALSE, perform the if is.
@@ -281,7 +259,7 @@ extern "C" {
  * @see fake_make_get_id_owner()
  */
 #ifndef _di_fake_make_operate_process_type_if_owner_
-  extern f_status_t fake_make_operate_process_type_if_owner(fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, fake_state_process_t *state_process) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_process_type_if_owner(fake_make_data_t * const data_make, const bool if_not, fake_state_process_t *state_process) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_if_owner_
 
 /**
@@ -289,8 +267,6 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
- * @param arguments
- *   The arguments for the operation.
  * @param if_not
  *   When TRUE, perform the if not is.
  *   When FALSE, perform the if is.
@@ -298,7 +274,7 @@ extern "C" {
  *   The operation process state.
  */
 #ifndef _di_fake_make_operate_process_type_if_parameter_
-  extern void fake_make_operate_process_type_if_parameter(fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool if_not, fake_state_process_t *state_process) F_attribute_visibility_internal_d;
+  extern void fake_make_operate_process_type_if_parameter(fake_make_data_t * const data_make, const bool if_not, fake_state_process_t *state_process) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_if_parameter_
 
 /**
@@ -306,8 +282,6 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
- * @param arguments
- *   The arguments for the operation.
  * @param all
  *   If TRUE, then if the path is a directory, then recursively apply to all paths within the directory.
  *   If FALSE, then only apply to the given path.
@@ -328,7 +302,7 @@ extern "C" {
  * @see fake_make_get_id_mode()
  */
 #ifndef _di_fake_make_operate_process_type_modes_
-  extern f_status_t fake_make_operate_process_type_modes(fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool all) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_process_type_modes(fake_make_data_t * const data_make, const bool all) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_modes_
 
 /**
@@ -336,8 +310,6 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
- * @param arguments
- *   The arguments for the operation.
  *
  * @return
  *   F_none on success.
@@ -349,7 +321,7 @@ extern "C" {
  * @see fll_file_move()
  */
 #ifndef _di_fake_make_operate_process_type_move_
-  extern f_status_t fake_make_operate_process_type_move(fake_make_data_t * const data_make, const f_string_dynamics_t arguments) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_process_type_move(fake_make_data_t * const data_make) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_move_
 
 /**
@@ -357,8 +329,6 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
- * @param arguments
- *   The arguments for the operation.
  * @param all
  *   If TRUE, then if the path is a directory, then recursively apply to all paths within the directory.
  *   If FALSE, then only apply to the given path.
@@ -379,7 +349,7 @@ extern "C" {
  * @see fake_make_get_id_owner()
  */
 #ifndef _di_fake_make_operate_process_type_owners_
-  extern f_status_t fake_make_operate_process_type_owners(fake_make_data_t * const data_make, const f_string_dynamics_t arguments, const bool all) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_process_type_owners(fake_make_data_t * const data_make, const bool all) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_owners_
 
 /**
@@ -387,8 +357,6 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
- * @param arguments
- *   The arguments for the operation.
  *
  * @return
  *   F_none on success.
@@ -402,7 +370,7 @@ extern "C" {
  * @see f_string_map_multis_resize()
  */
 #ifndef _di_fake_make_operate_process_type_parameter_
-  extern f_status_t fake_make_operate_process_type_parameter(fake_make_data_t * const data_make, const f_string_dynamics_t arguments) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_process_type_parameter(fake_make_data_t * const data_make) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_parameter_
 
 /**
@@ -413,8 +381,6 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
- * @param arguments
- *   The arguments for the operation.
  *
  * @return
  *   F_none on success.
@@ -428,7 +394,7 @@ extern "C" {
  * @see fake_make_path_relative()
  */
 #ifndef _di_fake_make_operate_process_type_pop_
-  extern f_status_t fake_make_operate_process_type_pop(fake_make_data_t * const data_make, const f_string_dynamics_t arguments) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_process_type_pop(fake_make_data_t * const data_make) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_pop_
 
 /**
@@ -452,7 +418,7 @@ extern "C" {
  * @see f_string_dynamic_increase_by()
  */
 #ifndef _di_fake_make_operate_process_type_print_
-  extern f_status_t fake_make_operate_process_type_print(fake_make_data_t * const data_make, const f_string_dynamics_t arguments) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_process_type_print(fake_make_data_t * const data_make) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_print_
 
 /**
@@ -460,8 +426,6 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
- * @param arguments
- *   The arguments for the operation.
  *
  * @return
  *   F_none on success.
@@ -480,7 +444,7 @@ extern "C" {
  * @see fake_make_path_relative()
  */
 #ifndef _di_fake_make_operate_process_type_to_
-  extern f_status_t fake_make_operate_process_type_to(fake_make_data_t * const data_make, const f_string_dynamics_t arguments) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_process_type_to(fake_make_data_t * const data_make) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_to_
 
 /**
@@ -488,8 +452,6 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
- * @param arguments
- *   The arguments for the operation.
  *
  * @return
  *   F_none on success.
@@ -501,7 +463,7 @@ extern "C" {
  * @see f_string_dynamic_resize()
  */
 #ifndef _di_fake_make_operate_process_type_top_
-  extern f_status_t fake_make_operate_process_type_top(fake_make_data_t * const data_make, const f_string_dynamics_t arguments) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_process_type_top(fake_make_data_t * const data_make) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_top_
 
 /**
@@ -509,8 +471,6 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
- * @param arguments
- *   The arguments for the operation.
  *
  * @return
  *   F_none on success.
@@ -522,7 +482,7 @@ extern "C" {
  * @see f_file_touch()
  */
 #ifndef _di_fake_make_operate_process_type_touch_
-  extern f_status_t fake_make_operate_process_type_touch(fake_make_data_t * const data_make, const f_string_dynamics_t arguments) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_process_type_touch(fake_make_data_t * const data_make) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_touch_
 
 /**
@@ -531,8 +491,6 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  *   This resets and uses data_make.cache_1.
- * @param arguments
- *   The arguments for the operation.
  *
  * @return
  *   F_none on success.
@@ -546,7 +504,7 @@ extern "C" {
  * @see f_file_stream_write()
  */
 #ifndef _di_fake_make_operate_process_type_write_
-  extern f_status_t fake_make_operate_process_type_write(fake_make_data_t * const data_make, const f_string_dynamics_t arguments) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_process_type_write(fake_make_data_t * const data_make) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_write_
 
 #ifdef __cplusplus

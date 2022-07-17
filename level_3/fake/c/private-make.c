@@ -9,27 +9,27 @@ extern "C" {
 #ifndef _di_fake_make_assure_inside_project_
   f_status_t fake_make_assure_inside_project(fake_make_data_t * const data_make, const f_string_static_t path) {
 
-    data_make->path_cache.used = 0;
+    data_make->cache_path.used = 0;
 
-    f_status_t status = fll_path_canonical(path, &data_make->path_cache);
+    f_status_t status = fll_path_canonical(path, &data_make->cache_path);
     if (F_status_is_error(status)) return status;
 
-    if (data_make->path_cache.used < data_make->path.stack.array[0].used) {
+    if (data_make->cache_path.used < data_make->path.stack.array[0].used) {
       return F_status_set_error(F_false);
     }
 
     const f_string_range_t range = macro_f_string_range_t_initialize2(data_make->path.stack.array[0].used);
 
     if (range.start <= range.stop) {
-      status = fl_string_dynamic_partial_compare(data_make->path.stack.array[0], data_make->path_cache, range, range);
+      status = fl_string_dynamic_partial_compare(data_make->path.stack.array[0], data_make->cache_path, range, range);
       if (F_status_is_error(status)) return status;
 
       if (status) {
-        if (data_make->path_cache.used == data_make->path.stack.array[0].used) {
+        if (data_make->cache_path.used == data_make->path.stack.array[0].used) {
           return F_true;
         }
 
-        if (data_make->path_cache.string[data_make->path.stack.array[0].used] == f_path_separator_s.string[0]) {
+        if (data_make->cache_path.string[data_make->path.stack.array[0].used] == f_path_separator_s.string[0]) {
           return F_true;
         }
       }
@@ -194,7 +194,7 @@ extern "C" {
 #ifndef _di_fake_make_path_relative_
   f_status_t fake_make_path_relative(fake_make_data_t * const data_make, const f_string_static_t path) {
 
-    data_make->path_cache.used = 0;
+    data_make->cache_path.used = 0;
 
     if (!path.used || path.used == data_make->path.stack.array[0].used) {
       return F_none;
@@ -209,10 +209,10 @@ extern "C" {
     range.start = data_make->path.stack.array[0].used + 1;
     range.stop = range.start + (path.used - range.start) - 1;
 
-    f_status_t status = f_string_dynamic_partial_append(path, range, &data_make->path_cache);
+    f_status_t status = f_string_dynamic_partial_append(path, range, &data_make->cache_path);
     if (F_status_is_error(status)) return status;
 
-    status = f_string_dynamic_terminate(&data_make->path_cache);
+    status = f_string_dynamic_terminate(&data_make->cache_path);
     if (F_status_is_error(status)) return status;
 
     return status;

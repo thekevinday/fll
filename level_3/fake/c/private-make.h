@@ -17,7 +17,7 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
- *   The data_make.path_cache will be updated to reflect the full path to this file.
+ *   The data_make.cache_path will be updated to reflect the full path to this file.
  * @param path
  *   file path to get the real path of.
  *
@@ -106,7 +106,7 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
- *   The relative path is stored in data_make.path_cache.
+ *   The relative path is stored in data_make.cache_path.
  * @param path
  *   The NULL terminated path to get the relative path of.
  *
