@@ -22,14 +22,14 @@ main:
 
   operate ld_library_path
 
-  if exists build/programs/shared/test-f_socket
+  if exist build/programs/shared/test-f_socket
     shell build/programs/shared/test-f_socket
 
-  if exists build/programs/static/test-f_socket
+  if exist build/programs/static/test-f_socket
     shell build/programs/static/test-f_socket
 
-  if not exists build/programs/shared/test-f_socket
-  and not exists build/programs/static/test-f_socket
+  if not exist build/programs/shared/test-f_socket
+  and not exist build/programs/static/test-f_socket
     operate not_created
 
 not_created:

@@ -22,14 +22,14 @@ main:
 
   operate ld_library_path
 
-  if exists build/programs/shared/test-f_file
+  if exist build/programs/shared/test-f_file
     shell build/programs/shared/test-f_file
 
-  if exists build/programs/static/test-f_file
+  if exist build/programs/static/test-f_file
     shell build/programs/static/test-f_file
 
-  if not exists build/programs/shared/test-f_file
-  and not exists build/programs/static/test-f_file
+  if not exist build/programs/shared/test-f_file
+  and not exist build/programs/static/test-f_file
     operate not_created
 
 not_created:

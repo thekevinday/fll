@@ -22,14 +22,14 @@ main:
 
   operate ld_library_path
 
-  if exists build/programs/shared/test-f_iki
+  if exist build/programs/shared/test-f_iki
     shell build/programs/shared/test-f_iki
 
-  if exists build/programs/static/test-f_iki
+  if exist build/programs/static/test-f_iki
     shell build/programs/static/test-f_iki
 
-  if not exists build/programs/shared/test-f_iki
-  and not exists build/programs/static/test-f_iki
+  if not exist build/programs/shared/test-f_iki
+  and not exist build/programs/static/test-f_iki
     operate not_created
 
 not_created:

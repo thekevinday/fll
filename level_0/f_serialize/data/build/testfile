@@ -22,14 +22,14 @@ main:
 
   operate ld_library_path
 
-  if exists build/programs/shared/test-f_serialize
+  if exist build/programs/shared/test-f_serialize
     shell build/programs/shared/test-f_serialize
 
-  if exists build/programs/static/test-f_serialize
+  if exist build/programs/static/test-f_serialize
     shell build/programs/static/test-f_serialize
 
-  if not exists build/programs/shared/test-f_serialize
-  and not exists build/programs/static/test-f_serialize
+  if not exist build/programs/shared/test-f_serialize
+  and not exist build/programs/static/test-f_serialize
     operate not_created
 
 not_created:
