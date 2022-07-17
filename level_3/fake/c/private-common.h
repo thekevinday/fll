@@ -1472,6 +1472,7 @@ extern "C" {
 
   #define FAKE_make_parameter_variable_build_s     "build"
   #define FAKE_make_parameter_variable_color_s     "color"
+  #define FAKE_make_parameter_variable_current_s   "current"
   #define FAKE_make_parameter_variable_data_s      "data"
   #define FAKE_make_parameter_variable_define_s    "define"
   #define FAKE_make_parameter_variable_fakefile_s  "fakefile"
@@ -1513,6 +1514,7 @@ extern "C" {
 
   #define FAKE_make_parameter_variable_build_s_length     5
   #define FAKE_make_parameter_variable_color_s_length     5
+  #define FAKE_make_parameter_variable_current_s_length   7
   #define FAKE_make_parameter_variable_data_s_length      4
   #define FAKE_make_parameter_variable_define_s_length    6
   #define FAKE_make_parameter_variable_fakefile_s_length  8
@@ -1554,6 +1556,7 @@ extern "C" {
 
   extern const f_string_static_t fake_make_parameter_variable_build_s;
   extern const f_string_static_t fake_make_parameter_variable_color_s;
+  extern const f_string_static_t fake_make_parameter_variable_current_s;
   extern const f_string_static_t fake_make_parameter_variable_data_s;
   extern const f_string_static_t fake_make_parameter_variable_define_s;
   extern const f_string_static_t fake_make_parameter_variable_fakefile_s;

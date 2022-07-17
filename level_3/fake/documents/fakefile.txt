@@ -313,6 +313,7 @@ Fakefile Documentation:
           The following are reserved parameters:
           - build: Associated with -b/--build parameter.
           - color: Associated with +d/++dark, +l/++light, and +n/++no_color parameters.
+          - current: The absolute path to the current working directory (present working directory) (Always has a trailing forward slash).
           - data: Associated with -D/--data parameter.
           - define: Associated with -d/--define parameter.
           - fakefile: Associated with -f/--fakefile parameter.

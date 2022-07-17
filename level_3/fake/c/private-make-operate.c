@@ -385,10 +385,41 @@ extern "C" {
                 }
 
                 // For safe path handling, always append the trailing slash.
-                *status = f_string_dynamic_append(f_path_separator_s, &data_make->cache_arguments.array[data_make->cache_arguments.used]);
+                *status = f_string_dynamic_append_assure(f_path_separator_s, &data_make->cache_arguments.array[data_make->cache_arguments.used]);
+
+                if (F_status_is_error(*status)) {
+                  fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamic_append_assure", F_true);
+
+                  break;
+                }
+              }
+
+              unmatched = F_false;
+            }
+            else if (fl_string_dynamic_partial_compare_string(fake_make_parameter_variable_current_s.string, data_make->buffer, fake_make_parameter_variable_current_s.used, iki_data->content.array[j]) == F_equal_to) {
+
+              if (data_make->path.stack.used) {
+                *status = f_string_dynamic_increase_by(data_make->path.stack.array[data_make->path.stack.used - 1].used + f_path_separator_s.used + 1, &data_make->cache_arguments.array[data_make->cache_arguments.used]);
+
+                if (F_status_is_error(*status)) {
+                  fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamic_increase_by", F_true);
+
+                  break;
+                }
+
+                *status = f_string_dynamic_append(data_make->path.stack.array[data_make->path.stack.used - 1], &data_make->cache_arguments.array[data_make->cache_arguments.used]);
 
                 if (F_status_is_error(*status)) {
                   fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamic_append", F_true);
+
+                  break;
+                }
+
+                // For safe path handling, always append the trailing slash.
+                *status = f_string_dynamic_append_assure(f_path_separator_s, &data_make->cache_arguments.array[data_make->cache_arguments.used]);
+
+                if (F_status_is_error(*status)) {
+                  fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamic_append_assure", F_true);
 
                   break;
                 }
