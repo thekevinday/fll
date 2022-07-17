@@ -629,7 +629,7 @@ extern "C" {
           fake_make_operation_argument_if_mode_s,
           fake_make_operation_argument_if_not_s,
           fake_make_operation_argument_if_define_s,    // If not define, represented by just "define".
-          fake_make_operation_argument_if_exist_s,    // If not exist, represented by just "exist".
+          fake_make_operation_argument_if_exist_s,     // If not exist, represented by just "exist".
           fake_make_operation_argument_if_group_s,     // If not group, represented by just "group".
           fake_make_operation_argument_if_is_s,        // If not is, represented by just "is".
           fake_make_operation_argument_if_mode_s,      // If not mode, represented by just "mode".

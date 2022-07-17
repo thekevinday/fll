@@ -10,6 +10,16 @@ extern "C" {
 
     if (state_process->block) {
       if (state_process->operation == fake_make_operation_type_and_e || state_process->operation == fake_make_operation_type_else_e || state_process->operation == fake_make_operation_type_if_e || state_process->operation == fake_make_operation_type_or_e) {
+
+        if (state_process->operation == fake_make_operation_type_if_e) {
+
+          // When another if condition follows a non-if, non-and, and non-or, then this is the start of a new condition block.
+          if (state_process->operation_previous != fake_make_operation_type_if_e && state_process->operation_previous != fake_make_operation_type_and_e && state_process->operation_previous != fake_make_operation_type_or_e) {
+            state_process->block = fake_state_process_block_operate_e;
+            state_process->block_result = 0;
+          }
+        }
+
         return;
       }
 
