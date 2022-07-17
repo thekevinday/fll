@@ -171,7 +171,11 @@ Rule Documentation:
         This supports ":option".
 
       - quiet\:
-        This variable holds the "quiet" program parameters, such as "+q".
+        This variable holds the "quiet" program parameters, such as "+Q".
+        This supports ":option".
+
+      - error\:
+        This variable holds the "error" program parameters, such as "+E".
         This supports ":option".
 
       - normal\:

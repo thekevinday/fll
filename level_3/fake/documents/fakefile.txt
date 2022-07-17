@@ -320,7 +320,7 @@ Fakefile Documentation:
           - process: Associated with -p/--process parameter.
           - settings: Associated with -s/--settings parameter.
           - sources: Associated with -S/--sources parameter.
-          - verbosity: Associated with +q/++quiet, +N/++normal, +V/++verbose, and +D/++debug parameters.
+          - verbosity: Associated with +Q/++quiet, +E/++error, +N/++normal, +V/++verbose, and +D/++debug parameters.
           - work: Associated with -w/--work parameter.
 
         - succeed\:
