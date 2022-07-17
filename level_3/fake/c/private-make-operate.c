@@ -364,6 +364,21 @@ extern "C" {
 
               unmatched = F_false;
             }
+            else if (fl_string_dynamic_partial_compare_string(fake_make_parameter_variable_top_s.string, data_make->buffer, fake_make_parameter_variable_top_s.used, iki_data->content.array[j]) == F_equal_to) {
+              data_make->cache_arguments.array[data_make->cache_arguments.used].used = 0;
+
+              if (data_make->path.stack.used) {
+                *status = f_string_dynamic_append(data_make->path.stack.array[0], &data_make->cache_arguments.array[data_make->cache_arguments.used]);
+
+                if (F_status_is_error(*status)) {
+                  fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamic_append", F_true);
+
+                  break;
+                }
+              }
+
+              unmatched = F_false;
+            }
             else {
               for (k = 0; k < 33; ++k) {
 

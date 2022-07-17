@@ -116,5 +116,5 @@ Fakefile Specification:
     - <=
 
   The "if" Section Operation condition "parameter"\:
-    The following reserved words are available for parameter names: build, color, data, define, fakefile, mode, process, settings, sources, verbosity, and work.
+    The following reserved words are available for parameter names: build, color, data, define, fakefile, mode, process, return, settings, sources, top, verbosity, and work.
     Each of the reserved words supports having ":option" and ":value" appended, such as: "work:value".

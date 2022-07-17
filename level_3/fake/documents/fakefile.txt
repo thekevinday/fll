@@ -318,8 +318,10 @@ Fakefile Documentation:
           - fakefile: Associated with -f/--fakefile parameter.
           - mode: Associated with -m/--mode parameter and possibly with the build settings default mode "modes_default".
           - process: Associated with -p/--process parameter.
+          - return: Contains the return value of a previous operation that produces a return code.
           - settings: Associated with -s/--settings parameter.
           - sources: Associated with -S/--sources parameter.
+          - top: The absolute path to the "top" directory, which is the base project directory.
           - verbosity: Associated with +Q/++quiet, +E/++error, +N/++normal, +V/++verbose, and +D/++debug parameters.
           - work: Associated with -w/--work parameter.
 
