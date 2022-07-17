@@ -562,6 +562,40 @@ extern "C" {
   extern f_status_t private_f_print_terminated(const f_string_t string, FILE * const stream) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_print_terminated_) || !defined(_di_f_print_raw_terminated_)
 
+/**
+ * Determine max width, which is the shorter of the byte width and the remaining characters in the string.
+ *
+ * @param string
+ *   The string to process.
+ * @param at
+ *   The position in the string representing a single character to get the width of.
+ *
+ * @return
+ *   The determined with (the max size is 4).
+ *
+ * @see f_print_except_dynamic_partial_raw()
+ * @see f_print_except_dynamic_partial_safely()
+ * @see f_print_except_dynamic_raw()
+ * @see f_print_except_dynamic_safely()
+ * @see f_print_except_in_dynamic_partial_raw_safely()
+ * @see f_print_except_in_dynamic_partial_safely()
+ * @see f_print_except_in_dynamic_raw_safely()
+ * @see f_print_except_in_dynamic_safely()
+ * @see f_print_except_in_raw_safely()
+ * @see f_print_except_in_safely()
+ * @see f_print_except_raw_safely()
+ * @see f_print_except_safely()
+ * @see f_print_raw_safely()
+ * @see f_print_raw_safely_dynamic()
+ * @see f_print_raw_safely_dynamic_partial()
+ * @see f_print_safely()
+ * @see f_print_safely_dynamic()
+ * @see f_print_safely_dynamic_partial()
+ */
+#if !defined(_di_f_print_except_dynamic_partial_raw_) || !defined(_di_f_print_except_dynamic_partial_safely_) || !defined(_di_f_print_except_dynamic_raw_) || !defined(_di_f_print_except_dynamic_safely_) || !defined(_di_f_print_except_in_dynamic_partial_raw_safely_) || !defined(_di_f_print_except_in_dynamic_partial_safely_) || !defined(_di_f_print_except_in_dynamic_raw_safely_) || !defined(_di_f_print_except_in_dynamic_safely_) || !defined(_di_f_print_except_in_raw_safely_) || !defined(_di_f_print_except_in_safely_) || !defined(_di_f_print_except_raw_safely_) || !defined(_di_f_print_except_safely_) || !defined(_di_f_print_raw_safely_) || !defined(_di_f_print_raw_safely_dynamic_) || !defined(_di_f_print_raw_safely_dynamic_partial_) || !defined(_di_f_print_safely_) || !defined(_di_f_print_safely_dynamic_) || !defined(_di_f_print_safely_dynamic_partial_)
+  extern uint8_t private_f_print_width_max(const f_string_t string, const f_array_length_t at) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_print_except_dynamic_partial_raw_) || !defined(_di_f_print_except_dynamic_partial_safely_) || !defined(_di_f_print_except_dynamic_raw_) || !defined(_di_f_print_except_dynamic_safely_) || !defined(_di_f_print_except_in_dynamic_partial_raw_safely_) || !defined(_di_f_print_except_in_dynamic_partial_safely_) || !defined(_di_f_print_except_in_dynamic_raw_safely_) || !defined(_di_f_print_except_in_dynamic_safely_) || !defined(_di_f_print_except_in_raw_safely_) || !defined(_di_f_print_except_in_safely_) || !defined(_di_f_print_except_raw_safely_) || !defined(_di_f_print_except_safely_) || !defined(_di_f_print_raw_safely_) || !defined(_di_f_print_raw_safely_dynamic_) || !defined(_di_f_print_raw_safely_dynamic_partial_) || !defined(_di_f_print_safely_) || !defined(_di_f_print_safely_dynamic_) || !defined(_di_f_print_safely_dynamic_partial_)
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

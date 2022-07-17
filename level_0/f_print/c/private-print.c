@@ -369,8 +369,7 @@ extern "C" {
       }
 
       if (string[i]) {
-        width = macro_f_utf_byte_width(string[i]);
-
+        width = private_f_print_width_max(string, i);
         safe = private_f_print_safely_get(string + i, width);
       }
       else {
@@ -502,8 +501,7 @@ extern "C" {
       }
 
       if (string[i]) {
-        width = macro_f_utf_byte_width(string[i]);
-
+        width = private_f_print_width_max(string, i);
         safe = private_f_print_safely_get(string + i, width);
       }
       else {
@@ -693,8 +691,7 @@ extern "C" {
       }
 
       if (string[i]) {
-        width = macro_f_utf_byte_width(string[i]);
-
+        width = private_f_print_width_max(string, i);
         safe = private_f_print_safely_get(string + i, width);
       }
       else {
@@ -800,8 +797,7 @@ extern "C" {
       }
 
       if (string[i]) {
-        width = macro_f_utf_byte_width(string[i]);
-
+        width = private_f_print_width_max(string, i);
         safe = private_f_print_safely_get(string + i, width);
       }
       else {
@@ -943,8 +939,7 @@ extern "C" {
     while (i < length) {
 
       if (string[i]) {
-        width = macro_f_utf_byte_width(string[i]);
-
+        width = private_f_print_width_max(string, i);
         safe = private_f_print_safely_get(string + i, width);
       }
       else {
@@ -1027,8 +1022,7 @@ extern "C" {
     while (i < length) {
 
       if (string[i]) {
-        width = macro_f_utf_byte_width(string[i]);
-
+        width = private_f_print_width_max(string, i);
         safe = private_f_print_safely_get(string + i, width);
       }
       else {
@@ -1147,6 +1141,35 @@ extern "C" {
     return F_none;
   }
 #endif // !defined(_di_f_print_terminated_) || !defined(_di_f_print_raw_terminated_)
+
+#if !defined(_di_f_print_except_dynamic_partial_raw_) || !defined(_di_f_print_except_dynamic_partial_safely_) || !defined(_di_f_print_except_dynamic_raw_) || !defined(_di_f_print_except_dynamic_safely_) || !defined(_di_f_print_except_in_dynamic_partial_raw_safely_) || !defined(_di_f_print_except_in_dynamic_partial_safely_) || !defined(_di_f_print_except_in_dynamic_raw_safely_) || !defined(_di_f_print_except_in_dynamic_safely_) || !defined(_di_f_print_except_in_raw_safely_) || !defined(_di_f_print_except_in_safely_) || !defined(_di_f_print_except_raw_safely_) || !defined(_di_f_print_except_safely_) || !defined(_di_f_print_raw_safely_) || !defined(_di_f_print_raw_safely_dynamic_) || !defined(_di_f_print_raw_safely_dynamic_partial_) || !defined(_di_f_print_safely_) || !defined(_di_f_print_safely_dynamic_) || !defined(_di_f_print_safely_dynamic_partial_)
+  uint8_t private_f_print_width_max(const f_string_t string, const f_array_length_t at) {
+
+    const uint8_t width = macro_f_utf_byte_width(string[at]);
+
+    if (width > 1) {
+      if (string[at + 1]) {
+        if (width > 2) {
+          if (string[at + 2]) {
+            if (width > 3) {
+              if (!string[at + 3]) {
+                return 3;
+              }
+            }
+          }
+          else {
+            return 2;
+          }
+        }
+      }
+      else {
+        return 1;
+      }
+    }
+
+    return width;
+  }
+#endif // !defined(_di_f_print_except_dynamic_partial_raw_) || !defined(_di_f_print_except_dynamic_partial_safely_) || !defined(_di_f_print_except_dynamic_raw_) || !defined(_di_f_print_except_dynamic_safely_) || !defined(_di_f_print_except_in_dynamic_partial_raw_safely_) || !defined(_di_f_print_except_in_dynamic_partial_safely_) || !defined(_di_f_print_except_in_dynamic_raw_safely_) || !defined(_di_f_print_except_in_dynamic_safely_) || !defined(_di_f_print_except_in_raw_safely_) || !defined(_di_f_print_except_in_safely_) || !defined(_di_f_print_except_raw_safely_) || !defined(_di_f_print_except_safely_) || !defined(_di_f_print_raw_safely_) || !defined(_di_f_print_raw_safely_dynamic_) || !defined(_di_f_print_raw_safely_dynamic_partial_) || !defined(_di_f_print_safely_) || !defined(_di_f_print_safely_dynamic_) || !defined(_di_f_print_safely_dynamic_partial_)
 
 #ifdef __cplusplus
 } // extern "C"
