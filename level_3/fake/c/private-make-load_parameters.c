@@ -100,6 +100,18 @@ extern "C" {
           *status = f_string_dynamic_append(f_console_standard_short_quiet_s, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
         }
       }
+      else if (data_make->main->error.verbosity == f_console_verbosity_error_e) {
+        if (data_make->main->parameters.array[fake_parameter_verbosity_error_e].type == f_console_type_normal_e) {
+          *status = f_string_dynamic_append(f_console_symbol_short_enable_s, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
+        }
+        else if (data_make->main->parameters.array[fake_parameter_verbosity_error_e].type == f_console_type_inverse_e) {
+          *status = f_string_dynamic_append(f_console_symbol_short_disable_s, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
+        }
+
+        if (F_status_is_error_not(*status)) {
+          *status = f_string_dynamic_append(f_console_standard_short_error_s, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
+        }
+      }
       else if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
         if (data_make->main->parameters.array[fake_parameter_verbosity_verbose_e].type == f_console_type_normal_e) {
           *status = f_string_dynamic_append(f_console_symbol_short_enable_s, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);

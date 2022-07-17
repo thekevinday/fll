@@ -160,6 +160,7 @@ extern "C" {
     fss_extended_list_write_parameter_dark_e,
     fss_extended_list_write_parameter_no_color_e,
     fss_extended_list_write_parameter_verbosity_quiet_e,
+    fss_extended_list_write_parameter_verbosity_error_e,
     fss_extended_list_write_parameter_verbosity_normal_e,
     fss_extended_list_write_parameter_verbosity_verbose_e,
     fss_extended_list_write_parameter_verbosity_debug_e,
@@ -183,6 +184,7 @@ extern "C" {
       macro_f_console_parameter_t_initialize(f_console_standard_short_dark_s.string, f_console_standard_long_dark_s.string, 0, 0, f_console_type_inverse_e), \
       macro_f_console_parameter_t_initialize(f_console_standard_short_no_color_s.string, f_console_standard_long_no_color_s.string, 0, F_false, f_console_type_inverse_e), \
       macro_f_console_parameter_t_initialize(f_console_standard_short_quiet_s.string, f_console_standard_long_quiet_s.string, 0, 0, f_console_type_inverse_e), \
+      macro_f_console_parameter_t_initialize(f_console_standard_short_error_s.string, f_console_standard_long_error_s.string, 0, 0, f_console_type_inverse_e), \
       macro_f_console_parameter_t_initialize(f_console_standard_short_normal_s.string, f_console_standard_long_normal_s.string, 0, 0, f_console_type_inverse_e), \
       macro_f_console_parameter_t_initialize(f_console_standard_short_verbose_s.string, f_console_standard_long_verbose_s.string, 0, 0, f_console_type_inverse_e), \
       macro_f_console_parameter_t_initialize(f_console_standard_short_debug_s.string, f_console_standard_long_debug_s.string, 0, 0, f_console_type_inverse_e), \
@@ -198,7 +200,7 @@ extern "C" {
       macro_f_console_parameter_t_initialize(fss_extended_list_write_short_trim_s.string, fss_extended_list_write_long_trim_s.string, 0, 0, f_console_type_normal_e), \
     }
 
-  #define fss_extended_list_write_total_parameters_d 18
+  #define fss_extended_list_write_total_parameters_d 19
 #endif // _di_fss_extended_list_write_parameters_
 
 /**

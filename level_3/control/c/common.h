@@ -99,6 +99,7 @@ extern "C" {
     control_parameter_dark_e,
     control_parameter_no_color_e,
     control_parameter_verbosity_quiet_e,
+    control_parameter_verbosity_error_e,
     control_parameter_verbosity_normal_e,
     control_parameter_verbosity_verbose_e,
     control_parameter_verbosity_debug_e,
@@ -117,6 +118,7 @@ extern "C" {
       macro_f_console_parameter_t_initialize(f_console_standard_short_dark_s.string, f_console_standard_long_dark_s.string, 0, 0, f_console_type_inverse_e), \
       macro_f_console_parameter_t_initialize(f_console_standard_short_no_color_s.string, f_console_standard_long_no_color_s.string, 0, 0, f_console_type_inverse_e), \
       macro_f_console_parameter_t_initialize(f_console_standard_short_quiet_s.string, f_console_standard_long_quiet_s.string, 0, 0, f_console_type_inverse_e), \
+      macro_f_console_parameter_t_initialize(f_console_standard_short_error_s.string, f_console_standard_long_error_s.string, 0, 0, f_console_type_inverse_e), \
       macro_f_console_parameter_t_initialize(f_console_standard_short_normal_s.string, f_console_standard_long_normal_s.string, 0, 0, f_console_type_inverse_e), \
       macro_f_console_parameter_t_initialize(f_console_standard_short_verbose_s.string, f_console_standard_long_verbose_s.string, 0, 0, f_console_type_inverse_e), \
       macro_f_console_parameter_t_initialize(f_console_standard_short_debug_s.string, f_console_standard_long_debug_s.string, 0, 0, f_console_type_inverse_e), \
@@ -127,7 +129,7 @@ extern "C" {
       macro_f_console_parameter_t_initialize(control_short_socket_s.string, control_long_socket_s.string, 0, 1, f_console_type_normal_e), \
     }
 
-  #define control_total_parameters_d 13
+  #define control_total_parameters_d 14
 #endif // _di_control_parameters_
 
 /**

@@ -9,9 +9,7 @@ extern "C" {
 #ifndef _di_fss_basic_list_write_error_parameter_same_times_print_
   void fss_basic_list_write_error_parameter_same_times_print(fll_program_data_t * const main) {
 
-    if (main->error.verbosity == f_console_verbosity_quiet_e) {
-      return;
-    }
+    if (main->error.verbosity == f_console_verbosity_quiet_e) return;
 
     flockfile(main->error.to.stream);
 
@@ -30,9 +28,7 @@ extern "C" {
 #ifndef _di_fss_basic_list_write_error_parameter_unsupported_eol_print_
   void fss_basic_list_write_error_parameter_unsupported_eol_print(fll_program_data_t * const main) {
 
-    if (main->error.verbosity == f_console_verbosity_quiet_e) {
-      return;
-    }
+    if (main->error.verbosity == f_console_verbosity_quiet_e) return;
 
     flockfile(main->error.to.stream);
 
@@ -49,9 +45,7 @@ extern "C" {
 #ifndef _di_fss_basic_list_write_error_parameter_value_missing_print_
   void fss_basic_list_write_error_parameter_value_missing_print(fll_program_data_t * const main, const f_string_static_t symbol, const f_string_static_t parameter) {
 
-    if (main->error.verbosity == f_console_verbosity_quiet_e) {
-      return;
-    }
+    if (main->error.verbosity == f_console_verbosity_quiet_e) return;
 
     flockfile(main->error.to.stream);
 

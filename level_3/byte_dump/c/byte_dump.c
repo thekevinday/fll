@@ -18,6 +18,7 @@ extern "C" {
     fll_program_print_help_option(file, context, f_console_standard_short_light_s, f_console_standard_long_light_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Output using colors that show up better on light backgrounds.");
     fll_program_print_help_option(file, context, f_console_standard_short_no_color_s, f_console_standard_long_no_color_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "Do not print using color.");
     fll_program_print_help_option(file, context, f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Decrease verbosity, silencing most output.");
+    fll_program_print_help_option(file, context, f_console_standard_short_error_s, f_console_standard_long_error_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Decrease verbosity, using only error output.");
     fll_program_print_help_option(file, context, f_console_standard_short_normal_s, f_console_standard_long_normal_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "  Set verbosity to normal.");
     fll_program_print_help_option(file, context, f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Increase verbosity beyond normal output.");
     fll_program_print_help_option(file, context, f_console_standard_short_debug_s, f_console_standard_long_debug_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Enable debugging, significantly increasing verbosity beyond normal output.");
@@ -114,9 +115,9 @@ extern "C" {
 
     // Identify priority of verbosity related parameters.
     {
-      f_console_parameter_id_t ids[4] = { byte_dump_parameter_verbosity_quiet_e, byte_dump_parameter_verbosity_normal_e, byte_dump_parameter_verbosity_verbose_e, byte_dump_parameter_verbosity_debug_e };
+      f_console_parameter_id_t ids[5] = { byte_dump_parameter_verbosity_quiet_e, byte_dump_parameter_verbosity_error_e, byte_dump_parameter_verbosity_normal_e, byte_dump_parameter_verbosity_verbose_e, byte_dump_parameter_verbosity_debug_e };
       f_console_parameter_id_t choice = 0;
-      const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 4);
+      const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 5);
 
       status = f_console_parameter_prioritize_right(main->parameters, choices, &choice);
 
@@ -130,6 +131,11 @@ extern "C" {
         main->output.verbosity = f_console_verbosity_quiet_e;
         main->error.verbosity = f_console_verbosity_quiet_e;
         main->warning.verbosity = f_console_verbosity_quiet_e;
+      }
+      else if (choice == byte_dump_parameter_verbosity_error_e) {
+        main->output.verbosity = f_console_verbosity_error_e;
+        main->error.verbosity = f_console_verbosity_error_e;
+        main->warning.verbosity = f_console_verbosity_error_e;
       }
       else if (choice == byte_dump_parameter_verbosity_normal_e) {
         main->output.verbosity = f_console_verbosity_normal_e;

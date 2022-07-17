@@ -352,6 +352,7 @@ extern "C" {
     firewall_parameter_dark_e,
     firewall_parameter_no_color_e,
     firewall_parameter_verbosity_quiet_e,
+    firewall_parameter_verbosity_error_e,
     firewall_parameter_verbosity_normal_e,
     firewall_parameter_verbosity_verbose_e,
     firewall_parameter_verbosity_debug_e,
@@ -399,7 +400,7 @@ extern "C" {
       macro_f_console_parameter_t_initialize(0, 0, firewall_command_show_s.string, F_false, f_console_type_other_e), \
     }
 
-  #define firewall_total_parameters_d 14
+  #define firewall_total_parameters_d 15
 #endif // _di_firewall_defines_
 
 #ifdef __cplusplus

@@ -50,7 +50,7 @@ extern "C" {
       &path_headers,
     };
 
-    if (data->main->output.verbosity != f_console_verbosity_quiet_e) {
+    if (data->main->output.verbosity != f_console_verbosity_quiet_e && data->main->output.verbosity != f_console_verbosity_error_e) {
       fll_print_format("%r%[Creating base build directories.%]%r", data->main->output.to.stream, f_string_eol_s, data->main->context.set.important, data->main->context.set.important, f_string_eol_s);
     }
 

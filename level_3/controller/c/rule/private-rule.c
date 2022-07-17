@@ -1746,7 +1746,7 @@ extern "C" {
     }
 
     if (options & controller_process_option_simulate_d) {
-      if (main->error.verbosity != f_console_verbosity_quiet_e) {
+      if (main->error.verbosity != f_console_verbosity_quiet_e && main->error.verbosity != f_console_verbosity_error_e) {
         controller_lock_print(main->error.to, thread);
 
         fl_print_format("%rSimulating execution of '%[", main->error.to.stream, f_string_eol_s, main->context.set.title);
@@ -2799,7 +2799,7 @@ extern "C" {
             if (i == 0) {
               controller_lock_print(global.main->error.to, global.thread);
 
-              controller_rule_item_print_error_need_want_wish(global.main->error, strings[i], dynamics[i]->array[j], "was not found");
+              controller_rule_item_print_error_need_want_wish(global.main->error, strings[i], dynamics[i]->array[j], "is not found");
               controller_rule_print_error_cache(global.main->error, process->cache.action, F_true);
 
               controller_unlock_print_flush(global.main->error.to, global.thread);
@@ -2818,7 +2818,7 @@ extern "C" {
               if (global.main->warning.verbosity == f_console_verbosity_debug_e) {
                 controller_lock_print(global.main->warning.to, global.thread);
 
-                controller_rule_item_print_error_need_want_wish(global.main->warning, strings[i], dynamics[i]->array[j], "was not found");
+                controller_rule_item_print_error_need_want_wish(global.main->warning, strings[i], dynamics[i]->array[j], "is not found");
 
                 controller_rule_print_error_cache(global.main->warning, process->cache.action, F_true);
 
@@ -4502,7 +4502,7 @@ extern "C" {
           if (type == rule->limits.array[j].type) {
             if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
 
-              // get the current line number within the settings item.
+              // Get the current line number within the settings item.
               cache->action.line_item = line_item;
               f_fss_count_lines(state, cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
 

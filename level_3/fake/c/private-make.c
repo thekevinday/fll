@@ -64,7 +64,7 @@ extern "C" {
 
             fl_print_format("%r%[%QThe group name '%]", data->main->error.to.stream, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
             fl_print_format("%[%Q%]", data->main->error.to.stream, data->main->error.notable, buffer, data->main->error.notable);
-            fl_print_format("%[' was not found.%]%r", data->main->error.to.stream, data->main->error.context, data->main->error.context, f_string_eol_s);
+            fl_print_format("%[' is not found.%]%r", data->main->error.to.stream, data->main->error.context, data->main->error.context, f_string_eol_s);
 
             funlockfile(data->main->error.to.stream);
           }
@@ -157,7 +157,7 @@ extern "C" {
 
             fl_print_format("%r%[%QThe user '%]", data->main->error.to.stream, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
             fl_print_format("%[%Q%]", data->main->error.to.stream, data->main->error.notable, buffer, data->main->error.notable);
-            fl_print_format("%[' was not found.%]%r", data->main->error.to.stream, data->main->error.context, data->main->error.context, f_string_eol_s);
+            fl_print_format("%[' is not found.%]%r", data->main->error.to.stream, data->main->error.context, data->main->error.context, f_string_eol_s);
 
             funlockfile(data->main->error.to.stream);
           }

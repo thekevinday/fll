@@ -11,7 +11,7 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    if (data->main->output.verbosity != f_console_verbosity_quiet_e) {
+    if (data->main->output.verbosity != f_console_verbosity_quiet_e && data->main->output.verbosity != f_console_verbosity_error_e) {
       fll_print_format("%rGenerating skeleton structure.%r", data->main->output.to.stream, f_string_eol_s, f_string_eol_s);
 
       if (data->main->output.verbosity >= f_console_verbosity_verbose_e) {

@@ -22,7 +22,7 @@ extern "C" {
       return F_status_set_error(F_interrupt);
     }
 
-    if (data->main->output.verbosity != f_console_verbosity_quiet_e) {
+    if (data->main->output.verbosity != f_console_verbosity_quiet_e && data->main->output.verbosity != f_console_verbosity_error_e) {
       flockfile(data->main->output.to.stream);
 
       fl_print_format("%r%[Now making using '%]", data->main->output.to.stream, f_string_eol_s, data->main->context.set.important, data->main->context.set.important);
@@ -1040,7 +1040,7 @@ extern "C" {
 
     const f_fss_named_t *section = &data_make->fakefile.array[id_section];
 
-    if (data_make->main->output.verbosity != f_console_verbosity_quiet_e) {
+    if (data_make->main->output.verbosity != f_console_verbosity_quiet_e && data_make->main->output.verbosity != f_console_verbosity_error_e) {
       flockfile(data_make->main->output.to.stream);
 
       fl_print_format("%r%[Processing Section '%]", data_make->main->output.to.stream, f_string_eol_s, data_make->main->context.set.important, data_make->main->context.set.important);

@@ -9,7 +9,7 @@ extern "C" {
 #ifndef _di_fake_clean_operate_
   f_status_t fake_clean_operate(fake_data_t * const data) {
 
-    if (data->main->output.verbosity != f_console_verbosity_quiet_e) {
+    if (data->main->output.verbosity != f_console_verbosity_quiet_e && data->main->output.verbosity != f_console_verbosity_error_e) {
       flockfile(data->main->output.to.stream);
 
       fl_print_format("%r%[Deleting all files within build directory '%]", data->main->output.to.stream, f_string_eol_s, data->main->context.set.important, data->main->context.set.important);

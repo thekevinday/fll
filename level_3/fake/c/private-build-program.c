@@ -25,7 +25,7 @@ extern "C" {
     if (F_status_is_error(*status) || f_file_exists(file_stage, F_true) == F_true || *status == F_child) return data->main->child;
     if (!data_build->setting.build_sources_program.used && !data_build->setting.build_sources_program_shared.used) return 0;
 
-    if (data->main->output.verbosity != f_console_verbosity_quiet_e) {
+    if (data->main->output.verbosity != f_console_verbosity_quiet_e && data->main->output.verbosity != f_console_verbosity_error_e) {
       fll_print_format("%r%[Compiling shared program.%]%r", data->main->output.to.stream, f_string_eol_s, data->main->context.set.important, data->main->context.set.important, f_string_eol_s);
     }
 
@@ -119,7 +119,7 @@ extern "C" {
     if (F_status_is_error(*status) || f_file_exists(file_stage, F_true) == F_true || *status == F_child) return data->main->child;
     if (!data_build->setting.build_sources_program.used && !data_build->setting.build_sources_program_static.used) return 0;
 
-    if (data->main->output.verbosity != f_console_verbosity_quiet_e) {
+    if (data->main->output.verbosity != f_console_verbosity_quiet_e && data->main->output.verbosity != f_console_verbosity_error_e) {
       fll_print_format("%r%[Compiling static program.%]%r", data->main->output.to.stream, f_string_eol_s, data->main->context.set.important, data->main->context.set.important, f_string_eol_s);
     }
 

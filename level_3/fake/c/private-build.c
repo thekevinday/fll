@@ -361,7 +361,7 @@ extern "C" {
     f_string_dynamic_t destination_directory = f_string_dynamic_t_initialize;
     f_string_static_t buffer = f_string_static_t_initialize;
 
-    if (data->main->output.verbosity != f_console_verbosity_quiet_e) {
+    if (data->main->output.verbosity != f_console_verbosity_quiet_e && data->main->output.verbosity != f_console_verbosity_error_e) {
       fll_print_format("%r%[Copying %Q.%]%r", data->main->output.to.stream, f_string_eol_s, data->main->context.set.important, label, data->main->context.set.important, f_string_eol_s);
     }
 
@@ -597,6 +597,9 @@ extern "C" {
       if (data->main->context.mode == f_console_verbosity_quiet_e) {
         memcpy(argument_string + f_console_symbol_short_disable_s.used, f_console_standard_short_quiet_s.string, sizeof(f_char_t) * f_console_standard_short_quiet_s.used);
       }
+      else if (data->main->context.mode == f_console_verbosity_error_e) {
+        memcpy(argument_string + f_console_symbol_short_disable_s.used, f_console_standard_short_error_s.string, sizeof(f_char_t) * f_console_standard_short_error_s.used);
+      }
       else if (data->main->context.mode == f_console_verbosity_verbose_e) {
         memcpy(argument_string + f_console_symbol_short_disable_s.used, f_console_standard_short_verbose_s.string, sizeof(f_char_t) * f_console_standard_short_verbose_s.used);
       }
@@ -831,7 +834,7 @@ extern "C" {
     fake_build_load_setting(data, build_arguments, &data_build.setting, &status);
 
     if (F_status_is_fine(status)) {
-      if (data->main->output.verbosity != f_console_verbosity_quiet_e) {
+      if (data->main->output.verbosity != f_console_verbosity_quiet_e && data->main->output.verbosity != f_console_verbosity_error_e) {
         flockfile(data->main->output.to.stream);
 
         fl_print_format("%r%[Building%] ", data->main->output.to.stream, f_string_eol_s, data->main->context.set.important, data->main->context.set.important);

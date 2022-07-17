@@ -278,6 +278,7 @@ extern "C" {
     byte_dump_parameter_dark_e,
     byte_dump_parameter_no_color_e,
     byte_dump_parameter_verbosity_quiet_e,
+    byte_dump_parameter_verbosity_error_e,
     byte_dump_parameter_verbosity_normal_e,
     byte_dump_parameter_verbosity_verbose_e,
     byte_dump_parameter_verbosity_debug_e,
@@ -311,6 +312,7 @@ extern "C" {
       macro_f_console_parameter_t_initialize(f_console_standard_short_dark_s.string, f_console_standard_long_dark_s.string, 0, 0, f_console_type_inverse_e), \
       macro_f_console_parameter_t_initialize(f_console_standard_short_no_color_s.string, f_console_standard_long_no_color_s.string, 0, 0, f_console_type_inverse_e), \
       macro_f_console_parameter_t_initialize(f_console_standard_short_quiet_s.string, f_console_standard_long_quiet_s.string, 0, 0, f_console_type_inverse_e), \
+      macro_f_console_parameter_t_initialize(f_console_standard_short_error_s.string, f_console_standard_long_error_s.string, 0, 0, f_console_type_inverse_e), \
       macro_f_console_parameter_t_initialize(f_console_standard_short_normal_s.string, f_console_standard_long_normal_s.string, 0, 0, f_console_type_inverse_e), \
       macro_f_console_parameter_t_initialize(f_console_standard_short_verbose_s.string, f_console_standard_long_verbose_s.string, 0, 0, f_console_type_inverse_e), \
       macro_f_console_parameter_t_initialize(f_console_standard_short_debug_s.string, f_console_standard_long_debug_s.string, 0, 0, f_console_type_inverse_e), \
@@ -333,7 +335,7 @@ extern "C" {
       macro_f_console_parameter_t_initialize(0, byte_dump_long_classic_s.string, 0, 0, f_console_type_normal_e), \
     }
 
-  #define byte_dump_total_parameters_d 25
+  #define byte_dump_total_parameters_d 26
 #endif // _di_byte_dump_parameters_
 
 #ifdef __cplusplus
