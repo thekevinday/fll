@@ -177,6 +177,7 @@ extern "C" {
     f_array_length_t j = 0;
     f_array_length_t k = 0;
     f_array_length_t l = 0;
+    f_array_length_t m = 0;
 
     const f_string_static_t reserved_name[] = {
       fake_make_parameter_variable_build_s,
@@ -406,8 +407,23 @@ extern "C" {
                 unmatched = F_false;
                 separate = F_false;
 
-                // Unquoted IKI content that are reserved words and entirely represent a single parameter should expand into separate parameters.
-                if (content.array[i].start == iki_data->variable.array[0].start && content.array[i].stop == iki_data->variable.array[0].stop && !quotes.array[i]) {
+                // Quoted IKI Content or unquoted IKI Content that are reserved words and entirely represent a single parameter should expand into a single argument.
+                if (content.array[i].start == iki_data->variable.array[0].start && content.array[i].stop == iki_data->variable.array[0].stop || quotes.array[i]) {
+
+                  // Pre-allocate memory to reduce number of allocations.
+                  m = parameter->array[k].value.used;
+
+                  for (l = 0; l < parameter->array[k].value.used; ++l) {
+                    m += parameter->array[k].value.array[l].used;
+                  } // for
+
+                  *status = f_string_dynamic_increase_by(m, &data_make->cache_arguments.array[data_make->cache_arguments.used]);
+
+                  if (F_status_is_error(*status)) {
+                    fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamic_increase_by", F_true);
+
+                    break;
+                  }
 
                   for (l = 0; l < reserved_value[k]->used; ++l) {
 
@@ -435,32 +451,21 @@ extern "C" {
                   } // for
                 }
                 else {
+
                   for (l = 0; l < reserved_value[k]->used; ++l) {
 
                     if (!reserved_value[k]->array[l].used) continue;
 
+                    // Unquoted use separate parameters rather then being separated by a space.
                     if (separate) {
-                      if (quotes.array[i]) {
-                        *status = f_string_dynamic_append(f_string_space_s, &data_make->cache_arguments.array[data_make->cache_arguments.used]);
+                      ++data_make->cache_arguments.used;
 
-                        if (F_status_is_error(*status)) {
-                          fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamic_append", F_true);
+                      *status = f_string_dynamics_increase(fake_default_allocation_small_d, &data_make->cache_arguments);
 
-                          break;
-                        }
-                      }
+                      if (F_status_is_error(*status)) {
+                        fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamics_increase", F_true);
 
-                      // Unquoted use separate parameters rather then being separated by a space.
-                      else {
-                        ++data_make->cache_arguments.used;
-
-                        *status = f_string_dynamics_increase(fake_default_allocation_small_d, &data_make->cache_arguments);
-
-                        if (F_status_is_error(*status)) {
-                          fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamics_increase", F_true);
-
-                          break;
-                        }
+                        break;
                       }
 
                     }
@@ -495,6 +500,24 @@ extern "C" {
                 separate = F_false;
 
                 if (parameter->array[k].value.used) {
+
+                  // Pre-allocate memory to reduce number of allocations.
+                  if (quotes.array[i]) {
+                    m = parameter->array[k].value.used;
+
+                    for (l = 0; l < parameter->array[k].value.used; ++l) {
+                      m += parameter->array[k].value.array[l].used;
+                    } // for
+
+                    *status = f_string_dynamic_increase_by(m, &data_make->cache_arguments.array[data_make->cache_arguments.used]);
+
+                    if (F_status_is_error(*status)) {
+                      fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamic_increase_by", F_true);
+
+                      break;
+                    }
+                  }
+
                   for (l = 0; l < parameter->array[k].value.used; ++l) {
 
                     if (!parameter->array[k].value.array[l].used) continue;
