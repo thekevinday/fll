@@ -65,7 +65,7 @@ extern "C" {
 
     for (; i < total; ++i) {
 
-      destination.used = data_make->cache_arguments.array[total].used;
+      destination.used = data_make->cache_arguments.array[total].used + 1;
 
       if (existing) {
         destination.used += data_make->cache_arguments.array[i].used + 1;
@@ -74,12 +74,47 @@ extern "C" {
       f_char_t destination_string[destination.used + 1];
       destination.string = destination_string;
       destination_string[destination.used] = 0;
+      destination_string[destination.used - 1] = 0;
+
+      if (existing) {
+        destination_string[destination.used - 2] = 0;
+      }
 
       memcpy(destination_string, data_make->cache_arguments.array[total].string, sizeof(f_char_t) * data_make->cache_arguments.array[total].used);
 
       if (existing) {
-        memcpy(destination_string + data_make->cache_arguments.array[total].used + 1, data_make->cache_arguments.array[i].string, sizeof(f_char_t) * data_make->cache_arguments.array[i].used);
-        destination_string[data_make->cache_arguments.array[total].used] = f_path_separator_s.string[0];
+        if (destination_string[data_make->cache_arguments.array[total].used - 1] == f_path_separator_s.string[0]) {
+          memcpy(destination_string + data_make->cache_arguments.array[total].used, data_make->cache_arguments.array[i].string, sizeof(f_char_t) * data_make->cache_arguments.array[i].used);
+
+          if (data_make->cache_arguments.array[i].string[data_make->cache_arguments.array[i].used - 1] == f_path_separator_s.string[0]) {
+            destination.used -= 2;
+          }
+          else {
+            destination_string[data_make->cache_arguments.array[total].used + data_make->cache_arguments.array[i].used] = f_path_separator_s.string[0];
+
+            --destination.used;
+          }
+        }
+        else {
+          memcpy(destination_string + data_make->cache_arguments.array[total].used + 1, data_make->cache_arguments.array[i].string, sizeof(f_char_t) * data_make->cache_arguments.array[i].used);
+
+          destination_string[data_make->cache_arguments.array[total].used] = f_path_separator_s.string[0];
+
+          if (data_make->cache_arguments.array[i].string[data_make->cache_arguments.array[i].used - 1] == f_path_separator_s.string[0]) {
+            --destination.used;
+          }
+          else {
+            destination_string[data_make->cache_arguments.array[total].used + 1 + data_make->cache_arguments.array[i].used] = f_path_separator_s.string[0];
+          }
+        }
+      }
+      else {
+        if (destination_string[data_make->cache_arguments.array[total].used - 1] == f_path_separator_s.string[0]) {
+          --destination.used;
+        }
+        else {
+          destination_string[data_make->cache_arguments.array[total].used] = f_path_separator_s.string[0];
+        }
       }
 
       status_file = f_directory_is(data_make->cache_arguments.array[i]);
