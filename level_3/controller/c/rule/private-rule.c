@@ -162,15 +162,6 @@ extern "C" {
 
             return status;
           }
-
-          // Apply the IKI delimits to the buffer, stripping out the NULL characters.
-          status = controller_rule_action_read_delimit_apply(global, &global.thread->cache, &action->ikis.array[action->ikis.used], &action->parameters.array[action->parameters.used]);
-
-          if (F_status_is_error(status)) {
-            controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "controller_rule_action_read_delimit_apply", F_true);
-
-            return status;
-          }
         }
 
         ++action->parameters.used;
@@ -240,18 +231,20 @@ extern "C" {
       cache->content_actions.used = 0;
       cache->object_actions.used = 0;
 
-      if (actions->size) {
-        actions->array[actions->used].parameters.used = 0;
+      for (; actions->used; --actions->used) {
 
-        actions->array[actions->used].ikis.used = 0;
+        for (; actions->array[actions->used - 1].parameters.used; --actions->array[actions->used - 1].parameters.used) {
+          actions->array[actions->used - 1].parameters.array[actions->array[actions->used - 1].parameters.used - 1].used = 0;
+        } // for
 
-        if (actions->array[actions->used].ikis.size) {
-          actions->array[actions->used].ikis.array[0].content.used = 0;
-          actions->array[actions->used].ikis.array[0].delimits.used = 0;
-          actions->array[actions->used].ikis.array[0].variable.used = 0;
-          actions->array[actions->used].ikis.array[0].vocabulary.used = 0;
-        }
-      }
+        for (; actions->array[actions->used - 1].ikis.used; --actions->array[actions->used - 1].ikis.used) {
+
+          actions->array[actions->used - 1].ikis.array[actions->array[actions->used - 1].ikis.used - 1].content.used = 0;
+          actions->array[actions->used - 1].ikis.array[actions->array[actions->used - 1].ikis.used - 1].delimits.used = 0;
+          actions->array[actions->used - 1].ikis.array[actions->array[actions->used - 1].ikis.used - 1].variable.used = 0;
+          actions->array[actions->used - 1].ikis.array[actions->array[actions->used - 1].ikis.used - 1].vocabulary.used = 0;
+        } // for
+      } // for
 
       status = fl_fss_extended_list_content_read(cache->buffer_item, state, range, &cache->content_action, &cache->delimits, &cache->comments);
 
@@ -317,15 +310,6 @@ extern "C" {
               controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "fl_iki_read", F_true);
 
               actions->array[actions->used++].status = controller_status_simplify_error(F_status_set_fine(status));
-
-              return status;
-            }
-
-            // Apply the IKI delimits to the buffer, stripping out the NULL characters.
-            status = controller_rule_action_read_delimit_apply(global, cache, &actions->array[actions->used].ikis.array[0], &actions->array[actions->used].parameters.array[0]);
-
-            if (F_status_is_error(status)) {
-              controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "controller_rule_action_read_delimit_apply", F_true);
 
               return status;
             }
@@ -639,15 +623,6 @@ extern "C" {
 
               return status;
             }
-
-            // Apply the IKI delimits to the buffer, stripping out the NULL characters.
-            status = controller_rule_action_read_delimit_apply(global, cache, &actions->array[actions->used].ikis.array[0], &actions->array[actions->used].parameters.array[0]);
-
-            if (F_status_is_error(status)) {
-              controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "controller_rule_action_read_delimit_apply", F_true);
-
-              return status;
-            }
           }
 
           actions->array[actions->used].ikis.used = 1;
@@ -697,32 +672,6 @@ extern "C" {
     return status;
   }
 #endif // _di_controller_rule_action_read_
-
-#ifndef _di_controller_rule_action_read_delimit_apply_
-  f_status_t controller_rule_action_read_delimit_apply(const controller_global_t global, controller_cache_t * const cache, f_iki_data_t * const iki_data, f_string_dynamic_t * const destination) {
-
-    if (!iki_data->delimits.used) return F_none;
-
-    cache->expanded.used = 0;
-
-    f_status_t status = f_string_dynamics_increase(F_memory_default_allocation_small_d, &cache->expanded);
-    if (F_status_is_error(status)) return status;
-
-    status = f_string_dynamic_append(*destination, &cache->expanded.array[0]);
-    if (F_status_is_error(status)) return status;
-
-    for (f_array_length_t j = 0; j < iki_data->delimits.used; ++j) {
-      cache->expanded.array[0].string[iki_data->delimits.array[j]] = f_iki_syntax_placeholder_s.string[0];
-    } // for
-
-    destination->used = 0;
-
-    status = f_string_dynamic_append_nulless(cache->expanded.array[0], destination);
-    if (F_status_is_error(status)) return status;
-
-    return F_none;
-  }
-#endif // _di_controller_rule_action_read_delimit_apply_
 
 #ifndef _di_controller_rule_action_read_rerun_number_
   f_status_t controller_rule_action_read_rerun_number(const controller_global_t global, const f_string_t name, controller_cache_t * const cache, f_array_length_t * const index, f_number_unsigned_t * const number) {
@@ -2021,7 +1970,7 @@ extern "C" {
         status = f_string_dynamic_increase_by(action.parameters.array[process->cache.expanded.used].used + controller_common_allocation_large_d, buffer);
 
         // Apply the IKI delimits.
-        for (i = 0; i < iki_data->delimits.used && iki_data->delimits.array[i] < iki_data->variable.array[0].start; ++i) {
+        for (i = 0; i < iki_data->delimits.used; ++i) {
           action.parameters.array[process->cache.expanded.used].string[iki_data->delimits.array[i]] = f_iki_syntax_placeholder_s.string[0];
         } // for
 
@@ -2058,7 +2007,7 @@ extern "C" {
         }
 
         // Unapply the IKI delimits.
-        for (i = 0; i < iki_data->delimits.used && iki_data->delimits.array[i] < iki_data->variable.array[0].start; ++i) {
+        for (i = 0; i < iki_data->delimits.used; ++i) {
           action.parameters.array[process->cache.expanded.used].string[iki_data->delimits.array[i]] = f_iki_syntax_slash_s.string[0];
         } // for
       }
