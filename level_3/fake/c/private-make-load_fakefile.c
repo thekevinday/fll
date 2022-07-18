@@ -50,10 +50,10 @@ extern "C" {
 
     f_fss_objects_t list_objects = f_fss_objects_t_initialize;
     f_fss_contents_t list_contents = f_fss_contents_t_initialize;
+    f_fss_delimits_t delimits = f_fss_delimits_t_initialize;
 
     {
       f_string_range_t range = macro_f_string_range_t_initialize2(data_make->buffer.used);
-      f_fss_delimits_t delimits = f_fss_delimits_t_initialize;
       f_fss_comments_t comments = f_fss_comments_t_initialize;
       f_state_t state = macro_f_state_t_initialize(fake_common_allocation_large_d, fake_common_allocation_small_d, 0, 0, &fll_program_standard_signal_state, 0, (void *) data_make->main, 0);
 
@@ -68,14 +68,16 @@ extern "C" {
         if (F_status_is_error(*status)) {
           fll_error_print(data_make->main->error, F_status_set_fine(*status), "f_fss_apply_delimit", F_true);
         }
+
+        delimits.used = 0;
       }
 
-      macro_f_fss_delimits_t_delete_simple(delimits);
       macro_f_fss_comments_t_delete_simple(comments);
 
       if (F_status_is_error(*status)) {
         macro_f_fss_objects_t_delete_simple(list_objects);
         macro_f_fss_contents_t_delete_simple(list_contents);
+        macro_f_fss_delimits_t_delete_simple(delimits);
 
         return;
       }
@@ -86,7 +88,6 @@ extern "C" {
       bool missing_settings = F_true;
 
       f_fss_set_t settings = f_fss_set_t_initialize;
-
       f_state_t state = macro_f_state_t_initialize(fake_common_allocation_large_d, fake_common_allocation_small_d, 0, 0, &fll_program_standard_signal_state, 0, (void *) data_make->main, 0);
 
       if (list_objects.used > data_make->fakefile.size) {
@@ -99,13 +100,13 @@ extern "C" {
         macro_f_fss_set_t_delete_simple(settings);
         macro_f_fss_objects_t_delete_simple(list_objects);
         macro_f_fss_contents_t_delete_simple(list_contents);
+        macro_f_fss_delimits_t_delete_simple(delimits);
 
         return;
       }
 
       {
         f_string_range_t content_range = f_string_range_t_initialize;
-        f_fss_delimits_t delimits = f_fss_delimits_t_initialize;
 
         for (f_array_length_t i = 0; i < list_objects.used; ++i) {
 
@@ -189,12 +190,11 @@ extern "C" {
 
           ++data_make->fakefile.used;
         } // for
-
-        macro_f_fss_delimits_t_delete_simple(delimits);
       }
 
       macro_f_fss_objects_t_delete_simple(list_objects);
       macro_f_fss_contents_t_delete_simple(list_contents);
+      macro_f_fss_delimits_t_delete_simple(delimits);
 
       if (F_status_is_error(*status)) {
         macro_f_fss_set_t_delete_simple(settings);

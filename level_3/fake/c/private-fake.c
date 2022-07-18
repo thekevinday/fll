@@ -175,7 +175,7 @@ extern "C" {
 
     do {
       if (fll_program_standard_signal_received(data->main)) {
-        f_string_dynamic_resize(0, buffer);
+        buffer->used = 0;
 
         fake_print_signal_received(data);
 
@@ -189,7 +189,7 @@ extern "C" {
     if (F_status_is_error(status)) {
       fll_error_file_print(data->main->error, F_status_set_fine(status), "f_file_stream_read_block", F_true, f_string_ascii_minus_s, f_file_operation_read_s, fll_error_file_type_file_e);
 
-      f_string_dynamic_resize(0, buffer);
+      buffer->used = 0;
     }
 
     return status;
