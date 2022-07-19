@@ -233,7 +233,16 @@ extern "C" {
       }
 
       for (j = 0; j < process->childs.size; ++j) {
-        process->childs.array[j] = 0;
+
+        if (process->childs.array[j]) {
+
+          // A hackish way to determine if the child process exists, and if it does then forcibly terminate it.
+          if (getpgid(process->childs.array[j]) >= 0) {
+            f_signal_send(F_signal_kill, process->childs.array[j]);
+          }
+
+          process->childs.array[j] = 0;
+        }
       } // for
 
       process->childs.used = 0;
