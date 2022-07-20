@@ -325,10 +325,10 @@ extern "C" {
       macro_f_console_parameter_t_initialize(byte_dump_short_unicode_s.string, byte_dump_long_unicode_s.string, 0, 0, f_console_type_normal_e), \
       macro_f_console_parameter_t_initialize(byte_dump_short_first_s.string, byte_dump_long_first_s.string, 0, 1, f_console_type_normal_e), \
       macro_f_console_parameter_t_initialize(byte_dump_short_last_s.string, byte_dump_long_last_s.string, 0, 1, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(byte_dump_short_narrow_s.string, byte_dump_long_narrow_s.string, 0, 1, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(byte_dump_short_narrow_s.string, byte_dump_long_narrow_s.string, 0, 0, f_console_type_normal_e), \
       macro_f_console_parameter_t_initialize(byte_dump_short_placeholder_s.string, byte_dump_long_placeholder_s.string, 0, 0, f_console_type_normal_e), \
       macro_f_console_parameter_t_initialize(byte_dump_short_text_s.string, byte_dump_long_text_s.string, 0, 0, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(byte_dump_short_wide_s.string, byte_dump_long_wide_s.string, 0, 1, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(byte_dump_short_wide_s.string, byte_dump_long_wide_s.string, 0, 0, f_console_type_normal_e), \
       macro_f_console_parameter_t_initialize(byte_dump_short_width_s.string, byte_dump_long_width_s.string, 0, 1, f_console_type_normal_e), \
       macro_f_console_parameter_t_initialize(0, byte_dump_long_normal_s.string, 0, 0, f_console_type_normal_e), \
       macro_f_console_parameter_t_initialize(0, byte_dump_long_simple_s.string, 0, 0, f_console_type_normal_e), \
