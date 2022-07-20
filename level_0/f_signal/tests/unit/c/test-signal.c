@@ -19,6 +19,9 @@ int setdown(void **state) {
 int main(void) {
 
   const struct CMUnitTest tests[] = {
+    cmocka_unit_test(test__f_signal_action__fails),
+    cmocka_unit_test(test__f_signal_action__works),
+
     cmocka_unit_test(test__f_signal_close__fails),
     cmocka_unit_test(test__f_signal_close__works),
 
@@ -27,6 +30,8 @@ int main(void) {
 
     cmocka_unit_test(test__f_signal_open__fails),
     cmocka_unit_test(test__f_signal_open__works),
+
+    cmocka_unit_test(test__f_signal_pause__works),
 
     cmocka_unit_test(test__f_signal_queue__fails),
     cmocka_unit_test(test__f_signal_queue__works),
@@ -52,6 +57,9 @@ int main(void) {
     cmocka_unit_test(test__f_signal_set_has__fails),
     cmocka_unit_test(test__f_signal_set_has__works),
 
+    cmocka_unit_test(test__f_signal_suspend__fails),
+    cmocka_unit_test(test__f_signal_suspend__works),
+
     cmocka_unit_test(test__f_signal_wait__fails),
     cmocka_unit_test(test__f_signal_wait__works),
 
@@ -59,9 +67,11 @@ int main(void) {
     cmocka_unit_test(test__f_signal_wait_until__works),
 
     #ifndef _di_level_0_parameter_checking_
+      cmocka_unit_test(test__f_signal_action__parameter_checking),
       cmocka_unit_test(test__f_signal_close__parameter_checking),
       cmocka_unit_test(test__f_signal_mask__parameter_checking),
       cmocka_unit_test(test__f_signal_open__parameter_checking),
+      // f_signal_pause() doesn't use parameter checking.
       // f_signal_queue() doesn't use parameter checking.
       cmocka_unit_test(test__f_signal_read__parameter_checking),
       // f_signal_send() doesn't use parameter checking.
@@ -70,6 +80,7 @@ int main(void) {
       cmocka_unit_test(test__f_signal_set_empty__parameter_checking),
       cmocka_unit_test(test__f_signal_set_fill__parameter_checking),
       cmocka_unit_test(test__f_signal_set_has__parameter_checking),
+      cmocka_unit_test(test__f_signal_suspend__parameter_checking),
       // f_signal_wait() doesn't use parameter checking.
       // f_signal_wait_until() doesn't use parameter checking.
     #endif // _di_level_0_parameter_checking_

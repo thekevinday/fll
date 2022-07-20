@@ -25,7 +25,7 @@ build_language c
 build_libraries -lc -lcmocka
 build_libraries-individual -lf_memory -lf_string -lf_signal
 
-build_sources_program test-signal-close.c test-signal-mask.c test-signal-open.c test-signal-queue.c test-signal-read.c test-signal-send.c test-signal-set_add.c test-signal-set_delete.c test-signal-set_empty.c test-signal-set_fill.c test-signal-set_has.c test-signal-wait.c test-signal-wait_until.c
+build_sources_program test-signal-action.c test-signal-close.c test-signal-mask.c test-signal-open.c test-signal-pause.c test-signal-queue.c test-signal-read.c test-signal-send.c test-signal-set_add.c test-signal-set_delete.c test-signal-set_empty.c test-signal-set_fill.c test-signal-set_has.c test-signal-suspend.c test-signal-wait.c test-signal-wait_until.c
 build_sources_program test-signal.c
 
 build_script no

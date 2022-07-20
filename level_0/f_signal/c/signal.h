@@ -29,6 +29,33 @@ extern "C" {
 #endif
 
 /**
+ * Get or set the signal action handlers.
+ *
+ * @param signal
+ *   The signal settings.
+ * @param action
+ *   (optional) The signal action to use.
+ *   Set to NULL to not use.
+ *   Both action and previous may not be NULL.
+ * @param previous
+ *   (optional) The previous signal action.
+ *   Set to NULL to not use.
+ *
+ * @return
+ *   F_none on success but no signal found.
+ *
+ *   F_buffer (with error bit) if the buffer is invalid (action or previous point to invalid memory).
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   F_failure (with error bit) for any other error.
+ *
+ * @see sigaction()
+ */
+#ifndef _di_f_signal_action_
+  extern f_status_t f_signal_action(const f_signal_t signal, const struct sigaction * const action, struct sigaction *previous);
+#endif // _di_f_signal_action_
+
+/**
  * Close an open signal descriptor.
  *
  * The signal.id is set to 0 on success.
@@ -39,6 +66,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not on success, but no descriptor was provided to close.
+ *
  *   F_descriptor (with error bit) if id is an invalid descriptor.
  *   F_filesystem_quota_block (with error bit) if file system's disk blocks or inodes are exhausted.
  *   F_input_output (with error bit) if an I/O error occurred.
@@ -107,6 +135,18 @@ extern "C" {
 #ifndef _di_f_signal_open_
   extern f_status_t f_signal_open(f_signal_t * const signal);
 #endif // _di_f_signal_open_
+
+/**
+ * Pause the current process until a signal is received.
+ *
+ * @return
+ *   The received signal.
+ *
+ * @see pause()
+ */
+#ifndef _di_f_signal_pause_
+  extern f_status_t f_signal_pause(void);
+#endif // _di_f_signal_pause_
 
 /**
  * Send the signal and value to the given process.
@@ -295,6 +335,26 @@ extern "C" {
 #ifndef _di_f_signal_set_has_
   extern f_status_t f_signal_set_has(const int signal, const sigset_t * const set);
 #endif // _di_f_signal_set_has_
+
+/**
+ * Suspend the current process until one of the provided signals is received.
+ *
+ * @param mask
+ *   The signal mask.
+ *
+ * @return
+ *   F_none on success but no signal found.
+ *
+ *   F_buffer (with error bit) if the mask is pointing to invalid memory.
+ *   F_interrupt (with error bit) when program received an interrupt signal, halting operation.
+ *
+ *   F_failure (with error bit) for any other error.
+ *
+ * @see sigsuspend()
+ */
+#ifndef _di_f_signal_suspend_
+  extern f_status_t f_signal_suspend(const sigset_t * const mask);
+#endif // _di_f_signal_suspend_
 
 /**
  * Wait until any signal in a set of signals is received.

@@ -26,9 +26,11 @@
 #include "mock-signal.h"
 
 // Test includes.
+#include "test-signal-action.h"
 #include "test-signal-close.h"
 #include "test-signal-mask.h"
 #include "test-signal-open.h"
+#include "test-signal-pause.h"
 #include "test-signal-queue.h"
 #include "test-signal-read.h"
 #include "test-signal-send.h"
@@ -37,6 +39,7 @@
 #include "test-signal-set_empty.h"
 #include "test-signal-set_fill.h"
 #include "test-signal-set_has.h"
+#include "test-signal-suspend.h"
 #include "test-signal-wait.h"
 #include "test-signal-wait_until.h"
 

@@ -4,6 +4,19 @@
 extern "C" {
 #endif
 
+int __wrap_sigaction(int signum, const struct sigaction *act, struct sigaction *oldact) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    errno = mock_type(int);
+
+    return -1;
+  }
+
+  return 0;
+}
+
 int __wrap_close(int fd) {
 
   const bool failure = mock_type(bool);
@@ -28,6 +41,11 @@ int __wrap_kill(pid_t pid, int sig) {
   }
 
   return 0;
+}
+
+int __wrap_pause(void) {
+
+  return -1;
 }
 
 int __wrap_poll(struct pollfd *fds, nfds_t nfds, int timeout) {
@@ -150,6 +168,19 @@ int __wrap_sigprocmask(int how, const sigset_t *set, sigset_t *oldset) {
 }
 
 int __wrap_sigqueue(pid_t pid, int sig, const union sigval value) {
+
+  const bool failure = mock_type(bool);
+
+  if (failure) {
+    errno = mock_type(int);
+
+    return -1;
+  }
+
+  return 0;
+}
+
+int __wrap_sigsuspend(const sigset_t *mask) {
 
   const bool failure = mock_type(bool);
 

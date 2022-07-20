@@ -4,6 +4,23 @@
 extern "C" {
 #endif
 
+#ifndef _di_f_signal_action_
+  f_status_t f_signal_action(const f_signal_t signal, const struct sigaction * const action, struct sigaction *previous) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!action && !previous) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    if (sigaction(signal.id, action, previous) == -1) {
+      if (errno == EFAULT) return F_status_set_error(F_buffer);
+      if (errno == EINVAL) return F_status_set_error(F_parameter);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_signal_action_
+
 #ifndef _di_f_signal_close_
   f_status_t f_signal_close(f_signal_t * const signal) {
     #ifndef _di_level_0_parameter_checking_
@@ -70,6 +87,15 @@ extern "C" {
     return F_none;
   }
 #endif // _di_f_signal_open_
+
+#ifndef _di_f_signal_pause_
+  f_status_t f_signal_pause(void) {
+
+    pause();
+
+    return F_none;
+  }
+#endif // _di_f_signal_pause_
 
 #ifndef _di_f_signal_queue_
   f_status_t f_signal_queue(const pid_t id, const int signal, const union sigval value) {
@@ -243,6 +269,25 @@ extern "C" {
     return result ? F_true : F_false;
   }
 #endif // _di_f_signal_set_has_
+
+#ifndef _di_f_signal_suspend_
+  f_status_t f_signal_suspend(const sigset_t * const mask) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!mask) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    const int result = sigsuspend(mask);
+
+    if (result == -1) {
+      if (errno == EFAULT) return F_status_set_error(F_buffer);
+      if (errno == EINTR) return F_status_set_error(F_interrupt);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
+  }
+#endif // _di_f_signal_suspend_
 
 #ifndef _di_f_signal_wait_
   f_status_t f_signal_wait(const sigset_t * const set, siginfo_t * const information) {

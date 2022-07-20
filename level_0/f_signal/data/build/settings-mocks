@@ -60,8 +60,10 @@ flags_library -fPIC
 # Inject mocks.
 flags -Wl,--wrap=close
 flags -Wl,--wrap=kill
+flags -Wl,--wrap=pause
 flags -Wl,--wrap=poll
 flags -Wl,--wrap=read
+flags -Wl,--wrap=sigaction
 flags -Wl,--wrap=sigaddset
 flags -Wl,--wrap=sigdelset
 flags -Wl,--wrap=sigemptyset
@@ -70,5 +72,6 @@ flags -Wl,--wrap=sigismember
 flags -Wl,--wrap=signalfd
 flags -Wl,--wrap=sigprocmask
 flags -Wl,--wrap=sigqueue
+flags -Wl,--wrap=sigsuspend
 flags -Wl,--wrap=sigtimedwait
 flags -Wl,--wrap=sigwaitinfo
