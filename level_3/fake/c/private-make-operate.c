@@ -178,6 +178,7 @@ extern "C" {
     f_array_length_t k = 0;
     f_array_length_t l = 0;
     f_array_length_t m = 0;
+    f_array_length_t n = 0;
 
     const f_string_static_t reserved_name[] = {
       fake_make_parameter_variable_build_s,
@@ -441,13 +442,16 @@ extern "C" {
                 if (content.array[i].start == iki_data->variable.array[0].start && content.array[i].stop == iki_data->variable.array[0].stop || quotes.array[i]) {
 
                   // Pre-allocate memory to reduce number of allocations.
-                  m = parameter->array[k].value.used;
+                  l = parameter->used;
 
-                  for (l = 0; l < parameter->array[k].value.used; ++l) {
-                    m += parameter->array[k].value.array[l].used;
+                  for (m = 0; m < parameter->used; ++m) {
+
+                    for (n = 0; n < parameter->array[m].value.used; ++n) {
+                      l += parameter->array[m].value.array[n].used;
+                    } // for
                   } // for
 
-                  *status = f_string_dynamic_increase_by(m, &data_make->cache_arguments.array[data_make->cache_arguments.used]);
+                  *status = f_string_dynamic_increase_by(l, &data_make->cache_arguments.array[data_make->cache_arguments.used]);
 
                   if (F_status_is_error(*status)) {
                     fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamic_increase_by", F_true);
@@ -533,13 +537,16 @@ extern "C" {
 
                   // Pre-allocate memory to reduce number of allocations.
                   if (quotes.array[i]) {
-                    m = parameter->array[k].value.used;
+                    l = parameter->used;
 
-                    for (l = 0; l < parameter->array[k].value.used; ++l) {
-                      m += parameter->array[k].value.array[l].used;
+                    for (m = 0; m < parameter->used; ++m) {
+
+                      for (n = 0; n < parameter->array[m].value.used; ++n) {
+                        l += parameter->array[m].value.array[n].used;
+                      } // for
                     } // for
 
-                    *status = f_string_dynamic_increase_by(m, &data_make->cache_arguments.array[data_make->cache_arguments.used]);
+                    *status = f_string_dynamic_increase_by(l, &data_make->cache_arguments.array[data_make->cache_arguments.used]);
 
                     if (F_status_is_error(*status)) {
                       fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamic_increase_by", F_true);
