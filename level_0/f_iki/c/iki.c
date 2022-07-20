@@ -179,7 +179,7 @@ extern "C" {
             quote = buffer->string[range->start];
           }
           else {
-            status = F_false;
+            status = F_next;
           }
 
           break;
@@ -221,8 +221,6 @@ extern "C" {
 
               break;
             }
-
-
 
             if (buffer->string[range->start] == f_iki_syntax_separator_s.string[0]) {
               separator_found = F_true;
