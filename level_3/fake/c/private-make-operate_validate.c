@@ -818,7 +818,7 @@ extern "C" {
           j = 7;
         }
 
-        if (j == 7 && data_make->cache_arguments.used >= if_type_minimum[i] || data_make->cache_arguments.used >= if_not_type_minimum[j]) {
+        if (j == 7 && data_make->cache_arguments.used >= if_type_minimum[i] || j < 7 && data_make->cache_arguments.used >= if_not_type_minimum[j]) {
           if (state_process->condition == fake_make_operation_if_type_if_success_e || state_process->condition == fake_make_operation_if_type_if_failure_e) {
 
             // The success and failure operations minimum is also the maximum.
