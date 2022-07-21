@@ -419,6 +419,10 @@ extern "C" {
  *
  * @see f_signal_mask()
  * @see f_signal_open()
+ * @see f_signal_set_add()
+ * @see f_signal_set_delete()
+ * @see f_signal_set_empty()
+ * @see f_signal_set_fill()
  */
 #ifndef _di_fll_program_standard_setup_
   extern f_status_t fll_program_standard_setup(f_signal_t * const signal);

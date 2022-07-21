@@ -327,17 +327,32 @@ extern "C" {
     f_signal_set_add(F_signal_termination, &signal->set);
 
     f_status_t status = f_signal_mask(SIG_BLOCK, &signal->set, 0);
+    if (F_status_is_error(status)) return status;
 
-    if (F_status_is_error_not(status)) {
-      status = f_signal_open(signal);
+    status = f_signal_open(signal);
 
-      // If there is an error opening a signal descriptor, then do not handle signals.
-      if (F_status_is_error(status)) {
-        f_signal_mask(SIG_UNBLOCK, &signal->set, 0);
-        f_signal_close(signal);
-      }
+    // If there is an error opening a signal descriptor, then do not handle signals.
+    if (F_status_is_error(status)) {
+      f_signal_mask(SIG_UNBLOCK, &signal->set, 0);
+      f_signal_close(signal);
+
+      return status;
     }
 
+    // Unblock all other signals.
+    sigset_t set;
+
+    memset(&set, 0, sizeof(sigset_t));
+
+    f_signal_set_fill(&signal->set);
+    f_signal_set_delete(F_signal_abort, &signal->set);
+    f_signal_set_delete(F_signal_broken_pipe, &signal->set);
+    f_signal_set_delete(F_signal_hangup, &signal->set);
+    f_signal_set_delete(F_signal_interrupt, &signal->set);
+    f_signal_set_delete(F_signal_quit, &signal->set);
+    f_signal_set_delete(F_signal_termination, &signal->set);
+
+    status = f_signal_mask(SIG_UNBLOCK, &set, 0);
     if (F_status_is_error(status)) return status;
 
     return F_none;
