@@ -23,6 +23,7 @@ Exit Specification:
       - "pid": Exactly one Content that is one of "disable", "require", or "ready".
       - "session": Exactly one Content that is one of  "new" or "same".
       - "show": Exactly one Content that is one of  "normal" or "init".
+      - "timeout": One or Two content with the first being one of "exit", "start", "stop", or "kill" and the (optional) second Content being a positive whole number or 0.
 
     The Exit file may have any other valid Item Objects, but only the above are reserved.
 
@@ -117,7 +118,8 @@ Exit Specification:
 
       - "timeout": Two Content.
         The first being one of\:
+          - "exit"
           - "start"
           - "stop"
           - "kill"
-        The second being a positive whole number or 0.
+        The (optional) second Content being a positive whole number or 0.

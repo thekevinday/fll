@@ -245,7 +245,7 @@ extern "C" {
       }
       else if (action->type == controller_entry_action_type_timeout_e) {
         allocate = 2;
-        at_least = 2;
+        at_least = 1;
         at_most = 2;
       }
       else if (action->type == controller_entry_action_type_ready_e) {
@@ -525,35 +525,44 @@ extern "C" {
             }
 
             if (action->status == F_none) {
-              status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, action->parameters.array[1], &action->number);
-
-              if (F_status_is_error(status) || status == F_data_not) {
-                action->number = 0;
-
-                if (status == F_data_not) {
-                  action->status = F_status_set_error(F_number);
-                }
-                else {
-                  action->status = controller_status_simplify_error(F_status_set_fine(status));
+              if (action->parameters.used == 2) {
+                if (action->flag & controller_entry_action_flag_undefined_e) {
+                  action->flag -= controller_entry_action_flag_undefined_e;
                 }
 
-                if (F_status_set_fine(status) == F_memory_not) {
-                  controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "fl_conversion_dynamic_to_unsigned_detect", F_true, global.thread);
+                status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, action->parameters.array[1], &action->number);
 
-                  status_action = status;
+                if (F_status_is_error(status) || status == F_data_not) {
+                  action->number = 0;
 
-                  break;
+                  if (status == F_data_not) {
+                    action->status = F_status_set_error(F_number);
+                  }
+                  else {
+                    action->status = controller_status_simplify_error(F_status_set_fine(status));
+                  }
+
+                  if (F_status_set_fine(status) == F_memory_not) {
+                    controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "fl_conversion_dynamic_to_unsigned_detect", F_true, global.thread);
+
+                    status_action = status;
+
+                    break;
+                  }
+
+                  if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
+                    flockfile(global.main->error.to.stream);
+
+                    fl_print_format("%r%[%QThe %r item action parameter '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
+                    fl_print_format("%[%Q%]", global.main->error.to.stream, global.main->error.notable, action->parameters.array[1], global.main->error.notable);
+                    fl_print_format("%[' is not a valid supported number.%]", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s);
+
+                    funlockfile(global.main->error.to.stream);
+                  }
                 }
-
-                if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
-                  flockfile(global.main->error.to.stream);
-
-                  fl_print_format("%r%[%QThe %r item action parameter '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
-                  fl_print_format("%[%Q%]", global.main->error.to.stream, global.main->error.notable, action->parameters.array[1], global.main->error.notable);
-                  fl_print_format("%[' is not a valid supported number.%]", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s);
-
-                  funlockfile(global.main->error.to.stream);
-                }
+              }
+              else {
+                action->flag |= controller_entry_action_flag_undefined_e;
               }
             }
           }
@@ -1368,7 +1377,12 @@ extern "C" {
           return F_execute;
         }
         else if (entry_action->type == controller_entry_action_type_timeout_e) {
-          if (entry_action->code == controller_entry_timeout_code_kill_d) {
+          if (entry_action->code == controller_entry_timeout_code_exit_d) {
+            entry->timeout_exit = entry_action->number;
+
+            controller_entry_preprocess_print_simulate_setting_value(*global, is_entry, controller_timeout_s, controller_exit_s, entry->items.array[global->setting->failsafe_item_id].name, controller_entry_print_suffix_megatime_s);
+          }
+          else if (entry_action->code == controller_entry_timeout_code_kill_d) {
             entry->timeout_kill = entry_action->number;
 
             controller_entry_preprocess_print_simulate_setting_value(*global, is_entry, controller_timeout_s, controller_kill_s, entry->items.array[global->setting->failsafe_item_id].name, controller_entry_print_suffix_megatime_s);
@@ -2179,6 +2193,97 @@ extern "C" {
           controller_entry_settings_read_print_setting_unknown_action_value(global, is_entry, *cache, i);
 
           continue;
+        }
+      }
+      else if (fl_string_dynamic_compare(controller_timeout_s, cache->action.name_action) == F_equal_to) {
+        if (cache->content_actions.array[i].used < 1 || cache->content_actions.array[i].used > 2) {
+          controller_entry_settings_read_print_setting_requires_between(global, is_entry, *cache, 1, 2);
+
+          continue;
+        }
+
+        f_number_unsigned_t *time = 0;
+
+        if (fl_string_dynamic_partial_compare_string(controller_exit_s.string, cache->buffer_file, controller_exit_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
+          if (cache->content_actions.array[i].used == 1) {
+            entry->flag |= controller_entry_flag_timeout_exit_no_e;
+
+            continue;
+          }
+
+          if (entry->flag & controller_entry_flag_timeout_exit_no_e) {
+            entry->flag -= controller_entry_flag_timeout_exit_no_e;
+          }
+
+          time = &entry->timeout_exit;
+        }
+        else if (fl_string_dynamic_partial_compare_string(controller_kill_s.string, cache->buffer_file, controller_kill_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
+          if (cache->content_actions.array[i].used == 1) {
+            entry->flag |= controller_entry_flag_timeout_kill_no_e;
+
+            continue;
+          }
+
+          if (entry->flag & controller_entry_flag_timeout_kill_no_e) {
+            entry->flag -= controller_entry_flag_timeout_kill_no_e;
+          }
+
+          time = &entry->timeout_kill;
+        }
+        else if (fl_string_dynamic_partial_compare_string(controller_start_s.string, cache->buffer_file, controller_start_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
+          if (cache->content_actions.array[i].used == 1) {
+            entry->flag |= controller_entry_flag_timeout_start_no_e;
+
+            continue;
+          }
+
+          if (entry->flag & controller_entry_flag_timeout_start_no_e) {
+            entry->flag -= controller_entry_flag_timeout_start_no_e;
+          }
+
+          time = &entry->timeout_start;
+        }
+        else if (fl_string_dynamic_partial_compare_string(controller_stop_s.string, cache->buffer_file, controller_stop_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
+          if (cache->content_actions.array[i].used == 1) {
+            entry->flag |= controller_entry_flag_timeout_stop_no_e;
+
+            continue;
+          }
+
+          if (entry->flag & controller_entry_flag_timeout_stop_no_e) {
+            entry->flag -= controller_entry_flag_timeout_stop_no_e;
+          }
+
+          time = &entry->timeout_stop;
+        }
+        else {
+          controller_entry_settings_read_print_setting_unknown_action_value(global, is_entry, *cache, i);
+
+          continue;
+        }
+
+        const f_number_unsigned_t time_previous = *time;
+
+        status = fl_conversion_dynamic_partial_to_unsigned_detect(fl_conversion_data_base_10_c, cache->buffer_file, cache->content_actions.array[i].array[1], time);
+
+        if (F_status_is_error(status) || status == F_data_not) {
+          *time = time_previous;
+
+          if (F_status_set_fine(status) == F_memory_not) {
+            controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "fl_conversion_dynamic_partial_to_unsigned_detect", F_true, global.thread);
+
+            continue;
+          }
+
+          if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
+            flockfile(global.main->error.to.stream);
+
+            fl_print_format("%r%[%QThe %r setting '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
+            fl_print_format("%[%/Q%]", global.main->error.to.stream, global.main->error.notable, cache->buffer_file, cache->content_actions.array[i].array[1], global.main->error.notable);
+            fl_print_format("%[' is not a valid supported number.%]", global.main->error.to.stream, global.main->error.context, global.main->error.context, f_string_eol_s);
+
+            funlockfile(global.main->error.to.stream);
+          }
         }
       }
       else {

@@ -54,20 +54,22 @@ extern "C" {
  *   - control: The process is started from a control operation.
  *
  * id:           The ID of this process relative to the processes array.
- * result:       The last return code from an execution of a process.
- * status:       The last execution status of the process.
- * state:        The state of the process.
- * action:       The action being performed.
- * options:      Configuration options for this asynchronous thread.
- * child:        The process id of a child process, if one is running (when forking to execute a child process).
  * id_thread:    The thread id, a valid ID when state is "active", and an invalid ID when the state is "busy".
- * lock:         A read/write lock on the structure.
+ * action:       The action being performed.
  * active:       A read/write lock representing that something is currently using this (read locks = in use, write lock = begin deleting).
+ * cache:        The cache used in this process.
+ * child:        The process id of a child process, if one is running (when forking to execute a child process).
+ * lock:         A read/write lock on the structure.
+ * options:      Configuration options for this asynchronous thread.
+ * result:       The last return code from an execution of a process.
+ * rule:         A copy of the rule actively being executed.
+ * stack:        A stack used to represent dependencies as Rule ID's to avoid circular rule dependencies (If Rule A waits on Rule B, then Rule B must not wait on Rule A).
+ * state:        The state of the process.
+ * status:       The last execution status of the process.
+ * type:         The currently active process type (from the controller_process_type_*_e).
  * wait:         A thread condition to tell a process waiting process that the rule has is done being processed.
  * wait_lock:    A mutex lock for working with "wait".
- * cache:        The cache used in this process.
- * stack:        A stack used to represent dependencies as Rule ID's to avoid circular rule dependencies (If Rule A waits on Rule B, then Rule B must not wait on Rule A).
- * rule:         A copy of the rule actively being executed.
+ *
  * main_data:    Used for passing the controller_main_t data to the process thread (to populate controller_global_t).
  * main_setting: Used for passing the controller_setting_t data to the process thread (to populate controller_global_t).
  * main_thread:  Used for passing the controller_thread_t data to the process thread (to populate controller_global_t).

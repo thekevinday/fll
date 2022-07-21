@@ -77,11 +77,23 @@ extern "C" {
 
     struct timespec time;
 
+    controller_entry_t *entry = 0;
     controller_process_t *process = 0;
 
     f_array_length_t i = 0;
     f_array_length_t j = 0;
     pid_t pid = 0;
+
+    if (is_normal) {
+      entry = &global.setting->entry;
+    }
+    else {
+      entry = &global.setting->exit;
+    }
+
+    // A simple but inaccurate interval counter (expect this to be replaced in the future).
+    const f_number_unsigned_t interval_nanoseconds = entry->timeout_exit < 1000 ? (entry->timeout_exit < 100 ? 5000000 : 100000000) : 500000000;
+    const f_number_unsigned_t interval_milliseconds = entry->timeout_exit < 1000 ? (entry->timeout_exit < 100 ? 5 : 100) : 500;
 
     if (global.thread->id_cleanup) {
       f_thread_cancel(global.thread->id_cleanup);
@@ -136,69 +148,70 @@ extern "C" {
       } // for
     } // for
 
-    for (i = 0; i < global.thread->processs.size && spent < controller_thread_exit_process_cancel_total_d; ++i) {
+    if (entry->timeout_exit && !(entry->flag & controller_entry_flag_timeout_exit_no_e)) {
+      f_number_unsigned_t lapsed = 0;
 
-      if (!global.thread->processs.array[i]) continue;
-      if (caller && i == caller->id) continue;
+      for (i = 0; i < global.thread->processs.used && lapsed < entry->timeout_exit; ++i) {
 
-      process = global.thread->processs.array[i];
+        if (!global.thread->processs.array[i]) continue;
+        if (caller && i == caller->id) continue;
 
-      // Do not cancel exit processes, when not performing "execute" during exit.
-      if (process->type == controller_process_type_exit_e && global.thread->enabled != controller_thread_enabled_exit_execute_e) continue;
+        process = global.thread->processs.array[i];
 
-      do {
-        if (!process->id_thread) break;
-
-        f_thread_signal_write(process->id_thread, global.thread->signal ? global.thread->signal : F_signal_termination);
-
-        controller_time(0, controller_thread_exit_process_cancel_wait_d, &time);
-
-        status = f_thread_join_timed(process->id_thread, time, 0);
-
-        if (status == F_none) {
-          for (j = 0; j < process->childs.size; ++j) {
-            process->childs.array[j] = 0;
-          } // for
-
-          process->childs.used = 0;
-          process->id_thread = 0;
+        // Do not wait for processes, when not performing "execute" during exit.
+        if (process->type == controller_process_type_exit_e && global.thread->enabled != controller_thread_enabled_exit_execute_e) {
+          continue;
         }
 
-        ++spent;
+        for (j = 0; j < process->childs.used && lapsed < entry->timeout_exit; ++j) {
 
-      } while (status == F_time && spent < controller_thread_exit_process_cancel_total_d);
+          while (process->childs.array[j] > 0 && lapsed < entry->timeout_exit) {
 
-      if (process->path_pids.used) {
-        for (j = 0; j < process->path_pids.used; ++j) {
+            // A hackish way to determine if the child process exists while waiting.
+            if (getpgid(process->childs.array[j]) >= 0) {
+              time.tv_sec = 0;
+              time.tv_nsec = interval_nanoseconds;
 
-          for (; spent < controller_thread_exit_process_cancel_total_d; ++spent) {
+              nanosleep(&time, 0);
 
-            if (process->path_pids.array[j].used && f_file_exists(process->path_pids.array[j], F_true) == F_true) {
-              status = controller_file_pid_read(process->path_pids.array[j], &pid);
+              lapsed += interval_milliseconds;
+            }
+            else {
+              process->childs.array[j] = 0;
 
-              if (pid) {
+              break;
+            }
+          } // while
+        } // for
 
-                // A hackish way to determine if the pid exists while waiting.
+        for (j = 0; j < process->path_pids.used && lapsed < entry->timeout_exit; ++j) {
+
+          if (process->path_pids.array[j].used && f_file_exists(process->path_pids.array[j], F_true) == F_true) {
+            status = controller_file_pid_read(process->path_pids.array[j], &pid);
+
+            if (pid) {
+              while (lapsed < entry->timeout_exit) {
+
+                // A hackish way to determine if the process exists while waiting.
                 if (getpgid(pid) >= 0) {
                   time.tv_sec = 0;
-                  time.tv_nsec = controller_thread_exit_process_cancel_wait_d;
+                  time.tv_nsec = interval_nanoseconds;
 
                   nanosleep(&time, 0);
 
-                  continue;
+                  lapsed += interval_milliseconds;
                 }
                 else {
-                  f_file_remove(process->path_pids.array[j]);
                   process->path_pids.array[j].used = 0;
-                }
-              }
-            }
 
-            break;
-          } // for
+                  break;
+                }
+              } // while
+            }
+          }
         } // for
-      }
-    } // for
+      } // for
+    }
 
     for (i = 0; i < global.thread->processs.size; ++i) {
 
@@ -232,36 +245,62 @@ extern "C" {
         process->id_thread = 0;
       }
 
-      for (j = 0; j < process->childs.size; ++j) {
+      if (!(entry->flag & controller_entry_flag_timeout_exit_no_e)) {
+        for (j = 0; j < process->childs.size; ++j) {
 
-        if (process->childs.array[j]) {
+          // Do not kill exit processes, when not performing "execute" during exit.
+          if (process->type == controller_process_type_exit_e && global.thread->enabled != controller_thread_enabled_exit_execute_e) continue;
 
-          // A hackish way to determine if the child process exists, and if it does then forcibly terminate it.
-          if (getpgid(process->childs.array[j]) >= 0) {
-            f_signal_send(F_signal_kill, process->childs.array[j]);
+          if (process->childs.array[j]) {
+
+            // A hackish way to determine if the child process exists, and if it does then forcibly terminate it.
+            if (getpgid(process->childs.array[j]) >= 0) {
+              f_signal_send(F_signal_kill, process->childs.array[j]);
+            }
+
+            process->childs.array[j] = 0;
           }
+        } // for
+      }
 
-          process->childs.array[j] = 0;
-        }
-      } // for
+      if (!(entry->flag & controller_entry_flag_timeout_exit_no_e)) {
+        for (j = 0; j < process->path_pids.used; ++j) {
 
-      process->childs.used = 0;
+          // Do not kill exit processes, when not performing "execute" during exit.
+          if (process->type == controller_process_type_exit_e && global.thread->enabled != controller_thread_enabled_exit_execute_e) continue;
 
-      for (j = 0; j < process->path_pids.used; ++j) {
+          if (f_file_exists(process->path_pids.array[j], F_true) == F_true) {
+            status = controller_file_pid_read(process->path_pids.array[j], &pid);
 
-        if (f_file_exists(process->path_pids.array[j], F_true) == F_true) {
-          status = controller_file_pid_read(process->path_pids.array[j], &pid);
+            if (pid) {
+              f_signal_send(F_signal_kill, pid);
+            }
 
-          if (pid) {
-            f_signal_send(F_signal_kill, pid);
+            f_file_remove(process->path_pids.array[j]);
+            process->path_pids.array[j].used = 0;
           }
+        } // for
+      }
 
-          f_file_remove(process->path_pids.array[j]);
-          process->path_pids.array[j].used = 0;
-        }
-      } // for
+      // Shrink the child pids as much as possible.
+      while (process->childs.used) {
 
-      process->path_pids.used = 0;
+        // Do not shrink below an exit processes, when not performing "execute" during exit.
+        if (process->type == controller_process_type_exit_e && global.thread->enabled != controller_thread_enabled_exit_execute_e) break;
+        if (process->childs.array[j] > 0) break;
+
+        --process->childs.used;
+      } // while
+
+      // Shrink the path pids as much as possible.
+      while (process->path_pids.used) {
+
+        // Do not shrink below an exit processes, when not performing "execute" during exit.
+        if (process->type == controller_process_type_exit_e && global.thread->enabled != controller_thread_enabled_exit_execute_e) break;
+        if (process->path_pids.array[j].used) break;
+
+        --process->path_pids.used;
+      } // while
     } // for
   }
 #endif // _di_controller_thread_process_cancel_

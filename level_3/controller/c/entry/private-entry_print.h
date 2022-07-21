@@ -196,7 +196,26 @@ extern "C" {
 #endif // _di_controller_entry_settings_read_print_setting_ignored_
 
 /**
- * Print a message for when an entry setting action has the incorrect number of parameters.
+ * Print a message for when an entry setting action has the incorrect number of parameters when the required amount is between a range.
+ *
+ * @param global
+ *   The global data.
+ * @param is_entry
+ *   If TRUE, then this loads as an entry.
+ *   If FALSE, then this loads as an exit.
+ * @param cache
+ *   A structure for containing and caching relevant data.
+ * @param minimum
+ *   The expected minimum number of arguments.
+ * @param maximum
+ *   The expected maximum number of arguments.
+ */
+#ifndef _di_controller_entry_settings_read_print_setting_requires_between_
+  extern void controller_entry_settings_read_print_setting_requires_between(const controller_global_t global, const bool is_entry, const controller_cache_t cache, const f_number_unsigned_t minimum, const f_number_unsigned_t maximum) F_attribute_visibility_internal_d;
+#endif // _di_controller_entry_settings_read_print_setting_requires_between_
+
+/**
+ * Print a message for when an entry setting action has the incorrect number of parameters when the required amount is fixed.
  *
  * @param global
  *   The global data.

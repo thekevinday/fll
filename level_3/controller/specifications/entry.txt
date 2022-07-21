@@ -38,6 +38,7 @@ Entry Specification:
       - "pid_file": Exactly one Content that is a relative or absolute path to a pid file.
       - "session": Exactly one Content that is one of "new" or "same".
       - "show": Exactly one Content that is one of "normal" or "init".
+      - "timeout": One or Two content with the first being one of "exit", "start", "stop", or "kill" and the (optional) second Content being a positive whole number or 0.
 
     The Entry file may have any other valid Item Objects, but only the above are reserved.
 
@@ -134,9 +135,10 @@ Entry Specification:
           - "require"
           - "wait"
 
-      - "timeout": Two Content.
+      - "timeout": One or Two Content.
         The first being one of\:
+          - "exit"
           - "start"
           - "stop"
           - "kill"
-        The second being a positive whole number or 0.
+        The (optional) second Content being a positive whole number or 0.

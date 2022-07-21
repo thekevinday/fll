@@ -15,6 +15,9 @@ extern "C" {
 /**
  * An Entry Item Action.
  *
+ * controller_entry_action_flag_*:
+ *   - undefined: The given type and code are designated as undefined.
+ *
  * controller_entry_action_type_*:
  *   - consider: Designate a rule to be pre-loaded.
  *   - execute:  Execute into another program.
@@ -37,8 +40,15 @@ extern "C" {
  *   - require:      Require Rule operations to succeed or the Entry/Exit will fail.
  *   - wait:         Wait for all existing asynchronous processes to finish before operating Rule.
  *
+ * controller_entry_timeout_code_*:
+ *   - exit:  The timeout Action represents an exit timeout.
+ *   - kill:  The timeout Action represents a kill timeout.
+ *   - start: The timeout Action represents a start timeout.
+ *   - stop:  The timeout Action represents a stop timeout.
+ *
  * type:       The type of Action.
  * code:       A single code or sub-type associated with the Action.
+ * flag:       A set of flags to describe special behavior for the given type and code (flags may be different per type and code).
  * line:       The line number where the Entry Item begins.
  * number:     The unsigned number that some types use instead of the "parameters".
  * status:     The overall status.
@@ -49,13 +59,20 @@ extern "C" {
   #define controller_entry_rule_code_require_d      0x2
   #define controller_entry_rule_code_wait_d         0x4
 
-  #define controller_entry_timeout_code_kill_d  0x1
-  #define controller_entry_timeout_code_start_d 0x2
-  #define controller_entry_timeout_code_stop_d  0x4
+  #define controller_entry_timeout_code_exit_d  0x1
+  #define controller_entry_timeout_code_kill_d  0x2
+  #define controller_entry_timeout_code_start_d 0x4
+  #define controller_entry_timeout_code_stop_d  0x8
+
+  enum {
+    controller_entry_action_flag_none_e      = 0x0,
+    controller_entry_action_flag_undefined_e = 0x1,
+  };
 
   typedef struct {
     uint8_t type;
     uint8_t code;
+    uint8_t flag;
 
     f_array_length_t line;
     f_number_unsigned_t number;
@@ -69,6 +86,7 @@ extern "C" {
     0, \
     0, \
     0, \
+    controller_entry_action_flag_none_e, \
     0, \
     F_known_not, \
     f_string_dynamics_t_initialize, \
@@ -153,6 +171,18 @@ extern "C" {
  * Entry and Exit files are essentially the same structure with minor differences in settings and behavior.
  * The structure is identical and due to lacking any particularly good name to represent both "entry" or "exit", the name "entry" is being used for both.
  *
+ * controller_entry_flag_*:
+ *   - none_e:             No flags are set.
+ *   - timeout_exit_no_e:  The exit timeout is disabled.
+ *   - timeout_kill_no_e:  The kill timeout is disabled for Rules by default.
+ *   - timeout_start_no_e: The start timeout is disabled for Rules by default.
+ *   - timeout_stop_no_e:  The stop timeout is disabled for Rules by default.
+ *
+ * controller_entry_session_*:
+ *   - none: No special session configuration specified, use built in defaults.
+ *   - new:  Designate the default to use a new session, ignoring built in defaults (passing FL_execute_parameter_option_session_d to the execute functions).
+ *   - same: Designate the default to use a same session, ignoring built in defaults.
+ *
  * controller_entry_pid_*:
  *   - disable: Do not check for or create a PID file to represent the entry execution.
  *   - require: Check to see if the PID file exists for an entry at startup and then when "ready" create a pid file, display error on pid file already exists or on failure and then fail.
@@ -162,21 +192,18 @@ extern "C" {
  *   - normal: Do not print anything other than warnings and errors, but allow executed programs and scripts to output however they like.
  *   - init:   Print like an init program, printing status of entry and rules as they are being started, stopped, etc...
  *
- * controller_entry_session_*:
- *   - none: No special session configuration specified, use built in defaults.
- *   - new:  Designate the default to use a new session, ignoring built in defaults (passing FL_execute_parameter_option_session_d to the execute functions).
- *   - same: Designate the default to use a same session, ignoring built in defaults.
- *
- * status:        The overall status.
+ * define:        Any defines (environment variables) made available to all Rules in this entry for IKI substitution or just as environment variables.
+ * flag:          A set of flags, primarily used to designate that timeouts are disabled.
+ * items:         The array of entry items.
+ * parameter:     Any parameters made available to all Rules in this entry for IKI substitution.
  * pid:           The PID file generation setting.
  * session:       The default session settings (when NULL, no default is specified).
  * show:          The show setting for controlling what to show when executing entry items and rules.
+ * status:        The overall status.
+ * timeout_exit:  The timeout to wait when exiting the Controller program after sending the terminate signal to send the kill signal.
  * timeout_kill:  The timeout to wait relating to using a kill signal.
  * timeout_start: The timeout to wait relating to starting a process.
  * timeout_stop:  The timeout to wait relating to stopping a process.
- * define:        Any defines (environment variables) made available to all Rules in this entry for IKI substitution or just as environment variables.
- * parameter:     Any parameters made available to all Rules in this entry for IKI substitution.
- * items:         The array of entry items.
  */
 #ifndef _di_controller_entry_t_
   enum {
@@ -196,13 +223,23 @@ extern "C" {
     controller_entry_session_same_e,
   };
 
+  enum {
+    controller_entry_flag_none_e             = 0x0,
+    controller_entry_flag_timeout_exit_no_e  = 0x1,
+    controller_entry_flag_timeout_kill_no_e  = 0x2,
+    controller_entry_flag_timeout_start_no_e = 0x4,
+    controller_entry_flag_timeout_stop_no_e  = 0x8,
+  };
+
   typedef struct {
     f_status_t status;
 
     uint8_t pid;
     uint8_t session;
     uint8_t show;
+    uint8_t flag;
 
+    f_number_unsigned_t timeout_exit;
     f_number_unsigned_t timeout_kill;
     f_number_unsigned_t timeout_start;
     f_number_unsigned_t timeout_stop;
@@ -218,6 +255,8 @@ extern "C" {
     controller_entry_pid_require_e, \
     controller_entry_session_none_e, \
     controller_entry_show_normal_e, \
+    0, \
+    controller_thread_exit_timeout_d, \
     0, \
     0, \
     0, \

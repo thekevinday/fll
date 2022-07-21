@@ -46,6 +46,7 @@ Rule Specification:
     - "parameter": Two Content, the first Content must be a case-sensitive valid IKI name and the second being an IKI value.
     - "path": One Content representing a valid PATH environment string (such as "/bin:/sbin:/usr/bin").
     - "scheduler": One or Two Content representing a scheduler name and the optional numeric priority (Any whole number inclusively between 0 and 99).
+    - "timeout": One or Two content with the first being one of "exit", "start", "stop", or "kill" and the (optional) second Content being a positive whole number or 0.
     - "user": One Content representing a user name or user id.
 
   The "command" and "script" Rule Types allow the following the FSS-0001 (Extended)\:

@@ -305,6 +305,7 @@ extern "C" {
  * path:             The path to the Rule file.
  * scheduler:        The scheduler setting if the Rule "has" a scheduler.
  * status:           A set of action-specific success/failure status of the Rule. Each index represents a controller_rule_action_type_* enum value. Index 0 represents a global status.
+ * timeout_exit:     The timeout to wait when exiting the Controller program after sending the terminate signal to send the kill signal.
  * timeout_kill:     The timeout to wait relating to using a kill signal.
  * timeout_start:    The timeout to wait relating to starting a process.
  * timeout_stop:     The timeout to wait relating to stopping a process.
