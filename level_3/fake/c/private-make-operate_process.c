@@ -25,9 +25,7 @@ extern "C" {
         fll_error_print(data_make->error, F_status_set_fine(*status), "fake_execute", F_true);
       }
 
-      if (*status == F_child) {
-        return result;
-      }
+      if (*status == F_child) return result;
 
       *status = fake_make_operate_process_return(data_make, result);
 
@@ -60,10 +58,7 @@ extern "C" {
 
     if (state_process->operation == fake_make_operation_type_build_e) {
       *status = fake_build_operate(data_make->data, data_make->cache_arguments.used ? &data_make->cache_arguments : 0);
-
-      if (F_status_set_fine(*status) == F_interrupt) {
-        return 0;
-      }
+      if (F_status_set_fine(*status) == F_interrupt) return 0;
 
       *status = fake_make_operate_process_return(data_make, F_status_is_error(*status) ? 1 : 0);
 
@@ -72,10 +67,7 @@ extern "C" {
 
     if (state_process->operation == fake_make_operation_type_clean_e) {
       *status = fake_clean_operate(data_make->data);
-
-      if (F_status_set_fine(*status) == F_interrupt) {
-        return 0;
-      }
+      if (F_status_set_fine(*status) == F_interrupt) return 0;
 
       *status = fake_make_operate_process_return(data_make, F_status_is_error(*status) ? 1 : 0);
 
@@ -95,9 +87,7 @@ extern "C" {
         fll_error_print(data_make->error, F_status_set_fine(*status), "fake_execute", F_true);
       }
 
-      if (*status == F_child) {
-        return result;
-      }
+      if (*status == F_child) return result;
 
       *status = fake_make_operate_process_return(data_make, result);
 
@@ -415,10 +405,7 @@ extern "C" {
 
     if (state_process->operation == fake_make_operation_type_skeleton_e) {
       *status = fake_skeleton_operate(data_make->data);
-
-      if (F_status_set_fine(*status) == F_interrupt) {
-        return 0;
-      }
+      if (F_status_set_fine(*status) == F_interrupt) return 0;
 
       *status = fake_make_operate_process_return(data_make, F_status_is_error(*status) ? 1 : 0);
 
@@ -611,9 +598,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_process_execute_
   f_status_t fake_make_operate_process_execute(fake_make_data_t * const data_make, const f_string_static_t program, const f_string_statics_t arguments, const bool as_shell) {
 
-    if (!program.used && !arguments.used) {
-      return F_data_not;
-    }
+    if (!program.used && !arguments.used) return F_data_not;
 
     if (fll_program_standard_signal_received(data_make->main)) {
       fake_print_signal_received(data_make->data);
@@ -698,9 +683,7 @@ extern "C" {
     }
 
     if (F_status_is_error(status)) {
-      if (F_status_set_fine(status) == F_interrupt) {
-        return status;
-      }
+      if (F_status_set_fine(status) == F_interrupt) return status;
 
       if (F_status_set_fine(status) == F_file_found_not) {
         if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
@@ -781,9 +764,7 @@ extern "C" {
       funlockfile(data_make->error.to.stream);
     }
 
-    if (data_make->setting_make.fail == fake_make_operation_fail_type_exit_e) {
-      return F_status_set_error(F_failure);
-    }
+    if (data_make->setting_make.fail == fake_make_operation_fail_type_exit_e) return F_status_set_error(F_failure);
 
     return F_failure;
   }
