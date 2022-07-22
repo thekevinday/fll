@@ -23,6 +23,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success but fakefile is empty.
  *
  *   F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
  *

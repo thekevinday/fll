@@ -80,6 +80,12 @@ extern "C" {
       return status;
     }
 
+    if (!data_make.buffer.used) {
+      fake_make_data_delete(&data_make);
+
+      return F_data_not;
+    }
+
     if (data_make.setting_make.fail == fake_make_operation_fail_type_exit_e) {
       data_make.error.prefix = fl_print_error_s;
       data_make.error.suffix = f_string_empty_s;
@@ -1111,7 +1117,7 @@ extern "C" {
 
     if (F_status_is_error(*status) || *status == F_child) return data_make->data->main->child;
 
-    if (id_section > data_make->fakefile.used) {
+    if (id_section >= data_make->fakefile.used) {
       *status = F_status_set_error(F_parameter);
 
       fll_error_print(data_make->error, F_parameter, "fake_make_operate_section", F_true);
