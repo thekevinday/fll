@@ -94,36 +94,13 @@ extern "C" {
 
       if (existing) {
         if (destination_string[data_make->cache_arguments.array[total].used - 1] == f_path_separator_s.string[0]) {
-
           memcpy(destination_string + data_make->cache_arguments.array[total].used, data_make->cache_path.string, sizeof(f_char_t) * data_make->cache_path.used);
 
-          if (data_make->cache_path.string[data_make->cache_path.used - 1] == f_path_separator_s.string[0]) {
-            destination.used -= 2;
-          }
-          else {
-            destination_string[data_make->cache_arguments.array[total].used + data_make->cache_path.used] = f_path_separator_s.string[0];
-
-            --destination.used;
-          }
+          --destination.used;
         }
         else {
           memcpy(destination_string + data_make->cache_arguments.array[total].used + 1, data_make->cache_path.string, sizeof(f_char_t) * data_make->cache_arguments.array[i].used);
 
-          destination_string[data_make->cache_arguments.array[total].used] = f_path_separator_s.string[0];
-
-          if (data_make->cache_path.string[data_make->cache_path.used - 1] == f_path_separator_s.string[0]) {
-            --destination.used;
-          }
-          else {
-            destination_string[data_make->cache_arguments.array[total].used + 1 + data_make->cache_path.used] = f_path_separator_s.string[0];
-          }
-        }
-      }
-      else {
-        if (destination_string[data_make->cache_arguments.array[total].used - 1] == f_path_separator_s.string[0]) {
-          --destination.used;
-        }
-        else {
           destination_string[data_make->cache_arguments.array[total].used] = f_path_separator_s.string[0];
         }
       }
@@ -1163,18 +1140,40 @@ extern "C" {
       destination.used = data_make->cache_arguments.array[total].used;
 
       if (existing) {
-        destination.used += data_make->cache_arguments.array[i].used + 1;
+        data_make->cache_path.used = 0;
+
+        status = f_file_name_base(data_make->cache_arguments.array[i], &data_make->cache_path);
+
+        if (F_status_is_error(status)) {
+          fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_name_base", F_true, data_make->cache_arguments.array[i], f_file_operation_process_s, fll_error_file_type_path_e);
+
+          return F_status_set_error(F_failure);
+        }
+
+        destination.used += data_make->cache_path.used + 1;
       }
 
       f_char_t destination_string[destination.used + 1];
       destination.string = destination_string;
       destination_string[destination.used] = 0;
 
+      if (existing) {
+        destination_string[destination.used - 1] = 0;
+      }
+
       memcpy(destination_string, data_make->cache_arguments.array[total].string, sizeof(f_char_t) * data_make->cache_arguments.array[total].used);
 
       if (existing) {
-        memcpy(destination_string + data_make->cache_arguments.array[total].used + 1, data_make->cache_arguments.array[i].string, sizeof(f_char_t) * data_make->cache_arguments.array[i].used);
-        destination_string[data_make->cache_arguments.array[total].used] = f_path_separator_s.string[0];
+        if (destination_string[data_make->cache_arguments.array[total].used - 1] == f_path_separator_s.string[0]) {
+          memcpy(destination_string + data_make->cache_arguments.array[total].used, data_make->cache_path.string, sizeof(f_char_t) * data_make->cache_path.used);
+
+          --destination.used;
+        }
+        else {
+          memcpy(destination_string + data_make->cache_arguments.array[total].used + 1, data_make->cache_path.string, sizeof(f_char_t) * data_make->cache_arguments.array[i].used);
+
+          destination_string[data_make->cache_arguments.array[total].used] = f_path_separator_s.string[0];
+        }
       }
 
       status = fll_file_move(data_make->cache_arguments.array[i], destination, recurse);

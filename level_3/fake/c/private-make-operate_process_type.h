@@ -316,9 +316,11 @@ extern "C" {
  *   F_none on success.
  *
  *   Errors (with error bit) from: f_directory_is().
+ *   Errors (with error bit) from: f_file_name_base().
  *   Errors (with error bit) from: fll_file_move().
  *
  * @see f_directory_is()
+ * @see f_file_name_base()
  * @see fll_file_move()
  */
 #ifndef _di_fake_make_operate_process_type_move_
