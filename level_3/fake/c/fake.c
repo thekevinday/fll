@@ -71,12 +71,13 @@ extern "C" {
     fl_print_format(" of 'fll_monolithic' is specified, build libraries from both 'build_libraries' and 'build_libraries-fll_monolithic' are used (but not 'build_libraries-fll_level').%r%r", file.stream, f_string_eol_s, f_string_eol_s);
 
     fl_print_format("  When specifying the %[%r%] or the %[%r%]", file.stream, context.set.notable, fake_make_parameter_variable_fakefile_s, context.set.notable, context.set.notable, fake_make_parameter_variable_settings_s, context.set.notable);
-    fl_print_format(" parameters, the filenames are relative to the data build directory, unless a path is used.%r", file.stream, f_string_eol_s);
+    fl_print_format(" parameters, the project root is seached first and then the build data director is searched when the given file does not contain a directory separator.%r", file.stream, f_string_eol_s);
 
     fl_print_format("  For example, with '%[%r%r my_fakefile%]' the fakefile at", file.stream, context.set.notable, f_console_symbol_long_enable_s, fake_long_fakefile_s, context.set.notable);
-    fl_print_format(" '%[./%r%rmy_fakefile%]' would be used, however with", file.stream, context.set.notable, fake_default_path_data_s, fake_default_path_build_s, context.set.notable);
-    fl_print_format(" '%[%r%r ./my_fakefile%]' the fakefile at", file.stream, context.set.notable, f_console_symbol_long_enable_s, fake_long_fakefile_s, context.set.notable);
-    fl_print_format(" '%[./my_fakefile%]' would be used.%r%r", file.stream, context.set.notable, context.set.notable, f_string_eol_s, f_string_eol_s);
+    fl_print_format(" '%[./my_fakefile%]' is used if found, but if it is not found then", file.stream, context.set.notable, context.set.notable);
+    fl_print_format(" '%[./%r%rmy_fakefile%]' is used if found.%r", file.stream, context.set.notable, fake_default_path_data_s, fake_default_path_build_s, context.set.notable, f_string_eol_s);
+    fl_print_format("  For example, with '%[%r%r ./my_fakefile%]' the fakefile at", file.stream, context.set.notable, f_console_symbol_long_enable_s, fake_long_fakefile_s, context.set.notable);
+    fl_print_format(" '%[./my_fakefile%]' is used if found, but if it is not found then no other paths are attempted.%r%r", file.stream, context.set.notable, context.set.notable, f_string_eol_s, f_string_eol_s);
 
     fl_print_format("  When piping data to this program, the piped data is treated as a %[%r%].%r", file.stream, context.set.notable, fake_make_parameter_variable_fakefile_s, context.set.notable, f_string_eol_s);
     fl_print_format("  Only the %[%r%] operation is supported when using piped data.%r%r", file.stream, context.set.notable, fake_other_operation_make_s, context.set.notable, f_string_eol_s, f_string_eol_s);

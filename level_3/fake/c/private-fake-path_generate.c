@@ -170,14 +170,13 @@ extern "C" {
     }
 
     // When custom fakefile or settings are used and they are paths to a file, remove the default path.
-    if (f_path_is(data->fakefile) == F_true) {
+    if (data->main->process_pipe || f_path_is(data->fakefile) == F_true || f_file_exists(data->fakefile, F_true) == F_true) {
       data->file_data_build_fakefile.used = 0;
     }
 
-    if (f_path_is(data->settings) == F_true) {
+    if (data->main->process_pipe || f_path_is(data->settings) == F_true || f_file_exists(data->settings, F_true) == F_true) {
       data->file_data_build_settings.used = 0;
     }
-
     {
       const f_string_static_t parameters_source[] = {
         fake_path_part_script_s,

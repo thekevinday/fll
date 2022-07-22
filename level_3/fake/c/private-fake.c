@@ -556,9 +556,7 @@ extern "C" {
   f_status_t fake_validate_parameter_paths(fake_data_t * const data) {
 
     // Only perform these checks when not a pipe.
-    if (data->main->process_pipe) {
-      return F_none;
-    }
+    if (data->main->process_pipe) return F_none;
 
     if (fll_program_standard_signal_received(data->main)) {
       fake_print_signal_received(data);
@@ -584,6 +582,8 @@ extern "C" {
       F_false,
     };
 
+    f_status_t status = F_none;
+
     // Check only expected operations (fake_operation_clean_e and fake_operation_skeleton_e should not call this function).
     if (data->operation == fake_operation_make_e) {
 
@@ -593,6 +593,13 @@ extern "C" {
 
         if (f_path_is_absolute(data->main->parameters.arguments.array[index]) == F_true || f_path_is_relative_current(data->main->parameters.arguments.array[index]) == F_true) {
           parameters_required[1] = F_none;
+        }
+        else {
+          status = f_file_exists(data->main->parameters.arguments.array[index], F_true);
+
+          if (F_status_is_error_not(status) && status == F_true) {
+            parameters_required[1] = F_none;
+          }
         }
       }
     }
@@ -605,11 +612,17 @@ extern "C" {
         if (f_path_is_absolute(data->main->parameters.arguments.array[index]) == F_true || f_path_is_relative_current(data->main->parameters.arguments.array[index]) == F_true) {
           parameters_required[1] = F_none;
         }
+        else {
+          status = f_file_exists(data->main->parameters.arguments.array[index], F_true);
+
+          if (F_status_is_error_not(status) && status == F_true) {
+            parameters_required[1] = F_none;
+          }
+        }
       }
     }
 
     struct stat directory_stat;
-    f_status_t status = F_none;
 
     for (uint8_t i = 0; i < 3; ++i) {
 
