@@ -8,9 +8,7 @@ extern "C" {
 #ifndef _di_f_file_access_
   f_status_t f_file_access(const f_string_static_t path, const int mode) {
 
-    if (!path.used) {
-      return F_data_not;
-    }
+    if (!path.used) return F_data_not;
 
     if (access(path.string, mode) == -1) {
 
@@ -40,9 +38,7 @@ extern "C" {
 #ifndef _di_f_file_access_at_
   f_status_t f_file_access_at(const int at_id, const f_string_static_t path, const int mode, const int flag) {
 
-    if (!path.used) {
-      return F_data_not;
-    }
+    if (!path.used) return F_data_not;
 
     if (faccessat(at_id, path.string, mode, flag) == -1) {
 
@@ -74,9 +70,7 @@ extern "C" {
 #ifndef _di_f_file_clone_
   f_status_t f_file_clone(const f_string_static_t source, const f_string_static_t destination, const f_number_unsigned_t size_block, const uint8_t flag) {
 
-    if (!source.used || !destination.used) {
-      return F_data_not;
-    }
+    if (!source.used || !destination.used) return F_data_not;
 
     struct stat source_stat;
 
@@ -148,9 +142,7 @@ extern "C" {
 #ifndef _di_f_file_copy_
   f_status_t f_file_copy(const f_string_static_t source, const f_string_static_t destination, const f_mode_t mode, const f_number_unsigned_t size_block, const uint8_t flag) {
 
-    if (!source.used || !destination.used) {
-      return F_data_not;
-    }
+    if (!source.used || !destination.used) return F_data_not;
 
     f_status_t status = F_none;
     struct stat source_stat;
@@ -261,9 +253,7 @@ extern "C" {
 #ifndef _di_f_file_create_
   f_status_t f_file_create(const f_string_static_t path, const mode_t mode, const bool exclusive) {
 
-    if (!path.used) {
-      return F_data_not;
-    }
+    if (!path.used) return F_data_not;
 
     return private_f_file_create(path, mode, exclusive);
   }
@@ -272,9 +262,7 @@ extern "C" {
 #ifndef _di_f_file_create_at_
   f_status_t f_file_create_at(const int at_id, const f_string_static_t path, const mode_t mode, const bool exclusive) {
 
-    if (!path.used) {
-      return F_data_not;
-    }
+    if (!path.used) return F_data_not;
 
     return private_f_file_create_at(at_id, path, mode, exclusive);
   }
@@ -283,9 +271,7 @@ extern "C" {
 #ifndef _di_f_file_create_device_
   f_status_t f_file_create_device(const f_string_static_t path, const mode_t mode, const unsigned int major, const unsigned int minor) {
 
-    if (!path.used) {
-      return F_data_not;
-    }
+    if (!path.used) return F_data_not;
 
     if (!macro_f_file_type_is_fifo(mode) && !macro_f_file_type_is_character(mode) && !macro_f_file_type_is_block(mode)) {
       return F_status_set_error(F_supported_not);
@@ -300,9 +286,7 @@ extern "C" {
 #ifndef _di_f_file_create_device_at_
   f_status_t f_file_create_device_at(const int at_id, const f_string_static_t path, const mode_t mode, const unsigned int major, const unsigned int minor) {
 
-    if (!path.used) {
-      return F_data_not;
-    }
+    if (!path.used) return F_data_not;
 
     if (!macro_f_file_type_is_fifo(mode) && !macro_f_file_type_is_character(mode) && !macro_f_file_type_is_block(mode)) {
       return F_status_set_error(F_supported_not);
@@ -317,9 +301,7 @@ extern "C" {
 #ifndef _di_f_file_create_fifo_
   f_status_t f_file_create_fifo(const f_string_static_t path, const mode_t mode) {
 
-    if (!path.used) {
-      return F_data_not;
-    }
+    if (!path.used) return F_data_not;
 
     return private_f_file_create_fifo(path, mode);
   }
@@ -328,9 +310,7 @@ extern "C" {
 #ifndef _di_f_file_create_fifo_at_
   f_status_t f_file_create_fifo_at(const int at_id, const f_string_static_t path, const mode_t mode) {
 
-    if (!path.used) {
-      return F_data_not;
-    }
+    if (!path.used) return F_data_not;
 
     return private_f_file_create_fifo_at(at_id, path, mode);
   }
@@ -339,9 +319,7 @@ extern "C" {
 #ifndef _di_f_file_create_node_
   f_status_t f_file_create_node(const f_string_static_t path, const mode_t mode, const dev_t device) {
 
-    if (!path.used) {
-      return F_data_not;
-    }
+    if (!path.used) return F_data_not;
 
     if (!macro_f_file_type_is_fifo(mode) && !macro_f_file_type_is_character(mode) && !macro_f_file_type_is_block(mode)) {
       return F_status_set_error(F_supported_not);
@@ -354,9 +332,7 @@ extern "C" {
 #ifndef _di_f_file_create_node_at_
   f_status_t f_file_create_node_at(const int at_id, const f_string_static_t path, const mode_t mode, const dev_t device) {
 
-    if (!path.used) {
-      return F_data_not;
-    }
+    if (!path.used) return F_data_not;
 
     if (!macro_f_file_type_is_fifo(mode) && !macro_f_file_type_is_character(mode) && !macro_f_file_type_is_block(mode)) {
       return F_status_set_error(F_supported_not);
@@ -374,9 +350,7 @@ extern "C" {
 
     file->id = fileno(file->stream);
 
-    if (file->id == -1) {
-      return F_status_set_error(F_stream_not);
-    }
+    if (file->id == -1) return F_status_set_error(F_stream_not);
 
     return F_none;
   }
@@ -385,9 +359,7 @@ extern "C" {
 #ifndef _di_f_file_exists_
   f_status_t f_file_exists(const f_string_static_t path, const bool dereference) {
 
-    if (!path.used) {
-      return F_data_not;
-    }
+    if (!path.used) return F_data_not;
 
     struct stat stat_file;
 
@@ -396,9 +368,7 @@ extern "C" {
     const f_status_t status = private_f_file_stat(path, dereference, &stat_file);
 
     if (F_status_is_error(status)) {
-      if (F_status_set_fine(status) == F_file_found_not) {
-        return F_false;
-      }
+      if (F_status_set_fine(status) == F_file_found_not) return F_false;
 
       return status;
     }
@@ -410,9 +380,7 @@ extern "C" {
 #ifndef _di_f_file_exists_at_
   f_status_t f_file_exists_at(const int at_id, const f_string_static_t path, const int flag) {
 
-    if (!path.used) {
-      return F_data_not;
-    }
+    if (!path.used) return F_data_not;
 
     struct stat stat_file;
 
@@ -421,9 +389,7 @@ extern "C" {
     const f_status_t status = private_f_file_stat_at(at_id, path, flag, &stat_file);
 
     if (F_status_is_error(status)) {
-      if (F_status_set_fine(status) == F_file_found_not) {
-        return F_false;
-      }
+      if (F_status_set_fine(status) == F_file_found_not) return F_false;
 
       return status;
     }
@@ -445,9 +411,7 @@ extern "C" {
       if (!group) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!path.used) {
-      return F_data_not;
-    }
+    if (!path.used) return F_data_not;
 
     struct stat stat_file;
 
@@ -467,9 +431,7 @@ extern "C" {
 #ifndef _di_f_file_is_
   f_status_t f_file_is(const f_string_static_t path, const int type, const bool dereference) {
 
-    if (!path.used) {
-      return F_data_not;
-    }
+    if (!path.used) return F_data_not;
 
     struct stat stat_file;
 
@@ -480,9 +442,7 @@ extern "C" {
       if (F_status_is_error(status)) return status;
     }
 
-    if (macro_f_file_type_get(stat_file.st_mode) == type) {
-      return F_true;
-    }
+    if (macro_f_file_type_get(stat_file.st_mode) == type) return F_true;
 
     return F_false;
   }
@@ -491,9 +451,7 @@ extern "C" {
 #ifndef _di_f_file_is_at_
   f_status_t f_file_is_at(const int at_id, const f_string_static_t path, const int type, const int flag) {
 
-    if (!path.used) {
-      return F_data_not;
-    }
+    if (!path.used) return F_data_not;
 
     struct stat stat_file;
 
@@ -513,9 +471,7 @@ extern "C" {
       return F_status_set_error(F_file_stat);
     }
 
-    if (macro_f_file_type_get(stat_file.st_mode) == type) {
-      return F_true;
-    }
+    if (macro_f_file_type_get(stat_file.st_mode) == type) return F_true;
 
     return F_false;
   }
@@ -524,9 +480,7 @@ extern "C" {
 #ifndef _di_f_file_link_
   f_status_t f_file_link(const f_string_static_t target, const f_string_static_t point) {
 
-    if (!target.used || !point.used) {
-      return F_data_not;
-    }
+    if (!target.used || !point.used) return F_data_not;
 
     return private_f_file_link(target, point);
   }
@@ -535,9 +489,7 @@ extern "C" {
 #ifndef _di_f_file_link_at_
   f_status_t f_file_link_at(const int at_id, const f_string_static_t target, const f_string_static_t point) {
 
-    if (!target.used || !point.used) {
-      return F_data_not;
-    }
+    if (!target.used || !point.used) return F_data_not;
 
     return private_f_file_link_at(at_id, target, point);
   }
@@ -546,9 +498,7 @@ extern "C" {
 #ifndef _di_f_file_link_hard_
   f_status_t f_file_link_hard(const f_string_static_t target, const f_string_static_t point) {
 
-    if (!target.used || !point.used) {
-      return F_data_not;
-    }
+    if (!target.used || !point.used) return F_data_not;
 
     if (link(target.string, point.string) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
@@ -578,9 +528,7 @@ extern "C" {
 #ifndef _di_f_file_link_hard_at_
   f_status_t f_file_link_hard_at(const int at_id_target, const int at_id_point, const f_string_static_t target, const f_string_static_t point, const int flag) {
 
-    if (!target.used || !point.used) {
-      return F_data_not;
-    }
+    if (!target.used || !point.used) return F_data_not;
 
     if (linkat(at_id_target, target.string, at_id_point, point.string, flag) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
@@ -614,9 +562,7 @@ extern "C" {
       if (!target) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!path.used) {
-      return F_data_not;
-    }
+    if (!path.used) return F_data_not;
 
     struct stat stat_file;
 
@@ -637,9 +583,7 @@ extern "C" {
       if (!target) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!path.used) {
-      return F_data_not;
-    }
+    if (!path.used) return F_data_not;
 
     struct stat stat_file;
 
@@ -964,9 +908,7 @@ extern "C" {
       if (!replace) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!code.used) {
-      return F_data_not;
-    }
+    if (!code.used) return F_data_not;
 
     uint8_t syntax = 0;
     uint8_t replace_result = 0;
@@ -974,9 +916,7 @@ extern "C" {
 
     if (code.string[0] == f_string_ascii_plus_s.string[0] || code.string[0] == f_string_ascii_minus_s.string[0] || code.string[0] == f_string_ascii_equal_s.string[0]) {
 
-      if (code.used < 2) {
-        return F_status_set_error(F_syntax);
-      }
+      if (code.used < 2) return F_status_set_error(F_syntax);
 
       if (code.string[1] == f_string_ascii_r_s.string[0] || code.string[1] == f_string_ascii_w_s.string[0] || code.string[1] == f_string_ascii_x_s.string[0] || code.string[1] == f_string_ascii_X_s.string[0] || code.string[1] == f_string_ascii_s_s.string[0] ||code.string[1] == f_string_ascii_t_s.string[0]) {
         syntax = 1;
@@ -990,9 +930,7 @@ extern "C" {
     }
     else if (code.string[0] == f_string_ascii_u_s.string[0] || code.string[0] == f_string_ascii_g_s.string[0] || code.string[0] == f_string_ascii_o_s.string[0] || code.string[0] == f_string_ascii_a_s.string[0]) {
 
-      if (code.used < 2) {
-        return F_status_set_error(F_syntax);
-      }
+      if (code.used < 2) return F_status_set_error(F_syntax);
 
       syntax = 1;
     }
@@ -1240,9 +1178,7 @@ extern "C" {
         }
       } // for
 
-      if (incomplete) {
-        return F_status_set_error(F_syntax);
-      }
+      if (incomplete) return F_status_set_error(F_syntax);
     }
     else if (syntax == 2) {
 
@@ -1280,9 +1216,7 @@ extern "C" {
         f_array_length_t j = 0;
 
         // Do not tolerate overly large numbers.
-        if (code.used - i > 4) {
-          return F_status_set_error(F_syntax);
-        }
+        if (code.used - i > 4) return F_status_set_error(F_syntax);
 
         for (; i + j < code.used; ++j) {
 
@@ -1335,9 +1269,7 @@ extern "C" {
       if (!mode) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!path.used) {
-      return F_data_not;
-    }
+    if (!path.used) return F_data_not;
 
     struct stat stat_file;
 
@@ -1360,9 +1292,7 @@ extern "C" {
       if (!mode) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!path.used) {
-      return F_data_not;
-    }
+    if (!path.used) return F_data_not;
 
     struct stat stat_file;
 
@@ -1382,9 +1312,7 @@ extern "C" {
 #ifndef _di_f_file_mode_set_
   f_status_t f_file_mode_set(const f_string_static_t path, const mode_t mode) {
 
-    if (!path.used) {
-      return F_data_not;
-    }
+    if (!path.used) return F_data_not;
 
     return private_f_file_mode_set(path, mode);
   }
@@ -1393,9 +1321,7 @@ extern "C" {
 #ifndef _di_f_file_mode_set_at_
   f_status_t f_file_mode_set_at(const int at_id, const f_string_static_t path, const mode_t mode) {
 
-    if (!path.used) {
-      return F_data_not;
-    }
+    if (!path.used) return F_data_not;
 
     return private_f_file_mode_set_at(at_id, path, mode);
   }
@@ -1469,9 +1395,7 @@ extern "C" {
       if (!name_base) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!path.used) {
-      return F_data_not;
-    }
+    if (!path.used) return F_data_not;
 
     // POSIX basename() modifies the path, so protect it (and add a terminating NULL).
     char path_argument[path.used + 1];
@@ -1500,9 +1424,7 @@ extern "C" {
       if (!name_directory) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!path.used) {
-      return F_data_not;
-    }
+    if (!path.used) return F_data_not;
 
     // POSIX dirname() modifies the path, so protect it (and add a terminating NULL).
     char path_argument[path.used + 1];
@@ -1538,9 +1460,7 @@ extern "C" {
       if (!file) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!path.used) {
-      return F_data_not;
-    }
+    if (!path.used) return F_data_not;
 
     return private_f_file_open(path, mode, file);
   }
@@ -1552,9 +1472,7 @@ extern "C" {
       if (!file) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!path.used) {
-      return F_data_not;
-    }
+    if (!path.used) return F_data_not;
 
     return private_f_file_open_at(at_id, path, mode, file);
   }
@@ -1566,9 +1484,7 @@ extern "C" {
       if (!owner) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!path.used) {
-      return F_data_not;
-    }
+    if (!path.used) return F_data_not;
 
     struct stat stat_file;
 
@@ -1592,9 +1508,7 @@ extern "C" {
       if (!buffer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (file.id == -1) {
-      return F_status_set_error(F_file_closed);
-    }
+    if (file.id == -1) return F_status_set_error(F_file_closed);
 
     f_status_t status = F_none;
     ssize_t size_read = 0;
@@ -1632,9 +1546,7 @@ extern "C" {
       if (!buffer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (file.id == -1) {
-      return F_status_set_error(F_file_closed);
-    }
+    if (file.id == -1) return F_status_set_error(F_file_closed);
 
     ssize_t size_read = 0;
 
@@ -1661,9 +1573,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    if (size_read) {
-      return F_none;
-    }
+    if (size_read) return F_none;
 
     return F_none_eof;
   }
@@ -1676,13 +1586,9 @@ extern "C" {
       if (!buffer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (file.id == -1) {
-      return F_status_set_error(F_file_closed);
-    }
+    if (file.id == -1) return F_status_set_error(F_file_closed);
 
-    if (!total) {
-      return F_data_not;
-    }
+    if (!total) return F_data_not;
 
     f_array_length_t buffer_size = file.size_read;
     f_array_length_t buffer_count = 0;
@@ -1715,9 +1621,7 @@ extern "C" {
 
       buffer->used += size_read;
 
-      if (!size_read) {
-        return F_none_eof;
-      }
+      if (!size_read) return F_none_eof;
 
       buffer_count += size_read;
 
@@ -1731,9 +1635,7 @@ extern "C" {
 #ifndef _di_f_file_remove_
   f_status_t f_file_remove(const f_string_static_t path) {
 
-    if (!path.used) {
-      return F_data_not;
-    }
+    if (!path.used) return F_data_not;
 
     if (unlink(path.string) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
@@ -1759,9 +1661,7 @@ extern "C" {
 #ifndef _di_f_file_remove_at_
   f_status_t f_file_remove_at(const int at_id, const f_string_static_t path, const int flag) {
 
-    if (!path.used) {
-      return F_data_not;
-    }
+    if (!path.used) return F_data_not;
 
     if (unlinkat(at_id, path.string, flag) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
@@ -1788,9 +1688,7 @@ extern "C" {
 #ifndef _di_f_file_rename_
   f_status_t f_file_rename(const f_string_static_t source, const f_string_static_t destination) {
 
-    if (!source.used || !destination.used) {
-      return F_data_not;
-    }
+    if (!source.used || !destination.used) return F_data_not;
 
     if (rename(source.string, destination.string) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
@@ -1822,9 +1720,7 @@ extern "C" {
 #ifndef _di_f_file_rename_at_
   f_status_t f_file_rename_at(const int at_id, const int to_id, const f_string_static_t source, const f_string_static_t destination, const unsigned int flag) {
 
-    if (!source.used || !destination.used) {
-      return F_data_not;
-    }
+    if (!source.used || !destination.used) return F_data_not;
 
     #ifdef _f_file_rename_use_renameat2_
       if (renameat2(at_id, source.string, to_id, destination.string, flag) < 0) {
@@ -1861,9 +1757,7 @@ extern "C" {
 #ifndef _di_f_file_role_change_
   f_status_t f_file_role_change(const f_string_static_t path, const uid_t uid, const gid_t gid, const bool dereference) {
 
-    if ((uid == -1 && gid == -1) || !path.used) {
-      return F_data_not;
-    }
+    if ((uid == -1 && gid == -1) || !path.used) return F_data_not;
 
     return private_f_file_role_change(path, uid, gid, dereference);
   }
@@ -1872,9 +1766,7 @@ extern "C" {
 #ifndef _di_f_file_role_change_at_
   f_status_t f_file_role_change_at(const int at_id, const f_string_static_t path, const uid_t uid, const gid_t gid, const int flag) {
 
-    if ((uid == -1 && gid == -1) || !path.used) {
-      return F_data_not;
-    }
+    if ((uid == -1 && gid == -1) || !path.used) return F_data_not;
 
     return private_f_file_role_change_at(at_id, path, uid, gid, flag);
   }
@@ -1909,9 +1801,7 @@ extern "C" {
       if (!size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!path.used) {
-      return F_data_not;
-    }
+    if (!path.used) return F_data_not;
 
     struct stat stat_file;
 
@@ -1934,9 +1824,7 @@ extern "C" {
       if (!size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!path.used) {
-      return F_data_not;
-    }
+    if (!path.used) return F_data_not;
 
     struct stat stat_file;
 
@@ -1959,9 +1847,7 @@ extern "C" {
       if (!size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (id == -1) {
-      return F_status_set_error(F_file_closed);
-    }
+    if (id == -1) return F_status_set_error(F_file_closed);
 
     struct stat stat_file;
 
@@ -1984,9 +1870,7 @@ extern "C" {
       if (!stat_file) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!path.used) {
-      return F_data_not;
-    }
+    if (!path.used) return F_data_not;
 
     return private_f_file_stat(path, dereference, stat_file);
   }
@@ -1998,9 +1882,7 @@ extern "C" {
       if (!stat_file) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!path.used) {
-      return F_data_not;
-    }
+    if (!path.used) return F_data_not;
 
     return private_f_file_stat_at(at_id, path, flag, stat_file);
   }
@@ -2079,9 +1961,7 @@ extern "C" {
       if (!file) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!path.used) {
-      return F_data_not;
-    }
+    if (!path.used) return F_data_not;
 
     if (mode.used) {
       file->stream = fopen(path.string, mode.string);
@@ -2116,9 +1996,7 @@ extern "C" {
 
     file->id = fileno(file->stream);
 
-    if (file->id == -1) {
-      return F_status_set_error(F_file_descriptor);
-    }
+    if (file->id == -1) return F_status_set_error(F_file_descriptor);
 
     return F_none;
   }
@@ -2130,9 +2008,7 @@ extern "C" {
       if (!file) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (file->id == -1) {
-      return F_status_set_error(F_file_descriptor);
-    }
+    if (file->id == -1) return F_status_set_error(F_file_descriptor);
 
     if (mode.used) {
       file->stream = fdopen(file->id, private_f_file_stream_open_mode_determine(file->flag));
@@ -2176,9 +2052,7 @@ extern "C" {
       if (!buffer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!file.stream) {
-      return F_status_set_error(F_file_closed);
-    }
+    if (!file.stream) return F_status_set_error(F_file_closed);
 
     flockfile(file.stream);
 
@@ -2231,9 +2105,7 @@ extern "C" {
       if (!buffer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!file.stream) {
-      return F_status_set_error(F_file_closed);
-    }
+    if (!file.stream) return F_status_set_error(F_file_closed);
 
     flockfile(file.stream);
 
@@ -2290,13 +2162,8 @@ extern "C" {
       if (!buffer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!file.stream) {
-      return F_status_set_error(F_file_closed);
-    }
-
-    if (!total) {
-      return F_none_stop;
-    }
+    if (!file.stream) return F_status_set_error(F_file_closed);
+    if (!total) return F_none_stop;
 
     flockfile(file.stream);
 
@@ -2366,9 +2233,7 @@ extern "C" {
       if (!file) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!path.used && !mode.used) {
-      return F_data_not;
-    }
+    if (!path.used && !mode.used) return F_data_not;
 
     FILE *result = 0;
 
@@ -2404,9 +2269,7 @@ extern "C" {
     file->stream = result;
     file->id = fileno(file->stream);
 
-    if (file->id == -1) {
-      return F_status_set_error(F_file_descriptor);
-    }
+    if (file->id == -1) return F_status_set_error(F_file_descriptor);
 
     return F_none;
   }
@@ -2418,9 +2281,7 @@ extern "C" {
       if (!file.size_write) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!file.stream) {
-      return F_status_set_error(F_file_closed);
-    }
+    if (!file.stream) return F_status_set_error(F_file_closed);
 
     if (!buffer.used) {
       if (written) {
@@ -2435,18 +2296,14 @@ extern "C" {
     if (written) {
       status = private_f_file_stream_write_until(file, buffer, buffer.used, written);
 
-      if (status == F_none && *written == buffer.used) {
-        return F_none_eos;
-      }
+      if (status == F_none && *written == buffer.used) return F_none_eos;
     }
     else {
       f_array_length_t written_local = 0;
 
       status = private_f_file_stream_write_until(file, buffer, buffer.used, &written_local);
 
-      if (status == F_none && written_local == buffer.used) {
-        return F_none_eos;
-      }
+      if (status == F_none && written_local == buffer.used) return F_none_eos;
     }
 
     return status;
@@ -2459,9 +2316,7 @@ extern "C" {
       if (!file.size_write) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!file.stream) {
-      return F_status_set_error(F_file_closed);
-    }
+    if (!file.stream) return F_status_set_error(F_file_closed);
 
     if (!buffer.used) {
       if (written) {
@@ -2483,13 +2338,8 @@ extern "C" {
       status = private_f_file_stream_write_until(file, buffer, write_max, written);
 
       if (status == F_none) {
-        if (*written == buffer.used) {
-          return F_none_eos;
-        }
-
-        if (*written == write_max) {
-          return F_none_stop;
-        }
+        if (*written == buffer.used) return F_none_eos;
+        if (*written == write_max) return F_none_stop;
       }
     }
     else {
@@ -2498,13 +2348,8 @@ extern "C" {
       status = private_f_file_stream_write_until(file, buffer, write_max, &written_local);
 
       if (status == F_none) {
-        if (written_local == buffer.used) {
-          return F_none_eos;
-        }
-
-        if (written_local == write_max) {
-          return F_none_stop;
-        }
+        if (written_local == buffer.used) return F_none_eos;
+        if (written_local == write_max) return F_none_stop;
       }
     }
 
@@ -2518,9 +2363,7 @@ extern "C" {
       if (!file.size_write) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!file.stream) {
-      return F_status_set_error(F_file_closed);
-    }
+    if (!file.stream) return F_status_set_error(F_file_closed);
 
     if (!buffer.used || !total) {
       if (written) {
@@ -2542,13 +2385,8 @@ extern "C" {
       status = private_f_file_stream_write_until(file, buffer, write_max, written);
 
       if (status == F_none) {
-        if (*written == buffer.used) {
-          return F_none_eos;
-        }
-
-        if (*written == write_max) {
-          return F_none_stop;
-        }
+        if (*written == buffer.used) return F_none_eos;
+        if (*written == write_max) return F_none_stop;
       }
     }
     else {
@@ -2557,13 +2395,8 @@ extern "C" {
       status = private_f_file_stream_write_until(file, buffer, buffer.used, &written_local);
 
       if (status == F_none) {
-        if (written_local == buffer.used) {
-          return F_none_eos;
-        }
-
-        if (written_local == write_max) {
-          return F_none_stop;
-        }
+        if (written_local == buffer.used) return F_none_eos;
+        if (written_local == write_max) return F_none_stop;
       }
     }
 
@@ -2577,9 +2410,7 @@ extern "C" {
       if (!file.size_write) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!file.stream) {
-      return F_status_set_error(F_file_closed);
-    }
+    if (!file.stream) return F_status_set_error(F_file_closed);
 
     if (!buffer.used || range.start > range.stop || range.start >= buffer.used) {
       if (written) {
@@ -2604,13 +2435,8 @@ extern "C" {
       status = private_f_file_stream_write_until(file, buffer_adjusted, write_max, written);
 
       if (status == F_none) {
-        if (range.start + *written == buffer.used) {
-          return F_none_stop;
-        }
-
-        if (range.start + *written == total) {
-          return F_none_eos;
-        }
+        if (range.start + *written == buffer.used) return F_none_stop;
+        if (range.start + *written == total) return F_none_eos;
       }
     }
     else {
@@ -2620,13 +2446,8 @@ extern "C" {
       status = private_f_file_stream_write_until(file, buffer_adjusted, write_max, &written_local);
 
       if (status == F_none) {
-        if (range.start + written_local == buffer.used) {
-          return F_none_eos;
-        }
-
-        if (range.start + written_local == total) {
-          return F_none_stop;
-        }
+        if (range.start + written_local == buffer.used) return F_none_eos;
+        if (range.start + written_local == total) return F_none_stop;
       }
     }
 
@@ -2637,9 +2458,7 @@ extern "C" {
 #ifndef _di_f_file_touch_
   f_status_t f_file_touch(const f_string_static_t path, const mode_t mode, const bool dereference) {
 
-    if (!path.used) {
-      return F_data_not;
-    }
+    if (!path.used) return F_data_not;
 
     f_status_t status = F_none;
     struct stat stat_file;
@@ -2648,13 +2467,8 @@ extern "C" {
 
     status = private_f_file_stat(path, dereference, &stat_file);
 
-    if (F_status_set_fine(status) == F_file_found_not) {
-      return private_f_file_create(path, mode, dereference);
-    }
-
-    if (F_status_is_error(status)) {
-      return status;
-    }
+    if (F_status_set_fine(status) == F_file_found_not) return private_f_file_create(path, mode, dereference);
+    if (F_status_is_error(status)) return status;
 
     if (utimensat(F_file_at_current_working_d, path.string, 0, dereference ? 0 : F_file_at_symlink_follow_no_d) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
@@ -2679,9 +2493,7 @@ extern "C" {
 #ifndef _di_f_file_touch_at_
   f_status_t f_file_touch_at(const int at_id, const f_string_static_t path, const mode_t mode, const int flag) {
 
-    if (!path.used) {
-      return F_data_not;
-    }
+    if (!path.used) return F_data_not;
 
     f_status_t status = F_none;
     struct stat stat_file;
@@ -2690,10 +2502,7 @@ extern "C" {
 
     status = private_f_file_stat_at(at_id, path, flag, &stat_file);
 
-    if (F_status_set_fine(status) == F_file_found_not) {
-      return private_f_file_create_at(at_id, path, mode, F_false);
-    }
-
+    if (F_status_set_fine(status) == F_file_found_not) return private_f_file_create_at(at_id, path, mode, F_false);
     if (F_status_is_error(status)) return status;
 
     if (utimensat(at_id, path.string, 0, flag) < 0) {
@@ -2722,9 +2531,7 @@ extern "C" {
       if (!type) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!path.used) {
-      return F_data_not;
-    }
+    if (!path.used) return F_data_not;
 
     struct stat stat_file;
 
@@ -2747,9 +2554,7 @@ extern "C" {
       if (!type) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!path.used) {
-      return F_data_not;
-    }
+    if (!path.used) return F_data_not;
 
     struct stat stat_file;
 
@@ -2797,9 +2602,7 @@ extern "C" {
       if (!file.size_write) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (file.id == -1) {
-      return F_status_set_error(F_file_closed);
-    }
+    if (file.id == -1) return F_status_set_error(F_file_closed);
 
     if (!buffer.used) {
       if (written) *written = 0;
@@ -2812,18 +2615,14 @@ extern "C" {
     if (written) {
       status = private_f_file_write_until(file, buffer, buffer.used, written);
 
-      if (status == F_none && *written == buffer.used) {
-        return F_none_eos;
-      }
+      if (status == F_none && *written == buffer.used) return F_none_eos;
     }
     else {
       f_array_length_t written_local = 0;
 
       status = private_f_file_write_until(file, buffer, buffer.used, &written_local);
 
-      if (status == F_none && written_local == buffer.used) {
-        return F_none_eos;
-      }
+      if (status == F_none && written_local == buffer.used) return F_none_eos;
     }
 
     return status;
@@ -2836,9 +2635,7 @@ extern "C" {
       if (!file.size_write) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (file.id == -1) {
-      return F_status_set_error(F_file_closed);
-    }
+    if (file.id == -1) return F_status_set_error(F_file_closed);
 
     if (!buffer.used) {
       if (written) *written = 0;
@@ -2858,13 +2655,8 @@ extern "C" {
       status = private_f_file_write_until(file, buffer, write_max, written);
 
       if (status == F_none) {
-        if (*written == buffer.used) {
-          return F_none_eos;
-        }
-
-        if (*written == write_max) {
-          return F_none_stop;
-        }
+        if (*written == buffer.used) return F_none_eos;
+        if (*written == write_max) return F_none_stop;
       }
     }
     else {
@@ -2873,13 +2665,8 @@ extern "C" {
       status = private_f_file_write_until(file, buffer, write_max, &written_local);
 
       if (status == F_none) {
-        if (written_local == buffer.used) {
-          return F_none_eos;
-        }
-
-        if (written_local == write_max) {
-          return F_none_stop;
-        }
+        if (written_local == buffer.used) return F_none_eos;
+        if (written_local == write_max) return F_none_stop;
       }
     }
 
@@ -2893,9 +2680,7 @@ extern "C" {
       if (!file.size_write) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (file.id == -1) {
-      return F_status_set_error(F_file_closed);
-    }
+    if (file.id == -1) return F_status_set_error(F_file_closed);
 
     if (!buffer.used || !total) {
       if (written) *written = 0;
@@ -2915,13 +2700,8 @@ extern "C" {
       status = private_f_file_write_until(file, buffer, write_max, written);
 
       if (status == F_none) {
-        if (*written == buffer.used) {
-          return F_none_eos;
-        }
-
-        if (*written == write_max) {
-          return F_none_stop;
-        }
+        if (*written == buffer.used) return F_none_eos;
+        if (*written == write_max) return F_none_stop;
       }
     }
     else {
@@ -2930,13 +2710,8 @@ extern "C" {
       status = private_f_file_write_until(file, buffer, buffer.used, &written_local);
 
       if (status == F_none) {
-        if (written_local == buffer.used) {
-          return F_none_eos;
-        }
-
-        if (written_local == write_max) {
-          return F_none_stop;
-        }
+        if (written_local == buffer.used) return F_none_eos;
+        if (written_local == write_max) return F_none_stop;
       }
     }
 
@@ -2950,9 +2725,7 @@ extern "C" {
       if (!file.size_write) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (file.id == -1) {
-      return F_status_set_error(F_file_closed);
-    }
+    if (file.id == -1) return F_status_set_error(F_file_closed);
 
     if (!buffer.used || range.start > range.stop || range.start >= buffer.used) {
       if (written) {
@@ -2977,13 +2750,8 @@ extern "C" {
       status = private_f_file_write_until(file, buffer_adjusted, write_max, written);
 
       if (status == F_none) {
-        if (range.start + *written == buffer.used) {
-          return F_none_stop;
-        }
-
-        if (range.start + *written == total) {
-          return F_none_eos;
-        }
+        if (range.start + *written == buffer.used) return F_none_stop;
+        if (range.start + *written == total) return F_none_eos;
       }
     }
     else {
@@ -2993,13 +2761,8 @@ extern "C" {
       status = private_f_file_write_until(file, buffer_adjusted, write_max, &written_local);
 
       if (status == F_none) {
-        if (range.start + written_local == buffer.used) {
-          return F_none_eos;
-        }
-
-        if (range.start + written_local == total) {
-          return F_none_stop;
-        }
+        if (range.start + written_local == buffer.used) return F_none_eos;
+        if (range.start + written_local == total) return F_none_stop;
       }
     }
 
