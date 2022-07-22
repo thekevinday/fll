@@ -33,6 +33,7 @@ extern "C" {
  * @see f_directory_is()
  * @see f_file_clone()
  * @see f_file_copy()
+ * @see f_file_name_base()
  * @see fl_directory_clone()
  * @see fl_directory_copy()
  */

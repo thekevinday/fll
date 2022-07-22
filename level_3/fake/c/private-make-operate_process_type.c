@@ -53,7 +53,7 @@ extern "C" {
       status = f_directory_is(data_make->cache_arguments.array[1]);
 
       if (F_status_is_error(status)) {
-        fll_error_file_print(data_make->error, F_status_set_fine(status), "f_directory_is", F_true, data_make->cache_arguments.array[1], f_file_operation_identify_s, fll_error_file_type_directory_e);
+        fll_error_file_print(data_make->error, F_status_set_fine(status), "f_directory_is", F_true, data_make->cache_arguments.array[1], f_file_operation_identify_s, fll_error_file_type_path_e);
 
         return F_status_set_error(F_failure);
       }
@@ -68,7 +68,17 @@ extern "C" {
       destination.used = data_make->cache_arguments.array[total].used + 1;
 
       if (existing) {
-        destination.used += data_make->cache_arguments.array[i].used + 1;
+        data_make->cache_path.used = 0;
+
+        status = f_file_name_base(data_make->cache_arguments.array[i], &data_make->cache_path);
+
+        if (F_status_is_error(status)) {
+          fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_name_base", F_true, data_make->cache_arguments.array[i], f_file_operation_process_s, fll_error_file_type_path_e);
+
+          return F_status_set_error(F_failure);
+        }
+
+        destination.used += data_make->cache_path.used + 1;
       }
 
       f_char_t destination_string[destination.used + 1];
@@ -84,27 +94,28 @@ extern "C" {
 
       if (existing) {
         if (destination_string[data_make->cache_arguments.array[total].used - 1] == f_path_separator_s.string[0]) {
-          memcpy(destination_string + data_make->cache_arguments.array[total].used, data_make->cache_arguments.array[i].string, sizeof(f_char_t) * data_make->cache_arguments.array[i].used);
 
-          if (data_make->cache_arguments.array[i].string[data_make->cache_arguments.array[i].used - 1] == f_path_separator_s.string[0]) {
+          memcpy(destination_string + data_make->cache_arguments.array[total].used, data_make->cache_path.string, sizeof(f_char_t) * data_make->cache_path.used);
+
+          if (data_make->cache_path.string[data_make->cache_path.used - 1] == f_path_separator_s.string[0]) {
             destination.used -= 2;
           }
           else {
-            destination_string[data_make->cache_arguments.array[total].used + data_make->cache_arguments.array[i].used] = f_path_separator_s.string[0];
+            destination_string[data_make->cache_arguments.array[total].used + data_make->cache_path.used] = f_path_separator_s.string[0];
 
             --destination.used;
           }
         }
         else {
-          memcpy(destination_string + data_make->cache_arguments.array[total].used + 1, data_make->cache_arguments.array[i].string, sizeof(f_char_t) * data_make->cache_arguments.array[i].used);
+          memcpy(destination_string + data_make->cache_arguments.array[total].used + 1, data_make->cache_path.string, sizeof(f_char_t) * data_make->cache_arguments.array[i].used);
 
           destination_string[data_make->cache_arguments.array[total].used] = f_path_separator_s.string[0];
 
-          if (data_make->cache_arguments.array[i].string[data_make->cache_arguments.array[i].used - 1] == f_path_separator_s.string[0]) {
+          if (data_make->cache_path.string[data_make->cache_path.used - 1] == f_path_separator_s.string[0]) {
             --destination.used;
           }
           else {
-            destination_string[data_make->cache_arguments.array[total].used + 1 + data_make->cache_arguments.array[i].used] = f_path_separator_s.string[0];
+            destination_string[data_make->cache_arguments.array[total].used + 1 + data_make->cache_path.used] = f_path_separator_s.string[0];
           }
         }
       }
