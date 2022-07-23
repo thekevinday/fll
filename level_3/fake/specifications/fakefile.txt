@@ -59,7 +59,7 @@ Fakefile Specification:
   - groups: Two or more Content. First Content is group name, number, or "no_dereference" (when "no_dereference", then the second Content is the group name or number, etc..), remaining Content are paths to files.
   - if: One or more Content. First Content is the condition or is "no_dereference" (when "no_dereference", then the Second Content is the condition, etc..), remaining Content are specific to the condition.
   - index: One or more Content.
-  - link: Two Content. First Content is the link target file and second Content is the pointer file (the link).
+  - link: Two to Four Content. The first and second Content may be either "force" or "strict", the second to last Content is the link target file, and the last Content is the pointer file (the link).
   - mode: Two or more Content. First Content is the mode, remaining Content are paths to files.
   - modes: Two or more Content. First Content is the mode, remaining Content are paths to files.
   - move: Two or more Content representing paths to files.

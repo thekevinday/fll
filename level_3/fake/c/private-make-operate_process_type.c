@@ -1312,10 +1312,52 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    status = f_file_link(data_make->cache_arguments.array[0], data_make->cache_arguments.array[1]);
+    // 0x1 = force, 0x2 = strict.
+    uint8_t flag = 0;
+
+    if (data_make->cache_arguments.used > 2) {
+      if (fl_string_dynamic_compare(fake_make_operation_argument_force_s, data_make->cache_arguments.array[1]) != F_equal_to) {
+        flag |= 0x1;
+      }
+      else if (fl_string_dynamic_compare(fake_make_operation_argument_strict_s, data_make->cache_arguments.array[1]) == F_equal_to) {
+        flag |= 0x2;
+      }
+
+      if (data_make->cache_arguments.used > 3) {
+        if (fl_string_dynamic_compare(fake_make_operation_argument_force_s, data_make->cache_arguments.array[2]) != F_equal_to) {
+          flag |= 0x1;
+        }
+        else if (fl_string_dynamic_compare(fake_make_operation_argument_strict_s, data_make->cache_arguments.array[2]) == F_equal_to) {
+          flag |= 0x2;
+        }
+      }
+    }
+
+    if ((flag & 0x1) && f_file_exists(data_make->cache_arguments.array[data_make->cache_arguments.used - 1], F_false) == F_true) {
+      if (f_directory_is(data_make->cache_arguments.array[data_make->cache_arguments.used - 1]) == F_true) {
+        status = f_directory_remove(data_make->cache_arguments.array[data_make->cache_arguments.used - 1], F_directory_descriptors_max_d, F_false);
+
+        if (F_status_is_error(status)) {
+          fll_error_file_print(data_make->error, F_status_set_fine(status), "f_directory_remove", F_true, data_make->cache_arguments.array[data_make->cache_arguments.used - 1], f_file_operation_delete_s, fll_error_file_type_directory_e);
+
+          return F_status_set_error(F_failure);
+        }
+      }
+      else {
+        status = f_file_remove(data_make->cache_arguments.array[data_make->cache_arguments.used - 1]);
+
+        if (F_status_is_error(status)) {
+          fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_remove", F_true, data_make->cache_arguments.array[data_make->cache_arguments.used - 1], f_file_operation_delete_s, fll_error_file_type_file_e);
+
+          return F_status_set_error(F_failure);
+        }
+      }
+    }
+
+    status = f_file_link(data_make->cache_arguments.array[0], data_make->cache_arguments.array[data_make->cache_arguments.used - 1]);
 
     if (F_status_is_error(status)) {
-      fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_link", F_true, data_make->cache_arguments.array[1], f_file_operation_link_s, fll_error_file_type_file_e);
+      fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_link", F_true, data_make->cache_arguments.array[data_make->cache_arguments.used - 1], f_file_operation_link_s, fll_error_file_type_file_e);
 
       return F_status_set_error(F_failure);
     }
@@ -1323,7 +1365,7 @@ extern "C" {
     if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
       flockfile(data_make->main->output.to.stream);
 
-      fl_print_format("Created symbolic link from '%[%Q%]", data_make->main->output.to.stream, data_make->main->context.set.notable, data_make->cache_arguments.array[1], data_make->main->context.set.notable);
+      fl_print_format("Created symbolic link from '%[%Q%]", data_make->main->output.to.stream, data_make->main->context.set.notable, data_make->cache_arguments.array[data_make->cache_arguments.used - 1], data_make->main->context.set.notable);
       fl_print_format("' to %[%Q%].%r", data_make->main->output.to.stream, data_make->main->context.set.notable, data_make->cache_arguments.array[0], data_make->main->context.set.notable, f_string_eol_s);
 
       funlockfile(data_make->main->output.to.stream);

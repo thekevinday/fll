@@ -367,26 +367,78 @@ extern "C" {
 #ifndef _di_fake_print_message_section_operation_failed_
   void fake_print_message_section_operation_failed(fake_data_t * const data, const fl_print_t print, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name) {
 
-    if (data->main->error.verbosity == f_console_verbosity_quiet_e || !print.to.stream) return;
+    if (print.verbosity == f_console_verbosity_quiet_e || !print.to.stream) return;
 
     f_array_length_t line = 1;
     f_state_t state = f_state_t_initialize;
 
     f_fss_count_lines(state, buffer, operation_name.start, &line);
 
-    flockfile(data->main->error.to.stream);
+    flockfile(print.to.stream);
 
-    fl_print_format("%r%[%QThe section operation '%]", data->main->error.to.stream, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
-    fl_print_format("%[%/Q%]", data->main->error.to.stream, data->main->error.notable, buffer, operation_name, data->main->error.notable);
-    fl_print_format("%[' from section '%]", data->main->error.to.stream, data->main->error.context, data->main->error.context);
-    fl_print_format("%[%/Q%]", data->main->error.to.stream, data->main->error.notable, buffer, section_name, data->main->error.notable);
-    fl_print_format("%[' on line%] ", data->main->error.to.stream, data->main->error.context, data->main->error.context);
-    fl_print_format("%[%un%]", data->main->error.to.stream, data->main->error.notable, line, data->main->error.notable);
-    fl_print_format(" %[failed.%]%r", data->main->error.to.stream, data->main->error.context, data->main->error.context, f_string_eol_s);
+    fl_print_format("%r%[%QThe section operation '%]", print.to.stream, f_string_eol_s, print.context, print.prefix, print.context);
+    fl_print_format("%[%/Q%]", print.to.stream, print.notable, buffer, operation_name, print.notable);
+    fl_print_format("%[' from section '%]", print.to.stream, print.context, print.context);
+    fl_print_format("%[%/Q%]", print.to.stream, print.notable, buffer, section_name, print.notable);
+    fl_print_format("%[' on line%] ", print.to.stream, print.context, print.context);
+    fl_print_format("%[%un%]", print.to.stream, print.notable, line, print.notable);
+    fl_print_format(" %[failed.%]%r", print.to.stream, print.context, print.context, f_string_eol_s);
 
-    funlockfile(data->main->error.to.stream);
+    funlockfile(print.to.stream);
   }
 #endif // _di_fake_print_message_section_operation_failed_
+
+#ifndef _di_fake_print_message_section_operation_link_argument_unknown_
+  void fake_print_message_section_operation_link_argument_unknown(fake_data_t * const data, const fl_print_t print, const f_string_static_t argument) {
+
+    if (print.verbosity == f_console_verbosity_quiet_e || !print.to.stream) return;
+
+    flockfile(print.to.stream);
+
+    fl_print_format("%r%[%QThe argument '%]", print.to.stream, f_string_eol_s, print.context, print.prefix, print.context);
+    fl_print_format("%[%Q%]", print.to.stream, print.notable, argument, print.notable);
+    fl_print_format("%[' is not not valid and may only be one of either '%]", print.to.stream, print.context, print.context);
+    fl_print_format("%[%r%]", print.to.stream, print.notable, fake_make_operation_argument_force_s, print.notable);
+    fl_print_format("%[' or '%]", print.to.stream, print.context, print.context);
+    fl_print_format("%[%r%]", print.to.stream, print.notable, fake_make_operation_argument_strict_s, print.notable);
+    fl_print_format("%['.%]%r", print.to.stream, print.context, print.context, f_string_eol_s);
+
+    funlockfile(print.to.stream);
+
+  }
+#endif // _di_fake_print_message_section_operation_link_argument_unknown_
+
+#ifndef _di_fake_print_message_section_operation_link_point_exists_
+  void fake_print_message_section_operation_link_point_exists(fake_data_t * const data, const fl_print_t print, const f_string_static_t argument) {
+
+    if (print.verbosity == f_console_verbosity_quiet_e || !print.to.stream) return;
+
+    flockfile(print.to.stream);
+
+    fl_print_format("%r%[%QThe point file '%]", print.to.stream, f_string_eol_s, print.context, print.prefix, print.context);
+    fl_print_format("%[%Q%]", print.to.stream, print.notable, argument, print.notable);
+    fl_print_format("%[' already exists.%]%r", print.to.stream, print.context, print.context, f_string_eol_s);
+
+    funlockfile(print.to.stream);
+
+  }
+#endif // _di_fake_print_message_section_operation_link_point_exists_
+
+#ifndef _di_fake_print_message_section_operation_link_target_exists_not_
+  void fake_print_message_section_operation_link_target_exists_not(fake_data_t * const data, const fl_print_t print, const f_string_static_t argument) {
+
+    if (print.verbosity == f_console_verbosity_quiet_e || !print.to.stream) return;
+
+    flockfile(print.to.stream);
+
+    fl_print_format("%r%[%QThe target file '%]", print.to.stream, f_string_eol_s, print.context, print.prefix, print.context);
+    fl_print_format("%[%Q%]", print.to.stream, print.notable, argument, print.notable);
+    fl_print_format("%[' does not exist.%]%r", print.to.stream, print.context, print.context, f_string_eol_s);
+
+    funlockfile(print.to.stream);
+
+  }
+#endif // _di_fake_print_message_section_operation_link_target_exists_not_
 
 #ifndef _di_fake_print_message_section_operation_path_outside_
   void fake_print_message_section_operation_path_outside(fake_data_t * const data, const fl_print_t print, const f_status_t status, const char *function, const f_string_static_t path) {

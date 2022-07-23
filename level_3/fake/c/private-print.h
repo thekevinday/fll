@@ -198,6 +198,63 @@ extern "C" {
 #endif // _di_fake_print_message_section_operation_failed_
 
 /**
+ * Print error messages when a given link argument is unknown.
+ *
+ * @param data
+ *   The program data.
+ * @param print
+ *   Designates how the section error/warning should be printed.
+ * @param argument
+ *   The argument that is unknown by the link operation.
+ *
+ * @see flockfile()
+ * @see funlockfile()
+ *
+ * @see fl_print_format()
+ */
+#ifndef _di_fake_print_message_section_operation_link_argument_unknown_
+  extern void fake_print_message_section_operation_link_argument_unknown(fake_data_t * const data, const fl_print_t print, const f_string_static_t argument) F_attribute_visibility_internal_d;
+#endif // _di_fake_print_message_section_operation_link_argument_unknown_
+
+/**
+ * Print error messages when a given link point file already exists.
+ *
+ * @param data
+ *   The program data.
+ * @param print
+ *   Designates how the section error/warning should be printed.
+ * @param argument
+ *   The argument representing the point file.
+ *
+ * @see flockfile()
+ * @see funlockfile()
+ *
+ * @see fl_print_format()
+ */
+#ifndef _di_fake_print_message_section_operation_link_point_exists_
+  extern void fake_print_message_section_operation_link_point_exists(fake_data_t * const data, const fl_print_t print, const f_string_static_t argument) F_attribute_visibility_internal_d;
+#endif // _di_fake_print_message_section_operation_link_point_exists_
+
+/**
+ * Print error messages when a given link target file does not already exist.
+ *
+ * @param data
+ *   The program data.
+ * @param print
+ *   Designates how the section error/warning should be printed.
+ * @param argument
+ *   The argument representing the point file.
+ *
+ * @see flockfile()
+ * @see funlockfile()
+ *
+ * @see fl_print_format()
+ */
+#ifndef _di_fake_print_message_section_operation_link_target_exists_not_
+  extern void fake_print_message_section_operation_link_target_exists_not(fake_data_t * const data, const fl_print_t print, const f_string_static_t argument) F_attribute_visibility_internal_d;
+#endif // _di_fake_print_message_section_operation_link_target_exists_not_
+
+/**
  * Print error messages when processing some fakefile section, for a specific line and operation, and that operation has a path outside of the project root.
  *
  * @param data

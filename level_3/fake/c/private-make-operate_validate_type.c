@@ -123,15 +123,16 @@ extern "C" {
 
     if (data_make->cache_arguments.used > 1) {
       f_status_t status = F_none;
+      f_status_t status_file = F_none;
 
       for (f_array_length_t i = 0; i < data_make->cache_arguments.used; ++i) {
 
-        status = fake_make_assure_inside_project(data_make, data_make->cache_arguments.array[i]);
+        status_file = fake_make_assure_inside_project(data_make, data_make->cache_arguments.array[i]);
 
-        if (F_status_is_error(status)) {
-          fake_print_message_section_operation_path_outside(data_make->data, data_make->error, F_status_set_fine(status), "fake_make_assure_inside_project", data_make->cache_path.used ? data_make->cache_path : data_make->cache_arguments.array[i]);
+        if (F_status_is_error(status_file)) {
+          fake_print_message_section_operation_path_outside(data_make->data, data_make->error, F_status_set_fine(status_file), "fake_make_assure_inside_project", data_make->cache_path.used ? data_make->cache_path : data_make->cache_arguments.array[i]);
 
-          if (F_status_set_fine(status) == F_false) return F_status_set_error(F_failure);
+          status = F_status_set_error(F_failure);
         }
       } // for
 
@@ -148,16 +149,16 @@ extern "C" {
             funlockfile(data_make->error.to.stream);
           }
 
-          return F_status_set_error(F_failure);
+          status = F_status_set_error(F_failure);
         }
       } // for
 
       if (data_make->cache_arguments.used > 2) {
 
         // The last file must be a directory.
-        status = f_directory_is(data_make->cache_arguments.array[data_make->cache_arguments.used - 1]);
+        status_file = f_directory_is(data_make->cache_arguments.array[data_make->cache_arguments.used - 1]);
 
-        if (status == F_false || status == F_file_found_not) {
+        if (status_file == F_false || status_file == F_file_found_not) {
           if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
             flockfile(data_make->error.to.stream);
 
@@ -168,24 +169,24 @@ extern "C" {
             funlockfile(data_make->error.to.stream);
           }
 
-          return F_status_set_error(F_failure);
+          status = F_status_set_error(F_failure);
         }
 
-        if (F_status_is_error(status)) {
-          fll_error_file_print(data_make->error, F_status_set_fine(status), "f_directory_is", F_true, data_make->cache_arguments.array[data_make->cache_arguments.used - 1], f_file_operation_find_s, fll_error_file_type_directory_e);
+        if (F_status_is_error(status_file)) {
+          fll_error_file_print(data_make->error, F_status_set_fine(status_file), "f_directory_is", F_true, data_make->cache_arguments.array[data_make->cache_arguments.used - 1], f_file_operation_find_s, fll_error_file_type_directory_e);
 
-          return F_status_set_error(F_failure);
+          status = F_status_set_error(F_failure);
         }
       }
       else {
 
         // When the first file is a directory, then the second, if it exists, must also be a directory.
-        status = f_directory_is(data_make->cache_arguments.array[0]);
+        status_file = f_directory_is(data_make->cache_arguments.array[0]);
 
-        if (status == F_true) {
-          status = f_directory_is(data_make->cache_arguments.array[1]);
+        if (status_file == F_true) {
+          status_file = f_directory_is(data_make->cache_arguments.array[1]);
 
-          if (status == F_false) {
+          if (status_file == F_false) {
             if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
               flockfile(data_make->error.to.stream);
 
@@ -196,12 +197,12 @@ extern "C" {
               funlockfile(data_make->error.to.stream);
             }
 
-            return F_status_set_error(F_failure);
+            status = F_status_set_error(F_failure);
           }
         }
       }
 
-      return F_none;
+      return status;
     }
 
     fake_print_error_requires_more_arguments(data_make);
@@ -716,23 +717,18 @@ extern "C" {
 
     if (data_make->cache_arguments.used > 1) {
       f_status_t status = F_none;
+      f_status_t status_file = F_none;
 
-      {
-        f_status_t status_file = F_none;
+      for (f_array_length_t i = 0; i < data_make->cache_arguments.used; ++i) {
 
-        for (f_array_length_t i = 0; i < data_make->cache_arguments.used; ++i) {
+        status_file = fake_make_assure_inside_project(data_make, data_make->cache_arguments.array[i]);
 
-          status_file = fake_make_assure_inside_project(data_make, data_make->cache_arguments.array[i]);
+        if (F_status_is_error(status_file)) {
+          fake_print_message_section_operation_path_outside(data_make->data, data_make->error, F_status_set_fine(status_file), "fake_make_assure_inside_project", data_make->cache_path.used ? data_make->cache_path : data_make->cache_arguments.array[i]);
 
-          if (F_status_is_error(status_file)) {
-            fake_print_message_section_operation_path_outside(data_make->data, data_make->error, F_status_set_fine(status_file), "fake_make_assure_inside_project", data_make->cache_path.used ? data_make->cache_path : data_make->cache_arguments.array[i]);
-
-            status = F_status_set_error(F_failure);
-          }
-        } // for
-      }
-
-      if (F_status_is_error(status)) return status;
+          status = F_status_set_error(F_failure);
+        }
+      } // for
 
       for (f_array_length_t i = 0; i < data_make->cache_arguments.used - 1; ++i) {
 
@@ -747,16 +743,16 @@ extern "C" {
             funlockfile(data_make->error.to.stream);
           }
 
-          return F_status_set_error(F_failure);
+          status = F_status_set_error(F_failure);
         }
       } // for
 
       if (data_make->cache_arguments.used > 2) {
 
         // The last file must be a directory.
-        status = f_directory_is(data_make->cache_arguments.array[data_make->cache_arguments.used - 1]);
+        status_file = f_directory_is(data_make->cache_arguments.array[data_make->cache_arguments.used - 1]);
 
-        if (status == F_false || status == F_file_found_not) {
+        if (status_file == F_false || status_file == F_file_found_not) {
           if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
             flockfile(data_make->error.to.stream);
 
@@ -767,24 +763,24 @@ extern "C" {
             funlockfile(data_make->error.to.stream);
           }
 
-          return F_status_set_error(F_failure);
+          status = F_status_set_error(F_failure);
         }
 
-        if (F_status_is_error(status)) {
-          fll_error_file_print(data_make->error, F_status_set_fine(status), "f_directory_is", F_true, data_make->cache_arguments.array[data_make->cache_arguments.used - 1], f_file_operation_identify_s, fll_error_file_type_directory_e);
+        if (F_status_is_error(status_file)) {
+          fll_error_file_print(data_make->error, F_status_set_fine(status_file), "f_directory_is", F_true, data_make->cache_arguments.array[data_make->cache_arguments.used - 1], f_file_operation_identify_s, fll_error_file_type_directory_e);
 
-          return F_status_set_error(F_failure);
+          status = F_status_set_error(F_failure);
         }
       }
       else {
 
         // When the first file is a directory, then the second, if it exists, must also be a directory.
-        status = f_directory_is(data_make->cache_arguments.array[0]);
+        status_file = f_directory_is(data_make->cache_arguments.array[0]);
 
-        if (status == F_true) {
-          status = f_directory_is(data_make->cache_arguments.array[1]);
+        if (status_file == F_true) {
+          status_file = f_directory_is(data_make->cache_arguments.array[1]);
 
-          if (status == F_false) {
+          if (status_file == F_false) {
             if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
               flockfile(data_make->error.to.stream);
 
@@ -795,12 +791,12 @@ extern "C" {
               funlockfile(data_make->error.to.stream);
             }
 
-            return F_status_set_error(F_failure);
+            status = F_status_set_error(F_failure);
           }
         }
       }
 
-      return F_none;
+      return status;
     }
 
     fake_print_error_requires_more_arguments(data_make);
@@ -1024,30 +1020,154 @@ extern "C" {
 #ifndef _di_fake_make_operate_validate_type_link_
   f_status_t fake_make_operate_validate_type_link(fake_make_data_t * const data_make) {
 
-    if (data_make->cache_arguments.used > 2) {
+    if (data_make->cache_arguments.used > 4) {
       fake_print_error_too_many_arguments(data_make);
 
       return F_status_set_error(F_failure);
     }
 
-    if (data_make->cache_arguments.used == 2) {
-      f_status_t status = fake_make_assure_inside_project(data_make, data_make->cache_arguments.array[0]);
+    if (data_make->cache_arguments.used > 1) {
+      f_status_t status = F_none;
+      f_status_t status_file = F_none;
 
-      if (F_status_is_error(status)) {
-        fake_print_message_section_operation_path_outside(data_make->data, data_make->error, F_status_set_fine(status), "fake_make_assure_inside_project", data_make->cache_path.used ? data_make->cache_path : data_make->cache_arguments.array[0]);
+      // 0x1 = force, 0x2 = strict.
+      uint8_t flag = 0;
 
-        if (F_status_set_fine(status) == F_false) return F_status_set_error(F_failure);
+      if (data_make->cache_arguments.used > 2) {
+        if (fl_string_dynamic_compare(fake_make_operation_argument_force_s, data_make->cache_arguments.array[0]) == F_equal_to) {
+          flag |= 0x1;
+        }
+        else if (fl_string_dynamic_compare(fake_make_operation_argument_strict_s, data_make->cache_arguments.array[0]) == F_equal_to) {
+          flag |= 0x2;
+        }
+        else {
+          fake_print_message_section_operation_link_argument_unknown(data_make->data, data_make->error, data_make->cache_arguments.array[0]);
+
+          status = F_status_set_error(F_failure);
+        }
+
+        if (data_make->cache_arguments.used > 3) {
+          if (fl_string_dynamic_compare(fake_make_operation_argument_force_s, data_make->cache_arguments.array[1]) == F_equal_to) {
+            flag |= 0x1;
+          }
+          else if (fl_string_dynamic_compare(fake_make_operation_argument_strict_s, data_make->cache_arguments.array[1]) == F_equal_to) {
+            flag |= 0x2;
+          }
+          else {
+            fake_print_message_section_operation_link_argument_unknown(data_make->data, data_make->error, data_make->cache_arguments.array[1]);
+
+            status = F_status_set_error(F_failure);
+          }
+        }
       }
 
-      status = fake_make_assure_inside_project(data_make, data_make->cache_arguments.array[1]);
+      status_file = fake_make_assure_inside_project(data_make, data_make->cache_arguments.array[data_make->cache_arguments.used - 1]);
 
-      if (F_status_is_error(status)) {
-        fake_print_message_section_operation_path_outside(data_make->data, data_make->error, F_status_set_fine(status), "fake_make_assure_inside_project", data_make->cache_path.used ? data_make->cache_path : data_make->cache_arguments.array[1]);
+      if (F_status_is_error(status_file)) {
+        fake_print_message_section_operation_path_outside(data_make->data, data_make->error, F_status_set_fine(status_file), "fake_make_assure_inside_project", data_make->cache_path.used ? data_make->cache_path : data_make->cache_arguments.array[data_make->cache_arguments.used - 1]);
 
-        if (F_status_set_fine(status) == F_false) return F_status_set_error(F_failure);
+        status = F_status_set_error(F_failure);
+      }
+      else {
+        if (!(flag & 0x1)) {
+          if (!data_make->cache_path.used || f_file_exists(data_make->cache_path, F_false) == F_true) {
+            fake_print_message_section_operation_link_point_exists(data_make->data, data_make->error, data_make->cache_arguments.array[data_make->cache_arguments.used - 1]);
+
+            status = F_status_set_error(F_failure);
+          }
+        }
+
+        if (f_path_is_absolute(data_make->cache_arguments.array[data_make->cache_arguments.used - 2]) == F_true) {
+          status_file = fake_make_assure_inside_project(data_make, data_make->cache_arguments.array[data_make->cache_arguments.used - 2]);
+
+          if (F_status_is_error(status_file)) {
+            fake_print_message_section_operation_path_outside(data_make->data, data_make->error, F_status_set_fine(status_file), "fake_make_assure_inside_project", data_make->cache_arguments.array[data_make->cache_arguments.used - 2]);
+
+            status = F_status_set_error(F_failure);
+          }
+
+          if ((flag & 0x2) && F_status_is_error_not(status_file)) {
+            if (f_file_exists(data_make->cache_arguments.array[data_make->cache_arguments.used - 2], F_false) != F_true) {
+              fake_print_message_section_operation_link_target_exists_not(data_make->data, data_make->error, data_make->cache_arguments.array[data_make->cache_arguments.used - 2]);
+
+              status = F_status_set_error(F_failure);
+            }
+          }
+        }
+
+        // The target path is relative to the point path so construct the path for performing checks.
+        else if (data_make->cache_arguments.array[data_make->cache_arguments.used - 2].used) {
+
+          // The cache_path contains the full path to the point file, save this so that the cache_path can be re-used.
+          f_char_t full_string[data_make->cache_path.used + 1];
+          f_string_static_t full = macro_f_string_static_t_initialize(full_string, 0, data_make->cache_path.used);
+
+          memcpy(full_string, data_make->cache_path.string, sizeof(f_char_t) * data_make->cache_path.used);
+          full_string[data_make->cache_path.used] = 0;
+
+          data_make->cache_path.used = 0;
+
+          status_file = f_file_name_directory(full, &data_make->cache_path);
+
+          if (F_status_is_error(status_file)) {
+            fll_error_file_print(data_make->error, F_status_set_fine(status_file), "f_file_name_directory", F_true, full, f_file_operation_analyze_s, fll_error_file_type_path_e);
+
+            status = F_status_set_error(F_failure);
+          }
+
+          if (F_status_is_error_not(status_file)) {
+            status_file = f_string_dynamic_append_assure(f_path_separator_s, &data_make->cache_path);
+
+            if (F_status_is_error(status_file)) {
+              fll_error_print(data_make->error, F_status_set_fine(status_file), "f_string_dynamic_append_assure", F_true);
+
+              status = F_status_set_error(F_failure);
+            }
+            else {
+              status_file = f_string_dynamic_append(data_make->cache_arguments.array[data_make->cache_arguments.used - 2], &data_make->cache_path);
+
+              if (F_status_is_error(status_file)) {
+                fll_error_print(data_make->error, F_status_set_fine(status_file), "f_string_dynamic_append", F_true);
+
+                status = F_status_set_error(F_failure);
+              }
+            }
+
+            if (F_status_is_error_not(status_file)) {
+
+              // The cache_path is used by fake_make_assure_inside_project(), so copy the contents into another buffer.
+              f_char_t target_string[data_make->cache_path.used + 1];
+              f_string_static_t target = macro_f_string_static_t_initialize(target_string, 0, data_make->cache_path.used);
+
+              memcpy(target_string, data_make->cache_path.string, sizeof(f_char_t) * data_make->cache_path.used);
+              target_string[data_make->cache_path.used] = 0;
+
+              status_file = fake_make_assure_inside_project(data_make, target);
+
+              if (F_status_is_error(status_file)) {
+                fake_print_message_section_operation_path_outside(data_make->data, data_make->error, F_status_set_fine(status_file), "fake_make_assure_inside_project", target);
+
+                status = F_status_set_error(F_failure);
+              }
+
+              if ((flag & 0x2) && F_status_is_error_not(status_file)) {
+                if (f_file_exists(target, F_false) != F_true) {
+                  fake_print_message_section_operation_link_target_exists_not(data_make->data, data_make->error, target);
+
+                  status = F_status_set_error(F_failure);
+                }
+              }
+            }
+          }
+        }
+        else {
+          if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
+            fll_print_format("%r%[%QTarget filename argument must not be an empty string.%]%r", data_make->error.to.stream, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context, f_string_eol_s);
+          }
+        }
       }
 
-      return F_none;
+      return status;
     }
 
     fake_print_error_requires_more_arguments(data_make);
