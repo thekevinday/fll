@@ -24,11 +24,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: f_directory_is().
- *   Errors (with error bit) from: f_file_clone().
- *   Errors (with error bit) from: f_file_copy()
- *   Errors (with error bit) from: fl_directory_clone().
- *   Errors (with error bit) from: fl_directory_copy().
+ *   F_failure (with error bit) on any error.
  *
  * @see f_directory_is()
  * @see f_file_clone()
@@ -53,10 +49,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: f_file_remove().
- *   Errors (with error bit) from: f_file_stat().
- *   Errors (with error bit) from: f_directory_remove().
- *   Errors (with error bit) from: f_directory_remove_custom().
+ *   F_failure (with error bit) on any error.
  *
  * @see f_file_remove()
  * @see f_file_stat()
@@ -89,11 +82,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: f_file_role_change().
- *   Errors (with error bit) from: fll_file_role_change_all().
- *
- *   Errors (with error bit) from: fake_make_assure_inside_project().
- *   Errors (with error bit) from: fake_make_get_id_group().
+ *   F_failure (with error bit) on any error.
  *
  * @see f_file_role_change()
  * @see fll_file_role_change_all()
@@ -134,7 +123,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: f_file_exists().
+ *   F_failure (with error bit) on any error.
  *
  * @see f_file_exists()
  */
@@ -153,7 +142,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: fl_conversion_dynamic_partial_to_unsigned_detect().
+ *   F_failure (with error bit) on any error.
  *
  * @see fl_conversion_dynamic_partial_to_unsigned_detect()
  */
@@ -175,9 +164,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: f_file_group_read().
- *
- *   Errors (with error bit) from: fake_make_get_id_group().
+ *   F_failure (with error bit) on any error.
  *
  * @see f_file_group_read()
  *
@@ -201,7 +188,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: f_file_mode_read().
+ *   F_failure (with error bit) on any error.
  *
  * @see f_file_mode_read()
  */
@@ -223,10 +210,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: f_file_mode_read().
- *   Errors (with error bit) from: f_file_mode_to_mode().
- *
- *   Errors (with error bit) from: fake_make_get_id_mode().
+ *   F_failure (with error bit) on any error.
  *
  * @see f_file_mode_read()
  * @see f_file_mode_to_mode()
@@ -251,9 +235,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: f_file_owner_read().
- *
- *   Errors (with error bit) from: fake_make_get_id_owner().
+ *   F_failure (with error bit) on any error.
  *
  * @see f_file_owner_read()
  *
@@ -290,10 +272,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: f_file_mode_determine().
- *   Errors (with error bit) from: f_file_mode_read().
- *   Errors (with error bit) from: f_file_mode_set().
- *   Errors (with error bit) from: fll_file_mode_set_all().
+ *   F_failure (with error bit) on any error.
  *
  * @see f_file_mode_determine()
  * @see f_file_mode_read()
@@ -315,9 +294,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: f_directory_is().
- *   Errors (with error bit) from: f_file_name_base().
- *   Errors (with error bit) from: fll_file_move().
+ *   F_failure (with error bit) on any error.
  *
  * @see f_directory_is()
  * @see f_file_name_base()
@@ -339,11 +316,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: f_file_role_change().
- *   Errors (with error bit) from: fll_file_role_change_all().
- *
- *   Errors (with error bit) from: fake_make_assure_inside_project().
- *   Errors (with error bit) from: fake_make_get_id_owner().
+ *   F_failure (with error bit) on any error.
  *
  * @see f_file_role_change()
  * @see fll_file_role_change_all()
@@ -364,9 +337,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: f_string_dynamic_resize().
- *   Errors (with error bit) from: f_string_dynamics_resize().
- *   Errors (with error bit) from: f_string_map_multis_resize().
+ *   F_failure (with error bit) on any error.
  *
  * @see f_string_dynamic_resize()
  * @see f_string_dynamics_resize()
@@ -388,8 +359,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: f_path_change().
- *   Errors (with error bit) from: f_string_dynamic_resize().
+ *   F_failure (with error bit) on any error.
  *
  * @see f_path_change()
  * @see f_string_dynamic_resize()
@@ -412,9 +382,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: fake_make_operate_process_buffer_escape().
- *   Errors (with error bit) from: f_string_dynamic_append().
- *   Errors (with error bit) from: f_string_dynamic_increase_by().
+ *   F_failure (with error bit) on any error.
  *
  * @see fake_make_operate_process_buffer_escape()
  * @see f_string_dynamic_append()
@@ -433,11 +401,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: f_path_change().
- *   Errors (with error bit) from: f_string_dynamic_append().
- *   Errors (with error bit) from: f_string_dynamics_increase_by().
- *
- *   Errors (with error bit) from: fake_make_assure_inside_project().
+ *   F_failure (with error bit) on any error.
  *
  * @see f_path_change()
  * @see f_string_dynamic_append()
@@ -459,8 +423,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: f_path_change_at().
- *   Errors (with error bit) from: f_string_dynamic_resize().
+ *   F_failure (with error bit) on any error.
  *
  * @see f_path_change_at()
  * @see f_string_dynamic_resize()
@@ -478,8 +441,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: f_directory_touch().
- *   Errors (with error bit) from: f_file_touch().
+ *   F_failure (with error bit) on any error.
  *
  * @see f_directory_touch()
  * @see f_file_touch()
@@ -498,9 +460,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: f_file_exists().
- *   Errors (with error bit) from: f_file_stream_open().
- *   Errors (with error bit) from: f_file_stream_write().
+ *   F_failure (with error bit) on any error.
  *
  * @see f_file_exists()
  * @see f_file_stream_open()
