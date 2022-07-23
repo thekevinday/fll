@@ -299,19 +299,7 @@ extern "C" {
     }
 
     if (state_process->operation == fake_make_operation_type_link_e) {
-      *status = f_file_link(data_make->cache_arguments.array[0], data_make->cache_arguments.array[1]);
-
-      if (F_status_is_error(*status)) {
-        fll_error_file_print(data_make->error, F_status_set_fine(*status), "f_file_link", F_true, data_make->cache_arguments.array[1], f_file_operation_link_s, fll_error_file_type_file_e);
-      }
-      else if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
-        flockfile(data_make->main->output.to.stream);
-
-        fl_print_format("Created symbolic link from '%[%Q%]", data_make->main->output.to.stream, data_make->main->context.set.notable, data_make->cache_arguments.array[1], data_make->main->context.set.notable);
-        fl_print_format("' to %[%Q%].%r", data_make->main->output.to.stream, data_make->main->context.set.notable, data_make->cache_arguments.array[0], data_make->main->context.set.notable, f_string_eol_s);
-
-        funlockfile(data_make->main->output.to.stream);
-      }
+      *status = fake_make_operate_process_type_link(data_make);
 
       return 0;
     }
