@@ -32,6 +32,7 @@ extern "C" {
  *
  * @return
  *   The return code of the execution process.
+ *
  *   This generally is only needed when F_child is returned, where this holds the return status of the child process.
  */
 #ifndef _di_fake_make_operate_process_

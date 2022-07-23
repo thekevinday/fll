@@ -13,6 +13,99 @@ extern "C" {
 #endif
 
 /**
+ * Perform the break operations process.
+ *
+ * @param data_make
+ *   All make related setting data, including data from the fakefile and the build settings file.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_failure (with error bit) on any error.
+ */
+#ifndef _di_fake_make_operate_process_type_break_
+  extern f_status_t fake_make_operate_process_type_break(fake_make_data_t * const data_make) F_attribute_visibility_internal_d;
+#endif // _di_fake_make_operate_process_type_break_
+
+/**
+ * Perform the build operations process.
+ *
+ * @param data_make
+ *   All make related setting data, including data from the fakefile and the build settings file.
+ *
+ * @return
+ *   F_interrupt (with error bit) on interrupt.
+ *
+ *   Success from: fake_make_operate_process_return().
+ *
+ *   Errors (with error bit) from: fake_make_operate_process_return().
+ *
+ * @see fake_build_operate()
+ * @see fake_make_operate_process_return()
+ */
+#ifndef _di_fake_make_operate_process_type_build_
+  extern f_status_t fake_make_operate_process_type_build(fake_make_data_t * const data_make) F_attribute_visibility_internal_d;
+#endif // _di_fake_make_operate_process_type_build_
+
+/**
+ * Perform the clean operations process.
+ *
+ * @param data_make
+ *   All make related setting data, including data from the fakefile and the build settings file.
+ *
+ * @return
+ *   F_interrupt (with error bit) on interrupt.
+ *
+ *   Success from: fake_make_operate_process_return().
+ *
+ *   Errors (with error bit) from: fake_make_operate_process_return().
+ *
+ * @see fake_clean_operate()
+ * @see fake_make_operate_process_return()
+ */
+#ifndef _di_fake_make_operate_process_type_clean_
+  extern f_status_t fake_make_operate_process_type_clean(fake_make_data_t * const data_make) F_attribute_visibility_internal_d;
+#endif // _di_fake_make_operate_process_type_clean_
+
+/**
+ * Perform the define operation process.
+ *
+ * @param data_make
+ *   All make related setting data, including data from the fakefile and the build settings file.
+ * @param status
+ *   The status code.
+ *
+ *   Success from: fake_execute().
+ *
+ *   Errors (with error bit) from: fake_execute().
+ *
+ * @return
+ *   The return code of the compile operation.
+ *
+ * @see fake_execute()
+ */
+#ifndef _di_fake_make_operate_process_type_compile_
+  extern int fake_make_operate_process_type_compile(fake_make_data_t * const data_make, f_status_t * const status) F_attribute_visibility_internal_d;
+#endif // _di_fake_make_operate_process_type_compile_
+
+/**
+ * Perform the if, and, and or operations process.
+ *
+ * @param data_make
+ *   All make related setting data, including data from the fakefile and the build settings file.
+ * @param state_process
+ *   The operation and if-condition states.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_failure (with error bit) on any error.
+ */
+#ifndef _di_fake_make_operate_process_type_condition_
+  extern f_status_t fake_make_operate_process_type_condition(fake_make_data_t * const data_make, fake_state_process_t * const state_process) F_attribute_visibility_internal_d;
+#endif // _di_fake_make_operate_process_type_condition_
+
+/**
  * Perform the copy and clone operation processes.
  *
  * @param data_make
@@ -38,6 +131,23 @@ extern "C" {
 #endif // _di_fake_make_operate_process_type_copy_
 
 /**
+ * Perform the define operation process.
+ *
+ * @param data_make
+ *   All make related setting data, including data from the fakefile and the build settings file.
+ *
+ * @return
+ *   Success from: f_environment_set().
+ *
+ *   Errors (with error bit) from: f_environment_set().
+ *
+ * @see f_environment_set()
+ */
+#ifndef _di_fake_make_operate_process_type_define_
+  extern f_status_t fake_make_operate_process_type_define(fake_make_data_t * const data_make) F_attribute_visibility_internal_d;
+#endif // _di_fake_make_operate_process_type_define_
+
+/**
  * Perform the delete and deletes operation processes.
  *
  * @param data_make
@@ -59,6 +169,23 @@ extern "C" {
 #ifndef _di_fake_make_operate_process_type_deletes_
   extern f_status_t fake_make_operate_process_type_deletes(fake_make_data_t * const data_make, const bool all) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_deletes_
+
+/**
+ * Perform the exit operation process.
+ *
+ * @param data_make
+ *   All make related setting data, including data from the fakefile and the build settings file.
+ *
+ * @return
+ *   F_none on unknown exit type (only success and failure are known).
+ *   F_signal_quit to designate exit on success.
+ *
+ *   F_failure (with error bit) on any error.
+ *   F_signal_quit (with error bit) to designate exit on failure.
+ */
+#ifndef _di_fake_make_operate_process_type_exit_
+  extern f_status_t fake_make_operate_process_type_exit(fake_make_data_t * const data_make) F_attribute_visibility_internal_d;
+#endif // _di_fake_make_operate_process_type_exit_
 
 /**
  * Perform the fail operation process.
@@ -261,6 +388,28 @@ extern "C" {
 #endif // _di_fake_make_operate_process_type_if_parameter_
 
 /**
+ * Perform the index operation process.
+ *
+ * @param data_make
+ *   All make related setting data, including data from the fakefile and the build settings file.
+ * @param status
+ *   F_child on child process returning.
+ *
+ *   Success from: fake_make_operate_process_return().
+ *
+ *   Errors (with error bit) from: fake_make_operate_process_return().
+ *
+ * @return
+ *   The return code of the index operation.
+ *
+ * @see fake_execute()
+ * @see fake_make_operate_process_return()
+ */
+#ifndef _di_fake_make_operate_process_type_index_
+  extern int fake_make_operate_process_type_index(fake_make_data_t * const data_make, f_status_t * const status) F_attribute_visibility_internal_d;
+#endif // _di_fake_make_operate_process_type_index_
+
+/**
  * Perform the link operation processes.
  *
  * @param data_make
@@ -320,6 +469,29 @@ extern "C" {
 #ifndef _di_fake_make_operate_process_type_move_
   extern f_status_t fake_make_operate_process_type_move(fake_make_data_t * const data_make) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_move_
+
+/**
+ * Perform the operate operation process.
+ *
+ * @param data_make
+ *   All make related setting data, including data from the fakefile and the build settings file.
+ * @param section_stack
+ *   The current operation stack.
+ * @param status
+ *   The status code.
+ *
+ *   F_none on success.
+ *
+ *   F_failure (with error bit) on any error.
+ *
+ * @return
+ *   The return code of the section operation.
+ *
+ * @see fake_make_operate_section()
+ */
+#ifndef _di_fake_make_operate_process_type_operate_
+  extern int fake_make_operate_process_type_operate(fake_make_data_t * const data_make, f_array_lengths_t * const section_stack, f_status_t * const status) F_attribute_visibility_internal_d;
+#endif // _di_fake_make_operate_process_type_operate_
 
 /**
  * Perform the owner and owners operation processes.
@@ -408,6 +580,26 @@ extern "C" {
 #ifndef _di_fake_make_operate_process_type_print_
   extern f_status_t fake_make_operate_process_type_print(fake_make_data_t * const data_make) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_type_print_
+
+/**
+ * Perform the skeleton operation process.
+ *
+ * @param data_make
+ *   All make related setting data, including data from the fakefile and the build settings file.
+ *
+ * @return
+ *   F_interrupt (with error bit) on interrupt.
+ *
+ *   Success from: fake_make_operate_process_return().
+ *
+ *   Errors (with error bit) from: fake_make_operate_process_return().
+ *
+ * @see fake_make_operate_process_return()
+ * @see fake_skeleton_operate()
+ */
+#ifndef _di_fake_make_operate_process_type_skeleton_
+  extern f_status_t fake_make_operate_process_type_skeleton(fake_make_data_t * const data_make) F_attribute_visibility_internal_d;
+#endif // _di_fake_make_operate_process_type_skeleton_
 
 /**
  * Perform the to operation process.
