@@ -261,6 +261,23 @@ extern "C" {
 #endif // _di_fake_make_operate_process_type_if_parameter_
 
 /**
+ * Perform the link operation processes.
+ *
+ * @param data_make
+ *   All make related setting data, including data from the fakefile and the build settings file.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_failure (with error bit) on any error.
+ *
+ * @see f_file_link()
+ */
+#ifndef _di_fake_make_operate_process_type_link_
+  extern f_status_t fake_make_operate_process_type_link(fake_make_data_t * const data_make) F_attribute_visibility_internal_d;
+#endif // _di_fake_make_operate_process_type_link_
+
+/**
  * Perform the mode and modes operation processes.
  *
  * @param data_make

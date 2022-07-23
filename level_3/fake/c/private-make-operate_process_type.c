@@ -1043,6 +1043,32 @@ extern "C" {
   }
 #endif // _di_fake_make_operate_process_type_if_parameter_
 
+#ifndef _di_fake_make_operate_process_type_link_
+  f_status_t fake_make_operate_process_type_link(fake_make_data_t * const data_make) {
+
+    f_status_t status = F_none;
+
+    status = f_file_link(data_make->cache_arguments.array[0], data_make->cache_arguments.array[1]);
+
+    if (F_status_is_error(status)) {
+      fll_error_file_print(data_make->error, F_status_set_fine(status), "f_file_link", F_true, data_make->cache_arguments.array[1], f_file_operation_link_s, fll_error_file_type_file_e);
+
+      return F_status_set_error(F_failure);
+    }
+
+    if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
+      flockfile(data_make->main->output.to.stream);
+
+      fl_print_format("Created symbolic link from '%[%Q%]", data_make->main->output.to.stream, data_make->main->context.set.notable, data_make->cache_arguments.array[1], data_make->main->context.set.notable);
+      fl_print_format("' to %[%Q%].%r", data_make->main->output.to.stream, data_make->main->context.set.notable, data_make->cache_arguments.array[0], data_make->main->context.set.notable, f_string_eol_s);
+
+      funlockfile(data_make->main->output.to.stream);
+    }
+
+    return F_none;
+  }
+#endif // _di_fake_make_operate_process_type_link_
+
 #ifndef _di_fake_make_operate_process_type_modes_
   f_status_t fake_make_operate_process_type_modes(fake_make_data_t * const data_make, const bool all) {
 
