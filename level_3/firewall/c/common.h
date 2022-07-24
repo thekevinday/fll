@@ -400,7 +400,7 @@ extern "C" {
       macro_f_console_parameter_t_initialize(0, 0, firewall_command_show_s.string, F_false, f_console_type_other_e), \
     }
 
-  #define firewall_total_parameters_d 15
+  #define firewall_total_parameters_d 14
 #endif // _di_firewall_defines_
 
 #ifdef __cplusplus
