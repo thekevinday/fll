@@ -15,26 +15,6 @@ extern "C" {
 #ifndef _di_controller_print_help_
   f_status_t controller_print_help(controller_main_t * const main) {
 
-    const f_string_static_t *path_setting = main->as_init ? main->default_path_setting_init : main->default_path_setting;
-    const f_string_static_t *path_socket = main->as_init ? main->default_path_socket_init : main->default_path_socket;
-    const f_string_static_t *path_pid = main->as_init ? main->default_path_pid_init : main->default_path_pid;
-
-    const int specify_custom_pid_length = 55 + path_pid->used + f_path_separator_s.used + controller_default_s.used + main->default_path_pid_suffix->used;
-    const int specify_path_settings_length = 50 + path_setting->used + f_path_separator_s.used;
-    const int specify_path_socket_length = 55 + path_socket->used + f_path_separator_s.used + controller_default_s.used + main->default_path_socket_suffix->used;
-
-    char specify_custom_pid[specify_custom_pid_length + 1];
-    char specify_path_settings[specify_path_settings_length + 1];
-    char specify_path_socket[specify_path_socket_length + 1];
-
-    specify_custom_pid[specify_custom_pid_length] = 0;
-    specify_path_settings[specify_path_settings_length] = 0;
-    specify_path_socket[specify_path_socket_length] = 0;
-
-    sprintf(specify_custom_pid, "            Specify a custom pid file path, such as '%s%s%s%s'.", path_pid->string, f_path_separator_s.string, controller_default_s.string, main->default_path_pid_suffix->string);
-    sprintf(specify_path_settings, "       Specify a custom settings path, such as '%s%s'.", path_setting->string, f_path_separator_s.string);
-    sprintf(specify_path_socket, "         Specify a custom socket file path, such as '%s%s%s%s'.", path_socket->string, f_path_separator_s.string, controller_default_s.string, main->default_path_socket_suffix->string);
-
     controller_lock_print(main->output.to, 0);
 
     fll_program_print_help_header(main->output.to, main->context, *main->program_name_long, controller_program_version_s);
@@ -55,10 +35,10 @@ extern "C" {
     fll_program_print_help_option(main->output.to, main->context, controller_short_daemon_s, controller_long_daemon_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "         Run in daemon only mode (do not process the entry).");
     fll_program_print_help_option(main->output.to, main->context, controller_short_init_s, controller_long_init_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "           The program will run as an init replacement.");
     fll_program_print_help_option(main->output.to, main->context, controller_short_interruptible_s, controller_long_interruptible_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "  Designate that this program can be interrupted by a signal.");
-    fll_program_print_help_option(main->output.to, main->context, controller_short_pid_s, controller_long_pid_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, specify_custom_pid);
-    fll_program_print_help_option(main->output.to, main->context, controller_short_settings_s, controller_long_settings_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, specify_path_settings);
+    fll_program_print_help_option(main->output.to, main->context, controller_short_pid_s, controller_long_pid_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "            Specify a custom pid file path, such as 'controller/run/default.pid'.");
+    fll_program_print_help_option(main->output.to, main->context, controller_short_settings_s, controller_long_settings_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       Specify a custom settings path, such as 'controller/'.");
     fll_program_print_help_option(main->output.to, main->context, controller_short_simulate_s, controller_long_simulate_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       Run as a simulation.");
-    fll_program_print_help_option(main->output.to, main->context, controller_short_socket_s, controller_long_socket_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, specify_path_socket);
+    fll_program_print_help_option(main->output.to, main->context, controller_short_socket_s, controller_long_socket_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "         Specify a custom socket file path, such as 'controller/run/default.socket'.");
     fll_program_print_help_option(main->output.to, main->context, controller_short_uninterruptible_s, controller_long_uninterruptible_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Designate that this program cannot be interrupted by a signal.");
     fll_program_print_help_option(main->output.to, main->context, controller_short_validate_s, controller_long_validate_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       Validate the settings (entry and rules) without running (does not simulate).");
 
