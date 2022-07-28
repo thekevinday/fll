@@ -3,10 +3,10 @@
 # license: open-standard-license-1.0
 #
 # This file (assumed to be named iki.txt) can be more easily read using the following iki_read commands:
-#   iki_read iki.txt -w
+#   iki_read iki.txt +Q -w -WW character '"' '"' code '"' '"'
 #
 # To read the "IKI Specifications" section of this file, use this command sequence:
-#   fss_basic_list_read iki.txt -cn "IKI Specifications" | iki_read -w
+#   fss_basic_list_read iki.txt -cn "IKI Specifications" | iki_read +Q -w -WW character '"' '"' code '"' '"'
 #
 
 IKI Specifications:
@@ -20,22 +20,22 @@ IKI Specifications:
   The IKI format will use code:"iki-0000" to represent an IKI with no explicitly defined vocabulary.
   Whereas code:"iki-0001" and beyond represent a specific IKI vocabulary.
 
-  A potential IKI variable name starts on word (or code:"_", code:"-", code:"+") characters.
-  White space and non-word (and non code:"_", code:"-", code:"+") character punctuations may not exist as part of the variable name.
-  The only Unicode dash-like characters allowed as a "dash" are those intended to connect, such as the Unicode hyphens (code:"U+2010" and code:"U+2011").
+  A potential IKI variable name starts on word (or character:"_", character:"-", character:"+") characters.
+  White space and non-word (and non character:"_", character:"-", character:"+") character punctuations may not exist as part of the variable name.
+  The only Unicode dash-like characters allowed as a "dash" are those intended to connect, such as the Unicode hyphens (unicode:"U+2010" and unicode:"U+2011").
 
-  Any valid IKI data may be escaped to make it treated as non-IKI data by prepending a backslash code:"\" before the colon code:":" that is before the opening quote (single or double).
+  Any potential IKI data must be escaped to make it treated as non-IKI data by prepending a backslash character:"\\" before the colon character:":" that is before the opening quote (single or double). Potential IKI data refers to any valid IKI sequence without considering the closing single quote character:"'" or closing double quote character:'"'.
 
-  Unicode punctuation connector characters are supported just like code:"_", except when they connect outside the current line (such as code:"U+FE33" code:"︳").
-  Unicode invisible punctuations (such as invisible plus: code:"U+2064") are not considered a punctuations in this standard (because they a zero-width characters), therefore they are not to be considered a valid code:"_", code:"-", or code:"+" Unicode equivalents.
+  Unicode punctuation connector characters are supported just like character:"_", except when they connect outside the current line (such as unicode:"U+FE33" character:"︳").
+  Unicode invisible punctuations (such as invisible plus: unicode:"U+2064") are not considered a punctuations in this standard (because they a zero-width characters), therefore they are not to be considered a valid character:"_", character:"-", or character:"+" Unicode equivalents.
 
   Key\:
-    code:"\o" = any printable word character, including code:"_", code:"-", code:"+" (and Unicode equivalents).
+    code:"\o" = any printable word character, including character:"_", character:"-", character:"+" (and Unicode equivalents).
     code:"\c" = any character, including white space and non-printing, and any delimited quote (used as the opening quote) or a any quote (undelimited) not used as the opening quote.
-    code:"\q" = either a single quote code:"'" or a double quote code:'"'.
+    code:"\q" = either a single quote character:"'" or a double quote character:'"'.
     code:"\x" = any character.
-    code:"\W" = any non-word character, discluding code:"_", code:"-", code:"+" (and Unicode equivalents).
-    code:"\e" = an optional escape sequence of any number of backslashes, such as code:"\\".
+    code:"\W" = any non-word character, discluding character:"_", character:"-", character:"+" (and Unicode equivalents).
+    code:"\e" = an optional escape sequence of any number of backslashes, such as character:"\\".
     code:"*" = zero or more occurrences.
     code:"~" = one or more occurrences, or zero if at start of file.
 
@@ -49,15 +49,15 @@ IKI Specifications:
     code:""
 
   Example\:
-    code:'# fss-000c iki-0000
+    code\:'# fss-000c iki-0000
 
-    This is my sentence, anything can go here but sometimes I want to emphasis:"emphasize some text".
+    This is my sentence, anything can go here but sometimes I want to emphasis\:"emphasize some text".
 
-    Other times I want to render a url such as this example url: url:\'http://www.example.com/url with space/\'.
+    Other times I want to render a url such as this example url: url\:'http://www.example.com/url with space/'.
 
     There are no comments, except for maybe the FSS header (which would not resolve to any IKI syntax anyway).
 
-    Quotes may be included, such as: code:"const char *string = \"My \\\"quoted\\\" C string.\";".
+    Quotes may be included, such as: code\:"const char *string = \"My \\\"quoted\\\" C string.\";".
 
     The following emphasis\:"is escaped to not be treated as IKI data".'
 

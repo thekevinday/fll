@@ -94,11 +94,10 @@ extern "C" {
 
     f_string_range_t found_vocabulary = f_string_range_t_initialize;
     f_array_length_t found_content = 0;
-    f_array_length_t vocabulary_slash_first = range->start;
+    f_array_length_t vocabulary_slash_first = 0;
     const f_array_length_t delimits_used = data->delimits.used;
 
     uint8_t quote = 0;
-    bool vocabulary_delimited = F_false;
 
     do {
 
@@ -133,7 +132,6 @@ extern "C" {
         if (status == F_true) {
           found_vocabulary.start = range->start;
           found_vocabulary.stop = range->start;
-          vocabulary_delimited = F_false;
 
           status = f_utf_buffer_increment(*buffer, range, 1);
           if (F_status_is_error(status)) break;
@@ -210,14 +208,18 @@ extern "C" {
             }
 
             if (separator_found) {
+
+              // Save delimit for a would-be valid IKI that is now delimited.
               if (buffer->string[range->start] == f_iki_syntax_quote_single_s.string[0] || buffer->string[range->start] == f_iki_syntax_quote_double_s.string[0]) {
-                status = F_true;
-                vocabulary_delimited = F_true;
-                quote = buffer->string[range->start];
+                status = f_array_lengths_increase(state.step_small, &data->delimits);
+                if (F_status_is_error(status)) break;
+
+                data->delimits.array[data->delimits.used++] = vocabulary_slash_first;
+
+                ++range->start;
               }
-              else {
-                status = F_next;
-              }
+
+              status = F_next;
 
               break;
             }
@@ -277,7 +279,6 @@ extern "C" {
 
       if (status == F_next) {
         quote = 0;
-        vocabulary_delimited = F_false;
 
         continue;
       }
@@ -305,20 +306,6 @@ extern "C" {
           }
 
           if (buffer->string[range->start] == quote) {
-
-            // This is a valid vocabulary name and content, but if it is delimited, save the delimit and ignore.
-            if (vocabulary_delimited) {
-              status = f_array_lengths_increase(state.step_small, &data->delimits);
-              if (F_status_is_error(status)) break;
-
-              data->delimits.array[data->delimits.used++] = vocabulary_slash_first;
-
-              vocabulary_delimited = F_false;
-              quote = 0;
-
-              break;
-            }
-
             status = f_string_ranges_increase(state.step_small, &data->variable);
             if (F_status_is_error(status)) break;
 
@@ -385,43 +372,28 @@ extern "C" {
 
                 // Valid content's ending quote is not delimited, save and return.
                 if (content_slash_total % 2 == 0) {
+                  status = f_string_ranges_increase(state.step_small, &data->variable);
+                  if (F_status_is_error(status)) break;
 
-                  // This is a valid vocabulary name and content, but if it is delimited, save the delimit and ignore.
-                  if (vocabulary_delimited) {
-                    status = f_array_lengths_increase(state.step_small, &data->delimits);
-                    if (F_status_is_error(status)) break;
+                  status = f_string_ranges_increase(state.step_small, &data->vocabulary);
+                  if (F_status_is_error(status)) break;
 
-                    data->delimits.array[data->delimits.used++] = vocabulary_slash_first;
+                  status = f_string_ranges_increase(state.step_small, &data->content);
+                  if (F_status_is_error(status)) break;
 
-                    vocabulary_delimited = F_false;
-                    quote = 0;
+                  data->variable.array[data->variable.used].start = found_vocabulary.start;
+                  data->variable.array[data->variable.used++].stop = range->start;
 
-                    ++range->start;
-                  }
-                  else {
-                    status = f_string_ranges_increase(state.step_small, &data->variable);
-                    if (F_status_is_error(status)) break;
+                  data->vocabulary.array[data->vocabulary.used].start = found_vocabulary.start;
+                  data->vocabulary.array[data->vocabulary.used++].stop = found_vocabulary.stop;
 
-                    status = f_string_ranges_increase(state.step_small, &data->vocabulary);
-                    if (F_status_is_error(status)) break;
+                  data->content.array[data->content.used].start = found_content;
+                  data->content.array[data->content.used++].stop = range->start - 1;
 
-                    status = f_string_ranges_increase(state.step_small, &data->content);
-                    if (F_status_is_error(status)) break;
+                  if (++range->start > range->stop) return F_none_stop;
+                  if (range->start >= buffer->used) return F_none_eos;
 
-                    data->variable.array[data->variable.used].start = found_vocabulary.start;
-                    data->variable.array[data->variable.used++].stop = range->start;
-
-                    data->vocabulary.array[data->vocabulary.used].start = found_vocabulary.start;
-                    data->vocabulary.array[data->vocabulary.used++].stop = found_vocabulary.stop;
-
-                    data->content.array[data->content.used].start = found_content;
-                    data->content.array[data->content.used++].stop = range->start - 1;
-
-                    if (++range->start > range->stop) return F_none_stop;
-                    if (range->start >= buffer->used) return F_none_eos;
-
-                    return F_none;
-                  }
+                  return F_none;
                 }
 
                 break;
