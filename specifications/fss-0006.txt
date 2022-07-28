@@ -3,16 +3,16 @@
 # license: open-standard-license-1.0
 #
 # This file (assumed to be named fss-0006.txt) can be more easily read using the following iki_read commands:
-#   iki_read fss-0006.txt -w
+#   iki_read fss-0006.txt +Q -w -WW character '"' '"' code '"' '"'
 #
 # To read the "Featureless Settings Specification: 0006 - Somewhat Extended List" section of this file, use this command sequence:
-#   fss_basic_list_read fss-0006.txt -cn "Featureless Settings Specification: 0006 - Somewhat Extended List" | iki_read -w
+#   fss_basic_list_read fss-0006.txt -cn "Featureless Settings Specification: 0006 - Somewhat Extended List" | iki_read +Q -w -WW character '"' '"' code '"' '"'
 #
 
 Featureless Settings Specification: 0006 - Somewhat Extended List:
-  This is a code:"fss-0003 (Extended List)" whose Content is then processed as code:"fss-0000 (Basic)".
+  This is a code:"FSS-0003 (Extended List)" whose Content is then processed as code:"FSS-0000 (Basic)".
 
-  All code:"fss-0003 (Extended List)" escapes are applied before any code:"fss-0000 (Basic)" is identified.
+  All code:"FSS-0003 (Extended List)" escapes are applied before any code:"FSS-0000 (Basic)" is identified.
 
   See the file:"fss-0000.txt" and file:"fss-0003.txt" specification files for details on the syntax rules.
 

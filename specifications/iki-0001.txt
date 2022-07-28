@@ -3,10 +3,10 @@
 # license: open-standard-license-1.0
 #
 # This file (assumed to be named iki-0001.txt) can be more easily read using the following iki_read commands:
-#   iki_read iki-0001.txt -w -rrr abbreviation-URI URI abbreviation-URL URL abbreviation-URN URN
+#   iki_read iki-0001.txt +Q -w -rrr abbreviation-URI URI abbreviation-URL URL abbreviation-URN URN -WW character '"' '"' code '"' '"'
 #
 # To read the "IKI Specification: 0001 - Basic" section of this file, use this command sequence:
-#   fss_basic_list_read iki-0001.txt -cn "IKI Specification: 0001 - Basic" | iki_read -w -rrr abbreviation-URI URI abbreviation-URL URL abbreviation-URN URN
+#   fss_basic_list_read iki-0001.txt -cn "IKI Specification: 0001 - Basic" | iki_read +Q -w -rrr abbreviation-URI URI abbreviation-URL URL abbreviation-URN URN -WW character '"' '"' code '"' '"'
 #
 
 IKI Specification: 0001 - Basic:

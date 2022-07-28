@@ -3,14 +3,14 @@
 # license: open-standard-license-1.0
 #
 # This file (assumed to be named fss-000f.txt) can be more easily read using the following iki_read commands:
-#   iki_read fss-000f.txt -w
+#   iki_read fss-000f.txt +Q -w -WW character '"' '"' code '"' '"'
 #
 # To read the "Featureless Settings Specification: 000f - Simple Packet" section of this file, use this command sequence:
-#   fss_basic_list_read fss-000f.txt -cn "Featureless Settings Specification: 000f - Simple Packet" | iki_read -w
+#   fss_basic_list_read fss-000f.txt -cn "Featureless Settings Specification: 000f - Simple Packet" | iki_read +Q -w -WW character '"' '"' code '"' '"'
 #
 
 Featureless Settings Specification: 000f - Simple Packet:
-  This is a network packet format that contains code:"fss-000e (Payload)" within it.
+  This is a network packet format that contains code:"FSS-000e (Payload)" within it.
 
   The Simple Packet structure is described in blocks, of which are structured in bytes.
 
@@ -42,9 +42,9 @@ Featureless Settings Specification: 000f - Simple Packet:
   The size represents number of bytes in the file.
   The Control Block is 1 byte long and the Size Block is 4 bytes long and so the maximum available size is (2^32)-6.
 
-  The Payload Block is not defined by this standard of that that it exists and should be in code:"fss-000e (Payload)" format.
-  The code:"fss-000e (Payload)" may be represented in either string format or binary format.
-  The code:"fss-000e (Payload)" may contain multiple emphasis:"header"(s) but may only contain a single emphasis:"payload".
+  The Payload Block is not defined by this standard of that that it exists and should be in code:"FSS-000e (Payload)" format.
+  The code:"FSS-000e (Payload)" may be represented in either string format or binary format.
+  The code:"FSS-000e (Payload)" may contain multiple emphasis:"header"(s) but may only contain a single emphasis:"payload".
   With this in mind, it is recommended that only a single emphasis:"header" be supported in the Payload Block.
 
   See the file:"fss-000e.txt" specification file for details on the syntax rules for the Payload Block.

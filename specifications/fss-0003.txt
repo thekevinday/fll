@@ -3,19 +3,19 @@
 # license: open-standard-license-1.0
 #
 # This file (assumed to be named fss-0003.txt) can be more easily read using the following iki_read commands:
-#   iki_read fss-0003.txt -w
+#   iki_read fss-0003.txt +Q -w -WW character '"' '"' code '"' '"'
 #
 # To read the "Featureless Settings Specification: 0003 - Extended List" section of this file, use this command sequence:
-#   fss_basic_list_read fss-0003.txt -cn "Featureless Settings Specification: 0003 - Extended List" | iki_read -w
+#   fss_basic_list_read fss-0003.txt -cn "Featureless Settings Specification: 0003 - Extended List" | iki_read +Q -w -WW character '"' '"' code '"' '"'
 #
 
 Featureless Settings Specification: 0003 - Extended List:
   Each Object starts at the beginning of a line and white space to the left of the Object is not treated as an object.
-  An open-brace code:"{" (code:"U+007B") followed by any white space until a newline terminates a possible valid Object.
-  An Object is not considered fully valid until a valid close-brace code:"}" (code:"U+007D") is found, designating the end of the Content.
+  An open-brace character:"{" (unicode:"U+007B") followed by any white space until a newline terminates a possible valid Object.
+  An Object is not considered fully valid until a valid close-brace character:"}" (unicode:"U+007D") is found, designating the end of the Content.
   Non-white space printable characters may not follow the open-brace of a valid Object.
 
-  Content is represented as a single Content column of every line following a valid object until the end of file (or string) or until a non-delimited close-brace code:"}".
+  Content is represented as a single Content column of every line following a valid object until the end of file (or string) or until a non-delimited close-brace character:"}".
   Any Content column that could be interpreted as an end of Content must be delimited if it should be part of the Content.
   White space may follow a valid close-brace but a terminating newline must be present to designate a valid end of Content.
 
@@ -32,8 +32,8 @@ Featureless Settings Specification: 0003 - Extended List:
 
   Key\:
     code:"\s" = White space, except newline.
-    code:"\o" = Any printable character, except unescaped code:"{" (code:"U+007B").
-    code:"\l" = Any printable character or white space, except unescaped code:"}" (code:"U+007D").
+    code:"\o" = Any printable character, except unescaped character:"{" (unicode:"U+007B").
+    code:"\l" = Any printable character or white space, except unescaped character:"}" (unicode:"U+007D").
     code:"\c" = Either white space or printable, including newline, that is not interpretable as an Object.
     code:"\n" = Newline.
     code:"*" = Zero or more occurrences.

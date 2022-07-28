@@ -3,24 +3,24 @@
 # license: open-standard-license-1.0
 #
 # This file (assumed to be named fss-000d.txt) can be more easily read using the following iki_read commands:
-#   iki_read fss-000d.txt -w -r abbreviation-FSS FSS
+#   iki_read fss-000d.txt +Q -w -r abbreviation-FSS FSS -WW character '"' '"' code '"' '"'
 #
 # To read the "Featureless Settings Specification: 000D - Basic Rule" section of this file, use this command sequence:
-#   fss_basic_list_read fss-000d.txt -cn "Featureless Settings Specification: 000D - Basic Rule" | iki_read -w -r abbreviation-FSS FSS
+#   fss_basic_list_read fss-000d.txt -cn "Featureless Settings Specification: 000D - Basic Rule" | iki_read +Q -w -r abbreviation-FSS FSS -WW character '"' '"' code '"' '"'
 #
 
 Featureless Settings Specification: 000D - Basic Rule:
-  This is a special case that follows code:"fss-0002 (Basic List)", and different abbreviation-FSS:"Featureless Settings Specifications" formats inside this code:"fss-0002 (Basic List)".
-  This code:"fss-0002 (Basic List)" is considered the "Outer List" and the Content of this Outer List is considered the "Inner Content".
+  This is a special case that follows code:"FSS-0002 (Basic List)", and different abbreviation-FSS:"Featureless Settings Specifications" formats inside this code:"FSS-0002 (Basic List)".
+  This code:"FSS-0002 (Basic List)" is considered the "Outer List" and the Content of this Outer List is considered the "Inner Content".
 
-  The Inner Content may be any of the following abbreviation-FSS:"Featureless Settings Specifications" formats: code:"fss-0000 (Basic)", code:"fss-0001 (Extended)", and code:"fss-0003 (Extended List)".
+  The Inner Content may be any of the following abbreviation-FSS:"Featureless Settings Specifications" formats: code:"FSS-0000 (Basic)", code:"FSS-0001 (Extended)", and code:"FSS-0003 (Extended List)".
   The way in which each format is determined is first to see if the Inner Content Object would be a valid Extended List Object.
-  If the Inner Content Object is not a valid code:"fss-0003 (Extended List)" Object, then check to see if it is an code:"fss-0000 (Basic)" or code:"fss-0001 (Extended)" Object.
+  If the Inner Content Object is not a valid code:"FSS-0003 (Extended List)" Object, then check to see if it is an code:"FSS-0000 (Basic)" or code:"FSS-0001 (Extended)" Object.
 
-  The code:"fss-0000 (Basic)" and code:"fss-0001 (Extended)" Objects have the same format for Object names but the code:"fss-0003 (Extended List)" Object is slightly different.
-  Anything that would match an code:"fss-0003 (Extended List)" Object must therefore be an code:"fss-0003 (Extended List)" Object.
+  The code:"FSS-0000 (Basic)" and code:"FSS-0001 (Extended)" Objects have the same format for Object names but the code:"FSS-0003 (Extended List)" Object is slightly different.
+  Anything that would match an code:"FSS-0003 (Extended List)" Object must therefore be an code:"FSS-0003 (Extended List)" Object.
 
-  This supports the use of code:"iki-0000 (Unrestricted)" but only within the Content of the outermost code:"fss-0002 (Basic List)".
+  This supports the use of code:"iki-0000 (Unrestricted)" but only within the Content of the outermost code:"FSS-0002 (Basic List)".
   That is to say, the IKI is only processed once.
   Additional restrictions on the use of IKI syntax is allowed if explicitly defined in the implementing specification.
   This additional restriction may also include using a more restrictive IKI syntax, such as code:"iki-0001 (Basic)".

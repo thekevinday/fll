@@ -3,19 +3,19 @@
 # license: open-standard-license-1.0
 #
 # This file (assumed to be named fss-000e.txt) can be more easily read using the following iki_read commands:
-#   iki_read fss-000e.txt -w -rr abbreviation-FLL FLL abbreviation-EOF EOF
+#   iki_read fss-000e.txt +Q -w -rr abbreviation-FLL FLL abbreviation-EOF EOF -WW character '"' '"' code '"' '"'
 #
 # To read the "Featureless Settings Specification: 000e - Payload" section of this file, use this command sequence:
-#   fss_basic_list_read fss-000e.txt -cn "Featureless Settings Specification: 000e - Payload" | iki_read -w -r abbreviation-FLL FLL abbreviation-EOF EOF
+#   fss_basic_list_read fss-000e.txt -cn "Featureless Settings Specification: 000e - Payload" | iki_read +Q -w -r abbreviation-FLL FLL abbreviation-EOF EOF -WW character '"' '"' code '"' '"'
 #
 
 Featureless Settings Specification: 000e - Payload:
-  This is a code:"fss-0002 (Basic List)" with two required objects\:
+  This is a code:"FSS-0002 (Basic List)" with two required objects\:
   1) emphasis:"header".
   2) emphasis:"payload".
 
   The emphasis:"header"\:
-  - The emphasis:"header"'s Content is of type code:"fss-0001 (Extended)".
+  - The emphasis:"header"'s Content is of type code:"FSS-0001 (Extended)".
   - The emphasis:"header" is recommended to have the Objects emphasis:"length", emphasis:"status", emphasis:"part", and emphasis:"total".
   - The recommended emphasis:"length" represents the size of the emphasis:"payload".
   - The recommended emphasis:"part" represents a single part of a set of packets for when the data being transmitted is split across multiple payloads.
@@ -29,7 +29,7 @@ Featureless Settings Specification: 000e - Payload:
   - The emphasis:"payload" is recommended to have its size designated in some manner in the emphasis:"header" (such as with the recommended emphasis:"length").
   - The emphasis:"payload" is terminated by the abbreviation-EOF:"End of File" character or by the recommended emphasis:"length" header.
   - The emphasis:"payload" may be empty (length may be zero), but the list Object emphasis:"payload" must still exist.
-  - Nothing in the emphasis:"payload" may be considered a valid list Object by the outer code:"fss-0002 (Basic List)" and therefore escaping is unnecessary (No further processing by the outer code:"fss-0002 (Basic List)" is allowed at this point).
+  - Nothing in the emphasis:"payload" may be considered a valid list Object by the outer code:"FSS-0002 (Basic List)" and therefore escaping is unnecessary (No further processing by the outer code:"FSS-0002 (Basic List)" is allowed at this point).
   - Comments in the emphasis:"payload" are not considered comments and are instead considered part of the payload, as-is.
   - Essentially, the emphasis:"payload" should be treated as binary data embedded in a text file.
 

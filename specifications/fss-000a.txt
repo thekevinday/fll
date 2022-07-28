@@ -3,14 +3,14 @@
 # license: open-standard-license-1.0
 #
 # This file (assumed to be named fss-000a.txt) can be more easily read using the following iki_read commands:
-#   iki_read fss-000a.txt -w
+#   iki_read fss-000a.txt +Q -w -WW character '"' '"' code '"' '"'
 #
 # To read the "Featureless Settings Specification: 000A - Extended Reverse Mapping" section of this file, use this command sequence:
-#   fss_basic_list_read fss-000a.txt -cn "Featureless Settings Specification: 000A - Extended Reverse Mapping" | iki_read -w
+#   fss_basic_list_read fss-000a.txt -cn "Featureless Settings Specification: 000A - Extended Reverse Mapping" | iki_read +Q -w -WW character '"' '"' code '"' '"'
 #
 
 Featureless Settings Specification: 000A - Extended Reverse Mapping:
-  This is based off of code:"fss-0001 (Extended)", except the Object is at the end of the line.
+  This is based off of code:"FSS-0001 (Extended)", except the Object is at the end of the line.
 
   Each Object starts at the end of a line and white space to the left of the Object is not treated as an object.
   White space separates an Object from the Content.

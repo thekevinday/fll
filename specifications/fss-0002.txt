@@ -3,15 +3,15 @@
 # license: open-standard-license-1.0
 #
 # This file (assumed to be named fss-0002.txt) can be more easily read using the following iki_read commands:
-#   iki_read fss-0002.txt -w
+#   iki_read fss-0002.txt +Q -w -WW character '"' '"' code '"' '"'
 #
 # To read the "Featureless Settings Specification: 0002 - Basic List" section of this file, use this command sequence:
-#   fss_basic_list_read fss-0002.txt -cn "Featureless Settings Specification: 0002 - Basic List" | iki_read -w
+#   fss_basic_list_read fss-0002.txt -cn "Featureless Settings Specification: 0002 - Basic List" | iki_read +Q -w -WW character '"' '"' code '"' '"'
 #
 
 Featureless Settings Specification: 0002 - Basic List:
   Each Object starts at the beginning of a line and white space to the left of the Object is not treated as an object.
-  A colon code:":" (code:"U+003A") followed by any white space until a newline terminates a valid Object.
+  A colon character:":" (unicode:"U+003A") followed by any white space until a newline terminates a valid Object.
   Non-white space printable characters may not follow the colon of a valid Object.
 
   Content is represented as a single Content column of every line following a valid object until the end of file (or string) or until the next valid Object is found.
@@ -24,8 +24,8 @@ Featureless Settings Specification: 0002 - Basic List:
 
   Key\:
     code:"\s" = White space, except newline.
-    code:"\o" = Any printable character, except unescaped code:":" (code:"U+003A").
-    code:"\l" = Any printable character or white space, except unescaped code:":" (code:"U+003A").
+    code:"\o" = Any printable character, except unescaped character:":" (unicode:"U+003A").
+    code:"\l" = Any printable character or white space, except unescaped character:":" (unicode:"U+003A").
     code:"\c" = Either white space or printable, including newline, that not interpretable as an Object.
     code:"\n" = Newline.
     code:"*" = Zero or more occurrences.
