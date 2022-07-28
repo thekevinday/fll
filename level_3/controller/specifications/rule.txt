@@ -4,11 +4,11 @@
 #
 
 Rule Specification:
-  The Rule files follow the FSS-000D (Basic Rule) format with IKI-0000 (Unrestricted IKI).
+  The Rule files follow the FSS-000D (Basic Rule) format with IKI-0000 (Unrestricted).
 
   A Rule file name is expected to have the file extension ".rule".
 
-  For each Rule file:
+  For each Rule file\:
     - The outer most part is a FSS-0002 (Basic List).
     - The Basic List Object is considered the "Rule Type".
     - The Basic List Content is determined by the specific "Rule Type".
@@ -21,11 +21,11 @@ Rule Specification:
     - Each Setting Content are the "Setting Values".
 
   The Rule Types\:
-    - "command": FSS-0003 (Extended List) or FSS-0001 (Extended).
-    - "script": FSS-0003 (Extended List) or FSS-0001 (Extended).
-    - "service": FSS-0003 (Extended List) or FSS-0001 (Extended).
-    - "settings": (Required) FSS-0001 (Extended).
-    - "utility": FSS-0003 (Extended List) or FSS-0001 (Extended).
+    - "command": Follows either FSS-0003 (Extended List) or FSS-0001 (Extended).
+    - "script": Follows either FSS-0003 (Extended List) or FSS-0001 (Extended).
+    - "service": Follows either FSS-0003 (Extended List) or FSS-0001 (Extended).
+    - "settings": Is required and follows either  FSS-0001 (Extended).
+    - "utility": Follows either FSS-0003 (Extended List) or FSS-0001 (Extended).
 
   For the above Rule Types, "settings" may be specified only once whereas the others may be specifed multiple times.
   The "settings" Rule Type is always processed first, regardless of position.
@@ -45,8 +45,8 @@ Rule Specification:
     - "on": Four Content, the first being a Rule Action, the second being "need", "want", or "wish", the third being a partial path, and the fourth being a Rule file name without ".rule" extension.
     - "parameter": Two Content, the first Content must be a case-sensitive valid IKI name and the second being an IKI value.
     - "path": One Content representing a valid PATH environment string (such as "/bin:/sbin:/usr/bin").
-    - "scheduler": One or Two Content representing a scheduler name and the optional numeric priority (Any whole number inclusively between 0 and 99).
-    - "timeout": One or Two content with the first being one of "exit", "start", "stop", or "kill" and the (optional) second Content being a positive whole number or 0.
+    - "scheduler": One or two Content representing a scheduler name and the optional numeric priority (Any whole number inclusively between 0 and 99).
+    - "timeout": One or two content with the first being one of "exit", "start", "stop", or "kill" and the (optional) second Content being a positive whole number or 0.
     - "user": One Content representing a user name or user id.
 
   The "command" and "script" Rule Types allow the following the FSS-0001 (Extended)\:

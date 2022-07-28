@@ -17,7 +17,7 @@ Actions Documentation:
     The Freeze Action is an extension of a Control Group.
     This is internal to the "controller" program and is not customizable via any Rule file.
     For a customizable "freeze"-like capability, look into the Pause and Resume Actions.
-    This is complemented by the Thaw Action.
+    This is the complement of the Thaw Action.
 
     This designates that a processes Control Group is to be frozen.
     All Rules (or any process not controlled by the "controller") that is within the same Control Group will be frozen.
@@ -73,5 +73,5 @@ Actions Documentation:
     (@todo consider instead designing this around the Control Groups instead of a "rule".)
     (This documentation will likely change with consideration to the above @todo once this gets implemented.)
 
-    This must not attempt to freeze (or unfreeze) the Control Group that the "controller" belongs to.
+    This must not attempt to thaw (or unthaw) the Control Group that the "controller" belongs to.
     Therefore, if a Rule does not specify a Control Group, then it is likely that the Thaw Action will be unsupported for that Rule/Control Group.

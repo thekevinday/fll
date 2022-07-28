@@ -8,7 +8,7 @@ Entry Specification:
 
   An Entry file name is expected to have the file extension ".entry".
 
-  For each Entry file:
+  For each Entry file\:
     - The outer most part is a FSS-0002 (Basic List).
     - The Basic List Object is considered the "Item".
     - The Basic List Content are considered the "Actions".
@@ -16,13 +16,8 @@ Entry Specification:
     - Each Action Object is the "Action Name".
     - Each Action Content are the "Action Parameters".
 
-  The Items:
+  The Items\:
     - "main": required.
-
-    - "command": optional.
-       Any valid Object represents a command name with\:
-         The first Content represents the file path (without any leading/trailing slashes and without file extension).
-         The second Content represent the basename of the command file.
 
     - "settings": optional, Actions may be one of\:
       - "control": One to two Content.
@@ -38,7 +33,7 @@ Entry Specification:
       - "pid_file": Exactly one Content that is a relative or absolute path to a pid file.
       - "session": Exactly one Content that is one of "new" or "same".
       - "show": Exactly one Content that is one of "normal" or "init".
-      - "timeout": One or Two content with the first being one of "exit", "start", "stop", or "kill" and the (optional) second Content being a positive whole number or 0.
+      - "timeout": One or two content with the first being one of "exit", "start", "stop", or "kill" and the (optional) second Content being a positive whole number or 0.
 
     The Entry file may have any other valid Item Objects, but only the above are reserved.
 
@@ -135,7 +130,7 @@ Entry Specification:
           - "require"
           - "wait"
 
-      - "timeout": One or Two Content.
+      - "timeout": One or two Content.
         The first being one of\:
           - "exit"
           - "start"

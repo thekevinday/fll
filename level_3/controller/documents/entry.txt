@@ -11,7 +11,7 @@ Entry Documentation:
 
   The "main" Item Object is always executed first (Therefore "main" is both reserved and required).
   All other Basic List Objects are not executed unless either an "item" or a "failsafe" specifies a valid Item name.
-  Execution of all Items are top-down.
+  Execution of all Items is top-down.
 
   - The "settings" item Object\:
     Represents Entry settings and is not an "item" that can be executed.

@@ -8,7 +8,7 @@ Exit Specification:
 
   An Exit file name is expected to have the file extension ".exit".
 
-  For each Exit file:
+  For each Exit file\:
     - The outer most part is a FSS-0002 (Basic List).
     - The Basic List Object is considered the "Item".
     - The Basic List Content are considered the "Actions".
@@ -16,10 +16,10 @@ Exit Specification:
     - Each Action Object is the "Action Name".
     - Each Action Content are the "Action Parameters".
 
-  The Items:
+  The Items\:
     - "main": required.
 
-    - "settings": optional, Actions may be one of:
+    - "settings": optional, Actions may be one of\:
       - "pid": Exactly one Content that is one of "disable", "require", or "ready".
       - "session": Exactly one Content that is one of  "new" or "same".
       - "show": Exactly one Content that is one of  "normal" or "init".
