@@ -12,7 +12,7 @@ Exit Documentation:
   An Exit is a special variation or subset of an Entry.
 
   - The "settings" Item Object\:
-    Represents settings and is not an "item" that can be executed.
+    Represents Exit settings and is not an "item" that can be executed.
     A number of settings are supported, but if this Item Object is not specified, then defaults are used.
     The following settings are available: "pid" and "show".
 
@@ -68,7 +68,7 @@ Exit Documentation:
 
     - The "execute" Item Action\:
       Execute into the specified program.
-      On successfull execution, the controller program will no longer be running and will be replaced with the designated program.
+      On successful execution, the controller program will no longer be running and will be replaced with the designated program.
       This Item Action is only supported when operating in "program" mode.
 
     - The "failsafe" Item Action\:

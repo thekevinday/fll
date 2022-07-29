@@ -42,7 +42,7 @@ Packet Documentation:
       The "at" condition designates that the kexec, reboot, or shutdown is to begin once a specific date and time is reached by the system clock.
       The "in" condition designates that the kexec, reboot, or shutdown is to begin once a specific amount of time is passed by the system clock since the execution of this command started.
 
-    For these "time" conditions, different units of time should be supported, such as "seconds", "days", "years" as standard time, Time or UNIX Time (Epoch Time).
+    For these "time" conditions, different units of time should be supported, such as "seconds", "days", "years" as standard time, Time, or UNIX Time (Epoch Time).
 
     The normal "controller" payload commands are any valid Rule Action that performs some action.
     This does not include Actions that provide some setting or configuration (such as "with_pid").
@@ -70,4 +70,4 @@ Packet Documentation:
     The "kexec" is for booting into another kernel, which may effectively be the same as a "reboot" ("kexec" is currently neither supported nor implemented).
     The "reboot" is for rebooting the machine (currently not implemented).
     The "shutdown" is for shutting down the machine (currently not implemented).
-    These three commands are configurable to fire off based on conditions\:
+    These three commands are configurable to fire off based on conditions.

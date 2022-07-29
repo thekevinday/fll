@@ -82,12 +82,12 @@ Entry Documentation:
       For "ready", when "ready" create a PID file, display error on failure and then fail (does not check if PID file exists).
 
     - The "pid_file" setting\:
-      When "pid" is not disabed this represents the path to the PID file.
+      When "pid" is not disabled this represents the path to the PID file.
       If -p or --pid is passed to the controller program, then this value is ignored in favor of the value passed along the command line.
 
     - The "session" setting\:
       Represents the default way in which child processes are executed.
-      This default can be overriden by individual Rules.
+      This default can be overridden by individual Rules.
       For "new", Execute Rule processes in a new session setting the process group to the executed process' id (making the executed process a "controlling terminal").
       For "same", Execute Rule processes in the same session where the process group is set to the parent process id.
 
@@ -102,7 +102,7 @@ Entry Documentation:
       Represents the default timeouts for the Entry.
       See the "timeout" Action below for details.
 
-  - The "item" item Object\:
+  - The "main" item Object\:
     Each "item" supports the following Action Names: "consider", "execute", "failsafe", "freeze", "item", "kill", "pause", "reload", "restart", "ready", "resume", "start", "stop", and "timeout".
     Of those types, the following are considered a "rule" Action: "freeze", "kill", "pause", "reload", "restart", "resume", "start", "stop", and "thaw".
 
@@ -115,7 +115,7 @@ Entry Documentation:
 
     - The "execute" Item Action\:
       Execute into the specified program.
-      On successfull execution, the controller program will no longer be running and will be replaced with the designated program.
+      On successful execution, the controller program will no longer be running and will be replaced with the designated program.
       This Item Action is only supported when operating in "program" mode.
 
     - The "failsafe" Item Action\:
@@ -187,7 +187,6 @@ Entry Documentation:
       For "start", this represents the number of MegaTime to wait after starting some Rule before assuming something went wrong and the Rule is returned as failed.
       For "stop", this represents the number of MegaTime to wait after stopping some Rule before assuming something went wrong and the Rule is returned as failed.
       If the second Content is not specified, then this disables the type (prevents the specified timeout action).
-
       For "exit", this represents the number of MegaTime to wait when the Controller program is exiting (such as having received a terminate signal).
       In this case, a terminate signal is sent to all child processes.
       The "exit" timeout represents the amount of time to wait after sending the terminate signal before sending a kill signal to each child process still running.
@@ -211,7 +210,7 @@ Entry Rule Documentation:
       - "require": Designates that this Rule must succeed or trigger execution of failsafe.
       - "wait": Designates that this Rule will not execute until all other Actions before this (including "asynchronous" ones) finish executing (in a top-down manner).
 
-  The full path to the "rule" is relative to the settings, such that if the controller Rule settings are found in "/etc/controller/rules/", then for a directory called "[directory]" and a Rule base name of "[base_name]", the resulting path would be: "/etc/controller/rules/[directory]/[base_name].rule"
+  The full path to the "rule" is relative to the settings, such that if the controller Rule settings are found in "/etc/controller/rules/", then for a directory called "[directory]" and a Rule base name of "[base_name]", the resulting path would be: "/etc/controller/rules/[directory]/[base_name].rule".
 
   It is important to note that for any given "rule", execution within that "rule" may be internally asynchronous (even if the "rule" is synchronous).
   For example, a service that is often called a daemon will execute in the background.

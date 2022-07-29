@@ -56,7 +56,7 @@ Rule Documentation:
 
   - The "limit" setting\:
     The first parameter must be one of: "as", "core", "cpu", "data", "fsize", "locks", "memlock", "msgqueue", "nice", "nofile", "nproc", "rss", "rtprio", "rttime", "sigpending", or "stack".
-    The second parameter repesents the soft limit.
+    The second parameter represents the soft limit.
     The third parameter represents the hard limit.
     This may be specified multiply times, but only once for each type.
 
@@ -128,7 +128,7 @@ Rule Documentation:
 
       - The second Content represents when to run this re-run is triggered, which is either "success" (return code of 0) or "failure" (return code is not 0).
 
-      - The third Content and more represent additional options for fine tuning how the re-run is perforrmed\:
+      - The third Content and more represent additional options for fine tuning how the re-run is Performed\:
         When "delay", followed by a number of MegaTime (MT) (equivalent to milliseconds) in which to wait before attempting the re-run.
         When "max", followed by a positive number or the number 0 designating the maximum number of re-runs to perform.
         When "reset", the "max" re-run counter is reset for the opposite re-run when this re-run is triggered, such as\:
