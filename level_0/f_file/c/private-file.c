@@ -547,7 +547,7 @@ extern "C" {
   }
 #endif // !defined(_di_f_file_open_) || !defined(_di_f_file_copy_)
 
-#if !defined(_di_f_file_open_at_) || !defined(_di_f_file_copy_at_)
+#if !defined(_di_f_file_copy_at_) || !defined(_di_f_file_clone_at_) || !defined(_di_f_file_open_at_) || !defined(_di_f_file_copy_at_)
   f_status_t private_f_file_open_at(const int at_id, const f_string_static_t path, const mode_t mode, f_file_t * const file) {
 
     file->id = openat(at_id, path.string, file->flag, mode);
@@ -579,7 +579,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // !defined(_di_f_file_open_at_) || !defined(_di_f_file_copy_at_)
+#endif // !defined(_di_f_file_copy_at_) || !defined(_di_f_file_clone_at_) || !defined(_di_f_file_open_at_) || !defined(_di_f_file_copy_at_)
 
 #if !defined(_di_f_file_role_change_) || !defined(_di_f_file_copy_)
   f_status_t private_f_file_role_change(const f_string_static_t path, const uid_t uid, const gid_t gid, const bool dereference) {

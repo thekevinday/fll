@@ -747,11 +747,14 @@ extern "C" {
  *
  * @see openat()
  *
+ * @see f_file_copy_at()
+ * @see f_file_clone_at()
  * @see f_file_open_at()
+ * @see f_file_copy_at()
  */
-#if !defined(_di_f_file_open_at_)
+#if !defined(_di_f_file_copy_at_) || !defined(_di_f_file_clone_at_) || !defined(_di_f_file_open_at_) || !defined(_di_f_file_copy_at_)
   extern f_status_t private_f_file_open_at(const int at_id, const f_string_static_t path, const mode_t mode, f_file_t * const file) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_file_open_at_)
+#endif // !defined(_di_f_file_copy_at_) || !defined(_di_f_file_clone_at_) || !defined(_di_f_file_open_at_) || !defined(_di_f_file_copy_at_)
 
 /**
  * Private implementation of f_file_role_change().
