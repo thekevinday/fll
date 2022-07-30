@@ -1,0 +1,46 @@
+# fss-0002
+#
+# license: cc-by-sa-4.0
+#
+
+Disabling Functions:
+  The Featureless Linux Library is designed in a modular fassion despite the primary language not being an object-oriented language.
+  This is loosely refered to as emphasis:"functional-oriented programming".
+
+  The resulting library can, and should, be trimmed down to contain only what is needed.
+  There are two ways this is done\:
+  1) The abbreviation:"FLL" is broken up into individual projects and can be perceived as a conceptial emphasis:"class object".
+  2) Each individual public function within each project is wrapped in if-def logic to designate that this function is to be disabled.
+
+  This approach allows for someone to override the existing function by easily replacing the abbreviation:"FLL" function with their own.
+  This also allows for removing, or disabling, functions entirely.
+
+  The focus of this is on the disabling of functions.
+
+  Each public function has its abbreviation:"API" exposed via a header file.
+  This header file describes the list of public functions that are available.
+  Looking at each header file, one can find each function is wrapped in special ifdef macros.
+  The macros are of the form code:"_di_XXX_" where code:"XXX" represents the function name.
+  One can then pass code:"-D_di_XXX_" to the compiler in order to disable the function code:"XXX".
+
+  Take the code:"f_file" project, for example.
+  The function code:"f_file_access" can be disabled by passing code:"-D_di_f_file_access_".
+  The code:"-D_di_f_file_access_" can be added to the code:"data/build/settings" file like this: code:"defines -D_di_f_file_access_".
+
+  One good use of this is to disable all of the functions that are not needed for some environment.
+  Lets say that only the Featureless Make program is needed.
+  All other functions in the abbreviation:"FLL" can be removed.
+  The compiled binaries should be analyzed and the dependencies can be extracted.
+
+  Something like the following needs to be done to get the list of functions from the strong:"fake" program\:
+  script:"
+    rm -f unsorted.txt ; nm -Dgu -f p libfake.so | grep -oP '^(f|fl|fll)_[^\s]+' | sed -e '/_s$/d' -e '/_c$/d' >> unsorted.txt
+    sort unsorted.txt | uniq > sorted.txt
+    nm -Dg --defined-only -f p libfll.so | grep -oP '^(f|fl|fll)_[^\s]+' | sed -e '/_s$/d' -e '/_c$/d' > unsorted_fll.txt
+    sort unsorted_fll.txt | uniq > sorted_fll.txt
+    rm -f unused.txt ; for i in $(cat sorted_fll.txt) ; do if [[ $(grep -o "^$i$" sorted.txt) == "" ]] ; then echo $i >> unused.txt ; fi ; done
+    echo -n "defines" > defines.txt ; for i in $(cat unused.txt) ; do echo -n " -D_di_${i}_" >> defines.txt ; done
+  "
+
+  The above example script may require more work.
+  There is planned work to provide a script to assist in performing this task.
