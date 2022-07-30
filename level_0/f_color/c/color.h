@@ -50,11 +50,11 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_color_save_1()
- *   Errors (with error bit) from: f_color_save_2()
+ *   Errors (with error bit) from: f_string_dynamic_increase_by()
  *
- * @see f_color_save_1()
- * @see f_color_save_2()
+ * @see memcpy()
+ *
+ * @see f_string_dynamic_increase_by()
  */
 #ifndef _di_f_color_load_context_
   extern f_status_t f_color_load_context(const bool use_light_colors, f_color_context_t * const context);
@@ -80,10 +80,10 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_string_dynamic_append()
  *   Errors (with error bit) from: f_string_dynamic_increase_by()
  *
- * @see f_string_dynamic_append()
+ * @see memcpy()
+ *
  * @see f_string_dynamic_increase_by()
  */
 #ifndef _di_f_color_save_1_
@@ -103,6 +103,7 @@ extern "C" {
  *   A color to assign.
  * @param color2
  *   A second color to assign.
+ *   Ignored if color1.used is 0.
  * @param buffer
  *   The string to save the colors to.
  *   The buffer will become NULL terminated after the appended string length.
@@ -112,10 +113,10 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_string_dynamic_append()
  *   Errors (with error bit) from: f_string_dynamic_increase_by()
  *
- * @see f_string_dynamic_append()
+ * @see memcpy()
+ *
  * @see f_string_dynamic_increase_by()
  */
 #ifndef _di_f_color_save_2_
@@ -135,8 +136,10 @@ extern "C" {
  *   A color to assign.
  * @param color2
  *   A second color to assign.
+ *   Ignored if color1.used is 0.
  * @param color3
  *   A third color to assign.
+ *   Ignored if color1.used or color2.used is 0.
  * @param buffer
  *   The string to save the colors to.
  *   The buffer will become NULL terminated after the appended string length.
@@ -146,10 +149,10 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_string_dynamic_append()
  *   Errors (with error bit) from: f_string_dynamic_increase_by()
  *
- * @see f_string_dynamic_append()
+ * @see memcpy()
+ *
  * @see f_string_dynamic_increase_by()
  */
 #ifndef _di_f_color_save_3_
@@ -169,10 +172,13 @@ extern "C" {
  *   A color to assign.
  * @param color2
  *   A second color to assign.
+ *   Ignored if color1.used is 0.
  * @param color3
  *   A third color to assign.
+ *   Ignored if color1.used or color2.used is 0.
  * @param color4
  *   A fourth color to assign.
+ *   Ignored if color1.used, color2.used, or color3.used is 0.
  * @param buffer
  *   The string to save the colors to.
  *   The buffer will become NULL terminated after the appended string length.
@@ -182,10 +188,10 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_string_dynamic_append()
  *   Errors (with error bit) from: f_string_dynamic_increase_by()
  *
- * @see f_string_dynamic_append()
+ * @see memcpy()
+ *
  * @see f_string_dynamic_increase_by()
  */
 #ifndef _di_f_color_save_4_
@@ -207,12 +213,16 @@ extern "C" {
  *   A color to assign.
  * @param color2
  *   A second color to assign.
+ *   Ignored if color1.used is 0.
  * @param color3
  *   A third color to assign.
+ *   Ignored if color1.used or color2.used is 0.
  * @param color4
  *   A fourth color to assign.
+ *   Ignored if color1.used, color2.used, or color3.used is 0.
  * @param color5
  *   A fifth color to assign.
+ *   Ignored if color1.used, color2.used, color3.used, or color4.used is 0.
  * @param buffer
  *   The string to save the colors to.
  *   The buffer will become NULL terminated after the appended string length.
@@ -222,10 +232,10 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_string_dynamic_append()
  *   Errors (with error bit) from: f_string_dynamic_increase_by()
  *
- * @see f_string_dynamic_append()
+ * @see memcpy()
+ *
  * @see f_string_dynamic_increase_by()
  */
 #ifndef _di_f_color_save_5_

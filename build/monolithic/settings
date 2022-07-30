@@ -21,7 +21,7 @@ build_libraries -lc -lcap
 
 build_sources_library level_0/account.c level_0/private-account.c
 build_sources_library level_0/capability.c
-build_sources_library level_0/color.c level_0/color/common.c
+build_sources_library level_0/color.c level_0/private-color.c level_0/color/common.c
 build_sources_library level_0/console.c level_0/console/common.c
 build_sources_library level_0/control_group.c level_0/control_group/common.c
 build_sources_library level_0/conversion.c level_0/private-conversion.c level_0/conversion/common.c

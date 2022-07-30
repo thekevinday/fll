@@ -1,4 +1,5 @@
 #include "color.h"
+#include "private-color.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -22,35 +23,35 @@ extern "C" {
       }
     }
 
-    f_status_t status = f_color_save_1(context->format, context->list.reset, &context->reset);
+    f_status_t status = private_f_color_save_1(context->format, context->list.reset, &context->reset);
 
     if (F_status_is_error_not(status)) {
-      status = f_color_save_1(context->format, context->list.yellow, &context->warning);
+      status = private_f_color_save_1(context->format, context->list.yellow, &context->warning);
     }
 
     if (F_status_is_error_not(status)) {
-      status = f_color_save_2(context->format, context->list.bold, context->list.red, &context->error);
+      status = private_f_color_save_2(context->format, context->list.bold, context->list.red, &context->error);
     }
 
     if (F_status_is_error_not(status)) {
-      status = f_color_save_2(context->format, context->list.bold, context->list.green, &context->success);
+      status = private_f_color_save_2(context->format, context->list.bold, context->list.green, &context->success);
     }
 
     if (F_status_is_error_not(status)) {
-      status = f_color_save_1(context->format, context->list.bold, &context->notable);
+      status = private_f_color_save_1(context->format, context->list.bold, &context->notable);
     }
 
     if (use_light_colors) {
       if (F_status_is_error_not(status)) {
-        status = f_color_save_2(context->format, context->list.bold, context->list.blue, &context->title);
+        status = private_f_color_save_2(context->format, context->list.bold, context->list.blue, &context->title);
       }
 
       if (F_status_is_error_not(status)) {
-        status = f_color_save_1(context->format, context->list.blue, &context->important);
+        status = private_f_color_save_1(context->format, context->list.blue, &context->important);
       }
 
       if (F_status_is_error_not(status)) {
-        status = f_color_save_1(context->format, context->list.purple, &context->standout);
+        status = private_f_color_save_1(context->format, context->list.purple, &context->standout);
       }
 
       if (F_status_is_error_not(status)) {
@@ -59,15 +60,15 @@ extern "C" {
     }
     else {
       if (F_status_is_error_not(status)) {
-        status = f_color_save_2(context->format, context->list.bold, context->list.yellow, &context->title);
+        status = private_f_color_save_2(context->format, context->list.bold, context->list.yellow, &context->title);
       }
 
       if (F_status_is_error_not(status)) {
-        status = f_color_save_2(context->format, context->list.bold, context->list.green, &context->important);
+        status = private_f_color_save_2(context->format, context->list.bold, context->list.green, &context->important);
       }
 
       if (F_status_is_error_not(status)) {
-        status = f_color_save_1(context->format, context->list.green, &context->standout);
+        status = private_f_color_save_1(context->format, context->list.green, &context->standout);
       }
 
       if (F_status_is_error_not(status)) {
@@ -105,6 +106,8 @@ extern "C" {
 
       context->set.warning.before = &context->warning;
       context->set.warning.after = &context->reset;
+
+      status = F_none;
     }
 
     return status;
@@ -117,32 +120,7 @@ extern "C" {
       if (!buffer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_status_t status = F_none;
-
-    status = f_string_dynamic_increase_by(format.begin.used + format.end.used + color1.used + 1, buffer);
-    if (F_status_is_error(status)) return status;
-
-    if (format.begin.used) {
-      memcpy(buffer->string + buffer->used, format.begin.string, sizeof(f_char_t) * format.begin.used);
-
-      buffer->used += format.begin.used;
-    }
-
-    if (color1.used) {
-      memcpy(buffer->string + buffer->used, color1.string, sizeof(f_char_t) * color1.used);
-
-      buffer->used += color1.used;
-    }
-
-    if (format.end.used) {
-      memcpy(buffer->string + buffer->used, format.end.string, sizeof(f_char_t) * format.end.used);
-
-      buffer->used += format.end.used;
-    }
-
-    buffer->string[buffer->used] = 0;
-
-    return F_none;
+    return private_f_color_save_1(format, color1, buffer);
   }
 #endif // _di_f_color_save_1_
 
@@ -152,44 +130,7 @@ extern "C" {
       if (!buffer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_status_t status = F_none;
-
-    status = f_string_dynamic_increase_by(format.begin.used + format.medium.used + format.end.used + color1.used + color2.used + 1, buffer);
-    if (F_status_is_error(status)) return status;
-
-    if (format.begin.used) {
-      memcpy(buffer->string + buffer->used, format.begin.string, sizeof(f_char_t) * format.begin.used);
-
-      buffer->used += format.begin.used;
-    }
-
-    if (color1.used) {
-      memcpy(buffer->string + buffer->used, color1.string, sizeof(f_char_t) * color1.used);
-
-      buffer->used += color1.used;
-    }
-
-    if (format.medium.used) {
-      memcpy(buffer->string + buffer->used, format.medium.string, sizeof(f_char_t) * format.medium.used);
-
-      buffer->used += format.medium.used;
-    }
-
-    if (color2.used) {
-      memcpy(buffer->string + buffer->used, color2.string, sizeof(f_char_t) * color2.used);
-
-      buffer->used += color2.used;
-    }
-
-    if (format.end.used) {
-      memcpy(buffer->string + buffer->used, format.end.string, sizeof(f_char_t) * format.end.used);
-
-      buffer->used += format.end.used;
-    }
-
-    buffer->string[buffer->used] = 0;
-
-    return F_none;
+    return private_f_color_save_2(format, color1, color2, buffer);
   }
 #endif // _di_f_color_save_2_
 
@@ -199,45 +140,37 @@ extern "C" {
       if (!buffer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_status_t status = F_none;
-
-    status = f_string_dynamic_increase_by(format.begin.used + (format.medium.used * 2) + format.end.used + color1.used + color2.used + color3.used + 1, buffer);
+    f_status_t status = f_string_dynamic_increase_by(format.begin.used + (format.medium.used * 2) + format.end.used + color1.used + color2.used + color3.used + 1, buffer);
     if (F_status_is_error(status)) return status;
-
-    if (format.begin.used) {
-      memcpy(buffer->string + buffer->used, format.begin.string, sizeof(f_char_t) * format.begin.used);
-
-      buffer->used += format.begin.used;
-    }
 
     if (color1.used) {
       memcpy(buffer->string + buffer->used, color1.string, sizeof(f_char_t) * color1.used);
 
       buffer->used += color1.used;
-    }
 
-    if (format.medium.used) {
-      memcpy(buffer->string + buffer->used, format.medium.string, sizeof(f_char_t) * format.medium.used);
+      if (color2.used) {
+        if (format.medium.used) {
+          memcpy(buffer->string + buffer->used, format.medium.string, sizeof(f_char_t) * format.medium.used);
 
-      buffer->used += format.medium.used;
-    }
+          buffer->used += format.medium.used;
+        }
 
-    if (color2.used) {
-      memcpy(buffer->string + buffer->used, color2.string, sizeof(f_char_t) * color2.used);
+        memcpy(buffer->string + buffer->used, color2.string, sizeof(f_char_t) * color2.used);
 
-      buffer->used += color2.used;
-    }
+        buffer->used += color2.used;
 
-    if (format.medium.used) {
-      memcpy(buffer->string + buffer->used, format.medium.string, sizeof(f_char_t) * format.medium.used);
+        if (color3.used) {
+          if (format.medium.used) {
+            memcpy(buffer->string + buffer->used, format.medium.string, sizeof(f_char_t) * format.medium.used);
 
-      buffer->used += format.medium.used;
-    }
+            buffer->used += format.medium.used;
+          }
 
-    if (color3.used) {
-      memcpy(buffer->string + buffer->used, color3.string, sizeof(f_char_t) * color3.used);
+          memcpy(buffer->string + buffer->used, color3.string, sizeof(f_char_t) * color3.used);
 
-      buffer->used += color3.used;
+          buffer->used += color3.used;
+        }
+      }
     }
 
     if (format.end.used) {
@@ -258,57 +191,49 @@ extern "C" {
       if (!buffer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_status_t status = F_none;
-
-    status = f_string_dynamic_increase_by(format.begin.used + (format.medium.used * 3) + format.end.used + color1.used + color2.used + color3.used + color4.used + 1, buffer);
+    f_status_t status = f_string_dynamic_increase_by(format.begin.used + (format.medium.used * 3) + format.end.used + color1.used + color2.used + color3.used + color4.used + 1, buffer);
     if (F_status_is_error(status)) return status;
-
-    if (format.begin.used) {
-      memcpy(buffer->string + buffer->used, format.begin.string, sizeof(f_char_t) * format.begin.used);
-
-      buffer->used += format.begin.used;
-    }
 
     if (color1.used) {
       memcpy(buffer->string + buffer->used, color1.string, sizeof(f_char_t) * color1.used);
 
       buffer->used += color1.used;
-    }
 
-    if (format.medium.used) {
-      memcpy(buffer->string + buffer->used, format.medium.string, sizeof(f_char_t) * format.medium.used);
+      if (color2.used) {
+        if (format.medium.used) {
+          memcpy(buffer->string + buffer->used, format.medium.string, sizeof(f_char_t) * format.medium.used);
 
-      buffer->used += format.medium.used;
-    }
+          buffer->used += format.medium.used;
+        }
 
-    if (color2.used) {
-      memcpy(buffer->string + buffer->used, color2.string, sizeof(f_char_t) * color2.used);
+        memcpy(buffer->string + buffer->used, color2.string, sizeof(f_char_t) * color2.used);
 
-      buffer->used += color2.used;
-    }
+        buffer->used += color2.used;
 
-    if (format.medium.used) {
-      memcpy(buffer->string + buffer->used, format.medium.string, sizeof(f_char_t) * format.medium.used);
+        if (color3.used) {
+          if (format.medium.used) {
+            memcpy(buffer->string + buffer->used, format.medium.string, sizeof(f_char_t) * format.medium.used);
 
-      buffer->used += format.medium.used;
-    }
+            buffer->used += format.medium.used;
+          }
 
-    if (color3.used) {
-      memcpy(buffer->string + buffer->used, color3.string, sizeof(f_char_t) * color3.used);
+          memcpy(buffer->string + buffer->used, color3.string, sizeof(f_char_t) * color3.used);
 
-      buffer->used += color3.used;
-    }
+          buffer->used += color3.used;
 
-    if (format.medium.used) {
-      memcpy(buffer->string + buffer->used, format.medium.string, sizeof(f_char_t) * format.medium.used);
+          if (color4.used) {
+            if (format.medium.used) {
+              memcpy(buffer->string + buffer->used, format.medium.string, sizeof(f_char_t) * format.medium.used);
 
-      buffer->used += format.medium.used;
-    }
+              buffer->used += format.medium.used;
+            }
 
-    if (color4.used) {
-      memcpy(buffer->string + buffer->used, color4.string, sizeof(f_char_t) * color4.used);
+            memcpy(buffer->string + buffer->used, color4.string, sizeof(f_char_t) * color4.used);
 
-      buffer->used += color4.used;
+            buffer->used += color4.used;
+          }
+        }
+      }
     }
 
     if (format.end.used) {
@@ -329,9 +254,7 @@ extern "C" {
       if (!buffer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_status_t status = F_none;
-
-    status = f_string_dynamic_increase_by(format.begin.used + (format.medium.used * 4) + format.end.used + color1.used + color2.used + color3.used + color4.used + color5.used + 1, buffer);
+    f_status_t status = f_string_dynamic_increase_by(format.begin.used + (format.medium.used * 4) + format.end.used + color1.used + color2.used + color3.used + color4.used + color5.used + 1, buffer);
     if (F_status_is_error(status)) return status;
 
     if (format.begin.used) {
@@ -344,54 +267,54 @@ extern "C" {
       memcpy(buffer->string + buffer->used, color1.string, sizeof(f_char_t) * color1.used);
 
       buffer->used += color1.used;
-    }
 
-    if (format.medium.used) {
-      memcpy(buffer->string + buffer->used, format.medium.string, sizeof(f_char_t) * format.medium.used);
+      if (color2.used) {
+        if (format.medium.used) {
+          memcpy(buffer->string + buffer->used, format.medium.string, sizeof(f_char_t) * format.medium.used);
 
-      buffer->used += format.medium.used;
-    }
+          buffer->used += format.medium.used;
+        }
 
-    if (color2.used) {
-      memcpy(buffer->string + buffer->used, color2.string, sizeof(f_char_t) * color2.used);
+        memcpy(buffer->string + buffer->used, color2.string, sizeof(f_char_t) * color2.used);
 
-      buffer->used += color2.used;
-    }
+        buffer->used += color2.used;
 
-    if (format.medium.used) {
-      memcpy(buffer->string + buffer->used, format.medium.string, sizeof(f_char_t) * format.medium.used);
+        if (color3.used) {
+          if (format.medium.used) {
+            memcpy(buffer->string + buffer->used, format.medium.string, sizeof(f_char_t) * format.medium.used);
 
-      buffer->used += format.medium.used;
-    }
+            buffer->used += format.medium.used;
+          }
 
-    if (color3.used) {
-      memcpy(buffer->string + buffer->used, color3.string, sizeof(f_char_t) * color3.used);
+          memcpy(buffer->string + buffer->used, color3.string, sizeof(f_char_t) * color3.used);
 
-      buffer->used += color3.used;
-    }
+          buffer->used += color3.used;
 
-    if (format.medium.used) {
-      memcpy(buffer->string + buffer->used, format.medium.string, sizeof(f_char_t) * format.medium.used);
+          if (color4.used) {
+            if (format.medium.used) {
+              memcpy(buffer->string + buffer->used, format.medium.string, sizeof(f_char_t) * format.medium.used);
 
-      buffer->used += format.medium.used;
-    }
+              buffer->used += format.medium.used;
+            }
 
-    if (color4.used) {
-      memcpy(buffer->string + buffer->used, color4.string, sizeof(f_char_t) * color4.used);
+            memcpy(buffer->string + buffer->used, color4.string, sizeof(f_char_t) * color4.used);
 
-      buffer->used += color4.used;
-    }
+            buffer->used += color4.used;
 
-    if (format.medium.used) {
-      memcpy(buffer->string + buffer->used, format.medium.string, sizeof(f_char_t) * format.medium.used);
+            if (color5.used) {
+              if (format.medium.used) {
+                memcpy(buffer->string + buffer->used, format.medium.string, sizeof(f_char_t) * format.medium.used);
 
-      buffer->used += format.medium.used;
-    }
+                buffer->used += format.medium.used;
+              }
 
-    if (color5.used) {
-      memcpy(buffer->string + buffer->used, color5.string, sizeof(f_char_t) * color5.used);
+              memcpy(buffer->string + buffer->used, color5.string, sizeof(f_char_t) * color5.used);
 
-      buffer->used += color5.used;
+              buffer->used += color5.used;
+            }
+          }
+        }
+      }
     }
 
     if (format.end.used) {
