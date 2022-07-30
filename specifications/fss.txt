@@ -3,11 +3,11 @@
 # license: open-standard-license-1.0
 #
 # This file (assumed to be named fss.txt) can be more easily read using the following iki_read commands:
-#   iki_read fss.txt +Q -w -rrrrrrrr abbreviation-FSS FSS abbreviation-KISS KISS anti-abbreviation-KISS anti-KISS abbreviation-XML XML abbreviation-UTF-8 UTF-8 abbreviation-ASCII ASCII abbreviation-BOM BOM abbreviation-URL URL -WW character '"' '"' code '"' '"'
+#   iki_read fss.txt +Q -w -rrrrrrrr abbreviation-FSS FSS abbreviation-KISS KISS anti-abbreviation-KISS anti-KISS abbreviation-XML XML abbreviation-UTF-8 UTF-8 abbreviation-ASCII ASCII abbreviation-BOM BOM abbreviation-URL URL -WWW character "'" "'" code '"' '"' emphasis '"' '"'
 #
 # Individual sections in this file may be parsed using fss_basic_list_read command and then passed to the iki_read command.
 # To read the "Featureless Settings Specifications" section of this file, use this command sequence:
-#   fss_basic_list_read fss.txt -cn "Featureless Settings Specifications" | iki_read +Q -w -rrrrrrrr abbreviation-FSS FSS abbreviation-KISS KISS anti-abbreviation-KISS anti-KISS abbreviation-XML XML abbreviation-UTF8 UTF8 abbreviation-ASCII ASCII abbreviation-BOM BOM abbreviation-URL URL -WW character '"' '"' code '"' '"'
+#   fss_basic_list_read fss.txt +Q -cn "Featureless Settings Specifications" | iki_read +Q -w -rrrrrrrr abbreviation-FSS FSS abbreviation-KISS KISS anti-abbreviation-KISS anti-KISS abbreviation-XML XML abbreviation-UTF8 UTF8 abbreviation-ASCII ASCII abbreviation-BOM BOM abbreviation-URL URL -WWW character "'" "'" code '"' '"' emphasis '"' '"'
 #
 
 Featureless Settings Specifications:
@@ -142,19 +142,19 @@ Featureless Settings Specifications:
   This is a common behavior for security reasons, each character used for any special purposes must be visibly distinct, with white space and non-printing characters as the exception to the words emphasis:"visibly distinct".
 
   The following are core specifications (each with a common name associated with the specification number)\:
-  - fss-0000: Basic
-  - fss-0001: Extended
-  - fss-0002: Basic List
-  - fss-0003: Extended List
-  - fss-0004: Very Basic List
-  - fss-0005: Somewhat Basic List
-  - fss-0006: Somewhat Extended List
-  - fss-0007: Very Extended List
-  - fss-0008: Embedded List
-  - fss-0009: Reverse Mapping
-  - fss-000a: Extended Reverse Mapping
-  - fss-000b: Simple List
-  - fss-000c: IKI Text
-  - fss-000d: Basic Rule
-  - fss-000e: Payload
-  - fss-000f: Simple Packet
+    - fss-0000: Basic
+    - fss-0001: Extended
+    - fss-0002: Basic List
+    - fss-0003: Extended List
+    - fss-0004: Very Basic List
+    - fss-0005: Somewhat Basic List
+    - fss-0006: Somewhat Extended List
+    - fss-0007: Very Extended List
+    - fss-0008: Embedded List
+    - fss-0009: Reverse Mapping
+    - fss-000a: Extended Reverse Mapping
+    - fss-000b: Simple List
+    - fss-000c: IKI Text
+    - fss-000d: Basic Rule
+    - fss-000e: Payload
+    - fss-000f: Simple Packet

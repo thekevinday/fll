@@ -1,12 +1,18 @@
-# fss-0002
+# fss-0002 iki-0000
 #
 # license: open-standard-license-1.0
 #
+# This file (assumed to be named fakefile.txt) can be more easily read using the following iki_read commands:
+#   iki_read fakefile.txt +Q -w -WWW character "'" "'" code '"' '"' bold '"' '"'
+#
+# To read the "Fakefile Specification" section of this file, use this command sequence:
+#   fss_basic_list_read fakefile.txt +Q -cn "Fakefile Specification" | iki_read +Q -w -WWW character "'" "'" code '"' '"' bold '"' '"'
+#
 
 Fakefile Specification:
-  The "fakefile" file follows the FSS-0005 (Somewhat Basic List) format with a sub-fomat of IKI-0002 (Simple Script).
+  The bold:"fakefile" file follows the code:"FSS-0005 (Somewhat Basic List)" format with a sub-format of code:"IKI-0002 (Simple Script)".
 
-  A fakefile is broken up into multiple Basic Lists, referred to as Sections, with two special purpose reserved Sections.
+  A bold:"fakefile" is broken up into multiple Basic Lists, referred to as Sections, with two special purpose reserved Sections.
   The Sections are broken up into multiple Extended Objects and their respective Contents, referred to as Section Operations.
 
   Each of these non-reserved Sections acts as a set to perform some set of Section Operations.
@@ -19,102 +25,103 @@ Fakefile Specification:
   The Operation Extended Object does not support IKI variable substitution.
   The reserved Settings Section does not support IKI variable substitution.
 
-  The IKI-0002 vocabulary context is further clarified as follows\:
-  - context: The value is case-sensitive variable name.
-  - define: The value must be a case-sensitive valid environment variable name (alpha-numeric or underscore, but no leading digits).
-  - parameter: The value is a case-sensitive variable name.
-    - Many parameters also support ":option" and ":value" appended at the end of the value.
+  The code:"IKI-0002 (Simple Script)" vocabulary context is further clarified as follows\:
+    - code:"context": The value is case-sensitive variable name.
+    - code:"define": The value must be a case-sensitive valid environment variable name (alpha-numeric or underscore, but no leading digits).
+    - code:"parameter": The value is a case-sensitive variable name.
+      - Many parameters also support code:":option" and code:":value" appended at the end of the value.
 
   The reserved Section Objects are\:
-  - settings: contains a list of Settings Objects and Content in FSS-0001 (Extended) format.
-  - main: contains a list of Operation Objects and Content in FSS-0001 (Extended) format.
+    - code:"settings": contains a list of Settings Objects and Content in code:"FSS-0001 (Extended)" format.
+    - code:"main:" contains a list of Operation Objects and Content in code:"FSS-0001 (Extended)" format.
 
   The Settings Objects are\:
-  - compiler: Only one Content, which must only be a valid filename.
-  - define: First Content represents variable name (case-sensitive), remaining Content represents the value.
-  - environment: Zero or more Content representing valid environment variable names (alpha-numeric with underscore, but cannot begin with a number).
-  - fail: Only one Content, which must be either "exit", "warn" or "ignore" (quotes not required) (case-sensitive).
-  - indexer: Only one Content, which must only be a valid filename.
-  - indexer_arguments: Zero or more arguments supported by the indexer specified in "build_indexer".
-  - load_build: Only one Content, which must be either "yes" or "no" (quotes not required) (case-sensitive).
-  - parameter: First Content represents variable name (case-sensitive), remaining Content represents the value.
+    - code:"compiler": Only one Content, which must only be a valid filename.
+    - code:"define": First Content represents variable name (case-sensitive), remaining Content represents the value.
+    - code:"environment": Zero or more Content representing valid environment variable names (alpha-numeric with underscore, but cannot begin with a number).
+    - code:"fail": Only one Content, which must be either code:"exit", code:"warn" or code:"ignore" (quotes not required) (case-sensitive).
+    - code:"indexer": Only one Content, which must only be a valid filename.
+    - code:"indexer_arguments: Zero or more arguments supported by the indexer specified in code:"build_indexer".
+    - code:"load_build": Only one Content, which must be either code:"yes" or code:"no" (quotes not required) (case-sensitive).
+    - code:"parameter": First Content represents variable name (case-sensitive), remaining Content represents the value.
 
   The build settings may also be specified in the Settings Section.
 
   The Section Operation Objects are\:
-  - and: One or more Content. First Content is the condition or "no_dereference" (when "no_dereference", then the Second Content is the condition, etc..), remaining Content are specific to the condition.
-  - break: Zero or one Content. If specified, First content must be one of "success" or "failure".
-  - build: Zero or more Content. First Content represents file name of the settings file to use, Second Content and on represent custom modes to use.
-  - clean: Zero Content.
-  - clone: Two or more Content representing paths to files.
-  - compile: One or more Content as parameters to compiler.
-  - copy: Two or more Content representing paths to files.
-  - define: First Content represents variable name (case-sensitive), remaining Content represents the value.
-  - delete: One or more Content representing paths to files.
-  - deletes: One or more Content representing paths to files.
-  - else: Zero Content.
-  - exit: Zero or One Content. If specified, First content must be one of "succeed" or "fail".
-  - fail: One Content. First Content must be one of "exit", "warn", or "ignore" (case-sensitive).
-  - group: Two or more Content. First Content is group name, number, or "no_dereference" (when "no_dereference", then the second Content is the group name or number, etc..), remaining Content are paths to files.
-  - groups: Two or more Content. First Content is group name, number, or "no_dereference" (when "no_dereference", then the second Content is the group name or number, etc..), remaining Content are paths to files.
-  - if: One or more Content. First Content is the condition or is "no_dereference" (when "no_dereference", then the Second Content is the condition, etc..), remaining Content are specific to the condition.
-  - index: One or more Content.
-  - link: Two to Four Content. The first and second Content may be either "force" or "strict", the second to last Content is the link target file, and the last Content is the pointer file (the link).
-  - mode: Two or more Content. First Content is the mode, remaining Content are paths to files.
-  - modes: Two or more Content. First Content is the mode, remaining Content are paths to files.
-  - move: Two or more Content representing paths to files.
-  - operate: One Content. First Content is the name of a valid Section Object, except for the reserved Section Objects.
-  - or: One or more Content. First Content is the condition or "no_dereference" (when "no_dereference", then the Second Content is the condition, etc..), remaining Content are specific to the condition.
-  - owner: Two or more Content. First Content is owner name, number, or "no_dereference" (when "no_dereference", then the second Content is the owner name or number, etc..), remaining Content are paths to files.
-  - owners: Two or more Content. First Content is owner name, number, or "no_dereference" (when "no_dereference", then the second Content is the owner name or number, etc..), remaining Content are paths to files.
-  - parameter: First Content represents variable name (case-sensitive), remaining Content represents the value.
-  - pop: Zero Content.
-  - print: Zero or more Content.
-  - run: One or more Content. First Content is the name of the program (or script) and all remaining Content are passed as arguments to the named program (or script).
-  - shell: One or more Content. First Content is the file path of the program (or script) and all remaining Content are passed as arguments to the named program (or script).
-  - skeleton: Zero Content.
-  - to: One Content. First Content is the directory path.
-  - top: Zero Content.
-  - touch: Two or more Content. First Content is one of "file" or "directory", remaining Content are paths to files.
-  - write: One or more Content. First Content the file to write to, remaining Content represent the string to write.
+    - code:"and": One or more Content. First Content is the condition or code:"no_dereference" (when code:"no_dereference", then the Second Content is the condition, etc..), remaining Content are specific to the condition.
+    - code:"break": Zero or one Content. If specified, First content must be one of code:"success" or code:"failure".
+    - code:"build": Zero or more Content. First Content represents file name of the settings file to use, Second Content and on represent custom modes to use.
+    - code:"clean": Zero Content.
+    - code:"clone": Two or more Content representing paths to files.
+    - code:"compile": One or more Content as parameters to compiler.
+    - code:"copy": Two or more Content representing paths to files.
+    - code:"define": First Content represents variable name (case-sensitive), remaining Content represents the value.
+    - code:"delete": One or more Content representing paths to files.
+    - code:"deletes": One or more Content representing paths to files.
+    - code:"else": Zero Content.
+    - code:"exit": Zero or One Content. If specified, First content must be one of code:"succeed" or code:"fail".
+    - code:"fail": One Content. First Content must be one of code:"exit", code:"warn", or code:"ignore" (case-sensitive).
+    - code:"group": Two or more Content. First Content is group name, number, or code:"no_dereference" (when code:"no_dereference", then the second Content is the group name or number, etc..), remaining Content are paths to files.
+    - code:"groups": Two or more Content. First Content is group name, number, or code:"no_dereference" (when code:"no_dereference", then the second Content is the group name or number, etc..), remaining Content are paths to files.
+    - code:"if": One or more Content. First Content is the condition or is code:"no_dereference" (when code:"no_dereference", then the Second Content is the condition, etc..), remaining Content are specific to the condition.
+    - code:"index": One or more Content.
+    - code:"link": Two to Four Content. The first and second Content may be either code:"force" or code:"strict", the second to last Content is the link target file, and the last Content is the pointer file (the link).
+    - code:"mode": Two or more Content. First Content is the mode, remaining Content are paths to files.
+    - code:"modes": Two or more Content. First Content is the mode, remaining Content are paths to files.
+    - code:"move": Two or more Content representing paths to files.
+    - code:"operate": One Content. First Content is the name of a valid Section Object, except for the reserved Section Objects.
+    - code:"or": One or more Content. First Content is the condition or code:"no_dereference" (when code:"no_dereference", then the Second Content is the condition, etc..), remaining Content are specific to the condition.
+    - code:"owner": Two or more Content. First Content is owner name, number, or code:"no_dereference" (when code:"no_dereference", then the second Content is the owner name or number, etc..), remaining Content are paths to files.
+    - code:"owners": Two or more Content. First Content is owner name, number, or code:"no_dereference" (when code:"no_dereference", then the second Content is the owner name or number, etc..), remaining Content are paths to files.
+    - code:"parameter": First Content represents variable name (case-sensitive), remaining Content represents the value.
+    - code:"pop": Zero Content.
+    - code:"print": Zero or more Content.
+    - code:"run": One or more Content. First Content is the name of the program (or script) and all remaining Content are passed as arguments to the named program (or script).
+    - code:"shell": One or more Content. First Content is the file path of the program (or script) and all remaining Content are passed as arguments to the named program (or script).
+    - code:"skeleton": Zero Content.
+    - code:"to": One Content. First Content is the directory path.
+    - code:"top": Zero Content.
+    - code:"touch": Two or more Content. First Content is one of code:"file" or code:"directory", remaining Content are paths to files.
+    - code:"write": One or more Content. First Content the file to write to, remaining Content represent the string to write.
 
-  The "if" Section Operation conditions are\:
-  - ==: Two or more Content.
-  - >: Two or more Content.
-  - <: Two or more Content.
-  - >=: Two or more Content.
-  - <=: Two or more Content.
-  - <>: Two or more Content.
-  - define: One or more Content are valid environment variable name.
-  - exist: One or more Content representing the files to check the existence of.
-  - failure: has no other Content.
-  - group: First Content is the name of a group. Second or more Content are paths to files.
-  - is: First Content is a list of "block", "character", "no_dereference", "directory", "fifo", "link", "regular" , or "socket" followed by "for" and then the Remaining Content that are paths to files.
-  - mode: First Content is either "has", "is", or "no_dereference". Second Content is a valid file mode. Third or more Content are paths to files.
-  - no_dereference: A non-condition inserted before any of "exist", "is", and "mode" (then the second Content is the actual condition followed by any Content associated with that condition).
-  - not: First Content is one of "define", "exist", "group", "is", "mode", "no_dereference", "owner", or "parameter" and all remaining Content are based on the First Content's "if" Section Operation Content rules.
-  - owner: First Content is the name of an owner. Second or more Content are paths to files.
-  - parameter: One or more Content are valid IKI names.
-  - success: has no other Content.
+    The code:"if" Section Operation conditions are\:
+      - code:"==": Two or more Content.
+      - code:">": Two or more Content.
+      - code:"<": Two or more Content.
+      - code:">=": Two or more Content.
+      - code:"<=": Two or more Content.
+      - code:"<>": Two or more Content.
+      - code:"define": One or more Content are valid environment variable name.
+      - code:"exist": One or more Content representing the files to check the existence of.
+      - code:"failure": has no other Content.
+      - code:"group": First Content is the name of a group. Second or more Content are paths to files.
+      - code:"is": First Content is a list of code:"block", code:"character", code:"no_dereference", code:"directory", code:"fifo", code:"link", code:"regular" , or code:"socket" followed by "for" and then the Remaining Content that are paths to files.
+      - code:"mode": First Content is either code:"has", code:"is", or code:"no_dereference". Second Content is a valid file mode. Third or more Content are paths to files.
+      - code:"no_dereference": A non-condition inserted before any of code:"exist", code:"is", and code:"mode" (then the second Content is the actual condition followed by any Content associated with that condition).
+      - code:"not": First Content is one of code:"define", code:"exist", code:"group", code:"is", code:"mode", code:"no_dereference", code:"owner", or code:"parameter" and all remaining Content are based on the First Content's code:"if" Section Operation Content rules.
+      - code:"owner": First Content is the name of an owner. Second or more Content are paths to files.
+      - code:"parameter": One or more Content are valid IKI names.
+      - code:"success": has no other Content.
 
-  The "if" Section Operation conditions and numbers\:
+  The code:"if" Section Operation conditions and numbers\:
     The numbers may be represented in any of the forms\:
-    1) decimal: all numbers without a base-type prefix are of base-type 10, referred to as decimal.
-    2) binary: all numbers with the prefix "0b" (uppercase or lowercase 'b') are of base-type 2, referred to as binary.
-    3) octal: all numbers with the prefix "0o" (that is zero followed by the letter o, uppercase or lowercase 'o') are of base-type 8, referred to as octal.
-    4) duodecimal: all numbers with the prefix "0d" (uppercase or lowercase 'd') are of base-type 12, referred to as duodecimal.
-    5) hexadecimal: all numbers with the prefix "0x" (uppercase or lowercase 'x') are of base-type 16, referred to as hexadecimal.
+      1) code:"decimal": all numbers without a base-type prefix are of base-type 10, referred to as decimal.
+      2) code:"binary": all numbers with the prefix code:"0b" (uppercase or lowercase character:'b') are of base-type 2, referred to as binary.
+      3) code:"octal": all numbers with the prefix code:"0o" (that is zero followed by the letter character:'o', uppercase or lowercase character:'o') are of base-type 8, referred to as octal.
+      4) code:"duodecimal": all numbers with the prefix code:"0d" (uppercase or lowercase character:'d') are of base-type 12, referred to as duodecimal.
+      5) code:"hexadecimal": all numbers with the prefix code:"0x" (uppercase or lowercase character:'x') are of base-type 16, referred to as hexadecimal.
 
     (At this time) The numbers may be of a max value of 2^64, or 18446744073709551615, positive or negative.
     (At this time) The numbers may only be whole numbers.
-    Note: there are plans to impose no limits on the number size or any decimal values, but this requires significant work is not to be implemented at this time.
+    Note: There are plans to impose no limits on the number size or any decimal values, but this requires significant work is not to be implemented at this time.
+    Once this restriction is lifted, it should be conditional upon an implementation for what the maximum supported numbers or digits may be.
 
-    Only the following "if" Section Operation conditions operate using these numbers\:
-    - >
-    - <
-    - >=
-    - <=
+    Only the following code:"if" Section Operation conditions use these operators\:
+      - code:">"
+      - code:"<"
+      - code:">="
+      - code:"<="
 
-  The "if" Section Operation condition "parameter"\:
-    The following reserved words are available for parameter names: build, color, current, data, define, fakefile, mode, process, return, settings, sources, top, verbosity, and work.
-    Each of the reserved words supports having ":option" and ":value" appended, such as: "work:value".
+  The code:"if" Section Operation condition code:"parameter"\:
+    The following reserved words are available for parameter names: code:"build", code:"color", code:"current", code:"data", code:"define", code:"fakefile", code:"mode", code:"process", code:"return", code:"settings", code:"sources", code:"top", code:"verbosity", and code:"work".
+    Each of the reserved words supports having code:":option" and code:":value" appended, such as: code:"work:value".

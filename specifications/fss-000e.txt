@@ -3,10 +3,10 @@
 # license: open-standard-license-1.0
 #
 # This file (assumed to be named fss-000e.txt) can be more easily read using the following iki_read commands:
-#   iki_read fss-000e.txt +Q -w -rr abbreviation-FLL FLL abbreviation-EOF EOF -WW character '"' '"' code '"' '"'
+#   iki_read fss-000e.txt +Q -w -rr abbreviation-FLL FLL abbreviation-EOF EOF -WWW character "'" "'" code '"' '"' emphasis '"' '"'
 #
 # To read the "Featureless Settings Specification: 000e - Payload" section of this file, use this command sequence:
-#   fss_basic_list_read fss-000e.txt -cn "Featureless Settings Specification: 000e - Payload" | iki_read +Q -w -r abbreviation-FLL FLL abbreviation-EOF EOF -WW character '"' '"' code '"' '"'
+#   fss_basic_list_read fss-000e.txt +Q -cn "Featureless Settings Specification: 000e - Payload" | iki_read +Q -w -r abbreviation-FLL FLL abbreviation-EOF EOF -WWW character "'" "'" code '"' '"' emphasis '"' '"'
 #
 
 Featureless Settings Specification: 000e - Payload:

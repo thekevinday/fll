@@ -3,10 +3,10 @@
 # license: open-standard-license-1.0
 #
 # This file (assumed to be named iki-0000.txt) can be more easily read using the following iki_read commands:
-#   iki_read iki-0000.txt +Q -w -WW character '"' '"' code '"' '"'
+#   iki_read iki-0000.txt +Q -w -WW character "'" "'" code '"' '"'
 #
 # To read the "IKI Specification: 0000 - Unrestricted" section of this file, use this command sequence:
-#   fss_basic_list_read iki-0000.txt -cn "IKI Specification: 0000 - Unrestricted" | iki_read +Q -w -WW character '"' '"' code '"' '"'
+#   fss_basic_list_read iki-0000.txt +Q -cn "IKI Specification: 0000 - Unrestricted" | iki_read +Q -w -WW character "'" "'" code '"' '"'
 #
 
 IKI Specification: 0000 - Unrestricted:

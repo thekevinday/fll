@@ -1,14 +1,21 @@
-# fss-0002
+# fss-0002 iki-0000
 #
 # license: open-standard-license-1.0
 #
+# This file (assumed to be named dependencies.txt) can be more easily read using the following iki_read commands:
+#   iki_read dependencies.txt +Q -w -r abbreviation-FLL FLL -WW code '"' '"' bold '"' '"'
+#
+# To read the "Dependencies Specification" section of this file, use this command sequence:
+#   fss_basic_list_read dependencies.txt +Q -cn "Dependencies Specification" | iki_read +Q -w -r abbreviation-FLL FLL -WW code '"' '"' bold '"' '"'
+#
 
 Dependencies Specification:
-  The build settings "dependencies" file follows the FSS-0000 (Basic) format.
+  The build settings bold:"dependencies" file follows the code:"FSS-0001 (Extended)" format.
 
   Each Object represents a specific project name as it would be linked against.
-  Each Content must not be specified, only FSS-0000 Object names are allowed.
+  Each Content represents associated information, such as a version number.
+  Future versions of this will clarify what and how Content, such as version numbers, are to be used and processed.
 
-  This file only holds dependencies provided by the FLL project.
+  This file is originally intended for dependencies provided by the abbreviation-FLL:"Featureless Linux Library" project.
   Order matters, and the provided order represents the order of dependencies.
   The first entry therefore has no preceding dependency and the last dependency could potentially depend on all dependencies above it.

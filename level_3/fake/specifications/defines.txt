@@ -1,14 +1,20 @@
-# fss-0002
+# fss-0002 iki-0000
 #
 # license: open-standard-license-1.0
 #
+# This file (assumed to be named defines.txt) can be more easily read using the following iki_read commands:
+#   iki_read defines.txt +Q -w -WW code '"' '"' bold '"' '"'
+#
+# To read the "Defines Specification" section of this file, use this command sequence:
+#   fss_basic_list_read defines.txt +Q -cn "Defines Specification" | iki_read +Q -w -WW code '"' '"' bold '"' '"'
+#
 
 Defines Specification:
-  The build settings "defines" file follows the FSS-0000 (Basic) format.
+  The build settings bold:"defines" file follows the code:"FSS-0000 (Basic)" format.
 
   Each Object represents a specific a macro name to be defined during compilation.
   Each Content represents documentation explaining the intent and purpose of that define.
 
-  The Object name has further restrictions than FSS-0000 requires.
+  The Object name has further restrictions than code:"FSS-0000" requires.
   These restrictions are that the Object must only evaluate to a valid C/C++ macro name.
   This is essentially means only Word characters.
