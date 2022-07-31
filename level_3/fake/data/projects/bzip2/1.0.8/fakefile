@@ -7,7 +7,7 @@
 #   2) Change into the extracted bzip2-1.0.8 directory.
 #   3) Create the directory path "data/build/" within this bzip2-1.0.8 directory.
 #   4) Copy the files fakefile-bzip2, settings-bzip2, and settings-bzip2recover) into the created directory path "data/build/".
-#   5) Use the featureless make build operation to make, such as: "fake make -f fakefile-bzip2".
+#   5) Use the featureless make build operation to make, such as: "fake".
 
 settings:
   environment PATH LD_LIBRARY_PATH
@@ -16,6 +16,7 @@ main:
   operate bzip2
   operate bzip2recover
   operate scripts
+  operate tests
 
 bzip2:
   print
@@ -29,6 +30,42 @@ bzip2recover:
 
 scripts:
   print
-  print copying bzip2 scripts.
+  print Copying bzip2 scripts.
   touch directory build build/programs build/programs/scripts
   copy bzdiff bzgrep build/programs/scripts
+
+tests:
+  print
+  print Performing tests.
+
+  # Conditionally setup the LD_LIBRARY_PATH to include the just compiled libraries.
+  if define LD_LIBRARY_PATH
+  and parameter work
+    define LD_LIBRARY_PATH 'build/libraries/shared:parameter:"work:value"libraries/shared:define:"LD_LIBRARY_PATH"'
+
+  else
+  if define LD_LIBRARY_PATH
+    define LD_LIBRARY_PATH 'build/libraries/shared:define:"LD_LIBRARY_PATH"'
+
+  else
+  if parameter work
+    define LD_LIBRARY_PATH 'build/libraries/shared:parameter:"work:value"libraries/shared'
+
+  # Setup the PATH to use the just compiled programs.
+  define PATH programs/static:programs/shared:define:"PATH"
+
+  # Execute the tests (redirects are not currently supported, so execute using bash).
+  run cat words1
+  run bash -c 'bzip2 -1  < sample1.ref > sample1.rb2'
+  run bash -c 'bzip2 -2  < sample2.ref > sample2.rb2'
+  run bash -c 'bzip2 -3  < sample3.ref > sample3.rb2'
+  run bash -c 'bzip2 -d  < sample1.bz2 > sample1.tst'
+  run bash -c 'bzip2 -d  < sample2.bz2 > sample2.tst'
+  run bash -c 'bzip2 -ds < sample3.bz2 > sample3.tst'
+  run cmp sample1.bz2 sample1.rb2
+  run cmp sample2.bz2 sample2.rb2
+  run cmp sample3.bz2 sample3.rb2
+  run cmp sample1.tst sample1.ref
+  run cmp sample2.tst sample2.ref
+  run cmp sample3.tst sample3.ref
+  run cat words3
