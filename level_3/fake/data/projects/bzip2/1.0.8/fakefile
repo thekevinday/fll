@@ -10,13 +10,6 @@
 #   5) Use the featureless make build operation to make, such as: "fake make -f fakefile-bzip2".
 
 settings:
-  load_build no
-  fail exit
-
-  compiler gcc
-  indexer ar
-  indexer_arguments rcs
-
   environment PATH LD_LIBRARY_PATH
 
 main:
