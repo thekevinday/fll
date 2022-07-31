@@ -275,8 +275,6 @@ extern "C" {
     if (data->main->parameters.array[utf8_parameter_strip_invalid_e].result == f_console_result_found_e) return;
     if (data->main->parameters.array[utf8_parameter_verify_e].result == f_console_result_found_e) return;
 
-    f_status_t status = F_none;
-
     if (data->mode & utf8_mode_to_combining_d) {
       utf8_print_error_combining_or_width(data);
     }

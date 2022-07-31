@@ -348,11 +348,8 @@ extern "C" {
 
     f_string_dynamics_t names = f_string_dynamics_t_initialize;
     f_string_range_t name_range = f_string_range_t_initialize;
-    f_string_range_t substitution_range = f_string_range_t_initialize;
 
     bool name_missed = F_true;
-
-    substitution_range.start = 0;
 
     if (data->main->parameters.array[iki_read_parameter_name_e].result == f_console_result_additional_e) {
       f_array_length_t i = 0;

@@ -14,7 +14,6 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
   bool is_ip_list = F_false;
 
   // Iptables command arguments
-  bool device_all = F_false;
   bool ip_list_direction = F_false; // false = source, true = destination.
   bool use_protocol = F_false;
   uint8_t tool = firewall_program_ip46tables_e;
@@ -37,10 +36,7 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
   f_string_dynamic_t protocol = f_string_dynamic_t_initialize;
   f_string_dynamics_t arguments = f_string_dynamics_t_initialize;
 
-  if (local->is_global) {
-    device_all = F_true;
-  }
-  else {
+  if (!local->is_global) {
     if (data->devices.array[local->device].used) {
       device.used = 0;
 
@@ -159,8 +155,6 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
       else if (fl_string_dynamic_compare_string(local->buffer.string + local->rule_contents.array[i].array[0].start, firewall_device_all_s, length) == F_equal_to) {
         f_string_dynamic_resize(0, &device);
 
-        device_all = F_true;
-
         continue;
       }
       else if (fl_string_dynamic_compare_string(local->buffer.string + local->rule_contents.array[i].array[0].start, firewall_device_this_s, length) == F_equal_to) {
@@ -178,8 +172,6 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
           f_string_dynamic_resize(0, &device);
         }
 
-        device_all = F_false;
-
         continue;
       }
 
@@ -191,8 +183,6 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
 
           if (F_status_is_error(status)) break;
         }
-
-        device_all = F_false;
 
         continue;
       }

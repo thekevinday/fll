@@ -2315,6 +2315,8 @@ extern "C" {
     if (F_status_is_error(status)) return status;
 
     ++setting_maps->used;
+
+    return F_none;
   }
 #endif // _di_controller_entry_settings_read_map_
 

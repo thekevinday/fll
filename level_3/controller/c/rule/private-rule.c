@@ -969,8 +969,6 @@ extern "C" {
 
     f_string_maps_t environment = f_string_maps_t_initialize;
 
-    const f_string_dynamics_t arguments_none = f_string_dynamics_t_initialize;
-
     controller_execute_set_t execute_set = macro_controller_execute_set_t_initialize(0, 0, &environment, &signals, 0, fl_execute_as_t_initialize);
 
     if (process->rule.affinity.used) {

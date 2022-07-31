@@ -73,8 +73,6 @@ extern "C" {
       f_thread_mutex_unlock(&global.thread->lock.alert);
     }
 
-    f_array_length_t spent = 0;
-
     struct timespec time;
 
     controller_entry_t *entry = 0;

@@ -283,7 +283,7 @@ extern "C" {
     }
 
     if (F_status_is_error_not(status) && main->process_pipe) {
-      if (operations_length > 1 || operations[0] != fake_operation_make_e) {
+      if (operations_length > 1 || operations_length && operations[0] != fake_operation_make_e) {
         status = F_status_set_error(F_parameter);
 
         if (main->error.verbosity != f_console_verbosity_quiet_e) {

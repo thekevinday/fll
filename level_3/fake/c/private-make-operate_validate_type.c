@@ -233,6 +233,8 @@ extern "C" {
 
       return F_status_set_error(F_failure);
     }
+
+    return F_none;
   }
 #endif // _di_fake_make_operate_validate_type_compile_
 
