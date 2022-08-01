@@ -168,14 +168,6 @@ test_main() {
     let failure=1
   fi
 
-  if [[ $failure -eq 0 && $test_system == "gitlab" ]] ; then
-    if [[ $verbosity != "quiet" ]] ; then
-      echo -e "${c_error}ERROR: The build system $c_notice$test_system$c_error is not currently implemented.$c_reset"
-    fi
-
-    let failure=1
-  fi
-
   if [[ $failure -eq 0 && $build_compiler != "gcc" && $build_compiler != "clang" ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
       echo -e "${c_error}ERROR: The build compiler $c_notice$build_compiler$c_error is not currently directly supported.$c_reset"
@@ -320,7 +312,7 @@ test_operate() {
   local work_path="${path_test_project}"
   local includes_path="${work_path}includes/"
   local libraries_path="${work_path}libraries/shared/"
-  local github_arguments=
+  local ci_arguments=
 
   if [[ $PATH != "" ]] ; then
     env_path="$env_path:$PATH"
@@ -330,10 +322,10 @@ test_operate() {
     env_libs="$env_libs:$LD_LIBRARY_PATH"
   fi
 
-  if [[ $test_system == "github" ]] ; then
-    github_arguments="-d -I$includes_path -d -L$libraries_path"
+  if [[ $test_system == "github" || $test_system == "gitlab" ]] ; then
+    ci_arguments="-d -I$includes_path -d -L$libraries_path"
 
-    test_operate_github_prebuild
+    test_operate_ci_prebuild
 
     if [[ $? -ne 0 ]] ; then
       return 1
@@ -354,8 +346,8 @@ test_operate() {
     return 1
   fi
 
-  if [[ $test_system == "github" ]] ; then
-    test_operate_github_pretest
+  if [[ $test_system == "github" || $test_system == "gitlab" ]] ; then
+    test_operate_ci_pretest
 
     if [[ $? -ne 0 ]] ; then
       return 1
@@ -451,16 +443,16 @@ test_operate_build_project() {
       echo
 
       if [[ $build_compiler == "gcc" ]] ; then
-        echo "PATH=\"$env_path\" LD_LIBRARY_PATH=\"$env_libs\" fake $verbose $context -w \"$destination\" -m $mode clean build $github_arguments"
+        echo "PATH=\"$env_path\" LD_LIBRARY_PATH=\"$env_libs\" fake $verbose $context -w \"$destination\" -m $mode clean build $ci_arguments"
       else
-        echo "PATH=\"$env_path\" LD_LIBRARY_PATH=\"$env_libs\" fake $verbose $context -w \"$destination\" -m individual -m $build_compiler clean make -f testfile $github_arguments"
+        echo "PATH=\"$env_path\" LD_LIBRARY_PATH=\"$env_libs\" fake $verbose $context -w \"$destination\" -m individual -m $build_compiler clean make -f testfile $ci_arguments"
       fi
     fi
 
     if [[ $build_compiler == "gcc" ]] ; then
-      PATH="$env_path" LD_LIBRARY_PATH="$env_libs" fake $verbose $context -w "$destination" -m $mode -m test clean build $github_arguments
+      PATH="$env_path" LD_LIBRARY_PATH="$env_libs" fake $verbose $context -w "$destination" -m $mode -m test clean build $ci_arguments
     else
-      PATH="$env_path" LD_LIBRARY_PATH="$env_libs" fake $verbose $context -w "$destination" -m $mode -m test -m $build_compiler clean build $github_arguments
+      PATH="$env_path" LD_LIBRARY_PATH="$env_libs" fake $verbose $context -w "$destination" -m $mode -m test -m $build_compiler clean build $ci_arguments
     fi
   else
     if [[ $verbosity == "debug" ]] ; then
@@ -575,7 +567,7 @@ test_operate_build_tools() {
   return $failure
 }
 
-test_operate_github_prebuild() {
+test_operate_ci_prebuild() {
   local clone_quiet=
   local path_original="$PWD/"
   local result=
@@ -590,7 +582,7 @@ test_operate_github_prebuild() {
     echo -e "${c_title}------------------------------------------------$c_reset"
   fi
 
-  test_operate_github_prebuild_libcap
+  test_operate_ci_prebuild_libcap
   result=$?
 
   cd ${path_original}
@@ -598,7 +590,7 @@ test_operate_github_prebuild() {
   return $result
 }
 
-test_operate_github_pretest() {
+test_operate_ci_pretest() {
   local clone_quiet=
   local path_original="$PWD/"
   local result=
@@ -613,7 +605,7 @@ test_operate_github_pretest() {
     echo -e "${c_title}-----------------------------------------------$c_reset"
   fi
 
-  test_operate_github_pretest_cmocka
+  test_operate_ci_pretest_cmocka
   result=$?
 
   cd ${path_original}
@@ -621,7 +613,7 @@ test_operate_github_pretest() {
   return $result
 }
 
-test_operate_github_pretest_cmocka() {
+test_operate_ci_pretest_cmocka() {
   local cmocka_path="${path_test}cmocka/"
   local cmocka_build="${cmocka_path}build/"
   local cmocka_data="${cmocka_path}data/build/"
@@ -704,10 +696,10 @@ test_operate_github_pretest_cmocka() {
 
   if [[ $verbosity == "debug" ]] ; then
     echo
-    echo "PATH=\"$env_path\" LD_LIBRARY_PATH=\"$env_libs\" fake $verbose $context -w \"$path_test_work\" -m $build_compiler clean build $github_arguments"
+    echo "PATH=\"$env_path\" LD_LIBRARY_PATH=\"$env_libs\" fake $verbose $context -w \"$path_test_work\" -m $build_compiler clean build $ci_arguments"
   fi
 
-  PATH="$env_path" LD_LIBRARY_PATH="$env_libs" fake $verbose $context -w "$path_test_work" -m $build_compiler clean build $github_arguments
+  PATH="$env_path" LD_LIBRARY_PATH="$env_libs" fake $verbose $context -w "$path_test_work" -m $build_compiler clean build $ci_arguments
 
   if [[ $? -ne 0 ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
@@ -753,7 +745,7 @@ test_operate_github_pretest_cmocka() {
   return 0
 }
 
-test_operate_github_prebuild_libcap() {
+test_operate_ci_prebuild_libcap() {
   local libcap_path="${path_test}libcap/"
   local libcap_uri="https://github.com/thekevinday/kernel.org-libcap.git"
   local libcap_branch="master"
@@ -880,16 +872,16 @@ test_operate_tests() {
         echo
 
         if [[ $build_compiler == "gcc" ]] ; then
-          echo "PATH=\"$env_path\" LD_LIBRARY_PATH=\"$env_libs\" fake $verbose $context -w \"$destination\" -m individual -m test clean make -f testfile $github_arguments"
+          echo "PATH=\"$env_path\" LD_LIBRARY_PATH=\"$env_libs\" fake $verbose $context -w \"$destination\" -m individual -m test clean make -f testfile $ci_arguments"
         else
-          echo "PATH=\"$env_path\" LD_LIBRARY_PATH=\"$env_libs\" fake $verbose $context -w \"$destination\" -m individual -m test -m $build_compiler clean make -f testfile $github_arguments"
+          echo "PATH=\"$env_path\" LD_LIBRARY_PATH=\"$env_libs\" fake $verbose $context -w \"$destination\" -m individual -m test -m $build_compiler clean make -f testfile $ci_arguments"
         fi
       fi
 
       if [[ $build_compiler == "gcc" ]] ; then
-        PATH="$env_path" LD_LIBRARY_PATH="$env_libs" fake $verbose $context -w "$destination" -m individual -m test clean make -f testfile $github_arguments
+        PATH="$env_path" LD_LIBRARY_PATH="$env_libs" fake $verbose $context -w "$destination" -m individual -m test clean make -f testfile $ci_arguments
       else
-        PATH="$env_path" LD_LIBRARY_PATH="$env_libs" fake $verbose $context -w "$destination" -m individual -m test -m $build_compiler clean make -f testfile $github_arguments
+        PATH="$env_path" LD_LIBRARY_PATH="$env_libs" fake $verbose $context -w "$destination" -m individual -m test -m $build_compiler clean make -f testfile $ci_arguments
       fi
 
       if [[ $? -ne 0 ]] ; then
@@ -923,10 +915,10 @@ test_cleanup() {
   unset test_operate_build_individual
   unset test_operate_build_project
   unset test_operate_build_tools
-  unset test_operate_github_prebuild
-  unset test_operate_github_prebuild_libcap
-  unset test_operate_github_pretest
-  unset test_operate_github_pretest_cmocka
+  unset test_operate_ci_prebuild
+  unset test_operate_ci_prebuild_libcap
+  unset test_operate_ci_pretest
+  unset test_operate_ci_pretest_cmocka
   unset test_operate_tests
 }
 
