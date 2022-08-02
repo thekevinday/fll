@@ -2,7 +2,7 @@
  * FLL - Level 0
  *
  * Project: UTF
- * API Version: 0.6
+ * API Version: 0.7
  * Licenses: lgplv2.1
  *
  * Defines UTF-8 "is" functions.

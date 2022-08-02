@@ -2,7 +2,7 @@
  * FLL - Level 0
  *
  * Project: Console
- * API Version: 0.6
+ * API Version: 0.7
  * Licenses: lgpl-2.1-or-later
  *
  * Some console input/output commands.

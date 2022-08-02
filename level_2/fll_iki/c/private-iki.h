@@ -2,7 +2,7 @@
  * FLL - Level 2
  *
  * Project: IKI
- * API Version: 0.6
+ * API Version: 0.7
  * Licenses: lgpl-2.1-or-later
  *
  * These are provided for internal reduction in redundant code.

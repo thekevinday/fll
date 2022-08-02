@@ -2,7 +2,7 @@
  * FLL - Level 1
  *
  * Project: Print
- * API Version: 0.6
+ * API Version: 0.7
  * Licenses: lgpl-2.1-or-later
  *
  * Provides some standard printing functions not available in a libc.

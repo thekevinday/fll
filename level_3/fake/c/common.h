@@ -2,7 +2,7 @@
  * FLL - Level 3
  *
  * Project: Featureless Make
- * API Version: 0.6
+ * API Version: 0.7
  * Licenses: lgpl-2.1-or-later
  *
  * Provides the common data structures.
@@ -21,11 +21,11 @@ extern "C" {
  */
 #ifndef _di_fake_program_version_
   #define FAKE_program_version_major_s F_string_ascii_0_s
-  #define FAKE_program_version_minor_s F_string_ascii_6_s
+  #define FAKE_program_version_minor_s F_string_ascii_7_s
   #define FAKE_program_version_micro_s F_string_ascii_0_s
 
   #define FAKE_program_version_major_s_length F_string_ascii_0_s_length
-  #define FAKE_program_version_minor_s_length F_string_ascii_6_s_length
+  #define FAKE_program_version_minor_s_length F_string_ascii_7_s_length
   #define FAKE_program_version_micro_s_length F_string_ascii_0_s_length
 
   #ifndef FAKE_program_version_nano_prefix_s

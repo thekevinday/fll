@@ -2,7 +2,7 @@
  * FLL - Level 0
  *
  * Project: Print
- * API Version: 0.6
+ * API Version: 0.7
  * Licenses: lgpl-2.1-or-later
  *
  * Defines print_to_* variants of print functins to be used for/by project print.

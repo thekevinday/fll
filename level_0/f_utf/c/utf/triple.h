@@ -2,7 +2,7 @@
  * FLL - Level 0
  *
  * Project: UTF
- * API Version: 0.6
+ * API Version: 0.7
  * Licenses: lgpl-2.1-or-later
  *
  * Defines 3-tuple of UTF-8 string data called a triple (which is an ordered list of 3 strings).

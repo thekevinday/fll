@@ -2,7 +2,7 @@
  * FLL - Level 0
  *
  * Project: Memory
- * API Version: 0.6
+ * API Version: 0.7
  * Licenses: lgpl-2.1-or-later
  *
  * Defines iki common data.

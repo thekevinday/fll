@@ -2,7 +2,7 @@
  * FLL - Level 3
  *
  * Project: UTF-8
- * API Version: 0.6
+ * API Version: 0.7
  * Licenses: lgpl-2.1-or-later
  *
  * This is intendend to support Unicode 14.0.

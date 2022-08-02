@@ -2,7 +2,7 @@
  * FLL - Level 0
  *
  * Project: Signal
- * API Version: 0.6
+ * API Version: 0.7
  * Licenses: lgpl-2.1-or-later
  *
  * Test the signal project.

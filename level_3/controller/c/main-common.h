@@ -2,7 +2,7 @@
  * FLL - Level 3
  *
  * Project: Controller
- * API Version: 0.6
+ * API Version: 0.7
  * Licenses: lgpl-2.1-or-later
  *
  * Provides the common data structures to be compiled into the main program rather than the library.

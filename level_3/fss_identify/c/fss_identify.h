@@ -2,7 +2,7 @@
  * FLL - Level 3
  *
  * Project: FSS Identify
- * API Version: 0.6
+ * API Version: 0.7
  * Licenses: lgpl-2.1-or-later
  *
  * This is the program is intended to be used to identify an FSS file or FSS data.

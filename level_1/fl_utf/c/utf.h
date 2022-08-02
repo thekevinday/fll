@@ -2,7 +2,7 @@
  * FLL - Level 1
  *
  * Project: Utf
- * API Version: 0.6
+ * API Version: 0.7
  * Licenses: lgpl-2.1-or-later
  *
  * Provides UTF-8 character manipulation and processing capabilities.

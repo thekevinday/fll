@@ -2,7 +2,7 @@
  * FLL - Level 3
  *
  * Project: Status Code
- * API Version: 0.6
+ * API Version: 0.7
  * Licenses: lgpl-2.1-or-later
  *
  * This program provides status code to/from string translation.
