@@ -11,7 +11,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fake_make_load_fakefile_
-  void fake_make_load_fakefile(fake_make_data_t * const data_make, f_status_t * const status) {
+  void fake_make_load_fakefile(fake_make_data_t * const data_make, const bool process_pipe, f_status_t * const status) {
 
     if (F_status_is_error(*status)) return;
 
@@ -25,11 +25,19 @@ extern "C" {
 
     data_make->fakefile.used = 0;
 
-    if (data_make->main->process_pipe) {
+    if (process_pipe) {
       *status = fake_pipe_buffer(data_make->data, &data_make->buffer);
+
+      if (F_status_is_error(*status)) {
+        data_make->buffer.used = 0;
+      }
+      else {
+        *status = f_string_dynamic_append_assure(f_string_eol_s, &data_make->buffer);
+      }
     }
-    else {
-      *status = fake_file_buffer(data_make->data, data_make->data->file_data_build_fakefile, &data_make->buffer);
+
+    if (F_status_is_error_not(*status)) {
+      *status = fake_file_buffer(data_make->data, data_make->data->file_data_build_fakefile, process_pipe ? F_false : F_true, &data_make->buffer);
     }
 
     if (F_status_is_error(*status)) return;
@@ -289,7 +297,7 @@ extern "C" {
       }
 
       if (F_status_is_error_not(*status) && data_make->setting_make.load_build) {
-        fake_build_load_setting(data_make->data, 0, &data_make->setting_build, status);
+        fake_build_load_setting(data_make->data, 0, F_false, &data_make->setting_build, status);
 
         if (F_status_is_error(*status) && *status != F_status_set_error(F_interrupt)) {
           fll_error_print(data_make->main->error, F_status_set_fine(*status), "fake_build_load_setting", F_true);

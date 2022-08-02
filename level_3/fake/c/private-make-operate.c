@@ -72,7 +72,7 @@ extern "C" {
 
     fake_make_load_parameters(&data_make, &status);
 
-    fake_make_load_fakefile(&data_make, &status);
+    fake_make_load_fakefile(&data_make, data_make.main->process_pipe, &status);
 
     if (F_status_is_error(status)) {
       fake_make_data_delete(&data_make);

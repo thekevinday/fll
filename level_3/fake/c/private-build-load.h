@@ -25,6 +25,9 @@ extern "C" {
  *   If build_arguments.used is 0, then the default or program parameter supplied file is used.
  *   Set the first argument used length to 0 to use the default program parameter supplied file.
  *   Set the second argument used length to 0 without any further arguments to not use any modes.
+ * @param process_pipe
+ *   If TRUE, then use the program input pipe.
+ *   If FALSE, then ignore the program input pipe.
  * @param setting
  *   All build related setting data from the build setting file are loaded into this.
  *   These setting will have any specified mode property applied.
@@ -37,7 +40,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_load_setting_
-  extern void fake_build_load_setting(fake_data_t * const data, const f_string_statics_t * const build_arguments, fake_build_setting_t * const setting, f_status_t * const status) F_attribute_visibility_internal_d;
+  extern void fake_build_load_setting(fake_data_t * const data, const f_string_statics_t * const build_arguments, const bool process_pipe, fake_build_setting_t * const setting, f_status_t * const status) F_attribute_visibility_internal_d;
 #endif // _di_fake_build_load_setting_
 
 /**

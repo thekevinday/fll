@@ -45,18 +45,23 @@ extern "C" {
  *   The program data.
  * @param path_file
  *   The path to the file to load.
+ * @param required
+ *   If TRUE, then return error when file is not found.
+ *   If FALSE, then return F_false when file is not found.
  * @param buffer
  *   A buffer containing the contents of the file.
  *
  * @return
  *   F_none on success.
+ *   F_false on file not found and file is not required.
  *
+ *   F_file_found_not (with error bit) if file is not found and file is required.
  *   F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
  *
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_file_buffer_
-  extern f_status_t fake_file_buffer(fake_data_t * const data, const f_string_static_t path_file, f_string_dynamic_t * const buffer) F_attribute_visibility_internal_d;
+  extern f_status_t fake_file_buffer(fake_data_t * const data, const f_string_static_t path_file, const bool required, f_string_dynamic_t * const buffer) F_attribute_visibility_internal_d;
 #endif // _di_fake_file_buffer_
 
 /**

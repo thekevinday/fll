@@ -194,6 +194,9 @@ extern "C" {
  *   If build_arguments.used is 0, then the default or program parameter supplied file is used.
  *   Set the first argument used length to 0 to use the default program parameter supplied file.
  *   Set the second argument used length to 0 without any further arguments to not use any modes.
+ * @param process_pipe
+ *   If TRUE, then use the program input pipe.
+ *   If FALSE, then ignore the program input pipe.
  *
  * @return
  *   F_none on success.
@@ -201,7 +204,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_operate_
-  extern f_status_t fake_build_operate(fake_data_t * const data, const f_string_statics_t * const build_arguments) F_attribute_visibility_internal_d;
+  extern f_status_t fake_build_operate(fake_data_t * const data, const f_string_statics_t * const build_arguments, const bool process_pipe) F_attribute_visibility_internal_d;
 #endif // _di_fake_build_operate_
 
 /**

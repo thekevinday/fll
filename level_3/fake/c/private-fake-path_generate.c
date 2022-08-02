@@ -170,11 +170,11 @@ extern "C" {
     }
 
     // When custom fakefile or settings are used and they are paths to a file, remove the default path.
-    if (data->main->process_pipe || f_path_is(data->fakefile) == F_true || f_file_exists(data->fakefile, F_true) == F_true) {
+    if (f_path_is(data->fakefile) == F_true || f_file_exists(data->fakefile, F_true) == F_true) {
       data->file_data_build_fakefile.used = 0;
     }
 
-    if (data->main->process_pipe || f_path_is(data->settings) == F_true || f_file_exists(data->settings, F_true) == F_true) {
+    if (f_path_is(data->settings) == F_true || f_file_exists(data->settings, F_true) == F_true) {
       data->file_data_build_settings.used = 0;
     }
     {

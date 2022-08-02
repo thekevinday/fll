@@ -86,11 +86,7 @@ extern "C" {
 #endif // _di_fake_execute_
 
 #ifndef _di_fake_file_buffer_
-  f_status_t fake_file_buffer(fake_data_t * const data, const f_string_static_t path_file, f_string_dynamic_t * const buffer) {
-
-    f_file_t file = f_file_t_initialize;
-    char *name_function = "f_file_exists";
-    f_status_t status = F_none;
+  f_status_t fake_file_buffer(fake_data_t * const data, const f_string_static_t path_file, const bool required, f_string_dynamic_t * const buffer) {
 
     if (fll_program_standard_signal_received(data->main)) {
       fake_print_signal_received(data);
@@ -98,7 +94,10 @@ extern "C" {
       return F_status_set_error(F_interrupt);
     }
 
-    status = f_file_exists(path_file, F_true);
+    f_file_t file = f_file_t_initialize;
+    char *name_function = "f_file_exists";
+
+    f_status_t status = f_file_exists(path_file, F_true);
 
     if (status == F_true) {
       {
@@ -112,13 +111,11 @@ extern "C" {
             size_file = fake_common_initial_buffer_max_d;
           }
 
-          status = f_string_dynamic_resize(size_file, buffer);
+          status = f_string_dynamic_increase_by(size_file, buffer);
 
           if (F_status_is_error(status)) {
             const f_string_static_t message = macro_f_string_static_t_initialize("allocate buffer size for", 0, 24);
             fll_error_file_print(data->main->error, F_status_set_fine(status), name_function, F_true, path_file, message, fll_error_file_type_file_e);
-
-            f_string_dynamic_resize(0, buffer);
 
             return status;
           }
@@ -138,13 +135,13 @@ extern "C" {
       }
     }
     else if (status == F_false) {
-      status = F_status_set_error(F_file_found_not);
+      if (required) {
+        status = F_status_set_error(F_file_found_not);
+      }
     }
 
     if (F_status_is_error(status)) {
       fll_error_file_print(data->main->error, F_status_set_fine(status), name_function, F_true, path_file, f_file_operation_read_s, fll_error_file_type_file_e);
-
-      f_string_dynamic_resize(0, buffer);
     }
 
     return status;
@@ -161,22 +158,20 @@ extern "C" {
     file.stream = F_type_input_d;
     file.size_read = fake_default_allocation_pipe_d;
 
-    buffer->used = 0;
     status = f_string_dynamic_increase_by(fake_common_initial_buffer_max_d, buffer);
 
     if (F_status_is_error(status)) {
       const f_string_static_t message = macro_f_string_static_t_initialize("allocate buffer size for", 0, 24);
       fll_error_file_print(data->main->error, F_status_set_fine(status), "f_string_dynamic_increase_by", F_true, f_string_ascii_minus_s, message, fll_error_file_type_file_e);
 
-      f_string_dynamic_resize(0, buffer);
-
       return status;
     }
 
+    // Reset the error state before processing.
+    clearerr(F_type_input_d);
+
     do {
       if (fll_program_standard_signal_received(data->main)) {
-        buffer->used = 0;
-
         fake_print_signal_received(data);
 
         return F_status_set_error(F_interrupt);
@@ -188,8 +183,6 @@ extern "C" {
 
     if (F_status_is_error(status)) {
       fll_error_file_print(data->main->error, F_status_set_fine(status), "f_file_stream_read_block", F_true, f_string_ascii_minus_s, f_file_operation_read_s, fll_error_file_type_file_e);
-
-      buffer->used = 0;
     }
 
     return status;
@@ -555,9 +548,6 @@ extern "C" {
 #ifndef _di_fake_validate_parameter_paths_
   f_status_t fake_validate_parameter_paths(fake_data_t * const data) {
 
-    // Only perform these checks when not a pipe.
-    if (data->main->process_pipe) return F_none;
-
     if (fll_program_standard_signal_received(data->main)) {
       fake_print_signal_received(data);
 
@@ -578,7 +568,7 @@ extern "C" {
 
     uint8_t parameters_required[] = {
       F_false,
-      F_true,
+      data->main->process_pipe ? F_false : F_true,
       F_false,
     };
 
