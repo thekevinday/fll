@@ -19,6 +19,9 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
+ * @param process_pipe
+ *   If TRUE, then use the program input pipe.
+ *   If FALSE, then ignore the program input pipe.
  * @param status
  *   The return status.
  *
@@ -31,7 +34,7 @@ extern "C" {
  * @see fake_build_load_setting()
  */
 #ifndef _di_fake_make_load_fakefile_
-  extern void fake_make_load_fakefile(fake_make_data_t * const data_make, f_status_t * const status) F_attribute_visibility_internal_d;
+  extern void fake_make_load_fakefile(fake_make_data_t * const data_make, const bool process_pipe, f_status_t * const status) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_load_fakefile_
 
 /**

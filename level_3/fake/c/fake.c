@@ -79,8 +79,8 @@ extern "C" {
     fl_print_format("  For example, with '%[%r%r ./my_fakefile%]' the fakefile at", file.stream, context.set.notable, f_console_symbol_long_enable_s, fake_long_fakefile_s, context.set.notable);
     fl_print_format(" '%[./my_fakefile%]' is used if found, but if it is not found then no other paths are attempted.%r%r", file.stream, context.set.notable, context.set.notable, f_string_eol_s, f_string_eol_s);
 
-    fl_print_format("  When piping data to this program, the piped data is treated as a %[%r%].%r", file.stream, context.set.notable, fake_make_parameter_variable_fakefile_s, context.set.notable, f_string_eol_s);
-    fl_print_format("  Only the %[%r%] operation is supported when using piped data.%r%r", file.stream, context.set.notable, fake_other_operation_make_s, context.set.notable, f_string_eol_s, f_string_eol_s);
+    fl_print_format("  When piping data to this program, the piped data is treated as if it were prepended to the %[%r%]", file.stream, context.set.notable, fake_make_parameter_variable_fakefile_s, context.set.notable);
+    fl_print_format("or the %[%r%], depending on the operation.%r%r", file.stream, context.set.notable, fake_make_parameter_variable_settings_s, context.set.notable, f_string_eol_s, f_string_eol_s);
 
     funlockfile(file.stream);
 
@@ -192,15 +192,18 @@ extern "C" {
     operations_length += main->parameters.array[fake_parameter_operation_make_e].locations.used;
     operations_length += main->parameters.array[fake_parameter_operation_skeleton_e].locations.used;
 
-    // Ensure the default operation exists.
-    if (!operations_length && !main->parameters.remaining.used) {
+    // Ensure the default operation always exists.
+    if (operations_length) {
+      data.flag |= fake_data_flag_has_operation_e;
+    }
+    else {
       operations_length = 1;
     }
 
     uint8_t operations[operations_length];
     f_string_static_t operations_name = f_string_static_t_initialize;
 
-    if (main->parameters.array[fake_parameter_operation_build_e].locations.used || main->parameters.array[fake_parameter_operation_clean_e].locations.used || main->parameters.array[fake_parameter_operation_make_e].locations.used || main->parameters.array[fake_parameter_operation_skeleton_e].locations.used) {
+    if (data.flag & fake_data_flag_has_operation_e) {
       f_array_length_t locations[operations_length];
       f_array_length_t locations_length = 0;
       f_array_length_t i = 0;
@@ -271,27 +274,30 @@ extern "C" {
         ++locations_length;
       } // for
     }
-    else if (operations_length) {
+    else {
       operations[0] = fake_operation_make_e;
-    }
-    else if (!main->process_pipe) {
-      status = F_status_set_error(F_parameter);
 
-      if (main->error.verbosity != f_console_verbosity_quiet_e) {
-        fll_print_format("%r%[%QYou failed to specify a valid operation.%]%r%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context, f_string_eol_s, f_string_eol_s);
+      if (!main->process_pipe && main->parameters.remaining.used) {
+        status = F_status_set_error(F_parameter);
+
+        if (main->error.verbosity != f_console_verbosity_quiet_e) {
+          fll_print_format("%r%[%QYou failed to specify a valid operation.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context, f_string_eol_s);
+        }
       }
     }
 
-    if (F_status_is_error_not(status) && main->process_pipe) {
-      if (operations_length > 1 || operations_length && operations[0] != fake_operation_make_e) {
+    if (F_status_is_error_not(status)) {
+      if (main->parameters.array[fake_parameter_operation_build_e].locations.used && main->parameters.array[fake_parameter_operation_make_e].locations.used) {
         status = F_status_set_error(F_parameter);
 
         if (main->error.verbosity != f_console_verbosity_quiet_e) {
           flockfile(main->error.to.stream);
 
-          fl_print_format("%r%[%QWhen using an input pipe, only the '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+          fl_print_format("%r%[%QThe operation '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+          fl_print_format("%[%r%]", main->error.to.stream, main->error.notable, fake_other_operation_build_s, main->error.notable);
+          fl_print_format("%[' cannot be specified with the operation '%]", main->error.to.stream, main->error.context, main->error.context);
           fl_print_format("%[%r%]", main->error.to.stream, main->error.notable, fake_other_operation_make_s, main->error.notable);
-          fl_print_format("%[' operation is supported.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+          fl_print_format("%['.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
           funlockfile(main->error.to.stream);
         }
@@ -316,7 +322,7 @@ extern "C" {
       {
         uint8_t i = 0;
 
-        if (main->process_pipe) {
+        if (main->process_pipe && !(data.flag & fake_data_flag_has_operation_e)) {
           data.file_data_build_fakefile.used = 0;
 
           status = f_string_dynamic_append(f_string_ascii_minus_s, &data.file_data_build_fakefile);
@@ -331,9 +337,9 @@ extern "C" {
             fll_error_print(data.main->error, F_status_set_fine(status), "f_string_dynamic_append", F_true);
           }
         }
-        else {
 
-          // Pre-process and perform validation when "clean" is before a "build" or "make" command as a safety check.
+        // Pre-process and perform validation when "clean" is before a "build" or "make" command as a safety check.
+        if (operations_length > 1) {
           for (uint8_t has_clean = F_false; i < operations_length; ++i) {
 
             if (operations[i] == fake_operation_clean_e) {
@@ -348,7 +354,7 @@ extern "C" {
 
                 status = fake_validate_parameter_paths(&data);
 
-                if (F_status_is_error_not(status)) {
+                if (F_status_is_error_not(status) && !main->process_pipe) {
                   f_string_static_t *path = 0;
 
                   if (operations[i] == fake_operation_build_e) {
@@ -400,7 +406,7 @@ extern "C" {
               }
 
               if (F_status_is_error_not(status)) {
-                status = fake_build_operate(&data, 0);
+                status = fake_build_operate(&data, 0, main->process_pipe);
               }
             }
             else if (data.operation == fake_operation_clean_e) {

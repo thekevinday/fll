@@ -815,7 +815,7 @@ extern "C" {
 #endif // _di_fake_build_objects_add_
 
 #ifndef _di_fake_build_operate_
-  f_status_t fake_build_operate(fake_data_t * const data, const f_string_statics_t * const build_arguments) {
+  f_status_t fake_build_operate(fake_data_t * const data, const f_string_statics_t * const build_arguments, const bool process_pipe) {
 
     if (fll_program_standard_signal_received(data->main)) {
       fake_print_signal_received(data);
@@ -831,7 +831,7 @@ extern "C" {
 
     macro_f_mode_t_set_default_umask(mode, data->main->umask);
 
-    fake_build_load_setting(data, build_arguments, &data_build.setting, &status);
+    fake_build_load_setting(data, build_arguments, process_pipe, &data_build.setting, &status);
 
     if (F_status_is_fine(status)) {
       if (data->main->output.verbosity != f_console_verbosity_quiet_e && data->main->output.verbosity != f_console_verbosity_error_e) {

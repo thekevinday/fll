@@ -70,7 +70,7 @@ extern "C" {
 #endif // _di_fake_build_load_environment_
 
 #ifndef _di_fake_build_load_setting_
-  void fake_build_load_setting(fake_data_t * const data, const f_string_statics_t * const build_arguments, fake_build_setting_t * const setting, f_status_t * const status) {
+  void fake_build_load_setting(fake_data_t * const data, const f_string_statics_t * const build_arguments, const bool process_pipe, fake_build_setting_t * const setting, f_status_t * const status) {
 
     if (F_status_is_error(*status)) return;
 
@@ -82,38 +82,62 @@ extern "C" {
       return;
     }
 
-    const f_string_static_t setting_file = build_arguments && build_arguments->used ? build_arguments->array[0] : f_string_empty_s;
     f_string_statics_t modes_custom = f_string_statics_t_initialize;
     const f_string_statics_t *modes_custom_ptr = 0;
 
     if (build_arguments && build_arguments->used > 1) {
       modes_custom.array = build_arguments->array + 1;
       modes_custom.used = build_arguments->used - 1;
-
       modes_custom_ptr = &modes_custom;
     }
 
     f_string_static_t path_file = f_string_static_t_initialize;
-    path_file.used = data->path_data_build.used + setting_file.used;
+
+    if (build_arguments && build_arguments->used) {
+      path_file.used = data->path_data_build.used + build_arguments->array[0].used;
+    }
+    else if (data->flag & fake_data_flag_has_operation_e) {
+      path_file.used = data->file_data_build_settings.used;
+    }
+    else {
+      path_file.used = f_string_ascii_minus_s.used;
+    }
 
     f_char_t path_file_string[path_file.used + 1];
     path_file.string = path_file_string;
     path_file_string[path_file.used] = 0;
 
+    if (build_arguments && build_arguments->used) {
+      memcpy(path_file_string, data->path_data_build.string, sizeof(f_char_t) * data->path_data_build.used);
+      memcpy(path_file_string + data->path_data_build.used, build_arguments->array[0].string, sizeof(f_char_t) * build_arguments->array[0].used);
+    }
+    else if (data->flag & fake_data_flag_has_operation_e) {
+      memcpy(path_file_string, data->file_data_build_settings.string, sizeof(f_char_t) * data->file_data_build_settings.used);
+    }
+    else {
+      memcpy(path_file_string, f_string_ascii_minus_s.string, sizeof(f_char_t) * f_string_ascii_minus_s.used);
+    }
+
     {
       f_string_dynamic_t buffer = f_string_dynamic_t_initialize;
-
       f_fss_objects_t objects = f_fss_objects_t_initialize;
       f_fss_contents_t contents = f_fss_contents_t_initialize;
 
-      if (setting_file.used) {
-        memcpy(path_file_string, data->path_data_build.string, sizeof(f_char_t) * data->path_data_build.used);
-        memcpy(path_file_string + data->path_data_build.used, setting_file.string, sizeof(f_char_t) * setting_file.used);
+      if (process_pipe) {
+        *status = fake_pipe_buffer(data, &buffer);
 
-        *status = fake_file_buffer(data, path_file, &buffer);
+        if (F_status_is_error(*status)) {
+          buffer.used = 0;
+        }
+        else {
+          *status = f_string_dynamic_append_assure(f_string_eol_s, &buffer);
+        }
       }
-      else {
-        *status = fake_file_buffer(data, data->file_data_build_settings, &buffer);
+
+      if (F_status_is_error_not(*status)) {
+        if (build_arguments && build_arguments->used || (data->flag & fake_data_flag_has_operation_e)) {
+          *status = fake_file_buffer(data, path_file, process_pipe ? F_false : F_true, &buffer);
+        }
       }
 
       if (F_status_is_error_not(*status)) {
@@ -133,7 +157,7 @@ extern "C" {
             fll_error_print(data->main->error, F_status_set_fine(*status), "f_fss_apply_delimit", F_true);
           }
           else {
-            fake_build_load_setting_process(data, F_true, setting_file.used ? path_file : data->file_data_build_settings, modes_custom_ptr, buffer, objects, contents, setting, status);
+            fake_build_load_setting_process(data, F_true, path_file, modes_custom_ptr, buffer, objects, contents, setting, status);
           }
         }
 
@@ -166,7 +190,7 @@ extern "C" {
           fl_print_format("%r%[%QThe setting '%]", data->main->error.to.stream, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
           fl_print_format("%[%Q%]", data->main->error.to.stream, data->main->error.notable, names[i], data->main->error.notable);
           fl_print_format("%[' is required but is not specified in the settings file '%]", data->main->error.to.stream, data->main->error.context, data->main->error.context);
-          fl_print_format("%[%Q%]", data->main->error.to.stream, data->main->error.notable, setting_file.used ? path_file : data->file_data_build_settings, data->main->error.notable);
+          fl_print_format("%[%Q%]", data->main->error.to.stream, data->main->error.notable, path_file, data->main->error.notable);
           fl_print_format("%['.%]%r", data->main->error.to.stream, data->main->error.context, data->main->error.context, f_string_eol_s);
 
           funlockfile(data->main->error.to.stream);
