@@ -41,7 +41,7 @@ Bootstrap Readme Documentation:
 
   If one of the build sub-directories, such as includes, libraries, programs, and settings, is empty or missing after a successful build, then there are no files of that type to install.
 
-  Build Tree Structure Example (using the status_code-0.6.0 project)\:
+  Build Tree Structure Example (using the status_code-0.6.1 project)\:
     build/
     ├── documents
     ├── includes
@@ -51,8 +51,8 @@ Bootstrap Readme Documentation:
     │   ├── script
     │   ├── shared
     │   │   ├── libstatus_code.so -> libstatus_code.so.0
-    │   │   ├── libstatus_code.so.0 -> libstatus_code.so.0.6.0
-    │   │   └── libstatus_code.so.0.6.0
+    │   │   ├── libstatus_code.so.0 -> libstatus_code.so.0.6.1
+    │   │   └── libstatus_code.so.0.6.1
     │   └── static
     │       └── libstatus_code.a
     ├── objects
@@ -77,7 +77,7 @@ Bootstrap Readme Documentation:
         └── sources_settings.built
 
 
-  Work Tree Structure Example at /tmp/work (using the status_code-0.6.0 project)\:
+  Work Tree Structure Example at /tmp/work (using the status_code-0.6.1 project)\:
     /tmp/work/
     ├── includes
     │   └── level_3
@@ -85,8 +85,8 @@ Bootstrap Readme Documentation:
     ├── libraries
     │   ├── shared
     │   │   ├── libstatus_code.so -> libstatus_code.so.0
-    │   │   ├── libstatus_code.so.0 -> libstatus_code.so.0.6.0
-    │   │   └── libstatus_code.so.0.6.0
+    │   │   ├── libstatus_code.so.0 -> libstatus_code.so.0.6.1
+    │   │   └── libstatus_code.so.0.6.1
     │   └── static
     │       └── libstatus_code.a
     └── programs

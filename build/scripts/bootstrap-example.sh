@@ -27,7 +27,7 @@ verbose_common=
 color=
 shared=
 static=
-version=0.6.0
+version=0.6.1
 clang=
 
 let i=2
