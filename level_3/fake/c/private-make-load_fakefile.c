@@ -172,28 +172,30 @@ extern "C" {
             data_make->id_main = data_make->fakefile.used;
           }
 
-          data_make->fakefile.array[data_make->fakefile.used].name = list_objects.array[i];
-
           delimits.used = 0;
-          content_range = list_contents.array[i].array[0];
+          data_make->fakefile.array[data_make->fakefile.used].name = list_objects.array[i];
           data_make->fakefile.array[data_make->fakefile.used].objects.used = 0;
           data_make->fakefile.array[data_make->fakefile.used].contents.used = 0;
           data_make->fakefile.array[data_make->fakefile.used].quotess.used = 0;
 
-          *status = fll_fss_extended_read(data_make->buffer, state, &content_range, &data_make->fakefile.array[data_make->fakefile.used].objects, &data_make->fakefile.array[data_make->fakefile.used].contents, 0, &data_make->fakefile.array[data_make->fakefile.used].quotess, &delimits, 0);
+          if (list_contents.array[i].used) {
+            content_range = list_contents.array[i].array[0];
 
-          if (F_status_is_error(*status)) {
-            fake_print_error_fss(data_make->data, F_status_set_fine(*status), "fll_fss_extended_read", data_make->data->file_data_build_fakefile, content_range, F_true);
+            *status = fll_fss_extended_read(data_make->buffer, state, &content_range, &data_make->fakefile.array[data_make->fakefile.used].objects, &data_make->fakefile.array[data_make->fakefile.used].contents, 0, &data_make->fakefile.array[data_make->fakefile.used].quotess, &delimits, 0);
 
-            break;
-          }
+            if (F_status_is_error(*status)) {
+              fake_print_error_fss(data_make->data, F_status_set_fine(*status), "fll_fss_extended_read", data_make->data->file_data_build_fakefile, content_range, F_true);
 
-          *status = f_fss_apply_delimit(state, delimits, &data_make->buffer);
+              break;
+            }
 
-          if (F_status_is_error(*status)) {
-            fll_error_print(data_make->main->error, F_status_set_fine(*status), "f_fss_apply_delimit", F_true);
+            *status = f_fss_apply_delimit(state, delimits, &data_make->buffer);
 
-            break;
+            if (F_status_is_error(*status)) {
+              fll_error_print(data_make->main->error, F_status_set_fine(*status), "f_fss_apply_delimit", F_true);
+
+              break;
+            }
           }
 
           ++data_make->fakefile.used;
