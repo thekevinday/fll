@@ -113,7 +113,7 @@ extern "C" {
             status2 = f_string_ranges_increase(state.step_small, &contents->array[contents->used]);
             if (F_status_is_error(status2)) return status2;
 
-            ++contents->used;
+            contents->array[contents->used++].used = 0;
 
             return F_none;
           }
@@ -152,6 +152,11 @@ extern "C" {
 
         // When content is found, the range->start is incremented, if content is found at range->stop, then range->start will be > range.stop.
         if (status == F_fss_found_object || status == F_fss_found_content || status == F_fss_found_content_not || status == F_fss_found_object_content_not) {
+
+          if (status == F_fss_found_object_content_not) {
+            contents->array[contents->used].used = 0;
+          }
+
           ++objects->used;
           ++contents->used;
         }
@@ -160,6 +165,10 @@ extern "C" {
         if (range->start >= buffer.used) return F_status_set_error(F_none_eos);
 
         return F_status_set_error(F_none_stop);
+      }
+
+      if (status == F_fss_found_object_content_not) {
+        contents->array[contents->used].used = 0;
       }
 
       ++objects->used;

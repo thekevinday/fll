@@ -73,6 +73,7 @@ extern "C" {
 
           break;
         }
+
       } while (status == F_fss_found_object_not);
 
       if (status == F_none_eos || status == F_none_stop) {
@@ -102,6 +103,11 @@ extern "C" {
 
         // When content is found, the range->start is incremented, if content is found at range->stop, then range->start will be > range.stop.
         if (status == F_fss_found_object || status == F_fss_found_content || status == F_fss_found_content_not || status == F_fss_found_object_content_not) {
+
+          if (status == F_fss_found_object_content_not) {
+            contents->array[contents->used].used = 0;
+          }
+
           ++objects->used;
           ++contents->used;
         }
@@ -109,6 +115,10 @@ extern "C" {
         if (range->start >= buffer.used) return F_none_eos;
 
         return F_none_stop;
+      }
+
+      if (status == F_fss_found_object_content_not) {
+        contents->array[contents->used].used = 0;
       }
 
       ++objects->used;
