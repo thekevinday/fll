@@ -23,7 +23,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (destination->used + 1 > destination->size) {
-      const f_status_t status = private_f_string_quantitys_adjust(destination->used + F_memory_default_allocation_small_d, destination);
+      const f_status_t status = private_f_string_quantitys_resize(destination->used + F_memory_default_allocation_small_d, destination);
       if (F_status_is_error(status)) return status;
     }
 

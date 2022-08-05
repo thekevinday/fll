@@ -25,7 +25,7 @@ extern "C" {
     f_status_t status = F_none;
 
     if (destination->used + 1 > destination->size) {
-      status = private_f_string_triples_adjust(destination->used + F_memory_default_allocation_small_d, destination);
+      status = private_f_string_triples_resize(destination->used + F_memory_default_allocation_small_d, destination);
       if (F_status_is_error(status)) return status;
     }
 
@@ -65,7 +65,7 @@ extern "C" {
     f_status_t status = F_none;
 
     if (destination->used + source.used > destination->size) {
-      status = private_f_string_triples_adjust(destination->used + source.used, destination);
+      status = private_f_string_triples_resize(destination->used + source.used, destination);
       if (F_status_is_error(status)) return status;
     }
 
