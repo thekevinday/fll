@@ -65,7 +65,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (ranges->size - amount > 0) {
+    if (ranges->size > amount) {
       return private_f_string_ranges_adjust(ranges->size - amount, ranges);
     }
 
@@ -81,7 +81,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (ranges->size - amount > 0) {
+    if (ranges->size > amount) {
       return private_f_string_ranges_resize(ranges->size - amount, ranges);
     }
 
@@ -218,7 +218,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (rangess->size - amount > 0) {
+    if (rangess->size > amount) {
       return private_f_string_rangess_adjust(rangess->size - amount, rangess);
     }
 
@@ -234,7 +234,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (rangess->size - amount > 0) {
+    if (rangess->size > amount) {
       return private_f_string_rangess_resize(rangess->size - amount, rangess);
     }
 

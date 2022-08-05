@@ -24,7 +24,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (conditions->size - amount > 0) {
+    if (conditions->size > amount) {
       return private_f_thread_conditions_adjust(conditions->size - amount, conditions);
     }
 
@@ -40,7 +40,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (conditions->size - amount > 0) {
+    if (conditions->size > amount) {
       return private_f_thread_conditions_resize(conditions->size - amount, conditions);
     }
 

@@ -120,7 +120,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (dynamic->size - amount > 0) {
+    if (dynamic->size > amount) {
       return private_f_utf_string_dynamic_adjust(dynamic->size - amount, dynamic);
     }
 
@@ -136,7 +136,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (dynamic->size - amount > 0) {
+    if (dynamic->size > amount) {
       return private_f_utf_string_dynamic_resize(dynamic->size - amount, dynamic);
     }
 
@@ -841,7 +841,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (dynamics->size - amount > 0) {
+    if (dynamics->size > amount) {
       return private_f_utf_string_dynamics_adjust(dynamics->size - amount, dynamics);
     }
 
@@ -857,7 +857,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (dynamics->size - amount > 0) {
+    if (dynamics->size > amount) {
       return private_f_utf_string_dynamics_resize(dynamics->size - amount, dynamics);
     }
 
@@ -994,7 +994,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (dynamicss->size - amount > 0) {
+    if (dynamicss->size > amount) {
       return private_f_utf_string_dynamicss_adjust(dynamicss->size - amount, dynamicss);
     }
 
@@ -1010,7 +1010,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (dynamicss->size - amount > 0) {
+    if (dynamicss->size > amount) {
       return private_f_utf_string_dynamicss_resize(dynamicss->size - amount, dynamicss);
     }
 

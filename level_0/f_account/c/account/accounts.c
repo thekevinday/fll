@@ -66,7 +66,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (accounts->size - amount > 0) {
+    if (accounts->size > amount) {
       return private_f_accounts_adjust(accounts->size - amount, accounts);
     }
 
@@ -82,7 +82,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (accounts->size - amount > 0) {
+    if (accounts->size > amount) {
       return private_f_accounts_resize(accounts->size - amount, accounts);
     }
 
@@ -215,7 +215,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (accountss->size - amount > 0) {
+    if (accountss->size > amount) {
       return private_f_accountss_adjust(accountss->size - amount, accountss);
     }
 
@@ -231,7 +231,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (accountss->size - amount > 0) {
+    if (accountss->size > amount) {
       return private_f_accountss_resize(accountss->size - amount, accountss);
     }
 

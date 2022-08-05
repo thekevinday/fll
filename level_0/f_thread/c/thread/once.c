@@ -24,7 +24,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (onces->size - amount > 0) {
+    if (onces->size > amount) {
       return private_f_thread_onces_adjust(onces->size - amount, onces);
     }
 
@@ -40,7 +40,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (onces->size - amount > 0) {
+    if (onces->size > amount) {
       return private_f_thread_onces_resize(onces->size - amount, onces);
     }
 

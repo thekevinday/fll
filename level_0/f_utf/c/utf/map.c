@@ -69,7 +69,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (maps->size - amount > 0) {
+    if (maps->size > amount) {
       return private_f_utf_string_maps_adjust(maps->size - amount, maps);
     }
 
@@ -85,7 +85,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (maps->size - amount > 0) {
+    if (maps->size > amount) {
       return private_f_utf_string_maps_resize(maps->size - amount, maps);
     }
 
@@ -222,7 +222,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (mapss->size - amount > 0) {
+    if (mapss->size > amount) {
       return private_f_utf_string_mapss_adjust(mapss->size - amount, mapss);
     }
 
@@ -238,7 +238,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (mapss->size - amount > 0) {
+    if (mapss->size > amount) {
       return private_f_utf_string_mapss_resize(mapss->size - amount, mapss);
     }
 

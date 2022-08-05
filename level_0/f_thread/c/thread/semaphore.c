@@ -24,7 +24,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (semaphores->size - amount > 0) {
+    if (semaphores->size > amount) {
       return private_f_thread_semaphores_adjust(semaphores->size - amount, semaphores);
     }
 
@@ -40,7 +40,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (semaphores->size - amount > 0) {
+    if (semaphores->size > amount) {
       return private_f_thread_semaphores_resize(semaphores->size - amount, semaphores);
     }
 

@@ -46,7 +46,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (values->size - amount > 0) {
+    if (values->size > amount) {
       return private_f_limit_values_adjust(values->size - amount, values);
     }
 
@@ -62,7 +62,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (values->size - amount > 0) {
+    if (values->size > amount) {
       return private_f_limit_values_resize(values->size - amount, values);
     }
 
@@ -195,7 +195,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (valuess->size - amount > 0) {
+    if (valuess->size > amount) {
       return private_f_limit_valuess_adjust(valuess->size - amount, valuess);
     }
 
@@ -211,7 +211,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (valuess->size - amount > 0) {
+    if (valuess->size > amount) {
       return private_f_limit_valuess_resize(valuess->size - amount, valuess);
     }
 

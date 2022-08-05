@@ -24,7 +24,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (locks->size - amount > 0) {
+    if (locks->size > amount) {
       return private_f_thread_locks_adjust(locks->size - amount, locks);
     }
 
@@ -40,7 +40,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (locks->size - amount > 0) {
+    if (locks->size > amount) {
       return private_f_thread_locks_resize(locks->size - amount, locks);
     }
 
