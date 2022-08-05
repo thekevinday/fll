@@ -17,7 +17,9 @@ extern "C" {
     // Account home directory.
     f_array_length_t string_length = strnlen(password.pw_dir, password_length);
 
-    status = f_string_dynamic_resize(string_length + 1, &account->home);
+    account->home.used = 0;
+
+    status = f_string_dynamic_increase_by(string_length + 1, &account->home);
     if (F_status_is_error(status)) return status;
 
     memcpy(account->home.string, password.pw_dir, sizeof(f_char_t) * string_length);
@@ -28,7 +30,9 @@ extern "C" {
     // Account label (gecos).
     string_length = strnlen(password.pw_gecos, password_length);
 
-    status = f_string_dynamic_resize(string_length + 1, &account->label);
+    account->label.used = 0;
+
+    status = f_string_dynamic_increase_by(string_length + 1, &account->label);
     if (F_status_is_error(status)) return status;
 
     memcpy(account->label.string, password.pw_gecos, sizeof(f_char_t) * string_length);
@@ -39,7 +43,9 @@ extern "C" {
     // Account name.
     string_length = strnlen(password.pw_name, password_length);
 
-    status = f_string_dynamic_resize(string_length + 1, &account->name);
+    account->name.used = 0;
+
+    status = f_string_dynamic_increase_by(string_length + 1, &account->name);
     if (F_status_is_error(status)) return status;
 
     memcpy(account->name.string, password.pw_name, sizeof(f_char_t) * string_length);
@@ -50,7 +56,9 @@ extern "C" {
     // Account password directory.
     string_length = strnlen(password.pw_passwd, password_length);
 
-    status = f_string_dynamic_resize(string_length + 1, &account->password);
+    account->password.used = 0;
+
+    status = f_string_dynamic_increase_by(string_length + 1, &account->password);
     if (F_status_is_error(status)) return status;
 
     memcpy(account->password.string, password.pw_passwd, sizeof(f_char_t) * string_length);
@@ -61,7 +69,9 @@ extern "C" {
     // Account shell directory.
     string_length = strnlen(password.pw_shell, password_length);
 
-    status = f_string_dynamic_resize(string_length + 1, &account->shell);
+    account->shell.used = 0;
+
+    status = f_string_dynamic_increase_by(string_length + 1, &account->shell);
     if (F_status_is_error(status)) return status;
 
     memcpy(account->shell.string, password.pw_shell, sizeof(f_char_t) * string_length);

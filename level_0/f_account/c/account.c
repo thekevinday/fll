@@ -53,9 +53,7 @@ extern "C" {
         }
       }
       else {
-        if (!pointer) {
-          return F_exist_not;
-        }
+        if (!pointer) return F_exist_not;
 
         return private_f_account_from_passwd(password, length, account);
       }
@@ -78,9 +76,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    if (!pointer) {
-      return F_exist_not;
-    }
+    if (!pointer) return F_exist_not;
 
     return private_f_account_from_passwd(password, length, account);
   }
@@ -117,6 +113,7 @@ extern "C" {
       errno = 0;
 
       char buffer[length];
+
       const int result = getpwnam_r(name.string, &password, buffer, length, &pointer);
 
       if (result) {
@@ -134,9 +131,7 @@ extern "C" {
         }
       }
       else {
-        if (!pointer) {
-          return F_exist_not;
-        }
+        if (!pointer) return F_exist_not;
 
         return private_f_account_from_passwd(password, length, account);
       }
@@ -159,9 +154,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    if (!pointer) {
-      return F_exist_not;
-    }
+    if (!pointer) return F_exist_not;
 
     return private_f_account_from_passwd(password, length, account);
   }
@@ -190,6 +183,7 @@ extern "C" {
       errno = 0;
 
       char buffer[length];
+
       int result = getgrnam_r(name.string, &group_data, buffer, length, &pointer);
 
       if (result) {
@@ -207,9 +201,7 @@ extern "C" {
         }
       }
       else {
-        if (!pointer) {
-          return F_exist_not;
-        }
+        if (!pointer) return F_exist_not;
 
         *id = group_data.gr_gid;
 
@@ -234,9 +226,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    if (!pointer) {
-      return F_exist_not;
-    }
+    if (!pointer) return F_exist_not;
 
     *id = group_data.gr_gid;
 
@@ -271,6 +261,7 @@ extern "C" {
       errno = 0;
 
       char buffer[length];
+
       const int result = getgrgid_r(id, &group_data, buffer, length, &pointer);
 
       if (result) {
@@ -288,13 +279,13 @@ extern "C" {
         }
       }
       else {
-        if (!pointer) {
-          return F_exist_not;
-        }
+        if (!pointer) return F_exist_not;
 
         const f_array_length_t name_length = strnlen(group_data.gr_name, length);
 
-        status = f_string_dynamic_resize(name_length + 1, name);
+        name->used = 0;
+
+        status = f_string_dynamic_increase_by(name_length + 1, name);
         if (F_status_is_error(status)) return status;
 
         memcpy(name->string, group_data.gr_name, sizeof(f_char_t) * name_length);
@@ -323,13 +314,13 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    if (!pointer) {
-      return F_exist_not;
-    }
+    if (!pointer) return F_exist_not;
 
     const f_array_length_t name_length = strnlen(group_data.gr_name, length);
 
-    status = f_string_dynamic_resize(name_length + 1, name);
+    name->used = 0;
+
+    status = f_string_dynamic_increase_by(name_length + 1, name);
     if (F_status_is_error(status)) return status;
 
     memcpy(name->string, group_data.gr_name, sizeof(f_char_t) * name_length);
@@ -364,6 +355,7 @@ extern "C" {
       errno = 0;
 
       char buffer[length];
+
       const int result = getpwnam_r(name.string, &password, buffer, length, &pointer);
 
       if (result) {
@@ -381,9 +373,7 @@ extern "C" {
         }
       }
       else {
-        if (!pointer) {
-          return F_exist_not;
-        }
+        if (!pointer) return F_exist_not;
 
         *id = password.pw_uid;
 
@@ -408,9 +398,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    if (!pointer) {
-      return F_exist_not;
-    }
+    if (!pointer) return F_exist_not;
 
     *id = password.pw_uid;
 
@@ -445,6 +433,7 @@ extern "C" {
       errno = 0;
 
       char buffer[length];
+
       const int result = getpwuid_r(id, &password, buffer, length, &pointer);
 
       if (result) {
@@ -462,13 +451,13 @@ extern "C" {
         }
       }
       else {
-        if (!pointer) {
-          return F_exist_not;
-        }
+        if (!pointer) return F_exist_not;
 
         const f_array_length_t name_length = strnlen(password.pw_name, length);
 
-        status = f_string_dynamic_resize(name_length + 1, name);
+        name->used = 0;
+
+        status = f_string_dynamic_increase_by(name_length + 1, name);
         if (F_status_is_error(status)) return status;
 
         memcpy(name->string, password.pw_name, sizeof(f_char_t) * name_length);
@@ -497,13 +486,13 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    if (!pointer) {
-      return F_exist_not;
-    }
+    if (!pointer) return F_exist_not;
 
     const f_array_length_t name_length = strnlen(password.pw_name, length);
 
-    status = f_string_dynamic_resize(name_length + 1, name);
+    name->used = 0;
+
+    status = f_string_dynamic_increase_by(name_length + 1, name);
     if (F_status_is_error(status)) return status;
 
     memcpy(name->string, password.pw_name, sizeof(f_char_t) * name_length);

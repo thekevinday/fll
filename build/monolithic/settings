@@ -19,7 +19,7 @@ build_language c
 
 build_libraries -lc -lcap
 
-build_sources_library level_0/account.c level_0/private-account.c
+build_sources_library
 build_sources_library level_0/capability.c
 build_sources_library level_0/color.c level_0/private-color.c level_0/color/common.c
 build_sources_library level_0/console.c level_0/console/common.c
@@ -72,7 +72,7 @@ build_sources_library level_2/status_string.c
 
 build_sources_library-monolithic level_0/thread.c level_0/private-thread.c level_0/thread/attribute.c level_0/thread/barrier.c level_0/thread/barrier_attribute.c level_0/thread/condition.c level_0/thread/condition_attribute.c level_0/thread/id.c level_0/thread/key.c level_0/thread/lock.c level_0/thread/lock_attribute.c level_0/thread/mutex.c level_0/thread/mutex_attribute.c level_0/thread/once.c level_0/thread/semaphore.c level_0/thread/set.c level_0/thread/spin.c
 
-build_sources_headers level_0/account.h level_0/account/common.h
+build_sources_headers level_0/account.h level_0/account/accounts.h level_0/account/common.h
 build_sources_headers level_0/capability.h level_0/capability/common.h
 build_sources_headers level_0/color.h level_0/color/common.h
 build_sources_headers level_0/console.h level_0/console/common.h

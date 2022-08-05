@@ -32,6 +32,22 @@
 #include "test-account-group_name_by_id.h"
 #include "test-account-id_by_name.h"
 #include "test-account-name_by_id.h"
+#include "test-account-s_adjust.h"
+#include "test-account-s_append.h"
+#include "test-account-s_append_all.h"
+#include "test-account-s_decimate_by.h"
+#include "test-account-s_decrease_by.h"
+#include "test-account-s_increase.h"
+#include "test-account-s_increase_by.h"
+#include "test-account-s_resize.h"
+#include "test-account-ss_adjust.h"
+#include "test-account-ss_append.h"
+#include "test-account-ss_append_all.h"
+#include "test-account-ss_decimate_by.h"
+#include "test-account-ss_decrease_by.h"
+#include "test-account-ss_increase.h"
+#include "test-account-ss_increase_by.h"
+#include "test-account-ss_resize.h"
 
 #ifdef __cplusplus
 extern "C" {
