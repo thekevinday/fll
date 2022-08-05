@@ -1,0 +1,113 @@
+# fss-0005
+
+main:
+  f_account_by_id
+  f_account_by_name
+  f_account_group_id_by_name
+  f_account_group_name_by_id
+  f_account_id_by_name
+  f_account_name_by_id
+
+  f_accounts_adjust
+  f_accounts_append
+  f_accounts_append_all
+  f_accounts_decimate_by
+  f_accounts_decrease_by
+  f_accounts_increase
+  f_accounts_increase_by
+  f_accounts_resize
+
+  f_accountss_adjust
+  f_accountss_append
+  f_accountss_append_all
+  f_accountss_decimate_by
+  f_accountss_decrease_by
+  f_accountss_increase
+  f_accountss_increase_by
+  f_accountss_resize
+
+f_account_by_id:
+  f_string_dynamic_increase_by
+
+f_account_by_name:
+  f_string_dynamic_increase_by
+
+f_account_delete:
+  f_string_dynamic_resize
+
+f_account_destroy:
+  f_string_dynamic_adjust
+
+f_account_group_id_by_name:
+
+f_account_group_name_by_id:
+  f_string_dynamic_increase_by
+
+f_account_id_by_name:
+
+f_account_name_by_id:
+  f_string_dynamic_increase_by
+
+f_accounts_adjust:
+  f_memory_adjust
+  f_string_dynamic_adjust
+
+f_accounts_append:
+  f_memory_resize
+  f_string_dynamic_append
+
+f_accounts_append_all:
+  f_memory_resize
+  f_string_dynamic_append
+
+f_accounts_decimate_by:
+  f_memory_adjust
+  f_string_dynamic_adjust
+
+f_accounts_decrease_by:
+  f_memory_resize
+  f_string_dynamic_resize
+
+f_accounts_increase:
+  f_memory_resize
+  f_string_dynamic_resize
+
+f_accounts_increase_by:
+  f_memory_resize
+  f_string_dynamic_resize
+
+f_accounts_resize:
+  f_memory_resize
+  f_string_dynamic_resize
+
+f_accountss_adjust:
+  f_memory_adjust
+  f_string_dynamic_adjust
+
+f_accountss_append:
+  f_memory_resize
+  f_string_dynamic_resize
+
+f_accountss_append_all:
+  f_memory_resize
+  f_string_dynamic_resize
+
+f_accountss_decimate_by:
+  f_memory_adjust
+  f_string_dynamic_adjust
+
+f_accountss_decrease_by:
+  f_memory_resize
+  f_string_dynamic_resize
+
+f_accountss_increase:
+  f_memory_resize
+  f_string_dynamic_resize
+
+f_accountss_increase_by:
+  f_memory_resize
+  f_string_dynamic_resize
+
+f_accountss_resize:
+  f_memory_resize
+  f_string_dynamic_resize
