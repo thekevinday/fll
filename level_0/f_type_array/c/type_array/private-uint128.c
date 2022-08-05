@@ -25,7 +25,7 @@ extern "C" {
   extern f_status_t private_f_uint128s_append(const uint128_t source, f_uint128s_t *destination) {
 
     if (destination->used + 1 > destination->size) {
-      const f_status_t status = private_f_uint128s_adjust(destination->used + F_memory_default_allocation_small_d, destination);
+      const f_status_t status = private_f_uint128s_resize(destination->used + F_memory_default_allocation_small_d, destination);
       if (F_status_is_error(status)) return status;
     }
 
@@ -39,7 +39,7 @@ extern "C" {
   extern f_status_t private_f_uint128s_append_all(const f_uint128s_t source, f_uint128s_t *destination) {
 
     if (destination->used + source.used > destination->size) {
-      const f_status_t status = private_f_uint128s_adjust(destination->used + source.used, destination);
+      const f_status_t status = private_f_uint128s_resize(destination->used + source.used, destination);
       if (F_status_is_error(status)) return status;
     }
 
