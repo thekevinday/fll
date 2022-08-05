@@ -24,7 +24,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (mutexs->size - amount > 0) {
+    if (mutexs->size > amount) {
       return private_f_thread_mutexs_adjust(mutexs->size - amount, mutexs);
     }
 
@@ -40,7 +40,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (mutexs->size - amount > 0) {
+    if (mutexs->size > amount) {
       return private_f_thread_mutexs_resize(mutexs->size - amount, mutexs);
     }
 

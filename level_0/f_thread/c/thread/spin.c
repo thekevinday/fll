@@ -24,7 +24,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (spins->size - amount > 0) {
+    if (spins->size > amount) {
       return private_f_thread_spins_adjust(spins->size - amount, spins);
     }
 
@@ -40,7 +40,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (spins->size - amount > 0) {
+    if (spins->size > amount) {
       return private_f_thread_spins_resize(spins->size - amount, spins);
     }
 

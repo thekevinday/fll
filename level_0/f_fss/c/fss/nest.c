@@ -23,7 +23,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (items->size - amount > 0) {
+    if (items->size > amount) {
       return private_f_fss_items_adjust(items->size - amount, items);
     }
 
@@ -39,7 +39,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (items->size - amount > 0) {
+    if (items->size > amount) {
       return private_f_fss_items_resize(items->size - amount, items);
     }
 
@@ -119,7 +119,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (nest->size - amount > 0) {
+    if (nest->size > amount) {
       return private_f_fss_nest_adjust(nest->size - amount, nest);
     }
 
@@ -135,7 +135,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (nest->size - amount > 0) {
+    if (nest->size > amount) {
       return private_f_fss_nest_resize(nest->size - amount, nest);
     }
 
@@ -215,7 +215,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (nests->size - amount > 0) {
+    if (nests->size > amount) {
       return private_f_fss_nests_adjust(nests->size - amount, nests);
     }
 
@@ -231,7 +231,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (nests->size - amount > 0) {
+    if (nests->size > amount) {
       return private_f_fss_nests_resize(nests->size - amount, nests);
     }
 

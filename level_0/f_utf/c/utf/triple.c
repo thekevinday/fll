@@ -102,7 +102,7 @@ extern "C" {
       if (!triples) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (triples->size - amount > 0) {
+    if (triples->size > amount) {
       return private_f_utf_string_triples_adjust(triples->size - amount, triples);
     }
 
@@ -118,7 +118,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (triples->size - amount > 0) {
+    if (triples->size > amount) {
       return private_f_utf_string_triples_resize(triples->size - amount, triples);
     }
 
@@ -255,7 +255,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (tripless->size - amount > 0) {
+    if (tripless->size > amount) {
       return private_f_utf_string_tripless_adjust(tripless->size - amount, tripless);
     }
 
@@ -271,7 +271,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (tripless->size - amount > 0) {
+    if (tripless->size > amount) {
       return private_f_utf_string_tripless_resize(tripless->size - amount, tripless);
     }
 

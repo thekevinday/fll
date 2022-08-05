@@ -119,7 +119,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (nameds->size - amount > 0) {
+    if (nameds->size > amount) {
       return private_f_fss_nameds_adjust(nameds->size - amount, nameds);
     }
 
@@ -135,7 +135,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (nameds->size - amount > 0) {
+    if (nameds->size > amount) {
       return private_f_fss_nameds_resize(nameds->size - amount, nameds);
     }
 

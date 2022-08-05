@@ -90,7 +90,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (datas->size - amount > 0) {
+    if (datas->size > amount) {
       return private_f_iki_datas_adjust(datas->size - amount, datas);
     }
 
@@ -106,7 +106,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (datas->size - amount > 0) {
+    if (datas->size > amount) {
       return private_f_iki_datas_resize(datas->size - amount, datas);
     }
 
@@ -239,7 +239,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (datass->size - amount > 0) {
+    if (datass->size > amount) {
       return private_f_iki_datass_adjust(datass->size - amount, datass);
     }
 
@@ -255,7 +255,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (datass->size - amount > 0) {
+    if (datass->size > amount) {
       return private_f_iki_datass_resize(datass->size - amount, datass);
     }
 

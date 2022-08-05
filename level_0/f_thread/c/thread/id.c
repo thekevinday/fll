@@ -24,7 +24,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (ids->size - amount > 0) {
+    if (ids->size > amount) {
       return private_f_thread_ids_adjust(ids->size - amount, ids);
     }
 
@@ -40,7 +40,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (ids->size - amount > 0) {
+    if (ids->size > amount) {
       return private_f_thread_ids_resize(ids->size - amount, ids);
     }
 

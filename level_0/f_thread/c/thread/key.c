@@ -24,7 +24,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (keys->size - amount > 0) {
+    if (keys->size > amount) {
       return private_f_thread_keys_adjust(keys->size - amount, keys);
     }
 
@@ -40,7 +40,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (keys->size - amount > 0) {
+    if (keys->size > amount) {
       return private_f_thread_keys_resize(keys->size - amount, keys);
     }
 

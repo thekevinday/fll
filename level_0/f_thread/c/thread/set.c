@@ -24,7 +24,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (sets->size - amount > 0) {
+    if (sets->size > amount) {
       return private_f_thread_sets_adjust(sets->size - amount, sets);
     }
 
@@ -40,7 +40,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (sets->size - amount > 0) {
+    if (sets->size > amount) {
       return private_f_thread_sets_resize(sets->size - amount, sets);
     }
 

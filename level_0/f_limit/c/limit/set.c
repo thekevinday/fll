@@ -46,7 +46,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (sets->size - amount > 0) {
+    if (sets->size > amount) {
       return private_f_limit_sets_adjust(sets->size - amount, sets);
     }
 
@@ -62,7 +62,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (sets->size - amount > 0) {
+    if (sets->size > amount) {
       return private_f_limit_sets_resize(sets->size - amount, sets);
     }
 
@@ -195,7 +195,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (setss->size - amount > 0) {
+    if (setss->size > amount) {
       return private_f_limit_setss_adjust(setss->size - amount, setss);
     }
 
@@ -211,7 +211,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (setss->size - amount > 0) {
+    if (setss->size > amount) {
       return private_f_limit_setss_resize(setss->size - amount, setss);
     }
 

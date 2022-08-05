@@ -54,7 +54,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (quantitys->size - amount > 0) {
+    if (quantitys->size > amount) {
       return private_f_string_quantitys_adjust(quantitys->size - amount, quantitys);
     }
 
@@ -70,7 +70,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (quantitys->size - amount > 0) {
+    if (quantitys->size > amount) {
       return private_f_string_quantitys_resize(quantitys->size - amount, quantitys);
     }
 
@@ -207,7 +207,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (quantityss->size - amount > 0) {
+    if (quantityss->size > amount) {
       return private_f_string_quantityss_adjust(quantityss->size - amount, quantityss);
     }
 
@@ -223,7 +223,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (quantityss->size - amount > 0) {
+    if (quantityss->size > amount) {
       return private_f_string_quantityss_resize(quantityss->size - amount, quantityss);
     }
 

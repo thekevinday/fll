@@ -24,7 +24,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (barriers->size - amount > 0) {
+    if (barriers->size > amount) {
       return private_f_thread_barriers_adjust(barriers->size - amount, barriers);
     }
 
@@ -40,7 +40,7 @@ extern "C" {
 
     if (!amount) return F_data_not;
 
-    if (barriers->size - amount > 0) {
+    if (barriers->size > amount) {
       return private_f_thread_barriers_resize(barriers->size - amount, barriers);
     }
 
