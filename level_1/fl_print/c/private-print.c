@@ -1192,7 +1192,7 @@ extern "C" {
   }
 #endif // !defined(_di_fl_print_format_) || !defined(_di_fl_print_format_convert_)
 
-#if !defined(_di_fl_print_trim_except_) || !defined(_di_fl_print_trim_except_dynamic_) || !defined(_di_fl_print_trim_except_dynamic_partial_) || !defined(_di_fl_print_trim_except_in_) || !defined(_di_fl_print_trim_except_in_dynamic_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_)
+#if !defined(_di_fl_print_format_) || !defined(_di_fl_print_format_convert_) || !defined(_di_fl_print_trim_except_) || !defined(_di_fl_print_trim_except_dynamic_) || !defined(_di_fl_print_trim_except_dynamic_partial_) || !defined(_di_fl_print_trim_except_in_) || !defined(_di_fl_print_trim_except_in_dynamic_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_)
   f_status_t private_fl_print_trim_except_in(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE * const stream) {
 
     f_array_length_t i = offset;
@@ -1459,9 +1459,9 @@ extern "C" {
 
     return F_none;
   }
-#endif // !defined(_di_fl_print_trim_except_) || !defined(_di_fl_print_trim_except_dynamic_) || !defined(_di_fl_print_trim_except_dynamic_partial_) || !defined(_di_fl_print_trim_except_in_) || !defined(_di_fl_print_trim_except_in_dynamic_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_)
+#endif // !defined(_di_fl_print_format_) || !defined(_di_fl_print_format_convert_) || !defined(_di_fl_print_trim_except_) || !defined(_di_fl_print_trim_except_dynamic_) || !defined(_di_fl_print_trim_except_dynamic_partial_) || !defined(_di_fl_print_trim_except_in_) || !defined(_di_fl_print_trim_except_in_dynamic_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_)
 
-#if !defined(_di_fl_print_trim_except_raw_) || !defined(_di_fl_print_trim_except_dynamic_raw_) || !defined(_di_fl_print_trim_except_dynamic_partial_raw_) || !defined(_di_fl_print_trim_except_in_raw_) || !defined(_di_fl_print_trim_except_in_dynamic_raw_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_raw_)
+#if !defined(_di_fl_print_format_) || !defined(_di_fl_print_format_convert_) || !defined(_di_fl_print_trim_except_raw_) || !defined(_di_fl_print_trim_except_dynamic_raw_) || !defined(_di_fl_print_trim_except_dynamic_partial_raw_) || !defined(_di_fl_print_trim_except_in_raw_) || !defined(_di_fl_print_trim_except_in_dynamic_raw_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_raw_)
   f_status_t private_fl_print_trim_except_in_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE * const stream) {
 
     f_array_length_t i = offset;
@@ -1665,9 +1665,9 @@ extern "C" {
 
     return F_none;
   }
-#endif // !defined(_di_fl_print_trim_except_raw_) || !defined(_di_fl_print_trim_except_dynamic_raw_) || !defined(_di_fl_print_trim_except_dynamic_partial_raw_) || !defined(_di_fl_print_trim_except_in_raw_) || !defined(_di_fl_print_trim_except_in_dynamic_raw_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_raw_)
+#endif // !defined(_di_fl_print_format_) || !defined(_di_fl_print_format_convert_) || !defined(_di_fl_print_trim_except_raw_) || !defined(_di_fl_print_trim_except_dynamic_raw_) || !defined(_di_fl_print_trim_except_dynamic_partial_raw_) || !defined(_di_fl_print_trim_except_in_raw_) || !defined(_di_fl_print_trim_except_in_dynamic_raw_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_raw_)
 
-#if !defined(_di_fl_print_trim_except_raw_safely_) || !defined(_di_fl_print_trim_except_dynamic_raw_safely_) || !defined(_di_fl_print_trim_except_dynamic_partial_raw_safely_) || !defined(_di_fl_print_trim_except_in_raw_safely_) || !defined(_di_fl_print_trim_except_in_dynamic_raw_safely_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_raw_safely_)
+#if !defined(_di_fl_print_format_) || !defined(_di_fl_print_format_convert_) || !defined(_di_fl_print_trim_except_raw_safely_) || !defined(_di_fl_print_trim_except_dynamic_raw_safely_) || !defined(_di_fl_print_trim_except_dynamic_partial_raw_safely_) || !defined(_di_fl_print_trim_except_in_raw_safely_) || !defined(_di_fl_print_trim_except_in_dynamic_raw_safely_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_raw_safely_)
   f_status_t private_fl_print_trim_except_in_raw_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE * const stream) {
 
     f_array_length_t i = offset;
@@ -1926,9 +1926,9 @@ extern "C" {
 
     return F_none;
   }
-#endif // !defined(_di_fl_print_trim_except_raw_safely_) || !defined(_di_fl_print_trim_except_dynamic_raw_safely_) || !defined(_di_fl_print_trim_except_dynamic_partial_raw_safely_) || !defined(_di_fl_print_trim_except_in_raw_safely_) || !defined(_di_fl_print_trim_except_in_dynamic_raw_safely_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_raw_safely_)
+#endif // !defined(_di_fl_print_format_) || !defined(_di_fl_print_format_convert_) || !defined(_di_fl_print_trim_except_raw_safely_) || !defined(_di_fl_print_trim_except_dynamic_raw_safely_) || !defined(_di_fl_print_trim_except_dynamic_partial_raw_safely_) || !defined(_di_fl_print_trim_except_in_raw_safely_) || !defined(_di_fl_print_trim_except_in_dynamic_raw_safely_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_raw_safely_)
 
-#if !defined(_di_fl_print_trim_except_safely_) || !defined(_di_fl_print_trim_except_dynamic_safely_) || !defined(_di_fl_print_trim_except_dynamic_partial_safely_) || !defined(_di_fl_print_trim_except_in_safely_) || !defined(_di_fl_print_trim_except_in_dynamic_safely_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_safely_)
+#if !defined(_di_fl_print_format_) || !defined(_di_fl_print_format_convert_) || !defined(_di_fl_print_trim_except_dynamic_safely_) || !defined(_di_fl_print_trim_except_dynamic_partial_safely_) || !defined(_di_fl_print_trim_except_in_dynamic_safely_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_safely_) || !defined(_di_fl_print_trim_except_in_safely_) || !defined(_di_fl_print_trim_except_safely_)
   f_status_t private_fl_print_trim_except_in_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE * const stream) {
 
     f_array_length_t i = offset;
@@ -2185,9 +2185,9 @@ extern "C" {
 
     return F_none;
   }
-#endif // !defined(_di_fl_print_trim_except_safely_) || !defined(_di_fl_print_trim_except_dynamic_safely_) || !defined(_di_fl_print_trim_except_dynamic_partial_safely_) || !defined(_di_fl_print_trim_except_in_safely_) || !defined(_di_fl_print_trim_except_in_dynamic_safely_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_safely_)
+#endif // !defined(_di_fl_print_format_) || !defined(_di_fl_print_format_convert_) || !defined(_di_fl_print_trim_except_dynamic_safely_) || !defined(_di_fl_print_trim_except_dynamic_partial_safely_) || !defined(_di_fl_print_trim_except_in_dynamic_safely_) || !defined(_di_fl_print_trim_except_in_dynamic_partial_safely_) || !defined(_di_fl_print_trim_except_in_safely_) || !defined(_di_fl_print_trim_except_safely_)
 
-#if !defined(_di_fl_print_trim_) || !defined(_di_fl_print_trim_dynamic_) || !defined(_di_fl_print_trim_dynamic_partial_)
+#if !defined(_di_fl_print_format_) || !defined(_di_fl_print_format_convert_) || !defined(_di_fl_print_trim_) || !defined(_di_fl_print_trim_dynamic_) || !defined(_di_fl_print_trim_dynamic_partial_)
   f_status_t private_fl_print_trim(const f_string_t string, const f_array_length_t length, FILE * const stream) {
 
     f_array_length_t i = 0;
@@ -2365,9 +2365,9 @@ extern "C" {
 
     return F_none;
   }
-#endif // !defined(_di_fl_print_trim_) || !defined(_di_fl_print_trim_dynamic_) || !defined(_di_fl_print_trim_dynamic_partial_)
+#endif // !defined(_di_fl_print_format_) || !defined(_di_fl_print_format_convert_) || !defined(_di_fl_print_trim_) || !defined(_di_fl_print_trim_dynamic_) || !defined(_di_fl_print_trim_dynamic_partial_)
 
-#if !defined(_di_fl_print_trim_raw_) || !defined(_di_fl_print_trim_dynamic_raw_) || !defined(_di_fl_print_trim_dynamic_partial_raw_)
+#if !defined(_di_fl_print_format_) || !defined(_di_fl_print_format_convert_) || !defined(_di_fl_print_trim_raw_) || !defined(_di_fl_print_trim_dynamic_raw_) || !defined(_di_fl_print_trim_dynamic_partial_raw_)
   f_status_t private_fl_print_trim_raw(const f_string_t string, const f_array_length_t length, FILE * const stream) {
 
     f_array_length_t i = 0;
@@ -2484,9 +2484,9 @@ extern "C" {
 
     return F_none;
   }
-#endif // !defined(_di_fl_print_trim_raw_) || !defined(_di_fl_print_trim_dynamic_raw_) || !defined(_di_fl_print_trim_dynamic_partial_raw_)
+#endif // !defined(_di_fl_print_format_) || !defined(_di_fl_print_format_convert_) || !defined(_di_fl_print_trim_raw_) || !defined(_di_fl_print_trim_dynamic_raw_) || !defined(_di_fl_print_trim_dynamic_partial_raw_)
 
-#if !defined(_di_fl_print_trim_raw_safely_) || !defined(_di_fl_print_trim_dynamic_raw_safely_) || !defined(_di_fl_print_trim_dynamic_partial_raw_safely_)
+#if !defined(_di_fl_print_format_) || !defined(_di_fl_print_format_convert_) || !defined(_di_fl_print_trim_raw_safely_) || !defined(_di_fl_print_trim_dynamic_raw_safely_) || !defined(_di_fl_print_trim_dynamic_partial_raw_safely_)
   f_status_t private_fl_print_trim_raw_safely(const f_string_t string, const f_array_length_t length, FILE * const stream) {
 
     f_array_length_t i = 0;
@@ -2658,9 +2658,9 @@ extern "C" {
 
     return F_none;
   }
-#endif // !defined(_di_fl_print_trim_raw_safely_) || !defined(_di_fl_print_trim_dynamic_raw_safely_) || !defined(_di_fl_print_trim_dynamic_partial_raw_safely_)
+#endif // !defined(_di_fl_print_format_) || !defined(_di_fl_print_format_convert_) || !defined(_di_fl_print_trim_raw_safely_) || !defined(_di_fl_print_trim_dynamic_raw_safely_) || !defined(_di_fl_print_trim_dynamic_partial_raw_safely_)
 
-#if !defined(_di_fl_print_trim_safely_) || !defined(_di_fl_print_trim_dynamic_safely_) || !defined(_di_fl_print_trim_dynamic_partial_safely_)
+#if !defined(_di_fl_print_format_) || !defined(_di_fl_print_format_convert_) || !defined(_di_fl_print_trim_safely_) || !defined(_di_fl_print_trim_dynamic_safely_) || !defined(_di_fl_print_trim_dynamic_partial_safely_)
   f_status_t private_fl_print_trim_safely(const f_string_t string, const f_array_length_t length, FILE * const stream) {
 
     f_array_length_t i = 0;
@@ -2826,7 +2826,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // !defined(_di_fl_print_trim_safely_) || !defined(_di_fl_print_trim_dynamic_safely_) || !defined(_di_fl_print_trim_dynamic_partial_safely_)
+#endif // !defined(_di_fl_print_format_) || !defined(_di_fl_print_format_convert_) || !defined(_di_fl_print_trim_safely_) || !defined(_di_fl_print_trim_dynamic_safely_) || !defined(_di_fl_print_trim_dynamic_partial_safely_)
 
 #ifdef __cplusplus
 } // extern "C"

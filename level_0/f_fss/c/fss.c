@@ -81,7 +81,7 @@ extern "C" {
   }
 #endif // _di_f_fss_count_lines_range_
 
-#ifndef _di_f_fss_do_fail_utf_
+#ifndef _di_f_fss_fail_utf_
   f_status_t f_fss_fail_utf(f_state_t state, const f_status_t status) {
 
     if (F_status_is_error(status)) {
@@ -96,7 +96,7 @@ extern "C" {
   }
 #endif // _di_f_fss_fail_utf_
 
-#ifndef _di_f_fss_do_fail_to_false_utf_
+#ifndef _di_f_fss_fail_utf_to_false_
   f_status_t f_fss_fail_utf_to_false(f_state_t state, const f_status_t status) {
 
     if (F_status_is_error(status)) {

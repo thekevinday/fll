@@ -445,7 +445,7 @@ extern "C" {
   }
 #endif // !defined(_di_fl_directory_copy_file_)
 
-#if !defined(_di_fl_directory_list_)
+#if !defined(_di_fl_directory_clone_) || !defined(_di_fl_directory_copy_) || !defined(_di_fl_directory_list_)
   f_status_t private_fl_directory_list(const f_string_static_t path, int (*filter)(const struct dirent *), int (*sort)(const struct dirent **, const struct dirent **), const bool dereference, f_directory_listing_t * const listing) {
 
     struct dirent **entity = 0;
@@ -455,7 +455,6 @@ extern "C" {
     DIR *parent = opendir(path.string);
 
     if (!parent) {
-      if (errno == ENOMEM) return F_status_set_error(F_memory_not);
       if (errno == ENOMEM) return F_status_set_error(F_memory_not);
       if (errno == EMFILE) return F_status_set_error(F_file_descriptor_max);
       if (errno == ENFILE) return F_status_set_error(F_file_open_max);
@@ -566,7 +565,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // !defined(_di_fl_directory_list_)
+#endif // !defined(_di_fl_directory_clone_) || !defined(_di_fl_directory_copy_) || !defined(_di_fl_directory_list_)
 
 #if !defined(_di_fl_directory_path_push_) || !defined(_di_fl_directory_path_push_dynamic_)
   f_status_t private_fl_directory_path_push(const f_string_static_t source, f_string_dynamic_t * const destination) {

@@ -14,7 +14,7 @@
 extern "C" {
 #endif
 
-#ifndef _di_macro_fl_fss_object_return_on_overflow_
+#ifndef _di_private_macro_fl_fss_object_return_on_overflow_
   #define private_macro_fl_fss_object_return_on_overflow(buffer, range, found, delimits, delimits_used, eos_status, stop_status) \
     if (range.start >= buffer.used) { \
       delimits.used = delimits_used; \
@@ -26,9 +26,9 @@ extern "C" {
       found.stop = range.stop; \
       return stop_status; \
     }
-#endif // _di_macro_fl_fss_object_return_on_overflow_
+#endif // _di_private_macro_fl_fss_object_return_on_overflow_
 
-#ifndef _di_macro_fl_fss_object_return_on_overflow_delimited_
+#ifndef _di_private_macro_fl_fss_object_return_on_overflow_delimited_
   #define private_macro_fl_fss_object_return_on_overflow_delimited(buffer, range, found, eos_status, stop_status) \
     if (range.start >= buffer.used) { \
       found.stop = buffer.used - 1; \
@@ -38,9 +38,9 @@ extern "C" {
       found.stop = range.stop; \
       return stop_status; \
     }
-#endif // _di_macro_fl_fss_object_return_on_overflow_delimited_
+#endif // _di_private_macro_fl_fss_object_return_on_overflow_delimited_
 
-#ifndef _di_macro_fl_fss_content_with_comments_return_on_overflow_
+#ifndef _di_private_macro_fl_fss_content_with_comments_return_on_overflow_
   #define private_macro_fl_fss_content_with_comments_return_on_overflow(buffer, range, found, delimits, delimits_used, comments, comments_used, eos_status, stop_status) \
     if (range.start >= buffer.used) { \
       delimits.used = delimits_used; \
@@ -54,9 +54,9 @@ extern "C" {
       found.array[found.used].stop = range.stop; \
       return stop_status; \
     }
-#endif // _di_macro_fl_fss_content_with_comments_return_on_overflow_
+#endif // _di_private_macro_fl_fss_content_with_comments_return_on_overflow_
 
-#ifndef _di_macro_fl_fss_nest_return_on_overflow_
+#ifndef _di_private_macro_fl_fss_nest_return_on_overflow_
   #define private_macro_fl_fss_nest_return_on_overflow(buffer, range, found, delimits, delimits_used, comments, comments_used, positions, objects, slashes, eos_status, stop_status) \
     if (range.start >= buffer.used) { \
       delimits.used = delimits_used; \
@@ -74,9 +74,9 @@ extern "C" {
       macro_f_array_lengths_t_delete_simple(slashes); \
       return stop_status; \
     }
-#endif // _di_macro_fl_fss_nest_return_on_overflow_
+#endif // _di_private_macro_fl_fss_nest_return_on_overflow_
 
-#ifndef _di_macro_fl_fss_nest_return_on_overflow_delimited_
+#ifndef _di_private_macro_fl_fss_nest_return_on_overflow_delimited_
   #define private_macro_fl_fss_nest_return_on_overflow_delimited(buffer, range, found, positions, objects, slashes, eos_status, stop_status) \
     if (range.start >= buffer.used) { \
       macro_f_array_lengths_t_delete_simple(positions); \
@@ -90,7 +90,7 @@ extern "C" {
       macro_f_array_lengths_t_delete_simple(slashes); \
       return stop_status; \
     }
-#endif // _di_macro_fl_fss_nest_return_on_overflow_delimited_
+#endif // _di_private_macro_fl_fss_nest_return_on_overflow_delimited_
 
 #ifdef __cplusplus
 } // extern "C"

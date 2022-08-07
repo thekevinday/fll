@@ -62,11 +62,18 @@ extern "C" {
  *   F_utf_not (with error bit) if unicode is an invalid Unicode character.
  *
  * @see f_utf_character_is_alphabetic_digit()
+ * @see f_utf_character_is_word()
+ * @see f_utf_character_is_word_dash()
+ * @see f_utf_character_is_word_dash_plus()
  * @see f_utf_is_alphabetic_digit()
+ * @see f_utf_is_word()
+ * @see f_utf_is_word_dash()
+ * @see f_utf_is_word_dash_plus_()
  */
-#if !defined(_di_f_utf_character_is_alphabetic_digit_) || !defined(_di_f_utf_is_alphabetic_digit_)
+#if !defined(_di_f_utf_character_is_alphabetic_digit_) || !defined(_di_f_utf_character_is_word_) || !defined(_di_f_utf_character_is_word_dash_) || !defined(_di_f_utf_character_is_word_dash_plus_) || !defined(_di_f_utf_is_alphabetic_digit_) || !defined(_di_f_utf_is_word_) || !defined(_di_f_utf_is_word_dash_) || !defined(_di_f_utf_is_word_dash_plus_)
+
   extern f_status_t private_f_utf_character_is_alphabetic_digit(const f_utf_char_t sequence, uint64_t * const value) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_utf_character_is_alphabetic_digit_) || !defined(_di_f_utf_is_alphabetic_digit_)
+#endif // !defined(_di_f_utf_character_is_alphabetic_digit_) || !defined(_di_f_utf_character_is_word_) || !defined(_di_f_utf_character_is_word_dash_) || !defined(_di_f_utf_character_is_word_dash_plus_) || !defined(_di_f_utf_is_alphabetic_digit_) || !defined(_di_f_utf_is_word_) || !defined(_di_f_utf_is_word_dash_) || !defined(_di_f_utf_is_word_dash_plus_)
 
 /**
  * Private implementation of f_utf_character_is_alphabetic_numeric().

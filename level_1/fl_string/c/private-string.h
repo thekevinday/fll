@@ -116,6 +116,7 @@ extern "C" {
  *
  * @see f_utf_is_combining()
  * @see f_utf_is_whitespace()
+ *
  * @see fl_string_compare_except_trim()
  * @see fl_string_dynamic_compare_except_trim()
  * @see fl_string_dynamic_partial_compare_except_trim()
@@ -153,6 +154,7 @@ extern "C" {
  *
  * @see f_utf_is_combining()
  * @see f_utf_is_whitespace()
+ *
  * @see fl_string_compare_trim()
  * @see fl_string_dynamic_compare_trim()
  * @see fl_string_dynamic_partial_compare_trim()
@@ -186,14 +188,16 @@ extern "C" {
  *
  * @see f_utf_is_combining()
  * @see f_utf_is_whitespace()
- * @see fl_string_rip()
- * @see fl_string_rip_nulless()
+ *
  * @see fl_string_dynamic_partial_rip()
  * @see fl_string_dynamic_partial_rip_nulless()
+ * @see fl_string_dynamic_rip()
+ * @see fl_string_rip()
+ * @see fl_string_rip_nulless()
  */
-#if !defined(_di_fl_string_rip_) || !defined(_di_fl_string_dynamic_partial_rip_) || !defined(_di_fl_string_rip_nulless_) || !defined(_di_fl_string_dynamic_partial_rip_nulless_)
+#if !defined(_di_fl_string_dynamic_partial_rip_) || !defined(_di_fl_string_dynamic_partial_rip_nulless_) || !defined(_di_fl_string_dynamic_rip_)  || !defined(_di_fl_string_rip_) || !defined(_di_fl_string_rip_nulless_)
   extern f_status_t private_fl_string_rip_find_range(const f_string_t string, f_array_length_t * const start, f_array_length_t * const stop) F_attribute_visibility_internal_d;
-#endif // !defined(_di_fl_string_rip_) || !defined(_di_fl_string_dynamic_partial_rip_) || !defined(_di_fl_string_rip_nulless_) || !defined(_di_fl_string_dynamic_partial_rip_nulless_)
+#endif // !defined(_di_fl_string_dynamic_partial_rip_) || !defined(_di_fl_string_dynamic_partial_rip_nulless_) || !defined(_di_fl_string_dynamic_rip_)  || !defined(_di_fl_string_rip_) || !defined(_di_fl_string_rip_nulless_)
 
 #ifdef __cplusplus
 } // extern "C"

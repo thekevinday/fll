@@ -154,7 +154,7 @@ extern "C" {
  * @return
  *   Status is either directly passed through or the error bit is removed depending on state.flag.
  */
-#ifndef _di_f_fss_do_fail_utf_
+#ifndef _di_f_fss_fail_utf_
   extern f_status_t f_fss_fail_utf(f_state_t state, const f_status_t status);
 #endif // _di_f_fss_fail_utf_
 
@@ -176,7 +176,7 @@ extern "C" {
  * @return
  *   Status is either directly passed through or F_false is returned depending on state.flag.
  */
-#ifndef _di_f_fss_do_fail_to_false_utf_
+#ifndef _di_f_fss_fail_utf_to_false_
   extern f_status_t f_fss_fail_utf_to_false(f_state_t state, const f_status_t status);
 #endif // _di_f_fss_fail_utf_to_false_
 

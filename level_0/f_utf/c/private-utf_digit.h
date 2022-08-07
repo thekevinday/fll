@@ -37,12 +37,20 @@ extern "C" {
  *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
  *   F_utf_not (with error bit) if unicode is an invalid Unicode character.
  *
+ * @see f_utf_character_is_alphabetic_digit()
  * @see f_utf_character_is_digit()
+ * @see f_utf_character_is_word()
+ * @see f_utf_character_is_word_dash()
+ * @see f_utf_character_is_word_dash_plus()
+ * @see f_utf_is_alphabetic_digit()
  * @see f_utf_is_digit()
+ * @see f_utf_is_word()
+ * @see f_utf_is_word_dash()
+ * @see f_utf_is_word_dash_plus_)
  */
-#if !defined(_di_f_utf_character_is_digit_) || !defined(_di_f_utf_is_digit_)
+#if !defined(_di_f_utf_character_is_alphabetic_digit_) || !defined(_di_f_utf_character_is_digit_) || !defined(_di_f_utf_character_is_word_) || !defined(_di_f_utf_character_is_word_dash_) || !defined(_di_f_utf_character_is_word_dash_plus_) || !defined(_di_f_utf_is_alphabetic_digit_) || !defined(_di_f_utf_is_digit_) || !defined(_di_f_utf_is_word_) || !defined(_di_f_utf_is_word_dash_) || !defined(_di_f_utf_is_word_dash_plus_)
   extern f_status_t private_f_utf_character_is_digit(const f_utf_char_t sequence, uint64_t * const value) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_utf_character_is_digit_) || !defined(_di_f_utf_is_digit_)
+#endif // !defined(_di_f_utf_character_is_alphabetic_digit_) || !defined(_di_f_utf_character_is_digit_) || !defined(_di_f_utf_character_is_word_) || !defined(_di_f_utf_character_is_word_dash_) || !defined(_di_f_utf_character_is_word_dash_plus_) || !defined(_di_f_utf_is_alphabetic_digit_) || !defined(_di_f_utf_is_digit_) || !defined(_di_f_utf_is_word_) || !defined(_di_f_utf_is_word_dash_) || !defined(_di_f_utf_is_word_dash_plus_)
 
 /**
  * Helper function for handling ascii-only tests.
@@ -61,12 +69,20 @@ extern "C" {
  *
  * @see isdigit()
  *
+ * @see f_utf_character_is_alphabetic_digit()
  * @see f_utf_character_is_digit()
+ * @see f_utf_character_is_word()
+ * @see f_utf_character_is_word_dash()
+ * @see f_utf_character_is_word_dash_plus()
+ * @see f_utf_is_alphabetic_digit()
  * @see f_utf_is_digit()
+ * @see f_utf_is_word()
+ * @see f_utf_is_word_dash()
+ * @see f_utf_is_word_dash_plus()
  */
-#if !defined(_di_f_utf_character_is_digit_) || !defined(_di_f_utf_is_digit_)
+#if !defined(_di_f_utf_character_is_alphabetic_digit_) || !defined(_di_f_utf_character_is_digit_) || !defined(_di_f_utf_character_is_word_) || !defined(_di_f_utf_character_is_word_dash_) || !defined(_di_f_utf_character_is_word_dash_plus_) || !defined(_di_f_utf_is_alphabetic_digit_) || !defined(_di_f_utf_is_digit_) || !defined(_di_f_utf_is_word_) || !defined(_di_f_utf_is_word_dash_) || !defined(_di_f_utf_is_word_dash_plus_)
   extern f_status_t private_f_utf_character_is_digit_for_ascii(const f_char_t character, uint64_t * const value) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_utf_character_is_digit_) || !defined(_di_f_utf_is_digit_)
+#endif // !defined(_di_f_utf_character_is_alphabetic_digit_) || !defined(_di_f_utf_character_is_digit_) || !defined(_di_f_utf_character_is_word_) || !defined(_di_f_utf_character_is_word_dash_) || !defined(_di_f_utf_character_is_word_dash_plus_) || !defined(_di_f_utf_is_alphabetic_digit_) || !defined(_di_f_utf_is_digit_) || !defined(_di_f_utf_is_word_) || !defined(_di_f_utf_is_word_dash_) || !defined(_di_f_utf_is_word_dash_plus_)
 
 #ifdef __cplusplus
 } // extern "C"

@@ -7,7 +7,7 @@
 extern "C" {
 #endif
 
-#if !defined(_di_f_utf_character_is_numeric_) || !defined(_di_f_utf_is_numeric_)
+#if !defined(_di_f_utf_character_is_alphabetic_) || !defined(_di_f_utf_character_is_alphabetic_digit_) || !defined(_di_f_utf_character_is_alphabetic_numeric_) || !defined(_di_f_utf_character_is_word_) || !defined(_di_f_utf_character_is_word_dash_) || !defined(_di_f_utf_character_is_word_dash_plus_) || !defined(_di_f_utf_is_alphabetic_) || !defined(_di_f_utf_is_alphabetic_digit_) || !defined(_di_f_utf_is_alphabetic_numeric_) || !defined(_di_f_utf_is_word_) || !defined(_di_f_utf_is_word_dash_) || !defined(_di_f_utf_is_word_dash_plus_)
   f_status_t private_f_utf_character_is_numeric(const f_utf_char_t sequence) {
 
     if (macro_f_utf_char_t_width_is(sequence) == 2) {
@@ -698,7 +698,7 @@ extern "C" {
 
     return F_false;
   }
-#endif // !defined(_di_f_utf_character_is_numeric_) || !defined(_di_f_utf_is_numeric_)
+#endif // !defined(_di_f_utf_character_is_alphabetic_) || !defined(_di_f_utf_character_is_alphabetic_digit_) || !defined(_di_f_utf_character_is_alphabetic_numeric_) || !defined(_di_f_utf_character_is_word_) || !defined(_di_f_utf_character_is_word_dash_) || !defined(_di_f_utf_character_is_word_dash_plus_) || !defined(_di_f_utf_is_alphabetic_) || !defined(_di_f_utf_is_alphabetic_digit_) || !defined(_di_f_utf_is_alphabetic_numeric_) || !defined(_di_f_utf_is_word_) || !defined(_di_f_utf_is_word_dash_) || !defined(_di_f_utf_is_word_dash_plus_)
 
 #ifdef __cplusplus
 } // extern "C"

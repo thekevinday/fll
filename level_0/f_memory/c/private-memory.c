@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-#if !defined(_di_f_memory_structure_adjust_) || !defined(_di_f_memory_structure_decimate_by_)
+#if !defined(_di_f_memory_adjust_) || !defined(_di_f_memory_structure_adjust_) || !defined(_di_f_memory_structure_decimate_by_)
   f_status_t private_f_memory_adjust(const size_t length_old, const size_t length_new, const size_t type_size, void ** const pointer) {
 
     if (length_old == length_new) {
@@ -60,9 +60,9 @@ extern "C" {
 
     return F_status_set_error(F_memory_not);
   }
-#endif // !defined(_di_f_memory_structure_adjust_) || !defined(_di_f_memory_structure_decimate_by_)
+#endif // !defined(_di_f_memory_adjust_) || !defined(_di_f_memory_structure_adjust_) || !defined(_di_f_memory_structure_decimate_by_)
 
-#if !defined(_di_memory_structure_decrease_by_) || !defined(_di_memory_structure_increase_) || !defined(_di_memory_structure_increase_by_) || !defined(_di_f_memory_structure_resize_)
+#if !defined(_di_f_memory_resize_) || !defined(_di_memory_structure_decrease_by_) || !defined(_di_memory_structure_increase_) || !defined(_di_memory_structure_increase_by_) || !defined(_di_f_memory_structure_resize_)
   f_status_t private_f_memory_resize(const size_t length_old, const size_t length_new, const size_t type_size, void ** const pointer) {
 
     if (length_old == length_new) {
@@ -108,7 +108,7 @@ extern "C" {
 
     return F_status_set_error(F_memory_not);
   }
-#endif // !defined(_di_memory_structure_decrease_by_) || !defined(_di_memory_structure_increase_) || !defined(_di_memory_structure_increase_by_) || !defined(_di_f_memory_structure_resize_)
+#endif // !defined(_di_f_memory_resize_) || !defined(_di_memory_structure_decrease_by_) || !defined(_di_memory_structure_increase_) || !defined(_di_memory_structure_increase_by_) || !defined(_di_f_memory_structure_resize_)
 
 #if !defined(_di_f_memory_structure_adjust_) || !defined(_di_f_memory_structure_decimate_by_)
   f_status_t private_f_memory_structure_adjust(const size_t length_new, const size_t type_size, void ** const structure, f_array_length_t * const used, f_array_length_t * const size) {

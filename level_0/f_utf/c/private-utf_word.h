@@ -39,11 +39,15 @@ extern "C" {
  *   F_utf_not (with error bit) if unicode is an invalid Unicode character.
  *
  * @see f_utf_character_is_word()
+ * @see f_utf_character_is_word_dash()
+ * @see f_utf_character_is_word_dash_plus()
  * @see f_utf_is_word()
+ * @see f_utf_is_word_dash()
+ * @see f_utf_is_word_dash_plus()
  */
-#if !defined(_di_f_utf_character_is_word_) || !defined(_di_f_utf_is_word_)
+#if !defined(_di_f_utf_character_is_word_) || !defined(_di_f_utf_character_is_word_dash_) || !defined(_di_f_utf_character_is_word_dash_plus_) || !defined(_di_f_utf_is_word_) || !defined(_di_f_utf_is_word_dash_) || !defined(_di_f_utf_is_word_dash_plus_)
   extern f_status_t private_f_utf_character_is_word(const f_utf_char_t sequence, const bool strict) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_utf_character_is_word_) || !defined(_di_f_utf_is_word_)
+#endif // !defined(_di_f_utf_character_is_word_) || !defined(_di_f_utf_character_is_word_dash_) || !defined(_di_f_utf_character_is_word_dash_plus_) || !defined(_di_f_utf_is_word_) || !defined(_di_f_utf_is_word_dash_) || !defined(_di_f_utf_is_word_dash_plus_)
 
 /**
  * Private implementation of f_utf_character_is_word_dash().
@@ -67,11 +71,13 @@ extern "C" {
  *   F_utf_not (with error bit) if unicode is an invalid Unicode character.
  *
  * @see f_utf_character_is_word_dash()
+ * @see f_utf_character_is_word_dash_plus()
  * @see f_utf_is_word_dash()
+ * @see f_utf_is_word_dash_plus()
  */
-#if !defined(_di_f_utf_character_is_word_dash_) || !defined(_di_f_utf_is_word_dash_)
+#if !defined(_di_f_utf_character_is_word_dash_) || !defined(_di_f_utf_character_is_word_dash_plus_) || !defined(_di_f_utf_is_word_dash_) || !defined(_di_f_utf_is_word_dash_plus_)
   extern f_status_t private_f_utf_character_is_word_dash(const f_utf_char_t sequence, const bool strict) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_utf_character_is_word_dash_) || !defined(_di_f_utf_is_word_dash_)
+#endif // !defined(_di_f_utf_character_is_word_dash_) || !defined(_di_f_utf_character_is_word_dash_plus_) || !defined(_di_f_utf_is_word_dash_) || !defined(_di_f_utf_is_word_dash_plus_)
 
 /**
  * Private implementation of f_utf_character_is_word_dash_plus().
