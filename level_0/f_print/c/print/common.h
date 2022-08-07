@@ -161,9 +161,9 @@ extern "C" {
  * The key should represents the ASCII code.
  * With the exception being ASCII code 127, which is not present in this map.
  */
-#ifndef _di_f_print_sequences_set_control_
+#ifndef _di_f_print_sequences_set_control_s_
   extern const f_string_static_t f_print_sequence_set_control_s[32];
-#endif // _di_f_print_sequences_set_control_
+#endif // _di_f_print_sequences_set_control_s_
 
 /**
  * Provide basic format flags.

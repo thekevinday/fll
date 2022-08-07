@@ -206,7 +206,7 @@ extern "C" {
   }
 #endif // _di_f_utf_is_control_
 
-#ifndef _di_f_utf_is_control_code
+#ifndef _di_f_utf_is_control_code_
   f_status_t f_utf_is_control_code(const f_string_t sequence, const f_array_length_t width_max) {
     #ifndef _di_level_0_parameter_checking_
       if (width_max < 1) return F_status_set_error(F_parameter);

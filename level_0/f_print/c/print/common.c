@@ -43,7 +43,7 @@ extern "C" {
   const f_string_static_t f_print_sequence_unknown_s = macro_f_string_static_t_initialize(F_print_sequence_unknown_s, 0, F_print_sequence_unknown_s_length);
 #endif // _di_f_print_sequences_
 
-#ifndef _di_f_print_sequences_set_control_
+#ifndef _di_f_print_sequences_set_control_s_
   #ifdef _clang_not_a_compile_time_constant_workaround_
     const f_string_static_t f_print_sequence_set_control_s[32] = {
       macro_f_string_static_t_initialize(F_print_sequence_null_s, 0, F_print_sequence_null_s_length),
@@ -115,7 +115,7 @@ extern "C" {
       f_print_sequence_separator_unit_s,
     };
   #endif // _clang_not_a_compile_time_constant_workaround_
-#endif // _di_f_print_sequences_set_control_
+#endif // _di_f_print_sequences_set_control_s_
 
 #ifdef __cplusplus
 } // extern "C"

@@ -2,6 +2,7 @@
 #include "../private-utf.h"
 #include "private-dynamic.h"
 #include "private-map_multi.h"
+#include "private-string.h"
 
 #ifdef __cplusplus
 extern "C" {

@@ -7,7 +7,7 @@
 extern "C" {
 #endif
 
-#if !defined(_di_f_utf_character_is_word_) || !defined(_di_f_utf_is_word_)
+#if !defined(_di_f_utf_character_is_word_) || !defined(_di_f_utf_character_is_word_dash_) || !defined(_di_f_utf_character_is_word_dash_plus_) || !defined(_di_f_utf_is_word_) || !defined(_di_f_utf_is_word_dash_) || !defined(_di_f_utf_is_word_dash_plus_)
   f_status_t private_f_utf_character_is_word(const f_utf_char_t sequence, const bool strict) {
 
     if (private_f_utf_character_is_alphabetic_digit(sequence, 0)) {
@@ -46,9 +46,9 @@ extern "C" {
 
     return F_false;
   }
-#endif // !defined(_di_f_utf_character_is_word_) || !defined(_di_f_utf_is_word_)
+#endif // !defined(_di_f_utf_character_is_word_) || !defined(_di_f_utf_character_is_word_dash_) || !defined(_di_f_utf_character_is_word_dash_plus_) || !defined(_di_f_utf_is_word_) || !defined(_di_f_utf_is_word_dash_) || !defined(_di_f_utf_is_word_dash_plus_)
 
-#if !defined(_di_f_utf_character_is_word_dash_) || !defined(_di_f_utf_is_word_dash_)
+#if !defined(_di_f_utf_character_is_word_dash_) || !defined(_di_f_utf_character_is_word_dash_plus_) || !defined(_di_f_utf_is_word_dash_) || !defined(_di_f_utf_is_word_dash_plus_)
   f_status_t private_f_utf_character_is_word_dash(const f_utf_char_t sequence, const bool strict) {
 
     if (private_f_utf_character_is_word(sequence, strict)) {
@@ -65,7 +65,7 @@ extern "C" {
 
     return F_false;
   }
-#endif // !defined(_di_f_utf_character_is_word_dash_) || !defined(_di_f_utf_is_word_dash_)
+#endif // !defined(_di_f_utf_character_is_word_dash_) || !defined(_di_f_utf_character_is_word_dash_plus_) || !defined(_di_f_utf_is_word_dash_) || !defined(_di_f_utf_is_word_dash_plus_)
 
 #if !defined(_di_f_utf_character_is_word_dash_plus_) || !defined(_di_f_utf_is_word_dash_plus_)
   f_status_t private_f_utf_character_is_word_dash_plus(const f_utf_char_t sequence, const bool strict) {

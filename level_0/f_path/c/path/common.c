@@ -17,7 +17,7 @@ extern "C" {
   const f_string_static_t f_path_present_working_old_s = macro_f_string_static_t_initialize(F_path_present_working_old_s, 0, F_path_present_working_old_s_length);
 #endif // _di_f_path_defines_
 
-#ifdef _di_path_tree_s_
+#if defined(_di_f_path_tree_s_) && !defined(_di_f_path_tree_hierarchy_standard_) && !defined(_di_f_path_tree_kevux_standard_)
 
   // KFS Root Level.
   const f_string_static_t f_path_tree_devices_s = macro_f_string_static_t_initialize(F_path_tree_devices_s, 0, F_path_tree_devices_s_length);
@@ -81,7 +81,7 @@ extern "C" {
   const f_string_static_t f_path_user_data_s = macro_f_string_static_t_initialize(F_path_user_data_s, 0, F_path_user_data_s_length);
   const f_string_static_t f_path_user_temporary_s = macro_f_string_static_t_initialize(F_path_user_temporary_s, 0, F_path_user_temporary_s_length);
   const f_string_static_t f_path_user_shared_s = macro_f_string_static_t_initialize(F_path_user_shared_s, 0, F_path_user_shared_s_length);
-#endif // _di_path_tree_s_
+#endif // defined(_di_f_path_tree_s_) && !defined(_di_f_path_tree_hierarchy_standard_) && !defined(_di_f_path_tree_kevux_standard_)
 
 #ifdef __cplusplus
 } // extern "C"

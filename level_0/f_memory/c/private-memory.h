@@ -41,12 +41,13 @@ extern "C" {
  * @see free()
  * @see memset()
  *
+ * @see f_memory_adjust()
  * @see f_memory_structure_adjust()
  * @see f_memory_structure_decimate_by()
  */
-#if !defined(_di_f_memory_structure_adjust_) || !defined(_di_f_memory_structure_decimate_by_)
+#if !defined(_di_f_memory_adjust_) || !defined(_di_f_memory_structure_adjust_) || !defined(_di_f_memory_structure_decimate_by_)
   extern f_status_t private_f_memory_adjust(const size_t length_old, const size_t length_new, const size_t type_size, void ** const pointer) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_memory_structure_adjust_) || !defined(_di_f_memory_structure_decimate_by_)
+#endif // !defined(_di_f_memory_adjust_) || !defined(_di_f_memory_structure_adjust_) || !defined(_di_f_memory_structure_decimate_by_)
 
 /**
  * Private implementation for resizing.
@@ -74,6 +75,7 @@ extern "C" {
  * @see free()
  * @see memset()
  *
+ * @see f_memory_resize()
  * @see f_memory_structure_decrease_by()
  * @see f_memory_structure_increase()
  * @see f_memory_structure_increase_by()
@@ -81,9 +83,9 @@ extern "C" {
  *
  * @see private_f_memory_structure_resize()
  */
-#if !defined(_di_memory_structure_decrease_by_) || !defined(_di_memory_structure_increase_) || !defined(_di_memory_structure_increase_by_) || !defined(_di_f_memory_structure_resize_)
+#if !defined(_di_f_memory_resize_) || !defined(_di_memory_structure_decrease_by_) || !defined(_di_memory_structure_increase_) || !defined(_di_memory_structure_increase_by_) || !defined(_di_f_memory_structure_resize_)
   extern f_status_t private_f_memory_resize(const size_t length_old, const size_t length_new, const size_t type_size, void ** const pointer) F_attribute_visibility_internal_d;
-#endif // !defined(_di_memory_structure_decrease_by_) || !defined(_di_memory_structure_increase_) || !defined(_di_memory_structure_increase_by_) || !defined(_di_f_memory_structure_resize_)
+#endif // !defined(_di_f_memory_resize_) || !defined(_di_memory_structure_decrease_by_) || !defined(_di_memory_structure_increase_) || !defined(_di_memory_structure_increase_by_) || !defined(_di_f_memory_structure_resize_)
 
 /**
  * Private implementation for resizing a structure.

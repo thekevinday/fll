@@ -18,7 +18,7 @@ extern "C" {
       return private_f_memory_adjust(old_length, new_length, size, pointer);
     #endif // _f_memory_FORCE_fast_memory_
   }
-#endif // _di_f_memory_adjust_-#ifndef _di_f_memory_delete_
+#endif // _di_f_memory_adjust_
 
 #ifndef _di_f_memory_delete_
   f_status_t f_memory_delete(const size_t length, const size_t size, void ** const pointer) {

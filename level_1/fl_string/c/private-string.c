@@ -605,7 +605,7 @@ extern "C" {
   }
 #endif // !defined(_di_fl_string_compare_trim_) || !defined(_di_fl_string_dynamic_compare_trim_) || !defined(_di_fl_string_dynamic_partial_compare_trim_)
 
-#if !defined(_di_fl_string_rip_) || !defined(_di_fl_string_dynamic_partial_rip_) || !defined(_di_fl_string_rip_nulless_) || !defined(_di_fl_string_dynamic_partial_rip_nulless_)
+#if !defined(_di_fl_string_dynamic_partial_rip_) || !defined(_di_fl_string_dynamic_partial_rip_nulless_) || !defined(_di_fl_string_dynamic_rip_)  || !defined(_di_fl_string_rip_) || !defined(_di_fl_string_rip_nulless_)
   f_status_t private_fl_string_rip_find_range(const f_string_t string, f_array_length_t * const start, f_array_length_t * const stop) {
 
     const f_array_length_t stop_original = *stop;
@@ -712,7 +712,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // !defined(_di_fl_string_rip_) || !defined(_di_fl_string_dynamic_partial_rip_) || !defined(_di_fl_string_rip_nulless_) || !defined(_di_fl_string_dynamic_partial_rip_nulless_)
+#endif // !defined(_di_fl_string_dynamic_partial_rip_) || !defined(_di_fl_string_dynamic_partial_rip_nulless_) || !defined(_di_fl_string_dynamic_rip_)  || !defined(_di_fl_string_rip_) || !defined(_di_fl_string_rip_nulless_)
 
 #ifdef __cplusplus
 } // extern "C"

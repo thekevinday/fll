@@ -168,11 +168,14 @@ extern "C" {
  *
  * @see f_file_stat_at()
  * @see f_string_dynamics_increase_by()
+ *
+ * @see fl_directory_clone()
  * @see fl_directory_list()
+ * @see fl_directory_copy()
  */
-#if !defined(_di_fl_directory_list_)
+#if !defined(_di_fl_directory_clone_) || !defined(_di_fl_directory_copy_) || !defined(_di_fl_directory_list_)
   extern f_status_t private_fl_directory_list(const f_string_static_t path, int (*filter)(const struct dirent *), int (*sort)(const struct dirent **, const struct dirent **), const bool dereference, f_directory_listing_t * const listing) F_attribute_visibility_internal_d;
-#endif // !defined(_di_fl_directory_list_)
+#endif // !defined(_di_fl_directory_clone_) || !defined(_di_fl_directory_copy_) || !defined(_di_fl_directory_list_)
 
 /**
  * Private implementation of fl_directory_path_push().
