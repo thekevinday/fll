@@ -40,8 +40,7 @@ test_main() {
   local path_test_project=${path_test}project/
   local path_test_work=${path_test}work/
   local path_test_package_individual=${path_test_package}individual/
-  local path_test_package_monolithic=${path_test_package}monolithic/
-  local path_test_package_program=${path_test_package}program/
+  local path_test_package_stand_alone=${path_test_package}stand_alone/
   local test_system=
 
   local context=
@@ -122,8 +121,7 @@ test_main() {
           path_test=$(echo $p | sed -e 's|^//*|/|' -e 's|/*$|/|')
           path_test_package=${path_test}package/
           path_test_package_individual=${path_test_package}individual/
-          path_test_package_monolithic=${path_test_package}monolithic/
-          path_test_package_program=${path_test_package}program/
+          path_test_package_stand_alone=${path_test_package}stand_alone/
           path_test_project=${path_test}project/
           path_test_work=${path_test}work/
         fi
@@ -372,12 +370,10 @@ test_operate_build_individual() {
 
   if [[ $verbosity == "debug" ]] ; then
     echo
-    echo "bash ${path_scripts_package} $verbose $context -d $path_test_package -i clean &&"
-    echo "bash ${path_scripts_package} $verbose $context -d $path_test_package -i build"
+    echo "bash ${path_scripts_package} $verbose $context -d $path_test_package -i rebuild"
   fi
 
-  bash ${path_scripts_package} $verbose $context -d $path_test_package -i clean &&
-  bash ${path_scripts_package} $verbose $context -d $path_test_package -i build
+  bash ${path_scripts_package} $verbose $context -d $path_test_package -i rebuild
 
   if [[ $? -ne 0 ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
@@ -445,7 +441,7 @@ test_operate_build_project() {
       if [[ $build_compiler == "gcc" ]] ; then
         echo "PATH=\"$env_path\" LD_LIBRARY_PATH=\"$env_libs\" fake $verbose $context -w \"$destination\" -m $mode clean build $ci_arguments"
       else
-        echo "PATH=\"$env_path\" LD_LIBRARY_PATH=\"$env_libs\" fake $verbose $context -w \"$destination\" -m individual -m $build_compiler clean make -f testfile $ci_arguments"
+        echo "PATH=\"$env_path\" LD_LIBRARY_PATH=\"$env_libs\" fake $verbose $context -w \"$destination\" -m $mode -m $build_compiler clean make -f testfile $ci_arguments"
       fi
     fi
 
@@ -512,54 +508,24 @@ test_operate_build_tools() {
 
   if [[ $verbosity == "debug" ]] ; then
     echo
-    echo "bash ${path_scripts_package} $verbose $context -d $path_test_package -m clean &&"
-    echo "bash ${path_scripts_package} $verbose $context -d $path_test_package -m build"
+    echo "bash ${path_scripts_package} $verbose $context -d $path_test_package -S fake rebuild"
   fi
 
-  bash ${path_scripts_package} $verbose $context -d $path_test_package -m clean &&
-  bash ${path_scripts_package} $verbose $context -d $path_test_package -m build
+  bash ${path_scripts_package} $verbose $context -d $path_test_package -S fake rebuild
 
   if [[ $? -ne 0 ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
       echo
-      echo -e "${c_error}ERROR: Failed to clean and build the monolithic packages.$c_reset"
+      echo -e "${c_error}ERROR: Failed to clean and build the stand_alone fake package.$c_reset"
     fi
 
     return 1
   fi
 
-  test_operate_build_project "$path_test_package_monolithic" "$path_test_project" fll monolithic bootstrap
+  test_operate_build_project "$path_test_package_stand_alone" "$path_test_project" fake stand_alone bootstrap
 
   if [[ $? -ne 0 ]] ; then
     let failure=1
-  fi
-
-  cd $path_original
-
-  if [[ $failure -eq 0 ]] ; then
-    if [[ $verbosity == "debug" ]] ; then
-      echo
-      echo "bash ${path_scripts_package} $verbose $context -d $path_test_package -p clean &&"
-      echo "bash ${path_scripts_package} $verbose $context -d $path_test_package -p build"
-    fi
-
-    bash ${path_scripts_package} $verbose $context -d $path_test_package -p clean &&
-    bash ${path_scripts_package} $verbose $context -d $path_test_package -p build
-
-    if [[ $? -ne 0 ]] ; then
-      if [[ $verbosity != "quiet" ]] ; then
-        echo
-        echo -e "${c_error}ERROR: Failed to clean and build the program packages.$c_reset"
-      fi
-
-      return 1
-    fi
-
-    test_operate_build_project "$path_test_package_program" "$path_test_project" fake monolithic bootstrap
-
-    if [[ $? -ne 0 ]] ; then
-      let failure=1
-    fi
   fi
 
   cd $path_original
