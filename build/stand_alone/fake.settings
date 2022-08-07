@@ -23,56 +23,56 @@ build_language c
 
 build_libraries -lc -lcap
 
-build_sources_program level_0/account.c level_0/private-account.c level_0/account/accounts.c level_0/account/private-accounts.c
-build_sources_program level_0/capability.c
-build_sources_program level_0/color.c level_0/private-color.c level_0/color/common.c
-build_sources_program level_0/console.c level_0/console/common.c
-build_sources_program level_0/control_group.c level_0/control_group/common.c
-build_sources_program level_0/conversion.c level_0/private-conversion.c level_0/conversion/common.c
-build_sources_program level_0/directory.c level_0/directory/common.c level_0/private-directory.c
-build_sources_program level_0/environment.c
-build_sources_program level_0/execute.c
-build_sources_program level_0/file.c level_0/private-file.c level_0/file/common.c
-build_sources_program level_0/fss.c level_0/private-fss.c level_0/fss/common.c level_0/fss/named.c level_0/fss/nest.c level_0/fss/set.c
-build_sources_program level_0/iki.c level_0/iki/common.c level_0/iki/data.c level_0/private-iki.c level_0/iki/private-data.c
-build_sources_program level_0/limit.c level_0/limit/set.c level_0/limit/value.c level_0/limit/private-set.c level_0/limit/private-value.c
-build_sources_program level_0/memory.c level_0/private-memory.c level_0/memory/structure.c
-build_sources_program level_0/path.c level_0/private-path.c level_0/path/common.c
-build_sources_program level_0/pipe.c
-build_sources_program level_0/print.c level_0/private-print.c level_0/print/common.c level_0/print/to.c level_0/print/private-to.c
-build_sources_program level_0/signal.c
-build_sources_program level_0/string.c level_0/private-string.c level_0/string/common.c level_0/string/dynamic.c level_0/string/map.c level_0/string/map_multi.c level_0/string/private-dynamic.c level_0/string/private-map.c level_0/string/private-map_multi.c level_0/string/private-quantity.c level_0/string/private-range.c level_0/string/private-triple.c level_0/string/quantity.c level_0/string/range.c level_0/string/static.c level_0/string/triple.c
-build_sources_program level_0/type_array/array_length.c level_0/type_array/cell.c level_0/type_array/fll_id.c level_0/type_array/int8.c level_0/type_array/int16.c level_0/type_array/int32.c level_0/type_array/int64.c level_0/type_array/int128.c level_0/type_array/state.c level_0/type_array/status.c level_0/type_array/uint8.c level_0/type_array/uint16.c level_0/type_array/uint32.c level_0/type_array/uint64.c level_0/type_array/uint128.c
-build_sources_program level_0/type_array/private-array_length.c level_0/type_array/private-cell.c level_0/type_array/private-fll_id.c level_0/type_array/private-int8.c level_0/type_array/private-int16.c level_0/type_array/private-int32.c level_0/type_array/private-int64.c level_0/type_array/private-int128.c level_0/type_array/private-state.c level_0/type_array/private-status.c level_0/type_array/private-uint8.c level_0/type_array/private-uint16.c level_0/type_array/private-uint32.c level_0/type_array/private-uint64.c level_0/type_array/private-uint128.c
-build_sources_program level_0/utf.c level_0/private-utf.c level_0/private-utf_alphabetic.c level_0/private-utf_combining.c level_0/private-utf_control.c level_0/private-utf_digit.c level_0/private-utf_emoji.c level_0/private-utf_numeric.c level_0/private-utf_phonetic.c level_0/private-utf_private.c level_0/private-utf_punctuation.c level_0/private-utf_subscript.c level_0/private-utf_superscript.c level_0/private-utf_symbol.c level_0/private-utf_valid.c level_0/private-utf_whitespace.c level_0/private-utf_wide.c level_0/private-utf_word.c level_0/private-utf_zero_width.c
-build_sources_program level_0/utf/common.c level_0/utf/convert.c level_0/utf/dynamic.c level_0/utf/is.c level_0/utf/is_character.c level_0/utf/map.c level_0/utf/map_multi.c level_0/utf/static.c level_0/utf/string.c level_0/utf/triple.c level_0/utf/private-dynamic.c level_0/utf/private-is_unassigned.c level_0/utf/private-map.c level_0/utf/private-map_multi.c level_0/utf/private-triple.c level_0/utf/private-string.c
+build_sources_program fll/level_0/account.c fll/level_0/private-account.c fll/level_0/account/accounts.c fll/level_0/account/private-accounts.c
+build_sources_program fll/level_0/capability.c
+build_sources_program fll/level_0/color.c fll/level_0/private-color.c fll/level_0/color/common.c
+build_sources_program fll/level_0/console.c fll/level_0/console/common.c
+build_sources_program fll/level_0/control_group.c fll/level_0/control_group/common.c
+build_sources_program fll/level_0/conversion.c fll/level_0/private-conversion.c fll/level_0/conversion/common.c
+build_sources_program fll/level_0/directory.c fll/level_0/directory/common.c fll/level_0/private-directory.c
+build_sources_program fll/level_0/environment.c
+build_sources_program fll/level_0/execute.c
+build_sources_program fll/level_0/file.c fll/level_0/private-file.c fll/level_0/file/common.c
+build_sources_program fll/level_0/fss.c fll/level_0/private-fss.c fll/level_0/fss/common.c fll/level_0/fss/named.c fll/level_0/fss/nest.c fll/level_0/fss/set.c
+build_sources_program fll/level_0/iki.c fll/level_0/iki/common.c fll/level_0/iki/data.c fll/level_0/private-iki.c fll/level_0/iki/private-data.c
+build_sources_program fll/level_0/limit.c fll/level_0/limit/set.c fll/level_0/limit/value.c fll/level_0/limit/private-set.c fll/level_0/limit/private-value.c
+build_sources_program fll/level_0/memory.c fll/level_0/private-memory.c fll/level_0/memory/structure.c
+build_sources_program fll/level_0/path.c fll/level_0/private-path.c fll/level_0/path/common.c
+build_sources_program fll/level_0/pipe.c
+build_sources_program fll/level_0/print.c fll/level_0/private-print.c fll/level_0/print/common.c fll/level_0/print/to.c fll/level_0/print/private-to.c
+build_sources_program fll/level_0/signal.c
+build_sources_program fll/level_0/string.c fll/level_0/private-string.c fll/level_0/string/common.c fll/level_0/string/dynamic.c fll/level_0/string/map.c fll/level_0/string/map_multi.c fll/level_0/string/private-dynamic.c fll/level_0/string/private-map.c fll/level_0/string/private-map_multi.c fll/level_0/string/private-quantity.c fll/level_0/string/private-range.c fll/level_0/string/private-triple.c fll/level_0/string/quantity.c fll/level_0/string/range.c fll/level_0/string/static.c fll/level_0/string/triple.c
+build_sources_program fll/level_0/type_array/array_length.c fll/level_0/type_array/cell.c fll/level_0/type_array/fll_id.c fll/level_0/type_array/int8.c fll/level_0/type_array/int16.c fll/level_0/type_array/int32.c fll/level_0/type_array/int64.c fll/level_0/type_array/int128.c fll/level_0/type_array/state.c fll/level_0/type_array/status.c fll/level_0/type_array/uint8.c fll/level_0/type_array/uint16.c fll/level_0/type_array/uint32.c fll/level_0/type_array/uint64.c fll/level_0/type_array/uint128.c
+build_sources_program fll/level_0/type_array/private-array_length.c fll/level_0/type_array/private-cell.c fll/level_0/type_array/private-fll_id.c fll/level_0/type_array/private-int8.c fll/level_0/type_array/private-int16.c fll/level_0/type_array/private-int32.c fll/level_0/type_array/private-int64.c fll/level_0/type_array/private-int128.c fll/level_0/type_array/private-state.c fll/level_0/type_array/private-status.c fll/level_0/type_array/private-uint8.c fll/level_0/type_array/private-uint16.c fll/level_0/type_array/private-uint32.c fll/level_0/type_array/private-uint64.c fll/level_0/type_array/private-uint128.c
+build_sources_program fll/level_0/utf.c fll/level_0/private-utf.c fll/level_0/private-utf_alphabetic.c fll/level_0/private-utf_combining.c fll/level_0/private-utf_control.c fll/level_0/private-utf_digit.c fll/level_0/private-utf_emoji.c fll/level_0/private-utf_numeric.c fll/level_0/private-utf_phonetic.c fll/level_0/private-utf_private.c fll/level_0/private-utf_punctuation.c fll/level_0/private-utf_subscript.c fll/level_0/private-utf_superscript.c fll/level_0/private-utf_symbol.c fll/level_0/private-utf_valid.c fll/level_0/private-utf_whitespace.c fll/level_0/private-utf_wide.c fll/level_0/private-utf_word.c fll/level_0/private-utf_zero_width.c
+build_sources_program fll/level_0/utf/common.c fll/level_0/utf/convert.c fll/level_0/utf/dynamic.c fll/level_0/utf/is.c fll/level_0/utf/is_character.c fll/level_0/utf/map.c fll/level_0/utf/map_multi.c fll/level_0/utf/static.c fll/level_0/utf/string.c fll/level_0/utf/triple.c fll/level_0/utf/private-dynamic.c fll/level_0/utf/private-is_unassigned.c fll/level_0/utf/private-map.c fll/level_0/utf/private-map_multi.c fll/level_0/utf/private-triple.c fll/level_0/utf/private-string.c
 
-build_sources_program level_1/control_group.c
-build_sources_program level_1/conversion.c level_1/private-conversion.c level_1/conversion/common.c
-build_sources_program level_1/directory.c level_1/private-directory.c
-build_sources_program level_1/environment.c
-build_sources_program level_1/private-fss.c level_1/fss/basic.c level_1/fss/basic_list.c level_1/fss/embedded_list.c level_1/fss/extended.c level_1/fss/extended_list.c
-build_sources_program level_1/iki.c
-build_sources_program level_1/print.c level_1/private-print.c level_1/print/common.c
-build_sources_program level_1/string.c level_1/private-string.c
+build_sources_program fll/level_1/control_group.c
+build_sources_program fll/level_1/conversion.c fll/level_1/private-conversion.c fll/level_1/conversion/common.c
+build_sources_program fll/level_1/directory.c fll/level_1/private-directory.c
+build_sources_program fll/level_1/environment.c
+build_sources_program fll/level_1/private-fss.c fll/level_1/fss/basic.c fll/level_1/fss/basic_list.c fll/level_1/fss/embedded_list.c fll/level_1/fss/extended.c fll/level_1/fss/extended_list.c
+build_sources_program fll/level_1/iki.c
+build_sources_program fll/level_1/print.c fll/level_1/private-print.c fll/level_1/print/common.c
+build_sources_program fll/level_1/string.c fll/level_1/private-string.c
 
-build_sources_program level_2/error.c level_2/error/common.c level_2/private-error.c
-build_sources_program level_2/execute.c level_2/private-execute.c
-build_sources_program level_2/file.c level_2/private-file.c
-build_sources_program level_2/fss.c level_2/fss/basic.c level_2/fss/basic_list.c level_2/fss/embedded_list.c level_2/fss/extended.c level_2/fss/extended_list.c level_2/fss/payload.c
-build_sources_program level_2/iki.c level_2/private-iki.c
-build_sources_program level_2/path.c
-build_sources_program level_2/print.c
-build_sources_program level_2/program.c level_2/program/common.c
+build_sources_program fll/level_2/error.c fll/level_2/error/common.c fll/level_2/private-error.c
+build_sources_program fll/level_2/execute.c fll/level_2/private-execute.c
+build_sources_program fll/level_2/file.c fll/level_2/private-file.c
+build_sources_program fll/level_2/fss.c fll/level_2/fss/basic.c fll/level_2/fss/basic_list.c fll/level_2/fss/embedded_list.c fll/level_2/fss/extended.c fll/level_2/fss/extended_list.c fll/level_2/fss/payload.c
+build_sources_program fll/level_2/iki.c fll/level_2/private-iki.c
+build_sources_program fll/level_2/path.c
+build_sources_program fll/level_2/print.c
+build_sources_program fll/level_2/program.c fll/level_2/program/common.c
 
-build_sources_program fake/fake.c fake/common.c
-build_sources_program fake/private-build.c fake/private-build-library.c fake/private-build-load.c fake/private-build-object.c fake/private-build-objects.c fake/private-build-program.c fake/private-build-skeleton.c
-build_sources_program fake/private-clean.c fake/private-common.c fake/private-make.c fake/private-print.c fake/private-skeleton.c
-build_sources_program fake/private-make-load_fakefile.c fake/private-make-load_parameters.c
-build_sources_program fake/private-make-operate.c fake/private-make-operate_block.c fake/private-make-operate_process.c fake/private-make-operate_process_type.c fake/private-make-operate_validate.c fake/private-make-operate_validate_type.c
-build_sources_program fake/private-fake.c fake/private-fake-path_generate.c
+build_sources_program program/fake/fake.c program/fake/common.c
+build_sources_program program/fake/private-build.c program/fake/private-build-library.c program/fake/private-build-load.c program/fake/private-build-object.c program/fake/private-build-objects.c program/fake/private-build-program.c program/fake/private-build-skeleton.c
+build_sources_program program/fake/private-clean.c program/fake/private-common.c program/fake/private-make.c program/fake/private-print.c program/fake/private-skeleton.c
+build_sources_program program/fake/private-make-load_fakefile.c program/fake/private-make-load_parameters.c
+build_sources_program program/fake/private-make-operate.c program/fake/private-make-operate_block.c program/fake/private-make-operate_process.c program/fake/private-make-operate_process_type.c program/fake/private-make-operate_validate.c program/fake/private-make-operate_validate_type.c
+build_sources_program program/fake/private-fake.c program/fake/private-fake-path_generate.c
 
-build_sources_program fake/main.c
+build_sources_program program/fake/main.c
 
 build_script yes
 build_shared yes
@@ -100,7 +100,7 @@ environment PATH LD_LIBRARY_PATH
 
 #defines -D_di_libcap_
 #defines -D_f_file_rename_use_renameat2_
-defines -include sources/c/config.h
+defines -include sources/c/config.h -I sources/c/
 defines -D_libcap_legacy_only_ -D_di_pthread_support_
 defines-clang -D_clang_not_a_compile_time_constant_workaround_
 

@@ -2129,12 +2129,12 @@ package_operation_stand_alone() {
       break
     fi
 
-    if [[ ! -d ${package}sources/c/$name/ ]] ; then
-      mkdir $verbose_common -p ${package}sources/c/$name/
+    if [[ ! -d ${package}sources/c/program/$name/ ]] ; then
+      mkdir $verbose_common -p ${package}sources/c/program/$name/
 
       if [[ $? -ne 0 ]] ; then
         if [[ $verbosity != "quiet" ]] ; then
-          echo -e "${c_error}ERROR: Failed to create package sources directory $c_notice${package}sources/c/$c_error.$c_reset"
+          echo -e "${c_error}ERROR: Failed to create package sources directory $c_notice${package}sources/c/program/$name/$c_error.$c_reset"
         fi
 
         let failure=1
@@ -2153,16 +2153,16 @@ package_operation_stand_alone() {
         path_name_sub="$(basename $path_sub)"
 
         # Do not attempt copying into self.
-        if [[ $path_name_sub == $name ]] ; then
+        if [[ $path_name_sub == "program" ]] ; then
           continue
         fi
 
-        if [[ ! -d ${package}sources/$path_name/$name/ ]] ; then
-          mkdir $verbose_common -p ${package}sources/$path_name/$name/
+        if [[ ! -d ${package}sources/$path_name/program/$name/ ]] ; then
+          mkdir $verbose_common -p ${package}sources/$path_name/program/$name/
 
           if [[ $? -ne 0 ]] ; then
             if [[ $verbosity != "quiet" ]] ; then
-              echo -e "${c_error}ERROR: Failed to create package sources directory $c_notice${package}sources/$path_name/$name/$c_error.$c_reset"
+              echo -e "${c_error}ERROR: Failed to create package sources directory $c_notice${package}sources/$path_name/program/$name/$c_error.$c_reset"
             fi
 
             let failure=1
@@ -2171,11 +2171,11 @@ package_operation_stand_alone() {
           fi
         fi
 
-        mv $verbose_common $path_sub ${package}sources/$path_name/$name/
+        mv $verbose_common $path_sub ${package}sources/$path_name/program/$name/
 
         if [[ $? -ne 0 ]] ; then
           if [[ $verbosity != "quiet" ]] ; then
-            echo -e "${c_error}ERROR: Failed to move path $c_notice$path_sub$c_error to $c_notice${package}sources/$path_name/$name/$c_error.$c_reset"
+            echo -e "${c_error}ERROR: Failed to move path $c_notice$path_sub$c_error to $c_notice${package}sources/$path_name/program/$name/$c_error.$c_reset"
           fi
 
           let failure=1
@@ -2236,12 +2236,12 @@ package_operation_stand_alone() {
               continue
             fi
 
-            if [[ ! -d ${package}sources/$path_name/$level/ ]] ; then
-              mkdir $verbose_common -p ${package}sources/$path_name/$level/
+            if [[ ! -d ${package}sources/$path_name/fll/$level/ ]] ; then
+              mkdir $verbose_common -p ${package}sources/$path_name/fll/$level/
 
               if [[ $? -ne 0 ]] ; then
                 if [[ $verbosity != "quiet" ]] ; then
-                  echo -e "${c_error}ERROR: Failed to create package sources directory $c_notice${package}sources/$path_name/$level/$c_error.$c_reset"
+                  echo -e "${c_error}ERROR: Failed to create package sources directory $c_notice${package}sources/$path_name/fll/$level/$c_error.$c_reset"
                 fi
 
                 let failure=1
@@ -2250,11 +2250,11 @@ package_operation_stand_alone() {
               fi
             fi
 
-            cp $verbose_common -R $directory_level$path_name/* ${package}sources/$path_name/$level/
+            cp $verbose_common -R $directory_level$path_name/* ${package}sources/$path_name/fll/$level/
 
             if [[ $? -ne 0 ]] ; then
               if [[ $verbosity != "quiet" ]] ; then
-                echo -e "${c_error}ERROR: Failed to copy files from sources directory $c_notice$directory_level$path_name/$c_error to $c_notice${package}sources/$path_name/$level/$c_error.$c_reset"
+                echo -e "${c_error}ERROR: Failed to copy files from sources directory $c_notice$directory_level$path_name/$c_error to $c_notice${package}sources/$path_name/fll/$level/$c_error.$c_reset"
               fi
 
               let failure=1
