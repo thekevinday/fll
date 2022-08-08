@@ -3,6 +3,7 @@
 f_type
 f_status
 f_memory
+f_type_array
 f_string
 f_utf
 f_color
@@ -12,9 +13,11 @@ f_file
 f_pipe
 f_print
 f_signal
+
 fl_conversion
 fl_print
 fl_string
+
 fll_error
 fll_print
 fll_program
