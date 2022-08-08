@@ -1,0 +1,87 @@
+# fss-0001
+#
+# A custom build for compiling utf8 as a stand alone binary building in all of the FLL dependencies.
+# This will compile a program that does not have a libutf8.so library.
+#
+
+build_name utf8
+
+version_major 0
+version_minor 6
+version_micro 1
+version_file micro
+version_target minor
+
+modes stand_alone
+modes_default stand_alone
+
+build_compiler gcc
+build_compiler-clang clang
+build_indexer ar
+build_indexer_arguments rcs
+build_language c
+
+build_libraries -lc -lcap
+
+build_sources_program fll/level_0/color.c fll/level_0/private-color.c fll/level_0/color/common.c
+build_sources_program fll/level_0/console.c fll/level_0/console/common.c
+build_sources_program fll/level_0/conversion.c fll/level_0/private-conversion.c fll/level_0/conversion/common.c
+build_sources_program fll/level_0/file.c fll/level_0/private-file.c fll/level_0/file/common.c
+build_sources_program fll/level_0/memory.c fll/level_0/private-memory.c fll/level_0/memory/structure.c
+build_sources_program fll/level_0/pipe.c
+build_sources_program fll/level_0/print.c fll/level_0/private-print.c fll/level_0/print/common.c fll/level_0/print/to.c fll/level_0/print/private-to.c
+build_sources_program fll/level_0/signal.c
+build_sources_program fll/level_0/string.c fll/level_0/private-string.c fll/level_0/string/common.c fll/level_0/string/dynamic.c fll/level_0/string/map.c fll/level_0/string/map_multi.c fll/level_0/string/private-dynamic.c fll/level_0/string/private-map.c fll/level_0/string/private-map_multi.c fll/level_0/string/private-quantity.c fll/level_0/string/private-range.c fll/level_0/string/private-triple.c fll/level_0/string/quantity.c fll/level_0/string/range.c fll/level_0/string/static.c fll/level_0/string/triple.c
+build_sources_program fll/level_0/type_array/array_length.c fll/level_0/type_array/cell.c fll/level_0/type_array/fll_id.c fll/level_0/type_array/int8.c fll/level_0/type_array/int16.c fll/level_0/type_array/int32.c fll/level_0/type_array/int64.c fll/level_0/type_array/int128.c fll/level_0/type_array/state.c fll/level_0/type_array/status.c fll/level_0/type_array/uint8.c fll/level_0/type_array/uint16.c fll/level_0/type_array/uint32.c fll/level_0/type_array/uint64.c fll/level_0/type_array/uint128.c
+build_sources_program fll/level_0/type_array/private-array_length.c fll/level_0/type_array/private-cell.c fll/level_0/type_array/private-fll_id.c fll/level_0/type_array/private-int8.c fll/level_0/type_array/private-int16.c fll/level_0/type_array/private-int32.c fll/level_0/type_array/private-int64.c fll/level_0/type_array/private-int128.c fll/level_0/type_array/private-state.c fll/level_0/type_array/private-status.c fll/level_0/type_array/private-uint8.c fll/level_0/type_array/private-uint16.c fll/level_0/type_array/private-uint32.c fll/level_0/type_array/private-uint64.c fll/level_0/type_array/private-uint128.c
+build_sources_program fll/level_0/utf.c fll/level_0/private-utf.c fll/level_0/private-utf_alphabetic.c fll/level_0/private-utf_combining.c fll/level_0/private-utf_control.c fll/level_0/private-utf_digit.c fll/level_0/private-utf_emoji.c fll/level_0/private-utf_numeric.c fll/level_0/private-utf_phonetic.c fll/level_0/private-utf_private.c fll/level_0/private-utf_punctuation.c fll/level_0/private-utf_subscript.c fll/level_0/private-utf_superscript.c fll/level_0/private-utf_symbol.c fll/level_0/private-utf_valid.c fll/level_0/private-utf_whitespace.c fll/level_0/private-utf_wide.c fll/level_0/private-utf_word.c fll/level_0/private-utf_zero_width.c
+build_sources_program fll/level_0/utf/common.c fll/level_0/utf/convert.c fll/level_0/utf/dynamic.c fll/level_0/utf/is.c fll/level_0/utf/is_character.c fll/level_0/utf/map.c fll/level_0/utf/map_multi.c fll/level_0/utf/static.c fll/level_0/utf/string.c fll/level_0/utf/triple.c fll/level_0/utf/private-dynamic.c fll/level_0/utf/private-is_unassigned.c fll/level_0/utf/private-map.c fll/level_0/utf/private-map_multi.c fll/level_0/utf/private-triple.c fll/level_0/utf/private-string.c
+
+build_sources_program fll/level_1/conversion.c fll/level_1/private-conversion.c fll/level_1/conversion/common.c
+build_sources_program fll/level_1/print.c fll/level_1/private-print.c fll/level_1/print/common.c
+build_sources_program fll/level_1/string.c fll/level_1/private-string.c
+
+build_sources_program fll/level_2/error.c fll/level_2/error/common.c fll/level_2/private-error.c
+build_sources_program fll/level_2/print.c
+build_sources_program fll/level_2/program.c fll/level_2/program/common.c
+
+build_sources_program program/utf8/utf8.c program/utf8/common.c program/utf8/private-common.c program/utf8/private-print.c program/utf8/private-utf8.c program/utf8/private-utf8_bytesequence.c program/utf8/private-utf8_codepoint.c
+
+build_sources_program program/utf8/main.c
+
+build_script yes
+build_shared yes
+build_static no
+
+path_headers fll
+path_library_script script
+path_library_shared shared
+path_library_static static
+path_object_script script
+path_object_shared shared
+path_object_static static
+path_program_script script
+path_program_shared shared
+path_program_static static
+
+has_path_standard yes
+preserve_path_headers yes
+
+search_exclusive yes
+search_shared yes
+search_static yes
+
+environment PATH LD_LIBRARY_PATH
+
+#defines -D_f_file_rename_use_renameat2_
+defines -include sources/c/config.h -I sources/c/
+defines -D_di_libcap_ -D_di_pthread_support_
+defines-clang -D_clang_not_a_compile_time_constant_workaround_
+
+flags -O2 -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-parentheses
+flags-clang -Wno-logical-op-parentheses
+flags-test -fstack-protector
+
+flags_library -fPIC
+flags_object -fPIC
+flags_program -fPIE
