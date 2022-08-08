@@ -27,6 +27,20 @@ extern "C" {
 
       fl_print_format("%r%[Now making using '%]", data->main->output.to.stream, f_string_eol_s, data->main->context.set.important, data->main->context.set.important);
       fl_print_format("%[%Q%]", data->main->output.to.stream, data->main->context.set.notable, data->fakefile, data->main->context.set.notable);
+
+      if (data->mode.used) {
+        fl_print_format("%[' with modes '%]", data->main->output.to.stream, data->main->context.set.important, data->main->context.set.important);
+
+        for (f_array_length_t i = 0; i < data->mode.used; ) {
+
+          fl_print_format("%[%Q%]", data->main->output.to.stream, data->main->context.set.notable, data->mode.array[i], data->main->context.set.notable);
+
+          if (++i < data->mode.used) {
+            fl_print_format("%[', '%]", data->main->output.to.stream, data->main->context.set.important, data->main->context.set.important);
+          }
+        } // for
+      }
+
       fl_print_format("%['.%]%r", data->main->output.to.stream, data->main->context.set.important, data->main->context.set.important, f_string_eol_s);
 
       funlockfile(data->main->output.to.stream);
