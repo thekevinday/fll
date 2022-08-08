@@ -1797,9 +1797,9 @@ extern "C" {
  *
  * @see write()
  */
-#ifndef _di_f_print_raw_to_terminated_
+#ifndef _di_f_print_to_raw_terminated_
   extern f_status_t f_print_to_raw_terminated(const f_string_t string, const int id);
-#endif // _di_f_print_raw_to_terminated_
+#endif // _di_f_print_to_raw_terminated_
 
 /**
  * Similar to a c-library dprintf, except that this will only print a specific range.

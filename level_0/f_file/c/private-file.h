@@ -455,10 +455,11 @@ extern "C" {
  * @see f_file_close()
  * @see f_file_copy()
  * @see f_file_flush()
+ * @see f_file_stream_close()
  */
-#if !defined(_di_f_file_flush_) || !defined(_di_f_file_close_) || !defined(_di_f_file_copy_)
+#if !defined(_di_f_file_flush_) || !defined(_di_f_file_close_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_stream_close_)
   extern f_status_t private_f_file_flush(const int id) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_file_flush_) || !defined(_di_f_file_close_) || !defined(_di_f_file_copy_)
+#endif // !defined(_di_f_file_flush_) || !defined(_di_f_file_close_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_stream_close_)
 
 /**
  * Private implementation of f_file_link().
