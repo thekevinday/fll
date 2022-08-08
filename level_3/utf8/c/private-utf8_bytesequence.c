@@ -76,7 +76,7 @@ extern "C" {
     f_string_static_t sequence = macro_f_string_static_t_initialize(block, 0, 4);
 
     do {
-      status = f_file_read_block(file, &data->buffer);
+      status = f_file_stream_read_block(file, &data->buffer);
 
       if (status == F_none_eof && !data->buffer.used) break;
 
