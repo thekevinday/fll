@@ -8,8 +8,8 @@
  * These are provided for internal reduction in redundant code.
  * These should not be exposed/used outside of this project.
  */
-#ifndef _PRIVATE_F_accounts_h
-#define _PRIVATE_F_accounts_h
+#ifndef _PRIVATE_F_account_accounts_h
+#define _PRIVATE_F_account_accounts_h
 
 #ifdef __cplusplus
 extern "C" {
@@ -249,4 +249,4 @@ extern "C" {
 } // extern "C"
 #endif
 
-#endif // _PRIVATE_F_accounts_h
+#endif // _PRIVATE_F_account_accounts_h

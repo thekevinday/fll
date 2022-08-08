@@ -9,8 +9,8 @@
  *
  * This is auto-included by account.h and should not need to be explicitly included.
  */
-#ifndef _F_accounts_h
-#define _F_accounts_h
+#ifndef _F_account_accounts_h
+#define _F_account_accounts_h
 
 #ifdef __cplusplus
 extern "C" {
@@ -472,4 +472,4 @@ extern "C" {
 } // extern "C"
 #endif
 
-#endif // _F_accounts_h
+#endif // _F_account_accounts_h
