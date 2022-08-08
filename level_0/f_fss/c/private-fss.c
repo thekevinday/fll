@@ -57,13 +57,13 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    macro_f_string_ranges_t_adjust(status, named->objects, length)
+    status = f_string_ranges_adjust(length, &named->objects);
     if (F_status_is_error(status)) return status;
 
-    macro_f_string_rangess_t_adjust(status, named->contents, length)
+    status = f_string_rangess_adjust(length, &named->contents);
     if (F_status_is_error(status)) return status;
 
-    macro_f_uint8ss_t_adjust(status, named->quotess, length)
+    status = f_uint8ss_adjust(length, &named->quotess);
     if (F_status_is_error(status)) return status;
 
     return F_none;
@@ -75,13 +75,13 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    macro_f_string_ranges_t_resize(status, named->objects, length)
+    status = f_string_ranges_resize(length, &named->objects);
     if (F_status_is_error(status)) return status;
 
-    macro_f_string_rangess_t_resize(status, named->contents, length)
+    status = f_string_rangess_resize(length, &named->contents);
     if (F_status_is_error(status)) return status;
 
-    macro_f_uint8ss_t_resize(status, named->quotess, length)
+    status = f_uint8ss_resize(length, &named->quotess);
     if (F_status_is_error(status)) return status;
 
     return F_none;
