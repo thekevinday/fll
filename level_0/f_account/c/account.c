@@ -1,4 +1,5 @@
 #include "account.h"
+#include "account/accounts.h"
 #include "private-account.h"
 
 #ifdef __cplusplus

@@ -19,7 +19,7 @@ build_language c
 
 build_libraries -lc -lcap
 
-build_sources_library account.c private-account.c account/private-accounts.c
+build_sources_library account.c private-account.c account/accounts.c account/private-accounts.c
 build_sources_library capability.c
 build_sources_library color.c private-color.c color/common.c
 build_sources_library console.c console/common.c
