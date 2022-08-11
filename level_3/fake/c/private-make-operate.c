@@ -115,7 +115,7 @@ extern "C" {
       data_make.error.context = data->main->context.set.warning;
       data_make.error.notable = data->main->context.set.notable;
       data_make.error.to.stream = F_type_warning_d;
-      data_make.error.to.id = F_type_descriptor_warning_d;
+      data_make.error.to.id = F_type_descriptor_output_d;
       data_make.error.set = &data->main->context.set;
     }
     else {
@@ -152,7 +152,8 @@ extern "C" {
       }
     }
 
-    f_file_stream_close(F_true, &data_make.path.top);
+    f_file_stream_flush(&data_make.path.top);
+    f_file_stream_close(&data_make.path.top);
 
     f_array_lengths_resize(0, &section_stack);
     fake_make_data_delete(&data_make);

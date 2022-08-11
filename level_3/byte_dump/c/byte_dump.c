@@ -498,7 +498,8 @@ extern "C" {
 
           status = byte_dump_file(&data, data.argv[main->parameters.remaining.array[counter]], file);
 
-          f_file_stream_close(F_true, &file);
+          f_file_stream_flush(&file);
+          f_file_stream_close(&file);
 
           if (F_status_is_error(status)) {
             if (F_status_set_fine(status) == F_interrupt) {

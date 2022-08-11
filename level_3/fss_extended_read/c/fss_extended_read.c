@@ -570,7 +570,8 @@ extern "C" {
           if (F_status_is_error(status)) {
             fll_error_file_print(main->error, F_status_set_fine(status), "f_file_size_by_id", F_true, data.argv[main->parameters.remaining.array[i]], f_file_operation_read_s, fll_error_file_type_file_e);
 
-            f_file_stream_close(F_true, &file);
+            f_file_stream_flush(&file);
+            f_file_stream_close(&file);
 
             break;
           }
@@ -596,7 +597,8 @@ extern "C" {
             if (F_status_is_error(status)) {
               fll_error_file_print(main->error, F_status_set_fine(status), "f_string_dynamic_resize", F_true, data.argv[main->parameters.remaining.array[i]], f_file_operation_process_s, fll_error_file_type_file_e);
 
-              f_file_stream_close(F_true, &file);
+              f_file_stream_flush(&file);
+              f_file_stream_close(&file);
 
               break;
             }
@@ -616,7 +618,8 @@ extern "C" {
               if (F_status_is_error(status)) break;
             } // for
 
-            f_file_stream_close(F_true, &file);
+            f_file_stream_flush(&file);
+            f_file_stream_close(&file);
 
             if (F_status_is_error(status)) {
               if (F_status_set_fine(status) != F_interrupt) {

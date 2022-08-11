@@ -52,9 +52,7 @@ extern "C" {
       }
     }
 
-    if (valid_not || F_status_is_error(status)) {
-      return F_utf_not;
-    }
+    if (valid_not || F_status_is_error(status)) return F_utf_not;
 
     return F_none;
   }
@@ -154,9 +152,7 @@ extern "C" {
 
     data->buffer.used = 0;
 
-    if (F_status_is_error(status) || status == F_interrupt) {
-      return status;
-    }
+    if (F_status_is_error(status) || status == F_interrupt) return status;
 
     return valid;
   }

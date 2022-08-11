@@ -16,7 +16,7 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
   data.pid = getpid();
 
-  fll_program_standard_setup(&data.signal);
+  fll_program_standard_set_up(&data.signal);
 
   f_file_umask_get(&data.umask);
 
@@ -45,7 +45,7 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
   controller_main_delete(&data);
 
-  fll_program_standard_setdown(&data.signal);
+  fll_program_standard_set_down(&data.signal);
 
   // When the child process exits, it must return the code to the parent so the parent knows how to handle the exit.
   if (status == F_child) {

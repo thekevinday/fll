@@ -578,12 +578,14 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
               firewall_print_error_on_unhandled(data->main->error, "f_file_open", F_status_set_fine(status));
             }
 
-            f_file_stream_close(F_true, &file);
+            f_file_stream_flush(&file);
+            f_file_stream_close(&file);
           }
           else {
             status = f_file_read(file, &local_buffer);
 
-            f_file_stream_close(F_true, &file);
+            f_file_stream_flush(&file);
+            f_file_stream_close(&file);
 
             if (F_status_is_error(status)) {
               if (data->main->error.verbosity != f_console_verbosity_quiet_e) {
@@ -1158,7 +1160,8 @@ f_status_t firewall_buffer_rules(firewall_data_t * const data, const f_string_st
 
   status = f_file_read(file, &local->buffer);
 
-  f_file_stream_close(F_true, &file);
+  f_file_stream_flush(&file);
+  f_file_stream_close(&file);
 
   if (F_status_is_error(status)) {
     if (data->main->error.verbosity != f_console_verbosity_quiet_e) {

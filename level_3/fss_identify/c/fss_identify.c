@@ -319,7 +319,8 @@ extern "C" {
           }
         }
 
-        f_file_stream_close(F_true, &file);
+        f_file_stream_flush(&file);
+        f_file_stream_close(&file);
 
         if (F_status_is_error(status)) break;
       } // for

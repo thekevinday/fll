@@ -48,10 +48,12 @@ extern "C" {
 /**
  * The program data.
  *
- * argv:      The argument structure in the progam data parameters for simplifying syntax.
+ * main:    The main program data.
+ * setting: The main program settings.
+ * argv:    The argument structure in the progam data parameters for simplifying syntax.
+ *
  * main:      The main program data.
  * file:      The output file for writing the processed data to (may potentially default to "output").
- * mode:      The input/output mode (see utf8_modes).
  * valid:     Designate the output context set for valid characters.
  * valid_not: Designate the output context set for invalid characters.
  * append:    A string to append. A value of NULL results in not appending.
@@ -62,10 +64,10 @@ extern "C" {
 #ifndef _di_utf8_data_t_
   typedef struct {
     fll_program_data_t *main;
+    utf8_main_setting_t *setting;
     f_string_static_t *argv;
 
-    f_file_t file;
-    uint8_t mode;
+    //f_file_t file;
 
     f_color_set_t valid;
     f_color_set_t valid_not;
@@ -81,8 +83,8 @@ extern "C" {
     { \
       0, \
       0, \
-      f_file_t_initialize, \
-      utf8_mode_from_bytesequence_d | utf8_mode_to_codepoint_d, \
+      0, \
+      //f_file_t_initialize, \
       f_color_set_t_initialize, \
       f_color_set_t_initialize, \
       f_string_static_t_initialize, \

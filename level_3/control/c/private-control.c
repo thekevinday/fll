@@ -642,7 +642,8 @@ extern "C" {
 
       status = f_file_stream_read(file, &data->cache.large);
 
-      f_file_stream_close(F_true, &file);
+      f_file_stream_flush(&file);
+      f_file_stream_close(&file);
 
       if (F_status_is_error(status)) {
         fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_read", F_true, data->cache.small, f_file_operation_read_s, fll_error_file_type_file_e);

@@ -131,7 +131,8 @@ extern "C" {
         name_function = "f_file_read";
         status = f_file_read(file, buffer);
 
-        f_file_stream_close(F_true, &file);
+        f_file_stream_flush(&file);
+        f_file_stream_close(&file);
       }
     }
     else if (status == F_false) {

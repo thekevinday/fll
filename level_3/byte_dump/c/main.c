@@ -13,13 +13,13 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
     data.process_pipe = F_true;
   }
 
-  fll_program_standard_setup(&data.signal);
+  fll_program_standard_set_up(&data.signal);
 
   const f_status_t status = byte_dump_main(&data, &arguments);
 
   fll_program_data_delete(&data);
 
-  fll_program_standard_setdown(&data.signal);
+  fll_program_standard_set_down(&data.signal);
 
   if (F_status_is_error(status)) return 1;
 

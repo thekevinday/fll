@@ -94,7 +94,8 @@ extern "C" {
 
     if (F_status_is_error(status)) {
       if (!required && F_status_set_fine(status) == F_file_found_not) {
-        f_file_stream_close(F_true, &file);
+        f_file_stream_flush(&file);
+        f_file_stream_close(&file);
 
         return F_file_found_not;
       }
@@ -113,7 +114,8 @@ extern "C" {
       }
     }
 
-    f_file_stream_close(F_true, &file);
+    f_file_stream_flush(&file);
+    f_file_stream_close(&file);
 
     if (F_status_is_error_not(status)) {
       struct stat stat_file;
@@ -175,7 +177,8 @@ extern "C" {
 
     fll_print_format("%i%r", file.stream, pid, f_string_eol_s);
 
-    f_file_stream_close(F_true, &file);
+    f_file_stream_flush(&file);
+    f_file_stream_close(&file);
 
     if (F_status_is_error(status)) return status;
 
@@ -202,7 +205,11 @@ extern "C" {
     status = f_file_stream_read(pid_file, &pid_buffer);
 
     if (F_status_is_error_not(status)) {
-      status = f_file_stream_close(F_true, &pid_file);
+      status = f_file_stream_flush(&pid_file);
+    }
+
+    if (F_status_is_error_not(status)) {
+      status = f_file_stream_close(&pid_file);
     }
 
     if (F_status_is_error_not(status)) {
@@ -255,7 +262,11 @@ extern "C" {
     status = f_file_stream_read(pid_file, &pid_buffer);
 
     if (F_status_is_error_not(status)) {
-      status = f_file_stream_close(F_true, &pid_file);
+      status = f_file_stream_flush(&pid_file);
+    }
+
+    if (F_status_is_error_not(status)) {
+      status = f_file_stream_close(&pid_file);
     }
 
     if (F_status_is_error_not(status)) {

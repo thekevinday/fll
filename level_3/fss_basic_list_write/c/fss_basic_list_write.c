@@ -514,9 +514,8 @@ extern "C" {
     }
 
     if (main->parameters.array[fss_basic_list_write_parameter_file_e].result == f_console_result_additional_e) {
-      if (output.id != -1) {
-        f_file_stream_close(F_true, &output);
-      }
+      f_file_stream_flush(&output);
+      f_file_stream_close(&output);
     }
 
     // Ensure a newline is always put at the end of the program execution, unless in quiet mode.

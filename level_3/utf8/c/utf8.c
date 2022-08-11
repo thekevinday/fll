@@ -68,235 +68,25 @@ extern "C" {
 #endif // _di_utf8_print_help_
 
 #ifndef _di_utf8_main_
-  f_status_t utf8_main(fll_program_data_t * const main, const f_console_arguments_t *arguments) {
+  f_status_t utf8_main(fll_program_data_t * const main, utf8_main_setting_t * const setting) {
 
-    f_status_t status = F_none;
+    if (!main || !setting) {
+      if (main->error.verbosity != f_console_verbosity_quiet_e) {
+        fll_error_print(main->error, F_status_set_fine(status), "utf8_main", F_true);
+        fll_print_dynamic_raw(f_string_eol_s, main->message.to.stream);
+      }
+
+      return F_status_set_error(F_paremeter);
+    }
 
     utf8_data_t data = utf8_data_t_initialize;
     data.main = main;
-
-    // Identify priority of color parameters.
-    {
-      f_console_parameter_id_t ids[3] = { utf8_parameter_no_color_e, utf8_parameter_light_e, utf8_parameter_dark_e };
-      const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
-
-      status = fll_program_parameter_process(*arguments, &main->parameters, choices, F_true, &main->context);
-
-      main->output.set = &main->context.set;
-      main->error.set = &main->context.set;
-      main->warning.set = &main->context.set;
-
-      if (main->context.set.error.before) {
-        main->output.context = f_color_set_empty_s;
-        main->output.notable = main->context.set.notable;
-
-        main->error.context = main->context.set.error;
-        main->error.notable = main->context.set.notable;
-
-        main->warning.context = main->context.set.warning;
-        main->warning.notable = main->context.set.notable;
-      }
-      else {
-        f_color_set_t *sets[] = { &main->output.context, &main->output.notable, &main->error.context, &main->error.notable, &main->warning.context, &main->warning.notable, 0 };
-
-        fll_program_parameter_process_empty(&main->context, sets);
-      }
-
-      if (F_status_is_error(status)) {
-        fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process", F_true);
-
-        utf8_data_delete(&data);
-
-        return F_status_set_error(status);
-      }
-    }
-
-    // Identify priority of verbosity related parameters.
-    {
-      f_console_parameter_id_t ids[5] = { utf8_parameter_verbosity_quiet_e, utf8_parameter_verbosity_error_e, utf8_parameter_verbosity_normal_e, utf8_parameter_verbosity_verbose_e, utf8_parameter_verbosity_debug_e };
-      f_console_parameter_id_t choice = 0;
-      const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 5);
-
-      status = f_console_parameter_prioritize_right(main->parameters, choices, &choice);
-
-      if (F_status_is_error(status)) {
-        fll_error_print(main->error, F_status_set_fine(status), "f_console_parameter_prioritize_right", F_true);
-
-        utf8_data_delete(&data);
-
-        return status;
-      }
-
-      if (choice == utf8_parameter_verbosity_quiet_e) {
-        main->output.verbosity = f_console_verbosity_quiet_e;
-        main->error.verbosity = f_console_verbosity_quiet_e;
-        main->warning.verbosity = f_console_verbosity_quiet_e;
-      }
-      else if (choice == utf8_parameter_verbosity_error_e) {
-        main->output.verbosity = f_console_verbosity_error_e;
-        main->error.verbosity = f_console_verbosity_error_e;
-        main->warning.verbosity = f_console_verbosity_error_e;
-      }
-      else if (choice == utf8_parameter_verbosity_normal_e) {
-        main->output.verbosity = f_console_verbosity_normal_e;
-        main->error.verbosity = f_console_verbosity_normal_e;
-        main->warning.verbosity = f_console_verbosity_normal_e;
-      }
-      else if (choice == utf8_parameter_verbosity_verbose_e) {
-        main->output.verbosity = f_console_verbosity_verbose_e;
-        main->error.verbosity = f_console_verbosity_verbose_e;
-        main->warning.verbosity = f_console_verbosity_verbose_e;
-      }
-      else if (choice == utf8_parameter_verbosity_debug_e) {
-        main->output.verbosity = f_console_verbosity_debug_e;
-        main->error.verbosity = f_console_verbosity_debug_e;
-        main->warning.verbosity = f_console_verbosity_debug_e;
-      }
-    }
-
-    // Identify and prioritize from mode parameters.
-    {
-      f_console_parameter_id_t ids[2] = { utf8_parameter_from_bytesequence_e, utf8_parameter_from_codepoint_e };
-      f_console_parameter_id_t choice = 0;
-      const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 2);
-
-      status = f_console_parameter_prioritize_right(main->parameters, choices, &choice);
-
-      if (F_status_is_error(status)) {
-        fll_error_print(main->error, F_status_set_fine(status), "f_console_parameter_prioritize_right", F_true);
-
-        utf8_data_delete(&data);
-
-        return status;
-      }
-
-      if (choice == utf8_parameter_from_bytesequence_e) {
-        if (data.mode & utf8_mode_from_codepoint_d) {
-          data.mode -= utf8_mode_from_codepoint_d;
-        }
-
-        data.mode |= utf8_mode_from_bytesequence_d;
-      }
-      else if (choice == utf8_parameter_from_codepoint_e) {
-        if (data.mode & utf8_mode_from_bytesequence_d) {
-          data.mode -= utf8_mode_from_bytesequence_d;
-        }
-
-        data.mode |= utf8_mode_from_codepoint_d;
-      }
-    }
-
-    // Identify and prioritize to mode parameters.
-    {
-      f_console_parameter_id_t ids[5] = { utf8_parameter_to_bytesequence_e, utf8_parameter_to_codepoint_e, utf8_parameter_to_combining_e, utf8_parameter_to_width_e };
-      f_console_parameter_id_t choice = 0;
-      const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 5);
-
-      status = f_console_parameter_prioritize_right(main->parameters, choices, &choice);
-
-      if (F_status_is_error(status)) {
-        fll_error_print(main->error, F_status_set_fine(status), "f_console_parameter_prioritize_right", F_true);
-
-        utf8_data_delete(&data);
-
-        return status;
-      }
-
-      if (choice == utf8_parameter_verbosity_quiet_e) {
-        main->output.verbosity = f_console_verbosity_quiet_e;
-        main->error.verbosity = f_console_verbosity_quiet_e;
-        main->warning.verbosity = f_console_verbosity_quiet_e;
-      }
-      else if (choice == utf8_parameter_verbosity_error_e) {
-        main->output.verbosity = f_console_verbosity_error_e;
-        main->error.verbosity = f_console_verbosity_error_e;
-        main->warning.verbosity = f_console_verbosity_error_e;
-      }
-      else if (choice == utf8_parameter_verbosity_normal_e) {
-        main->output.verbosity = f_console_verbosity_normal_e;
-        main->error.verbosity = f_console_verbosity_normal_e;
-        main->warning.verbosity = f_console_verbosity_normal_e;
-      }
-      else if (choice == utf8_parameter_verbosity_verbose_e) {
-        main->output.verbosity = f_console_verbosity_verbose_e;
-        main->error.verbosity = f_console_verbosity_verbose_e;
-        main->warning.verbosity = f_console_verbosity_verbose_e;
-      }
-      else if (choice == utf8_parameter_verbosity_debug_e) {
-        main->output.verbosity = f_console_verbosity_debug_e;
-        main->error.verbosity = f_console_verbosity_debug_e;
-        main->warning.verbosity = f_console_verbosity_debug_e;
-      }
-
-      if (choice == utf8_parameter_to_bytesequence_e) {
-        if (data.mode & utf8_mode_to_codepoint_d) {
-          data.mode -= utf8_mode_to_codepoint_d;
-        }
-
-        if (data.mode & utf8_mode_to_combining_d) {
-          data.mode -= utf8_mode_to_combining_d;
-        }
-
-        if (data.mode & utf8_mode_to_width_d) {
-          data.mode -= utf8_mode_to_width_d;
-        }
-
-        data.mode |= utf8_mode_to_bytesequence_d;
-      }
-      else if (choice == utf8_parameter_to_codepoint_e) {
-        if (data.mode & utf8_mode_to_bytesequence_d) {
-          data.mode -= utf8_mode_to_bytesequence_d;
-        }
-
-        if (data.mode & utf8_mode_to_combining_d) {
-          data.mode -= utf8_mode_to_combining_d;
-        }
-
-        if (data.mode & utf8_mode_to_width_d) {
-          data.mode -= utf8_mode_to_width_d;
-        }
-
-        data.mode |= utf8_mode_to_codepoint_d;
-      }
-      else if (choice == utf8_parameter_to_combining_e) {
-        if (data.mode & utf8_mode_to_bytesequence_d) {
-          data.mode -= utf8_mode_to_bytesequence_d;
-        }
-
-        if (data.mode & utf8_mode_to_codepoint_d) {
-          data.mode -= utf8_mode_to_codepoint_d;
-        }
-
-        // --to_width may be specified with --to_combining.
-        if (main->parameters.array[utf8_parameter_to_width_e].result == f_console_result_found_e) {
-          data.mode |= utf8_mode_to_width_d;
-        }
-
-        data.mode |= utf8_mode_to_combining_d;
-      }
-      else if (choice == utf8_parameter_to_width_e) {
-        if (data.mode & utf8_mode_to_bytesequence_d) {
-          data.mode -= utf8_mode_to_bytesequence_d;
-        }
-
-        if (data.mode & utf8_mode_to_codepoint_d) {
-          data.mode -= utf8_mode_to_codepoint_d;
-        }
-
-        // --to_width may be specified with --to_combining.
-        if (main->parameters.array[utf8_parameter_to_combining_e].result == f_console_result_found_e) {
-          data.mode |= utf8_mode_to_combining_d;
-        }
-
-        data.mode |= utf8_mode_to_width_d;
-      }
-    }
-
+    data.setting = setting;
     data.argv = main->parameters.arguments.array;
-    status = F_none;
+    f_status_t status = F_none;
 
     if (main->parameters.array[utf8_parameter_help_e].result == f_console_result_found_e) {
-      utf8_print_help(main->output.to, main->context);
+      utf8_print_help(main->message.to, main->context);
 
       utf8_data_delete(&data);
 
@@ -304,7 +94,7 @@ extern "C" {
     }
 
     if (main->parameters.array[utf8_parameter_version_e].result == f_console_result_found_e) {
-      fll_program_print_version(main->output.to, utf8_program_version_s);
+      fll_program_print_version(main->message.to, utf8_program_version_s);
 
       utf8_data_delete(&data);
 
@@ -375,7 +165,7 @@ extern "C" {
         status = F_status_set_error(F_parameter);
       }
       else {
-        data.file = main->output.to;
+        data.file = main->message.to;
       }
     }
 
@@ -396,7 +186,7 @@ extern "C" {
         }
       }
 
-      data.valid_not = main->output.set->error;
+      data.valid_not = main->message.set->error;
     }
 
     if (F_status_is_error_not(status)) {
@@ -459,7 +249,8 @@ extern "C" {
             status = utf8_process_file_codepoint(&data, file);
           }
 
-          f_file_stream_close(F_true, &file);
+          f_file_stream_flush(&file);
+          f_file_stream_close(&file);
 
           if (main->parameters.array[utf8_parameter_verify_e].result == f_console_result_found_e) {
             if (status == F_false) {
@@ -501,27 +292,195 @@ extern "C" {
       }
     }
 
-    if (main->output.verbosity != f_console_verbosity_quiet_e && main->parameters.array[utf8_parameter_verify_e].result == f_console_result_none_e) {
+    if (main->message.verbosity != f_console_verbosity_quiet_e && main->parameters.array[utf8_parameter_verify_e].result == f_console_result_none_e) {
       if (status == F_interrupt) {
         fflush(data.file.stream);
 
-        if (data.file.stream != main->output.to.stream) {
-          fflush(main->output.to.stream);
+        if (data.file.stream != main->message.to.stream) {
+          fflush(main->message.to.stream);
         }
       }
 
-      fll_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
+      fll_print_dynamic_raw(f_string_eol_s, main->message.to.stream);
     }
 
     utf8_data_delete(&data);
 
-    if (F_status_is_error(status) || status == F_interrupt) {
-      return status;
-    }
+    if (F_status_is_error(status) || status == F_interrupt) return status;
 
     return valid;
   }
 #endif // _di_utf8_main_
+
+#ifndef _di_utf8_main_setting_delete_
+  f_status_t utf8_main_setting_delete(utf8_main_setting_t * const setting) {
+
+    return F_none;
+  }
+#endif // _di_utf8_main_setting_delete_
+
+#ifndef _di_utf8_main_setting_load_
+  f_status_t utf8_main_setting_load(const f_console_arguments_t arguments, fll_program_data_t * const main, utf8_main_setting_t * const setting) {
+
+    f_status_t status = F_none;
+
+    // Identify priority of color parameters.
+    {
+      f_console_parameter_id_t ids[3] = { utf8_parameter_no_color_e, utf8_parameter_light_e, utf8_parameter_dark_e };
+      const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
+
+      status = fll_program_parameter_process(arguments, choices, F_true, main);
+
+      if (F_status_is_error(status)) {
+        fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process", F_true);
+
+        return status;
+      }
+    }
+
+    {
+      const verbosity[5] = { utf8_parameter_verbosity_quiet_e, utf8_parameter_verbosity_error_e, f_console_verbosity_normal_e, utf8_parameter_verbosity_verbose_e, utf8_parameter_verbosity_debug_e };
+      f_console_parameter_id_t ids[5] = { utf8_parameter_verbosity_quiet_e, utf8_parameter_verbosity_error_e, utf8_parameter_verbosity_normal_e, utf8_parameter_verbosity_verbose_e, utf8_parameter_verbosity_debug_e };
+      const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 5);
+
+      status = fll_program_parameter_process_verbosity(choices, F_true, verbosity, main);
+
+      if (F_status_is_error(status)) {
+        fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process_verbosity", F_true);
+
+        return status;
+      }
+    }
+
+    // Identify and prioritize from mode parameters.
+    {
+      f_console_parameter_id_t ids[2] = { utf8_parameter_from_bytesequence_e, utf8_parameter_from_codepoint_e };
+      f_console_parameter_id_t choice = 0;
+      const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 2);
+
+      status = f_console_parameter_prioritize_right(main->parameters, choices, &choice);
+
+      if (F_status_is_error(status)) {
+        fll_error_print(main->error, F_status_set_fine(status), "f_console_parameter_prioritize_right", F_true);
+
+        return status;
+      }
+
+      if (choice == utf8_parameter_from_bytesequence_e) {
+        if (data.mode & utf8_mode_from_codepoint_d) {
+          data.mode -= utf8_mode_from_codepoint_d;
+        }
+
+        data.mode |= utf8_mode_from_bytesequence_d;
+      }
+      else if (choice == utf8_parameter_from_codepoint_e) {
+        if (data.mode & utf8_mode_from_bytesequence_d) {
+          data.mode -= utf8_mode_from_bytesequence_d;
+        }
+
+        data.mode |= utf8_mode_from_codepoint_d;
+      }
+    }
+
+    // Identify and prioritize to mode parameters.
+    {
+      f_console_parameter_id_t ids[5] = { utf8_parameter_to_bytesequence_e, utf8_parameter_to_codepoint_e, utf8_parameter_to_combining_e, utf8_parameter_to_width_e };
+      f_console_parameter_id_t choice = 0;
+      const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 5);
+
+      status = f_console_parameter_prioritize_right(main->parameters, choices, &choice);
+
+      if (F_status_is_error(status)) {
+        fll_error_print(main->error, F_status_set_fine(status), "f_console_parameter_prioritize_right", F_true);
+
+        return status;
+      }
+
+      if (choice == utf8_parameter_to_bytesequence_e) {
+        if (data.mode & utf8_mode_to_codepoint_d) {
+          data.mode -= utf8_mode_to_codepoint_d;
+        }
+
+        if (data.mode & utf8_mode_to_combining_d) {
+          data.mode -= utf8_mode_to_combining_d;
+        }
+
+        if (data.mode & utf8_mode_to_width_d) {
+          data.mode -= utf8_mode_to_width_d;
+        }
+
+        data.mode |= utf8_mode_to_bytesequence_d;
+      }
+      else if (choice == utf8_parameter_to_codepoint_e) {
+        if (data.mode & utf8_mode_to_bytesequence_d) {
+          data.mode -= utf8_mode_to_bytesequence_d;
+        }
+
+        if (data.mode & utf8_mode_to_combining_d) {
+          data.mode -= utf8_mode_to_combining_d;
+        }
+
+        if (data.mode & utf8_mode_to_width_d) {
+          data.mode -= utf8_mode_to_width_d;
+        }
+
+        data.mode |= utf8_mode_to_codepoint_d;
+      }
+      else if (choice == utf8_parameter_to_combining_e) {
+        if (data.mode & utf8_mode_to_bytesequence_d) {
+          data.mode -= utf8_mode_to_bytesequence_d;
+        }
+
+        if (data.mode & utf8_mode_to_codepoint_d) {
+          data.mode -= utf8_mode_to_codepoint_d;
+        }
+
+        // --to_width may be specified with --to_combining.
+        if (main->parameters.array[utf8_parameter_to_width_e].result == f_console_result_found_e) {
+          data.mode |= utf8_mode_to_width_d;
+        }
+
+        data.mode |= utf8_mode_to_combining_d;
+      }
+      else if (choice == utf8_parameter_to_width_e) {
+        if (data.mode & utf8_mode_to_bytesequence_d) {
+          data.mode -= utf8_mode_to_bytesequence_d;
+        }
+
+        if (data.mode & utf8_mode_to_codepoint_d) {
+          data.mode -= utf8_mode_to_codepoint_d;
+        }
+
+        // --to_width may be specified with --to_combining.
+        if (main->parameters.array[utf8_parameter_to_combining_e].result == f_console_result_found_e) {
+          data.mode |= utf8_mode_to_combining_d;
+        }
+
+        data.mode |= utf8_mode_to_width_d;
+      }
+    }
+
+    return F_none;
+  }
+#endif // _di_utf8_main_setting_load_
+
+#ifndef _di_utf8_main_setting_unload_
+  f_status_t utf8_main_setting_unload(fll_program_data_t * const main, utf8_main_setting_t * const setting) {
+
+    if (data->file.stream) {
+      if (data->file.stream != main->message.stream && data->file.stream != main->output.stream && data->file.stream != main->error.stream && data->file.stream != main->warning.stream && data->file.stream != main->debug.stream) {
+        f_file_stream_flush(&data->file);
+        f_file_stream_close(&data->file);
+      }
+    }
+    else if (data->file.id != -1) {
+      if (data->file.id != main->message.id && data->file.id != main->output.id && data->file.id != main->error.id && data->file.id != main->warning.id && data->file.id != main->debug.id) {
+        f_file_flush(&data->file);
+        f_file_close(&data->file);
+      }
+    }
+  }
+#endif // _di_utf8_main_setting_unload_
 
 #ifdef __cplusplus
 } // extern "C"

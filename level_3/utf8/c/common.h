@@ -298,24 +298,76 @@ extern "C" {
 /**
  * Modes used to designate how to the input and output are to be processed.
  *
- * utf8_mode_from_*:
+ * utf8_mode_*_e:
+ *   - none: No modes in use.
+ *
+ * utf8_mode_from_*_e:
  *   - bytesequence: The input format is bytesequence.
  *   - codepoint:    The input format is codepoint (U+XXXX or U+XXXXXX).
  *
- * utf8_mode_to_*:
+ * utf8_mode_to_*_e:
  *   - bytesequence: The outout format is bytesequence.
  *   - codepoint:    The outout format is codepoint (U+XXXX or U+XXXXXX).
  *   - combining:    The outout format is whether or not character is combining (may be used with "width").
  *   - width:        The outout format is how wide the character is (may be used with "combining").
  */
-#ifndef _di_utf8_modes_
-  #define utf8_mode_from_bytesequence_d 0x1
-  #define utf8_mode_from_codepoint_d    0x2
-  #define utf8_mode_to_bytesequence_d   0x4
-  #define utf8_mode_to_codepoint_d      0x8
-  #define utf8_mode_to_combining_d      0x10
-  #define utf8_mode_to_width_d          0x20
-#endif // _di_utf8_modes_
+#ifndef _di_utf8_modes_e_
+  enum {
+    utf8_mode_none_e              = 0x0,
+    utf8_mode_from_bytesequence_e = 0x1,
+    utf8_mode_from_codepoint_d    = 0x2,
+    utf8_mode_to_bytesequence_d   = 0x4,
+    utf8_mode_to_codepoint_d      = 0x8,
+    utf8_mode_to_combining_d      = 0x10,
+    utf8_mode_to_width_d          = 0x20,
+  };
+#endif // _di_utf8_modes_e_
+
+/**
+ * The UTF-8 main program settings.
+ *
+ * This is passed to the program-specific main entry point to designate program settings.
+ * These program settings are often processed from the program arguments (often called the command line arguments).
+ *
+ * mode: The input/output mode (see utf8_modes_e).
+ */
+#ifndef _di_utf8_main_setting_t_
+  typedef struct {
+    uint8_t mode;
+  } utf8_main_setting_t;
+
+  #define utf8_main_setting_t_initialize \
+    { \
+      utf8_mode_from_bytesequence_d | utf8_mode_to_codepoint_d, \
+    }
+#endif // _di_utf8_main_setting_t_
+
+/*
+    f_color_set_t valid;
+    f_color_set_t valid_not;
+
+    f_string_static_t append;
+    f_string_static_t prepend;
+
+    f_string_dynamic_t buffer;
+    f_string_dynamic_t text;
+  } utf8_data_t;
+
+  #define utf8_data_t_initialize \
+    { \
+      0, \
+      0, \
+      0, \
+      f_file_t_initialize, \
+      utf8_mode_from_bytesequence_d | utf8_mode_to_codepoint_d, \
+      f_color_set_t_initialize, \
+      f_color_set_t_initialize, \
+      f_string_static_t_initialize, \
+      f_string_static_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+    }
+    */
 
 #ifdef __cplusplus
 } // extern "C"

@@ -89,8 +89,8 @@ extern "C" {
  *
  * @param main
  *   The main program data.
- * @param arguments
- *   The parameters passed to the process.
+ * @param setting
+ *   The main program setting data.
  *
  * @return
  *   F_none on success.
@@ -98,11 +98,60 @@ extern "C" {
  *   F_false on success when performing verification and verify failed.
  *   F_interrupt on (exit) signal received.
  *
- *   Status codes (with error bit) are returned on any problem.
+ *   F_parameter (with error bit) If main is NULL or setting is NULL.
  */
 #ifndef _di_utf8_main_
-  extern f_status_t utf8_main(fll_program_data_t * const main, const f_console_arguments_t *arguments);
+  extern f_status_t utf8_main(fll_program_data_t * const main, utf8_main_setting_t * const setting);
 #endif // _di_utf8_main_
+
+/**
+ * Delete the program main setting data.
+ *
+ * @param setting
+ *   The program main setting data.
+ *
+ * @return
+ *   F_none on success.
+ */
+#ifndef _di_utf8_main_setting_delete_
+  extern f_status_t utf8_main_setting_delete(utf8_main_setting_t * const setting);
+#endif // _di_utf8_main_setting_delete_
+
+/**
+ * Perform the standard program setting load process.
+ *
+ * @param arguments
+ *   The parameters passed to the process (often referred to as command line arguments).
+ * @param main
+ *   The main program data.
+ * @param setting
+ *   The main program setting data.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Errors (with error bit) from: fll_program_parameter_process().
+ *
+ * @see fll_program_parameter_process()
+ */
+#ifndef _di_utf8_main_setting_load_
+  extern f_status_t utf8_main_setting_load(const f_console_arguments_t arguments, fll_program_data_t * const main, utf8_main_setting_t * const setting);
+#endif // _di_utf8_main_setting_load_
+
+/**
+ * Perform the standard program setting unload process.
+ *
+ * @param main
+ *   The main program data.
+ * @param setting
+ *   The main program setting data.
+ *
+ * @return
+ *   F_none on success.
+ */
+#ifndef _di_utf8_main_setting_unload_
+  extern f_status_t utf8_main_setting_unload(fll_program_data_t * const main, utf8_main_setting_t * const setting);
+#endif // _di_utf8_main_setting_unload_
 
 #ifdef __cplusplus
 } // extern "C"

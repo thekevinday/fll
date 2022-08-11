@@ -455,9 +455,8 @@ extern "C" {
     }
 
     if (main->parameters.array[iki_write_parameter_file_e].result == f_console_result_additional_e) {
-      if (file.id != -1) {
-        f_file_stream_close(F_true, &file);
-      }
+      f_file_stream_flush(&file);
+      f_file_stream_close(&file);
     }
 
     // Ensure a new line is always put at the end of the program execution, unless in quiet mode.

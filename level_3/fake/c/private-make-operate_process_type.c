@@ -509,7 +509,7 @@ extern "C" {
       data_make->error.context = data_make->main->context.set.warning;
       data_make->error.notable = data_make->main->context.set.notable;
       data_make->error.to.stream = F_type_warning_d;
-      data_make->error.to.id = F_type_descriptor_warning_d;
+      data_make->error.to.id = F_type_descriptor_output_d;
       data_make->error.set = &data_make->main->context.set;
     }
     else {
@@ -1964,7 +1964,8 @@ extern "C" {
       else {
         status = F_none;
 
-        f_file_stream_close(F_true, &file);
+        f_file_stream_flush(&file);
+        f_file_stream_close(&file);
       }
     }
 
@@ -2025,7 +2026,8 @@ extern "C" {
         } // for
       }
 
-      f_file_stream_close(F_true, &file);
+      f_file_stream_flush(&file);
+      f_file_stream_close(&file);
     }
 
     if (F_status_is_error(status)) return F_status_set_error(F_failure);
