@@ -28,6 +28,26 @@ extern "C" {
 #endif // _di_fll_program_parameters_
 
 /**
+ * Program data pipe codes.
+ *
+ * These are bit-wise codes used to designate that a particular pipe exists and is to be used.
+ *
+ * fll_program_data_pipe_*_e:
+ *   - none:   No pipes are available for use.
+ *   - error:  Error pipe is available for use.
+ *   - input:  Input pipe is available for use.
+ *   - output: Output pipe is available for use.
+ */
+#ifndef _di_fll_program_data_pipe_e_
+  enum {
+    fll_program_data_pipe_none_e   = 0x0,
+    fll_program_data_pipe_error_e  = 0x1,
+    fll_program_data_pipe_input_e  = 0x2,
+    fll_program_data_pipe_output_e = 0x4,
+  };
+#endif // _di_fll_program_data_pipe_e_
+
+/**
  * A common program structure to be used by simple programs needing no special structure.
  *
  * Complex programs or programs that need more data passed via the main should implement their own version of this.
@@ -35,18 +55,23 @@ extern "C" {
  * The umask() has design flaws as per specification that requires the umask be changed to read the value!
  * As a work-around, a umask variable is provided here so that umask() only ever need be called once.
  *
- * child:           Reserved for a child process, often representing the child return status or the child process ID.
- * context:         The color context.
- * error:           The output file for error printing.
- * output:          The output file for general printing.
- * parameters:      The state of pre-defined parameters passed to the program.
- * pid:             The PID of the program.
- * process_pipe:    Designate whether or not to process the input pipe.
- * signal:          The process signal management structure.
+ * parameters: The state of pre-defined parameters passed to the program.
+ *
+ * umask: The umask settings, needed for avoiding calls to umask() to read the current umask.
+ * pid:   The PID of the program.
+ * child: Reserved for a child process, often representing the child return status or the child process ID.
+ * pipe:  Designate that a pipe exists and is available for use.
+ *
  * signal_check:    A counter used to map to for reducing the amount of actual signal check calls.
  * signal_received: The signal received (if 0, then no signal is received).
- * umask:           The umask settings, needed for avoiding calls to umask() to read the current umask.
- * warning:         The output file for warning printing.
+ * signal:          The process signal management structure.
+ *
+ * message: The output file for normal output messages (often stdout).
+ * output:  The output file for normal/non-message output (often stdout or a file).
+ * error:   The output file for error output messages.
+ * warning: The output file for warning output messages.
+ *
+ * context: The color context.
  */
 #ifndef _di_fll_program_data_t_
   typedef struct {
@@ -55,15 +80,17 @@ extern "C" {
     mode_t umask;
     pid_t pid;
     int child;
-    bool process_pipe;
+    uint8_t pipe;
 
     int signal_received;
     uint16_t signal_check;
     f_signal_t signal;
 
+    fl_print_t message;
     fl_print_t output;
     fl_print_t error;
     fl_print_t warning;
+    fl_print_t debug;
 
     f_color_context_t context;
   } fll_program_data_t;
@@ -74,27 +101,31 @@ extern "C" {
       0, \
       0, \
       0, \
-      F_false, \
+      fll_program_data_pipe_none_e, \
       0, \
       0, \
       f_signal_t_initialize, \
       fl_print_t_initialize, \
+      fl_print_t_initialize, \
       macro_fl_print_t_initialize_error(), \
       macro_fl_print_t_initialize_warning(), \
+      macro_fl_print_t_initialize_debug(), \
       f_color_context_t_initialize, \
     }
 
-  #define macro_fll_program_data_t_initialize(umask, pid, child, process_pipe, signal_received, signal_check, signal, output, error, warning, context) { \
+  #define macro_fll_program_data_t_initialize(umask, pid, child, pipe, signal_received, signal_check, signal, message, output, error, warning, debug, context) { \
     umask, \
     pid, \
     child, \
-    process_pipe, \
+    pipe, \
     signal_received, \
     signal_check, \
     signal, \
+    message, \
     output, \
     error, \
     warning, \
+    debug, \
     context, \
   }
 #endif // _di_fll_program_data_t_

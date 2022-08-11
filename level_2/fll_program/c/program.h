@@ -190,15 +190,14 @@ extern "C" {
  *
  * @param arguments
  *   The parameters passed to the process.
- * @param parameters
- *   The console parameters to look for.
  * @param choices
  *   A set of the color options: no-color option, light-color option, dark-color option.
  *   This must have its used size set to 3 and the ids are expected to be in this order: no_color, light, and dark.
  * @param right
- *   Set to TRUE for right priortization and FALSE for left prioritization.
- * @param context
- *   The color context.
+ *   If TRUE, use the right-most parameter on conflict.
+ *   If FALSE, use the left-most parameter on conflict.
+ * @param main
+ *   The main program data.
  *
  * @return
  *   F_none on success.
@@ -218,7 +217,7 @@ extern "C" {
  * @see f_color_load_context()
  */
 #ifndef _di_fll_program_parameter_process_
-  extern f_status_t fll_program_parameter_process(const f_console_arguments_t arguments, f_console_parameters_t * const parameters, const f_console_parameter_ids_t choices, const bool right, f_color_context_t * const context);
+  extern f_status_t fll_program_parameter_process(const f_console_arguments_t arguments, const f_console_parameter_ids_t choices, const bool right, fll_program_data_t * const main);
 #endif // _di_fll_program_parameter_process_
 
 /**
@@ -235,6 +234,34 @@ extern "C" {
 #ifndef _di_fll_program_parameter_process_empty_
   extern void fll_program_parameter_process_empty(f_color_context_t * const context, f_color_set_t * const sets[]);
 #endif // _di_fll_program_parameter_process_empty_
+
+/**
+ * Determine the verbosity from the parameters and then set the verbosity based on the choice.
+ *
+ * @param choices
+ *   The available choices based on parameter ids.
+ * @param right
+ *   If TRUE, use the right-most parameter on conflict.
+ *   If FALSE, use the left-most parameter on conflict.
+ * @param verbosity
+ *   An array designating what to set the verbosity to based on the choice made.
+ *   This must exactly match the size of the choices array.
+ *   No bounds checking is performed.
+ * @param main
+ *   The main program data.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Errors (with error bit) from: f_console_parameter_prioritize_left().
+ *   Errors (with error bit) from: f_console_parameter_prioritize_right().
+ *
+ * @see f_console_parameter_prioritize_left()
+ * @see f_console_parameter_prioritize_right()
+ */
+#ifndef _di_fll_program_parameter_process_verbosity_
+  extern f_status_t fll_program_parameter_process_verbosity(const f_console_parameter_ids_t choices, const bool right, const uint8_t verbosity[], fll_program_data_t * const main);
+#endif // _di_fll_program_parameter_process_verbosity_
 
 /**
  * Allocate new strings from all of the provided locations.
@@ -377,15 +404,17 @@ extern "C" {
 #endif // _di_fll_program_parameter_long_print_cannot_use_with_
 
 /**
- * This provides a standard program setdown operations used by FLL programs.
+ * This provides a standard program set down operations used by FLL programs.
  *
  * This does the following:
+ *   - Flushes program data files.
  *   - Flushes standard outputs.
+ *   - Closes program data files.
  *   - Closes standard inputs and outputs.
  *   - Closes the signal handler.
  *
- * @param signal
- *   The signal structure.
+ * @param main
+ *   The main program data.
  *
  * @return
  *   F_none on success.
@@ -394,20 +423,24 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_signal_close().
  *
+ * @see f_file_close()
+ * @see f_file_flush()
+ * @see f_file_stream_close()
+ * @see f_file_stream_flush()
  * @see f_signal_close()
  */
-#ifndef _di_fll_program_standard_setdown_
-  extern f_status_t fll_program_standard_setdown(f_signal_t * const signal);
-#endif // _di_fll_program_standard_setdown_
+#ifndef _di_fll_program_standard_set_down_
+  extern f_status_t fll_program_standard_set_down(fll_program_data_t * const main);
+#endif // _di_fll_program_standard_set_down_
 
 /**
- * This provides a standard program setup operations used by FLL programs.
+ * This provides a standard program set up operations used by FLL programs.
  *
  * This does the following:
- *   - Handle signals so that program can cleanly exit, deallocating as appropriate.
+ *   - Handle signals so that program can cleanly exit, de-allocating as appropriate.
  *
- * @param signal
- *   The signal structure.
+ * @param main
+ *   The main program data.
  *
  * @return
  *   F_none on success.
@@ -424,9 +457,9 @@ extern "C" {
  * @see f_signal_set_empty()
  * @see f_signal_set_fill()
  */
-#ifndef _di_fll_program_standard_setup_
-  extern f_status_t fll_program_standard_setup(f_signal_t * const signal);
-#endif // _di_fll_program_standard_setup_
+#ifndef _di_fll_program_standard_set_up_
+  extern f_status_t fll_program_standard_set_up(fll_program_data_t * const main);
+#endif // _di_fll_program_standard_set_up_
 
 /**
  * Check to see if a process signal is received.
@@ -437,7 +470,6 @@ extern "C" {
  *
  * @param main
  *   The main program data.
- *   The main->signal must be used to designate blocked signals.
  *
  * @return
  *   A positive number representing a valid signal on signal received.
