@@ -465,9 +465,9 @@ extern "C" {
       return F_status_set_error(F_directory_open);
     }
 
-    int parent_fd = dirfd(parent);
+    const f_file_t directory = macro_f_file_t_initialize_id(dirfd(parent));
 
-    if (parent_fd < 0) {
+    if (directory.id < 0) {
       closedir(parent);
 
       if (errno == EINVAL) return F_status_set_error(F_directory_stream);
@@ -506,7 +506,7 @@ extern "C" {
 
       memset(&file_stat, 0, sizeof(struct stat));
 
-      status = f_file_stat_at(parent_fd, name_directory, dereference ? 0 : AT_SYMLINK_NOFOLLOW, &file_stat);
+      status = f_file_stat_at(directory, name_directory, dereference ? 0 : AT_SYMLINK_NOFOLLOW, &file_stat);
       if (F_status_is_error(status)) break;
 
       mode = macro_f_file_type_get(file_stat.st_mode);

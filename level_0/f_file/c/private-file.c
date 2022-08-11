@@ -6,21 +6,13 @@ extern "C" {
 #endif
 
 #if !defined(_di_f_file_close_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_stream_close_)
-  f_status_t private_f_file_close(const bool flush, int * const id) {
+  f_status_t private_f_file_close(f_file_t * const file) {
 
-    if (*id == -1) {
-      return F_none;
-    }
-
-    if (flush) {
-      private_f_file_flush(*id);
-    }
-
-    if (close(*id) < 0) {
+    if (close(file->id) < 0) {
 
       // According to man pages, retrying close() after another close on error is invalid on Linux because Linux releases the descriptor before stages that cause failures.
       if (errno != EBADF && errno != EINTR) {
-        *id = -1;
+        file->id = -1;
       }
 
       if (errno == EBADF) return F_status_set_error(F_file_descriptor);
@@ -32,7 +24,7 @@ extern "C" {
       return F_status_set_error(F_file_close);
     }
 
-    *id = -1;
+    file->id = -1;
 
     return F_none;
   }
@@ -53,7 +45,8 @@ extern "C" {
     status = private_f_file_open(destination, 0, &file_destination);
 
     if (F_status_is_error(status)) {
-      private_f_file_close(F_true, &file_source.id);
+      private_f_file_flush(file_source);
+      private_f_file_close(&file_source);
 
       return status;
     }
@@ -69,26 +62,30 @@ extern "C" {
       size_write = write(file_destination.id, buffer, size_read);
 
       if (size_write < 0 || size_write != size_read) {
-        private_f_file_close(F_true, &file_destination.id);
-        private_f_file_close(F_true, &file_source.id);
+        private_f_file_flush(file_destination);
+        private_f_file_flush(file_source);
+
+        private_f_file_close(&file_destination);
+        private_f_file_close(&file_source);
 
         return F_status_set_error(F_file_write);
       }
     } // while
 
-    private_f_file_close(F_true, &file_destination.id);
-    private_f_file_close(F_true, &file_source.id);
+    private_f_file_flush(file_destination);
+    private_f_file_flush(file_source);
 
-    if (size_read < 0) {
-      return F_status_set_error(F_file_read);
-    }
+    private_f_file_close(&file_destination);
+    private_f_file_close(&file_source);
+
+    if (size_read < 0) return F_status_set_error(F_file_read);
 
     return F_none;
   }
 #endif // !defined(_di_f_file_copy_) || !defined(_di_f_file_clone_)
 
 #if !defined(_di_f_file_copy_at_) || !defined(_di_f_file_clone_at_)
-  f_status_t private_f_file_copy_content_at(const int at_id, const f_string_static_t source, const f_string_static_t destination, const f_number_unsigned_t size_block) {
+  f_status_t private_f_file_copy_content_at(const f_file_t directory, const f_string_static_t source, const f_string_static_t destination, const f_number_unsigned_t size_block) {
 
     f_file_t file_source = f_file_t_initialize;
     f_file_t file_destination = f_file_t_initialize;
@@ -96,13 +93,14 @@ extern "C" {
     file_source.flag = F_file_flag_read_only_d;
     file_destination.flag = F_file_flag_write_only_d | F_file_flag_no_follow_d;
 
-    f_status_t status = private_f_file_open_at(at_id, source, 0, &file_source);
+    f_status_t status = private_f_file_open_at(directory, source, 0, &file_source);
     if (F_status_is_error(status)) return status;
 
-    status = private_f_file_open_at(at_id, destination, 0, &file_destination);
+    status = private_f_file_open_at(directory, destination, 0, &file_destination);
 
     if (F_status_is_error(status)) {
-      private_f_file_close(F_true, &file_source.id);
+      private_f_file_flush(file_source);
+      private_f_file_close(&file_source);
 
       return status;
     }
@@ -118,19 +116,23 @@ extern "C" {
       size_write = write(file_destination.id, buffer, size_read);
 
       if (size_write < 0 || size_write != size_read) {
-        private_f_file_close(F_true, &file_destination.id);
-        private_f_file_close(F_true, &file_source.id);
+        private_f_file_flush(file_destination);
+        private_f_file_flush(file_source);
+
+        private_f_file_close(&file_destination);
+        private_f_file_close(&file_source);
 
         return F_status_set_error(F_file_write);
       }
     } // while
 
-    private_f_file_close(F_true, &file_destination.id);
-    private_f_file_close(F_true, &file_source.id);
+    private_f_file_flush(file_destination);
+    private_f_file_flush(file_source);
 
-    if (size_read < 0) {
-      return F_status_set_error(F_file_read);
-    }
+    private_f_file_close(&file_destination);
+    private_f_file_close(&file_source);
+
+    if (size_read < 0) return F_status_set_error(F_file_read);
 
     return F_none;
   }
@@ -147,34 +149,42 @@ extern "C" {
       file.flag |= F_file_flag_exclusive_d;
     }
 
-    const f_status_t status = private_f_file_open(path, mode, &file);
+    f_status_t status = private_f_file_open(path, mode, &file);
 
-    if (file.id != -1) {
-      return private_f_file_close(F_true, &file.id);
+    if (F_status_is_error_not(status) && file.id != -1) {
+      private_f_file_flush(file);
+
+      status = private_f_file_close(&file);
     }
 
-    return status;
+    if (F_status_is_error(status)) return status;
+
+    return F_none;
   }
 #endif // !defined(_di_f_file_create_) || !defined(_di_f_file_copy_)
 
 #if !defined(_di_f_file_create_at_) || !defined(_di_f_file_copy_at_)
-  f_status_t private_f_file_create_at(const int at_id, const f_string_static_t path, const mode_t mode, const bool exclusive) {
+  f_status_t private_f_file_create_at(const f_file_t file, const f_string_static_t path, const mode_t mode, const bool exclusive) {
 
-    f_file_t file = f_file_t_initialize;
+    f_file_t file_internal = f_file_t_initialize;
 
-    file.flag = F_file_flag_close_execute_d | F_file_flag_create_d | F_file_flag_write_only_d;
+    file_internal.flag = F_file_flag_close_execute_d | F_file_flag_create_d | F_file_flag_write_only_d;
 
     if (exclusive) {
-      file.flag |= F_file_flag_exclusive_d;
+      file_internal.flag |= F_file_flag_exclusive_d;
     }
 
-    const f_status_t status = private_f_file_open_at(at_id, path, mode, &file);
+    f_status_t status = private_f_file_open_at(file, path, mode, &file_internal);
 
-    if (file.id != -1) {
-      return private_f_file_close(F_true, &file.id);
+    if (F_status_is_error_not(status) && file_internal.id != -1) {
+      private_f_file_flush(file_internal);
+
+      status = private_f_file_close(&file_internal);
     }
 
-    return status;
+    if (F_status_is_error(status)) return status;
+
+    return F_none;
   }
 #endif // !defined(_di_f_file_create_at_) || !defined(_di_f_file_copy_at_)
 
@@ -205,9 +215,9 @@ extern "C" {
 #endif // !defined(_di_f_file_copy_)
 
 #if !defined(_di_f_file_copy_at_)
-  f_status_t private_f_file_create_directory_at(const int at_id, const f_string_static_t path, const mode_t mode) {
+  f_status_t private_f_file_create_directory_at(const f_file_t directory, const f_string_static_t path, const mode_t mode) {
 
-    if (mkdirat(at_id, path.string, mode) < 0) {
+    if (mkdirat(directory.id, path.string, mode) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_block);
       if (errno == EEXIST) return F_status_set_error(F_file_found);
@@ -253,9 +263,9 @@ extern "C" {
 #endif // !defined(_di_f_file_create_fifo_) || !defined(_di_f_file_copy_)
 
 #if !defined(_di_f_file_create_fifo_at_) || !defined(_di_f_file_copy_at_)
-  f_status_t private_f_file_create_fifo_at(const int at_id, const f_string_static_t path, const mode_t mode) {
+  f_status_t private_f_file_create_fifo_at(const f_file_t file, const f_string_static_t path, const mode_t mode) {
 
-    if (mkfifoat(at_id, path.string, mode) < 0) {
+    if (mkfifoat(file.id, path.string, mode) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EBADF) return F_status_set_error(F_directory_descriptor);
       if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_block);
@@ -301,9 +311,9 @@ extern "C" {
 #endif // !defined(_di_f_file_create_device_) || !defined(_di_f_file_create_node_) || !defined(_di_f_file_copy_)
 
 #if !defined(_di_f_file_create_device_at_) || !defined(_di_f_file_create_node_at_) || !defined(_di_f_file_copy_at_)
-  f_status_t private_f_file_create_node_at(const int at_id, const f_string_static_t path, const mode_t mode, const dev_t device) {
+  f_status_t private_f_file_create_node_at(const f_file_t file, const f_string_static_t path, const mode_t mode, const dev_t device) {
 
-    if (mknodat(at_id, path.string, mode, device) < 0) {
+    if (mknodat(file.id, path.string, mode, device) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EBADF) return F_status_set_error(F_directory_descriptor);
       if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_block);
@@ -327,10 +337,10 @@ extern "C" {
   }
 #endif // !defined(_di_f_file_create_device_at_) || !defined(_di_f_file_create_node_at_) || !defined(_di_f_file_copy_at_)
 
-#if !defined(_di_f_file_flush_) || !defined(_di_f_file_close_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_stream_close_)
-  f_status_t private_f_file_flush(const int id) {
+#if !defined(_di_f_file_clone_at_) || !defined(_di_f_file_close_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_copy_at_) || !defined(_di_f_file_create_) || !defined(_di_f_file_create_at_) || !defined(_di_f_file_flush_) || !defined(_di_f_file_stream_close_)
+  f_status_t private_f_file_flush(const f_file_t file) {
 
-    if (fsync(id) < 0) {
+    if (fsync(file.id) < 0) {
       if (errno == EBADF) return F_status_set_error(F_file_descriptor);
       if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_block);
       if (errno == EINVAL) return F_status_set_error(F_supported_not);
@@ -343,7 +353,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // !defined(_di_f_file_flush_) || !defined(_di_f_file_close_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_stream_close_)
+#endif // !defined(_di_f_file_clone_at_) || !defined(_di_f_file_close_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_copy_at_) || !defined(_di_f_file_create_) || !defined(_di_f_file_create_at_) || !defined(_di_f_file_flush_) || !defined(_di_f_file_stream_close_)
 
 #if !defined(_di_f_file_link_) || !defined(_di_f_file_copy_)
   f_status_t private_f_file_link(const f_string_static_t target, const f_string_static_t point) {
@@ -374,9 +384,9 @@ extern "C" {
 #endif // !defined(_di_f_file_link_) || !defined(_di_f_file_copy_)
 
 #if !defined(_di_f_file_link_at_) || !defined(_di_f_file_copy_at_)
-  f_status_t private_f_file_link_at(const int at_id, const f_string_static_t target, const f_string_static_t point) {
+  f_status_t private_f_file_link_at(const f_file_t directory, const f_string_static_t target, const f_string_static_t point) {
 
-    if (symlinkat(target.string, at_id, point.string) < 0) {
+    if (symlinkat(target.string, directory.id, point.string) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EBADF) return F_status_set_error(F_directory_descriptor);
       if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_block);
@@ -436,7 +446,7 @@ extern "C" {
 #endif // !defined(_di_f_file_link_read_) || !defined(_di_f_file_copy_)
 
 #if !defined(_di_f_file_link_read_at_) || !defined(_di_f_file_copy_at_)
-  f_status_t private_f_file_link_read_at(const int at_id, const f_string_static_t path, const off_t size, f_string_dynamic_t * const target) {
+  f_status_t private_f_file_link_read_at(const f_file_t file, const f_string_static_t path, const off_t size, f_string_dynamic_t * const target) {
 
     target->used = 0;
 
@@ -444,7 +454,7 @@ extern "C" {
     if (F_status_is_error(status)) return status;
 
     if (size) {
-      if (readlinkat(at_id, path.string, target->string, size) < 0) {
+      if (readlinkat(file.id, path.string, target->string, size) < 0) {
         if (errno == EACCES) return F_status_set_error(F_access_denied);
         if (errno == EBADF) return F_status_set_error(F_directory_descriptor);
         if (errno == EFAULT) return F_status_set_error(F_buffer);
@@ -492,9 +502,9 @@ extern "C" {
 #endif // !defined(_di_f_file_mode_set_) || !defined(_di_f_file_copy_)
 
 #if !defined(_di_f_file_mode_set_at_) || !defined(_di_f_file_copy_at_)
-  f_status_t private_f_file_mode_set_at(const int at_id, const f_string_static_t path, const mode_t mode) {
+  f_status_t private_f_file_mode_set_at(const f_file_t file, const f_string_static_t path, const mode_t mode) {
 
-    if (fchmodat(at_id, path.string, mode, 0) < 0) {
+    if (fchmodat(file.id, path.string, mode, 0) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EBADF) return F_status_set_error(F_directory_descriptor);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
@@ -548,9 +558,9 @@ extern "C" {
 #endif // !defined(_di_f_file_open_) || !defined(_di_f_file_copy_)
 
 #if !defined(_di_f_file_copy_at_) || !defined(_di_f_file_clone_at_) || !defined(_di_f_file_open_at_) || !defined(_di_f_file_copy_at_)
-  f_status_t private_f_file_open_at(const int at_id, const f_string_static_t path, const mode_t mode, f_file_t * const file) {
+  f_status_t private_f_file_open_at(const f_file_t directory, const f_string_static_t path, const mode_t mode, f_file_t * const file) {
 
-    file->id = openat(at_id, path.string, file->flag, mode);
+    file->id = openat(directory.id, path.string, file->flag, mode);
 
     if (file->id == -1) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
@@ -631,12 +641,12 @@ extern "C" {
 #endif // !defined(_di_f_file_role_change_) || !defined(_di_f_file_copy_)
 
 #if !defined(_di_f_file_role_change_at_) || !defined(_di_f_file_copy_at_)
-  f_status_t private_f_file_role_change_at(const int at_id, const f_string_static_t path, const uid_t uid, const gid_t gid, const int flag) {
+  f_status_t private_f_file_role_change_at(const f_file_t file, const f_string_static_t path, const uid_t uid, const gid_t gid, const int flag) {
 
     int result = 0;
 
     if (uid != -1) {
-      result = fchownat(at_id, path.string, uid, -1, flag);
+      result = fchownat(file.id, path.string, uid, -1, flag);
 
       if (result < 0 && errno == EPERM) {
         return F_status_set_error(F_access_owner);
@@ -644,7 +654,7 @@ extern "C" {
     }
 
     if (result == 0 && gid != -1) {
-      result = fchownat(at_id, path.string, -1, gid, flag);
+      result = fchownat(file.id, path.string, -1, gid, flag);
 
       if (result < 0 && errno == EPERM) {
         return F_status_set_error(F_access_group);
@@ -692,9 +702,9 @@ extern "C" {
 #endif // !defined(_di_f_file_stat_) || !defined(_di_f_file_copy_)
 
 #if !defined(_di_f_file_stat_at_) || !defined(_di_f_file_copy_at_)
-  f_status_t private_f_file_stat_at(const int at_id, const f_string_static_t path, const int flag, struct stat * const file_stat) {
+  f_status_t private_f_file_stat_at(const f_file_t file, const f_string_static_t path, const int flag, struct stat * const file_stat) {
 
-    if (fstatat(at_id, path.string, file_stat, flag) < 0) {
+    if (fstatat(file.id, path.string, file_stat, flag) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EBADF) return F_status_set_error(F_directory_descriptor);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
@@ -714,9 +724,9 @@ extern "C" {
 #endif // !defined(_di_f_file_stat_at_) || !defined(_di_f_file_copy_at_)
 
 #if !defined(_di_f_file_stat_by_id_) || !defined(_di_f_file_size_by_id_)
-  f_status_t private_f_file_stat_by_id(const int id, struct stat * const file_stat) {
+  f_status_t private_f_file_stat_by_id(const f_file_t file, struct stat * const file_stat) {
 
-    if (fstat(id, file_stat) < 0) {
+    if (fstat(file.id, file_stat) < 0) {
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EBADF) return F_status_set_error(F_file_descriptor);
       if (errno == EFAULT) return F_status_set_error(F_buffer);

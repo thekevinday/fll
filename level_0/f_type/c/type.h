@@ -280,21 +280,24 @@ extern "C" {
 /**
  * Standard Input/Output types.
  *
- * For most systems, there is no standard warning nor is there a standard debug.
- * Therefore, these will map to standard output.
+ * F_type_*_d:
+ *   - error:  Standard error stream.
+ *   - input:  Standard input stream.
+ *   - output: Standard output stream.
+ *
+ * F_type_descriptor_*_d:
+ *   - error:  Standard error file descriptor.
+ *   - input:  Standard input file descriptor.
+ *   - output: Standard output file descriptor.
  */
 #ifndef _di_f_type_input_output_
-  #define F_type_debug_d   stdout
-  #define F_type_error_d   stderr
-  #define F_type_input_d   stdin
-  #define F_type_output_d  stdout
-  #define F_type_warning_d stdout
+  #define F_type_error_d  stderr
+  #define F_type_input_d  stdin
+  #define F_type_output_d stdout
 
-  #define F_type_descriptor_debug_d   STDOUT_FILENO
-  #define F_type_descriptor_error_d   STDERR_FILENO
-  #define F_type_descriptor_input_d   STDIN_FILENO
-  #define F_type_descriptor_output_d  STDOUT_FILENO
-  #define F_type_descriptor_warning_d STDOUT_FILENO
+  #define F_type_descriptor_error_d  STDERR_FILENO
+  #define F_type_descriptor_input_d  STDIN_FILENO
+  #define F_type_descriptor_output_d STDOUT_FILENO
 #endif // _di_f_type_input_output_
 
 /**

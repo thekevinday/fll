@@ -85,8 +85,8 @@ extern "C" {
  * Do not use this to check file access before immediately attempting to open a file due to the possibility that the permissions change between this call and the open call.
  * Instead, use the f_file_open() directly.
  *
- * @param at_id
- *   The parent directory, as an open directory file descriptor, in which path is relative to.
+ * @param directory
+ *   The parent directory, via an open directory file descriptor, in which path is relative to.
  * @param path
  *   The path file name.
  * @param mode
@@ -98,6 +98,7 @@ extern "C" {
  *   F_true if requested access is allowed.
  *   F_false if requested access is denied.
  *   F_data_not if path.used is 0.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_directory_descriptor (with error bit) when at_id is not a valid file descriptor (at_id must point to a directory).
@@ -114,7 +115,7 @@ extern "C" {
  * @see faccessat()
  */
 #ifndef _di_f_file_access_at_
-  extern f_status_t f_file_access_at(const int at_id, const f_string_static_t path, const int mode, const int flag);
+  extern f_status_t f_file_access_at(const f_file_t directory, const f_string_static_t path, const int mode, const int flag);
 #endif // _di_f_file_access_at_
 
 /**
@@ -180,11 +181,12 @@ extern "C" {
  *
  * Will not flush before closing.
  *
- * @param id
- *   The file descriptor.
+ * @param file
+ *   The file.
  *
  * @return
  *   F_none on success.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_file_close (with error bit) if fclose() failed for any other reason.
  *   F_file_descriptor (with error bit) if file descriptor is invalid.
@@ -197,33 +199,8 @@ extern "C" {
  * @see fclose()
  */
 #ifndef _di_f_file_close_
-  extern f_status_t f_file_close(int * const id);
+  extern f_status_t f_file_close(f_file_t * const file);
 #endif // _di_f_file_close_
-
-/**
- * Close an open file.
- *
- * Will flush before closing.
- *
- * @param id
- *   The file descriptor.
- *
- * @return
- *   F_none on success.
- *
- *   F_file_close (with error bit) if fclose() failed for any other reason.
- *   F_file_descriptor (with error bit) if file descriptor is invalid.
- *   F_file_synchronize (with error bit) on flush failure.
- *   F_filesystem_quota_block (with error bit) if file system's disk blocks or inodes are exhausted.
- *   F_input_output (with error bit) on I/O error.
- *   F_interrupt (with error bit) when program received an interrupt signal, halting operation.
- *   F_space_not (with error bit) if file system is out of space (or file system quota is reached).
- *
- * @see fclose()
- */
-#ifndef _di_f_file_close_flush_
-  extern f_status_t f_file_close_flush(int * const id);
-#endif // _di_f_file_close_flush_
 
 /**
  * Copy a file.
@@ -327,8 +304,8 @@ extern "C" {
  *
  * The file will not be open after calling this.
  *
- * @param at_id
- *   The parent directory, as an open directory file descriptor, in which path is relative to.
+ * @param directory
+ *   The parent directory, via an open directory file descriptor, in which path is relative to.
  * @param path
  *   The path file name.
  * @param mode
@@ -340,6 +317,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if path.used is 0.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_busy (with error bit) if file system is too busy to perform write.
@@ -362,7 +340,7 @@ extern "C" {
  * @see openat()
  */
 #ifndef _di_f_file_create_at_
-  extern f_status_t f_file_create_at(const int at_id, const f_string_static_t path, const mode_t mode, const bool exclusive);
+  extern f_status_t f_file_create_at(const f_file_t directory, const f_string_static_t path, const mode_t mode, const bool exclusive);
 #endif // _di_f_file_create_at_
 
 /**
@@ -410,8 +388,8 @@ extern "C" {
  *
  * Warning: Due to the current status of POSIX and LINUX in regards to major and minor devices, this utilizes the non-POSI makedev() function.
  *
- * @param at_id
- *   The parent directory, as an open directory file descriptor, in which path is relative to.
+ * @param directory
+ *   The parent directory, via an open directory file descriptor, in which path is relative to.
  * @param path
  *   The path file name.
  * @param mode
@@ -426,6 +404,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if path.used is 0.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_directory_descriptor (with error bit) when at_id is not a valid file descriptor (at_id must point to a directory).
@@ -445,7 +424,7 @@ extern "C" {
  * @see mknodat()
  */
 #ifndef _di_f_file_create_device_at_
-  extern f_status_t f_file_create_device_at(const int at_id, const f_string_static_t path, const mode_t mode, const unsigned int major, const unsigned int minor);
+  extern f_status_t f_file_create_device_at(const f_file_t directory, const f_string_static_t path, const mode_t mode, const unsigned int major, const unsigned int minor);
 #endif // _di_f_file_create_device_at_
 
 /**
@@ -482,8 +461,8 @@ extern "C" {
 /**
  * Create a fifo based on the given path and file mode.
  *
- * @param at_id
- *   The parent directory, as an open directory file descriptor, in which path is relative to.
+ * @param directory
+ *   The parent directory, via an open directory file descriptor, in which path is relative to.
  * @param path
  *   The path file name.
  * @param mode
@@ -492,6 +471,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if path.used is 0.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_directory_descriptor (with error bit) when at_id is not a valid file descriptor (at_id must point to a directory).
@@ -510,7 +490,7 @@ extern "C" {
  * @see mkfifoat()
  */
 #ifndef _di_f_file_create_fifo_at_
-  extern f_status_t f_file_create_fifo_at(const int at_id, const f_string_static_t path, const mode_t mode);
+  extern f_status_t f_file_create_fifo_at(const f_file_t directory, const f_string_static_t path, const mode_t mode);
 #endif // _di_f_file_create_fifo_at_
 
 /**
@@ -550,8 +530,8 @@ extern "C" {
 /**
  * Create a node based on the given path and file mode.
  *
- * @param at_id
- *   The parent directory, as an open directory file descriptor, in which path is relative to.
+ * @param directory
+ *   The parent directory, via an open directory file descriptor, in which path is relative to.
  * @param path
  *   The path file name.
  * @param mode
@@ -563,6 +543,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if path.used is 0.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_directory_descriptor (with error bit) when at_id is not a valid file descriptor (at_id must point to a directory).
@@ -581,17 +562,18 @@ extern "C" {
  * @see mknodat()
  */
 #ifndef _di_f_file_create_node_at_
-  extern f_status_t f_file_create_node_at(const int at_id, const f_string_static_t path, const mode_t mode, const dev_t device);
+  extern f_status_t f_file_create_node_at(const f_file_t directory, const f_string_static_t path, const mode_t mode, const dev_t device);
 #endif // _di_f_file_create_node_at_
 
 /**
  * Identify the file descriptor of a valid file stream.
  *
  * @param file
- *   The file stream to get descriptor of.
+ *   The file.
  *
  * @return
  *   F_none is returned on success.
+ *   F_stream_not if file.stream is NULL.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_stream_not (with error bit) if file is not a valid stream.
@@ -640,8 +622,8 @@ extern "C" {
  * This does not require access on the file itself.
  * This only requires access via the parent directories in the path.
  *
- * @param at_id
- *   The parent directory, as an open directory file descriptor, in which path is relative to.
+ * @param directory
+ *   The parent directory, via an open directory file descriptor, in which path is relative to.
  * @param path
  *   The path file name.
  * @param flag
@@ -651,6 +633,7 @@ extern "C" {
  *   F_true if file exists.
  *   F_false if file does not exist.
  *   F_data_not if path.used is 0.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_directory_descriptor (with error bit) when at_id is not a valid file descriptor (at_id must point to a directory).
@@ -665,17 +648,18 @@ extern "C" {
  * @see fstatat()
  */
 #ifndef _di_f_file_exists_at_
-  extern f_status_t f_file_exists_at(const int at_id, const f_string_static_t path, const int flag);
+  extern f_status_t f_file_exists_at(const f_file_t directory, const f_string_static_t path, const int flag);
 #endif // _di_f_file_exists_at_
 
 /**
  * Flush the file.
  *
- * @param id
- *   The file descriptor.
+ * @param file
+ *   The file.
  *
  * @return
  *   F_none is returned on success.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_file_descriptor (with error bit) if file descriptor is invalid.
  *   F_filesystem_quota_block (with error bit) if file system's disk blocks or inodes are exhausted.
@@ -688,7 +672,7 @@ extern "C" {
  * @see fsync()
  */
 #ifndef _di_f_file_flush_
-  extern f_status_t f_file_flush(const int id);
+  extern f_status_t f_file_flush(const f_file_t id);
 #endif // _di_f_file_flush_
 
 /**
@@ -738,8 +722,8 @@ extern "C" {
  * @return
  *   F_true if path was found and path is type.
  *   F_false if path was found and path is not type.
- *   F_file_found_not if the path was not found.
  *   F_data_not if path.used is 0.
+ *   F_file_found_not if the path was not found.
  *
  *   F_access_denied (with error bit) if access to the file was denied.
  *   F_directory_not (with error bit) on invalid directory.
@@ -758,8 +742,8 @@ extern "C" {
 /**
  * Identify whether or not a file exists at the given path within the parent directory and if that file is a specific type.
  *
- * @param at_id
- *   The parent directory, as an open directory file descriptor, in which path is relative to.
+ * @param directory
+ *   The parent directory, via an open directory file descriptor, in which path is relative to.
  * @param path
  *   The path file name.
  * @param type
@@ -770,8 +754,9 @@ extern "C" {
  * @return
  *   F_true if path was found and path is type.
  *   F_false if path was found and path is not type.
- *   F_file_found_not if the path was not found.
  *   F_data_not if path.used is 0.
+ *   F_file_descriptor_not if file.id is -1.
+ *   F_file_found_not if the path was not found.
  *
  *   F_access_denied (with error bit) if access to the file was denied.
  *   F_directory_descriptor (with error bit) when at_id is not a valid file descriptor (at_id must point to a directory).
@@ -785,7 +770,7 @@ extern "C" {
  * @see fstatat()
  */
 #ifndef _di_f_file_is_at_
-  extern f_status_t f_file_is_at(const int at_id, const f_string_static_t path, const int type, const int flag);
+  extern f_status_t f_file_is_at(const f_file_t directory, const f_string_static_t path, const int type, const int flag);
 #endif // _di_f_file_is_at_
 
 /**
@@ -832,8 +817,8 @@ extern "C" {
  * This will not replace existing files/links.
  * This does not validate the existence of target.
  *
- * @param at_id
- *   The parent directory, as an open directory file descriptor, in which point path is relative to.
+ * @param directory
+ *   The parent directory, via an open directory file descriptor, in which path is relative to.
  * @param target
  *   A path that the link points to.
  * @param point
@@ -842,6 +827,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if target.used or point.used is 0.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_busy (with error bit) if file system is too busy to perform write.
@@ -864,7 +850,7 @@ extern "C" {
  * @see symlinkat()
  */
 #ifndef _di_f_file_link_at_
-  extern f_status_t f_file_link_at(const int at_id, const f_string_static_t target, const f_string_static_t point);
+  extern f_status_t f_file_link_at(const f_file_t directory, const f_string_static_t target, const f_string_static_t point);
 #endif // _di_f_file_link_at_
 
 /**
@@ -909,10 +895,10 @@ extern "C" {
  *
  * This will not replace existing files/links.
  *
- * @param at_id_target
- *   The parent directory, as an open directory file descriptor, in which target path is relative to.
- * @param at_id_point
- *   The parent directory, as an open directory file descriptor, in which point path is relative to.
+ * @param file_target
+ *   The parent directory, via an open directory file descriptor, in which target path is relative to.
+ * @param file_point
+ *   The parent directory, via an open directory file descriptor, in which point path is relative to.
  * @param target
  *   A path that the link points to.
  * @param point
@@ -923,6 +909,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if target.used or point.used is 0.
+ *   F_file_descriptor_not if either file.id is -1.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -946,7 +933,7 @@ extern "C" {
  * @see linkat()
  */
 #ifndef _di_f_file_link_hard_at_
-  extern f_status_t f_file_link_hard_at(const int at_id_target, const int at_id_point, const f_string_static_t target, const f_string_static_t point, const int flag);
+  extern f_status_t f_file_link_hard_at(const f_file_t file_target, const f_file_t file_point, const f_string_static_t target, const f_string_static_t point, const int flag);
 #endif // _di_f_file_link_hard_at_
 
 /**
@@ -1000,8 +987,8 @@ extern "C" {
  * This does not require access on the file itself.
  * This only requires access via the parent directories in the path.
  *
- * @param at_id
- *   The parent directory, as an open directory file descriptor, in which path is relative to.
+ * @param directory
+ *   The parent directory, via an open directory file descriptor, in which path is relative to.
  * @param path
  *   The path file name.
  * @param flag
@@ -1013,6 +1000,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if path.used is 0.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -1037,7 +1025,7 @@ extern "C" {
  * @see f_string_dynamic_terminate_after()
  */
 #ifndef _di_f_file_link_read_at_
-  extern f_status_t f_file_link_read_at(const int at_id, const f_string_static_t path, const int flag, f_string_dynamic_t * const target);
+  extern f_status_t f_file_link_read_at(const f_file_t directory, const f_string_static_t path, const int flag, f_string_dynamic_t * const target);
 #endif // _di_f_file_link_read_at_
 
 /**
@@ -1204,8 +1192,8 @@ extern "C" {
 /**
  * Get the current file mode as an f_file_mode_t.
  *
- * @param at_id
- *   The parent directory, as an open directory file descriptor, in which path is relative to.
+ * @param directory
+ *   The parent directory, via an open directory file descriptor, in which path is relative to.
  * @param path
  *   The path file name.
  * @param flag
@@ -1216,6 +1204,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if path.used is 0.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_access_denied (with error bit) if access to the file was denied.
  *   F_directory_descriptor (with error bit) when at_id is not a valid file descriptor (at_id must point to a directory).
@@ -1230,7 +1219,7 @@ extern "C" {
  * @see fstatat()
  */
 #ifndef _di_f_file_mode_read_at_
-  extern f_status_t f_file_mode_read_at(const int at_id, const f_string_static_t path, const int flag, mode_t * const mode);
+  extern f_status_t f_file_mode_read_at(const f_file_t directory, const f_string_static_t path, const int flag, mode_t * const mode);
 #endif // _di_f_file_mode_read_at_
 
 /**
@@ -1272,8 +1261,8 @@ extern "C" {
  * This does not set mode based on umask(), be sure to apply umask if so desired.
  * (such as: mode & ~mask).
  *
- * @param at_id
- *   The parent directory, as an open directory file descriptor, in which path is relative to.
+ * @param directory
+ *   The parent directory, via an open directory file descriptor, in which path is relative to.
  * @param path
  *   The path file name.
  * @param mode
@@ -1282,6 +1271,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if path.used is 0.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_access_mode (with error bit) if the current user does not have access to assign the file mode.
@@ -1299,7 +1289,7 @@ extern "C" {
  * @see fchmodat()
  */
 #ifndef _di_f_file_mode_set_at_
-  extern f_status_t f_file_mode_set_at(const int at_id, const f_string_static_t path, const mode_t mode);
+  extern f_status_t f_file_mode_set_at(const f_file_t directory, const f_string_static_t path, const mode_t mode);
 #endif // _di_f_file_mode_set_at_
 
 /**
@@ -1435,8 +1425,8 @@ extern "C" {
  * This will open the file as a file descriptor.
  * This does not open a file stream.
  *
- * @param at_id
- *   The parent directory, as an open directory file descriptor, in which path is relative to.
+ * @param directory
+ *   The parent directory, via an open directory file descriptor, in which path is relative to.
  * @param path
  *   The path file name.
  * @param mode
@@ -1449,6 +1439,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if path.used is 0.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
  *   F_file_found_not (with error bit) if the file was not found.
@@ -1458,7 +1449,7 @@ extern "C" {
  * @see openat()
  */
 #ifndef _di_f_file_open_at_
-  extern f_status_t f_file_open_at(const int at_id, const f_string_static_t path, const mode_t mode, f_file_t * const file);
+  extern f_status_t f_file_open_at(const f_file_t directory, const f_string_static_t path, const mode_t mode, f_file_t * const file);
 #endif // _di_f_file_open_at_
 
 /**
@@ -1498,13 +1489,13 @@ extern "C" {
  *
  * @param file
  *   The file to read.
- *   The file must already be open.
  * @param buffer
  *   The buffer the file is being read into.
  *   The contents of the file is appended into this buffer.
  *
  * @return
  *   F_none_eof on success and EOF was reached.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the read would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -1532,7 +1523,6 @@ extern "C" {
  *
  * @param file
  *   The file to read.
- *   The file must already be open.
  * @param buffer
  *   The buffer the file is being read into.
  *   The contents of the file is appended into this buffer.
@@ -1540,6 +1530,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_none_eof on success and EOF was reached.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the read would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -1568,7 +1559,6 @@ extern "C" {
  *
  * @param file
  *   The file to read.
- *   The file must already be open.
  * @param total
  *   The total bytes to read, unless EOF is reached first.
  * @param buffer
@@ -1578,6 +1568,7 @@ extern "C" {
  *   F_none_eof on success and EOF was reached.
  *   F_none_stop on success and total was reached.
  *   F_data_not if total is 0.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the read would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -1626,8 +1617,8 @@ extern "C" {
 /**
  * Remove a file.
  *
- * @param at_id
- *   The parent directory, as an open directory file descriptor, in which path is relative to.
+ * @param directory
+ *   The parent directory, via an open directory file descriptor, in which path is relative to.
  * @param path
  *   The path file name.
  * @param flag
@@ -1635,6 +1626,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_busy (with error bit) if file is busy.
@@ -1654,7 +1646,7 @@ extern "C" {
  * @see unlinkat()
  */
 #ifndef _di_f_file_remove_at_
-  extern f_status_t f_file_remove_at(const int at_id, const f_string_static_t path, const int flag);
+  extern f_status_t f_file_remove_at(const f_file_t directory, const f_string_static_t path, const int flag);
 #endif // _di_f_file_remove_at_
 
 /**
@@ -1714,10 +1706,10 @@ extern "C" {
  * If destination already exists, then according to rename(), destination will be atomically replaced.
  * Which, if destination is a directory, then that directory must either not exist or be empty.
  *
- * @param at_id
- *   The parent directory, as an open directory file descriptor, in which the source is relative to.
- * @param to_id
- *   The parent directory, as an open directory file descriptor, in which the destination is relative to.
+ * @param directory_source
+ *   The parent directory, via an open directory file descriptor, in which the source path is relative to.
+ * @param directory_destination
+ *   The parent directory, via an open directory file descriptor, in which the destination path is relative to.
  * @param source
  *   The path to the file to copy from.
  * @param destination
@@ -1729,6 +1721,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -1753,7 +1746,7 @@ extern "C" {
  * @see renameat()
  */
 #ifndef _di_f_file_rename_at_
-  extern f_status_t f_file_rename_at(const int at_id, const int to_id, const f_string_static_t source, const f_string_static_t destination, const unsigned int flag);
+  extern f_status_t f_file_rename_at(const f_file_t directory_source, const f_file_t directory_destination, const f_string_static_t source, const f_string_static_t destination, const unsigned int flag);
 #endif // _di_f_file_rename_at_
 
 /**
@@ -1799,8 +1792,8 @@ extern "C" {
 /**
  * Change owner and/or group of a given file at the specified path.
  *
- * @param at_id
- *   The parent directory, as an open directory file descriptor, in which path is relative to.
+ * @param directory
+ *   The parent directory, via an open directory file descriptor, in which path is relative to.
  * @param path
  *   The path file name.
  * @param uid
@@ -1815,6 +1808,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if either both uid and gid are -1 or path.used is 0.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_access_group (with error bit) if the current user does not have access to assign the specified group.
@@ -1834,14 +1828,14 @@ extern "C" {
  * @see fchownat()
  */
 #ifndef _di_f_file_role_change_at_
-  extern f_status_t f_file_role_change_at(const int at_id, const f_string_static_t path, const uid_t uid, const gid_t gid, const int flag);
+  extern f_status_t f_file_role_change_at(const f_file_t directory, const f_string_static_t path, const uid_t uid, const gid_t gid, const int flag);
 #endif // _di_f_file_role_change_at_
 
 /**
  * Given an open file descriptor, seek to a given location.
  *
- * @param id
- *   The file descriptor.
+ * @param file
+ *   The file.
  * @param whence
  *   One of: SEEK_SET, SEEK_CUR, SEEK_END, SEEK_DATA, SEEK_HOLE.
  * @param offset
@@ -1852,6 +1846,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_bound_not (with error bit) if SEEK_DATA or SEEK_HOLE is specified as whence and offset is beyond the end of file.
  *   F_file_descriptor (with error bit) if the file descriptor is invalid.
@@ -1863,7 +1858,7 @@ extern "C" {
  * @see lseek
  */
 #ifndef _di_f_file_seek_
-  extern f_status_t f_file_seek(const int id, const int whence, const off_t offset, off_t * const seeked);
+  extern f_status_t f_file_seek(const f_file_t file, const int whence, const off_t offset, off_t * const seeked);
 #endif // _di_f_file_seek_
 
 /**
@@ -1898,8 +1893,8 @@ extern "C" {
 /**
  * Read the size of file.
  *
- * @param at_id
- *   The parent directory, as an open directory file descriptor, in which path is relative to.
+ * @param directory
+ *   The parent directory, via an open directory file descriptor, in which path is relative to.
  * @param path
  *   The path to the file.
  * @param dereference
@@ -1910,6 +1905,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_access_denied (with error bit) if access to the file was denied.
  *   F_directory_descriptor (with error bit) when at_id is not a valid file descriptor (at_id must point to a directory).
@@ -1921,22 +1917,25 @@ extern "C" {
  *   F_number_overflow (with error bit) on overflow error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ *   F_file_stat (with error bit) on any other error.
+ *
  * @see f_file_stat_at()
  */
 #ifndef _di_f_file_size_at_
-  extern f_status_t f_file_size_at(const int at_id, const f_string_static_t path, const bool dereference, off_t * const size);
+  extern f_status_t f_file_size_at(const f_file_t directory, const f_string_static_t path, const bool dereference, off_t * const size);
 #endif // _di_f_file_size_at_
 
 /**
  * Read size of a file relative to the path represented by the file descriptor id.
  *
- * @param id
- *   The file descriptor.
+ * @param file
+ *   The file.
  * @param size
  *   This gets set to the size of the file.
  *
  * @return
  *   F_none on success.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_access_denied (with error bit) if access to the file was denied.
  *   F_directory_not (with error bit) on invalid directory.
@@ -1949,10 +1948,12 @@ extern "C" {
  *   F_number_overflow (with error bit) on overflow error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ *   F_file_stat (with error bit) on any other error.
+ *
  * @see f_file_stat_by_id()
  */
 #ifndef _di_f_file_size_by_id_
-  extern f_status_t f_file_size_by_id(const int id, off_t * const size);
+  extern f_status_t f_file_size_by_id(const f_file_t file, off_t * const size);
 #endif // _di_f_file_size_by_id_
 
 /**
@@ -1968,6 +1969,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_access_denied (with error bit) if access to the file was denied.
  *   F_directory_not (with error bit) on invalid directory.
@@ -1978,6 +1980,8 @@ extern "C" {
  *   F_number_overflow (with error bit) on overflow error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ *   F_file_stat (with error bit) on any other error.
+ *
  * @see stat()
  */
 #ifndef _di_f_file_stat_
@@ -1987,8 +1991,8 @@ extern "C" {
 /**
  * Read statistics of a file relative to the path represented by the file descriptor id.
  *
- * @param at_id
- *   The parent directory, as an open directory file descriptor, in which path is relative to.
+ * @param directory
+ *   The parent directory, via an open directory file descriptor, in which path is relative to.
  * @param path
  *   The path to the file.
  * @param flag
@@ -1998,6 +2002,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_access_denied (with error bit) if access to the file was denied.
  *   F_directory_descriptor (with error bit) when at_id is not a valid file descriptor (at_id must point to a directory).
@@ -2009,22 +2014,25 @@ extern "C" {
  *   F_number_overflow (with error bit) on overflow error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ *   F_file_stat (with error bit) on any other error.
+ *
  * @see fstatat()
  */
 #ifndef _di_f_file_stat_at_
-  extern f_status_t f_file_stat_at(const int at_id, const f_string_static_t path, const int flag, struct stat * const stat_file);
+  extern f_status_t f_file_stat_at(const f_file_t directory, const f_string_static_t path, const int flag, struct stat * const stat_file);
 #endif // _di_f_file_stat_at_
 
 /**
  * Read statistics of a file using a file descriptor id.
  *
- * @param id
- *   The file descriptor.
+ * @param file
+ *   The file.
  * @param stat_file
  *   The statistics read.
  *
  * @return
  *   F_none on success.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_access_denied (with error bit) if access to the file was denied.
  *   F_directory_not (with error bit) on invalid directory.
@@ -2035,39 +2043,33 @@ extern "C" {
  *   F_number_overflow (with error bit) on overflow error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ *   F_file_stat (with error bit) on any other error.
+ *
  * @see fstat()
  */
 #ifndef _di_f_file_stat_by_id_
-  extern f_status_t f_file_stat_by_id(const int id, struct stat * const stat_file);
+  extern f_status_t f_file_stat_by_id(const f_file_t file, struct stat * const stat_file);
 #endif // _di_f_file_stat_by_id_
 
 /**
  * Close an open file stream.
  *
- * @param flush
- *   If TRUE, will explicitly flush all unwritten data in any buffers to the file.
- *   If FALSE, will not explicitly flush unwritten data.
- *
- *   If TRUE and flush fails, then this will still attempt to close the stream.
  * @param file
  *   The file information.
- *   The file.stream is set to 0, on success or on failure.
- *   The file.id is set to 0, on success or on failure.
+ *   The file.stream is set to NULL, on both success or on failure.
  *
  * @return
- *   F_none is returned on success.
+ *   F_none on success.
+ *   F_stream_not if file.stream is NULL.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_block (with error bit) if the action would block and non-blocking is set on the stream.
  *   F_buffer (with error bit) if the buffer is invalid.
  *   F_deadlock (with error bit) if operation would cause a deadlock.
- *   F_file_close (with error bit) if fclose() failed for any other reason.
  *   F_file_descriptor (with error bit) if file descriptor is invalid.
  *   F_file_descriptor_max (with error bit) if max file descriptors is reached.
  *   F_file_overflow (with error bit) if the write exceeds some implementation defined maximum file size.
- *   F_file_synchronize (with error bit) on flush failure.
  *   F_file_type_not_directory (with error bit) if F_NOTIFY was specified and file.id is not a directory.
- *   F_filesystem_quota_block (with error bit) if file system's disk blocks or inodes are exhausted.
  *   F_input_output (with error bit) on I/O error.
  *   F_interrupt (with error bit) when program received an interrupt signal, halting operation.
  *   F_lock (with error bit) if failed to lock, such as lock table is full or too many open segments.
@@ -2076,13 +2078,41 @@ extern "C" {
  *   F_space_not (with error bit) if file system is out of space (or file system quota is reached).
  *   F_socket_not (with error bit) if the datagram socket in which a peer has not been set (for socket related streams).
  *
- * @see close()
+ *   F_file_close (with error bit) on any other error.
+ *
  * @see fclose()
- * @see fflush()
  */
 #ifndef _di_f_file_stream_close_
-  extern f_status_t f_file_stream_close(const bool flush, f_file_t * const file);
+  extern f_status_t f_file_stream_close(f_file_t * const file);
 #endif // _di_f_file_stream_close_
+
+/**
+ * Flush a file stream.
+ *
+ * @param file
+ *   The file information.
+ *   The file.id is updated with the file descriptor, if necessary and able.
+ *
+ * @return
+ *   F_none is returned on success.
+ *   F_stream_not if file.stream is NULL.
+ *   F_file_descriptor_not if file.id is -1.
+ *
+ *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
+ *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_file_closed (with error bit) if file is not open.
+ *   F_file_descriptor (with error bit) if the file descriptor is invalid.
+ *   F_file_type_directory (with error bit) if file descriptor represents a directory.
+ *   F_input_output (with error bit) on I/O error.
+ *   F_interrupt (with error bit) if interrupt was received.
+ *
+ *   F_file_synchronize (with error bit) on any other error.
+ *
+ * @see fflush()
+ */
+#ifndef _di_f_file_stream_flush_
+  extern f_status_t f_file_stream_flush(f_file_t * const file);
+#endif // _di_f_file_stream_flush_
 
 /**
  * Open a file stream.
@@ -2135,7 +2165,6 @@ extern "C" {
  *   F_supported_not (with error bit) fo unsupported file types.
  *   F_failure (with error bit) for any other error.
  *
- * @see fileno()
  * @see fopen()
  */
 #ifndef _di_f_file_stream_open_
@@ -2152,10 +2181,10 @@ extern "C" {
  *   This should match the modes used to open the file descriptor as it relates to the stream modes.
  * @param file
  *   The file with a valid file descriptor (file.id).
- *   THe file stream (file.stream) is updated on success, but may be set to NULL on error.
  *
  * @return
  *   F_none is returned on success.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_access_denied (with error bit) on access denied.
  *   F_block (with error bit) if the action would block and non-blocking is set on the stream.
@@ -2186,7 +2215,6 @@ extern "C" {
  *
  * @param file
  *   The file to read.
- *   The file must already be open.
  *   The file.size_read represents the amount to process at a given time.
  * @param buffer
  *   The buffer the file is being read into.
@@ -2194,6 +2222,7 @@ extern "C" {
  *
  * @return
  *   F_none_eof on success and EOF was reached.
+ *   F_stream_not if file.stream is NULL.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the read would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -2222,7 +2251,6 @@ extern "C" {
  *
  * @param file
  *   The file to read.
- *   The file must already be open.
  *   The file.size_read represents the amount to process at a given time.
  * @param buffer
  *   The buffer the file is being read into.
@@ -2231,6 +2259,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_none_eof on success and EOF was reached.
+ *   F_stream_not if file.stream is NULL.
  *
  *   F_error (with error bit) if the file is already in the error state at the start of this function.
  *   F_file_closed (with error bit) if the file is closed.
@@ -2259,7 +2288,6 @@ extern "C" {
  *
  * @param file
  *   The file to read.
- *   The file must already be open.
  *   The file.size_read represents the amount to process at a given time.
  * @param total
  *   The total bytes to read, unless EOF is reached first.
@@ -2269,6 +2297,8 @@ extern "C" {
  * @return
  *   F_none_eof on success and EOF was reached.
  *   F_none_stop on success and total was reached.
+ *   F_data_not if total is 0.
+ *   F_stream_not if file.stream is NULL.
  *
  *   F_error (with error bit) if the file is already in the error state at the start of this function.
  *   F_file_closed (with error bit) if the file is closed.
@@ -2306,7 +2336,6 @@ extern "C" {
  * @param file
  *   The file information.
  *   The file.stream is updated, if necessary.
- *   The file.id is updated with the file descriptor, if necessary and able.
  *
  * @return
  *   F_none is returned on success.
@@ -2348,14 +2377,15 @@ extern "C" {
  * @param buffer
  *   The buffer to write to the file.
  * @param written
- *   The total bytes written.
- *   Set pointer to 0 to not use.
+ *   (optional) The total bytes written.
+ *   Set to NULL to not use.
  *
  * @return
  *   F_none on success.
  *   F_none_eof when the file stream is at the end of the file.
  *   F_none_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
  *   F_data_not on success but buffer.used is 0.
+ *   F_stream_not if file.stream is NULL.
  *
  *   F_file_write (with error bit) on error during file write.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -2383,14 +2413,15 @@ extern "C" {
  * @param buffer
  *   The buffer to write to the file.
  * @param written
- *   The total bytes written.
- *   Set pointer to 0 to not use.
+ *   (optional) The total bytes written.
+ *   Set to NULL to not use.
  *
  * @return
  *   F_none on success.
  *   F_none_eof when the file stream is at the end of the file.
  *   F_none_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
  *   F_data_not on success but buffer.used is 0.
+ *   F_stream_not if file.stream is NULL.
  *
  *   F_file_write (with error bit) on error during file write.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -2418,8 +2449,8 @@ extern "C" {
  * @param total
  *   The total bytes to write, unless end of buffer is reached first.
  * @param written
- *   The total bytes written.
- *   Set pointer to 0 to not use.
+ *   (optional) The total bytes written.
+ *   Set to NULL to not use..
  *
  * @return
  *   F_none on success.
@@ -2427,6 +2458,7 @@ extern "C" {
  *   F_none_eos on success but range.stop exceeded buffer.used (only wrote up to buffer.used).
  *   F_none_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
  *   F_data_not on success but either buffer.used or total is 0.
+ *   F_stream_not if file.stream is NULL.
  *
  *   F_file_write (with error bit) on error during file write.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -2447,20 +2479,20 @@ extern "C" {
  *
  * @param file
  *   The file to write to.
- *   The file must already be open.
  *   The file.size_write represents the amount to process at a given time.
  * @param buffer
  *   The buffer to write to the file.
  * @param range
  *   An inclusive start an stop range within the buffer to read.
  * @param written
- *   The total bytes written.
- *   Set pointer to 0 to not use.
+ *   (optional) The total bytes written.
+ *   Set to NULL to not use.
  *
  * @return
  *   F_none on success.
  *   F_none_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
  *   F_none_eos on success but range.stop exceeded buffer.used (only wrote up to buffer.used).
+ *   F_stream_not if file.stream is NULL.
  *
  *   F_file_write (with error bit) on error during file write.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -2519,8 +2551,8 @@ extern "C" {
  *
  * When the file is created, it is created as a regular file.
  *
- * @param at_id
- *   The parent directory, as an open directory file descriptor, in which path is relative to.
+ * @param directory
+ *   The parent directory, via an open directory file descriptor, in which path is relative to.
  * @param path
  *   The path file name.
  * @param mode
@@ -2532,6 +2564,7 @@ extern "C" {
  *   F_none on success.
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer (with error bit) if the buffer is invalid.
+ *   F_stream_not if file.stream is NULL.
  *
  *   F_busy (with error bit) if file system is too busy to perform write.
  *   F_directory_descriptor (with error bit) when at_id is not a valid file descriptor (at_id must point to a directory).
@@ -2554,7 +2587,7 @@ extern "C" {
  * @see utimensat()
  */
 #ifndef _di_f_file_touch_at_
-  extern f_status_t f_file_touch_at(const int at_id, const f_string_static_t path, const mode_t mode, const int flag);
+  extern f_status_t f_file_touch_at(const f_file_t directory, const f_string_static_t path, const mode_t mode, const int flag);
 #endif // _di_f_file_touch_at_
 
 /**
@@ -2592,8 +2625,8 @@ extern "C" {
 /**
  * Get the file type for the file at the given path within the parent directory.
  *
- * @param at_id
- *   The parent directory, as an open directory file descriptor, in which path is relative to.
+ * @param directory
+ *   The parent directory, via an open directory file descriptor, in which path is relative to.
  * @param path
  *   The path file name.
  * @param flag
@@ -2604,6 +2637,7 @@ extern "C" {
  * @return
  *   F_none if path was found and and the type was loaded in the type parameter.
  *   F_file_found_not if the path was not found.
+ *   F_stream_not if file.stream is NULL.
  *
  *   F_access_denied (with error bit) if access to the file was denied.
  *   F_directory_descriptor (with error bit) when at_id is not a valid file descriptor (at_id must point to a directory).
@@ -2617,7 +2651,7 @@ extern "C" {
  * @see fstatat()
  */
 #ifndef _di_f_file_type_at_
-  extern f_status_t f_file_type_at(const int at_id, const f_string_static_t path, const int flag, int * const type);
+  extern f_status_t f_file_type_at(const f_file_t directory, const f_string_static_t path, const int flag, int * const type);
 #endif // _di_f_file_type_at_
 
 /**
@@ -2661,17 +2695,17 @@ extern "C" {
  *
  * @param file
  *   The file to write to.
- *   The file must already be open.
  * @param buffer
  *   The buffer to write to the file.
  * @param written
- *   The total bytes written.
- *   Set pointer to 0 to not use.
+ *   (optional) The total bytes written.
+ *   Set to NULL to not use.
  *
  * @return
  *   F_none on success.
- *   F_none_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
- *   F_data_not if buffer.used is 0.
+ *   F_none_eos on success and wrote up to buffer.used.
+ *   F_data_not if buffer.used is 0 or range.start > range.stop.
+ *   F_stream_not if file.id is -1.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -2695,17 +2729,18 @@ extern "C" {
  *
  * @param file
  *   The file to write to.
- *   The file must already be open.
  * @param buffer
  *   The buffer to write to the file.
  * @param written
- *   The total bytes written.
- *   Set pointer to 0 to not use.
+ *   (optional) The total bytes written.
+ *   Set to NULL to not use.
  *
  * @return
  *   F_none on success.
- *   F_none_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
- *   F_data_not if buffer.used is 0.
+ *   F_none_stop on success and wrote up to stop point.
+ *   F_none_eos on success and wrote up to buffer.used (buffer.used is reached before stop point).
+ *   F_data_not if buffer.used is 0 or range.start > range.stop.
+ *   F_stream_not if file.id is -1.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -2727,20 +2762,20 @@ extern "C" {
  *
  * @param file
  *   The file to write to.
- *   The file must already be open.
  * @param buffer
  *   The buffer to write to the file.
  * @param total
  *   The total bytes to write, unless end of buffer is reached first.
  * @param written
- *   The total bytes written.
- *   Set pointer to 0 to not use.
+ *   (optional) The total bytes written.
+ *   Set to NULL to not use.
  *
  * @return
  *   F_none on success.
- *   F_none_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
- *   F_none_eos on success but range.stop exceeded buffer.used (only wrote up to buffer.used).
- *   F_data_not if buffer.used is 0 or total is 0.
+ *   F_none_stop on success and wrote up to stop point.
+ *   F_none_eos on success and wrote up to buffer.used (buffer.used is reached before stop point).
+ *   F_data_not if buffer.used is 0 or range.start > range.stop.
+ *   F_stream_not if file.id is -1.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -2762,20 +2797,20 @@ extern "C" {
  *
  * @param file
  *   The file to write to.
- *   The file must already be open.
  * @param buffer
  *   The buffer to write to the file.
  * @param range
  *   An inclusive start an stop range within the buffer to read.
  * @param written
- *   The total bytes written.
- *   Set pointer to 0 to not use.
+ *   (optional) The total bytes written.
+ *   Set to NULL to not use.
  *
  * @return
  *   F_none on success.
- *   F_none_stop on success but no data was written (written == 0) (not an error and often happens if file type is not a regular file).
- *   F_none_eos on success but range.stop exceeded buffer.used (only wrote up to buffer.used).
+ *   F_none_stop on success and wrote up to stop point.
+ *   F_none_eos on success and wrote up to buffer.used (buffer.used is reached before stop point).
  *   F_data_not if buffer.used is 0 or range.start > range.stop.
+ *   F_stream_not if file.id is -1.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.

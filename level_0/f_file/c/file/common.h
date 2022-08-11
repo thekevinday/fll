@@ -189,6 +189,8 @@ extern "C" {
 
   #define macro_f_file_t_initialize(stream, id, flag, read_size, write_size) { stream, id, flag, read_size, write_size }
   #define macro_f_file_t_initialize2(stream, id, flag) { stream, id, flag, F_file_default_read_size_d, F_file_default_write_size_d }
+  #define macro_f_file_t_initialize_id(id) { 0, id, F_file_flag_read_only_d, F_file_default_read_size_d, F_file_default_write_size_d }
+  #define macro_f_file_t_initialize_stream(stream) { stream, -1, F_file_flag_read_only_d, F_file_default_read_size_d, F_file_default_write_size_d }
 
   #define macro_f_file_t_clear(file) \
     file.stream = 0; \

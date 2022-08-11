@@ -20,12 +20,9 @@ extern "C" {
  *
  * Intended to be shared to each of the different implementation variations.
  *
- * @param flush
- *   If TRUE, then perform flush before closing.
- *   If FALSE, then do not perform flush before closing.
- * @param id
- *   The file descriptor.
- *   The value gets set to -1.
+ * @param file
+ *   The file to close.
+ *   The file descriptor gets set to -1.
  *
  * @return
  *   F_none on success.
@@ -40,14 +37,13 @@ extern "C" {
  *   F_space_not (with error bit) if file system is out of space (or file system quota is reached).
  *
  * @see close()
- * @see fsync()
  *
  * @see f_file_close()
  * @see f_file_copy()
  * @see f_file_stream_close()
  */
 #if !defined(_di_f_file_close_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_stream_close_)
-  extern f_status_t private_f_file_close(const bool flush, int * const id) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_file_close(f_file_t * const file) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_file_close_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_stream_close_)
 
 /**
@@ -152,8 +148,8 @@ extern "C" {
  *
  * Intended to be shared to each of the different implementation variations.
  *
- * @param at_id
- *   The parent directory, as an open directory file descriptor, in which path is relative to.
+ * @param directory
+ *   The parent directory, via an open directory file descriptor, in which path is relative to.
  * @param file
  *   The data related to the file being opened.
  *   This will be updated with the file descriptor.
@@ -191,7 +187,7 @@ extern "C" {
  * @see f_file_create_at()
  */
 #if !defined(_di_f_file_create_at_)
-  extern f_status_t private_f_file_create_at(const int at_id, const f_string_static_t path, const mode_t mode, const bool exclusive) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_file_create_at(const f_file_t directory, const f_string_static_t path, const mode_t mode, const bool exclusive) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_file_create_at_)
 
 /**
@@ -236,8 +232,8 @@ extern "C" {
  *
  * Intended to be shared to each of the different implementation variations.
  *
- * @param at_id
- *   The file descriptor in which the directory will be created within.
+ * @param directory
+ *   The parent directory, via an open directory file descriptor, in which path is relative to.
  * @param path
  *   The path file name.
  * @param mode
@@ -268,7 +264,7 @@ extern "C" {
  * @see f_file_copy_at()
  */
 #if !defined(_di_f_file_copy_at_)
-  extern f_status_t private_f_file_create_directory_at(const int at_id, const f_string_static_t path, const mode_t mode) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_file_create_directory_at(const f_file_t directory, const f_string_static_t path, const mode_t mode) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_file_copy_at_)
 
 /**
@@ -311,8 +307,8 @@ extern "C" {
  *
  * Intended to be shared to each of the different implementation variations.
  *
- * @param at_id
- *   The parent directory, as an open directory file descriptor, in which path is relative to.
+ * @param directory
+ *   The parent directory, via an open directory file descriptor, in which path is relative to.
  * @param path
  *   The path file name.
  * @param mode
@@ -341,7 +337,7 @@ extern "C" {
  * @see f_file_copy_at()
  */
 #if !defined(_di_f_file_create_fifo_at_) || !defined(_di_f_file_copy_at_)
-  extern f_status_t private_f_file_create_fifo_at(const int at_id, const f_string_static_t path, const mode_t mode) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_file_create_fifo_at(const f_file_t directory, const f_string_static_t path, const mode_t mode) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_file_create_fifo_at_) || !defined(_di_f_file_copy_at_)
 
 /**
@@ -391,8 +387,8 @@ extern "C" {
  *
  * Intended to be shared to each of the different implementation variations.
  *
- * @param at_id
- *   The parent directory, as an open directory file descriptor, in which path is relative to.
+ * @param directory
+ *   The parent directory, via an open directory file descriptor, in which path is relative to.
  * @param path
  *   The path file name.
  * @param mode
@@ -428,7 +424,7 @@ extern "C" {
  * @see f_file_create_node_at()
  */
 #if !defined(_di_f_file_create_device_at_) || !defined(_di_f_file_create_node_at_) || !defined(_di_f_file_copy_at_)
-  extern f_status_t private_f_file_create_node_at(const int at_id, const f_string_static_t path, const mode_t mode, const dev_t device) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_file_create_node_at(const f_file_t directory, const f_string_static_t path, const mode_t mode, const dev_t device) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_file_create_device_at_) || !defined(_di_f_file_create_node_at_) || !defined(_di_f_file_copy_at_)
 
 /**
@@ -436,8 +432,8 @@ extern "C" {
  *
  * Intended to be shared to each of the different implementation variations.
  *
- * @param id
- *   The file descriptor.
+ * @param file
+ *   The file to flush.
  *
  * @return
  *   F_none is returned on success.
@@ -450,16 +446,18 @@ extern "C" {
  *   F_supported_not (with error bit) if the file system or file type does not support flushing.
  *   F_file_synchronize (with error bit) on any other failure.
  *
- * @see fsync()
- *
+ * @see f_file_clone_at()
  * @see f_file_close()
  * @see f_file_copy()
+ * @see f_file_copy_at()
+ * @see f_file_create()
+ * @see f_file_create_at()
  * @see f_file_flush()
  * @see f_file_stream_close()
  */
-#if !defined(_di_f_file_flush_) || !defined(_di_f_file_close_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_stream_close_)
-  extern f_status_t private_f_file_flush(const int id) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_file_flush_) || !defined(_di_f_file_close_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_stream_close_)
+#if !defined(_di_f_file_clone_at_) || !defined(_di_f_file_close_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_copy_at_) || !defined(_di_f_file_create_) || !defined(_di_f_file_create_at_) || !defined(_di_f_file_flush_) || !defined(_di_f_file_stream_close_)
+  extern f_status_t private_f_file_flush(const f_file_t file) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_file_clone_at_) || !defined(_di_f_file_close_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_copy_at_) || !defined(_di_f_file_create_) || !defined(_di_f_file_create_at_) || !defined(_di_f_file_flush_) || !defined(_di_f_file_stream_close_)
 
 /**
  * Private implementation of f_file_link().
@@ -505,8 +503,8 @@ extern "C" {
  *
  * Intended to be shared to each of the different implementation variations.
  *
- * @param at_id
- *   The parent directory, as an open directory file descriptor, in which point point path is relative to.
+ * @param directory
+ *   The parent directory, via an open directory file descriptor, in which point point path is relative to.
  * @param target
  *   A path that the link points to.
  * @param point
@@ -538,7 +536,7 @@ extern "C" {
  * @see f_file_link_at()
  */
 #if !defined(_di_f_file_link_at_)
-  extern f_status_t private_f_file_link_at(const int at_id, const f_string_static_t target, const f_string_static_t point) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_file_link_at(const f_file_t directory, const f_string_static_t target, const f_string_static_t point) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_file_link_at_)
 
 /**
@@ -585,8 +583,8 @@ extern "C" {
  *
  * Intended to be shared to each of the different implementation variations.
  *
- * @param at_id
- *   The parent directory, as an open directory file descriptor, in which path is relative to.
+ * @param directory
+ *   The parent directory, via an open directory file descriptor, in which path is relative to.
  * @param path
  *   The path file name.
  * @param size
@@ -619,7 +617,7 @@ extern "C" {
  * @see f_string_dynamic_terminate_after()
  */
 #if !defined(_di_f_file_link_read_at_) || !defined(_di_f_file_copy_at_)
-  extern f_status_t private_f_file_link_read_at(const int at_id, const f_string_static_t path, const off_t size, f_string_dynamic_t * const target) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_file_link_read_at(const f_file_t directory, const f_string_static_t path, const off_t size, f_string_dynamic_t * const target) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_file_link_read_at_) || !defined(_di_f_file_copy_at_)
 
 /**
@@ -661,8 +659,8 @@ extern "C" {
  *
  * Intended to be shared to each of the different implementation variations.
  *
- * @param at_id
- *   The parent directory, as an open directory file descriptor, in which path is relative to.
+ * @param directory
+ *   The parent directory, via an open directory file descriptor, in which path is relative to.
  * @param path
  *   The path file name.
  * @param mode
@@ -688,7 +686,7 @@ extern "C" {
  * @see f_file_mode_set_at()
  */
 #if !defined(_di_f_file_mode_set_at_)
-  extern f_status_t private_f_file_mode_set_at(const int at_id, const f_string_static_t path, const mode_t mode) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_file_mode_set_at(const f_file_t directory, const f_string_static_t path, const mode_t mode) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_file_mode_set_at_)
 
 /**
@@ -727,8 +725,8 @@ extern "C" {
  *
  * Intended to be shared to each of the different implementation variations.
  *
- * @param at_id
- *   The parent directory, as an open directory file descriptor, in which path is relative to.
+ * @param directory
+ *   The parent directory, via an open directory file descriptor, in which path is relative to.
  * @param path
  *   The path file name.
  * @param mode
@@ -754,7 +752,7 @@ extern "C" {
  * @see f_file_copy_at()
  */
 #if !defined(_di_f_file_copy_at_) || !defined(_di_f_file_clone_at_) || !defined(_di_f_file_open_at_) || !defined(_di_f_file_copy_at_)
-  extern f_status_t private_f_file_open_at(const int at_id, const f_string_static_t path, const mode_t mode, f_file_t * const file) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_file_open_at(const f_file_t directory, const f_string_static_t path, const mode_t mode, f_file_t * const file) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_file_copy_at_) || !defined(_di_f_file_clone_at_) || !defined(_di_f_file_open_at_) || !defined(_di_f_file_copy_at_)
 
 /**
@@ -804,8 +802,8 @@ extern "C" {
  *
  * Intended to be shared to each of the different implementation variations.
  *
- * @param at_id
- *   The parent directory, as an open directory file descriptor, in which path is relative to.
+ * @param directory
+ *   The parent directory, via an open directory file descriptor, in which path is relative to.
  * @param path
  *   The path file name.
  * @param uid
@@ -838,7 +836,7 @@ extern "C" {
  * @see f_file_role_change_at()
  */
 #if !defined(_di_f_file_role_change_at_)
-  extern f_status_t private_f_file_role_change_at(const int at_id, const f_string_static_t path, const uid_t uid, const gid_t gid, const int flag) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_file_role_change_at(const f_file_t directory, const f_string_static_t path, const uid_t uid, const gid_t gid, const int flag) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_file_role_change_at_)
 
 /**
@@ -884,8 +882,8 @@ extern "C" {
  *
  * Intended to be shared to each of the different implementation variations.
  *
- * @param at_id
- *   The parent directory, as an open directory file descriptor, in which path is relative to.
+ * @param directory
+ *   The parent directory, via an open directory file descriptor, in which path is relative to.
  * @param file_name
  *   The name of the file.
  * @param flag
@@ -912,7 +910,7 @@ extern "C" {
  * @see f_file_touch_at()
  */
 #if !defined(_di_f_file_stat_at_) || !defined(_di_f_file_exists_at_) || !defined(_di_f_file_touch_at_)
-  extern f_status_t private_f_file_stat_at(const int at_id, const f_string_static_t file_name, const int flag, struct stat * const file_stat) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_file_stat_at(const f_file_t directory, const f_string_static_t file_name, const int flag, struct stat * const file_stat) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_file_stat_at_) || !defined(_di_f_file_exists_at_) || !defined(_di_f_file_touch_at_)
 
 /**
@@ -920,8 +918,8 @@ extern "C" {
  *
  * Intended to be shared to each of the different implementation variations.
  *
- * @param id
- *   The file descriptor.
+ * @param file
+ *   The file.
  * @param file_stat
  *   The statistics read.
  *
@@ -943,7 +941,7 @@ extern "C" {
  * @see f_file_stat_by_id()
  */
 #if !defined(_di_f_file_stat_by_id_) || !defined(_di_f_file_size_by_id_)
-  extern f_status_t private_f_file_stat_by_id(const int id, struct stat * const file_stat) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_file_stat_by_id(const f_file_t file, struct stat * const file_stat) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_file_stat_by_id_) || !defined(_di_f_file_size_by_id_)
 
 /**
@@ -972,7 +970,6 @@ extern "C" {
  *
  * @param file
  *   The file to write to.
- *   The file must already be open.
  * @param buffer
  *   The string to write to the file.
  * @param total
@@ -1007,7 +1004,6 @@ extern "C" {
  *
  * @param file
  *   The file to write to.
- *   The file must already be open.
  * @param buffer
  *   The string to write to the file.
  * @param total

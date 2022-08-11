@@ -24,37 +24,6 @@ extern "C" {
 #endif
 
 /**
- * Identify whether or not the standard input pipe source contains piped data.
- *
- * @return
- *   F_true if there is piped data.
- *   F_false if there is no piped data.
- *   F_file_stat (with error bit) on stat() error.
- *
- * @see fstat()
- */
-#ifndef _di_f_pipe_input_exists_
-  extern f_status_t f_pipe_input_exists(void);
-#endif // _di_f_pipe_input_exists_
-
-/**
- * Identify whether or not the standard warning pipe contains piped data.
- *
- * For most systems, standard warning does not exist and instead maps to standard output.
- *
- * @return
- *   F_true if there is piped data.
- *   F_false if there is no piped data.
- *
- *   F_file_stat (with error bit) on stat() error.
- *
- * @see fstat()
- */
-#ifndef _di_f_pipe_warning_exists_
-  extern f_status_t f_pipe_warning_exists(void);
-#endif // _di_f_pipe_warning_exists_
-
-/**
  * Identify whether or not the standard error pipe source contains piped data.
  *
  * @return
@@ -70,9 +39,24 @@ extern "C" {
 #endif // _di_f_pipe_error_exists_
 
 /**
- * Identify whether or not the standard debug pipe source contains piped data.
+ * Identify whether or not the standard input pipe source contains piped data.
  *
- * For most systems, standard debug does not exist and instead maps to standard output.
+ * @return
+ *   F_true if there is piped data.
+ *   F_false if there is no piped data.
+ *
+ *   F_file_stat (with error bit) on stat() error.
+ *
+ * @see fstat()
+ */
+#ifndef _di_f_pipe_input_exists_
+  extern f_status_t f_pipe_input_exists(void);
+#endif // _di_f_pipe_input_exists_
+
+/**
+ * Identify whether or not the standard output pipe source contains piped data.
+ *
+ * For most systems, standard output does not exist and instead maps to standard output.
  *
  * @return
  *   F_false if there is no piped data.
@@ -82,9 +66,9 @@ extern "C" {
  *
  * @see fstat()
  */
-#ifndef _di_f_pipe_debug_exists_
-  extern f_status_t f_pipe_debug_exists(void);
-#endif // _di_f_pipe_debug_exists_
+#ifndef _di_f_pipe_output_exists_
+  extern f_status_t f_pipe_output_exists(void);
+#endif // _di_f_pipe_output_exists_
 
 #ifdef __cplusplus
 } // extern "C"
