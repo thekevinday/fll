@@ -126,6 +126,8 @@ extern "C" {
     controller_parameter_verbosity_verbose_e,
     controller_parameter_verbosity_debug_e,
     controller_parameter_version_e,
+    controller_parameter_line_first_no_e,
+    controller_parameter_line_last_no_e,
 
     controller_parameter_cgroup_e,
     controller_parameter_daemon_e,
@@ -141,29 +143,32 @@ extern "C" {
 
   #define controller_console_parameter_t_initialize \
     { \
-      macro_f_console_parameter_t_initialize(f_console_standard_short_help_s.string, f_console_standard_long_help_s.string, 0, 0, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(f_console_standard_short_light_s.string, f_console_standard_long_light_s.string, 0, 0, f_console_type_inverse_e), \
-      macro_f_console_parameter_t_initialize(f_console_standard_short_dark_s.string, f_console_standard_long_dark_s.string, 0, 0, f_console_type_inverse_e), \
-      macro_f_console_parameter_t_initialize(f_console_standard_short_no_color_s.string, f_console_standard_long_no_color_s.string, 0, 0, f_console_type_inverse_e), \
-      macro_f_console_parameter_t_initialize(f_console_standard_short_quiet_s.string, f_console_standard_long_quiet_s.string, 0, 0, f_console_type_inverse_e), \
-      macro_f_console_parameter_t_initialize(f_console_standard_short_error_s.string, f_console_standard_long_error_s.string, 0, 0, f_console_type_inverse_e), \
-      macro_f_console_parameter_t_initialize(f_console_standard_short_normal_s.string, f_console_standard_long_normal_s.string, 0, 0, f_console_type_inverse_e), \
-      macro_f_console_parameter_t_initialize(f_console_standard_short_verbose_s.string, f_console_standard_long_verbose_s.string, 0, 0, f_console_type_inverse_e), \
-      macro_f_console_parameter_t_initialize(f_console_standard_short_debug_s.string, f_console_standard_long_debug_s.string, 0, 0, f_console_type_inverse_e), \
-      macro_f_console_parameter_t_initialize(f_console_standard_short_version_s.string, f_console_standard_long_version_s.string, 0, 0, f_console_type_inverse_e), \
-      macro_f_console_parameter_t_initialize(controller_short_cgroup_s.string, controller_long_cgroup_s.string, 0, 1, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(controller_short_daemon_s.string, controller_long_daemon_s.string, 0, 0, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(controller_short_init_s.string, controller_long_init_s.string, 0, 0, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(controller_short_interruptible_s.string, controller_long_interruptible_s.string, 0, 0, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(controller_short_pid_s.string, controller_long_pid_s.string, 0, 1, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(controller_short_settings_s.string, controller_long_settings_s.string, 0, 1, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(controller_short_simulate_s.string, controller_long_simulate_s.string, 0, 0, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(controller_short_socket_s.string, controller_long_socket_s.string, 0, 1, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(controller_short_uninterruptible_s.string, controller_long_uninterruptible_s.string, 0, 0, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(controller_short_validate_s.string, controller_long_validate_s.string, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize4(f_console_standard_short_help_s,          f_console_standard_long_help_s,          0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize4(f_console_standard_short_light_s,         f_console_standard_long_light_s,         0, f_console_type_inverse_e), \
+      macro_f_console_parameter_t_initialize4(f_console_standard_short_dark_s,          f_console_standard_long_dark_s,          0, f_console_type_inverse_e), \
+      macro_f_console_parameter_t_initialize4(f_console_standard_short_no_color_s,      f_console_standard_long_no_color_s,      0, f_console_type_inverse_e), \
+      macro_f_console_parameter_t_initialize4(f_console_standard_short_quiet_s,         f_console_standard_long_quiet_s,         0, f_console_type_inverse_e), \
+      macro_f_console_parameter_t_initialize4(f_console_standard_short_error_s,         f_console_standard_long_error_s,         0, f_console_type_inverse_e), \
+      macro_f_console_parameter_t_initialize4(f_console_standard_short_normal_s,        f_console_standard_long_normal_s,        0, f_console_type_inverse_e), \
+      macro_f_console_parameter_t_initialize4(f_console_standard_short_verbose_s,       f_console_standard_long_verbose_s,       0, f_console_type_inverse_e), \
+      macro_f_console_parameter_t_initialize4(f_console_standard_short_debug_s,         f_console_standard_long_debug_s,         0, f_console_type_inverse_e), \
+      macro_f_console_parameter_t_initialize4(f_console_standard_short_version_s,       f_console_standard_long_version_s,       0, f_console_type_inverse_e), \
+      macro_f_console_parameter_t_initialize4(f_console_standard_short_line_first_no_s, f_console_standard_long_line_first_no_s, 0, f_console_type_inverse_e), \
+      macro_f_console_parameter_t_initialize4(f_console_standard_short_line_last_no_s,  f_console_standard_long_line_last_no_s,  0, f_console_type_inverse_e), \
+      \
+      macro_f_console_parameter_t_initialize2(controller_short_cgroup_s.string, controller_long_cgroup_s.string, 0, 1, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize2(controller_short_daemon_s.string, controller_long_daemon_s.string, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize2(controller_short_init_s.string, controller_long_init_s.string, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize2(controller_short_interruptible_s.string, controller_long_interruptible_s.string, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize2(controller_short_pid_s.string, controller_long_pid_s.string, 0, 1, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize2(controller_short_settings_s.string, controller_long_settings_s.string, 0, 1, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize2(controller_short_simulate_s.string, controller_long_simulate_s.string, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize2(controller_short_socket_s.string, controller_long_socket_s.string, 0, 1, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize2(controller_short_uninterruptible_s.string, controller_long_uninterruptible_s.string, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize2(controller_short_validate_s.string, controller_long_validate_s.string, 0, 0, f_console_type_normal_e), \
     }
 
-  #define controller_total_parameters_d 20
+  #define controller_total_parameters_d 22
 #endif // _di_controller_parameters_
 
 /**
@@ -187,7 +192,6 @@ extern "C" {
  * output:                     The output file for general printing.
  * parameters:                 The state of pre-defined parameters passed to the program.
  * pid:                        The PID of the program.
- * process_pipe:               Designate whether or not to process the input pipe.
  * program_name:               The name of the program.
  * program_name_long:          The long name of the program.
  * signal:                     The process signal management structure.
@@ -198,7 +202,6 @@ extern "C" {
   typedef struct {
     f_console_parameters_t parameters;
 
-    bool process_pipe;
     bool as_init;
 
     fl_print_t output;
@@ -234,7 +237,6 @@ extern "C" {
   #define controller_main_t_initialize \
     { \
       f_console_parameters_t_initialize, \
-      F_false, \
       F_false, \
       fl_print_t_initialize, \
       macro_fl_print_t_initialize_error(), \

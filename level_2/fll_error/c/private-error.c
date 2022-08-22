@@ -12,7 +12,7 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet_e) {
         flockfile(print.to.stream);
 
-        fl_print_format("%r%[%QAccess denied", print.to.stream, f_string_eol_s, print.context, print.prefix);
+        fl_print_format("%[%QAccess denied", print.to.stream, print.context, print.prefix);
 
         private_fll_error_print_function(print, function);
 
@@ -28,7 +28,7 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet_e) {
         flockfile(print.to.stream);
 
-        fl_print_format("%r%[%QMaximum array length reached", print.to.stream, f_string_eol_s, print.context, print.prefix);
+        fl_print_format("%[%QMaximum array length reached", print.to.stream, print.context, print.prefix);
 
         private_fll_error_print_function(print, function);
 
@@ -44,7 +44,7 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet_e) {
         flockfile(print.to.stream);
 
-        fl_print_format("%r%[%QMaximum buffer length reached", print.to.stream, f_string_eol_s, print.context, print.prefix);
+        fl_print_format("%[%QMaximum buffer length reached", print.to.stream, print.context, print.prefix);
 
         private_fll_error_print_function(print, function);
 
@@ -60,7 +60,7 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet_e) {
         flockfile(print.to.stream);
 
-        fl_print_format("%r%[%QAn error has occurred", print.to.stream, f_string_eol_s, print.context, print.prefix);
+        fl_print_format("%[%QAn error has occurred", print.to.stream, print.context, print.prefix);
 
         private_fll_error_print_function(print, function);
 
@@ -76,7 +76,7 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet_e) {
         flockfile(print.to.stream);
 
-        fl_print_format("%r%[%QFile not found", print.to.stream, f_string_eol_s, print.context, print.prefix);
+        fl_print_format("%[%QFile not found", print.to.stream, print.context, print.prefix);
 
         private_fll_error_print_function(print, function);
 
@@ -92,7 +92,7 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet_e) {
         flockfile(print.to.stream);
 
-        fl_print_format("%r%[%QUnable to allocate memory", print.to.stream, f_string_eol_s, print.context, print.prefix);
+        fl_print_format("%[%QUnable to allocate memory", print.to.stream, print.context, print.prefix);
 
         private_fll_error_print_function(print, function);
 
@@ -108,7 +108,7 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet_e) {
         flockfile(print.to.stream);
 
-        fl_print_format("%r%[%QInvalid parameter", print.to.stream, f_string_eol_s, print.context, print.prefix);
+        fl_print_format("%[%QInvalid parameter", print.to.stream, print.context, print.prefix);
 
         private_fll_error_print_function(print, function);
 
@@ -124,7 +124,7 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet_e) {
         flockfile(print.to.stream);
 
-        fl_print_format("%r%[%QMaximum string length reached", print.to.stream, f_string_eol_s, print.context, print.prefix);
+        fl_print_format("%[%QMaximum string length reached", print.to.stream, print.context, print.prefix);
 
         private_fll_error_print_function(print, function);
 
@@ -140,7 +140,7 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet_e) {
         flockfile(print.to.stream);
 
-        fl_print_format("%r%[%QInvalid UTF-8 character found", print.to.stream, f_string_eol_s, print.context, print.prefix);
+        fl_print_format("%[%QInvalid UTF-8 character found", print.to.stream, print.context, print.prefix);
 
         private_fll_error_print_function(print, function);
 
@@ -156,7 +156,7 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet_e) {
         flockfile(print.to.stream);
 
-        fl_print_format("%r%[%QUTF-8 character (fragment) found", print.to.stream, f_string_eol_s, print.context, print.prefix);
+        fl_print_format("%[%QUTF-8 character (fragment) found", print.to.stream, print.context, print.prefix);
 
         private_fll_error_print_function(print, function);
 
@@ -172,7 +172,7 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet_e) {
         flockfile(print.to.stream);
 
-        fl_print_format("%r%[%QInvalid (incomplete) UTF-8 character found", print.to.stream, f_string_eol_s, print.context, print.prefix);
+        fl_print_format("%[%QInvalid (incomplete) UTF-8 character found", print.to.stream, print.context, print.prefix);
 
         private_fll_error_print_function(print, function);
 
@@ -196,7 +196,7 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet_e) {
         flockfile(print.to.stream);
 
-        fl_print_format("%r%[%QFailure", print.to.stream, f_string_eol_s, print.context, print.prefix);
+        fl_print_format("%[%QFailure", print.to.stream, print.context, print.prefix);
 
         private_fll_error_print_function(print, function);
 
@@ -212,7 +212,7 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet_e) {
         flockfile(print.to.stream);
 
-        fl_print_format("%r%[%QSignal received", print.to.stream, f_string_eol_s, print.context, print.prefix);
+        fl_print_format("%[%QSignal received", print.to.stream, print.context, print.prefix);
 
         private_fll_error_print_function(print, function);
 
@@ -228,7 +228,7 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet_e) {
         flockfile(print.to.stream);
 
-        fl_print_format("%r%[%QInterrupt signal received", print.to.stream, f_string_eol_s, print.context, print.prefix);
+        fl_print_format("%[%QInterrupt signal received", print.to.stream, print.context, print.prefix);
 
         private_fll_error_print_function(print, function);
 
@@ -244,7 +244,7 @@ extern "C" {
       if (print.verbosity != f_console_verbosity_quiet_e) {
         flockfile(print.to.stream);
 
-        fl_print_format("%r%[%Q(%]", print.to.stream, f_string_eol_s, print.context, print.prefix, print.context);
+        fl_print_format("%[%Q(%]", print.to.stream, print.context, print.prefix, print.context);
         fl_print_format("%[%ui%]%[)", print.to.stream, print.notable, status, print.notable, print.context);
 
         private_fll_error_print_function(print, function);

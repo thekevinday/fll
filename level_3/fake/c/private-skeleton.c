@@ -274,7 +274,7 @@ extern "C" {
         if (F_status_is_error(status)) {
           fll_error_file_print(data->main->error, F_status_set_fine(status), "f_file_write", F_true, path, fake_common_file_populate_pre_s, fll_error_file_type_file_e);
 
-          f_file_stream_flush(&file);
+          f_file_stream_flush(file);
           f_file_stream_close(&file);
 
           return status;
@@ -284,7 +284,7 @@ extern "C" {
           fll_print_format("File '%Q' pre-populated.%r", data->main->output.to.stream, path, f_string_eol_s);
         }
 
-        f_file_stream_flush(&file);
+        f_file_stream_flush(file);
         f_file_stream_close(&file);
       }
     }

@@ -560,7 +560,7 @@ extern "C" {
     *status = fll_execute_arguments_add(fake_other_operation_build_s, &arguments);
 
     // Ensure console color mode is passed to the scripts so that they can also react to color mode.
-    if (F_status_is_error_not(*status) && data->main->context.mode != F_color_mode_none_d) {
+    if (F_status_is_error_not(*status) && data->main->context.mode != f_color_mode_none_e) {
       f_string_static_t argument = f_string_static_t_initialize;
       argument.used = f_console_symbol_short_disable_s.used + f_console_standard_short_dark_s.used;
 
@@ -570,13 +570,13 @@ extern "C" {
 
       memcpy(argument_string, f_console_symbol_short_disable_s.string, sizeof(f_char_t) * f_console_symbol_short_disable_s.used);
 
-      if (data->main->context.mode == F_color_mode_dark_d) {
+      if (data->main->context.mode == f_color_mode_dark_e) {
         memcpy(argument_string + f_console_symbol_short_disable_s.used, f_console_standard_short_dark_s.string, sizeof(f_char_t) * f_console_standard_short_dark_s.used);
       }
-      else if (data->main->context.mode == F_color_mode_light_d) {
+      else if (data->main->context.mode == f_color_mode_light_e) {
         memcpy(argument_string + f_console_symbol_short_disable_s.used, f_console_standard_short_light_s.string, sizeof(f_char_t) * f_console_standard_short_light_s.used);
       }
-      else if (data->main->context.mode == F_color_mode_no_color_d) {
+      else if (data->main->context.mode == f_color_mode_color_not_e) {
         memcpy(argument_string + f_console_symbol_short_disable_s.used, f_console_standard_short_no_color_s.string, sizeof(f_char_t) * f_console_standard_short_no_color_s.used);
       }
 

@@ -56,25 +56,11 @@
 
 // UTF-8 includes.
 #include <program/utf8/common.h>
+#include <program/utf8/print.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-/**
- * Print help.
- *
- * @param file
- *   The file to print to.
- * @param context
- *   The color context settings.
- *
- * @return
- *   F_none on success.
- */
-#ifndef _di_utf8_print_help_
-  extern f_status_t utf8_print_help(const f_file_t file, const f_color_context_t context);
-#endif // _di_utf8_print_help_
 
 /**
  * Execute main program.
@@ -90,68 +76,19 @@ extern "C" {
  * @param main
  *   The main program data.
  * @param setting
- *   The main program setting data.
+ *   The main program settings.
  *
- * @return
- *   F_none on success.
- *   F_true on success when performing verification and verify passed.
- *   F_false on success when performing verification and verify failed.
- *   F_interrupt on (exit) signal received.
+ *   This alters setting.status:
+ *     F_none on success.
+ *     F_true on success when performing verification and verify passed.
+ *     F_false on success when performing verification and verify failed.
+ *     F_interrupt on (exit) signal received.
  *
- *   F_parameter (with error bit) If main is NULL or setting is NULL.
+ *     F_parameter (with error bit) if main is NULL or setting is NULL.
  */
 #ifndef _di_utf8_main_
-  extern f_status_t utf8_main(fll_program_data_t * const main, utf8_main_setting_t * const setting);
+  extern void utf8_main(fll_program_data_t * const main, utf8_setting_t * const setting);
 #endif // _di_utf8_main_
-
-/**
- * Delete the program main setting data.
- *
- * @param setting
- *   The program main setting data.
- *
- * @return
- *   F_none on success.
- */
-#ifndef _di_utf8_main_setting_delete_
-  extern f_status_t utf8_main_setting_delete(utf8_main_setting_t * const setting);
-#endif // _di_utf8_main_setting_delete_
-
-/**
- * Perform the standard program setting load process.
- *
- * @param arguments
- *   The parameters passed to the process (often referred to as command line arguments).
- * @param main
- *   The main program data.
- * @param setting
- *   The main program setting data.
- *
- * @return
- *   F_none on success.
- *
- *   Errors (with error bit) from: fll_program_parameter_process().
- *
- * @see fll_program_parameter_process()
- */
-#ifndef _di_utf8_main_setting_load_
-  extern f_status_t utf8_main_setting_load(const f_console_arguments_t arguments, fll_program_data_t * const main, utf8_main_setting_t * const setting);
-#endif // _di_utf8_main_setting_load_
-
-/**
- * Perform the standard program setting unload process.
- *
- * @param main
- *   The main program data.
- * @param setting
- *   The main program setting data.
- *
- * @return
- *   F_none on success.
- */
-#ifndef _di_utf8_main_setting_unload_
-  extern f_status_t utf8_main_setting_unload(fll_program_data_t * const main, utf8_main_setting_t * const setting);
-#endif // _di_utf8_main_setting_unload_
 
 #ifdef __cplusplus
 } // extern "C"

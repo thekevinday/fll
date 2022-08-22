@@ -1964,7 +1964,7 @@ extern "C" {
       else {
         status = F_none;
 
-        f_file_stream_flush(&file);
+        f_file_stream_flush(file);
         f_file_stream_close(&file);
       }
     }
@@ -2026,7 +2026,7 @@ extern "C" {
         } // for
       }
 
-      f_file_stream_flush(&file);
+      f_file_stream_flush(file);
       f_file_stream_close(&file);
     }
 

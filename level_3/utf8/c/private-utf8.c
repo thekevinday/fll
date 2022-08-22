@@ -1,6 +1,5 @@
 #include "utf8.h"
 #include "private-common.h"
-#include "private-print.h"
 #include "private-utf8.h"
 #include "private-utf8_bytesequence.h"
 #include "private-utf8_codepoint.h"
@@ -10,7 +9,7 @@ extern "C" {
 #endif
 
 #ifndef _di_utf8_process_text_
-  f_status_t utf8_process_text(utf8_data_t * const data, f_string_static_t text) {
+  f_status_t utf8_process_text(fll_program_data_t * const main, utf8_setting_t * const setting, f_string_static_t text) {
 
     if (!text.used) return F_true;
 
@@ -20,38 +19,39 @@ extern "C" {
 
     utf8_process_text_width(&text);
 
-    flockfile(data->file.stream);
+    flockfile(main->output.to.stream);
 
     for (; text.string[0] && F_status_is_error_not(status); ) {
 
-      if (!((++data->main->signal_check) % utf8_signal_check_d)) {
-        if (fll_program_standard_signal_received(data->main)) {
-          utf8_print_signal_received(data, status);
+      if (!((++main->signal_check) % utf8_signal_check_d)) {
+        if (fll_program_standard_signal_received(main)) {
+          utf8_print_signal_received(main, setting, status);
 
           status = F_status_set_error(F_interrupt);
 
           break;
         }
 
-        data->main->signal_check = 0;
+        main->signal_check = 0;
       }
 
       status = F_none;
 
-      if (data->mode & utf8_mode_from_bytesequence_d) {
-        status = utf8_convert_bytesequence(data, text);
+      if (setting->mode & utf8_mode_from_bytesequence_e) {
+        status = utf8_convert_bytesequence(main, setting, text);
       }
       else {
-        status = utf8_detect_codepoint(data, text, &mode_codepoint);
+        status = utf8_detect_codepoint(main, setting, text, &mode_codepoint);
 
         if (F_status_is_error(status)) {
-          fll_error_print(data->main->error, F_status_set_fine(status), "utf8_detect_codepoint", F_true);
+          utf8_print_line_first(setting, main->error, F_true);
+          fll_error_print(main->error, F_status_set_fine(status), "utf8_detect_codepoint", F_true);
 
           break;
         }
 
         if (F_status_is_fine(status) && status != F_next) {
-          status = utf8_convert_codepoint(data, text, &mode_codepoint);
+          status = utf8_convert_codepoint(main, setting, text, &mode_codepoint);
         }
       }
 
@@ -63,7 +63,7 @@ extern "C" {
       utf8_process_text_width(&text);
     } // for
 
-    if (F_status_is_error_not(status) && !(data->mode & utf8_mode_from_bytesequence_d)) {
+    if (F_status_is_error_not(status) && !(setting->mode & utf8_mode_from_bytesequence_e)) {
       if (mode_codepoint != utf8_codepoint_mode_ready_e && mode_codepoint != utf8_codepoint_mode_end_e && mode_codepoint != utf8_codepoint_mode_bad_end_e && mode_codepoint != utf8_codepoint_mode_raw_end_e) {
         if (mode_codepoint == utf8_codepoint_mode_number_e) {
           mode_codepoint = utf8_codepoint_mode_end_e;
@@ -79,29 +79,21 @@ extern "C" {
         text.used = 0;
 
         if (mode_codepoint == utf8_codepoint_mode_raw_number_e) {
-          status = utf8_convert_raw(data, text, &mode_codepoint);
+          status = utf8_convert_raw(main, setting, text, &mode_codepoint);
         }
         else {
-          status = utf8_convert_codepoint(data, text, &mode_codepoint);
+          status = utf8_convert_codepoint(main, setting, text, &mode_codepoint);
         }
       }
     }
 
     if (F_status_is_error(status)) {
-      funlockfile(data->file.stream);
+      funlockfile(main->output.to.stream);
 
       return status;
     }
 
-    if (data->main->parameters.array[utf8_parameter_verify_e].result == f_console_result_none_e) {
-
-      // When headers are printed, they are printed with a newline so only print this newline when separate is used without headers being printed.
-      if (data->main->parameters.array[utf8_parameter_headers_e].result == f_console_result_none_e && data->main->parameters.array[utf8_parameter_separate_e].result == f_console_result_found_e) {
-        f_print_dynamic_raw(f_string_eol_s, data->file.stream);
-      }
-    }
-
-    funlockfile(data->file.stream);
+    funlockfile(main->output.to.stream);
 
     return valid;
   }

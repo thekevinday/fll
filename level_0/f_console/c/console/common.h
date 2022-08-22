@@ -82,14 +82,16 @@ extern "C" {
  * For example, a "+D +D" means more debug output than simply "+D".
  *
  * The verbosity interpretation used as the default for many of the level 3 programs in this process, is to treat verbosity modes as a scale from quiet to debug with quiet as the least verbose and debug as the most verbose.
- * This is not stricly a requirement, but expect level 3 projects to work this way.
+ * This is not strictly a requirement, but expect level 3 projects to work this way.
  *
  * The following options are subjective in interpretation of the verbosity but are expected to be follow the general interpretation:
- *   - debug:   Enable debugging, which will likely increase output verbosity.
- *   - error:   Similar to quiet, except that error messages are printed (this is less verbose than "normal").
- *   - normal:  Use normal printing (don't use debug/quiet/verbose).
- *   - quiet:   Decrease verbosity, print less, in some use cases this could mean printing nothing.
- *   - verbose: Increase verbosity, print more, in some use cases this could mean printing just about everything.
+ *   - debug:         Enable debugging, which will likely increase output verbosity.
+ *   - error:         Similar to quiet, except that error messages are printed (this is less verbose than "normal").
+ *   - normal:        Use normal printing (don't use debug/quiet/verbose).
+ *   - quiet:         Decrease verbosity, print less, in some use cases this could mean printing nothing.
+ *   - verbose:       Increase verbosity, print more, in some use cases this could mean printing just about everything.
+ *   - line_first_no: Don't print the first line if one is to be printed (useful in scripts) (may include error/warning messages).
+ *   - line_last_no:  Don't print the last line if one is to be printed (useful in scripts) (may include error/warning messages).
  *
  * The following are less subjective in interpretation but do allow some flexibility.
  *   - dark:     Do display color intended for dark backgrounds (often the default behavior) when printing to the console. Other contexts may be acceptable (such as voice inflections, or lack-thereof) for audio.)
@@ -108,63 +110,73 @@ extern "C" {
  *     - To avoid problems with the status code after a program is forcibly killed, the status_out environment variable should be cleared at program start.
  */
 #ifndef _di_f_console_standard_s_
-  #define F_console_standard_short_dark_s       "d"
-  #define F_console_standard_short_debug_s      "D"
-  #define F_console_standard_short_error_s      "E"
-  #define F_console_standard_short_help_s       "h"
-  #define F_console_standard_short_light_s      "l"
-  #define F_console_standard_short_no_color_s   "n"
-  #define F_console_standard_short_normal_s     "N"
-  #define F_console_standard_short_quiet_s      "Q"
-  #define F_console_standard_short_status_in_s  "s"
-  #define F_console_standard_short_status_out_s "S"
-  #define F_console_standard_short_verbose_s    "V"
-  #define F_console_standard_short_version_s    "v"
+  #define F_console_standard_short_dark_s          "d"
+  #define F_console_standard_short_debug_s         "D"
+  #define F_console_standard_short_error_s         "E"
+  #define F_console_standard_short_help_s          "h"
+  #define F_console_standard_short_light_s         "l"
+  #define F_console_standard_short_line_first_no_s "F"
+  #define F_console_standard_short_line_last_no_s  "L"
+  #define F_console_standard_short_no_color_s      "n"
+  #define F_console_standard_short_normal_s        "N"
+  #define F_console_standard_short_quiet_s         "Q"
+  #define F_console_standard_short_status_in_s     "s"
+  #define F_console_standard_short_status_out_s    "S"
+  #define F_console_standard_short_verbose_s       "V"
+  #define F_console_standard_short_version_s       "v"
 
-  #define F_console_standard_short_dark_s_length       1
-  #define F_console_standard_short_debug_s_length      1
-  #define F_console_standard_short_error_s_length      1
-  #define F_console_standard_short_help_s_length       1
-  #define F_console_standard_short_light_s_length      1
-  #define F_console_standard_short_no_color_s_length   1
-  #define F_console_standard_short_normal_s_length     1
-  #define F_console_standard_short_quiet_s_length      1
-  #define F_console_standard_short_status_in_s_length  1
-  #define F_console_standard_short_status_out_s_length 1
-  #define F_console_standard_short_verbose_s_length    1
-  #define F_console_standard_short_version_s_length    1
+  #define F_console_standard_short_dark_s_length          1
+  #define F_console_standard_short_debug_s_length         1
+  #define F_console_standard_short_error_s_length         1
+  #define F_console_standard_short_help_s_length          1
+  #define F_console_standard_short_light_s_length         1
+  #define F_console_standard_short_line_first_no_s_length 1
+  #define F_console_standard_short_line_last_no_s_length  1
+  #define F_console_standard_short_no_color_s_length      1
+  #define F_console_standard_short_normal_s_length        1
+  #define F_console_standard_short_quiet_s_length         1
+  #define F_console_standard_short_status_in_s_length     1
+  #define F_console_standard_short_status_out_s_length    1
+  #define F_console_standard_short_verbose_s_length       1
+  #define F_console_standard_short_version_s_length       1
 
-  #define F_console_standard_long_dark_s       "dark"
-  #define F_console_standard_long_debug_s      "debug"
-  #define F_console_standard_long_error_s      "error"
-  #define F_console_standard_long_help_s       "help"
-  #define F_console_standard_long_light_s      "light"
-  #define F_console_standard_long_no_color_s   "no_color"
-  #define F_console_standard_long_normal_s     "normal"
-  #define F_console_standard_long_quiet_s      "quiet"
-  #define F_console_standard_long_status_in_s  "status_in"
-  #define F_console_standard_long_status_out_s "status_out"
-  #define F_console_standard_long_verbose_s    "verbose"
-  #define F_console_standard_long_version_s    "version"
+  #define F_console_standard_long_dark_s          "dark"
+  #define F_console_standard_long_debug_s         "debug"
+  #define F_console_standard_long_error_s         "error"
+  #define F_console_standard_long_help_s          "help"
+  #define F_console_standard_long_light_s         "light"
+  #define F_console_standard_long_line_first_no_s "line_first_no"
+  #define F_console_standard_long_line_last_no_s  "line_last_no"
+  #define F_console_standard_long_no_color_s      "no_color"
+  #define F_console_standard_long_normal_s        "normal"
+  #define F_console_standard_long_quiet_s         "quiet"
+  #define F_console_standard_long_status_in_s     "status_in"
+  #define F_console_standard_long_status_out_s    "status_out"
+  #define F_console_standard_long_verbose_s       "verbose"
+  #define F_console_standard_long_version_s       "version"
 
-  #define F_console_standard_long_dark_s_length       4
-  #define F_console_standard_long_debug_s_length      5
-  #define F_console_standard_long_error_s_length      5
-  #define F_console_standard_long_help_s_length       4
-  #define F_console_standard_long_light_s_length      5
-  #define F_console_standard_long_no_color_s_length   8
-  #define F_console_standard_long_normal_s_length     6
-  #define F_console_standard_long_quiet_s_length      5
-  #define F_console_standard_long_status_in_s_length  9
-  #define F_console_standard_long_status_out_s_length 10
-  #define F_console_standard_long_verbose_s_length    7
-  #define F_console_standard_long_version_s_length    7
+  #define F_console_standard_long_dark_s_length          4
+  #define F_console_standard_long_debug_s_length         5
+  #define F_console_standard_long_error_s_length         5
+  #define F_console_standard_long_help_s_length          4
+  #define F_console_standard_long_light_s_length         5
+  #define F_console_standard_long_line_first_no_s_length 13
+  #define F_console_standard_long_line_last_no_s_length  12
+  #define F_console_standard_long_no_color_s_length      8
+  #define F_console_standard_long_normal_s_length        6
+  #define F_console_standard_long_quiet_s_length         5
+  #define F_console_standard_long_status_in_s_length     9
+  #define F_console_standard_long_status_out_s_length    10
+  #define F_console_standard_long_verbose_s_length       7
+  #define F_console_standard_long_version_s_length       7
 
   extern const f_string_static_t f_console_standard_short_dark_s;
   extern const f_string_static_t f_console_standard_short_debug_s;
   extern const f_string_static_t f_console_standard_short_error_s;
   extern const f_string_static_t f_console_standard_short_help_s;
   extern const f_string_static_t f_console_standard_short_light_s;
+  extern const f_string_static_t f_console_standard_short_line_first_no_s;
+  extern const f_string_static_t f_console_standard_short_line_last_no_s;
   extern const f_string_static_t f_console_standard_short_no_color_s;
   extern const f_string_static_t f_console_standard_short_normal_s;
   extern const f_string_static_t f_console_standard_short_quiet_s;
@@ -178,6 +190,8 @@ extern "C" {
   extern const f_string_static_t f_console_standard_long_error_s;
   extern const f_string_static_t f_console_standard_long_help_s;
   extern const f_string_static_t f_console_standard_long_light_s;
+  extern const f_string_static_t f_console_standard_long_line_first_no_s;
+  extern const f_string_static_t f_console_standard_long_line_last_no_s;
   extern const f_string_static_t f_console_standard_long_no_color_s;
   extern const f_string_static_t f_console_standard_long_normal_s;
   extern const f_string_static_t f_console_standard_long_quiet_s;
@@ -268,6 +282,14 @@ extern "C" {
  * locations:     All locations within argv where this parameter is found (order is preserved).
  * locations_sub: All sub-locations within argv where this parameter is found (order is preserved).
  * values:        An array of locations representing where in the argv[] the values arguments are found.
+ *
+ * The macro_f_console_parameter_t_initialize() all arguments.
+ * The macro_f_console_parameter_t_initialize2() reduced arguments.
+ * The macro_f_console_parameter_t_initialize3() reduced arguments, strings are of f_string_static_t, has short, long, and other.
+ * The macro_f_console_parameter_t_initialize4() reduced arguments, strings are of f_string_static_t, has short and long.
+ * The macro_f_console_parameter_t_initialize5() reduced arguments, strings are of f_string_static_t, has short.
+ * The macro_f_console_parameter_t_initialize6() reduced arguments, strings are of f_string_static_t, has long.
+ * The macro_f_console_parameter_t_initialize7() reduced arguments, strings are of f_string_static_t, has other.
  */
 #ifndef _di_f_console_parameter_t_
   typedef struct {
@@ -300,7 +322,22 @@ extern "C" {
     f_array_lengths_t_initialize, \
   }
 
-  #define macro_f_console_parameter_t_initialize(symbol_short, symbol_long, symbol_other, values_total, type_value) { \
+  #define macro_f_console_parameter_t_initialize(symbol_short, symbol_long, symbol_other, values_total, type_value, result, location, location_sub, locations, locations_sub, values) { \
+    symbol_short, \
+    symbol_long, \
+    symbol_other, \
+    values_total, \
+    type_value, \
+    result, \
+    total, \
+    location, \
+    location_sub, \
+    locations, \
+    locations_sub, \
+    values, \
+  }
+
+  #define macro_f_console_parameter_t_initialize2(symbol_short, symbol_long, symbol_other, values_total, type_value) { \
     symbol_short, \
     symbol_long, \
     symbol_other, \
@@ -314,19 +351,74 @@ extern "C" {
     f_array_lengths_t_initialize, \
   }
 
-  #define macro_f_console_parameter_t_initialize2(symbol_short, symbol_long, symbol_other, values_total, type_value, result, location, location_sub, locations, locations_sub, values) { \
-    symbol_short, \
-    symbol_long, \
-    symbol_other, \
+  #define macro_f_console_parameter_t_initialize3(symbol_short, symbol_long, symbol_other, values_total, type_value) { \
+    symbol_short.string, \
+    symbol_long.string, \
+    symbol_other.string, \
     values_total, \
     type_value, \
-    result, \
-    total, \
-    location, \
-    location_sub, \
-    locations, \
-    locations_sub, \
-    values, \
+    f_console_result_none_e, \
+    0, \
+    0, \
+    f_array_lengths_t_initialize, \
+    f_array_lengths_t_initialize, \
+    f_array_lengths_t_initialize, \
+  }
+
+  #define macro_f_console_parameter_t_initialize4(symbol_short, symbol_long, values_total, type_value) { \
+    symbol_short.string, \
+    symbol_long.string, \
+    0, \
+    values_total, \
+    type_value, \
+    f_console_result_none_e, \
+    0, \
+    0, \
+    f_array_lengths_t_initialize, \
+    f_array_lengths_t_initialize, \
+    f_array_lengths_t_initialize, \
+  }
+
+  #define macro_f_console_parameter_t_initialize5(symbol_short, values_total, type_value) { \
+    symbol_short.string, \
+    0, \
+    0, \
+    values_total, \
+    type_value, \
+    f_console_result_none_e, \
+    0, \
+    0, \
+    f_array_lengths_t_initialize, \
+    f_array_lengths_t_initialize, \
+    f_array_lengths_t_initialize, \
+  }
+
+  #define macro_f_console_parameter_t_initialize6(symbol_long, values_total, type_value) { \
+    0, \
+    symbol_long.string, \
+    0, \
+    values_total, \
+    type_value, \
+    f_console_result_none_e, \
+    0, \
+    0, \
+    f_array_lengths_t_initialize, \
+    f_array_lengths_t_initialize, \
+    f_array_lengths_t_initialize, \
+  }
+
+  #define macro_f_console_parameter_t_initialize7(symbol_other, values_total, type_value) { \
+    0, \
+    0, \
+    symbol_other.string, \
+    values_total, \
+    type_value, \
+    f_console_result_none_e, \
+    0, \
+    0, \
+    f_array_lengths_t_initialize, \
+    f_array_lengths_t_initialize, \
+    f_array_lengths_t_initialize, \
   }
 #endif // _di_f_console_parameter_t_
 
@@ -358,40 +450,14 @@ extern "C" {
 #endif // _di_f_console_parameters_t_
 
 /**
- * Provide a helper structure for references and processing standard C main() arguments.
- *
- * The f_console_parameter_id_t is designed to be used for the enums to represent any given parameter by the ID.
- */
-#ifndef _di_f_console_parameter_id_t_
-  typedef uint16_t f_console_parameter_id_t;
-
-  #define f_console_parameter_id_t_initialize 0
-
-  #define macro_f_console_parameter_id_t_initialize(id) id
-#endif // _di_f_console_parameter_id_t_
-
-/**
- * The f_console_parameter_ids_t is designed for passing this to a function as a single argument.
- *
- * id:   An array of f_console_parameter_id_t whose size is defined by the "used" property.
- * used: The total number of ids in the id array.
- */
-#ifndef _di_f_console_parameter_ids_t_
-  typedef struct {
-    f_console_parameter_id_t *id;
-
-    f_array_length_t used;
-  } f_console_parameter_ids_t;
-
-  #define f_console_parameter_ids_t_initialize { 0, 0 }
-
-  #define macro_f_console_parameter_ids_t_initialize(id, used) { id, used }
-#endif // _di_f_console_parameter_ids_t_
-
-/**
  * Provide a helper structure for referencing the argc and argv standard main arguments.
  *
  * This is intended to only store the argc and argv and should not be treated as dynamic.
+ *
+ * argc: The total number of arguments in argv.
+ *
+ * argv: An array of strings representing arguments passed to some program.
+ * envp: Any array of strings representing all environment variables at the time the program is called.
  *
  * macro_f_console_arguments_t_initialize() initializes the structure.
  */

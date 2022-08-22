@@ -10,6 +10,8 @@ extern "C" {
   const f_string_static_t f_console_standard_short_error_s = macro_f_string_static_t_initialize((f_string_t) F_console_standard_short_error_s, 0, F_console_standard_short_error_s_length);
   const f_string_static_t f_console_standard_short_help_s = macro_f_string_static_t_initialize((f_string_t) F_console_standard_short_help_s, 0, F_console_standard_short_help_s_length);
   const f_string_static_t f_console_standard_short_light_s = macro_f_string_static_t_initialize((f_string_t) F_console_standard_short_light_s, 0, F_console_standard_short_light_s_length);
+  const f_string_static_t f_console_standard_short_line_first_no_s = macro_f_string_static_t_initialize((f_string_t) F_console_standard_short_line_first_no_s, 0, F_console_standard_short_line_first_no_s_length);
+  const f_string_static_t f_console_standard_short_line_last_no_s = macro_f_string_static_t_initialize((f_string_t) F_console_standard_short_line_last_no_s, 0, F_console_standard_short_line_last_no_s_length);
   const f_string_static_t f_console_standard_short_no_color_s = macro_f_string_static_t_initialize((f_string_t) F_console_standard_short_no_color_s, 0, F_console_standard_short_no_color_s_length);
   const f_string_static_t f_console_standard_short_normal_s = macro_f_string_static_t_initialize((f_string_t) F_console_standard_short_normal_s, 0, F_console_standard_short_normal_s_length);
   const f_string_static_t f_console_standard_short_quiet_s = macro_f_string_static_t_initialize((f_string_t) F_console_standard_short_quiet_s, 0, F_console_standard_short_quiet_s_length);
@@ -23,6 +25,8 @@ extern "C" {
   const f_string_static_t f_console_standard_long_error_s = macro_f_string_static_t_initialize((f_string_t) F_console_standard_long_error_s, 0, F_console_standard_long_error_s_length);
   const f_string_static_t f_console_standard_long_help_s = macro_f_string_static_t_initialize((f_string_t) F_console_standard_long_help_s, 0, F_console_standard_long_help_s_length);
   const f_string_static_t f_console_standard_long_light_s = macro_f_string_static_t_initialize((f_string_t) F_console_standard_long_light_s, 0, F_console_standard_long_light_s_length);
+  const f_string_static_t f_console_standard_long_line_first_no_s = macro_f_string_static_t_initialize((f_string_t) F_console_standard_long_line_first_no_s, 0, F_console_standard_long_line_first_no_s_length);
+  const f_string_static_t f_console_standard_long_line_last_no_s = macro_f_string_static_t_initialize((f_string_t) F_console_standard_long_line_last_no_s, 0, F_console_standard_long_line_last_no_s_length);
   const f_string_static_t f_console_standard_long_no_color_s = macro_f_string_static_t_initialize((f_string_t) F_console_standard_long_no_color_s, 0, F_console_standard_long_no_color_s_length);
   const f_string_static_t f_console_standard_long_normal_s = macro_f_string_static_t_initialize((f_string_t) F_console_standard_long_normal_s, 0, F_console_standard_long_normal_s_length);
   const f_string_static_t f_console_standard_long_quiet_s = macro_f_string_static_t_initialize((f_string_t) F_console_standard_long_quiet_s, 0, F_console_standard_long_quiet_s_length);

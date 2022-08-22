@@ -89,7 +89,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fss_identify_main_
-  extern f_status_t fss_identify_main(fll_program_data_t * const main, const f_console_arguments_t *arguments);
+  extern f_status_t fss_identify_main(fll_program_data_t * const main, const f_console_arguments_t arguments);
 #endif // _di_fss_identify_main_
 
 #ifdef __cplusplus

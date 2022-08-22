@@ -8,8 +8,10 @@ extern "C" {
 #if !defined(_di_f_color_load_context_) || !defined(_di_f_color_save_1_)
   f_status_t private_f_color_save_1(const f_color_format_t format, const f_string_static_t color1, f_string_dynamic_t * const buffer) {
 
-    f_status_t status = f_string_dynamic_increase_by(format.begin.used + format.end.used + color1.used + 1, buffer);
-    if (F_status_is_error(status)) return status;
+    {
+      const f_status_t status = f_string_dynamic_increase_by(format.begin.used + format.end.used + color1.used + 1, buffer);
+      if (F_status_is_error(status)) return status;
+    }
 
     if (format.begin.used) {
       memcpy(buffer->string + buffer->used, format.begin.string, sizeof(f_char_t) * format.begin.used);
@@ -38,8 +40,10 @@ extern "C" {
 #if !defined(_di_f_color_load_context_) || !defined(_di_f_color_save_2_)
   f_status_t private_f_color_save_2(const f_color_format_t format, const f_string_static_t color1, const f_string_static_t color2, f_string_dynamic_t * const buffer) {
 
-    f_status_t status = f_string_dynamic_increase_by(format.begin.used + format.medium.used + format.end.used + color1.used + color2.used + 1, buffer);
-    if (F_status_is_error(status)) return status;
+    {
+      const f_status_t status = f_string_dynamic_increase_by(format.begin.used + format.medium.used + format.end.used + color1.used + color2.used + 1, buffer);
+      if (F_status_is_error(status)) return status;
+    }
 
     if (format.begin.used) {
       memcpy(buffer->string + buffer->used, format.begin.string, sizeof(f_char_t) * format.begin.used);

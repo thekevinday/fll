@@ -15,8 +15,10 @@ extern "C" {
 /**
  * Convert the text from one format to other another format or verify text.
  *
- * @param data
- *   The program data.
+ * @param main
+ *   The main program data.
+ * @param setting
+ *   The main program settings.
  * @param text
  *   This represent a single text data.
  *   This text is NULL terminated and can therefore not contain any NULLs.
@@ -36,7 +38,7 @@ extern "C" {
  * @see utf8_signal_received()
  */
 #ifndef _di_utf8_process_text_
-  extern f_status_t utf8_process_text(utf8_data_t * const data, f_string_static_t text) F_attribute_visibility_internal_d;
+  extern f_status_t utf8_process_text(fll_program_data_t * const main, utf8_setting_t * const setting, f_string_static_t text) F_attribute_visibility_internal_d;
 #endif // _di_utf8_process_text_
 
 /**

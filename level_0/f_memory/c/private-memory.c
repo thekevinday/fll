@@ -8,9 +8,7 @@ extern "C" {
 #if !defined(_di_f_memory_adjust_) || !defined(_di_f_memory_structure_adjust_) || !defined(_di_f_memory_structure_decimate_by_)
   f_status_t private_f_memory_adjust(const size_t length_old, const size_t length_new, const size_t type_size, void ** const pointer) {
 
-    if (length_old == length_new) {
-      return F_data_not;
-    }
+    if (length_old == length_new) return F_data_not;
 
     if (*pointer) {
       if (length_old) {
@@ -23,7 +21,7 @@ extern "C" {
       }
 
       if (length_new) {
-        void *new_pointer = realloc(*pointer, type_size * length_new);
+        void * const new_pointer = realloc(*pointer, type_size * length_new);
 
         if (new_pointer) {
           if (length_new > length_old) {
@@ -49,10 +47,7 @@ extern "C" {
     }
     else if (length_new) {
       *pointer = calloc(type_size, length_new);
-
-      if (*pointer) {
-        return F_none;
-      }
+      if (*pointer) return F_none;
     }
     else {
       return F_data_not;
@@ -65,13 +60,9 @@ extern "C" {
 #if !defined(_di_f_memory_resize_) || !defined(_di_memory_structure_decrease_by_) || !defined(_di_memory_structure_increase_) || !defined(_di_memory_structure_increase_by_) || !defined(_di_f_memory_structure_resize_)
   f_status_t private_f_memory_resize(const size_t length_old, const size_t length_new, const size_t type_size, void ** const pointer) {
 
-    if (length_old == length_new) {
-      return F_data_not;
-    }
-
     if (*pointer) {
       if (length_new) {
-        void *new_pointer = realloc(*pointer, type_size * length_new);
+        void * const new_pointer = realloc(*pointer, type_size * length_new);
 
         if (new_pointer) {
           if (length_new > length_old) {
@@ -97,10 +88,7 @@ extern "C" {
     }
     else if (length_new) {
       *pointer = calloc(type_size, length_new);
-
-      if (*pointer) {
-        return F_none;
-      }
+      if (*pointer) return F_none;
     }
     else {
       return F_data_not;

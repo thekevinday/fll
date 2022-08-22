@@ -6,16 +6,19 @@ extern "C" {
 #endif
 
 #ifndef _di_f_memory_adjust_
-  f_status_t f_memory_adjust(const size_t old_length, const size_t new_length, const size_t size, void ** const pointer) {
+  f_status_t f_memory_adjust(const size_t length_old, const size_t length_new, const size_t size, void ** const pointer) {
     #ifndef _di_level_0_parameter_checking_
       if (!size) return F_status_set_error(F_parameter);
       if (!pointer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
+    // Prevent double-frees and unnecessary frees.
+    if (!*pointer && !length_new || length_old == length_new) return F_data_not;
+
     #ifdef _f_memory_FORCE_fast_memory_
-      return private_f_memory_resize(old_length, new_length, size, pointer);
+      return private_f_memory_resize(length_old, length_new, size, pointer);
     #else // _f_memory_FORCE_fast_memory_
-      return private_f_memory_adjust(old_length, new_length, size, pointer);
+      return private_f_memory_adjust(length_old, length_new, size, pointer);
     #endif // _f_memory_FORCE_fast_memory_
   }
 #endif // _di_f_memory_adjust_
@@ -23,13 +26,12 @@ extern "C" {
 #ifndef _di_f_memory_delete_
   f_status_t f_memory_delete(const size_t length, const size_t size, void ** const pointer) {
     #ifndef _di_level_0_parameter_checking_
+      if (!size) return F_status_set_error(F_parameter);
       if (!pointer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     // Prevent double-frees.
-    if (!*pointer || !size) {
-      return F_data_not;
-    }
+    if (!*pointer) return F_data_not;
 
     #ifdef _f_memory_FORCE_secure_memory_
       if (!length) {
@@ -54,9 +56,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     // Prevent double-frees.
-    if (!*pointer) {
-      return F_data_not;
-    }
+    if (!*pointer) return F_data_not;
 
     #ifndef _f_memory_FORCE_fast_memory_
       if (!length) {
@@ -80,16 +80,10 @@ extern "C" {
       if (!pointer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    // prevent double-allocations.
-    if (*pointer || !length) {
-      return F_data_not;
-    }
+    // Prevent double-allocations and unnecessary frees.
+    if (*pointer || !length) return F_data_not;
 
-    *pointer = calloc(length, size);
-
-    if (*pointer) {
-      return F_none;
-    }
+    if (*pointer = calloc(length, size)) return F_none;
 
     return F_status_set_error(F_memory_not);
   }
@@ -100,26 +94,21 @@ extern "C" {
   f_status_t f_memory_new_aligned(const size_t length, const size_t alignment, void ** const pointer) {
     #ifndef _di_level_0_parameter_checking_
       if (!alignment) return F_status_set_error(F_parameter);
-      if (!pointer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    // Prevent double-allocations.
-    if (*pointer || !length) {
-      return F_data_not;
-    }
+    // Prevent double-allocations and unnecessary frees.
+    if (*pointer || !length) return F_data_not;
 
     #ifdef _f_memory_USE_posix_memalign_
       const int result = posix_memalign(pointer, alignment, length);
 
       if (result) {
-        if (result == EINVAL) {
-          return F_status_set_error(F_parameter);
-        }
+        if (result == EINVAL) return F_status_set_error(F_parameter);
 
         return F_status_set_error(F_memory_not);
       }
     #else
-      void *result = aligned_alloc(alignment, length);
+      void * const result = aligned_alloc(alignment, length);
 
       if (result) {
         *pointer = result;
@@ -141,16 +130,19 @@ extern "C" {
 #endif // _di_f_memory_new_aligned_
 
 #ifndef _di_f_memory_resize_
-  f_status_t f_memory_resize(const size_t old_length, const size_t new_length, const size_t size, void ** const pointer) {
+  f_status_t f_memory_resize(const size_t length_old, const size_t length_new, const size_t size, void ** const pointer) {
     #ifndef _di_level_0_parameter_checking_
       if (!size) return F_status_set_error(F_parameter);
       if (!pointer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
+    // Prevent double-frees and unnecessary frees.
+    if (!*pointer && !length_new || length_old == length_new) return F_data_not;
+
     #ifdef _f_memory_FORCE_secure_memory_
-      return private_f_memory_adjust(old_length, new_length, size, pointer);
+      return private_f_memory_adjust(length_old, length_new, size, pointer);
     #else // _f_memory_FORCE_secure_memory_
-      return private_f_memory_resize(old_length, new_length, size, pointer);
+      return private_f_memory_resize(length_old, length_new, size, pointer);
     #endif // _f_memory_FORCE_secure_memory_
   }
 #endif // _di_f_memory_resize_

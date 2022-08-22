@@ -225,6 +225,8 @@ void test__fll_status_string_from__works(void **state) {
     F_halt_not,
     F_header,
     F_header_not,
+    F_help,
+    F_help_not,
     F_ignore,
     F_ignore_not,
     F_implemented,
@@ -815,6 +817,8 @@ void test__fll_status_string_from__works(void **state) {
     f_status_halt_not_s,
     f_status_header_s,
     f_status_header_not_s,
+    f_status_help_s,
+    f_status_help_not_s,
     f_status_ignore_s,
     f_status_ignore_not_s,
     f_status_implemented_s,
@@ -1225,7 +1229,7 @@ void test__fll_status_string_from__works(void **state) {
     f_status_status_code_last_s,
   };
 
-  for (uint16_t i = 0; i < 587; ++i) {
+  for (uint16_t i = 0; i < 589; ++i) {
 
     f_status_t result = F_none;
 

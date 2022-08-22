@@ -11,12 +11,12 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
   data.parameters.used = controller_total_parameters_d;
 
   if (f_pipe_input_exists()) {
-    data.process_pipe = F_true;
+    data.pipe = fll_program_data_pipe_input_e;
   }
 
   data.pid = getpid();
 
-  fll_program_standard_set_up(&data.signal);
+  fll_program_standard_set_up(&data);
 
   f_file_umask_get(&data.umask);
 
@@ -41,11 +41,11 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
     data.as_init = F_false;
   #endif // _controller_as_init_
 
-  const f_status_t status = controller_main(&data, &arguments);
+  const f_status_t status = controller_main(&data, arguments);
 
   controller_main_delete(&data);
 
-  fll_program_standard_set_down(&data.signal);
+  fll_program_standard_set_down(&data);
 
   // When the child process exits, it must return the code to the parent so the parent knows how to handle the exit.
   if (status == F_child) {

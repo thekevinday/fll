@@ -1,6 +1,5 @@
 #include "utf8.h"
 #include "private-common.h"
-#include "private-print.h"
 #include "private-utf8.h"
 #include "private-utf8_bytesequence.h"
 #include "private-utf8_codepoint.h"
@@ -10,26 +9,26 @@ extern "C" {
 #endif
 
 #ifndef _di_utf8_convert_codepoint_
-  f_status_t utf8_convert_codepoint(utf8_data_t * const data, const f_string_static_t unicode, uint8_t *mode) {
+  f_status_t utf8_convert_codepoint(fll_program_data_t * const main, utf8_setting_t * const setting, const f_string_static_t unicode, uint8_t *mode) {
 
     f_status_t status = F_none;
     bool valid_not = F_false;
 
     if (*mode != utf8_codepoint_mode_end_e) {
-      if (data->text.used + unicode.used >= data->text.size) {
-        status = f_string_dynamic_increase_by(utf8_default_allocation_step_d, &data->text);
+      if (setting->text.used + unicode.used >= setting->text.size) {
+        status = f_string_dynamic_increase_by(utf8_default_allocation_step_d, &setting->text);
         if (F_status_is_error(status)) return status;
       }
 
       for (f_array_length_t i = 0; i < unicode.used; ++i) {
-        data->text.string[data->text.used++] = unicode.string[i];
+        setting->text.string[setting->text.used++] = unicode.string[i];
       } // for
     }
 
     if (*mode == utf8_codepoint_mode_end_e) {
       uint32_t codepoint = 0;
 
-      status = f_utf_unicode_string_to(data->text.string, data->text.used, &codepoint);
+      status = f_utf_unicode_string_to(setting->text.string, setting->text.used, &codepoint);
 
       if (F_status_is_error(status)) {
         status = F_status_set_fine(status);
@@ -37,19 +36,19 @@ extern "C" {
         if (status == F_failure || status == F_utf_not || status == F_complete_not_utf || status == F_utf_fragment || status == F_valid_not) {
           valid_not = F_true;
 
-          utf8_print_character_invalid(data, unicode);
+          utf8_print_character_invalid(main, setting, unicode);
         }
         else {
           status = F_status_set_error(status);
 
-          utf8_print_error_decode(data, status, unicode);
+          utf8_print_error_decode(main, setting, status, unicode);
 
           return status;
         }
       }
-      else if (data->main->parameters.array[utf8_parameter_verify_e].result == f_console_result_none_e) {
-        if (data->mode & utf8_mode_to_codepoint_d) {
-          utf8_print_codepoint(data, codepoint);
+      else if (!(setting->flag & utf8_main_flag_verify_e)) {
+        if (setting->mode & utf8_mode_to_codepoint_e) {
+          utf8_print_codepoint(main, setting, codepoint);
         }
         else {
           f_char_t byte[4] = { 0, 0, 0, 0 };
@@ -58,23 +57,23 @@ extern "C" {
           status = f_utf_unicode_from(codepoint, 4, &unicode.string);
 
           if (F_status_is_error(status)) {
-            if (data->mode & utf8_mode_to_bytesequence_d) {
-              utf8_print_error_encode(data, status, codepoint);
+            if (setting->mode & utf8_mode_to_bytesequence_e) {
+              utf8_print_error_encode(main, setting, status, codepoint);
             }
             else {
-              utf8_print_error_combining_or_width(data);
+              utf8_print_error_combining_or_width(main, setting);
             }
           }
-          else if (data->mode & utf8_mode_to_bytesequence_d) {
+          else if (setting->mode & utf8_mode_to_bytesequence_e) {
             status = F_none;
             unicode.used = macro_f_utf_byte_width(unicode.string[0]);
 
-            utf8_print_bytesequence(data, unicode);
+            utf8_print_bytesequence(main, setting, unicode);
           }
           else {
             status = F_none;
 
-            utf8_print_combining_or_width(data, unicode);
+            utf8_print_combining_or_width(main, setting, unicode);
           }
         }
       }
@@ -82,14 +81,14 @@ extern "C" {
     else if (*mode == utf8_codepoint_mode_bad_end_e) {
       status = F_none;
 
-      utf8_print_character_invalid(data, unicode);
+      utf8_print_character_invalid(main, setting, unicode);
     }
     else {
       return F_none;
     }
 
     *mode = utf8_codepoint_mode_ready_e;
-    data->text.used = 0;
+    setting->text.used = 0;
 
     if (valid_not || F_status_is_error(status)) {
       return F_utf_not;
@@ -100,19 +99,19 @@ extern "C" {
 #endif // _di_utf8_convert_codepoint_
 
 #ifndef _di_utf8_convert_raw_
-  f_status_t utf8_convert_raw(utf8_data_t * const data, const f_string_static_t hex, uint8_t *mode) {
+  f_status_t utf8_convert_raw(fll_program_data_t * const main, utf8_setting_t * const setting, const f_string_static_t hex, uint8_t *mode) {
 
     f_status_t status = F_none;
     bool valid_not = F_false;
 
     if (*mode != utf8_codepoint_mode_raw_end_e) {
-      if (data->text.used + hex.used >= data->text.size) {
-        status = f_string_dynamic_increase_by(utf8_default_allocation_step_d, &data->text);
+      if (setting->text.used + hex.used >= setting->text.size) {
+        status = f_string_dynamic_increase_by(utf8_default_allocation_step_d, &setting->text);
         if (F_status_is_error(status)) return status;
       }
 
       for (f_array_length_t i = 0; i < hex.used; ++i) {
-        data->text.string[data->text.used++] = hex.string[i];
+        setting->text.string[setting->text.used++] = hex.string[i];
       } // for
     }
 
@@ -122,7 +121,7 @@ extern "C" {
       {
         f_number_unsigned_t number = 0;
 
-        status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, data->text, &number);
+        status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, setting->text, &number);
 
         raw = (f_utf_char_t) number;
       }
@@ -133,47 +132,47 @@ extern "C" {
         if (status == F_number || status == F_utf_not || status == F_complete_not_utf || status == F_utf_fragment || status == F_number_decimal || status == F_number_negative || status == F_number_positive || status == F_number_overflow) {
           valid_not = F_true;
 
-          utf8_print_character_invalid(data, hex);
+          utf8_print_character_invalid(main, setting, hex);
         }
         else {
           status = F_status_set_error(status);
 
-          utf8_print_error_decode(data, status, hex);
+          utf8_print_error_decode(main, setting, status, hex);
 
           return status;
         }
       }
-      else if (data->main->parameters.array[utf8_parameter_verify_e].result == f_console_result_none_e) {
+      else if (!(setting->flag & utf8_main_flag_verify_e)) {
 
         // The width actually includes the leading '0x', which is not part of the width of the digit in binary form.
-        uint8_t width = data->text.used > 1 ? (data->text.used - 2) / 2 : 0;
+        uint8_t width = setting->text.used > 1 ? (setting->text.used - 2) / 2 : 0;
 
-        if ((data->text.used - 2) % 2) {
+        if ((setting->text.used - 2) % 2) {
           ++width;
         }
 
-        if (data->mode & utf8_mode_to_bytesequence_d) {
-          utf8_print_raw_bytesequence(data, raw, width);
+        if (setting->mode & utf8_mode_to_bytesequence_e) {
+          utf8_print_raw_bytesequence(main, setting, raw, width);
         }
-        else if (data->mode & utf8_mode_to_codepoint_d) {
-          utf8_print_raw_codepoint(data, data->text);
+        else if (setting->mode & utf8_mode_to_codepoint_e) {
+          utf8_print_raw_codepoint(main, setting, setting->text);
         }
         else {
-          utf8_print_raw_combining_or_width(data, width);
+          utf8_print_raw_combining_or_width(main, setting, width);
         }
       }
     }
     else if (*mode == utf8_codepoint_mode_bad_end_e) {
       status = F_none;
 
-      utf8_print_character_invalid(data, hex);
+      utf8_print_character_invalid(main, setting, hex);
     }
     else {
       return F_none;
     }
 
     *mode = utf8_codepoint_mode_ready_e;
-    data->text.used = 0;
+    setting->text.used = 0;
 
     if (valid_not || F_status_is_error(status)) {
       return F_valid_not;
@@ -184,7 +183,7 @@ extern "C" {
 #endif // _di_utf8_convert_raw_
 
 #ifndef _di_utf8_detect_codepoint_
-  f_status_t utf8_detect_codepoint(utf8_data_t * const data, const f_string_static_t unicode, uint8_t *mode) {
+  f_status_t utf8_detect_codepoint(fll_program_data_t * const main, utf8_setting_t * const setting, const f_string_static_t unicode, uint8_t *mode) {
 
     // Skip past NULL.
     if (!unicode.string[0]) {
@@ -265,11 +264,11 @@ extern "C" {
         }
         else if (unicode.string[0] == f_string_ascii_u_s.string[0] || unicode.string[0] == f_string_ascii_U_s.string[0]) {
           *mode = utf8_codepoint_mode_begin_e;
-          data->text.used = 0;
+          setting->text.used = 0;
         }
         else if (unicode.string[0] == f_string_ascii_0_s.string[0]) {
           *mode = utf8_codepoint_mode_raw_begin_e;
-          data->text.used = 0;
+          setting->text.used = 0;
         }
         else {
           *mode = utf8_codepoint_mode_bad_e;
@@ -308,7 +307,7 @@ extern "C" {
 #endif // _di_utf8_detect_codepoint_
 
 #ifndef _di_utf8_process_file_codepoint_
-  f_status_t utf8_process_file_codepoint(utf8_data_t * const data, const f_file_t file) {
+  f_status_t utf8_process_file_codepoint(fll_program_data_t * const main, utf8_setting_t * const setting, const f_file_t file) {
 
     f_status_t status = F_none;
     bool valid = F_true;
@@ -322,21 +321,21 @@ extern "C" {
     f_string_static_t sequence = macro_f_string_static_t_initialize(block, 0, 0);
 
     do {
-      status = f_file_stream_read_block(file, &data->buffer);
+      status = f_file_stream_read_block(file, &setting->buffer);
 
-      if (status == F_none_eof && !data->buffer.used) {
+      if (status == F_none_eof && !setting->buffer.used) {
 
         // Handle complete character, which must be explicitly set to end in this situation.
         if (mode_codepoint == utf8_codepoint_mode_number_e || mode_codepoint == utf8_codepoint_mode_raw_number_e) {
           if (mode_codepoint == utf8_codepoint_mode_number_e) {
             mode_codepoint = utf8_codepoint_mode_end_e;
 
-            status = utf8_convert_codepoint(data, sequence, &mode_codepoint);
+            status = utf8_convert_codepoint(main, setting, sequence, &mode_codepoint);
           }
           else if (mode_codepoint == utf8_codepoint_mode_raw_number_e) {
             mode_codepoint = utf8_codepoint_mode_raw_end_e;
 
-            status = utf8_convert_raw(data, sequence, &mode_codepoint);
+            status = utf8_convert_raw(main, setting, sequence, &mode_codepoint);
 
             // Raw mode represents an invalid Unicode sequence.
             valid = F_false;
@@ -351,48 +350,48 @@ extern "C" {
         break;
       }
 
-      for (i = 0; F_status_is_fine(status) && i < data->buffer.used; ) {
+      for (i = 0; F_status_is_fine(status) && i < setting->buffer.used; ) {
 
-        if (!((++data->main->signal_check) % utf8_signal_check_d)) {
-          if (fll_program_standard_signal_received(data->main)) {
-            utf8_print_signal_received(data, status);
+        if (!((++main->signal_check) % utf8_signal_check_d)) {
+          if (fll_program_standard_signal_received(main)) {
+            utf8_print_signal_received(main, setting, status);
 
             status = F_interrupt;
 
             break;
           }
 
-          data->main->signal_check = 0;
+          main->signal_check = 0;
         }
 
         status = F_none;
 
         // Get the current width only when processing a new block.
         if (next) {
-          sequence.used = macro_f_utf_byte_width(data->buffer.string[i]);
+          sequence.used = macro_f_utf_byte_width(setting->buffer.string[i]);
           next = F_false;
         }
 
-        for (; j < sequence.used && i < data->buffer.used; ++j, ++i) {
-          sequence.string[j] = data->buffer.string[i];
+        for (; j < sequence.used && i < setting->buffer.used; ++j, ++i) {
+          sequence.string[j] = setting->buffer.string[i];
         } // for
 
         if (j >= sequence.used) {
-          if (data->mode & utf8_mode_from_bytesequence_d) {
-            status = utf8_convert_bytesequence(data, sequence);
+          if (setting->mode & utf8_mode_from_bytesequence_e) {
+            status = utf8_convert_bytesequence(main, setting, sequence);
           }
           else {
-            status = utf8_detect_codepoint(data, sequence, &mode_codepoint);
+            status = utf8_detect_codepoint(main, setting, sequence, &mode_codepoint);
 
             if (F_status_is_fine(status) && status != F_next) {
               if (mode_codepoint == utf8_codepoint_mode_raw_begin_e || mode_codepoint == utf8_codepoint_mode_raw_number_e || mode_codepoint == utf8_codepoint_mode_raw_end_e) {
-                status = utf8_convert_raw(data, sequence, &mode_codepoint);
+                status = utf8_convert_raw(main, setting, sequence, &mode_codepoint);
 
                 // Raw mode represents an invalid Unicode sequence.
                 valid = F_false;
               }
               else {
-                status = utf8_convert_codepoint(data, sequence, &mode_codepoint);
+                status = utf8_convert_codepoint(main, setting, sequence, &mode_codepoint);
               }
             }
           }
@@ -406,7 +405,7 @@ extern "C" {
         }
       } // for
 
-      data->buffer.used = 0;
+      setting->buffer.used = 0;
 
     } while (F_status_is_fine(status) && status != F_interrupt);
 
@@ -414,21 +413,21 @@ extern "C" {
     if (F_status_is_error_not(status) && status != F_interrupt && next == F_false) {
       sequence.used = j;
 
-      if (data->mode & utf8_mode_from_bytesequence_d) {
-        status = utf8_convert_bytesequence(data, sequence);
+      if (setting->mode & utf8_mode_from_bytesequence_e) {
+        status = utf8_convert_bytesequence(main, setting, sequence);
       }
       else {
-        status = utf8_detect_codepoint(data, sequence, &mode_codepoint);
+        status = utf8_detect_codepoint(main, setting, sequence, &mode_codepoint);
 
         if (F_status_is_fine(status) && status != F_next) {
           if (mode_codepoint == utf8_codepoint_mode_raw_begin_e || mode_codepoint == utf8_codepoint_mode_raw_number_e || mode_codepoint == utf8_codepoint_mode_raw_end_e) {
-            status = utf8_convert_raw(data, sequence, &mode_codepoint);
+            status = utf8_convert_raw(main, setting, sequence, &mode_codepoint);
 
             // Raw mode represents an invalid Unicode sequence.
             valid = F_false;
           }
           else {
-            status = utf8_convert_codepoint(data, sequence, &mode_codepoint);
+            status = utf8_convert_codepoint(main, setting, sequence, &mode_codepoint);
           }
         }
       }
@@ -438,7 +437,7 @@ extern "C" {
       }
     }
 
-    data->buffer.used = 0;
+    setting->buffer.used = 0;
 
     if (F_status_is_error(status) || status == F_interrupt) return status;
 

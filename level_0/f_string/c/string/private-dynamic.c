@@ -56,9 +56,7 @@ extern "C" {
 #if !defined(_di_f_string_dynamics_adjust_) || !defined(_di_f_string_dynamics_append_) || !defined(_di_f_string_dynamics_decimate_by_) || !defined(_di_f_string_map_multis_adjust_) || !defined(_di_f_string_map_multis_append_)
   f_status_t private_f_string_dynamics_adjust(const f_array_length_t length, f_string_dynamics_t * const dynamics) {
 
-    if (dynamics->used + length > F_array_length_t_size_d) {
-      return F_status_set_error(F_array_too_large);
-    }
+    if (dynamics->used + length > F_array_length_t_size_d) return F_status_set_error(F_array_too_large);
 
     f_status_t status = F_none;
 
@@ -132,9 +130,7 @@ extern "C" {
 #if !defined(_di_f_string_dynamics_decrease_by_) || !defined(_di_f_string_dynamics_increase_) || !defined(_di_f_string_dynamics_increase_by_) || !defined(f_string_map_multis_append)
   f_status_t private_f_string_dynamics_resize(const f_array_length_t length, f_string_dynamics_t * const dynamics) {
 
-    if (dynamics->used + length > F_array_length_t_size_d) {
-      return F_status_set_error(F_array_too_large);
-    }
+    if (dynamics->used + length > F_array_length_t_size_d) return F_status_set_error(F_array_too_large);
 
     f_status_t status = F_none;
 
@@ -160,9 +156,7 @@ extern "C" {
 #if !defined(_di_f_string_dynamicss_adjust_) || !defined(_di_f_string_dynamicss_append_) || !defined(_di_f_string_dynamicss_decimate_by_) || !defined(_di_f_string_map_multis_adjust_) || !defined(_di_f_string_map_multis_append_)
   f_status_t private_f_string_dynamicss_adjust(const f_array_length_t length, f_string_dynamicss_t * const dynamicss) {
 
-    if (dynamicss->used + length > F_array_length_t_size_d) {
-      return F_status_set_error(F_array_too_large);
-    }
+    if (dynamicss->used + length > F_array_length_t_size_d) return F_status_set_error(F_array_too_large);
 
     f_status_t status = F_none;
 
@@ -188,9 +182,7 @@ extern "C" {
 #if !defined(_di_f_string_dynamicss_decrease_by_) || !defined(_di_f_string_dynamicss_increase_) || !defined(_di_f_string_dynamicss_increase_by_) || !defined(_di_f_string_dynamicss_append_all_) || !defined(_di_f_string_map_multis_append_all_)
   f_status_t private_f_string_dynamicss_resize(const f_array_length_t length, f_string_dynamicss_t * const dynamicss) {
 
-    if (dynamicss->used + length > F_array_length_t_size_d) {
-      return F_status_set_error(F_array_too_large);
-    }
+    if (dynamicss->used + length > F_array_length_t_size_d) return F_status_set_error(F_array_too_large);
 
     f_status_t status = F_none;
 

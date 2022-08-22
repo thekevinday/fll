@@ -17,8 +17,10 @@ extern "C" {
  *
  * This automatically determines the output format and also handles the verify process.
  *
- * @param data
- *   The program data.
+ * @param main
+ *   The main program data.
+ * @param setting
+ *   The main program settings.
  * @param unicode
  *   A set of bytes representing a single codepoint character to process.
  * @param mode
@@ -35,7 +37,7 @@ extern "C" {
  * @see f_utf_unicode_to()
  */
 #ifndef _di_utf8_convert_codepoint_
-  extern f_status_t utf8_convert_codepoint(utf8_data_t * const data, const f_string_static_t unicode, uint8_t *mode) F_attribute_visibility_internal_d;
+  extern f_status_t utf8_convert_codepoint(fll_program_data_t * const main, utf8_setting_t * const setting, const f_string_static_t unicode, uint8_t *mode) F_attribute_visibility_internal_d;
 #endif // _di_utf8_convert_codepoint_
 
 /**
@@ -43,8 +45,10 @@ extern "C" {
  *
  * This automatically determines the output format and also handles the verify process.
  *
- * @param data
- *   The program data.
+ * @param main
+ *   The main program data.
+ * @param setting
+ *   The main program settings.
  * @param hex
  *   A set of bytes representing hexidecimal digits of a character to process.
  * @param mode
@@ -61,14 +65,16 @@ extern "C" {
  * @see fl_conversion_dynamic_to_unsigned_detect()
  */
 #ifndef _di_utf8_convert_raw_
-  extern f_status_t utf8_convert_raw(utf8_data_t * const data, const f_string_static_t hex, uint8_t *mode) F_attribute_visibility_internal_d;
+  extern f_status_t utf8_convert_raw(fll_program_data_t * const main, utf8_setting_t * const setting, const f_string_static_t hex, uint8_t *mode) F_attribute_visibility_internal_d;
 #endif // _di_utf8_convert_raw_
 
 /**
  * Detect a codepoint character.
  *
- * @param data
- *   The program data.
+ * @param main
+ *   The main program data.
+ * @param setting
+ *   The main program settings.
  * @param unicode
  *   A set of bytes representing a single codepoint character to process.
  * @param mode
@@ -82,14 +88,16 @@ extern "C" {
  *   Errors (with error bit) from: f_utf_is_whitespace()
  */
 #ifndef _di_utf8_detect_codepoint_
-  extern f_status_t utf8_detect_codepoint(utf8_data_t * const data, const f_string_static_t unicode, uint8_t *mode) F_attribute_visibility_internal_d;
+  extern f_status_t utf8_detect_codepoint(fll_program_data_t * const main, utf8_setting_t * const setting, const f_string_static_t unicode, uint8_t *mode) F_attribute_visibility_internal_d;
 #endif // _di_utf8_detect_codepoint_
 
 /**
  * Process file as a codepoint input, handling conversion or verification as appropriate.
  *
- * @param data
- *   The program data.
+ * @param main
+ *   The main program data.
+ * @param setting
+ *   The main program settings.
  * @param file
  *   The file stream to process.
  *   This file may contain NULLs.
@@ -107,7 +115,7 @@ extern "C" {
  * @see utf8_detect_codepoint()
  */
 #ifndef _di_utf8_process_file_codepoint_
-  extern f_status_t utf8_process_file_codepoint(utf8_data_t * const data, const f_file_t file) F_attribute_visibility_internal_d;
+  extern f_status_t utf8_process_file_codepoint(fll_program_data_t * const main, utf8_setting_t * const setting, const f_file_t file) F_attribute_visibility_internal_d;
 #endif // _di_utf8_process_file_codepoint_
 
 #ifdef __cplusplus

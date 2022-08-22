@@ -34,29 +34,29 @@ extern "C" {
 
     if (print.verbosity == f_console_verbosity_quiet_e) return;
 
-    fl_print_format("%r%[%QWhile processing ", print.to.stream, f_string_eol_s, print.context, print.prefix);
+    fl_print_format("%r%[%QWhile processing ", print.to, f_string_eol_s, print.context, print.prefix);
 
     if (cache.name_action.used) {
-      fl_print_format("%r '%]", print.to.stream, item ? controller_action_s : controller_value_s, print.context);
-      fl_print_format("%[%Q%]", print.to.stream, print.notable, cache.name_action, print.notable);
-      fl_print_format("%[' on line%] ", print.to.stream, print.context, print.context);
-      fl_print_format("%[%un%]", print.to.stream, print.notable, cache.line_action, print.notable);
-      fl_print_format("%[ for ", print.to.stream, print.context);
+      fl_print_format("%r '%]", print.to, item ? controller_action_s : controller_value_s, print.context);
+      fl_print_format("%[%Q%]", print.to, print.notable, cache.name_action, print.notable);
+      fl_print_format("%[' on line%] ", print.to, print.context, print.context);
+      fl_print_format("%[%un%]", print.to, print.notable, cache.line_action, print.notable);
+      fl_print_format("%[ for ", print.to, print.context);
     }
 
     if (cache.name_item.used) {
-      fl_print_format("rule %r '%]", print.to.stream, item ? controller_item_s : controller_settings_s, print.context);
-      fl_print_format("%[%Q%]", print.to.stream, print.notable, cache.name_item, print.notable);
-      fl_print_format("%[' on line%] ", print.to.stream, print.context, print.context);
-      fl_print_format("%[%un%]", print.to.stream, print.notable, cache.line_item, print.notable);
-      fl_print_format("%[ for ", print.to.stream, print.context);
+      fl_print_format("rule %r '%]", print.to, item ? controller_item_s : controller_settings_s, print.context);
+      fl_print_format("%[%Q%]", print.to, print.notable, cache.name_item, print.notable);
+      fl_print_format("%[' on line%] ", print.to, print.context, print.context);
+      fl_print_format("%[%un%]", print.to, print.notable, cache.line_item, print.notable);
+      fl_print_format("%[ for ", print.to, print.context);
     }
 
     if (cache.name_file.used) {
-      fl_print_format("rule file '%]%[%Q%]%['", print.to.stream, print.context, print.notable, cache.name_file, print.notable, print.context);
+      fl_print_format("rule file '%]%[%Q%]%['", print.to, print.context, print.notable, cache.name_file, print.notable, print.context);
     }
 
-    fl_print_format(".%]%r", print.to.stream, print.context, f_string_eol_s);
+    fl_print_format(".%]%r", print.to, print.context, f_string_eol_s);
   }
 #endif // _di_controller_rule_print_error_cache_
 
@@ -333,9 +333,9 @@ extern "C" {
 
     if (print.verbosity == f_console_verbosity_quiet_e) return;
 
-    fl_print_format("%r%[%QThe rule '%]", print.to.stream, f_string_eol_s, print.context, print.prefix, print.context);
-    fl_print_format("%[%Q%]", print.to.stream, print.notable, alias, print.notable);
-    fl_print_format("%[' is not designating a pid file.%]%r", print.to.stream, print.context, print.context, f_string_eol_s);
+    fl_print_format("%r%[%QThe rule '%]", print.to, f_string_eol_s, print.context, print.prefix, print.context);
+    fl_print_format("%[%Q%]", print.to, print.notable, alias, print.notable);
+    fl_print_format("%[' is not designating a pid file.%]%r", print.to, print.context, print.context, f_string_eol_s);
   }
 #endif // _di_controller_rule_action_print_error_missing_pid_
 
@@ -344,9 +344,9 @@ extern "C" {
 
     if (print.verbosity == f_console_verbosity_quiet_e) return;
 
-    fl_print_format("%r%[%QThe %r rule '%]", print.to.stream, f_string_eol_s, print.context, print.prefix, need_want_wish, print.context);
-    fl_print_format("%[%Q%]", print.to.stream, print.notable, value, print.notable);
-    fl_print_format("%[' %S.%]%r", print.to.stream, print.context, why, print.context, f_string_eol_s);
+    fl_print_format("%r%[%QThe %r rule '%]", print.to, f_string_eol_s, print.context, print.prefix, need_want_wish, print.context);
+    fl_print_format("%[%Q%]", print.to, print.notable, value, print.notable);
+    fl_print_format("%[' %S.%]%r", print.to, print.context, why, print.context, f_string_eol_s);
   }
 #endif // _di_controller_rule_item_print_error_need_want_wish_
 
@@ -355,9 +355,9 @@ extern "C" {
 
     if (print.verbosity == f_console_verbosity_quiet_e) return;
 
-    fl_print_format("%r%[%QThe rule '%]", print.to.stream, f_string_eol_s, print.context, print.prefix, print.context);
-    fl_print_format("%[%Q%]", print.to.stream, print.notable, alias, print.notable);
-    fl_print_format("%[' is no longer loaded.%]%r", print.to.stream, print.context, print.context, f_string_eol_s);
+    fl_print_format("%r%[%QThe rule '%]", print.to, f_string_eol_s, print.context, print.prefix, print.context);
+    fl_print_format("%[%Q%]", print.to, print.notable, alias, print.notable);
+    fl_print_format("%[' is no longer loaded.%]%r", print.to, print.context, print.context, f_string_eol_s);
   }
 #endif // _di_controller_rule_item_print_error_rule_not_loaded_
 
@@ -376,7 +376,7 @@ extern "C" {
 
     controller_lock_print(print.to, thread);
 
-    fl_print_format("%r%[%QRule setting %S.%]%r", print.to.stream, f_string_eol_s, print.context, print.prefix, message, print.context, f_string_eol_s);
+    fl_print_format("%r%[%QRule setting %S.%]%r", print.to, f_string_eol_s, print.context, print.prefix, message, print.context, f_string_eol_s);
 
     controller_rule_print_error_cache(print, cache->action, F_false);
 
@@ -399,9 +399,9 @@ extern "C" {
 
     controller_lock_print(print.to, thread);
 
-    fl_print_format("%r%[%QRule setting%S '%]", print.to.stream, f_string_eol_s, print.context, print.prefix, before, print.context);
-    fl_print_format("%[%/Q%]", print.to.stream, print.notable, cache->buffer_item, range, print.notable);
-    fl_print_format("%['%S.%]%r", print.to.stream, print.context, after, print.context, f_string_eol_s);
+    fl_print_format("%r%[%QRule setting%S '%]", print.to, f_string_eol_s, print.context, print.prefix, before, print.context);
+    fl_print_format("%[%/Q%]", print.to, print.notable, cache->buffer_item, range, print.notable);
+    fl_print_format("%['%S.%]%r", print.to, print.context, after, print.context, f_string_eol_s);
 
     controller_rule_print_error_cache(print, cache->action, F_false);
 

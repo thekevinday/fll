@@ -86,17 +86,17 @@ extern "C" {
  *   An array of numeric ids, each representing a parameter within the parameters variable.
  *   The order does not matter.
  * @param decision
- *   The resulting decision.
+ *   The location in the choices array representing the decision.
  *   If none of the parameters are found, then this will not be updated (therefore it is safe to have it pre-initialized to the default).
  *
  * @return
  *   F_none on success.
- *   F_data_not if no parameters were found.
+ *   F_data_not if no parameters were matched with the available choices.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_console_parameter_prioritize_left_
-  extern f_status_t f_console_parameter_prioritize_left(const f_console_parameters_t parameters, const f_console_parameter_ids_t choices, f_console_parameter_id_t * const decision);
+  extern f_status_t f_console_parameter_prioritize_left(const f_console_parameters_t parameters, const f_uint16s_t choices, f_array_length_t * const decision);
 #endif // _di_f_console_parameter_prioritize_left_
 
 /**
@@ -117,17 +117,17 @@ extern "C" {
  *   An array of numeric ids, each representing a parameter within the parameters variable.
  *   The order does not matter.
  * @param decision
- *   The resulting decision.
+ *   The location in the choices array representing the decision.
  *   If none of the parameters are found, then this will not be updated (therefore it is safe to have it pre-initialized to the default).
  *
  * @return
  *   F_none on success.
- *   F_data_not if no parameters were found.
+ *   F_data_not if no parameters were matched with the available choices.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_f_console_parameter_prioritize_right_
-  extern f_status_t f_console_parameter_prioritize_right(const f_console_parameters_t parameters, const f_console_parameter_ids_t choices, f_console_parameter_id_t * const decision);
+  extern f_status_t f_console_parameter_prioritize_right(const f_console_parameters_t parameters, const f_uint16s_t choices, f_array_length_t * const decision);
 #endif // _di_f_console_parameter_prioritize_right_
 
 /**

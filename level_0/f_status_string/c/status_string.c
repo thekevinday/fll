@@ -193,6 +193,8 @@ extern "C" {
     const f_string_static_t f_status_halt_not_s = macro_f_string_static_t_initialize(F_status_halt_not_s, 0, F_status_halt_not_s_length);
     const f_string_static_t f_status_header_s = macro_f_string_static_t_initialize(F_status_header_s, 0, F_status_header_s_length);
     const f_string_static_t f_status_header_not_s = macro_f_string_static_t_initialize(F_status_header_not_s, 0, F_status_header_not_s_length);
+    const f_string_static_t f_status_help_s = macro_f_string_static_t_initialize(F_status_help_s, 0, F_status_help_s_length);
+    const f_string_static_t f_status_help_not_s = macro_f_string_static_t_initialize(F_status_help_not_s, 0, F_status_help_not_s_length);
     const f_string_static_t f_status_ignore_s = macro_f_string_static_t_initialize(F_status_ignore_s, 0, F_status_ignore_s_length);
     const f_string_static_t f_status_ignore_not_s = macro_f_string_static_t_initialize(F_status_ignore_not_s, 0, F_status_ignore_not_s_length);
     const f_string_static_t f_status_implemented_s = macro_f_string_static_t_initialize(F_status_implemented_s, 0, F_status_implemented_s_length);

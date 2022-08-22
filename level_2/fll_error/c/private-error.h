@@ -16,7 +16,7 @@ extern "C" {
 #endif
 
 /**
- * Private implementation of private_fll_error_print().
+ * Private implementation of fll_error_print().
  *
  * Intended to be shared to each of the different implementation variations.
  *
@@ -61,7 +61,7 @@ extern "C" {
  * @see fll_error_file_print()
  */
 #if !defined(_di_fll_error_print_) || !defined(_di_fll_error_file_print_) || !defined(_di_fll_error_number_print_)
-  void private_fll_error_print_function(const fl_print_t print, const char *function) F_attribute_visibility_internal_d;
+  extern void private_fll_error_print_function(const fl_print_t print, const char *function) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fll_error_print_) || !defined(_di_fll_error_file_print_) || !defined(_di_fll_error_number_print_)
 
 #ifdef __cplusplus

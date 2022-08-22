@@ -133,9 +133,9 @@ extern "C" {
 
     controller_lock_print(print.to, thread);
 
-    fl_print_format("%r%[%Q%r setting%S '%]", print.to.stream, f_string_eol_s, print.context, print.prefix, is_entry ? controller_Entry_s : controller_Exit_s, before, print.context);
-    fl_print_format("%[%/Q%]", print.to.stream, print.notable, cache->buffer_file, range, print.notable);
-    fl_print_format("%['%S.%]%r", print.to.stream, print.context, after, print.context, f_string_eol_s);
+    fl_print_format("%r%[%Q%r setting%S '%]", print.to, f_string_eol_s, print.context, print.prefix, is_entry ? controller_Entry_s : controller_Exit_s, before, print.context);
+    fl_print_format("%[%/Q%]", print.to, print.notable, cache->buffer_file, range, print.notable);
+    fl_print_format("%['%S.%]%r", print.to, print.context, after, print.context, f_string_eol_s);
 
     controller_entry_print_error_cache(is_entry, print, cache->action);
 

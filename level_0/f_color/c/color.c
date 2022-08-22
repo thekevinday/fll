@@ -6,10 +6,117 @@ extern "C" {
 #endif
 
 #ifndef _di_f_color_load_context_
-  f_status_t f_color_load_context(const bool use_light_colors, f_color_context_t * const context) {
+  f_status_t f_color_load_context(const uint8_t mode, f_color_context_t * const context) {
     #ifndef _di_level_0_parameter_checking_
       if (!context) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    context->mode = mode;
+
+    if (mode == f_color_mode_color_not_e) {
+      macro_f_color_t_set_none(context->list);
+
+      context->format.begin = f_string_empty_s;
+      context->format.end = f_string_empty_s;
+      context->format.medium = f_string_empty_s;
+
+      context->set.error = f_color_set_empty_s;
+      context->set.important = f_color_set_empty_s;
+      context->set.normal = f_color_set_empty_s;
+      context->set.normal_reset = f_color_set_empty_s;
+      context->set.notable = f_color_set_empty_s;
+      context->set.reset = f_color_set_empty_s;
+      context->set.standout = f_color_set_empty_s;
+      context->set.success = f_color_set_empty_s;
+      context->set.title = f_color_set_empty_s;
+      context->set.warning = f_color_set_empty_s;
+
+      f_status_t status = F_none;
+
+      if (context->error.size) {
+        status = f_string_dynamic_resize(0, &context->error);
+        if (F_status_is_error(status)) return status;
+      }
+      else {
+        context->error.used = 0;
+      }
+
+      if (context->important.size) {
+        status = f_string_dynamic_resize(0, &context->important);
+        if (F_status_is_error(status)) return status;
+      }
+      else {
+        context->important.used = 0;
+      }
+
+      if (context->normal.size) {
+        status = f_string_dynamic_resize(0, &context->normal);
+        if (F_status_is_error(status)) return status;
+      }
+      else {
+        context->normal.used = 0;
+      }
+
+      if (context->normal_reset.size) {
+        status = f_string_dynamic_resize(0, &context->normal_reset);
+        if (F_status_is_error(status)) return status;
+      }
+      else {
+        context->normal_reset.used = 0;
+      }
+
+      if (context->notable.size) {
+        status = f_string_dynamic_resize(0, &context->notable);
+        if (F_status_is_error(status)) return status;
+      }
+      else {
+        context->notable.used = 0;
+      }
+
+      if (context->reset.size) {
+        status = f_string_dynamic_resize(0, &context->reset);
+        if (F_status_is_error(status)) return status;
+      }
+      else {
+        context->reset.used = 0;
+      }
+
+      if (context->standout.size) {
+        status = f_string_dynamic_resize(0, &context->standout);
+        if (F_status_is_error(status)) return status;
+      }
+      else {
+        context->standout.used = 0;
+      }
+
+      if (context->success.size) {
+        status = f_string_dynamic_resize(0, &context->success);
+        if (F_status_is_error(status)) return status;
+      }
+      else {
+        context->success.used = 0;
+      }
+
+      if (context->title.size) {
+        status = f_string_dynamic_resize(0, &context->title);
+        if (F_status_is_error(status)) return status;
+      }
+      else {
+        context->title.used = 0;
+      }
+
+      if (context->warning.size) {
+        status = f_string_dynamic_resize(0, &context->warning);
+        if (F_status_is_error(status)) return status;
+      }
+      else {
+        context->warning.used = 0;
+      }
+
+      return F_none;
+    }
+
+    if (mode != f_color_mode_dark_e && mode != f_color_mode_light_e) return F_data_not;
 
     // Switch to the appropriate terminal color mode.
     {
@@ -41,7 +148,7 @@ extern "C" {
       status = private_f_color_save_1(context->format, context->list.bold, &context->notable);
     }
 
-    if (use_light_colors) {
+    if (mode == f_color_mode_light_e) {
       if (F_status_is_error_not(status)) {
         status = private_f_color_save_2(context->format, context->list.bold, context->list.blue, &context->title);
       }
@@ -52,10 +159,6 @@ extern "C" {
 
       if (F_status_is_error_not(status)) {
         status = private_f_color_save_1(context->format, context->list.purple, &context->standout);
-      }
-
-      if (F_status_is_error_not(status)) {
-        context->mode = F_color_mode_light_d;
       }
     }
     else {
@@ -69,10 +172,6 @@ extern "C" {
 
       if (F_status_is_error_not(status)) {
         status = private_f_color_save_1(context->format, context->list.green, &context->standout);
-      }
-
-      if (F_status_is_error_not(status)) {
-        context->mode = F_color_mode_dark_d;
       }
     }
 
@@ -140,8 +239,10 @@ extern "C" {
       if (!buffer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_status_t status = f_string_dynamic_increase_by(format.begin.used + (format.medium.used * 2) + format.end.used + color1.used + color2.used + color3.used + 1, buffer);
-    if (F_status_is_error(status)) return status;
+    {
+      const f_status_t status = f_string_dynamic_increase_by(format.begin.used + (format.medium.used * 2) + format.end.used + color1.used + color2.used + color3.used + 1, buffer);
+      if (F_status_is_error(status)) return status;
+    }
 
     if (color1.used) {
       memcpy(buffer->string + buffer->used, color1.string, sizeof(f_char_t) * color1.used);
@@ -191,8 +292,10 @@ extern "C" {
       if (!buffer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_status_t status = f_string_dynamic_increase_by(format.begin.used + (format.medium.used * 3) + format.end.used + color1.used + color2.used + color3.used + color4.used + 1, buffer);
-    if (F_status_is_error(status)) return status;
+    {
+      const f_status_t status = f_string_dynamic_increase_by(format.begin.used + (format.medium.used * 3) + format.end.used + color1.used + color2.used + color3.used + color4.used + 1, buffer);
+      if (F_status_is_error(status)) return status;
+    }
 
     if (color1.used) {
       memcpy(buffer->string + buffer->used, color1.string, sizeof(f_char_t) * color1.used);
@@ -254,8 +357,10 @@ extern "C" {
       if (!buffer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    f_status_t status = f_string_dynamic_increase_by(format.begin.used + (format.medium.used * 4) + format.end.used + color1.used + color2.used + color3.used + color4.used + color5.used + 1, buffer);
-    if (F_status_is_error(status)) return status;
+    {
+      const f_status_t status = f_string_dynamic_increase_by(format.begin.used + (format.medium.used * 4) + format.end.used + color1.used + color2.used + color3.used + color4.used + color5.used + 1, buffer);
+      if (F_status_is_error(status)) return status;
+    }
 
     if (format.begin.used) {
       memcpy(buffer->string + buffer->used, format.begin.string, sizeof(f_char_t) * format.begin.used);

@@ -17,8 +17,10 @@ extern "C" {
  *
  * This automatically determines the output format and is also handles the verify process.
  *
- * @param data
- *   The program data.
+ * @param main
+ *   The main program data.
+ * @param setting
+ *   The main program settings.
  * @param sequence
  *   A byte sequences representing a single character to convert.
  *   This does not stop on NULL and will process all text until sequence.used.
@@ -32,14 +34,16 @@ extern "C" {
  *   Errors (with error bit) from: f_utf_unicode_to()
  */
 #ifndef _di_utf8_convert_bytesequence_
-  extern f_status_t utf8_convert_bytesequence(utf8_data_t * const data, const f_string_static_t sequence) F_attribute_visibility_internal_d;
+  extern f_status_t utf8_convert_bytesequence(fll_program_data_t * const main, utf8_setting_t * const setting, const f_string_static_t sequence) F_attribute_visibility_internal_d;
 #endif // _di_utf8_convert_bytesequence_
 
 /**
  * Process file as a bytesequence input, handling conversion or verification as appropriate.
  *
- * @param data
- *   The program data.
+ * @param main
+ *   The main program data.
+ * @param setting
+ *   The main program settings.
  * @param file
  *   The file stream to process.
  *   This file may contain NULLs.
@@ -57,7 +61,7 @@ extern "C" {
  * @see utf8_detect_codepoint()
  */
 #ifndef _di_utf8_process_file_bytesequence_
-  extern f_status_t utf8_process_file_bytesequence(utf8_data_t * const data, const f_file_t file) F_attribute_visibility_internal_d;
+  extern f_status_t utf8_process_file_bytesequence(fll_program_data_t * const main, utf8_setting_t * const setting, const f_file_t file) F_attribute_visibility_internal_d;
 #endif // _di_utf8_process_file_bytesequence_
 
 #ifdef __cplusplus

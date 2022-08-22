@@ -376,13 +376,13 @@ extern "C" {
 
     flockfile(print.to.stream);
 
-    fl_print_format("%r%[%QThe section operation '%]", print.to.stream, f_string_eol_s, print.context, print.prefix, print.context);
-    fl_print_format("%[%/Q%]", print.to.stream, print.notable, buffer, operation_name, print.notable);
-    fl_print_format("%[' from section '%]", print.to.stream, print.context, print.context);
-    fl_print_format("%[%/Q%]", print.to.stream, print.notable, buffer, section_name, print.notable);
-    fl_print_format("%[' on line%] ", print.to.stream, print.context, print.context);
-    fl_print_format("%[%un%]", print.to.stream, print.notable, line, print.notable);
-    fl_print_format(" %[failed.%]%r", print.to.stream, print.context, print.context, f_string_eol_s);
+    fl_print_format("%r%[%QThe section operation '%]", print.to, f_string_eol_s, print.context, print.prefix, print.context);
+    fl_print_format("%[%/Q%]", print.to, print.notable, buffer, operation_name, print.notable);
+    fl_print_format("%[' from section '%]", print.to, print.context, print.context);
+    fl_print_format("%[%/Q%]", print.to, print.notable, buffer, section_name, print.notable);
+    fl_print_format("%[' on line%] ", print.to, print.context, print.context);
+    fl_print_format("%[%un%]", print.to, print.notable, line, print.notable);
+    fl_print_format(" %[failed.%]%r", print.to, print.context, print.context, f_string_eol_s);
 
     funlockfile(print.to.stream);
   }
@@ -395,13 +395,13 @@ extern "C" {
 
     flockfile(print.to.stream);
 
-    fl_print_format("%r%[%QThe argument '%]", print.to.stream, f_string_eol_s, print.context, print.prefix, print.context);
-    fl_print_format("%[%Q%]", print.to.stream, print.notable, argument, print.notable);
-    fl_print_format("%[' is not not valid and may only be one of either '%]", print.to.stream, print.context, print.context);
-    fl_print_format("%[%r%]", print.to.stream, print.notable, fake_make_operation_argument_force_s, print.notable);
-    fl_print_format("%[' or '%]", print.to.stream, print.context, print.context);
-    fl_print_format("%[%r%]", print.to.stream, print.notable, fake_make_operation_argument_strict_s, print.notable);
-    fl_print_format("%['.%]%r", print.to.stream, print.context, print.context, f_string_eol_s);
+    fl_print_format("%r%[%QThe argument '%]", print.to, f_string_eol_s, print.context, print.prefix, print.context);
+    fl_print_format("%[%Q%]", print.to, print.notable, argument, print.notable);
+    fl_print_format("%[' is not not valid and may only be one of either '%]", print.to, print.context, print.context);
+    fl_print_format("%[%r%]", print.to, print.notable, fake_make_operation_argument_force_s, print.notable);
+    fl_print_format("%[' or '%]", print.to, print.context, print.context);
+    fl_print_format("%[%r%]", print.to, print.notable, fake_make_operation_argument_strict_s, print.notable);
+    fl_print_format("%['.%]%r", print.to, print.context, print.context, f_string_eol_s);
 
     funlockfile(print.to.stream);
 
@@ -415,9 +415,9 @@ extern "C" {
 
     flockfile(print.to.stream);
 
-    fl_print_format("%r%[%QThe point file '%]", print.to.stream, f_string_eol_s, print.context, print.prefix, print.context);
-    fl_print_format("%[%Q%]", print.to.stream, print.notable, argument, print.notable);
-    fl_print_format("%[' already exists.%]%r", print.to.stream, print.context, print.context, f_string_eol_s);
+    fl_print_format("%r%[%QThe point file '%]", print.to, f_string_eol_s, print.context, print.prefix, print.context);
+    fl_print_format("%[%Q%]", print.to, print.notable, argument, print.notable);
+    fl_print_format("%[' already exists.%]%r", print.to, print.context, print.context, f_string_eol_s);
 
     funlockfile(print.to.stream);
 
@@ -431,9 +431,9 @@ extern "C" {
 
     flockfile(print.to.stream);
 
-    fl_print_format("%r%[%QThe target file '%]", print.to.stream, f_string_eol_s, print.context, print.prefix, print.context);
-    fl_print_format("%[%Q%]", print.to.stream, print.notable, argument, print.notable);
-    fl_print_format("%[' does not exist.%]%r", print.to.stream, print.context, print.context, f_string_eol_s);
+    fl_print_format("%r%[%QThe target file '%]", print.to, f_string_eol_s, print.context, print.prefix, print.context);
+    fl_print_format("%[%Q%]", print.to, print.notable, argument, print.notable);
+    fl_print_format("%[' does not exist.%]%r", print.to, print.context, print.context, f_string_eol_s);
 
     funlockfile(print.to.stream);
 

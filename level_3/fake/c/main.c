@@ -24,18 +24,18 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
   data.parameters.used = fake_total_parameters_d;
 
   if (f_pipe_input_exists()) {
-    data.process_pipe = F_true;
+    data.pipe = fll_program_data_pipe_input_e;
   }
 
-  fll_program_standard_set_up(&data.signal);
+  fll_program_standard_set_up(&data);
 
   f_file_umask_get(&data.umask);
 
-  const f_status_t status = fake_main(&data, &arguments);
+  const f_status_t status = fake_main(&data, arguments);
 
   fll_program_data_delete(&data);
 
-  fll_program_standard_set_down(&data.signal);
+  fll_program_standard_set_down(&data);
 
   if (status == F_child) {
     exit(data.child);

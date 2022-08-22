@@ -11,6 +11,10 @@ extern "C" {
 
     flockfile(file.stream);
 
+    //if (!(setting->flag & XXX_main_flag_line_first_no_e)) {
+      f_print_dynamic_raw(f_string_eol_s, file.stream);
+    //}
+
     fll_program_print_help_header(file, context, iki_write_program_name_long_s, iki_write_program_version_s);
 
     fll_program_print_help_option(file, context, f_console_standard_short_help_s, f_console_standard_long_help_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Print this help message.");
@@ -34,14 +38,19 @@ extern "C" {
 
     fll_program_print_help_usage(file, context, iki_write_program_name_s, f_string_empty_s);
 
-    fl_print_format(" %[Notes:%]%r", file.stream, context.set.important, context.set.important, f_string_eol_s);
+    fl_print_format("%r %[Notes:%]%r", file.stream, f_string_eol_s, context.set.important, context.set.important, f_string_eol_s);
     fl_print_format("  This program will accept Object and Content strings to generate an IKI string, such as %[object:\"content\"%].%r", file.stream, context.set.notable, context.set.notable, f_string_eol_s);
 
     fl_print_format("  Each object must have a Content (and each Content must have an Object).%r%r", file.stream, f_string_eol_s, f_string_eol_s);
 
     fl_print_format("  When piping main to this program, a single form-feed character (\\f) must be used to separate each Object from each Content.%r", file.stream, f_string_eol_s);
-    fl_print_format("  Furthermore, each Object must be followed by a Content.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
+    fl_print_format("  Furthermore, each Object must be followed by a Content.%r", file.stream, f_string_eol_s);
 
+    //if (!(setting->flag & XXX_main_flag_line_last_no_e)) {
+      f_print_dynamic_raw(f_string_eol_s, file.stream);
+    //}
+
+    f_file_stream_flush(file);
     funlockfile(file.stream);
 
     return F_none;
@@ -49,84 +58,50 @@ extern "C" {
 #endif // _di_iki_write_print_help_
 
 #ifndef _di_iki_write_main_
-  f_status_t iki_write_main(fll_program_data_t * const main, const f_console_arguments_t *arguments) {
+  f_status_t iki_write_main(fll_program_data_t * const main, const f_console_arguments_t arguments) {
 
     f_status_t status = F_none;
 
+    // Load parameters.
+    status = f_console_parameter_process(arguments, &main->parameters);
+    if (F_status_is_error(status)) return;
+
     {
-      f_console_parameter_id_t ids[3] = { iki_write_parameter_no_color_e, iki_write_parameter_light_e, iki_write_parameter_dark_e };
-      const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
+      f_array_length_t choice = 0;
+      f_uint16s_t choices = f_uint16s_t_initialize;
 
-      status = fll_program_parameter_process(*arguments, &main->parameters, choices, F_true, &main->context);
+      // Identify and prioritize "color context" parameters.
+      {
+        uint16_t choices_array[3] = { iki_write_parameter_no_color_e, iki_write_parameter_light_e, iki_write_parameter_dark_e };
+        choices.array = choices_array;
+        choices.used = 3;
 
-      main->output.set = &main->context.set;
-      main->error.set = &main->context.set;
-      main->warning.set = &main->context.set;
+        const uint8_t modes[3] = { f_color_mode_color_not_e, f_color_mode_light_e, f_color_mode_dark_e };
 
-      if (main->context.set.error.before) {
-        main->output.context = f_color_set_empty_s;
-        main->output.notable = main->context.set.notable;
+        status = fll_program_parameter_process_context(choices, modes, F_true, main);
 
-        main->error.context = main->context.set.error;
-        main->error.notable = main->context.set.notable;
+        if (F_status_is_error(status)) {
+          fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process_context", F_true);
 
-        main->warning.context = main->context.set.warning;
-        main->warning.notable = main->context.set.notable;
-      }
-      else {
-        f_color_set_t *sets[] = { &main->output.context, &main->output.notable, &main->error.context, &main->error.notable, &main->warning.context, &main->warning.notable, 0 };
-
-        fll_program_parameter_process_empty(&main->context, sets);
-      }
-
-      if (F_status_is_error(status)) {
-        if (main->error.verbosity != f_console_verbosity_quiet_e) {
-          fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process", F_true);
-          f_print_dynamic_raw(f_string_eol_s, main->error.to.stream);
+          return;
         }
-
-        return F_status_set_error(status);
-      }
-    }
-
-    // Identify priority of verbosity related parameters.
-    {
-      f_console_parameter_id_t ids[5] = { iki_write_parameter_verbosity_quiet_e, iki_write_parameter_verbosity_error_e, iki_write_parameter_verbosity_normal_e, iki_write_parameter_verbosity_verbose_e, iki_write_parameter_verbosity_debug_e };
-      f_console_parameter_id_t choice = 0;
-      const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 5);
-
-      status = f_console_parameter_prioritize_right(main->parameters, choices, &choice);
-
-      if (F_status_is_error(status)) {
-        fll_error_print(main->error, F_status_set_fine(status), "f_console_parameter_prioritize_right", F_true);
-
-        return status;
       }
 
-      if (choice == iki_write_parameter_verbosity_quiet_e) {
-        main->output.verbosity = f_console_verbosity_quiet_e;
-        main->error.verbosity = f_console_verbosity_quiet_e;
-        main->warning.verbosity = f_console_verbosity_quiet_e;
-      }
-      else if (choice == iki_write_parameter_verbosity_error_e) {
-        main->output.verbosity = f_console_verbosity_error_e;
-        main->error.verbosity = f_console_verbosity_error_e;
-        main->warning.verbosity = f_console_verbosity_error_e;
-      }
-      else if (choice == iki_write_parameter_verbosity_normal_e) {
-        main->output.verbosity = f_console_verbosity_normal_e;
-        main->error.verbosity = f_console_verbosity_normal_e;
-        main->warning.verbosity = f_console_verbosity_normal_e;
-      }
-      else if (choice == iki_write_parameter_verbosity_verbose_e) {
-        main->output.verbosity = f_console_verbosity_verbose_e;
-        main->error.verbosity = f_console_verbosity_verbose_e;
-        main->warning.verbosity = f_console_verbosity_verbose_e;
-      }
-      else if (choice == iki_write_parameter_verbosity_debug_e) {
-        main->output.verbosity = f_console_verbosity_debug_e;
-        main->error.verbosity = f_console_verbosity_debug_e;
-        main->warning.verbosity = f_console_verbosity_debug_e;
+      // Identify and prioritize "verbosity" parameters.
+      {
+        uint16_t choices_array[5] = { iki_write_parameter_verbosity_quiet_e, iki_write_parameter_verbosity_error_e, iki_write_parameter_verbosity_verbose_e, iki_write_parameter_verbosity_debug_e, iki_write_parameter_verbosity_normal_e };
+        choices.array = choices_array;
+        choices.used = 5;
+
+        const uint8_t verbosity[5] = { f_console_verbosity_quiet_e, f_console_verbosity_error_e, f_console_verbosity_verbose_e, f_console_verbosity_debug_e, f_console_verbosity_normal_e };
+
+        status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, main);
+
+        if (F_status_is_error(status)) {
+          fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process_verbosity", F_true);
+
+          return;
+        }
       }
     }
 
@@ -229,7 +204,7 @@ extern "C" {
       status = F_status_set_error(F_parameter);
     }
 
-    if (F_status_is_error_not(status) && !main->process_pipe) {
+    if (F_status_is_error_not(status) && !(main->pipe & fll_program_data_pipe_input_e)) {
       if (main->parameters.array[iki_write_parameter_object_e].result != f_console_result_additional_e && main->parameters.array[iki_write_parameter_content_e].result != f_console_result_additional_e) {
         if (main->error.verbosity != f_console_verbosity_quiet_e) {
           flockfile(main->error.to.stream);
@@ -283,7 +258,7 @@ extern "C" {
     if (F_status_is_error_not(status)) {
       f_string_dynamic_t escaped = f_string_dynamic_t_initialize;
 
-      if (main->process_pipe) {
+      if (main->pipe & fll_program_data_pipe_input_e) {
         f_file_t pipe = f_file_t_initialize;
 
         pipe.id = F_type_descriptor_input_d;
@@ -455,7 +430,7 @@ extern "C" {
     }
 
     if (main->parameters.array[iki_write_parameter_file_e].result == f_console_result_additional_e) {
-      f_file_stream_flush(&file);
+      f_file_stream_flush(file);
       f_file_stream_close(&file);
     }
 

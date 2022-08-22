@@ -34,9 +34,9 @@ extern "C" {
  *
  * The pointer address might be changed by realloc().
  *
- * @param old_length
+ * @param length_old
  *   The total number of blocks representing the length to be resized from.
- * @param new_length
+ * @param length_new
  *   The total number of blocks representing the length to be resized to.
  * @param size
  *   The block size, in bytes (size * length = allocated size).
@@ -55,7 +55,7 @@ extern "C" {
  * @see realloc()
  */
 #ifndef _di_f_memory_adjust_
-  extern f_status_t f_memory_adjust(const size_t old_length, const size_t new_length, const size_t size, void ** const pointer);
+  extern f_status_t f_memory_adjust(const size_t length_old, const size_t length_new, const size_t size, void ** const pointer);
 #endif // _di_f_memory_adjust_
 
 /**
@@ -174,9 +174,9 @@ extern "C" {
  *
  * The pointer address might be changed by realloc().
  *
- * @param old_length
+ * @param length_old
  *   The total number of blocks representing the length to be resized from.
- * @param new_length
+ * @param length_new
  *   The total number of blocks representing the length to be resized to.
  * @param size
  *   The block size, in bytes (size * length = allocated size).
@@ -195,7 +195,7 @@ extern "C" {
  * @see realloc()
  */
 #ifndef _di_f_memory_resize_
-  extern f_status_t f_memory_resize(const size_t old_length, const size_t new_length, const size_t size, void ** const pointer);
+  extern f_status_t f_memory_resize(const size_t length_old, const size_t length_new, const size_t size, void ** const pointer);
 #endif // _di_f_memory_resize_
 
 #ifdef __cplusplus

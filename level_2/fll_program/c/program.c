@@ -1,4 +1,5 @@
 #include "program.h"
+#include "private-program.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -7,7 +8,7 @@ extern "C" {
 #ifndef _di_fll_program_print_help_header_
   f_status_t fll_program_print_help_header(const f_file_t output, const f_color_context_t context, const f_string_static_t name, const f_string_static_t version) {
 
-    fl_print_format("%r %[%Q%]%r", output.stream, f_string_eol_s, context.set.title, name, context.set.title, f_string_eol_s);
+    fl_print_format(" %[%Q%]%r", output.stream, context.set.title, name, context.set.title, f_string_eol_s);
     fl_print_format("  %[Version %Q%]%r", output.stream, context.set.notable, version, context.set.notable, f_string_eol_s);
 
     fl_print_format("%r %[Available Options:%] ", output.stream, f_string_eol_s, context.set.important, context.set.important);
@@ -19,12 +20,29 @@ extern "C" {
 #ifndef _di_fll_program_print_help_option_
   f_status_t fll_program_print_help_option(const f_file_t output, const f_color_context_t context, const f_string_static_t option_short, const f_string_static_t option_long, const f_string_static_t symbol_short, const f_string_static_t symbol_long, const char *description) {
 
-    fl_print_format("%r  %Q%[%Q%]", output.stream, f_string_eol_s, symbol_short, context.set.standout, option_short, context.set.standout);
-    fl_print_format(", %Q%[%Q%]  %S", output.stream, symbol_long, context.set.standout, option_long, context.set.standout, description);
+    return private_fll_program_print_help_option(output, context, option_short, option_long, symbol_short, symbol_long, description);
+  }
+#endif // _di_fll_program_print_help_option_
+
+#ifndef _di_fll_program_print_help_option_standard_
+  f_status_t fll_program_print_help_option_standard(const f_file_t output, const f_color_context_t context) {
+
+    private_fll_program_print_help_option(output, context, f_console_standard_short_help_s, f_console_standard_long_help_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "         Print this help message.");
+    private_fll_program_print_help_option(output, context, f_console_standard_short_dark_s, f_console_standard_long_dark_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "         Output using colors that show up better on dark backgrounds.");
+    private_fll_program_print_help_option(output, context, f_console_standard_short_light_s, f_console_standard_long_light_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "        Output using colors that show up better on light backgrounds.");
+    private_fll_program_print_help_option(output, context, f_console_standard_short_no_color_s, f_console_standard_long_no_color_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "     Do not print using color.");
+    private_fll_program_print_help_option(output, context, f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "        Decrease verbosity, silencing most output.");
+    private_fll_program_print_help_option(output, context, f_console_standard_short_error_s, f_console_standard_long_error_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "        Decrease verbosity, using only error output.");
+    private_fll_program_print_help_option(output, context, f_console_standard_short_normal_s, f_console_standard_long_normal_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "       Set verbosity to normal.");
+    private_fll_program_print_help_option(output, context, f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "      Increase verbosity beyond normal output.");
+    private_fll_program_print_help_option(output, context, f_console_standard_short_debug_s, f_console_standard_long_debug_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "        Enable debugging, significantly increasing verbosity beyond normal output.");
+    private_fll_program_print_help_option(output, context, f_console_standard_short_version_s, f_console_standard_long_version_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "      Print only the version number.");
+    private_fll_program_print_help_option(output, context, f_console_standard_short_line_first_no_s, f_console_standard_long_line_first_no_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "Disable printing of first line.");
+    private_fll_program_print_help_option(output, context, f_console_standard_short_line_last_no_s, f_console_standard_long_line_last_no_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Disable printing of last line.");
 
     return F_none;
   }
-#endif // _di_fll_program_print_help_option_
+#endif // _di_fll_program_print_help_option_standard_
 
 #ifndef _di_fll_program_print_help_option_long_
   f_status_t fll_program_print_help_option_long(const f_file_t output, const f_color_context_t context, const f_string_static_t option_long, const f_string_static_t symbol_long, const char *description) {
@@ -56,7 +74,7 @@ extern "C" {
       fl_print_format(" %[[%] %Q %[]%]", output.stream, context.set.notable, context.set.notable, parameters, context.set.notable, context.set.notable);
     }
 
-    fl_print_format("%r%r", output.stream, f_string_eol_s, f_string_eol_s);
+    f_print_dynamic_raw(f_string_eol_s, output.stream);
 
     return F_none;
   }
@@ -72,34 +90,37 @@ extern "C" {
   }
 #endif // _di_fll_program_print_version_
 
-#ifndef _di_fll_program_parameter_process_
-  f_status_t fll_program_parameter_process(const f_console_arguments_t arguments, const f_console_parameter_ids_t choices, const bool right, fll_program_data_t * const main) {
-
-    f_status_t status = f_console_parameter_process(arguments, &main->parameters);
-    if (F_status_is_error(status)) return status;
+#ifndef _di_fll_program_parameter_process_context_
+  f_status_t fll_program_parameter_process_context(const f_uint16s_t choices, const uint8_t modes[], const bool right, fll_program_data_t * const main) {
 
     {
-      f_console_parameter_id_t decision = choices.id[2];
+      if (choices.used) {
+        f_status_t status = F_none;
+        f_array_length_t decision = 0;
 
-      if (right) {
-        status = f_console_parameter_prioritize_right(main->parameters, choices, &decision);
-      }
-      else {
-        status = f_console_parameter_prioritize_left(main->parameters, choices, &decision);
-      }
+        if (right) {
+          status = f_console_parameter_prioritize_right(main->parameters, choices, &decision);
+        }
+        else {
+          status = f_console_parameter_prioritize_left(main->parameters, choices, &decision);
+        }
 
-      if (F_status_is_error(status)) return status;
-
-      // Load colors unless told not to.
-      if (decision == choices.id[0]) {
-        main->context.mode = F_color_mode_no_color_d;
-      }
-      else {
-        // @todo update this once macro_f_color_context_t_new is turned into a function.
-        macro_f_color_context_t_new(status, main->context);
         if (F_status_is_error(status)) return status;
 
-        status = f_color_load_context(decision == choices.id[1], &main->context);
+        if (status == F_data_not) {
+          main->context.mode = modes[choices.used - 1];
+        }
+        else {
+          main->context.mode = modes[decision];
+        }
+
+        if (main->context.mode == f_color_mode_dark_e || main->context.mode == f_color_mode_light_e) {
+          status = f_color_load_context(main->context.mode, &main->context);
+          if (F_status_is_error(status)) return status;
+        }
+      }
+      else {
+        main->context.mode = f_color_mode_color_not_e;
       }
     }
 
@@ -124,50 +145,50 @@ extern "C" {
     else {
       f_color_set_t *sets[] = { &main->message.context, &main->message.notable, &main->output.context, &main->output.notable, &main->error.context, &main->error.notable, &main->warning.context, &main->warning.notable, 0 };
 
-      fll_program_parameter_process_empty(&main->context, sets);
+      private_fll_program_parameter_process_empty(&main->context, sets);
     }
 
     return F_none;
   }
-#endif // _di_fll_program_parameter_process_
+#endif // _di_fll_program_parameter_process_context_
 
 #ifndef _di_fll_program_parameter_process_empty_
-  void fll_program_parameter_process_empty(f_color_context_t * const context, f_color_set_t * const sets[]) {
+  f_status_t fll_program_parameter_process_empty(f_color_context_t * const context, f_color_set_t * const sets[]) {
+    #ifndef _di_level_2_parameter_checking_
+      if (!context) return F_status_set_error(F_parameter);
+      if (!sets) return F_status_set_error(F_parameter);
+    #endif // _di_level_2_parameter_checking_
 
-    context->set.error = f_color_set_empty_s;
-    context->set.important = f_color_set_empty_s;
-    context->set.normal = f_color_set_empty_s;
-    context->set.normal_reset = f_color_set_empty_s;
-    context->set.notable = f_color_set_empty_s;
-    context->set.reset = f_color_set_empty_s;
-    context->set.standout = f_color_set_empty_s;
-    context->set.success = f_color_set_empty_s;
-    context->set.title = f_color_set_empty_s;
-    context->set.warning = f_color_set_empty_s;
+    private_fll_program_parameter_process_empty(context, sets);
 
-    if (sets) {
-      for (f_array_length_t i = 0; sets[i]; ++i) {
-        *sets[i] = f_color_set_empty_s;
-      } // for
-    }
+    return F_none;
   }
 #endif // _di_fll_program_parameter_process_empty_
 
 #ifndef _di_fll_program_parameter_process_verbosity_
-  f_status_t fll_program_parameter_process_verbosity(const f_console_parameter_ids_t choices, const bool right, const uint8_t verbosity[], fll_program_data_t * const main) {
+  f_status_t fll_program_parameter_process_verbosity(const f_uint16s_t choices, const uint8_t verbosity[], const bool right, fll_program_data_t * const main) {
+    #ifndef _di_level_2_parameter_checking_
+      if (!main) return F_status_set_error(F_parameter);
+    #endif // _di_level_2_parameter_checking_
 
-    f_console_parameter_id_t choice = 0;
+    if (!choices.used) return F_data_not;
 
-    const f_status_t status = right ?
-      f_console_parameter_prioritize_right(main->parameters, choices, &choice) :
-      f_console_parameter_prioritize_left(main->parameters, choices, &choice);
+    f_array_length_t choice = 0;
 
-    if (F_status_is_error(status)) return status;
+    {
+      const f_status_t status = right ? f_console_parameter_prioritize_right(main->parameters, choices, &choice) : f_console_parameter_prioritize_left(main->parameters, choices, &choice);
+
+      if (F_status_is_error(status)) return status;
+
+      if (status == F_data_not) {
+        choice = choices.used - 1;
+      }
+    }
 
     main->message.verbosity = verbosity[choice];
-    main->output.verbosity = verbosity[choice];
-    main->error.verbosity = verbosity[choice];
-    main->warning.verbosity = verbosity[choice];
+    main->output.verbosity = main->message.verbosity;
+    main->error.verbosity = main->message.verbosity;
+    main->warning.verbosity = main->message.verbosity;
 
     return F_none;
   }
@@ -181,7 +202,6 @@ extern "C" {
     #endif // _di_level_2_parameter_checking_
 
     f_status_t status = F_none;
-
     const f_array_length_t start = destination->used;
 
     for (f_array_length_t i = 0; i < values.used; ++i) {
@@ -204,9 +224,10 @@ extern "C" {
       }
     } // for
 
-    if (status == F_none && start == destination->used) return F_data_not;
+    if (F_status_is_error(status)) return status;
+    if (start == destination->used) return F_data_not;
 
-    return status;
+    return F_none;
   }
 #endif // _di_fll_program_parameter_additional_append_
 
@@ -218,7 +239,6 @@ extern "C" {
     #endif // _di_level_2_parameter_checking_
 
     f_status_t status = F_none;
-
     const f_array_length_t start = destination->used;
 
     for (f_array_length_t i = 0; i < values.used; ++i) {
@@ -229,9 +249,10 @@ extern "C" {
       }
     } // for
 
-    if (status == F_none && start == destination->used) return F_data_not;
+    if (F_status_is_error(status)) return status;
+    if (start == destination->used) return F_data_not;
 
-    return status;
+    return F_none;
   }
 #endif // _di_fll_program_parameter_additional_mash_
 
@@ -265,9 +286,10 @@ extern "C" {
       }
     } // for
 
-    if (status == F_none && start == destination->used) return F_data_not;
+    if (F_status_is_error(status)) return status;
+    if (start == destination->used) return F_data_not;
 
-    return status;
+    return F_none;
   }
 #endif // _di_fll_program_parameter_additional_rip_
 
@@ -279,7 +301,6 @@ extern "C" {
     #endif // _di_level_2_parameter_checking_
 
     f_status_t status = F_none;
-
     const f_array_length_t start = destination->used;
     f_string_dynamic_t ripped = f_string_dynamic_t_initialize;
 
@@ -300,9 +321,10 @@ extern "C" {
 
     f_string_dynamic_resize(0, &ripped);
 
-    if (status == F_none && start == destination->used) return F_data_not;
+    if (F_status_is_error(status)) return status;
+    if (start == destination->used) return F_data_not;
 
-    return status;
+    return F_none;
   }
 #endif // _di_fll_program_parameter_additional_rip_mash_
 
@@ -326,7 +348,7 @@ extern "C" {
 #ifndef _di_fll_program_standard_set_down_
   f_status_t fll_program_standard_set_down(fll_program_data_t * const main) {
     #ifndef _di_level_2_parameter_checking_
-      if (!signal) return F_status_set_error(F_parameter);
+      if (!main) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
     // The fclose() calls have undefined behavior when closing an already closed file.
@@ -337,7 +359,7 @@ extern "C" {
 
     if (main->message.to.id == -1) {
       if (main->message.to.stream != 0 && main->message.to.stream != F_type_error_d && main->message.to.stream != F_type_input_d && main->message.to.stream != F_type_output_d) {
-        f_file_stream_flush(&main->message.to);
+        f_file_stream_flush(main->message.to);
 
         flag |= 0x1;
       }
@@ -353,7 +375,7 @@ extern "C" {
     if (main->output.to.id == -1) {
       if (main->output.to.stream && main->output.to.stream != main->message.to.stream) {
         if (main->output.to.stream != F_type_error_d && main->output.to.stream != F_type_input_d && main->output.to.stream != F_type_output_d) {
-          f_file_stream_flush(&main->output.to);
+          f_file_stream_flush(main->output.to);
 
           flag |= 0x2;
         }
@@ -370,7 +392,7 @@ extern "C" {
     if (main->error.to.id == -1) {
       if (main->error.to.stream && main->error.to.stream != main->message.to.stream && main->error.to.stream != main->output.to.stream) {
         if (main->error.to.stream != F_type_error_d && main->error.to.stream != F_type_input_d && main->error.to.stream != F_type_output_d) {
-          f_file_stream_flush(&main->error.to);
+          f_file_stream_flush(main->error.to);
 
           flag |= 0x4;
         }
@@ -387,7 +409,7 @@ extern "C" {
     if (main->warning.to.id == -1) {
       if (main->warning.to.stream && main->warning.to.stream != main->message.to.stream && main->warning.to.stream != main->output.to.stream && main->warning.to.stream != main->error.to.stream) {
         if (main->warning.to.stream != F_type_error_d && main->warning.to.stream != F_type_input_d && main->warning.to.stream != F_type_output_d) {
-          f_file_stream_flush(&main->warning.to);
+          f_file_stream_flush(main->warning.to);
 
           flag |= 0x8;
         }
@@ -405,7 +427,7 @@ extern "C" {
     if (main->debug.to.id == -1) {
       if (main->debug.to.stream && main->debug.to.stream != main->message.to.stream && main->debug.to.stream != main->output.to.stream && main->debug.to.stream != main->error.to.stream && main->debug.to.stream != main->warning.to.stream) {
         if (main->debug.to.stream != F_type_error_d && main->debug.to.stream != F_type_input_d && main->debug.to.stream != F_type_output_d) {
-          f_file_stream_flush(&main->debug.to);
+          f_file_stream_flush(main->debug.to);
 
           flag |= 0x10;
         }
@@ -469,7 +491,7 @@ extern "C" {
       file.stream = F_type_output_d;
       flag |= 0x1;
 
-      f_file_stream_flush(&file);
+      f_file_stream_flush(file);
     }
     else {
       if (F_type_descriptor_output_d != -1) {
@@ -484,7 +506,7 @@ extern "C" {
       file.stream = F_type_error_d;
       flag |= 0x2;
 
-      f_file_stream_flush(&file);
+      f_file_stream_flush(file);
     }
     else {
       if (F_type_descriptor_error_d != -1) {
@@ -499,7 +521,7 @@ extern "C" {
       file.stream = F_type_input_d;
       flag |= 0x4;
 
-      f_file_stream_flush(&file);
+      f_file_stream_flush(file);
     }
     else {
       if (F_type_descriptor_input_d != -1) {
@@ -601,45 +623,26 @@ extern "C" {
 #endif // _di_fll_program_standard_set_up_
 
 #ifndef _di_fll_program_standard_signal_received_
-  f_status_t fll_program_standard_signal_received(fll_program_data_t * const main) {
+  uint32_t fll_program_standard_signal_received(fll_program_data_t * const main) {
+    #ifndef _di_level_2_parameter_checking_
+      if (!main) return 0;
+    #endif // _di_level_2_parameter_checking_
 
-    if (!main || main->signal.id == -1) return F_false;
-
-    struct signalfd_siginfo information;
-
-    memset(&information, 0, sizeof(struct signalfd_siginfo));
-
-    if (f_signal_read(main->signal, 0, &information) == F_signal) {
-      switch (information.ssi_signo) {
-        case F_signal_abort:
-        case F_signal_broken_pipe:
-        case F_signal_hangup:
-        case F_signal_interrupt:
-        case F_signal_quit:
-        case F_signal_termination:
-          main->signal_received = information.ssi_signo;
-
-          return information.ssi_signo;
-      }
-    }
-
-    return F_false;
+    return private_fll_program_standard_signal_received(main);
   }
 #endif // _di_fss_basic_read_signal_received_
 
 #ifndef _di_fll_program_standard_signal_state_
   f_status_t fll_program_standard_signal_state(void * const state, void * const internal) {
 
-    if (!state) {
-      return F_interrupt_not;
-    }
+    if (!state) return F_interrupt_not;
 
     f_state_t *state_ptr = (f_state_t *) state;
     if (!state_ptr->custom) return F_interrupt_not;
 
     fll_program_data_t *custom = (fll_program_data_t *) state_ptr->custom;
 
-    custom->signal_received = fll_program_standard_signal_received(custom);
+    custom->signal_received = private_fll_program_standard_signal_received(custom);
 
     if (custom->signal_received == F_signal_abort || custom->signal_received == F_signal_broken_pipe || custom->signal_received == F_signal_hangup || custom->signal_received == F_signal_interrupt || custom->signal_received == F_signal_quit || custom->signal_received == F_signal_termination) {
       return F_status_set_error(F_interrupt);

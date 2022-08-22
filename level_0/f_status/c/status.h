@@ -319,6 +319,8 @@ extern "C" {
       F_halt_not,
       F_header,
       F_header_not,
+      F_help,
+      F_help_not,
       F_ignore,
       F_ignore_not,
       F_implemented,

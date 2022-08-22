@@ -141,6 +141,26 @@ extern "C" {
 #endif // _di_fll_program_print_help_option_other_
 
 /**
+ * Print all standard help options.
+ *
+ * This print function does not use locking, be sure something like flockfile() and funlockfile() are appropriately called.
+ *
+ * @param output
+ *   The file stream to output to.
+ * @param context
+ *   The color context.
+ *
+ * @return
+ *   F_none on success.
+ *
+ * @see f_print_terminated()
+ * @see fl_print_format()
+ */
+#ifndef _di_fll_program_print_help_option_standard_
+  extern f_status_t fll_program_print_help_option_standard(const f_file_t output, const f_color_context_t context);
+#endif // _di_fll_program_print_help_option_standard_
+
+/**
  * Print standard help usage.
  *
  * This print function does not use locking, be sure something like flockfile() and funlockfile() are appropriately called.
@@ -186,13 +206,17 @@ extern "C" {
 #endif // _di_fll_program_print_version_
 
 /**
- * Perform basic parameter loading, including initialization of color context.
+ * Determine the color context from the parameters and then set the color context based on the choice.
  *
- * @param arguments
- *   The parameters passed to the process.
+ * This will allow for the color context and the color sets to be safely used when colors are disabled.
+ *
  * @param choices
- *   A set of the color options: no-color option, light-color option, dark-color option.
- *   This must have its used size set to 3 and the ids are expected to be in this order: no_color, light, and dark.
+ *   An array of color modes.
+ *   The default, if no mode is specified, will be the last value in the array.
+ * @param modes
+ *   An array designating the context modes associated with each choice.
+ *   This must exactly match the size of the choices array.
+ *   No bounds checking is performed.
  * @param right
  *   If TRUE, use the right-most parameter on conflict.
  *   If FALSE, use the left-most parameter on conflict.
@@ -208,17 +232,15 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_console_parameter_prioritize_left().
  *   Errors (with error bit) from: f_console_parameter_prioritize_right().
- *   Errors (with error bit) from: f_console_parameter_process().
  *   Errors (with error bit) from: f_color_load_context().
  *
  * @see f_console_parameter_prioritize_left()
  * @see f_console_parameter_prioritize_right()
- * @see f_console_parameter_process()
  * @see f_color_load_context()
  */
-#ifndef _di_fll_program_parameter_process_
-  extern f_status_t fll_program_parameter_process(const f_console_arguments_t arguments, const f_console_parameter_ids_t choices, const bool right, fll_program_data_t * const main);
-#endif // _di_fll_program_parameter_process_
+#ifndef _di_fll_program_parameter_process_context_
+  extern f_status_t fll_program_parameter_process_context(const f_uint16s_t choices, const uint8_t modes[], const bool right, fll_program_data_t * const main);
+#endif // _di_fll_program_parameter_process_context_
 
 /**
  * Set the provided context to empty along with all additional color sets.
@@ -230,9 +252,14 @@ extern "C" {
  * @param sets
  *   (optional) A NULL terminated array representing additional sets to assign as empty.
  *   Set to NULL to not use.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fll_program_parameter_process_empty_
-  extern void fll_program_parameter_process_empty(f_color_context_t * const context, f_color_set_t * const sets[]);
+  extern f_status_t fll_program_parameter_process_empty(f_color_context_t * const context, f_color_set_t * const sets[]);
 #endif // _di_fll_program_parameter_process_empty_
 
 /**
@@ -240,18 +267,22 @@ extern "C" {
  *
  * @param choices
  *   The available choices based on parameter ids.
- * @param right
- *   If TRUE, use the right-most parameter on conflict.
- *   If FALSE, use the left-most parameter on conflict.
+ *   The default, if no verbosity is specified, will be the last value in the array.
  * @param verbosity
  *   An array designating what to set the verbosity to based on the choice made.
  *   This must exactly match the size of the choices array.
  *   No bounds checking is performed.
+ * @param right
+ *   If TRUE, use the right-most parameter on conflict.
+ *   If FALSE, use the left-most parameter on conflict.
  * @param main
  *   The main program data.
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success but choices.used is 0.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_console_parameter_prioritize_left().
  *   Errors (with error bit) from: f_console_parameter_prioritize_right().
@@ -260,7 +291,7 @@ extern "C" {
  * @see f_console_parameter_prioritize_right()
  */
 #ifndef _di_fll_program_parameter_process_verbosity_
-  extern f_status_t fll_program_parameter_process_verbosity(const f_console_parameter_ids_t choices, const bool right, const uint8_t verbosity[], fll_program_data_t * const main);
+  extern f_status_t fll_program_parameter_process_verbosity(const f_uint16s_t choices, const uint8_t verbosity[], const bool right, fll_program_data_t * const main);
 #endif // _di_fll_program_parameter_process_verbosity_
 
 /**
@@ -473,13 +504,13 @@ extern "C" {
  *
  * @return
  *   A positive number representing a valid signal on signal received.
- *   F_false on no signal received or when main is NULL.
+ *   0 on no signal received or when main is NULL.
  *
  * @see f_signal_read()
  */
-#ifndef _di_fss_basic_read_signal_received_
-  extern f_status_t fll_program_standard_signal_received(fll_program_data_t * const main);
-#endif // _di_fss_basic_read_signal_received_
+#ifndef _di_fll_program_standard_signal_received_
+  extern uint32_t fll_program_standard_signal_received(fll_program_data_t * const main);
+#endif // _di_fll_program_standard_signal_received_
 
 /**
  * Standardized callback for checking for interrupts via the f_state_t interrupt callback.
@@ -495,6 +526,8 @@ extern "C" {
  * These signals may not be checked if they are not also blocked via the fll_program_data_t.signals variable.
  *
  * When one of the above signals is both blocked and received, then this calls fll_program_standard_signal_received().
+ *
+ * As a callback, this does not perform the standard parameter checking.
  *
  * @param state
  *   The state data.

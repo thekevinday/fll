@@ -22,6 +22,7 @@
 #include <fll/level_0/type.h>
 #include <fll/level_0/status.h>
 #include <fll/level_0/memory.h>
+#include <fll/level_0/type_array.h>
 #include <fll/level_0/string.h>
 
 // FLL-0 color includes.
@@ -37,16 +38,22 @@ extern "C" {
  * This will handle the difference betweem xorg terminals and linux consoles.
  * If you wish to use non-standard colors either redefine this function or don't use it.
  *
+ * This only supports the following color modes:
+ *   - f_color_mode_color_not_e
+ *   - f_color_mode_dark_e
+ *   - f_color_mode_light_e
+ *
  * The default/fallback behavior is f_color_xterminal.
  *
- * @param use_light_colors
- *   Set to F_true to use colors for light backgrounds.
- *   Set to F_false to use colors for dark backgrounds.
+ * @param mode
+ *   The color mode to load.
  * @param context
  *   The color context the load the color codes into.
+ *   The context.mode is always set to the specified mode, even if it is not supported (except when there is an invalid parameter).
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success but mode is f_color_mode_none_e or not a supported mode.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
@@ -57,7 +64,7 @@ extern "C" {
  * @see f_string_dynamic_increase_by()
  */
 #ifndef _di_f_color_load_context_
-  extern f_status_t f_color_load_context(const bool use_light_colors, f_color_context_t * const context);
+  extern f_status_t f_color_load_context(const uint8_t mode, f_color_context_t * const context);
 #endif // _di_f_color_load_context_
 
 /**

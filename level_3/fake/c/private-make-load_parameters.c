@@ -11,7 +11,7 @@ extern "C" {
 
     if (F_status_is_error(*status)) return;
 
-    if (data_make->main->context.mode != F_color_mode_none_d) {
+    if (data_make->main->context.mode != f_color_mode_none_e) {
       *status = f_string_dynamics_increase_by(fake_default_allocation_small_d, &data_make->parameter.color);
 
       if (F_status_is_error_not(*status)) {
@@ -24,7 +24,7 @@ extern "C" {
         return;
       }
 
-      if (data_make->main->context.mode == F_color_mode_no_color_d) {
+      if (data_make->main->context.mode == f_color_mode_color_not_e) {
         if (data_make->main->parameters.array[fake_parameter_no_color_e].type == f_console_type_normal_e) {
           *status = f_string_dynamic_append(f_console_symbol_short_enable_s, &data_make->parameter.color.array[data_make->parameter.color.used]);
         }
@@ -36,7 +36,7 @@ extern "C" {
           *status = f_string_dynamic_append(f_console_standard_short_no_color_s, &data_make->parameter.color.array[data_make->parameter.color.used]);
         }
       }
-      else if (data_make->main->context.mode == F_color_mode_dark_d) {
+      else if (data_make->main->context.mode == f_color_mode_dark_e) {
         if (data_make->main->parameters.array[fake_parameter_dark_e].type == f_console_type_normal_e) {
           *status = f_string_dynamic_append(f_console_symbol_short_enable_s, &data_make->parameter.color.array[data_make->parameter.color.used]);
         }

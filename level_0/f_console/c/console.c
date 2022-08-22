@@ -10,9 +10,7 @@ extern "C" {
       if (!environment) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_f
 
-    if (!arguments.envp) {
-      return F_data_not;
-    }
+    if (!arguments.envp) return F_data_not;
 
     f_array_length_t total = 0;
 
@@ -20,9 +18,7 @@ extern "C" {
       ++total;
     } // while
 
-    if (!total) {
-      return F_data_not;
-    }
+    if (!total) return F_data_not;
 
     {
       const f_status_t status = f_string_maps_increase_by(total, environment);
@@ -114,47 +110,37 @@ extern "C" {
 #endif // _di_f_console_identify_
 
 #ifndef _di_f_console_parameter_prioritize_left_
-  f_status_t f_console_parameter_prioritize_left(const f_console_parameters_t parameters, const f_console_parameter_ids_t choices, f_console_parameter_id_t * const decision) {
+  f_status_t f_console_parameter_prioritize_left(const f_console_parameters_t parameters, const f_uint16s_t choices, f_array_length_t * const decision) {
     #ifndef _di_level_0_parameter_checking_
       if (!decision) return F_status_set_error(F_parameter);
-      if (!choices.id) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!choices.used) {
-      return F_data_not;
-    }
-
-    if (!parameters.used) {
-      return F_data_not;
-    }
+    if (!choices.used) return F_data_not;
+    if (!parameters.used) return F_data_not;
 
     f_array_length_t location = 0;
     f_array_length_t location_sub = 0;
-    f_console_parameter_id_t priority = 0;
+    f_array_length_t priority = 0;
 
     for (f_array_length_t i = 0; i < choices.used; ++i) {
 
-      if (choices.id[i] > parameters.used) {
-        return F_status_set_error(F_parameter);
-      }
+      if (choices.array[i] > parameters.used) return F_status_set_error(F_parameter);
 
-      if (parameters.array[choices.id[i]].result == f_console_result_found_e) {
-        if (!location || parameters.array[choices.id[i]].location < location) {
-          location = parameters.array[choices.id[i]].location;
-          location_sub = parameters.array[choices.id[i]].location_sub;
-          priority = choices.id[i];
+      if (parameters.array[choices.array[i]].result == f_console_result_found_e) {
+        if (!location || parameters.array[choices.array[i]].location < location) {
+          location = parameters.array[choices.array[i]].location;
+          location_sub = parameters.array[choices.array[i]].location_sub;
+          priority = i;
         }
-        else if (parameters.array[choices.id[i]].location == location && parameters.array[choices.id[i]].location_sub < location_sub) {
-          location_sub = parameters.array[choices.id[i]].location_sub;
-          priority = choices.id[i];
+        else if (parameters.array[choices.array[i]].location == location && parameters.array[choices.array[i]].location_sub < location_sub) {
+          location_sub = parameters.array[choices.array[i]].location_sub;
+          priority = i;
         }
       }
     } // for
 
     // The first parameter location (argc = 0) is the program name, therefore if the location is 0, then no matches were found.
-    if (!location) {
-      return F_data_not;
-    }
+    if (!location) return F_data_not;
 
     *decision = priority;
 
@@ -163,47 +149,37 @@ extern "C" {
 #endif // _di_f_console_parameter_prioritize_left_
 
 #ifndef _di_f_console_parameter_prioritize_right_
-  f_status_t f_console_parameter_prioritize_right(const f_console_parameters_t parameters, const f_console_parameter_ids_t choices, f_console_parameter_id_t * const decision) {
+  f_status_t f_console_parameter_prioritize_right(const f_console_parameters_t parameters, const f_uint16s_t choices, f_array_length_t * const decision) {
     #ifndef _di_level_0_parameter_checking_
       if (!decision) return F_status_set_error(F_parameter);
-      if (!choices.id) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!choices.used) {
-      return F_data_not;
-    }
-
-    if (!parameters.used) {
-      return F_data_not;
-    }
+    if (!choices.used) return F_data_not;
+    if (!parameters.used) return F_data_not;
 
     f_array_length_t location = 0;
     f_array_length_t location_sub = 0;
-    f_console_parameter_id_t priority = 0;
+    f_array_length_t priority = 0;
 
     for (f_array_length_t i = 0; i < choices.used; ++i) {
 
-      if (choices.id[i] > parameters.used) {
-        return F_status_set_error(F_parameter);
-      }
+      if (choices.array[i] > parameters.used) return F_status_set_error(F_parameter);
 
-      if (parameters.array[choices.id[i]].result == f_console_result_found_e) {
-        if (!location || parameters.array[choices.id[i]].location > location) {
-          location = parameters.array[choices.id[i]].location;
-          location_sub = parameters.array[choices.id[i]].location_sub;
-          priority = choices.id[i];
+      if (parameters.array[choices.array[i]].result == f_console_result_found_e) {
+        if (!location || parameters.array[choices.array[i]].location > location) {
+          location = parameters.array[choices.array[i]].location;
+          location_sub = parameters.array[choices.array[i]].location_sub;
+          priority = i;
         }
-        else if (parameters.array[choices.id[i]].location == location && parameters.array[choices.id[i]].location_sub > location_sub) {
-          location_sub = parameters.array[choices.id[i]].location_sub;
-          priority = choices.id[i];
+        else if (parameters.array[choices.array[i]].location == location && parameters.array[choices.array[i]].location_sub > location_sub) {
+          location_sub = parameters.array[choices.array[i]].location_sub;
+          priority = i;
         }
       }
     } // for
 
     // The first parameter location (argc = 0) is the program name, therefore if the location is 0, then no matches were found.
-    if (!location) {
-      return F_data_not;
-    }
+    if (!location) return F_data_not;
 
     *decision = priority;
 
@@ -219,14 +195,12 @@ extern "C" {
 
     parameters->arguments.used = 0;
 
-    if (!arguments.argc || !arguments.argv || !arguments.argv[0]) {
-      return F_data_not;
-    }
+    if (!arguments.argc || !arguments.argv || !arguments.argv[0]) return F_data_not;
 
     f_status_t status = f_string_dynamics_increase_by(arguments.argc, &parameters->arguments);
     if (F_status_is_error(status)) return status;
 
-    // Append the program name parameter.
+    // Append the program name parameter as a static string.
     parameters->arguments.array[parameters->arguments.used].string = arguments.argv[0];
     parameters->arguments.array[parameters->arguments.used].used = strnlen(arguments.argv[0], F_console_parameter_size_d);
     parameters->arguments.array[parameters->arguments.used++].size = 0;

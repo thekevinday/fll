@@ -131,7 +131,7 @@ extern "C" {
         name_function = "f_file_read";
         status = f_file_read(file, buffer);
 
-        f_file_stream_flush(&file);
+        f_file_stream_flush(file);
         f_file_stream_close(&file);
       }
     }
@@ -569,7 +569,7 @@ extern "C" {
 
     uint8_t parameters_required[] = {
       F_false,
-      data->main->process_pipe ? F_false : F_true,
+      (data->main->pipe & fll_program_data_pipe_input_e) ? F_false : F_true,
       F_false,
     };
 
@@ -651,19 +651,19 @@ extern "C" {
 
 #ifndef _di_fake_verbose_print_clone_
   void fake_verbose_print_clone(const f_file_t output, const f_string_static_t source, const f_string_static_t destination) {
-    fll_print_format("Cloned '%Q' to '%Q'.%r", output.stream, source, destination, f_string_eol_s);
+    fll_print_format("Cloned '%Q' to '%Q'.%r", output, source, destination, f_string_eol_s);
   }
 #endif // _di_fake_verbose_print_clone_
 
 #ifndef _di_fake_verbose_print_copy_
   void fake_verbose_print_copy(const f_file_t output, const f_string_static_t source, const f_string_static_t destination) {
-    fll_print_format("Copied '%Q' to '%Q'.%r", output.stream, source, destination, f_string_eol_s);
+    fll_print_format("Copied '%Q' to '%Q'.%r", output, source, destination, f_string_eol_s);
   }
 #endif // _di_fake_verbose_print_copy_
 
 #ifndef _di_fake_verbose_print_move_
   void fake_verbose_print_move(const f_file_t output, const f_string_static_t source, const f_string_static_t destination) {
-    fll_print_format("Moved '%Q' to '%Q'.%r", output.stream, source, destination, f_string_eol_s);
+    fll_print_format("Moved '%Q' to '%Q'.%r", output, source, destination, f_string_eol_s);
   }
 #endif // _di_fake_verbose_print_move_
 

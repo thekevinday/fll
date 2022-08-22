@@ -78,8 +78,8 @@ extern "C" {
  * GCC errors such as: "warning: assignment discards ‘const’ qualifier from pointer target type [-Wdiscarded-qualifiers]" can be avoided using this.
  *
  * Do not confuse this with "const f_string_static_t".
- * When "const f_string_static_t * xxx" is passed to a function, then "xxx" cannot be changed.
- * When "f_string_constant_t * xxx" is passed to a function, then "xxx" can be changed.
+ * When "const f_string_t xxx" is passed to a function, then "xxx" cannot be changed.
+ * When "f_string_constant_t xxx" is passed to a function, then "xxx" can be changed.
  */
 #ifndef _di_f_string_constant_t_
   typedef const f_char_t *f_string_constant_t;
@@ -89,7 +89,7 @@ extern "C" {
   #define macro_f_string_constant_t_initialize(string) string
 
   #define macro_f_string_constant_t_clear(string) string = 0;
-#endif // _di_f_string_t_
+#endif // _di_f_string_constant_t_
 
 #ifdef __cplusplus
 } // extern "C"

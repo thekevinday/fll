@@ -248,6 +248,8 @@ extern "C" {
     utf8_parameter_verbosity_verbose_e,
     utf8_parameter_verbosity_debug_e,
     utf8_parameter_version_e,
+    utf8_parameter_line_first_no_e,
+    utf8_parameter_line_last_no_e,
 
     utf8_parameter_from_bytesequence_e,
     utf8_parameter_from_codepoint_e,
@@ -268,31 +270,34 @@ extern "C" {
 
   #define utf8_console_parameter_t_initialize \
     { \
-      macro_f_console_parameter_t_initialize(f_console_standard_short_help_s.string, f_console_standard_long_help_s.string, 0, 0, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(f_console_standard_short_light_s.string, f_console_standard_long_light_s.string, 0, 0, f_console_type_inverse_e), \
-      macro_f_console_parameter_t_initialize(f_console_standard_short_dark_s.string, f_console_standard_long_dark_s.string, 0, 0, f_console_type_inverse_e), \
-      macro_f_console_parameter_t_initialize(f_console_standard_short_no_color_s.string, f_console_standard_long_no_color_s.string, 0, 0, f_console_type_inverse_e), \
-      macro_f_console_parameter_t_initialize(f_console_standard_short_quiet_s.string, f_console_standard_long_quiet_s.string, 0, 0, f_console_type_inverse_e), \
-      macro_f_console_parameter_t_initialize(f_console_standard_short_error_s.string, f_console_standard_long_error_s.string, 0, 0, f_console_type_inverse_e), \
-      macro_f_console_parameter_t_initialize(f_console_standard_short_normal_s.string, f_console_standard_long_normal_s.string, 0, 0, f_console_type_inverse_e), \
-      macro_f_console_parameter_t_initialize(f_console_standard_short_verbose_s.string, f_console_standard_long_verbose_s.string, 0, 0, f_console_type_inverse_e), \
-      macro_f_console_parameter_t_initialize(f_console_standard_short_debug_s.string, f_console_standard_long_debug_s.string, 0, 0, f_console_type_inverse_e), \
-      macro_f_console_parameter_t_initialize(f_console_standard_short_version_s.string, f_console_standard_long_version_s.string, 0, 0, f_console_type_inverse_e), \
-      macro_f_console_parameter_t_initialize(utf8_short_from_bytesequence_s.string, utf8_long_from_bytesequence_s.string, 0, 0, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(utf8_short_from_codepoint_s.string, utf8_long_from_codepoint_s.string, 0, 0, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(utf8_short_from_file_s.string, utf8_long_from_file_s.string, 0, 1, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(utf8_short_headers_s.string, utf8_long_headers_s.string, 0, 0, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(utf8_short_separate_s.string, utf8_long_headers_s.string, 0, 0, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(utf8_short_strip_invalid_s.string, utf8_long_strip_invalid_s.string, 0, 0, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(utf8_short_to_bytesequence_s.string, utf8_long_to_bytesequence_s.string, 0, 0, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(utf8_short_to_codepoint_s.string, utf8_long_to_codepoint_s.string, 0, 0, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(utf8_short_to_combining_s.string, utf8_long_to_combining_s.string, 0, 0, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(utf8_short_to_file_s.string, utf8_long_to_file_s.string, 0, 1, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(utf8_short_to_width_s.string, utf8_long_to_width_s.string, 0, 0, f_console_type_normal_e), \
-      macro_f_console_parameter_t_initialize(utf8_short_verify_s.string, utf8_long_verify_s.string, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize4(f_console_standard_short_help_s,          f_console_standard_long_help_s,          0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize4(f_console_standard_short_light_s,         f_console_standard_long_light_s,         0, f_console_type_inverse_e), \
+      macro_f_console_parameter_t_initialize4(f_console_standard_short_dark_s,          f_console_standard_long_dark_s,          0, f_console_type_inverse_e), \
+      macro_f_console_parameter_t_initialize4(f_console_standard_short_no_color_s,      f_console_standard_long_no_color_s,      0, f_console_type_inverse_e), \
+      macro_f_console_parameter_t_initialize4(f_console_standard_short_quiet_s,         f_console_standard_long_quiet_s,         0, f_console_type_inverse_e), \
+      macro_f_console_parameter_t_initialize4(f_console_standard_short_error_s,         f_console_standard_long_error_s,         0, f_console_type_inverse_e), \
+      macro_f_console_parameter_t_initialize4(f_console_standard_short_normal_s,        f_console_standard_long_normal_s,        0, f_console_type_inverse_e), \
+      macro_f_console_parameter_t_initialize4(f_console_standard_short_verbose_s,       f_console_standard_long_verbose_s,       0, f_console_type_inverse_e), \
+      macro_f_console_parameter_t_initialize4(f_console_standard_short_debug_s,         f_console_standard_long_debug_s,         0, f_console_type_inverse_e), \
+      macro_f_console_parameter_t_initialize4(f_console_standard_short_version_s,       f_console_standard_long_version_s,       0, f_console_type_inverse_e), \
+      macro_f_console_parameter_t_initialize4(f_console_standard_short_line_first_no_s, f_console_standard_long_line_first_no_s, 0, f_console_type_inverse_e), \
+      macro_f_console_parameter_t_initialize4(f_console_standard_short_line_last_no_s,  f_console_standard_long_line_last_no_s,  0, f_console_type_inverse_e), \
+      \
+      macro_f_console_parameter_t_initialize4(utf8_short_from_bytesequence_s, utf8_long_from_bytesequence_s, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize4(utf8_short_from_codepoint_s,    utf8_long_from_codepoint_s,    0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize4(utf8_short_from_file_s,         utf8_long_from_file_s,         1, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize4(utf8_short_headers_s,           utf8_long_headers_s,           0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize4(utf8_short_separate_s,          utf8_long_separate_s,          0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize4(utf8_short_strip_invalid_s,     utf8_long_strip_invalid_s,     0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize4(utf8_short_to_bytesequence_s,   utf8_long_to_bytesequence_s,   0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize4(utf8_short_to_codepoint_s,      utf8_long_to_codepoint_s,      0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize4(utf8_short_to_combining_s,      utf8_long_to_combining_s,      0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize4(utf8_short_to_file_s,           utf8_long_to_file_s,           1, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize4(utf8_short_to_width_s,          utf8_long_to_width_s,          0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize4(utf8_short_verify_s,            utf8_long_verify_s,            0, f_console_type_normal_e), \
     }
 
-  #define utf8_total_parameters_d 22
+  #define utf8_total_parameters_d 24
 #endif // _di_utf8_parameters_
 
 /**
@@ -315,13 +320,41 @@ extern "C" {
   enum {
     utf8_mode_none_e              = 0x0,
     utf8_mode_from_bytesequence_e = 0x1,
-    utf8_mode_from_codepoint_d    = 0x2,
-    utf8_mode_to_bytesequence_d   = 0x4,
-    utf8_mode_to_codepoint_d      = 0x8,
-    utf8_mode_to_combining_d      = 0x10,
-    utf8_mode_to_width_d          = 0x20,
+    utf8_mode_from_codepoint_e    = 0x2,
+    utf8_mode_to_bytesequence_e   = 0x4,
+    utf8_mode_to_codepoint_e      = 0x8,
+    utf8_mode_to_combining_e      = 0x10,
+    utf8_mode_to_width_e          = 0x20,
   };
 #endif // _di_utf8_modes_e_
+
+/**
+ * Flags used to represent flags passed to the main function.
+ *
+ * utf8_main_flag_*_e:
+ *   - none:          No modes in use.
+ *   - file_from:     Using a specified source file.
+ *   - file_to:       Using a specified destination file.
+ *   - help:          Print help.
+ *   - header:        Enable printing of headers.
+ *   - separate:      Enable printing of separators.
+ *   - strip_invalid: Using strip invalid character mode.
+ *   - verify:        Using verify mode.
+ *   - version:       Print version.
+ */
+#ifndef _di_utf8_main_flag_e_
+  enum {
+    utf8_main_flag_none_e          = 0x0,
+    utf8_main_flag_file_from_e     = 0x1,
+    utf8_main_flag_file_to_e       = 0x2,
+    utf8_main_flag_header_e        = 0x4,
+    utf8_main_flag_help_e          = 0x8,
+    utf8_main_flag_separate_e      = 0x10,
+    utf8_main_flag_strip_invalid_e = 0x20,
+    utf8_main_flag_verify_e        = 0x40,
+    utf8_main_flag_version_e       = 0x80,
+  };
+#endif // _di_utf8_main_flag_e_
 
 /**
  * The UTF-8 main program settings.
@@ -330,44 +363,131 @@ extern "C" {
  * These program settings are often processed from the program arguments (often called the command line arguments).
  *
  * mode: The input/output mode (see utf8_modes_e).
+ * flag: Flags passed to the main function.
+ *
+ * status: The main status code, generally used by the load settings and main functions.
+ *
+ * valid:     Designate the output context set for valid characters.
+ * valid_not: Designate the output context set for invalid characters.
+ *
+ * append:  A string to append. A value of NULL results in not appending.
+ * prepend: A string to prepend. A value of NULL results in not prepending.
+ *
+ * line_first: A string expected to represent either "\n" or NULL to allow for easy handling of when to print first new line or not.
+ * line_last:  A string expected to represent either "\n" or NULL to allow for easy handling of when to print last new line or not.
+ *
+ * buffer: A buffer to use for printing output (generally for storing a block of input from an input file).
+ * text:   A buffer for storing a series of characters for processing (generally for code point processing).
+ *
+ * path_files_from: An array of all "from" file paths for when the flag utf8_main_flag_file_from_e is set.
+ * path_files_to:   An array of all "to" file paths for when the flag utf8_main_flag_file_to_e is set.
  */
-#ifndef _di_utf8_main_setting_t_
+#ifndef _di_utf8_setting_t_
   typedef struct {
     uint8_t mode;
-  } utf8_main_setting_t;
+    uint16_t flag;
 
-  #define utf8_main_setting_t_initialize \
-    { \
-      utf8_mode_from_bytesequence_d | utf8_mode_to_codepoint_d, \
-    }
-#endif // _di_utf8_main_setting_t_
+    f_status_t status;
 
-/*
     f_color_set_t valid;
     f_color_set_t valid_not;
 
     f_string_static_t append;
     f_string_static_t prepend;
 
+    f_string_static_t line_first;
+    f_string_static_t line_last;
+
     f_string_dynamic_t buffer;
     f_string_dynamic_t text;
-  } utf8_data_t;
 
-  #define utf8_data_t_initialize \
+    f_string_dynamics_t path_files_from;
+    f_string_dynamics_t path_files_to;
+  } utf8_setting_t;
+
+  #define utf8_setting_t_initialize \
     { \
-      0, \
-      0, \
-      0, \
-      f_file_t_initialize, \
-      utf8_mode_from_bytesequence_d | utf8_mode_to_codepoint_d, \
+      utf8_mode_from_bytesequence_e | utf8_mode_to_codepoint_e, \
+      utf8_main_flag_none_e, \
+      F_none, \
       f_color_set_t_initialize, \
       f_color_set_t_initialize, \
       f_string_static_t_initialize, \
       f_string_static_t_initialize, \
+      f_string_eol_s, \
+      f_string_eol_s, \
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
+      f_string_dynamics_t_initialize, \
+      f_string_dynamics_t_initialize, \
     }
-    */
+#endif // _di_utf8_setting_t_
+
+/**
+ * Delete the program main setting data.
+ *
+ * @param setting
+ *   The program main setting data.
+ *   This does not alter setting.status.
+ *
+ *   Assumed to always be non-NULL.
+ *
+ * @return
+ *   F_none on success.
+ */
+#ifndef _di_utf8_setting_delete_
+  extern f_status_t utf8_setting_delete(utf8_setting_t * const setting);
+#endif // _di_utf8_setting_delete_
+
+/**
+ * Perform the standard program setting load process.
+ *
+ * This prints error messages as appropriate.
+ *
+ * @param arguments
+ *   The parameters passed to the process (often referred to as command line arguments).
+ * @param main
+ *   The main program data.
+ *
+ *   Assumed to always be non-NULL.
+ * @param setting
+ *   The main program settings.
+ *
+ *   Assumed to always be non-NULL.
+ *
+ *   This alters setting.status:
+ *     F_none on success.
+ *
+ *     Errors (with error bit) from: f_console_parameter_process().
+ *     Errors (with error bit) from: fll_program_parameter_process_context().
+ *
+ * @see f_console_parameter_process()
+ * @see fll_program_parameter_process_context()
+ */
+#ifndef _di_utf8_setting_load_
+  extern void utf8_setting_load(const f_console_arguments_t arguments, fll_program_data_t * const main, utf8_setting_t * const setting);
+#endif // _di_utf8_setting_load_
+
+/**
+ * Perform the standard program setting unload process.
+ *
+ * @param main
+ *   The main program data.
+ *
+ *   Assumed to always be non-NULL.
+ * @param setting
+ *   The main program settings.
+ *   This does not alter setting.status.
+ *   All buffers are deallocated.
+ *
+ *   Assumed to always be non-NULL.
+ *
+ * @return
+ *   F_none on success.
+ */
+#ifndef _di_utf8_setting_unload_
+  extern f_status_t utf8_setting_unload(fll_program_data_t * const main, utf8_setting_t * const setting);
+#endif // _di_utf8_setting_unload_
 
 #ifdef __cplusplus
 } // extern "C"

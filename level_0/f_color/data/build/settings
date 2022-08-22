@@ -3,7 +3,7 @@
 build_name f_color
 
 version_major 0
-version_minor 6
+version_minor 7
 version_micro 0
 version_file micro
 version_target minor
@@ -18,7 +18,7 @@ build_indexer_arguments rcs
 build_language c
 
 build_libraries -lc
-build_libraries-individual -lf_memory -lf_string
+build_libraries-individual -lf_memory -lf_string -lf_type_array
 
 build_sources_library color.c private-color.c color/common.c
 

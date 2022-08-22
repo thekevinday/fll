@@ -346,6 +346,8 @@ extern "C" {
     #define F_status_halt_not_s          "F_halt_not"
     #define F_status_header_s            "F_header"
     #define F_status_header_not_s        "F_header_not"
+    #define F_status_help_s              "F_help"
+    #define F_status_help_not_s          "F_help_not"
     #define F_status_ignore_s            "F_ignore"
     #define F_status_ignore_not_s        "F_ignore_not"
     #define F_status_implemented_s       "F_implemented"
@@ -640,6 +642,8 @@ extern "C" {
     #define F_status_halt_not_s_length          10
     #define F_status_header_s_length            8
     #define F_status_header_not_s_length        12
+    #define F_status_help_s_length              6
+    #define F_status_help_not_s_length          10
     #define F_status_ignore_s_length            8
     #define F_status_ignore_not_s_length        12
     #define F_status_implemented_s_length       13
@@ -936,6 +940,8 @@ extern "C" {
     extern const f_string_static_t f_status_halt_not_s;
     extern const f_string_static_t f_status_header_s;
     extern const f_string_static_t f_status_header_not_s;
+    extern const f_string_static_t f_status_help_s;
+    extern const f_string_static_t f_status_help_not_s;
     extern const f_string_static_t f_status_ignore_s;
     extern const f_string_static_t f_status_ignore_not_s;
     extern const f_string_static_t f_status_implemented_s;

@@ -207,6 +207,8 @@ void test__f_status_string_to__works(void **state) {
     F_group_not,
     F_halt,
     F_halt_not,
+    F_help,
+    F_help_not,
     F_header,
     F_header_not,
     F_ignore,
@@ -797,6 +799,8 @@ void test__f_status_string_to__works(void **state) {
     f_status_group_not_s,
     f_status_halt_s,
     f_status_halt_not_s,
+    f_status_help_s,
+    f_status_help_not_s,
     f_status_header_s,
     f_status_header_not_s,
     f_status_ignore_s,
@@ -1209,7 +1213,7 @@ void test__f_status_string_to__works(void **state) {
     f_status_status_code_last_s,
   };
 
-  for (uint16_t i = 0; i < 587; ++i) {
+  for (uint16_t i = 0; i < 589; ++i) {
 
     f_string_static_t result = f_string_static_t_initialize;
 

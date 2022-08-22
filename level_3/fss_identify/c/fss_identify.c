@@ -11,18 +11,13 @@ extern "C" {
 
     flockfile(file.stream);
 
+    //if (!(setting->flag & XXX_main_flag_line_first_no_e)) {
+      f_print_dynamic_raw(f_string_eol_s, file.stream);
+    //}
+
     fll_program_print_help_header(file, context, fss_identify_program_name_long_s, fss_identify_program_version_s);
 
-    fll_program_print_help_option(file, context, f_console_standard_short_help_s, f_console_standard_long_help_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Print this help message.");
-    fll_program_print_help_option(file, context, f_console_standard_short_dark_s, f_console_standard_long_dark_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "    Output using colors that show up better on dark backgrounds.");
-    fll_program_print_help_option(file, context, f_console_standard_short_light_s, f_console_standard_long_light_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Output using colors that show up better on light backgrounds.");
-    fll_program_print_help_option(file, context, f_console_standard_short_no_color_s, f_console_standard_long_no_color_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "Do not print using color.");
-    fll_program_print_help_option(file, context, f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Decrease verbosity, silencing most output.");
-    fll_program_print_help_option(file, context, f_console_standard_short_error_s, f_console_standard_long_error_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Decrease verbosity, using only error output.");
-    fll_program_print_help_option(file, context, f_console_standard_short_normal_s, f_console_standard_long_normal_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "  Set verbosity to normal.");
-    fll_program_print_help_option(file, context, f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Increase verbosity beyond normal output.");
-    fll_program_print_help_option(file, context, f_console_standard_short_debug_s, f_console_standard_long_debug_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Enable debugging, significantly increasing verbosity beyond normal output.");
-    fll_program_print_help_option(file, context, f_console_standard_short_version_s, f_console_standard_long_version_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Print only the version number.");
+    fll_program_print_help_option_standard(file, context);
 
     f_print_dynamic_raw(f_string_eol_s, file.stream);
 
@@ -37,7 +32,7 @@ extern "C" {
 
     fll_program_print_help_usage(file, context, fss_identify_program_name_s, fll_program_parameter_filenames_s);
 
-    fl_print_format("  The %[%r%r%] parameter refers to the file lines and not the lines in a given file.%r%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_identify_long_line_s, context.set.notable, f_string_eol_s, f_string_eol_s);
+    fl_print_format("%r  The %[%r%r%] parameter refers to the file lines and not the lines in a given file.%r%r", file.stream, f_string_eol_s, context.set.notable, f_console_symbol_long_enable_s, fss_identify_long_line_s, context.set.notable, f_string_eol_s, f_string_eol_s);
 
     fl_print_format("  If neither the %[%r%r%] nor", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_identify_long_object_s, context.set.notable);
     fl_print_format(" %[%r%r%] are specified, then the default behavior is to print both.%r%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_identify_long_content_s, context.set.notable, f_string_eol_s, f_string_eol_s);
@@ -50,8 +45,13 @@ extern "C" {
     fl_print_format(" where the Object, is a machine-name representing the name and may only consist of \"word\" characters and the Content is a 4-digit hexidecimal number representing a particular variant of the Object.%r", file.stream, f_string_eol_s);
     fl_print_format("  This identifier, if provided, must exist on the first line in a file and must begin with the pound character: '#'.%r", file.stream, f_string_eol_s);
     fl_print_format("  Whitespace must follow this pound character.%r", file.stream, f_string_eol_s);
-    fl_print_format("  There may be multiple Object and Content pairs, separated by white space, such as: \"# fss-0002 fss-0000 iki-0002\".%r%r", file.stream, f_string_eol_s, f_string_eol_s);
+    fl_print_format("  There may be multiple Object and Content pairs, separated by white space, such as: \"# fss-0002 fss-0000 iki-0002\".%r", file.stream, f_string_eol_s);
 
+    //if (!(setting->flag & XXX_main_flag_line_last_no_e)) {
+      f_print_dynamic_raw(f_string_eol_s, file.stream);
+    //}
+
+    f_file_stream_flush(file);
     funlockfile(file.stream);
 
     return F_none;
@@ -59,84 +59,50 @@ extern "C" {
 #endif // _di_fss_identify_print_help_
 
 #ifndef _di_fss_identify_main_
-  f_status_t fss_identify_main(fll_program_data_t * const main, const f_console_arguments_t *arguments) {
+  f_status_t fss_identify_main(fll_program_data_t * const main, const f_console_arguments_t arguments) {
 
     f_status_t status = F_none;
 
+    // Load parameters.
+    status = f_console_parameter_process(arguments, &main->parameters);
+    if (F_status_is_error(status)) return;
+
     {
-      f_console_parameter_id_t ids[3] = { fss_identify_parameter_no_color_e, fss_identify_parameter_light_e, fss_identify_parameter_dark_e };
-      const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 3);
+      f_array_length_t choice = 0;
+      f_uint16s_t choices = f_uint16s_t_initialize;
 
-      status = fll_program_parameter_process(*arguments, &main->parameters, choices, F_true, &main->context);
+      // Identify and prioritize "color context" parameters.
+      {
+        uint16_t choices_array[3] = { fss_identify_parameter_no_color_e, fss_identify_parameter_light_e, fss_identify_parameter_dark_e };
+        choices.array = choices_array;
+        choices.used = 3;
 
-      main->output.set = &main->context.set;
-      main->error.set = &main->context.set;
-      main->warning.set = &main->context.set;
+        const uint8_t modes[3] = { f_color_mode_color_not_e, f_color_mode_light_e, f_color_mode_dark_e };
 
-      if (main->context.set.error.before) {
-        main->output.context = f_color_set_empty_s;
-        main->output.notable = main->context.set.notable;
+        status = fll_program_parameter_process_context(choices, modes, F_true, main);
 
-        main->error.context = main->context.set.error;
-        main->error.notable = main->context.set.notable;
+        if (F_status_is_error(status)) {
+          fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process_context", F_true);
 
-        main->warning.context = main->context.set.warning;
-        main->warning.notable = main->context.set.notable;
-      }
-      else {
-        f_color_set_t *sets[] = { &main->output.context, &main->output.notable, &main->error.context, &main->error.notable, &main->warning.context, &main->warning.notable, 0 };
-
-        fll_program_parameter_process_empty(&main->context, sets);
-      }
-
-      if (F_status_is_error(status)) {
-        if (main->error.verbosity != f_console_verbosity_quiet_e) {
-          fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process", F_true);
-          fll_print_dynamic_raw(f_string_eol_s, main->error.to.stream);
+          return;
         }
-
-        return F_status_set_error(status);
-      }
-    }
-
-    // Identify priority of verbosity related parameters.
-    {
-      f_console_parameter_id_t ids[5] = { fss_identify_parameter_verbosity_quiet_e, fss_identify_parameter_verbosity_error_e, fss_identify_parameter_verbosity_normal_e, fss_identify_parameter_verbosity_verbose_e, fss_identify_parameter_verbosity_debug_e };
-      f_console_parameter_id_t choice = 0;
-      const f_console_parameter_ids_t choices = macro_f_console_parameter_ids_t_initialize(ids, 5);
-
-      status = f_console_parameter_prioritize_right(main->parameters, choices, &choice);
-
-      if (F_status_is_error(status)) {
-        fll_error_print(main->error, F_status_set_fine(status), "f_console_parameter_prioritize_right", F_true);
-
-        return status;
       }
 
-      if (choice == fss_identify_parameter_verbosity_quiet_e) {
-        main->output.verbosity = f_console_verbosity_quiet_e;
-        main->error.verbosity = f_console_verbosity_quiet_e;
-        main->warning.verbosity = f_console_verbosity_quiet_e;
-      }
-      else if (choice == fss_identify_parameter_verbosity_error_e) {
-        main->output.verbosity = f_console_verbosity_error_e;
-        main->error.verbosity = f_console_verbosity_error_e;
-        main->warning.verbosity = f_console_verbosity_error_e;
-      }
-      else if (choice == fss_identify_parameter_verbosity_normal_e) {
-        main->output.verbosity = f_console_verbosity_normal_e;
-        main->error.verbosity = f_console_verbosity_normal_e;
-        main->warning.verbosity = f_console_verbosity_normal_e;
-      }
-      else if (choice == fss_identify_parameter_verbosity_verbose_e) {
-        main->output.verbosity = f_console_verbosity_verbose_e;
-        main->error.verbosity = f_console_verbosity_verbose_e;
-        main->warning.verbosity = f_console_verbosity_verbose_e;
-      }
-      else if (choice == fss_identify_parameter_verbosity_debug_e) {
-        main->output.verbosity = f_console_verbosity_debug_e;
-        main->error.verbosity = f_console_verbosity_debug_e;
-        main->warning.verbosity = f_console_verbosity_debug_e;
+      // Identify and prioritize "verbosity" parameters.
+      {
+        uint16_t choices_array[5] = { fss_identify_parameter_verbosity_quiet_e, fss_identify_parameter_verbosity_error_e, fss_identify_parameter_verbosity_verbose_e, fss_identify_parameter_verbosity_debug_e, fss_identify_parameter_verbosity_normal_e };
+        choices.array = choices_array;
+        choices.used = 5;
+
+        const uint8_t verbosity[5] = { f_console_verbosity_quiet_e, f_console_verbosity_error_e, f_console_verbosity_verbose_e, f_console_verbosity_debug_e, f_console_verbosity_normal_e };
+
+        status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, main);
+
+        if (F_status_is_error(status)) {
+          fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process_verbosity", F_true);
+
+          return;
+        }
       }
     }
 
@@ -271,7 +237,7 @@ extern "C" {
     f_string_dynamic_t buffer = f_string_dynamic_t_initialize;
     f_file_t file = f_file_t_initialize;
 
-    if (F_status_is_error_not(status) && main->process_pipe) {
+    if (F_status_is_error_not(status) && (main->pipe & fll_program_data_pipe_input_e)) {
       file.id = F_type_descriptor_input_d;
       file.stream = F_type_input_d;
       file.size_read = 512;
@@ -319,7 +285,7 @@ extern "C" {
           }
         }
 
-        f_file_stream_flush(&file);
+        f_file_stream_flush(file);
         f_file_stream_close(&file);
 
         if (F_status_is_error(status)) break;

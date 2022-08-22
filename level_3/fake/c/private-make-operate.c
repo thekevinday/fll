@@ -86,7 +86,7 @@ extern "C" {
 
     fake_make_load_parameters(&data_make, &status);
 
-    fake_make_load_fakefile(&data_make, data_make.main->process_pipe, &status);
+    fake_make_load_fakefile(&data_make, main->pipe & fll_program_data_pipe_input_e, &status);
 
     if (F_status_is_error(status)) {
       fake_make_data_delete(&data_make);
@@ -152,7 +152,7 @@ extern "C" {
       }
     }
 
-    f_file_stream_flush(&data_make.path.top);
+    f_file_stream_flush(data_make.path.top);
     f_file_stream_close(&data_make.path.top);
 
     f_array_lengths_resize(0, &section_stack);

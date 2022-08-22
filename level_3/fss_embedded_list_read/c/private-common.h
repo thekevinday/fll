@@ -120,8 +120,13 @@ extern "C" {
 /**
  * The program data.
  *
- * process_pipe: Designate whether or not to process the input pipe.
- * context:      The color context.
+ * main:
+ * argv:
+ *
+ * buffer:
+ * nest:
+ * delimit_mode:
+ * delimit_depth:
  */
 #ifndef _di_fss_embedded_list_read_data_t_
   typedef struct {

@@ -80,7 +80,7 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
 
     ip_list.used = 0;
 
-    // Process chain rule
+    // Process chain rule.
     if (fl_string_dynamic_compare_string(local->buffer.string + local->rule_objects.array[i].start, firewall_chain_s, length) == F_equal_to) {
       if (chain == firewall_chain_custom_id_e) {
 
@@ -578,13 +578,13 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
               firewall_print_error_on_unhandled(data->main->error, "f_file_open", F_status_set_fine(status));
             }
 
-            f_file_stream_flush(&file);
+            f_file_stream_flush(file);
             f_file_stream_close(&file);
           }
           else {
             status = f_file_read(file, &local_buffer);
 
-            f_file_stream_flush(&file);
+            f_file_stream_flush(file);
             f_file_stream_close(&file);
 
             if (F_status_is_error(status)) {
@@ -1160,7 +1160,7 @@ f_status_t firewall_buffer_rules(firewall_data_t * const data, const f_string_st
 
   status = f_file_read(file, &local->buffer);
 
-  f_file_stream_flush(&file);
+  f_file_stream_flush(file);
   f_file_stream_close(&file);
 
   if (F_status_is_error(status)) {

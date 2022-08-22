@@ -1116,6 +1116,18 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_dynamic_compare(name, f_status_help_s) == F_equal_to) {
+        *code = F_help;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_help_not_s) == F_equal_to) {
+        *code = F_help_not;
+
+        return F_none;
+      }
+
       if (fl_string_dynamic_compare(name, f_status_ignore_s) == F_equal_to) {
         *code = F_ignore;
 

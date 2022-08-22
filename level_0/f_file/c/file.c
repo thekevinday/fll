@@ -1956,15 +1956,12 @@ extern "C" {
 #endif // _di_f_file_stream_close_
 
 #ifndef _di_f_file_stream_flush_
-  f_status_t f_file_stream_flush(f_file_t * const file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!file) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+  f_status_t f_file_stream_flush(const f_file_t file) {
 
-    if (!file->stream) return F_stream_not;
+    if (!file.stream) return F_stream_not;
 
     // Only 0 is considered a success and so any non-zero value could be an error.
-    if (fflush(file->stream) != 0) {
+    if (fflush(file.stream) != 0) {
       if (errno == EAGAIN || errno == EWOULDBLOCK) return F_status_set_error(F_block);
       if (errno == EBADF) return F_status_set_error(F_file_descriptor);
       if (errno == EFAULT) return F_status_set_error(F_buffer);

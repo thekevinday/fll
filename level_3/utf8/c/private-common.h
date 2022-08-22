@@ -45,68 +45,6 @@ extern "C" {
   };
 #endif // _di__utf8_codepoint_modes_
 
-/**
- * The program data.
- *
- * main:    The main program data.
- * setting: The main program settings.
- * argv:    The argument structure in the progam data parameters for simplifying syntax.
- *
- * main:      The main program data.
- * file:      The output file for writing the processed data to (may potentially default to "output").
- * valid:     Designate the output context set for valid characters.
- * valid_not: Designate the output context set for invalid characters.
- * append:    A string to append. A value of NULL results in not appending.
- * prepend:   A string to prepend. A value of NULL results in not prepending.
- * buffer:    A buffer to use for printing output (generally for storing a block of input from an input file).
- * text:      A buffer for storing a series of characters for processing (generally for codepoint processing).
- */
-#ifndef _di_utf8_data_t_
-  typedef struct {
-    fll_program_data_t *main;
-    utf8_main_setting_t *setting;
-    f_string_static_t *argv;
-
-    //f_file_t file;
-
-    f_color_set_t valid;
-    f_color_set_t valid_not;
-
-    f_string_static_t append;
-    f_string_static_t prepend;
-
-    f_string_dynamic_t buffer;
-    f_string_dynamic_t text;
-  } utf8_data_t;
-
-  #define utf8_data_t_initialize \
-    { \
-      0, \
-      0, \
-      0, \
-      //f_file_t_initialize, \
-      f_color_set_t_initialize, \
-      f_color_set_t_initialize, \
-      f_string_static_t_initialize, \
-      f_string_static_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-    }
-#endif // _di_utf8_data_t_
-
-/**
- * Deallocate program data.
- *
- * @param data
- *   The program data.
- *
- * @return
- *   F_none on success.
- */
-#ifndef _di_utf8_data_delete_
-  extern void utf8_data_delete(utf8_data_t *data) F_attribute_visibility_internal_d;
-#endif // _di_utf8_data_delete_
-
 #ifdef __cplusplus
 } // extern "C"
 #endif

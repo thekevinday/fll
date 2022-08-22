@@ -2111,7 +2111,7 @@ extern "C" {
  * @see fflush()
  */
 #ifndef _di_f_file_stream_flush_
-  extern f_status_t f_file_stream_flush(f_file_t * const file);
+  extern f_status_t f_file_stream_flush(const f_file_t file);
 #endif // _di_f_file_stream_flush_
 
 /**

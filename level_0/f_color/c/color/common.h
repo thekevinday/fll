@@ -31,7 +31,7 @@ extern "C" {
 /**
  * Define codes representing color sets.
  *
- * F_color_code_*:
+ * F_color_code_*_e:
  *   - none:      No color code set defined.
  *   - linux:     Linux terminal color code set.
  *   - xterminal: X-Terminal color code set.
@@ -39,9 +39,13 @@ extern "C" {
 #ifndef _di_f_color_code_t_
   typedef f_char_t f_color_code_t;
 
-  #define F_color_code_none_d      0
-  #define F_color_code_linux_d     1
-  #define F_color_code_xterminal_d 2
+  enum {
+    f_color_code_none_e = 0,
+    f_color_code_linux_e,
+    f_color_code_xterminal_e,
+  };
+
+  #define f_color_code_t_initialize f_color_code_none_e
 #endif // _di_f_color_code_t_
 
 /**
@@ -242,23 +246,21 @@ extern "C" {
 #endif // _di_f_color_string_s_
 
 /**
- * Specify color modes.
- *
  * Color modes communicate how the color is supposed to be.
  *
- * F_color_mode_*:
- *   - none:     define designates that there is no assigned mode (the mode is undefined).
- *   - no_color: define designates that the color mode is set to no color (disable colors).
- *   - dark:     define designates that the color mode is for dark backgrounds.
- *   - light:    define designates that the color mode is for light backgrounds.
+ * f_color_mode_*_e:
+ *   - none:      Designates that there is no assigned mode (the mode is undefined).
+ *   - color_not: Designates that the color mode is set to no color (disable colors).
+ *   - dark:      Designates that the color mode is for dark backgrounds.
+ *   - light:     Designates that the color mode is for light backgrounds.
  */
 #ifndef _di_f_color_mode_t_
-  typedef uint8_t f_color_mode_t;
-
-  #define F_color_mode_none_d     0
-  #define F_color_mode_no_color_d 1
-  #define F_color_mode_dark_d     2
-  #define F_color_mode_light_d    3
+  enum {
+    f_color_mode_none_e = 0,
+    f_color_mode_color_not_e,
+    f_color_mode_dark_e,
+    f_color_mode_light_e,
+  };
 #endif // _di_f_color_mode_t_
 
 /**
@@ -524,45 +526,45 @@ extern "C" {
     f_color_string_code_bright_white_bg_s, \
   }
 
-  #define macro_f_color_t_clear(color) \
-    macro_f_string_static_t_clear(color.reset) \
-    macro_f_string_static_t_clear(color.bold) \
-    macro_f_string_static_t_clear(color.underline) \
-    macro_f_string_static_t_clear(color.blink) \
-    macro_f_string_static_t_clear(color.reverse) \
-    macro_f_string_static_t_clear(color.conceal) \
-    macro_f_string_static_t_clear(color.black) \
-    macro_f_string_static_t_clear(color.red) \
-    macro_f_string_static_t_clear(color.green) \
-    macro_f_string_static_t_clear(color.yellow) \
-    macro_f_string_static_t_clear(color.blue) \
-    macro_f_string_static_t_clear(color.purple) \
-    macro_f_string_static_t_clear(color.teal) \
-    macro_f_string_static_t_clear(color.white) \
-    macro_f_string_static_t_clear(color.black_bg) \
-    macro_f_string_static_t_clear(color.red_bg) \
-    macro_f_string_static_t_clear(color.green_bg) \
-    macro_f_string_static_t_clear(color.yellow_bg) \
-    macro_f_string_static_t_clear(color.blue_bg) \
-    macro_f_string_static_t_clear(color.purple_bg) \
-    macro_f_string_static_t_clear(color.teal_bg) \
-    macro_f_string_static_t_clear(color.white_bg) \
-    macro_f_string_static_t_clear(color.bright_black) \
-    macro_f_string_static_t_clear(color.bright_red) \
-    macro_f_string_static_t_clear(color.bright_green) \
-    macro_f_string_static_t_clear(color.bright_yellow) \
-    macro_f_string_static_t_clear(color.bright_blue) \
-    macro_f_string_static_t_clear(color.bright_purple) \
-    macro_f_string_static_t_clear(color.bright_teal) \
-    macro_f_string_static_t_clear(color.bright_white) \
-    macro_f_string_static_t_clear(color.bright_black_bg) \
-    macro_f_string_static_t_clear(color.bright_red_bg) \
-    macro_f_string_static_t_clear(color.bright_green_bg) \
-    macro_f_string_static_t_clear(color.bright_yellow_bg) \
-    macro_f_string_static_t_clear(color.bright_blue_bg) \
-    macro_f_string_static_t_clear(color.bright_purple_bg) \
-    macro_f_string_static_t_clear(color.bright_teal_bg) \
-    macro_f_string_static_t_clear(color.bright_white_bg)
+  #define macro_f_color_t_set_none(color) \
+    color.reset = f_string_empty_s; \
+    color.bold = f_string_empty_s; \
+    color.underline = f_string_empty_s; \
+    color.blink = f_string_empty_s; \
+    color.reverse = f_string_empty_s; \
+    color.conceal = f_string_empty_s; \
+    color.black = f_string_empty_s; \
+    color.red = f_string_empty_s; \
+    color.green = f_string_empty_s; \
+    color.yellow = f_string_empty_s; \
+    color.blue = f_string_empty_s; \
+    color.purple = f_string_empty_s; \
+    color.teal = f_string_empty_s; \
+    color.white = f_string_empty_s; \
+    color.black_bg = f_string_empty_s; \
+    color.red_bg = f_string_empty_s; \
+    color.green_bg = f_string_empty_s; \
+    color.yellow_bg = f_string_empty_s; \
+    color.blue_bg = f_string_empty_s; \
+    color.purple_bg = f_string_empty_s; \
+    color.teal_bg = f_string_empty_s; \
+    color.white_bg = f_string_empty_s; \
+    color.bright_black = f_string_empty_s; \
+    color.bright_red = f_string_empty_s; \
+    color.bright_green = f_string_empty_s; \
+    color.bright_yellow = f_string_empty_s; \
+    color.bright_blue = f_string_empty_s; \
+    color.bright_purple = f_string_empty_s; \
+    color.bright_teal = f_string_empty_s; \
+    color.bright_white = f_string_empty_s; \
+    color.bright_black_bg = f_string_empty_s; \
+    color.bright_red_bg = f_string_empty_s; \
+    color.bright_green_bg = f_string_empty_s; \
+    color.bright_yellow_bg = f_string_empty_s; \
+    color.bright_blue_bg = f_string_empty_s; \
+    color.bright_purple_bg = f_string_empty_s; \
+    color.bright_teal_bg = f_string_empty_s; \
+    color.bright_white_bg = f_string_empty_s;
 
   #define macro_f_color_t_set_linux(color) \
     color.reset = f_color_string_code_reset_s; \
@@ -732,7 +734,6 @@ extern "C" {
     macro_f_color_set_t_clear(set.success) \
     macro_f_color_set_t_clear(set.title) \
     macro_f_color_set_t_clear(set.warning)
-
 #endif // _di_f_color_set_context_t_
 
 /**
@@ -760,7 +761,7 @@ extern "C" {
   typedef struct {
     f_color_t list;
     f_color_format_t format;
-    f_color_mode_t mode;
+    uint8_t mode;
     f_color_set_context_t set;
 
     f_string_dynamic_t error;
@@ -775,10 +776,11 @@ extern "C" {
     f_string_dynamic_t warning;
   } f_color_context_t;
 
+  // @todo create allocate/clear/etc... functions.
   #define f_color_context_t_initialize { \
     f_color_t_initialize_linux, \
     f_color_format_t_initialize_linux, \
-    F_color_mode_none_d, \
+    f_color_mode_none_e, \
     f_color_set_context_t_initialize, \
     f_string_dynamic_t_initialize, \
     f_string_dynamic_t_initialize, \
@@ -793,9 +795,9 @@ extern "C" {
   }
 
   #define macro_f_color_context_t_clear(context) \
-    macro_f_color_t_clear(context.list) \
+    macro_f_color_t_set_none(context.list) \
     macro_f_color_format_t_clear(context.format) \
-    context.mode = F_color_mode_none_d; \
+    context.mode = f_color_mode_none_e; \
     macro_f_color_set_context_t_clear(context.set) \
     macro_f_string_dynamic_t_clear(context.error) \
     macro_f_string_dynamic_t_clear(context.important) \

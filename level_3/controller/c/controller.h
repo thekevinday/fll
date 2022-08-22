@@ -125,7 +125,7 @@ extern "C" {
  * @see controller_main_delete()
  */
 #ifndef _di_controller_main_
-  extern f_status_t controller_main(controller_main_t * const main, const f_console_arguments_t *arguments);
+  extern f_status_t controller_main(controller_main_t * const main, const f_console_arguments_t arguments);
 #endif // _di_controller_main_
 
 #ifdef __cplusplus

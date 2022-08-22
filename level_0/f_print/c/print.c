@@ -37,9 +37,7 @@ static inline f_status_t private_inline_f_print_write_unlocked(const f_string_t 
       if (!stream) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!length || !string) {
-      return F_data_not;
-    }
+    if (!length || !string) return F_data_not;
 
     return private_f_print(string, length, stream);
   }
@@ -195,9 +193,7 @@ static inline f_status_t private_inline_f_print_write_unlocked(const f_string_t 
       if (!stream) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.used || !buffer.string) {
-      return F_data_not;
-    }
+    if (!buffer.used || !buffer.string) return F_data_not;
 
     return private_f_print_raw(buffer.string, buffer.used, stream);
   }
@@ -209,9 +205,7 @@ static inline f_status_t private_inline_f_print_write_unlocked(const f_string_t 
       if (!stream) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.used || !buffer.string) {
-      return F_data_not;
-    }
+    if (!buffer.used || !buffer.string) return F_data_not;
 
     return private_f_print_raw_safely(buffer.string, buffer.used, stream);
   }
@@ -223,9 +217,7 @@ static inline f_status_t private_inline_f_print_write_unlocked(const f_string_t 
       if (!stream) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.used || !buffer.string) {
-      return F_data_not;
-    }
+    if (!buffer.used || !buffer.string) return F_data_not;
 
     return private_f_print_safely(buffer.string, buffer.used, stream);
   }
@@ -237,9 +229,7 @@ static inline f_status_t private_inline_f_print_write_unlocked(const f_string_t 
       if (!stream) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!length || !string) {
-      return F_data_not;
-    }
+    if (!length || !string) return F_data_not;
 
     return private_f_print_except(string, offset, length, except, stream);
   }

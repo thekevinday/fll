@@ -55,7 +55,8 @@ extern "C" {
  * The umask() has design flaws as per specification that requires the umask be changed to read the value!
  * As a work-around, a umask variable is provided here so that umask() only ever need be called once.
  *
- * parameters: The state of pre-defined parameters passed to the program.
+ * parameters:  The state of pre-defined parameters passed to the program.
+ * environment: Environment variables passed to the program.
  *
  * umask: The umask settings, needed for avoiding calls to umask() to read the current umask.
  * pid:   The PID of the program.
@@ -76,6 +77,7 @@ extern "C" {
 #ifndef _di_fll_program_data_t_
   typedef struct {
     f_console_parameters_t parameters;
+    const f_string_t *     environment;
 
     mode_t umask;
     pid_t pid;
@@ -101,6 +103,7 @@ extern "C" {
       0, \
       0, \
       0, \
+      0, \
       fll_program_data_pipe_none_e, \
       0, \
       0, \
@@ -113,7 +116,9 @@ extern "C" {
       f_color_context_t_initialize, \
     }
 
-  #define macro_fll_program_data_t_initialize(umask, pid, child, pipe, signal_received, signal_check, signal, message, output, error, warning, debug, context) { \
+  #define macro_fll_program_data_t_initialize(parameters, environment, umask, pid, child, pipe, signal_received, signal_check, signal, message, output, error, warning, debug, context) { \
+    parameters, \
+    environment, \
     umask, \
     pid, \
     child, \
