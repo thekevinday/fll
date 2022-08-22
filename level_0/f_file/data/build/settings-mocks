@@ -30,9 +30,9 @@ build_language c
 build_libraries -lc
 build_libraries-individual -lf_memory -lf_string
 
-build_sources_library file.c file/common.c private-file.c ../../tests/unit/c/mock-file.c
+build_sources_library file.c file/common.c file/stream.c private-file.c ../../tests/unit/c/mock-file.c
 
-build_sources_headers file.h file/common.h file/type.h
+build_sources_headers file.h file/common.h file/stream.h file/type.h
 
 build_script yes
 build_shared yes

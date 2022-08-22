@@ -343,6 +343,66 @@ extern "C" {
   #define byte_dump_total_parameters_d 28
 #endif // _di_byte_dump_parameters_
 
+/**
+ * Flags used to represent flags passed to the main function.
+ *
+ * byte_dump_main_flag_*_e:
+ *   - none:          No modes in use.
+ *   - file_from:     Using a specified source file.
+ *   - file_to:       Using a specified destination file.
+ *   - help:          Print help.
+ *   - header:        Enable printing of headers.
+ *   - separate:      Enable printing of separators.
+ *   - strip_invalid: Using strip invalid character mode.
+ *   - verify:        Using verify mode.
+ *   - version:       Print version.
+ */
+#ifndef _di_byte_dump_main_flag_e_
+  enum {
+    byte_dump_main_flag_none_e          = 0x0,
+    byte_dump_main_flag_file_from_e     = 0x1,
+    byte_dump_main_flag_file_to_e       = 0x2,
+    byte_dump_main_flag_header_e        = 0x4,
+    byte_dump_main_flag_help_e          = 0x8,
+    byte_dump_main_flag_separate_e      = 0x10,
+    byte_dump_main_flag_strip_invalid_e = 0x20,
+    byte_dump_main_flag_verify_e        = 0x40,
+    byte_dump_main_flag_version_e       = 0x80,
+  };
+#endif // _di_byte_dump_main_flag_e_
+
+/**
+ * The byte dump main program settings.
+ *
+ * This is passed to the program-specific main entry point to designate program settings.
+ * These program settings are often processed from the program arguments (often called the command line arguments).
+ *
+ * flag: Flags passed to the main function.
+ *
+ * status: The main status code, generally used by the load settings and main functions.
+ *
+ * line_first: A string expected to represent either "\n" or NULL to allow for easy handling of when to print first new line or not.
+ * line_last:  A string expected to represent either "\n" or NULL to allow for easy handling of when to print last new line or not.
+ */
+#ifndef _di_byte_dump_setting_t_
+  typedef struct {
+    uint16_t flag;
+
+    f_status_t status;
+
+    f_string_static_t line_first;
+    f_string_static_t line_last;
+  } byte_dump_setting_t;
+
+  #define byte_dump_setting_t_initialize \
+    { \
+      byte_dump_main_flag_none_e, \
+      F_none, \
+      f_string_static_t_initialize, \
+      f_string_static_t_initialize, \
+    }
+#endif // _di_byte_dump_setting_t_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

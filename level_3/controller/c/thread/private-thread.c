@@ -319,7 +319,7 @@ extern "C" {
     }
 
     if (F_status_set_fine(status) == F_interrupt) {
-      controller_print_signal_received(main, thread.signal);
+      fll_program_print_signal_received(main->warning, setting->line_first, thread.signal);
 
       if (main->output.verbosity != f_console_verbosity_quiet_e) {
         fll_print_dynamic_raw(f_string_eol_s, main->output.to.stream);

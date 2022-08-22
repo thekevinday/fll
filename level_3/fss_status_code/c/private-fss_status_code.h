@@ -1,7 +1,7 @@
 /**
  * FLL - Level 3
  *
- * Project: FSS
+ * Project: FSS Status Code
  * API Version: 0.7
  * Licenses: lgpl-2.1-or-later
  */
@@ -29,12 +29,12 @@ extern "C" {
  *   F_number_overflow (with error bit) on integer overflow.
  *   F_complete_not_utf (with error bit) if an incomplete UTF-8 fragment is found.
  *
- *   Errors (with error bit) from: fss_status_code_convert_number().
+ *   Errors (with error bit) from: fss_fss_status_code_convert_number().
  *
- * @see fss_status_code_convert_number()
+ * @see fss_fss_status_code_convert_number()
  */
 #ifndef _di_fss_status_code_process_check_
-  extern f_status_t fss_status_code_process_check(fll_program_data_t * const main, const f_string_static_t value) F_attribute_visibility_internal_d;
+  extern f_status_t fss_status_code_process_check(fll_program_data_t * const main, fss_status_code_setting_t * const setting, const f_string_static_t value) F_attribute_visibility_internal_d;
 #endif // _di_fss_status_code_process_check_
 
 /**
@@ -56,7 +56,7 @@ extern "C" {
  * @see fll_fss_status_string_from()
  */
 #ifndef _di_fss_status_code_process_number_
-  extern f_status_t fss_status_code_process_number(fll_program_data_t * const main, const f_string_static_t value) F_attribute_visibility_internal_d;
+  extern f_status_t fss_status_code_process_number(fll_program_data_t * const main, fss_status_code_setting_t * const setting, const f_string_static_t value) F_attribute_visibility_internal_d;
 #endif // _di_fss_status_code_process_number_
 
 /**
@@ -77,13 +77,13 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: fll_fss_status_string_from().
- *   Errors (with error bit) from: fss_status_code_convert_number().
+ *   Errors (with error bit) from: fss_fss_status_code_convert_number().
  *
  * @see fll_fss_status_string_from()
- * @see fss_status_code_convert_number()
+ * @see fss_fss_status_code_convert_number()
  */
 #ifndef _di_fss_status_code_process_normal_
-  extern f_status_t fss_status_code_process_normal(fll_program_data_t * const main, const f_string_static_t value) F_attribute_visibility_internal_d;
+  extern f_status_t fss_status_code_process_normal(fll_program_data_t * const main, fss_status_code_setting_t * const setting, const f_string_static_t value) F_attribute_visibility_internal_d;
 #endif // _di_fss_status_code_process_normal_
 
 /**
@@ -111,7 +111,7 @@ extern "C" {
  * @see fl_console_parameter_to_number_unsigned()
  */
 #ifndef _di_fss_status_code_convert_number_
-  extern f_status_t fss_status_code_convert_number(fll_program_data_t * const main, const f_string_static_t value, f_number_unsigned_t *number) F_attribute_visibility_internal_d;
+  extern f_status_t fss_status_code_convert_number(fll_program_data_t * const main, fss_status_code_setting_t * const setting, const f_string_static_t value, f_number_unsigned_t *number) F_attribute_visibility_internal_d;
 #endif // _di_fss_status_code_convert_number_
 
 #ifdef __cplusplus

@@ -75,7 +75,7 @@ extern "C" {
     if (F_status_is_error(*status)) return;
 
     if (fll_program_standard_signal_received(data->main)) {
-      fake_print_signal_received(data);
+      fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
 
       *status = F_status_set_error(F_interrupt);
 
@@ -216,7 +216,7 @@ extern "C" {
     if (F_status_is_error(*status) && buffer.used) return;
 
     if (fll_program_standard_signal_received(data->main)) {
-      fake_print_signal_received(data);
+      fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
 
       *status = F_status_set_error(F_interrupt);
 
@@ -1463,7 +1463,7 @@ extern "C" {
     if (F_status_is_error(*status)) return;
 
     if (fll_program_standard_signal_received(data->main)) {
-      fake_print_signal_received(data);
+      fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
 
       *status = F_status_set_error(F_interrupt);
 

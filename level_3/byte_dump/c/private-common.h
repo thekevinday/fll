@@ -93,16 +93,6 @@ extern "C" {
     }
 #endif // _di_byte_previous_cell_
 
-/**
- * Print a message about a process signal being recieved, such as an interrupt signal.
- *
- * @param main
- *   The main program data.
- */
-#ifndef _di_byte_dump_print_signal_received_
-  extern void byte_dump_print_signal_received(byte_dump_data_t * const data) F_attribute_visibility_internal_d;
-#endif // _di_byte_dump_print_signal_received_
-
 #ifdef __cplusplus
 } // extern "C"
 #endif

@@ -7,7 +7,7 @@ extern "C" {
 #endif
 
 #ifndef _di_iki_write_process_
-  f_status_t iki_write_process(iki_write_data_t * const data, const f_file_t output, const f_string_static_t object, const f_string_static_t content, f_string_dynamic_t *escaped) {
+  f_status_t iki_write_process(fll_program_data_t * const main, status_code_setting_t * const setting, iki_write_data_t * const data, const f_file_t output, const f_string_static_t object, const f_string_static_t content, f_string_dynamic_t *escaped) {
 
     if (!object.used) {
       if (data->main->error.verbosity != f_console_verbosity_quiet_e) {

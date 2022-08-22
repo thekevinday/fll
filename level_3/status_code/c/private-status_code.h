@@ -34,7 +34,7 @@ extern "C" {
  * @see fss_status_code_convert_number()
  */
 #ifndef _di_status_code_process_check_
-  extern f_status_t status_code_process_check(fll_program_data_t * const main, const f_string_static_t value) F_attribute_visibility_internal_d;
+  extern f_status_t status_code_process_check(fll_program_data_t * const main, status_code_setting_t * const setting, const f_string_static_t value) F_attribute_visibility_internal_d;
 #endif // _di_status_code_process_check_
 
 /**
@@ -56,7 +56,7 @@ extern "C" {
  * @see fll_fss_status_string_from()
  */
 #ifndef _di_status_code_process_number_
-  extern f_status_t status_code_process_number(fll_program_data_t * const main, const f_string_static_t value) F_attribute_visibility_internal_d;
+  extern f_status_t status_code_process_number(fll_program_data_t * const main, status_code_setting_t * const setting, const f_string_static_t value) F_attribute_visibility_internal_d;
 #endif // _di_status_code_process_number_
 
 /**
@@ -83,7 +83,7 @@ extern "C" {
  * @see fss_status_code_convert_number()
  */
 #ifndef _di_status_code_process_normal_
-  extern f_status_t status_code_process_normal(fll_program_data_t * const main, const f_string_static_t value) F_attribute_visibility_internal_d;
+  extern f_status_t status_code_process_normal(fll_program_data_t * const main, status_code_setting_t * const setting, const f_string_static_t value) F_attribute_visibility_internal_d;
 #endif // _di_status_code_process_normal_
 
 /**
@@ -111,7 +111,7 @@ extern "C" {
  * @see fl_console_parameter_to_number_unsigned()
  */
 #ifndef _di_status_code_convert_number_
-  extern f_status_t status_code_convert_number(fll_program_data_t * const main, const f_string_static_t value, f_number_unsigned_t *number) F_attribute_visibility_internal_d;
+  extern f_status_t status_code_convert_number(fll_program_data_t * const main, status_code_setting_t * const setting, const f_string_static_t value, f_number_unsigned_t *number) F_attribute_visibility_internal_d;
 #endif // _di_status_code_convert_number_
 
 #ifdef __cplusplus

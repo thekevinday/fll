@@ -189,18 +189,6 @@ extern void firewall_print_error_on_unhandled(const fl_print_t output, const cha
 extern void firewall_print_error_on_unhandled_for_file(const fl_print_t output, const char *function, const f_status_t status, const f_string_static_t filename) F_attribute_visibility_internal_d;
 
 /**
- * Print a message about a process signal being recieved, such as an interrupt signal.
- *
- * @param data
- *   The program data.
- * @param signal
- *   The signal received.
- */
-#ifndef _di_firewall_print_signal_received_
-  extern void firewall_print_signal_received(firewall_data_t * const data, const f_status_t signal) F_attribute_visibility_internal_d;
-#endif // _di_firewall_print_signal_received_
-
-/**
  * Check to see if a process signal is received.
  *
  * Only signals that are blocked via main.signal will be received.

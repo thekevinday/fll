@@ -94,6 +94,7 @@ extern "C" {
   f_status_t f_memory_new_aligned(const size_t length, const size_t alignment, void ** const pointer) {
     #ifndef _di_level_0_parameter_checking_
       if (!alignment) return F_status_set_error(F_parameter);
+      if (!pointer) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     // Prevent double-allocations and unnecessary frees.

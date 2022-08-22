@@ -3,12 +3,13 @@
 
 int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
-  const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize(argc, argv, envp);
-  controller_main_t data = controller_main_t_initialize;
+  fll_program_data_t data = fll_program_data_t_initialize;
+  controller_setting_t setting = controller_setting_t_initialize;
 
   f_console_parameter_t parameters[] = controller_console_parameter_t_initialize;
   data.parameters.array = parameters;
   data.parameters.used = controller_total_parameters_d;
+  data.environment = envp;
 
   if (f_pipe_input_exists()) {
     data.pipe = fll_program_data_pipe_input_e;
@@ -41,7 +42,15 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
     data.as_init = F_false;
   #endif // _controller_as_init_
 
-  const f_status_t status = controller_main(&data, arguments);
+  {
+    const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize(argc, argv, envp);
+
+    controller_setting_load(arguments, &data, &setting);
+  }
+
+  controller_main(&data, &setting);
+
+  controller_setting_unload(&data, &setting);
 
   controller_main_delete(&data);
 
@@ -52,7 +61,5 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
     exit(data.child);
   }
 
-  if (F_status_is_error(status)) return 1;
-
-  return 0;
+  return F_status_is_error(status) ? 1 : 0;
 }

@@ -246,6 +246,8 @@ extern "C" {
     const f_string_static_t f_status_no_not_s = macro_f_string_static_t_initialize(F_status_no_not_s, 0, F_status_no_not_s_length);
     const f_string_static_t f_status_object_s = macro_f_string_static_t_initialize(F_status_object_s, 0, F_status_object_s_length);
     const f_string_static_t f_status_object_not_s = macro_f_string_static_t_initialize(F_status_object_not_s, 0, F_status_object_not_s_length);
+    const f_string_static_t f_status_okay_s = macro_f_string_static_t_initialize(F_status_okay_s, 0, F_status_okay_s_length);
+    const f_string_static_t f_status_okay_not_s = macro_f_string_static_t_initialize(F_status_okay_not_s, 0, F_status_okay_not_s_length);
     const f_string_static_t f_status_once_s = macro_f_string_static_t_initialize(F_status_once_s, 0, F_status_once_s_length);
     const f_string_static_t f_status_once_not_s = macro_f_string_static_t_initialize(F_status_once_not_s, 0, F_status_once_not_s_length);
     const f_string_static_t f_status_option_s = macro_f_string_static_t_initialize(F_status_option_s, 0, F_status_option_s_length);
@@ -1818,6 +1820,16 @@ extern "C" {
 
         case F_object_not:
           *name = f_status_object_not_s;
+
+          break;
+
+        case F_okay:
+          *name = f_status_okay_s;
+
+          break;
+
+        case F_okay_not:
+          *name = f_status_okay_not_s;
 
           break;
 

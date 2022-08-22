@@ -16,7 +16,7 @@ extern "C" {
     if (F_status_is_error(*status)) return;
 
     if (fll_program_standard_signal_received(data_make->main)) {
-      fake_print_signal_received(data_make->data);
+      fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
 
       *status = F_status_set_error(F_interrupt);
 
@@ -120,7 +120,7 @@ extern "C" {
 
           if (!(i % fake_signal_check_short_d)) {
             if (fll_program_standard_signal_received(data_make->main)) {
-              fake_print_signal_received(data_make->data);
+              fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
 
               *status = F_status_set_error(F_interrupt);
 

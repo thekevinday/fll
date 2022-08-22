@@ -25,16 +25,6 @@ extern "C" {
   #define fss_embedded_list_write_common_allocation_small_d 128
 #endif // _di_fss_embedded_list_write_common_
 
-/**
- * Print a message about a process signal being recieved, such as an interrupt signal.
- *
- * @param main
- *   The main program data.
- */
-#ifndef _di_fss_embedded_list_write_print_signal_received_
-  extern void fss_embedded_list_write_print_signal_received(fll_program_data_t * const main) F_attribute_visibility_internal_d;
-#endif // _di_fss_embedded_list_write_print_signal_received_
-
 #ifdef __cplusplus
 } // extern "C"
 #endif

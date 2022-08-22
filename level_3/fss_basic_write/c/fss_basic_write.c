@@ -6,59 +6,8 @@
 extern "C" {
 #endif
 
-#ifndef _di_fss_basic_write_print_help_
-  f_status_t fss_basic_write_print_help(const f_file_t file, const f_color_context_t context) {
-
-    flockfile(file.stream);
-
-    //if (!(setting->flag & XXX_main_flag_line_first_no_e)) {
-      f_print_dynamic_raw(f_string_eol_s, file.stream);
-    //}
-
-    fll_program_print_help_header(file, context, fss_basic_write_program_name_long_s, fss_basic_write_program_version_s);
-
-    fll_program_print_help_option_standard(file, context);
-
-    f_print_dynamic_raw(f_string_eol_s, file.stream);
-
-    fll_program_print_help_option(file, context, fss_basic_write_short_file_s, fss_basic_write_long_file_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Specify a file to send data to.");
-    fll_program_print_help_option(file, context, fss_basic_write_short_content_s, fss_basic_write_long_content_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "The Content to write.");
-    fll_program_print_help_option(file, context, fss_basic_write_short_double_s, fss_basic_write_long_double_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Use double quotes (default).");
-    fll_program_print_help_option(file, context, fss_basic_write_short_ignore_s, fss_basic_write_long_ignore_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Ignore a given range within a Content.");
-    fll_program_print_help_option(file, context, fss_basic_write_short_object_s, fss_basic_write_long_object_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " The Object to write.");
-    fll_program_print_help_option(file, context, fss_basic_write_short_partial_s, fss_basic_write_long_partial_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Do not write end of Object/Content character.");
-    fll_program_print_help_option(file, context, fss_basic_write_short_prepend_s, fss_basic_write_long_prepend_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Prepend the given white space characters to the start of each multi-line Content.");
-    fll_program_print_help_option(file, context, fss_basic_write_short_single_s, fss_basic_write_long_single_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Use single quotes.");
-    fll_program_print_help_option(file, context, fss_basic_write_short_trim_s, fss_basic_write_long_trim_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Trim Object names.");
-
-    fll_program_print_help_usage(file, context, fss_basic_write_program_name_s, f_string_empty_s);
-
-    fl_print_format("%r  The pipe uses the Backspace character '%[\\b%]' (%[U+0008%]) to designate the start of a Content.%r", file.stream, f_string_eol_s, context.set.notable, context.set.notable, context.set.notable, context.set.notable, f_string_eol_s);
-    fl_print_format("  The pipe uses the Form Feed character '%[\\f%]' (%[U+000C%]) to designate the end of the last Content.%r", file.stream, context.set.notable, context.set.notable, context.set.notable, context.set.notable, f_string_eol_s);
-    fl_print_format("  The pipe uses the Vertical Line character '%[\\v%]' (%[U+000B%]) is used to ignore a Content range, which does nothing in this program.%r", file.stream, context.set.notable, context.set.notable, context.set.notable, context.set.notable, f_string_eol_s);
-    fl_print_format("  For the pipe, an Object is terminated by either a Backspace character '%[\\b%]' (%[U+0008%])", file.stream, context.set.notable, context.set.notable, context.set.notable, context.set.notable);
-    fl_print_format(" or a Form Feed character '%[\\f%]' (%[U+000C%]).%r", file.stream, context.set.notable, context.set.notable, context.set.notable, context.set.notable, f_string_eol_s);
-    fl_print_format("  The end of the pipe represents the end of any Object or Content.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
-
-    fl_print_format("  The FSS-0000 (Basic) specification does not support multi-line Content, therefore the parameter '%[%r%r%]'", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_basic_write_long_prepend_s, context.set.notable);
-    fl_print_format(" does nothing.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
-
-    fl_print_format("  This program does not use the parameter '%[%r%r%]', which therefore does nothing.%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_basic_write_long_ignore_s, context.set.notable, f_string_eol_s);
-    fl_print_format("  This parameter requires two values.%r", file.stream, f_string_eol_s);
-
-    //if (!(setting->flag & XXX_main_flag_line_last_no_e)) {
-      f_print_dynamic_raw(f_string_eol_s, file.stream);
-    //}
-
-    f_file_stream_flush(file);
-    funlockfile(file.stream);
-
-    return F_none;
-  }
-#endif // _di_fss_basic_write_print_help_
-
 #ifndef _di_fss_basic_write_main_
-  f_status_t fss_basic_write_main(fll_program_data_t * const main, const f_console_arguments_t arguments) {
+  f_status_t fss_basic_write_main(fll_program_data_t * const main, fss_basic_write_setting_t * const setting) {
 
     f_status_t status = F_none;
 
@@ -110,13 +59,13 @@ extern "C" {
     status = F_none;
 
     if (main->parameters.array[fss_basic_write_parameter_help_e].result == f_console_result_found_e) {
-      fss_basic_write_print_help(main->output.to, main->context);
+      fss_basic_write_print_help(setting, main->message);
 
       return status;
     }
 
     if (main->parameters.array[fss_basic_write_parameter_version_e].result == f_console_result_found_e) {
-      fll_program_print_version(main->output.to, fss_basic_write_program_version_s);
+      fll_program_print_version(main->message, fss_basic_write_program_version_s);
 
       return status;
     }
@@ -405,7 +354,7 @@ extern "C" {
 
               if (!((++main->signal_check) % fss_basic_write_signal_check_d)) {
                 if (fll_program_standard_signal_received(main)) {
-                  fss_basic_write_print_signal_received(main);
+                  fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
 
                   status = F_status_set_error(F_interrupt);
 
@@ -424,7 +373,7 @@ extern "C" {
 
               if (!((++main->signal_check) % fss_basic_write_signal_check_d)) {
                 if (fll_program_standard_signal_received(main)) {
-                  fss_basic_write_print_signal_received(main);
+                  fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
 
                   status = F_status_set_error(F_interrupt);
 
@@ -444,7 +393,7 @@ extern "C" {
 
             if (!((++main->signal_check) % fss_basic_write_signal_check_d)) {
               if (fll_program_standard_signal_received(main)) {
-                fss_basic_write_print_signal_received(main);
+                fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
 
                 status = F_status_set_error(F_interrupt);
 

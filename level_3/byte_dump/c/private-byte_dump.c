@@ -60,7 +60,7 @@ extern "C" {
 
         if (!((++data->main->signal_check) % byte_dump_signal_check_d)) {
           if (fll_program_standard_signal_received(data->main)) {
-            byte_dump_print_signal_received(data);
+            fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
 
             return F_status_set_error(F_interrupt);
           }

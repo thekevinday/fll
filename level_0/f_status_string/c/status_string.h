@@ -399,6 +399,8 @@ extern "C" {
     #define F_status_no_not_s            "F_no_not"
     #define F_status_object_s            "F_object"
     #define F_status_object_not_s        "F_object_not"
+    #define F_status_okay_s              "F_okay"
+    #define F_status_okay_not_s          "F_okay_not"
     #define F_status_once_s              "F_once"
     #define F_status_once_not_s          "F_once_not"
     #define F_status_option_s            "F_option"
@@ -695,6 +697,8 @@ extern "C" {
     #define F_status_no_not_s_length            8
     #define F_status_object_s_length            8
     #define F_status_object_not_s_length        12
+    #define F_status_okay_s_length              6
+    #define F_status_okay_not_s_length          10
     #define F_status_once_s_length              6
     #define F_status_once_not_s_length          10
     #define F_status_option_s_length            8
@@ -993,6 +997,8 @@ extern "C" {
     extern const f_string_static_t f_status_no_not_s;
     extern const f_string_static_t f_status_object_s;
     extern const f_string_static_t f_status_object_not_s;
+    extern const f_string_static_t f_status_okay_s;
+    extern const f_string_static_t f_status_okay_not_s;
     extern const f_string_static_t f_status_once_s;
     extern const f_string_static_t f_status_once_not_s;
     extern const f_string_static_t f_status_option_s;

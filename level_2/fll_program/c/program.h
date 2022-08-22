@@ -31,179 +31,11 @@
 
 // FLL-2 program includes.
 #include <fll/level_2/program/common.h>
+#include <fll/level_2/program/print.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-/**
- * Print standard help header.
- *
- * This print function does not use locking, be sure something like flockfile() and funlockfile() are appropriately called.
- *
- * @param output
- *   The file stream to output to.
- * @param context
- *   The color context.
- * @param name
- *   The name of the program.
- * @param version
- *   The version number of the program.
- *
- * @return
- *   F_none on success.
- *
- * @see f_print_terminated()
- * @see fl_print_format()
- */
-#ifndef _di_fll_program_print_help_header_
-  extern f_status_t fll_program_print_help_header(const f_file_t output, const f_color_context_t context, const f_string_static_t name, const f_string_static_t version);
-#endif // _di_fll_program_print_help_header_
-
-/**
- * Print standard help option.
- *
- * This print function does not use locking, be sure something like flockfile() and funlockfile() are appropriately called.
- *
- * @param output
- *   The file stream to output to.
- * @param context
- *   The color context.
- * @param option_short
- *   The short name of the option.
- * @param option_long
- *   The long name of the option.
- * @param symbol_short
- *   The short symbol of the option.
- * @param symbol_long
- *   The long symbol of the option.
- * @param description
- *   A desciption associated with the option.
- *
- * @return
- *   F_none on success.
- *
- * @see f_print_terminated()
- * @see fl_print_format()
- */
-#ifndef _di_fll_program_print_help_option_
-  extern f_status_t fll_program_print_help_option(const f_file_t output, const f_color_context_t context, const f_string_static_t option_short, const f_string_static_t option_long, const f_string_static_t symbol_short, const f_string_static_t symbol_long, const char *description);
-#endif // _di_fll_program_print_help_option_
-
-/**
- * Print standard help option (long option only).
- *
- * This print function does not use locking, be sure something like flockfile() and funlockfile() are appropriately called.
- *
- * @param output
- *   The file stream to output to.
- * @param context
- *   The color context.
- * @param option_long
- *   The long name of the option.
- * @param symbol_long
- *   The long symbol of the option.
- * @param description
- *   A desciption associated with the option.
- *
- * @return
- *   F_none on success.
- *
- * @see f_print_terminated()
- * @see fl_print_format()
- */
-#ifndef _di_fll_program_print_help_option_long_
-  extern f_status_t fll_program_print_help_option_long(const f_file_t output, const f_color_context_t context, const f_string_static_t option_long, const f_string_static_t symbol_long, const char *description);
-#endif // _di_fll_program_print_help_option_long_
-
-/**
- * Print standard help option (other option only).
- *
- * This print function does not use locking, be sure something like flockfile() and funlockfile() are appropriately called.
- *
- * @param output
- *   The file stream to output to.
- * @param context
- *   The color context.
- * @param option_other
- *   The other name of the option.
- * @param description
- *   A desciption associated with the option.
- *
- * @return
- *   F_none on success.
- *
- * @see f_print_terminated()
- * @see fl_print_format()
- */
-#ifndef _di_fll_program_print_help_option_other_
-  extern f_status_t fll_program_print_help_option_other(const f_file_t output, const f_color_context_t context, const f_string_static_t option_other, const char *description);
-#endif // _di_fll_program_print_help_option_other_
-
-/**
- * Print all standard help options.
- *
- * This print function does not use locking, be sure something like flockfile() and funlockfile() are appropriately called.
- *
- * @param output
- *   The file stream to output to.
- * @param context
- *   The color context.
- *
- * @return
- *   F_none on success.
- *
- * @see f_print_terminated()
- * @see fl_print_format()
- */
-#ifndef _di_fll_program_print_help_option_standard_
-  extern f_status_t fll_program_print_help_option_standard(const f_file_t output, const f_color_context_t context);
-#endif // _di_fll_program_print_help_option_standard_
-
-/**
- * Print standard help usage.
- *
- * This print function does not use locking, be sure something like flockfile() and funlockfile() are appropriately called.
- *
- * @param output
- *   The file stream to output to.
- * @param context
- *   The color context.
- * @param name
- *   The name of the program.
- * @param parameters
- *   (optional) The non-option parameters to be displayed inside the brackets.
- *   Set the first array value to EOS to disable printing of parameters.
- *   Set parameters.used to 0 to disable.
- *
- * @return
- *   F_none on success.
- *
- * @see f_print_terminated()
- * @see fl_print_format()
- */
-#ifndef _di_fll_program_print_help_usage_
-  extern f_status_t fll_program_print_help_usage(const f_file_t output, const f_color_context_t context, const f_string_static_t name, const f_string_static_t parameters);
-#endif // _di_fll_program_print_help_usage_
-
-/**
- * Print the program version.
- *
- * This print function does not use locking, be sure something like flockfile() and funlockfile() are appropriately called.
- *
- * @param output
- *   The file stream to output to.
- * @param version
- *   The version number of the program.
- *
- * @return
- *   F_none on success.
- *
- * @see fl_print_format()
- */
-#ifndef _di_fll_program_print_version_
-  extern f_status_t fll_program_print_version(const f_file_t output, const f_string_static_t version);
-#endif // _di_fll_program_print_version_
 
 /**
  * Determine the color context from the parameters and then set the color context based on the choice.
@@ -501,6 +333,7 @@ extern "C" {
  *
  * @param main
  *   The main program data.
+ *   The main->signal must be used to designate blocked signals.
  *
  * @return
  *   A positive number representing a valid signal on signal received.

@@ -64,18 +64,6 @@ extern "C" {
   extern void controller_print_error_file(controller_thread_t * const thread, const fl_print_t print, const f_status_t status, const char *function, const bool fallback, const f_string_static_t name, const f_string_static_t operation, const uint8_t type) F_attribute_visibility_internal_d;
 #endif // _di_controller_print_error_file_
 
-/**
- * Print a message about a process signal being recieved, such as an interrupt signal.
- *
- * @param main
- *   The main program data.
- * @param signal
- *   The signal received.
- */
-#ifndef _di_controller_print_signal_received_
-  extern void controller_print_signal_received(controller_main_t * const main, const f_status_t signal) F_attribute_visibility_internal_d;
-#endif // _di_controller_print_signal_received_
-
 #ifdef __cplusplus
 } // extern "C"
 #endif

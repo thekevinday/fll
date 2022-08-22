@@ -77,18 +77,8 @@ extern "C" {
  *   F_none on success.
  */
 #ifndef _di_iki_read_data_delete_
-  extern f_status_t iki_read_data_delete(iki_read_data_t * const data) F_attribute_visibility_internal_d;
+  extern f_status_t iki_read_data_delete(fll_program_data_t * const main, status_code_setting_t * const setting, iki_read_data_t * const data) F_attribute_visibility_internal_d;
 #endif // _di_iki_read_data_delete_
-
-/**
- * Print a message about a process signal being recieved, such as an interrupt signal.
- *
- * @param data
- *   The program data.
- */
-#ifndef _di_iki_read_print_signal_received_
-  extern void iki_read_print_signal_received(iki_read_data_t * const data) F_attribute_visibility_internal_d;
-#endif // _di_iki_read_print_signal_received_
 
 #ifdef __cplusplus
 } // extern "C"

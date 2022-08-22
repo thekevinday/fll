@@ -12,41 +12,8 @@
 extern "C" {
 #endif
 
-#ifndef _di_firewall_print_help_
-  f_status_t firewall_print_help(const f_file_t file, const f_color_context_t context) {
-
-    flockfile(file.stream);
-
-    //if (!(setting->flag & XXX_main_flag_line_first_no_e)) {
-      f_print_dynamic_raw(f_string_eol_s, file.stream);
-    //}
-
-    fll_program_print_help_header(file, context, firewall_program_name_long_s, firewall_program_version_s);
-
-    fll_program_print_help_option_standard(file, context);
-
-    fl_print_format("%r%r %[Commands:%] ", file.stream, f_string_eol_s, f_string_eol_s, context.set.important, context.set.important);
-    fl_print_format("%r  %[%r%]    Turn on the firewall.", file.stream, f_string_eol_s, context.set.standout, firewall_command_start_s, context.set.standout);
-    fl_print_format("%r  %[%r%]     Turn off the firewall.", file.stream, f_string_eol_s, context.set.standout, firewall_command_stop_s, context.set.standout);
-    fl_print_format("%r  %[%r%]  Turn off and then turn on the firewall.", file.stream, f_string_eol_s, context.set.standout, firewall_command_restart_s, context.set.standout);
-    fl_print_format("%r  %[%r%]     Prevent all communication.", file.stream, f_string_eol_s, context.set.standout, firewall_command_lock_s, context.set.standout);
-    fl_print_format("%r  %[%r%]     Show active firewall settings.", file.stream, f_string_eol_s, context.set.standout, firewall_command_show_s, context.set.standout);
-
-    fll_program_print_help_usage(file, context, firewall_program_name_s, firewall_program_help_parameters_s);
-
-    //if (!(setting->flag & XXX_main_flag_line_last_no_e)) {
-      f_print_dynamic_raw(f_string_eol_s, file.stream);
-    //}
-
-    f_file_stream_flush(file);
-    funlockfile(file.stream);
-
-    return F_none;
-  }
-#endif // _di_firewall_print_help_
-
 #ifndef _di_firewall_main_
-  f_status_t firewall_main(fll_program_data_t * const main, const f_console_arguments_t arguments) {
+  f_status_t firewall_main(fll_program_data_t * const main, firewall_setting_t * const setting) {
 
     f_status_t status = F_none;
 
@@ -102,13 +69,13 @@ extern "C" {
     status = F_none;
 
     if (main->parameters.array[firewall_parameter_help_e].result == f_console_result_found_e) {
-      firewall_print_help(main->output.to, main->context);
+      firewall_print_help(setting, main->message);
 
       return F_none;
     }
 
     if (main->parameters.array[firewall_parameter_version_e].result == f_console_result_found_e) {
-      fll_program_print_version(main->output.to, firewall_program_version_s);
+      fll_program_print_version(main->message, firewall_program_version_s);
 
       return F_none;
     }

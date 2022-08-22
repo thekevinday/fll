@@ -20,10 +20,8 @@ extern "C" {
  *
  * This print function does not use locking, be sure something like flockfile() and funlockfile() are appropriately called.
  *
- * @param output
- *   The file stream to output to.
- * @param context
- *   The color context.
+ * @param print
+ *   The output structure to print to.
  * @param option_short
  *   The short name of the option.
  * @param option_long
@@ -45,7 +43,7 @@ extern "C" {
  * @see fll_program_print_help_option_standard()
  */
 #if !defined(_di_fll_program_print_help_option_) || !defined(_di_fll_program_print_help_option_standard_)
-  extern f_status_t private_fll_program_print_help_option(const f_file_t output, const f_color_context_t context, const f_string_static_t option_short, const f_string_static_t option_long, const f_string_static_t symbol_short, const f_string_static_t symbol_long, const char *description) F_attribute_visibility_internal_d;
+  extern f_status_t private_fll_program_print_help_option(const fl_print_t print, const f_string_static_t option_short, const f_string_static_t option_long, const f_string_static_t symbol_short, const f_string_static_t symbol_long, const char *description) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fll_program_print_help_option_) || !defined(_di_fll_program_print_help_option_standard_)
 
 /**

@@ -82,21 +82,6 @@ extern "C" {
 #endif
 
 /**
- * Print help.
- *
- * @param main
- *   The main program data.
- *
- * @return
- *   F_none on success.
- *
- * @see controller_main()
- */
-#ifndef _di_controller_print_help_
-  extern f_status_t controller_print_help(controller_main_t * const main);
-#endif // _di_controller_print_help_
-
-/**
  * Execute main program.
  *
  * Be sure to call controller_main_delete() after executing this.

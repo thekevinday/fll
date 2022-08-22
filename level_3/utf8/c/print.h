@@ -229,18 +229,14 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *   This does not alter setting.status.
- * @param output
- *   The file to print to.
- * @param context
- *   The color context settings.
+ * @param print
+ *   The output structure to print to.
  *
  * @return
  *   F_none on success.
- *   F_true on success and validation passed.
- *   F_false on success and validation failed.
  */
 #ifndef _di_utf8_print_help_
-  extern f_status_t utf8_print_help(utf8_setting_t * const setting, const f_file_t output, const f_color_context_t context);
+  extern f_status_t utf8_print_help(utf8_setting_t * const setting, const fl_print_t print);
 #endif // _di_utf8_print_help_
 
 /**
@@ -252,7 +248,7 @@ extern "C" {
  *   The main program settings.
  *   This does not alter setting.status.
  * @param print
- *   Designates how the how and where to print.
+ *   Designates the how and where to print.
  * @param lock
  *   If TRUE, then lock the stream.
  *   If FALSE, then do not lock or unlock the stream.
@@ -270,7 +266,7 @@ extern "C" {
  *   The main program settings.
  *   This does not alter setting.status.
  * @param print
- *   Designates how the how and where to print.
+ *   Designates the how and where to print.
  * @param lock
  *   If TRUE, then lock the stream.
  *   If FALSE, then do not lock or unlock the stream.
@@ -378,22 +374,6 @@ extern "C" {
 #ifndef _di_utf8_print_section_header_pipe_
   extern void utf8_print_section_header_pipe(fll_program_data_t * const main, utf8_setting_t * const setting);
 #endif // _di_utf8_print_section_header_pipe_
-
-/**
- * Print a message about a process signal being recieved, such as an interrupt signal.
- *
- * @param main
- *   The main program data.
- * @param setting
- *   The main program settings.
- *
- *   Assumed to always be non-NULL.
- * @param signal
- *   The signal code received.
- */
-#ifndef _di_utf8_print_signal_received_
-  extern void utf8_print_signal_received(fll_program_data_t * const main, utf8_setting_t * const setting, const f_status_t signal);
-#endif // _di_utf8_print_signal_received_
 
 /**
  * Print the width of the given character.

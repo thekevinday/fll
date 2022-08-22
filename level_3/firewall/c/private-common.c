@@ -85,24 +85,6 @@ void firewall_print_error_on_unhandled_for_file(const fl_print_t output, const c
   fll_print_format("%r%[%QAn unhandled error (%ui) has occurred while calling %s() for the file '%Q'.%]%r", output.to.stream, f_string_eol_s, output.context, output.prefix, status, function, filename, output.context, f_string_eol_s);
 }
 
-#ifndef _di_firewall_print_signal_received_
-  void firewall_print_signal_received(firewall_data_t * const data, const f_status_t signal) {
-
-    if (data->main->warning.verbosity != f_console_verbosity_verbose_e && data->main->warning.verbosity != f_console_verbosity_debug_e) return;
-
-    // Must flush and reset color because the interrupt may have interrupted the middle of a print function.
-    fflush(data->main->warning.to.stream);
-
-    flockfile(data->main->warning.to.stream);
-
-    fl_print_format("%]%r%r%[Received signal code %]", data->main->warning.to.stream, data->main->context.set.reset, f_string_eol_s, f_string_eol_s, data->main->context.set.warning, data->main->context.set.warning);
-    fl_print_format("%[%i%]", data->main->warning.to.stream, data->main->context.set.notable, signal, data->main->context.set.notable);
-    fl_print_format("%[.%]%r", data->main->warning.to.stream, data->main->context.set.warning, data->main->context.set.warning, f_string_eol_s);
-
-    funlockfile(data->main->warning.to.stream);
-  }
-#endif // _di_firewall_print_signal_received_
-
 #ifndef _di_firewall_signal_received_
   f_status_t firewall_signal_received(firewall_data_t * const data) {
 

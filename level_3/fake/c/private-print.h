@@ -352,21 +352,6 @@ extern "C" {
 #endif // _di_fake_print_message_section_operation_unknown_
 
 /**
- * Print a message about a process signal being recieved, such as an interrupt signal.
- *
- * @param data
- *   The program data.
- *
- * @see flockfile()
- * @see funlockfile()
- *
- * @see fl_print_format()
- */
-#ifndef _di_fake_print_signal_received_
-  extern void fake_print_signal_received(fake_data_t * const data) F_attribute_visibility_internal_d;
-#endif // _di_fake_print_signal_received_
-
-/**
  * Print message when fake settings content is empty.
  *
  * @param data

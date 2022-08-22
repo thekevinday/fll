@@ -26,11 +26,9 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
   utf8_setting_unload(&data, &setting);
 
-  utf8_setting_delete(&setting);
-
   fll_program_data_delete(&data);
 
   fll_program_standard_set_down(&data);
 
-  return F_status_is_error(setting.status) || setting.status == F_false ? 1 : 0;
+  return (F_status_is_error(setting.status) || setting.status == F_false) ? 1 : 0;
 }

@@ -6,165 +6,52 @@
 extern "C" {
 #endif
 
-#ifndef _di_status_code_print_help_
-  f_status_t status_code_print_help(const f_file_t file, const f_color_context_t context) {
-
-    flockfile(file.stream);
-
-    //if (!(setting->flag & XXX_main_flag_line_first_no_e)) {
-      f_print_dynamic_raw(f_string_eol_s, file.stream);
-    //}
-
-    fll_program_print_help_header(file, context, status_code_program_name_long_s, status_code_program_version_s);
-
-    fll_program_print_help_option_standard(file, context);
-
-    f_print_dynamic_raw(f_string_eol_s, file.stream);
-
-    fll_program_print_help_option(file, context, status_code_short_fine_s, status_code_long_fine_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Print F_true or F_false if status code is neither an error nor a warning or print number with neither the error code nor the warning code bits set.");
-    fll_program_print_help_option(file, context, status_code_short_warning_s, status_code_long_warning_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Print F_true or F_false if status code is a warning or print number with warning code bit set.");
-    fll_program_print_help_option(file, context, status_code_short_error_s, status_code_long_error_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "  Print F_true or F_false if status code is an error or print number with error code bit set.");
-    fll_program_print_help_option(file, context, status_code_short_number_s, status_code_long_number_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Convert status code name to number.");
-
-    fll_program_print_help_usage(file, context, status_code_program_name_s, status_code_program_help_parameters_s);
-
-    //if (!(setting->flag & XXX_main_flag_line_last_no_e)) {
-      f_print_dynamic_raw(f_string_eol_s, file.stream);
-    //}
-
-    f_file_stream_flush(file);
-    funlockfile(file.stream);
-
-    return F_none;
-  }
-#endif // _di_status_code_print_help_
-
 #ifndef _di_status_code_main_
-  f_status_t status_code_main(fll_program_data_t * const main, const f_console_arguments_t arguments) {
+  void status_code_main(fll_program_data_t * const main, status_code_setting_t * const setting) {
 
-    f_status_t status = F_none;
+    if (!main || !setting) {
+      status_code_print_line_first(setting, main->error, F_true);
+      fll_error_print(main->error, F_parameter, "status_code_main", F_true);
+      status_code_print_line_last(setting, main->error, F_true);
 
-    // Load parameters.
-    status = f_console_parameter_process(arguments, &main->parameters);
-    if (F_status_is_error(status)) return;
+      setting->status = F_status_set_error(F_parameter);
 
-    {
-      f_array_length_t choice = 0;
-      f_uint16s_t choices = f_uint16s_t_initialize;
-
-      // Identify and prioritize "color context" parameters.
-      {
-        uint16_t choices_array[3] = { status_code_parameter_no_color_e, status_code_parameter_light_e, status_code_parameter_dark_e };
-        choices.array = choices_array;
-        choices.used = 3;
-
-        const uint8_t modes[3] = { f_color_mode_color_not_e, f_color_mode_light_e, f_color_mode_dark_e };
-
-        status = fll_program_parameter_process_context(choices, modes, F_true, main);
-
-        if (F_status_is_error(status)) {
-          fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process_context", F_true);
-
-          return;
-        }
-      }
-
-      // Identify and prioritize "verbosity" parameters.
-      {
-        uint16_t choices_array[5] = { status_code_parameter_verbosity_quiet_e, status_code_parameter_verbosity_error_e, status_code_parameter_verbosity_verbose_e, status_code_parameter_verbosity_debug_e, status_code_parameter_verbosity_normal_e };
-        choices.array = choices_array;
-        choices.used = 5;
-
-        const uint8_t verbosity[5] = { f_console_verbosity_quiet_e, f_console_verbosity_error_e, f_console_verbosity_verbose_e, f_console_verbosity_debug_e, f_console_verbosity_normal_e };
-
-        status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, main);
-
-        if (F_status_is_error(status)) {
-          fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process_verbosity", F_true);
-
-          return;
-        }
-      }
+      return;
     }
 
-    f_string_static_t * const argv = main->parameters.arguments.array;
+    if (F_status_is_error(setting->status)) return;
 
-    status = F_none;
+    setting->status = F_none;
 
-    if (main->parameters.array[status_code_parameter_help_e].result == f_console_result_found_e) {
-      status_code_print_help(main->output.to, main->context);
+    if (setting->flag & status_code_main_flag_help_e) {
+      status_code_print_help(setting, main->message);
 
-      return F_none;
+      return;
     }
 
-    if (main->parameters.array[status_code_parameter_version_e].result == f_console_result_found_e) {
-      fll_program_print_version(main->output.to, status_code_program_version_s);
+    if (setting->flag & status_code_main_flag_version_e) {
+      fll_program_print_version(main->message, status_code_program_version_s);
 
-      return F_none;
-    }
-
-    if (main->parameters.array[status_code_parameter_error_e].result == f_console_result_found_e) {
-      if (main->parameters.array[status_code_parameter_warning_e].result == f_console_result_found_e) {
-        if (main->parameters.array[status_code_parameter_number_e].result == f_console_result_none_e) {
-          if (main->error.verbosity != f_console_verbosity_quiet_e) {
-            flockfile(main->error.to.stream);
-
-            fl_print_format("%r%[%QCannot specify the '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-            fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, status_code_long_error_s, main->error.notable);
-            fl_print_format("%[' parameter with the '%]", main->error.to.stream, main->error.context, main->error.context);
-            fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, status_code_long_warning_s, main->error.notable);
-            fl_print_format("%[' parameter when not also specifying the '%]", main->error.to.stream, main->error.context, main->error.context);
-            fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, status_code_long_number_s, main->error.notable);
-            fl_print_format("%[' parameter.%]%r%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s, f_string_eol_s);
-
-            funlockfile(main->error.to.stream);
-          }
-
-          return F_status_set_error(status);
-        }
-      }
-
-      if (main->parameters.array[status_code_parameter_fine_e].result == f_console_result_found_e) {
-        if (main->error.verbosity != f_console_verbosity_quiet_e) {
-          fll_program_parameter_long_print_cannot_use_with(main->error, status_code_long_error_s, status_code_long_fine_s);
-          fll_print_dynamic_raw(f_string_eol_s, main->error.to.stream);
-        }
-
-        return F_status_set_error(status);
-      }
-    }
-    else if (main->parameters.array[status_code_parameter_warning_e].result == f_console_result_found_e && main->parameters.array[status_code_parameter_fine_e].result == f_console_result_found_e) {
-      if (main->error.verbosity != f_console_verbosity_quiet_e) {
-        fll_program_parameter_long_print_cannot_use_with(main->error, status_code_long_warning_s, status_code_long_fine_s);
-        fll_print_dynamic_raw(f_string_eol_s, main->error.to.stream);
-      }
-
-      return F_status_set_error(status);
-    }
-
-    if (main->parameters.remaining.used == 0 && !(main->pipe & fll_program_data_pipe_input_e)) {
-      fll_print_format("%[You failed to specify a status code.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
-
-      return F_status_set_error(F_parameter);
+      return;
     }
 
     f_status_t status2 = F_none;
 
-    if (main->parameters.array[status_code_parameter_number_e].result == f_console_result_found_e) {
+    if (setting->flag & status_code_main_flag_number_e) {
       if (main->pipe & fll_program_data_pipe_input_e) {
         // @todo call status_code_process_number() here for all main from pipe that is space separated.
       }
 
       if (main->parameters.remaining.used) {
-        flockfile(main->output.to.stream);
+        f_file_stream_lock(main->output.to);
 
         for (f_array_length_t i = 0; i < main->parameters.remaining.used; ++i) {
 
           if (!((++main->signal_check) % status_code_signal_check_d)) {
             if (fll_program_standard_signal_received(main)) {
-              status_code_print_signal_received(main);
+              fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
 
-              status = F_status_set_error(F_signal);
+              setting->status = F_status_set_error(F_signal);
 
               break;
             }
@@ -172,31 +59,31 @@ extern "C" {
             main->signal_check = 0;
           }
 
-          status2 = status_code_process_number(main, argv[main->parameters.remaining.array[i]]);
+          status2 = status_code_process_number(main, setting, main->parameters.arguments.array[main->parameters.remaining.array[i]]);
 
-          if (F_status_is_error(status2) && status == F_none) {
-            status = status2;
+          if (F_status_is_error(status2) && setting->status == F_none) {
+            setting->status = status2;
           }
         } // for
 
-        funlockfile(main->output.to.stream);
+        f_file_stream_unlock(main->output.to);
       }
     }
-    else if (main->parameters.array[status_code_parameter_error_e].result == f_console_result_found_e || main->parameters.array[status_code_parameter_warning_e].result == f_console_result_found_e || main->parameters.array[status_code_parameter_fine_e].result == f_console_result_found_e) {
+    else if (setting->flag & status_code_main_flag_error_e || setting->flag & status_code_main_flag_warning_e || setting->flag & status_code_main_flag_fine_e) {
       if (main->pipe & fll_program_data_pipe_input_e) {
         // @todo call status_code_process_check() here for all main from pipe that is space separated.
       }
 
       if (main->parameters.remaining.used) {
-        flockfile(main->output.to.stream);
+        f_file_stream_lock(main->output.to);
 
         for (f_array_length_t i = 0; i < main->parameters.remaining.used; ++i) {
 
           if (!((++main->signal_check) % status_code_signal_check_d)) {
             if (fll_program_standard_signal_received(main)) {
-              status_code_print_signal_received(main);
+              fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
 
-              status = F_status_set_error(F_signal);
+              setting->status = F_status_set_error(F_signal);
 
               break;
             }
@@ -204,14 +91,14 @@ extern "C" {
             main->signal_check = 0;
           }
 
-          status2 = status_code_process_check(main, argv[main->parameters.remaining.array[i]]);
+          status2 = status_code_process_check(main, setting, main->parameters.arguments.array[main->parameters.remaining.array[i]]);
 
-          if (F_status_is_error(status2) && status == F_none) {
-            status = status2;
+          if (F_status_is_error(status2) && setting->status == F_none) {
+            setting->status = status2;
           }
         } // for
 
-        funlockfile(main->output.to.stream);
+        f_file_stream_unlock(main->output.to);
       }
     }
     else {
@@ -220,15 +107,15 @@ extern "C" {
       }
 
       if (main->parameters.remaining.used) {
-        flockfile(main->output.to.stream);
+        f_file_stream_lock(main->output.to);
 
         for (f_array_length_t i = 0; i < main->parameters.remaining.used; ++i) {
 
           if (!((++main->signal_check) % status_code_signal_check_d)) {
             if (fll_program_standard_signal_received(main)) {
-              status_code_print_signal_received(main);
+              fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
 
-              status = F_status_set_error(F_signal);
+              setting->status = F_status_set_error(F_signal);
 
               break;
             }
@@ -236,26 +123,23 @@ extern "C" {
             main->signal_check = 0;
           }
 
-          status2 = status_code_process_normal(main, argv[main->parameters.remaining.array[i]]);
+          status2 = status_code_process_normal(main, setting, main->parameters.arguments.array[main->parameters.remaining.array[i]]);
 
-          if (F_status_is_error(status2) && status == F_none) {
-            status = status2;
+          if (F_status_is_error(status2) && setting->status == F_none) {
+            setting->status = status2;
           }
         } // for
 
-        funlockfile(main->output.to.stream);
+        f_file_stream_unlock(main->output.to);
       }
     }
 
-    if (F_status_set_fine(status) == F_interrupt) {
-      if (main->output.verbosity != f_console_verbosity_quiet_e) {
-        fflush(main->output.to.stream);
-
-        fll_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
-      }
+    if (F_status_is_error(setting->status)) {
+      status_code_print_line_last(setting, main->error, F_true);
     }
-
-    return status;
+    else if (setting->status != F_interrupt) {
+      status_code_print_line_last(setting, main->message, F_true);
+    }
   }
 #endif // _di_status_code_main_
 

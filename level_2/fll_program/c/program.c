@@ -5,91 +5,6 @@
 extern "C" {
 #endif
 
-#ifndef _di_fll_program_print_help_header_
-  f_status_t fll_program_print_help_header(const f_file_t output, const f_color_context_t context, const f_string_static_t name, const f_string_static_t version) {
-
-    fl_print_format(" %[%Q%]%r", output.stream, context.set.title, name, context.set.title, f_string_eol_s);
-    fl_print_format("  %[Version %Q%]%r", output.stream, context.set.notable, version, context.set.notable, f_string_eol_s);
-
-    fl_print_format("%r %[Available Options:%] ", output.stream, f_string_eol_s, context.set.important, context.set.important);
-
-    return F_none;
-  }
-#endif // _di_fll_program_print_help_header_
-
-#ifndef _di_fll_program_print_help_option_
-  f_status_t fll_program_print_help_option(const f_file_t output, const f_color_context_t context, const f_string_static_t option_short, const f_string_static_t option_long, const f_string_static_t symbol_short, const f_string_static_t symbol_long, const char *description) {
-
-    return private_fll_program_print_help_option(output, context, option_short, option_long, symbol_short, symbol_long, description);
-  }
-#endif // _di_fll_program_print_help_option_
-
-#ifndef _di_fll_program_print_help_option_standard_
-  f_status_t fll_program_print_help_option_standard(const f_file_t output, const f_color_context_t context) {
-
-    private_fll_program_print_help_option(output, context, f_console_standard_short_help_s, f_console_standard_long_help_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "         Print this help message.");
-    private_fll_program_print_help_option(output, context, f_console_standard_short_dark_s, f_console_standard_long_dark_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "         Output using colors that show up better on dark backgrounds.");
-    private_fll_program_print_help_option(output, context, f_console_standard_short_light_s, f_console_standard_long_light_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "        Output using colors that show up better on light backgrounds.");
-    private_fll_program_print_help_option(output, context, f_console_standard_short_no_color_s, f_console_standard_long_no_color_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "     Do not print using color.");
-    private_fll_program_print_help_option(output, context, f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "        Decrease verbosity, silencing most output.");
-    private_fll_program_print_help_option(output, context, f_console_standard_short_error_s, f_console_standard_long_error_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "        Decrease verbosity, using only error output.");
-    private_fll_program_print_help_option(output, context, f_console_standard_short_normal_s, f_console_standard_long_normal_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "       Set verbosity to normal.");
-    private_fll_program_print_help_option(output, context, f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "      Increase verbosity beyond normal output.");
-    private_fll_program_print_help_option(output, context, f_console_standard_short_debug_s, f_console_standard_long_debug_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "        Enable debugging, significantly increasing verbosity beyond normal output.");
-    private_fll_program_print_help_option(output, context, f_console_standard_short_version_s, f_console_standard_long_version_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "      Print only the version number.");
-    private_fll_program_print_help_option(output, context, f_console_standard_short_line_first_no_s, f_console_standard_long_line_first_no_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "Disable printing of first line.");
-    private_fll_program_print_help_option(output, context, f_console_standard_short_line_last_no_s, f_console_standard_long_line_last_no_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Disable printing of last line.");
-
-    return F_none;
-  }
-#endif // _di_fll_program_print_help_option_standard_
-
-#ifndef _di_fll_program_print_help_option_long_
-  f_status_t fll_program_print_help_option_long(const f_file_t output, const f_color_context_t context, const f_string_static_t option_long, const f_string_static_t symbol_long, const char *description) {
-
-    fl_print_format("%r      %Q%[%Q%]  %S", output.stream, f_string_eol_s, symbol_long, context.set.standout, option_long, context.set.standout, description);
-
-    return F_none;
-  }
-#endif // _di_fll_program_print_help_option_long_
-
-#ifndef _di_fll_program_print_help_option_other_
-  f_status_t fll_program_print_help_option_other(const f_file_t output, const f_color_context_t context, const f_string_static_t option_other, const char *description) {
-
-    fl_print_format("%r  %[%Q%]  %S", output.stream, f_string_eol_s, context.set.standout, option_other, context.set.standout, description);
-
-    return F_none;
-  }
-#endif // _di_fll_program_print_help_option_other_
-
-#ifndef _di_fll_program_print_help_usage_
-  f_status_t fll_program_print_help_usage(const f_file_t output, const f_color_context_t context, const f_string_static_t name, const f_string_static_t parameters) {
-
-    fl_print_format("%r%r %[Usage:%]%r", output.stream, f_string_eol_s, f_string_eol_s, context.set.important, context.set.important, f_string_eol_s);
-
-    fl_print_format("  %[%Q%]", output.stream, context.set.standout, name, context.set.standout);
-    fl_print_format(" %[[%] options %[]%]", output.stream, context.set.notable, context.set.notable, context.set.notable, context.set.notable);
-
-    if (parameters.used) {
-      fl_print_format(" %[[%] %Q %[]%]", output.stream, context.set.notable, context.set.notable, parameters, context.set.notable, context.set.notable);
-    }
-
-    f_print_dynamic_raw(f_string_eol_s, output.stream);
-
-    return F_none;
-  }
-#endif // _di_fll_program_print_help_usage_
-
-#ifndef _di_fll_program_print_version_
-  f_status_t fll_program_print_version(const f_file_t output, const f_string_static_t version) {
-
-    f_print_dynamic(version, output.stream);
-    f_print_dynamic_raw(f_string_eol_s, output.stream);
-
-    return F_none;
-  }
-#endif // _di_fll_program_print_version_
-
 #ifndef _di_fll_program_parameter_process_context_
   f_status_t fll_program_parameter_process_context(const f_uint16s_t choices, const uint8_t modes[], const bool right, fll_program_data_t * const main) {
 
@@ -331,15 +246,15 @@ extern "C" {
 #ifndef _di_fll_program_parameter_long_print_cannot_use_with_
   f_status_t fll_program_parameter_long_print_cannot_use_with(const fl_print_t print, const f_string_static_t first, const f_string_static_t second) {
 
-    flockfile(print.to.stream);
+    f_file_stream_lock(print.to);
 
-    fl_print_format("%r%[%QCannot specify the '%]", print.to.stream, f_string_eol_s, print.context, print.prefix, print.context);
+    fl_print_format("%[%QCannot specify the '%]", print.to.stream, print.context, print.prefix, print.context);
     fl_print_format("%[%r%r%]", print.to.stream, print.notable, f_console_symbol_long_enable_s, first, print.notable);
     fl_print_format("%[' parameter with the '%]", print.to.stream, print.context, print.context);
     fl_print_format("%[%r%r%]", print.to.stream, print.notable, f_console_symbol_long_enable_s, second, print.notable);
     fl_print_format("%[' parameter.%]%r", print.to.stream, print.context, print.context, f_string_eol_s);
 
-    funlockfile(print.to.stream);
+    f_file_stream_unlock(print.to);
 
     return F_none;
   }

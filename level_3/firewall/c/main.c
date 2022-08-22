@@ -2,12 +2,13 @@
 
 int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
-  const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize(argc, argv, envp);
   fll_program_data_t data = fll_program_data_t_initialize;
+  firewall_setting_t setting = firewall_setting_t_initialize;
 
   f_console_parameter_t parameters[] = firewall_console_parameter_t_initialize;
   data.parameters.array = parameters;
   data.parameters.used = firewall_total_parameters_d;
+  data.environment = envp;
 
   if (f_pipe_input_exists()) {
     data.pipe = fll_program_data_pipe_input_e;
@@ -15,7 +16,15 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
   fll_program_standard_set_up(&data);
 
-  const f_status_t status = firewall_main(&data, arguments);
+  {
+    const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize(argc, argv, envp);
+
+    firewall_setting_load(arguments, &data, &setting);
+  }
+
+  firewall_main(&data, &setting);
+
+  firewall_setting_unload(&data, &setting);
 
   fll_program_data_delete(&data);
 
@@ -25,7 +34,5 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
     exit(data.child);
   }
 
-  if (F_status_is_error(status)) return 1;
-
-  return 0;
+  return F_status_is_error(status) ? 1 : 0;
 }

@@ -169,7 +169,7 @@ extern "C" {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e) return;
 
-    flockfile(main->error.to.stream);
+    f_file_stream_lock(main->error.to);
 
     utf8_print_line_first(setting, main->error, F_false);
 
@@ -177,7 +177,7 @@ extern "C" {
     fl_print_format("%[%r%r%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, parameter, main->context.set.notable);
     fl_print_format("%[' is specified, but no value was given.%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
 
-    funlockfile(main->error.to.stream);
+    f_file_stream_unlock(main->error.to);
   }
 #endif // _di_utf8_print_error_no_value_
 
@@ -186,7 +186,7 @@ extern "C" {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e) return;
 
-    flockfile(main->error.to.stream);
+    f_file_stream_lock(main->error.to);
 
     utf8_print_line_first(setting, main->error, F_false);
 
@@ -194,7 +194,7 @@ extern "C" {
     fl_print_format("%[%ul%]", main->error.to.stream, main->context.set.notable, index, main->context.set.notable);
     fl_print_format("%[.%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
 
-    funlockfile(main->error.to.stream);
+    f_file_stream_unlock(main->error.to);
   }
 #endif // _di_utf8_print_error_parameter_file_name_empty_
 
@@ -203,7 +203,7 @@ extern "C" {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e) return;
 
-    flockfile(main->error.to.stream);
+    f_file_stream_lock(main->error.to);
 
     utf8_print_line_first(setting, main->error, F_false);
 
@@ -211,7 +211,7 @@ extern "C" {
     fl_print_format("%[%Q%]", main->error.to.stream, main->context.set.notable, name, main->context.set.notable);
     fl_print_format("%['.%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
 
-    funlockfile(main->error.to.stream);
+    f_file_stream_unlock(main->error.to);
   }
 #endif // _di_utf8_print_error_parameter_file_not_found_
 
@@ -246,54 +246,54 @@ extern "C" {
 #endif // _di_utf8_print_flush_
 
 #ifndef _di_utf8_print_help_
-  f_status_t utf8_print_help(utf8_setting_t * const setting, const f_file_t output, const f_color_context_t context) {
+  f_status_t utf8_print_help(utf8_setting_t * const setting, const fl_print_t print) {
 
-    flockfile(output.stream);
+    f_file_stream_lock(print.to);
 
-    f_print_dynamic_raw(setting->line_first, output.stream);
+    f_print_dynamic_raw(setting->line_first, print.to.stream);
 
-    fll_program_print_help_header(output, context, utf8_program_name_long_s, utf8_program_version_s);
+    fll_program_print_help_header(print, utf8_program_name_long_s, utf8_program_version_s);
 
-    fll_program_print_help_option_standard(output, context);
+    fll_program_print_help_option_standard(print);
 
-    f_print_dynamic_raw(f_string_eol_s, output.stream);
+    f_print_dynamic_raw(f_string_eol_s, print.to.stream);
 
-    fll_program_print_help_option(output, context, utf8_short_from_bytesequence_s, utf8_long_from_bytesequence_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "The expected input format is byte sequence (character data).");
-    fll_program_print_help_option(output, context, utf8_short_from_codepoint_s, utf8_long_from_codepoint_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   The expected input format is codepoint (such as U+0000).");
-    fll_program_print_help_option(output, context, utf8_short_from_file_s, utf8_long_from_file_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "        Use the given output as the input source.");
+    fll_program_print_help_option(print, utf8_short_from_bytesequence_s, utf8_long_from_bytesequence_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "The expected input format is byte sequence (character data).");
+    fll_program_print_help_option(print, utf8_short_from_codepoint_s, utf8_long_from_codepoint_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   The expected input format is codepoint (such as U+0000).");
+    fll_program_print_help_option(print, utf8_short_from_file_s, utf8_long_from_file_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "        Use the given print.to as the input source.");
 
-    f_print_dynamic_raw(f_string_eol_s, output.stream);
+    f_print_dynamic_raw(f_string_eol_s, print.to.stream);
 
-    fll_program_print_help_option(output, context, utf8_short_to_bytesequence_s, utf8_long_to_bytesequence_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "The output format is byte sequence (character data).");
-    fll_program_print_help_option(output, context, utf8_short_to_codepoint_s, utf8_long_to_codepoint_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   The output format is codepoint (such as U+0000).");
-    fll_program_print_help_option(output, context, utf8_short_to_combining_s, utf8_long_to_combining_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   The output format is to print whether or not character is combining or not.");
-    fll_program_print_help_option(output, context, utf8_short_to_file_s, utf8_long_to_file_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "        Use the given output as the output destination.");
-    fll_program_print_help_option(output, context, utf8_short_to_width_s, utf8_long_to_width_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       The output format is to print the width of a character (either 0, 1, or 2).");
+    fll_program_print_help_option(print, utf8_short_to_bytesequence_s, utf8_long_to_bytesequence_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "The print.to format is byte sequence (character data).");
+    fll_program_print_help_option(print, utf8_short_to_codepoint_s, utf8_long_to_codepoint_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   The print.to format is codepoint (such as U+0000).");
+    fll_program_print_help_option(print, utf8_short_to_combining_s, utf8_long_to_combining_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   The print.to format is to print whether or not character is combining or not.");
+    fll_program_print_help_option(print, utf8_short_to_file_s, utf8_long_to_file_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "        Use the given print.to as the print.to destination.");
+    fll_program_print_help_option(print, utf8_short_to_width_s, utf8_long_to_width_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       The print.to format is to print the width of a character (either 0, 1, or 2).");
 
-    f_print_dynamic_raw(f_string_eol_s, output.stream);
+    f_print_dynamic_raw(f_string_eol_s, print.to.stream);
 
-    fll_program_print_help_option(output, context, utf8_short_headers_s, utf8_long_headers_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "      Print headers for each section (pipe, output, or parameter).");
-    fll_program_print_help_option(output, context, utf8_short_separate_s, utf8_long_separate_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "     Separate characters by newlines (implied when printing headers).");
-    fll_program_print_help_option(output, context, utf8_short_strip_invalid_s, utf8_long_strip_invalid_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Strip invalid Unicode characters (do not print invalid sequences).");
-    fll_program_print_help_option(output, context, utf8_short_verify_s, utf8_long_verify_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       Only perform verification of valid sequences.");
+    fll_program_print_help_option(print, utf8_short_headers_s, utf8_long_headers_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "      Print headers for each section (pipe, file, or parameter).");
+    fll_program_print_help_option(print, utf8_short_separate_s, utf8_long_separate_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "     Separate characters by newlines (implied when printing headers).");
+    fll_program_print_help_option(print, utf8_short_strip_invalid_s, utf8_long_strip_invalid_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Strip invalid Unicode characters (do not print invalid sequences).");
+    fll_program_print_help_option(print, utf8_short_verify_s, utf8_long_verify_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       Only perform verification of valid sequences.");
 
-    fll_program_print_help_usage(output, context, utf8_program_name_s, utf8_program_help_parameters_s);
+    fll_program_print_help_usage(print, utf8_program_name_s, utf8_program_help_parameters_s);
 
-    fl_print_format("%r  The default behavior is to assume the expected input is byte sequence from the command line to be output to the screen as codepoints.%r%r", output.stream, f_string_eol_s, f_string_eol_s, f_string_eol_s);
+    fl_print_format("%r  The default behavior is to assume the expected input is byte sequence from the command line to be print.to to the screen as codepoints.%r%r", print.to.stream, f_string_eol_s, f_string_eol_s, f_string_eol_s);
 
-    fl_print_format("  Multiple input sources are allowed but only a single output destination is allowed.%r%r", output.stream, f_string_eol_s, f_string_eol_s);
+    fl_print_format("  Multiple input sources are allowed but only a single print.to destination is allowed.%r%r", print.to.stream, f_string_eol_s, f_string_eol_s);
 
-    fl_print_format("  When using the parameter '%[%r%r%]', no data is printed and 0 is returned if valid or 1 is returned if invalid.%r%r", output.stream, context.set.notable, f_console_symbol_long_enable_s, utf8_long_verify_s, context.set.notable, f_string_eol_s, f_string_eol_s);
+    fl_print_format("  When using the parameter '%[%r%r%]', no data is printed and 0 is returned if valid or 1 is returned if invalid.%r%r", print.to.stream, print.set->notable, f_console_symbol_long_enable_s, utf8_long_verify_s, print.set->notable, f_string_eol_s, f_string_eol_s);
 
-    fl_print_format("  When using the parameter '%[%r%r%]' with the parameter ", output.stream, context.set.notable, f_console_symbol_long_enable_s, utf8_long_to_combining_s, context.set.notable);
-    fl_print_format("'%[%r%r%]', the ", output.stream, context.set.notable, f_console_symbol_long_enable_s, utf8_long_to_width_s, context.set.notable);
-    fl_print_format("'%[%r%]' character is printed to represent the combining and the digits are used to represent widths.%r", output.stream, context.set.notable, utf8_string_combining_is_s, context.set.notable, f_string_eol_s);
-    fl_print_format("  The combining characters should be considered 1-width by themselves or 0-width when combined.%r", output.stream, f_string_eol_s);
+    fl_print_format("  When using the parameter '%[%r%r%]' with the parameter ", print.to.stream, print.set->notable, f_console_symbol_long_enable_s, utf8_long_to_combining_s, print.set->notable);
+    fl_print_format("'%[%r%r%]', the ", print.to.stream, print.set->notable, f_console_symbol_long_enable_s, utf8_long_to_width_s, print.set->notable);
+    fl_print_format("'%[%r%]' character is printed to represent the combining and the digits are used to represent widths.%r", print.to.stream, print.set->notable, utf8_string_combining_is_s, print.set->notable, f_string_eol_s);
+    fl_print_format("  The combining characters should be considered 1-width by themselves or 0-width when combined.%r", print.to.stream, f_string_eol_s);
 
-    f_print_dynamic_raw(setting->line_last, output.stream);
+    f_print_dynamic_raw(setting->line_last, print.to.stream);
 
-    f_file_stream_flush(output);
-    funlockfile(output.stream);
+    f_file_stream_flush(print.to);
+    f_file_stream_unlock(print.to);
 
     return F_none;
   }
@@ -486,30 +486,6 @@ extern "C" {
     funlockfile(main->output.to.stream);
   }
 #endif // _di_utf8_print_section_header_pipe_
-
-#ifndef _di_utf8_print_signal_received_
-  void utf8_print_signal_received(fll_program_data_t * const main, utf8_setting_t * const setting, const f_status_t signal) {
-
-    if (main->warning.verbosity != f_console_verbosity_verbose_e && main->warning.verbosity != f_console_verbosity_debug_e) {
-      return;
-    }
-
-    flockfile(main->warning.to.stream);
-
-    // Must flush and reset color because the interrupt may have interrupted the middle of a print function.
-    f_file_stream_flush(main->warning.to);
-
-    fl_print_format("%]", main->warning.to.stream, main->context.set.reset);
-
-    utf8_print_line_first(setting, main->warning, F_false);
-
-    fl_print_format("%r%[Received signal code %]", main->warning.to.stream, f_string_eol_s, main->context.set.warning, main->context.set.warning);
-    fl_print_format("%[%i%]", main->warning.to.stream, main->context.set.notable, signal, main->context.set.notable);
-    fl_print_format("%[.%]%r", main->warning.to.stream, main->context.set.warning, main->context.set.warning, f_string_eol_s);
-
-    funlockfile(main->warning.to.stream);
-  }
-#endif // _di_utf8_print_signal_received_
 
 #ifndef _di_utf8_print_width_
   void utf8_print_width(fll_program_data_t * const main, utf8_setting_t * const setting, const f_string_static_t sequence) {

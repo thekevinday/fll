@@ -31,7 +31,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_iki_read_process_at_
-  extern f_status_t iki_read_process_at(iki_read_data_t * const data, f_string_range_t *range) F_attribute_visibility_internal_d;
+  extern f_status_t iki_read_process_at(fll_program_data_t * const main, status_code_setting_t * const setting, iki_read_data_t * const data, f_string_range_t *range) F_attribute_visibility_internal_d;
 #endif // _di_iki_read_process_at_
 
 /**

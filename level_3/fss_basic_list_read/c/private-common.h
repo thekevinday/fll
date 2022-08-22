@@ -261,16 +261,6 @@ extern "C" {
   extern f_status_t fss_basic_list_read_depths_resize(const f_array_length_t length, fss_basic_list_read_depths_t *depths) F_attribute_visibility_internal_d;
 #endif // _di_fss_basic_list_read_depths_resize_
 
-/**
- * Print a message about a process signal being recieved, such as an interrupt signal.
- *
- * @param main
- *   The main program data.
- */
-#ifndef _di_fss_basic_list_read_print_signal_received_
-  extern void fss_basic_list_read_print_signal_received(fll_program_data_t * const main) F_attribute_visibility_internal_d;
-#endif // _di_fss_basic_list_read_print_signal_received_
-
 #ifdef __cplusplus
 } // extern "C"
 #endif

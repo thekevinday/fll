@@ -407,24 +407,6 @@ extern "C" {
   }
 #endif // _di_control_print_error_socket_file_not_
 
-#ifndef _di_control_print_signal_received_
-  void control_print_signal_received(const fll_program_data_t * const main, const f_status_t signal) {
-
-    if (main->warning.verbosity != f_console_verbosity_verbose_e && main->warning.verbosity != f_console_verbosity_debug_e) return;
-
-    // Must flush and reset color because the interrupt may have interrupted the middle of a print function.
-    fflush(main->warning.to.stream);
-
-    flockfile(main->warning.to.stream);
-
-    fl_print_format("%]%r%r%[Received signal code%] ", main->warning.to.stream, main->context.set.reset, f_string_eol_s, f_string_eol_s, main->context.set.warning, main->context.set.warning);
-    fl_print_format("%[%i%]", main->warning.to.stream, main->context.set.notable, signal, main->context.set.notable);
-    fl_print_format("%[.%]%r", main->warning.to.stream, main->context.set.warning, main->context.set.warning, f_string_eol_s);
-
-    funlockfile(main->warning.to.stream);
-  }
-#endif // _di_control_print_signal_received_
-
 #ifndef _di_control_print_warning_packet_header_duplicate_object_
   void control_print_warning_packet_header_duplicate_object(const fll_program_data_t * const main, const f_string_static_t response_header) {
 

@@ -81,7 +81,7 @@ extern "C" {
 
         if (!((++main->signal_check) % utf8_signal_check_d)) {
           if (fll_program_standard_signal_received(main)) {
-            utf8_print_signal_received(main, setting, status);
+            fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
 
             status = F_interrupt;
 

@@ -372,6 +372,8 @@ extern "C" {
       F_no_not,
       F_object,
       F_object_not,
+      F_okay,
+      F_okay_not,
       F_once,
       F_once_not,
       F_option,

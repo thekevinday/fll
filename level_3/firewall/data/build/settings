@@ -22,11 +22,11 @@ build_libraries-individual -lfll_error -lfll_execute -lfll_fss -lfll_print -lfll
 build_libraries-level -lfll_2 -lfll_1 -lfll_0
 build_libraries-monolithic -lfll
 
-build_sources_library firewall.c common.c private-common.c private-firewall.c
+build_sources_library firewall.c common.c print.c private-common.c private-firewall.c
 
 build_sources_program main.c
 
-build_sources_headers firewall.h common.h
+build_sources_headers firewall.h common.h print.h
 
 build_sources_setting default-blacklist default-whitelist example-device-firewall firewall-first firewall-last firewall-other
 

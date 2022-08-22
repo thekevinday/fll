@@ -74,6 +74,11 @@ extern "C" {
 #ifndef _di_utf8_setting_delete_
   f_status_t utf8_setting_delete(utf8_setting_t * const setting) {
 
+    if (!setting) return F_status_set_error(F_parameter);
+
+    f_string_dynamic_resize(0, &setting->buffer);
+    f_string_dynamic_resize(0, &setting->text);
+
     f_string_dynamics_resize(0, &setting->path_files_from);
     f_string_dynamics_resize(0, &setting->path_files_to);
 
@@ -83,6 +88,8 @@ extern "C" {
 
 #ifndef _di_utf8_setting_load_
   void utf8_setting_load(const f_console_arguments_t arguments, fll_program_data_t * const main, utf8_setting_t * const setting) {
+
+    if (!main || !setting) return;
 
     // Load parameters.
     setting->status = f_console_parameter_process(arguments, &main->parameters);
@@ -103,7 +110,9 @@ extern "C" {
         setting->status = fll_program_parameter_process_context(choices, modes, F_true, main);
 
         if (F_status_is_error(setting->status)) {
+          utf8_print_line_first(setting, main->error, F_true);
           fll_error_print(main->error, F_status_set_fine(setting->status), "fll_program_parameter_process_context", F_true);
+          utf8_print_line_last(setting, main->error, F_true);
 
           return;
         }
@@ -134,7 +143,9 @@ extern "C" {
         setting->status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, main);
 
         if (F_status_is_error(setting->status)) {
+          utf8_print_line_first(setting, main->error, F_true);
           fll_error_print(main->error, F_status_set_fine(setting->status), "fll_program_parameter_process_verbosity", F_true);
+          utf8_print_line_last(setting, main->error, F_true);
 
           return;
         }
@@ -161,7 +172,9 @@ extern "C" {
         setting->status = f_console_parameter_prioritize_right(main->parameters, choices, &choice);
 
         if (F_status_is_error(setting->status)) {
+          utf8_print_line_first(setting, main->error, F_true);
           fll_error_print(main->error, F_status_set_fine(setting->status), "f_console_parameter_prioritize_right", F_true);
+          utf8_print_line_last(setting, main->error, F_true);
 
           return;
         }
@@ -192,7 +205,9 @@ extern "C" {
         setting->status = f_console_parameter_prioritize_right(main->parameters, choices, &choice);
 
         if (F_status_is_error(setting->status)) {
+          utf8_print_line_first(setting, main->error, F_true);
           fll_error_print(main->error, F_status_set_fine(setting->status), "f_console_parameter_prioritize_right", F_true);
+          utf8_print_line_last(setting, main->error, F_true);
 
           return;
         }
@@ -410,8 +425,9 @@ extern "C" {
 #ifndef _di_utf8_setting_unload_
   f_status_t utf8_setting_unload(fll_program_data_t * const main, utf8_setting_t * const setting) {
 
-    f_string_dynamic_resize(0, &setting->buffer);
-    f_string_dynamic_resize(0, &setting->text);
+    if (!main || !setting) return F_status_set_error(F_parameter);
+
+    utf8_setting_delete(setting);
 
     return F_none;
   }

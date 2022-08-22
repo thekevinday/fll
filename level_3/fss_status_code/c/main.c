@@ -2,12 +2,13 @@
 
 int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
-  const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize(argc, argv, envp);
   fll_program_data_t data = fll_program_data_t_initialize;
+  fss_status_code_setting_t setting = fss_status_code_setting_t_initialize;
 
   f_console_parameter_t parameters[] = fss_status_code_console_parameter_t_initialize;
   data.parameters.array = parameters;
   data.parameters.used = fss_status_code_total_parameters_d;
+  data.environment = envp;
 
   if (f_pipe_input_exists()) {
     data.pipe = fll_program_data_pipe_input_e;
@@ -15,13 +16,19 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
   fll_program_standard_set_up(&data);
 
-  const f_status_t status = fss_status_code_main(&data, arguments);
+  {
+    const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize(argc, argv, envp);
+
+    fss_status_code_setting_load(arguments, &data, &setting);
+  }
+
+  fss_status_code_main(&data, &setting);
+
+  fss_status_code_setting_unload(&data, &setting);
 
   fll_program_data_delete(&data);
 
   fll_program_standard_set_down(&data);
 
-  if (F_status_is_error(status) || status == F_false) return 1;
-
-  return 0;
+  return (F_status_is_error(setting.status) || setting.status == F_false) ? 1 : 0;
 }

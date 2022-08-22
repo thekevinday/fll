@@ -22,11 +22,11 @@ build_libraries-individual -lfll_error -lfll_file -lfll_fss -lfll_fss_status_str
 build_libraries-level -lfll_2 -lfll_1 -lfll_0
 build_libraries-monolithic -lfll
 
-build_sources_library fss_status_code.c common.c private-common.c private-fss_status_code.c
+build_sources_library fss_status_code.c common.c print.c private-common.c private-fss_status_code.c
 
 build_sources_program main.c
 
-build_sources_headers fss_status_code.h common.h
+build_sources_headers fss_status_code.h common.h print.h
 
 build_script yes
 build_shared yes

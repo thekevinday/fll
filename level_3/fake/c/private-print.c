@@ -537,24 +537,6 @@ extern "C" {
   }
 #endif // _di_fake_print_message_section_operation_unknown_
 
-#ifndef _di_fake_print_signal_received_
-  void fake_print_signal_received(fake_data_t * const data) {
-
-    if (data->main->warning.verbosity != f_console_verbosity_verbose_e && data->main->warning.verbosity != f_console_verbosity_debug_e) return;
-
-    // Must flush and reset color because the interrupt may have interrupted the middle of a print function.
-    fflush(data->main->warning.to.stream);
-
-    flockfile(data->main->warning.to.stream);
-
-    fl_print_format("%]%r%r%[Received signal code %]", data->main->warning.to.stream, data->main->context.set.reset, f_string_eol_s, f_string_eol_s, data->main->context.set.warning, data->main->context.set.warning);
-    fl_print_format("%[%i%]", data->main->warning.to.stream, data->main->context.set.notable, data->main->signal_received, data->main->context.set.notable);
-    fl_print_format("%[.%]%r", data->main->warning.to.stream, data->main->context.set.warning, data->main->context.set.warning, f_string_eol_s);
-
-    funlockfile(data->main->warning.to.stream);
-  }
-#endif // _di_fake_print_signal_received_
-
 #ifndef _di_fake_print_warning_settings_content_empty_
   void fake_print_warning_settings_content_empty(fake_data_t * const data, const f_string_static_t path_file, const f_string_dynamic_t buffer, const f_string_range_t range_object, const f_string_static_t settings_name) {
 

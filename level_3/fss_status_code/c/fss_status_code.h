@@ -1,7 +1,7 @@
 /**
  * FLL - Level 3
  *
- * Project: FSS
+ * Project: FSS Status Code
  * API Version: 0.7
  * Licenses: lgpl-2.1-or-later
  *
@@ -44,25 +44,11 @@
 
 // FSS Status Code includes.
 #include <program/fss_status_code/common.h>
+#include <program/fss_status_code/print.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-/**
- * Print help.
- *
- * @param file
- *   The file to print to.
- * @param context
- *   The color context settings.
- *
- * @return
- *   F_none on success.
- */
-#ifndef _di_fss_status_code_print_help_
-  extern f_status_t fss_status_code_print_help(const f_file_t file, const f_color_context_t context);
-#endif // _di_fss_status_code_print_help_
 
 /**
  * Execute main program.
@@ -77,16 +63,19 @@ extern "C" {
  *
  * @param main
  *   The main program data.
- * @param arguments
- *   The parameters passed to the process.
+ * @param setting
+ *   The main program settings.
  *
- * @return
- *   F_none on success.
+ *   This alters setting.status:
+ *     F_none on success.
+ *     F_true on success when performing verification and verify passed.
+ *     F_false on success when performing verification and verify failed.
+ *     F_interrupt on (exit) signal received.
  *
- *   Status codes (with error bit) are returned on any problem.
+ *     F_parameter (with error bit) if main is NULL or setting is NULL.
  */
 #ifndef _di_fss_status_code_main_
-  extern f_status_t fss_status_code_main(fll_program_data_t * const main, const f_console_arguments_t arguments);
+  extern void fss_status_code_main(fll_program_data_t * const main, fss_status_code_setting_t * const setting);
 #endif // _di_fss_status_code_main_
 
 #ifdef __cplusplus

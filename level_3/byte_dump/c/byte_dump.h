@@ -54,23 +54,6 @@ extern "C" {
 #endif
 
 /**
- * Print help.
- *
- * @param file
- *   The file to print to.
- * @param context
- *   The color context settings.
- *
- * @return
- *   F_none on success.
- *
- * @see byte_dump_main()
- */
-#ifndef _di_byte_dump_print_help_
-  extern f_status_t byte_dump_print_help(const f_file_t file, const f_color_context_t context);
-#endif // _di_byte_dump_print_help_
-
-/**
  * Execute main program.
  *
  * @param main
@@ -95,8 +78,74 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_byte_dump_main_
-  extern f_status_t byte_dump_main(fll_program_data_t * const main, const f_console_arguments_t arguments);
+  extern f_status_t byte_dump_main(fll_program_data_t * const main, byte_dump_setting_t * const setting);
 #endif // _di_byte_dump_main_
+
+/**
+ * Delete the program main setting data.
+ *
+ * @param setting
+ *   The program main setting data.
+ *   This does not alter setting.status.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_byte_dump_setting_delete_
+  extern f_status_t byte_dump_setting_delete(byte_dump_setting_t * const setting);
+#endif // _di_byte_dump_setting_delete_
+
+/**
+ * Perform the standard program setting load process.
+ *
+ * This prints error messages as appropriate.
+ *
+ * If either main or setting is NULL, then this immediately retuns without doing anything.
+ *
+ * @param arguments
+ *   The parameters passed to the process (often referred to as command line arguments).
+ * @param main
+ *   The main program data.
+ * @param setting
+ *   The main program settings.
+ *
+ *   This alters setting.status:
+ *     F_none on success.
+ *
+ *     Errors (with error bit) from: f_console_parameter_process().
+ *     Errors (with error bit) from: fll_program_parameter_process_context().
+ *
+ * @see f_console_parameter_process()
+ * @see fll_program_parameter_process_context()
+ */
+#ifndef _di_byte_dump_setting_load_
+  extern void byte_dump_setting_load(const f_console_arguments_t arguments, fll_program_data_t * const main, byte_dump_setting_t * const setting);
+#endif // _di_byte_dump_setting_load_
+
+/**
+ * Perform the standard program setting unload process.
+ *
+ * @param main
+ *   The main program data.
+ * @param setting
+ *   The main program settings.
+ *   This does not alter setting.status.
+ *   All buffers are deallocated.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: utf8_setting_delete().
+ *
+ * @see utf8_setting_delete()
+ */
+#ifndef _di_byte_dump_setting_unload_
+  extern f_status_t byte_dump_setting_unload(fll_program_data_t * const main, byte_dump_setting_t * const setting);
+#endif // _di_byte_dump_setting_unload_
 
 #ifdef __cplusplus
 } // extern "C"

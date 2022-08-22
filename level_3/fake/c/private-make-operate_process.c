@@ -287,7 +287,7 @@ extern "C" {
     if (!program.used && !arguments.used) return F_data_not;
 
     if (fll_program_standard_signal_received(data_make->main)) {
-      fake_print_signal_received(data_make->data);
+      fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
 
       return F_status_set_error(F_interrupt);
     }
@@ -363,7 +363,7 @@ extern "C" {
     status = fll_execute_program(program, arguments, &parameter, 0, (void *) &return_code);
 
     if (fll_program_standard_signal_received(data_make->main)) {
-      fake_print_signal_received(data_make->data);
+      fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
 
       return F_status_set_error(F_interrupt);
     }

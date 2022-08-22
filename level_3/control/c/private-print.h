@@ -309,18 +309,6 @@ extern "C" {
 #endif // _di_control_print_error_socket_file_not_
 
 /**
- * Print a message about a process signal being recieved, such as an interrupt signal.
- *
- * @param main
- *   The main program data.
- * @param signal
- *   The signal received.
- */
-#ifndef _di_control_print_signal_received_
-  extern void control_print_signal_received(const fll_program_data_t * const main, const f_status_t signal) F_attribute_visibility_internal_d;
-#endif // _di_control_print_signal_received_
-
-/**
  * Print a warning message about a response header being repeated (when debugging).
  *
  * This program currently does not support multiple headers for any given valid header Object.

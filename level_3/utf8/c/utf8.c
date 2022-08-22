@@ -16,25 +16,23 @@ extern "C" {
       fll_error_print(main->error, F_parameter, "utf8_main", F_true);
       utf8_print_line_last(setting, main->error, F_true);
 
-      return;
-    }
-
-    if (F_status_is_error(setting->status)) {
-      utf8_print_line_last(setting, main->error, F_true);
+      setting->status = F_status_set_error(F_parameter);
 
       return;
     }
+
+    if (F_status_is_error(setting->status)) return;
 
     setting->status = F_none;
 
     if (setting->flag & utf8_main_flag_help_e) {
-      utf8_print_help(setting, main->message.to, main->context);
+      utf8_print_help(setting, main->message);
 
       return;
     }
 
     if (setting->flag & utf8_main_flag_version_e) {
-      fll_program_print_version(main->message.to, utf8_program_version_s);
+      fll_program_print_version(main->message, utf8_program_version_s);
 
       return;
     }

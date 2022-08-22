@@ -48,21 +48,6 @@ extern "C" {
 #endif
 
 /**
- * Print help.
- *
- * @param file
- *   The file to print to.
- * @param context
- *   The color context settings.
- *
- * @return
- *   F_none on success.
- */
-#ifndef _di_fss_embedded_list_write_print_help_
-  extern f_status_t fss_embedded_list_write_print_help(const f_file_t file, const f_color_context_t context);
-#endif // _di_fss_embedded_list_write_print_help_
-
-/**
  * Execute main program.
  *
  * Be sure to call fss_embedded_list_write_main_delete() after executing this.
@@ -86,7 +71,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fss_embedded_list_write_main_
-  extern f_status_t fss_embedded_list_write_main(fll_program_data_t * const main, const f_console_arguments_t arguments);
+  extern f_status_t fss_embedded_list_write_main(fll_program_data_t * const main, fss_embedded_list_write_setting_t * const setting);
 #endif // _di_fss_embedded_list_write_main_
 
 #ifdef __cplusplus

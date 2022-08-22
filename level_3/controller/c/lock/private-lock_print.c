@@ -50,15 +50,15 @@ extern "C" {
       f_thread_mutex_lock(&thread->lock.print);
     }
 
-    flockfile(to.stream);
+    f_file_stream_lock(to);
   }
 #endif // _di_controller_lock_print_
 
 #ifndef _di_controller_unlock_print_flush_
   void controller_unlock_print_flush(const f_file_t to, controller_thread_t * const thread) {
 
-    f_file_stream_flush(to.stream);
-    funlockfile(to.stream);
+    f_file_stream_flush(to);
+    f_file_stream_unlock(to);
 
     if (thread) {
       f_thread_mutex_unlock(&thread->lock.print);

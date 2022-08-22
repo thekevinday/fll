@@ -180,7 +180,7 @@ extern "C" {
 
       if (!((++main->signal_check) % fss_extended_write_signal_check_d)) {
         if (fll_program_standard_signal_received(main)) {
-          fss_extended_write_print_signal_received(main);
+          fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
 
           status = F_status_set_error(F_interrupt);
 

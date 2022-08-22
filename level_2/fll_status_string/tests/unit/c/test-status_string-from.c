@@ -278,6 +278,8 @@ void test__fll_status_string_from__works(void **state) {
     F_no_not,
     F_object,
     F_object_not,
+    F_okay,
+    F_okay_not,
     F_once,
     F_once_not,
     F_option,
@@ -870,6 +872,8 @@ void test__fll_status_string_from__works(void **state) {
     f_status_no_not_s,
     f_status_object_s,
     f_status_object_not_s,
+    f_status_okay_s,
+    f_status_okay_not_s,
     f_status_once_s,
     f_status_once_not_s,
     f_status_option_s,
@@ -1229,7 +1233,7 @@ void test__fll_status_string_from__works(void **state) {
     f_status_status_code_last_s,
   };
 
-  for (uint16_t i = 0; i < 589; ++i) {
+  for (uint16_t i = 0; i < 591; ++i) {
 
     f_status_t result = F_none;
 

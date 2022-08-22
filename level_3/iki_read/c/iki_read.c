@@ -6,101 +6,8 @@
 extern "C" {
 #endif
 
-#ifndef _di_iki_read_print_help_
-  f_status_t iki_read_print_help(const f_file_t file, const f_color_context_t context) {
-
-    flockfile(file.stream);
-
-    //if (!(setting->flag & XXX_main_flag_line_first_no_e)) {
-      f_print_dynamic_raw(f_string_eol_s, file.stream);
-    //}
-
-    fll_program_print_help_header(file, context, iki_read_program_name_long_s, iki_read_program_version_s);
-
-    fll_program_print_help_option_standard(file, context);
-
-    f_print_dynamic_raw(f_string_eol_s, file.stream);
-
-    fll_program_print_help_option(file, context, iki_read_short_at_s, iki_read_long_at_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Select variable at this numeric index.");
-    fll_program_print_help_option(file, context, iki_read_short_line_s, iki_read_long_line_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Print only the variables at the given line within the file.");
-    fll_program_print_help_option(file, context, iki_read_short_name_s, iki_read_long_name_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Select variables with this name.");
-    fll_program_print_help_option(file, context, iki_read_short_whole_s, iki_read_long_whole_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Print all of the data instead of just the IKI variable data.");
-
-    f_print_dynamic_raw(f_string_eol_s, file.stream);
-
-    fll_program_print_help_option(file, context, iki_read_short_content_s, iki_read_long_content_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Print the variable value (aka: content) (default)");
-    fll_program_print_help_option(file, context, iki_read_short_literal_s, iki_read_long_literal_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Print the entire variable (aka: object, content, and syntax).");
-    fll_program_print_help_option(file, context, iki_read_short_object_s, iki_read_long_object_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Print the variable name (aka: object).");
-    fll_program_print_help_option(file, context, iki_read_short_total_s, iki_read_long_total_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "  Print the total number of variables.");
-
-    f_print_dynamic_raw(f_string_eol_s, file.stream);
-
-    fll_program_print_help_option(file, context, iki_read_short_replace_s, iki_read_long_replace_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Simple substitution, replacing the variable for the given name with the given string.");
-    fll_program_print_help_option(file, context, iki_read_short_substitute_s, iki_read_long_substitute_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Substitute the variable for the given name and matching content value with the given string.");
-    fll_program_print_help_option(file, context, iki_read_short_wrap_s, iki_read_long_wrap_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "      Prepend and append strings for the given name.");
-
-    fll_program_print_help_usage(file, context, iki_read_program_name_s, fll_program_parameter_filenames_s);
-
-    fl_print_format("%r %[Notes:%]%r", file.stream, f_string_eol_s, context.set.important, context.set.important, f_string_eol_s);
-    fl_print_format("  This program will find and print variables, vocabularies, or content following the IKI standard, without focusing on any particular vocabulary specification.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
-
-    fl_print_format("  The %[%r%r%] option requires 2 additional parameters:", file.stream, context.set.notable, f_console_symbol_long_enable_s, iki_read_long_replace_s, context.set.notable);
-    fl_print_format(" %[<%]%r%[>%]", file.stream, context.set.notable, context.set.notable, iki_read_substitution_vocabulary_s, context.set.notable, context.set.notable);
-    fl_print_format(" %[<%]%r%[>%].%r", file.stream, context.set.notable, context.set.notable, iki_read_substitution_with_s, context.set.notable, context.set.notable, f_string_eol_s);
-
-    fl_print_format("    %[%r%]: The name of the vocabulary whose content is to be substituted.%r", file.stream, context.set.notable, iki_read_substitution_vocabulary_s, context.set.notable, f_string_eol_s);
-    fl_print_format("    %[%r%]: The new string to use as the substitute.%r%r", file.stream, context.set.notable, iki_read_substitution_with_s, context.set.notable, f_string_eol_s, f_string_eol_s);
-
-    fl_print_format("  The vocabulary is case-sensitive and must exactly match.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
-
-    fl_print_format("  The %[%r%r%] option requires 3 additional parameters:", file.stream, context.set.notable, f_console_symbol_long_enable_s, iki_read_long_substitute_s, context.set.notable);
-    fl_print_format(" %[<%]%r%[>%]", file.stream, context.set.notable, context.set.notable, iki_read_substitution_vocabulary_s, context.set.notable, context.set.notable);
-    fl_print_format(" %[<%]%r%[>%]", file.stream, context.set.notable, context.set.notable, iki_read_substitution_replace_s, context.set.notable, context.set.notable);
-    fl_print_format(" %[<%]%r%[>%].%r", file.stream, context.set.notable, context.set.notable, iki_read_substitution_with_s, context.set.notable, context.set.notable, f_string_eol_s);
-
-    fl_print_format("    %[%r%]: The name of the vocabulary whose content is to be substituted.%r", file.stream, context.set.notable, iki_read_substitution_vocabulary_s, context.set.notable, f_string_eol_s);
-    fl_print_format("    %[%r%]: The content matching this exact string will be substituted.%r", file.stream, context.set.notable, iki_read_substitution_replace_s, context.set.notable, f_string_eol_s);
-    fl_print_format("    %[%r%]: The new string to use as the substitute.%r%r", file.stream, context.set.notable, iki_read_substitution_with_s, context.set.notable, f_string_eol_s, f_string_eol_s);
-
-    fl_print_format("  The vocabulary and replacement are case-sensitive and must exactly match.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
-
-    fl_print_format("  The %[%r%r%] option requires 3 additional parameters:", file.stream, context.set.notable, f_console_symbol_long_enable_s, iki_read_long_wrap_s, context.set.notable);
-    fl_print_format(" %[<%]%r%[>%]", file.stream, context.set.notable, context.set.notable, iki_read_substitution_vocabulary_s, context.set.notable, context.set.notable);
-    fl_print_format(" %[<%]%r%[>%]", file.stream, context.set.notable, context.set.notable, iki_read_substitution_before_s, context.set.notable, context.set.notable);
-    fl_print_format(" %[<%]%r%[>%].%r", file.stream, context.set.notable, context.set.notable, iki_read_substitution_after_s, context.set.notable, context.set.notable, f_string_eol_s);
-
-    fl_print_format("    %[%r%]: The name of the vocabulary whose content is to be wrapped.%r", file.stream, context.set.notable, iki_read_substitution_vocabulary_s, context.set.notable, f_string_eol_s);
-    fl_print_format("    %[%r%]: The string to prepend.%r", file.stream, context.set.notable, iki_read_substitution_before_s, context.set.notable, f_string_eol_s);
-    fl_print_format("    %[%r%]: The string to append.%r%r", file.stream, context.set.notable, iki_read_substitution_after_s, context.set.notable, f_string_eol_s, f_string_eol_s);
-
-    fl_print_format("  The vocabulary is case-sensitive and must exactly match.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
-
-    fl_print_format("  The difference between %[%r%r%]", file.stream, context.set.notable, f_console_symbol_long_enable_s, iki_read_long_replace_s, context.set.notable);
-    fl_print_format(" and %[%r%r%] is that the", file.stream, context.set.notable, f_console_symbol_long_enable_s, iki_read_long_substitute_s, context.set.notable);
-    fl_print_format(" %[%r%r%] option substitutes all matching vocabulary names and the", file.stream, context.set.notable, f_console_symbol_long_enable_s, iki_read_long_replace_s, context.set.notable);
-    fl_print_format(" %[%r%r%] option substitutes all matching vocabulary names that must also have the given matching content.%r%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, iki_read_long_substitute_s, context.set.notable, f_string_eol_s, f_string_eol_s);
-
-    fl_print_format("  The %[%r%r%]", file.stream, context.set.notable, f_console_symbol_long_enable_s, iki_read_long_substitute_s, context.set.notable);
-    fl_print_format(" option takes priority over the %[%r%r%] option when matching the same variable.%r%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, iki_read_long_replace_s, context.set.notable, f_string_eol_s, f_string_eol_s);
-
-    fl_print_format("  The %[%r%r%]", file.stream, context.set.notable, f_console_symbol_long_enable_s, iki_read_long_wrap_s, context.set.notable);
-    fl_print_format(" option is ignored when the %[%r%r%] option is matching the same variable.%r%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, iki_read_long_substitute_s, context.set.notable, f_string_eol_s, f_string_eol_s);
-
-    fl_print_format("  The default behavior is to only display content portion of the IKI variable.%r", file.stream, f_string_eol_s);
-
-    //if (!(setting->flag & XXX_main_flag_line_last_no_e)) {
-      f_print_dynamic_raw(f_string_eol_s, file.stream);
-    //}
-
-    f_file_stream_flush(file);
-    funlockfile(file.stream);
-
-    return F_none;
-  }
-#endif // _di_iki_read_print_help_
-
 #ifndef _di_iki_read_main_
-  f_status_t iki_read_main(fll_program_data_t * const main, const f_console_arguments_t arguments) {
+  f_status_t iki_read_main(fll_program_data_t * const main, iki_read_setting_t * const setting) {
 
     f_status_t status = F_none;
 
@@ -154,7 +61,7 @@ extern "C" {
     status = F_none;
 
     if (main->parameters.array[iki_read_parameter_help_e].result == f_console_result_found_e) {
-      iki_read_print_help(main->output.to, main->context);
+      iki_read_print_help(setting, main->message);
 
       iki_read_data_delete(&data);
 
@@ -162,7 +69,7 @@ extern "C" {
     }
 
     if (main->parameters.array[iki_read_parameter_version_e].result == f_console_result_found_e) {
-      fll_program_print_version(main->output.to, iki_read_program_version_s);
+      fll_program_print_version(main->message, iki_read_program_version_s);
 
       iki_read_data_delete(&data);
 
@@ -401,7 +308,7 @@ extern "C" {
 
           if (!((++main->signal_check) % iki_read_signal_check_d)) {
             if (fll_program_standard_signal_received(main)) {
-              iki_read_print_signal_received(&data);
+              fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
 
               status = F_status_set_error(F_interrupt);
 
@@ -469,7 +376,7 @@ extern "C" {
 
             // The signal check is always performed on each pass.
             if (size_file > iki_read_block_max && fll_program_standard_signal_received(main)) {
-              iki_read_print_signal_received(&data);
+              fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
 
               status = F_status_set_error(F_interrupt);
 

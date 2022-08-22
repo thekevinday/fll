@@ -65,7 +65,7 @@ extern "C" {
 
       if (!((++main->signal_check) % fss_basic_read_signal_check_d)) {
         if (fll_program_standard_signal_received(main)) {
-          fss_basic_read_print_signal_received(main);
+          fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
 
           return F_status_set_error(F_interrupt);
         }
@@ -153,7 +153,7 @@ extern "C" {
 
         if (!((++main->signal_check) % fss_basic_read_signal_check_d)) {
           if (fll_program_standard_signal_received(main)) {
-            fss_basic_read_print_signal_received(main);
+            fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
 
             return F_status_set_error(F_interrupt);
           }
@@ -233,7 +233,7 @@ extern "C" {
 
     if (F_status_is_error(status)) {
       if (F_status_set_fine(status) == F_interrupt) {
-        fss_basic_read_print_signal_received(main);
+        fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
 
         return status;
       }
@@ -378,7 +378,7 @@ extern "C" {
 
       if (!((++main->signal_check) % fss_basic_read_signal_check_d)) {
         if (fll_program_standard_signal_received(main)) {
-          fss_basic_read_print_signal_received(main);
+          fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
 
           return F_status_set_error(F_interrupt);
         }
@@ -461,7 +461,7 @@ extern "C" {
 
       if (!((++main->signal_check) % fss_basic_read_signal_check_d)) {
         if (fll_program_standard_signal_received(main)) {
-          fss_basic_read_print_signal_received(main);
+          fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
 
           return F_status_set_error(F_interrupt);
         }
@@ -494,7 +494,7 @@ extern "C" {
 
       if (!((++main->signal_check) % fss_basic_read_signal_check_d)) {
         if (fll_program_standard_signal_received(main)) {
-          fss_basic_read_print_signal_received(main);
+          fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
 
           return F_status_set_error(F_interrupt);
         }
@@ -645,7 +645,7 @@ extern "C" {
 
       if (!((++main->signal_check) % fss_basic_read_signal_check_d)) {
         if (fll_program_standard_signal_received(main)) {
-          fss_basic_read_print_signal_received(main);
+          fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
 
           return F_status_set_error(F_interrupt);
         }

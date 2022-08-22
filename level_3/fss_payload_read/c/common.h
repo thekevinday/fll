@@ -287,6 +287,132 @@ extern "C" {
   };
 #endif // _di_fss_payload_read_delimit_modes_
 
+/**
+ * Flags used to represent flags passed to the main function.
+ *
+ * fss_payload_read_main_flag_*_e:
+ *   - none:          No modes in use.
+ *   - file_from:     Using a specified source file.
+ *   - file_to:       Using a specified destination file.
+ *   - help:          Print help.
+ *   - header:        Enable printing of headers.
+ *   - separate:      Enable printing of separators.
+ *   - strip_invalid: Using strip invalid character mode.
+ *   - verify:        Using verify mode.
+ *   - version:       Print version.
+ */
+#ifndef _di_fss_payload_read_main_flag_e_
+  enum {
+    fss_payload_read_main_flag_none_e          = 0x0,
+    fss_payload_read_main_flag_file_from_e     = 0x1,
+    fss_payload_read_main_flag_file_to_e       = 0x2,
+    fss_payload_read_main_flag_header_e        = 0x4,
+    fss_payload_read_main_flag_help_e          = 0x8,
+    fss_payload_read_main_flag_separate_e      = 0x10,
+    fss_payload_read_main_flag_strip_invalid_e = 0x20,
+    fss_payload_read_main_flag_verify_e        = 0x40,
+    fss_payload_read_main_flag_version_e       = 0x80,
+  };
+#endif // _di_fss_payload_read_main_flag_e_
+
+/**
+ * The fss payload read main program settings.
+ *
+ * This is passed to the program-specific main entry point to designate program settings.
+ * These program settings are often processed from the program arguments (often called the command line arguments).
+ *
+ * flag: Flags passed to the main function.
+ *
+ * status: The main status code, generally used by the load settings and main functions.
+ *
+ * line_first: A string expected to represent either "\n" or NULL to allow for easy handling of when to print first new line or not.
+ * line_last:  A string expected to represent either "\n" or NULL to allow for easy handling of when to print last new line or not.
+ */
+#ifndef _di_fss_payload_read_setting_t_
+  typedef struct {
+    uint16_t flag;
+
+    f_status_t status;
+
+    f_string_static_t line_first;
+    f_string_static_t line_last;
+  } fss_payload_read_setting_t;
+
+  #define fss_payload_read_setting_t_initialize \
+    { \
+      fss_payload_read_main_flag_none_e, \
+      F_none, \
+      f_string_static_t_initialize, \
+      f_string_static_t_initialize, \
+    }
+#endif // _di_fss_payload_read_setting_t_
+
+/**
+ * Delete the program main setting data.
+ *
+ * @param setting
+ *   The program main setting data.
+ *   This does not alter setting.status.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_fss_payload_read_setting_delete_
+  extern f_status_t fss_payload_read_setting_delete(fss_payload_read_setting_t * const setting);
+#endif // _di_fss_payload_read_setting_delete_
+
+/**
+ * Perform the standard program setting load process.
+ *
+ * This prints error messages as appropriate.
+ *
+ * If either main or setting is NULL, then this immediately retuns without doing anything.
+ *
+ * @param arguments
+ *   The parameters passed to the process (often referred to as command line arguments).
+ * @param main
+ *   The main program data.
+ * @param setting
+ *   The main program settings.
+ *
+ *   This alters setting.status:
+ *     F_none on success.
+ *
+ *     Errors (with error bit) from: f_console_parameter_process().
+ *     Errors (with error bit) from: fll_program_parameter_process_context().
+ *
+ * @see f_console_parameter_process()
+ * @see fll_program_parameter_process_context()
+ */
+#ifndef _di_fss_payload_read_setting_load_
+  extern void fss_payload_read_setting_load(const f_console_arguments_t arguments, fll_program_data_t * const main, fss_payload_read_setting_t * const setting);
+#endif // _di_fss_payload_read_setting_load_
+
+/**
+ * Perform the standard program setting unload process.
+ *
+ * @param main
+ *   The main program data.
+ * @param setting
+ *   The main program settings.
+ *   This does not alter setting.status.
+ *   All buffers are deallocated.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: utf8_setting_delete().
+ *
+ * @see utf8_setting_delete()
+ */
+#ifndef _di_fss_payload_read_setting_unload_
+  extern f_status_t fss_payload_read_setting_unload(fll_program_data_t * const main, fss_payload_read_setting_t * const setting);
+#endif // _di_fss_payload_read_setting_unload_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

@@ -6,10 +6,10 @@ extern "C" {
 #endif
 
 #if !defined(_di_fll_program_print_help_option_) || !defined(_di_fll_program_print_help_option_standard_)
-  f_status_t private_fll_program_print_help_option(const f_file_t output, const f_color_context_t context, const f_string_static_t option_short, const f_string_static_t option_long, const f_string_static_t symbol_short, const f_string_static_t symbol_long, const char *description) {
+  f_status_t private_fll_program_print_help_option(const fl_print_t print, const f_string_static_t option_short, const f_string_static_t option_long, const f_string_static_t symbol_short, const f_string_static_t symbol_long, const char *description) {
 
-    fl_print_format("%r  %Q%[%Q%]", output.stream, f_string_eol_s, symbol_short, context.set.standout, option_short, context.set.standout);
-    fl_print_format(", %Q%[%Q%]  %S", output.stream, symbol_long, context.set.standout, option_long, context.set.standout, description);
+    fl_print_format("%r  %Q%[%Q%]", print.to.stream, f_string_eol_s, symbol_short, print.set->standout, option_short, print.set->standout);
+    fl_print_format(", %Q%[%Q%]  %S", print.to.stream, symbol_long, print.set->standout, option_long, print.set->standout, description);
 
     return F_none;
   }

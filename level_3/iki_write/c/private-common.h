@@ -60,16 +60,6 @@ extern "C" {
   extern void iki_write_data_delete(iki_write_data_t *data) F_attribute_visibility_internal_d;
 #endif // _di_iki_write_data_delete_
 
-/**
- * Print a message about a process signal being recieved, such as an interrupt signal.
- *
- * @param data
- *   The program data.
- */
-#ifndef _di_iki_write_print_signal_received_
-  extern void iki_write_print_signal_received(iki_write_data_t * const data) F_attribute_visibility_internal_d;
-#endif // _di_iki_write_print_signal_received_
-
 #ifdef __cplusplus
 } // extern "C"
 #endif

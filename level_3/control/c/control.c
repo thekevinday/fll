@@ -7,52 +7,8 @@
 extern "C" {
 #endif
 
-#ifndef _di_control_print_help_
-  f_status_t control_print_help(const fll_program_data_t * const main) {
-
-    flockfile(main->output.to.stream);
-
-    //if (!(setting->flag & XXX_main_flag_line_first_no_e)) {
-      f_print_dynamic_raw(f_string_eol_s, file.stream);
-    //}
-
-    fll_program_print_help_header(main->output.to, main->context, control_program_name_long_s, control_program_version_s);
-
-    fll_program_print_help_option_standard(main->output.to, context);
-
-    f_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
-
-    fll_program_print_help_option(main->output.to, main->context, control_short_name_s, control_long_name_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Specify the name of the controller socket file.");
-    fll_program_print_help_option(main->output.to, main->context, control_short_return_s, control_long_return_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "  Print a message about the response packet.");
-    fll_program_print_help_option(main->output.to, main->context, control_short_settings_s, control_long_settings_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Specify a directory path or a full path to the control settings file.");
-    fll_program_print_help_option(main->output.to, main->context, control_short_socket_s, control_long_socket_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "  Specify a directory path or a full path to the controller socket file.");
-
-    fll_program_print_help_usage(main->output.to, main->context, control_program_name_s, control_action_s);
-
-    fl_print_format("%r  When the %[%r%r%] parameter represents a directory path then the file name is generated from either the", main->output.to.stream, f_string_eol_s, main->context.set.notable, f_console_symbol_long_enable_s, control_long_socket_s, main->context.set.notable);
-    fl_print_format(" %[%r%r%] parameter or from the control settings file.%r%r", main->output.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, control_long_name_s, main->context.set.notable, f_string_eol_s, f_string_eol_s);
-
-    fl_print_format("  A rule action allows for either the full rule path, such as '%[boot/root%]'", main->output.to.stream, main->context.set.notable, main->context.set.notable);
-    fl_print_format(" as a single parameter or two parameters with the first representing the rule directory path '%[boot%]'", main->output.to.stream, main->context.set.notable, main->context.set.notable);
-    fl_print_format(" and the second representing the rule base name '%[root%]'.%r%r", main->output.to.stream, main->context.set.notable, main->context.set.notable, f_string_eol_s, f_string_eol_s);
-
-    fl_print_format("  The %[%r%r%] parameter is intended to be used for scripting and is of the form \"response [type] [action] [status]\".%r", main->output.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, control_long_return_s, main->context.set.notable, f_string_eol_s);
-    fl_print_format("  Be sure to use the %[%r%r%] parameter to suppress output when using this in scripting.%r", main->output.to.stream, main->context.set.notable, f_console_symbol_long_disable_s, f_console_standard_long_quiet_s, main->context.set.notable, f_string_eol_s);
-    fl_print_format("  No response is returned on program errors, especially those errors that prevent communicating to the controller.%r", main->output.to.stream, f_string_eol_s);
-
-    //if (!(setting->flag & XXX_main_flag_line_last_no_e)) {
-      f_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
-    //}
-
-    f_file_stream_flush(main->output.to.stream);
-    funlockfile(main->output.to.stream);
-
-    return F_none;
-  }
-#endif // _di_control_print_help_
-
 #ifndef _di_control_main_
-  f_status_t control_main(fll_program_data_t * const main, const f_console_arguments_t arguments) {
+  f_status_t control_main(fll_program_data_t * const main, control_setting_t * const setting) {
 
     f_status_t status = F_none;
 
@@ -108,7 +64,7 @@ extern "C" {
     }
 
     if (main->parameters.array[control_parameter_version_e].result == f_console_result_found_e) {
-      fll_program_print_version(main->output.to, control_program_version_s);
+      fll_program_print_version(main->message, control_program_version_s);
 
       return F_none;
     }

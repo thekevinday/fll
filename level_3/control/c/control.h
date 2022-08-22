@@ -58,21 +58,6 @@ extern "C" {
 #endif
 
 /**
- * Print help.
- *
- * @param main
- *   The main program data.
- *
- * @return
- *   F_none on success.
- *
- * @see control_main()
- */
-#ifndef _di_control_print_help_
-  extern f_status_t control_print_help(const fll_program_data_t * const main);
-#endif // _di_control_print_help_
-
-/**
  * Execute main program.
  *
  * If main.signal is non-zero, then this blocks and handles the following signals:
@@ -96,7 +81,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_control_main_
-  extern f_status_t control_main(fll_program_data_t * const main, const f_console_arguments_t arguments);
+  extern f_status_t control_main(fll_program_data_t * const main, control_setting_t * const setting);
 #endif // _di_control_main_
 
 #ifdef __cplusplus

@@ -46,7 +46,7 @@ extern "C" {
       *status = fll_execute_program(program, arguments, &parameter, 0, (void *) &return_code);
 
       if (fll_program_standard_signal_received(data->main)) {
-        fake_print_signal_received(data);
+        fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
 
         *status = F_status_set_error(F_interrupt);
 
@@ -89,7 +89,7 @@ extern "C" {
   f_status_t fake_file_buffer(fake_data_t * const data, const f_string_static_t path_file, const bool required, f_string_dynamic_t * const buffer) {
 
     if (fll_program_standard_signal_received(data->main)) {
-      fake_print_signal_received(data);
+      fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
 
       return F_status_set_error(F_interrupt);
     }
@@ -173,7 +173,7 @@ extern "C" {
 
     do {
       if (fll_program_standard_signal_received(data->main)) {
-        fake_print_signal_received(data);
+        fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
 
         return F_status_set_error(F_interrupt);
       }
@@ -550,7 +550,7 @@ extern "C" {
   f_status_t fake_validate_parameter_paths(fake_data_t * const data) {
 
     if (fll_program_standard_signal_received(data->main)) {
-      fake_print_signal_received(data);
+      fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
 
       return F_status_set_error(F_interrupt);
     }

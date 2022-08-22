@@ -56,21 +56,6 @@ extern "C" {
 #endif
 
 /**
- * Print help.
- *
- * @param file
- *   The file to print to.
- * @param context
- *   The color context settings.
- *
- * @return
- *   F_none on success.
- */
-#ifndef _di_fss_payload_read_print_help_
-  extern f_status_t fss_payload_read_print_help(const f_file_t file, const f_color_context_t context);
-#endif // _di_fss_payload_read_print_help_
-
-/**
  * Execute main program.
  *
  * If main.signal is non-zero, then this blocks and handles the following signals:
@@ -92,7 +77,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fss_payload_read_main_
-  extern f_status_t fss_payload_read_main(fll_program_data_t * const main, const f_console_arguments_t arguments);
+  extern f_status_t fss_payload_read_main(fll_program_data_t * const main, fss_payload_read_setting_t * const setting);
 #endif // _di_fss_payload_read_main_
 
 #ifdef __cplusplus

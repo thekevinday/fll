@@ -28,7 +28,7 @@ build_sources_library level_0/conversion.c level_0/private-conversion.c level_0/
 build_sources_library level_0/directory.c level_0/directory/common.c level_0/private-directory.c
 build_sources_library level_0/environment.c
 build_sources_library level_0/execute.c
-build_sources_library level_0/file.c level_0/private-file.c level_0/file/common.c
+build_sources_library level_0/file.c level_0/private-file.c level_0/file/common.c level_0/file/stream.c
 build_sources_library level_0/fss.c level_0/private-fss.c level_0/fss/common.c level_0/fss/named.c level_0/fss/nest.c level_0/fss/set.c
 build_sources_library level_0/iki.c level_0/iki/common.c level_0/iki/data.c level_0/private-iki.c level_0/iki/private-data.c
 build_sources_library level_0/limit.c level_0/limit/set.c level_0/limit/value.c level_0/limit/private-set.c level_0/limit/private-value.c
@@ -67,7 +67,7 @@ build_sources_library level_2/fss_status_string.c
 build_sources_library level_2/iki.c level_2/private-iki.c
 build_sources_library level_2/path.c
 build_sources_library level_2/print.c
-build_sources_library level_2/program.c level_2/program/common.c level_2/private-program.c
+build_sources_library level_2/program.c level_2/program/common.c level_2/program/print.c level_2/private-program.c
 build_sources_library level_2/status_string.c
 
 build_sources_library-monolithic level_0/thread.c level_0/private-thread.c level_0/thread/attribute.c level_0/thread/barrier.c level_0/thread/barrier_attribute.c level_0/thread/condition.c level_0/thread/condition_attribute.c level_0/thread/id.c level_0/thread/key.c level_0/thread/lock.c level_0/thread/lock_attribute.c level_0/thread/mutex.c level_0/thread/mutex_attribute.c level_0/thread/once.c level_0/thread/semaphore.c level_0/thread/set.c level_0/thread/spin.c
@@ -81,7 +81,7 @@ build_sources_headers level_0/conversion.h level_0/conversion/common.h
 build_sources_headers level_0/directory.h level_0/directory/common.h level_0/directory/type.h
 build_sources_headers level_0/environment.h level_0/environment/common.h
 build_sources_headers level_0/execute.h level_0/execute/common.h
-build_sources_headers level_0/file.h level_0/file/common.h
+build_sources_headers level_0/file.h level_0/file/common.h level_0/file/stream.h
 build_sources_headers level_0/fss.h level_0/fss/comment.h level_0/fss/common.h level_0/fss/delimit.h level_0/fss/named.h level_0/fss/nest.h level_0/fss/quote.h level_0/fss/set.h
 build_sources_headers level_0/iki.h level_0/iki/common.h level_0/iki/data.h
 build_sources_headers level_0/limit.h level_0/limit/set.h level_0/limit/value.h
@@ -122,7 +122,7 @@ build_sources_headers level_2/fss_status_string.h
 build_sources_headers level_2/iki.h
 build_sources_headers level_2/path.h
 build_sources_headers level_2/print.h
-build_sources_headers level_2/program.h level_2/program/common.h
+build_sources_headers level_2/program.h level_2/program/common.h level_2/program/print.h
 build_sources_headers level_2/status_string.h
 
 build_sources_headers-monolithic level_0/thread.h level_0/thread/attribute.h level_0/thread/barrier.h level_0/thread/barrier_attribute.h level_0/thread/condition.h level_0/thread/condition_attribute.h level_0/thread/id.h level_0/thread/key.h level_0/thread/lock.h level_0/thread/lock_attribute.h level_0/thread/mutex.h level_0/thread/mutex_attribute.h level_0/thread/once.h level_0/thread/semaphore.h level_0/thread/set.h level_0/thread/spin.h

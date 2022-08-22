@@ -357,7 +357,7 @@ extern "C" {
 #endif // _di_utf8_main_flag_e_
 
 /**
- * The UTF-8 main program settings.
+ * The utf8 main program settings.
  *
  * This is passed to the program-specific main entry point to designate program settings.
  * These program settings are often processed from the program arguments (often called the command line arguments).
@@ -430,10 +430,10 @@ extern "C" {
  *   The program main setting data.
  *   This does not alter setting.status.
  *
- *   Assumed to always be non-NULL.
- *
  * @return
  *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_utf8_setting_delete_
   extern f_status_t utf8_setting_delete(utf8_setting_t * const setting);
@@ -444,16 +444,14 @@ extern "C" {
  *
  * This prints error messages as appropriate.
  *
+ * If either main or setting is NULL, then this immediately retuns without doing anything.
+ *
  * @param arguments
  *   The parameters passed to the process (often referred to as command line arguments).
  * @param main
  *   The main program data.
- *
- *   Assumed to always be non-NULL.
  * @param setting
  *   The main program settings.
- *
- *   Assumed to always be non-NULL.
  *
  *   This alters setting.status:
  *     F_none on success.
@@ -473,17 +471,19 @@ extern "C" {
  *
  * @param main
  *   The main program data.
- *
- *   Assumed to always be non-NULL.
  * @param setting
  *   The main program settings.
  *   This does not alter setting.status.
  *   All buffers are deallocated.
  *
- *   Assumed to always be non-NULL.
- *
  * @return
  *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: utf8_setting_delete().
+ *
+ * @see utf8_setting_delete()
  */
 #ifndef _di_utf8_setting_unload_
   extern f_status_t utf8_setting_unload(fll_program_data_t * const main, utf8_setting_t * const setting);

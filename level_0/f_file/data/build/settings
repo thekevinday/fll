@@ -20,9 +20,9 @@ build_language c
 build_libraries -lc
 build_libraries-individual -lf_memory -lf_string
 
-build_sources_library file.c private-file.c file/common.c
+build_sources_library file.c private-file.c file/common.c file/stream.c
 
-build_sources_headers file.h file/common.h
+build_sources_headers file.h file/common.h file/stream.h
 
 build_script yes
 build_shared yes
