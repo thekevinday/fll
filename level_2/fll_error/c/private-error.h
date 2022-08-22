@@ -16,7 +16,7 @@ extern "C" {
 #endif
 
 /**
- * Private implementation of private_fll_error_print().
+ * Private implementation of fll_error_print().
  *
  * Intended to be shared to each of the different implementation variations.
  *

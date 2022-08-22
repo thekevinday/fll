@@ -82,7 +82,7 @@ extern "C" {
  * For example, a "+D +D" means more debug output than simply "+D".
  *
  * The verbosity interpretation used as the default for many of the level 3 programs in this process, is to treat verbosity modes as a scale from quiet to debug with quiet as the least verbose and debug as the most verbose.
- * This is not stricly a requirement, but expect level 3 projects to work this way.
+ * This is not strictly a requirement, but expect level 3 projects to work this way.
  *
  * The following options are subjective in interpretation of the verbosity but are expected to be follow the general interpretation:
  *   - debug:   Enable debugging, which will likely increase output verbosity.
