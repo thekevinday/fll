@@ -20,7 +20,7 @@ build_language c
 build_libraries -lc
 build_libraries-individual -lfl_print -lfl_string -lf_color -lf_console -lf_conversion -lf_file -lf_memory -lf_print -lf_signal -lf_string -lf_type_array -lf_utf
 
-build_sources_library program.c program/common.c
+build_sources_library program.c program/common.c private-program.c
 
 build_sources_headers program.h program/common.h
 

@@ -441,7 +441,7 @@ extern "C" {
  *
  * @return
  *   A positive number representing a valid signal on signal received.
- *   F_false on no signal received or when main is NULL.
+ *   0 on no signal received or when main is NULL.
  *
  * @see f_signal_read()
  */

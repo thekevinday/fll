@@ -1,4 +1,5 @@
 #include "program.h"
+#include "private-program.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -362,48 +363,24 @@ extern "C" {
 #ifndef _di_fll_program_standard_signal_received_
   f_status_t fll_program_standard_signal_received(fll_program_data_t * const main) {
 
-    if (!main || main->signal.id == -1) {
-      return F_false;
-    }
+    if (!main) return 0;
 
-    struct signalfd_siginfo information;
-
-    memset(&information, 0, sizeof(struct signalfd_siginfo));
-
-    if (f_signal_read(main->signal, 0, &information) == F_signal) {
-      switch (information.ssi_signo) {
-        case F_signal_abort:
-        case F_signal_broken_pipe:
-        case F_signal_hangup:
-        case F_signal_interrupt:
-        case F_signal_quit:
-        case F_signal_termination:
-          main->signal_received = information.ssi_signo;
-
-          return information.ssi_signo;
-      }
-    }
-
-    return F_false;
+    return private_fll_program_standard_signal_received(main);
   }
 #endif // _di_fss_basic_read_signal_received_
 
 #ifndef _di_fll_program_standard_signal_state_
   f_status_t fll_program_standard_signal_state(void * const state, void * const internal) {
 
-    if (!state) {
-      return F_interrupt_not;
-    }
+    if (!state) return F_interrupt_not;
 
     f_state_t *state_ptr = (f_state_t *) state;
 
-    if (!state_ptr->custom) {
-      return F_interrupt_not;
-    }
+    if (!state_ptr->custom) return F_interrupt_not;
 
     fll_program_data_t *custom = (fll_program_data_t *) state_ptr->custom;
 
-    custom->signal_received = fll_program_standard_signal_received(custom);
+    custom->signal_received = private_fll_program_standard_signal_received(custom);
 
     if (custom->signal_received == F_signal_abort || custom->signal_received == F_signal_broken_pipe || custom->signal_received == F_signal_hangup || custom->signal_received == F_signal_interrupt || custom->signal_received == F_signal_quit || custom->signal_received == F_signal_termination) {
       return F_status_set_error(F_interrupt);
