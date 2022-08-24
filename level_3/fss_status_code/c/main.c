@@ -21,7 +21,7 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
   fll_program_standard_setdown(&data.signal);
 
-  if (F_status_is_error(status) || status == F_false) return 1;
+  if (F_status_is_error(status)) return 1;
 
   return 0;
 }
