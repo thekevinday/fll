@@ -185,23 +185,17 @@ extern "C" {
         }
 
         if (data->depths.array[i].depth == data->depths.array[j].depth) {
-          if (main->error.verbosity != f_console_verbosity_quiet_e) {
-            flockfile(main->error.to.stream);
+          if (main->error.verbosity < f_console_verbosity_normal_e) {
+            fss_payload_read_print_line_first(setting, main->error, F_true);
 
-            fl_print_format("%r%[%QThe value '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-            fl_print_format("%[%ul%]", main->error.to.stream, main->error.notable, data->depths.array[i].depth, main->error.notable);
-            fl_print_format("%[' may only be specified once for the parameter '%]", main->error.to.stream, main->error.context, main->error.context);
-            fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_payload_read_long_depth_s, main->error.notable);
-            fl_print_format("%['.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
-
-            funlockfile(main->error.to.stream);
+            fll_program_print_error_parameter_must_specify_once_value(main->error, f_console_symbol_long_enable_s, fss_payload_read_long_depth_s, data->depths.array[i].depth);
           }
 
           return F_status_set_error(F_parameter);
         }
         else if (data->depths.array[i].depth > data->depths.array[j].depth) {
-          if (main->error.verbosity != f_console_verbosity_quiet_e) {
-            flockfile(main->error.to.stream);
+          if (main->error.verbosity > f_console_verbosity_quiet_e) {
+            f_file_stream_lock(main->error.to);
 
             fl_print_format("%r%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
             fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_payload_read_long_depth_s, main->error.notable);
@@ -211,7 +205,7 @@ extern "C" {
             fl_print_format("%[%ul%]", main->error.to.stream, main->error.notable, data->depths.array[j].depth, main->error.notable);
             fl_print_format("%['.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
-            funlockfile(main->error.to.stream);
+            f_file_stream_unlock(main->error.to);
           }
 
           return F_status_set_error(F_parameter);
@@ -257,8 +251,8 @@ extern "C" {
       const f_string_static_t file_name = fss_payload_read_file_identify(input.start, data->files);
 
       if (F_status_set_fine(status) == F_none || F_status_set_fine(status) == F_none_eos || F_status_set_fine(status) == F_none_stop || F_status_set_fine(status) == F_data_not_eos || F_status_set_fine(status) == F_data_not_stop) {
-        if (main->error.verbosity != f_console_verbosity_quiet_e) {
-          flockfile(main->error.to.stream);
+        if (main->error.verbosity > f_console_verbosity_quiet_e) {
+          f_file_stream_lock(main->error.to);
 
           fl_print_format("%r%[%QThe file '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
           fl_print_format("%[%r%]", main->error.to.stream, main->error.notable, file_name, main->error.notable);
@@ -266,7 +260,7 @@ extern "C" {
           fl_print_format("%[%r%]", main->error.to.stream, main->error.notable, f_fss_string_payload_s, main->error.notable);
           fl_print_format("%['.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
-          funlockfile(main->error.to.stream);
+          f_file_stream_unlock(main->error.to);
         }
       }
       else {

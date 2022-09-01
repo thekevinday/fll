@@ -439,7 +439,7 @@ extern "C" {
           }
 
           if (!type_rerun) {
-            if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
+            if (global.main->error.verbosity > f_console_verbosity_quiet_e) {
               controller_lock_print(global.main->error.to, global.thread);
 
               fl_print_format("%r%[%QRule item action '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
@@ -479,7 +479,7 @@ extern "C" {
             }
           }
           else {
-            if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
+            if (global.main->error.verbosity > f_console_verbosity_quiet_e) {
               controller_lock_print(global.main->error.to, global.thread);
 
               fl_print_format("%r%[%QRule item action '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
@@ -511,7 +511,7 @@ extern "C" {
               item->reruns[type_rerun].is |= rerun_item == &item->reruns[type_rerun].failure ? controller_rule_rerun_is_failure_reset_d : controller_rule_rerun_is_success_reset_d;
             }
             else {
-              if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
+              if (global.main->error.verbosity > f_console_verbosity_quiet_e) {
                 controller_lock_print(global.main->error.to, global.thread);
 
                 fl_print_format("%r%[%QRule item action '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
@@ -552,7 +552,7 @@ extern "C" {
               }
             }
             else {
-              if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
+              if (global.main->error.verbosity > f_console_verbosity_quiet_e) {
                 controller_lock_print(global.main->error.to, global.thread);
 
                 fl_print_format("%r%[%QUnknown value '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
@@ -695,7 +695,7 @@ extern "C" {
     }
 
     if (F_status_is_error(status)) {
-      if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
+      if (global.main->error.verbosity > f_console_verbosity_quiet_e) {
         status = F_status_set_fine(status);
 
         if (status != F_valid_not && status != F_number && status != F_number_decimal && status != F_number_overflow && status != F_number_underflow && status != F_number_negative) {
@@ -1693,7 +1693,7 @@ extern "C" {
     }
 
     if (options & controller_process_option_simulate_d) {
-      if (main->error.verbosity != f_console_verbosity_quiet_e && main->error.verbosity != f_console_verbosity_error_e) {
+      if (main->error.verbosity > f_console_verbosity_error_e) {
         controller_lock_print(main->error.to, thread);
 
         fl_print_format("%rSimulating execution of '%[", main->error.to.stream, f_string_eol_s, main->context.set.title);
@@ -2496,7 +2496,7 @@ extern "C" {
       if (multiple) {
         if (type == controller_rule_action_type_group_e || type == controller_rule_action_type_pid_file_e || type == controller_rule_action_type_user_e) {
 
-          if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
+          if (global.main->error.verbosity > f_console_verbosity_quiet_e) {
             controller_lock_print(global.main->error.to, global.thread);
 
             fl_print_format("%r%[%QFSS Extended List is not allowed for the rule item action '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
@@ -2569,7 +2569,7 @@ extern "C" {
         break;
 
       default:
-        if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
+        if (global.main->error.verbosity > f_console_verbosity_quiet_e) {
           controller_lock_print(global.main->error.to, global.thread);
 
           fl_print_format("%r%[%QUnsupported action type '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
@@ -2688,7 +2688,7 @@ extern "C" {
                 }
               }
 
-              if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
+              if (global.main->error.verbosity > f_console_verbosity_quiet_e) {
                 controller_lock_print(global.main->error.to, global.thread);
 
                 controller_rule_item_print_error_rule_not_loaded(global.main->error, dynamics[i]->array[j]);
@@ -2989,7 +2989,7 @@ extern "C" {
         } // for
 
         if (missing) {
-          if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
+          if (global.main->error.verbosity > f_console_verbosity_quiet_e) {
             controller_lock_print(global.main->error.to, global.thread);
 
             if (process->rule.items.used) {
@@ -3138,7 +3138,7 @@ extern "C" {
       if (F_status_is_error(status)) {
         f_thread_unlock(&global.thread->lock.process);
 
-        if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
+        if (global.main->error.verbosity > f_console_verbosity_quiet_e) {
           controller_lock_print(global.main->error.to, global.thread);
 
           controller_rule_item_print_error_rule_not_loaded(global.main->error, alias_rule);
@@ -3445,7 +3445,7 @@ extern "C" {
         for (f_array_length_t i = 0; i < process->stack.used && controller_thread_is_enabled_process(process, global.thread); ++i) {
 
           if (process->stack.array[i] == id_rule) {
-            if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
+            if (global.main->error.verbosity > f_console_verbosity_quiet_e) {
               controller_lock_print(global.main->error.to, global.thread);
 
               fl_print_format("%r%[%QThe rule '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
@@ -3523,7 +3523,7 @@ extern "C" {
 
       status = F_status_set_error(F_found_not);
 
-      if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
+      if (global.main->error.verbosity > f_console_verbosity_quiet_e) {
         controller_lock_print(global.main->error.to, global.thread);
 
         controller_rule_item_print_error_rule_not_loaded(global.main->error, process->rule.alias);
@@ -4447,7 +4447,7 @@ extern "C" {
         for (j = 0; j < rule->limits.used; ++j) {
 
           if (type == rule->limits.array[j].type) {
-            if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
+            if (global.main->error.verbosity > f_console_verbosity_quiet_e) {
 
               // Get the current line number within the settings item.
               cache->action.line_item = line_item;
@@ -4636,7 +4636,7 @@ extern "C" {
           status = controller_validate_has_graph(*setting_value);
 
           if (status == F_false || F_status_set_fine(status) == F_complete_not_utf) {
-            if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
+            if (global.main->error.verbosity > f_console_verbosity_quiet_e) {
 
               // Get the current line number within the settings item.
               cache->action.line_item = line_item;
@@ -4646,7 +4646,7 @@ extern "C" {
             }
 
             if (status == F_false) {
-              if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
+              if (global.main->error.verbosity > f_console_verbosity_quiet_e) {
                 controller_lock_print(global.main->error.to, global.thread);
 
                 fl_print_format("%r%[%QRule setting has an invalid name '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
@@ -4781,7 +4781,7 @@ extern "C" {
             status = F_status_set_fine(status);
 
             if ((zero_only && number) || (!zero_only && (number < 1 || number > 99)) || status == F_data_not || status == F_number || status == F_number_overflow || status == F_number_negative || status == F_number_positive) {
-              if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
+              if (global.main->error.verbosity > f_console_verbosity_quiet_e) {
 
                 // Get the current line number within the settings item.
                 cache->action.line_item = line_item;
@@ -4860,7 +4860,7 @@ extern "C" {
           timeout_code = controller_rule_timeout_code_stop_d;
         }
         else {
-          if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
+          if (global.main->error.verbosity > f_console_verbosity_quiet_e) {
 
             // Get the current line number within the settings item.
             cache->action.line_item = line_item;
@@ -5057,7 +5057,7 @@ extern "C" {
             status = F_status_set_fine(status);
 
             if (number < -20 || number > 19 || status == F_data_not || status == F_number || status == F_number_overflow || status == F_number_underflow || status == F_number_decimal) {
-              if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
+              if (global.main->error.verbosity > f_console_verbosity_quiet_e) {
 
                 // Get the current line number within the settings item.
                 cache->action.line_item = line_item;
@@ -5348,7 +5348,7 @@ extern "C" {
             cache->action.line_action = ++cache->action.line_item;
 
             if (status == F_false) {
-              if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
+              if (global.main->error.verbosity > f_console_verbosity_quiet_e) {
                 controller_lock_print(global.main->error.to, global.thread);
 
                 fl_print_format("%r%[%QRule setting has an invalid environment variable name '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, global.main->error.context);
@@ -5441,7 +5441,7 @@ extern "C" {
         action = controller_rule_action_type_thaw_e;
       }
       else {
-        if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
+        if (global.main->error.verbosity > f_console_verbosity_quiet_e) {
 
           // Get the current line number within the settings item.
           cache->action.line_item = line_item;
@@ -5492,7 +5492,7 @@ extern "C" {
           setting_values = &rule->ons.array[j].wish;
         }
         else {
-          if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
+          if (global.main->error.verbosity > f_console_verbosity_quiet_e) {
 
             // Get the current line number within the settings item.
             cache->action.line_item = line_item;
@@ -5644,7 +5644,7 @@ extern "C" {
         break;
 
       default:
-        if (main->error.verbosity != f_console_verbosity_quiet_e) {
+        if (main->error.verbosity > f_console_verbosity_quiet_e) {
           controller_lock_print(main->error.to, global.thread);
 
           fl_print_format("%r%[%QUnsupported action type '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);

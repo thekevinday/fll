@@ -199,7 +199,7 @@ extern "C" {
     // Ensure a newline is always put at the end of the program execution, unless in quiet mode.
     if (main->output.verbosity != f_console_verbosity_quiet_e) {
       if (F_status_is_error(status)) {
-        fflush(main->output.to.stream);
+        f_file_stream_flush(main->output.to);
         fflush(main->error.to.stream);
 
         fll_print_dynamic_raw(f_string_eol_s, main->output.to.stream);

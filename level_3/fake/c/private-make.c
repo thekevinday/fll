@@ -59,7 +59,7 @@ extern "C" {
         }
 
         if (status == F_exist_not) {
-          if (data->main->error.verbosity != f_console_verbosity_quiet_e) {
+          if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
             flockfile(data->main->error.to.stream);
 
             fl_print_format("%r%[%QThe group name '%]", data->main->error.to.stream, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
@@ -81,7 +81,7 @@ extern "C" {
     }
 
     if (number > F_type_size_32_unsigned_d) {
-      if (data->main->error.verbosity != f_console_verbosity_quiet_e) {
+      if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
         flockfile(data->main->error.to.stream);
 
         fl_print_format("%r%[%QThe number '%]", data->main->error.to.stream, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
@@ -110,7 +110,7 @@ extern "C" {
     const f_status_t status = f_file_mode_from_string(buffer, data->main->umask, mode, replace);
 
     if (F_status_is_error(status)) {
-      if (data->main->error.verbosity != f_console_verbosity_quiet_e) {
+      if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
         if (F_status_set_fine(status) == F_syntax) {
           flockfile(data->main->error.to.stream);
 
@@ -152,7 +152,7 @@ extern "C" {
         }
 
         if (status == F_exist_not) {
-          if (data->main->error.verbosity != f_console_verbosity_quiet_e) {
+          if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
             flockfile(data->main->error.to.stream);
 
             fl_print_format("%r%[%QThe user '%]", data->main->error.to.stream, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
@@ -174,7 +174,7 @@ extern "C" {
     }
 
     if (number > F_type_size_32_unsigned_d) {
-      if (data->main->error.verbosity != f_console_verbosity_quiet_e) {
+      if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
         flockfile(data->main->error.to.stream);
 
         fl_print_format("%r%[%QThe number '%]", data->main->error.to.stream, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);

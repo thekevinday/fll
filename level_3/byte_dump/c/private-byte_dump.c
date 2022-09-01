@@ -314,7 +314,7 @@ extern "C" {
     fflush(data->main->output.to.stream);
 
     if (found_invalid_utf) {
-      if (data->main->error.verbosity != f_console_verbosity_quiet_e) {
+      if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
         flockfile(data->main->error.to.stream);
 
         fl_print_format("%[Invalid UTF-8 codes were detected for file '%]", data->main->error.to.stream, data->main->context.set.error, data->main->context.set.error);
@@ -326,7 +326,7 @@ extern "C" {
     }
 
     if (ferror(file.stream)) {
-      if (data->main->error.verbosity != f_console_verbosity_quiet_e) {
+      if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
         flockfile(data->main->error.to.stream);
 
         fl_print_format("%[%Qread() failed for '%]", data->main->error.to.stream, data->main->context.set.error, data->main->error.prefix, data->main->context.set.error);

@@ -100,7 +100,7 @@ extern "C" {
         return F_file_found_not;
       }
 
-      if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
+      if (global.main->error.verbosity > f_console_verbosity_quiet_e) {
         controller_print_error_file(global.thread, global.main->error, F_status_set_fine(status), "f_file_stream_open", F_true, path, f_file_operation_open_s, fll_error_file_type_file_e);
       }
     }
@@ -108,7 +108,7 @@ extern "C" {
       status = f_file_stream_read(file, &cache->buffer_file);
 
       if (F_status_is_error(status)) {
-        if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
+        if (global.main->error.verbosity > f_console_verbosity_quiet_e) {
           controller_print_error_file(global.thread, global.main->error, F_status_set_fine(status), "f_file_stream_read", F_true, path, f_file_operation_read_s, fll_error_file_type_file_e);
         }
       }
@@ -123,7 +123,7 @@ extern "C" {
       status = f_file_stat(path, F_true, &stat_file);
 
       if (F_status_is_error(status)) {
-        if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
+        if (global.main->error.verbosity > f_console_verbosity_quiet_e) {
           controller_print_error_file(global.thread, global.main->error, F_status_set_fine(status), "f_file_stat", F_true, path, f_file_operation_stat_s, fll_error_file_type_file_e);
         }
       }
@@ -434,7 +434,7 @@ extern "C" {
 
         // Always return immediately on memory errors.
         if (F_status_set_fine(status) == F_memory_not) {
-          if (global->main->error.verbosity != f_console_verbosity_quiet_e) {
+          if (global->main->error.verbosity > f_console_verbosity_quiet_e) {
             controller_lock_print(global->main->error.to, global->thread);
 
             controller_print_error_file(0, global->main->error, F_status_set_fine(status), "controller_file_pid_create", F_true, global->setting->path_pid, f_file_operation_create_s, fll_error_file_type_file_e);
@@ -667,7 +667,7 @@ extern "C" {
         global->thread->id_control = 0;
       }
 
-      if (global->main->error.verbosity != f_console_verbosity_quiet_e) {
+      if (global->main->error.verbosity > f_console_verbosity_quiet_e) {
         controller_print_error(global->thread, global->main->error, F_status_set_fine(status), "f_thread_create", F_true);
       }
     }

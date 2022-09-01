@@ -5,6 +5,157 @@
 extern "C" {
 #endif
 
+#ifndef _di_fll_program_print_error_missing_variable_not_zero_
+  f_status_t fll_program_print_error_missing_variable_not_zero(const fl_print_t print, const f_string_static_t variable) {
+
+    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+
+    f_file_stream_lock(print.to);
+
+    fl_print_format("%[%QThe %]", print.to.stream, print.set->error, print.prefix, print.set->error);
+    fl_print_format("%[%Q%]", print.to.stream, print.set->notable, variable, print.set->notable);
+    fl_print_format("%[ is missing or has a length of %]", print.to.stream, print.set->error, print.set->error);
+    fl_print_format("%[0%]", print.to.stream, print.set->notable, print.set->notable);
+    fl_print_format("%[.%]%r", print.to.stream, print.set->error, print.set->error, f_string_eol_s);
+
+    f_file_stream_unlock(print.to);
+
+    return F_none;
+  }
+#endif // _di_fll_program_print_error_missing_variable_not_zero_
+
+#ifndef _di_fll_program_print_error_parameter_both_specified_same_amount_
+  f_status_t fll_program_print_error_parameter_both_specified_same_amount(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t first, const f_string_static_t second) {
+
+    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+
+    f_file_stream_lock(print.to);
+
+    fl_print_format("%[%QThe '%]", print.to.stream, print.set->error, print.prefix, print.set->error);
+    fl_print_format("%[%Q%Q%]", print.to.stream, print.set->notable, symbol, first, print.set->notable);
+    fl_print_format("%[' parameter and the '%]", print.to.stream, print.set->error, print.set->error);
+    fl_print_format("%[%Q%Q%]", print.to.stream, print.set->notable, symbol, second, print.set->notable);
+    fl_print_format("%[' parameter must be specified the same number of times.%]%r", print.to.stream, print.set->error, print.set->error, f_string_eol_s);
+
+    f_file_stream_unlock(print.to);
+
+    return F_none;
+  }
+#endif // _di_fll_program_print_error_parameter_both_specified_same_amount_
+
+#ifndef _di_fll_program_print_error_parameter_cannot_use_with_
+  f_status_t fll_program_print_error_parameter_cannot_use_with(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t first, const f_string_static_t second) {
+
+    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+
+    f_file_stream_lock(print.to);
+
+    fl_print_format("%[%QCannot specify the '%]", print.to.stream, print.set->error, print.prefix, print.set->error);
+    fl_print_format("%[%Q%Q%]", print.to.stream, print.set->notable, symbol, first, print.set->notable);
+    fl_print_format("%[' parameter with the '%]", print.to.stream, print.set->error, print.set->error);
+    fl_print_format("%[%Q%Q%]", print.to.stream, print.set->notable, symbol, second, print.set->notable);
+    fl_print_format("%[' parameter.%]%r", print.to.stream, print.set->error, print.set->error, f_string_eol_s);
+
+    f_file_stream_unlock(print.to);
+
+    return F_none;
+  }
+#endif // _di_fll_program_print_error_parameter_cannot_use_with_
+
+#ifndef _di_fll_program_print_error_parameter_missing_value_
+  f_status_t fll_program_print_error_parameter_missing_value(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t parameter) {
+
+    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+
+    f_file_stream_lock(print.to);
+
+    f_file_stream_unlock(print.to);
+
+    return F_none;
+  }
+#endif // _di_fll_program_print_error_parameter_missing_value_
+
+#ifndef _di_fll_program_print_error_parameter_must_specify_once_
+  f_status_t fll_program_print_error_parameter_must_specify_once(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t parameter) {
+
+    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+
+    f_file_stream_lock(print.to);
+
+    fl_print_format("%[%QThe parameter '%]", print.to.stream, print.set->error, print.prefix, print.set->error);
+    fl_print_format("%[%Q%Q%]", print.to.stream, print.set->notable, symbol, parameter, print.set->notable);
+    fl_print_format("%[' may only be specified once.%]%r", print.to.stream, print.set->error, print.set->error, f_string_eol_s);
+
+    f_file_stream_unlock(print.to);
+
+    return F_none;
+  }
+#endif // _di_fll_program_print_error_parameter_must_specify_once_
+
+#ifndef _di_fll_program_print_error_parameter_must_specify_once_value_
+  f_status_t fll_program_print_error_parameter_must_specify_once_value(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t parameter, const f_string_static_t value) {
+
+    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+
+    f_file_stream_lock(print.to);
+
+    fl_print_format("%[%QThe value '%]", print.to.stream, print.set->error, print.prefix, print.set->error);
+    fl_print_format("%[%Q%Q%]", print.to.stream, print.set->notable, symbol, value, print.set->notable);
+    fl_print_format("%[' may only be specified once for the parameter '%]", print.to.stream, print.set->error, print.set->error);
+    fl_print_format("%[%Q%Q%]", print.to.stream, print.set->notable, symbol, parameter, print.set->notable);
+    fl_print_format("%['.%]%r", print.to.stream, print.set->error, print.set->error, f_string_eol_s);
+
+    f_file_stream_unlock(print.to);
+
+    return F_none;
+  }
+#endif // _di_fll_program_print_error_parameter_must_specify_once_value_
+
+#ifndef _di_fll_program_print_error_pipe_invalid_form_feed_
+  f_status_t fll_program_print_error_pipe_invalid_form_feed(const fl_print_t print) {
+
+    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+
+    f_file_stream_lock(print.to);
+
+    fl_print_format("%[%QThe pipe has incorrectly placed form-feed characters (\\f).%]%r", print.to.stream, print.set->error, print.prefix, print.set->error, f_string_eol_s);
+
+    f_file_stream_unlock(print.to);
+
+    return F_none;
+  }
+#endif // _di_fll_program_print_error_pipe_invalid_form_feed_
+
+#ifndef _di_fll_program_print_error_pipe_missing_content_
+  f_status_t fll_program_print_error_pipe_missing_content(const fl_print_t print) {
+
+    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+
+    f_file_stream_lock(print.to);
+
+    fl_print_format("%[%QThe pipe has no content.%]%r", print.to.stream, print.set->error, print.prefix, print.set->error, f_string_eol_s);
+
+    f_file_stream_unlock(print.to);
+
+    return F_none;
+  }
+#endif // _di_fll_program_print_error_pipe_missing_content_
+
+#ifndef _di_fll_program_print_error_pipe_object_without_content_
+  f_status_t fll_program_print_error_pipe_object_without_content(const fl_print_t print) {
+
+    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+
+    f_file_stream_lock(print.to);
+
+    fl_print_format("%[%QThe pipe has an Object without Content.%]%r", print.to.stream, print.set->error, print.prefix, print.set->error, f_string_eol_s);
+
+    f_file_stream_unlock(print.to);
+
+    return F_none;
+  }
+#endif // _di_fll_program_print_error_pipe_object_without_content_
+
 #ifndef _di_fll_program_print_help_header_
   f_status_t fll_program_print_help_header(const fl_print_t print, const f_string_static_t name, const f_string_static_t version) {
 
@@ -65,7 +216,7 @@ extern "C" {
 #ifndef _di_fll_program_print_help_usage_
   f_status_t fll_program_print_help_usage(const fl_print_t print, const f_string_static_t name, const f_string_static_t parameters) {
 
-    fl_print_format("%r%r %[Usage:%]%r", print.to.stream, f_string_eol_s, f_string_eol_s, print.set->important, print.set->important, f_string_eol_s);
+    fl_print_format(" %[Usage:%]%r", print.to.stream, print.set->important, print.set->important, f_string_eol_s);
 
     fl_print_format("  %[%Q%]", print.to.stream, print.set->standout, name, print.set->standout);
     fl_print_format(" %[[%] options %[]%]", print.to.stream, print.set->notable, print.set->notable, print.set->notable, print.set->notable);
@@ -81,22 +232,22 @@ extern "C" {
 #endif // _di_fll_program_print_help_usage_
 
 #ifndef _di_fll_program_print_signal_received_
-  f_status_t fll_program_print_signal_received(const fl_print_t print, const f_string_static_t line_first, const f_status_t signal) {
+  f_status_t fll_program_print_signal_received(const fl_print_t print, const f_string_static_t line_first, const uint32_t signal) {
 
     if (print.verbosity != f_console_verbosity_verbose_e && print.verbosity != f_console_verbosity_debug_e) {
       return F_output_not;
     }
 
-    flockfile(print.to.stream);
+    f_file_stream_lock(print.to);
 
     // Must flush and reset color because the interrupt may have interrupted the middle of a print function.
     f_file_stream_flush(print.to);
 
     fl_print_format("%]%r%[Received signal code %]", print.to.stream, print.set->reset, line_first, print.set->warning, print.set->warning);
-    fl_print_format("%[%i%]", print.to.stream, print.set->notable, signal, print.set->notable);
+    fl_print_format("%[%u%]", print.to.stream, print.set->notable, signal, print.set->notable);
     fl_print_format("%[.%]%r", print.to.stream, print.set->warning, print.set->warning, f_string_eol_s);
 
-    funlockfile(print.to.stream);
+    f_file_stream_unlock(print.to);
 
     return F_none;
   }

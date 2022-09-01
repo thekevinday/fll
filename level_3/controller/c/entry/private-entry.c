@@ -257,7 +257,7 @@ extern "C" {
       if (cache->content_actions.array[i].used < at_least || cache->content_actions.array[i].used > at_most) {
         action->status = F_status_set_error(F_parameter);
 
-        if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
+        if (global.main->error.verbosity > f_console_verbosity_quiet_e) {
           f_thread_mutex_lock(&global.thread->lock.print);
 
           flockfile(global.main->error.to.stream);
@@ -373,7 +373,7 @@ extern "C" {
                 status_action = action->status;
               }
 
-              if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
+              if (global.main->error.verbosity > f_console_verbosity_quiet_e) {
                 fll_print_format("%r%[%QThe %r item action must not have an empty string for a path (the first parameter).%]%r", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context, f_string_eol_s);
               }
             }
@@ -400,7 +400,7 @@ extern "C" {
               }
               else {
                 if (fl_string_dynamic_compare(action->parameters.array[1], cache->buffer_path) == F_equal_to_not) {
-                  if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
+                  if (global.main->error.verbosity > f_console_verbosity_quiet_e) {
                     flockfile(global.main->error.to.stream);
 
                     fl_print_format("%r%[%QThe %r item action second parameter '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
@@ -427,7 +427,7 @@ extern "C" {
                 status_action = action->status;
               }
 
-              if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
+              if (global.main->error.verbosity > f_console_verbosity_quiet_e) {
                 fll_print_format("%r%[%QThe %r item action must not have an empty string for a rule name (the second parameter).%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context, f_string_eol_s);
               }
             }
@@ -452,7 +452,7 @@ extern "C" {
                   }
                 }
 
-                if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
+                if (global.main->error.verbosity > f_console_verbosity_quiet_e) {
                   flockfile(global.main->error.to.stream);
 
                   fl_print_format("%r%[%QThe %r item action third parameter (and beyond) must be one of '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
@@ -478,7 +478,7 @@ extern "C" {
                 status_action = action->status;
               }
 
-              if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
+              if (global.main->error.verbosity > f_console_verbosity_quiet_e) {
                 flockfile(global.main->error.to.stream);
 
                 fl_print_format("%r%[%QThe %r item action may not specify the reserved item '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
@@ -507,7 +507,7 @@ extern "C" {
                 status_action = action->status;
               }
 
-              if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
+              if (global.main->error.verbosity > f_console_verbosity_quiet_e) {
                 flockfile(global.main->error.to.stream);
 
                 fl_print_format("%r%[%QThe %r item action must have one of '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
@@ -550,7 +550,7 @@ extern "C" {
                     break;
                   }
 
-                  if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
+                  if (global.main->error.verbosity > f_console_verbosity_quiet_e) {
                     flockfile(global.main->error.to.stream);
 
                     fl_print_format("%r%[%QThe %r item action parameter '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
@@ -574,7 +574,7 @@ extern "C" {
               else {
                 action->status = F_status_set_error(F_supported_not);
 
-                if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
+                if (global.main->error.verbosity > f_console_verbosity_quiet_e) {
                   flockfile(global.main->error.to.stream);
 
                   fl_print_format("%r%[%QThe %r item action may only have '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
@@ -709,7 +709,7 @@ extern "C" {
               for (j = 2; j < cache->ats.used; j += 2) {
 
                 if (cache->ats.array[j] == i) {
-                  if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
+                  if (global.main->error.verbosity > f_console_verbosity_quiet_e) {
                     controller_lock_print(global.main->error.to, global.thread);
 
                     fl_print_format("%r%[%QThe %r item named '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, is_entry ? controller_entry_s : controller_exit_s, global.main->error.prefix, global.main->error.context);
@@ -771,7 +771,7 @@ extern "C" {
 
           if (error_has || i >= entry->items.used) {
             if (i >= entry->items.used) {
-              if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
+              if (global.main->error.verbosity > f_console_verbosity_quiet_e) {
                 controller_lock_print(global.main->error.to, global.thread);
 
                 fl_print_format("%r%[%QThe %r item named '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, is_entry ? controller_entry_s : controller_exit_s, global.main->error.prefix, global.main->error.context);
@@ -888,7 +888,7 @@ extern "C" {
     }
 
     if (global->main->parameters.array[controller_parameter_simulate_e].result == f_console_result_found_e || global->main->error.verbosity == f_console_verbosity_verbose_e || global->main->error.verbosity == f_console_verbosity_debug_e) {
-      if (global->main->error.verbosity != f_console_verbosity_quiet_e && global->main->error.verbosity != f_console_verbosity_error_e) {
+      if ((global->main->error.verbosity > f_console_verbosity_error_e)) {
         controller_lock_print(global->main->output.to, global->thread);
 
         fl_print_format("%rProcessing %r%r item '", global->main->output.to.stream, f_string_eol_s, failsafe ? controller_entry_print_failsafe_s : f_string_empty_s, is_entry ? controller_entry_s : controller_exit_s);
@@ -925,7 +925,7 @@ extern "C" {
 
         if (F_status_is_error(entry_action->status)) {
           if (global->main->parameters.array[controller_parameter_simulate_e].result == f_console_result_found_e) {
-            if (global->main->error.verbosity != f_console_verbosity_quiet_e) {
+            if (global->main->error.verbosity > f_console_verbosity_quiet_e) {
               controller_lock_print(global->main->output.to, global->thread);
 
               fl_print_format("%rThe %r item action '", global->main->output.to.stream, f_string_eol_s, is_entry ? controller_entry_s : controller_exit_s);
@@ -947,7 +947,7 @@ extern "C" {
             }
           }
           else {
-            if ((entry_action->code & controller_entry_rule_code_require_d) && global->main->error.verbosity != f_console_verbosity_quiet_e || !(entry_action->code & controller_entry_rule_code_require_d) && (global->main->warning.verbosity == f_console_verbosity_verbose_e || global->main->warning.verbosity == f_console_verbosity_debug_e)) {
+            if ((entry_action->code & controller_entry_rule_code_require_d) && global->main->error.verbosity > f_console_verbosity_quiet_e || !(entry_action->code & controller_entry_rule_code_require_d) && (global->main->warning.verbosity == f_console_verbosity_verbose_e || global->main->warning.verbosity == f_console_verbosity_debug_e)) {
               fl_print_t *output = 0;
 
               if (entry_action->code & controller_entry_rule_code_require_d) {
@@ -1037,7 +1037,7 @@ extern "C" {
           }
           else {
             if (!failsafe && (global->main->error.verbosity == f_console_verbosity_verbose_e || entry->show == controller_entry_show_init_e) && global->main->parameters.array[controller_parameter_simulate_e].result == f_console_result_none_e) {
-              if (global->main->error.verbosity != f_console_verbosity_quiet_e && global->main->error.verbosity != f_console_verbosity_error_e) {
+              if ((global->main->error.verbosity > f_console_verbosity_error_e)) {
                 fl_print_format("%rState is now '%[%r%]'.%r", global->main->output.to.stream, f_string_eol_s, global->main->context.set.notable, controller_ready_s, global->main->context.set.notable, f_string_eol_s);
               }
             }
@@ -1050,7 +1050,7 @@ extern "C" {
           if (entry_action->number == 0 || entry_action->number >= entry->items.used || failsafe && entry_action->number == global->setting->failsafe_item_id) {
 
             // This should not happen if the pre-process is working as intended, but in case it doesn't, return a critical error to prevent infinite recursion and similar errors.
-            if (global->main->error.verbosity != f_console_verbosity_quiet_e) {
+            if (global->main->error.verbosity > f_console_verbosity_quiet_e) {
               controller_lock_print(global->main->error.to, global->thread);
 
               fl_print_format("%r%[Invalid %r item index '%]", global->main->error.to.stream, f_string_eol_s, global->main->error.context, is_entry ? controller_entry_s : controller_exit_s, global->main->error.context);
@@ -1233,7 +1233,7 @@ extern "C" {
             }
 
             if (F_status_is_error(status)) {
-              if (global->main->error.verbosity != f_console_verbosity_quiet_e) {
+              if (global->main->error.verbosity > f_console_verbosity_quiet_e) {
                 controller_lock_print(global->main->error.to, global->thread);
 
                 controller_entry_print_error_cache(is_entry, global->main->error, cache->action);
@@ -1340,7 +1340,7 @@ extern "C" {
 
           if (F_status_is_error(status)) {
             if (F_status_set_fine(status) == F_file_found_not) {
-              if (global->main->error.verbosity != f_console_verbosity_quiet_e) {
+              if (global->main->error.verbosity > f_console_verbosity_quiet_e) {
                 controller_lock_print(global->main->error.to, global->thread);
 
                 fl_print_format("%r%[%QExecution failed, unable to find program or script '%]", global->main->error.to.stream, f_string_eol_s, global->main->error.context, global->main->error.prefix, global->main->error.context);
@@ -1359,7 +1359,7 @@ extern "C" {
             return F_status_set_error(F_execute);
           }
           else if (result != 0) {
-            if (global->main->error.verbosity != f_console_verbosity_quiet_e) {
+            if (global->main->error.verbosity > f_console_verbosity_quiet_e) {
               controller_lock_print(global->main->error.to, global->thread);
 
               fl_print_format("%r%[%QExecution failed with return value of '%]", global->main->error.to.stream, f_string_eol_s, global->main->error.context, global->main->error.prefix, global->main->error.context);
@@ -1415,7 +1415,7 @@ extern "C" {
             if (entry_action->number == 0 || entry_action->number >= entry->items.used) {
 
               // This should not happen if the pre-process is working as designed, but in case it doesn't, return a critical error to prevent infinite recursion and similar errors.
-              if (global->main->error.verbosity != f_console_verbosity_quiet_e) {
+              if (global->main->error.verbosity > f_console_verbosity_quiet_e) {
                 controller_lock_print(global->main->error.to, global->thread);
 
                 fl_print_format("%r%[%QInvalid %r item index '%]", global->main->error.to.stream, f_string_eol_s, global->main->error.context, global->main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global->main->error.context);
@@ -1500,7 +1500,7 @@ extern "C" {
       }
     }
 
-    if ((global->main->parameters.array[controller_parameter_simulate_e].result == f_console_result_found_e && global->main->error.verbosity != f_console_verbosity_quiet_e) && global->main->error.verbosity != f_console_verbosity_error_e || global->main->error.verbosity == f_console_verbosity_verbose_e) {
+    if ((global->main->parameters.array[controller_parameter_simulate_e].result == f_console_result_found_e && global->main->error.verbosity > f_console_verbosity_quiet_e) && global->main->error.verbosity != f_console_verbosity_error_e || global->main->error.verbosity == f_console_verbosity_verbose_e) {
       controller_lock_print(global->main->output.to, global->thread);
 
       fl_print_format("%rDone processing %r item '", global->main->output.to.stream, f_string_eol_s, is_entry ? controller_entry_s : controller_exit_s);
@@ -1602,7 +1602,7 @@ extern "C" {
         }
       }
       else {
-        if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
+        if (global.main->error.verbosity > f_console_verbosity_quiet_e) {
           controller_lock_print(global.main->error.to, global.thread);
 
           fll_print_format("%r%[%QThe %r file is empty.%]%r", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : is_entry ? controller_entry_s : controller_exit_s, global.main->error.context, f_string_eol_s);
@@ -1771,7 +1771,7 @@ extern "C" {
           cache->action.name_item.used = 0;
 
           if (!(code & 0x1)) {
-            if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
+            if (global.main->error.verbosity > f_console_verbosity_quiet_e) {
               controller_lock_print(global.main->error.to, global.thread);
 
               fl_print_format("%r%[%QThe required %r item '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
@@ -1833,7 +1833,7 @@ extern "C" {
                       break;
                     }
 
-                    if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
+                    if (global.main->error.verbosity > f_console_verbosity_quiet_e) {
                       controller_lock_print(global.main->error.to, global.thread);
 
                       fl_print_format("%r%[%QThe required %r item '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
@@ -2275,7 +2275,7 @@ extern "C" {
             continue;
           }
 
-          if (global.main->error.verbosity != f_console_verbosity_quiet_e) {
+          if (global.main->error.verbosity > f_console_verbosity_quiet_e) {
             flockfile(global.main->error.to.stream);
 
             fl_print_format("%r%[%QThe %r setting '%]", global.main->error.to.stream, f_string_eol_s, global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);

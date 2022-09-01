@@ -243,23 +243,6 @@ extern "C" {
   }
 #endif // _di_fll_program_parameter_additional_rip_mash_
 
-#ifndef _di_fll_program_parameter_long_print_cannot_use_with_
-  f_status_t fll_program_parameter_long_print_cannot_use_with(const fl_print_t print, const f_string_static_t first, const f_string_static_t second) {
-
-    f_file_stream_lock(print.to);
-
-    fl_print_format("%[%QCannot specify the '%]", print.to.stream, print.context, print.prefix, print.context);
-    fl_print_format("%[%r%r%]", print.to.stream, print.notable, f_console_symbol_long_enable_s, first, print.notable);
-    fl_print_format("%[' parameter with the '%]", print.to.stream, print.context, print.context);
-    fl_print_format("%[%r%r%]", print.to.stream, print.notable, f_console_symbol_long_enable_s, second, print.notable);
-    fl_print_format("%[' parameter.%]%r", print.to.stream, print.context, print.context, f_string_eol_s);
-
-    f_file_stream_unlock(print.to);
-
-    return F_none;
-  }
-#endif // _di_fll_program_parameter_long_print_cannot_use_with_
-
 #ifndef _di_fll_program_standard_set_down_
   f_status_t fll_program_standard_set_down(fll_program_data_t * const main) {
     #ifndef _di_level_2_parameter_checking_
@@ -267,19 +250,20 @@ extern "C" {
     #endif // _di_level_2_parameter_checking_
 
     // The fclose() calls have undefined behavior when closing an already closed file.
-    // Avoid this by explicitly checking every permutation to make sure each descriptor is not a duplicat descriptor.
+    // Avoid this by explicitly checking every permutation to make sure each descriptor is not a duplicate descriptor.
     // 0x1 = message stream, 0x2 = output stream, 0x4 = error stream, 0x8 = warning stream, 0x10 = debug stream.
     // 0x20 = message descriptor, 0x40 = output descriptor, 0x80 = error descriptor, 0x100 = warning descriptor, 0x200 = debug descriptor.
     uint16_t flag = 0;
 
-    if (main->message.to.id == -1) {
-      if (main->message.to.stream != 0 && main->message.to.stream != F_type_error_d && main->message.to.stream != F_type_input_d && main->message.to.stream != F_type_output_d) {
+    if (main->message.to.stream) {
+      if (main->message.to.stream != F_type_error_d && main->message.to.stream != F_type_input_d && main->message.to.stream != F_type_output_d) {
         f_file_stream_flush(main->message.to);
 
         flag |= 0x1;
       }
     }
-    else {
+
+    if (main->message.to.id == -1) {
       if (main->message.to.id != F_type_descriptor_error_d && main->message.to.id != F_type_descriptor_input_d && main->message.to.id != F_type_descriptor_output_d) {
         f_file_flush(main->message.to);
 
@@ -287,8 +271,8 @@ extern "C" {
       }
     }
 
-    if (main->output.to.id == -1) {
-      if (main->output.to.stream && main->output.to.stream != main->message.to.stream) {
+    if (main->output.to.stream) {
+      if (main->output.to.stream != main->message.to.stream) {
         if (main->output.to.stream != F_type_error_d && main->output.to.stream != F_type_input_d && main->output.to.stream != F_type_output_d) {
           f_file_stream_flush(main->output.to);
 
@@ -296,16 +280,19 @@ extern "C" {
         }
       }
     }
-    else if (main->output.to.id != main->message.to.id) {
-      if (main->output.to.id != F_type_descriptor_error_d && main->output.to.id != F_type_descriptor_input_d && main->output.to.id != F_type_descriptor_output_d) {
-        f_file_flush(main->output.to);
 
-        flag |= 0x40;
+    if (main->error.to.id != -1) {
+      if (main->output.to.id != main->message.to.id) {
+        if (main->output.to.id != F_type_descriptor_error_d && main->output.to.id != F_type_descriptor_input_d && main->output.to.id != F_type_descriptor_output_d) {
+          f_file_flush(main->output.to);
+
+          flag |= 0x40;
+        }
       }
     }
 
-    if (main->error.to.id == -1) {
-      if (main->error.to.stream && main->error.to.stream != main->message.to.stream && main->error.to.stream != main->output.to.stream) {
+    if (main->error.to.stream) {
+      if (main->error.to.stream != main->message.to.stream && main->error.to.stream != main->output.to.stream) {
         if (main->error.to.stream != F_type_error_d && main->error.to.stream != F_type_input_d && main->error.to.stream != F_type_output_d) {
           f_file_stream_flush(main->error.to);
 
@@ -313,16 +300,19 @@ extern "C" {
         }
       }
     }
-    else if (main->error.to.id != main->message.to.id && main->error.to.id != main->output.to.id) {
-      if (main->error.to.id != F_type_descriptor_error_d && main->error.to.id != F_type_descriptor_input_d && main->error.to.id != F_type_descriptor_output_d) {
-        f_file_flush(main->error.to);
 
-        flag |= 0x80;
+    if (main->error.to.id != -1) {
+      if (main->error.to.id != main->message.to.id && main->error.to.id != main->output.to.id) {
+        if (main->error.to.id != F_type_descriptor_error_d && main->error.to.id != F_type_descriptor_input_d && main->error.to.id != F_type_descriptor_output_d) {
+          f_file_flush(main->error.to);
+
+          flag |= 0x80;
+        }
       }
     }
 
-    if (main->warning.to.id == -1) {
-      if (main->warning.to.stream && main->warning.to.stream != main->message.to.stream && main->warning.to.stream != main->output.to.stream && main->warning.to.stream != main->error.to.stream) {
+    if (main->warning.to.stream) {
+      if (main->warning.to.stream != main->message.to.stream && main->warning.to.stream != main->output.to.stream && main->warning.to.stream != main->error.to.stream) {
         if (main->warning.to.stream != F_type_error_d && main->warning.to.stream != F_type_input_d && main->warning.to.stream != F_type_output_d) {
           f_file_stream_flush(main->warning.to);
 
@@ -330,17 +320,20 @@ extern "C" {
         }
       }
     }
-    else if (main->warning.to.id != main->message.to.id && main->warning.to.id != main->output.to.id && main->warning.to.id != main->error.to.id) {
-      if (main->warning.to.id != F_type_descriptor_error_d && main->warning.to.id != F_type_descriptor_input_d && main->warning.to.id != F_type_descriptor_output_d) {
-        f_file_flush(main->warning.to);
 
-        flag |= 0x100;
+    if (main->warning.to.id != -1) {
+      if (main->warning.to.id != main->message.to.id && main->warning.to.id != main->output.to.id && main->warning.to.id != main->error.to.id) {
+        if (main->warning.to.id != F_type_descriptor_error_d && main->warning.to.id != F_type_descriptor_input_d && main->warning.to.id != F_type_descriptor_output_d) {
+          f_file_flush(main->warning.to);
+
+          flag |= 0x100;
+        }
       }
     }
 
 
-    if (main->debug.to.id == -1) {
-      if (main->debug.to.stream && main->debug.to.stream != main->message.to.stream && main->debug.to.stream != main->output.to.stream && main->debug.to.stream != main->error.to.stream && main->debug.to.stream != main->warning.to.stream) {
+    if (main->debug.to.stream) {
+      if (main->debug.to.stream != main->message.to.stream && main->debug.to.stream != main->output.to.stream && main->debug.to.stream != main->error.to.stream && main->debug.to.stream != main->warning.to.stream) {
         if (main->debug.to.stream != F_type_error_d && main->debug.to.stream != F_type_input_d && main->debug.to.stream != F_type_output_d) {
           f_file_stream_flush(main->debug.to);
 
@@ -348,11 +341,14 @@ extern "C" {
         }
       }
     }
-    else if (main->debug.to.id != main->message.to.id && main->debug.to.id != main->output.to.id && main->debug.to.id != main->error.to.id && main->debug.to.id != main->warning.to.id) {
-      if (main->debug.to.id != F_type_descriptor_error_d && main->debug.to.id != F_type_descriptor_input_d && main->debug.to.id != F_type_descriptor_output_d) {
-        f_file_flush(main->debug.to);
 
-        flag |= 0x200;
+    if (main->debug.to.id != -1) {
+      if (main->debug.to.id != main->message.to.id && main->debug.to.id != main->output.to.id && main->debug.to.id != main->error.to.id && main->debug.to.id != main->warning.to.id) {
+        if (main->debug.to.id != F_type_descriptor_error_d && main->debug.to.id != F_type_descriptor_input_d && main->debug.to.id != F_type_descriptor_output_d) {
+          f_file_flush(main->debug.to);
+
+          flag |= 0x200;
+        }
       }
     }
 

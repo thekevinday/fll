@@ -101,7 +101,7 @@ extern "C" {
           *status = f_directory_exists(destination_path);
 
           if (*status == F_false) {
-            if (data->main->error.verbosity != f_console_verbosity_quiet_e) {
+            if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
               flockfile(data->main->error.to.stream);
 
               fl_print_format("%r%[%QThe path '%]", data->main->error.to.stream, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);

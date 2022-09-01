@@ -20,9 +20,13 @@ extern "C" {
  *   This does not alter setting.status.
  * @param print
  *   Designates the how and where to print.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_status_code_print_error_cannot_error_warning_number_
-  extern void status_code_print_error_cannot_error_warning_number(status_code_setting_t * const setting, const fl_print_t print);
+  extern f_status_t status_code_print_error_cannot_error_warning_number(status_code_setting_t * const setting, const fl_print_t print);
 #endif // _di_status_code_print_error_cannot_error_warning_number_
 
 /**
@@ -33,9 +37,13 @@ extern "C" {
  *   This does not alter setting.status.
  * @param print
  *   Designates the how and where to print.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_status_code_print_error_no_status_codes_
-  extern void status_code_print_error_no_status_codes(status_code_setting_t * const setting, const fl_print_t print);
+  extern f_status_t status_code_print_error_no_status_codes(status_code_setting_t * const setting, const fl_print_t print);
 #endif // _di_status_code_print_error_no_status_codes_
 
 /**
@@ -49,6 +57,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_status_code_print_help_
   extern f_status_t status_code_print_help(status_code_setting_t * const setting, const fl_print_t print);
@@ -67,9 +76,13 @@ extern "C" {
  * @param lock
  *   If TRUE, then lock the stream.
  *   If FALSE, then do not lock or unlock the stream.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_status_code_print_line_first_
-  extern void status_code_print_line_first(status_code_setting_t * const setting, const fl_print_t print, const bool lock);
+  extern f_status_t status_code_print_line_first(status_code_setting_t * const setting, const fl_print_t print, const bool lock);
 #endif // _di_status_code_print_line_first_
 
 /**
@@ -85,9 +98,13 @@ extern "C" {
  * @param lock
  *   If TRUE, then lock the stream.
  *   If FALSE, then do not lock or unlock the stream.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_status_code_print_line_last_
-  extern void status_code_print_line_last(status_code_setting_t * const setting, const fl_print_t print, const bool lock);
+  extern f_status_t status_code_print_line_last(status_code_setting_t * const setting, const fl_print_t print, const bool lock);
 #endif // _di_status_code_print_line_last_
 
 #ifdef __cplusplus

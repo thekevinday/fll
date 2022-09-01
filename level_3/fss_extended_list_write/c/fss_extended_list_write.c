@@ -79,14 +79,14 @@ extern "C" {
     if (F_status_is_error_not(status)) {
       if (main->parameters.array[fss_extended_list_write_parameter_file_e].result == f_console_result_additional_e) {
         if (main->parameters.array[fss_extended_list_write_parameter_file_e].values.used > 1) {
-          if (main->error.verbosity != f_console_verbosity_quiet_e) {
-            flockfile(main->error.to.stream);
+          if (main->error.verbosity > f_console_verbosity_quiet_e) {
+            f_file_stream_lock(main->error.to);
 
             fl_print_format("%r%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
             fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_extended_list_write_long_file_s, main->error.notable);
             fl_print_format("%[' may only be specified once.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
-            funlockfile(main->error.to.stream);
+            f_file_stream_unlock(main->error.to);
           }
 
           status = F_status_set_error(F_parameter);
@@ -126,8 +126,8 @@ extern "C" {
           }
           else if (main->parameters.array[fss_extended_list_write_parameter_content_e].locations.used && main->parameters.array[fss_extended_list_write_parameter_partial_e].locations.used) {
             if (main->parameters.array[fss_extended_list_write_parameter_content_e].result == f_console_result_additional_e) {
-              if (main->error.verbosity != f_console_verbosity_quiet_e) {
-                flockfile(main->error.to.stream);
+              if (main->error.verbosity > f_console_verbosity_quiet_e) {
+                f_file_stream_lock(main->error.to);
 
                 fl_print_format("%r%[%QThe '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
                 fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_extended_list_write_long_partial_s, main->error.notable);
@@ -137,7 +137,7 @@ extern "C" {
                 fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_extended_list_write_long_content_s, main->error.notable);
                 fl_print_format("%[' parameter, but not both.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
-                funlockfile(main->error.to.stream);
+                f_file_stream_unlock(main->error.to);
               }
 
               status = F_status_set_error(F_parameter);
@@ -158,8 +158,8 @@ extern "C" {
                 location_sub_content = main->parameters.array[fss_extended_list_write_parameter_content_e].locations_sub.array[i];
 
                 if (location_object > location_content || location_object == location_content && location_sub_object > location_sub_content) {
-                  if (main->error.verbosity != f_console_verbosity_quiet_e) {
-                    flockfile(main->error.to.stream);
+                  if (main->error.verbosity > f_console_verbosity_quiet_e) {
+                    f_file_stream_lock(main->error.to);
 
                     fl_print_format("%r%[%QEach '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
                     fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_extended_list_write_long_object_s, main->error.notable);
@@ -167,7 +167,7 @@ extern "C" {
                     fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_extended_list_write_long_content_s, main->error.notable);
                     fl_print_format("%[' parameter.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
-                    funlockfile(main->error.to.stream);
+                    f_file_stream_unlock(main->error.to);
                   }
 
                   status = F_status_set_error(F_parameter);
@@ -189,8 +189,8 @@ extern "C" {
         }
       }
       else if (!(main->pipe & fll_program_data_pipe_input_e)) {
-        if (main->error.verbosity != f_console_verbosity_quiet_e) {
-          flockfile(main->error.to.stream);
+        if (main->error.verbosity > f_console_verbosity_quiet_e) {
+          f_file_stream_lock(main->error.to);
 
           fl_print_format("%r%[%QThis requires either piped data or the use of the '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
           fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_extended_list_write_long_object_s, main->error.notable);
@@ -198,7 +198,7 @@ extern "C" {
           fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_extended_list_write_long_content_s, main->error.notable);
           fl_print_format("%[' parameter.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
-          funlockfile(main->error.to.stream);
+          f_file_stream_unlock(main->error.to);
         }
 
         status = F_status_set_error(F_parameter);
@@ -206,14 +206,14 @@ extern "C" {
 
       if (F_status_is_error_not(status) && (main->pipe & fll_program_data_pipe_input_e)) {
         if (main->parameters.array[fss_extended_list_write_parameter_partial_e].result == f_console_result_found_e) {
-          if (main->error.verbosity != f_console_verbosity_quiet_e) {
-            flockfile(main->error.to.stream);
+          if (main->error.verbosity > f_console_verbosity_quiet_e) {
+            f_file_stream_lock(main->error.to);
 
             fl_print_format("%r%[%QThis '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
             fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_extended_list_write_long_partial_s, main->error.notable);
             fl_print_format("%[' parameter cannot be used when processing a pipe.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
-            funlockfile(main->error.to.stream);
+            f_file_stream_unlock(main->error.to);
           }
 
           status = F_status_set_error(F_parameter);
@@ -223,14 +223,14 @@ extern "C" {
 
     if (F_status_is_error_not(status)) {
       if (main->parameters.array[fss_extended_list_write_parameter_prepend_e].result == f_console_result_found_e) {
-        if (main->error.verbosity != f_console_verbosity_quiet_e) {
-          flockfile(main->error.to.stream);
+        if (main->error.verbosity > f_console_verbosity_quiet_e) {
+          f_file_stream_lock(main->error.to);
 
           fl_print_format("%r%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
           fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_extended_list_write_long_prepend_s, main->error.notable);
           fl_print_format("%[' is specified, but no value is given.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
-          funlockfile(main->error.to.stream);
+          f_file_stream_unlock(main->error.to);
         }
 
         status = F_status_set_error(F_parameter);
@@ -248,14 +248,14 @@ extern "C" {
             if (F_status_is_error(status)) break;
 
             if (status == F_false) {
-              if (main->error.verbosity != f_console_verbosity_quiet_e) {
-                flockfile(main->error.to.stream);
+              if (main->error.verbosity > f_console_verbosity_quiet_e) {
+                f_file_stream_lock(main->error.to);
 
                 fl_print_format("%r%[%QThe value for the parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
                 fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_extended_list_write_long_prepend_s, main->error.notable);
                 fl_print_format("%[' must only contain white space.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
-                funlockfile(main->error.to.stream);
+                f_file_stream_unlock(main->error.to);
               }
 
               status = F_status_set_error(F_parameter);
@@ -265,14 +265,14 @@ extern "C" {
           } // for
         }
         else {
-          if (main->error.verbosity != f_console_verbosity_quiet_e) {
-            flockfile(main->error.to.stream);
+          if (main->error.verbosity > f_console_verbosity_quiet_e) {
+            f_file_stream_lock(main->error.to);
 
             fl_print_format("%r%[%QThe value for the parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
             fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_extended_list_write_long_prepend_s, main->error.notable);
             fl_print_format("%[' must not be an empty string.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
-            funlockfile(main->error.to.stream);
+            f_file_stream_unlock(main->error.to);
           }
 
           status = F_status_set_error(F_parameter);
@@ -282,14 +282,14 @@ extern "C" {
 
     if (F_status_is_error_not(status)) {
       if (main->parameters.array[fss_extended_list_write_parameter_ignore_e].result == f_console_result_found_e) {
-        if (main->error.verbosity != f_console_verbosity_quiet_e) {
-          flockfile(main->error.to.stream);
+        if (main->error.verbosity > f_console_verbosity_quiet_e) {
+          f_file_stream_lock(main->error.to);
 
           fl_print_format("%r%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
           fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_extended_list_write_long_ignore_s, main->error.notable);
           fl_print_format("%[' was specified, but no values were given.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
-          funlockfile(main->error.to.stream);
+          f_file_stream_unlock(main->error.to);
         }
 
         status = F_status_set_error(F_parameter);
@@ -299,13 +299,13 @@ extern "C" {
         const f_array_length_t total_arguments = main->parameters.array[fss_extended_list_write_parameter_ignore_e].values.used;
 
         if (total_locations * 2 > total_arguments) {
-          flockfile(main->error.to.stream);
+          f_file_stream_lock(main->error.to);
 
           fl_print_format("%r%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
           fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_extended_list_write_long_ignore_s, main->error.notable);
           fl_print_format("%[' requires two values.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
-          funlockfile(main->error.to.stream);
+          f_file_stream_unlock(main->error.to);
 
           status = F_status_set_error(F_parameter);
         }
@@ -336,13 +336,13 @@ extern "C" {
         status = fss_extended_list_write_process_pipe(main, output, quote, &buffer, &ignore);
 
         if (F_status_is_error(status)) {
-          if (main->error.verbosity != f_console_verbosity_quiet_e) {
-            flockfile(main->error.to.stream);
+          if (main->error.verbosity > f_console_verbosity_quiet_e) {
+            f_file_stream_lock(main->error.to);
 
             fl_print_format("%r%[%QWhile processing the '%]%[input pipe%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context, main->error.notable, main->error.notable);
             fl_print_format("%['.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
-            funlockfile(main->error.to.stream);
+            f_file_stream_unlock(main->error.to);
           }
         }
 
@@ -418,16 +418,16 @@ extern "C" {
         }
 
         if (F_status_is_error(status)) {
-          if (main->error.verbosity != f_console_verbosity_quiet_e) {
-            flockfile(main->error.to.stream);
+          if (main->error.verbosity > f_console_verbosity_quiet_e) {
+            f_file_stream_lock(main->error.to);
 
             fl_print_format("%r%[%QWhile processing the '%]%[input arguments%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context, main->error.notable, main->error.notable);
             fl_print_format("%['.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
-            funlockfile(main->error.to.stream);
+            f_file_stream_unlock(main->error.to);
           }
         }
-        else if (main->error.verbosity != f_console_verbosity_quiet_e && main->error.verbosity != f_console_verbosity_error_e && main->parameters.array[fss_extended_list_write_parameter_file_e].result == f_console_result_none_e) {
+        else if (main->error.verbosity > f_console_verbosity_quiet_e && main->error.verbosity != f_console_verbosity_error_e && main->parameters.array[fss_extended_list_write_parameter_file_e].result == f_console_result_none_e) {
 
           // Ensure there is always a newline at the end, unless in quiet mode.
           fll_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
@@ -443,7 +443,7 @@ extern "C" {
     }
 
     // Ensure a newline is always put at the end of the program execution, unless in quiet mode.
-    if (main->error.verbosity != f_console_verbosity_quiet_e) {
+    if (main->error.verbosity > f_console_verbosity_quiet_e) {
       if (F_status_is_error(status)) {
         fll_print_dynamic_raw(f_string_eol_s, main->error.to.stream);
       }

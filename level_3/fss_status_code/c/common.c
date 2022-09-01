@@ -55,7 +55,14 @@ extern "C" {
 
     // Load parameters.
     setting->status = f_console_parameter_process(arguments, &main->parameters);
-    if (F_status_is_error(setting->status)) return;
+
+    if (F_status_is_error(setting->status)) {
+      fss_status_code_print_line_first(setting, main->error, F_true);
+      fll_error_print(main->error, F_status_set_fine(setting->status), "f_console_parameter_process", F_true);
+      fss_status_code_print_line_last(setting, main->error, F_true);
+
+      return;
+    }
 
     {
       f_array_length_t choice = 0;
@@ -145,42 +152,42 @@ extern "C" {
     if (setting->flag & fss_status_code_main_flag_error_e) {
       if (setting->flag & fss_status_code_main_flag_warning_e) {
         if (!(setting->flag & fss_status_code_main_flag_number_e)) {
+          setting->status = F_status_set_error(F_parameter);
+
           fss_status_code_print_line_first(setting, main->error, F_true);
           fss_status_code_print_error_cannot_error_warning_number(setting, main->error);
           fss_status_code_print_line_last(setting, main->error, F_true);
-
-          setting->status = F_status_set_error(F_parameter);
 
           return;
         }
       }
 
       if (setting->flag & fss_status_code_main_flag_fine_e) {
-        fss_status_code_print_line_first(setting, main->error, F_true);
-        fll_program_parameter_long_print_cannot_use_with(main->error, fss_status_code_long_error_s, fss_status_code_long_fine_s);
-        fss_status_code_print_line_last(setting, main->error, F_true);
-
         setting->status = F_status_set_error(F_parameter);
+
+        fss_status_code_print_line_first(setting, main->error, F_true);
+        fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_enable_s, fss_status_code_long_error_s, fss_status_code_long_fine_s);
+        fss_status_code_print_line_last(setting, main->error, F_true);
 
         return;
       }
     }
     else if (setting->flag & fss_status_code_main_flag_warning_e && setting->flag & fss_status_code_main_flag_fine_e) {
-      fss_status_code_print_line_first(setting, main->error, F_true);
-      fll_program_parameter_long_print_cannot_use_with(main->error, fss_status_code_long_warning_s, fss_status_code_long_fine_s);
-      fss_status_code_print_line_last(setting, main->error, F_true);
-
       setting->status = F_status_set_error(F_parameter);
+
+      fss_status_code_print_line_first(setting, main->error, F_true);
+      fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_enable_s, fss_status_code_long_warning_s, fss_status_code_long_fine_s);
+      fss_status_code_print_line_last(setting, main->error, F_true);
 
       return;
     }
 
     if (main->parameters.remaining.used == 0 && !(main->pipe & fll_program_data_pipe_input_e)) {
+      setting->status = F_status_set_error(F_parameter);
+
       fss_status_code_print_line_first(setting, main->error, F_true);
       fss_status_code_print_error_no_fss_status_codes(setting, main->error);
       fss_status_code_print_line_last(setting, main->error, F_true);
-
-      setting->status = F_status_set_error(F_parameter);
 
       return;
     }

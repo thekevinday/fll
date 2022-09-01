@@ -213,7 +213,7 @@ extern "C" {
       }
 
       if (missing_main) {
-        if (data_make->main->error.verbosity != f_console_verbosity_quiet_e) {
+        if (data_make->main->error.verbosity > f_console_verbosity_quiet_e) {
           flockfile(data_make->main->error.to.stream);
 
           fl_print_format("%r%[%QThe fakefile '%]", data_make->main->error.to.stream, f_string_eol_s, data_make->main->error.context, data_make->main->error.prefix, data_make->main->error.context);
@@ -449,7 +449,7 @@ extern "C" {
           }
         }
         else {
-          if (data->main->error.verbosity != f_console_verbosity_quiet_e) {
+          if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
             flockfile(data->main->error.to.stream);
 
             fl_print_format("%r%[%QInvalid characters in the define setting name '%]", data->main->error.to.stream, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);

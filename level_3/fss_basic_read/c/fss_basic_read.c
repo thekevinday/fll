@@ -117,13 +117,13 @@ extern "C" {
         for (f_array_length_t i = 0; i < 6; ++i) {
 
           if (main->parameters.array[parameter_code[i]].result == f_console_result_found_e) {
-            flockfile(main->error.to.stream);
+            f_file_stream_lock(main->error.to);
 
             fl_print_format("%r%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
             fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, parameter_name[i], main->error.notable);
             fl_print_format("%[' requires a %s.%]%r", main->error.to.stream, main->error.context, parameter_message[i], main->error.context, f_string_eol_s);
 
-            funlockfile(main->error.to.stream);
+            f_file_stream_unlock(main->error.to);
 
             status = F_status_set_error(F_parameter);
 
@@ -160,8 +160,8 @@ extern "C" {
         for (f_array_length_t i = 0; i < 5; ++i) {
 
           if (main->parameters.array[parameter_code[i]].result == parameter_match[i]) {
-            if (main->error.verbosity != f_console_verbosity_quiet_e) {
-              fll_program_parameter_long_print_cannot_use_with(main->error, fss_basic_read_long_columns_s, parameter_name[i]);
+            if (main->error.verbosity > f_console_verbosity_quiet_e) {
+              fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_enable_s, fss_basic_read_long_columns_s, parameter_name[i]);
             }
 
             status = F_status_set_error(F_parameter);
@@ -173,15 +173,15 @@ extern "C" {
 
       if (F_status_is_error_not(status) && main->parameters.array[fss_basic_read_parameter_pipe_e].result == f_console_result_found_e) {
         if (main->parameters.array[fss_basic_read_parameter_total_e].result == f_console_result_found_e) {
-          if (main->error.verbosity != f_console_verbosity_quiet_e) {
-            fll_program_parameter_long_print_cannot_use_with(main->error, fss_basic_read_long_pipe_s, fss_basic_read_long_total_s);
+          if (main->error.verbosity > f_console_verbosity_quiet_e) {
+            fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_enable_s, fss_basic_read_long_pipe_s, fss_basic_read_long_total_s);
           }
 
           status = F_status_set_error(F_parameter);
         }
         else if (main->parameters.array[fss_basic_read_parameter_line_e].result == f_console_result_additional_e) {
-          if (main->error.verbosity != f_console_verbosity_quiet_e) {
-            fll_program_parameter_long_print_cannot_use_with(main->error, fss_basic_read_long_pipe_s, fss_basic_read_long_line_s);
+          if (main->error.verbosity > f_console_verbosity_quiet_e) {
+            fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_enable_s, fss_basic_read_long_pipe_s, fss_basic_read_long_line_s);
           }
 
           status = F_status_set_error(F_parameter);
@@ -213,13 +213,13 @@ extern "C" {
           length = data.argv[index].used;
 
           if (!length) {
-            flockfile(main->error.to.stream);
+            f_file_stream_lock(main->error.to);
 
             fl_print_format("%r%[%QThe value for the parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
             fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_basic_read_long_delimit_s, main->error.notable);
             fl_print_format("%[' must not be empty.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
-            funlockfile(main->error.to.stream);
+            f_file_stream_unlock(main->error.to);
 
             status = F_status_set_error(F_parameter);
 
@@ -346,13 +346,13 @@ extern "C" {
       }
 
       if (F_status_is_error_not(status) && main->parameters.array[fss_basic_read_parameter_select_e].result == f_console_result_found_e) {
-        flockfile(main->error.to.stream);
+        f_file_stream_lock(main->error.to);
 
         fl_print_format("%r%[%QThe '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
         fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_basic_read_long_select_s, main->error.notable);
         fl_print_format("%[' parameter requires a positive number.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
-        funlockfile(main->error.to.stream);
+        f_file_stream_unlock(main->error.to);
 
         fss_basic_read_depths_resize(0, &data.depths);
 
@@ -523,9 +523,9 @@ extern "C" {
       status = F_status_set_error(F_parameter);
     }
 
-    if (main->error.verbosity != f_console_verbosity_quiet_e) {
+    if (main->error.verbosity > f_console_verbosity_quiet_e) {
       if (F_status_set_fine(status) == F_interrupt) {
-        fflush(main->output.to.stream);
+        f_file_stream_flush(main->output.to);
 
         fll_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
       }

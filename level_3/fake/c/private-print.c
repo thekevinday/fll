@@ -10,7 +10,7 @@ extern "C" {
   bool fake_print_error_build_operation_file(fake_data_t * const data, const f_status_t status, const char *function, const f_string_static_t operation, const f_string_static_t source, const f_string_static_t destination, const f_string_static_t how, const bool fallback) {
 
     if (status == F_file_found_not) {
-      if (data->main->error.verbosity != f_console_verbosity_quiet_e) {
+      if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
         flockfile(data->main->error.to.stream);
 
         fl_print_format("%r%[%QFailed to find '%]", data->main->error.to.stream, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
@@ -26,7 +26,7 @@ extern "C" {
     }
 
     if (status == F_parameter) {
-      if (data->main->error.verbosity != f_console_verbosity_quiet_e) {
+      if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
         flockfile(data->main->error.to.stream);
 
         fl_print_format("%r%[%QInvalid parameter when calling '%]", data->main->error.to.stream, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
@@ -44,7 +44,7 @@ extern "C" {
     }
 
     if (status == F_name) {
-      if (data->main->error.verbosity != f_console_verbosity_quiet_e) {
+      if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
         flockfile(data->main->error.to.stream);
 
         fl_print_format("%r%[%QInvalid name for '%]", data->main->error.to.stream, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
@@ -67,7 +67,7 @@ extern "C" {
     }
 
     if (status == F_memory_not) {
-      if (data->main->error.verbosity != f_console_verbosity_quiet_e) {
+      if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
         flockfile(data->main->error.to.stream);
 
         fl_print_format("%r%[%QUnable to allocate memory, while trying to %Q '%]", data->main->error.to.stream, f_string_eol_s, data->main->error.context, data->main->error.prefix, operation, data->main->error.context);
@@ -83,7 +83,7 @@ extern "C" {
     }
 
     if (status == F_number_overflow) {
-      if (data->main->error.verbosity != f_console_verbosity_quiet_e) {
+      if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
         flockfile(data->main->error.to.stream);
 
         fl_print_format("%r%[%QOverflow while trying to %Q '%]", data->main->error.to.stream, f_string_eol_s, data->main->error.context, data->main->error.prefix, operation, data->main->error.context);
@@ -99,7 +99,7 @@ extern "C" {
     }
 
     if (status == F_directory) {
-      if (data->main->error.verbosity != f_console_verbosity_quiet_e) {
+      if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
         flockfile(data->main->error.to.stream);
 
         fl_print_format("%r%[%QInvalid directory while trying to %Q '%]", data->main->error.to.stream, f_string_eol_s, data->main->error.context, data->main->error.prefix, operation, data->main->error.context);
@@ -115,7 +115,7 @@ extern "C" {
     }
 
     if (status == F_access_denied) {
-      if (data->main->error.verbosity != f_console_verbosity_quiet_e) {
+      if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
         flockfile(data->main->error.to.stream);
 
         fl_print_format("%r%[%QAccess denied while trying to %Q '%]", data->main->error.to.stream, f_string_eol_s, data->main->error.context, data->main->error.prefix, operation, data->main->error.context);
@@ -131,7 +131,7 @@ extern "C" {
     }
 
     if (status == F_loop) {
-      if (data->main->error.verbosity != f_console_verbosity_quiet_e) {
+      if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
         flockfile(data->main->error.to.stream);
 
         fl_print_format("%r%[%QLoop while trying to %Q '%]", data->main->error.to.stream, f_string_eol_s, data->main->error.context, data->main->error.prefix, operation, data->main->error.context);
@@ -147,7 +147,7 @@ extern "C" {
     }
 
     if (status == F_prohibited) {
-      if (data->main->error.verbosity != f_console_verbosity_quiet_e) {
+      if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
         flockfile(data->main->error.to.stream);
 
         fl_print_format("%r%[%QProhibited by system while trying to %Q '%]", data->main->error.to.stream, f_string_eol_s, data->main->error.context, data->main->error.prefix, operation, data->main->error.context);
@@ -163,7 +163,7 @@ extern "C" {
     }
 
     if (status == F_directory_found_not) {
-      if (data->main->error.verbosity != f_console_verbosity_quiet_e) {
+      if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
         flockfile(data->main->error.to.stream);
 
         fl_print_format("%r%[%QFailed to %Q '%]", data->main->error.to.stream, f_string_eol_s, data->main->error.context, data->main->error.prefix, operation, data->main->error.context);
@@ -179,7 +179,7 @@ extern "C" {
     }
 
     if (status == F_failure) {
-      if (data->main->error.verbosity != f_console_verbosity_quiet_e) {
+      if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
         flockfile(data->main->error.to.stream);
 
         fl_print_format("%r%[%QFailed to %Q '%]", data->main->error.to.stream, f_string_eol_s, data->main->error.context, data->main->error.prefix, operation, data->main->error.context);
@@ -194,7 +194,7 @@ extern "C" {
       return F_false;
     }
 
-    if (fll_error_print(data->main->error, status, function, F_false) == F_known_not && fallback && data->main->error.verbosity != f_console_verbosity_quiet_e) {
+    if (fll_error_print(data->main->error, status, function, F_false) == F_known_not && fallback && data->main->error.verbosity > f_console_verbosity_quiet_e) {
       flockfile(data->main->error.to.stream);
 
       fl_print_format("%r%[UNKNOWN %Q(%]", data->main->error.to.stream, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
@@ -235,7 +235,7 @@ extern "C" {
   bool fake_print_error_fss(fake_data_t * const data, const f_status_t status, const char *function, const f_string_static_t path_file, const f_string_range_t range, const bool fallback) {
 
     if (status == F_file_found_not) {
-      if (data->main->error.verbosity != f_console_verbosity_quiet_e) {
+      if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
         flockfile(data->main->error.to.stream);
 
         fl_print_format("%r%[%QOccurred on invalid UTF-8 character at stop position (at '%]", data->main->error.to.stream, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
@@ -251,7 +251,7 @@ extern "C" {
     }
 
     if (status == F_complete_not_utf || status == F_complete_not_utf_eos || status == F_complete_not_utf_stop) {
-      if (data->main->error.verbosity != f_console_verbosity_quiet_e) {
+      if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
         flockfile(data->main->error.to.stream);
 
         fl_print_format("%r%[%QOccurred on invalid UTF-8 character at %s (at '%]", data->main->error.to.stream, f_string_eol_s, data->main->error.context, data->main->error.prefix, status == F_complete_not_utf_eos ? "end of string" : "stop point of string", data->main->error.context);
@@ -267,7 +267,7 @@ extern "C" {
     }
 
     if (status == F_complete_not_utf_stop) {
-      if (data->main->error.verbosity != f_console_verbosity_quiet_e) {
+      if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
         flockfile(data->main->error.to.stream);
 
         fl_print_format("%r%[%QOccurred on invalid UTF-8 character at stop point of string (at '%]", data->main->error.to.stream, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
@@ -282,7 +282,7 @@ extern "C" {
       return F_false;
     }
 
-    if (fll_error_print(data->main->error, status, function, F_false) == F_known_not && fallback && data->main->error.verbosity != f_console_verbosity_quiet_e) {
+    if (fll_error_print(data->main->error, status, function, F_false) == F_known_not && fallback && data->main->error.verbosity > f_console_verbosity_quiet_e) {
       flockfile(data->main->error.to.stream);
 
       fl_print_format("%r%[UNKNOWN %Q(%]", data->main->error.to.stream, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);

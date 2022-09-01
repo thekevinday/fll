@@ -84,7 +84,7 @@ extern "C" {
     int child;
     uint8_t pipe;
 
-    int signal_received;
+    uint32_t signal_received;
     uint16_t signal_check;
     f_signal_t signal;
 

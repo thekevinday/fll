@@ -451,7 +451,7 @@ extern "C" {
 
             break;
           }
-          else if (data->main->error.verbosity != f_console_verbosity_quiet_e) {
+          else if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
             fake_print_error_build_operation_file(data, F_status_set_fine(*status), "fl_directory_copy", fake_common_file_directory_copy_s, f_file_operation_to_s, path_source, destination_directory, F_true);
           }
 
@@ -721,7 +721,7 @@ extern "C" {
     else if (*status != F_child) {
       if (F_status_is_error(*status)) {
         if (F_status_set_fine(*status) == F_failure) {
-          if (data->main->error.verbosity != f_console_verbosity_quiet_e) {
+          if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
             flockfile(data->main->error.to.stream);
 
             fl_print_format("%r%[%QFailed to execute script: '%]", data->main->error.to.stream, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);

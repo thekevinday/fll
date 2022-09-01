@@ -60,6 +60,17 @@ extern "C" {
 #endif // _di_iki_write_program_name_
 
 /**
+ * Special strings used by this program.
+ */
+#ifndef _di_iki_write_strings_
+  #define IKI_WRITE_object_s  "object"
+
+  #define IKI_WRITE_object_s_length 6
+
+  extern const f_string_static_t iki_write_object_s;
+#endif // _di_iki_write_strings_
+
+/**
  * The program defines.
  */
 #ifndef _di_iki_write_defines_
@@ -157,26 +168,24 @@ extern "C" {
  *
  * iki_write_main_flag_*_e:
  *   - none:          No modes in use.
- *   - file_from:     Using a specified source file.
+ *   - content:       The Content being written is specified.
+ *   - double:        Operate using double quotes.
  *   - file_to:       Using a specified destination file.
  *   - help:          Print help.
- *   - header:        Enable printing of headers.
- *   - separate:      Enable printing of separators.
- *   - strip_invalid: Using strip invalid character mode.
- *   - verify:        Using verify mode.
+ *   - object:        The Object being written is specified.
+ *   - single:        Operate using single quotes.
  *   - version:       Print version.
  */
 #ifndef _di_iki_write_main_flag_e_
   enum {
-    iki_write_main_flag_none_e          = 0x0,
-    iki_write_main_flag_file_from_e     = 0x1,
-    iki_write_main_flag_file_to_e       = 0x2,
-    iki_write_main_flag_header_e        = 0x4,
-    iki_write_main_flag_help_e          = 0x8,
-    iki_write_main_flag_separate_e      = 0x10,
-    iki_write_main_flag_strip_invalid_e = 0x20,
-    iki_write_main_flag_verify_e        = 0x40,
-    iki_write_main_flag_version_e       = 0x80,
+    iki_write_main_flag_none_e    = 0x0,
+    iki_write_main_flag_content_e = 0x1,
+    iki_write_main_flag_double_e  = 0x2,
+    iki_write_main_flag_file_to_e = 0x4,
+    iki_write_main_flag_help_e    = 0x8,
+    iki_write_main_flag_object_e  = 0x10,
+    iki_write_main_flag_single_e  = 0x20,
+    iki_write_main_flag_version_e = 0x40,
   };
 #endif // _di_iki_write_main_flag_e_
 
@@ -192,6 +201,16 @@ extern "C" {
  *
  * line_first: A string expected to represent either "\n" or NULL to allow for easy handling of when to print first new line or not.
  * line_last:  A string expected to represent either "\n" or NULL to allow for easy handling of when to print last new line or not.
+ *
+ * quote: This holds the quote used during processing.
+ *
+ * escaped: A buffer used for escaping strings during processing.
+ * buffer:  A buffer used during processing the file.
+ * object:  A buffer used to hold an Object during processing.
+ * content: A buffer used to hold a Content during processing.
+ *
+ * objects:  An array of objects passed as values to the "--object" parameter.
+ * contents: An array of objects passed as values to the "--content" parameter and must match the length of objects.
  */
 #ifndef _di_iki_write_setting_t_
   typedef struct {
@@ -201,6 +220,16 @@ extern "C" {
 
     f_string_static_t line_first;
     f_string_static_t line_last;
+
+    f_string_static_t quote;
+
+    f_string_dynamic_t escaped;
+    f_string_dynamic_t buffer;
+    f_string_dynamic_t object;
+    f_string_dynamic_t content;
+
+    f_string_dynamics_t objects;
+    f_string_dynamics_t contents;
   } iki_write_setting_t;
 
   #define iki_write_setting_t_initialize \
@@ -209,6 +238,12 @@ extern "C" {
       F_none, \
       f_string_static_t_initialize, \
       f_string_static_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamics_t_initialize, \
+      f_string_dynamics_t_initialize, \
     }
 #endif // _di_iki_write_setting_t_
 

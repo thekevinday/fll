@@ -9,17 +9,7 @@ extern "C" {
 #ifndef _di_status_code_main_
   void status_code_main(fll_program_data_t * const main, status_code_setting_t * const setting) {
 
-    if (!main || !setting) {
-      status_code_print_line_first(setting, main->error, F_true);
-      fll_error_print(main->error, F_parameter, "status_code_main", F_true);
-      status_code_print_line_last(setting, main->error, F_true);
-
-      setting->status = F_status_set_error(F_parameter);
-
-      return;
-    }
-
-    if (F_status_is_error(setting->status)) return;
+    if (!main || !setting || F_status_is_error(setting->status)) return;
 
     setting->status = F_none;
 
@@ -39,7 +29,7 @@ extern "C" {
 
     if (setting->flag & status_code_main_flag_number_e) {
       if (main->pipe & fll_program_data_pipe_input_e) {
-        // @todo call status_code_process_number() here for all main from pipe that is space separated.
+        // @todo call status_code_process_number() here for all main from pipe that are space separated.
       }
 
       if (main->parameters.remaining.used) {
@@ -51,9 +41,9 @@ extern "C" {
             if (fll_program_standard_signal_received(main)) {
               fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
 
-              setting->status = F_status_set_error(F_signal);
+              setting->status = F_status_set_error(F_interrupt);
 
-              break;
+              return;
             }
 
             main->signal_check = 0;
@@ -83,9 +73,9 @@ extern "C" {
             if (fll_program_standard_signal_received(main)) {
               fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
 
-              setting->status = F_status_set_error(F_signal);
+              setting->status = F_status_set_error(F_interrupt);
 
-              break;
+              return;
             }
 
             main->signal_check = 0;
@@ -115,9 +105,9 @@ extern "C" {
             if (fll_program_standard_signal_received(main)) {
               fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
 
-              setting->status = F_status_set_error(F_signal);
+              setting->status = F_status_set_error(F_interrupt);
 
-              break;
+              return;
             }
 
             main->signal_check = 0;

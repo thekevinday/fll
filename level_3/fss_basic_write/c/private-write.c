@@ -11,7 +11,7 @@ extern "C" {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e) return;
 
-    flockfile(main->error.to.stream);
+    f_file_stream_lock(main->error.to);
 
     fl_print_format("%r%[%QMust specify the '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
     fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_basic_write_long_object_s, main->error.notable);
@@ -21,7 +21,7 @@ extern "C" {
     fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_basic_write_long_partial_s, main->error.notable);
     fl_print_format("%[' parameter.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
-    funlockfile(main->error.to.stream);
+    f_file_stream_unlock(main->error.to);
   }
 #endif // _di_fss_basic_write_error_parameter_same_times_print_
 
@@ -30,13 +30,13 @@ extern "C" {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e) return;
 
-    flockfile(main->error.to.stream);
+    f_file_stream_lock(main->error.to);
 
     fl_print_format("%r%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
     fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, symbol, parameter, main->error.notable);
     fl_print_format("%[' is specified, but no value is given.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
-    funlockfile(main->error.to.stream);
+    f_file_stream_unlock(main->error.to);
   }
 #endif // _di_fss_basic_write_error_parameter_value_missing_print_
 
@@ -45,7 +45,7 @@ extern "C" {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e) return;
 
-    flockfile(main->error.to.stream);
+    f_file_stream_lock(main->error.to);
 
     fl_print_format("%r%[%QThe FSS-0000 (Basic) standard does not support end of line character '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
     fl_print_format("%[\\n%]", main->error.to.stream, main->error.notable, main->error.notable);
@@ -53,7 +53,7 @@ extern "C" {
     fl_print_format("%[U+000A%]", main->error.to.stream, main->error.notable, main->error.notable);
     fl_print_format("%[) in objects.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
-    funlockfile(main->error.to.stream);
+    f_file_stream_unlock(main->error.to);
   }
 #endif // _di_fss_basic_write_error_parameter_unsupported_eol_print_
 
@@ -269,7 +269,7 @@ extern "C" {
           for (; range.start <= range.stop; ++range.start) {
 
             if (block.string[range.start] == fss_basic_write_pipe_content_start_s.string[0]) {
-              if (main->error.verbosity != f_console_verbosity_quiet_e) {
+              if (main->error.verbosity > f_console_verbosity_quiet_e) {
                 fll_print_format("%r%[%QThe FSS-0000 (Basic) standard only supports one content per object.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context, f_string_eol_s);
               }
 

@@ -14,6 +14,9 @@ extern "C" {
       if (!size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
+    // Prevent double-frees and unnecessary frees.
+    if (!*structure && !length_new || *size == length_new) return F_data_not;
+
     return private_f_memory_structure_adjust(length_new, type_size, structure, used, size);
   }
 #endif // _di_f_memory_structure_adjust_
@@ -89,7 +92,7 @@ extern "C" {
       if (!size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (*used + amount > *size) {
+    if (amount && *used + amount > *size) {
       if (*used + amount > F_array_length_t_size_d) {
         return F_status_set_error(F_array_too_large);
       }
@@ -109,6 +112,9 @@ extern "C" {
       if (!used) return F_status_set_error(F_parameter);
       if (!size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
+
+    // Prevent double-frees and unnecessary frees.
+    if (!*structure && !length_new || *size == length_new) return F_data_not;
 
     return private_f_memory_structure_resize(length_new, type_size, structure, used, size);
   }

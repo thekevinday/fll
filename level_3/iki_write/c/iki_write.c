@@ -7,396 +7,189 @@ extern "C" {
 #endif
 
 #ifndef _di_iki_write_main_
-  f_status_t iki_write_main(fll_program_data_t * const main, iki_write_setting_t * const setting) {
+  void iki_write_main(fll_program_data_t * const main, iki_write_setting_t * const setting) {
 
-    f_status_t status = F_none;
+    if (!main || !setting || F_status_is_error(setting->status)) return;
 
-    // Load parameters.
-    status = f_console_parameter_process(arguments, &main->parameters);
-    if (F_status_is_error(status)) return;
+    setting->status = F_none;
 
-    {
-      f_array_length_t choice = 0;
-      f_uint16s_t choices = f_uint16s_t_initialize;
-
-      // Identify and prioritize "color context" parameters.
-      {
-        uint16_t choices_array[3] = { iki_write_parameter_no_color_e, iki_write_parameter_light_e, iki_write_parameter_dark_e };
-        choices.array = choices_array;
-        choices.used = 3;
-
-        const uint8_t modes[3] = { f_color_mode_color_not_e, f_color_mode_light_e, f_color_mode_dark_e };
-
-        status = fll_program_parameter_process_context(choices, modes, F_true, main);
-
-        if (F_status_is_error(status)) {
-          fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process_context", F_true);
-
-          return;
-        }
-      }
-
-      // Identify and prioritize "verbosity" parameters.
-      {
-        uint16_t choices_array[5] = { iki_write_parameter_verbosity_quiet_e, iki_write_parameter_verbosity_error_e, iki_write_parameter_verbosity_verbose_e, iki_write_parameter_verbosity_debug_e, iki_write_parameter_verbosity_normal_e };
-        choices.array = choices_array;
-        choices.used = 5;
-
-        const uint8_t verbosity[5] = { f_console_verbosity_quiet_e, f_console_verbosity_error_e, f_console_verbosity_verbose_e, f_console_verbosity_debug_e, f_console_verbosity_normal_e };
-
-        status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, main);
-
-        if (F_status_is_error(status)) {
-          fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process_verbosity", F_true);
-
-          return;
-        }
-      }
-    }
-
-    iki_write_data_t data = iki_write_data_t_initialize;
-    data.main = main;
-    data.argv = main->parameters.arguments.array;
-
-    status = F_none;
-
-    if (main->parameters.array[iki_write_parameter_help_e].result == f_console_result_found_e) {
+    if (setting->flag & iki_write_main_flag_help_e) {
       iki_write_print_help(setting, main->message);
 
-      iki_write_data_delete(&data);
-
-      return F_none;
+      return;
     }
 
-    if (main->parameters.array[iki_write_parameter_version_e].result == f_console_result_found_e) {
+    if (setting->flag & iki_write_main_flag_version_e) {
       fll_program_print_version(main->message, iki_write_program_version_s);
 
-      iki_write_data_delete(&data);
-
-      return F_none;
+      return;
     }
 
-    f_file_t file = f_file_t_initialize;
+    setting->escaped.used = 0;
 
-    file.id = F_type_descriptor_output_d;
-    file.stream = F_type_output_d;
-    file.flag = F_file_flag_create_d | F_file_flag_write_only_d | F_file_flag_append_d;
+    if (main->pipe & fll_program_data_pipe_input_e) {
+      bool object_ended = F_false;
 
-    if (F_status_is_error_not(status)) {
-      if (main->parameters.array[iki_write_parameter_file_e].result == f_console_result_additional_e) {
-        if (main->parameters.array[iki_write_parameter_file_e].values.used > 1) {
-          if (main->error.verbosity != f_console_verbosity_quiet_e) {
-            flockfile(main->error.to.stream);
+      f_array_length_t previous = 0;
+      f_string_range_t range = f_string_range_t_initialize;
+      f_status_t status = F_none;
+      f_file_t pipe = f_file_t_initialize;
 
-            fl_print_format("%r%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-            fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_write_long_file_s, main->error.notable);
-            fl_print_format("%[' may only be specified once.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+      pipe.id = F_type_descriptor_input_d;
+      pipe.size_read = 1;
 
-            funlockfile(main->error.to.stream);
+      setting->buffer.used = 0;
+      setting->object.used = 0;
+      setting->content.used = 0;
+
+      range.start = 0;
+
+      do {
+        if (!((++main->signal_check) % iki_write_signal_check_d)) {
+          if (fll_program_standard_signal_received(main)) {
+            setting->status = F_status_set_error(F_interrupt);
+
+            return;
           }
 
-          status = F_status_set_error(F_parameter);
+          main->signal_check = 0;
+        }
+
+        if (status != F_none_eof) {
+          status = f_file_read(pipe, &setting->buffer);
+
+          if (F_status_is_error(status)) {
+            setting->status = F_status_set_error(F_pipe);
+
+            iki_write_print_line_first(setting, main->error, F_true);
+            fll_error_file_print(main->error, F_status_set_fine(setting->status), "f_file_read", F_true, f_string_ascii_minus_s, f_file_operation_read_s, fll_error_file_type_pipe_e);
+            iki_write_print_line_last(setting, main->error, F_true);
+
+            return;
+          }
+
+          if (!setting->buffer.used) {
+            setting->status = F_status_set_error(F_parameter);
+
+            iki_write_print_line_first(setting, main->error, F_true);
+            fll_program_print_error_pipe_missing_content(main->error);
+            iki_write_print_line_last(setting, main->error, F_true);
+
+            return;
+          }
+
+          range.stop = setting->buffer.used - 1;
+        }
+
+        previous = range.start;
+        setting->status = f_string_dynamic_seek_to(setting->buffer, f_string_ascii_feed_form_s.string[0], &range);
+
+        if (setting->status == F_data_not_stop) {
+          setting->status = F_status_set_error(F_parameter);
+        }
+
+        if (F_status_is_error(setting->status)) {
+          iki_write_print_line_first(setting, main->error, F_true);
+          fll_error_print(main->error, F_status_set_fine(setting->status), "f_string_dynamic_seek_to", F_true);
+          iki_write_print_line_last(setting, main->error, F_true);
+
+          return;
+        }
+
+        if (object_ended && previous == range.start) {
+          setting->status = F_status_set_error(F_parameter);
+
+          iki_write_print_line_first(setting, main->error, F_true);
+          fll_program_print_error_pipe_invalid_form_feed(main->error);
+          iki_write_print_line_last(setting, main->error, F_true);
+
+          return;
+        }
+
+        range.stop = range.start - 1;
+        range.start = previous;
+
+        if (object_ended) {
+          setting->content.used = 0;
+
+          if (setting->buffer.used) {
+            setting->status = f_string_dynamic_partial_append_nulless(setting->buffer, range, &setting->content);
+
+            if (F_status_is_error(setting->status)) {
+              iki_write_print_line_first(setting, main->error, F_true);
+              fll_error_print(main->error, F_status_set_fine(setting->status), "f_string_dynamic_partial_append_nulless", F_true);
+              iki_write_print_line_last(setting, main->error, F_true);
+
+              return;
+            }
+          }
+
+          setting->status = iki_write_process(main, setting, setting->object, setting->content);
+          if (F_status_is_error(setting->status)) return;
+
+          fll_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
+
+          object_ended = F_false;
         }
         else {
-          const f_array_length_t index = main->parameters.array[iki_write_parameter_file_e].values.array[0];
+          setting->object.used = 0;
 
-          file.id = -1;
-          file.stream = 0;
+          setting->status = f_string_dynamic_partial_append_nulless(setting->buffer, range, &setting->object);
 
-          status = f_file_stream_open(data.argv[index], f_string_empty_s, &file);
+          if (F_status_is_error(setting->status)) {
+            iki_write_print_line_first(setting, main->error, F_true);
+            fll_error_print(main->error, F_status_set_fine(setting->status), "f_string_dynamic_partial_append_nulless", F_true);
+            iki_write_print_line_last(setting, main->error, F_true);
 
-          if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, data.argv[index], f_file_operation_open_s, fll_error_file_type_file_e);
+            return;
           }
-        }
-      }
-      else if (main->parameters.array[iki_write_parameter_file_e].result == f_console_result_found_e) {
-        if (main->error.verbosity != f_console_verbosity_quiet_e) {
-          flockfile(main->error.to.stream);
 
-          fl_print_format("%r%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-          fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_write_long_file_s, main->error.notable);
-          fl_print_format("%[' is specified, but no value is given.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
-
-          funlockfile(main->error.to.stream);
+          object_ended = F_true;
         }
 
-        status = F_status_set_error(F_parameter);
-      }
-    }
+        // Restore the range, positioned after the new line.
+        range.start = range.stop + 2;
+        range.stop = setting->buffer.used - 1;
 
-    if (F_status_is_error_not(status) && main->parameters.array[iki_write_parameter_object_e].result == f_console_result_found_e) {
-      if (main->error.verbosity != f_console_verbosity_quiet_e) {
-        flockfile(main->error.to.stream);
-
-        fl_print_format("%r%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-        fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_write_long_object_s, main->error.notable);
-        fl_print_format("%[' is specified, but no value is given.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
-
-        funlockfile(main->error.to.stream);
-      }
-
-      status = F_status_set_error(F_parameter);
-    }
-
-    if (F_status_is_error_not(status) && main->parameters.array[iki_write_parameter_content_e].result == f_console_result_found_e) {
-      if (main->error.verbosity != f_console_verbosity_quiet_e) {
-        flockfile(main->error.to.stream);
-
-        fl_print_format("%r%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-        fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_write_long_content_s, main->error.notable);
-        fl_print_format("%[' is specified, but no value is given.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
-
-        funlockfile(main->error.to.stream);
-      }
-
-      status = F_status_set_error(F_parameter);
-    }
-
-    if (F_status_is_error_not(status) && !(main->pipe & fll_program_data_pipe_input_e)) {
-      if (main->parameters.array[iki_write_parameter_object_e].result != f_console_result_additional_e && main->parameters.array[iki_write_parameter_content_e].result != f_console_result_additional_e) {
-        if (main->error.verbosity != f_console_verbosity_quiet_e) {
-          flockfile(main->error.to.stream);
-
-          fl_print_format("%r%[%QNo main provided, either pipe the main or use the '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-          fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_write_long_object_s, main->error.notable);
-          fl_print_format("%[' and the '%]", main->error.to.stream, main->error.context, main->error.context);
-          fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_write_long_content_s, main->error.notable);
-          fl_print_format("%[' parameters.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
-
-          funlockfile(main->error.to.stream);
+        // Only clear the buffer and reset the start when the entire buffer has been processed.
+        if (range.start > range.stop) {
+          range.start = 0;
+          setting->buffer.used = 0;
         }
 
-        status = F_status_set_error(F_parameter);
+      } while (status != F_none_eof || setting->buffer.used || object_ended);
+
+      if (object_ended) {
+        setting->status = F_status_set_error(F_parameter);
+
+        iki_write_print_line_first(setting, main->error, F_true);
+        fll_program_print_error_pipe_object_without_content(main->error);
+        iki_write_print_line_last(setting, main->error, F_true);
+
+        return;
       }
     }
 
-    if (F_status_is_error_not(status)) {
-      if (main->parameters.array[iki_write_parameter_object_e].values.used != main->parameters.array[iki_write_parameter_content_e].values.used) {
-        if (main->error.verbosity != f_console_verbosity_quiet_e) {
-          flockfile(main->error.to.stream);
+    for (f_array_length_t i = 0; i < setting->objects.used; ++i) {
 
-          fl_print_format("%r%[%QThe parameters '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-          fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_write_long_content_s, main->error.notable);
-          fl_print_format("%[' and '%]", main->error.to.stream, main->error.context, main->error.context);
-          fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, iki_write_long_object_s, main->error.notable);
-          fl_print_format("%[' must be specified the same number of times.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+      if (!((++main->signal_check) % iki_write_signal_check_d)) {
+        if (fll_program_standard_signal_received(main)) {
+          setting->status = F_status_set_error(F_interrupt);
 
-          funlockfile(main->error.to.stream);
+          return;
         }
 
-        status = F_status_set_error(F_parameter);
-      }
-    }
-
-    data.quote = f_iki_syntax_quote_double_s;
-
-    if (F_status_is_error_not(status)) {
-      if (main->parameters.array[iki_write_parameter_double_e].result == f_console_result_found_e) {
-        if (main->parameters.array[iki_write_parameter_single_e].result == f_console_result_found_e) {
-          if (main->parameters.array[iki_write_parameter_double_e].location < main->parameters.array[iki_write_parameter_single_e].location) {
-            data.quote = f_iki_syntax_quote_single_s;
-          }
-        }
-      }
-      else if (main->parameters.array[iki_write_parameter_single_e].result == f_console_result_found_e) {
-        data.quote = f_iki_syntax_quote_single_s;
-      }
-    }
-
-    if (F_status_is_error_not(status)) {
-      f_string_dynamic_t escaped = f_string_dynamic_t_initialize;
-
-      if (main->pipe & fll_program_data_pipe_input_e) {
-        f_file_t pipe = f_file_t_initialize;
-
-        pipe.id = F_type_descriptor_input_d;
-        pipe.size_read = 1;
-
-        f_string_dynamic_t buffer = f_string_dynamic_t_initialize;
-        f_string_dynamic_t object = f_string_dynamic_t_initialize;
-        f_string_dynamic_t content = f_string_dynamic_t_initialize;
-
-        bool object_ended = F_false;
-
-        f_array_length_t previous = 0;
-        f_string_range_t range = f_string_range_t_initialize;
-
-        range.start = 0;
-
-        for (f_status_t status_pipe = F_none; ; ) {
-
-          if (!((++main->signal_check) % iki_write_signal_check_d)) {
-            if (fll_program_standard_signal_received(main)) {
-              status = F_status_set_error(F_interrupt);
-
-              break;
-            }
-
-            main->signal_check = 0;
-          }
-
-          if (status_pipe != F_none_eof) {
-            status_pipe = f_file_read(pipe, &buffer);
-
-            if (F_status_is_error(status_pipe)) {
-              fll_error_file_print(main->error, F_status_set_fine(status), "f_file_read_to", F_true, f_string_ascii_minus_s, f_file_operation_read_s, fll_error_file_type_pipe_e);
-
-              status = F_status_set_error(F_pipe);
-
-              break;
-            }
-
-            if (!buffer.used) {
-              if (main->error.verbosity != f_console_verbosity_quiet_e) {
-                fll_print_format("%r%[%QThe pipe has no content.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context, f_string_eol_s);
-              }
-
-              status = F_status_set_error(F_parameter);
-
-              break;
-            }
-
-            range.stop = buffer.used - 1;
-          }
-
-          previous = range.start;
-          status = f_string_dynamic_seek_to(buffer, f_string_ascii_feed_form_s.string[0], &range);
-
-          if (F_status_is_error(status)) {
-            fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_seek_to", F_true);
-
-            break;
-          }
-
-          if (status == F_data_not_stop) {
-            status = F_status_set_error(F_parameter);
-
-            fll_error_print(main->error, F_parameter, "f_string_dynamic_seek_line", F_true);
-
-            break;
-          }
-
-          if (object_ended && previous == range.start) {
-            if (main->error.verbosity != f_console_verbosity_quiet_e) {
-              fll_print_format("%r%[%QThe pipe has incorrectly placed form-feed characters (\\f).%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context, f_string_eol_s);
-            }
-
-            status = F_status_set_error(F_parameter);
-
-            break;
-          }
-
-          range.stop = range.start - 1;
-          range.start = previous;
-
-          if (object_ended) {
-            content.used = 0;
-
-            if (buffer.used) {
-              status = f_string_dynamic_partial_append_nulless(buffer, range, &content);
-
-              if (F_status_is_error(status)) {
-                fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true);
-
-                break;
-              }
-            }
-
-            status = iki_write_process(&data, file, object, content, &escaped);
-            if (F_status_is_error(status)) break;
-
-            fll_print_dynamic_raw(f_string_eol_s, file.stream);
-
-            object_ended = F_false;
-          }
-          else {
-            object.used = 0;
-
-            status = f_string_dynamic_partial_append_nulless(buffer, range, &object);
-
-            if (F_status_is_error(status)) {
-              fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true);
-
-              break;
-            }
-
-            object_ended = F_true;
-          }
-
-          // Restore the range, positioned after the new line.
-          range.start = range.stop + 2;
-          range.stop = buffer.used - 1;
-
-          // only clear the buffer and reset the start when the entire buffer has been processed.
-          if (range.start > range.stop) {
-            range.start = 0;
-            buffer.used = 0;
-          }
-
-          if (status_pipe == F_none_eof && !buffer.used && !object_ended) break;
-        } // for
-
-        if (F_status_is_error_not(status) && object_ended) {
-          if (main->error.verbosity != f_console_verbosity_quiet_e) {
-            fll_print_format("%r%[%QThe pipe has an object without content.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context, f_string_eol_s);
-          }
-
-          status = F_status_set_error(F_parameter);
-        }
-
-        f_string_dynamic_resize(0, &buffer);
-        f_string_dynamic_resize(0, &object);
-        f_string_dynamic_resize(0, &content);
+        main->signal_check = 0;
       }
 
-      if (F_status_is_error_not(status)) {
-        for (f_array_length_t i = 0; i < main->parameters.array[iki_write_parameter_object_e].values.used; ++i) {
+      setting->status = iki_write_process(main, setting, setting->objects.array[i], setting->contents.array[i]);
+      if (F_status_is_error(setting->status)) return;
 
-          if (!((++main->signal_check) % iki_write_signal_check_d)) {
-            if (fll_program_standard_signal_received(main)) {
-              status = F_status_set_error(F_interrupt);
-
-              break;
-            }
-
-            main->signal_check = 0;
-          }
-
-          status = iki_write_process(&data, file, data.argv[main->parameters.array[iki_write_parameter_object_e].values.array[i]], data.argv[main->parameters.array[iki_write_parameter_content_e].values.array[i]], &escaped);
-          if (F_status_is_error(status)) break;
-
-          fll_print_dynamic_raw(f_string_eol_s, file.stream);
-        } // for
-
-        // Ensure there is always a new line at the end, unless in quiet mode.
-        if (F_status_is_error_not(status) && main->error.verbosity != f_console_verbosity_quiet_e && main->error.verbosity != f_console_verbosity_error_e && main->parameters.array[iki_write_parameter_file_e].result == f_console_result_none_e) {
-          fll_print_dynamic_raw(f_string_eol_s, file.stream);
-        }
-      }
-
-      f_string_dynamic_resize(0, &escaped);
-    }
-
-    if (main->parameters.array[iki_write_parameter_file_e].result == f_console_result_additional_e) {
-      f_file_stream_flush(output);
-      f_file_stream_close(&file);
-    }
+      fll_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
+    } // for
 
     // Ensure a new line is always put at the end of the program execution, unless in quiet mode.
-    if (main->error.verbosity != f_console_verbosity_quiet_e) {
-      if (F_status_is_error(status)) {
-        if (F_status_set_fine(status) == F_interrupt) {
-          fflush(main->output.to.stream);
-        }
-
-        fll_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
-      }
-    }
-
-    iki_write_data_delete(&data);
-
-    return status;
+    iki_write_print_line_last(setting, main->message, F_true);
   }
 #endif // _di_iki_write_main_
 

@@ -930,7 +930,7 @@ extern "C" {
     if (F_status_is_error(status)) {
       state_process->condition_result = fake_condition_result_error_e;
 
-      if (data_make->main->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
+      if (data_make->main->error.verbosity > f_console_verbosity_quiet_e && data_make->error.to.stream) {
         flockfile(data_make->error.to.stream);
 
         if ((i == 1 && number_left > F_number_t_size_unsigned_d) || (i > 1 && number_right > F_number_t_size_unsigned_d)) {

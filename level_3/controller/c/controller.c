@@ -117,7 +117,7 @@ extern "C" {
     }
     else {
       if (main->parameters.array[controller_parameter_settings_e].result == f_console_result_found_e) {
-        if (main->error.verbosity != f_console_verbosity_quiet_e) {
+        if (main->error.verbosity > f_console_verbosity_quiet_e) {
           controller_lock_print(main->error.to, 0);
 
           fl_print_format("%r%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
@@ -156,7 +156,7 @@ extern "C" {
 
     if (F_status_is_error_not(status)) {
       if (main->parameters.array[controller_parameter_pid_e].result == f_console_result_found_e) {
-        if (main->error.verbosity != f_console_verbosity_quiet_e) {
+        if (main->error.verbosity > f_console_verbosity_quiet_e) {
           controller_lock_print(main->error.to, 0);
 
           fl_print_format("%r%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
@@ -214,7 +214,7 @@ extern "C" {
 
     if (F_status_is_error_not(status)) {
       if (main->parameters.array[controller_parameter_cgroup_e].result == f_console_result_found_e) {
-        if (main->error.verbosity != f_console_verbosity_quiet_e) {
+        if (main->error.verbosity > f_console_verbosity_quiet_e) {
           controller_lock_print(main->error.to, 0);
 
           fl_print_format("%r%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
@@ -259,7 +259,7 @@ extern "C" {
 
     if (F_status_is_error_not(status) && main->parameters.array[controller_parameter_daemon_e].result == f_console_result_found_e) {
       if (main->parameters.array[controller_parameter_validate_e].result == f_console_result_found_e) {
-        if (main->error.verbosity != f_console_verbosity_quiet_e) {
+        if (main->error.verbosity > f_console_verbosity_quiet_e) {
           controller_lock_print(main->error.to, 0);
 
           fl_print_format("%r%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
@@ -340,7 +340,7 @@ extern "C" {
     // Ensure a newline is always put at the end of the program execution, unless in quiet mode.
     if (F_status_is_error(status) && main->output.verbosity != f_console_verbosity_quiet_e) {
       if (F_status_set_fine(status) == F_interrupt) {
-        fflush(main->output.to.stream);
+        f_file_stream_flush(main->output.to);
       }
 
       fll_print_dynamic_raw(f_string_eol_s, main->output.to.stream);

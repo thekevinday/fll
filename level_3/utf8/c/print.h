@@ -23,9 +23,13 @@ extern "C" {
  *   Assumed to always be non-NULL.
  * @param sequence
  *   A byte sequences representing a single character to print.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_utf8_print_bytesequence_
-  extern void utf8_print_bytesequence(fll_program_data_t * const main, utf8_setting_t * const setting, const f_string_static_t sequence);
+  extern f_status_t utf8_print_bytesequence(fll_program_data_t * const main, utf8_setting_t * const setting, const f_string_static_t sequence);
 #endif // _di_utf8_print_bytesequence_
 
 /**
@@ -42,10 +46,14 @@ extern "C" {
  * @param invalid
  *   The byte sequence string or unicode codepoint string representing a single character to print.
  *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ *
  * @see utf8_print_combining_or_width()
  */
 #ifndef _di_utf8_print_character_invalid_
-  extern void utf8_print_character_invalid(fll_program_data_t * const main, utf8_setting_t * const setting, const f_string_static_t invalid);
+  extern f_status_t utf8_print_character_invalid(fll_program_data_t * const main, utf8_setting_t * const setting, const f_string_static_t invalid);
 #endif // _di_utf8_print_character_invalid_
 
 /**
@@ -60,9 +68,13 @@ extern "C" {
  * @param codepoint
  *   The codepoint to print.
  *   This is the code that represents a single character.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_utf8_print_codepoint_
-  extern void utf8_print_codepoint(fll_program_data_t * const main, utf8_setting_t * const setting, const uint32_t codepoint);
+  extern f_status_t utf8_print_codepoint(fll_program_data_t * const main, utf8_setting_t * const setting, const uint32_t codepoint);
 #endif // _di_utf8_print_codepoint_
 
 /**
@@ -78,9 +90,13 @@ extern "C" {
  *   A byte sequences representing a single character to print.
  *
  * @see utf8_print_width()
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_utf8_print_combining_or_width_
-  extern void utf8_print_combining_or_width(fll_program_data_t * const main, utf8_setting_t * const setting, const f_string_static_t sequence);
+  extern f_status_t utf8_print_combining_or_width(fll_program_data_t * const main, utf8_setting_t * const setting, const f_string_static_t sequence);
 #endif // _di_utf8_print_combining_or_width_
 
 /**
@@ -92,9 +108,13 @@ extern "C" {
  *   The main program settings.
  *
  *   Assumed to always be non-NULL.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_utf8_print_error_combining_or_width_
-  extern void utf8_print_error_combining_or_width(fll_program_data_t * const main, utf8_setting_t * const setting);
+  extern f_status_t utf8_print_error_combining_or_width(fll_program_data_t * const main, utf8_setting_t * const setting);
 #endif // _di_utf8_print_error_combining_or_width_
 
 /**
@@ -108,9 +128,13 @@ extern "C" {
  *   Assumed to always be non-NULL.
  * @param invalid
  *   The byte sequence string or unicode codepoint string representing a single character to print.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_utf8_print_error_decode_
-  extern void utf8_print_error_decode(fll_program_data_t * const main, utf8_setting_t * const setting, const f_status_t status, const f_string_static_t invalid);
+  extern f_status_t utf8_print_error_decode(fll_program_data_t * const main, utf8_setting_t * const setting, const f_status_t status, const f_string_static_t invalid);
 #endif // _di_utf8_print_error_decode_
 
 /**
@@ -124,9 +148,13 @@ extern "C" {
  *   Assumed to always be non-NULL.
  * @param codepoint
  *   The codepoint that is invalid.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_utf8_print_error_encode_
-  extern void utf8_print_error_encode(fll_program_data_t * const main, utf8_setting_t * const setting, const f_status_t status, const uint32_t codepoint);
+  extern f_status_t utf8_print_error_encode(fll_program_data_t * const main, utf8_setting_t * const setting, const f_status_t status, const uint32_t codepoint);
 #endif // _di_utf8_print_error_encode_
 
 /**
@@ -138,26 +166,14 @@ extern "C" {
  *   The main program settings.
  *
  *   Assumed to always be non-NULL.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_utf8_print_error_no_from_
-  extern void utf8_print_error_no_from(fll_program_data_t * const main, utf8_setting_t * const setting);
+  extern f_status_t utf8_print_error_no_from(fll_program_data_t * const main, utf8_setting_t * const setting);
 #endif // _di_utf8_print_error_no_from_
-
-/**
- * Print error message for when no sources are provided.
- *
- * @param main
- *   The main program data.
- * @param setting
- *   The main program settings.
- *
- *   Assumed to always be non-NULL.
- * @param parameter
- *   The long parameter name.
- */
-#ifndef _di_utf8_print_error_no_value_
-  extern void utf8_print_error_no_value(fll_program_data_t * const main, utf8_setting_t * const setting, const f_string_static_t parameter);
-#endif // _di_utf8_print_error_no_value_
 
 /**
  * Print error message for when the file parameter is an empty string.
@@ -170,9 +186,13 @@ extern "C" {
  *   Assumed to always be non-NULL.
  * @param index
  *   The index within the argv[] array where the empty string is found.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_utf8_print_error_parameter_file_name_empty_
-  extern void utf8_print_error_parameter_file_name_empty(fll_program_data_t * const main, utf8_setting_t * const setting, const f_array_length_t index);
+  extern f_status_t utf8_print_error_parameter_file_name_empty(fll_program_data_t * const main, utf8_setting_t * const setting, const f_array_length_t index);
 #endif // _di_utf8_print_error_parameter_file_name_empty_
 
 /**
@@ -189,9 +209,13 @@ extern "C" {
  *   If FALSE, then this is a to file (destination file).
  * @param name
  *   The file path name.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_utf8_print_error_parameter_file_not_found_
-  extern void utf8_print_error_parameter_file_not_found(fll_program_data_t * const main, utf8_setting_t * const setting, const bool from, const f_string_static_t name);
+  extern f_status_t utf8_print_error_parameter_file_not_found(fll_program_data_t * const main, utf8_setting_t * const setting, const bool from, const f_string_static_t name);
 #endif // _di_utf8_print_error_parameter_file_not_found_
 
 /**
@@ -203,9 +227,13 @@ extern "C" {
  *   The main program settings.
  *
  *   Assumed to always be non-NULL.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_utf8_print_error_parameter_file_to_too_many_
-  extern void utf8_print_error_parameter_file_to_too_many(fll_program_data_t * const main, utf8_setting_t * const setting);
+  extern f_status_t utf8_print_error_parameter_file_to_too_many(fll_program_data_t * const main, utf8_setting_t * const setting);
 #endif // _di_utf8_print_error_parameter_file_to_too_many_
 
 /**
@@ -218,9 +246,13 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *   This does not alter setting.status.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_utf8_print_flush_
-  extern void utf8_print_flush(fll_program_data_t * const main, utf8_setting_t * const setting);
+  extern f_status_t utf8_print_flush(fll_program_data_t * const main, utf8_setting_t * const setting);
 #endif // _di_utf8_print_flush_
 
 /**
@@ -234,6 +266,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_utf8_print_help_
   extern f_status_t utf8_print_help(utf8_setting_t * const setting, const fl_print_t print);
@@ -252,9 +285,13 @@ extern "C" {
  * @param lock
  *   If TRUE, then lock the stream.
  *   If FALSE, then do not lock or unlock the stream.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_utf8_print_line_first_
-  extern void utf8_print_line_first(utf8_setting_t * const setting, const fl_print_t print, const bool lock);
+  extern f_status_t utf8_print_line_first(utf8_setting_t * const setting, const fl_print_t print, const bool lock);
 #endif // _di_utf8_print_line_first_
 
 /**
@@ -270,9 +307,13 @@ extern "C" {
  * @param lock
  *   If TRUE, then lock the stream.
  *   If FALSE, then do not lock or unlock the stream.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_utf8_print_line_last_
-  extern void utf8_print_line_last(utf8_setting_t * const setting, const fl_print_t print, const bool lock);
+  extern f_status_t utf8_print_line_last(utf8_setting_t * const setting, const fl_print_t print, const bool lock);
 #endif // _di_utf8_print_line_last_
 
 /**
@@ -288,9 +329,13 @@ extern "C" {
  *   The raw string in integer format.
  * @param width
  *   The width the raw character represents (a value inclusively from 1 to 4).
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_utf8_print_raw_bytesequence_
-  extern void utf8_print_raw_bytesequence(fll_program_data_t * const main, utf8_setting_t * const setting, const f_utf_char_t raw, const uint8_t width);
+  extern f_status_t utf8_print_raw_bytesequence(fll_program_data_t * const main, utf8_setting_t * const setting, const f_utf_char_t raw, const uint8_t width);
 #endif // _di_utf8_print_raw_bytesequence_
 
 /**
@@ -304,9 +349,13 @@ extern "C" {
  *   Assumed to always be non-NULL.
  * @param raw
  *   The raw string already in codepoint format.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_utf8_print_raw_codepoint_
-  extern void utf8_print_raw_codepoint(fll_program_data_t * const main, utf8_setting_t * const setting, const f_string_static_t raw);
+  extern f_status_t utf8_print_raw_codepoint(fll_program_data_t * const main, utf8_setting_t * const setting, const f_string_static_t raw);
 #endif // _di_utf8_print_raw_codepoint_
 
 /**
@@ -321,10 +370,14 @@ extern "C" {
  * @param width
  *   The pre-calculated width.
  *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ *
  * @see utf8_print_width()
  */
 #ifndef _di_utf8_print_raw_combining_or_width_
-  extern void utf8_print_raw_combining_or_width(fll_program_data_t * const main, utf8_setting_t * const setting, const uint8_t width);
+  extern f_status_t utf8_print_raw_combining_or_width(fll_program_data_t * const main, utf8_setting_t * const setting, const uint8_t width);
 #endif // _di_utf8_print_raw_combining_or_width_
 
 /**
@@ -340,9 +393,13 @@ extern "C" {
  *   The name of the file.
  * @param index
  *   The index position of the file.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_utf8_print_section_header_file_
-  extern void utf8_print_section_header_file(fll_program_data_t * const main, utf8_setting_t * const setting, const f_string_static_t name, const f_array_length_t index);
+  extern f_status_t utf8_print_section_header_file(fll_program_data_t * const main, utf8_setting_t * const setting, const f_string_static_t name, const f_array_length_t index);
 #endif // _di_utf8_print_section_header_file_
 
 /**
@@ -356,9 +413,13 @@ extern "C" {
  *   Assumed to always be non-NULL.
  * @param index
  *   The index position of the parameter.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_utf8_print_section_header_parameter_
-  extern void utf8_print_section_header_parameter(fll_program_data_t * const main, utf8_setting_t * const setting, const f_array_length_t index);
+  extern f_status_t utf8_print_section_header_parameter(fll_program_data_t * const main, utf8_setting_t * const setting, const f_array_length_t index);
 #endif // _di_utf8_print_section_header_parameter_
 
 /**
@@ -370,9 +431,13 @@ extern "C" {
  *   The main program settings.
  *
  *   Assumed to always be non-NULL.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_utf8_print_section_header_pipe_
-  extern void utf8_print_section_header_pipe(fll_program_data_t * const main, utf8_setting_t * const setting);
+  extern f_status_t utf8_print_section_header_pipe(fll_program_data_t * const main, utf8_setting_t * const setting);
 #endif // _di_utf8_print_section_header_pipe_
 
 /**
@@ -386,9 +451,13 @@ extern "C" {
  *   Assumed to always be non-NULL.
  * @param sequence
  *   A byte sequences representing a single character whose width is to be printed.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_utf8_print_width_
-  extern void utf8_print_width(fll_program_data_t * const main, utf8_setting_t * const setting, const f_string_static_t sequence);
+  extern f_status_t utf8_print_width(fll_program_data_t * const main, utf8_setting_t * const setting, const f_string_static_t sequence);
 #endif // _di_utf8_print_width_
 
 #ifdef __cplusplus

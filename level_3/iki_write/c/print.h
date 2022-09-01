@@ -23,6 +23,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_iki_write_print_help_
   extern f_status_t iki_write_print_help(iki_write_setting_t * const setting, const fl_print_t print);
@@ -41,9 +42,13 @@ extern "C" {
  * @param lock
  *   If TRUE, then lock the stream.
  *   If FALSE, then do not lock or unlock the stream.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_iki_write_print_line_first_
-  extern void iki_write_print_line_first(iki_write_setting_t * const setting, const fl_print_t print, const bool lock);
+  extern f_status_t iki_write_print_line_first(iki_write_setting_t * const setting, const fl_print_t print, const bool lock);
 #endif // _di_iki_write_print_line_first_
 
 /**
@@ -59,10 +64,50 @@ extern "C" {
  * @param lock
  *   If TRUE, then lock the stream.
  *   If FALSE, then do not lock or unlock the stream.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_iki_write_print_line_last_
-  extern void iki_write_print_line_last(iki_write_setting_t * const setting, const fl_print_t print, const bool lock);
+  extern f_status_t iki_write_print_line_last(iki_write_setting_t * const setting, const fl_print_t print, const bool lock);
 #endif // _di_iki_write_print_line_last_
+
+/**
+ * Print error message about "main" Object being missing.
+ *
+ * @param setting
+ *   The main program settings.
+ *   This does not alter setting.status.
+ * @param print
+ *   Designates the how and where to print.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ */
+#ifndef _di_iki_write_print_error_main_missing_
+  extern f_status_t iki_write_print_error_main_missing(iki_write_setting_t * const setting, const fl_print_t print);
+#endif // _di_iki_write_print_error_main_missing_
+
+/**
+ * Print error message about an Object not being valid.
+ *
+ * @param setting
+ *   The main program settings.
+ *   This does not alter setting.status.
+ * @param print
+ *   Designates the how and where to print.
+ * @param object
+ *   The a string representing the object that is missing.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ */
+#ifndef _di_iki_write_print_error_object_not_valid_
+  extern f_status_t iki_write_print_error_object_not_valid(iki_write_setting_t * const setting, const fl_print_t print, const f_string_static_t object);
+#endif // _di_iki_write_print_error_object_not_valid_
 
 #ifdef __cplusplus
 } // extern "C"

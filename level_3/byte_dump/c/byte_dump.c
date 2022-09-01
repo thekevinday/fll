@@ -154,13 +154,13 @@ extern "C" {
 
     if (main->parameters.remaining.used || (main->pipe & fll_program_data_pipe_input_e)) {
       if (main->parameters.array[byte_dump_parameter_width_e].result == f_console_result_found_e) {
-        flockfile(main->error.to.stream);
+        f_file_stream_lock(main->error.to);
 
         fl_print_format("%[%QThe parameter '%]", main->error.to.stream, main->context.set.error, main->error.prefix, main->context.set.error);
         fl_print_format("%[%r%r%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_width_s, main->context.set.notable);
         fl_print_format("%[' is specified, but no value is given.%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
 
-        funlockfile(main->error.to.stream);
+        f_file_stream_unlock(main->error.to);
 
         return F_status_set_error(F_parameter);
       }
@@ -172,7 +172,7 @@ extern "C" {
         status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, data.argv[index], &number);
 
         if (F_status_is_error(status) || number < 1 || number >= 0xfb) {
-          flockfile(main->error.to.stream);
+          f_file_stream_lock(main->error.to);
 
           fl_print_format("%[%QThe parameter '%]", main->error.to.stream, main->context.set.error, main->error.prefix, main->context.set.error);
           fl_print_format("%[%r%r%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_width_s, main->context.set.notable);
@@ -182,7 +182,7 @@ extern "C" {
           fl_print_format("%[250%]", main->error.to.stream, main->context.set.notable, main->context.set.notable);
           fl_print_format("%[.%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
 
-          funlockfile(main->error.to.stream);
+          f_file_stream_unlock(main->error.to);
 
           if (F_status_is_error(status)) return status;
 
@@ -193,13 +193,13 @@ extern "C" {
       }
 
       if (main->parameters.array[byte_dump_parameter_first_e].result == f_console_result_found_e) {
-        flockfile(main->error.to.stream);
+        f_file_stream_lock(main->error.to);
 
         fl_print_format("%[%QThe parameter '%]", main->error.to.stream, main->context.set.error, main->error.prefix, main->context.set.error);
         fl_print_format("%[%r%r%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_first_s, main->context.set.notable);
         fl_print_format("%[' is specified, but no value is given.%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
 
-        funlockfile(main->error.to.stream);
+        f_file_stream_unlock(main->error.to);
 
         return F_status_set_error(F_parameter);
       }
@@ -211,7 +211,7 @@ extern "C" {
         status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, data.argv[index], &number);
 
         if (F_status_is_error(status) || number > F_number_t_size_unsigned_d) {
-          flockfile(main->error.to.stream);
+          f_file_stream_lock(main->error.to);
 
           fl_print_format("%[%QThe parameter '%]", main->error.to.stream, main->context.set.error, main->error.prefix, main->context.set.error);
           fl_print_format("%[%r%r%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_first_s, main->context.set.notable);
@@ -221,7 +221,7 @@ extern "C" {
           fl_print_format("%[%un%]", main->error.to.stream, main->context.set.notable, F_number_t_size_unsigned_d, main->context.set.notable);
           fl_print_format("%[.%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
 
-          funlockfile(main->error.to.stream);
+          f_file_stream_unlock(main->error.to);
 
           if (F_status_is_error(status)) return status;
 
@@ -232,13 +232,13 @@ extern "C" {
       }
 
       if (main->parameters.array[byte_dump_parameter_last_e].result == f_console_result_found_e) {
-        flockfile(main->error.to.stream);
+        f_file_stream_lock(main->error.to);
 
         fl_print_format("%[%QThe parameter '%]", main->error.to.stream, main->context.set.error, main->error.prefix, main->context.set.error);
         fl_print_format("%[%r%r%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_last_s, main->context.set.notable);
         fl_print_format("%[' is specified, but no value is given.%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
 
-        funlockfile(main->error.to.stream);
+        f_file_stream_unlock(main->error.to);
 
         return F_status_set_error(F_parameter);
       }
@@ -250,7 +250,7 @@ extern "C" {
         status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, data.argv[index], &number);
 
         if (F_status_is_error(status) || number < 0 || number > F_number_t_size_unsigned_d) {
-          flockfile(main->error.to.stream);
+          f_file_stream_lock(main->error.to);
 
           fl_print_format("%[%QThe parameter '%]", main->error.to.stream, main->context.set.error, main->error.prefix, main->context.set.error);
           fl_print_format("%[%r%r%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_last_s, main->context.set.notable);
@@ -260,7 +260,7 @@ extern "C" {
           fl_print_format("%[%un%]", main->error.to.stream, main->context.set.notable, F_number_t_size_unsigned_d, main->context.set.notable);
           fl_print_format("%[.%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
 
-          funlockfile(main->error.to.stream);
+          f_file_stream_unlock(main->error.to);
 
           if (F_status_is_error(status)) return status;
 
@@ -272,7 +272,7 @@ extern "C" {
 
       if (main->parameters.array[byte_dump_parameter_first_e].result == f_console_result_additional_e && main->parameters.array[byte_dump_parameter_last_e].result == f_console_result_additional_e) {
         if (data.first > data.last) {
-          flockfile(main->error.to.stream);
+          f_file_stream_lock(main->error.to);
 
           fl_print_format("%[%QThe parameter '%]", main->error.to.stream, main->context.set.error, main->error.prefix, main->context.set.error);
           fl_print_format("%[%r%r%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_first_s, main->context.set.notable);
@@ -280,7 +280,7 @@ extern "C" {
           fl_print_format("%[%r%r%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_last_s, main->context.set.notable);
           fl_print_format("%[' value.%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
 
-          funlockfile(main->error.to.stream);
+          f_file_stream_unlock(main->error.to);
 
           return F_status_set_error(F_parameter);
         }
@@ -406,13 +406,13 @@ extern "C" {
 
               // Ensure a newline is always put at the end of the program execution, unless in quiet mode.
               if (main->output.verbosity != f_console_verbosity_quiet_e) {
-                fflush(main->output.to.stream);
+                f_file_stream_flush(main->output.to);
 
                 fll_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
               }
             }
             else {
-              if (main->error.verbosity != f_console_verbosity_quiet_e) {
+              if (main->error.verbosity > f_console_verbosity_quiet_e) {
                 fll_error_file_print(main->error, F_status_set_fine(status), "byte_dump_file", F_true, data.argv[main->parameters.remaining.array[counter]], f_file_operation_process_s, fll_error_file_type_file_e);
               }
             }

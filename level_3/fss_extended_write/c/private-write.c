@@ -13,7 +13,7 @@ extern "C" {
       return;
     }
 
-    flockfile(main->error.to.stream);
+    f_file_stream_lock(main->error.to);
 
     fl_print_format("%r%[%QMust specify the '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
     fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_extended_write_long_object_s, main->error.notable);
@@ -23,7 +23,7 @@ extern "C" {
     fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_extended_write_long_partial_s, main->error.notable);
     fl_print_format("%[' parameter.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
-    funlockfile(main->error.to.stream);
+    f_file_stream_unlock(main->error.to);
   }
 #endif // _di_fss_extended_write_error_parameter_at_least_once_print_
 
@@ -34,13 +34,13 @@ extern "C" {
       return;
     }
 
-    flockfile(main->error.to.stream);
+    f_file_stream_lock(main->error.to);
 
     fl_print_format("%r%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
     fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, symbol, parameter, main->error.notable);
     fl_print_format("%[' is specified, but no value is given.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
-    funlockfile(main->error.to.stream);
+    f_file_stream_unlock(main->error.to);
   }
 #endif // _di_fss_extended_write_error_parameter_value_missing_print_
 
@@ -51,7 +51,7 @@ extern "C" {
       return;
     }
 
-    flockfile(main->error.to.stream);
+    f_file_stream_lock(main->error.to);
 
     fl_print_format("%r%[%QThe FSS-0001 (Extended) standard does not support end of line character '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
     fl_print_format("%[\\n%]", main->error.to.stream, main->error.notable, main->error.notable);
@@ -59,7 +59,7 @@ extern "C" {
     fl_print_format("%[U+000A%]", main->error.to.stream, main->error.notable, main->error.notable);
     fl_print_format("%[) in objects.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
-    funlockfile(main->error.to.stream);
+    f_file_stream_unlock(main->error.to);
   }
 #endif // _di_fss_extended_write_error_parameter_unsupported_eol_print_
 

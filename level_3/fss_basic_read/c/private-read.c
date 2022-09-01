@@ -162,8 +162,8 @@ extern "C" {
         }
 
         if (data->depths.array[i].depth == data->depths.array[j].depth) {
-          if (main->error.verbosity != f_console_verbosity_quiet_e) {
-            flockfile(main->error.to.stream);
+          if (main->error.verbosity > f_console_verbosity_quiet_e) {
+            f_file_stream_lock(main->error.to);
 
             fl_print_format("%r%[%QThe value '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
             fl_print_format("%[%ul%]", main->error.to.stream, main->error.notable, data->depths.array[i].depth, main->error.notable);
@@ -171,15 +171,15 @@ extern "C" {
             fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_basic_read_long_depth_s, main->error.notable);
             fl_print_format("%['.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
-            funlockfile(main->error.to.stream);
+            f_file_stream_unlock(main->error.to);
           }
 
           return F_status_set_error(F_parameter);
         }
 
         if (data->depths.array[i].depth > data->depths.array[j].depth) {
-          if (main->error.verbosity != f_console_verbosity_quiet_e) {
-            flockfile(main->error.to.stream);
+          if (main->error.verbosity > f_console_verbosity_quiet_e) {
+            f_file_stream_lock(main->error.to);
 
             fl_print_format("%r%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
             fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_basic_read_long_depth_s, main->error.notable);
@@ -189,7 +189,7 @@ extern "C" {
             fl_print_format("%[%ul%]", main->error.to.stream, main->error.notable, data->depths.array[j].depth, main->error.notable);
             fl_print_format("%['.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
 
-            funlockfile(main->error.to.stream);
+            f_file_stream_unlock(main->error.to);
           }
 
           return F_status_set_error(F_parameter);

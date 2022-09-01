@@ -13,7 +13,7 @@ extern "C" {
     if (header.status == F_failure) {
       if (main->error.verbosity == f_console_verbosity_quiet_e) return;
 
-      flockfile(main->error.to.stream);
+      f_file_stream_lock(main->error.to);
 
       fl_print_format("%r%[%QThe action '%]", main->error.to.stream, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
       fl_print_format("%[%Q%]", main->error.to.stream, main->context.set.notable, control_action_type_name(header.action), main->context.set.notable);
@@ -29,7 +29,7 @@ extern "C" {
         fl_print_format("%[).%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
       }
 
-      funlockfile(main->error.to.stream);
+      f_file_stream_unlock(main->error.to);
 
       return;
     }
@@ -120,7 +120,7 @@ extern "C" {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e) return;
 
-    flockfile(main->error.to.stream);
+    f_file_stream_lock(main->error.to);
 
     fl_print_format("%r%[%QReceived error response for " CONTROL_action_s " '%]", main->error.to.stream, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
     fl_print_format("%[%q%]", main->error.to.stream, main->context.set.notable, control_action_type_name(header.action), main->context.set.notable);
@@ -136,7 +136,7 @@ extern "C" {
       fl_print_format("%[).%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
     }
 
-    funlockfile(main->error.to.stream);
+    f_file_stream_unlock(main->error.to);
   }
 #endif // _di_control_print_error_packet_response_
 
@@ -154,13 +154,13 @@ extern "C" {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e) return;
 
-    flockfile(main->error.to.stream);
+    f_file_stream_lock(main->error.to);
 
     fl_print_format("%r%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
     fl_print_format("%[%Q%]", main->error.to.stream, main->context.set.notable, action, main->context.set.notable);
     fl_print_format("%[' is not a known controller action.%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
 
-    funlockfile(main->error.to.stream);
+    f_file_stream_unlock(main->error.to);
   }
 #endif // _di_control_print_error_parameter_action_not_
 
@@ -169,13 +169,13 @@ extern "C" {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e) return;
 
-    flockfile(main->error.to.stream);
+    f_file_stream_lock(main->error.to);
 
     fl_print_format("%r%[%QThe action parameter '%]", main->error.to.stream, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
     fl_print_format("%[%Q%]", main->error.to.stream, main->context.set.notable, action, main->context.set.notable);
     fl_print_format("%[' a rule base name cannot be an empty string.%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
 
-    funlockfile(main->error.to.stream);
+    f_file_stream_unlock(main->error.to);
   }
 #endif // _di_control_print_error_parameter_action_rule_basename_empty_
 
@@ -184,13 +184,13 @@ extern "C" {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e) return;
 
-    flockfile(main->error.to.stream);
+    f_file_stream_lock(main->error.to);
 
     fl_print_format("%r%[%QThe action parameter '%]", main->error.to.stream, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
     fl_print_format("%[%Q%]", main->error.to.stream, main->context.set.notable, action, main->context.set.notable);
     fl_print_format("%[' a rule directory path cannot be an empty string.%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
 
-    funlockfile(main->error.to.stream);
+    f_file_stream_unlock(main->error.to);
   }
 #endif // _di_control_print_error_parameter_action_rule_directory_empty_
 
@@ -199,13 +199,13 @@ extern "C" {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e) return;
 
-    flockfile(main->error.to.stream);
+    f_file_stream_lock(main->error.to);
 
     fl_print_format("%r%[%QThe action parameter '%]", main->error.to.stream, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
     fl_print_format("%[%Q%]", main->error.to.stream, main->context.set.notable, action, main->context.set.notable);
     fl_print_format("%[' a rule name cannot be an empty string.%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
 
-    funlockfile(main->error.to.stream);
+    f_file_stream_unlock(main->error.to);
   }
 #endif // _di_control_print_error_parameter_action_rule_empty_
 
@@ -214,13 +214,13 @@ extern "C" {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e) return;
 
-    flockfile(main->error.to.stream);
+    f_file_stream_lock(main->error.to);
 
     fl_print_format("%r%[%QThe action parameter '%]", main->error.to.stream, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
     fl_print_format("%[%Q%]", main->error.to.stream, main->context.set.notable, action, main->context.set.notable);
     fl_print_format("%[' requires either a full rule name or a rule directory path along with the rule base name.%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
 
-    funlockfile(main->error.to.stream);
+    f_file_stream_unlock(main->error.to);
   }
 #endif // _di_control_print_error_parameter_action_rule_not_
 
@@ -229,13 +229,13 @@ extern "C" {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e) return;
 
-    flockfile(main->error.to.stream);
+    f_file_stream_lock(main->error.to);
 
     fl_print_format("%r%[%QThe action parameter '%]", main->error.to.stream, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
     fl_print_format("%[%Q%]", main->error.to.stream, main->context.set.notable, action, main->context.set.notable);
     fl_print_format("%[' has too few arguments.%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
 
-    funlockfile(main->error.to.stream);
+    f_file_stream_unlock(main->error.to);
   }
 #endif // _di_control_print_error_parameter_action_rule_too_few_
 
@@ -244,7 +244,7 @@ extern "C" {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e) return;
 
-    flockfile(main->error.to.stream);
+    f_file_stream_lock(main->error.to);
 
     fl_print_format("%r%[%QThe action parameter '%]", main->error.to.stream, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
     fl_print_format("%[%Q%]", main->error.to.stream, main->context.set.notable, action, main->context.set.notable);
@@ -252,7 +252,7 @@ extern "C" {
     fl_print_format("%[%Q%]", main->error.to.stream, main->context.set.notable, with, main->context.set.notable);
     fl_print_format("%[' has too few arguments.%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
 
-    funlockfile(main->error.to.stream);
+    f_file_stream_unlock(main->error.to);
   }
 #endif // _di_control_print_error_parameter_action_rule_too_few_with_
 
@@ -261,13 +261,13 @@ extern "C" {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e) return;
 
-    flockfile(main->error.to.stream);
+    f_file_stream_lock(main->error.to);
 
     fl_print_format("%r%[%QThe action parameter '%]", main->error.to.stream, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
     fl_print_format("%[%Q%]", main->error.to.stream, main->context.set.notable, action, main->context.set.notable);
     fl_print_format("%[' has too many arguments.%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
 
-    funlockfile(main->error.to.stream);
+    f_file_stream_unlock(main->error.to);
   }
 #endif // _di_control_print_error_parameter_action_rule_too_many_
 
@@ -276,7 +276,7 @@ extern "C" {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e) return;
 
-    flockfile(main->error.to.stream);
+    f_file_stream_lock(main->error.to);
 
     fl_print_format("%r%[%QThe action parameter '%]", main->error.to.stream, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
     fl_print_format("%[%Q%]", main->error.to.stream, main->context.set.notable, action, main->context.set.notable);
@@ -284,7 +284,7 @@ extern "C" {
     fl_print_format("%[%Q%]", main->error.to.stream, main->context.set.notable, with, main->context.set.notable);
     fl_print_format("%[' has too many arguments.%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
 
-    funlockfile(main->error.to.stream);
+    f_file_stream_unlock(main->error.to);
   }
 #endif // _di_control_print_error_parameter_action_rule_too_many_with_
 
@@ -293,7 +293,7 @@ extern "C" {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e) return;
 
-    flockfile(main->error.to.stream);
+    f_file_stream_lock(main->error.to);
 
     fl_print_format("%r%[%QThe action parameter '%]", main->error.to.stream, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
     fl_print_format("%[%Q%]", main->error.to.stream, main->context.set.notable, action, main->context.set.notable);
@@ -301,7 +301,7 @@ extern "C" {
     fl_print_format("%[%Q%]", main->error.to.stream, main->context.set.notable, with, main->context.set.notable);
     fl_print_format("%['.%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
 
-    funlockfile(main->error.to.stream);
+    f_file_stream_unlock(main->error.to);
   }
 #endif // _di_control_print_error_parameter_action_rule_with_unknown_
 
@@ -310,13 +310,13 @@ extern "C" {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e) return;
 
-    flockfile(main->error.to.stream);
+    f_file_stream_lock(main->error.to);
 
     fl_print_format("%r%[%QThe value for the parameter '%]", main->error.to.stream, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
     fl_print_format("%[%r%r%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, parameter, main->context.set.notable);
     fl_print_format("%[' must not be an empty string.%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
 
-    funlockfile(main->error.to.stream);
+    f_file_stream_unlock(main->error.to);
   }
 #endif // _di_control_print_error_parameter_value_empty_
 
@@ -325,13 +325,13 @@ extern "C" {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e) return;
 
-    flockfile(main->error.to.stream);
+    f_file_stream_lock(main->error.to);
 
     fl_print_format("%r%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
     fl_print_format("%[%r%r%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, parameter, main->context.set.notable);
     fl_print_format("%[' is specified, but no value is given.%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
 
-    funlockfile(main->error.to.stream);
+    f_file_stream_unlock(main->error.to);
   }
 #endif // _di_control_print_error_parameter_value_not_
 
@@ -367,13 +367,13 @@ extern "C" {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e) return;
 
-    flockfile(main->error.to.stream);
+    f_file_stream_lock(main->error.to);
 
     fl_print_format("%r%[%QFailed to connect to the socket file '%]", main->error.to.stream, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
     fl_print_format("%[%Q%]", main->error.to.stream, main->context.set.notable, path_socket, main->context.set.notable);
     fl_print_format("%['.%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
 
-    funlockfile(main->error.to.stream);
+    f_file_stream_unlock(main->error.to);
   }
 #endif // _di_control_print_error_socket_file_failed_
 
@@ -382,13 +382,13 @@ extern "C" {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e) return;
 
-    flockfile(main->error.to.stream);
+    f_file_stream_lock(main->error.to);
 
     fl_print_format("%r%[%QThe controller socket file '%]", main->error.to.stream, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
     fl_print_format("%[%Q%]", main->error.to.stream, main->context.set.notable, path_socket, main->context.set.notable);
     fl_print_format("%[' could not be found and is required.%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
 
-    funlockfile(main->error.to.stream);
+    f_file_stream_unlock(main->error.to);
   }
 #endif // _di_control_print_error_socket_file_missing_
 
@@ -397,13 +397,13 @@ extern "C" {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e) return;
 
-    flockfile(main->error.to.stream);
+    f_file_stream_lock(main->error.to);
 
     fl_print_format("%r%[%QThe controller socket file '%]", main->error.to.stream, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
     fl_print_format("%[%Q%]", main->error.to.stream, main->context.set.notable, path_socket, main->context.set.notable);
     fl_print_format("%[' is not a socket file.%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
 
-    funlockfile(main->error.to.stream);
+    f_file_stream_unlock(main->error.to);
   }
 #endif // _di_control_print_error_socket_file_not_
 

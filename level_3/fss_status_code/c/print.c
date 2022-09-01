@@ -7,9 +7,9 @@ extern "C" {
 #endif
 
 #ifndef _di_fss_status_code_print_error_cannot_error_warning_number_
-  void fss_status_code_print_error_cannot_error_warning_number(fss_status_code_setting_t * const setting, const fl_print_t print) {
+  f_status_t fss_status_code_print_error_cannot_error_warning_number(fss_status_code_setting_t * const setting, const fl_print_t print) {
 
-    if (print.verbosity == f_console_verbosity_quiet_e) return;
+    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
 
     f_file_stream_lock(print.to);
 
@@ -22,15 +22,19 @@ extern "C" {
     fl_print_format("%[' parameter.%]%r", print.to.stream, print.context, print.context, f_string_eol_s);
 
     f_file_stream_unlock(print.to);
+
+    return F_none;
   }
 #endif // _di_fss_status_code_print_error_cannot_error_warning_number_
 
 #ifndef _di_fss_status_code_print_error_no_fss_status_codes_
-  void fss_status_code_print_error_no_fss_status_codes(fss_status_code_setting_t * const setting, const fl_print_t print) {
+  f_status_t fss_status_code_print_error_no_fss_status_codes(fss_status_code_setting_t * const setting, const fl_print_t print) {
 
-    if (print.verbosity == f_console_verbosity_quiet_e) return;
+    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
 
     fll_print_format("%[No status code is specified.%]%r", print.to.stream, print.context, print.context, f_string_eol_s);
+
+    return F_none;
   }
 #endif // _di_fss_status_code_print_error_no_fss_status_codes_
 
@@ -64,9 +68,9 @@ extern "C" {
 #endif // _di_fss_status_code_print_help_
 
 #ifndef _di_fss_status_code_print_line_first_
-  void fss_status_code_print_line_first(fss_status_code_setting_t * const setting, const fl_print_t print, const bool lock) {
+  f_status_t fss_status_code_print_line_first(fss_status_code_setting_t * const setting, const fl_print_t print, const bool lock) {
 
-    if (print.verbosity == f_console_verbosity_quiet_e) return;
+    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
 
     if (lock) {
       fll_print_dynamic_raw(setting->line_first, print.to.stream);
@@ -74,14 +78,16 @@ extern "C" {
     else {
       f_print_dynamic_raw(setting->line_first, print.to.stream);
     }
+
+    return F_none;
   }
 #endif // _di_fss_status_code_print_line_first_
 
 #ifndef _di_fss_status_code_print_line_last_
-  void fss_status_code_print_line_last(fss_status_code_setting_t * const setting, const fl_print_t print, const bool lock) {
+  f_status_t fss_status_code_print_line_last(fss_status_code_setting_t * const setting, const fl_print_t print, const bool lock) {
 
-    if (print.verbosity == f_console_verbosity_quiet_e) return;
-    if (print.verbosity == f_console_verbosity_error_e && !F_status_is_error(setting->status)) return;
+    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+    if (print.verbosity == f_console_verbosity_error_e && !F_status_is_error(setting->status)) return F_output_not;
 
     if (lock) {
       fll_print_dynamic_raw(setting->line_last, print.to.stream);
@@ -89,6 +95,8 @@ extern "C" {
     else {
       f_print_dynamic_raw(setting->line_last, print.to.stream);
     }
+
+    return F_none;
   }
 #endif // _di_fss_status_code_print_line_last_
 

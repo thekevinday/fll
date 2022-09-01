@@ -548,7 +548,7 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
 
           if (F_status_is_error(status)) {
             if (F_status_set_fine(status) == F_parameter) {
-              if (data->main->error.verbosity != f_console_verbosity_quiet_e) {
+              if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
                 firewall_print_error_on_invalid_parameter(data->main->error, "f_file_open");
               }
             }
@@ -562,12 +562,12 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
               status = F_none;
             }
             else if (F_status_set_fine(status) == F_file_open) {
-              if (data->main->error.verbosity != f_console_verbosity_quiet_e) {
+              if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
                 fll_print_format("%r%[%QUnable to open the file '%Q'.%]%r", data->main->error.to.stream, f_string_eol_s, data->main->error.context, data->main->error.prefix, path_file, data->main->error.context, f_string_eol_s);
               }
             }
             else if (F_status_set_fine(status) == F_file_descriptor) {
-              if (data->main->error.verbosity != f_console_verbosity_quiet_e) {
+              if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
                 fll_print_format("%r%[%QFile descriptor error while trying to open the file '%Q'.%]%r", data->main->error.to.stream, f_string_eol_s, data->main->error.context, data->main->error.prefix, path_file, data->main->error.context, f_string_eol_s);
               }
             }
@@ -588,7 +588,7 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
             f_file_stream_close(&file);
 
             if (F_status_is_error(status)) {
-              if (data->main->error.verbosity != f_console_verbosity_quiet_e) {
+              if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
                 if (F_status_set_fine(status) == F_parameter) {
                   firewall_print_error_on_invalid_parameter(data->main->error, "f_file_read");
                 }
@@ -1128,7 +1128,7 @@ f_status_t firewall_buffer_rules(firewall_data_t * const data, const f_string_st
   f_status_t status = f_file_open(filename, 0, &file);
 
   if (F_status_is_error(status)) {
-    if (data->main->error.verbosity != f_console_verbosity_quiet_e) {
+    if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
       if (optional) {
         if (F_status_set_fine(status) == F_parameter) {
           firewall_print_error_on_invalid_parameter(data->main->error, "f_file_open");
@@ -1164,7 +1164,7 @@ f_status_t firewall_buffer_rules(firewall_data_t * const data, const f_string_st
   f_file_stream_close(&file);
 
   if (F_status_is_error(status)) {
-    if (data->main->error.verbosity != f_console_verbosity_quiet_e) {
+    if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
       if (F_status_set_fine(status) == F_parameter) {
         firewall_print_error_on_invalid_parameter(data->main->error, "f_file_read");
       }
@@ -1204,7 +1204,7 @@ f_status_t firewall_buffer_rules(firewall_data_t * const data, const f_string_st
   if (F_status_is_error(status)) {
     status = F_status_set_fine(status);
 
-    if (data->main->error.verbosity != f_console_verbosity_quiet_e) {
+    if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
       if (status == F_parameter) {
         firewall_print_error_on_invalid_parameter_for_file(data->main->error, "fll_fss_basic_list_read", filename);
       }

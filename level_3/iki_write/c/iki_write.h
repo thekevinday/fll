@@ -52,6 +52,7 @@
 
 // IKI Write includes.
 #include <program/iki_write/common.h>
+#include <program/iki_write/print.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -82,7 +83,7 @@ extern "C" {
  *     F_parameter (with error bit) if main is NULL or setting is NULL.
  */
 #ifndef _di_iki_write_main_
-  extern f_status_t iki_write_main(fll_program_data_t * const main, iki_write_setting_t * const setting);
+  extern void iki_write_main(fll_program_data_t * const main, iki_write_setting_t * const setting);
 #endif // _di_iki_write_main_
 
 #ifdef __cplusplus

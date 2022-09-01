@@ -311,10 +311,10 @@ extern "C" {
  *   - codepoint:    The input format is codepoint (U+XXXX or U+XXXXXX).
  *
  * utf8_mode_to_*_e:
- *   - bytesequence: The outout format is bytesequence.
- *   - codepoint:    The outout format is codepoint (U+XXXX or U+XXXXXX).
- *   - combining:    The outout format is whether or not character is combining (may be used with "width").
- *   - width:        The outout format is how wide the character is (may be used with "combining").
+ *   - bytesequence: The output format is bytesequence.
+ *   - codepoint:    The output format is codepoint (U+XXXX or U+XXXXXX).
+ *   - combining:    The output format is whether or not character is combining (may be used with "width").
+ *   - width:        The output format is how wide the character is (may be used with "combining").
  */
 #ifndef _di_utf8_modes_e_
   enum {
@@ -332,15 +332,15 @@ extern "C" {
  * Flags used to represent flags passed to the main function.
  *
  * utf8_main_flag_*_e:
- *   - none:          No modes in use.
- *   - file_from:     Using a specified source file.
- *   - file_to:       Using a specified destination file.
- *   - help:          Print help.
- *   - header:        Enable printing of headers.
- *   - separate:      Enable printing of separators.
- *   - strip_invalid: Using strip invalid character mode.
- *   - verify:        Using verify mode.
- *   - version:       Print version.
+ *   - none:           No modes in use.
+ *   - file_from:      Using a specified source file.
+ *   - file_to:        Using a specified destination file.
+ *   - header:         Enable printing of headers.
+ *   - help:           Print help.
+ *   - separate:       Enable printing of separators.
+ *   - strip_invalid:  Using strip invalid character mode.
+ *   - verify:         Using verify mode.
+ *   - version:        Print version.
  */
 #ifndef _di_utf8_main_flag_e_
   enum {
@@ -381,6 +381,7 @@ extern "C" {
  *
  * path_files_from: An array of all "from" file paths for when the flag utf8_main_flag_file_from_e is set.
  * path_files_to:   An array of all "to" file paths for when the flag utf8_main_flag_file_to_e is set.
+ * remaining:       An array containing all remaining arguments passed to the program.
  */
 #ifndef _di_utf8_setting_t_
   typedef struct {
@@ -403,6 +404,7 @@ extern "C" {
 
     f_string_dynamics_t path_files_from;
     f_string_dynamics_t path_files_to;
+    f_string_dynamics_t remaining;
   } utf8_setting_t;
 
   #define utf8_setting_t_initialize \
@@ -418,6 +420,7 @@ extern "C" {
       f_string_eol_s, \
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
+      f_string_dynamics_t_initialize, \
       f_string_dynamics_t_initialize, \
       f_string_dynamics_t_initialize, \
     }

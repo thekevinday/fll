@@ -191,7 +191,7 @@ extern "C" {
     status = controller_lock_create(&thread.lock);
 
     if (F_status_is_error(status)) {
-      if (main->error.verbosity != f_console_verbosity_quiet_e) {
+      if (main->error.verbosity > f_console_verbosity_quiet_e) {
         fll_error_print(main->error, status, "controller_lock_create", F_true);
       }
     }
@@ -210,7 +210,7 @@ extern "C" {
     if (F_status_is_error(status)) {
       thread.id_signal = 0;
 
-      if (main->error.verbosity != f_console_verbosity_quiet_e) {
+      if (main->error.verbosity > f_console_verbosity_quiet_e) {
         controller_print_error(&thread, main->error, F_status_set_fine(status), "f_thread_create", F_true);
       }
     }
@@ -219,7 +219,7 @@ extern "C" {
         setting->ready = controller_setting_ready_done_e;
 
         if (f_file_exists(setting->path_pid, F_true) == F_true) {
-          if (main->error.verbosity != f_console_verbosity_quiet_e) {
+          if (main->error.verbosity > f_console_verbosity_quiet_e) {
             controller_lock_print(main->error.to, &thread);
 
             fl_print_format("%r%[%QThe pid file '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
@@ -239,7 +239,7 @@ extern "C" {
         status = f_thread_create(0, &thread.id_entry, &controller_thread_entry, (void *) &entry);
 
         if (F_status_is_error(status)) {
-          if (main->error.verbosity != f_console_verbosity_quiet_e) {
+          if (main->error.verbosity > f_console_verbosity_quiet_e) {
             controller_print_error(&thread, main->error, F_status_set_fine(status), "f_thread_create", F_true);
           }
         }
@@ -272,7 +272,7 @@ extern "C" {
           if (F_status_is_error(status)) {
             thread.id_cleanup = 0;
 
-            if (main->error.verbosity != f_console_verbosity_quiet_e) {
+            if (main->error.verbosity > f_console_verbosity_quiet_e) {
               controller_print_error(&thread, main->error, F_status_set_fine(status), "f_thread_create", F_true);
             }
           }

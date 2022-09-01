@@ -9,17 +9,7 @@ extern "C" {
 #ifndef _di_fss_status_code_main_
   void fss_status_code_main(fll_program_data_t * const main, fss_status_code_setting_t * const setting) {
 
-    if (!main || !setting) {
-      fss_status_code_print_line_first(setting, main->error, F_true);
-      fll_error_print(main->error, F_parameter, "fss_status_code_main", F_true);
-      fss_status_code_print_line_last(setting, main->error, F_true);
-
-      setting->status = F_status_set_error(F_parameter);
-
-      return;
-    }
-
-    if (F_status_is_error(setting->status)) return;
+    if (!main || !setting || F_status_is_error(setting->status)) return;
 
     setting->status = F_none;
 

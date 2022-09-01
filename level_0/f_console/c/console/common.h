@@ -247,6 +247,8 @@ extern "C" {
  *
  * Intended to be used for the basic/standard verbosity modes for all programs following this practice.
  *
+ * These are expected to be in numeric order such that the smallest number is the least verbose and the highest number is the most verbose.
+ *
  * f_console_verbosity_*:
  *   - quiet:   Verbosity is set to quiet.
  *   - error:   Verbosity is set to error.

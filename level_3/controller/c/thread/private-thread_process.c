@@ -330,7 +330,7 @@ extern "C" {
       f_status_t status = f_thread_create(0, &global->thread->id_entry, &controller_thread_exit, (void *) &entry);
 
       if (F_status_is_error(status)) {
-        if (global->main->error.verbosity != f_console_verbosity_quiet_e) {
+        if (global->main->error.verbosity > f_console_verbosity_quiet_e) {
           controller_print_error(global->thread, global->main->error, F_status_set_fine(status), "f_thread_create", F_true);
         }
 

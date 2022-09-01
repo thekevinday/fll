@@ -43,7 +43,7 @@ extern "C" {
 
     if (environment->used + data_build->setting.environment.used > environment->size) {
       if (environment->used + data_build->setting.environment.used > f_environment_max_length) {
-        if (data->main->error.verbosity != f_console_verbosity_quiet_e) {
+        if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
           flockfile(data->main->error.to.stream);
 
           fl_print_format("%r%[%QThe values for the setting '%]", data->main->error.to.stream, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
@@ -579,7 +579,7 @@ extern "C" {
         } // for
 
         if (found == F_false) {
-          if (data->main->error.verbosity != f_console_verbosity_quiet_e) {
+          if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
             flockfile(data->main->error.to.stream);
 
             fl_print_format("%r%[%QThe specified mode '%]", data->main->error.to.stream, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
@@ -673,7 +673,7 @@ extern "C" {
 
     if (F_status_is_error(*status)) {
       if (*status == F_status_set_error(F_string_too_large)) {
-        if (data->main->error.verbosity != f_console_verbosity_quiet_e) {
+        if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
           funlockfile(data->main->error.to.stream);
 
           fl_print_format("%r%[%QA setting in the file '%]", data->main->error.to.stream, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
@@ -1376,7 +1376,7 @@ extern "C" {
           setting->search_shared = F_false;
         }
 
-        if (data->main->error.verbosity != f_console_verbosity_quiet_e) {
+        if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
           flockfile(data->main->error.to.stream);
 
           fl_print_format("%r%[%QThe parameters '%]", data->main->error.to.stream, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
@@ -1437,7 +1437,7 @@ extern "C" {
 
     if (setting->build_language == fake_build_language_type_c_e || setting->build_language == fake_build_language_type_cpp_e) {
       if (setting->build_shared == F_false && setting->build_static == F_false) {
-        if (data->main->error.verbosity != f_console_verbosity_quiet_e) {
+        if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
           flockfile(data->main->error.to.stream);
 
           fl_print_format("%r%[%QThe build settings '%]", data->main->error.to.stream, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);

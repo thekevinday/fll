@@ -1389,7 +1389,7 @@ extern "C" {
     if (F_status_set_error(*status) == F_interrupt) return 0;
 
     if (i == section->objects.used && F_status_is_error_not(*status) && (state_process.operation == fake_make_operation_type_and_e || state_process.operation == fake_make_operation_type_else_e || state_process.operation == fake_make_operation_type_if_e || state_process.operation == fake_make_operation_type_or_e)) {
-      if (data_make->data->main->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
+      if (data_make->data->main->error.verbosity > f_console_verbosity_quiet_e && data_make->error.to.stream) {
         flockfile(data_make->error.to.stream);
 
         fl_print_format("%r%[%QIncomplete '%]", data_make->error.to.stream, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);

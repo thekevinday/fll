@@ -13,6 +13,10 @@ extern "C" {
   const f_string_static_t iki_write_program_name_long_s = macro_f_string_static_t_initialize(IKI_WRITE_program_name_long_s, 0, IKI_WRITE_program_name_long_s_length);
 #endif // _di_iki_write_program_name_
 
+#ifndef _di_iki_write_strings_
+  const f_string_static_t iki_write_object_s = macro_f_string_static_t_initialize(IKI_WRITE_object_s, 0, IKI_WRITE_object_s_length);
+#endif // _di_iki_write_strings_
+
 #ifndef _di_iki_write_parameters_
   const f_string_static_t iki_write_short_file_s = macro_f_string_static_t_initialize(IKI_WRITE_short_file_s, 0, IKI_WRITE_short_file_s_length);
   const f_string_static_t iki_write_short_content_s = macro_f_string_static_t_initialize(IKI_WRITE_short_content_s, 0, IKI_WRITE_short_content_s_length);
@@ -32,6 +36,14 @@ extern "C" {
 
     if (!setting) return F_status_set_error(F_parameter);
 
+    f_string_dynamic_resize(0, &setting->escaped);
+    f_string_dynamic_resize(0, &setting->buffer);
+    f_string_dynamic_resize(0, &setting->object);
+    f_string_dynamic_resize(0, &setting->content);
+
+    f_string_dynamics_resize(0, &setting->objects);
+    f_string_dynamics_resize(0, &setting->contents);
+
     return F_none;
   }
 #endif // _di_iki_write_setting_delete_
@@ -43,7 +55,14 @@ extern "C" {
 
     // Load parameters.
     setting->status = f_console_parameter_process(arguments, &main->parameters);
-    if (F_status_is_error(setting->status)) return;
+
+    if (F_status_is_error(setting->status)) {
+      iki_write_print_line_first(setting, main->error, F_true);
+      fll_error_print(main->error, F_status_set_fine(setting->status), "f_console_parameter_process", F_true);
+      iki_write_print_line_last(setting, main->error, F_true);
+
+      return;
+    }
 
     {
       f_array_length_t choice = 0;
@@ -62,6 +81,7 @@ extern "C" {
         if (F_status_is_error(setting->status)) {
           iki_write_print_line_first(setting, main->error, F_true);
           fll_error_print(main->error, F_status_set_fine(setting->status), "fll_program_parameter_process_context", F_true);
+          iki_write_print_line_last(setting, main->error, F_true);
 
           return;
         }
@@ -94,6 +114,7 @@ extern "C" {
         if (F_status_is_error(setting->status)) {
           iki_write_print_line_first(setting, main->error, F_true);
           fll_error_print(main->error, F_status_set_fine(setting->status), "fll_program_parameter_process_verbosity", F_true);
+          iki_write_print_line_last(setting, main->error, F_true);
 
           return;
         }
@@ -110,261 +131,148 @@ extern "C" {
 
         return;
       }
-
-      // Identify and prioritize "from" mode parameters.
-      {
-        uint16_t choices_array[2] = { iki_write_parameter_from_bytesequence_e, iki_write_parameter_from_codepoint_e };
-        choices.array = choices_array;
-        choices.used = 2;
-
-        setting->status = f_console_parameter_prioritize_right(main->parameters, choices, &choice);
-
-        if (F_status_is_error(setting->status)) {
-          iki_write_print_line_first(setting, main->error, F_true);
-          fll_error_print(main->error, F_status_set_fine(setting->status), "f_console_parameter_prioritize_right", F_true);
-
-          return;
-        }
-
-        if (choices.array[choice] == iki_write_parameter_from_bytesequence_e) {
-          if (setting->mode & iki_write_mode_from_codepoint_e) {
-            setting->mode -= iki_write_mode_from_codepoint_e;
-          }
-
-          setting->mode |= iki_write_mode_from_bytesequence_e;
-        }
-        else if (choices.array[choice] == iki_write_parameter_from_codepoint_e) {
-          if (setting->mode & iki_write_mode_from_bytesequence_e) {
-            setting->mode -= iki_write_mode_from_bytesequence_e;
-          }
-
-          setting->mode |= iki_write_mode_from_codepoint_e;
-        }
-      }
-
-      // Identify and prioritize "to" mode parameters.
-      {
-        uint16_t choices_array[4] = { iki_write_parameter_to_bytesequence_e, iki_write_parameter_to_codepoint_e, iki_write_parameter_to_combining_e, iki_write_parameter_to_width_e };
-        choices.array = choices_array;
-        choices.used = 4;
-        choice = 1;
-
-        setting->status = f_console_parameter_prioritize_right(main->parameters, choices, &choice);
-
-        if (F_status_is_error(setting->status)) {
-          iki_write_print_line_first(setting, main->error, F_true);
-          fll_error_print(main->error, F_status_set_fine(setting->status), "f_console_parameter_prioritize_right", F_true);
-
-          return;
-        }
-
-        if (choices.array[choice] == iki_write_parameter_to_bytesequence_e) {
-          if (setting->mode & iki_write_mode_to_codepoint_e) {
-            setting->mode -= iki_write_mode_to_codepoint_e;
-          }
-
-          if (setting->mode & iki_write_mode_to_combining_e) {
-            setting->mode -= iki_write_mode_to_combining_e;
-          }
-
-          if (setting->mode & iki_write_mode_to_width_e) {
-            setting->mode -= iki_write_mode_to_width_e;
-          }
-
-          setting->mode |= iki_write_mode_to_bytesequence_e;
-        }
-        else if (choices.array[choice] == iki_write_parameter_to_codepoint_e) {
-          if (setting->mode & iki_write_mode_to_bytesequence_e) {
-            setting->mode -= iki_write_mode_to_bytesequence_e;
-          }
-
-          if (setting->mode & iki_write_mode_to_combining_e) {
-            setting->mode -= iki_write_mode_to_combining_e;
-          }
-
-          if (setting->mode & iki_write_mode_to_width_e) {
-            setting->mode -= iki_write_mode_to_width_e;
-          }
-
-          setting->mode |= iki_write_mode_to_codepoint_e;
-        }
-        else if (choices.array[choice] == iki_write_parameter_to_combining_e) {
-          if (setting->mode & iki_write_mode_to_bytesequence_e) {
-            setting->mode -= iki_write_mode_to_bytesequence_e;
-          }
-
-          if (setting->mode & iki_write_mode_to_codepoint_e) {
-            setting->mode -= iki_write_mode_to_codepoint_e;
-          }
-
-          // --to_width may be specified with --to_combining.
-          if (main->parameters.array[iki_write_parameter_to_width_e].result == f_console_result_found_e) {
-            setting->mode |= iki_write_mode_to_width_e;
-          }
-
-          setting->mode |= iki_write_mode_to_combining_e;
-        }
-        else if (choices.array[choice] == iki_write_parameter_to_width_e) {
-          if (setting->mode & iki_write_mode_to_bytesequence_e) {
-            setting->mode -= iki_write_mode_to_bytesequence_e;
-          }
-
-          if (setting->mode & iki_write_mode_to_codepoint_e) {
-            setting->mode -= iki_write_mode_to_codepoint_e;
-          }
-
-          // --to_width may be specified with --to_combining.
-          if (main->parameters.array[iki_write_parameter_to_combining_e].result == f_console_result_found_e) {
-            setting->mode |= iki_write_mode_to_combining_e;
-          }
-
-          setting->mode |= iki_write_mode_to_width_e;
-        }
-      }
     }
 
-    f_string_static_t * const args = main->parameters.arguments.array;
+    main->output.to.id = F_type_descriptor_output_d;
+    main->output.to.stream = F_type_output_d;
+    main->output.to.flag = F_file_flag_create_d | F_file_flag_write_only_d | F_file_flag_append_d;
 
-    if (main->parameters.array[iki_write_parameter_to_file_e].result == f_console_result_additional_e) {
-      if (main->parameters.array[iki_write_parameter_to_file_e].values.used > 1) {
-        iki_write_print_error_parameter_file_to_too_many(main, setting);
-
+    if (main->parameters.array[iki_write_parameter_file_e].result == f_console_result_additional_e) {
+      if (main->parameters.array[iki_write_parameter_file_e].values.used > 1) {
         setting->status = F_status_set_error(F_parameter);
+
+        iki_write_print_line_first(setting, main->error, F_true);
+        fll_program_print_error_parameter_must_specify_once(main->error, f_console_symbol_long_enable_s, iki_write_long_file_s);
+        iki_write_print_line_last(setting, main->error, F_true);
 
         return;
       }
 
-      if (args[main->parameters.array[iki_write_parameter_to_file_e].values.array[0]].used) {
-        setting->path_files_to.used = 0;
+      f_string_static_t * const args = main->parameters.arguments.array;
 
-        setting->status = f_string_dynamics_increase_by(1, &setting->path_files_to);
-        if (F_status_is_error(setting->status)) return;
+      const f_array_length_t index = main->parameters.array[iki_write_parameter_file_e].values.array[0];
 
-        setting->path_files_to.array[setting->path_files_to.used].used = 0;
+      main->output.to.id = -1;
+      main->output.to.stream = 0;
 
-        setting->status = f_string_dynamic_append_nulless(main->parameters.arguments.array[main->parameters.array[iki_write_parameter_to_file_e].values.array[0]], &setting->path_files_to.array[0]);
-        if (F_status_is_error(setting->status)) return;
+      setting->status = f_file_stream_open(args[index], f_string_empty_s, &main->output.to);
 
-        ++setting->path_files_to.used;
-
-        setting->status = f_file_stream_open(args[main->parameters.array[iki_write_parameter_to_file_e].values.array[0]], f_file_open_mode_append_s, &main->output.to);
-
-        if (F_status_is_error(setting->status)) {
-          fll_error_file_print(main->error, F_status_set_fine(setting->status), "f_file_stream_open", F_true, args[main->parameters.array[iki_write_parameter_to_file_e].values.array[0]], f_file_operation_open_s, fll_error_file_type_file_e);
-
-          return;
-        }
-
-        setting->flag |= iki_write_main_flag_file_to_e;
-      }
-      else {
-        iki_write_print_error_parameter_file_name_empty(main, setting, main->parameters.array[iki_write_parameter_to_file_e].values.array[0]);
-
-        setting->status = F_status_set_error(F_parameter);
+      if (F_status_is_error(setting->status)) {
+        iki_write_print_line_first(setting, main->error, F_true);
+        fll_error_file_print(main->error, F_status_set_fine(setting->status), "f_file_stream_open", F_true, args[index], f_file_operation_open_s, fll_error_file_type_file_e);
+        iki_write_print_line_last(setting, main->error, F_true);
 
         return;
       }
-    }
-    else if (main->parameters.array[iki_write_parameter_to_file_e].result == f_console_result_found_e) {
-      iki_write_print_error_no_value(main, setting, iki_write_long_to_file_s);
 
+      setting->flag |= iki_write_main_flag_file_to_e;
+    }
+    else if (main->parameters.array[iki_write_parameter_file_e].result == f_console_result_found_e) {
       setting->status = F_status_set_error(F_parameter);
+
+      iki_write_print_line_first(setting, main->error, F_true);
+      fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_enable_s, iki_write_long_file_s);
+      iki_write_print_line_last(setting, main->error, F_true);
 
       return;
     }
-    else {
-      main->output.to = main->message.to;
 
-      if (setting->flag & iki_write_main_flag_file_to_e) {
-        setting->flag -= iki_write_main_flag_file_to_e;
+    if (main->parameters.array[iki_write_parameter_object_e].result == f_console_result_additional_e) {
+      f_array_lengths_t * const values = &main->parameters.array[iki_write_parameter_object_e].values;
+
+      setting->objects.used = 0;
+
+      setting->status = f_string_dynamics_resize(values->used, &setting->objects);
+
+      if (F_status_is_error(setting->status)) {
+        iki_write_print_line_first(setting, main->error, F_true);
+        fll_error_print(main->error, F_status_set_fine(setting->status), "f_string_dynamics_resize", F_true);
+        iki_write_print_line_last(setting, main->error, F_true);
+
+        return;
       }
-    }
 
-    if (main->parameters.array[iki_write_parameter_from_file_e].result == f_console_result_additional_e) {
-      setting->path_files_from.used = 0;
+      // Construct the array without allocating any more memory by setting this as a static string (used > 0, size = 0).
+      for (f_array_length_t index = 0; setting->objects.used < values->used; ) {
 
-      setting->status = f_string_dynamics_increase_by(main->parameters.array[iki_write_parameter_from_file_e].values.used, &setting->path_files_from);
-      if (F_status_is_error(setting->status)) return;
+        index = values->array[setting->objects.used];
 
-      setting->path_files_from.used = main->parameters.array[iki_write_parameter_from_file_e].values.used;
-
-      f_array_length_t i = 0;
-      f_array_length_t index = 0;
-
-      for (; i < setting->path_files_from.used; ++i) {
-
-        index = main->parameters.array[iki_write_parameter_from_file_e].values.array[i];
-        setting->path_files_from.array[i].used = 0;
-
-        setting->status = f_string_dynamic_append_nulless(main->parameters.arguments.array[index], &setting->path_files_from.array[i]);
-        if (F_status_is_error(setting->status)) return;
-
-        if (args[index].used) {
-          if (f_file_exists(args[index], F_true) != F_true) {
-            iki_write_print_error_parameter_file_not_found(main, setting, F_true, args[index]);
-
-            if (F_status_is_error_not(setting->status)) {
-              setting->status = F_status_set_error(F_file_found_not);
-            }
-          }
-        }
-        else {
-          iki_write_print_error_parameter_file_name_empty(main, setting, index);
-
-          if (F_status_is_error_not(setting->status)) {
-            setting->status = F_status_set_error(F_parameter);
-          }
-        }
+        setting->objects.array[setting->objects.used].string = main->parameters.arguments.array[index].string;
+        setting->objects.array[setting->objects.used].used = main->parameters.arguments.array[index].used;
+        setting->objects.array[setting->objects.used++].size = 0;
       } // for
 
-      if (F_status_is_error(setting->status)) return;
-
-      setting->flag |= iki_write_main_flag_file_from_e;
+      setting->flag |= iki_write_main_flag_object_e;
     }
-    else if (main->parameters.array[iki_write_parameter_from_file_e].result == f_console_result_found_e) {
-      iki_write_print_error_no_value(main, setting, iki_write_long_from_file_s);
-
+    else if (main->parameters.array[iki_write_parameter_object_e].result == f_console_result_found_e) {
       setting->status = F_status_set_error(F_parameter);
+
+      iki_write_print_line_first(setting, main->error, F_true);
+      fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_enable_s, iki_write_long_object_s);
+      iki_write_print_line_last(setting, main->error, F_true);
 
       return;
     }
-    else {
-      if (setting->flag & iki_write_main_flag_file_from_e) {
-        setting->flag -= iki_write_main_flag_file_from_e;
+
+    if (main->parameters.array[iki_write_parameter_content_e].result == f_console_result_additional_e) {
+      f_array_lengths_t * const values = &main->parameters.array[iki_write_parameter_content_e].values;
+
+      setting->contents.used = 0;
+
+      setting->status = f_string_dynamics_resize(values->used, &setting->contents);
+
+      if (F_status_is_error(setting->status)) {
+        iki_write_print_line_first(setting, main->error, F_true);
+        fll_error_print(main->error, F_status_set_fine(setting->status), "f_string_dynamics_resize", F_true);
+        iki_write_print_line_last(setting, main->error, F_true);
+
+        return;
       }
+
+      // Construct the array without allocating any more memory by setting this as a static string (used > 0, size = 0).
+      for (f_array_length_t index = 0; setting->contents.used < values->used; ) {
+
+        index = values->array[setting->contents.used];
+
+        setting->contents.array[setting->contents.used].string = main->parameters.arguments.array[index].string;
+        setting->contents.array[setting->contents.used].used = main->parameters.arguments.array[index].used;
+        setting->contents.array[setting->contents.used++].size = 0;
+      } // for
+
+      setting->flag |= iki_write_main_flag_content_e;
     }
-
-    if (F_status_is_error(setting->status)) return;
-
-    if (main->parameters.array[iki_write_parameter_from_file_e].result == f_console_result_none_e && !((main->pipe & fll_program_data_pipe_input_e) || main->parameters.remaining.used)) {
-      iki_write_print_error_no_from(main, setting);
-
+    else if (main->parameters.array[iki_write_parameter_content_e].result == f_console_result_found_e) {
       setting->status = F_status_set_error(F_parameter);
+
+      iki_write_print_line_first(setting, main->error, F_true);
+      fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_enable_s, iki_write_long_content_s);
+      iki_write_print_line_last(setting, main->error, F_true);
+
+      return;
     }
 
-    if (!(setting->mode & iki_write_mode_to_bytesequence_e)) {
-      if (main->parameters.array[iki_write_parameter_separate_e].result == f_console_result_found_e || main->parameters.array[iki_write_parameter_headers_e].result == f_console_result_found_e) {
-        setting->prepend = iki_write_string_prepend_padding_s;
-        setting->append = f_string_eol_s;
+    if (!(main->pipe & fll_program_data_pipe_input_e) && !(setting->flag & (iki_write_main_flag_content_e | iki_write_parameter_object_e))) {
+      setting->status = F_status_set_error(F_parameter);
+
+      iki_write_print_line_first(setting, main->error, F_true);
+      iki_write_print_error_main_missing(setting, main->error);
+      iki_write_print_line_last(setting, main->error, F_true);
+
+      return;
+    }
+
+    setting->quote = f_iki_syntax_quote_double_s;
+
+    if (main->parameters.array[iki_write_parameter_double_e].result == f_console_result_found_e) {
+      if (main->parameters.array[iki_write_parameter_single_e].result == f_console_result_found_e) {
+        if (main->parameters.array[iki_write_parameter_double_e].location < main->parameters.array[iki_write_parameter_single_e].location) {
+          setting->quote = f_iki_syntax_quote_single_s;
+        }
       }
-      else {
-        setting->prepend = f_string_space_s;
-      }
     }
-
-    if (main->parameters.array[iki_write_parameter_headers_e].result == f_console_result_found_e) {
-      setting->flag |= iki_write_main_flag_header_e;
+    else if (main->parameters.array[iki_write_parameter_single_e].result == f_console_result_found_e) {
+      setting->quote = f_iki_syntax_quote_single_s;
     }
-
-    if (main->parameters.array[iki_write_parameter_separate_e].result == f_console_result_found_e) {
-      setting->flag |= iki_write_main_flag_separate_e;
-    }
-
-    if (main->parameters.array[iki_write_parameter_strip_invalid_e].result == f_console_result_found_e) {
-      setting->flag |= iki_write_main_flag_strip_invalid_e;
-    }
-
-    setting->valid_not = main->message.set->error;
   }
 #endif // _di_iki_write_setting_load_
 

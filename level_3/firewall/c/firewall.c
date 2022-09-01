@@ -203,7 +203,7 @@ extern "C" {
 
         if (show_nat) {
           fll_print_format("%[===========================%] %[NAT%] %[============================%]%r", main->output.to.stream, main->context.set.standout, main->context.set.standout, main->context.set.title, main->context.set.title, main->context.set.standout, main->context.set.standout, f_string_eol_s);
-          fflush(main->output.to.stream);
+          f_file_stream_flush(main->output.to);
 
           status = fll_execute_program(firewall_tool_iptables_s, parameters, 0, 0, (void *) &return_code);
 
@@ -217,12 +217,12 @@ extern "C" {
           }
 
           fll_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
-          fflush(main->output.to.stream);
+          f_file_stream_flush(main->output.to);
         }
 
         if (F_status_is_error_not(status) && show_mangle) {
           fll_print_format("%[==========================%] %[MANGLE%] %[==========================%]%r", main->output.to.stream, main->context.set.standout, main->context.set.standout, main->context.set.title, main->context.set.title, main->context.set.standout, main->context.set.standout, f_string_eol_s);
-          fflush(main->output.to.stream);
+          f_file_stream_flush(main->output.to);
 
           parameters_array[3] = firewall_show_mangle_s;
 
@@ -238,12 +238,12 @@ extern "C" {
           }
 
           fll_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
-          fflush(main->output.to.stream);
+          f_file_stream_flush(main->output.to);
         }
 
         if (F_status_is_error_not(status) && show_ports) {
           fll_print_format("%[==========================%] %[FILTER%] %[==========================%]%r", main->output.to.stream, main->context.set.standout, main->context.set.standout, main->context.set.title, main->context.set.title, main->context.set.standout, main->context.set.standout, f_string_eol_s);
-          fflush(main->output.to.stream);
+          f_file_stream_flush(main->output.to);
 
           parameters_array[0] = firewall_show_parameter_exact_s;
           parameters_array[1] = firewall_show_parameter_verbose_s;
@@ -263,7 +263,7 @@ extern "C" {
           }
 
           fll_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
-          fflush(main->output.to.stream);
+          f_file_stream_flush(main->output.to);
         }
 
         if (F_status_is_error(status)) {
@@ -291,7 +291,7 @@ extern "C" {
       if (F_status_is_error(status)) {
         status = F_status_set_fine(status);
 
-        if (main->error.verbosity != f_console_verbosity_quiet_e) {
+        if (main->error.verbosity > f_console_verbosity_quiet_e) {
           if (status == F_memory_not) {
             firewall_print_error_on_allocation_failure(main->error);
           }
@@ -392,7 +392,7 @@ extern "C" {
             return status;
           }
 
-          if (main->error.verbosity != f_console_verbosity_quiet_e) {
+          if (main->error.verbosity > f_console_verbosity_quiet_e) {
             fll_print_format("%r%[%QFailed to perform lock request because the lock instructions are missing from: %r.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, path_file_other, main->error.context, f_string_eol_s);
           }
 
@@ -434,7 +434,7 @@ extern "C" {
             }
           }
           else {
-            if (main->error.verbosity != f_console_verbosity_quiet_e) {
+            if (main->error.verbosity > f_console_verbosity_quiet_e) {
               fll_print_format("%r%[%QFailed to perform stop request because the lock instructions are missing from: %r.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, path_file_other, main->error.context, f_string_eol_s);
             }
 
@@ -683,16 +683,16 @@ extern "C" {
       firewall_delete_local_data(&local);
     }
     else {
-      if (main->error.verbosity != f_console_verbosity_quiet_e) {
+      if (main->error.verbosity > f_console_verbosity_quiet_e) {
         fll_print_format("%r%[%QNo command given.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context, f_string_eol_s);
       }
 
       status = F_status_set_error(F_parameter);
     }
 
-    if (main->error.verbosity != f_console_verbosity_quiet_e) {
+    if (main->error.verbosity > f_console_verbosity_quiet_e) {
       if (F_status_set_fine(status) == F_interrupt) {
-        fflush(main->output.to.stream);
+        f_file_stream_flush(main->output.to);
 
         fll_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
       }

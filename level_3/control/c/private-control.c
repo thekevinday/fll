@@ -733,7 +733,7 @@ extern "C" {
         if (F_status_is_error(status)) {
           fll_error_file_print(main->error, F_status_set_fine(status), "f_file_exists", F_true, data->cache.small, f_file_operation_find_s, fll_error_file_type_directory_e);
 
-          if (main->error.verbosity != f_console_verbosity_quiet_e) {
+          if (main->error.verbosity > f_console_verbosity_quiet_e) {
             fll_print_dynamic_raw(f_string_eol_s, main->error.to.stream);
           }
         }
@@ -802,7 +802,7 @@ extern "C" {
               if (F_status_is_error(status)) {
                 fll_error_file_print(main->error, F_status_set_fine(status), "f_file_exists", F_true, data->cache.small, f_file_operation_find_s, fll_error_file_type_directory_e);
 
-                if (main->error.verbosity != f_console_verbosity_quiet_e) {
+                if (main->error.verbosity > f_console_verbosity_quiet_e) {
                   fll_print_dynamic_raw(f_string_eol_s, main->error.to.stream);
                 }
               }

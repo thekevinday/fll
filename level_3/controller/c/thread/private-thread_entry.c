@@ -39,7 +39,7 @@ extern "C" {
       if (main->parameters.array[controller_parameter_validate_e].result == f_console_result_none_e || main->parameters.array[controller_parameter_simulate_e].result == f_console_result_found_e) {
 
         if (entry->setting->entry.pid == controller_entry_pid_require_e && f_file_exists(entry->setting->path_pid, F_true) == F_true) {
-          if (main->error.verbosity != f_console_verbosity_quiet_e) {
+          if (main->error.verbosity > f_console_verbosity_quiet_e) {
             controller_lock_print(main->error.to, entry->global->thread);
 
             fl_print_format("%r%[%QThe pid file '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
@@ -78,7 +78,7 @@ extern "C" {
               const f_status_t status_failsafe = controller_entry_process(entry->global, cache, F_true, F_true);
 
               if (F_status_is_error(status_failsafe)) {
-                if (main->error.verbosity != f_console_verbosity_quiet_e) {
+                if (main->error.verbosity > f_console_verbosity_quiet_e) {
                   controller_lock_print(main->error.to, entry->global->thread);
 
                   fl_print_format("%r%[%QFailed while processing requested failsafe item '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
@@ -193,7 +193,7 @@ extern "C" {
             const f_status_t status_failsafe = controller_entry_process(entry->global, cache, F_true, F_false);
 
             if (F_status_is_error(status_failsafe)) {
-              if (main->error.verbosity != f_console_verbosity_quiet_e) {
+              if (main->error.verbosity > f_console_verbosity_quiet_e) {
                 controller_lock_print(main->error.to, entry->global->thread);
 
                 fl_print_format("%r%[%QFailed while processing requested failsafe item '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
