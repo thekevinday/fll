@@ -89,7 +89,7 @@ extern "C" {
       if (!size) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (*used + amount > *size) {
+    if (amount && *used + amount > *size) {
       if (*used + amount > F_array_length_t_size_d) {
         return F_status_set_error(F_array_too_large);
       }
