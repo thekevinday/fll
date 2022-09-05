@@ -7,8 +7,8 @@
 build_name utf8
 
 version_major 0
-version_minor 6
-version_micro 1
+version_minor 7
+version_micro 0
 version_file micro
 version_target minor
 
@@ -26,7 +26,7 @@ build_libraries -lc -lcap
 build_sources_program fll/level_0/color.c fll/level_0/private-color.c fll/level_0/color/common.c
 build_sources_program fll/level_0/console.c fll/level_0/console/common.c
 build_sources_program fll/level_0/conversion.c fll/level_0/private-conversion.c fll/level_0/conversion/common.c
-build_sources_program fll/level_0/file.c fll/level_0/private-file.c fll/level_0/file/common.c
+build_sources_program fll/level_0/file.c fll/level_0/private-file.c fll/level_0/file/common.c fll/level_0/file/stream.c
 build_sources_program fll/level_0/memory.c fll/level_0/private-memory.c fll/level_0/memory/structure.c
 build_sources_program fll/level_0/pipe.c
 build_sources_program fll/level_0/print.c fll/level_0/private-print.c fll/level_0/print/common.c fll/level_0/print/to.c fll/level_0/print/private-to.c
@@ -43,9 +43,10 @@ build_sources_program fll/level_1/string.c fll/level_1/private-string.c
 
 build_sources_program fll/level_2/error.c fll/level_2/error/common.c fll/level_2/private-error.c
 build_sources_program fll/level_2/print.c
-build_sources_program fll/level_2/program.c fll/level_2/program/common.c fll/level_2/private-program.c
+build_sources_program fll/level_2/program.c fll/level_2/program/common.c fll/level_2/program/print.c fll/level_2/private-program.c
 
-build_sources_program program/utf8/utf8.c program/utf8/common.c program/utf8/private-common.c program/utf8/private-print.c program/utf8/private-utf8.c program/utf8/private-utf8_bytesequence.c program/utf8/private-utf8_codepoint.c
+build_sources_program program/utf8/common.c program/utf8/print.c program/utf8/utf8.c
+build_sources_program program/utf8/private-common.c program/utf8/private-utf8.c program/utf8/private-utf8_bytesequence.c program/utf8/private-utf8_codepoint.c
 
 build_sources_program program/utf8/main.c
 

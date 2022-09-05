@@ -57,8 +57,6 @@
 #define _di_f_file_access_
 #define _di_f_file_access_at_
 #define _di_f_file_clone_
-#define _di_f_file_close_
-#define _di_f_file_close_flush_
 #define _di_f_file_copy_
 #define _di_f_file_create_
 #define _di_f_file_create_at_
@@ -70,7 +68,6 @@
 #define _di_f_file_create_node_at_
 #define _di_f_file_descriptor_
 #define _di_f_file_exists_at_
-#define _di_f_file_flush_
 #define _di_f_file_group_read_
 #define _di_f_file_is_
 #define _di_f_file_is_at_
@@ -401,7 +398,6 @@
 #define _di_f_string_dynamic_append_
 #define _di_f_string_dynamic_append_assure_
 #define _di_f_string_dynamic_append_assure_nulless_
-#define _di_f_string_dynamic_append_nulless_
 #define _di_f_string_dynamic_decimate_by_
 #define _di_f_string_dynamic_decrease_by_
 #define _di_f_string_dynamic_increase_

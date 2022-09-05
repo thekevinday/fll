@@ -7,8 +7,8 @@
 build_name fake
 
 version_major 0
-version_minor 6
-version_micro 1
+version_minor 7
+version_micro 0
 version_file micro
 version_target minor
 
@@ -32,7 +32,7 @@ build_sources_program fll/level_0/conversion.c fll/level_0/private-conversion.c 
 build_sources_program fll/level_0/directory.c fll/level_0/directory/common.c fll/level_0/private-directory.c
 build_sources_program fll/level_0/environment.c
 build_sources_program fll/level_0/execute.c
-build_sources_program fll/level_0/file.c fll/level_0/private-file.c fll/level_0/file/common.c
+build_sources_program fll/level_0/file.c fll/level_0/private-file.c fll/level_0/file/common.c fll/level_0/file/stream.c
 build_sources_program fll/level_0/fss.c fll/level_0/private-fss.c fll/level_0/fss/common.c fll/level_0/fss/named.c fll/level_0/fss/nest.c fll/level_0/fss/set.c
 build_sources_program fll/level_0/iki.c fll/level_0/iki/common.c fll/level_0/iki/data.c fll/level_0/private-iki.c fll/level_0/iki/private-data.c
 build_sources_program fll/level_0/limit.c fll/level_0/limit/set.c fll/level_0/limit/value.c fll/level_0/limit/private-set.c fll/level_0/limit/private-value.c
@@ -63,7 +63,7 @@ build_sources_program fll/level_2/fss.c fll/level_2/fss/basic.c fll/level_2/fss/
 build_sources_program fll/level_2/iki.c fll/level_2/private-iki.c
 build_sources_program fll/level_2/path.c
 build_sources_program fll/level_2/print.c
-build_sources_program fll/level_2/program.c fll/level_2/program/common.c fll/level_2/private-program.c
+build_sources_program fll/level_2/program.c fll/level_2/program/common.c fll/level_2/program/print.c fll/level_2/private-program.c
 
 build_sources_program program/fake/fake.c program/fake/common.c
 build_sources_program program/fake/private-build.c program/fake/private-build-library.c program/fake/private-build-load.c program/fake/private-build-object.c program/fake/private-build-objects.c program/fake/private-build-program.c program/fake/private-build-skeleton.c

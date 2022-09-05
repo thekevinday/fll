@@ -7,10 +7,26 @@
 # Instead this provides a functional example on what commands to perform to perform the bootstrap.
 #
 # This only accepts one argument, followed by these optional arguments:
-# 1) One of "individual", "level", "monolithic", "fake-individual", "fake-level", "fake-monolithic", "programs-individual", "programs-level", or "programs-monolithic".
+# 1) One of "Modes" from below.
 # 2) Optional, may be one of: +V, +q, +n, +l, +d, --enable-shared, --enable-static, --disable-shared, --disable-static.
 # 3) Optional, may be one of: -w, --work.
 # 4) Optional, may be: clang.
+#
+# Modes:
+#   - "individual"
+#   - "level"
+#   - "monolithic"
+#   - "fake-individual"
+#   - "fake-level"
+#   - "fake-monolithic"
+#   - "fake-stand_alone"
+#   - "utf8-individual"
+#   - "utf8-level"
+#   - "utf8-monolithic"
+#   - "utf8-stand_alone"
+#   - "programs-individual"
+#   - "programs-level"
+#   - "programs-monolithic"
 #
 # The -w/--work requires the path to the work directory following it.
 # The clang parameter does not need the "-m".
@@ -29,6 +45,10 @@ shared=
 static=
 version=0.7.0
 clang=
+mode_part=
+mode_parameter=
+mode_path=
+mode_value=
 
 let i=2
 
@@ -141,19 +161,36 @@ if [[ $1 == "monolithic" ]] ; then
   ./install.sh $verbose $color $shared $static -w $path_work
 fi
 
-# The following in an example on building the Featureless Make project (fake) using the project bootstrapped from above.
-if [[ $1 == "fake-individual" || $1 == "fake-level" || $1 == "fake-monolithic" ]] ; then
-  if [[ $1 == "fake-individual" ]] ; then
-    build_mode="individual"
-  elif [[ $1 == "fake-level" ]] ; then
-    build_mode="level"
-  elif [[ $1 == "fake-monolithic" ]] ; then
-    build_mode="monolithic"
+# The following in an example on building individual projects.
+for mode_part in fake utf8 ; do
+  if [[ $1 == "$mode_part-individual" || $1 == "$mode_part-level" || $1 == "$mode_part-monolithic" || $1 == "$mode_part-stand_alone" ]] ; then
+    break;
   fi
 
-  bash build/scripts/package.sh $verbose $color rebuild -p &&
+  mode_part=
+done
 
-  cd package/program/fake-$version/ &&
+if [[ $mode_part != "" ]] ; then
+  mode_parameter="-p"
+  mode_path="program"
+  mode_value=
+
+  if [[ $1 == "$mode_part-individual" ]] ; then
+    build_mode="individual"
+  elif [[ $1 == "$mode_part-level" ]] ; then
+    build_mode="level"
+  elif [[ $1 == "$mode_part-monolithic" ]] ; then
+    build_mode="monolithic"
+  elif [[ $1 == "$mode_part-stand_alone" ]] ; then
+    build_mode="stand_alone"
+    mode_path="stand_alone"
+    mode_parameter="-S"
+    mode_value="$mode_part"
+  fi
+
+  bash build/scripts/package.sh $verbose $color rebuild $mode_parameter $mode_value &&
+
+  cd package/$mode_path/$mode_part-$version/ &&
 
   ./bootstrap.sh clean $verbose $color &&
 

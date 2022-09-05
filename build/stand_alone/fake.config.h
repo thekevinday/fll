@@ -1,11 +1,16 @@
 // A config.h file for defining all code being disabled for compiling the stand alone Featureless Make.
 // To assist in building this file use: nm --defined-only -f p programs/shared/fake | grep -oP '^(f|fl|fll)_[^\s]+
 
+#define _di_f_account_adjust_
 #define _di_f_account_by_id_
 #define _di_f_account_by_name_
+#define _di_f_account_destroy_
 #define _di_f_account_group_name_by_id_
 #define _di_f_account_name_by_id_
-#define _di_f_accounts_t_
+#define _di_f_accounts_adjust_
+#define _di_f_accounts_decimate_by_
+#define _di_f_accountss_adjust_
+#define _di_f_accountss_decimate_by_
 
 #define _di_f_array_lengths_adjust_
 #define _di_f_array_lengths_append_
@@ -117,8 +122,6 @@
 
 #define _di_f_file_access_
 #define _di_f_file_access_at_
-#define _di_f_file_close_
-#define _di_f_file_close_flush_
 #define _di_f_file_create_at_
 #define _di_f_file_create_device_
 #define _di_f_file_create_device_at_
@@ -128,7 +131,6 @@
 #define _di_f_file_create_node_at_
 #define _di_f_file_descriptor_
 #define _di_f_file_exists_at_
-#define _di_f_file_flush_
 #define _di_f_file_is_at_
 #define _di_f_file_link_at_
 #define _di_f_file_link_hard_
