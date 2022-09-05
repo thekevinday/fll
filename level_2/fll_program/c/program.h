@@ -445,9 +445,9 @@ extern "C" {
  *
  * @see f_signal_read()
  */
-#ifndef _di_fss_basic_read_signal_received_
+#ifndef _di_fll_program_standard_signal_received_
   extern f_status_t fll_program_standard_signal_received(fll_program_data_t * const main);
-#endif // _di_fss_basic_read_signal_received_
+#endif // _di_fll_program_standard_signal_received_
 
 /**
  * Standardized callback for checking for interrupts via the f_state_t interrupt callback.

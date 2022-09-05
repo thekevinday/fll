@@ -367,7 +367,7 @@ extern "C" {
 
     return private_fll_program_standard_signal_received(main);
   }
-#endif // _di_fss_basic_read_signal_received_
+#endif // _di_fll_program_standard_signal_received_
 
 #ifndef _di_fll_program_standard_signal_state_
   f_status_t fll_program_standard_signal_state(void * const state, void * const internal) {

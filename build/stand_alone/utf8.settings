@@ -43,7 +43,7 @@ build_sources_program fll/level_1/string.c fll/level_1/private-string.c
 
 build_sources_program fll/level_2/error.c fll/level_2/error/common.c fll/level_2/private-error.c
 build_sources_program fll/level_2/print.c
-build_sources_program fll/level_2/program.c fll/level_2/program/common.c
+build_sources_program fll/level_2/program.c fll/level_2/program/common.c fll/level_2/private-program.c
 
 build_sources_program program/utf8/utf8.c program/utf8/common.c program/utf8/private-common.c program/utf8/private-print.c program/utf8/private-utf8.c program/utf8/private-utf8_bytesequence.c program/utf8/private-utf8_codepoint.c
 
