@@ -63,7 +63,7 @@ build_sources_program fll/level_2/fss.c fll/level_2/fss/basic.c fll/level_2/fss/
 build_sources_program fll/level_2/iki.c fll/level_2/private-iki.c
 build_sources_program fll/level_2/path.c
 build_sources_program fll/level_2/print.c
-build_sources_program fll/level_2/program.c fll/level_2/program/common.c
+build_sources_program fll/level_2/program.c fll/level_2/program/common.c fll/level_2/private-program.c
 
 build_sources_program program/fake/fake.c program/fake/common.c
 build_sources_program program/fake/private-build.c program/fake/private-build-library.c program/fake/private-build-load.c program/fake/private-build-object.c program/fake/private-build-objects.c program/fake/private-build-program.c program/fake/private-build-skeleton.c
