@@ -9,72 +9,32 @@ extern "C" {
 #ifndef _di_iki_read_main_
   f_status_t iki_read_main(fll_program_data_t * const main, iki_read_setting_t * const setting) {
 
-    f_status_t status = F_none;
+    if (!main || !setting || F_status_is_error(setting->status)) return;
 
-    // Load parameters.
-    status = f_console_parameter_process(arguments, &main->parameters);
-    if (F_status_is_error(status)) return;
+    setting->status = F_none;
 
-    {
-      f_array_length_t choice = 0;
-      f_uint16s_t choices = f_uint16s_t_initialize;
+    if (setting->flag & iki_read_main_flag_help_e) {
+      iki_read_print_help(setting, main->message);
 
-      // Identify and prioritize "color context" parameters.
-      {
-        uint16_t choices_array[3] = { iki_read_parameter_no_color_e, iki_read_parameter_light_e, iki_read_parameter_dark_e };
-        choices.array = choices_array;
-        choices.used = 3;
-
-        const uint8_t modes[3] = { f_color_mode_color_not_e, f_color_mode_light_e, f_color_mode_dark_e };
-
-        status = fll_program_parameter_process_context(choices, modes, F_true, main);
-
-        if (F_status_is_error(status)) {
-          fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process_context", F_true);
-
-          return;
-        }
-      }
-
-      // Identify and prioritize "verbosity" parameters.
-      {
-        uint16_t choices_array[5] = { iki_read_parameter_verbosity_quiet_e, iki_read_parameter_verbosity_error_e, iki_read_parameter_verbosity_verbose_e, iki_read_parameter_verbosity_debug_e, iki_read_parameter_verbosity_normal_e };
-        choices.array = choices_array;
-        choices.used = 5;
-
-        const uint8_t verbosity[5] = { f_console_verbosity_quiet_e, f_console_verbosity_error_e, f_console_verbosity_verbose_e, f_console_verbosity_debug_e, f_console_verbosity_normal_e };
-
-        status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, main);
-
-        if (F_status_is_error(status)) {
-          fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process_verbosity", F_true);
-
-          return;
-        }
-      }
+      return;
     }
+
+    if (setting->flag & iki_read_main_flag_version_e) {
+      fll_program_print_version(main->message, iki_read_program_version_s);
+
+      return;
+    }
+
+    // ...
+    //if (main->pipe & fll_program_data_pipe_input_e) {
+
+    // XXXXXXXXXXXXXXXXXXXX
 
     iki_read_data_t data = iki_read_data_t_initialize;
     data.main = main;
     data.argv = main->parameters.arguments.array;
 
     status = F_none;
-
-    if (main->parameters.array[iki_read_parameter_help_e].result == f_console_result_found_e) {
-      iki_read_print_help(setting, main->message);
-
-      iki_read_data_delete(&data);
-
-      return F_none;
-    }
-
-    if (main->parameters.array[iki_read_parameter_version_e].result == f_console_result_found_e) {
-      fll_program_print_version(main->message, iki_read_program_version_s);
-
-      iki_read_data_delete(&data);
-
-      return F_none;
-    }
 
     if (main->parameters.remaining.used > 0 || (main->pipe & fll_program_data_pipe_input_e)) {
       if (main->parameters.array[iki_read_parameter_at_e].result == f_console_result_found_e) {

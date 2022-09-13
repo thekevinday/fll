@@ -94,36 +94,65 @@ extern "C" {
   }
 #endif // _di_iki_read_print_help_
 
-#ifndef _di_iki_read_print_line_first_
-  void iki_read_print_line_first(iki_read_setting_t * const setting, const fl_print_t print, const bool lock) {
+#ifndef _di_iki_read_print_line_first_locked_
+  f_status_t iki_read_print_line_first_locked(iki_read_setting_t * const setting, const fl_print_t print) {
 
-    if (print.verbosity == f_console_verbosity_quiet_e) return;
+    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
 
-    if (lock) {
-      fll_print_dynamic_raw(setting->line_first, print.to.stream);
+    if (!F_status_is_error(setting->status)) {
+      if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
     }
-    else {
-      f_print_dynamic_raw(setting->line_first, print.to.stream);
-    }
+
+    f_print_dynamic_raw(setting->line_first, print.to.stream);
+
+    return F_none;
   }
-#endif // _di_iki_read_print_line_first_
+#endif // _di_iki_read_print_line_first_locked_
 
-#ifndef _di_iki_read_print_line_last_
-  void iki_read_print_line_last(iki_read_setting_t * const setting, const fl_print_t print, const bool lock) {
+#ifndef _di_iki_read_print_line_first_unlocked_
+  f_status_t iki_read_print_line_first_unlocked(iki_read_setting_t * const setting, const fl_print_t print) {
 
-    if (print.verbosity == f_console_verbosity_quiet_e) return;
-    if (print.verbosity == f_console_verbosity_error_e && !F_status_is_error(setting->status)) return;
-    if (setting->flag & iki_read_main_flag_verify_e) return;
-    if ((setting->flag & iki_read_main_flag_file_to_e) && !F_status_is_error(setting->status)) return;
+    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
 
-    if (lock) {
-      fll_print_dynamic_raw(setting->line_last, print.to.stream);
+    if (!F_status_is_error(setting->status)) {
+      if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
     }
-    else {
-      f_print_dynamic_raw(setting->line_last, print.to.stream);
-    }
+
+    fll_print_dynamic_raw(setting->line_first, print.to.stream);
+
+    return F_none;
   }
-#endif // _di_iki_read_print_line_last_
+#endif // _di_iki_read_print_line_first_unlocked_
+
+#ifndef _di_iki_read_print_line_last_locked_
+  f_status_t iki_read_print_line_last_locked(iki_read_setting_t * const setting, const fl_print_t print) {
+
+    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+
+    if (!F_status_is_error(setting->status)) {
+      if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
+    }
+
+    fll_print_dynamic_raw(setting->line_last, print.to.stream);
+
+    return F_none;
+  }
+#endif // _di_iki_read_print_line_last_locked_
+
+#ifndef _di_iki_read_print_line_last_unlocked_
+  f_status_t iki_read_print_line_last_unlocked(iki_read_setting_t * const setting, const fl_print_t print) {
+
+    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+
+    if (!F_status_is_error(setting->status)) {
+      if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
+    }
+
+    f_print_dynamic_raw(setting->line_last, print.to.stream);
+
+    return F_none;
+  }
+#endif // _di_iki_read_print_line_last_unlocked_
 
 #ifdef __cplusplus
 } // extern "C"

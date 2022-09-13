@@ -168,10 +168,10 @@ extern "C" {
     }
 
     if (F_status_is_error(setting->status)) {
-      utf8_print_line_last(setting, main->error, F_true);
+      utf8_print_line_last_locked(setting, main->error);
     }
     else if (setting->status != F_interrupt) {
-      utf8_print_line_last(setting, main->message, F_true);
+      utf8_print_line_last_locked(setting, main->message);
     }
 
     if (F_status_is_error(setting->status) || setting->status == F_interrupt) return;

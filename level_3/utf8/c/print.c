@@ -111,7 +111,7 @@ extern "C" {
     if (main->error.verbosity == f_console_verbosity_quiet_e) return F_output_not;
     if (setting->flag & (utf8_main_flag_strip_invalid_e | utf8_main_flag_verify_e)) return F_output_not;
 
-    utf8_print_line_first(setting, main->error, F_false);
+    utf8_print_line_first_unlocked(setting, main->error);
 
     fl_print_format("%[%QFailed to decode character code '%]", main->error.to.stream, main->context.set.error, main->error.prefix, main->context.set.error);
 
@@ -149,7 +149,7 @@ extern "C" {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e) return F_output_not;
 
-    utf8_print_line_first(setting, main->error, F_false);
+    utf8_print_line_first_unlocked(setting, main->error);
 
     fl_print_format("%[%QFailed to encode Unicode codepoint '%]", main->error.to.stream, main->context.set.error, main->error.prefix, main->context.set.error);
     fl_print_format("%[U+%_U%]", main->error.to.stream, main->context.set.notable, codepoint, main->context.set.notable);
@@ -172,7 +172,7 @@ extern "C" {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e) return F_output_not;
 
-    utf8_print_line_first(setting, main->error, F_true);
+    utf8_print_line_first_locked(setting, main->error);
 
     fll_print_format("%[%QNo from sources are specified, please pipe data, designate a file, or add parameters.%]%r", main->error.to.stream, main->error.context, main->error.prefix, main->error.context, f_string_eol_s);
 
@@ -187,7 +187,7 @@ extern "C" {
 
     f_file_stream_lock(main->error.to);
 
-    utf8_print_line_first(setting, main->error, F_false);
+    utf8_print_line_first_unlocked(setting, main->error);
 
     fl_print_format("%[%QNo file specified at parameter index %]", main->error.to.stream, main->context.set.error, main->error.prefix, main->context.set.error);
     fl_print_format("%[%ul%]", main->error.to.stream, main->context.set.notable, index, main->context.set.notable);
@@ -206,7 +206,7 @@ extern "C" {
 
     f_file_stream_lock(main->error.to);
 
-    utf8_print_line_first(setting, main->error, F_false);
+    utf8_print_line_first_unlocked(setting, main->error);
 
     fl_print_format("%[%QFailed to find the %r file '%]", main->error.to.stream, main->context.set.error, main->error.prefix, from ? utf8_string_from_s : utf8_string_to_s, main->context.set.error);
     fl_print_format("%[%Q%]", main->error.to.stream, main->context.set.notable, name, main->context.set.notable);
@@ -223,7 +223,7 @@ extern "C" {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e) return F_output_not;
 
-    utf8_print_line_first(setting, main->error, F_true);
+    utf8_print_line_first_locked(setting, main->error);
 
     fll_print_format("%[%QToo many '%r' files specified, there may only be one '%r' file.%]%r", main->error.to.stream, main->context.set.error, main->error.prefix, utf8_string_to_s, utf8_string_to_s, main->context.set.error, f_string_eol_s);
 
@@ -309,24 +309,8 @@ extern "C" {
   }
 #endif // _di_utf8_print_help_
 
-#ifndef _di_utf8_print_line_first_
-  f_status_t utf8_print_line_first(utf8_setting_t * const setting, const fl_print_t print, const bool lock) {
-
-    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
-
-    if (lock) {
-      fll_print_dynamic_raw(setting->line_first, print.to.stream);
-    }
-    else {
-      f_print_dynamic_raw(setting->line_first, print.to.stream);
-    }
-
-    return F_none;
-  }
-#endif // _di_utf8_print_line_first_
-
-#ifndef _di_utf8_print_line_last_
-  f_status_t utf8_print_line_last(utf8_setting_t * const setting, const fl_print_t print, const bool lock) {
+#ifndef _di_utf8_print_line_first_locked_
+  f_status_t utf8_print_line_first_locked(utf8_setting_t * const setting, const fl_print_t print) {
 
     if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
 
@@ -335,16 +319,59 @@ extern "C" {
       if (setting->flag & (utf8_main_flag_verify_e | utf8_main_flag_file_to_e)) return F_output_not;
     }
 
-    if (lock) {
-      fll_print_dynamic_raw(setting->line_last, print.to.stream);
-    }
-    else {
-      f_print_dynamic_raw(setting->line_last, print.to.stream);
-    }
+    f_print_dynamic_raw(setting->line_first, print.to.stream);
 
     return F_none;
   }
-#endif // _di_utf8_print_line_last_
+#endif // _di_utf8_print_line_first_locked_
+
+#ifndef _di_utf8_print_line_first_unlocked_
+  f_status_t utf8_print_line_first_unlocked(utf8_setting_t * const setting, const fl_print_t print) {
+
+    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+
+    if (!F_status_is_error(setting->status)) {
+      if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
+      if (setting->flag & (utf8_main_flag_verify_e | utf8_main_flag_file_to_e)) return F_output_not;
+    }
+
+    fll_print_dynamic_raw(setting->line_first, print.to.stream);
+
+    return F_none;
+  }
+#endif // _di_utf8_print_line_first_unlocked_
+
+#ifndef _di_utf8_print_line_last_locked_
+  f_status_t utf8_print_line_last_locked(utf8_setting_t * const setting, const fl_print_t print) {
+
+    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+
+    if (!F_status_is_error(setting->status)) {
+      if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
+      if (setting->flag & (utf8_main_flag_verify_e | utf8_main_flag_file_to_e)) return F_output_not;
+    }
+
+    fll_print_dynamic_raw(setting->line_last, print.to.stream);
+
+    return F_none;
+  }
+#endif // _di_utf8_print_line_last_locked_
+
+#ifndef _di_utf8_print_line_last_unlocked_
+  f_status_t utf8_print_line_last_unlocked(utf8_setting_t * const setting, const fl_print_t print) {
+
+    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+
+    if (!F_status_is_error(setting->status)) {
+      if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
+      if (setting->flag & (utf8_main_flag_verify_e | utf8_main_flag_file_to_e)) return F_output_not;
+    }
+
+    f_print_dynamic_raw(setting->line_last, print.to.stream);
+
+    return F_none;
+  }
+#endif // _di_utf8_print_line_last_unlocked_
 
 #ifndef _di_utf8_print_raw_bytesequence_
   f_status_t utf8_print_raw_bytesequence(fll_program_data_t * const main, utf8_setting_t * const setting, const f_utf_char_t raw, const uint8_t width) {

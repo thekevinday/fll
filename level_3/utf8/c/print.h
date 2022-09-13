@@ -277,44 +277,84 @@ extern "C" {
  *
  * This is generally either the first line in the program or the first line printed before an error message.
  *
+ * This function locks and then unlocks the input stream when printing.
+ *
  * @param setting
  *   The main program settings.
  *   This does not alter setting.status.
  * @param print
  *   Designates the how and where to print.
- * @param lock
- *   If TRUE, then lock the stream.
- *   If FALSE, then do not lock or unlock the stream.
  *
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
  */
-#ifndef _di_utf8_print_line_first_
-  extern f_status_t utf8_print_line_first(utf8_setting_t * const setting, const fl_print_t print, const bool lock);
-#endif // _di_utf8_print_line_first_
+#ifndef _di_utf8_print_line_first_locked_
+  extern f_status_t utf8_print_line_first_locked(utf8_setting_t * const setting, const fl_print_t print);
+#endif // _di_utf8_print_line_first_locked_
+
+/**
+ * Print first new line, unless verbosity says otherwise.
+ *
+ * This is generally either the first line in the program or the first line printed before an error message.
+ *
+ * This function neither locks nor unlocks the input stream.
+ *
+ * @param setting
+ *   The main program settings.
+ *   This does not alter setting.status.
+ * @param print
+ *   Designates the how and where to print.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ */
+#ifndef _di_utf8_print_line_first_unlocked_
+  extern f_status_t utf8_print_line_first_unlocked(utf8_setting_t * const setting, const fl_print_t print);
+#endif // _di_utf8_print_line_first_unlocked_
 
 /**
  * Print last new line when the main is complete, unless verbosity says otherwise.
  *
  * This is generally the very last line printed in the program.
  *
+ * This function locks and then unlocks the input stream when printing.
+ *
  * @param setting
  *   The main program settings.
  *   This does not alter setting.status.
  * @param print
  *   Designates the how and where to print.
- * @param lock
- *   If TRUE, then lock the stream.
- *   If FALSE, then do not lock or unlock the stream.
  *
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
  */
-#ifndef _di_utf8_print_line_last_
-  extern f_status_t utf8_print_line_last(utf8_setting_t * const setting, const fl_print_t print, const bool lock);
-#endif // _di_utf8_print_line_last_
+#ifndef _di_utf8_print_line_last_locked_
+  extern f_status_t utf8_print_line_last_locked(utf8_setting_t * const setting, const fl_print_t print);
+#endif // _di_utf8_print_line_last_locked_
+
+/**
+ * Print last new line when the main is complete, unless verbosity says otherwise.
+ *
+ * This is generally the very last line printed in the program.
+ *
+ * This function neither locks nor unlocks the input stream.
+ *
+ * @param setting
+ *   The main program settings.
+ *   This does not alter setting.status.
+ * @param print
+ *   Designates the how and where to print.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ */
+#ifndef _di_utf8_print_line_last_unlocked_
+  extern f_status_t utf8_print_line_last_unlocked(utf8_setting_t * const setting, const fl_print_t print);
+#endif // _di_utf8_print_line_last_unlocked_
 
 /**
  * Print the raw character data (binary / byte sequence).

@@ -57,9 +57,9 @@ extern "C" {
     setting->status = f_console_parameter_process(arguments, &main->parameters);
 
     if (F_status_is_error(setting->status)) {
-      status_code_print_line_first(setting, main->error, F_true);
+      status_code_print_line_first_locked(setting, main->error);
       fll_error_print(main->error, F_status_set_fine(setting->status), "f_console_parameter_process", F_true);
-      status_code_print_line_last(setting, main->error, F_true);
+      status_code_print_line_last_locked(setting, main->error);
 
       return;
     }
@@ -79,9 +79,9 @@ extern "C" {
         setting->status = fll_program_parameter_process_context(choices, modes, F_true, main);
 
         if (F_status_is_error(setting->status)) {
-          status_code_print_line_first(setting, main->error, F_true);
+          status_code_print_line_first_locked(setting, main->error);
           fll_error_print(main->error, F_status_set_fine(setting->status), "fll_program_parameter_process_context", F_true);
-          status_code_print_line_last(setting, main->error, F_true);
+          status_code_print_line_last_locked(setting, main->error);
 
           return;
         }
@@ -112,9 +112,9 @@ extern "C" {
         setting->status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, main);
 
         if (F_status_is_error(setting->status)) {
-          status_code_print_line_first(setting, main->error, F_true);
+          status_code_print_line_first_locked(setting, main->error);
           fll_error_print(main->error, F_status_set_fine(setting->status), "fll_program_parameter_process_verbosity", F_true);
-          status_code_print_line_last(setting, main->error, F_true);
+          status_code_print_line_last_locked(setting, main->error);
 
           return;
         }
@@ -154,9 +154,9 @@ extern "C" {
         if (!(setting->flag & status_code_main_flag_number_e)) {
           setting->status = F_status_set_error(F_parameter);
 
-          status_code_print_line_first(setting, main->error, F_true);
+          status_code_print_line_first_locked(setting, main->error);
           status_code_print_error_cannot_error_warning_number(setting, main->error);
-          status_code_print_line_last(setting, main->error, F_true);
+          status_code_print_line_last_locked(setting, main->error);
 
           return;
         }
@@ -165,9 +165,9 @@ extern "C" {
       if (setting->flag & status_code_main_flag_fine_e) {
         setting->status = F_status_set_error(F_parameter);
 
-        status_code_print_line_first(setting, main->error, F_true);
+        status_code_print_line_first_locked(setting, main->error);
         fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_enable_s, status_code_long_error_s, status_code_long_fine_s);
-        status_code_print_line_last(setting, main->error, F_true);
+        status_code_print_line_last_locked(setting, main->error);
 
         return;
       }
@@ -175,9 +175,9 @@ extern "C" {
     else if (setting->flag & status_code_main_flag_warning_e && setting->flag & status_code_main_flag_fine_e) {
       setting->status = F_status_set_error(F_parameter);
 
-      status_code_print_line_first(setting, main->error, F_true);
+      status_code_print_line_first_locked(setting, main->error);
       fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_enable_s, status_code_long_warning_s, status_code_long_fine_s);
-      status_code_print_line_last(setting, main->error, F_true);
+      status_code_print_line_last_locked(setting, main->error);
 
       return;
     }
@@ -185,9 +185,9 @@ extern "C" {
     if (main->parameters.remaining.used == 0 && !(main->pipe & fll_program_data_pipe_input_e)) {
       setting->status = F_status_set_error(F_parameter);
 
-      status_code_print_line_first(setting, main->error, F_true);
+      status_code_print_line_first_locked(setting, main->error);
       status_code_print_error_no_status_codes(setting, main->error);
-      status_code_print_line_last(setting, main->error, F_true);
+      status_code_print_line_last_locked(setting, main->error);
 
       return;
     }

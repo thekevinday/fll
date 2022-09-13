@@ -5,6 +5,21 @@
 extern "C" {
 #endif
 
+#ifndef _di_fll_program_print_error_missing_file_
+  f_status_t fll_program_print_error_missing_file(const fl_print_t print) {
+
+    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+
+    f_file_stream_lock(print.to);
+
+    fl_print_format("%[%QNo files are specified.%]%r", print.to.stream, print.set->error, print.prefix, print.set->error, f_string_eol_s);
+
+    f_file_stream_unlock(print.to);
+
+    return F_none;
+  }
+#endif // _di_fll_program_print_error_missing_file_
+
 #ifndef _di_fll_program_print_error_missing_variable_not_zero_
   f_status_t fll_program_print_error_missing_variable_not_zero(const fl_print_t print, const f_string_static_t variable) {
 
@@ -68,6 +83,10 @@ extern "C" {
     if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
 
     f_file_stream_lock(print.to);
+
+    fl_print_format("%[%QThe parameter %]", print.to.stream, print.set->error, print.prefix, print.set->error);
+    fl_print_format("%[%Q%Q%]", print.to.stream, print.set->notable, symbol, parameter, print.set->notable);
+    fl_print_format("%[ is specified, but no value is given.%]%r", print.to.stream, print.set->error, print.set->error, f_string_eol_s);
 
     f_file_stream_unlock(print.to);
 

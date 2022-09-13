@@ -45,36 +45,73 @@ extern "C" {
   }
 #endif // _di_control_print_help_
 
-#ifndef _di_control_print_line_first_
-  void control_print_line_first(control_setting_t * const setting, const fl_print_t print, const bool lock) {
+#ifndef _di_control_print_line_first_locked_
+  f_status_t control_print_line_first_locked(control_setting_t * const setting, const fl_print_t print) {
 
-    if (print.verbosity == f_console_verbosity_quiet_e) return;
-
-    if (lock) {
-      fll_print_dynamic_raw(setting->line_first, print.to.stream);
-    }
-    else {
-      f_print_dynamic_raw(setting->line_first, print.to.stream);
-    }
-  }
-#endif // _di_control_print_line_first_
-
-#ifndef _di_control_print_line_last_
-  void control_print_line_last(control_setting_t * const setting, const fl_print_t print, const bool lock) {
-
-    if (print.verbosity == f_console_verbosity_quiet_e) return;
-    if (print.verbosity == f_console_verbosity_error_e && !F_status_is_error(setting->status)) return;
+    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
     if (setting->flag & control_main_flag_verify_e) return;
-    if ((setting->flag & control_main_flag_file_to_e) && !F_status_is_error(setting->status)) return;
 
-    if (lock) {
-      fll_print_dynamic_raw(setting->line_last, print.to.stream);
+    if (!F_status_is_error(setting->status)) {
+      if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
+      if (setting->flag & control_main_flag_file_to_e) return F_output_not;
     }
-    else {
-      f_print_dynamic_raw(setting->line_last, print.to.stream);
-    }
+
+    f_print_dynamic_raw(setting->line_first, print.to.stream);
+
+    return F_none;
   }
-#endif // _di_control_print_line_last_
+#endif // _di_control_print_line_first_locked_
+
+#ifndef _di_control_print_line_first_unlocked_
+  f_status_t control_print_line_first_unlocked(control_setting_t * const setting, const fl_print_t print) {
+
+    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+    if (setting->flag & control_main_flag_verify_e) return;
+
+    if (!F_status_is_error(setting->status)) {
+      if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
+      if (setting->flag & control_main_flag_file_to_e) return F_output_not;
+    }
+
+    fll_print_dynamic_raw(setting->line_first, print.to.stream);
+
+    return F_none;
+  }
+#endif // _di_control_print_line_first_unlocked_
+
+#ifndef _di_control_print_line_last_locked_
+  f_status_t control_print_line_last_locked(control_setting_t * const setting, const fl_print_t print) {
+
+    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+    if (setting->flag & control_main_flag_verify_e) return;
+
+    if (!F_status_is_error(setting->status)) {
+      if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
+      if (setting->flag & control_main_flag_file_to_e) return F_output_not;
+    }
+
+    fll_print_dynamic_raw(setting->line_last, print.to.stream);
+
+    return F_none;
+  }
+#endif // _di_control_print_line_last_locked_
+
+#ifndef _di_control_print_line_last_unlocked_
+  f_status_t control_print_line_last_unlocked(control_setting_t * const setting, const fl_print_t print) {
+
+    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+    if (setting->flag & control_main_flag_verify_e) return;
+
+    if (!F_status_is_error(setting->status)) {
+      if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
+      if (setting->flag & control_main_flag_file_to_e) return F_output_not;
+    }
+
+    f_print_dynamic_raw(setting->line_last, print.to.stream);
+
+    return F_none;
+  }
+#endif // _di_control_print_line_last_unlocked_
 
 #ifdef __cplusplus
 } // extern "C"

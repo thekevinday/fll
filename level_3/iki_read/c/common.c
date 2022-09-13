@@ -80,8 +80,9 @@ extern "C" {
         setting->status = fll_program_parameter_process_context(choices, modes, F_true, main);
 
         if (F_status_is_error(setting->status)) {
-          iki_read_print_line_first(setting, main->error, F_true);
+          iki_read_print_line_first_locked(setting, main->error);
           fll_error_print(main->error, F_status_set_fine(setting->status), "fll_program_parameter_process_context", F_true);
+          iki_read_print_line_last_locked(setting, main->error);
 
           return;
         }
@@ -112,8 +113,9 @@ extern "C" {
         setting->status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, main);
 
         if (F_status_is_error(setting->status)) {
-          iki_read_print_line_first(setting, main->error, F_true);
+          iki_read_print_line_first_locked(setting, main->error);
           fll_error_print(main->error, F_status_set_fine(setting->status), "fll_program_parameter_process_verbosity", F_true);
+          iki_read_print_line_last_locked(setting, main->error);
 
           return;
         }
@@ -134,9 +136,19 @@ extern "C" {
 
     f_string_static_t * const args = main->parameters.arguments.array;
 
-    if (main->parameters.array[iki_read_parameter_strip_invalid_e].result == f_console_result_found_e) {
-      setting->flag |= iki_read_main_flag_strip_invalid_e;
+    if (!(main->parameters.remaining.used || (main->pipe & fll_program_data_pipe_input_e)) {
+      setting->status = F_status_set_error(F_parameter);
+
+      iki_read_print_line_first_locked(setting, main->error);
+      fll_program_print_error_missing_file(main->error);
+      iki_read_print_line_last_locked(setting, main->error);
+
+      return;
     }
+
+    //if (main->parameters.array[iki_read_parameter_strip_invalid_e].result == f_console_result_found_e) {
+    //  setting->flag |= iki_read_main_flag_strip_invalid_e;
+    //}
   }
 #endif // _di_iki_read_setting_load_
 

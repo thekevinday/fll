@@ -8,7 +8,7 @@ extern "C" {
 #endif
 
 #ifndef _di_iki_read_process_at_
-  f_status_t iki_read_process_at(fll_program_data_t * const main, status_code_setting_t * const setting, iki_read_data_t * const data, f_string_range_t *range) {
+  f_status_t iki_read_process_at(fll_program_data_t * const main, iki_read_setting_t * const setting, iki_read_data_t * const data, f_string_range_t *range) {
 
     if (data->main->parameters.array[iki_read_parameter_line_e].result != f_console_result_additional_e) {
       return F_false;

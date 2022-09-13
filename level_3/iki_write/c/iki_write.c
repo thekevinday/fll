@@ -61,9 +61,9 @@ extern "C" {
           if (F_status_is_error(status)) {
             setting->status = F_status_set_error(F_pipe);
 
-            iki_write_print_line_first(setting, main->error, F_true);
+            iki_write_print_line_first_locked(setting, main->error);
             fll_error_file_print(main->error, F_status_set_fine(setting->status), "f_file_read", F_true, f_string_ascii_minus_s, f_file_operation_read_s, fll_error_file_type_pipe_e);
-            iki_write_print_line_last(setting, main->error, F_true);
+            iki_write_print_line_last_locked(setting, main->error);
 
             return;
           }
@@ -71,9 +71,9 @@ extern "C" {
           if (!setting->buffer.used) {
             setting->status = F_status_set_error(F_parameter);
 
-            iki_write_print_line_first(setting, main->error, F_true);
+            iki_write_print_line_first_locked(setting, main->error);
             fll_program_print_error_pipe_missing_content(main->error);
-            iki_write_print_line_last(setting, main->error, F_true);
+            iki_write_print_line_last_locked(setting, main->error);
 
             return;
           }
@@ -89,9 +89,9 @@ extern "C" {
         }
 
         if (F_status_is_error(setting->status)) {
-          iki_write_print_line_first(setting, main->error, F_true);
+          iki_write_print_line_first_locked(setting, main->error);
           fll_error_print(main->error, F_status_set_fine(setting->status), "f_string_dynamic_seek_to", F_true);
-          iki_write_print_line_last(setting, main->error, F_true);
+          iki_write_print_line_last_locked(setting, main->error);
 
           return;
         }
@@ -99,9 +99,9 @@ extern "C" {
         if (object_ended && previous == range.start) {
           setting->status = F_status_set_error(F_parameter);
 
-          iki_write_print_line_first(setting, main->error, F_true);
+          iki_write_print_line_first_locked(setting, main->error);
           fll_program_print_error_pipe_invalid_form_feed(main->error);
-          iki_write_print_line_last(setting, main->error, F_true);
+          iki_write_print_line_last_locked(setting, main->error);
 
           return;
         }
@@ -116,9 +116,9 @@ extern "C" {
             setting->status = f_string_dynamic_partial_append_nulless(setting->buffer, range, &setting->content);
 
             if (F_status_is_error(setting->status)) {
-              iki_write_print_line_first(setting, main->error, F_true);
+              iki_write_print_line_first_locked(setting, main->error);
               fll_error_print(main->error, F_status_set_fine(setting->status), "f_string_dynamic_partial_append_nulless", F_true);
-              iki_write_print_line_last(setting, main->error, F_true);
+              iki_write_print_line_last_locked(setting, main->error);
 
               return;
             }
@@ -137,9 +137,9 @@ extern "C" {
           setting->status = f_string_dynamic_partial_append_nulless(setting->buffer, range, &setting->object);
 
           if (F_status_is_error(setting->status)) {
-            iki_write_print_line_first(setting, main->error, F_true);
+            iki_write_print_line_first_locked(setting, main->error);
             fll_error_print(main->error, F_status_set_fine(setting->status), "f_string_dynamic_partial_append_nulless", F_true);
-            iki_write_print_line_last(setting, main->error, F_true);
+            iki_write_print_line_last_locked(setting, main->error);
 
             return;
           }
@@ -162,9 +162,9 @@ extern "C" {
       if (object_ended) {
         setting->status = F_status_set_error(F_parameter);
 
-        iki_write_print_line_first(setting, main->error, F_true);
+        iki_write_print_line_first_locked(setting, main->error);
         fll_program_print_error_pipe_object_without_content(main->error);
-        iki_write_print_line_last(setting, main->error, F_true);
+        iki_write_print_line_last_locked(setting, main->error);
 
         return;
       }
@@ -189,7 +189,7 @@ extern "C" {
     } // for
 
     // Ensure a new line is always put at the end of the program execution, unless in quiet mode.
-    iki_write_print_line_last(setting, main->message, F_true);
+    iki_write_print_line_last_locked(setting, main->message);
   }
 #endif // _di_iki_write_main_
 

@@ -17,6 +17,28 @@ extern "C" {
 #endif
 
 /**
+ * Print an error message when a file is not provided.
+ *
+ * This is only printed when verbosity is not set to quiet.
+ *
+ * This uses the following:
+ *   - print.set->error: For the error context.
+ *   - print.set->strong: For the highlighting context
+ *   - print.prefix: For the prefixing a string to the message (such as "ERROR:").
+ *
+ * @param print
+ *   The output structure.
+ *   This locks, uses, and unlocks the file stream.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ */
+#ifndef _di_fll_program_print_error_missing_file_
+  extern f_status_t fll_program_print_error_missing_file(const fl_print_t print);
+#endif // _di_fll_program_print_error_missing_file_
+
+/**
  * Print an error message a variable not being defined or the variable has a length is 0.
  *
  * This is only printed when verbosity is not set to quiet.

@@ -125,10 +125,10 @@ extern "C" {
     }
 
     if (F_status_is_error(setting->status)) {
-      fss_status_code_print_line_last(setting, main->error, F_true);
+      fss_status_code_print_line_last_locked(setting, main->error);
     }
     else if (setting->status != F_interrupt) {
-      fss_status_code_print_line_last(setting, main->message, F_true);
+      fss_status_code_print_line_last_locked(setting, main->message);
     }
   }
 #endif // _di_fss_status_code_main_
