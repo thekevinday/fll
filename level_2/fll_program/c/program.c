@@ -514,8 +514,6 @@ extern "C" {
     }
 
     // Unblock all other signals.
-    sigset_t set;
-
     memset(&main->signal.set, 0, sizeof(sigset_t));
 
     f_signal_set_fill(&main->signal.set);
