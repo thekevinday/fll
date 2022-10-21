@@ -47,6 +47,9 @@ extern "C" {
     fll_program_print_help_option_other(print, fake_other_operation_make_s, "    Build or compile the code based on fakefile (default).");
     fll_program_print_help_option_other(print, fake_other_operation_skeleton_s, "Build a skeleton directory structure.");
 
+    f_print_dynamic_raw(f_string_eol_s, print.to.stream);
+    f_print_dynamic_raw(f_string_eol_s, print.to.stream);
+
     fll_program_print_help_usage(print, fake_program_name_s, fake_program_help_parameters_s);
 
     fl_print_format("%r  When performing the %[%r%] operation, the", print.to.stream, f_string_eol_s, print.set->notable, fake_other_operation_build_s, print.set->notable);

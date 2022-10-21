@@ -33,6 +33,9 @@ extern "C" {
     fll_program_print_help_option(print, fss_basic_list_read_short_total_s, fss_basic_list_read_long_total_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Print the total number of lines.");
     fll_program_print_help_option(print, fss_basic_list_read_short_trim_s, fss_basic_list_read_long_trim_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "    Trim Object names on select or print.");
 
+    f_print_dynamic_raw(f_string_eol_s, print.to.stream);
+    f_print_dynamic_raw(f_string_eol_s, print.to.stream);
+
     fll_program_print_help_usage(print, fss_basic_list_read_program_name_s, fll_program_parameter_filenames_s);
 
     fl_print_format("%r %[Notes:%]%r", print.to.stream, f_string_eol_s, print.set->important, print.set->important, f_string_eol_s);

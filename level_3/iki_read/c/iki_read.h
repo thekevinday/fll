@@ -52,6 +52,7 @@
 
 // IKI Read includes.
 #include <program/iki_read/common.h>
+#include <program/iki_read/print.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -80,9 +81,10 @@ extern "C" {
  *     F_interrupt on (exit) signal received.
  *
  *     F_parameter (with error bit) if main is NULL or setting is NULL.
+ *     F_failure (with error bit) for any other failure.
  */
 #ifndef _di_iki_read_main_
-  extern f_status_t iki_read_main(fll_program_data_t * const main, iki_read_setting_t * const setting);
+  extern void iki_read_main(fll_program_data_t * const main, iki_read_setting_t * const setting);
 #endif // _di_iki_read_main_
 
 #ifdef __cplusplus

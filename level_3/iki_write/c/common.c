@@ -148,18 +148,16 @@ extern "C" {
         return;
       }
 
-      f_string_static_t * const args = main->parameters.arguments.array;
-
       const f_array_length_t index = main->parameters.array[iki_write_parameter_file_e].values.array[0];
 
       main->output.to.id = -1;
       main->output.to.stream = 0;
 
-      setting->status = f_file_stream_open(args[index], f_string_empty_s, &main->output.to);
+      setting->status = f_file_stream_open(main->parameters.arguments.array[index], f_string_empty_s, &main->output.to);
 
       if (F_status_is_error(setting->status)) {
         iki_write_print_line_first_locked(setting, main->error);
-        fll_error_file_print(main->error, F_status_set_fine(setting->status), "f_file_stream_open", F_true, args[index], f_file_operation_open_s, fll_error_file_type_file_e);
+        fll_error_file_print(main->error, F_status_set_fine(setting->status), "f_file_stream_open", F_true, main->parameters.arguments.array[index], f_file_operation_open_s, fll_error_file_type_file_e);
         iki_write_print_line_last_locked(setting, main->error);
 
         return;

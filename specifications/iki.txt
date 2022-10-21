@@ -12,9 +12,9 @@
 IKI Specifications:
   IKI is a minimally structured WIKI-like syntax meant to be simpler than WIKI syntax.
 
-  The IKI syntax provides a vocabulary name (with specific context associated with it) followed by quoted code that is associated with the given vocabulary name.
+  The IKI syntax provides a vocabulary name (with specific context associated with it) followed by quoted value that is associated with the given vocabulary name.
   The vocabulary represents a list of allowed variable names that may also have specific contextual meaning defined by a given IKI specification.
-  The variable name is considered the emphasis:"Object".
+  The variable name is considered the emphasis:"Object" and is also considered the vocabulary.
   The variable value is considered the emphasis:"Content".
 
   The IKI format will use code:"iki-0000" to represent an IKI with no explicitly defined vocabulary.
@@ -61,12 +61,12 @@ IKI Specifications:
 
     The following emphasis\:"is escaped to not be treated as IKI data".'
 
-  Objects would be\:
+  Objects (also called vocabulary or variable name) would be\:
     1) emphasis
     2) url
     3) code
 
-  Contents would be\:
+  Contents (also called variable value) would be\:
     1.1) emphasize some text
     2.1) http://www.example.com/url with space/
     3.1) const char *string = "My \"quoted\" C string.";

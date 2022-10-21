@@ -23,6 +23,9 @@ extern "C" {
     fll_program_print_help_option(print, control_short_settings_s, control_long_settings_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Specify a directory path or a full path to the control settings file.");
     fll_program_print_help_option(print, control_short_socket_s, control_long_socket_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "  Specify a directory path or a full path to the controller socket file.");
 
+    f_print_dynamic_raw(f_string_eol_s, print.to.stream);
+    f_print_dynamic_raw(f_string_eol_s, print.to.stream);
+
     fll_program_print_help_usage(print, control_program_name_s, control_action_s);
 
     fl_print_format("%r  When the %[%r%r%] parameter represents a directory path then the file name is generated from either the", print.to.stream, f_string_eol_s, print.set->notable, f_console_symbol_long_enable_s, control_long_socket_s, print.set->notable);

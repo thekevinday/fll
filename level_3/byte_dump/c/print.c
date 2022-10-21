@@ -47,6 +47,9 @@ extern "C" {
     fll_program_print_help_option_long(print.to, context, byte_dump_long_simple_s, f_console_symbol_long_enable_s, " Display spaces for ASCII control codes.");
     fll_program_print_help_option_long(print.to, context, byte_dump_long_classic_s, f_console_symbol_long_enable_s, "Display periods for ASCII control codes.");
 
+    f_print_dynamic_raw(f_string_eol_s, print.to.stream);
+    f_print_dynamic_raw(f_string_eol_s, print.to.stream);
+
     fll_program_print_help_usage(print, byte_dump_program_name_s, fll_program_parameter_filenames_s);
 
     //if (!(setting->flag & XXX_main_flag_line_last_no_e)) {

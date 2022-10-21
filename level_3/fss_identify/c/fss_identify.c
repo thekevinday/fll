@@ -98,14 +98,14 @@ extern "C" {
     if (F_status_is_error_not(status) && main->parameters.array[fss_identify_parameter_total_e].result == f_console_result_found_e) {
       if (main->parameters.array[fss_identify_parameter_object_e].result == f_console_result_found_e) {
         if (main->error.verbosity > f_console_verbosity_quiet_e) {
-          fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_enable_s, fss_identify_long_object_s, fss_identify_long_total_s);
+          fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_enable_s, f_console_symbol_long_enable_s, fss_identify_long_object_s, fss_identify_long_total_s);
         }
 
         status = F_status_set_error(F_parameter);
       }
       else if (main->parameters.array[fss_identify_parameter_content_e].result == f_console_result_found_e) {
         if (main->error.verbosity > f_console_verbosity_quiet_e) {
-          fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_enable_s, fss_identify_long_content_s, fss_identify_long_total_s);
+          fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_enable_s, f_console_symbol_long_enable_s, f_console_symbol_long_enable_s, fss_identify_long_content_s, fss_identify_long_total_s);
         }
 
         status = F_status_set_error(F_parameter);

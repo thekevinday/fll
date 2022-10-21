@@ -59,16 +59,16 @@ extern "C" {
 #endif // _di_fll_program_print_error_parameter_both_specified_same_amount_
 
 #ifndef _di_fll_program_print_error_parameter_cannot_use_with_
-  f_status_t fll_program_print_error_parameter_cannot_use_with(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t first, const f_string_static_t second) {
+  f_status_t fll_program_print_error_parameter_cannot_use_with(const fl_print_t print, const f_string_static_t symbol_first, const f_string_static_t symbol_second, const f_string_static_t first, const f_string_static_t second) {
 
     if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
 
     f_file_stream_lock(print.to);
 
     fl_print_format("%[%QCannot specify the '%]", print.to.stream, print.set->error, print.prefix, print.set->error);
-    fl_print_format("%[%Q%Q%]", print.to.stream, print.set->notable, symbol, first, print.set->notable);
+    fl_print_format("%[%Q%Q%]", print.to.stream, print.set->notable, symbol_first, first, print.set->notable);
     fl_print_format("%[' parameter with the '%]", print.to.stream, print.set->error, print.set->error);
-    fl_print_format("%[%Q%Q%]", print.to.stream, print.set->notable, symbol, second, print.set->notable);
+    fl_print_format("%[%Q%Q%]", print.to.stream, print.set->notable, symbol_second, second, print.set->notable);
     fl_print_format("%[' parameter.%]%r", print.to.stream, print.set->error, print.set->error, f_string_eol_s);
 
     f_file_stream_unlock(print.to);
@@ -76,6 +76,63 @@ extern "C" {
     return F_none;
   }
 #endif // _di_fll_program_print_error_parameter_cannot_use_with_
+
+#ifndef _di_fll_program_print_error_parameter_integer_not_
+  f_status_t fll_program_print_error_parameter_integer_not(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t parameter, const f_string_static_t value) {
+
+    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+
+    f_file_stream_lock(print.to);
+
+    fl_print_format("%[%QThe value '%]", print.to.stream, print.set->error, print.prefix, print.set->error);
+    fl_print_format("%[%Q%]", print.to.stream, print.set->notable, value, print.set->notable);
+    fl_print_format("%[' for the parameter '%]", print.to.stream, print.set->error, print.set->error);
+    fl_print_format("%[%Q%Q%]", print.to.stream, print.set->notable, symbol, parameter, print.set->notable);
+    fl_print_format("%[' is not a valid integer.%]%r", print.to.stream, print.set->error, print.set->error, f_string_eol_s);
+
+    f_file_stream_unlock(print.to);
+
+    return F_none;
+  }
+#endif // _di_fll_program_print_error_parameter_integer_not_
+
+#ifndef _di_fll_program_print_error_parameter_integer_not_negative_
+  f_status_t fll_program_print_error_parameter_integer_not_negative(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t parameter, const f_string_static_t value) {
+
+    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+
+    f_file_stream_lock(print.to);
+
+    fl_print_format("%[%QThe value '%]", print.to.stream, print.set->error, print.prefix, print.set->error);
+    fl_print_format("%[%Q%]", print.to.stream, print.set->notable, value, print.set->notable);
+    fl_print_format("%[' for the parameter '%]", print.to.stream, print.set->error, print.set->error);
+    fl_print_format("%[%Q%Q%]", print.to.stream, print.set->notable, symbol, parameter, print.set->notable);
+    fl_print_format("%[' is not a valid negative integer.%]%r", print.to.stream, print.set->error, print.set->error, f_string_eol_s);
+
+    f_file_stream_unlock(print.to);
+
+    return F_none;
+  }
+#endif // _di_fll_program_print_error_parameter_integer_not_negative_
+
+#ifndef _di_fll_program_print_error_parameter_integer_not_positive_
+  f_status_t fll_program_print_error_parameter_integer_not_positive(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t parameter, const f_string_static_t value) {
+
+    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+
+    f_file_stream_lock(print.to);
+
+    fl_print_format("%[%QThe value '%]", print.to.stream, print.set->error, print.prefix, print.set->error);
+    fl_print_format("%[%Q%]", print.to.stream, print.set->notable, value, print.set->notable);
+    fl_print_format("%[' for the parameter '%]", print.to.stream, print.set->error, print.set->error);
+    fl_print_format("%[%Q%Q%]", print.to.stream, print.set->notable, symbol, parameter, print.set->notable);
+    fl_print_format("%[' is not a valid positive integer.%]%r", print.to.stream, print.set->error, print.set->error, f_string_eol_s);
+
+    f_file_stream_unlock(print.to);
+
+    return F_none;
+  }
+#endif // _di_fll_program_print_error_parameter_integer_not_positive_
 
 #ifndef _di_fll_program_print_error_parameter_missing_value_
   f_status_t fll_program_print_error_parameter_missing_value(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t parameter) {
@@ -86,13 +143,32 @@ extern "C" {
 
     fl_print_format("%[%QThe parameter %]", print.to.stream, print.set->error, print.prefix, print.set->error);
     fl_print_format("%[%Q%Q%]", print.to.stream, print.set->notable, symbol, parameter, print.set->notable);
-    fl_print_format("%[ is specified, but no value is given.%]%r", print.to.stream, print.set->error, print.set->error, f_string_eol_s);
+    fl_print_format(" %[is specified, but no value is given.%]%r", print.to.stream, print.set->error, print.set->error, f_string_eol_s);
 
     f_file_stream_unlock(print.to);
 
     return F_none;
   }
 #endif // _di_fll_program_print_error_parameter_missing_value_
+
+#ifndef _di_fll_program_print_error_parameter_missing_value_requires_amount_
+  f_status_t fll_program_print_error_parameter_missing_value_requires_amount(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t parameter, const f_string_static_t amount) {
+
+    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+
+    f_file_stream_lock(print.to);
+
+    fl_print_format("%[%QThe parameter %]", print.to.stream, print.set->error, print.prefix, print.set->error);
+    fl_print_format("%[%Q%Q%]", print.to.stream, print.set->notable, symbol, parameter, print.set->notable);
+    fl_print_format("%[ is specified, but %]", print.to.stream, print.set->error, print.set->error);
+    fl_print_format("%[%Q%]", print.to.stream, print.set->notable, amount, print.set->notable);
+    fl_print_format(" %[values are not given.%]%r", print.to.stream, print.set->error, print.set->error, f_string_eol_s);
+
+    f_file_stream_unlock(print.to);
+
+    return F_none;
+  }
+#endif // _di_fll_program_print_error_parameter_missing_value_requires_amount_
 
 #ifndef _di_fll_program_print_error_parameter_must_specify_once_
   f_status_t fll_program_print_error_parameter_must_specify_once(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t parameter) {

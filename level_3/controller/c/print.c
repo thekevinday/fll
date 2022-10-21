@@ -29,6 +29,9 @@ extern "C" {
     fll_program_print_help_option(print, controller_short_uninterruptible_s, controller_long_uninterruptible_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Designate that this program cannot be interrupted by a signal.");
     fll_program_print_help_option(print, controller_short_validate_s, controller_long_validate_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       Validate the settings (entry and rules) without running (does not simulate).");
 
+    f_print_dynamic_raw(f_string_eol_s, print.to.stream);
+    f_print_dynamic_raw(f_string_eol_s, print.to.stream);
+
     fll_program_print_help_usage(print, *main->program_name, controller_entry_s);
 
     fl_print_format("%r  When both the %[%r%r%] parameter and the", print.to.stream, f_string_eol_s, print.set->notable, f_console_symbol_long_enable_s, controller_long_simulate_s, print.set->notable);

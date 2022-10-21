@@ -24,6 +24,8 @@ extern "C" {
  * Historically, a "-" is used as a parameter.
  * To be consistent with the historical use, "-" is referred to as "enable" and "+" is referred to as disable (which is the opposite of the usual mathematical interpetation of those symbols).
  *
+ * @todo consider renaming "-" and "--" from "enable" to "normal" and "+" and "++" from "disable" to "inverse".
+ *
  * f_console_*:
  *   - none:                A basic parameter without any prefixes attached.
  *   - short_enable:        An "enable" short parameter: "-".

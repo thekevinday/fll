@@ -285,8 +285,6 @@ extern "C" {
       }
     }
 
-    f_string_static_t * const args = main->parameters.arguments.array;
-
     if (main->parameters.array[utf8_parameter_to_file_e].result == f_console_result_additional_e) {
       if (main->parameters.array[utf8_parameter_to_file_e].values.used > 1) {
         setting->status = F_status_set_error(F_parameter);
@@ -297,7 +295,7 @@ extern "C" {
         return;
       }
 
-      if (args[main->parameters.array[utf8_parameter_to_file_e].values.array[0]].used) {
+      if (main->parameters.arguments.array[main->parameters.array[utf8_parameter_to_file_e].values.array[0]].used) {
         setting->path_files_to.used = 0;
 
         setting->status = f_string_dynamics_increase_by(1, &setting->path_files_to);
@@ -324,11 +322,11 @@ extern "C" {
 
         ++setting->path_files_to.used;
 
-        setting->status = f_file_stream_open(args[main->parameters.array[utf8_parameter_to_file_e].values.array[0]], f_file_open_mode_append_s, &main->output.to);
+        setting->status = f_file_stream_open(main->parameters.arguments.array[main->parameters.array[utf8_parameter_to_file_e].values.array[0]], f_file_open_mode_append_s, &main->output.to);
 
         if (F_status_is_error(setting->status)) {
           utf8_print_line_first_locked(setting, main->error);
-          fll_error_file_print(main->error, F_status_set_fine(setting->status), "f_file_stream_open", F_true, args[main->parameters.array[utf8_parameter_to_file_e].values.array[0]], f_file_operation_open_s, fll_error_file_type_file_e);
+          fll_error_file_print(main->error, F_status_set_fine(setting->status), "f_file_stream_open", F_true, main->parameters.arguments.array[main->parameters.array[utf8_parameter_to_file_e].values.array[0]], f_file_operation_open_s, fll_error_file_type_file_e);
           utf8_print_line_last_locked(setting, main->error);
 
           return;
@@ -395,9 +393,9 @@ extern "C" {
           break;
         }
 
-        if (args[index].used) {
-          if (f_file_exists(args[index], F_true) != F_true) {
-            utf8_print_error_parameter_file_not_found(main, setting, F_true, args[index]);
+        if (main->parameters.arguments.array[index].used) {
+          if (f_file_exists(main->parameters.arguments.array[index], F_true) != F_true) {
+            utf8_print_error_parameter_file_not_found(main, setting, F_true, main->parameters.arguments.array[index]);
 
             if (F_status_is_error_not(setting->status)) {
               setting->status = F_status_set_error(F_file_found_not);

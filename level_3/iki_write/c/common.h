@@ -252,6 +252,7 @@ extern "C" {
  *
  * @param setting
  *   The program main setting data.
+ *
  *   This does not alter setting.status.
  *
  * @return
@@ -281,10 +282,16 @@ extern "C" {
  *     F_none on success.
  *
  *     Errors (with error bit) from: f_console_parameter_process().
+ *     Errors (with error bit) from: f_file_stream_open().
+ *     Errors (with error bit) from: f_string_dynamics_resize().
  *     Errors (with error bit) from: fll_program_parameter_process_context().
+ *     Errors (with error bit) from: fll_program_parameter_process_verbosity().
  *
  * @see f_console_parameter_process()
+ * @see f_file_stream_open()
+ * @see f_string_dynamics_resize()
  * @see fll_program_parameter_process_context()
+ * @see fll_program_parameter_process_verbosity()
  */
 #ifndef _di_iki_write_setting_load_
   extern void iki_write_setting_load(const f_console_arguments_t arguments, fll_program_data_t * const main, iki_write_setting_t * const setting);
@@ -297,8 +304,9 @@ extern "C" {
  *   The main program data.
  * @param setting
  *   The main program settings.
- *   This does not alter setting.status.
  *   All buffers are deallocated.
+ *
+ *   This does not alter setting.status.
  *
  * @return
  *   F_none on success.

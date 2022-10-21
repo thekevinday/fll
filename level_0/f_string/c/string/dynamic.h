@@ -22,7 +22,9 @@ extern "C" {
  * Save the string size along with the string, so that strlen(..) commands can be avoided as much as possible.
  *
  * This is a sub-type of f_string_static_t, allowing it to be passed into any f_string_static_t type.
- * It is recommended that f_string_static_t are not otherwise casted into f_string_dynamic_t to avoid potential memory allocation issues.
+ *
+ * The size should only be set to 0 when the string is not allocated (and therefore deallocation attempts must not be made).
+ * This is necessary for the cases where f_string_static_t is used as a f_string_dynamic_t.
  *
  * string: The string.
  * size:   Total amount of allocated space.

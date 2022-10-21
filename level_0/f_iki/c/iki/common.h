@@ -107,252 +107,35 @@ extern "C" {
 #endif // _di_f_iki_vocabulary_0002_
 
 /**
- * Designate an iki delimit location.
- */
-#ifndef _di_f_iki_delimit_t_
-  typedef f_array_length_t f_iki_delimit_t;
-
-  #define f_iki_delimit_t_initialize f_array_length_t_initialize
-
-  #define macro_f_iki_delimits_t_initialize(array, size, used) macro_f_array_lengths_t_initialize(array, size, used)
-#endif // _di_f_iki_delimit_t_
-
-/**
- * An array of f_iki_delimit_t.
- *
- * array: The array of iki quote.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
- */
-#ifndef _di_f_iki_delimits_t_
-  typedef f_array_lengths_t f_iki_delimits_t;
-
-  #define f_iki_delimits_t_initialize f_array_lengths_t_initialize
-
-  #define macro_f_iki_delimits_t_initialize(array, size, used) macro_f_array_lengths_t_initialize(array, size, used)
-  #define macro_f_iki_delimits_t_initialize2(array, length) macro_f_array_lengths_t_initialize2(array, length)
-
-  #define macro_f_iki_delimits_t_clear(delimits) macro_f_array_lengths_t_clear(delimits)
-
-  #define macro_f_iki_delimits_t_resize(status, delimits, length) macro_f_array_lengths_t_resize(status, delimits, length)
-  #define macro_f_iki_delimits_t_adjust(status, delimits, length) macro_f_array_lengths_t_adjust(status, delimits, length)
-
-  #define macro_f_iki_delimits_t_delete_simple(delimits)  macro_f_array_lengths_t_delete_simple(delimits)
-  #define macro_f_iki_delimits_t_destroy_simple(delimits) macro_f_array_lengths_t_destroy_simple(delimits)
-
-  #define macro_f_iki_delimits_t_increase(status, step, delimits)      macro_f_array_lengths_t_increase(status, step, delimits)
-  #define macro_f_iki_delimits_t_increase_by(status, delimits, amount) macro_f_array_lengths_t_increase_by(status, delimits, amount)
-  #define macro_f_iki_delimits_t_decrease_by(status, delimits, amount) macro_f_array_lengths_t_decrease_by(status, delimits, amount)
-  #define macro_f_iki_delimits_t_decimate_by(status, delimits, amount) macro_f_array_lengths_t_decimate_by(status, delimits, amount)
-#endif // _di_f_iki_delimits_t_
-
-/**
- * An array of f_iki_delimits_t.
- *
- * array: The array of iki quotes.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
- */
-#ifndef _di_f_iki_delimitss_t_
-  typedef f_array_lengthss_t f_iki_delimitss_t;
-
-  #define f_iki_delimitss_t_initialize f_array_lengthss_t_initialize
-
-  #define macro_f_iki_delimitss_t_initialize(array, size, used) macro_f_array_lengthss_t_initialize(array, size, used)
-  #define macro_f_iki_delimitss_t_initialize2(array, length) macro_f_array_lengthss_t_initialize2(array, length)
-
-  #define macro_f_iki_delimitss_t_clear(delimitss) macro_f_array_lengthss_t_clear(delimitss)
-
-  #define macro_f_iki_delimitss_t_resize(status, delimitss, length) macro_f_array_lengthss_t_resize(status, delimitss, length)
-  #define macro_f_iki_delimitss_t_adjust(status, delimitss, length) macro_f_array_lengthss_t_adjust(status, delimitss, length)
-
-  #define macro_f_iki_delimitss_t_delete_simple(delimitss)  macro_f_array_lengthss_t_delete_simple(delimitss)
-  #define macro_f_iki_delimitss_t_destroy_simple(delimitss) macro_f_array_lengthss_t_destroy_simple(delimitss)
-
-  #define macro_f_iki_delimitss_t_increase(status, step, delimitss)      macro_f_array_lengthss_t_increase(status, step, delimitss)
-  #define macro_f_iki_delimitss_t_increase_by(status, delimitss, amount) macro_f_array_lengthss_t_increase_by(status, delimitss, amount)
-  #define macro_f_iki_delimitss_t_decrease_by(status, delimitss, amount) macro_f_array_lengthss_t_decrease_by(status, delimitss, amount)
-  #define macro_f_iki_delimitss_t_decimate_by(status, delimitss, amount) macro_f_array_lengthss_t_decimate_by(status, delimitss, amount)
-#endif // _di_f_iki_delimitss_t_
-
-/**
- * This holds an array of string ranges that represent the entire vocabulary name, content, and syntax.
- *
- * array: The array of variable.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
- */
-#ifndef _di_f_iki_variable_t_
-  typedef f_string_ranges_t f_iki_variable_t;
-
-  #define f_iki_variable_t_initialize f_string_ranges_t_initialize
-
-  #define macro_f_iki_variable_t_initialize(array, size, used) macro_f_string_ranges_t_initialize(array, size, used)
-  #define macro_f_iki_variable_t_initialize2(array, length) macro_f_string_ranges_t_initialize2(array, length)
-
-  #define macro_f_iki_variable_t_clear(variable) macro_f_string_ranges_t_clear(variable)
-
-  #define macro_f_iki_variable_t_resize(status, variable, new_length) macro_f_string_ranges_t_resize(status, variable, new_length)
-  #define macro_f_iki_variable_t_adjust(status, variable, new_length) macro_f_string_ranges_t_adjust(status, variable, new_length)
-
-  #define macro_f_iki_variable_t_delete_simple(variable)  macro_f_string_ranges_t_delete_simple(variable)
-  #define macro_f_iki_variable_t_destroy_simple(variable) macro_f_string_ranges_t_destroy_simple(variable)
-
-#endif // _di_f_iki_variable_t_
-
-/**
- * This holds an array of string ranges that represent the entire vocabulary name, content, and syntax.
- *
- * array: The array of variable.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
- */
-#ifndef _di_f_iki_variables_t_
-  typedef f_string_rangess_t f_iki_variables_t;
-
-  #define f_iki_variables_t_initialize f_string_rangess_t_initialize
-
-  #define macro_f_iki_variables_t_initialize(array, size, used) macro_f_string_rangess_t_initialize(array, size, used)
-  #define macro_f_iki_variables_t_initialize2(array, length) macro_f_string_rangess_t_initialize2(array, length)
-
-  #define macro_f_iki_variables_t_clear(variable) macro_f_string_rangess_t_clear(variable)
-
-  #define macro_f_iki_variables_t_resize(status, variable, new_length) macro_f_string_rangess_t_resize(status, variable, new_length)
-  #define macro_f_iki_variables_t_adjust(status, variable, new_length) macro_f_string_rangess_t_adjust(status, variable, new_length)
-
-  #define macro_f_iki_variables_t_delete_simple(variable)  macro_f_string_rangess_t_delete_simple(variable)
-  #define macro_f_iki_variables_t_destroy_simple(variable) macro_f_string_rangess_t_destroy_simple(variable)
-
-#endif // _di_f_iki_variables_t_
-
-/**
- * This holds an array of string ranges that represent the vocabulary names.
- *
- * array: The array of vocabulary names.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
- */
-#ifndef _di_f_iki_vocabulary_t_
-  typedef f_string_ranges_t f_iki_vocabulary_t;
-
-  #define f_iki_vocabulary_t_initialize f_string_ranges_t_initialize
-
-  #define macro_f_iki_vocabulary_t_initialize(array, size, used) macro_f_string_ranges_t_initialize(array, size, used)
-  #define macro_f_iki_vocabulary_t_initialize2(array, length) macro_f_string_ranges_t_initialize2(array, length)
-
-  #define macro_f_iki_vocabulary_t_clear(vocabulary) macro_f_string_ranges_t_clear(vocabulary)
-
-  #define macro_f_iki_vocabulary_t_resize(status, vocabulary, new_length) macro_f_string_ranges_t_resize(status, vocabulary, new_length)
-  #define macro_f_iki_vocabulary_t_adjust(status, vocabulary, new_length) macro_f_string_ranges_t_adjust(status, vocabulary, new_length)
-
-  #define macro_f_iki_vocabulary_t_delete_simple(vocabulary)  macro_f_string_ranges_t_delete_simple(vocabulary)
-  #define macro_f_iki_vocabulary_t_destroy_simple(vocabulary) macro_f_string_ranges_t_destroy_simple(vocabulary)
-#endif // _di_f_iki_vocabulary_t_
-
-/**
- * This holds an array of f_iki_vocabulary_t.
- *
- * array: The array of content.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
- */
-#ifndef _di_f_iki_vocabularys_t_
-  typedef f_string_rangess_t f_iki_vocabularys_t;
-
-  #define f_iki_vocabularys_t_initialize f_string_rangess_t_initialize
-
-  #define macro_f_iki_vocabularys_t_initialize(array, size, used) macro_f_string_rangess_t_initialize(array, size, used)
-  #define macro_f_iki_vocabularys_t_initialize2(array, length) macro_f_string_rangess_t_initialize2(array, length)
-
-  #define macro_f_iki_vocabularys_t_clear(content) macro_f_string_rangess_t_clear(content)
-
-  #define macro_f_iki_vocabularys_t_resize(status, content, new_length) macro_f_string_rangess_t_resize(status, content, new_length)
-  #define macro_f_iki_vocabularys_t_adjust(status, content, new_length) macro_f_string_rangess_t_adjust(status, content, new_length)
-
-  #define macro_f_iki_vocabularys_t_delete_simple(content)  macro_f_string_rangess_t_delete_simple(content)
-  #define macro_f_iki_vocabularys_t_destroy_simple(content) macro_f_string_rangess_t_destroy_simple(content)
-#endif // _di_f_iki_vocabularys_t_
-
-/**
- * This holds an array of string ranges that represent the content.
- *
- * The very first string range will represent the first content found.
- *
- * array: The array of content.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
- */
-#ifndef _di_f_iki_content_t_
-  typedef f_string_ranges_t f_iki_content_t;
-
-  #define f_iki_content_t_initialize f_string_ranges_t_initialize
-
-  #define macro_f_iki_content_t_initialize(array, size, used) macro_f_string_ranges_t_initialize(array, size, used)
-  #define macro_f_iki_content_t_initialize2(array, length) macro_f_string_ranges_t_initialize2(array, length)
-
-  #define macro_f_iki_content_t_clear(content) macro_f_string_ranges_t_clear(content)
-
-  #define macro_f_iki_content_t_resize(status, content, new_length) macro_f_string_ranges_t_resize(status, content, new_length)
-  #define macro_f_iki_content_t_adjust(status, content, new_length) macro_f_string_ranges_t_adjust(status, content, new_length)
-
-  #define macro_f_iki_content_t_delete_simple(content)  macro_f_string_ranges_t_delete_simple(content)
-  #define macro_f_iki_content_t_destroy_simple(content) macro_f_string_ranges_t_destroy_simple(content)
-#endif // _di_f_iki_content_t_
-
-/**
- * This holds an array of f_iki_content_t.
- *
- * array: The array of content.
- * size:  Total amount of allocated space.
- * used:  Total number of allocated spaces used.
- */
-#ifndef _di_f_iki_contents_t_
-  typedef f_string_rangess_t f_iki_contents_t;
-
-  #define f_iki_contents_t_initialize f_string_rangess_t_initialize
-
-  #define macro_f_iki_contents_t_initialize(array, size, used) macro_f_string_rangess_t_initialize(array, size, used)
-  #define macro_f_iki_contents_t_initialize2(array, length) macro_f_string_rangess_t_initialize2(array, length)
-
-  #define macro_f_iki_contents_t_clear(content) macro_f_string_rangess_t_clear(content)
-
-  #define macro_f_iki_contents_t_resize(status, content, new_length) macro_f_string_rangess_t_resize(status, content, new_length)
-  #define macro_f_iki_contents_t_adjust(status, content, new_length) macro_f_string_rangess_t_adjust(status, content, new_length)
-
-  #define macro_f_iki_contents_t_delete_simple(content)  macro_f_string_rangess_t_delete_simple(content)
-  #define macro_f_iki_contents_t_destroy_simple(content) macro_f_string_rangess_t_destroy_simple(content)
-#endif // _di_f_iki_contents_t_
-
-/**
  * This containg all of the IKI data.
  *
- * content:    A set of ranges representing the content list to store the content associated with the found vocabulary name.
+ * content:    A set of ranges representing the content (variable value) list to store the content associated with the found vocabulary name.
  * delimits:   A delimits array representing where delimits exist within the buffer.
- * variable:   A set of ranges representing the entire vocabulary name, content, and syntax.
- * vocabulary: A set of ranges representing the vocabulary name list to store the found vocabulary name.
+ * variable:   A set of ranges representing the entire vocabulary (variable name), content, and the syntax.
+ * vocabulary: A set of ranges representing the vocabulary (variable name) list to store the found vocabulary name.
  */
 #ifndef _di_f_iki_data_t_
   typedef struct {
-    f_iki_content_t content;
-    f_iki_delimits_t delimits;
-    f_iki_variable_t variable;
-    f_iki_vocabulary_t vocabulary;
+    f_string_ranges_t content;
+    f_array_lengths_t delimits;
+    f_string_ranges_t variable;
+    f_string_ranges_t vocabulary;
   } f_iki_data_t;
 
   #define f_iki_data_t_initialize { \
-    f_iki_content_t_initialize, \
-    f_iki_delimits_t_initialize, \
-    f_iki_variable_t_initialize, \
-    f_iki_vocabulary_t_initialize, \
+    f_string_ranges_t_initialize, \
+    f_array_lengths_t_initialize, \
+    f_string_ranges_t_initialize, \
+    f_string_ranges_t_initialize, \
   }
 
   #define macro_f_iki_data_t_initialize(content, delimits, variable, vocabulary) { content, delimits, variable, vocabulary }
 
   #define macro_f_iki_data_t_clear(data) \
-    f_iki_content_t_clear(data.content) \
-    f_iki_delimits_t_clear(data.delimits) \
-    f_iki_variable_t_clear(data.variable) \
-    f_iki_vocabulary_t_clear(data.vocabulary)
+    f_string_ranges_t_clear(data.content) \
+    f_array_lengths_t_clear(data.delimits) \
+    f_string_ranges_t_clear(data.variable) \
+    f_string_ranges_t_clear(data.vocabulary)
 
   #define macro_f_iki_data_t_delete_simple(data)  status = f_iki_data_delete(data);
   #define macro_f_iki_data_t_destroy_simple(data) status = f_iki_data_destroy(data);

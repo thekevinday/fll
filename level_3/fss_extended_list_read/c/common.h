@@ -375,6 +375,7 @@ extern "C" {
  *
  * @param setting
  *   The program main setting data.
+ *
  *   This does not alter setting.status.
  *
  * @return
@@ -420,8 +421,9 @@ extern "C" {
  *   The main program data.
  * @param setting
  *   The main program settings.
- *   This does not alter setting.status.
  *   All buffers are deallocated.
+ *
+ *   This does not alter setting.status.
  *
  * @return
  *   F_none on success.

@@ -77,7 +77,7 @@ extern "C" {
 #ifndef _di_fll_program_data_t_
   typedef struct {
     f_console_parameters_t parameters;
-    const f_string_t *     environment;
+    const f_string_t *environment;
 
     mode_t umask;
     pid_t pid;

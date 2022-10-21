@@ -13,30 +13,61 @@ extern "C" {
 #endif
 
 /**
- * Print any applicable substitution and if there is none then print the given range at the given index.
+ * Print the given range at the given index.
  *
- * @param data
- *   The program data.
- * @param iki_data
- *   The IKI data.
- * @param ranges
- *   The ranges containing the desired range to print as specified by index.
- * @param replacement
- *   A simple substitution string for substitution, substituted only if there are no matches in the substitutions.
- * @param wraps
- *   The wraps will prepend a string and append a string to the content for the given range at the given index.
- *   This is only performed when substitutions has no match for the given range at the given index.
- * @param substitutions
- *   The substitutions associated with the variable for the given range at the given index to use for potential printing.
+ * This detects and prints any applicable substitution matching the vocabulary at the given index.
+ * If there is no substitution, then this prints the given range at the given index.
+ *
+ * @param main
+ *   The main program data.
+ * @param setting
+ *   The main program settings.
+ *
+ *   The setting.map_wraps is expected to be defined as a valid pointer to an array.
+ *   The setting.map_replaces is expected to be defined as a valid pointer to an array.
+ *
+ *   This does not alter setting.status.
  * @param index
  *   The index used to identify the desired range in variable, content, and ranges.
  * @param content_only
- *   Set to TRUE to only print the content when printing substituted text.
- *   Set to FALSE to print the entire variable when printing substituted text.
+ *   Set to TRUE to only print the value (Content) when printing.
+ *   Set to FALSE to print the entire variable when printing.
  */
-#ifndef _di_iki_read_substitutions_print_
-  extern void iki_read_substitutions_print(fll_program_data_t * const main, iki_read_setting_t * const setting, iki_read_data_t * const data, const f_iki_data_t iki_data, const f_string_ranges_t ranges, const iki_read_substitution_t replacement, const iki_read_substitution_t wraps, const iki_read_substitutions_t substitutions, const f_array_length_t index, const bool content_only) F_attribute_visibility_internal_d;
-#endif // _di_iki_read_substitutions_print_
+#ifndef _di_iki_read_print_
+  extern void iki_read_print(fll_program_data_t * const main, iki_read_setting_t * const setting, const f_array_length_t index, const bool content_only) F_attribute_visibility_internal_d;
+#endif // _di_iki_read_print_
+
+/**
+ * Print the append part of the wrap at the given index, if valid.
+ *
+ * @param main
+ *   The main program data.
+ * @param setting
+ *   The main program settings.
+ *
+ *   This does not alter setting.status.
+ * @param index
+ *   The index within the setting->map_wraps array to print.
+ */
+#ifndef _di_iki_read_print_wrap_append_
+  extern void iki_read_print_wrap_append(fll_program_data_t * const main, iki_read_setting_t * const setting, const f_array_length_t index) F_attribute_visibility_internal_d;
+#endif // _di_iki_read_print_wrap_append_
+
+/**
+ * Print the prepend part of the wrap at the given index, if valid.
+ *
+ * @param main
+ *   The main program data.
+ * @param setting
+ *   The main program settings.
+ *
+ *   This does not alter setting.status.
+ * @param index
+ *   The index within the setting->map_wraps array to print.
+ */
+#ifndef _di_iki_read_print_wrap_prepend_
+  extern void iki_read_print_wrap_prepend(fll_program_data_t * const main, iki_read_setting_t * const setting, const f_array_length_t index) F_attribute_visibility_internal_d;
+#endif // _di_iki_read_print_wrap_prepend_
 
 #ifdef __cplusplus
 } // extern "C"

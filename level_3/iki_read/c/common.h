@@ -64,14 +64,21 @@ extern "C" {
  */
 #ifndef _di_iki_read_defines_
   #define iki_read_signal_check_d 20000
-
-  enum {
-    iki_read_mode_content_e = 1,
-    iki_read_mode_literal_e,
-    iki_read_mode_object_e,
-    iki_read_mode_total_e,
-  };
 #endif // _di_iki_read_defines_
+
+/**
+ * A collection of static strings associated with IKI Read.
+ */
+#ifndef _di_iki_read_strings_
+  #define IKI_READ_string_two_s   "two"
+  #define IKI_READ_string_three_s "three"
+
+  #define IKI_READ_string_two_s_length   3
+  #define IKI_READ_string_three_s_length 5
+
+  extern const f_string_static_t iki_read_string_two_s;
+  extern const f_string_static_t iki_read_string_three_s;
+#endif // _di_iki_read_strings_
 
 /**
  * The main program parameters.
@@ -178,7 +185,6 @@ extern "C" {
 
   #define iki_read_console_parameter_t_initialize \
     { \
-      mac
       macro_f_console_parameter_t_initialize4(f_console_standard_short_help_s,          f_console_standard_long_help_s,          0, f_console_type_normal_e), \
       macro_f_console_parameter_t_initialize4(f_console_standard_short_light_s,         f_console_standard_long_light_s,         0, f_console_type_inverse_e), \
       macro_f_console_parameter_t_initialize4(f_console_standard_short_dark_s,          f_console_standard_long_dark_s,          0, f_console_type_inverse_e), \
@@ -226,69 +232,43 @@ extern "C" {
   extern const f_string_static_t iki_read_substitution_replace_s;
   extern const f_string_static_t iki_read_substitution_vocabulary_s;
   extern const f_string_static_t iki_read_substitution_with_s;
-
-  typedef struct {
-    f_string_static_t replace;
-    f_string_static_t with;
-  } iki_read_substitution_t;
-
-  #define iki_read_substitution_t_initialize \
-    { \
-      f_string_static_t_initialize, \
-      f_string_static_t_initialize, \
-    }
-
-  #define macro_iki_read_substitution_t_initialize(replace, with, extra) \
-    { \
-      replace, \
-      with, \
-    }
 #endif // _di_iki_read_substitution_t_
-
-#ifndef _di_iki_read_substitutions_t_
-  typedef struct {
-    iki_read_substitution_t *array;
-
-    f_array_length_t size;
-    f_array_length_t used;
-  } iki_read_substitutions_t;
-
-  #define iki_read_substitutions_t_initialize { 0, 0, 0 }
-
-  #define macro_iki_read_substitutions_t_clear(replacements) macro_f_memory_structure_clear(replacements)
-
-  #define macro_iki_read_substitutions_t_delete_simple(replacements)  macro_f_memory_structure_delete_simple(replacements, iki_read_substitution_t)
-  #define macro_iki_read_substitutions_t_destroy_simple(replacements) macro_f_memory_structure_destroy_simple(replacements, iki_read_substitution_t)
-
-  #define macro_iki_read_substitutions_t_resize(status, replacements, length) macro_f_memory_structure_resize(status, replacements, iki_read_substitution_t, length)
-  #define macro_iki_read_substitutions_t_adjust(status, replacements, length) macro_f_memory_structure_adjust(status, replacements, iki_read_substitution_t, length)
-#endif // _di_iki_read_substitutions_t_
 
 /**
  * Flags used to represent flags passed to the main function.
  *
  * iki_read_main_flag_*_e:
- *   - none:          No modes in use.
- *   - file_from:     Using a specified source file.
- *   - file_to:       Using a specified destination file.
- *   - help:          Print help.
- *   - header:        Enable printing of headers.
- *   - separate:      Enable printing of separators.
- *   - strip_invalid: Using strip invalid character mode.
- *   - verify:        Using verify mode.
- *   - version:       Print version.
+ *   - none:       No modes in use.
+ *   - at:         Selecting at a specific index.
+ *   - content:    Print Contents.
+ *   - help:       Print help.
+ *   - literal:    Print as literal data (printing entire variable).
+ *   - line:       Selecting at a specific line.
+ *   - name:       Selecting using a specific Vocabulary name.
+ *   - object:     Print Objects.
+ *   - replace:    Using replacements.
+ *   - substitute: Using substitutions.
+ *   - total:      Enable printing of "total" count.
+ *   - version:    Print version.
+ *   - whole:      Print all data.
+ *   - wrap:       Using wrapping.
  */
 #ifndef _di_iki_read_main_flag_e_
   enum {
-    iki_read_main_flag_none_e          = 0x0,
-    iki_read_main_flag_file_from_e     = 0x1,
-    iki_read_main_flag_file_to_e       = 0x2,
-    iki_read_main_flag_header_e        = 0x4,
-    iki_read_main_flag_help_e          = 0x8,
-    iki_read_main_flag_separate_e      = 0x10,
-    iki_read_main_flag_strip_invalid_e = 0x20,
-    iki_read_main_flag_verify_e        = 0x40,
-    iki_read_main_flag_version_e       = 0x80,
+    iki_read_main_flag_none_e       = 0x0,
+    iki_read_main_flag_at_e         = 0x1,
+    iki_read_main_flag_content_e    = 0x2,
+    iki_read_main_flag_help_e       = 0x4,
+    iki_read_main_flag_literal_e    = 0x8,
+    iki_read_main_flag_line_e       = 0x10,
+    iki_read_main_flag_name_e       = 0x20,
+    iki_read_main_flag_object_e     = 0x40,
+    iki_read_main_flag_replace_e    = 0x80,
+    iki_read_main_flag_substitute_e = 0x100,
+    iki_read_main_flag_total_e      = 0x200,
+    iki_read_main_flag_version_e    = 0x400,
+    iki_read_main_flag_whole_e      = 0x800,
+    iki_read_main_flag_wrap_e       = 0x1000,
   };
 #endif // _di_iki_read_main_flag_e_
 
@@ -302,8 +282,24 @@ extern "C" {
  *
  * status: The main status code, generally used by the load settings and main functions.
  *
+ * at:   The position representing the "at" index.
+ * line: The position representing the "line" index.
+ *
  * line_first: A string expected to represent either "\n" or NULL to allow for easy handling of when to print first new line or not.
  * line_last:  A string expected to represent either "\n" or NULL to allow for easy handling of when to print last new line or not.
+ *
+ * buffer: A buffer used for loading the files and other miscellaneous tasks.
+ * name:   A string representing the IKI vocabulary name being selected.
+ * files:  An array of all files to process (except for the input pipe).
+ *
+ * replace:    A map containing the Vocabulary name and its replacement as the value.
+ * substitute: A triple containing the Vocabulary name (a), Content to match (b), and the string used as the substitute (c).
+ * wrap:       A triple containing the Vocabulary name (a), the string to prepend (b), and the string to append (c).
+ *
+ * map_replaces: A pointer representing an array with length of setting->data.vocabulary.used mapping the vocabulary location to a replace array location.
+ * map_wraps:    A pointer representing an array with length of setting->data.vocabulary.used mapping the vocabulary location to a wrap array location.
+ *
+ * data: The loaded IKI data.
  */
 #ifndef _di_iki_read_setting_t_
   typedef struct {
@@ -311,16 +307,43 @@ extern "C" {
 
     f_status_t status;
 
+    f_array_length_t at;
+    f_array_length_t line;
+
     f_string_static_t line_first;
     f_string_static_t line_last;
+
+    f_string_dynamic_t buffer;
+    f_string_dynamics_t names;
+    f_string_dynamics_t files;
+
+    f_string_maps_t replace;
+    f_string_triples_t substitute;
+    f_string_triples_t wrap;
+
+    f_array_length_t *map_replaces;
+    f_array_length_t *map_wraps;
+
+    f_iki_data_t data;
   } iki_read_setting_t;
 
   #define iki_read_setting_t_initialize \
     { \
       iki_read_main_flag_none_e, \
       F_none, \
+      0, \
+      0, \
       f_string_static_t_initialize, \
       f_string_static_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamics_t_initialize, \
+      f_string_maps_t_initialize, \
+      f_string_triples_t_initialize, \
+      f_string_triples_t_initialize, \
+      0, \
+      0, \
+      f_iki_data_t_initialize, \
     }
 #endif // _di_iki_read_setting_t_
 
@@ -329,6 +352,7 @@ extern "C" {
  *
  * @param setting
  *   The program main setting data.
+ *
  *   This does not alter setting.status.
  *
  * @return
@@ -358,10 +382,22 @@ extern "C" {
  *     F_none on success.
  *
  *     Errors (with error bit) from: f_console_parameter_process().
+ *     Errors (with error bit) from: f_file_exists().
+ *     Errors (with error bit) from: f_string_dynamic_append().
+ *     Errors (with error bit) from: f_string_dynamic_resize().
+ *     Errors (with error bit) from: f_string_maps_resize().
+ *     Errors (with error bit) from: f_string_triples_resize().
  *     Errors (with error bit) from: fll_program_parameter_process_context().
+ *     Errors (with error bit) from: fll_program_parameter_process_verbosity().
  *
  * @see f_console_parameter_process()
+ * @see f_file_exists()
+ * @see f_string_dynamic_append()
+ * @see f_string_dynamic_resize()
+ * @see f_string_maps_resize()
+ * @see f_string_triples_resize()
  * @see fll_program_parameter_process_context()
+ * @see fll_program_parameter_process_verbosity()
  */
 #ifndef _di_iki_read_setting_load_
   extern void iki_read_setting_load(const f_console_arguments_t arguments, fll_program_data_t * const main, iki_read_setting_t * const setting);
@@ -374,8 +410,9 @@ extern "C" {
  *   The main program data.
  * @param setting
  *   The main program settings.
- *   This does not alter setting.status.
  *   All buffers are deallocated.
+ *
+ *   This does not alter setting.status.
  *
  * @return
  *   F_none on success.

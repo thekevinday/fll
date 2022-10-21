@@ -27,6 +27,9 @@ extern "C" {
     fll_program_print_help_option(print, fss_identify_short_name_s, fss_identify_long_name_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Select FSS using this full or partial type name or code.");
     fll_program_print_help_option(print, fss_identify_short_total_s, fss_identify_long_total_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Print the total Identifiers found.");
 
+    f_print_dynamic_raw(f_string_eol_s, print.to.stream);
+    f_print_dynamic_raw(f_string_eol_s, print.to.stream);
+
     fll_program_print_help_usage(print, fss_identify_program_name_s, fll_program_parameter_filenames_s);
 
     fl_print_format("%r  The %[%r%r%] parameter refers to the file lines and not the lines in a given file.%r%r", print.to.stream, f_string_eol_s, print.set->notable, f_console_symbol_long_enable_s, fss_identify_long_line_s, print.set->notable, f_string_eol_s, f_string_eol_s);

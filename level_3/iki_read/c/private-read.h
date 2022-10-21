@@ -13,55 +13,106 @@ extern "C" {
 #endif
 
 /**
- * Determine the range based on the --at parameter.
+ * Process the arguments, associating replacements and wraps with a given vocabulary.
  *
- * If the --at parameter is not specified in the console arguments, then range is untouched.
- * The range.start will be greater than main->buffer.used if the --at range is not found before buffer end is reached.
+ * This does not handle substitutions because substitutions must match both name and value (Object and Content).
+ * This function does not know the value (Content).
  *
- * @param data
- *   The program data.
- * @param range
- *   The range value to represent the --at values.
+ * @param setting
+ *   The main program settings.
+ * @param replaces
+ *   A map to the last matching replacment or a value of setting->data.vocabulary.used if there is no matching replacement.
+ *   Must be an array of length setting->data.vocabulary.used.
+ * @param wraps
+ *   A map to the last matching wrap or a value of setting->data.vocabulary.used if there is no matching wrap.
+ *   Must be an array of length setting->data.vocabulary.used.
  *
  * @return
- *   F_true is returned if the range is processed.
- *   F_false is returned if the range is not processed.
- *   F_data_not if the range is processed, but the requested line is out of range.
- *
- *   Status codes (with error bit) are returned on any problem.
+ *   The matching setting->data.vocabulary index or if no match then setting->data.vocabulary.used.
  */
-#ifndef _di_iki_read_process_at_
-  extern f_status_t iki_read_process_at(fll_program_data_t * const main, iki_read_setting_t * const setting, iki_read_data_t * const data, f_string_range_t *range) F_attribute_visibility_internal_d;
-#endif // _di_iki_read_process_at_
+#ifndef _di_iki_read_identify_alteration_
+  extern void iki_read_identify_alteration(iki_read_setting_t * const setting) F_attribute_visibility_internal_d;
+#endif // _di_iki_read_identify_alteration_
+
+/**
+ * Process the arguments, associating the last matching substitution with a given vocabulary name and value (Object and Content).
+ *
+ * This function expects appropriate sanity checks are performed on the substitutions array before calling.
+ *
+ * @param setting
+ *   The main program settings.
+ * @param name
+ *   A range within setting->buffer representing the name (Object) to match.
+ * @param value
+ *   A range within setting->buffer representing the value (Content) to match.
+ *
+ * @return
+ *   The matched substitution.
+ *   The value of setting->substitute.used is returned on no match.
+ */
+#ifndef _di_iki_read_identify_substitution_
+  extern f_array_length_t iki_read_identify_substitution(iki_read_setting_t * const setting, const f_string_range_t name, const f_string_range_t value) F_attribute_visibility_internal_d;
+#endif // _di_iki_read_identify_substitution_
+
+/**
+ * Determine the range based on the --line parameter.
+ *
+ * If the --line parameter is not specified in the console arguments, then range is untouched.
+ * The range.start will be greater than main->buffer.used if the --line is not found before buffer end is reached.
+ *
+ * @param main
+ *   The main program data.
+ * @param setting
+ *   The main program settings.
+ *
+ *   This alters setting.status:
+ *     F_true is returned if the range is processed.
+ *     F_false is returned if the range is not processed.
+ *     F_data_not if the range is processed, but the requested line is out of range.
+ * @param range
+ *   The range value to represent the --line values.
+ */
+#ifndef _di_iki_read_process_line_
+  extern void iki_read_process_line(fll_program_data_t * const main, iki_read_setting_t * const setting, f_string_range_t *range) F_attribute_visibility_internal_d;
+#endif // _di_iki_read_process_line_
 
 /**
  * Process a given buffer.
  *
- * @param data
- *   The program data.
+ * This will print error messages.
  *
- * @return
- *   F_none on success.
- *   F_data_not on success, but nothing done.
+ * @param main
+ *   The main program data.
+ * @param setting
+ *   The main program settings.
  *
- *   Status codes (with error bit) are returned on any problem.
+ *   This alters setting.status:
+ *     F_none on success.
+ *     F_data_not on success, but nothing done.
+ *
+ *     F_interrupt (with error bit) on (exit) signal received.
+ *
+ *     Errors (with error bit) from: iki_read_process_at().
+ *     Errors (with error bit) from: iki_read_process_buffer_ranges().
+ *     Errors (with error bit) from: iki_read_process_buffer_ranges_whole().
+ *
+ * @see iki_read_process_at()
+ * @see iki_read_process_buffer_ranges()
+ * @see iki_read_process_buffer_ranges_whole()
  */
 #ifndef _di_iki_read_process_buffer_
-  extern f_status_t iki_read_process_buffer(iki_read_data_t * const data) F_attribute_visibility_internal_d;
+  extern void iki_read_process_buffer(fll_program_data_t * const main, iki_read_setting_t * const setting) F_attribute_visibility_internal_d;
 #endif // _di_iki_read_process_buffer_
 
 /**
  * Process a given buffer, printing the given range.
  *
- * @param data
- *   The program data.
+ * @param main
+ *   The main program data.
+ * @param setting
+ *   The main program settings.
  * @param buffer_range
  *   The range within the buffer to process.
- * @param iki_data
- *   The IKI data.
- * @param ranges
- *   The ranges to print when matched.
- *   Should be one of: variable, vocabulary, or content.
  *
  * @return
  *   F_none on success.
@@ -70,23 +121,20 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_iki_read_process_buffer_ranges_
-  extern f_status_t iki_read_process_buffer_ranges(iki_read_data_t * const data, f_string_range_t *buffer_range, f_iki_data_t *iki_data, f_string_ranges_t *ranges) F_attribute_visibility_internal_d;
+  extern void iki_read_process_buffer_ranges(fll_program_data_t * const main, iki_read_setting_t * const setting, f_string_range_t *buffer_range) F_attribute_visibility_internal_d;
 #endif // _di_iki_read_process_buffer_ranges_
 
 /**
  * Process a given buffer, printing the given buffer in whole mode based on the given ranges.
  *
- * The entire variable is replaced with the range from the associated ranges.
+ * The entire variable is replaced with the value from the associated ranges.
  *
- * @param data
- *   The program data.
+ * @param main
+ *   The main program data.
+ * @param setting
+ *   The main program settings.
  * @param buffer_range
  *   The range within the buffer to process.
- * @param iki_data
- *   The IKI data.
- * @param ranges
- *   The ranges to print when matched.
- *   Should be one of: variable, vocabulary, or content.
  *
  * @return
  *   F_none on success.
@@ -95,16 +143,16 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_iki_read_process_buffer_ranges_whole_
-  extern f_status_t iki_read_process_buffer_ranges_whole(iki_read_data_t * const data, const f_string_range_t buffer_range, f_iki_data_t *iki_data, f_string_ranges_t *ranges) F_attribute_visibility_internal_d;
+  extern void iki_read_process_buffer_ranges_whole(fll_program_data_t * const main, iki_read_setting_t * const setting, const f_string_range_t buffer_range) F_attribute_visibility_internal_d;
 #endif // _di_iki_read_process_buffer_ranges_whole_
 
 /**
  * Process a given buffer, printing the total.
  *
- * @param data
- *   The program data.
- * @param iki_data
- *   The IKI data.
+ * @param main
+ *   The main program data.
+ * @param setting
+ *   The main program settings.
  *
  * @return
  *   F_none on success.
@@ -112,74 +160,8 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_iki_read_process_buffer_total_
-  extern f_status_t iki_read_process_buffer_total(iki_read_data_t * const data, f_iki_data_t *iki_data) F_attribute_visibility_internal_d;
+  extern void iki_read_process_buffer_total(fll_program_data_t * const main, iki_read_setting_t * const setting) F_attribute_visibility_internal_d;
 #endif // _di_iki_read_process_buffer_total_
-
-/**
- * Process the arguments, associating replacement with a given vocabulary.
- *
- * The replace property is not used by the --replace option parameter.
- * The replace property is instead used to designate whether or not a match is found.
- * The replace.string property should, therefore, never be accessed because this would likely result in an invalid read.
- *
- * When multiple replacements are found, only use the last specified replacement (right-most).
- *
- * @param data
- *   The program data.
- * @param vocabulary
- *   The ranges representing a vocabulary.
- * @param replacements
- *   An array of replacements representing an index in the respective vocabulary array.
- *   This sets replacements[].replace.used to F_false when there are no matches and F_true when there are matches.
- *
- * @return
- *   F_none on success.
- *
- *   Status codes (with error bit) are returned on any problem.
- */
-#ifndef _di_iki_read_replacements_identify_
-  extern f_status_t iki_read_replacements_identify(iki_read_data_t * const data, f_iki_vocabulary_t *vocabulary, iki_read_substitution_t *replacements) F_attribute_visibility_internal_d;
-#endif // _di_iki_read_replacements_identify_
-
-/**
- * Process the arguments, associating substitutions with a given vocabulary.
- *
- * @param data
- *   The program data.
- * @param vocabulary
- *   The ranges representing a vocabulary.
- * @param substitutionss
- *   An array of substitutions with each index representing an index for in the respective vocabulary array.
- *
- * @return
- *   F_none on success.
- *
- *   Status codes (with error bit) are returned on any problem.
- */
-#ifndef _di_iki_read_substitutions_identify_
-  extern f_status_t iki_read_substitutions_identify(iki_read_data_t * const data, f_iki_vocabulary_t *vocabulary, iki_read_substitutions_t *substitutionss) F_attribute_visibility_internal_d;
-#endif // _di_iki_read_substitutions_identify_
-
-/**
- * Process the arguments, associating wraps with a given vocabulary.
- *
- * @param data
- *   The program data.
- * @param vocabulary
- *   The ranges representing a vocabulary.
- * @param wraps
- *   An array of substitutions with each index representing an index for in the respective vocabulary array.
- *   The replacements[].replace is used to represent the "before".
- *   The replacements[].with is used to represent the "after".
- *
- * @return
- *   F_none on success.
- *
- *   Status codes (with error bit) are returned on any problem.
- */
-#ifndef _di_iki_read_wraps_identify_
-  extern f_status_t iki_read_wraps_identify(iki_read_data_t * const data, f_iki_vocabulary_t *vocabulary, iki_read_substitution_t *wraps) F_attribute_visibility_internal_d;
-#endif // _di_iki_read_wraps_identify_
 
 #ifdef __cplusplus
 } // extern "C"

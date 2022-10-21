@@ -20,7 +20,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_failure (with error bit) for any othe failure.
+ *   F_failure (with error bit) for any other failure.
  */
 #ifndef _di_fss_extended_write_error_parameter_at_least_once_print_
   void fss_extended_write_error_parameter_at_least_once(fll_program_data_t * const main) F_attribute_visibility_internal_d;
@@ -38,7 +38,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_failure (with error bit) for any othe failure.
+ *   F_failure (with error bit) for any other failure.
  */
 #ifndef _di_fss_extended_write_error_parameter_value_missing_print_
   void fss_extended_write_error_parameter_value_missing_print(fll_program_data_t * const main, const f_string_static_t symbol, const f_string_static_t parameter) F_attribute_visibility_internal_d;
@@ -52,7 +52,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_failure (with error bit) for any othe failure.
+ *   F_failure (with error bit) for any other failure.
  */
 #ifndef _di_fss_extended_write_error_parameter_unsupported_eol_print_
   void fss_extended_write_error_parameter_unsupported_eol_print(fll_program_data_t * const main) F_attribute_visibility_internal_d;
@@ -79,7 +79,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_failure (with error bit) for any othe failure.
+ *   F_failure (with error bit) for any other failure.
  */
 #ifndef _di_fss_extended_write_process_
   extern f_status_t fss_extended_write_process(fll_program_data_t * const main, const f_file_t output, const f_fss_quote_t quote, const f_string_static_t *object, const f_string_statics_t *contents, f_string_dynamic_t *buffer) F_attribute_visibility_internal_d;
@@ -100,7 +100,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_failure (with error bit) for any othe failure.
+ *   F_failure (with error bit) for any other failure.
  */
 #ifndef _di_fss_extended_write_process_pipe_
   extern f_status_t fss_extended_write_process_pipe(fll_program_data_t * const main, const f_file_t output, const f_fss_quote_t quote, f_string_dynamic_t *buffer) F_attribute_visibility_internal_d;

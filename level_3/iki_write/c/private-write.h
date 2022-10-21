@@ -27,7 +27,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_failure (with error bit) for any othe failure.
+ *   F_failure (with error bit) for any other failure.
  */
 #ifndef _di_iki_write_process_
   extern f_status_t iki_write_process(fll_program_data_t * const main, iki_write_setting_t * const setting, const f_string_static_t object, const f_string_static_t content) F_attribute_visibility_internal_d;

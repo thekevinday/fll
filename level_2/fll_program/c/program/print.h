@@ -104,8 +104,11 @@ extern "C" {
  * @param print
  *   The output structure.
  *   This locks, uses, and unlocks the file stream.
- * @param symbol
- *   The symbol string prepended to both parameters.
+ * @param symbol_first
+ *   The symbol string prepended to the first parameter.
+ *   This is usually f_console_symbol_long_enable_s.
+ * @param symbol_second
+ *   The symbol string prepended to the second parameter.
  *   This is usually f_console_symbol_long_enable_s.
  * @param first
  *   The first parameter name.
@@ -117,11 +120,101 @@ extern "C" {
  *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_fll_program_print_error_parameter_cannot_use_with_
-  extern f_status_t fll_program_print_error_parameter_cannot_use_with(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t first, const f_string_static_t second);
+  extern f_status_t fll_program_print_error_parameter_cannot_use_with(const fl_print_t print, const f_string_static_t symbol_first, const f_string_static_t symbol_second, const f_string_static_t first, const f_string_static_t second);
 #endif // _di_fll_program_print_error_parameter_cannot_use_with_
 
 /**
- * Print message about parameter not have the required value associated with this.
+ * Print message about parameter not being a valid integer.
+ *
+ * This is only printed when verbosity is not set to quiet.
+ *
+ * This uses the following:
+ *   - print.set->error: For the error context.
+ *   - print.set->strong: For the highlighting context
+ *   - print.prefix: For the prefixing a string to the message (such as "ERROR:").
+ *
+ * @param print
+ *   The output structure.
+ *   This locks, uses, and unlocks the file stream.
+ * @param symbol
+ *   The symbol string prepended to both parameters.
+ *   This locks, uses, and unlocks the file stream.
+ *   This is usually f_console_symbol_long_enable_s.
+ * @param parameter
+ *   The parameter name.
+ * @param value
+ *   The value.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ */
+#ifndef _di_fll_program_print_error_parameter_integer_not_
+  extern f_status_t fll_program_print_error_parameter_integer_not(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t parameter, const f_string_static_t value);
+#endif // _di_fll_program_print_error_parameter_integer_not_
+
+/**
+ * Print message about parameter not being a negative integer.
+ *
+ * This is only printed when verbosity is not set to quiet.
+ *
+ * This uses the following:
+ *   - print.set->error: For the error context.
+ *   - print.set->strong: For the highlighting context
+ *   - print.prefix: For the prefixing a string to the message (such as "ERROR:").
+ *
+ * @param print
+ *   The output structure.
+ *   This locks, uses, and unlocks the file stream.
+ * @param symbol
+ *   The symbol string prepended to both parameters.
+ *   This locks, uses, and unlocks the file stream.
+ *   This is usually f_console_symbol_long_enable_s.
+ * @param parameter
+ *   The parameter name.
+ * @param value
+ *   The value.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ */
+#ifndef _di_fll_program_print_error_parameter_integer_not_negative_
+  extern f_status_t fll_program_print_error_parameter_integer_not_negative(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t parameter, const f_string_static_t value);
+#endif // _di_fll_program_print_error_parameter_integer_not_negative_
+
+/**
+ * Print message about parameter not being a positive integer.
+ *
+ * This is only printed when verbosity is not set to quiet.
+ *
+ * This uses the following:
+ *   - print.set->error: For the error context.
+ *   - print.set->strong: For the highlighting context
+ *   - print.prefix: For the prefixing a string to the message (such as "ERROR:").
+ *
+ * @param print
+ *   The output structure.
+ *   This locks, uses, and unlocks the file stream.
+ * @param symbol
+ *   The symbol string prepended to both parameters.
+ *   This locks, uses, and unlocks the file stream.
+ *   This is usually f_console_symbol_long_enable_s.
+ * @param parameter
+ *   The parameter name.
+ * @param value
+ *   The value.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ */
+#ifndef _di_fll_program_print_error_parameter_integer_not_positive_
+  extern f_status_t fll_program_print_error_parameter_integer_not_positive(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t parameter, const f_string_static_t value);
+#endif // _di_fll_program_print_error_parameter_integer_not_positive_
+
+/**
+ * Print message about parameter not have the required value associated with this parameter.
  *
  * This is only printed when verbosity is not set to quiet.
  *
@@ -147,6 +240,36 @@ extern "C" {
 #ifndef _di_fll_program_print_error_parameter_missing_value_
   f_status_t fll_program_print_error_parameter_missing_value(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t parameter);
 #endif // _di_fll_program_print_error_parameter_missing_value_
+
+/**
+ * Print message about parameter not have the required amount of values associated with this parameter.
+ *
+ * This is only printed when verbosity is not set to quiet.
+ *
+ * This uses the following:
+ *   - print.set->error: For the error context.
+ *   - print.set->strong: For the highlighting context
+ *   - print.prefix: For the prefixing a string to the message (such as "ERROR:").
+ *
+ * @param print
+ *   The output structure.
+ *   This locks, uses, and unlocks the file stream.
+ * @param symbol
+ *   The symbol string prepended to both parameters.
+ *   This locks, uses, and unlocks the file stream.
+ *   This is usually f_console_symbol_long_enable_s.
+ * @param parameter
+ *   The parameter name.
+ * @param amount
+ *   A string representing the amount of missing parameters.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ */
+#ifndef _di_fll_program_print_error_parameter_missing_value_requires_amount_
+  f_status_t fll_program_print_error_parameter_missing_value_requires_amount(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t parameter, const f_string_static_t amount);
+#endif // _di_fll_program_print_error_parameter_missing_value_requires_amount_
 
 /**
  * Print message about parameter only being allowed to be used once.

@@ -17,6 +17,7 @@ extern "C" {
  *
  * @param setting
  *   The main program settings.
+ *
  *   This does not alter setting.status.
  * @param print
  *   Designates the how and where to print.
@@ -34,6 +35,7 @@ extern "C" {
  *
  * @param setting
  *   The main program settings.
+ *
  *   This does not alter setting.status.
  * @param print
  *   Designates the how and where to print.
@@ -51,6 +53,7 @@ extern "C" {
  *
  * @param setting
  *   The main program settings.
+ *
  *   This does not alter setting.status.
  * @param print
  *   The output structure to print to.
@@ -72,6 +75,7 @@ extern "C" {
  *
  * @param setting
  *   The main program settings.
+ *
  *   This does not alter setting.status.
  * @param print
  *   Designates the how and where to print.
@@ -93,6 +97,7 @@ extern "C" {
  *
  * @param setting
  *   The main program settings.
+ *
  *   This does not alter setting.status.
  * @param print
  *   Designates the how and where to print.
@@ -114,6 +119,7 @@ extern "C" {
  *
  * @param setting
  *   The main program settings.
+ *
  *   This does not alter setting.status.
  * @param print
  *   Designates the how and where to print.
@@ -135,6 +141,7 @@ extern "C" {
  *
  * @param setting
  *   The main program settings.
+ *
  *   This does not alter setting.status.
  * @param print
  *   Designates the how and where to print.

@@ -23,6 +23,9 @@ extern "C" {
     fl_print_format("%r  %[%r%]     Prevent all communication.", print.to.stream, f_string_eol_s, print.set->standout, firewall_command_lock_s, print.set->standout);
     fl_print_format("%r  %[%r%]     Show active firewall settings.", print.to.stream, f_string_eol_s, print.set->standout, firewall_command_show_s, print.set->standout);
 
+    f_print_dynamic_raw(f_string_eol_s, print.to.stream);
+    f_print_dynamic_raw(f_string_eol_s, print.to.stream);
+
     fll_program_print_help_usage(print, firewall_program_name_s, firewall_program_help_parameters_s);
 
     f_print_dynamic_raw(setting->line_last, print.to.stream);

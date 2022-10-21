@@ -19,10 +19,13 @@ extern "C" {
 /**
  * A string that is analogous to f_string_dynamic_t but intended for static-only uses.
  *
- * The f_string_static_t type should never be directly allocated or deallocated.
+ * The f_string_static_t type should always have size set to 0 to represent that it is a static string.
+ * This allows for easier integration with f_string_dynamic_t.
  *
- * A special macro_f_string_static_t_initialize() is provided for the special purpose of easily initialize a static string.
- * A special macro_f_string_static_t_initialize2() is provided for the special purpose of easily initialize a static string with an identical used and size.
+ * If size is set to some value other than 0 for a static string, then take special care not to intermix it with f_string_dynamic_t.
+ *
+ * A special macro_f_string_static_t_initialize() is provided to easily initialize a static string.
+ * A special macro_f_string_static_t_initialize2() is provided to easily initialize a static string with an identical used and size.
  *
  * string: The string.
  * size:   Total amount of space available.

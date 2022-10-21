@@ -166,7 +166,7 @@ extern "C" {
         setting->status = F_status_set_error(F_parameter);
 
         status_code_print_line_first_locked(setting, main->error);
-        fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_enable_s, status_code_long_error_s, status_code_long_fine_s);
+        fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_enable_s, f_console_symbol_long_enable_s, status_code_long_error_s, status_code_long_fine_s);
         status_code_print_line_last_locked(setting, main->error);
 
         return;
@@ -176,7 +176,7 @@ extern "C" {
       setting->status = F_status_set_error(F_parameter);
 
       status_code_print_line_first_locked(setting, main->error);
-      fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_enable_s, status_code_long_warning_s, status_code_long_fine_s);
+      fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_enable_s, f_console_symbol_long_enable_s, status_code_long_warning_s, status_code_long_fine_s);
       status_code_print_line_last_locked(setting, main->error);
 
       return;

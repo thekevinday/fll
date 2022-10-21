@@ -80,7 +80,7 @@ extern "C" {
     if (F_status_is_error_not(status) && main->parameters.array[fss_embedded_list_read_parameter_total_e].result == f_console_result_found_e) {
       if (main->parameters.array[fss_embedded_list_read_parameter_columns_e].result == f_console_result_found_e) {
         if (main->error.verbosity > f_console_verbosity_quiet_e) {
-          fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_enable_s, fss_embedded_list_read_long_columns_s, fss_embedded_list_read_long_total_s);
+          fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_enable_s, f_console_symbol_long_enable_s, fss_embedded_list_read_long_columns_s, fss_embedded_list_read_long_total_s);
         }
 
         status = F_status_set_error(F_parameter);
@@ -151,7 +151,7 @@ extern "C" {
       if (main->parameters.array[fss_embedded_list_read_parameter_line_e].result == f_console_result_additional_e) {
         if (F_status_is_error_not(status) && main->parameters.array[fss_embedded_list_read_parameter_total_e].result == f_console_result_found_e) {
           if (main->error.verbosity > f_console_verbosity_quiet_e) {
-            fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_enable_s, fss_embedded_list_read_long_line_s, fss_embedded_list_read_long_total_s);
+            fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_enable_s, f_console_symbol_long_enable_s, fss_embedded_list_read_long_line_s, fss_embedded_list_read_long_total_s);
           }
 
           status = F_status_set_error(F_parameter);
@@ -161,7 +161,7 @@ extern "C" {
       if (main->parameters.array[fss_embedded_list_read_parameter_pipe_e].result == f_console_result_found_e) {
         if (F_status_is_error_not(status) && main->parameters.array[fss_embedded_list_read_parameter_total_e].result == f_console_result_found_e) {
           if (main->error.verbosity > f_console_verbosity_quiet_e) {
-            fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_enable_s, fss_embedded_list_read_long_pipe_s, fss_embedded_list_read_long_total_s);
+            fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_enable_s, f_console_symbol_long_enable_s, fss_embedded_list_read_long_pipe_s, fss_embedded_list_read_long_total_s);
           }
 
           status = F_status_set_error(F_parameter);
@@ -338,7 +338,7 @@ extern "C" {
             continue;
           }
 
-          // Enforce a max block read size to allow for interrupts to be processed beteween blocks.
+          // Enforce a max block read size to allow for interrupts to be processed between blocks.
           if (size_file > fss_embedded_list_read_block_max) {
             file.size_read = fss_embedded_list_read_block_read_large;
             size_block = fss_embedded_list_read_block_max;

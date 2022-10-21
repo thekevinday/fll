@@ -56,6 +56,9 @@ extern "C" {
     fll_program_print_help_option(print, fss_status_code_short_error_s, fss_status_code_long_error_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "  Print F_true or F_false if status code is an error or print number with error code bit set.");
     fll_program_print_help_option(print, fss_status_code_short_number_s, fss_status_code_long_number_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Convert status code name to number.");
 
+    f_print_dynamic_raw(f_string_eol_s, print.to.stream);
+    f_print_dynamic_raw(f_string_eol_s, print.to.stream);
+
     fll_program_print_help_usage(print, fss_status_code_program_name_s, fss_status_code_program_help_parameters_s);
 
     f_print_dynamic_raw(setting->line_last, print.to.stream);

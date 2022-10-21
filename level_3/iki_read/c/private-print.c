@@ -1,119 +1,121 @@
 #include "iki_read.h"
 #include "private-common.h"
 #include "private-print.h"
+#include "private-read.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#ifndef _di_iki_read_substitutions_print_
-  void iki_read_substitutions_print(fll_program_data_t * const main, iki_read_setting_t * const setting, iki_read_data_t * const data, const f_iki_data_t iki_data, const f_string_ranges_t ranges, const iki_read_substitution_t replacement, const iki_read_substitution_t wraps, const iki_read_substitutions_t substitutions, const f_array_length_t index, const bool content_only) {
+#ifndef _di_iki_read_print_
+  void iki_read_print(fll_program_data_t * const main, iki_read_setting_t * const setting, const f_array_length_t index, const bool content_only) {
 
-    uint8_t matched = F_false;
-    f_array_length_t at = 0;
+    f_array_length_t at = setting->substitute.used;
 
-    // Grab the last (right-most) match.
-    for (f_array_length_t i = 0; i < substitutions.used; ++i) {
+    if (setting->substitute.used && (setting->flag & (iki_read_main_flag_content_e | iki_read_main_flag_literal_e))) {
+      at = iki_read_identify_substitution(setting, setting->data.vocabulary.array[index], setting->data.content.array[index]);
+    }
 
-      if (fl_string_dynamic_partial_compare_string(substitutions.array[i].replace.string, data->buffer, substitutions.array[i].replace.used, iki_data.content.array[index]) == F_equal_to) {
-        matched = F_true;
-        at = i;
-      }
-    } // for
-
-    if (matched) {
+    if (at < setting->substitute.used) {
       if (content_only) {
-        f_print_dynamic(substitutions.array[at].with, data->main->output.to.stream);
+        iki_read_print_wrap_prepend(main, setting, index);
+
+        f_print_dynamic(setting->substitute.array[at].c, main->output.to.stream);
+
+        iki_read_print_wrap_append(main, setting, index);
       }
       else {
-        f_string_range_t range = macro_f_string_range_t_initialize(iki_data.variable.array[index].start, iki_data.content.array[index].start - 1);
+        f_string_range_t range = macro_f_string_range_t_initialize(setting->data.variable.array[index].start, setting->data.content.array[index].start - 1);
 
-        f_print_dynamic_partial(data->buffer, range, data->main->output.to.stream);
+        f_print_dynamic_partial(setting->buffer, range, main->output.to.stream);
 
-        f_print_dynamic(substitutions.array[at].with, data->main->output.to.stream);
+        iki_read_print_wrap_prepend(main, setting, index);
 
-        range.start = iki_data.content.array[index].stop + 1;
-        range.stop = iki_data.variable.array[index].stop;
+        f_print_dynamic(setting->substitute.array[at].a, main->output.to.stream);
 
-        f_print_dynamic_partial(data->buffer, range, data->main->output.to.stream);
+        iki_read_print_wrap_append(main, setting, index);
+
+        f_print_dynamic(setting->substitute.array[at].c, main->output.to.stream);
       }
     }
-    else if (replacement.replace.used) {
+    else if (setting->replace.used && setting->map_replaces[index] < setting->replace.used) {
       if (content_only) {
+        iki_read_print_wrap_prepend(main, setting, index);
 
-        // The wraps.replace represents the "before", which is a string to prepend.
-        if (wraps.replace.used) {
-          f_print_dynamic(wraps.replace, data->main->output.to.stream);
-        }
+        f_print_dynamic(setting->replace.array[index].value, main->output.to.stream);
 
-        f_print_dynamic(replacement.with, data->main->output.to.stream);
-
-        // The wraps.replace represents the "after", which is a string to append.
-        if (wraps.with.used) {
-          f_print_dynamic(wraps.with, data->main->output.to.stream);
-        }
+        iki_read_print_wrap_append(main, setting, index);
+      }
+      else if (setting->flag & iki_read_main_flag_object_e) {
+        f_print_dynamic(setting->replace.array[index].name, main->output.to.stream);
       }
       else {
-        f_string_range_t range = macro_f_string_range_t_initialize(iki_data.variable.array[index].start, iki_data.content.array[index].start - 1);
+        f_string_range_t range = macro_f_string_range_t_initialize(setting->data.variable.array[index].start, setting->data.content.array[index].start - 1);
 
-        f_print_dynamic_partial(data->buffer, range, data->main->output.to.stream);
+        f_print_dynamic_partial(setting->buffer, setting->data.vocabulary.array[index], main->output.to.stream);
+        f_print_dynamic_partial(setting->buffer, range, main->output.to.stream);
 
-        // The wraps.replace represents the "before", which is a string to prepend.
-        if (wraps.replace.used) {
-          f_print_dynamic(wraps.replace, data->main->output.to.stream);
-        }
+        iki_read_print_wrap_prepend(main, setting, index);
 
-        f_print_dynamic(replacement.with, data->main->output.to.stream);
+        f_print_dynamic_partial(setting->buffer, setting->data.content.array[index], main->output.to.stream);
 
-        // The wraps.replace represents the "after", which is a string to append.
-        if (wraps.with.used) {
-          f_print_dynamic(wraps.with, data->main->output.to.stream);
-        }
+        iki_read_print_wrap_append(main, setting, index);
 
-        range.start = iki_data.content.array[index].stop + 1;
-        range.stop = iki_data.variable.array[index].stop;
+        f_print_dynamic(setting->replace.array[index].value, main->output.to.stream);
 
-        f_print_dynamic_partial(data->buffer, range, data->main->output.to.stream);
+        range.start = setting->data.content.array[index].stop + 1;
+        range.stop = setting->data.variable.array[index].stop;
+
+        f_print_dynamic_partial(setting->buffer, range, main->output.to.stream);
       }
     }
     else if (content_only) {
+      iki_read_print_wrap_prepend(main, setting, index);
 
-      // The wraps.replace represents the "before", which is a string to prepend.
-      if (wraps.replace.used) {
-        f_print_dynamic(wraps.replace, data->main->output.to.stream);
-      }
+      f_print_dynamic_partial(setting->buffer, setting->data.content.array[index], main->output.to.stream);
 
-      f_print_dynamic_partial(data->buffer, ranges.array[index], data->main->output.to.stream);
-
-      // The wraps.replace represents the "after", which is a string to append.
-      if (wraps.with.used) {
-        f_print_dynamic(wraps.with, data->main->output.to.stream);
-      }
+      iki_read_print_wrap_append(main, setting, index);
+    }
+    else if (setting->flag & iki_read_main_flag_object_e) {
+      f_print_dynamic_partial(setting->buffer, setting->data.vocabulary.array[index], main->output.to.stream);
     }
     else {
-      f_string_range_t range = macro_f_string_range_t_initialize(iki_data.variable.array[index].start, iki_data.content.array[index].start - 1);
+      f_string_range_t range = macro_f_string_range_t_initialize(setting->data.variable.array[index].start, setting->data.content.array[index].start - 1);
 
-      f_print_dynamic_partial(data->buffer, range, data->main->output.to.stream);
+      f_print_dynamic_partial(setting->buffer, setting->data.vocabulary.array[index], main->output.to.stream);
+      f_print_dynamic_partial(setting->buffer, range, main->output.to.stream);
 
-      // The wraps.replace represents the "before", which is a string to prepend.
-      if (wraps.replace.used) {
-        f_print_dynamic(wraps.replace, data->main->output.to.stream);
-      }
+      iki_read_print_wrap_prepend(main, setting, index);
 
-      f_print_dynamic_partial(data->buffer, iki_data.content.array[index], data->main->output.to.stream);
+      f_print_dynamic_partial(setting->buffer, setting->data.content.array[index], main->output.to.stream);
 
-      // The wraps.replace represents the "after", which is a string to append.
-      if (wraps.with.used) {
-        f_print_dynamic(wraps.with, data->main->output.to.stream);
-      }
+      iki_read_print_wrap_append(main, setting, index);
 
-      range.start = iki_data.content.array[index].stop + 1;
-      range.stop = iki_data.variable.array[index].stop;
+      range.start = setting->data.content.array[index].stop + 1;
+      range.stop = setting->data.variable.array[index].stop;
 
-      f_print_dynamic_partial(data->buffer, range, data->main->output.to.stream);
+      f_print_dynamic_partial(setting->buffer, range, main->output.to.stream);
     }
   }
-#endif // _di_iki_read_substitutions_print_
+#endif // _di_iki_read_print_
+
+#ifndef _di_iki_read_print_wrap_append_
+  void iki_read_print_wrap_append(fll_program_data_t * const main, iki_read_setting_t * const setting, const f_array_length_t index) {
+
+    if (!(index < setting->wrap.used && setting->wrap.array[setting->map_wraps[index]].c.used)) return;
+
+    f_print_dynamic(setting->wrap.array[setting->map_wraps[index]].c, main->output.to.stream);
+  }
+#endif // _di_iki_read_print_wrap_append_
+
+#ifndef _di_iki_read_print_wrap_prepend_
+  void iki_read_print_wrap_prepend(fll_program_data_t * const main, iki_read_setting_t * const setting, const f_array_length_t index) {
+
+    if (!(index < setting->wrap.used && setting->wrap.array[setting->map_wraps[index]].b.used)) return;
+
+    f_print_dynamic(setting->wrap.array[setting->map_wraps[index]].b, main->output.to.stream);
+  }
+#endif // _di_iki_read_print_wrap_prepend_
 
 #ifdef __cplusplus
 } // extern "C"
