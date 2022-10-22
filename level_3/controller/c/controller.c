@@ -120,9 +120,9 @@ extern "C" {
         if (main->error.verbosity > f_console_verbosity_quiet_e) {
           controller_lock_print(main->error.to, 0);
 
-          fl_print_format("%r%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-          fl_print_format("%[%r%r%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_settings_s, main->context.set.notable);
-          fl_print_format("%[' is specified, but no value is given.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+          fl_print_format("%r%[%QThe parameter '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+          fl_print_format("%[%r%r%]", main->error.to, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_settings_s, main->context.set.notable);
+          fl_print_format("%[' is specified, but no value is given.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
 
           controller_unlock_print_flush(main->error.to, 0);
         }
@@ -159,9 +159,9 @@ extern "C" {
         if (main->error.verbosity > f_console_verbosity_quiet_e) {
           controller_lock_print(main->error.to, 0);
 
-          fl_print_format("%r%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-          fl_print_format("%[%r%r%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_pid_s, main->context.set.notable);
-          fl_print_format("%[' is specified, but no value is given.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+          fl_print_format("%r%[%QThe parameter '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+          fl_print_format("%[%r%r%]", main->error.to, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_pid_s, main->context.set.notable);
+          fl_print_format("%[' is specified, but no value is given.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
 
           controller_unlock_print_flush(main->error.to, 0);
         }
@@ -217,9 +217,9 @@ extern "C" {
         if (main->error.verbosity > f_console_verbosity_quiet_e) {
           controller_lock_print(main->error.to, 0);
 
-          fl_print_format("%r%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-          fl_print_format("%[%r%r%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_cgroup_s, main->context.set.notable);
-          fl_print_format("%[' is specified, but no value is given.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+          fl_print_format("%r%[%QThe parameter '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+          fl_print_format("%[%r%r%]", main->error.to, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_cgroup_s, main->context.set.notable);
+          fl_print_format("%[' is specified, but no value is given.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
 
           controller_unlock_print_flush(main->error.to, 0);
         }
@@ -247,9 +247,9 @@ extern "C" {
           if (main->warning.verbosity == f_console_verbosity_debug_e) {
             controller_lock_print(main->warning.to, 0);
 
-            fl_print_format("%r%[%QThe parameter '%]", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
-            fl_print_format("%[%r%r%]", main->warning.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_cgroup_s, main->context.set.notable);
-            fl_print_format("%[' must be a file directory path but instead is an empty string, falling back to the default.%]%r", main->warning.to.stream, main->warning.context, main->warning.context, f_string_eol_s);
+            fl_print_format("%r%[%QThe parameter '%]", main->warning.to, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
+            fl_print_format("%[%r%r%]", main->warning.to, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_cgroup_s, main->context.set.notable);
+            fl_print_format("%[' must be a file directory path but instead is an empty string, falling back to the default.%]%r", main->warning.to, main->warning.context, main->warning.context, f_string_eol_s);
 
             controller_unlock_print_flush(main->warning.to, 0);
           }
@@ -262,10 +262,10 @@ extern "C" {
         if (main->error.verbosity > f_console_verbosity_quiet_e) {
           controller_lock_print(main->error.to, 0);
 
-          fl_print_format("%r%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-          fl_print_format("%[' must not be specified with the parameter '%]", main->error.to.stream, main->error.context, main->error.context);
-          fl_print_format("%[%r%r%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_daemon_s, main->context.set.notable);
-          fl_print_format("%['.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+          fl_print_format("%r%[%QThe parameter '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+          fl_print_format("%[' must not be specified with the parameter '%]", main->error.to, main->error.context, main->error.context);
+          fl_print_format("%[%r%r%]", main->error.to, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_daemon_s, main->context.set.notable);
+          fl_print_format("%['.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
 
           controller_unlock_print_flush(main->error.to, 0);
         }
@@ -343,7 +343,7 @@ extern "C" {
         f_file_stream_flush(main->output.to);
       }
 
-      fll_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
+      fll_print_dynamic_raw(f_string_eol_s, main->output.to);
     }
 
     if (status != F_child && (setting.flag & controller_setting_flag_pid_created_e)) {
@@ -353,11 +353,11 @@ extern "C" {
         if (F_status_set_fine(status_delete) == F_number_not) {
           controller_lock_print(main->warning.to, 0);
 
-          fl_print_format("%r%[%QThe pid file '%]", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
-          fl_print_format("%[%Q%]", main->warning.to.stream, main->warning.notable, setting.path_pid, main->warning.notable);
-          fl_print_format("%[' must not be specified with the parameter '%]", main->warning.to.stream, main->warning.context, main->warning.context);
-          fl_print_format("%[%i%]", main->warning.to.stream, main->warning.notable, main->pid, main->warning.notable);
-          fl_print_format("%[' doesn't contain the expected number, not deleting file.%]%r", main->warning.to.stream, main->warning.context, main->warning.context, f_string_eol_s);
+          fl_print_format("%r%[%QThe pid file '%]", main->warning.to, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
+          fl_print_format("%[%Q%]", main->warning.to, main->warning.notable, setting.path_pid, main->warning.notable);
+          fl_print_format("%[' must not be specified with the parameter '%]", main->warning.to, main->warning.context, main->warning.context);
+          fl_print_format("%[%i%]", main->warning.to, main->warning.notable, main->pid, main->warning.notable);
+          fl_print_format("%[' doesn't contain the expected number, not deleting file.%]%r", main->warning.to, main->warning.context, main->warning.context, f_string_eol_s);
 
           controller_unlock_print_flush(main->warning.to, 0);
         }

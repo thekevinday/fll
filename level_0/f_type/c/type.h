@@ -6,6 +6,8 @@
  * Licenses: lgpl-2.1-or-later
  *
  * Provides datatype definitions.
+ *
+ * This does not auto-include type_file.h, which must be manually included when needed.
  */
 #ifndef _F_type_h
 #define _F_type_h

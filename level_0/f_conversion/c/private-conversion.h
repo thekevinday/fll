@@ -28,8 +28,8 @@ extern "C" {
  *   Set this to 0 to represent a positive number.
  *   Set this to 1 to represent a negative number.
  *   Set this to 2 to represent the number 0;
- * @param stream
- *   The file stream to output to, including standard streams such as stdout and stderr.
+ * @param file
+ *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
  *   F_none on success.
@@ -48,7 +48,7 @@ extern "C" {
  * @see private_f_conversion_digit_to_file_prefix()
  */
 #if !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
-  extern f_status_t private_f_conversion_digit_to_file(const f_number_unsigned_t number, const f_conversion_data_t data, const uint8_t negative_or_zero, FILE * const stream) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_conversion_digit_to_file(const f_number_unsigned_t number, const f_conversion_data_t data, const uint8_t negative_or_zero, const f_file_t file) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
 
 /**
@@ -62,8 +62,8 @@ extern "C" {
  *   To represent a negative number, assign the flag f_conversion_data_flag_is_negative to data.flags.
  * @param digits
  *   The number of digits the number is represented by (based on the base unit).
- * @param stream
- *   The file stream to output to, including standard streams such as stdout and stderr.
+ * @param file
+ *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
  *   F_none on success.
@@ -78,7 +78,7 @@ extern "C" {
  * @see f_conversion_number_unsigned_print()
  */
 #if !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
-  extern f_status_t private_f_conversion_digit_to_file_number(const f_conversion_data_t data, f_number_unsigned_t number, int digits, FILE * const stream) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_conversion_digit_to_file_number(const f_conversion_data_t data, f_number_unsigned_t number, int digits, const f_file_t file) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
 
 /**
@@ -91,8 +91,8 @@ extern "C" {
  *   Should be either f_string_ascii_space_s or f_string_ascii_0_s.
  * @param total
  *   The total number of times to print the pad.
- * @param stream
- *   The file stream to output to, including standard streams such as stdout and stderr.
+ * @param file
+ *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
  *   F_none on success.
@@ -107,7 +107,7 @@ extern "C" {
  * @see f_conversion_number_unsigned_print()
  */
 #if !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
-  extern f_status_t private_f_conversion_digit_to_file_pad(const f_conversion_data_t data, const f_string_static_t pad, int total, FILE * const stream) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_conversion_digit_to_file_pad(const f_conversion_data_t data, const f_string_static_t pad, int total, const f_file_t file) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
 
 /**
@@ -121,8 +121,8 @@ extern "C" {
  *   Set this to 0 to represent a positive number.
  *   Set this to 1 to represent a negative number.
  *   Set this to 2 to represent the number 0;
- * @param stream
- *   The file stream to output to, including standard streams such as stdout and stderr.
+ * @param file
+ *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
  *   F_none on success.
@@ -137,7 +137,7 @@ extern "C" {
  * @see f_conversion_number_unsigned_print()
  */
 #if !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
-  extern f_status_t private_f_conversion_digit_to_file_prefix(const f_conversion_data_t data, const uint8_t negative_or_zero, FILE * const stream) F_attribute_visibility_internal_d;
+  extern f_status_t private_f_conversion_digit_to_file_prefix(const f_conversion_data_t data, const uint8_t negative_or_zero, const f_file_t file) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
 
 /**
@@ -153,8 +153,8 @@ extern "C" {
  *   Set this to 0 to represent a positive number.
  *   Set this to 1 to represent a negative number.
  *   Set this to 2 to represent the number 0;
- * @param stream
- *   The file stream to output to, including standard streams such as stdout and stderr.
+ * @param file
+ *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
  *   F_none on success.
@@ -173,7 +173,7 @@ extern "C" {
 #endif // !defined(_di_f_conversion_number_signed_to_string_) || !defined(_di_f_conversion_number_unsigned_to_string_)
 
 /**
- * Helper function for printing the number to the stream file.
+ * Helper function for printing the number to the file.
  *
  * @param data
  *   The settings designating how to perform the conversion.
@@ -183,8 +183,8 @@ extern "C" {
  *   To represent a negative number, assign the flag f_conversion_data_flag_is_negative to data.flags.
  * @param digits
  *   The number of digits the number is represented by (based on the base unit).
- * @param stream
- *   The file stream to output to, including standard streams such as stdout and stderr.
+ * @param file
+ *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @see f_conversion_number_signed_to_string()
  * @see f_conversion_number_unsigned_to_string()

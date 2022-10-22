@@ -10,7 +10,7 @@ extern "C" {
 
     f_file_stream_lock(print.to);
 
-    f_print_dynamic_raw(setting->line_first, print.to.stream);
+    f_print_dynamic_raw(setting->line_first, print.to);
 
     fll_program_print_help_header(print, iki_write_program_name_long_s, iki_write_program_version_s);
 
@@ -25,7 +25,7 @@ extern "C" {
     fll_program_print_help_option(print, f_console_standard_short_debug_s, f_console_standard_long_debug_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, "   Enable debugging, significantly increasing verbosity beyond normal output.");
     fll_program_print_help_option(print, f_console_standard_short_version_s, f_console_standard_long_version_s, f_console_symbol_short_disable_s, f_console_symbol_long_disable_s, " Print only the version number.");
 
-    f_print_dynamic_raw(f_string_eol_s, print.to.stream);
+    f_print_dynamic_raw(f_string_eol_s, print.to);
 
     fll_program_print_help_option(print, iki_write_short_file_s, iki_write_long_file_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Specify a file to send data to.");
     fll_program_print_help_option(print, iki_write_short_content_s, iki_write_long_content_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "The Content to write.");
@@ -33,20 +33,20 @@ extern "C" {
     fll_program_print_help_option(print, iki_write_short_object_s, iki_write_long_object_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " The Object to write.");
     fll_program_print_help_option(print, iki_write_short_single_s, iki_write_long_single_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Use single quotes.");
 
-    f_print_dynamic_raw(f_string_eol_s, print.to.stream);
-    f_print_dynamic_raw(f_string_eol_s, print.to.stream);
+    f_print_dynamic_raw(f_string_eol_s, print.to);
+    f_print_dynamic_raw(f_string_eol_s, print.to);
 
     fll_program_print_help_usage(print, iki_write_program_name_s, f_string_empty_s);
 
-    fl_print_format("%r %[Notes:%]%r", print.to.stream, f_string_eol_s, print.set->important, print.set->important, f_string_eol_s);
-    fl_print_format("  This program will accept Object and Content strings to generate an IKI string, such as %[object:\"content\"%].%r", print.to.stream, print.set->notable, print.set->notable, f_string_eol_s);
+    fl_print_format("%r %[Notes:%]%r", print.to, f_string_eol_s, print.set->important, print.set->important, f_string_eol_s);
+    fl_print_format("  This program will accept Object and Content strings to generate an IKI string, such as %[object:\"content\"%].%r", print.to, print.set->notable, print.set->notable, f_string_eol_s);
 
-    fl_print_format("  Each object must have a Content (and each Content must have an Object).%r%r", print.to.stream, f_string_eol_s, f_string_eol_s);
+    fl_print_format("  Each object must have a Content (and each Content must have an Object).%r%r", print.to, f_string_eol_s, f_string_eol_s);
 
-    fl_print_format("  When piping main to this program, a single form-feed character (\\f) must be used to separate each Object from each Content.%r", print.to.stream, f_string_eol_s);
-    fl_print_format("  Furthermore, each Object must be followed by a Content.%r", print.to.stream, f_string_eol_s);
+    fl_print_format("  When piping main to this program, a single form-feed character (\\f) must be used to separate each Object from each Content.%r", print.to, f_string_eol_s);
+    fl_print_format("  Furthermore, each Object must be followed by a Content.%r", print.to, f_string_eol_s);
 
-    f_print_dynamic_raw(setting->line_last, print.to.stream);
+    f_print_dynamic_raw(setting->line_last, print.to);
 
     f_file_stream_flush(print.to);
     f_file_stream_unlock(print.to);
@@ -64,7 +64,7 @@ extern "C" {
       if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
     }
 
-    f_print_dynamic_raw(setting->line_first, print.to.stream);
+    f_print_dynamic_raw(setting->line_first, print.to);
 
     return F_none;
   }
@@ -79,7 +79,7 @@ extern "C" {
       if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
     }
 
-    fll_print_dynamic_raw(setting->line_first, print.to.stream);
+    fll_print_dynamic_raw(setting->line_first, print.to);
 
     return F_none;
   }
@@ -94,7 +94,7 @@ extern "C" {
       if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
     }
 
-    fll_print_dynamic_raw(setting->line_last, print.to.stream);
+    fll_print_dynamic_raw(setting->line_last, print.to);
 
     return F_none;
   }
@@ -109,7 +109,7 @@ extern "C" {
       if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
     }
 
-    f_print_dynamic_raw(setting->line_last, print.to.stream);
+    f_print_dynamic_raw(setting->line_last, print.to);
 
     return F_none;
   }
@@ -122,11 +122,11 @@ extern "C" {
 
     f_file_stream_lock(print.to);
 
-    fl_print_format("%[%QNo main provided, either pipe the main data or use the '%]", print.to.stream, print.set->error, print.prefix, print.set->error);
-    fl_print_format("%[%r%r%]", print.to.stream, print.set->notable, f_console_symbol_long_enable_s, iki_write_long_object_s, print.set->notable);
-    fl_print_format("%[' and the '%]", print.to.stream, print.set->error, print.set->error);
-    fl_print_format("%[%r%r%]", print.to.stream, print.set->notable, f_console_symbol_long_enable_s, iki_write_long_content_s, print.set->notable);
-    fl_print_format("%[' parameters.%]%r", print.to.stream, print.set->error, print.set->error, f_string_eol_s);
+    fl_print_format("%[%QNo main provided, either pipe the main data or use the '%]", print.to, print.set->error, print.prefix, print.set->error);
+    fl_print_format("%[%r%r%]", print.to, print.set->notable, f_console_symbol_long_enable_s, iki_write_long_object_s, print.set->notable);
+    fl_print_format("%[' and the '%]", print.to, print.set->error, print.set->error);
+    fl_print_format("%[%r%r%]", print.to, print.set->notable, f_console_symbol_long_enable_s, iki_write_long_content_s, print.set->notable);
+    fl_print_format("%[' parameters.%]%r", print.to, print.set->error, print.set->error, f_string_eol_s);
 
     f_file_stream_unlock(print.to);
 
@@ -141,9 +141,9 @@ extern "C" {
 
     f_file_stream_lock(print.to);
 
-    fl_print_format("%[%QThe object '%]", print.to.stream, print.set->error, print.prefix, print.set->error);
-    fl_print_format("%[%Q%]", print.to.stream, print.set->notable, object, print.set->notable);
-    fl_print_format("%[' is not a valid IKI Object.%]%r", print.to.stream, print.set->error, print.set->error, f_string_eol_s);
+    fl_print_format("%[%QThe object '%]", print.to, print.set->error, print.prefix, print.set->error);
+    fl_print_format("%[%Q%]", print.to, print.set->notable, object, print.set->notable);
+    fl_print_format("%[' is not a valid IKI Object.%]%r", print.to, print.set->error, print.set->error, f_string_eol_s);
 
     f_file_stream_unlock(print.to);
 

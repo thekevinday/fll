@@ -127,7 +127,7 @@ extern "C" {
           setting->status = iki_write_process(main, setting, setting->object, setting->content);
           if (F_status_is_error(setting->status)) return;
 
-          fll_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
+          fll_print_dynamic_raw(f_string_eol_s, main->output.to);
 
           object_ended = F_false;
         }
@@ -185,7 +185,7 @@ extern "C" {
       setting->status = iki_write_process(main, setting, setting->objects.array[i], setting->contents.array[i]);
       if (F_status_is_error(setting->status)) return;
 
-      fll_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
+      fll_print_dynamic_raw(f_string_eol_s, main->output.to);
     } // for
 
     // Ensure a new line is always put at the end of the program execution, unless in quiet mode.

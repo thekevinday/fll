@@ -213,7 +213,7 @@ extern "C" {
 
             iki_read_print(main, setting, i, setting->flag & iki_read_main_flag_content_e);
 
-            f_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
+            f_print_dynamic_raw(f_string_eol_s, main->output.to);
           }
         } // for
       } // for
@@ -235,7 +235,7 @@ extern "C" {
 
             iki_read_print(main, setting, setting->at, setting->flag & iki_read_main_flag_content_e);
 
-            f_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
+            f_print_dynamic_raw(f_string_eol_s, main->output.to);
 
             funlockfile(main->output.to.stream);
 
@@ -252,7 +252,7 @@ extern "C" {
 
             iki_read_print(main, setting, i, setting->flag & iki_read_main_flag_content_e);
 
-            f_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
+            f_print_dynamic_raw(f_string_eol_s, main->output.to);
           } // for
 
           funlockfile(main->output.to.stream);
@@ -293,7 +293,7 @@ extern "C" {
     } // for
 
     if (!setting->data.variable.used) {
-      fll_print_dynamic_partial(setting->buffer, buffer_range, main->output.to.stream);
+      fll_print_dynamic_partial(setting->buffer, buffer_range, main->output.to);
 
       setting->status = F_none;
 
@@ -318,7 +318,7 @@ extern "C" {
           range.start = i;
           range.stop = setting->data.variable.array[j].start - 1;
 
-          f_print_dynamic_partial(setting->buffer, range, main->output.to.stream);
+          f_print_dynamic_partial(setting->buffer, range, main->output.to);
 
           range.start = setting->data.variable.array[j].stop + 1;
           range.stop = buffer_range.stop;
@@ -346,7 +346,7 @@ extern "C" {
 
       if (i <= buffer_range.stop) {
         range.start = i;
-        f_print_dynamic_partial(setting->buffer, range, main->output.to.stream);
+        f_print_dynamic_partial(setting->buffer, range, main->output.to);
       }
 
       funlockfile(main->output.to.stream);
@@ -365,7 +365,7 @@ extern "C" {
 
     if (setting->status == F_true) {
       if (range.start > setting->buffer.used) {
-        fll_print_format("%r%r", main->output.to.stream, f_string_ascii_0_s, f_string_eol_s);
+        fll_print_format("%r%r", main->output.to, f_string_ascii_0_s, f_string_eol_s);
 
         setting->status = F_none;
 
@@ -373,7 +373,7 @@ extern "C" {
       }
     }
     else if (setting->status == F_data_not) {
-      fll_print_format("%r%r", main->output.to.stream, f_string_ascii_0_s, f_string_eol_s);
+      fll_print_format("%r%r", main->output.to, f_string_ascii_0_s, f_string_eol_s);
 
       setting->status = F_none;
 
@@ -462,7 +462,7 @@ extern "C" {
       }
     }
 
-    fll_print_format("%ul%r", main->output.to.stream, total, f_string_eol_s);
+    fll_print_format("%ul%r", main->output.to, total, f_string_eol_s);
 
     setting->status = F_none;
   }

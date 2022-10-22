@@ -15,18 +15,18 @@ extern "C" {
 
       f_file_stream_lock(main->error.to);
 
-      fl_print_format("%r%[%QThe action '%]", main->error.to.stream, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
-      fl_print_format("%[%Q%]", main->error.to.stream, main->context.set.notable, control_action_type_name(header.action), main->context.set.notable);
-      fl_print_format("%[' failed with status '%]", main->error.to.stream, main->context.set.error, main->context.set.error);
-      fl_print_format("%[%Q%]", main->error.to.stream, main->context.set.notable, string_status, main->context.set.notable);
-      fl_print_format("%[' (%]", main->error.to.stream, main->context.set.error, main->context.set.error);
-      fl_print_format("%[%ui%]", main->error.to.stream, main->context.set.notable, header.status, main->context.set.notable);
+      fl_print_format("%r%[%QThe action '%]", main->error.to, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
+      fl_print_format("%[%Q%]", main->error.to, main->context.set.notable, control_action_type_name(header.action), main->context.set.notable);
+      fl_print_format("%[' failed with status '%]", main->error.to, main->context.set.error, main->context.set.error);
+      fl_print_format("%[%Q%]", main->error.to, main->context.set.notable, string_status, main->context.set.notable);
+      fl_print_format("%[' (%]", main->error.to, main->context.set.error, main->context.set.error);
+      fl_print_format("%[%ui%]", main->error.to, main->context.set.notable, header.status, main->context.set.notable);
 
       if (header.length) {
-        fl_print_format("%[): %/Q%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, data->cache.large, data->cache.packet_contents.array[data->cache.packet_contents.used - 1].array[0], f_string_eol_s);
+        fl_print_format("%[): %/Q%]%r", main->error.to, main->context.set.error, main->context.set.error, data->cache.large, data->cache.packet_contents.array[data->cache.packet_contents.used - 1].array[0], f_string_eol_s);
       }
       else {
-        fl_print_format("%[).%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
+        fl_print_format("%[).%]%r", main->error.to, main->context.set.error, main->context.set.error, f_string_eol_s);
       }
 
       f_file_stream_unlock(main->error.to);
@@ -39,9 +39,9 @@ extern "C" {
 
       flockfile(main->warning.to.stream);
 
-      fl_print_format("%r%[%QThe action '%]", main->warning.to.stream, f_string_eol_s, main->context.set.warning, main->warning.prefix, main->context.set.warning);
-      fl_print_format("%[%q%]", main->warning.to.stream, main->context.set.notable, control_action_type_name(header.action), main->context.set.notable);
-      fl_print_format("%[' could not be performed because the service is busy.%]%r", main->warning.to.stream, main->context.set.warning, main->context.set.warning, f_string_eol_s);
+      fl_print_format("%r%[%QThe action '%]", main->warning.to, f_string_eol_s, main->context.set.warning, main->warning.prefix, main->context.set.warning);
+      fl_print_format("%[%q%]", main->warning.to, main->context.set.notable, control_action_type_name(header.action), main->context.set.notable);
+      fl_print_format("%[' could not be performed because the service is busy.%]%r", main->warning.to, main->context.set.warning, main->context.set.warning, f_string_eol_s);
 
       funlockfile(main->warning.to.stream);
 
@@ -52,21 +52,21 @@ extern "C" {
 
     flockfile(main->output.to.stream);
 
-    fl_print_format("%rThe action '", main->output.to.stream, f_string_eol_s);
-    fl_print_format("%[%q%]", main->output.to.stream, main->context.set.notable, control_action_type_name(header.action), main->context.set.notable);
+    fl_print_format("%rThe action '", main->output.to, f_string_eol_s);
+    fl_print_format("%[%q%]", main->output.to, main->context.set.notable, control_action_type_name(header.action), main->context.set.notable);
 
     if (header.status == F_done) {
-      fl_print_format("' is performed", main->output.to.stream);
+      fl_print_format("' is performed", main->output.to);
     }
     else {
-      fl_print_format("' is successfully performed", main->output.to.stream);
+      fl_print_format("' is successfully performed", main->output.to);
     }
 
     if (header.length) {
-      fl_print_format(": %/Q%r", main->output.to.stream, data->cache.large, data->cache.packet_contents.array[data->cache.packet_contents.used - 1].array[0], f_string_eol_s);
+      fl_print_format(": %/Q%r", main->output.to, data->cache.large, data->cache.packet_contents.array[data->cache.packet_contents.used - 1].array[0], f_string_eol_s);
     }
     else {
-      fl_print_format(".%r", main->output.to.stream, f_string_eol_s);
+      fl_print_format(".%r", main->output.to, f_string_eol_s);
     }
 
     funlockfile(main->output.to.stream);
@@ -80,8 +80,8 @@ extern "C" {
 
     flockfile(main->output.to.stream);
 
-    fl_print_format("%rPacket header Object '%[%Q%]", main->output.to.stream, f_string_eol_s, main->context.set.notable, object, main->context.set.notable);
-    fl_print_format("' has value '%[%/Q%]'.%r", main->output.to.stream, main->context.set.notable, content, content_range, main->context.set.notable, f_string_eol_s);
+    fl_print_format("%rPacket header Object '%[%Q%]", main->output.to, f_string_eol_s, main->context.set.notable, object, main->context.set.notable);
+    fl_print_format("' has value '%[%/Q%]'.%r", main->output.to, main->context.set.notable, content, content_range, main->context.set.notable, f_string_eol_s);
 
     funlockfile(main->output.to.stream);
   }
@@ -94,22 +94,22 @@ extern "C" {
 
     flockfile(main->output.to.stream);
 
-    fl_print_format("%r%s", main->output.to.stream, f_string_eol_s, message, main->context.set.notable, main->context.set.notable);
+    fl_print_format("%r%s", main->output.to, f_string_eol_s, message, main->context.set.notable, main->context.set.notable);
 
     if (buffer) {
       if (range) {
-        fl_print_format("'%[%/Q%]'", main->output.to.stream, main->context.set.notable, *buffer, *range, main->context.set.notable);
+        fl_print_format("'%[%/Q%]'", main->output.to, main->context.set.notable, *buffer, *range, main->context.set.notable);
       }
       else {
-        fl_print_format("'%[%/Q%]'", main->output.to.stream, main->context.set.notable, *buffer, main->context.set.notable);
+        fl_print_format("'%[%/Q%]'", main->output.to, main->context.set.notable, *buffer, main->context.set.notable);
       }
     }
 
     if (status) {
-      fl_print_format(", with status code %[%ui%]'", main->output.to.stream, main->context.set.notable, *status, main->context.set.notable);
+      fl_print_format(", with status code %[%ui%]'", main->output.to, main->context.set.notable, *status, main->context.set.notable);
     }
 
-    fl_print_format(".%r", main->output.to.stream, f_string_eol_s);
+    fl_print_format(".%r", main->output.to, f_string_eol_s);
 
     funlockfile(main->output.to.stream);
   }
@@ -122,18 +122,18 @@ extern "C" {
 
     f_file_stream_lock(main->error.to);
 
-    fl_print_format("%r%[%QReceived error response for " CONTROL_action_s " '%]", main->error.to.stream, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
-    fl_print_format("%[%q%]", main->error.to.stream, main->context.set.notable, control_action_type_name(header.action), main->context.set.notable);
-    fl_print_format("%[' with status '%]", main->error.to.stream, main->context.set.error, main->context.set.error);
-    fl_print_format("%[%Q%]", main->error.to.stream, main->context.set.notable, string_status, main->context.set.notable);
-    fl_print_format("%[' (%]", main->error.to.stream, main->context.set.error, main->context.set.error);
-    fl_print_format("%[%ui%]", main->error.to.stream, main->context.set.notable, header.status, main->context.set.notable);
+    fl_print_format("%r%[%QReceived error response for " CONTROL_action_s " '%]", main->error.to, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
+    fl_print_format("%[%q%]", main->error.to, main->context.set.notable, control_action_type_name(header.action), main->context.set.notable);
+    fl_print_format("%[' with status '%]", main->error.to, main->context.set.error, main->context.set.error);
+    fl_print_format("%[%Q%]", main->error.to, main->context.set.notable, string_status, main->context.set.notable);
+    fl_print_format("%[' (%]", main->error.to, main->context.set.error, main->context.set.error);
+    fl_print_format("%[%ui%]", main->error.to, main->context.set.notable, header.status, main->context.set.notable);
 
     if (header.length) {
-      fl_print_format("%[): %/Q%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, data->cache.large, data->cache.packet_contents.array[data->cache.packet_contents.used - 1].array[0], f_string_eol_s);
+      fl_print_format("%[): %/Q%]%r", main->error.to, main->context.set.error, main->context.set.error, data->cache.large, data->cache.packet_contents.array[data->cache.packet_contents.used - 1].array[0], f_string_eol_s);
     }
     else {
-      fl_print_format("%[).%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
+      fl_print_format("%[).%]%r", main->error.to, main->context.set.error, main->context.set.error, f_string_eol_s);
     }
 
     f_file_stream_unlock(main->error.to);
@@ -145,7 +145,7 @@ extern "C" {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e) return;
 
-    fll_print_format("%r%[%QNo actions provided.%]%r", main->error.to.stream, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error, f_string_eol_s);
+    fll_print_format("%r%[%QNo actions provided.%]%r", main->error.to, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error, f_string_eol_s);
   }
 #endif // _di_control_print_error_parameter_actions_none_
 
@@ -156,9 +156,9 @@ extern "C" {
 
     f_file_stream_lock(main->error.to);
 
-    fl_print_format("%r%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
-    fl_print_format("%[%Q%]", main->error.to.stream, main->context.set.notable, action, main->context.set.notable);
-    fl_print_format("%[' is not a known controller action.%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
+    fl_print_format("%r%[%QThe parameter '%]", main->error.to, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
+    fl_print_format("%[%Q%]", main->error.to, main->context.set.notable, action, main->context.set.notable);
+    fl_print_format("%[' is not a known controller action.%]%r", main->error.to, main->context.set.error, main->context.set.error, f_string_eol_s);
 
     f_file_stream_unlock(main->error.to);
   }
@@ -171,9 +171,9 @@ extern "C" {
 
     f_file_stream_lock(main->error.to);
 
-    fl_print_format("%r%[%QThe action parameter '%]", main->error.to.stream, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
-    fl_print_format("%[%Q%]", main->error.to.stream, main->context.set.notable, action, main->context.set.notable);
-    fl_print_format("%[' a rule base name cannot be an empty string.%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
+    fl_print_format("%r%[%QThe action parameter '%]", main->error.to, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
+    fl_print_format("%[%Q%]", main->error.to, main->context.set.notable, action, main->context.set.notable);
+    fl_print_format("%[' a rule base name cannot be an empty string.%]%r", main->error.to, main->context.set.error, main->context.set.error, f_string_eol_s);
 
     f_file_stream_unlock(main->error.to);
   }
@@ -186,9 +186,9 @@ extern "C" {
 
     f_file_stream_lock(main->error.to);
 
-    fl_print_format("%r%[%QThe action parameter '%]", main->error.to.stream, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
-    fl_print_format("%[%Q%]", main->error.to.stream, main->context.set.notable, action, main->context.set.notable);
-    fl_print_format("%[' a rule directory path cannot be an empty string.%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
+    fl_print_format("%r%[%QThe action parameter '%]", main->error.to, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
+    fl_print_format("%[%Q%]", main->error.to, main->context.set.notable, action, main->context.set.notable);
+    fl_print_format("%[' a rule directory path cannot be an empty string.%]%r", main->error.to, main->context.set.error, main->context.set.error, f_string_eol_s);
 
     f_file_stream_unlock(main->error.to);
   }
@@ -201,9 +201,9 @@ extern "C" {
 
     f_file_stream_lock(main->error.to);
 
-    fl_print_format("%r%[%QThe action parameter '%]", main->error.to.stream, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
-    fl_print_format("%[%Q%]", main->error.to.stream, main->context.set.notable, action, main->context.set.notable);
-    fl_print_format("%[' a rule name cannot be an empty string.%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
+    fl_print_format("%r%[%QThe action parameter '%]", main->error.to, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
+    fl_print_format("%[%Q%]", main->error.to, main->context.set.notable, action, main->context.set.notable);
+    fl_print_format("%[' a rule name cannot be an empty string.%]%r", main->error.to, main->context.set.error, main->context.set.error, f_string_eol_s);
 
     f_file_stream_unlock(main->error.to);
   }
@@ -216,9 +216,9 @@ extern "C" {
 
     f_file_stream_lock(main->error.to);
 
-    fl_print_format("%r%[%QThe action parameter '%]", main->error.to.stream, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
-    fl_print_format("%[%Q%]", main->error.to.stream, main->context.set.notable, action, main->context.set.notable);
-    fl_print_format("%[' requires either a full rule name or a rule directory path along with the rule base name.%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
+    fl_print_format("%r%[%QThe action parameter '%]", main->error.to, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
+    fl_print_format("%[%Q%]", main->error.to, main->context.set.notable, action, main->context.set.notable);
+    fl_print_format("%[' requires either a full rule name or a rule directory path along with the rule base name.%]%r", main->error.to, main->context.set.error, main->context.set.error, f_string_eol_s);
 
     f_file_stream_unlock(main->error.to);
   }
@@ -231,9 +231,9 @@ extern "C" {
 
     f_file_stream_lock(main->error.to);
 
-    fl_print_format("%r%[%QThe action parameter '%]", main->error.to.stream, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
-    fl_print_format("%[%Q%]", main->error.to.stream, main->context.set.notable, action, main->context.set.notable);
-    fl_print_format("%[' has too few arguments.%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
+    fl_print_format("%r%[%QThe action parameter '%]", main->error.to, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
+    fl_print_format("%[%Q%]", main->error.to, main->context.set.notable, action, main->context.set.notable);
+    fl_print_format("%[' has too few arguments.%]%r", main->error.to, main->context.set.error, main->context.set.error, f_string_eol_s);
 
     f_file_stream_unlock(main->error.to);
   }
@@ -246,11 +246,11 @@ extern "C" {
 
     f_file_stream_lock(main->error.to);
 
-    fl_print_format("%r%[%QThe action parameter '%]", main->error.to.stream, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
-    fl_print_format("%[%Q%]", main->error.to.stream, main->context.set.notable, action, main->context.set.notable);
-    fl_print_format("%[' when used with '%]", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
-    fl_print_format("%[%Q%]", main->error.to.stream, main->context.set.notable, with, main->context.set.notable);
-    fl_print_format("%[' has too few arguments.%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
+    fl_print_format("%r%[%QThe action parameter '%]", main->error.to, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
+    fl_print_format("%[%Q%]", main->error.to, main->context.set.notable, action, main->context.set.notable);
+    fl_print_format("%[' when used with '%]", main->error.to, main->context.set.error, main->context.set.error, f_string_eol_s);
+    fl_print_format("%[%Q%]", main->error.to, main->context.set.notable, with, main->context.set.notable);
+    fl_print_format("%[' has too few arguments.%]%r", main->error.to, main->context.set.error, main->context.set.error, f_string_eol_s);
 
     f_file_stream_unlock(main->error.to);
   }
@@ -263,9 +263,9 @@ extern "C" {
 
     f_file_stream_lock(main->error.to);
 
-    fl_print_format("%r%[%QThe action parameter '%]", main->error.to.stream, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
-    fl_print_format("%[%Q%]", main->error.to.stream, main->context.set.notable, action, main->context.set.notable);
-    fl_print_format("%[' has too many arguments.%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
+    fl_print_format("%r%[%QThe action parameter '%]", main->error.to, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
+    fl_print_format("%[%Q%]", main->error.to, main->context.set.notable, action, main->context.set.notable);
+    fl_print_format("%[' has too many arguments.%]%r", main->error.to, main->context.set.error, main->context.set.error, f_string_eol_s);
 
     f_file_stream_unlock(main->error.to);
   }
@@ -278,11 +278,11 @@ extern "C" {
 
     f_file_stream_lock(main->error.to);
 
-    fl_print_format("%r%[%QThe action parameter '%]", main->error.to.stream, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
-    fl_print_format("%[%Q%]", main->error.to.stream, main->context.set.notable, action, main->context.set.notable);
-    fl_print_format("%[' when used with '%]", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
-    fl_print_format("%[%Q%]", main->error.to.stream, main->context.set.notable, with, main->context.set.notable);
-    fl_print_format("%[' has too many arguments.%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
+    fl_print_format("%r%[%QThe action parameter '%]", main->error.to, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
+    fl_print_format("%[%Q%]", main->error.to, main->context.set.notable, action, main->context.set.notable);
+    fl_print_format("%[' when used with '%]", main->error.to, main->context.set.error, main->context.set.error, f_string_eol_s);
+    fl_print_format("%[%Q%]", main->error.to, main->context.set.notable, with, main->context.set.notable);
+    fl_print_format("%[' has too many arguments.%]%r", main->error.to, main->context.set.error, main->context.set.error, f_string_eol_s);
 
     f_file_stream_unlock(main->error.to);
   }
@@ -295,11 +295,11 @@ extern "C" {
 
     f_file_stream_lock(main->error.to);
 
-    fl_print_format("%r%[%QThe action parameter '%]", main->error.to.stream, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
-    fl_print_format("%[%Q%]", main->error.to.stream, main->context.set.notable, action, main->context.set.notable);
-    fl_print_format("%[' does not know the argument '%]", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
-    fl_print_format("%[%Q%]", main->error.to.stream, main->context.set.notable, with, main->context.set.notable);
-    fl_print_format("%['.%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
+    fl_print_format("%r%[%QThe action parameter '%]", main->error.to, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
+    fl_print_format("%[%Q%]", main->error.to, main->context.set.notable, action, main->context.set.notable);
+    fl_print_format("%[' does not know the argument '%]", main->error.to, main->context.set.error, main->context.set.error, f_string_eol_s);
+    fl_print_format("%[%Q%]", main->error.to, main->context.set.notable, with, main->context.set.notable);
+    fl_print_format("%['.%]%r", main->error.to, main->context.set.error, main->context.set.error, f_string_eol_s);
 
     f_file_stream_unlock(main->error.to);
   }
@@ -312,9 +312,9 @@ extern "C" {
 
     f_file_stream_lock(main->error.to);
 
-    fl_print_format("%r%[%QThe value for the parameter '%]", main->error.to.stream, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
-    fl_print_format("%[%r%r%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, parameter, main->context.set.notable);
-    fl_print_format("%[' must not be an empty string.%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
+    fl_print_format("%r%[%QThe value for the parameter '%]", main->error.to, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
+    fl_print_format("%[%r%r%]", main->error.to, main->context.set.notable, f_console_symbol_long_enable_s, parameter, main->context.set.notable);
+    fl_print_format("%[' must not be an empty string.%]%r", main->error.to, main->context.set.error, main->context.set.error, f_string_eol_s);
 
     f_file_stream_unlock(main->error.to);
   }
@@ -327,9 +327,9 @@ extern "C" {
 
     f_file_stream_lock(main->error.to);
 
-    fl_print_format("%r%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
-    fl_print_format("%[%r%r%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, parameter, main->context.set.notable);
-    fl_print_format("%[' is specified, but no value is given.%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
+    fl_print_format("%r%[%QThe parameter '%]", main->error.to, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
+    fl_print_format("%[%r%r%]", main->error.to, main->context.set.notable, f_console_symbol_long_enable_s, parameter, main->context.set.notable);
+    fl_print_format("%[' is specified, but no value is given.%]%r", main->error.to, main->context.set.error, main->context.set.error, f_string_eol_s);
 
     f_file_stream_unlock(main->error.to);
   }
@@ -340,7 +340,7 @@ extern "C" {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e) return;
 
-    fll_print_format("%r%[%QPipe input is not supported by this program.%]%r", main->error.to.stream, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error, f_string_eol_s);
+    fll_print_format("%r%[%QPipe input is not supported by this program.%]%r", main->error.to, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error, f_string_eol_s);
   }
 #endif // _di_control_print_error_pipe_supported_not_
 
@@ -349,7 +349,7 @@ extern "C" {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e) return;
 
-    fll_print_format("%r%[%QThe received response is not a valid or supported packet.%]%r", main->error.to.stream, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error, f_string_eol_s);
+    fll_print_format("%r%[%QThe received response is not a valid or supported packet.%]%r", main->error.to, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error, f_string_eol_s);
   }
 #endif // _di_control_print_error_response_packet_valid_not_
 
@@ -358,7 +358,7 @@ extern "C" {
 
     if (main->error.verbosity == f_console_verbosity_quiet_e) return;
 
-    fll_print_format("%r%[%QThe generated packet is too large, cannot send packet.%]%r", main->error.to.stream, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error, f_string_eol_s);
+    fll_print_format("%r%[%QThe generated packet is too large, cannot send packet.%]%r", main->error.to, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error, f_string_eol_s);
   }
 #endif // _di_control_print_error_request_packet_too_large_
 
@@ -369,9 +369,9 @@ extern "C" {
 
     f_file_stream_lock(main->error.to);
 
-    fl_print_format("%r%[%QFailed to connect to the socket file '%]", main->error.to.stream, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
-    fl_print_format("%[%Q%]", main->error.to.stream, main->context.set.notable, path_socket, main->context.set.notable);
-    fl_print_format("%['.%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
+    fl_print_format("%r%[%QFailed to connect to the socket file '%]", main->error.to, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
+    fl_print_format("%[%Q%]", main->error.to, main->context.set.notable, path_socket, main->context.set.notable);
+    fl_print_format("%['.%]%r", main->error.to, main->context.set.error, main->context.set.error, f_string_eol_s);
 
     f_file_stream_unlock(main->error.to);
   }
@@ -384,9 +384,9 @@ extern "C" {
 
     f_file_stream_lock(main->error.to);
 
-    fl_print_format("%r%[%QThe controller socket file '%]", main->error.to.stream, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
-    fl_print_format("%[%Q%]", main->error.to.stream, main->context.set.notable, path_socket, main->context.set.notable);
-    fl_print_format("%[' could not be found and is required.%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
+    fl_print_format("%r%[%QThe controller socket file '%]", main->error.to, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
+    fl_print_format("%[%Q%]", main->error.to, main->context.set.notable, path_socket, main->context.set.notable);
+    fl_print_format("%[' could not be found and is required.%]%r", main->error.to, main->context.set.error, main->context.set.error, f_string_eol_s);
 
     f_file_stream_unlock(main->error.to);
   }
@@ -399,9 +399,9 @@ extern "C" {
 
     f_file_stream_lock(main->error.to);
 
-    fl_print_format("%r%[%QThe controller socket file '%]", main->error.to.stream, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
-    fl_print_format("%[%Q%]", main->error.to.stream, main->context.set.notable, path_socket, main->context.set.notable);
-    fl_print_format("%[' is not a socket file.%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
+    fl_print_format("%r%[%QThe controller socket file '%]", main->error.to, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
+    fl_print_format("%[%Q%]", main->error.to, main->context.set.notable, path_socket, main->context.set.notable);
+    fl_print_format("%[' is not a socket file.%]%r", main->error.to, main->context.set.error, main->context.set.error, f_string_eol_s);
 
     f_file_stream_unlock(main->error.to);
   }
@@ -414,9 +414,9 @@ extern "C" {
 
     flockfile(main->warning.to.stream);
 
-    fl_print_format("%r%[%QThe received response header '%]", main->warning.to.stream, f_string_eol_s, main->context.set.warning, main->warning.prefix, main->context.set.warning);
-    fl_print_format("%[%Q%]", main->warning.to.stream, main->context.set.notable, response_header, main->context.set.notable);
-    fl_print_format("%[' is repeated.%]%r", main->warning.to.stream, main->context.set.warning, main->context.set.warning, f_string_eol_s);
+    fl_print_format("%r%[%QThe received response header '%]", main->warning.to, f_string_eol_s, main->context.set.warning, main->warning.prefix, main->context.set.warning);
+    fl_print_format("%[%Q%]", main->warning.to, main->context.set.notable, response_header, main->context.set.notable);
+    fl_print_format("%[' is repeated.%]%r", main->warning.to, main->context.set.warning, main->context.set.warning, f_string_eol_s);
 
     funlockfile(main->warning.to.stream);
   }
@@ -429,11 +429,11 @@ extern "C" {
 
     flockfile(main->warning.to.stream);
 
-    fl_print_format("%r%[%QFailed while calling f_status_string_to() for status%] ", main->output.to.stream, f_string_eol_s, main->context.set.warning, main->context.set.warning, main->context.set.warning);
-    fl_print_format("%[%ui%]", main->output.to.stream, main->context.set.notable, status_of, main->context.set.notable);
-    fl_print_format("%[, failing with status code%] ", main->output.to.stream, main->context.set.warning, status_error, main->context.set.warning);
-    fl_print_format("%[%ui%]", main->output.to.stream, main->context.set.notable, status_error, main->context.set.notable);
-    fl_print_format("%[.%]%r", main->output.to.stream, main->context.set.warning, main->context.set.warning, f_string_eol_s);
+    fl_print_format("%r%[%QFailed while calling f_status_string_to() for status%] ", main->output.to, f_string_eol_s, main->context.set.warning, main->context.set.warning, main->context.set.warning);
+    fl_print_format("%[%ui%]", main->output.to, main->context.set.notable, status_of, main->context.set.notable);
+    fl_print_format("%[, failing with status code%] ", main->output.to, main->context.set.warning, status_error, main->context.set.warning);
+    fl_print_format("%[%ui%]", main->output.to, main->context.set.notable, status_error, main->context.set.notable);
+    fl_print_format("%[.%]%r", main->output.to, main->context.set.warning, main->context.set.warning, f_string_eol_s);
 
     funlockfile(main->warning.to.stream);
   }

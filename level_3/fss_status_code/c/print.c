@@ -13,13 +13,13 @@ extern "C" {
 
     f_file_stream_lock(print.to);
 
-    fl_print_format("%[%QCannot specify the '%]", print.to.stream, print.context, print.prefix, print.context);
-    fl_print_format("%[%r%r%]", print.to.stream, print.notable, f_console_symbol_long_enable_s, fss_status_code_long_error_s, print.notable);
-    fl_print_format("%[' parameter with the '%]", print.to.stream, print.context, print.context);
-    fl_print_format("%[%r%r%]", print.to.stream, print.notable, f_console_symbol_long_enable_s, fss_status_code_long_warning_s, print.notable);
-    fl_print_format("%[' parameter when not also specifying the '%]", print.to.stream, print.context, print.context);
-    fl_print_format("%[%r%r%]", print.to.stream, print.notable, f_console_symbol_long_enable_s, fss_status_code_long_number_s, print.notable);
-    fl_print_format("%[' parameter.%]%r", print.to.stream, print.context, print.context, f_string_eol_s);
+    fl_print_format("%[%QCannot specify the '%]", print.to, print.context, print.prefix, print.context);
+    fl_print_format("%[%r%r%]", print.to, print.notable, f_console_symbol_long_enable_s, fss_status_code_long_error_s, print.notable);
+    fl_print_format("%[' parameter with the '%]", print.to, print.context, print.context);
+    fl_print_format("%[%r%r%]", print.to, print.notable, f_console_symbol_long_enable_s, fss_status_code_long_warning_s, print.notable);
+    fl_print_format("%[' parameter when not also specifying the '%]", print.to, print.context, print.context);
+    fl_print_format("%[%r%r%]", print.to, print.notable, f_console_symbol_long_enable_s, fss_status_code_long_number_s, print.notable);
+    fl_print_format("%[' parameter.%]%r", print.to, print.context, print.context, f_string_eol_s);
 
     f_file_stream_unlock(print.to);
 
@@ -32,7 +32,7 @@ extern "C" {
 
     if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
 
-    fll_print_format("%[No status code is specified.%]%r", print.to.stream, print.context, print.context, f_string_eol_s);
+    fll_print_format("%[No status code is specified.%]%r", print.to, print.context, print.context, f_string_eol_s);
 
     return F_none;
   }
@@ -43,25 +43,25 @@ extern "C" {
 
     f_file_stream_lock(print.to);
 
-    f_print_dynamic_raw(setting->line_first, print.to.stream);
+    f_print_dynamic_raw(setting->line_first, print.to);
 
     fll_program_print_help_header(print, fss_status_code_program_name_long_s, fss_status_code_program_version_s);
 
     fll_program_print_help_option_standard(print);
 
-    f_print_dynamic_raw(f_string_eol_s, print.to.stream);
+    f_print_dynamic_raw(f_string_eol_s, print.to);
 
     fll_program_print_help_option(print, fss_status_code_short_fine_s, fss_status_code_long_fine_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Print F_true or F_false if status code is neither an error nor a warning or print number with neither the error code nor the warning code bits set.");
     fll_program_print_help_option(print, fss_status_code_short_warning_s, fss_status_code_long_warning_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Print F_true or F_false if status code is a warning or print number with warning code bit set.");
     fll_program_print_help_option(print, fss_status_code_short_error_s, fss_status_code_long_error_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "  Print F_true or F_false if status code is an error or print number with error code bit set.");
     fll_program_print_help_option(print, fss_status_code_short_number_s, fss_status_code_long_number_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Convert status code name to number.");
 
-    f_print_dynamic_raw(f_string_eol_s, print.to.stream);
-    f_print_dynamic_raw(f_string_eol_s, print.to.stream);
+    f_print_dynamic_raw(f_string_eol_s, print.to);
+    f_print_dynamic_raw(f_string_eol_s, print.to);
 
     fll_program_print_help_usage(print, fss_status_code_program_name_s, fss_status_code_program_help_parameters_s);
 
-    f_print_dynamic_raw(setting->line_last, print.to.stream);
+    f_print_dynamic_raw(setting->line_last, print.to);
 
     f_file_stream_flush(print.to);
     f_file_stream_unlock(print.to);
@@ -79,7 +79,7 @@ extern "C" {
       if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
     }
 
-    f_print_dynamic_raw(setting->line_first, print.to.stream);
+    f_print_dynamic_raw(setting->line_first, print.to);
 
     return F_none;
   }
@@ -94,7 +94,7 @@ extern "C" {
       if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
     }
 
-    fll_print_dynamic_raw(setting->line_first, print.to.stream);
+    fll_print_dynamic_raw(setting->line_first, print.to);
 
     return F_none;
   }
@@ -109,7 +109,7 @@ extern "C" {
       if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
     }
 
-    fll_print_dynamic_raw(setting->line_last, print.to.stream);
+    fll_print_dynamic_raw(setting->line_last, print.to);
 
     return F_none;
   }
@@ -124,7 +124,7 @@ extern "C" {
       if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
     }
 
-    f_print_dynamic_raw(setting->line_last, print.to.stream);
+    f_print_dynamic_raw(setting->line_last, print.to);
 
     return F_none;
   }

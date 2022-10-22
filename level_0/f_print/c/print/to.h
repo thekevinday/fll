@@ -29,8 +29,8 @@ extern "C" {
  *   The string to output.
  * @param length
  *   The total number of characters to print.
- * @param id
- *   The file descriptor to output to.
+ * @param file
+ *   The file structure containing the file descriptor to output to.
  *
  * @return
  *   F_none on success.
@@ -55,7 +55,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_print_to_
-  extern f_status_t f_print_to(const f_string_t string, const f_array_length_t length, const int id);
+  extern f_status_t f_print_to(const f_string_t string, const f_array_length_t length, const f_file_t file);
 #endif // _di_f_print_to_
 
 /**
@@ -65,8 +65,8 @@ extern "C" {
  *
  * @param character
  *   The character to verify as safe or not and then print.
- * @param id
- *   The file descriptor to output to.
+ * @param file
+ *   The file structure containing the file descriptor to output to.
  *
  * @return
  *   F_none on success.
@@ -91,7 +91,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_print_to_character_
-  extern f_status_t f_print_to_character(const f_char_t character, const int id);
+  extern f_status_t f_print_to_character(const f_char_t character, const f_file_t file);
 #endif // _di_f_print_to_character_
 
 /**
@@ -105,8 +105,8 @@ extern "C" {
  *
  * @param character
  *   The character to verify as safe or not and then print.
- * @param id
- *   The file descriptor to output to.
+ * @param file
+ *   The file structure containing the file descriptor to output to.
  *
  * @return
  *   F_none on success.
@@ -131,7 +131,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_print_to_character_safely_
-  extern f_status_t f_print_to_character_safely(const f_char_t character, const int id);
+  extern f_status_t f_print_to_character_safely(const f_char_t character, const f_file_t file);
 #endif // _di_f_print_to_character_safely_
 
 /**
@@ -143,8 +143,8 @@ extern "C" {
  *
  * @param buffer
  *   The string to output.
- * @param id
- *   The file descriptor to output to.
+ * @param file
+ *   The file structure containing the file descriptor to output to.
  *
  * @return
  *   F_none on success.
@@ -169,7 +169,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_print_to_dynamic_
-  extern f_status_t f_print_to_dynamic(const f_string_static_t buffer, const int id);
+  extern f_status_t f_print_to_dynamic(const f_string_static_t buffer, const f_file_t file);
 #endif // _di_f_print_to_dynamic_
 
 /**
@@ -183,8 +183,8 @@ extern "C" {
  *   The string to output.
  * @param range
  *   The range within the provided string to print.
- * @param id
- *   The file descriptor to output to.
+ * @param file
+ *   The file structure containing the file descriptor to output to.
  *
  * @return
  *   F_none on success.
@@ -209,7 +209,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_print_to_dynamic_partial_
-  extern f_status_t f_print_to_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const int id);
+  extern f_status_t f_print_to_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const f_file_t file);
 #endif // _di_f_print_to_dynamic_partial_
 
 /**
@@ -225,8 +225,8 @@ extern "C" {
  *   The string to output.
  * @param range
  *   The range within the provided string to print.
- * @param id
- *   The file descriptor to output to.
+ * @param file
+ *   The file structure containing the file descriptor to output to.
  *
  * @return
  *   F_none on success.
@@ -251,7 +251,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_print_to_dynamic_partial_raw_
-  extern f_status_t f_print_to_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const int id);
+  extern f_status_t f_print_to_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const f_file_t file);
 #endif // _di_f_print_to_dynamic_partial_raw_
 
 /**
@@ -272,8 +272,8 @@ extern "C" {
  *   The string to output.
  * @param range
  *   The range within the provided string to print.
- * @param id
- *   The file descriptor to output to.
+ * @param file
+ *   The file structure containing the file descriptor to output to.
  *
  * @return
  *   F_none on success.
@@ -298,7 +298,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_print_to_dynamic_partial_raw_safely_
-  extern f_status_t f_print_to_dynamic_partial_raw_safely(const f_string_static_t buffer, const f_string_range_t range, const int id);
+  extern f_status_t f_print_to_dynamic_partial_raw_safely(const f_string_static_t buffer, const f_string_range_t range, const f_file_t file);
 #endif // _di_f_print_to_dynamic_partial_raw_safely_
 
 /**
@@ -315,8 +315,8 @@ extern "C" {
  *   The string to output.
  * @param range
  *   The range within the provided string to print.
- * @param id
- *   The file descriptor to output to.
+ * @param file
+ *   The file structure containing the file descriptor to output to.
  *
  * @return
  *   F_none on success.
@@ -341,7 +341,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_print_to_dynamic_partial_safely_
-  extern f_status_t f_print_to_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const int id);
+  extern f_status_t f_print_to_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const f_file_t file);
 #endif // _di_f_print_to_dynamic_partial_safely_
 
 /**
@@ -355,8 +355,8 @@ extern "C" {
  *
  * @param buffer
  *   The string to output.
- * @param id
- *   The file descriptor to output to.
+ * @param file
+ *   The file structure containing the file descriptor to output to.
  *
  * @return
  *   F_none on success.
@@ -381,7 +381,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_print_to_dynamic_raw_
-  extern f_status_t f_print_to_dynamic_raw(const f_string_static_t buffer, const int id);
+  extern f_status_t f_print_to_dynamic_raw(const f_string_static_t buffer, const f_file_t file);
 #endif // _di_f_print_to_dynamic_raw_
 
 /**
@@ -400,8 +400,8 @@ extern "C" {
  *
  * @param buffer
  *   The string to output.
- * @param id
- *   The file descriptor to output to.
+ * @param file
+ *   The file structure containing the file descriptor to output to.
  *
  * @return
  *   F_none on success.
@@ -426,7 +426,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_print_to_dynamic_raw_safely_
-  extern f_status_t f_print_to_dynamic_raw_safely(const f_string_static_t buffer, const int id);
+  extern f_status_t f_print_to_dynamic_raw_safely(const f_string_static_t buffer, const f_file_t file);
 #endif // _di_f_print_to_dynamic_raw_safely_
 
 /**
@@ -441,8 +441,8 @@ extern "C" {
  *
  * @param buffer
  *   The string to output.
- * @param id
- *   The file descriptor to output to.
+ * @param file
+ *   The file structure containing the file descriptor to output to.
  *
  * @return
  *   F_none on success.
@@ -467,7 +467,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_print_to_dynamic_safely_
-  extern f_status_t f_print_to_dynamic_safely(const f_string_static_t buffer, const int id);
+  extern f_status_t f_print_to_dynamic_safely(const f_string_static_t buffer, const f_file_t file);
 #endif // _di_f_print_to_dynamic_safely_
 
 /**
@@ -487,8 +487,8 @@ extern "C" {
  * @param except
  *   An array of locations within the given string to not print.
  *   The array of locations is required/assumed to be in linear order.
- * @param id
- *   The file descriptor to output to.
+ * @param file
+ *   The file structure containing the file descriptor to output to.
  *
  * @return
  *   F_none on success.
@@ -513,7 +513,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_print_to_except_
-  extern f_status_t f_print_to_except(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, const int id);
+  extern f_status_t f_print_to_except(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, const f_file_t file);
 #endif // _di_f_print_to_except_
 
 /**
@@ -529,8 +529,8 @@ extern "C" {
  * @param except
  *   An array of locations within the given string to not print.
  *   The array of locations is required/assumed to be in linear order.
- * @param id
- *   The file descriptor to output to.
+ * @param file
+ *   The file structure containing the file descriptor to output to.
  *
  * @return
  *   F_none on success.
@@ -555,7 +555,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_print_to_except_dynamic_
-  extern f_status_t f_print_to_except_dynamic(const f_string_static_t buffer, const f_array_lengths_t except, const int id);
+  extern f_status_t f_print_to_except_dynamic(const f_string_static_t buffer, const f_array_lengths_t except, const f_file_t file);
 #endif // _di_f_print_to_except_dynamic_
 
 /**
@@ -573,8 +573,8 @@ extern "C" {
  * @param except
  *   An array of locations within the given string to not print.
  *   The array of locations is required/assumed to be in linear order.
- * @param id
- *   The file descriptor to output to.
+ * @param file
+ *   The file structure containing the file descriptor to output to.
  *
  * @return
  *   F_none on success.
@@ -599,7 +599,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_print_to_except_dynamic_partial_
-  extern f_status_t f_print_to_except_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, const int id);
+  extern f_status_t f_print_to_except_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, const f_file_t file);
 #endif // _di_f_print_to_except_dynamic_partial_
 
 /**
@@ -619,8 +619,8 @@ extern "C" {
  * @param except
  *   An array of locations within the given string to not print.
  *   The array of locations is required/assumed to be in linear order.
- * @param id
- *   The file descriptor to output to.
+ * @param file
+ *   The file structure containing the file descriptor to output to.
  *
  * @return
  *   F_none on success.
@@ -645,7 +645,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_print_to_except_dynamic_partial_raw_
-  extern f_status_t f_print_to_except_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, const int id);
+  extern f_status_t f_print_to_except_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, const f_file_t file);
 #endif // _di_f_print_to_except_dynamic_partial_raw_
 
 /**
@@ -670,8 +670,8 @@ extern "C" {
  * @param except
  *   An array of locations within the given string to not print.
  *   The array of locations is required/assumed to be in linear order.
- * @param id
- *   The file descriptor to output to.
+ * @param file
+ *   The file structure containing the file descriptor to output to.
  *
  * @return
  *   F_none on success.
@@ -696,7 +696,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_print_to_except_dynamic_partial_raw_safely_
-  extern f_status_t f_print_to_except_dynamic_partial_raw_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, const int id);
+  extern f_status_t f_print_to_except_dynamic_partial_raw_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, const f_file_t file);
 #endif // _di_f_print_to_except_dynamic_partial_raw_safely_
 
 /**
@@ -710,8 +710,8 @@ extern "C" {
  * Will not print any 1-byte character at a location specified in except array.
  * Will print up to the specified range within the buffer.
  *
- * @param id
- *   The file descriptor to output to.
+ * @param file
+ *   The file structure containing the file descriptor to output to.
  * @param buffer
  *   The string to output.
  * @param range
@@ -743,7 +743,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_print_to_except_dynamic_partial_safely_
-  extern f_status_t f_print_to_except_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, const int id);
+  extern f_status_t f_print_to_except_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, const f_file_t file);
 #endif // _di_f_print_to_except_dynamic_partial_safely_
 
 /**
@@ -761,8 +761,8 @@ extern "C" {
  * @param except
  *   An array of locations within the given string to not print.
  *   The array of locations is required/assumed to be in linear order.
- * @param id
- *   The file descriptor to output to.
+ * @param file
+ *   The file structure containing the file descriptor to output to.
  *
  * @return
  *   F_none on success.
@@ -787,7 +787,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_print_to_except_dynamic_raw_
-  extern f_status_t f_print_to_except_dynamic_raw(const f_string_static_t buffer, const f_array_lengths_t except, const int id);
+  extern f_status_t f_print_to_except_dynamic_raw(const f_string_static_t buffer, const f_array_lengths_t except, const f_file_t file);
 #endif // _di_f_print_to_except_dynamic_raw_
 
 /**
@@ -810,8 +810,8 @@ extern "C" {
  * @param except
  *   An array of locations within the given string to not print.
  *   The array of locations is required/assumed to be in linear order.
- * @param id
- *   The file descriptor to output to.
+ * @param file
+ *   The file structure containing the file descriptor to output to.
  *
  * @return
  *   F_none on success.
@@ -836,7 +836,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_print_to_except_dynamic_raw_safely_
-  extern f_status_t f_print_to_except_dynamic_raw_safely(const f_string_static_t buffer, const f_array_lengths_t except, const int id);
+  extern f_status_t f_print_to_except_dynamic_raw_safely(const f_string_static_t buffer, const f_array_lengths_t except, const f_file_t file);
 #endif // _di_f_print_to_except_dynamic_raw_safely_
 
 /**
@@ -855,8 +855,8 @@ extern "C" {
  * @param except
  *   An array of locations within the given string to not print.
  *   The array of locations is required/assumed to be in linear order.
- * @param id
- *   The file descriptor to output to.
+ * @param file
+ *   The file structure containing the file descriptor to output to.
  *
  * @return
  *   F_none on success.
@@ -881,7 +881,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_print_to_except_dynamic_safely_
-  extern f_status_t f_print_to_except_dynamic_safely(const f_string_static_t buffer, const f_array_lengths_t except, const int id);
+  extern f_status_t f_print_to_except_dynamic_safely(const f_string_static_t buffer, const f_array_lengths_t except, const f_file_t file);
 #endif // _di_f_print_to_except_dynamic_safely_
 
 /**
@@ -909,8 +909,8 @@ extern "C" {
  * @param except_in
  *   An array of ranges within the string to not print.
  *   The array of ranges is required/assumed to be in linear order.
- * @param id
- *   The file descriptor to output to.
+ * @param file
+ *   The file structure containing the file descriptor to output to.
  *
  * @return
  *   F_none on success.
@@ -935,7 +935,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_print_to_except_in_
-  extern f_status_t f_print_to_except_in(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const int id);
+  extern f_status_t f_print_to_except_in(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file);
 #endif // _di_f_print_to_except_in_
 
 /**
@@ -957,8 +957,8 @@ extern "C" {
  * @param except_in
  *   An array of ranges within the string to not print.
  *   The array of ranges is required/assumed to be in linear order.
- * @param id
- *   The file descriptor to output to.
+ * @param file
+ *   The file structure containing the file descriptor to output to.
  *
  * @return
  *   F_none on success.
@@ -983,7 +983,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_print_to_except_in_dynamic_
-  extern f_status_t f_print_to_except_in_dynamic(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const int id);
+  extern f_status_t f_print_to_except_in_dynamic(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file);
 #endif // _di_f_print_to_except_in_dynamic_
 
 /**
@@ -1007,8 +1007,8 @@ extern "C" {
  * @param except_in
  *   An array of ranges within the string to not print.
  *   The array of ranges is required/assumed to be in linear order.
- * @param id
- *   The file descriptor to output to.
+ * @param file
+ *   The file structure containing the file descriptor to output to.
  *
  * @return
  *   F_none on success.
@@ -1033,7 +1033,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_print_dynamic_except_partial_
-  extern f_status_t f_print_to_except_in_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const int id);
+  extern f_status_t f_print_to_except_in_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file);
 #endif // _di_f_print_to_except_in_dynamic_partial_
 
 /**
@@ -1059,8 +1059,8 @@ extern "C" {
  * @param except_in
  *   An array of ranges within the string to not print.
  *   The array of ranges is required/assumed to be in linear order.
- * @param id
- *   The file descriptor to output to.
+ * @param file
+ *   The file structure containing the file descriptor to output to.
  *
  * @return
  *   F_none on success.
@@ -1085,7 +1085,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_print_dynamic_except_partial_raw_
-  extern f_status_t f_print_to_except_in_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const int id);
+  extern f_status_t f_print_to_except_in_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file);
 #endif // _di_f_print_to_except_in_dynamic_partial_raw_
 
 /**
@@ -1111,8 +1111,8 @@ extern "C" {
  * @param except_in
  *   An array of ranges within the string to not print.
  *   The array of ranges is required/assumed to be in linear order.
- * @param id
- *   The file descriptor to output to.
+ * @param file
+ *   The file structure containing the file descriptor to output to.
  *
  * @return
  *   F_none on success.
@@ -1137,7 +1137,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_print_dynamic_except_partial_raw_safely_
-  extern f_status_t f_print_to_except_in_dynamic_partial_raw_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const int id);
+  extern f_status_t f_print_to_except_in_dynamic_partial_raw_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file);
 #endif // _di_f_print_to_except_in_dynamic_partial_raw_safely_
 
 /**
@@ -1161,8 +1161,8 @@ extern "C" {
  * @param except_in
  *   An array of ranges within the string to not print.
  *   The array of ranges is required/assumed to be in linear order.
- * @param id
- *   The file descriptor to output to.
+ * @param file
+ *   The file structure containing the file descriptor to output to.
  *
  * @return
  *   F_none on success.
@@ -1189,7 +1189,7 @@ extern "C" {
  * @see f_utf_is_valid()
  */
 #ifndef _di_f_print_dynamic_except_partial_safely_
-  extern f_status_t f_print_to_except_in_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const int id);
+  extern f_status_t f_print_to_except_in_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file);
 #endif // _di_f_print_to_except_in_dynamic_partial_safely_
 
 /**
@@ -1213,8 +1213,8 @@ extern "C" {
  * @param except_in
  *   An array of ranges within the string to not print.
  *   The array of ranges is required/assumed to be in linear order.
- * @param id
- *   The file descriptor to output to.
+ * @param file
+ *   The file structure containing the file descriptor to output to.
  *
  * @return
  *   F_none on success.
@@ -1239,7 +1239,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_print_to_except_in_dynamic_raw_
-  extern f_status_t f_print_to_except_in_dynamic_raw(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const int id);
+  extern f_status_t f_print_to_except_in_dynamic_raw(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file);
 #endif // _di_f_print_to_except_in_dynamic_raw_
 
 /**
@@ -1266,8 +1266,8 @@ extern "C" {
  * @param except_in
  *   An array of ranges within the string to not print.
  *   The array of ranges is required/assumed to be in linear order.
- * @param id
- *   The file descriptor to output to.
+ * @param file
+ *   The file structure containing the file descriptor to output to.
  *
  * @return
  *   F_none on success.
@@ -1292,7 +1292,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_print_to_except_in_dynamic_raw_safely_
-  extern f_status_t f_print_to_except_in_dynamic_raw_safely(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const int id);
+  extern f_status_t f_print_to_except_in_dynamic_raw_safely(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file);
 #endif // _di_f_print_to_except_in_dynamic_raw_safely_
 
 /**
@@ -1317,8 +1317,8 @@ extern "C" {
  * @param except_in
  *   An array of ranges within the string to not print.
  *   The array of ranges is required/assumed to be in linear order.
- * @param id
- *   The file descriptor to output to.
+ * @param file
+ *   The file structure containing the file descriptor to output to.
  *
  * @return
  *   F_none on success.
@@ -1345,7 +1345,7 @@ extern "C" {
  * @see f_utf_is_valid()
  */
 #ifndef _di_f_print_to_except_in_dynamic_safely_
-  extern f_status_t f_print_to_except_in_dynamic_safely(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const int id);
+  extern f_status_t f_print_to_except_in_dynamic_safely(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file);
 #endif // _di_f_print_to_except_in_dynamic_safely_
 
 /**
@@ -1375,8 +1375,8 @@ extern "C" {
  * @param except_in
  *   An array of ranges within the string to not print.
  *   The array of ranges is required/assumed to be in linear order.
- * @param id
- *   The file descriptor to output to.
+ * @param file
+ *   The file structure containing the file descriptor to output to.
  *
  * @return
  *   F_none on success.
@@ -1401,7 +1401,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_print_to_except_in_raw_
-  extern f_status_t f_print_to_except_in_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const int id);
+  extern f_status_t f_print_to_except_in_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file);
 #endif // _di_f_print_to_except_in_raw_
 
 /**
@@ -1434,8 +1434,8 @@ extern "C" {
  * @param except_in
  *   An array of ranges within the string to not print.
  *   The array of ranges is required/assumed to be in linear order.
- * @param id
- *   The file descriptor to output to.
+ * @param file
+ *   The file structure containing the file descriptor to output to.
  *
  * @return
  *   F_none on success.
@@ -1460,7 +1460,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_print_to_except_in_raw_safely_
-  extern f_status_t f_print_to_except_in_raw_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const int id);
+  extern f_status_t f_print_to_except_in_raw_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file);
 #endif // _di_f_print_to_except_in_raw_safely_
 
 /**
@@ -1491,8 +1491,8 @@ extern "C" {
  * @param except_in
  *   An array of ranges within the string to not print.
  *   The array of ranges is required/assumed to be in linear order.
- * @param id
- *   The file descriptor to output to.
+ * @param file
+ *   The file structure containing the file descriptor to output to.
  *
  * @return
  *   F_none on success.
@@ -1519,7 +1519,7 @@ extern "C" {
  * @see f_utf_is_valid()
  */
 #ifndef _di_f_print_to_except_in_safely_
-  extern f_status_t f_print_to_except_in_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const int id);
+  extern f_status_t f_print_to_except_in_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file);
 #endif // _di_f_print_to_except_in_safely_
 
 /**
@@ -1541,8 +1541,8 @@ extern "C" {
  * @param except
  *   An array of locations within the given string to not print.
  *   The array of locations is required/assumed to be in linear order.
- * @param id
- *   The file descriptor to output to.
+ * @param file
+ *   The file structure containing the file descriptor to output to.
  *
  * @return
  *   F_none on success.
@@ -1567,7 +1567,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_print_to_except_raw_
-  extern f_status_t f_print_to_except_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, const int id);
+  extern f_status_t f_print_to_except_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, const f_file_t file);
 #endif // _di_f_print_to_except_raw_
 
 /**
@@ -1594,8 +1594,8 @@ extern "C" {
  * @param except
  *   An array of locations within the given string to not print.
  *   The array of locations is required/assumed to be in linear order.
- * @param id
- *   The file descriptor to output to.
+ * @param file
+ *   The file structure containing the file descriptor to output to.
  *
  * @return
  *   F_none on success.
@@ -1620,7 +1620,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_print_to_except_raw_safely_
-  extern f_status_t f_print_to_except_raw_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, const int id);
+  extern f_status_t f_print_to_except_raw_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, const f_file_t file);
 #endif // _di_f_print_to_except_raw_safely_
 
 /**
@@ -1643,8 +1643,8 @@ extern "C" {
  * @param except
  *   An array of locations within the given string to not print.
  *   The array of locations is required/assumed to be in linear order.
- * @param id
- *   The file descriptor to output to.
+ * @param file
+ *   The file structure containing the file descriptor to output to.
  *
  * @return
  *   F_none on success.
@@ -1669,7 +1669,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_print_to_except_safely_
-  extern f_status_t f_print_to_except_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, const int id);
+  extern f_status_t f_print_to_except_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, const f_file_t file);
 #endif // _di_f_print_to_except_safely_
 
 /**
@@ -1685,8 +1685,8 @@ extern "C" {
  *   The string to output.
  * @param length
  *   The total number of characters to print.
- * @param id
- *   The file descriptor to output to.
+ * @param file
+ *   The file structure containing the file descriptor to output to.
  *
  * @return
  *   F_none on success.
@@ -1711,7 +1711,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_print_to_raw_
-  extern f_status_t f_print_to_raw(const f_string_t string, const f_array_length_t length, const int id);
+  extern f_status_t f_print_to_raw(const f_string_t string, const f_array_length_t length, const f_file_t file);
 #endif // _di_f_print_to_raw_
 
 /**
@@ -1732,8 +1732,8 @@ extern "C" {
  *   The string to output.
  * @param length
  *   The total number of characters to print.
- * @param id
- *   The file descriptor to output to.
+ * @param file
+ *   The file structure containing the file descriptor to output to.
  *
  * @return
  *   F_none on success.
@@ -1758,7 +1758,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_print_to_raw_safely_
-  extern f_status_t f_print_to_raw_safely(const f_string_t string, const f_array_length_t length, const int id);
+  extern f_status_t f_print_to_raw_safely(const f_string_t string, const f_array_length_t length, const f_file_t file);
 #endif // _di_f_print_to_raw_safely_
 
 /**
@@ -1772,8 +1772,8 @@ extern "C" {
  *
  * @param string
  *   The string to output.
- * @param id
- *   The file descriptor to output to.
+ * @param file
+ *   The file structure containing the file descriptor to output to.
  *
  * @return
  *   F_none on success.
@@ -1798,7 +1798,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_print_to_raw_terminated_
-  extern f_status_t f_print_to_raw_terminated(const f_string_t string, const int id);
+  extern f_status_t f_print_to_raw_terminated(const f_string_t string, const f_file_t file);
 #endif // _di_f_print_to_raw_terminated_
 
 /**
@@ -1815,8 +1815,8 @@ extern "C" {
  *   The string to output.
  * @param length
  *   The total number of characters to print.
- * @param id
- *   The file descriptor to output to.
+ * @param file
+ *   The file structure containing the file descriptor to output to.
  *
  * @return
  *   F_none on success.
@@ -1841,7 +1841,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_print_to_safely_
-  extern f_status_t f_print_to_safely(const f_string_t string, const f_array_length_t length, const int id);
+  extern f_status_t f_print_to_safely(const f_string_t string, const f_array_length_t length, const f_file_t file);
 #endif // _di_f_print_to_safely_
 
 /**
@@ -1857,8 +1857,8 @@ extern "C" {
  *
  * @param string
  *   The string to output.
- * @param id
- *   The file descriptor to output to.
+ * @param file
+ *   The file structure containing the file descriptor to output to.
  *
  * @return
  *   F_none on success.
@@ -1885,7 +1885,7 @@ extern "C" {
  * @see f_utf_is_valid()
  */
 #ifndef _di_f_print_to_safely_terminated_
-  extern f_status_t f_print_to_safely_terminated(const f_string_t string, const int id);
+  extern f_status_t f_print_to_safely_terminated(const f_string_t string, const f_file_t file);
 #endif // _di_f_print_to_safely_terminated_
 
 /**
@@ -1898,8 +1898,8 @@ extern "C" {
  *
  * @param string
  *   The string to output.
- * @param id
- *   The file descriptor to output to.
+ * @param file
+ *   The file structure containing the file descriptor to output to.
  *
  * @return
  *   F_none on success.
@@ -1924,7 +1924,7 @@ extern "C" {
  * @see write()
  */
 #ifndef _di_f_print_to_terminated_
-  extern f_status_t f_print_to_terminated(const f_string_t string, const int id);
+  extern f_status_t f_print_to_terminated(const f_string_t string, const f_file_t file);
 #endif // _di_f_print_to_terminated_
 
 #ifdef __cplusplus

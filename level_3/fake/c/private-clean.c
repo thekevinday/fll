@@ -10,13 +10,13 @@ extern "C" {
   f_status_t fake_clean_operate(fake_data_t * const data) {
 
     if (data->main->output.verbosity != f_console_verbosity_quiet_e && data->main->output.verbosity != f_console_verbosity_error_e) {
-      flockfile(data->main->output.to.stream);
+      flockfile(data->main->output.to);
 
-      fl_print_format("%r%[Deleting all files within build directory '%]", data->main->output.to.stream, f_string_eol_s, data->main->context.set.important, data->main->context.set.important);
-      fl_print_format("%[%Q%]", data->main->output.to.stream, data->main->context.set.notable, data->path_build, data->main->context.set.notable);
-      fl_print_format("%['.%]%r", data->main->output.to.stream, data->main->context.set.important, data->main->context.set.important, f_string_eol_s);
+      fl_print_format("%r%[Deleting all files within build directory '%]", data->main->output.to, f_string_eol_s, data->main->context.set.important, data->main->context.set.important);
+      fl_print_format("%[%Q%]", data->main->output.to, data->main->context.set.notable, data->path_build, data->main->context.set.notable);
+      fl_print_format("%['.%]%r", data->main->output.to, data->main->context.set.important, data->main->context.set.important, f_string_eol_s);
 
-      funlockfile(data->main->output.to.stream);
+      funlockfile(data->main->output.to);
     }
 
     f_status_t status = F_none;
@@ -30,7 +30,7 @@ extern "C" {
 
     if (F_status_set_fine(status) == F_file_found_not || F_status_set_fine(status) == F_directory) {
       if (data->main->error.verbosity >= f_console_verbosity_verbose_e) {
-        fll_print_format("The build directory '%[%Q%]' does not exist.%r", data->main->warning.to.stream, data->main->context.set.notable, data->path_build, data->main->context.set.notable, f_string_eol_s);
+        fll_print_format("The build directory '%[%Q%]' does not exist.%r", data->main->warning.to, data->main->context.set.notable, data->path_build, data->main->context.set.notable, f_string_eol_s);
       }
 
       status = F_none;

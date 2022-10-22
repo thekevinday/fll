@@ -119,9 +119,9 @@ extern "C" {
           if (main->parameters.array[parameter_code[i]].result == f_console_result_found_e) {
             f_file_stream_lock(main->error.to);
 
-            fl_print_format("%r%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-            fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, parameter_name[i], main->error.notable);
-            fl_print_format("%[' requires a %s.%]%r", main->error.to.stream, main->error.context, parameter_message[i], main->error.context, f_string_eol_s);
+            fl_print_format("%r%[%QThe parameter '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+            fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_enable_s, parameter_name[i], main->error.notable);
+            fl_print_format("%[' requires a %s.%]%r", main->error.to, main->error.context, parameter_message[i], main->error.context, f_string_eol_s);
 
             f_file_stream_unlock(main->error.to);
 
@@ -215,9 +215,9 @@ extern "C" {
           if (!length) {
             f_file_stream_lock(main->error.to);
 
-            fl_print_format("%r%[%QThe value for the parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-            fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_basic_read_long_delimit_s, main->error.notable);
-            fl_print_format("%[' must not be empty.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+            fl_print_format("%r%[%QThe value for the parameter '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+            fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_enable_s, fss_basic_read_long_delimit_s, main->error.notable);
+            fl_print_format("%[' must not be empty.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
 
             f_file_stream_unlock(main->error.to);
 
@@ -348,9 +348,9 @@ extern "C" {
       if (F_status_is_error_not(status) && main->parameters.array[fss_basic_read_parameter_select_e].result == f_console_result_found_e) {
         f_file_stream_lock(main->error.to);
 
-        fl_print_format("%r%[%QThe '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-        fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_basic_read_long_select_s, main->error.notable);
-        fl_print_format("%[' parameter requires a positive number.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+        fl_print_format("%r%[%QThe '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+        fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_enable_s, fss_basic_read_long_select_s, main->error.notable);
+        fl_print_format("%[' parameter requires a positive number.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
 
         f_file_stream_unlock(main->error.to);
 
@@ -519,7 +519,7 @@ extern "C" {
       fss_basic_read_data_delete_simple(&data);
     }
     else {
-      fll_print_format("%r%[%QYou failed to specify one or more files.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context, f_string_eol_s);
+      fll_print_format("%r%[%QYou failed to specify one or more files.%]%r", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context, f_string_eol_s);
       status = F_status_set_error(F_parameter);
     }
 
@@ -527,7 +527,7 @@ extern "C" {
       if (F_status_set_fine(status) == F_interrupt) {
         f_file_stream_flush(main->output.to);
 
-        fll_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
+        fll_print_dynamic_raw(f_string_eol_s, main->output.to);
       }
     }
 

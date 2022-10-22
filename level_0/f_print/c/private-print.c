@@ -6,12 +6,12 @@ extern "C" {
 #endif
 
 #if !defined(_di_f_print_) || !defined(_di_f_print_dynamic_) || !defined(_di_f_print_dynamic_partial_)
-  f_status_t private_f_print(const f_string_t string, const f_array_length_t length, FILE * const stream) {
+  f_status_t private_f_print(const f_string_t string, const f_array_length_t length, const f_file_t file) {
 
     f_array_length_t total = 0;
     f_array_length_t count = 0;
 
-    clearerr_unlocked(stream);
+    clearerr_unlocked(file.stream);
 
     for (register f_array_length_t i = 0; i < length; ) {
 
@@ -25,8 +25,8 @@ extern "C" {
         count = 0;
 
         do {
-          count += fwrite_unlocked(string + i + count, 1, total - count, stream);
-          if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+          count += fwrite_unlocked(string + i + count, 1, total - count, file.stream);
+          if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
 
         } while (count < total);
 
@@ -65,7 +65,7 @@ extern "C" {
 #endif // !defined(_di_f_print_character_safely_get_) || !defined(_di_f_print_dynamic_partial_safely_) || !defined(_di_f_print_dynamic_safely_) || !defined(_di_f_print_except_dynamic_partial_safely_) || !defined(_di_f_print_except_dynamic_safely_) || !defined(_di_f_print_except_in_dynamic_safely_) || !defined(_di_f_print_except_in_dynamic_partial_safely_) || !defined(_di_f_print_except_in_safely_) || !defined(_di_f_print_except_safely_) || !defined(_di_f_print_safely_) || !defined(_di_f_print_safely_terminated_) || !defined(_di_f_print_to_dynamic_partial_safely_) || !defined(_di_f_print_to_dynamic_safely_) || !defined(_di_f_print_to_except_dynamic_partial_safely_) || !defined(_di_f_print_to_except_dynamic_safely_) || !defined(_di_f_print_to_except_in_dynamic_safely_) || !defined(_di_f_print_to_except_in_dynamic_partial_safely_) || !defined(_di_f_print_to_except_in_safely_) || !defined(_di_f_print_to_except_safely_) || !defined(_di_f_print_to_safely_)
 
 #if !defined(_di_f_print_except_) || !defined(_di_f_print_except_dynamic_) || !defined(_di_f_print_except_dynamic_partial_)
-  f_status_t private_f_print_except(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except, FILE * const stream) {
+  f_status_t private_f_print_except(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except, const f_file_t file) {
 
     register f_array_length_t i = offset;
     f_array_length_t j = 0;
@@ -73,7 +73,7 @@ extern "C" {
     f_array_length_t total = 0;
     f_array_length_t count = 0;
 
-    clearerr_unlocked(stream);
+    clearerr_unlocked(file.stream);
 
     while (i < stop) {
 
@@ -86,8 +86,8 @@ extern "C" {
           count = 0;
 
           do {
-            count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+            count += fwrite_unlocked(string + start + count, 1, total - count, file.stream);
+            if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
 
           } while (count < total);
 
@@ -108,8 +108,8 @@ extern "C" {
           count = 0;
 
           do {
-            count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+            count += fwrite_unlocked(string + start + count, 1, total - count, file.stream);
+            if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
 
           } while (count < total);
 
@@ -128,7 +128,7 @@ extern "C" {
 #endif // !defined(_di_f_print_except_) || !defined(_di_f_print_except_dynamic_) || !defined(_di_f_print_except_dynamic_partial_)
 
 #if !defined(_di_f_print_except_in_) || !defined(_di_f_print_except_in_dynamic_) || !defined(_di_f_print_except_in_dynamic_partial_)
-  f_status_t private_f_print_except_in(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE * const stream) {
+  f_status_t private_f_print_except_in(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
 
     f_array_length_t i = offset;
     f_array_length_t at = 0;
@@ -137,7 +137,7 @@ extern "C" {
     f_array_length_t total = 0;
     f_array_length_t count = 0;
 
-    clearerr_unlocked(stream);
+    clearerr_unlocked(file.stream);
 
     while (i < stop) {
 
@@ -150,8 +150,8 @@ extern "C" {
           count = 0;
 
           do {
-            count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+            count += fwrite_unlocked(string + start + count, 1, total - count, file.stream);
+            if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
 
           } while (count < total);
 
@@ -173,8 +173,8 @@ extern "C" {
             count = 0;
 
             do {
-              count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-              if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+              count += fwrite_unlocked(string + start + count, 1, total - count, file.stream);
+              if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
 
             } while (count < total);
 
@@ -197,8 +197,8 @@ extern "C" {
           count = 0;
 
           do {
-            count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+            count += fwrite_unlocked(string + start + count, 1, total - count, file.stream);
+            if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
 
           } while (count < total);
 
@@ -217,7 +217,7 @@ extern "C" {
 #endif // !defined(_di_f_print_except_in_) || !defined(_di_f_print_except_in_dynamic_) || !defined(_di_f_print_except_in_dynamic_partial_)
 
 #if !defined(_di_f_print_except_in_raw_) || !defined(_di_f_print_except_in_dynamic_raw_) || !defined(_di_f_print_except_in_dynamic_partial_raw_)
-  f_status_t private_f_print_except_in_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE * const stream) {
+  f_status_t private_f_print_except_in_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
 
     f_array_length_t i = offset;
     f_array_length_t at = 0;
@@ -226,7 +226,7 @@ extern "C" {
     f_array_length_t total = 0;
     f_array_length_t count = 0;
 
-    clearerr_unlocked(stream);
+    clearerr_unlocked(file.stream);
 
     while (i < stop) {
 
@@ -239,8 +239,8 @@ extern "C" {
           count = 0;
 
           do {
-            count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+            count += fwrite_unlocked(string + start + count, 1, total - count, file.stream);
+            if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
 
           } while (count < total);
 
@@ -262,8 +262,8 @@ extern "C" {
             count = 0;
 
             do {
-              count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-              if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+              count += fwrite_unlocked(string + start + count, 1, total - count, file.stream);
+              if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
 
             } while (count < total);
 
@@ -284,8 +284,8 @@ extern "C" {
           count = 0;
 
           do {
-            count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+            count += fwrite_unlocked(string + start + count, 1, total - count, file.stream);
+            if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
 
           } while (count < total);
 
@@ -304,7 +304,7 @@ extern "C" {
 #endif // !defined(_di_f_print_except_in_raw_) || !defined(_di_f_print_except_in_dynamic_raw_) || !defined(_di_f_print_except_in_dynamic_partial_raw_)
 
 #if !defined(_di_f_print_except_in_raw_safely_) || !defined(_di_f_print_except_in_dynamic_raw_safely_) || !defined(_di_f_print_except_in_dynamic_partial_raw_safely_)
-  f_status_t private_f_print_except_in_raw_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE * const stream) {
+  f_status_t private_f_print_except_in_raw_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
 
     f_array_length_t i = offset;
     f_array_length_t at = 0;
@@ -317,7 +317,7 @@ extern "C" {
 
     uint8_t width = 0;
 
-    clearerr_unlocked(stream);
+    clearerr_unlocked(file.stream);
 
     while (i < stop) {
 
@@ -330,8 +330,8 @@ extern "C" {
           count = 0;
 
           do {
-            count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+            count += fwrite_unlocked(string + start + count, 1, total - count, file.stream);
+            if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
 
           } while (count < total);
 
@@ -353,8 +353,8 @@ extern "C" {
             count = 0;
 
             do {
-              count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-              if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+              count += fwrite_unlocked(string + start + count, 1, total - count, file.stream);
+              if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
 
             } while (count < total);
 
@@ -382,8 +382,8 @@ extern "C" {
           count = 0;
 
           do {
-            count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+            count += fwrite_unlocked(string + start + count, 1, total - count, file.stream);
+            if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
 
           } while (count < total);
 
@@ -393,8 +393,8 @@ extern "C" {
         count = 0;
 
         do {
-          count += fwrite_unlocked(safe.string + count, 1, safe.used - count, stream);
-          if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+          count += fwrite_unlocked(safe.string + count, 1, safe.used - count, file.stream);
+          if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
 
         } while (count < safe.used);
 
@@ -408,8 +408,8 @@ extern "C" {
         count = 0;
 
         do {
-          count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-          if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+          count += fwrite_unlocked(string + start + count, 1, total - count, file.stream);
+          if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
 
         } while (count < total);
 
@@ -425,8 +425,8 @@ extern "C" {
       count = 0;
 
       do {
-        count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-        if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+        count += fwrite_unlocked(string + start + count, 1, total - count, file.stream);
+        if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
 
       } while (count < total);
     }
@@ -436,7 +436,7 @@ extern "C" {
 #endif // !defined(_di_f_print_except_in_raw_safely_) || !defined(_di_f_print_except_in_dynamic_raw_safely_) || !defined(_di_f_print_except_in_dynamic_partial_raw_safely_)
 
 #if !defined(_di_f_print_except_in_safely_) || !defined(_di_f_print_except_in_dynamic_safely_) || !defined(_di_f_print_except_in_dynamic_partial_safely_)
-  f_status_t private_f_print_except_in_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except_at, const f_string_ranges_t except_in, FILE * const stream) {
+  f_status_t private_f_print_except_in_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
 
     f_array_length_t i = offset;
     f_array_length_t at = 0;
@@ -449,7 +449,7 @@ extern "C" {
 
     uint8_t width = 0;
 
-    clearerr_unlocked(stream);
+    clearerr_unlocked(file.stream);
 
     while (i < stop) {
 
@@ -462,8 +462,8 @@ extern "C" {
           count = 0;
 
           do {
-            count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+            count += fwrite_unlocked(string + start + count, 1, total - count, file.stream);
+            if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
 
           } while (count < total);
 
@@ -485,8 +485,8 @@ extern "C" {
           count = 0;
 
           do {
-            count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+            count += fwrite_unlocked(string + start + count, 1, total - count, file.stream);
+            if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
 
           } while (count < total);
 
@@ -509,8 +509,8 @@ extern "C" {
           count = 0;
 
           do {
-            count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+            count += fwrite_unlocked(string + start + count, 1, total - count, file.stream);
+            if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
 
           } while (count < total);
 
@@ -527,8 +527,8 @@ extern "C" {
           count = 0;
 
           do {
-            count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+            count += fwrite_unlocked(string + start + count, 1, total - count, file.stream);
+            if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
 
           } while (count < total);
 
@@ -538,8 +538,8 @@ extern "C" {
         count = 0;
 
         do {
-          count += fwrite_unlocked(safe.string + count, 1, safe.used - count, stream);
-          if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+          count += fwrite_unlocked(safe.string + count, 1, safe.used - count, file.stream);
+          if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
 
         } while (count < safe.used);
 
@@ -553,8 +553,8 @@ extern "C" {
         count = 0;
 
         do {
-          count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-          if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+          count += fwrite_unlocked(string + start + count, 1, total - count, file.stream);
+          if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
 
         } while (count < total);
 
@@ -570,8 +570,8 @@ extern "C" {
       count = 0;
 
       do {
-        count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-        if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+        count += fwrite_unlocked(string + start + count, 1, total - count, file.stream);
+        if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
 
       } while (count < total);
     }
@@ -581,7 +581,7 @@ extern "C" {
 #endif // !defined(_di_f_print_except_in_safely_) || !defined(_di_f_print_except_in_dynamic_safely_) || !defined(_di_f_print_except_in_dynamic_partial_safely_)
 
 #if !defined(_di_f_print_except_raw_) || !defined(_di_f_print_except_dynamic_raw_) || !defined(_di_f_print_except_dynamic_partial_raw_)
-  f_status_t private_f_print_except_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except, FILE * const stream) {
+  f_status_t private_f_print_except_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except, const f_file_t file) {
 
     register f_array_length_t i = offset;
     f_array_length_t j = 0;
@@ -589,7 +589,7 @@ extern "C" {
     f_array_length_t total = 0;
     f_array_length_t count = 0;
 
-    clearerr_unlocked(stream);
+    clearerr_unlocked(file.stream);
 
     while (i < stop) {
 
@@ -602,8 +602,8 @@ extern "C" {
           count = 0;
 
           do {
-            count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+            count += fwrite_unlocked(string + start + count, 1, total - count, file.stream);
+            if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
 
           } while (count < total);
 
@@ -622,8 +622,8 @@ extern "C" {
           count = 0;
 
           do {
-            count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+            count += fwrite_unlocked(string + start + count, 1, total - count, file.stream);
+            if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
 
           } while (count < total);
 
@@ -641,8 +641,8 @@ extern "C" {
       count = 0;
 
       do {
-        count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-        if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+        count += fwrite_unlocked(string + start + count, 1, total - count, file.stream);
+        if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
 
       } while (count < total);
     }
@@ -652,7 +652,7 @@ extern "C" {
 #endif // !defined(_di_f_print_except_raw_) || !defined(_di_f_print_except_dynamic_raw_) || !defined(_di_f_print_except_dynamic_partial_raw_)
 
 #if !defined(_di_f_print_except_raw_safely_) || !defined(_di_f_print_except_dynamic_raw_) || !defined(_di_f_print_except_dynamic_partial_raw_)
-  f_status_t private_f_print_except_raw_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except, FILE * const stream) {
+  f_status_t private_f_print_except_raw_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except, const f_file_t file) {
 
     f_array_length_t i = offset;
     f_array_length_t j = 0;
@@ -664,7 +664,7 @@ extern "C" {
 
     uint8_t width = 0;
 
-    clearerr_unlocked(stream);
+    clearerr_unlocked(file.stream);
 
     while (i < stop) {
 
@@ -677,8 +677,8 @@ extern "C" {
           count = 0;
 
           do {
-            count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+            count += fwrite_unlocked(string + start + count, 1, total - count, file.stream);
+            if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
 
           } while (count < total);
 
@@ -704,8 +704,8 @@ extern "C" {
           count = 0;
 
           do {
-            count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+            count += fwrite_unlocked(string + start + count, 1, total - count, file.stream);
+            if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
 
           } while (count < total);
 
@@ -715,8 +715,8 @@ extern "C" {
         count = 0;
 
         do {
-          count += fwrite_unlocked(safe.string + count, 1, safe.used - count, stream);
-          if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+          count += fwrite_unlocked(safe.string + count, 1, safe.used - count, file.stream);
+          if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
 
         } while (count < safe.used);
 
@@ -730,8 +730,8 @@ extern "C" {
         count = 0;
 
         do {
-          count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-          if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+          count += fwrite_unlocked(string + start + count, 1, total - count, file.stream);
+          if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
 
         } while (count < total);
 
@@ -747,8 +747,8 @@ extern "C" {
       count = 0;
 
       do {
-        count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-        if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+        count += fwrite_unlocked(string + start + count, 1, total - count, file.stream);
+        if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
 
       } while (count < total);
     }
@@ -758,7 +758,7 @@ extern "C" {
 #endif // !defined(_di_f_print_except_raw_safely_) || !defined(_di_f_print_except_dynamic_raw_) || !defined(_di_f_print_except_dynamic_partial_raw_)
 
 #if !defined(_di_f_print_except_safely_) || !defined(_di_f_print_except_dynamic_safely_) || !defined(_di_f_print_except_dynamic_partial_safely_)
-  f_status_t private_f_print_except_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except, FILE * const stream) {
+  f_status_t private_f_print_except_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except, const f_file_t file) {
 
     f_array_length_t i = offset;
     f_array_length_t j = 0;
@@ -770,7 +770,7 @@ extern "C" {
 
     uint8_t width = 0;
 
-    clearerr_unlocked(stream);
+    clearerr_unlocked(file.stream);
 
     while (i < stop) {
 
@@ -783,8 +783,8 @@ extern "C" {
           count = 0;
 
           do {
-            count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+            count += fwrite_unlocked(string + start + count, 1, total - count, file.stream);
+            if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
 
           } while (count < total);
 
@@ -805,8 +805,8 @@ extern "C" {
           count = 0;
 
           do {
-            count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+            count += fwrite_unlocked(string + start + count, 1, total - count, file.stream);
+            if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
 
           } while (count < total);
 
@@ -823,8 +823,8 @@ extern "C" {
           count = 0;
 
           do {
-            count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+            count += fwrite_unlocked(string + start + count, 1, total - count, file.stream);
+            if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
 
           } while (count < total);
 
@@ -834,8 +834,8 @@ extern "C" {
         count = 0;
 
         do {
-          count += fwrite_unlocked(safe.string + count, 1, safe.used - count, stream);
-          if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+          count += fwrite_unlocked(safe.string + count, 1, safe.used - count, file.stream);
+          if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
 
         } while (count < safe.used);
 
@@ -849,8 +849,8 @@ extern "C" {
         count = 0;
 
         do {
-          count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-          if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+          count += fwrite_unlocked(string + start + count, 1, total - count, file.stream);
+          if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
 
         } while (count < total);
 
@@ -866,8 +866,8 @@ extern "C" {
       count = 0;
 
       do {
-        count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-        if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+        count += fwrite_unlocked(string + start + count, 1, total - count, file.stream);
+        if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
 
       } while (count < total);
     }
@@ -877,18 +877,18 @@ extern "C" {
 #endif // !defined(_di_f_print_except_safely_) || !defined(_di_f_print_except_dynamic_safely_) || !defined(_di_f_print_except_dynamic_partial_safely_)
 
 #if !defined(_di_f_print_raw_) || !defined(_di_f_print_raw_dynamic_) || !defined(_di_f_print_raw_dynamic_partial_)
-  f_status_t private_f_print_raw(const f_string_t string, const f_array_length_t length, FILE * const stream) {
+  f_status_t private_f_print_raw(const f_string_t string, const f_array_length_t length, const f_file_t file) {
 
     f_array_length_t count = 0;
 
-    clearerr_unlocked(stream);
+    clearerr_unlocked(file.stream);
 
     if (length < F_print_write_max_d) {
       count = 0;
 
       do {
-        count += fwrite_unlocked(string + count, 1, length - count, stream);
-        if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+        count += fwrite_unlocked(string + count, 1, length - count, file.stream);
+        if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
 
       } while (count < length);
     }
@@ -899,8 +899,8 @@ extern "C" {
           count = 0;
 
           do {
-            count += fwrite_unlocked(string + count, 1, F_print_write_max_d - count, stream);
-            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+            count += fwrite_unlocked(string + count, 1, F_print_write_max_d - count, file.stream);
+            if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
 
           } while (count < F_print_write_max_d);
         }
@@ -908,8 +908,8 @@ extern "C" {
           count = 0;
 
           do {
-            count += fwrite_unlocked(string + count, 1, length - total - count, stream);
-            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+            count += fwrite_unlocked(string + count, 1, length - total - count, file.stream);
+            if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
 
           } while (count < length - total);
 
@@ -923,7 +923,7 @@ extern "C" {
 #endif // !defined(_di_f_print_raw_) || !defined(_di_f_print_raw_dynamic_) || !defined(_di_f_print_raw_dynamic_partial_)
 
 #if !defined(_di_f_print_raw_safely_) || !defined(_di_f_print_raw_safely_dynamic_) || !defined(_di_f_print_raw_safely_dynamic_partial_)
-  f_status_t private_f_print_raw_safely(const f_string_t string, const f_array_length_t length, FILE * const stream) {
+  f_status_t private_f_print_raw_safely(const f_string_t string, const f_array_length_t length, const f_file_t file) {
 
     register f_array_length_t i = 0;
     f_array_length_t start = 0;
@@ -934,7 +934,7 @@ extern "C" {
 
     uint8_t width = 0;
 
-    clearerr_unlocked(stream);
+    clearerr_unlocked(file.stream);
 
     while (i < length) {
 
@@ -952,8 +952,8 @@ extern "C" {
           count = 0;
 
           do {
-            count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+            count += fwrite_unlocked(string + start + count, 1, total - count, file.stream);
+            if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
 
           } while (count < total);
 
@@ -963,8 +963,8 @@ extern "C" {
         count = 0;
 
         do {
-          count += fwrite_unlocked(safe.string + count, 1, safe.used - count, stream);
-          if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+          count += fwrite_unlocked(safe.string + count, 1, safe.used - count, file.stream);
+          if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
 
         } while (count < safe.used);
 
@@ -978,8 +978,8 @@ extern "C" {
         count = 0;
 
         do {
-          count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-          if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+          count += fwrite_unlocked(string + start + count, 1, total - count, file.stream);
+          if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
 
         } while (count < total);
 
@@ -995,8 +995,8 @@ extern "C" {
       count = 0;
 
       do {
-        count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-        if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+        count += fwrite_unlocked(string + start + count, 1, total - count, file.stream);
+        if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
 
       } while (count < total);
     }
@@ -1006,7 +1006,7 @@ extern "C" {
 #endif // !defined(_di_f_print_raw_safely_) || !defined(_di_f_print_raw_safely_dynamic_) || !defined(_di_f_print_raw_safely_dynamic_partial_)
 
 #if !defined(_di_f_print_safely_) || !defined(_di_f_print_safely_dynamic_) || !defined(_di_f_print_safely_dynamic_partial_)
-  f_status_t private_f_print_safely(const f_string_t string, const f_array_length_t length, FILE * const stream) {
+  f_status_t private_f_print_safely(const f_string_t string, const f_array_length_t length, const f_file_t file) {
 
     register f_array_length_t i = 0;
     f_array_length_t start = 0;
@@ -1017,7 +1017,7 @@ extern "C" {
 
     uint8_t width = 0;
 
-    clearerr_unlocked(stream);
+    clearerr_unlocked(file.stream);
 
     while (i < length) {
 
@@ -1030,8 +1030,8 @@ extern "C" {
           count = 0;
 
           do {
-            count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+            count += fwrite_unlocked(string + start + count, 1, total - count, file.stream);
+            if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
 
           } while (count < total);
 
@@ -1048,8 +1048,8 @@ extern "C" {
           count = 0;
 
           do {
-            count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+            count += fwrite_unlocked(string + start + count, 1, total - count, file.stream);
+            if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
 
           } while (count < total);
 
@@ -1059,8 +1059,8 @@ extern "C" {
         count = 0;
 
         do {
-          count += fwrite_unlocked(safe.string + count, 1, safe.used - count, stream);
-          if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+          count += fwrite_unlocked(safe.string + count, 1, safe.used - count, file.stream);
+          if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
 
         } while (count < total);
 
@@ -1074,8 +1074,8 @@ extern "C" {
         count = 0;
 
         do {
-          count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-          if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+          count += fwrite_unlocked(string + start + count, 1, total - count, file.stream);
+          if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
 
         } while (count < total);
 
@@ -1091,8 +1091,8 @@ extern "C" {
       count = 0;
 
       do {
-        count += fwrite_unlocked(string + start + count, 1, total - count, stream);
-        if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+        count += fwrite_unlocked(string + start + count, 1, total - count, file.stream);
+        if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
 
       } while (count < total);
     }
@@ -1104,9 +1104,7 @@ extern "C" {
 #if !defined(_di_f_print_character_safely_get_) || !defined(_di_f_print_dynamic_partial_safely_) || !defined(_di_f_print_dynamic_safely_) || !defined(_di_f_print_except_dynamic_partial_safely_) || !defined(_di_f_print_except_dynamic_safely_) || !defined(_di_f_print_except_in_dynamic_safely_) || !defined(_di_f_print_except_in_dynamic_partial_safely_) || !defined(_di_f_print_except_in_safely_) || !defined(_di_f_print_except_safely_) || !defined(_di_f_print_raw_safely_) || !defined(_di_f_print_raw_safely_dynamic_) || !defined(_di_f_print_raw_safely_dynamic_partial_) || !defined(_di_f_print_safely_) || !defined(_di_f_print_safely_terminated_) || !defined(_di_f_print_to_dynamic_partial_safely_) || !defined(_di_f_print_to_dynamic_safely_) || !defined(_di_f_print_to_except_dynamic_partial_safely_) || !defined(_di_f_print_to_except_dynamic_safely_) || !defined(_di_f_print_to_except_in_dynamic_safely_) || !defined(_di_f_print_to_except_in_dynamic_partial_safely_) || !defined(_di_f_print_to_except_in_safely_) || !defined(_di_f_print_to_except_safely_) || !defined(_di_f_print_to_safely_)
   const f_string_static_t private_f_print_safely_get(const f_string_t character, const f_array_length_t width_max) {
 
-    if (character[0] == 0x7f) {
-      return f_print_sequence_delete_s;
-    }
+    if (character[0] == 0x7f) return f_print_sequence_delete_s;
 
     if (macro_f_utf_byte_width_is(character[0])) {
       if (f_utf_is_valid(character, width_max) != F_true || f_utf_is_control(character, width_max)) {
@@ -1116,25 +1114,23 @@ extern "C" {
       return f_string_empty_s;
     }
 
-    if (character[0] > 0x1f) {
-      return f_string_empty_s;
-    }
+    if (character[0] > 0x1f) return f_string_empty_s;
 
     return f_print_sequence_set_control_s[(unsigned int) character[0]];
   }
 #endif // !defined(_di_f_print_character_safely_get_) || !defined(_di_f_print_dynamic_partial_safely_) || !defined(_di_f_print_dynamic_safely_) || !defined(_di_f_print_except_dynamic_partial_safely_) || !defined(_di_f_print_except_dynamic_safely_) || !defined(_di_f_print_except_in_dynamic_safely_) || !defined(_di_f_print_except_in_dynamic_partial_safely_) || !defined(_di_f_print_except_in_safely_) || !defined(_di_f_print_except_safely_) || !defined(_di_f_print_raw_safely_) || !defined(_di_f_print_raw_safely_dynamic_) || !defined(_di_f_print_raw_safely_dynamic_partial_) || !defined(_di_f_print_safely_) || !defined(_di_f_print_safely_terminated_) || !defined(_di_f_print_to_dynamic_partial_safely_) || !defined(_di_f_print_to_dynamic_safely_) || !defined(_di_f_print_to_except_dynamic_partial_safely_) || !defined(_di_f_print_to_except_dynamic_safely_) || !defined(_di_f_print_to_except_in_dynamic_safely_) || !defined(_di_f_print_to_except_in_dynamic_partial_safely_) || !defined(_di_f_print_to_except_in_safely_) || !defined(_di_f_print_to_except_safely_) || !defined(_di_f_print_to_safely_)
 
 #if !defined(_di_f_print_terminated_) || !defined(_di_f_print_raw_terminated_)
-  f_status_t private_f_print_terminated(const f_string_t string, FILE * const stream) {
+  f_status_t private_f_print_terminated(const f_string_t string, const f_file_t file) {
 
     const size_t length = strlen(string);
     f_array_length_t count = 0;
 
-    clearerr_unlocked(stream);
+    clearerr_unlocked(file.stream);
 
     do {
-      count += fwrite_unlocked(string + count, 1, length - count, stream);
-      if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+      count += fwrite_unlocked(string + count, 1, length - count, file.stream);
+      if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
 
     } while (count < length);
 

@@ -76,9 +76,9 @@ extern "C" {
       if (main->parameters.array[fss_identify_parameter_line_e].result == f_console_result_found_e) {
         f_file_stream_lock(main->error.to);
 
-        fl_print_format("%r%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-        fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_identify_long_line_s, main->error.notable);
-        fl_print_format("%[' requires a positive number.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+        fl_print_format("%r%[%QThe parameter '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+        fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_enable_s, fss_identify_long_line_s, main->error.notable);
+        fl_print_format("%[' requires a positive number.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
 
         f_file_stream_unlock(main->error.to);
 
@@ -116,9 +116,9 @@ extern "C" {
       if (main->parameters.array[fss_identify_parameter_name_e].result == f_console_result_found_e) {
         f_file_stream_lock(main->error.to);
 
-        fl_print_format("%r%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-        fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_identify_long_name_s, main->error.notable);
-        fl_print_format("%[' requires a string.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+        fl_print_format("%r%[%QThe parameter '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+        fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_enable_s, fss_identify_long_name_s, main->error.notable);
+        fl_print_format("%[' requires a string.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
 
         f_file_stream_unlock(main->error.to);
 
@@ -132,9 +132,9 @@ extern "C" {
         if (length == 0) {
           f_file_stream_lock(main->error.to);
 
-          fl_print_format("%r%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-          fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_identify_long_name_s, main->error.notable);
-          fl_print_format("%[' does not allow zero length strings.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+          fl_print_format("%r%[%QThe parameter '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+          fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_enable_s, fss_identify_long_name_s, main->error.notable);
+          fl_print_format("%[' does not allow zero length strings.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
 
           f_file_stream_unlock(main->error.to);
 
@@ -162,11 +162,11 @@ extern "C" {
             else if (status == F_false) {
               f_file_stream_lock(main->error.to);
 
-              fl_print_format("%r%[%QThe value '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-              fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, data.argv[index], main->error.notable);
-              fl_print_format("%[' for the parameter '%]", main->error.to.stream, main->error.context, main->error.context);
-              fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_identify_long_name_s, main->error.notable);
-              fl_print_format("%[' may only contain word characters or the dash (minus)y character.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+              fl_print_format("%r%[%QThe value '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+              fl_print_format("%[%Q%]", main->error.to, main->error.notable, data.argv[index], main->error.notable);
+              fl_print_format("%[' for the parameter '%]", main->error.to, main->error.context, main->error.context);
+              fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_enable_s, fss_identify_long_name_s, main->error.notable);
+              fl_print_format("%[' may only contain word characters or the dash (minus)y character.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
 
               f_file_stream_unlock(main->error.to);
 
@@ -244,7 +244,7 @@ extern "C" {
 
     if (F_status_is_error_not(status)) {
       if (main->parameters.array[fss_identify_parameter_total_e].result == f_console_result_found_e) {
-        fll_print_format("%ul%r", main->output.to.stream, data.total, f_string_eol_s);
+        fll_print_format("%ul%r", main->output.to, data.total, f_string_eol_s);
       }
     }
 
@@ -255,7 +255,7 @@ extern "C" {
           f_file_stream_flush(main->output.to);
         }
 
-        fll_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
+        fll_print_dynamic_raw(f_string_eol_s, main->output.to);
       }
     }
 

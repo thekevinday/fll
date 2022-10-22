@@ -18,10 +18,10 @@ extern "C" {
 
       if (data->option & fss_basic_list_read_data_option_object_d) {
         if (data->option & fss_basic_list_read_data_option_trim_d) {
-          fl_print_trim_except_in_dynamic_partial(data->buffer, data->objects.array[at], delimits_object, data->comments, main->output.to.stream);
+          fl_print_trim_except_in_dynamic_partial(data->buffer, data->objects.array[at], delimits_object, data->comments, main->output.to);
         }
         else {
-          f_print_except_in_dynamic_partial(data->buffer, data->objects.array[at], delimits_object, data->comments, main->output.to.stream);
+          f_print_except_in_dynamic_partial(data->buffer, data->objects.array[at], delimits_object, data->comments, main->output.to);
         }
 
         fss_basic_list_read_print_object_end(main);
@@ -31,7 +31,7 @@ extern "C" {
         if (data->contents.array[at].used) {
           fss_basic_list_read_print_content_ignore(main);
 
-          f_print_except_in_dynamic_partial(data->buffer, data->contents.array[at].array[0], delimits_content, data->comments, main->output.to.stream);
+          f_print_except_in_dynamic_partial(data->buffer, data->contents.array[at].array[0], delimits_content, data->comments, main->output.to);
 
           fss_basic_list_read_print_content_ignore(main);
         }
@@ -52,10 +52,10 @@ extern "C" {
     }
 
     if (data->option & fss_basic_list_read_data_option_trim_d) {
-      fl_print_trim_except_dynamic_partial(data->buffer, data->objects.array[at], delimits_object, main->output.to.stream);
+      fl_print_trim_except_dynamic_partial(data->buffer, data->objects.array[at], delimits_object, main->output.to);
     }
     else {
-      f_print_except_dynamic_partial(data->buffer, data->objects.array[at], delimits_object, main->output.to.stream);
+      f_print_except_dynamic_partial(data->buffer, data->objects.array[at], delimits_object, main->output.to);
     }
 
     fss_basic_list_read_print_object_end(main);
@@ -66,7 +66,7 @@ extern "C" {
   void fss_basic_list_read_print_content_ignore(fll_program_data_t * const main) {
 
     if (main->parameters.array[fss_basic_list_read_parameter_pipe_e].result == f_console_result_found_e) {
-      f_print_dynamic_raw(fss_basic_list_read_pipe_content_ignore_s, main->output.to.stream);
+      f_print_dynamic_raw(fss_basic_list_read_pipe_content_ignore_s, main->output.to);
     }
   }
 #endif // _di_fss_basic_list_read_print_content_ignore_
@@ -75,15 +75,15 @@ extern "C" {
   void fss_basic_list_read_print_object_end(fll_program_data_t * const main) {
 
     if (main->parameters.array[fss_basic_list_read_parameter_pipe_e].result == f_console_result_found_e) {
-      f_print_dynamic_raw(fss_basic_list_read_pipe_content_start_s, main->output.to.stream);
+      f_print_dynamic_raw(fss_basic_list_read_pipe_content_start_s, main->output.to);
     }
     else {
       if (main->parameters.array[fss_basic_list_read_parameter_content_e].result == f_console_result_found_e) {
-        f_print_dynamic_raw(f_fss_basic_list_open_s, main->output.to.stream);
-        f_print_dynamic_raw(f_fss_basic_list_open_end_s, main->output.to.stream);
+        f_print_dynamic_raw(f_fss_basic_list_open_s, main->output.to);
+        f_print_dynamic_raw(f_fss_basic_list_open_end_s, main->output.to);
       }
       else {
-        f_print_dynamic_raw(f_fss_eol_s, main->output.to.stream);
+        f_print_dynamic_raw(f_fss_eol_s, main->output.to);
       }
     }
   }
@@ -93,7 +93,7 @@ extern "C" {
   void fss_basic_list_read_print_set_end(fll_program_data_t * const main) {
 
     if (main->parameters.array[fss_basic_list_read_parameter_pipe_e].result == f_console_result_found_e) {
-      f_print_dynamic_raw(fss_basic_list_read_pipe_content_end_s, main->output.to.stream);
+      f_print_dynamic_raw(fss_basic_list_read_pipe_content_end_s, main->output.to);
     }
   }
 #endif // _di_fss_basic_list_read_print_set_end_
@@ -101,16 +101,16 @@ extern "C" {
 #ifndef _di_fss_basic_list_read_print_one_
   void fss_basic_list_read_print_one(fll_program_data_t * const main) {
 
-    f_print_dynamic_raw(f_string_ascii_1_s, main->output.to.stream);
-    f_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
+    f_print_dynamic_raw(f_string_ascii_1_s, main->output.to);
+    f_print_dynamic_raw(f_string_eol_s, main->output.to);
   }
 #endif // _di_fss_basic_list_read_print_one_
 
 #ifndef _di_fss_basic_list_read_print_zero_
   void fss_basic_list_read_print_zero(fll_program_data_t * const main) {
 
-    f_print_dynamic_raw(f_string_ascii_0_s, main->output.to.stream);
-    f_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
+    f_print_dynamic_raw(f_string_ascii_0_s, main->output.to);
+    f_print_dynamic_raw(f_string_eol_s, main->output.to);
   }
 #endif // _di_fss_basic_list_read_print_zero_
 

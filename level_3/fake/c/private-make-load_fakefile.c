@@ -44,13 +44,13 @@ extern "C" {
 
     if (!data_make->buffer.used) {
       if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
-        flockfile(data_make->main->warning.to.stream);
+        flockfile(data_make->main->warning.to);
 
-        fl_print_format("%r%[%QThe fakefile '%]", data_make->main->warning.to.stream, f_string_eol_s, data_make->main->warning.context, data_make->main->warning.prefix, data_make->main->warning.context);
-        fl_print_format("%[%Q%]", data_make->main->warning.to.stream, data_make->main->warning.notable, data_make->data->file_data_build_fakefile, data_make->main->warning.notable);
-        fl_print_format("%[' is empty.%]%r", data_make->main->warning.to.stream, data_make->main->warning.context, data_make->main->warning.context, f_string_eol_s);
+        fl_print_format("%r%[%QThe fakefile '%]", data_make->main->warning.to, f_string_eol_s, data_make->main->warning.context, data_make->main->warning.prefix, data_make->main->warning.context);
+        fl_print_format("%[%Q%]", data_make->main->warning.to, data_make->main->warning.notable, data_make->data->file_data_build_fakefile, data_make->main->warning.notable);
+        fl_print_format("%[' is empty.%]%r", data_make->main->warning.to, data_make->main->warning.context, data_make->main->warning.context, f_string_eol_s);
 
-        funlockfile(data_make->main->warning.to.stream);
+        funlockfile(data_make->main->warning.to);
       }
 
       return;
@@ -214,15 +214,15 @@ extern "C" {
 
       if (missing_main) {
         if (data_make->main->error.verbosity > f_console_verbosity_quiet_e) {
-          flockfile(data_make->main->error.to.stream);
+          flockfile(data_make->main->error.to);
 
-          fl_print_format("%r%[%QThe fakefile '%]", data_make->main->error.to.stream, f_string_eol_s, data_make->main->error.context, data_make->main->error.prefix, data_make->main->error.context);
-          fl_print_format("%[%Q%]", data_make->main->error.to.stream, data_make->main->error.notable, data_make->data->file_data_build_fakefile, data_make->main->error.notable);
-          fl_print_format("%[' is missing the required '%]", data_make->main->error.to.stream, data_make->main->error.context, data_make->main->error.context);
-          fl_print_format("%[%r%]", data_make->main->error.to.stream, data_make->main->error.notable, fake_make_section_main_s, data_make->main->error.notable);
-          fl_print_format("%[' object.%]%r", data_make->main->error.to.stream, data_make->main->error.context, data_make->main->error.context, f_string_eol_s);
+          fl_print_format("%r%[%QThe fakefile '%]", data_make->main->error.to, f_string_eol_s, data_make->main->error.context, data_make->main->error.prefix, data_make->main->error.context);
+          fl_print_format("%[%Q%]", data_make->main->error.to, data_make->main->error.notable, data_make->data->file_data_build_fakefile, data_make->main->error.notable);
+          fl_print_format("%[' is missing the required '%]", data_make->main->error.to, data_make->main->error.context, data_make->main->error.context);
+          fl_print_format("%[%r%]", data_make->main->error.to, data_make->main->error.notable, fake_make_section_main_s, data_make->main->error.notable);
+          fl_print_format("%[' object.%]%r", data_make->main->error.to, data_make->main->error.context, data_make->main->error.context, f_string_eol_s);
 
-          funlockfile(data_make->main->error.to.stream);
+          funlockfile(data_make->main->error.to);
         }
 
         *status = F_status_set_error(F_failure);
@@ -450,13 +450,13 @@ extern "C" {
         }
         else {
           if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
-            flockfile(data->main->error.to.stream);
+            flockfile(data->main->error.to);
 
-            fl_print_format("%r%[%QInvalid characters in the define setting name '%]", data->main->error.to.stream, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
-            fl_print_format("%[%Q%]", data->main->error.to.stream, data->main->error.notable, define.array[i].name, data->main->error.notable);
-            fl_print_format("%[', only alpha-numeric ASCII characters and underscore (without a leading digit) are allowed.%]%r", data->main->error.to.stream, data->main->error.context, data->main->error.context, f_string_eol_s);
+            fl_print_format("%r%[%QInvalid characters in the define setting name '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
+            fl_print_format("%[%Q%]", data->main->error.to, data->main->error.notable, define.array[i].name, data->main->error.notable);
+            fl_print_format("%[', only alpha-numeric ASCII characters and underscore (without a leading digit) are allowed.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-            funlockfile(data->main->error.to.stream);
+            funlockfile(data->main->error.to);
           }
 
           status = F_status_set_error(F_failure);
@@ -534,23 +534,23 @@ extern "C" {
           ++data_make->setting_build.environment.used;
         }
         else if (data_make->main->warning.verbosity >= f_console_verbosity_verbose_e) {
-          flockfile(data_make->main->warning.to.stream);
+          flockfile(data_make->main->warning.to);
 
-          fl_print_format("%r%[%QThe environment name '%]", data_make->main->warning.to.stream, f_string_eol_s, data_make->main->warning.context, data_make->main->warning.prefix, data_make->main->warning.context);
-          fl_print_format("%[%Q%]", data_make->main->warning.to.stream, data_make->main->warning.notable, name_define, data_make->main->warning.notable);
-          fl_print_format("%[' is already added.%]%r", data_make->main->warning.to.stream, data_make->main->warning.context, data_make->main->warning.context, f_string_eol_s);
+          fl_print_format("%r%[%QThe environment name '%]", data_make->main->warning.to, f_string_eol_s, data_make->main->warning.context, data_make->main->warning.prefix, data_make->main->warning.context);
+          fl_print_format("%[%Q%]", data_make->main->warning.to, data_make->main->warning.notable, name_define, data_make->main->warning.notable);
+          fl_print_format("%[' is already added.%]%r", data_make->main->warning.to, data_make->main->warning.context, data_make->main->warning.context, f_string_eol_s);
 
-          funlockfile(data_make->main->warning.to.stream);
+          funlockfile(data_make->main->warning.to);
         }
       }
       else if (data_make->main->warning.verbosity >= f_console_verbosity_verbose_e) {
-        flockfile(data_make->main->warning.to.stream);
+        flockfile(data_make->main->warning.to);
 
-        fl_print_format("%r%[%QThe environment name '%]", data_make->main->warning.to.stream, f_string_eol_s, data_make->main->warning.context, data_make->main->warning.prefix, data_make->main->warning.context);
-        fl_print_format("%[%Q%]", data_make->main->warning.to.stream, data_make->main->warning.notable, name_define, data_make->main->warning.notable);
-        fl_print_format("%[' is invalid, ignoring.%]%r", data_make->main->warning.to.stream, data_make->main->warning.context, data_make->main->warning.context, f_string_eol_s);
+        fl_print_format("%r%[%QThe environment name '%]", data_make->main->warning.to, f_string_eol_s, data_make->main->warning.context, data_make->main->warning.prefix, data_make->main->warning.context);
+        fl_print_format("%[%Q%]", data_make->main->warning.to, data_make->main->warning.notable, name_define, data_make->main->warning.notable);
+        fl_print_format("%[' is invalid, ignoring.%]%r", data_make->main->warning.to, data_make->main->warning.context, data_make->main->warning.context, f_string_eol_s);
 
-        funlockfile(data_make->main->warning.to.stream);
+        funlockfile(data_make->main->warning.to);
       }
 
       name_define.used = 0;

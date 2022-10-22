@@ -91,9 +91,9 @@ extern "C" {
       if (main->parameters.array[fss_embedded_list_read_parameter_at_e].result == f_console_result_found_e) {
         f_file_stream_lock(main->error.to);
 
-        fl_print_format("%r%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-        fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_at_s, main->error.notable);
-        fl_print_format("%[' requires a positive number.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+        fl_print_format("%r%[%QThe parameter '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+        fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_at_s, main->error.notable);
+        fl_print_format("%[' requires a positive number.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
 
         f_file_stream_unlock(main->error.to);
 
@@ -103,9 +103,9 @@ extern "C" {
       if (F_status_is_error_not(status) && main->parameters.array[fss_embedded_list_read_parameter_depth_e].result == f_console_result_found_e) {
         f_file_stream_lock(main->error.to);
 
-        fl_print_format("%r%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-        fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_depth_s, main->error.notable);
-        fl_print_format("%[' requires a positive number.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+        fl_print_format("%r%[%QThe parameter '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+        fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_depth_s, main->error.notable);
+        fl_print_format("%[' requires a positive number.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
 
         f_file_stream_unlock(main->error.to);
 
@@ -115,9 +115,9 @@ extern "C" {
       if (F_status_is_error_not(status) && main->parameters.array[fss_embedded_list_read_parameter_line_e].result == f_console_result_additional_e) {
         f_file_stream_lock(main->error.to);
 
-        fl_print_format("%r%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-        fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_line_s, main->error.notable);
-        fl_print_format("%[' requires a positive number.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+        fl_print_format("%r%[%QThe parameter '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+        fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_line_s, main->error.notable);
+        fl_print_format("%[' requires a positive number.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
 
         f_file_stream_unlock(main->error.to);
 
@@ -127,9 +127,9 @@ extern "C" {
       if (F_status_is_error_not(status) && main->parameters.array[fss_embedded_list_read_parameter_name_e].result == f_console_result_found_e) {
         f_file_stream_lock(main->error.to);
 
-        fl_print_format("%r%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-        fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_name_s, main->error.notable);
-        fl_print_format("%[' requires a string.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+        fl_print_format("%r%[%QThe parameter '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+        fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_name_s, main->error.notable);
+        fl_print_format("%[' requires a string.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
 
         f_file_stream_unlock(main->error.to);
 
@@ -139,9 +139,9 @@ extern "C" {
       if (F_status_is_error_not(status) && main->parameters.array[fss_embedded_list_read_parameter_select_e].result == f_console_result_found_e) {
         f_file_stream_lock(main->error.to);
 
-        fl_print_format("%r%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-        fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_select_s, main->error.notable);
-        fl_print_format("%[' requires a positive number.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+        fl_print_format("%r%[%QThe parameter '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+        fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_select_s, main->error.notable);
+        fl_print_format("%[' requires a positive number.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
 
         f_file_stream_unlock(main->error.to);
 
@@ -172,9 +172,9 @@ extern "C" {
         if (main->parameters.array[fss_embedded_list_read_parameter_delimit_e].result == f_console_result_found_e) {
           f_file_stream_lock(main->error.to);
 
-          fl_print_format("%r%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-          fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_delimit_s, main->error.notable);
-          fl_print_format("%[' requires a value.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+          fl_print_format("%r%[%QThe parameter '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+          fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_delimit_s, main->error.notable);
+          fl_print_format("%[' requires a value.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
 
           f_file_stream_unlock(main->error.to);
 
@@ -187,9 +187,9 @@ extern "C" {
           if (!length) {
             f_file_stream_lock(main->error.to);
 
-            fl_print_format("%r%[%QThe value for the parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-            fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_delimit_s, main->error.notable);
-            fl_print_format("%[' must not be empty.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+            fl_print_format("%r%[%QThe value for the parameter '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+            fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_delimit_s, main->error.notable);
+            fl_print_format("%[' must not be empty.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
 
             f_file_stream_unlock(main->error.to);
 
@@ -250,9 +250,9 @@ extern "C" {
       if (F_status_is_error_not(status) && main->parameters.array[fss_embedded_list_read_parameter_select_e].result == f_console_result_found_e) {
         f_file_stream_lock(main->error.to);
 
-        fl_print_format("%r%[%QThe '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-        fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_select_s, main->error.notable);
-        fl_print_format("%[' parameter requires a positive number.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+        fl_print_format("%r%[%QThe '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+        fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_select_s, main->error.notable);
+        fl_print_format("%[' parameter requires a positive number.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
 
         f_file_stream_unlock(main->error.to);
 
@@ -329,7 +329,7 @@ extern "C" {
           // Skip past empty files.
           if (!size_file) {
             if (main->parameters.array[fss_embedded_list_read_parameter_total_e].result == f_console_result_found_e) {
-              fll_print_format("%r%r", main->output.to.stream, f_string_ascii_0_s, f_string_eol_s);
+              fll_print_format("%r%r", main->output.to, f_string_ascii_0_s, f_string_eol_s);
             }
 
             f_file_stream_flush(file);
@@ -411,7 +411,7 @@ extern "C" {
       f_string_ranges_resize(0, &comments);
     }
     else {
-      fll_print_format("%r%[%QYou failed to specify one or more files.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context, f_string_eol_s);
+      fll_print_format("%r%[%QYou failed to specify one or more files.%]%r", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context, f_string_eol_s);
       status = F_status_set_error(F_parameter);
     }
 
@@ -419,7 +419,7 @@ extern "C" {
       if (F_status_set_fine(status) == F_interrupt) {
         f_file_stream_flush(main->output.to);
 
-        fll_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
+        fll_print_dynamic_raw(f_string_eol_s, main->output.to);
       }
     }
 

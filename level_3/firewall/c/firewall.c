@@ -176,12 +176,12 @@ extern "C" {
                 else {
                   flockfile(main->warning.to.stream);
 
-                  fl_print_format("%r%[%Q'%]", main->warning.to.stream, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
-                  fl_print_format("%[%Q%]", main->warning.to.stream, main->warning.notable, data.argv[index], main->warning.notable);
-                  fl_print_format("%[' is not a valid show option.%]%r", main->warning.to.stream, main->warning.context, main->warning.context, f_string_eol_s);
+                  fl_print_format("%r%[%Q'%]", main->warning.to, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
+                  fl_print_format("%[%Q%]", main->warning.to, main->warning.notable, data.argv[index], main->warning.notable);
+                  fl_print_format("%[' is not a valid show option.%]%r", main->warning.to, main->warning.context, main->warning.context, f_string_eol_s);
 
                   funlockfile(main->warning.to.stream);
-                  fflush(main->warning.to.stream);
+                  fflush(main->warning.to);
                 }
               }
             }
@@ -202,7 +202,7 @@ extern "C" {
         parameters_array[5] = firewall_show_parameter_list_s;
 
         if (show_nat) {
-          fll_print_format("%[===========================%] %[NAT%] %[============================%]%r", main->output.to.stream, main->context.set.standout, main->context.set.standout, main->context.set.title, main->context.set.title, main->context.set.standout, main->context.set.standout, f_string_eol_s);
+          fll_print_format("%[===========================%] %[NAT%] %[============================%]%r", main->output.to, main->context.set.standout, main->context.set.standout, main->context.set.title, main->context.set.title, main->context.set.standout, main->context.set.standout, f_string_eol_s);
           f_file_stream_flush(main->output.to);
 
           status = fll_execute_program(firewall_tool_iptables_s, parameters, 0, 0, (void *) &return_code);
@@ -216,12 +216,12 @@ extern "C" {
             return status;
           }
 
-          fll_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
+          fll_print_dynamic_raw(f_string_eol_s, main->output.to);
           f_file_stream_flush(main->output.to);
         }
 
         if (F_status_is_error_not(status) && show_mangle) {
-          fll_print_format("%[==========================%] %[MANGLE%] %[==========================%]%r", main->output.to.stream, main->context.set.standout, main->context.set.standout, main->context.set.title, main->context.set.title, main->context.set.standout, main->context.set.standout, f_string_eol_s);
+          fll_print_format("%[==========================%] %[MANGLE%] %[==========================%]%r", main->output.to, main->context.set.standout, main->context.set.standout, main->context.set.title, main->context.set.title, main->context.set.standout, main->context.set.standout, f_string_eol_s);
           f_file_stream_flush(main->output.to);
 
           parameters_array[3] = firewall_show_mangle_s;
@@ -237,12 +237,12 @@ extern "C" {
             return status;
           }
 
-          fll_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
+          fll_print_dynamic_raw(f_string_eol_s, main->output.to);
           f_file_stream_flush(main->output.to);
         }
 
         if (F_status_is_error_not(status) && show_ports) {
-          fll_print_format("%[==========================%] %[FILTER%] %[==========================%]%r", main->output.to.stream, main->context.set.standout, main->context.set.standout, main->context.set.title, main->context.set.title, main->context.set.standout, main->context.set.standout, f_string_eol_s);
+          fll_print_format("%[==========================%] %[FILTER%] %[==========================%]%r", main->output.to, main->context.set.standout, main->context.set.standout, main->context.set.title, main->context.set.title, main->context.set.standout, main->context.set.standout, f_string_eol_s);
           f_file_stream_flush(main->output.to);
 
           parameters_array[0] = firewall_show_parameter_exact_s;
@@ -262,7 +262,7 @@ extern "C" {
             return status;
           }
 
-          fll_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
+          fll_print_dynamic_raw(f_string_eol_s, main->output.to);
           f_file_stream_flush(main->output.to);
         }
 
@@ -296,10 +296,10 @@ extern "C" {
             firewall_print_error_on_allocation_failure(main->error);
           }
           else if (status == F_data_not) {
-            fll_print_format("%r%[%QCould not find any network devices.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context, f_string_eol_s);
+            fll_print_format("%r%[%QCould not find any network devices.%]%r", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context, f_string_eol_s);
           }
           else if (status == F_failure) {
-            fll_print_format("%r%[%QFailed to read the device directory '%r'.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, firewall_network_devices_s, main->error.context, f_string_eol_s);
+            fll_print_format("%r%[%QFailed to read the device directory '%r'.%]%r", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, firewall_network_devices_s, main->error.context, f_string_eol_s);
           }
         }
 
@@ -393,7 +393,7 @@ extern "C" {
           }
 
           if (main->error.verbosity > f_console_verbosity_quiet_e) {
-            fll_print_format("%r%[%QFailed to perform lock request because the lock instructions are missing from: %r.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, path_file_other, main->error.context, f_string_eol_s);
+            fll_print_format("%r%[%QFailed to perform lock request because the lock instructions are missing from: %r.%]%r", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, path_file_other, main->error.context, f_string_eol_s);
           }
 
           firewall_delete_local_data(&local);
@@ -435,7 +435,7 @@ extern "C" {
           }
           else {
             if (main->error.verbosity > f_console_verbosity_quiet_e) {
-              fll_print_format("%r%[%QFailed to perform stop request because the lock instructions are missing from: %r.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, path_file_other, main->error.context, f_string_eol_s);
+              fll_print_format("%r%[%QFailed to perform stop request because the lock instructions are missing from: %r.%]%r", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, path_file_other, main->error.context, f_string_eol_s);
             }
 
             firewall_delete_local_data(&local);
@@ -684,7 +684,7 @@ extern "C" {
     }
     else {
       if (main->error.verbosity > f_console_verbosity_quiet_e) {
-        fll_print_format("%r%[%QNo command given.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context, f_string_eol_s);
+        fll_print_format("%r%[%QNo command given.%]%r", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context, f_string_eol_s);
       }
 
       status = F_status_set_error(F_parameter);
@@ -694,7 +694,7 @@ extern "C" {
       if (F_status_set_fine(status) == F_interrupt) {
         f_file_stream_flush(main->output.to);
 
-        fll_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
+        fll_print_dynamic_raw(f_string_eol_s, main->output.to);
       }
     }
 

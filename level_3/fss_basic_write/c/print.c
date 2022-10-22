@@ -10,13 +10,13 @@ extern "C" {
 
     f_file_stream_lock(print.to);
 
-    f_print_dynamic_raw(setting->line_first, print.to.stream);
+    f_print_dynamic_raw(setting->line_first, print.to);
 
     fll_program_print_help_header(print, fss_basic_write_program_name_long_s, fss_basic_write_program_version_s);
 
     fll_program_print_help_option_standard(print);
 
-    f_print_dynamic_raw(f_string_eol_s, print.to.stream);
+    f_print_dynamic_raw(f_string_eol_s, print.to);
 
     fll_program_print_help_option(print, fss_basic_write_short_file_s, fss_basic_write_long_file_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Specify a file to send data to.");
     fll_program_print_help_option(print, fss_basic_write_short_content_s, fss_basic_write_long_content_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "The Content to write.");
@@ -28,25 +28,25 @@ extern "C" {
     fll_program_print_help_option(print, fss_basic_write_short_single_s, fss_basic_write_long_single_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Use single quotes.");
     fll_program_print_help_option(print, fss_basic_write_short_trim_s, fss_basic_write_long_trim_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Trim Object names.");
 
-    f_print_dynamic_raw(f_string_eol_s, print.to.stream);
-    f_print_dynamic_raw(f_string_eol_s, print.to.stream);
+    f_print_dynamic_raw(f_string_eol_s, print.to);
+    f_print_dynamic_raw(f_string_eol_s, print.to);
 
     fll_program_print_help_usage(print, fss_basic_write_program_name_s, f_string_empty_s);
 
-    fl_print_format("%r  The pipe uses the Backspace character '%[\\b%]' (%[U+0008%]) to designate the start of a Content.%r", print.to.stream, f_string_eol_s, print.set->notable, print.set->notable, print.set->notable, print.set->notable, f_string_eol_s);
-    fl_print_format("  The pipe uses the Form Feed character '%[\\f%]' (%[U+000C%]) to designate the end of the last Content.%r", print.to.stream, print.set->notable, print.set->notable, print.set->notable, print.set->notable, f_string_eol_s);
-    fl_print_format("  The pipe uses the Vertical Line character '%[\\v%]' (%[U+000B%]) is used to ignore a Content range, which does nothing in this program.%r", print.to.stream, print.set->notable, print.set->notable, print.set->notable, print.set->notable, f_string_eol_s);
-    fl_print_format("  For the pipe, an Object is terminated by either a Backspace character '%[\\b%]' (%[U+0008%])", print.to.stream, print.set->notable, print.set->notable, print.set->notable, print.set->notable);
-    fl_print_format(" or a Form Feed character '%[\\f%]' (%[U+000C%]).%r", print.to.stream, print.set->notable, print.set->notable, print.set->notable, print.set->notable, f_string_eol_s);
-    fl_print_format("  The end of the pipe represents the end of any Object or Content.%r%r", print.to.stream, f_string_eol_s, f_string_eol_s);
+    fl_print_format("%r  The pipe uses the Backspace character '%[\\b%]' (%[U+0008%]) to designate the start of a Content.%r", print.to, f_string_eol_s, print.set->notable, print.set->notable, print.set->notable, print.set->notable, f_string_eol_s);
+    fl_print_format("  The pipe uses the Form Feed character '%[\\f%]' (%[U+000C%]) to designate the end of the last Content.%r", print.to, print.set->notable, print.set->notable, print.set->notable, print.set->notable, f_string_eol_s);
+    fl_print_format("  The pipe uses the Vertical Line character '%[\\v%]' (%[U+000B%]) is used to ignore a Content range, which does nothing in this program.%r", print.to, print.set->notable, print.set->notable, print.set->notable, print.set->notable, f_string_eol_s);
+    fl_print_format("  For the pipe, an Object is terminated by either a Backspace character '%[\\b%]' (%[U+0008%])", print.to, print.set->notable, print.set->notable, print.set->notable, print.set->notable);
+    fl_print_format(" or a Form Feed character '%[\\f%]' (%[U+000C%]).%r", print.to, print.set->notable, print.set->notable, print.set->notable, print.set->notable, f_string_eol_s);
+    fl_print_format("  The end of the pipe represents the end of any Object or Content.%r%r", print.to, f_string_eol_s, f_string_eol_s);
 
-    fl_print_format("  The FSS-0000 (Basic) specification does not support multi-line Content, therefore the parameter '%[%r%r%]'", print.to.stream, print.set->notable, f_console_symbol_long_enable_s, fss_basic_write_long_prepend_s, print.set->notable);
-    fl_print_format(" does nothing.%r%r", print.to.stream, f_string_eol_s, f_string_eol_s);
+    fl_print_format("  The FSS-0000 (Basic) specification does not support multi-line Content, therefore the parameter '%[%r%r%]'", print.to, print.set->notable, f_console_symbol_long_enable_s, fss_basic_write_long_prepend_s, print.set->notable);
+    fl_print_format(" does nothing.%r%r", print.to, f_string_eol_s, f_string_eol_s);
 
-    fl_print_format("  This program does not use the parameter '%[%r%r%]', which therefore does nothing.%r", print.to.stream, print.set->notable, f_console_symbol_long_enable_s, fss_basic_write_long_ignore_s, print.set->notable, f_string_eol_s);
-    fl_print_format("  This parameter requires two values.%r", print.to.stream, f_string_eol_s);
+    fl_print_format("  This program does not use the parameter '%[%r%r%]', which therefore does nothing.%r", print.to, print.set->notable, f_console_symbol_long_enable_s, fss_basic_write_long_ignore_s, print.set->notable, f_string_eol_s);
+    fl_print_format("  This parameter requires two values.%r", print.to, f_string_eol_s);
 
-    f_print_dynamic_raw(setting->line_last, print.to.stream);
+    f_print_dynamic_raw(setting->line_last, print.to);
 
     f_file_stream_flush(print.to);
     f_file_stream_unlock(print.to);
@@ -64,7 +64,7 @@ extern "C" {
       if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
     }
 
-    f_print_dynamic_raw(setting->line_first, print.to.stream);
+    f_print_dynamic_raw(setting->line_first, print.to);
 
     return F_none;
   }
@@ -79,7 +79,7 @@ extern "C" {
       if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
     }
 
-    fll_print_dynamic_raw(setting->line_first, print.to.stream);
+    fll_print_dynamic_raw(setting->line_first, print.to);
 
     return F_none;
   }
@@ -94,7 +94,7 @@ extern "C" {
       if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
     }
 
-    fll_print_dynamic_raw(setting->line_last, print.to.stream);
+    fll_print_dynamic_raw(setting->line_last, print.to);
 
     return F_none;
   }
@@ -109,7 +109,7 @@ extern "C" {
       if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
     }
 
-    f_print_dynamic_raw(setting->line_last, print.to.stream);
+    f_print_dynamic_raw(setting->line_last, print.to);
 
     return F_none;
   }

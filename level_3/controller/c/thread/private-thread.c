@@ -222,9 +222,9 @@ extern "C" {
           if (main->error.verbosity > f_console_verbosity_quiet_e) {
             controller_lock_print(main->error.to, &thread);
 
-            fl_print_format("%r%[%QThe pid file '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-            fl_print_format("%[%Q%]", main->error.to.stream, main->error.notable, setting->path_pid, main->error.notable);
-            fl_print_format("%[' must not already exist.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+            fl_print_format("%r%[%QThe pid file '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+            fl_print_format("%[%Q%]", main->error.to, main->error.notable, setting->path_pid, main->error.notable);
+            fl_print_format("%[' must not already exist.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
 
             controller_unlock_print_flush(main->error.to, &thread);
           }
@@ -322,7 +322,7 @@ extern "C" {
       fll_program_print_signal_received(main->warning, setting->line_first, thread.signal);
 
       if (main->output.verbosity != f_console_verbosity_quiet_e) {
-        fll_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
+        fll_print_dynamic_raw(f_string_eol_s, main->output.to);
       }
 
       return F_status_set_error(F_interrupt);

@@ -188,11 +188,11 @@ extern "C" {
           if (main->error.verbosity > f_console_verbosity_quiet_e) {
             f_file_stream_lock(main->error.to);
 
-            fl_print_format("%r%[%QThe value '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-            fl_print_format("%[%ul%]", main->error.to.stream, main->error.notable, data->depths.array[i].depth, main->error.notable);
-            fl_print_format("%[' may only be specified once for the parameter '%]", main->error.to.stream, main->error.context, main->error.context);
-            fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_basic_list_read_long_depth_s, main->error.notable);
-            fl_print_format("%['.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+            fl_print_format("%r%[%QThe value '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+            fl_print_format("%[%ul%]", main->error.to, main->error.notable, data->depths.array[i].depth, main->error.notable);
+            fl_print_format("%[' may only be specified once for the parameter '%]", main->error.to, main->error.context, main->error.context);
+            fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_enable_s, fss_basic_list_read_long_depth_s, main->error.notable);
+            fl_print_format("%['.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
 
             f_file_stream_unlock(main->error.to);
           }
@@ -204,13 +204,13 @@ extern "C" {
           if (main->error.verbosity > f_console_verbosity_quiet_e) {
             f_file_stream_lock(main->error.to);
 
-            fl_print_format("%r%[%QThe parameter '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-            fl_print_format("%[%r%r%]", main->error.to.stream, main->error.notable, f_console_symbol_long_enable_s, fss_basic_list_read_long_depth_s, main->error.notable);
-            fl_print_format("%[' may not have the value '%]", main->error.to.stream, main->error.context, main->error.context);
-            fl_print_format("%[%ul%]", main->error.to.stream, main->error.notable, data->depths.array[i].depth, main->error.notable);
-            fl_print_format("%[' before the value '%]", main->error.to.stream, main->error.context, main->error.context);
-            fl_print_format("%[%ul%]", main->error.to.stream, main->error.notable, data->depths.array[j].depth, main->error.notable);
-            fl_print_format("%['.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+            fl_print_format("%r%[%QThe parameter '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+            fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_enable_s, fss_basic_list_read_long_depth_s, main->error.notable);
+            fl_print_format("%[' may not have the value '%]", main->error.to, main->error.context, main->error.context);
+            fl_print_format("%[%ul%]", main->error.to, main->error.notable, data->depths.array[i].depth, main->error.notable);
+            fl_print_format("%[' before the value '%]", main->error.to, main->error.context, main->error.context);
+            fl_print_format("%[%ul%]", main->error.to, main->error.notable, data->depths.array[j].depth, main->error.notable);
+            fl_print_format("%['.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
 
             f_file_stream_unlock(main->error.to);
           }
@@ -421,7 +421,7 @@ extern "C" {
           if (status == F_success) return F_none;
         }
         else if (data->option & fss_basic_list_read_data_option_columns_d) {
-          fll_print_format("%ul%r", main->output.to.stream, data->contents.array[i].used, f_string_eol_s);
+          fll_print_format("%ul%r", main->output.to, data->contents.array[i].used, f_string_eol_s);
         }
         else if (data->option & fss_basic_list_read_data_option_total_d) {
           f_array_length_t total = 0;
@@ -444,7 +444,7 @@ extern "C" {
             total = 1;
           }
 
-          fll_print_format("%ul%r", main->output.to.stream, total, f_string_eol_s);
+          fll_print_format("%ul%r", main->output.to, total, f_string_eol_s);
         }
         else {
           fss_basic_list_read_print_at(main, i, *delimits_object, *delimits_content, data);
@@ -526,7 +526,7 @@ extern "C" {
               fss_basic_list_read_print_one(main);
             }
             else {
-              f_print_except_in_dynamic_partial(data->buffer, range, delimits_content, data->comments, main->output.to.stream);
+              f_print_except_in_dynamic_partial(data->buffer, range, delimits_content, data->comments, main->output.to);
             }
 
             funlockfile(main->output.to.stream);
@@ -555,8 +555,8 @@ extern "C" {
           else {
             range.stop = data->contents.array[at].array[0].stop;
 
-            f_print_except_in_dynamic_partial(data->buffer, range, delimits_content, data->comments, main->output.to.stream);
-            f_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
+            f_print_except_in_dynamic_partial(data->buffer, range, delimits_content, data->comments, main->output.to);
+            f_print_dynamic_raw(f_string_eol_s, main->output.to);
           }
 
           funlockfile(main->output.to.stream);
@@ -604,7 +604,7 @@ extern "C" {
       }
     } // for
 
-    fll_print_format("%ul%r", main->output.to.stream, max, f_string_eol_s);
+    fll_print_format("%ul%r", main->output.to, max, f_string_eol_s);
 
     return F_none;
   }
@@ -800,7 +800,7 @@ extern "C" {
       }
     }
     else {
-      fl_print_format("%ul%r", main->output.to.stream, total, f_string_eol_s);
+      fl_print_format("%ul%r", main->output.to, total, f_string_eol_s);
     }
 
     funlockfile(main->output.to.stream);

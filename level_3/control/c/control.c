@@ -200,9 +200,9 @@ extern "C" {
     if (main->output.verbosity != f_console_verbosity_quiet_e) {
       if (F_status_is_error(status)) {
         f_file_stream_flush(main->output.to);
-        fflush(main->error.to.stream);
+        fflush(main->error.to);
 
-        fll_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
+        fll_print_dynamic_raw(f_string_eol_s, main->output.to);
       }
     }
 

@@ -17,6 +17,7 @@
 
 // FLL-0 includes.
 #include <fll/level_0/type.h>
+#include <fll/level_0/type_file.h>
 #include <fll/level_0/status.h>
 #include <fll/level_0/memory.h>
 #include <fll/level_0/string.h>
@@ -236,8 +237,8 @@ extern "C" {
  *   The number to convert.
  * @param data
  *   The settings designating how to perform the conversion.
- * @param stream
- *   The file stream to output to, including standard streams such as stdout and stderr.
+ * @param file
+ *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
  *   F_none if the number was converted to a string.
@@ -254,7 +255,7 @@ extern "C" {
  * @see fwrite_unlocked()
  */
 #ifndef _di_f_conversion_number_signed_print_
-  extern f_status_t f_conversion_number_signed_print(const f_number_signed_t number, const f_conversion_data_t data, FILE * const stream);
+  extern f_status_t f_conversion_number_signed_print(const f_number_signed_t number, const f_conversion_data_t data, const f_file_t file);
 #endif // _di_f_conversion_number_signed_print_
 
 /**
@@ -301,8 +302,8 @@ extern "C" {
  *   To represent a negative number, assign the flag f_conversion_data_flag_is_negative to data.flags.
  * @param data
  *   The settings designating how to perform the conversion.
- * @param stream
- *   The file stream to output to, including standard streams such as stdout and stderr.
+ * @param file
+ *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
  *   F_none if the number was converted to a string.
@@ -319,7 +320,7 @@ extern "C" {
  * @see fwrite_unlocked()
  */
 #ifndef _di_f_conversion_number_unsigned_print_
-  extern f_status_t f_conversion_number_unsigned_print(const f_number_unsigned_t number, const f_conversion_data_t data, FILE * const stream);
+  extern f_status_t f_conversion_number_unsigned_print(const f_number_unsigned_t number, const f_conversion_data_t data, const f_file_t file);
 #endif // _di_f_conversion_number_unsigned_print_
 
 /**

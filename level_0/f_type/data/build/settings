@@ -19,7 +19,7 @@ build_language c
 
 build_libraries -lc
 
-build_sources_headers type.h
+build_sources_headers type.h type_file.h
 
 build_script yes
 build_shared yes

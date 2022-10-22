@@ -156,9 +156,9 @@ extern "C" {
       if (main->parameters.array[byte_dump_parameter_width_e].result == f_console_result_found_e) {
         f_file_stream_lock(main->error.to);
 
-        fl_print_format("%[%QThe parameter '%]", main->error.to.stream, main->context.set.error, main->error.prefix, main->context.set.error);
-        fl_print_format("%[%r%r%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_width_s, main->context.set.notable);
-        fl_print_format("%[' is specified, but no value is given.%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
+        fl_print_format("%[%QThe parameter '%]", main->error.to, main->context.set.error, main->error.prefix, main->context.set.error);
+        fl_print_format("%[%r%r%]", main->error.to, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_width_s, main->context.set.notable);
+        fl_print_format("%[' is specified, but no value is given.%]%r", main->error.to, main->context.set.error, main->context.set.error, f_string_eol_s);
 
         f_file_stream_unlock(main->error.to);
 
@@ -174,13 +174,13 @@ extern "C" {
         if (F_status_is_error(status) || number < 1 || number >= 0xfb) {
           f_file_stream_lock(main->error.to);
 
-          fl_print_format("%[%QThe parameter '%]", main->error.to.stream, main->context.set.error, main->error.prefix, main->context.set.error);
-          fl_print_format("%[%r%r%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_width_s, main->context.set.notable);
-          fl_print_format("%[' value can only be a number (inclusively) between %]", main->error.to.stream, main->context.set.error, main->context.set.error);
-          fl_print_format("%[1%]", main->error.to.stream, main->context.set.notable, main->context.set.notable);
-          fl_print_format(" %[and%] ", main->error.to.stream, main->context.set.error, main->context.set.error);
-          fl_print_format("%[250%]", main->error.to.stream, main->context.set.notable, main->context.set.notable);
-          fl_print_format("%[.%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
+          fl_print_format("%[%QThe parameter '%]", main->error.to, main->context.set.error, main->error.prefix, main->context.set.error);
+          fl_print_format("%[%r%r%]", main->error.to, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_width_s, main->context.set.notable);
+          fl_print_format("%[' value can only be a number (inclusively) between %]", main->error.to, main->context.set.error, main->context.set.error);
+          fl_print_format("%[1%]", main->error.to, main->context.set.notable, main->context.set.notable);
+          fl_print_format(" %[and%] ", main->error.to, main->context.set.error, main->context.set.error);
+          fl_print_format("%[250%]", main->error.to, main->context.set.notable, main->context.set.notable);
+          fl_print_format("%[.%]%r", main->error.to, main->context.set.error, main->context.set.error, f_string_eol_s);
 
           f_file_stream_unlock(main->error.to);
 
@@ -195,9 +195,9 @@ extern "C" {
       if (main->parameters.array[byte_dump_parameter_first_e].result == f_console_result_found_e) {
         f_file_stream_lock(main->error.to);
 
-        fl_print_format("%[%QThe parameter '%]", main->error.to.stream, main->context.set.error, main->error.prefix, main->context.set.error);
-        fl_print_format("%[%r%r%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_first_s, main->context.set.notable);
-        fl_print_format("%[' is specified, but no value is given.%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
+        fl_print_format("%[%QThe parameter '%]", main->error.to, main->context.set.error, main->error.prefix, main->context.set.error);
+        fl_print_format("%[%r%r%]", main->error.to, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_first_s, main->context.set.notable);
+        fl_print_format("%[' is specified, but no value is given.%]%r", main->error.to, main->context.set.error, main->context.set.error, f_string_eol_s);
 
         f_file_stream_unlock(main->error.to);
 
@@ -213,13 +213,13 @@ extern "C" {
         if (F_status_is_error(status) || number > F_number_t_size_unsigned_d) {
           f_file_stream_lock(main->error.to);
 
-          fl_print_format("%[%QThe parameter '%]", main->error.to.stream, main->context.set.error, main->error.prefix, main->context.set.error);
-          fl_print_format("%[%r%r%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_first_s, main->context.set.notable);
-          fl_print_format("%[' value can only be a number (inclusively) between %]", main->error.to.stream, main->context.set.error, main->context.set.error);
-          fl_print_format("%[0%]", main->error.to.stream, main->context.set.notable, main->context.set.notable);
-          fl_print_format(" %[and%] ", main->error.to.stream, main->context.set.error, main->context.set.error);
-          fl_print_format("%[%un%]", main->error.to.stream, main->context.set.notable, F_number_t_size_unsigned_d, main->context.set.notable);
-          fl_print_format("%[.%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
+          fl_print_format("%[%QThe parameter '%]", main->error.to, main->context.set.error, main->error.prefix, main->context.set.error);
+          fl_print_format("%[%r%r%]", main->error.to, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_first_s, main->context.set.notable);
+          fl_print_format("%[' value can only be a number (inclusively) between %]", main->error.to, main->context.set.error, main->context.set.error);
+          fl_print_format("%[0%]", main->error.to, main->context.set.notable, main->context.set.notable);
+          fl_print_format(" %[and%] ", main->error.to, main->context.set.error, main->context.set.error);
+          fl_print_format("%[%un%]", main->error.to, main->context.set.notable, F_number_t_size_unsigned_d, main->context.set.notable);
+          fl_print_format("%[.%]%r", main->error.to, main->context.set.error, main->context.set.error, f_string_eol_s);
 
           f_file_stream_unlock(main->error.to);
 
@@ -234,9 +234,9 @@ extern "C" {
       if (main->parameters.array[byte_dump_parameter_last_e].result == f_console_result_found_e) {
         f_file_stream_lock(main->error.to);
 
-        fl_print_format("%[%QThe parameter '%]", main->error.to.stream, main->context.set.error, main->error.prefix, main->context.set.error);
-        fl_print_format("%[%r%r%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_last_s, main->context.set.notable);
-        fl_print_format("%[' is specified, but no value is given.%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
+        fl_print_format("%[%QThe parameter '%]", main->error.to, main->context.set.error, main->error.prefix, main->context.set.error);
+        fl_print_format("%[%r%r%]", main->error.to, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_last_s, main->context.set.notable);
+        fl_print_format("%[' is specified, but no value is given.%]%r", main->error.to, main->context.set.error, main->context.set.error, f_string_eol_s);
 
         f_file_stream_unlock(main->error.to);
 
@@ -252,13 +252,13 @@ extern "C" {
         if (F_status_is_error(status) || number < 0 || number > F_number_t_size_unsigned_d) {
           f_file_stream_lock(main->error.to);
 
-          fl_print_format("%[%QThe parameter '%]", main->error.to.stream, main->context.set.error, main->error.prefix, main->context.set.error);
-          fl_print_format("%[%r%r%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_last_s, main->context.set.notable);
-          fl_print_format("%[' value can only be a number (inclusively) between %]", main->error.to.stream, main->context.set.error, main->context.set.error);
-          fl_print_format("%[0%]", main->error.to.stream, main->context.set.notable, main->context.set.notable);
-          fl_print_format(" %[and%] ", main->error.to.stream, main->context.set.error, main->context.set.error);
-          fl_print_format("%[%un%]", main->error.to.stream, main->context.set.notable, F_number_t_size_unsigned_d, main->context.set.notable);
-          fl_print_format("%[.%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
+          fl_print_format("%[%QThe parameter '%]", main->error.to, main->context.set.error, main->error.prefix, main->context.set.error);
+          fl_print_format("%[%r%r%]", main->error.to, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_last_s, main->context.set.notable);
+          fl_print_format("%[' value can only be a number (inclusively) between %]", main->error.to, main->context.set.error, main->context.set.error);
+          fl_print_format("%[0%]", main->error.to, main->context.set.notable, main->context.set.notable);
+          fl_print_format(" %[and%] ", main->error.to, main->context.set.error, main->context.set.error);
+          fl_print_format("%[%un%]", main->error.to, main->context.set.notable, F_number_t_size_unsigned_d, main->context.set.notable);
+          fl_print_format("%[.%]%r", main->error.to, main->context.set.error, main->context.set.error, f_string_eol_s);
 
           f_file_stream_unlock(main->error.to);
 
@@ -274,11 +274,11 @@ extern "C" {
         if (data.first > data.last) {
           f_file_stream_lock(main->error.to);
 
-          fl_print_format("%[%QThe parameter '%]", main->error.to.stream, main->context.set.error, main->error.prefix, main->context.set.error);
-          fl_print_format("%[%r%r%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_first_s, main->context.set.notable);
-          fl_print_format("%[' value cannot be greater than the parameter '%]", main->error.to.stream, main->context.set.error, main->context.set.error);
-          fl_print_format("%[%r%r%]", main->error.to.stream, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_last_s, main->context.set.notable);
-          fl_print_format("%[' value.%]%r", main->error.to.stream, main->context.set.error, main->context.set.error, f_string_eol_s);
+          fl_print_format("%[%QThe parameter '%]", main->error.to, main->context.set.error, main->error.prefix, main->context.set.error);
+          fl_print_format("%[%r%r%]", main->error.to, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_first_s, main->context.set.notable);
+          fl_print_format("%[' value cannot be greater than the parameter '%]", main->error.to, main->context.set.error, main->context.set.error);
+          fl_print_format("%[%r%r%]", main->error.to, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_last_s, main->context.set.notable);
+          fl_print_format("%[' value.%]%r", main->error.to, main->context.set.error, main->context.set.error, f_string_eol_s);
 
           f_file_stream_unlock(main->error.to);
 
@@ -297,26 +297,26 @@ extern "C" {
 
         flockfile(main->output.to.stream);
 
-        f_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
-        fl_print_format("%[Piped " BYTE_DUMP_program_name_long_s ": (in ", main->output.to.stream, main->context.set.title);
+        f_print_dynamic_raw(f_string_eol_s, main->output.to);
+        fl_print_format("%[Piped " BYTE_DUMP_program_name_long_s ": (in ", main->output.to, main->context.set.title);
 
         if (data.mode == byte_dump_mode_hexidecimal_e) {
-          f_print_dynamic_raw(byte_dump_print_strings_hexidecimal_s, main->output.to.stream);
+          f_print_dynamic_raw(byte_dump_print_strings_hexidecimal_s, main->output.to);
         }
         else if (data.mode == byte_dump_mode_duodecimal_e) {
-          f_print_dynamic_raw(byte_dump_print_strings_duodecimal_s, main->output.to.stream);
+          f_print_dynamic_raw(byte_dump_print_strings_duodecimal_s, main->output.to);
         }
         else if (data.mode == byte_dump_mode_octal_e) {
-          f_print_dynamic_raw(byte_dump_print_strings_octal_s, main->output.to.stream);
+          f_print_dynamic_raw(byte_dump_print_strings_octal_s, main->output.to);
         }
         else if (data.mode == byte_dump_mode_binary_e) {
-          f_print_dynamic_raw(byte_dump_print_strings_binary_s, main->output.to.stream);
+          f_print_dynamic_raw(byte_dump_print_strings_binary_s, main->output.to);
         }
         else if (data.mode == byte_dump_mode_decimal_e) {
-          f_print_dynamic_raw(byte_dump_print_strings_decimal_s, main->output.to.stream);
+          f_print_dynamic_raw(byte_dump_print_strings_decimal_s, main->output.to);
         }
 
-        fl_print_format(")%]%r", main->output.to.stream, main->context.set.title, f_string_eol_s);
+        fl_print_format(")%]%r", main->output.to, main->context.set.title, f_string_eol_s);
 
         funlockfile(main->output.to.stream);
 
@@ -373,26 +373,26 @@ extern "C" {
 
           flockfile(main->output.to.stream);
 
-          fl_print_format("%r%[" BYTE_DUMP_program_name_long_s " of: %]%[", main->output.to.stream, f_string_eol_s, main->context.set.title, main->context.set.title, main->context.set.notable);
-          fl_print_format("%Q%] %[(in ", main->output.to.stream, data.argv[main->parameters.remaining.array[counter]], main->context.set.notable, main->context.set.title);
+          fl_print_format("%r%[" BYTE_DUMP_program_name_long_s " of: %]%[", main->output.to, f_string_eol_s, main->context.set.title, main->context.set.title, main->context.set.notable);
+          fl_print_format("%Q%] %[(in ", main->output.to, data.argv[main->parameters.remaining.array[counter]], main->context.set.notable, main->context.set.title);
 
           if (data.mode == byte_dump_mode_hexidecimal_e) {
-            f_print_dynamic_raw(byte_dump_print_strings_hexidecimal_s, main->output.to.stream);
+            f_print_dynamic_raw(byte_dump_print_strings_hexidecimal_s, main->output.to);
           }
           else if (data.mode == byte_dump_mode_duodecimal_e) {
-            f_print_dynamic_raw(byte_dump_print_strings_duodecimal_s, main->output.to.stream);
+            f_print_dynamic_raw(byte_dump_print_strings_duodecimal_s, main->output.to);
           }
           else if (data.mode == byte_dump_mode_octal_e) {
-            f_print_dynamic_raw(byte_dump_print_strings_octal_s, main->output.to.stream);
+            f_print_dynamic_raw(byte_dump_print_strings_octal_s, main->output.to);
           }
           else if (data.mode == byte_dump_mode_binary_e) {
-            f_print_dynamic_raw(byte_dump_print_strings_binary_s, main->output.to.stream);
+            f_print_dynamic_raw(byte_dump_print_strings_binary_s, main->output.to);
           }
           else if (data.mode == byte_dump_mode_decimal_e) {
-            f_print_dynamic_raw(byte_dump_print_strings_decimal_s, main->output.to.stream);
+            f_print_dynamic_raw(byte_dump_print_strings_decimal_s, main->output.to);
           }
 
-          fl_print_format(")%]%r", main->output.to.stream, main->context.set.title, f_string_eol_s);
+          fl_print_format(")%]%r", main->output.to, main->context.set.title, f_string_eol_s);
 
           funlockfile(main->output.to.stream);
 
@@ -408,7 +408,7 @@ extern "C" {
               if (main->output.verbosity != f_console_verbosity_quiet_e) {
                 f_file_stream_flush(main->output.to);
 
-                fll_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
+                fll_print_dynamic_raw(f_string_eol_s, main->output.to);
               }
             }
             else {
@@ -426,7 +426,7 @@ extern "C" {
       }
     }
     else {
-      fll_print_format("%r%[%QYou failed to specify one or more filenames.%]%r", main->error.to.stream, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error, f_string_eol_s);
+      fll_print_format("%r%[%QYou failed to specify one or more filenames.%]%r", main->error.to, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error, f_string_eol_s);
 
       status = F_status_set_error(F_parameter);
     }

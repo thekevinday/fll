@@ -362,7 +362,7 @@ extern "C" {
     f_string_static_t buffer = f_string_static_t_initialize;
 
     if (data->main->output.verbosity != f_console_verbosity_quiet_e && data->main->output.verbosity != f_console_verbosity_error_e) {
-      fll_print_format("%r%[Copying %Q.%]%r", data->main->output.to.stream, f_string_eol_s, data->main->context.set.important, label, data->main->context.set.important, f_string_eol_s);
+      fll_print_format("%r%[Copying %Q.%]%r", data->main->output.to, f_string_eol_s, data->main->context.set.important, label, data->main->context.set.important, f_string_eol_s);
     }
 
     *status = f_string_dynamic_resize(source.used, &path_source);
@@ -380,7 +380,7 @@ extern "C" {
     fl_directory_recurse_t recurse = fl_directory_recurse_t_initialize;
 
     if (data->main->error.verbosity >= f_console_verbosity_verbose_e) {
-      recurse.output.stream = data->main->output.to.stream;
+      recurse.output.stream = data->main->output.to;
       recurse.output.id = data->main->output.to.id;
       recurse.output.flag = data->main->output.to.flag;
       recurse.output.size_read = data->main->output.to.size_read;
@@ -525,7 +525,7 @@ extern "C" {
         }
 
         if (data->main->error.verbosity >= f_console_verbosity_verbose_e) {
-          fll_print_format("Copied file '%Q' to '%Q'.%r", data->main->output.to.stream, path_source, destination_file, f_string_eol_s);
+          fll_print_format("Copied file '%Q' to '%Q'.%r", data->main->output.to, path_source, destination_file, f_string_eol_s);
         }
       }
       else if (F_status_is_error(*status)) {
@@ -722,13 +722,13 @@ extern "C" {
       if (F_status_is_error(*status)) {
         if (F_status_set_fine(*status) == F_failure) {
           if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
-            flockfile(data->main->error.to.stream);
+            flockfile(data->main->error.to);
 
-            fl_print_format("%r%[%QFailed to execute script: '%]", data->main->error.to.stream, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
-            fl_print_format("%[%Q%]", data->main->error.to.stream, data->main->error.notable, path, data->main->error.notable);
-            fl_print_format("%['.%]%r", data->main->error.to.stream, data->main->error.context, data->main->error.context, f_string_eol_s);
+            fl_print_format("%r%[%QFailed to execute script: '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
+            fl_print_format("%[%Q%]", data->main->error.to, data->main->error.notable, path, data->main->error.notable);
+            fl_print_format("%['.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-            funlockfile(data->main->error.to.stream);
+            funlockfile(data->main->error.to);
           }
         }
         else {
@@ -835,29 +835,29 @@ extern "C" {
 
     if (F_status_is_fine(status)) {
       if (data->main->output.verbosity != f_console_verbosity_quiet_e && data->main->output.verbosity != f_console_verbosity_error_e) {
-        flockfile(data->main->output.to.stream);
+        flockfile(data->main->output.to);
 
-        fl_print_format("%r%[Building%] ", data->main->output.to.stream, f_string_eol_s, data->main->context.set.important, data->main->context.set.important);
-        fl_print_format("%[%Q%]", data->main->output.to.stream, data->main->context.set.notable, data_build.setting.build_name, data->main->context.set.notable);
-        fl_print_format("%[ using '%]", data->main->output.to.stream, data->main->context.set.important, data->main->context.set.important);
-        fl_print_format("%[%Q%]", data->main->output.to.stream, data->main->context.set.notable, data->settings, data->main->context.set.notable);
+        fl_print_format("%r%[Building%] ", data->main->output.to, f_string_eol_s, data->main->context.set.important, data->main->context.set.important);
+        fl_print_format("%[%Q%]", data->main->output.to, data->main->context.set.notable, data_build.setting.build_name, data->main->context.set.notable);
+        fl_print_format("%[ using '%]", data->main->output.to, data->main->context.set.important, data->main->context.set.important);
+        fl_print_format("%[%Q%]", data->main->output.to, data->main->context.set.notable, data->settings, data->main->context.set.notable);
 
-        fl_print_format("%[' with modes '%]", data->main->output.to.stream, data->main->context.set.important, data->main->context.set.important);
+        fl_print_format("%[' with modes '%]", data->main->output.to, data->main->context.set.important, data->main->context.set.important);
 
         f_string_dynamics_t * const modes = data->mode.used ? &data->mode : &data_build.setting.modes_default;
 
         for (f_array_length_t i = 0; i < modes->used; ) {
 
-          fl_print_format("%[%Q%]", data->main->output.to.stream, data->main->context.set.notable, modes->array[i], data->main->context.set.notable);
+          fl_print_format("%[%Q%]", data->main->output.to, data->main->context.set.notable, modes->array[i], data->main->context.set.notable);
 
           if (++i < modes->used) {
-            fl_print_format("%[', '%]", data->main->output.to.stream, data->main->context.set.important, data->main->context.set.important);
+            fl_print_format("%[', '%]", data->main->output.to, data->main->context.set.important, data->main->context.set.important);
           }
         } // for
 
-        fl_print_format("%['.%]%r", data->main->output.to.stream, data->main->context.set.important, data->main->context.set.important, f_string_eol_s);
+        fl_print_format("%['.%]%r", data->main->output.to, data->main->context.set.important, data->main->context.set.important, f_string_eol_s);
 
-        funlockfile(data->main->output.to.stream);
+        funlockfile(data->main->output.to);
       }
     }
 

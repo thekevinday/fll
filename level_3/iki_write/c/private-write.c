@@ -39,7 +39,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    fl_print_format("%Q%r%r%Q%r", main->output.to.stream, object, f_iki_syntax_separator_s, setting->quote, setting->escaped, setting->quote);
+    fl_print_format("%Q%r%r%Q%r", main->output.to, object, f_iki_syntax_separator_s, setting->quote, setting->escaped, setting->quote);
 
     return F_none;
   }

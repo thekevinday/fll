@@ -17,18 +17,6 @@ extern "C" {
 #endif
 
 /**
- * Provide file defaults.
- *
- * F_file_default_*:
- *   - read_size:  Default read size in bytes.
- *   - write_size: Default write size in bytes.
- */
-#ifndef _di_f_file_defaults_
-  #define F_file_default_read_size_d  8192
-  #define F_file_default_write_size_d 8192
-#endif // _di_f_file_defaults_
-
-/**
  * Provide macros for file-seek operations.
  *
  * The fseek() function parameters can be confusing, so provide a hopefully more readibly code via these macros.
@@ -166,46 +154,6 @@ extern "C" {
   extern const f_string_static_t f_file_open_mode_read_write_s;
   extern const f_string_static_t f_file_open_mode_truncate_s;
 #endif // _di_f_file_open_modes_
-
-/**
- * Commonly used file related properties.
- *
- * stream:     File stream.
- * id:         File descriptor, with a value of -1 represents a closed file.
- * flag:       Flags used for opening the file.
- * size_read:  The default number of 1-byte characters to read at a time and is often used for the read buffer size.
- * size_write: The default number of 1-byte characters to read at a time and is often used for the write buffer size.
- */
-#ifndef _di_f_file_t_
-  typedef struct {
-    FILE   *stream;
-    int    id;
-    int    flag;
-    size_t size_read;
-    size_t size_write;
-  } f_file_t;
-
-  #define f_file_t_initialize { 0, -1, F_file_flag_read_only_d, F_file_default_read_size_d, F_file_default_write_size_d }
-
-  #define macro_f_file_t_initialize(stream, id, flag, read_size, write_size) { stream, id, flag, read_size, write_size }
-  #define macro_f_file_t_initialize2(stream, id, flag) { stream, id, flag, F_file_default_read_size_d, F_file_default_write_size_d }
-  #define macro_f_file_t_initialize_id(id) { 0, id, F_file_flag_read_only_d, F_file_default_read_size_d, F_file_default_write_size_d }
-  #define macro_f_file_t_initialize_stream(stream) { stream, -1, F_file_flag_read_only_d, F_file_default_read_size_d, F_file_default_write_size_d }
-
-  #define macro_f_file_t_clear(file) \
-    file.stream = 0; \
-    file.id = -1; \
-    file.flag = 0; \
-    file.size_read = 0; \
-    file.size_write = 0;
-
-  #define macro_f_file_t_reset(file) \
-    file.stream = 0; \
-    file.id = -1; \
-    file.flag = F_file_flag_read_only_d; \
-    file.size_read = F_file_default_read_size_d; \
-    file.size_write = F_file_default_write_size_d;
-#endif // _di_f_file_t_
 
 /**
  * File AT_* define related functionality.

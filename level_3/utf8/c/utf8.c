@@ -44,10 +44,10 @@ extern "C" {
       if (F_status_is_error_not(setting->status)) {
         if (setting->mode & utf8_mode_to_bytesequence_e) {
           if (setting->flag & utf8_main_flag_header_e) {
-            fll_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
+            fll_print_dynamic_raw(f_string_eol_s, main->output.to);
           }
           else if ((setting->flag & (utf8_main_flag_separate_e | utf8_main_flag_file_from_e)) || setting->remaining.used) {
-            fll_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
+            fll_print_dynamic_raw(f_string_eol_s, main->output.to);
           }
         }
       }
@@ -102,16 +102,16 @@ extern "C" {
         if (F_status_is_error_not(setting->status)) {
           if (setting->mode & utf8_mode_to_bytesequence_e) {
             if (setting->flag & utf8_main_flag_header_e) {
-              fll_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
+              fll_print_dynamic_raw(f_string_eol_s, main->output.to);
             }
             else if ((setting->flag & utf8_main_flag_separate_e) && (setting->remaining.used || setting->path_files_from.used)) {
-              fll_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
+              fll_print_dynamic_raw(f_string_eol_s, main->output.to);
             }
           }
           else {
             if (!(setting->flag & (utf8_main_flag_file_to_e | utf8_main_flag_header_e | utf8_main_flag_verify_e))) {
               if (!(setting->flag & utf8_main_flag_separate_e)) {
-                fll_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
+                fll_print_dynamic_raw(f_string_eol_s, main->output.to);
               }
             }
           }
@@ -145,16 +145,16 @@ extern "C" {
 
         if (setting->mode & utf8_mode_to_bytesequence_e) {
           if (setting->flag & utf8_main_flag_header_e) {
-            fll_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
+            fll_print_dynamic_raw(f_string_eol_s, main->output.to);
           }
           else if ((setting->flag & utf8_main_flag_separate_e) && i + 1 < main->parameters.remaining.used) {
-            fll_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
+            fll_print_dynamic_raw(f_string_eol_s, main->output.to);
           }
         }
         else {
           if (!(setting->flag & (utf8_main_flag_file_to_e | utf8_main_flag_header_e | utf8_main_flag_verify_e))) {
             if (!(setting->flag & utf8_main_flag_separate_e)) {
-              fll_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
+              fll_print_dynamic_raw(f_string_eol_s, main->output.to);
             }
           }
         }

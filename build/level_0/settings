@@ -71,7 +71,7 @@ build_sources_headers socket.h socket/common.h
 build_sources_headers status.h
 build_sources_headers status_string.h
 build_sources_headers string.h string/common.h string/dynamic.h string/map.h string/map_multi.h string/quantity.h string/range.h string/static.h string/triple.h
-build_sources_headers type.h
+build_sources_headers type.h type_file.h
 build_sources_headers type_array.h type_array/common.h
 build_sources_headers type_array/array_length.h type_array/cell.h type_array/fll_id.h type_array/int8.h type_array/int16.h type_array/int32.h type_array/int64.h type_array/int128.h type_array/state.h type_array/status.h type_array/uint8.h type_array/uint16.h type_array/uint32.h type_array/uint64.h type_array/uint128.h
 build_sources_headers utf.h utf/common.h utf/convert.h utf/dynamic.h utf/is.h utf/is_character.h utf/map.h utf/map_multi.h utf/static.h utf/string.h utf/triple.h

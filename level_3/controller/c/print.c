@@ -10,13 +10,13 @@ extern "C" {
 
     controller_lock_print(print.to, 0);
 
-    f_print_dynamic_raw(setting->line_first, print.to.stream);
+    f_print_dynamic_raw(setting->line_first, print.to);
 
     fll_program_print_help_header(print, *main->program_name_long, controller_program_version_s);
 
     fll_program_print_help_option_standard(print.to, context);
 
-    f_print_dynamic_raw(f_string_eol_s, print.to.stream);
+    f_print_dynamic_raw(f_string_eol_s, print.to);
 
     fll_program_print_help_option(print, controller_short_cgroup_s, controller_long_cgroup_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "         Specify a custom control group file path, such as '" F_control_group_path_system_prefix_s F_control_group_path_system_default_s "'.");
     fll_program_print_help_option(print, controller_short_daemon_s, controller_long_daemon_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "         Run in daemon only mode (do not process the entry).");
@@ -29,21 +29,21 @@ extern "C" {
     fll_program_print_help_option(print, controller_short_uninterruptible_s, controller_long_uninterruptible_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Designate that this program cannot be interrupted by a signal.");
     fll_program_print_help_option(print, controller_short_validate_s, controller_long_validate_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "       Validate the settings (entry and rules) without running (does not simulate).");
 
-    f_print_dynamic_raw(f_string_eol_s, print.to.stream);
-    f_print_dynamic_raw(f_string_eol_s, print.to.stream);
+    f_print_dynamic_raw(f_string_eol_s, print.to);
+    f_print_dynamic_raw(f_string_eol_s, print.to);
 
     fll_program_print_help_usage(print, *main->program_name, controller_entry_s);
 
-    fl_print_format("%r  When both the %[%r%r%] parameter and the", print.to.stream, f_string_eol_s, print.set->notable, f_console_symbol_long_enable_s, controller_long_simulate_s, print.set->notable);
-    fl_print_format(" %[%r%r%] parameter are specified, then additional information on each would be executed rule is printed but no simulation is performed.%r%r", print.to.stream, print.set->notable, f_console_symbol_long_enable_s, controller_long_validate_s, print.set->notable, f_string_eol_s, f_string_eol_s);
+    fl_print_format("%r  When both the %[%r%r%] parameter and the", print.to, f_string_eol_s, print.set->notable, f_console_symbol_long_enable_s, controller_long_simulate_s, print.set->notable);
+    fl_print_format(" %[%r%r%] parameter are specified, then additional information on each would be executed rule is printed but no simulation is performed.%r%r", print.to, print.set->notable, f_console_symbol_long_enable_s, controller_long_validate_s, print.set->notable, f_string_eol_s, f_string_eol_s);
 
     const f_string_static_t interruptable = main->as_init ? controller_long_uninterruptible_s : controller_long_interruptible_s;
 
-    fl_print_format("  The default interrupt behavior is to operate as if the %[%r%r%] parameter is passed.%r%r", print.to.stream, print.set->notable, f_console_symbol_long_enable_s, interruptable, print.set->notable, f_string_eol_s, f_string_eol_s);
+    fl_print_format("  The default interrupt behavior is to operate as if the %[%r%r%] parameter is passed.%r%r", print.to, print.set->notable, f_console_symbol_long_enable_s, interruptable, print.set->notable, f_string_eol_s, f_string_eol_s);
 
-    fl_print_format("  Specify an empty string for the %[%r%r%] parameter to disable pid file creation for this program.%r", print.to.stream, print.set->notable, f_console_symbol_long_enable_s, controller_long_pid_s, print.set->notable, f_string_eol_s);
+    fl_print_format("  Specify an empty string for the %[%r%r%] parameter to disable pid file creation for this program.%r", print.to, print.set->notable, f_console_symbol_long_enable_s, controller_long_pid_s, print.set->notable, f_string_eol_s);
 
-    f_print_dynamic_raw(setting->line_last, print.to.stream);
+    f_print_dynamic_raw(setting->line_last, print.to);
 
     controller_unlock_print_flush(print.to, 0);
 
@@ -62,7 +62,7 @@ extern "C" {
       if (setting->flag & controller_main_flag_file_to_e) return F_output_not;
     }
 
-    f_print_dynamic_raw(setting->line_first, print.to.stream);
+    f_print_dynamic_raw(setting->line_first, print.to);
 
     return F_none;
   }
@@ -79,7 +79,7 @@ extern "C" {
       if (setting->flag & controller_main_flag_file_to_e) return F_output_not;
     }
 
-    fll_print_dynamic_raw(setting->line_first, print.to.stream);
+    fll_print_dynamic_raw(setting->line_first, print.to);
 
     return F_none;
   }
@@ -96,7 +96,7 @@ extern "C" {
       if (setting->flag & controller_main_flag_file_to_e) return F_output_not;
     }
 
-    fll_print_dynamic_raw(setting->line_last, print.to.stream);
+    fll_print_dynamic_raw(setting->line_last, print.to);
 
     return F_none;
   }
@@ -113,7 +113,7 @@ extern "C" {
       if (setting->flag & controller_main_flag_file_to_e) return F_output_not;
     }
 
-    f_print_dynamic_raw(setting->line_last, print.to.stream);
+    f_print_dynamic_raw(setting->line_last, print.to);
 
     return F_none;
   }

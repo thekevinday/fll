@@ -574,7 +574,7 @@ extern "C" {
     }
 
     if (main->parameters.array[control_parameter_return_e].result == f_console_result_found_e) {
-      fll_print_format("%rresponse %q %q %q%r", main->output.to.stream, f_string_eol_s, control_payload_type_name(header->type), control_action_type_name(header->action), string_status, f_string_eol_s);
+      fll_print_format("%rresponse %q %q %q%r", main->output.to, f_string_eol_s, control_payload_type_name(header->type), control_action_type_name(header->action), string_status, f_string_eol_s);
     }
     else if (header->type == control_payload_type_error_e) {
       control_print_error_packet_response(main, data, *header, string_status);
@@ -734,7 +734,7 @@ extern "C" {
           fll_error_file_print(main->error, F_status_set_fine(status), "f_file_exists", F_true, data->cache.small, f_file_operation_find_s, fll_error_file_type_directory_e);
 
           if (main->error.verbosity > f_console_verbosity_quiet_e) {
-            fll_print_dynamic_raw(f_string_eol_s, main->error.to.stream);
+            fll_print_dynamic_raw(f_string_eol_s, main->error.to);
           }
         }
 
@@ -803,7 +803,7 @@ extern "C" {
                 fll_error_file_print(main->error, F_status_set_fine(status), "f_file_exists", F_true, data->cache.small, f_file_operation_find_s, fll_error_file_type_directory_e);
 
                 if (main->error.verbosity > f_console_verbosity_quiet_e) {
-                  fll_print_dynamic_raw(f_string_eol_s, main->error.to.stream);
+                  fll_print_dynamic_raw(f_string_eol_s, main->error.to);
                 }
               }
 

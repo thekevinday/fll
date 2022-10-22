@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #if !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
-  f_status_t private_f_conversion_digit_to_file(const f_number_unsigned_t number, const f_conversion_data_t data, const uint8_t negative_or_zero, FILE * const stream) {
+  f_status_t private_f_conversion_digit_to_file(const f_number_unsigned_t number, const f_conversion_data_t data, const uint8_t negative_or_zero, const f_file_t file) {
 
     int digits = 0;
 
@@ -22,60 +22,60 @@ extern "C" {
 
     if (data.width > digits) {
       if (data.flag & F_conversion_data_flag_zeros_leading_d) {
-        if (F_status_is_error(private_f_conversion_digit_to_file_prefix(data, negative_or_zero, stream))) {
+        if (F_status_is_error(private_f_conversion_digit_to_file_prefix(data, negative_or_zero, file))) {
           return F_status_set_error(F_output);
         }
 
-        if (F_status_is_error(private_f_conversion_digit_to_file_pad(data, f_string_ascii_0_s, data.width - digits, stream))) {
+        if (F_status_is_error(private_f_conversion_digit_to_file_pad(data, f_string_ascii_0_s, data.width - digits, file))) {
           return F_status_set_error(F_output);
         }
 
-        if (F_status_is_error(private_f_conversion_digit_to_file_number(data, number, digits, stream))) {
+        if (F_status_is_error(private_f_conversion_digit_to_file_number(data, number, digits, file))) {
           return F_status_set_error(F_output);
         }
       }
       else if (number) {
-        if (F_status_is_error(private_f_conversion_digit_to_file_pad(data, f_string_ascii_space_s, data.width - digits, stream))) {
+        if (F_status_is_error(private_f_conversion_digit_to_file_pad(data, f_string_ascii_space_s, data.width - digits, file))) {
           return F_status_set_error(F_output);
         }
 
-        if (F_status_is_error(private_f_conversion_digit_to_file_prefix(data, negative_or_zero, stream))) {
+        if (F_status_is_error(private_f_conversion_digit_to_file_prefix(data, negative_or_zero, file))) {
           return F_status_set_error(F_output);
         }
 
-        if (F_status_is_error(private_f_conversion_digit_to_file_number(data, number, digits, stream))) {
+        if (F_status_is_error(private_f_conversion_digit_to_file_number(data, number, digits, file))) {
           return F_status_set_error(F_output);
         }
       }
       else {
-        if (F_status_is_error(private_f_conversion_digit_to_file_pad(data, f_string_ascii_space_s, data.width - digits, stream))) {
+        if (F_status_is_error(private_f_conversion_digit_to_file_pad(data, f_string_ascii_space_s, data.width - digits, file))) {
           return F_status_set_error(F_output);
         }
 
-        if (F_status_is_error(private_f_conversion_digit_to_file_prefix(data, negative_or_zero, stream))) {
+        if (F_status_is_error(private_f_conversion_digit_to_file_prefix(data, negative_or_zero, file))) {
           return F_status_set_error(F_output);
         }
 
-        if (F_status_is_error(private_f_conversion_digit_to_file_number(data, number, digits, stream))) {
+        if (F_status_is_error(private_f_conversion_digit_to_file_number(data, number, digits, file))) {
           return F_status_set_error(F_output);
         }
       }
     }
     else if (number) {
-      if (F_status_is_error(private_f_conversion_digit_to_file_prefix(data, negative_or_zero, stream))) {
+      if (F_status_is_error(private_f_conversion_digit_to_file_prefix(data, negative_or_zero, file))) {
         return F_status_set_error(F_output);
       }
 
-      if (F_status_is_error(private_f_conversion_digit_to_file_number(data, number, digits, stream))) {
+      if (F_status_is_error(private_f_conversion_digit_to_file_number(data, number, digits, file))) {
         return F_status_set_error(F_output);
       }
     }
     else if (data.width) {
-      if (F_status_is_error(private_f_conversion_digit_to_file_prefix(data, negative_or_zero, stream))) {
+      if (F_status_is_error(private_f_conversion_digit_to_file_prefix(data, negative_or_zero, file))) {
         return F_status_set_error(F_output);
       }
 
-      if (F_status_is_error(private_f_conversion_digit_to_file_number(data, number, digits, stream))) {
+      if (F_status_is_error(private_f_conversion_digit_to_file_number(data, number, digits, file))) {
         return F_status_set_error(F_output);
       }
     }
@@ -85,7 +85,7 @@ extern "C" {
 #endif // !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
 
 #if !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
-  f_status_t private_f_conversion_digit_to_file_number(const f_conversion_data_t data, f_number_unsigned_t number, int digits, FILE * const stream) {
+  f_status_t private_f_conversion_digit_to_file_number(const f_conversion_data_t data, f_number_unsigned_t number, int digits, const f_file_t file) {
 
     f_number_unsigned_t current = 0;
     f_number_unsigned_t power = 1;
@@ -109,15 +109,15 @@ extern "C" {
         if (work & number) {
           while (current < f_string_ascii_1_s.used) {
 
-            current += fwrite_unlocked(f_string_ascii_1_s.string + current, 1, f_string_ascii_1_s.used - current, stream);
-            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+            current += fwrite_unlocked(f_string_ascii_1_s.string + current, 1, f_string_ascii_1_s.used - current, file.stream);
+            if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
           } // while
         }
         else {
           while (current < f_string_ascii_0_s.used) {
 
-            current += fwrite_unlocked(f_string_ascii_0_s.string + current, 1, f_string_ascii_0_s.used - current, stream);
-            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+            current += fwrite_unlocked(f_string_ascii_0_s.string + current, 1, f_string_ascii_0_s.used - current, file.stream);
+            if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
           } // while
         }
 
@@ -166,8 +166,8 @@ extern "C" {
 
       while (count < sizeof(f_char_t)) {
 
-        count += fwrite_unlocked(&c, 1, sizeof(f_char_t), stream);
-        if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+        count += fwrite_unlocked(&c, 1, sizeof(f_char_t), file.stream);
+        if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
       } // while
     } // for
 
@@ -176,7 +176,7 @@ extern "C" {
 #endif // !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
 
 #if !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
-  f_status_t private_f_conversion_digit_to_file_pad(const f_conversion_data_t data, const f_string_static_t pad, int total, FILE * const stream) {
+  f_status_t private_f_conversion_digit_to_file_pad(const f_conversion_data_t data, const f_string_static_t pad, int total, const f_file_t file) {
 
     for (int count; total; --total) {
 
@@ -184,8 +184,8 @@ extern "C" {
 
       while (count < pad.used) {
 
-        count += fwrite_unlocked(pad.string + count, 1, pad.used - count, stream);
-        if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+        count += fwrite_unlocked(pad.string + count, 1, pad.used - count, file.stream);
+        if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
       } // while
     } // for
 
@@ -194,7 +194,7 @@ extern "C" {
 #endif // !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
 
 #if !defined(_di_f_conversion_number_signed_print_) || !defined(_di_f_conversion_number_unsigned_print_)
-  f_status_t private_f_conversion_digit_to_file_prefix(const f_conversion_data_t data, const uint8_t negative_or_zero, FILE * const stream) {
+  f_status_t private_f_conversion_digit_to_file_prefix(const f_conversion_data_t data, const uint8_t negative_or_zero, const f_file_t file) {
 
     if (negative_or_zero) {
       if (negative_or_zero == 1) {
@@ -203,8 +203,8 @@ extern "C" {
 
           while (count < f_string_ascii_minus_s.used) {
 
-            count += fwrite_unlocked(f_string_ascii_minus_s.string + count, 1, f_string_ascii_minus_s.used - count, stream);
-            if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+            count += fwrite_unlocked(f_string_ascii_minus_s.string + count, 1, f_string_ascii_minus_s.used - count, file.stream);
+            if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
           } // while
         }
       }
@@ -214,8 +214,8 @@ extern "C" {
 
       while (count < f_string_ascii_plus_s.used) {
 
-        count += fwrite_unlocked(f_string_ascii_plus_s.string + count, 1, f_string_ascii_plus_s.used - count, stream);
-        if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+        count += fwrite_unlocked(f_string_ascii_plus_s.string + count, 1, f_string_ascii_plus_s.used - count, file.stream);
+        if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
       } // while
     }
     else if (data.flag & F_conversion_data_flag_sign_pad_d) {
@@ -223,8 +223,8 @@ extern "C" {
 
       while (count < f_string_ascii_space_s.used) {
 
-        count += fwrite_unlocked(f_string_ascii_space_s.string + count, 1, f_string_ascii_space_s.used - count, stream);
-        if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+        count += fwrite_unlocked(f_string_ascii_space_s.string + count, 1, f_string_ascii_space_s.used - count, file.stream);
+        if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
       } // while
     }
 
@@ -234,8 +234,8 @@ extern "C" {
 
         while (count < f_string_ascii_0_s.used) {
 
-          count += fwrite_unlocked(f_string_ascii_0_s.string + count, 1, f_string_ascii_0_s.used - count, stream);
-          if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+          count += fwrite_unlocked(f_string_ascii_0_s.string + count, 1, f_string_ascii_0_s.used - count, file.stream);
+          if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
         } // while
       }
 
@@ -271,8 +271,8 @@ extern "C" {
 
         while (count < character->used) {
 
-          count += fwrite_unlocked(character->string + count, 1, character->used - count, stream);
-          if (ferror_unlocked(stream)) return F_status_set_error(F_output);
+          count += fwrite_unlocked(character->string + count, 1, character->used - count, file.stream);
+          if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
         } // while
       }
     }

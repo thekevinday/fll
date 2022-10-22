@@ -21,13 +21,13 @@ void firewall_print_debug_tool(const fl_print_t output, const f_string_static_t 
 
   flockfile(output.to.stream);
 
-  fl_print_format("%[%r", output.to.stream, output.context, tool);
+  fl_print_format("%[%r", output.to, output.context, tool);
 
   for (f_array_length_t i = 0; i < arguments.used; ++i) {
-    fl_print_format(" %Q", output.to.stream, arguments.array[i]);
+    fl_print_format(" %Q", output.to, arguments.array[i]);
   } // for
 
-  fl_print_format("%]%r", output.to.stream, output.context, f_string_eol_s);
+  fl_print_format("%]%r", output.to, output.context, f_string_eol_s);
 
   funlockfile(output.to.stream);
 }
@@ -36,21 +36,21 @@ void firewall_print_error_on_allocation_failure(const fl_print_t output) {
 
   if (output.verbosity == f_console_verbosity_quiet_e) return;
 
-  fll_print_format("%r%[%QUnable to allocate memory.%]%r", output.to.stream, f_string_eol_s, output.context, output.prefix, output.context, f_string_eol_s);
+  fll_print_format("%r%[%QUnable to allocate memory.%]%r", output.to, f_string_eol_s, output.context, output.prefix, output.context, f_string_eol_s);
 }
 
 void firewall_print_error_on_invalid_parameter(const fl_print_t output, const char *function) {
 
   if (output.verbosity == f_console_verbosity_quiet_e) return;
 
-  fll_print_format("%r%[%QInvalid parameter when calling %s().%]%r", output.to.stream, f_string_eol_s, output.context, output.prefix, function, output.context, f_string_eol_s);
+  fll_print_format("%r%[%QInvalid parameter when calling %s().%]%r", output.to, f_string_eol_s, output.context, output.prefix, function, output.context, f_string_eol_s);
 }
 
 void firewall_print_error_on_invalid_parameter_for_file(const fl_print_t output, const char *function, const f_string_static_t filename) {
 
   if (output.verbosity == f_console_verbosity_quiet_e) return;
 
-  fll_print_format("%r%[%QInvalid parameter when calling %s() for the file '%Q'.%]%r", output.to.stream, f_string_eol_s, output.context, output.prefix, function, filename, output.context, f_string_eol_s);
+  fll_print_format("%r%[%QInvalid parameter when calling %s() for the file '%Q'.%]%r", output.to, f_string_eol_s, output.context, output.prefix, function, filename, output.context, f_string_eol_s);
 }
 
 void firewall_print_error_on_operation(const fl_print_t output, const f_string_static_t tool, const f_string_statics_t arguments) {
@@ -59,14 +59,14 @@ void firewall_print_error_on_operation(const fl_print_t output, const f_string_s
 
   flockfile(output.to.stream);
 
-  fl_print_format("%r%[%QFailed to perform requested %r operation:%]", output.to.stream, f_string_eol_s, output.context, output.prefix, tool, output.context);
-  fl_print_format("%r  %[%r", output.to.stream, f_string_eol_s, output.context, tool);
+  fl_print_format("%r%[%QFailed to perform requested %r operation:%]", output.to, f_string_eol_s, output.context, output.prefix, tool, output.context);
+  fl_print_format("%r  %[%r", output.to, f_string_eol_s, output.context, tool);
 
   for (f_array_length_t i = 0; i < arguments.used; ++i) {
-    fl_print_format(" %Q", output.to.stream, arguments.array[i]);
+    fl_print_format(" %Q", output.to, arguments.array[i]);
   } // for
 
-  fl_print_format("%]%r", output.to.stream, output.context, f_string_eol_s);
+  fl_print_format("%]%r", output.to, output.context, f_string_eol_s);
 
   funlockfile(output.to.stream);
 }
@@ -75,14 +75,14 @@ void firewall_print_error_on_unhandled(const fl_print_t output, const char *func
 
   if (output.verbosity == f_console_verbosity_quiet_e) return;
 
-  fll_print_format("%r%[%QAn unhandled error (%ui) has occurred while calling %s().%]%r", output.to.stream, f_string_eol_s, output.context, output.prefix, status, function, output.context, f_string_eol_s);
+  fll_print_format("%r%[%QAn unhandled error (%ui) has occurred while calling %s().%]%r", output.to, f_string_eol_s, output.context, output.prefix, status, function, output.context, f_string_eol_s);
 }
 
 void firewall_print_error_on_unhandled_for_file(const fl_print_t output, const char *function, const f_status_t status, const f_string_static_t filename) {
 
   if (output.verbosity == f_console_verbosity_quiet_e) return;
 
-  fll_print_format("%r%[%QAn unhandled error (%ui) has occurred while calling %s() for the file '%Q'.%]%r", output.to.stream, f_string_eol_s, output.context, output.prefix, status, function, filename, output.context, f_string_eol_s);
+  fll_print_format("%r%[%QAn unhandled error (%ui) has occurred while calling %s() for the file '%Q'.%]%r", output.to, f_string_eol_s, output.context, output.prefix, status, function, filename, output.context, f_string_eol_s);
 }
 
 #ifndef _di_firewall_signal_received_

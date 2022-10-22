@@ -174,7 +174,7 @@ extern "C" {
         status = F_status_set_error(F_parameter);
 
         if (main->error.verbosity > f_console_verbosity_quiet_e) {
-          fll_print_format("%r%[%QYou failed to specify a valid operation.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context, f_string_eol_s);
+          fll_print_format("%r%[%QYou failed to specify a valid operation.%]%r", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context, f_string_eol_s);
         }
       }
     }
@@ -186,11 +186,11 @@ extern "C" {
         if (main->error.verbosity > f_console_verbosity_quiet_e) {
           f_file_stream_lock(main->error.to);
 
-          fl_print_format("%r%[%QThe operation '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-          fl_print_format("%[%r%]", main->error.to.stream, main->error.notable, fake_other_operation_build_s, main->error.notable);
-          fl_print_format("%[' cannot be specified with the operation '%]", main->error.to.stream, main->error.context, main->error.context);
-          fl_print_format("%[%r%]", main->error.to.stream, main->error.notable, fake_other_operation_make_s, main->error.notable);
-          fl_print_format("%['.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+          fl_print_format("%r%[%QThe operation '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+          fl_print_format("%[%r%]", main->error.to, main->error.notable, fake_other_operation_build_s, main->error.notable);
+          fl_print_format("%[' cannot be specified with the operation '%]", main->error.to, main->error.context, main->error.context);
+          fl_print_format("%[%r%]", main->error.to, main->error.notable, fake_other_operation_make_s, main->error.notable);
+          fl_print_format("%['.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
 
           f_file_stream_unlock(main->error.to);
         }
@@ -348,9 +348,9 @@ extern "C" {
           if (main->error.verbosity > f_console_verbosity_quiet_e) {
             f_file_stream_lock(main->error.to);
 
-            fl_print_format("%r%[%QThe operation '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-            fl_print_format("%[%r%]", main->error.to.stream, main->error.notable, operations_name, main->error.notable);
-            fl_print_format("%[' failed.%]%r", main->error.to.stream, main->error.context, main->error.context, f_string_eol_s);
+            fl_print_format("%r%[%QThe operation '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
+            fl_print_format("%[%r%]", main->error.to, main->error.notable, operations_name, main->error.notable);
+            fl_print_format("%[' failed.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
 
             f_file_stream_unlock(main->error.to);
           }
@@ -359,7 +359,7 @@ extern "C" {
 
       if (main->error.verbosity > f_console_verbosity_error_e) {
         if (F_status_is_error_not(status) && status != F_child) {
-          fll_print_format("%rAll operations complete.%r%r", main->output.to.stream, f_string_eol_s, f_string_eol_s, f_string_eol_s);
+          fll_print_format("%rAll operations complete.%r%r", main->output.to, f_string_eol_s, f_string_eol_s, f_string_eol_s);
         }
       }
     }
@@ -369,7 +369,7 @@ extern "C" {
         f_file_stream_flush(main->output.to);
       }
 
-      fll_print_dynamic_raw(f_string_eol_s, main->output.to.stream);
+      fll_print_dynamic_raw(f_string_eol_s, main->output.to);
     }
 
     fake_data_delete(&data);
