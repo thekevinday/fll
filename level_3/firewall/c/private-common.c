@@ -19,7 +19,7 @@ void firewall_print_debug_tool(const fl_print_t output, const f_string_static_t 
 
   if (output.verbosity != f_console_verbosity_debug_e) return;
 
-  flockfile(output.to.stream);
+  f_file_stream_lock(output.to);
 
   fl_print_format("%[%r", output.to, output.context, tool);
 
@@ -29,7 +29,7 @@ void firewall_print_debug_tool(const fl_print_t output, const f_string_static_t 
 
   fl_print_format("%]%r", output.to, output.context, f_string_eol_s);
 
-  funlockfile(output.to.stream);
+  f_file_stream_unlock(output.to);
 }
 
 void firewall_print_error_on_allocation_failure(const fl_print_t output) {
@@ -57,7 +57,7 @@ void firewall_print_error_on_operation(const fl_print_t output, const f_string_s
 
   if (output.verbosity == f_console_verbosity_quiet_e) return;
 
-  flockfile(output.to.stream);
+  f_file_stream_lock(output.to);
 
   fl_print_format("%r%[%QFailed to perform requested %r operation:%]", output.to, f_string_eol_s, output.context, output.prefix, tool, output.context);
   fl_print_format("%r  %[%r", output.to, f_string_eol_s, output.context, tool);
@@ -68,7 +68,7 @@ void firewall_print_error_on_operation(const fl_print_t output, const f_string_s
 
   fl_print_format("%]%r", output.to, output.context, f_string_eol_s);
 
-  funlockfile(output.to.stream);
+  f_file_stream_unlock(output.to);
 }
 
 void firewall_print_error_on_unhandled(const fl_print_t output, const char *function, const f_status_t status) {

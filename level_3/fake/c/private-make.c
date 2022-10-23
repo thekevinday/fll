@@ -60,13 +60,13 @@ extern "C" {
 
         if (status == F_exist_not) {
           if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
-            flockfile(data->main->error.to);
+            f_file_stream_lock(data->main->error);
 
             fl_print_format("%r%[%QThe group name '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
             fl_print_format("%[%Q%]", data->main->error.to, data->main->error.notable, buffer, data->main->error.notable);
             fl_print_format("%[' is not found.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-            funlockfile(data->main->error.to);
+            f_file_stream_unlock(data->main->error);
           }
 
           return F_status_set_error(F_failure);
@@ -82,13 +82,13 @@ extern "C" {
 
     if (number > F_type_size_32_unsigned_d) {
       if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
-        flockfile(data->main->error.to);
+        f_file_stream_lock(data->main->error);
 
         fl_print_format("%r%[%QThe number '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
         fl_print_format("%[%un%]", data->main->error.to, data->main->error.notable, number, data->main->error.notable);
         fl_print_format("%[' is too large.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-        funlockfile(data->main->error.to);
+        f_file_stream_unlock(data->main->error);
       }
     }
 
@@ -112,13 +112,13 @@ extern "C" {
     if (F_status_is_error(status)) {
       if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
         if (F_status_set_fine(status) == F_syntax) {
-          flockfile(data->main->error.to);
+          f_file_stream_lock(data->main->error);
 
           fl_print_format("%r%[%QThe mode '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
           fl_print_format("%[%Q%]", data->main->error.to, data->main->error.notable, buffer, data->main->error.notable);
           fl_print_format("%[' is invalid.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-          funlockfile(data->main->error.to);
+          f_file_stream_unlock(data->main->error);
         }
         else {
           fll_error_print(print, status, "f_file_mode_from_string", F_true);
@@ -153,13 +153,13 @@ extern "C" {
 
         if (status == F_exist_not) {
           if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
-            flockfile(data->main->error.to);
+            f_file_stream_lock(data->main->error);
 
             fl_print_format("%r%[%QThe user '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
             fl_print_format("%[%Q%]", data->main->error.to, data->main->error.notable, buffer, data->main->error.notable);
             fl_print_format("%[' is not found.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-            funlockfile(data->main->error.to);
+            f_file_stream_unlock(data->main->error);
           }
 
           return F_status_set_error(F_failure);
@@ -175,13 +175,13 @@ extern "C" {
 
     if (number > F_type_size_32_unsigned_d) {
       if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
-        flockfile(data->main->error.to);
+        f_file_stream_lock(data->main->error);
 
         fl_print_format("%r%[%QThe number '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
         fl_print_format("%[%un%]", data->main->error.to, data->main->error.notable, number, data->main->error.notable);
         fl_print_format("%[' is too large.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-        funlockfile(data->main->error.to);
+        f_file_stream_unlock(data->main->error);
       }
     }
 

@@ -10,13 +10,13 @@ extern "C" {
   f_status_t fake_clean_operate(fake_data_t * const data) {
 
     if (data->main->output.verbosity != f_console_verbosity_quiet_e && data->main->output.verbosity != f_console_verbosity_error_e) {
-      flockfile(data->main->output.to);
+      f_file_stream_lock(data->main->output);
 
       fl_print_format("%r%[Deleting all files within build directory '%]", data->main->output.to, f_string_eol_s, data->main->context.set.important, data->main->context.set.important);
       fl_print_format("%[%Q%]", data->main->output.to, data->main->context.set.notable, data->path_build, data->main->context.set.notable);
       fl_print_format("%['.%]%r", data->main->output.to, data->main->context.set.important, data->main->context.set.important, f_string_eol_s);
 
-      funlockfile(data->main->output.to);
+      f_file_stream_unlock(data->main->output);
     }
 
     f_status_t status = F_none;

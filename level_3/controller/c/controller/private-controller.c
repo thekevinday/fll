@@ -439,7 +439,7 @@ extern "C" {
 
             controller_print_error_file(0, global->main->error, F_status_set_fine(status), "controller_file_pid_create", F_true, global->setting->path_pid, f_file_operation_create_s, fll_error_file_type_file_e);
 
-            flockfile(global->main->error.to);
+            f_file_stream_lock(global->main->error.to);
 
             controller_entry_print_error_cache(is_entry, global->main->error, cache->action);
 

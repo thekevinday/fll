@@ -37,20 +37,20 @@ extern "C" {
     if (header.status == F_busy) {
       if (main->warning.verbosity == f_console_verbosity_quiet_e) return;
 
-      flockfile(main->warning.to.stream);
+      f_file_stream_lock(main->warning.to);
 
       fl_print_format("%r%[%QThe action '%]", main->warning.to, f_string_eol_s, main->context.set.warning, main->warning.prefix, main->context.set.warning);
       fl_print_format("%[%q%]", main->warning.to, main->context.set.notable, control_action_type_name(header.action), main->context.set.notable);
       fl_print_format("%[' could not be performed because the service is busy.%]%r", main->warning.to, main->context.set.warning, main->context.set.warning, f_string_eol_s);
 
-      funlockfile(main->warning.to.stream);
+      f_file_stream_unlock(main->warning.to);
 
       return;
     }
 
     if (main->output.verbosity == f_console_verbosity_quiet_e) return;
 
-    flockfile(main->output.to.stream);
+    f_file_stream_lock(main->output.to);
 
     fl_print_format("%rThe action '", main->output.to, f_string_eol_s);
     fl_print_format("%[%q%]", main->output.to, main->context.set.notable, control_action_type_name(header.action), main->context.set.notable);
@@ -69,7 +69,7 @@ extern "C" {
       fl_print_format(".%r", main->output.to, f_string_eol_s);
     }
 
-    funlockfile(main->output.to.stream);
+    f_file_stream_unlock(main->output.to);
   }
 #endif // _di_control_print_controller_packet_response_
 
@@ -78,12 +78,12 @@ extern "C" {
 
     if (main->output.verbosity == f_console_verbosity_debug_e) return;
 
-    flockfile(main->output.to.stream);
+    f_file_stream_lock(main->output.to);
 
     fl_print_format("%rPacket header Object '%[%Q%]", main->output.to, f_string_eol_s, main->context.set.notable, object, main->context.set.notable);
     fl_print_format("' has value '%[%/Q%]'.%r", main->output.to, main->context.set.notable, content, content_range, main->context.set.notable, f_string_eol_s);
 
-    funlockfile(main->output.to.stream);
+    f_file_stream_unlock(main->output.to);
   }
 #endif // _di_control_print_debug_packet_header_object_and_content_
 
@@ -92,7 +92,7 @@ extern "C" {
 
     if (main->output.verbosity == f_console_verbosity_debug_e) return;
 
-    flockfile(main->output.to.stream);
+    f_file_stream_lock(main->output.to);
 
     fl_print_format("%r%s", main->output.to, f_string_eol_s, message, main->context.set.notable, main->context.set.notable);
 
@@ -111,7 +111,7 @@ extern "C" {
 
     fl_print_format(".%r", main->output.to, f_string_eol_s);
 
-    funlockfile(main->output.to.stream);
+    f_file_stream_unlock(main->output.to);
   }
 #endif // _di_control_print_debug_packet_message_
 
@@ -412,13 +412,13 @@ extern "C" {
 
     if (main->warning.verbosity == f_console_verbosity_debug_e) return;
 
-    flockfile(main->warning.to.stream);
+    f_file_stream_lock(main->warning.to);
 
     fl_print_format("%r%[%QThe received response header '%]", main->warning.to, f_string_eol_s, main->context.set.warning, main->warning.prefix, main->context.set.warning);
     fl_print_format("%[%Q%]", main->warning.to, main->context.set.notable, response_header, main->context.set.notable);
     fl_print_format("%[' is repeated.%]%r", main->warning.to, main->context.set.warning, main->context.set.warning, f_string_eol_s);
 
-    funlockfile(main->warning.to.stream);
+    f_file_stream_unlock(main->warning.to);
   }
 #endif // _di_control_print_warning_packet_header_duplicate_object_
 
@@ -427,7 +427,7 @@ extern "C" {
 
     if (main->warning.verbosity == f_console_verbosity_debug_e) return;
 
-    flockfile(main->warning.to.stream);
+    f_file_stream_lock(main->warning.to);
 
     fl_print_format("%r%[%QFailed while calling f_status_string_to() for status%] ", main->output.to, f_string_eol_s, main->context.set.warning, main->context.set.warning, main->context.set.warning);
     fl_print_format("%[%ui%]", main->output.to, main->context.set.notable, status_of, main->context.set.notable);
@@ -435,7 +435,7 @@ extern "C" {
     fl_print_format("%[%ui%]", main->output.to, main->context.set.notable, status_error, main->context.set.notable);
     fl_print_format("%[.%]%r", main->output.to, main->context.set.warning, main->context.set.warning, f_string_eol_s);
 
-    funlockfile(main->warning.to.stream);
+    f_file_stream_unlock(main->warning.to);
   }
 #endif // _di_control_print_warning_packet_process_string_to_failed_
 

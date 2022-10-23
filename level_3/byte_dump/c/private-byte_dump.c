@@ -137,7 +137,7 @@ extern "C" {
           }
         }
 
-        flockfile(data->main->output.to);
+        f_file_stream_lock(data->main->output);
 
         if (byte_dump_print_character_fragment(data, sequence, invalid, width_utf, 1, &previous, &cell, &offset) == F_true) {
           character_reset = F_true;
@@ -164,7 +164,7 @@ extern "C" {
             position += width_utf;
 
             if (position >= data->last) {
-              funlockfile(data->main->output.to);
+              f_file_stream_unlock(data->main->output);
 
               break;
             }
@@ -174,19 +174,19 @@ extern "C" {
           ++position;
 
           if (position >= data->last) {
-            funlockfile(data->main->output.to);
+            f_file_stream_unlock(data->main->output);
 
             break;
           }
         }
 
-        funlockfile(data->main->output.to);
+        f_file_stream_unlock(data->main->output);
 
         width_utf = -1;
       } // for
     }
 
-    flockfile(data->main->output.to);
+    f_file_stream_lock(data->main->output);
 
     // Print placeholders to fill out the remaining line and then optionally print the text block.
     if (cell.column && cell.column < data->width) {
@@ -308,38 +308,38 @@ extern "C" {
 
     f_print_dynamic_raw(f_string_eol_s, data->main->output.to);
 
-    funlockfile(data->main->output.to);
+    f_file_stream_unlock(data->main->output);
 
     // Make sure to flush standard out to help prevent standard error from causing problems.
-    fflush(data->main->output.to);
+    f_file_stream_flush(data->main->output.to);
 
     if (found_invalid_utf) {
       if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
-        flockfile(data->main->error.to);
+        f_file_stream_lock(data->main->error);
 
         fl_print_format("%[Invalid UTF-8 codes were detected for file '%]", data->main->error.to, data->main->context.set.error, data->main->context.set.error);
         fl_print_format("%[%Q%]", data->main->error.to, data->main->context.set.notable, file_name.used ? file_name : f_string_ascii_minus_s, data->main->context.set.notable);
         fl_print_format("%['.%]%r%r", data->main->error.to, data->main->context.set.error, data->main->context.set.error, f_string_eol_s, f_string_eol_s);
 
-        funlockfile(data->main->error.to);
+        f_file_stream_unlock(data->main->error);
       }
     }
 
     if (ferror(file.stream)) {
       if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
-        flockfile(data->main->error.to);
+        f_file_stream_lock(data->main->error);
 
         fl_print_format("%[%Qread() failed for '%]", data->main->error.to, data->main->context.set.error, data->main->error.prefix, data->main->context.set.error);
         fl_print_format("%[%Q%]", data->main->error.to, data->main->context.set.notable, file_name.used ? file_name : f_string_ascii_minus_s, data->main->context.set.notable);
         fl_print_format("%['.%]%r%r", data->main->error.to, data->main->context.set.error, data->main->context.set.error, f_string_eol_s, f_string_eol_s);
 
-        funlockfile(data->main->error.to);
+        f_file_stream_unlock(data->main->error);
       }
 
       status = F_status_set_error(F_failure);
     }
 
-    fflush(data->main->error.to);
+    f_file_stream_flush(data->main->error.to);
 
     return status;
   }

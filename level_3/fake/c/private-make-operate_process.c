@@ -323,7 +323,7 @@ extern "C" {
     }
 
     if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
-      flockfile(data_make->main->output.to);
+      f_file_stream_lock(data_make->output.to);
 
       f_array_length_t i = 0;
 
@@ -345,10 +345,10 @@ extern "C" {
 
       f_print_dynamic_raw(f_string_eol_s, data_make->main->output.to);
 
-      funlockfile(data_make->main->output.to);
+      f_file_stream_unlock(data_make->output.to);
 
       // Flush to stdout before executing command.
-      fflush(data_make->main->output.to);
+      f_file_stream_flush(data_make->main->output.to);
     }
 
     int return_code = 0;
@@ -373,13 +373,13 @@ extern "C" {
 
       if (F_status_set_fine(status) == F_file_found_not) {
         if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to) {
-          flockfile(data_make->error.to.stream);
+          f_file_stream_lock(data_make->error.to);
 
           fl_print_format("%r%[%QFailed to find program '%]", data_make->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
           fl_print_format("%[%Q%]", data_make->error.to, data_make->error.notable, program, data_make->error.notable);
           fl_print_format("%[' for executing.%]%r", data_make->error.to, data_make->error.context, data_make->error.context, f_string_eol_s);
 
-          funlockfile(data_make->error.to.stream);
+          f_file_stream_unlock(data_make->error.to);
         }
       }
       else if (F_status_set_fine(status) != F_failure) {
@@ -441,13 +441,13 @@ extern "C" {
     }
 
     if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to) {
-      flockfile(data_make->error.to.stream);
+      f_file_stream_lock(data_make->error.to);
 
       fl_print_format("%r%[%QFailed with return code %]", data_make->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
       fl_print_format("%[%i%]", data_make->error.to, data_make->error.notable, return_code, data_make->error.notable);
       fl_print_format("%[.%]%r", data_make->error.to, data_make->error.context, data_make->error.context, f_string_eol_s);
 
-      funlockfile(data_make->error.to.stream);
+      f_file_stream_unlock(data_make->error.to);
     }
 
     if (data_make->setting_make.fail == fake_make_operation_fail_type_exit_e) return F_status_set_error(F_failure);

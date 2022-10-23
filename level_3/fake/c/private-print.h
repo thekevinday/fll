@@ -37,9 +37,8 @@ extern "C" {
  *   F_true is returned if the status code has no print message.
  *   F_false is returned on successful print of known errors.
  *
- * @see flockfile()
- * @see funlockfile()
- *
+ * @see f_file_stream_lock()
+ * @see f_file_stream_unlock()
  * @see fl_print_format()
  *
  * @see fake_print_error_build_operation_file_message();
@@ -93,9 +92,8 @@ extern "C" {
  *   F_true is returned if the status code has no print message.
  *   F_false is returned on successful print of known errors.
  *
- * @see flockfile()
- * @see funlockfile()
- *
+ * @see f_file_stream_lock()
+ * @see f_file_stream_unlock()
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_error_fss_
@@ -110,9 +108,8 @@ extern "C" {
  * @param parameter
  *   The parameter name.
  *
- * @see flockfile()
- * @see funlockfile()
- *
+ * @see f_file_stream_lock()
+ * @see f_file_stream_unlock()
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_error_parameter_missing_value_
@@ -127,9 +124,8 @@ extern "C" {
  * @param parameter
  *   The parameter name.
  *
- * @see flockfile()
- * @see funlockfile()
- *
+ * @see f_file_stream_lock()
+ * @see f_file_stream_unlock()
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_error_parameter_too_many_
@@ -188,9 +184,8 @@ extern "C" {
  * @param operation_name
  *   The range within the buffer representing the operation name within the section.
  *
- * @see flockfile()
- * @see funlockfile()
- *
+ * @see f_file_stream_lock()
+ * @see f_file_stream_unlock()
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_message_section_operation_failed_
@@ -207,9 +202,8 @@ extern "C" {
  * @param argument
  *   The argument that is unknown by the link operation.
  *
- * @see flockfile()
- * @see funlockfile()
- *
+ * @see f_file_stream_lock()
+ * @see f_file_stream_unlock()
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_message_section_operation_link_argument_unknown_
@@ -226,9 +220,8 @@ extern "C" {
  * @param argument
  *   The argument representing the point file.
  *
- * @see flockfile()
- * @see funlockfile()
- *
+ * @see f_file_stream_lock()
+ * @see f_file_stream_unlock()
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_message_section_operation_link_point_exists_
@@ -245,9 +238,8 @@ extern "C" {
  * @param argument
  *   The argument representing the point file.
  *
- * @see flockfile()
- * @see funlockfile()
- *
+ * @see f_file_stream_lock()
+ * @see f_file_stream_unlock()
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_message_section_operation_link_target_exists_not_
@@ -268,9 +260,8 @@ extern "C" {
  * @param path
  *   The path that is outside of the project path.
  *
- * @see flockfile()
- * @see funlockfile()
- *
+ * @see f_file_stream_lock()
+ * @see f_file_stream_unlock()
  * @see fl_print_format()
  * @see fll_error_file_print()
  */
@@ -293,9 +284,8 @@ extern "C" {
  * @param path
  *   The path to the directory.
  *
- * @see flockfile()
- * @see funlockfile()
- *
+ * @see f_file_stream_lock()
+ * @see f_file_stream_unlock()
  * @see fl_print_format()
  * @see fll_error_file_print()
  */
@@ -319,9 +309,8 @@ extern "C" {
  * @param stack_max
  *   The max stack depth.
  *
- * @see flockfile()
- * @see funlockfile()
- *
+ * @see f_file_stream_lock()
+ * @see f_file_stream_unlock()
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_message_section_operation_stack_max_
@@ -342,9 +331,8 @@ extern "C" {
  * @param operation_name
  *   The range within the buffer representing the operation name within the section.
  *
- * @see flockfile()
- * @see funlockfile()
- *
+ * @see f_file_stream_lock()
+ * @see f_file_stream_unlock()
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_message_section_operation_unknown_
@@ -365,9 +353,8 @@ extern "C" {
  * @param settings_name
  *   The name of the setting that has an invalid value.
  *
- * @see flockfile()
- * @see funlockfile()
- *
+ * @see f_file_stream_lock()
+ * @see f_file_stream_unlock()
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_warning_settings_content_empty_
@@ -390,9 +377,8 @@ extern "C" {
  * @param settings_name
  *   The name of the setting that has an invalid value.
  *
- * @see flockfile()
- * @see funlockfile()
- *
+ * @see f_file_stream_lock()
+ * @see f_file_stream_unlock()
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_warning_settings_content_invalid_
@@ -411,9 +397,8 @@ extern "C" {
  * @param name_object
  *   The name of the object.
  *
- * @see flockfile()
- * @see funlockfile()
- *
+ * @see f_file_stream_lock()
+ * @see f_file_stream_unlock()
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_warning_settings_content_multiple_
@@ -434,9 +419,8 @@ extern "C" {
  * @param name_object
  *   The name of the object.
  *
- * @see flockfile()
- * @see funlockfile()
- *
+ * @see f_file_stream_lock()
+ * @see f_file_stream_unlock()
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_warning_settings_object_multiple_

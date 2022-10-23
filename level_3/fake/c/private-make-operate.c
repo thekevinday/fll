@@ -23,7 +23,7 @@ extern "C" {
     }
 
     if (data->main->output.verbosity != f_console_verbosity_quiet_e && data->main->output.verbosity != f_console_verbosity_error_e) {
-      flockfile(data->main->output.to);
+      f_file_stream_lock(data->main->output);
 
       fl_print_format("%r%[Now making using '%]", data->main->output.to, f_string_eol_s, data->main->context.set.important, data->main->context.set.important);
       fl_print_format("%[%Q%]", data->main->output.to, data->main->context.set.notable, data->fakefile, data->main->context.set.notable);
@@ -43,7 +43,7 @@ extern "C" {
 
       fl_print_format("%['.%]%r", data->main->output.to, data->main->context.set.important, data->main->context.set.important, f_string_eol_s);
 
-      funlockfile(data->main->output.to);
+      f_file_stream_unlock(data->main->output);
     }
 
     f_status_t status = F_none;
@@ -140,7 +140,7 @@ extern "C" {
       const f_status_t status_path = f_path_change_at(data_make.path.top.id);
 
       if (F_status_is_error(status_path) && data->main->warning.verbosity >= f_console_verbosity_verbose_e) {
-        flockfile(data->main->warning.to);
+        f_file_stream_lock(data->main->warning);
 
         fl_print_format("%r%[%QFailed change back to orignal path '%]", data->main->warning.to, f_string_eol_s, data->main->warning.context, data->main->warning.prefix, data->main->warning.context);
         fl_print_format("%[%Q%]", data->main->warning.to, data->main->warning.notable, data_make.path.stack.array[0], data->main->warning.notable);
@@ -148,7 +148,7 @@ extern "C" {
         fl_print_format("%[%ui%]", data->main->warning.to, data->main->warning.notable, F_status_set_fine(status_path), data->main->warning.notable);
         fl_print_format("%['.%]%r", data->main->warning.to, data->main->warning.context, data->main->warning.context, f_string_eol_s);
 
-        funlockfile(data->main->warning.to);
+        f_file_stream_unlock(data->main->warning);
       }
     }
 
@@ -1154,13 +1154,13 @@ extern "C" {
     const f_fss_named_t *section = &data_make->fakefile.array[id_section];
 
     if (data_make->main->output.verbosity != f_console_verbosity_quiet_e && data_make->main->output.verbosity != f_console_verbosity_error_e) {
-      flockfile(data_make->main->output.to);
+      f_file_stream_lock(data_make->output.to);
 
       fl_print_format("%r%[Processing Section '%]", data_make->main->output.to, f_string_eol_s, data_make->main->context.set.important, data_make->main->context.set.important);
       fl_print_format("%[%/Q%]", data_make->main->output.to, data_make->main->context.set.notable, data_make->buffer, section->name, data_make->main->context.set.notable);
       fl_print_format("%['.%]%r", data_make->main->output.to, data_make->main->context.set.important, data_make->main->context.set.important, f_string_eol_s);
 
-      funlockfile(data_make->main->output.to);
+      f_file_stream_unlock(data_make->output.to);
     }
 
     if (!section->objects.used) {
@@ -1390,7 +1390,7 @@ extern "C" {
 
     if (i == section->objects.used && F_status_is_error_not(*status) && (state_process.operation == fake_make_operation_type_and_e || state_process.operation == fake_make_operation_type_else_e || state_process.operation == fake_make_operation_type_if_e || state_process.operation == fake_make_operation_type_or_e)) {
       if (data_make->data->main->error.verbosity > f_console_verbosity_quiet_e && data_make->error.to) {
-        flockfile(data_make->error.to.stream);
+        f_file_stream_lock(data_make->error.to);
 
         fl_print_format("%r%[%QIncomplete '%]", data_make->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
 
@@ -1409,7 +1409,7 @@ extern "C" {
 
         fl_print_format("%[' at end of the section.%]%r", data_make->error.to, data_make->error.context, data_make->error.context, f_string_eol_s);
 
-        funlockfile(data_make->error.to.stream);
+        f_file_stream_unlock(data_make->error.to);
       }
 
       fake_print_message_section_operation_failed(data_make->data, data_make->error, data_make->buffer, section->name, section->objects.array[section->objects.used - 1]);

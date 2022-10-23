@@ -14,7 +14,7 @@ extern "C" {
       return;
     }
 
-    flockfile(main->output.to.stream);
+    f_file_stream_lock(main->output.to);
 
     if ((data->option & fss_extended_read_data_option_object_d) || (data->option & fss_extended_read_data_option_content_d) && (data->contents.array[at].used || (data->option & fss_extended_read_data_option_empty_d))) {
       if (data->option & fss_extended_read_data_option_object_d) {
@@ -94,7 +94,7 @@ extern "C" {
         fss_extended_read_print_set_end(main);
       }
 
-      funlockfile(main->output.to.stream);
+      f_file_stream_unlock(main->output.to);
     }
   }
 #endif // _di_fss_extended_read_print_at_
@@ -104,33 +104,33 @@ extern "C" {
 
     if (data->option & fss_extended_read_data_option_select_d) {
       if (data->option & fss_extended_read_data_option_object_d) {
-        flockfile(main->output.to.stream);
+        f_file_stream_lock(main->output.to);
 
         fss_extended_read_print_one(main);
 
-        funlockfile(main->output.to.stream);
+        f_file_stream_unlock(main->output.to);
 
         return F_success;
       }
 
       if (data->select < data->contents.array[at].used) {
         if (data->contents.array[at].array[data->select].start <= data->contents.array[at].array[data->select].stop || (data->option & fss_extended_read_data_option_empty_d)) {
-          flockfile(main->output.to.stream);
+          f_file_stream_lock(main->output.to);
 
           fss_extended_read_print_one(main);
 
-          funlockfile(main->output.to.stream);
+          f_file_stream_unlock(main->output.to);
 
           return F_success;
         }
       }
     }
     else if ((data->option & fss_extended_read_data_option_object_d) || (data->option & fss_extended_read_data_option_empty_d)) {
-      flockfile(main->output.to.stream);
+      f_file_stream_lock(main->output.to);
 
       fss_extended_read_print_one(main);
 
-      funlockfile(main->output.to.stream);
+      f_file_stream_unlock(main->output.to);
 
       return F_success;
     }
@@ -138,11 +138,11 @@ extern "C" {
       for (f_array_length_t j = 0; j < data->contents.array[at].used; ++j) {
 
         if (data->contents.array[at].array[j].start <= data->contents.array[at].array[j].stop) {
-          flockfile(main->output.to.stream);
+          f_file_stream_lock(main->output.to);
 
           fss_extended_read_print_one(main);
 
-          funlockfile(main->output.to.stream);
+          f_file_stream_unlock(main->output.to);
 
           return F_success;
         }

@@ -23,13 +23,13 @@ extern "C" {
         if (fl_string_dynamic_compare(fake_make_operation_argument_failure_s, data_make->cache_arguments.array[0]) == F_equal_to_not) {
 
           if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to) {
-            flockfile(data_make->error.to.stream);
+            f_file_stream_lock(data_make->error.to);
 
             fl_print_format("%r%[%QUnsupported break type '%]", data_make->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
             fl_print_format("%[%Q%]", data_make->error.to, data_make->error.notable, data_make->cache_arguments.array[0], data_make->error.notable);
             fl_print_format("%['.%]%r", data_make->error.to, data_make->error.context, data_make->error.context, f_string_eol_s);
 
-            funlockfile(data_make->error.to.stream);
+            f_file_stream_unlock(data_make->error.to);
           }
 
           return F_status_set_error(F_failure);
@@ -60,13 +60,13 @@ extern "C" {
 
         if (status == F_file_found_not) {
           if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to) {
-            flockfile(data_make->error.to.stream);
+            f_file_stream_lock(data_make->error.to);
 
             fl_print_format("%r%[%QFailed to find file '%]", data_make->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
             fl_print_format("%[%Q%]", data_make->error.to, data_make->error.notable, path_file, data_make->error.notable);
             fl_print_format("%['.%]%r", data_make->error.to, data_make->error.context, data_make->error.context, f_string_eol_s);
 
-            funlockfile(data_make->error.to.stream);
+            f_file_stream_unlock(data_make->error.to);
           }
 
           return F_status_set_error(F_failure);
@@ -80,13 +80,13 @@ extern "C" {
 
         if (!status) {
           if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to) {
-            flockfile(data_make->error.to.stream);
+            f_file_stream_lock(data_make->error.to);
 
             fl_print_format("%r%[%QThe file '%]", data_make->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
             fl_print_format("%[%Q%]", data_make->error.to, data_make->error.notable, path_file, data_make->error.notable);
             fl_print_format("%[' must be a regular file.%]%r", data_make->error.to, data_make->error.context, data_make->error.context, f_string_eol_s);
 
-            funlockfile(data_make->error.to.stream);
+            f_file_stream_unlock(data_make->error.to);
           }
 
           return F_status_set_error(F_failure);
@@ -140,13 +140,13 @@ extern "C" {
 
         if (f_file_exists(data_make->cache_arguments.array[i], F_true) != F_true) {
           if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to) {
-            flockfile(data_make->error.to.stream);
+            f_file_stream_lock(data_make->error.to);
 
             fl_print_format("%r%[%QFailed to find file '%]", data_make->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
             fl_print_format("%[%Q%]", data_make->error.to, data_make->error.notable, data_make->cache_arguments.array[i], data_make->error.notable);
             fl_print_format("%['.%]%r", data_make->error.to, data_make->error.context, data_make->error.context, f_string_eol_s);
 
-            funlockfile(data_make->error.to.stream);
+            f_file_stream_unlock(data_make->error.to);
           }
 
           status = F_status_set_error(F_failure);
@@ -160,13 +160,13 @@ extern "C" {
 
         if (status_file == F_false || status_file == F_file_found_not) {
           if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to) {
-            flockfile(data_make->error.to.stream);
+            f_file_stream_lock(data_make->error.to);
 
             fl_print_format("%r%[%QThe last file '%]", data_make->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
             fl_print_format("%[%Q%]", data_make->error.to, data_make->error.notable, data_make->cache_arguments.array[data_make->cache_arguments.used - 1], data_make->error.notable);
             fl_print_format("%[' must be a valid directory.%]%r", data_make->error.to, data_make->error.context, data_make->error.context, f_string_eol_s);
 
-            funlockfile(data_make->error.to.stream);
+            f_file_stream_unlock(data_make->error.to);
           }
 
           status = F_status_set_error(F_failure);
@@ -188,13 +188,13 @@ extern "C" {
 
           if (status_file == F_false) {
             if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to) {
-              flockfile(data_make->error.to.stream);
+              f_file_stream_lock(data_make->error.to);
 
               fl_print_format("%r%[%QThe second file '%]", data_make->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
               fl_print_format("%[%Q%]", data_make->error.to, data_make->error.notable, data_make->cache_arguments.array[1], data_make->error.notable);
               fl_print_format("%[' must be a valid directory.%]%r", data_make->error.to, data_make->error.context, data_make->error.context, f_string_eol_s);
 
-              funlockfile(data_make->error.to.stream);
+              f_file_stream_unlock(data_make->error.to);
             }
 
             status = F_status_set_error(F_failure);
@@ -222,13 +222,13 @@ extern "C" {
 
     if (data_make->setting_build.build_compiler.used) {
       if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to) {
-        flockfile(data_make->error.to.stream);
+        f_file_stream_lock(data_make->error.to);
 
         fl_print_format("%r%[%QNo compiler has been specified, cannot perform '%]", data_make->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
         fl_print_format("%[%r%]", data_make->error.to, data_make->error.notable, fake_make_operation_compile_s, data_make->error.notable);
         fl_print_format("%[' section operation.%]%r", data_make->error.to, data_make->error.context, data_make->error.context, f_string_eol_s);
 
-        funlockfile(data_make->error.to.stream);
+        f_file_stream_unlock(data_make->error.to);
       }
 
       return F_status_set_error(F_failure);
@@ -244,7 +244,7 @@ extern "C" {
     if (state_process->operation == fake_make_operation_type_if_e) {
       if (state_process->operation_previous == fake_make_operation_type_if_e) {
         if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to) {
-          flockfile(data_make->error.to.stream);
+          f_file_stream_lock(data_make->error.to);
 
           fl_print_format("%r%[%QMust not be used immediately after another '%]", data_make->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
           fl_print_format("%[%r%]", data_make->error.to, data_make->error.notable, fake_make_operation_if_s, data_make->error.notable);
@@ -254,7 +254,7 @@ extern "C" {
           fl_print_format("%[%r%]", data_make->error.to, data_make->error.notable, fake_make_operation_or_s, data_make->error.notable);
           fl_print_format("%[' section operation.%]%r", data_make->error.to, data_make->error.context, data_make->error.context, f_string_eol_s);
 
-          funlockfile(data_make->error.to.stream);
+          f_file_stream_unlock(data_make->error.to);
         }
 
         return F_status_set_error(F_failure);
@@ -263,7 +263,7 @@ extern "C" {
     else {
       if (!(state_process->operation_previous == fake_make_operation_type_if_e || state_process->operation_previous == fake_make_operation_type_and_e || state_process->operation_previous == fake_make_operation_type_or_e)) {
         if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to) {
-          flockfile(data_make->error.to.stream);
+          f_file_stream_lock(data_make->error.to);
 
           fl_print_format("%r%[%QMay only be used immediately after another '%]", data_make->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
           fl_print_format("%[%r%]", data_make->error.to, data_make->error.notable, fake_make_operation_if_s, data_make->error.notable);
@@ -273,7 +273,7 @@ extern "C" {
           fl_print_format("%[%r%]", data_make->error.to, data_make->error.notable, fake_make_operation_or_s, data_make->error.notable);
           fl_print_format("%[' section operation.%]%r", data_make->error.to, data_make->error.context, data_make->error.context, f_string_eol_s);
 
-          funlockfile(data_make->error.to.stream);
+          f_file_stream_unlock(data_make->error.to);
         }
 
         return F_status_set_error(F_failure);
@@ -424,7 +424,7 @@ extern "C" {
 
       if (i == 23) {
         if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to) {
-          flockfile(data_make->error.to.stream);
+          f_file_stream_lock(data_make->error.to);
 
           fl_print_format("%r%[%QUnsupported '%]", data_make->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
           fl_print_format("%[%r%]", data_make->error.to, data_make->error.notable, if_and_or, data_make->error.notable);
@@ -432,7 +432,7 @@ extern "C" {
           fl_print_format("%[%Q%]", data_make->error.to, data_make->error.notable, data_make->cache_arguments.array[k], data_make->error.notable);
           fl_print_format("%['.%]%r", data_make->error.to, data_make->error.context, data_make->error.context, f_string_eol_s);
 
-          funlockfile(data_make->error.to.stream);
+          f_file_stream_unlock(data_make->error.to);
         }
 
         return F_status_set_error(F_failure);
@@ -461,7 +461,7 @@ extern "C" {
 
         if (j == 7) {
           if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to) {
-            flockfile(data_make->error.to.stream);
+            f_file_stream_lock(data_make->error.to);
 
             fl_print_format("%r%[%QUnsupported '%]", data_make->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
             fl_print_format("%[%r%]", data_make->error.to, data_make->error.notable, if_and_or, data_make->error.notable);
@@ -469,7 +469,7 @@ extern "C" {
             fl_print_format("%[%Q%]", data_make->error.to, data_make->error.notable, data_make->cache_arguments.array[k], data_make->error.notable);
             fl_print_format("%['.%]%r", data_make->error.to, data_make->error.context, data_make->error.context, f_string_eol_s);
 
-            funlockfile(data_make->error.to.stream);
+            f_file_stream_unlock(data_make->error.to);
           }
 
           return F_status_set_error(F_failure);
@@ -512,13 +512,13 @@ extern "C" {
             if (fl_string_dynamic_compare(fake_make_operation_argument_is_s, data_make->cache_arguments.array[k]) == F_equal_to_not) {
               if (fl_string_dynamic_compare(fake_make_operation_argument_has_s, data_make->cache_arguments.array[k]) == F_equal_to_not) {
                 if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to) {
-                  flockfile(data_make->error.to.stream);
+                  f_file_stream_lock(data_make->error.to);
 
                   fl_print_format("%r%[%QUnsupported %smode type '%]", data_make->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, j == 6 ? "" : "not ", data_make->error.context);
                   fl_print_format("%[%Q%]", data_make->error.to, data_make->error.notable, data_make->cache_arguments.array[k], data_make->error.notable);
                   fl_print_format("%['.%]%r", data_make->error.to, data_make->error.context, data_make->error.context, f_string_eol_s);
 
-                  funlockfile(data_make->error.to.stream);
+                  f_file_stream_unlock(data_make->error.to);
                 }
 
                 return F_status_set_error(F_failure);
@@ -582,13 +582,13 @@ extern "C" {
               }
               else {
                 if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to) {
-                  flockfile(data_make->error.to.stream);
+                  f_file_stream_lock(data_make->error.to);
 
                   fl_print_format("%r%[%QUnsupported file type '%]", data_make->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
                   fl_print_format("%[%Q%]", data_make->error.to, data_make->error.notable, data_make->cache_arguments.array[i], data_make->error.notable);
                   fl_print_format("%['.%]%r", data_make->error.to, data_make->error.context, data_make->error.context, f_string_eol_s);
 
-                  funlockfile(data_make->error.to.stream);
+                  f_file_stream_unlock(data_make->error.to);
                 }
 
                 type_file |= 0x80;
@@ -683,7 +683,7 @@ extern "C" {
               status = F_status_set_error(F_failure);
 
               if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to) {
-                flockfile(data_make->error.to.stream);
+                f_file_stream_lock(data_make->error.to);
 
                 if (number > F_number_t_size_unsigned_d) {
                   fl_print_format("%r%[%QThe number '%]", data_make->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
@@ -696,7 +696,7 @@ extern "C" {
                   fl_print_format("%['.%]%r", data_make->error.to, data_make->error.context, data_make->error.context, f_string_eol_s);
                 }
 
-                funlockfile(data_make->error.to.stream);
+                f_file_stream_unlock(data_make->error.to);
               }
             }
           } // for
@@ -736,13 +736,13 @@ extern "C" {
 
         if (f_file_exists(data_make->cache_arguments.array[i], F_true) != F_true) {
           if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to) {
-            flockfile(data_make->error.to.stream);
+            f_file_stream_lock(data_make->error.to);
 
             fl_print_format("%r%[%QFailed to find file '%]", data_make->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
             fl_print_format("%[%Q%]", data_make->error.to, data_make->error.notable, data_make->cache_arguments.array[i], data_make->error.notable);
             fl_print_format("%['.%]%r", data_make->error.to, data_make->error.context, data_make->error.context, f_string_eol_s);
 
-            funlockfile(data_make->error.to.stream);
+            f_file_stream_unlock(data_make->error.to);
           }
 
           status = F_status_set_error(F_failure);
@@ -756,13 +756,13 @@ extern "C" {
 
         if (status_file == F_false || status_file == F_file_found_not) {
           if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to) {
-            flockfile(data_make->error.to.stream);
+            f_file_stream_lock(data_make->error.to);
 
             fl_print_format("%r%[%QThe last file '%]", data_make->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
             fl_print_format("%[%Q%]", data_make->error.to, data_make->error.notable, data_make->cache_arguments.array[data_make->cache_arguments.used - 1], data_make->error.notable);
             fl_print_format("%[' must be a valid directory.%]%r", data_make->error.to, data_make->error.context, data_make->error.context, f_string_eol_s);
 
-            funlockfile(data_make->error.to.stream);
+            f_file_stream_unlock(data_make->error.to);
           }
 
           status = F_status_set_error(F_failure);
@@ -784,13 +784,13 @@ extern "C" {
 
           if (status_file == F_false) {
             if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to) {
-              flockfile(data_make->error.to.stream);
+              f_file_stream_lock(data_make->error.to);
 
               fl_print_format("%r%[%QThe second file '%]", data_make->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
               fl_print_format("%[%Q%]", data_make->error.to, data_make->error.notable, data_make->cache_arguments.array[1], data_make->error.notable);
               fl_print_format("%[' must be a valid directory.%]%r", data_make->error.to, data_make->error.context, data_make->error.context, f_string_eol_s);
 
-              funlockfile(data_make->error.to.stream);
+              f_file_stream_unlock(data_make->error.to);
             }
 
             status = F_status_set_error(F_failure);
@@ -823,13 +823,13 @@ extern "C" {
 
       if (status == F_false) {
         if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to) {
-          flockfile(data_make->error.to.stream);
+          f_file_stream_lock(data_make->error.to);
 
           fl_print_format("%r%[%QInvalid characters in the define setting name '%]", data_make->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
           fl_print_format("%[%Q%]", data_make->error.to, data_make->error.notable, data_make->cache_arguments.array[0], data_make->error.notable);
           fl_print_format("%[', only alpha-numeric ASCII characters and underscore (without a leading digit) is allowed.%]%r", data_make->error.to, data_make->error.context, data_make->error.context, f_string_eol_s);
 
-          funlockfile(data_make->error.to.stream);
+          f_file_stream_unlock(data_make->error.to);
         }
 
         return F_status_set_error(F_failure);
@@ -876,13 +876,13 @@ extern "C" {
 
     if (state_process->operation_previous == fake_make_operation_type_else_e) {
       if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to) {
-        flockfile(data_make->error.to.stream);
+        f_file_stream_lock(data_make->error.to);
 
         fl_print_format("%r%[%QMust not be used immediately after another '%]", data_make->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
         fl_print_format("%[%r%]", data_make->error.to, data_make->error.notable, fake_make_operation_else_s, data_make->error.notable);
         fl_print_format("%[' section operation.%]%r", data_make->error.to, data_make->error.context, data_make->error.context, f_string_eol_s);
 
-        funlockfile(data_make->error.to.stream);
+        f_file_stream_unlock(data_make->error.to);
       }
 
       return F_status_set_error(F_failure);
@@ -890,7 +890,7 @@ extern "C" {
 
     if (state_process->operation_previous == fake_make_operation_type_if_e || state_process->operation_previous == fake_make_operation_type_and_e || state_process->operation_previous == fake_make_operation_type_or_e) {
       if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to) {
-        flockfile(data_make->error.to.stream);
+        f_file_stream_lock(data_make->error.to);
 
         fl_print_format("%r%[%QMust not be used immediately after an '%]", data_make->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
         fl_print_format("%[%r%]", data_make->error.to, data_make->error.notable, fake_make_operation_if_s, data_make->error.notable);
@@ -900,7 +900,7 @@ extern "C" {
         fl_print_format("%[%r%]", data_make->error.to, data_make->error.notable, fake_make_operation_or_s, data_make->error.notable);
         fl_print_format("%[' section operation.%]%r", data_make->error.to, data_make->error.context, data_make->error.context, f_string_eol_s);
 
-        funlockfile(data_make->error.to.stream);
+        f_file_stream_unlock(data_make->error.to);
       }
 
       return F_status_set_error(F_failure);
@@ -943,13 +943,13 @@ extern "C" {
       if (fl_string_dynamic_compare(fake_make_operation_argument_success_s, data_make->cache_arguments.array[0]) == F_equal_to_not) {
         if (fl_string_dynamic_compare(fake_make_operation_argument_failure_s, data_make->cache_arguments.array[0]) == F_equal_to_not) {
           if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to) {
-            flockfile(data_make->error.to.stream);
+            f_file_stream_lock(data_make->error.to);
 
             fl_print_format("%r%[%QUnsupported exit type '%]", data_make->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
             fl_print_format("%[%Q%]", data_make->error.to, data_make->error.notable, data_make->cache_arguments.array[0], data_make->error.notable);
             fl_print_format("%['.%]%r", data_make->error.to, data_make->error.context, data_make->error.context, f_string_eol_s);
 
-            funlockfile(data_make->error.to.stream);
+            f_file_stream_unlock(data_make->error.to);
           }
 
           return F_status_set_error(F_failure);
@@ -969,13 +969,13 @@ extern "C" {
         if (fl_string_dynamic_compare(fake_make_operation_argument_warn_s, data_make->cache_arguments.array[0]) == F_equal_to_not) {
           if (fl_string_dynamic_compare(fake_make_operation_argument_ignore_s, data_make->cache_arguments.array[0]) == F_equal_to_not) {
             if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to) {
-              flockfile(data_make->error.to.stream);
+              f_file_stream_lock(data_make->error.to);
 
               fl_print_format("%r%[%QUnsupported fail type '%]", data_make->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
               fl_print_format("%[%Q%]", data_make->error.to, data_make->error.notable, data_make->cache_arguments.array[0], data_make->error.notable);
               fl_print_format("%['.%]%r", data_make->error.to, data_make->error.context, data_make->error.context, f_string_eol_s);
 
-              funlockfile(data_make->error.to.stream);
+              f_file_stream_unlock(data_make->error.to);
             }
 
             return F_status_set_error(F_failure);
@@ -1003,13 +1003,13 @@ extern "C" {
 
     if (!data_make->setting_build.build_indexer.used) {
       if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to) {
-        flockfile(data_make->error.to.stream);
+        f_file_stream_lock(data_make->error.to);
 
         fl_print_format("%r%[%QNo indexer has been specified, cannot perform '%]", data_make->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
         fl_print_format("%[%r%]", data_make->error.to, data_make->error.notable, fake_make_operation_index_s, data_make->error.notable);
         fl_print_format("%[' section operation.%]%r", data_make->error.to, data_make->error.context, data_make->error.context, f_string_eol_s);
 
-        funlockfile(data_make->error.to.stream);
+        f_file_stream_unlock(data_make->error.to);
       }
 
       return F_status_set_error(F_failure);
@@ -1203,13 +1203,13 @@ extern "C" {
 
             if (f_file_exists(data_make->cache_arguments.array[i], F_true) != F_true) {
               if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to) {
-                flockfile(data_make->error.to.stream);
+                f_file_stream_lock(data_make->error.to);
 
                 fl_print_format("%r%[%QFailed to find file '%]", data_make->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
                 fl_print_format("%[%Q%]", data_make->error.to, data_make->error.notable, data_make->cache_arguments.array[i], data_make->error.notable);
                 fl_print_format("%['.%]%r", data_make->error.to, data_make->error.context, data_make->error.context, f_string_eol_s);
 
-                funlockfile(data_make->error.to.stream);
+                f_file_stream_unlock(data_make->error.to);
               }
 
               status = F_status_set_error(F_failure);
@@ -1227,13 +1227,13 @@ extern "C" {
 
         if (status == F_false || status == F_file_found_not) {
           if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to) {
-            flockfile(data_make->error.to.stream);
+            f_file_stream_lock(data_make->error.to);
 
             fl_print_format("%r%[%QThe last file '%]", data_make->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
             fl_print_format("%[%Q%]", data_make->error.to, data_make->error.notable, data_make->cache_arguments.array[data_make->cache_arguments.used - 1], data_make->error.notable);
             fl_print_format("%[' must be a valid directory.%]%r", data_make->error.to, data_make->error.context, data_make->error.context, f_string_eol_s);
 
-            funlockfile(data_make->error.to.stream);
+            f_file_stream_unlock(data_make->error.to);
           }
 
           return F_status_set_error(F_failure);
@@ -1255,13 +1255,13 @@ extern "C" {
 
           if (status == F_false) {
             if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to) {
-              flockfile(data_make->error.to.stream);
+              f_file_stream_lock(data_make->error.to);
 
               fl_print_format("%r%[%QThe second file '%]", data_make->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
               fl_print_format("%[%Q%]", data_make->error.to, data_make->error.notable, data_make->cache_arguments.array[1], data_make->error.notable);
               fl_print_format("%[' must be a valid directory.%]%r", data_make->error.to, data_make->error.context, data_make->error.context, f_string_eol_s);
 
-              funlockfile(data_make->error.to.stream);
+              f_file_stream_unlock(data_make->error.to);
             }
 
             return F_status_set_error(F_failure);
@@ -1298,13 +1298,13 @@ extern "C" {
       } // for
 
       if (id_section == data_make->fakefile.used) {
-        flockfile(data_make->error.to.stream);
+        f_file_stream_lock(data_make->error.to);
 
         fl_print_format("%r%[%QNo operation section named '%]", data_make->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
         fl_print_format("%[%Q%]", data_make->error.to, data_make->error.notable, data_make->cache_arguments.array[0], data_make->error.notable);
         fl_print_format("%[' is found.%]%r", data_make->error.to, data_make->error.context, data_make->error.context, f_string_eol_s);
 
-        funlockfile(data_make->error.to.stream);
+        f_file_stream_unlock(data_make->error.to);
 
         return F_status_set_error(F_failure);
       }
@@ -1313,13 +1313,13 @@ extern "C" {
 
         if (section_stack->array[i] == id_section) {
           if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to) {
-            flockfile(data_make->error.to.stream);
+            f_file_stream_lock(data_make->error.to);
 
             fl_print_format("%r%[%QThe section operation '%]", data_make->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
             fl_print_format("%[%Q%]", data_make->error.to, data_make->error.notable, data_make->fakefile.array[id_section].name, data_make->error.notable);
             fl_print_format("%[' is already in the operation stack, recursion is not allowed.%]%r", data_make->error.to, data_make->error.context, data_make->error.context, f_string_eol_s);
 
-            funlockfile(data_make->error.to.stream);
+            f_file_stream_unlock(data_make->error.to);
           }
 
           return F_status_set_error(F_failure);
@@ -1417,13 +1417,13 @@ extern "C" {
 
           if (status_file == F_file_found_not) {
             if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to) {
-              flockfile(data_make->error.to.stream);
+              f_file_stream_lock(data_make->error.to);
 
               fl_print_format("%r%[%QFailed to find file '%]", data_make->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
               fl_print_format("%[%Q%]", data_make->error.to, data_make->error.notable, data_make->cache_arguments.array[i], data_make->error.notable);
               fl_print_format("%['.%]%r", data_make->error.to, data_make->error.context, data_make->error.context, f_string_eol_s);
 
-              funlockfile(data_make->error.to.stream);
+              f_file_stream_unlock(data_make->error.to);
             }
 
             status = F_status_set_error(F_failure);
@@ -1497,13 +1497,13 @@ extern "C" {
 
         if (status == F_file_found_not) {
           if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to) {
-            flockfile(data_make->error.to.stream);
+            f_file_stream_lock(data_make->error.to);
 
             fl_print_format("%r%[%QFailed to find file '%]", data_make->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
             fl_print_format("%[%Q%]", data_make->error.to, data_make->error.notable, data_make->cache_arguments.array[0], data_make->error.notable);
             fl_print_format("%['.%]%r", data_make->error.to, data_make->error.context, data_make->error.context, f_string_eol_s);
 
-            funlockfile(data_make->error.to.stream);
+            f_file_stream_unlock(data_make->error.to);
           }
 
           return F_status_set_error(F_failure);
@@ -1519,13 +1519,13 @@ extern "C" {
 
         if (!status) {
           if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to) {
-            flockfile(data_make->error.to.stream);
+            f_file_stream_lock(data_make->error.to);
 
             fl_print_format("%r%[%QThe file '%]", data_make->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
             fl_print_format("%[%Q%]", data_make->error.to, data_make->error.notable, data_make->cache_arguments.array[0], data_make->error.notable);
             fl_print_format("%[' must be a directory file.%]%r", data_make->error.to, data_make->error.context, data_make->error.context, f_string_eol_s);
 
-            funlockfile(data_make->error.to.stream);
+            f_file_stream_unlock(data_make->error.to);
           }
 
           return F_status_set_error(F_failure);
@@ -1555,13 +1555,13 @@ extern "C" {
         if (fl_string_dynamic_compare(fake_make_operation_argument_directory_s, data_make->cache_arguments.array[0]) == F_equal_to_not) {
 
           if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to) {
-            flockfile(data_make->error.to.stream);
+            f_file_stream_lock(data_make->error.to);
 
             fl_print_format("%r%[%QUnsupported file type '%]", data_make->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
             fl_print_format("%[%Q%]", data_make->error.to, data_make->error.notable, data_make->cache_arguments.array[0], data_make->error.notable);
             fl_print_format("%['.%]%r", data_make->error.to, data_make->error.context, data_make->error.context, f_string_eol_s);
 
-            funlockfile(data_make->error.to.stream);
+            f_file_stream_unlock(data_make->error.to);
           }
 
           return F_status_set_error(F_failure);

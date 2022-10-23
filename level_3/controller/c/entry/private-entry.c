@@ -260,7 +260,7 @@ extern "C" {
         if (global.main->error.verbosity > f_console_verbosity_quiet_e) {
           f_thread_mutex_lock(&global.thread->lock.print);
 
-          flockfile(global.main->error.to);
+          f_file_stream_lock(global.main->error.to);
 
           fl_print_format("%r%[%QThe %r item action '%]", global.main->error.to, f_string_eol_s, global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
           fl_print_format("%[%Q%]", global.main->error.to, global.main->error.notable, cache->action.name_action, global.main->error.notable);
@@ -286,7 +286,7 @@ extern "C" {
             }
           }
 
-          funlockfile(global.main->error.to);
+          f_file_stream_unlock(global.main->error.to);
 
           f_thread_mutex_unlock(&global.thread->lock.print);
         }
@@ -401,7 +401,7 @@ extern "C" {
               else {
                 if (fl_string_dynamic_compare(action->parameters.array[1], cache->buffer_path) == F_equal_to_not) {
                   if (global.main->error.verbosity > f_console_verbosity_quiet_e) {
-                    flockfile(global.main->error.to);
+                    f_file_stream_lock(global.main->error.to);
 
                     fl_print_format("%r%[%QThe %r item action second parameter '%]", global.main->error.to, f_string_eol_s, global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
                     fl_print_format("%[%Q%]", global.main->error.to, global.main->error.notable, action->parameters.array[1], global.main->error.notable);
@@ -409,7 +409,7 @@ extern "C" {
                     fl_print_format("%[%Q%]", global.main->error.to, global.main->error.notable, cache->buffer_path, global.main->error.notable);
                     fl_print_format("%['.%]", global.main->error.to, global.main->error.context, global.main->error.context, f_string_eol_s);
 
-                    funlockfile(global.main->error.to);
+                    f_file_stream_unlock(global.main->error.to);
                   }
 
                   action->status = F_status_set_error(F_parameter);
@@ -453,7 +453,7 @@ extern "C" {
                 }
 
                 if (global.main->error.verbosity > f_console_verbosity_quiet_e) {
-                  flockfile(global.main->error.to);
+                  f_file_stream_lock(global.main->error.to);
 
                   fl_print_format("%r%[%QThe %r item action third parameter (and beyond) must be one of '%]", global.main->error.to, f_string_eol_s, global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
                   fl_print_format("%[%r%]", global.main->error.to, global.main->error.notable, controller_asynchronous_s, global.main->error.notable);
@@ -465,7 +465,7 @@ extern "C" {
                   fl_print_format("%[%Q%]", global.main->error.to, global.main->error.notable, action->parameters.array[j], global.main->error.notable);
                   fl_print_format("%['.%]", global.main->error.to, global.main->error.context, global.main->error.context, f_string_eol_s);
 
-                  funlockfile(global.main->error.to);
+                  f_file_stream_unlock(global.main->error.to);
                 }
               }
             } // for
@@ -479,13 +479,13 @@ extern "C" {
               }
 
               if (global.main->error.verbosity > f_console_verbosity_quiet_e) {
-                flockfile(global.main->error.to);
+                f_file_stream_lock(global.main->error.to);
 
                 fl_print_format("%r%[%QThe %r item action may not specify the reserved item '%]", global.main->error.to, f_string_eol_s, global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
                 fl_print_format("%[%r%]", global.main->error.to, global.main->error.notable, controller_main_s, global.main->error.notable);
                 fl_print_format("%['.%]", global.main->error.to, global.main->error.context, global.main->error.context, f_string_eol_s);
 
-                funlockfile(global.main->error.to);
+                f_file_stream_unlock(global.main->error.to);
               }
             }
           }
@@ -508,7 +508,7 @@ extern "C" {
               }
 
               if (global.main->error.verbosity > f_console_verbosity_quiet_e) {
-                flockfile(global.main->error.to);
+                f_file_stream_lock(global.main->error.to);
 
                 fl_print_format("%r%[%QThe %r item action must have one of '%]", global.main->error.to, f_string_eol_s, global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
                 fl_print_format("%[%r%]", global.main->error.to, global.main->error.notable, controller_kill_s, global.main->error.notable);
@@ -520,7 +520,7 @@ extern "C" {
                 fl_print_format("%[%Q%]", global.main->error.to, global.main->error.notable, action->parameters.array[0], global.main->error.notable);
                 fl_print_format("%['.%]", global.main->error.to, global.main->error.context, global.main->error.context, f_string_eol_s);
 
-                funlockfile(global.main->error.to);
+                f_file_stream_unlock(global.main->error.to);
               }
             }
 
@@ -551,13 +551,13 @@ extern "C" {
                   }
 
                   if (global.main->error.verbosity > f_console_verbosity_quiet_e) {
-                    flockfile(global.main->error.to);
+                    f_file_stream_lock(global.main->error.to);
 
                     fl_print_format("%r%[%QThe %r item action parameter '%]", global.main->error.to, f_string_eol_s, global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
                     fl_print_format("%[%Q%]", global.main->error.to, global.main->error.notable, action->parameters.array[1], global.main->error.notable);
                     fl_print_format("%[' is not a valid supported number.%]", global.main->error.to, global.main->error.context, global.main->error.context, f_string_eol_s);
 
-                    funlockfile(global.main->error.to);
+                    f_file_stream_unlock(global.main->error.to);
                   }
                 }
               }
@@ -575,7 +575,7 @@ extern "C" {
                 action->status = F_status_set_error(F_supported_not);
 
                 if (global.main->error.verbosity > f_console_verbosity_quiet_e) {
-                  flockfile(global.main->error.to);
+                  f_file_stream_lock(global.main->error.to);
 
                   fl_print_format("%r%[%QThe %r item action may only have '%]", global.main->error.to, f_string_eol_s, global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
                   fl_print_format("%[%r%]", global.main->error.to, global.main->error.notable, controller_wait_s, global.main->error.notable);
@@ -583,7 +583,7 @@ extern "C" {
                   fl_print_format("%[%Q%]", global.main->error.to, global.main->error.notable, action->parameters.array[0], global.main->error.notable);
                   fl_print_format("%['.%]", global.main->error.to, global.main->error.context, global.main->error.context, f_string_eol_s);
 
-                  funlockfile(global.main->error.to);
+                  f_file_stream_unlock(global.main->error.to);
                 }
               }
             }
@@ -2276,13 +2276,13 @@ extern "C" {
           }
 
           if (global.main->error.verbosity > f_console_verbosity_quiet_e) {
-            flockfile(global.main->error.to);
+            f_file_stream_lock(global.main->error.to);
 
             fl_print_format("%r%[%QThe %r setting '%]", global.main->error.to, f_string_eol_s, global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
             fl_print_format("%[%/Q%]", global.main->error.to, global.main->error.notable, cache->buffer_file, cache->content_actions.array[i].array[1], global.main->error.notable);
             fl_print_format("%[' is not a valid supported number.%]", global.main->error.to, global.main->error.context, global.main->error.context, f_string_eol_s);
 
-            funlockfile(global.main->error.to);
+            f_file_stream_unlock(global.main->error.to);
           }
         }
       }

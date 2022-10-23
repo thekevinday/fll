@@ -9,7 +9,7 @@ extern "C" {
 #ifndef _di_fss_identify_print_
   void fss_identify_print(fll_program_data_t * const main, const f_fll_id_t id) {
 
-    flockfile(main->output.to.stream);
+    f_file_stream_lock(main->output.to);
 
     if (main->parameters.array[fss_identify_parameter_object_e].result == f_console_result_found_e || main->parameters.array[fss_identify_parameter_content_e].result != f_console_result_found_e) {
       f_print((const f_string_t) id.name, id.used, main->output.to);
@@ -25,7 +25,7 @@ extern "C" {
 
     f_print_dynamic_raw(f_string_eol_s, main->output.to);
 
-    funlockfile(main->output.to.stream);
+    f_file_stream_unlock(main->output.to);
   }
 #endif // _di_fss_identify_print_
 

@@ -21,7 +21,7 @@ extern "C" {
 
     fll_error_print(print, status, function, fallback);
 
-    flockfile(print.to.stream);
+    f_file_stream_lock(print.to);
 
     controller_rule_print_error_cache(print, cache, item);
 
@@ -71,7 +71,7 @@ extern "C" {
 
     controller_rule_print_error_cache(print, cache, item);
 
-    flockfile(print.to.stream);
+    f_file_stream_lock(print.to);
 
     controller_unlock_print_flush(print.to, thread);
   }

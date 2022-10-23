@@ -295,7 +295,7 @@ extern "C" {
         file.id = F_type_descriptor_input_d;
         file.stream = F_type_input_d;
 
-        flockfile(main->output.to.stream);
+        f_file_stream_lock(main->output.to);
 
         f_print_dynamic_raw(f_string_eol_s, main->output.to);
         fl_print_format("%[Piped " BYTE_DUMP_program_name_long_s ": (in ", main->output.to, main->context.set.title);
@@ -318,7 +318,7 @@ extern "C" {
 
         fl_print_format(")%]%r", main->output.to, main->context.set.title, f_string_eol_s);
 
-        funlockfile(main->output.to.stream);
+        f_file_stream_unlock(main->output.to);
 
         status = byte_dump_file(&data, f_string_empty_s, file);
 
@@ -371,7 +371,7 @@ extern "C" {
             return status;
           }
 
-          flockfile(main->output.to.stream);
+          f_file_stream_lock(main->output.to);
 
           fl_print_format("%r%[" BYTE_DUMP_program_name_long_s " of: %]%[", main->output.to, f_string_eol_s, main->context.set.title, main->context.set.title, main->context.set.notable);
           fl_print_format("%Q%] %[(in ", main->output.to, data.argv[main->parameters.remaining.array[counter]], main->context.set.notable, main->context.set.title);
@@ -394,7 +394,7 @@ extern "C" {
 
           fl_print_format(")%]%r", main->output.to, main->context.set.title, f_string_eol_s);
 
-          funlockfile(main->output.to.stream);
+          f_file_stream_unlock(main->output.to);
 
           status = byte_dump_file(&data, data.argv[main->parameters.remaining.array[counter]], file);
 

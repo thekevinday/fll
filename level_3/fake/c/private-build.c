@@ -722,13 +722,13 @@ extern "C" {
       if (F_status_is_error(*status)) {
         if (F_status_set_fine(*status) == F_failure) {
           if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
-            flockfile(data->main->error.to);
+            f_file_stream_lock(data->main->error);
 
             fl_print_format("%r%[%QFailed to execute script: '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
             fl_print_format("%[%Q%]", data->main->error.to, data->main->error.notable, path, data->main->error.notable);
             fl_print_format("%['.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-            funlockfile(data->main->error.to);
+            f_file_stream_unlock(data->main->error);
           }
         }
         else {
@@ -835,7 +835,7 @@ extern "C" {
 
     if (F_status_is_fine(status)) {
       if (data->main->output.verbosity != f_console_verbosity_quiet_e && data->main->output.verbosity != f_console_verbosity_error_e) {
-        flockfile(data->main->output.to);
+        f_file_stream_lock(data->main->output);
 
         fl_print_format("%r%[Building%] ", data->main->output.to, f_string_eol_s, data->main->context.set.important, data->main->context.set.important);
         fl_print_format("%[%Q%]", data->main->output.to, data->main->context.set.notable, data_build.setting.build_name, data->main->context.set.notable);
@@ -857,7 +857,7 @@ extern "C" {
 
         fl_print_format("%['.%]%r", data->main->output.to, data->main->context.set.important, data->main->context.set.important, f_string_eol_s);
 
-        funlockfile(data->main->output.to);
+        f_file_stream_unlock(data->main->output);
       }
     }
 

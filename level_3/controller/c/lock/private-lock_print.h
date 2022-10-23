@@ -42,8 +42,7 @@ extern "C" {
  * @param thread
  *   The thread containing the print mutex to lock.
  *
- * @see flockfile()
- *
+ * @see f_file_stream_lock()
  * @see f_thread_mutex_unlock()
  */
 #ifndef _di_controller_lock_print_
@@ -65,7 +64,7 @@ extern "C" {
  * @param thread
  *   The thread containing the print mutex to unlock.
  *
- * @see funlockfile()
+ * @see f_file_stream_unlock()
  *
  * @see f_thread_mutex_unlock()
  */

@@ -11,7 +11,7 @@ extern "C" {
 
     if (status == F_file_found_not) {
       if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
-        flockfile(data->main->error.to);
+        f_file_stream_lock(data->main->error);
 
         fl_print_format("%r%[%QFailed to find '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
 
@@ -19,7 +19,7 @@ extern "C" {
 
         fl_print_format("%['.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-        funlockfile(data->main->error.to);
+        f_file_stream_unlock(data->main->error);
       }
 
       return F_false;
@@ -27,7 +27,7 @@ extern "C" {
 
     if (status == F_parameter) {
       if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
-        flockfile(data->main->error.to);
+        f_file_stream_lock(data->main->error);
 
         fl_print_format("%r%[%QInvalid parameter when calling '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
         fl_print_format("%[%S%]", data->main->error.to, data->main->error.notable, function, data->main->error.notable);
@@ -37,7 +37,7 @@ extern "C" {
 
         fl_print_format("%['.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-        funlockfile(data->main->error.to);
+        f_file_stream_unlock(data->main->error);
       }
 
       return F_false;
@@ -45,7 +45,7 @@ extern "C" {
 
     if (status == F_name) {
       if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
-        flockfile(data->main->error.to);
+        f_file_stream_lock(data->main->error);
 
         fl_print_format("%r%[%QInvalid name for '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
 
@@ -60,7 +60,7 @@ extern "C" {
 
         fl_print_format("%['.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-        funlockfile(data->main->error.to);
+        f_file_stream_unlock(data->main->error);
       }
 
       return F_false;
@@ -68,7 +68,7 @@ extern "C" {
 
     if (status == F_memory_not) {
       if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
-        flockfile(data->main->error.to);
+        f_file_stream_lock(data->main->error);
 
         fl_print_format("%r%[%QUnable to allocate memory, while trying to %Q '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, operation, data->main->error.context);
 
@@ -76,7 +76,7 @@ extern "C" {
 
         fl_print_format("%['.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-        funlockfile(data->main->error.to);
+        f_file_stream_unlock(data->main->error);
       }
 
       return F_false;
@@ -84,7 +84,7 @@ extern "C" {
 
     if (status == F_number_overflow) {
       if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
-        flockfile(data->main->error.to);
+        f_file_stream_lock(data->main->error);
 
         fl_print_format("%r%[%QOverflow while trying to %Q '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, operation, data->main->error.context);
 
@@ -92,7 +92,7 @@ extern "C" {
 
         fl_print_format("%['.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-        funlockfile(data->main->error.to);
+        f_file_stream_unlock(data->main->error);
       }
 
       return F_false;
@@ -100,7 +100,7 @@ extern "C" {
 
     if (status == F_directory) {
       if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
-        flockfile(data->main->error.to);
+        f_file_stream_lock(data->main->error);
 
         fl_print_format("%r%[%QInvalid directory while trying to %Q '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, operation, data->main->error.context);
 
@@ -108,7 +108,7 @@ extern "C" {
 
         fl_print_format("%['.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-        funlockfile(data->main->error.to);
+        f_file_stream_unlock(data->main->error);
       }
 
       return F_false;
@@ -116,7 +116,7 @@ extern "C" {
 
     if (status == F_access_denied) {
       if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
-        flockfile(data->main->error.to);
+        f_file_stream_lock(data->main->error);
 
         fl_print_format("%r%[%QAccess denied while trying to %Q '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, operation, data->main->error.context);
 
@@ -124,7 +124,7 @@ extern "C" {
 
         fl_print_format("%['.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-        funlockfile(data->main->error.to);
+        f_file_stream_unlock(data->main->error);
       }
 
       return F_false;
@@ -132,7 +132,7 @@ extern "C" {
 
     if (status == F_loop) {
       if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
-        flockfile(data->main->error.to);
+        f_file_stream_lock(data->main->error);
 
         fl_print_format("%r%[%QLoop while trying to %Q '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, operation, data->main->error.context);
 
@@ -140,7 +140,7 @@ extern "C" {
 
         fl_print_format("%['.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-        funlockfile(data->main->error.to);
+        f_file_stream_unlock(data->main->error);
       }
 
       return F_false;
@@ -148,7 +148,7 @@ extern "C" {
 
     if (status == F_prohibited) {
       if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
-        flockfile(data->main->error.to);
+        f_file_stream_lock(data->main->error);
 
         fl_print_format("%r%[%QProhibited by system while trying to %Q '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, operation, data->main->error.context);
 
@@ -156,7 +156,7 @@ extern "C" {
 
         fl_print_format("%['.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-        funlockfile(data->main->error.to);
+        f_file_stream_unlock(data->main->error);
       }
 
       return F_false;
@@ -164,7 +164,7 @@ extern "C" {
 
     if (status == F_directory_found_not) {
       if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
-        flockfile(data->main->error.to);
+        f_file_stream_lock(data->main->error);
 
         fl_print_format("%r%[%QFailed to %Q '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, operation, data->main->error.context);
 
@@ -172,7 +172,7 @@ extern "C" {
 
         fl_print_format("%[' due to an invalid directory in the path.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-        funlockfile(data->main->error.to);
+        f_file_stream_unlock(data->main->error);
       }
 
       return F_false;
@@ -180,7 +180,7 @@ extern "C" {
 
     if (status == F_failure) {
       if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
-        flockfile(data->main->error.to);
+        f_file_stream_lock(data->main->error);
 
         fl_print_format("%r%[%QFailed to %Q '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, operation, data->main->error.context);
 
@@ -188,14 +188,14 @@ extern "C" {
 
         fl_print_format("%['.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-        funlockfile(data->main->error.to);
+        f_file_stream_unlock(data->main->error);
       }
 
       return F_false;
     }
 
     if (fll_error_print(data->main->error, status, function, F_false) == F_known_not && fallback && data->main->error.verbosity > f_console_verbosity_quiet_e) {
-      flockfile(data->main->error.to);
+      f_file_stream_lock(data->main->error);
 
       fl_print_format("%r%[UNKNOWN %Q(%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
       fl_print_format("%[%ui%]", data->main->error.to, data->main->error.notable, status, data->main->error.notable);
@@ -205,7 +205,7 @@ extern "C" {
 
       fl_print_format("%['.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-      funlockfile(data->main->error.to);
+      f_file_stream_unlock(data->main->error);
     }
 
     return F_true;
@@ -236,7 +236,7 @@ extern "C" {
 
     if (status == F_file_found_not) {
       if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
-        flockfile(data->main->error.to);
+        f_file_stream_lock(data->main->error);
 
         fl_print_format("%r%[%QOccurred on invalid UTF-8 character at stop position (at '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
         fl_print_format("%[%un%]", data->main->error.to, data->main->error.notable, range.start, data->main->error.notable);
@@ -244,7 +244,7 @@ extern "C" {
         fl_print_format("%[%Q%]", data->main->error.to, data->main->error.notable, path_file, data->main->error.notable);
         fl_print_format("%[').%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-        funlockfile(data->main->error.to);
+        f_file_stream_unlock(data->main->error);
       }
 
       return F_false;
@@ -252,7 +252,7 @@ extern "C" {
 
     if (status == F_complete_not_utf || status == F_complete_not_utf_eos || status == F_complete_not_utf_stop) {
       if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
-        flockfile(data->main->error.to);
+        f_file_stream_lock(data->main->error);
 
         fl_print_format("%r%[%QOccurred on invalid UTF-8 character at %s (at '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, status == F_complete_not_utf_eos ? "end of string" : "stop point of string", data->main->error.context);
         fl_print_format("%[%un%]", data->main->error.to, data->main->error.notable, range.start, data->main->error.notable);
@@ -260,7 +260,7 @@ extern "C" {
         fl_print_format("%[%Q%]", data->main->error.to, data->main->error.notable, path_file, data->main->error.notable);
         fl_print_format("%[').%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-        funlockfile(data->main->error.to);
+        f_file_stream_unlock(data->main->error);
       }
 
       return F_false;
@@ -268,7 +268,7 @@ extern "C" {
 
     if (status == F_complete_not_utf_stop) {
       if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
-        flockfile(data->main->error.to);
+        f_file_stream_lock(data->main->error);
 
         fl_print_format("%r%[%QOccurred on invalid UTF-8 character at stop point of string (at '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
         fl_print_format("%[%un%]", data->main->error.to, data->main->error.notable, range.start, data->main->error.notable);
@@ -276,14 +276,14 @@ extern "C" {
         fl_print_format("%[%Q%]", data->main->error.to, data->main->error.notable, path_file, data->main->error.notable);
         fl_print_format("%[').%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-        funlockfile(data->main->error.to);
+        f_file_stream_unlock(data->main->error);
       }
 
       return F_false;
     }
 
     if (fll_error_print(data->main->error, status, function, F_false) == F_known_not && fallback && data->main->error.verbosity > f_console_verbosity_quiet_e) {
-      flockfile(data->main->error.to);
+      f_file_stream_lock(data->main->error);
 
       fl_print_format("%r%[UNKNOWN %Q(%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
       fl_print_format("%[%ui%]", data->main->error.to, data->main->error.notable, status, data->main->error.notable);
@@ -291,7 +291,7 @@ extern "C" {
       fl_print_format("%[%Q%]", data->main->error.to, data->main->error.notable, function, data->main->error.notable);
       fl_print_format("%[().%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-      funlockfile(data->main->error.to);
+      f_file_stream_unlock(data->main->error);
     }
 
     return F_true;
@@ -303,13 +303,13 @@ extern "C" {
 
     if (data->main->error.verbosity == f_console_verbosity_quiet_e) return;
 
-    flockfile(data->main->error.to);
+    f_file_stream_lock(data->main->error);
 
     fl_print_format("%r%[%QThe parameter '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
     fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_enable_s, parameter, data->main->error.notable);
     fl_print_format("%[' is specified, but no value is given.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-    funlockfile(data->main->error.to);
+    f_file_stream_unlock(data->main->error);
   }
 #endif // _di_fake_print_error_parameter_missing_value_
 
@@ -318,13 +318,13 @@ extern "C" {
 
     if (data->main->error.verbosity == f_console_verbosity_quiet_e) return;
 
-    flockfile(data->main->error.to);
+    f_file_stream_lock(data->main->error);
 
     fl_print_format("%r%[%QThe parameter '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
     fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_enable_s, parameter, data->main->error.notable);
     fl_print_format("%[' was specified too many times.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-    funlockfile(data->main->error.to);
+    f_file_stream_unlock(data->main->error);
   }
 #endif // _di_fake_print_error_parameter_too_many_
 
@@ -354,13 +354,13 @@ extern "C" {
     if (data_make->error.verbosity == f_console_verbosity_quiet_e) return;
     if (!data_make->error.to) return;
 
-    flockfile(data_make->error.to.stream);
+    f_file_stream_lock(data_make->error.to);
 
     fl_print_format("%r%[%QThe %]", data_make->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
     fl_print_format("%[%un%]", data_make->error.to, data_make->error.notable, index, data_make->error.notable);
     fl_print_format("%[ argument must not be an empty string.%]%r", data_make->error.to, data_make->error.context, data_make->error.context, f_string_eol_s);
 
-    funlockfile(data_make->error.to.stream);
+    f_file_stream_unlock(data_make->error.to);
   }
 #endif // _di_fake_print_error_argument_empty_
 
@@ -374,7 +374,7 @@ extern "C" {
 
     f_fss_count_lines(state, buffer, operation_name.start, &line);
 
-    flockfile(print.to.stream);
+    f_file_stream_lock(print.to);
 
     fl_print_format("%r%[%QThe section operation '%]", print.to, f_string_eol_s, print.context, print.prefix, print.context);
     fl_print_format("%[%/Q%]", print.to, print.notable, buffer, operation_name, print.notable);
@@ -384,7 +384,7 @@ extern "C" {
     fl_print_format("%[%un%]", print.to, print.notable, line, print.notable);
     fl_print_format(" %[failed.%]%r", print.to, print.context, print.context, f_string_eol_s);
 
-    funlockfile(print.to.stream);
+    f_file_stream_unlock(print.to);
   }
 #endif // _di_fake_print_message_section_operation_failed_
 
@@ -393,7 +393,7 @@ extern "C" {
 
     if (print.verbosity == f_console_verbosity_quiet_e || !print.to) return;
 
-    flockfile(print.to.stream);
+    f_file_stream_lock(print.to);
 
     fl_print_format("%r%[%QThe argument '%]", print.to, f_string_eol_s, print.context, print.prefix, print.context);
     fl_print_format("%[%Q%]", print.to, print.notable, argument, print.notable);
@@ -403,7 +403,7 @@ extern "C" {
     fl_print_format("%[%r%]", print.to, print.notable, fake_make_operation_argument_strict_s, print.notable);
     fl_print_format("%['.%]%r", print.to, print.context, print.context, f_string_eol_s);
 
-    funlockfile(print.to.stream);
+    f_file_stream_unlock(print.to);
 
   }
 #endif // _di_fake_print_message_section_operation_link_argument_unknown_
@@ -413,13 +413,13 @@ extern "C" {
 
     if (print.verbosity == f_console_verbosity_quiet_e || !print.to) return;
 
-    flockfile(print.to.stream);
+    f_file_stream_lock(print.to);
 
     fl_print_format("%r%[%QThe point file '%]", print.to, f_string_eol_s, print.context, print.prefix, print.context);
     fl_print_format("%[%Q%]", print.to, print.notable, argument, print.notable);
     fl_print_format("%[' already exists.%]%r", print.to, print.context, print.context, f_string_eol_s);
 
-    funlockfile(print.to.stream);
+    f_file_stream_unlock(print.to);
 
   }
 #endif // _di_fake_print_message_section_operation_link_point_exists_
@@ -429,13 +429,13 @@ extern "C" {
 
     if (print.verbosity == f_console_verbosity_quiet_e || !print.to) return;
 
-    flockfile(print.to.stream);
+    f_file_stream_lock(print.to);
 
     fl_print_format("%r%[%QThe target file '%]", print.to, f_string_eol_s, print.context, print.prefix, print.context);
     fl_print_format("%[%Q%]", print.to, print.notable, argument, print.notable);
     fl_print_format("%[' does not exist.%]%r", print.to, print.context, print.context, f_string_eol_s);
 
-    funlockfile(print.to.stream);
+    f_file_stream_unlock(print.to);
 
   }
 #endif // _di_fake_print_message_section_operation_link_target_exists_not_
@@ -445,7 +445,7 @@ extern "C" {
 
     if (data->main->error.verbosity == f_console_verbosity_quiet_e || !print.to) return;
 
-    flockfile(data->main->error.to);
+    f_file_stream_lock(data->main->error);
 
     if (F_status_set_fine(status) == F_false) {
       fl_print_format("%r%[%QThe path '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
@@ -456,7 +456,7 @@ extern "C" {
       fll_error_file_print(data->main->error, F_status_set_fine(status), function, F_true, path, fake_common_file_path_determine_real_s, fll_error_file_type_file_e);
     }
 
-    funlockfile(data->main->error.to);
+    f_file_stream_unlock(data->main->error);
   }
 #endif // _di_fake_print_message_section_operation_path_outside_
 
@@ -466,7 +466,7 @@ extern "C" {
     if (data->main->error.verbosity == f_console_verbosity_quiet_e || !print.to) return;
 
     if (status == F_array_too_large) {
-      flockfile(data->main->error.to);
+      f_file_stream_lock(data->main->error);
 
       fl_print_format("%r%[%QMaximum stack size reached while processing path '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
       fl_print_format("%[%Q%]", data->main->error.to, data->main->error.notable, path, data->main->error.notable);
@@ -479,7 +479,7 @@ extern "C" {
 
       fl_print_format(".%]%r", data->main->error.to, data->main->error.context, f_string_eol_s);
 
-      funlockfile(data->main->error.to);
+      f_file_stream_unlock(data->main->error);
     }
     else {
       fll_error_file_print(print, status, function, F_true, path, fake_common_file_path_change_to_s, fll_error_file_type_directory_e);
@@ -497,7 +497,7 @@ extern "C" {
 
     f_fss_count_lines(state, buffer, operation_name.start, &line);
 
-    flockfile(data->main->error.to);
+    f_file_stream_lock(data->main->error);
 
     fl_print_format("%r%[%QThe section operation '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
     fl_print_format("%[%/Q%]", data->main->error.to, data->main->error.notable, buffer, operation_name, data->main->error.notable);
@@ -509,7 +509,7 @@ extern "C" {
     fl_print_format("%[%ul%]", data->main->error.to, data->main->error.notable, stack_max, data->main->error.notable);
     fl_print_format(" %[has been reached.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-    funlockfile(data->main->error.to);
+    f_file_stream_unlock(data->main->error);
   }
 #endif // _di_fake_print_message_section_operation_stack_max_
 
@@ -523,7 +523,7 @@ extern "C" {
 
     f_fss_count_lines(state, buffer, operation_name.start, &line);
 
-    flockfile(data->main->error.to);
+    f_file_stream_lock(data->main->error);
 
     fl_print_format("%r%[%QThe section operation '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
     fl_print_format("%[%/Q%]", data->main->error.to, data->main->error.notable, buffer, operation_name, data->main->error.notable);
@@ -533,7 +533,7 @@ extern "C" {
     fl_print_format("%[%ul%]", data->main->error.to, data->main->error.notable, line, data->main->error.notable);
     fl_print_format(" %[is not a known operation name.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-    funlockfile(data->main->error.to);
+    f_file_stream_unlock(data->main->error);
   }
 #endif // _di_fake_print_message_section_operation_unknown_
 
@@ -542,7 +542,7 @@ extern "C" {
 
     if (data->main->warning.verbosity == f_console_verbosity_quiet_e) return;
 
-    flockfile(data->main->warning.to);
+    f_file_stream_lock(data->main->warning);
 
     fl_print_format("%r%[%QThe fakefile '%]", data->main->warning.to, f_string_eol_s, data->main->warning.context, data->main->warning.prefix, data->main->warning.context);
     fl_print_format("%[%Q%]", data->main->warning.to, data->main->warning.notable, path_file, data->main->warning.notable);
@@ -552,7 +552,7 @@ extern "C" {
     fl_print_format("%[%/Q%]", data->main->warning.to, data->main->warning.notable, buffer, range_object, data->main->warning.notable);
     fl_print_format("%['.%]%r", data->main->warning.to, data->main->warning.context, data->main->warning.context, f_string_eol_s);
 
-    funlockfile(data->main->warning.to);
+    f_file_stream_unlock(data->main->warning);
   }
 #endif // _di_fake_print_warning_settings_content_empty_
 
@@ -561,7 +561,7 @@ extern "C" {
 
     if (data->main->warning.verbosity == f_console_verbosity_quiet_e) return;
 
-    flockfile(data->main->warning.to);
+    f_file_stream_lock(data->main->warning);
 
     fl_print_format("%r%[%QThe fakefile '%]", data->main->warning.to, f_string_eol_s, data->main->warning.context, data->main->warning.prefix, data->main->warning.context);
     fl_print_format("%[%Q%]", data->main->warning.to, data->main->warning.notable, path_file, data->main->warning.notable);
@@ -573,7 +573,7 @@ extern "C" {
     fl_print_format("%[%/Q%]", data->main->warning.to, data->main->warning.notable, buffer, range_object, data->main->warning.notable);
     fl_print_format("%['.%]%r", data->main->warning.to, data->main->warning.context, data->main->warning.context, f_string_eol_s);
 
-    funlockfile(data->main->warning.to);
+    f_file_stream_unlock(data->main->warning);
   }
 #endif // _di_fake_print_warning_settings_content_invalid_
 
@@ -582,7 +582,7 @@ extern "C" {
 
     if (data->main->warning.verbosity == f_console_verbosity_quiet_e) return;
 
-    flockfile(data->main->warning.to);
+    f_file_stream_lock(data->main->warning);
 
     fl_print_format("%r%[%QThe fakefile '%]", data->main->warning.to, f_string_eol_s, data->main->warning.context, data->main->warning.prefix, data->main->warning.context);
     fl_print_format("%[%r%]", data->main->warning.to, data->main->warning.notable, name_object, data->main->warning.notable);
@@ -590,7 +590,7 @@ extern "C" {
     fl_print_format("%[%Q%]", data->main->warning.to, data->main->warning.notable, path_file, data->main->warning.notable);
     fl_print_format("%[' may only have a single property, only using the first.%]%r", data->main->warning.to, data->main->warning.context, data->main->warning.context, f_string_eol_s);
 
-    funlockfile(data->main->warning.to);
+    f_file_stream_unlock(data->main->warning);
   }
 #endif // _di_fake_print_warning_settings_content_multiple_
 
@@ -599,7 +599,7 @@ extern "C" {
 
     if (data->main->warning.verbosity == f_console_verbosity_quiet_e) return;
 
-    flockfile(data->main->warning.to);
+    f_file_stream_lock(data->main->warning);
 
     fl_print_format("%r%[%QThe object '%]", data->main->warning.to, f_string_eol_s, data->main->warning.context, data->main->warning.prefix, data->main->warning.context);
     fl_print_format("%[%r%]", data->main->warning.to, data->main->warning.notable, name_object, data->main->warning.notable);
@@ -607,7 +607,7 @@ extern "C" {
     fl_print_format("%[%Q%]", data->main->warning.to, data->main->warning.notable, path_file, data->main->warning.notable);
     fl_print_format("%[' may only be specified once, only using the first.%]%r", data->main->warning.to, data->main->warning.context, data->main->warning.context, f_string_eol_s);
 
-    funlockfile(data->main->warning.to);
+    f_file_stream_unlock(data->main->warning);
   }
 #endif // _di_fake_print_warning_settings_object_multiple_
 

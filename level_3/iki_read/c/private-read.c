@@ -197,7 +197,7 @@ extern "C" {
       f_array_length_t matches = 0;
       bool unmatched = F_true;
 
-      flockfile(main->output.to.stream);
+      f_file_stream_lock(main->output.to);
 
       for (i = 0; i < setting->data.vocabulary.used; ++i) {
 
@@ -223,7 +223,7 @@ extern "C" {
         } // for
       } // for
 
-      funlockfile(main->output.to.stream);
+      f_file_stream_unlock(main->output.to);
 
       if (unmatched) {
         setting->status = F_data_not;
@@ -236,13 +236,13 @@ extern "C" {
       if (setting->data.variable.used) {
         if (setting->flag & iki_read_main_flag_at_e) {
           if (setting->at < setting->data.variable.used) {
-            flockfile(main->output.to.stream);
+            f_file_stream_lock(main->output.to);
 
             iki_read_print(main, setting, setting->at);
 
             f_print_dynamic_raw(f_string_eol_s, main->output.to);
 
-            funlockfile(main->output.to.stream);
+            f_file_stream_unlock(main->output.to);
 
             setting->status = F_none;
           }
@@ -251,7 +251,7 @@ extern "C" {
           }
         }
         else {
-          flockfile(main->output.to.stream);
+          f_file_stream_lock(main->output.to);
 
           for (i = 0; i < setting->data.variable.used; ++i) {
 
@@ -260,7 +260,7 @@ extern "C" {
             f_print_dynamic_raw(f_string_eol_s, main->output.to);
           } // for
 
-          funlockfile(main->output.to.stream);
+          f_file_stream_unlock(main->output.to);
 
           setting->status = F_none;
         }
@@ -324,7 +324,7 @@ extern "C" {
       i = buffer_range.start;
       range = buffer_range;
 
-      flockfile(main->output.to.stream);
+      f_file_stream_lock(main->output.to);
 
       while (i <= range.stop && j < stop) {
 
@@ -362,7 +362,7 @@ extern "C" {
         f_print_dynamic_partial(setting->buffer, range, main->output.to);
       }
 
-      funlockfile(main->output.to.stream);
+      f_file_stream_unlock(main->output.to);
     }
 
     setting->status = F_none;

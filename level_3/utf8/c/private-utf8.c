@@ -19,7 +19,7 @@ extern "C" {
 
     utf8_process_text_width(&text);
 
-    flockfile(main->output.to.stream);
+    f_file_stream_lock(main->output.to);
 
     for (; text.string[0] && F_status_is_error_not(status); ) {
 
@@ -88,12 +88,12 @@ extern "C" {
     }
 
     if (F_status_is_error(status)) {
-      funlockfile(main->output.to.stream);
+      f_file_stream_unlock(main->output.to);
 
       return status;
     }
 
-    funlockfile(main->output.to.stream);
+    f_file_stream_unlock(main->output.to);
 
     return valid;
   }

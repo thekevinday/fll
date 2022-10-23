@@ -357,11 +357,11 @@ extern "C" {
 
     if (data->depths.array[0].value_at >= data->objects.used) {
       if (data->option & (fss_extended_read_data_option_columns_d | fss_extended_read_data_option_total_d)) {
-        flockfile(main->output.to.stream);
+        f_file_stream_lock(main->output.to);
 
         fss_extended_read_print_zero(main);
 
-        funlockfile(main->output.to.stream);
+        f_file_stream_unlock(main->output.to);
       }
 
       return F_none;
@@ -371,11 +371,11 @@ extern "C" {
     if (data->option & fss_extended_read_data_option_line_d) {
       if (data->line) {
         if (data->option & fss_extended_read_data_option_total_d) {
-          flockfile(main->output.to.stream);
+          f_file_stream_lock(main->output.to);
 
           fss_extended_read_print_zero(main);
 
-          funlockfile(main->output.to.stream);
+          f_file_stream_unlock(main->output.to);
         }
 
         return F_none;
@@ -447,11 +447,11 @@ extern "C" {
     } // for
 
     if (data->option & fss_extended_read_data_option_total_d) {
-      flockfile(main->output.to.stream);
+      f_file_stream_lock(main->output.to);
 
       fss_extended_read_print_zero(main);
 
-      funlockfile(main->output.to.stream);
+      f_file_stream_unlock(main->output.to);
     }
 
     return F_none;
@@ -462,11 +462,11 @@ extern "C" {
   f_status_t fss_extended_read_process_columns(fll_program_data_t * const main, fss_extended_read_data_t * const data, bool names[]) {
 
     if (!(data->option & fss_extended_read_data_option_content_d)) {
-      flockfile(main->output.to.stream);
+      f_file_stream_lock(main->output.to);
 
       fss_extended_read_print_zero(main);
 
-      funlockfile(main->output.to.stream);
+      f_file_stream_unlock(main->output.to);
 
       return F_none;
     }
@@ -510,11 +510,11 @@ extern "C" {
         if (!data->contents.array[i].used) {
           if (data->option & fss_extended_read_data_option_empty_d) {
             if (line == data->line) {
-              flockfile(main->output.to.stream);
+              f_file_stream_lock(main->output.to);
 
               fss_extended_read_print_set_end(main);
 
-              funlockfile(main->output.to.stream);
+              f_file_stream_unlock(main->output.to);
 
               break;
             }
@@ -685,7 +685,7 @@ extern "C" {
       } // for
     }
 
-    flockfile(main->output.to.stream);
+    f_file_stream_lock(main->output.to);
 
     if (data->option & fss_extended_read_data_option_line_d) {
       if (data->line < total) {
@@ -699,7 +699,7 @@ extern "C" {
       fl_print_format("%ul%r", main->output.to, total, f_string_eol_s);
     }
 
-    funlockfile(main->output.to.stream);
+    f_file_stream_unlock(main->output.to);
 
     return F_none;
   }

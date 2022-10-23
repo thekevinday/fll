@@ -143,13 +143,13 @@ extern "C" {
 
     if (status == F_false) {
       if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
-        flockfile(data->main->error.to);
+        f_file_stream_lock(data->main->error);
 
         fl_print_format("%r%[%QThe path '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
         fl_print_format("%[%Q%]", data->main->error.to, data->main->error.notable, path, data->main->error.notable);
         fl_print_format("%[' exists but is not a directory.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-        funlockfile(data->main->error.to);
+        f_file_stream_unlock(data->main->error);
       }
 
       return F_status_set_warning(F_failure);
@@ -159,13 +159,13 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_file_found_not) {
-          flockfile(data->main->error.to);
+          f_file_stream_lock(data->main->error);
 
           fl_print_format("%r%[%QThe path '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
           fl_print_format("%[%Q%]", data->main->error.to, data->main->error.notable, path, data->main->error.notable);
           fl_print_format("%[' could not be created, a parent directory does not exist.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-          funlockfile(data->main->error.to);
+          f_file_stream_unlock(data->main->error);
         }
         else {
           fll_error_file_print(data->main->error, F_status_set_fine(status), "f_directory_create", F_true, path, f_file_operation_create_s, fll_error_file_type_directory_e);
@@ -236,13 +236,13 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_file_found_not) {
-          flockfile(data->main->error.to);
+          f_file_stream_lock(data->main->error);
 
           fl_print_format("%r%[%QThe file '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
           fl_print_format("%[%Q%]", data->main->error.to, data->main->error.notable, path, data->main->error.notable);
           fl_print_format("%[' could not be created, a parent directory does not exist.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-          funlockfile(data->main->error.to);
+          f_file_stream_unlock(data->main->error);
         }
         else {
           fll_error_file_print(data->main->error, F_status_set_fine(status), "f_file_create", F_true, path, f_file_operation_create_s, fll_error_file_type_file_e);

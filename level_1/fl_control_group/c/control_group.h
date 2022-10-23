@@ -56,11 +56,11 @@ extern "C" {
  *   Errors (with error bit) from: f_file_stream_open().
  *
  * @see fprintf()
- * @see fflush()
  * @see memcpy()
  * @see unshare()
  *
  * @see f_file_stream_close()
+ * @see f_file_stream_flush()
  * @see f_file_stream_open()
  */
 #ifndef _di_fl_control_group_apply_

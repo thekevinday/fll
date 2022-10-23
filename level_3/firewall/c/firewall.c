@@ -174,14 +174,14 @@ extern "C" {
                   show_ports = F_true;
                 }
                 else {
-                  flockfile(main->warning.to.stream);
+                  f_file_stream_lock(main->warning.to);
 
                   fl_print_format("%r%[%Q'%]", main->warning.to, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
                   fl_print_format("%[%Q%]", main->warning.to, main->warning.notable, data.argv[index], main->warning.notable);
                   fl_print_format("%[' is not a valid show option.%]%r", main->warning.to, main->warning.context, main->warning.context, f_string_eol_s);
 
-                  funlockfile(main->warning.to.stream);
-                  fflush(main->warning.to);
+                  f_file_stream_unlock(main->warning.to);
+                  f_file_stream_flush(main->warning.to);
                 }
               }
             }

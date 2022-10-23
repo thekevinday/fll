@@ -13,7 +13,7 @@ extern "C" {
     if (F_status_is_error(*status)) return 1;
 
     if (data->main->error.verbosity >= f_console_verbosity_verbose_e) {
-      flockfile(data->main->output.to);
+      f_file_stream_lock(data->main->output);
 
       f_print_dynamic(program, data->main->output.to);
 
@@ -26,10 +26,10 @@ extern "C" {
 
       f_print_dynamic_raw(f_string_eol_s, data->main->output.to);
 
-      funlockfile(data->main->output.to);
+      f_file_stream_unlock(data->main->output);
 
       // Flush to stdout before executing command.
-      fflush(data->main->output.to);
+      f_file_stream_flush(data->main->output.to);
     }
 
     int return_code = 0;
@@ -67,13 +67,13 @@ extern "C" {
 
       if (F_status_set_fine(*status) == F_file_found_not) {
         if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
-          flockfile(data->main->error.to);
+          f_file_stream_lock(data->main->error);
 
           fl_print_format("%r%[%QFailed to find program '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
           fl_print_format("%[%Q%]", data->main->error.to, data->main->error.notable, program, data->main->error.notable);
           fl_print_format("%[' for executing.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-          funlockfile(data->main->error.to);
+          f_file_stream_unlock(data->main->error);
         }
       }
       else {
@@ -256,13 +256,13 @@ extern "C" {
 
                 if (F_status_is_error(status)) {
                   if (fll_error_print(data->main->error, F_status_set_fine(status), "f_utf_is_word_dash_plus", F_false) == F_known_not && data->main->error.verbosity > f_console_verbosity_quiet_e) {
-                    flockfile(data->main->error.to);
+                    f_file_stream_lock(data->main->error);
 
                     fl_print_format("%r%[%QFailed to process the parameter '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
                     fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_enable_s, fake_long_process_s, data->main->error.notable);
                     fl_print_format("%['.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-                    funlockfile(data->main->error.to);
+                    f_file_stream_unlock(data->main->error);
                   }
 
                   return status;
@@ -270,7 +270,7 @@ extern "C" {
 
                 if (status == F_false) {
                   if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
-                    flockfile(data->main->error.to);
+                    f_file_stream_lock(data->main->error);
 
                     fl_print_format("%r%[%QThe '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
                     fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_enable_s, fake_long_process_s, data->main->error.notable);
@@ -278,7 +278,7 @@ extern "C" {
                     fl_print_format("%[%Q%]", data->main->error.to, data->main->error.notable, data->main->parameters.arguments.array[index], data->main->error.notable);
                     fl_print_format("%[' contains non-word, non-dash, and non-plus characters.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-                    funlockfile(data->main->error.to);
+                    f_file_stream_unlock(data->main->error);
                   }
 
                   return F_status_set_error(F_parameter);
@@ -299,13 +299,13 @@ extern "C" {
             if (F_status_is_error(status)) {
               if (status == F_status_set_error(F_string_too_large)) {
                 if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
-                  flockfile(data->main->error.to);
+                  f_file_stream_lock(data->main->error);
 
                   fl_print_format("%r%[%QThe parameter '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
                   fl_print_format("%[%r%Q%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_enable_s, parameters_name[i], data->main->error.notable);
                   fl_print_format("%[' is too long.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-                  funlockfile(data->main->error.to);
+                  f_file_stream_unlock(data->main->error);
                 }
               }
               else {
@@ -320,13 +320,13 @@ extern "C" {
 
           if (!data->main->parameters.arguments.array[index].used || status == F_data_not) {
             if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
-              flockfile(data->main->error.to);
+              f_file_stream_lock(data->main->error);
 
               fl_print_format("%r%[%QThe parameter '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
               fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_enable_s, parameters_name[i], data->main->error.notable);
               fl_print_format("%[' must not be empty and must not contain only white space.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-              funlockfile(data->main->error.to);
+              f_file_stream_unlock(data->main->error);
             }
           }
         }
@@ -414,13 +414,13 @@ extern "C" {
 
           if (F_status_is_error(status)) {
             if (fll_error_print(data->main->error, F_status_set_fine(status), "f_path_directory_cleanup", F_false) == F_known_not && data->main->error.verbosity > f_console_verbosity_quiet_e) {
-              flockfile(data->main->error.to);
+              f_file_stream_lock(data->main->error);
 
               fl_print_format("%r%[%QFailed to process parameter '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
               fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_enable_s, parameters_name[i], data->main->error.notable);
               fl_print_format("%['.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-              funlockfile(data->main->error.to);
+              f_file_stream_unlock(data->main->error);
             }
 
             return status;
@@ -441,13 +441,13 @@ extern "C" {
 
           if (F_status_is_error(status)) {
             if (fll_error_print(data->main->error, F_status_set_fine(status), " f_string_dynamic_append", F_false) == F_known_not && data->main->error.verbosity > f_console_verbosity_quiet_e) {
-              flockfile(data->main->error.to);
+              f_file_stream_lock(data->main->error);
 
               fl_print_format("%r%[%QFailed to load default for the parameter '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
               fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_enable_s, parameters_name[i], data->main->error.notable);
               fl_print_format("%['.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-              funlockfile(data->main->error.to);
+              f_file_stream_unlock(data->main->error);
             }
 
             return status;
@@ -461,13 +461,13 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         if (fll_error_print(data->main->error, F_status_set_fine(status), "fll_program_parameter_additional_rip", F_false) == F_known_not && data->main->error.verbosity > f_console_verbosity_quiet_e) {
-          flockfile(data->main->error.to);
+          f_file_stream_lock(data->main->error);
 
           fl_print_format("%r%[%QFailed to process the parameter '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
           fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_enable_s, fake_long_define_s, data->main->error.notable);
           fl_print_format("%['.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-          funlockfile(data->main->error.to);
+          f_file_stream_unlock(data->main->error);
         }
 
         return status;
@@ -485,13 +485,13 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         if (fll_error_print(data->main->error, F_status_set_fine(status), "fll_program_parameter_additional_rip", F_false) == F_known_not && data->main->error.verbosity > f_console_verbosity_quiet_e) {
-          flockfile(data->main->error.to);
+          f_file_stream_lock(data->main->error);
 
           fl_print_format("%r%[%QFailed to process the parameter '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
           fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_enable_s, fake_long_mode_s, data->main->error.notable);
           fl_print_format("%['.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-          funlockfile(data->main->error.to);
+          f_file_stream_unlock(data->main->error);
         }
 
         return status;
@@ -511,13 +511,13 @@ extern "C" {
 
           if (F_status_is_error(status)) {
             if (fll_error_print(data->main->error, F_status_set_fine(status), "f_utf_is_word_dash_plus", F_false) == F_known_not && data->main->error.verbosity > f_console_verbosity_quiet_e) {
-              flockfile(data->main->error.to);
+              f_file_stream_lock(data->main->error);
 
               fl_print_format("%r%[%QFailed to process the parameter '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
               fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_enable_s, fake_long_mode_s, data->main->error.notable);
               fl_print_format("%['.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-              funlockfile(data->main->error.to);
+              f_file_stream_unlock(data->main->error);
             }
 
             return status;
@@ -525,7 +525,7 @@ extern "C" {
 
           if (status == F_false) {
             if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
-              flockfile(data->main->error.to);
+              f_file_stream_lock(data->main->error);
 
               fl_print_format("%r%[%QThe '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
               fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_enable_s, fake_long_mode_s, data->main->error.notable);
@@ -533,7 +533,7 @@ extern "C" {
               fl_print_format("%[%Q%]", data->main->error.to, data->main->error.notable, data->mode.array[i], data->main->error.notable);
               fl_print_format("%[' contains non-word, non-dash, and non-plus characters.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-              funlockfile(data->main->error.to);
+              f_file_stream_unlock(data->main->error);
             }
 
             return F_status_set_error(F_parameter);
@@ -633,13 +633,13 @@ extern "C" {
         }
       }
       else if (parameters_required[i] == F_true) {
-        flockfile(data->main->error.to);
+        f_file_stream_lock(data->main->error);
 
         fl_print_format("%r%[%QNo valid path for the (required) directory parameter '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
         fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_enable_s, parameters_name[i], data->main->error.notable);
         fl_print_format("%[' was found.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-        funlockfile(data->main->error.to);
+        f_file_stream_unlock(data->main->error);
 
         return F_status_set_error(F_directory_found_not);
       }

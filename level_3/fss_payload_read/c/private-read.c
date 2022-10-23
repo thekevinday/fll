@@ -272,11 +272,11 @@ extern "C" {
 
     if (status == F_data_not_stop || status == F_data_not_eos) {
       if (data->option & fss_payload_read_data_option_total_d) {
-        flockfile(main->output.to.stream);
+        f_file_stream_lock(main->output.to);
 
         fss_payload_read_print_zero(main);
 
-        funlockfile(main->output.to.stream);
+        f_file_stream_unlock(main->output.to);
 
         return F_none;
       }
@@ -337,11 +337,11 @@ extern "C" {
     if (!(data->option & fss_payload_read_data_option_extended_d)) {
       if ((data->option & fss_payload_read_data_option_select_d) && data->select) {
         if (main->parameters.array[fss_payload_read_parameter_total_e].result == f_console_result_found_e) {
-          flockfile(main->output.to.stream);
+          f_file_stream_lock(main->output.to);
 
           fss_payload_read_print_zero(main);
 
-          funlockfile(main->output.to.stream);
+          f_file_stream_unlock(main->output.to);
         }
 
         return F_none;
@@ -365,11 +365,11 @@ extern "C" {
           if (names[i]) break;
 
           if (main->parameters.array[fss_payload_read_parameter_total_e].result == f_console_result_found_e) {
-            flockfile(main->output.to.stream);
+            f_file_stream_lock(main->output.to);
 
             fss_payload_read_print_zero(main);
 
-            funlockfile(main->output.to.stream);
+            f_file_stream_unlock(main->output.to);
           }
 
           return F_none;
@@ -470,11 +470,11 @@ extern "C" {
 
     if (data->depths.array[0].value_at >= data->objects.used) {
       if (data->option & (fss_payload_read_data_option_columns_d | fss_payload_read_data_option_total_d)) {
-        flockfile(main->output.to.stream);
+        f_file_stream_lock(main->output.to);
 
         fss_payload_read_print_zero(main);
 
-        funlockfile(main->output.to.stream);
+        f_file_stream_unlock(main->output.to);
       }
 
       return F_none;
@@ -518,7 +518,7 @@ extern "C" {
           fll_print_format("%ul%r", main->output.to, data->contents.array[i].used, f_string_eol_s);
         }
         else if (data->option & fss_payload_read_data_option_total_d) {
-          flockfile(main->output.to.stream);
+          f_file_stream_lock(main->output.to);
 
           if (data->contents.array[i].used) {
             fss_payload_read_print_one(main);
@@ -527,7 +527,7 @@ extern "C" {
             fss_payload_read_print_zero(main);
           }
 
-          funlockfile(main->output.to.stream);
+          f_file_stream_unlock(main->output.to);
         }
         else {
           is_payload = fl_string_dynamic_partial_compare_string(f_fss_string_payload_s.string, data->buffer, f_fss_string_payload_s.used, data->objects.array[i]) == F_equal_to;
@@ -542,11 +542,11 @@ extern "C" {
     } // for
 
     if (data->option & fss_payload_read_data_option_total_d) {
-      flockfile(main->output.to.stream);
+      f_file_stream_lock(main->output.to);
 
       fss_payload_read_print_zero(main);
 
-      funlockfile(main->output.to.stream);
+      f_file_stream_unlock(main->output.to);
     }
 
     return F_none;
@@ -558,11 +558,11 @@ extern "C" {
 
     if (data->depths.array[data->depths.used - 1].value_at >= data->objects_header.used) {
       if (data->option & (fss_payload_read_data_option_columns_d | fss_payload_read_data_option_total_d)) {
-        flockfile(main->output.to.stream);
+        f_file_stream_lock(main->output.to);
 
         fss_payload_read_print_zero(main);
 
-        funlockfile(main->output.to.stream);
+        f_file_stream_unlock(main->output.to);
       }
 
       return F_none;
@@ -572,11 +572,11 @@ extern "C" {
     if (data->option & fss_payload_read_data_option_line_d) {
       if (data->line) {
         if (data->option & fss_payload_read_data_option_total_d) {
-          flockfile(main->output.to.stream);
+          f_file_stream_lock(main->output.to);
 
           fss_payload_read_print_zero(main);
 
-          funlockfile(main->output.to.stream);
+          f_file_stream_unlock(main->output.to);
         }
 
         return F_none;
@@ -648,11 +648,11 @@ extern "C" {
     } // for
 
     if (data->option & fss_payload_read_data_option_total_d) {
-      flockfile(main->output.to.stream);
+      f_file_stream_lock(main->output.to);
 
       fss_payload_read_print_zero(main);
 
-      funlockfile(main->output.to.stream);
+      f_file_stream_unlock(main->output.to);
     }
 
     return F_none;
@@ -664,7 +664,7 @@ extern "C" {
 
     if (data->option & fss_payload_read_data_option_object_d) {
       if (*line == data->line) {
-        flockfile(main->output.to.stream);
+        f_file_stream_lock(main->output.to);
 
         if (data->option & fss_payload_read_data_option_total_d) {
           fss_payload_read_print_one(main);
@@ -673,7 +673,7 @@ extern "C" {
           fss_payload_read_print_at_object(main, data, at, delimits_object);
         }
 
-        funlockfile(main->output.to.stream);
+        f_file_stream_unlock(main->output.to);
 
         return F_success;
       }
@@ -714,7 +714,7 @@ extern "C" {
           if (*line == data->line) {
             range.stop = i;
 
-            flockfile(main->output.to.stream);
+            f_file_stream_lock(main->output.to);
 
             if (data->option & fss_payload_read_data_option_total_d) {
               fss_payload_read_print_one(main);
@@ -723,7 +723,7 @@ extern "C" {
               f_print_except_in_dynamic_partial(data->buffer, range, delimits_content, data->comments, main->output.to);
             }
 
-            funlockfile(main->output.to.stream);
+            f_file_stream_unlock(main->output.to);
 
             return F_success;
           }
@@ -741,7 +741,7 @@ extern "C" {
         ++(*line);
 
         if (*line == data->line) {
-          flockfile(main->output.to.stream);
+          f_file_stream_lock(main->output.to);
 
           if (data->option & fss_payload_read_data_option_total_d) {
             fss_payload_read_print_one(main);
@@ -753,7 +753,7 @@ extern "C" {
             f_print_dynamic_raw(f_string_eol_s, main->output.to);
           }
 
-          funlockfile(main->output.to.stream);
+          f_file_stream_unlock(main->output.to);
 
           return F_success;
         }
@@ -768,11 +768,11 @@ extern "C" {
   f_status_t fss_payload_read_process_columns(fll_program_data_t * const main, fss_payload_read_data_t * const data, bool names[]) {
 
     if (!(data->option & fss_payload_read_data_option_content_d)) {
-      flockfile(main->output.to.stream);
+      f_file_stream_lock(main->output.to);
 
       fss_payload_read_print_zero(main);
 
-      funlockfile(main->output.to.stream);
+      f_file_stream_unlock(main->output.to);
 
       return F_none;
     }
@@ -808,11 +808,11 @@ extern "C" {
   f_status_t fss_payload_read_process_columns_extended(fll_program_data_t * const main, fss_payload_read_data_t * const data, bool names[]) {
 
     if (!(data->option & fss_payload_read_data_option_content_d)) {
-      flockfile(main->output.to.stream);
+      f_file_stream_lock(main->output.to);
 
       fss_payload_read_print_zero(main);
 
-      funlockfile(main->output.to.stream);
+      f_file_stream_unlock(main->output.to);
 
       return F_none;
     }
@@ -893,11 +893,11 @@ extern "C" {
         if (!data->contents_header.array[i].used) {
           if (data->option & fss_payload_read_data_option_empty_d) {
             if (line == data->line) {
-              flockfile(main->output.to.stream);
+              f_file_stream_lock(main->output.to);
 
               fss_payload_read_print_set_end_extended(main);
 
-              funlockfile(main->output.to.stream);
+              f_file_stream_unlock(main->output.to);
 
               break;
             }
@@ -1103,7 +1103,7 @@ extern "C" {
       }
     } // for
 
-    flockfile(main->output.to.stream);
+    f_file_stream_lock(main->output.to);
 
     if (data->option & fss_payload_read_data_option_line_d) {
       if (data->line < total) {
@@ -1117,7 +1117,7 @@ extern "C" {
       fl_print_format("%ul%r", main->output.to, total, f_string_eol_s);
     }
 
-    funlockfile(main->output.to.stream);
+    f_file_stream_unlock(main->output.to);
 
     return F_none;
   }
@@ -1170,7 +1170,7 @@ extern "C" {
       } // for
     }
 
-    flockfile(main->output.to.stream);
+    f_file_stream_lock(main->output.to);
 
     if (data->option & fss_payload_read_data_option_line_d) {
       if (data->line < total) {
@@ -1184,7 +1184,7 @@ extern "C" {
       fl_print_format("%ul%r", main->output.to, total, f_string_eol_s);
     }
 
-    funlockfile(main->output.to.stream);
+    f_file_stream_unlock(main->output.to);
 
     return F_none;
   }
