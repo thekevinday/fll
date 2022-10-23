@@ -29,12 +29,9 @@ extern "C" {
  *   This does not alter setting.status.
  * @param index
  *   The index used to identify the desired range in variable, content, and ranges.
- * @param content_only
- *   Set to TRUE to only print the value (Content) when printing.
- *   Set to FALSE to print the entire variable when printing.
  */
 #ifndef _di_iki_read_print_
-  extern void iki_read_print(fll_program_data_t * const main, iki_read_setting_t * const setting, const f_array_length_t index, const bool content_only) F_attribute_visibility_internal_d;
+  extern void iki_read_print(fll_program_data_t * const main, iki_read_setting_t * const setting, const f_array_length_t index) F_attribute_visibility_internal_d;
 #endif // _di_iki_read_print_
 
 /**

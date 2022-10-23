@@ -296,15 +296,13 @@ extern "C" {
         return;
       }
 
-      const f_array_length_t total = main->parameters.array[iki_read_parameter_replace_e].values.used % 2;
-
       setting->replace.used = 0;
 
-      setting->status = f_string_maps_resize(total, &setting->replace);
+      setting->status = f_string_maps_increase_by(main->parameters.array[iki_read_parameter_replace_e].values.used / 2, &setting->replace);
 
       if (F_status_is_error(setting->status)) {
         iki_read_print_line_first_locked(setting, main->error);
-        fll_error_print(main->error, F_status_set_fine(setting->status), "f_string_maps_resize", F_true);
+        fll_error_print(main->error, F_status_set_fine(setting->status), "f_string_maps_increase_by", F_true);
         iki_read_print_line_last_locked(setting, main->error);
 
         return;
@@ -315,11 +313,16 @@ extern "C" {
       f_array_length_t i = 0;
       f_array_length_t j = 0;
 
-      for (; i < total; ++i) {
+      for (; i < main->parameters.array[iki_read_parameter_replace_e].values.used; ++i) {
 
-        // Replace any existing values so that each name exists only once.
+        index = main->parameters.array[iki_read_parameter_replace_e].values.array[i];
+
+        // Replace any existing value so that each name exists only once.
         for (j = 0; j < setting->replace.used; ++j) {
-          if (fl_string_dynamic_compare(main->parameters.arguments.array[i], setting->replace.array[j].name) == F_equal_to) break;
+
+          if (fl_string_dynamic_compare(main->parameters.arguments.array[index], setting->replace.array[j].name) == F_equal_to) {
+            break;
+          }
         } // for
 
         at = j;
@@ -341,20 +344,18 @@ extern "C" {
           return;
         }
 
-        index = main->parameters.array[iki_read_parameter_replace_e].values.array[i];
-
         setting->replace.array[at].name.string = main->parameters.arguments.array[index].string;
         setting->replace.array[at].name.used = main->parameters.arguments.array[index].used;
         setting->replace.array[at].name.size = 0;
 
-        index = main->parameters.array[iki_read_parameter_replace_e].values.array[i + 1];
+        index = main->parameters.array[iki_read_parameter_replace_e].values.array[++i];
 
         setting->replace.array[at].value.string = main->parameters.arguments.array[index].string;
         setting->replace.array[at].value.used = main->parameters.arguments.array[index].used;
         setting->replace.array[at].value.size = 0;
 
-        if (at == setting->wrap.used) {
-          ++setting->wrap.used;
+        if (at == setting->replace.used) {
+          ++setting->replace.used;
         }
       } // for
 
@@ -372,15 +373,13 @@ extern "C" {
         return;
       }
 
-      const f_array_length_t total = main->parameters.array[iki_read_parameter_substitute_e].values.used % 3;
-
       setting->substitute.used = 0;
 
-      setting->status = f_string_triples_resize(total, &setting->substitute);
+      setting->status = f_string_triples_increase_by(main->parameters.array[iki_read_parameter_substitute_e].values.used / 3, &setting->substitute);
 
       if (F_status_is_error(setting->status)) {
         iki_read_print_line_first_locked(setting, main->error);
-        fll_error_print(main->error, F_status_set_fine(setting->status), "f_string_triples_resize", F_true);
+        fll_error_print(main->error, F_status_set_fine(setting->status), "f_string_triples_increase_by", F_true);
         iki_read_print_line_last_locked(setting, main->error);
 
         return;
@@ -391,7 +390,7 @@ extern "C" {
       f_array_length_t i = 0;
       f_array_length_t j = 0;
 
-      for (; i < total; ++i) {
+      for (; i < main->parameters.array[iki_read_parameter_substitute_e].values.used; ++i) {
 
         index = main->parameters.array[iki_read_parameter_substitute_e].values.array[i];
 
@@ -432,20 +431,20 @@ extern "C" {
         setting->substitute.array[at].a.used = main->parameters.arguments.array[index].used;
         setting->substitute.array[at].a.size = 0;
 
-        index = main->parameters.array[iki_read_parameter_substitute_e].values.array[i + 1];
+        index = main->parameters.array[iki_read_parameter_substitute_e].values.array[++i];
 
         setting->substitute.array[at].b.string = main->parameters.arguments.array[index].string;
         setting->substitute.array[at].b.used = main->parameters.arguments.array[index].used;
         setting->substitute.array[at].b.size = 0;
 
-        index = main->parameters.array[iki_read_parameter_substitute_e].values.array[i + 2];
+        index = main->parameters.array[iki_read_parameter_substitute_e].values.array[++i];
 
         setting->substitute.array[at].c.string = main->parameters.arguments.array[index].string;
         setting->substitute.array[at].c.used = main->parameters.arguments.array[index].used;
         setting->substitute.array[at].c.size = 0;
 
-        if (at == setting->wrap.used) {
-          ++setting->wrap.used;
+        if (at == setting->substitute.used) {
+          ++setting->substitute.used;
         }
       } // for
 
@@ -463,15 +462,13 @@ extern "C" {
         return;
       }
 
-      const f_array_length_t total = main->parameters.array[iki_read_parameter_wrap_e].values.used % 3;
-
       setting->wrap.used = 0;
 
-      setting->status = f_string_triples_resize(total, &setting->wrap);
+      setting->status = f_string_triples_increase_by(main->parameters.array[iki_read_parameter_wrap_e].values.used / 3, &setting->wrap);
 
       if (F_status_is_error(setting->status)) {
         iki_read_print_line_first_locked(setting, main->error);
-        fll_error_print(main->error, F_status_set_fine(setting->status), "f_string_triples_resize", F_true);
+        fll_error_print(main->error, F_status_set_fine(setting->status), "f_string_triples_increase_by", F_true);
         iki_read_print_line_last_locked(setting, main->error);
 
         return;
@@ -482,13 +479,16 @@ extern "C" {
       f_array_length_t i = 0;
       f_array_length_t j = 0;
 
-      for (; i < total; ++i) {
+      for (; i < main->parameters.array[iki_read_parameter_wrap_e].values.used; ++i) {
 
         index = main->parameters.array[iki_read_parameter_wrap_e].values.array[i];
 
         // Replace any existing values so that each name exists only once.
         for (j = 0; j < setting->wrap.used; ++j) {
-          if (fl_string_dynamic_compare(main->parameters.arguments.array[index], setting->wrap.array[j].a) == F_equal_to) break;
+
+          if (fl_string_dynamic_compare(main->parameters.arguments.array[index], setting->wrap.array[j].a) == F_equal_to) {
+            break;
+          }
         } // for
 
         at = j;
@@ -518,13 +518,13 @@ extern "C" {
         setting->wrap.array[at].a.used = main->parameters.arguments.array[index].used;
         setting->wrap.array[at].a.size = 0;
 
-        index = main->parameters.array[iki_read_parameter_wrap_e].values.array[i + 1];
+        index = main->parameters.array[iki_read_parameter_wrap_e].values.array[++i];
 
         setting->wrap.array[at].b.string = main->parameters.arguments.array[index].string;
         setting->wrap.array[at].b.used = main->parameters.arguments.array[index].used;
         setting->wrap.array[at].b.size = 0;
 
-        index = main->parameters.array[iki_read_parameter_wrap_e].values.array[i + 2];
+        index = main->parameters.array[iki_read_parameter_wrap_e].values.array[++i];
 
         setting->wrap.array[at].c.string = main->parameters.arguments.array[index].string;
         setting->wrap.array[at].c.used = main->parameters.arguments.array[index].used;
@@ -622,6 +622,10 @@ extern "C" {
 
       // This is the default behavior.
       setting->flag |= iki_read_main_flag_content_e;
+    }
+
+    if (main->parameters.array[iki_read_parameter_whole_e].result == f_console_result_found_e) {
+      setting->flag |= iki_read_main_flag_whole_e;
     }
 
     if (main->parameters.remaining.used) {

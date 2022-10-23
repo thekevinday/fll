@@ -10,10 +10,12 @@ extern "C" {
 #ifndef _di_iki_read_identify_alteration_
   void iki_read_identify_alteration(iki_read_setting_t * const setting) {
 
-    register f_array_length_t i = 0;
+    if (!(setting->replace.used || setting->wrap.used)) return;
+
+    f_array_length_t i = 0;
 
     if (setting->flag & (iki_read_main_flag_content_e | iki_read_main_flag_literal_e)) {
-      register f_array_length_t j = 0;
+      f_array_length_t j = 0;
 
       for (i = 0; i < setting->data.vocabulary.used; ++i) {
 
@@ -178,6 +180,9 @@ extern "C" {
     f_array_length_t replaces[setting->data.vocabulary.used];
     f_array_length_t wraps[setting->data.vocabulary.used];
 
+    memset(replaces, 0, sizeof(f_array_length_t) * setting->data.vocabulary.used);
+    memset(wraps, 0, sizeof(f_array_length_t) * setting->data.vocabulary.used);
+
     setting->map_replaces = replaces;
     setting->map_wraps = wraps;
 
@@ -211,7 +216,7 @@ extern "C" {
               if (matches++ > setting->at) break;
             }
 
-            iki_read_print(main, setting, i, setting->flag & iki_read_main_flag_content_e);
+            iki_read_print(main, setting, i);
 
             f_print_dynamic_raw(f_string_eol_s, main->output.to);
           }
@@ -233,7 +238,7 @@ extern "C" {
           if (setting->at < setting->data.variable.used) {
             flockfile(main->output.to.stream);
 
-            iki_read_print(main, setting, setting->at, setting->flag & iki_read_main_flag_content_e);
+            iki_read_print(main, setting, setting->at);
 
             f_print_dynamic_raw(f_string_eol_s, main->output.to);
 
@@ -250,7 +255,7 @@ extern "C" {
 
           for (i = 0; i < setting->data.variable.used; ++i) {
 
-            iki_read_print(main, setting, i, setting->flag & iki_read_main_flag_content_e);
+            iki_read_print(main, setting, i);
 
             f_print_dynamic_raw(f_string_eol_s, main->output.to);
           } // for
@@ -300,6 +305,15 @@ extern "C" {
       return;
     }
 
+    f_array_length_t replaces[setting->data.vocabulary.used];
+    f_array_length_t wraps[setting->data.vocabulary.used];
+
+    memset(replaces, 0, sizeof(f_array_length_t) * setting->data.vocabulary.used);
+    memset(wraps, 0, sizeof(f_array_length_t) * setting->data.vocabulary.used);
+
+    setting->map_replaces = replaces;
+    setting->map_wraps = wraps;
+
     iki_read_identify_alteration(setting);
 
     {
@@ -326,18 +340,17 @@ extern "C" {
           i = setting->data.variable.array[j].start;
         }
 
-        k = 0;
         if (setting->names.used) {
-          for (; k < setting->names.used; ++k) {
+          for (k = 0; k < setting->names.used; ++k) {
             if (fl_string_dynamic_partial_compare_string(setting->names.array[k].string, setting->buffer, setting->names.array[k].used, setting->data.vocabulary.array[j]) == F_equal_to) break;
           } // for
 
           if (k < setting->names.used) {
-            iki_read_print(main, setting, j, F_true);
+            iki_read_print(main, setting, j);
           }
         }
         else {
-          iki_read_print(main, setting, j, F_true);
+          iki_read_print(main, setting, j);
         }
 
         i = setting->data.variable.array[j].stop + 1;
