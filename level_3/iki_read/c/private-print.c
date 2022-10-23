@@ -10,10 +10,36 @@ extern "C" {
 #ifndef _di_iki_read_print_
   void iki_read_print(fll_program_data_t * const main, iki_read_setting_t * const setting, const f_array_length_t index) {
 
-    f_array_length_t at = setting->substitute.used;
+    f_array_length_t at = setting->reassign.used;
+
+    if (setting->reassign.used && (setting->flag & (iki_read_main_flag_content_e | iki_read_main_flag_literal_e))) {
+      at = iki_read_identify_substitution(setting, setting->data.vocabulary.array[index], setting->data.content.array[index], &setting->reassign);
+    }
+
+    if (at < setting->reassign.used) {
+      if (setting->flag & iki_read_main_flag_content_e) {
+        f_print_dynamic(setting->reassign.array[at].c, main->output.to);
+      }
+      else {
+        f_string_range_t range = macro_f_string_range_t_initialize(setting->data.variable.array[index].start, setting->data.content.array[index].start - 1);
+
+        f_print_dynamic_partial(setting->buffer, range, main->output.to);
+
+        f_print_dynamic(setting->reassign.array[at].c, main->output.to);
+
+        range.start = setting->data.content.array[index].stop + 1;
+        range.stop = setting->data.variable.array[index].stop;
+
+        f_print_dynamic_partial(setting->buffer, range, main->output.to);
+      }
+
+      return;
+    }
+
+    at = setting->substitute.used;
 
     if (setting->substitute.used && (setting->flag & (iki_read_main_flag_content_e | iki_read_main_flag_literal_e))) {
-      at = iki_read_identify_substitution(setting, setting->data.vocabulary.array[index], setting->data.content.array[index]);
+      at = iki_read_identify_substitution(setting, setting->data.vocabulary.array[index], setting->data.content.array[index], &setting->substitute);
     }
 
     if (at < setting->substitute.used) {

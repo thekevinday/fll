@@ -35,9 +35,9 @@ extern "C" {
 #endif // _di_iki_read_identify_alteration_
 
 /**
- * Process the arguments, associating the last matching substitution with a given vocabulary name and value (Object and Content).
+ * Process the arguments, associating the last matching reassignment or substitution with a given vocabulary name and value (Object and Content).
  *
- * This function expects appropriate sanity checks are performed on the substitutions array before calling.
+ * This function expects appropriate sanity checks are performed on the reassignments or substitutions array before calling.
  *
  * @param setting
  *   The main program settings.
@@ -45,13 +45,15 @@ extern "C" {
  *   A range within setting->buffer representing the name (Object) to match.
  * @param value
  *   A range within setting->buffer representing the value (Content) to match.
+ * @param triple
+ *   The setting, such as setting->substitute, to update.
  *
  * @return
  *   The matched substitution.
- *   The value of setting->substitute.used is returned on no match.
+ *   The value of the triple.used is returned on no match.
  */
 #ifndef _di_iki_read_identify_substitution_
-  extern f_array_length_t iki_read_identify_substitution(iki_read_setting_t * const setting, const f_string_range_t name, const f_string_range_t value) F_attribute_visibility_internal_d;
+  extern f_array_length_t iki_read_identify_substitution(iki_read_setting_t * const setting, const f_string_range_t name, const f_string_range_t value, f_string_triples_t *triple) F_attribute_visibility_internal_d;
 #endif // _di_iki_read_identify_substitution_
 
 /**

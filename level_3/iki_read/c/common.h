@@ -90,6 +90,7 @@ extern "C" {
   #define IKI_READ_short_literal_s    "L"
   #define IKI_READ_short_name_s       "n"
   #define IKI_READ_short_object_s     "o"
+  #define IKI_READ_short_reassign_s   "R"
   #define IKI_READ_short_replace_s    "r"
   #define IKI_READ_short_substitute_s "s"
   #define IKI_READ_short_total_s      "t"
@@ -102,6 +103,7 @@ extern "C" {
   #define IKI_READ_long_literal_s    "literal"
   #define IKI_READ_long_name_s       "name"
   #define IKI_READ_long_object_s     "object"
+  #define IKI_READ_long_reassign_s   "reassign"
   #define IKI_READ_long_replace_s    "replace"
   #define IKI_READ_long_substitute_s "substitute"
   #define IKI_READ_long_total_s      "total"
@@ -114,6 +116,7 @@ extern "C" {
   #define IKI_READ_short_literal_s_length    1
   #define IKI_READ_short_name_s_length       1
   #define IKI_READ_short_object_s_length     1
+  #define IKI_READ_short_reassign_s_length   1
   #define IKI_READ_short_replace_s_length    1
   #define IKI_READ_short_substitute_s_length 1
   #define IKI_READ_short_total_s_length      1
@@ -126,6 +129,7 @@ extern "C" {
   #define IKI_READ_long_literal_s_length    7
   #define IKI_READ_long_name_s_length       4
   #define IKI_READ_long_object_s_length     6
+  #define IKI_READ_long_reassign_s_length   8
   #define IKI_READ_long_replace_s_length    7
   #define IKI_READ_long_substitute_s_length 10
   #define IKI_READ_long_total_s_length      5
@@ -138,6 +142,7 @@ extern "C" {
   extern const f_string_static_t iki_read_short_literal_s;
   extern const f_string_static_t iki_read_short_name_s;
   extern const f_string_static_t iki_read_short_object_s;
+  extern const f_string_static_t iki_read_short_reassign_s;
   extern const f_string_static_t iki_read_short_replace_s;
   extern const f_string_static_t iki_read_short_substitute_s;
   extern const f_string_static_t iki_read_short_total_s;
@@ -150,6 +155,7 @@ extern "C" {
   extern const f_string_static_t iki_read_long_literal_s;
   extern const f_string_static_t iki_read_long_name_s;
   extern const f_string_static_t iki_read_long_object_s;
+  extern const f_string_static_t iki_read_long_reassign_s;
   extern const f_string_static_t iki_read_long_replace_s;
   extern const f_string_static_t iki_read_long_substitute_s;
   extern const f_string_static_t iki_read_long_total_s;
@@ -176,6 +182,7 @@ extern "C" {
     iki_read_parameter_literal_e,
     iki_read_parameter_name_e,
     iki_read_parameter_object_e,
+    iki_read_parameter_reassign_e,
     iki_read_parameter_replace_e,
     iki_read_parameter_substitute_e,
     iki_read_parameter_total_e,
@@ -204,6 +211,7 @@ extern "C" {
       macro_f_console_parameter_t_initialize2(iki_read_short_literal_s.string, iki_read_long_literal_s.string, 0, 0, f_console_type_normal_e), \
       macro_f_console_parameter_t_initialize2(iki_read_short_name_s.string, iki_read_long_name_s.string, 0, 1, f_console_type_normal_e), \
       macro_f_console_parameter_t_initialize2(iki_read_short_object_s.string, iki_read_long_object_s.string, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize2(iki_read_short_reassign_s.string, iki_read_long_reassign_s.string, 0, 3, f_console_type_normal_e), \
       macro_f_console_parameter_t_initialize2(iki_read_short_replace_s.string, iki_read_long_replace_s.string, 0, 2, f_console_type_normal_e), \
       macro_f_console_parameter_t_initialize2(iki_read_short_substitute_s.string, iki_read_long_substitute_s.string, 0, 3, f_console_type_normal_e), \
       macro_f_console_parameter_t_initialize2(iki_read_short_total_s.string, iki_read_long_total_s.string, 0, 0, f_console_type_normal_e), \
@@ -211,7 +219,7 @@ extern "C" {
       macro_f_console_parameter_t_initialize2(iki_read_short_wrap_s.string, iki_read_long_wrap_s.string, 0, 3, f_console_type_normal_e), \
     }
 
-  #define iki_read_total_parameters_d 23
+  #define iki_read_total_parameters_d 24
 #endif // _di_iki_read_parameters_
 
 #ifndef _di_iki_read_substitution_t_
@@ -246,6 +254,7 @@ extern "C" {
  *   - line:       Selecting at a specific line.
  *   - name:       Selecting using a specific Vocabulary name.
  *   - object:     Print Objects.
+ *   - replace:    Using re-assignments.
  *   - replace:    Using replacements.
  *   - substitute: Using substitutions.
  *   - total:      Enable printing of "total" count.
@@ -263,12 +272,13 @@ extern "C" {
     iki_read_main_flag_line_e       = 0x10,
     iki_read_main_flag_name_e       = 0x20,
     iki_read_main_flag_object_e     = 0x40,
-    iki_read_main_flag_replace_e    = 0x80,
-    iki_read_main_flag_substitute_e = 0x100,
-    iki_read_main_flag_total_e      = 0x200,
-    iki_read_main_flag_version_e    = 0x400,
-    iki_read_main_flag_whole_e      = 0x800,
-    iki_read_main_flag_wrap_e       = 0x1000,
+    iki_read_main_flag_reassign_e   = 0x80,
+    iki_read_main_flag_replace_e    = 0x100,
+    iki_read_main_flag_substitute_e = 0x200,
+    iki_read_main_flag_total_e      = 0x400,
+    iki_read_main_flag_version_e    = 0x800,
+    iki_read_main_flag_whole_e      = 0x1000,
+    iki_read_main_flag_wrap_e       = 0x2000,
   };
 #endif // _di_iki_read_main_flag_e_
 
@@ -293,6 +303,7 @@ extern "C" {
  * files:  An array of all files to process (except for the input pipe).
  *
  * replace:    A map containing the Vocabulary name and its replacement as the value.
+ * reassign:   A triple containing the Vocabulary name (a), Content to match (b), and the string used as the reassign (c).
  * substitute: A triple containing the Vocabulary name (a), Content to match (b), and the string used as the substitute (c).
  * wrap:       A triple containing the Vocabulary name (a), the string to prepend (b), and the string to append (c).
  *
@@ -318,6 +329,7 @@ extern "C" {
     f_string_dynamics_t files;
 
     f_string_maps_t replace;
+    f_string_triples_t reassign;
     f_string_triples_t substitute;
     f_string_triples_t wrap;
 
@@ -339,6 +351,7 @@ extern "C" {
       f_string_dynamic_t_initialize, \
       f_string_dynamics_t_initialize, \
       f_string_maps_t_initialize, \
+      f_string_triples_t_initialize, \
       f_string_triples_t_initialize, \
       f_string_triples_t_initialize, \
       0, \
@@ -402,6 +415,38 @@ extern "C" {
 #ifndef _di_iki_read_setting_load_
   extern void iki_read_setting_load(const f_console_arguments_t arguments, fll_program_data_t * const main, iki_read_setting_t * const setting);
 #endif // _di_iki_read_setting_load_
+
+/**
+ * Load the specific parameter that uses a substitution type, such as reassign or substitute.
+ *
+ * This prints error messages as appropriate.
+ *
+ * @param main
+ *   The main program data.
+ * @param setting
+ *   The main program settings.
+ *
+ *   This alters setting.status:
+ *     F_none on success.
+ *
+ *     Errors (with error bit) from: f_string_dynamic_resize().
+ *     Errors (with error bit) from: f_string_triples_resize().
+ * @param name
+ *   The name of the parameter.
+ *   This is used for printing error messages.
+ * @param triple
+ *   The setting, such as setting->substitute, to update.
+ *
+ * @return
+ *   F_true if found and processed.
+ *   F_false if not found or not processed.
+ *
+ * @see f_string_dynamic_resize()
+ * @see f_string_triples_resize()
+ */
+#ifndef _di_iki_read_setting_load_parameter_substitution_
+  extern f_status_t iki_read_setting_load_parameter_substitution(fll_program_data_t * const main, iki_read_setting_t * const setting, const f_console_parameter_t parameter, const f_string_static_t name, f_string_triples_t *triple);
+#endif // _di_iki_read_setting_load_parameter_substitution_
 
 /**
  * Perform the standard program setting unload process.

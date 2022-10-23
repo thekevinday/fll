@@ -66,20 +66,20 @@ extern "C" {
 #endif // _di_iki_read_identify_alteration_
 
 #ifndef _di_iki_read_identify_substitution_
-  f_array_length_t iki_read_identify_substitution(iki_read_setting_t * const setting, const f_string_range_t name, const f_string_range_t value) {
+  f_array_length_t iki_read_identify_substitution(iki_read_setting_t * const setting, const f_string_range_t name, const f_string_range_t value, f_string_triples_t *triple) {
 
-    register f_array_length_t i = setting->substitute.used - 1;
+    f_array_length_t i = triple->used - 1;
 
     do {
-      if (fl_string_dynamic_partial_compare_string(setting->substitute.array[i].a.string, setting->buffer, setting->substitute.array[i].a.used, name) == F_equal_to) {
-        if (fl_string_dynamic_partial_compare_string(setting->substitute.array[i].b.string, setting->buffer, setting->substitute.array[i].b.used, value) == F_equal_to) {
+      if (fl_string_dynamic_partial_compare_string(triple->array[i].a.string, setting->buffer, triple->array[i].a.used, name) == F_equal_to) {
+        if (fl_string_dynamic_partial_compare_string(triple->array[i].b.string, setting->buffer, triple->array[i].b.used, value) == F_equal_to) {
           return i;
         }
       }
 
     } while (i--);
 
-    return setting->substitute.used;
+    return triple->used;
   }
 #endif // _di_iki_read_identify_substitution_
 

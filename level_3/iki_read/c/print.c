@@ -32,6 +32,7 @@ extern "C" {
 
     f_print_dynamic_raw(f_string_eol_s, print.to);
 
+    fll_program_print_help_option(print, iki_read_short_reassign_s, iki_read_long_reassign_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "  Re-assign the variable for the given name and matching content value with the given string.");
     fll_program_print_help_option(print, iki_read_short_replace_s, iki_read_long_replace_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Simple substitution, replacing the variable for the given name with the given string.");
     fll_program_print_help_option(print, iki_read_short_substitute_s, iki_read_long_substitute_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Substitute the variable for the given name and matching content value with the given string.");
     fll_program_print_help_option(print, iki_read_short_wrap_s, iki_read_long_wrap_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "      Prepend and append strings for the given name.");
@@ -53,14 +54,15 @@ extern "C" {
 
     fl_print_format("  The vocabulary is case-sensitive and must exactly match.%r%r", print.to, f_string_eol_s, f_string_eol_s);
 
-    fl_print_format("  The %[%r%r%] option requires 3 additional parameters:", print.to, print.set->notable, f_console_symbol_long_enable_s, iki_read_long_substitute_s, print.set->notable);
+    fl_print_format("  The %[%r%r%] and the", print.to, print.set->notable, f_console_symbol_long_enable_s, iki_read_long_reassign_s, print.set->notable);
+    fl_print_format(" %[%r%r%] options require 3 additional parameters:", print.to, print.set->notable, f_console_symbol_long_enable_s, iki_read_long_substitute_s, print.set->notable);
     fl_print_format(" %[<%]%r%[>%]", print.to, print.set->notable, print.set->notable, iki_read_substitution_vocabulary_s, print.set->notable, print.set->notable);
     fl_print_format(" %[<%]%r%[>%]", print.to, print.set->notable, print.set->notable, iki_read_substitution_replace_s, print.set->notable, print.set->notable);
     fl_print_format(" %[<%]%r%[>%].%r", print.to, print.set->notable, print.set->notable, iki_read_substitution_with_s, print.set->notable, print.set->notable, f_string_eol_s);
 
-    fl_print_format("    %[%r%]: The name of the vocabulary whose content is to be substituted.%r", print.to, print.set->notable, iki_read_substitution_vocabulary_s, print.set->notable, f_string_eol_s);
-    fl_print_format("    %[%r%]: The content matching this exact string will be substituted.%r", print.to, print.set->notable, iki_read_substitution_replace_s, print.set->notable, f_string_eol_s);
-    fl_print_format("    %[%r%]: The new string to use as the substitute.%r%r", print.to, print.set->notable, iki_read_substitution_with_s, print.set->notable, f_string_eol_s, f_string_eol_s);
+    fl_print_format("    %[%r%]: The name of the vocabulary whose content is to be substituted or re-assigned.%r", print.to, print.set->notable, iki_read_substitution_vocabulary_s, print.set->notable, f_string_eol_s);
+    fl_print_format("    %[%r%]: The content matching this exact string will be substituted or re-assigned.%r", print.to, print.set->notable, iki_read_substitution_replace_s, print.set->notable, f_string_eol_s);
+    fl_print_format("    %[%r%]: The new string to use as the substitute or re-assignment.%r%r", print.to, print.set->notable, iki_read_substitution_with_s, print.set->notable, f_string_eol_s, f_string_eol_s);
 
     fl_print_format("  The vocabulary and replacement are case-sensitive and must exactly match.%r%r", print.to, f_string_eol_s, f_string_eol_s);
 
@@ -79,6 +81,10 @@ extern "C" {
     fl_print_format(" and %[%r%r%] is that the", print.to, print.set->notable, f_console_symbol_long_enable_s, iki_read_long_substitute_s, print.set->notable);
     fl_print_format(" %[%r%r%] option substitutes all matching vocabulary names and the", print.to, print.set->notable, f_console_symbol_long_enable_s, iki_read_long_replace_s, print.set->notable);
     fl_print_format(" %[%r%r%] option substitutes all matching vocabulary names that must also have the given matching content.%r%r", print.to, print.set->notable, f_console_symbol_long_enable_s, iki_read_long_substitute_s, print.set->notable, f_string_eol_s, f_string_eol_s);
+
+    fl_print_format("  The %[%r%r%]", print.to, print.set->notable, f_console_symbol_long_enable_s, iki_read_long_reassign_s, print.set->notable);
+    fl_print_format(" option is identical to the %[%r%r%] option", print.to, print.set->notable, f_console_symbol_long_enable_s, iki_read_long_substitute_s, print.set->notable);
+    fl_print_format(" except that the %[%r%r%] option is ignored (not applied).%r%r", print.to, print.set->notable, f_console_symbol_long_enable_s, iki_read_long_wrap_s, print.set->notable, f_string_eol_s, f_string_eol_s);
 
     fl_print_format("  The %[%r%r%]", print.to, print.set->notable, f_console_symbol_long_enable_s, iki_read_long_substitute_s, print.set->notable);
     fl_print_format(" option takes priority over the %[%r%r%] option when matching the same variable.%r%r", print.to, print.set->notable, f_console_symbol_long_enable_s, iki_read_long_replace_s, print.set->notable, f_string_eol_s, f_string_eol_s);
