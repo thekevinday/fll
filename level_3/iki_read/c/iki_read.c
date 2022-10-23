@@ -88,9 +88,6 @@ extern "C" {
     fl_print_format("  The %[%r%r%]", file.stream, context.set.notable, f_console_symbol_long_enable_s, iki_read_long_substitute_s, context.set.notable);
     fl_print_format(" option takes priority over the %[%r%r%] option when matching the same variable.%r%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, iki_read_long_replace_s, context.set.notable, f_string_eol_s, f_string_eol_s);
 
-    fl_print_format("  The %[%r%r%]", file.stream, context.set.notable, f_console_symbol_long_enable_s, iki_read_long_wrap_s, context.set.notable);
-    fl_print_format(" option is ignored when the %[%r%r%] option is matching the same variable.%r%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, iki_read_long_substitute_s, context.set.notable, f_string_eol_s, f_string_eol_s);
-
     fl_print_format("  The default behavior is to only display content portion of the IKI variable.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
 
     funlockfile(file.stream);

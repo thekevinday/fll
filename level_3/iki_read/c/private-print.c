@@ -30,7 +30,17 @@ extern "C" {
 
         f_print_dynamic_partial(data->buffer, range, data->main->output.to.stream);
 
+        // The wraps.replace represents the "before", which is a string to prepend.
+        if (wraps.replace.used) {
+          f_print_dynamic(wraps.replace, data->main->output.to.stream);
+        }
+
         f_print_dynamic(substitutions.array[at].with, data->main->output.to.stream);
+
+        // The wraps.replace represents the "after", which is a string to append.
+        if (wraps.with.used) {
+          f_print_dynamic(wraps.with, data->main->output.to.stream);
+        }
 
         range.start = iki_data.content.array[index].stop + 1;
         range.stop = iki_data.variable.array[index].stop;
