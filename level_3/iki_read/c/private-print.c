@@ -17,15 +17,29 @@ extern "C" {
     }
 
     if (at < setting->substitute.used) {
-      if (!(setting->flag & iki_read_main_flag_content_e)) {
-        f_print_dynamic(setting->substitute.array[at].a, main->output.to);
+      if (setting->flag & iki_read_main_flag_content_e) {
+        iki_read_print_wrap_prepend(main, setting, index);
+
+        f_print_dynamic(setting->substitute.array[at].c, main->output.to);
+
+        iki_read_print_wrap_append(main, setting, index);
       }
+      else {
+        f_string_range_t range = macro_f_string_range_t_initialize(setting->data.variable.array[index].start, setting->data.content.array[index].start - 1);
 
-      iki_read_print_wrap_prepend(main, setting, index);
+        f_print_dynamic_partial(setting->buffer, range, main->output.to);
 
-      f_print_dynamic(setting->substitute.array[at].c, main->output.to);
+        iki_read_print_wrap_prepend(main, setting, index);
 
-      iki_read_print_wrap_append(main, setting, index);
+        f_print_dynamic(setting->substitute.array[at].c, main->output.to);
+
+        iki_read_print_wrap_append(main, setting, index);
+
+        range.start = setting->data.content.array[index].stop + 1;
+        range.stop = setting->data.variable.array[index].stop;
+
+        f_print_dynamic_partial(setting->buffer, range, main->output.to);
+      }
     }
     else if (setting->replace.used && setting->map_replaces[index] < setting->replace.used) {
       if (setting->flag & iki_read_main_flag_content_e) {

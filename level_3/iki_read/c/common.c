@@ -279,7 +279,7 @@ extern "C" {
       setting->status = F_status_set_error(F_parameter);
 
       iki_read_print_line_first_locked(setting, main->error);
-      fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_short_enable_s, iki_read_long_name_s);
+      fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_enable_s, iki_read_long_name_s);
       iki_read_print_line_last_locked(setting, main->error);
 
       return;
@@ -290,7 +290,7 @@ extern "C" {
         setting->status = F_status_set_error(F_parameter);
 
         iki_read_print_line_first_locked(setting, main->error);
-        fll_program_print_error_parameter_missing_value_requires_amount(main->error, f_console_symbol_short_enable_s, iki_read_long_replace_s, iki_read_string_two_s);
+        fll_program_print_error_parameter_missing_value_requires_amount(main->error, f_console_symbol_long_enable_s, iki_read_long_replace_s, iki_read_string_two_s);
         iki_read_print_line_last_locked(setting, main->error);
 
         return;
@@ -367,7 +367,7 @@ extern "C" {
         setting->status = F_status_set_error(F_parameter);
 
         iki_read_print_line_first_locked(setting, main->error);
-        fll_program_print_error_parameter_missing_value_requires_amount(main->error, f_console_symbol_short_enable_s, iki_read_long_substitute_s, iki_read_string_three_s);
+        fll_program_print_error_parameter_missing_value_requires_amount(main->error, f_console_symbol_long_enable_s, iki_read_long_substitute_s, iki_read_string_three_s);
         iki_read_print_line_last_locked(setting, main->error);
 
         return;
@@ -456,7 +456,7 @@ extern "C" {
         setting->status = F_status_set_error(F_parameter);
 
         iki_read_print_line_first_locked(setting, main->error);
-        fll_program_print_error_parameter_missing_value_requires_amount(main->error, f_console_symbol_short_enable_s, iki_read_long_wrap_s, iki_read_string_three_s);
+        fll_program_print_error_parameter_missing_value_requires_amount(main->error, f_console_symbol_long_enable_s, iki_read_long_wrap_s, iki_read_string_three_s);
         iki_read_print_line_last_locked(setting, main->error);
 
         return;
