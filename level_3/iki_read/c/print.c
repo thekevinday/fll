@@ -83,9 +83,6 @@ extern "C" {
     fl_print_format("  The %[%r%r%]", print.to, print.set->notable, f_console_symbol_long_enable_s, iki_read_long_substitute_s, print.set->notable);
     fl_print_format(" option takes priority over the %[%r%r%] option when matching the same variable.%r%r", print.to, print.set->notable, f_console_symbol_long_enable_s, iki_read_long_replace_s, print.set->notable, f_string_eol_s, f_string_eol_s);
 
-    fl_print_format("  The %[%r%r%]", print.to, print.set->notable, f_console_symbol_long_enable_s, iki_read_long_wrap_s, print.set->notable);
-    fl_print_format(" option is ignored when the %[%r%r%] option is matching the same variable.%r%r", print.to, print.set->notable, f_console_symbol_long_enable_s, iki_read_long_substitute_s, print.set->notable, f_string_eol_s, f_string_eol_s);
-
     fl_print_format("  The default behavior is to only display content portion of the IKI variable.%r", print.to, f_string_eol_s);
 
     f_print_dynamic_raw(setting->line_last, print.to);
