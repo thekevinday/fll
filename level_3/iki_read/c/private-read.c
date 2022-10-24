@@ -123,10 +123,12 @@ extern "C" {
 
     iki_read_substitution_t replacements[iki_data->variable.used];
     iki_read_substitution_t wraps[iki_data->variable.used];
+    iki_read_substitutions_t reassignments[iki_data->variable.used];
     iki_read_substitutions_t substitutionss[iki_data->variable.used];
 
     memset(replacements, 0, sizeof(iki_read_substitution_t) * iki_data->variable.used);
     memset(wraps, 0, sizeof(iki_read_substitution_t) * iki_data->variable.used);
+    memset(reassignments, 0, sizeof(iki_read_substitutions_t) * iki_data->variable.used);
     memset(substitutionss, 0, sizeof(iki_read_substitutions_t) * iki_data->variable.used);
 
     if (data->mode == iki_read_mode_literal_e || data->mode == iki_read_mode_content_e) {
@@ -146,12 +148,22 @@ extern "C" {
         return status;
       }
 
-      status = iki_read_substitutions_identify(data, &iki_data->vocabulary, substitutionss);
+      status = iki_read_substitutions_identify(data, &data->main->parameters.array[iki_read_parameter_reassign_e], &iki_data->vocabulary, reassignments);
+
+      if (F_status_is_error_not(status)) {
+        status = iki_read_substitutions_identify(data, &data->main->parameters.array[iki_read_parameter_substitute_e], &iki_data->vocabulary, substitutionss);
+      }
 
       if (F_status_is_error(status)) {
         fll_error_print(data->main->error, F_status_set_fine(status), "iki_read_substitutions_identify", F_true);
 
-        for (f_array_length_t i = 0; i < iki_data->variable.used; ++i) {
+        f_array_length_t i = 0;
+
+        for (; i < iki_data->variable.used; ++i) {
+          macro_iki_read_substitutions_t_delete_simple(reassignments[i]);
+        } // for
+
+        for (i = 0; i < iki_data->variable.used; ++i) {
           macro_iki_read_substitutions_t_delete_simple(substitutionss[i]);
         } // for
 
@@ -178,11 +190,18 @@ extern "C" {
         if (F_status_is_error(status)) {
           fll_error_print(data->main->error, F_status_set_fine(status), "f_string_dynamic_append_nulless", F_true);
 
-          for (f_array_length_t i = 0; i < iki_data->variable.used; ++i) {
+          f_array_length_t i = 0;
+
+          for (; i < iki_data->variable.used; ++i) {
+            macro_iki_read_substitutions_t_delete_simple(reassignments[i]);
+          } // for
+
+          for (i = 0; i < iki_data->variable.used; ++i) {
             macro_iki_read_substitutions_t_delete_simple(substitutionss[i]);
           } // for
 
           f_string_dynamic_resize(0, &name);
+
           return status;
         }
 
@@ -201,8 +220,8 @@ extern "C" {
               if (matches++ != data->at) continue;
             }
 
-            if (replacements[j].replace.used || wraps[j].replace.used || wraps[j].with.used || substitutionss[j].used) {
-              iki_read_substitutions_print(data, *iki_data, *ranges, replacements[j], wraps[j], substitutionss[j], j, content_only);
+            if (replacements[j].replace.used || wraps[j].replace.used || wraps[j].with.used || substitutionss[j].used || reassignments[j].used) {
+              iki_read_substitutions_print(data, *iki_data, *ranges, replacements[j], wraps[j], substitutionss[j], reassignments[j], j, content_only);
             }
             else {
               f_print_dynamic_partial(data->buffer, ranges->array[j], data->main->output.to.stream);
@@ -229,8 +248,8 @@ extern "C" {
         if (data->at < ranges->used) {
           flockfile(data->main->output.to.stream);
 
-          if (replacements[data->at].replace.used || wraps[data->at].replace.used || wraps[data->at].with.used || substitutionss[data->at].used) {
-            iki_read_substitutions_print(data, *iki_data, *ranges, replacements[data->at], wraps[data->at], substitutionss[data->at], data->at, content_only);
+          if (replacements[data->at].replace.used || wraps[data->at].replace.used || wraps[data->at].with.used || substitutionss[data->at].used || reassignments[data->at].used) {
+            iki_read_substitutions_print(data, *iki_data, *ranges, replacements[data->at], wraps[data->at], substitutionss[data->at], reassignments[data->at], data->at, content_only);
           }
           else {
             f_print_dynamic_partial(data->buffer, ranges->array[data->at], data->main->output.to.stream);
@@ -251,8 +270,8 @@ extern "C" {
 
         for (f_array_length_t i = 0; i < ranges->used; ++i) {
 
-          if (replacements[i].replace.used || wraps[i].replace.used || wraps[i].with.used || substitutionss[i].used) {
-            iki_read_substitutions_print(data, *iki_data, *ranges, replacements[i], wraps[i], substitutionss[i], i, content_only);
+          if (replacements[i].replace.used || wraps[i].replace.used || wraps[i].with.used || substitutionss[i].used || reassignments[i].used) {
+            iki_read_substitutions_print(data, *iki_data, *ranges, replacements[i], wraps[i], substitutionss[i], reassignments[i], i, content_only);
           }
           else {
             f_print_dynamic_partial(data->buffer, ranges->array[i], data->main->output.to.stream);
@@ -270,7 +289,13 @@ extern "C" {
       status = F_data_not;
     }
 
-    for (f_array_length_t i = 0; i < iki_data->variable.used; ++i) {
+    f_array_length_t i = 0;
+
+    for (; i < iki_data->variable.used; ++i) {
+      macro_iki_read_substitutions_t_delete_simple(reassignments[i]);
+    } // for
+
+    for (i = 0; i < iki_data->variable.used; ++i) {
       macro_iki_read_substitutions_t_delete_simple(substitutionss[i]);
     } // for
 
@@ -310,10 +335,12 @@ extern "C" {
 
     iki_read_substitution_t replacements[iki_data->variable.used];
     iki_read_substitution_t wraps[iki_data->variable.used];
+    iki_read_substitutions_t reassignments[iki_data->variable.used];
     iki_read_substitutions_t substitutionss[iki_data->variable.used];
 
     memset(replacements, 0, sizeof(iki_read_substitution_t) * iki_data->variable.used);
     memset(wraps, 0, sizeof(iki_read_substitution_t) * iki_data->variable.used);
+    memset(reassignments, 0, sizeof(iki_read_substitutions_t) * iki_data->variable.used);
     memset(substitutionss, 0, sizeof(iki_read_substitutions_t) * iki_data->variable.used);
 
     if (data->mode == iki_read_mode_literal_e || data->mode == iki_read_mode_content_e) {
@@ -333,12 +360,22 @@ extern "C" {
         return status;
       }
 
-      status = iki_read_substitutions_identify(data, &iki_data->vocabulary, substitutionss);
+      status = iki_read_substitutions_identify(data, &data->main->parameters.array[iki_read_parameter_reassign_e], &iki_data->vocabulary, reassignments);
+
+      if (F_status_is_error_not(status)) {
+        status = iki_read_substitutions_identify(data, &data->main->parameters.array[iki_read_parameter_substitute_e], &iki_data->vocabulary, substitutionss);
+      }
 
       if (F_status_is_error(status)) {
         fll_error_print(data->main->error, F_status_set_fine(status), "iki_read_substitutions_identify", F_true);
 
-        for (f_array_length_t i = 0; i < iki_data->variable.used; ++i) {
+        f_array_length_t i = 0;
+
+        for (; i < iki_data->variable.used; ++i) {
+          macro_iki_read_substitutions_t_delete_simple(reassignments[i]);
+        } // for
+
+        for (i = 0; i < iki_data->variable.used; ++i) {
           macro_iki_read_substitutions_t_delete_simple(substitutionss[i]);
         } // for
 
@@ -390,6 +427,10 @@ extern "C" {
       } // for
 
       if (F_status_is_error(status)) {
+        for (; i < iki_data->variable.used; ++i) {
+          macro_iki_read_substitutions_t_delete_simple(reassignments[i]);
+        } // for
+
         for (i = 0; i < iki_data->variable.used; ++i) {
           macro_iki_read_substitutions_t_delete_simple(substitutionss[i]);
         } // for
@@ -435,21 +476,22 @@ extern "C" {
 
             if (status == F_equal_to) {
               name_missed = F_false;
+
               break;
             }
           } // for
 
           if (name_missed) {
-            if (replacements[j].replace.used || wraps[j].replace.used || wraps[j].with.used || substitutionss[j].used) {
-              iki_read_substitutions_print(data, *iki_data, iki_data->variable, replacements[j], wraps[j], substitutionss[j], j, F_false);
+            if (replacements[j].replace.used || wraps[j].replace.used || wraps[j].with.used || substitutionss[j].used || reassignments[j].used) {
+              iki_read_substitutions_print(data, *iki_data, iki_data->variable, replacements[j], wraps[j], substitutionss[j], reassignments[j], j, F_false);
             }
             else {
               f_print_dynamic_partial(data->buffer, iki_data->variable.array[j], data->main->output.to.stream);
             }
           }
           else {
-            if (replacements[j].replace.used || wraps[j].replace.used || wraps[j].with.used || substitutionss[j].used) {
-              iki_read_substitutions_print(data, *iki_data, *ranges, replacements[j], wraps[j], substitutionss[j], j, content_only);
+            if (replacements[j].replace.used || wraps[j].replace.used || wraps[j].with.used || substitutionss[j].used || reassignments[j].used) {
+              iki_read_substitutions_print(data, *iki_data, *ranges, replacements[j], wraps[j], substitutionss[j], reassignments[j], j, content_only);
             }
             else {
               f_print_dynamic_partial(data->buffer, ranges->array[j], data->main->output.to.stream);
@@ -457,8 +499,8 @@ extern "C" {
           }
         }
         else {
-          if (replacements[j].replace.used || wraps[j].replace.used || wraps[j].with.used || substitutionss[j].used) {
-            iki_read_substitutions_print(data, *iki_data, *ranges, replacements[j], wraps[j], substitutionss[j], j, content_only);
+          if (replacements[j].replace.used || wraps[j].replace.used || wraps[j].with.used || substitutionss[j].used || reassignments[j].used) {
+            iki_read_substitutions_print(data, *iki_data, *ranges, replacements[j], wraps[j], substitutionss[j], reassignments[j], j, content_only);
           }
           else {
             f_print_dynamic_partial(data->buffer, ranges->array[j], data->main->output.to.stream);
@@ -477,7 +519,13 @@ extern "C" {
       funlockfile(data->main->output.to.stream);
     }
 
-    for (f_array_length_t i = 0; i < iki_data->variable.used; ++i) {
+    f_array_length_t i = 0;
+
+    for (; i < iki_data->variable.used; ++i) {
+      macro_iki_read_substitutions_t_delete_simple(reassignments[i]);
+    } // for
+
+    for (i = 0; i < iki_data->variable.used; ++i) {
       macro_iki_read_substitutions_t_delete_simple(substitutionss[i]);
     } // for
 
@@ -629,11 +677,9 @@ extern "C" {
 #endif // _di_iki_read_replacements_identify_
 
 #ifndef _di_iki_read_substitutions_identify_
-  f_status_t iki_read_substitutions_identify(iki_read_data_t * const data, f_iki_vocabulary_t *vocabulary, iki_read_substitutions_t *substitutionss) {
+  f_status_t iki_read_substitutions_identify(iki_read_data_t * const data, f_console_parameter_t * const parameter, f_iki_vocabulary_t *vocabulary, iki_read_substitutions_t *substitutionss) {
 
-    if (data->main->parameters.array[iki_read_parameter_substitute_e].result != f_console_result_additional_e) {
-      return F_none;
-    }
+    if (parameter->result != f_console_result_additional_e) return F_none;
 
     f_status_t status = F_none;
 
@@ -642,8 +688,6 @@ extern "C" {
 
     f_array_length_t index = 0;
     f_array_length_t index2 = 0;
-
-    f_console_parameter_t *parameter = &data->main->parameters.array[iki_read_parameter_substitute_e];
 
     for (; i < parameter->values.used; i += 3) {
 

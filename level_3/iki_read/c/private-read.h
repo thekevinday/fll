@@ -146,6 +146,8 @@ extern "C" {
  *
  * @param data
  *   The program data.
+ * @param parameter
+ *   The parameter data for the parameter being processed.
  * @param vocabulary
  *   The ranges representing a vocabulary.
  * @param substitutionss
@@ -157,7 +159,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_iki_read_substitutions_identify_
-  extern f_status_t iki_read_substitutions_identify(iki_read_data_t * const data, f_iki_vocabulary_t *vocabulary, iki_read_substitutions_t *substitutionss) F_attribute_visibility_internal_d;
+  extern f_status_t iki_read_substitutions_identify(iki_read_data_t * const data, f_console_parameter_t * const parameter, f_iki_vocabulary_t *vocabulary, iki_read_substitutions_t *substitutionss) F_attribute_visibility_internal_d;
 #endif // _di_iki_read_substitutions_identify_
 
 /**

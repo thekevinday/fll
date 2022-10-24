@@ -83,6 +83,7 @@ extern "C" {
   #define IKI_READ_short_literal_s    "L"
   #define IKI_READ_short_name_s       "n"
   #define IKI_READ_short_object_s     "o"
+  #define IKI_READ_short_reassign_s   "R"
   #define IKI_READ_short_replace_s    "r"
   #define IKI_READ_short_substitute_s "s"
   #define IKI_READ_short_total_s      "t"
@@ -95,6 +96,7 @@ extern "C" {
   #define IKI_READ_long_literal_s    "literal"
   #define IKI_READ_long_name_s       "name"
   #define IKI_READ_long_object_s     "object"
+  #define IKI_READ_long_reassign_s   "reassign"
   #define IKI_READ_long_replace_s    "replace"
   #define IKI_READ_long_substitute_s "substitute"
   #define IKI_READ_long_total_s      "total"
@@ -107,6 +109,7 @@ extern "C" {
   #define IKI_READ_short_literal_s_length    1
   #define IKI_READ_short_name_s_length       1
   #define IKI_READ_short_object_s_length     1
+  #define IKI_READ_short_reassign_s_length   1
   #define IKI_READ_short_replace_s_length    1
   #define IKI_READ_short_substitute_s_length 1
   #define IKI_READ_short_total_s_length      1
@@ -119,6 +122,7 @@ extern "C" {
   #define IKI_READ_long_literal_s_length    7
   #define IKI_READ_long_name_s_length       4
   #define IKI_READ_long_object_s_length     6
+  #define IKI_READ_long_reassign_s_length   8
   #define IKI_READ_long_replace_s_length    7
   #define IKI_READ_long_substitute_s_length 10
   #define IKI_READ_long_total_s_length      5
@@ -131,6 +135,7 @@ extern "C" {
   extern const f_string_static_t iki_read_short_literal_s;
   extern const f_string_static_t iki_read_short_name_s;
   extern const f_string_static_t iki_read_short_object_s;
+  extern const f_string_static_t iki_read_short_reassign_s;
   extern const f_string_static_t iki_read_short_replace_s;
   extern const f_string_static_t iki_read_short_substitute_s;
   extern const f_string_static_t iki_read_short_total_s;
@@ -143,6 +148,7 @@ extern "C" {
   extern const f_string_static_t iki_read_long_literal_s;
   extern const f_string_static_t iki_read_long_name_s;
   extern const f_string_static_t iki_read_long_object_s;
+  extern const f_string_static_t iki_read_long_reassign_s;
   extern const f_string_static_t iki_read_long_replace_s;
   extern const f_string_static_t iki_read_long_substitute_s;
   extern const f_string_static_t iki_read_long_total_s;
@@ -167,6 +173,7 @@ extern "C" {
     iki_read_parameter_literal_e,
     iki_read_parameter_name_e,
     iki_read_parameter_object_e,
+    iki_read_parameter_reassign_e,
     iki_read_parameter_replace_e,
     iki_read_parameter_substitute_e,
     iki_read_parameter_total_e,
@@ -192,6 +199,7 @@ extern "C" {
       macro_f_console_parameter_t_initialize(iki_read_short_literal_s.string, iki_read_long_literal_s.string, 0, 0, f_console_type_normal_e), \
       macro_f_console_parameter_t_initialize(iki_read_short_name_s.string, iki_read_long_name_s.string, 0, 1, f_console_type_normal_e), \
       macro_f_console_parameter_t_initialize(iki_read_short_object_s.string, iki_read_long_object_s.string, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(iki_read_short_reassign_s.string, iki_read_long_reassign_s.string, 0, 3, f_console_type_normal_e), \
       macro_f_console_parameter_t_initialize(iki_read_short_replace_s.string, iki_read_long_replace_s.string, 0, 2, f_console_type_normal_e), \
       macro_f_console_parameter_t_initialize(iki_read_short_substitute_s.string, iki_read_long_substitute_s.string, 0, 3, f_console_type_normal_e), \
       macro_f_console_parameter_t_initialize(iki_read_short_total_s.string, iki_read_long_total_s.string, 0, 0, f_console_type_normal_e), \
@@ -199,7 +207,7 @@ extern "C" {
       macro_f_console_parameter_t_initialize(iki_read_short_wrap_s.string, iki_read_long_wrap_s.string, 0, 3, f_console_type_normal_e), \
     }
 
-  #define iki_read_total_parameters_d 21
+  #define iki_read_total_parameters_d 22
 #endif // _di_iki_read_parameters_
 
 #ifndef _di_iki_read_substitution_t_

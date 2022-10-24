@@ -28,6 +28,8 @@ extern "C" {
  *   This is only performed when substitutions has no match for the given range at the given index.
  * @param substitutions
  *   The substitutions associated with the variable for the given range at the given index to use for potential printing.
+ * @param reassignments
+ *   The reassignments associated with the variable for the given range at the given index to use for potential printing.
  * @param index
  *   The index used to identify the desired range in variable, content, and ranges.
  * @param content_only
@@ -35,7 +37,7 @@ extern "C" {
  *   Set to FALSE to print the entire variable when printing substituted text.
  */
 #ifndef _di_iki_read_substitutions_print_
-  extern void iki_read_substitutions_print(iki_read_data_t * const data, const f_iki_data_t iki_data, const f_string_ranges_t ranges, const iki_read_substitution_t replacement, const iki_read_substitution_t wraps, const iki_read_substitutions_t substitutions, const f_array_length_t index, const bool content_only) F_attribute_visibility_internal_d;
+  extern void iki_read_substitutions_print(iki_read_data_t * const data, const f_iki_data_t iki_data, const f_string_ranges_t ranges, const iki_read_substitution_t replacement, const iki_read_substitution_t wraps, const iki_read_substitutions_t substitutions, const iki_read_substitutions_t reassignments, const f_array_length_t index, const bool content_only) F_attribute_visibility_internal_d;
 #endif // _di_iki_read_substitutions_print_
 
 #ifdef __cplusplus
