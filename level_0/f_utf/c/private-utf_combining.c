@@ -336,8 +336,8 @@ extern "C" {
           return F_true;
         }
 
-        // Kannada: U+0CE2, U+0CE3.
-        if (sequence == 0xe0b3a200 || sequence == 0xe0b3a300) {
+        // Kannada: U+0CE2, U+0CE3, U+0CF3.
+        if (sequence == 0xe0b3a200 || sequence == 0xe0b3a300 || sequence == 0xe0b3b300) {
           return F_true;
         }
 
@@ -396,8 +396,8 @@ extern "C" {
           return F_true;
         }
 
-        // Lao: U+0EBB, U+0EBC.
-        if (sequence == 0xe0babb00 || sequence == 0xe0babc00) {
+        // Lao: U+0EBB, U+0EBC, U+0ECE.
+        if (sequence == 0xe0babb00 || sequence == 0xe0babc00 || sequence == 0xe0bb8e00) {
           return F_true;
         }
 
@@ -930,6 +930,11 @@ extern "C" {
       return F_true;
     }
 
+    // Arabic Extended-C: U+10EFD to U+10EFF.
+    if (sequence >= 0xf090bbbd && sequence <= 0xf090bbbf) {
+      return F_true;
+    }
+
     // Brahmi: U+11001.
     if (sequence == 0xf0918081) {
       return F_true;
@@ -992,6 +997,21 @@ extern "C" {
 
     // Sharada: U+111CA to U+111CC.
     if (sequence >= 0xf091878a && sequence <= 0xf091878c) {
+      return F_true;
+    }
+
+    // Kawi: U+11F00 to U+11F03.
+    if (sequence >= 0xf091bc80 && sequence <= 0xf091bc83) {
+      return F_true;
+    }
+
+    // Kawi: U+11F34 to U+11F3A.
+    if (sequence >= 0xf091bcb4 && sequence <= 0xf091bcba) {
+      return F_true;
+    }
+
+    // Kawi: U+11F3E to U+11F42.
+    if (sequence >= 0xf091bcbe && sequence <= 0xf091bd82) {
       return F_true;
     }
 
@@ -1167,6 +1187,16 @@ extern "C" {
 
     // Sutton SignWriting: U+1DAA1 to U+1DAAF.
     if (sequence >= 0xf09daaa1 && sequence <= 0xf09daaaf) {
+      return F_true;
+    }
+
+    // Cyrillic Extended-D: U+1E08F.
+    if (sequence == 0xf09e828f) {
+      return F_true;
+    }
+
+    // Nag Mundari: U+1E4EC to U+1E4EF.
+    if (sequence >= 0xf09e93ac && sequence <= 0xf09e93af) {
       return F_true;
     }
 

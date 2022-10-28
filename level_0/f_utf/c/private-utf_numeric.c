@@ -569,6 +569,11 @@ extern "C" {
           return F_true;
         }
 
+        // Kawi: U+11F50 to U+11F59.
+        if (sequence >= 0xf091bd90 && sequence <= 0xf091bd99) {
+          return F_true;
+        }
+
         // Tamil Supplement: U+11FC0 to U+11FD4.
         if (sequence >= 0xf091bf80 && sequence <= 0xf091bf94) {
           return F_true;
@@ -609,6 +614,11 @@ extern "C" {
         }
       }
       else if (macro_f_utf_char_t_to_char_2(sequence) == 0x9d) {
+
+        // Kaktovik Numerals: U+1D2C0 to U+1D2D3.
+        if (sequence >= 0xf09d8b80 && sequence <= 0xf09d8b93) {
+          return F_true;
+        }
 
         // Mayan Numerals: U+1D2E0 to U+1D2F3.
         if (sequence >= 0xf09d8ba0 && sequence <= 0xf09d8bb3) {
@@ -654,6 +664,11 @@ extern "C" {
 
         // Wancho: U+1E2F0 to U+1E2F9.
         if (sequence >= 0xf09e8bb0 && sequence <= 0xf09e8bb9) {
+          return F_true;
+        }
+
+        // Nag Mundari: U+1E4F0 to U+1E4F9.
+        if (sequence >= 0xf09e93b0 && sequence <= 0xf09e93b9) {
           return F_true;
         }
 

@@ -775,6 +775,11 @@ extern "C" {
           return F_true;
         }
 
+        // Kawi: U+11F43 to U+11F4F.
+        if (sequence >= 0xf091bd83 && sequence <= 0xf091bd8f) {
+          return F_true;
+        }
+
         // Tamil Supplement: U+11FFF.
         if (sequence == 0xf091bfbf) {
           return F_true;

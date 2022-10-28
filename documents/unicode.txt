@@ -1,0 +1,10 @@
+# fss-0002
+#
+# license: cc-by-sa-4.0
+#
+
+Unicode:
+  This project attempts to support Unicode 15.0.
+
+  Given the scale of Unicode in conjunction with the knowledege and availability of the developers behind this project this is goal is likely not met.
+  The intent is to reach compatibility, therefore fixes, improvements, and corrections will continue to be made as they are discovered and time is available.

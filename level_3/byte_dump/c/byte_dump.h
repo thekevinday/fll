@@ -5,7 +5,7 @@
  * API Version: 0.7
  * Licenses: lgpl-2.1-or-later
  *
- * This is intendend to support Unicode 14.0.
+ * This is intended to support Unicode 15.0.
  *
  * When using "text" mode, this program attempts to translate UTF-8 sequences such that certain codes don't cause printing problems.
  * There may be cases where there are unknown codes that get printed and the invalid UTF-8 marker may be displayed not by this program but instead by the shell or some other program.
