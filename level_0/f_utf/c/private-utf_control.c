@@ -97,8 +97,8 @@ extern "C" {
       return F_true;
     }
 
-    // Egyptian Hieroglyphics: U+13430 to U+13438.
-    if (sequence >= 0xf09390b0 && sequence <= 0xf09390b8) {
+    // Egyptian Hieroglyph Format Controls: U+13430 to U+13455.
+    if (sequence >= 0xf09390b0 && sequence <= 0xf0939195) {
       return F_true;
     }
 
@@ -219,8 +219,8 @@ extern "C" {
       return F_true;
     }
 
-    // Egyptian Hieroglyphics: U+13430 to U+13438.
-    if (sequence >= 0xf09390b0 && sequence <= 0xf09390b8) {
+    // Egyptian Hieroglyph Format Controls: U+13430 to U+13455.
+    if (sequence >= 0xf09390b0 && sequence <= 0xf0939195) {
       return F_true;
     }
 

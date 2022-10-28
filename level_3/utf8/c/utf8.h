@@ -5,7 +5,7 @@
  * API Version: 0.6
  * Licenses: lgpl-2.1-or-later
  *
- * This is intendend to support Unicode 14.0.
+ * This is intended to support Unicode 15.0.
  *
  * This is a program for handling basic UTF-8 related conversions.
  *   - Convert from UTF-8 character to bytesequence.

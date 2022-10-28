@@ -49,6 +49,57 @@ static inline f_status_t private_inline_f_utf_character_handle_digit(const f_utf
 /**
  * Inline helper function to reduce amount of code typed.
  *
+ * Given the value, this will conditionally convert the range into an appropriate base-10 integer.
+ *
+ * This does not handle non-decimal values (non-base-10).
+ *
+ * This applies an offset with the intent of being used for producing values greater than 9 (such as 10 through 19).
+ *
+ * @param sequence
+ *   The character sequence to process.
+ * @param start
+ *   An inclusive start range.
+ *   The base-10 stop range calculated from this.
+ * @param offset
+ *   An offset needed to add to the calculated base-10 value.
+ *   If value is 9 and offset is 10 then the a value of 19 is returned.
+ * @param value
+ *   The value to update, if non-NULL.
+ *
+ * @return
+ *   F_true for valid digit in the requested range.
+ *   F_false, otherwise.
+ */
+static inline f_status_t private_inline_f_utf_character_handle_digit_offset(const f_utf_char_t sequence, const f_utf_char_t start, const uint8_t offset, uint64_t * const value) {
+
+  if (value) {
+    f_char_t ascii = 0x30;
+
+    if (macro_f_utf_char_t_width(sequence) == 2) {
+      ascii += (f_char_t) macro_f_utf_char_t_to_char_2(sequence - start);
+    }
+    else if (macro_f_utf_char_t_width(sequence) == 3) {
+      ascii += (f_char_t) macro_f_utf_char_t_to_char_3(sequence - start);
+    }
+    else if (macro_f_utf_char_t_width(sequence) == 4) {
+      ascii += (f_char_t) macro_f_utf_char_t_to_char_4(sequence - start);
+    }
+
+    if (private_f_utf_character_is_digit_for_ascii(ascii, value) == F_true) {
+      *value += offset;
+
+      return F_true;
+    }
+
+    return F_false;
+  }
+
+  return F_true;
+}
+
+/**
+ * Inline helper function to reduce amount of code typed.
+ *
  * Given the value, this will conditionally convert the range into an appropriate base-10 integer from 1 to 9.
  *
  * This does not handle non-decimal values (non-base-10).
@@ -769,94 +820,9 @@ static inline f_status_t private_inline_f_utf_character_handle_digit_from_four(c
             return private_inline_f_utf_character_handle_digit_from_one(sequence, 0xe291a000, value);
           }
 
-          // Enclosed Alphanumerics: U+2469.
-          if (sequence == 0xe291a900) {
-            if (value) {
-              *value = 10;
-            }
-
-            return F_true;
-          }
-
-          // Enclosed Alphanumerics: U+246A.
-          if (sequence == 0xe291aa00) {
-            if (value) {
-              *value = 11;
-            }
-
-            return F_true;
-          }
-
-          // Enclosed Alphanumerics: U+246B.
-          if (sequence == 0xe291ab00) {
-            if (value) {
-              *value = 12;
-            }
-
-            return F_true;
-          }
-
-          // Enclosed Alphanumerics: U+246C.
-          if (sequence == 0xe291ac00) {
-            if (value) {
-              *value = 13;
-            }
-
-            return F_true;
-          }
-
-          // Enclosed Alphanumerics: U+246D.
-          if (sequence == 0xe291ad00) {
-            if (value) {
-              *value = 14;
-            }
-
-            return F_true;
-          }
-
-          // Enclosed Alphanumerics: U+246E.
-          if (sequence == 0xe291ae00) {
-            if (value) {
-              *value = 15;
-            }
-
-            return F_true;
-          }
-
-          // Enclosed Alphanumerics: U+246F.
-          if (sequence == 0xe291af00) {
-            if (value) {
-              *value = 16;
-            }
-
-            return F_true;
-          }
-
-          // Enclosed Alphanumerics: U+2470.
-          if (sequence == 0xe291b000) {
-            if (value) {
-              *value = 17;
-            }
-
-            return F_true;
-          }
-
-          // Enclosed Alphanumerics: U+2471.
-          if (sequence == 0xe291b100) {
-            if (value) {
-              *value = 18;
-            }
-
-            return F_true;
-          }
-
-          // Enclosed Alphanumerics: U+2472.
-          if (sequence == 0xe291b200) {
-            if (value) {
-              *value = 19;
-            }
-
-            return F_true;
+          // Enclosed Alphanumerics: U+2469 to U+2472.
+          if (sequence <= 0xe291b200) {
+            return private_inline_f_utf_character_handle_digit_offset(sequence, 0xe291a900, 10, value);
           }
 
           // Enclosed Alphanumerics: U+2473.
@@ -873,91 +839,20 @@ static inline f_status_t private_inline_f_utf_character_handle_digit_from_four(c
             return private_inline_f_utf_character_handle_digit_from_one(sequence, 0xe291b400, value);
           }
 
-          // Enclosed Alphanumerics: U+247D.
-          if (sequence == 0xe291bd00) {
-            if (value) {
-              *value = 10;
-            }
-
-            return F_true;
+          // Enclosed Alphanumerics: U+247D to U+247F.
+          if (sequence <= 0xe291bf00) {
+            return private_inline_f_utf_character_handle_digit_offset(sequence, 0xe291bd00, 10, value);
           }
 
-          // Enclosed Alphanumerics: U+247E.
-          if (sequence == 0xe291be00) {
-            if (value) {
-              *value = 11;
-            }
-
-            return F_true;
+          // Enclosed Alphanumerics: U+2480 to U+2486.
+          if (sequence <= 0xe2928600) {
+            return private_inline_f_utf_character_handle_digit_offset(sequence, 0xe2928000, 13, value);
           }
 
-          // Enclosed Alphanumerics: U+247F.
-          if (sequence == 0xe291bf00) {
+          // Enclosed Alphanumerics: U+2487.
+          if (sequence == 0xe2928700) {
             if (value) {
-              *value = 12;
-            }
-
-            return F_true;
-          }
-
-          // Enclosed Alphanumerics: U+2480.
-          if (sequence == 0xe2928000) {
-            if (value) {
-              *value = 13;
-            }
-
-            return F_true;
-          }
-
-          // Enclosed Alphanumerics: U+2481.
-          if (sequence == 0xe2928100) {
-            if (value) {
-              *value = 14;
-            }
-
-            return F_true;
-          }
-
-          // Enclosed Alphanumerics: U+2482.
-          if (sequence == 0xe2928200) {
-            if (value) {
-              *value = 15;
-            }
-
-            return F_true;
-          }
-
-          // Enclosed Alphanumerics: U+2483.
-          if (sequence == 0xe2928300) {
-            if (value) {
-              *value = 16;
-            }
-
-            return F_true;
-          }
-
-          // Enclosed Alphanumerics: U+2484.
-          if (sequence == 0xe2928400) {
-            if (value) {
-              *value = 17;
-            }
-
-            return F_true;
-          }
-
-          // Enclosed Alphanumerics: U+2485.
-          if (sequence == 0xe2928500) {
-            if (value) {
-              *value = 18;
-            }
-
-            return F_true;
-          }
-
-          // Enclosed Alphanumerics: U+2486.
-          if (sequence == 0xe2928600) {
-            if (value) {
-              *value = 19;
+              *value = 20;
             }
 
             return F_true;
@@ -977,94 +872,9 @@ static inline f_status_t private_inline_f_utf_character_handle_digit_from_four(c
             return private_inline_f_utf_character_handle_digit_from_one(sequence, 0xe2928800, value);
           }
 
-          // Enclosed Alphanumerics: U+2491.
-          if (sequence == 0xe2929100) {
-            if (value) {
-              *value = 10;
-            }
-
-            return F_true;
-          }
-
-          // Enclosed Alphanumerics: U+2492.
-          if (sequence == 0xe2929200) {
-            if (value) {
-              *value = 11;
-            }
-
-            return F_true;
-          }
-
-          // Enclosed Alphanumerics: U+2493.
-          if (sequence == 0xe2929300) {
-            if (value) {
-              *value = 12;
-            }
-
-            return F_true;
-          }
-
-          // Enclosed Alphanumerics: U+2494.
-          if (sequence == 0xe2929400) {
-            if (value) {
-              *value = 13;
-            }
-
-            return F_true;
-          }
-
-          // Enclosed Alphanumerics: U+2495.
-          if (sequence == 0xe2929500) {
-            if (value) {
-              *value = 14;
-            }
-
-            return F_true;
-          }
-
-          // Enclosed Alphanumerics: U+2496.
-          if (sequence == 0xe2929600) {
-            if (value) {
-              *value = 15;
-            }
-
-            return F_true;
-          }
-
-          // Enclosed Alphanumerics: U+2497.
-          if (sequence == 0xe2929700) {
-            if (value) {
-              *value = 16;
-            }
-
-            return F_true;
-          }
-
-          // Enclosed Alphanumerics: U+2498.
-          if (sequence == 0xe2929800) {
-            if (value) {
-              *value = 17;
-            }
-
-            return F_true;
-          }
-
-          // Enclosed Alphanumerics: U+2499.
-          if (sequence == 0xe2929900) {
-            if (value) {
-              *value = 18;
-            }
-
-            return F_true;
-          }
-
-          // Enclosed Alphanumerics: U+249A.
-          if (sequence == 0xe2929a00) {
-            if (value) {
-              *value = 19;
-            }
-
-            return F_true;
+          // Enclosed Alphanumerics: U+2491 to U+249A.
+          if (sequence <= 0xe2929a00) {
+            return private_inline_f_utf_character_handle_digit_offset(sequence, 0xe2929100, 10, value);
           }
 
           // Enclosed Alphanumerics: U+249B.
@@ -1087,85 +897,9 @@ static inline f_status_t private_inline_f_utf_character_handle_digit_from_four(c
             return F_true;
           }
 
-          // Enclosed Alphanumerics: U+24EB.
-          if (sequence == 0xe293ab00) {
-            if (value) {
-              *value = 11;
-            }
-
-            return F_true;
-          }
-
-          // Enclosed Alphanumerics: U+24EC.
-          if (sequence == 0xe293ac00) {
-            if (value) {
-              *value = 12;
-            }
-
-            return F_true;
-          }
-
-          // Enclosed Alphanumerics: U+24ED.
-          if (sequence == 0xe293ad00) {
-            if (value) {
-              *value = 13;
-            }
-
-            return F_true;
-          }
-
-          // Enclosed Alphanumerics: U+24EE.
-          if (sequence == 0xe293ae00) {
-            if (value) {
-              *value = 14;
-            }
-
-            return F_true;
-          }
-
-          // Enclosed Alphanumerics: U+24EF.
-          if (sequence == 0xe293af00) {
-            if (value) {
-              *value = 15;
-            }
-
-            return F_true;
-          }
-
-          // Enclosed Alphanumerics: U+24F0.
-          if (sequence == 0xe293b000) {
-            if (value) {
-              *value = 16;
-            }
-
-            return F_true;
-          }
-
-          // Enclosed Alphanumerics: U+24F1.
-          if (sequence == 0xe293b100) {
-            if (value) {
-              *value = 17;
-            }
-
-            return F_true;
-          }
-
-          // Enclosed Alphanumerics: U+24F2.
-          if (sequence == 0xe293b200) {
-            if (value) {
-              *value = 18;
-            }
-
-            return F_true;
-          }
-
-          // Enclosed Alphanumerics: U+24F3.
-          if (sequence == 0xe293b300) {
-            if (value) {
-              *value = 19;
-            }
-
-            return F_true;
+          // Enclosed Alphanumerics: U+24EB to U+24F3.
+          if (sequence <= 0xe293b300) {
+            return private_inline_f_utf_character_handle_digit_offset(sequence, 0xe293aa00, 10, value);
           }
 
           // Enclosed Alphanumerics: U+24F4.
@@ -4849,6 +4583,11 @@ static inline f_status_t private_inline_f_utf_character_handle_digit_from_four(c
 
           return F_true;
         }
+
+        // Kawi: U+11F50 to U+11F59.
+        if (sequence >= 0xf091bd90 && sequence <= 0xf091bd99) {
+          return private_inline_f_utf_character_handle_digit(sequence, 0xf091bd90, value);
+        }
       }
       else if (macro_f_utf_char_t_to_char_2(sequence) == 0x92) {
 
@@ -5436,94 +5175,9 @@ static inline f_status_t private_inline_f_utf_character_handle_digit_from_four(c
             return private_inline_f_utf_character_handle_digit(sequence, 0xf096ba80, value);
           }
 
-          // Medefaidrin: U+16E8A.
-          if (sequence == 0xf096ba8a) {
-            if (value) {
-              *value = 10;
-            }
-
-            return F_true;
-          }
-
-          // Medefaidrin: U+16E8B.
-          if (sequence == 0xf096ba8b) {
-            if (value) {
-              *value = 11;
-            }
-
-            return F_true;
-          }
-
-          // Medefaidrin: U+16E8C.
-          if (sequence == 0xf096ba8c) {
-            if (value) {
-              *value = 12;
-            }
-
-            return F_true;
-          }
-
-          // Medefaidrin: U+16E8D.
-          if (sequence == 0xf096ba8d) {
-            if (value) {
-              *value = 13;
-            }
-
-            return F_true;
-          }
-
-          // Medefaidrin: U+16E8E.
-          if (sequence == 0xf096ba8e) {
-            if (value) {
-              *value = 14;
-            }
-
-            return F_true;
-          }
-
-          // Medefaidrin: U+16E8F.
-          if (sequence == 0xf096ba8f) {
-            if (value) {
-              *value = 15;
-            }
-
-            return F_true;
-          }
-
-          // Medefaidrin: U+16E90.
-          if (sequence == 0xf096ba90) {
-            if (value) {
-              *value = 16;
-            }
-
-            return F_true;
-          }
-
-          // Medefaidrin: U+16E91.
-          if (sequence == 0xf096ba91) {
-            if (value) {
-              *value = 17;
-            }
-
-            return F_true;
-          }
-
-          // Medefaidrin: U+16E92.
-          if (sequence == 0xf096ba92) {
-            if (value) {
-              *value = 18;
-            }
-
-            return F_true;
-          }
-
-          // Medefaidrin: U+16E93.
-          if (sequence == 0xf096ba93) {
-            if (value) {
-              *value = 19;
-            }
-
-            return F_true;
+          // Medefaidrin: U+16E8A to U+16E93.
+          if (sequence <= 0xf096ba93) {
+            return private_inline_f_utf_character_handle_digit_offset(sequence, 0xf096ba8a, 10, value);
           }
 
           // Medefaidrin: U+16E94 to U+16E96.
@@ -5531,6 +5185,18 @@ static inline f_status_t private_inline_f_utf_character_handle_digit_from_four(c
         }
       }
       else if (macro_f_utf_char_t_to_char_2(sequence) == 0x9d) {
+
+        // Kaktovik Numerals: U+1D2C0 to U+1D2D3.
+        if (sequence >= 0xf09d8b80 && sequence <= 0xf09d8b93) {
+
+          // Kaktovik Numerals: U+1D2C0 to U+1D2C9.
+          if (sequence <= 0xf09d8b89) {
+            return private_inline_f_utf_character_handle_digit(sequence, 0xf09d8b80, value);
+          }
+
+          // Kaktovik Numerals: U+1D2CA to U+1D2D3.
+          return private_inline_f_utf_character_handle_digit_offset(sequence, 0xf09d8b8a, 10, value);
+        }
 
         // Mayan Numerals: U+1D2E0 to U+1D2F3.
         if (sequence >= 0xf09d8ba0 && sequence <= 0xf09d8bb3) {
@@ -5540,93 +5206,8 @@ static inline f_status_t private_inline_f_utf_character_handle_digit_from_four(c
             return private_inline_f_utf_character_handle_digit(sequence, 0xf09d8ba0, value);
           }
 
-          // Mayan Numerals: U+1D2EA.
-          if (sequence == 0xf09d8baa) {
-            if (value) {
-              *value = 10;
-            }
-
-            return F_true;
-          }
-
-          // Mayan Numerals: U+1D2EB.
-          if (sequence == 0xf09d8bab) {
-            if (value) {
-              *value = 11;
-            }
-
-            return F_true;
-          }
-
-          // Mayan Numerals: U+1D2EC.
-          if (sequence == 0xf09d8bac) {
-            if (value) {
-              *value = 12;
-            }
-
-            return F_true;
-          }
-
-          // Mayan Numerals: U+1D2ED.
-          if (sequence == 0xf09d8bad) {
-            if (value) {
-              *value = 13;
-            }
-
-            return F_true;
-          }
-
-          // Mayan Numerals: U+1D2EE.
-          if (sequence == 0xf09d8bae) {
-            if (value) {
-              *value = 14;
-            }
-
-            return F_true;
-          }
-
-          // Mayan Numerals: U+1D2EF.
-          if (sequence == 0xf09d8baf) {
-            if (value) {
-              *value = 15;
-            }
-
-            return F_true;
-          }
-
-          // Mayan Numerals: U+1D2F0.
-          if (sequence == 0xf09d8bb0) {
-            if (value) {
-              *value = 16;
-            }
-
-            return F_true;
-          }
-
-          // Mayan Numerals: U+1D2F1.
-          if (sequence == 0xf09d8bb1) {
-            if (value) {
-              *value = 17;
-            }
-
-            return F_true;
-          }
-
-          // Mayan Numerals: U+1D2F2.
-          if (sequence == 0xf09d8bb2) {
-            if (value) {
-              *value = 18;
-            }
-
-            return F_true;
-          }
-
-          // Mayan Numerals: U+1D2F3.
-          if (value) {
-            *value = 19;
-          }
-
-          return F_true;
+          // Mayan Numerals: U+1D2EA to U+1D2F3.
+          return private_inline_f_utf_character_handle_digit_offset(sequence, 0xf09d8baa, 10, value);
         }
 
         // Counting Rod Numerals: U+1D360 to U+1D378.
@@ -5806,6 +5387,11 @@ static inline f_status_t private_inline_f_utf_character_handle_digit_from_four(c
         }
       }
       else if (macro_f_utf_char_t_to_char_2(sequence) == 0x9e) {
+
+        // Nag Mundari: U+1E4F0 to U+1E4F9.
+        if (sequence >= 0xf09e93b0 && sequence <= 0xf09e93b9) {
+          return private_inline_f_utf_character_handle_digit(sequence, 0xf09e93b0, value);
+        }
 
         // Mende Kikakui: U+1E8C7 to U+1E8CF.
         if (sequence >= 0xf09ea387 && sequence <= 0xf09ea38f) {

@@ -118,13 +118,8 @@ extern "C" {
       return F_false;
     }
 
-    // CJK Unified Ideographs Extension C .. CJK Unified Ideographs Extension E: U+2A700 to U+2CEA1.
-    if (sequence >= 0xf0aa9c80 && sequence <= 0xf0acbaa1) {
-      return F_true;
-    }
-
-    // CJK Compatibility Ideographs Supplement: U+2F800 to U+2FA1D.
-    if (sequence >= 0xf0afa080 && sequence <= 0xf0afa89d) {
+    // CJK Unified Ideographs Extension B .. CJK Unified Ideographs Extension H: U+20000 to U+323AF.
+    if (sequence >= 0xf0a08080 && sequence <= 0xf0b28eaf) {
       return F_true;
     }
 

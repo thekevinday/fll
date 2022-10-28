@@ -425,8 +425,8 @@ extern "C" {
         return F_true;
       }
 
-      // Kannada: U+0CF3 to U+0CFF.
-      if (character >= 0xe0b3b300 && character <= 0xe0b3bf00) {
+      // Kannada: U+0CF4 to U+0CFF.
+      if (character >= 0xe0b3b400 && character <= 0xe0b3bf00) {
         return F_true;
       }
 
@@ -550,8 +550,8 @@ extern "C" {
         return F_true;
       }
 
-      // Lao: U+0ECE, U+0ECF, U+0EDA, U+0EDB.
-      if (character == 0xe0bb8e00 || character == 0xe0bb8f00 || character == 0xe0bb9a00 || character == 0xe0bb9b00) {
+      // Lao: U+0ECF, U+0EDA, U+0EDB.
+      if (character == 0xe0bb8f00 || character == 0xe0bb9a00 || character == 0xe0bb9b00) {
         return F_true;
       }
 
@@ -1623,6 +1623,11 @@ extern "C" {
       return F_true;
     }
 
+    // Arabic Extended-C: U+10EC0 to U+10EFC.
+    if (character >= 0xf090bb80 && character <= 0xf090bbbc) {
+      return F_true;
+    }
+
     // Brahmi: U+1104E to U+11051.
     if (character >= 0xf091818e && character <= 0xf0918191) {
       return F_true;
@@ -1645,6 +1650,26 @@ extern "C" {
 
     // Sora Sompeng: U+110FA to U+110FF.
     if (character >= 0xf09183ba && character <= 0xf09183bf) {
+      return F_true;
+    }
+
+    // Devanagari Extended A: U+11B0A to U+11B5F.
+    if (character >= 0xf091ac8a && character <= 0xf091ad9f) {
+      return F_true;
+    }
+
+    // Kawi: U+11F11.
+    if (character == 0xf091bc91) {
+      return F_true;
+    }
+
+    // Kawi: U+11F3B to U+11F3D.
+    if (character >= 0xf091bcbb && character <= 0xf091bcbd) {
+      return F_true;
+    }
+
+    // Kawi: U+11F5A to U+11F5F.
+    if (character >= 0xf091bd9a && character <= 0xf091bd9f) {
       return F_true;
     }
 
@@ -1688,8 +1713,8 @@ extern "C" {
       return F_true;
     }
 
-    // Khojki: U+1123E to U+1124F.
-    if (character >= 0xf09188be && character <= 0xf091898f) {
+    // Khojki: U+11242 to U+1124F.
+    if (character >= 0xf0918982 && character <= 0xf091898f) {
       return F_true;
     }
 
@@ -1853,8 +1878,8 @@ extern "C" {
       return F_true;
     }
 
-    // Egyptian Hieroglyphs: U+1342F.
-    if (character == 0xf09390af) {
+    // Egyptian Hieroglyph Format Controls: U+13456 to U+1345F.
+    if (character >= 0xf0939196 && character <= 0xf093919f) {
       return F_true;
     }
 
@@ -1918,6 +1943,31 @@ extern "C" {
       return F_true;
     }
 
+    // Small Kana Extension: U+1B130, U+1B131.
+    if (character == 0xf09b84b0 || character == 0xf09b84b1) {
+      return F_true;
+    }
+
+    // Small Kana Extension: U+1B133 to U+1B14F.
+    if (character >= 0xf09b84b3 && character <= 0xf09b858f) {
+      return F_true;
+    }
+
+    // Small Kana Extension: U+1B153, U+1B154.
+    if (character == 0xf09b8593 || character == 0xf09b8594) {
+      return F_true;
+    }
+
+    // Small Kana Extension: U+1B156 to U+1B163.
+    if (character >= 0xf09b8596 && character <= 0xf09b85a3) {
+      return F_true;
+    }
+
+    // Small Kana Extension: U+1B168 to U+1B16F.
+    if (character >= 0xf09b85a8 && character <= 0xf09b85af) {
+      return F_true;
+    }
+
     // Duployan: U+1BC6B to U+1BC6F.
     if (character >= 0xf09bb1ab && character <= 0xf09bb1af) {
       return F_true;
@@ -1968,6 +2018,11 @@ extern "C" {
       return F_true;
     }
 
+    // Kaktovik Numerals: U+1D2D4 to U+1D2DF.
+    if (character >= 0xf09d8b94 && character <= 0xf09d8b9f) {
+      return F_true;
+    }
+
     // Counting Rod Numerals: U+1D372 to U+1D37F.
     if (character >= 0xf09d8db2 && character <= 0xf09d8dbf) {
       return F_true;
@@ -2015,6 +2070,26 @@ extern "C" {
 
     // Sutton SignWriting: U+1DAA0.
     if (character == 0xf09daaa0) {
+      return F_true;
+    }
+
+    // Latin Extended-G: U+1DF1F to U+1DF24.
+    if (character >= 0xf09dbc9f && character <= 0xf09dbca4) {
+      return F_true;
+    }
+
+    // Latin Extended-G: U+1DF2B to U+1DFFF.
+    if (character >= 0xf09dbcab && character <= 0xf09dbfbf) {
+      return F_true;
+    }
+
+    // Cyrillic Extended-D: U+1E06E to U+1E08E.
+    if (character >= 0xf09e81ae && character <= 0xf09e828e) {
+      return F_true;
+    }
+
+    // Nag Mundari: U+1E4FA to U+1E4FF.
+    if (character >= 0xf09e93ba && character <= 0xf09e93bf) {
       return F_true;
     }
 
@@ -2168,8 +2243,8 @@ extern "C" {
       return F_true;
     }
 
-    // Transport and Map Symbols: U+1F6D1 to U+1F6DF.
-    if (character >= 0xf09f9b91 && character <= 0xf09f9b9f) {
+    // Transport and Map Symbols: U+1F6D8 to U+1F6DB.
+    if (character >= 0xf09f9b98 && character <= 0xf09f9b9b) {
       return F_true;
     }
 
@@ -2178,18 +2253,28 @@ extern "C" {
       return F_true;
     }
 
-    // Transport and Map Symbols: U+1F6F4 to U+1F6FF.
-    if (character >= 0xf09f9bb4 && character <= 0xf09f9bbf) {
+    // Transport and Map Symbols: U+1F6FD to U+1F6FF.
+    if (character >= 0xf09f9bbd && character <= 0xf09f9bbf) {
       return F_true;
     }
 
-    // Alchemical Symbols: U+1F774 to U+1F77F.
-    if (character >= 0xf09f9db4 && character <= 0xf09f9dbf) {
+    // Alchemical Symbols: U+1F777 to U+1F77A.
+    if (character >= 0xf09f9db7 && character <= 0xf09f9dba) {
       return F_true;
     }
 
-    // Geometric Shapes Extended: U+1F7D5 to U+1F7FF.
-    if (character >= 0xf09f9f95 && character <= 0xf09f9fbf) {
+    // Geometric Shapes Extended: U+1F7DA to U+1F7DF.
+    if (character >= 0xf09f9f9a && character <= 0xf09f9f9f) {
+      return F_true;
+    }
+
+    // Geometric Shapes Extended: U+1F7EC to U+1F7EF.
+    if (character >= 0xf09f9fac && character <= 0xf09f9faf) {
+      return F_true;
+    }
+
+    // Geometric Shapes Extended: U+1F7F1 to U+1F7FF.
+    if (character >= 0xf09f9fb1 && character <= 0xf09f9fbf) {
       return F_true;
     }
 
@@ -2238,6 +2323,41 @@ extern "C" {
       return F_true;
     }
 
+    // Symbols and Pictographs Extended-A: U+1FA7D to U+1FA7F.
+    if (character >= 0xf09fa9bd && character <= 0xf09fa9bf) {
+      return F_true;
+    }
+
+    // Symbols and Pictographs Extended-A: U+1FA89 to U+1FA8F.
+    if (character >= 0xf09faa89 && character <= 0xf09faa8f) {
+      return F_true;
+    }
+
+    // Symbols and Pictographs Extended-A: U+1FABE.
+    if (character == 0xf09faabe) {
+      return F_true;
+    }
+
+    // Symbols and Pictographs Extended-A: U+1FAC6 to U+1FACD.
+    if (character >= 0xf09fab86 && character <= 0xf09fab8d) {
+      return F_true;
+    }
+
+    // Symbols and Pictographs Extended-A: U+1FADC to U+1FADF.
+    if (character >= 0xf09fab9c && character <= 0xf09fab9f) {
+      return F_true;
+    }
+
+    // Symbols and Pictographs Extended-A: U+1FAE9 to U+1FAEF.
+    if (character >= 0xf09faba9 && character <= 0xf09fabaf) {
+      return F_true;
+    }
+
+    // Symbols and Pictographs Extended-A: U+1FAF9 to U+1FAFF.
+    if (character >= 0xf09fabb9 && character <= 0xf09fabbf) {
+      return F_true;
+    }
+
     // CJK Unified Ideographs Extension B: U+2A6D7 to U+2A6FF.
     if (character >= 0xf0aa9b97 && character <= 0xf0aa9bbf) {
       return F_true;
@@ -2258,13 +2378,28 @@ extern "C" {
       return F_true;
     }
 
+    // CJK Unified Ideographs Extension F: U+2CEB2 to U+2CEBF.
+    if (character >= 0xf0acbab2 && character <= 0xf0acbabf) {
+      return F_true;
+    }
+
     // CJK Compatibility Ideographs Supplement: U+2FA1E to U+2FFFD.
     if (character >= 0xf0b08080 && character <= 0xf0afbfbd) {
       return F_true;
     }
 
-    // Tertiary Ideographic Plane: U+30000 to U+3FFFD.
-    if (character >= 0xf0b08080 && character <= 0xf0bfbfbd) {
+    // CJK Unified Ideographs Extension G: U+3134B to U+3134F.
+    if (character >= 0xf0b18d8b && character <= 0xf0b18d8f) {
+      return F_true;
+    }
+
+    // Tertiary Ideographic Plane: U+30000 to U+3134F.
+    if (character >= 0xf0b08080 && character <= 0xf0b18d8f) {
+      return F_true;
+    }
+
+    // Tertiary Ideographic Plane: U+323AF to U+3FFFD.
+    if (character >= 0xf0b28eaf && character <= 0xf0bfbfbd) {
       return F_true;
     }
 

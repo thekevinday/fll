@@ -428,8 +428,8 @@ extern "C" {
           return F_true;
         }
 
-        // Transport and Map Symbols: U+1F6DD to U+1F6DF.
-        if (sequence >= 0xf09f9b9d && sequence <= 0xf09f9b9f) {
+        // Transport and Map Symbols: U+1F6DC to U+1F6DF.
+        if (sequence >= 0xf09f9b9c && sequence <= 0xf09f9b9f) {
           return F_true;
         }
 
@@ -473,48 +473,38 @@ extern "C" {
           return F_true;
         }
 
-        // Symbols and Pictographs Extended-A: U+1FA70 to U+1FA74.
-        if (sequence >= 0xf09fa9b0 && sequence <= 0xf09fa9b4) {
+        // Symbols and Pictographs Extended-A: U+1FA70 to U+1FA7C.
+        if (sequence >= 0xf09fa9b0 && sequence <= 0xf09fa9bc) {
           return F_true;
         }
 
-        // Symbols and Pictographs Extended-A: U+1FA78 to U+1FA7C.
-        if (sequence >= 0xf09fa9b8 && sequence <= 0xf09fa9bc) {
+        // Symbols and Pictographs Extended-A: U+1FA80 to U+1FA88.
+        if (sequence >= 0xf09faa80 && sequence <= 0xf09faa88) {
           return F_true;
         }
 
-        // Symbols and Pictographs Extended-A: U+1FA80 to U+1FA86.
-        if (sequence >= 0xf09faa80 && sequence <= 0xf09faa86) {
+        // Symbols and Pictographs Extended-A: U+1FA90 to U+1FABD.
+        if (sequence >= 0xf09faa90 && sequence <= 0xf09faabd) {
           return F_true;
         }
 
-        // Symbols and Pictographs Extended-A: U+1FA90 to U+1FAAC.
-        if (sequence >= 0xf09faa90 && sequence <= 0xf09faaac) {
+        // Symbols and Pictographs Extended-A: U+1FABF to U+1FAC5.
+        if (sequence >= 0xf09faabf && sequence <= 0xf09fab85) {
           return F_true;
         }
 
-        // Symbols and Pictographs Extended-A: U+1FAB0 to U+1FABA.
-        if (sequence >= 0xf09faab0 && sequence <= 0xf09faaba) {
+        // Symbols and Pictographs Extended-A: U+1FACE to U+1FADB.
+        if (sequence >= 0xf09fab8e && sequence <= 0xf09fab9b) {
           return F_true;
         }
 
-        // Symbols and Pictographs Extended-A: U+1FAC0 to U+1FAC5.
-        if (sequence >= 0xf09fab80 && sequence <= 0xf09fab85) {
+        // Symbols and Pictographs Extended-A: U+1FAE0 to U+1FAE8.
+        if (sequence >= 0xf09faba0 && sequence <= 0xf09faba8) {
           return F_true;
         }
 
-        // Symbols and Pictographs Extended-A: U+1FAD0 to U+1FAD9.
-        if (sequence >= 0xf09fab90 && sequence <= 0xf09fab99) {
-          return F_true;
-        }
-
-        // Symbols and Pictographs Extended-A: U+1FAE0 to U+1FAE7.
-        if (sequence >= 0xf09faba0 && sequence <= 0xf09faba7) {
-          return F_true;
-        }
-
-        // Symbols and Pictographs Extended-A: U+1FAF0 to U+1FAF6.
-        if (sequence >= 0xf09fabb0 && sequence <= 0xf09fabb6) {
+        // Symbols and Pictographs Extended-A: U+1FAF0 to U+1FAF8.
+        if (sequence >= 0xf09fabb0 && sequence <= 0xf09fabb8) {
           return F_true;
         }
       }

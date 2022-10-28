@@ -925,13 +925,18 @@ extern "C" {
           return F_true;
         }
 
-        // Alchemical Symbols: U+1F6F0 to U+1F773.
-        if (sequence >= 0xf09f9c80 && sequence <= 0xf09f9db3) {
+        // Alchemical Symbols: U+1F6F0 to U+1F776.
+        if (sequence >= 0xf09f9c80 && sequence <= 0xf09f9db6) {
           return F_true;
         }
 
-        // Geometric Shapes Extended: U+1F780 to U+1F7D8.
-        if (sequence >= 0xf09f9e80 && sequence <= 0xf09f9f98) {
+        // Alchemical Symbols: U+1F77B to U+1F77F.
+        if (sequence >= 0xf09f9dbb && sequence <= 0xf09f9dbf) {
+          return F_true;
+        }
+
+        // Geometric Shapes Extended: U+1F780 to U+1F7D9.
+        if (sequence >= 0xf09f9e80 && sequence <= 0xf09f9f99) {
           return F_true;
         }
 
