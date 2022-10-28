@@ -6,9 +6,19 @@
 # This assumes the destination directories already exist and does not attempt to create them.
 # Ideally, the package manager of the system should be used, but this is provided as a guide or a fallback.
 # Settings files are not copied over, but a warning will be printed to inform the installer of their existence.
+#
 # The dependencies of this script are: bash, grep, and sed.
+#
+# This script can also be run under zsh rather than bash by setting the environment variable SHELL_ENGINE to "zsh", such as:
+#   SHELL_ENGINE="zsh" zsh ./install.sh --help
+#
 
 install_main() {
+
+  if [[ $SHELL_ENGINE == "zsh" ]] ; then
+    emulate ksh
+  fi
+
   local public_name="Simple FLL Project Install Script"
   local system_name=install
   local called_name=$(basename $0)
@@ -20,6 +30,7 @@ install_main() {
   local i=0
   local p=
   local t=0
+  local key=
 
   local c_reset="\\033[0m"
   local c_title="\\033[1;33m"
@@ -31,7 +42,7 @@ install_main() {
   local c_subtle="\\033[1;30m"
   local c_prefix="\\"
 
-  local variables=
+  local -A variables=()
   local settings_file=data/build/settings
   local operation=
   local operation_failure=
@@ -71,7 +82,12 @@ install_main() {
 
     while [[ $i -lt $t ]] ; do
       let i=$i+1
-      p=${!i}
+
+      if [[ $SHELL_ENGINE == "zsh" ]] ; then
+        p=${(P)i}
+      else
+        p=${!i}
+      fi
 
       if [[ $grab_next == "" ]] ; then
         if [[ $p == "-h" || $p == "--help" ]] ; then
@@ -193,7 +209,7 @@ install_main() {
 
   if [[ $operation_failure == "fail-unsupported" ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      echo -e "${c_error}ERROR: The operation $c_notice$operation$c_error was not recognized.$c_reset"
+      echo -e "${c_error}ERROR: The operation ${c_notice}$operation${c_error} was not recognized.${c_reset}"
     fi
 
     install_cleanup
@@ -203,7 +219,7 @@ install_main() {
 
   if [[ ! -d $path_build ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      echo -e "${c_error}ERROR: The build path $c_notice$path_build$c_error is not a valid directory.$c_reset"
+      echo -e "${c_error}ERROR: The build path ${c_notice}$path_build${c_error} is not a valid directory.${c_reset}"
     fi
 
     install_cleanup
@@ -213,7 +229,7 @@ install_main() {
 
   if [[ $work == "" && $destination_prefix != "" && ! -d $destination_prefix ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      echo -e "${c_error}ERROR: The destination prefix $c_notice$destination_prefix$c_error is not a valid directory.$c_reset"
+      echo -e "${c_error}ERROR: The destination prefix ${c_notice}$destination_prefix${c_error} is not a valid directory.${c_reset}"
     fi
 
     install_cleanup
@@ -269,7 +285,7 @@ install_main() {
 
   if [[ $work != "" && ! -d $work ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      echo -e "${c_error}ERROR: The work directory $c_notice$work$c_error is not a valid directory.$c_reset"
+      echo -e "${c_error}ERROR: The work directory ${c_notice}$work${c_error} is not a valid directory.${c_reset}"
     fi
 
     install_cleanup
@@ -279,7 +295,7 @@ install_main() {
 
   if [[ $work == "" && ! -d $destination_programs ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      echo -e "${c_error}ERROR: The destination bindir $c_notice$destination_programs$c_error is not a valid directory.$c_reset"
+      echo -e "${c_error}ERROR: The destination bindir ${c_notice}$destination_programs${c_error} is not a valid directory.${c_reset}"
     fi
 
     install_cleanup
@@ -289,7 +305,7 @@ install_main() {
 
   if [[ $work == "" && ! -d $destination_programs_static ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      echo -e "${c_error}ERROR: The destination (${c_notice}static$c_error) bindir $c_notice$destination_programs_static$c_error is not a valid directory.$c_reset"
+      echo -e "${c_error}ERROR: The destination (${c_notice}static${c_error}) bindir ${c_notice}$destination_programs_static${c_error} is not a valid directory.${c_reset}"
     fi
 
     install_cleanup
@@ -299,7 +315,7 @@ install_main() {
 
   if [[ $work == "" && ! -d $destination_programs_shared ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      echo -e "${c_error}ERROR: The destination (${c_notice}shared$c_error) bindir $c_notice$destination_programs_shared$c_error is not a valid directory.$c_reset"
+      echo -e "${c_error}ERROR: The destination (${c_notice}shared${c_error}) bindir ${c_notice}$destination_programs_shared${c_error} is not a valid directory.${c_reset}"
     fi
 
     install_cleanup
@@ -309,7 +325,7 @@ install_main() {
 
   if [[ $work == "" && ! -d $destination_includes ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      echo -e "${c_error}ERROR: The destination incluedir $c_notice$destination_includes$c_error is not a valid directory.$c_reset"
+      echo -e "${c_error}ERROR: The destination incluedir ${c_notice}$destination_includes${c_error} is not a valid directory.${c_reset}"
     fi
 
     install_cleanup
@@ -319,7 +335,7 @@ install_main() {
 
   if [[ $work == "" && ! -d $destination_libraries_static ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      echo -e "${c_error}ERROR: The destination (${c_notice}static$c_error) libdir $c_notice$destination_libraries_static$c_error is not a valid directory.$c_reset"
+      echo -e "${c_error}ERROR: The destination (${c_notice}static${c_error}) libdir ${c_notice}$destination_libraries_static${c_error} is not a valid directory.${c_reset}"
     fi
 
     install_cleanup
@@ -329,7 +345,7 @@ install_main() {
 
   if [[ $work == "" && ! -d $destination_libraries_shared ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      echo -e "${c_error}ERROR: The destination (${c_notice}shared$c_error) libdir $c_notice$destination_libraries_shared$c_error is not a valid directory.$c_reset"
+      echo -e "${c_error}ERROR: The destination (${c_notice}shared${c_error}) libdir ${c_notice}$destination_libraries_shared${c_error} is not a valid directory.${c_reset}"
     fi
 
     install_cleanup
@@ -371,32 +387,32 @@ install_handle_colors() {
 install_help() {
 
   echo
-  echo -e "${c_title}$public_name$c_reset"
-  echo -e " ${c_notice}Version $version$c_reset"
+  echo -e "${c_title}${public_name}${c_reset}"
+  echo -e " ${c_notice}Version ${version}${c_reset}"
   echo
-  echo -e "$c_highlight$system_name$c_reset $c_notice[${c_reset} options $c_notice]$c_reset"
+  echo -e "${c_highlight}${system_name}${c_reset} ${c_notice}[${c_reset} options ${c_notice}]${c_reset}"
   echo
-  echo -e "${c_highlight}Options:$c_reset"
-  echo -e " -${c_important}h$c_reset, --${c_important}help$c_reset      Print this help screen."
-  echo -e " +${c_important}d$c_reset, ++${c_important}dark$c_reset      Use color modes that show up better on dark backgrounds."
-  echo -e " +${c_important}l$c_reset, ++${c_important}light$c_reset     Use color modes that show up better on light backgrounds."
-  echo -e " +${c_important}n$c_reset, ++${c_important}no_color$c_reset  Do not use color."
-  echo -e " +${c_important}q$c_reset, ++${c_important}quiet$c_reset     Decrease verbosity, silencing most output."
-  echo -e " +${c_important}N$c_reset, ++${c_important}normal$c_reset    Set verbosity to normal."
-  echo -e " +${c_important}V$c_reset, ++${c_important}verbose$c_reset   Increase verbosity beyond normal output."
-  echo -e " +${c_important}D$c_reset, ++${c_important}debug$c_reset     Enable debugging, significantly increasing verbosity beyond normal output."
-  echo -e " +${c_important}v$c_reset, ++${c_important}version$c_reset   Print the version number of this program."
+  echo -e "${c_highlight}Options:${c_reset}"
+  echo -e " -${c_important}h${c_reset}, --${c_important}help${c_reset}      Print this help screen."
+  echo -e " +${c_important}d${c_reset}, ++${c_important}dark${c_reset}      Use color modes that show up better on dark backgrounds."
+  echo -e " +${c_important}l${c_reset}, ++${c_important}light${c_reset}     Use color modes that show up better on light backgrounds."
+  echo -e " +${c_important}n${c_reset}, ++${c_important}no_color${c_reset}  Do not use color."
+  echo -e " +${c_important}q${c_reset}, ++${c_important}quiet${c_reset}     Decrease verbosity, silencing most output."
+  echo -e " +${c_important}N${c_reset}, ++${c_important}normal${c_reset}    Set verbosity to normal."
+  echo -e " +${c_important}V${c_reset}, ++${c_important}verbose${c_reset}   Increase verbosity beyond normal output."
+  echo -e " +${c_important}D${c_reset}, ++${c_important}debug${c_reset}     Enable debugging, significantly increasing verbosity beyond normal output."
+  echo -e " +${c_important}v${c_reset}, ++${c_important}version${c_reset}   Print the version number of this program."
   echo
-  echo -e "${c_highlight}Install Options:$c_reset"
-  echo -e " -${c_important}b$c_reset, --${c_important}build${c_reset}       Custom build directory."
-  echo -e " -${c_important}s$c_reset, --${c_important}settings${c_reset}    Custom build settings file."
-  echo -e " -${c_important}P$c_reset, --${c_important}prefix${c_reset}      Custom destination prefix."
-  echo -e " -${c_important}B$c_reset, --${c_important}bindir${c_reset}      Custom destination bin/ directory."
-  echo -e " -${c_important}I$c_reset, --${c_important}includedir${c_reset}  Custom destination include/ directory."
-  echo -e " -${c_important}L$c_reset, --${c_important}libdir${c_reset}      Custom destination lib/ directory."
-  echo -e " -${c_important}w$c_reset, --${c_important}work${c_reset}        Install to this directory instead of system."
+  echo -e "${c_highlight}Install Options:${c_reset}"
+  echo -e " -${c_important}b${c_reset}, --${c_important}build${c_reset}       Custom build directory."
+  echo -e " -${c_important}s${c_reset}, --${c_important}settings${c_reset}    Custom build settings file."
+  echo -e " -${c_important}P${c_reset}, --${c_important}prefix${c_reset}      Custom destination prefix."
+  echo -e " -${c_important}B${c_reset}, --${c_important}bindir${c_reset}      Custom destination bin/ directory."
+  echo -e " -${c_important}I${c_reset}, --${c_important}includedir${c_reset}  Custom destination include/ directory."
+  echo -e " -${c_important}L${c_reset}, --${c_important}libdir${c_reset}      Custom destination lib/ directory."
+  echo -e " -${c_important}w${c_reset}, --${c_important}work${c_reset}        Install to this directory instead of system."
   echo
-  echo -e "${c_highlight}Special Options:$c_reset"
+  echo -e "${c_highlight}Special Options:${c_reset}"
   echo -e " --${c_important}enable-shared${c_reset}             Forcibly do install shared files."
   echo -e " --${c_important}disable-shared${c_reset}            Forcibly do not install shared files."
   echo -e " --${c_important}disable-shared-programs${c_reset}   Forcibly do not install shared programs."
@@ -418,28 +434,29 @@ install_id() {
   local name=$1
 
   case $name in
-    "build_sources_library") echo -n 1;;
-    "build_sources_program") echo -n 2;;
-    "build_sources_headers") echo -n 3;;
-    "build_sources_setting") echo -n 4;;
-    "build_shared") echo -n 5;;
-    "build_static") echo -n 6;;
+    "build_sources_library") let key=1;;
+    "build_sources_program") let key=2;;
+    "build_sources_headers") let key=3;;
+    "build_sources_setting") let key=4;;
+    "build_shared") let key=5;;
+    "build_static") let key=6;;
   esac
 }
 
 install_load_settings() {
   local failure=
   local i=
+  local key=
 
   if [[ $settings_file == "" ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      echo -e "${c_error}ERROR: No settings file has been defined.$c_reset"
+      echo -e "${c_error}ERROR: No settings file has been defined.${c_reset}"
     fi
 
     failure=1
   elif [[ ! -f $settings_file ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      echo -e "${c_error}ERROR: No settings file $c_notice$settings_file$c_error could not be found or is not a valid file.$c_reset"
+      echo -e "${c_error}ERROR: No settings file ${c_notice}${settings_file}${c_error} could not be found or is not a valid file.${c_reset}"
     fi
 
     failure=1
@@ -451,17 +468,34 @@ install_load_settings() {
   fi
 
   for i in build_sources_library build_sources_program build_sources_headers build_sources_setting build_shared build_static ; do
-    variables[$(install_id $i)]=$(grep -s -o "^[[:space:]]*$i\>.*$" $settings_file | sed -e "s|^[[:space:]]*$i\>||" -e 's|^[[:space:]]*||')
+
+    install_id "$i"
+
+    variables[$key]=$(grep -s -o "^[[:space:]]*${i}\>.*$" $settings_file | sed -e "s|^[[:space:]]*${i}\>||" -e 's|^[[:space:]]*||')
   done
 }
 
 install_perform_install() {
-  local build_sources_library=${variables[$(install_id build_sources_library)]}
-  local build_sources_program=${variables[$(install_id build_sources_program)]}
-  local build_sources_headers=${variables[$(install_id build_sources_headers)]}
-  local build_sources_setting=${variables[$(install_id build_sources_setting)]}
-  local build_shared=${variables[$(install_id build_shared)]}
-  local build_static=${variables[$(install_id build_static)]}
+  local key=
+
+  install_id "build_sources_library"
+  local build_sources_library=${variables[$key]}
+
+  install_id "build_sources_program"
+  local build_sources_program=${variables[$key]}
+
+  install_id "build_sources_headers"
+  local build_sources_headers=${variables[$key]}
+
+  install_id "build_sources_setting"
+  local build_sources_setting=${variables[$key]}
+
+  install_id "build_shared"
+  local build_shared=${variables[$key]}
+
+  install_id "build_static"
+  local build_static=${variables[$key]}
+
   local failure=
 
   if [[ $build_shared == "yes" ]] ; then
@@ -567,7 +601,7 @@ install_perform_install() {
 
         if [[ $? -ne 0 ]] ; then
           if [[ $verbosity != "quiet" ]] ; then
-            echo -e "${c_error}ERROR: Failed to create work directories $c_notice${work}programs$c_error.$c_reset"
+            echo -e "${c_error}ERROR: Failed to create work directories ${c_notice}${work}programs${c_error}.${c_reset}"
           fi
 
           failure=1
@@ -579,7 +613,7 @@ install_perform_install() {
 
         if [[ $? -ne 0 ]] ; then
           if [[ $verbosity != "quiet" ]] ; then
-            echo -e "${c_error}ERROR: Failed to create work directories $c_notice${work}programs/shared$c_error.$c_reset"
+            echo -e "${c_error}ERROR: Failed to create work directories ${c_notice}${work}programs/shared${c_error}.${c_reset}"
           fi
 
           failure=1
@@ -591,7 +625,7 @@ install_perform_install() {
 
         if [[ $? -ne 0 ]] ; then
           if [[ $verbosity != "quiet" ]] ; then
-            echo -e "${c_error}ERROR: Failed to create work directories $c_notice${work}programs/static$c_error.$c_reset"
+            echo -e "${c_error}ERROR: Failed to create work directories ${c_notice}${work}programs/static${c_error}.${c_reset}"
           fi
 
           failure=1
@@ -605,7 +639,7 @@ install_perform_install() {
 
         if [[ $? -ne 0 ]] ; then
           if [[ $verbosity != "quiet" ]] ; then
-            echo -e "${c_error}ERROR: Failed to create work directories $c_notice${work}libraries$c_error.$c_reset"
+            echo -e "${c_error}ERROR: Failed to create work directories ${c_notice}${work}libraries${c_error}.${c_reset}"
           fi
 
           failure=1
@@ -617,7 +651,7 @@ install_perform_install() {
 
         if [[ $? -ne 0 ]] ; then
           if [[ $verbosity != "quiet" ]] ; then
-            echo -e "${c_error}ERROR: Failed to create work directories $c_notice${work}libraries/shared$c_error.$c_reset"
+            echo -e "${c_error}ERROR: Failed to create work directories ${c_notice}${work}libraries/shared${c_error}.${c_reset}"
           fi
 
           failure=1
@@ -629,7 +663,7 @@ install_perform_install() {
 
         if [[ $? -ne 0 ]] ; then
           if [[ $verbosity != "quiet" ]] ; then
-            echo -e "${c_error}ERROR: Failed to create work directories $c_notice${work}libraries/static$c_error.$c_reset"
+            echo -e "${c_error}ERROR: Failed to create work directories ${c_notice}${work}libraries/static${c_error}.${c_reset}"
           fi
 
           failure=1
@@ -643,7 +677,7 @@ install_perform_install() {
 
         if [[ $? -ne 0 ]] ; then
           if [[ $verbosity != "quiet" ]] ; then
-            echo -e "${c_error}ERROR: Failed to create work directories $c_notice${work}includes$c_error.$c_reset"
+            echo -e "${c_error}ERROR: Failed to create work directories ${c_notice}${work}includes${c_error}.${c_reset}"
           fi
 
           failure=1
@@ -666,14 +700,14 @@ install_perform_install() {
   if [[ $failure == "" && $build_sources_headers != "" && $enable_includes == "yes" ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
       echo
-      echo -e "${c_highlight}Installing Includes to: $c_reset$c_notice$destination_includes$c_reset${c_highlight}.$c_reset"
+      echo -e "${c_highlight}Installing Includes to: ${c_reset}${c_notice}${destination_includes}${c_reset}${c_highlight}.${c_reset}"
     fi
 
     cp $verbose_common -R $path_build${path_includes}* $destination_includes
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
-        echo -e "${c_error}ERROR: Failed to copy include files from $c_notice$path_build$path_includes$c_error to $c_notice$destination_includes$c_error.$c_reset"
+        echo -e "${c_error}ERROR: Failed to copy include files from ${c_notice}${path_build}${path_includes}${c_error} to ${c_notice}${destination_includes}${c_error}.${c_reset}"
       fi
 
       failure=1
@@ -684,14 +718,14 @@ install_perform_install() {
     if [[ $enable_static_libraries == "yes" ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
         echo
-        echo -e "${c_highlight}Installing (${c_notice}static$c_highlight) Libraries to: $c_reset$c_notice$destination_libraries_static$c_reset${c_highlight}.$c_reset"
+        echo -e "${c_highlight}Installing (${c_notice}static${c_highlight}) Libraries to: ${c_reset}${c_notice}${destination_libraries_static}${c_reset}${c_highlight}.${c_reset}"
       fi
 
-      cp $verbose_common -R $path_build$path_libraries${path_static}* $destination_libraries_static
+      cp $verbose_common -R ${path_build}${path_libraries}${path_static}* $destination_libraries_static
 
       if [[ $? -ne 0 ]] ; then
         if [[ $verbosity != "quiet" ]] ; then
-          echo -e "${c_error}ERROR: Failed to copy (${c_notice}static$c_error) library files from $c_notice$path_build$path_libraries$path_static$c_error to $c_notice$destination_libraries_static$c_error.$c_reset"
+          echo -e "${c_error}ERROR: Failed to copy (${c_notice}static${c_error}) library files from ${c_notice}${path_build}${path_libraries}${path_static}${c_error} to ${c_notice}${destination_libraries_static}${c_error}.${c_reset}"
         fi
 
         failure=1
@@ -701,14 +735,14 @@ install_perform_install() {
     if [[ $failure == "" && $build_sources_library != "" && $enable_shared_libraries == "yes" ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
         echo
-        echo -e "${c_highlight}Installing (${c_notice}shared$c_highlight) Libraries to: $c_reset$c_notice$destination_libraries_shared$c_reset${c_highlight}.$c_reset"
+        echo -e "${c_highlight}Installing (${c_notice}shared${c_highlight}) Libraries to: ${c_reset}${c_notice}${destination_libraries_shared}${c_reset}${c_highlight}.${c_reset}"
       fi
 
-      cp $verbose_common -R $path_build$path_libraries${path_shared}* $destination_libraries_shared
+      cp $verbose_common -R ${path_build}${path_libraries}${path_shared}* $destination_libraries_shared
 
       if [[ $? -ne 0 ]] ; then
         if [[ $verbosity != "quiet" ]] ; then
-          echo -e "${c_error}ERROR: Failed to copy (${c_notice}shared$c_error) library files from $c_notice$path_build$path_libraries$path_shared$c_error to $c_notice$destination_libraries_shared$c_error.$c_reset"
+          echo -e "${c_error}ERROR: Failed to copy (${c_notice}shared${c_error}) library files from ${c_notice}${path_build}${path_libraries}${path_shared}${c_error} to ${c_notice}${destination_libraries_shared}${c_error}.${c_reset}"
         fi
 
         failure=1
@@ -720,14 +754,14 @@ install_perform_install() {
     if [[ $enable_static_programs == "yes" ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
         echo
-        echo -e "${c_highlight}Installing (${c_notice}static$c_highlight) Programs to: $c_reset$c_notice$destination_programs_static$c_reset${c_highlight}.$c_reset"
+        echo -e "${c_highlight}Installing (${c_notice}static${c_highlight}) Programs to: ${c_reset}${c_notice}${destination_programs_static}${c_reset}${c_highlight}.${c_reset}"
       fi
 
-      cp $verbose_common -R $path_build$path_programs${path_static}* $destination_programs_static
+      cp $verbose_common -R ${path_build}${path_programs}${path_static}* $destination_programs_static
 
       if [[ $? -ne 0 ]] ; then
         if [[ $verbosity != "quiet" ]] ; then
-          echo -e "${c_error}ERROR: failed to copy (${c_notice}static$c_error) program files from $c_notice$path_build$path_programs$path_static$c_error to $c_notice$destination_programs_static$c_error.$c_reset"
+          echo -e "${c_error}ERROR: failed to copy (${c_notice}static${c_error}) program files from ${c_notice}${path_build}${path_programs}${path_static}${c_error} to ${c_notice}${destination_programs_static}${c_error}.${c_reset}"
         fi
 
         failure=1
@@ -737,14 +771,14 @@ install_perform_install() {
     if [[ $failure == "" && $build_sources_program != "" && $enable_shared_programs == "yes" ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
         echo
-        echo -e "${c_highlight}Installing (${c_notice}shared$c_highlight) Programs to: $c_reset$c_notice$destination_programs_shared$c_reset${c_highlight}.$c_reset"
+        echo -e "${c_highlight}Installing (${c_notice}shared${c_highlight}) Programs to: ${c_reset}${c_notice}${destination_programs_shared}${c_reset}${c_highlight}.${c_reset}"
       fi
 
-      cp $verbose_common -R $path_build$path_programs${path_shared}* $destination_programs_shared
+      cp $verbose_common -R ${path_build}${path_programs}${path_shared}* $destination_programs_shared
 
       if [[ $? -ne 0 ]] ; then
         if [[ $verbosity != "quiet" ]] ; then
-          echo -e "${c_error}ERROR: failed to copy (${c_notice}shared$c_error) program files from $c_notice$path_build$path_programs$path_shared$c_error to $c_notice$destination_programs_shared$c_error.$c_reset"
+          echo -e "${c_error}ERROR: failed to copy (${c_notice}shared${c_error}) program files from ${c_notice}${path_build}${path_programs}${path_shared}${c_error} to ${c_notice}${destination_programs_shared}${c_error}.${c_reset}"
         fi
 
         failure=1
@@ -754,7 +788,7 @@ install_perform_install() {
 
   if [[ $failure == "" && $build_sources_setting != "" && $verbosity != "quiet" ]] ; then
     echo
-    echo -e "${c_warning}Settings Files Detected, see: $c_reset$c_notice$path_build$path_settings$c_reset${c_warning}.$c_reset"
+    echo -e "${c_warning}Settings Files Detected, see: ${c_reset}${c_notice}${path_build}${path_settings}${c_reset}${c_warning}.${c_reset}"
   fi
 
   if [[ $failure != "" ]] ; then

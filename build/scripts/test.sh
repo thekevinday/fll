@@ -6,9 +6,22 @@
 # This is intended to be run directly from the bare source tree.
 # The tests can still be run as normal by directly running the appropriate fake command (such as "fake make -f testfile") inside the appropriate project.
 # This calls other scripts and expects this to be run in the project root.
+#
 # The dependencies of this script are: bash, grep, and sed.
+#
+# This script can also be run under zsh rather than bash by setting the environment variable SHELL_ENGINE to "zsh", such as:
+#   SHELL_ENGINE="zsh" zsh ./test.sh --help
+#
 
 test_main() {
+  local shell_command=bash
+
+  if [[ $SHELL_ENGINE == "zsh" ]] ; then
+    shell_command=zsh
+
+    emulate ksh
+  fi
+
   local public_name="FLL Project Mass Test Script"
   local system_name=install
   local called_name=$(basename $0)
@@ -62,7 +75,12 @@ test_main() {
     while [[ $i -lt $t ]] ; do
 
       let i=$i+1
-      p=${!i}
+
+      if [[ $SHELL_ENGINE == "zsh" ]] ; then
+        p=${(P)i}
+      else
+        p=${!i}
+      fi
 
       if [[ $grab_next == "" ]] ; then
         if [[ $p == "-h" || $p == "--help" ]] ; then
@@ -144,7 +162,7 @@ test_main() {
 
   if [[ $operation_failure == "fail-too_many" ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      echo -e "${c_error}ERROR: Only a single build system is supported, received the following test systems $c_notice$test_system $operation$c_error was not recognized.$c_reset"
+      echo -e "${c_error}ERROR: Only a single build system is supported, received the following test systems ${c_notice}${test_system} ${operation}${c_error} was not recognized.${c_reset}"
     fi
 
     let failure=1
@@ -160,7 +178,7 @@ test_main() {
 
   if [[ $failure -eq 0 && $test_system != "normal" && $test_system != "github" && $test_system != "gitlab" ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      echo -e "${c_error}ERROR: The test system must be one of ${c_notice}normal$c_error, ${c_notice}github$c_error, or  ${c_notice}gitlab$c_error.$c_reset"
+      echo -e "${c_error}ERROR: The test system must be one of ${c_notice}normal${c_error}, ${c_notice}github${c_error}, or  ${c_notice}gitlab${c_error}.${c_reset}"
     fi
 
     let failure=1
@@ -168,7 +186,7 @@ test_main() {
 
   if [[ $failure -eq 0 && $build_compiler != "gcc" && $build_compiler != "clang" ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      echo -e "${c_error}ERROR: The build compiler $c_notice$build_compiler$c_error is not currently directly supported.$c_reset"
+      echo -e "${c_error}ERROR: The build compiler ${c_notice}${build_compiler}${c_error} is not currently directly supported.${c_reset}"
     fi
 
     let failure=1
@@ -176,7 +194,7 @@ test_main() {
 
   if [[ $failure -eq 0 && ! -d $path_scripts ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      echo -e "${c_error}ERROR: The build scripts path $c_notice$path_scripts$c_error is not a valid directory.$c_reset"
+      echo -e "${c_error}ERROR: The build scripts path ${c_notice}${path_scripts}${c_error} is not a valid directory.${c_reset}"
     fi
 
     let failure=1
@@ -184,7 +202,7 @@ test_main() {
 
   if [[ $failure -eq 0 && ! -f $path_scripts_package ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      echo -e "${c_error}ERROR: Unable to find the package build script file under the build scripts path at $c_notice$path_scripts_package$c_error.$c_reset"
+      echo -e "${c_error}ERROR: Unable to find the package build script file under the build scripts path at ${c_notice}${path_scripts_package}${c_error}.${c_reset}"
     fi
 
     let failure=1
@@ -195,7 +213,7 @@ test_main() {
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
-        echo -e "${c_error}ERROR: The test path $c_notice$path_test$c_error, does not exist and could not be created or exists and is not a valid directory.$c_reset"
+        echo -e "${c_error}ERROR: The test path ${c_notice}${path_test}${c_error}, does not exist and could not be created or exists and is not a valid directory.${c_reset}"
       fi
 
       let failure=1
@@ -207,7 +225,7 @@ test_main() {
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
-        echo -e "${c_error}ERROR: The package path $c_notice$path_test_package$c_error, does not exist and could not be created or exists and is not a valid directory.$c_reset"
+        echo -e "${c_error}ERROR: The package path ${c_notice}${path_test_package}${c_error}, does not exist and could not be created or exists and is not a valid directory.${c_reset}"
       fi
 
       let failure=1
@@ -219,7 +237,7 @@ test_main() {
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
-        echo -e "${c_error}ERROR: The test project path $c_notice$path_test_project$c_error, does not exist and could not be created or exists and is not a valid directory.$c_reset"
+        echo -e "${c_error}ERROR: The test project path ${c_notice}${path_test_project}${c_error}, does not exist and could not be created or exists and is not a valid directory.${c_reset}"
       fi
 
       let failure=1
@@ -231,7 +249,7 @@ test_main() {
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
-        echo -e "${c_error}ERROR: The test work path $c_notice$path_test_work$c_error, does not exist and could not be created or exists and is not a valid directory.$c_reset"
+        echo -e "${c_error}ERROR: The test work path ${c_notice}${path_test_work}${c_error}, does not exist and could not be created or exists and is not a valid directory.${c_reset}"
       fi
 
       let failure=1
@@ -277,30 +295,30 @@ test_handle_colors() {
 test_help() {
 
   echo
-  echo -e "${c_title}$public_name$c_reset"
-  echo -e " ${c_notice}Version $version$c_reset"
+  echo -e "${c_title}${public_name}${c_reset}"
+  echo -e " ${c_notice}Version ${version}${c_reset}"
   echo
-  echo -e "$c_highlight$system_name$c_reset $c_notice[${c_reset} options $c_notice]$c_reset $c_notice[${c_reset} test_system $c_notice]$c_reset"
+  echo -e "${c_highlight}${system_name}${c_reset} ${c_notice}[${c_reset} options ${c_notice}]${c_reset} ${c_notice}[${c_reset} test_system ${c_notice}]${c_reset}"
   echo -e " ${c_important}normal${c_reset}  Perform a normal test (default)."
   echo -e " ${c_important}github${c_reset}  Perform a test meant to be used within Github."
   echo -e " ${c_important}gitlab${c_reset}  Perform a test meant to be used within Gitlab (not yet supported)."
   echo
-  echo -e "${c_highlight}Options:$c_reset"
-  echo -e " -${c_important}h$c_reset, --${c_important}help$c_reset      Print this help screen."
-  echo -e " +${c_important}d$c_reset, ++${c_important}dark$c_reset      Use color modes that show up better on dark backgrounds."
-  echo -e " +${c_important}l$c_reset, ++${c_important}light$c_reset     Use color modes that show up better on light backgrounds."
-  echo -e " +${c_important}n$c_reset, ++${c_important}no_color$c_reset  Do not use color."
-  echo -e " +${c_important}q$c_reset, ++${c_important}quiet$c_reset     Decrease verbosity, silencing most output."
-  echo -e " +${c_important}N$c_reset, ++${c_important}normal$c_reset    Set verbosity to normal."
-  echo -e " +${c_important}V$c_reset, ++${c_important}verbose$c_reset   Increase verbosity beyond normal output."
-  echo -e " +${c_important}D$c_reset, ++${c_important}debug$c_reset     Enable debugging, significantly increasing verbosity beyond normal output."
-  echo -e " +${c_important}v$c_reset, ++${c_important}version$c_reset   Print the version number of this program."
+  echo -e "${c_highlight}Options:${c_reset}"
+  echo -e " -${c_important}h${c_reset}, --${c_important}help${c_reset}      Print this help screen."
+  echo -e " +${c_important}d${c_reset}, ++${c_important}dark${c_reset}      Use color modes that show up better on dark backgrounds."
+  echo -e " +${c_important}l${c_reset}, ++${c_important}light${c_reset}     Use color modes that show up better on light backgrounds."
+  echo -e " +${c_important}n${c_reset}, ++${c_important}no_color${c_reset}  Do not use color."
+  echo -e " +${c_important}q${c_reset}, ++${c_important}quiet${c_reset}     Decrease verbosity, silencing most output."
+  echo -e " +${c_important}N${c_reset}, ++${c_important}normal${c_reset}    Set verbosity to normal."
+  echo -e " +${c_important}V${c_reset}, ++${c_important}verbose${c_reset}   Increase verbosity beyond normal output."
+  echo -e " +${c_important}D${c_reset}, ++${c_important}debug${c_reset}     Enable debugging, significantly increasing verbosity beyond normal output."
+  echo -e " +${c_important}v${c_reset}, ++${c_important}version${c_reset}   Print the version number of this program."
   echo
-  echo -e "${c_highlight}Install Options:$c_reset"
-  echo -e " -${c_important}c$c_reset, --${c_important}compiler${c_reset}      Specify the compiler, either gcc (default) or clang."
-  echo -e " -${c_important}p$c_reset, --${c_important}project${c_reset}       Designate that the project files must also be built."
-  echo -e " -${c_important}s$c_reset, --${c_important}path_scripts${c_reset}  Specify a custom directory where the build scripts are found."
-  echo -e " -${c_important}t$c_reset, --${c_important}path_test${c_reset}     Specify a custom directory where the test environment is found."
+  echo -e "${c_highlight}Install Options:${c_reset}"
+  echo -e " -${c_important}c${c_reset}, --${c_important}compiler${c_reset}      Specify the compiler, either gcc (default) or clang."
+  echo -e " -${c_important}p${c_reset}, --${c_important}project${c_reset}       Designate that the project files must also be built."
+  echo -e " -${c_important}s${c_reset}, --${c_important}path_scripts${c_reset}  Specify a custom directory where the build scripts are found."
+  echo -e " -${c_important}t${c_reset}, --${c_important}path_test${c_reset}     Specify a custom directory where the test environment is found."
   echo
 }
 
@@ -313,15 +331,15 @@ test_operate() {
   local ci_arguments=
 
   if [[ $PATH != "" ]] ; then
-    env_path="$env_path:$PATH"
+    env_path="${env_path}:${PATH}"
   fi
 
   if [[ $LD_LIBRARY_PATH != "" ]] ; then
-    env_libs="$env_libs:$LD_LIBRARY_PATH"
+    env_libs="${env_libs}:${LD_LIBRARY_PATH}"
   fi
 
   if [[ $test_system == "github" || $test_system == "gitlab" ]] ; then
-    ci_arguments="-d -I$includes_path -d -L$libraries_path"
+    ci_arguments="-d -I${includes_path} -d -L${libraries_path}"
 
     test_operate_ci_prebuild
 
@@ -364,21 +382,21 @@ test_operate_build_individual() {
 
   if [[ $verbosity != "quiet" ]] ; then
     echo
-    echo -e "${c_highlight}Cleaning and building package.$c_reset"
-    echo -e "${c_title}------------------------------$c_reset"
+    echo -e "${c_highlight}Cleaning and building package.${c_reset}"
+    echo -e "${c_title}------------------------------${c_reset}"
   fi
 
   if [[ $verbosity == "debug" ]] ; then
     echo
-    echo "bash ${path_scripts_package} $verbose $context -d $path_test_package -i rebuild"
+    echo "$shell_command ${path_scripts_package} $verbose $context -d $path_test_package -i rebuild"
   fi
 
-  bash ${path_scripts_package} $verbose $context -d $path_test_package -i rebuild
+  $shell_command ${path_scripts_package} $verbose $context -d $path_test_package -i rebuild
 
   if [[ $? -ne 0 ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
       echo
-      echo -e "${c_error}ERROR: Failed to clean and build the individual packages.$c_reset"
+      echo -e "${c_error}ERROR: Failed to clean and build the individual packages.${c_reset}"
     fi
 
     return 1
@@ -403,16 +421,16 @@ test_operate_build_individual() {
 }
 
 test_operate_build_project() {
-  local path="$1"
+  local path_="$1"
   local destination="$2"
   local project="$3"
   local mode="$4"
   local bootstrap="$5"
 
-  if [[ ! -d ${path}$project-$version/ ]] ; then
+  if [[ ! -d ${path_}${project}-${version}/ ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
       echo
-      echo -e "${c_error}ERROR: Package directory '${c_notice}${path}$project-$version$c_error' is invalid or missing.$c_reset"
+      echo -e "${c_error}ERROR: Package directory '${c_notice}${path_}${project}-${version}${c_error}' is invalid or missing.${c_reset}"
     fi
 
     return 1
@@ -420,15 +438,15 @@ test_operate_build_project() {
 
   if [[ $verbosity == "debug" ]] ; then
     echo
-    echo -e "Running '${c_notice}cd ${path}$project-$version/$c_reset'."
+    echo -e "Running '${c_notice}cd ${path_}${project}-${version}/${c_reset}'."
   fi
 
-  cd ${path}$project-$version/
+  cd ${path_}${project}-${version}/
 
   if [[ $? -ne 0 ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
       echo
-      echo -e "${c_error}ERROR: Failed to change into directory '${c_notice}${path}$project-$version$c_error'.$c_reset"
+      echo -e "${c_error}ERROR: Failed to change into directory '${c_notice}${path_}${project}-${version}${c_error}'.${c_reset}"
     fi
 
     return 1
@@ -451,27 +469,45 @@ test_operate_build_project() {
       PATH="$env_path" LD_LIBRARY_PATH="$env_libs" fake $verbose $context -w "$destination" -m $mode -m test -m $build_compiler clean build $ci_arguments
     fi
   else
-    if [[ $verbosity == "debug" ]] ; then
-      echo
+    if [[ $SHELL_ENGINE == "zsh" ]] ; then
+      if [[ $verbosity == "debug" ]] ; then
+        echo
+
+        if [[ $build_compiler == "gcc" ]] ; then
+          echo "zsh ./bootstrap.sh $verbose $context -w \"$destination\" -m $mode -m test build"
+        else
+          echo "zsh ./bootstrap.sh $verbose $context -w \"$destination\" -m $mode -m test -m $build_compiler build"
+        fi
+      fi
 
       if [[ $build_compiler == "gcc" ]] ; then
-        echo "./bootstrap.sh $verbose $context -w \"$destination\" -m $mode -m test build"
+        zsh ./bootstrap.sh $verbose $context -w "$destination" -m $mode -m test build
       else
-        echo "./bootstrap.sh $verbose $context -w \"$destination\" -m $mode -m test -m $build_compiler build"
+        zsh ./bootstrap.sh $verbose $context -w "$destination" -m $mode -m test -m $build_compiler build
       fi
-    fi
-
-    if [[ $build_compiler == "gcc" ]] ; then
-      ./bootstrap.sh $verbose $context -w "$destination" -m $mode -m test build
     else
-      ./bootstrap.sh $verbose $context -w "$destination" -m $mode -m test -m $build_compiler build
+      if [[ $verbosity == "debug" ]] ; then
+        echo
+
+        if [[ $build_compiler == "gcc" ]] ; then
+          echo "./bootstrap.sh $verbose $context -w \"$destination\" -m $mode -m test build"
+        else
+          echo "./bootstrap.sh $verbose $context -w \"$destination\" -m $mode -m test -m $build_compiler build"
+        fi
+      fi
+
+      if [[ $build_compiler == "gcc" ]] ; then
+        ./bootstrap.sh $verbose $context -w "$destination" -m $mode -m test build
+      else
+        ./bootstrap.sh $verbose $context -w "$destination" -m $mode -m test -m $build_compiler build
+      fi
     fi
   fi
 
   if [[ $? -ne 0 ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
       echo
-      echo -e "${c_error}ERROR: Failed to build $mode project '$c_notice$project$c_reset$c_error'.$c_reset"
+      echo -e "${c_error}ERROR: Failed to build $mode project '${c_notice}$project${c_reset}${c_error}'.${c_reset}"
     fi
 
     return 1
@@ -479,15 +515,19 @@ test_operate_build_project() {
 
   if [[ $verbosity != "quiet" ]] ; then
     echo
-    echo -e "Installing $mode project '$c_notice$project$c_reset'."
+    echo -e "Installing $mode project '${c_notice}$project${c_reset}'."
   fi
 
-  ./install.sh $verbose $context -w "$destination"
+  if [[ $SHELL_ENGINE == "zsh" ]] ; then
+    zsh ./install.sh $verbose $context -w "$destination"
+  else
+    ./install.sh $verbose $context -w "$destination"
+  fi
 
   if [[ $? -ne 0 ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
       echo
-      echo -e "${c_error}ERROR: Failed to install $mode project '$c_notice$project$c_reset$c_error'.$c_reset"
+      echo -e "${c_error}ERROR: Failed to install $mode project '${c_notice}$project${c_reset}${c_error}'.${c_reset}"
     fi
 
     return 1
@@ -502,21 +542,21 @@ test_operate_build_tools() {
 
   if [[ $verbosity != "quiet" ]] ; then
     echo
-    echo -e "${c_highlight}Building project build tools.$c_reset"
-    echo -e "${c_title}-----------------------------$c_reset"
+    echo -e "${c_highlight}Building project build tools.${c_reset}"
+    echo -e "${c_title}-----------------------------${c_reset}"
   fi
 
   if [[ $verbosity == "debug" ]] ; then
     echo
-    echo "bash ${path_scripts_package} $verbose $context -d $path_test_package -S fake rebuild"
+    echo "$shell_command ${path_scripts_package} $verbose $context -d $path_test_package -S fake rebuild"
   fi
 
-  bash ${path_scripts_package} $verbose $context -d $path_test_package -S fake rebuild
+  $shell_command ${path_scripts_package} $verbose $context -d $path_test_package -S fake rebuild
 
   if [[ $? -ne 0 ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
       echo
-      echo -e "${c_error}ERROR: Failed to clean and build the stand_alone fake package.$c_reset"
+      echo -e "${c_error}ERROR: Failed to clean and build the stand_alone fake package.${c_reset}"
     fi
 
     return 1
@@ -544,8 +584,8 @@ test_operate_ci_prebuild() {
 
   if [[ $verbosity != "quiet" ]] ; then
     echo
-    echo -e "${c_highlight}Performing Github Specific Pre-Build Operations.$c_reset"
-    echo -e "${c_title}------------------------------------------------$c_reset"
+    echo -e "${c_highlight}Performing Github Specific Pre-Build Operations.${c_reset}"
+    echo -e "${c_title}------------------------------------------------${c_reset}"
   fi
 
   test_operate_ci_prebuild_libcap
@@ -567,8 +607,8 @@ test_operate_ci_pretest() {
 
   if [[ $verbosity != "quiet" ]] ; then
     echo
-    echo -e "${c_highlight}Performing Github Specific Pre-Test Operations.$c_reset"
-    echo -e "${c_title}-----------------------------------------------$c_reset"
+    echo -e "${c_highlight}Performing Github Specific Pre-Test Operations.${c_reset}"
+    echo -e "${c_title}-----------------------------------------------${c_reset}"
   fi
 
   test_operate_ci_pretest_cmocka
@@ -590,7 +630,7 @@ test_operate_ci_pretest_cmocka() {
   if [[ -d $cmocka_path ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
       echo
-      echo -e "Detected existing cmocka repository at \"$c_notice$cmocka_path$c_reset\", skipping the cmocka process."
+      echo -e "Detected existing cmocka repository at \"${c_notice}$cmocka_path${c_reset}\", skipping the cmocka process."
     fi
 
     return 0
@@ -606,7 +646,7 @@ test_operate_ci_pretest_cmocka() {
   if [[ $? -ne 0 ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
       echo
-      echo -e "${c_error}ERROR: Failed to git clone '${c_notice}$cmocka_uri$c_error' onto  '${c_notice}$cmocka_path$c_error'.$c_reset"
+      echo -e "${c_error}ERROR: Failed to git clone '${c_notice}$cmocka_uri${c_error}' onto  '${c_notice}$cmocka_path${c_error}'.${c_reset}"
     fi
 
     return 1
@@ -622,7 +662,7 @@ test_operate_ci_pretest_cmocka() {
   if [[ $? -ne 0 ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
       echo
-      echo -e "${c_error}ERROR: Failed to create cmocka build data directory '$c_notice$cmocka_data$c_error'.$c_reset"
+      echo -e "${c_error}ERROR: Failed to create cmocka build data directory '${c_notice}$cmocka_data${c_error}'.${c_reset}"
     fi
 
     return 1
@@ -638,7 +678,7 @@ test_operate_ci_pretest_cmocka() {
   if [[ $? -ne 0 ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
       echo
-      echo -e "${c_error}ERROR: Failed to copy cmocka build settings: '$c_notice$cmocka_settings$c_error'.$c_reset"
+      echo -e "${c_error}ERROR: Failed to copy cmocka build settings: '${c_notice}$cmocka_settings${c_error}'.${c_reset}"
     fi
 
     return 1
@@ -654,7 +694,7 @@ test_operate_ci_pretest_cmocka() {
   if [[ $? -ne 0 ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
       echo
-      echo -e "${c_error}ERROR: Failed to change cmocka source directory '$c_notice$cmocka_path$c_error'.$c_reset"
+      echo -e "${c_error}ERROR: Failed to change cmocka source directory '${c_notice}$cmocka_path${c_error}'.${c_reset}"
     fi
 
     return 1
@@ -670,7 +710,7 @@ test_operate_ci_pretest_cmocka() {
   if [[ $? -ne 0 ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
       echo
-      echo -e "${c_error}ERROR: Failed to build '${c_notice}cmocka$c_error'.$c_reset"
+      echo -e "${c_error}ERROR: Failed to build '${c_notice}cmocka${c_error}'.${c_reset}"
     fi
 
     return 1
@@ -686,7 +726,7 @@ test_operate_ci_pretest_cmocka() {
   if [[ $? -ne 0 ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
       echo
-      echo -e "${c_error}ERROR: Failed to install cmocka headers to '$c_notice${work_path}includes/$c_error'.$c_reset"
+      echo -e "${c_error}ERROR: Failed to install cmocka headers to '${c_notice}${work_path}includes/${c_error}'.${c_reset}"
     fi
 
     return 1
@@ -702,7 +742,7 @@ test_operate_ci_pretest_cmocka() {
   if [[ $? -ne 0 ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
       echo
-      echo -e "${c_error}ERROR: Failed to install cmocka libraries to '$c_notice${work_path}libraries/shared/$c_error'.$c_reset"
+      echo -e "${c_error}ERROR: Failed to install cmocka libraries to '${c_notice}${work_path}libraries/shared/${c_error}'.${c_reset}"
     fi
 
     return 1
@@ -719,7 +759,7 @@ test_operate_ci_prebuild_libcap() {
   if [[ -d $libcap_path ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
       echo
-      echo -e "Detected existing libcap repository at \"$c_notice$libcap_path$c_reset\", skipping the libcap process."
+      echo -e "Detected existing libcap repository at \"${c_notice}$libcap_path${c_reset}\", skipping the libcap process."
     fi
 
     return 0
@@ -735,7 +775,7 @@ test_operate_ci_prebuild_libcap() {
   if [[ $? -ne 0 ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
       echo
-      echo -e "${c_error}ERROR: Failed to git clone '${c_notice}$libcap_uri$c_error' onto  '${c_notice}$libcap_path$c_error'.$c_reset"
+      echo -e "${c_error}ERROR: Failed to git clone '${c_notice}$libcap_uri${c_error}' onto  '${c_notice}$libcap_path${c_error}'.${c_reset}"
     fi
 
     return 1
@@ -751,7 +791,7 @@ test_operate_ci_prebuild_libcap() {
   if [[ $? -ne 0 ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
       echo
-      echo -e "${c_error}ERROR: Failed to change libcap source directory '$c_notice$libcap_path$c_error'.$c_reset"
+      echo -e "${c_error}ERROR: Failed to change libcap source directory '${c_notice}$libcap_path${c_error}'.${c_reset}"
     fi
 
     return 1
@@ -767,7 +807,7 @@ test_operate_ci_prebuild_libcap() {
   if [[ $? -ne 0 ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
       echo
-      echo -e "${c_error}ERROR: Failed to build and install libcap into the work directory '$c_notice${work_path}$c_error'.$c_reset"
+      echo -e "${c_error}ERROR: Failed to build and install libcap into the work directory '${c_notice}${work_path}${c_error}'.${c_reset}"
     fi
 
     return 1
@@ -786,14 +826,14 @@ test_operate_tests() {
 
     if [[ $verbosity != "quiet" ]] ; then
       echo
-      echo -e "${c_highlight}Testing Project $project.$c_reset"
-      echo -e "${c_title}--------------------------------------$c_reset"
+      echo -e "${c_highlight}Testing Project $project.${c_reset}"
+      echo -e "${c_title}--------------------------------------${c_reset}"
     fi
 
     if [[ ! -d $path_test_package_individual$project-$version/ ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
         echo
-        echo -e "${c_error}ERROR: Package directory '$c_notice$path_test_package_individual$project-$version$c_error' is invalid or missing.$c_reset"
+        echo -e "${c_error}ERROR: Package directory '${c_notice}$path_test_package_individual$project-$version${c_error}' is invalid or missing.${c_reset}"
       fi
 
       let failure=1
@@ -804,11 +844,11 @@ test_operate_tests() {
         if [[ $(echo $projects_no_tests | grep -o "\<$project\>") == "" ]] ; then
           if [[ $verbosity == "verbose" || $verbosity == "debug" ]] ; then
             echo
-            echo -e "${c_warning}WARNING: Project '$c_notice$project$c_warning' does not have a testfile.$c_reset"
+            echo -e "${c_warning}WARNING: Project '${c_notice}$project${c_warning}' does not have a testfile.${c_reset}"
           fi
         else
           echo
-          echo -e "Project '$c_notice$project$c_reset' has no tests and is not expected to.$c_reset"
+          echo -e "Project '${c_notice}$project${c_reset}' has no tests and is not expected to.${c_reset}"
         fi
 
         continue
@@ -818,7 +858,7 @@ test_operate_tests() {
     if [[ $failure -eq 0 ]] ; then
       if [[ $verbosity == "debug" ]] ; then
         echo
-        echo -e "Running '${c_notice}cd $path_test_package_individual$project-$version/$c_reset'."
+        echo -e "Running '${c_notice}cd $path_test_package_individual$project-$version/${c_reset}'."
       fi
 
       cd $path_test_package_individual$project-$version/
@@ -826,7 +866,7 @@ test_operate_tests() {
       if [[ $? -ne 0 ]] ; then
         if [[ $verbosity != "quiet" ]] ; then
           echo
-          echo -e "${c_error}ERROR: Failed to change into directory '$c_notice$path_test_package_individual$project-$version$c_error'.$c_reset"
+          echo -e "${c_error}ERROR: Failed to change into directory '${c_notice}$path_test_package_individual$project-$version${c_error}'.${c_reset}"
         fi
 
         let failure=1
@@ -853,7 +893,7 @@ test_operate_tests() {
       if [[ $? -ne 0 ]] ; then
         if [[ $verbosity != "quiet" ]] ; then
           echo
-          echo -e "${c_error}ERROR: Failure while testing project '$c_notice$project$c_reset$c_error'.$c_reset"
+          echo -e "${c_error}ERROR: Failure while testing project '${c_notice}$project${c_reset}${c_error}'.${c_reset}"
         fi
 
         let failure=1
