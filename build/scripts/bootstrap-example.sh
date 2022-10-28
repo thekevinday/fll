@@ -18,6 +18,14 @@
 # This will create a directory at he present working directory of the script caller called "fll" where everything will be installed.
 # This assumes the shell script is GNU bash.
 # This is not intended to provide any extensive or thorough error handling.
+#
+# This script can also be run under zsh rather than bash by setting the environment variable SHELL_ENGINE to "zsh", such as:
+#   SHELL_ENGINE="zsh" zsh ./bootstrap-example.sh --help
+#
+
+if [[ $SHELL_ENGINE == "zsh" ]] ; then
+  emulate ksh
+fi
 
 path_original="$PWD/"
 path_work="${path_original}fll/"
@@ -29,44 +37,56 @@ shared=
 static=
 version=0.6.1
 clang=
+shell_command=bash
+
+if [[ $SHELL_ENGINE == "zsh" ]] ; then
+  shell_command=zsh
+fi
 
 let i=2
+p=
 
 while [[ $i -le $# ]] ; do
 
-  if [[ ${!i} == "+d" ]] ; then
+  if [[ $SHELL_ENGINE == "zsh" ]] ; then
+    p=${(P)i}
+  else
+    p=${!i}
+  fi
+
+  if [[ $p == "+d" ]] ; then
     color="+d"
-  elif [[ ${!i} == "+l" ]] ; then
+  elif [[ $p == "+l" ]] ; then
     color="+l"
-  elif [[ ${!i} == "+n" ]] ; then
+  elif [[ $p == "+n" ]] ; then
     color="+n"
-  elif [[ ${!i} == "+q" ]] ; then
+  elif [[ $p == "+q" ]] ; then
     verbose="+q"
     verbose_common=
-  elif [[ ${!i} == "+N" ]] ; then
+  elif [[ $p == "+N" ]] ; then
     verbose="+N"
     verbose_common=
-  elif [[ ${!i} == "+V" ]] ; then
+  elif [[ $p == "+V" ]] ; then
     verbose="+V"
     verbose_common="-v"
-  elif [[ ${!i} == "+D" ]] ; then
+  elif [[ $p == "+D" ]] ; then
     verbose="+D"
     verbose_common="-v"
-  elif [[ ${!i} == "--enable-static" ]] ; then
+  elif [[ $p == "--enable-static" ]] ; then
     static="--enable-static"
-  elif [[ ${!i} == "--disable-static" ]] ; then
+  elif [[ $p == "--disable-static" ]] ; then
     static="--disable-static"
-  elif [[ ${!i} == "--enable-shared" ]] ; then
+  elif [[ $p == "--enable-shared" ]] ; then
     shared="--enable-shared"
-  elif [[ ${!i} == "--disable-shared" ]] ; then
+  elif [[ $p == "--disable-shared" ]] ; then
     shared="--disable-shared"
-  elif [[ ${!i} == "clang" ]] ; then
+  elif [[ $p == "clang" ]] ; then
     clang="-m clang"
-  elif [[ ${!i} == "-w" || ${!i} == "--work" ]] ; then
+  elif [[ $p == "-w" || $p == "--work" ]] ; then
     let i++
 
     if [[ $i -le $# ]] ; then
-      path_work=${!i}
+      path_work=$p
     fi
   fi
 
@@ -78,7 +98,7 @@ if [[ ! -d $path_work ]] ; then
 fi
 
 if [[ $1 == "individual" ]] ; then
-  bash build/scripts/package.sh $verbose $color rebuild -i
+  $shell_command build/scripts/package.sh $verbose $color rebuild -i
 
   if [[ $? -eq 0 ]] ; then
     for i in f_type f_status f_memory f_type_array f_string f_utf f_account f_capability f_color f_console f_control_group f_conversion f_directory f_environment f_execute f_file f_fss f_iki f_limit f_path f_pipe f_print f_status_string f_serialize f_signal f_socket f_thread fl_control_group fl_conversion fl_directory fl_environment fl_execute fl_fss fl_iki fl_print fl_signal fl_string fl_utf fl_utf_file fll_control_group fll_error fll_execute fll_file fll_fss fll_fss_status_string fll_iki fll_path fll_print fll_program fll_status_string ; do
@@ -86,11 +106,11 @@ if [[ $1 == "individual" ]] ; then
 
       cd package/individual/$i-$version/ &&
 
-      ./bootstrap.sh clean $verbose $color &&
+      $shell_command ./bootstrap.sh clean $verbose $color &&
 
-      ./bootstrap.sh build $verbose $color $shared $static -w $path_work -m individual $clang &&
+      $shell_command ./bootstrap.sh build $verbose $color $shared $static -w $path_work -m individual $clang &&
 
-      ./install.sh $verbose $color $shared $static -w $path_work &&
+      $shell_command ./install.sh $verbose $color $shared $static -w $path_work &&
 
       cd $path_original || break
     done
@@ -98,47 +118,47 @@ if [[ $1 == "individual" ]] ; then
 fi
 
 if [[ $1 == "level" ]] ; then
-  bash build/scripts/package.sh $verbose $color rebuild -l &&
+  $shell_command build/scripts/package.sh $verbose $color rebuild -l &&
 
   cd package/level/fll-level_0-$version/ &&
 
-  ./bootstrap.sh clean $verbose $color &&
+  $shell_command ./bootstrap.sh clean $verbose $color &&
 
-  ./bootstrap.sh build $verbose $color $shared $static -w $path_work -m level $clang &&
+  $shell_command ./bootstrap.sh build $verbose $color $shared $static -w $path_work -m level $clang &&
 
-  ./install.sh $verbose $color $shared $static -w $path_work &&
+  $shell_command ./install.sh $verbose $color $shared $static -w $path_work &&
 
   cd $path_original &&
 
   cd package/level/fll-level_1-$version/ &&
 
-  ./bootstrap.sh clean $verbose $color &&
+  $shell_command ./bootstrap.sh clean $verbose $color &&
 
-  ./bootstrap.sh build $verbose $color $shared $static -w $path_work -m level &&
+  $shell_command ./bootstrap.sh build $verbose $color $shared $static -w $path_work -m level &&
 
-  ./install.sh $verbose $color $shared $static -w $path_work &&
+  $shell_command ./install.sh $verbose $color $shared $static -w $path_work &&
 
   cd $path_original &&
 
   cd package/level/fll-level_2-$version/ &&
 
-  ./bootstrap.sh clean $verbose $color &&
+  $shell_command ./bootstrap.sh clean $verbose $color &&
 
-  ./bootstrap.sh build $verbose $color $shared $static -w $path_work -m level &&
+  $shell_command ./bootstrap.sh build $verbose $color $shared $static -w $path_work -m level &&
 
-  ./install.sh $verbose $color $shared $static -w $path_work
+  $shell_command ./install.sh $verbose $color $shared $static -w $path_work
 fi
 
 if [[ $1 == "monolithic" ]] ; then
-  bash build/scripts/package.sh $verbose $color rebuild -m &&
+  $shell_command build/scripts/package.sh $verbose $color rebuild -m &&
 
   cd package/monolithic/fll-$version/ &&
 
-  ./bootstrap.sh clean $verbose $color &&
+  $shell_command ./bootstrap.sh clean $verbose $color &&
 
-  ./bootstrap.sh build $verbose $color $shared $static -w $path_work -m monolithic $clang &&
+  $shell_command ./bootstrap.sh build $verbose $color $shared $static -w $path_work -m monolithic $clang &&
 
-  ./install.sh $verbose $color $shared $static -w $path_work
+  $shell_command ./install.sh $verbose $color $shared $static -w $path_work
 fi
 
 # The following in an example on building the Featureless Make project (fake) using the project bootstrapped from above.
@@ -151,15 +171,15 @@ if [[ $1 == "fake-individual" || $1 == "fake-level" || $1 == "fake-monolithic" ]
     build_mode="monolithic"
   fi
 
-  bash build/scripts/package.sh $verbose $color rebuild -p &&
+  $shell_command build/scripts/package.sh $verbose $color rebuild -p &&
 
   cd package/program/fake-$version/ &&
 
-  ./bootstrap.sh clean $verbose $color &&
+  $shell_command ./bootstrap.sh clean $verbose $color &&
 
-  ./bootstrap.sh build $verbose $color $shared $static -w $path_work -m $build_mode &&
+  $shell_command ./bootstrap.sh build $verbose $color $shared $static -w $path_work -m $build_mode &&
 
-  ./install.sh $verbose $color $shared $static -w $path_work
+  $shell_command ./install.sh $verbose $color $shared $static -w $path_work
 
 # The following in an example on building all FLL program projects using the project bootstrapped from above.
 elif [[ $1 == "programs-individual" || $1 == "programs-level" || $1 == "programs-monolithic" ]] ; then
@@ -171,7 +191,7 @@ elif [[ $1 == "programs-individual" || $1 == "programs-level" || $1 == "programs
     build_mode="monolithic"
   fi
 
-  bash build/scripts/package.sh $verbose $color rebuild -p &&
+  $shell_command build/scripts/package.sh $verbose $color rebuild -p &&
 
   cd package/program
 
@@ -181,11 +201,11 @@ elif [[ $1 == "programs-individual" || $1 == "programs-level" || $1 == "programs
 
       cd ${path_original}package/program/$i &&
 
-      ./bootstrap.sh clean $verbose $color &&
+      $shell_command ./bootstrap.sh clean $verbose $color &&
 
-      ./bootstrap.sh build $verbose $color $shared $static -w $path_work -m $build_mode &&
+      $shell_command ./bootstrap.sh build $verbose $color $shared $static -w $path_work -m $build_mode &&
 
-      ./install.sh $verbose $color $shared $static -w $path_work ||
+      $shell_command ./install.sh $verbose $color $shared $static -w $path_work ||
 
       break
     done
