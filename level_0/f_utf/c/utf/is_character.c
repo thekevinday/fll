@@ -12,12 +12,12 @@
 #include "../private-utf_subscript.h"
 #include "../private-utf_superscript.h"
 #include "../private-utf_symbol.h"
+#include "../private-utf_unassigned.h"
 #include "../private-utf_valid.h"
 #include "../private-utf_whitespace.h"
 #include "../private-utf_wide.h"
 #include "../private-utf_word.h"
 #include "../private-utf_zero_width.h"
-#include "private-is_unassigned.h"
 
 #ifdef __cplusplus
 extern "C" {

@@ -20,9 +20,9 @@ build_language c
 build_libraries -lc
 build_libraries-individual -lf_memory -lf_string
 
-build_sources_library utf.c private-utf.c private-utf_alphabetic.c private-utf_combining.c private-utf_control.c private-utf_digit.c private-utf_emoji.c private-utf_numeric.c private-utf_phonetic.c private-utf_private.c private-utf_punctuation.c private-utf_subscript.c private-utf_superscript.c private-utf_symbol.c private-utf_valid.c private-utf_whitespace.c private-utf_wide.c private-utf_word.c private-utf_zero_width.c
+build_sources_library utf.c private-utf.c private-utf_alphabetic.c private-utf_combining.c private-utf_control.c private-utf_digit.c private-utf_emoji.c private-utf_numeric.c private-utf_phonetic.c private-utf_private.c private-utf_punctuation.c private-utf_subscript.c private-utf_superscript.c private-utf_symbol.c private-utf_unassigned.c private-utf_valid.c private-utf_whitespace.c private-utf_wide.c private-utf_word.c private-utf_zero_width.c
 build_sources_library utf/common.c utf/convert.c utf/dynamic.c utf/is.c utf/is_character.c utf/map.c utf/map_multi.c utf/static.c utf/string.c utf/triple.c
-build_sources_library utf/private-is_unassigned.c utf/private-dynamic.c utf/private-map.c utf/private-map_multi.c utf/private-string.c utf/private-triple.c
+build_sources_library utf/private-dynamic.c utf/private-map.c utf/private-map_multi.c utf/private-string.c utf/private-triple.c
 
 build_sources_headers utf.h
 build_sources_headers utf/common.h utf/convert.h utf/dynamic.h utf/is.h utf/is_character.h utf/map.h utf/map_multi.h utf/static.h utf/string.h utf/triple.h

@@ -1,6 +1,6 @@
 #include "utf.h"
 #include "private-utf.h"
-#include "utf/private-is_unassigned.h"
+#include "private-utf_unassigned.h"
 
 #ifdef __cplusplus
 extern "C" {
