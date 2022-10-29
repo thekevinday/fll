@@ -277,15 +277,7 @@ extern "C" {
     }
 
     if (status == F_data_not_stop || status == F_data_not_eos) {
-      if (data->option & fss_payload_read_data_option_total_d) {
-        flockfile(main->output.to.stream);
-
-        fss_payload_read_print_zero(main);
-
-        funlockfile(main->output.to.stream);
-
-        return F_none;
-      }
+      if (data->option & fss_payload_read_data_option_total_d) return F_none;
 
       return F_status_set_warning(status);
     }

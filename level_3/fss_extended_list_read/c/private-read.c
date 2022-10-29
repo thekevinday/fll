@@ -262,11 +262,7 @@ extern "C" {
     }
 
     if (status == F_data_not_stop || status == F_data_not_eos) {
-      if (data->option & fss_extended_list_read_data_option_total_d) {
-        fss_extended_list_read_print_zero(main);
-
-        return F_none;
-      }
+      if (data->option & fss_extended_list_read_data_option_total_d) return F_none;
 
       return F_status_set_warning(status);
     }
