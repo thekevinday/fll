@@ -261,15 +261,7 @@ extern "C" {
     }
 
     if (status == F_data_not_stop || status == F_data_not_eos) {
-      if (data->option & fss_basic_list_read_data_option_total_d) {
-        f_file_stream_lock(main->output.to);
-
-        fss_basic_list_read_print_zero(main);
-
-        f_file_stream_unlock(main->output.to);
-
-        return F_none;
-      }
+      if (data->option & fss_basic_list_read_data_option_total_d) return F_none;
 
       return F_status_set_warning(status);
     }
