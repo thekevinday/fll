@@ -4,7 +4,7 @@ build_name fll
 
 version_major 0
 version_minor 6
-version_micro 1
+version_micro 2
 version_file micro
 version_target minor
 

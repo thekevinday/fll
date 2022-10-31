@@ -6,7 +6,7 @@ build_name e
 
 version_major 0
 version_minor 0
-version_micro 1
+version_micro 2
 version_file micro
 version_target major
 
