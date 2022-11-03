@@ -470,7 +470,7 @@ extern "C" {
             fl_print_format(" U+%04_U  ", data->main->output.to, unicode);
           }
           else {
-            fl_print_format(" U+%06_U  ", data->main->output.to, unicode);
+            fl_print_format(" U+%06_U", data->main->output.to, unicode);
           }
         }
         else {
@@ -494,7 +494,7 @@ extern "C" {
         }
         else if (data->mode == byte_dump_mode_duodecimal_e) {
           if (data->main->parameters.array[byte_dump_parameter_unicode_e].result == f_console_result_found_e) {
-            f_print_terminated("   ", data->main->output.to);
+            f_print_terminated("     ", data->main->output.to);
           }
 
           if (invalid[current]) {
