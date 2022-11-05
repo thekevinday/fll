@@ -77,6 +77,9 @@ extern "C" {
         return F_true;
       }
 
+      // The U+FEFF is used for the byte order mark (BOM).
+      // The use as a zero-width space is no longer supported as of Unicode 3.2.
+      // The BOM is meaningless in UTF-8.
       // Arabic Presentation Forms-B: U+FEFF.
       if (sequence == 0xefbbbf00) {
         return F_true;
