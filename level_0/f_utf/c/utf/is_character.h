@@ -146,6 +146,8 @@ extern "C" {
  *
  * This includes control code and control format characters.
  *
+ * The control codes U+0009..U+000D and U+0085 are considered white space and line breaking.
+ *
  * @param sequence
  *   The byte sequence to validate as a character.
  *
