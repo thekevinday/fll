@@ -930,6 +930,16 @@ extern "C" {
       return F_true;
     }
 
+    // Hanifi Rohingya: U+10D24 to U+10D27.
+    if (sequence >= 0xf090b4a3 && sequence <= 0xf090b4a7) {
+      return F_true;
+    }
+
+    // Yezidi: U+10EAB to U+10EAD.
+    if (sequence >= 0xf090baab && sequence <= 0xf090baad) {
+      return F_true;
+    }
+
     // Arabic Extended-C: U+10EFD to U+10EFF.
     if (sequence >= 0xf090bbbd && sequence <= 0xf090bbbf) {
       return F_true;

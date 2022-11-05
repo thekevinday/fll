@@ -585,22 +585,21 @@ extern "C" {
         return F_status_set_error(F_utf_fragment);
       }
 
+      // Control and combining characters are zero-width.
+      if (private_f_utf_character_is_control(sequence)) return F_true;
+      if (private_f_utf_character_is_combining(sequence)) return F_true;
+
       return private_f_utf_character_is_zero_width(sequence);
     }
 
-    const uint8_t ascii = macro_f_utf_char_t_to_char_1(sequence);
-
     // These control characters are considered zero-width spaces.
-    if (ascii >= 0x00 && ascii <= 0x08) {
+    if (macro_f_utf_char_t_to_char_1(sequence) >= 0x00 && macro_f_utf_char_t_to_char_1(sequence) < 0x09) {
       return F_true;
     }
-    else if (ascii == 0x0a) {
+    else if (macro_f_utf_char_t_to_char_1(sequence) > 0x0b && macro_f_utf_char_t_to_char_1(sequence) < 0x20) {
       return F_true;
     }
-    else if (ascii >= 0x0c && ascii <= 0x1f) {
-      return F_true;
-    }
-    else if (ascii == 0x7f) {
+    else if (macro_f_utf_char_t_to_char_1(sequence) == 0x7f) {
       return F_true;
     }
 

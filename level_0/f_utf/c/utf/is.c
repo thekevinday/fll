@@ -994,14 +994,18 @@ extern "C" {
         if (F_status_is_error(status)) return status;
       }
 
+      // Control and combining characters are zero-width.
+      if (private_f_utf_character_is_control(utf)) return F_true;
+      if (private_f_utf_character_is_combining(utf)) return F_true;
+
       return private_f_utf_character_is_zero_width(utf);
     }
 
     // These control characters are considered zero-width spaces.
-    if (*sequence >= 0x00 && *sequence <= 0x08) {
+    if (*sequence >= 0x00 && *sequence < 0x09) {
       return F_true;
     }
-    else if (*sequence >= 0x0c && *sequence <= 0x1f) {
+    else if (*sequence > 0x0b && *sequence < 0x20) {
       return F_true;
     }
     else if (*sequence == 0x7f) {
