@@ -567,6 +567,9 @@ package_dependencies_individual() {
   local dependencies_individual=
   local dependencies_individual_threadless=
   local dependency=
+  local dependency_file=
+  local dependency_files=
+  local dependency_suffix=
   local has_thread=
   local sub_level=
   local sub_dependencies=
@@ -586,61 +589,58 @@ package_dependencies_individual() {
       echo -e "${c_highlight}Building Dependencies for ${c_reset}${c_notice}${name}${c_reset}${c_highlight}.${c_reset}"
     fi
 
-    if [[ ! -f ${directory}/data/build/dependencies ]] ; then
+    if [[ ! -d ${directory}/data/build/ ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
-        echo -e "${c_error}ERROR: Cannot build dependencies, failed to find ${c_notice}${directory}/data/build/dependencies${c_error}.${c_reset}"
+        echo -e "${c_warning}WARNING: The project build directory ${c_notice}${dependency_file}${c_warning} is not found.${c_reset}"
       fi
 
-      let failure=1
-
-      return
+      continue
     fi
 
-    if [[ ! -f ${directory}/data/build/settings ]] ; then
-      if [[ $verbosity != "quiet" ]] ; then
-        echo -e "${c_error}ERROR: Cannot build dependencies for ${c_reset}${c_notice}${name}${c_reset}${c_error}, failed to find ${c_notice}${directory}/data/build/settings${c_error}.${c_reset}"
-      fi
+    # Additional dependency files are only supported in level_3.
+    if [[ $(echo "$directory" | grep -o "^${path_sources}level_3/") != "" ]] ; then
+      dependency_files="yes"
 
-      let failure=1
+      # When the files don't exist bash treats the pattern as a literal file.
+      # Do not loop through this wild-carded name (a file with the unexpanded name 'dependencies.*' is therefore not supported).
+      for dependency_file in ${directory}/data/build/dependencies.* ; do
 
-      return
+        if [[ "${directory}/data/build/dependencies.*" == $dependency_file ]] ; then
+          dependency_files="no"
+        fi
+
+        break
+      done
+    else
+      dependency_files="no"
     fi
 
-    dependencies=
-    dependencies_0=
-    dependencies_1=
-    dependencies_2=
-    dependencies_thread=
-    dependencies_individual=
-    has_thread=
+    for dependency_file in ${directory}/data/build/dependencies{,.*} ; do
 
-    if [[ -f ${directory}/data/build/dependencies ]] ; then
-      dependencies=$(cat ${directory}/data/build/dependencies | sed -e "/^\s*#/d" -e "s|#\.*$||")
-    fi
+      if [[ ! -f $dependency_file ]] ; then
 
-    if [[ $(echo "$dependencies" | grep -o "\<f_thread\>") != "" ]] ; then
-      has_thread="yes"
-    fi
-
-    for dependency in $dependencies ; do
-
-      if [[ $(echo "$dependency" | grep -o "^f_") != "" ]] ; then
-        level=level_0
-      elif [[ $(echo "$dependency" | grep -o "^fl_") != "" ]] ; then
-        level=level_1
-      elif [[ $(echo "$dependency" | grep -o "^fll_") != "" ]] ; then
-        level=level_2
-      else
-        if [[ $verbosity != "quiet" ]] ; then
-          echo -e "${c_warning}WARNING: Failed to detect level for dependency ${c_notice}${dependency}${c_warning}.${c_reset}"
+        if [[ $dependency_files == "yes" && "${directory}/data/build/dependencies" != $dependency_file ]] ; then
+          if [[ $verbosity != "quiet" ]] ; then
+            echo -e "${c_warning}WARNING: The dependency file ${c_notice}${dependency_file}${c_warning} is not found.${c_reset}"
+          fi
+        elif [[ $dependency_files == "no" && "${directory}/data/build/dependencies.*" != $dependency_file ]] ; then
+          if [[ $verbosity != "quiet" ]] ; then
+            echo -e "${c_error}ERROR: Cannot build dependencies, failed to find ${c_notice}${dependency_file}${c_error} file(s).${c_reset}"
+          fi
         fi
 
         continue
       fi
 
-      if [[ ! -d ${path_sources}${level}/${dependency}/data/build/ ]] ; then
+      if [[ $dependency_file == "${directory}/data/build/dependencies" ]] ; then
+        dependency_suffix=
+      else
+        dependency_suffix=$(echo $dependency_file | sed -e "s|^${directory}/data/build/dependencies||")
+      fi
+
+      if [[ ! -f ${directory}/data/build/settings${dependency_suffix} ]] ; then
         if [[ $verbosity != "quiet" ]] ; then
-          echo -e "${c_error}ERROR: Failed to find dependency data directory ${c_notice}${path_sources}${level}/${dependency}/data/build/${c_error}.${c_reset}"
+          echo -e "${c_error}ERROR: Cannot build dependencies for ${c_reset}${c_notice}${name}${c_reset}${c_error}, failed to find ${c_notice}${directory}/data/build/settings${dependency_suffix}${c_error}.${c_reset}"
         fi
 
         let failure=1
@@ -648,28 +648,39 @@ package_dependencies_individual() {
         return
       fi
 
-      sub_dependencies=
-      if [[ -f ${path_sources}${level}/${dependency}/data/build/dependencies ]] ; then
-        sub_dependencies=$(cat ${path_sources}${level}/${dependency}/data/build/dependencies | sed -e "/^\s*#/d" -e "s|#\.*$||")
+      dependencies=
+      dependencies_0=
+      dependencies_1=
+      dependencies_2=
+      dependencies_thread=
+      dependencies_individual=
+      has_thread=
+
+      dependencies=$(cat $dependency_file | sed -e "/^\s*#/d" -e "s|#\.*$||")
+
+      if [[ $(echo "$dependencies" | grep -o "\<f_thread\>") != "" ]] ; then
+        has_thread="yes"
       fi
 
-      for sub_dependency in $sub_dependencies ; do
+      for dependency in $dependencies ; do
 
-        if [[ $(echo "$sub_dependency" | grep -o "^f_") != "" ]] ; then
-          sub_level=level_0
-        elif [[ $(echo "$sub_dependency" | grep -o "^fl_") != "" ]] ; then
-          sub_level=level_1
+        if [[ $(echo "$dependency" | grep -o "^f_") != "" ]] ; then
+          level=level_0
+        elif [[ $(echo "$dependency" | grep -o "^fl_") != "" ]] ; then
+          level=level_1
+        elif [[ $(echo "$dependency" | grep -o "^fll_") != "" ]] ; then
+          level=level_2
         else
           if [[ $verbosity != "quiet" ]] ; then
-            echo -e "${c_warning}WARNING: Failed to detect level for sub-dependency ${c_notice}${sub_dependency}${c_warning}.${c_reset}"
+            echo -e "${c_warning}WARNING: Failed to detect level for dependency ${c_notice}${dependency}${c_warning}.${c_reset}"
           fi
 
           continue
         fi
 
-        if [[ ! -d ${path_sources}${sub_level}/${sub_dependency}/data/build/ ]] ; then
+        if [[ ! -d ${path_sources}${level}/${dependency}/data/build/ ]] ; then
           if [[ $verbosity != "quiet" ]] ; then
-            echo -e "${c_error}ERROR: Failed to find dependency data directory ${c_notice}${path_sources}${sub_level}/${sub_dependency}/data/build/${c_error}.${c_reset}"
+            echo -e "${c_error}ERROR: Failed to find dependency data directory ${c_notice}${path_sources}${level}/${dependency}/data/build/${c_error}.${c_reset}"
           fi
 
           let failure=1
@@ -677,31 +688,71 @@ package_dependencies_individual() {
           return
         fi
 
-        sub_sub_dependencies=
-        if [[ -f ${path_sources}${sub_level}/${sub_dependency}/data/build/dependencies ]] ; then
-          sub_sub_dependencies=$(cat ${path_sources}${sub_level}/${sub_dependency}/data/build/dependencies | sed -e "/^\s*#/d" -e "s|#\.*$||")
+        sub_dependencies=
+        if [[ -f ${path_sources}${level}/${dependency}/data/build/dependencies ]] ; then
+          sub_dependencies=$(cat ${path_sources}${level}/${dependency}/data/build/dependencies | sed -e "/^\s*#/d" -e "s|#\.*$||")
         fi
 
-        for sub_sub_dependency in $sub_sub_dependencies ; do
+        for sub_dependency in $sub_dependencies ; do
 
-          if [[ $(echo "$sub_sub_dependency" | grep -o "^f_") != "" ]] ; then
-            sub_sub_level=level_0
+          if [[ $(echo "$sub_dependency" | grep -o "^f_") != "" ]] ; then
+            sub_level=level_0
+          elif [[ $(echo "$sub_dependency" | grep -o "^fl_") != "" ]] ; then
+            sub_level=level_1
           else
             if [[ $verbosity != "quiet" ]] ; then
-              echo -e "${c_warning}WARNING: Failed to detect level for sub-sub-dependency ${c_notice}$sub_sub_dependency${c_warning}.${c_reset}"
+              echo -e "${c_warning}WARNING: Failed to detect level for sub-dependency ${c_notice}${sub_dependency}${c_warning}.${c_reset}"
             fi
 
             continue
           fi
 
-          package_dependencies_individual_append "$sub_sub_level" "$sub_sub_dependency"
+          if [[ ! -d ${path_sources}${sub_level}/${sub_dependency}/data/build/ ]] ; then
+            if [[ $verbosity != "quiet" ]] ; then
+              echo -e "${c_error}ERROR: Failed to find dependency data directory ${c_notice}${path_sources}${sub_level}/${sub_dependency}/data/build/${c_error}.${c_reset}"
+            fi
+
+            let failure=1
+
+            return
+          fi
+
+          sub_sub_dependencies=
+          if [[ -f ${path_sources}${sub_level}/${sub_dependency}/data/build/dependencies ]] ; then
+            sub_sub_dependencies=$(cat ${path_sources}${sub_level}/${sub_dependency}/data/build/dependencies | sed -e "/^\s*#/d" -e "s|#\.*$||")
+          fi
+
+          for sub_sub_dependency in $sub_sub_dependencies ; do
+
+            if [[ $(echo "$sub_sub_dependency" | grep -o "^f_") != "" ]] ; then
+              sub_sub_level=level_0
+            else
+              if [[ $verbosity != "quiet" ]] ; then
+                echo -e "${c_warning}WARNING: Failed to detect level for sub-sub-dependency ${c_notice}$sub_sub_dependency${c_warning}.${c_reset}"
+              fi
+
+              continue
+            fi
+
+            package_dependencies_individual_append "$sub_sub_level" "$sub_sub_dependency"
+          done
+
+          if [[ $failure != "" ]] ; then
+            break;
+          fi
+
+          package_dependencies_individual_append "$sub_level" "$sub_dependency"
+
+          if [[ $failure != "" ]] ; then
+            break;
+          fi
         done
 
         if [[ $failure != "" ]] ; then
           break;
         fi
 
-        package_dependencies_individual_append "$sub_level" "$sub_dependency"
+        package_dependencies_individual_append "$level" "$dependency"
 
         if [[ $failure != "" ]] ; then
           break;
@@ -712,89 +763,87 @@ package_dependencies_individual() {
         break;
       fi
 
-      package_dependencies_individual_append "$level" "$dependency"
-
       if [[ $failure != "" ]] ; then
         break;
+      fi
+
+      dependencies_individual=$(echo "$dependencies_individual" | sed -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||' -e 's|[[:space:]][[:space:]]*$| |')
+      if [[ $dependencies_individual != "" ]] ; then
+        if [[ $verbosity == "verbose" ]] ; then
+          echo -e " $dependencies_individual"
+        fi
+
+        dependencies_individual=" $dependencies_individual"
+      fi
+
+      settings=${directory}/data/build/settings${dependency_suffix}
+      sed -i -e "s|^\s*build_libraries-individual[[:space:]].*\$|build_libraries-individual${dependencies_individual}|" $settings &&
+      sed -i -e "s|^\s*build_libraries-individual\$|build_libraries-individual${dependencies_individual}|" $settings
+
+      if [[ $? -ne 0 ]] ; then
+        if [[ $verbosity != "quiet" ]] ; then
+          echo -e "${c_error}ERROR: Failed to update settings file ${c_notice}${settings}${c_error}.${c_reset}"
+        fi
+
+        let failure=1
+
+        break
+      fi
+
+      if [[ $has_thread == "yes" && $dependencies_individual != "" && $(grep -o "^\s*build_libraries-individual_threadless\>" $settings) != "" ]] ; then
+        dependencies_individual_threadless=$(echo "$dependencies_individual" | sed -e "s| \-lf_thread\>||g")
+
+        if [[ $verbosity == "verbose" ]] ; then
+          echo -e " (threadless) $dependencies_individual_threadless"
+        fi
+
+        settings=${directory}/data/build/settings
+        sed -i -e "s|^\s*build_libraries-individual_threadless[[:space:]].*\$|build_libraries-individual_threadless${dependencies_individual_threadless}|" $settings &&
+        sed -i -e "s|^\s*build_libraries-individual_threadless\$|build_libraries-individual_threadless${dependencies_individual_threadless}|" $settings
+
+        if [[ $? -ne 0 ]] ; then
+          if [[ $verbosity != "quiet" ]] ; then
+            echo -e "${c_error}ERROR: Failed to update settings file ${c_notice}${settings}${c_error}.${c_reset}"
+          fi
+
+          let failure=1
+
+          break
+        fi
+      fi
+
+      # All level 3 are expected to support all modes: individual, level, and monolithic.
+      if [[ $level_current == "3" ]] ; then
+        sed -i -e "s|^\s*build_libraries-level\>.*\$|build_libraries-level -lfll_2 -lfll_1 -lfll_0|" $settings &&
+        sed -i -e "s|^\s*build_libraries-level\$|build_libraries-level -lfll_2 -lfll_1 -lfll_0|" $settings
+
+        if [[ $? -ne 0 ]] ; then
+          if [[ $verbosity != "quiet" ]] ; then
+            echo -e "${c_error}ERROR: Failed to update settings file ${c_notice}${settings}${c_error}.${c_reset}"
+          fi
+
+          let failure=1
+
+          break
+        fi
+
+        sed -i -e "s|^\s*build_libraries-monolithic\>.*\$|build_libraries-monolithic -lfll|" $settings &&
+        sed -i -e "s|^\s*build_libraries-monolithic\$|build_libraries-monolithic -lfll|" $settings
+
+        if [[ $? -ne 0 ]] ; then
+          if [[ $verbosity != "quiet" ]] ; then
+            echo -e "${c_error}ERROR: Failed to update settings file ${c_notice}${settings}${c_error}.${c_reset}"
+          fi
+
+          let failure=1
+
+          break
+        fi
       fi
     done
 
     if [[ $failure != "" ]] ; then
       break;
-    fi
-
-    dependencies_individual=$(echo "$dependencies_individual" | sed -e 's|^[[:space:]]*||' -e 's|[[:space:]]*$||' -e 's|[[:space:]][[:space:]]*$| |')
-    if [[ $dependencies_individual != "" ]] ; then
-      if [[ $verbosity == "verbose" ]] ; then
-        echo -e " $dependencies_individual"
-      fi
-
-      dependencies_individual=" $dependencies_individual"
-    fi
-
-    settings=${directory}/data/build/settings
-    sed -i -e "s|^\s*build_libraries-individual[[:space:]].*\$|build_libraries-individual${dependencies_individual}|" $settings &&
-    sed -i -e "s|^\s*build_libraries-individual\$|build_libraries-individual${dependencies_individual}|" $settings
-
-    if [[ $? -ne 0 ]] ; then
-      if [[ $verbosity != "quiet" ]] ; then
-        echo -e "${c_error}ERROR: Failed to update settings file ${c_notice}${settings}${c_error}.${c_reset}"
-      fi
-
-      let failure=1
-
-      return
-    fi
-
-    if [[ $has_thread == "yes" && $dependencies_individual != "" && $(grep -o "^\s*build_libraries-individual_threadless\>" $settings) != "" ]] ; then
-      dependencies_individual_threadless=$(echo "$dependencies_individual" | sed -e "s| \-lf_thread\>||g")
-
-      if [[ $verbosity == "verbose" ]] ; then
-        echo -e " (threadless) $dependencies_individual_threadless"
-      fi
-
-      settings=${directory}/data/build/settings
-      sed -i -e "s|^\s*build_libraries-individual_threadless[[:space:]].*\$|build_libraries-individual_threadless${dependencies_individual_threadless}|" $settings &&
-      sed -i -e "s|^\s*build_libraries-individual_threadless\$|build_libraries-individual_threadless${dependencies_individual_threadless}|" $settings
-
-      if [[ $? -ne 0 ]] ; then
-        if [[ $verbosity != "quiet" ]] ; then
-          echo -e "${c_error}ERROR: Failed to update settings file ${c_notice}${settings}${c_error}.${c_reset}"
-        fi
-
-        let failure=1
-
-        return
-      fi
-    fi
-
-    # All level 3 are expected to support all modes: individual, level, and monolithic.
-    if [[ $level_current == "3" ]] ; then
-      sed -i -e "s|^\s*build_libraries-level\>.*\$|build_libraries-level -lfll_2 -lfll_1 -lfll_0|" $settings &&
-      sed -i -e "s|^\s*build_libraries-level\$|build_libraries-level -lfll_2 -lfll_1 -lfll_0|" $settings
-
-      if [[ $? -ne 0 ]] ; then
-        if [[ $verbosity != "quiet" ]] ; then
-          echo -e "${c_error}ERROR: Failed to update settings file ${c_notice}${settings}${c_error}.${c_reset}"
-        fi
-
-        let failure=1
-
-        return
-      fi
-
-      sed -i -e "s|^\s*build_libraries-monolithic\>.*\$|build_libraries-monolithic -lfll|" $settings &&
-      sed -i -e "s|^\s*build_libraries-monolithic\$|build_libraries-monolithic -lfll|" $settings
-
-      if [[ $? -ne 0 ]] ; then
-        if [[ $verbosity != "quiet" ]] ; then
-          echo -e "${c_error}ERROR: Failed to update settings file ${c_notice}${settings}${c_error}.${c_reset}"
-        fi
-
-        let failure=1
-
-        return
-      fi
     fi
   done
 }
