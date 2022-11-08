@@ -39,6 +39,8 @@ extern "C" {
 
           if (!((++main->signal_check) % status_code_signal_check_d)) {
             if (fll_program_standard_signal_received(main)) {
+              f_file_stream_unlock(main->output.to);
+
               fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
 
               setting->status = F_status_set_error(F_interrupt);
@@ -71,6 +73,8 @@ extern "C" {
 
           if (!((++main->signal_check) % status_code_signal_check_d)) {
             if (fll_program_standard_signal_received(main)) {
+              f_file_stream_unlock(main->output.to);
+
               fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
 
               setting->status = F_status_set_error(F_interrupt);
@@ -103,6 +107,8 @@ extern "C" {
 
           if (!((++main->signal_check) % status_code_signal_check_d)) {
             if (fll_program_standard_signal_received(main)) {
+              f_file_stream_unlock(main->output.to);
+
               fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
 
               setting->status = F_status_set_error(F_interrupt);
