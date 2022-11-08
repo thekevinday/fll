@@ -38,6 +38,23 @@ extern "C" {
   }
 #endif // _di_status_code_print_error_no_status_codes_
 
+#ifndef _di_status_code_print_error_invalid_callback_
+  f_status_t status_code_print_error_invalid_callback(status_code_setting_t * const setting, const fl_print_t print, const f_string_t name) {
+
+    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+
+    f_file_stream_lock(print.to);
+
+    fl_print_format("%[%QInvalid callback specified for '%]", print.to, print.context, print.prefix, print.context);
+    fl_print_format("%[%s%]", print.to, print.notable, name, print.notable);
+    fl_print_format("%[' internal setting.%]%r", print.to, print.context, print.context, f_string_eol_s);
+
+    f_file_stream_unlock(print.to);
+
+    return F_none;
+  }
+#endif // _di_status_code_print_error_invalid_callback_
+
 #ifndef _di_status_code_print_help_
   f_status_t status_code_print_help(status_code_setting_t * const setting, const fl_print_t print) {
 

@@ -1,4 +1,7 @@
 # fss-0001
+#
+# Settings for the "status_code" program.
+#
 
 build_name status_code
 
@@ -24,7 +27,7 @@ build_libraries-monolithic -lfll
 
 build_sources_library status_code.c common.c print.c private-common.c private-status_code.c
 
-build_sources_program main.c
+build_sources_program main-status_code.c
 
 build_sources_headers status_code.h common.h print.h
 

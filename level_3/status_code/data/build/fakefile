@@ -1,0 +1,21 @@
+# fss-0005 iki-0002
+
+settings:
+  fail exit
+  modes monolithic level individual
+
+  environment PATH LD_LIBRARY_PATH
+
+main:
+  if parameter mode
+    operate using_mode
+  else
+    operate using_default
+
+using_default:
+  build settings
+  build settings.fss_status_code
+
+using_mode:
+  build settings parameter:'mode:value'
+  build settings.fss_status_code parameter:'mode:value'

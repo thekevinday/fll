@@ -11,6 +11,21 @@ extern "C" {
 
     if (!main || !setting || F_status_is_error(setting->status)) return;
 
+    if (!setting->status_string_from || !setting->status_string_to) {
+
+      if (!setting->status_string_from) {
+        status_code_print_error_invalid_callback(setting, main->error, "status_string_from");
+      }
+
+      if (!setting->status_string_to) {
+        status_code_print_error_invalid_callback(setting, main->error, "status_string_to");
+      }
+
+      setting->status = F_status_set_error(F_parameter);
+
+      return;
+    }
+
     setting->status = F_none;
 
     if (setting->flag & status_code_main_flag_help_e) {

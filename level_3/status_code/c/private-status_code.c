@@ -54,7 +54,7 @@ extern "C" {
 
     f_status_t code = F_none;
 
-    status = fll_status_string_from(value, &code);
+    status = setting->status_string_from(value, &code);
 
     if (F_status_is_error(status)) {
       if (F_status_set_fine(status) == F_data) {
@@ -97,7 +97,7 @@ extern "C" {
 
     f_string_static_t name = f_string_static_t_initialize;
 
-    status = f_status_string_to((f_status_t) number, &name);
+    status = setting->status_string_to((f_status_t) number, &name);
 
     if (F_status_is_error(status)) {
       if (F_status_set_fine(status) == F_data) {

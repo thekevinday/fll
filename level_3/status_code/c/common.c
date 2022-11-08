@@ -8,11 +8,6 @@ extern "C" {
   const f_string_static_t status_code_program_version_s = macro_f_string_static_t_initialize(STATUS_CODE_program_version_s, 0, STATUS_CODE_program_version_s_length);
 #endif // _di_status_code_program_version_
 
-#ifndef _di_status_code_program_name_
-  const f_string_static_t status_code_program_name_s = macro_f_string_static_t_initialize(STATUS_CODE_program_name_s, 0, STATUS_CODE_program_name_s_length);
-  const f_string_static_t status_code_program_name_long_s = macro_f_string_static_t_initialize(STATUS_CODE_program_name_long_s, 0, STATUS_CODE_program_name_long_s_length);
-#endif // _di_status_code_program_name_
-
 #ifndef _di_status_code_program_help_parameters_
   const f_string_static_t status_code_program_help_parameters_s = macro_f_string_static_t_initialize(STATUS_CODE_program_help_parameters_s, 0, STATUS_CODE_program_help_parameters_s_length);
 #endif // _di_status_code_program_help_parameters_

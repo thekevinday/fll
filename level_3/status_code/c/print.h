@@ -49,6 +49,27 @@ extern "C" {
 #endif // _di_status_code_print_error_no_status_codes_
 
 /**
+ * Print an error message when a callback from status_code_setting_t is invalid.
+ *
+ * @param setting
+ *   The main program settings.
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   Designates the how and where to print.
+ * @param name
+ *   The name of the callback setting that is invalid.
+ *   This should either be 'status_string_from' or 'status_string_to'.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ */
+#ifndef _di_status_code_print_error_invalid_callback_
+  extern f_status_t status_code_print_error_invalid_callback(status_code_setting_t * const setting, const fl_print_t print, const f_string_t name);
+#endif // _di_status_code_print_error_invalid_callback_
+
+/**
  * Print help.
  *
  * @param setting
