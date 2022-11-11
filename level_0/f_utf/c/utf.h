@@ -48,14 +48,24 @@
 // FLL-0 utf includes.
 #include <fll/level_0/utf/common.h>
 #include <fll/level_0/utf/static.h>
+#include <fll/level_0/utf/statics.h>
+#include <fll/level_0/utf/staticss.h>
 #include <fll/level_0/utf/dynamic.h>
+#include <fll/level_0/utf/dynamics.h>
+#include <fll/level_0/utf/dynamicss.h>
 #include <fll/level_0/utf/convert.h>
 #include <fll/level_0/utf/is.h>
 #include <fll/level_0/utf/is_character.h>
 #include <fll/level_0/utf/map.h>
+#include <fll/level_0/utf/maps.h>
+#include <fll/level_0/utf/mapss.h>
 #include <fll/level_0/utf/map_multi.h>
+#include <fll/level_0/utf/map_multis.h>
+#include <fll/level_0/utf/map_multiss.h>
 #include <fll/level_0/utf/string.h>
 #include <fll/level_0/utf/triple.h>
+#include <fll/level_0/utf/triples.h>
+#include <fll/level_0/utf/tripless.h>
 
 #ifdef __cplusplus
 extern "C" {

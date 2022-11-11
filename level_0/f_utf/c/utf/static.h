@@ -48,58 +48,6 @@ extern "C" {
 #endif // _di_f_utf_string_static_t_
 
 /**
- * An array of static strings.
- *
- * array: The array of static strings.
- * size:  Total amount of space available.
- * used:  Total number of space used.
- */
-#ifndef _di_f_utf_string_statics_t_
-  typedef struct {
-    f_utf_string_static_t *array;
-
-    f_array_length_t size;
-    f_array_length_t used;
-  } f_utf_string_statics_t;
-
-  #define f_utf_string_statics_t_initialize { 0, 0, 0 }
-
-  #define macro_f_utf_string_statics_t_initialize(array, size, used) { array, size, used }
-  #define macro_f_utf_string_statics_t_initialize2(array, length) { array, length, length }
-
-  #define macro_f_utf_string_statics_t_clear(statics) \
-    statics.array = 0; \
-    statics.size = 0; \
-    statics.used = 0;
-#endif // _di_f_utf_string_statics_t_
-
-/**
- * An array of static strings.
- *
- * array: The array of static strings.
- * size:  Total amount of space available.
- * used:  Total number of space used.
- */
-#ifndef _di_f_utf_string_staticss_t_
-  typedef struct {
-    f_utf_string_statics_t *array;
-
-    f_array_length_t size;
-    f_array_length_t used;
-  } f_utf_string_staticss_t;
-
-  #define f_utf_string_staticss_t_initialize { 0, 0, 0 }
-
-  #define macro_f_utf_string_staticss_t_initialize(array, size, used) { array, size, used }
-  #define macro_f_utf_string_staticss_t_initialize2(array, length) { array, length, length }
-
-  #define macro_f_utf_string_staticss_t_clear(staticss) \
-    staticss.array = 0; \
-    staticss.size = 0; \
-    staticss.used = 0;
-#endif // _di_f_utf_string_staticss_t_
-
-/**
  * Provide a static empty string.
  *
  * This is intended to represent an empty string.
