@@ -9,8 +9,6 @@ char * __wrap_getenv(char *name) {
   const bool failure = mock_type(bool);
 
   if (failure) {
-    errno = mock_type(int);
-
     return (char *) 0;
   }
 
