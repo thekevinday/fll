@@ -47,6 +47,7 @@
 
 // FSS Identify includes.
 #include <program/fss_identify/common.h>
+#include <program/fss_identify/print.h>
 
 #ifdef __cplusplus
 extern "C" {

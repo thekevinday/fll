@@ -49,6 +49,7 @@
 
 // FSS Extended List Read includes.
 #include <program/fss_extended_list_read/common.h>
+#include <program/fss_extended_list_read/print.h>
 
 #ifdef __cplusplus
 extern "C" {

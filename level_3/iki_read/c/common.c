@@ -81,7 +81,12 @@ extern "C" {
 
     // Load parameters.
     setting->status = f_console_parameter_process(arguments, &main->parameters);
-    if (F_status_is_error(setting->status)) return;
+
+    if (F_status_is_error(setting->status)) {
+      iki_read_print_error(setting, main->error, "f_console_parameter_process");
+
+      return;
+    }
 
     {
       f_array_length_t choice = 0;
@@ -98,9 +103,7 @@ extern "C" {
         setting->status = fll_program_parameter_process_context(choices, modes, F_true, main);
 
         if (F_status_is_error(setting->status)) {
-          iki_read_print_line_first_locked(setting, main->error);
-          fll_error_print(main->error, F_status_set_fine(setting->status), "fll_program_parameter_process_context", F_true);
-          iki_read_print_line_last_locked(setting, main->error);
+          iki_read_print_error(setting, main->error, "fll_program_parameter_process_context");
 
           return;
         }
@@ -131,9 +134,7 @@ extern "C" {
         setting->status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, main);
 
         if (F_status_is_error(setting->status)) {
-          iki_read_print_line_first_locked(setting, main->error);
-          fll_error_print(main->error, F_status_set_fine(setting->status), "fll_program_parameter_process_verbosity", F_true);
-          iki_read_print_line_last_locked(setting, main->error);
+          iki_read_print_error(setting, main->error, "fll_program_parameter_process_verbosity");
 
           return;
         }
@@ -236,9 +237,7 @@ extern "C" {
       setting->status = f_string_dynamics_increase_by(main->parameters.array[iki_read_parameter_name_e].values.used, &setting->names);
 
       if (F_status_is_error(setting->status)) {
-        iki_read_print_line_first_locked(setting, main->error);
-        fll_error_print(main->error, F_status_set_fine(setting->status), "f_string_dynamics_increase_by", F_true);
-        iki_read_print_line_last_locked(setting, main->error);
+        iki_read_print_error(setting, main->error, "f_string_dynamics_increase_by");
 
         return;
       }
@@ -269,9 +268,7 @@ extern "C" {
       } // for
 
       if (F_status_is_error(setting->status)) {
-        iki_read_print_line_first_locked(setting, main->error);
-        fll_error_print(main->error, F_status_set_fine(setting->status), "f_string_dynamics_append", F_true);
-        iki_read_print_line_last_locked(setting, main->error);
+        iki_read_print_error(setting, main->error, "f_string_dynamics_append");
 
         return;
       }
@@ -304,9 +301,7 @@ extern "C" {
       setting->status = f_string_maps_increase_by(main->parameters.array[iki_read_parameter_replace_e].values.used / 2, &setting->replace);
 
       if (F_status_is_error(setting->status)) {
-        iki_read_print_line_first_locked(setting, main->error);
-        fll_error_print(main->error, F_status_set_fine(setting->status), "f_string_maps_increase_by", F_true);
-        iki_read_print_line_last_locked(setting, main->error);
+        iki_read_print_error(setting, main->error, "f_string_maps_increase_by");
 
         return;
       }
@@ -340,9 +335,7 @@ extern "C" {
         }
 
         if (F_status_is_error(setting->status)) {
-          iki_read_print_line_first_locked(setting, main->error);
-          fll_error_print(main->error, F_status_set_fine(setting->status), "f_string_dynamic_resize", F_true);
-          iki_read_print_line_last_locked(setting, main->error);
+          iki_read_print_error(setting, main->error, "f_string_dynamic_resize");
 
           return;
         }
@@ -393,9 +386,7 @@ extern "C" {
       setting->status = f_string_triples_increase_by(main->parameters.array[iki_read_parameter_wrap_e].values.used / 3, &setting->wrap);
 
       if (F_status_is_error(setting->status)) {
-        iki_read_print_line_first_locked(setting, main->error);
-        fll_error_print(main->error, F_status_set_fine(setting->status), "f_string_triples_increase_by", F_true);
-        iki_read_print_line_last_locked(setting, main->error);
+        iki_read_print_error(setting, main->error, "f_string_triples_increase_by");
 
         return;
       }
@@ -433,9 +424,7 @@ extern "C" {
         }
 
         if (F_status_is_error(setting->status)) {
-          iki_read_print_line_first_locked(setting, main->error);
-          fll_error_print(main->error, F_status_set_fine(setting->status), "f_string_dynamic_resize", F_true);
-          iki_read_print_line_last_locked(setting, main->error);
+          iki_read_print_error(setting, main->error, "f_string_dynamic_resize");
 
           return;
         }
@@ -560,9 +549,7 @@ extern "C" {
       setting->status = f_string_dynamics_resize(main->parameters.remaining.used, &setting->files);
 
       if (F_status_is_error(setting->status)) {
-        iki_read_print_line_first_locked(setting, main->error);
-        fll_error_print(main->error, F_status_set_fine(setting->status), "f_string_dynamics_resize", F_true);
-        iki_read_print_line_last_locked(setting, main->error);
+        iki_read_print_error(setting, main->error, "f_string_dynamics_resize");
 
         return;
       }
@@ -576,9 +563,7 @@ extern "C" {
           setting->status = f_string_dynamic_resize(0, &setting->files.array[setting->files.used]);
 
           if (F_status_is_error(setting->status)) {
-            iki_read_print_line_first_locked(setting, main->error);
-            fll_error_print(main->error, F_status_set_fine(setting->status), "f_string_dynamic_resize", F_true);
-            iki_read_print_line_last_locked(setting, main->error);
+            iki_read_print_error(setting, main->error, "f_string_dynamic_resize");
 
             return;
           }
@@ -624,9 +609,7 @@ extern "C" {
     setting->status = f_string_triples_increase_by(parameter.values.used / 3, triple);
 
     if (F_status_is_error(setting->status)) {
-      iki_read_print_line_first_locked(setting, main->error);
-      fll_error_print(main->error, F_status_set_fine(setting->status), "f_string_triples_increase_by", F_true);
-      iki_read_print_line_last_locked(setting, main->error);
+      iki_read_print_error(setting, main->error, "f_string_triples_increase_by");
 
       return F_false;
     }
@@ -666,9 +649,7 @@ extern "C" {
       }
 
       if (F_status_is_error(setting->status)) {
-        iki_read_print_line_first_locked(setting, main->error);
-        fll_error_print(main->error, F_status_set_fine(setting->status), "f_string_dynamic_resize", F_true);
-        iki_read_print_line_last_locked(setting, main->error);
+        iki_read_print_error(setting, main->error, "f_string_dynamic_resize");
 
         return F_false;
       }

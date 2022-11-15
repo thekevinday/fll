@@ -9,9 +9,7 @@ extern "C" {
 #ifndef _di_fss_payload_write_error_parameter_same_times_print_
   void fss_payload_write_error_parameter_same_times_print(fll_program_data_t * const main) {
 
-    if (main->error.verbosity == f_console_verbosity_quiet_e) {
-      return;
-    }
+    if (main->error.verbosity == f_console_verbosity_quiet_e) return;
 
     f_file_stream_lock(main->error.to);
 
@@ -30,9 +28,7 @@ extern "C" {
 #ifndef _di_fss_payload_write_error_parameter_unsupported_eol_print_
   void fss_payload_write_error_parameter_unsupported_eol_print(fll_program_data_t * const main) {
 
-    if (main->error.verbosity == f_console_verbosity_quiet_e) {
-      return;
-    }
+    if (main->error.verbosity == f_console_verbosity_quiet_e) return;
 
     f_file_stream_lock(main->error.to);
 
@@ -49,9 +45,7 @@ extern "C" {
 #ifndef _di_fss_payload_write_error_parameter_value_missing_print_
   void fss_payload_write_error_parameter_value_missing_print(fll_program_data_t * const main, const f_string_static_t symbol, const f_string_static_t parameter) {
 
-    if (main->error.verbosity == f_console_verbosity_quiet_e) {
-      return;
-    }
+    if (main->error.verbosity == f_console_verbosity_quiet_e) return;
 
     f_file_stream_lock(main->error.to);
 
@@ -104,7 +98,7 @@ extern "C" {
         }
 
         if (F_status_is_error(status)) {
-          fll_error_print(main->error, F_status_set_fine(status), "fll_fss_payload_write", F_true);
+          fss_payload_write_print_error(setting, main->error, "fll_fss_payload_write");
 
           return status;
         }
@@ -139,7 +133,7 @@ extern "C" {
         }
 
         if (F_status_is_error(status)) {
-          fll_error_print(main->error, F_status_set_fine(status), "fl_fss_basic_list_object_write", F_true);
+          fss_payload_write_print_error(setting, main->error, "fl_fss_basic_list_object_write");
 
           return status;
         }
@@ -161,7 +155,7 @@ extern "C" {
         status = fl_fss_basic_list_content_write(*content, object ? f_fss_complete_full_e : f_fss_complete_none_e, prepend, state, &range, buffer);
 
         if (F_status_is_error(status)) {
-          fll_error_print(main->error, F_status_set_fine(status), "fl_fss_payload_content_write", F_true);
+          fss_payload_write_print_error(setting, main->error, "fl_fss_payload_content_write");
 
           return status;
         }
@@ -172,7 +166,7 @@ extern "C" {
       status = f_string_dynamic_append(f_string_eol_s, buffer);
 
       if (F_status_is_error(status)) {
-        fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_append", F_true);
+        fss_payload_write_print_error(setting, main->error, "f_string_dynamic_append");
 
         return status;
       }
@@ -229,7 +223,7 @@ extern "C" {
         status_pipe = f_file_read_block(input, &block);
 
         if (F_status_is_error(status_pipe)) {
-          fll_error_print(main->error, F_status_set_fine(status_pipe), "f_file_read_block", F_true);
+          fss_payload_write_print_error(setting, main->error, "f_file_read_block");
 
           status_pipe = F_status_set_error(F_pipe);
 
@@ -254,7 +248,7 @@ extern "C" {
           status = f_string_dynamic_increase_by(block.used, &object);
 
           if (F_status_is_error(status)) {
-            fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_increase_by", F_true);
+            fss_payload_write_print_error(setting, main->error, "f_string_dynamic_increase_by");
 
             break;
           }
@@ -313,7 +307,7 @@ extern "C" {
             status = f_string_dynamic_increase_by(total, &content);
 
             if (F_status_is_error(status)) {
-              fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_increase_by", F_true);
+              fss_payload_write_print_error(setting, main->error, "f_string_dynamic_increase_by");
 
               break;
             }
@@ -336,7 +330,7 @@ extern "C" {
           status = f_string_dynamic_increase_by(total, &content);
 
           if (F_status_is_error(status)) {
-            fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_increase_by", F_true);
+            fss_payload_write_print_error(setting, main->error, "f_string_dynamic_increase_by");
 
             break;
           }
@@ -388,7 +382,7 @@ extern "C" {
           status = f_string_dynamic_increase_by(block.used, &content);
 
           if (F_status_is_error(status)) {
-            fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_increase_by", F_true);
+            fss_payload_write_print_error(setting, main->error, "f_string_dynamic_increase_by");
 
             break;
           }

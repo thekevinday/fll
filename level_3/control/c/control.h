@@ -52,6 +52,7 @@
 
 // Control includes.
 #include <program/control/common.h>
+#include <program/control/print.h>
 
 #ifdef __cplusplus
 extern "C" {

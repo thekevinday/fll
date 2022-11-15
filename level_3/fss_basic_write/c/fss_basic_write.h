@@ -42,6 +42,7 @@
 
 // FSS Basic Write includes.
 #include <program/fss_basic_write/common.h>
+#include <program/fss_basic_write/print.h>
 
 #ifdef __cplusplus
 extern "C" {

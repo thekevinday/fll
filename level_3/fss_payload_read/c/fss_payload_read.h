@@ -50,6 +50,7 @@
 
 // FSS Payload Read includes.
 #include <program/fss_payload_read/common.h>
+#include <program/fss_payload_read/print.h>
 
 #ifdef __cplusplus
 extern "C" {

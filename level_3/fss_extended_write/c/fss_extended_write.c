@@ -47,7 +47,9 @@ extern "C" {
         status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, main);
 
         if (F_status_is_error(status)) {
+          fss_extended_write_print_line_first_locked(setting, main->error);
           fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process_verbosity", F_true);
+          fss_extended_write_print_line_last_locked(setting, main->error);
 
           return;
         }

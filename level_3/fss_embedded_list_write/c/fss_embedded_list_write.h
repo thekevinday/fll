@@ -42,6 +42,7 @@
 
 // FSS Embedded List Write includes.
 #include <program/fss_embedded_list_write/common.h>
+#include <program/fss_embedded_list_write/print.h>
 
 #ifdef __cplusplus
 extern "C" {

@@ -42,6 +42,7 @@
 
 // FSS Payload Write includes.
 #include <program/fss_payload_write/common.h>
+#include <program/fss_payload_write/print.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -72,7 +73,7 @@ extern "C" {
  *     F_parameter (with error bit) if main is NULL or setting is NULL.
  */
 #ifndef _di_fss_payload_write_main_
-  extern f_status_t fss_payload_write_main(fll_program_data_t * const main, fss_payload_write_setting_t * const setting);
+  extern void fss_payload_write_main(fll_program_data_t * const main, fss_payload_write_setting_t * const setting);
 #endif // _di_fss_payload_write_main_
 
 #ifdef __cplusplus

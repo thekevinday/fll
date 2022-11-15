@@ -80,7 +80,14 @@ extern "C" {
  *     F_false on success when performing verification and verify failed.
  *     F_interrupt on (exit) signal received.
  *
+ *     F_failure (with error bit) on processing failure.
  *     F_parameter (with error bit) if main is NULL or setting is NULL.
+ *
+ *     Errors (with error bit) from: f_iki_object_is().
+ *     Errors (with error bit) from: fll_iki_content_escape().
+ *
+ * @see f_iki_object_is()
+ * @see fll_iki_content_escape()
  */
 #ifndef _di_iki_write_main_
   extern void iki_write_main(fll_program_data_t * const main, iki_write_setting_t * const setting);

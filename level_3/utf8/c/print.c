@@ -5,6 +5,32 @@
 extern "C" {
 #endif
 
+#ifndef _di_utf8_print_error_
+  f_status_t utf8_print_error(utf8_setting_t * const setting, const fl_print_t print, const f_string_t function) {
+
+    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+
+    utf8_print_line_first_locked(setting, print);
+    fll_error_print(print, F_status_set_fine(setting->status), function, F_true);
+    utf8_print_line_last_locked(setting, print);
+
+    return F_none;
+  }
+#endif // _di_utf8_print_error_
+
+#ifndef _di_utf8_print_error_file_
+  f_status_t utf8_print_error_file(utf8_setting_t * const setting, const fl_print_t print, const f_string_t function, const f_string_static_t name, const f_string_static_t operation, const uint8_t type) {
+
+    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+
+    utf8_print_line_first_locked(setting, print);
+    fll_error_file_print(print, F_status_set_fine(setting->status), function, F_true, name, operation, type);
+    utf8_print_line_last_locked(setting, print);
+
+    return F_none;
+  }
+#endif // _di_utf8_print_error_file_
+
 #ifndef _di_utf8_print_bytesequence_
   f_status_t utf8_print_bytesequence(fll_program_data_t * const main, utf8_setting_t * const setting, const f_string_static_t sequence) {
 

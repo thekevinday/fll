@@ -6,241 +6,188 @@
 extern "C" {
 #endif
 
-#ifndef _di_fss_payload_write_program_version_
-  const f_string_static_t fss_payload_write_program_version_s = macro_f_string_static_t_initialize(FSS_PAYLOAD_WRITE_program_version_s, 0, FSS_PAYLOAD_WRITE_program_version_s_length);
-#endif // _di_fss_payload_write_program_version_
-
-#ifndef _di_fss_payload_write_program_name_
-  const f_string_static_t fss_payload_write_program_name_s = macro_f_string_static_t_initialize(FSS_PAYLOAD_WRITE_program_name_s, 0, FSS_PAYLOAD_WRITE_program_name_s_length);
-  const f_string_static_t fss_payload_write_program_name_long_s = macro_f_string_static_t_initialize(FSS_PAYLOAD_WRITE_program_name_long_s, 0, FSS_PAYLOAD_WRITE_program_name_long_s_length);
-#endif // _di_fss_payload_write_program_name_
-
 #ifndef _di_fss_payload_write_main_
-  f_status_t fss_payload_write_main(fll_program_data_t * const main, fss_payload_write_setting_t * const setting) {
+  void fss_payload_write_main(fll_program_data_t * const main, fss_payload_write_setting_t * const setting) {
 
-    f_status_t status = F_none;
+    if (!main || !setting || F_status_is_error(setting->status)) return;
 
-    // Load parameters.
-    setting->status = f_console_parameter_process(arguments, &main->parameters);
-    if (F_status_is_error(setting->status)) return;
+    setting->status = F_none;
 
-    {
-      f_array_length_t choice = 0;
-      f_uint16s_t choices = f_uint16s_t_initialize;
-
-      // Identify and prioritize "color context" parameters.
-      {
-        uint16_t choices_array[3] = { fss_payload_write_parameter_no_color_e, fss_payload_write_parameter_light_e, fss_payload_write_parameter_dark_e };
-        choices.array = choices_array;
-        choices.used = 3;
-
-        const uint8_t modes[3] = { f_color_mode_color_not_e, f_color_mode_light_e, f_color_mode_dark_e };
-
-        status = fll_program_parameter_process_context(choices, modes, F_true, main);
-
-        if (F_status_is_error(status)) {
-          fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process_context", F_true);
-
-          return;
-        }
-      }
-
-      // Identify and prioritize "verbosity" parameters.
-      {
-        uint16_t choices_array[5] = { fss_payload_write_parameter_verbosity_quiet_e, fss_payload_write_parameter_verbosity_error_e, fss_payload_write_parameter_verbosity_verbose_e, fss_payload_write_parameter_verbosity_debug_e, fss_payload_write_parameter_verbosity_normal_e };
-        choices.array = choices_array;
-        choices.used = 5;
-
-        const uint8_t verbosity[5] = { f_console_verbosity_quiet_e, f_console_verbosity_error_e, f_console_verbosity_verbose_e, f_console_verbosity_debug_e, f_console_verbosity_normal_e };
-
-        status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, main);
-
-        if (F_status_is_error(status)) {
-          fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process_verbosity", F_true);
-
-          return;
-        }
-      }
-    }
-
-    f_string_static_t * const argv = main->parameters.arguments.array;
-
-    status = F_none;
-
-    if (main->parameters.array[fss_payload_write_parameter_help_e].result == f_console_result_found_e) {
+    if (setting->flag & fss_payload_write_main_flag_help_e) {
       fss_payload_write_print_help(setting, main->message);
 
-      return status;
+      return;
     }
 
-    if (main->parameters.array[fss_payload_write_parameter_version_e].result == f_console_result_found_e) {
+    if (setting->flag & fss_payload_write_main_flag_version_e) {
       fll_program_print_version(main->message, fss_payload_write_program_version_s);
 
-      return status;
+      return;
     }
 
-    f_file_t output = f_file_t_initialize;
+    setting->escaped.used = 0;
 
-    output.id = F_type_descriptor_output_d;
-    output.stream = main->output.to;
-    output.flag = F_file_flag_create_d | F_file_flag_write_only_d | F_file_flag_append_d;
-    output.size_read = main->output.to.size_read;
-    output.size_write = main->output.to.size_write;
+    if (main->pipe & fll_program_data_pipe_input_e) {
+      bool object_ended = F_false;
 
-    if (F_status_is_error_not(status)) {
-      if (main->parameters.array[fss_payload_write_parameter_file_e].result == f_console_result_additional_e) {
-        if (main->parameters.array[fss_payload_write_parameter_file_e].values.used > 1) {
-          if (main->error.verbosity < f_console_verbosity_normal_e) {
-            fll_program_print_error_parameter_must_specify_once(main->error, f_console_symbol_long_enable_s, fss_payload_write_long_file_s);
+      f_array_length_t previous = 0;
+      f_string_range_t range = f_string_range_t_initialize;
+      f_status_t status = F_none;
+      f_file_t pipe = f_file_t_initialize;
+
+      pipe.id = F_type_descriptor_input_d;
+      pipe.size_read = 1;
+
+      setting->buffer.used = 0;
+      setting->object.used = 0;
+      setting->content.used = 0;
+
+      range.start = 0;
+
+      do {
+        if (!((++main->signal_check) % fss_payload_write_signal_check_d)) {
+          if (fll_program_standard_signal_received(main)) {
+            setting->status = F_status_set_error(F_interrupt);
+
+            return;
           }
 
-          status = F_status_set_error(F_parameter);
+          main->signal_check = 0;
         }
-        else {
-          const f_array_length_t location = main->parameters.array[fss_payload_write_parameter_file_e].values.array[0];
 
-          output.id = -1;
-          output.stream = 0;
-          status = f_file_stream_open(argv[location], f_string_empty_s, &output);
+        if (status != F_none_eof) {
+          status = f_file_read(pipe, &setting->buffer);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, argv[location], f_file_operation_open_s, fll_error_file_type_file_e);
+            setting->status = F_status_set_error(F_pipe);
+
+            fss_payload_write_print_error_file(setting, main->error, "f_file_read", f_string_ascii_minus_s, f_file_operation_read_s, fll_error_file_type_pipe_e);
+
+            return;
           }
+
+          if (!setting->buffer.used) {
+            setting->status = F_status_set_error(F_parameter);
+
+            fss_payload_write_print_line_first_locked(setting, main->error);
+            fll_program_print_error_pipe_missing_content(main->error);
+            fss_payload_write_print_line_last_locked(setting, main->error);
+
+            return;
+          }
+
+          range.stop = setting->buffer.used - 1;
         }
-      }
-      else if (main->parameters.array[fss_payload_write_parameter_file_e].result == f_console_result_found_e) {
-        fss_payload_write_error_parameter_value_missing_print(main, f_console_symbol_long_enable_s, fss_payload_write_long_file_s);
-        status = F_status_set_error(F_parameter);
-      }
-    }
 
-    if (F_status_is_error_not(status)) {
-      if (main->parameters.array[fss_payload_write_parameter_object_e].locations.used || main->parameters.array[fss_payload_write_parameter_content_e].locations.used) {
-        if (main->parameters.array[fss_payload_write_parameter_object_e].locations.used) {
-          if (main->parameters.array[fss_payload_write_parameter_object_e].locations.used != main->parameters.array[fss_payload_write_parameter_object_e].values.used) {
-            fss_payload_write_error_parameter_value_missing_print(main, f_console_symbol_long_enable_s, fss_payload_write_long_object_s);
-            status = F_status_set_error(F_parameter);
-          }
-          else if (main->parameters.array[fss_payload_write_parameter_content_e].locations.used != main->parameters.array[fss_payload_write_parameter_content_e].values.used) {
-            fss_payload_write_error_parameter_value_missing_print(main, f_console_symbol_long_enable_s, fss_payload_write_long_content_s);
-            status = F_status_set_error(F_parameter);
-          }
-          else if (main->parameters.array[fss_payload_write_parameter_object_e].locations.used != main->parameters.array[fss_payload_write_parameter_content_e].locations.used && main->parameters.array[fss_payload_write_parameter_partial_e].result == f_console_result_none_e) {
-            fss_payload_write_error_parameter_same_times_print(main);
-            status = F_status_set_error(F_parameter);
-          }
-          else if (main->parameters.array[fss_payload_write_parameter_content_e].locations.used && main->parameters.array[fss_payload_write_parameter_partial_e].locations.used) {
-            if (main->parameters.array[fss_payload_write_parameter_content_e].result == f_console_result_additional_e) {
-              if (main->error.verbosity > f_console_verbosity_quiet_e) {
-                f_file_stream_lock(main->error.to);
+        previous = range.start;
+        setting->status = f_string_dynamic_seek_to(setting->buffer, f_string_ascii_feed_form_s.string[0], &range);
 
-                fl_print_format("%r%[%QThe '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-                fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_enable_s, fss_payload_write_long_partial_s, main->error.notable);
-                fl_print_format("%[' parameter only allows either the '%]", main->error.to, main->error.context, main->error.context);
-                fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_enable_s, fss_payload_write_long_object_s, main->error.notable);
-                fl_print_format("%[' parameter or the '%]", main->error.to, main->error.context, main->error.context);
-                fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_enable_s, fss_payload_write_long_content_s, main->error.notable);
-                fl_print_format("%[' parameter, but not both.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
+        if (setting->status == F_data_not_stop) {
+          setting->status = F_status_set_error(F_parameter);
+        }
 
-                f_file_stream_unlock(main->error.to);
-              }
+        if (F_status_is_error(setting->status)) {
+          fss_payload_write_print_error(setting, main->error, "f_string_dynamic_seek_to");
 
-              status = F_status_set_error(F_parameter);
+          return;
+        }
+
+        if (object_ended && previous == range.start) {
+          setting->status = F_status_set_error(F_parameter);
+
+          fss_payload_write_print_line_first_locked(setting, main->error);
+          fll_program_print_error_pipe_invalid_form_feed(main->error);
+          fss_payload_write_print_line_last_locked(setting, main->error);
+
+          return;
+        }
+
+        range.stop = range.start - 1;
+        range.start = previous;
+
+        if (object_ended) {
+          setting->content.used = 0;
+
+          if (setting->buffer.used) {
+            setting->status = f_string_dynamic_partial_append_nulless(setting->buffer, range, &setting->content);
+
+            if (F_status_is_error(setting->status)) {
+              fss_payload_write_print_error(setting, main->error, "f_string_dynamic_partial_append_nulless");
+
+              return;
             }
           }
 
-          if (F_status_is_error_not(status)) {
-            if (main->parameters.array[fss_payload_write_parameter_content_e].result == f_console_result_additional_e) {
-              f_array_length_t location_object = 0;
-              f_array_length_t location_content = 0;
-              f_array_length_t location_sub_object = 0;
-              f_array_length_t location_sub_content = 0;
+          setting->status = fss_payload_write_process(main, setting, setting->object, setting->content);
+          if (F_status_is_error(setting->status)) return;
 
-              for (f_array_length_t i = 0; i < main->parameters.array[fss_payload_write_parameter_object_e].locations.used; ++i) {
-                location_object = main->parameters.array[fss_payload_write_parameter_object_e].locations.array[i];
-                location_content = main->parameters.array[fss_payload_write_parameter_content_e].locations.array[i];
-                location_sub_object = main->parameters.array[fss_payload_write_parameter_object_e].locations_sub.array[i];
-                location_sub_content = main->parameters.array[fss_payload_write_parameter_content_e].locations_sub.array[i];
+          fll_print_dynamic_raw(f_string_eol_s, main->output.to);
 
-                if (location_object > location_content || location_object == location_content && location_sub_object > location_sub_content) {
-                  if (main->error.verbosity > f_console_verbosity_quiet_e) {
-                    f_file_stream_lock(main->error.to);
-
-                    fl_print_format("%r%[%QEach '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-                    fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_enable_s, fss_payload_write_long_object_s, main->error.notable);
-                    fl_print_format("%[' parameter must be specified before a '%]", main->error.to, main->error.context, main->error.context);
-                    fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_enable_s, fss_payload_write_long_content_s, main->error.notable);
-                    fl_print_format("%[' parameter.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
-
-                    f_file_stream_unlock(main->error.to);
-                  }
-
-                  status = F_status_set_error(F_parameter);
-                  break;
-                }
-              } // for
-            }
-          }
+          object_ended = F_false;
         }
-        else if (main->parameters.array[fss_payload_write_parameter_content_e].locations.used) {
-          if (main->parameters.array[fss_payload_write_parameter_content_e].locations.used != main->parameters.array[fss_payload_write_parameter_content_e].values.used) {
-            fss_payload_write_error_parameter_value_missing_print(main, f_console_symbol_long_enable_s, fss_payload_write_long_content_s);
-            status = F_status_set_error(F_parameter);
-          }
-          else if (!main->parameters.array[fss_payload_write_parameter_partial_e].locations.used) {
-            fss_payload_write_error_parameter_same_times_print(main);
-            status = F_status_set_error(F_parameter);
-          }
-        }
-      }
-      else if (!(main->pipe & fll_program_data_pipe_input_e)) {
-        if (main->error.verbosity > f_console_verbosity_quiet_e) {
-          f_file_stream_lock(main->error.to);
+        else {
+          setting->object.used = 0;
 
-          fl_print_format("%r%[%QThis requires either piped data or the use of the '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-          fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_enable_s, fss_payload_write_long_object_s, main->error.notable);
-          fl_print_format("%[' parameter with the '%]", main->error.to, main->error.context, main->error.context);
-          fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_enable_s, fss_payload_write_long_content_s, main->error.notable);
-          fl_print_format("%[' parameter.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
+          setting->status = f_string_dynamic_partial_append_nulless(setting->buffer, range, &setting->object);
 
-          f_file_stream_unlock(main->error.to);
-        }
+          if (F_status_is_error(setting->status)) {
+            fss_payload_write_print_error(setting, main->error, "f_string_dynamic_partial_append_nulless");
 
-        status = F_status_set_error(F_parameter);
-      }
-
-      if (F_status_is_error_not(status) && (main->pipe & fll_program_data_pipe_input_e)) {
-        if (main->parameters.array[fss_payload_write_parameter_partial_e].result == f_console_result_found_e) {
-          if (main->error.verbosity > f_console_verbosity_quiet_e) {
-            f_file_stream_lock(main->error.to);
-
-            fl_print_format("%r%[%QThis '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-            fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_enable_s, fss_payload_write_long_partial_s, main->error.notable);
-            fl_print_format("%[' parameter cannot be used when processing a pipe.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
-
-            f_file_stream_unlock(main->error.to);
+            return;
           }
 
-          status = F_status_set_error(F_parameter);
+          object_ended = F_true;
         }
+
+        // Restore the range, positioned after the new line.
+        range.start = range.stop + 2;
+        range.stop = setting->buffer.used - 1;
+
+        // Only clear the buffer and reset the start when the entire buffer has been processed.
+        if (range.start > range.stop) {
+          range.start = 0;
+          setting->buffer.used = 0;
+        }
+
+      } while (status != F_none_eof || setting->buffer.used || object_ended);
+
+      if (object_ended) {
+        setting->status = F_status_set_error(F_parameter);
+
+        fss_payload_write_print_line_first_locked(setting, main->error);
+        fll_program_print_error_pipe_object_without_content(main->error);
+        fss_payload_write_print_line_last_locked(setting, main->error);
+
+        return;
       }
     }
 
-    if (F_status_is_error_not(status)) {
-      if (main->parameters.array[fss_payload_write_parameter_prepend_e].result == f_console_result_found_e) {
-        if (main->error.verbosity > f_console_verbosity_quiet_e) {
-          f_file_stream_lock(main->error.to);
+    for (f_array_length_t i = 0; i < setting->objects.used; ++i) {
 
-          fl_print_format("%r%[%QThe parameter '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-          fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_enable_s, fss_payload_write_long_prepend_s, main->error.notable);
-          fl_print_format("%[' is specified, but no value is given.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
+      if (!((++main->signal_check) % fss_payload_write_signal_check_d)) {
+        if (fll_program_standard_signal_received(main)) {
+          setting->status = F_status_set_error(F_interrupt);
 
-          f_file_stream_unlock(main->error.to);
+          return;
         }
 
-        status = F_status_set_error(F_parameter);
+        main->signal_check = 0;
       }
-      else if (main->parameters.array[fss_payload_write_parameter_prepend_e].result == f_console_result_additional_e) {
+
+      setting->status = fss_payload_write_process(main, setting, setting->objects.array[i], setting->contents.array[i]);
+      if (F_status_is_error(setting->status)) return;
+
+      fll_print_dynamic_raw(f_string_eol_s, main->output.to);
+    } // for
+
+    // Ensure a new line is always put at the end of the program execution, unless in quiet mode.
+    fss_payload_write_print_line_last_locked(setting, main->message);
+
+
+    // xxxxxxxxxxx
+
+    if (F_status_is_error_not(status)) {
+      if (main->parameters.array[fss_payload_write_parameter_prepend_e].result == f_console_result_additional_e) {
         const f_array_length_t index = main->parameters.array[fss_payload_write_parameter_prepend_e].values.array[main->parameters.array[fss_payload_write_parameter_prepend_e].values.used - 1];
 
         if (argv[index].used) {
@@ -264,6 +211,7 @@ extern "C" {
               }
 
               status = F_status_set_error(F_parameter);
+
               break;
             }
           } // for

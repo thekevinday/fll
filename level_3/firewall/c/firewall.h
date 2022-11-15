@@ -49,6 +49,7 @@
 
 // Firewall includes.
 #include <program/firewall/common.h>
+#include <program/firewall/print.h>
 
 #ifdef __cplusplus
 extern "C" {

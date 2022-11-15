@@ -4,6 +4,15 @@
 extern "C" {
 #endif
 
+#ifndef _di_fss_payload_read_program_version_
+  const f_string_static_t fss_payload_read_program_version_s = macro_f_string_static_t_initialize(FSS_PAYLOAD_READ_program_version_s, 0, FSS_PAYLOAD_READ_program_version_s_length);
+#endif // _di_fss_payload_read_program_version_
+
+#ifndef _di_fss_payload_read_program_name_
+  const f_string_static_t fss_payload_read_program_name_s = macro_f_string_static_t_initialize(FSS_PAYLOAD_READ_program_name_s, 0, FSS_PAYLOAD_READ_program_name_s_length);
+  const f_string_static_t fss_payload_read_program_name_long_s = macro_f_string_static_t_initialize(FSS_PAYLOAD_READ_program_name_long_s, 0, FSS_PAYLOAD_READ_program_name_long_s_length);
+#endif // _di_fss_payload_read_program_name_
+
 #ifndef _di_fss_payload_read_defines_
   const f_string_static_t fss_payload_read_pipe_name_s = macro_f_string_static_t_initialize(FSS_PAYLOAD_READ_pipe_name_s, 0, FSS_PAYLOAD_READ_pipe_name_s_length);
 
@@ -68,7 +77,14 @@ extern "C" {
 
     // Load parameters.
     setting->status = f_console_parameter_process(arguments, &main->parameters);
-    if (F_status_is_error(setting->status)) return;
+
+    if (F_status_is_error(setting->status)) {
+      fss_payload_read_print_line_first_locked(setting, main->error);
+      fll_error_print(main->error, F_status_set_fine(setting->status), "f_console_parameter_process", F_true);
+      fss_payload_read_print_line_last_locked(setting, main->error);
+
+      return;
+    }
 
     {
       f_array_length_t choice = 0;
@@ -85,8 +101,9 @@ extern "C" {
         setting->status = fll_program_parameter_process_context(choices, modes, F_true, main);
 
         if (F_status_is_error(setting->status)) {
-          fss_payload_read_print_line_first(setting, main->error, F_true);
+          fss_payload_read_print_line_first_locked(setting, main->error);
           fll_error_print(main->error, F_status_set_fine(setting->status), "fll_program_parameter_process_context", F_true);
+          fss_payload_read_print_line_last_locked(setting, main->error);
 
           return;
         }
@@ -117,8 +134,9 @@ extern "C" {
         setting->status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, main);
 
         if (F_status_is_error(setting->status)) {
-          fss_payload_read_print_line_first(setting, main->error, F_true);
+          fss_payload_read_print_line_first_locked(setting, main->error);
           fll_error_print(main->error, F_status_set_fine(setting->status), "fll_program_parameter_process_verbosity", F_true);
+          fss_payload_read_print_line_last_locked(setting, main->error);
 
           return;
         }
@@ -136,6 +154,10 @@ extern "C" {
         return;
       }
     }
+
+    main->output.to.id = F_type_descriptor_output_d;
+    main->output.to.stream = F_type_output_d;
+    main->output.to.flag = F_file_flag_create_d | F_file_flag_write_only_d | F_file_flag_append_d;
 
     f_string_static_t * const args = main->parameters.arguments.array;
 

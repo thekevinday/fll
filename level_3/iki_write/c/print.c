@@ -5,6 +5,72 @@
 extern "C" {
 #endif
 
+#ifndef _di_iki_write_print_error_
+  f_status_t iki_write_print_error(iki_write_setting_t * const setting, const fl_print_t print, const f_string_t function) {
+
+    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+
+    iki_write_print_line_first_locked(setting, print);
+    fll_error_print(print, F_status_set_fine(setting->status), function, F_true);
+    iki_write_print_line_last_locked(setting, print);
+
+    return F_none;
+  }
+#endif // _di_iki_write_print_error_
+
+#ifndef _di_iki_write_print_error_file_
+  f_status_t iki_write_print_error_file(iki_write_setting_t * const setting, const fl_print_t print, const f_string_t function, const f_string_static_t name, const f_string_static_t operation, const uint8_t type) {
+
+    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+
+    iki_write_print_line_first_locked(setting, print);
+    fll_error_file_print(print, F_status_set_fine(setting->status), function, F_true, name, operation, type);
+    iki_write_print_line_last_locked(setting, print);
+
+    return F_none;
+  }
+#endif // _di_iki_write_print_error_file_
+
+#ifndef _di_iki_write_print_error_main_missing_
+  f_status_t iki_write_print_error_main_missing(iki_write_setting_t * const setting, const fl_print_t print) {
+
+    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+
+    f_file_stream_lock(print.to);
+
+    fl_print_format("%[%QNo main provided, either pipe the main data or use the '%]", print.to, print.set->error, print.prefix, print.set->error);
+    fl_print_format("%[%r%r%]", print.to, print.set->notable, f_console_symbol_long_enable_s, iki_write_long_object_s, print.set->notable);
+    fl_print_format("%[' and the '%]", print.to, print.set->error, print.set->error);
+    fl_print_format("%[%r%r%]", print.to, print.set->notable, f_console_symbol_long_enable_s, iki_write_long_content_s, print.set->notable);
+    fl_print_format("%[' parameters.%]%r", print.to, print.set->error, print.set->error, f_string_eol_s);
+
+    f_file_stream_unlock(print.to);
+
+    return F_none;
+  }
+#endif // _di_iki_write_print_error_main_missing_
+
+#ifndef _di_iki_write_print_error_object_not_valid_
+  f_status_t iki_write_print_error_object_not_valid(iki_write_setting_t * const setting, const fl_print_t print, const f_string_static_t object) {
+
+    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+
+    f_file_stream_lock(print.to);
+
+    iki_write_print_line_first_unlocked(setting, print);
+
+    fl_print_format("%[%QThe object '%]", print.to, print.set->error, print.prefix, print.set->error);
+    fl_print_format("%[%Q%]", print.to, print.set->notable, object, print.set->notable);
+    fl_print_format("%[' is not a valid IKI Object.%]%r", print.to, print.set->error, print.set->error, f_string_eol_s);
+
+    iki_write_print_line_last_unlocked(setting, print);
+
+    f_file_stream_unlock(print.to);
+
+    return F_none;
+  }
+#endif // _di_iki_write_print_error_object_not_valid_
+
 #ifndef _di_iki_write_print_help_
   f_status_t iki_write_print_help(iki_write_setting_t * const setting, const fl_print_t print) {
 
@@ -114,42 +180,6 @@ extern "C" {
     return F_none;
   }
 #endif // _di_iki_write_print_line_last_unlocked_
-
-#ifndef _di_iki_write_print_error_main_missing_
-  f_status_t iki_write_print_error_main_missing(iki_write_setting_t * const setting, const fl_print_t print) {
-
-    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
-
-    f_file_stream_lock(print.to);
-
-    fl_print_format("%[%QNo main provided, either pipe the main data or use the '%]", print.to, print.set->error, print.prefix, print.set->error);
-    fl_print_format("%[%r%r%]", print.to, print.set->notable, f_console_symbol_long_enable_s, iki_write_long_object_s, print.set->notable);
-    fl_print_format("%[' and the '%]", print.to, print.set->error, print.set->error);
-    fl_print_format("%[%r%r%]", print.to, print.set->notable, f_console_symbol_long_enable_s, iki_write_long_content_s, print.set->notable);
-    fl_print_format("%[' parameters.%]%r", print.to, print.set->error, print.set->error, f_string_eol_s);
-
-    f_file_stream_unlock(print.to);
-
-    return F_none;
-  }
-#endif // _di_iki_write_print_error_main_missing_
-
-#ifndef _di_iki_write_print_error_object_not_valid_
-  f_status_t iki_write_print_error_object_not_valid(iki_write_setting_t * const setting, const fl_print_t print, const f_string_static_t object) {
-
-    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
-
-    f_file_stream_lock(print.to);
-
-    fl_print_format("%[%QThe object '%]", print.to, print.set->error, print.prefix, print.set->error);
-    fl_print_format("%[%Q%]", print.to, print.set->notable, object, print.set->notable);
-    fl_print_format("%[' is not a valid IKI Object.%]%r", print.to, print.set->error, print.set->error, f_string_eol_s);
-
-    f_file_stream_unlock(print.to);
-
-    return F_none;
-  }
-#endif // _di_iki_write_print_error_object_not_valid_
 
 #ifdef __cplusplus
 } // extern "C"

@@ -5,6 +5,68 @@
 extern "C" {
 #endif
 
+#ifndef _di_fss_payload_write_print_error_
+  f_status_t fss_payload_write_print_error(fss_payload_write_setting_t * const setting, const fl_print_t print, const f_string_t function) {
+
+    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+
+    fss_payload_write_print_line_first_locked(setting, print);
+    fll_error_print(print, F_status_set_fine(setting->status), function, F_true);
+    fss_payload_write_print_line_last_locked(setting, print);
+
+    return F_none;
+  }
+#endif // _di_fss_payload_write_print_error_
+
+#ifndef _di_fss_payload_write_print_error_file_
+  f_status_t fss_payload_write_print_error_file(fss_payload_write_setting_t * const setting, const fl_print_t print, const f_string_t function, const f_string_static_t name, const f_string_static_t operation, const uint8_t type) {
+
+    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+
+    fss_payload_write_print_line_first_locked(setting, print);
+    fll_error_file_print(print, F_status_set_fine(setting->status), function, F_true, name, operation, type);
+    fss_payload_write_print_line_last_locked(setting, print);
+
+    return F_none;
+  }
+#endif // _di_fss_payload_write_print_error_file_
+
+#ifndef _di_fss_payload_write_print_error_object_not_before_content_
+  f_status_t fss_payload_write_print_error_object_not_before_content(fss_payload_write_setting_t * const setting, const fl_print_t print) {
+
+    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+
+    f_file_stream_lock(print.to);
+
+    fl_print_format("%r%[%QEach '%]", print.to, f_string_eol_s, print.set->error, print.prefix, print.set->error);
+    fl_print_format("%[%r%r%]", print.to, print.set->notable, f_console_symbol_long_enable_s, fss_payload_write_long_object_s, print.set->notable);
+    fl_print_format("%[' parameter must be specified before a '%]", print.to, print.set->error, print.set->error);
+    fl_print_format("%[%r%r%]", print.to, print.set->notable, f_console_symbol_long_enable_s, fss_payload_write_long_content_s, print.set->notable);
+    fl_print_format("%[' parameter.%]%r", print.to, print.set->error, print.set->error, f_string_eol_s);
+
+    f_file_stream_unlock(print.to);
+
+    return F_none;
+  }
+#endif // _di_fss_payload_write_print_error_object_not_before_content_
+
+#ifndef _fss_payload_write_print_error_prepend_only_whitespace_
+  f_status_t fss_payload_write_print_error_prepend_only_whitespace(fss_payload_write_setting_t * const setting, const fl_print_t print) {
+
+    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+
+    f_file_stream_lock(print.to);
+
+    fl_print_format("%r%[%QThe value for the parameter '%]", print.to, f_string_eol_s, print.set->error, print.prefix, print.set->error);
+    fl_print_format("%[%r%r%]", print.to, print.set->notable, f_console_symbol_long_enable_s, fss_payload_write_long_prepend_s, print.set->notable);
+    fl_print_format("%[' must only contain white space.%]%r", print.to, print.set->error, print.set->error, f_string_eol_s);
+
+    f_file_stream_unlock(print.to);
+
+    return F_none;
+  }
+#endif // _fss_payload_write_print_error_prepend_only_whitespace_
+
 #ifndef _di_fss_payload_write_print_help_
   f_status_t fss_payload_write_print_help(fss_payload_write_setting_t * const setting, const fl_print_t print) {
 

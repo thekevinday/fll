@@ -96,9 +96,7 @@ extern "C" {
     setting->status = f_console_parameter_process(arguments, &main->parameters);
 
     if (F_status_is_error(setting->status)) {
-      utf8_print_line_first_locked(setting, main->error);
-      fll_error_print(main->error, F_status_set_fine(setting->status), "f_console_parameter_process", F_true);
-      utf8_print_line_last_locked(setting, main->error);
+      utf8_print_error(setting, main->error, "f_console_parameter_process");
 
       return;
     }
@@ -118,9 +116,7 @@ extern "C" {
         setting->status = fll_program_parameter_process_context(choices, modes, F_true, main);
 
         if (F_status_is_error(setting->status)) {
-          utf8_print_line_first_locked(setting, main->error);
-          fll_error_print(main->error, F_status_set_fine(setting->status), "fll_program_parameter_process_context", F_true);
-          utf8_print_line_last_locked(setting, main->error);
+          utf8_print_error(setting, main->error, "fll_program_parameter_process_context");
 
           return;
         }
@@ -151,9 +147,7 @@ extern "C" {
         setting->status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, main);
 
         if (F_status_is_error(setting->status)) {
-          utf8_print_line_first_locked(setting, main->error);
-          fll_error_print(main->error, F_status_set_fine(setting->status), "fll_program_parameter_process_verbosity", F_true);
-          utf8_print_line_last_locked(setting, main->error);
+          utf8_print_error(setting, main->error, "fll_program_parameter_process_verbosity");
 
           return;
         }
@@ -180,9 +174,7 @@ extern "C" {
         setting->status = f_console_parameter_prioritize_right(main->parameters, choices, &choice);
 
         if (F_status_is_error(setting->status)) {
-          utf8_print_line_first_locked(setting, main->error);
-          fll_error_print(main->error, F_status_set_fine(setting->status), "f_console_parameter_prioritize_right", F_true);
-          utf8_print_line_last_locked(setting, main->error);
+          utf8_print_error(setting, main->error, "f_console_parameter_prioritize_right");
 
           return;
         }
@@ -213,9 +205,7 @@ extern "C" {
         setting->status = f_console_parameter_prioritize_right(main->parameters, choices, &choice);
 
         if (F_status_is_error(setting->status)) {
-          utf8_print_line_first_locked(setting, main->error);
-          fll_error_print(main->error, F_status_set_fine(setting->status), "f_console_parameter_prioritize_right", F_true);
-          utf8_print_line_last_locked(setting, main->error);
+          utf8_print_error(setting, main->error, "f_console_parameter_prioritize_right");
 
           return;
         }
@@ -301,9 +291,7 @@ extern "C" {
         setting->status = f_string_dynamics_increase_by(1, &setting->path_files_to);
 
         if (F_status_is_error(setting->status)) {
-          utf8_print_line_first_locked(setting, main->error);
-          fll_error_print(main->error, F_status_set_fine(setting->status), "f_string_dynamics_increase_by", F_true);
-          utf8_print_line_last_locked(setting, main->error);
+          utf8_print_error(setting, main->error, "f_string_dynamics_increase_by");
 
           return;
         }
@@ -313,9 +301,7 @@ extern "C" {
         setting->status = f_string_dynamic_append_nulless(main->parameters.arguments.array[main->parameters.array[utf8_parameter_to_file_e].values.array[0]], &setting->path_files_to.array[0]);
 
         if (F_status_is_error(setting->status)) {
-          utf8_print_line_first_locked(setting, main->error);
-          fll_error_print(main->error, F_status_set_fine(setting->status), "f_string_dynamic_append_nulless", F_true);
-          utf8_print_line_last_locked(setting, main->error);
+          utf8_print_error(setting, main->error, "f_string_dynamic_append_nulless");
 
           return;
         }
@@ -325,9 +311,7 @@ extern "C" {
         setting->status = f_file_stream_open(main->parameters.arguments.array[main->parameters.array[utf8_parameter_to_file_e].values.array[0]], f_file_open_mode_append_s, &main->output.to);
 
         if (F_status_is_error(setting->status)) {
-          utf8_print_line_first_locked(setting, main->error);
-          fll_error_file_print(main->error, F_status_set_fine(setting->status), "f_file_stream_open", F_true, main->parameters.arguments.array[main->parameters.array[utf8_parameter_to_file_e].values.array[0]], f_file_operation_open_s, fll_error_file_type_file_e);
-          utf8_print_line_last_locked(setting, main->error);
+          utf8_print_error_file(setting, main->error, "f_file_stream_open", main->parameters.arguments.array[main->parameters.array[utf8_parameter_to_file_e].values.array[0]], f_file_operation_open_s, fll_error_file_type_file_e);
 
           return;
         }
@@ -367,9 +351,7 @@ extern "C" {
       setting->status = f_string_dynamics_increase_by(main->parameters.array[utf8_parameter_from_file_e].values.used, &setting->path_files_from);
 
       if (F_status_is_error(setting->status)) {
-        utf8_print_line_first_locked(setting, main->error);
-        fll_error_print(main->error, F_status_set_fine(setting->status), "f_string_dynamics_increase_by", F_true);
-        utf8_print_line_last_locked(setting, main->error);
+        utf8_print_error(setting, main->error, "f_string_dynamics_increase_by");
 
         return;
       }
@@ -440,9 +422,7 @@ extern "C" {
       setting->status = f_string_dynamics_resize(main->parameters.remaining.used, &setting->remaining);
 
       if (F_status_is_error(setting->status)) {
-        utf8_print_line_first_locked(setting, main->error);
-        fll_error_print(main->error, F_status_set_fine(setting->status), "f_string_dynamic_append_nulless", F_true);
-        utf8_print_line_last_locked(setting, main->error);
+        utf8_print_error(setting, main->error, "f_string_dynamic_append_nulless");
 
         return;
       }

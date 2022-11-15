@@ -57,9 +57,7 @@ extern "C" {
     setting->status = f_console_parameter_process(arguments, &main->parameters);
 
     if (F_status_is_error(setting->status)) {
-      status_code_print_line_first_locked(setting, main->error);
-      fll_error_print(main->error, F_status_set_fine(setting->status), "f_console_parameter_process", F_true);
-      status_code_print_line_last_locked(setting, main->error);
+      status_code_print_error(setting, main->error, "f_console_parameter_process");
 
       return;
     }
@@ -79,9 +77,7 @@ extern "C" {
         setting->status = fll_program_parameter_process_context(choices, modes, F_true, main);
 
         if (F_status_is_error(setting->status)) {
-          status_code_print_line_first_locked(setting, main->error);
-          fll_error_print(main->error, F_status_set_fine(setting->status), "fll_program_parameter_process_context", F_true);
-          status_code_print_line_last_locked(setting, main->error);
+          status_code_print_error(setting, main->error, "fll_program_parameter_process_context");
 
           return;
         }
@@ -112,9 +108,7 @@ extern "C" {
         setting->status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, main);
 
         if (F_status_is_error(setting->status)) {
-          status_code_print_line_first_locked(setting, main->error);
-          fll_error_print(main->error, F_status_set_fine(setting->status), "fll_program_parameter_process_verbosity", F_true);
-          status_code_print_line_last_locked(setting, main->error);
+          status_code_print_error(setting, main->error, "fll_program_parameter_process_verbosity");
 
           return;
         }

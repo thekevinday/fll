@@ -76,6 +76,7 @@
 
 // Controller includes.
 #include <program/controller/common.h>
+#include <program/controller/print.h>
 
 #ifdef __cplusplus
 extern "C" {

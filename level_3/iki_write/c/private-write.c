@@ -7,41 +7,47 @@ extern "C" {
 #endif
 
 #ifndef _di_iki_write_process_
-  f_status_t iki_write_process(fll_program_data_t * const main, iki_write_setting_t * const setting, const f_string_static_t object, const f_string_static_t content) {
+  void iki_write_process(fll_program_data_t * const main, iki_write_setting_t * const setting, const f_string_static_t object, const f_string_static_t content) {
 
     if (!object.used) {
-      fll_program_print_error_missing_variable_not_zero(main->error, iki_write_object_s);
+      setting->status = F_status_set_error(F_failure);
 
-      return F_status_set_error(F_failure);
+      if (main->error.verbosity != f_console_verbosity_quiet_e) {
+        iki_write_print_line_first_locked(setting, main->error);
+        fll_program_print_error_missing_variable_not_zero(main->error, iki_write_object_s);
+        iki_write_print_line_last_locked(setting, main->error);
+      }
+
+      return;
     }
 
-    f_status_t status = f_iki_object_is(object);
+    setting->status = f_iki_object_is(object);
 
-    if (status == F_false) {
+    if (setting->status == F_false) {
+      setting->status = F_status_set_error(F_failure);
+
       iki_write_print_error_object_not_valid(setting, main->error, object);
 
-      return F_status_set_error(F_failure);
+      return;
     }
 
-    if (F_status_is_error(status)) {
-      fll_error_print(main->error, F_status_set_fine(status), "f_iki_object_is", F_true);
+    if (F_status_is_error(setting->status)) {
+      iki_write_print_error(setting, main->error, "f_iki_object_is");
 
-      return F_status_set_error(F_failure);
+      return;
     }
 
     setting->escaped.used = 0;
 
-    status = fll_iki_content_escape(content, setting->quote, &setting->escaped);
+    setting->status = fll_iki_content_escape(content, setting->quote, &setting->escaped);
 
-    if (F_status_is_error(status)) {
-      fll_error_print(main->error, F_status_set_fine(status), "fll_iki_content_escape", F_true);
+    if (F_status_is_error(setting->status)) {
+      iki_write_print_error(setting, main->error, "fll_iki_content_escape");
 
-      return F_status_set_error(F_failure);
+      return;
     }
 
     fl_print_format("%Q%r%r%Q%r", main->output.to, object, f_iki_syntax_separator_s, setting->quote, setting->escaped, setting->quote);
-
-    return F_none;
   }
 #endif // _di_iki_write_process_
 

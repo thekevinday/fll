@@ -7,15 +7,6 @@
 extern "C" {
 #endif
 
-#ifndef _di_fss_payload_read_program_version_
-  const f_string_static_t fss_payload_read_program_version_s = macro_f_string_static_t_initialize(FSS_PAYLOAD_READ_program_version_s, 0, FSS_PAYLOAD_READ_program_version_s_length);
-#endif // _di_fss_payload_read_program_version_
-
-#ifndef _di_fss_payload_read_program_name_
-  const f_string_static_t fss_payload_read_program_name_s = macro_f_string_static_t_initialize(FSS_PAYLOAD_READ_program_name_s, 0, FSS_PAYLOAD_READ_program_name_s_length);
-  const f_string_static_t fss_payload_read_program_name_long_s = macro_f_string_static_t_initialize(FSS_PAYLOAD_READ_program_name_long_s, 0, FSS_PAYLOAD_READ_program_name_long_s_length);
-#endif // _di_fss_payload_read_program_name_
-
 #ifndef _di_fss_payload_read_main_
   f_status_t fss_payload_read_main(fll_program_data_t * const main, fss_payload_read_setting_t * const setting) {
 
@@ -40,7 +31,9 @@ extern "C" {
         status = fll_program_parameter_process_context(choices, modes, F_true, main);
 
         if (F_status_is_error(status)) {
+          fss_payload_read_print_line_first_locked(setting, main->error);
           fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process_context", F_true);
+          fss_payload_read_print_line_last_locked(setting, main->error);
 
           return;
         }
@@ -57,7 +50,9 @@ extern "C" {
         status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, main);
 
         if (F_status_is_error(status)) {
+          fss_payload_read_print_line_first_locked(setting, main->error);
           fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process_verbosity", F_true);
+          fss_payload_read_print_line_last_locked(setting, main->error);
 
           return;
         }

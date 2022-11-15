@@ -49,6 +49,7 @@
 
 // FSS Embedded List Read includes.
 #include <program/fss_embedded_list_read/common.h>
+#include <program/fss_embedded_list_read/print.h>
 
 #ifdef __cplusplus
 extern "C" {

@@ -6,6 +6,19 @@
 extern "C" {
 #endif
 
+#ifndef _di_status_code_print_error_
+  f_status_t status_code_print_error(status_code_setting_t * const setting, const fl_print_t print, const f_string_t function) {
+
+    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+
+    status_code_print_line_first_locked(setting, print);
+    fll_error_print(print, F_status_set_fine(setting->status), function, F_true);
+    status_code_print_line_last_locked(setting, print);
+
+    return F_none;
+  }
+#endif // _di_status_code_print_error_
+
 #ifndef _di_status_code_print_error_cannot_error_warning_number_
   f_status_t status_code_print_error_cannot_error_warning_number(status_code_setting_t * const setting, const fl_print_t print) {
 

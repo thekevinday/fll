@@ -291,27 +291,39 @@ extern "C" {
  * Flags used to represent flags passed to the main function.
  *
  * fss_payload_read_main_flag_*_e:
- *   - none:          No modes in use.
- *   - file_from:     Using a specified source file.
- *   - file_to:       Using a specified destination file.
- *   - help:          Print help.
- *   - header:        Enable printing of headers.
- *   - separate:      Enable printing of separators.
- *   - strip_invalid: Using strip invalid character mode.
- *   - verify:        Using verify mode.
- *   - version:       Print version.
+ *   - none:       No modes in use.
+ *   - at:         Selecting at a specific index.
+ *   - content:    Print Contents.
+ *   - help:       Print help.
+ *   - literal:    Print as literal data (printing entire variable).
+ *   - line:       Selecting at a specific line.
+ *   - name:       Selecting using a specific Vocabulary name.
+ *   - object:     Print Objects.
+ *   - replace:    Using re-assignments.
+ *   - replace:    Using replacements.
+ *   - substitute: Using substitutions.
+ *   - total:      Enable printing of "total" count.
+ *   - version:    Print version.
+ *   - whole:      Print all data.
+ *   - wrap:       Using wrapping.
  */
 #ifndef _di_fss_payload_read_main_flag_e_
   enum {
-    fss_payload_read_main_flag_none_e          = 0x0,
-    fss_payload_read_main_flag_file_from_e     = 0x1,
-    fss_payload_read_main_flag_file_to_e       = 0x2,
-    fss_payload_read_main_flag_header_e        = 0x4,
-    fss_payload_read_main_flag_help_e          = 0x8,
-    fss_payload_read_main_flag_separate_e      = 0x10,
-    fss_payload_read_main_flag_strip_invalid_e = 0x20,
-    fss_payload_read_main_flag_verify_e        = 0x40,
-    fss_payload_read_main_flag_version_e       = 0x80,
+    fss_payload_read_main_flag_none_e       = 0x0,
+    fss_payload_read_main_flag_at_e         = 0x1,
+    fss_payload_read_main_flag_content_e    = 0x2,
+    fss_payload_read_main_flag_help_e       = 0x4,
+    fss_payload_read_main_flag_literal_e    = 0x8,
+    fss_payload_read_main_flag_line_e       = 0x10,
+    fss_payload_read_main_flag_name_e       = 0x20,
+    fss_payload_read_main_flag_object_e     = 0x40,
+    fss_payload_read_main_flag_reassign_e   = 0x80,
+    fss_payload_read_main_flag_replace_e    = 0x100,
+    fss_payload_read_main_flag_substitute_e = 0x200,
+    fss_payload_read_main_flag_total_e      = 0x400,
+    fss_payload_read_main_flag_version_e    = 0x800,
+    fss_payload_read_main_flag_whole_e      = 0x1000,
+    fss_payload_read_main_flag_wrap_e       = 0x2000,
   };
 #endif // _di_fss_payload_read_main_flag_e_
 

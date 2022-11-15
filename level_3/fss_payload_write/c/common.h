@@ -200,27 +200,33 @@ extern "C" {
  * Flags used to represent flags passed to the main function.
  *
  * fss_payload_write_main_flag_*_e:
- *   - none:          No modes in use.
- *   - file_from:     Using a specified source file.
- *   - file_to:       Using a specified destination file.
- *   - help:          Print help.
- *   - header:        Enable printing of headers.
- *   - separate:      Enable printing of separators.
- *   - strip_invalid: Using strip invalid character mode.
- *   - verify:        Using verify mode.
- *   - version:       Print version.
+ *   - none:    No modes in use.
+ *   - content: The Content being written is specified.
+ *   - double:  Operate using double quotes.
+ *   - file_to: Using a specified destination file.
+ *   - help:    Print help.
+ *   - ignore:  Ignore a given range within a Content.
+ *   - object:  The Object being written is specified.
+ *   - partial: Do not write end of Object/Content character.
+ *   - prepend: Prepend the given white space characters to the start of each multi-line Content.
+ *   - single:  Operate using single quotes.
+ *   - trim:    Trim Object names.
+ *   - version: Print version.
  */
 #ifndef _di_fss_payload_write_main_flag_e_
   enum {
-    fss_payload_write_main_flag_none_e          = 0x0,
-    fss_payload_write_main_flag_file_from_e     = 0x1,
-    fss_payload_write_main_flag_file_to_e       = 0x2,
-    fss_payload_write_main_flag_header_e        = 0x4,
-    fss_payload_write_main_flag_help_e          = 0x8,
-    fss_payload_write_main_flag_separate_e      = 0x10,
-    fss_payload_write_main_flag_strip_invalid_e = 0x20,
-    fss_payload_write_main_flag_verify_e        = 0x40,
-    fss_payload_write_main_flag_version_e       = 0x80,
+    fss_payload_write_main_flag_none_e    = 0x0,
+    fss_payload_write_main_flag_content_e = 0x1,
+    fss_payload_write_main_flag_double_e  = 0x2,
+    fss_payload_write_main_flag_file_to_e = 0x4,
+    fss_payload_write_main_flag_help_e    = 0x8,
+    fss_payload_write_main_flag_ignore_e  = 0x10,
+    fss_payload_write_main_flag_object_e  = 0x20,
+    fss_payload_write_main_flag_partial_e = 0x40,
+    fss_payload_write_main_flag_prepend_e = 0x80,
+    fss_payload_write_main_flag_single_e  = 0x100,
+    fss_payload_write_main_flag_trim_e    = 0x200,
+    fss_payload_write_main_flag_version_e = 0x400,
   };
 #endif // _di_fss_payload_write_main_flag_e_
 
@@ -236,6 +242,17 @@ extern "C" {
  *
  * line_first: A string expected to represent either "\n" or NULL to allow for easy handling of when to print first new line or not.
  * line_last:  A string expected to represent either "\n" or NULL to allow for easy handling of when to print last new line or not.
+ *
+ * quote: This holds the quote used during processing.
+ *
+ * escaped: A buffer used for escaping strings during processing.
+ * buffer:  A buffer used during processing the file.
+ * object:  A buffer used to hold an Object during processing.
+ * content: A buffer used to hold a Content during processing.
+ * prepend: A string to prepend to each multi-line Content.
+ *
+ * objects:  An array of objects passed as values to the "--object" parameter.
+ * contents: An array of objects passed as values to the "--content" parameter and must match the length of objects.
  */
 #ifndef _di_fss_payload_write_setting_t_
   typedef struct {
@@ -245,6 +262,17 @@ extern "C" {
 
     f_string_static_t line_first;
     f_string_static_t line_last;
+
+    f_string_static_t quote;
+
+    f_string_dynamic_t escaped;
+    f_string_dynamic_t buffer;
+    f_string_dynamic_t object;
+    f_string_dynamic_t content;
+    f_string_dynamic_t prepend;
+
+    f_string_dynamics_t objects;
+    f_string_dynamics_t contents;
   } fss_payload_write_setting_t;
 
   #define fss_payload_write_setting_t_initialize \
@@ -253,6 +281,13 @@ extern "C" {
       F_none, \
       f_string_static_t_initialize, \
       f_string_static_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamics_t_initialize, \
+      f_string_dynamics_t_initialize, \
     }
 #endif // _di_fss_payload_write_setting_t_
 
@@ -289,12 +324,19 @@ extern "C" {
  *
  *   This alters setting.status:
  *     F_none on success.
+ *     F_data_not on success but nothing was provided to operate with.
  *
  *     Errors (with error bit) from: f_console_parameter_process().
+ *     Errors (with error bit) from: f_file_stream_open().
+ *     Errors (with error bit) from: f_string_dynamics_resize().
  *     Errors (with error bit) from: fll_program_parameter_process_context().
+ *     Errors (with error bit) from: fll_program_parameter_process_verbosity().
  *
  * @see f_console_parameter_process()
+ * @see f_file_stream_open()
+ * @see f_string_dynamics_resize()
  * @see fll_program_parameter_process_context()
+ * @see fll_program_parameter_process_verbosity()
  */
 #ifndef _di_fss_payload_write_setting_load_
   extern void fss_payload_write_setting_load(const f_console_arguments_t arguments, fll_program_data_t * const main, fss_payload_write_setting_t * const setting);

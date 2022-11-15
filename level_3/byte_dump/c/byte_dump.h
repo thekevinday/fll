@@ -48,6 +48,7 @@
 
 // Byte Dump includes.
 #include <program/byte_dump/common.h>
+#include <program/byte_dump/print.h>
 
 #ifdef __cplusplus
 extern "C" {

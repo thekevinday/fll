@@ -57,9 +57,7 @@ extern "C" {
     setting->status = f_console_parameter_process(arguments, &main->parameters);
 
     if (F_status_is_error(setting->status)) {
-      iki_write_print_line_first_locked(setting, main->error);
-      fll_error_print(main->error, F_status_set_fine(setting->status), "f_console_parameter_process", F_true);
-      iki_write_print_line_last_locked(setting, main->error);
+      iki_write_print_error(setting, main->error, "f_console_parameter_process");
 
       return;
     }
@@ -79,9 +77,7 @@ extern "C" {
         setting->status = fll_program_parameter_process_context(choices, modes, F_true, main);
 
         if (F_status_is_error(setting->status)) {
-          iki_write_print_line_first_locked(setting, main->error);
-          fll_error_print(main->error, F_status_set_fine(setting->status), "fll_program_parameter_process_context", F_true);
-          iki_write_print_line_last_locked(setting, main->error);
+          iki_write_print_error(setting, main->error, "fll_program_parameter_process_context");
 
           return;
         }
@@ -112,9 +108,7 @@ extern "C" {
         setting->status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, main);
 
         if (F_status_is_error(setting->status)) {
-          iki_write_print_line_first_locked(setting, main->error);
-          fll_error_print(main->error, F_status_set_fine(setting->status), "fll_program_parameter_process_verbosity", F_true);
-          iki_write_print_line_last_locked(setting, main->error);
+          iki_write_print_error(setting, main->error, "fll_program_parameter_process_verbosity");
 
           return;
         }
@@ -137,7 +131,7 @@ extern "C" {
     main->output.to.stream = F_type_output_d;
     main->output.to.flag = F_file_flag_create_d | F_file_flag_write_only_d | F_file_flag_append_d;
 
-    if (main->parameters.array[iki_write_parameter_file_e].result == f_console_result_additional_e) {
+    if (main->parameters.array[iki_write_parameter_file_e].result == f_console_result_additional_e && main->parameters.array[iki_write_parameter_file_e].values.used) {
       if (main->parameters.array[iki_write_parameter_file_e].values.used > 1) {
         setting->status = F_status_set_error(F_parameter);
 
@@ -183,9 +177,7 @@ extern "C" {
       setting->status = f_string_dynamics_resize(values->used, &setting->objects);
 
       if (F_status_is_error(setting->status)) {
-        iki_write_print_line_first_locked(setting, main->error);
-        fll_error_print(main->error, F_status_set_fine(setting->status), "f_string_dynamics_resize", F_true);
-        iki_write_print_line_last_locked(setting, main->error);
+        iki_write_print_error(setting, main->error, "f_string_dynamics_resize");
 
         return;
       }
@@ -220,9 +212,7 @@ extern "C" {
       setting->status = f_string_dynamics_resize(values->used, &setting->contents);
 
       if (F_status_is_error(setting->status)) {
-        iki_write_print_line_first_locked(setting, main->error);
-        fll_error_print(main->error, F_status_set_fine(setting->status), "f_string_dynamics_resize", F_true);
-        iki_write_print_line_last_locked(setting, main->error);
+        iki_write_print_error(setting, main->error, "f_string_dynamics_resize");
 
         return;
       }

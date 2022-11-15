@@ -4,6 +4,15 @@
 extern "C" {
 #endif
 
+#ifndef _di_fss_payload_write_program_version_
+  const f_string_static_t fss_payload_write_program_version_s = macro_f_string_static_t_initialize(FSS_PAYLOAD_WRITE_program_version_s, 0, FSS_PAYLOAD_WRITE_program_version_s_length);
+#endif // _di_fss_payload_write_program_version_
+
+#ifndef _di_fss_payload_write_program_name_
+  const f_string_static_t fss_payload_write_program_name_s = macro_f_string_static_t_initialize(FSS_PAYLOAD_WRITE_program_name_s, 0, FSS_PAYLOAD_WRITE_program_name_s_length);
+  const f_string_static_t fss_payload_write_program_name_long_s = macro_f_string_static_t_initialize(FSS_PAYLOAD_WRITE_program_name_long_s, 0, FSS_PAYLOAD_WRITE_program_name_long_s_length);
+#endif // _di_fss_payload_write_program_name_
+
 #ifndef _di_fss_payload_write_defines_
   const f_string_static_t fss_payload_write_pipe_content_end_s = macro_f_string_static_t_initialize(FSS_PAYLOAD_WRITE_pipe_content_end_s, 0, FSS_PAYLOAD_WRITE_pipe_content_end_s_length);
   const f_string_static_t fss_payload_write_pipe_content_ignore_s = macro_f_string_static_t_initialize(FSS_PAYLOAD_WRITE_pipe_content_ignore_s, 0, FSS_PAYLOAD_WRITE_pipe_content_ignore_s_length);
@@ -37,6 +46,15 @@ extern "C" {
 
     if (!setting) return F_status_set_error(F_parameter);
 
+    f_string_dynamic_resize(0, &setting->escaped);
+    f_string_dynamic_resize(0, &setting->buffer);
+    f_string_dynamic_resize(0, &setting->object);
+    f_string_dynamic_resize(0, &setting->content);
+    f_string_dynamic_resize(0, &setting->prepend);
+
+    f_string_dynamics_resize(0, &setting->objects);
+    f_string_dynamics_resize(0, &setting->contents);
+
     return F_none;
   }
 #endif // _di_fss_payload_write_setting_delete_
@@ -48,7 +66,12 @@ extern "C" {
 
     // Load parameters.
     setting->status = f_console_parameter_process(arguments, &main->parameters);
-    if (F_status_is_error(setting->status)) return;
+
+    if (F_status_is_error(setting->status)) {
+      fss_payload_write_print_error(setting, main->error, "f_console_parameter_process");
+
+      return;
+    }
 
     {
       f_array_length_t choice = 0;
@@ -65,8 +88,7 @@ extern "C" {
         setting->status = fll_program_parameter_process_context(choices, modes, F_true, main);
 
         if (F_status_is_error(setting->status)) {
-          fss_payload_write_print_line_first(setting, main->error, F_true);
-          fll_error_print(main->error, F_status_set_fine(setting->status), "fll_program_parameter_process_context", F_true);
+          fss_payload_write_print_error(setting, main->error, "fll_program_parameter_process_context");
 
           return;
         }
@@ -97,8 +119,7 @@ extern "C" {
         setting->status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, main);
 
         if (F_status_is_error(setting->status)) {
-          fss_payload_write_print_line_first(setting, main->error, F_true);
-          fll_error_print(main->error, F_status_set_fine(setting->status), "fll_program_parameter_process_verbosity", F_true);
+          fss_payload_write_print_error(setting, main->error, "fll_program_parameter_process_verbosity");
 
           return;
         }
@@ -117,10 +138,271 @@ extern "C" {
       }
     }
 
-    f_string_static_t * const args = main->parameters.arguments.array;
+    main->output.to.id = F_type_descriptor_output_d;
+    main->output.to.stream = F_type_output_d;
+    main->output.to.flag = F_file_flag_create_d | F_file_flag_write_only_d | F_file_flag_append_d;
 
-    if (main->parameters.array[fss_payload_write_parameter_strip_invalid_e].result == f_console_result_found_e) {
-      setting->flag |= fss_payload_write_main_flag_strip_invalid_e;
+    if (main->parameters.array[fss_payload_write_parameter_file_e].result == f_console_result_additional_e && main->parameters.array[fss_payload_write_parameter_file_e].values.used) {
+      if (main->parameters.array[fss_payload_write_parameter_file_e].values.used > 1) {
+        setting->status = F_status_set_error(F_parameter);
+
+        fss_payload_write_print_line_first_locked(setting, main->error);
+        fll_program_print_error_parameter_must_specify_once(main->error, f_console_symbol_long_enable_s, fss_payload_write_long_file_s);
+        fss_payload_write_print_line_last_locked(setting, main->error);
+
+        return;
+      }
+
+      const f_array_length_t index = main->parameters.array[fss_payload_write_parameter_file_e].values.array[0];
+
+      main->output.to.id = -1;
+      main->output.to.stream = 0;
+
+      setting->status = f_file_stream_open(main->parameters.arguments.array[index], f_string_empty_s, &main->output.to);
+
+      if (F_status_is_error(setting->status)) {
+        fss_payload_write_print_error_file(setting, main->error, "f_file_stream_open", main->parameters.arguments.array[index], f_file_operation_open_s, fll_error_file_type_file_e);
+
+        return;
+      }
+
+      setting->flag |= fss_payload_write_main_flag_file_to_e;
+    }
+    else if (main->parameters.array[fss_payload_write_parameter_file_e].result == f_console_result_found_e) {
+      setting->status = F_status_set_error(F_parameter);
+
+      fss_payload_write_print_line_first_locked(setting, main->error);
+      fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_enable_s, fss_payload_write_long_file_s);
+      fss_payload_write_print_line_last_locked(setting, main->error);
+
+      return;
+    }
+
+    if (main->parameters.array[fss_payload_write_parameter_object_e].result == f_console_result_additional_e && main->parameters.array[fss_payload_write_parameter_object_e].values.used) {
+      f_array_lengths_t * const values = &main->parameters.array[fss_payload_write_parameter_object_e].values;
+
+      setting->objects.used = 0;
+
+      setting->status = f_string_dynamics_resize(values->used, &setting->objects);
+
+      if (F_status_is_error(setting->status)) {
+        fss_payload_write_print_error(setting, main->error, "f_string_dynamics_resize");
+
+        return;
+      }
+
+      // Construct the array without allocating any more memory by setting this as a static string (used > 0, size = 0).
+      for (f_array_length_t index = 0; setting->objects.used < values->used; ) {
+
+        index = values->array[setting->objects.used];
+
+        setting->objects.array[setting->objects.used].string = main->parameters.arguments.array[index].string;
+        setting->objects.array[setting->objects.used].used = main->parameters.arguments.array[index].used;
+        setting->objects.array[setting->objects.used++].size = 0;
+      } // for
+
+      setting->flag |= fss_payload_write_main_flag_object_e;
+    }
+    else if (main->parameters.array[fss_payload_write_parameter_object_e].result == f_console_result_found_e) {
+      setting->status = F_status_set_error(F_parameter);
+
+      fss_payload_write_print_line_first_locked(setting, main->error);
+      fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_enable_s, fss_payload_write_long_object_s);
+      fss_payload_write_print_line_last_locked(setting, main->error);
+
+      return;
+    }
+
+    if (main->parameters.array[fss_payload_write_parameter_content_e].result == f_console_result_additional_e && main->parameters.array[fss_payload_write_parameter_content_e].values.used) {
+      f_array_lengths_t * const values = &main->parameters.array[fss_payload_write_parameter_content_e].values;
+
+      setting->contents.used = 0;
+
+      setting->status = f_string_dynamics_resize(values->used, &setting->contents);
+
+      if (F_status_is_error(setting->status)) {
+        fss_payload_write_print_error(setting, main->error, "f_string_dynamics_resize");
+
+        return;
+      }
+
+      // Construct the array without allocating any more memory by setting this as a static string (used > 0, size = 0).
+      for (f_array_length_t index = 0; setting->contents.used < values->used; ) {
+
+        index = values->array[setting->contents.used];
+
+        setting->contents.array[setting->contents.used].string = main->parameters.arguments.array[index].string;
+        setting->contents.array[setting->contents.used].used = main->parameters.arguments.array[index].used;
+        setting->contents.array[setting->contents.used++].size = 0;
+      } // for
+
+      setting->flag |= fss_payload_write_main_flag_content_e;
+    }
+    else if (main->parameters.array[fss_payload_write_parameter_content_e].result == f_console_result_found_e) {
+      setting->status = F_status_set_error(F_parameter);
+
+      fss_payload_write_print_line_first_locked(setting, main->error);
+      fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_enable_s, fss_payload_write_long_content_s);
+      fss_payload_write_print_line_last_locked(setting, main->error);
+
+      return;
+    }
+
+    if (main->parameters.array[fss_payload_write_parameter_prepend_e].result == f_console_result_additional_e && main->parameters.array[fss_payload_write_parameter_prepend_e].values.used) {
+      const f_array_length_t index = main->parameters.array[fss_payload_write_parameter_prepend_e].values.array[main->parameters.array[fss_payload_write_parameter_prepend_e].values.used - 1];
+
+      setting->prepend.used = 0;
+
+      setting->status = f_string_dynamic_append_nulless(main->parameters.arguments.array[index], &setting->prepend);
+
+      if (F_status_is_error(setting->status)) {
+        fss_payload_write_print_error(setting, main->error, "f_string_dynamic_append_nulless");
+
+        return;
+      }
+
+      if (main->parameters.arguments.array[index].used) {
+        f_string_range_t range = macro_f_string_range_t_initialize2(main->parameters.arguments.array[index].used);
+        f_state_t state = f_state_t_initialize;
+
+        for (; range.start < main->parameters.arguments.array[index].used; range.start++) {
+
+          setting->status = f_fss_is_space(state, main->parameters.arguments.array[index], range);
+
+          if (F_status_is_error(setting->status)) {
+            fss_payload_write_print_error(setting, main->error, "f_fss_is_space");
+
+            return;
+          }
+
+          if (status == F_false) {
+            setting->status = F_status_set_error(F_parameter);
+
+            fss_payload_write_print_error_prepend_only_whitespace(setting, main->error);
+
+            return;
+          }
+        } // for
+      }
+
+      setting->flag |= fss_payload_write_main_flag_prepend_e;
+    }
+    else if (main->parameters.array[fss_payload_write_parameter_prepend_e].result == f_console_result_found_e) {
+      setting->status = F_status_set_error(F_parameter);
+
+      fss_payload_write_print_line_first_locked(setting, main->error);
+      fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_enable_s, fss_payload_write_long_prepend_s);
+      fss_payload_write_print_line_last_locked(setting, main->error);
+
+      return;
+    }
+
+    if (main->parameters.array[fss_payload_write_parameter_partial_e].result == f_console_result_found_e) {
+      setting->flag |= fss_payload_write_main_flag_partial_e;
+    }
+
+    if (setting->flag & (fss_payload_write_main_flag_object_e | fss_payload_write_main_flag_content_e)) {
+      if (setting->flag & fss_payload_write_main_flag_object_e) {
+        if (main->parameters.array[fss_payload_write_parameter_object_e].locations.used != main->parameters.array[fss_payload_write_parameter_object_e].values.used) {
+          setting->status = F_status_set_error(F_parameter);
+
+          fss_payload_write_print_line_first_locked(setting, main->error);
+          fss_payload_write_error_parameter_value_missing_print(main, f_console_symbol_long_enable_s, fss_payload_write_long_object_s);
+          fss_payload_write_print_line_last_locked(setting, main->error);
+
+          return;
+        }
+
+        if (main->parameters.array[fss_payload_write_parameter_content_e].locations.used != main->parameters.array[fss_payload_write_parameter_content_e].values.used) {
+          setting->status = F_status_set_error(F_parameter);
+
+          fss_payload_write_print_line_first_locked(setting, main->error);
+          fss_payload_write_error_parameter_value_missing_print(main, f_console_symbol_long_enable_s, fss_payload_write_long_content_s);
+          fss_payload_write_print_line_last_locked(setting, main->error);
+
+          return;
+        }
+
+        if (main->parameters.array[fss_payload_write_parameter_object_e].locations.used != main->parameters.array[fss_payload_write_parameter_content_e].locations.used && !(setting->flag & fss_payload_write_main_flag_partial_e)) {
+          setting->status = F_status_set_error(F_parameter);
+
+          fss_payload_write_print_line_first_locked(setting, main->error);
+          fss_payload_write_error_parameter_same_times_print(main);
+          fss_payload_write_print_line_last_locked(setting, main->error);
+
+          return;
+        }
+
+        if ((setting->flag & fss_payload_write_main_flag_content_e) && (setting->flag & fss_payload_write_main_flag_partial_e)) {
+          if (main->parameters.array[fss_payload_write_parameter_content_e].result == f_console_result_additional_e) {
+            setting->status = F_status_set_error(F_parameter);
+
+            fss_payload_write_print_line_first_locked(setting, main->error);
+            fll_program_print_error_parameter_cannot_use_with_xor(main->error, f_console_symbol_long_enable_s, f_console_symbol_long_enable_s, f_console_symbol_long_enable_s, fss_payload_write_long_partial_s, fss_payload_write_long_object_s, fss_payload_write_long_content_s);
+            fss_payload_write_print_line_last_locked(setting, main->error);
+
+            return;
+          }
+        }
+
+        if (setting->flag & fss_payload_write_main_flag_content_e) {
+          f_array_length_t location_object = 0;
+          f_array_length_t location_content = 0;
+          f_array_length_t location_sub_object = 0;
+          f_array_length_t location_sub_content = 0;
+
+          for (f_array_length_t i = 0; i < main->parameters.array[fss_payload_write_parameter_object_e].locations.used; ++i) {
+
+            location_object = main->parameters.array[fss_payload_write_parameter_object_e].locations.array[i];
+            location_content = main->parameters.array[fss_payload_write_parameter_content_e].locations.array[i];
+            location_sub_object = main->parameters.array[fss_payload_write_parameter_object_e].locations_sub.array[i];
+            location_sub_content = main->parameters.array[fss_payload_write_parameter_content_e].locations_sub.array[i];
+
+            if (location_object > location_content || location_object == location_content && location_sub_object > location_sub_content) {
+              setting->status = F_status_set_error(F_parameter);
+
+              fss_payload_write_print_line_first_locked(setting, main->error);
+              fss_payload_write_print_error_object_not_before_content(setting, main->error);
+              fss_payload_write_print_line_last_locked(setting, main->error);
+
+              break;
+            }
+          } // for
+        }
+      }
+    }
+
+    setting->quote = f_iki_syntax_quote_double_s;
+
+    if (main->parameters.array[fss_payload_write_parameter_double_e].result == f_console_result_found_e) {
+      if (main->parameters.array[fss_payload_write_parameter_single_e].result == f_console_result_found_e) {
+        if (main->parameters.array[fss_payload_write_parameter_double_e].location < main->parameters.array[fss_payload_write_parameter_single_e].location) {
+          setting->quote = f_iki_syntax_quote_single_s;
+        }
+      }
+    }
+    else if (main->parameters.array[fss_payload_write_parameter_single_e].result == f_console_result_found_e) {
+      setting->quote = f_iki_syntax_quote_single_s;
+    }
+
+    if (main->parameters.array[fss_payload_write_parameter_trim_e].result == f_console_result_found_e) {
+      setting->flag |= fss_payload_write_main_flag_trim_e;
+    }
+
+    if (main->pipe & fll_program_data_pipe_input_e) {
+      // @fixme why is this not allowed?
+      if (setting->flag & fss_payload_write_main_flag_partial_e) {
+        setting->status = F_status_set_error(F_parameter);
+
+        fss_payload_write_print_line_first_locked(setting, main->error);
+        fll_program_print_error_parameter_cannot_use_with_pipe(setting, main->error);
+        fss_payload_write_print_line_last_locked(setting, main->error);
+
+        return;
+      }
+    }
+    else if (!(setting->flag & (fss_payload_write_main_flag_content_e | fss_payload_write_parameter_object_e))) {
+      setting->status = F_data_not;
     }
   }
 #endif // _di_fss_payload_write_setting_load_

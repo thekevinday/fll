@@ -77,6 +77,44 @@ extern "C" {
   }
 #endif // _di_fll_program_print_error_parameter_cannot_use_with_
 
+#ifndef _di_fll_program_print_error_parameter_cannot_use_with_pipe_
+  f_status_t fll_program_print_error_parameter_cannot_use_with_pipe(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t parameter) {
+
+    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+
+    f_file_stream_lock(print.to);
+
+    fl_print_format("%[%QCannot specify the '%]", print.to, print.set->error, print.prefix, print.set->error);
+    fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol, parameter, print.set->notable);
+    fl_print_format("%[' when processing a pipe.%]%r", print.to, print.set->error, print.set->error, f_string_eol_s);
+
+    f_file_stream_unlock(print.to);
+
+    return F_none;
+  }
+#endif // _di_fll_program_print_error_parameter_cannot_use_with_pipe_
+
+#ifndef _di_fll_program_print_error_parameter_cannot_use_with_xor_
+  f_status_t fll_program_print_error_parameter_cannot_use_with_xor(const fl_print_t print, const f_string_static_t symbol_first, const f_string_static_t symbol_second, const f_string_static_t symbol_third, const f_string_static_t first, const f_string_static_t second, const f_string_static_t third) {
+
+    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+
+    f_file_stream_lock(print.to);
+
+    fl_print_format("%r%[%QThe '%]", print.to, f_string_eol_s, print.set->error, print.prefix, print.set->error);
+    fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol_first, first, print.set->notable);
+    fl_print_format("%[' parameter only allows either the '%]", print.to, print.set->error, print.set->error);
+    fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol_second, second, print.set->notable);
+    fl_print_format("%[' parameter or the '%]", print.to, print.set->error, print.set->error);
+    fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol_third, third, print.set->notable);
+    fl_print_format("%[' parameter, but not both.%]%r", print.to, print.set->error, print.set->error, f_string_eol_s);
+
+    f_file_stream_unlock(print.to);
+
+    return F_none;
+  }
+#endif // _di_fll_program_print_error_parameter_cannot_use_with_xor_
+
 #ifndef _di_fll_program_print_error_parameter_integer_not_
   f_status_t fll_program_print_error_parameter_integer_not(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t parameter, const f_string_static_t value) {
 

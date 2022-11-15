@@ -61,9 +61,7 @@ extern "C" {
           if (F_status_is_error(status)) {
             setting->status = F_status_set_error(F_pipe);
 
-            iki_write_print_line_first_locked(setting, main->error);
-            fll_error_file_print(main->error, F_status_set_fine(setting->status), "f_file_read", F_true, f_string_ascii_minus_s, f_file_operation_read_s, fll_error_file_type_pipe_e);
-            iki_write_print_line_last_locked(setting, main->error);
+            iki_write_print_error_file(setting, main->error, "f_file_read", f_string_ascii_minus_s, f_file_operation_read_s, fll_error_file_type_pipe_e);
 
             return;
           }
@@ -89,9 +87,7 @@ extern "C" {
         }
 
         if (F_status_is_error(setting->status)) {
-          iki_write_print_line_first_locked(setting, main->error);
-          fll_error_print(main->error, F_status_set_fine(setting->status), "f_string_dynamic_seek_to", F_true);
-          iki_write_print_line_last_locked(setting, main->error);
+          iki_write_print_error(setting, main->error, "f_string_dynamic_seek_to");
 
           return;
         }
@@ -116,15 +112,13 @@ extern "C" {
             setting->status = f_string_dynamic_partial_append_nulless(setting->buffer, range, &setting->content);
 
             if (F_status_is_error(setting->status)) {
-              iki_write_print_line_first_locked(setting, main->error);
-              fll_error_print(main->error, F_status_set_fine(setting->status), "f_string_dynamic_partial_append_nulless", F_true);
-              iki_write_print_line_last_locked(setting, main->error);
+              iki_write_print_error(setting, main->error, "f_string_dynamic_partial_append_nulless");
 
               return;
             }
           }
 
-          setting->status = iki_write_process(main, setting, setting->object, setting->content);
+          iki_write_process(main, setting, setting->object, setting->content);
           if (F_status_is_error(setting->status)) return;
 
           fll_print_dynamic_raw(f_string_eol_s, main->output.to);
@@ -137,9 +131,7 @@ extern "C" {
           setting->status = f_string_dynamic_partial_append_nulless(setting->buffer, range, &setting->object);
 
           if (F_status_is_error(setting->status)) {
-            iki_write_print_line_first_locked(setting, main->error);
-            fll_error_print(main->error, F_status_set_fine(setting->status), "f_string_dynamic_partial_append_nulless", F_true);
-            iki_write_print_line_last_locked(setting, main->error);
+            iki_write_print_error(setting, main->error, "f_string_dynamic_partial_append_nulless");
 
             return;
           }
@@ -182,7 +174,7 @@ extern "C" {
         main->signal_check = 0;
       }
 
-      setting->status = iki_write_process(main, setting, setting->objects.array[i], setting->contents.array[i]);
+      iki_write_process(main, setting, setting->objects.array[i], setting->contents.array[i]);
       if (F_status_is_error(setting->status)) return;
 
       fll_print_dynamic_raw(f_string_eol_s, main->output.to);

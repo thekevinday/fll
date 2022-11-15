@@ -49,6 +49,7 @@
 
 // FSS Basic Read includes.
 #include <program/fss_basic_read/common.h>
+#include <program/fss_basic_read/print.h>
 
 #ifdef __cplusplus
 extern "C" {

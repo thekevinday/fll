@@ -91,6 +91,7 @@
 
 // Featureless Make includes.
 #include <program/fake/common.h>
+#include <program/fake/print.h>
 
 #ifdef __cplusplus
 extern "C" {

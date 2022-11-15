@@ -42,6 +42,7 @@
 
 // FSS Extended Write includes.
 #include <program/fss_extended_write/common.h>
+#include <program/fss_extended_write/print.h>
 
 #ifdef __cplusplus
 extern "C" {

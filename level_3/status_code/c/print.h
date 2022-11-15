@@ -13,6 +13,26 @@ extern "C" {
 #endif
 
 /**
+ * Print generic error message regarding a function failing in some way.
+ *
+ * @param setting
+ *   The main program settings.
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   Designates the how and where to print.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ *
+ * @see fll_error_print()
+ */
+#ifndef _di_status_code_print_error_
+  extern f_status_t status_code_print_error(status_code_setting_t * const setting, const fl_print_t print, const f_string_t function);
+#endif // _di_status_code_print_error_
+
+/**
  * Print an error message when error parameter and warning parameter are specified without number parameter.
  *
  * @param setting

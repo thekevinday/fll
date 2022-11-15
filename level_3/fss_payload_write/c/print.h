@@ -13,6 +13,91 @@ extern "C" {
 #endif
 
 /**
+ * Print generic error message regarding a function failing in some way.
+ *
+ * @param setting
+ *   The main program settings.
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   Designates the how and where to print.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ *
+ * @see fll_error_print()
+ */
+#ifndef _di_fss_payload_write_print_error_
+  extern f_status_t fss_payload_write_print_error(fss_payload_write_setting_t * const setting, const fl_print_t print, const f_string_t function);
+#endif // _di_fss_payload_write_print_error_
+
+/**
+ * Print file related error or warning messages.
+ *
+ * @param setting
+ *   The main program settings.
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   Designates how printing is to be performed.
+ * @param function
+ *   The name of the function where the error happened.
+ *   Set to 0 to disable.
+ * @param name
+ *   The name of the file or directory.
+ * @param operation
+ *   The operation that fails, such as 'create' or 'access'.
+ * @param type
+ *   A valid file type code from the fll_error_file_type enum.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ *
+ * @see fll_error_file_print()
+ */
+#ifndef _di_fss_payload_write_print_error_file_
+  extern f_status_t fss_payload_write_print_error_file(fss_payload_write_setting_t * const setting, const fl_print_t print, const f_string_t function, const f_string_static_t name, const f_string_static_t operation, const uint8_t type);
+#endif // _di_fss_payload_write_print_error_file_
+
+/**
+ * Print error message about each Object parameter not being specified before a Content parameter.
+ *
+ * @param setting
+ *   The main program settings.
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   Designates the how and where to print.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ */
+#ifndef _di_fss_payload_write_print_error_object_not_before_content_
+  extern f_status_t fss_payload_write_print_error_object_not_before_content(fss_payload_write_setting_t * const setting, const fl_print_t print);
+#endif // _di_fss_payload_write_print_error_object_not_before_content_
+
+/**
+ * Print error when prepend parameter has something other than white space.
+ *
+ * @param setting
+ *   The main program settings.
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   Designates the how and where to print.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ */
+#ifndef _fss_payload_write_print_error_prepend_only_whitespace_
+  extern f_status_t fss_payload_write_print_error_prepend_only_whitespace(fss_payload_write_setting_t * const setting, const fl_print_t print);
+#endif // _fss_payload_write_print_error_prepend_only_whitespace_
+
+/**
  * Print help.
  *
  * @param setting
