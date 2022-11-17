@@ -61,9 +61,16 @@ extern "C" {
 
 /**
  * The program defines.
+ *
+ * payload_write_common_allocation_*:
+ *   - large: An allocation step used for buffers that are anticipated to have large buffers.
+ *   - small: An allocation step used for buffers that are anticipated to have small buffers.
  */
 #ifndef _di_fss_payload_write_defines_
   #define fss_payload_write_signal_check_d 20000
+
+  #define fss_payload_write_common_allocation_large_d 2048
+  #define fss_payload_write_common_allocation_small_d 128
 
   #define FSS_PAYLOAD_WRITE_pipe_content_end_s    "\f"
   #define FSS_PAYLOAD_WRITE_pipe_content_ignore_s "\v"
@@ -77,6 +84,17 @@ extern "C" {
   extern const f_string_static_t fss_payload_write_pipe_content_ignore_s;
   extern const f_string_static_t fss_payload_write_pipe_content_start_s;
 #endif // _di_fss_payload_write_defines_
+
+/**
+ * A collection of static strings associated with FSS Payload Write.
+ */
+#ifndef _di_fss_payload_write_strings_
+  #define FSS_PAYLOAD_WRITE_string_two_s "two"
+
+  #define FSS_PAYLOAD_WRITE_string_two_s_length 3
+
+  extern const f_string_static_t fss_payload_write_string_two_s;
+#endif // _di_fss_payload_write_strings_
 
 /**
  * The main program parameters.
@@ -240,17 +258,22 @@ extern "C" {
  *
  * status: The main status code, generally used by the load settings and main functions.
  *
+ * state: The state data used when processing the FSS data.
+ * range: A range used as a buffer during processing.
+ *
  * line_first: A string expected to represent either "\n" or NULL to allow for easy handling of when to print first new line or not.
  * line_last:  A string expected to represent either "\n" or NULL to allow for easy handling of when to print last new line or not.
  *
  * quote: This holds the quote used during processing.
  *
  * escaped: A buffer used for escaping strings during processing.
+ * block:   A buffer used to storing one or more blocks while processing a file line by line.
  * buffer:  A buffer used during processing the file.
  * object:  A buffer used to hold an Object during processing.
  * content: A buffer used to hold a Content during processing.
  * prepend: A string to prepend to each multi-line Content.
  *
+ * ignores:  An array of ranges passed as values to the "--ignore" parameter.
  * objects:  An array of objects passed as values to the "--object" parameter.
  * contents: An array of objects passed as values to the "--content" parameter and must match the length of objects.
  */
@@ -260,17 +283,22 @@ extern "C" {
 
     f_status_t status;
 
+    f_state_t state;
+    f_string_range_t range;
+
     f_string_static_t line_first;
     f_string_static_t line_last;
 
     f_string_static_t quote;
 
     f_string_dynamic_t escaped;
+    f_string_dynamic_t block;
     f_string_dynamic_t buffer;
     f_string_dynamic_t object;
     f_string_dynamic_t content;
     f_string_dynamic_t prepend;
 
+    f_string_ranges_t ignores;
     f_string_dynamics_t objects;
     f_string_dynamics_t contents;
   } fss_payload_write_setting_t;
@@ -279,6 +307,8 @@ extern "C" {
     { \
       fss_payload_write_main_flag_none_e, \
       F_none, \
+      macro_f_state_t_initialize(fss_payload_write_common_allocation_large_d, fss_payload_write_common_allocation_small_d, 0, 0, &fll_program_standard_signal_state, 0, 0, 0), \
+      f_string_range_t_initialize, \
       f_string_static_t_initialize, \
       f_string_static_t_initialize, \
       f_string_dynamic_t_initialize, \
@@ -286,6 +316,8 @@ extern "C" {
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_ranges_t_initialize, \
       f_string_dynamics_t_initialize, \
       f_string_dynamics_t_initialize, \
     }

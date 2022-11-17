@@ -6,113 +6,48 @@
 extern "C" {
 #endif
 
-#ifndef _di_fss_payload_write_error_parameter_same_times_print_
-  void fss_payload_write_error_parameter_same_times_print(fll_program_data_t * const main) {
-
-    if (main->error.verbosity == f_console_verbosity_quiet_e) return;
-
-    f_file_stream_lock(main->error.to);
-
-    fl_print_format("%r%[%QMust specify the '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-    fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_enable_s, fss_payload_write_long_object_s, main->error.notable);
-    fl_print_format("%[' parameter and the '%]", main->error.to, main->error.context, main->error.context);
-    fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_enable_s, fss_payload_write_long_content_s, main->error.notable);
-    fl_print_format("%[' parameter the same number of times when not specifying the '%]", main->error.to, main->error.context, main->error.context);
-    fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_enable_s, fss_payload_write_long_partial_s, main->error.notable);
-    fl_print_format("%[' parameter.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
-
-    f_file_stream_unlock(main->error.to);
-  }
-#endif // _di_fss_payload_write_error_parameter_same_times_print_
-
-#ifndef _di_fss_payload_write_error_parameter_unsupported_eol_print_
-  void fss_payload_write_error_parameter_unsupported_eol_print(fll_program_data_t * const main) {
-
-    if (main->error.verbosity == f_console_verbosity_quiet_e) return;
-
-    f_file_stream_lock(main->error.to);
-
-    fl_print_format("%r%[%QThe FSS-000E (Payload) standard does not support end of line character '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-    fl_print_format("%[\\n%]", main->error.to, main->error.notable, main->error.notable);
-    fl_print_format("%[' (%]", main->error.to, main->error.context, main->error.context);
-    fl_print_format("%[U+000A%]", main->error.to, main->error.notable, main->error.notable);
-    fl_print_format("%[) in objects.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
-
-    f_file_stream_unlock(main->error.to);
-  }
-#endif // _di_fss_payload_write_error_parameter_unsupported_eol_print_
-
-#ifndef _di_fss_payload_write_error_parameter_value_missing_print_
-  void fss_payload_write_error_parameter_value_missing_print(fll_program_data_t * const main, const f_string_static_t symbol, const f_string_static_t parameter) {
-
-    if (main->error.verbosity == f_console_verbosity_quiet_e) return;
-
-    f_file_stream_lock(main->error.to);
-
-    fl_print_format("%r%[%QThe parameter '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-    fl_print_format("%[%r%r%]", main->error.to, main->error.notable, symbol, parameter, main->error.notable);
-    fl_print_format("%[' is specified, but no value is given.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
-
-    f_file_stream_unlock(main->error.to);
-  }
-#endif // _di_fss_payload_write_error_parameter_value_missing_print_
-
 #ifndef _di_fss_payload_write_process_
-  f_status_t fss_payload_write_process(fll_program_data_t * const main, const f_file_t output, const f_fss_quote_t quote, const f_string_static_t *object, const f_string_static_t *content, f_string_dynamic_t *buffer) {
-
-    f_status_t status = F_none;
-    f_state_t state = macro_f_state_t_initialize(fss_payload_write_common_allocation_large_d, fss_payload_write_common_allocation_small_d, 0, 0, &fll_program_standard_signal_state, 0, (void *) main, 0);
-    f_string_range_t range = f_string_range_t_initialize;
+  void fss_payload_write_process(fll_program_data_t * const main, fss_payload_write_setting_t * const setting, const f_string_static_t *object, const f_string_static_t *content) {
 
     if (object) {
       if (content) {
-        bool trim = F_false;
-
-        if (main->parameters.array[fss_payload_write_parameter_trim_e].result == f_console_result_found_e) {
-          trim = F_true;
-        }
-
         if (object->used) {
-          range.start = 0;
-          range.stop = object->used - 1;
+          setting->range.start = 0;
+          setting->range.stop = object->used - 1;
         }
         else {
-          range.start = 1;
-          range.stop = 0;
+          setting->range.start = 1;
+          setting->range.stop = 0;
         }
 
-        const f_string_static_t *prepend = 0;
+        setting->status = fll_fss_payload_write(*object, *content, setting->flag & fss_payload_write_main_flag_trim_e, setting->flag & fss_payload_write_main_flag_prepend_e ? &setting->prepend : 0, setting->state, &setting->buffer);
 
-        if (main->parameters.array[fss_payload_write_parameter_prepend_e].result == f_console_result_additional_e) {
-          const f_array_length_t index = main->parameters.array[fss_payload_write_parameter_prepend_e].values.array[main->parameters.array[fss_payload_write_parameter_prepend_e].values.used - 1];
+        if (F_status_set_fine(setting->status) == F_none_eol) {
+          setting->status = F_status_set_error(F_supported_not);
 
-          prepend = &main->parameters.arguments.array[index];
+          fss_payload_write_print_line_first_locked(setting, main->error);
+          fss_payload_write_print_error_unsupported_eol(setting, main->error);
+          fss_payload_write_print_line_last_locked(setting, main->error);
+
+          return;
         }
 
-        status = fll_fss_payload_write(*object, *content, trim, prepend, state, buffer);
-
-        if (F_status_set_fine(status) == F_none_eol) {
-          fss_payload_write_error_parameter_unsupported_eol_print(main);
-
-          return F_status_set_error(F_supported_not);
-        }
-
-        if (F_status_is_error(status)) {
+        if (F_status_is_error(setting->status)) {
           fss_payload_write_print_error(setting, main->error, "fll_fss_payload_write");
 
-          return status;
+          return;
         }
       }
       else {
-        uint8_t complete = f_fss_complete_none_e;
+        bool complete = f_fss_complete_none_e;
 
         if (object->used) {
-          range.start = 0;
-          range.stop = object->used - 1;
+          setting->range.start = 0;
+          setting->range.stop = object->used - 1;
         }
         else {
-          range.start = 1;
-          range.stop = 0;
+          setting->range.start = 1;
+          setting->range.stop = 0;
         }
 
         if (content) {
@@ -124,79 +59,82 @@ extern "C" {
           }
         }
 
-        status = fl_fss_basic_list_object_write(*object, complete, state, &range, buffer);
+        setting->status = fl_fss_basic_list_object_write(*object, complete, setting->state, &setting->range, &setting->buffer);
 
-        if (F_status_set_fine(status) == F_none_eol) {
-          fss_payload_write_error_parameter_unsupported_eol_print(main);
+        if (F_status_set_fine(setting->status) == F_none_eol) {
+          setting->status = F_status_set_error(F_supported_not);
 
-          return F_status_set_error(F_supported_not);
+          fss_payload_write_print_line_first_locked(setting, main->error);
+          fss_payload_write_print_error_unsupported_eol(setting, main->error);
+          fss_payload_write_print_line_last_locked(setting, main->error);
+
+          return;
         }
 
-        if (F_status_is_error(status)) {
+        if (F_status_is_error(setting->status)) {
           fss_payload_write_print_error(setting, main->error, "fl_fss_basic_list_object_write");
 
-          return status;
+          return;
         }
       }
     }
-    else {
-      if (content && content->used) {
-        range.start = 0;
-        range.stop = content->used - 1;
+    else if (content && content->used) {
+      setting->range.start = 0;
+      setting->range.stop = content->used - 1;
 
-        const f_string_static_t *prepend = 0;
+      const f_string_static_t *prepend = 0;
 
-        if (main->parameters.array[fss_payload_write_parameter_prepend_e].result == f_console_result_additional_e) {
-          const f_array_length_t index = main->parameters.array[fss_payload_write_parameter_prepend_e].values.array[main->parameters.array[fss_payload_write_parameter_prepend_e].values.used - 1];
+      if (setting->flag & fss_payload_write_main_flag_prepend_e) {
+        const f_array_length_t index = main->parameters.array[fss_payload_write_parameter_prepend_e].values.array[main->parameters.array[fss_payload_write_parameter_prepend_e].values.used - 1];
 
-          prepend = &main->parameters.arguments.array[index];
-        }
+        prepend = &main->parameters.arguments.array[index];
+      }
 
-        status = fl_fss_basic_list_content_write(*content, object ? f_fss_complete_full_e : f_fss_complete_none_e, prepend, state, &range, buffer);
+      setting->status = fl_fss_basic_list_content_write(*content, object ? f_fss_complete_full_e : f_fss_complete_none_e, prepend, setting->state, &setting->range, &setting->buffer);
 
-        if (F_status_is_error(status)) {
-          fss_payload_write_print_error(setting, main->error, "fl_fss_payload_content_write");
+      if (F_status_is_error(setting->status)) {
+        fss_payload_write_print_error(setting, main->error, "fl_fss_payload_content_write");
 
-          return status;
-        }
+        return;
       }
     }
 
     if (!object || !content) {
-      status = f_string_dynamic_append(f_string_eol_s, buffer);
+      setting->status = f_string_dynamic_append(f_string_eol_s, &setting->buffer);
 
-      if (F_status_is_error(status)) {
+      if (F_status_is_error(setting->status)) {
         fss_payload_write_print_error(setting, main->error, "f_string_dynamic_append");
 
-        return status;
+        return;
       }
     }
 
-    fll_print_dynamic(*buffer, output);
+    fll_print_dynamic(setting->buffer, main->output.to);
 
-    buffer->used = 0;
-
-    return status;
+    setting->buffer.used = 0;
+    setting->status = F_none;
   }
 #endif // _di_fss_payload_write_process_
 
+#ifndef _di_fss_payload_write_process_parameters_
+  void fss_payload_write_process_parameters(fll_program_data_t * const main, fss_payload_write_setting_t * const setting) {
+  }
+#endif // _di_fss_payload_write_process_parameters_
+
 #ifndef _di_fss_payload_write_process_pipe_
-  f_status_t fss_payload_write_process_pipe(fll_program_data_t * const main, const f_file_t output, const f_fss_quote_t quote, f_string_dynamic_t *buffer) {
+  void fss_payload_write_process_pipe(fll_program_data_t * const main, fss_payload_write_setting_t * const setting) {
 
-    f_status_t status = F_none;
     f_status_t status_pipe = F_none;
-
     f_file_t input = f_file_t_initialize;
-
     input.id = F_type_descriptor_input_d;
-    input.size_read = 2048;
+    input.size_read = fss_payload_write_common_allocation_large_d;
 
     f_array_length_t total = 0;
+    f_array_length_t length = 0;
     f_string_range_t range = f_string_range_t_initialize;
 
-    f_string_dynamic_t block = f_string_dynamic_t_initialize;
-    f_string_dynamic_t object = f_string_dynamic_t_initialize;
-    f_string_dynamic_t content = f_string_dynamic_t_initialize;
+    // 0x0 = nothing printed, 0x1 = something printed, 0x2 = "payload" matched.
+    uint8_t printed = 0;
 
     // 0x0 = start new object/content set, 0x1 = processing object, 0x2 = processing content, 0x3 = end object/content set, 0x4 = processing payload content.
     uint8_t state = 0;
@@ -207,7 +145,7 @@ extern "C" {
         if (fll_program_standard_signal_received(main)) {
           fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
 
-          status = F_status_set_error(F_interrupt);
+          setting->status = F_status_set_error(F_interrupt);
 
           break;
         }
@@ -218,9 +156,9 @@ extern "C" {
       if (range.start > range.stop) {
         if (status_pipe == F_none_eof) break;
 
-        block.used = 0;
+        setting->block.used = 0;
 
-        status_pipe = f_file_read_block(input, &block);
+        status_pipe = f_file_read_block(input, &setting->block);
 
         if (F_status_is_error(status_pipe)) {
           fss_payload_write_print_error(setting, main->error, "f_file_read_block");
@@ -230,24 +168,24 @@ extern "C" {
           break;
         }
 
-        if (!block.used) break;
+        if (!setting->block.used) break;
 
         range.start = 0;
-        range.stop = block.used - 1;
+        range.stop = setting->block.used - 1;
       }
 
       if (!state || state == 0x1) {
         if (!state) {
-          object.used = 0;
-          content.used = 0;
+          setting->object.used = 0;
+          setting->content.used = 0;
 
           state = 0x1;
         }
 
-        if (object.used + block.used > object.size) {
-          status = f_string_dynamic_increase_by(block.used, &object);
+        if (setting->object.used + setting->block.used > setting->object.size) {
+          setting->status = f_string_dynamic_increase_by(setting->block.used, &setting->object);
 
-          if (F_status_is_error(status)) {
+          if (F_status_is_error(setting->status)) {
             fss_payload_write_print_error(setting, main->error, "f_string_dynamic_increase_by");
 
             break;
@@ -256,30 +194,30 @@ extern "C" {
 
         for (; range.start <= range.stop; ++range.start) {
 
-          if (block.string[range.start] == fss_payload_write_pipe_content_start_s.string[0]) {
+          if (setting->block.string[range.start] == fss_payload_write_pipe_content_start_s.string[0]) {
             state = 0x2;
             ++range.start;
 
             break;
           }
 
-          if (block.string[range.start] == fss_payload_write_pipe_content_end_s.string[0]) {
+          if (setting->block.string[range.start] == fss_payload_write_pipe_content_end_s.string[0]) {
             state = 0x3;
             ++range.start;
 
             break;
           }
 
-          if (block.string[range.start] == fss_payload_write_pipe_content_ignore_s.string[0]) {
+          if (setting->block.string[range.start] == fss_payload_write_pipe_content_ignore_s.string[0]) {
 
             // This is not used by objects.
             continue;
           }
 
-          object.string[object.used++] = block.string[range.start];
+          setting->object.string[setting->object.used++] = setting->block.string[range.start];
         } // for
 
-        if (F_status_is_error(status)) break;
+        if (F_status_is_error(setting->status)) break;
 
         // If the start of content was not found, then fetch the next block.
         if (state == 0x1) continue;
@@ -297,27 +235,23 @@ extern "C" {
         }
 
         // When payload is provided, all data at this point is part of the payload until the end of the pipe.
-        if (fl_string_dynamic_compare(f_fss_string_payload_s, object) == F_equal_to) {
+        if (fl_string_dynamic_compare(f_fss_string_payload_s, setting->object) == F_equal_to) {
           if (total > 1) {
+            setting->status = f_string_dynamic_increase_by(total, &setting->content);
 
-            // The first character is the terminating new line, which is not part of the payload.
-            ++range.start;
-            --total;
-
-            status = f_string_dynamic_increase_by(total, &content);
-
-            if (F_status_is_error(status)) {
+            if (F_status_is_error(setting->status)) {
               fss_payload_write_print_error(setting, main->error, "f_string_dynamic_increase_by");
 
               break;
             }
 
-            memcpy(content.string, block.string + range.start, sizeof(f_char_t) * total);
+            memcpy(setting->content.string, setting->block.string + range.start, sizeof(f_char_t) * total);
 
-            content.used += total;
+            setting->content.used += total;
           }
 
           state = 0x4;
+          printed |= 0x2;
 
           // Designate to read next block from pipe.
           range.start = 1;
@@ -327,9 +261,9 @@ extern "C" {
         }
 
         if (total) {
-          status = f_string_dynamic_increase_by(total, &content);
+          setting->status = f_string_dynamic_increase_by(total, &setting->content);
 
-          if (F_status_is_error(status)) {
+          if (F_status_is_error(setting->status)) {
             fss_payload_write_print_error(setting, main->error, "f_string_dynamic_increase_by");
 
             break;
@@ -337,33 +271,35 @@ extern "C" {
 
           for (; range.start <= range.stop; ++range.start) {
 
-            if (block.string[range.start] == fss_payload_write_pipe_content_start_s.string[0]) {
-              if (main->error.verbosity > f_console_verbosity_quiet_e) {
-                fll_print_format("%r%[%QThe FSS-000E (Payload) standard only supports one content per object.%]%r", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context, f_string_eol_s);
-              }
+            if (setting->block.string[range.start] == fss_payload_write_pipe_content_start_s.string[0]) {
+              setting->status = F_status_set_error(F_supported_not);
 
-              status = F_status_set_error(F_supported_not);
+              if (main->error.verbosity > f_console_verbosity_quiet_e) {
+                fss_payload_write_print_line_first_locked(setting, main->error);
+                fss_payload_write_print_error_one_content_only(setting, main->error);
+                fss_payload_write_print_line_last_locked(setting, main->error);
+              }
 
               break;
             }
 
-            if (block.string[range.start] == fss_payload_write_pipe_content_end_s.string[0]) {
+            if (setting->block.string[range.start] == fss_payload_write_pipe_content_end_s.string[0]) {
               state = 0x3;
               ++range.start;
 
               break;
             }
 
-            if (block.string[range.start] == fss_payload_write_pipe_content_ignore_s.string[0]) {
+            if (setting->block.string[range.start] == fss_payload_write_pipe_content_ignore_s.string[0]) {
 
               // This is not used by this program.
               continue;
             }
 
-            content.string[content.used++] = block.string[range.start];
+            setting->content.string[setting->content.used++] = setting->block.string[range.start];
           } // for
 
-          if (F_status_is_error(status)) break;
+          if (F_status_is_error(setting->status)) break;
         }
         else {
           state = 0x3;
@@ -371,25 +307,41 @@ extern "C" {
       }
 
       if (state == 0x3) {
-        status = fss_payload_write_process(main, output, quote, &object, &content, buffer);
-        if (F_status_is_error(status)) break;
+        if (setting->flag & fss_payload_write_main_flag_partial_e) {
+          if (setting->flag & fss_payload_write_main_flag_content_e) {
+            fss_payload_write_process(main, setting, 0, &setting->content);
+          }
+          else {
+            fss_payload_write_process(main, setting, &setting->object, 0);
+          }
+        }
+        else {
+          fss_payload_write_process(main, setting, &setting->object, &setting->content);
+        }
+
+        if (F_status_is_error(setting->status)) break;
 
         state = 0;
+        printed |= 0x1;
+
+        continue;
       }
 
       if (state == 0x4) {
-        if (block.used) {
-          status = f_string_dynamic_increase_by(block.used, &content);
+        if (setting->block.used && range.start <= range.stop) {
+          length = (range.stop - range.start) + 1;
 
-          if (F_status_is_error(status)) {
+          setting->status = f_string_dynamic_increase_by(length + 1, &setting->content);
+
+          if (F_status_is_error(setting->status)) {
             fss_payload_write_print_error(setting, main->error, "f_string_dynamic_increase_by");
 
             break;
           }
 
-          memcpy(content.string, block.string, sizeof(f_char_t) * block.used);
+          memcpy(setting->content.string + range.start, setting->block.string, sizeof(f_char_t) * length);
 
-          content.used += block.used;
+          setting->content.used += length;
         }
 
         // Designate to read next block from pipe.
@@ -399,15 +351,41 @@ extern "C" {
     } // for
 
     // If the pipe ended before finishing, then attempt to wrap up.
-    if (F_status_is_error_not(status) && status_pipe == F_none_eof && state) {
-      status = fss_payload_write_process(main, output, quote, &object, &content, buffer);
+    if (F_status_is_error_not(setting->status) && status_pipe == F_none_eof && state) {
+      if (setting->flag & fss_payload_write_main_flag_partial_e) {
+        if (setting->flag & fss_payload_write_main_flag_content_e) {
+          fss_payload_write_process(main, setting, 0, &setting->content);
+        }
+        else {
+          fss_payload_write_process(main, setting, &setting->object, 0);
+        }
+      }
+      else {
+        fss_payload_write_process(main, setting, &setting->object, &setting->content);
+      }
+
+      printed |= 0x1;
     }
 
-    f_string_dynamic_resize(0, &block);
-    f_string_dynamic_resize(0, &object);
-    f_string_dynamic_resize(0, &content);
+    setting->block.used = 0;
+    setting->object.used = 0;
+    setting->content.used = 0;
+    setting->buffer.used = 0;
 
-    return status;
+    if (F_status_is_error_not(setting->status)) {
+
+      if (printed | 0x1) {
+        if (printed | 0x2) {
+          setting->status = F_payload;
+        }
+        else {
+          setting->status = F_none;
+        }
+      }
+      else {
+        setting->status = F_data_not;
+      }
+    }
   }
 #endif // _di_fss_payload_write_process_pipe_
 

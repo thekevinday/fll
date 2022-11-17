@@ -24,12 +24,14 @@
 #include <fll/level_0/utf.h>
 #include <fll/level_0/color.h>
 #include <fll/level_0/console.h>
+#include <fll/level_0/conversion.h>
 #include <fll/level_0/file.h>
 #include <fll/level_0/pipe.h>
 #include <fll/level_0/print.h>
 #include <fll/level_0/signal.h>
 
 // FLL-1 includes.
+#include <fll/level_1/conversion.h>
 #include <fll/level_1/fss/basic_list.h>
 #include <fll/level_1/print.h>
 #include <fll/level_1/string.h>

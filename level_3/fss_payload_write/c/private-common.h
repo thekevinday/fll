@@ -12,18 +12,6 @@
 extern "C" {
 #endif
 
-/**
- * Provide common/generic definitions.
- *
- * payload_write_common_allocation_*:
- *   - large: An allocation step used for buffers that are anticipated to have large buffers.
- *   - small: An allocation step used for buffers that are anticipated to have small buffers.
- */
-#ifndef _di_fss_payload_write_common_
-  #define fss_payload_write_common_allocation_large_d 2048
-  #define fss_payload_write_common_allocation_small_d 128
-#endif // _di_fss_payload_write_common_
-
 #ifdef __cplusplus
 } // extern "C"
 #endif

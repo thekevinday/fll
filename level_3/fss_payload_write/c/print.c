@@ -50,6 +50,17 @@ extern "C" {
   }
 #endif // _di_fss_payload_write_print_error_object_not_before_content_
 
+#ifndef _di_fss_payload_write_print_error_one_content_only_
+  f_status_t fss_payload_write_print_error_one_content_only(fss_payload_write_setting_t * const setting, const fl_print_t print) {
+
+    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+
+    fll_print_format("%r%[%QThe FSS-000E (Payload) standard only supports one content per object.%]%r", print.to, f_string_eol_s, print.set->error, print.prefix, print.set->error, f_string_eol_s);
+
+    return F_none;
+  }
+#endif // _di_fss_payload_write_print_error_one_content_only_
+
 #ifndef _fss_payload_write_print_error_prepend_only_whitespace_
   f_status_t fss_payload_write_print_error_prepend_only_whitespace(fss_payload_write_setting_t * const setting, const fl_print_t print) {
 
@@ -66,6 +77,25 @@ extern "C" {
     return F_none;
   }
 #endif // _fss_payload_write_print_error_prepend_only_whitespace_
+
+#ifndef _di_fss_payload_write_print_error_unsupported_eol_
+  f_status_t fss_payload_write_print_error_unsupported_eol(fss_payload_write_setting_t * const setting, const fl_print_t print) {
+
+    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+
+    f_file_stream_lock(print.to);
+
+    fl_print_format("%r%[%QThe FSS-000E (Payload) standard does not support end of line character '%]", print.to, f_string_eol_s, print.set->error, print.prefix, print.set->error);
+    fl_print_format("%[\\n%]", print.to, print.set->notable, print.set->notable);
+    fl_print_format("%[' (%]", print.to, print.set->error, print.set->error);
+    fl_print_format("%[U+000A%]", print.to, print.set->notable, print.set->notable);
+    fl_print_format("%[) in objects.%]%r", print.to, print.set->error, print.set->error, f_string_eol_s);
+
+    f_file_stream_unlock(print.to);
+
+    return F_none;
+  }
+#endif // _di_fss_payload_write_print_error_unsupported_eol_
 
 #ifndef _di_fss_payload_write_print_help_
   f_status_t fss_payload_write_print_help(fss_payload_write_setting_t * const setting, const fl_print_t print) {
@@ -154,7 +184,7 @@ extern "C" {
 
     if (!F_status_is_error(setting->status)) {
       if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
-      if (setting->flag & (fss_payload_write_main_flag_verify_e | fss_payload_write_main_flag_file_to_e)) return F_output_not;
+      if (setting->flag & fss_payload_write_main_flag_file_to_e) return F_output_not;
     }
 
     fll_print_dynamic_raw(setting->line_last, print.to);
@@ -170,7 +200,7 @@ extern "C" {
 
     if (!F_status_is_error(setting->status)) {
       if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
-      if (setting->flag & (fss_payload_write_main_flag_verify_e | fss_payload_write_main_flag_file_to_e)) return F_output_not;
+      if (setting->flag & fss_payload_write_main_flag_file_to_e) return F_output_not;
     }
 
     f_print_dynamic_raw(setting->line_last, print.to);

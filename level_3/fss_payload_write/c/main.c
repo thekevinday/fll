@@ -4,6 +4,7 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
   fll_program_data_t data = fll_program_data_t_initialize;
   fss_payload_write_setting_t setting = fss_payload_write_setting_t_initialize;
+  setting.state.data = (void *) &data;
 
   f_console_parameter_t parameters[] = fss_payload_write_console_parameter_t_initialize;
   data.parameters.array = parameters;
@@ -30,5 +31,5 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
   fll_program_standard_set_down(&data);
 
-  return F_status_is_error(status) ? 1 : 0;
+  return F_status_is_error(setting.status) ? 1 : 0;
 }

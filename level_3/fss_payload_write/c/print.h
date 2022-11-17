@@ -80,6 +80,24 @@ extern "C" {
 #endif // _di_fss_payload_write_print_error_object_not_before_content_
 
 /**
+ * Print an message about a multiple Content being unsupported.
+ *
+ * @param setting
+ *   The main program settings.
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   Designates the how and where to print.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ */
+#ifndef _di_fss_payload_write_print_error_one_content_only_
+  extern f_status_t fss_payload_write_print_error_one_content_only(fss_payload_write_setting_t * const setting, const fl_print_t print);
+#endif // _di_fss_payload_write_print_error_one_content_only_
+
+/**
  * Print error when prepend parameter has something other than white space.
  *
  * @param setting
@@ -96,6 +114,24 @@ extern "C" {
 #ifndef _fss_payload_write_print_error_prepend_only_whitespace_
   extern f_status_t fss_payload_write_print_error_prepend_only_whitespace(fss_payload_write_setting_t * const setting, const fl_print_t print);
 #endif // _fss_payload_write_print_error_prepend_only_whitespace_
+
+/**
+ * Print an message about a parameter New Line character '\n' (U+000A) being unsupported.
+ *
+ * @param setting
+ *   The main program settings.
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   Designates the how and where to print.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ */
+#ifndef _di_fss_payload_write_print_error_unsupported_eol_
+  extern f_status_t fss_payload_write_print_error_unsupported_eol(fss_payload_write_setting_t * const setting, const fl_print_t print);
+#endif // _di_fss_payload_write_print_error_unsupported_eol_
 
 /**
  * Print help.
