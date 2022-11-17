@@ -155,7 +155,7 @@ extern "C" {
  * @see f_utf_buffer_increment()
  */
 #ifndef _di_fl_fss_basic_list_content_write_
-  extern f_status_t fl_fss_basic_list_content_write(const f_string_static_t content, const uint8_t complete, const f_string_static_t *prepend, f_state_t state, f_string_range_t * const range, f_string_dynamic_t * const destination);
+  extern f_status_t fl_fss_basic_list_content_write(const f_string_static_t content, const uint8_t complete, const f_string_static_t * const prepend, f_state_t state, f_string_range_t * const range, f_string_dynamic_t * const destination);
 #endif // _di_fl_fss_basic_list_content_write_
 
 /**

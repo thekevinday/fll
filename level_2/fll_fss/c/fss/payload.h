@@ -150,7 +150,7 @@ extern "C" {
  * @see fl_fss_basic_list_object_write()
  */
 #ifndef _di_fll_fss_payload_write_
-  extern f_status_t fll_fss_payload_write(const f_string_static_t object, const f_string_static_t content, const bool trim, const f_string_static_t *content_prepend, f_state_t state, f_string_dynamic_t * const destination);
+  extern f_status_t fll_fss_payload_write(const f_string_static_t object, const f_string_static_t content, const bool trim, const f_string_static_t * const content_prepend, f_state_t state, f_string_dynamic_t * const destination);
 #endif // _di_fll_fss_payload_write_
 
 #ifdef __cplusplus

@@ -40,16 +40,16 @@ extern "C" {
 #endif // _di_fll_program_print_error_missing_variable_not_zero_
 
 #ifndef _di_fll_program_print_error_parameter_both_specified_same_amount_
-  f_status_t fll_program_print_error_parameter_both_specified_same_amount(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t first, const f_string_static_t second) {
+  f_status_t fll_program_print_error_parameter_both_specified_same_amount(const fl_print_t print, const f_string_static_t symbol_first, const f_string_static_t symbol_second, const f_string_static_t first, const f_string_static_t second) {
 
     if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
 
     f_file_stream_lock(print.to);
 
     fl_print_format("%[%QThe '%]", print.to, print.set->error, print.prefix, print.set->error);
-    fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol, first, print.set->notable);
+    fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol_first, first, print.set->notable);
     fl_print_format("%[' parameter and the '%]", print.to, print.set->error, print.set->error);
-    fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol, second, print.set->notable);
+    fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol_second, second, print.set->notable);
     fl_print_format("%[' parameter must be specified the same number of times.%]%r", print.to, print.set->error, print.set->error, f_string_eol_s);
 
     f_file_stream_unlock(print.to);
@@ -57,6 +57,27 @@ extern "C" {
     return F_none;
   }
 #endif // _di_fll_program_print_error_parameter_both_specified_same_amount_
+
+#ifndef _di_fll_program_print_error_parameter_both_specified_same_amount_without_
+  f_status_t fll_program_print_error_parameter_both_specified_same_amount_without(const fl_print_t print, const f_string_static_t symbol_first, const f_string_static_t symbol_second, const f_string_static_t symbol_third, const f_string_static_t first, const f_string_static_t second, const f_string_static_t third) {
+
+    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+
+    f_file_stream_lock(print.to);
+
+    fl_print_format("%[%QThe '%]", print.to, print.set->error, print.prefix, print.set->error);
+    fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol_first, first, print.set->notable);
+    fl_print_format("%[' parameter and the '%]", print.to, print.set->error, print.set->error);
+    fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol_second, second, print.set->notable);
+    fl_print_format("%[' parameter must be specified the same number of times when not specifying the '%]", print.to, print.set->error, print.set->error);
+    fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol_third, third, print.set->notable);
+    fl_print_format("%[' parameter.%]%r", print.to, print.set->error, print.set->error, f_string_eol_s);
+
+    f_file_stream_unlock(print.to);
+
+    return F_none;
+  }
+#endif // _di_fll_program_print_error_parameter_both_specified_same_amount_without_
 
 #ifndef _di_fll_program_print_error_parameter_cannot_use_with_
   f_status_t fll_program_print_error_parameter_cannot_use_with(const fl_print_t print, const f_string_static_t symbol_first, const f_string_static_t symbol_second, const f_string_static_t first, const f_string_static_t second) {
@@ -101,7 +122,7 @@ extern "C" {
 
     f_file_stream_lock(print.to);
 
-    fl_print_format("%r%[%QThe '%]", print.to, f_string_eol_s, print.set->error, print.prefix, print.set->error);
+    fl_print_format("%[%QThe '%]", print.to, print.set->error, print.prefix, print.set->error);
     fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol_first, first, print.set->notable);
     fl_print_format("%[' parameter only allows either the '%]", print.to, print.set->error, print.set->error);
     fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol_second, second, print.set->notable);
@@ -243,6 +264,27 @@ extern "C" {
     return F_none;
   }
 #endif // _di_fll_program_print_error_parameter_must_specify_once_value_
+
+#ifndef _di_fll_program_print_error_parameter_range_start_before_stop_
+  f_status_t fll_program_print_error_parameter_range_start_before_stop(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t parameter, const f_string_static_t value_start, const f_string_static_t value_stop) {
+
+    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+
+    f_file_stream_lock(print.to);
+
+    fl_print_format("%[%QThe start range value '%]", print.to, print.set->error, print.prefix, print.set->error);
+    fl_print_format("%[%Q%]", print.to, print.set->notable, value_start, print.set->notable);
+    fl_print_format("%[' may not be greater than the stop value '%]", print.to, print.set->error, print.set->error);
+    fl_print_format("%[%Q%]", print.to, print.set->notable, value_stop, print.set->notable);
+    fl_print_format("%[' for the parameter '%]", print.to, print.set->error, print.set->error);
+    fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol, parameter, print.set->notable);
+    fl_print_format("%['.%]%r", print.to, print.set->error, print.set->error, f_string_eol_s);
+
+    f_file_stream_unlock(print.to);
+
+    return F_none;
+  }
+#endif // _di_fll_program_print_error_parameter_range_start_before_stop_
 
 #ifndef _di_fll_program_print_error_pipe_invalid_form_feed_
   f_status_t fll_program_print_error_pipe_invalid_form_feed(const fl_print_t print) {

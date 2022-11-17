@@ -75,8 +75,11 @@ extern "C" {
  * @param print
  *   The output structure.
  *   This locks, uses, and unlocks the file stream.
- * @param symbol
- *   The symbol string prepended to both parameters.
+ * @param symbol_first
+ *   The symbol string prepended to the first parameter.
+ *   This is usually f_console_symbol_long_enable_s.
+ * @param symbol_second
+ *   The symbol string prepended to the second parameter.
  *   This is usually f_console_symbol_long_enable_s.
  * @param first
  *   The first parameter name.
@@ -88,8 +91,46 @@ extern "C" {
  *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_fll_program_print_error_parameter_both_specified_same_amount_
-  extern f_status_t fll_program_print_error_parameter_both_specified_same_amount(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t first, const f_string_static_t second);
+  extern f_status_t fll_program_print_error_parameter_both_specified_same_amount(const fl_print_t print, const f_string_static_t symbol_first, const f_string_static_t symbol_second, const f_string_static_t first, const f_string_static_t second);
 #endif // _di_fll_program_print_error_parameter_both_specified_same_amount_
+
+/**
+ * Print an error message about two parameters being required to be specified the same number of times when not specifying the third parameter.
+ *
+ * This is only printed when verbosity is not set to quiet.
+ *
+ * This uses the following:
+ *   - print.set->error: For the error context.
+ *   - print.set->strong: For the highlighting context
+ *   - print.prefix: For the prefixing a string to the message (such as "ERROR:").
+ *
+ * @param print
+ *   The output structure.
+ *   This locks, uses, and unlocks the file stream.
+ * @param symbol_first
+ *   The symbol string prepended to the first parameter.
+ *   This is usually f_console_symbol_long_enable_s.
+ * @param symbol_second
+ *   The symbol string prepended to the second parameter.
+ *   This is usually f_console_symbol_long_enable_s.
+ * @param symbol_third
+ *   The symbol string prepended to the third parameter.
+ *   This is usually f_console_symbol_long_enable_s.
+ * @param first
+ *   The first parameter name.
+ * @param second
+ *   The second parameter name.
+ * @param third
+ *   The third parameter name, representing the "without" parameter.
+ *   The first and second parameter must be specified the same amount of times without this parameter.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ */
+#ifndef _di_fll_program_print_error_parameter_both_specified_same_amount_without_
+  extern f_status_t fll_program_print_error_parameter_both_specified_same_amount_without(const fl_print_t print, const f_string_static_t symbol_first, const f_string_static_t symbol_second, const f_string_static_t symbol_third, const f_string_static_t first, const f_string_static_t second, const f_string_static_t third);
+#endif // _di_fll_program_print_error_parameter_both_specified_same_amount_without_
 
 /**
  * Print message about two parameters not being allowed to be used together.
@@ -398,6 +439,38 @@ extern "C" {
 #ifndef _di_fll_program_print_error_parameter_must_specify_once_value_
   extern f_status_t fll_program_print_error_parameter_must_specify_once_value(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t parameter, const f_string_static_t value);
 #endif // _di_fll_program_print_error_parameter_must_specify_once_value_
+
+/**
+ * Print message about a specific value only being allowed to be used once for the parameter.
+ *
+ * This is only printed when verbosity is not set to quiet.
+ *
+ * This uses the following:
+ *   - print.set->error: For the error context.
+ *   - print.set->strong: For the highlighting context
+ *   - print.prefix: For the prefixing a string to the message (such as "ERROR:").
+ *
+ * @param print
+ *   The output structure.
+ *   This locks, uses, and unlocks the file stream.
+ * @param symbol
+ *   The symbol string prepended to both parameters.
+ *   This locks, uses, and unlocks the file stream.
+ *   This is usually f_console_symbol_long_enable_s.
+ * @param parameter
+ *   The parameter name.
+ * @param value_start
+ *   The range start value.
+ * @param value_stop
+ *   The range stop value.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ */
+#ifndef _di_fll_program_print_error_parameter_range_start_before_stop_
+  extern f_status_t fll_program_print_error_parameter_range_start_before_stop(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t parameter, const f_string_static_t value_start, const f_string_static_t value_stop);
+#endif // _di_fll_program_print_error_parameter_range_start_before_stop_
 
 /**
  * Print a message about the pipe having an invalid form-feed character '\f' (U+000C).
