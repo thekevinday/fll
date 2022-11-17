@@ -305,11 +305,6 @@ extern "C" {
         // When payload is provided, all data at this point is part of the payload until the end of the pipe.
         if (fl_string_dynamic_compare(f_fss_string_payload_s, object) == F_equal_to) {
           if (total > 1) {
-
-            // The first character is the terminating new line, which is not part of the payload.
-            ++range.start;
-            --total;
-
             status = f_string_dynamic_increase_by(total, &content);
 
             if (F_status_is_error(status)) {
