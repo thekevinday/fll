@@ -374,8 +374,8 @@ extern "C" {
 
     if (F_status_is_error_not(setting->status)) {
 
-      if (printed | 0x1) {
-        if (printed | 0x2) {
+      if (printed & 0x1) {
+        if (printed & 0x2) {
           setting->status = F_payload;
         }
         else {
