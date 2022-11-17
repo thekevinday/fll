@@ -10,6 +10,10 @@ extern "C" {
 
     if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
 
+    if (!F_status_is_error(setting->status)) {
+      if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
+    }
+
     iki_read_print_line_first_locked(setting, print);
     fll_error_print(print, F_status_set_fine(setting->status), function, F_true);
     iki_read_print_line_last_locked(setting, print);
@@ -22,6 +26,10 @@ extern "C" {
   f_status_t iki_read_print_error_file(iki_read_setting_t * const setting, const fl_print_t print, const f_string_t function, const f_string_static_t name, const f_string_static_t operation, const uint8_t type) {
 
     if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+
+    if (!F_status_is_error(setting->status)) {
+      if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
+    }
 
     iki_read_print_line_first_locked(setting, print);
     fll_error_file_print(print, F_status_set_fine(setting->status), function, F_true, name, operation, type);

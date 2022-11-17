@@ -11,6 +11,8 @@ extern "C" {
 
     f_status_t status = F_none;
 
+    setting->flag = 0;
+
     // Load parameters.
     setting->status = f_console_parameter_process(arguments, &main->parameters);
     if (F_status_is_error(setting->status)) return;

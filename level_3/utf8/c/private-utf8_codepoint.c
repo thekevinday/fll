@@ -36,19 +36,19 @@ extern "C" {
         if (status == F_failure || status == F_utf_not || status == F_complete_not_utf || status == F_utf_fragment || status == F_valid_not) {
           valid_not = F_true;
 
-          utf8_print_character_invalid(main, setting, unicode);
+          utf8_print_character_invalid(setting, main->output, unicode);
         }
         else {
           status = F_status_set_error(status);
 
-          utf8_print_error_decode(main, setting, status, unicode);
+          utf8_print_error_decode(setting, main->error, status, unicode);
 
           return status;
         }
       }
       else if (!(setting->flag & utf8_main_flag_verify_e)) {
         if (setting->mode & utf8_mode_to_codepoint_e) {
-          utf8_print_codepoint(main, setting, codepoint);
+          utf8_print_codepoint(setting, main->output, codepoint);
         }
         else {
           f_char_t byte[4] = { 0, 0, 0, 0 };
@@ -58,22 +58,22 @@ extern "C" {
 
           if (F_status_is_error(status)) {
             if (setting->mode & utf8_mode_to_bytesequence_e) {
-              utf8_print_error_encode(main, setting, status, codepoint);
+              utf8_print_error_encode(setting, main->error, status, codepoint);
             }
             else {
-              utf8_print_error_combining_or_width(main, setting);
+              utf8_print_combining_or_width_invalid(setting, main->output);
             }
           }
           else if (setting->mode & utf8_mode_to_bytesequence_e) {
             status = F_none;
             unicode.used = macro_f_utf_byte_width(unicode.string[0]);
 
-            utf8_print_bytesequence(main, setting, unicode);
+            utf8_print_bytesequence(setting, main->output, unicode);
           }
           else {
             status = F_none;
 
-            utf8_print_combining_or_width(main, setting, unicode);
+            utf8_print_combining_or_width(setting, main->output, unicode);
           }
         }
       }
@@ -81,7 +81,7 @@ extern "C" {
     else if (*mode == utf8_codepoint_mode_bad_end_e) {
       status = F_none;
 
-      utf8_print_character_invalid(main, setting, unicode);
+      utf8_print_character_invalid(setting, main->output, unicode);
     }
     else {
       return F_none;
@@ -132,12 +132,12 @@ extern "C" {
         if (status == F_number || status == F_utf_not || status == F_complete_not_utf || status == F_utf_fragment || status == F_number_decimal || status == F_number_negative || status == F_number_positive || status == F_number_overflow) {
           valid_not = F_true;
 
-          utf8_print_character_invalid(main, setting, hex);
+          utf8_print_character_invalid(setting, main->output, hex);
         }
         else {
           status = F_status_set_error(status);
 
-          utf8_print_error_decode(main, setting, status, hex);
+          utf8_print_error_decode(setting, main->error, status, hex);
 
           return status;
         }
@@ -152,20 +152,20 @@ extern "C" {
         }
 
         if (setting->mode & utf8_mode_to_bytesequence_e) {
-          utf8_print_raw_bytesequence(main, setting, raw, width);
+          utf8_print_raw_bytesequence(setting, main->output, raw, width);
         }
         else if (setting->mode & utf8_mode_to_codepoint_e) {
-          utf8_print_raw_codepoint(main, setting, setting->text);
+          utf8_print_raw_codepoint(setting, main->output, setting->text);
         }
         else {
-          utf8_print_raw_combining_or_width(main, setting, width);
+          utf8_print_raw_combining_or_width(setting, main->output, width);
         }
       }
     }
     else if (*mode == utf8_codepoint_mode_bad_end_e) {
       status = F_none;
 
-      utf8_print_character_invalid(main, setting, hex);
+      utf8_print_character_invalid(setting, main->output, hex);
     }
     else {
       return F_none;

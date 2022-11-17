@@ -11,6 +11,10 @@ extern "C" {
 
     if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
 
+    if (!F_status_is_error(setting->status)) {
+      if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
+    }
+
     status_code_print_line_first_locked(setting, print);
     fll_error_print(print, F_status_set_fine(setting->status), function, F_true);
     status_code_print_line_last_locked(setting, print);
@@ -23,6 +27,10 @@ extern "C" {
   f_status_t status_code_print_error_cannot_error_warning_number(status_code_setting_t * const setting, const fl_print_t print) {
 
     if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+
+    if (!F_status_is_error(setting->status)) {
+      if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
+    }
 
     f_file_stream_lock(print.to);
 
@@ -45,6 +53,10 @@ extern "C" {
 
     if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
 
+    if (!F_status_is_error(setting->status)) {
+      if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
+    }
+
     fll_print_format("%[No status code is specified.%]%r", print.to, print.context, print.context, f_string_eol_s);
 
     return F_none;
@@ -55,6 +67,10 @@ extern "C" {
   f_status_t status_code_print_error_invalid_callback(status_code_setting_t * const setting, const fl_print_t print, const f_string_t name) {
 
     if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+
+    if (!F_status_is_error(setting->status)) {
+      if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
+    }
 
     f_file_stream_lock(print.to);
 

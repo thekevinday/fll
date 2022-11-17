@@ -337,6 +337,7 @@ extern "C" {
  *   - file_to:        Using a specified destination file.
  *   - header:         Enable printing of headers.
  *   - help:           Print help.
+ *   - pipe:           Use the input pipe.
  *   - separate:       Enable printing of separators.
  *   - strip_invalid:  Using strip invalid character mode.
  *   - verify:         Using verify mode.
@@ -349,10 +350,11 @@ extern "C" {
     utf8_main_flag_file_to_e       = 0x2,
     utf8_main_flag_header_e        = 0x4,
     utf8_main_flag_help_e          = 0x8,
-    utf8_main_flag_separate_e      = 0x10,
-    utf8_main_flag_strip_invalid_e = 0x20,
-    utf8_main_flag_verify_e        = 0x40,
-    utf8_main_flag_version_e       = 0x80,
+    utf8_main_flag_pipe_e          = 0x10,
+    utf8_main_flag_separate_e      = 0x20,
+    utf8_main_flag_strip_invalid_e = 0x40,
+    utf8_main_flag_verify_e        = 0x80,
+    utf8_main_flag_version_e       = 0x100,
   };
 #endif // _di_utf8_main_flag_e_
 

@@ -92,6 +92,8 @@ extern "C" {
 
     if (!main || !setting) return;
 
+    setting->flag = 0;
+
     // Load parameters.
     setting->status = f_console_parameter_process(arguments, &main->parameters);
 
@@ -279,7 +281,7 @@ extern "C" {
       if (main->parameters.array[utf8_parameter_to_file_e].values.used > 1) {
         setting->status = F_status_set_error(F_parameter);
 
-        utf8_print_error_parameter_file_to_too_many(main, setting);
+        utf8_print_error_parameter_file_to_too_many(setting, main->error);
         utf8_print_line_last_locked(setting, main->error);
 
         return;
@@ -320,7 +322,7 @@ extern "C" {
       }
       else {
         utf8_print_line_first_locked(setting, main->error);
-        utf8_print_error_parameter_file_name_empty(main, setting, main->parameters.array[utf8_parameter_to_file_e].values.array[0]);
+        utf8_print_error_parameter_file_name_empty(setting, main->error, main->parameters.array[utf8_parameter_to_file_e].values.array[0]);
         utf8_print_line_last_locked(setting, main->error);
 
         setting->status = F_status_set_error(F_parameter);
@@ -377,7 +379,7 @@ extern "C" {
 
         if (main->parameters.arguments.array[index].used) {
           if (f_file_exists(main->parameters.arguments.array[index], F_true) != F_true) {
-            utf8_print_error_parameter_file_not_found(main, setting, F_true, main->parameters.arguments.array[index]);
+            utf8_print_error_parameter_file_not_found(setting, main->error, F_true, main->parameters.arguments.array[index]);
 
             if (F_status_is_error_not(setting->status)) {
               setting->status = F_status_set_error(F_file_found_not);
@@ -385,7 +387,7 @@ extern "C" {
           }
         }
         else {
-          utf8_print_error_parameter_file_name_empty(main, setting, index);
+          utf8_print_error_parameter_file_name_empty(setting, main->error, index);
 
           if (F_status_is_error_not(setting->status)) {
             setting->status = F_status_set_error(F_parameter);
@@ -441,7 +443,8 @@ extern "C" {
     if (main->parameters.array[utf8_parameter_from_file_e].result == f_console_result_none_e && !((main->pipe & fll_program_data_pipe_input_e) || main->parameters.remaining.used)) {
       setting->status = F_status_set_error(F_parameter);
 
-      utf8_print_error_no_from(main, setting);
+      utf8_print_line_first_locked(setting, main->error);
+      utf8_print_error_no_from(setting, main->error);
       utf8_print_line_last_locked(setting, main->error);
 
       return;
@@ -470,6 +473,10 @@ extern "C" {
     }
 
     setting->valid_not = main->message.set->error;
+
+    if (main->pipe & fll_program_data_pipe_input_e) {
+      setting->flag |= utf8_main_flag_pipe_e;
+    }
   }
 #endif // _di_utf8_setting_load_
 

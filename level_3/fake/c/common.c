@@ -129,6 +129,8 @@ extern "C" {
 
     if (!main || !setting) return;
 
+    setting->flag = 0;
+
     // Load parameters.
     setting->status = f_console_parameter_process(arguments, &main->parameters);
 

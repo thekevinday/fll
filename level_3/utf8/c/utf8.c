@@ -32,7 +32,7 @@ extern "C" {
     if (main->pipe & fll_program_data_pipe_input_e) {
       const f_file_t file = macro_f_file_t_initialize(F_type_input_d, F_type_descriptor_input_d, F_file_flag_read_only_d, 32768, F_file_default_write_size_d);
 
-      utf8_print_section_header_pipe(main, setting);
+      utf8_print_section_header_pipe(setting, main->output);
 
       if (setting->mode & utf8_mode_from_bytesequence_e) {
         setting->status = utf8_process_file_bytesequence(main, setting, file);
@@ -73,7 +73,7 @@ extern "C" {
           main->signal_check = 0;
         }
 
-        utf8_print_section_header_file(main, setting, setting->path_files_from.array[i], i);
+        utf8_print_section_header_file(setting, main->output, setting->path_files_from.array[i], i);
 
         setting->status = f_file_stream_open(setting->path_files_from.array[i], f_string_empty_s, &file);
 
@@ -139,7 +139,7 @@ extern "C" {
           main->signal_check = 0;
         }
 
-        utf8_print_section_header_parameter(main, setting, main->parameters.remaining.array[i]);
+        utf8_print_section_header_parameter(setting, main->output, main->parameters.remaining.array[i]);
 
         setting->status = utf8_process_text(main, setting, main->parameters.arguments.array[main->parameters.remaining.array[i]]);
 
