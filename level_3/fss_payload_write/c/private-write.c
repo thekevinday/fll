@@ -116,11 +116,6 @@ extern "C" {
   }
 #endif // _di_fss_payload_write_process_
 
-#ifndef _di_fss_payload_write_process_parameters_
-  void fss_payload_write_process_parameters(fll_program_data_t * const main, fss_payload_write_setting_t * const setting) {
-  }
-#endif // _di_fss_payload_write_process_parameters_
-
 #ifndef _di_fss_payload_write_process_pipe_
   void fss_payload_write_process_pipe(fll_program_data_t * const main, fss_payload_write_setting_t * const setting) {
 
@@ -373,7 +368,6 @@ extern "C" {
     setting->buffer.used = 0;
 
     if (F_status_is_error_not(setting->status)) {
-
       if (printed & 0x1) {
         if (printed & 0x2) {
           setting->status = F_payload;
