@@ -144,24 +144,24 @@ extern "C" {
 
     status = F_none;
 
-    if (main->parameters.array[byte_dump_parameter_help_e].result == f_console_result_found_e) {
+    if (main->parameters.array[byte_dump_parameter_help_e].result & f_console_result_found_e) {
       byte_dump_print_help(setting, main->message);
 
       return F_none;
     }
 
-    if (main->parameters.array[byte_dump_parameter_version_e].result == f_console_result_found_e) {
+    if (main->parameters.array[byte_dump_parameter_version_e].result & f_console_result_found_e) {
       fll_program_print_version(main->message, byte_dump_program_version_s);
 
       return F_none;
     }
 
     if (main->parameters.remaining.used || (main->pipe & fll_program_data_pipe_input_e)) {
-      if (main->parameters.array[byte_dump_parameter_width_e].result == f_console_result_found_e) {
+      if (main->parameters.array[byte_dump_parameter_width_e].result & f_console_result_found_e) {
         f_file_stream_lock(main->error.to);
 
         fl_print_format("%[%QThe parameter '%]", main->error.to, main->context.set.error, main->error.prefix, main->context.set.error);
-        fl_print_format("%[%r%r%]", main->error.to, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_width_s, main->context.set.notable);
+        fl_print_format("%[%r%r%]", main->error.to, main->context.set.notable, f_console_symbol_long_normal_s, byte_dump_long_width_s, main->context.set.notable);
         fl_print_format("%[' is specified, but no value is given.%]%r", main->error.to, main->context.set.error, main->context.set.error, f_string_eol_s);
 
         f_file_stream_unlock(main->error.to);
@@ -169,7 +169,7 @@ extern "C" {
         return F_status_set_error(F_parameter);
       }
 
-      if (main->parameters.array[byte_dump_parameter_width_e].result == f_console_result_additional_e) {
+      if (main->parameters.array[byte_dump_parameter_width_e].result & f_console_result_value_e) {
         const f_array_length_t index = main->parameters.array[byte_dump_parameter_width_e].values.array[main->parameters.array[byte_dump_parameter_width_e].values.used - 1];
         f_number_unsigned_t number = 0;
 
@@ -179,7 +179,7 @@ extern "C" {
           f_file_stream_lock(main->error.to);
 
           fl_print_format("%[%QThe parameter '%]", main->error.to, main->context.set.error, main->error.prefix, main->context.set.error);
-          fl_print_format("%[%r%r%]", main->error.to, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_width_s, main->context.set.notable);
+          fl_print_format("%[%r%r%]", main->error.to, main->context.set.notable, f_console_symbol_long_normal_s, byte_dump_long_width_s, main->context.set.notable);
           fl_print_format("%[' value can only be a number (inclusively) between %]", main->error.to, main->context.set.error, main->context.set.error);
           fl_print_format("%[1%]", main->error.to, main->context.set.notable, main->context.set.notable);
           fl_print_format(" %[and%] ", main->error.to, main->context.set.error, main->context.set.error);
@@ -196,11 +196,11 @@ extern "C" {
         data.width = (uint8_t) number;
       }
 
-      if (main->parameters.array[byte_dump_parameter_first_e].result == f_console_result_found_e) {
+      if (main->parameters.array[byte_dump_parameter_first_e].result & f_console_result_found_e) {
         f_file_stream_lock(main->error.to);
 
         fl_print_format("%[%QThe parameter '%]", main->error.to, main->context.set.error, main->error.prefix, main->context.set.error);
-        fl_print_format("%[%r%r%]", main->error.to, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_first_s, main->context.set.notable);
+        fl_print_format("%[%r%r%]", main->error.to, main->context.set.notable, f_console_symbol_long_normal_s, byte_dump_long_first_s, main->context.set.notable);
         fl_print_format("%[' is specified, but no value is given.%]%r", main->error.to, main->context.set.error, main->context.set.error, f_string_eol_s);
 
         f_file_stream_unlock(main->error.to);
@@ -208,7 +208,7 @@ extern "C" {
         return F_status_set_error(F_parameter);
       }
 
-      if (main->parameters.array[byte_dump_parameter_first_e].result == f_console_result_additional_e) {
+      if (main->parameters.array[byte_dump_parameter_first_e].result & f_console_result_value_e) {
         const f_array_length_t index = main->parameters.array[byte_dump_parameter_first_e].values.array[main->parameters.array[byte_dump_parameter_first_e].values.used - 1];
         f_number_unsigned_t number = 0;
 
@@ -218,7 +218,7 @@ extern "C" {
           f_file_stream_lock(main->error.to);
 
           fl_print_format("%[%QThe parameter '%]", main->error.to, main->context.set.error, main->error.prefix, main->context.set.error);
-          fl_print_format("%[%r%r%]", main->error.to, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_first_s, main->context.set.notable);
+          fl_print_format("%[%r%r%]", main->error.to, main->context.set.notable, f_console_symbol_long_normal_s, byte_dump_long_first_s, main->context.set.notable);
           fl_print_format("%[' value can only be a number (inclusively) between %]", main->error.to, main->context.set.error, main->context.set.error);
           fl_print_format("%[0%]", main->error.to, main->context.set.notable, main->context.set.notable);
           fl_print_format(" %[and%] ", main->error.to, main->context.set.error, main->context.set.error);
@@ -235,11 +235,11 @@ extern "C" {
         data.first = number;
       }
 
-      if (main->parameters.array[byte_dump_parameter_last_e].result == f_console_result_found_e) {
+      if (main->parameters.array[byte_dump_parameter_last_e].result & f_console_result_found_e) {
         f_file_stream_lock(main->error.to);
 
         fl_print_format("%[%QThe parameter '%]", main->error.to, main->context.set.error, main->error.prefix, main->context.set.error);
-        fl_print_format("%[%r%r%]", main->error.to, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_last_s, main->context.set.notable);
+        fl_print_format("%[%r%r%]", main->error.to, main->context.set.notable, f_console_symbol_long_normal_s, byte_dump_long_last_s, main->context.set.notable);
         fl_print_format("%[' is specified, but no value is given.%]%r", main->error.to, main->context.set.error, main->context.set.error, f_string_eol_s);
 
         f_file_stream_unlock(main->error.to);
@@ -247,7 +247,7 @@ extern "C" {
         return F_status_set_error(F_parameter);
       }
 
-      if (main->parameters.array[byte_dump_parameter_last_e].result == f_console_result_additional_e) {
+      if (main->parameters.array[byte_dump_parameter_last_e].result & f_console_result_value_e) {
         const f_array_length_t index = main->parameters.array[byte_dump_parameter_last_e].values.array[main->parameters.array[byte_dump_parameter_last_e].values.used - 1];
         f_number_unsigned_t number = 0;
 
@@ -257,7 +257,7 @@ extern "C" {
           f_file_stream_lock(main->error.to);
 
           fl_print_format("%[%QThe parameter '%]", main->error.to, main->context.set.error, main->error.prefix, main->context.set.error);
-          fl_print_format("%[%r%r%]", main->error.to, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_last_s, main->context.set.notable);
+          fl_print_format("%[%r%r%]", main->error.to, main->context.set.notable, f_console_symbol_long_normal_s, byte_dump_long_last_s, main->context.set.notable);
           fl_print_format("%[' value can only be a number (inclusively) between %]", main->error.to, main->context.set.error, main->context.set.error);
           fl_print_format("%[0%]", main->error.to, main->context.set.notable, main->context.set.notable);
           fl_print_format(" %[and%] ", main->error.to, main->context.set.error, main->context.set.error);
@@ -274,14 +274,14 @@ extern "C" {
         data.last = number;
       }
 
-      if (main->parameters.array[byte_dump_parameter_first_e].result == f_console_result_additional_e && main->parameters.array[byte_dump_parameter_last_e].result == f_console_result_additional_e) {
+      if (main->parameters.array[byte_dump_parameter_first_e].result & f_console_result_value_e && main->parameters.array[byte_dump_parameter_last_e].result & f_console_result_value_e) {
         if (data.first > data.last) {
           f_file_stream_lock(main->error.to);
 
           fl_print_format("%[%QThe parameter '%]", main->error.to, main->context.set.error, main->error.prefix, main->context.set.error);
-          fl_print_format("%[%r%r%]", main->error.to, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_first_s, main->context.set.notable);
+          fl_print_format("%[%r%r%]", main->error.to, main->context.set.notable, f_console_symbol_long_normal_s, byte_dump_long_first_s, main->context.set.notable);
           fl_print_format("%[' value cannot be greater than the parameter '%]", main->error.to, main->context.set.error, main->context.set.error);
-          fl_print_format("%[%r%r%]", main->error.to, main->context.set.notable, f_console_symbol_long_enable_s, byte_dump_long_last_s, main->context.set.notable);
+          fl_print_format("%[%r%r%]", main->error.to, main->context.set.notable, f_console_symbol_long_normal_s, byte_dump_long_last_s, main->context.set.notable);
           fl_print_format("%[' value.%]%r", main->error.to, main->context.set.error, main->context.set.error, f_string_eol_s);
 
           f_file_stream_unlock(main->error.to);

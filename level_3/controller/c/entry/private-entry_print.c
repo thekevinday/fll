@@ -33,7 +33,7 @@ extern "C" {
 #ifndef _di_controller_entry_preprocess_print_simulate_setting_value_
   void controller_entry_preprocess_print_simulate_setting_value(const controller_global_t global, const bool is_entry, const f_string_static_t name, const f_string_static_t name_sub, const f_string_static_t value, const f_string_static_t suffix) {
 
-    if (global.main->error.verbosity != f_console_verbosity_debug_e && !(global.main->error.verbosity == f_console_verbosity_verbose_e && global.main->parameters.array[controller_parameter_simulate_e].result == f_console_result_found_e)) {
+    if (global.main->error.verbosity != f_console_verbosity_debug_e && !(global.main->error.verbosity == f_console_verbosity_verbose_e && global.main->parameters.array[controller_parameter_simulate_e].result & f_console_result_found_e)) {
       return;
     }
 

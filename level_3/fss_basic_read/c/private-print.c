@@ -74,7 +74,7 @@ extern "C" {
 #ifndef _di_fss_basic_read_print_object_end_
   void fss_basic_read_print_object_end(fll_program_data_t * const main) {
 
-    if (main->parameters.array[fss_basic_read_parameter_pipe_e].result == f_console_result_found_e) {
+    if (main->parameters.array[fss_basic_read_parameter_pipe_e].result & f_console_result_found_e) {
       f_print_dynamic_raw(fss_basic_read_pipe_content_start_s, main->output.to);
     }
     else {
@@ -94,7 +94,7 @@ extern "C" {
 #ifndef _di_fss_basic_read_print_set_end_
   void fss_basic_read_print_set_end(fll_program_data_t * const main) {
 
-    if (main->parameters.array[fss_basic_read_parameter_pipe_e].result == f_console_result_found_e) {
+    if (main->parameters.array[fss_basic_read_parameter_pipe_e].result & f_console_result_found_e) {
       f_print_dynamic_raw(fss_basic_read_pipe_content_end_s, main->output.to);
     }
     else {

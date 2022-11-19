@@ -68,13 +68,13 @@ extern "C" {
 
     status = F_none;
 
-    if (main->parameters.array[controller_parameter_help_e].result == f_console_result_found_e) {
+    if (main->parameters.array[controller_parameter_help_e].result & f_console_result_found_e) {
       controller_print_help(main);
 
       return F_none;
     }
 
-    if (main->parameters.array[controller_parameter_version_e].result == f_console_result_found_e) {
+    if (main->parameters.array[controller_parameter_version_e].result & f_console_result_found_e) {
       controller_lock_print(main->output.to, 0);
 
       fll_program_print_version(main->message, controller_program_version_s);
@@ -106,7 +106,7 @@ extern "C" {
       return status;
     }
 
-    if (main->parameters.array[controller_parameter_init_e].result == f_console_result_found_e) {
+    if (main->parameters.array[controller_parameter_init_e].result & f_console_result_found_e) {
       main->as_init = F_true;
     }
 
@@ -120,12 +120,12 @@ extern "C" {
       fll_error_print(main->error, F_status_set_fine(status), "f_path_current", F_true);
     }
     else {
-      if (main->parameters.array[controller_parameter_settings_e].result == f_console_result_found_e) {
+      if (main->parameters.array[controller_parameter_settings_e].result & f_console_result_found_e) {
         if (main->error.verbosity > f_console_verbosity_quiet_e) {
           controller_lock_print(main->error.to, 0);
 
           fl_print_format("%r%[%QThe parameter '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-          fl_print_format("%[%r%r%]", main->error.to, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_settings_s, main->context.set.notable);
+          fl_print_format("%[%r%r%]", main->error.to, main->context.set.notable, f_console_symbol_long_normal_s, controller_long_settings_s, main->context.set.notable);
           fl_print_format("%[' is specified, but no value is given.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
 
           controller_unlock_print_flush(main->error.to, 0);
@@ -159,12 +159,12 @@ extern "C" {
     }
 
     if (F_status_is_error_not(status)) {
-      if (main->parameters.array[controller_parameter_pid_e].result == f_console_result_found_e) {
+      if (main->parameters.array[controller_parameter_pid_e].result & f_console_result_found_e) {
         if (main->error.verbosity > f_console_verbosity_quiet_e) {
           controller_lock_print(main->error.to, 0);
 
           fl_print_format("%r%[%QThe parameter '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-          fl_print_format("%[%r%r%]", main->error.to, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_pid_s, main->context.set.notable);
+          fl_print_format("%[%r%r%]", main->error.to, main->context.set.notable, f_console_symbol_long_normal_s, controller_long_pid_s, main->context.set.notable);
           fl_print_format("%[' is specified, but no value is given.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
 
           controller_unlock_print_flush(main->error.to, 0);
@@ -217,12 +217,12 @@ extern "C" {
     }
 
     if (F_status_is_error_not(status)) {
-      if (main->parameters.array[controller_parameter_cgroup_e].result == f_console_result_found_e) {
+      if (main->parameters.array[controller_parameter_cgroup_e].result & f_console_result_found_e) {
         if (main->error.verbosity > f_console_verbosity_quiet_e) {
           controller_lock_print(main->error.to, 0);
 
           fl_print_format("%r%[%QThe parameter '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-          fl_print_format("%[%r%r%]", main->error.to, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_cgroup_s, main->context.set.notable);
+          fl_print_format("%[%r%r%]", main->error.to, main->context.set.notable, f_console_symbol_long_normal_s, controller_long_cgroup_s, main->context.set.notable);
           fl_print_format("%[' is specified, but no value is given.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
 
           controller_unlock_print_flush(main->error.to, 0);
@@ -252,7 +252,7 @@ extern "C" {
             controller_lock_print(main->warning.to, 0);
 
             fl_print_format("%r%[%QThe parameter '%]", main->warning.to, f_string_eol_s, main->warning.context, main->warning.prefix, main->warning.context);
-            fl_print_format("%[%r%r%]", main->warning.to, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_cgroup_s, main->context.set.notable);
+            fl_print_format("%[%r%r%]", main->warning.to, main->context.set.notable, f_console_symbol_long_normal_s, controller_long_cgroup_s, main->context.set.notable);
             fl_print_format("%[' must be a file directory path but instead is an empty string, falling back to the default.%]%r", main->warning.to, main->warning.context, main->warning.context, f_string_eol_s);
 
             controller_unlock_print_flush(main->warning.to, 0);
@@ -261,14 +261,14 @@ extern "C" {
       }
     }
 
-    if (F_status_is_error_not(status) && main->parameters.array[controller_parameter_daemon_e].result == f_console_result_found_e) {
-      if (main->parameters.array[controller_parameter_validate_e].result == f_console_result_found_e) {
+    if (F_status_is_error_not(status) && (main->parameters.array[controller_parameter_daemon_e].result & f_console_result_found_e)) {
+      if (main->parameters.array[controller_parameter_validate_e].result & f_console_result_found_e) {
         if (main->error.verbosity > f_console_verbosity_quiet_e) {
           controller_lock_print(main->error.to, 0);
 
           fl_print_format("%r%[%QThe parameter '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
           fl_print_format("%[' must not be specified with the parameter '%]", main->error.to, main->error.context, main->error.context);
-          fl_print_format("%[%r%r%]", main->error.to, main->context.set.notable, f_console_symbol_long_enable_s, controller_long_daemon_s, main->context.set.notable);
+          fl_print_format("%[%r%r%]", main->error.to, main->context.set.notable, f_console_symbol_long_normal_s, controller_long_daemon_s, main->context.set.notable);
           fl_print_format("%['.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
 
           controller_unlock_print_flush(main->error.to, 0);
@@ -283,7 +283,7 @@ extern "C" {
       setting.entry.pid = controller_entry_pid_disable_e;
       setting.entry.show = controller_entry_show_init_e;
 
-      if (main->parameters.array[controller_parameter_interruptible_e].result == f_console_result_found_e) {
+      if (main->parameters.array[controller_parameter_interruptible_e].result & f_console_result_found_e) {
         setting.flag |= controller_setting_flag_interruptible_e;
       }
       else if (setting.flag & controller_setting_flag_interruptible_e) {
@@ -291,7 +291,7 @@ extern "C" {
       }
     }
     else {
-      if (main->parameters.array[controller_parameter_uninterruptible_e].result == f_console_result_found_e) {
+      if (main->parameters.array[controller_parameter_uninterruptible_e].result & f_console_result_found_e) {
         if (setting.flag & controller_setting_flag_interruptible_e) {
           setting.flag -= controller_setting_flag_interruptible_e;
         }

@@ -306,7 +306,7 @@ extern "C" {
     f_file_stream_lock(data->main->error);
 
     fl_print_format("%r%[%QThe parameter '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
-    fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_enable_s, parameter, data->main->error.notable);
+    fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_normal_s, parameter, data->main->error.notable);
     fl_print_format("%[' is specified, but no value is given.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
     f_file_stream_unlock(data->main->error);
@@ -321,7 +321,7 @@ extern "C" {
     f_file_stream_lock(data->main->error);
 
     fl_print_format("%r%[%QThe parameter '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
-    fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_enable_s, parameter, data->main->error.notable);
+    fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_normal_s, parameter, data->main->error.notable);
     fl_print_format("%[' was specified too many times.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
     f_file_stream_unlock(data->main->error);

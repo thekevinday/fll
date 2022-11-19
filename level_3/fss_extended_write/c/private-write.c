@@ -16,11 +16,11 @@ extern "C" {
     f_file_stream_lock(main->error.to);
 
     fl_print_format("%r%[%QMust specify the '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-    fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_enable_s, fss_extended_write_long_object_s, main->error.notable);
+    fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_normal_s, fss_extended_write_long_object_s, main->error.notable);
     fl_print_format("%[' parameter and the '%]", main->error.to, main->error.context, main->error.context);
-    fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_enable_s, fss_extended_write_long_content_s, main->error.notable);
+    fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_normal_s, fss_extended_write_long_content_s, main->error.notable);
     fl_print_format("%[' parameter the same number of times when not specifying the '%]", main->error.to, main->error.context, main->error.context);
-    fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_enable_s, fss_extended_write_long_partial_s, main->error.notable);
+    fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_normal_s, fss_extended_write_long_partial_s, main->error.notable);
     fl_print_format("%[' parameter.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
 
     f_file_stream_unlock(main->error.to);
@@ -83,7 +83,7 @@ extern "C" {
       }
 
       if (contents && contents->used) {
-        if (main->parameters.array[fss_extended_write_parameter_trim_e].result == f_console_result_found_e) {
+        if (main->parameters.array[fss_extended_write_parameter_trim_e].result & f_console_result_found_e) {
           complete = f_fss_complete_full_trim_e;
         }
         else {

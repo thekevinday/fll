@@ -562,22 +562,22 @@ extern "C" {
     // Ensure console color mode is passed to the scripts so that they can also react to color mode.
     if (F_status_is_error_not(*status) && data->main->context.mode != f_color_mode_none_e) {
       f_string_static_t argument = f_string_static_t_initialize;
-      argument.used = f_console_symbol_short_disable_s.used + f_console_standard_short_dark_s.used;
+      argument.used = f_console_symbol_short_inverse_s.used + f_console_standard_short_dark_s.used;
 
       f_char_t argument_string[argument.used + 1];
       argument.string = argument_string;
       argument_string[argument.used] = 0;
 
-      memcpy(argument_string, f_console_symbol_short_disable_s.string, sizeof(f_char_t) * f_console_symbol_short_disable_s.used);
+      memcpy(argument_string, f_console_symbol_short_inverse_s.string, sizeof(f_char_t) * f_console_symbol_short_inverse_s.used);
 
       if (data->main->context.mode == f_color_mode_dark_e) {
-        memcpy(argument_string + f_console_symbol_short_disable_s.used, f_console_standard_short_dark_s.string, sizeof(f_char_t) * f_console_standard_short_dark_s.used);
+        memcpy(argument_string + f_console_symbol_short_inverse_s.used, f_console_standard_short_dark_s.string, sizeof(f_char_t) * f_console_standard_short_dark_s.used);
       }
       else if (data->main->context.mode == f_color_mode_light_e) {
-        memcpy(argument_string + f_console_symbol_short_disable_s.used, f_console_standard_short_light_s.string, sizeof(f_char_t) * f_console_standard_short_light_s.used);
+        memcpy(argument_string + f_console_symbol_short_inverse_s.used, f_console_standard_short_light_s.string, sizeof(f_char_t) * f_console_standard_short_light_s.used);
       }
       else if (data->main->context.mode == f_color_mode_color_not_e) {
-        memcpy(argument_string + f_console_symbol_short_disable_s.used, f_console_standard_short_no_color_s.string, sizeof(f_char_t) * f_console_standard_short_no_color_s.used);
+        memcpy(argument_string + f_console_symbol_short_inverse_s.used, f_console_standard_short_no_color_s.string, sizeof(f_char_t) * f_console_standard_short_no_color_s.used);
       }
 
       *status = fll_execute_arguments_add(argument, &arguments);
@@ -586,25 +586,25 @@ extern "C" {
     // Ensure verbosity level is passed to the scripts so that they can also react to requested verbosity.
     if (F_status_is_error_not(*status) && data->main->error.verbosity != f_console_verbosity_normal_e) {
       f_string_static_t argument = f_string_static_t_initialize;
-      argument.used = f_console_symbol_short_disable_s.used + f_console_standard_short_quiet_s.used;
+      argument.used = f_console_symbol_short_inverse_s.used + f_console_standard_short_quiet_s.used;
 
       f_char_t argument_string[argument.used + 1];
       argument.string = argument_string;
       argument_string[argument.used] = 0;
 
-      memcpy(argument_string, f_console_symbol_short_disable_s.string, sizeof(f_char_t) * f_console_symbol_short_disable_s.used);
+      memcpy(argument_string, f_console_symbol_short_inverse_s.string, sizeof(f_char_t) * f_console_symbol_short_inverse_s.used);
 
       if (data->main->context.mode == f_console_verbosity_quiet_e) {
-        memcpy(argument_string + f_console_symbol_short_disable_s.used, f_console_standard_short_quiet_s.string, sizeof(f_char_t) * f_console_standard_short_quiet_s.used);
+        memcpy(argument_string + f_console_symbol_short_inverse_s.used, f_console_standard_short_quiet_s.string, sizeof(f_char_t) * f_console_standard_short_quiet_s.used);
       }
       else if (data->main->context.mode == f_console_verbosity_error_e) {
-        memcpy(argument_string + f_console_symbol_short_disable_s.used, f_console_standard_short_error_s.string, sizeof(f_char_t) * f_console_standard_short_error_s.used);
+        memcpy(argument_string + f_console_symbol_short_inverse_s.used, f_console_standard_short_error_s.string, sizeof(f_char_t) * f_console_standard_short_error_s.used);
       }
       else if (data->main->context.mode == f_console_verbosity_verbose_e) {
-        memcpy(argument_string + f_console_symbol_short_disable_s.used, f_console_standard_short_verbose_s.string, sizeof(f_char_t) * f_console_standard_short_verbose_s.used);
+        memcpy(argument_string + f_console_symbol_short_inverse_s.used, f_console_standard_short_verbose_s.string, sizeof(f_char_t) * f_console_standard_short_verbose_s.used);
       }
       else if (data->main->context.mode == f_console_verbosity_debug_e) {
-        memcpy(argument_string + f_console_symbol_short_disable_s.used, f_console_standard_short_debug_s.string, sizeof(f_char_t) * f_console_standard_short_debug_s.used);
+        memcpy(argument_string + f_console_symbol_short_inverse_s.used, f_console_standard_short_debug_s.string, sizeof(f_char_t) * f_console_standard_short_debug_s.used);
       }
 
       *status = fll_execute_arguments_add(argument, &arguments);
@@ -639,13 +639,13 @@ extern "C" {
       }
 
       const f_string_static_t parameters_prefix[] = {
-        f_console_symbol_short_enable_s,
-        f_console_symbol_short_enable_s,
-        f_console_symbol_short_enable_s,
-        f_console_symbol_short_enable_s,
-        f_console_symbol_short_enable_s,
-        f_console_symbol_short_enable_s,
-        f_console_symbol_short_enable_s,
+        f_console_symbol_short_normal_s,
+        f_console_symbol_short_normal_s,
+        f_console_symbol_short_normal_s,
+        f_console_symbol_short_normal_s,
+        f_console_symbol_short_normal_s,
+        f_console_symbol_short_normal_s,
+        f_console_symbol_short_normal_s,
       };
 
       const f_string_static_t parameters_name[] = {

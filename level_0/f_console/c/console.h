@@ -58,14 +58,14 @@ extern "C" {
  * @param input
  *   The input parameter to process.
  * @param result
- *   The resulting console type code determined by this function.
+ *   The flag with the console type bits determined by this function.
  *
  * @return
  *   F_none on success.
  *   F_data_not the input string is empty.
  */
 #ifndef _di_f_console_identify_
-  extern f_status_t f_console_identify(const f_string_t input, f_console_id_t * const result);
+  extern f_status_t f_console_identify(const f_string_t input, f_console_result_t * const result);
 #endif // _di_f_console_identify_
 
 /**

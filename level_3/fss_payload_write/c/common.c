@@ -102,14 +102,14 @@ extern "C" {
         }
       }
 
-      if (main->parameters.array[fss_payload_write_parameter_line_first_no_e].result == f_console_result_found_e) {
+      if (main->parameters.array[fss_payload_write_parameter_line_first_no_e].result & f_console_result_found_e) {
         setting->line_first = f_string_empty_s;
       }
       else {
         setting->line_first = f_string_eol_s;
       }
 
-      if (main->parameters.array[fss_payload_write_parameter_line_last_no_e].result == f_console_result_found_e) {
+      if (main->parameters.array[fss_payload_write_parameter_line_last_no_e].result & f_console_result_found_e) {
         setting->line_last = f_string_empty_s;
       }
       else {
@@ -133,13 +133,13 @@ extern "C" {
         }
       }
 
-      if (main->parameters.array[fss_payload_write_parameter_help_e].result == f_console_result_found_e) {
+      if (main->parameters.array[fss_payload_write_parameter_help_e].result & f_console_result_found_e) {
         setting->flag |= fss_payload_write_main_flag_help_e;
 
         return;
       }
 
-      if (main->parameters.array[fss_payload_write_parameter_version_e].result == f_console_result_found_e) {
+      if (main->parameters.array[fss_payload_write_parameter_version_e].result & f_console_result_found_e) {
         setting->flag |= fss_payload_write_main_flag_version_e;
 
         return;
@@ -150,12 +150,12 @@ extern "C" {
     main->output.to.stream = F_type_output_d;
     main->output.to.flag = F_file_flag_create_d | F_file_flag_write_only_d | F_file_flag_append_d;
 
-    if (main->parameters.array[fss_payload_write_parameter_file_e].result == f_console_result_additional_e && main->parameters.array[fss_payload_write_parameter_file_e].values.used) {
+    if (main->parameters.array[fss_payload_write_parameter_file_e].result & f_console_result_value_e && main->parameters.array[fss_payload_write_parameter_file_e].values.used) {
       if (main->parameters.array[fss_payload_write_parameter_file_e].values.used > 1) {
         setting->status = F_status_set_error(F_parameter);
 
         fss_payload_write_print_line_first_locked(setting, main->error);
-        fll_program_print_error_parameter_must_specify_once(main->error, f_console_symbol_long_enable_s, fss_payload_write_long_file_s);
+        fll_program_print_error_parameter_must_specify_once(main->error, f_console_symbol_long_normal_s, fss_payload_write_long_file_s);
         fss_payload_write_print_line_last_locked(setting, main->error);
 
         return;
@@ -176,17 +176,17 @@ extern "C" {
 
       setting->flag |= fss_payload_write_main_flag_file_to_e;
     }
-    else if (main->parameters.array[fss_payload_write_parameter_file_e].result == f_console_result_found_e) {
+    else if (main->parameters.array[fss_payload_write_parameter_file_e].result & f_console_result_found_e) {
       setting->status = F_status_set_error(F_parameter);
 
       fss_payload_write_print_line_first_locked(setting, main->error);
-      fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_enable_s, fss_payload_write_long_file_s);
+      fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, fss_payload_write_long_file_s);
       fss_payload_write_print_line_last_locked(setting, main->error);
 
       return;
     }
 
-    if (main->parameters.array[fss_payload_write_parameter_object_e].result == f_console_result_additional_e && main->parameters.array[fss_payload_write_parameter_object_e].values.used) {
+    if (main->parameters.array[fss_payload_write_parameter_object_e].result & f_console_result_value_e && main->parameters.array[fss_payload_write_parameter_object_e].values.used) {
       f_array_lengths_t * const values = &main->parameters.array[fss_payload_write_parameter_object_e].values;
 
       setting->objects.used = 0;
@@ -211,17 +211,17 @@ extern "C" {
 
       setting->flag |= fss_payload_write_main_flag_object_e;
     }
-    else if (main->parameters.array[fss_payload_write_parameter_object_e].result == f_console_result_found_e) {
+    else if (main->parameters.array[fss_payload_write_parameter_object_e].result & f_console_result_found_e) {
       setting->status = F_status_set_error(F_parameter);
 
       fss_payload_write_print_line_first_locked(setting, main->error);
-      fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_enable_s, fss_payload_write_long_object_s);
+      fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, fss_payload_write_long_object_s);
       fss_payload_write_print_line_last_locked(setting, main->error);
 
       return;
     }
 
-    if (main->parameters.array[fss_payload_write_parameter_content_e].result == f_console_result_additional_e && main->parameters.array[fss_payload_write_parameter_content_e].values.used) {
+    if (main->parameters.array[fss_payload_write_parameter_content_e].result & f_console_result_value_e && main->parameters.array[fss_payload_write_parameter_content_e].values.used) {
       f_array_lengths_t * const values = &main->parameters.array[fss_payload_write_parameter_content_e].values;
 
       setting->contents.used = 0;
@@ -246,17 +246,17 @@ extern "C" {
 
       setting->flag |= fss_payload_write_main_flag_content_e;
     }
-    else if (main->parameters.array[fss_payload_write_parameter_content_e].result == f_console_result_found_e) {
+    else if (main->parameters.array[fss_payload_write_parameter_content_e].result & f_console_result_found_e) {
       setting->status = F_status_set_error(F_parameter);
 
       fss_payload_write_print_line_first_locked(setting, main->error);
-      fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_enable_s, fss_payload_write_long_content_s);
+      fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, fss_payload_write_long_content_s);
       fss_payload_write_print_line_last_locked(setting, main->error);
 
       return;
     }
 
-    if (main->parameters.array[fss_payload_write_parameter_prepend_e].result == f_console_result_additional_e && main->parameters.array[fss_payload_write_parameter_prepend_e].values.used) {
+    if (main->parameters.array[fss_payload_write_parameter_prepend_e].result & f_console_result_value_e && main->parameters.array[fss_payload_write_parameter_prepend_e].values.used) {
       const f_array_length_t index = main->parameters.array[fss_payload_write_parameter_prepend_e].values.array[main->parameters.array[fss_payload_write_parameter_prepend_e].values.used - 1];
 
       setting->prepend.used = 0;
@@ -295,23 +295,23 @@ extern "C" {
 
       setting->flag |= fss_payload_write_main_flag_prepend_e;
     }
-    else if (main->parameters.array[fss_payload_write_parameter_prepend_e].result == f_console_result_found_e) {
+    else if (main->parameters.array[fss_payload_write_parameter_prepend_e].result & f_console_result_found_e) {
       setting->status = F_status_set_error(F_parameter);
 
       fss_payload_write_print_line_first_locked(setting, main->error);
-      fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_enable_s, fss_payload_write_long_prepend_s);
+      fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, fss_payload_write_long_prepend_s);
       fss_payload_write_print_line_last_locked(setting, main->error);
 
       return;
     }
 
-    if (main->parameters.array[fss_payload_write_parameter_ignore_e].result == f_console_result_additional_e && main->parameters.array[fss_payload_write_parameter_ignore_e].values.used) {
+    if (main->parameters.array[fss_payload_write_parameter_ignore_e].result & f_console_result_value_e && main->parameters.array[fss_payload_write_parameter_ignore_e].values.used) {
 
       if (main->parameters.array[fss_payload_write_parameter_ignore_e].values.used % 2 != 0) {
         setting->status = F_status_set_error(F_parameter);
 
         fss_payload_write_print_line_first_locked(setting, main->error);
-        fll_program_print_error_parameter_missing_value_requires_amount(main->error, f_console_symbol_long_enable_s, fss_payload_write_long_ignore_s, fss_payload_write_string_two_s);
+        fll_program_print_error_parameter_missing_value_requires_amount(main->error, f_console_symbol_long_normal_s, fss_payload_write_long_ignore_s, fss_payload_write_string_two_s);
         fss_payload_write_print_line_last_locked(setting, main->error);
 
         return;
@@ -337,7 +337,7 @@ extern "C" {
 
         if (F_status_is_error(setting->status)) {
           fss_payload_write_print_line_first_locked(setting, main->error);
-          fll_program_print_error_parameter_integer_not(main->error, f_console_symbol_long_enable_s, fss_payload_write_long_ignore_s, main->parameters.arguments.array[index]);
+          fll_program_print_error_parameter_integer_not(main->error, f_console_symbol_long_normal_s, fss_payload_write_long_ignore_s, main->parameters.arguments.array[index]);
           fss_payload_write_print_line_last_locked(setting, main->error);
 
           return;
@@ -349,7 +349,7 @@ extern "C" {
 
         if (F_status_is_error(setting->status)) {
           fss_payload_write_print_line_first_locked(setting, main->error);
-          fll_program_print_error_parameter_integer_not(main->error, f_console_symbol_long_enable_s, fss_payload_write_long_ignore_s, main->parameters.arguments.array[index]);
+          fll_program_print_error_parameter_integer_not(main->error, f_console_symbol_long_normal_s, fss_payload_write_long_ignore_s, main->parameters.arguments.array[index]);
           fss_payload_write_print_line_last_locked(setting, main->error);
 
           return;
@@ -359,7 +359,7 @@ extern "C" {
           setting->status = F_status_set_error(F_parameter);
 
           fss_payload_write_print_line_first_locked(setting, main->error);
-          fll_program_print_error_parameter_range_start_before_stop(main->error, f_console_symbol_long_enable_s, fss_payload_write_long_ignore_s, main->parameters.arguments.array[main->parameters.array[fss_payload_write_parameter_ignore_e].values.array[i]], main->parameters.arguments.array[index]);
+          fll_program_print_error_parameter_range_start_before_stop(main->error, f_console_symbol_long_normal_s, fss_payload_write_long_ignore_s, main->parameters.arguments.array[main->parameters.array[fss_payload_write_parameter_ignore_e].values.array[i]], main->parameters.arguments.array[index]);
           fss_payload_write_print_line_last_locked(setting, main->error);
 
           return;
@@ -370,17 +370,17 @@ extern "C" {
 
       setting->flag |= fss_payload_write_main_flag_ignore_e;
     }
-    else if (main->parameters.array[fss_payload_write_parameter_ignore_e].result == f_console_result_found_e) {
+    else if (main->parameters.array[fss_payload_write_parameter_ignore_e].result & f_console_result_found_e) {
       setting->status = F_status_set_error(F_parameter);
 
       fss_payload_write_print_line_first_locked(setting, main->error);
-      fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_enable_s, fss_payload_write_long_ignore_s);
+      fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, fss_payload_write_long_ignore_s);
       fss_payload_write_print_line_last_locked(setting, main->error);
 
       return;
     }
 
-    if (main->parameters.array[fss_payload_write_parameter_partial_e].result == f_console_result_found_e) {
+    if (main->parameters.array[fss_payload_write_parameter_partial_e].result & f_console_result_found_e) {
       setting->flag |= fss_payload_write_main_flag_partial_e;
     }
 
@@ -390,7 +390,7 @@ extern "C" {
           setting->status = F_status_set_error(F_parameter);
 
           fss_payload_write_print_line_first_locked(setting, main->error);
-          fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_enable_s, fss_payload_write_long_object_s);
+          fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, fss_payload_write_long_object_s);
           fss_payload_write_print_line_last_locked(setting, main->error);
 
           return;
@@ -400,7 +400,7 @@ extern "C" {
           setting->status = F_status_set_error(F_parameter);
 
           fss_payload_write_print_line_first_locked(setting, main->error);
-          fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_enable_s, fss_payload_write_long_content_s);
+          fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, fss_payload_write_long_content_s);
           fss_payload_write_print_line_last_locked(setting, main->error);
 
           return;
@@ -410,18 +410,18 @@ extern "C" {
           setting->status = F_status_set_error(F_parameter);
 
           fss_payload_write_print_line_first_locked(setting, main->error);
-          fll_program_print_error_parameter_both_specified_same_amount_without(main->error, f_console_symbol_long_enable_s, f_console_symbol_long_enable_s, f_console_symbol_long_enable_s, fss_payload_write_long_object_s, fss_payload_write_long_content_s, fss_payload_write_long_partial_s);
+          fll_program_print_error_parameter_both_specified_same_amount_without(main->error, f_console_symbol_long_normal_s, f_console_symbol_long_normal_s, f_console_symbol_long_normal_s, fss_payload_write_long_object_s, fss_payload_write_long_content_s, fss_payload_write_long_partial_s);
           fss_payload_write_print_line_last_locked(setting, main->error);
 
           return;
         }
 
         if ((setting->flag & fss_payload_write_main_flag_content_e) && (setting->flag & fss_payload_write_main_flag_partial_e)) {
-          if (main->parameters.array[fss_payload_write_parameter_content_e].result == f_console_result_additional_e) {
+          if (main->parameters.array[fss_payload_write_parameter_content_e].result & f_console_result_value_e) {
             setting->status = F_status_set_error(F_parameter);
 
             fss_payload_write_print_line_first_locked(setting, main->error);
-            fll_program_print_error_parameter_cannot_use_with_xor(main->error, f_console_symbol_long_enable_s, f_console_symbol_long_enable_s, f_console_symbol_long_enable_s, fss_payload_write_long_partial_s, fss_payload_write_long_object_s, fss_payload_write_long_content_s);
+            fll_program_print_error_parameter_cannot_use_with_xor(main->error, f_console_symbol_long_normal_s, f_console_symbol_long_normal_s, f_console_symbol_long_normal_s, fss_payload_write_long_partial_s, fss_payload_write_long_object_s, fss_payload_write_long_content_s);
             fss_payload_write_print_line_last_locked(setting, main->error);
 
             return;
@@ -457,18 +457,18 @@ extern "C" {
 
     setting->quote = f_fss_quote_double_s;
 
-    if (main->parameters.array[fss_payload_write_parameter_double_e].result == f_console_result_found_e) {
-      if (main->parameters.array[fss_payload_write_parameter_single_e].result == f_console_result_found_e) {
+    if (main->parameters.array[fss_payload_write_parameter_double_e].result & f_console_result_found_e) {
+      if (main->parameters.array[fss_payload_write_parameter_single_e].result & f_console_result_found_e) {
         if (main->parameters.array[fss_payload_write_parameter_double_e].location < main->parameters.array[fss_payload_write_parameter_single_e].location) {
           setting->quote = f_fss_quote_single_s;
         }
       }
     }
-    else if (main->parameters.array[fss_payload_write_parameter_single_e].result == f_console_result_found_e) {
+    else if (main->parameters.array[fss_payload_write_parameter_single_e].result & f_console_result_found_e) {
       setting->quote = f_fss_quote_single_s;
     }
 
-    if (main->parameters.array[fss_payload_write_parameter_trim_e].result == f_console_result_found_e) {
+    if (main->parameters.array[fss_payload_write_parameter_trim_e].result & f_console_result_found_e) {
       setting->flag |= fss_payload_write_main_flag_trim_e;
     }
 

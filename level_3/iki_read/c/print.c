@@ -52,24 +52,24 @@ extern "C" {
 
     f_print_dynamic_raw(f_string_eol_s, print.to);
 
-    fll_program_print_help_option(print, iki_read_short_at_s, iki_read_long_at_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Select variable at this numeric index.");
-    fll_program_print_help_option(print, iki_read_short_line_s, iki_read_long_line_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Print only the variables at the given line within the file.");
-    fll_program_print_help_option(print, iki_read_short_name_s, iki_read_long_name_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Select variables with this name.");
-    fll_program_print_help_option(print, iki_read_short_whole_s, iki_read_long_whole_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Print all of the data instead of just the IKI variable data.");
+    fll_program_print_help_option(print, iki_read_short_at_s, iki_read_long_at_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "   Select variable at this numeric index.");
+    fll_program_print_help_option(print, iki_read_short_line_s, iki_read_long_line_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, " Print only the variables at the given line within the file.");
+    fll_program_print_help_option(print, iki_read_short_name_s, iki_read_long_name_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, " Select variables with this name.");
+    fll_program_print_help_option(print, iki_read_short_whole_s, iki_read_long_whole_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "Print all of the data instead of just the IKI variable data.");
 
     f_print_dynamic_raw(f_string_eol_s, print.to);
 
-    fll_program_print_help_option(print, iki_read_short_content_s, iki_read_long_content_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Print the variable value (aka: content) (default)");
-    fll_program_print_help_option(print, iki_read_short_literal_s, iki_read_long_literal_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Print the entire variable (aka: object, content, and syntax).");
-    fll_program_print_help_option(print, iki_read_short_object_s, iki_read_long_object_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Print the variable name (aka: object).");
-    fll_program_print_help_option(print, iki_read_short_total_s, iki_read_long_total_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "  Print the total number of variables.");
+    fll_program_print_help_option(print, iki_read_short_content_s, iki_read_long_content_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "Print the variable value (aka: content) (default)");
+    fll_program_print_help_option(print, iki_read_short_literal_s, iki_read_long_literal_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "Print the entire variable (aka: object, content, and syntax).");
+    fll_program_print_help_option(print, iki_read_short_object_s, iki_read_long_object_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, " Print the variable name (aka: object).");
+    fll_program_print_help_option(print, iki_read_short_total_s, iki_read_long_total_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "  Print the total number of variables.");
 
     f_print_dynamic_raw(f_string_eol_s, print.to);
 
-    fll_program_print_help_option(print, iki_read_short_reassign_s, iki_read_long_reassign_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "  Re-assign the variable for the given name and matching content value with the given string.");
-    fll_program_print_help_option(print, iki_read_short_replace_s, iki_read_long_replace_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Simple substitution, replacing the variable for the given name with the given string.");
-    fll_program_print_help_option(print, iki_read_short_substitute_s, iki_read_long_substitute_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Substitute the variable for the given name and matching content value with the given string.");
-    fll_program_print_help_option(print, iki_read_short_wrap_s, iki_read_long_wrap_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "      Prepend and append strings for the given name.");
+    fll_program_print_help_option(print, iki_read_short_reassign_s, iki_read_long_reassign_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "  Re-assign the variable for the given name and matching content value with the given string.");
+    fll_program_print_help_option(print, iki_read_short_replace_s, iki_read_long_replace_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "   Simple substitution, replacing the variable for the given name with the given string.");
+    fll_program_print_help_option(print, iki_read_short_substitute_s, iki_read_long_substitute_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "Substitute the variable for the given name and matching content value with the given string.");
+    fll_program_print_help_option(print, iki_read_short_wrap_s, iki_read_long_wrap_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "      Prepend and append strings for the given name.");
 
     f_print_dynamic_raw(f_string_eol_s, print.to);
     f_print_dynamic_raw(f_string_eol_s, print.to);
@@ -79,7 +79,7 @@ extern "C" {
     fl_print_format("%r %[Notes:%]%r", print.to, f_string_eol_s, print.set->important, print.set->important, f_string_eol_s);
     fl_print_format("  This program will find and print variables, vocabularies, or content following the IKI standard, without focusing on any particular vocabulary specification.%r%r", print.to, f_string_eol_s, f_string_eol_s);
 
-    fl_print_format("  The %[%r%r%] option requires 2 additional parameters:", print.to, print.set->notable, f_console_symbol_long_enable_s, iki_read_long_replace_s, print.set->notable);
+    fl_print_format("  The %[%r%r%] option requires 2 additional parameters:", print.to, print.set->notable, f_console_symbol_long_normal_s, iki_read_long_replace_s, print.set->notable);
     fl_print_format(" %[<%]%r%[>%]", print.to, print.set->notable, print.set->notable, iki_read_substitution_vocabulary_s, print.set->notable, print.set->notable);
     fl_print_format(" %[<%]%r%[>%].%r", print.to, print.set->notable, print.set->notable, iki_read_substitution_with_s, print.set->notable, print.set->notable, f_string_eol_s);
 
@@ -88,8 +88,8 @@ extern "C" {
 
     fl_print_format("  The vocabulary is case-sensitive and must exactly match.%r%r", print.to, f_string_eol_s, f_string_eol_s);
 
-    fl_print_format("  The %[%r%r%] and the", print.to, print.set->notable, f_console_symbol_long_enable_s, iki_read_long_reassign_s, print.set->notable);
-    fl_print_format(" %[%r%r%] options require 3 additional parameters:", print.to, print.set->notable, f_console_symbol_long_enable_s, iki_read_long_substitute_s, print.set->notable);
+    fl_print_format("  The %[%r%r%] and the", print.to, print.set->notable, f_console_symbol_long_normal_s, iki_read_long_reassign_s, print.set->notable);
+    fl_print_format(" %[%r%r%] options require 3 additional parameters:", print.to, print.set->notable, f_console_symbol_long_normal_s, iki_read_long_substitute_s, print.set->notable);
     fl_print_format(" %[<%]%r%[>%]", print.to, print.set->notable, print.set->notable, iki_read_substitution_vocabulary_s, print.set->notable, print.set->notable);
     fl_print_format(" %[<%]%r%[>%]", print.to, print.set->notable, print.set->notable, iki_read_substitution_replace_s, print.set->notable, print.set->notable);
     fl_print_format(" %[<%]%r%[>%].%r", print.to, print.set->notable, print.set->notable, iki_read_substitution_with_s, print.set->notable, print.set->notable, f_string_eol_s);
@@ -100,7 +100,7 @@ extern "C" {
 
     fl_print_format("  The vocabulary and replacement are case-sensitive and must exactly match.%r%r", print.to, f_string_eol_s, f_string_eol_s);
 
-    fl_print_format("  The %[%r%r%] option requires 3 additional parameters:", print.to, print.set->notable, f_console_symbol_long_enable_s, iki_read_long_wrap_s, print.set->notable);
+    fl_print_format("  The %[%r%r%] option requires 3 additional parameters:", print.to, print.set->notable, f_console_symbol_long_normal_s, iki_read_long_wrap_s, print.set->notable);
     fl_print_format(" %[<%]%r%[>%]", print.to, print.set->notable, print.set->notable, iki_read_substitution_vocabulary_s, print.set->notable, print.set->notable);
     fl_print_format(" %[<%]%r%[>%]", print.to, print.set->notable, print.set->notable, iki_read_substitution_before_s, print.set->notable, print.set->notable);
     fl_print_format(" %[<%]%r%[>%].%r", print.to, print.set->notable, print.set->notable, iki_read_substitution_after_s, print.set->notable, print.set->notable, f_string_eol_s);
@@ -111,17 +111,17 @@ extern "C" {
 
     fl_print_format("  The vocabulary is case-sensitive and must exactly match.%r%r", print.to, f_string_eol_s, f_string_eol_s);
 
-    fl_print_format("  The difference between %[%r%r%]", print.to, print.set->notable, f_console_symbol_long_enable_s, iki_read_long_replace_s, print.set->notable);
-    fl_print_format(" and %[%r%r%] is that the", print.to, print.set->notable, f_console_symbol_long_enable_s, iki_read_long_substitute_s, print.set->notable);
-    fl_print_format(" %[%r%r%] option substitutes all matching vocabulary names and the", print.to, print.set->notable, f_console_symbol_long_enable_s, iki_read_long_replace_s, print.set->notable);
-    fl_print_format(" %[%r%r%] option substitutes all matching vocabulary names that must also have the given matching content.%r%r", print.to, print.set->notable, f_console_symbol_long_enable_s, iki_read_long_substitute_s, print.set->notable, f_string_eol_s, f_string_eol_s);
+    fl_print_format("  The difference between %[%r%r%]", print.to, print.set->notable, f_console_symbol_long_normal_s, iki_read_long_replace_s, print.set->notable);
+    fl_print_format(" and %[%r%r%] is that the", print.to, print.set->notable, f_console_symbol_long_normal_s, iki_read_long_substitute_s, print.set->notable);
+    fl_print_format(" %[%r%r%] option substitutes all matching vocabulary names and the", print.to, print.set->notable, f_console_symbol_long_normal_s, iki_read_long_replace_s, print.set->notable);
+    fl_print_format(" %[%r%r%] option substitutes all matching vocabulary names that must also have the given matching content.%r%r", print.to, print.set->notable, f_console_symbol_long_normal_s, iki_read_long_substitute_s, print.set->notable, f_string_eol_s, f_string_eol_s);
 
-    fl_print_format("  The %[%r%r%]", print.to, print.set->notable, f_console_symbol_long_enable_s, iki_read_long_reassign_s, print.set->notable);
-    fl_print_format(" option is identical to the %[%r%r%] option", print.to, print.set->notable, f_console_symbol_long_enable_s, iki_read_long_substitute_s, print.set->notable);
-    fl_print_format(" except that the %[%r%r%] option is ignored (not applied).%r%r", print.to, print.set->notable, f_console_symbol_long_enable_s, iki_read_long_wrap_s, print.set->notable, f_string_eol_s, f_string_eol_s);
+    fl_print_format("  The %[%r%r%]", print.to, print.set->notable, f_console_symbol_long_normal_s, iki_read_long_reassign_s, print.set->notable);
+    fl_print_format(" option is identical to the %[%r%r%] option", print.to, print.set->notable, f_console_symbol_long_normal_s, iki_read_long_substitute_s, print.set->notable);
+    fl_print_format(" except that the %[%r%r%] option is ignored (not applied).%r%r", print.to, print.set->notable, f_console_symbol_long_normal_s, iki_read_long_wrap_s, print.set->notable, f_string_eol_s, f_string_eol_s);
 
-    fl_print_format("  The %[%r%r%]", print.to, print.set->notable, f_console_symbol_long_enable_s, iki_read_long_substitute_s, print.set->notable);
-    fl_print_format(" option takes priority over the %[%r%r%] option when matching the same variable.%r%r", print.to, print.set->notable, f_console_symbol_long_enable_s, iki_read_long_replace_s, print.set->notable, f_string_eol_s, f_string_eol_s);
+    fl_print_format("  The %[%r%r%]", print.to, print.set->notable, f_console_symbol_long_normal_s, iki_read_long_substitute_s, print.set->notable);
+    fl_print_format(" option takes priority over the %[%r%r%] option when matching the same variable.%r%r", print.to, print.set->notable, f_console_symbol_long_normal_s, iki_read_long_replace_s, print.set->notable, f_string_eol_s, f_string_eol_s);
 
     fl_print_format("  The default behavior is to only display content portion of the IKI variable.%r", print.to, f_string_eol_s);
 

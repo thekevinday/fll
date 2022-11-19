@@ -412,8 +412,10 @@ extern "C" {
 #ifndef _di_controller_rule_setting_read_print_mapping_
   void controller_rule_setting_read_print_mapping(const controller_global_t global, const f_string_static_t name, const f_string_map_t map) {
 
-    if (global.main->error.verbosity != f_console_verbosity_debug_e && !(global.main->error.verbosity == f_console_verbosity_verbose_e && global.main->parameters.array[controller_parameter_simulate_e].result == f_console_result_found_e)) {
-      return;
+    if (global.main->error.verbosity != f_console_verbosity_debug_e) {
+      if (!(global.main->error.verbosity == f_console_verbosity_verbose_e && (global.main->parameters.array[controller_parameter_simulate_e].result & f_console_result_found_e))) {
+        return;
+      }
     }
 
     controller_lock_print(global.main->output.to, global.thread);
@@ -429,8 +431,10 @@ extern "C" {
 #ifndef _di_controller_rule_setting_read_print_value_
   void controller_rule_setting_read_print_value(const controller_global_t global, const f_string_static_t name, const f_string_static_t name_sub, const f_string_static_t value, const f_string_t suffix) {
 
-    if (global.main->error.verbosity != f_console_verbosity_debug_e && !(global.main->error.verbosity == f_console_verbosity_verbose_e && global.main->parameters.array[controller_parameter_simulate_e].result == f_console_result_found_e)) {
-      return;
+    if (global.main->error.verbosity != f_console_verbosity_debug_e) {
+      if (!(global.main->error.verbosity == f_console_verbosity_verbose_e && (global.main->parameters.array[controller_parameter_simulate_e].result & f_console_result_found_e))) {
+        return;
+      }
     }
 
     controller_lock_print(global.main->output.to, global.thread);
@@ -454,8 +458,10 @@ extern "C" {
 #ifndef _di_controller_rule_setting_read_print_values_
   void controller_rule_setting_read_print_values(const controller_global_t global, const f_string_static_t name, const f_array_length_t index, controller_cache_t * const cache) {
 
-    if (global.main->error.verbosity != f_console_verbosity_debug_e && !(global.main->error.verbosity == f_console_verbosity_verbose_e && global.main->parameters.array[controller_parameter_simulate_e].result == f_console_result_found_e)) {
-      return;
+    if (global.main->error.verbosity != f_console_verbosity_debug_e) {
+      if (!(global.main->error.verbosity == f_console_verbosity_verbose_e && (global.main->parameters.array[controller_parameter_simulate_e].result & f_console_result_found_e))) {
+        return;
+      }
     }
 
     controller_lock_print(global.main->output.to, global.thread);

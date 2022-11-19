@@ -573,7 +573,7 @@ extern "C" {
       }
     }
 
-    if (main->parameters.array[control_parameter_return_e].result == f_console_result_found_e) {
+    if (main->parameters.array[control_parameter_return_e].result & f_console_result_found_e) {
       fll_print_format("%rresponse %q %q %q%r", main->output.to, f_string_eol_s, control_payload_type_name(header->type), control_action_type_name(header->action), string_status, f_string_eol_s);
     }
     else if (header->type == control_payload_type_error_e) {
@@ -614,7 +614,7 @@ extern "C" {
 
     data->cache.small.used = 0;
 
-    if (main->parameters.array[control_parameter_settings_e].result == f_console_result_additional_e) {
+    if (main->parameters.array[control_parameter_settings_e].result & f_console_result_value_e) {
       const f_array_length_t index = main->parameters.array[control_parameter_settings_e].values.array[main->parameters.array[control_parameter_settings_e].values.used - 1];
 
       status = f_string_dynamic_append(data->argv[index], &data->cache.small);
@@ -706,7 +706,7 @@ extern "C" {
 
       data->cache.small.used = 0;
 
-      if (main->parameters.array[control_parameter_socket_e].result == f_console_result_additional_e) {
+      if (main->parameters.array[control_parameter_socket_e].result & f_console_result_value_e) {
         const f_array_length_t index = main->parameters.array[control_parameter_socket_e].values.array[main->parameters.array[control_parameter_socket_e].values.used - 1];
 
         status = f_string_dynamic_append(data->argv[index], &data->cache.small);
@@ -719,7 +719,7 @@ extern "C" {
       }
 
       if (F_status_is_error(status)) {
-        if (main->parameters.array[control_parameter_socket_e].result == f_console_result_additional_e || !parameter_hass[1]) {
+        if (main->parameters.array[control_parameter_socket_e].result & f_console_result_value_e || !parameter_hass[1]) {
           fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_append", F_true);
         }
         else {
@@ -771,7 +771,7 @@ extern "C" {
 
           for (uint8_t i = 0; i < 3; ++i) {
 
-            if (append_ids[i] && main->parameters.array[append_ids[i]].result == f_console_result_additional_e) {
+            if (append_ids[i] && main->parameters.array[append_ids[i]].result & f_console_result_value_e) {
               const f_array_length_t index = main->parameters.array[append_ids[i]].values.array[main->parameters.array[append_ids[i]].values.used - 1];
 
               status = f_string_dynamic_append(data->argv[index], &data->cache.small);
@@ -784,7 +784,7 @@ extern "C" {
             }
 
             if (F_status_is_error(status)) {
-              if ((append_ids[i] && main->parameters.array[append_ids[i]].result == f_console_result_additional_e) || !append_hass[i]) {
+              if ((append_ids[i] && main->parameters.array[append_ids[i]].result & f_console_result_value_e) || !append_hass[i]) {
                 fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_append", F_true);
               }
               else {

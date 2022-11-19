@@ -77,10 +77,10 @@ extern "C" {
  *   This locks, uses, and unlocks the file stream.
  * @param symbol_first
  *   The symbol string prepended to the first parameter.
- *   This is usually f_console_symbol_long_enable_s.
+ *   This is usually f_console_symbol_long_normal_s.
  * @param symbol_second
  *   The symbol string prepended to the second parameter.
- *   This is usually f_console_symbol_long_enable_s.
+ *   This is usually f_console_symbol_long_normal_s.
  * @param first
  *   The first parameter name.
  * @param second
@@ -109,13 +109,13 @@ extern "C" {
  *   This locks, uses, and unlocks the file stream.
  * @param symbol_first
  *   The symbol string prepended to the first parameter.
- *   This is usually f_console_symbol_long_enable_s.
+ *   This is usually f_console_symbol_long_normal_s.
  * @param symbol_second
  *   The symbol string prepended to the second parameter.
- *   This is usually f_console_symbol_long_enable_s.
+ *   This is usually f_console_symbol_long_normal_s.
  * @param symbol_third
  *   The symbol string prepended to the third parameter.
- *   This is usually f_console_symbol_long_enable_s.
+ *   This is usually f_console_symbol_long_normal_s.
  * @param first
  *   The first parameter name.
  * @param second
@@ -147,10 +147,10 @@ extern "C" {
  *   This locks, uses, and unlocks the file stream.
  * @param symbol_first
  *   The symbol string prepended to the first parameter.
- *   This is usually f_console_symbol_long_enable_s.
+ *   This is usually f_console_symbol_long_normal_s.
  * @param symbol_second
  *   The symbol string prepended to the second parameter.
- *   This is usually f_console_symbol_long_enable_s.
+ *   This is usually f_console_symbol_long_normal_s.
  * @param first
  *   The first parameter name.
  * @param second
@@ -179,7 +179,7 @@ extern "C" {
  *   This locks, uses, and unlocks the file stream.
  * @param symbol
  *   The symbol string prepended to the first parameter.
- *   This is usually f_console_symbol_long_enable_s.
+ *   This is usually f_console_symbol_long_normal_s.
  * @param parameter
  *   The parameter name.
  *
@@ -206,13 +206,13 @@ extern "C" {
  *   This locks, uses, and unlocks the file stream.
  * @param symbol_first
  *   The symbol string prepended to the first parameter.
- *   This is usually f_console_symbol_long_enable_s.
+ *   This is usually f_console_symbol_long_normal_s.
  * @param symbol_second
  *   The symbol string prepended to the second parameter.
- *   This is usually f_console_symbol_long_enable_s.
+ *   This is usually f_console_symbol_long_normal_s.
  * @param symbol_third
  *   The symbol string prepended to the third parameter.
- *   This is usually f_console_symbol_long_enable_s.
+ *   This is usually f_console_symbol_long_normal_s.
  * @param first
  *   The first parameter name.
  *
@@ -250,7 +250,7 @@ extern "C" {
  * @param symbol
  *   The symbol string prepended to both parameters.
  *   This locks, uses, and unlocks the file stream.
- *   This is usually f_console_symbol_long_enable_s.
+ *   This is usually f_console_symbol_long_normal_s.
  * @param parameter
  *   The parameter name.
  * @param value
@@ -280,7 +280,7 @@ extern "C" {
  * @param symbol
  *   The symbol string prepended to both parameters.
  *   This locks, uses, and unlocks the file stream.
- *   This is usually f_console_symbol_long_enable_s.
+ *   This is usually f_console_symbol_long_normal_s.
  * @param parameter
  *   The parameter name.
  * @param value
@@ -310,7 +310,7 @@ extern "C" {
  * @param symbol
  *   The symbol string prepended to both parameters.
  *   This locks, uses, and unlocks the file stream.
- *   This is usually f_console_symbol_long_enable_s.
+ *   This is usually f_console_symbol_long_normal_s.
  * @param parameter
  *   The parameter name.
  * @param value
@@ -340,7 +340,7 @@ extern "C" {
  * @param symbol
  *   The symbol string prepended to both parameters.
  *   This locks, uses, and unlocks the file stream.
- *   This is usually f_console_symbol_long_enable_s.
+ *   This is usually f_console_symbol_long_normal_s.
  * @param parameter
  *   The parameter name.
  *
@@ -368,7 +368,7 @@ extern "C" {
  * @param symbol
  *   The symbol string prepended to both parameters.
  *   This locks, uses, and unlocks the file stream.
- *   This is usually f_console_symbol_long_enable_s.
+ *   This is usually f_console_symbol_long_normal_s.
  * @param parameter
  *   The parameter name.
  * @param amount
@@ -398,7 +398,7 @@ extern "C" {
  * @param symbol
  *   The symbol string prepended to both parameters.
  *   This locks, uses, and unlocks the file stream.
- *   This is usually f_console_symbol_long_enable_s.
+ *   This is usually f_console_symbol_long_normal_s.
  * @param parameter
  *   The parameter name.
  *
@@ -426,7 +426,7 @@ extern "C" {
  * @param symbol
  *   The symbol string prepended to both parameters.
  *   This locks, uses, and unlocks the file stream.
- *   This is usually f_console_symbol_long_enable_s.
+ *   This is usually f_console_symbol_long_normal_s.
  * @param parameter
  *   The parameter name.
  * @param value
@@ -456,7 +456,7 @@ extern "C" {
  * @param symbol
  *   The symbol string prepended to both parameters.
  *   This locks, uses, and unlocks the file stream.
- *   This is usually f_console_symbol_long_enable_s.
+ *   This is usually f_console_symbol_long_normal_s.
  * @param parameter
  *   The parameter name.
  * @param value_start

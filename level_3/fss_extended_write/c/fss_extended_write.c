@@ -60,13 +60,13 @@ extern "C" {
 
     status = F_none;
 
-    if (main->parameters.array[fss_extended_write_parameter_help_e].result == f_console_result_found_e) {
+    if (main->parameters.array[fss_extended_write_parameter_help_e].result & f_console_result_found_e) {
       fss_extended_write_print_help(setting, main->message);
 
       return status;
     }
 
-    if (main->parameters.array[fss_extended_write_parameter_version_e].result == f_console_result_found_e) {
+    if (main->parameters.array[fss_extended_write_parameter_version_e].result & f_console_result_found_e) {
       fll_program_print_version(main->message, fss_extended_write_program_version_s);
 
       return status;
@@ -79,13 +79,13 @@ extern "C" {
     output.flag = F_file_flag_create_d | F_file_flag_write_only_d | F_file_flag_append_d;
 
     if (F_status_is_error_not(status)) {
-      if (main->parameters.array[fss_extended_write_parameter_file_e].result == f_console_result_additional_e) {
+      if (main->parameters.array[fss_extended_write_parameter_file_e].result & f_console_result_value_e) {
         if (main->parameters.array[fss_extended_write_parameter_file_e].values.used > 1) {
           if (main->error.verbosity > f_console_verbosity_quiet_e) {
             f_file_stream_lock(main->error.to);
 
             fl_print_format("%r%[%QThe parameter '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-            fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_enable_s, fss_extended_write_long_file_s, main->error.notable);
+            fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_normal_s, fss_extended_write_long_file_s, main->error.notable);
             fl_print_format("%[' may only be specified once.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
 
             f_file_stream_unlock(main->error.to);
@@ -105,8 +105,8 @@ extern "C" {
           }
         }
       }
-      else if (main->parameters.array[fss_extended_write_parameter_file_e].result == f_console_result_found_e) {
-        fss_extended_write_error_parameter_value_missing_print(main, f_console_symbol_long_enable_s, fss_extended_write_long_file_s);
+      else if (main->parameters.array[fss_extended_write_parameter_file_e].result & f_console_result_found_e) {
+        fss_extended_write_error_parameter_value_missing_print(main, f_console_symbol_long_normal_s, fss_extended_write_long_file_s);
         status = F_status_set_error(F_parameter);
       }
     }
@@ -115,28 +115,28 @@ extern "C" {
       if (main->parameters.array[fss_extended_write_parameter_object_e].locations.used || main->parameters.array[fss_extended_write_parameter_content_e].locations.used) {
         if (main->parameters.array[fss_extended_write_parameter_object_e].locations.used) {
           if (main->parameters.array[fss_extended_write_parameter_object_e].locations.used != main->parameters.array[fss_extended_write_parameter_object_e].values.used) {
-            fss_extended_write_error_parameter_value_missing_print(main, f_console_symbol_long_enable_s, fss_extended_write_long_object_s);
+            fss_extended_write_error_parameter_value_missing_print(main, f_console_symbol_long_normal_s, fss_extended_write_long_object_s);
             status = F_status_set_error(F_parameter);
           }
           else if (main->parameters.array[fss_extended_write_parameter_content_e].locations.used != main->parameters.array[fss_extended_write_parameter_content_e].values.used) {
-            fss_extended_write_error_parameter_value_missing_print(main, f_console_symbol_long_enable_s, fss_extended_write_long_content_s);
+            fss_extended_write_error_parameter_value_missing_print(main, f_console_symbol_long_normal_s, fss_extended_write_long_content_s);
             status = F_status_set_error(F_parameter);
           }
-          else if (!main->parameters.array[fss_extended_write_parameter_content_e].locations.used && main->parameters.array[fss_extended_write_parameter_partial_e].result == f_console_result_none_e) {
+          else if (!main->parameters.array[fss_extended_write_parameter_content_e].locations.used && !(main->parameters.array[fss_extended_write_parameter_partial_e].result & f_console_result_found_e)) {
             fss_extended_write_error_parameter_at_least_once(main);
             status = F_status_set_error(F_parameter);
           }
           else if (main->parameters.array[fss_extended_write_parameter_content_e].locations.used && main->parameters.array[fss_extended_write_parameter_partial_e].locations.used) {
-            if (main->parameters.array[fss_extended_write_parameter_content_e].result == f_console_result_additional_e) {
+            if (main->parameters.array[fss_extended_write_parameter_content_e].result & f_console_result_value_e) {
               if (main->error.verbosity > f_console_verbosity_quiet_e) {
                 f_file_stream_lock(main->error.to);
 
                 fl_print_format("%r%[%QThe '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-                fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_enable_s, fss_extended_write_long_partial_s, main->error.notable);
+                fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_normal_s, fss_extended_write_long_partial_s, main->error.notable);
                 fl_print_format("%[' parameter only allows either the '%]", main->error.to, main->error.context, main->error.context);
-                fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_enable_s, fss_extended_write_long_object_s, main->error.notable);
+                fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_normal_s, fss_extended_write_long_object_s, main->error.notable);
                 fl_print_format("%[' parameter or the '%]", main->error.to, main->error.context, main->error.context);
-                fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_enable_s, fss_extended_write_long_content_s, main->error.notable);
+                fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_normal_s, fss_extended_write_long_content_s, main->error.notable);
                 fl_print_format("%[' parameter, but not both.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
 
                 f_file_stream_unlock(main->error.to);
@@ -147,7 +147,7 @@ extern "C" {
           }
 
           if (F_status_is_error_not(status)) {
-            if (main->parameters.array[fss_extended_write_parameter_content_e].result == f_console_result_additional_e) {
+            if (main->parameters.array[fss_extended_write_parameter_content_e].result & f_console_result_value_e) {
               f_array_length_t location_object = main->parameters.array[fss_extended_write_parameter_object_e].locations.array[0];
               f_array_length_t location_content = main->parameters.array[fss_extended_write_parameter_content_e].locations.array[0];
               f_array_length_t location_sub_object = main->parameters.array[fss_extended_write_parameter_object_e].locations_sub.array[0];
@@ -158,9 +158,9 @@ extern "C" {
                   f_file_stream_lock(main->error.to);
 
                   fl_print_format("%r%[%QEach '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-                  fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_enable_s, fss_extended_write_long_object_s, main->error.notable);
+                  fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_normal_s, fss_extended_write_long_object_s, main->error.notable);
                   fl_print_format("%[' parameter must be specified before a '%]", main->error.to, main->error.context, main->error.context);
-                  fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_enable_s, fss_extended_write_long_content_s, main->error.notable);
+                  fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_normal_s, fss_extended_write_long_content_s, main->error.notable);
                   fl_print_format("%[' parameter.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
 
                   f_file_stream_unlock(main->error.to);
@@ -179,9 +179,9 @@ extern "C" {
                     f_file_stream_lock(main->error.to);
 
                     fl_print_format("%r%[%QEach '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-                    fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_enable_s, fss_extended_write_long_object_s, main->error.notable);
+                    fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_normal_s, fss_extended_write_long_object_s, main->error.notable);
                     fl_print_format("%[' parameter must have at least one '%]", main->error.to, main->error.context, main->error.context);
-                    fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_enable_s, fss_extended_write_long_content_s, main->error.notable);
+                    fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_normal_s, fss_extended_write_long_content_s, main->error.notable);
                     fl_print_format("%[' parameter.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
 
                     f_file_stream_unlock(main->error.to);
@@ -195,7 +195,7 @@ extern "C" {
         }
         else if (main->parameters.array[fss_extended_write_parameter_content_e].locations.used) {
           if (main->parameters.array[fss_extended_write_parameter_content_e].locations.used != main->parameters.array[fss_extended_write_parameter_content_e].values.used) {
-            fss_extended_write_error_parameter_value_missing_print(main, f_console_symbol_long_enable_s, fss_extended_write_long_content_s);
+            fss_extended_write_error_parameter_value_missing_print(main, f_console_symbol_long_normal_s, fss_extended_write_long_content_s);
             status = F_status_set_error(F_parameter);
           }
           else if (!main->parameters.array[fss_extended_write_parameter_partial_e].locations.used) {
@@ -209,9 +209,9 @@ extern "C" {
           f_file_stream_lock(main->error.to);
 
           fl_print_format("%r%[%QThis requires either piped data or the use of the '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-          fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_enable_s, fss_extended_write_long_object_s, main->error.notable);
+          fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_normal_s, fss_extended_write_long_object_s, main->error.notable);
           fl_print_format("%[' parameter with the '%]", main->error.to, main->error.context, main->error.context);
-          fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_enable_s, fss_extended_write_long_content_s, main->error.notable);
+          fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_normal_s, fss_extended_write_long_content_s, main->error.notable);
           fl_print_format("%[' parameter.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
 
           f_file_stream_unlock(main->error.to);
@@ -221,12 +221,12 @@ extern "C" {
       }
 
       if (F_status_is_error_not(status) && (main->pipe & fll_program_data_pipe_input_e)) {
-        if (main->parameters.array[fss_extended_write_parameter_partial_e].result == f_console_result_found_e) {
+        if (main->parameters.array[fss_extended_write_parameter_partial_e].result & f_console_result_found_e) {
           if (main->error.verbosity > f_console_verbosity_quiet_e) {
             f_file_stream_lock(main->error.to);
 
             fl_print_format("%r%[%QThis '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-            fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_enable_s, fss_extended_write_long_partial_s, main->error.notable);
+            fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_normal_s, fss_extended_write_long_partial_s, main->error.notable);
             fl_print_format("%[' parameter cannot be used when processing a pipe.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
 
             f_file_stream_unlock(main->error.to);
@@ -238,12 +238,12 @@ extern "C" {
     }
 
     if (F_status_is_error_not(status)) {
-      if (main->parameters.array[fss_extended_write_parameter_prepend_e].result == f_console_result_found_e) {
+      if (main->parameters.array[fss_extended_write_parameter_prepend_e].result & f_console_result_found_e) {
         if (main->error.verbosity > f_console_verbosity_quiet_e) {
           f_file_stream_lock(main->error.to);
 
           fl_print_format("%r%[%QThe parameter '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-          fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_enable_s, fss_extended_write_long_prepend_s, main->error.notable);
+          fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_normal_s, fss_extended_write_long_prepend_s, main->error.notable);
           fl_print_format("%[' is specified, but no value is given.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
 
           f_file_stream_unlock(main->error.to);
@@ -251,7 +251,7 @@ extern "C" {
 
         status = F_status_set_error(F_parameter);
       }
-      else if (main->parameters.array[fss_extended_write_parameter_prepend_e].result == f_console_result_additional_e) {
+      else if (main->parameters.array[fss_extended_write_parameter_prepend_e].result & f_console_result_value_e) {
         const f_array_length_t index = main->parameters.array[fss_extended_write_parameter_prepend_e].values.array[main->parameters.array[fss_extended_write_parameter_prepend_e].values.used - 1];
 
         // Even though this standard does not utilize this parameter, provide the validation for consistency.
@@ -269,7 +269,7 @@ extern "C" {
                 f_file_stream_lock(main->error.to);
 
                 fl_print_format("%r%[%QThe value for the parameter '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-                fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_enable_s, fss_extended_write_long_prepend_s, main->error.notable);
+                fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_normal_s, fss_extended_write_long_prepend_s, main->error.notable);
                 fl_print_format("%[' must only contain white space.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
 
                 f_file_stream_unlock(main->error.to);
@@ -286,7 +286,7 @@ extern "C" {
             f_file_stream_lock(main->error.to);
 
             fl_print_format("%r%[%QThe value for the parameter '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-            fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_enable_s, fss_extended_write_long_prepend_s, main->error.notable);
+            fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_normal_s, fss_extended_write_long_prepend_s, main->error.notable);
             fl_print_format("%[' must not be an empty string.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
 
             f_file_stream_unlock(main->error.to);
@@ -298,12 +298,12 @@ extern "C" {
     }
 
     if (F_status_is_error_not(status)) {
-      if (main->parameters.array[fss_extended_write_parameter_ignore_e].result == f_console_result_found_e) {
+      if (main->parameters.array[fss_extended_write_parameter_ignore_e].result & f_console_result_found_e) {
         if (main->error.verbosity > f_console_verbosity_quiet_e) {
           f_file_stream_lock(main->error.to);
 
           fl_print_format("%r%[%QThe parameter '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-          fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_enable_s, fss_extended_write_long_ignore_s, main->error.notable);
+          fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_normal_s, fss_extended_write_long_ignore_s, main->error.notable);
           fl_print_format("%[' was specified, but no values were given.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
 
           f_file_stream_unlock(main->error.to);
@@ -311,7 +311,7 @@ extern "C" {
 
         status = F_status_set_error(F_parameter);
       }
-      else if (main->parameters.array[fss_extended_write_parameter_ignore_e].result == f_console_result_additional_e) {
+      else if (main->parameters.array[fss_extended_write_parameter_ignore_e].result & f_console_result_value_e) {
         const f_array_length_t total_locations = main->parameters.array[fss_extended_write_parameter_ignore_e].locations.used;
         const f_array_length_t total_arguments = main->parameters.array[fss_extended_write_parameter_ignore_e].values.used;
 
@@ -319,7 +319,7 @@ extern "C" {
           f_file_stream_lock(main->error.to);
 
           fl_print_format("%r%[%QThe parameter '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-          fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_enable_s, fss_extended_write_long_ignore_s, main->error.notable);
+          fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_normal_s, fss_extended_write_long_ignore_s, main->error.notable);
           fl_print_format("%[' requires two values.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
 
           f_file_stream_unlock(main->error.to);
@@ -332,14 +332,14 @@ extern "C" {
     f_fss_quote_t quote = f_fss_quote_type_double_e;
 
     if (F_status_is_error_not(status)) {
-      if (main->parameters.array[fss_extended_write_parameter_double_e].result == f_console_result_found_e) {
-        if (main->parameters.array[fss_extended_write_parameter_single_e].result == f_console_result_found_e) {
+      if (main->parameters.array[fss_extended_write_parameter_double_e].result & f_console_result_found_e) {
+        if (main->parameters.array[fss_extended_write_parameter_single_e].result & f_console_result_found_e) {
           if (main->parameters.array[fss_extended_write_parameter_double_e].location < main->parameters.array[fss_extended_write_parameter_single_e].location) {
             quote = f_fss_quote_type_single_e;
           }
         }
       }
-      else if (main->parameters.array[fss_extended_write_parameter_single_e].result == f_console_result_found_e) {
+      else if (main->parameters.array[fss_extended_write_parameter_single_e].result & f_console_result_found_e) {
         quote = f_fss_quote_type_single_e;
       }
     }
@@ -366,8 +366,8 @@ extern "C" {
       }
 
       if (F_status_is_error_not(status)) {
-        if (main->parameters.array[fss_extended_write_parameter_partial_e].result == f_console_result_found_e) {
-          if (main->parameters.array[fss_extended_write_parameter_object_e].result == f_console_result_additional_e) {
+        if (main->parameters.array[fss_extended_write_parameter_partial_e].result & f_console_result_found_e) {
+          if (main->parameters.array[fss_extended_write_parameter_object_e].result & f_console_result_value_e) {
             contents.used = 0;
 
             for (f_array_length_t i = 0; i < main->parameters.array[fss_extended_write_parameter_object_e].values.used; ++i) {
@@ -487,7 +487,7 @@ extern "C" {
             f_file_stream_unlock(main->error.to);
           }
         }
-        else if (main->error.verbosity > f_console_verbosity_quiet_e && main->error.verbosity != f_console_verbosity_error_e && main->parameters.array[fss_extended_write_parameter_file_e].result == f_console_result_none_e) {
+        else if (main->error.verbosity > f_console_verbosity_quiet_e && main->error.verbosity != f_console_verbosity_error_e && !(main->parameters.array[fss_extended_write_parameter_file_e].result & f_console_result_found_e)) {
 
           // Ensure there is always a newline at the end, unless in quiet mode.
           fll_print_dynamic_raw(f_string_eol_s, main->output.to);
@@ -497,7 +497,7 @@ extern "C" {
       f_string_dynamic_resize(0, &escaped);
     }
 
-    if (main->parameters.array[fss_extended_write_parameter_file_e].result == f_console_result_additional_e) {
+    if (main->parameters.array[fss_extended_write_parameter_file_e].result & f_console_result_value_e) {
       f_file_stream_flush(output);
       f_file_stream_close(&output);
     }

@@ -65,7 +65,7 @@ extern "C" {
 #ifndef _di_fss_basic_list_read_print_content_ignore_
   void fss_basic_list_read_print_content_ignore(fll_program_data_t * const main) {
 
-    if (main->parameters.array[fss_basic_list_read_parameter_pipe_e].result == f_console_result_found_e) {
+    if (main->parameters.array[fss_basic_list_read_parameter_pipe_e].result & f_console_result_found_e) {
       f_print_dynamic_raw(fss_basic_list_read_pipe_content_ignore_s, main->output.to);
     }
   }
@@ -74,11 +74,11 @@ extern "C" {
 #ifndef _di_fss_basic_list_read_print_object_end_
   void fss_basic_list_read_print_object_end(fll_program_data_t * const main) {
 
-    if (main->parameters.array[fss_basic_list_read_parameter_pipe_e].result == f_console_result_found_e) {
+    if (main->parameters.array[fss_basic_list_read_parameter_pipe_e].result & f_console_result_found_e) {
       f_print_dynamic_raw(fss_basic_list_read_pipe_content_start_s, main->output.to);
     }
     else {
-      if (main->parameters.array[fss_basic_list_read_parameter_content_e].result == f_console_result_found_e) {
+      if (main->parameters.array[fss_basic_list_read_parameter_content_e].result & f_console_result_found_e) {
         f_print_dynamic_raw(f_fss_basic_list_open_s, main->output.to);
         f_print_dynamic_raw(f_fss_basic_list_open_end_s, main->output.to);
       }
@@ -92,7 +92,7 @@ extern "C" {
 #ifndef _di_fss_basic_list_read_print_set_end_
   void fss_basic_list_read_print_set_end(fll_program_data_t * const main) {
 
-    if (main->parameters.array[fss_basic_list_read_parameter_pipe_e].result == f_console_result_found_e) {
+    if (main->parameters.array[fss_basic_list_read_parameter_pipe_e].result & f_console_result_found_e) {
       f_print_dynamic_raw(fss_basic_list_read_pipe_content_end_s, main->output.to);
     }
   }

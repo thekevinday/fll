@@ -61,13 +61,13 @@ extern "C" {
 
     status = F_none;
 
-    if (main->parameters.array[fss_payload_read_parameter_help_e].result == f_console_result_found_e) {
+    if (main->parameters.array[fss_payload_read_parameter_help_e].result & f_console_result_found_e) {
       fss_payload_read_print_help(setting, main->message);
 
       return status;
     }
 
-    if (main->parameters.array[fss_payload_read_parameter_version_e].result == f_console_result_found_e) {
+    if (main->parameters.array[fss_payload_read_parameter_version_e].result & f_console_result_found_e) {
       fll_program_print_version(main->message, fss_payload_read_program_version_s);
 
       return status;
@@ -120,11 +120,11 @@ extern "C" {
 
         for (f_array_length_t i = 0; i < 6; ++i) {
 
-          if (main->parameters.array[parameter_code[i]].result == f_console_result_found_e) {
+          if (main->parameters.array[parameter_code[i]].result & f_console_result_found_e) {
             f_file_stream_lock(main->error.to);
 
             fl_print_format("%r%[%QThe parameter '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-            fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_enable_s, parameter_name[i], main->error.notable);
+            fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_normal_s, parameter_name[i], main->error.notable);
             fl_print_format("%[' requires a %s.%]%r", main->error.to, main->error.context, parameter_message[i], main->error.context, f_string_eol_s);
 
             f_file_stream_unlock(main->error.to);
@@ -135,7 +135,7 @@ extern "C" {
         } // for
       }
 
-      if (F_status_is_error_not(status) && main->parameters.array[fss_payload_read_parameter_columns_e].result == f_console_result_found_e) {
+      if (F_status_is_error_not(status) && (main->parameters.array[fss_payload_read_parameter_columns_e].result & f_console_result_found_e)) {
         const f_array_length_t parameter_code[] = {
           fss_payload_read_parameter_depth_e,
           fss_payload_read_parameter_line_e,
@@ -164,7 +164,7 @@ extern "C" {
 
           if (main->parameters.array[parameter_code[i]].result == parameter_match[i]) {
             if (main->error.verbosity > f_console_verbosity_quiet_e) {
-              fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_enable_s, f_console_symbol_long_enable_s, fss_payload_read_long_columns_s, parameter_name[i]);
+              fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_normal_s, f_console_symbol_long_normal_s, fss_payload_read_long_columns_s, parameter_name[i]);
             }
 
             status = F_status_set_error(F_parameter);
@@ -174,24 +174,24 @@ extern "C" {
         } // for
       }
 
-      if (F_status_is_error_not(status) && main->parameters.array[fss_payload_read_parameter_pipe_e].result == f_console_result_found_e) {
-        if (main->parameters.array[fss_payload_read_parameter_total_e].result == f_console_result_found_e) {
+      if (F_status_is_error_not(status) && (main->parameters.array[fss_payload_read_parameter_pipe_e].result & f_console_result_found_e)) {
+        if (main->parameters.array[fss_payload_read_parameter_total_e].result & f_console_result_found_e) {
           if (main->error.verbosity > f_console_verbosity_quiet_e) {
-            fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_enable_s, f_console_symbol_long_enable_s, fss_payload_read_long_pipe_s, fss_payload_read_long_total_s);
+            fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_normal_s, f_console_symbol_long_normal_s, fss_payload_read_long_pipe_s, fss_payload_read_long_total_s);
           }
 
           status = F_status_set_error(F_parameter);
         }
-        else if (main->parameters.array[fss_payload_read_parameter_line_e].result == f_console_result_additional_e) {
+        else if (main->parameters.array[fss_payload_read_parameter_line_e].result & f_console_result_value_e) {
           if (main->error.verbosity > f_console_verbosity_quiet_e) {
-            fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_enable_s, f_console_symbol_long_enable_s, fss_payload_read_long_pipe_s, fss_payload_read_long_line_s);
+            fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_normal_s, f_console_symbol_long_normal_s, fss_payload_read_long_pipe_s, fss_payload_read_long_line_s);
           }
 
           status = F_status_set_error(F_parameter);
         }
       }
 
-      if (F_status_is_error_not(status) && main->parameters.array[fss_payload_read_parameter_delimit_e].result == f_console_result_additional_e) {
+      if (F_status_is_error_not(status) && main->parameters.array[fss_payload_read_parameter_delimit_e].result & f_console_result_value_e) {
         f_array_length_t index = 0;
         f_array_length_t length = 0;
 
@@ -219,7 +219,7 @@ extern "C" {
             f_file_stream_lock(main->error.to);
 
             fl_print_format("%r%[%QThe value for the parameter '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-            fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_enable_s, fss_payload_read_long_delimit_s, main->error.notable);
+            fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_normal_s, fss_payload_read_long_delimit_s, main->error.notable);
             fl_print_format("%[' must not be empty.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
 
             f_file_stream_unlock(main->error.to);
@@ -351,7 +351,7 @@ extern "C" {
         } // for
 
         if (data.depth_max > 1) {
-          if (main->parameters.array[fss_payload_read_parameter_total_e].result == f_console_result_found_e) {
+          if (main->parameters.array[fss_payload_read_parameter_total_e].result & f_console_result_found_e) {
             fss_payload_read_print_zero(main);
           }
 
@@ -361,11 +361,11 @@ extern "C" {
         }
       }
 
-      if (F_status_is_error_not(status) && main->parameters.array[fss_payload_read_parameter_select_e].result == f_console_result_found_e) {
+      if (F_status_is_error_not(status) && (main->parameters.array[fss_payload_read_parameter_select_e].result & f_console_result_found_e)) {
         f_file_stream_lock(main->error.to);
 
         fl_print_format("%r%[%QThe '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-        fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_enable_s, fss_payload_read_long_select_s, main->error.notable);
+        fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_normal_s, fss_payload_read_long_select_s, main->error.notable);
         fl_print_format("%[' parameter requires a positive number.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
 
         f_file_stream_unlock(main->error.to);

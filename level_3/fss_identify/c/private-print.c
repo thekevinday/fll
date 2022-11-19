@@ -11,15 +11,15 @@ extern "C" {
 
     f_file_stream_lock(main->output.to);
 
-    if (main->parameters.array[fss_identify_parameter_object_e].result == f_console_result_found_e || main->parameters.array[fss_identify_parameter_content_e].result != f_console_result_found_e) {
+    if ((main->parameters.array[fss_identify_parameter_object_e].result & f_console_result_found_e) || main->parameters.array[fss_identify_parameter_content_e].result != f_console_result_found_e) {
       f_print((const f_string_t) id.name, id.used, main->output.to);
 
-      if (main->parameters.array[fss_identify_parameter_object_e].result != f_console_result_found_e || main->parameters.array[fss_identify_parameter_content_e].result == f_console_result_found_e) {
+      if (main->parameters.array[fss_identify_parameter_object_e].result != f_console_result_found_e || (main->parameters.array[fss_identify_parameter_content_e].result & f_console_result_found_e)) {
         f_print_dynamic_raw(f_fss_type_header_part5_s, main->output.to);
       }
     }
 
-    if (main->parameters.array[fss_identify_parameter_object_e].result != f_console_result_found_e || main->parameters.array[fss_identify_parameter_content_e].result == f_console_result_found_e) {
+    if (main->parameters.array[fss_identify_parameter_object_e].result != f_console_result_found_e || (main->parameters.array[fss_identify_parameter_content_e].result & f_console_result_found_e)) {
       fl_print_format("%04_ui", main->output.to, id.type);
     }
 

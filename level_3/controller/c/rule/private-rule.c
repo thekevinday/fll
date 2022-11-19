@@ -2132,25 +2132,25 @@ extern "C" {
       };
 
       const f_string_static_t symbols[] = {
-        f_console_symbol_short_disable_s, // light.
-        f_console_symbol_short_disable_s, // dark.
-        f_console_symbol_short_disable_s, // no_color.
-        f_console_symbol_short_disable_s, // quiet.
-        f_console_symbol_short_disable_s, // normal.
-        f_console_symbol_short_disable_s, // verbose.
-        f_console_symbol_short_disable_s, // debug.
-        f_console_symbol_short_enable_s,  // daemon.
-        f_console_symbol_short_enable_s,  // init.
-        f_console_symbol_short_enable_s,  // interruptible.
-        f_console_symbol_short_enable_s,  // simulate.
-        f_console_symbol_short_enable_s,  // uninterruptible.
-        f_console_symbol_short_enable_s,  // validate.
+        f_console_symbol_short_inverse_s, // light.
+        f_console_symbol_short_inverse_s, // dark.
+        f_console_symbol_short_inverse_s, // no_color.
+        f_console_symbol_short_inverse_s, // quiet.
+        f_console_symbol_short_inverse_s, // normal.
+        f_console_symbol_short_inverse_s, // verbose.
+        f_console_symbol_short_inverse_s, // debug.
+        f_console_symbol_short_normal_s,  // daemon.
+        f_console_symbol_short_normal_s,  // init.
+        f_console_symbol_short_normal_s,  // interruptible.
+        f_console_symbol_short_normal_s,  // simulate.
+        f_console_symbol_short_normal_s,  // uninterruptible.
+        f_console_symbol_short_normal_s,  // validate.
 
         // Option and Value.
-        f_console_symbol_short_enable_s,  // cgroup.
-        f_console_symbol_short_enable_s,  // pid.
-        f_console_symbol_short_enable_s,  // settings.
-        f_console_symbol_short_enable_s,  // socket.
+        f_console_symbol_short_normal_s,  // cgroup.
+        f_console_symbol_short_normal_s,  // pid.
+        f_console_symbol_short_normal_s,  // settings.
+        f_console_symbol_short_normal_s,  // socket.
       };
 
       const f_string_static_t expands[] = {
@@ -2224,7 +2224,7 @@ extern "C" {
 
         if (fl_string_dynamic_partial_compare_string(options[i].string, source, options[i].used, content) == F_equal_to) {
           if (values[i]) {
-            if (parameters->array[codes[i]].result == f_console_result_additional_e) {
+            if (parameters->array[codes[i]].result & f_console_result_value_e) {
               const f_array_length_t index = parameters->array[codes[i]].values.array[parameters->array[codes[i]].values.used - 1];
 
               status = f_string_dynamic_increase_by(symbols[i].used + expands[i].used + f_string_ascii_space_s.used + argv[index].used + 1, destination);
@@ -2244,7 +2244,7 @@ extern "C" {
             }
           }
           else {
-            if (parameters->array[codes[i]].result == f_console_result_found_e) {
+            if (parameters->array[codes[i]].result & f_console_result_found_e) {
               status = f_string_dynamic_increase_by(symbols[i].used + expands[i].used + 1, destination);
               if (F_status_is_error(status)) return status;
 
@@ -2270,7 +2270,7 @@ extern "C" {
           memcpy(buffer_string + options[i].used, controller_parameter_map_option_s.string, sizeof(f_char_t) * controller_parameter_map_option_s.used);
 
           if (fl_string_dynamic_partial_compare_string(buffer.string, source, buffer.used, content) == F_equal_to) {
-            if (values[i] && parameters->array[codes[i]].result == f_console_result_additional_e || !values[i] && parameters->array[codes[i]].result == f_console_result_found_e) {
+            if (values[i] && parameters->array[codes[i]].result & f_console_result_value_e || !values[i] && (parameters->array[codes[i]].result & f_console_result_found_e)) {
               status = f_string_dynamic_increase_by(symbols[i].used + expands[i].used + 1, destination);
               if (F_status_is_error(status)) return status;
 
@@ -2296,7 +2296,7 @@ extern "C" {
           memcpy(buffer_string + options[i].used, controller_parameter_map_value_s.string, sizeof(f_char_t) * controller_parameter_map_value_s.used);
 
           if (fl_string_dynamic_partial_compare_string(buffer.string, source, buffer.used, content) == F_equal_to) {
-            if (parameters->array[codes[i]].result == f_console_result_additional_e) {
+            if (parameters->array[codes[i]].result & f_console_result_value_e) {
               const f_array_length_t index = parameters->array[codes[i]].values.array[parameters->array[codes[i]].values.used - 1];
 
               status = f_string_dynamic_append(argv[index], destination);
@@ -2830,7 +2830,7 @@ extern "C" {
 
                 options_process = 0;
 
-                if (global.main->parameters.array[controller_parameter_simulate_e].result == f_console_result_found_e) {
+                if (global.main->parameters.array[controller_parameter_simulate_e].result & f_console_result_found_e) {
                   options_process |= controller_process_option_simulate_d;
                 }
 
@@ -4934,7 +4934,7 @@ extern "C" {
             rule->timeout_stop = number;
           }
 
-          if (global.main->error.verbosity == f_console_verbosity_debug_e || (global.main->error.verbosity == f_console_verbosity_verbose_e && global.main->parameters.array[controller_parameter_simulate_e].result == f_console_result_found_e)) {
+          if (global.main->error.verbosity == f_console_verbosity_debug_e || (global.main->error.verbosity == f_console_verbosity_verbose_e && (global.main->parameters.array[controller_parameter_simulate_e].result & f_console_result_found_e))) {
             f_string_static_t name_sub = controller_stop_s;
 
             if (timeout_code == controller_rule_timeout_code_kill_d) {
@@ -5097,7 +5097,7 @@ extern "C" {
             rule->nice = number;
             rule->has |= controller_rule_has_nice_d;
 
-            if (global.main->parameters.array[controller_parameter_simulate_e].result == f_console_result_found_e || global.main->error.verbosity == f_console_verbosity_verbose_e) {
+            if ((global.main->parameters.array[controller_parameter_simulate_e].result & f_console_result_found_e) || global.main->error.verbosity == f_console_verbosity_verbose_e) {
               cache->action.generic.used = 0;
 
               status = f_string_dynamic_partial_append_nulless(cache->buffer_item, cache->content_actions.array[i].array[0], &cache->action.generic);
@@ -5173,7 +5173,7 @@ extern "C" {
             rule->user = number;
             rule->has |= controller_rule_has_user_d;
 
-            if (global.main->error.verbosity == f_console_verbosity_debug_e || (global.main->error.verbosity == f_console_verbosity_verbose_e && global.main->parameters.array[controller_parameter_simulate_e].result == f_console_result_found_e)) {
+            if (global.main->error.verbosity == f_console_verbosity_debug_e || (global.main->error.verbosity == f_console_verbosity_verbose_e && (global.main->parameters.array[controller_parameter_simulate_e].result & f_console_result_found_e))) {
               cache->action.generic.used = 0;
 
               status = f_string_dynamic_partial_append_nulless(cache->buffer_item, cache->content_actions.array[i].array[0], &cache->action.generic);
@@ -5390,7 +5390,7 @@ extern "C" {
           controller_rule_setting_read_print_values(global, controller_environment_s, i, cache);
         }
         else {
-          if (global.main->error.verbosity == f_console_verbosity_debug_e || (global.main->error.verbosity == f_console_verbosity_verbose_e && global.main->parameters.array[controller_parameter_simulate_e].result == f_console_result_found_e)) {
+          if (global.main->error.verbosity == f_console_verbosity_debug_e || (global.main->error.verbosity == f_console_verbosity_verbose_e && (global.main->parameters.array[controller_parameter_simulate_e].result & f_console_result_found_e))) {
             controller_lock_print(global.main->output.to, global.thread);
 
             fl_print_format("%rProcessing rule item action '%[%r%]' setting value to an empty set.%r", global.main->output.to, f_string_eol_s, global.main->context.set.title, controller_environment_s, global.main->context.set.title, f_string_eol_s);
@@ -5602,7 +5602,7 @@ extern "C" {
         ++rule->ons.used;
       }
 
-      if (global.main->error.verbosity == f_console_verbosity_debug_e || (global.main->error.verbosity == f_console_verbosity_verbose_e && global.main->parameters.array[controller_parameter_simulate_e].result == f_console_result_found_e)) {
+      if (global.main->error.verbosity == f_console_verbosity_debug_e || (global.main->error.verbosity == f_console_verbosity_verbose_e && (global.main->parameters.array[controller_parameter_simulate_e].result & f_console_result_found_e))) {
         controller_lock_print(global.main->output.to, global.thread);
 
         fl_print_format("%rProcessing rule item action '%[%r%]', adding ", global.main->output.to, f_string_eol_s, global.main->context.set.title, controller_on_s, global.main->context.set.title);

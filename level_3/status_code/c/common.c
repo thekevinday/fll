@@ -85,14 +85,14 @@ extern "C" {
         }
       }
 
-      if (main->parameters.array[status_code_parameter_line_first_no_e].result == f_console_result_found_e) {
+      if (main->parameters.array[status_code_parameter_line_first_no_e].result & f_console_result_found_e) {
         setting->line_first = f_string_empty_s;
       }
       else {
         setting->line_first = f_string_eol_s;
       }
 
-      if (main->parameters.array[status_code_parameter_line_last_no_e].result == f_console_result_found_e) {
+      if (main->parameters.array[status_code_parameter_line_last_no_e].result & f_console_result_found_e) {
         setting->line_last = f_string_empty_s;
       }
       else {
@@ -116,32 +116,32 @@ extern "C" {
         }
       }
 
-      if (main->parameters.array[status_code_parameter_help_e].result == f_console_result_found_e) {
+      if (main->parameters.array[status_code_parameter_help_e].result & f_console_result_found_e) {
         setting->flag |= status_code_main_flag_help_e;
 
         return;
       }
 
-      if (main->parameters.array[status_code_parameter_version_e].result == f_console_result_found_e) {
+      if (main->parameters.array[status_code_parameter_version_e].result & f_console_result_found_e) {
         setting->flag |= status_code_main_flag_version_e;
 
         return;
       }
     }
 
-    if (main->parameters.array[status_code_parameter_error_e].result == f_console_result_found_e) {
+    if (main->parameters.array[status_code_parameter_error_e].result & f_console_result_found_e) {
       setting->flag |= status_code_main_flag_error_e;
     }
 
-    if (main->parameters.array[status_code_parameter_fine_e].result == f_console_result_found_e) {
+    if (main->parameters.array[status_code_parameter_fine_e].result & f_console_result_found_e) {
       setting->flag |= status_code_main_flag_fine_e;
     }
 
-    if (main->parameters.array[status_code_parameter_warning_e].result == f_console_result_found_e) {
+    if (main->parameters.array[status_code_parameter_warning_e].result & f_console_result_found_e) {
       setting->flag |= status_code_main_flag_warning_e;
     }
 
-    if (main->parameters.array[status_code_parameter_number_e].result == f_console_result_found_e) {
+    if (main->parameters.array[status_code_parameter_number_e].result & f_console_result_found_e) {
       setting->flag |= status_code_main_flag_number_e;
     }
 
@@ -162,7 +162,7 @@ extern "C" {
         setting->status = F_status_set_error(F_parameter);
 
         status_code_print_line_first_locked(setting, main->error);
-        fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_enable_s, f_console_symbol_long_enable_s, status_code_long_error_s, status_code_long_fine_s);
+        fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_normal_s, f_console_symbol_long_normal_s, status_code_long_error_s, status_code_long_fine_s);
         status_code_print_line_last_locked(setting, main->error);
 
         return;
@@ -172,7 +172,7 @@ extern "C" {
       setting->status = F_status_set_error(F_parameter);
 
       status_code_print_line_first_locked(setting, main->error);
-      fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_enable_s, f_console_symbol_long_enable_s, status_code_long_warning_s, status_code_long_fine_s);
+      fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_normal_s, f_console_symbol_long_normal_s, status_code_long_warning_s, status_code_long_fine_s);
       status_code_print_line_last_locked(setting, main->error);
 
       return;

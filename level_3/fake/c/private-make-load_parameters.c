@@ -25,11 +25,11 @@ extern "C" {
       }
 
       if (data_make->main->context.mode == f_color_mode_color_not_e) {
-        if (data_make->main->parameters.array[fake_parameter_no_color_e].type == f_console_type_normal_e) {
-          *status = f_string_dynamic_append(f_console_symbol_short_enable_s, &data_make->parameter.color.array[data_make->parameter.color.used]);
+        if (data_make->main->parameters.array[fake_parameter_no_color_e].flag & f_console_flag_normal_e) {
+          *status = f_string_dynamic_append(f_console_symbol_short_normal_s, &data_make->parameter.color.array[data_make->parameter.color.used]);
         }
-        else if (data_make->main->parameters.array[fake_parameter_no_color_e].type == f_console_type_inverse_e) {
-          *status = f_string_dynamic_append(f_console_symbol_short_disable_s, &data_make->parameter.color.array[data_make->parameter.color.used]);
+        else if (data_make->main->parameters.array[fake_parameter_no_color_e].flag & f_console_flag_normal_e) {
+          *status = f_string_dynamic_append(f_console_symbol_short_inverse_s, &data_make->parameter.color.array[data_make->parameter.color.used]);
         }
 
         if (F_status_is_error_not(*status)) {
@@ -37,11 +37,11 @@ extern "C" {
         }
       }
       else if (data_make->main->context.mode == f_color_mode_dark_e) {
-        if (data_make->main->parameters.array[fake_parameter_dark_e].type == f_console_type_normal_e) {
-          *status = f_string_dynamic_append(f_console_symbol_short_enable_s, &data_make->parameter.color.array[data_make->parameter.color.used]);
+        if (data_make->main->parameters.array[fake_parameter_dark_e].flag & f_console_flag_normal_e) {
+          *status = f_string_dynamic_append(f_console_symbol_short_normal_s, &data_make->parameter.color.array[data_make->parameter.color.used]);
         }
-        else if (data_make->main->parameters.array[fake_parameter_dark_e].type == f_console_type_inverse_e) {
-          *status = f_string_dynamic_append(f_console_symbol_short_disable_s, &data_make->parameter.color.array[data_make->parameter.color.used]);
+        else if (data_make->main->parameters.array[fake_parameter_dark_e].flag & f_console_flag_normal_e) {
+          *status = f_string_dynamic_append(f_console_symbol_short_inverse_s, &data_make->parameter.color.array[data_make->parameter.color.used]);
         }
 
         if (F_status_is_error_not(*status)) {
@@ -49,11 +49,11 @@ extern "C" {
         }
       }
       else {
-        if (data_make->main->parameters.array[fake_parameter_light_e].type == f_console_type_normal_e) {
-          *status = f_string_dynamic_append(f_console_symbol_short_enable_s, &data_make->parameter.color.array[data_make->parameter.color.used]);
+        if (data_make->main->parameters.array[fake_parameter_light_e].flag & f_console_flag_normal_e) {
+          *status = f_string_dynamic_append(f_console_symbol_short_normal_s, &data_make->parameter.color.array[data_make->parameter.color.used]);
         }
-        else if (data_make->main->parameters.array[fake_parameter_light_e].type == f_console_type_inverse_e) {
-          *status = f_string_dynamic_append(f_console_symbol_short_disable_s, &data_make->parameter.color.array[data_make->parameter.color.used]);
+        else if (data_make->main->parameters.array[fake_parameter_light_e].flag & f_console_flag_normal_e) {
+          *status = f_string_dynamic_append(f_console_symbol_short_inverse_s, &data_make->parameter.color.array[data_make->parameter.color.used]);
         }
 
         if (F_status_is_error_not(*status)) {
@@ -89,11 +89,11 @@ extern "C" {
       }
 
       if (data_make->main->error.verbosity == f_console_verbosity_quiet_e) {
-        if (data_make->main->parameters.array[fake_parameter_verbosity_quiet_e].type == f_console_type_normal_e) {
-          *status = f_string_dynamic_append(f_console_symbol_short_enable_s, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
+        if (data_make->main->parameters.array[fake_parameter_verbosity_quiet_e].flag & f_console_flag_normal_e) {
+          *status = f_string_dynamic_append(f_console_symbol_short_normal_s, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
         }
-        else if (data_make->main->parameters.array[fake_parameter_verbosity_quiet_e].type == f_console_type_inverse_e) {
-          *status = f_string_dynamic_append(f_console_symbol_short_disable_s, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
+        else if (data_make->main->parameters.array[fake_parameter_verbosity_quiet_e].flag & f_console_flag_normal_e) {
+          *status = f_string_dynamic_append(f_console_symbol_short_inverse_s, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
         }
 
         if (F_status_is_error_not(*status)) {
@@ -101,11 +101,11 @@ extern "C" {
         }
       }
       else if (data_make->main->error.verbosity == f_console_verbosity_error_e) {
-        if (data_make->main->parameters.array[fake_parameter_verbosity_error_e].type == f_console_type_normal_e) {
-          *status = f_string_dynamic_append(f_console_symbol_short_enable_s, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
+        if (data_make->main->parameters.array[fake_parameter_verbosity_error_e].flag & f_console_flag_normal_e) {
+          *status = f_string_dynamic_append(f_console_symbol_short_normal_s, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
         }
-        else if (data_make->main->parameters.array[fake_parameter_verbosity_error_e].type == f_console_type_inverse_e) {
-          *status = f_string_dynamic_append(f_console_symbol_short_disable_s, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
+        else if (data_make->main->parameters.array[fake_parameter_verbosity_error_e].flag & f_console_flag_normal_e) {
+          *status = f_string_dynamic_append(f_console_symbol_short_inverse_s, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
         }
 
         if (F_status_is_error_not(*status)) {
@@ -113,11 +113,11 @@ extern "C" {
         }
       }
       else if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
-        if (data_make->main->parameters.array[fake_parameter_verbosity_verbose_e].type == f_console_type_normal_e) {
-          *status = f_string_dynamic_append(f_console_symbol_short_enable_s, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
+        if (data_make->main->parameters.array[fake_parameter_verbosity_verbose_e].flag & f_console_flag_normal_e) {
+          *status = f_string_dynamic_append(f_console_symbol_short_normal_s, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
         }
-        else if (data_make->main->parameters.array[fake_parameter_verbosity_verbose_e].type == f_console_type_inverse_e) {
-          *status = f_string_dynamic_append(f_console_symbol_short_disable_s, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
+        else if (data_make->main->parameters.array[fake_parameter_verbosity_verbose_e].flag & f_console_flag_normal_e) {
+          *status = f_string_dynamic_append(f_console_symbol_short_inverse_s, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
         }
 
         if (F_status_is_error_not(*status)) {
@@ -125,11 +125,11 @@ extern "C" {
         }
       }
       else {
-        if (data_make->main->parameters.array[fake_parameter_verbosity_debug_e].type == f_console_type_normal_e) {
-          *status = f_string_dynamic_append(f_console_symbol_short_enable_s, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
+        if (data_make->main->parameters.array[fake_parameter_verbosity_debug_e].flag & f_console_flag_normal_e) {
+          *status = f_string_dynamic_append(f_console_symbol_short_normal_s, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
         }
-        else if (data_make->main->parameters.array[fake_parameter_verbosity_debug_e].type == f_console_type_inverse_e) {
-          *status = f_string_dynamic_append(f_console_symbol_short_disable_s, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
+        else if (data_make->main->parameters.array[fake_parameter_verbosity_debug_e].flag & f_console_flag_normal_e) {
+          *status = f_string_dynamic_append(f_console_symbol_short_inverse_s, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
         }
 
         if (F_status_is_error_not(*status)) {
@@ -187,9 +187,7 @@ extern "C" {
 
       for (; i < 2; ++i) {
 
-        if (console[i]->result == f_console_result_none_e) {
-          continue;
-        }
+        if (!(console[i]->result & f_console_result_found_e)) continue;
 
         for (j = 0; j < source[i]->used; ++j) {
 
@@ -215,11 +213,11 @@ extern "C" {
             return;
           }
 
-          if (console[i]->type == f_console_type_normal_e) {
-            *status = f_string_dynamic_append_nulless(f_console_symbol_short_enable_s, &destination[i]->array[destination[i]->used]);
+          if (console[i]->flag & f_console_flag_normal_e) {
+            *status = f_string_dynamic_append_nulless(f_console_symbol_short_normal_s, &destination[i]->array[destination[i]->used]);
           }
-          else if (console[i]->type == f_console_type_inverse_e) {
-            *status = f_string_dynamic_append_nulless(f_console_symbol_short_disable_s, &destination[i]->array[destination[i]->used]);
+          else if (console[i]->flag & f_console_flag_inverse_e) {
+            *status = f_string_dynamic_append_nulless(f_console_symbol_short_inverse_s, &destination[i]->array[destination[i]->used]);
           }
 
           if (F_status_is_error_not(*status)) {
@@ -328,9 +326,7 @@ extern "C" {
 
       for (uint8_t i = 0; i < 7; ++i) {
 
-        if (console[i]->result == f_console_result_none_e) {
-          continue;
-        }
+        if (!(console[i]->result & f_console_result_found_e)) continue;
 
         if (destination[i]->used + 2 > destination[i]->size) {
           *status = f_string_dynamics_increase_by(fake_default_allocation_small_d, destination[i]);
@@ -354,11 +350,11 @@ extern "C" {
           return;
         }
 
-        if (console[i]->type == f_console_type_normal_e) {
-          *status = f_string_dynamic_append_nulless(f_console_symbol_short_enable_s, &destination[i]->array[destination[i]->used]);
+        if (console[i]->flag & f_console_flag_normal_e) {
+          *status = f_string_dynamic_append_nulless(f_console_symbol_short_normal_s, &destination[i]->array[destination[i]->used]);
         }
-        else if (console[i]->type == f_console_type_inverse_e) {
-          *status = f_string_dynamic_append_nulless(f_console_symbol_short_disable_s, &destination[i]->array[destination[i]->used]);
+        else if (console[i]->flag & f_console_flag_inverse_e) {
+          *status = f_string_dynamic_append_nulless(f_console_symbol_short_inverse_s, &destination[i]->array[destination[i]->used]);
         }
 
         if (F_status_is_error_not(*status)) {

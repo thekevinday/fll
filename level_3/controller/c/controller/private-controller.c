@@ -405,8 +405,8 @@ extern "C" {
       return F_none;
     }
 
-    if (global->main->parameters.array[controller_parameter_validate_e].result == f_console_result_found_e) {
-      if (global->main->parameters.array[controller_parameter_simulate_e].result == f_console_result_found_e && global->main->output.verbosity == f_console_verbosity_debug_e) {
+    if (global->main->parameters.array[controller_parameter_validate_e].result & f_console_result_found_e) {
+      if ((global->main->parameters.array[controller_parameter_simulate_e].result & f_console_result_found_e) && global->main->output.verbosity == f_console_verbosity_debug_e) {
         controller_lock_print(global->main->output.to, global->thread);
 
         fl_print_format("%rPID file '", global->main->output.to, f_string_eol_s);

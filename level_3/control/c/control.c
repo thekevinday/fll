@@ -61,13 +61,13 @@ extern "C" {
 
     status = F_none;
 
-    if (main->parameters.array[control_parameter_help_e].result == f_console_result_found_e) {
+    if (main->parameters.array[control_parameter_help_e].result & f_console_result_found_e) {
       control_print_help(main);
 
       return F_none;
     }
 
-    if (main->parameters.array[control_parameter_version_e].result == f_console_result_found_e) {
+    if (main->parameters.array[control_parameter_version_e].result & f_console_result_found_e) {
       fll_program_print_version(main->message, control_program_version_s);
 
       return F_none;
@@ -90,12 +90,12 @@ extern "C" {
 
       for (uint8_t i = 0; i < 3; ++i) {
 
-        if (main->parameters.array[ids[i]].result == f_console_result_found_e) {
+        if (main->parameters.array[ids[i]].result & f_console_result_found_e) {
           control_print_error_parameter_value_not(main, names[i]);
 
           status = F_status_set_error(F_parameter);
         }
-        else if (main->parameters.array[ids[i]].result == f_console_result_additional_e) {
+        else if (main->parameters.array[ids[i]].result & f_console_result_value_e) {
           index = main->parameters.array[ids[i]].values.array[main->parameters.array[ids[i]].values.used - 1];
 
           if (!main->parameters.arguments.array[index].used) {

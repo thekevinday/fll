@@ -36,7 +36,7 @@ extern "C" {
     }
 
     if (F_status_is_error_not(*status) && *status != F_child) {
-      if (main->parameters.array[controller_parameter_validate_e].result == f_console_result_none_e || main->parameters.array[controller_parameter_simulate_e].result == f_console_result_found_e) {
+      if (!(main->parameters.array[controller_parameter_validate_e].result & f_console_result_found_e) || (main->parameters.array[controller_parameter_simulate_e].result & f_console_result_found_e)) {
 
         if (entry->setting->entry.pid == controller_entry_pid_require_e && f_file_exists(entry->setting->path_pid, F_true) == F_true) {
           if (main->error.verbosity > f_console_verbosity_quiet_e) {
@@ -163,7 +163,7 @@ extern "C" {
     }
 
     if (F_status_is_error_not(*status) && *status != F_child && *status != F_file_found_not) {
-      if (main->parameters.array[controller_parameter_validate_e].result == f_console_result_none_e || main->parameters.array[controller_parameter_simulate_e].result == f_console_result_found_e) {
+      if (!(main->parameters.array[controller_parameter_validate_e].result & f_console_result_found_e) || (main->parameters.array[controller_parameter_simulate_e].result & f_console_result_found_e)) {
 
         *status = controller_entry_process(entry->global, cache, F_false, F_false);
 

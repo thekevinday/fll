@@ -85,14 +85,14 @@ extern "C" {
         }
       }
 
-      if (main->parameters.array[iki_write_parameter_line_first_no_e].result == f_console_result_found_e) {
+      if (main->parameters.array[iki_write_parameter_line_first_no_e].result & f_console_result_found_e) {
         setting->line_first = f_string_empty_s;
       }
       else {
         setting->line_first = f_string_eol_s;
       }
 
-      if (main->parameters.array[iki_write_parameter_line_last_no_e].result == f_console_result_found_e) {
+      if (main->parameters.array[iki_write_parameter_line_last_no_e].result & f_console_result_found_e) {
         setting->line_last = f_string_empty_s;
       }
       else {
@@ -116,13 +116,13 @@ extern "C" {
         }
       }
 
-      if (main->parameters.array[iki_write_parameter_help_e].result == f_console_result_found_e) {
+      if (main->parameters.array[iki_write_parameter_help_e].result & f_console_result_found_e) {
         setting->flag |= iki_write_main_flag_help_e;
 
         return;
       }
 
-      if (main->parameters.array[iki_write_parameter_version_e].result == f_console_result_found_e) {
+      if (main->parameters.array[iki_write_parameter_version_e].result & f_console_result_found_e) {
         setting->flag |= iki_write_main_flag_version_e;
 
         return;
@@ -133,12 +133,12 @@ extern "C" {
     main->output.to.stream = F_type_output_d;
     main->output.to.flag = F_file_flag_create_d | F_file_flag_write_only_d | F_file_flag_append_d;
 
-    if (main->parameters.array[iki_write_parameter_file_e].result == f_console_result_additional_e && main->parameters.array[iki_write_parameter_file_e].values.used) {
+    if (main->parameters.array[iki_write_parameter_file_e].result & f_console_result_value_e && main->parameters.array[iki_write_parameter_file_e].values.used) {
       if (main->parameters.array[iki_write_parameter_file_e].values.used > 1) {
         setting->status = F_status_set_error(F_parameter);
 
         iki_write_print_line_first_locked(setting, main->error);
-        fll_program_print_error_parameter_must_specify_once(main->error, f_console_symbol_long_enable_s, iki_write_long_file_s);
+        fll_program_print_error_parameter_must_specify_once(main->error, f_console_symbol_long_normal_s, iki_write_long_file_s);
         iki_write_print_line_last_locked(setting, main->error);
 
         return;
@@ -161,17 +161,17 @@ extern "C" {
 
       setting->flag |= iki_write_main_flag_file_to_e;
     }
-    else if (main->parameters.array[iki_write_parameter_file_e].result == f_console_result_found_e) {
+    else if (main->parameters.array[iki_write_parameter_file_e].result & f_console_result_found_e) {
       setting->status = F_status_set_error(F_parameter);
 
       iki_write_print_line_first_locked(setting, main->error);
-      fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_enable_s, iki_write_long_file_s);
+      fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, iki_write_long_file_s);
       iki_write_print_line_last_locked(setting, main->error);
 
       return;
     }
 
-    if (main->parameters.array[iki_write_parameter_object_e].result == f_console_result_additional_e) {
+    if (main->parameters.array[iki_write_parameter_object_e].result & f_console_result_value_e) {
       f_array_lengths_t * const values = &main->parameters.array[iki_write_parameter_object_e].values;
 
       setting->objects.used = 0;
@@ -196,17 +196,17 @@ extern "C" {
 
       setting->flag |= iki_write_main_flag_object_e;
     }
-    else if (main->parameters.array[iki_write_parameter_object_e].result == f_console_result_found_e) {
+    else if (main->parameters.array[iki_write_parameter_object_e].result & f_console_result_found_e) {
       setting->status = F_status_set_error(F_parameter);
 
       iki_write_print_line_first_locked(setting, main->error);
-      fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_enable_s, iki_write_long_object_s);
+      fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, iki_write_long_object_s);
       iki_write_print_line_last_locked(setting, main->error);
 
       return;
     }
 
-    if (main->parameters.array[iki_write_parameter_content_e].result == f_console_result_additional_e) {
+    if (main->parameters.array[iki_write_parameter_content_e].result & f_console_result_value_e) {
       f_array_lengths_t * const values = &main->parameters.array[iki_write_parameter_content_e].values;
 
       setting->contents.used = 0;
@@ -231,11 +231,11 @@ extern "C" {
 
       setting->flag |= iki_write_main_flag_content_e;
     }
-    else if (main->parameters.array[iki_write_parameter_content_e].result == f_console_result_found_e) {
+    else if (main->parameters.array[iki_write_parameter_content_e].result & f_console_result_found_e) {
       setting->status = F_status_set_error(F_parameter);
 
       iki_write_print_line_first_locked(setting, main->error);
-      fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_enable_s, iki_write_long_content_s);
+      fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, iki_write_long_content_s);
       iki_write_print_line_last_locked(setting, main->error);
 
       return;
@@ -253,14 +253,14 @@ extern "C" {
 
     setting->quote = f_iki_syntax_quote_double_s;
 
-    if (main->parameters.array[iki_write_parameter_double_e].result == f_console_result_found_e) {
-      if (main->parameters.array[iki_write_parameter_single_e].result == f_console_result_found_e) {
+    if (main->parameters.array[iki_write_parameter_double_e].result & f_console_result_found_e) {
+      if (main->parameters.array[iki_write_parameter_single_e].result & f_console_result_found_e) {
         if (main->parameters.array[iki_write_parameter_double_e].location < main->parameters.array[iki_write_parameter_single_e].location) {
           setting->quote = f_iki_syntax_quote_single_s;
         }
       }
     }
-    else if (main->parameters.array[iki_write_parameter_single_e].result == f_console_result_found_e) {
+    else if (main->parameters.array[iki_write_parameter_single_e].result & f_console_result_found_e) {
       setting->quote = f_iki_syntax_quote_single_s;
     }
   }

@@ -18,15 +18,15 @@ extern "C" {
 
     f_print_dynamic_raw(f_string_eol_s, print.to);
 
-    fll_program_print_help_option(print, fss_extended_write_short_file_s, fss_extended_write_long_file_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Specify a file to send data to.");
-    fll_program_print_help_option(print, fss_extended_write_short_content_s, fss_extended_write_long_content_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "The Content to write.");
-    fll_program_print_help_option(print, fss_extended_write_short_double_s, fss_extended_write_long_double_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Use double quotes (default).");
-    fll_program_print_help_option(print, fss_extended_write_short_ignore_s, fss_extended_write_long_ignore_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Ignore a given range within a Content.");
-    fll_program_print_help_option(print, fss_extended_write_short_object_s, fss_extended_write_long_object_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " The Object to write.");
-    fll_program_print_help_option(print, fss_extended_write_short_partial_s, fss_extended_write_long_partial_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Do not write end of Object/Content character.");
-    fll_program_print_help_option(print, fss_extended_write_short_prepend_s, fss_extended_write_long_prepend_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Prepend the given white space characters to the start of each multi-line Content.");
-    fll_program_print_help_option(print, fss_extended_write_short_single_s, fss_extended_write_long_single_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Use single quotes.");
-    fll_program_print_help_option(print, fss_extended_write_short_trim_s, fss_extended_write_long_trim_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Trim Object names.");
+    fll_program_print_help_option(print, fss_extended_write_short_file_s, fss_extended_write_long_file_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "   Specify a file to send data to.");
+    fll_program_print_help_option(print, fss_extended_write_short_content_s, fss_extended_write_long_content_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "The Content to write.");
+    fll_program_print_help_option(print, fss_extended_write_short_double_s, fss_extended_write_long_double_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, " Use double quotes (default).");
+    fll_program_print_help_option(print, fss_extended_write_short_ignore_s, fss_extended_write_long_ignore_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, " Ignore a given range within a Content.");
+    fll_program_print_help_option(print, fss_extended_write_short_object_s, fss_extended_write_long_object_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, " The Object to write.");
+    fll_program_print_help_option(print, fss_extended_write_short_partial_s, fss_extended_write_long_partial_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "Do not write end of Object/Content character.");
+    fll_program_print_help_option(print, fss_extended_write_short_prepend_s, fss_extended_write_long_prepend_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "Prepend the given white space characters to the start of each multi-line Content.");
+    fll_program_print_help_option(print, fss_extended_write_short_single_s, fss_extended_write_long_single_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, " Use single quotes.");
+    fll_program_print_help_option(print, fss_extended_write_short_trim_s, fss_extended_write_long_trim_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "   Trim Object names.");
 
     f_print_dynamic_raw(f_string_eol_s, print.to);
     f_print_dynamic_raw(f_string_eol_s, print.to);
@@ -40,10 +40,10 @@ extern "C" {
     fl_print_format(" or a Form Feed character '%[\\f%]' (%[U+000C%]).%r", print.to, print.set->notable, print.set->notable, print.set->notable, print.set->notable, f_string_eol_s);
     fl_print_format("  The end of the pipe represents the end of any Object or Content.%r%r", print.to, f_string_eol_s, f_string_eol_s);
 
-    fl_print_format("  The FSS-0001 (Extended) specification does not support multi-line Content, therefore the parameter '%[%r%r%]'", print.to, print.set->notable, f_console_symbol_long_enable_s, fss_extended_write_long_prepend_s, print.set->notable);
+    fl_print_format("  The FSS-0001 (Extended) specification does not support multi-line Content, therefore the parameter '%[%r%r%]'", print.to, print.set->notable, f_console_symbol_long_normal_s, fss_extended_write_long_prepend_s, print.set->notable);
     fl_print_format(" does nothing.%r%r", print.to, f_string_eol_s, f_string_eol_s);
 
-    fl_print_format("  This program does not use the parameter '%[%r%r%]', which therefore does nothing.%r", print.to, print.set->notable, f_console_symbol_long_enable_s, fss_extended_write_long_ignore_s, print.set->notable, f_string_eol_s);
+    fl_print_format("  This program does not use the parameter '%[%r%r%]', which therefore does nothing.%r", print.to, print.set->notable, f_console_symbol_long_normal_s, fss_extended_write_long_ignore_s, print.set->notable, f_string_eol_s);
     fl_print_format("  This parameter requires two values.%r", print.to, f_string_eol_s);
 
     f_print_dynamic_raw(setting->line_last, print.to);

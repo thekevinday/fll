@@ -100,7 +100,7 @@ extern "C" {
       } // for
     }
 
-    if (main->parameters.array[fss_identify_parameter_line_e].result == f_console_result_additional_e) {
+    if (main->parameters.array[fss_identify_parameter_line_e].result & f_console_result_value_e) {
       for (i = 0; i < ids.used; ++i, ++data->current) {
 
         if (data->current == data->line) {
@@ -108,7 +108,7 @@ extern "C" {
             if (fss_identify_process_name_compare(data, ids.array[i], mode) != F_equal_to) continue;
           }
 
-          if (main->parameters.array[fss_identify_parameter_total_e].result == f_console_result_found_e) {
+          if (main->parameters.array[fss_identify_parameter_total_e].result & f_console_result_found_e) {
             ++data->total;
           }
           else {
@@ -121,7 +121,7 @@ extern "C" {
         }
       } // for
     }
-    else if (main->parameters.array[fss_identify_parameter_total_e].result == f_console_result_found_e) {
+    else if (main->parameters.array[fss_identify_parameter_total_e].result & f_console_result_found_e) {
       if (data->name.used) {
 
         for (i = 0; i < ids.used; ++i, ++data->current) {

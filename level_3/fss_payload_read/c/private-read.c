@@ -63,7 +63,7 @@ extern "C" {
     {
       f_array_length_t depth_size = 1;
 
-      if (main->parameters.array[fss_payload_read_parameter_depth_e].result == f_console_result_additional_e) {
+      if (main->parameters.array[fss_payload_read_parameter_depth_e].result & f_console_result_value_e) {
         depth_size = main->parameters.array[fss_payload_read_parameter_depth_e].values.used;
       }
 
@@ -118,7 +118,7 @@ extern "C" {
         }
       }
 
-      if (main->parameters.array[fss_payload_read_parameter_at_e].result == f_console_result_additional_e) {
+      if (main->parameters.array[fss_payload_read_parameter_at_e].result & f_console_result_value_e) {
         for (; position_at < main->parameters.array[fss_payload_read_parameter_at_e].values.used; ++position_at) {
 
           if (main->parameters.array[fss_payload_read_parameter_at_e].values.array[position_at] < position_depth) {
@@ -141,7 +141,7 @@ extern "C" {
         } // for
       }
 
-      if (main->parameters.array[fss_payload_read_parameter_name_e].result == f_console_result_additional_e) {
+      if (main->parameters.array[fss_payload_read_parameter_name_e].result & f_console_result_value_e) {
         for (; position_name < main->parameters.array[fss_payload_read_parameter_name_e].values.used; ++position_name) {
 
           if (main->parameters.array[fss_payload_read_parameter_name_e].values.array[position_name] < position_depth) {
@@ -154,7 +154,7 @@ extern "C" {
 
           data->depths.array[i].index_name = main->parameters.array[fss_payload_read_parameter_name_e].values.array[position_name];
 
-          if (main->parameters.array[fss_payload_read_parameter_trim_e].result == f_console_result_found_e) {
+          if (main->parameters.array[fss_payload_read_parameter_trim_e].result & f_console_result_found_e) {
             status = fl_string_dynamic_rip(data->argv[data->depths.array[i].index_name], &data->depths.array[i].value_name);
           }
           else {
@@ -162,7 +162,7 @@ extern "C" {
           }
 
           if (F_status_is_error(status)) {
-            fll_error_print(main->error, F_status_set_fine(status), main->parameters.array[fss_payload_read_parameter_trim_e].result == f_console_result_found_e ? "fl_string_dynamic_rip" : "f_string_dynamic_append", F_true);
+            fll_error_print(main->error, F_status_set_fine(status), (main->parameters.array[fss_payload_read_parameter_trim_e].result & f_console_result_found_e) ? "fl_string_dynamic_rip" : "f_string_dynamic_append", F_true);
 
             return status;
           }
@@ -188,7 +188,7 @@ extern "C" {
           if (main->error.verbosity < f_console_verbosity_normal_e) {
             fss_payload_read_print_line_first(setting, main->error, F_true);
 
-            fll_program_print_error_parameter_must_specify_once_value(main->error, f_console_symbol_long_enable_s, fss_payload_read_long_depth_s, data->depths.array[i].depth);
+            fll_program_print_error_parameter_must_specify_once_value(main->error, f_console_symbol_long_normal_s, fss_payload_read_long_depth_s, data->depths.array[i].depth);
           }
 
           return F_status_set_error(F_parameter);
@@ -198,7 +198,7 @@ extern "C" {
             f_file_stream_lock(main->error.to);
 
             fl_print_format("%r%[%QThe parameter '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-            fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_enable_s, fss_payload_read_long_depth_s, main->error.notable);
+            fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_normal_s, fss_payload_read_long_depth_s, main->error.notable);
             fl_print_format("%[' may not have the value '%]", main->error.to, main->error.context, main->error.context);
             fl_print_format("%[%ul%]", main->error.to, main->error.notable, data->depths.array[i].depth, main->error.notable);
             fl_print_format("%[' before the value '%]", main->error.to, main->error.context, main->error.context);
@@ -301,7 +301,7 @@ extern "C" {
 #ifndef _di_fss_payload_read_load_number_
   f_status_t fss_payload_read_load_number(fll_program_data_t * const main, fss_payload_read_data_t * const data, const f_array_length_t parameter, const f_string_static_t name, f_number_unsigned_t *number) {
 
-    if (main->parameters.array[parameter].result == f_console_result_additional_e) {
+    if (main->parameters.array[parameter].result & f_console_result_value_e) {
       const f_array_length_t index = main->parameters.array[parameter].values.array[main->parameters.array[parameter].values.used - 1];
 
       const f_status_t status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, data->argv[index], number);
@@ -328,7 +328,7 @@ extern "C" {
     // This standard does not support multiple content groups, except for "headers" FSS-0001 Extended at depth 1.
     if (!(data->option & fss_payload_read_data_option_extended_d)) {
       if ((data->option & fss_payload_read_data_option_select_d) && data->select) {
-        if (main->parameters.array[fss_payload_read_parameter_total_e].result == f_console_result_found_e) {
+        if (main->parameters.array[fss_payload_read_parameter_total_e].result & f_console_result_found_e) {
           f_file_stream_lock(main->output.to);
 
           fss_payload_read_print_zero(main);
@@ -356,7 +356,7 @@ extern "C" {
         if (fl_string_dynamic_partial_compare_string(F_fss_string_header_s, data->buffer, F_fss_string_header_s_length, data->objects.array[i]) == F_equal_to) {
           if (names[i]) break;
 
-          if (main->parameters.array[fss_payload_read_parameter_total_e].result == f_console_result_found_e) {
+          if (main->parameters.array[fss_payload_read_parameter_total_e].result & f_console_result_found_e) {
             f_file_stream_lock(main->output.to);
 
             fss_payload_read_print_zero(main);
@@ -980,53 +980,53 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    if (main->parameters.array[fss_payload_read_parameter_at_e].result == f_console_result_additional_e) {
+    if (main->parameters.array[fss_payload_read_parameter_at_e].result & f_console_result_value_e) {
       data->option |= fss_payload_read_data_option_at_d;
     }
 
-    if (main->parameters.array[fss_payload_read_parameter_columns_e].result == f_console_result_found_e) {
+    if (main->parameters.array[fss_payload_read_parameter_columns_e].result & f_console_result_found_e) {
       data->option |= fss_payload_read_data_option_columns_d;
     }
 
-    if (main->parameters.array[fss_payload_read_parameter_content_e].result == f_console_result_found_e) {
+    if (main->parameters.array[fss_payload_read_parameter_content_e].result & f_console_result_found_e) {
       data->option |= fss_payload_read_data_option_content_d;
     }
 
-    if (main->parameters.array[fss_payload_read_parameter_empty_e].result == f_console_result_found_e) {
+    if (main->parameters.array[fss_payload_read_parameter_empty_e].result & f_console_result_found_e) {
       data->option |= fss_payload_read_data_option_empty_d;
     }
 
-    if (main->parameters.array[fss_payload_read_parameter_line_e].result == f_console_result_additional_e) {
+    if (main->parameters.array[fss_payload_read_parameter_line_e].result & f_console_result_value_e) {
       data->option |= fss_payload_read_data_option_line_d;
 
       status = fss_payload_read_load_number(main, data, fss_payload_read_parameter_line_e, fss_payload_read_long_line_s, &data->line);
       if (F_status_is_error(status)) return status;
     }
 
-    if (main->parameters.array[fss_payload_read_parameter_name_e].result == f_console_result_additional_e) {
+    if (main->parameters.array[fss_payload_read_parameter_name_e].result & f_console_result_value_e) {
       data->option |= fss_payload_read_data_option_name_d;
     }
 
-    if (main->parameters.array[fss_payload_read_parameter_object_e].result == f_console_result_found_e) {
+    if (main->parameters.array[fss_payload_read_parameter_object_e].result & f_console_result_found_e) {
       data->option |= fss_payload_read_data_option_object_d;
     }
 
-    if (main->parameters.array[fss_payload_read_parameter_original_e].result == f_console_result_found_e) {
+    if (main->parameters.array[fss_payload_read_parameter_original_e].result & f_console_result_found_e) {
       data->option |= fss_payload_read_data_option_original_d;
     }
 
-    if (main->parameters.array[fss_payload_read_parameter_select_e].result == f_console_result_additional_e) {
+    if (main->parameters.array[fss_payload_read_parameter_select_e].result & f_console_result_value_e) {
       data->option |= fss_payload_read_data_option_select_d;
 
       status = fss_payload_read_load_number(main, data, fss_payload_read_parameter_select_e, fss_payload_read_long_select_s, &data->select);
       if (F_status_is_error(status)) return status;
     }
 
-    if (main->parameters.array[fss_payload_read_parameter_total_e].result == f_console_result_found_e) {
+    if (main->parameters.array[fss_payload_read_parameter_total_e].result & f_console_result_found_e) {
       data->option |= fss_payload_read_data_option_total_d;
     }
 
-    if (main->parameters.array[fss_payload_read_parameter_trim_e].result == f_console_result_found_e) {
+    if (main->parameters.array[fss_payload_read_parameter_trim_e].result & f_console_result_found_e) {
       data->option |= fss_payload_read_data_option_trim_d;
     }
 

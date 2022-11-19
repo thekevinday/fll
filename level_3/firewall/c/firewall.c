@@ -72,13 +72,13 @@ extern "C" {
 
     status = F_none;
 
-    if (main->parameters.array[firewall_parameter_help_e].result == f_console_result_found_e) {
+    if (main->parameters.array[firewall_parameter_help_e].result & f_console_result_found_e) {
       firewall_print_help(setting, main->message);
 
       return F_none;
     }
 
-    if (main->parameters.array[firewall_parameter_version_e].result == f_console_result_found_e) {
+    if (main->parameters.array[firewall_parameter_version_e].result & f_console_result_found_e) {
       fll_program_print_version(main->message, firewall_program_version_s);
 
       return F_none;
@@ -88,12 +88,12 @@ extern "C" {
     bool found_command = F_false;
     unsigned int command = 0;
 
-    if (main->parameters.array[firewall_parameter_command_start_e].result == f_console_result_found_e) {
+    if (main->parameters.array[firewall_parameter_command_start_e].result & f_console_result_found_e) {
       command = firewall_parameter_command_start_e;
       found_command = F_true;
     }
 
-    if (main->parameters.array[firewall_parameter_command_stop_e].result == f_console_result_found_e) {
+    if (main->parameters.array[firewall_parameter_command_stop_e].result & f_console_result_found_e) {
       if (found_command) {
         if (main->parameters.array[command].values.array[0] > main->parameters.array[firewall_parameter_command_stop_e].values.array[0]) {
           command = firewall_parameter_command_stop_e;
@@ -105,7 +105,7 @@ extern "C" {
       }
     }
 
-    if (main->parameters.array[firewall_parameter_command_restart_e].result == f_console_result_found_e) {
+    if (main->parameters.array[firewall_parameter_command_restart_e].result & f_console_result_found_e) {
       if (found_command) {
         if (main->parameters.array[command].values.array[0] > main->parameters.array[firewall_parameter_command_restart_e].values.array[0]) {
           command = firewall_parameter_command_restart_e;
@@ -117,7 +117,7 @@ extern "C" {
       }
     }
 
-    if (main->parameters.array[firewall_parameter_command_lock_e].result == f_console_result_found_e) {
+    if (main->parameters.array[firewall_parameter_command_lock_e].result & f_console_result_found_e) {
       if (found_command) {
         if (main->parameters.array[command].values.array[0] > main->parameters.array[firewall_parameter_command_lock_e].values.array[0]) {
           command = firewall_parameter_command_lock_e;
@@ -129,7 +129,7 @@ extern "C" {
       }
     }
 
-    if (main->parameters.array[firewall_parameter_command_show_e].result == f_console_result_found_e) {
+    if (main->parameters.array[firewall_parameter_command_show_e].result & f_console_result_found_e) {
       if (found_command) {
         if (main->parameters.array[command].values.array[0] > main->parameters.array[firewall_parameter_command_show_e].values.array[0]) {
           command = firewall_parameter_command_show_e;

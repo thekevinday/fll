@@ -24,7 +24,7 @@ build_language c
 build_libraries -lc -lcap
 
 build_sources_program fll/level_0/color.c fll/level_0/private-color.c fll/level_0/color/common.c
-build_sources_program fll/level_0/console.c fll/level_0/console/common.c
+build_sources_program fll/level_0/console.c fll/level_0/console/common.c fll/level_0/private-console.c
 build_sources_program fll/level_0/conversion.c fll/level_0/private-conversion.c fll/level_0/conversion/common.c
 build_sources_program fll/level_0/file.c fll/level_0/private-file.c fll/level_0/file/common.c fll/level_0/file/stream.c
 build_sources_program fll/level_0/memory.c fll/level_0/private-memory.c fll/level_0/memory/structure.c

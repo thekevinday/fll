@@ -124,14 +124,14 @@ extern "C" {
         }
       }
 
-      if (main->parameters.array[utf8_parameter_line_first_no_e].result == f_console_result_found_e) {
+      if (main->parameters.array[utf8_parameter_line_first_no_e].result & f_console_result_found_e) {
         setting->line_first = f_string_empty_s;
       }
       else {
         setting->line_first = f_string_eol_s;
       }
 
-      if (main->parameters.array[utf8_parameter_line_last_no_e].result == f_console_result_found_e) {
+      if (main->parameters.array[utf8_parameter_line_last_no_e].result & f_console_result_found_e) {
         setting->line_last = f_string_empty_s;
       }
       else {
@@ -155,13 +155,13 @@ extern "C" {
         }
       }
 
-      if (main->parameters.array[utf8_parameter_help_e].result == f_console_result_found_e) {
+      if (main->parameters.array[utf8_parameter_help_e].result & f_console_result_found_e) {
         setting->flag |= utf8_main_flag_help_e;
 
         return;
       }
 
-      if (main->parameters.array[utf8_parameter_version_e].result == f_console_result_found_e) {
+      if (main->parameters.array[utf8_parameter_version_e].result & f_console_result_found_e) {
         setting->flag |= utf8_main_flag_version_e;
 
         return;
@@ -252,7 +252,7 @@ extern "C" {
           }
 
           // --to_width may be specified with --to_combining.
-          if (main->parameters.array[utf8_parameter_to_width_e].result == f_console_result_found_e) {
+          if (main->parameters.array[utf8_parameter_to_width_e].result & f_console_result_found_e) {
             setting->mode |= utf8_mode_to_width_e;
           }
 
@@ -268,7 +268,7 @@ extern "C" {
           }
 
           // --to_width may be specified with --to_combining.
-          if (main->parameters.array[utf8_parameter_to_combining_e].result == f_console_result_found_e) {
+          if (main->parameters.array[utf8_parameter_to_combining_e].result & f_console_result_found_e) {
             setting->mode |= utf8_mode_to_combining_e;
           }
 
@@ -277,7 +277,7 @@ extern "C" {
       }
     }
 
-    if (main->parameters.array[utf8_parameter_to_file_e].result == f_console_result_additional_e) {
+    if (main->parameters.array[utf8_parameter_to_file_e].result & f_console_result_value_e) {
       if (main->parameters.array[utf8_parameter_to_file_e].values.used > 1) {
         setting->status = F_status_set_error(F_parameter);
 
@@ -330,11 +330,11 @@ extern "C" {
         return;
       }
     }
-    else if (main->parameters.array[utf8_parameter_to_file_e].result == f_console_result_found_e) {
+    else if (main->parameters.array[utf8_parameter_to_file_e].result & f_console_result_found_e) {
       setting->status = F_status_set_error(F_parameter);
 
       utf8_print_line_first_locked(setting, main->error);
-      fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_enable_s, utf8_long_to_file_s);
+      fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, utf8_long_to_file_s);
       utf8_print_line_last_locked(setting, main->error);
 
       return;
@@ -347,7 +347,7 @@ extern "C" {
       }
     }
 
-    if (main->parameters.array[utf8_parameter_from_file_e].result == f_console_result_additional_e) {
+    if (main->parameters.array[utf8_parameter_from_file_e].result & f_console_result_value_e) {
       setting->path_files_from.used = 0;
 
       setting->status = f_string_dynamics_increase_by(main->parameters.array[utf8_parameter_from_file_e].values.used, &setting->path_files_from);
@@ -403,11 +403,11 @@ extern "C" {
 
       setting->flag |= utf8_main_flag_file_from_e;
     }
-    else if (main->parameters.array[utf8_parameter_from_file_e].result == f_console_result_found_e) {
+    else if (main->parameters.array[utf8_parameter_from_file_e].result & f_console_result_found_e) {
       setting->status = F_status_set_error(F_parameter);
 
       utf8_print_line_first_locked(setting, main->error);
-      fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_enable_s, utf8_long_from_file_s);
+      fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, utf8_long_from_file_s);
       utf8_print_line_last_locked(setting, main->error);
 
       return;
@@ -440,7 +440,7 @@ extern "C" {
       } // for
     }
 
-    if (main->parameters.array[utf8_parameter_from_file_e].result == f_console_result_none_e && !((main->pipe & fll_program_data_pipe_input_e) || main->parameters.remaining.used)) {
+    if (!(main->parameters.array[utf8_parameter_from_file_e].result & f_console_result_found_e) && !((main->pipe & fll_program_data_pipe_input_e) || main->parameters.remaining.used)) {
       setting->status = F_status_set_error(F_parameter);
 
       utf8_print_line_first_locked(setting, main->error);
@@ -451,7 +451,7 @@ extern "C" {
     }
 
     if (!(setting->mode & utf8_mode_to_bytesequence_e)) {
-      if (main->parameters.array[utf8_parameter_separate_e].result == f_console_result_found_e || main->parameters.array[utf8_parameter_headers_e].result == f_console_result_found_e) {
+      if ((main->parameters.array[utf8_parameter_separate_e].result & f_console_result_found_e) || (main->parameters.array[utf8_parameter_headers_e].result & f_console_result_found_e)) {
         setting->prepend = utf8_string_prepend_padding_s;
         setting->append = f_string_eol_s;
       }
@@ -460,15 +460,15 @@ extern "C" {
       }
     }
 
-    if (main->parameters.array[utf8_parameter_headers_e].result == f_console_result_found_e) {
+    if (main->parameters.array[utf8_parameter_headers_e].result & f_console_result_found_e) {
       setting->flag |= utf8_main_flag_header_e;
     }
 
-    if (main->parameters.array[utf8_parameter_separate_e].result == f_console_result_found_e) {
+    if (main->parameters.array[utf8_parameter_separate_e].result & f_console_result_found_e) {
       setting->flag |= utf8_main_flag_separate_e;
     }
 
-    if (main->parameters.array[utf8_parameter_strip_invalid_e].result == f_console_result_found_e) {
+    if (main->parameters.array[utf8_parameter_strip_invalid_e].result & f_console_result_found_e) {
       setting->flag |= utf8_main_flag_strip_invalid_e;
     }
 

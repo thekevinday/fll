@@ -37,11 +37,11 @@ extern "C" {
 #endif // _di_f_console_standard_s_
 
 #ifndef _di_f_console_symbol_s_
-  const f_string_static_t f_console_symbol_short_enable_s = macro_f_string_static_t_initialize((f_string_t)F_console_symbol_short_enable_s, 0, F_console_symbol_short_enable_s_length);
-  const f_string_static_t f_console_symbol_short_disable_s = macro_f_string_static_t_initialize((f_string_t)F_console_symbol_short_disable_s, 0, F_console_symbol_short_disable_s_length);
+  const f_string_static_t f_console_symbol_short_normal_s = macro_f_string_static_t_initialize((f_string_t)F_console_symbol_short_normal_s, 0, F_console_symbol_short_normal_s_length);
+  const f_string_static_t f_console_symbol_short_inverse_s = macro_f_string_static_t_initialize((f_string_t)F_console_symbol_short_inverse_s, 0, F_console_symbol_short_inverse_s_length);
 
-  const f_string_static_t f_console_symbol_long_enable_s = macro_f_string_static_t_initialize((f_string_t)F_console_symbol_long_enable_s, 0, F_console_symbol_long_enable_s_length);
-  const f_string_static_t f_console_symbol_long_disable_s = macro_f_string_static_t_initialize((f_string_t)F_console_symbol_long_disable_s, 0, F_console_symbol_long_disable_s_length);
+  const f_string_static_t f_console_symbol_long_normal_s = macro_f_string_static_t_initialize((f_string_t)F_console_symbol_long_normal_s, 0, F_console_symbol_long_normal_s_length);
+  const f_string_static_t f_console_symbol_long_inverse_s = macro_f_string_static_t_initialize((f_string_t)F_console_symbol_long_inverse_s, 0, F_console_symbol_long_inverse_s_length);
 #endif // _di_f_console_symbol_s_
 
 #ifndef _di_f_console_parameters_delete_

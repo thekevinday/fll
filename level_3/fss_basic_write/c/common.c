@@ -92,14 +92,14 @@ extern "C" {
         }
       }
 
-      if (main->parameters.array[fss_basic_write_parameter_line_first_no_e].result == f_console_result_found_e) {
+      if (main->parameters.array[fss_basic_write_parameter_line_first_no_e].result & f_console_result_found_e) {
         setting->line_first = f_string_empty_s;
       }
       else {
         setting->line_first = f_string_eol_s;
       }
 
-      if (main->parameters.array[fss_basic_write_parameter_line_last_no_e].result == f_console_result_found_e) {
+      if (main->parameters.array[fss_basic_write_parameter_line_last_no_e].result & f_console_result_found_e) {
         setting->line_last = f_string_empty_s;
       }
       else {
@@ -125,13 +125,13 @@ extern "C" {
         }
       }
 
-      if (main->parameters.array[fss_basic_write_parameter_help_e].result == f_console_result_found_e) {
+      if (main->parameters.array[fss_basic_write_parameter_help_e].result & f_console_result_found_e) {
         setting->flag |= fss_basic_write_main_flag_help_e;
 
         return;
       }
 
-      if (main->parameters.array[fss_basic_write_parameter_version_e].result == f_console_result_found_e) {
+      if (main->parameters.array[fss_basic_write_parameter_version_e].result & f_console_result_found_e) {
         setting->flag |= fss_basic_write_main_flag_version_e;
 
         return;
@@ -144,7 +144,7 @@ extern "C" {
 
     f_string_static_t * const args = main->parameters.arguments.array;
 
-    if (main->parameters.array[fss_basic_write_parameter_strip_invalid_e].result == f_console_result_found_e) {
+    if (main->parameters.array[fss_basic_write_parameter_strip_invalid_e].result & f_console_result_found_e) {
       setting->flag |= fss_basic_write_main_flag_strip_invalid_e;
     }
   }

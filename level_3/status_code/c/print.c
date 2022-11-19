@@ -35,11 +35,11 @@ extern "C" {
     f_file_stream_lock(print.to);
 
     fl_print_format("%[%QCannot specify the '%]", print.to, print.context, print.prefix, print.context);
-    fl_print_format("%[%r%r%]", print.to, print.notable, f_console_symbol_long_enable_s, status_code_long_error_s, print.notable);
+    fl_print_format("%[%r%r%]", print.to, print.notable, f_console_symbol_long_normal_s, status_code_long_error_s, print.notable);
     fl_print_format("%[' parameter with the '%]", print.to, print.context, print.context);
-    fl_print_format("%[%r%r%]", print.to, print.notable, f_console_symbol_long_enable_s, status_code_long_warning_s, print.notable);
+    fl_print_format("%[%r%r%]", print.to, print.notable, f_console_symbol_long_normal_s, status_code_long_warning_s, print.notable);
     fl_print_format("%[' parameter when not also specifying the '%]", print.to, print.context, print.context);
-    fl_print_format("%[%r%r%]", print.to, print.notable, f_console_symbol_long_enable_s, status_code_long_number_s, print.notable);
+    fl_print_format("%[%r%r%]", print.to, print.notable, f_console_symbol_long_normal_s, status_code_long_number_s, print.notable);
     fl_print_format("%[' parameter.%]%r", print.to, print.context, print.context, f_string_eol_s);
 
     f_file_stream_unlock(print.to);
@@ -97,10 +97,10 @@ extern "C" {
 
     f_print_dynamic_raw(f_string_eol_s, print.to);
 
-    fll_program_print_help_option(print, status_code_short_fine_s, status_code_long_fine_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Print F_true or F_false if status code is neither an error nor a warning or print number with neither the error code nor the warning code bits set.");
-    fll_program_print_help_option(print, status_code_short_warning_s, status_code_long_warning_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Print F_true or F_false if status code is a warning or print number with warning code bit set.");
-    fll_program_print_help_option(print, status_code_short_error_s, status_code_long_error_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "  Print F_true or F_false if status code is an error or print number with error code bit set.");
-    fll_program_print_help_option(print, status_code_short_number_s, status_code_long_number_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Convert status code name to number.");
+    fll_program_print_help_option(print, status_code_short_fine_s, status_code_long_fine_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "   Print F_true or F_false if status code is neither an error nor a warning or print number with neither the error code nor the warning code bits set.");
+    fll_program_print_help_option(print, status_code_short_warning_s, status_code_long_warning_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "Print F_true or F_false if status code is a warning or print number with warning code bit set.");
+    fll_program_print_help_option(print, status_code_short_error_s, status_code_long_error_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "  Print F_true or F_false if status code is an error or print number with error code bit set.");
+    fll_program_print_help_option(print, status_code_short_number_s, status_code_long_number_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, " Convert status code name to number.");
 
     f_print_dynamic_raw(f_string_eol_s, print.to);
     f_print_dynamic_raw(f_string_eol_s, print.to);

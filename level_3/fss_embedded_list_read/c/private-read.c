@@ -103,7 +103,7 @@ extern "C" {
     {
       i = 1;
 
-      if (data->main->parameters.array[fss_embedded_list_read_parameter_depth_e].result == f_console_result_additional_e) {
+      if (data->main->parameters.array[fss_embedded_list_read_parameter_depth_e].result & f_console_result_value_e) {
         i = data->main->parameters.array[fss_embedded_list_read_parameter_depth_e].values.used + 1;
       }
 
@@ -176,7 +176,7 @@ extern "C" {
           depths->array[depths->used].index_name = values_order[i];
           depths->array[depths->used].value_name.used = 0;
 
-          if (data->main->parameters.array[fss_embedded_list_read_parameter_trim_e].result == f_console_result_found_e) {
+          if (data->main->parameters.array[fss_embedded_list_read_parameter_trim_e].result & f_console_result_found_e) {
             status = fl_string_dynamic_rip(argv[values_order[i]], &depths->array[depths->used].value_name);
 
             if (F_status_is_error(status)) {
@@ -210,7 +210,7 @@ extern "C" {
           fl_print_format("%r%[%QThe value '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
           fl_print_format("%[%ul%]", data->main->error.to, data->main->error.notable, depths->array[i].depth, data->main->error.notable);
           fl_print_format("%[' may only be specified once for the parameter '%]", data->main->error.to, data->main->error.notable, data->main->error.notable);
-          fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_depth_s, data->main->error.notable);
+          fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_normal_s, fss_embedded_list_read_long_depth_s, data->main->error.notable);
           fl_print_format("%['.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
           f_file_stream_unlock(data->main->error);
@@ -221,7 +221,7 @@ extern "C" {
           f_file_stream_lock(data->main->error);
 
           fl_print_format("%r%[%QThe parameter '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
-          fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_enable_s, fss_embedded_list_read_long_depth_s, data->main->error.notable);
+          fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_normal_s, fss_embedded_list_read_long_depth_s, data->main->error.notable);
           fl_print_format("%[' may not have the value '%]", data->main->error.to, data->main->error.notable, data->main->error.notable);
           fl_print_format("%[%ul%]", data->main->error.to, data->main->error.notable, depths->array[i].depth, data->main->error.notable);
           fl_print_format("%[' before the value '%]", data->main->error.to, data->main->error.notable, data->main->error.notable);
@@ -257,7 +257,7 @@ extern "C" {
       if (F_status_is_error_not(status) && (status == F_data_not_stop || status == F_data_not_eos)) {
         fss_embedded_list_read_data_delete(data);
 
-        if (data->main->parameters.array[fss_embedded_list_read_parameter_total_e].result == f_console_result_found_e) {
+        if (data->main->parameters.array[fss_embedded_list_read_parameter_total_e].result & f_console_result_found_e) {
           fll_print_format("%r%r", data->main->output.to, f_string_ascii_0_s, f_string_eol_s);
 
           return F_none;
@@ -286,7 +286,7 @@ extern "C" {
 
     // Requested depths cannot be greater than contents depth.
     if (depths.used > data->nest.used) {
-      if (data->main->parameters.array[fss_embedded_list_read_parameter_total_e].result == f_console_result_found_e) {
+      if (data->main->parameters.array[fss_embedded_list_read_parameter_total_e].result & f_console_result_found_e) {
         fll_print_format("%r%r", data->main->output.to, f_string_ascii_0_s, f_string_eol_s);
 
         return F_none;
@@ -298,7 +298,7 @@ extern "C" {
     {
       f_number_unsigned_t select = 0;
 
-      if (data->main->parameters.array[fss_embedded_list_read_parameter_select_e].result == f_console_result_additional_e) {
+      if (data->main->parameters.array[fss_embedded_list_read_parameter_select_e].result & f_console_result_value_e) {
         const f_array_length_t index = data->main->parameters.array[fss_embedded_list_read_parameter_select_e].values.array[data->main->parameters.array[fss_embedded_list_read_parameter_select_e].values.used - 1];
 
         status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, data->main->parameters.arguments.array[index], &select);
@@ -318,7 +318,7 @@ extern "C" {
 
     f_array_length_t line = 0;
 
-    if (data->main->parameters.array[fss_embedded_list_read_parameter_line_e].result == f_console_result_additional_e) {
+    if (data->main->parameters.array[fss_embedded_list_read_parameter_line_e].result & f_console_result_value_e) {
       const f_array_length_t index = data->main->parameters.array[fss_embedded_list_read_parameter_line_e].values.array[data->main->parameters.array[fss_embedded_list_read_parameter_line_e].values.used - 1];
 
       status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, data->main->parameters.arguments.array[index], &line);
@@ -335,7 +335,7 @@ extern "C" {
     const fss_embedded_list_read_skip_t parents = fss_embedded_list_read_skip_t_initialize;
 
 
-    if (data->main->parameters.array[fss_embedded_list_read_parameter_original_e].result == f_console_result_found_e) {
+    if (data->main->parameters.array[fss_embedded_list_read_parameter_original_e].result & f_console_result_found_e) {
       f_fss_delimits_t except_none = f_fss_delimits_t_initialize;
 
       return fss_embedded_list_read_main_process_for_depth(data, filename, depths, 0, line, parents, &except_none, &except_none);
@@ -387,7 +387,7 @@ extern "C" {
         if (depths.array[depths_index].value_at < items->used && !skip[depths.array[depths_index].value_at]) {
           if (depths.array[depths_index].index_name) {
 
-            if (data->main->parameters.array[fss_embedded_list_read_parameter_trim_e].result == f_console_result_found_e) {
+            if (data->main->parameters.array[fss_embedded_list_read_parameter_trim_e].result & f_console_result_found_e) {
 
               if (fl_string_dynamic_partial_compare_except_trim_dynamic(depths.array[depths_index].value_name, data->buffer, items->array[depths.array[depths_index].value_at].object, except_none, *objects_delimits) != F_equal_to) {
                 skip[depths.array[depths_index].value_at] = F_true;
@@ -402,7 +402,7 @@ extern "C" {
         }
       }
       else {
-        if (data->main->parameters.array[fss_embedded_list_read_parameter_trim_e].result == f_console_result_found_e) {
+        if (data->main->parameters.array[fss_embedded_list_read_parameter_trim_e].result & f_console_result_found_e) {
           for (i = 0; i < items->used; ++i) {
 
             if (skip[i]) continue;
@@ -495,8 +495,8 @@ extern "C" {
     f_array_length_t i = 0;
     f_array_length_t j = 0;
 
-    if (data->main->parameters.array[fss_embedded_list_read_parameter_object_e].result == f_console_result_found_e) {
-      if (data->main->parameters.array[fss_embedded_list_read_parameter_total_e].result == f_console_result_found_e) {
+    if (data->main->parameters.array[fss_embedded_list_read_parameter_object_e].result & f_console_result_found_e) {
+      if (data->main->parameters.array[fss_embedded_list_read_parameter_total_e].result & f_console_result_found_e) {
         f_array_length_t total = 0;
 
         for (i = 0; i < items->used; ++i) {
@@ -512,7 +512,7 @@ extern "C" {
 
       f_status_t (*print_object)(const f_string_static_t, const f_string_range_t, const f_array_lengths_t, FILE *) = &f_print_except_dynamic_partial;
 
-      if (data->main->parameters.array[fss_embedded_list_read_parameter_trim_e].result == f_console_result_found_e) {
+      if (data->main->parameters.array[fss_embedded_list_read_parameter_trim_e].result & f_console_result_found_e) {
         print_object = &fl_print_trim_except_dynamic_partial;
       }
 
@@ -524,7 +524,7 @@ extern "C" {
 
         print_object(data->buffer, items->array[i].object, *objects_delimits, data->main->output.to);
 
-        if (data->main->parameters.array[fss_embedded_list_read_parameter_content_e].result == f_console_result_found_e) {
+        if (data->main->parameters.array[fss_embedded_list_read_parameter_content_e].result & f_console_result_found_e) {
           fss_embedded_list_read_print_object_end(data);
 
           if (items->array[i].content.used) {
@@ -543,11 +543,11 @@ extern "C" {
     // Process contents.
     bool include_empty = 0;
 
-    if (data->main->parameters.array[fss_embedded_list_read_parameter_empty_e].result == f_console_result_found_e) {
+    if (data->main->parameters.array[fss_embedded_list_read_parameter_empty_e].result & f_console_result_found_e) {
       include_empty = 1;
     }
 
-    if (data->main->parameters.array[fss_embedded_list_read_parameter_total_e].result == f_console_result_found_e) {
+    if (data->main->parameters.array[fss_embedded_list_read_parameter_total_e].result & f_console_result_found_e) {
       f_array_length_t total = 0;
 
       for (i = 0; i < items->used; ++i) {
@@ -587,7 +587,7 @@ extern "C" {
       return F_none;
     }
 
-    if (data->main->parameters.array[fss_embedded_list_read_parameter_line_e].result == f_console_result_additional_e) {
+    if (data->main->parameters.array[fss_embedded_list_read_parameter_line_e].result & f_console_result_value_e) {
       f_array_length_t line_current = 0;
 
       f_file_stream_lock(data->main->output);
@@ -668,7 +668,7 @@ extern "C" {
 
       f_print_except_dynamic_partial(data->buffer, items->array[i].content.array[0], *contents_delimits, data->main->output.to);
 
-      if (data->main->parameters.array[fss_embedded_list_read_parameter_pipe_e].result == f_console_result_found_e) {
+      if (data->main->parameters.array[fss_embedded_list_read_parameter_pipe_e].result & f_console_result_found_e) {
         f_print_dynamic_raw(fss_embedded_list_read_pipe_content_end_s, data->main->output.to);
       }
     } // for

@@ -408,7 +408,7 @@ extern "C" {
       setting->buffer.string[setting->data.delimits.array[i]] = f_iki_syntax_placeholder_s.string[0];
     } // for
 
-    if (main->parameters.array[iki_read_parameter_name_e].result == f_console_result_additional_e) {
+    if (main->parameters.array[iki_read_parameter_name_e].result & f_console_result_value_e) {
       f_string_dynamic_t name = f_string_dynamic_t_initialize;
 
       f_array_length_t index = 0;
@@ -462,7 +462,7 @@ extern "C" {
     }
 
     // If the "at" position is within the actual total, then the total at the given position is 1, otherwise is 0.
-    if (main->parameters.array[iki_read_parameter_at_e].result == f_console_result_additional_e) {
+    if (main->parameters.array[iki_read_parameter_at_e].result & f_console_result_value_e) {
       if (setting->at < total) {
         total = 1;
       }

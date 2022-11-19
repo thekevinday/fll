@@ -1355,7 +1355,7 @@ extern "C" {
 
     if (F_status_is_error(*status)) return;
 
-    if (data->main->parameters.array[fake_parameter_path_sources_e].result == f_console_result_additional_e && data->path_sources.used) {
+    if (data->main->parameters.array[fake_parameter_path_sources_e].result & f_console_result_value_e && data->path_sources.used) {
       *status = f_string_dynamic_append_assure(f_path_separator_s, &data->path_sources);
 
       if (F_status_is_error(*status)) {
@@ -1365,8 +1365,8 @@ extern "C" {
       }
     }
 
-    if (data->main->parameters.array[fake_parameter_shared_disabled_e].result == f_console_result_found_e) {
-      if (data->main->parameters.array[fake_parameter_shared_enabled_e].result == f_console_result_found_e) {
+    if (data->main->parameters.array[fake_parameter_shared_disabled_e].result & f_console_result_found_e) {
+      if (data->main->parameters.array[fake_parameter_shared_enabled_e].result & f_console_result_found_e) {
         if (data->main->parameters.array[fake_parameter_shared_enabled_e].location > data->main->parameters.array[fake_parameter_shared_disabled_e].location) {
           setting->build_shared = F_true;
           setting->search_shared = F_true;
@@ -1380,11 +1380,11 @@ extern "C" {
           f_file_stream_lock(data->main->error);
 
           fl_print_format("%r%[%QThe parameters '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
-          fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_enable_s, fake_long_shared_disabled_s, data->main->error.notable);
+          fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_normal_s, fake_long_shared_disabled_s, data->main->error.notable);
           fl_print_format("%[' and '%]", data->main->error.to, data->main->error.context, data->main->error.context);
-          fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_enable_s, fake_long_shared_enabled_s, data->main->error.notable);
+          fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_normal_s, fake_long_shared_enabled_s, data->main->error.notable);
           fl_print_format("%[' contradict, defaulting to '%]", data->main->error.to, data->main->error.context, data->main->error.context);
-          fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_enable_s, setting->build_shared ? fake_long_shared_enabled_s : fake_long_shared_disabled_s, data->main->error.notable);
+          fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_normal_s, setting->build_shared ? fake_long_shared_enabled_s : fake_long_shared_disabled_s, data->main->error.notable);
           fl_print_format("%['.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
           f_file_stream_unlock(data->main->error);
@@ -1395,13 +1395,13 @@ extern "C" {
         setting->search_shared = F_false;
       }
     }
-    else if (data->main->parameters.array[fake_parameter_shared_enabled_e].result == f_console_result_found_e) {
+    else if (data->main->parameters.array[fake_parameter_shared_enabled_e].result & f_console_result_found_e) {
       setting->build_shared = F_true;
       setting->search_shared = F_true;
     }
 
-    if (data->main->parameters.array[fake_parameter_static_disabled_e].result == f_console_result_found_e) {
-      if (data->main->parameters.array[fake_parameter_static_enabled_e].result == f_console_result_found_e) {
+    if (data->main->parameters.array[fake_parameter_static_disabled_e].result & f_console_result_found_e) {
+      if (data->main->parameters.array[fake_parameter_static_enabled_e].result & f_console_result_found_e) {
         if (data->main->parameters.array[fake_parameter_static_enabled_e].location > data->main->parameters.array[fake_parameter_static_disabled_e].location) {
           setting->build_static = F_true;
           setting->search_static = F_true;
@@ -1415,11 +1415,11 @@ extern "C" {
           f_file_stream_lock(data->main->error);
 
           fl_print_format("%r%[%QThe parameters '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
-          fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_enable_s, fake_long_static_disabled_s, data->main->error.notable);
+          fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_normal_s, fake_long_static_disabled_s, data->main->error.notable);
           fl_print_format("%[' and '%]", data->main->error.to, data->main->error.context, data->main->error.context);
-          fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_enable_s, fake_long_static_enabled_s, data->main->error.notable);
+          fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_normal_s, fake_long_static_enabled_s, data->main->error.notable);
           fl_print_format("%[' contradict, defaulting to '%]", data->main->error.to, data->main->error.context, data->main->error.context);
-          fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_enable_s, setting->build_static ? fake_long_static_enabled_s : fake_long_static_disabled_s, data->main->error.notable);
+          fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_normal_s, setting->build_static ? fake_long_static_enabled_s : fake_long_static_disabled_s, data->main->error.notable);
           fl_print_format("%['.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
           f_file_stream_unlock(data->main->error);
@@ -1430,7 +1430,7 @@ extern "C" {
         setting->search_static = F_false;
       }
     }
-    else if (data->main->parameters.array[fake_parameter_static_enabled_e].result == f_console_result_found_e) {
+    else if (data->main->parameters.array[fake_parameter_static_enabled_e].result & f_console_result_found_e) {
       setting->build_static = F_true;
       setting->search_static = F_true;
     }

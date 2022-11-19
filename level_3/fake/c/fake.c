@@ -65,13 +65,13 @@ extern "C" {
       }
     }
 
-    if (main->parameters.array[fake_parameter_help_e].result == f_console_result_found_e) {
+    if (main->parameters.array[fake_parameter_help_e].result & f_console_result_found_e) {
       fake_print_help(setting, main->message);
 
       return F_none;
     }
 
-    if (main->parameters.array[fake_parameter_version_e].result == f_console_result_found_e) {
+    if (main->parameters.array[fake_parameter_version_e].result & f_console_result_found_e) {
       fll_program_print_version(main->message, fake_program_version_s);
 
       return F_none;

@@ -60,13 +60,13 @@ extern "C" {
 
     status = F_none;
 
-    if (main->parameters.array[fss_identify_parameter_help_e].result == f_console_result_found_e) {
+    if (main->parameters.array[fss_identify_parameter_help_e].result & f_console_result_found_e) {
       fss_identify_print_help(setting, main->message);
 
       return F_none;
     }
 
-    if (main->parameters.array[fss_identify_parameter_version_e].result == f_console_result_found_e) {
+    if (main->parameters.array[fss_identify_parameter_version_e].result & f_console_result_found_e) {
       fll_program_print_version(main->message, fss_identify_program_version_s);
 
       return F_none;
@@ -77,18 +77,18 @@ extern "C" {
     data.argv = main->parameters.arguments.array;
 
     if (F_status_is_error_not(status)) {
-      if (main->parameters.array[fss_identify_parameter_line_e].result == f_console_result_found_e) {
+      if (main->parameters.array[fss_identify_parameter_line_e].result & f_console_result_found_e) {
         f_file_stream_lock(main->error.to);
 
         fl_print_format("%r%[%QThe parameter '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-        fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_enable_s, fss_identify_long_line_s, main->error.notable);
+        fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_normal_s, fss_identify_long_line_s, main->error.notable);
         fl_print_format("%[' requires a positive number.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
 
         f_file_stream_unlock(main->error.to);
 
         status = F_status_set_error(F_parameter);
       }
-      else if (main->parameters.array[fss_identify_parameter_line_e].result == f_console_result_additional_e) {
+      else if (main->parameters.array[fss_identify_parameter_line_e].result & f_console_result_value_e) {
         const f_array_length_t index = main->parameters.array[fss_identify_parameter_line_e].values.array[main->parameters.array[fss_identify_parameter_line_e].values.used - 1];
 
         status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, data.argv[index], &data.line);
@@ -99,17 +99,17 @@ extern "C" {
       }
     }
 
-    if (F_status_is_error_not(status) && main->parameters.array[fss_identify_parameter_total_e].result == f_console_result_found_e) {
-      if (main->parameters.array[fss_identify_parameter_object_e].result == f_console_result_found_e) {
+    if (F_status_is_error_not(status) && (main->parameters.array[fss_identify_parameter_total_e].result & f_console_result_found_e)) {
+      if (main->parameters.array[fss_identify_parameter_object_e].result & f_console_result_found_e) {
         if (main->error.verbosity > f_console_verbosity_quiet_e) {
-          fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_enable_s, f_console_symbol_long_enable_s, fss_identify_long_object_s, fss_identify_long_total_s);
+          fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_normal_s, f_console_symbol_long_normal_s, fss_identify_long_object_s, fss_identify_long_total_s);
         }
 
         status = F_status_set_error(F_parameter);
       }
-      else if (main->parameters.array[fss_identify_parameter_content_e].result == f_console_result_found_e) {
+      else if (main->parameters.array[fss_identify_parameter_content_e].result & f_console_result_found_e) {
         if (main->error.verbosity > f_console_verbosity_quiet_e) {
-          fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_enable_s, f_console_symbol_long_enable_s, f_console_symbol_long_enable_s, fss_identify_long_content_s, fss_identify_long_total_s);
+          fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_normal_s, f_console_symbol_long_normal_s, f_console_symbol_long_normal_s, fss_identify_long_content_s, fss_identify_long_total_s);
         }
 
         status = F_status_set_error(F_parameter);
@@ -117,18 +117,18 @@ extern "C" {
     }
 
     if (F_status_is_error_not(status)) {
-      if (main->parameters.array[fss_identify_parameter_name_e].result == f_console_result_found_e) {
+      if (main->parameters.array[fss_identify_parameter_name_e].result & f_console_result_found_e) {
         f_file_stream_lock(main->error.to);
 
         fl_print_format("%r%[%QThe parameter '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-        fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_enable_s, fss_identify_long_name_s, main->error.notable);
+        fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_normal_s, fss_identify_long_name_s, main->error.notable);
         fl_print_format("%[' requires a string.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
 
         f_file_stream_unlock(main->error.to);
 
         status = F_status_set_error(F_parameter);
       }
-      else if (main->parameters.array[fss_identify_parameter_name_e].result == f_console_result_additional_e) {
+      else if (main->parameters.array[fss_identify_parameter_name_e].result & f_console_result_value_e) {
         const f_array_length_t index = main->parameters.array[fss_identify_parameter_name_e].values.array[main->parameters.array[fss_identify_parameter_name_e].values.used - 1];
         const f_array_length_t length = data.argv[index].used;
         const f_string_range_t range = macro_f_string_range_t_initialize2(length);
@@ -137,7 +137,7 @@ extern "C" {
           f_file_stream_lock(main->error.to);
 
           fl_print_format("%r%[%QThe parameter '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
-          fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_enable_s, fss_identify_long_name_s, main->error.notable);
+          fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_normal_s, fss_identify_long_name_s, main->error.notable);
           fl_print_format("%[' does not allow zero length strings.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
 
           f_file_stream_unlock(main->error.to);
@@ -169,7 +169,7 @@ extern "C" {
               fl_print_format("%r%[%QThe value '%]", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
               fl_print_format("%[%Q%]", main->error.to, main->error.notable, data.argv[index], main->error.notable);
               fl_print_format("%[' for the parameter '%]", main->error.to, main->error.context, main->error.context);
-              fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_enable_s, fss_identify_long_name_s, main->error.notable);
+              fl_print_format("%[%r%r%]", main->error.to, main->error.notable, f_console_symbol_long_normal_s, fss_identify_long_name_s, main->error.notable);
               fl_print_format("%[' may only contain word characters or the dash (minus)y character.%]%r", main->error.to, main->error.context, main->error.context, f_string_eol_s);
 
               f_file_stream_unlock(main->error.to);
@@ -216,7 +216,7 @@ extern "C" {
           main->signal_check = 0;
         }
 
-        if (main->parameters.array[fss_identify_parameter_line_e].result == f_console_result_additional_e) {
+        if (main->parameters.array[fss_identify_parameter_line_e].result & f_console_result_value_e) {
           if (data.current > data.line) break;
         }
 
@@ -247,7 +247,7 @@ extern "C" {
     f_string_dynamic_resize(0, &buffer);
 
     if (F_status_is_error_not(status)) {
-      if (main->parameters.array[fss_identify_parameter_total_e].result == f_console_result_found_e) {
+      if (main->parameters.array[fss_identify_parameter_total_e].result & f_console_result_found_e) {
         fll_print_format("%ul%r", main->output.to, data.total, f_string_eol_s);
       }
     }

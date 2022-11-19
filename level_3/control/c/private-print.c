@@ -313,7 +313,7 @@ extern "C" {
     f_file_stream_lock(main->error.to);
 
     fl_print_format("%r%[%QThe value for the parameter '%]", main->error.to, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
-    fl_print_format("%[%r%r%]", main->error.to, main->context.set.notable, f_console_symbol_long_enable_s, parameter, main->context.set.notable);
+    fl_print_format("%[%r%r%]", main->error.to, main->context.set.notable, f_console_symbol_long_normal_s, parameter, main->context.set.notable);
     fl_print_format("%[' must not be an empty string.%]%r", main->error.to, main->context.set.error, main->context.set.error, f_string_eol_s);
 
     f_file_stream_unlock(main->error.to);
@@ -328,7 +328,7 @@ extern "C" {
     f_file_stream_lock(main->error.to);
 
     fl_print_format("%r%[%QThe parameter '%]", main->error.to, f_string_eol_s, main->context.set.error, main->error.prefix, main->context.set.error);
-    fl_print_format("%[%r%r%]", main->error.to, main->context.set.notable, f_console_symbol_long_enable_s, parameter, main->context.set.notable);
+    fl_print_format("%[%r%r%]", main->error.to, main->context.set.notable, f_console_symbol_long_normal_s, parameter, main->context.set.notable);
     fl_print_format("%[' is specified, but no value is given.%]%r", main->error.to, main->context.set.error, main->context.set.error, f_string_eol_s);
 
     f_file_stream_unlock(main->error.to);

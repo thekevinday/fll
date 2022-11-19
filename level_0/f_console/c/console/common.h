@@ -17,61 +17,28 @@ extern "C" {
 #endif
 
 /**
- * Result values that represent the type of command found.
- *
- * Here "empty" refers to '-', or '++', in that they only have the symbols (whereas '-x', or '++x' would not be empty).
- *
- * Historically, a "-" is used as a parameter.
- * To be consistent with the historical use, "-" is referred to as "enable" and "+" is referred to as disable (which is the opposite of the usual mathematical interpetation of those symbols).
- *
- * @todo consider renaming "-" and "--" from "enable" to "normal" and "+" and "++" from "disable" to "inverse".
- *
- * f_console_*:
- *   - none:                A basic parameter without any prefixes attached.
- *   - short_enable:        An "enable" short parameter: "-".
- *   - short_disable:       An "disable" short parameter: "+".
- *   - long_enable:         An "enable" long parameter: "--".
- *   - long_disable:        An "disable" long parameter: "++".
- *   - empty_short_enable:  A "-" by itself, considered an "enable".
- *   - empty_short_disable: A "+" by itself, considered an "disable".
- *   - empty_long_enable:   A "--" by itself, considered an "enable".
- *   - empty_long_disable:  A "++" by itself, considered an "disable".
- */
-#ifndef _di_f_console_ids_
-  enum {
-    f_console_none_e = 1,
-    f_console_short_enable_e,
-    f_console_short_disable_e,
-    f_console_long_enable_e,
-    f_console_long_disable_e,
-    f_console_empty_short_enable_e,
-    f_console_empty_short_disable_e,
-    f_console_empty_long_enable_e,
-    f_console_empty_long_disable_e,
-  };
-#endif // _di_f_console_ids_
-
-/**
  * The symbols passed to the program for option handling.
+ *
+ * For historical reasons the "-" is the normal symbol and "+" is the inverse.
  */
 #ifndef _di_f_console_symbol_s_
-  #define F_console_symbol_short_enable_s  "-"
-  #define F_console_symbol_short_disable_s "+"
+  #define F_console_symbol_short_normal_s  "-"
+  #define F_console_symbol_short_inverse_s "+"
 
-  #define F_console_symbol_short_enable_s_length  1
-  #define F_console_symbol_short_disable_s_length 1
+  #define F_console_symbol_short_normal_s_length  1
+  #define F_console_symbol_short_inverse_s_length 1
 
-  #define F_console_symbol_long_enable_s  "--"
-  #define F_console_symbol_long_disable_s "++"
+  #define F_console_symbol_long_normal_s  "--"
+  #define F_console_symbol_long_inverse_s "++"
 
-  #define F_console_symbol_long_enable_s_length  2
-  #define F_console_symbol_long_disable_s_length 2
+  #define F_console_symbol_long_normal_s_length  2
+  #define F_console_symbol_long_inverse_s_length 2
 
-  extern const f_string_static_t f_console_symbol_short_enable_s;
-  extern const f_string_static_t f_console_symbol_short_disable_s;
+  extern const f_string_static_t f_console_symbol_short_normal_s;
+  extern const f_string_static_t f_console_symbol_short_inverse_s;
 
-  extern const f_string_static_t f_console_symbol_long_enable_s;
-  extern const f_string_static_t f_console_symbol_long_disable_s;
+  extern const f_string_static_t f_console_symbol_long_normal_s;
+  extern const f_string_static_t f_console_symbol_long_inverse_s;
 #endif // _di_f_console_symbol_s_
 
 /**
@@ -214,35 +181,78 @@ extern "C" {
 #endif // _di_f_console_length_size_
 
 /**
- * Provide console type enumerations:
+ * Provide console flags.
+ *
+ * The flags are bits or sets of bits used for designating different states of the parameter.
+ *
+ * The disabled flag prevents it from being processed at all and will be treated as other data.
+ * If the flag should still be processed, then do not set disabled flag and instead just ignore it when found.
+ *
+ * f_console_flag_*:
+ *   - none:    No flag data is set.
+ *   - normal:  Parameters using minus sign, such as '--help' ("inverse" and "additional" bits are 0.
+ *   - inverse: Parameters using plus sign, such as '++version'.
+ *   - simple:  Parameters using neither minus nor plus sign, such as 'build'.
+ *   - complex: Parameters that provide a set of additional parameters, similar to 'git clone http:s//..' (Not yet implemented).
+ *   - disable: This parameter is disabled (does not get processed).
+ *
+ * f_console_flag_mask_*:
+ *   - type:  A mask for selecting the bits representing all possible type value flags.
+ *   - state: A mask for selecting the bits representing all possible state flags.
+ */
+#ifndef _di_f_console_flag_t_
+  typedef uint8_t f_console_flag_t;
+
+  #define f_console_flag_t_initialize 0
+
+  enum {
+    f_console_flag_none_e    = 0x0,
+
+    // Type flags.
+    f_console_flag_normal_e  = 0x1,
+    f_console_flag_inverse_e = 0x2,
+    f_console_flag_simple_e  = 0x4,
+    f_console_flag_complex_e = 0x8,
+
+    // State flags.
+    f_console_flag_disable_e = 0x10,
+  };
+
+  #define f_console_flag_mask_type_d  0xf
+  #define f_console_flag_mask_state_d 0x10
+#endif // _di_f_console_flag_t_
+
+/**
+ * Result values that represent the type of command found.
+ *
+ * Here "alone" refers to '-', or '++', in that they only have the symbols (whereas '-x', or '++x' would not be alone).
  *
  * f_console_result_*:
- *   - none:   Parameter not found.
- *   - found:  Parameter found.
- *   - values: Parameter found, extra data exists (such as '-f filename', 'filename' would be the extra data).
- *
- * f_console_type_*:
- *   - normal:  Parameters using minus sign, such as '--help'.
- *   - inverse: Parameters using plus sign, such as '++version'.
- *   - other:   Parameters using neither minus nor plus sign, such as 'build'.
+ *   - none:    No flags are set.
+ *   - found:   The parameter has been found.
+ *   - normal:  The normal prefix character ("-" by default) has been found.
+ *   - inverse: The inverse prefix character ("+" by default) has been found.
+ *   - short:   The found prefix is short (only a single character, such as "-" or "+").
+ *   - long:    The found prefix is long (two characters, such as "--" or "++").
+ *   - alone:   The prefix character is by itself (such as only "-" rather than "-h").
+ *   - value:   One or more values associated with the parameter have been found.
  */
-#ifndef _di_f_console_types_t_
-  typedef uint16_t f_console_id_t;
+#ifndef _di_f_console_result_t_
+  typedef uint8_t f_console_result_t;
 
-  #define f_console_id_t_initialize 0
-
-  enum {
-    f_console_result_none_e = 1,
-    f_console_result_found_e,
-    f_console_result_additional_e,
-  };
+  #define f_console_result_t_initialize 0
 
   enum {
-    f_console_type_normal_e = 1,
-    f_console_type_inverse_e,
-    f_console_type_other_e,
+    f_console_result_none_e    = 0x0,
+    f_console_result_found_e   = 0x1,
+    f_console_result_normal_e  = 0x2,
+    f_console_result_inverse_e = 0x4,
+    f_console_result_short_e   = 0x8,
+    f_console_result_long_e    = 0x10,
+    f_console_result_alone_e   = 0x20,
+    f_console_result_value_e   = 0x40,
   };
-#endif // _di_f_console_types_t_
+#endif // _di_f_console_result_t_
 
 /**
  * Provide the standard verbosity codes.
@@ -271,16 +281,16 @@ extern "C" {
 /**
  * Provide a structure for describing console parameters for the console processing functions to use.
  *
- * The short parameters are will be prepended with either '-' or '+'.
- * The long parameters are will be prepended with either '--' or '++'.
- * The other parameters are for any other parameter that has no prepended characters.
+ * The short parameters are prepended with either '-' or '+'.
+ * The long parameters are prepended with either '--' or '++'.
+ * The simple parameters have no prefix characters.
  *
- * symbol_short: The single character string, such as 'h' in '-h'.
- * symbol_long:  The multi-character string, such as 'help' in '--help'.
- * symbol_other: The special meaning parameter, such as 'all' in 'make all'.
+ * symbol_short:  The NULL terminated single character string, such as 'h' in '-h'.
+ * symbol_long:   The NULL terminated multi-character string, such as 'help' in '--help'.
+ * symbol_simple: The NULL terminated parameter that has no prefix, such as 'all' in 'make all'.
  * values_total:  Designates that a parameter will have a given number of values arguments, such as 'blue' in '--color blue'.
- * type:          One of the f_console_type_* codes, defining how this parameter is to be processed.
- * result:        A code representing that the parameter is found and how it is found ('-h' vs '--help').
+ * flag:          A set of bits for providing.
+ * result:        A set of bits representing if and how the parameter is found (such as '-h' vs '--help').
  * location:      The last location in argv[] where this parameter is found.
  * location_sub:  The last sub-location at location in argv (only used by short parameters, such as -h or +l).
  * locations:     All locations within argv where this parameter is found (order is preserved).
@@ -289,22 +299,22 @@ extern "C" {
  *
  * The macro_f_console_parameter_t_initialize() all arguments.
  * The macro_f_console_parameter_t_initialize2() reduced arguments.
- * The macro_f_console_parameter_t_initialize3() reduced arguments, strings are of f_string_static_t, has short, long, and other.
+ * The macro_f_console_parameter_t_initialize3() reduced arguments, strings are of f_string_static_t, has short, long, and simple.
  * The macro_f_console_parameter_t_initialize4() reduced arguments, strings are of f_string_static_t, has short and long.
  * The macro_f_console_parameter_t_initialize5() reduced arguments, strings are of f_string_static_t, has short.
  * The macro_f_console_parameter_t_initialize6() reduced arguments, strings are of f_string_static_t, has long.
- * The macro_f_console_parameter_t_initialize7() reduced arguments, strings are of f_string_static_t, has other.
+ * The macro_f_console_parameter_t_initialize7() reduced arguments, strings are of f_string_static_t, has simple.
  */
 #ifndef _di_f_console_parameter_t_
   typedef struct {
-    const f_string_t symbol_short;
-    const f_string_t symbol_long;
-    const f_string_t symbol_other;
+    f_string_t symbol_short;
+    f_string_t symbol_long;
+    f_string_t symbol_simple;
 
-    const uint8_t values_total;
-    const uint8_t type;
+    uint16_t values_total;
 
-    f_array_length_t result;
+    f_console_flag_t flag;
+    f_console_result_t result;
     f_array_length_t location;
     f_array_length_t location_sub;
     f_array_lengths_t locations;
@@ -316,8 +326,8 @@ extern "C" {
     0, \
     0, \
     0, \
-    0, \
-    0, \
+    f_console_flag_t_initialize, \
+    f_console_result_t_initialize, \
     f_array_length_t_initialize, \
     f_array_length_t_initialize, \
     f_array_length_t_initialize, \
@@ -326,12 +336,12 @@ extern "C" {
     f_array_lengths_t_initialize, \
   }
 
-  #define macro_f_console_parameter_t_initialize(symbol_short, symbol_long, symbol_other, values_total, type_value, result, location, location_sub, locations, locations_sub, values) { \
+  #define macro_f_console_parameter_t_initialize(symbol_short, symbol_long, symbol_simple, values_total, flag, result, location, location_sub, locations, locations_sub, values) { \
     symbol_short, \
     symbol_long, \
-    symbol_other, \
+    symbol_simple, \
     values_total, \
-    type_value, \
+    flag, \
     result, \
     total, \
     location, \
@@ -341,12 +351,12 @@ extern "C" {
     values, \
   }
 
-  #define macro_f_console_parameter_t_initialize2(symbol_short, symbol_long, symbol_other, values_total, type_value) { \
+  #define macro_f_console_parameter_t_initialize2(symbol_short, symbol_long, symbol_simple, values_total, flag) { \
     symbol_short, \
     symbol_long, \
-    symbol_other, \
+    symbol_simple, \
     values_total, \
-    type_value, \
+    flag, \
     f_console_result_none_e, \
     0, \
     0, \
@@ -355,12 +365,12 @@ extern "C" {
     f_array_lengths_t_initialize, \
   }
 
-  #define macro_f_console_parameter_t_initialize3(symbol_short, symbol_long, symbol_other, values_total, type_value) { \
+  #define macro_f_console_parameter_t_initialize3(symbol_short, symbol_long, symbol_simple, values_total, flag) { \
     symbol_short.string, \
     symbol_long.string, \
-    symbol_other.string, \
+    symbol_simple.string, \
     values_total, \
-    type_value, \
+    flag, \
     f_console_result_none_e, \
     0, \
     0, \
@@ -369,12 +379,12 @@ extern "C" {
     f_array_lengths_t_initialize, \
   }
 
-  #define macro_f_console_parameter_t_initialize4(symbol_short, symbol_long, values_total, type_value) { \
+  #define macro_f_console_parameter_t_initialize4(symbol_short, symbol_long, values_total, flag) { \
     symbol_short.string, \
     symbol_long.string, \
     0, \
     values_total, \
-    type_value, \
+    flag, \
     f_console_result_none_e, \
     0, \
     0, \
@@ -383,12 +393,12 @@ extern "C" {
     f_array_lengths_t_initialize, \
   }
 
-  #define macro_f_console_parameter_t_initialize5(symbol_short, values_total, type_value) { \
+  #define macro_f_console_parameter_t_initialize5(symbol_short, values_total, flag) { \
     symbol_short.string, \
     0, \
     0, \
     values_total, \
-    type_value, \
+    flag, \
     f_console_result_none_e, \
     0, \
     0, \
@@ -397,12 +407,12 @@ extern "C" {
     f_array_lengths_t_initialize, \
   }
 
-  #define macro_f_console_parameter_t_initialize6(symbol_long, values_total, type_value) { \
+  #define macro_f_console_parameter_t_initialize6(symbol_long, values_total, flag) { \
     0, \
     symbol_long.string, \
     0, \
     values_total, \
-    type_value, \
+    flag, \
     f_console_result_none_e, \
     0, \
     0, \
@@ -411,12 +421,12 @@ extern "C" {
     f_array_lengths_t_initialize, \
   }
 
-  #define macro_f_console_parameter_t_initialize7(symbol_other, values_total, type_value) { \
+  #define macro_f_console_parameter_t_initialize7(symbol_simple, values_total, flag) { \
     0, \
     0, \
-    symbol_other.string, \
+    symbol_simple.string, \
     values_total, \
-    type_value, \
+    flag, \
     f_console_result_none_e, \
     0, \
     0, \
