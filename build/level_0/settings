@@ -22,7 +22,7 @@ build_libraries -lc -lcap
 build_sources_library account.c private-account.c
 build_sources_library capability.c
 build_sources_library color.c private-color.c color/common.c
-build_sources_library console.c console/common.c
+build_sources_library console.c console/common.c private-console.c
 build_sources_library control_group.c control_group/common.c
 build_sources_library conversion.c private-conversion.c conversion/common.c
 build_sources_library directory.c directory/common.c private-directory.c
@@ -51,7 +51,7 @@ build_sources_library-level thread.c private-thread.c thread/attribute.c thread/
 build_sources_headers account.h account/common.h
 build_sources_headers capability.h capability/common.h
 build_sources_headers color.h color/common.h
-build_sources_headers console.h console/common.h
+build_sources_headers console.h console/common.h private-console.h
 build_sources_headers control_group.h control_group/common.h
 build_sources_headers conversion.h conversion/common.h
 build_sources_headers directory.h directory/common.h directory/type.h

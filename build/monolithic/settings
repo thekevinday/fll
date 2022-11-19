@@ -22,7 +22,7 @@ build_libraries -lc -lcap
 build_sources_library level_0/account.c level_0/private-account.c
 build_sources_library level_0/capability.c
 build_sources_library level_0/color.c level_0/private-color.c level_0/color/common.c
-build_sources_library level_0/console.c level_0/console/common.c
+build_sources_library level_0/console.c level_0/console/common.c level_0/private-console.c
 build_sources_library level_0/control_group.c level_0/control_group/common.c
 build_sources_library level_0/conversion.c level_0/private-conversion.c level_0/conversion/common.c
 build_sources_library level_0/directory.c level_0/directory/common.c level_0/private-directory.c
@@ -75,7 +75,7 @@ build_sources_library-monolithic level_0/thread.c level_0/private-thread.c level
 build_sources_headers level_0/account.h level_0/account/common.h
 build_sources_headers level_0/capability.h level_0/capability/common.h
 build_sources_headers level_0/color.h level_0/color/common.h
-build_sources_headers level_0/console.h level_0/console/common.h
+build_sources_headers level_0/console.h level_0/console/common.h level_0/private-console.h
 build_sources_headers level_0/control_group.h level_0/control_group/common.h
 build_sources_headers level_0/conversion.h level_0/conversion/common.h
 build_sources_headers level_0/directory.h level_0/directory/common.h level_0/directory/type.h

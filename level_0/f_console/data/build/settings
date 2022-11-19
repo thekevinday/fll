@@ -20,9 +20,9 @@ build_language c
 build_libraries -lc
 build_libraries-individual -lf_memory -lf_string -lf_type_array -lf_utf
 
-build_sources_library console.c console/common.c
+build_sources_library console.c console/common.c private-console.c
 
-build_sources_headers console.h console/common.h
+build_sources_headers console.h console/common.h private-console.h
 
 build_script yes
 build_shared yes
