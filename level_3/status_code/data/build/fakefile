@@ -2,7 +2,7 @@
 
 settings:
   fail exit
-  modes monolithic level individual
+  modes individual level monolithic clang test
 
   environment PATH LD_LIBRARY_PATH
 
