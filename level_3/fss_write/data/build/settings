@@ -1,0 +1,68 @@
+# fss-0001
+
+build_name fss_write
+
+version_major 0
+version_minor 7
+version_micro 0
+version_file micro
+version_target minor
+
+modes individual level monolithic clang test
+modes_default monolithic
+
+build_compiler gcc
+build_compiler-clang clang
+build_indexer ar
+build_indexer_arguments rcs
+build_language c
+
+build_libraries -lc
+build_libraries-individual -lfll_error -lfll_file -lfll_fss -lfll_print -lfll_program -lfl_conversion -lfl_directory -lfl_fss -lfl_print -lfl_string -lf_color -lf_console -lf_conversion -lf_directory -lf_environment -lf_file -lf_fss -lf_memory -lf_path -lf_pipe -lf_print -lf_signal -lf_status_string -lf_string -lf_type_array -lf_utf
+build_libraries-level -lfll_2 -lfll_1 -lfll_0
+build_libraries-monolithic -lfll
+
+build_sources_library main/fss_write.c main/common.c main/print.c main/private-common.c main/private-write.c
+build_sources_library basic/fss_write.c basic/common.c basic/print.c basic/private-common.c basic/private-write.c basic/private-print.c
+build_sources_library basic_list/fss_write.c basic_list/common.c basic_list/print.c basic_list/private-common.c basic_list/private-write.c basic_list/private-print.c
+build_sources_library embedded_list/fss_write.c embedded_list/common.c embedded_list/print.c embedded_list/private-common.c embedded_list/private-write.c embedded_list/private-print.c
+build_sources_library extended/fss_write.c extended/common.c extended/print.c extended/private-common.c extended/private-write.c extended/private-print.c
+build_sources_library extended_list/fss_write.c extended_list/common.c extended_list/print.c extended_list/private-common.c extended_list/private-write.c extended_list/private-print.c
+build_sources_library payload/fss_write.c payload/common.c payload/print.c payload/private-common.c payload/private-write.c payload/private-print.c
+
+build_sources_program main/main.c
+
+build_sources_headers main/fss_write.h main/common.h main/print.h main/private-common.h main/private-write.h
+build_sources_headers basic/fss_write.h basic/common.h basic/print.h basic/private-common.h basic/private-write.h basic/private-print.h
+build_sources_headers basic_list/fss_write.h basic_list/common.h basic_list/print.h basic_list/private-common.h basic_list/private-write.h basic_list/private-print.h
+build_sources_headers embedded_list/fss_write.h embedded_list/common.h embedded_list/print.h embedded_list/private-common.h embedded_list/private-write.h embedded_list/private-print.h
+build_sources_headers extended/fss_write.h extended/common.h extended/print.h extended/private-common.h extended/private-write.h extended/private-print.h
+build_sources_headers extended_list/fss_write.h extended_list/common.h extended_list/print.h extended_list/private-common.h extended_list/private-write.h extended_list/private-print.h
+build_sources_headers payload/fss_write.h payload/common.h payload/print.h payload/private-common.h payload/private-write.h payload/private-print.h
+
+build_script yes
+build_shared yes
+build_static no
+
+path_headers program/fss_write
+
+has_path_standard yes
+preserve_path_headers yes
+
+search_exclusive yes
+search_shared yes
+search_static yes
+
+environment PATH LD_LIBRARY_PATH
+
+#defines -D_di_libcap_ -D_di_thread_support_
+defines -D_libcap_legacy_only_ -D_pthread_attr_unsupported_ -D_pthread_sigqueue_unsupported_
+
+flags -O2 -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-parentheses -Wno-missing-braces
+flags-clang -Wno-logical-op-parentheses
+flags-test -O0 -fstack-protector -Wall
+flags-coverage -O0 --coverage -fprofile-abs-path -fprofile-dir=build/coverage/
+
+flags_library -fPIC
+flags_object -fPIC
+flags_program -fPIE

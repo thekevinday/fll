@@ -1,0 +1,24 @@
+# fss-0005 iki-0002
+
+settings:
+  fail exit
+
+  compiler gcc
+  indexer ar
+  indexer_arguments rcs
+
+  environment PATH LD_LIBRARY_PATH
+
+main:
+  if parameter mode
+    operate using_mode
+  else
+    operate using_default
+
+using_default:
+  build settings
+  build settings.fss_write
+
+using_mode:
+  build settings parameter:'mode:value'
+  build settings.fss_status_code parameter:'mode:value'
