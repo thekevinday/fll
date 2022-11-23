@@ -136,13 +136,9 @@ extern "C" {
       return F_fss_found_object_not;
     }
 
-    if (status == F_none_eos) {
-      return F_data_not_eos;
-    }
-
-    if (status == F_none_stop) {
-      return F_data_not_stop;
-    }
+    if (status == F_none_eos) return F_data_not_eos;
+    if (status == F_none_stop) return F_data_not_stop;
+    if (status == F_data_not) return status;
 
     // Begin the search.
     found->start = range->start;
@@ -704,17 +700,10 @@ extern "C" {
     f_status_t status = f_fss_skip_past_space(state, object, range);
     if (F_status_is_error(status)) return status;
 
-    if (status == F_none_eos) {
-      return F_data_not_eos;
-    }
-
-    if (status == F_none_stop) {
-      return F_data_not_stop;
-    }
-
-    if (status == F_none_eol) {
-      return F_status_set_error(F_none_eol);
-    }
+    if (status == F_none_eos) return F_data_not_eos;
+    if (status == F_none_stop) return F_data_not_stop;
+    if (status == F_none_eol) return F_status_set_error(F_none_eol);
+    if (status == F_data_not) return status;
 
     // Ensure that there is room for the potential start and stop quotes, a potential delimit at start, and the potential object open character.
     status = f_string_dynamic_increase_by(5, destination);
