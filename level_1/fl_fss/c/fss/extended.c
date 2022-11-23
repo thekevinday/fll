@@ -185,18 +185,10 @@ extern "C" {
 
     const f_array_length_t delimits_used = delimits->used;
 
-    f_status_t status = private_fl_fss_basic_read(buffer, F_true, state, range, found, quoted, delimits);
+    const f_status_t status = private_fl_fss_basic_read(buffer, F_true, state, range, found, quoted, delimits);
 
-    if (F_status_is_error(status)) {
+    if (F_status_is_error(status) || status == F_fss_found_object_not || status == F_data_not || status == F_data_not_eos || status == F_data_not_stop) {
       delimits->used = delimits_used;
-
-      return status;
-    }
-
-    if (status == F_fss_found_object_not || status == F_data_not || status == F_data_not_eos || status == F_data_not_stop) {
-      delimits->used = delimits_used;
-
-      return status;
     }
 
     return status;
