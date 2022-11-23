@@ -236,7 +236,7 @@ extern "C" {
         }
 
         // Pre-process and perform validation when "clean" is before a "build" or "make" command as a safety check.
-        if (operations_length > 1) {
+        if (operations_length) {
           for (uint8_t has_clean = F_false; i < operations_length; ++i) {
 
             if (operations[i] == fake_operation_clean_e) {

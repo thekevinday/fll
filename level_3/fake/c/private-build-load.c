@@ -96,7 +96,7 @@ extern "C" {
     if (build_arguments && build_arguments->used) {
       path_file.used = data->path_data_build.used + build_arguments->array[0].used;
     }
-    else if (data->flag & fake_data_flag_has_operation_e) {
+    else if (!process_pipe || (data->flag & fake_data_flag_has_operation_e)) {
       path_file.used = data->file_data_build_settings.used;
     }
     else {
@@ -111,7 +111,7 @@ extern "C" {
       memcpy(path_file_string, data->path_data_build.string, sizeof(f_char_t) * data->path_data_build.used);
       memcpy(path_file_string + data->path_data_build.used, build_arguments->array[0].string, sizeof(f_char_t) * build_arguments->array[0].used);
     }
-    else if (data->flag & fake_data_flag_has_operation_e) {
+    else if (!process_pipe || (data->flag & fake_data_flag_has_operation_e)) {
       memcpy(path_file_string, data->file_data_build_settings.string, sizeof(f_char_t) * data->file_data_build_settings.used);
     }
     else {
@@ -135,7 +135,7 @@ extern "C" {
       }
 
       if (F_status_is_error_not(*status)) {
-        if (build_arguments && build_arguments->used || (data->flag & fake_data_flag_has_operation_e)) {
+        if (build_arguments && build_arguments->used || !process_pipe || (data->flag & fake_data_flag_has_operation_e)) {
           *status = fake_file_buffer(data, path_file, process_pipe ? F_false : F_true, &buffer);
         }
       }
