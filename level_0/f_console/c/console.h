@@ -49,7 +49,7 @@ extern "C" {
  * @see f_string_maps_increase_by()
  */
 #ifndef _di_f_console_environment_process_
-  extern f_status_t f_console_environment_process(const f_console_arguments_t arguments, f_string_maps_t * const environment) F_attribute_visibility_internal_d;
+  extern f_status_t f_console_environment_process(const f_console_arguments_t arguments, f_string_maps_t * const environment);
 #endif // _di_f_console_environment_process_
 
 /**
