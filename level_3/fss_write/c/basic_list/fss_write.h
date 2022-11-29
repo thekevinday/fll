@@ -26,6 +26,7 @@
 #include <fll/level_0/console.h>
 #include <fll/level_0/conversion.h>
 #include <fll/level_0/file.h>
+#include <fll/level_0/fss.h>
 #include <fll/level_0/pipe.h>
 #include <fll/level_0/print.h>
 #include <fll/level_0/signal.h>
@@ -59,20 +60,57 @@ extern "C" {
  *   The main program data.
  * @param setting
  *   The main program settings.
+ *   Must be of type (fss_write_setting_t *).
+ *
+ *   This does not alter setting.status.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ */
+#ifndef _di_fss_write_basic_list_process_help_
+  extern void fss_write_basic_list_process_help(fll_program_data_t * const main, void * const setting);
+#endif // _di_fss_write_basic_list_process_help_
+
+/**
+ * Process normally, writing to the output.
+ *
+ * @param main
+ *   The main program data.
+ * @param setting
+ *   The main program settings.
+ *   Must be of type (fss_write_setting_t *).
  *
  *   This alters setting.status:
  *     F_none on success.
  *     F_interrupt on (exit) signal received.
  *
  *     F_parameter (with error bit) if main is NULL or setting is NULL.
- *
- * @return
- *   F_none on success.
- *   F_failure (with error bit) for any other failure.
  */
-#ifndef _di_fss_write_basic_list_process_help_
-  extern void fss_write_basic_list_process_help(fll_program_data_t * const main, fss_write_setting_t * const setting);
-#endif // _di_fss_write_basic_list_process_help_
+#ifndef _di_fss_write_basic_list_process_normal_
+  extern void fss_write_basic_list_process_normal(fll_program_data_t * const main, void * const setting);
+#endif // _di_fss_write_basic_list_process_normal_
+
+/**
+ * Process the pipe, reading from the pipe and writing to the output.
+ *
+ * @param main
+ *   The main program data.
+ * @param setting
+ *   The main program settings.
+ *   Must be of type (fss_write_setting_t *).
+ *
+ *   This alters setting.status:
+ *     F_none on success.
+ *     F_data_not on success but pipe contained no relevant data.
+ *     F_basic_list on success and the basic_list has been printed.
+ *     F_interrupt on (exit) signal received.
+ *
+ *     F_parameter (with error bit) if main is NULL or setting is NULL.
+ */
+#ifndef _di_fss_write_basic_list_process_pipe_
+  extern void fss_write_basic_list_process_pipe(fll_program_data_t * const main, void * const setting);
+#endif // _di_fss_write_basic_list_process_pipe_
 
 #ifdef __cplusplus
 } // extern "C"

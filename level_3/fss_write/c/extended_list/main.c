@@ -1,11 +1,11 @@
-#include "extended_list.h"
+#include "fss_write.h"
 
 int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
   fll_program_data_t data = fll_program_data_t_initialize;
   fss_write_setting_t setting = fss_write_setting_t_initialize;
   setting.state.data = (void *) &data;
-  setting.process_help = &fss_write_extended_list_print_help;
+  setting.process_help = &fss_write_extended_list_process_help;
   setting.process_pipe = &fss_write_extended_list_process_pipe;
   setting.process_normal = &fss_write_extended_list_process_normal;
 

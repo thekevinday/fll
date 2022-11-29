@@ -1,6 +1,6 @@
-#include "fss_write_payload.h"
+#include "fss_write.h"
 #include "private-common.h"
-#include "private-payload.h"
+#include "private-write.h"
 #include "../main/fss_write.h"
 
 #ifdef __cplusplus
@@ -8,15 +8,16 @@ extern "C" {
 #endif
 
 #ifndef _di_fss_write_payload_process_help_
-  void fss_write_payload_process_help(fll_program_data_t * const main, fss_write_setting_t * const setting) {
+  void fss_write_payload_process_help(fll_program_data_t * const main, void * const setting) {
 
-    fss_write_payload_print_help(main, setting);
+    fss_write_payload_print_help((fss_write_setting_t *) setting, main->message);
   }
 #endif // _di_fss_write_payload_process_help_
 
 #ifndef _di_fss_write_payload_process_normal_
-  void fss_write_payload_process_normal(fll_program_data_t * const main, fss_write_setting_t * const setting) {
+  void fss_write_payload_process_normal(fll_program_data_t * const main, void * const void_setting) {
 
+    fss_write_setting_t * const setting = (fss_write_setting_t *) void_setting;
     f_string_statics_t *objects = &setting->objects;
     f_string_statics_t *contents = &setting->contents;
     f_string_statics_t *data = &setting->objects;
@@ -50,8 +51,9 @@ extern "C" {
 #endif // _di_fss_write_payload_process_normal_
 
 #ifndef _di_fss_write_payload_process_pipe_
-  void fss_write_payload_process_pipe(fll_program_data_t * const main, fss_write_setting_t * const setting) {
+  void fss_write_payload_process_pipe(fll_program_data_t * const main, void * const void_setting) {
 
+    fss_write_setting_t * const setting = (fss_write_setting_t *) void_setting;
     f_status_t status_pipe = F_none;
     f_file_t input = f_file_t_initialize;
     input.id = F_type_descriptor_input_d;
@@ -182,7 +184,7 @@ extern "C" {
           printed |= 0x2;
 
           // Designate to read next block from pipe.
-          range.start = 1;fss_write_payload_process_set
+          range.start = 1; // fss_write_payload_process_set ??
           range.stop = 0;
 
           continue;
@@ -204,7 +206,7 @@ extern "C" {
 
               if (main->error.verbosity > f_console_verbosity_quiet_e) {
                 fss_write_print_line_first_locked(setting, main->error);
-                fss_write_print_error_one_content_only(setting, main->error, "FSS-000E (Payload)");
+                fss_write_print_error_one_content_only(setting, main->error, fss_write_payload_standard_s);
                 fss_write_print_line_last_locked(setting, main->error);
               }
 
@@ -344,7 +346,7 @@ extern "C" {
           setting->status = F_status_set_error(F_supported_not);
 
           fss_write_print_line_first_locked(setting, main->error);
-          fss_write_print_error_unsupported_eol(setting, main->error);
+          fss_write_print_error_unsupported_eol(setting, main->error, fss_write_payload_standard_s);
           fss_write_print_line_last_locked(setting, main->error);
 
           return;
@@ -383,7 +385,7 @@ extern "C" {
           setting->status = F_status_set_error(F_supported_not);
 
           fss_write_print_line_first_locked(setting, main->error);
-          fss_write_print_error_unsupported_eol(setting, main->error);
+          fss_write_print_error_unsupported_eol(setting, main->error, fss_write_payload_standard_s);
           fss_write_print_line_last_locked(setting, main->error);
 
           return;

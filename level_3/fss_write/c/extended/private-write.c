@@ -1,4 +1,4 @@
-#include "extended.h"
+#include "fss_write.h"
 #include "private-common.h"
 #include "private-write.h"
 

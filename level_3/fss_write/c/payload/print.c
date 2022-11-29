@@ -1,4 +1,4 @@
-#include "payload.h"
+#include "fss_write.h"
 #include "private-common.h"
 
 #ifdef __cplusplus
@@ -15,6 +15,8 @@ extern "C" {
     fll_program_print_help_header(print, fss_write_program_name_long_s, fss_write_program_version_s);
 
     fss_write_print_help(setting, print);
+
+    f_print_dynamic_raw(f_string_eol_s, print.to);
 
     fll_program_print_help_usage(print, fss_write_program_name_s, f_string_empty_s);
 

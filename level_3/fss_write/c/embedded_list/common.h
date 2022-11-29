@@ -25,6 +25,22 @@ extern "C" {
   #define FSS_WRITE_embedded_list_standard_s_length 24
 
   extern const f_string_static_t fss_write_embedded_list_standard_s;
+
+  #define FSS_WRITE_format_code_short_0008_s "0008"
+  #define FSS_WRITE_format_code_long_0008_s  "fss-0008"
+  #define FSS_WRITE_format_code_human_0008_s "basic"
+
+  #define FSS_WRITE_basic_standard_s_length 16
+
+  #define FSS_WRITE_format_code_short_0008_s_length 4
+  #define FSS_WRITE_format_code_long_0008_s_length  8
+  #define FSS_WRITE_format_code_human_0008_s_length 5
+
+  extern const f_string_static_t fss_write_basic_standard_s;
+
+  extern const f_string_static_t fss_write_format_code_short_0008_s;
+  extern const f_string_static_t fss_write_format_code_long_0008_s;
+  extern const f_string_static_t fss_write_format_code_human_0008_s;
 #endif // _di_fss_write_embedded_list_strings_
 
 #ifdef __cplusplus

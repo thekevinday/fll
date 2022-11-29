@@ -1,4 +1,4 @@
-#include "embedded_list.h"
+#include "fss_write.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -6,6 +6,10 @@ extern "C" {
 
 #ifndef _di_fss_write_embedded_list_strings_
   const f_string_static_t fss_write_embedded_list_standard_s = macro_f_string_static_t_initialize(FSS_WRITE_embedded_list_standard_s, 0, FSS_WRITE_embedded_list_standard_s_length);
+
+  const f_string_static_t fss_write_format_code_short_0008_s = macro_f_string_static_t_initialize(FSS_WRITE_format_code_short_0008_s, 0, FSS_WRITE_format_code_short_0008_s_length);
+  const f_string_static_t fss_write_format_code_long_0008_s = macro_f_string_static_t_initialize(FSS_WRITE_format_code_long_0008_s, 0, FSS_WRITE_format_code_long_0008_s_length);
+  const f_string_static_t fss_write_format_code_human_0008_s = macro_f_string_static_t_initialize(FSS_WRITE_format_code_human_0008_s, 0, FSS_WRITE_format_code_human_0008_s_length);
 #endif // _di_fss_write_embedded_list_strings_
 
 #ifdef __cplusplus

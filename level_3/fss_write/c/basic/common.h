@@ -22,9 +22,21 @@ extern "C" {
 #ifndef _di_fss_write_basic_strings_
   #define FSS_WRITE_basic_standard_s "FSS-0000 (Basic)"
 
+  #define FSS_WRITE_format_code_short_0000_s "0000"
+  #define FSS_WRITE_format_code_long_0000_s  "fss-0000"
+  #define FSS_WRITE_format_code_human_0000_s "basic"
+
   #define FSS_WRITE_basic_standard_s_length 16
 
+  #define FSS_WRITE_format_code_short_0000_s_length 4
+  #define FSS_WRITE_format_code_long_0000_s_length  8
+  #define FSS_WRITE_format_code_human_0000_s_length 5
+
   extern const f_string_static_t fss_write_basic_standard_s;
+
+  extern const f_string_static_t fss_write_format_code_short_0000_s;
+  extern const f_string_static_t fss_write_format_code_long_0000_s;
+  extern const f_string_static_t fss_write_format_code_human_0000_s;
 #endif // _di_fss_write_basic_strings_
 
 #ifdef __cplusplus

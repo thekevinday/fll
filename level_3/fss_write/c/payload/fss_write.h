@@ -26,6 +26,7 @@
 #include <fll/level_0/console.h>
 #include <fll/level_0/conversion.h>
 #include <fll/level_0/file.h>
+#include <fll/level_0/fss.h>
 #include <fll/level_0/pipe.h>
 #include <fll/level_0/print.h>
 #include <fll/level_0/signal.h>
@@ -59,19 +60,16 @@ extern "C" {
  *   The main program data.
  * @param setting
  *   The main program settings.
+ *   Must be of type (fss_write_setting_t *).
  *
- *   This alters setting.status:
- *     F_none on success.
- *     F_interrupt on (exit) signal received.
- *
- *     F_parameter (with error bit) if main is NULL or setting is NULL.
+ *   This does not alter setting.status.
  *
  * @return
  *   F_none on success.
- *   F_failure (with error bit) for any other failure.
+ *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_fss_write_payload_process_help_
-  extern void fss_write_payload_process_help(fll_program_data_t * const main, fss_write_setting_t * const setting);
+  extern void fss_write_payload_process_help(fll_program_data_t * const main, void * const setting);
 #endif // _di_fss_write_payload_process_help_
 
 /**
@@ -81,6 +79,7 @@ extern "C" {
  *   The main program data.
  * @param setting
  *   The main program settings.
+ *   Must be of type (fss_write_setting_t *).
  *
  *   This alters setting.status:
  *     F_none on success.
@@ -89,7 +88,7 @@ extern "C" {
  *     F_parameter (with error bit) if main is NULL or setting is NULL.
  */
 #ifndef _di_fss_write_payload_process_normal_
-  extern void fss_write_payload_process_normal(fll_program_data_t * const main, fss_write_setting_t * const setting);
+  extern void fss_write_payload_process_normal(fll_program_data_t * const main, void * const setting);
 #endif // _di_fss_write_payload_process_normal_
 
 /**
@@ -99,6 +98,7 @@ extern "C" {
  *   The main program data.
  * @param setting
  *   The main program settings.
+ *   Must be of type (fss_write_setting_t *).
  *
  *   This alters setting.status:
  *     F_none on success.
@@ -109,7 +109,7 @@ extern "C" {
  *     F_parameter (with error bit) if main is NULL or setting is NULL.
  */
 #ifndef _di_fss_write_payload_process_pipe_
-  extern void fss_write_payload_process_pipe(fll_program_data_t * const main, fss_write_setting_t * const setting);
+  extern void fss_write_payload_process_pipe(fll_program_data_t * const main, void * const setting);
 #endif // _di_fss_write_payload_process_pipe_
 
 /**
@@ -132,9 +132,9 @@ extern "C" {
  *   The content to escape and print.
  *   Set pointer address to 0 to not use.
  */
-#ifndef _di_fss_write_process_payload_set_
-  extern void fss_write_process_payload_set(fll_program_data_t * const main, fss_write_setting_t * const setting, const f_string_static_t *object, const f_string_static_t *content);
-#endif // _di_fss_write_process_payload_set_
+#ifndef _di_fss_write_payload_process_set_
+  extern void fss_write_payload_process_set(fll_program_data_t * const main, fss_write_setting_t * const setting, const f_string_static_t *object, const f_string_static_t *content);
+#endif // _di_fss_write_payload_process_set_
 
 #ifdef __cplusplus
 } // extern "C"

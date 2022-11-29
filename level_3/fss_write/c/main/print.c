@@ -115,7 +115,6 @@ extern "C" {
     fll_program_print_help_option(print, fss_write_short_trim_s, fss_write_long_trim_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "   Trim Object names.");
 
     f_print_dynamic_raw(f_string_eol_s, print.to);
-    f_print_dynamic_raw(f_string_eol_s, print.to);
   }
 #endif // _di_fss_write_print_help_
 

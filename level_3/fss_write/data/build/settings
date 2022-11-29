@@ -32,7 +32,7 @@ build_sources_library payload/fss_write.c payload/common.c payload/print.c paylo
 
 build_sources_program main/main.c
 
-build_sources_headers main/fss_write.h main/common.h main/print.h main/private-common.h main/private-write.h
+build_sources_headers main/main.h main/fss_write.h main/common.h main/print.h main/private-common.h main/private-write.h
 build_sources_headers basic/fss_write.h basic/common.h basic/print.h basic/private-common.h basic/private-write.h basic/private-print.h
 build_sources_headers basic_list/fss_write.h basic_list/common.h basic_list/print.h basic_list/private-common.h basic_list/private-write.h basic_list/private-print.h
 build_sources_headers embedded_list/fss_write.h embedded_list/common.h embedded_list/print.h embedded_list/private-common.h embedded_list/private-write.h embedded_list/private-print.h

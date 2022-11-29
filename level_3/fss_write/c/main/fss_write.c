@@ -14,7 +14,7 @@ extern "C" {
     setting->status = F_none;
 
     if (setting->flag & fss_write_main_flag_help_e) {
-      fss_write_print_help(setting, main->message);
+      setting->process_help(main, (void *) setting);
 
       return;
     }
