@@ -22,17 +22,26 @@ extern "C" {
 #ifndef _di_fss_write_basic_list_strings_
   #define FSS_WRITE_basic_list_standard_s "FSS-0002 (Basic List)"
 
+  #define FSS_WRITE_basic_list_program_name_s      "fss_basic_list_write"
+  #define FSS_WRITE_basic_list_program_name_long_s "FSS Basic List Write"
+
   #define FSS_WRITE_format_code_short_0002_s "0002"
   #define FSS_WRITE_format_code_long_0002_s  "fss-0002"
   #define FSS_WRITE_format_code_human_0002_s "basic list"
 
   #define FSS_WRITE_basic_list_standard_s_length 21
 
+  #define FSS_WRITE_basic_list_program_name_s_length      20
+  #define FSS_WRITE_basic_list_program_name_long_s_length 20
+
   #define FSS_WRITE_format_code_short_0002_s_length 4
   #define FSS_WRITE_format_code_long_0002_s_length  8
   #define FSS_WRITE_format_code_human_0002_s_length 10
 
   extern const f_string_static_t fss_write_basic_list_standard_s;
+
+  extern const f_string_static_t fss_write_basic_list_program_name_s;
+  extern const f_string_static_t fss_write_basic_list_program_name_long_s;
 
   extern const f_string_static_t fss_write_format_code_short_0002_s;
   extern const f_string_static_t fss_write_format_code_long_0002_s;

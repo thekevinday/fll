@@ -131,23 +131,23 @@ extern "C" {
           return;
         }
       }
-
-      if (main->parameters.array[fss_extended_list_write_parameter_help_e].result & f_console_result_found_e) {
-        setting->flag |= fss_extended_list_write_main_flag_help_e;
-
-        return;
-      }
-
-      if (main->parameters.array[fss_extended_list_write_parameter_version_e].result & f_console_result_found_e) {
-        setting->flag |= fss_extended_list_write_main_flag_version_e;
-
-        return;
-      }
     }
 
     main->output.to.id = F_type_descriptor_output_d;
     main->output.to.stream = F_type_output_d;
     main->output.to.flag = F_file_flag_create_d | F_file_flag_write_only_d | F_file_flag_append_d;
+
+    if (main->parameters.array[fss_extended_list_write_parameter_help_e].result & f_console_result_found_e) {
+      setting->flag |= fss_extended_list_write_main_flag_help_e;
+
+      return;
+    }
+
+    if (main->parameters.array[fss_extended_list_write_parameter_version_e].result & f_console_result_found_e) {
+      setting->flag |= fss_extended_list_write_main_flag_version_e;
+
+      return;
+    }
 
     f_string_static_t * const args = main->parameters.arguments.array;
 

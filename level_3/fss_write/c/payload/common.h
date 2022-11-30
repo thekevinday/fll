@@ -22,17 +22,26 @@ extern "C" {
 #ifndef _di_fss_write_payload_strings_
   #define FSS_WRITE_payload_standard_s "FSS-000E (Payload)"
 
+  #define FSS_WRITE_payload_program_name_s      "fss_payload_write"
+  #define FSS_WRITE_payload_program_name_long_s "FSS Payload Write"
+
   #define FSS_WRITE_format_code_short_000e_s "000e"
   #define FSS_WRITE_format_code_long_000e_s  "fss-000e"
   #define FSS_WRITE_format_code_human_000e_s "payload"
 
   #define FSS_WRITE_payload_standard_s_length 18
 
+  #define FSS_WRITE_payload_program_name_s_length      17
+  #define FSS_WRITE_payload_program_name_long_s_length 17
+
   #define FSS_WRITE_format_code_short_000e_s_length 4
   #define FSS_WRITE_format_code_long_000e_s_length  8
   #define FSS_WRITE_format_code_human_000e_s_length 7
 
   extern const f_string_static_t fss_write_payload_standard_s;
+
+  extern const f_string_static_t fss_write_payload_program_name_s;
+  extern const f_string_static_t fss_write_payload_program_name_long_s;
 
   extern const f_string_static_t fss_write_format_code_short_000e_s;
   extern const f_string_static_t fss_write_format_code_long_000e_s;

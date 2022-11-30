@@ -155,18 +155,6 @@ extern "C" {
         }
       }
 
-      if (main->parameters.array[utf8_parameter_help_e].result & f_console_result_found_e) {
-        setting->flag |= utf8_main_flag_help_e;
-
-        return;
-      }
-
-      if (main->parameters.array[utf8_parameter_version_e].result & f_console_result_found_e) {
-        setting->flag |= utf8_main_flag_version_e;
-
-        return;
-      }
-
       // Identify and prioritize "from" mode parameters.
       {
         uint16_t choices_array[2] = { utf8_parameter_from_bytesequence_e, utf8_parameter_from_codepoint_e };
@@ -275,6 +263,18 @@ extern "C" {
           setting->mode |= utf8_mode_to_width_e;
         }
       }
+    }
+
+    if (main->parameters.array[utf8_parameter_help_e].result & f_console_result_found_e) {
+      setting->flag |= utf8_main_flag_help_e;
+
+      return;
+    }
+
+    if (main->parameters.array[utf8_parameter_version_e].result & f_console_result_found_e) {
+      setting->flag |= utf8_main_flag_version_e;
+
+      return;
     }
 
     if (main->parameters.array[utf8_parameter_to_file_e].result & f_console_result_value_e) {

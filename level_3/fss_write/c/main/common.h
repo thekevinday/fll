@@ -86,32 +86,6 @@ extern "C" {
 #endif // _di_fss_write_defines_
 
 /**
- * Designate the supported formats for the main (fss_write) program.
- *
- * These are intended to be used for communicating or selecting an "--as" option.
- *
- * The digit value of the codes are intended to exactly match the numeric representation.
- *
- * fss_write_format_code_*_e:
- *   - 0000: The FSS-0000 (Basic) format.
- *   - 0001: The FSS-0001 (Extended) format.
- *   - 0002: The FSS-0002 (Basic List) format.
- *   - 0003: The FSS-0003 (Extended List) format.
- *   - 0008: The FSS-0008 (Embedded List) format.
- *   - 000e: The FSS-000E (Payload) format.
- */
-#ifndef _di_fss_write_formats_
-  enum {
-    fss_write_format_code_0000_e = 0x0,
-    fss_write_format_code_0001_e = 0x1,
-    fss_write_format_code_0002_e = 0x2,
-    fss_write_format_code_0003_e = 0x3,
-    fss_write_format_code_0008_e = 0x8,
-    fss_write_format_code_000e_e = 0xe,
-  };
-#endif // _di_fss_write_formats_
-
-/**
  * A collection of static strings associated with FSS Payload Write.
  */
 #ifndef _di_fss_write_strings_
@@ -340,6 +314,9 @@ extern "C" {
     f_string_dynamics_t objects;
     f_string_dynamics_t contents;
 
+    const f_string_static_t *program_name;
+    const f_string_static_t *program_name_long;
+
     void (*process_help)(fll_program_data_t * const main, void * const setting);
     void (*process_normal)(fll_program_data_t * const main, void * const setting);
     void (*process_pipe)(fll_program_data_t * const main, void * const setting);
@@ -362,6 +339,8 @@ extern "C" {
       f_string_ranges_t_initialize, \
       f_string_dynamics_t_initialize, \
       f_string_dynamics_t_initialize, \
+      0, \
+      0, \
       0, \
       0, \
       0, \
@@ -408,6 +387,10 @@ extern "C" {
  *     Errors (with error bit) from: f_string_dynamics_resize().
  *     Errors (with error bit) from: fll_program_parameter_process_context().
  *     Errors (with error bit) from: fll_program_parameter_process_verbosity().
+ * @param callback
+ *   (optional) Designate a function to call after performing the initial processing, but before printing help.
+ *   If the function returns F_done, then this function immediately returns, resetting status to F_none.
+ *   Set to NULL to disable.
  *
  * @see f_console_parameter_process()
  * @see f_file_stream_open()
@@ -416,7 +399,7 @@ extern "C" {
  * @see fll_program_parameter_process_verbosity()
  */
 #ifndef _di_fss_write_setting_load_
-  extern void fss_write_setting_load(const f_console_arguments_t arguments, fll_program_data_t * const main, fss_write_setting_t * const setting);
+  extern void fss_write_setting_load(const f_console_arguments_t arguments, fll_program_data_t * const main, fss_write_setting_t * const setting, void (*callback)(const f_console_arguments_t arguments, fll_program_data_t * const main, fss_write_setting_t * const setting));
 #endif // _di_fss_write_setting_load_
 
 /**

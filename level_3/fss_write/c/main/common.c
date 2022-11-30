@@ -68,7 +68,7 @@ extern "C" {
 #endif // _di_fss_write_setting_delete_
 
 #ifndef _di_fss_write_setting_load_
-  void fss_write_setting_load(const f_console_arguments_t arguments, fll_program_data_t * const main, fss_write_setting_t * const setting) {
+  void fss_write_setting_load(const f_console_arguments_t arguments, fll_program_data_t * const main, fss_write_setting_t * const setting, void (*callback)(const f_console_arguments_t arguments, fll_program_data_t * const main, fss_write_setting_t * const setting)) {
 
     if (!main || !setting) return;
 
@@ -134,37 +134,33 @@ extern "C" {
           return;
         }
       }
-
-      if (main->parameters.array[fss_write_parameter_help_e].result & f_console_result_found_e) {
-        setting->flag |= fss_write_main_flag_help_e;
-
-        return;
-      }
-
-      if (main->parameters.array[fss_write_parameter_version_e].result & f_console_result_found_e) {
-        setting->flag |= fss_write_main_flag_version_e;
-
-        return;
-      }
     }
 
     main->output.to.id = F_type_descriptor_output_d;
     main->output.to.stream = F_type_output_d;
     main->output.to.flag = F_file_flag_create_d | F_file_flag_write_only_d | F_file_flag_append_d;
 
-    if (main->parameters.array[fss_write_parameter_file_e].result & f_console_result_value_e && main->parameters.array[fss_write_parameter_file_e].values.used) {
-      // @todo check the "-a/--as" and select format or fallback to FSS-0000 Basic (support either digits "0000"/"0001" or simple names "basic"/"basic_list".
-    // Fallback only happens if -a/--as is not disabled, otherwise the callback function should be pre-defined.
+    if (main->parameters.array[fss_write_parameter_help_e].result & f_console_result_found_e) {
+      setting->flag |= fss_write_main_flag_help_e;
     }
-    else if (main->parameters.array[fss_write_parameter_as_e].result & f_console_result_found_e) {
-      setting->status = F_status_set_error(F_parameter);
 
-      fss_write_print_line_first_locked(setting, main->error);
-      fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, fss_write_long_file_s);
-      fss_write_print_line_last_locked(setting, main->error);
-
-      return;
+    if (main->parameters.array[fss_write_parameter_version_e].result & f_console_result_found_e) {
+      setting->flag |= fss_write_main_flag_version_e;
     }
+
+    if (callback) {
+      callback(arguments, main, setting);
+      if (F_status_is_error(setting->status)) return;
+
+      if (setting->status == F_done) {
+        setting->status = F_none;
+
+        return;
+      }
+    }
+
+    if (main->parameters.array[fss_write_parameter_help_e].result & f_console_result_found_e) return;
+    if (main->parameters.array[fss_write_parameter_version_e].result & f_console_result_found_e) return;
 
     if (main->parameters.array[fss_write_parameter_file_e].result & f_console_result_value_e && main->parameters.array[fss_write_parameter_file_e].values.used) {
       if (main->parameters.array[fss_write_parameter_file_e].values.used > 1) {

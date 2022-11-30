@@ -154,6 +154,22 @@ extern "C" {
 #endif // _di_fss_write_print_help_
 
 /**
+ * Print standard parts of the help regarding pipe usage.
+ *
+ * This is expected to be called as part of the help printing and does not perform any locking.
+ *
+ * @param setting
+ *   The main program settings.
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   The output structure to print to.
+ */
+#ifndef _di_fss_write_print_help_pipe_
+  extern void fss_write_print_help_pipe(fss_write_setting_t * const setting, const fl_print_t print);
+#endif // _di_fss_write_print_help_pipe_
+
+/**
  * Print first new line, unless verbosity says otherwise.
  *
  * This is generally either the first line in the program or the first line printed before an error message.

@@ -14,7 +14,7 @@ extern "C" {
     setting->status = F_none;
 
     if (setting->flag & iki_read_main_flag_help_e) {
-      iki_read_print_help(setting, main->message);
+      iki_read_print_help(main, setting, main->message);
 
       return;
     }

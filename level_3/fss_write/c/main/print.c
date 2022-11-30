@@ -118,6 +118,19 @@ extern "C" {
   }
 #endif // _di_fss_write_print_help_
 
+#ifndef _di_fss_write_print_help_pipe_
+  void fss_write_print_help_pipe(fss_write_setting_t * const setting, const fl_print_t print) {
+
+    fl_print_format("%r  The pipe uses the Backspace character '%[\\b%]' (%[U+0008%]) to designate the start of a Content.%r", print.to, f_string_eol_s, print.set->notable, print.set->notable, print.set->notable, print.set->notable, f_string_eol_s);
+    fl_print_format("  The pipe uses the Form Feed character '%[\\f%]' (%[U+000C%]) to designate the end of the last Content.%r", print.to, print.set->notable, print.set->notable, print.set->notable, print.set->notable, f_string_eol_s);
+    fl_print_format("  The pipe uses the Vertical Line character '%[\\v%]' (%[U+000B%]) is used to ignore a Content range (use this both before and after the range).%r", print.to, print.set->notable, print.set->notable, print.set->notable, print.set->notable, f_string_eol_s);
+    fl_print_format("  For the pipe, an Object is terminated by either a Backspace character '%[\\b%]' (%[U+0008%])", print.to, print.set->notable, print.set->notable, print.set->notable, print.set->notable);
+    fl_print_format(" or a Form Feed character '%[\\f%]' (%[U+000C%]).%r", print.to, print.set->notable, print.set->notable, print.set->notable, print.set->notable, f_string_eol_s);
+    fl_print_format("  The end of the pipe represents the end of any Object or Content.%r", print.to, f_string_eol_s);
+
+  }
+#endif // _di_fss_write_print_help_pipe_
+
 #ifndef _di_fss_write_print_line_first_locked_
   f_status_t fss_write_print_line_first_locked(fss_write_setting_t * const setting, const fl_print_t print) {
 
