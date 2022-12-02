@@ -65,13 +65,19 @@ extern "C" {
 #ifndef _di_fss_payload_write_defines_
   #define fss_payload_write_signal_check_d 20000
 
+  #define FSS_PAYLOAD_WRITE_object_payload_s "payload"
+
   #define FSS_PAYLOAD_WRITE_pipe_content_end_s    "\f"
   #define FSS_PAYLOAD_WRITE_pipe_content_ignore_s "\v"
   #define FSS_PAYLOAD_WRITE_pipe_content_start_s  "\b"
 
+  #define FSS_PAYLOAD_WRITE_object_payload_s_length 7
+
   #define FSS_PAYLOAD_WRITE_pipe_content_end_s_length    1
   #define FSS_PAYLOAD_WRITE_pipe_content_ignore_s_length 1
   #define FSS_PAYLOAD_WRITE_pipe_content_start_s_length  1
+
+  extern const f_string_static_t fss_payload_write_object_payload_s;
 
   extern const f_string_static_t fss_payload_write_pipe_content_end_s;
   extern const f_string_static_t fss_payload_write_pipe_content_ignore_s;

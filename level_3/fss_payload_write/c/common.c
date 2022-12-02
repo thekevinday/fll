@@ -5,6 +5,8 @@ extern "C" {
 #endif
 
 #ifndef _di_fss_payload_write_defines_
+  const f_string_static_t fss_payload_write_object_payload_s = macro_f_string_static_t_initialize(FSS_PAYLOAD_WRITE_object_payload_s, 0, FSS_PAYLOAD_WRITE_object_payload_s_length);
+
   const f_string_static_t fss_payload_write_pipe_content_end_s = macro_f_string_static_t_initialize(FSS_PAYLOAD_WRITE_pipe_content_end_s, 0, FSS_PAYLOAD_WRITE_pipe_content_end_s_length);
   const f_string_static_t fss_payload_write_pipe_content_ignore_s = macro_f_string_static_t_initialize(FSS_PAYLOAD_WRITE_pipe_content_ignore_s, 0, FSS_PAYLOAD_WRITE_pipe_content_ignore_s_length);
   const f_string_static_t fss_payload_write_pipe_content_start_s = macro_f_string_static_t_initialize(FSS_PAYLOAD_WRITE_pipe_content_start_s, 0, FSS_PAYLOAD_WRITE_pipe_content_start_s_length);

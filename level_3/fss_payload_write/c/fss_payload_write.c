@@ -234,6 +234,27 @@ extern "C" {
           }
 
           if (F_status_is_error_not(status)) {
+            if (main->parameters.array[fss_payload_write_parameter_object_e].locations.used) {
+              f_array_length_t index = 0;
+
+              for (f_array_length_t i = 0; i < main->parameters.array[fss_payload_write_parameter_object_e].locations.used; ++i) {
+
+                index = main->parameters.array[fss_payload_write_parameter_object_e].locations.array[i] + 1;
+
+                if (fl_string_dynamic_compare(argv[index], fss_payload_write_object_payload_s) == F_equal_to && i + 1 < main->parameters.array[fss_payload_write_parameter_object_e].locations.used) {
+                  if (main->error.verbosity != f_console_verbosity_quiet_e) {
+                    fll_print_format("%r%[%QThe payload may only be specified last.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context, f_string_eol_s);
+                  }
+
+                  status = F_status_set_error(F_parameter);
+
+                  break;
+                }
+              } // for
+            }
+          }
+
+          if (F_status_is_error_not(status)) {
             if (main->parameters.array[fss_payload_write_parameter_content_e].result == f_console_result_additional_e) {
               f_array_length_t location_object = 0;
               f_array_length_t location_content = 0;
@@ -241,6 +262,7 @@ extern "C" {
               f_array_length_t location_sub_content = 0;
 
               for (f_array_length_t i = 0; i < main->parameters.array[fss_payload_write_parameter_object_e].locations.used; ++i) {
+
                 location_object = main->parameters.array[fss_payload_write_parameter_object_e].locations.array[i];
                 location_content = main->parameters.array[fss_payload_write_parameter_content_e].locations.array[i];
                 location_sub_object = main->parameters.array[fss_payload_write_parameter_object_e].locations_sub.array[i];
@@ -260,6 +282,7 @@ extern "C" {
                   }
 
                   status = F_status_set_error(F_parameter);
+
                   break;
                 }
               } // for
@@ -348,6 +371,7 @@ extern "C" {
               }
 
               status = F_status_set_error(F_parameter);
+
               break;
             }
           } // for
