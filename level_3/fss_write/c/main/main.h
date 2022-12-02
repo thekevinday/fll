@@ -6,8 +6,7 @@
  * Licenses: lgpl-2.1-or-later
  *
  * This file is only ever included by main/main.c and should not normally be included anywhere else.
- * Anything that wants to include this should be providing the "main" program functionality in some manner.
- * Any program utilizing this should link to the "main" program library.
+ * Anything that wants to include this should be providing the "fss_write" program functionality in some manner.
  */
 #ifndef _fss_write_main_h
 #define _fss_write_main_h
@@ -37,8 +36,6 @@ extern "C" {
 
 /**
  * Perform the standard program setting load process for the "--as" parameter.
- *
- * This should be called before fss_write_setting_load() is called to ensure "--as" gets processed before "--help".
  *
  * This prints error messages as appropriate.
  *

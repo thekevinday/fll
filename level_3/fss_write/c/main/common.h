@@ -382,6 +382,8 @@ extern "C" {
  *     F_none on success.
  *     F_data_not on success but nothing was provided to operate with.
  *
+ *     F_parameter (with error bit) on parameter error.
+ *
  *     Errors (with error bit) from: f_console_parameter_process().
  *     Errors (with error bit) from: f_file_stream_open().
  *     Errors (with error bit) from: f_string_dynamics_resize().

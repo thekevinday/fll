@@ -43,10 +43,10 @@
 #include <fll/level_2/program.h>
 
 // FSS Write includes.
-#include <program/fss_write/embedded_list/common.h>
 #include <program/fss_write/main/common.h>
-#include <program/fss_write/embedded_list/print.h>
+#include <program/fss_write/embedded_list/common.h>
 #include <program/fss_write/main/print.h>
+#include <program/fss_write/embedded_list/print.h>
 
 #ifdef __cplusplus
 extern "C" {

@@ -1,7 +1,7 @@
 #include "fss_write.h"
+#include "../main/fss_write.h"
 #include "private-common.h"
 #include "private-write.h"
-#include "../main/fss_write.h"
 
 #ifdef __cplusplus
 extern "C" {

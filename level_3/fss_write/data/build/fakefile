@@ -17,8 +17,20 @@ main:
 
 using_default:
   build settings
-  build settings.fss_write
+  build settings.main
+  #build settings.basic
+  #build settings.basic_list
+  #build settings.extended
+  #build settings.extended_list
+  #build settings.embedded_list
+  build settings.payload
 
 using_mode:
   build settings parameter:'mode:value'
-  build settings.fss_status_code parameter:'mode:value'
+  build settings.main parameter:'mode:value'
+  #build settings.basic parameter:'mode:value'
+  #build settings.basic_list parameter:'mode:value'
+  #build settings.extended parameter:'mode:value'
+  #build settings.extended_list parameter:'mode:value'
+  #build settings.embedded_list parameter:'mode:value'
+  build settings.payload parameter:'mode:value'

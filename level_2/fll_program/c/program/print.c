@@ -27,9 +27,9 @@ extern "C" {
 
     f_file_stream_lock(print.to);
 
-    fl_print_format("%[%QThe %]", print.to, print.set->error, print.prefix, print.set->error);
+    fl_print_format("%[%QThe%] ", print.to, print.set->error, print.prefix, print.set->error);
     fl_print_format("%[%Q%]", print.to, print.set->notable, variable, print.set->notable);
-    fl_print_format("%[ is missing or has a length of %]", print.to, print.set->error, print.set->error);
+    fl_print_format("%[ is missing or has a length of%] ", print.to, print.set->error, print.set->error);
     fl_print_format("%[0%]", print.to, print.set->notable, print.set->notable);
     fl_print_format("%[.%]%r", print.to, print.set->error, print.set->error, f_string_eol_s);
 
@@ -200,7 +200,7 @@ extern "C" {
 
     f_file_stream_lock(print.to);
 
-    fl_print_format("%[%QThe parameter %]", print.to, print.set->error, print.prefix, print.set->error);
+    fl_print_format("%[%QThe parameter%] ", print.to, print.set->error, print.prefix, print.set->error);
     fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol, parameter, print.set->notable);
     fl_print_format(" %[is specified, but no value is given.%]%r", print.to, print.set->error, print.set->error, f_string_eol_s);
 
@@ -217,9 +217,9 @@ extern "C" {
 
     f_file_stream_lock(print.to);
 
-    fl_print_format("%[%QThe parameter %]", print.to, print.set->error, print.prefix, print.set->error);
+    fl_print_format("%[%QThe parameter%] ", print.to, print.set->error, print.prefix, print.set->error);
     fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol, parameter, print.set->notable);
-    fl_print_format("%[ is specified, but %]", print.to, print.set->error, print.set->error);
+    fl_print_format("%[ is specified, but%] ", print.to, print.set->error, print.set->error);
     fl_print_format("%[%Q%]", print.to, print.set->notable, amount, print.set->notable);
     fl_print_format(" %[values are not given.%]%r", print.to, print.set->error, print.set->error, f_string_eol_s);
 

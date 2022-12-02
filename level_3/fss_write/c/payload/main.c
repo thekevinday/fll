@@ -1,4 +1,5 @@
 #include "fss_write.h"
+#include "../main/fss_write.h"
 
 int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
@@ -26,7 +27,7 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
   {
     const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize(argc, argv, envp);
 
-    fss_write_setting_load(arguments, &data, &setting, 0);
+    fss_write_setting_load(arguments, &data, &setting, &fss_write_payload_setting_load);
   }
 
   fss_write_main(&data, &setting);

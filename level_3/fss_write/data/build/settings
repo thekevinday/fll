@@ -1,4 +1,7 @@
 # fss-0001
+#
+# Builds the main library of the project with all parts except "main" program related.
+#
 
 build_name fss_write
 
@@ -30,9 +33,7 @@ build_sources_library extended/fss_write.c extended/common.c extended/print.c ex
 build_sources_library extended_list/fss_write.c extended_list/common.c extended_list/print.c extended_list/private-common.c extended_list/private-write.c extended_list/private-print.c
 build_sources_library payload/fss_write.c payload/common.c payload/print.c payload/private-common.c payload/private-write.c payload/private-print.c
 
-build_sources_program main/main.c
-
-build_sources_headers main/main.h main/fss_write.h main/common.h main/print.h main/private-common.h main/private-write.h
+build_sources_headers main/fss_write.h main/common.h main/print.h main/private-common.h main/private-write.h
 build_sources_headers basic/fss_write.h basic/common.h basic/print.h basic/private-common.h basic/private-write.h basic/private-print.h
 build_sources_headers basic_list/fss_write.h basic_list/common.h basic_list/print.h basic_list/private-common.h basic_list/private-write.h basic_list/private-print.h
 build_sources_headers embedded_list/fss_write.h embedded_list/common.h embedded_list/print.h embedded_list/private-common.h embedded_list/private-write.h embedded_list/private-print.h

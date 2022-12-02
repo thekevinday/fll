@@ -137,7 +137,7 @@ extern "C" {
 
     utf8_print_line_first_unlocked(setting, print);
 
-    fl_print_format("%[%QNo file specified at parameter index %]", print.to, print.set->error, print.prefix, print.set->error);
+    fl_print_format("%[%QNo file specified at parameter index%] ", print.to, print.set->error, print.prefix, print.set->error);
     fl_print_format("%[%ul%]", print.to, print.set->notable, index, print.set->notable);
     fl_print_format("%[.%]%r", print.to, print.set->error, print.set->error, f_string_eol_s);
 

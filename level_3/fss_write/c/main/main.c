@@ -1,5 +1,6 @@
 #include "fss_write.h"
 #include "main.h"
+#include "main-print.h"
 #include "../basic/fss_write.h"
 #include "../basic_list/fss_write.h"
 #include "../extended/fss_write.h"
@@ -44,76 +45,9 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 }
 
 #ifndef _di_fss_write_main_process_help_
-  void fss_write_main_process_help(fll_program_data_t * const main, void * const void_setting) {
+  void fss_write_main_process_help(fll_program_data_t * const main, void * const setting) {
 
-    fss_write_setting_t * const setting = (fss_write_setting_t *) void_setting;
-
-    f_file_stream_lock(main->message.to);
-
-    f_print_dynamic_raw(setting->line_first, main->message.to);
-
-    fll_program_print_help_header(main->message, fss_write_program_name_long_s, fss_write_program_version_s);
-
-    fss_write_print_help(setting, main->message);
-
-    fll_program_print_help_option(main->message, fss_write_short_as_s, fss_write_long_as_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "Designate the supported format to write as.");
-
-    f_print_dynamic_raw(f_string_eol_s, main->message.to);
-    f_print_dynamic_raw(f_string_eol_s, main->message.to);
-
-    fll_program_print_help_usage(main->message, fss_write_program_name_s, f_string_empty_s);
-
-    fss_write_print_help_pipe(setting, main->message);
-
-    f_print_dynamic_raw(f_string_eol_s, main->message.to);
-
-    fl_print_format("  The '%[%r%r%]' parameter supports the following standards with the specified possible case-sensitive values:%r", main->message.to, main->message.set->notable, f_console_symbol_long_normal_s, fss_write_long_as_s, main->message.set->notable, f_string_eol_s);
-
-    // FSS-0000 (Basic)
-    fl_print_format("    - As %[%r%]         format: ", main->message.to, main->message.set->notable, fss_write_basic_standard_s, main->message.set->notable);
-    fl_print_format("'%[%r%]', ", main->message.to, main->message.set->notable, fss_write_format_code_short_0000_s, main->message.set->notable);
-    fl_print_format("'%[%r%]', or ", main->message.to, main->message.set->notable, fss_write_format_code_long_0000_s, main->message.set->notable);
-    fl_print_format("'%[%r%]'.%r", main->message.to, main->message.set->notable, fss_write_format_code_human_0000_s, main->message.set->notable, f_string_eol_s);
-
-    // FSS-0001 (Extended)
-    fl_print_format("    - As %[%r%]      format: ", main->message.to, main->message.set->notable, fss_write_extended_standard_s, main->message.set->notable);
-    fl_print_format("'%[%r%]', ", main->message.to, main->message.set->notable, fss_write_format_code_short_0001_s, main->message.set->notable);
-    fl_print_format("'%[%r%]', or ", main->message.to, main->message.set->notable, fss_write_format_code_long_0001_s, main->message.set->notable);
-    fl_print_format("'%[%r%]'.%r", main->message.to, main->message.set->notable, fss_write_format_code_human_0001_s, main->message.set->notable, f_string_eol_s);
-
-    // FSS-0002 (Basic List)
-    fl_print_format("    - As %[%r%]    format: ", main->message.to, main->message.set->notable, fss_write_basic_list_standard_s, main->message.set->notable);
-    fl_print_format("'%[%r%]', ", main->message.to, main->message.set->notable, fss_write_format_code_short_0002_s, main->message.set->notable);
-    fl_print_format("'%[%r%]', or ", main->message.to, main->message.set->notable, fss_write_format_code_long_0002_s, main->message.set->notable);
-    fl_print_format("'%[%r%]'.%r", main->message.to, main->message.set->notable, fss_write_format_code_human_0002_s, main->message.set->notable, f_string_eol_s);
-
-    // FSS-0003 (Extended List)
-    fl_print_format("    - As %[%r%] format: ", main->message.to, main->message.set->notable, fss_write_extended_list_standard_s, main->message.set->notable);
-    fl_print_format("'%[%r%]', ", main->message.to, main->message.set->notable, fss_write_format_code_short_0003_s, main->message.set->notable);
-    fl_print_format("'%[%r%]', or ", main->message.to, main->message.set->notable, fss_write_format_code_long_0003_s, main->message.set->notable);
-    fl_print_format("'%[%r%]'.%r", main->message.to, main->message.set->notable, fss_write_format_code_human_0003_s, main->message.set->notable, f_string_eol_s);
-
-    // FSS-0008 (Embedded List)
-    fl_print_format("    - As %[%r%] format: ", main->message.to, main->message.set->notable, fss_write_embedded_list_standard_s, main->message.set->notable);
-    fl_print_format("'%[%r%]', ", main->message.to, main->message.set->notable, fss_write_format_code_short_0008_s, main->message.set->notable);
-    fl_print_format("'%[%r%]', or ", main->message.to, main->message.set->notable, fss_write_format_code_long_0008_s, main->message.set->notable);
-    fl_print_format("'%[%r%]'.%r", main->message.to, main->message.set->notable, fss_write_format_code_human_0008_s, main->message.set->notable, f_string_eol_s);
-
-    // FSS-000E (Payload)
-    fl_print_format("    - As %[%r%]       format: ", main->message.to, main->message.set->notable, fss_write_payload_standard_s, main->message.set->notable);
-    fl_print_format("'%[%r%]', ", main->message.to, main->message.set->notable, fss_write_format_code_short_000e_s, main->message.set->notable);
-    fl_print_format("'%[%r%]', or ", main->message.to, main->message.set->notable, fss_write_format_code_long_000e_s, main->message.set->notable);
-    fl_print_format("'%[%r%]'.%r", main->message.to, main->message.set->notable, fss_write_format_code_human_000e_s, main->message.set->notable, f_string_eol_s);
-
-    f_print_dynamic_raw(f_string_eol_s, main->message.to);
-
-    fl_print_format("  The %[%r%] format is the default when no ", main->message.to, main->message.set->notable, fss_write_basic_standard_s, main->message.set->notable);
-    fl_print_format("'%[%r%r%]' is specified.%r", main->message.to, main->message.set->notable, f_console_symbol_long_normal_s, fss_write_long_as_s, main->message.set->notable, f_string_eol_s);
-
-    f_print_dynamic_raw(setting->line_last, main->message.to);
-
-    f_file_stream_flush(main->message.to);
-    f_file_stream_unlock(main->message.to);
+    fss_write_main_print_help((fss_write_setting_t *) setting, main->message);
   }
 #endif // _di_fss_write_main_process_help_
 
@@ -148,8 +82,8 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
           setting->process_normal = &fss_write_basic_process_normal;
         }
         else if (fl_string_dynamic_compare(argv[index], fss_write_format_code_short_0001_s) == F_equal_to ||
-            fl_string_dynamic_compare(argv[index], fss_write_format_code_long_0001_s) == F_equal_to ||
-            fl_string_dynamic_compare(argv[index], fss_write_format_code_human_0001_s) == F_equal_to) {
+                 fl_string_dynamic_compare(argv[index], fss_write_format_code_long_0001_s) == F_equal_to ||
+                 fl_string_dynamic_compare(argv[index], fss_write_format_code_human_0001_s) == F_equal_to) {
 
           setting->program_name = &fss_write_extended_program_name_s;
           setting->program_name_long = &fss_write_extended_program_name_long_s;
@@ -158,8 +92,8 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
           setting->process_normal = &fss_write_extended_process_normal;
         }
         else if (fl_string_dynamic_compare(argv[index], fss_write_format_code_short_0002_s) == F_equal_to ||
-            fl_string_dynamic_compare(argv[index], fss_write_format_code_long_0002_s) == F_equal_to ||
-            fl_string_dynamic_compare(argv[index], fss_write_format_code_human_0002_s) == F_equal_to) {
+                 fl_string_dynamic_compare(argv[index], fss_write_format_code_long_0002_s) == F_equal_to ||
+                 fl_string_dynamic_compare(argv[index], fss_write_format_code_human_0002_s) == F_equal_to) {
 
           setting->program_name = &fss_write_basic_list_program_name_s;
           setting->program_name_long = &fss_write_basic_list_program_name_long_s;
@@ -168,8 +102,8 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
           setting->process_normal = &fss_write_basic_list_process_normal;
         }
         else if (fl_string_dynamic_compare(argv[index], fss_write_format_code_short_0003_s) == F_equal_to ||
-            fl_string_dynamic_compare(argv[index], fss_write_format_code_long_0003_s) == F_equal_to ||
-            fl_string_dynamic_compare(argv[index], fss_write_format_code_human_0003_s) == F_equal_to) {
+                 fl_string_dynamic_compare(argv[index], fss_write_format_code_long_0003_s) == F_equal_to ||
+                 fl_string_dynamic_compare(argv[index], fss_write_format_code_human_0003_s) == F_equal_to) {
 
           setting->program_name = &fss_write_extended_list_program_name_s;
           setting->program_name_long = &fss_write_extended_list_program_name_long_s;
@@ -178,8 +112,8 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
           setting->process_normal = &fss_write_extended_list_process_normal;
         }
         else if (fl_string_dynamic_compare(argv[index], fss_write_format_code_short_0008_s) == F_equal_to ||
-            fl_string_dynamic_compare(argv[index], fss_write_format_code_long_0008_s) == F_equal_to ||
-            fl_string_dynamic_compare(argv[index], fss_write_format_code_human_0008_s) == F_equal_to) {
+                 fl_string_dynamic_compare(argv[index], fss_write_format_code_long_0008_s) == F_equal_to ||
+                 fl_string_dynamic_compare(argv[index], fss_write_format_code_human_0008_s) == F_equal_to) {
 
           setting->program_name = &fss_write_embedded_list_program_name_s;
           setting->program_name_long = &fss_write_embedded_list_program_name_long_s;
@@ -188,8 +122,8 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
           setting->process_normal = &fss_write_embedded_list_process_normal;
         }
         else if (fl_string_dynamic_compare(argv[index], fss_write_format_code_short_000e_s) == F_equal_to ||
-            fl_string_dynamic_compare(argv[index], fss_write_format_code_long_000e_s) == F_equal_to ||
-            fl_string_dynamic_compare(argv[index], fss_write_format_code_human_000e_s) == F_equal_to) {
+                 fl_string_dynamic_compare(argv[index], fss_write_format_code_long_000e_s) == F_equal_to ||
+                 fl_string_dynamic_compare(argv[index], fss_write_format_code_human_000e_s) == F_equal_to) {
 
           setting->program_name = &fss_write_payload_program_name_s;
           setting->program_name_long = &fss_write_payload_program_name_long_s;
@@ -199,15 +133,28 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
         }
         else {
-          // @todo print error
+          if (setting->flag & fss_write_main_flag_help_e) {
+            setting->status = F_status_set_error(F_parameter);
+
+            break;
+          }
+
+          if (setting->status != F_status_set_error(F_parameter)) {
+            fss_write_print_line_first_locked(setting, main->error);
+          }
 
           setting->status = F_status_set_error(F_parameter);
+
+          fss_write_main_print_error_format_unknown(main->error, argv[index]);
         }
       } // for
 
       if (F_status_is_error(setting->status)) {
         if (setting->flag & fss_write_main_flag_help_e) {
           fss_write_main_process_help(main, setting);
+        }
+        else {
+          fss_write_print_line_last_locked(setting, main->error);
         }
 
         return;

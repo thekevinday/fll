@@ -23,7 +23,7 @@ extern "C" {
 #endif // _di_fss_basic_write_error_parameter_same_times_print_
 
 /**
- * Print an message about a parameter missing a value.
+ * Print an error message about a parameter missing a value.
  *
  * @param main
  *   The main program data.
@@ -37,7 +37,7 @@ extern "C" {
 #endif // _di_fss_basic_write_error_parameter_value_missing_print_
 
 /**
- * Print an message about a parameter a New Line character '\n' (U+000A) being unsupported.
+ * Print an error message about a parameter a New Line character '\n' (U+000A) being unsupported.
  *
  * @param main
  *   The main program data.

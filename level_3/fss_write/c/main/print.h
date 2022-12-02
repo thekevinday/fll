@@ -118,7 +118,7 @@ extern "C" {
 #endif // _fss_write_print_error_prepend_only_whitespace_
 
 /**
- * Print an message about a parameter New Line character '\n' (U+000A) being unsupported.
+ * Print an error message about a parameter New Line character '\n' (U+000A) being unsupported.
  *
  * @param setting
  *   The main program settings.

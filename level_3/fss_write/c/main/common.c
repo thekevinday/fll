@@ -198,7 +198,7 @@ extern "C" {
       return;
     }
 
-    if (main->parameters.array[fss_write_parameter_object_e].result & f_console_result_value_e && main->parameters.array[fss_write_parameter_object_e].values.used) {
+    if ((main->parameters.array[fss_write_parameter_object_e].result & f_console_result_value_e) && main->parameters.array[fss_write_parameter_object_e].values.used) {
       f_array_lengths_t * const values = &main->parameters.array[fss_write_parameter_object_e].values;
 
       setting->objects.used = 0;
