@@ -47,20 +47,22 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 #ifndef _di_fss_write_main_process_help_
   void fss_write_main_process_help(fll_program_data_t * const main, void * const setting) {
 
-    fss_write_main_print_help((fss_write_setting_t *) setting, main->message);
+    fss_write_main_print_help(macro_fss_write_setting(setting), main->message);
   }
 #endif // _di_fss_write_main_process_help_
 
 #ifndef _di_fss_write_main_setting_load_as_
   void fss_write_main_setting_load_as(const f_console_arguments_t arguments, fll_program_data_t * const main, fss_write_setting_t * const setting) {
 
-    if (!main || !setting || F_status_is_error(setting->status) || (setting->flag & fss_write_main_flag_version_e)) return;
+    if (!main || !setting || F_status_is_error(setting->status) || (setting->flag & fss_write_flag_version_e)) return;
 
     setting->program_name = &fss_write_program_name_s;
     setting->program_name_long = &fss_write_program_name_long_s;
     setting->process_help = &fss_write_main_process_help;
     setting->process_pipe = &fss_write_basic_process_pipe;
     setting->process_normal = &fss_write_basic_process_normal;
+    setting->process_object = &fss_write_basic_process_object;
+    setting->process_content = &fss_write_basic_process_content;
 
     if (main->parameters.array[fss_write_parameter_as_e].result & f_console_result_value_e && main->parameters.array[fss_write_parameter_as_e].values.used) {
 
@@ -80,6 +82,8 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
           setting->process_help = &fss_write_basic_process_help;
           setting->process_pipe = &fss_write_basic_process_pipe;
           setting->process_normal = &fss_write_basic_process_normal;
+          setting->process_object = &fss_write_basic_process_object;
+          setting->process_content = &fss_write_basic_process_content;
         }
         else if (fl_string_dynamic_compare(argv[index], fss_write_format_code_short_0001_s) == F_equal_to ||
                  fl_string_dynamic_compare(argv[index], fss_write_format_code_long_0001_s) == F_equal_to ||
@@ -90,6 +94,8 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
           setting->process_help = &fss_write_extended_process_help;
           setting->process_pipe = &fss_write_extended_process_pipe;
           setting->process_normal = &fss_write_extended_process_normal;
+          setting->process_object = &fss_write_extended_process_object;
+          setting->process_content = &fss_write_extended_process_content;
         }
         else if (fl_string_dynamic_compare(argv[index], fss_write_format_code_short_0002_s) == F_equal_to ||
                  fl_string_dynamic_compare(argv[index], fss_write_format_code_long_0002_s) == F_equal_to ||
@@ -100,6 +106,8 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
           setting->process_help = &fss_write_basic_list_process_help;
           setting->process_pipe = &fss_write_basic_list_process_pipe;
           setting->process_normal = &fss_write_basic_list_process_normal;
+          setting->process_object = &fss_write_basic_list_process_object;
+          setting->process_content = &fss_write_basic_list_process_content;
         }
         else if (fl_string_dynamic_compare(argv[index], fss_write_format_code_short_0003_s) == F_equal_to ||
                  fl_string_dynamic_compare(argv[index], fss_write_format_code_long_0003_s) == F_equal_to ||
@@ -110,6 +118,8 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
           setting->process_help = &fss_write_extended_list_process_help;
           setting->process_pipe = &fss_write_extended_list_process_pipe;
           setting->process_normal = &fss_write_extended_list_process_normal;
+          setting->process_object = &fss_write_extended_list_process_object;
+          setting->process_content = &fss_write_extended_list_process_content;
         }
         else if (fl_string_dynamic_compare(argv[index], fss_write_format_code_short_0008_s) == F_equal_to ||
                  fl_string_dynamic_compare(argv[index], fss_write_format_code_long_0008_s) == F_equal_to ||
@@ -120,6 +130,8 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
           setting->process_help = &fss_write_embedded_list_process_help;
           setting->process_pipe = &fss_write_embedded_list_process_pipe;
           setting->process_normal = &fss_write_embedded_list_process_normal;
+          setting->process_object = &fss_write_embedded_list_process_object;
+          setting->process_content = &fss_write_embedded_list_process_content;
         }
         else if (fl_string_dynamic_compare(argv[index], fss_write_format_code_short_000e_s) == F_equal_to ||
                  fl_string_dynamic_compare(argv[index], fss_write_format_code_long_000e_s) == F_equal_to ||
@@ -130,10 +142,11 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
           setting->process_help = &fss_write_payload_process_help;
           setting->process_pipe = &fss_write_payload_process_pipe;
           setting->process_normal = &fss_write_payload_process_normal;
-
+          setting->process_object = 0; // Not used by payload.
+           setting->process_content = 0; // Not used by payload.
         }
         else {
-          if (setting->flag & fss_write_main_flag_help_e) {
+          if (setting->flag & fss_write_flag_help_e) {
             setting->status = F_status_set_error(F_parameter);
 
             break;
@@ -150,7 +163,7 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
       } // for
 
       if (F_status_is_error(setting->status)) {
-        if (setting->flag & fss_write_main_flag_help_e) {
+        if (setting->flag & fss_write_flag_help_e) {
           fss_write_main_process_help(main, setting);
         }
         else {
@@ -163,7 +176,7 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
     else if (main->parameters.array[fss_write_parameter_as_e].result & f_console_result_found_e) {
       setting->status = F_status_set_error(F_parameter);
 
-      if (setting->flag & fss_write_main_flag_help_e) {
+      if (setting->flag & fss_write_flag_help_e) {
         fss_write_main_process_help(main, setting);
 
         return;

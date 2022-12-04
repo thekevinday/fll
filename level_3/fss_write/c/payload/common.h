@@ -54,39 +54,6 @@ extern "C" {
   extern const f_string_static_t fss_write_format_code_human_000e_s;
 #endif // _di_fss_write_payload_strings_
 
-/**
- * Perform the payload-specific program setting load process.
- *
- * This prints error messages as appropriate.
- *
- * If either main or setting is NULL, then this immediately retuns without doing anything.
- *
- * @param arguments
- *   The parameters passed to the process (often referred to as command line arguments).
- * @param main
- *   The main program data.
- * @param setting
- *   The main program settings.
- *
- *   This alters setting.process_help, setting.process_normal, and setting.process_pipe.
- *
- *   This alters setting.status:
- *     F_none on success.
- *     F_interrupt on (exit) signal received.
- *
- *     F_parameter (with error bit) if main is NULL or setting is NULL.
- *     F_parameter (with error bit) on parameter error.
- *
- *   This alters setting.status:
- *     F_none on success.
- *     F_data_not on success but nothing was provided to operate with.
- *
- * @see fss_write_setting_load()
- */
-#ifndef _di_fss_write_payload_setting_load_
-  extern void fss_write_payload_setting_load(const f_console_arguments_t arguments, fll_program_data_t * const main, fss_write_setting_t * const setting);
-#endif // _di_fss_write_payload_setting_load_
-
 #ifdef __cplusplus
 } // extern "C"
 #endif

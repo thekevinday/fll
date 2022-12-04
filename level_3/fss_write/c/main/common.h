@@ -62,9 +62,21 @@ extern "C" {
 /**
  * The program defines.
  *
+ * The fss_write_pipe_content_*_s strings are strings rather than characters to allow for wide characters.
+ *
  * payload_write_common_allocation_*:
  *   - large: An allocation step used for buffers that are anticipated to have large buffers.
  *   - small: An allocation step used for buffers that are anticipated to have small buffers.
+ *
+ * fss_write_pipe_content_*_s:
+ *   - end:    The character representing the end of content.
+ *   - ignore: The character representing the start of or end of a set of characters to ignore.
+ *   - start:  The character representing the start of content.
+ *
+ * macro_fss_write_setting:
+ *   - Used to represent a cast to ((fss_write_setting_t *) setting).
+ *   - Simplifies the number of parenthesis used to make code slightly cleaner.
+ *   - Is wrapped in a parenthesis and not a block.
  */
 #ifndef _di_fss_write_defines_
   #define fss_write_signal_check_d 20000
@@ -83,6 +95,8 @@ extern "C" {
   extern const f_string_static_t fss_write_pipe_content_end_s;
   extern const f_string_static_t fss_write_pipe_content_ignore_s;
   extern const f_string_static_t fss_write_pipe_content_start_s;
+
+  #define macro_fss_write_setting(setting) ((fss_write_setting_t *) setting)
 #endif // _di_fss_write_defines_
 
 /**
@@ -225,7 +239,7 @@ extern "C" {
 /**
  * Flags used to represent flags passed to the main function.
  *
- * fss_write_main_flag_*_e:
+ * fss_write_flag_*_e:
  *   - none:    No modes in use.
  *   - content: The Content being written is specified.
  *   - double:  Operate using double quotes.
@@ -235,26 +249,28 @@ extern "C" {
  *   - object:  The Object being written is specified.
  *   - partial: Do not write end of Object/Content character.
  *   - prepend: Prepend the given white space characters to the start of each multi-line Content.
+ *   - printed: Designate that the first line has been print for the main output.
  *   - single:  Operate using single quotes.
  *   - trim:    Trim Object names.
  *   - version: Print version.
  */
-#ifndef _di_fss_write_main_flag_e_
+#ifndef _di_fss_write_flag_e_
   enum {
-    fss_write_main_flag_none_e    = 0x0,
-    fss_write_main_flag_content_e = 0x1,
-    fss_write_main_flag_double_e  = 0x2,
-    fss_write_main_flag_file_to_e = 0x4,
-    fss_write_main_flag_help_e    = 0x8,
-    fss_write_main_flag_ignore_e  = 0x10,
-    fss_write_main_flag_object_e  = 0x20,
-    fss_write_main_flag_partial_e = 0x40,
-    fss_write_main_flag_prepend_e = 0x80,
-    fss_write_main_flag_single_e  = 0x100,
-    fss_write_main_flag_trim_e    = 0x200,
-    fss_write_main_flag_version_e = 0x400,
+    fss_write_flag_none_e    = 0x0,
+    fss_write_flag_content_e = 0x1,
+    fss_write_flag_double_e  = 0x2,
+    fss_write_flag_file_to_e = 0x4,
+    fss_write_flag_help_e    = 0x8,
+    fss_write_flag_ignore_e  = 0x10,
+    fss_write_flag_object_e  = 0x20,
+    fss_write_flag_partial_e = 0x40,
+    fss_write_flag_prepend_e = 0x80,
+    fss_write_flag_printed_e = 0x100,
+    fss_write_flag_single_e  = 0x200,
+    fss_write_flag_trim_e    = 0x400,
+    fss_write_flag_version_e = 0x800,
   };
-#endif // _di_fss_write_main_flag_e_
+#endif // _di_fss_write_flag_e_
 
 /**
  * The fss payload write main program settings.
@@ -320,11 +336,13 @@ extern "C" {
     void (*process_help)(fll_program_data_t * const main, void * const setting);
     void (*process_normal)(fll_program_data_t * const main, void * const setting);
     void (*process_pipe)(fll_program_data_t * const main, void * const setting);
+    void (*process_object)(fll_program_data_t * const main, void * const setting, const f_string_static_t * const object);
+    void (*process_content)(fll_program_data_t * const main, void * const setting, const f_string_static_t * const content);
   } fss_write_setting_t;
 
   #define fss_write_setting_t_initialize \
     { \
-      fss_write_main_flag_none_e, \
+      fss_write_flag_none_e, \
       F_none, \
       macro_f_state_t_initialize(fss_write_common_allocation_large_d, fss_write_common_allocation_small_d, 0, 0, &fll_program_standard_signal_state, 0, 0, 0), \
       f_string_range_t_initialize, \
@@ -339,6 +357,8 @@ extern "C" {
       f_string_ranges_t_initialize, \
       f_string_dynamics_t_initialize, \
       f_string_dynamics_t_initialize, \
+      0, \
+      0, \
       0, \
       0, \
       0, \

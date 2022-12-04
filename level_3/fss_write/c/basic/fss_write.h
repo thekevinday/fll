@@ -39,7 +39,6 @@
 
 // FLL-2 includes.
 #include <fll/level_2/error.h>
-#include <fll/level_2/fss/basic.h>
 #include <fll/level_2/print.h>
 #include <fll/level_2/program.h>
 
@@ -52,6 +51,24 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+/**
+ * Process a single Content, printing the FSS-0000 (Basic) if valid or an error if invalid.
+ *
+ * @param main
+ *   The main program data.
+ * @param setting
+ *   The main program settings.
+ *   Must be of type (fss_write_setting_t *).
+ *
+ *   This alters setting.status.
+ *   This uses and alters setting.buffer.
+ * @param content
+ *   The string representing the Content to write to the buffer.
+ */
+#ifndef _di_fss_write_basic_process_content_
+  extern void fss_write_basic_process_content(fll_program_data_t * const main, void * const setting, const f_string_static_t * const content);
+#endif // _di_fss_write_basic_process_content_
 
 /**
  * Process help for FSS-0000 (Basic).
@@ -73,7 +90,7 @@ extern "C" {
 #endif // _di_fss_write_basic_process_help_
 
 /**
- * Process normally, writing to the output.
+ * Process normally, writing to the output for FSS-0000 (Basic).
  *
  * @param main
  *   The main program data.
@@ -92,7 +109,25 @@ extern "C" {
 #endif // _di_fss_write_basic_process_normal_
 
 /**
- * Process the pipe, reading from the pipe and writing to the output.
+ * Process a single Object, printing the FSS-0000 (Basic) if valid or an error if invalid.
+ *
+ * @param main
+ *   The main program data.
+ * @param setting
+ *   The main program settings.
+ *   Must be of type (fss_write_setting_t *).
+ *
+ *   This alters setting.status.
+ *   This uses and alters setting.buffer.
+ * @param object
+ *   The string representing the Object to write to the buffer.
+ */
+#ifndef _di_fss_write_basic_process_object_
+  extern void fss_write_basic_process_object(fll_program_data_t * const main, void * const setting, const f_string_static_t * const object);
+#endif // _di_fss_write_basic_process_object_
+
+/**
+ * Process the pipe, reading from the pipe and writing to the output for FSS-0000 (Basic).
  *
  * @param main
  *   The main program data.

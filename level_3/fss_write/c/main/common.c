@@ -141,11 +141,11 @@ extern "C" {
     main->output.to.flag = F_file_flag_create_d | F_file_flag_write_only_d | F_file_flag_append_d;
 
     if (main->parameters.array[fss_write_parameter_help_e].result & f_console_result_found_e) {
-      setting->flag |= fss_write_main_flag_help_e;
+      setting->flag |= fss_write_flag_help_e;
     }
 
     if (main->parameters.array[fss_write_parameter_version_e].result & f_console_result_found_e) {
-      setting->flag |= fss_write_main_flag_version_e;
+      setting->flag |= fss_write_flag_version_e;
     }
 
     if (callback) {
@@ -162,7 +162,7 @@ extern "C" {
     if (main->parameters.array[fss_write_parameter_help_e].result & f_console_result_found_e) return;
     if (main->parameters.array[fss_write_parameter_version_e].result & f_console_result_found_e) return;
 
-    if (main->parameters.array[fss_write_parameter_file_e].result & f_console_result_value_e && main->parameters.array[fss_write_parameter_file_e].values.used) {
+    if ((main->parameters.array[fss_write_parameter_file_e].result & f_console_result_value_e) && main->parameters.array[fss_write_parameter_file_e].values.used) {
       if (main->parameters.array[fss_write_parameter_file_e].values.used > 1) {
         setting->status = F_status_set_error(F_parameter);
 
@@ -186,7 +186,7 @@ extern "C" {
         return;
       }
 
-      setting->flag |= fss_write_main_flag_file_to_e;
+      setting->flag |= fss_write_flag_file_to_e;
     }
     else if (main->parameters.array[fss_write_parameter_file_e].result & f_console_result_found_e) {
       setting->status = F_status_set_error(F_parameter);
@@ -221,7 +221,7 @@ extern "C" {
         setting->objects.array[setting->objects.used++].size = 0;
       } // for
 
-      setting->flag |= fss_write_main_flag_object_e;
+      setting->flag |= fss_write_flag_object_e;
     }
     else if (main->parameters.array[fss_write_parameter_object_e].result & f_console_result_found_e) {
       setting->status = F_status_set_error(F_parameter);
@@ -233,7 +233,7 @@ extern "C" {
       return;
     }
 
-    if (main->parameters.array[fss_write_parameter_content_e].result & f_console_result_value_e && main->parameters.array[fss_write_parameter_content_e].values.used) {
+    if ((main->parameters.array[fss_write_parameter_content_e].result & f_console_result_value_e) && main->parameters.array[fss_write_parameter_content_e].values.used) {
       f_array_lengths_t * const values = &main->parameters.array[fss_write_parameter_content_e].values;
 
       setting->contents.used = 0;
@@ -256,7 +256,7 @@ extern "C" {
         setting->contents.array[setting->contents.used++].size = 0;
       } // for
 
-      setting->flag |= fss_write_main_flag_content_e;
+      setting->flag |= fss_write_flag_content_e;
     }
     else if (main->parameters.array[fss_write_parameter_content_e].result & f_console_result_found_e) {
       setting->status = F_status_set_error(F_parameter);
@@ -268,7 +268,7 @@ extern "C" {
       return;
     }
 
-    if (main->parameters.array[fss_write_parameter_prepend_e].result & f_console_result_value_e && main->parameters.array[fss_write_parameter_prepend_e].values.used) {
+    if ((main->parameters.array[fss_write_parameter_prepend_e].result & f_console_result_value_e) && main->parameters.array[fss_write_parameter_prepend_e].values.used) {
       const f_array_length_t index = main->parameters.array[fss_write_parameter_prepend_e].values.array[main->parameters.array[fss_write_parameter_prepend_e].values.used - 1];
 
       setting->prepend.used = 0;
@@ -305,7 +305,7 @@ extern "C" {
         } // for
       }
 
-      setting->flag |= fss_write_main_flag_prepend_e;
+      setting->flag |= fss_write_flag_prepend_e;
     }
     else if (main->parameters.array[fss_write_parameter_prepend_e].result & f_console_result_found_e) {
       setting->status = F_status_set_error(F_parameter);
@@ -317,7 +317,7 @@ extern "C" {
       return;
     }
 
-    if (main->parameters.array[fss_write_parameter_ignore_e].result & f_console_result_value_e && main->parameters.array[fss_write_parameter_ignore_e].values.used) {
+    if ((main->parameters.array[fss_write_parameter_ignore_e].result & f_console_result_value_e) && main->parameters.array[fss_write_parameter_ignore_e].values.used) {
 
       if (main->parameters.array[fss_write_parameter_ignore_e].values.used % 2 != 0) {
         setting->status = F_status_set_error(F_parameter);
@@ -380,7 +380,7 @@ extern "C" {
         ++setting->ignores.used;
       } // for
 
-      setting->flag |= fss_write_main_flag_ignore_e;
+      setting->flag |= fss_write_flag_ignore_e;
     }
     else if (main->parameters.array[fss_write_parameter_ignore_e].result & f_console_result_found_e) {
       setting->status = F_status_set_error(F_parameter);
@@ -393,11 +393,11 @@ extern "C" {
     }
 
     if (main->parameters.array[fss_write_parameter_partial_e].result & f_console_result_found_e) {
-      setting->flag |= fss_write_main_flag_partial_e;
+      setting->flag |= fss_write_flag_partial_e;
     }
 
-    if (setting->flag & (fss_write_main_flag_object_e | fss_write_main_flag_content_e)) {
-      if (setting->flag & fss_write_main_flag_object_e) {
+    if (setting->flag & (fss_write_flag_object_e | fss_write_flag_content_e)) {
+      if (setting->flag & fss_write_flag_object_e) {
         if (main->parameters.array[fss_write_parameter_object_e].locations.used != main->parameters.array[fss_write_parameter_object_e].values.used) {
           setting->status = F_status_set_error(F_parameter);
 
@@ -418,7 +418,7 @@ extern "C" {
           return;
         }
 
-        if (main->parameters.array[fss_write_parameter_object_e].locations.used != main->parameters.array[fss_write_parameter_content_e].locations.used && !(setting->flag & fss_write_main_flag_partial_e)) {
+        if (main->parameters.array[fss_write_parameter_object_e].locations.used != main->parameters.array[fss_write_parameter_content_e].locations.used && !(setting->flag & fss_write_flag_partial_e)) {
           setting->status = F_status_set_error(F_parameter);
 
           fss_write_print_line_first_locked(setting, main->error);
@@ -428,7 +428,7 @@ extern "C" {
           return;
         }
 
-        if ((setting->flag & fss_write_main_flag_content_e) && (setting->flag & fss_write_main_flag_partial_e)) {
+        if ((setting->flag & fss_write_flag_content_e) && (setting->flag & fss_write_flag_partial_e)) {
           if (main->parameters.array[fss_write_parameter_content_e].result & f_console_result_value_e) {
             setting->status = F_status_set_error(F_parameter);
 
@@ -438,31 +438,6 @@ extern "C" {
 
             return;
           }
-        }
-
-        if (setting->flag & fss_write_main_flag_content_e) {
-          f_array_length_t location_object = 0;
-          f_array_length_t location_content = 0;
-          f_array_length_t location_sub_object = 0;
-          f_array_length_t location_sub_content = 0;
-
-          for (f_array_length_t i = 0; i < main->parameters.array[fss_write_parameter_object_e].locations.used; ++i) {
-
-            location_object = main->parameters.array[fss_write_parameter_object_e].locations.array[i];
-            location_content = main->parameters.array[fss_write_parameter_content_e].locations.array[i];
-            location_sub_object = main->parameters.array[fss_write_parameter_object_e].locations_sub.array[i];
-            location_sub_content = main->parameters.array[fss_write_parameter_content_e].locations_sub.array[i];
-
-            if (location_object > location_content || location_object == location_content && location_sub_object > location_sub_content) {
-              setting->status = F_status_set_error(F_parameter);
-
-              fss_write_print_line_first_locked(setting, main->error);
-              fss_write_print_error_object_not_before_content(setting, main->error);
-              fss_write_print_line_last_locked(setting, main->error);
-
-              break;
-            }
-          } // for
         }
       }
     }
@@ -481,10 +456,10 @@ extern "C" {
     }
 
     if (main->parameters.array[fss_write_parameter_trim_e].result & f_console_result_found_e) {
-      setting->flag |= fss_write_main_flag_trim_e;
+      setting->flag |= fss_write_flag_trim_e;
     }
 
-    if (!(setting->flag & (fll_program_data_pipe_input_e | fss_write_main_flag_content_e | fss_write_parameter_object_e))) {
+    if (!(setting->flag & (fll_program_data_pipe_input_e | fss_write_flag_content_e | fss_write_parameter_object_e))) {
       setting->status = F_data_not;
     }
   }

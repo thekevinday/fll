@@ -68,7 +68,7 @@ extern "C" {
  * signal:          The process signal management structure.
  *
  * message: The output file for normal output messages (often stdout).
- * output:  The output file for normal/non-message output (often stdout or a file).
+ * output:  The output file for normal/non-message output, aka data output (often stdout or a file).
  * error:   The output file for error output messages.
  * warning: The output file for warning output messages.
  *

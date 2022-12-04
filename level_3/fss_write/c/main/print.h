@@ -62,7 +62,7 @@ extern "C" {
 #endif // _di_fss_write_print_error_file_
 
 /**
- * Print error message about each Object parameter not being specified before a Content parameter.
+ * Print an error message about the object and content parameters not being specified the same number of times.
  *
  * @param setting
  *   The main program settings.
@@ -74,10 +74,34 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ * @see fll_error_print()
  */
-#ifndef _di_fss_write_print_error_object_not_before_content_
-  extern f_status_t fss_write_print_error_object_not_before_content(fss_write_setting_t * const setting, const fl_print_t print);
-#endif // _di_fss_write_print_error_object_not_before_content_
+#ifndef _di_fss_write_print_error_parameter_same_times_
+  extern f_status_t fss_write_print_error_parameter_same_times(fss_write_setting_t * const setting, const fl_print_t print);
+#endif // _di_fss_write_print_error_parameter_same_times_
+
+/**
+ * Print an error message about a parameter a new line character '\n' (U+000A) being unsupported for an Object for the given standard.
+ *
+ * @param setting
+ *   The main program settings.
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   Designates the how and where to print.
+ * @param standard
+ *   The string used to communicate the standad that does not support the EOL character.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ *
+ * @see fll_error_print()
+ */
+#ifndef _di_fss_write_print_error_parameter_unsupported_eol_object_
+  extern f_status_t fss_write_print_error_parameter_unsupported_eol_object(fss_write_setting_t * const setting, const fl_print_t print, const f_string_static_t standard);
+#endif // _di_fss_write_print_error_parameter_unsupported_eol_object_
 
 /**
  * Print an message about a multiple Content being unsupported.

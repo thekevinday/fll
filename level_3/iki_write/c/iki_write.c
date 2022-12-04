@@ -180,7 +180,7 @@ extern "C" {
       fll_print_dynamic_raw(f_string_eol_s, main->output.to);
     } // for
 
-    // Ensure a new line is always put at the end of the program execution, unless in quiet mode.
+    // Ensure a new line is always put at the end of the program execution.
     iki_write_print_line_last_locked(setting, main->message);
   }
 #endif // _di_iki_write_main_

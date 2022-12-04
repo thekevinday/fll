@@ -23,7 +23,7 @@ Featureless Settings Specification: 0001 - Extended:
   Key\:
     code:"\s" = White space, except newline.
     code:"\b" = Either white space or printable, except newline.
-    code:"\q" = Non-white space or quoted white space, no white space outside of quotes.
+    code:"\q" = Non-white space or quoted white space (and non-whitespace) with no white space outside of the quotes.
     code:"\n" = Newline.
     code:"*" = Zero or more occurrences.
     code:"+" = One or more occurrences.

@@ -53,6 +53,24 @@ extern "C" {
 #endif
 
 /**
+ * Process a single Content, printing the FSS-0008 (Embedded List) if valid or an error if invalid.
+ *
+ * @param main
+ *   The main program data.
+ * @param setting
+ *   The main program settings.
+ *   Must be of type (fss_write_setting_t *).
+ *
+ *   This alters setting.status.
+ *   This uses and alters setting.buffer.
+ * @param content
+ *   The string representing the Content to write to the buffer.
+ */
+#ifndef _di_fss_write_embedded_list_process_content_
+  extern void fss_write_embedded_list_process_content(fll_program_data_t * const main, void * const setting, const f_string_static_t * const content);
+#endif // _di_fss_write_embedded_list_process_content_
+
+/**
  * Process help for FSS-0008 (Embedded List).
  *
  * @param main
@@ -89,6 +107,24 @@ extern "C" {
 #ifndef _di_fss_write_embedded_list_process_normal_
   extern void fss_write_embedded_list_process_normal(fll_program_data_t * const main, void * const setting);
 #endif // _di_fss_write_embedded_list_process_normal_
+
+/**
+ * Process a single Object, printing the FSS-0008 (Embedded List) if valid or an error if invalid.
+ *
+ * @param main
+ *   The main program data.
+ * @param setting
+ *   The main program settings.
+ *   Must be of type (fss_write_setting_t *).
+ *
+ *   This alters setting.status.
+ *   This uses and alters setting.buffer.
+ * @param object
+ *   The string representing the Object to write to the buffer.
+ */
+#ifndef _di_fss_write_embedded_list_process_object_
+  extern void fss_write_embedded_list_process_object(fll_program_data_t * const main, void * const setting, const f_string_static_t * const object);
+#endif // _di_fss_write_embedded_list_process_object_
 
 /**
  * Process the pipe, reading from the pipe and writing to the output.

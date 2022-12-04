@@ -159,7 +159,7 @@ extern "C" {
       }
     }
 
-    // Ensure a new line is always put at the end of the program execution, unless in quiet mode.
+    // Ensure a new line is always put at the end of the program execution.
     iki_read_print_line_last_locked(setting, main->message);
   }
 #endif // _di_iki_read_main_

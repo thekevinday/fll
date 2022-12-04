@@ -1,11 +1,13 @@
 # fss-0005 iki-0002
+#
+# Builds the fss_write library and all programs.
+#
+# An optional "install" is provided as a convience and a sort of documentation.
+# This "install" only provides a very basic setup and it is strongly recommended to install manually or through some other means.
+#
 
 settings:
   fail exit
-
-  compiler gcc
-  indexer ar
-  indexer_arguments rcs
 
   environment PATH LD_LIBRARY_PATH
 
@@ -34,3 +36,13 @@ using_mode:
   #build settings.extended_list parameter:'mode:value'
   #build settings.embedded_list parameter:'mode:value'
   build settings.payload parameter:'mode:value'
+
+install:
+  shell ./install.sh parameter:'work'
+  #shell ./install.sh parameter:'work' -s data/build/settings.main
+  #shell ./install.sh parameter:'work' -s data/build/settings.basic
+  #shell ./install.sh parameter:'work' -s data/build/settings.basic_list
+  #shell ./install.sh parameter:'work' -s data/build/settings.extended
+  #shell ./install.sh parameter:'work' -s data/build/settings.extended_list
+  #shell ./install.sh parameter:'work' -s data/build/settings.embedded_list
+  shell ./install.sh parameter:'work' -s data/build/settings.payload

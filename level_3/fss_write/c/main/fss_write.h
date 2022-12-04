@@ -77,6 +77,30 @@ extern "C" {
   extern void fss_write_main(fll_program_data_t * const main, fss_write_setting_t * const setting);
 #endif // _di_fss_write_main_
 
+/**
+ * Process a given Object and Content, printing the assigned FSS format if valid or an error if invalid.
+ *
+ * @param main
+ *   The main program data.
+ * @param setting
+ *   The main program settings.
+ *
+ *   This alters setting.status:
+ *     F_none on success.
+ *     F_interrupt on (exit) signal received.
+ *
+ *     F_parameter (with error bit) if main is NULL or setting is NULL.
+ * @param object
+ *   The object to validate and print.
+ *   Set pointer address to 0 to not use.
+ * @param content
+ *   The content to escape and print.
+ *   Set pointer address to 0 to not use.
+ */
+#ifndef _di_fss_write_process_set_
+  extern void fss_write_process_set(fll_program_data_t * const main, fss_write_setting_t * const setting, const f_string_static_t * const object, const f_string_static_t * const content);
+#endif // _di_fss_write_process_set_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif
