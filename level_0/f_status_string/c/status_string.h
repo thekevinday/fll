@@ -503,8 +503,8 @@ extern "C" {
     #define F_status_type_not_s          "F_type_not"
     #define F_status_success_s           "F_success"
     #define F_status_success_not_s       "F_success_not"
-    #define F_status_supported_s         "F_supported"
-    #define F_status_supported_not_s     "F_supported_not"
+    #define F_status_support_s         "F_support"
+    #define F_status_support_not_s     "F_support_not"
     #define F_status_user_s              "F_user"
     #define F_status_user_not_s          "F_user_not"
     #define F_status_utf_s               "F_utf"
@@ -788,8 +788,8 @@ extern "C" {
     #define F_status_string_too_small_s_length  18
     #define F_status_success_s_length           9
     #define F_status_success_not_s_length       13
-    #define F_status_supported_s_length         11
-    #define F_status_supported_not_s_length     15
+    #define F_status_support_s_length           9
+    #define F_status_support_not_s_length       13
     #define F_status_syntax_s_length            8
     #define F_status_syntax_not_s_length        12
     #define F_status_terminate_s_length         11
@@ -1101,8 +1101,8 @@ extern "C" {
     extern const f_string_static_t f_status_type_not_s;
     extern const f_string_static_t f_status_success_s;
     extern const f_string_static_t f_status_success_not_s;
-    extern const f_string_static_t f_status_supported_s;
-    extern const f_string_static_t f_status_supported_not_s;
+    extern const f_string_static_t f_status_support_s;
+    extern const f_string_static_t f_status_support_not_s;
     extern const f_string_static_t f_status_user_s;
     extern const f_string_static_t f_status_user_not_s;
     extern const f_string_static_t f_status_utf_s;

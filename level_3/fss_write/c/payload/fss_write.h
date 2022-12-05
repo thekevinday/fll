@@ -73,25 +73,6 @@ extern "C" {
 #endif // _di_fss_write_payload_process_help_
 
 /**
- * Process normally, writing to the output.
- *
- * @param main
- *   The main program data.
- * @param setting
- *   The main program settings.
- *   Must be of type (fss_write_setting_t *).
- *
- *   This alters setting.status:
- *     F_none on success.
- *     F_interrupt on (exit) signal received.
- *
- *     F_parameter (with error bit) if main is NULL or setting is NULL.
- */
-#ifndef _di_fss_write_payload_process_normal_
-  extern void fss_write_payload_process_normal(fll_program_data_t * const main, void * const setting);
-#endif // _di_fss_write_payload_process_normal_
-
-/**
  * Process the pipe, reading from the pipe and writing to the output.
  *
  * @param main
@@ -119,21 +100,22 @@ extern "C" {
  *   The main program data.
  * @param setting
  *   The main program settings.
+ *   Must be of type (fss_write_setting_t *).
+ *
+ *   Set setting.object to 0 to not use an Object.
+ *   Set setting.contents to 0 to not use an Content set.
+ *
+ *   This standard only supports a single Content per Object.
+ *   The setting.contents.array[0] must exist (settings.contents.used == 1), or it is treated as if (settings.contents == 0).
  *
  *   This alters setting.status:
  *     F_none on success.
  *     F_interrupt on (exit) signal received.
  *
  *     F_parameter (with error bit) if main is NULL or setting is NULL.
- * @param object
- *   The object to validate and print.
- *   Set pointer address to 0 to not use.
- * @param content
- *   The content to escape and print.
- *   Set pointer address to 0 to not use.
  */
 #ifndef _di_fss_write_payload_process_set_
-  extern void fss_write_payload_process_set(fll_program_data_t * const main, fss_write_setting_t * const setting, const f_string_static_t *object, const f_string_static_t *content);
+  extern void fss_write_payload_process_set(fll_program_data_t * const main, void * const setting);
 #endif // _di_fss_write_payload_process_set_
 
 /**

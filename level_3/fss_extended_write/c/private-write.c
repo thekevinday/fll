@@ -96,7 +96,7 @@ extern "C" {
       if (F_status_set_fine(status) == F_none_eol) {
         fss_extended_write_error_parameter_unsupported_eol_print(main);
 
-        return F_status_set_error(F_supported_not);
+        return F_status_set_error(F_support_not);
       }
 
       if (F_status_is_error(status)) {
@@ -124,7 +124,7 @@ extern "C" {
           if (F_status_set_fine(status) == F_none_eol) {
             fss_extended_write_error_parameter_unsupported_eol_print(main);
 
-            return F_status_set_error(F_supported_not);
+            return F_status_set_error(F_support_not);
           }
 
           if (F_status_is_error(status)) {
@@ -324,7 +324,7 @@ extern "C" {
             if (F_status_set_fine(status) == F_none_eol) {
               fss_extended_write_error_parameter_unsupported_eol_print(main);
 
-              status = F_status_set_error(F_supported_not);
+              status = F_status_set_error(F_support_not);
 
               break;
             }

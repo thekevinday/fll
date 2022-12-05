@@ -72,7 +72,7 @@ extern "C" {
     if (as.capability) {
       const f_status_t status = f_capability_process_set(as.capability);
 
-      if (F_status_is_error(status) && F_status_set_fine(status) != F_supported_not) {
+      if (F_status_is_error(status) && F_status_set_fine(status) != F_support_not) {
         if (parameter && parameter->option & FL_execute_parameter_option_exit_d) {
           exit(F_execute_capability);
         }

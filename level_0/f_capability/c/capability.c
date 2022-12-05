@@ -394,7 +394,7 @@ extern "C" {
       *ambient = cap_get_ambient(value);
 
       if (*ambient == -1) {
-        return F_status_set_error(F_supported_not);
+        return F_status_set_error(F_support_not);
       }
 
       return F_none;
@@ -598,7 +598,7 @@ extern "C" {
       if (errno == ENOMEM) return F_status_set_error(F_memory_not);
       if (errno == ENOTDIR) return F_status_set_error(F_directory_not);
       if (errno == EPERM) return F_status_set_error(F_prohibited);
-      if (errno == EROFS) return F_status_set_error(F_supported_not);
+      if (errno == EROFS) return F_status_set_error(F_support_not);
 
       return F_status_set_error(F_failure);
     }
@@ -617,7 +617,7 @@ extern "C" {
         if (errno == ENOMEM) return F_status_set_error(F_memory_not);
         if (errno == ENOTDIR) return F_status_set_error(F_directory_not);
         if (errno == EPERM) return F_status_set_error(F_prohibited);
-        if (errno == EROFS) return F_status_set_error(F_supported_not);
+        if (errno == EROFS) return F_status_set_error(F_support_not);
 
         return F_status_set_error(F_failure);
       }
@@ -645,7 +645,7 @@ extern "C" {
       if (errno == ENOMEM) return F_status_set_error(F_memory_not);
       if (errno == ENOTDIR) return F_status_set_error(F_directory_not);
       if (errno == EPERM) return F_status_set_error(F_prohibited);
-      if (errno == EROFS) return F_status_set_error(F_supported_not);
+      if (errno == EROFS) return F_status_set_error(F_support_not);
 
       return F_status_set_error(F_failure);
     }
@@ -664,7 +664,7 @@ extern "C" {
         if (errno == ENOMEM) return F_status_set_error(F_memory_not);
         if (errno == ENOTDIR) return F_status_set_error(F_directory_not);
         if (errno == EPERM) return F_status_set_error(F_prohibited);
-        if (errno == EROFS) return F_status_set_error(F_supported_not);
+        if (errno == EROFS) return F_status_set_error(F_support_not);
 
         return F_status_set_error(F_failure);
       }
@@ -850,7 +850,7 @@ extern "C" {
         if (errno == ENOMEM) return F_status_set_error(F_memory_not);
         if (errno == ENOTDIR) return F_status_set_error(F_directory_not);
         if (errno == EPERM) return F_status_set_error(F_prohibited);
-        if (errno == EROFS) return F_status_set_error(F_supported_not);
+        if (errno == EROFS) return F_status_set_error(F_support_not);
 
         return F_status_set_error(F_failure);
       }

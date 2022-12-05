@@ -343,10 +343,10 @@ extern "C" {
     if (fsync(file.id) < 0) {
       if (errno == EBADF) return F_status_set_error(F_file_descriptor);
       if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_block);
-      if (errno == EINVAL) return F_status_set_error(F_supported_not);
+      if (errno == EINVAL) return F_status_set_error(F_support_not);
       if (errno == EIO) return F_status_set_error(F_input_output);
       if (errno == ENOSPC) return F_status_set_error(F_space_not);
-      if (errno == EROFS) return F_status_set_error(F_supported_not);
+      if (errno == EROFS) return F_status_set_error(F_support_not);
 
       return F_status_set_error(F_file_synchronize);
     }
@@ -545,7 +545,7 @@ extern "C" {
       if (errno == ENOMEM) return F_status_set_error(F_memory_not);
       if (errno == ENOSPC) return F_status_set_error(F_space_not);
       if (errno == ENOTDIR) return F_status_set_error(F_file_type_not_directory);
-      if (errno == EOPNOTSUPP) return F_status_set_error(F_supported_not);
+      if (errno == EOPNOTSUPP) return F_status_set_error(F_support_not);
       if (errno == EPERM) return F_status_set_error(F_prohibited);
       if (errno == EROFS) return F_status_set_error(F_read_only);
       if (errno == ETXTBSY) return F_status_set_error(F_busy);
@@ -579,7 +579,7 @@ extern "C" {
       if (errno == ENOMEM) return F_status_set_error(F_memory_not);
       if (errno == ENOSPC) return F_status_set_error(F_space_not);
       if (errno == ENOTDIR) return F_status_set_error(F_file_type_not_directory);
-      if (errno == EOPNOTSUPP) return F_status_set_error(F_supported_not);
+      if (errno == EOPNOTSUPP) return F_status_set_error(F_support_not);
       if (errno == EPERM) return F_status_set_error(F_prohibited);
       if (errno == EROFS) return F_status_set_error(F_read_only);
       if (errno == ETXTBSY) return F_status_set_error(F_busy);

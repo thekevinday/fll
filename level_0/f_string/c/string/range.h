@@ -42,6 +42,15 @@ extern "C" {
     range.stop = 0;
 #endif // _di_f_string_range_t_
 
+/**
+ * Provide a static empty range.
+ *
+ * This is intended to represent an empty or disabled range.
+ */
+#ifndef _di_f_string_range_empty_c_
+  extern const f_string_range_t f_string_range_empty_c;
+#endif // _di_f_string_range_empty_c_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

@@ -350,8 +350,8 @@ extern "C" {
     const f_string_static_t f_status_type_not_s = macro_f_string_static_t_initialize(F_status_type_not_s, 0, F_status_type_not_s_length);
     const f_string_static_t f_status_success_s = macro_f_string_static_t_initialize(F_status_success_s, 0, F_status_success_s_length);
     const f_string_static_t f_status_success_not_s = macro_f_string_static_t_initialize(F_status_success_not_s, 0, F_status_success_not_s_length);
-    const f_string_static_t f_status_supported_s = macro_f_string_static_t_initialize(F_status_supported_s, 0, F_status_supported_s_length);
-    const f_string_static_t f_status_supported_not_s = macro_f_string_static_t_initialize(F_status_supported_not_s, 0, F_status_supported_not_s_length);
+    const f_string_static_t f_status_support_s = macro_f_string_static_t_initialize(F_status_support_s, 0, F_status_support_s_length);
+    const f_string_static_t f_status_support_not_s = macro_f_string_static_t_initialize(F_status_support_not_s, 0, F_status_support_not_s_length);
     const f_string_static_t f_status_user_s = macro_f_string_static_t_initialize(F_status_user_s, 0, F_status_user_s_length);
     const f_string_static_t f_status_user_not_s = macro_f_string_static_t_initialize(F_status_user_not_s, 0, F_status_user_not_s_length);
     const f_string_static_t f_status_utf_s = macro_f_string_static_t_initialize(F_status_utf_s, 0, F_status_utf_s_length);
@@ -2353,13 +2353,13 @@ extern "C" {
 
           break;
 
-        case F_supported:
-          *name = f_status_supported_s;
+        case F_support:
+          *name = f_status_support_s;
 
           break;
 
-        case F_supported_not:
-          *name = f_status_supported_not_s;
+        case F_support_not:
+          *name = f_status_support_not_s;
 
           break;
 

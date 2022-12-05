@@ -2506,7 +2506,7 @@ extern "C" {
             controller_unlock_print_flush(global.main->error.to, global.thread);
           }
 
-          status = F_status_set_error(F_supported_not);
+          status = F_status_set_error(F_support_not);
           break;
         }
 
@@ -5006,7 +5006,7 @@ extern "C" {
 
           status = f_capability_from_text(cache->action.generic, &rule->capability);
 
-          if (F_status_is_error(status) && F_status_set_fine(status) != F_supported_not) {
+          if (F_status_is_error(status) && F_status_set_fine(status) != F_support_not) {
             if (F_status_set_fine(status) == F_memory_not) {
 
               // Get the current line number within the settings item.

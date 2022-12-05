@@ -33,7 +33,7 @@ extern "C" {
       if (errno == EOPNOTSUPP) return F_status_set_error(F_stream_not);
       if (errno == EPROTO) return F_status_set_error(F_protocol);
       if (errno == EPERM) return F_status_set_error(F_prohibited);
-      if (errno == ESOCKTNOSUPPORT) return F_status_set_error(F_supported_not);
+      if (errno == ESOCKTNOSUPPORT) return F_status_set_error(F_support_not);
       if (errno == EPROTONOSUPPORT) return F_status_set_error(F_protocol_not);
       if (errno == ETIMEDOUT) return F_status_set_error(F_time_out);
 
@@ -224,7 +224,7 @@ extern "C" {
       result = shutdown(socket->id, SHUT_RDWR);
     }
     else {
-      return F_status_set_error(F_supported_not);
+      return F_status_set_error(F_support_not);
     }
 
     if (result == -1) {
@@ -264,7 +264,7 @@ extern "C" {
       if (errno == EADDRINUSE) return F_status_set_error(F_busy_address);
       if (errno == EBADF) return F_status_set_error(F_file_descriptor);
       if (errno == ENOTSOCK) return F_status_set_error(F_socket_not);
-      if (errno == EOPNOTSUPP) return F_status_set_error(F_supported_not);
+      if (errno == EOPNOTSUPP) return F_status_set_error(F_support_not);
 
       return F_status_set_error(F_failure);
     }

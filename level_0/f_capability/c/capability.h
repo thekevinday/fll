@@ -61,7 +61,7 @@ extern "C" {
  *
  *   F_implemented_not (with error bit) if this function is not available (due to not having libcap support compiled in).
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_supported_not (with error bit) if the system does not support ambient capabilities.
+ *   F_support_not (with error bit) if the system does not support ambient capabilities.
  *
  *   F_failure (with error bit) on any other failure.
  *
@@ -304,7 +304,7 @@ extern "C" {
  *   F_name_not (with error bit) if the file name is too long.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if the file system does not permit this operation.
- *   F_supported_not (with error bit) if the file system does not support this operation.
+ *   F_support_not (with error bit) if the file system does not support this operation.
  *
  *   F_failure (with error bit) on any other failure.
  *
@@ -334,7 +334,7 @@ extern "C" {
  *   F_name_not (with error bit) if the file name is too long.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if the file system does not permit this operation.
- *   F_supported_not (with error bit) if the file system does not support this operation.
+ *   F_support_not (with error bit) if the file system does not support this operation.
  *
  *   F_failure (with error bit) on any other failure.
  *
@@ -365,7 +365,7 @@ extern "C" {
  *   F_name_not (with error bit) if the file name is too long.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if the file system does not permit this operation.
- *   F_supported_not (with error bit) if the file system does not support this operation.
+ *   F_support_not (with error bit) if the file system does not support this operation.
  *
  *   F_failure (with error bit) on any other failure.
  *
@@ -395,7 +395,7 @@ extern "C" {
  *   F_name_not (with error bit) if the file name is too long.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if the file system does not permit this operation.
- *   F_supported_not (with error bit) if the file system does not support this operation.
+ *   F_support_not (with error bit) if the file system does not support this operation.
  *
  *   F_failure (with error bit) on any other failure.
  *
@@ -666,7 +666,7 @@ extern "C" {
  *   F_name_not (with error bit) if the file name is too long.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if the file system does not permit this operation.
- *   F_supported_not (with error bit) if the file system does not support this operation.
+ *   F_support_not (with error bit) if the file system does not support this operation.
  *
  *   F_failure (with error bit) on any other error.
  *

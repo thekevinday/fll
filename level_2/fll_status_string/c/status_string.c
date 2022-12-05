@@ -1968,14 +1968,14 @@ extern "C" {
         return F_none;
       }
 
-      if (fl_string_dynamic_compare(name, f_status_supported_s) == F_equal_to) {
-        *code = F_supported;
+      if (fl_string_dynamic_compare(name, f_status_support_s) == F_equal_to) {
+        *code = F_support;
 
         return F_none;
       }
 
-      if (fl_string_dynamic_compare(name, f_status_supported_not_s) == F_equal_to) {
-        *code = F_supported_not;
+      if (fl_string_dynamic_compare(name, f_status_support_not_s) == F_equal_to) {
+        *code = F_support_not;
 
         return F_none;
       }

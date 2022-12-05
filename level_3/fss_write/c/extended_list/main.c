@@ -7,11 +7,13 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
   setting.state.data = (void *) &data;
   setting.program_name = &fss_write_extended_list_program_name_s;
   setting.program_name_long = &fss_write_extended_list_program_name_long_s;
+  setting.process_content = &fss_write_exended_list_process_content;
   setting.process_help = &fss_write_extended_list_process_help;
-  setting.process_pipe = &fss_write_extended_list_process_pipe;
   setting.process_normal = &fss_write_extended_list_process_normal;
   setting.process_object = &fss_write_exended_list_process_object;
-  setting.process_content = &fss_write_exended_list_process_content;
+  setting.process_pipe = &fss_write_extended_list_process_pipe;
+  setting.process_set = &fss_write_process_normal;
+  setting.flag |= fss_write_flag_ignore_e;
 
   f_console_parameter_t parameters[] = fss_write_console_parameter_t_initialize;
   data.parameters.array = parameters;

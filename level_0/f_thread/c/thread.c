@@ -379,7 +379,7 @@ extern "C" {
 
     if (error) {
       if (error == EINVAL) return F_status_set_error(F_parameter);
-      if (error == ENOTSUP) return F_status_set_error(F_supported_not);
+      if (error == ENOTSUP) return F_status_set_error(F_support_not);
 
       return F_status_set_error(F_failure);
     }
@@ -657,7 +657,7 @@ extern "C" {
     const int error = pthread_getcpuclockid(id_thread, id_clock);
 
     if (error) {
-      if (error == ENOENT) return F_status_set_error(F_supported_not);
+      if (error == ENOENT) return F_status_set_error(F_support_not);
       if (error == ESRCH) return F_status_set_error(F_found_not);
 
       return F_status_set_error(F_failure);
@@ -950,7 +950,7 @@ extern "C" {
     if (error) {
       if (error == EDEADLK) return F_status_set_error(F_deadlock);
       if (error == EINVAL) return F_status_set_error(F_parameter);
-      if (error == EPERM) return F_status_set_error(F_supported_not);
+      if (error == EPERM) return F_status_set_error(F_support_not);
       if (error == ESRCH) return F_status_set_error(F_found_not);
 
       return F_status_set_error(F_failure);
@@ -969,7 +969,7 @@ extern "C" {
       if (error == EBUSY) return F_busy;
       if (error == EDEADLK) return F_status_set_error(F_deadlock);
       if (error == EINVAL) return F_status_set_error(F_parameter);
-      if (error == EPERM) return F_status_set_error(F_supported_not);
+      if (error == EPERM) return F_status_set_error(F_support_not);
       if (error == ESRCH) return F_status_set_error(F_found_not);
 
       return F_status_set_error(F_failure);
@@ -988,7 +988,7 @@ extern "C" {
       if (error == EBUSY) return F_busy;
       if (error == EDEADLK) return F_status_set_error(F_deadlock);
       if (error == EINVAL) return F_status_set_error(F_parameter);
-      if (error == EPERM) return F_status_set_error(F_supported_not);
+      if (error == EPERM) return F_status_set_error(F_support_not);
       if (error == ESRCH) return F_status_set_error(F_found_not);
       if (error == ETIMEDOUT) return F_time;
 
@@ -1378,7 +1378,7 @@ extern "C" {
     if (error) {
       if (error == EINVAL) return F_status_set_error(F_parameter);
       if (error == EPERM) return F_status_set_error(F_prohibited);
-      if (error == ENOTSUP) return F_status_set_error(F_supported_not);
+      if (error == ENOTSUP) return F_status_set_error(F_support_not);
 
       return F_status_set_error(F_failure);
     }
@@ -1642,7 +1642,7 @@ extern "C" {
     const int error = pthread_getschedparam(id, policy, parameter);
 
     if (error) {
-      if (error == ENOTSUP) return F_status_set_error(F_supported_not);
+      if (error == ENOTSUP) return F_status_set_error(F_support_not);
 
       return F_status_set_error(F_failure);
     }
@@ -1695,7 +1695,7 @@ extern "C" {
 
     if (sem_init(semaphore, shared, value) == -1) {
       if (errno == EINVAL) return F_status_set_error(F_parameter);
-      if (errno == ENOSYS) return F_status_set_error(F_supported_not);
+      if (errno == ENOSYS) return F_status_set_error(F_support_not);
 
       return F_status_set_error(F_failure);
     }
@@ -1895,7 +1895,7 @@ extern "C" {
 
     if (error) {
       if (error == EAGAIN) return F_status_set_error(F_resource_not);
-      if (error == ENOSYS) return F_status_set_error(F_supported_not);
+      if (error == ENOSYS) return F_status_set_error(F_support_not);
       if (error == EINVAL) return F_status_set_error(F_parameter);
       if (error == ESRCH) return F_status_set_error(F_found_not);
 

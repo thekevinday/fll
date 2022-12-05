@@ -699,7 +699,7 @@ extern "C" {
       return F_status_set_error(F_number);
     }
 
-    if (status == F_parameter || status == F_found_not || status == F_interrupt || status == F_supported_not || status == F_critical) {
+    if (status == F_parameter || status == F_found_not || status == F_interrupt || status == F_support_not || status == F_critical) {
       return F_status_set_error(status);
     }
 

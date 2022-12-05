@@ -66,7 +66,7 @@ extern "C" {
  *   F_protocol_not (with error bit) if the given protocol is unknown or is unsupported.
  *   F_socket_not (with error bit) if the id is not a socket descriptor.
  *   F_stream_not (with error bit) the socket type is not a stream.
- *   F_supported_not (with error bit) if this socket type is not supported.
+ *   F_support_not (with error bit) if this socket type is not supported.
  *   F_time_out (with error bit) if a timeout occurred.
  *
  *   F_failure (with error bit) for any other error.
@@ -292,7 +292,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_socket_not (with error bit) if the id is not a socket descriptor.
  *   F_space_not (with error bit) if file system is out of space (or file system quota is reached).
- *   F_supported_not (with error bit) if this socket does not support the listen() operation.
+ *   F_support_not (with error bit) if this socket does not support the listen() operation.
  *
  *   F_failure (with error bit) for any other error.
  *
@@ -319,7 +319,7 @@ extern "C" {
  *   F_busy_address (with error bit) if address is already in use (therefore unavailable).
  *   F_file_descriptor (with error bit) if id is an invalid descriptor.
  *   F_socket_not (with error bit) if the id is not a socket descriptor.
- *   F_supported_not (with error bit) if this socket does not support the listen() operation.
+ *   F_support_not (with error bit) if this socket does not support the listen() operation.
  *
  *   F_failure (with error bit) for any other error.
  *

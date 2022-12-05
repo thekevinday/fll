@@ -56,13 +56,15 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
     if (!main || !setting || F_status_is_error(setting->status) || (setting->flag & fss_write_flag_version_e)) return;
 
+    setting->standard = fss_write_basic_standard_s;
     setting->program_name = &fss_write_program_name_s;
     setting->program_name_long = &fss_write_program_name_long_s;
-    setting->process_help = &fss_write_main_process_help;
-    setting->process_pipe = &fss_write_basic_process_pipe;
-    setting->process_normal = &fss_write_basic_process_normal;
-    setting->process_object = &fss_write_basic_process_object;
     setting->process_content = &fss_write_basic_process_content;
+    setting->process_help = &fss_write_main_process_help;
+    setting->process_object = &fss_write_basic_process_object;
+    setting->process_pipe = &fss_write_process_pipe;
+    setting->process_normal = &fss_write_process_normal;
+    setting->process_set = &fss_write_process_set;
 
     if (main->parameters.array[fss_write_parameter_as_e].result & f_console_result_value_e && main->parameters.array[fss_write_parameter_as_e].values.used) {
 
@@ -77,73 +79,98 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
             fl_string_dynamic_compare(argv[index], fss_write_format_code_long_0000_s) == F_equal_to ||
             fl_string_dynamic_compare(argv[index], fss_write_format_code_human_0000_s) == F_equal_to) {
 
+          setting->standard = fss_write_basic_standard_s;
           setting->program_name = &fss_write_basic_program_name_s;
           setting->program_name_long = &fss_write_basic_program_name_long_s;
-          setting->process_help = &fss_write_basic_process_help;
-          setting->process_pipe = &fss_write_basic_process_pipe;
-          setting->process_normal = &fss_write_basic_process_normal;
-          setting->process_object = &fss_write_basic_process_object;
           setting->process_content = &fss_write_basic_process_content;
+          setting->process_help = &fss_write_basic_process_help;
+          setting->process_object = &fss_write_basic_process_object;
+          setting->process_pipe = &fss_write_process_pipe;
+          setting->process_normal = &fss_write_process_normal;
+          setting->process_set = &fss_write_process_set;
+          setting->flag -= setting->flag & fss_write_flag_ignore_e; // Not supported by basic.
+          setting->flag -= setting->flag & fss_write_flag_content_multiple_e; // Not supported by payload.
         }
         else if (fl_string_dynamic_compare(argv[index], fss_write_format_code_short_0001_s) == F_equal_to ||
                  fl_string_dynamic_compare(argv[index], fss_write_format_code_long_0001_s) == F_equal_to ||
                  fl_string_dynamic_compare(argv[index], fss_write_format_code_human_0001_s) == F_equal_to) {
 
+          setting->standard = fss_write_extended_standard_s;
+          setting->content_separator = 0; // Not used by extended.
           setting->program_name = &fss_write_extended_program_name_s;
           setting->program_name_long = &fss_write_extended_program_name_long_s;
-          setting->process_help = &fss_write_extended_process_help;
-          setting->process_pipe = &fss_write_extended_process_pipe;
-          setting->process_normal = &fss_write_extended_process_normal;
-          setting->process_object = &fss_write_extended_process_object;
           setting->process_content = &fss_write_extended_process_content;
+          setting->process_help = &fss_write_extended_process_help;
+          setting->process_object = &fss_write_extended_process_object;
+          setting->process_pipe = &fss_write_process_pipe;
+          setting->process_normal = &fss_write_process_normal;
+          setting->process_set = &fss_write_process_set;
+          setting->flag -= setting->flag & fss_write_flag_ignore_e; // Not supported by extended.
+          setting->flag |= fss_write_flag_content_multiple_e;
         }
         else if (fl_string_dynamic_compare(argv[index], fss_write_format_code_short_0002_s) == F_equal_to ||
                  fl_string_dynamic_compare(argv[index], fss_write_format_code_long_0002_s) == F_equal_to ||
                  fl_string_dynamic_compare(argv[index], fss_write_format_code_human_0002_s) == F_equal_to) {
 
+          setting->standard = fss_write_basic_list_standard_s;
           setting->program_name = &fss_write_basic_list_program_name_s;
           setting->program_name_long = &fss_write_basic_list_program_name_long_s;
-          setting->process_help = &fss_write_basic_list_process_help;
-          setting->process_pipe = &fss_write_basic_list_process_pipe;
-          setting->process_normal = &fss_write_basic_list_process_normal;
-          setting->process_object = &fss_write_basic_list_process_object;
           setting->process_content = &fss_write_basic_list_process_content;
+          setting->process_help = &fss_write_basic_list_process_help;
+          setting->process_object = &fss_write_basic_list_process_object;
+          setting->process_pipe = &fss_write_process_pipe;
+          setting->process_normal = &fss_write_process_normal;
+          setting->process_set = &fss_write_process_set;
+          setting->flag -= setting->flag & fss_write_flag_ignore_e; // Not supported by basic list.
+          setting->flag -= setting->flag & fss_write_flag_content_multiple_e; // Not supported by basic list.
         }
         else if (fl_string_dynamic_compare(argv[index], fss_write_format_code_short_0003_s) == F_equal_to ||
                  fl_string_dynamic_compare(argv[index], fss_write_format_code_long_0003_s) == F_equal_to ||
                  fl_string_dynamic_compare(argv[index], fss_write_format_code_human_0003_s) == F_equal_to) {
 
+          setting->standard = fss_write_extended_list_standard_s;
           setting->program_name = &fss_write_extended_list_program_name_s;
           setting->program_name_long = &fss_write_extended_list_program_name_long_s;
-          setting->process_help = &fss_write_extended_list_process_help;
-          setting->process_pipe = &fss_write_extended_list_process_pipe;
-          setting->process_normal = &fss_write_extended_list_process_normal;
-          setting->process_object = &fss_write_extended_list_process_object;
           setting->process_content = &fss_write_extended_list_process_content;
+          setting->process_help = &fss_write_extended_list_process_help;
+          setting->process_object = &fss_write_extended_list_process_object;
+          setting->process_pipe = &fss_write_process_pipe;
+          setting->process_normal = &fss_write_process_normal;
+          setting->process_set = &fss_write_process_set;
+          setting->flag |= fss_write_flag_ignore_e;
+          setting->flag -= setting->flag & fss_write_flag_content_multiple_e; // Not supported by extended list.
         }
         else if (fl_string_dynamic_compare(argv[index], fss_write_format_code_short_0008_s) == F_equal_to ||
                  fl_string_dynamic_compare(argv[index], fss_write_format_code_long_0008_s) == F_equal_to ||
                  fl_string_dynamic_compare(argv[index], fss_write_format_code_human_0008_s) == F_equal_to) {
 
+          setting->standard = fss_write_embedded_list_standard_s;
           setting->program_name = &fss_write_embedded_list_program_name_s;
           setting->program_name_long = &fss_write_embedded_list_program_name_long_s;
-          setting->process_help = &fss_write_embedded_list_process_help;
-          setting->process_pipe = &fss_write_embedded_list_process_pipe;
-          setting->process_normal = &fss_write_embedded_list_process_normal;
-          setting->process_object = &fss_write_embedded_list_process_object;
           setting->process_content = &fss_write_embedded_list_process_content;
+          setting->process_help = &fss_write_embedded_list_process_help;
+          setting->process_object = &fss_write_embedded_list_process_object;
+          setting->process_pipe = &fss_write_process_pipe;
+          setting->process_normal = &fss_write_process_normal;
+          setting->process_set = &fss_write_process_set;
+          setting->flag |= fss_write_flag_ignore_e;
+          setting->flag |= fss_write_flag_content_multiple_e;
         }
         else if (fl_string_dynamic_compare(argv[index], fss_write_format_code_short_000e_s) == F_equal_to ||
                  fl_string_dynamic_compare(argv[index], fss_write_format_code_long_000e_s) == F_equal_to ||
                  fl_string_dynamic_compare(argv[index], fss_write_format_code_human_000e_s) == F_equal_to) {
 
+          setting->standard = fss_write_payload_standard_s;
           setting->program_name = &fss_write_payload_program_name_s;
           setting->program_name_long = &fss_write_payload_program_name_long_s;
+          setting->process_content = 0; // Not used by payload.
           setting->process_help = &fss_write_payload_process_help;
-          setting->process_pipe = &fss_write_payload_process_pipe;
-          setting->process_normal = &fss_write_payload_process_normal;
+          setting->process_normal = &fss_write_process_normal;
           setting->process_object = 0; // Not used by payload.
-           setting->process_content = 0; // Not used by payload.
+          setting->process_pipe = &fss_write_payload_process_pipe;
+          setting->process_set = &fss_write_payload_process_set;
+          setting->flag -= setting->flag & fss_write_flag_ignore_e; // Not supported by payload.
+          setting->flag -= setting->flag & fss_write_flag_content_multiple_e; // Not supported by payload.
         }
         else {
           if (setting->flag & fss_write_flag_help_e) {

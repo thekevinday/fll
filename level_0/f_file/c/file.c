@@ -116,7 +116,7 @@ extern "C" {
       return F_none;
     }
 
-    return F_supported_not;
+    return F_support_not;
   }
 #endif // _di_f_file_clone_
 
@@ -239,7 +239,7 @@ extern "C" {
       return F_none;
     }
 
-    return F_supported_not;
+    return F_support_not;
   }
 #endif // _di_f_file_copy_
 
@@ -268,7 +268,7 @@ extern "C" {
     if (!path.used) return F_data_not;
 
     if (!macro_f_file_type_is_fifo(mode) && !macro_f_file_type_is_character(mode) && !macro_f_file_type_is_block(mode)) {
-      return F_status_set_error(F_supported_not);
+      return F_status_set_error(F_support_not);
     }
 
     const dev_t device = makedev(major, minor);
@@ -284,7 +284,7 @@ extern "C" {
     if (!path.used) return F_data_not;
 
     if (!macro_f_file_type_is_fifo(mode) && !macro_f_file_type_is_character(mode) && !macro_f_file_type_is_block(mode)) {
-      return F_status_set_error(F_supported_not);
+      return F_status_set_error(F_support_not);
     }
 
     const dev_t device = makedev(major, minor);
@@ -318,7 +318,7 @@ extern "C" {
     if (!path.used) return F_data_not;
 
     if (!macro_f_file_type_is_fifo(mode) && !macro_f_file_type_is_character(mode) && !macro_f_file_type_is_block(mode)) {
-      return F_status_set_error(F_supported_not);
+      return F_status_set_error(F_support_not);
     }
 
     return private_f_file_create_node(path, mode, device);
@@ -332,7 +332,7 @@ extern "C" {
     if (!path.used) return F_data_not;
 
     if (!macro_f_file_type_is_fifo(mode) && !macro_f_file_type_is_character(mode) && !macro_f_file_type_is_block(mode)) {
-      return F_status_set_error(F_supported_not);
+      return F_status_set_error(F_support_not);
     }
 
     return private_f_file_create_node_at(directory, path, mode, device);

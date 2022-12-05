@@ -220,7 +220,7 @@ extern "C" {
  *   If f_fss_complete_full_e, this will write any appropriate open and close aspects of this object.
  *   If f_fss_complete_full_trim_e, this will write any appropriate open and close aspects of this object, but will omit whitespace before and after the object (inside the quotes).
  *   If f_fss_complete_partial_e, this will write any appropriate open and close aspects of this object.
- *   If f_fss_complete_partial_tim, this will write any appropriate open and close aspects of this object, but will omit whitespace before and after the object (inside the quotes).
+ *   If f_fss_complete_partial_trim, this will write any appropriate open and close aspects of this object, but will omit whitespace before and after the object (inside the quotes).
  * @param state
  *   A state for providing flags and handling interrupts during long running operations.
  *   There is no print_error().

@@ -111,7 +111,7 @@ extern "C" {
       if (main->pipe & fll_program_data_pipe_input_e) {
         control_print_error_pipe_supported_not(main);
 
-        status = F_status_set_error(F_supported_not);
+        status = F_status_set_error(F_support_not);
       }
       else if (main->parameters.remaining.used) {
         control_data_t data = control_data_t_initialize;

@@ -55,13 +55,11 @@ extern "C" {
     f_string_dynamic_resize(0, &setting->escaped);
     f_string_dynamic_resize(0, &setting->block);
     f_string_dynamic_resize(0, &setting->buffer);
-    f_string_dynamic_resize(0, &setting->object);
-    f_string_dynamic_resize(0, &setting->content);
     f_string_dynamic_resize(0, &setting->prepend);
 
-    f_string_ranges_resize(0, &setting->ignores);
+    f_string_rangess_resize(0, &setting->ignoress);
     f_string_dynamics_resize(0, &setting->objects);
-    f_string_dynamics_resize(0, &setting->contents);
+    f_string_dynamicss_resize(0, &setting->contentss);
 
     return F_none;
   }
@@ -211,7 +209,7 @@ extern "C" {
         return;
       }
 
-      // Construct the array without allocating any more memory by setting this as a static string (used > 0, size = 0).
+      // Construct the array without allocating any more memory for the string data by setting this as a static string (used > 0, size = 0).
       for (f_array_length_t index = 0; setting->objects.used < values->used; ) {
 
         index = values->array[setting->objects.used];
@@ -234,27 +232,81 @@ extern "C" {
     }
 
     if ((main->parameters.array[fss_write_parameter_content_e].result & f_console_result_value_e) && main->parameters.array[fss_write_parameter_content_e].values.used) {
-      f_array_lengths_t * const values = &main->parameters.array[fss_write_parameter_content_e].values;
 
-      setting->contents.used = 0;
+        if (setting->flag & fss_write_flag_object_e) {
+        if (!(setting->flag & fss_write_flag_content_multiple_e)) {
+          if (main->parameters.array[fss_write_parameter_content_e].values.used > main->parameters.array[fss_write_parameter_object_e].values.used) {
+            setting->status = F_status_set_error(F_support_not);
 
-      setting->status = f_string_dynamics_resize(values->used, &setting->contents);
+            fss_write_print_error_one_content_only(setting, main->error);
+
+            return;
+          }
+        }
+      }
+
+      f_array_length_t stub_object_array[1] = { 0 };
+      f_array_lengths_t stub_object = macro_f_array_lengths_t_initialize(stub_object_array, 0, 1);
+
+      f_array_lengths_t * const values_content = &main->parameters.array[fss_write_parameter_content_e].values;
+      f_array_lengths_t * const values_object = main->parameters.array[fss_write_parameter_object_e].values.used
+        ? &main->parameters.array[fss_write_parameter_object_e].values
+        : &stub_object;
+
+      setting->contentss.used = 0;
+
+      setting->status = f_string_dynamicss_increase_by(values_object->used, &setting->contentss);
 
       if (F_status_is_error(setting->status)) {
-        fss_write_print_error(setting, main->error, "f_string_dynamics_resize");
+        fss_write_print_error(setting, main->error, "f_string_dynamicss_increase_by");
 
         return;
       }
 
-      // Construct the array without allocating any more memory by setting this as a static string (used > 0, size = 0).
-      for (f_array_length_t index = 0; setting->contents.used < values->used; ) {
+      f_array_length_t i = 0; // For Contents.
+      f_array_length_t j = 0; // For Objects.
+      f_array_length_t k = 0;
+      f_array_length_t total = 0;
+      f_array_length_t index = 0;
 
-        index = values->array[setting->contents.used];
+      // Construct the array without allocating any more memory for the string data by setting this as a static string (used > 0, size = 0).
+      while (i < values_content->used) {
 
-        setting->contents.array[setting->contents.used].string = main->parameters.arguments.array[index].string;
-        setting->contents.array[setting->contents.used].used = main->parameters.arguments.array[index].used;
-        setting->contents.array[setting->contents.used++].size = 0;
-      } // for
+        // Determine the total Content associated with the given Object.
+        for (total = 0; i + total < values_content->used && (j + 1 >= values_object->used || values_content->array[i + total] < values_object->array[j + 1]); ++total) {
+          // Do nothing.
+        } // for
+
+
+        if (!total) {
+          ++setting->contentss.used;
+
+          if (++j < values_object->used) continue;
+
+          break;
+        }
+
+        setting->status = f_string_dynamics_increase_by(total, &setting->contentss.array[j]);
+
+        if (F_status_is_error(setting->status)) {
+          fss_write_print_error(setting, main->error, "f_string_dynamics_increase_by");
+
+          return;
+        }
+
+        for (k = 0; k < total; ++k) {
+
+          index = values_content->array[i++];
+
+          setting->contentss.array[j].array[setting->contentss.array[j].used].string = main->parameters.arguments.array[index].string;
+          setting->contentss.array[j].array[setting->contentss.array[j].used].used = main->parameters.arguments.array[index].used;
+          setting->contentss.array[j].array[setting->contentss.array[j].used++].size = 0;
+        } // for
+      } // while
+
+      if (total) {
+        ++setting->contentss.used;
+      }
 
       setting->flag |= fss_write_flag_content_e;
     }
@@ -318,7 +370,6 @@ extern "C" {
     }
 
     if ((main->parameters.array[fss_write_parameter_ignore_e].result & f_console_result_value_e) && main->parameters.array[fss_write_parameter_ignore_e].values.used) {
-
       if (main->parameters.array[fss_write_parameter_ignore_e].values.used % 2 != 0) {
         setting->status = F_status_set_error(F_parameter);
 
@@ -329,58 +380,160 @@ extern "C" {
         return;
       }
 
-      setting->ignores.used = 0;
+      // Only process if the standard designates that the ingore is supported.
+      if (setting->flag & fss_write_flag_ignore_e) {
+        f_array_length_t stub_data_array[1] = { 0 };
+        f_array_lengths_t stub_data = macro_f_array_lengths_t_initialize(stub_data_array, 0, 1);
 
-      setting->status = f_string_ranges_increase_by(main->parameters.array[fss_write_parameter_ignore_e].values.used / 2, &setting->ignores);
+        f_array_lengths_t * const values_ignore = &main->parameters.array[fss_write_parameter_ignore_e].values;
+        f_array_lengths_t * const values_data = main->parameters.array[fss_write_parameter_object_e].values.used
+          ? &main->parameters.array[fss_write_parameter_object_e].values
+          : main->parameters.array[fss_write_parameter_content_e].values.used
+            ? &main->parameters.array[fss_write_parameter_content_e].values
+            : &stub_data;
 
-      if (F_status_is_error(setting->status)) {
-        fss_write_print_error(setting, main->error, "f_string_ranges_increase_by");
+        setting->ignoress.used = 0;
 
-        return;
+        setting->status = f_string_rangess_increase_by(values_data->used, &setting->ignoress);
+
+        if (F_status_is_error(setting->status)) {
+          fss_write_print_error(setting, main->error, "f_string_rangess_increase_by");
+
+          return;
+        }
+
+        f_array_length_t i = 0; // For Ignores.
+        f_array_length_t j = 0; // For Objects/Contents.
+        f_array_length_t k = 0;
+        f_array_length_t total = 0;
+        f_array_length_t index = 0;
+        f_number_unsigned_t number_start = 0;
+        f_number_unsigned_t number_stop = 0;
+
+        // Construct the array without allocating any more memory for the string data by setting this as a static string (used > 0, size = 0).
+        while (i < values_ignore->used) {
+
+          // Determine the total Ignore associated with the given Object/Content.
+          for (total = 0; i + total < values_ignore->used && (j + 1 >= values_data->used || values_ignore->array[i + total] < values_data->array[j + 1]); ++total) {
+            // Do nothing.
+          } // for
+
+          if (!total) {
+            ++setting->ignoress.used;
+
+            if (++j < values_data->used) continue;
+
+            break;
+          }
+
+          setting->status = f_string_ranges_increase_by(total, &setting->ignoress.array[j]);
+
+          if (F_status_is_error(setting->status)) {
+            fss_write_print_error(setting, main->error, "f_string_ranges_increase_by");
+
+            return;
+          }
+
+          for (k = 0; k < total; ++k) {
+
+            index = values_ignore->array[i++];
+
+            setting->status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, main->parameters.arguments.array[index], &setting->ignoress.array[j].array[setting->ignoress.array[j].used].start);
+
+            if (F_status_is_error(setting->status)) {
+              fss_write_print_line_first_locked(setting, main->error);
+              fll_program_print_error_parameter_integer_not(main->error, f_console_symbol_long_normal_s, fss_write_long_ignore_s, main->parameters.arguments.array[index]);
+              fss_write_print_line_last_locked(setting, main->error);
+
+              return;
+            }
+
+            index = values_ignore->array[i++];
+
+            setting->status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, main->parameters.arguments.array[index], &setting->ignoress.array[j].array[setting->ignoress.array[j].used].stop);
+
+            if (F_status_is_error(setting->status)) {
+              fss_write_print_line_first_locked(setting, main->error);
+              fll_program_print_error_parameter_integer_not(main->error, f_console_symbol_long_normal_s, fss_write_long_ignore_s, main->parameters.arguments.array[index]);
+              fss_write_print_line_last_locked(setting, main->error);
+
+              return;
+            }
+
+            if (setting->ignoress.array[j].array[setting->ignoress.array[j].used].stop > setting->ignoress.array[j].array[setting->ignoress.array[j].used].start) {
+              setting->status = F_status_set_error(F_parameter);
+
+              fss_write_print_line_first_locked(setting, main->error);
+              fll_program_print_error_parameter_range_start_before_stop(
+                main->error,
+                f_console_symbol_long_normal_s,
+                fss_write_long_ignore_s,
+                main->parameters.arguments.array[values_ignore->array[i - 1]],
+                main->parameters.arguments.array[index]
+              );
+              fss_write_print_line_last_locked(setting, main->error);
+
+              return;
+            }
+
+            ++setting->ignoress.array[j].used;
+          } // for
+        } // while
+
+        if (total) {
+          ++setting->ignoress.used;
+        }
       }
+      else {
 
-      f_array_length_t index = 0;
+        // Still validate the parameters, even if not being used.
+        f_array_length_t i = 0;
+        f_array_length_t index = 0;
+        f_string_range_t number = f_string_range_t_initialize;
 
-      for (f_array_length_t i = 0; i < main->parameters.array[fss_write_parameter_ignore_e].values.used; i += 2) {
+        while (i < main->parameters.array[fss_write_parameter_ignore_e].values.used) {
 
-        index = main->parameters.array[fss_write_parameter_ignore_e].values.array[i];
+          index = main->parameters.array[fss_write_parameter_ignore_e].values.array[i++];
 
-        setting->status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, main->parameters.arguments.array[index], &setting->ignores.array[setting->ignores.used].start);
+          setting->status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, main->parameters.arguments.array[index], &number.start);
 
-        if (F_status_is_error(setting->status)) {
-          fss_write_print_line_first_locked(setting, main->error);
-          fll_program_print_error_parameter_integer_not(main->error, f_console_symbol_long_normal_s, fss_write_long_ignore_s, main->parameters.arguments.array[index]);
-          fss_write_print_line_last_locked(setting, main->error);
+          if (F_status_is_error(setting->status)) {
+            fss_write_print_line_first_locked(setting, main->error);
+            fll_program_print_error_parameter_integer_not(main->error, f_console_symbol_long_normal_s, fss_write_long_ignore_s, main->parameters.arguments.array[index]);
+            fss_write_print_line_last_locked(setting, main->error);
 
-          return;
-        }
+            return;
+          }
 
-        index = main->parameters.array[fss_write_parameter_ignore_e].values.array[i + 1];
+          index = main->parameters.array[fss_write_parameter_ignore_e].values.array[i++];
 
-        setting->status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, main->parameters.arguments.array[index], &setting->ignores.array[setting->ignores.used].stop);
+          setting->status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, main->parameters.arguments.array[index], &number.stop);
 
-        if (F_status_is_error(setting->status)) {
-          fss_write_print_line_first_locked(setting, main->error);
-          fll_program_print_error_parameter_integer_not(main->error, f_console_symbol_long_normal_s, fss_write_long_ignore_s, main->parameters.arguments.array[index]);
-          fss_write_print_line_last_locked(setting, main->error);
+          if (F_status_is_error(setting->status)) {
+            fss_write_print_line_first_locked(setting, main->error);
+            fll_program_print_error_parameter_integer_not(main->error, f_console_symbol_long_normal_s, fss_write_long_ignore_s, main->parameters.arguments.array[index]);
+            fss_write_print_line_last_locked(setting, main->error);
 
-          return;
-        }
+            return;
+          }
 
-        if (setting->ignores.array[setting->ignores.used].stop > setting->ignores.array[setting->ignores.used].start) {
-          setting->status = F_status_set_error(F_parameter);
+          if (number.start > number.stop) {
+            setting->status = F_status_set_error(F_parameter);
 
-          fss_write_print_line_first_locked(setting, main->error);
-          fll_program_print_error_parameter_range_start_before_stop(main->error, f_console_symbol_long_normal_s, fss_write_long_ignore_s, main->parameters.arguments.array[main->parameters.array[fss_write_parameter_ignore_e].values.array[i]], main->parameters.arguments.array[index]);
-          fss_write_print_line_last_locked(setting, main->error);
+            fss_write_print_line_first_locked(setting, main->error);
+            fll_program_print_error_parameter_range_start_before_stop(
+              main->error,
+              f_console_symbol_long_normal_s,
+              fss_write_long_ignore_s,
+              main->parameters.arguments.array[main->parameters.array[fss_write_parameter_ignore_e].values.array[i - 1]],
+              main->parameters.arguments.array[index]
+            );
+            fss_write_print_line_last_locked(setting, main->error);
 
-          return;
-        }
-
-        ++setting->ignores.used;
-      } // for
-
-      setting->flag |= fss_write_flag_ignore_e;
+            return;
+          }
+        } // while
+      }
     }
     else if (main->parameters.array[fss_write_parameter_ignore_e].result & f_console_result_found_e) {
       setting->status = F_status_set_error(F_parameter);
@@ -390,6 +543,13 @@ extern "C" {
       fss_write_print_line_last_locked(setting, main->error);
 
       return;
+    }
+    else {
+
+      // There is no Object or Content, so remove ignores if set.
+      if (setting->flag & fss_write_flag_ignore_e) {
+        setting->flag -= fss_write_flag_ignore_e;
+      }
     }
 
     if (main->parameters.array[fss_write_parameter_partial_e].result & f_console_result_found_e) {
@@ -418,12 +578,10 @@ extern "C" {
           return;
         }
 
-        if (main->parameters.array[fss_write_parameter_object_e].locations.used != main->parameters.array[fss_write_parameter_content_e].locations.used && !(setting->flag & fss_write_flag_partial_e)) {
+        if (main->parameters.array[fss_write_parameter_object_e].locations.used > main->parameters.array[fss_write_parameter_content_e].locations.used && !(setting->flag & fss_write_flag_partial_e)) {
           setting->status = F_status_set_error(F_parameter);
 
-          fss_write_print_line_first_locked(setting, main->error);
-          fll_program_print_error_parameter_both_specified_same_amount_without(main->error, f_console_symbol_long_normal_s, f_console_symbol_long_normal_s, f_console_symbol_long_normal_s, fss_write_long_object_s, fss_write_long_content_s, fss_write_long_partial_s);
-          fss_write_print_line_last_locked(setting, main->error);
+          fss_write_print_error_parameter_same_times_at_least(setting, main->error);
 
           return;
         }

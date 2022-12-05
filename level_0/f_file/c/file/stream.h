@@ -164,7 +164,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if file system does not allow for making changes.
  *   F_read_only (with error bit) if file is read-only.
- *   F_supported_not (with error bit) fo unsupported file types.
+ *   F_support_not (with error bit) fo unsupported file types.
  *   F_failure (with error bit) for any other error.
  *
  * @see fopen()
@@ -359,7 +359,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if file system does not allow for making changes.
  *   F_read_only (with error bit) if file is read-only.
- *   F_supported_not (with error bit) fo unsupported file types.
+ *   F_support_not (with error bit) fo unsupported file types.
  *   F_failure (with error bit) for any other error.
  *
  * @see fileno()

@@ -445,7 +445,7 @@ extern "C" {
               }
               else {
                 if (action->status == F_none) {
-                  action->status = F_status_set_error(F_supported_not);
+                  action->status = F_status_set_error(F_support_not);
 
                   if (F_status_is_error_not(status_action)) {
                     status_action = action->status;
@@ -472,7 +472,7 @@ extern "C" {
           }
           else if (action->type == controller_entry_action_type_failsafe_e || action->type == controller_entry_action_type_item_e) {
             if (fl_string_dynamic_compare(controller_main_s, action->parameters.array[0]) == F_equal_to) {
-              action->status = F_status_set_error(F_supported_not);
+              action->status = F_status_set_error(F_support_not);
 
               if (F_status_is_error_not(status_action)) {
                 status_action = action->status;
@@ -501,7 +501,7 @@ extern "C" {
               action->code = controller_entry_timeout_code_stop_d;
             }
             else {
-              action->status = F_status_set_error(F_supported_not);
+              action->status = F_status_set_error(F_support_not);
 
               if (F_status_is_error_not(status_action)) {
                 status_action = action->status;
@@ -572,7 +572,7 @@ extern "C" {
                 action->code |= controller_entry_rule_code_wait_d;
               }
               else {
-                action->status = F_status_set_error(F_supported_not);
+                action->status = F_status_set_error(F_support_not);
 
                 if (global.main->error.verbosity > f_console_verbosity_quiet_e) {
                   f_file_stream_lock(global.main->error.to);

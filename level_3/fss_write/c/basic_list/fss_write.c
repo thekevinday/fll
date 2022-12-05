@@ -8,11 +8,11 @@ extern "C" {
 #endif
 
 #ifndef _di_fss_write_basic_list_process_content_
-  void fss_write_basic_list_process_content(fll_program_data_t * const main, void * const setting, const f_string_static_t * const content) {
+  void fss_write_basic_list_process_content(fll_program_data_t * const main, void * const setting, const bool last) {
 
     if (macro_fss_write_setting(setting)->flag & fss_write_flag_partial_e) {
       macro_fss_write_setting(setting)->status = fl_fss_basic_list_content_write(
-        *content,
+        *macro_fss_write_setting(setting)->content,
         f_fss_complete_none_e,
         &macro_fss_write_setting(setting)->prepend,
         macro_fss_write_setting(setting)->state,
@@ -22,7 +22,7 @@ extern "C" {
     }
     else {
       macro_fss_write_setting(setting)->status = fl_fss_basic_list_content_write(
-        *content,
+        *macro_fss_write_setting(setting)->content,
         (macro_fss_write_setting(setting)->flag & fss_write_flag_trim_e) ? f_fss_complete_full_trim_e : f_fss_complete_full_e,
         &macro_fss_write_setting(setting)->prepend,
         macro_fss_write_setting(setting)->state,
@@ -32,10 +32,10 @@ extern "C" {
     }
 
     if (F_status_set_fine(macro_fss_write_setting(setting)->status) == F_none_eol) {
-      macro_fss_write_setting(setting)->status = F_status_set_error(F_supported_not);
+      macro_fss_write_setting(setting)->status = F_status_set_error(F_support_not);
 
       fss_write_print_line_first_locked(macro_fss_write_setting(setting), main->error);
-      fss_write_print_error_unsupported_eol(macro_fss_write_setting(setting), main->error, fss_write_basic_list_standard_s);
+      fss_write_print_error_unsupported_eol(macro_fss_write_setting(setting), main->error);
       fss_write_print_line_last_locked(macro_fss_write_setting(setting), main->error);
 
       return;
@@ -56,20 +56,13 @@ extern "C" {
   }
 #endif // _di_fss_write_basic_list_process_help_
 
-#ifndef _di_fss_write_basic_list_process_normal_
-  void fss_write_basic_list_process_normal(fll_program_data_t * const main, void * const setting) {
-
-    // @todo
-  }
-#endif // _di_fss_write_basic_list_process_normal_
-
 #ifndef _di_fss_write_basic_list_process_object_
-  void fss_write_basic_list_process_object(fll_program_data_t * const main, void * const setting, const f_string_static_t * const object) {
+  void fss_write_basic_list_process_object(fll_program_data_t * const main, void * const setting) {
 
     if (macro_fss_write_setting(setting)->flag & fss_write_flag_partial_e) {
       macro_fss_write_setting(setting)->status = fl_fss_basic_list_object_write(
-        *object,
-        f_fss_complete_none_e,
+        *macro_fss_write_setting(setting)->object,
+        f_fss_complete_none_e, // @fixme each of these needs to have "partial", "trim", etc..
         macro_fss_write_setting(setting)->state,
         &macro_fss_write_setting(setting)->range,
         &macro_fss_write_setting(setting)->buffer
@@ -77,7 +70,7 @@ extern "C" {
     }
     else {
       macro_fss_write_setting(setting)->status = fl_fss_basic_list_object_write(
-        *object,
+        *macro_fss_write_setting(setting)->object,
         (macro_fss_write_setting(setting)->flag & fss_write_flag_trim_e) ? f_fss_complete_full_trim_e : f_fss_complete_full_e,
         macro_fss_write_setting(setting)->state,
         &macro_fss_write_setting(setting)->range,
@@ -86,10 +79,10 @@ extern "C" {
     }
 
     if (F_status_set_fine(macro_fss_write_setting(setting)->status) == F_none_eol) {
-      macro_fss_write_setting(setting)->status = F_status_set_error(F_supported_not);
+      macro_fss_write_setting(setting)->status = F_status_set_error(F_support_not);
 
       fss_write_print_line_first_locked(macro_fss_write_setting(setting), main->error);
-      fss_write_print_error_unsupported_eol(macro_fss_write_setting(setting), main->error, fss_write_basic_list_standard_s);
+      fss_write_print_error_unsupported_eol(macro_fss_write_setting(setting), main->error);
       fss_write_print_line_last_locked(macro_fss_write_setting(setting), main->error);
 
       return;
@@ -100,13 +93,6 @@ extern "C" {
     }
   }
 #endif // _di_fss_write_basic_list_process_object_
-
-#ifndef _di_fss_write_basic_list_process_pipe_
-  void fss_write_basic_list_process_pipe(fll_program_data_t * const main, void * const setting) {
-
-    // @todo
-  }
-#endif // _di_fss_write_basic_list_process_pipe_
 
 #ifdef __cplusplus
 } // extern "C"

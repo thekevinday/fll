@@ -492,7 +492,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_supported_not (with error bit) if the scope is not supported by the current OS (such as Linux not supporting PTHREAD_SCOPE_PROCESS).
+ *   F_support_not (with error bit) if the scope is not supported by the current OS (such as Linux not supporting PTHREAD_SCOPE_PROCESS).
  *
  *   F_failure (with error bit) on any other error.
  *
@@ -853,7 +853,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_found_not (with error bit) if no thread by the given ID was found.
- *   F_supported_not (with error bit) if per-CPU clocks are not supported by the OS.
+ *   F_support_not (with error bit) if per-CPU clocks are not supported by the OS.
  *
  *   F_failure (with error bit) on any other error.
  *
@@ -1238,7 +1238,7 @@ extern "C" {
  *   F_deadlock (with error bit) if operation would cause a deadlock.ead.
  *   F_found_not (with error bit) if no thread by the given ID was found.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_supported_not (with error bit) if the thread is not joinable or is already being joined by another thread.
+ *   F_support_not (with error bit) if the thread is not joinable or is already being joined by another thread.
  *
  *   F_failure (with error bit) on any other error.
  *
@@ -1267,7 +1267,7 @@ extern "C" {
  *   F_deadlock (with error bit) if operation would cause a deadlock.ead.
  *   F_found_not (with error bit) if no thread by the given ID was found.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_supported_not (with error bit) if the thread is not joinable or is already being joined by another thread.
+ *   F_support_not (with error bit) if the thread is not joinable or is already being joined by another thread.
  *
  *   F_failure (with error bit) on any other error.
  *
@@ -1301,7 +1301,7 @@ extern "C" {
  *   F_deadlock (with error bit) if operation would cause a deadlock.
  *   F_found_not (with error bit) if no thread by the given ID was found.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_supported_not (with error bit) if the thread is not joinable or is already being joined by another thread.
+ *   F_support_not (with error bit) if the thread is not joinable or is already being joined by another thread.
  *
  *   F_failure (with error bit) on any other error.
  *
@@ -1800,7 +1800,7 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if not allowed to perform the operation.
- *   F_supported_not (with error bit) if the protocol is not supported.
+ *   F_support_not (with error bit) if the protocol is not supported.
  *
  *   F_failure (with error bit) on any other error.
  *
@@ -2129,7 +2129,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_supported_not (with error bit) if the policy or scheduling parameter is invalid.
+ *   F_support_not (with error bit) if the policy or scheduling parameter is invalid.
  *
  *   F_failure (with error bit) on any other error.
  *
@@ -2202,7 +2202,7 @@ extern "C" {
  *   F_none on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_supported_not (with error bit) if the system does not support the process shared semaphore (shared == true).
+ *   F_support_not (with error bit) if the system does not support the process shared semaphore (shared == true).
  *
  *   F_failure (with error bit) on any other error.
  *
@@ -2311,7 +2311,7 @@ extern "C" {
  *   F_file_found_not (with error bit) if the file was not found and the O_CREAT is not set.
  *   F_name_not (with error bit) if file name is too long.
  *   F_parameter (with error bit) if a parameter is invalid.
- *   F_supported_not (with error bit) if the system does not support the process shared semaphore (shared == true).
+ *   F_support_not (with error bit) if the system does not support the process shared semaphore (shared == true).
  *   F_memory_not (with error bit) if out of memory.
  *
  *   F_failure (with error bit) on any other error.
@@ -2481,7 +2481,7 @@ extern "C" {
  *   F_found_not (with error bit) if no thread by the given ID was found.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_resource_not (with error bit) if the max signals is reached.
- *   F_supported_not (with error bit) if this action is not supported by the current OS.
+ *   F_support_not (with error bit) if this action is not supported by the current OS.
  *
  *   F_failure (with error bit) on any other error.
  *

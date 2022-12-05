@@ -164,7 +164,7 @@ extern "C" {
 
     f_status_t status = f_file_clone(path_source, path_destination, recurse.size_block, recurse.flag);
 
-    if (F_status_is_error(status) || status == F_supported_not) {
+    if (F_status_is_error(status) || status == F_support_not) {
       if (status == F_status_set_error(F_memory_not)) {
         return F_status_set_error(status);
       }
@@ -376,7 +376,7 @@ extern "C" {
 
     f_status_t status = f_file_copy(path_source, path_destination, mode, recurse.size_block, recurse.flag);
 
-    if (F_status_is_error(status) || status == F_supported_not) {
+    if (F_status_is_error(status) || status == F_support_not) {
       if (status == F_status_set_error(F_memory_not)) {
         return F_status_set_error(status);
       }

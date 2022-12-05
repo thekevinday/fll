@@ -179,7 +179,7 @@ extern "C" {
  * The details on how these work are specific to individual specifications.
  * The notes below provide the intended purpose but be sure to still read the individual function documentation.
  *
- * Only "next" and "end" are only meaningful for a Content and will be treated as "none" for an Object.
+ * The "next" and "end" are only meaningful for a Content and will be treated as "none" for an Object.
  *
  * f_fss_complete_*:
  *   - none:         Disable completeness.

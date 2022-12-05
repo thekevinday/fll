@@ -124,7 +124,7 @@ extern "C" {
       if (errno == EROFS) return F_status_set_error(F_read_only);
       if (errno == ETXTBSY) return F_status_set_error(F_busy);
       if (errno == EISDIR) return F_status_set_error(F_directory);
-      if (errno == EOPNOTSUPP) return F_status_set_error(F_supported_not);
+      if (errno == EOPNOTSUPP) return F_status_set_error(F_support_not);
 
       return F_status_set_error(F_failure);
     }

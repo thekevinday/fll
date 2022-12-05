@@ -240,35 +240,35 @@ extern "C" {
  * Flags used to represent flags passed to the main function.
  *
  * fss_write_flag_*_e:
- *   - none:    No modes in use.
- *   - content: The Content being written is specified.
- *   - double:  Operate using double quotes.
- *   - file_to: Using a specified destination file.
- *   - help:    Print help.
- *   - ignore:  Ignore a given range within a Content.
- *   - object:  The Object being written is specified.
- *   - partial: Do not write end of Object/Content character.
- *   - prepend: Prepend the given white space characters to the start of each multi-line Content.
- *   - printed: Designate that the first line has been print for the main output.
- *   - single:  Operate using single quotes.
- *   - trim:    Trim Object names.
- *   - version: Print version.
+ *   - none:             No modes in use.
+ *   - content:          The Content being written is specified.
+ *   - content_multiple: Designate that multiple Content is allowed for an Object for this standard rather than a single Content per Object.
+ *   - double:           Operate using double quotes.
+ *   - file_to:          Using a specified destination file.
+ *   - help:             Print help.
+ *   - ignore:           Ignore a given range within a Content (specify flag before setting loading to designate ignores is supported by standard).
+ *   - object:           The Object being written is specified.
+ *   - partial:          Do not write end of Object/Content character.
+ *   - prepend:          Prepend the given white space characters to the start of each multi-line Content.
+ *   - single:           Operate using single quotes.
+ *   - trim:             Trim Object names.
+ *   - version:          Print version.
  */
 #ifndef _di_fss_write_flag_e_
   enum {
-    fss_write_flag_none_e    = 0x0,
-    fss_write_flag_content_e = 0x1,
-    fss_write_flag_double_e  = 0x2,
-    fss_write_flag_file_to_e = 0x4,
-    fss_write_flag_help_e    = 0x8,
-    fss_write_flag_ignore_e  = 0x10,
-    fss_write_flag_object_e  = 0x20,
-    fss_write_flag_partial_e = 0x40,
-    fss_write_flag_prepend_e = 0x80,
-    fss_write_flag_printed_e = 0x100,
-    fss_write_flag_single_e  = 0x200,
-    fss_write_flag_trim_e    = 0x400,
-    fss_write_flag_version_e = 0x800,
+    fss_write_flag_none_e             = 0x0,
+    fss_write_flag_content_e          = 0x1,
+    fss_write_flag_content_multiple_e = 0x2,
+    fss_write_flag_double_e           = 0x4,
+    fss_write_flag_file_to_e          = 0x8,
+    fss_write_flag_help_e             = 0x10,
+    fss_write_flag_ignore_e           = 0x20,
+    fss_write_flag_object_e           = 0x40,
+    fss_write_flag_partial_e          = 0x80,
+    fss_write_flag_prepend_e          = 0x100,
+    fss_write_flag_single_e           = 0x200,
+    fss_write_flag_trim_e             = 0x400,
+    fss_write_flag_version_e          = 0x800,
   };
 #endif // _di_fss_write_flag_e_
 
@@ -288,22 +288,32 @@ extern "C" {
  * line_first: A string expected to represent either "\n" or NULL to allow for easy handling of when to print first new line or not.
  * line_last:  A string expected to represent either "\n" or NULL to allow for easy handling of when to print last new line or not.
  *
- * quote: This holds the quote used during processing.
+ * quote:    This holds the quote used during processing.
+ * standard: A human-friendly string describing the standard in use, such as "FSS-0000 (Basic)".
  *
  * escaped: A buffer used for escaping strings during processing.
  * block:   A buffer used to storing one or more blocks while processing a file line by line.
  * buffer:  A buffer used during processing the file.
- * object:  A buffer used to hold an Object during processing.
- * content: A buffer used to hold a Content during processing.
  * prepend: A string to prepend to each multi-line Content.
  *
- * ignores:  An array of ranges passed as values to the "--ignore" parameter.
- * objects:  An array of objects passed as values to the "--object" parameter.
- * contents: An array of objects passed as values to the "--content" parameter and must match the length of objects.
+ * ignoress:  An array of range sets passed as values to the "--ignore" parameter or via the input pipe.
+ * objects:   An array of objects passed as values to the "--object" parameter or via the input pipe.
+ * contentss: An array of content sets passed as values to the "--content" parameter or via the input pipe.
  *
- * process_help:   Process help (generally printing help).
- * process_normal: Process normally (data from parameters and files).
- * process_pipe:   Process using the data from input pipe.
+ * object:   A pointer to a specific Object used during processing.
+ * content:  A pointer to a specific Content used during processing.
+ * contents: A pointer to a specific set of Content used during processing.
+ *
+ * content_separator: A standard format specific string used to separate Content.
+ * program_name:      The short name of the program.
+ * program_name_long: The human friendly name of the program.
+ *
+ * process_content: Process a single Content.
+ * process_help:    Process help (generally printing help).
+ * process_normal:  Process normally (data from parameters and files).
+ * process_object:  Process a single Object.
+ * process_pipe:    Process using the data from input pipe.
+ * process_set:     Process a set of Object and one or more Content.
  */
 #ifndef _di_fss_write_setting_t_
   typedef struct {
@@ -318,26 +328,32 @@ extern "C" {
     f_string_static_t line_last;
 
     f_string_static_t quote;
+    f_string_static_t standard;
 
     f_string_dynamic_t escaped;
     f_string_dynamic_t block;
     f_string_dynamic_t buffer;
-    f_string_dynamic_t object;
-    f_string_dynamic_t content;
     f_string_dynamic_t prepend;
 
-    f_string_ranges_t ignores;
+    f_string_rangess_t ignoress;
     f_string_dynamics_t objects;
-    f_string_dynamics_t contents;
+    f_string_dynamicss_t contentss;
 
+    f_string_ranges_t *ignores;
+    f_string_static_t *object;
+    f_string_static_t *content;
+    f_string_statics_t *contents;
+
+    const f_string_static_t *content_separator;
     const f_string_static_t *program_name;
     const f_string_static_t *program_name_long;
 
+    void (*process_content)(fll_program_data_t * const main, void * const setting, const bool last);
     void (*process_help)(fll_program_data_t * const main, void * const setting);
     void (*process_normal)(fll_program_data_t * const main, void * const setting);
+    void (*process_object)(fll_program_data_t * const main, void * const setting);
     void (*process_pipe)(fll_program_data_t * const main, void * const setting);
-    void (*process_object)(fll_program_data_t * const main, void * const setting, const f_string_static_t * const object);
-    void (*process_content)(fll_program_data_t * const main, void * const setting, const f_string_static_t * const content);
+    void (*process_set)(fll_program_data_t * const main, void * const setting);
   } fss_write_setting_t;
 
   #define fss_write_setting_t_initialize \
@@ -348,15 +364,20 @@ extern "C" {
       f_string_range_t_initialize, \
       f_string_static_t_initialize, \
       f_string_static_t_initialize, \
+      f_string_static_t_initialize, \
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_ranges_t_initialize, \
+      f_string_rangess_t_initialize, \
       f_string_dynamics_t_initialize, \
-      f_string_dynamics_t_initialize, \
+      f_string_dynamicss_t_initialize, \
+      0, \
+      0, \
+      0, \
+      0, \
+      0, \
+      0, \
       0, \
       0, \
       0, \

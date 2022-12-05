@@ -78,12 +78,76 @@ extern "C" {
 #endif // _di_fss_write_main_
 
 /**
+ * Process normally, writing to the output for the assigned FSS format.
+ *
+ * @param main
+ *   The main program data.
+ * @param setting
+ *   The main program settings.
+ *   Must be of type (fss_write_setting_t *).
+ *
+ *   This alters setting.status:
+ *     status from fss_write_process_normal_data().
+ *
+ *     Errors (with error bit) from fss_write_process_normal_data().
+ *
+ * @see fss_write_process_normal_data()
+ */
+#ifndef _di_fss_write_process_normal_
+  extern void fss_write_process_normal(fll_program_data_t * const main, void * const setting);
+#endif // _di_fss_write_process_normal_
+
+/**
+ * Process the data normally, writing to the output for the assigned FSS format.
+ *
+ * @param main
+ *   The main program data.
+ * @param setting
+ *   The main program settings.
+ *   Must be of type (fss_write_setting_t *).
+ *
+ *   This alters setting.status:
+ *     F_none on success.
+ *     F_interrupt on (exit) signal received.
+ *
+ *     F_parameter (with error bit) if main is NULL or setting is NULL.
+ */
+#ifndef _di_fss_write_process_normal_data_
+  void fss_write_process_normal_data(fll_program_data_t * const main, fss_write_setting_t * const setting, const f_array_length_t length);
+#endif // _di_fss_write_process_normal_data_
+
+/**
+ * Process the pipe, reading from the pipe and writing to the output for the assigned FSS format.
+ *
+ * @param main
+ *   The main program data.
+ * @param setting
+ *   The main program settings.
+ *   Must be of type (fss_write_setting_t *).
+ *
+ *   This alters setting.status:
+ *     F_none on success.
+ *     F_data_not on success but pipe contained no relevant data.
+ *     F_basic on success and the basic has been printed.
+ *     F_interrupt on (exit) signal received.
+ *
+ *     F_parameter (with error bit) if main is NULL or setting is NULL.
+ */
+#ifndef _di_fss_write_process_pipe_
+  extern void fss_write_process_pipe(fll_program_data_t * const main, void * const setting);
+#endif // _di_fss_write_process_pipe_
+
+/**
  * Process a given Object and Content, printing the assigned FSS format if valid or an error if invalid.
  *
  * @param main
  *   The main program data.
  * @param setting
  *   The main program settings.
+ *   Must be of type (fss_write_setting_t *).
+ *
+ *   Set setting.object to 0 to not use an Object.
+ *   Set setting.contents to 0 to not use an Content set.
  *
  *   This alters setting.status:
  *     F_none on success.
@@ -92,13 +156,13 @@ extern "C" {
  *     F_parameter (with error bit) if main is NULL or setting is NULL.
  * @param object
  *   The object to validate and print.
- *   Set pointer address to 0 to not use.
+ *   Set to setting.objects.used to not use.
  * @param content
  *   The content to escape and print.
- *   Set pointer address to 0 to not use.
+ *   Set start to 1 and stop to 0 to not use.
  */
 #ifndef _di_fss_write_process_set_
-  extern void fss_write_process_set(fll_program_data_t * const main, fss_write_setting_t * const setting, const f_string_static_t * const object, const f_string_static_t * const content);
+  extern void fss_write_process_set(fll_program_data_t * const main, void * const setting);
 #endif // _di_fss_write_process_set_
 
 #ifdef __cplusplus

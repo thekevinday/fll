@@ -85,7 +85,7 @@ extern "C" {
  *   F_prohibited (with error bit) if file system does not allow for making changes.
  *   F_read_only (with error bit) if file is read-only.
  *   F_space_not (with error bit) if file system is out of space (or file system quota is reached).
- *   F_supported_not if copying a given type of file is unsupported.
+ *   F_support_not if copying a given type of file is unsupported.
  *   F_failure (with error bit) for any other error.
  *
  * @see open()
@@ -290,7 +290,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if file system does not allow for making changes.
  *   F_space_not (with error bit) if file system is out of space (or file system quota is reached).
- *   F_supported_not (with error bit) for unsupported file types.
+ *   F_support_not (with error bit) for unsupported file types.
  *   F_failure (with error bit) for any other error.
  *
  * @see mkfifo()
@@ -328,7 +328,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if file system does not allow for making changes.
  *   F_space_not (with error bit) if file system is out of space (or file system quota is reached).
- *   F_supported_not (with error bit) for unsupported file types.
+ *   F_support_not (with error bit) for unsupported file types.
  *   F_failure (with error bit) for any other error.
  *
  * @see mkfifoat()
@@ -369,7 +369,7 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_prohibited (with error bit) if file system does not allow for making changes.
  *   F_space_not (with error bit) if file system is out of space (or file system quota is reached).
- *   F_supported_not (with error bit) for unsupported file types.
+ *   F_support_not (with error bit) for unsupported file types.
  *   F_failure (with error bit) for any other error.
  *
  * @see mknod()
@@ -415,7 +415,7 @@ extern "C" {
  *   F_prohibited (with error bit) if file system does not allow for making changes.
  *   F_space_not (with error bit) if file system is out of space (or file system quota is reached).
  *   F_failure (with error bit) for any other error.
- *   F_supported_not (with error bit) for unsupported file types.
+ *   F_support_not (with error bit) for unsupported file types.
  *
  * @see mknodat()
  *
@@ -443,7 +443,7 @@ extern "C" {
  *   F_input_output (with error bit) on I/O error.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_space_not (with error bit) if file system is out of space (or file system quota is reached).
- *   F_supported_not (with error bit) if the file system or file type does not support flushing.
+ *   F_support_not (with error bit) if the file system or file type does not support flushing.
  *   F_file_synchronize (with error bit) on any other failure.
  *
  * @see f_file_clone_at()

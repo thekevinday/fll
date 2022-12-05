@@ -164,7 +164,7 @@ extern "C" {
  *   F_found_not (with error bit) if the given PID was found.
  *   F_parameter (with error bit) if a parameter is invalid.
  *   F_resource_not (with error bit) if the max signals is reached.
- *   F_supported_not (with error bit) if this action is not supported by the current OS.
+ *   F_support_not (with error bit) if this action is not supported by the current OS.
  *
  *   F_failure (with error bit) for any other error.
  *

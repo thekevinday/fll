@@ -102,7 +102,7 @@ extern "C" {
 
     if (sigqueue(id, signal, value) == -1) {
       if (errno == EAGAIN) return F_status_set_error(F_resource_not);
-      if (errno == ENOSYS) return F_status_set_error(F_supported_not);
+      if (errno == ENOSYS) return F_status_set_error(F_support_not);
       if (errno == EINVAL) return F_status_set_error(F_parameter);
       if (errno == ESRCH) return F_status_set_error(F_found_not);
 
