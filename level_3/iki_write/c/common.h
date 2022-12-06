@@ -70,39 +70,39 @@ extern "C" {
  * The main program parameters.
  */
 #ifndef _di_iki_write_parameters_
-  #define IKI_WRITE_short_file_s    "f"
   #define IKI_WRITE_short_content_s "c"
   #define IKI_WRITE_short_double_s  "d"
+  #define IKI_WRITE_short_file_s    "f"
   #define IKI_WRITE_short_object_s  "o"
   #define IKI_WRITE_short_single_s  "s"
 
-  #define IKI_WRITE_long_file_s    "file"
   #define IKI_WRITE_long_content_s "content"
   #define IKI_WRITE_long_double_s  "double"
+  #define IKI_WRITE_long_file_s    "file"
   #define IKI_WRITE_long_object_s  "object"
   #define IKI_WRITE_long_single_s  "single"
 
-  #define IKI_WRITE_short_file_s_length    1
   #define IKI_WRITE_short_content_s_length 1
   #define IKI_WRITE_short_double_s_length  1
+  #define IKI_WRITE_short_file_s_length    1
   #define IKI_WRITE_short_object_s_length  1
   #define IKI_WRITE_short_single_s_length  1
 
-  #define IKI_WRITE_long_file_s_length    4
   #define IKI_WRITE_long_content_s_length 7
   #define IKI_WRITE_long_double_s_length  6
+  #define IKI_WRITE_long_file_s_length    4
   #define IKI_WRITE_long_object_s_length  6
   #define IKI_WRITE_long_single_s_length  6
 
-  extern const f_string_static_t iki_write_short_file_s;
   extern const f_string_static_t iki_write_short_content_s;
   extern const f_string_static_t iki_write_short_double_s;
+  extern const f_string_static_t iki_write_short_file_s;
   extern const f_string_static_t iki_write_short_object_s;
   extern const f_string_static_t iki_write_short_single_s;
 
-  extern const f_string_static_t iki_write_long_file_s;
   extern const f_string_static_t iki_write_long_content_s;
   extern const f_string_static_t iki_write_long_double_s;
+  extern const f_string_static_t iki_write_long_file_s;
   extern const f_string_static_t iki_write_long_object_s;
   extern const f_string_static_t iki_write_long_single_s;
 
@@ -118,9 +118,9 @@ extern "C" {
     iki_write_parameter_verbosity_debug_e,
     iki_write_parameter_version_e,
 
-    iki_write_parameter_file_e,
     iki_write_parameter_content_e,
     iki_write_parameter_double_e,
+    iki_write_parameter_file_e,
     iki_write_parameter_object_e,
     iki_write_parameter_single_e,
   };
@@ -137,9 +137,9 @@ extern "C" {
       macro_f_console_parameter_t_initialize(f_console_standard_short_verbose_s.string, f_console_standard_long_verbose_s.string, 0, 0, f_console_type_inverse_e), \
       macro_f_console_parameter_t_initialize(f_console_standard_short_debug_s.string, f_console_standard_long_debug_s.string, 0, 0, f_console_type_inverse_e), \
       macro_f_console_parameter_t_initialize(f_console_standard_short_version_s.string, f_console_standard_long_version_s.string, 0, 0, f_console_type_inverse_e), \
-      macro_f_console_parameter_t_initialize(iki_write_short_file_s.string, iki_write_long_file_s.string, 0, 1, f_console_type_normal_e), \
       macro_f_console_parameter_t_initialize(iki_write_short_content_s.string, iki_write_long_content_s.string, 0, 1, f_console_type_normal_e), \
       macro_f_console_parameter_t_initialize(iki_write_short_double_s.string, iki_write_long_double_s.string, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(iki_write_short_file_s.string, iki_write_long_file_s.string, 0, 1, f_console_type_normal_e), \
       macro_f_console_parameter_t_initialize(iki_write_short_object_s.string, iki_write_long_object_s.string, 0, 1, f_console_type_normal_e), \
       macro_f_console_parameter_t_initialize(iki_write_short_single_s.string, iki_write_long_single_s.string, 0, 0, f_console_type_normal_e), \
     }
