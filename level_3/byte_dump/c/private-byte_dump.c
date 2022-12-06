@@ -70,7 +70,15 @@ extern "C" {
 
         byte_get = getc(file.stream);
 
-        if (byte_get < 0) break;
+        if (byte_get < 0) {
+          if (width_utf == -1 && character_reset) {
+            sequence.used = 0;
+            character_reset = F_false;
+            memset(&invalid, 0, sizeof(f_char_t) * data->width);
+          }
+
+          break;
+        }
 
         byte = (f_char_t) byte_get;
 
@@ -560,13 +568,13 @@ extern "C" {
       cell->column = 0;
       ++cell->row;
 
-      if (!bytes) {
-        previous->bytes = 0;
-        previous->invalid = 0;
-      }
-      else {
+      if (bytes) {
         previous->bytes = bytes;
         previous->invalid = invalid[current];
+      }
+      else {
+        previous->bytes = 0;
+        previous->invalid = 0;
       }
     }
     else {
