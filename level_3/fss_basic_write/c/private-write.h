@@ -70,7 +70,7 @@ extern "C" {
  *   F_failure (with error bit) for any other failure.
  */
 #ifndef _di_fss_basic_write_process_
-  extern f_status_t fss_basic_write_process(fll_program_data_t * const main, const f_file_t output, const f_fss_quote_t quote, const f_string_static_t *object, const f_string_static_t *content, f_string_dynamic_t *buffer) F_attribute_visibility_internal_d;
+  extern f_status_t fss_basic_write_process(fll_program_data_t * const main, const f_file_t output, const uint8_t quote, const f_string_static_t *object, const f_string_static_t *content, f_string_dynamic_t *buffer) F_attribute_visibility_internal_d;
 #endif // _di_fss_basic_write_process_
 
 /**
@@ -91,7 +91,7 @@ extern "C" {
  *   F_failure (with error bit) for any other failure.
  */
 #ifndef _di_fss_basic_write_process_pipe_
-  extern f_status_t fss_basic_write_process_pipe(fll_program_data_t * const main, const f_file_t output, const f_fss_quote_t quote, f_string_dynamic_t *buffer) F_attribute_visibility_internal_d;
+  extern f_status_t fss_basic_write_process_pipe(fll_program_data_t * const main, const f_file_t output, const uint8_t quote, f_string_dynamic_t *buffer) F_attribute_visibility_internal_d;
 #endif // _di_fss_basic_write_process_pipe_
 
 #ifdef __cplusplus

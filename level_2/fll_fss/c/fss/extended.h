@@ -84,7 +84,7 @@ extern "C" {
  * @see fl_fss_extended_object_read()
  */
 #ifndef _di_fll_fss_extended_read_
-  extern f_status_t fll_fss_extended_read(const f_string_static_t buffer, f_state_t state, f_string_range_t * const range, f_fss_objects_t * const objects, f_fss_contents_t * const contents, f_fss_quotes_t * const objects_quoted, f_fss_quotess_t * const contents_quoted, f_fss_delimits_t * const objects_delimits, f_fss_delimits_t * const contents_delimits);
+  extern f_status_t fll_fss_extended_read(const f_string_static_t buffer, f_state_t state, f_string_range_t * const range, f_fss_objects_t * const objects, f_fss_contents_t * const contents, f_uint8s_t * const objects_quoted, f_uint8ss_t * const contents_quoted, f_fss_delimits_t * const objects_delimits, f_fss_delimits_t * const contents_delimits);
 #endif // _di_fll_fss_extended_read_
 
 /**
@@ -96,7 +96,7 @@ extern "C" {
  *   An array of strings representing multiple content to write.
  * @param quote
  *   If 0, then double quotes are auto-inserted, when required.
- *   Otherwise, this is the type of quote to wrap the object in when writing.
+ *   Otherwise, this is quote character to wrap the object in when writing.
  * @param state
  A state for providing flags and handling interrupts during long running operations.
  *   There is no print_error().
@@ -127,7 +127,7 @@ extern "C" {
  * @see fl_fss_extended_object_write()
  */
 #ifndef _di_fll_fss_extended_write_
-  extern f_status_t fll_fss_extended_write(const f_string_static_t object, const f_string_statics_t contents, const f_fss_quote_t quote, f_state_t state, f_string_dynamic_t * const destination);
+  extern f_status_t fll_fss_extended_write(const f_string_static_t object, const f_string_statics_t contents, const uint8_t quote, f_state_t state, f_string_dynamic_t * const destination);
 #endif // _di_fll_fss_extended_write_
 
 #ifdef __cplusplus

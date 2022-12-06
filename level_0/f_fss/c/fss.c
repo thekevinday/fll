@@ -16,7 +16,7 @@ extern "C" {
     for (f_array_length_t i = 0; i < delimits.used; ++i) {
 
       if (delimits.array[i] < buffer->used) {
-        buffer->string[delimits.array[i]] = f_fss_delimit_placeholder_s.string[0];
+        buffer->string[delimits.array[i]] = f_fss_placeholder_s.string[0];
       }
     } // for
 
@@ -35,7 +35,7 @@ extern "C" {
     for (f_array_length_t i = 0; i < delimits.used; ++i) {
 
       if (delimits.array[i] < buffer->used && delimits.array[i] >= range.start && delimits.array[i] <= range.stop) {
-        buffer->string[delimits.array[i]] = f_fss_delimit_placeholder_s.string[0];
+        buffer->string[delimits.array[i]] = f_fss_placeholder_s.string[0];
       }
     } // for
 
@@ -226,7 +226,7 @@ extern "C" {
 
       if (range->start >= buffer.used) return F_none_eos;
       if (range->start > range->stop) return F_none_stop;
-      if (buffer.string[range->start] != f_fss_delimit_placeholder_s.string[0]) break;
+      if (buffer.string[range->start] != f_fss_placeholder_s.string[0]) break;
     } // for
 
     return F_none;
@@ -266,7 +266,7 @@ extern "C" {
         return F_none_eol;
       }
 
-      if (buffer.string[range->start] == f_fss_delimit_placeholder_s.string[0]) {
+      if (buffer.string[range->start] == f_fss_placeholder_s.string[0]) {
         ++range->start;
 
         continue;

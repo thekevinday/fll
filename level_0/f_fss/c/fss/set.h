@@ -101,19 +101,19 @@ extern "C" {
     f_fss_objects_t objects;
     f_fss_contents_t contents;
 
-    f_fss_quotes_t objects_quote;
-    f_fss_quotess_t contents_quote;
+    f_uint8s_t objects_quote;
+    f_uint8ss_t contents_quote;
   } f_fss_set_quote_t;
 
-  #define f_fss_set_quote_t_initialize { f_fss_objects_t_initialize, f_fss_contents_t_initialize, f_fss_quotes_t_initialize, f_fss_quotess_t_initialize }
+  #define f_fss_set_quote_t_initialize { f_fss_objects_t_initialize, f_fss_contents_t_initialize, f_uint8s_t_initialize, f_uint8ss_t_initialize }
 
   #define macro_f_fss_set_quote_t_initialize(objects, contents, objects_quote, contents_quote) { objects, contents, objects_quote, contents_quote }
 
   #define macro_f_fss_set_quote_t_clear(set) \
     macro_f_fss_objects_t_clear(set.objects) \
     macro_f_fss_contents_t_clear(set.contents) \
-    macro_f_fss_quotes_t_clear(set.objects_quote) \
-    macro_f_fss_quotess_t_clear(set.contents_quote)
+    macro_f_uint8s_t_clear(set.objects_quote) \
+    macro_f_uint8ss_t_clear(set.contents_quote)
 
   #define macro_f_fss_set_quote_t_resize(status, set_quote, length) status = f_fss_set_quote_resize(length, &set_quote);
   #define macro_f_fss_set_quote_t_adjust(status, set_quote, length) status = f_fss_set_quote_adjust(length, &set_quote);

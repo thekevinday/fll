@@ -20,24 +20,52 @@ extern "C" {
       if (data->option & fss_extended_read_data_option_object_d) {
         if (data->option & fss_extended_read_data_option_trim_d) {
           if ((data->option & fss_extended_read_data_option_original_d) && data->quotes_object.array[at]) {
-            f_print_dynamic_raw(data->quotes_object.array[at] == f_fss_quote_type_single_e ? f_fss_quote_single_s : f_fss_quote_double_s, main->output.to);
+            f_print_dynamic_raw(
+              data->quotes_object.array[at] == f_fss_quote_type_single_e
+                ? f_fss_quote_single_s
+                : data->quotes_object.array[at] == f_fss_quote_type_backtick_e
+                  ? f_fss_quote_backtick_s,
+                  : f_fss_quote_double_s,
+              main->output.to
+            );
           }
 
           fl_print_trim_except_dynamic_partial(data->buffer, data->objects.array[at], delimits_object, main->output.to);
 
           if ((data->option & fss_extended_read_data_option_original_d) && data->quotes_object.array[at]) {
-            f_print_dynamic_raw(data->quotes_object.array[at] == f_fss_quote_type_single_e ? f_fss_quote_single_s : f_fss_quote_double_s, main->output.to);
+            f_print_dynamic_raw(
+              data->quotes_object.array[at] == f_fss_quote_type_single_e
+                ? f_fss_quote_single_s
+                : data->quotes_object.array[at] == f_fss_quote_type_backtick_e
+                  ? f_fss_quote_backtick_s,
+                  : f_fss_quote_double_s,
+              main->output.to
+            );
           }
         }
         else {
           if ((data->option & fss_extended_read_data_option_original_d) && data->quotes_object.array[at]) {
-            f_print_dynamic_raw(data->quotes_object.array[at] == f_fss_quote_type_single_e ? f_fss_quote_single_s : f_fss_quote_double_s, main->output.to);
+            f_print_dynamic_raw(
+              data->quotes_object.array[at] == f_fss_quote_type_single_e
+                ? f_fss_quote_single_s
+                : data->quotes_object.array[at] == f_fss_quote_type_backtick_e
+                  ? f_fss_quote_backtick_s,
+                  : f_fss_quote_double_s,
+              main->output.to
+            );
           }
 
           f_print_except_dynamic_partial(data->buffer, data->objects.array[at], delimits_object, main->output.to);
 
           if ((data->option & fss_extended_read_data_option_original_d) && data->quotes_object.array[at]) {
-            f_print_dynamic_raw(data->quotes_object.array[at] == f_fss_quote_type_single_e ? f_fss_quote_single_s : f_fss_quote_double_s, main->output.to);
+            f_print_dynamic_raw(
+              data->quotes_object.array[at] == f_fss_quote_type_single_e
+                ? f_fss_quote_single_s
+                : data->quotes_object.array[at] == f_fss_quote_type_backtick_e
+                  ? f_fss_quote_backtick_s,
+                  : f_fss_quote_double_s,
+              main->output.to
+            );
           }
         }
 
@@ -54,13 +82,26 @@ extern "C" {
             content_printed = F_true;
 
             if ((data->option & fss_extended_read_data_option_original_d) && data->quotes_content.array[at].array[data->select]) {
-              f_print_dynamic_raw(data->quotes_content.array[at].array[data->select] == f_fss_quote_type_single_e ? f_fss_quote_single_s : f_fss_quote_double_s, main->output.to);
+                data->quotes_content.array[at].array[data->select] == f_fss_quote_type_single_e
+                  ? f_fss_quote_single_s
+                  : data->quotes_content.array[at].array[data->select] == f_fss_quote_type_backtick_e
+                    ? f_fss_quote_backtick_s
+                    : f_fss_quote_double_s,
+                  main->output.to
+                );
             }
 
             f_print_except_dynamic_partial(data->buffer, data->contents.array[at].array[data->select], delimits_content, main->output.to);
 
             if ((data->option & fss_extended_read_data_option_original_d) && data->quotes_content.array[at].array[data->select]) {
-              f_print_dynamic_raw(data->quotes_content.array[at].array[data->select] == f_fss_quote_type_single_e ? f_fss_quote_single_s : f_fss_quote_double_s, main->output.to);
+              f_print_dynamic_raw(
+                data->quotes_content.array[at].array[data->select] == f_fss_quote_type_single_e
+                  ? f_fss_quote_single_s
+                  : data->quotes_content.array[at].array[data->select] == f_fss_quote_type_backtick_e
+                    ? f_fss_quote_backtick_s
+                    : f_fss_quote_double_s,
+                  main->output.to
+                );
             }
           }
         }
@@ -74,13 +115,27 @@ extern "C" {
             content_printed = F_true;
 
             if ((data->option & fss_extended_read_data_option_original_d) && data->quotes_content.array[at].array[i]) {
-              f_print_dynamic_raw(data->quotes_content.array[at].array[i] == f_fss_quote_type_single_e ? f_fss_quote_single_s : f_fss_quote_double_s, main->output.to);
+              f_print_dynamic_raw(
+                data->quotes_content.array[at].array[i] == f_fss_quote_type_single_e
+                  ? f_fss_quote_single_s
+                  : data->quotes_content.array[at].array[i] == f_fss_quote_type_backtick_e
+                    ? f_fss_quote_backtick_s,
+                    : f_fss_quote_double_s,
+                main->output.to
+              );
             }
 
             f_print_except_dynamic_partial(data->buffer, data->contents.array[at].array[i], delimits_content, main->output.to);
 
             if ((data->option & fss_extended_read_data_option_original_d) && data->quotes_content.array[at].array[i]) {
-              f_print_dynamic_raw(data->quotes_content.array[at].array[i] == f_fss_quote_type_single_e ? f_fss_quote_single_s : f_fss_quote_double_s, main->output.to);
+              f_print_dynamic_raw(
+                data->quotes_content.array[at].array[i] == f_fss_quote_type_single_e
+                  ? f_fss_quote_single_s
+                  : data->quotes_content.array[at].array[i] == f_fss_quote_type_backtick_e
+                    ? f_fss_quote_backtick_s,
+                    : f_fss_quote_double_s,
+                main->output.to
+              );
             }
 
             if (i + 1 < data->contents.array[at].used && data->contents.array[at].array[i + 1].start <= data->contents.array[at].array[i + 1].stop) {

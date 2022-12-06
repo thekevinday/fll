@@ -108,7 +108,7 @@ extern "C" {
         return F_status_set_error(F_none_eol);
       }
 
-      if (content.string[range->start] == f_fss_delimit_placeholder_s.string[0]) continue;
+      if (content.string[range->start] == f_fss_placeholder_s.string[0]) continue;
 
       destination->string[destination->used++] = content.string[range->start];
     } // for
@@ -124,7 +124,7 @@ extern "C" {
 #endif // _di_fl_fss_basic_content_write_
 
 #ifndef _di_fl_fss_basic_object_read_
-  f_status_t fl_fss_basic_object_read(const f_string_static_t buffer, f_state_t state, f_string_range_t * const range, f_fss_object_t * const found, f_fss_quote_t * const quote, f_fss_delimits_t * const delimits) {
+  f_status_t fl_fss_basic_object_read(const f_string_static_t buffer, f_state_t state, f_string_range_t * const range, f_fss_object_t * const found, uint8_t * const quote, f_fss_delimits_t * const delimits) {
     #ifndef _di_level_1_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
       if (!found) return F_status_set_error(F_parameter);
@@ -144,7 +144,7 @@ extern "C" {
 #endif // _di_fl_fss_basic_object_read_
 
 #ifndef _di_fl_fss_basic_object_write_
-  f_status_t fl_fss_basic_object_write(const f_string_static_t object, const f_fss_quote_t quote, const uint8_t complete, f_state_t state, f_string_range_t * const range, f_string_dynamic_t * const destination) {
+  f_status_t fl_fss_basic_object_write(const f_string_static_t object, const uint8_t quote, const uint8_t complete, f_state_t state, f_string_range_t * const range, f_string_dynamic_t * const destination) {
     #ifndef _di_level_1_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
       if (!destination) return F_status_set_error(F_parameter);
@@ -152,11 +152,11 @@ extern "C" {
 
     const f_array_length_t destination_used = destination->used;
 
-    f_status_t status = private_fl_fss_basic_write(F_true, object, quote ? quote : f_fss_delimit_quote_double_s.string[0], state, range, destination);
+    f_status_t status = private_fl_fss_basic_write(F_true, object, quote ? quote : f_fss_quote_double_s.string[0], state, range, destination);
 
     if (status == F_data_not_stop || status == F_data_not_eos) {
 
-      // Objects cannot be empty, so write a quoted empty string.
+      // Objects cannot be empty, so write a quote empty string.
       const f_status_t status_allocation = f_string_dynamic_increase_by(2, destination);
 
       if (F_status_is_error(status_allocation)) {
@@ -165,8 +165,8 @@ extern "C" {
         return status_allocation;
       }
 
-      destination->string[destination->used++] = quote ? f_fss_delimit_quote_single_s.string[0] : f_fss_delimit_quote_double_s.string[0];
-      destination->string[destination->used++] = quote ? f_fss_delimit_quote_single_s.string[0] : f_fss_delimit_quote_double_s.string[0];
+      destination->string[destination->used++] = quote ? quote : f_fss_quote_double_s.string[0];
+      destination->string[destination->used++] = quote ? quote : f_fss_quote_double_s.string[0];
     }
 
     if (complete == f_fss_complete_partial_e || complete == f_fss_complete_partial_trim_e || complete == f_fss_complete_full_e || complete == f_fss_complete_full_trim_e) {
@@ -174,7 +174,7 @@ extern "C" {
         f_status_t status2 = F_none;
 
         if (complete == f_fss_complete_full_trim_e) {
-          status2 = private_fl_fss_basic_write_object_trim(quote ? quote : f_fss_delimit_quote_double_s.string[0], destination_used, state, destination);
+          status2 = private_fl_fss_basic_write_object_trim(quote ? quote : f_fss_quote_double_s.string[0], destination_used, state, destination);
 
           if (F_status_is_error(status2)) {
             destination->used = destination_used;

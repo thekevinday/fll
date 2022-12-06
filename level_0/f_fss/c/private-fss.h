@@ -358,13 +358,13 @@ extern "C" {
  *
  *   Errors (with error bit) from: macro_f_fss_contents_t_adjust().
  *   Errors (with error bit) from: macro_f_fss_objects_t_adjust().
- *   Errors (with error bit) from: macro_f_fss_quotes_t_adjust().
- *   Errors (with error bit) from: macro_f_fss_quotess_t_adjust().
+ *   Errors (with error bit) from: macro_f_uint8s_t_adjust().
+ *   Errors (with error bit) from: macro_f_uint8ss_t_adjust().
  *
  * @see macro_f_fss_contents_t_adjust()
  * @see macro_f_fss_objects_t_adjust()
- * @see macro_f_fss_quotes_t_adjust()
- * @see macro_f_fss_quotess_t_adjust()
+ * @see macro_f_uint8s_t_adjust()
+ * @see macro_f_uint8ss_t_adjust()
  *
  * @see f_fss_set_quote_adjust()
  * @see f_fss_set_quote_decimate_by()
@@ -388,13 +388,13 @@ extern "C" {
  *
  *   Errors (with error bit) from: macro_f_fss_contents_t_resize().
  *   Errors (with error bit) from: macro_f_fss_objects_t_resize().
- *   Errors (with error bit) from: macro_f_fss_quotes_t_resize().
- *   Errors (with error bit) from: macro_f_fss_quotess_t_resize().
+ *   Errors (with error bit) from: macro_f_uint8s_t_resize().
+ *   Errors (with error bit) from: macro_f_uint8ss_t_resize().
  *
  * @see macro_f_fss_contents_t_resize()
  * @see macro_f_fss_objects_t_resize()
- * @see macro_f_fss_quotes_t_resize()
- * @see macro_f_fss_quotess_t_resize()
+ * @see macro_f_uint8s_t_resize()
+ * @see macro_f_uint8ss_t_resize()
  *
  * @see f_fss_set_quote_decrease_by()
  * @see f_fss_set_quote_increase()
@@ -420,14 +420,14 @@ extern "C" {
  *
  *   Errors (with error bit) from: macro_f_fss_contents_t_adjust().
  *   Errors (with error bit) from: macro_f_fss_objects_t_adjust().
- *   Errors (with error bit) from: macro_f_fss_quotes_t_adjust().
- *   Errors (with error bit) from: macro_f_fss_quotess_t_adjust().
+ *   Errors (with error bit) from: macro_f_uint8s_t_adjust().
+ *   Errors (with error bit) from: macro_f_uint8ss_t_adjust().
  *   Errors (with error bit) from: f_memory_adjust().
  *
  * @see macro_f_fss_contents_t_adjust()
  * @see macro_f_fss_objects_t_adjust()
- * @see macro_f_fss_quotes_t_adjust()
- * @see macro_f_fss_quotess_t_adjust()
+ * @see macro_f_uint8s_t_adjust()
+ * @see macro_f_uint8ss_t_adjust()
  *
  * @see f_fss_set_quotes_adjust()
  * @see f_fss_set_quotes_decimate_by()
@@ -452,14 +452,14 @@ extern "C" {
  *
  *   Errors (with error bit) from: macro_f_fss_contents_t_resize().
  *   Errors (with error bit) from: macro_f_fss_objects_t_resize().
- *   Errors (with error bit) from: macro_f_fss_quotes_t_resize().
- *   Errors (with error bit) from: macro_f_fss_quotess_t_resize().
+ *   Errors (with error bit) from: macro_f_uint8s_t_resize().
+ *   Errors (with error bit) from: macro_f_uint8ss_t_resize().
  *   Errors (with error bit) from: f_memory_resize().
  *
  * @see macro_f_fss_contents_t_resize()
  * @see macro_f_fss_objects_t_resize()
- * @see macro_f_fss_quotes_t_resize()
- * @see macro_f_fss_quotess_t_resize()
+ * @see macro_f_uint8s_t_resize()
+ * @see macro_f_uint8ss_t_resize()
  *
  * @see f_fss_set_quotes_decrease_by()
  * @see f_fss_set_quotes_increase()

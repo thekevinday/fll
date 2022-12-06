@@ -33,10 +33,10 @@ extern "C" {
 
     f_fss_objects_t objects;
     f_fss_contents_t contents;
-    f_fss_quotess_t quotess;
+    f_uint8ss_t quotess;
   } f_fss_named_t;
 
-  #define f_fss_named_t_initialize { f_fss_object_t_initialize, f_fss_objects_t_initialize, f_fss_contents_t_initialize, f_fss_quotess_t_initialize }
+  #define f_fss_named_t_initialize { f_fss_object_t_initialize, f_fss_objects_t_initialize, f_fss_contents_t_initialize, f_uint8ss_t_initialize }
 
   #define macro_f_fss_named_t_initialize(name, objects, contents, quotess) macro_f_array_lengths_t_initialize(name, objects, contents, quotess)
 
@@ -44,7 +44,7 @@ extern "C" {
     macro_f_fss_object_t_clear(named.name) \
     macro_f_fss_objects_t_clear(named.objects) \
     macro_f_fss_contents_t_clear(named.contents) \
-    macro_f_fss_quotess_t_clear(named.quotess)
+    macro_f_uint8ss_t_clear(named.quotess)
 
   #define macro_f_fss_named_t_resize(status, named, length) status = f_fss_named_resize(length, &named);
   #define macro_f_fss_named_t_adjust(status, named, length) status = f_fss_named_adjust(length, &named);

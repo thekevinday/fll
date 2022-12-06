@@ -60,7 +60,9 @@ extern "C" {
     if (macro_fss_write_setting(setting)->flag & fss_write_flag_partial_e) {
       macro_fss_write_setting(setting)->status = fl_fss_basic_object_write(
         *macro_fss_write_setting(setting)->object,
-        (macro_fss_write_setting(setting)->flag & fss_write_flag_single_e) ? f_fss_quote_type_single_e : f_fss_quote_type_double_e,
+        macro_fss_write_setting(setting)->quote.used
+          ? macro_fss_write_setting(setting)->quote.string[0]
+          : f_fss_quote_double_s.string[0],
         f_fss_complete_none_e,
         macro_fss_write_setting(setting)->state,
         &macro_fss_write_setting(setting)->range,
@@ -70,7 +72,9 @@ extern "C" {
     else {
       macro_fss_write_setting(setting)->status = fl_fss_basic_object_write(
         *macro_fss_write_setting(setting)->object,
-        (macro_fss_write_setting(setting)->flag & fss_write_flag_single_e) ? f_fss_quote_type_single_e : f_fss_quote_type_double_e,
+        macro_fss_write_setting(setting)->quote.used
+          ? macro_fss_write_setting(setting)->quote.string[0]
+          : f_fss_quote_double_s.string[0],
         (macro_fss_write_setting(setting)->flag & fss_write_flag_trim_e) ? f_fss_complete_full_trim_e : f_fss_complete_full_e,
         macro_fss_write_setting(setting)->state,
         &macro_fss_write_setting(setting)->range,

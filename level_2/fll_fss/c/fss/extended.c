@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fll_fss_extended_read_
-  f_status_t fll_fss_extended_read(const f_string_static_t buffer, f_state_t state, f_string_range_t * const range, f_fss_objects_t * const objects, f_fss_contents_t * const contents, f_fss_quotes_t * const objects_quoted, f_fss_quotess_t * const contents_quoted, f_fss_delimits_t * const objects_delimits, f_fss_delimits_t * const contents_delimits) {
+  f_status_t fll_fss_extended_read(const f_string_static_t buffer, f_state_t state, f_string_range_t * const range, f_fss_objects_t * const objects, f_fss_contents_t * const contents, f_uint8s_t * const objects_quoted, f_uint8ss_t * const contents_quoted, f_fss_delimits_t * const objects_delimits, f_fss_delimits_t * const contents_delimits) {
     #ifndef _di_level_2_parameter_checking_
       if (!range) return F_status_set_error(F_parameter);
       if (!objects) return F_status_set_error(F_parameter);
@@ -19,8 +19,8 @@ extern "C" {
 
     bool found_data = F_false;
 
-    f_fss_quote_t *quoted_object = 0;
-    f_fss_quotes_t *quoted_content = 0;
+    uint8_t *quoted_object = 0;
+    f_uint8s_t *quoted_content = 0;
 
     do {
       status = f_string_ranges_increase(state.step_small, objects);
@@ -198,7 +198,7 @@ extern "C" {
 #endif // _di_fll_fss_extended_read_
 
 #ifndef _di_fll_fss_extended_write_
-  f_status_t fll_fss_extended_write(const f_string_static_t object, const f_string_statics_t contents, const f_fss_quote_t quote, f_state_t state, f_string_dynamic_t * const destination) {
+  f_status_t fll_fss_extended_write(const f_string_static_t object, const f_string_statics_t contents, const uint8_t quote, f_state_t state, f_string_dynamic_t * const destination) {
     #ifndef _di_level_2_parameter_checking_
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_

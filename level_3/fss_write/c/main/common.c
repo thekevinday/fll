@@ -25,6 +25,7 @@ extern "C" {
 
 #ifndef _di_fss_write_parameters_
   const f_string_static_t fss_write_short_as_s = macro_f_string_static_t_initialize(FSS_WRITE_short_as_s, 0, FSS_WRITE_short_as_s_length);
+  const f_string_static_t fss_write_short_backtick_s = macro_f_string_static_t_initialize(FSS_WRITE_short_backtick_s, 0, FSS_WRITE_short_backtick_s_length);
   const f_string_static_t fss_write_short_content_s = macro_f_string_static_t_initialize(FSS_WRITE_short_content_s, 0, FSS_WRITE_short_content_s_length);
   const f_string_static_t fss_write_short_double_s = macro_f_string_static_t_initialize(FSS_WRITE_short_double_s, 0, FSS_WRITE_short_double_s_length);
   const f_string_static_t fss_write_short_file_s = macro_f_string_static_t_initialize(FSS_WRITE_short_file_s, 0, FSS_WRITE_short_file_s_length);
@@ -36,6 +37,7 @@ extern "C" {
   const f_string_static_t fss_write_short_trim_s = macro_f_string_static_t_initialize(FSS_WRITE_short_trim_s, 0, FSS_WRITE_short_trim_s_length);
 
   const f_string_static_t fss_write_long_as_s = macro_f_string_static_t_initialize(FSS_WRITE_long_as_s, 0, FSS_WRITE_long_as_s_length);
+  const f_string_static_t fss_write_long_backtick_s = macro_f_string_static_t_initialize(FSS_WRITE_long_backtick_s, 0, FSS_WRITE_long_backtick_s_length);
   const f_string_static_t fss_write_long_content_s = macro_f_string_static_t_initialize(FSS_WRITE_long_content_s, 0, FSS_WRITE_long_content_s_length);
   const f_string_static_t fss_write_long_double_s = macro_f_string_static_t_initialize(FSS_WRITE_long_double_s, 0, FSS_WRITE_long_double_s_length);
   const f_string_static_t fss_write_long_file_s = macro_f_string_static_t_initialize(FSS_WRITE_long_file_s, 0, FSS_WRITE_long_file_s_length);
@@ -606,11 +608,36 @@ extern "C" {
       if (main->parameters.array[fss_write_parameter_single_e].result & f_console_result_found_e) {
         if (main->parameters.array[fss_write_parameter_double_e].location < main->parameters.array[fss_write_parameter_single_e].location) {
           setting->quote = f_fss_quote_single_s;
+
+          if (main->parameters.array[fss_write_parameter_backtick_e].result & f_console_result_found_e) {
+            if (main->parameters.array[fss_write_parameter_single_e].location < main->parameters.array[fss_write_parameter_backtick_e].location) {
+              setting->quote = f_fss_quote_backtick_s;
+            }
+          }
+        }
+        else if (main->parameters.array[fss_write_parameter_backtick_e].result & f_console_result_found_e) {
+          if (main->parameters.array[fss_write_parameter_double_e].location < main->parameters.array[fss_write_parameter_backtick_e].location) {
+            setting->quote = f_fss_quote_backtick_s;
+          }
+        }
+      }
+      else if (main->parameters.array[fss_write_parameter_backtick_e].result & f_console_result_found_e) {
+        if (main->parameters.array[fss_write_parameter_double_e].location < main->parameters.array[fss_write_parameter_backtick_e].location) {
+          setting->quote = f_fss_quote_backtick_s;
         }
       }
     }
     else if (main->parameters.array[fss_write_parameter_single_e].result & f_console_result_found_e) {
       setting->quote = f_fss_quote_single_s;
+
+      if (main->parameters.array[fss_write_parameter_backtick_e].result & f_console_result_found_e) {
+        if (main->parameters.array[fss_write_parameter_single_e].location < main->parameters.array[fss_write_parameter_backtick_e].location) {
+          setting->quote = f_fss_quote_backtick_s;
+        }
+      }
+    }
+    else if (main->parameters.array[fss_write_parameter_backtick_e].result & f_console_result_found_e) {
+      setting->quote = f_fss_quote_backtick_s;
     }
 
     if (main->parameters.array[fss_write_parameter_trim_e].result & f_console_result_found_e) {

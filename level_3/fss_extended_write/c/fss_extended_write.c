@@ -329,18 +329,18 @@ extern "C" {
       }
     }
 
-    f_fss_quote_t quote = f_fss_quote_type_double_e;
+    uint8_t quote = f_fss_quote_double_s;
 
     if (F_status_is_error_not(status)) {
       if (main->parameters.array[fss_extended_write_parameter_double_e].result & f_console_result_found_e) {
         if (main->parameters.array[fss_extended_write_parameter_single_e].result & f_console_result_found_e) {
           if (main->parameters.array[fss_extended_write_parameter_double_e].location < main->parameters.array[fss_extended_write_parameter_single_e].location) {
-            quote = f_fss_quote_type_single_e;
+            quote = f_fss_quote_single_s;
           }
         }
       }
       else if (main->parameters.array[fss_extended_write_parameter_single_e].result & f_console_result_found_e) {
-        quote = f_fss_quote_type_single_e;
+        quote = f_fss_quote_single_s;
       }
     }
 

@@ -163,7 +163,7 @@ extern "C" {
 #endif // _di_fake_make_operate_
 
 #ifndef _di_fake_make_operate_expand_
-  void fake_make_operate_expand(fake_make_data_t * const data_make, const f_string_range_t section_name, const f_fss_content_t content, const f_fss_quotes_t quotes, f_status_t * const status) {
+  void fake_make_operate_expand(fake_make_data_t * const data_make, const f_string_range_t section_name, const f_fss_content_t content, const f_uint8s_t quotes, f_status_t * const status) {
 
     if (F_status_is_error(*status)) return;
     if (!content.used) return;
@@ -723,7 +723,7 @@ extern "C" {
 #endif // _di_fake_make_operate_expand_
 
 #ifndef _di_fake_make_operate_expand_build_
-  f_status_t fake_make_operate_expand_build(fake_make_data_t * const data_make, const f_fss_quote_t quoted, const f_string_range_t range_name) {
+  f_status_t fake_make_operate_expand_build(fake_make_data_t * const data_make, const uint8_t quote, const f_string_range_t range_name) {
 
     f_status_t status = F_none;
     f_string_dynamic_t value = f_string_dynamic_t_initialize;
@@ -1001,7 +1001,7 @@ extern "C" {
       return F_false;
     }
 
-    if (quoted) {
+    if (quote) {
       status = f_string_dynamic_append_nulless(value, &data_make->cache_arguments.array[data_make->cache_arguments.used]);
     }
     else {
@@ -1025,7 +1025,7 @@ extern "C" {
 #endif // _di_fake_make_operate_expand_build_
 
 #ifndef _di_fake_make_operate_expand_context_
-  f_status_t fake_make_operate_expand_context(fake_make_data_t * const data_make, const f_fss_quote_t quoted, const f_string_range_t range_name) {
+  f_status_t fake_make_operate_expand_context(fake_make_data_t * const data_make, const uint8_t quote, const f_string_range_t range_name) {
 
     f_status_t status = F_none;
     const f_string_static_t *context = 0;
@@ -1064,7 +1064,7 @@ extern "C" {
     } // for
 
     if (context) {
-      if (quoted) {
+      if (quote) {
         status = f_string_dynamic_append_nulless(*context, &data_make->cache_arguments.array[data_make->cache_arguments.used]);
       }
       else {
@@ -1087,7 +1087,7 @@ extern "C" {
 #endif // _di_fake_make_operate_expand_context_
 
 #ifndef _di_fake_make_operate_expand_environment_
-  f_status_t fake_make_operate_expand_environment(fake_make_data_t * const data_make, const f_fss_quote_t quoted, const f_string_range_t range_name) {
+  f_status_t fake_make_operate_expand_environment(fake_make_data_t * const data_make, const uint8_t quote, const f_string_range_t range_name) {
 
     f_status_t status = F_none;
 
@@ -1119,7 +1119,7 @@ extern "C" {
 
     if (F_status_is_error(status)) return status;
 
-    if (!quoted) {
+    if (!quote) {
       ++data_make->cache_arguments.used;
     }
 

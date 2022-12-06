@@ -200,14 +200,14 @@ extern "C" {
     f_fss_objects_t objects_header;
     f_fss_contents_t contents;
     f_fss_contents_t contents_header;
-    f_fss_quotes_t quotes_object_header;
-    f_fss_quotess_t quotes_content_header;
+    f_uint8s_t quotes_object_header;
+    f_uint8ss_t quotes_content_header;
     f_fss_delimits_t delimits_object;
     f_fss_delimits_t delimits_object_header;
     f_fss_delimits_t delimits_content;
     f_fss_delimits_t delimits_content_header;
     f_fss_comments_t comments;
-    f_fss_quotes_t quotes;
+    f_uint8s_t quotes;
   } fss_payload_read_data_t;
 
   #define fss_payload_read_data_t_initialize \
@@ -226,13 +226,13 @@ extern "C" {
       f_fss_objects_t_initialize, \
       f_fss_contents_t_initialize, \
       f_fss_contents_t_initialize, \
-      f_fss_quotes_t_initialize, \
-      f_fss_quotess_t_initialize, \
+      f_uint8s_t_initialize, \
+      f_uint8ss_t_initialize, \
       f_fss_delimits_t_initialize, \
       f_fss_delimits_t_initialize, \
       f_fss_delimits_t_initialize, \
       f_fss_delimits_t_initialize, \
-      f_fss_quotes_t_initialize, \
+      f_uint8s_t_initialize, \
       f_fss_comments_t_initialize, \
     }
 #endif // _di_fss_payload_read_data_t_

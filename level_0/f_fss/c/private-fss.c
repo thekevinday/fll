@@ -276,10 +276,10 @@ extern "C" {
     macro_f_fss_contents_t_adjust(status, set_quote->contents, length);
     if (F_status_is_error(status)) return status;
 
-    macro_f_fss_quotes_t_adjust(status, set_quote->objects_quote, length);
+    macro_f_uint8s_t_adjust(status, set_quote->objects_quote, length);
     if (F_status_is_error(status)) return status;
 
-    macro_f_fss_quotess_t_adjust(status, set_quote->contents_quote, length);
+    macro_f_uint8ss_t_adjust(status, set_quote->contents_quote, length);
     if (F_status_is_error(status)) return status;
 
     return F_none;
@@ -297,10 +297,10 @@ extern "C" {
     macro_f_fss_contents_t_resize(status, set_quote->contents, length);
     if (F_status_is_error(status)) return status;
 
-    macro_f_fss_quotes_t_resize(status, set_quote->objects_quote, length);
+    macro_f_uint8s_t_resize(status, set_quote->objects_quote, length);
     if (F_status_is_error(status)) return status;
 
-    macro_f_fss_quotess_t_resize(status, set_quote->contents_quote, length);
+    macro_f_uint8ss_t_resize(status, set_quote->contents_quote, length);
     if (F_status_is_error(status)) return status;
 
     return F_none;
@@ -320,10 +320,10 @@ extern "C" {
       macro_f_fss_contents_t_adjust(status, set_quotes->array[i].contents, 0);
       if (F_status_is_error(status)) return status;
 
-      macro_f_fss_quotes_t_adjust(status, set_quotes->array[i].objects_quote, 0);
+      macro_f_uint8s_t_adjust(status, set_quotes->array[i].objects_quote, 0);
       if (F_status_is_error(status)) return status;
 
-      macro_f_fss_quotess_t_adjust(status, set_quotes->array[i].contents_quote, 0);
+      macro_f_uint8ss_t_adjust(status, set_quotes->array[i].contents_quote, 0);
       if (F_status_is_error(status)) return status;
     } // for
 
@@ -356,10 +356,10 @@ extern "C" {
       macro_f_fss_contents_t_resize(status, set_quotes->array[i].contents, 0);
       if (F_status_is_error(status)) return status;
 
-      macro_f_fss_quotes_t_resize(status, set_quotes->array[i].objects_quote, 0);
+      macro_f_uint8s_t_resize(status, set_quotes->array[i].objects_quote, 0);
       if (F_status_is_error(status)) return status;
 
-      macro_f_fss_quotess_t_resize(status, set_quotes->array[i].contents_quote, 0);
+      macro_f_uint8ss_t_resize(status, set_quotes->array[i].contents_quote, 0);
       if (F_status_is_error(status)) return status;
     } // for
 

@@ -886,7 +886,7 @@ f_status_t firewall_create_custom_chains(firewall_data_t * const data, firewall_
       // Copy the string character by character, ignoring placeholders.
       for (j = local->chain_objects.array[i].start; j <= local->chain_objects.array[i].stop; ++j) {
 
-        if (local->buffer.string[j] == f_fss_delimit_placeholder_s.string[0]) continue;
+        if (local->buffer.string[j] == f_fss_placeholder_s.string[0]) continue;
 
         data->chains.array[data->chains.used].string[data->chains.array[data->chains.used].used++] = local->buffer.string[j];
         arguments.array[1].string[arguments.array[1].used++] = local->buffer.string[j];

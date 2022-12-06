@@ -64,7 +64,7 @@ extern "C" {
         continue;
       }
 
-      if (buffer.string[range->start] == f_fss_delimit_slash_s.string[0]) {
+      if (buffer.string[range->start] == f_fss_slash_s.string[0]) {
         slash_first = range->start;
         slash_count = 1;
 
@@ -80,8 +80,8 @@ extern "C" {
             }
           }
 
-          if (buffer.string[range->start] == f_fss_delimit_placeholder_s.string[0]) continue;
-          if (buffer.string[range->start] != f_fss_delimit_slash_s.string[0]) break;
+          if (buffer.string[range->start] == f_fss_placeholder_s.string[0]) continue;
+          if (buffer.string[range->start] != f_fss_slash_s.string[0]) break;
 
           ++slash_count;
         } // for
@@ -133,7 +133,7 @@ extern "C" {
 
             while (slash_count > 0) {
 
-              if (buffer.string[range->start] == f_fss_delimit_slash_s.string[0]) {
+              if (buffer.string[range->start] == f_fss_slash_s.string[0]) {
                 if (slash_count % 2 == 1) {
                   delimits->array[delimits->used++] = range->start;
                 }
@@ -340,7 +340,7 @@ extern "C" {
         }
       }
 
-      if (content.string[range->start] == f_fss_delimit_slash_s.string[0] && !is_comment) {
+      if (content.string[range->start] == f_fss_slash_s.string[0] && !is_comment) {
         slash_count = 1;
 
         if (do_prepend) {
@@ -365,10 +365,10 @@ extern "C" {
             }
           }
 
-          if (content.string[range->start] == f_fss_delimit_placeholder_s.string[0]) continue;
-          if (content.string[range->start] != f_fss_delimit_slash_s.string[0]) break;
+          if (content.string[range->start] == f_fss_placeholder_s.string[0]) continue;
+          if (content.string[range->start] != f_fss_slash_s.string[0]) break;
 
-          destination->string[destination->used++] = f_fss_delimit_slash_s.string[0];
+          destination->string[destination->used++] = f_fss_slash_s.string[0];
           ++slash_count;
         } // for
 
@@ -385,10 +385,10 @@ extern "C" {
             if (F_status_is_error(status)) break;
 
             while (--slash_count) {
-              destination->string[destination->used++] = f_fss_delimit_slash_s.string[0];
+              destination->string[destination->used++] = f_fss_slash_s.string[0];
             } // while
 
-            destination->string[destination->used++] = f_fss_delimit_slash_s.string[0];
+            destination->string[destination->used++] = f_fss_slash_s.string[0];
             destination->string[destination->used++] = f_fss_basic_list_open_s.string[0];
 
             range->start = start + 1;
@@ -429,7 +429,7 @@ extern "C" {
           status = f_string_dynamic_increase_by(3, destination);
           if (F_status_is_error(status)) break;
 
-          destination->string[destination->used++] = f_fss_delimit_slash_s.string[0];
+          destination->string[destination->used++] = f_fss_slash_s.string[0];
           destination->string[destination->used++] = f_fss_basic_list_open_s.string[0];
 
           range->start = start + 1;
@@ -466,7 +466,7 @@ extern "C" {
         }
       }
 
-      if (content.string[range->start] != f_fss_delimit_placeholder_s.string[0]) {
+      if (content.string[range->start] != f_fss_placeholder_s.string[0]) {
         if (do_prepend) {
           status = f_string_dynamic_append(*prepend, destination);
           if (F_status_is_error(status)) break;
@@ -505,7 +505,7 @@ extern "C" {
       // Check to see if a newline exists, at the end.
       if (destination->used) {
         for (i = destination->used - 1; i > 0; --i) {
-          if (destination->string[i] != f_fss_delimit_placeholder_s.string[0]) break;
+          if (destination->string[i] != f_fss_placeholder_s.string[0]) break;
         } // for
       }
 
@@ -583,7 +583,7 @@ extern "C" {
         }
       }
 
-      if (buffer.string[range->start] == f_fss_delimit_slash_s.string[0]) {
+      if (buffer.string[range->start] == f_fss_slash_s.string[0]) {
         slash_first = range->start;
         slash_count = 1;
 
@@ -599,9 +599,9 @@ extern "C" {
             }
           }
 
-          if (buffer.string[range->start] == f_fss_delimit_placeholder_s.string[0]) {
+          if (buffer.string[range->start] == f_fss_placeholder_s.string[0]) {
             continue;
-          } else if (buffer.string[range->start] != f_fss_delimit_slash_s.string[0]) {
+          } else if (buffer.string[range->start] != f_fss_slash_s.string[0]) {
             break;
           }
 
@@ -653,7 +653,7 @@ extern "C" {
             if (slash_count % 2 == 0) {
               while (slash_count > 0) {
 
-                if (buffer.string[range->start] == f_fss_delimit_slash_s.string[0]) {
+                if (buffer.string[range->start] == f_fss_slash_s.string[0]) {
                   if (slash_count % 2 == 1) {
                     delimits->array[delimits->used] = range->start;
                     ++delimits->used;
@@ -830,7 +830,7 @@ extern "C" {
         status = f_string_dynamic_increase(state.step_large, destination);
         if (F_status_is_error(status)) break;
 
-        destination->string[destination->used++] = f_fss_delimit_slash_s.string[0];
+        destination->string[destination->used++] = f_fss_slash_s.string[0];
 
         break;
       }
@@ -841,7 +841,7 @@ extern "C" {
       if (status == F_true) break;
 
       // Objects will not have leading white spaces, but having this does not result in an invalid object, so just write the provided spaces.
-      if (object.string[range->start] != f_fss_delimit_placeholder_s.string[0]) {
+      if (object.string[range->start] != f_fss_placeholder_s.string[0]) {
         if (object.string[range->start] == f_fss_eol_s.string[0]) {
           status = F_status_set_error(F_none_eol);
 
@@ -891,7 +891,7 @@ extern "C" {
         }
       }
 
-      if (object.string[range->start] == f_fss_delimit_slash_s.string[0]) {
+      if (object.string[range->start] == f_fss_slash_s.string[0]) {
         slash_count = 1;
 
         for (++range->start; range->start <= range->stop && range->start < object.used; ++range->start) {
@@ -906,8 +906,8 @@ extern "C" {
             }
           }
 
-          if (object.string[range->start] == f_fss_delimit_placeholder_s.string[0]) continue;
-          if (object.string[range->start] != f_fss_delimit_slash_s.string[0]) break;
+          if (object.string[range->start] == f_fss_placeholder_s.string[0]) continue;
+          if (object.string[range->start] != f_fss_slash_s.string[0]) break;
 
           ++slash_count;
         } // for
@@ -924,13 +924,13 @@ extern "C" {
         if (F_status_is_error(status)) break;
 
         while (--slash_count) {
-          destination->string[destination->used++] = f_fss_delimit_slash_s.string[0];
+          destination->string[destination->used++] = f_fss_slash_s.string[0];
         } // while
 
         if (range->start > range->stop || range->start >= object.used) break;
       }
 
-      if (object.string[range->start] != f_fss_delimit_placeholder_s.string[0]) {
+      if (object.string[range->start] != f_fss_placeholder_s.string[0]) {
         if (object.string[range->start] == f_fss_eol_s.string[0]) {
           status = F_status_set_error(F_none_eol);
 

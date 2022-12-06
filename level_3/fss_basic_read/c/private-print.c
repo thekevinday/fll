@@ -20,13 +20,27 @@ extern "C" {
         if (data->option & fss_basic_read_data_option_trim_d) {
           if (data->option & fss_basic_read_data_option_original_d) {
             if (data->quotes.array[at]) {
-              f_print_dynamic_raw(data->quotes.array[at] == f_fss_quote_type_single_e ? f_fss_quote_single_s : f_fss_quote_double_s, main->output.to);
+              f_print_dynamic_raw(
+                data->quotes.array[at] == f_fss_quote_type_single_e
+                  ? f_fss_quote_single_s
+                  : data->quotes.array[at] == f_fss_quote_type_backtick_e
+                    ? f_fss_quote_backtick_s,
+                    : f_fss_quote_double_s,
+                main->output.to
+              );
             }
 
             fl_print_trim_dynamic_partial(data->buffer, data->objects.array[at], main->output.to);
 
             if (data->quotes.array[at]) {
-              f_print_dynamic_raw(data->quotes.array[at] == f_fss_quote_type_single_e ? f_fss_quote_single_s : f_fss_quote_double_s, main->output.to);
+              f_print_dynamic_raw(
+                data->quotes.array[at] == f_fss_quote_type_single_e
+                  ? f_fss_quote_single_s
+                  : data->quotes.array[at] == f_fss_quote_type_backtick_e
+                    ? f_fss_quote_backtick_s,
+                    : f_fss_quote_double_s,
+                main->output.to
+              );
             }
           }
           else {
@@ -36,13 +50,27 @@ extern "C" {
         else {
           if (data->option & fss_basic_read_data_option_original_d) {
             if (data->quotes.array[at]) {
-              f_print_dynamic_raw(data->quotes.array[at] == f_fss_quote_type_single_e ? f_fss_quote_single_s : f_fss_quote_double_s, main->output.to);
+              f_print_dynamic_raw(
+                data->quotes.array[at] == f_fss_quote_type_single_e
+                  ? f_fss_quote_single_s
+                  : data->quotes.array[at] == f_fss_quote_type_backtick_e
+                    ? f_fss_quote_backtick_s,
+                    : f_fss_quote_double_s,
+                main->output.to
+              );
             }
 
             f_print_dynamic_partial(data->buffer, data->objects.array[at], main->output.to);
 
             if (data->quotes.array[at]) {
-              f_print_dynamic_raw(data->quotes.array[at] == f_fss_quote_type_single_e ? f_fss_quote_single_s : f_fss_quote_double_s, main->output.to);
+              f_print_dynamic_raw(
+                data->quotes.array[at] == f_fss_quote_type_single_e
+                  ? f_fss_quote_single_s
+                  : data->quotes.array[at] == f_fss_quote_type_backtick_e
+                    ? f_fss_quote_backtick_s,
+                    : f_fss_quote_double_s,
+                main->output.to
+              );
             }
           }
           else {

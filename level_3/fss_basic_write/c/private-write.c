@@ -58,7 +58,7 @@ extern "C" {
 #endif // _di_fss_basic_write_error_parameter_unsupported_eol_print_
 
 #ifndef _di_fss_basic_write_process_
-  f_status_t fss_basic_write_process(fll_program_data_t * const main, const f_file_t output, const f_fss_quote_t quote, const f_string_static_t *object, const f_string_static_t *content, f_string_dynamic_t *buffer) {
+  f_status_t fss_basic_write_process(fll_program_data_t * const main, const f_file_t output, const uint8_t quote, const f_string_static_t *object, const f_string_static_t *content, f_string_dynamic_t *buffer) {
 
     f_status_t status = F_none;
     f_state_t state = macro_f_state_t_initialize(fss_basic_write_common_allocation_large_d, fss_basic_write_common_allocation_small_d, 0, 0, &fll_program_standard_signal_state, 0, (void *) main, 0);
@@ -144,7 +144,7 @@ extern "C" {
 #endif // _di_fss_basic_write_process_
 
 #ifndef _di_fss_basic_write_process_pipe_
-  f_status_t fss_basic_write_process_pipe(fll_program_data_t * const main, const f_file_t output, const f_fss_quote_t quote, f_string_dynamic_t *buffer) {
+  f_status_t fss_basic_write_process_pipe(fll_program_data_t * const main, const f_file_t output, const uint8_t quote, f_string_dynamic_t *buffer) {
 
     f_status_t status = F_none;
     f_status_t status_pipe = F_none;

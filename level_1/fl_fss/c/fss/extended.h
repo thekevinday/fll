@@ -93,7 +93,7 @@ extern "C" {
  * @see fl_fss_extended_content_read()
  */
 #ifndef _di_fl_fss_extended_content_read_
-  extern f_status_t fl_fss_extended_content_read(const f_string_static_t buffer, f_state_t state, f_string_range_t * const range, f_fss_content_t * const found, f_fss_quotes_t * const quotes, f_fss_delimits_t * const delimits);
+  extern f_status_t fl_fss_extended_content_read(const f_string_static_t buffer, f_state_t state, f_string_range_t * const range, f_fss_content_t * const found, f_uint8s_t * const quotes, f_fss_delimits_t * const delimits);
 #endif // _di_fl_fss_extended_content_read_
 
 /**
@@ -106,9 +106,9 @@ extern "C" {
  *
  * @param content
  *   The string to write as (does not stop at NULLS, they are ignored and not written).
- * @param quoted
+ * @param quote
  *   If 0, then double quotes are auto-inserted, when required.
- *   Otherwise, this is the type of quote to wrap the object in when writing.
+ *   Otherwise, this is quote character to wrap the object in when writing.
  * @param complete
  *   If f_fss_complete_none_e, then only the content is written.
  *   If f_fss_complete_next_e, then the content followed by any appropriate "next" character separating one content from the next, if applicable.
@@ -158,7 +158,7 @@ extern "C" {
  * @see fl_fss_extended_content_write()
  */
 #ifndef _di_fl_fss_extended_content_write_
-  extern f_status_t fl_fss_extended_content_write(const f_string_static_t content, const f_fss_quote_t quoted, const uint8_t complete, f_state_t state, f_string_range_t * const range, f_string_dynamic_t * const destination);
+  extern f_status_t fl_fss_extended_content_write(const f_string_static_t content, const uint8_t quote, const uint8_t complete, f_state_t state, f_string_range_t * const range, f_string_dynamic_t * const destination);
 #endif // _di_fl_fss_extended_content_write_
 
 /**
@@ -184,8 +184,8 @@ extern "C" {
  *   A start location past the stop location or buffer used means that the entire range was processed.
  * @param found
  *   A location where a valid object was found.
- * @param quoted
- *   This will store whether or not this object is quoted and what quote is in use.
+ * @param quote
+ *   This will store the quote character to use (if value is 0, then there is not quote).
  *   Set pointer address to 0 to not use.
  * @param delimits
  *   A delimits array representing where delimits exist within the buffer.
@@ -230,7 +230,7 @@ extern "C" {
  * @see fl_fss_extended_content_read()
  */
 #ifndef _di_fl_fss_extended_object_read_
-  extern f_status_t fl_fss_extended_object_read(const f_string_static_t buffer, f_state_t state, f_string_range_t * const range, f_fss_object_t * const found, f_fss_quote_t * const quoted, f_fss_delimits_t * const delimits);
+  extern f_status_t fl_fss_extended_object_read(const f_string_static_t buffer, f_state_t state, f_string_range_t * const range, f_fss_object_t * const found, uint8_t * const quote, f_fss_delimits_t * const delimits);
 #endif // _di_fl_fss_extended_object_read_
 
 /**
@@ -244,9 +244,9 @@ extern "C" {
  *
  * @param object
  *   The string to write as (does not stop at NULLS, they are ignored and not written).
- * @param quoted
+ * @param quote
  *   If 0, then double quotes are auto-inserted, when required.
- *   Otherwise, this is the type of quote to wrap the object in when writing.
+ *   Otherwise, this is quote character to wrap the object in when writing.
  * @param complete
  *   If f_fss_complete_none_e, then only the object name is written.
  *   If f_fss_complete_full_e, this will write any appropriate open and close aspects of this object.
@@ -289,7 +289,7 @@ extern "C" {
  * @see f_string_dynamic_increase_by()
  */
 #ifndef _di_fl_fss_extended_object_write_
-  extern f_status_t fl_fss_extended_object_write(const f_string_static_t object, const f_fss_quote_t quoted, const uint8_t complete, f_state_t state, f_string_range_t * const range, f_string_dynamic_t * const destination);
+  extern f_status_t fl_fss_extended_object_write(const f_string_static_t object, const uint8_t quote, const uint8_t complete, f_state_t state, f_string_range_t * const range, f_string_dynamic_t * const destination);
 #endif // _di_fl_fss_extended_object_write_
 
 #ifdef __cplusplus

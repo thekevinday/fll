@@ -279,7 +279,7 @@ extern "C" {
       for (; i < comments->used; ++i) {
 
         for (j = comments->array[i].start; j <= comments->array[i].stop; ++j) {
-          data->buffer.string[j] = f_fss_delimit_placeholder_s.string[0];
+          data->buffer.string[j] = f_fss_placeholder_s.string[0];
         } // for
       } // for
     }

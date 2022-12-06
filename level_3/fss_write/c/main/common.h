@@ -114,51 +114,56 @@ extern "C" {
  * The main program parameters.
  */
 #ifndef _di_fss_write_parameters_
-  #define FSS_WRITE_short_as_s      "a"
-  #define FSS_WRITE_short_content_s "c"
-  #define FSS_WRITE_short_double_s  "d"
-  #define FSS_WRITE_short_file_s    "f"
-  #define FSS_WRITE_short_ignore_s  "I"
-  #define FSS_WRITE_short_object_s  "o"
-  #define FSS_WRITE_short_partial_s "p"
-  #define FSS_WRITE_short_prepend_s "P"
-  #define FSS_WRITE_short_single_s  "s"
-  #define FSS_WRITE_short_trim_s    "T"
+  #define FSS_WRITE_short_as_s       "a"
+  #define FSS_WRITE_short_backtick_s "b"
+  #define FSS_WRITE_short_content_s  "c"
+  #define FSS_WRITE_short_double_s   "d"
+  #define FSS_WRITE_short_file_s     "f"
+  #define FSS_WRITE_short_ignore_s   "I"
+  #define FSS_WRITE_short_object_s   "o"
+  #define FSS_WRITE_short_partial_s  "p"
+  #define FSS_WRITE_short_prepend_s  "P"
+  #define FSS_WRITE_short_single_s   "s"
+  #define FSS_WRITE_short_trim_s     "T"
 
-  #define FSS_WRITE_long_as_s      "as"
-  #define FSS_WRITE_long_content_s "content"
-  #define FSS_WRITE_long_double_s  "double"
-  #define FSS_WRITE_long_file_s    "file"
-  #define FSS_WRITE_long_ignore_s  "ignore"
-  #define FSS_WRITE_long_object_s  "object"
-  #define FSS_WRITE_long_partial_s "partial"
-  #define FSS_WRITE_long_prepend_s "prepend"
-  #define FSS_WRITE_long_single_s  "single"
-  #define FSS_WRITE_long_trim_s    "trim"
+  #define FSS_WRITE_long_as_s       "as"
+  #define FSS_WRITE_long_backtick_s "backtick"
+  #define FSS_WRITE_long_content_s  "content"
+  #define FSS_WRITE_long_double_s   "double"
+  #define FSS_WRITE_long_file_s     "file"
+  #define FSS_WRITE_long_ignore_s   "ignore"
+  #define FSS_WRITE_long_object_s   "object"
+  #define FSS_WRITE_long_partial_s  "partial"
+  #define FSS_WRITE_long_prepend_s  "prepend"
+  #define FSS_WRITE_long_single_s   "single"
+  #define FSS_WRITE_long_trim_s     "trim"
 
-  #define FSS_WRITE_short_as_s_length      1
-  #define FSS_WRITE_short_content_s_length 1
-  #define FSS_WRITE_short_double_s_length  1
-  #define FSS_WRITE_short_file_s_length    1
-  #define FSS_WRITE_short_ignore_s_length  1
-  #define FSS_WRITE_short_object_s_length  1
-  #define FSS_WRITE_short_partial_s_length 1
-  #define FSS_WRITE_short_prepend_s_length 1
-  #define FSS_WRITE_short_single_s_length  1
-  #define FSS_WRITE_short_trim_s_length    1
+  #define FSS_WRITE_short_as_s_length       1
+  #define FSS_WRITE_short_backtick_s_length 1
+  #define FSS_WRITE_short_content_s_length  1
+  #define FSS_WRITE_short_double_s_length   1
+  #define FSS_WRITE_short_file_s_length     1
+  #define FSS_WRITE_short_ignore_s_length   1
+  #define FSS_WRITE_short_object_s_length   1
+  #define FSS_WRITE_short_partial_s_length  1
+  #define FSS_WRITE_short_prepend_s_length  1
+  #define FSS_WRITE_short_single_s_length   1
+  #define FSS_WRITE_short_trim_s_length     1
 
-  #define FSS_WRITE_long_as_s_length      2
-  #define FSS_WRITE_long_content_s_length 7
-  #define FSS_WRITE_long_double_s_length  6
-  #define FSS_WRITE_long_file_s_length    4
-  #define FSS_WRITE_long_ignore_s_length  6
-  #define FSS_WRITE_long_object_s_length  6
-  #define FSS_WRITE_long_partial_s_length 7
-  #define FSS_WRITE_long_prepend_s_length 7
-  #define FSS_WRITE_long_single_s_length  6
-  #define FSS_WRITE_long_trim_s_length    4
+  #define FSS_WRITE_long_as_s_length       2
+  #define FSS_WRITE_long_backtick_s_length 8
+  #define FSS_WRITE_long_content_s_length  7
+  #define FSS_WRITE_long_double_s_length   6
+  #define FSS_WRITE_long_file_s_length     4
+  #define FSS_WRITE_long_ignore_s_length   6
+  #define FSS_WRITE_long_object_s_length   6
+  #define FSS_WRITE_long_partial_s_length  7
+  #define FSS_WRITE_long_prepend_s_length  7
+  #define FSS_WRITE_long_single_s_length   6
+  #define FSS_WRITE_long_trim_s_length     4
 
   extern const f_string_static_t fss_write_short_as_s;
+  extern const f_string_static_t fss_write_short_backtick_s;
   extern const f_string_static_t fss_write_short_content_s;
   extern const f_string_static_t fss_write_short_double_s;
   extern const f_string_static_t fss_write_short_file_s;
@@ -170,6 +175,7 @@ extern "C" {
   extern const f_string_static_t fss_write_short_trim_s;
 
   extern const f_string_static_t fss_write_long_as_s;
+  extern const f_string_static_t fss_write_long_backtick_s;
   extern const f_string_static_t fss_write_long_content_s;
   extern const f_string_static_t fss_write_long_double_s;
   extern const f_string_static_t fss_write_long_file_s;
@@ -195,6 +201,7 @@ extern "C" {
     fss_write_parameter_line_last_no_e,
 
     fss_write_parameter_as_e,
+    fss_write_parameter_backtick_e,
     fss_write_parameter_content_e,
     fss_write_parameter_double_e,
     fss_write_parameter_file_e,
@@ -222,6 +229,7 @@ extern "C" {
       macro_f_console_parameter_t_initialize4(f_console_standard_short_line_last_no_s,  f_console_standard_long_line_last_no_s,  0, f_console_flag_inverse_e), \
       \
       macro_f_console_parameter_t_initialize2(fss_write_short_as_s.string, fss_write_long_as_s.string, 0, 1, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize2(fss_write_short_backtick_s.string, fss_write_long_backtick_s.string, 0, 0, f_console_flag_normal_e), \
       macro_f_console_parameter_t_initialize2(fss_write_short_content_s.string, fss_write_long_content_s.string, 0, 1, f_console_flag_normal_e), \
       macro_f_console_parameter_t_initialize2(fss_write_short_double_s.string, fss_write_long_double_s.string, 0, 0, f_console_flag_normal_e), \
       macro_f_console_parameter_t_initialize2(fss_write_short_file_s.string, fss_write_long_file_s.string, 0, 1, f_console_flag_normal_e), \
@@ -233,7 +241,7 @@ extern "C" {
       macro_f_console_parameter_t_initialize2(fss_write_short_trim_s.string, fss_write_long_trim_s.string, 0, 0, f_console_flag_normal_e), \
     }
 
-  #define fss_write_total_parameters_d 22
+  #define fss_write_total_parameters_d 23
 #endif // _di_fss_write_parameters_
 
 /**
@@ -243,14 +251,12 @@ extern "C" {
  *   - none:             No modes in use.
  *   - content:          The Content being written is specified.
  *   - content_multiple: Designate that multiple Content is allowed for an Object for this standard rather than a single Content per Object.
- *   - double:           Operate using double quotes.
  *   - file_to:          Using a specified destination file.
  *   - help:             Print help.
  *   - ignore:           Ignore a given range within a Content (specify flag before setting loading to designate ignores is supported by standard).
  *   - object:           The Object being written is specified.
  *   - partial:          Do not write end of Object/Content character.
  *   - prepend:          Prepend the given white space characters to the start of each multi-line Content.
- *   - single:           Operate using single quotes.
  *   - trim:             Trim Object names.
  *   - version:          Print version.
  */
@@ -259,16 +265,14 @@ extern "C" {
     fss_write_flag_none_e             = 0x0,
     fss_write_flag_content_e          = 0x1,
     fss_write_flag_content_multiple_e = 0x2,
-    fss_write_flag_double_e           = 0x4,
-    fss_write_flag_file_to_e          = 0x8,
-    fss_write_flag_help_e             = 0x10,
-    fss_write_flag_ignore_e           = 0x20,
-    fss_write_flag_object_e           = 0x40,
-    fss_write_flag_partial_e          = 0x80,
-    fss_write_flag_prepend_e          = 0x100,
-    fss_write_flag_single_e           = 0x200,
-    fss_write_flag_trim_e             = 0x400,
-    fss_write_flag_version_e          = 0x800,
+    fss_write_flag_file_to_e          = 0x4,
+    fss_write_flag_help_e             = 0x8,
+    fss_write_flag_ignore_e           = 0x10,
+    fss_write_flag_object_e           = 0x20,
+    fss_write_flag_partial_e          = 0x40,
+    fss_write_flag_prepend_e          = 0x80,
+    fss_write_flag_trim_e             = 0x100,
+    fss_write_flag_version_e          = 0x200,
   };
 #endif // _di_fss_write_flag_e_
 

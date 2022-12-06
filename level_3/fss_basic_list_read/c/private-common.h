@@ -194,7 +194,7 @@ extern "C" {
     f_fss_delimits_t delimits_object;
     f_fss_delimits_t delimits_content;
     f_fss_comments_t comments;
-    f_fss_quotes_t quotes;
+    f_uint8s_t quotes;
   } fss_basic_list_read_data_t;
 
   #define fss_basic_list_read_data_t_initialize \
@@ -212,7 +212,7 @@ extern "C" {
       f_fss_contents_t_initialize, \
       f_fss_delimits_t_initialize, \
       f_fss_delimits_t_initialize, \
-      f_fss_quotes_t_initialize, \
+      f_uint8s_t_initialize, \
       f_fss_comments_t_initialize, \
     }
 #endif // _di_fss_basic_list_read_data_t_

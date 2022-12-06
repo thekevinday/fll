@@ -430,7 +430,7 @@ extern "C" {
 
                 while (k >= data->contents.array[i].array[0].start) {
 
-                  if (data->buffer.string[k] == f_fss_delimit_placeholder_s.string[0]) {
+                  if (data->buffer.string[k] == f_fss_placeholder_s.string[0]) {
                     --k;
 
                     continue;
