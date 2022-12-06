@@ -111,8 +111,8 @@ extern "C" {
  *   A start location past the stop location or buffer used means that the entire range was processed.
  * @param found
  *   A set of all locations where a valid object was found.
- * @param quoted
- *   This will store whether or not this object is quoted and what quote is in use.
+ * @param quote
+ *   This will store whether or not this object is quote and what quote is in use.
  *   Set pointer address to 0 to not use.
  * @param delimits
  *   An array of delimits detected during processing.
@@ -154,7 +154,7 @@ extern "C" {
  * @see fl_fss_extended_content_read()
  */
 #if !defined(_di_fl_fss_basic_object_read_) || !defined(_di_fl_fss_extended_object_read_) || !defined(_di_fl_fss_extended_content_read_)
-  extern f_status_t private_fl_fss_basic_read(const f_string_static_t buffer, const bool object_as, f_state_t state, f_string_range_t * const range, f_fss_object_t * const found, f_fss_quote_t * const quoted, f_fss_delimits_t * const delimits) F_attribute_visibility_internal_d;
+  extern f_status_t private_fl_fss_basic_read(const f_string_static_t buffer, const bool object_as, f_state_t state, f_string_range_t * const range, f_fss_object_t * const found, f_fss_quote_t * const quote, f_fss_delimits_t * const delimits) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fl_fss_basic_object_read_) || !defined(_di_fl_fss_extended_object_read_) || !defined(_di_fl_fss_extended_content_read_)
 
 /**
@@ -172,7 +172,7 @@ extern "C" {
  *   As Content, this does nothing special in regards to a leading '#'.
  * @param object
  *   The string to write as (does not stop at NULLS, they are ignored and not written).
- * @param quoted
+ * @param quote
  *   If 0, then double quotes are auto-inserted, if needed.
  *   Otherwise, this is the type of quote to wrap the object in when writing.
  * @param state
@@ -218,13 +218,13 @@ extern "C" {
  * @see fl_fss_extended_content_write()
  */
 #if !defined(fl_fss_basic_object_write) || !defined(fl_fss_extended_object_write) || !defined(_di_fl_fss_extended_content_write_)
-  extern f_status_t private_fl_fss_basic_write(const bool object_as, const f_string_static_t object, const f_fss_quote_t quoted, f_state_t state, f_string_range_t * const range, f_string_dynamic_t * const destination) F_attribute_visibility_internal_d;
+  extern f_status_t private_fl_fss_basic_write(const bool object_as, const f_string_static_t object, const f_fss_quote_t quote, f_state_t state, f_string_range_t * const range, f_string_dynamic_t * const destination) F_attribute_visibility_internal_d;
 #endif // !defined(fl_fss_basic_object_write) || !defined(fl_fss_extended_object_write) || !defined(_di_fl_fss_extended_content_write_)
 
 /**
  * Trim a given object used by the basic and extended object write functions.
  *
- * @param quoted
+ * @param quote
  *   If 0, then double quotes are auto-inserted, when required.
  *   Otherwise, this is the type of quote to wrap the object in when writing.
  * @param used_start
@@ -253,7 +253,7 @@ extern "C" {
  * @see fl_fss_extended_object_write()
  */
 #if !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_extended_object_write_)
-  extern f_status_t private_fl_fss_basic_write_object_trim(const f_fss_quote_t quoted, const f_array_length_t used_start, f_state_t state, f_string_dynamic_t * const destination) F_attribute_visibility_internal_d;
+  extern f_status_t private_fl_fss_basic_write_object_trim(const f_fss_quote_t quote, const f_array_length_t used_start, f_state_t state, f_string_dynamic_t * const destination) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_extended_object_write_)
 
 #ifdef __cplusplus
