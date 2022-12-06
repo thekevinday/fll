@@ -19,7 +19,7 @@ Featureless Settings Specification: 0003 - Extended List:
   Any Content column that could be interpreted as an end of Content must be delimited if it should be part of the Content.
   White space may follow a valid close-brace but a terminating newline must be present to designate a valid end of Content.
 
-  There is no single-quote or double-quote delimitation in this specification.
+  There is no single-quote, double-quote, or backtick delimitation in this specification.
   Only the open-brace that would result in a valid Object or the close-brace that would terminate valid Content can be delimited.
   When inside potentially valid Content (which follows a valid Object) the open-brace cannot be delimited because this standard is not-recursive.
   When not inside any potentially valid Content (that is, there is no previous unclosed Object), then the Object may be delimited.

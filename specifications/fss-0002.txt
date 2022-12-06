@@ -17,7 +17,7 @@ Featureless Settings Specification: 0002 - Basic List:
   Content is represented as a single Content column of every line following a valid object until the end of file (or string) or until the next valid Object is found.
   Any Content that could be interpreted as a valid Object must have the colon delimited.
 
-  There is no single-quote or double-quote delimitation in this specification.
+  There is no single-quote, double-quote, or backtick delimitation in this specification.
   Only the colon that would result in a valid Object can be delimited.
 
   Empty Objects are allowed, that is, the length of the object may be zero.
