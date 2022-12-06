@@ -8,6 +8,7 @@ extern "C" {
 #ifndef _di_f_iki_syntax_
   const f_string_static_t f_iki_syntax_separator_s = macro_f_string_static_t_initialize(F_iki_syntax_separator_s, 0, F_iki_syntax_separator_s_length);
   const f_string_static_t f_iki_syntax_placeholder_s = macro_f_string_static_t_initialize(F_iki_syntax_placeholder_s, 0, F_iki_syntax_placeholder_s_length);
+  const f_string_static_t f_iki_syntax_quote_backtick_s = macro_f_string_static_t_initialize(F_iki_syntax_quote_backtick_s, 0, F_iki_syntax_quote_backtick_s_length);
   const f_string_static_t f_iki_syntax_quote_double_s = macro_f_string_static_t_initialize(F_iki_syntax_quote_double_s, 0, F_iki_syntax_quote_double_s_length);
   const f_string_static_t f_iki_syntax_quote_single_s = macro_f_string_static_t_initialize(F_iki_syntax_quote_single_s, 0, F_iki_syntax_quote_single_s_length);
   const f_string_static_t f_iki_syntax_slash_s = macro_f_string_static_t_initialize(F_iki_syntax_slash_s, 0, F_iki_syntax_slash_s_length);

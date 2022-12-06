@@ -9,7 +9,7 @@ extern "C" {
   f_status_t f_iki_content_is(const f_string_static_t content, const f_string_static_t quote) {
     #ifndef _di_level_0_parameter_checking_
       if (!quote.used) return F_status_set_error(F_parameter);
-      if (quote.string[0] != f_iki_syntax_quote_single_s.string[0] && quote.string[0] != f_iki_syntax_quote_double_s.string[0]) return F_status_set_error(F_parameter);
+      if (quote.string[0] != f_iki_syntax_quote_single_s.string[0] && quote.string[0] != f_iki_syntax_quote_double_s.string[0] && quote.string[0] != f_iki_syntax_quote_backtick_s.string[0]) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (!content.used) {
@@ -24,7 +24,7 @@ extern "C" {
   f_status_t f_iki_content_partial_is(const f_string_static_t content, const f_string_range_t range, const f_string_static_t quote) {
     #ifndef _di_level_0_parameter_checking_
       if (!quote.used) return F_status_set_error(F_parameter);
-      if (quote.string[0] != f_iki_syntax_quote_single_s.string[0] && quote.string[0] != f_iki_syntax_quote_double_s.string[0]) return F_status_set_error(F_parameter);
+      if (quote.string[0] != f_iki_syntax_quote_single_s.string[0] && quote.string[0] != f_iki_syntax_quote_double_s.string[0] && quote.string[0] != f_iki_syntax_quote_backtick_s.string[0]) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (!content.used) {
@@ -172,7 +172,7 @@ extern "C" {
           if (F_status_is_error(status) || range->start > range->stop || range->start >= buffer->used) break;
 
           // Found a valid vocabulary name.
-          if (buffer->string[range->start] == f_iki_syntax_quote_single_s.string[0] || buffer->string[range->start] == f_iki_syntax_quote_double_s.string[0]) {
+          if (buffer->string[range->start] == f_iki_syntax_quote_single_s.string[0] || buffer->string[range->start] == f_iki_syntax_quote_double_s.string[0] || buffer->string[range->start] == f_iki_syntax_quote_backtick_s.string[0]) {
             status = F_true;
             quote = buffer->string[range->start];
           }
@@ -210,7 +210,7 @@ extern "C" {
             if (separator_found) {
 
               // Save delimit for a would-be valid IKI that is now delimited.
-              if (buffer->string[range->start] == f_iki_syntax_quote_single_s.string[0] || buffer->string[range->start] == f_iki_syntax_quote_double_s.string[0]) {
+              if (buffer->string[range->start] == f_iki_syntax_quote_single_s.string[0] || buffer->string[range->start] == f_iki_syntax_quote_double_s.string[0] || buffer->string[range->start] == f_iki_syntax_quote_backtick_s.string[0]) {
                 status = f_array_lengths_increase(state.step_small, &data->delimits);
                 if (F_status_is_error(status)) break;
 

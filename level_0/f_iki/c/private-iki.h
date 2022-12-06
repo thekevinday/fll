@@ -28,7 +28,7 @@ extern "C" {
  *   The range within the buffer that represents the content name.
  * @param quote
  *   The quote character in use.
- *   This must be either a single (') or double (") quote.
+ *   This must be either a single quote (') (U+0027), double quote (") (U+0022), or backtick (`) (U+0060).
  *
  * @return
  *   F_true on success and string is a valid content name.

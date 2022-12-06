@@ -38,20 +38,23 @@ extern "C" {
  * IKI-specific syntax.
  */
 #ifndef _di_f_iki_syntax_
-  #define F_iki_syntax_separator_s    ":"
-  #define F_iki_syntax_placeholder_s  ""
-  #define F_iki_syntax_quote_double_s "\""
-  #define F_iki_syntax_quote_single_s "\'"
-  #define F_iki_syntax_slash_s        "\\"
+  #define F_iki_syntax_separator_s      F_string_ascii_colon_s
+  #define F_iki_syntax_placeholder_s    F_string_placeholder_s
+  #define F_iki_syntax_quote_backtick_s F_string_ascii_grave_s
+  #define F_iki_syntax_quote_double_s   F_string_ascii_quote_double_s
+  #define F_iki_syntax_quote_single_s   F_string_ascii_quote_single_s
+  #define F_iki_syntax_slash_s          F_string_ascii_slash_backward_s
 
-  #define F_iki_syntax_separator_s_length    1
-  #define F_iki_syntax_placeholder_s_length  1
-  #define F_iki_syntax_quote_double_s_length 1
-  #define F_iki_syntax_quote_single_s_length 1
-  #define F_iki_syntax_slash_s_length        1
+  #define F_iki_syntax_separator_s_length      F_string_ascii_colon_s_length
+  #define F_iki_syntax_placeholder_s_length    F_string_placeholder_s_length
+  #define F_iki_syntax_quote_backtick_s_length F_string_ascii_grave_s_length
+  #define F_iki_syntax_quote_double_s_length   F_string_ascii_quote_double_s_length
+  #define F_iki_syntax_quote_single_s_length   F_string_ascii_quote_single_s_length
+  #define F_iki_syntax_slash_s_length          F_string_ascii_slash_backward_s_length
 
   extern const f_string_static_t f_iki_syntax_separator_s;
   extern const f_string_static_t f_iki_syntax_placeholder_s;
+  extern const f_string_static_t f_iki_syntax_quote_backtick_s;
   extern const f_string_static_t f_iki_syntax_quote_double_s;
   extern const f_string_static_t f_iki_syntax_quote_single_s;
   extern const f_string_static_t f_iki_syntax_slash_s;

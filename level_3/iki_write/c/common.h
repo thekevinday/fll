@@ -81,39 +81,45 @@ extern "C" {
  * The main program parameters.
  */
 #ifndef _di_iki_write_parameters_
-  #define IKI_WRITE_short_file_s    "f"
-  #define IKI_WRITE_short_content_s "c"
-  #define IKI_WRITE_short_double_s  "d"
-  #define IKI_WRITE_short_object_s  "o"
-  #define IKI_WRITE_short_single_s  "s"
+  #define IKI_WRITE_short_backtick_s "b"
+  #define IKI_WRITE_short_content_s  "c"
+  #define IKI_WRITE_short_double_s   "d"
+  #define IKI_WRITE_short_file_s     "f"
+  #define IKI_WRITE_short_object_s   "o"
+  #define IKI_WRITE_short_single_s   "s"
 
-  #define IKI_WRITE_long_file_s    "file"
-  #define IKI_WRITE_long_content_s "content"
-  #define IKI_WRITE_long_double_s  "double"
-  #define IKI_WRITE_long_object_s  "object"
-  #define IKI_WRITE_long_single_s  "single"
+  #define IKI_WRITE_long_backtick_s "backtick"
+  #define IKI_WRITE_long_content_s  "content"
+  #define IKI_WRITE_long_double_s   "double"
+  #define IKI_WRITE_long_file_s     "file"
+  #define IKI_WRITE_long_object_s   "object"
+  #define IKI_WRITE_long_single_s   "single"
 
-  #define IKI_WRITE_short_file_s_length    1
-  #define IKI_WRITE_short_content_s_length 1
-  #define IKI_WRITE_short_double_s_length  1
-  #define IKI_WRITE_short_object_s_length  1
-  #define IKI_WRITE_short_single_s_length  1
+  #define IKI_WRITE_short_backtick_s_length 1
+  #define IKI_WRITE_short_content_s_length  1
+  #define IKI_WRITE_short_double_s_length   1
+  #define IKI_WRITE_short_file_s_length     1
+  #define IKI_WRITE_short_object_s_length   1
+  #define IKI_WRITE_short_single_s_length   1
 
-  #define IKI_WRITE_long_file_s_length    4
-  #define IKI_WRITE_long_content_s_length 7
-  #define IKI_WRITE_long_double_s_length  6
-  #define IKI_WRITE_long_object_s_length  6
-  #define IKI_WRITE_long_single_s_length  6
+  #define IKI_WRITE_long_backtick_s_length 8
+  #define IKI_WRITE_long_content_s_length  7
+  #define IKI_WRITE_long_double_s_length   6
+  #define IKI_WRITE_long_file_s_length     4
+  #define IKI_WRITE_long_object_s_length   6
+  #define IKI_WRITE_long_single_s_length   6
 
-  extern const f_string_static_t iki_write_short_file_s;
+  extern const f_string_static_t iki_write_short_backtick_s;
   extern const f_string_static_t iki_write_short_content_s;
   extern const f_string_static_t iki_write_short_double_s;
+  extern const f_string_static_t iki_write_short_file_s;
   extern const f_string_static_t iki_write_short_object_s;
   extern const f_string_static_t iki_write_short_single_s;
 
-  extern const f_string_static_t iki_write_long_file_s;
+  extern const f_string_static_t iki_write_long_backtick_s;
   extern const f_string_static_t iki_write_long_content_s;
   extern const f_string_static_t iki_write_long_double_s;
+  extern const f_string_static_t iki_write_long_file_s;
   extern const f_string_static_t iki_write_long_object_s;
   extern const f_string_static_t iki_write_long_single_s;
 
@@ -131,9 +137,10 @@ extern "C" {
     iki_write_parameter_line_first_no_e,
     iki_write_parameter_line_last_no_e,
 
-    iki_write_parameter_file_e,
+    iki_write_parameter_backtick_e,
     iki_write_parameter_content_e,
     iki_write_parameter_double_e,
+    iki_write_parameter_file_e,
     iki_write_parameter_object_e,
     iki_write_parameter_single_e,
   };
@@ -153,39 +160,36 @@ extern "C" {
       macro_f_console_parameter_t_initialize4(f_console_standard_short_line_first_no_s, f_console_standard_long_line_first_no_s, 0, f_console_flag_inverse_e), \
       macro_f_console_parameter_t_initialize4(f_console_standard_short_line_last_no_s,  f_console_standard_long_line_last_no_s,  0, f_console_flag_inverse_e), \
       \
-      macro_f_console_parameter_t_initialize2(iki_write_short_file_s.string, iki_write_long_file_s.string, 0, 1, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize2(iki_write_short_content_s.string, iki_write_long_content_s.string, 0, 1, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize2(iki_write_short_double_s.string, iki_write_long_double_s.string, 0, 0, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize2(iki_write_short_object_s.string, iki_write_long_object_s.string, 0, 1, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize2(iki_write_short_single_s.string, iki_write_long_single_s.string, 0, 0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize2(iki_write_short_backtick_s.string, iki_write_long_backtick_s.string, 0, 0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize2(iki_write_short_content_s.string,  iki_write_long_content_s.string,  0, 1, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize2(iki_write_short_double_s.string,   iki_write_long_double_s.string,   0, 0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize2(iki_write_short_file_s.string,     iki_write_long_file_s.string,     0, 1, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize2(iki_write_short_object_s.string,   iki_write_long_object_s.string,   0, 1, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize2(iki_write_short_single_s.string,   iki_write_long_single_s.string,   0, 0, f_console_flag_normal_e), \
     }
 
-  #define iki_write_total_parameters_d 17
+  #define iki_write_total_parameters_d 18
 #endif // _di_iki_write_parameters_
 
 /**
  * Flags used to represent flags passed to the main function.
  *
  * iki_write_main_flag_*_e:
- *   - none:          No modes in use.
- *   - content:       The Content being written is specified.
- *   - double:        Operate using double quotes.
- *   - file_to:       Using a specified destination file.
- *   - help:          Print help.
- *   - object:        The Object being written is specified.
- *   - single:        Operate using single quotes.
- *   - version:       Print version.
+ *   - none:     No modes in use.
+ *   - content:  The Content being written is specified.
+ *   - file_to:  Using a specified destination file.
+ *   - help:     Print help.
+ *   - object:   The Object being written is specified.
+ *   - version:  Print version.
  */
 #ifndef _di_iki_write_main_flag_e_
   enum {
     iki_write_main_flag_none_e    = 0x0,
     iki_write_main_flag_content_e = 0x1,
-    iki_write_main_flag_double_e  = 0x2,
-    iki_write_main_flag_file_to_e = 0x4,
-    iki_write_main_flag_help_e    = 0x8,
-    iki_write_main_flag_object_e  = 0x10,
-    iki_write_main_flag_single_e  = 0x20,
-    iki_write_main_flag_version_e = 0x40,
+    iki_write_main_flag_file_to_e = 0x2,
+    iki_write_main_flag_help_e    = 0x4,
+    iki_write_main_flag_object_e  = 0x8,
+    iki_write_main_flag_version_e = 0x10,
   };
 #endif // _di_iki_write_main_flag_e_
 
