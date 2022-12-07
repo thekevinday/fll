@@ -680,7 +680,7 @@ extern "C" {
   }
 #endif // !defined(_di_f_file_role_change_at_) || !defined(_di_f_file_copy_at_)
 
-#if !defined(_di_f_file_stat_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_exists_) || !defined(_di_f_file_is_) || !defined(_di_f_file_touch_)
+#if !defined(_di_f_file_clone_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_exists_) || !defined(_di_f_file_group_read_) || !defined(_di_f_file_is_) || !defined(_di_f_file_link_read_) || !defined(_di_f_file_mode_read_) || !defined(_di_f_file_owner_read_) || !defined(_di_f_file_size_) || !defined(_di_f_file_stat_) || !defined(_di_f_file_touch_) || !defined(_di_f_file_type_)
   f_status_t private_f_file_stat(const f_string_static_t path, const bool dereference, struct stat * const file_stat) {
 
     if ((dereference ? stat(path.string, file_stat) : lstat(path.string, file_stat)) < 0) {
@@ -699,9 +699,9 @@ extern "C" {
 
     return F_none;
   }
-#endif // !defined(_di_f_file_stat_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_exists_) || !defined(_di_f_file_is_) || !defined(_di_f_file_touch_)
+#endif // !defined(_di_f_file_clone_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_exists_) || !defined(_di_f_file_group_read_) || !defined(_di_f_file_is_) || !defined(_di_f_file_link_read_) || !defined(_di_f_file_mode_read_) || !defined(_di_f_file_owner_read_) || !defined(_di_f_file_size_) || !defined(_di_f_file_stat_) || !defined(_di_f_file_touch_) || !defined(_di_f_file_type_)
 
-#if !defined(_di_f_file_stat_at_) || !defined(_di_f_file_exists_at_) || !defined(_di_f_file_copy_at_)
+#if !defined(_di_f_file_exists_at_) || !defined(_di_f_file_link_read_at_) || !defined(_di_f_file_mode_read_at_) || !defined(_di_f_file_size_at_) || !defined(_di_f_file_stat_at_) || !defined(_di_f_file_touch_at_) || !defined(_di_f_file_type_at_)
   f_status_t private_f_file_stat_at(const f_file_t file, const f_string_static_t path, const int flag, struct stat * const file_stat) {
 
     if (fstatat(file.id, path.string, file_stat, flag) < 0) {
@@ -721,7 +721,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // !defined(_di_f_file_stat_at_) || !defined(_di_f_file_exists_at_) || !defined(_di_f_file_touch_at_)
+#endif // !defined(_di_f_file_exists_at_) || !defined(_di_f_file_link_read_at_) || !defined(_di_f_file_mode_read_at_) || !defined(_di_f_file_size_at_) || !defined(_di_f_file_stat_at_) || !defined(_di_f_file_touch_at_) || !defined(_di_f_file_type_at_)
 
 #if !defined(_di_f_file_stat_by_id_) || !defined(_di_f_file_size_by_id_)
   f_status_t private_f_file_stat_by_id(const f_file_t file, struct stat * const file_stat) {
