@@ -303,7 +303,7 @@ extern "C" {
   }
 #endif // _di_f_utf_unicode_to_
 
-#ifndef _di_f_utf_unicode_string_to_f_
+#ifndef _di_f_utf_unicode_string_to_
   f_status_t f_utf_unicode_string_to(const f_string_t string, const f_array_length_t length, uint32_t *unicode) {
     #ifndef _di_level_0_parameter_checking_
       if (!unicode) return F_status_set_error(F_parameter);
