@@ -869,15 +869,22 @@ extern "C" {
  * @see lstat()
  * @see stat()
  *
+ * @see f_file_clone()
  * @see f_file_copy()
  * @see f_file_exists()
+ * @see f_file_group_read()
  * @see f_file_is()
+ * @see f_file_link_read()
+ * @see f_file_mode_read()
+ * @see f_file_owner_read()
+ * @see f_file_size()
  * @see f_file_stat()
  * @see f_file_touch()
+ * @see f_file_type()
  */
-#if !defined(_di_f_file_stat_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_exists_) || !defined(_di_f_file_is_) || !defined(_di_f_file_touch_)
+#if !defined(_di_f_file_clone_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_exists_) || !defined(_di_f_file_group_read_) || !defined(_di_f_file_is_) || !defined(_di_f_file_link_read_) || !defined(_di_f_file_mode_read_) || !defined(_di_f_file_owner_read_) || !defined(_di_f_file_size_) || !defined(_di_f_file_stat_) || !defined(_di_f_file_touch_) || !defined(_di_f_file_type_)
   extern f_status_t private_f_file_stat(const f_string_static_t file_name, const bool dereference, struct stat * const file_stat) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_file_stat_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_exists_) || !defined(_di_f_file_is_) || !defined(_di_f_file_touch_)
+#endif // !defined(_di_f_file_clone_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_exists_) || !defined(_di_f_file_group_read_) || !defined(_di_f_file_is_) || !defined(_di_f_file_link_read_) || !defined(_di_f_file_mode_read_) || !defined(_di_f_file_owner_read_) || !defined(_di_f_file_size_) || !defined(_di_f_file_stat_) || !defined(_di_f_file_touch_) || !defined(_di_f_file_type_)
 
 /**
  * Private implementation of f_file_stat_at().
@@ -907,13 +914,17 @@ extern "C" {
  *
  * @see fstatat()
  *
- * @see f_file_stat_at()
  * @see f_file_exists_at()
+ * @see f_file_link_read_at()
+ * @see f_file_mode_read_at()
+ * @see f_file_size_at()
+ * @see f_file_stat_at()
  * @see f_file_touch_at()
+ * @see f_file_type_at()
  */
-#if !defined(_di_f_file_stat_at_) || !defined(_di_f_file_exists_at_) || !defined(_di_f_file_touch_at_)
+#if !defined(_di_f_file_exists_at_) || !defined(_di_f_file_link_read_at_) || !defined(_di_f_file_mode_read_at_) || !defined(_di_f_file_size_at_) || !defined(_di_f_file_stat_at_) || !defined(_di_f_file_touch_at_) || !defined(_di_f_file_type_at_)
   extern f_status_t private_f_file_stat_at(const int at_id, const f_string_static_t file_name, const int flag, struct stat * const file_stat) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_file_stat_at_) || !defined(_di_f_file_exists_at_) || !defined(_di_f_file_touch_at_)
+#endif // !defined(_di_f_file_exists_at_) || !defined(_di_f_file_link_read_at_) || !defined(_di_f_file_mode_read_at_) || !defined(_di_f_file_size_at_) || !defined(_di_f_file_stat_at_) || !defined(_di_f_file_touch_at_) || !defined(_di_f_file_type_at_)
 
 /**
  * Private implementation of f_file_stat_by_id().
