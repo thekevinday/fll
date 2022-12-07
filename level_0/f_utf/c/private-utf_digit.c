@@ -6,256 +6,258 @@
 extern "C" {
 #endif
 
-/**
- * Inline helper function to reduce amount of code typed.
- *
- * Given the value, this will conditionally convert the range into an appropriate base-10 integer.
- *
- * This does not handle non-decimal values (non-base-10).
- *
- * @param sequence
- *   The character sequence to process.
- * @param start
- *   An inclusive start range.
- *   The base-10 stop range calculated from this.
- * @param value
- *   The value to update, if non-NULL.
- *
- * @return
- *   F_true for valid digit in the requested range.
- *   F_false, otherwise.
- */
-static inline f_status_t private_inline_f_utf_character_handle_digit(const f_utf_char_t sequence, const f_utf_char_t start, uint64_t * const value) {
+#if !defined(_di_f_utf_character_is_alphabetic_digit_) || !defined(_di_f_utf_character_is_digit_) || !defined(_di_f_utf_character_is_word_) || !defined(_di_f_utf_character_is_word_dash_) || !defined(_di_f_utf_character_is_word_dash_plus_) || !defined(_di_f_utf_is_alphabetic_digit_) || !defined(_di_f_utf_is_digit_) || !defined(_di_f_utf_is_word_) || !defined(_di_f_utf_is_word_dash_) || !defined(_di_f_utf_is_word_dash_plus_)
+  /**
+   * Inline helper function to reduce amount of code typed.
+   *
+   * Given the value, this will conditionally convert the range into an appropriate base-10 integer.
+   *
+   * This does not handle non-decimal values (non-base-10).
+   *
+   * @param sequence
+   *   The character sequence to process.
+   * @param start
+   *   An inclusive start range.
+   *   The base-10 stop range calculated from this.
+   * @param value
+   *   The value to update, if non-NULL.
+   *
+   * @return
+   *   F_true for valid digit in the requested range.
+   *   F_false, otherwise.
+   */
+  static inline f_status_t private_inline_f_utf_character_handle_digit(const f_utf_char_t sequence, const f_utf_char_t start, uint64_t * const value) {
 
-  if (value) {
-    f_char_t ascii = 0x30;
+    if (value) {
+      f_char_t ascii = 0x30;
 
-    if (macro_f_utf_char_t_width(sequence) == 2) {
-      ascii += (f_char_t) macro_f_utf_char_t_to_char_2(sequence - start);
-    }
-    else if (macro_f_utf_char_t_width(sequence) == 3) {
-      ascii += (f_char_t) macro_f_utf_char_t_to_char_3(sequence - start);
-    }
-    else if (macro_f_utf_char_t_width(sequence) == 4) {
-      ascii += (f_char_t) macro_f_utf_char_t_to_char_4(sequence - start);
+      if (macro_f_utf_char_t_width(sequence) == 2) {
+        ascii += (f_char_t) macro_f_utf_char_t_to_char_2(sequence - start);
+      }
+      else if (macro_f_utf_char_t_width(sequence) == 3) {
+        ascii += (f_char_t) macro_f_utf_char_t_to_char_3(sequence - start);
+      }
+      else if (macro_f_utf_char_t_width(sequence) == 4) {
+        ascii += (f_char_t) macro_f_utf_char_t_to_char_4(sequence - start);
+      }
+
+      return private_f_utf_character_is_digit_for_ascii(ascii, value);
     }
 
-    return private_f_utf_character_is_digit_for_ascii(ascii, value);
+    return F_true;
   }
 
-  return F_true;
-}
+  /**
+   * Inline helper function to reduce amount of code typed.
+   *
+   * Given the value, this will conditionally convert the range into an appropriate base-10 integer.
+   *
+   * This does not handle non-decimal values (non-base-10).
+   *
+   * This applies an offset with the intent of being used for producing values greater than 9 (such as 10 through 19).
+   *
+   * @param sequence
+   *   The character sequence to process.
+   * @param start
+   *   An inclusive start range.
+   *   The base-10 stop range calculated from this.
+   * @param offset
+   *   An offset needed to add to the calculated base-10 value.
+   *   If value is 9 and offset is 10 then the a value of 19 is returned.
+   * @param value
+   *   The value to update, if non-NULL.
+   *
+   * @return
+   *   F_true for valid digit in the requested range.
+   *   F_false, otherwise.
+   */
+  static inline f_status_t private_inline_f_utf_character_handle_digit_offset(const f_utf_char_t sequence, const f_utf_char_t start, const uint8_t offset, uint64_t * const value) {
 
-/**
- * Inline helper function to reduce amount of code typed.
- *
- * Given the value, this will conditionally convert the range into an appropriate base-10 integer.
- *
- * This does not handle non-decimal values (non-base-10).
- *
- * This applies an offset with the intent of being used for producing values greater than 9 (such as 10 through 19).
- *
- * @param sequence
- *   The character sequence to process.
- * @param start
- *   An inclusive start range.
- *   The base-10 stop range calculated from this.
- * @param offset
- *   An offset needed to add to the calculated base-10 value.
- *   If value is 9 and offset is 10 then the a value of 19 is returned.
- * @param value
- *   The value to update, if non-NULL.
- *
- * @return
- *   F_true for valid digit in the requested range.
- *   F_false, otherwise.
- */
-static inline f_status_t private_inline_f_utf_character_handle_digit_offset(const f_utf_char_t sequence, const f_utf_char_t start, const uint8_t offset, uint64_t * const value) {
+    if (value) {
+      f_char_t ascii = 0x30;
 
-  if (value) {
-    f_char_t ascii = 0x30;
+      if (macro_f_utf_char_t_width(sequence) == 2) {
+        ascii += (f_char_t) macro_f_utf_char_t_to_char_2(sequence - start);
+      }
+      else if (macro_f_utf_char_t_width(sequence) == 3) {
+        ascii += (f_char_t) macro_f_utf_char_t_to_char_3(sequence - start);
+      }
+      else if (macro_f_utf_char_t_width(sequence) == 4) {
+        ascii += (f_char_t) macro_f_utf_char_t_to_char_4(sequence - start);
+      }
 
-    if (macro_f_utf_char_t_width(sequence) == 2) {
-      ascii += (f_char_t) macro_f_utf_char_t_to_char_2(sequence - start);
+      if (private_f_utf_character_is_digit_for_ascii(ascii, value) == F_true) {
+        *value += offset;
+
+        return F_true;
+      }
+
+      return F_false;
     }
-    else if (macro_f_utf_char_t_width(sequence) == 3) {
-      ascii += (f_char_t) macro_f_utf_char_t_to_char_3(sequence - start);
-    }
-    else if (macro_f_utf_char_t_width(sequence) == 4) {
-      ascii += (f_char_t) macro_f_utf_char_t_to_char_4(sequence - start);
-    }
 
-    if (private_f_utf_character_is_digit_for_ascii(ascii, value) == F_true) {
-      *value += offset;
-
-      return F_true;
-    }
-
-    return F_false;
+    return F_true;
   }
 
-  return F_true;
-}
+  /**
+   * Inline helper function to reduce amount of code typed.
+   *
+   * Given the value, this will conditionally convert the range into an appropriate base-10 integer from 1 to 9.
+   *
+   * This does not handle non-decimal values (non-base-10).
+   *
+   * @param sequence
+   *   The character sequence to process.
+   * @param start
+   *   An inclusive start range.
+   *   The base-10 stop range calculated from this.
+   * @param value
+   *   The value to update, if non-NULL.
+   *
+   * @return
+   *   F_true for valid digit in the requested range.
+   *   F_false, otherwise.
+   */
+  static inline f_status_t private_inline_f_utf_character_handle_digit_from_one(const f_utf_char_t sequence, const f_utf_char_t start, uint64_t * const value) {
 
-/**
- * Inline helper function to reduce amount of code typed.
- *
- * Given the value, this will conditionally convert the range into an appropriate base-10 integer from 1 to 9.
- *
- * This does not handle non-decimal values (non-base-10).
- *
- * @param sequence
- *   The character sequence to process.
- * @param start
- *   An inclusive start range.
- *   The base-10 stop range calculated from this.
- * @param value
- *   The value to update, if non-NULL.
- *
- * @return
- *   F_true for valid digit in the requested range.
- *   F_false, otherwise.
- */
-static inline f_status_t private_inline_f_utf_character_handle_digit_from_one(const f_utf_char_t sequence, const f_utf_char_t start, uint64_t * const value) {
+    if (value) {
+      f_char_t ascii = 0x31;
 
-  if (value) {
-    f_char_t ascii = 0x31;
+      if (macro_f_utf_char_t_width(sequence) == 2) {
+        ascii += (f_char_t) macro_f_utf_char_t_to_char_2(sequence - start);
+      }
+      else if (macro_f_utf_char_t_width(sequence) == 3) {
+        ascii += (f_char_t) macro_f_utf_char_t_to_char_3(sequence - start);
+      }
+      else if (macro_f_utf_char_t_width(sequence) == 4) {
+        ascii += (f_char_t) macro_f_utf_char_t_to_char_4(sequence - start);
+      }
 
-    if (macro_f_utf_char_t_width(sequence) == 2) {
-      ascii += (f_char_t) macro_f_utf_char_t_to_char_2(sequence - start);
+      return private_f_utf_character_is_digit_for_ascii(ascii, value);
     }
-    else if (macro_f_utf_char_t_width(sequence) == 3) {
-      ascii += (f_char_t) macro_f_utf_char_t_to_char_3(sequence - start);
-    }
-    else if (macro_f_utf_char_t_width(sequence) == 4) {
-      ascii += (f_char_t) macro_f_utf_char_t_to_char_4(sequence - start);
-    }
 
-    return private_f_utf_character_is_digit_for_ascii(ascii, value);
+    return F_true;
   }
 
-  return F_true;
-}
+  /**
+   * Inline helper function to reduce amount of code typed.
+   *
+   * Given the value, this will conditionally convert the range into an appropriate base-10 integer from 2 to 9.
+   *
+   * This does not handle non-decimal values (non-base-10).
+   *
+   * @param sequence
+   *   The character sequence to process.
+   * @param start
+   *   An inclusive start range.
+   *   The base-10 stop range calculated from this.
+   * @param value
+   *   The value to update, if non-NULL.
+   *
+   * @return
+   *   F_true for valid digit in the requested range.
+   *   F_false, otherwise.
+   */
+  static inline f_status_t private_inline_f_utf_character_handle_digit_from_two(const f_utf_char_t sequence, const f_utf_char_t start, uint64_t * const value) {
 
-/**
- * Inline helper function to reduce amount of code typed.
- *
- * Given the value, this will conditionally convert the range into an appropriate base-10 integer from 2 to 9.
- *
- * This does not handle non-decimal values (non-base-10).
- *
- * @param sequence
- *   The character sequence to process.
- * @param start
- *   An inclusive start range.
- *   The base-10 stop range calculated from this.
- * @param value
- *   The value to update, if non-NULL.
- *
- * @return
- *   F_true for valid digit in the requested range.
- *   F_false, otherwise.
- */
-static inline f_status_t private_inline_f_utf_character_handle_digit_from_two(const f_utf_char_t sequence, const f_utf_char_t start, uint64_t * const value) {
+    if (value) {
+      f_char_t ascii = 0x32;
 
-  if (value) {
-    f_char_t ascii = 0x32;
+      if (macro_f_utf_char_t_width(sequence) == 2) {
+        ascii += (f_char_t) macro_f_utf_char_t_to_char_2(sequence - start);
+      }
+      else if (macro_f_utf_char_t_width(sequence) == 3) {
+        ascii += (f_char_t) macro_f_utf_char_t_to_char_3(sequence - start);
+      }
+      else if (macro_f_utf_char_t_width(sequence) == 4) {
+        ascii += (f_char_t) macro_f_utf_char_t_to_char_4(sequence - start);
+      }
 
-    if (macro_f_utf_char_t_width(sequence) == 2) {
-      ascii += (f_char_t) macro_f_utf_char_t_to_char_2(sequence - start);
+      return private_f_utf_character_is_digit_for_ascii(ascii, value);
     }
-    else if (macro_f_utf_char_t_width(sequence) == 3) {
-      ascii += (f_char_t) macro_f_utf_char_t_to_char_3(sequence - start);
-    }
-    else if (macro_f_utf_char_t_width(sequence) == 4) {
-      ascii += (f_char_t) macro_f_utf_char_t_to_char_4(sequence - start);
-    }
 
-    return private_f_utf_character_is_digit_for_ascii(ascii, value);
+    return F_true;
   }
 
-  return F_true;
-}
+  /**
+   * Inline helper function to reduce amount of code typed.
+   *
+   * Given the value, this will conditionally convert the range into an appropriate base-10 integer from 3 to 9.
+   *
+   * This does not handle non-decimal values (non-base-10).
+   *
+   * @param sequence
+   *   The character sequence to process.
+   * @param start
+   *   An inclusive start range.
+   *   The base-10 stop range calculated from this.
+   * @param value
+   *   The value to update, if non-NULL.
+   *
+   * @return
+   *   F_true for valid digit in the requested range.
+   *   F_false, otherwise.
+   */
+  static inline f_status_t private_inline_f_utf_character_handle_digit_from_three(const f_utf_char_t sequence, const f_utf_char_t start, uint64_t * const value) {
 
-/**
- * Inline helper function to reduce amount of code typed.
- *
- * Given the value, this will conditionally convert the range into an appropriate base-10 integer from 3 to 9.
- *
- * This does not handle non-decimal values (non-base-10).
- *
- * @param sequence
- *   The character sequence to process.
- * @param start
- *   An inclusive start range.
- *   The base-10 stop range calculated from this.
- * @param value
- *   The value to update, if non-NULL.
- *
- * @return
- *   F_true for valid digit in the requested range.
- *   F_false, otherwise.
- */
-static inline f_status_t private_inline_f_utf_character_handle_digit_from_three(const f_utf_char_t sequence, const f_utf_char_t start, uint64_t * const value) {
+    if (value) {
+      f_char_t ascii = 0x33;
 
-  if (value) {
-    f_char_t ascii = 0x33;
+      if (macro_f_utf_char_t_width(sequence) == 2) {
+        ascii += (f_char_t) macro_f_utf_char_t_to_char_2(sequence - start);
+      }
+      else if (macro_f_utf_char_t_width(sequence) == 3) {
+        ascii += (f_char_t) macro_f_utf_char_t_to_char_3(sequence - start);
+      }
+      else if (macro_f_utf_char_t_width(sequence) == 4) {
+        ascii += (f_char_t) macro_f_utf_char_t_to_char_4(sequence - start);
+      }
 
-    if (macro_f_utf_char_t_width(sequence) == 2) {
-      ascii += (f_char_t) macro_f_utf_char_t_to_char_2(sequence - start);
+      return private_f_utf_character_is_digit_for_ascii(ascii, value);
     }
-    else if (macro_f_utf_char_t_width(sequence) == 3) {
-      ascii += (f_char_t) macro_f_utf_char_t_to_char_3(sequence - start);
-    }
-    else if (macro_f_utf_char_t_width(sequence) == 4) {
-      ascii += (f_char_t) macro_f_utf_char_t_to_char_4(sequence - start);
-    }
 
-    return private_f_utf_character_is_digit_for_ascii(ascii, value);
+    return F_true;
   }
 
-  return F_true;
-}
+  /**
+   * Inline helper function to reduce amount of code typed.
+   *
+   * Given the value, this will conditionally convert the range into an appropriate base-10 integer from 4 to 9.
+   *
+   * This does not handle non-decimal values (non-base-10).
+   *
+   * @param sequence
+   *   The character sequence to process.
+   * @param start
+   *   An inclusive start range.
+   *   The base-10 stop range calculated from this.
+   * @param value
+   *   The value to update, if non-NULL.
+   *
+   * @return
+   *   F_true for valid digit in the requested range.
+   *   F_false, otherwise.
+   */
+  static inline f_status_t private_inline_f_utf_character_handle_digit_from_four(const f_utf_char_t sequence, const f_utf_char_t start, uint64_t * const value) {
 
-/**
- * Inline helper function to reduce amount of code typed.
- *
- * Given the value, this will conditionally convert the range into an appropriate base-10 integer from 4 to 9.
- *
- * This does not handle non-decimal values (non-base-10).
- *
- * @param sequence
- *   The character sequence to process.
- * @param start
- *   An inclusive start range.
- *   The base-10 stop range calculated from this.
- * @param value
- *   The value to update, if non-NULL.
- *
- * @return
- *   F_true for valid digit in the requested range.
- *   F_false, otherwise.
- */
-static inline f_status_t private_inline_f_utf_character_handle_digit_from_four(const f_utf_char_t sequence, const f_utf_char_t start, uint64_t * const value) {
+    if (value) {
+      f_char_t ascii = 0x34;
 
-  if (value) {
-    f_char_t ascii = 0x34;
+      if (macro_f_utf_char_t_width(sequence) == 2) {
+        ascii += (f_char_t) macro_f_utf_char_t_to_char_2(sequence - start);
+      }
+      else if (macro_f_utf_char_t_width(sequence) == 3) {
+        ascii += (f_char_t) macro_f_utf_char_t_to_char_3(sequence - start);
+      }
+      else if (macro_f_utf_char_t_width(sequence) == 4) {
+        ascii += (f_char_t) macro_f_utf_char_t_to_char_4(sequence - start);
+      }
 
-    if (macro_f_utf_char_t_width(sequence) == 2) {
-      ascii += (f_char_t) macro_f_utf_char_t_to_char_2(sequence - start);
+      return private_f_utf_character_is_digit_for_ascii(ascii, value);
     }
-    else if (macro_f_utf_char_t_width(sequence) == 3) {
-      ascii += (f_char_t) macro_f_utf_char_t_to_char_3(sequence - start);
-    }
-    else if (macro_f_utf_char_t_width(sequence) == 4) {
-      ascii += (f_char_t) macro_f_utf_char_t_to_char_4(sequence - start);
-    }
 
-    return private_f_utf_character_is_digit_for_ascii(ascii, value);
+    return F_true;
   }
-
-  return F_true;
-}
+#endif // !defined(_di_f_utf_character_is_alphabetic_digit_) || !defined(_di_f_utf_character_is_digit_) || !defined(_di_f_utf_character_is_word_) || !defined(_di_f_utf_character_is_word_dash_) || !defined(_di_f_utf_character_is_word_dash_plus_) || !defined(_di_f_utf_is_alphabetic_digit_) || !defined(_di_f_utf_is_digit_) || !defined(_di_f_utf_is_word_) || !defined(_di_f_utf_is_word_dash_) || !defined(_di_f_utf_is_word_dash_plus_)
 
 #if !defined(_di_f_utf_character_is_alphabetic_digit_) || !defined(_di_f_utf_character_is_digit_) || !defined(_di_f_utf_character_is_word_) || !defined(_di_f_utf_character_is_word_dash_) || !defined(_di_f_utf_character_is_word_dash_plus_) || !defined(_di_f_utf_is_alphabetic_digit_) || !defined(_di_f_utf_is_digit_) || !defined(_di_f_utf_is_word_) || !defined(_di_f_utf_is_word_dash_) || !defined(_di_f_utf_is_word_dash_plus_)
   f_status_t private_f_utf_character_is_digit(const f_utf_char_t sequence, uint64_t * const value) {
