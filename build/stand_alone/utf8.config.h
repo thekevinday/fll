@@ -1,5 +1,6 @@
 // A config.h file for defining all code being disabled for compiling the stand alone UTF8.
-// To assist in building this file use: nm --defined-only -f p programs/shared/utf8 | grep -oP '^(f|fl|fll)_[^\s]+
+// To assist in building this file use (may need to omit --defined-only): "nm --defined-only -f p programs/shared/utf8 | grep -oP '^(f|fl|fll)_[^\s]+'".
+// To get the list of all possible functions, use something like: "grep -hor '#ifndef _di_f_.*\>' level_0/f_color/" | sed -e 's|^#ifndef |#define |g' | sort | uniq.
 
 #define _di_f_array_lengths_adjust_
 #define _di_f_array_lengths_append_
