@@ -33,6 +33,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_adjust().
  *
  * @see f_memory_adjust()
+ *
  * @see f_utf_string_dynamics_adjust()
  * @see f_utf_string_dynamics_append()
  * @see f_utf_string_dynamics_decimate_by()
@@ -61,6 +62,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  *
  * @see f_memory_resize()
+ *
  * @see f_utf_string_dynamics_append()
  * @see f_utf_string_map_multis_append()
  * @see f_utf_string_map_multis_append_all()
@@ -87,6 +89,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  *
  * @see f_memory_resize()
+ *
  * @see f_utf_string_dynamics_append_all()
  * @see f_utf_string_map_multis_append()
  * @see f_utf_string_map_multis_append_all()
@@ -118,10 +121,15 @@ extern "C" {
  * @see f_utf_string_dynamics_increase()
  * @see f_utf_string_dynamics_increase_by()
  * @see f_utf_string_map_multis_append()
+ * @see f_utf_string_map_multis_decrease_by()
+ * @see f_utf_string_map_multis_increase()
+ * @see f_utf_string_map_multis_increase_by()
+ * @see f_utf_string_map_multis_terminate()
+ * @see f_utf_string_map_multis_terminate_after()
  */
-#if !defined(_di_f_utf_string_dynamics_decrease_by_) || !defined(_di_f_utf_string_dynamics_increase_) || !defined(_di_f_utf_string_dynamics_increase_by_) || !defined(_di_f_utf_string_map_multis_append_)
+#if !defined(_di_f_utf_string_dynamics_decrease_by_) || !defined(_di_f_utf_string_dynamics_increase_) || !defined(_di_f_utf_string_dynamics_increase_by_) || !defined(_di_f_utf_string_map_multis_append_) || !defined(_di_f_utf_string_map_multis_decrease_by_) || !defined(_di_f_utf_string_map_multis_increase_) || !defined(_di_f_utf_string_map_multis_increase_by_) || !defined(_di_f_utf_string_map_multis_terminate_) || !defined(_di_f_utf_string_map_multis_terminate_after_)
   extern f_status_t private_f_utf_string_dynamics_resize(const f_array_length_t length, f_utf_string_dynamics_t * const dynamics) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_utf_string_dynamics_decrease_by_) || !defined(_di_f_utf_string_dynamics_increase_) || !defined(_di_f_utf_string_dynamics_increase_by_) || !defined(_di_f_utf_string_map_multis_append_)
+#endif // !defined(_di_f_utf_string_dynamics_decrease_by_) || !defined(_di_f_utf_string_dynamics_increase_) || !defined(_di_f_utf_string_dynamics_increase_by_) || !defined(_di_f_utf_string_map_multis_append_) || !defined(_di_f_utf_string_map_multis_decrease_by_) || !defined(_di_f_utf_string_map_multis_increase_) || !defined(_di_f_utf_string_map_multis_increase_by_) || !defined(_di_f_utf_string_map_multis_terminate_) || !defined(_di_f_utf_string_map_multis_terminate_after_)
 
 #ifdef __cplusplus
 } // extern "C"
