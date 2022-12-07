@@ -1,0 +1,7 @@
+#define _di_fl_utf_file_read_
+#define _di_fl_utf_file_read_block_
+#define _di_fl_utf_file_read_until_
+#define _di_fl_utf_file_write_
+#define _di_fl_utf_file_write_block_
+#define _di_fl_utf_file_write_range_
+#define _di_fl_utf_file_write_until_

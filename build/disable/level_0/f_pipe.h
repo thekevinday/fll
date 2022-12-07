@@ -1,0 +1,3 @@
+#define _di_f_pipe_error_exists_
+#define _di_f_pipe_input_exists_
+#define _di_f_pipe_output_exists_

@@ -1,0 +1,11 @@
+#define _di_f_path_change_
+#define _di_f_path_change_at_
+#define _di_f_path_current_
+#define _di_f_path_defines_
+#define _di_f_path_is_
+#define _di_f_path_is_absolute_
+#define _di_f_path_is_relative_
+#define _di_f_path_is_relative_current_
+#define _di_f_path_real_
+#define _di_f_path_tree_hierarchy_standard_
+#define _di_f_path_tree_kevux_standard_

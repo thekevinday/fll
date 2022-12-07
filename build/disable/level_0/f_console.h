@@ -1,0 +1,16 @@
+#define _di_f_console_arguments_t_
+#define _di_f_console_environment_process_
+#define _di_f_console_flag_t_
+#define _di_f_console_identify_
+#define _di_f_console_length_size_
+#define _di_f_console_parameter_prioritize_left_
+#define _di_f_console_parameter_prioritize_right_
+#define _di_f_console_parameter_process_
+#define _di_f_console_parameters_delete_
+#define _di_f_console_parameters_destroy_
+#define _di_f_console_parameters_t_
+#define _di_f_console_parameter_t_
+#define _di_f_console_result_t_
+#define _di_f_console_standard_s_
+#define _di_f_console_symbol_s_
+#define _di_f_console_verbosity_
