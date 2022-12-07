@@ -939,7 +939,6 @@
 #define _di_f_utf_substitute_
 #define _di_f_utf_unicode_from_
 #define _di_f_utf_unicode_string_to_
-#define _di_f_utf_unicode_string_to_f_
 #define _di_f_utf_unicode_to_
 #define _di_f_utf_widths_t_
 
