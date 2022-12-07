@@ -1,5 +1,6 @@
 // A config.h file for defining all code being disabled for compiling the stand alone Featureless Make.
-// To assist in building this file use: nm --defined-only -f p programs/shared/fake | grep -oP '^(f|fl|fll)_[^\s]+
+// To assist in building this file use (may need to omit --defined-only): "nm --defined-only -f p programs/shared/fake | grep -oP '^(f|fl|fll)_[^\s]+'".
+// To get the list of all possible functions, use something like: "grep -hor '#ifndef _di_f_.*\>' level_0/f_color/" | sed -e 's|^#ifndef |#define |g' | sort | uniq.
 
 #define _di_f_account_by_id_
 #define _di_f_account_by_name_
