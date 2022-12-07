@@ -11,8 +11,8 @@
 #define _di_f_conversion_data_flag_
 #define _di_f_conversion_data_t_
 #define _di_f_conversion_data_t_defines_
+#define _di_f_conversion_digits_d_
 #define _di_f_conversion_number_signed_print_
 #define _di_f_conversion_number_signed_to_string_
 #define _di_f_conversion_number_unsigned_print_
 #define _di_f_conversion_number_unsigned_to_string_
-#define _di_f_type_number_64_t_
