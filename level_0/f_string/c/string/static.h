@@ -145,7 +145,7 @@ extern "C" {
  * The NULL ASCII string can be represented by the integer 0; however, given that these are all NULL-terminated strings the NULL character is represented with a NULL termination as well.
  * The NULL ASCII string therefore has two NULLs, first the NULL represents the NULL and the second represents the NULL termination.
  */
-#ifndef _di_string_ascii_s_
+#ifndef _di_f_string_ascii_s_
   #define F_string_ascii_0_s "0"
   #define F_string_ascii_1_s "1"
   #define F_string_ascii_2_s "2"
@@ -541,7 +541,7 @@ extern "C" {
   extern const f_string_static_t f_string_ascii_text_stop_s;
   extern const f_string_static_t f_string_ascii_transmission_stop_s;
   extern const f_string_static_t f_string_ascii_transmission_block_end_s;
-#endif // _di_string_ascii_s_
+#endif // _di_f_string_ascii_s_
 
 /**
  * Define the end of line character.

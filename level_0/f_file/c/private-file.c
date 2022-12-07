@@ -670,7 +670,7 @@ extern "C" {
   }
 #endif // !defined(_di_f_file_role_change_at_) || !defined(_di_f_file_copy_at_)
 
-#if !defined(_di_f_file_stat_) || !defined(_di_f_file_copy_)
+#if !defined(_di_f_file_stat_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_exists_) || !defined(_di_f_file_is_) || !defined(_di_f_file_touch_)
   f_status_t private_f_file_stat(const f_string_static_t path, const bool dereference, struct stat * const file_stat) {
 
     if ((dereference ? stat(path.string, file_stat) : lstat(path.string, file_stat)) < 0) {
@@ -689,9 +689,9 @@ extern "C" {
 
     return F_none;
   }
-#endif // !defined(_di_f_file_stat_) || !defined(_di_f_file_copy_)
+#endif // !defined(_di_f_file_stat_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_exists_) || !defined(_di_f_file_is_) || !defined(_di_f_file_touch_)
 
-#if !defined(_di_f_file_stat_at_) || !defined(_di_f_file_copy_at_)
+#if !defined(_di_f_file_stat_at_) || !defined(_di_f_file_exists_at_) || !defined(_di_f_file_touch_at_)
   f_status_t private_f_file_stat_at(const int at_id, const f_string_static_t path, const int flag, struct stat * const file_stat) {
 
     if (fstatat(at_id, path.string, file_stat, flag) < 0) {
@@ -711,7 +711,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // !defined(_di_f_file_stat_at_) || !defined(_di_f_file_copy_at_)
+#endif // !defined(_di_f_file_stat_at_) || !defined(_di_f_file_exists_at_) || !defined(_di_f_file_touch_at_)
 
 #if !defined(_di_f_file_stat_by_id_) || !defined(_di_f_file_size_by_id_)
   f_status_t private_f_file_stat_by_id(const int id, struct stat * const file_stat) {
