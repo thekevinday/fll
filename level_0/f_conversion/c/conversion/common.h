@@ -23,56 +23,58 @@ extern "C" {
  *
  * 64-bit is the designed default.
  */
-#ifndef _di_f_type_number_64_t_
-  #define F_conversion_digits_binary_unsigned_d 64
-  #define F_conversion_digits_binary_signed_d   63
+#ifndef _di_f_conversion_digits_d_
+  #ifndef _di_f_type_number_64_t_
+    #define F_conversion_digits_binary_unsigned_d 64
+    #define F_conversion_digits_binary_signed_d   63
 
-  #define F_conversion_digits_octal_unsigned_d 22
-  #define F_conversion_digits_octal_signed_d   22
+    #define F_conversion_digits_octal_unsigned_d 22
+    #define F_conversion_digits_octal_signed_d   22
 
-  #define F_conversion_digits_decimal_unsigned_d 19
-  #define F_conversion_digits_decimal_signed_d   19
+    #define F_conversion_digits_decimal_unsigned_d 19
+    #define F_conversion_digits_decimal_signed_d   19
 
-  #define F_conversion_digits_duodecimal_unsigned_d 18
-  #define F_conversion_digits_duodecimal_signed_d   18
+    #define F_conversion_digits_duodecimal_unsigned_d 18
+    #define F_conversion_digits_duodecimal_signed_d   18
 
-  #define F_conversion_digits_hexidecimal_unsigned_d 16
-  #define F_conversion_digits_hexidecimal_signed_d   16
-#endif // _di_f_type_number_64_t_
+    #define F_conversion_digits_hexidecimal_unsigned_d 16
+    #define F_conversion_digits_hexidecimal_signed_d   16
+  #endif // _di_f_type_number_64_t_
 
-#ifdef _en_f_type_number_32_t_
-  #define F_conversion_digits_binary_unsigned_d 32
-  #define F_conversion_digits_binary_signed_d   31
+  #ifdef _en_f_type_number_32_t_
+    #define F_conversion_digits_binary_unsigned_d 32
+    #define F_conversion_digits_binary_signed_d   31
 
-  #define F_conversion_digits_octal_unsigned_d 10
-  #define F_conversion_digits_octal_signed_d   10
+    #define F_conversion_digits_octal_unsigned_d 10
+    #define F_conversion_digits_octal_signed_d   10
 
-  #define F_conversion_digits_decimal_unsigned_d 9
-  #define F_conversion_digits_decimal_signed_d   9
+    #define F_conversion_digits_decimal_unsigned_d 9
+    #define F_conversion_digits_decimal_signed_d   9
 
-  #define F_conversion_digits_duodecimal_unsigned_d 8
-  #define F_conversion_digits_duodecimal_signed_d   8
+    #define F_conversion_digits_duodecimal_unsigned_d 8
+    #define F_conversion_digits_duodecimal_signed_d   8
 
-  #define F_conversion_digits_hexidecimal_unsigned_d 8
-  #define F_conversion_digits_hexidecimal_signed_d   8
-#endif // _en_f_type_number_32_t_
+    #define F_conversion_digits_hexidecimal_unsigned_d 8
+    #define F_conversion_digits_hexidecimal_signed_d   8
+  #endif // _en_f_type_number_32_t_
 
-#ifdef _en_f_type_number_128_t_
-  #define F_conversion_digits_binary_unsigned_d 128
-  #define F_conversion_digits_binary_signed_d   127
+  #ifdef _en_f_type_number_128_t_
+    #define F_conversion_digits_binary_unsigned_d 128
+    #define F_conversion_digits_binary_signed_d   127
 
-  #define F_conversion_digits_octal_unsigned_d 43
-  #define F_conversion_digits_octal_signed_d   43
+    #define F_conversion_digits_octal_unsigned_d 43
+    #define F_conversion_digits_octal_signed_d   43
 
-  #define F_conversion_digits_decimal_unsigned_d 38
-  #define F_conversion_digits_decimal_signed_d   38
+    #define F_conversion_digits_decimal_unsigned_d 38
+    #define F_conversion_digits_decimal_signed_d   38
 
-  #define F_conversion_digits_duodecimal_unsigned_d 36
-  #define F_conversion_digits_duodecimal_signed_d   36
+    #define F_conversion_digits_duodecimal_unsigned_d 36
+    #define F_conversion_digits_duodecimal_signed_d   36
 
-  #define F_conversion_digits_hexidecimal_unsigned_d 32
-  #define F_conversion_digits_hexidecimal_signed_d   32
-#endif // _en_f_type_number_128_t_
+    #define F_conversion_digits_hexidecimal_unsigned_d 32
+    #define F_conversion_digits_hexidecimal_signed_d   32
+  #endif // _en_f_type_number_128_t_
+#endif // _di_f_conversion_digits_d_
 
 /**
  * Provide a structure for customizing conversion settings for a conversion function to use.
