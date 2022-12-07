@@ -1,0 +1,9 @@
+#define _di_f_account_by_id_
+#define _di_f_account_by_name_
+#define _di_f_account_defines_
+#define _di_f_account_group_id_by_name_
+#define _di_f_account_group_name_by_id_
+#define _di_f_account_id_by_name_
+#define _di_f_account_name_by_id_
+#define _di_f_accounts_t_
+#define _di_f_account_t_

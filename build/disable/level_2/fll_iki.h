@@ -1,0 +1,4 @@
+#define _di_fll_iki_content_escape_
+#define _di_fll_iki_content_partial_escape_
+#define _di_fll_iki_content_partial_unescape_
+#define _di_fll_iki_content_unescape_

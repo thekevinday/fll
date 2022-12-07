@@ -1,0 +1,8 @@
+#define _di_f_environment_clear_
+#define _di_f_environment_defines_
+#define _di_f_environment_exists_
+#define _di_f_environment_get_
+#define _di_f_environment_get_all_
+#define _di_f_environment_secure_is_
+#define _di_f_environment_set_
+#define _di_f_environment_unset_

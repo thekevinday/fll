@@ -1,0 +1,19 @@
+Use these files as a starting point to generate a config.h or similar to disable functions in a project.
+This is also used for building the stand alone programs.
+
+These files are generated like the following:
+
+# cd fll/
+
+# cd level_0;
+# for i in * ; do grep -hor '#ifndef _di_f_.*\>' $i | sed -e 's|^#ifndef |#define |g' | sort | uniq > ../build/disable/level_0/$i.h ; done
+
+# cd ..
+
+# cd level_1;
+# for i in * ; do grep -hor '#ifndef _di_fl_.*\>' $i | sed -e 's|^#ifndef |#define |g' | sort | uniq > ../build/disable/level_1/$i.h ; done
+
+# cd ..
+
+# cd level_2;
+# for i in * ; do grep -hor '#ifndef _di_fll_.*\>' $i | sed -e 's|^#ifndef |#define |g' | sort | uniq > ../build/disable/level_2/$i.h ; done
