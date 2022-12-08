@@ -311,7 +311,7 @@ enum {
  * size:  Total amount of allocated space.
  * used:  Total number of allocated spaces used.
  */
-#ifndef _di_f_fss_content_
+#ifndef _di_f_fss_content_t_
   typedef f_string_ranges_t f_fss_content_t;
 
   #define f_fss_content_t_initialize f_string_ranges_t_initialize
@@ -331,7 +331,7 @@ enum {
   #define macro_f_fss_content_t_increase_by(status, content, amount) macro_f_string_ranges_t_increase_by(status, content, amount)
   #define macro_f_fss_content_t_decrease_by(status, content, amount) macro_f_string_ranges_t_decrease_by(status, content, amount)
   #define macro_f_fss_content_t_decimate_by(status, content, amount) macro_f_string_ranges_t_decimate_by(status, content, amount)
-#endif // _di_f_fss_content_
+#endif // _di_f_fss_content_t_
 
 /**
  * This holds an array of fss_content.

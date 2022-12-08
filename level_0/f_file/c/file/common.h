@@ -372,7 +372,7 @@ extern "C" {
  * The file mode macros with "f_file_mode_" prefix (has no "_t") refer to the first type (mode_t).
  * The file mode macros with "f_file_mode_t" prefix refer to the second type (f_file_mode_t).
  */
-#ifndef _di_f_file_mode_
+#ifndef _di_f_file_mode_t_
   typedef uint32_t f_file_mode_t;
 
   #define f_file_mode_t_initialize 0
@@ -452,7 +452,7 @@ extern "C" {
   #define F_file_mode_user_file_d      (F_file_mode_owner_rw_d | F_file_mode_group_rw_d)
   #define F_file_mode_user_program_d   (F_file_mode_owner_rx_d | F_file_mode_group_rx_d)
   #define F_file_mode_user_protected_d (F_file_mode_owner_r_d | F_file_mode_group_r_d)
-#endif // _di_f_file_mode_
+#endif // _di_f_file_mode_t_
 
 /**
  * File flag related to file statistics.
