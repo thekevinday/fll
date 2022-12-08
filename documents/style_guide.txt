@@ -12,6 +12,7 @@ Style Guide:
 
 General Style Guides:
   - Naming Structure.
+  - Purpose of Defines.
   - Commas in Sets.
   - Loops and Newlines.
   - Returns, Breaks, Continues, Gotos, and Newlines.
@@ -19,9 +20,13 @@ General Style Guides:
 Specific Style Guides:
   - Return Code Names.
   - Global String Constant Names.
+  - Global Character Constant Names.
   - Enumeration Names.
-  - Define Names.
-  - Type Definition names.
+  - Wrapping Define Names.
+  - Constant Define Names
+  - Header Define Names.
+  - Macro Replacement Names.
+  - Type Definition Names.
   - Function Names.
   - File Names.
   - Returns, Breaks, Continues, and Gotos Function Accessories.
@@ -63,6 +68,18 @@ Naming Structure:
 
   The person who added "happy" might have fixed a situation where there is no red cat or dog and while understanding that there is no happy apple.
   However, in case (1) because "my_red" is grouped together by the underscore, it is clear that there is a "my_red" must be preserved and there is red cat and red dog, so happy is added to the cat and dog but not the apple without removing the "red".
+
+Purpose of Defines:
+  There are several types of defines, often wrapped in code:"#ifndef" blocks, for both communicating a type of define and the purpose of the define.
+
+  The defines serve one or more of five purposes:
+  1) As macro replacements, simulating functions.
+  2) Mimicking other functions, structures, defines, or anything else.
+  3) Providing default values or setting up static (global) variables (as with strings).
+  4) Wrapping functions, structures, and anything else in blocks that can be enabled or disabled dyamically as needed.
+  5) Enabling or disabling custom features, functionality, or compatibility (such as compiler specific functionality).
+
+  To simplify this process, special naming structures are provided in macros that are different depending on the intent and purpose.
 
 Commas in Sets:
   In english, the more grammatically correct way to write lists is to have commas except for the last item in the set.
@@ -129,27 +146,35 @@ Global String Constant Names:
   1) Via a define (macro).
   2) As a variable at the global scope.
 
-  When used as a define, these follow the naming structure "(A)_(b)_s" or "(a)_(b)_s", where "(A)" is replaced with an upper-case character representing the project level, "(a)" is a lower-case alternative of "(A)" and "(b)" is replaced with the lower-case name using words that are underscore separated.
-
-  When used as a variable these follow the naming structure "(a)_(b)_s", where "(a)" is replaced with an lower-case character representing the project level (or name) and "(b)" is replaced with the lower-case name using words that are underscore separated.
+  These follow the naming structure "(A)_(b)_s" or "(a)_(b)_s".
+  The "(A)" represents upper-case characters used for the project level (or similar purposes).
+  The "(a)" represents lower-case characters used for the project level (or similar purposes).
+  The "(b)" represents lower-case characters used for the name.
 
   The trailing "_s" designates that this is a string.
 
-  In general, the defines are always using the upper-case variant and the variable are always using the lower-case.
-  This separation allows for a define and a variable to both exist simultaneously without naming conflict.
-  This is used extensively to define strings in this practice such that a define exists while a variable is provided.
+  The upper-case variant is to be used for the defines.
+  The lower-case variant is to be used for the variables, such as global consant strings.
+  Replacement macros may use eithe depending on which of these they are replacing and the way in which they are performing the replacement.
 
-  A special case define that describes the length of the string is of the forms: (A)_(b)_s_length or "(a)_(b)_s_length".
+  A special case define that describes the length of the string is of the forms: (A)_(b)_s_length.
 
   Examples\:
   - F_file_open_mode_truncate_s: as a define, such as: #define F_file_open_mode_truncate_s "w".
+  - F_file_open_mode_truncate_s_length: as a define, such as: #define F_file_open_mode_truncate_s_length 1.
   - f_file_open_mode_truncate_s: as a variable, such as: extern const f_string_t f_file_open_mode_truncate_s;.
-  - FAKE_build_setting_name_build_compiler_s: as a define.
-  - fake_build_setting_name_build_compiler_s: as a variable.
-  - fake_build_setting_name_build_compiler_s_length: for describing the length of the string represented by fake_build_setting_name_build_compiler_s.
+
+Global Character Constant Names:
+  The C-language specific global names are identical to the "Global String Constant Names" except that they represent a single 1-byte character.
+
+  These are of the form "(A)_(b)_c" or "(a)_(b)_c".
+
+  The trailing "_c" designates that this is a 1-byte character.
 
 Enumeration Names:
-  The C-language specific enumeration names follow the naming structure "(b)_e", where "(b)" is replaced with the lower-case name using words that are underscore separated.
+  The C-language specific enumeration names follow the naming structure "(a)_(b)_e".
+  The "(a)" represents lower-case characters used for the project level (or similar purposes).
+  The "(b)" represents lower-case characters used for the name.
 
   The trailing "_e" designates that this is an enumeration.
 
@@ -158,24 +183,67 @@ Enumeration Names:
   - f_fss_basic_e
   - fss_extended_list_read_parameter_at_e
 
-Define Names:
-  The C-language specific define names (also known as macro names) follow the naming structure "(A)_(b)_d", where "(A)" is replaced with an upper-case character representing the project level and "(b)" is replaced with the lower-case name using words that are underscore separated.
+Wrapping Define Names:
+  Most, if not all, of the code that follows this style guide is to be wrapped in some sort of define.
+  These are formally referred to as Wrapping Defines or Wrapping Define Names.
 
-  The trailing "_d" designates that this is a define (a macro).
+  These C-language specific define names (also known as macro names) used for wrapping always begin and end in an underscore.
+
+  There are two primary forms of the wrapping define names.
+  1) The disable wrapping define name (this is the most common).
+  2) The enable wrapping define name (this is for special cases or less common cases).
+
+  The format for the disable wrapping defines is "_di_(a)_(b)_".
+  The "(a)" is replaced with the name representing the block that is being wrapped.
+  The "(b)" represents the type of the wrapping define, which may already be provided by "(a)" (as with types, the "f_string_t" typedef would have a wrapping define name of "_di_f_string_t_".
+  This macro must be explicitly defined to "disable" the wrapped block, such as passing "-D_di_f_string_t_" to the compiler.
+  These are commonly used with an "#ifndef" block.
+
+  The format for the enable wrapping defines is "_en_(a)_(b)_".
+  This is exactly the same as the disable wrapping define, except it has "en" instead of "di".
+  This macro must be explicitly defined to "enable" the wrapped block, such as passing "-D_en_f_type_number_32_t_" to the compiler.
+
+  Both the enable and disable types must end in an "#endif" block that has the comment representing the block, such as "#endif // _di_fl_print_format_".
+
+  This helps encourages the concept of using these when passing them as arguments.
+  A wrapping define name such as -D_di_fl_print_format_ would be the wrapping define name for the function fl_print_format().
+
+Constant Define Names:
+  The define names representing the C-language specific define names (also known as macro names) used to represent constant data follow the naming structure "(A)_(b)_(c).
+  The "(A)" represents upper-case characters representing the project level (or something similar).
+  The "(b)" represents lower-case characters using words, function names, structure names, or category names that are underscore separated.
+  The "(c)" represents lower-case type-description character, such as "_d", "_c", or "_s".
 
   Examples\:
   - F_file_mode_special_sticky_d
   - F_attribute_visibility_internal_d
   - FL_diectory_recurse_depth_max_d
+  - FAKE_program_name_s
 
-Type Definition names:
-  The C-language specific type definition names follow the naming structure "(a)_(b)_t", where "(a)" is replaced with an lower-case character representing the project level and "(b)" is replaced with the lower-case name using words that are underscore separated.
+Header Define Names:
+  The header define are used to wrap the header file and are of the form "_(a)_(b)_h".
+  The "(a)" represents lower-case characters representing the project level (or something similar).
+  The "(b)" represents lower-case characters representing the file name without the extenson and dashes.
+
+  Do not forget the leading "_".
+  The trailing "_h" designates that this is a header file name define.
+
+Macro Replacement Names:
+  All C-language specific define names defines are considered macro names but for the purpose of this style guide the ones that are formally considered macros are prefixed with "macro_".
+  These macro defines represent the traditional concept and use of a macro and are most often used to represent a macro function.
+
+  These macro defines are intended to simulate functions and therefore follow the naming styles similar to that of functions.
+  The "Type Definition Names" section describs the naming of this in details.
+
+Type Definition Names:
+  The C-language specific type definition names follow the naming structure "(a)_(b)_t".
+  The "(a)" represents lower-case characters representing the project level (or something similar).
+  The "(b)" represents lower-case characters representing the name using words that are underscore separated.
 
   The trailing "_t" designates that this is a type definition.
 
   In addition to the type definition, special defines (macros) are provided that are specific to type definitions are an exception to the Define Names rules.
   - Each type definition should have an initializer and that initializer name follows the naming structure "(a)_(b)_t_initialize" where "_initialize" is appended to the type definition name.
-
   - Each type definition may have special defines (macros) used as functions for helping with special operations such as complex initialization, allocation, and deallocation.
     These special case defines are an exception to the Define Name rules and follow the naming structure "macro_(a)_(b)_t_(c)" where "macro_" is prepended to the type definition name and the (c) is just like (b) but is used to communicate the special purpose.
 
@@ -190,9 +258,9 @@ Function Names:
 
   The leading "private_" is used to designate that this is a private function.
 
-  In addition, special practices are followed.
+  There are also special practices.
     - For FLL projects, each project has a level.
-      Each project within some level is prepended to functions with their level representation characters of: "F" (level 0), "FL" (level 1), and "FLL" (level 2).
+      Each project within some level is prepended to functions with their level representation characters of: "f" (level 0), "fl" (level 1), and "fll" (level 2).
 
     - For programs, each program has a project name.
       The program name, or a short alias of the program name, is prepended to functions.
@@ -205,12 +273,10 @@ Function Names:
   - fake_print_help
 
 File Names:
-  The C-language specific file names follow the naming structure "(c-)(b)(-c)" where "(b)" is replaced with the lower-case name using words that are underscore separated and "(c-)" and "(-c)" are just like "(b)" except there may be any number of these (or none at all) and the dash "-" is used to separate context as per the General Naming Structure.
+  The C-language specific file names follow the simple naming structure utilizing word characters, underscores, and dashes.
+  Special cases will have prefixes, such a "private-".
 
-  In addition, special practices are followed:
-  - private-(c-)(b)(-c): "private-" is prepended to all source and header files intended to be private (aka: not intended to be exposed via the API or ABI).
-
-  - (c-)(b)(-c)-common: "-common" is appended to all files used as a common include for standard practice data such as global strings, define strings, type definitions, and memory allocation or deallocation functions.
+  The "private-" special case is intended for private files (aka: not intended to be exposed via the API or ABI).
 
 Returns, Breaks, Continues, and Gotos Function Accessories:
   To avoid excessive newline spacing, certain one-line operations that are tightly coupled to a function are treated as an accessory to the function.
