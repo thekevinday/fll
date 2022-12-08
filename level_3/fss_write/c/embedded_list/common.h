@@ -19,7 +19,7 @@ extern "C" {
 /**
  * The FSS-0008 (Embedded List) specific strings.
  */
-#ifndef _di_fss_write_embedded_list_strings_
+#ifndef _di_fss_write_embedded_list_s_
   #define FSS_WRITE_embedded_list_standard_s "FSS-0008 (Embedded List)"
 
   #define FSS_WRITE_embedded_list_program_name_s      "fss_embedded_list_write"
@@ -46,7 +46,7 @@ extern "C" {
   extern const f_string_static_t fss_write_format_code_short_0008_s;
   extern const f_string_static_t fss_write_format_code_long_0008_s;
   extern const f_string_static_t fss_write_format_code_human_0008_s;
-#endif // _di_fss_write_embedded_list_strings_
+#endif // _di_fss_write_embedded_list_s_
 
 #ifdef __cplusplus
 } // extern "C"

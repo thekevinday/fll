@@ -19,7 +19,7 @@ extern "C" {
 /**
  * The program version.
  */
-#ifndef _di_fss_write_program_version_
+#ifndef _di_fss_write_program_version_s_
   #define FSS_WRITE_program_version_major_s F_string_ascii_0_s
   #define FSS_WRITE_program_version_minor_s F_string_ascii_7_s
   #define FSS_WRITE_program_version_micro_s F_string_ascii_0_s
@@ -43,12 +43,12 @@ extern "C" {
   #define FSS_WRITE_program_version_s_length FSS_WRITE_program_version_major_s_length + F_string_ascii_period_s_length + FSS_WRITE_program_version_minor_s_length + F_string_ascii_period_s_length + FSS_WRITE_program_version_micro_s_length + FSS_WRITE_program_version_nano_prefix_s_length + FSS_WRITE_program_version_nano_s_length
 
   extern const f_string_static_t fss_write_program_version_s;
-#endif // _di_fss_write_program_version_
+#endif // _di_fss_write_program_version_s_
 
 /**
  * The program name.
  */
-#ifndef _di_fss_write_program_name_
+#ifndef _di_fss_write_program_name_s_
   #define FSS_WRITE_program_name_s      "fss_write"
   #define FSS_WRITE_program_name_long_s "FSS Write"
 
@@ -57,16 +57,38 @@ extern "C" {
 
   extern const f_string_static_t fss_write_program_name_s;
   extern const f_string_static_t fss_write_program_name_long_s;
-#endif // _di_fss_write_program_name_
+#endif // _di_fss_write_program_name_s_
+
+/**
+ * The program default defines.
+ *
+ * fss_write_default_allocation_*:
+ *   - large: An allocation step used for buffers that are anticipated to have large buffers.
+ *   - small: An allocation step used for buffers that are anticipated to have small buffers.
+ */
+#ifndef _di_fss_write_default_d_
+  #define fss_write_default_allocation_large_d 2048
+  #define fss_write_default_allocation_small_d 128
+#endif // _di_fss_write_default_d_
 
 /**
  * The program defines.
  *
- * The fss_write_pipe_content_*_s strings are strings rather than characters to allow for wide characters.
+ * macro_fss_write_setting:
+ *   - Used to represent a cast to ((fss_write_setting_t *) setting).
+ *   - Simplifies the number of parenthesis used to make code slightly cleaner.
+ *   - Is wrapped in a parenthesis and not a block.
+ */
+#ifndef _di_fss_write_d_
+  #define fss_write_signal_check_d 20000
+
+  #define macro_fss_write_setting(setting) ((fss_write_setting_t *) setting)
+#endif // _di_fss_write_d_
+
+/**
+ * The program pipe strings.
  *
- * payload_write_common_allocation_*:
- *   - large: An allocation step used for buffers that are anticipated to have large buffers.
- *   - small: An allocation step used for buffers that are anticipated to have small buffers.
+ * The fss_write_pipe_content_*_s strings are strings rather than characters to allow for wide characters.
  *
  * fss_write_pipe_content_*_s:
  *   - end:    The character representing the end of content.
@@ -78,12 +100,7 @@ extern "C" {
  *   - Simplifies the number of parenthesis used to make code slightly cleaner.
  *   - Is wrapped in a parenthesis and not a block.
  */
-#ifndef _di_fss_write_defines_
-  #define fss_write_signal_check_d 20000
-
-  #define fss_write_common_allocation_large_d 2048
-  #define fss_write_common_allocation_small_d 128
-
+#ifndef _di_fss_write_pipe_s_
   #define FSS_WRITE_pipe_content_end_s    "\f"
   #define FSS_WRITE_pipe_content_ignore_s "\v"
   #define FSS_WRITE_pipe_content_start_s  "\b"
@@ -97,23 +114,23 @@ extern "C" {
   extern const f_string_static_t fss_write_pipe_content_start_s;
 
   #define macro_fss_write_setting(setting) ((fss_write_setting_t *) setting)
-#endif // _di_fss_write_defines_
+#endif // _di_fss_write_pipe_s_
 
 /**
  * A collection of static strings associated with FSS Payload Write.
  */
-#ifndef _di_fss_write_strings_
+#ifndef _di_fss_write_s_
   #define FSS_WRITE_string_two_s "two"
 
   #define FSS_WRITE_string_two_s_length 3
 
   extern const f_string_static_t fss_write_string_two_s;
-#endif // _di_fss_write_strings_
+#endif // _di_fss_write_s_
 
 /**
  * The main program parameters.
  */
-#ifndef _di_fss_write_parameters_
+#ifndef _di_fss_write_parameter_d_
   #define FSS_WRITE_short_as_s       "a"
   #define FSS_WRITE_short_backtick_s "b"
   #define FSS_WRITE_short_content_s  "c"
@@ -211,7 +228,7 @@ extern "C" {
     fss_write_parameter_prepend_e,
     fss_write_parameter_single_e,
     fss_write_parameter_trim_e,
-  };
+  }; // enum
 
   #define fss_write_console_parameter_t_initialize \
     { \
@@ -242,7 +259,7 @@ extern "C" {
     }
 
   #define fss_write_total_parameters_d 23
-#endif // _di_fss_write_parameters_
+#endif // _di_fss_write_parameter_d_
 
 /**
  * Flags used to represent flags passed to the main function.
@@ -273,7 +290,7 @@ extern "C" {
     fss_write_flag_prepend_e          = 0x80,
     fss_write_flag_trim_e             = 0x100,
     fss_write_flag_version_e          = 0x200,
-  };
+  }; // enum
 #endif // _di_fss_write_flag_e_
 
 /**
@@ -364,7 +381,7 @@ extern "C" {
     { \
       fss_write_flag_none_e, \
       F_none, \
-      macro_f_state_t_initialize(fss_write_common_allocation_large_d, fss_write_common_allocation_small_d, 0, 0, &fll_program_standard_signal_state, 0, 0, 0), \
+      macro_f_state_t_initialize(fss_write_default_allocation_large_d, fss_write_default_allocation_small_d, 0, 0, &fll_program_standard_signal_state, 0, 0, 0), \
       f_string_range_t_initialize, \
       f_string_static_t_initialize, \
       f_string_static_t_initialize, \

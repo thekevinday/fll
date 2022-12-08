@@ -28,13 +28,13 @@ extern "C" {
  *   - hole:  sets the file pointer from this many bytes from the end of the file, relative to the next hole.
  *   - to:    sets the file pointer from this many bytes relative to the current position.
  */
-#ifndef _di_f_file_seeks_
+#ifndef _di_f_file_seeks_d_
   #define macro_f_file_seek_begin(file, bytes) fseek(file, bytes, SEEK_SET)
   #define macro_f_file_seek_data(file, bytes)  fseek(file, bytes, SEEK_DATA)
   #define macro_f_file_seek_end(file)          fseek(file, bytes, SEEK_END)
   #define macro_f_file_seek_hole(file, bytes)  fseek(file, bytes, SEEK_HOLE)
   #define macro_f_file_seek_to(file, bytes)    fseek(file, bytes, SEEK_CUR)
-#endif // _di_f_file_seeks_
+#endif // _di_f_file_seeks_d_
 
 /**
  * Provide file type macros.
@@ -50,6 +50,30 @@ extern "C" {
  *   - link:      The file type is a file link.
  *   - regular:   The file type is a regular file.
  *   - socket:    The file type is a socket file.
+ */
+#ifndef _di_f_file_type_d_
+  #define F_file_type_block_d     S_IFBLK
+  #define F_file_type_character_d S_IFCHR
+  #define F_file_type_directory_d S_IFDIR
+  #define F_file_type_fifo_d      S_IFIFO
+  #define F_file_type_link_d      S_IFLNK
+  #define F_file_type_mask_d      S_IFMT
+  #define F_file_type_regular_d   S_IFREG
+  #define F_file_type_socket_d    S_IFSOCK
+
+  #define macro_f_file_type_get(mode) (F_file_type_mask_d & mode)
+
+  #define macro_f_file_type_is_block(mode)     (macro_f_file_type_get(mode) == F_file_type_block_d)
+  #define macro_f_file_type_is_character(mode) (macro_f_file_type_get(mode) == F_file_type_character_d)
+  #define macro_f_file_type_is_directory(mode) (macro_f_file_type_get(mode) == F_file_type_directory_d)
+  #define macro_f_file_type_is_fifo(mode)      (macro_f_file_type_get(mode) == F_file_type_fifo_d)
+  #define macro_f_file_type_is_link(mode)      (macro_f_file_type_get(mode) == F_file_type_link_d)
+  #define macro_f_file_type_is_regular(mode)   (macro_f_file_type_get(mode) == F_file_type_regular_d)
+  #define macro_f_file_type_is_socket(mode)    (macro_f_file_type_get(mode) == F_file_type_socket_d)
+#endif // _di_f_file_type_d_
+
+/**
+ * Provide file type strings.
  *
  * F_file_type_name_*:
  *  - block:     A string representing the block file type.
@@ -60,16 +84,7 @@ extern "C" {
  *  - regular:   A string representing the regular file type.
  *  - socket:    A string representing the socket file type.
  */
-#ifndef _di_f_file_types_
-  #define F_file_type_block_d     S_IFBLK
-  #define F_file_type_character_d S_IFCHR
-  #define F_file_type_directory_d S_IFDIR
-  #define F_file_type_fifo_d      S_IFIFO
-  #define F_file_type_link_d      S_IFLNK
-  #define F_file_type_mask_d      S_IFMT
-  #define F_file_type_regular_d   S_IFREG
-  #define F_file_type_socket_d    S_IFSOCK
-
+#ifndef _di_f_file_type_s_
   #define F_file_type_name_block_s     "block"
   #define F_file_type_name_character_s "character"
   #define F_file_type_name_directory_s "directory"
@@ -86,16 +101,6 @@ extern "C" {
   #define F_file_type_name_regular_s_length   7
   #define F_file_type_name_socket_s_length    6
 
-  #define macro_f_file_type_get(mode) (F_file_type_mask_d & mode)
-
-  #define macro_f_file_type_is_block(mode)     (macro_f_file_type_get(mode) == F_file_type_block_d)
-  #define macro_f_file_type_is_character(mode) (macro_f_file_type_get(mode) == F_file_type_character_d)
-  #define macro_f_file_type_is_directory(mode) (macro_f_file_type_get(mode) == F_file_type_directory_d)
-  #define macro_f_file_type_is_fifo(mode)      (macro_f_file_type_get(mode) == F_file_type_fifo_d)
-  #define macro_f_file_type_is_link(mode)      (macro_f_file_type_get(mode) == F_file_type_link_d)
-  #define macro_f_file_type_is_regular(mode)   (macro_f_file_type_get(mode) == F_file_type_regular_d)
-  #define macro_f_file_type_is_socket(mode)    (macro_f_file_type_get(mode) == F_file_type_socket_d)
-
   extern const f_string_static_t f_file_type_name_block_s;
   extern const f_string_static_t f_file_type_name_character_s;
   extern const f_string_static_t f_file_type_name_directory_s;
@@ -103,7 +108,7 @@ extern "C" {
   extern const f_string_static_t f_file_type_name_link_s;
   extern const f_string_static_t f_file_type_name_regular_s;
   extern const f_string_static_t f_file_type_name_socket_s;
-#endif // _di_f_file_types_
+#endif // _di_f_file_type_s_
 
 /**
  * Provide macros for file access mode operations.
@@ -114,12 +119,12 @@ extern "C" {
  *   - read:    Check if file can be read.
  *   - write:   Check if file can be written to.
  */
-#ifndef _di_f_file_access_modes_
+#ifndef _di_f_file_access_mode_d_
   #define F_file_access_mode_execute_d X_OK
   #define F_file_access_mode_exist_d   F_OK
   #define F_file_access_mode_read_d    R_OK
   #define F_file_access_mode_write_d   W_OK
-#endif // _di_f_file_access_modes_
+#endif // _di_f_file_access_mode_d_
 
 /**
  * Provide file open mode macros.
@@ -132,7 +137,7 @@ extern "C" {
  *   - read_write:    Open file in read write mode.
  *   - truncate:      Open file in truncate mode.
  */
-#ifndef _di_f_file_open_modes_
+#ifndef _di_f_file_open_mode_s_
   #define F_file_open_mode_append_s        "a"
   #define F_file_open_mode_read_s          "r"
   #define F_file_open_mode_read_append_s   "a+"
@@ -153,12 +158,12 @@ extern "C" {
   extern const f_string_static_t f_file_open_mode_read_truncate_s;
   extern const f_string_static_t f_file_open_mode_read_write_s;
   extern const f_string_static_t f_file_open_mode_truncate_s;
-#endif // _di_f_file_open_modes_
+#endif // _di_f_file_open_mode_s_
 
 /**
  * File AT_* define related functionality.
  */
-#ifndef _di_f_file_at_
+#ifndef _di_f_file_at_d_
   #define F_file_at_current_working_d    -100
   #define F_file_at_symlink_follow_d     0x400
   #define F_file_at_symlink_follow_no_d  0x100
@@ -169,12 +174,12 @@ extern "C" {
   #define F_file_at_statx_sync_as_stat_d 0x0000
   #define F_file_at_statx_sync_force_d   0x2000
   #define F_file_at_statx_sync_no_d      0x4000
-#endif // _di_f_file_at_
+#endif // _di_f_file_at_d_
 
 /**
  * File flag related functionality.
  */
-#ifndef _di_f_file_flag_
+#ifndef _di_f_file_flag_d_
 
   // file open flags
   #define F_file_flag_append_d             O_APPEND
@@ -272,7 +277,7 @@ extern "C" {
   #define F_file_flag_large_async_create_new_ro_d (O_LARGEFILE | O_ASYNC | O_CREAT | O_EXCL | O_RDONLY)
   #define F_file_flag_large_async_create_new_wo_d (O_LARGEFILE | O_ASYNC | O_CREAT | O_EXCL | O_WRONLY)
   #define F_file_flag_large_async_create_new_rw_d (O_LARGEFILE | O_ASYNC | O_CREAT | O_EXCL | O_RDRW)
-#endif // _di_f_file_flag_
+#endif // _di_f_file_flag_d_
 
 /**
  * File mode related functionality.
@@ -418,7 +423,7 @@ extern "C" {
  *   - owner:     Copy the owner.
  *   - reference: Do not perform dereference.
  */
-#ifndef _di_f_file_stat_flags_
+#ifndef _di_f_file_stat_flags_e_
   enum {
     f_file_stat_flag_none_e      = 0,
     f_file_stat_flag_exclusive_e = 0x1,
@@ -426,7 +431,7 @@ extern "C" {
     f_file_stat_flag_owner_e     = 0x4,
     f_file_stat_flag_reference_e = 0x8,
   }; // enum
-#endif // _di_f_file_stat_flags_
+#endif // _di_f_file_stat_flags_e_
 
 /**
  * Provide common file operation strings.
@@ -477,7 +482,7 @@ extern "C" {
  *   - wipe:         Wipe a file.
  *   - write:        Write a file.
  */
-#ifndef _di_f_file_operation_strings_
+#ifndef _di_f_file_operation_s_
   #define F_file_operation_access_s       "access"
   #define F_file_operation_analyze_s      "analyze"
   #define F_file_operation_append_s       "append"
@@ -612,7 +617,7 @@ extern "C" {
   extern const f_string_static_t f_file_operation_verify_s;
   extern const f_string_static_t f_file_operation_wipe_s;
   extern const f_string_static_t f_file_operation_write_s;
-#endif // _di_f_file_operation_strings_
+#endif // _di_f_file_operation_s_
 
 #ifdef __cplusplus
 } // extern "C"

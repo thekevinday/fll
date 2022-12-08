@@ -19,7 +19,7 @@ extern "C" {
 /**
  * The program version.
  */
-#ifndef _di_fss_extended_read_program_version_
+#ifndef _di_fss_extended_read_program_version_s_
   #define FSS_EXTENDED_READ_program_version_major_s F_string_ascii_0_s
   #define FSS_EXTENDED_READ_program_version_minor_s F_string_ascii_7_s
   #define FSS_EXTENDED_READ_program_version_micro_s F_string_ascii_0_s
@@ -43,12 +43,12 @@ extern "C" {
   #define FSS_EXTENDED_READ_program_version_s_length FSS_EXTENDED_READ_program_version_major_s_length + F_string_ascii_period_s_length + FSS_EXTENDED_READ_program_version_minor_s_length + F_string_ascii_period_s_length + FSS_EXTENDED_READ_program_version_micro_s_length + FSS_EXTENDED_READ_program_version_nano_prefix_s_length + FSS_EXTENDED_READ_program_version_nano_s_length
 
   extern const f_string_static_t fss_extended_read_program_version_s;
-#endif // _di_fss_extended_read_program_version_
+#endif // _di_fss_extended_read_program_version_s_
 
 /**
  * The program name.
  */
-#ifndef _di_fss_extended_read_program_name_
+#ifndef _di_fss_extended_read_program_name_s_
   #define FSS_EXTENDED_READ_program_name_s      "fss_extended_read"
   #define FSS_EXTENDED_READ_program_name_long_s "FSS Extended Read"
 
@@ -57,10 +57,17 @@ extern "C" {
 
   extern const f_string_static_t fss_extended_read_program_name_s;
   extern const f_string_static_t fss_extended_read_program_name_long_s;
-#endif // _di_fss_extended_read_program_name_
+#endif // _di_fss_extended_read_program_name_s_
 
 /**
  * The program defines.
+ */
+#ifndef _di_fss_extended_read_d_
+  #define fss_extended_read_signal_check_d 20000
+#endif // _di_fss_extended_read_d_
+
+/**
+ * The program pipe strings.
  *
  * fss_extended_read_pipe_*:
  *   - name:           A name used to represent the pipe when printing file names.
@@ -68,9 +75,7 @@ extern "C" {
  *   - content_ignore: A code used to represent the ignoring Content for use in binary formats.
  *   - content_start:  A code used to represent the start of Content for use in binary formats.
  */
-#ifndef _di_fss_extended_read_defines_
-  #define fss_extended_read_signal_check_d 20000
-
+#ifndef _di_fss_extended_read_pipe_s_
   #define FSS_EXTENDED_READ_pipe_name_s "(pipe)"
 
   #define FSS_EXTENDED_READ_pipe_content_end_s    "\f"
@@ -88,12 +93,12 @@ extern "C" {
   extern const f_string_static_t fss_extended_read_pipe_content_end_s;
   extern const f_string_static_t fss_extended_read_pipe_content_ignore_s;
   extern const f_string_static_t fss_extended_read_pipe_content_start_s;
-#endif // _di_fss_extended_read_defines_
+#endif // _di_fss_extended_read_pipe_s_
 
 /**
  * The main program parameters.
  */
-#ifndef _di_fss_extended_read_parameters_
+#ifndef _di_fss_extended_read_parameter_d_
   #define FSS_EXTENDED_READ_short_at_s       "a"
   #define FSS_EXTENDED_READ_short_content_s  "c"
   #define FSS_EXTENDED_READ_short_columns_s  "C"
@@ -212,7 +217,7 @@ extern "C" {
     fss_extended_read_parameter_select_e,
     fss_extended_read_parameter_total_e,
     fss_extended_read_parameter_trim_e,
-  };
+  }; // enum
 
   #define fss_extended_read_console_parameter_t_initialize \
     { \
@@ -245,10 +250,10 @@ extern "C" {
     }
 
   #define fss_extended_read_total_parameters_d 26
-#endif // _di_fss_extended_read_parameters_
+#endif // _di_fss_extended_read_parameter_d_
 
 /**
- * FSS Delimit Parameter data.
+ * FSS Delimit Parameter strings.
  *
  * fss_extended_read_delimit_mode_*:
  *   - all:                    All delimits are to be aplied.
@@ -260,7 +265,7 @@ extern "C" {
  *   - content_object:         Objects and Content are to have delimits applied
  *   - object:                 Objects arre to have delimits applied.
  */
-#ifndef _di_fss_extended_read_delimit_mode_
+#ifndef _di_fss_extended_read_delimit_mode_s_
   #define FSS_EXTENDED_READ_delimit_mode_name_none_s    "none"
   #define FSS_EXTENDED_READ_delimit_mode_name_all_s     "all"
   #define FSS_EXTENDED_READ_delimit_mode_name_object_s  "object"
@@ -278,7 +283,12 @@ extern "C" {
   extern const f_string_static_t fss_extended_read_delimit_mode_name_object_s;
   extern const f_string_static_t fss_extended_read_delimit_mode_name_greater_s;
   extern const f_string_static_t fss_extended_read_delimit_mode_name_lesser_s;
+#endif // _di_fss_extended_read_delimit_mode_s_
 
+/**
+ * FSS Delimit Parameter enumerations.
+ */
+#ifndef _di_fss_extended_read_delimit_mode_e_
   enum {
     fss_extended_read_delimit_mode_none_e = 1,
     fss_extended_read_delimit_mode_all_e,
@@ -289,8 +299,8 @@ extern "C" {
     fss_extended_read_delimit_mode_content_lesser_object_e,
     fss_extended_read_delimit_mode_content_object_e,
     fss_extended_read_delimit_mode_object_e,
-  };
-#endif // _di_fss_extended_read_delimit_modes_
+  }; // enum
+#endif // _di_fss_extended_read_delimit_mode_e_
 
 /**
  * Flags used to represent flags passed to the main function.
@@ -317,7 +327,7 @@ extern "C" {
     fss_extended_read_main_flag_strip_invalid_e = 0x20,
     fss_extended_read_main_flag_verify_e        = 0x40,
     fss_extended_read_main_flag_version_e       = 0x80,
-  };
+  }; // enum
 #endif // _di_fss_extended_read_main_flag_e_
 
 /**

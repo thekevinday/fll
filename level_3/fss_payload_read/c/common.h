@@ -19,7 +19,7 @@ extern "C" {
 /**
  * The program version.
  */
-#ifndef _di_fss_payload_read_program_version_
+#ifndef _di_fss_payload_read_program_version_s_
   #define FSS_PAYLOAD_READ_program_version_major_s F_string_ascii_0_s
   #define FSS_PAYLOAD_READ_program_version_minor_s F_string_ascii_7_s
   #define FSS_PAYLOAD_READ_program_version_micro_s F_string_ascii_0_s
@@ -43,12 +43,12 @@ extern "C" {
   #define FSS_PAYLOAD_READ_program_version_s_length FSS_PAYLOAD_READ_program_version_major_s_length + F_string_ascii_period_s_length + FSS_PAYLOAD_READ_program_version_minor_s_length + F_string_ascii_period_s_length + FSS_PAYLOAD_READ_program_version_micro_s_length + FSS_PAYLOAD_READ_program_version_nano_prefix_s_length + FSS_PAYLOAD_READ_program_version_nano_s_length
 
   extern const f_string_static_t fss_payload_read_program_version_s;
-#endif // _di_fss_payload_read_program_version_
+#endif // _di_fss_payload_read_program_version_s_
 
 /**
  * The program name.
  */
-#ifndef _di_fss_payload_read_program_name_
+#ifndef _di_fss_payload_read_program_name_s_
   #define FSS_PAYLOAD_READ_program_name_s      "fss_payload_read"
   #define FSS_PAYLOAD_READ_program_name_long_s "FSS Payload Read"
 
@@ -57,14 +57,19 @@ extern "C" {
 
   extern const f_string_static_t fss_payload_read_program_name_s;
   extern const f_string_static_t fss_payload_read_program_name_long_s;
-#endif // _di_fss_payload_read_program_name_
+#endif // _di_fss_payload_read_program_name_s_
 
 /**
  * The program defines.
  */
-#ifndef _di_fss_payload_read_defines_
+#ifndef _di_fss_payload_read_d_
   #define fss_payload_read_signal_check_d 20000
+#endif // _di_fss_payload_read_d_
 
+/**
+ * The program pipe strings.
+ */
+#ifndef _di_fss_payload_read_pipe_s_
   #define FSS_PAYLOAD_READ_pipe_name_s "(pipe)"
 
   #define FSS_PAYLOAD_READ_pipe_content_end_s    "\f"
@@ -82,12 +87,12 @@ extern "C" {
   extern const f_string_static_t fss_payload_read_pipe_content_end_s;
   extern const f_string_static_t fss_payload_read_pipe_content_ignore_s;
   extern const f_string_static_t fss_payload_read_pipe_content_start_s;
-#endif // _di_fss_payload_read_defines_
+#endif // _di_fss_payload_read_pipe_s_
 
 /**
  * The main program parameters.
  */
-#ifndef _di_fss_payload_read_parameters_
+#ifndef _di_fss_payload_read_parameter_d_
   #define FSS_PAYLOAD_READ_short_at_s       "a"
   #define FSS_PAYLOAD_READ_short_content_s  "c"
   #define FSS_PAYLOAD_READ_short_columns_s  "C"
@@ -206,7 +211,7 @@ extern "C" {
     fss_payload_read_parameter_select_e,
     fss_payload_read_parameter_total_e,
     fss_payload_read_parameter_trim_e,
-  };
+  }; // enum
 
   #define fss_payload_read_console_parameter_t_initialize \
     { \
@@ -240,10 +245,10 @@ extern "C" {
     }
 
   #define fss_payload_read_total_parameters_d 26
-#endif // _di_fss_payload_read_parameters_
+#endif // _di_fss_payload_read_parameter_d_
 
 /**
- * FSS Delimit Parameter data.
+ * FSS Delimit Parameter strings.
  *
  * fss_payload_read_delimit_mode_*:
  *   - all:                    All delimits are to be aplied.
@@ -255,7 +260,7 @@ extern "C" {
  *   - content_object:         Objects and Content are to have delimits applied
  *   - object:                 Objects arre to have delimits applied.
  */
-#ifndef _di_fss_payload_read_delimit_mode_
+#ifndef _di_fss_payload_read_delimit_mode_s_
   #define FSS_PAYLOAD_READ_delimit_mode_name_none_s    "none"
   #define FSS_PAYLOAD_READ_delimit_mode_name_all_s     "all"
   #define FSS_PAYLOAD_READ_delimit_mode_name_object_s  "object"
@@ -273,7 +278,12 @@ extern "C" {
   extern const f_string_static_t fss_payload_read_delimit_mode_name_object_s;
   extern const f_string_static_t fss_payload_read_delimit_mode_name_greater_s;
   extern const f_string_static_t fss_payload_read_delimit_mode_name_lesser_s;
+#endif // _di_fss_payload_read_delimit_mode_s_
 
+/**
+ * FSS Delimit Parameter enumerations.
+ */
+#ifndef _di_fss_payload_read_delimit_mode_e_
   enum {
     fss_payload_read_delimit_mode_none_e = 1,
     fss_payload_read_delimit_mode_all_e,
@@ -284,8 +294,8 @@ extern "C" {
     fss_payload_read_delimit_mode_content_lesser_object_e,
     fss_payload_read_delimit_mode_content_object_e,
     fss_payload_read_delimit_mode_object_e,
-  };
-#endif // _di_fss_payload_read_delimit_modes_
+  }; // enum
+#endif // _di_fss_payload_read_delimit_mode_e_
 
 /**
  * Flags used to represent flags passed to the main function.
@@ -324,7 +334,7 @@ extern "C" {
     fss_payload_read_main_flag_version_e    = 0x800,
     fss_payload_read_main_flag_whole_e      = 0x1000,
     fss_payload_read_main_flag_wrap_e       = 0x2000,
-  };
+  }; // enum
 #endif // _di_fss_payload_read_main_flag_e_
 
 /**

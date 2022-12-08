@@ -27,17 +27,17 @@ extern "C" {
  *   - none:                  No flags are set.
  *   - utf_fail_on_valid_not: Immediately fail on invalid UTF-8 character (including incomplete).
  */
-#ifndef _di_f_iki_state_flags_
+#ifndef _di_f_iki_state_flag_e_
   enum {
     f_iki_state_flag_none_e                  = 0,
     f_iki_state_flag_utf_fail_on_valid_not_e = 0x1,
   }; // enum
-#endif // _di_f_iki_state_flags_
+#endif // _di_f_iki_state_flag_e_
 
 /**
  * IKI-specific syntax.
  */
-#ifndef _di_f_iki_syntax_
+#ifndef _di_f_iki_syntax_s_
   #define F_iki_syntax_separator_s      F_string_ascii_colon_s
   #define F_iki_syntax_placeholder_s    F_string_placeholder_s
   #define F_iki_syntax_quote_backtick_s F_string_ascii_grave_s
@@ -58,9 +58,9 @@ extern "C" {
   extern const f_string_static_t f_iki_syntax_quote_double_s;
   extern const f_string_static_t f_iki_syntax_quote_single_s;
   extern const f_string_static_t f_iki_syntax_slash_s;
-#endif //_di_f_iki_syntax_
+#endif //_di_f_iki_syntax_s_
 
-#ifndef _di_f_iki_vocabulary_0001_
+#ifndef _di_f_iki_vocabulary_0001_s_
   #define F_iki_vocabulary_0001_address_s  "address"
   #define F_iki_vocabulary_0001_code_s     "code"
   #define F_iki_vocabulary_0001_email_s    "email"
@@ -93,9 +93,9 @@ extern "C" {
   extern const f_string_static_t f_iki_vocabulary_0001_url_s;
   extern const f_string_static_t f_iki_vocabulary_0001_urn_s;
   extern const f_string_static_t f_iki_vocabulary_0001_variable_s;
-#endif // _di_f_iki_vocabulary_0001_
+#endif // _di_f_iki_vocabulary_0001_s_
 
-#ifndef _di_f_iki_vocabulary_0002_
+#ifndef _di_f_iki_vocabulary_0002_s_
   #define F_iki_vocabulary_0002_context_s   "context"
   #define F_iki_vocabulary_0002_define_s    "define"
   #define F_iki_vocabulary_0002_parameter_s "parameter"
@@ -107,7 +107,7 @@ extern "C" {
   extern const f_string_static_t f_iki_vocabulary_0002_context_s;
   extern const f_string_static_t f_iki_vocabulary_0002_define_s;
   extern const f_string_static_t f_iki_vocabulary_0002_parameter_s;
-#endif // _di_f_iki_vocabulary_0002_
+#endif // _di_f_iki_vocabulary_0002_s_
 
 /**
  * This containg all of the IKI data.
@@ -221,10 +221,10 @@ extern "C" {
  *   - large: The large allocation size.
  *   - small: The small allocation size, in particular used for allocation iki strings.
  */
-#ifndef _di_f_iki_default_allocation_step_
+#ifndef _di_f_iki_default_d_
   #define F_iki_default_allocation_large_d F_memory_default_allocation_large_d
   #define F_iki_default_allocation_small_d 8
-#endif // _di_f_iki_default_allocation_step_
+#endif // _di_f_iki_default_d_
 
 #ifdef __cplusplus
 } // extern "C"

@@ -19,7 +19,7 @@ extern "C" {
 /**
  * The program version.
  */
-#ifndef _di_controller_program_version_
+#ifndef _di_controller_program_version_s_
   #define CONTROLLER_program_version_major_s F_string_ascii_0_s
   #define CONTROLLER_program_version_minor_s F_string_ascii_7_s
   #define CONTROLLER_program_version_micro_s F_string_ascii_0_s
@@ -43,12 +43,12 @@ extern "C" {
   #define CONTROLLER_program_version_s_length CONTROLLER_program_version_major_s_length + F_string_ascii_period_s_length + CONTROLLER_program_version_minor_s_length + F_string_ascii_period_s_length + CONTROLLER_program_version_micro_s_length + CONTROLLER_program_version_nano_prefix_s_length + CONTROLLER_program_version_nano_s_length
 
   extern const f_string_static_t controller_program_version_s;
-#endif // _di_controller_program_version_
+#endif // _di_controller_program_version_s_
 
 /**
  * The main program parameters.
  */
-#ifndef _di_controller_parameters_
+#ifndef _di_controller_parameter_d_
   #define CONTROLLER_short_cgroup_s          "c"
   #define CONTROLLER_short_daemon_s          "d"
   #define CONTROLLER_short_init_s            "I"
@@ -139,7 +139,7 @@ extern "C" {
     controller_parameter_socket_e,
     controller_parameter_uninterruptible_e,
     controller_parameter_validate_e,
-  };
+  }; // enum
 
   #define controller_console_parameter_t_initialize \
     { \
@@ -169,7 +169,7 @@ extern "C" {
     }
 
   #define controller_total_parameters_d 22
-#endif // _di_controller_parameters_
+#endif // _di_controller_parameter_d_
 
 /**
  * The main program data.
@@ -272,13 +272,13 @@ extern "C" {
  *   - error:      The item type represents a script operation.
  *   - init:       The item type represents an init operation (Only fo init mode).
  */
-#ifndef _di_controller_control_payload_types_t_
+#ifndef _di_controller_control_payload_type_e_
   enum {
     controller_control_payload_type_controller_e = 1,
     controller_control_payload_type_error_e,
     controller_control_payload_type_init_e,
-  };
-#endif // _di_controller_control_payload_types_t_
+  }; // enum
+#endif // _di_controller_control_payload_type_e_
 
 /**
  * Codes representing supported actions.
@@ -302,7 +302,7 @@ extern "C" {
  *   - timeout:  Perform the timeout controller operation.
  *   - thaw:     Perform the thaw controller operation.
  */
-#ifndef _di_controller_entry_action_types_t_
+#ifndef _di_controller_entry_action_type_e_
   enum {
     controller_entry_action_type_consider_e = 1,
     controller_entry_action_type_execute_e,
@@ -322,8 +322,8 @@ extern "C" {
     controller_entry_action_type_stop_e,
     controller_entry_action_type_timeout_e,
     controller_entry_action_type_thaw_e,
-  };
-#endif // _di_controller_entry_action_types_t_
+  }; // enum
+#endif // _di_controller_entry_action_type_e_
 
 /**
  * Codes representing rule actions.
@@ -344,7 +344,7 @@ extern "C" {
  *   - user:     The User setting.
  *   - with:     The With flags.
  */
-#ifndef _di_controller_rule_action_types_t_
+#ifndef _di_controller_rule_action_type_e_
   enum {
     controller_rule_action_type_freeze_e = 1,
     controller_rule_action_type_group_e,
@@ -363,8 +363,8 @@ extern "C" {
 
     // Designate the largest value in the enum, the '__' is intended.
     controller_rule_action_type__enum_size_e,
-  };
-#endif // _di_controller_rule_action_types_t_
+  }; // enum
+#endif // _di_controller_rule_action_type_e_
 
 /**
  * Codes representing rule action executes.
@@ -382,7 +382,7 @@ extern "C" {
  *   - stop:     The Stop execution instructions.
  *   - thaw:     The Thaw execution instructions.
  */
-#ifndef _di_controller_rule_action_execute_types_t_
+#ifndef _di_controller_rule_action_execute_type_e_
   enum {
     controller_rule_action_execute_type_freeze_e = 0,
     controller_rule_action_execute_type_kill_e,
@@ -396,8 +396,8 @@ extern "C" {
 
     // Designate the largest value in the enum, the '__' is intended.
     controller_rule_action_execute_type__enum_size_e,
-  };
-#endif // _di_controller_rule_action_execute_types_t_
+  }; // enum
+#endif // _di_controller_rule_action_execute_type_e_
 
 /**
  * Codes representing rule items.
@@ -409,22 +409,22 @@ extern "C" {
  *   - settings: The item type represents a setting operation.
  *   - utility:  The item type represents a utility operation.
  */
-#ifndef _di_controller_rule_item_types_t_
+#ifndef _di_controller_rule_item_type_e_
   enum {
     controller_rule_item_type_command_e = 1,
     controller_rule_item_type_script_e,
     controller_rule_item_type_service_e,
     controller_rule_item_type_settings_e,
     controller_rule_item_type_utility_e,
-  };
-#endif // _di_controller_rule_item_types_t_
+  }; // enum
+#endif // _di_controller_rule_item_type_e_
 
 /**
  * A set of codes for resource limitations.
  *
  * This essentally converts the POSIX standard names into a more verbose format.
  */
-#ifndef _di_controller_resource_limit_t_
+#ifndef _di_controller_resource_limit_type_d_
   enum {
     controller_resource_limit_type_as_e = RLIMIT_AS,
     controller_resource_limit_type_core_e = RLIMIT_CORE,
@@ -442,8 +442,8 @@ extern "C" {
     controller_resource_limit_type_rttime_e = RLIMIT_RTTIME,
     controller_resource_limit_type_sigpending_e = RLIMIT_SIGPENDING,
     controller_resource_limit_type_stack_e = RLIMIT_STACK,
-  };
-#endif // _di_controller_resource_limit_t_
+  }; // enum
+#endif // _di_controller_resource_limit_type_d_
 
 /**
  * Flags used to represent flags passed to the main function.
@@ -470,7 +470,7 @@ extern "C" {
     controller_main_flag_strip_invalid_e = 0x20,
     controller_main_flag_verify_e        = 0x40,
     controller_main_flag_version_e       = 0x80,
-  };
+  }; // enum
 #endif // _di_controller_main_flag_e_
 
 /**

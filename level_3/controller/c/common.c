@@ -5,11 +5,11 @@
 extern "C" {
 #endif
 
-#ifndef _di_controller_program_version_
+#ifndef _di_controller_program_version_s_
   const f_string_static_t controller_program_version_s = macro_f_string_static_t_initialize(CONTROLLER_program_version_s, 0, CONTROLLER_program_version_s_length);
-#endif // _di_controller_program_version_
+#endif // _di_controller_program_version_s_
 
-#ifndef _di_controller_parameters_
+#ifndef _di_controller_parameter_d_
   const f_string_static_t controller_short_cgroup_s = macro_f_string_static_t_initialize(CONTROLLER_short_cgroup_s, 0, CONTROLLER_short_cgroup_s_length);
   const f_string_static_t controller_short_daemon_s = macro_f_string_static_t_initialize(CONTROLLER_short_daemon_s, 0, CONTROLLER_short_daemon_s_length);
   const f_string_static_t controller_short_init_s = macro_f_string_static_t_initialize(CONTROLLER_short_init_s, 0, CONTROLLER_short_init_s_length);
@@ -31,7 +31,7 @@ extern "C" {
   const f_string_static_t controller_long_socket_s = macro_f_string_static_t_initialize(CONTROLLER_long_socket_s, 0, CONTROLLER_long_socket_s_length);
   const f_string_static_t controller_long_uninterruptible_s = macro_f_string_static_t_initialize(CONTROLLER_long_uninterruptible_s, 0, CONTROLLER_long_uninterruptible_s_length);
   const f_string_static_t controller_long_validate_s = macro_f_string_static_t_initialize(CONTROLLER_long_validate_s, 0, CONTROLLER_long_validate_s_length);
-#endif // _di_controller_parameters_
+#endif // _di_controller_parameter_d_
 
 #ifndef _di_controller_control_payload_type_identify_
   uint8_t controller_control_payload_type_identify(const f_string_static_t payload) {

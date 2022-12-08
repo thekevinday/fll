@@ -19,7 +19,7 @@ extern "C" {
 /**
  * The program version.
  */
-#ifndef _di_iki_read_program_version_
+#ifndef _di_iki_read_program_version_s_
   #define IKI_READ_program_version_major_s F_string_ascii_0_s
   #define IKI_READ_program_version_minor_s F_string_ascii_7_s
   #define IKI_READ_program_version_micro_s F_string_ascii_0_s
@@ -43,12 +43,12 @@ extern "C" {
   #define IKI_READ_program_version_s_length IKI_READ_program_version_major_s_length + F_string_ascii_period_s_length + IKI_READ_program_version_minor_s_length + F_string_ascii_period_s_length + IKI_READ_program_version_micro_s_length + IKI_READ_program_version_nano_prefix_s_length + IKI_READ_program_version_nano_s_length
 
   extern const f_string_static_t iki_read_program_version_s;
-#endif // _di_iki_read_program_version_
+#endif // _di_iki_read_program_version_s_
 
 /**
  * The program name.
  */
-#ifndef _di_iki_read_program_name_
+#ifndef _di_iki_read_program_name_s_
   #define IKI_READ_program_name_s      "iki_read"
   #define IKI_READ_program_name_long_s "IKI Read"
 
@@ -57,19 +57,19 @@ extern "C" {
 
   extern const f_string_static_t iki_read_program_name_s;
   extern const f_string_static_t iki_read_program_name_long_s;
-#endif // _di_iki_read_program_name_
+#endif // _di_iki_read_program_name_s_
 
 /**
  * The program defines.
  */
-#ifndef _di_iki_read_defines_
+#ifndef _di_iki_read_d_
   #define iki_read_signal_check_d 20000
-#endif // _di_iki_read_defines_
+#endif // _di_iki_read_d_
 
 /**
  * A collection of static strings associated with IKI Read.
  */
-#ifndef _di_iki_read_strings_
+#ifndef _di_iki_read_s_
   #define IKI_READ_string_two_s   "two"
   #define IKI_READ_string_three_s "three"
 
@@ -78,12 +78,12 @@ extern "C" {
 
   extern const f_string_static_t iki_read_string_two_s;
   extern const f_string_static_t iki_read_string_three_s;
-#endif // _di_iki_read_strings_
+#endif // _di_iki_read_s_
 
 /**
  * The main program parameters.
  */
-#ifndef _di_iki_read_parameters_
+#ifndef _di_iki_read_parameter_d_
   #define IKI_READ_short_at_s         "a"
   #define IKI_READ_short_content_s    "c"
   #define IKI_READ_short_line_s       "l"
@@ -188,7 +188,7 @@ extern "C" {
     iki_read_parameter_total_e,
     iki_read_parameter_whole_e,
     iki_read_parameter_wrap_e,
-  };
+  }; // enum
 
   #define iki_read_console_parameter_t_initialize \
     { \
@@ -220,7 +220,7 @@ extern "C" {
     }
 
   #define iki_read_total_parameters_d 24
-#endif // _di_iki_read_parameters_
+#endif // _di_iki_read_parameter_d_
 
 #ifndef _di_iki_read_substitution_t_
   #define IKI_READ_substitution_after_s      "after"

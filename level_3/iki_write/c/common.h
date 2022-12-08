@@ -19,7 +19,7 @@ extern "C" {
 /**
  * The program version.
  */
-#ifndef _di_iki_write_program_version_
+#ifndef _di_iki_write_program_version_s_
   #define IKI_WRITE_program_version_major_s F_string_ascii_0_s
   #define IKI_WRITE_program_version_minor_s F_string_ascii_7_s
   #define IKI_WRITE_program_version_micro_s F_string_ascii_0_s
@@ -43,12 +43,12 @@ extern "C" {
   #define IKI_WRITE_program_version_s_length IKI_WRITE_program_version_major_s_length + F_string_ascii_period_s_length + IKI_WRITE_program_version_minor_s_length + F_string_ascii_period_s_length + IKI_WRITE_program_version_micro_s_length + IKI_WRITE_program_version_nano_prefix_s_length + IKI_WRITE_program_version_nano_s_length
 
   extern const f_string_static_t iki_write_program_version_s;
-#endif // _di_iki_write_program_version_
+#endif // _di_iki_write_program_version_s_
 
 /**
  * The program name.
  */
-#ifndef _di_iki_write_program_name_
+#ifndef _di_iki_write_program_name_s_
   #define IKI_WRITE_program_name_s      "iki_write"
   #define IKI_WRITE_program_name_long_s "IKI Write"
 
@@ -57,30 +57,30 @@ extern "C" {
 
   extern const f_string_static_t iki_write_program_name_s;
   extern const f_string_static_t iki_write_program_name_long_s;
-#endif // _di_iki_write_program_name_
+#endif // _di_iki_write_program_name_s_
+
+/**
+ * The program defines.
+ */
+#ifndef _di_iki_write_d_
+  #define iki_write_signal_check_d 20000
+#endif // _di_iki_write_d_
 
 /**
  * Special strings used by this program.
  */
-#ifndef _di_iki_write_strings_
+#ifndef _di_iki_write_s_
   #define IKI_WRITE_object_s  "object"
 
   #define IKI_WRITE_object_s_length 6
 
   extern const f_string_static_t iki_write_object_s;
-#endif // _di_iki_write_strings_
-
-/**
- * The program defines.
- */
-#ifndef _di_iki_write_defines_
-  #define iki_write_signal_check_d 20000
-#endif // _di_iki_write_defines_
+#endif // _di_iki_write_s_
 
 /**
  * The main program parameters.
  */
-#ifndef _di_iki_write_parameters_
+#ifndef _di_iki_write_parameter_d_
   #define IKI_WRITE_short_backtick_s "b"
   #define IKI_WRITE_short_content_s  "c"
   #define IKI_WRITE_short_double_s   "d"
@@ -143,7 +143,7 @@ extern "C" {
     iki_write_parameter_file_e,
     iki_write_parameter_object_e,
     iki_write_parameter_single_e,
-  };
+  }; // enum
 
   #define iki_write_console_parameter_t_initialize \
     { \
@@ -169,7 +169,7 @@ extern "C" {
     }
 
   #define iki_write_total_parameters_d 18
-#endif // _di_iki_write_parameters_
+#endif // _di_iki_write_parameter_d_
 
 /**
  * Flags used to represent flags passed to the main function.

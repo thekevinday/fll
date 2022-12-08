@@ -19,7 +19,7 @@ extern "C" {
 /**
  * The program version.
  */
-#ifndef _di_firewall_program_version_
+#ifndef _di_firewall_program_version_s_
   #define FIREWALL_program_version_major_s F_string_ascii_0_s
   #define FIREWALL_program_version_minor_s F_string_ascii_7_s
   #define FIREWALL_program_version_micro_s F_string_ascii_0_s
@@ -43,12 +43,12 @@ extern "C" {
   #define FIREWALL_program_version_s_length FIREWALL_program_version_major_s_length + F_string_ascii_period_s_length + FIREWALL_program_version_minor_s_length + F_string_ascii_period_s_length + FIREWALL_program_version_micro_s_length + FIREWALL_program_version_nano_prefix_s_length + FIREWALL_program_version_nano_s_length
 
   extern const f_string_static_t firewall_program_version_s;
-#endif // _di_firewall_program_version_
+#endif // _di_firewall_program_version_s_
 
 /**
  * The program name.
  */
-#ifndef _di_firewall_program_name_
+#ifndef _di_firewall_program_name_s_
   #define FIREWALL_program_name_s      "firewall"
   #define FIREWALL_program_name_long_s "Kevux Firewall Manager"
 
@@ -57,22 +57,22 @@ extern "C" {
 
   extern const f_string_static_t firewall_program_name_s;
   extern const f_string_static_t firewall_program_name_long_s;
-#endif // _di_firewall_program_name_
+#endif // _di_firewall_program_name_s_
 
 /**
  * The program help related data.
  */
-#ifndef _di_firewall_program_help_parameters_
+#ifndef _di_firewall_program_help_parameters_s_
   #define FIREWALL_program_help_parameters_s "command"
   #define FIREWALL_program_help_parameters_s_length 7
 
   extern const f_string_static_t firewall_program_help_parameters_s;
-#endif // _di_firewall_program_help_parameters_
+#endif // _di_firewall_program_help_parameters_s_
 
 /**
  * The program paths.
  */
-#ifndef _di_firewall_paths_
+#ifndef _di_firewall_path_s_
   #define FIREWALL_file_first_s  "firewall-first"
   #define FIREWALL_file_last_s   "firewall-last"
   #define FIREWALL_file_other_s  "firewall-other"
@@ -96,26 +96,26 @@ extern "C" {
 
   extern const f_string_static_t firewall_network_path_s;
   extern const f_string_static_t firewall_network_devices_s;
-#endif // _di_firewall_paths_
+#endif // _di_firewall_path_s_
 
 /**
  * Default allocations.
  */
-#ifndef _di_firewall_default_allocation_step_
+#ifndef _di_firewall_default_d_
   #define firewall_default_allocation_step_d F_memory_default_allocation_small_d
-#endif // _di_firewall_default_allocation_step_
+#endif // _di_firewall_default_d_
 
 /**
  * The program defines.
  */
-#ifndef _di_firewall_defines_
+#ifndef _di_firewall_d_
   #define firewall_signal_check_d 20000
-#endif // _di_firewall_defines_
+#endif // _di_firewall_d_
 
 /**
  * The main program parameters.
  */
-#ifndef _di_firewall_parameters_
+#ifndef _di_firewall_parameter_d_
   #define FIREWALL_action_s        "action"
   #define FIREWALL_action_append_s "append"
   #define FIREWALL_action_insert_s "insert"
@@ -344,7 +344,7 @@ extern "C" {
     firewall_program_ip6tables_e,
     firewall_program_ip46tables_e,
     firewall_program_ipset_e,
-  };
+  }; // enum
 
   enum {
     firewall_parameter_help_e,
@@ -382,7 +382,7 @@ extern "C" {
     firewall_action_insert_id_e,
     firewall_action_policy_id_e,
     firewall_action_none_id_e,
-  };
+  }; // enum
 
   #define firewall_console_parameter_t_initialize \
     { \
@@ -407,7 +407,7 @@ extern "C" {
     }
 
   #define firewall_total_parameters_d 17
-#endif // _di_firewall_defines_
+#endif // _di_firewall_parameter_d_
 
 /**
  * Flags used to represent flags passed to the main function.
@@ -434,7 +434,7 @@ extern "C" {
     firewall_main_flag_strip_invalid_e = 0x20,
     firewall_main_flag_verify_e        = 0x40,
     firewall_main_flag_version_e       = 0x80,
-  };
+  }; // enum
 #endif // _di_firewall_main_flag_e_
 
 /**

@@ -1,5 +1,5 @@
 #define _di_f_memory_adjust_
-#define _di_f_memory_default_allocation_step_
+#define _di_f_memory_default_d_
 #define _di_f_memory_delete_
 #define _di_f_memory_destroy_
 #define _di_f_memory_new_

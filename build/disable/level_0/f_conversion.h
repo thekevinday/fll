@@ -8,10 +8,10 @@
 #define _di_f_conversion_character_to_duodecimal_
 #define _di_f_conversion_character_to_hexidecimal_
 #define _di_f_conversion_character_to_octal_
-#define _di_f_conversion_data_flag_
+#define _di_f_conversion_data_flag_d_
 #define _di_f_conversion_data_t_
-#define _di_f_conversion_data_t_defines_
-#define _di_f_conversion_digits_d_
+#define _di_f_conversion_data_c_
+#define _di_f_conversion_d_
 #define _di_f_conversion_number_signed_print_
 #define _di_f_conversion_number_signed_to_string_
 #define _di_f_conversion_number_unsigned_print_

@@ -4,20 +4,20 @@
 extern "C" {
 #endif
 
-#ifndef _di_firewall_program_version_
+#ifndef _di_firewall_program_version_s_
   const f_string_static_t firewall_program_version_s = macro_f_string_static_t_initialize(FIREWALL_program_version_s, 0, FIREWALL_program_version_s_length);
-#endif // _di_firewall_program_version_
+#endif // _di_firewall_program_version_s_
 
-#ifndef _di_firewall_program_name_
+#ifndef _di_firewall_program_name_s_
   const f_string_static_t firewall_program_name_s = macro_f_string_static_t_initialize(FIREWALL_program_name_s, 0, FIREWALL_program_name_s_length);
   const f_string_static_t firewall_program_name_long_s = macro_f_string_static_t_initialize(FIREWALL_program_name_long_s, 0, FIREWALL_program_name_long_s_length);
-#endif // _di_firewall_program_name_
+#endif // _di_firewall_program_name_s_
 
-#ifndef _di_firewall_program_help_parameters_
+#ifndef _di_firewall_program_help_parameters_s_
   const f_string_static_t firewall_program_help_parameters_s = macro_f_string_static_t_initialize(FIREWALL_program_help_parameters_s, 0, FIREWALL_program_help_parameters_s_length);
-#endif // _di_firewall_program_help_parameters_
+#endif // _di_firewall_program_help_parameters_s_
 
-#ifndef _di_firewall_paths_
+#ifndef _di_firewall_path_s_
   const f_string_static_t firewall_file_first_s = macro_f_string_static_t_initialize(FIREWALL_file_first_s, 0, FIREWALL_file_first_s_length);
   const f_string_static_t firewall_file_last_s = macro_f_string_static_t_initialize(FIREWALL_file_last_s, 0, FIREWALL_file_last_s_length);
   const f_string_static_t firewall_file_other_s = macro_f_string_static_t_initialize(FIREWALL_file_other_s, 0, FIREWALL_file_other_s_length);
@@ -25,9 +25,9 @@ extern "C" {
 
   const f_string_static_t firewall_network_path_s = macro_f_string_static_t_initialize(FIREWALL_network_path_s, 0, FIREWALL_network_path_s_length);
   const f_string_static_t firewall_network_devices_s = macro_f_string_static_t_initialize(FIREWALL_network_devices_s, 0, FIREWALL_network_devices_s_length);
-#endif // _di_firewall_paths_
+#endif // _di_firewall_path_s_
 
-#ifndef _di_firewall_defines_
+#ifndef _di_firewall_d_
   const f_string_static_t firewall_action_s = macro_f_string_static_t_initialize(FIREWALL_action_s, 0, FIREWALL_action_s_length);
   const f_string_static_t firewall_action_append_s = macro_f_string_static_t_initialize(FIREWALL_action_append_s, 0, FIREWALL_action_append_s_length);
   const f_string_static_t firewall_action_insert_s = macro_f_string_static_t_initialize(FIREWALL_action_insert_s, 0, FIREWALL_action_insert_s_length);
@@ -101,7 +101,7 @@ extern "C" {
   const f_string_static_t firewall_tool_ip6tables_s = macro_f_string_static_t_initialize(FIREWALL_tool_ip6tables_s, 0, FIREWALL_tool_ip6tables_s_length);
   const f_string_static_t firewall_tool_ip46tables_s = macro_f_string_static_t_initialize(FIREWALL_tool_ip46tables_s, 0, FIREWALL_tool_ip46tables_s_length);
   const f_string_static_t firewall_tool_ipset_s = macro_f_string_static_t_initialize(FIREWALL_tool_ipset_s, 0, FIREWALL_tool_ipset_s_length);
-#endif // _di_firewall_defines_
+#endif // _di_firewall_d_
 
 #ifndef _di_firewall_setting_delete_
   f_status_t firewall_setting_delete(firewall_setting_t * const setting) {

@@ -50,7 +50,7 @@ extern "C" {
  *   - endian_little: Basic base-10 conversion with little-endian flag.
  *   - shift_left:    Basic base-10 conversion with shift left flag.
  */
-#ifndef _di_fl_conversion_data_t_defines_
+#ifndef _di_fl_conversion_data_c_
   extern const fl_conversion_data_t fl_conversion_data_base_2_c;
   extern const fl_conversion_data_t fl_conversion_data_base_8_c;
   extern const fl_conversion_data_t fl_conversion_data_base_10_c;
@@ -59,7 +59,7 @@ extern "C" {
   extern const fl_conversion_data_t fl_conversion_data_endian_big_c;
   extern const fl_conversion_data_t fl_conversion_data_endian_little_c;
   extern const fl_conversion_data_t fl_conversion_data_shift_left_c;
-#endif // _di_fl_conversion_data_t_defines_
+#endif // _di_fl_conversion_data_c_
 
 /**
  * Define flags used by fl_conversion_data_t.
@@ -69,11 +69,11 @@ extern "C" {
  *   - endian_little: Use little-endian rather than host byte order or big-endian when converting.
  *   - negative:      Treat the string as a negative number.
  */
-#ifndef _di_fl_conversion_data_flag_
+#ifndef _di_fl_conversion_data_flag_d_
   #define FL_conversion_data_flag_endian_big_d    0x1
   #define FL_conversion_data_flag_endian_little_d 0x2
   #define FL_conversion_data_flag_negative_d      0x4
-#endif // _di_fl_conversion_data_flag_
+#endif // _di_fl_conversion_data_flag_d_
 
 #ifdef __cplusplus
 } // extern "C"

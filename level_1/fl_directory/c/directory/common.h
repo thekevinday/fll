@@ -16,13 +16,19 @@
 extern "C" {
 #endif
 
+
+/**
+ * An association of a path and a status code.
+ */
+#ifndef _di_fl_directory_recurse_d_
+  #define FL_directory_recurse_depth_max_d 65535
+#endif // _di_fl_directory_recurse_d_
+
 /**
  * An association of a path and a status code.
  *
  * The allocation macros apply to the path.
  *
- * depth_max:
- *   The max recursion depth.
  * size_block:
  *   The default number of chunks to read at a time with each chunk being 1-byte.
  *   Must be greater than 0.
@@ -52,8 +58,6 @@ extern "C" {
  *   If 0, then this and statuses are ignored.
  */
 #ifndef _di_fl_directory_recurse_t_
-  #define FL_directory_recurse_depth_max_d 65535
-
   typedef struct {
     f_number_unsigned_t depth_max;
     f_number_unsigned_t size_block;

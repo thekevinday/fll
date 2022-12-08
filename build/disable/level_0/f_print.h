@@ -38,15 +38,15 @@
 #define _di_f_print_except_raw_
 #define _di_f_print_except_raw_safely_
 #define _di_f_print_except_safely_
-#define _di_f_print_format_flag_
-#define _di_f_print_format_type_
+#define _di_f_print_format_flag_d_
+#define _di_f_print_format_type_e_
 #define _di_f_print_raw_
 #define _di_f_print_raw_safely_
 #define _di_f_print_raw_terminated_
 #define _di_f_print_safely_
 #define _di_f_print_safely_get_
 #define _di_f_print_safely_terminated_
-#define _di_f_print_sequences_
+#define _di_f_print_sequence_s_
 #define _di_f_print_sequences_set_control_s_
 #define _di_f_print_terminated_
 #define _di_f_print_to_
@@ -90,4 +90,4 @@
 #define _di_f_print_to_safely_
 #define _di_f_print_to_safely_terminated_
 #define _di_f_print_to_terminated_
-#define _di_f_print_write_max_
+#define _di_f_print_write_max_d_

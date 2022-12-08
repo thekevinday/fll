@@ -9,7 +9,7 @@
 #define _di_fll_program_parameter_process_context_
 #define _di_fll_program_parameter_process_empty_
 #define _di_fll_program_parameter_process_verbosity_
-#define _di_fll_program_parameters_
+#define _di_fll_program_parameter_s_
 #define _di_fll_program_print_error_missing_file_
 #define _di_fll_program_print_error_missing_variable_not_zero_
 #define _di_fll_program_print_error_parameter_allows_either_xor_

@@ -20,7 +20,7 @@ extern "C" {
     f_status_t status_pipe = F_none;
     f_file_t input = f_file_t_initialize;
     input.id = F_type_descriptor_input_d;
-    input.size_read = fss_write_common_allocation_large_d;
+    input.size_read = fss_write_default_allocation_large_d;
 
     fss_write_setting_t * const setting = macro_fss_write_setting(void_setting);
 

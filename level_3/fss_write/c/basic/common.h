@@ -19,7 +19,7 @@ extern "C" {
 /**
  * The FSS-0000 (Basic) specific strings.
  */
-#ifndef _di_fss_write_basic_strings_
+#ifndef _di_fss_write_basic_s_
   #define FSS_WRITE_basic_standard_s "FSS-0000 (Basic)"
 
   #define FSS_WRITE_basic_program_name_s      "fss_basic_write"
@@ -46,7 +46,7 @@ extern "C" {
   extern const f_string_static_t fss_write_format_code_short_0000_s;
   extern const f_string_static_t fss_write_format_code_long_0000_s;
   extern const f_string_static_t fss_write_format_code_human_0000_s;
-#endif // _di_fss_write_basic_strings_
+#endif // _di_fss_write_basic_s_
 
 #ifdef __cplusplus
 } // extern "C"

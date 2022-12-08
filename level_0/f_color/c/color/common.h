@@ -23,10 +23,10 @@ extern "C" {
  *
  * A color max size terminated represents the max size with the terminating null.
  */
-#ifndef _di_f_color_max_size_
+#ifndef _di_f_color_max_size_d_
   #define F_color_max_size_d            7
   #define F_color_max_size_terminated_d 8
-#endif // _di_f_color_max_size_
+#endif // _di_f_color_max_size_d_
 
 /**
  * Define codes representing color sets.
@@ -114,7 +114,7 @@ extern "C" {
  *   - bright_teal_bg:   String used to describe bright teal backgound color code.
  *   - bright_white_bg:  String used to describe bright white backgound color code.
  */
-#ifndef _di_f_color_string_s_
+#ifndef _di_f_color_s_
   #define F_color_string_begin_s  "\033["
   #define F_color_string_end_s    "m"
   #define F_color_string_medium_s ";"
@@ -243,7 +243,7 @@ extern "C" {
   extern const f_string_static_t f_color_string_code_bright_purple_bg_s;
   extern const f_string_static_t f_color_string_code_bright_teal_bg_s;
   extern const f_string_static_t f_color_string_code_bright_white_bg_s;
-#endif // _di_f_color_string_s_
+#endif // _di_f_color_s_
 
 /**
  * Color modes communicate how the color is supposed to be.

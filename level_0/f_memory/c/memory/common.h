@@ -37,10 +37,10 @@ extern "C" {
  *
  * Other projects may provide their own values.
  */
-#ifndef _di_f_memory_default_allocation_step_
+#ifndef _di_f_memory_default_d_
   #define F_memory_default_allocation_large_d 64
   #define F_memory_default_allocation_small_d 8
-#endif // _di_f_memory_default_allocation_step_
+#endif // _di_f_memory_default_d_
 
 /**
  * Reset a generic memory stucture to 0 (clear all values).

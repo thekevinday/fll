@@ -4,7 +4,7 @@
 extern "C" {
 #endif
 
-#ifndef _di_f_print_sequences_
+#ifndef _di_f_print_sequence_s_
   const f_string_static_t f_print_sequence_acknowledge_s = macro_f_string_static_t_initialize(F_print_sequence_acknowledge_s, 0, F_print_sequence_acknowledge_s_length);
   const f_string_static_t f_print_sequence_acknowledge_negative_s = macro_f_string_static_t_initialize(F_print_sequence_acknowledge_negative_s, 0, F_print_sequence_acknowledge_negative_s_length);
   const f_string_static_t f_print_sequence_backspace_s = macro_f_string_static_t_initialize(F_print_sequence_backspace_s, 0, F_print_sequence_backspace_s_length);
@@ -41,7 +41,7 @@ extern "C" {
   const f_string_static_t f_print_sequence_tab_s = macro_f_string_static_t_initialize(F_print_sequence_tab_s, 0, F_print_sequence_tab_s_length);
   const f_string_static_t f_print_sequence_tab_vertical_s = macro_f_string_static_t_initialize(F_print_sequence_tab_vertical_s, 0, F_print_sequence_tab_vertical_s_length);
   const f_string_static_t f_print_sequence_unknown_s = macro_f_string_static_t_initialize(F_print_sequence_unknown_s, 0, F_print_sequence_unknown_s_length);
-#endif // _di_f_print_sequences_
+#endif // _di_f_print_sequence_s_
 
 #ifndef _di_f_print_sequences_set_control_s_
   #ifdef _clang_not_a_compile_time_constant_workaround_

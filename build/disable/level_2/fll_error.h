@@ -1,4 +1,4 @@
 #define _di_fll_error_file_print_
-#define _di_fll_error_file_type_
+#define _di_fll_error_file_type_e_
 #define _di_fll_error_parameter_integer_print_
 #define _di_fll_error_print_

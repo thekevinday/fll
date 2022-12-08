@@ -19,7 +19,7 @@ extern "C" {
 /**
  * The program version.
  */
-#ifndef _di_fss_identify_program_version_
+#ifndef _di_fss_identify_program_version_s_
   #define FSS_IDENTIFY_program_version_major_s F_string_ascii_0_s
   #define FSS_IDENTIFY_program_version_minor_s F_string_ascii_7_s
   #define FSS_IDENTIFY_program_version_micro_s F_string_ascii_0_s
@@ -43,12 +43,12 @@ extern "C" {
   #define FSS_IDENTIFY_program_version_s_length FSS_IDENTIFY_program_version_major_s_length + F_string_ascii_period_s_length + FSS_IDENTIFY_program_version_minor_s_length + F_string_ascii_period_s_length + FSS_IDENTIFY_program_version_micro_s_length + FSS_IDENTIFY_program_version_nano_prefix_s_length + FSS_IDENTIFY_program_version_nano_s_length
 
   extern const f_string_static_t fss_identify_program_version_s;
-#endif // _di_fss_identify_program_version_
+#endif // _di_fss_identify_program_version_s_
 
 /**
  * The program name.
  */
-#ifndef _di_fss_identify_program_name_
+#ifndef _di_fss_identify_program_name_s_
   #define FSS_IDENTIFY_program_name_s      "fss_identify"
   #define FSS_IDENTIFY_program_name_long_s "FSS Identify"
 
@@ -57,19 +57,19 @@ extern "C" {
 
   extern const f_string_static_t fss_identify_program_name_s;
   extern const f_string_static_t fss_identify_program_name_long_s;
-#endif // _di_fss_identify_program_name_
+#endif // _di_fss_identify_program_name_s_
 
 /**
  * The program defines.
  */
-#ifndef _di_fss_identify_defines_
+#ifndef _di_fss_identify_d_
   #define fss_identify_signal_check_d 20000
-#endif // _di_fss_identify_defines_
+#endif // _di_fss_identify_d_
 
 /**
  * The main program parameters.
  */
-#ifndef _di_fss_identify_parameters_
+#ifndef _di_fss_identify_parameter_d_
   #define FSS_IDENTIFY_short_content_s "c"
   #define FSS_IDENTIFY_short_line_s    "l"
   #define FSS_IDENTIFY_short_name_s    "n"
@@ -125,7 +125,7 @@ extern "C" {
     fss_identify_parameter_name_e,
     fss_identify_parameter_object_e,
     fss_identify_parameter_total_e,
-  };
+  }; // enum
 
   #define fss_identify_console_parameter_t_initialize \
     { \
@@ -150,7 +150,7 @@ extern "C" {
     }
 
   #define fss_identify_total_parameters_d 17
-#endif // _di_fss_identify_parameters_
+#endif // _di_fss_identify_parameter_d_
 
 /**
  * Flags used to represent flags passed to the main function.
@@ -177,7 +177,7 @@ extern "C" {
     fss_identify_main_flag_strip_invalid_e = 0x20,
     fss_identify_main_flag_verify_e        = 0x40,
     fss_identify_main_flag_version_e       = 0x80,
-  };
+  }; // enum
 #endif // _di_fss_identify_main_flag_e_
 
 /**

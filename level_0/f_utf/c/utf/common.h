@@ -33,7 +33,7 @@ extern "C" {
  * The macro_f_utf_byte_width macro determines a width of the character.
  * The macro_f_utf_byte_width_is is identical to macro_f_utf_byte_width, except it returns 0 when character is ASCII.
  */
-#ifndef _di_f_utf_byte_
+#ifndef _di_f_utf_byte_d_
   #define F_utf_byte_1_d 0x80 // 1000 0000
   #define F_utf_byte_2_d 0xc0 // 1100 0000
   #define F_utf_byte_3_d 0xe0 // 1110 0000
@@ -53,7 +53,7 @@ extern "C" {
 
   #define macro_f_utf_byte_width(character)    ((!macro_f_utf_byte_is(character) || macro_f_utf_byte_is_1(character)) ? 1 : (macro_f_utf_byte_is_2(character) ? 2 : (macro_f_utf_byte_is_3(character) ? 3 : 4)))
   #define macro_f_utf_byte_width_is(character) (macro_f_utf_byte_is(character) ? (macro_f_utf_byte_is_1(character) ? 1 : (macro_f_utf_byte_is_2(character) ? 2 : (macro_f_utf_byte_is_3(character) ? 3 : 4))) : 0)
-#endif // _di_f_utf_byte_
+#endif // _di_f_utf_byte_d_
 
 /**
  * Define the UTF-8 general whitespace codes.
@@ -62,7 +62,7 @@ extern "C" {
  *
  * This does not provide whitespace codes for standard ascii whitespaces, such as '\t' or '\r'.
  */
-#ifndef _di_f_utf_space_
+#ifndef _di_f_utf_space_s_
   #define F_utf_space_em_s_length           3
   #define F_utf_space_em_quad_s_length      3
   #define F_utf_space_em_per_three_s_length 3
@@ -116,7 +116,7 @@ extern "C" {
 
   extern const f_char_t f_utf_space_separator_line_s[];
   extern const f_char_t f_utf_space_separator_paragraph_s[];
-#endif // _di_f_utf_space_
+#endif // _di_f_utf_space_s_
 
 /**
  * Define the UTF-8 general substitute whitespace codes.
@@ -127,7 +127,7 @@ extern "C" {
  *
  * This does not provide substitute whitespace codes for standard ascii whitespaces, such as '\t' or '\r'.
  */
-#ifndef _di_f_utf_substitute_
+#ifndef _di_f_utf_substitute_s_
   #define F_utf_substitute_symbol_blank_s_length 3
   #define F_utf_substitute_symbol_space_s_length 3
 
@@ -143,7 +143,7 @@ extern "C" {
 
   extern const f_char_t f_utf_substitute_open_box_s[];
   extern const f_char_t f_utf_substitute_open_box_shouldered_s[];
-#endif // _di_f_utf_substitute_
+#endif // _di_f_utf_substitute_s_
 
 /**
  * Provide a basic UTF-8 byte sequence as a single 4-byte variable.
@@ -259,7 +259,7 @@ extern "C" {
  * The macros that end in "_be" or "_le" represent "big endian" and "little endian".
  * The default macros without the "_be" should be in "big endian" because the strings are always stored as if they were "big endian" without regard to the host byte order.
  */
-#ifndef _di_f_utf_char_t_codes_
+#ifndef _di_f_utf_char_s_
 
   // Big Endian.
   #define F_utf_char_t_eol_be_s         0x0a000000 // 0000 1010, 0000 0000, 0000 0000, 0000 0000
@@ -278,7 +278,7 @@ extern "C" {
   extern const f_utf_char_t f_utf_char_t_eol_s;
   extern const f_utf_char_t f_utf_char_t_eos_s;
   extern const f_utf_char_t f_utf_char_t_placeholder_s;
-#endif // _di_f_utf_char_t_codes_
+#endif // _di_f_utf_char_s_
 
 /**
  * Define the basic string type.
@@ -311,7 +311,7 @@ extern "C" {
  *   - nuetral:   Characters that do not appear in East Asian DBCS codes.
  *   - wide:      Wide byte sequence, without a narrow equivalent.
  */
-#ifndef _di_f_utf_widths_t_
+#ifndef _di_f_utf_width_e_
   enum {
     F_utf_width_none_e,
     F_utf_width_ambiguous_e,
@@ -321,7 +321,7 @@ extern "C" {
     F_utf_width_nuetral_e,
     F_utf_width_wide_e,
   };
-#endif // _di_f_utf_widths_t_
+#endif // _di_f_utf_width_e_
 
 #ifdef __cplusplus
 } // extern "C"

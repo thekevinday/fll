@@ -26,15 +26,27 @@ extern "C" {
  *   - pipe:      Pipe error.
  *   - socket:    Socket error.
  */
-#ifndef _di_fll_error_file_type_
+#ifndef _di_fll_error_file_type_e_
   enum {
     fll_error_file_type_file_e = 1,
     fll_error_file_type_directory_e,
     fll_error_file_type_path_e,
     fll_error_file_type_pipe_e,
     fll_error_file_type_socket_e,
-  };
+  }; // enum
+#endif // _di_fll_error_file_type_e_
 
+/**
+ * Error file types.
+ *
+ * fll_error_file_type_*:
+ *   - file:      File error.
+ *   - directory: Directory error.
+ *   - path:      Path error.
+ *   - pipe:      Pipe error.
+ *   - socket:    Socket error.
+ */
+#ifndef _di_fll_error_file_type_s_
   #define FLL_error_file_type_directory_s "directory"
   #define FLL_error_file_type_file_s      "file"
   #define FLL_error_file_type_path_s      "path"
@@ -52,7 +64,7 @@ extern "C" {
   extern const f_string_static_t fll_error_file_type_path_s;
   extern const f_string_static_t fll_error_file_type_pipe_s;
   extern const f_string_static_t fll_error_file_type_socket_s;
-#endif // _di_fll_error_file_type_
+#endif // _di_fll_error_file_type_s_
 
 #ifdef __cplusplus
 } // extern "C"

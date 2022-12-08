@@ -19,7 +19,7 @@ extern "C" {
 /**
  * The program version.
  */
-#ifndef _di_status_code_program_version_
+#ifndef _di_status_code_program_version_s_
   #define STATUS_CODE_program_version_major_s F_string_ascii_0_s
   #define STATUS_CODE_program_version_minor_s F_string_ascii_7_s
   #define STATUS_CODE_program_version_micro_s F_string_ascii_0_s
@@ -43,12 +43,12 @@ extern "C" {
   #define STATUS_CODE_program_version_s_length STATUS_CODE_program_version_major_s_length + F_string_ascii_period_s_length + STATUS_CODE_program_version_minor_s_length + F_string_ascii_period_s_length + STATUS_CODE_program_version_micro_s_length + STATUS_CODE_program_version_nano_prefix_s_length + STATUS_CODE_program_version_nano_s_length
 
   extern const f_string_static_t status_code_program_version_s;
-#endif // _di_status_code_program_version_
+#endif // _di_status_code_program_version_s_
 
 /**
  * The program name.
  */
-#ifndef _di_status_code_program_name_
+#ifndef _di_status_code_program_name_s_
   #ifdef _status_code_as_fss_status_code
     #define STATUS_CODE_program_name_s      "fss_status_code"
     #define STATUS_CODE_program_name_long_s "FSS Status Code"
@@ -65,22 +65,29 @@ extern "C" {
 
   extern const f_string_static_t status_code_program_name_s;
   extern const f_string_static_t status_code_program_name_long_s;
-#endif // _di_status_code_program_name_
+#endif // _di_status_code_program_name_s_
 
 /**
  * The program help related data.
  */
-#ifndef _di_status_code_program_help_parameters_
+#ifndef _di_status_code_program_help_parameters_s_
   #define STATUS_CODE_program_help_parameters_s "status code(s)"
   #define STATUS_CODE_program_help_parameters_s_length 14
 
   extern const f_string_static_t status_code_program_help_parameters_s;
-#endif // _di_status_code_program_help_parameters_
+#endif // _di_status_code_program_help_parameters_s_
+
+/**
+ * The program defines.
+ */
+#ifndef _di_status_code_d_
+  #define status_code_signal_check_d 20000
+#endif // _di_status_code_d_
 
 /**
  * Special strings used by this program.
  */
-#ifndef _di_status_code_strings_
+#ifndef _di_status_code_s_
   #define STATUS_CODE_failed_to_convert_s "failed to convert"
   #define STATUS_CODE_invalid_number_s    "invalid number"
   #define STATUS_CODE_invalid_name_s      "invalid name"
@@ -104,19 +111,12 @@ extern "C" {
   extern const f_string_static_t status_code_out_of_range_s;
   extern const f_string_static_t status_code_unknown_code_s;
   extern const f_string_static_t status_code_unknown_name_s;
-#endif // _di_status_code_strings_
-
-/**
- * The program defines.
- */
-#ifndef _di_status_code_defines_
-  #define status_code_signal_check_d 20000
-#endif // _di_status_code_defines_
+#endif // _di_status_code_s_
 
 /**
  * The main program parameters.
  */
-#ifndef _di_status_code_parameters_
+#ifndef _di_status_code_parameter_d_
   #define STATUS_CODE_short_fine_s    "f"
   #define STATUS_CODE_short_warning_s "w"
   #define STATUS_CODE_short_error_s   "e"
@@ -165,7 +165,7 @@ extern "C" {
     status_code_parameter_warning_e,
     status_code_parameter_error_e,
     status_code_parameter_number_e,
-  };
+  }; // enum
 
   #define status_code_console_parameter_t_initialize \
     { \
@@ -189,7 +189,7 @@ extern "C" {
     }
 
   #define status_code_total_parameters_d 16
-#endif // _di_status_code_parameters_
+#endif // _di_status_code_parameter_d_
 
 /**
  * Flags used to represent flags passed to the main function.

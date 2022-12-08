@@ -19,7 +19,7 @@ extern "C" {
 /**
  * The program version.
  */
-#ifndef _di_fake_program_version_
+#ifndef _di_fake_program_version_s_
   #define FAKE_program_version_major_s F_string_ascii_0_s
   #define FAKE_program_version_minor_s F_string_ascii_7_s
   #define FAKE_program_version_micro_s F_string_ascii_0_s
@@ -43,12 +43,12 @@ extern "C" {
   #define FAKE_program_version_s_length FAKE_program_version_major_s_length + F_string_ascii_period_s_length + FAKE_program_version_minor_s_length + F_string_ascii_period_s_length + FAKE_program_version_micro_s_length + FAKE_program_version_nano_prefix_s_length + FAKE_program_version_nano_s_length
 
   extern const f_string_static_t fake_program_version_s;
-#endif // _di_fake_program_version_
+#endif // _di_fake_program_version_s_
 
 /**
  * The program name.
  */
-#ifndef _di_fake_program_name_
+#ifndef _di_fake_program_name_s_
   #define FAKE_program_name_s      "fake"
   #define FAKE_program_name_long_s "Featureless Make"
 
@@ -57,34 +57,23 @@ extern "C" {
 
   extern const f_string_static_t fake_program_name_s;
   extern const f_string_static_t fake_program_name_long_s;
-#endif // _di_fake_program_name_
+#endif // _di_fake_program_name_s_
 
 /**
  * The program help related data.
  */
-#ifndef _di_fake_program_help_parameters_
+#ifndef _di_fake_program_help_parameter_s_
   #define FAKE_program_help_parameters_s "operation"
   #define FAKE_program_help_parameters_s_length 9
 
   extern const f_string_static_t fake_program_help_parameters_s;
-#endif // _di_fake_program_help_parameters_
-
-/***
- * Default allocations.
- *
- * Set to at least 4 to provide a UTF-8 friendly allocation step.
- */
-#ifndef _di_fake_default_allocation_
-  #define fake_default_allocation_pipe_d  16384
-  #define fake_default_allocation_large_d 64
-  #define fake_default_allocation_small_d 8
-#endif // _di_fake_default_allocation_
+#endif // _di_fake_program_help_parameter_s_
 
 /**
  * The build operation utilizes pre-defined path structures.
  * These structures are hard-coded by their individual pieces to be constructed later on.
  */
-#ifndef _di_fake_path_
+#ifndef _di_fake_path_s_
   #define FAKE_path_part_bash_s           "bash"           F_path_separator_s
   #define FAKE_path_part_build_s          "build"          F_path_separator_s
   #define FAKE_path_part_c_s              "c"              F_path_separator_s
@@ -141,12 +130,12 @@ extern "C" {
   extern const f_string_static_t fake_path_part_specifications_s;
   extern const f_string_static_t fake_path_part_stage_s;
   extern const f_string_static_t fake_path_part_static_s;
-#endif // _di_fake_path_
+#endif // _di_fake_path_s_
 
 /**
  * The file settings.
  */
-#ifndef _di_fake_file_
+#ifndef _di_fake_file_s_
   #define FAKE_file_defines_s      "defines"
   #define FAKE_file_dependencies_s "dependencies"
   #define FAKE_file_process_pre_s  "process_pre.sh"
@@ -164,12 +153,23 @@ extern "C" {
   extern const f_string_static_t fake_file_process_pre_s;
   extern const f_string_static_t fake_file_process_post_s;
   extern const f_string_static_t fake_file_readme_s;
-#endif // _di_fake_file_
+#endif // _di_fake_file_s_
+
+/***
+ * Default allocations.
+ *
+ * Set to at least 4 to provide a UTF-8 friendly allocation step.
+ */
+#ifndef _di_fake_default_d_
+  #define fake_default_allocation_pipe_d  16384
+  #define fake_default_allocation_large_d 64
+  #define fake_default_allocation_small_d 8
+#endif // _di_fake_default_d_
 
 /**
  * Provide default settings.
  */
-#ifndef _di_fake_defaults_
+#ifndef _di_fake_default_s_
   #define FAKE_default_path_build_s   "build"   F_path_separator_s
   #define FAKE_default_path_data_s    "data"    F_path_separator_s
   #define FAKE_default_path_sources_s "sources" F_path_separator_s
@@ -202,18 +202,23 @@ extern "C" {
   extern const f_string_static_t fake_default_mode_s;
   extern const f_string_static_t fake_default_process_s;
   extern const f_string_static_t fake_default_settings_s;
-#endif // _di_fake_defaults_
+#endif // _di_fake_default_s_
 
 /**
- * The build languages.
+ * The build language enumerations.
  */
-#ifndef _di_fake_build_language_
+#ifndef _di_fake_build_language_e_
   enum {
     fake_build_language_type_bash_e = 1,
     fake_build_language_type_c_e,
     fake_build_language_type_cpp_e,
-  };
+  }; // enum
+#endif // _di_fake_build_language_e_
 
+/**
+ * The build language strings.
+ */
+#ifndef _di_fake_build_language_s_
   #define FAKE_build_language_bash_s "bash"
   #define FAKE_build_language_c_s    "c"
   #define FAKE_build_language_cpp_s  "c++"
@@ -225,19 +230,24 @@ extern "C" {
   extern const f_string_static_t fake_build_language_bash_s;
   extern const f_string_static_t fake_build_language_c_s;
   extern const f_string_static_t fake_build_language_cpp_s;
-#endif // _di_fake_build_language_
+#endif // _di_fake_build_language_s_
 
 /**
- * The program version.
+ * The program version enumerations.
  */
-#ifndef _di_fake_build_version_
+#ifndef _di_fake_build_version_e_
   enum {
     fake_build_version_type_major_e = 1,
     fake_build_version_type_minor_e,
     fake_build_version_type_micro_e,
     fake_build_version_type_nano_e,
-  };
+  }; // enum
+#endif // _di_fake_build_version_e_
 
+/**
+ * The program version strings.
+ */
+#ifndef _di_fake_build_version_s_
   #define FAKE_build_version_major_s "major"
   #define FAKE_build_version_minor_s "minor"
   #define FAKE_build_version_micro_s "micro"
@@ -252,31 +262,33 @@ extern "C" {
   extern const f_string_static_t fake_build_version_minor_s;
   extern const f_string_static_t fake_build_version_micro_s;
   extern const f_string_static_t fake_build_version_nano_s;
-#endif // _di_fake_build_version_
+#endif // _di_fake_build_version_s_
 
 /**
- * The program defines.
+ * The program operation enumerations.
  */
-#ifndef _di_fake_defines_
+#ifndef _di_fake_operation_e_
   enum {
     fake_operation_build_e = 1,
     fake_operation_clean_e,
     fake_operation_make_e,
     fake_operation_skeleton_e,
-  };
+  }; // enum
+#endif // _di_fake_operation_e_
 
+/**
+ * The program defines.
+ */
+#ifndef _di_fake_d_
   #define fake_signal_check_d       500000
   #define fake_signal_check_tiny_d  4
   #define fake_signal_check_short_d 16
-
-  #define fake_operations_total_d    4
-  #define fake_operations_initialize { 0, 0, 0, 0 }
-#endif // _di_fake_defines_
+#endif // _di_fake_d_
 
 /**
  * The main program parameters.
  */
-#ifndef _di_fake_parameters_
+#ifndef _di_fake_parameter_d_
   #define FAKE_short_define_s   "d"
   #define FAKE_short_fakefile_s "f"
   #define FAKE_short_mode_s     "m"
@@ -416,7 +428,7 @@ extern "C" {
     fake_parameter_operation_clean_e,
     fake_parameter_operation_make_e,
     fake_parameter_operation_skeleton_e,
-  };
+  }; // enum
 
   #define fake_console_parameter_t_initialize \
     { \
@@ -455,7 +467,7 @@ extern "C" {
     }
 
   #define fake_total_parameters_d 31
-#endif // _di_fake_parameters_
+#endif // _di_fake_parameter_d_
 
 /**
  * Flags used to represent flags passed to the main function.
@@ -482,7 +494,7 @@ extern "C" {
     fake_main_flag_strip_invalid_e = 0x20,
     fake_main_flag_verify_e        = 0x40,
     fake_main_flag_version_e       = 0x80,
-  };
+  }; // enum
 #endif // _di_fake_main_flag_e_
 
 /**

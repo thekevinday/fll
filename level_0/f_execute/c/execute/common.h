@@ -39,7 +39,7 @@ extern "C" {
  * Warning: F_execute and F_execute_not are F_status_t status codes and are not F_execute_codes.
  * The F_execute_off is the execute code equivalent of F_execute_not.
  */
-#ifndef _di_f_execute_codes_
+#ifndef _di_f_execute_e_
   enum {
     F_execute_none = 0,
     F_execute_failure,
@@ -150,7 +150,7 @@ extern "C" {
     // Required.
     F_execute_code_last = 255,
   }; // enum
-#endif // _di_f_execute_codes_
+#endif // _di_f_execute_e_
 
 /**
  * A structure representing a scheduler and its parameters for execution.

@@ -1,6 +1,6 @@
 #define _di_f_utf_buffer_decrement_
 #define _di_f_utf_buffer_increment_
-#define _di_f_utf_byte_
+#define _di_f_utf_byte_d_
 #define _di_f_utf_character_is_
 #define _di_f_utf_character_is_alphabetic_
 #define _di_f_utf_character_is_alphabetic_digit_
@@ -37,7 +37,7 @@
 #define _di_f_utf_character_unicode_string_to_
 #define _di_f_utf_character_unicode_to_
 #define _di_f_utf_char_t_
-#define _di_f_utf_char_t_codes_
+#define _di_f_utf_char_s_
 #define _di_f_utf_char_to_char_
 #define _di_f_utf_char_to_character_
 #define _di_f_utf_is_
@@ -72,7 +72,7 @@
 #define _di_f_utf_is_word_dash_
 #define _di_f_utf_is_word_dash_plus_
 #define _di_f_utf_is_zero_width_
-#define _di_f_utf_space_
+#define _di_f_utf_space_s_
 #define _di_f_utf_string_append_
 #define _di_f_utf_string_append_assure_
 #define _di_f_utf_string_append_assure_nulless_
@@ -204,8 +204,8 @@
 #define _di_f_utf_string_tripless_t_
 #define _di_f_utf_string_triples_t_
 #define _di_f_utf_string_triple_t_
-#define _di_f_utf_substitute_
+#define _di_f_utf_substitute_s_
 #define _di_f_utf_unicode_from_
 #define _di_f_utf_unicode_string_to_
 #define _di_f_utf_unicode_to_
-#define _di_f_utf_widths_t_
+#define _di_f_utf_width_e_

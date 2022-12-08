@@ -16,7 +16,7 @@
 extern "C" {
 #endif
 
-#ifndef _di_fll_program_parameters_
+#ifndef _di_fll_program_parameter_s_
   #define FLL_program_parameter_filename_s  "filename"
   #define FLL_program_parameter_filenames_s "filename(s)"
 
@@ -25,7 +25,7 @@ extern "C" {
 
   extern const f_string_static_t fll_program_parameter_filename_s;
   extern const f_string_static_t fll_program_parameter_filenames_s;
-#endif // _di_fll_program_parameters_
+#endif // _di_fll_program_parameter_s_
 
 /**
  * Program data pipe codes.
@@ -44,7 +44,7 @@ extern "C" {
     fll_program_data_pipe_error_e  = 0x1,
     fll_program_data_pipe_input_e  = 0x2,
     fll_program_data_pipe_output_e = 0x4,
-  };
+  }; // enum
 #endif // _di_fll_program_data_pipe_e_
 
 /**

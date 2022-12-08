@@ -23,10 +23,10 @@ extern "C" {
  *   - first:  provide a fallback max length for when sysconf(_SC_GETPW_R_SIZE_MAX) return -1 (aka: infinite).
  *   - second: provide a fallback max length for when F_account_pwd_length_fallback_first_d is too small.
  */
-#ifndef _di_f_account_defines_
+#ifndef _di_f_account_d_
   #define F_account_pwd_length_fallback_first_d  8192
   #define F_account_pwd_length_fallback_second_d 32767
-#endif // _di_f_account_defines_
+#endif // _di_f_account_d_
 
 /**
  * Provide a complete standard password account structure.

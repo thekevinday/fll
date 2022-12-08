@@ -4,23 +4,23 @@
 extern "C" {
 #endif
 
-#ifndef _di_fss_extended_read_program_version_
+#ifndef _di_fss_extended_read_program_version_s_
   const f_string_static_t fss_extended_read_program_version_s = macro_f_string_static_t_initialize(FSS_EXTENDED_READ_program_version_s, 0, FSS_EXTENDED_READ_program_version_s_length);
-#endif // _di_fss_extended_read_program_version_
+#endif // _di_fss_extended_read_program_version_s_
 
-#ifndef _di_fss_extended_read_program_name_
+#ifndef _di_fss_extended_read_program_name_s_
   const f_string_static_t fss_extended_read_program_name_s = macro_f_string_static_t_initialize(FSS_EXTENDED_READ_program_name_s, 0, FSS_EXTENDED_READ_program_name_s_length);
   const f_string_static_t fss_extended_read_program_name_long_s = macro_f_string_static_t_initialize(FSS_EXTENDED_READ_program_name_long_s, 0, FSS_EXTENDED_READ_program_name_long_s_length);
-#endif // _di_fss_extended_read_program_name_
+#endif // _di_fss_extended_read_program_name_s_
 
-#ifndef _di_fss_extended_read_defines_
+#ifndef _di_fss_extended_read_pipe_s_
   const f_string_static_t fss_extended_read_pipe_name_s = macro_f_string_static_t_initialize(FSS_EXTENDED_READ_pipe_name_s, 0, FSS_EXTENDED_READ_pipe_name_s_length);
   const f_string_static_t fss_extended_read_pipe_content_end_s = macro_f_string_static_t_initialize(FSS_EXTENDED_READ_pipe_content_end_s, 0, FSS_EXTENDED_READ_pipe_content_end_s_length);
   const f_string_static_t fss_extended_read_pipe_content_ignore_s = macro_f_string_static_t_initialize(FSS_EXTENDED_READ_pipe_content_ignore_s, 0, FSS_EXTENDED_READ_pipe_content_ignore_s_length);
   const f_string_static_t fss_extended_read_pipe_content_start_s = macro_f_string_static_t_initialize(FSS_EXTENDED_READ_pipe_content_start_s, 0, FSS_EXTENDED_READ_pipe_content_start_s_length);
-#endif // _di_fss_extended_read_defines_
+#endif // _di_fss_extended_read_pipe_s_
 
-#ifndef _di_fss_extended_read_parameters_
+#ifndef _di_fss_extended_read_parameter_d_
   const f_string_static_t fss_extended_read_short_at_s = macro_f_string_static_t_initialize(FSS_EXTENDED_READ_short_at_s, 0, FSS_EXTENDED_READ_short_at_s_length);
   const f_string_static_t fss_extended_read_short_content_s = macro_f_string_static_t_initialize(FSS_EXTENDED_READ_short_content_s, 0, FSS_EXTENDED_READ_short_content_s_length);
   const f_string_static_t fss_extended_read_short_columns_s = macro_f_string_static_t_initialize(FSS_EXTENDED_READ_short_columns_s, 0, FSS_EXTENDED_READ_short_columns_s_length);
@@ -50,15 +50,15 @@ extern "C" {
   const f_string_static_t fss_extended_read_long_select_s = macro_f_string_static_t_initialize(FSS_EXTENDED_READ_long_select_s, 0, FSS_EXTENDED_READ_long_select_s_length);
   const f_string_static_t fss_extended_read_long_total_s = macro_f_string_static_t_initialize(FSS_EXTENDED_READ_long_total_s, 0, FSS_EXTENDED_READ_long_total_s_length);
   const f_string_static_t fss_extended_read_long_trim_s = macro_f_string_static_t_initialize(FSS_EXTENDED_READ_long_trim_s, 0, FSS_EXTENDED_READ_long_trim_s_length);
-#endif // _di_fss_extended_read_parameters_
+#endif // _di_fss_extended_read_parameter_d_
 
-#ifndef _di_fss_extended_read_delimit_mode_
+#ifndef _di_fss_extended_read_delimit_mode_s_
   const f_string_static_t fss_extended_read_delimit_mode_name_none_s = macro_f_string_static_t_initialize(FSS_EXTENDED_READ_delimit_mode_name_none_s, 0, FSS_EXTENDED_READ_delimit_mode_name_none_s_length);
   const f_string_static_t fss_extended_read_delimit_mode_name_all_s = macro_f_string_static_t_initialize(FSS_EXTENDED_READ_delimit_mode_name_all_s, 0, FSS_EXTENDED_READ_delimit_mode_name_all_s_length);
   const f_string_static_t fss_extended_read_delimit_mode_name_object_s = macro_f_string_static_t_initialize(FSS_EXTENDED_READ_delimit_mode_name_object_s, 0, FSS_EXTENDED_READ_delimit_mode_name_object_s_length);
   const f_string_static_t fss_extended_read_delimit_mode_name_greater_s = macro_f_string_static_t_initialize(FSS_EXTENDED_READ_delimit_mode_name_greater_s, 0, FSS_EXTENDED_READ_delimit_mode_name_greater_s_length);
   const f_string_static_t fss_extended_read_delimit_mode_name_lesser_s = macro_f_string_static_t_initialize(FSS_EXTENDED_READ_delimit_mode_name_lesser_s, 0, FSS_EXTENDED_READ_delimit_mode_name_lesser_s_length);
-#endif // _di_fss_extended_read_delimit_mode_
+#endif // _di_fss_extended_read_delimit_mode_s_
 
 #ifndef _di_fss_extended_read_setting_delete_
   f_status_t fss_extended_read_setting_delete(fss_extended_read_setting_t * const setting) {

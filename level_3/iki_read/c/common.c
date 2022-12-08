@@ -4,21 +4,21 @@
 extern "C" {
 #endif
 
-#ifndef _di_iki_read_program_version_
+#ifndef _di_iki_read_program_version_s_
   const f_string_static_t iki_read_program_version_s = macro_f_string_static_t_initialize(IKI_READ_program_version_s, 0, IKI_READ_program_version_s_length);
-#endif // _di_iki_read_program_version_
+#endif // _di_iki_read_program_version_s_
 
-#ifndef _di_iki_read_program_name_
+#ifndef _di_iki_read_program_name_s_
   const f_string_static_t iki_read_program_name_s = macro_f_string_static_t_initialize(IKI_READ_program_name_s, 0, IKI_READ_program_name_s_length);
   const f_string_static_t iki_read_program_name_long_s = macro_f_string_static_t_initialize(IKI_READ_program_name_long_s, 0, IKI_READ_program_name_long_s_length);
-#endif // _di_iki_read_program_name_
+#endif // _di_iki_read_program_name_s_
 
-#ifndef _di_iki_read_strings_
+#ifndef _di_iki_read_s_
   const f_string_static_t iki_read_string_two_s = macro_f_string_static_t_initialize(IKI_READ_string_two_s, 0, IKI_READ_string_two_s_length);
   const f_string_static_t iki_read_string_three_s = macro_f_string_static_t_initialize(IKI_READ_string_three_s, 0, IKI_READ_string_three_s_length);
-#endif // _di_iki_read_strings_
+#endif // _di_iki_read_s_
 
-#ifndef _di_iki_read_parameters_
+#ifndef _di_iki_read_parameter_d_
   const f_string_static_t iki_read_short_at_s = macro_f_string_static_t_initialize(IKI_READ_short_at_s, 0, IKI_READ_short_at_s_length);
   const f_string_static_t iki_read_short_content_s = macro_f_string_static_t_initialize(IKI_READ_short_content_s, 0, IKI_READ_short_content_s_length);
   const f_string_static_t iki_read_short_line_s = macro_f_string_static_t_initialize(IKI_READ_short_line_s, 0, IKI_READ_short_line_s_length);
@@ -44,7 +44,7 @@ extern "C" {
   const f_string_static_t iki_read_long_total_s = macro_f_string_static_t_initialize(IKI_READ_long_total_s, 0, IKI_READ_long_total_s_length);
   const f_string_static_t iki_read_long_whole_s = macro_f_string_static_t_initialize(IKI_READ_long_whole_s, 0, IKI_READ_long_whole_s_length);
   const f_string_static_t iki_read_long_wrap_s = macro_f_string_static_t_initialize(IKI_READ_long_wrap_s, 0, IKI_READ_long_wrap_s_length);
-#endif // _di_iki_read_parameters_
+#endif // _di_iki_read_parameter_d_
 
 #ifndef _di_iki_read_substitution_t_
   const f_string_static_t iki_read_substitution_after_s = macro_f_string_static_t_initialize(IKI_READ_substitution_after_s, 0, IKI_READ_substitution_after_s_length);

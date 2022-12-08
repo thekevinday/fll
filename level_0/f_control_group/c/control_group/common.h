@@ -19,7 +19,7 @@ extern "C" {
 /**
  * The defines for control groups.
  */
-#ifndef _di_f_control_group_defines_
+#ifndef _di_f_control_group_s_
   #define F_control_group_path_system_default_s "sys/fs/cgroup/"
   #define F_control_group_path_system_prefix_s  "/"
   #define F_control_group_path_system_suffix_s  "/cgroup.procs"
@@ -33,7 +33,7 @@ extern "C" {
   extern const f_string_static_t f_control_group_path_system_default_s;
   extern const f_string_static_t f_control_group_path_system_prefix_s;
   extern const f_string_static_t f_control_group_path_system_suffix_s;
-#endif // _di_f_control_group_defines_
+#endif // _di_f_control_group_s_
 
 /**
  * Provide a structure for associating some process with one or more control groups (cgroups).

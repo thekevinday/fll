@@ -19,7 +19,7 @@ extern "C" {
 /**
  * The FSS-000E (Payload) specific strings.
  */
-#ifndef _di_fss_write_payload_strings_
+#ifndef _di_fss_write_payload_s_
   #define FSS_WRITE_payload_s "payload"
 
   #define FSS_WRITE_payload_standard_s "FSS-000E (Payload)"
@@ -52,7 +52,7 @@ extern "C" {
   extern const f_string_static_t fss_write_format_code_short_000e_s;
   extern const f_string_static_t fss_write_format_code_long_000e_s;
   extern const f_string_static_t fss_write_format_code_human_000e_s;
-#endif // _di_fss_write_payload_strings_
+#endif // _di_fss_write_payload_s_
 
 #ifdef __cplusplus
 } // extern "C"

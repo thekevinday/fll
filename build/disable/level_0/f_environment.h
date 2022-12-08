@@ -1,5 +1,5 @@
 #define _di_f_environment_clear_
-#define _di_f_environment_defines_
+#define _di_f_environment_d_
 #define _di_f_environment_exists_
 #define _di_f_environment_get_
 #define _di_f_environment_get_all_

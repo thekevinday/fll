@@ -19,9 +19,9 @@ extern "C" {
 /**
  * Environment related defines.
  */
-#ifndef _di_f_environment_defines_
+#ifndef _di_f_environment_d_
   #define f_environment_max_length F_string_t_size_d
-#endif // _di_f_environment_defines_
+#endif // _di_f_environment_d_
 
 #ifdef __cplusplus
 } // extern "C"

@@ -19,7 +19,7 @@ extern "C" {
 /**
  * The program version.
  */
-#ifndef _di_utf8_program_version_
+#ifndef _di_utf8_program_version_s_
   #define UTF8_program_version_major_s F_string_ascii_0_s
   #define UTF8_program_version_minor_s F_string_ascii_7_s
   #define UTF8_program_version_micro_s F_string_ascii_0_s
@@ -43,12 +43,12 @@ extern "C" {
   #define UTF8_program_version_s_length UTF8_program_version_major_s_length + F_string_ascii_period_s_length + UTF8_program_version_minor_s_length + F_string_ascii_period_s_length + UTF8_program_version_micro_s_length + UTF8_program_version_nano_prefix_s_length + UTF8_program_version_nano_s_length
 
   extern const f_string_static_t utf8_program_version_s;
-#endif // _di_utf8_program_version_
+#endif // _di_utf8_program_version_s_
 
 /**
  * The program name.
  */
-#ifndef _di_utf8_program_name_
+#ifndef _di_utf8_program_name_s_
   #define UTF8_program_name_s      "utf8"
   #define UTF8_program_name_long_s "UTF-8"
 
@@ -57,31 +57,36 @@ extern "C" {
 
   extern const f_string_static_t utf8_program_name_s;
   extern const f_string_static_t utf8_program_name_long_s;
-#endif // _di_utf8_program_name_
+#endif // _di_utf8_program_name_s_
 
 /**
  * The program help related data.
  */
-#ifndef _di_utf8_program_help_parameters_
+#ifndef _di_utf8_program_help_parameters_s_
   #define UTF8_program_help_parameters_s "character(s)"
   #define UTF8_program_help_parameters_s_length 12
 
   extern const f_string_static_t utf8_program_help_parameters_s;
-#endif // _di_utf8_program_help_parameters_
+#endif // _di_utf8_program_help_parameters_s_
 
 /**
  * Set to at least 4 to provide a UTF-8 friendly allocation step.
  */
-#ifndef _di_utf8_default_allocation_step_
+#ifndef _di_utf8_default_d_
   #define utf8_default_allocation_step_d 16
-#endif // _di_utf8_default_allocation_step_
+#endif // _di_utf8_default_d_
 
 /**
  * The program defines.
  */
-#ifndef _di_utf8_defines_
+#ifndef _di_utf8_d_
   #define utf8_signal_check_d 20000
+#endif // _di_utf8_d_
 
+/**
+ * The program strings.
+ */
+#ifndef _di_utf8_s_
   #define UTF8_string_combining_is_s  "C"
   #define UTF8_string_combining_not_s "N"
   #define UTF8_string_unknown_s       "?"
@@ -141,12 +146,12 @@ extern "C" {
   extern const f_string_static_t utf8_string_width_4_s;
 
   extern const f_string_static_t utf8_string_valid_not_s;
-#endif // _di_utf8_defines_
+#endif // _di_utf8_s_
 
 /**
  * The main program parameters.
  */
-#ifndef _di_utf8_parameters_
+#ifndef _di_utf8_parameter_d_
   #define UTF8_short_from_bytesequence_s "b"
   #define UTF8_short_from_codepoint_s    "c"
   #define UTF8_short_from_file_s         "f"
@@ -266,7 +271,7 @@ extern "C" {
     utf8_parameter_to_width_e,
 
     utf8_parameter_verify_e,
-  };
+  }; // enum
 
   #define utf8_console_parameter_t_initialize \
     { \
@@ -298,7 +303,7 @@ extern "C" {
     }
 
   #define utf8_total_parameters_d 24
-#endif // _di_utf8_parameters_
+#endif // _di_utf8_parameter_d_
 
 /**
  * Modes used to designate how to the input and output are to be processed.
@@ -325,7 +330,7 @@ extern "C" {
     utf8_mode_to_codepoint_e      = 0x8,
     utf8_mode_to_combining_e      = 0x10,
     utf8_mode_to_width_e          = 0x20,
-  };
+  }; // enum
 #endif // _di_utf8_modes_e_
 
 /**
@@ -355,7 +360,7 @@ extern "C" {
     utf8_main_flag_strip_invalid_e = 0x40,
     utf8_main_flag_verify_e        = 0x80,
     utf8_main_flag_version_e       = 0x100,
-  };
+  }; // enum
 #endif // _di_utf8_main_flag_e_
 
 /**

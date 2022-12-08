@@ -19,7 +19,7 @@ extern "C" {
 /**
  * The program version.
  */
-#ifndef _di_control_program_version_
+#ifndef _di_control_program_version_s_
   #define CONTROL_program_version_major_s F_string_ascii_0_s
   #define CONTROL_program_version_minor_s F_string_ascii_7_s
   #define CONTROL_program_version_micro_s F_string_ascii_0_s
@@ -43,12 +43,12 @@ extern "C" {
   #define CONTROL_program_version_s_length CONTROL_program_version_major_s_length + F_string_ascii_period_s_length + CONTROL_program_version_minor_s_length + F_string_ascii_period_s_length + CONTROL_program_version_micro_s_length + CONTROL_program_version_nano_prefix_s_length + CONTROL_program_version_nano_s_length
 
   extern const f_string_static_t control_program_version_s;
-#endif // _di_control_program_version_
+#endif // _di_control_program_version_s_
 
 /**
  * The program name.
  */
-#ifndef _di_control_program_name_
+#ifndef _di_control_program_name_s_
   #define CONTROL_program_name_s      "control"
   #define CONTROL_program_name_long_s "Control Program"
 
@@ -57,12 +57,12 @@ extern "C" {
 
   extern const f_string_static_t control_program_name_s;
   extern const f_string_static_t control_program_name_long_s;
-#endif // _di_control_program_name_
+#endif // _di_control_program_name_s_
 
 /**
  * The main program parameters.
  */
-#ifndef _di_control_parameters_
+#ifndef _di_control_parameter_d_
   #define CONTROL_short_name_s     "n"
   #define CONTROL_short_return_s   "R"
   #define CONTROL_short_settings_s "s"
@@ -111,7 +111,7 @@ extern "C" {
     control_parameter_return_e,
     control_parameter_settings_e,
     control_parameter_socket_e,
-  };
+  }; // enum
 
   #define control_console_parameter_t_initialize \
     { \
@@ -135,7 +135,7 @@ extern "C" {
     }
 
   #define control_total_parameters_d 16
-#endif // _di_control_parameters_
+#endif // _di_control_parameter_d_
 
 /**
  * Codes representing supported actions.
@@ -154,7 +154,7 @@ extern "C" {
  * stop:     Perform the stop controller operation.
  * thaw:     Perform the thaw controller operation.
  */
-#ifndef _di_control_action_types_
+#ifndef _di_control_action_type_e_
   enum {
     control_action_type_freeze_e = 1,
     control_action_type_kexec_e,
@@ -169,8 +169,8 @@ extern "C" {
     control_action_type_start_e,
     control_action_type_stop_e,
     control_action_type_thaw_e,
-  };
-#endif // _di_control_action_types_
+  }; // enum
+#endif // _di_control_action_type_e_
 
 /**
  * Supported payload types.
@@ -179,13 +179,13 @@ extern "C" {
  * error:      The payload is an error payload.
  * init:       The payload is an init payload (only available when operating in "init" mode).
  */
-#ifndef _di_control_payload_types_
+#ifndef _di_control_payload_type_e_
   enum {
     control_payload_type_controller_e = 1,
     control_payload_type_error_e,
     control_payload_type_init_e,
-  };
-#endif // _di_control_payload_types_
+  }; // enum
+#endif // _di_control_payload_type_e_
 
 /**
  * Flags used to represent flags passed to the main function.
@@ -212,7 +212,7 @@ extern "C" {
     control_main_flag_strip_invalid_e = 0x20,
     control_main_flag_verify_e        = 0x40,
     control_main_flag_version_e       = 0x80,
-  };
+  }; // enum
 #endif // _di_control_main_flag_e_
 
 /**

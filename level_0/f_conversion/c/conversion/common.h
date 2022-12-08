@@ -23,7 +23,7 @@ extern "C" {
  *
  * 64-bit is the designed default.
  */
-#ifndef _di_f_conversion_digits_d_
+#ifndef _di_f_conversion_d_
   #ifndef _di_f_type_number_64_t_
     #define F_conversion_digits_binary_unsigned_d 64
     #define F_conversion_digits_binary_signed_d   63
@@ -74,7 +74,7 @@ extern "C" {
     #define F_conversion_digits_hexidecimal_unsigned_d 32
     #define F_conversion_digits_hexidecimal_signed_d   32
   #endif // _en_f_type_number_128_t_
-#endif // _di_f_conversion_digits_d_
+#endif // _di_f_conversion_d_
 
 /**
  * Provide a structure for customizing conversion settings for a conversion function to use.
@@ -111,13 +111,13 @@ extern "C" {
  *   - 12: Basic base-12 conversion structure.
  *   - 16: Basic base-16 conversion structure.
  */
-#ifndef _di_f_conversion_data_t_defines_
+#ifndef _di_f_conversion_data_c_
   extern const f_conversion_data_t f_conversion_data_base_2_c;
   extern const f_conversion_data_t f_conversion_data_base_8_c;
   extern const f_conversion_data_t f_conversion_data_base_10_c;
   extern const f_conversion_data_t f_conversion_data_base_12_c;
   extern const f_conversion_data_t f_conversion_data_base_16_c;
-#endif // _di_f_conversion_data_t_defines_
+#endif // _di_f_conversion_data_c_
 
 /**
  * Define flags used by f_conversion_data_t.
@@ -142,7 +142,7 @@ extern "C" {
  *   - base 12: 0d, 0D.
  *   - base 16: 0x, 0X.
  */
-#ifndef _di_f_conversion_data_flag_
+#ifndef _di_f_conversion_data_flag_d_
   #define F_conversion_data_flag_align_left_d      0x1
   #define F_conversion_data_flag_base_prepend_d    0x2
   #define F_conversion_data_flag_base_upper_d      0x4
@@ -154,7 +154,7 @@ extern "C" {
   #define F_conversion_data_flag_sign_always_d     0x100
   #define F_conversion_data_flag_sign_pad_d        0x200
   #define F_conversion_data_flag_zeros_leading_d   0x400
-#endif // _di_f_conversion_data_flag_
+#endif // _di_f_conversion_data_flag_d_
 
 #ifdef __cplusplus
 } // extern "C"

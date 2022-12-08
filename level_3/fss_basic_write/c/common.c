@@ -4,16 +4,16 @@
 extern "C" {
 #endif
 
-#ifndef _di_fss_basic_write_program_version_
+#ifndef _di_fss_basic_write_program_version_s_
   const f_string_static_t fss_basic_write_program_version_s = macro_f_string_static_t_initialize(FSS_BASIC_WRITE_program_version_s, 0, FSS_BASIC_WRITE_program_version_s_length);
-#endif // _di_fss_basic_write_program_version_
+#endif // _di_fss_basic_write_program_version_s_
 
-#ifndef _di_fss_basic_write_program_name_
+#ifndef _di_fss_basic_write_program_name_s_
   const f_string_static_t fss_basic_write_program_name_s = macro_f_string_static_t_initialize(FSS_BASIC_WRITE_program_name_s, 0, FSS_BASIC_WRITE_program_name_s_length);
   const f_string_static_t fss_basic_write_program_name_long_s = macro_f_string_static_t_initialize(FSS_BASIC_WRITE_program_name_long_s, 0, FSS_BASIC_WRITE_program_name_long_s_length);
-#endif // _di_fss_basic_write_program_name_
+#endif // _di_fss_basic_write_program_name_s_
 
-#ifndef _di_fss_basic_write_defines_
+#ifndef _di_fss_basic_write_pipe_s_
   const f_string_static_t fss_basic_write_pipe_name_s = macro_f_string_static_t_initialize(FSS_BASIC_WRITE_pipe_name_s, 0, FSS_BASIC_WRITE_pipe_name_s_length);
   const f_string_static_t fss_basic_write_pipe_content_end_s = macro_f_string_static_t_initialize(FSS_BASIC_WRITE_pipe_content_end_s, 0, FSS_BASIC_WRITE_pipe_content_end_s_length);
   const f_string_static_t fss_basic_write_pipe_content_ignore_s = macro_f_string_static_t_initialize(FSS_BASIC_WRITE_pipe_content_ignore_s, 0, FSS_BASIC_WRITE_pipe_content_ignore_s_length);

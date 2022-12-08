@@ -19,7 +19,7 @@ extern "C" {
 /**
  * FSS-specific types.
  */
-#ifndef _di_f_fss_types_t_
+#ifndef _di_f_fss_type_s_
   #define F_fss_brace_close_s    F_string_ascii_brace_close_s
   #define F_fss_brace_open_s     F_string_ascii_brace_open_s
   #define F_fss_colon_s          F_string_ascii_colon_s
@@ -94,18 +94,18 @@ extern "C" {
   #define f_fss_type_header_part4_s       f_fss_s_s
   #define f_fss_type_header_part5_s       f_fss_minus_s
   #define f_fss_type_header_close_s       f_string_eol_s
-#endif // _di_f_fss_types_t_
+#endif // _di_f_fss_type_s_
 
 /**
  * FSS-specific delimiters.
  */
-#ifndef _di_f_fss_delimiters_
+#ifndef _di_f_fss_placeholder_s_
   #define F_fss_placeholder_s F_string_placeholder_s
 
   #define F_fss_placeholder_s_length F_string_placeholder_s_length
 
   #define f_fss_placeholder_s f_string_placeholder_s
-#endif //_di_f_fss_delimiters_
+#endif //_di_f_fss_placeholder_s_
 
 /**
  * Provide strings used by FSS.
@@ -114,7 +114,7 @@ extern "C" {
  *   - header:  String representing the header Object name.
  *   - payload: String representing the payload Object name.
  */
-#ifndef _di_f_fss_strings_
+#ifndef _di_f_fss_s_
   #define F_fss_string_header_s  "header"
   #define F_fss_string_payload_s "payload"
 
@@ -123,7 +123,7 @@ extern "C" {
 
   extern const f_string_static_t f_fss_string_header_s;
   extern const f_string_static_t f_fss_string_payload_s;
-#endif // _di_f_fss_strings_
+#endif // _di_f_fss_s_
 
 /**
  * Codes for every known FSS standard.
@@ -146,7 +146,7 @@ extern "C" {
  *   - payload:                  FSS-000E: Payload.
  *   - simple_packet:            FSS-000F: Simple Packet.
  */
-#ifndef _di_f_fss_codes_
+#ifndef _di_f_fss_e_
   enum {
     f_fss_basic_e = 1,
     f_fss_extended_e,
@@ -165,7 +165,7 @@ extern "C" {
     f_fss_payload_e,
     f_fss_simple_packet_e,
   };
-#endif // _di_f_fss_codes_
+#endif // _di_f_fss_e_
 
 /**
  * Codes for FSS completeness.
@@ -184,7 +184,7 @@ extern "C" {
  *   - partial:      Complete, but do not add terminating EOL, where applicable.
  *   - partial_trim: Complete, but do not add terminating EOL and remove any leading or trailing whitespace, where applicable.
  */
-#ifndef _di_f_fss_complete_
+#ifndef _di_f_fss_complete_e_
   enum {
     f_fss_complete_none_e = 1,
     f_fss_complete_end_e,
@@ -194,7 +194,7 @@ extern "C" {
     f_fss_complete_partial_e,
     f_fss_complete_partial_trim_e,
   };
-#endif // _di_f_fss_complete_
+#endif // _di_f_fss_complete_e_
 
 /**
  * FSS-specific Status codes.
@@ -202,27 +202,27 @@ extern "C" {
 enum {
   F_fss_status_code_first = F_status_code_last + 1,
 
-  #ifndef _di_f_fss_status_error_
+  #ifndef _di_f_fss_status_error_e_
     F_fss_format,
     F_fss_format_eos,
-  #endif // _di_f_fss_status_error_
+  #endif // _di_f_fss_status_error_e_
 
-  #ifndef _di_f_fss_status_warning_
+  #ifndef _di_f_fss_status_warning_e_
     F_fss_accepted_invalid,
     F_fss_accepted_invalid_eos,
-  #endif // _di_f_fss_status_warning_
+  #endif // _di_f_fss_status_warning_e_
 
-  #ifndef _di_f_fss_status_success_
+  #ifndef _di_f_fss_status_success_e_
     F_fss_found_content,
     F_fss_found_object,
     F_fss_found_object_content_not,
     F_fss_found_content_not,
     F_fss_found_object_not,
-  #endif // _di_f_fss_status_success_
+  #endif // _di_f_fss_status_success_e_
 
-  #ifndef _di_f_fss_status_codes_
+  #ifndef _di_f_fss_status_codes_e_
     F_fss_found_comment,
-  #endif // _di_f_fss_status_codes_
+  #endif // _di_f_fss_status_codes_e_
 
   F_fss_status_code_last,
 }; // enum
@@ -231,15 +231,6 @@ enum {
  * Default allocation steps.
  *
  * Recommended to be set to at least 4 to be UTF-8 friendlier.
- */
-#ifndef _di_f_fss_default_allocation_step_
-  #define F_fss_default_allocation_step_d       F_memory_default_allocation_small_d
-  #define F_fss_default_allocation_step_small_d F_memory_default_allocation_small_d
-  #define F_fss_default_allocation_step_large_d F_memory_default_allocation_large_d
-#endif // _di_f_fss_default_allocation_step_
-
-/**
- * Common FSS defaults.
  *
  * F_fss_default_*:
  *   - block_size_huge:   The "huge" size in blocks to process for an FSS related task.
@@ -247,12 +238,16 @@ enum {
  *   - block_size_small:  The "small" size in blocks to process for an FSS related task.
  *   - block_size_tiny:   The "tiny" size in blocks to process for an FSS related task.
  */
-#ifndef _di_f_fss_defaults_
+#ifndef _di_f_fss_default_d_
+  #define F_fss_default_allocation_step_d       F_memory_default_allocation_small_d
+  #define F_fss_default_allocation_step_small_d F_memory_default_allocation_small_d
+  #define F_fss_default_allocation_step_large_d F_memory_default_allocation_large_d
+
   #define F_fss_default_block_size_huge_d   65536
   #define F_fss_default_block_size_normal_d 16384
   #define F_fss_default_block_size_small_d  4096
   #define F_fss_default_block_size_tiny_d   512
-#endif // _di_f_fss_defaults_
+#endif // _di_f_fss_default_d_
 
 /**
  * This is a range that represents an object.
@@ -367,12 +362,12 @@ enum {
  *   - none:                  No flags are set.
  *   - utf_fail_on_valid_not: Immediately fail on invalid UTF-8 character (including incomplete).
  */
-#ifndef _di_f_fss_state_flags_
+#ifndef _di_f_fss_state_flag_e_
   enum {
     f_fss_state_flag_none_e                  = 0,
     f_fss_state_flag_utf_fail_on_valid_not_e = 0x1,
   }; // enum
-#endif // _di_f_fss_state_flags_
+#endif // _di_f_fss_state_flag_e_
 
 #ifdef __cplusplus
 } // extern "C"

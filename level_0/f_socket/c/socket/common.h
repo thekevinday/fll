@@ -23,10 +23,10 @@ extern "C" {
  *   - read_size:  Default read size in bytes.
  *   - write_size: Default write size in bytes.
  */
-#ifndef _di_f_socket_defaults_
+#ifndef _di_f_socket_default_d_
   #define F_socket_default_read_size_d  8192
   #define F_socket_default_write_size_d 8192
-#endif // _di_f_socket_defaults_
+#endif // _di_f_socket_default_d_
 
 /**
  * Socket Closes.
@@ -37,14 +37,14 @@ extern "C" {
  *   - read_write: Read/Write close, as in shutdown(, SHUT_RDWR).
  *   - write:      Write close, as in shutdown(, SHUT_WR).
  */
-#ifndef _di_f_socket_closes_
+#ifndef _di_f_socket_close_e_
   enum {
     f_socket_close_fast_e = 1,
     f_socket_close_read_e,
     f_socket_close_write_e,
     f_socket_close_read_write_e,
   };
-#endif // _di_f_socket_closes_
+#endif // _di_f_socket_close_e_
 
 /**
  * Socket protocol families, referred to as a domain.
@@ -61,7 +61,7 @@ extern "C" {
  *   - radio:         Amateur Radio.
  *   - x25:           ITU-T X.25 / ISO-8208 protocol
  */
-#ifndef _di_f_socket_domains_
+#ifndef _di_f_socket_domain_d_
   #define f_socket_domain_apple_talk_d    AF_APPLETALK
   #define f_socket_domain_atm_d           AF_ATMPVC
   #define f_socket_domain_cryptographic_d AF_ALG
@@ -72,7 +72,7 @@ extern "C" {
   #define f_socket_domain_kernel_d        AF_NETLINK
   #define f_socket_domain_radio_d         AF_AX25
   #define f_socket_domain_x25_d           AF_X25
-#endif // _di_f_socket_domains_
+#endif // _di_f_socket_domain_d_
 
 /**
  * Socket Options.
@@ -142,7 +142,7 @@ extern "C" {
  *   - wifi_status:              Wifi status.
  *   - zero_copy_d               Zero copy.
  */
-#ifndef _di_f_socket_options_
+#ifndef _di_f_socket_option_d_
   #define f_socket_option_address_reuse_d            SO_REUSEADDR
   #define f_socket_option_advice_cnx_d               SO_CNX_ADVICE
   #define f_socket_option_bpf_attach_d               SO_ATTACH_BPF
@@ -206,7 +206,7 @@ extern "C" {
   #define f_socket_option_type_d                     SO_TYPE
   #define f_socket_option_wifi_status_d              SO_WIFI_STATUS
   #define f_socket_option_zero_copy_d                SO_ZEROCOPY
-#endif // _di_f_socket_options_
+#endif // _di_f_socket_option_d_
 
 /**
  * Socket Flags.
@@ -227,7 +227,7 @@ extern "C" {
  *   - wait_all:      Block until the full request is satisfied.
  *   - wait_not:      Use non-blocking.
  */
-#ifndef _di_f_socket_flags_
+#ifndef _di_f_socket_flag_d_
   #define f_socket_flag_close_on_exit_d MSG_CMSG_CLOEXEC
   #define f_socket_flag_confirm_d       MSG_CONFIRM
   #define f_socket_flag_error_queue_d   MSG_ERRQUEUE
@@ -240,7 +240,7 @@ extern "C" {
   #define f_socket_flag_truncate_d      MSG_TRUNC
   #define f_socket_flag_wait_all_d      MSG_WAITALL
   #define f_socket_flag_wait_not_d      MSG_DONTWAIT
-#endif // _di_f_socket_flags_
+#endif // _di_f_socket_flag_d_
 
 /**
  * Socket Message Flags.
@@ -254,13 +254,13 @@ extern "C" {
  *   - truncate:         The data has been truncated due to lack of space in the buffer.
  *   - truncate_control: The control data has been truncated due to lack of space in the buffer.
  */
-#ifndef _di_f_socket_message_flags_
+#ifndef _di_f_socket_message_flag_d_
   #define f_socket_message_flag_error_queue_d      MSG_ERRQUEUE
   #define f_socket_message_flag_out_of_band_d      MSG_OOB
   #define f_socket_message_flag_record_end_d       MSG_EOR
   #define f_socket_message_flag_truncate_d         MSG_TRUNC
   #define f_socket_message_flag_truncate_control_d MSG_CTRUNC
-#endif // _di_f_socket_flags_
+#endif // _di_f_socket_flag_d_
 
 /**
  * Socket types.
@@ -274,7 +274,7 @@ extern "C" {
  *   - raw:               Raw access.
  *   - stream:            Stream.
  */
-#ifndef _di_f_socket_types_
+#ifndef _di_f_socket_type_d_
   #define f_socket_type_close_on_execute_d  SOCK_CLOEXEC
   #define f_socket_type_datagram_d          SOCK_DGRAM
   #define f_socket_type_datagram_reliable_d SOCK_RDM
@@ -282,7 +282,7 @@ extern "C" {
   #define f_socket_type_nonblocking_d       SOCK_NONBLOCK
   #define f_socket_type_raw_d               SOCK_RAW
   #define f_socket_type_stream_d            SOCK_STREAM
-#endif // _di_f_socket_types_
+#endif // _di_f_socket_type_d_
 
 /**
  * Commonly used socket related properties, loosely based off of f_file_t.

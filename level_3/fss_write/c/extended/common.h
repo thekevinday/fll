@@ -19,7 +19,7 @@ extern "C" {
 /**
  * The FSS-0001 (Extended) specific strings.
  */
-#ifndef _di_fss_write_extended_strings_
+#ifndef _di_fss_write_extended_s_
   #define FSS_WRITE_extended_standard_s "FSS-0001 (Extended)"
 
   #define FSS_WRITE_extended_program_name_s      "fss_extended_write"
@@ -46,7 +46,7 @@ extern "C" {
   extern const f_string_static_t fss_write_format_code_short_0001_s;
   extern const f_string_static_t fss_write_format_code_long_0001_s;
   extern const f_string_static_t fss_write_format_code_human_0001_s;
-#endif // _di_fss_write_extended_strings_
+#endif // _di_fss_write_extended_s_
 
 #ifdef __cplusplus
 } // extern "C"

@@ -4,16 +4,16 @@
 extern "C" {
 #endif
 
-#ifndef _di_fss_identify_program_version_
+#ifndef _di_fss_identify_program_version_s_
   const f_string_static_t fss_identify_program_version_s = macro_f_string_static_t_initialize(FSS_IDENTIFY_program_version_s, 0, FSS_IDENTIFY_program_version_s_length);
-#endif // _di_fss_identify_program_version_
+#endif // _di_fss_identify_program_version_s_
 
-#ifndef _di_fss_identify_program_name_
+#ifndef _di_fss_identify_program_name_s_
   const f_string_static_t fss_identify_program_name_s = macro_f_string_static_t_initialize(FSS_IDENTIFY_program_name_s, 0, FSS_IDENTIFY_program_name_s_length);
   const f_string_static_t fss_identify_program_name_long_s = macro_f_string_static_t_initialize(FSS_IDENTIFY_program_name_long_s, 0, FSS_IDENTIFY_program_name_long_s_length);
-#endif // _di_fss_identify_program_name_
+#endif // _di_fss_identify_program_name_s_
 
-#ifndef _di_fss_identify_parameters_
+#ifndef _di_fss_identify_parameter_d_
   const f_string_static_t fss_identify_short_content_s = macro_f_string_static_t_initialize(FSS_IDENTIFY_short_content_s, 0, FSS_IDENTIFY_short_content_s_length);
   const f_string_static_t fss_identify_short_line_s = macro_f_string_static_t_initialize(FSS_IDENTIFY_short_line_s, 0, FSS_IDENTIFY_short_line_s_length);
   const f_string_static_t fss_identify_short_name_s = macro_f_string_static_t_initialize(FSS_IDENTIFY_short_name_s, 0, FSS_IDENTIFY_short_name_s_length);
@@ -25,7 +25,7 @@ extern "C" {
   const f_string_static_t fss_identify_long_name_s = macro_f_string_static_t_initialize(FSS_IDENTIFY_long_name_s, 0, FSS_IDENTIFY_long_name_s_length);
   const f_string_static_t fss_identify_long_object_s = macro_f_string_static_t_initialize(FSS_IDENTIFY_long_object_s, 0, FSS_IDENTIFY_long_object_s_length);
   const f_string_static_t fss_identify_long_total_s = macro_f_string_static_t_initialize(FSS_IDENTIFY_long_total_s, 0, FSS_IDENTIFY_long_total_s_length);
-#endif // _di_fss_identify_parameters_
+#endif // _di_fss_identify_parameter_d_
 
 #ifndef _di_fss_identify_setting_delete_
   f_status_t fss_identify_setting_delete(fss_identify_setting_t * const setting) {

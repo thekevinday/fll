@@ -3,10 +3,10 @@
 // FLL-2 includes.
 #include <fll/level_2/fss_status_string.h>
 
-#ifndef _di_status_code_program_name_
+#ifndef _di_status_code_program_name_s_
   const f_string_static_t status_code_program_name_s = macro_f_string_static_t_initialize(STATUS_CODE_program_name_s, 0, STATUS_CODE_program_name_s_length);
   const f_string_static_t status_code_program_name_long_s = macro_f_string_static_t_initialize(STATUS_CODE_program_name_long_s, 0, STATUS_CODE_program_name_long_s_length);
-#endif // _di_status_code_program_name_
+#endif // _di_status_code_program_name_s_
 
 int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 

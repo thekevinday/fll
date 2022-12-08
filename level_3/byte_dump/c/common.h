@@ -19,7 +19,7 @@ extern "C" {
 /**
  * The program version.
  */
-#ifndef _di_byte_dump_program_version_
+#ifndef _di_byte_dump_program_version_d_
   #define BYTE_DUMP_program_version_major_s F_string_ascii_0_s
   #define BYTE_DUMP_program_version_minor_s F_string_ascii_7_s
   #define BYTE_DUMP_program_version_micro_s F_string_ascii_0_s
@@ -43,12 +43,12 @@ extern "C" {
   #define BYTE_DUMP_program_version_s_length BYTE_DUMP_program_version_major_s_length + F_string_ascii_period_s_length + BYTE_DUMP_program_version_minor_s_length + F_string_ascii_period_s_length + BYTE_DUMP_program_version_micro_s_length + BYTE_DUMP_program_version_nano_prefix_s_length + BYTE_DUMP_program_version_nano_s_length
 
   extern const f_string_static_t byte_dump_program_version_s;
-#endif // _di_byte_dump_program_version_
+#endif // _di_byte_dump_program_version_d_
 
 /**
  * The program name.
  */
-#ifndef _di_byte_dump_program_name_
+#ifndef _di_byte_dump_program_name_s_
   #define BYTE_DUMP_program_name_s      "byte_dump"
   #define BYTE_DUMP_program_name_long_s "Byte Dump"
 
@@ -57,12 +57,12 @@ extern "C" {
 
   extern const f_string_static_t byte_dump_program_name_s;
   extern const f_string_static_t byte_dump_program_name_long_s;
-#endif // _di_byte_dump_program_name_
+#endif // _di_byte_dump_program_name_s_
 
 /**
  * The program strings for printing.
  */
-#ifndef _di_byte_dump_print_strings_
+#ifndef _di_byte_dump_print_s_
   #define BYTE_DUMP_print_strings_hexidecimal_s "Hexidecimal"
   #define BYTE_DUMP_print_strings_duodecimal_s  "Duodecimal"
   #define BYTE_DUMP_print_strings_octal_s       "Octal"
@@ -80,17 +80,26 @@ extern "C" {
   extern const f_string_static_t byte_dump_print_strings_octal_s;
   extern const f_string_static_t byte_dump_print_strings_binary_s;
   extern const f_string_static_t byte_dump_print_strings_decimal_s;
-#endif // _di_byte_dump_print_strings_
+#endif // _di_byte_dump_print_s_
 
 /**
  * Set to at least 4 to provide a UTF-8 friendly allocation step.
  */
-#ifndef _di_byte_dump_default_allocation_step_
+#ifndef _di_byte_dump_default_d_
   #define byte_dump_default_allocation_step_d 4
-#endif // _di_byte_dump_default_allocation_step_
+#endif // _di_byte_dump_default_d_
 
 /**
  * The program defines.
+ */
+#ifndef _di_byte_dump_d_
+  #define byte_dump_option_wide_d 0x1
+
+  #define byte_dump_signal_check_d 20000
+#endif // _di_byte_dump_d_
+
+/**
+ * The program enumerations.
  *
  * byte_dump_mode_*:
  *   - hexidecimal: Display using hexidecimal notation (base 16).
@@ -104,25 +113,26 @@ extern "C" {
  *   - simple:  Simple presentation mode.
  *   - classic: Classic presentation mode.
  */
-#ifndef _di_byte_dump_defines_
+#ifndef _di_byte_dump_e_
   enum {
     byte_dump_mode_hexidecimal_e = 1,
     byte_dump_mode_duodecimal_e,
     byte_dump_mode_octal_e,
     byte_dump_mode_binary_e,
     byte_dump_mode_decimal_e,
-  };
+  }; // enum
 
   enum {
     byte_dump_presentation_normal_e = 1,
     byte_dump_presentation_simple_e,
     byte_dump_presentation_classic_e,
-  };
+  }; // enum
+#endif // _di_byte_dump_e_
 
-  #define byte_dump_option_wide_d 0x1
-
-  #define byte_dump_signal_check_d 20000
-
+/**
+ * The program strings.
+ */
+#ifndef _di_byte_dump_s_
   #define BYTE_DUMP_character_wall_s        "|"
   #define BYTE_DUMP_character_placeholder_s "␣" // Other likely choices: (substitute form 1: '␚', substitute form 2: '␦').
   #define BYTE_DUMP_character_incomplete_s  "�"
@@ -137,7 +147,7 @@ extern "C" {
   extern const f_string_static_t byte_dump_character_placeholder_s;
   extern const f_string_static_t byte_dump_character_incomplete_s;
   extern const f_string_static_t byte_dump_character_unused_s;
-#endif // _di_byte_dump_defines_
+#endif // _di_byte_dump_s_
 
 /**
  * The program parameters.
@@ -163,7 +173,7 @@ extern "C" {
  *   - simple:  Use simple presentation, displaying spaces for ASCII special codes instead of UTF-8 sequence codes.
  *   - classic: Use classic presentation, displaying periods for ASCII special codes instead of UTF-8 sequence codes.
  */
-#ifndef _di_byte_dump_parameters_
+#ifndef _di_byte_dump_parameter_d_
   #define BYTE_DUMP_short_binary_s      "b"
   #define BYTE_DUMP_short_decimal_s     "d"
   #define BYTE_DUMP_short_duodecimal_s  "D"
@@ -305,7 +315,7 @@ extern "C" {
     byte_dump_parameter_normal_e,
     byte_dump_parameter_simple_e,
     byte_dump_parameter_classic_e,
-  };
+  }; // enum
 
   #define byte_dump_console_parameter_t_initialize \
     { \
@@ -341,7 +351,7 @@ extern "C" {
     }
 
   #define byte_dump_total_parameters_d 28
-#endif // _di_byte_dump_parameters_
+#endif // _di_byte_dump_parameter_d_
 
 /**
  * Flags used to represent flags passed to the main function.
@@ -368,7 +378,7 @@ extern "C" {
     byte_dump_main_flag_strip_invalid_e = 0x20,
     byte_dump_main_flag_verify_e        = 0x40,
     byte_dump_main_flag_version_e       = 0x80,
-  };
+  }; // enum
 #endif // _di_byte_dump_main_flag_e_
 
 /**

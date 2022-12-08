@@ -4,7 +4,7 @@
 extern "C" {
 #endif
 
-#ifndef _di_f_path_defines_
+#ifndef _di_f_path_d_
   const f_string_static_t f_path_separator_s = macro_f_string_static_t_initialize(F_string_ascii_slash_forward_s, 0, F_string_ascii_slash_forward_s_length);
   const f_string_static_t f_path_separator_current_s = macro_f_string_static_t_initialize(F_string_ascii_period_s, 0, F_string_ascii_period_s_length);
   const f_string_static_t f_path_separator_variable_s = macro_f_string_static_t_initialize(F_string_ascii_colon_s, 0, F_string_ascii_colon_s_length);
@@ -15,9 +15,9 @@ extern "C" {
   const f_string_static_t f_path_home_wildcard_s = macro_f_string_static_t_initialize(F_string_ascii_tilde_s, 0, F_string_ascii_tilde_s_length);
   const f_string_static_t f_path_present_working_s = macro_f_string_static_t_initialize(F_path_present_working_s, 0, F_path_present_working_s_length);
   const f_string_static_t f_path_present_working_old_s = macro_f_string_static_t_initialize(F_path_present_working_old_s, 0, F_path_present_working_old_s_length);
-#endif // _di_f_path_defines_
+#endif // _di_f_path_d_
 
-#if defined(_di_f_path_tree_s_) && !defined(_di_f_path_tree_hierarchy_standard_) && !defined(_di_f_path_tree_kevux_standard_)
+#if defined(_di_f_path_tree_s_) && !defined(_di_f_path_tree_hierarchy_standard_d_) && !defined(_di_f_path_tree_kevux_standard_d_)
 
   // KFS Root Level.
   const f_string_static_t f_path_tree_devices_s = macro_f_string_static_t_initialize(F_path_tree_devices_s, 0, F_path_tree_devices_s_length);
@@ -81,7 +81,7 @@ extern "C" {
   const f_string_static_t f_path_user_data_s = macro_f_string_static_t_initialize(F_path_user_data_s, 0, F_path_user_data_s_length);
   const f_string_static_t f_path_user_temporary_s = macro_f_string_static_t_initialize(F_path_user_temporary_s, 0, F_path_user_temporary_s_length);
   const f_string_static_t f_path_user_shared_s = macro_f_string_static_t_initialize(F_path_user_shared_s, 0, F_path_user_shared_s_length);
-#endif // defined(_di_f_path_tree_s_) && !defined(_di_f_path_tree_hierarchy_standard_) && !defined(_di_f_path_tree_kevux_standard_)
+#endif // defined(_di_f_path_tree_s_) && !defined(_di_f_path_tree_hierarchy_standard_d_) && !defined(_di_f_path_tree_kevux_standard_d_)
 
 #ifdef __cplusplus
 } // extern "C"

@@ -8,7 +8,7 @@
 //#define _di_f_color_context_t_
 //#define _di_f_color_format_t_
 //#define _di_f_color_load_context_
-//#define _di_f_color_max_size_
+//#define _di_f_color_max_size_d_
 //#define _di_f_color_mode_t_
 #define _di_f_color_save_1_
 #define _di_f_color_save_2_
@@ -18,7 +18,7 @@
 //#define _di_f_color_set_context_t_
 //#define _di_f_color_set_string_empty_s_
 //#define _di_f_color_set_t_
-//#define _di_f_color_string_s_
+//#define _di_f_color_s_
 //#define _di_f_color_strings_s_
 //#define _di_f_color_t_
 //#define _di_f_color_terminal_s_
@@ -52,10 +52,10 @@
 //#define _di_f_conversion_character_to_duodecimal_
 //#define _di_f_conversion_character_to_hexidecimal_
 //#define _di_f_conversion_character_to_octal_
-//#define _di_f_conversion_data_flag_
+//#define _di_f_conversion_data_flag_d_
 //#define _di_f_conversion_data_t_
-#define _di_f_conversion_data_t_defines_
-//#define _di_f_conversion_digits_d_
+#define _di_f_conversion_data_d_
+//#define _di_f_conversion_d_
 //#define _di_f_conversion_number_signed_print_
 #define _di_f_conversion_number_signed_to_string_
 //#define _di_f_conversion_number_unsigned_print_
@@ -63,8 +63,8 @@
 
 #define _di_f_file_access_
 #define _di_f_file_access_at_
-#define _di_f_file_access_modes_
-#define _di_f_file_at_
+#define _di_f_file_access_mode_d_
+#define _di_f_file_at_d_
 #define _di_f_file_clone_
 //#define _di_f_file_close_
 #define _di_f_file_close_flush_
@@ -81,7 +81,7 @@
 #define _di_f_file_descriptor_
 //#define _di_f_file_exists_
 #define _di_f_file_exists_at_
-//#define _di_f_file_flag_
+//#define _di_f_file_flag_d_
 #define _di_f_file_flush_
 #define _di_f_file_group_read_
 #define _di_f_file_is_
@@ -104,8 +104,8 @@
 #define _di_f_file_name_directory_
 #define _di_f_file_open_
 #define _di_f_file_open_at_
-//#define _di_f_file_open_modes_
-//#define _di_f_file_operation_strings_
+//#define _di_f_file_open_mode_s_
+//#define _di_f_file_operation_s_
 #define _di_f_file_owner_read_
 #define _di_f_file_read_
 #define _di_f_file_read_block_
@@ -117,14 +117,14 @@
 #define _di_f_file_role_change_
 #define _di_f_file_role_change_at_
 #define _di_f_file_seek_
-#define _di_f_file_seeks_
+#define _di_f_file_seeks_d_
 #define _di_f_file_size_
 #define _di_f_file_size_at_
 #define _di_f_file_size_by_id_
 #define _di_f_file_stat_
 #define _di_f_file_stat_at_
 #define _di_f_file_stat_by_id_
-#define _di_f_file_stat_flags_
+#define _di_f_file_stat_flags_e_
 //#define _di_f_file_stream_close_
 //#define _di_f_file_stream_open_
 #define _di_f_file_stream_open_descriptor_
@@ -141,7 +141,7 @@
 #define _di_f_file_touch_at_
 #define _di_f_file_type_
 #define _di_f_file_type_at_
-#define _di_f_file_types_
+#define _di_f_file_type_d_
 #define _di_f_file_umask_get_
 #define _di_f_file_umask_set_
 #define _di_f_file_write_
@@ -150,7 +150,7 @@
 #define _di_f_file_write_until_
 
 #define _di_f_memory_adjust_
-//#define _di_f_memory_default_allocation_step_
+//#define _di_f_memory_default_d_
 #define _di_f_memory_delete_
 #define _di_f_memory_destroy_
 #define _di_f_memory_new_
@@ -208,15 +208,15 @@
 #define _di_f_print_except_raw_
 #define _di_f_print_except_raw_safely_
 #define _di_f_print_except_safely_
-//#define _di_f_print_format_flag_
-//#define _di_f_print_format_type_
+//#define _di_f_print_format_flag_d_
+//#define _di_f_print_format_type_e_
 //#define _di_f_print_raw_
 //#define _di_f_print_raw_safely_
 #define _di_f_print_raw_terminated_
 //#define _di_f_print_safely_
 #define _di_f_print_safely_get_
 //#define _di_f_print_safely_terminated_
-//#define _di_f_print_sequences_
+//#define _di_f_print_sequence_s_
 //#define _di_f_print_sequences_set_control_s_
 //#define _di_f_print_terminated_
 #define _di_f_print_to_
@@ -260,7 +260,7 @@
 #define _di_f_print_to_safely_
 #define _di_f_print_to_safely_terminated_
 #define _di_f_print_to_terminated_
-//#define _di_f_print_write_max_
+//#define _di_f_print_write_max_d_
 
 #define _di_f_signal_action_
 //#define _di_f_signal_close_
@@ -751,7 +751,7 @@
 
 #define _di_f_utf_buffer_decrement_
 #define _di_f_utf_buffer_increment_
-//#define _di_f_utf_byte_
+//#define _di_f_utf_byte_d_
 #define _di_f_utf_character_is_
 #define _di_f_utf_character_is_alphabetic_
 #define _di_f_utf_character_is_alphabetic_digit_
@@ -788,7 +788,7 @@
 #define _di_f_utf_character_unicode_string_to_
 #define _di_f_utf_character_unicode_to_
 //#define _di_f_utf_char_t_
-#define _di_f_utf_char_t_codes_
+#define _di_f_utf_char_s_
 #define _di_f_utf_char_to_char_
 //#define _di_f_utf_char_to_character_
 #define _di_f_utf_is_
@@ -823,7 +823,7 @@
 #define _di_f_utf_is_word_dash_
 #define _di_f_utf_is_word_dash_plus_
 #define _di_f_utf_is_zero_width_
-#define _di_f_utf_space_
+#define _di_f_utf_space_s_
 #define _di_f_utf_string_append_
 #define _di_f_utf_string_append_assure_
 #define _di_f_utf_string_append_assure_nulless_
@@ -955,15 +955,15 @@
 //#define _di_f_utf_string_tripless_t_
 //#define _di_f_utf_string_triples_t_
 //#define _di_f_utf_string_triple_t_
-#define _di_f_utf_substitute_
+#define _di_f_utf_substitute_s_
 //#define _di_f_utf_unicode_from_
 //#define _di_f_utf_unicode_string_to_
 //#define _di_f_utf_unicode_to_
-#define _di_f_utf_widths_t_
+#define _di_f_utf_width_e_
 
-//#define _di_fl_conversion_data_flag_
+//#define _di_fl_conversion_data_flag_d_
 //#define _di_fl_conversion_data_t_
-//#define _di_fl_conversion_data_t_defines_
+//#define _di_fl_conversion_data_c_
 #define _di_fl_conversion_dynamic_partial_to_signed_
 #define _di_fl_conversion_dynamic_partial_to_signed_detect_
 #define _di_fl_conversion_dynamic_partial_to_unsigned_
@@ -1055,7 +1055,7 @@
 #define _di_fl_string_seek_to_utf_character_
 
 //#define _di_fll_error_file_print_
-//#define _di_fll_error_file_type_
+//#define _di_fll_error_file_type_e_
 #define _di_fll_error_parameter_integer_print_
 //#define _di_fll_error_print_
 
@@ -1150,7 +1150,7 @@
 #define _di_fll_program_parameter_long_print_cannot_use_with_
 //#define _di_fll_program_parameter_process_
 //#define _di_fll_program_parameter_process_empty_
-#define _di_fll_program_parameters_
+#define _di_fll_program_parameter_s_
 //#define _di_fll_program_print_help_header_
 //#define _di_fll_program_print_help_option_
 #define _di_fll_program_print_help_option_long_

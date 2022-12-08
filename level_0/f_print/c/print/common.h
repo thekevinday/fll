@@ -28,9 +28,9 @@ extern "C" {
  *
  * This is documented in the man write(2) pages under Linux to being 0x7ffff000 regardless of 32-bit or 64-bit.
  */
-#ifndef _di_f_print_write_max_
+#ifndef _di_f_print_write_max_d_
  #define F_print_write_max_d 0x7ffff000
-#endif // _di_f_print_write_max_
+#endif // _di_f_print_write_max_d_
 
 /**
  * Common print sequences.
@@ -42,7 +42,7 @@ extern "C" {
  *
  * The code currently expects these to be 3-bytes wide so changing this to any other width will require changing code that utilizes these.
  */
-#ifndef _di_f_print_sequences_
+#ifndef _di_f_print_sequence_s_
   #define F_print_sequence_acknowledge_s               "␆"
   #define F_print_sequence_acknowledge_negative_s      "␕"
   #define F_print_sequence_backspace_s                 "␈"
@@ -153,7 +153,7 @@ extern "C" {
   extern const f_string_static_t f_print_sequence_tab_s;
   extern const f_string_static_t f_print_sequence_tab_vertical_s;
   extern const f_string_static_t f_print_sequence_unknown_s;
-#endif // _di_f_print_sequences_
+#endif // _di_f_print_sequence_s_
 
 /**
  * A map for converting control ASCII codes into the representation sequences.
@@ -189,7 +189,7 @@ extern "C" {
  *
  * @see fprintf()
  */
-#ifndef _di_f_print_format_flag_
+#ifndef _di_f_print_format_flag_d_
   #define F_print_format_flag_align_left_d      0x1
   #define F_print_format_flag_convert_d         0x2
   #define F_print_format_flag_exponent_d        0x4
@@ -241,7 +241,7 @@ extern "C" {
  *
  * @see fprintf()
  */
-#ifndef _di_f_print_format_type_
+#ifndef _di_f_print_format_type_e_
   enum {
     f_print_format_type_character_e = 1,
     f_print_format_type_character_safe_e,
@@ -269,7 +269,7 @@ extern "C" {
     f_print_format_type_unsigned_128_e,
     f_print_format_type_unsigned_number_e,
   };
-#endif // _di_f_print_format_type_
+#endif // _di_f_print_format_type_e_
 
 #ifdef __cplusplus
 } // extern "C"

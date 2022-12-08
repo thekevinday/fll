@@ -1,7 +1,7 @@
 #define _di_f_file_access_
 #define _di_f_file_access_at_
-#define _di_f_file_access_modes_
-#define _di_f_file_at_
+#define _di_f_file_access_mode_d_
+#define _di_f_file_at_d_
 #define _di_f_file_clone_
 #define _di_f_file_close_
 #define _di_f_file_copy_
@@ -16,7 +16,7 @@
 #define _di_f_file_descriptor_
 #define _di_f_file_exists_
 #define _di_f_file_exists_at_
-#define _di_f_file_flag_
+#define _di_f_file_flag_d_
 #define _di_f_file_flush_
 #define _di_f_file_group_read_
 #define _di_f_file_is_
@@ -39,8 +39,8 @@
 #define _di_f_file_name_directory_
 #define _di_f_file_open_
 #define _di_f_file_open_at_
-#define _di_f_file_open_modes_
-#define _di_f_file_operation_strings_
+#define _di_f_file_open_mode_s_
+#define _di_f_file_operation_s_
 #define _di_f_file_owner_read_
 #define _di_f_file_read_
 #define _di_f_file_read_block_
@@ -52,14 +52,14 @@
 #define _di_f_file_role_change_
 #define _di_f_file_role_change_at_
 #define _di_f_file_seek_
-#define _di_f_file_seeks_
+#define _di_f_file_seeks_d_
 #define _di_f_file_size_
 #define _di_f_file_size_at_
 #define _di_f_file_size_by_id_
 #define _di_f_file_stat_
 #define _di_f_file_stat_at_
 #define _di_f_file_stat_by_id_
-#define _di_f_file_stat_flags_
+#define _di_f_file_stat_flags_e_
 #define _di_f_file_stream_close_
 #define _di_f_file_stream_flush_
 #define _di_f_file_stream_lock_
@@ -79,7 +79,7 @@
 #define _di_f_file_touch_at_
 #define _di_f_file_type_
 #define _di_f_file_type_at_
-#define _di_f_file_types_
+#define _di_f_file_type_d_
 #define _di_f_file_umask_get_
 #define _di_f_file_umask_set_
 #define _di_f_file_write_

@@ -4,20 +4,20 @@
 extern "C" {
 #endif
 
-#ifndef _di_utf8_program_version_
+#ifndef _di_utf8_program_version_s_
   const f_string_static_t utf8_program_version_s = macro_f_string_static_t_initialize(UTF8_program_version_s, 0, UTF8_program_version_s_length);
-#endif // _di_utf8_program_version_
+#endif // _di_utf8_program_version_s_
 
-#ifndef _di_utf8_program_name_
+#ifndef _di_utf8_program_name_s_
   const f_string_static_t utf8_program_name_s = macro_f_string_static_t_initialize(UTF8_program_name_s, 0, UTF8_program_name_s_length);
   const f_string_static_t utf8_program_name_long_s = macro_f_string_static_t_initialize(UTF8_program_name_long_s, 0, UTF8_program_name_long_s_length);
-#endif // _di_utf8_program_name_
+#endif // _di_utf8_program_name_s_
 
-#ifndef _di_utf8_program_help_parameters_
+#ifndef _di_utf8_program_help_parameters_s_
   const f_string_static_t utf8_program_help_parameters_s = macro_f_string_static_t_initialize(UTF8_program_help_parameters_s, 0, UTF8_program_help_parameters_s_length);
-#endif // _di_utf8_program_help_parameters_
+#endif // _di_utf8_program_help_parameters_s_
 
-#ifndef _di_utf8_defines_
+#ifndef _di_utf8_s_
   const f_string_static_t utf8_string_combining_is_s = macro_f_string_static_t_initialize(UTF8_string_combining_is_s, 0, UTF8_string_combining_is_s_length);
   const f_string_static_t utf8_string_combining_not_s = macro_f_string_static_t_initialize(UTF8_string_combining_not_s, 0, UTF8_string_combining_not_s_length);
   const f_string_static_t utf8_string_unknown_s = macro_f_string_static_t_initialize(UTF8_string_unknown_s, 0, UTF8_string_unknown_s_length);
@@ -37,9 +37,9 @@ extern "C" {
   const f_string_static_t utf8_string_width_2_s = macro_f_string_static_t_initialize(UTF8_string_width_2_s, 0, UTF8_string_width_2_s_length);
   const f_string_static_t utf8_string_width_3_s = macro_f_string_static_t_initialize(UTF8_string_width_3_s, 0, UTF8_string_width_3_s_length);
   const f_string_static_t utf8_string_width_4_s = macro_f_string_static_t_initialize(UTF8_string_width_4_s, 0, UTF8_string_width_4_s_length);
-#endif // _di_utf8_defines_
+#endif // _di_utf8_s_
 
-#ifndef _di_utf8_parameters_
+#ifndef _di_utf8_parameter_d_
   const f_string_static_t utf8_short_from_bytesequence_s = macro_f_string_static_t_initialize(UTF8_short_from_bytesequence_s, 0, UTF8_short_from_bytesequence_s_length);
   const f_string_static_t utf8_short_from_codepoint_s = macro_f_string_static_t_initialize(UTF8_short_from_codepoint_s, 0, UTF8_short_from_codepoint_s_length);
   const f_string_static_t utf8_short_from_file_s = macro_f_string_static_t_initialize(UTF8_short_from_file_s, 0, UTF8_short_from_file_s_length);
@@ -69,7 +69,7 @@ extern "C" {
   const f_string_static_t utf8_long_to_combining_s = macro_f_string_static_t_initialize(UTF8_long_to_combining_s, 0, UTF8_long_to_combining_s_length);
   const f_string_static_t utf8_long_to_file_s = macro_f_string_static_t_initialize(UTF8_long_to_file_s, 0, UTF8_long_to_file_s_length);
   const f_string_static_t utf8_long_to_width_s = macro_f_string_static_t_initialize(UTF8_long_to_width_s, 0, UTF8_long_to_width_s_length);
-#endif // _di_utf8_parameters_
+#endif // _di_utf8_parameter_d_
 
 #ifndef _di_utf8_setting_delete_
   f_status_t utf8_setting_delete(utf8_setting_t * const setting) {

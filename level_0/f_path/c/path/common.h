@@ -18,6 +18,13 @@ extern "C" {
 
 /**
  * Standard path defines.
+ */
+#ifndef _di_f_path_d_
+  #define F_path_length_max_d PATH_MAX
+#endif // _di_f_path_d_
+
+/**
+ * Standard path strings.
  *
  * The path separator, intended to be represented as a single character.
  * The path separator length must be a 1-byte wide character.
@@ -31,7 +38,7 @@ extern "C" {
  *
  * The path extension separator is for the separator that separates the main part of a file path with its extension (which is generally a '.').
  */
-#ifndef _di_f_path_defines_
+#ifndef _di_f_path_s_
   #define F_path_separator_s          F_string_ascii_slash_forward_s
   #define F_path_separator_current_s  F_string_ascii_period_s
   #define F_path_separator_variable_s F_string_ascii_colon_s
@@ -54,8 +61,6 @@ extern "C" {
   #define F_path_present_working_s_length     3
   #define F_path_present_working_old_s_length 6
 
-  #define F_path_length_max_d PATH_MAX
-
   extern const f_string_static_t f_path_separator_s;
   extern const f_string_static_t f_path_separator_current_s;
   extern const f_string_static_t f_path_separator_variable_s;
@@ -66,15 +71,15 @@ extern "C" {
   extern const f_string_static_t f_path_home_wildcard_s;
   extern const f_string_static_t f_path_present_working_s;
   extern const f_string_static_t f_path_present_working_old_s;
-#endif // _di_f_path_defines_
+#endif // _di_f_path_s_
 
 /**
  * KFS Filesystem Paths
  */
-#ifndef _di_f_path_tree_kevux_standard_
+#ifndef _di_f_path_tree_kevux_standard_d_
 
   // Disable the FHS default paths.
-  #define _di_f_path_tree_hierarchy_standard_
+  #define _di_f_path_tree_hierarchy_standard_d_
 
   // KFS Root Level.
   #define F_path_tree_devices_s   F_path_separator_s "devices"
@@ -193,15 +198,15 @@ extern "C" {
   #define F_path_tree_user_data_s_length      4
   #define F_path_tree_user_temporary_s_length 9
   #define F_path_tree_user_shared_s_length    6
-#endif // _di_f_path_tree_kevux_standard_
+#endif // _di_f_path_tree_kevux_standard_d_
 
 /**
  * FHS Filesystem Paths
  */
-#ifndef _di_f_path_tree_hierarchy_standard_
+#ifndef _di_f_path_tree_hierarchy_standard_d_
 
   // Disable the kevux standard default paths.
-  #define _di_f_path_tree_kevux_standard_
+  #define _di_f_path_tree_kevux_standard_d_
 
   // KFS Root Level.
   #define F_path_tree_devices_s   F_path_separator_s
@@ -320,9 +325,9 @@ extern "C" {
   #define F_path_tree_user_data_s_length      0
   #define F_path_tree_user_temporary_s_length 0
   #define F_path_tree_user_shared_s_length    0
-#endif // _di_f_path_tree_hierarchy_standard_
+#endif // _di_f_path_tree_hierarchy_standard_d_
 
-#if defined(_di_f_path_tree_s_) && !defined(_di_f_path_tree_hierarchy_standard_) && !defined(_di_f_path_tree_kevux_standard_)
+#if defined(_di_f_path_tree_s_) && !defined(_di_f_path_tree_hierarchy_standard_d_) && !defined(_di_f_path_tree_kevux_standard_d_)
 
   // KFS Root Level.
   extern const f_string_static_t f_path_tree_devices_s;
@@ -386,7 +391,7 @@ extern "C" {
   extern const f_string_static_t f_path_user_data_s;
   extern const f_string_static_t f_path_user_temporary_s;
   extern const f_string_static_t f_path_user_shared_s;
-#endif // defined(_di_f_path_tree_s_) && !defined(_di_f_path_tree_hierarchy_standard_) && !defined(_di_f_path_tree_kevux_standard_)
+#endif // defined(_di_f_path_tree_s_) && !defined(_di_f_path_tree_hierarchy_standard_d_) && !defined(_di_f_path_tree_kevux_standard_d_)
 
 #ifdef __cplusplus
 } // extern "C"

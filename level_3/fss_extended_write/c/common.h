@@ -19,7 +19,7 @@ extern "C" {
 /**
  * The program version.
  */
-#ifndef _di_fss_extended_write_program_version_
+#ifndef _di_fss_extended_write_program_version_s_
   #define FSS_EXTENDED_WRITE_program_version_major_s F_string_ascii_0_s
   #define FSS_EXTENDED_WRITE_program_version_minor_s F_string_ascii_7_s
   #define FSS_EXTENDED_WRITE_program_version_micro_s F_string_ascii_0_s
@@ -43,12 +43,12 @@ extern "C" {
   #define FSS_EXTENDED_WRITE_program_version_s_length FSS_EXTENDED_WRITE_program_version_major_s_length + F_string_ascii_period_s_length + FSS_EXTENDED_WRITE_program_version_minor_s_length + F_string_ascii_period_s_length + FSS_EXTENDED_WRITE_program_version_micro_s_length + FSS_EXTENDED_WRITE_program_version_nano_prefix_s_length + FSS_EXTENDED_WRITE_program_version_nano_s_length
 
   extern const f_string_static_t fss_extended_write_program_version_s;
-#endif // _di_fss_extended_write_program_version_
+#endif // _di_fss_extended_write_program_version_s_
 
 /**
  * The program name.
  */
-#ifndef _di_fss_extended_write_program_name_
+#ifndef _di_fss_extended_write_program_name_s_
   #define FSS_EXTENDED_WRITE_program_name_s      "fss_extended_write"
   #define FSS_EXTENDED_WRITE_program_name_long_s "FSS Extended Write"
 
@@ -57,10 +57,17 @@ extern "C" {
 
   extern const f_string_static_t fss_extended_write_program_name_s;
   extern const f_string_static_t fss_extended_write_program_name_long_s;
-#endif // _di_fss_extended_write_program_name_
+#endif // _di_fss_extended_write_program_name_s_
 
 /**
- * The main program defines.
+ * The main program signal defines.
+ */
+#ifndef _di_fss_extended_write_d_
+  #define fss_extended_write_signal_check_d 20000
+#endif // _di_fss_extended_write_d_
+
+/**
+ * The main program pipe strings.
  *
  * fss_extended_write_pipe_*:
  *   - name:           A name used to represent the pipe when printing file names.
@@ -68,9 +75,7 @@ extern "C" {
  *   - content_ignore: A code used to represent the ignoring Content for use in binary formats.
  *   - content_start:  A code used to represent the start of Content for use in binary formats.
  */
-#ifndef _di_fss_extended_write_defines_
-  #define fss_extended_write_signal_check_d 20000
-
+#ifndef _di_fss_extended_write_pipe_s_
   #define FSS_EXTENDED_WRITE_pipe_name_s "(pipe)"
 
   #define FSS_EXTENDED_WRITE_pipe_content_end_s    "\f"
@@ -88,12 +93,12 @@ extern "C" {
   extern const f_string_static_t fss_extended_write_pipe_content_end_s;
   extern const f_string_static_t fss_extended_write_pipe_content_ignore_s;
   extern const f_string_static_t fss_extended_write_pipe_content_start_s;
-#endif // _di_fss_extended_write_defines_
+#endif // _di_fss_extended_write_pipe_s_
 
 /**
  * The main program parameters.
  */
-#ifndef _di_fss_extended_write_parameters_
+#ifndef _di_fss_extended_write_parameter_d_
   #define FSS_EXTENDED_WRITE_short_file_s    "f"
   #define FSS_EXTENDED_WRITE_short_content_s "c"
   #define FSS_EXTENDED_WRITE_short_double_s  "d"
@@ -177,7 +182,7 @@ extern "C" {
     fss_extended_write_parameter_prepend_e,
     fss_extended_write_parameter_single_e,
     fss_extended_write_parameter_trim_e,
-  };
+  }; // enum
 
   #define fss_extended_write_console_parameter_t_initialize \
     { \
@@ -206,7 +211,7 @@ extern "C" {
     }
 
   #define fss_extended_write_total_parameters_d 20
-#endif // _di_fss_extended_write_parameters_
+#endif // _di_fss_extended_write_parameter_d_
 
 /**
  * Flags used to represent flags passed to the main function.
@@ -233,7 +238,7 @@ extern "C" {
     fss_extended_write_main_flag_strip_invalid_e = 0x20,
     fss_extended_write_main_flag_verify_e        = 0x40,
     fss_extended_write_main_flag_version_e       = 0x80,
-  };
+  }; // enum
 #endif // _di_fss_extended_write_main_flag_e_
 
 /**

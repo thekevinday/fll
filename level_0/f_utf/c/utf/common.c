@@ -4,13 +4,13 @@
 extern "C" {
 #endif
 
-#ifndef _di_f_utf_char_t_codes_
+#ifndef _di_f_utf_char_s_
   const f_utf_char_t f_utf_char_t_eol_s = (f_utf_char_t) F_utf_char_t_eol_s;
   const f_utf_char_t f_utf_char_t_eos_s = (f_utf_char_t) F_utf_char_t_eol_s;
   const f_utf_char_t f_utf_char_t_placeholder_s = (f_utf_char_t) F_utf_char_t_eol_s;
-#endif // _di_f_utf_char_t_codes_
+#endif // _di_f_utf_char_s_
 
-#ifndef _di_f_utf_space_
+#ifndef _di_f_utf_space_s_
   const f_char_t f_utf_space_em_s[F_utf_space_em_s_length]                     = { 0xe2, 0x80, 0x83 };
   const f_char_t f_utf_space_em_quad_s[F_utf_space_em_quad_s_length]           = { 0xe2, 0x80, 0x81 };
   const f_char_t f_utf_space_em_per_three_s[F_utf_space_em_per_three_s_length] = { 0xe2, 0x80, 0x84 };
@@ -37,9 +37,9 @@ extern "C" {
 
   const f_char_t f_utf_space_separator_line_s[F_utf_space_separator_line_s_length]           = { 0xe2, 0x80, 0xa8 };
   const f_char_t f_utf_space_separator_paragraph_s[F_utf_space_separator_paragraph_s_length] = { 0xe2, 0x80, 0xa8 };
-#endif // _di_f_utf_space_
+#endif // _di_f_utf_space_s_
 
-#ifndef _di_f_utf_substitute_
+#ifndef _di_f_utf_substitute_s_
   const f_char_t f_utf_substitute_symbol_blank_s[F_utf_substitute_symbol_blank_s_length] = { 0xe2, 0x90, 0xa2 };
   const f_char_t f_utf_substitute_symbol_space_s[F_utf_substitute_symbol_space_s_length] = { 0xe2, 0x90, 0xa0 };
 
@@ -47,7 +47,7 @@ extern "C" {
 
   const f_char_t f_utf_substitute_open_box_s[F_utf_substitute_open_box_s_length]                       = { 0xe2, 0x90, 0xa3 };
   const f_char_t f_utf_substitute_open_box_shouldered_s[F_utf_substitute_open_box_shouldered_s_length] = { 0xe2, 0x8d, 0xbd };
-#endif // _di_f_utf_substitute_
+#endif // _di_f_utf_substitute_s_
 
 #ifdef __cplusplus
 } // extern "C"

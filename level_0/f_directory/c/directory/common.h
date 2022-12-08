@@ -16,7 +16,7 @@
 extern "C" {
 #endif
 
-#ifndef _di_f_directory_string_
+#ifndef _di_f_directory_s_
   #define F_directory_back_s    ".."
   #define F_directory_current_s "."
 
@@ -25,12 +25,12 @@ extern "C" {
 
   extern const f_string_static_t f_directory_back_s;
   extern const f_string_static_t f_directory_current_s;
-#endif // _di_f_directory_string_
+#endif // _di_f_directory_s_
 
 /**
  * Directory AT_* define related functionality.
  */
-#ifndef _di_f_directory_at_
+#ifndef _di_f_directory_at_d_
   #define F_directory_at_current_working_d    -100
   #define F_directory_at_symlink_follow_d     0x400
   #define F_directory_at_symlink_follow_no_d  0x100
@@ -41,12 +41,12 @@ extern "C" {
   #define F_directory_at_statx_sync_as_stat_d 0x0000
   #define F_directory_at_statx_sync_force_d   0x2000
   #define F_directory_at_statx_sync_no_d      0x4000
-#endif // _di_f_directory_at_
+#endif // _di_f_directory_at_d_
 
 /**
  * Directory flag related functionality.
  */
-#ifndef _di_f_directory_flag_
+#ifndef _di_f_directory_flag_d_
 
   // directory open flags
   #define F_directory_flag_append_d             O_APPEND
@@ -69,7 +69,7 @@ extern "C" {
   #define F_directory_flag_temporary_d          O_TMPFILE
   #define F_directory_flag_truncate_d           O_TRUNC
   #define F_directory_flag_write_only_d         O_WRONLY
-#endif // _di_f_directory_flag_
+#endif // _di_f_directory_flag_d_
 
 /**
  * Provide limitations and related defines.
@@ -77,7 +77,7 @@ extern "C" {
  * The directory max descriptors is more of a default than a rule.
  * This is generally used for nftw() recursive operations to reduce the number of open file descriptors during recursion.
  */
-#ifndef _di_f_directory_limitations_
+#ifndef _di_f_directory_d_
   #define F_directory_default_allocation_step_d F_memory_default_allocation_small_d
 
   #define F_directory_descriptors_max_d 255
@@ -87,7 +87,7 @@ extern "C" {
   #else
     #define F_directory_name_max_d 255
   #endif // NAME_MAX
-#endif // _di_f_directory_limitations_
+#endif // _di_f_directory_d_
 
 #ifdef __cplusplus
 } // extern "C"
