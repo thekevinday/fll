@@ -12,7 +12,7 @@ version_micro 0
 version_file micro
 version_target minor
 
-modes stand_alone
+modes stand_alone clang
 modes_default stand_alone
 
 build_compiler gcc
@@ -107,7 +107,6 @@ defines-clang -D_clang_not_a_compile_time_constant_workaround_
 
 flags -O2 -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-parentheses
 flags-clang -Wno-logical-op-parentheses
-flags-test -fstack-protector
 
 flags_library -fPIC
 flags_object -fPIC
