@@ -92,13 +92,13 @@
 #define _di_f_file_link_hard_at_
 #define _di_f_file_link_read_
 #define _di_f_file_link_read_at_
-#define _di_f_file_mode_
 #define _di_f_file_mode_determine_
 #define _di_f_file_mode_from_string_
 #define _di_f_file_mode_read_
 #define _di_f_file_mode_read_at_
 #define _di_f_file_mode_set_
 #define _di_f_file_mode_set_at_
+#define _di_f_file_mode_t_
 #define _di_f_file_mode_to_mode_
 #define _di_f_file_name_base_
 #define _di_f_file_name_directory_
@@ -281,6 +281,27 @@
 //#define _di_f_signal_t_
 #define _di_f_signal_wait_
 #define _di_f_signal_wait_until_
+
+//#define _di_f_status_access_
+//#define _di_f_status_array_
+//#define _di_f_status_available_
+//#define _di_f_status_basic_
+//#define _di_f_status_boolean_
+//#define _di_f_status_buffer_
+//#define _di_f_status_buffers_
+//#define _di_f_status_busy_
+//#define _di_f_status_compare_
+//#define _di_f_status_directory_
+//#define _di_f_status_end_
+//#define _di_f_status_file_
+//#define _di_f_status_filesystem_
+//#define _di_f_status_network_
+//#define _di_f_status_number_
+//#define _di_f_status_process_
+//#define _di_f_status_return_
+//#define _di_f_status_signal_
+//#define _di_f_status_socket_
+//#define _di_f_status_terminal_
 
 //#define _di_f_char_t_
 #define _di_f_string_append_
