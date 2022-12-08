@@ -5,8 +5,8 @@
 #define _di_f_fss_comments_t_
 #define _di_f_fss_comment_t_
 #define _di_f_fss_complete_
-#define _di_f_fss_content_
 #define _di_f_fss_contents_t_
+#define _di_f_fss_content_t_
 #define _di_f_fss_count_lines_
 #define _di_f_fss_count_lines_range_
 #define _di_f_fss_default_allocation_step_

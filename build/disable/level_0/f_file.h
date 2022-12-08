@@ -27,13 +27,13 @@
 #define _di_f_file_link_hard_at_
 #define _di_f_file_link_read_
 #define _di_f_file_link_read_at_
-#define _di_f_file_mode_
 #define _di_f_file_mode_determine_
 #define _di_f_file_mode_from_string_
 #define _di_f_file_mode_read_
 #define _di_f_file_mode_read_at_
 #define _di_f_file_mode_set_
 #define _di_f_file_mode_set_at_
+#define _di_f_file_mode_t_
 #define _di_f_file_mode_to_mode_
 #define _di_f_file_name_base_
 #define _di_f_file_name_directory_
