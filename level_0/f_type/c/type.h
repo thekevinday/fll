@@ -37,14 +37,14 @@ extern "C" {
  *   - visibility_public:    Visibility is public.
  *   - weak:                 Designate symbol is weak rather than global.
  */
-#ifndef _di_compiler_attributes_
+#ifndef _di_compiler_attributes_d_
   #define F_attribute_visibility_hidden_d    __attribute__((visibility("hidden")))
   #define F_attribute_visibility_internal_d  __attribute__((visibility("internal")))
   #define F_attribute_visibility_protected_d __attribute__((visibility("protected")))
   #define F_attribute_visibility_public_d    __attribute__((visibility("default")))
 
   #define F_attribute_weak_d __attribute__((weak))
-#endif // _di_compiler_attributes_
+#endif // _di_compiler_attributes_d_
 
 /**
  * A status intended to be used as the return value status of some function or operation.
