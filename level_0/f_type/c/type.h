@@ -310,7 +310,7 @@ extern "C" {
  * This may need to be set to a signed 64-bit integer on some system (or a smaller unsigned).
  * There are problems, however, with signed integers and binary operations as well as with overflows to be aware of.
  */
-#ifndef _di_f_array_t_
+#ifndef _di_f_array_length_t_
   typedef f_number_unsigned_t f_array_length_t;
 
   #define f_array_length_t_initialize 0
@@ -319,7 +319,7 @@ extern "C" {
 
   #define F_array_length_t_size_d     F_number_t_size_unsigned_d
   #define F_array_length_t_size_max_d F_number_t_size_max_unsigned_d
-#endif // _di_f_array_t_
+#endif // _di_f_array_length_t_
 
 /**
  * A structure designating a row and column, just like a cell in a table.
