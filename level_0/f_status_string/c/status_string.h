@@ -21,8 +21,8 @@
 extern "C" {
 #endif
 
-#ifndef _di_f_status_string_
-  #ifndef _di_f_status_boolean_
+#ifndef _di_f_status_string_s_
+  #ifndef _di_f_status_boolean_s_
     #define F_status_false_s "F_false"
     #define F_status_true_s  "F_true"
 
@@ -31,9 +31,9 @@ extern "C" {
 
     extern const f_string_static_t f_status_false_s;
     extern const f_string_static_t f_status_true_s;
-  #endif // _di_f_status_boolean_
+  #endif // _di_f_status_boolean_s_
 
-  #ifndef _di_f_status_signal_
+  #ifndef _di_f_status_signal_s_
     #define F_status_signal_hangup_s               "F_signal_hangup"
     #define F_status_signal_interrupt_s            "F_signal_interrupt"
     #define F_status_signal_quit_s                 "F_signal_quit"
@@ -228,9 +228,9 @@ extern "C" {
     extern const f_string_static_t f_status_signal_reserved_62_s;
     extern const f_string_static_t f_status_signal_reserved_63_s;
     extern const f_string_static_t f_status_signal_reserved_64_s;
-  #endif // _di_f_status_signal_
+  #endif // _di_f_status_signal_s_
 
-  #ifndef _di_f_status_basic_
+  #ifndef _di_f_status_basic_s_
     #define F_status_none_s              "F_none"
     #define F_status_abort_s             "F_abort"
     #define F_status_abort_not_s         "F_abort_not"
@@ -1114,9 +1114,9 @@ extern "C" {
     extern const f_string_static_t f_status_write_only_s;
     extern const f_string_static_t f_status_yes_s;
     extern const f_string_static_t f_status_yes_not_s;
-  #endif // _di_f_status_basic_
+  #endif // _di_f_status_basic_s_
 
-  #ifndef _di_f_status_return_
+  #ifndef _di_f_status_return_s_
     #define F_status_debug_s       "F_debug"
     #define F_status_debug_not_s   "F_debug_not"
     #define F_status_error_s       "F_error"
@@ -1143,9 +1143,9 @@ extern "C" {
     extern const f_string_static_t f_status_fine_not_s;
     extern const f_string_static_t f_status_warning_s;
     extern const f_string_static_t f_status_warning_not_s;
-  #endif // _di_f_status_return_
+  #endif // _di_f_status_return_s_
 
-  #ifndef _di_f_status_array_
+  #ifndef _di_f_status_array_s_
     #define F_status_array_s           "F_array"
     #define F_status_array_not_s       "F_array_not"
     #define F_status_array_too_large_s "F_array_too_large"
@@ -1160,9 +1160,9 @@ extern "C" {
     extern const f_string_static_t f_status_array_not_s;
     extern const f_string_static_t f_status_array_too_large_s;
     extern const f_string_static_t f_status_array_too_small_s;
-  #endif // _di_f_status_array_
+  #endif // _di_f_status_array_s_
 
-  #ifndef _di_f_status_available_
+  #ifndef _di_f_status_available_s_
     #define F_status_available_s             "F_available"
     #define F_status_available_not_s         "F_available_not"
     #define F_status_available_not_address_s "F_available_not_address"
@@ -1192,9 +1192,9 @@ extern "C" {
     extern const f_string_static_t f_status_available_not_port_s;
     extern const f_string_static_t f_status_available_not_process_s;
     extern const f_string_static_t f_status_available_not_socket_s;
-  #endif // _di_f_status_available_
+  #endif // _di_f_status_available_s_
 
-  #ifndef _di_f_status_busy_
+  #ifndef _di_f_status_busy_s_
     #define F_status_busy_s         "F_busy"
     #define F_status_busy_address_s "F_busy_address"
     #define F_status_busy_buffer_s  "F_busy_buffer"
@@ -1224,9 +1224,9 @@ extern "C" {
     extern const f_string_static_t f_status_busy_port_s;
     extern const f_string_static_t f_status_busy_process_s;
     extern const f_string_static_t f_status_busy_socket_s;
-  #endif // _di_f_status_busy_
+  #endif // _di_f_status_busy_s_
 
-  #ifndef _di_f_status_network_
+  #ifndef _di_f_status_network_s_
     #define F_status_network_s                  "F_network"
     #define F_status_network_busy_s             "F_network_busy"
     #define F_status_network_busy_not_s         "F_network_busy_not"
@@ -1295,9 +1295,9 @@ extern "C" {
     extern const f_string_static_t f_status_network_server_not_s;
     extern const f_string_static_t f_status_network_time_s;
     extern const f_string_static_t f_status_network_time_not_s;
-  #endif // _di_f_status_network_
+  #endif // _di_f_status_network_s_
 
-  #ifndef _di_f_status_number_
+  #ifndef _di_f_status_number_s_
     #define F_status_number_s                "F_number"
     #define F_status_number_decimal_s        "F_number_decimal"
     #define F_status_number_decimal_not_s    "F_number_decimal_not"
@@ -1351,9 +1351,9 @@ extern "C" {
     extern const f_string_static_t f_status_number_whole_not_s;
     extern const f_string_static_t f_status_number_zero_s;
     extern const f_string_static_t f_status_number_zero_not_s;
-  #endif // _di_f_status_number_
+  #endif // _di_f_status_number_s_
 
-  #ifndef _di_f_status_buffer_
+  #ifndef _di_f_status_buffer_s_
     #define F_status_buffer_s                 "F_buffer"
     #define F_status_buffer_not_s             "F_buffer_not"
     #define F_status_buffer_overflow_s        "F_buffer_overflow"
@@ -1449,9 +1449,9 @@ extern "C" {
     extern const f_string_static_t f_status_data_not_eos_s;
     extern const f_string_static_t f_status_data_not_start_s;
     extern const f_string_static_t f_status_data_not_stop_s;
-  #endif // _di_f_status_buffer_
+  #endif // _di_f_status_buffer_s_
 
-  #ifndef _di_f_status_end_
+  #ifndef _di_f_status_end_s_
     #define F_status_end_s                 "F_end"
     #define F_status_end_not_s             "F_end_not"
     #define F_status_end_not_block_s       "F_end_not_block"
@@ -1529,9 +1529,9 @@ extern "C" {
     extern const f_string_static_t f_status_end_not_nest_eos_s;
     extern const f_string_static_t f_status_end_not_nest_start_s;
     extern const f_string_static_t f_status_end_not_nest_stop_s;
-  #endif // _di_f_status_end_
+  #endif // _di_f_status_end_s_
 
-  #ifndef _di_f_status_process_
+  #ifndef _di_f_status_process_s_
     #define F_status_process_s          "F_process"
     #define F_status_process_not_s      "F_process_not"
     #define F_status_process_too_many_s "F_process_too_many"
@@ -1543,9 +1543,9 @@ extern "C" {
     extern const f_string_static_t f_status_process_s;
     extern const f_string_static_t f_status_process_not_s;
     extern const f_string_static_t f_status_process_too_many_s;
-  #endif // _di_f_status_process_
+  #endif // _di_f_status_process_s_
 
-  #ifndef _di_f_status_file_
+  #ifndef _di_f_status_file_s_
     #define F_status_file_s                    "F_file"
     #define F_status_file_close_s              "F_file_close"
     #define F_status_file_closed_s             "F_file_closed"
@@ -1677,9 +1677,9 @@ extern "C" {
     extern const f_string_static_t f_status_file_utf_s;
     extern const f_string_static_t f_status_file_utf_not_s;
     extern const f_string_static_t f_status_file_write_s;
-  #endif // _di_f_status_file_
+  #endif // _di_f_status_file_s_
 
-  #ifndef _di_f_status_filesystem_
+  #ifndef _di_f_status_filesystem_s_
     #define F_status_filesystem_s               "F_filesystem"
     #define F_status_filesystem_not_s           "F_filesystem_not"
     #define F_status_filesystem_quota_block_s   "F_filesystem_quota_block"
@@ -1694,9 +1694,9 @@ extern "C" {
     extern const f_string_static_t f_status_filesystem_not_s;
     extern const f_string_static_t f_status_filesystem_quota_block_s;
     extern const f_string_static_t f_status_filesystem_quota_reached_s;
-  #endif // _di_f_status_filesystem_
+  #endif // _di_f_status_filesystem_s_
 
-  #ifndef _di_f_status_directory_
+  #ifndef _di_f_status_directory_s_
     #define F_status_directory_s               "F_directory"
     #define F_status_directory_close_s         "F_directory_close"
     #define F_status_directory_closed_s        "F_directory_closed"
@@ -1759,9 +1759,9 @@ extern "C" {
     extern const f_string_static_t f_status_directory_utf_s;
     extern const f_string_static_t f_status_directory_utf_not_s;
     extern const f_string_static_t f_status_directory_write_s;
-  #endif // _di_f_status_directory_
+  #endif // _di_f_status_directory_s_
 
-  #ifndef _di_f_status_socket_
+  #ifndef _di_f_status_socket_s_
     #define F_status_socket_s         "F_socket"
     #define F_status_socket_client_s  "F_socket_client"
     #define F_status_socket_not_s     "F_socket_not"
@@ -1782,9 +1782,9 @@ extern "C" {
     extern const f_string_static_t f_status_socket_receive_s;
     extern const f_string_static_t f_status_socket_send_s;
     extern const f_string_static_t f_status_socket_target_s;
-  #endif // _di_f_status_socket_
+  #endif // _di_f_status_socket_s_
 
-  #ifndef _di_f_status_compare_
+  #ifndef _di_f_status_compare_s_
     #define F_status_equal_to_s     "F_equal_to"
     #define F_status_equal_to_not_s "F_equal_to_not"
     #define F_status_than_greater_s "F_than_greater"
@@ -1799,9 +1799,9 @@ extern "C" {
     extern const f_string_static_t f_status_equal_to_not_s;
     extern const f_string_static_t f_status_than_greater_s;
     extern const f_string_static_t f_status_than_less_s;
-  #endif // _di_f_status_compare_
+  #endif // _di_f_status_compare_s_
 
-  #ifndef _di_f_status_access_
+  #ifndef _di_f_status_access_s_
     #define F_status_access_s                 "F_access"
     #define F_status_access_denied_s          "F_access_denied"
     #define F_status_access_denied_user_s     "F_access_denied_user"
@@ -1867,9 +1867,9 @@ extern "C" {
     extern const f_string_static_t f_status_access_mode_s;
     extern const f_string_static_t f_status_access_not_s;
     extern const f_string_static_t f_status_access_owner_s;
-  #endif // _di_f_status_access_
+  #endif // _di_f_status_access_s_
 
-  #ifndef _di_f_status_terminal_
+  #ifndef _di_f_status_terminal_s_
     #define F_status_terminal_s            "F_terminal"
     #define F_status_terminal_access_s     "F_terminal_access"
     #define F_status_terminal_known_s      "F_terminal_known"
@@ -1902,13 +1902,13 @@ extern "C" {
     extern const f_string_static_t f_status_terminal_valid_s;
     extern const f_string_static_t f_status_terminal_valid_not_s;
     extern const f_string_static_t f_status_terminal_write_s;
-  #endif // _di_f_status_terminal_
+  #endif // _di_f_status_terminal_s_
 
   #define F_status_status_code_last_s "F_status_code_last"
   #define F_status_status_code_last_s_length 18
 
   extern const f_string_static_t f_status_status_code_last_s;
-#endif // _di_f_status_string_
+#endif // _di_f_status_string_s_
 
 /**
  * Convert status codes to their string representation.
