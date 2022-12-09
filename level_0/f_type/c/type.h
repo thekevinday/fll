@@ -171,7 +171,7 @@ extern "C" {
  * For example, F_type_size_8_positive_d is 2^7, or 0 to 127, therefore the max size here is 127.
  * For example, F_type_size_8_unsigned_d is 2^8, or 0 to 255, therefore the max size here is 255.
  */
-#ifndef _di_f_type_sizes_
+#ifndef _di_f_type_sizes_d_
   #define F_type_size_8_negative_d 0x7f
   #define F_type_size_8_positive_d 0x7e
   #define F_type_size_8_unsigned_d 0xfe
@@ -223,7 +223,7 @@ extern "C" {
     #define F_type_size_max_128_positive_d F_type_size_max_64_positive_d
     #define F_type_size_max_128_unsigned_d F_type_size_max_64_unsigned_d
   #endif // _di_f_int_128_t_
-#endif // _di_f_type_sizes_
+#endif // _di_f_type_sizes_d_
 
 /**
  * Custom data type to be used throughout the project to represent general numbers.
@@ -292,7 +292,7 @@ extern "C" {
  *   - input:  Standard input file descriptor.
  *   - output: Standard output file descriptor.
  */
-#ifndef _di_f_type_input_output_
+#ifndef _di_f_type_input_output_d_
   #define F_type_error_d  stderr
   #define F_type_input_d  stdin
   #define F_type_output_d stdout
@@ -300,7 +300,7 @@ extern "C" {
   #define F_type_descriptor_error_d  STDERR_FILENO
   #define F_type_descriptor_input_d  STDIN_FILENO
   #define F_type_descriptor_output_d STDOUT_FILENO
-#endif // _di_f_type_input_output_
+#endif // _di_f_type_input_output_d_
 
 /**
  * Defines a variable to be used by arrays.
