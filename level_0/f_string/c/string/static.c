@@ -12,7 +12,7 @@ extern "C" {
   const f_string_static_t f_string_null_s = macro_f_string_static_t_initialize(F_string_null_s, 0, F_string_null_s_length);
 #endif // _di_f_string_null_s_
 
-#ifndef _di_string_ascii_s_
+#ifndef _di_f_string_ascii_s_
   const f_string_static_t f_string_ascii_0_s = macro_f_string_static_t_initialize(F_string_ascii_0_s, 0, F_string_ascii_0_s_length);
   const f_string_static_t f_string_ascii_1_s = macro_f_string_static_t_initialize(F_string_ascii_1_s, 0, F_string_ascii_1_s_length);
   const f_string_static_t f_string_ascii_2_s = macro_f_string_static_t_initialize(F_string_ascii_2_s, 0, F_string_ascii_2_s_length);
@@ -144,7 +144,7 @@ extern "C" {
   const f_string_static_t f_string_ascii_text_stop_s = macro_f_string_static_t_initialize(F_string_ascii_text_stop_s, 0, F_string_ascii_text_stop_s_length);
   const f_string_static_t f_string_ascii_transmission_stop_s = macro_f_string_static_t_initialize(F_string_ascii_transmission_stop_s, 0, F_string_ascii_transmission_stop_s_length);
   const f_string_static_t f_string_ascii_transmission_block_end_s = macro_f_string_static_t_initialize(F_string_ascii_transmission_block_end_s, 0, F_string_ascii_transmission_block_end_s_length);
-#endif // _di_string_ascii_s_
+#endif // _di_f_string_ascii_s_
 
 #ifdef __cplusplus
 } // extern "C"
