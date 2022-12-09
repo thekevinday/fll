@@ -174,3 +174,4 @@
 #define _di_f_string_tripless_t_
 #define _di_f_string_triples_t_
 #define _di_f_string_triple_t_
+#define _di_string_ascii_s_

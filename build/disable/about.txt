@@ -6,14 +6,23 @@ These files are generated like the following:
 # cd fll/
 
 # cd level_0;
-# for i in * ; do grep -hor '#ifndef _di_f_.*\>' $i | sed -e 's|^#ifndef |#define |g' | sort | uniq > ../build/disable/level_0/$i.h ; done
+# for i in * ; do grep -hor '#ifndef _di_.*\>' $i | sed -e 's|^#ifndef |#define |g' | sort | uniq > ../build/disable/level_0/$i.h ; done
 
 # cd ..
 
 # cd level_1;
-# for i in * ; do grep -hor '#ifndef _di_fl_.*\>' $i | sed -e 's|^#ifndef |#define |g' | sort | uniq > ../build/disable/level_1/$i.h ; done
+# for i in * ; do grep -hor '#ifndef _di_.*\>' $i | sed -e 's|^#ifndef |#define |g' | sort | uniq > ../build/disable/level_1/$i.h ; done
 
 # cd ..
 
 # cd level_2;
-# for i in * ; do grep -hor '#ifndef _di_fll_.*\>' $i | sed -e 's|^#ifndef |#define |g' | sort | uniq > ../build/disable/level_2/$i.h ; done
+# for i in * ; do grep -hor '#ifndef _di_.*\>' $i | sed -e 's|^#ifndef |#define |g' | sort | uniq > ../build/disable/level_2/$i.h ; done
+
+# cd ..
+
+Make sure the parameter checking files do not exist.
+# sed -i -e '/_di_level_0_parameter_checking_/d' -e '/_di_level_1_parameter_checking_/d' -e '/_di_level_2_parameter_checking_/d' build/disable/level_?/*.h
+
+There are some defines that need to be manually removed if they don't belong, such as "_di_pthread_support_" and "_di_libcap_".
+
+Use these files to construct a list of all defines to potentially disable based on the "dependencies" of a given project.
