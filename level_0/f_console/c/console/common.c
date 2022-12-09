@@ -42,9 +42,9 @@ extern "C" {
 
 #ifndef _di_f_console_parameters_delete_
   f_status_t f_console_parameters_delete(f_console_parameters_t * const parameters) {
-    #ifndef _di_level_0_parameters_checking_
+    #ifndef _di_level_0_parameter_checking_
       if (!parameters) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameters_checking_
+    #endif // _di_level_0_parameter_checking_
 
     f_status_t status = F_none;
 
@@ -72,9 +72,9 @@ extern "C" {
 
 #ifndef _di_f_console_parameters_destroy_
   f_status_t f_console_parameters_destroy(f_console_parameters_t * const parameters) {
-    #ifndef _di_level_0_parameters_checking_
+    #ifndef _di_level_0_parameter_checking_
       if (!parameters) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameters_checking_
+    #endif // _di_level_0_parameter_checking_
 
     f_status_t status = F_none;
 

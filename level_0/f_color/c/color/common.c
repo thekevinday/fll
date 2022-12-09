@@ -60,9 +60,9 @@ extern "C" {
 
 #ifndef _di_f_color_context_delete_
   f_status_t f_color_context_delete(f_color_context_t * const context) {
-    #ifndef _di_level_0_parameters_checking_
+    #ifndef _di_level_0_parameter_checking_
       if (!context) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameters_checking_
+    #endif // _di_level_0_parameter_checking_
 
     f_status_t status = F_none;
 
@@ -114,9 +114,9 @@ extern "C" {
 
 #ifndef _di_f_color_context_destroy_
   f_status_t f_color_context_destroy(f_color_context_t * const context) {
-    #ifndef _di_level_0_parameters_checking_
+    #ifndef _di_level_0_parameter_checking_
       if (!context) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameters_checking_
+    #endif // _di_level_0_parameter_checking_
 
     f_status_t status = F_none;
 

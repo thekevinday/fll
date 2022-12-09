@@ -11,9 +11,9 @@ extern "C" {
 
 #ifndef _di_fll_program_data_delete_
   f_status_t fll_program_data_delete(fll_program_data_t * const data) {
-    #ifndef _di_level_2_parameters_checking_
+    #ifndef _di_level_2_parameter_checking_
       if (!data) return F_status_set_error(F_parameter);
-    #endif // _di_level_2_parameters_checking_
+    #endif // _di_level_2_parameter_checking_
 
     f_status_t status = F_none;
 
@@ -29,9 +29,9 @@ extern "C" {
 
 #ifndef _di_fll_program_data_destroy_
   f_status_t fll_program_data_destroy(fll_program_data_t * const data) {
-    #ifndef _di_level_2_parameters_checking_
+    #ifndef _di_level_2_parameter_checking_
       if (!data) return F_status_set_error(F_parameter);
-    #endif // _di_level_2_parameters_checking_
+    #endif // _di_level_2_parameter_checking_
 
     f_status_t status = F_none;
 
