@@ -8,4 +8,3 @@
 #define _di_fl_directory_path_push_
 #define _di_fl_directory_recurse_d_
 #define _di_fl_directory_recurse_t_
-#define _di_level_1_parameter_checking_

@@ -16,4 +16,3 @@
 #define _di_fl_conversion_dynamic_to_signed_detect_
 #define _di_fl_conversion_dynamic_to_unsigned_
 #define _di_fl_conversion_dynamic_to_unsigned_detect_
-#define _di_level_1_parameter_checking_

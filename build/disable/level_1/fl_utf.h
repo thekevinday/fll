@@ -17,4 +17,3 @@
 #define _di_fl_utf_string_seek_line_until_graph_non_
 #define _di_fl_utf_string_seek_to_char_
 #define _di_fl_utf_string_seek_to_character_
-#define _di_level_1_parameter_checking_

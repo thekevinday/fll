@@ -1,3 +1,4 @@
+#define _di_f_char_t_
 #define _di_f_string_append_
 #define _di_f_string_append_assure_
 #define _di_f_string_append_assure_nulless_

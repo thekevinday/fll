@@ -21,4 +21,3 @@
 #define _di_fll_fss_snatch_mash_
 #define _di_fll_fss_snatch_mash_apart_
 #define _di_fll_fss_snatch_together_
-#define _di_level_2_parameter_checking_

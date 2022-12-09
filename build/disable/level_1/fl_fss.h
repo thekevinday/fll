@@ -18,7 +18,6 @@
 #define _di_fl_fss_extended_list_object_write_
 #define _di_fl_fss_extended_object_read_
 #define _di_fl_fss_extended_object_write_
-#define _di_level_1_parameter_checking_
 #define _di_private_macro_fl_fss_content_with_comments_return_on_overflow_
 #define _di_private_macro_fl_fss_nest_return_on_overflow_
 #define _di_private_macro_fl_fss_nest_return_on_overflow_delimited_

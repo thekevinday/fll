@@ -5,4 +5,3 @@
 #define _di_fll_fss_status_string_to_
 #define _di_fll_fss_status_success_
 #define _di_fll_fss_status_warning_
-#define _di_level_2_parameter_checking_

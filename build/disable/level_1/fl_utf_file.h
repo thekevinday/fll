@@ -5,5 +5,3 @@
 #define _di_fl_utf_file_write_block_
 #define _di_fl_utf_file_write_range_
 #define _di_fl_utf_file_write_until_
-#define _di_level_0_parameter_checking_
-#define _di_level_1_parameter_checking_
