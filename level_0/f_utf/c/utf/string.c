@@ -298,7 +298,7 @@ extern "C" {
       return F_data_not_stop;
     }
 
-    while (string[range->start] != f_utf_char_t_eol_s) {
+    while (string[range->start] != f_utf_char_eol_s) {
 
       if (macro_f_utf_char_t_width_is(string[range->start]) == 1) {
         return F_status_set_error(F_utf_fragment);
@@ -327,7 +327,7 @@ extern "C" {
 
     while (string[range->start] != seek_to) {
 
-      if (string[range->start] == f_utf_char_t_eol_s) {
+      if (string[range->start] == f_utf_char_eol_s) {
         return F_none_eol;
       }
 

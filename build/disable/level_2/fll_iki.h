@@ -2,3 +2,4 @@
 #define _di_fll_iki_content_partial_escape_
 #define _di_fll_iki_content_partial_unescape_
 #define _di_fll_iki_content_unescape_
+#define _di_level_2_parameter_checking_

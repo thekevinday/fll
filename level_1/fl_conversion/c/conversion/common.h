@@ -40,7 +40,7 @@ extern "C" {
 /**
  * The defines for conversion data.
  *
- * fl_conversion_data_*:
+ * fl_conversion_data_*_c:
  *   - base_2:        Basic base-2 conversion structure.
  *   - base_8:        Basic base-8 conversion structure.
  *   - base_10:       Basic base-10 conversion structure.
@@ -51,14 +51,33 @@ extern "C" {
  *   - shift_left:    Basic base-10 conversion with shift left flag.
  */
 #ifndef _di_fl_conversion_data_c_
-  extern const fl_conversion_data_t fl_conversion_data_base_2_c;
-  extern const fl_conversion_data_t fl_conversion_data_base_8_c;
-  extern const fl_conversion_data_t fl_conversion_data_base_10_c;
-  extern const fl_conversion_data_t fl_conversion_data_base_12_c;
-  extern const fl_conversion_data_t fl_conversion_data_base_16_c;
-  extern const fl_conversion_data_t fl_conversion_data_endian_big_c;
-  extern const fl_conversion_data_t fl_conversion_data_endian_little_c;
-  extern const fl_conversion_data_t fl_conversion_data_shift_left_c;
+  #ifndef _di_fl_conversion_data_base_2_c_
+    extern const fl_conversion_data_t fl_conversion_data_base_2_c;
+  #endif // _di_fl_conversion_data_base_2_c_
+
+  #ifndef _di_fl_conversion_data_base_8_c_
+    extern const fl_conversion_data_t fl_conversion_data_base_8_c;
+  #endif // _di_fl_conversion_data_base_8_c_
+
+  #ifndef _di_fl_conversion_data_base_10_c_
+    extern const fl_conversion_data_t fl_conversion_data_base_10_c;
+  #endif // _di_fl_conversion_data_base_10_c_
+
+  #ifndef _di_fl_conversion_data_base_12_c_
+    extern const fl_conversion_data_t fl_conversion_data_base_12_c;
+  #endif // _di_fl_conversion_data_base_12_c_
+
+  #ifndef _di_fl_conversion_data_base_16_c_
+    extern const fl_conversion_data_t fl_conversion_data_base_16_c;
+  #endif // _di_fl_conversion_data_base_16_c_
+
+  #ifndef _di_fl_conversion_data_endian_big_c_
+    extern const fl_conversion_data_t fl_conversion_data_endian_big_c;
+  #endif // _di_fl_conversion_data_endian_big_c_
+
+  #ifndef _di_fl_conversion_data_endian_little_c_
+    extern const fl_conversion_data_t fl_conversion_data_endian_little_c;
+  #endif // _di_fl_conversion_data_endian_little_c_
 #endif // _di_fl_conversion_data_c_
 
 /**

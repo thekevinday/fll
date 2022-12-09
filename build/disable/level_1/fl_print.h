@@ -1,3 +1,5 @@
+#define _di_fl_print_debug_s_
+#define _di_fl_print_error_s_
 #define _di_fl_print_format_
 #define _di_fl_print_format_convert_
 #define _di_fl_print_s_
@@ -39,3 +41,5 @@
 #define _di_fl_print_trim_raw_
 #define _di_fl_print_trim_raw_safely_
 #define _di_fl_print_trim_safely_
+#define _di_fl_print_warning_s_
+#define _di_level_1_parameter_checking_

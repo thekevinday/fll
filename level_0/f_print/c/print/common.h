@@ -117,42 +117,149 @@ extern "C" {
   #define F_print_sequence_tab_vertical_s_length              3
   #define F_print_sequence_unknown_s_length                   3
 
-  extern const f_string_static_t f_print_sequence_acknowledge_s;
-  extern const f_string_static_t f_print_sequence_acknowledge_negative_s;
-  extern const f_string_static_t f_print_sequence_backspace_s;
-  extern const f_string_static_t f_print_sequence_bell_s;
-  extern const f_string_static_t f_print_sequence_cancel_s;
-  extern const f_string_static_t f_print_sequence_carriage_return_s;
-  extern const f_string_static_t f_print_sequence_data_link_escape_s;
-  extern const f_string_static_t f_print_sequence_delete_s;
-  extern const f_string_static_t f_print_sequence_device_control_1_s;
-  extern const f_string_static_t f_print_sequence_device_control_2_s;
-  extern const f_string_static_t f_print_sequence_device_control_3_s;
-  extern const f_string_static_t f_print_sequence_device_control_4_s;
-  extern const f_string_static_t f_print_sequence_end_of_medium_s;
-  extern const f_string_static_t f_print_sequence_end_of_text_s;
-  extern const f_string_static_t f_print_sequence_end_of_transmission_s;
-  extern const f_string_static_t f_print_sequence_end_of_transmission_block_s;
-  extern const f_string_static_t f_print_sequence_escape_s;
-  extern const f_string_static_t f_print_sequence_enquiry_s;
-  extern const f_string_static_t f_print_sequence_form_feed_s;
-  extern const f_string_static_t f_print_sequence_line_feed_s;
-  extern const f_string_static_t f_print_sequence_line_new_s;
-  extern const f_string_static_t f_print_sequence_null_s;
-  extern const f_string_static_t f_print_sequence_separator_file_s;
-  extern const f_string_static_t f_print_sequence_separator_group_s;
-  extern const f_string_static_t f_print_sequence_separator_record_s;
-  extern const f_string_static_t f_print_sequence_separator_unit_s;
-  extern const f_string_static_t f_print_sequence_shift_in_s;
-  extern const f_string_static_t f_print_sequence_shift_out_s;
-  extern const f_string_static_t f_print_sequence_space_s;
-  extern const f_string_static_t f_print_sequence_start_of_header_s;
-  extern const f_string_static_t f_print_sequence_start_of_text_s;
-  extern const f_string_static_t f_print_sequence_substitute_s;
-  extern const f_string_static_t f_print_sequence_synchronous_idle_s;
-  extern const f_string_static_t f_print_sequence_tab_s;
-  extern const f_string_static_t f_print_sequence_tab_vertical_s;
-  extern const f_string_static_t f_print_sequence_unknown_s;
+  #ifndef _di_f_print_sequence_acknowledge_s_
+    extern const f_string_static_t f_print_sequence_acknowledge_s;
+  #endif // _di_f_print_sequence_acknowledge_s_
+
+  #ifndef _di_f_print_sequence_acknowledge_negative_s_
+    extern const f_string_static_t f_print_sequence_acknowledge_negative_s;
+  #endif // _di_f_print_sequence_acknowledge_negative_s_
+
+  #ifndef _di_f_print_sequence_backspace_s_
+    extern const f_string_static_t f_print_sequence_backspace_s;
+  #endif // _di_f_print_sequence_backspace_s_
+
+  #ifndef _di_f_print_sequence_bell_s_
+    extern const f_string_static_t f_print_sequence_bell_s;
+  #endif // _di_f_print_sequence_bell_s_
+
+  #ifndef _di_f_print_sequence_cancel_s_
+    extern const f_string_static_t f_print_sequence_cancel_s;
+  #endif // _di_f_print_sequence_cancel_s_
+
+  #ifndef _di_f_print_sequence_carriage_return_s_
+    extern const f_string_static_t f_print_sequence_carriage_return_s;
+  #endif // _di_f_print_sequence_carriage_return_s_
+
+  #ifndef _di_f_print_sequence_data_link_escape_s_
+    extern const f_string_static_t f_print_sequence_data_link_escape_s;
+  #endif // _di_f_print_sequence_data_link_escape_s_
+
+  #ifndef _di_f_print_sequence_delete_s_
+    extern const f_string_static_t f_print_sequence_delete_s;
+  #endif // _di_f_print_sequence_delete_s_
+
+  #ifndef _di_f_print_sequence_device_control_1_s_
+    extern const f_string_static_t f_print_sequence_device_control_1_s;
+  #endif // _di_f_print_sequence_device_control_1_s_
+
+  #ifndef _di_f_print_sequence_device_control_2_s_
+    extern const f_string_static_t f_print_sequence_device_control_2_s;
+  #endif // _di_f_print_sequence_device_control_2_s_
+
+  #ifndef _di_f_print_sequence_device_control_3_s_
+    extern const f_string_static_t f_print_sequence_device_control_3_s;
+  #endif // _di_f_print_sequence_device_control_3_s_
+
+  #ifndef _di_f_print_sequence_device_control_4_s_
+    extern const f_string_static_t f_print_sequence_device_control_4_s;
+  #endif // _di_f_print_sequence_device_control_4_s_
+
+  #ifndef _di_f_print_sequence_end_of_medium_s_
+    extern const f_string_static_t f_print_sequence_end_of_medium_s;
+  #endif // _di_f_print_sequence_end_of_medium_s_
+
+  #ifndef _di_f_print_sequence_end_of_text_s_
+    extern const f_string_static_t f_print_sequence_end_of_text_s;
+  #endif // _di_f_print_sequence_end_of_text_s_
+
+  #ifndef _di_f_print_sequence_end_of_transmission_s_
+    extern const f_string_static_t f_print_sequence_end_of_transmission_s;
+  #endif // _di_f_print_sequence_end_of_transmission_s_
+
+  #ifndef _di_f_print_sequence_end_of_transmission_block_s_
+    extern const f_string_static_t f_print_sequence_end_of_transmission_block_s;
+  #endif // _di_f_print_sequence_end_of_transmission_block_s_
+
+  #ifndef _di_f_print_sequence_enquiry_s_
+    extern const f_string_static_t f_print_sequence_enquiry_s;
+  #endif // _di_f_print_sequence_enquiry_s_
+
+  #ifndef _di_f_print_sequence_escape_s_
+    extern const f_string_static_t f_print_sequence_escape_s;
+  #endif // _di_f_print_sequence_escape_s_
+
+  #ifndef _di_f_print_sequence_form_feed_s_
+    extern const f_string_static_t f_print_sequence_form_feed_s;
+  #endif // _di_f_print_sequence_form_feed_s_
+
+  #ifndef _di_f_print_sequence_line_feed_s_
+    extern const f_string_static_t f_print_sequence_line_feed_s;
+  #endif // _di_f_print_sequence_line_feed_s_
+
+  #ifndef _di_f_print_sequence_line_new_s_
+    extern const f_string_static_t f_print_sequence_line_new_s;
+  #endif // _di_f_print_sequence_line_new_s_
+
+  #ifndef _di_f_print_sequence_null_s_
+    extern const f_string_static_t f_print_sequence_null_s;
+  #endif // _di_f_print_sequence_null_s_
+
+  #ifndef _di_f_print_sequence_separator_file_s_
+    extern const f_string_static_t f_print_sequence_separator_file_s;
+  #endif // _di_f_print_sequence_separator_file_s_
+
+  #ifndef _di_f_print_sequence_separator_group_s_
+    extern const f_string_static_t f_print_sequence_separator_group_s;
+  #endif // _di_f_print_sequence_separator_group_s_
+
+  #ifndef _di_f_print_sequence_separator_record_s_
+    extern const f_string_static_t f_print_sequence_separator_record_s;
+  #endif // _di_f_print_sequence_separator_record_s_
+
+  #ifndef _di_f_print_sequence_separator_unit_s_
+    extern const f_string_static_t f_print_sequence_separator_unit_s;
+  #endif // _di_f_print_sequence_separator_unit_s_
+
+  #ifndef _di_f_print_sequence_shift_in_s_
+    extern const f_string_static_t f_print_sequence_shift_in_s;
+  #endif // _di_f_print_sequence_shift_in_s_
+
+  #ifndef _di_f_print_sequence_shift_out_s_
+    extern const f_string_static_t f_print_sequence_shift_out_s;
+  #endif // _di_f_print_sequence_shift_out_s_
+
+  #ifndef _di_f_print_sequence_space_s_
+    extern const f_string_static_t f_print_sequence_space_s;
+  #endif // _di_f_print_sequence_space_s_
+
+  #ifndef _di_f_print_sequence_start_of_header_s_
+    extern const f_string_static_t f_print_sequence_start_of_header_s;
+  #endif // _di_f_print_sequence_start_of_header_s_
+
+  #ifndef _di_f_print_sequence_start_of_text_s_
+    extern const f_string_static_t f_print_sequence_start_of_text_s;
+  #endif // _di_f_print_sequence_start_of_text_s_
+
+  #ifndef _di_f_print_sequence_substitute_s_
+    extern const f_string_static_t f_print_sequence_substitute_s;
+  #endif // _di_f_print_sequence_substitute_s_
+
+  #ifndef _di_f_print_sequence_synchronous_idle_s_
+    extern const f_string_static_t f_print_sequence_synchronous_idle_s;
+  #endif // _di_f_print_sequence_synchronous_idle_s_
+
+  #ifndef _di_f_print_sequence_tab_s_
+    extern const f_string_static_t f_print_sequence_tab_s;
+  #endif // _di_f_print_sequence_tab_s_
+
+  #ifndef _di_f_print_sequence_tab_vertical_s_
+    extern const f_string_static_t f_print_sequence_tab_vertical_s;
+  #endif // _di_f_print_sequence_tab_vertical_s_
+
+  #ifndef _di_f_print_sequence_unknown_s_
+    extern const f_string_static_t f_print_sequence_unknown_s;
+  #endif // _di_f_print_sequence_unknown_s_
 #endif // _di_f_print_sequence_s_
 
 /**
@@ -160,6 +267,8 @@ extern "C" {
  *
  * The key should represents the ASCII code.
  * With the exception being ASCII code 127, which is not present in this map.
+ *
+ * This is requires all of the sequence strings from the _di_f_print_sequence_s_ block above.
  */
 #ifndef _di_f_print_sequences_set_control_s_
   extern const f_string_static_t f_print_sequence_set_control_s[32];
@@ -207,7 +316,7 @@ extern "C" {
   #define F_print_format_flag_width_d           0x4000
   #define F_print_format_flag_width_value_d     0x8000
   #define F_print_format_flag_zeros_leading_d   0x10000
-#endif // _di_f_print_format_flags_
+#endif // _di_f_print_format_flag_d_
 
 /**
  * Provide type format flags.
@@ -268,7 +377,7 @@ extern "C" {
     f_print_format_type_unsigned_64_e,
     f_print_format_type_unsigned_128_e,
     f_print_format_type_unsigned_number_e,
-  };
+  }; // enum
 #endif // _di_f_print_format_type_e_
 
 #ifdef __cplusplus

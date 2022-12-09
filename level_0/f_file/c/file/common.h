@@ -101,13 +101,33 @@ extern "C" {
   #define F_file_type_name_regular_s_length   7
   #define F_file_type_name_socket_s_length    6
 
-  extern const f_string_static_t f_file_type_name_block_s;
-  extern const f_string_static_t f_file_type_name_character_s;
-  extern const f_string_static_t f_file_type_name_directory_s;
-  extern const f_string_static_t f_file_type_name_fifo_s;
-  extern const f_string_static_t f_file_type_name_link_s;
-  extern const f_string_static_t f_file_type_name_regular_s;
-  extern const f_string_static_t f_file_type_name_socket_s;
+  #ifndef _di_f_file_type_name_block_s_
+    extern const f_string_static_t f_file_type_name_block_s;
+  #endif // _di_f_file_type_name_block_s_
+
+  #ifndef _di_f_file_type_name_character_s_
+    extern const f_string_static_t f_file_type_name_character_s;
+  #endif // _di_f_file_type_name_character_s_
+
+  #ifndef _di_f_file_type_name_directory_s_
+    extern const f_string_static_t f_file_type_name_directory_s;
+  #endif // _di_f_file_type_name_directory_s_
+
+  #ifndef _di_f_file_type_name_fifo_s_
+    extern const f_string_static_t f_file_type_name_fifo_s;
+  #endif // _di_f_file_type_name_fifo_s_
+
+  #ifndef _di_f_file_type_name_link_s_
+    extern const f_string_static_t f_file_type_name_link_s;
+  #endif // _di_f_file_type_name_link_s_
+
+  #ifndef _di_f_file_type_name_regular_s_
+    extern const f_string_static_t f_file_type_name_regular_s;
+  #endif // _di_f_file_type_name_regular_s_
+
+  #ifndef _di_f_file_type_name_socket_s_
+    extern const f_string_static_t f_file_type_name_socket_s;
+  #endif // _di_f_file_type_name_socket_s_
 #endif // _di_f_file_type_s_
 
 /**
@@ -152,12 +172,29 @@ extern "C" {
   #define F_file_open_mode_read_write_s_length    2
   #define F_file_open_mode_truncate_s_length      1
 
-  extern const f_string_static_t f_file_open_mode_append_s;
-  extern const f_string_static_t f_file_open_mode_read_s;
-  extern const f_string_static_t f_file_open_mode_read_append_s;
-  extern const f_string_static_t f_file_open_mode_read_truncate_s;
-  extern const f_string_static_t f_file_open_mode_read_write_s;
-  extern const f_string_static_t f_file_open_mode_truncate_s;
+  #ifndef _di_f_file_open_mode_append_s_
+    extern const f_string_static_t f_file_open_mode_append_s;
+  #endif // _di_f_file_open_mode_append_s_
+
+  #ifndef _di_f_file_open_mode_read_s_
+    extern const f_string_static_t f_file_open_mode_read_s;
+  #endif // _di_f_file_open_mode_read_s_
+
+  #ifndef _di_f_file_open_mode_read_append_s_
+    extern const f_string_static_t f_file_open_mode_read_append_s;
+  #endif // _di_f_file_open_mode_read_append_s_
+
+  #ifndef _di_f_file_open_mode_read_truncate_s_
+    extern const f_string_static_t f_file_open_mode_read_truncate_s;
+  #endif // _di_f_file_open_mode_read_truncate_s_
+
+  #ifndef _di_f_file_open_mode_read_write_s_
+    extern const f_string_static_t f_file_open_mode_read_write_s;
+  #endif // _di_f_file_open_mode_read_write_s_
+
+  #ifndef _di_f_file_open_mode_truncate_s_
+    extern const f_string_static_t f_file_open_mode_truncate_s;
+  #endif // _di_f_file_open_mode_truncate_s_
 #endif // _di_f_file_open_mode_s_
 
 /**
@@ -573,50 +610,181 @@ extern "C" {
   #define F_file_operation_wipe_s_length         4
   #define F_file_operation_write_s_length        5
 
-  extern const f_string_static_t f_file_operation_access_s;
-  extern const f_string_static_t f_file_operation_analyze_s;
-  extern const f_string_static_t f_file_operation_append_s;
-  extern const f_string_static_t f_file_operation_change_group_s;
-  extern const f_string_static_t f_file_operation_change_mode_s;
-  extern const f_string_static_t f_file_operation_change_owner_s;
-  extern const f_string_static_t f_file_operation_change_type_s;
-  extern const f_string_static_t f_file_operation_clone_s;
-  extern const f_string_static_t f_file_operation_close_s;
-  extern const f_string_static_t f_file_operation_concatenate_s;
-  extern const f_string_static_t f_file_operation_connect_s;
-  extern const f_string_static_t f_file_operation_copy_s;
-  extern const f_string_static_t f_file_operation_create_s;
-  extern const f_string_static_t f_file_operation_decrypt_s;
-  extern const f_string_static_t f_file_operation_delete_s;
-  extern const f_string_static_t f_file_operation_disconnect_s;
-  extern const f_string_static_t f_file_operation_encrypt_s;
-  extern const f_string_static_t f_file_operation_find_s;
-  extern const f_string_static_t f_file_operation_from_s;
-  extern const f_string_static_t f_file_operation_flush_s;
-  extern const f_string_static_t f_file_operation_get_group_s;
-  extern const f_string_static_t f_file_operation_get_mode_s;
-  extern const f_string_static_t f_file_operation_get_owner_s;
-  extern const f_string_static_t f_file_operation_get_type_s;
-  extern const f_string_static_t f_file_operation_identify_s;
-  extern const f_string_static_t f_file_operation_link_s;
-  extern const f_string_static_t f_file_operation_list_s;
-  extern const f_string_static_t f_file_operation_move_s;
-  extern const f_string_static_t f_file_operation_open_s;
-  extern const f_string_static_t f_file_operation_pipe_s;
-  extern const f_string_static_t f_file_operation_process_s;
-  extern const f_string_static_t f_file_operation_read_s;
-  extern const f_string_static_t f_file_operation_receive_s;
-  extern const f_string_static_t f_file_operation_rename_s;
-  extern const f_string_static_t f_file_operation_send_s;
-  extern const f_string_static_t f_file_operation_shred_s;
-  extern const f_string_static_t f_file_operation_stat_s;
-  extern const f_string_static_t f_file_operation_to_s;
-  extern const f_string_static_t f_file_operation_touch_s;
-  extern const f_string_static_t f_file_operation_truncate_s;
-  extern const f_string_static_t f_file_operation_unlink_s;
-  extern const f_string_static_t f_file_operation_verify_s;
-  extern const f_string_static_t f_file_operation_wipe_s;
-  extern const f_string_static_t f_file_operation_write_s;
+  #ifndef _di_f_file_operation_access_s_
+    extern const f_string_static_t f_file_operation_access_s;
+  #endif // _di_f_file_operation_access_s_
+
+  #ifndef _di_f_file_operation_analyze_s_
+    extern const f_string_static_t f_file_operation_analyze_s;
+  #endif // _di_f_file_operation_analyze_s_
+
+  #ifndef _di_f_file_operation_append_s_
+    extern const f_string_static_t f_file_operation_append_s;
+  #endif // _di_f_file_operation_append_s_
+
+  #ifndef _di_f_file_operation_change_group_s_
+    extern const f_string_static_t f_file_operation_change_group_s;
+  #endif // _di_f_file_operation_change_group_s_
+
+  #ifndef _di_f_file_operation_change_mode_s_
+    extern const f_string_static_t f_file_operation_change_mode_s;
+  #endif // _di_f_file_operation_change_mode_s_
+
+  #ifndef _di_f_file_operation_change_owner_s_
+    extern const f_string_static_t f_file_operation_change_owner_s;
+  #endif // _di_f_file_operation_change_owner_s_
+
+  #ifndef _di_f_file_operation_change_type_s_
+    extern const f_string_static_t f_file_operation_change_type_s;
+  #endif // _di_f_file_operation_change_type_s_
+
+  #ifndef _di_f_file_operation_clone_s_
+    extern const f_string_static_t f_file_operation_clone_s;
+  #endif // _di_f_file_operation_clone_s_
+
+  #ifndef _di_f_file_operation_close_s_
+    extern const f_string_static_t f_file_operation_close_s;
+  #endif // _di_f_file_operation_close_s_
+
+  #ifndef _di_f_file_operation_concatenate_s_
+    extern const f_string_static_t f_file_operation_concatenate_s;
+  #endif // _di_f_file_operation_concatenate_s_
+
+  #ifndef _di_f_file_operation_connect_s_
+    extern const f_string_static_t f_file_operation_connect_s;
+  #endif // _di_f_file_operation_connect_s_
+
+  #ifndef _di_f_file_operation_copy_s_
+    extern const f_string_static_t f_file_operation_copy_s;
+  #endif // _di_f_file_operation_copy_s_
+
+  #ifndef _di_f_file_operation_create_s_
+    extern const f_string_static_t f_file_operation_create_s;
+  #endif // _di_f_file_operation_create_s_
+
+  #ifndef _di_f_file_operation_decrypt_s_
+    extern const f_string_static_t f_file_operation_decrypt_s;
+  #endif // _di_f_file_operation_decrypt_s_
+
+  #ifndef _di_f_file_operation_delete_s_
+    extern const f_string_static_t f_file_operation_delete_s;
+  #endif // _di_f_file_operation_delete_s_
+
+  #ifndef _di_f_file_operation_disconnect_s_
+    extern const f_string_static_t f_file_operation_disconnect_s;
+  #endif // _di_f_file_operation_disconnect_s_
+
+  #ifndef _di_f_file_operation_encrypt_s_
+    extern const f_string_static_t f_file_operation_encrypt_s;
+  #endif // _di_f_file_operation_encrypt_s_
+
+  #ifndef _di_f_file_operation_find_s_
+    extern const f_string_static_t f_file_operation_find_s;
+  #endif // _di_f_file_operation_find_s_
+
+  #ifndef _di_f_file_operation_from_s_
+    extern const f_string_static_t f_file_operation_from_s;
+  #endif // _di_f_file_operation_from_s_
+
+  #ifndef _di_f_file_operation__s_
+    extern const f_string_static_t f_file_operation_flush_s;
+  #endif // _di_f_file_operation__s_
+
+  #ifndef _di_f_file_operation_get_group_s_
+    extern const f_string_static_t f_file_operation_get_group_s;
+  #endif // _di_f_file_operation_get_group_s_
+
+  #ifndef _di_f_file_operation_get_mode_s_
+    extern const f_string_static_t f_file_operation_get_mode_s;
+  #endif // _di_f_file_operation_get_mode_s_
+
+  #ifndef _di_f_file_operation_get_owner_s_
+    extern const f_string_static_t f_file_operation_get_owner_s;
+  #endif // _di_f_file_operation_get_owner_s_
+
+  #ifndef _di_f_file_operation_get_type_s_
+    extern const f_string_static_t f_file_operation_get_type_s;
+  #endif // _di_f_file_operation_get_type_s_
+
+  #ifndef _di_f_file_operation_identify_s_
+    extern const f_string_static_t f_file_operation_identify_s;
+  #endif // _di_f_file_operation_identify_s_
+
+  #ifndef _di_f_file_operation_link_s_
+    extern const f_string_static_t f_file_operation_link_s;
+  #endif // _di_f_file_operation_link_s_
+
+  #ifndef _di_f_file_operation_list_s_
+    extern const f_string_static_t f_file_operation_list_s;
+  #endif // _di_f_file_operation_list_s_
+
+  #ifndef _di_f_file_operation_move_s_
+    extern const f_string_static_t f_file_operation_move_s;
+  #endif // _di_f_file_operation_move_s_
+
+  #ifndef _di_f_file_operation_open_s_
+    extern const f_string_static_t f_file_operation_open_s;
+  #endif // _di_f_file_operation_open_s_
+
+  #ifndef _di_f_file_operation_pipe_s_
+    extern const f_string_static_t f_file_operation_pipe_s;
+  #endif // _di_f_file_operation_pipe_s_
+
+  #ifndef _di_f_file_operation_process_s_
+    extern const f_string_static_t f_file_operation_process_s;
+  #endif // _di_f_file_operation_process_s_
+
+  #ifndef _di_f_file_operation_read_s_
+    extern const f_string_static_t f_file_operation_read_s;
+  #endif // _di_f_file_operation_read_s_
+
+  #ifndef _di_f_file_operation_receive_s_
+    extern const f_string_static_t f_file_operation_receive_s;
+  #endif // _di_f_file_operation_receive_s_
+
+  #ifndef _di_f_file_operation_rename_s_
+    extern const f_string_static_t f_file_operation_rename_s;
+  #endif // _di_f_file_operation_rename_s_
+
+  #ifndef _di_f_file_operation_send_s_
+    extern const f_string_static_t f_file_operation_send_s;
+  #endif // _di_f_file_operation_send_s_
+
+  #ifndef _di_f_file_operation_shred_s_
+    extern const f_string_static_t f_file_operation_shred_s;
+  #endif // _di_f_file_operation_shred_s_
+
+  #ifndef _di_f_file_operation_stat_s_
+    extern const f_string_static_t f_file_operation_stat_s;
+  #endif // _di_f_file_operation_stat_s_
+
+  #ifndef _di_f_file_operation_to_s_
+    extern const f_string_static_t f_file_operation_to_s;
+  #endif // _di_f_file_operation_to_s_
+
+  #ifndef _di_f_file_operation_touch_s_
+    extern const f_string_static_t f_file_operation_touch_s;
+  #endif // _di_f_file_operation_touch_s_
+
+  #ifndef _di_f_file_operation_truncate_s_
+    extern const f_string_static_t f_file_operation_truncate_s;
+  #endif // _di_f_file_operation_truncate_s_
+
+  #ifndef _di_f_file_operation_unlink_s_
+    extern const f_string_static_t f_file_operation_unlink_s;
+  #endif // _di_f_file_operation_unlink_s_
+
+  #ifndef _di_f_file_operation_verify_s_
+    extern const f_string_static_t f_file_operation_verify_s;
+  #endif // _di_f_file_operation_verify_s_
+
+  #ifndef _di_f_file_operation_wipe_s_
+    extern const f_string_static_t f_file_operation_wipe_s;
+  #endif // _di_f_file_operation_wipe_s_
+
+  #ifndef _di_f_file_operation_write_s_
+    extern const f_string_static_t f_file_operation_write_s;
+  #endif // _di_f_file_operation_write_s_
 #endif // _di_f_file_operation_s_
 
 #ifdef __cplusplus

@@ -4,3 +4,5 @@
 #define _di_fll_execute_arguments_add_set_
 #define _di_fll_execute_into_
 #define _di_fll_execute_program_
+#define _di_level_2_parameter_checking_
+#define _di_pthread_support_

@@ -37,3 +37,4 @@
 #define _di_fl_string_seek_line_until_graph_
 #define _di_fl_string_seek_line_until_graph_non_
 #define _di_fl_string_seek_to_utf_character_
+#define _di_level_1_parameter_checking_

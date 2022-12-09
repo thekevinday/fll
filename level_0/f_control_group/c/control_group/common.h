@@ -19,6 +19,13 @@ extern "C" {
 /**
  * The defines for control groups.
  */
+#ifndef _di_f_control_group_d_
+  #define F_control_group_pid_length_max_d 64
+#endif // _di_f_control_group_d_
+
+/**
+ * Control group strings.
+ */
 #ifndef _di_f_control_group_s_
   #define F_control_group_path_system_default_s "sys/fs/cgroup/"
   #define F_control_group_path_system_prefix_s  "/"
@@ -28,11 +35,17 @@ extern "C" {
   #define F_control_group_path_system_prefix_s_length  1
   #define F_control_group_path_system_suffix_s_length  13
 
-  #define F_control_group_pid_length_max_d 64
+  #ifndef _di_f_control_group_path_system_default_s_
+    extern const f_string_static_t f_control_group_path_system_default_s;
+  #endif // _di_f_control_group_path_system_default_s_
 
-  extern const f_string_static_t f_control_group_path_system_default_s;
-  extern const f_string_static_t f_control_group_path_system_prefix_s;
-  extern const f_string_static_t f_control_group_path_system_suffix_s;
+  #ifndef _di_f_control_group_path_system_prefix_s_
+    extern const f_string_static_t f_control_group_path_system_prefix_s;
+  #endif // _di_f_control_group_path_system_prefix_s_
+
+  #ifndef _di_f_control_group_path_system_suffix_s_
+    extern const f_string_static_t f_control_group_path_system_suffix_s;
+  #endif // _di_f_control_group_path_system_suffix_s_
 #endif // _di_f_control_group_s_
 
 /**

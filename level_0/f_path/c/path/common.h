@@ -61,16 +61,37 @@ extern "C" {
   #define F_path_present_working_s_length     3
   #define F_path_present_working_old_s_length 6
 
-  extern const f_string_static_t f_path_separator_s;
-  extern const f_string_static_t f_path_separator_current_s;
-  extern const f_string_static_t f_path_separator_variable_s;
+  #ifndef _di_f_path_separator_s_
+    extern const f_string_static_t f_path_separator_s;
+  #endif // _di_f_path_separator_s_
 
-  extern const f_string_static_t f_path_extension_separator_s;
+  #ifndef _di_f_path_separator_current_s_
+    extern const f_string_static_t f_path_separator_current_s;
+  #endif // _di_f_path_separator_current_s_
 
-  extern const f_string_static_t f_path_environment_s;
-  extern const f_string_static_t f_path_home_wildcard_s;
-  extern const f_string_static_t f_path_present_working_s;
-  extern const f_string_static_t f_path_present_working_old_s;
+  #ifndef _di_f_path_separator_variable_s_
+    extern const f_string_static_t f_path_separator_variable_s;
+  #endif // _di_f_path_separator_variable_s_
+
+  #ifndef _di_f_path_extension_separator_s_
+    extern const f_string_static_t f_path_extension_separator_s;
+  #endif // _di_f_path_extension_separator_s_
+
+  #ifndef _di_f_path_environment_s_
+    extern const f_string_static_t f_path_environment_s;
+  #endif // _di_f_path_environment_s_
+
+  #ifndef _di_f_path_home_wildcard_s_
+    extern const f_string_static_t f_path_home_wildcard_s;
+  #endif // _di_f_path_home_wildcard_s_
+
+  #ifndef _di_f_path_present_working_s_
+    extern const f_string_static_t f_path_present_working_s;
+  #endif // _di_f_path_present_working_s_
+
+  #ifndef _di_f_path_present_working_old_s_
+    extern const f_string_static_t f_path_present_working_old_s;
+  #endif // _di_f_path_present_working_old_s_
 #endif // _di_f_path_s_
 
 /**
@@ -330,67 +351,200 @@ extern "C" {
 #if defined(_di_f_path_tree_s_) && !defined(_di_f_path_tree_hierarchy_standard_d_) && !defined(_di_f_path_tree_kevux_standard_d_)
 
   // KFS Root Level.
-  extern const f_string_static_t f_path_tree_devices_s;
-  extern const f_string_static_t f_path_tree_external_s;
-  extern const f_string_static_t f_path_tree_libraries_s;
-  extern const f_string_static_t f_path_tree_programs_s;
-  extern const f_string_static_t f_path_tree_temporary_s;
-  extern const f_string_static_t f_path_tree_home_s;
-  extern const f_string_static_t f_path_tree_run_s;
-  extern const f_string_static_t f_path_tree_binary_s;
+  #ifndef _di_f_path_tree_devices_s_
+    extern const f_string_static_t f_path_tree_devices_s;
+  #endif // _di_f_path_tree_devices_s_
+
+  #ifndef _di_f_path_tree_external_s_
+    extern const f_string_static_t f_path_tree_external_s;
+  #endif // _di_f_path_tree_external_s_
+
+  #ifndef _di_f_path_tree_libraries_s_
+    extern const f_string_static_t f_path_tree_libraries_s;
+  #endif // _di_f_path_tree_libraries_s_
+
+  #ifndef _di_f_path_tree_programs_s_
+    extern const f_string_static_t f_path_tree_programs_s;
+  #endif // _di_f_path_tree_programs_s_
+
+  #ifndef _di_f_path_tree_temporary_s_
+    extern const f_string_static_t f_path_tree_temporary_s;
+  #endif // _di_f_path_tree_temporary_s_
+
+  #ifndef _di_f_path_tree_home_s_
+    extern const f_string_static_t f_path_tree_home_s;
+  #endif // _di_f_path_tree_home_s_
+
+  #ifndef _di_f_path_tree_run_s_
+    extern const f_string_static_t f_path_tree_run_s;
+  #endif // _di_f_path_tree_run_s_
+
+  #ifndef _di_f_path_tree_binary_s_
+    extern const f_string_static_t f_path_tree_binary_s;
+  #endif // _di_f_path_tree_binary_s_
 
   // FHS Root Level.
-  extern const f_string_static_t f_path_tree_boot_s;
-  extern const f_string_static_t f_path_tree_hardware_s;
-  extern const f_string_static_t f_path_tree_processes_s;
-  extern const f_string_static_t f_path_tree_system_s;
+  #ifndef _di_f_path_tree_boot_s_
+    extern const f_string_static_t f_path_tree_boot_s;
+  #endif // _di_f_path_tree_boot_s_
+
+  #ifndef _di_f_path_tree_hardware_s_
+    extern const f_string_static_t f_path_tree_hardware_s;
+  #endif // _di_f_path_tree_hardware_s_
+
+  #ifndef _di_f_path_tree_processes_s_
+    extern const f_string_static_t f_path_tree_processes_s;
+  #endif // _di_f_path_tree_processes_s_
+
+  #ifndef _di_f_path_tree_system_s_
+    extern const f_string_static_t f_path_tree_system_s;
+  #endif // _di_f_path_tree_system_s_
 
   // Program Level.
-  extern const f_string_static_t f_path_tree_programs_public_s;
-  extern const f_string_static_t f_path_tree_programs_system_s;
-  extern const f_string_static_t f_path_tree_programs_remote_s;
-  extern const f_string_static_t f_path_tree_programs_services_s;
-  extern const f_string_static_t f_path_tree_programs_toolchain_s;
-  extern const f_string_static_t f_path_tree_programs_users_s;
-  extern const f_string_static_t f_path_tree_programs_susers_s;
-  extern const f_string_static_t f_path_tree_programs_boot_s;
-  extern const f_string_static_t f_path_tree_programs_sboot_s;
+  #ifndef _di_f_path_tree_programs_public_s_
+    extern const f_string_static_t f_path_tree_programs_public_s;
+  #endif // _di_f_path_tree_programs_public_s_
+
+  #ifndef _di_f_path_tree_programs_system_s_
+    extern const f_string_static_t f_path_tree_programs_system_s;
+  #endif // _di_f_path_tree_programs_system_s_
+
+  #ifndef _di_f_path_tree_programs_remote_s_
+    extern const f_string_static_t f_path_tree_programs_remote_s;
+  #endif // _di_f_path_tree_programs_remote_s_
+
+  #ifndef _di_f_path_tree_programs_services_s_
+    extern const f_string_static_t f_path_tree_programs_services_s;
+  #endif // _di_f_path_tree_programs_services_s_
+
+  #ifndef _di_f_path_tree_programs_toolchain_s_
+    extern const f_string_static_t f_path_tree_programs_toolchain_s;
+  #endif // _di_f_path_tree_programs_toolchain_s_
+
+  #ifndef _di_f_path_tree_programs_users_s_
+    extern const f_string_static_t f_path_tree_programs_users_s;
+  #endif // _di_f_path_tree_programs_users_s_
+
+  #ifndef _di_f_path_tree_programs_susers_s_
+    extern const f_string_static_t f_path_tree_programs_susers_s;
+  #endif // _di_f_path_tree_programs_susers_s_
+
+  #ifndef _di_f_path_tree_programs_boot_s_
+    extern const f_string_static_t f_path_tree_programs_boot_s;
+  #endif // _di_f_path_tree_programs_boot_s_
+
+  #ifndef _di_f_path_tree_programs_sboot_s_
+    extern const f_string_static_t f_path_tree_programs_sboot_s;
+  #endif // _di_f_path_tree_programs_sboot_s_
 
   // Library Level.
-  extern const f_string_static_t f_path_tree_libraries_public_s;
-  extern const f_string_static_t f_path_tree_libraries_system_s;
-  extern const f_string_static_t f_path_tree_libraries_remote_s;
-  extern const f_string_static_t f_path_tree_libraries_services_s;
-  extern const f_string_static_t f_path_tree_libraries_toolchain_s;
-  extern const f_string_static_t f_path_tree_libraries_users_s;
-  extern const f_string_static_t f_path_tree_libraries_boot_s;
+  #ifndef _di_f_path_tree_libraries_public_s_
+    extern const f_string_static_t f_path_tree_libraries_public_s;
+  #endif // _di_f_path_tree_libraries_public_s_
+
+  #ifndef _di_f_path_tree_libraries_system_s_
+    extern const f_string_static_t f_path_tree_libraries_system_s;
+  #endif // _di_f_path_tree_libraries_system_s_
+
+  #ifndef _di_f_path_tree_libraries_remote_s_
+    extern const f_string_static_t f_path_tree_libraries_remote_s;
+  #endif // _di_f_path_tree_libraries_remote_s_
+
+  #ifndef _di_f_path_tree_libraries_services_s_
+    extern const f_string_static_t f_path_tree_libraries_services_s;
+  #endif // _di_f_path_tree_libraries_services_s_
+
+  #ifndef _di_f_path_tree_libraries_toolchain_s_
+    extern const f_string_static_t f_path_tree_libraries_toolchain_s;
+  #endif // _di_f_path_tree_libraries_toolchain_s_
+
+  #ifndef _di_f_path_tree_libraries_users_s_
+    extern const f_string_static_t f_path_tree_libraries_users_s;
+  #endif // _di_f_path_tree_libraries_users_s_
+
+  #ifndef _di_f_path_tree_libraries_boot_s_
+    extern const f_string_static_t f_path_tree_libraries_boot_s;
+  #endif // _di_f_path_tree_libraries_boot_s_
 
   // Home Level.
-  extern const f_string_static_t f_path_tree_home_services_s;
-  extern const f_string_static_t f_path_tree_home_share_s;
-  extern const f_string_static_t f_path_tree_home_users_s;
-  extern const f_string_static_t f_path_tree_home_websites_s;
+  #ifndef _di_f_path_tree_home_services_s_
+    extern const f_string_static_t f_path_tree_home_services_s;
+  #endif // _di_f_path_tree_home_services_s_
 
-  // system level.
-  extern const f_string_static_t f_path_tree_system_logs_s;
-  extern const f_string_static_t f_path_tree_system_settings_s;
-  extern const f_string_static_t f_path_tree_system_data_s;
-  extern const f_string_static_t f_path_tree_system_variables_s;
+  #ifndef _di_f_path_tree_home_share_s_
+    extern const f_string_static_t f_path_tree_home_share_s;
+  #endif // _di_f_path_tree_home_share_s_
 
-  // temporary level.
-  extern const f_string_static_t f_path_tree_temporary_public_s;
-  extern const f_string_static_t f_path_tree_temporary_services_s;
-  extern const f_string_static_t f_path_tree_temporary_users_s;
-  extern const f_string_static_t f_path_tree_temporary_variables_s;
+  #ifndef _di_f_path_tree_home_users_s_
+    extern const f_string_static_t f_path_tree_home_users_s;
+  #endif // _di_f_path_tree_home_users_s_
 
-  // Private user directories.
-  extern const f_string_static_t f_path_user_downloads_s;
-  extern const f_string_static_t f_path_user_desktop_s;
-  extern const f_string_static_t f_path_user_private_s;
-  extern const f_string_static_t f_path_user_settings_s;
-  extern const f_string_static_t f_path_user_data_s;
-  extern const f_string_static_t f_path_user_temporary_s;
-  extern const f_string_static_t f_path_user_shared_s;
+  #ifndef _di_f_path_tree_home_websites_s_
+    extern const f_string_static_t f_path_tree_home_websites_s;
+  #endif // _di_f_path_tree_home_websites_s_
+
+  // System Level.
+  #ifndef _di_f_path_tree_system_logs_s_
+    extern const f_string_static_t f_path_tree_system_logs_s;
+  #endif // _di_f_path_tree_system_logs_s_
+
+  #ifndef _di_f_path_tree_system_settings_s_
+    extern const f_string_static_t f_path_tree_system_settings_s;
+  #endif // _di_f_path_tree_system_settings_s_
+
+  #ifndef _di_f_path_tree_system_data_s_
+    extern const f_string_static_t f_path_tree_system_data_s;
+  #endif // _di_f_path_tree_system_data_s_
+
+  #ifndef _di_f_path_tree_system_variables_s_
+    extern const f_string_static_t f_path_tree_system_variables_s;
+  #endif // _di_f_path_tree_system_variables_s_
+
+  // Temporary Level.
+  #ifndef _di_f_path_tree_temporary_public_s_
+    extern const f_string_static_t f_path_tree_temporary_public_s;
+  #endif // _di_f_path_tree_temporary_public_s_
+
+  #ifndef _di_f_path_tree_temporary_services_s_
+    extern const f_string_static_t f_path_tree_temporary_services_s;
+  #endif // _di_f_path_tree_temporary_services_s_
+
+  #ifndef _di_f_path_tree_temporary_users_s_
+    extern const f_string_static_t f_path_tree_temporary_users_s;
+  #endif // _di_f_path_tree_temporary_users_s_
+
+  #ifndef _di_f_path_tree_temporary_variables_s_
+    extern const f_string_static_t f_path_tree_temporary_variables_s;
+  #endif // _di_f_path_tree_temporary_variables_s_
+
+  // Private User Directories.
+  #ifndef _di_f_path_user_downloads_s_
+    extern const f_string_static_t f_path_user_downloads_s;
+  #endif // _di_f_path_user_downloads_s_
+
+  #ifndef _di_f_path_user_desktop_s_
+    extern const f_string_static_t f_path_user_desktop_s;
+  #endif // _di_f_path_user_desktop_s_
+
+  #ifndef _di_f_path_user_private_s_
+    extern const f_string_static_t f_path_user_private_s;
+  #endif // _di_f_path_user_private_s_
+
+  #ifndef _di_f_path_user_settings_s_
+    extern const f_string_static_t f_path_user_settings_s;
+  #endif // _di_f_path_user_settings_s_
+
+  #ifndef _di_f_path_user_data_s_
+    extern const f_string_static_t f_path_user_data_s;
+  #endif // _di_f_path_user_data_s_
+
+  #ifndef _di_f_path_user_temporary_s_
+    extern const f_string_static_t f_path_user_temporary_s;
+  #endif // _di_f_path_user_temporary_s_
+
+  #ifndef _di_f_path_user_shared_s_
+    extern const f_string_static_t f_path_user_shared_s;
+  #endif // _di_f_path_user_shared_s_
 #endif // defined(_di_f_path_tree_s_) && !defined(_di_f_path_tree_hierarchy_standard_d_) && !defined(_di_f_path_tree_kevux_standard_d_)
 
 #ifdef __cplusplus

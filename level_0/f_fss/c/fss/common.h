@@ -110,19 +110,24 @@ extern "C" {
 /**
  * Provide strings used by FSS.
  *
- * F_fss_string_*:
+ * F_fss_*_s:
  *   - header:  String representing the header Object name.
  *   - payload: String representing the payload Object name.
  */
 #ifndef _di_f_fss_s_
-  #define F_fss_string_header_s  "header"
-  #define F_fss_string_payload_s "payload"
+  #define F_fss_header_s  "header"
+  #define F_fss_payload_s "payload"
 
   #define F_fss_string_header_s_length  6
   #define F_fss_string_payload_s_length 7
 
-  extern const f_string_static_t f_fss_string_header_s;
-  extern const f_string_static_t f_fss_string_payload_s;
+  #ifndef _di_f_fss_header_s_
+    extern const f_string_static_t f_fss_header_s;
+  #endif // _di_f_fss_header_s_
+
+  #ifndef _di_f_fss_payload_s_
+    extern const f_string_static_t f_fss_payload_s;
+  #endif // _di_f_fss_payload_s_
 #endif // _di_f_fss_s_
 
 /**
@@ -164,7 +169,7 @@ extern "C" {
     f_fss_basic_rule_e,
     f_fss_payload_e,
     f_fss_simple_packet_e,
-  };
+  }; // enum
 #endif // _di_f_fss_e_
 
 /**
@@ -193,7 +198,7 @@ extern "C" {
     f_fss_complete_next_e,
     f_fss_complete_partial_e,
     f_fss_complete_partial_trim_e,
-  };
+  }; // enum
 #endif // _di_f_fss_complete_e_
 
 /**

@@ -34,7 +34,7 @@ extern "C" {
 
         if (range->start >= range->stop || range->start >= buffer.used) {
           if (status == F_fss_found_object || status == F_fss_found_object_content_not) {
-            if (fl_string_dynamic_partial_compare_string(f_fss_string_payload_s.string, buffer, f_fss_string_payload_s.used, objects->array[objects->used]) == F_equal_to) {
+            if (fl_string_dynamic_partial_compare_string(f_fss_payload_s.string, buffer, f_fss_payload_s.used, objects->array[objects->used]) == F_equal_to) {
               status = F_fss_found_object_content_not;
             }
 
@@ -70,7 +70,7 @@ extern "C" {
 
           contents->array[contents->used].used = 0;
 
-          if (fl_string_dynamic_partial_compare_string(f_fss_string_payload_s.string, buffer, f_fss_string_payload_s.used, objects->array[objects->used]) == F_equal_to) {
+          if (fl_string_dynamic_partial_compare_string(f_fss_payload_s.string, buffer, f_fss_payload_s.used, objects->array[objects->used]) == F_equal_to) {
             status2 = f_string_ranges_increase(state.step_small, &contents->array[contents->used]);
             if (F_status_is_error(status)) return status;
 
@@ -107,7 +107,7 @@ extern "C" {
 
           contents->array[contents->used].used = 0;
 
-          if (fl_string_dynamic_partial_compare_string(f_fss_string_payload_s.string, buffer, f_fss_string_payload_s.used, objects->array[objects->used]) == F_equal_to) {
+          if (fl_string_dynamic_partial_compare_string(f_fss_payload_s.string, buffer, f_fss_payload_s.used, objects->array[objects->used]) == F_equal_to) {
             ++objects->used;
 
             status2 = f_string_ranges_increase(state.step_small, &contents->array[contents->used]);
@@ -196,7 +196,7 @@ extern "C" {
     }
 
     if (status == F_none || status == F_none_stop || status == F_none_eos || status == F_none_eol) {
-      if (fl_string_dynamic_compare(f_fss_string_payload_s, object) == F_equal_to) {
+      if (fl_string_dynamic_compare(f_fss_payload_s, object) == F_equal_to) {
         status = f_string_dynamic_increase_by(content.used, destination);
         if (F_status_is_error(status)) return status;
 

@@ -1,4 +1,10 @@
 #define _di_fll_error_file_print_
+#define _di_fll_error_file_type_directory_s_
 #define _di_fll_error_file_type_e_
+#define _di_fll_error_file_type_file_s_
+#define _di_fll_error_file_type_path_s_
+#define _di_fll_error_file_type_pipe_s_
+#define _di_fll_error_file_type_s_
+#define _di_fll_error_file_type_socket_s_
 #define _di_fll_error_parameter_integer_print_
 #define _di_fll_error_print_

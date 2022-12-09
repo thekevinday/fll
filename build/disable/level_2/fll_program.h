@@ -6,6 +6,8 @@
 #define _di_fll_program_parameter_additional_mash_
 #define _di_fll_program_parameter_additional_rip_
 #define _di_fll_program_parameter_additional_rip_mash_
+#define _di_fll_program_parameter_filename_s_
+#define _di_fll_program_parameter_filenames_s_
 #define _di_fll_program_parameter_process_context_
 #define _di_fll_program_parameter_process_empty_
 #define _di_fll_program_parameter_process_verbosity_
@@ -41,3 +43,5 @@
 #define _di_fll_program_standard_set_up_
 #define _di_fll_program_standard_signal_received_
 #define _di_fll_program_standard_signal_state_
+#define _di_level_2_parameter_checking_
+#define _di_level_2_parameters_checking_

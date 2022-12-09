@@ -188,7 +188,7 @@ extern "C" {
         }
 
         // When payload is provided, all data at this point is part of the payload until the end of the pipe.
-        if (fl_string_dynamic_compare(f_fss_string_payload_s, setting->objects.array[used_objects]) == F_equal_to) {
+        if (fl_string_dynamic_compare(f_fss_payload_s, setting->objects.array[used_objects]) == F_equal_to) {
           if (total > 1) {
             setting->status = f_string_dynamic_increase_by(total, &setting->contentss.array[used_contentss].array[0]);
 

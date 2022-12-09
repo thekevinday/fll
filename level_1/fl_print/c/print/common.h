@@ -33,9 +33,17 @@ extern "C" {
   #define FL_print_error_s_length   7
   #define FL_print_warning_s_length 9
 
-  extern const f_string_static_t fl_print_debug_s;
-  extern const f_string_static_t fl_print_error_s;
-  extern const f_string_static_t fl_print_warning_s;
+  #ifndef _di_fl_print_debug_s_
+    extern const f_string_static_t fl_print_debug_s;
+  #endif // _di_fl_print_debug_s_
+
+  #ifndef _di_fl_print_error_s_
+    extern const f_string_static_t fl_print_error_s;
+  #endif // _di_fl_print_error_s_
+
+  #ifndef _di_fl_print_warning_s_
+    extern const f_string_static_t fl_print_warning_s;
+  #endif // _di_fl_print_warning_s_
 #endif // _di_fl_print_s_
 
 /**

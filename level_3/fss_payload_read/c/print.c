@@ -108,11 +108,11 @@ extern "C" {
 
     fl_print_format("  As an exceptional case, a %[%r%r%] of", print.to, print.set->notable, f_console_symbol_long_normal_s, fss_payload_read_long_depth_s, print.set->notable);
     fl_print_format(" %[1%] applies only to the explicit Object of", print.to, print.set->notable, print.set->notable);
-    fl_print_format(" '%[%r%]'.%r", print.to, print.set->notable, f_fss_string_header_s, print.set->notable, f_string_eol_s);
+    fl_print_format(" '%[%r%]'.%r", print.to, print.set->notable, f_fss_header_s, print.set->notable, f_string_eol_s);
     fl_print_format("  Content at this depth is processed as FSS-0001 Extended.%r%r", print.to, f_string_eol_s, f_string_eol_s);
 
     fl_print_format("  The Content of the explicit Object of", print.to);
-    fl_print_format(" '%[%r%]'", print.to, print.set->notable, f_fss_string_payload_s, print.set->notable, f_string_eol_s);
+    fl_print_format(" '%[%r%]'", print.to, print.set->notable, f_fss_payload_s, print.set->notable, f_string_eol_s);
     fl_print_format(" will not contain any Content close pipe control codes when using", print.to);
     fl_print_format(" %[%r%r%].%r", print.to, print.set->notable, f_console_symbol_long_normal_s, fss_payload_read_long_pipe_s, print.set->notable, f_string_eol_s);
 

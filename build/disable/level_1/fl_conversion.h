@@ -1,6 +1,13 @@
+#define _di_fl_conversion_data_base_10_c_
+#define _di_fl_conversion_data_base_12_c_
+#define _di_fl_conversion_data_base_16_c_
+#define _di_fl_conversion_data_base_2_c_
+#define _di_fl_conversion_data_base_8_c_
+#define _di_fl_conversion_data_c_
+#define _di_fl_conversion_data_endian_big_c_
+#define _di_fl_conversion_data_endian_little_c_
 #define _di_fl_conversion_data_flag_d_
 #define _di_fl_conversion_data_t_
-#define _di_fl_conversion_data_c_
 #define _di_fl_conversion_dynamic_partial_to_signed_
 #define _di_fl_conversion_dynamic_partial_to_signed_detect_
 #define _di_fl_conversion_dynamic_partial_to_unsigned_
@@ -9,3 +16,4 @@
 #define _di_fl_conversion_dynamic_to_signed_detect_
 #define _di_fl_conversion_dynamic_to_unsigned_
 #define _di_fl_conversion_dynamic_to_unsigned_detect_
+#define _di_level_1_parameter_checking_

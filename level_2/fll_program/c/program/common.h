@@ -23,8 +23,13 @@ extern "C" {
   #define FLL_program_parameter_filename_s_length  8
   #define FLL_program_parameter_filenames_s_length 11
 
-  extern const f_string_static_t fll_program_parameter_filename_s;
-  extern const f_string_static_t fll_program_parameter_filenames_s;
+  #ifndef _di_fll_program_parameter_filename_s_
+    extern const f_string_static_t fll_program_parameter_filename_s;
+  #endif // _di_fll_program_parameter_filename_s_
+
+  #ifndef _di_fll_program_parameter_filenames_s_
+    extern const f_string_static_t fll_program_parameter_filenames_s;
+  #endif // _di_fll_program_parameter_filenames_s_
 #endif // _di_fll_program_parameter_s_
 
 /**

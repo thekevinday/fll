@@ -17,56 +17,6 @@ extern "C" {
 #endif
 
 /**
- * Color max size represents the maximum length of the resulting color string.
- *
- * This color max size does not include the terminating null.
- *
- * A color max size terminated represents the max size with the terminating null.
- */
-#ifndef _di_f_color_max_size_d_
-  #define F_color_max_size_d            7
-  #define F_color_max_size_terminated_d 8
-#endif // _di_f_color_max_size_d_
-
-/**
- * Define codes representing color sets.
- *
- * F_color_code_*_e:
- *   - none:      No color code set defined.
- *   - linux:     Linux terminal color code set.
- *   - xterminal: X-Terminal color code set.
- */
-#ifndef _di_f_color_code_t_
-  typedef f_char_t f_color_code_t;
-
-  enum {
-    f_color_code_none_e = 0,
-    f_color_code_linux_e,
-    f_color_code_xterminal_e,
-  };
-
-  #define f_color_code_t_initialize f_color_code_none_e
-#endif // _di_f_color_code_t_
-
-/**
- * Terminal environment variable strings that may relate to color processing.
- *
- * f_color_terminal_*:
- *   - name:        The standard terminal environment variable name.
- *   - value_linux: The value representing the Linux terminal.
- */
-#ifndef _di_f_color_terminal_s_
-  #define F_color_terminal_name_s        "TERM"
-  #define F_color_terminal_value_linux_s "linux"
-
-  #define F_color_terminal_name_s_length        4
-  #define F_color_terminal_value_linux_s_length 5
-
-  extern const f_string_static_t f_color_terminal_name_s;
-  extern const f_string_static_t f_color_terminal_value_linux_s;
-#endif // _di_f_color_terminal_s_
-
-/**
  * Provide a global color related strings.
  *
  * F_color_string_*:
@@ -201,49 +151,240 @@ extern "C" {
   #define F_color_string_code_bright_teal_bg_s_length   3
   #define F_color_string_code_bright_white_bg_s_length  3
 
-  extern const f_string_static_t f_color_string_begin_s;
-  extern const f_string_static_t f_color_string_end_s;
-  extern const f_string_static_t f_color_string_medium_s;
+  #ifndef _di_f_color_begin_s_
+    extern const f_string_static_t f_color_begin_s;
+  #endif // _di_f_color_begin_s_
 
-  extern const f_string_static_t f_color_string_code_reset_s;
-  extern const f_string_static_t f_color_string_code_bold_s;
-  extern const f_string_static_t f_color_string_code_underline_s;
-  extern const f_string_static_t f_color_string_code_blink_s;
-  extern const f_string_static_t f_color_string_code_reverse_s;
-  extern const f_string_static_t f_color_string_code_conceal_s;
-  extern const f_string_static_t f_color_string_code_black_s;
-  extern const f_string_static_t f_color_string_code_red_s;
-  extern const f_string_static_t f_color_string_code_green_s;
-  extern const f_string_static_t f_color_string_code_yellow_s;
-  extern const f_string_static_t f_color_string_code_blue_s;
-  extern const f_string_static_t f_color_string_code_purple_s;
-  extern const f_string_static_t f_color_string_code_teal_s;
-  extern const f_string_static_t f_color_string_code_white_s;
-  extern const f_string_static_t f_color_string_code_black_bg_s;
-  extern const f_string_static_t f_color_string_code_red_bg_s;
-  extern const f_string_static_t f_color_string_code_green_bg_s;
-  extern const f_string_static_t f_color_string_code_yellow_bg_s;
-  extern const f_string_static_t f_color_string_code_blue_bg_s;
-  extern const f_string_static_t f_color_string_code_purple_bg_s;
-  extern const f_string_static_t f_color_string_code_teal_bg_s;
-  extern const f_string_static_t f_color_string_code_white_bg_s;
-  extern const f_string_static_t f_color_string_code_bright_black_s;
-  extern const f_string_static_t f_color_string_code_bright_red_s;
-  extern const f_string_static_t f_color_string_code_bright_green_s;
-  extern const f_string_static_t f_color_string_code_bright_yellow_s;
-  extern const f_string_static_t f_color_string_code_bright_blue_s;
-  extern const f_string_static_t f_color_string_code_bright_purple_s;
-  extern const f_string_static_t f_color_string_code_bright_teal_s;
-  extern const f_string_static_t f_color_string_code_bright_white_s;
-  extern const f_string_static_t f_color_string_code_bright_black_bg_s;
-  extern const f_string_static_t f_color_string_code_bright_red_bg_s;
-  extern const f_string_static_t f_color_string_code_bright_green_bg_s;
-  extern const f_string_static_t f_color_string_code_bright_yellow_bg_s;
-  extern const f_string_static_t f_color_string_code_bright_blue_bg_s;
-  extern const f_string_static_t f_color_string_code_bright_purple_bg_s;
-  extern const f_string_static_t f_color_string_code_bright_teal_bg_s;
-  extern const f_string_static_t f_color_string_code_bright_white_bg_s;
+  #ifndef _di_f_color_end_s_
+    extern const f_string_static_t f_color_end_s;
+  #endif // _di_f_color_end_s_
+
+  #ifndef _di_f_color_medium_s_
+    extern const f_string_static_t f_color_medium_s;
+  #endif // _di_f_color_medium_s_
+
+  #ifndef _di_f_color_code_reset_s_
+    extern const f_string_static_t f_color_code_reset_s;
+  #endif // _di_f_color_reset_s_
+
+  #ifndef _di_f_color_code_bold_s_
+    extern const f_string_static_t f_color_code_bold_s;
+  #endif // _di_f_color_code_bold_s_
+
+  #ifndef _di_f_color_code_underline_s_
+    extern const f_string_static_t f_color_code_underline_s;
+  #endif // _di_f_color_code_underline_s_
+
+  #ifndef _di_f_color_code_blink_s_
+    extern const f_string_static_t f_color_code_blink_s;
+  #endif // _di_f_color_code_blink_s_
+
+  #ifndef _di_f_color_code_reverse_s_
+    extern const f_string_static_t f_color_code_reverse_s;
+  #endif // _di_f_color_code_reverse_s_
+
+  #ifndef _di_f_color_code_conceal_s_
+    extern const f_string_static_t f_color_code_conceal_s;
+  #endif // _di_f_color_code_conceal_s_
+
+  #ifndef _di_f_color_code_black_s_
+    extern const f_string_static_t f_color_code_black_s;
+  #endif // _di_f_color_code_black_s_
+
+  #ifndef _di_f_color_code_red_s_
+    extern const f_string_static_t f_color_code_red_s;
+  #endif // _di_f_color_code_red_s_
+
+  #ifndef _di_f_color_code_green_s_
+    extern const f_string_static_t f_color_code_green_s;
+  #endif // _di_f_color_code_green_s_
+
+  #ifndef _di_f_color_code_yellow_s_
+    extern const f_string_static_t f_color_code_yellow_s;
+  #endif // _di_f_color_code_yellow_s_
+
+  #ifndef _di_f_color_code_blue_s_
+    extern const f_string_static_t f_color_code_blue_s;
+  #endif // _di_f_color_code_blue_s_
+
+  #ifndef _di_f_color_code_purple_s_
+    extern const f_string_static_t f_color_code_purple_s;
+  #endif // _di_f_color_code_purple_s_
+
+  #ifndef _di_f_color_code_teal_s_
+    extern const f_string_static_t f_color_code_teal_s;
+  #endif // _di_f_color_code_teal_s_
+
+  #ifndef _di_f_color_code_white_s_
+    extern const f_string_static_t f_color_code_white_s;
+  #endif // _di_f_color_code_white_s_
+
+  #ifndef _di_f_color_code_black_bg_s_
+    extern const f_string_static_t f_color_code_black_bg_s;
+  #endif // _di_f_color_code_black_bg_s_
+
+  #ifndef _di_f_color_code_red_bg_s_
+    extern const f_string_static_t f_color_code_red_bg_s;
+  #endif // _di_f_color_code_red_bg_s_
+
+  #ifndef _di_f_color_code_green_bg_s_
+    extern const f_string_static_t f_color_code_green_bg_s;
+  #endif // _di_f_color_code_green_bg_s_
+
+  #ifndef _di_f_color_code_yellow_bg_s_
+    extern const f_string_static_t f_color_code_yellow_bg_s;
+  #endif // _di_f_color_code_yellow_bg_s_
+
+  #ifndef _di_f_color_code_blue_bg_s_
+    extern const f_string_static_t f_color_code_blue_bg_s;
+  #endif // _di_f_color_code_blue_bg_s_
+
+  #ifndef _di_f_color_code_purple_bg_s_
+    extern const f_string_static_t f_color_code_purple_bg_s;
+  #endif // _di_f_color_code_purple_bg_s_
+
+  #ifndef _di_f_color_code_teal_bg_s_
+    extern const f_string_static_t f_color_code_teal_bg_s;
+  #endif // _di_f_color_code_teal_bg_s_
+
+  #ifndef _di_f_color_code_white_bg_s_
+    extern const f_string_static_t f_color_code_white_bg_s;
+  #endif // _di_f_color_code_white_bg_s_
+
+  #ifndef _di_f_color_code_bright_black_s_
+    extern const f_string_static_t f_color_code_bright_black_s;
+  #endif // _di_f_color_code_bright_black_s_
+
+  #ifndef _di_f_color_code_bright_red_s_
+    extern const f_string_static_t f_color_code_bright_red_s;
+  #endif // _di_f_color_code_bright_red_s_
+
+  #ifndef _di_f_color_code_bright_green_s_
+    extern const f_string_static_t f_color_code_bright_green_s;
+  #endif // _di_f_color_code_bright_green_s_
+
+  #ifndef _di_f_color_code_bright_yellow_s_
+    extern const f_string_static_t f_color_code_bright_yellow_s;
+  #endif // _di_f_color_code_bright_yellow_s_
+
+  #ifndef _di_f_color_code_bright_blue_s_
+    extern const f_string_static_t f_color_code_bright_blue_s;
+  #endif // _di_f_color_code_bright_blue_s_
+
+  #ifndef _di_f_color_code_bright_purple_s_
+    extern const f_string_static_t f_color_code_bright_purple_s;
+  #endif // _di_f_color_code_bright_purple_s_
+
+  #ifndef _di_f_color_code_bright_teal_s_
+    extern const f_string_static_t f_color_code_bright_teal_s;
+  #endif // _di_f_color_code_bright_teal_s_
+
+  #ifndef _di_f_color_code_bright_white_s_
+    extern const f_string_static_t f_color_code_bright_white_s;
+  #endif // _di_f_color_code_bright_white_s_
+
+  #ifndef _di_f_color_code_bright_black_bg_s_
+    extern const f_string_static_t f_color_code_bright_black_bg_s;
+  #endif // _di_f_color_code_bright_black_bg_s_
+
+  #ifndef _di_f_color_code_bright_red_bg_s_
+    extern const f_string_static_t f_color_code_bright_red_bg_s;
+  #endif // _di_f_color_code_bright_red_bg_s_
+
+  #ifndef _di_f_color_code_bright_green_bg_s_
+    extern const f_string_static_t f_color_code_bright_green_bg_s;
+  #endif // _di_f_color_code_bright_green_bg_s_
+
+  #ifndef _di_f_color_code_bright_yellow_bg_s_
+    extern const f_string_static_t f_color_code_bright_yellow_bg_s;
+  #endif // _di_f_color_code_bright_yellow_bg_s_
+
+  #ifndef _di_f_color_code_bright_blue_bg_s_
+    extern const f_string_static_t f_color_code_bright_blue_bg_s;
+  #endif // _di_f_color_code__s_
+
+  #ifndef _di_f_color_code_bright_purple_bg_s_
+    extern const f_string_static_t f_color_code_bright_purple_bg_s;
+  #endif // _di_f_color_code_bright_purple_bg_s_
+
+  #ifndef _di_f_color_code_bright_teal_bg_s_
+    extern const f_string_static_t f_color_code_bright_teal_bg_s;
+  #endif // _di_f_color_code_bright_teal_bg_s_
+
+  #ifndef _di_f_color_code_bright_white_bg_s_
+    extern const f_string_static_t f_color_code_bright_white_bg_s;
+  #endif // _di_f_color_code_bright_white_bg_s_
 #endif // _di_f_color_s_
+
+#ifndef _di_f_color_terminal_s_
+  #ifndef _di_f_color_terminal_name_s_
+    extern const f_string_static_t f_color_terminal_name_s;
+  #endif // _di_f_color_terminal_name_s_
+
+  #ifndef _di_f_color_terminal_value_linux_s_
+    extern const f_string_static_t f_color_terminal_value_linux_s;
+  #endif // _di_f_color_terminal_value_linux_s_
+#endif // _di_f_color_s_
+
+/**
+ * Color max size represents the maximum length of the resulting color string.
+ *
+ * This color max size does not include the terminating null.
+ *
+ * A color max size terminated represents the max size with the terminating null.
+ */
+#ifndef _di_f_color_max_size_d_
+  #define F_color_max_size_d            7
+  #define F_color_max_size_terminated_d 8
+#endif // _di_f_color_max_size_d_
+
+/**
+ * Data type representing color sets.
+ */
+#ifndef _di_f_color_code_t_
+  typedef f_char_t f_color_code_t;
+
+  #define f_color_code_t_initialize f_color_code_none_e
+#endif // _di_f_color_code_t_
+
+/**
+ * Define codes representing color sets.
+ *
+ * F_color_code_*_e:
+ *   - none:      No color code set defined.
+ *   - linux:     Linux terminal color code set.
+ *   - xterminal: X-Terminal color code set.
+ */
+#ifndef _di_f_color_code_e_
+  enum {
+    f_color_code_none_e = 0,
+    f_color_code_linux_e,
+    f_color_code_xterminal_e,
+  }; // enum
+#endif // _di_f_color_code_e_
+
+/**
+ * Terminal environment variable strings that may relate to color processing.
+ *
+ * f_color_terminal_*:
+ *   - name:        The standard terminal environment variable name.
+ *   - value_linux: The value representing the Linux terminal.
+ */
+#ifndef _di_f_color_terminal_s_
+  #define F_color_terminal_name_s        "TERM"
+  #define F_color_terminal_value_linux_s "linux"
+
+  #define F_color_terminal_name_s_length        4
+  #define F_color_terminal_value_linux_s_length 5
+
+  #ifndef _di_f_color_terminal_name_s_
+    extern const f_string_static_t f_color_terminal_name_s;
+  #endif // _di_f_color_terminal_name_s_
+
+  #ifndef _di_f_color_terminal_value_linux_s_
+    extern const f_string_static_t f_color_terminal_value_linux_s;
+  #endif // _di_f_color_terminal_value_linux_s_
+#endif // _di_f_color_terminal_s_
 
 /**
  * Color modes communicate how the color is supposed to be.
@@ -254,14 +395,14 @@ extern "C" {
  *   - dark:      Designates that the color mode is for dark backgrounds.
  *   - light:     Designates that the color mode is for light backgrounds.
  */
-#ifndef _di_f_color_mode_t_
+#ifndef _di_f_color_mode_e_
   enum {
     f_color_mode_none_e = 0,
     f_color_mode_color_not_e,
     f_color_mode_dark_e,
     f_color_mode_light_e,
-  };
-#endif // _di_f_color_mode_t_
+  }; // enum
+#endif // _di_f_color_mode_e_
 
 /**
  * Provide structure for containing color format control strings.
@@ -284,15 +425,15 @@ extern "C" {
   }
 
   #define f_color_format_t_initialize_linux { \
-    f_color_string_begin_s, \
-    f_color_string_end_s, \
-    f_color_string_medium_s \
+    f_color_begin_s, \
+    f_color_end_s, \
+    f_color_medium_s \
   }
 
   #define f_color_format_t_initialize_xterminal { \
-    f_color_string_begin_s, \
-    f_color_string_end_s, \
-    f_color_string_medium_s \
+    f_color_begin_s, \
+    f_color_end_s, \
+    f_color_medium_s \
   }
 
   #define macro_f_color_format_t_initialize(begin, end, medium) { begin, end, medium }
@@ -303,14 +444,14 @@ extern "C" {
     macro_f_string_static_t_clear(format.medium)
 
   #define macro_f_color_format_t_set_linux(format) \
-    format.begin = f_color_string_begin_s; \
-    format.end = f_color_string_end_s; \
-    format.medium = f_color_string_medium_s;
+    format.begin = f_color_begin_s; \
+    format.end = f_color_end_s; \
+    format.medium = f_color_medium_s;
 
   #define macro_f_color_format_t_set_xterminal(format) \
-    format.begin = f_color_string_begin_s; \
-    format.end = f_color_string_end_s; \
-    format.medium = f_color_string_medium_s;
+    format.begin = f_color_begin_s; \
+    format.end = f_color_end_s; \
+    format.medium = f_color_medium_s;
 #endif // _di_f_color_format_t_
 
 /**
@@ -445,85 +586,85 @@ extern "C" {
   }
 
   #define f_color_t_initialize_linux { \
-    f_color_string_code_reset_s, \
-    f_color_string_code_bold_s, \
-    f_color_string_code_underline_s, \
-    f_color_string_code_blink_s, \
-    f_color_string_code_reverse_s, \
-    f_color_string_code_conceal_s, \
-    f_color_string_code_black_s, \
-    f_color_string_code_red_s, \
-    f_color_string_code_green_s, \
-    f_color_string_code_yellow_s, \
-    f_color_string_code_blue_s, \
-    f_color_string_code_purple_s, \
-    f_color_string_code_teal_s, \
-    f_color_string_code_white_s, \
-    f_color_string_code_black_bg_s, \
-    f_color_string_code_red_bg_s, \
-    f_color_string_code_green_bg_s, \
-    f_color_string_code_yellow_bg_s, \
-    f_color_string_code_blue_bg_s, \
-    f_color_string_code_purple_bg_s, \
-    f_color_string_code_teal_bg_s, \
-    f_color_string_code_white_bg_s, \
-    f_color_string_code_black_s, \
-    f_color_string_code_red_s, \
-    f_color_string_code_green_s, \
-    f_color_string_code_yellow_s, \
-    f_color_string_code_blue_s, \
-    f_color_string_code_purple_s, \
-    f_color_string_code_teal_s, \
-    f_color_string_code_white_s, \
-    f_color_string_code_black_bg_s, \
-    f_color_string_code_red_bg_s, \
-    f_color_string_code_green_bg_s, \
-    f_color_string_code_yellow_bg_s, \
-    f_color_string_code_blue_bg_s, \
-    f_color_string_code_purple_bg_s, \
-    f_color_string_code_teal_bg_s, \
-    f_color_string_code_white_bg_s, \
+    f_color_code_reset_s, \
+    f_color_code_bold_s, \
+    f_color_code_underline_s, \
+    f_color_code_blink_s, \
+    f_color_code_reverse_s, \
+    f_color_code_conceal_s, \
+    f_color_code_black_s, \
+    f_color_code_red_s, \
+    f_color_code_green_s, \
+    f_color_code_yellow_s, \
+    f_color_code_blue_s, \
+    f_color_code_purple_s, \
+    f_color_code_teal_s, \
+    f_color_code_white_s, \
+    f_color_code_black_bg_s, \
+    f_color_code_red_bg_s, \
+    f_color_code_green_bg_s, \
+    f_color_code_yellow_bg_s, \
+    f_color_code_blue_bg_s, \
+    f_color_code_purple_bg_s, \
+    f_color_code_teal_bg_s, \
+    f_color_code_white_bg_s, \
+    f_color_code_black_s, \
+    f_color_code_red_s, \
+    f_color_code_green_s, \
+    f_color_code_yellow_s, \
+    f_color_code_blue_s, \
+    f_color_code_purple_s, \
+    f_color_code_teal_s, \
+    f_color_code_white_s, \
+    f_color_code_black_bg_s, \
+    f_color_code_red_bg_s, \
+    f_color_code_green_bg_s, \
+    f_color_code_yellow_bg_s, \
+    f_color_code_blue_bg_s, \
+    f_color_code_purple_bg_s, \
+    f_color_code_teal_bg_s, \
+    f_color_code_white_bg_s, \
   }
 
   #define f_color_t_initialize_xterminal { \
-    f_color_string_code_reset_s, \
-    f_color_string_code_bold_s, \
-    f_color_string_code_underline_s, \
-    f_color_string_code_blink_s, \
-    f_color_string_code_reverse_s, \
-    f_color_string_code_conceal_s, \
-    f_color_string_code_black_s, \
-    f_color_string_code_red_s, \
-    f_color_string_code_green_s, \
-    f_color_string_code_yellow_s, \
-    f_color_string_code_blue_s, \
-    f_color_string_code_purple_s, \
-    f_color_string_code_teal_s, \
-    f_color_string_code_white_s, \
-    f_color_string_code_black_bg_s, \
-    f_color_string_code_red_bg_s, \
-    f_color_string_code_green_bg_s, \
-    f_color_string_code_yellow_bg_s, \
-    f_color_string_code_blue_bg_s, \
-    f_color_string_code_purple_bg_s, \
-    f_color_string_code_teal_bg_s, \
-    f_color_string_code_white_bg_s, \
-    f_color_string_code_bright_black_s, \
-    f_color_string_code_bright_red_s, \
-    f_color_string_code_bright_green_s, \
-    f_color_string_code_bright_yellow_s, \
-    f_color_string_code_bright_blue_s, \
-    f_color_string_code_bright_purple_s, \
-    f_color_string_code_bright_teal_s, \
-    f_color_string_code_bright_white_s, \
-    f_color_string_code_bright_black_bg_s, \
-    f_color_string_code_bright_red_bg_s, \
-    f_color_string_code_bright_green_bg_s, \
-    f_color_string_code_bright_yellow_bg_s, \
-    f_color_string_code_bright_blue_bg_s, \
-    f_color_string_code_bright_purple_bg_s, \
-    f_color_string_code_bright_teal_bg_s, \
-    f_color_string_code_bright_white_bg_s, \
+    f_color_code_reset_s, \
+    f_color_code_bold_s, \
+    f_color_code_underline_s, \
+    f_color_code_blink_s, \
+    f_color_code_reverse_s, \
+    f_color_code_conceal_s, \
+    f_color_code_black_s, \
+    f_color_code_red_s, \
+    f_color_code_green_s, \
+    f_color_code_yellow_s, \
+    f_color_code_blue_s, \
+    f_color_code_purple_s, \
+    f_color_code_teal_s, \
+    f_color_code_white_s, \
+    f_color_code_black_bg_s, \
+    f_color_code_red_bg_s, \
+    f_color_code_green_bg_s, \
+    f_color_code_yellow_bg_s, \
+    f_color_code_blue_bg_s, \
+    f_color_code_purple_bg_s, \
+    f_color_code_teal_bg_s, \
+    f_color_code_white_bg_s, \
+    f_color_code_bright_black_s, \
+    f_color_code_bright_red_s, \
+    f_color_code_bright_green_s, \
+    f_color_code_bright_yellow_s, \
+    f_color_code_bright_blue_s, \
+    f_color_code_bright_purple_s, \
+    f_color_code_bright_teal_s, \
+    f_color_code_bright_white_s, \
+    f_color_code_bright_black_bg_s, \
+    f_color_code_bright_red_bg_s, \
+    f_color_code_bright_green_bg_s, \
+    f_color_code_bright_yellow_bg_s, \
+    f_color_code_bright_blue_bg_s, \
+    f_color_code_bright_purple_bg_s, \
+    f_color_code_bright_teal_bg_s, \
+    f_color_code_bright_white_bg_s, \
   }
 
   #define macro_f_color_t_set_none(color) \
@@ -567,84 +708,84 @@ extern "C" {
     color.bright_white_bg = f_string_empty_s;
 
   #define macro_f_color_t_set_linux(color) \
-    color.reset = f_color_string_code_reset_s; \
-    color.bold = f_color_string_code_bold_s; \
-    color.underline = f_color_string_code_underline_s; \
-    color.blink = f_color_string_code_blink_s; \
-    color.reverse = f_color_string_code_reverse_s; \
-    color.conceal = f_color_string_code_conceal_s; \
-    color.black = f_color_string_code_black_s; \
-    color.red = f_color_string_code_red_s; \
-    color.green = f_color_string_code_green_s; \
-    color.yellow = f_color_string_code_yellow_s; \
-    color.blue = f_color_string_code_blue_s; \
-    color.purple = f_color_string_code_purple_s; \
-    color.teal = f_color_string_code_teal_s; \
-    color.white = f_color_string_code_white_s; \
-    color.black_bg = f_color_string_code_black_bg_s; \
-    color.red_bg = f_color_string_code_red_bg_s; \
-    color.green_bg = f_color_string_code_green_bg_s; \
-    color.yellow_bg = f_color_string_code_yellow_bg_s; \
-    color.blue_bg = f_color_string_code_blue_bg_s; \
-    color.purple_bg = f_color_string_code_purple_bg_s; \
-    color.teal_bg = f_color_string_code_teal_bg_s; \
-    color.white_bg = f_color_string_code_white_bg_s; \
-    color.bright_black = f_color_string_code_black_s; \
-    color.bright_red = f_color_string_code_red_s; \
-    color.bright_green = f_color_string_code_green_s; \
-    color.bright_yellow = f_color_string_code_yellow_s; \
-    color.bright_blue = f_color_string_code_blue_s; \
-    color.bright_purple = f_color_string_code_purple_s; \
-    color.bright_teal = f_color_string_code_teal_s; \
-    color.bright_white = f_color_string_code_white_s; \
-    color.bright_black_bg = f_color_string_code_black_bg_s; \
-    color.bright_red_bg = f_color_string_code_red_bg_s; \
-    color.bright_green_bg = f_color_string_code_green_bg_s; \
-    color.bright_yellow_bg = f_color_string_code_yellow_bg_s; \
-    color.bright_blue_bg = f_color_string_code_blue_bg_s; \
-    color.bright_purple_bg = f_color_string_code_purple_bg_s; \
-    color.bright_teal_bg = f_color_string_code_teal_bg_s; \
-    color.bright_white_bg = f_color_string_code_white_bg_s;
+    color.reset = f_color_code_reset_s; \
+    color.bold = f_color_code_bold_s; \
+    color.underline = f_color_code_underline_s; \
+    color.blink = f_color_code_blink_s; \
+    color.reverse = f_color_code_reverse_s; \
+    color.conceal = f_color_code_conceal_s; \
+    color.black = f_color_code_black_s; \
+    color.red = f_color_code_red_s; \
+    color.green = f_color_code_green_s; \
+    color.yellow = f_color_code_yellow_s; \
+    color.blue = f_color_code_blue_s; \
+    color.purple = f_color_code_purple_s; \
+    color.teal = f_color_code_teal_s; \
+    color.white = f_color_code_white_s; \
+    color.black_bg = f_color_code_black_bg_s; \
+    color.red_bg = f_color_code_red_bg_s; \
+    color.green_bg = f_color_code_green_bg_s; \
+    color.yellow_bg = f_color_code_yellow_bg_s; \
+    color.blue_bg = f_color_code_blue_bg_s; \
+    color.purple_bg = f_color_code_purple_bg_s; \
+    color.teal_bg = f_color_code_teal_bg_s; \
+    color.white_bg = f_color_code_white_bg_s; \
+    color.bright_black = f_color_code_black_s; \
+    color.bright_red = f_color_code_red_s; \
+    color.bright_green = f_color_code_green_s; \
+    color.bright_yellow = f_color_code_yellow_s; \
+    color.bright_blue = f_color_code_blue_s; \
+    color.bright_purple = f_color_code_purple_s; \
+    color.bright_teal = f_color_code_teal_s; \
+    color.bright_white = f_color_code_white_s; \
+    color.bright_black_bg = f_color_code_black_bg_s; \
+    color.bright_red_bg = f_color_code_red_bg_s; \
+    color.bright_green_bg = f_color_code_green_bg_s; \
+    color.bright_yellow_bg = f_color_code_yellow_bg_s; \
+    color.bright_blue_bg = f_color_code_blue_bg_s; \
+    color.bright_purple_bg = f_color_code_purple_bg_s; \
+    color.bright_teal_bg = f_color_code_teal_bg_s; \
+    color.bright_white_bg = f_color_code_white_bg_s;
 
   #define macro_f_color_t_set_xterminal(color) \
-    color.reset = f_color_string_code_reset_s; \
-    color.bold = f_color_string_code_bold_s; \
-    color.underline = f_color_string_code_underline_s; \
-    color.blink = f_color_string_code_blink_s; \
-    color.reverse = f_color_string_code_reverse_s; \
-    color.conceal = f_color_string_code_conceal_s; \
-    color.black = f_color_string_code_black_s; \
-    color.red = f_color_string_code_red_s; \
-    color.green = f_color_string_code_green_s; \
-    color.yellow = f_color_string_code_yellow_s; \
-    color.blue = f_color_string_code_blue_s; \
-    color.purple = f_color_string_code_purple_s; \
-    color.teal = f_color_string_code_teal_s; \
-    color.white = f_color_string_code_white_s; \
-    color.black_bg = f_color_string_code_black_bg_s; \
-    color.red_bg = f_color_string_code_red_bg_s; \
-    color.green_bg = f_color_string_code_green_bg_s; \
-    color.yellow_bg = f_color_string_code_yellow_bg_s; \
-    color.blue_bg = f_color_string_code_blue_bg_s; \
-    color.purple_bg = f_color_string_code_purple_bg_s; \
-    color.teal_bg = f_color_string_code_teal_bg_s; \
-    color.white_bg = f_color_string_code_white_bg_s; \
-    color.bright_black = f_color_string_code_bright_black_s; \
-    color.bright_red = f_color_string_code_bright_red_s; \
-    color.bright_green = f_color_string_code_bright_green_s; \
-    color.bright_yellow = f_color_string_code_bright_yellow_s; \
-    color.bright_blue = f_color_string_code_bright_blue_s; \
-    color.bright_purple = f_color_string_code_bright_purple_s; \
-    color.bright_teal = f_color_string_code_bright_teal_s; \
-    color.bright_white = f_color_string_code_bright_white_s; \
-    color.bright_black_bg = f_color_string_code_bright_black_bg_s; \
-    color.bright_red_bg = f_color_string_code_bright_red_bg_s; \
-    color.bright_green_bg = f_color_string_code_bright_green_bg_s; \
-    color.bright_yellow_bg = f_color_string_code_bright_yellow_bg_s; \
-    color.bright_blue_bg = f_color_string_code_bright_blue_bg_s; \
-    color.bright_purple_bg = f_color_string_code_bright_purple_bg_s; \
-    color.bright_teal_bg = f_color_string_code_bright_teal_bg_s; \
-    color.bright_white_bg = f_color_string_code_bright_white_bg_s;
+    color.reset = f_color_code_reset_s; \
+    color.bold = f_color_code_bold_s; \
+    color.underline = f_color_code_underline_s; \
+    color.blink = f_color_code_blink_s; \
+    color.reverse = f_color_code_reverse_s; \
+    color.conceal = f_color_code_conceal_s; \
+    color.black = f_color_code_black_s; \
+    color.red = f_color_code_red_s; \
+    color.green = f_color_code_green_s; \
+    color.yellow = f_color_code_yellow_s; \
+    color.blue = f_color_code_blue_s; \
+    color.purple = f_color_code_purple_s; \
+    color.teal = f_color_code_teal_s; \
+    color.white = f_color_code_white_s; \
+    color.black_bg = f_color_code_black_bg_s; \
+    color.red_bg = f_color_code_red_bg_s; \
+    color.green_bg = f_color_code_green_bg_s; \
+    color.yellow_bg = f_color_code_yellow_bg_s; \
+    color.blue_bg = f_color_code_blue_bg_s; \
+    color.purple_bg = f_color_code_purple_bg_s; \
+    color.teal_bg = f_color_code_teal_bg_s; \
+    color.white_bg = f_color_code_white_bg_s; \
+    color.bright_black = f_color_code_bright_black_s; \
+    color.bright_red = f_color_code_bright_red_s; \
+    color.bright_green = f_color_code_bright_green_s; \
+    color.bright_yellow = f_color_code_bright_yellow_s; \
+    color.bright_blue = f_color_code_bright_blue_s; \
+    color.bright_purple = f_color_code_bright_purple_s; \
+    color.bright_teal = f_color_code_bright_teal_s; \
+    color.bright_white = f_color_code_bright_white_s; \
+    color.bright_black_bg = f_color_code_bright_black_bg_s; \
+    color.bright_red_bg = f_color_code_bright_red_bg_s; \
+    color.bright_green_bg = f_color_code_bright_green_bg_s; \
+    color.bright_yellow_bg = f_color_code_bright_yellow_bg_s; \
+    color.bright_blue_bg = f_color_code_bright_blue_bg_s; \
+    color.bright_purple_bg = f_color_code_bright_purple_bg_s; \
+    color.bright_teal_bg = f_color_code_bright_teal_bg_s; \
+    color.bright_white_bg = f_color_code_bright_white_bg_s;
 #endif // _di_f_color_t_
 
 /**

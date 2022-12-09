@@ -34,11 +34,21 @@ extern "C" {
   #define F_console_symbol_long_normal_s_length  2
   #define F_console_symbol_long_inverse_s_length 2
 
-  extern const f_string_static_t f_console_symbol_short_normal_s;
-  extern const f_string_static_t f_console_symbol_short_inverse_s;
+  #ifndef _di_f_console_symbol_short_normal_s_
+    extern const f_string_static_t f_console_symbol_short_normal_s;
+  #endif // _di_f_console_symbol_short_normal_s_
 
-  extern const f_string_static_t f_console_symbol_long_normal_s;
-  extern const f_string_static_t f_console_symbol_long_inverse_s;
+  #ifndef _di_f_console_symbol_short_inverse_s_
+    extern const f_string_static_t f_console_symbol_short_inverse_s;
+  #endif // _di_f_console_symbol_short_inverse_s_
+
+  #ifndef _di_f_console_symbol_long_normal_s_
+    extern const f_string_static_t f_console_symbol_long_normal_s;
+  #endif // _di_f_console_symbol_long_normal_s_
+
+  #ifndef _di_f_console_symbol_long_inverse_s_
+    extern const f_string_static_t f_console_symbol_long_inverse_s;
+  #endif // _di_f_console_symbol_long_inverse_s_
 #endif // _di_f_console_symbol_s_
 
 /**
@@ -139,35 +149,117 @@ extern "C" {
   #define F_console_standard_long_verbose_s_length       7
   #define F_console_standard_long_version_s_length       7
 
-  extern const f_string_static_t f_console_standard_short_dark_s;
-  extern const f_string_static_t f_console_standard_short_debug_s;
-  extern const f_string_static_t f_console_standard_short_error_s;
-  extern const f_string_static_t f_console_standard_short_help_s;
-  extern const f_string_static_t f_console_standard_short_light_s;
-  extern const f_string_static_t f_console_standard_short_line_first_no_s;
-  extern const f_string_static_t f_console_standard_short_line_last_no_s;
-  extern const f_string_static_t f_console_standard_short_no_color_s;
-  extern const f_string_static_t f_console_standard_short_normal_s;
-  extern const f_string_static_t f_console_standard_short_quiet_s;
-  extern const f_string_static_t f_console_standard_short_status_in_s;
-  extern const f_string_static_t f_console_standard_short_status_out_s;
-  extern const f_string_static_t f_console_standard_short_verbose_s;
-  extern const f_string_static_t f_console_standard_short_version_s;
+  #ifndef _di_f_console_standard_short_dark_s_
+    extern const f_string_static_t f_console_standard_short_dark_s;
+  #endif // _di_f_console_standard_short_dark_s_
 
-  extern const f_string_static_t f_console_standard_long_dark_s;
-  extern const f_string_static_t f_console_standard_long_debug_s;
-  extern const f_string_static_t f_console_standard_long_error_s;
-  extern const f_string_static_t f_console_standard_long_help_s;
-  extern const f_string_static_t f_console_standard_long_light_s;
-  extern const f_string_static_t f_console_standard_long_line_first_no_s;
-  extern const f_string_static_t f_console_standard_long_line_last_no_s;
-  extern const f_string_static_t f_console_standard_long_no_color_s;
-  extern const f_string_static_t f_console_standard_long_normal_s;
-  extern const f_string_static_t f_console_standard_long_quiet_s;
-  extern const f_string_static_t f_console_standard_long_status_in_s;
-  extern const f_string_static_t f_console_standard_long_status_out_s;
-  extern const f_string_static_t f_console_standard_long_verbose_s;
-  extern const f_string_static_t f_console_standard_long_version_s;
+  #ifndef _di_f_console_standard_short_debug_s_
+    extern const f_string_static_t f_console_standard_short_debug_s;
+  #endif // _di_f_console_standard_short_debug_s_
+
+  #ifndef _di_f_console_standard_short_error_s_
+    extern const f_string_static_t f_console_standard_short_error_s;
+  #endif // _di_f_console_standard_short_error_s_
+
+  #ifndef _di_f_console_standard_short_help_s_
+    extern const f_string_static_t f_console_standard_short_help_s;
+  #endif // _di_f_console_standard_short_help_s_
+
+  #ifndef _di_f_console_standard_short_light_s_
+    extern const f_string_static_t f_console_standard_short_light_s;
+  #endif // _di_f_console_standard_short_light_s_
+
+  #ifndef _di_f_console_standard_short_line_first_no_s_
+    extern const f_string_static_t f_console_standard_short_line_first_no_s;
+  #endif // _di_f_console_standard_short_line_first_no_s_
+
+  #ifndef _di_f_console_standard_short_line_last_no_s_
+    extern const f_string_static_t f_console_standard_short_line_last_no_s;
+  #endif // _di_f_console_standard_short_line_last_no_s_
+
+  #ifndef _di_f_console_standard_short_no_color_s_
+    extern const f_string_static_t f_console_standard_short_no_color_s;
+  #endif // _di_f_console_standard_short_no_color_s_
+
+  #ifndef _di_f_console_standard_short_normal_s_
+    extern const f_string_static_t f_console_standard_short_normal_s;
+  #endif // _di_f_console_standard_short_normal_s_
+
+  #ifndef _di_f_console_standard_short_quiet_s_
+    extern const f_string_static_t f_console_standard_short_quiet_s;
+  #endif // _di_f_console_standard_short_quiet_s_
+
+  #ifndef _di_f_console_standard_short_status_in_s_
+    extern const f_string_static_t f_console_standard_short_status_in_s;
+  #endif // _di_f_console_standard_short_status_in_s_
+
+  #ifndef _di_f_console_standard_short_status_out_s_
+    extern const f_string_static_t f_console_standard_short_status_out_s;
+  #endif // _di_f_console_standard_short_status_out_s_
+
+  #ifndef _di_f_console_standard_short_verbose_s_
+    extern const f_string_static_t f_console_standard_short_verbose_s;
+  #endif // _di_f_console_standard_short_verbose_s_
+
+  #ifndef _di_f_console_standard_short_version_s_
+    extern const f_string_static_t f_console_standard_short_version_s;
+  #endif // _di_f_console_standard_short_version_s_
+
+  #ifndef _di_f_console_standard_long_dark_s_
+    extern const f_string_static_t f_console_standard_long_dark_s;
+  #endif // _di_f_console_standard_long_dark_s_
+
+  #ifndef _di_f_console_standard_long_debug_s_
+    extern const f_string_static_t f_console_standard_long_debug_s;
+  #endif // _di_f_console_standard_long_debug_s_
+
+  #ifndef _di_f_console_standard_long_error_s_
+    extern const f_string_static_t f_console_standard_long_error_s;
+  #endif // _di_f_console_standard_long_error_s_
+
+  #ifndef _di_f_console_standard_long_help_s_
+    extern const f_string_static_t f_console_standard_long_help_s;
+  #endif // _di_f_console_standard_long_help_s_
+
+  #ifndef _di_f_console_standard_long_light_s_
+    extern const f_string_static_t f_console_standard_long_light_s;
+  #endif // _di_f_console_standard_long_light_s_
+
+  #ifndef _di_f_console_standard_long_line_first_no_s_
+    extern const f_string_static_t f_console_standard_long_line_first_no_s;
+  #endif // _di_f_console_standard_long_line_first_no_s_
+
+  #ifndef _di_f_console_standard_long_line_last_no_s_
+    extern const f_string_static_t f_console_standard_long_line_last_no_s;
+  #endif // _di_f_console_standard_long_line_last_no_s_
+
+  #ifndef _di_f_console_standard_long_no_color_s_
+    extern const f_string_static_t f_console_standard_long_no_color_s;
+  #endif // _di_f_console_standard_long_no_color_s_
+
+  #ifndef _di_f_console_standard_long_normal_s_
+    extern const f_string_static_t f_console_standard_long_normal_s;
+  #endif // _di_f_console_standard_long_normal_s_
+
+  #ifndef _di_f_console_standard_long_quiet_s_
+    extern const f_string_static_t f_console_standard_long_quiet_s;
+  #endif // _di_f_console_standard_long_quiet_s_
+
+  #ifndef _di_f_console_standard_long_status_in_s_
+    extern const f_string_static_t f_console_standard_long_status_in_s;
+  #endif // _di_f_console_standard_long_status_in_s_
+
+  #ifndef _di_f_console_standard_long_status_out_s_
+    extern const f_string_static_t f_console_standard_long_status_out_s;
+  #endif // _di_f_console_standard_long_status_out_s_
+
+  #ifndef _di_f_console_standard_long_verbose_s_
+    extern const f_string_static_t f_console_standard_long_verbose_s;
+  #endif // _di_f_console_standard_long_verbose_s_
+
+  #ifndef _di_f_console_standard_long_version_s_
+    extern const f_string_static_t f_console_standard_long_version_s;
+  #endif // _di_f_console_standard_long_version_s_
 #endif // _di_f_console_standard_s_
 
 /**
@@ -181,6 +273,15 @@ extern "C" {
 #endif // _di_f_console_length_size_
 
 /**
+ * Provide console flag data type.
+ */
+#ifndef _di_f_console_flag_t_
+  typedef uint8_t f_console_flag_t;
+
+  #define f_console_flag_t_initialize 0
+#endif // _di_f_console_flag_t_
+
+/**
  * Provide console flags.
  *
  * The flags are bits or sets of bits used for designating different states of the parameter.
@@ -188,7 +289,7 @@ extern "C" {
  * The disabled flag prevents it from being processed at all and will be treated as other data.
  * If the flag should still be processed, then do not set disabled flag and instead just ignore it when found.
  *
- * f_console_flag_*:
+ * f_console_flag_*e:
  *   - none:    No flag data is set.
  *   - normal:  Parameters using minus sign, such as '--help' ("inverse" and "additional" bits are 0.
  *   - inverse: Parameters using plus sign, such as '++version'.
@@ -200,11 +301,7 @@ extern "C" {
  *   - type:  A mask for selecting the bits representing all possible type value flags.
  *   - state: A mask for selecting the bits representing all possible state flags.
  */
-#ifndef _di_f_console_flag_t_
-  typedef uint8_t f_console_flag_t;
-
-  #define f_console_flag_t_initialize 0
-
+#ifndef _di_f_console_flag_e_
   enum {
     f_console_flag_none_e    = 0x0,
 
@@ -216,18 +313,27 @@ extern "C" {
 
     // State flags.
     f_console_flag_disable_e = 0x10,
-  };
+  }; // enum
 
   #define f_console_flag_mask_type_d  0xf
   #define f_console_flag_mask_state_d 0x10
-#endif // _di_f_console_flag_t_
+#endif // _di_f_console_flag_e_
+
+/**
+ * The console result data type.
+ */
+#ifndef _di_f_console_result_t_
+  typedef uint8_t f_console_result_t;
+
+  #define f_console_result_t_initialize 0
+#endif // _di_f_console_result_t_
 
 /**
  * Result values that represent the type of command found.
  *
  * Here "alone" refers to '-', or '++', in that they only have the symbols (whereas '-x', or '++x' would not be alone).
  *
- * f_console_result_*:
+ * f_console_result_*e:
  *   - none:    No flags are set.
  *   - found:   The parameter has been found.
  *   - normal:  The normal prefix character ("-" by default) has been found.
@@ -237,11 +343,7 @@ extern "C" {
  *   - alone:   The prefix character is by itself (such as only "-" rather than "-h").
  *   - value:   One or more values associated with the parameter have been found.
  */
-#ifndef _di_f_console_result_t_
-  typedef uint8_t f_console_result_t;
-
-  #define f_console_result_t_initialize 0
-
+#ifndef _di_f_console_result_e_
   enum {
     f_console_result_none_e    = 0x0,
     f_console_result_found_e   = 0x1,
@@ -251,8 +353,8 @@ extern "C" {
     f_console_result_long_e    = 0x10,
     f_console_result_alone_e   = 0x20,
     f_console_result_value_e   = 0x40,
-  };
-#endif // _di_f_console_result_t_
+  }; // enum
+#endif // _di_f_console_result_e_
 
 /**
  * Provide the standard verbosity codes.

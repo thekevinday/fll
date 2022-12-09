@@ -59,11 +59,25 @@ extern "C" {
   #define FLL_error_file_type_pipe_s_length      4
   #define FLL_error_file_type_socket_s_length    6
 
-  extern const f_string_static_t fll_error_file_type_directory_s;
-  extern const f_string_static_t fll_error_file_type_file_s;
-  extern const f_string_static_t fll_error_file_type_path_s;
-  extern const f_string_static_t fll_error_file_type_pipe_s;
-  extern const f_string_static_t fll_error_file_type_socket_s;
+  #ifndef _di_fll_error_file_type_directory_s_
+    extern const f_string_static_t fll_error_file_type_directory_s;
+  #endif // _di_fll_error_file_type_directory_s_
+
+  #ifndef _di_fll_error_file_type_file_s_
+    extern const f_string_static_t fll_error_file_type_file_s;
+  #endif // _di_fll_error_file_type_file_s_
+
+  #ifndef _di_fll_error_file_type_path_s_
+    extern const f_string_static_t fll_error_file_type_path_s;
+  #endif // _di_fll_error_file_type_path_s_
+
+  #ifndef _di_fll_error_file_type_pipe_s_
+    extern const f_string_static_t fll_error_file_type_pipe_s;
+  #endif // _di_fll_error_file_type_pipe_s_
+
+  #ifndef _di_fll_error_file_type_socket_s_
+    extern const f_string_static_t fll_error_file_type_socket_s;
+  #endif // _di_fll_error_file_type_socket_s_
 #endif // _di_fll_error_file_type_s_
 
 #ifdef __cplusplus

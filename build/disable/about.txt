@@ -6,14 +6,14 @@ These files are generated like the following:
 # cd fll/
 
 # cd level_0;
-# for i in * ; do grep -hor '#ifndef _di_f_.*\>' $i | sed -e 's|^#ifndef |#define |g' | sort | uniq > ../build/disable/level_0/$i.h ; done
+# for i in * ; do grep -hor "#ifndef _di_$i.*\>" $i | sed -e 's|^#ifndef |#define |g' | sort | uniq > ../build/disable/level_0/$i.h ; done
 
 # cd ..
 
 # cd level_1;
-# for i in * ; do grep -hor '#ifndef _di_fl_.*\>' $i | sed -e 's|^#ifndef |#define |g' | sort | uniq > ../build/disable/level_1/$i.h ; done
+# for i in * ; do grep -hor "#ifndef _di_$i_.*\>" $i | sed -e 's|^#ifndef |#define |g' | sort | uniq > ../build/disable/level_1/$i.h ; done
 
 # cd ..
 
 # cd level_2;
-# for i in * ; do grep -hor '#ifndef _di_fll_.*\>' $i | sed -e 's|^#ifndef |#define |g' | sort | uniq > ../build/disable/level_2/$i.h ; done
+# for i in * ; do grep -hor "#ifndef _di_$i_.*\>" $i | sed -e 's|^#ifndef |#define |g' | sort | uniq > ../build/disable/level_2/$i.h ; done

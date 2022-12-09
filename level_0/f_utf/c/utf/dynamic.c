@@ -679,7 +679,7 @@ extern "C" {
     if (!buffer.used) return F_data_not;
     if (range->start > range->stop) return F_data_not_stop;
 
-    while (buffer.string[range->start] != f_utf_char_t_eol_s) {
+    while (buffer.string[range->start] != f_utf_char_eol_s) {
 
       if (macro_f_utf_char_t_width_is(buffer.string[range->start]) == 1) {
         return F_status_set_error(F_utf_fragment);
@@ -710,7 +710,7 @@ extern "C" {
         return F_status_set_error(F_utf_fragment);
       }
 
-      if (buffer.string[range->start] == f_utf_char_t_eol_s) return F_none_eol;
+      if (buffer.string[range->start] == f_utf_char_eol_s) return F_none_eol;
 
       ++range->start;
 

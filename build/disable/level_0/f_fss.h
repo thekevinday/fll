@@ -1,6 +1,5 @@
 #define _di_f_fss_apply_delimit_
 #define _di_f_fss_apply_delimit_range_
-#define _di_f_fss_e_
 #define _di_f_fss_commentss_t_
 #define _di_f_fss_comments_t_
 #define _di_f_fss_comment_t_
@@ -10,13 +9,13 @@
 #define _di_f_fss_count_lines_
 #define _di_f_fss_count_lines_range_
 #define _di_f_fss_default_d_
-#define _di_f_fss_default_d_
-#define _di_f_fss_placeholder_s_
 #define _di_f_fss_delimitss_t_
 #define _di_f_fss_delimits_t_
 #define _di_f_fss_delimit_t_
+#define _di_f_fss_e_
 #define _di_f_fss_fail_utf_
 #define _di_f_fss_fail_utf_to_false_
+#define _di_f_fss_header_s_
 #define _di_f_fss_is_combining_
 #define _di_f_fss_is_graph_
 #define _di_f_fss_is_space_
@@ -59,7 +58,10 @@
 #define _di_f_fss_nest_t_
 #define _di_f_fss_objects_t_
 #define _di_f_fss_object_t_
+#define _di_f_fss_payload_s_
+#define _di_f_fss_placeholder_s_
 #define _di_f_fss_quote_type_
+#define _di_f_fss_s_
 #define _di_f_fss_seek_to_eol_
 #define _di_f_fss_set_adjust_
 #define _di_f_fss_set_decimate_by_
@@ -96,5 +98,4 @@
 #define _di_f_fss_status_error_e_
 #define _di_f_fss_status_success_e_
 #define _di_f_fss_status_warning_e_
-#define _di_f_fss_s_
-#define _di_f_fss_s_
+#define _di_f_fss_type_s_

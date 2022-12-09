@@ -99,7 +99,7 @@ extern "C" {
 
     while (buffer.string[range->start] != seek_to_character) {
 
-      if (buffer.string[range->start++] == f_utf_char_t_eol_s) {
+      if (buffer.string[range->start++] == f_utf_char_eol_s) {
         return F_none_eol;
       }
 
@@ -142,7 +142,7 @@ extern "C" {
         return status;
       }
 
-      if (buffer.string[range->start++] == f_utf_char_t_eol_s) {
+      if (buffer.string[range->start++] == f_utf_char_eol_s) {
         return F_none_eol;
       }
 
@@ -186,7 +186,7 @@ extern "C" {
     while (buffer.string[range->start] == placeholder || (status = f_utf_character_is_whitespace(buffer.string[range->start], F_false)) == F_false) {
 
       if (F_status_is_error(status)) return status;
-      if (buffer.string[range->start] == f_utf_char_t_eol_s) return F_none_eol;
+      if (buffer.string[range->start] == f_utf_char_eol_s) return F_none_eol;
 
       ++range->start;
 
@@ -309,7 +309,7 @@ extern "C" {
         return F_status_set_error(F_utf_fragment);
       }
 
-      if (string[range->start] == f_utf_char_t_eol_s) {
+      if (string[range->start] == f_utf_char_eol_s) {
         return F_none_eol;
       }
 
@@ -344,7 +344,7 @@ extern "C" {
         return status;
       }
 
-      if (string[range->start++] == f_utf_char_t_eol_s) {
+      if (string[range->start++] == f_utf_char_eol_s) {
         return F_none_eol;
       }
 
@@ -387,7 +387,7 @@ extern "C" {
         return status;
       }
 
-      if (string[range->start++] == f_utf_char_t_eol_s) {
+      if (string[range->start++] == f_utf_char_eol_s) {
         return F_none_eol;
       }
 

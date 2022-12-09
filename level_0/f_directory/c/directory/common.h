@@ -23,8 +23,13 @@ extern "C" {
   #define F_directory_back_s_length    2
   #define F_directory_current_s_length 1
 
-  extern const f_string_static_t f_directory_back_s;
-  extern const f_string_static_t f_directory_current_s;
+  #ifndef _di_f_directory_back_s_
+    extern const f_string_static_t f_directory_back_s;
+  #endif // _di_f_directory_back_s_
+
+  #ifndef _di_f_directory_current_s_
+    extern const f_string_static_t f_directory_current_s;
+  #endif // _di_f_directory_current_s_
 #endif // _di_f_directory_s_
 
 /**

@@ -1,2 +1,3 @@
 #define _di_fl_signal_interrupt_t_
 #define _di_fl_signal_state_interrupt_
+#define _di_level_1_parameter_checking_

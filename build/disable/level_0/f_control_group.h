@@ -1,3 +1,7 @@
 #define _di_f_control_group_copy_
+#define _di_f_control_group_d_
+#define _di_f_control_group_path_system_default_s_
+#define _di_f_control_group_path_system_prefix_s_
+#define _di_f_control_group_path_system_suffix_s_
 #define _di_f_control_group_s_
 #define _di_f_control_group_t_

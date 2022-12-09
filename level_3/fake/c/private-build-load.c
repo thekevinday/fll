@@ -42,7 +42,7 @@ extern "C" {
     }
 
     if (environment->used + data_build->setting.environment.used > environment->size) {
-      if (environment->used + data_build->setting.environment.used > f_environment_max_length) {
+      if (environment->used + data_build->setting.environment.used > f_environment_max_length_d) {
         if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
           f_file_stream_lock(data->main->error);
 

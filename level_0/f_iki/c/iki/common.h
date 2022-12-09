@@ -17,6 +17,20 @@ extern "C" {
 #endif
 
 /**
+ * Provide a default allocation step.
+ *
+ * For a UTF-8 friendly allocation step, set to at least 4.
+ *
+ * F_iki_default_allocation_*:
+ *   - large: The large allocation size.
+ *   - small: The small allocation size, in particular used for allocation iki strings.
+ */
+#ifndef _di_f_iki_default_d_
+  #define F_iki_default_allocation_large_d F_memory_default_allocation_large_d
+  #define F_iki_default_allocation_small_d 8
+#endif // _di_f_iki_default_d_
+
+/**
  * State flags associated with iki functions.
  *
  * These flags are meant to be bitwise for the 32-bit f_state_t flag property.
@@ -52,12 +66,29 @@ extern "C" {
   #define F_iki_syntax_quote_single_s_length   F_string_ascii_quote_single_s_length
   #define F_iki_syntax_slash_s_length          F_string_ascii_slash_backward_s_length
 
-  extern const f_string_static_t f_iki_syntax_separator_s;
-  extern const f_string_static_t f_iki_syntax_placeholder_s;
-  extern const f_string_static_t f_iki_syntax_quote_backtick_s;
-  extern const f_string_static_t f_iki_syntax_quote_double_s;
-  extern const f_string_static_t f_iki_syntax_quote_single_s;
-  extern const f_string_static_t f_iki_syntax_slash_s;
+  #ifndef _di_f_iki_syntax_separator_s_
+    extern const f_string_static_t f_iki_syntax_separator_s;
+  #endif // _di_f_iki_syntax_separator_s_
+
+  #ifndef _di_f_iki_syntax_placeholder_s_
+    extern const f_string_static_t f_iki_syntax_placeholder_s;
+  #endif // _di_f_iki_syntax_placeholder_s_
+
+  #ifndef _di_f_iki_syntax_quote_backtick_s_
+    extern const f_string_static_t f_iki_syntax_quote_backtick_s;
+  #endif // _di_f_iki_syntax_quote_backtick_s_
+
+  #ifndef _di_f_iki_syntax_quote_double_s_
+    extern const f_string_static_t f_iki_syntax_quote_double_s;
+  #endif // _di_f_iki_syntax_quote_double_s_
+
+  #ifndef _di_f_iki_syntax_quote_single_s_
+    extern const f_string_static_t f_iki_syntax_quote_single_s;
+  #endif // _di_f_iki_syntax_quote_single_s_
+
+  #ifndef _di_f_iki_syntax_slash_s_
+    extern const f_string_static_t f_iki_syntax_slash_s;
+  #endif // _di_f_iki_syntax_slash_s_
 #endif //_di_f_iki_syntax_s_
 
 #ifndef _di_f_iki_vocabulary_0001_s_
@@ -83,16 +114,45 @@ extern "C" {
   #define F_iki_vocabulary_0001_urn_s_length      3
   #define F_iki_vocabulary_0001_variable_s_length 3
 
-  extern const f_string_static_t f_iki_vocabulary_0001_address_s;
-  extern const f_string_static_t f_iki_vocabulary_0001_code_s;
-  extern const f_string_static_t f_iki_vocabulary_0001_email_s;
-  extern const f_string_static_t f_iki_vocabulary_0001_name_s;
-  extern const f_string_static_t f_iki_vocabulary_0001_phone_s;
-  extern const f_string_static_t f_iki_vocabulary_0001_quote_s;
-  extern const f_string_static_t f_iki_vocabulary_0001_uri_s;
-  extern const f_string_static_t f_iki_vocabulary_0001_url_s;
-  extern const f_string_static_t f_iki_vocabulary_0001_urn_s;
-  extern const f_string_static_t f_iki_vocabulary_0001_variable_s;
+  #ifndef _di_f_iki_vocabulary_0001_address_s_
+    extern const f_string_static_t f_iki_vocabulary_0001_address_s;
+  #endif // _di_f_iki_vocabulary_0001_address_s_
+
+  #ifndef _di_f_iki_vocabulary_0001_code_s_
+    extern const f_string_static_t f_iki_vocabulary_0001_code_s;
+  #endif // _di_f_iki_vocabulary_0001_code_s_
+
+  #ifndef _di_f_iki_vocabulary_0001_email_s_
+    extern const f_string_static_t f_iki_vocabulary_0001_email_s;
+  #endif // _di_f_iki_vocabulary_0001_email_s_
+
+  #ifndef _di_f_iki_vocabulary_0001_name_s_
+    extern const f_string_static_t f_iki_vocabulary_0001_name_s;
+  #endif // _di_f_iki_vocabulary_0001_name_s_
+
+  #ifndef _di_f_iki_vocabulary_0001_phone_s_
+    extern const f_string_static_t f_iki_vocabulary_0001_phone_s;
+  #endif // _di_f_iki_vocabulary_0001_phone_s_
+
+  #ifndef _di_f_iki_vocabulary_0001_quote_s_
+    extern const f_string_static_t f_iki_vocabulary_0001_quote_s;
+  #endif // _di_f_iki_vocabulary_0001_quote_s_
+
+  #ifndef _di_f_iki_vocabulary_0001_uri_s_
+    extern const f_string_static_t f_iki_vocabulary_0001_uri_s;
+  #endif // _di_f_iki_vocabulary_0001_uri_s_
+
+  #ifndef _di_f_iki_vocabulary_0001_url_s_
+    extern const f_string_static_t f_iki_vocabulary_0001_url_s;
+  #endif // _di_f_iki_vocabulary_0001_url_s_
+
+  #ifndef _di_f_iki_vocabulary_0001_urn_s_
+    extern const f_string_static_t f_iki_vocabulary_0001_urn_s;
+  #endif // _di_f_iki_vocabulary_0001_urn_s_
+
+  #ifndef _di_f_iki_vocabulary_0001_variable_s_
+    extern const f_string_static_t f_iki_vocabulary_0001_variable_s;
+  #endif // _di_f_iki_vocabulary_0001_variable_s_
 #endif // _di_f_iki_vocabulary_0001_s_
 
 #ifndef _di_f_iki_vocabulary_0002_s_
@@ -104,9 +164,17 @@ extern "C" {
   #define F_iki_vocabulary_0002_define_s_length    6
   #define F_iki_vocabulary_0002_parameter_s_length 9
 
-  extern const f_string_static_t f_iki_vocabulary_0002_context_s;
-  extern const f_string_static_t f_iki_vocabulary_0002_define_s;
-  extern const f_string_static_t f_iki_vocabulary_0002_parameter_s;
+  #ifndef _di_f_iki_vocabulary_0002_context_s_
+    extern const f_string_static_t f_iki_vocabulary_0002_context_s;
+  #endif // _di_f_iki_vocabulary_0002_context_s_
+
+  #ifndef _di_f_iki_vocabulary_0002_define_s_
+    extern const f_string_static_t f_iki_vocabulary_0002_define_s;
+  #endif // _di_f_iki_vocabulary_0002_define_s_
+
+  #ifndef _di_f_iki_vocabulary_0002_parameter_s_
+    extern const f_string_static_t f_iki_vocabulary_0002_parameter_s;
+  #endif // _di_f_iki_vocabulary_0002_parameter_s_
 #endif // _di_f_iki_vocabulary_0002_s_
 
 /**
@@ -211,20 +279,6 @@ extern "C" {
   #define macro_f_iki_datass_t_decrease_by(status, datas, amount) status = f_iki_datass_decrease_by(amount, &datas);
   #define macro_f_iki_datass_t_decimate_by(status, datas, amount) status = f_iki_datass_decimate_by(amount, &datas);
 #endif // _di_f_iki_datass_t_
-
-/**
- * Provide a default allocation step.
- *
- * For a UTF-8 friendly allocation step, set to at least 4.
- *
- * F_iki_default_allocation_*:
- *   - large: The large allocation size.
- *   - small: The small allocation size, in particular used for allocation iki strings.
- */
-#ifndef _di_f_iki_default_d_
-  #define F_iki_default_allocation_large_d F_memory_default_allocation_large_d
-  #define F_iki_default_allocation_small_d 8
-#endif // _di_f_iki_default_d_
 
 #ifdef __cplusplus
 } // extern "C"

@@ -90,32 +90,85 @@ extern "C" {
   #define F_utf_space_separator_line_s_length      3
   #define F_utf_space_separator_paragraph_s_length 3
 
-  extern const f_char_t f_utf_space_em_s[];
-  extern const f_char_t f_utf_space_em_quad_s[];
-  extern const f_char_t f_utf_space_em_per_three_s[];
-  extern const f_char_t f_utf_space_em_per_four_s[];
-  extern const f_char_t f_utf_space_em_per_six_s[];
+  #ifndef _di_f_utf_space_em_s_
+    extern const f_char_t f_utf_space_em_s[];
+  #endif // _di_f_f_utf_space_em_s_
 
-  extern const f_char_t f_utf_space_en_s[];
-  extern const f_char_t f_utf_space_en_quad_s[];
+  #ifndef _di_f_utf_space_em_quad_s_
+    extern const f_char_t f_utf_space_em_quad_s[];
+  #endif // _di_f_f_utf_space_em_quad_s_
 
-  extern const f_char_t f_utf_space_line_feed_reverse_s[];
-  extern const f_char_t f_utf_space_line_next_s[];
+  #ifndef _di_f_utf_space_em_per_three_s_
+    extern const f_char_t f_utf_space_em_per_three_s[];
+  #endif // _di_f_f_utf_space_em_per_three_s_
 
-  extern const f_char_t f_utf_space_medium_mathematical_s[];
+  #ifndef _di_f_utf_space_em_per_four_s_
+    extern const f_char_t f_utf_space_em_per_four_s[];
+  #endif // _di_f_f_utf_space_em_per_four_s_
 
-  extern const f_char_t f_utf_space_no_break_s[];
-  extern const f_char_t f_utf_space_no_break_narrow_s[];
+  #ifndef _di_f_utf_space_em_per_six_s_
+    extern const f_char_t f_utf_space_em_per_six_s[];
+  #endif // _di_f_f_utf_space_em_per_six_s_
 
-  extern const f_char_t f_utf_space_ogham_s[];
-  extern const f_char_t f_utf_space_figure_s[];
-  extern const f_char_t f_utf_space_punctuation_s[];
-  extern const f_char_t f_utf_space_thin_s[];
-  extern const f_char_t f_utf_space_hair_s[];
-  extern const f_char_t f_utf_space_ideographic_s[];
+  #ifndef _di_f_utf_space_en_s_
+    extern const f_char_t f_utf_space_en_s[];
+  #endif // _di_f_f_utf_space_en_s_
 
-  extern const f_char_t f_utf_space_separator_line_s[];
-  extern const f_char_t f_utf_space_separator_paragraph_s[];
+  #ifndef _di_f_utf_space_en_quad_s_
+    extern const f_char_t f_utf_space_en_quad_s[];
+  #endif // _di_f_f_utf_space_en_quad_s_
+
+  #ifndef _di_f_utf_space_line_feed_reverse_s_
+    extern const f_char_t f_utf_space_line_feed_reverse_s[];
+  #endif // _di_f_f_utf_space_line_feed_reverse_s_
+
+  #ifndef _di_f_utf_space_line_next_s_
+    extern const f_char_t f_utf_space_line_next_s[];
+  #endif // _di_f_f_utf_space_line_next_s_
+
+  #ifndef _di_f_utf_space_medium_mathematical_s_
+    extern const f_char_t f_utf_space_medium_mathematical_s[];
+  #endif // _di_f_f_utf_space_medium_mathematical_s_
+
+  #ifndef _di_f_utf_space_no_break_s_
+    extern const f_char_t f_utf_space_no_break_s[];
+  #endif // _di_f_f_utf_space_no_break_s_
+
+  #ifndef _di_f_utf_space_no_break_narrow_s_
+    extern const f_char_t f_utf_space_no_break_narrow_s[];
+  #endif // _di_f_f_utf_space_no_break_narrow_s_
+
+  #ifndef _di_f_utf_space_ogham_s_
+    extern const f_char_t f_utf_space_ogham_s[];
+  #endif // _di_f_f_utf_space_ogham_s_
+
+  #ifndef _di_f_utf_space_figure_s_
+    extern const f_char_t f_utf_space_figure_s[];
+  #endif // _di_f_f_utf_space_figure_s_
+
+  #ifndef _di_f_utf_space_punctuation_s_
+    extern const f_char_t f_utf_space_punctuation_s[];
+  #endif // _di_f_f_utf_space_punctuation_s_
+
+  #ifndef _di_f_utf_space_thin_s_
+    extern const f_char_t f_utf_space_thin_s[];
+  #endif // _di_f_f_utf_space_thin_s_
+
+  #ifndef _di_f_utf_space_hair_s_
+    extern const f_char_t f_utf_space_hair_s[];
+  #endif // _di_f_f_utf_space_hair_s_
+
+  #ifndef _di_f_utf_space_ideographic_s_
+    extern const f_char_t f_utf_space_ideographic_s[];
+  #endif // _di_f_f_utf_space_ideographic_s_
+
+  #ifndef _di_f_utf_space_separator_line_s_
+    extern const f_char_t f_utf_space_separator_line_s[];
+  #endif // _di_f_f_utf_space_separator_line_s_
+
+  #ifndef _di_f_utf_space_separator_paragraph_s_
+    extern const f_char_t f_utf_space_separator_paragraph_s[];
+  #endif // _di_f_f_utf_space_separator_paragraph_s_
 #endif // _di_f_utf_space_s_
 
 /**
@@ -136,13 +189,25 @@ extern "C" {
   #define F_utf_substitute_open_box_s_length            3
   #define F_utf_substitute_open_box_shouldered_s_length 3
 
-  extern const f_char_t f_utf_substitute_symbol_blank_s[];
-  extern const f_char_t f_utf_substitute_symbol_space_s[];
+  #ifndef _di_f_utf_substitute_symbol_blank_s_
+    extern const f_char_t f_utf_substitute_symbol_blank_s[];
+  #endif // _di_f_f_utf_substitute_symbol_blank_s_
 
-  extern const f_char_t f_utf_substitute_middle_dot_s[];
+  #ifndef _di_f_utf_substitute_symbol_space_s_
+    extern const f_char_t f_utf_substitute_symbol_space_s[];
+  #endif // _di_f_f_utf_substitute_symbol_space_s_
 
-  extern const f_char_t f_utf_substitute_open_box_s[];
-  extern const f_char_t f_utf_substitute_open_box_shouldered_s[];
+  #ifndef _di_f_utf_substitute_middle_dot_s_
+    extern const f_char_t f_utf_substitute_middle_dot_s[];
+  #endif // _di_f_f_utf_substitute_middle_dot_s_
+
+  #ifndef _di_f_utf_substitute_open_box_s_
+    extern const f_char_t f_utf_substitute_open_box_s[];
+  #endif // _di_f_f_utf_substitute_open_box_s_
+
+  #ifndef _di_f_utf_substitute_open_box_shouldered_s_
+    extern const f_char_t f_utf_substitute_open_box_shouldered_s[];
+  #endif // _di_f_f_utf_substitute_open_box_shouldered_s_
 #endif // _di_f_utf_substitute_s_
 
 /**
@@ -262,22 +327,30 @@ extern "C" {
 #ifndef _di_f_utf_char_s_
 
   // Big Endian.
-  #define F_utf_char_t_eol_be_s         0x0a000000 // 0000 1010, 0000 0000, 0000 0000, 0000 0000
-  #define F_utf_char_t_eos_be_s         0x00000000 // 0000 0000, 0000 0000, 0000 0000, 0000 0000
-  #define F_utf_char_t_placeholder_be_s 0x00000000 // 0000 0000, 0000 0000, 0000 0000, 0000 0000
+  #define F_utf_char_eol_be_s         0x0a000000 // 0000 1010, 0000 0000, 0000 0000, 0000 0000
+  #define F_utf_char_eos_be_s         0x00000000 // 0000 0000, 0000 0000, 0000 0000, 0000 0000
+  #define F_utf_char_placeholder_be_s 0x00000000 // 0000 0000, 0000 0000, 0000 0000, 0000 0000
 
   // Little Endian.
-  #define F_utf_char_t_eol_le_s         0x0000000a // 0000 0000, 0000 0000, 0000 0000, 0000 1010
-  #define F_utf_char_t_eos_le_s         0x00000000 // 0000 0000, 0000 0000, 0000 0000, 0000 0000
-  #define F_utf_char_t_placeholder_le_s 0x00000000 // 0000 0000, 0000 0000, 0000 0000, 0000 0000
+  #define F_utf_char_eol_le_s         0x0000000a // 0000 0000, 0000 0000, 0000 0000, 0000 1010
+  #define F_utf_char_eos_le_s         0x00000000 // 0000 0000, 0000 0000, 0000 0000, 0000 0000
+  #define F_utf_char_placeholder_le_s 0x00000000 // 0000 0000, 0000 0000, 0000 0000, 0000 0000
 
-  #define F_utf_char_t_eol_s         F_utf_char_t_eol_be_s
-  #define F_utf_char_t_eos_s         F_utf_char_t_eos_be_s
-  #define F_utf_char_t_placeholder_s F_utf_char_t_placeholder_be_s
+  #define F_utf_char_eol_s         F_utf_char_eol_be_s
+  #define F_utf_char_eos_s         F_utf_char_eos_be_s
+  #define F_utf_char_placeholder_s F_utf_char_placeholder_be_s
 
-  extern const f_utf_char_t f_utf_char_t_eol_s;
-  extern const f_utf_char_t f_utf_char_t_eos_s;
-  extern const f_utf_char_t f_utf_char_t_placeholder_s;
+  #ifndef _di_f_utf_char_eol_s_
+    extern const f_utf_char_t f_utf_char_eol_s;
+  #endif // _di_f_utf_char_eol_s_
+
+  #ifndef _di_f_utf_char_eos_s_
+    extern const f_utf_char_t f_utf_char_eos_s;
+  #endif // _di_f_utf_char_eos_s_
+
+  #ifndef _di_f_utf_char_placeholder_s_
+    extern const f_utf_char_t f_utf_char_t_placeholder_s;
+  #endif // _di_f_utf_char_placeholder_s_
 #endif // _di_f_utf_char_s_
 
 /**
@@ -320,7 +393,7 @@ extern "C" {
     F_utf_width_narrow_e,
     F_utf_width_nuetral_e,
     F_utf_width_wide_e,
-  };
+  }; // enum
 #endif // _di_f_utf_width_e_
 
 #ifdef __cplusplus

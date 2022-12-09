@@ -141,7 +141,7 @@ extern "C" {
     f_status_t status = F_none;
 
     {
-      f_array_length_t length = 5 + f_fss_string_header_s.used + f_fss_string_payload_s.used;
+      f_array_length_t length = 5 + f_fss_header_s.used + f_fss_payload_s.used;
       length += control_action_s.used + control_length_s.used + control_type_s.used;
       length += (f_fss_payload_list_open_s.used + f_fss_payload_list_close_s.used) * 2;
       length += (f_fss_payload_header_open_s.used + f_fss_payload_header_close_s.used) * 3;
@@ -216,13 +216,13 @@ extern "C" {
     if (F_status_is_error(status)) return status;
 
     // Payload Packet: Header.
-    status = fll_fss_payload_write(f_fss_string_header_s, data->cache.large, F_false, 0, state, &data->cache.packet);
+    status = fll_fss_payload_write(f_fss_header_s, data->cache.large, F_false, 0, state, &data->cache.packet);
     if (F_status_is_error(status)) return status;
 
     // Payload Packet: Payload.
     data->cache.large.used = 0;
 
-    status = fll_fss_payload_write(f_fss_string_payload_s, data->cache.large, F_false, 0, state, &data->cache.packet);
+    status = fll_fss_payload_write(f_fss_payload_s, data->cache.large, F_false, 0, state, &data->cache.packet);
     if (F_status_is_error(status)) return status;
 
     // Construct Packet Size Block.
@@ -349,28 +349,28 @@ extern "C" {
 
         for (; i < data->cache.packet_objects.used; ++i) {
 
-          if (fl_string_dynamic_partial_compare_string(f_fss_string_header_s.string, data->cache.large, f_fss_string_header_s.used, data->cache.packet_objects.array[i]) == F_equal_to) {
+          if (fl_string_dynamic_partial_compare_string(f_fss_header_s.string, data->cache.large, f_fss_header_s.used, data->cache.packet_objects.array[i]) == F_equal_to) {
 
             // The FSS-000E (Payload) standard does not prohibit multiple "header", but such cases are not supported by the controller and the control programs.
             if (content_header) {
-              control_print_debug_packet_message(main, "Multiple %[" F_fss_string_header_s "%] found in response packet", 0, 0, 0);
+              control_print_debug_packet_message(main, "Multiple %[" F_fss_header_s "%] found in response packet", 0, 0, 0);
 
               return F_status_set_error(F_payload_not);
             }
 
             content_header = &data->cache.packet_contents.array[i];
           }
-          else if (fl_string_dynamic_partial_compare_string(f_fss_string_payload_s.string, data->cache.large, f_fss_string_payload_s.used, data->cache.packet_objects.array[i]) == F_equal_to) {
+          else if (fl_string_dynamic_partial_compare_string(f_fss_payload_s.string, data->cache.large, f_fss_payload_s.used, data->cache.packet_objects.array[i]) == F_equal_to) {
 
             // Only a single "payload" is supported by the FSS-000E (Payload) standard.
             if (content_payload) {
-              control_print_debug_packet_message(main, "Multiple %[" F_fss_string_payload_s "%] found in response packet", 0, 0, 0);
+              control_print_debug_packet_message(main, "Multiple %[" F_fss_payload_s "%] found in response packet", 0, 0, 0);
 
               return F_status_set_error(F_payload_not);
             }
 
             if (i + 1 < data->cache.packet_contents.used) {
-              control_print_debug_packet_message(main, "Invalid FSS Payload format, the %[" F_fss_string_payload_s "%] is required to be the last FSS Basic List Object", 0, 0, 0);
+              control_print_debug_packet_message(main, "Invalid FSS Payload format, the %[" F_fss_payload_s "%] is required to be the last FSS Basic List Object", 0, 0, 0);
 
               return F_status_set_error(F_payload_not);
             }
@@ -380,13 +380,13 @@ extern "C" {
         } // for
 
         if (!content_header) {
-          control_print_debug_packet_message(main, "Did not find a %[" F_fss_string_header_s "%] in the response packet", 0, 0, 0);
+          control_print_debug_packet_message(main, "Did not find a %[" F_fss_header_s "%] in the response packet", 0, 0, 0);
 
           return F_status_set_error(F_payload_not);
         }
 
         if (!content_payload) {
-          control_print_debug_packet_message(main, "Did not find a %[" F_fss_string_payload_s "%] in the response packet", 0, 0, 0);
+          control_print_debug_packet_message(main, "Did not find a %[" F_fss_payload_s "%] in the response packet", 0, 0, 0);
 
           return F_status_set_error(F_payload_not);
         }
@@ -422,7 +422,7 @@ extern "C" {
         }
 
         if (!data->cache.header_contents.used) {
-          control_print_debug_packet_message(main, "Did not find any Content within the %[" F_fss_string_header_s "%]", 0, 0, 0);
+          control_print_debug_packet_message(main, "Did not find any Content within the %[" F_fss_header_s "%]", 0, 0, 0);
 
           return F_status_set_error(F_header_not);
         }
