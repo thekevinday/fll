@@ -85,7 +85,7 @@ extern "C" {
  * - signal:  Set both the error and warning bits.
  * - warning: Set the warning bit.
  */
-#ifndef _di_f_status_masks_
+#ifndef _di_f_status_mask_d_
   #define F_status_bit_error   0x8000 // 1000 0000 0000 0000
   #define F_status_bit_signal  0xc000 // 1100 0000 0000 0000
   #define F_status_bit_warning 0x4000 // 0100 0000 0000 0000
@@ -112,7 +112,7 @@ extern "C" {
 
   #define F_status_size_max_d           0x3fff
   #define F_status_size_max_with_bits_d 0xffff
-#endif // _di_f_status_masks_
+#endif // _di_f_status_mask_d_
 
 /**
  * All standard/core status codes.
@@ -128,14 +128,14 @@ extern "C" {
  * 5) F_status_code_last, this is intended to designate the last code provided by level_0 status project.
  *    All code sets started by another project (such as FSS status codes) must start at this number + 1 with a code start map.
  */
-#ifndef _di_f_status_codes_
+#ifndef _di_f_status_code_e_
   enum {
-    #ifndef _di_f_status_boolean_
+    #ifndef _di_f_status_boolean_e_
       F_false = 0,
       F_true,
-    #endif // _di_f_status_boolean_
+    #endif // _di_f_status_boolean_e_
 
-    #ifndef _di_f_status_signal_
+    #ifndef _di_f_status_signal_e_
       F_signal_hangup = 1,
       F_signal_interrupt,
       F_signal_quit,
@@ -200,10 +200,10 @@ extern "C" {
       F_signal_reserved_62,
       F_signal_reserved_63,
       F_signal_reserved_64,
-    #endif // _di_f_status_signal_
+    #endif // _di_f_status_signal_e_
 
     // Start at 197 to allow compatibility with the reserved bash return codes (keep in mind fss return codes can be larger than 255).
-    #ifndef _di_f_status_basic_
+    #ifndef _di_f_status_basic_e_
       F_none = 197,
       F_abort,
       F_abort_not,
@@ -501,9 +501,9 @@ extern "C" {
       F_write_only,
       F_yes,
       F_yes_not,
-    #endif // _di_f_status_basic_
+    #endif // _di_f_status_basic_e_
 
-    #ifndef _di_f_status_return_
+    #ifndef _di_f_status_return_e_
       F_debug,
       F_debug_not,
       F_error,
@@ -512,16 +512,16 @@ extern "C" {
       F_fine_not,
       F_warning,
       F_warning_not,
-    #endif // _di_f_status_return_
+    #endif // _di_f_status_return_e_
 
-    #ifndef _di_f_status_array_
+    #ifndef _di_f_status_array_e_
       F_array,
       F_array_not,
       F_array_too_large,
       F_array_too_small,
-    #endif // _di_f_status_array_
+    #endif // _di_f_status_array_e_
 
-    #ifndef _di_f_status_available_
+    #ifndef _di_f_status_available_e_
       F_available,
       F_available_not,
       F_available_not_address,
@@ -531,9 +531,9 @@ extern "C" {
       F_available_not_port,
       F_available_not_process,
       F_available_not_socket,
-    #endif // _di_f_status_available_
+    #endif // _di_f_status_available_e_
 
-    #ifndef _di_f_status_busy_
+    #ifndef _di_f_status_busy_e_
       F_busy,
       F_busy_address,
       F_busy_buffer,
@@ -543,9 +543,9 @@ extern "C" {
       F_busy_port,
       F_busy_process,
       F_busy_socket,
-    #endif // _di_f_status_busy_
+    #endif // _di_f_status_busy_e_
 
-    #ifndef _di_f_status_network_
+    #ifndef _di_f_status_network_e_
       F_network,
       F_network_busy,
       F_network_busy_not,
@@ -568,9 +568,9 @@ extern "C" {
       F_network_server_not,
       F_network_time,
       F_network_time_not,
-    #endif // _di_f_status_network_
+    #endif // _di_f_status_network_e_
 
-    #ifndef _di_f_status_number_
+    #ifndef _di_f_status_number_e_
       F_number,
       F_number_decimal,
       F_number_decimal_not,
@@ -588,9 +588,9 @@ extern "C" {
       F_number_whole_not,
       F_number_zero,
       F_number_zero_not,
-    #endif // _di_f_status_number_
+    #endif // _di_f_status_number_e_
 
-    #ifndef _di_f_status_buffer_
+    #ifndef _di_f_status_buffer_e_
       F_buffer,
       F_buffer_not,
       F_buffer_overflow,
@@ -621,9 +621,9 @@ extern "C" {
       F_data_not_eos,
       F_data_not_start,
       F_data_not_stop,
-    #endif // _di_f_status_buffer_
+    #endif // _di_f_status_buffer_e_
 
-    #ifndef _di_f_status_end_
+    #ifndef _di_f_status_end_e_
       F_end,
       F_end_not,
       F_end_not_block,
@@ -649,15 +649,15 @@ extern "C" {
       F_end_not_nest_stop,
       F_end_not_start,
       F_end_not_stop,
-    #endif // _di_f_status_end_
+    #endif // _di_f_status_end_e_
 
-    #ifndef _di_f_status_process_
+    #ifndef _di_f_status_process_e_
       F_process,
       F_process_not,
       F_process_too_many,
-    #endif // _di_f_status_process_
+    #endif // _di_f_status_process_e_
 
-    #ifndef _di_f_status_file_
+    #ifndef _di_f_status_file_e_
       F_file,
       F_file_close,
       F_file_closed,
@@ -701,16 +701,16 @@ extern "C" {
       F_file_utf,
       F_file_utf_not,
       F_file_write,
-    #endif // _di_f_status_file_
+    #endif // _di_f_status_file_e_
 
-    #ifndef _di_f_status_filesystem_
+    #ifndef _di_f_status_filesystem_e_
       F_filesystem,
       F_filesystem_not,
       F_filesystem_quota_block,
       F_filesystem_quota_reached,
-    #endif // _di_f_status_filesystem_
+    #endif // _di_f_status_filesystem_e_
 
-    #ifndef _di_f_status_directory_
+    #ifndef _di_f_status_directory_e_
       F_directory,
       F_directory_close,
       F_directory_closed,
@@ -731,25 +731,25 @@ extern "C" {
       F_directory_utf,
       F_directory_utf_not,
       F_directory_write,
-    #endif // _di_f_status_directory_
+    #endif // _di_f_status_directory_e_
 
-    #ifndef _di_f_status_socket_
+    #ifndef _di_f_status_socket_e_
       F_socket,
       F_socket_client,
       F_socket_not,
       F_socket_receive,
       F_socket_send,
       F_socket_target,
-    #endif // _di_f_status_socket_
+    #endif // _di_f_status_socket_e_
 
-    #ifndef _di_f_status_compare_
+    #ifndef _di_f_status_compare_e_
       F_equal_to,
       F_equal_to_not,
       F_than_greater,
       F_than_less,
-    #endif // _di_f_status_compare_
+    #endif // _di_f_status_compare_e_
 
-    #ifndef _di_f_status_access_
+    #ifndef _di_f_status_access_e_
       F_access,
       F_access_denied,
       F_access_denied_execute,
@@ -771,9 +771,9 @@ extern "C" {
       F_access_mode,
       F_access_not,
       F_access_owner,
-    #endif // _di_f_status_access_
+    #endif // _di_f_status_access_e_
 
-    #ifndef _di_f_status_terminal_
+    #ifndef _di_f_status_terminal_e_
       F_terminal,
       F_terminal_access,
       F_terminal_known,
@@ -784,12 +784,12 @@ extern "C" {
       F_terminal_valid,
       F_terminal_valid_not,
       F_terminal_write,
-    #endif // _di_f_status_terminal_
+    #endif // _di_f_status_terminal_e_
 
     // Required.
     F_status_code_last,
   }; // enum
-#endif // _di_f_status_codes_
+#endif // _di_f_status_code_e_
 
 #ifdef __cplusplus
 } // extern "C"
