@@ -169,7 +169,7 @@ extern "C" {
     }
 
     if (F_status_is_error(setting->status)) {
-      iki_read_print_error(setting, main->error, "fl_iki_read");
+      iki_read_print_error(setting, main->error, macro_iki_read_f(fl_iki_read));
 
       return;
     }
@@ -282,7 +282,7 @@ extern "C" {
     }
 
     if (F_status_is_error(setting->status)) {
-      iki_read_print_error(setting, main->error, "fl_iki_read");
+      iki_read_print_error(setting, main->error, macro_iki_read_f(fl_iki_read));
 
       return;
     }
@@ -396,7 +396,7 @@ extern "C" {
     }
 
     if (F_status_is_error(setting->status)) {
-      iki_read_print_error(setting, main->error, "fl_iki_read");
+      iki_read_print_error(setting, main->error, macro_iki_read_f(fl_iki_read));
 
       return;
     }
@@ -438,7 +438,7 @@ extern "C" {
         setting->status = f_string_dynamic_append_nulless(main->parameters.arguments.array[index], &name);
 
         if (F_status_is_error(setting->status)) {
-          iki_read_print_error(setting, main->error, "f_string_dynamic_append_nulless");
+          iki_read_print_error(setting, main->error, macro_iki_read_f(f_string_dynamic_append_nulless));
 
           f_string_dynamic_resize(0, &name);
 

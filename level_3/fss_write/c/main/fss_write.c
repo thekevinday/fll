@@ -125,7 +125,7 @@ extern "C" {
     setting->status = f_string_dynamics_increase(setting->state.step_small, &setting->objects);
 
     if (F_status_is_error(setting->status)) {
-      fss_write_print_error(setting, main->error, "f_string_dynamics_increase");
+      fss_write_print_error(setting, main->error, macro_fss_write_f(f_string_dynamics_increase));
 
       return;
     }
@@ -134,7 +134,7 @@ extern "C" {
     setting->status = f_string_dynamicss_increase(setting->state.step_small, &setting->contentss);
 
     if (F_status_is_error(setting->status)) {
-      fss_write_print_error(setting, main->error, "f_string_dynamicss_increase");
+      fss_write_print_error(setting, main->error, macro_fss_write_f(f_string_dynamicss_increase));
 
       return;
     }
@@ -142,7 +142,7 @@ extern "C" {
     setting->status = f_string_dynamics_increase(setting->state.step_small, setting->contents);
 
     if (F_status_is_error(setting->status)) {
-      fss_write_print_error(setting, main->error, "f_string_dynamics_increase");
+      fss_write_print_error(setting, main->error, macro_fss_write_f(f_string_dynamics_increase));
 
       return;
     }
@@ -151,7 +151,7 @@ extern "C" {
     setting->status = f_string_rangess_increase(setting->state.step_small, &setting->ignoress);
 
     if (F_status_is_error(setting->status)) {
-      fss_write_print_error(setting, main->error, "f_string_rangess_increase");
+      fss_write_print_error(setting, main->error, macro_fss_write_f(f_string_rangess_increase));
 
       return;
     }
@@ -183,7 +183,7 @@ extern "C" {
         status_pipe = f_file_read_block(input, &setting->block);
 
         if (F_status_is_error(status_pipe)) {
-          fss_write_print_error(setting, main->error, "f_file_read_block");
+          fss_write_print_error(setting, main->error, macro_fss_write_f(f_file_read_block));
 
           status_pipe = F_status_set_error(F_pipe);
 
@@ -211,7 +211,7 @@ extern "C" {
         setting->status = f_string_dynamic_increase_by(setting->block.used, setting->object);
 
         if (F_status_is_error(setting->status)) {
-          fss_write_print_error(setting, main->error, "f_string_dynamic_increase_by");
+          fss_write_print_error(setting, main->error, macro_fss_write_f(f_string_dynamic_increase_by));
 
           break;
         }
@@ -277,7 +277,7 @@ extern "C" {
           setting->status = f_string_dynamics_increase(setting->state.step_small, setting->contents);
 
           if (F_status_is_error(setting->status)) {
-            fss_write_print_error(setting, main->error, "f_string_dynamics_increase");
+            fss_write_print_error(setting, main->error, macro_fss_write_f(f_string_dynamics_increase));
 
             break;
           }
@@ -294,7 +294,7 @@ extern "C" {
           setting->status = f_string_dynamic_increase_by(total, &setting->contents->array[setting->contents->used]);
 
           if (F_status_is_error(setting->status)) {
-            fss_write_print_error(setting, main->error, "f_string_dynamic_increase_by");
+            fss_write_print_error(setting, main->error, macro_fss_write_f(f_string_dynamic_increase_by));
 
             break;
           }
@@ -328,7 +328,7 @@ extern "C" {
                 setting->status = f_string_ranges_increase(setting->state.step_small, setting->ignores);
 
                 if (F_status_is_error(setting->status)) {
-                  fss_write_print_error(setting, main->error, "f_string_ranges_increase");
+                  fss_write_print_error(setting, main->error, macro_fss_write_f(f_string_ranges_increase));
 
                   break;
                 }

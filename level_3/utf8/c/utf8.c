@@ -78,7 +78,7 @@ extern "C" {
         setting->status = f_file_stream_open(setting->path_files_from.array[i], f_string_empty_s, &file);
 
         if (F_status_is_error(setting->status)) {
-          utf8_print_error_file(setting, main->error, "f_file_stream_open", setting->path_files_from.array[i], f_file_operation_open_s, fll_error_file_type_file_e);
+          utf8_print_error_file(setting, main->error, macro_utf8_f(f_file_stream_open), setting->path_files_from.array[i], f_file_operation_open_s, fll_error_file_type_file_e);
 
           break;
         }

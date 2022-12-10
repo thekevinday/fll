@@ -56,6 +56,7 @@
 
 // UTF-8 includes.
 #include <program/utf8/common.h>
+#include <program/utf8/common-print.h>
 #include <program/utf8/print.h>
 
 #ifdef __cplusplus

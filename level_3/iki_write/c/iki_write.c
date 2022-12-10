@@ -61,7 +61,7 @@ extern "C" {
           if (F_status_is_error(status)) {
             setting->status = F_status_set_error(F_pipe);
 
-            iki_write_print_error_file(setting, main->error, "f_file_read", f_string_ascii_minus_s, f_file_operation_read_s, fll_error_file_type_pipe_e);
+            iki_write_print_error_file(setting, main->error, macro_iki_write_f(f_file_read), f_string_ascii_minus_s, f_file_operation_read_s, fll_error_file_type_pipe_e);
 
             return;
           }
@@ -87,7 +87,7 @@ extern "C" {
         }
 
         if (F_status_is_error(setting->status)) {
-          iki_write_print_error(setting, main->error, "f_string_dynamic_seek_to");
+          iki_write_print_error(setting, main->error, macro_iki_write_f(f_string_dynamic_seek_to));
 
           return;
         }
@@ -112,7 +112,7 @@ extern "C" {
             setting->status = f_string_dynamic_partial_append_nulless(setting->buffer, range, &setting->content);
 
             if (F_status_is_error(setting->status)) {
-              iki_write_print_error(setting, main->error, "f_string_dynamic_partial_append_nulless");
+              iki_write_print_error(setting, main->error, macro_iki_write_f(f_string_dynamic_partial_append_nulless));
 
               return;
             }
@@ -131,7 +131,7 @@ extern "C" {
           setting->status = f_string_dynamic_partial_append_nulless(setting->buffer, range, &setting->object);
 
           if (F_status_is_error(setting->status)) {
-            iki_write_print_error(setting, main->error, "f_string_dynamic_partial_append_nulless");
+            iki_write_print_error(setting, main->error, macro_iki_write_f(f_string_dynamic_partial_append_nulless));
 
             return;
           }

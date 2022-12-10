@@ -76,7 +76,7 @@ extern "C" {
     setting->status = f_console_parameter_process(arguments, &main->parameters);
 
     if (F_status_is_error(setting->status)) {
-      fss_write_print_error(setting, main->error, "f_console_parameter_process");
+      fss_write_print_error(setting, main->error, macro_fss_write_f(f_console_parameter_process));
 
       return;
     }
@@ -96,7 +96,7 @@ extern "C" {
         setting->status = fll_program_parameter_process_context(choices, modes, F_true, main);
 
         if (F_status_is_error(setting->status)) {
-          fss_write_print_error(setting, main->error, "fll_program_parameter_process_context");
+          fss_write_print_error(setting, main->error, macro_fss_write_f(fll_program_parameter_process_context));
 
           return;
         }
@@ -127,7 +127,7 @@ extern "C" {
         setting->status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, main);
 
         if (F_status_is_error(setting->status)) {
-          fss_write_print_error(setting, main->error, "fll_program_parameter_process_verbosity");
+          fss_write_print_error(setting, main->error, macro_fss_write_f(fll_program_parameter_process_verbosity));
 
           return;
         }
@@ -179,7 +179,7 @@ extern "C" {
       setting->status = f_file_stream_open(main->parameters.arguments.array[index], f_string_empty_s, &main->output.to);
 
       if (F_status_is_error(setting->status)) {
-        fss_write_print_error_file(setting, main->error, "f_file_stream_open", main->parameters.arguments.array[index], f_file_operation_open_s, fll_error_file_type_file_e);
+        fss_write_print_error_file(setting, main->error, macro_fss_write_f(f_file_stream_open), main->parameters.arguments.array[index], f_file_operation_open_s, fll_error_file_type_file_e);
 
         return;
       }
@@ -204,7 +204,7 @@ extern "C" {
       setting->status = f_string_dynamics_resize(values->used, &setting->objects);
 
       if (F_status_is_error(setting->status)) {
-        fss_write_print_error(setting, main->error, "f_string_dynamics_resize");
+        fss_write_print_error(setting, main->error, macro_fss_write_f(f_string_dynamics_resize));
 
         return;
       }
@@ -258,7 +258,7 @@ extern "C" {
       setting->status = f_string_dynamicss_increase_by(values_object->used, &setting->contentss);
 
       if (F_status_is_error(setting->status)) {
-        fss_write_print_error(setting, main->error, "f_string_dynamicss_increase_by");
+        fss_write_print_error(setting, main->error, macro_fss_write_f(f_string_dynamicss_increase_by));
 
         return;
       }
@@ -289,7 +289,7 @@ extern "C" {
         setting->status = f_string_dynamics_increase_by(total, &setting->contentss.array[j]);
 
         if (F_status_is_error(setting->status)) {
-          fss_write_print_error(setting, main->error, "f_string_dynamics_increase_by");
+          fss_write_print_error(setting, main->error, macro_fss_write_f(f_string_dynamics_increase_by));
 
           return;
         }
@@ -328,7 +328,7 @@ extern "C" {
       setting->status = f_string_dynamic_append_nulless(main->parameters.arguments.array[index], &setting->prepend);
 
       if (F_status_is_error(setting->status)) {
-        fss_write_print_error(setting, main->error, "f_string_dynamic_append_nulless");
+        fss_write_print_error(setting, main->error, macro_fss_write_f(f_string_dynamic_append_nulless));
 
         return;
       }
@@ -342,7 +342,7 @@ extern "C" {
           setting->status = f_fss_is_space(state, main->parameters.arguments.array[index], range);
 
           if (F_status_is_error(setting->status)) {
-            fss_write_print_error(setting, main->error, "f_fss_is_space");
+            fss_write_print_error(setting, main->error, macro_fss_write_f(f_fss_is_space));
 
             return;
           }
@@ -397,7 +397,7 @@ extern "C" {
         setting->status = f_string_rangess_increase_by(values_data->used, &setting->ignoress);
 
         if (F_status_is_error(setting->status)) {
-          fss_write_print_error(setting, main->error, "f_string_rangess_increase_by");
+          fss_write_print_error(setting, main->error, macro_fss_write_f(f_string_rangess_increase_by));
 
           return;
         }
@@ -429,7 +429,7 @@ extern "C" {
           setting->status = f_string_ranges_increase_by(total, &setting->ignoress.array[j]);
 
           if (F_status_is_error(setting->status)) {
-            fss_write_print_error(setting, main->error, "f_string_ranges_increase_by");
+            fss_write_print_error(setting, main->error, macro_fss_write_f(f_string_ranges_increase_by));
 
             return;
           }

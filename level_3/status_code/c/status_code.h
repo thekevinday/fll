@@ -43,6 +43,7 @@
 
 // Status Code includes.
 #include <program/status_code/common.h>
+#include <program/status_code/common-print.h>
 #include <program/status_code/print.h>
 
 #ifdef __cplusplus

@@ -61,7 +61,7 @@ extern "C" {
     setting->status = f_console_parameter_process(arguments, &main->parameters);
 
     if (F_status_is_error(setting->status)) {
-      iki_write_print_error(setting, main->error, "f_console_parameter_process");
+      iki_write_print_error(setting, main->error, macro_iki_write_f(f_console_parameter_process));
 
       return;
     }
@@ -81,7 +81,7 @@ extern "C" {
         setting->status = fll_program_parameter_process_context(choices, modes, F_true, main);
 
         if (F_status_is_error(setting->status)) {
-          iki_write_print_error(setting, main->error, "fll_program_parameter_process_context");
+          iki_write_print_error(setting, main->error, macro_iki_write_f(fll_program_parameter_process_context));
 
           return;
         }
@@ -112,7 +112,7 @@ extern "C" {
         setting->status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, main);
 
         if (F_status_is_error(setting->status)) {
-          iki_write_print_error(setting, main->error, "fll_program_parameter_process_verbosity");
+          iki_write_print_error(setting, main->error, macro_iki_write_f(fll_program_parameter_process_verbosity));
 
           return;
         }
@@ -181,7 +181,7 @@ extern "C" {
       setting->status = f_string_dynamics_resize(values->used, &setting->objects);
 
       if (F_status_is_error(setting->status)) {
-        iki_write_print_error(setting, main->error, "f_string_dynamics_resize");
+        iki_write_print_error(setting, main->error, macro_iki_write_f(f_string_dynamics_resize));
 
         return;
       }
@@ -216,7 +216,7 @@ extern "C" {
       setting->status = f_string_dynamics_resize(values->used, &setting->contents);
 
       if (F_status_is_error(setting->status)) {
-        iki_write_print_error(setting, main->error, "f_string_dynamics_resize");
+        iki_write_print_error(setting, main->error, macro_iki_write_f(f_string_dynamics_resize));
 
         return;
       }

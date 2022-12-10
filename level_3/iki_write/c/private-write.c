@@ -32,7 +32,7 @@ extern "C" {
     }
 
     if (F_status_is_error(setting->status)) {
-      iki_write_print_error(setting, main->error, "f_iki_object_is");
+      iki_write_print_error(setting, main->error, macro_iki_write_f(f_iki_object_is));
 
       return;
     }
@@ -42,7 +42,7 @@ extern "C" {
     setting->status = fll_iki_content_escape(content, setting->quote, &setting->escaped);
 
     if (F_status_is_error(setting->status)) {
-      iki_write_print_error(setting, main->error, "fll_iki_content_escape");
+      iki_write_print_error(setting, main->error, macro_iki_write_f(fll_iki_content_escape));
 
       return;
     }

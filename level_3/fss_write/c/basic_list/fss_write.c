@@ -34,7 +34,7 @@ extern "C" {
     }
 
     if (F_status_is_error(setting->status)) {
-      fss_write_print_error(setting, main->error, "fl_fss_basic_list_content_write");
+      fss_write_print_error(setting, main->error, macro_fss_write_f(fl_fss_basic_list_content_write));
 
       return;
     }
@@ -78,7 +78,7 @@ extern "C" {
     }
 
     if (F_status_is_error(setting->status)) {
-      fss_write_print_error(setting, main->error, "fl_fss_basic_list_object_write");
+      fss_write_print_error(setting, main->error, macro_fss_write_f(fl_fss_basic_list_object_write));
     }
   }
 #endif // _di_fss_write_basic_list_process_object_

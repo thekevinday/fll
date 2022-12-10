@@ -52,6 +52,7 @@
 
 // IKI Write includes.
 #include <program/iki_write/common.h>
+#include <program/iki_write/common-print.h>
 #include <program/iki_write/print.h>
 
 #ifdef __cplusplus

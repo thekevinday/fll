@@ -85,7 +85,7 @@ extern "C" {
     setting->status = f_console_parameter_process(arguments, &main->parameters);
 
     if (F_status_is_error(setting->status)) {
-      iki_read_print_error(setting, main->error, "f_console_parameter_process");
+      iki_read_print_error(setting, main->error, macro_iki_read_f(f_console_parameter_process));
 
       return;
     }
@@ -105,7 +105,7 @@ extern "C" {
         setting->status = fll_program_parameter_process_context(choices, modes, F_true, main);
 
         if (F_status_is_error(setting->status)) {
-          iki_read_print_error(setting, main->error, "fll_program_parameter_process_context");
+          iki_read_print_error(setting, main->error, macro_iki_read_f(fll_program_parameter_process_context));
 
           return;
         }
@@ -136,7 +136,7 @@ extern "C" {
         setting->status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, main);
 
         if (F_status_is_error(setting->status)) {
-          iki_read_print_error(setting, main->error, "fll_program_parameter_process_verbosity");
+          iki_read_print_error(setting, main->error, macro_iki_read_f(fll_program_parameter_process_verbosity));
 
           return;
         }
@@ -239,7 +239,7 @@ extern "C" {
       setting->status = f_string_dynamics_increase_by(main->parameters.array[iki_read_parameter_name_e].values.used, &setting->names);
 
       if (F_status_is_error(setting->status)) {
-        iki_read_print_error(setting, main->error, "f_string_dynamics_increase_by");
+        iki_read_print_error(setting, main->error, macro_iki_read_f(f_string_dynamics_increase_by));
 
         return;
       }
@@ -270,7 +270,7 @@ extern "C" {
       } // for
 
       if (F_status_is_error(setting->status)) {
-        iki_read_print_error(setting, main->error, "f_string_dynamics_append");
+        iki_read_print_error(setting, main->error, macro_iki_read_f(f_string_dynamics_append));
 
         return;
       }
@@ -303,7 +303,7 @@ extern "C" {
       setting->status = f_string_maps_increase_by(main->parameters.array[iki_read_parameter_replace_e].values.used / 2, &setting->replace);
 
       if (F_status_is_error(setting->status)) {
-        iki_read_print_error(setting, main->error, "f_string_maps_increase_by");
+        iki_read_print_error(setting, main->error, macro_iki_read_f(f_string_maps_increase_by));
 
         return;
       }
@@ -337,7 +337,7 @@ extern "C" {
         }
 
         if (F_status_is_error(setting->status)) {
-          iki_read_print_error(setting, main->error, "f_string_dynamic_resize");
+          iki_read_print_error(setting, main->error, macro_iki_read_f(f_string_dynamic_resize));
 
           return;
         }
@@ -388,7 +388,7 @@ extern "C" {
       setting->status = f_string_triples_increase_by(main->parameters.array[iki_read_parameter_wrap_e].values.used / 3, &setting->wrap);
 
       if (F_status_is_error(setting->status)) {
-        iki_read_print_error(setting, main->error, "f_string_triples_increase_by");
+        iki_read_print_error(setting, main->error, macro_iki_read_f(f_string_triples_increase_by));
 
         return;
       }
@@ -426,7 +426,7 @@ extern "C" {
         }
 
         if (F_status_is_error(setting->status)) {
-          iki_read_print_error(setting, main->error, "f_string_dynamic_resize");
+          iki_read_print_error(setting, main->error, macro_iki_read_f(f_string_dynamic_resize));
 
           return;
         }
@@ -551,7 +551,7 @@ extern "C" {
       setting->status = f_string_dynamics_resize(main->parameters.remaining.used, &setting->files);
 
       if (F_status_is_error(setting->status)) {
-        iki_read_print_error(setting, main->error, "f_string_dynamics_resize");
+        iki_read_print_error(setting, main->error, macro_iki_read_f(f_string_dynamics_resize));
 
         return;
       }
@@ -565,7 +565,7 @@ extern "C" {
           setting->status = f_string_dynamic_resize(0, &setting->files.array[setting->files.used]);
 
           if (F_status_is_error(setting->status)) {
-            iki_read_print_error(setting, main->error, "f_string_dynamic_resize");
+            iki_read_print_error(setting, main->error, macro_iki_read_f(f_string_dynamic_resize));
 
             return;
           }
@@ -611,7 +611,7 @@ extern "C" {
     setting->status = f_string_triples_increase_by(parameter.values.used / 3, triple);
 
     if (F_status_is_error(setting->status)) {
-      iki_read_print_error(setting, main->error, "f_string_triples_increase_by");
+      iki_read_print_error(setting, main->error, macro_iki_read_f(f_string_triples_increase_by));
 
       return F_false;
     }
@@ -651,7 +651,7 @@ extern "C" {
       }
 
       if (F_status_is_error(setting->status)) {
-        iki_read_print_error(setting, main->error, "f_string_dynamic_resize");
+        iki_read_print_error(setting, main->error, macro_iki_read_f(f_string_dynamic_resize));
 
         return F_false;
       }

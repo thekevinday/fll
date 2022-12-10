@@ -35,7 +35,7 @@ extern "C" {
       setting->status = f_file_read(file, &setting->buffer);
 
       if (F_status_is_error(setting->status)) {
-        iki_read_print_error_file(setting, main->error, "f_file_read", f_string_ascii_minus_s, f_file_operation_process_s, fll_error_file_type_file_e);
+        iki_read_print_error_file(setting, main->error, macro_iki_read_f(f_file_read), f_string_ascii_minus_s, f_file_operation_process_s, fll_error_file_type_file_e);
       }
       else {
         iki_read_process_buffer(main, setting);
@@ -69,7 +69,7 @@ extern "C" {
         setting->status = f_file_stream_open(setting->files.array[i], f_string_empty_s, &file);
 
         if (F_status_is_error(setting->status)) {
-          iki_read_print_error_file(setting, main->error, "f_file_stream_open", setting->files.array[i], f_file_operation_process_s, fll_error_file_type_file_e);
+          iki_read_print_error_file(setting, main->error, macro_iki_read_f(f_file_stream_open), setting->files.array[i], f_file_operation_process_s, fll_error_file_type_file_e);
 
           return;
         }
@@ -77,7 +77,7 @@ extern "C" {
         setting->status = f_file_descriptor(&file);
 
         if (F_status_is_error(setting->status)) {
-          iki_read_print_error_file(setting, main->error, "f_file_descriptor", setting->files.array[i], f_file_operation_process_s, fll_error_file_type_file_e);
+          iki_read_print_error_file(setting, main->error, macro_iki_read_f(f_file_descriptor), setting->files.array[i], f_file_operation_process_s, fll_error_file_type_file_e);
 
           return;
         }
@@ -87,7 +87,7 @@ extern "C" {
         setting->status = f_file_size_by_id(file, &size_file);
 
         if (F_status_is_error(setting->status)) {
-          iki_read_print_error_file(setting, main->error, "f_file_size_by_id", setting->files.array[i], f_file_operation_analyze_s, fll_error_file_type_file_e);
+          iki_read_print_error_file(setting, main->error, macro_iki_read_f(f_file_size_by_id), setting->files.array[i], f_file_operation_analyze_s, fll_error_file_type_file_e);
 
           break;
         }
@@ -114,7 +114,7 @@ extern "C" {
         setting->status = f_string_dynamic_increase_by(size_file + 1, &setting->buffer);
 
         if (F_status_is_error(setting->status)) {
-          iki_read_print_error_file(setting, main->error, "f_string_dynamic_increase_by", setting->files.array[i], f_file_operation_process_s, fll_error_file_type_file_e);
+          iki_read_print_error_file(setting, main->error, macro_iki_read_f(f_string_dynamic_increase_by), setting->files.array[i], f_file_operation_process_s, fll_error_file_type_file_e);
 
           break;
         }
@@ -136,7 +136,7 @@ extern "C" {
 
         if (F_status_is_error(setting->status)) {
           if (F_status_set_fine(setting->status) != F_interrupt) {
-            iki_read_print_error_file(setting, main->error, "f_file_stream_read_until", setting->files.array[i], f_file_operation_process_s, fll_error_file_type_file_e);
+            iki_read_print_error_file(setting, main->error, macro_iki_read_f(f_file_stream_read_until), setting->files.array[i], f_file_operation_process_s, fll_error_file_type_file_e);
           }
 
           break;

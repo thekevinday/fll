@@ -14,11 +14,11 @@ extern "C" {
     if (!setting->status_string_from || !setting->status_string_to) {
 
       if (!setting->status_string_from) {
-        status_code_print_error_invalid_callback(setting, main->error, "status_string_from");
+        status_code_print_error_invalid_callback(setting, main->error, macro_status_code_f(status_string_from));
       }
 
       if (!setting->status_string_to) {
-        status_code_print_error_invalid_callback(setting, main->error, "status_string_to");
+        status_code_print_error_invalid_callback(setting, main->error, macro_status_code_f(status_string_to));
       }
 
       setting->status = F_status_set_error(F_parameter);

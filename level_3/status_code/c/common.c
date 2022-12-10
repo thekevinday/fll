@@ -59,7 +59,7 @@ extern "C" {
     setting->status = f_console_parameter_process(arguments, &main->parameters);
 
     if (F_status_is_error(setting->status)) {
-      status_code_print_error(setting, main->error, "f_console_parameter_process");
+      status_code_print_error(setting, main->error, macro_status_code_f(f_console_parameter_process));
 
       return;
     }
@@ -79,7 +79,7 @@ extern "C" {
         setting->status = fll_program_parameter_process_context(choices, modes, F_true, main);
 
         if (F_status_is_error(setting->status)) {
-          status_code_print_error(setting, main->error, "fll_program_parameter_process_context");
+          status_code_print_error(setting, main->error, macro_status_code_f(fll_program_parameter_process_context));
 
           return;
         }
@@ -110,7 +110,7 @@ extern "C" {
         setting->status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, main);
 
         if (F_status_is_error(setting->status)) {
-          status_code_print_error(setting, main->error, "fll_program_parameter_process_verbosity");
+          status_code_print_error(setting, main->error, macro_status_code_f(fll_program_parameter_process_verbosity));
 
           return;
         }

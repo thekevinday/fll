@@ -22,12 +22,12 @@ build_libraries-individual -lfll_error -lfll_print -lfll_program -lfl_conversion
 build_libraries-level -lfll_2 -lfll_1 -lfll_0
 build_libraries-monolithic -lfll
 
-build_sources_library common.c print.c utf8.c
+build_sources_library common.c common-print.c print.c utf8.c
 build_sources_library private-common.c private-utf8.c private-utf8_bytesequence.c private-utf8_codepoint.c
 
 build_sources_program main.c
 
-build_sources_headers common.h print.h utf8.h
+build_sources_headers common.h common-print.h print.h utf8.h
 
 build_script yes
 build_shared yes

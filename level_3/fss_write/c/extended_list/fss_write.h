@@ -44,6 +44,7 @@
 
 // FSS Write includes.
 #include <program/fss_write/main/common.h>
+#include <program/fss_write/main/common-print.h>
 #include <program/fss_write/extended_list/common.h>
 #include <program/fss_write/main/print.h>
 #include <program/fss_write/extended_list/print.h>

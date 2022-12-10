@@ -52,6 +52,7 @@
 
 // IKI Read includes.
 #include <program/iki_read/common.h>
+#include <program/iki_read/common-print.h>
 #include <program/iki_read/print.h>
 
 #ifdef __cplusplus
