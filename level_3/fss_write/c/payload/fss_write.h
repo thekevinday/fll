@@ -102,9 +102,6 @@ extern "C" {
  *   The main program settings.
  *   Must be of type (fss_write_setting_t *).
  *
- *   This standard only supports a single Content per Object.
- *   The setting.contents.array[0] must exist (settings.contents.used == 1), or it is treated as if (settings.contents == 0).
- *
  *   This alters setting.status:
  *     F_none on success.
  *     F_interrupt on (exit) signal received.

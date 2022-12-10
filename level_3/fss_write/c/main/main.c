@@ -89,7 +89,7 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
           setting->process_normal = &fss_write_process_normal;
           setting->process_set = &fss_write_process_set;
           setting->flag -= setting->flag & fss_write_flag_ignore_e; // Not supported by basic.
-          setting->flag -= setting->flag & fss_write_flag_content_multiple_e; // Not supported by payload.
+          setting->flag -= setting->flag & fss_write_flag_content_multiple_e; // Not supported by basic.
         }
         else if (fl_string_dynamic_compare(argv[index], fss_write_format_code_short_0001_s) == F_equal_to ||
                  fl_string_dynamic_compare(argv[index], fss_write_format_code_long_0001_s) == F_equal_to ||
