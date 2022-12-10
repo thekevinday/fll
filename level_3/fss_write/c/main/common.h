@@ -362,9 +362,6 @@ extern "C" {
     f_string_static_t *content;
     f_string_statics_t *contents;
 
-    const f_string_static_t *program_name;
-    const f_string_static_t *program_name_long;
-
     void (*process_content)(fll_program_data_t * const main, void * const setting, const bool last);
     void (*process_help)(fll_program_data_t * const main, void * const setting);
     void (*process_normal)(fll_program_data_t * const main, void * const setting);
@@ -389,8 +386,6 @@ extern "C" {
       f_string_rangess_t_initialize, \
       f_string_dynamics_t_initialize, \
       f_string_dynamicss_t_initialize, \
-      0, \
-      0, \
       0, \
       0, \
       0, \

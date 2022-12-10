@@ -7,8 +7,6 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
   fss_write_setting_t setting = fss_write_setting_t_initialize;
   setting.state.data = (void *) &data;
   setting.standard = fss_write_basic_standard_s;
-  setting.program_name = &fss_write_basic_program_name_s;
-  setting.program_name_long = &fss_write_basic_program_name_long_s;
   setting.process_content = &fss_write_basic_process_content;
   setting.process_help = &fss_write_basic_process_help;
   setting.process_normal = &fss_write_process_normal;

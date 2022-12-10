@@ -13,8 +13,6 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
   fll_program_data_t data = fll_program_data_t_initialize;
   fss_write_setting_t setting = fss_write_setting_t_initialize;
   setting.state.data = (void *) &data;
-  setting.program_name = &fss_write_program_name_s;
-  setting.program_name_long = &fss_write_program_name_long_s;
 
   f_console_parameter_t parameters[] = fss_write_console_parameter_t_initialize;
   data.parameters.array = parameters;
@@ -57,8 +55,6 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
     if (!main || !setting || F_status_is_error(setting->status) || (setting->flag & fss_write_flag_version_e)) return;
 
     setting->standard = fss_write_basic_standard_s;
-    setting->program_name = &fss_write_program_name_s;
-    setting->program_name_long = &fss_write_program_name_long_s;
     setting->process_content = &fss_write_basic_process_content;
     setting->process_help = &fss_write_main_process_help;
     setting->process_normal = &fss_write_process_normal;
@@ -80,8 +76,6 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
             fl_string_dynamic_compare(argv[index], fss_write_format_code_human_0000_s) == F_equal_to) {
 
           setting->standard = fss_write_basic_standard_s;
-          setting->program_name = &fss_write_basic_program_name_s;
-          setting->program_name_long = &fss_write_basic_program_name_long_s;
           setting->process_content = &fss_write_basic_process_content;
           setting->process_help = &fss_write_basic_process_help;
           setting->process_object = &fss_write_basic_process_object;
@@ -96,8 +90,6 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
                  fl_string_dynamic_compare(argv[index], fss_write_format_code_human_0001_s) == F_equal_to) {
 
           setting->standard = fss_write_extended_standard_s;
-          setting->program_name = &fss_write_extended_program_name_s;
-          setting->program_name_long = &fss_write_extended_program_name_long_s;
           setting->process_content = &fss_write_extended_process_content;
           setting->process_help = &fss_write_extended_process_help;
           setting->process_object = &fss_write_extended_process_object;
@@ -112,8 +104,6 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
                  fl_string_dynamic_compare(argv[index], fss_write_format_code_human_0002_s) == F_equal_to) {
 
           setting->standard = fss_write_basic_list_standard_s;
-          setting->program_name = &fss_write_basic_list_program_name_s;
-          setting->program_name_long = &fss_write_basic_list_program_name_long_s;
           setting->process_content = &fss_write_basic_list_process_content;
           setting->process_help = &fss_write_basic_list_process_help;
           setting->process_object = &fss_write_basic_list_process_object;
@@ -128,8 +118,6 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
                  fl_string_dynamic_compare(argv[index], fss_write_format_code_human_0003_s) == F_equal_to) {
 
           setting->standard = fss_write_extended_list_standard_s;
-          setting->program_name = &fss_write_extended_list_program_name_s;
-          setting->program_name_long = &fss_write_extended_list_program_name_long_s;
           setting->process_content = &fss_write_extended_list_process_content;
           setting->process_help = &fss_write_extended_list_process_help;
           setting->process_object = &fss_write_extended_list_process_object;
@@ -144,8 +132,6 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
                  fl_string_dynamic_compare(argv[index], fss_write_format_code_human_0008_s) == F_equal_to) {
 
           setting->standard = fss_write_embedded_list_standard_s;
-          setting->program_name = &fss_write_embedded_list_program_name_s;
-          setting->program_name_long = &fss_write_embedded_list_program_name_long_s;
           setting->process_content = &fss_write_embedded_list_process_content;
           setting->process_help = &fss_write_embedded_list_process_help;
           setting->process_object = &fss_write_embedded_list_process_object;
@@ -160,8 +146,6 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
                  fl_string_dynamic_compare(argv[index], fss_write_format_code_human_000e_s) == F_equal_to) {
 
           setting->standard = fss_write_payload_standard_s;
-          setting->program_name = &fss_write_payload_program_name_s;
-          setting->program_name_long = &fss_write_payload_program_name_long_s;
           setting->process_content = 0; // Not used by payload.
           setting->process_help = &fss_write_payload_process_help;
           setting->process_normal = &fss_write_process_normal;
