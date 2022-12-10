@@ -146,20 +146,11 @@ extern "C" {
  *   The main program settings.
  *   Must be of type (fss_write_setting_t *).
  *
- *   Set setting.object to 0 to not use an Object.
- *   Set setting.contents to 0 to not use an Content set.
- *
  *   This alters setting.status:
  *     F_none on success.
  *     F_interrupt on (exit) signal received.
  *
  *     F_parameter (with error bit) if main is NULL or setting is NULL.
- * @param object
- *   The object to validate and print.
- *   Set to setting.objects.used to not use.
- * @param content
- *   The content to escape and print.
- *   Set start to 1 and stop to 0 to not use.
  */
 #ifndef _di_fss_write_process_set_
   extern void fss_write_process_set(fll_program_data_t * const main, void * const setting);

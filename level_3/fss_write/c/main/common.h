@@ -112,8 +112,6 @@ extern "C" {
   extern const f_string_static_t fss_write_pipe_content_end_s;
   extern const f_string_static_t fss_write_pipe_content_ignore_s;
   extern const f_string_static_t fss_write_pipe_content_start_s;
-
-  #define macro_fss_write_setting(setting) ((fss_write_setting_t *) setting)
 #endif // _di_fss_write_pipe_s_
 
 /**
@@ -325,7 +323,6 @@ extern "C" {
  * content:  A pointer to a specific Content used during processing.
  * contents: A pointer to a specific set of Content used during processing.
  *
- * content_separator: A standard format specific string used to separate Content.
  * program_name:      The short name of the program.
  * program_name_long: The human friendly name of the program.
  *
@@ -365,7 +362,6 @@ extern "C" {
     f_string_static_t *content;
     f_string_statics_t *contents;
 
-    const f_string_static_t *content_separator;
     const f_string_static_t *program_name;
     const f_string_static_t *program_name_long;
 
@@ -393,7 +389,6 @@ extern "C" {
       f_string_rangess_t_initialize, \
       f_string_dynamics_t_initialize, \
       f_string_dynamicss_t_initialize, \
-      0, \
       0, \
       0, \
       0, \

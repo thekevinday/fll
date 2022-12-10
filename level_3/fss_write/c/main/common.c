@@ -72,8 +72,6 @@ extern "C" {
 
     if (!main || !setting) return;
 
-    setting->flag = 0;
-
     // Load parameters.
     setting->status = f_console_parameter_process(arguments, &main->parameters);
 
@@ -235,7 +233,7 @@ extern "C" {
 
     if ((main->parameters.array[fss_write_parameter_content_e].result & f_console_result_value_e) && main->parameters.array[fss_write_parameter_content_e].values.used) {
 
-        if (setting->flag & fss_write_flag_object_e) {
+      if (setting->flag & fss_write_flag_object_e) {
         if (!(setting->flag & fss_write_flag_content_multiple_e)) {
           if (main->parameters.array[fss_write_parameter_content_e].values.used > main->parameters.array[fss_write_parameter_object_e].values.used) {
             setting->status = F_status_set_error(F_support_not);

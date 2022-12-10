@@ -20,29 +20,29 @@ main:
 using_default:
   build settings
   build settings.main
-  #build settings.basic
-  #build settings.basic_list
-  #build settings.extended
-  #build settings.extended_list
-  #build settings.embedded_list
+  build settings.basic
+  build settings.basic_list
+  build settings.extended
+  build settings.extended_list
+  build settings.embedded_list
   build settings.payload
 
 using_mode:
   build settings parameter:'mode:value'
   build settings.main parameter:'mode:value'
-  #build settings.basic parameter:'mode:value'
-  #build settings.basic_list parameter:'mode:value'
-  #build settings.extended parameter:'mode:value'
-  #build settings.extended_list parameter:'mode:value'
-  #build settings.embedded_list parameter:'mode:value'
+  build settings.basic parameter:'mode:value'
+  build settings.basic_list parameter:'mode:value'
+  build settings.extended parameter:'mode:value'
+  build settings.extended_list parameter:'mode:value'
+  build settings.embedded_list parameter:'mode:value'
   build settings.payload parameter:'mode:value'
 
 install:
   shell ./install.sh parameter:'work'
-  #shell ./install.sh parameter:'work' -s data/build/settings.main
-  #shell ./install.sh parameter:'work' -s data/build/settings.basic
-  #shell ./install.sh parameter:'work' -s data/build/settings.basic_list
-  #shell ./install.sh parameter:'work' -s data/build/settings.extended
-  #shell ./install.sh parameter:'work' -s data/build/settings.extended_list
-  #shell ./install.sh parameter:'work' -s data/build/settings.embedded_list
+  shell ./install.sh parameter:'work' -s data/build/settings.main
+  shell ./install.sh parameter:'work' -s data/build/settings.basic
+  shell ./install.sh parameter:'work' -s data/build/settings.basic_list
+  shell ./install.sh parameter:'work' -s data/build/settings.extended
+  shell ./install.sh parameter:'work' -s data/build/settings.extended_list
+  shell ./install.sh parameter:'work' -s data/build/settings.embedded_list
   shell ./install.sh parameter:'work' -s data/build/settings.payload

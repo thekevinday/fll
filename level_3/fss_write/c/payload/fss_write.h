@@ -102,9 +102,6 @@ extern "C" {
  *   The main program settings.
  *   Must be of type (fss_write_setting_t *).
  *
- *   Set setting.object to 0 to not use an Object.
- *   Set setting.contents to 0 to not use an Content set.
- *
  *   This standard only supports a single Content per Object.
  *   The setting.contents.array[0] must exist (settings.contents.used == 1), or it is treated as if (settings.contents == 0).
  *

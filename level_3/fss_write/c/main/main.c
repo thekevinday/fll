@@ -61,9 +61,9 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
     setting->program_name_long = &fss_write_program_name_long_s;
     setting->process_content = &fss_write_basic_process_content;
     setting->process_help = &fss_write_main_process_help;
+    setting->process_normal = &fss_write_process_normal;
     setting->process_object = &fss_write_basic_process_object;
     setting->process_pipe = &fss_write_process_pipe;
-    setting->process_normal = &fss_write_process_normal;
     setting->process_set = &fss_write_process_set;
 
     if (main->parameters.array[fss_write_parameter_as_e].result & f_console_result_value_e && main->parameters.array[fss_write_parameter_as_e].values.used) {
@@ -96,7 +96,6 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
                  fl_string_dynamic_compare(argv[index], fss_write_format_code_human_0001_s) == F_equal_to) {
 
           setting->standard = fss_write_extended_standard_s;
-          setting->content_separator = 0; // Not used by extended.
           setting->program_name = &fss_write_extended_program_name_s;
           setting->program_name_long = &fss_write_extended_program_name_long_s;
           setting->process_content = &fss_write_extended_process_content;

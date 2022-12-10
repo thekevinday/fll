@@ -1,6 +1,4 @@
 #include "fss_write.h"
-#include "private-common.h"
-#include "private-write.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -106,12 +104,16 @@ extern "C" {
 
     f_array_length_t total = 0;
     f_array_length_t length = 0;
-    f_array_length_t ignore_start = 0;
+    f_array_length_t ignore = 0;
     f_string_range_t range = f_string_range_t_initialize;
 
     const f_array_length_t used_objects = setting->objects.used;
     const f_array_length_t used_contentss = setting->contentss.used;
     const f_array_length_t used_ignoress = setting->ignoress.used;
+
+    setting->object = &setting->objects.array[used_objects];
+    setting->contents = &setting->contentss.array[used_contentss];
+    setting->ignores = &setting->ignoress.array[used_ignoress];
 
     // 0x0 = nothing printed, 0x1 = something printed, 0x2 = ignore enabled, 0x4 = added Content for Object.
     uint8_t flag = 0;
@@ -137,6 +139,14 @@ extern "C" {
       return;
     }
 
+    setting->status = f_string_dynamics_increase(setting->state.step_small, setting->contents);
+
+    if (F_status_is_error(setting->status)) {
+      fss_write_print_error(setting, main->error, "f_string_dynamics_increase");
+
+      return;
+    }
+
     // This is processed in a single set, so there is only ever one Ignores added.
     setting->status = f_string_rangess_increase(setting->state.step_small, &setting->ignoress);
 
@@ -146,13 +156,10 @@ extern "C" {
       return;
     }
 
-    setting->status = f_string_dynamics_increase(setting->state.step_small, &setting->contentss.array[used_contentss]);
-
-    if (F_status_is_error(setting->status)) {
-      fss_write_print_error(setting, main->error, "f_string_dynamics_increase");
-
-      return;
-    }
+    // Reset all of the used data before starting the loop.
+    setting->object->used = 0;
+    setting->contents->used = 0;
+    setting->ignores->used = 0;
 
     for (;;) {
 
@@ -192,48 +199,57 @@ extern "C" {
       // Start Object.
       if (!state || state == 0x1) {
         if (!state) {
-          setting->objects.array[used_objects].used = 0;
+          setting->object->used = 0;
 
           state = 0x1;
         }
 
         // Reset the "has Content for Object" flag and associated contents array used length.
         flag -= flag | 0x4;
-        setting->contentss.array[used_contentss].used = 0;
+        setting->contents->used = 0;
 
-        if (setting->objects.array[used_objects].used + setting->block.used > setting->objects.array[used_objects].size) {
-          setting->status = f_string_dynamic_increase_by(setting->block.used, &setting->objects.array[used_objects]);
+        setting->status = f_string_dynamic_increase_by(setting->block.used, setting->object);
 
-          if (F_status_is_error(setting->status)) {
-            fss_write_print_error(setting, main->error, "f_string_dynamic_increase_by");
+        if (F_status_is_error(setting->status)) {
+          fss_write_print_error(setting, main->error, "f_string_dynamic_increase_by");
 
-            break;
-          }
+          break;
         }
 
         for (; range.start <= range.stop; ++range.start) {
 
-          if (setting->block.string[range.start] == fss_write_pipe_content_start_s.string[0]) {
-            state = 0x2;
-            ++range.start;
+          // Do not handle start/end while inside an ignore set.
+          if (!(flag & 0x2)) {
+            if (setting->block.string[range.start] == fss_write_pipe_content_start_s.string[0]) {
+              state = 0x2;
+              ++range.start;
 
-            break;
+              break;
+            }
+
+            if (setting->block.string[range.start] == fss_write_pipe_content_end_s.string[0]) {
+              state = 0x3;
+              ++range.start;
+
+              break;
+            }
           }
 
-          if (setting->block.string[range.start] == fss_write_pipe_content_end_s.string[0]) {
-            state = 0x3;
-            ++range.start;
-
-            break;
-          }
-
+          // There currently is no support for "ignore" in Objects, but the Ignore should still be processed.
           if (setting->block.string[range.start] == fss_write_pipe_content_ignore_s.string[0]) {
 
-            // @todo implement this, populating the ignores array, continue until no ignores is found, so set a new state to represent this.
+            // Ignore is enabled.
+            if (flag & 0x2) {
+              flag -= 0x2;
+            }
+            else {
+              flag |= 0x2;
+            }
+
             continue;
           }
 
-          setting->objects.array[used_objects].string[setting->objects.array[used_objects].used++] = setting->block.string[range.start];
+          setting->object->string[setting->object->used++] = setting->block.string[range.start];
         } // for
 
         if (F_status_is_error(setting->status)) break;
@@ -258,7 +274,7 @@ extern "C" {
             break;
           }
 
-          setting->status = f_string_dynamics_increase(setting->state.step_small, &setting->contentss.array[used_contentss]);
+          setting->status = f_string_dynamics_increase(setting->state.step_small, setting->contents);
 
           if (F_status_is_error(setting->status)) {
             fss_write_print_error(setting, main->error, "f_string_dynamics_increase");
@@ -275,7 +291,7 @@ extern "C" {
         }
 
         if (total) {
-          setting->status = f_string_dynamic_increase_by(total, &setting->contentss.array[used_contentss].array[setting->contentss.array[used_contentss].used]);
+          setting->status = f_string_dynamic_increase_by(total, &setting->contents->array[setting->contents->used]);
 
           if (F_status_is_error(setting->status)) {
             fss_write_print_error(setting, main->error, "f_string_dynamic_increase_by");
@@ -285,33 +301,58 @@ extern "C" {
 
           for (; range.start <= range.stop; ++range.start) {
 
-            if (setting->block.string[range.start] == fss_write_pipe_content_start_s.string[0]) {
-              setting->status = F_status_set_error(F_support_not);
+            // Do not handle start/end while inside an ignore set.
+            if (!(flag & 0x2)) {
+              if (setting->block.string[range.start] == fss_write_pipe_content_start_s.string[0]) {
+                if (!(setting->flag & fss_write_flag_content_multiple_e)) {
+                  setting->status = F_status_set_error(F_support_not);
 
-              fss_write_print_error_one_content_only(setting, main->error);
+                  fss_write_print_error_one_content_only(setting, main->error);
 
-              break;
-            }
+                  break;
+                }
+              }
 
-            if (setting->block.string[range.start] == fss_write_pipe_content_end_s.string[0]) {
-              state = 0x3;
-              ++range.start;
+              if (setting->block.string[range.start] == fss_write_pipe_content_end_s.string[0]) {
+                state = 0x3;
+                ++range.start;
 
-              break;
+                break;
+              }
             }
 
             if (setting->block.string[range.start] == fss_write_pipe_content_ignore_s.string[0]) {
 
-              // @todo implement this (a single fss_write_pipe_content_ignore_s followed by another fss_write_pipe_content_ignore_s should act as a delimit). (also consider delimits for other special escapes as well.)
+              // Ignore is enabled.
+              if (flag & 0x2) {
+                setting->status = f_string_ranges_increase(setting->state.step_small, setting->ignores);
+
+                if (F_status_is_error(setting->status)) {
+                  fss_write_print_error(setting, main->error, "f_string_ranges_increase");
+
+                  break;
+                }
+
+                setting->ignores->array[setting->ignores->used].start = setting->contents->array[setting->contents->used].used;
+                setting->ignores->array[setting->ignores->used].stop = range.start;
+
+                flag -= 0x2;
+              }
+              else {
+                ignore = setting->contents->array[setting->contents->used].used;
+
+                flag |= 0x2;
+              }
+
               continue;
             }
 
-            setting->contentss.array[used_contentss].array[setting->contentss.array[used_contentss].used].string[setting->contentss.array[used_contentss].array[setting->contentss.array[used_contentss].used].used++] = setting->block.string[range.start];
+            setting->contents->array[setting->contents->used].string[setting->contents->array[setting->contents->used].used++] = setting->block.string[range.start];
           } // for
 
           if (F_status_is_error(setting->status)) break;
 
-          ++setting->contentss.array[used_contentss].used;
+          ++setting->contents->used;
           flag |= 0x4;
         }
         else {
@@ -321,28 +362,16 @@ extern "C" {
 
       // End Object or Content set.
       if (state == 0x3) {
-        if (setting->flag & fss_write_flag_partial_e) {
-          if (setting->flag & fss_write_flag_content_e) {
-            setting->object = 0;
-            setting->contents = &setting->contentss.array[used_contentss];
-          }
-          else {
-            setting->object = &setting->objects.array[used_objects];
-            setting->contents = 0;
-          }
-        }
-        else {
-          setting->object = &setting->objects.array[used_objects];
-          setting->contents = &setting->contentss.array[used_contentss];
-        }
-
-        setting->ignores = &setting->ignoress.array[used_contentss];
-
         setting->process_set(main, void_setting);
         if (F_status_is_error(setting->status)) break;
 
         state = 0;
         flag |= 0x1;
+
+        // Reset all of the used data for next set.
+        setting->object->used = 0;
+        setting->contents->used = 0;
+        setting->ignores->used = 0;
 
         continue;
       }
@@ -350,23 +379,6 @@ extern "C" {
 
     // If the pipe ended before finishing, then attempt to wrap up.
     if (F_status_is_error_not(setting->status) && status_pipe == F_none_eof && state) {
-      if (setting->flag & fss_write_flag_partial_e) {
-        if (setting->flag & fss_write_flag_content_e) {
-          setting->object = 0;
-          setting->contents = &setting->contentss.array[used_contentss];
-        }
-        else {
-          setting->object = &setting->objects.array[used_objects];
-          setting->contents = 0;
-        }
-      }
-      else {
-        setting->object = &setting->objects.array[used_objects];
-        setting->contents = &setting->contentss.array[used_contentss];
-      }
-
-      setting->ignores = &setting->ignoress.array[used_contentss];
-
       setting->process_set(main, void_setting);
 
       flag |= 0x1;
@@ -374,17 +386,15 @@ extern "C" {
 
     setting->block.used = 0;
     setting->buffer.used = 0;
+    setting->object->used = 0;
+    setting->contents->used = 0;
+    setting->ignores->used = 0;
     setting->ignoress.used = used_ignoress;
     setting->objects.used = used_objects;
     setting->contentss.used = used_contentss;
 
     if (F_status_is_error_not(setting->status)) {
       setting->status = (flag & 0x1) ? F_none : F_data_not;
-
-      // Print newline character to separate data printed from pipe.
-      if ((setting->flag & fss_write_flag_partial_e) && setting->objects.used) {
-        fll_print_dynamic(f_string_eol_s, main->output.to); // @fixme review this, should this be sending to message or not at all?
-      }
     }
   }
 #endif // _di_fss_write_process_pipe_
@@ -396,7 +406,7 @@ extern "C" {
 
     setting->buffer.used = 0;
 
-    if (setting->object) {
+    if ((!(setting->flag & fss_write_flag_partial_e) || (setting->flag & fss_write_flag_partial_e) && (setting->flag & fss_write_flag_object_e)) && setting->object) {
       if (setting->object->used) {
         setting->range.start = 0;
         setting->range.stop = setting->object->used - 1;
@@ -410,7 +420,7 @@ extern "C" {
       if (F_status_is_error(setting->status)) return;
     }
 
-    if (setting->contents) {
+    if ((!(setting->flag & fss_write_flag_partial_e) || (setting->flag & fss_write_flag_partial_e) && (setting->flag & fss_write_flag_content_e)) && setting->contents) {
       for (f_array_length_t i = 0; i < setting->contents->used; ++i) {
 
         if (setting->contents->array[i].used) {

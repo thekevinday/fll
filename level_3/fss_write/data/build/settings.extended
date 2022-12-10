@@ -1,9 +1,10 @@
 # fss-0001
 #
-# Builds the main library of the project with all parts except "main" program related.
+# Builds the "extended" program (fss_extended_write).
+# This must be called after the "setting".
 #
 
-build_name fss_write
+build_name fss_extended_write
 
 version_major 0
 version_minor 7
@@ -20,26 +21,12 @@ build_indexer ar
 build_indexer_arguments rcs
 build_language c
 
-build_libraries -lc
+build_libraries -lc -lfss_write
 build_libraries-individual -lfll_error -lfll_file -lfll_fss -lfll_print -lfll_program -lfl_conversion -lfl_directory -lfl_fss -lfl_print -lfl_string -lf_color -lf_console -lf_conversion -lf_directory -lf_environment -lf_file -lf_fss -lf_memory -lf_path -lf_pipe -lf_print -lf_signal -lf_status_string -lf_string -lf_type_array -lf_utf
 build_libraries-level -lfll_2 -lfll_1 -lfll_0
 build_libraries-monolithic -lfll
 
-build_sources_library main/fss_write.c main/common.c main/print.c
-build_sources_library basic/fss_write.c basic/common.c basic/print.c
-build_sources_library basic_list/fss_write.c basic_list/common.c basic_list/print.c
-build_sources_library embedded_list/fss_write.c embedded_list/common.c embedded_list/print.c
-build_sources_library extended/fss_write.c extended/common.c extended/print.c
-build_sources_library extended_list/fss_write.c extended_list/common.c extended_list/print.c
-build_sources_library payload/fss_write.c payload/common.c payload/print.c
-
-build_sources_headers main/fss_write.h main/common.h main/print.h main/private-common.h
-build_sources_headers basic/fss_write.h basic/common.h basic/print.h basic/private-common.h
-build_sources_headers basic_list/fss_write.h basic_list/common.h basic_list/print.h
-build_sources_headers embedded_list/fss_write.h embedded_list/common.h embedded_list/print.h
-build_sources_headers extended/fss_write.h extended/common.h extended/print.h
-build_sources_headers extended_list/fss_write.h extended_list/common.h extended_list/print.h
-build_sources_headers payload/fss_write.h payload/common.h payload/print.h
+build_sources_program extended/main.c
 
 build_script yes
 build_shared yes
