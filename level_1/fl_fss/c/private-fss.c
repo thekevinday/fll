@@ -706,7 +706,7 @@ extern "C" {
     if (status == F_data_not) return status;
 
     // Ensure that there is room for the potential start and stop quotes, a potential delimit at start, and the potential object open character.
-    status = f_string_dynamic_increase_by(5, destination);
+    status = f_string_dynamic_increase_by(state.step_small + 5, destination);
     if (F_status_is_error(status)) return status;
 
     const f_array_length_t input_start = range->start;
@@ -813,7 +813,7 @@ extern "C" {
           item_first = range->start++;
 
           status = f_fss_skip_past_delimit(state, object, range);
-          if (F_status_is_error(status)) return status;
+          if (F_status_is_error(status)) break;
 
           if (range->start > range->stop || range->start >= object.used) {
 
@@ -842,20 +842,14 @@ extern "C" {
 
             quote_is = F_true;
 
-            status = f_string_dynamic_increase_by(item_total, destination);
+            status = f_string_dynamic_increase_by(item_total + 1, destination);
             if (F_status_is_error(status)) break;
 
             // Add the slashes that delimit the slashes.
             if (item_first == input_start) {
-              status = f_string_dynamic_increase(state.step_large, destination);
-              if (F_status_is_error(status)) break;
-
               destination->string[destination->used++] = f_fss_delimit_slash_s.string[0];
             }
             else {
-              status = f_string_dynamic_increase_by(item_total, destination);
-              if (F_status_is_error(status)) break;
-
               for (i = 0; i < item_total; ++i) {
                 destination->string[destination->used++] = f_fss_delimit_slash_s.string[0];
               } // for
@@ -921,9 +915,6 @@ extern "C" {
             destination->string[destination->used++] = f_fss_delimit_slash_s.string[0];
           } // for
 
-          status = f_string_dynamic_increase_by(width, destination);
-          if (F_status_is_error(status)) break;
-
           for (i = 0; i < width; ++i) {
             destination->string[destination->used++] = object.string[range->start + i];
           } // for
@@ -986,7 +977,7 @@ extern "C" {
 
         width = macro_f_utf_byte_width(object.string[range->start]);
 
-        status = f_string_dynamic_increase_by(1 + width, destination);
+        status = f_string_dynamic_increase_by(width + 1, destination);
         if (F_status_is_error(status)) break;
 
         destination->string[destination->used++] = quote_char;
@@ -1031,7 +1022,7 @@ extern "C" {
     }
 
     if (quote_is) {
-      status = f_string_dynamic_increase(state.step_large, destination);
+      status = f_string_dynamic_increase_by(state.step_small + 2, destination);
 
       if (F_status_is_error(status)) {
         destination->used = used_start;
@@ -1051,6 +1042,8 @@ extern "C" {
             status = state.interrupt((void *) &state, 0);
 
             if (F_status_set_fine(status) == F_interrupt) {
+              destination->used = used_start;
+
               return F_status_set_error(F_interrupt);
             }
           }
@@ -1089,9 +1082,7 @@ extern "C" {
       destination->string[used_start] = f_fss_delimit_slash_s.string[0];
     }
 
-    if (range->start > range->stop) {
-      return F_none_stop;
-    }
+    if (range->start > range->stop) return F_none_stop;
 
     return F_none_eos;
   }

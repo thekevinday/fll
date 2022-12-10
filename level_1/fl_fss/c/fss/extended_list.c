@@ -241,8 +241,10 @@ extern "C" {
 
     if (range->start > range->stop || range->start >= content.used) {
       if (complete == f_fss_complete_full_e || complete == f_fss_complete_full_trim_e || complete == f_fss_complete_end_e) {
-        const f_status_t status_allocation = f_string_dynamic_increase_by(2, destination);
-        if (F_status_is_error(status_allocation)) return status_allocation;
+        {
+          const f_status_t status_allocation = f_string_dynamic_increase_by(state.step_small + 2, destination);
+          if (F_status_is_error(status_allocation)) return status_allocation;
+        }
 
         destination->string[destination->used++] = f_fss_extended_list_close_s.string[0];
         destination->string[destination->used++] = f_fss_extended_list_close_end_s.string[0];
@@ -252,10 +254,10 @@ extern "C" {
     }
 
     // Ensure that there is room for a slash delimit and possibly the end of content characters.
-    status = f_string_dynamic_increase_by(4, destination);
+    status = f_string_dynamic_increase_by(state.step_small + 4, destination);
     if (F_status_is_error(status)) return status;
 
-    const f_array_length_t used_start = destination->used;
+    const f_array_length_t destination_used = destination->used;
 
     bool is_comment = F_false;
     bool ends_on_eol = F_false;
@@ -263,10 +265,9 @@ extern "C" {
     bool do_prepend = prepend ? F_true : F_false;
 
     f_array_length_t i = 0;
+    f_array_length_t r = 0;
     f_array_length_t slash_count = 0;
     f_array_length_t start = 0;
-
-    f_array_length_t r = 0;
 
     uint8_t width = 0;
 
@@ -286,10 +287,17 @@ extern "C" {
         slash_count = 1;
 
         if (do_prepend) {
+          status = f_string_dynamic_increase_by(state.step_small + prepend->used, destination);
+          if (F_status_is_error(status)) break;
+
           status = f_string_dynamic_append(*prepend, destination);
           if (F_status_is_error(status)) break;
 
           do_prepend = F_false;
+        }
+        else {
+          status = f_string_dynamic_increase(state.step_large, destination);
+          if (F_status_is_error(status)) break;
         }
 
         destination->string[destination->used++] = content.string[range->start];
@@ -300,14 +308,22 @@ extern "C" {
             status = state.interrupt((void *) &state, 0);
 
             if (F_status_set_fine(status) == F_interrupt) {
-              status = F_status_set_error(F_interrupt);
+              destination->used = destination_used;
 
-              break;
+              return F_status_set_error(F_interrupt);
             }
           }
 
           if (content.string[range->start] == f_fss_delimit_placeholder_s.string[0]) continue;
           if (content.string[range->start] != f_fss_delimit_slash_s.string[0]) break;
+
+          status = f_string_dynamic_increase(state.step_large, destination);
+
+          if (F_status_is_error(status)) {
+            destination->used = destination_used;
+
+            return status;
+          }
 
           destination->string[destination->used++] = f_fss_delimit_slash_s.string[0];
           ++slash_count;
@@ -323,9 +339,7 @@ extern "C" {
             // Do nothing.
           }
           else if (content.string[range->start] == f_fss_eol_s.string[0] || range->start >= content.used || range->start > range->stop) {
-
-            // increase by total slashes + 1 and extended list close.
-            status = f_string_dynamic_increase_by(2, destination);
+            status = f_string_dynamic_increase_by(state.step_small + 2, destination);
             if (F_status_is_error(status)) break;
 
             destination->string[destination->used++] = f_fss_delimit_slash_s.string[0];
@@ -344,7 +358,7 @@ extern "C" {
           }
 
           // Increase by character at "start" and possible newline.
-          status = f_string_dynamic_increase_by(2, destination);
+          status = f_string_dynamic_increase_by(state.step_small + 2, destination);
           if (F_status_is_error(status)) break;
 
           destination->string[destination->used++] = content.string[start];
@@ -405,7 +419,7 @@ extern "C" {
           }
 
           // Increase by slash and extended list close.
-          status = f_string_dynamic_increase_by(2, destination);
+          status = f_string_dynamic_increase_by(state.step_small + 2, destination);
           if (F_status_is_error(status)) break;
 
           destination->string[destination->used++] = f_fss_delimit_slash_s.string[0];
@@ -472,14 +486,18 @@ extern "C" {
     } // while
 
     if (F_status_is_error(status)) {
-      destination->used = used_start;
+      destination->used = destination_used;
 
       return status;
     }
 
     if (complete == f_fss_complete_full_e || complete == f_fss_complete_full_trim_e || complete == f_fss_complete_end_e) {
-      status = f_string_dynamic_increase_by(3, destination);
-      if (F_status_is_error(status)) return status;
+      status = f_string_dynamic_increase_by(state.step_small + 3, destination);
+      if (F_status_is_error(status)) {
+        destination->used = destination_used;
+
+        return status;
+      }
 
       if (!ends_on_eol) {
         destination->string[destination->used++] = f_fss_eol_s.string[0];
@@ -798,8 +816,10 @@ extern "C" {
 
     if (status == F_data_not_stop || status == F_data_not_eos) {
       if (complete == f_fss_complete_partial_e || complete == f_fss_complete_partial_trim_e || complete == f_fss_complete_full_e || complete == f_fss_complete_full_trim_e) {
-        const f_status_t status_allocation = f_string_dynamic_increase_by(2, destination);
-        if (F_status_is_error(status_allocation)) return status_allocation;
+        {
+          const f_status_t status_allocation = f_string_dynamic_increase_by(state.step_small + 2, destination);
+          if (F_status_is_error(status_allocation)) return status_allocation;
+        }
 
         destination->string[destination->used++] = f_fss_extended_list_open_s.string[0];
 
@@ -812,10 +832,10 @@ extern "C" {
     }
 
     // Ensure that there is room for a slash delimit, the object open character, and the end of line character.
-    status = f_string_dynamic_increase_by(4, destination);
+    status = f_string_dynamic_increase_by(state.step_small + 4, destination);
     if (F_status_is_error(status)) return status;
 
-    const f_array_length_t used_start = destination->used;
+    const f_array_length_t destination_used = destination->used;
 
     f_array_length_t i = 0;
     f_array_length_t slash_count = 0;
@@ -887,7 +907,7 @@ extern "C" {
     } // while
 
     if (F_status_is_error(status)) {
-      destination->used = used_start;
+      destination->used = destination_used;
 
       return status;
     }
@@ -913,9 +933,9 @@ extern "C" {
             status = state.interrupt((void *) &state, 0);
 
             if (F_status_set_fine(status) == F_interrupt) {
-              status = F_status_set_error(F_interrupt);
+              destination->used = destination_used;
 
-              break;
+              return F_status_set_error(F_interrupt);
             }
           }
 
@@ -924,8 +944,6 @@ extern "C" {
 
           ++slash_count;
         } // for
-
-        if (F_status_is_error(status)) break;
 
         if (range->start > range->stop || range->start >= object.used) {
 
@@ -980,17 +998,17 @@ extern "C" {
     } // while
 
     if (F_status_is_error(status)) {
-      destination->used = used_start;
+      destination->used = destination_used;
 
       return status;
     }
 
     if (complete == f_fss_complete_partial_e || complete == f_fss_complete_partial_trim_e || complete == f_fss_complete_full_e || complete == f_fss_complete_full_trim_e) {
       if (complete == f_fss_complete_full_trim_e) {
-        status = private_fl_fss_basic_list_write_object_trim(used_start, state, destination);
+        status = private_fl_fss_basic_list_write_object_trim(destination_used, state, destination);
 
         if (F_status_is_error(status)) {
-          destination->used = used_start;
+          destination->used = destination_used;
 
           return status;
         }
@@ -999,10 +1017,10 @@ extern "C" {
         ends_on_space = F_true;
       }
 
-      status = f_string_dynamic_increase_by(3, destination);
+      status = f_string_dynamic_increase_by(state.step_small + 3, destination);
 
       if (F_status_is_error(status)) {
-        destination->used = used_start;
+        destination->used = destination_used;
 
         return status;
       }

@@ -88,10 +88,6 @@ extern "C" {
       return F_data_not_eos;
     }
 
-    // Ensure that there is room for the potential terminating newline.
-    status = f_string_dynamic_increase_by(2, destination);
-    if (F_status_is_error(status)) return status;
-
     const f_array_length_t destination_used = destination->used;
 
     for (; range->start <= range->stop && range->start < content.used; ++range->start) {
@@ -110,10 +106,26 @@ extern "C" {
 
       if (content.string[range->start] == f_fss_delimit_placeholder_s.string[0]) continue;
 
+      status = f_string_dynamic_increase(state.step_large, destination);
+
+      if (F_status_is_error(status)) {
+        destination->used = destination_used;
+
+        return status;
+      }
+
       destination->string[destination->used++] = content.string[range->start];
     } // for
 
     if (complete == f_fss_complete_full_e || complete == f_fss_complete_full_trim_e || complete == f_fss_complete_end_e) {
+      status = f_string_dynamic_increase(state.step_large, destination);
+
+      if (F_status_is_error(status)) {
+        destination->used = destination_used;
+
+        return status;
+      }
+
       destination->string[destination->used++] = f_fss_basic_close_s.string[0];
     }
 
@@ -154,15 +166,23 @@ extern "C" {
 
     f_status_t status = private_fl_fss_basic_write(F_true, object, quote ? quote : f_fss_delimit_quote_double_s.string[0], state, range, destination);
 
+    if (F_status_is_error(status)) {
+      destination->used = destination_used;
+
+      return status;
+    }
+
     if (status == F_data_not_stop || status == F_data_not_eos) {
 
-      // Objects cannot be empty, so write a quoted empty string.
-      const f_status_t status_allocation = f_string_dynamic_increase_by(2, destination);
+      // Objects cannot be empty, so write a quote empty string.
+      {
+        const f_status_t status_allocation = f_string_dynamic_increase_by(state.step_small + 2, destination);
 
-      if (F_status_is_error(status_allocation)) {
-        destination->used = destination_used;
+        if (F_status_is_error(status_allocation)) {
+          destination->used = destination_used;
 
-        return status_allocation;
+          return status_allocation;
+        }
       }
 
       destination->string[destination->used++] = quote ? f_fss_delimit_quote_single_s.string[0] : f_fss_delimit_quote_double_s.string[0];
