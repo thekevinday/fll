@@ -165,6 +165,43 @@ extern "C" {
 #endif // _di_fll_program_print_error_parameter_cannot_use_with_
 
 /**
+ * Print message about two parameters not being allowed to be used together when a third is not used.
+ *
+ * This is only printed when verbosity is not set to quiet.
+ *
+ * This uses the following:
+ *   - print.set->error: For the error context.
+ *   - print.set->strong: For the highlighting context
+ *   - print.prefix: For the prefixing a string to the message (such as "ERROR:").
+ *
+ * @param print
+ *   The output structure.
+ *   This locks, uses, and unlocks the file stream.
+ * @param symbol_first
+ *   The symbol string prepended to the first parameter.
+ *   This is usually f_console_symbol_long_normal_s.
+ * @param symbol_second
+ *   The symbol string prepended to the second parameter.
+ *   This is usually f_console_symbol_long_normal_s.
+ * @param symbol_third
+ *   The symbol string prepended to the second parameter.
+ *   This is usually f_console_symbol_long_normal_s.
+ * @param first
+ *   The first parameter name (the parameter that cannot be used with the second parameter).
+ * @param second
+ *   The second parameter name.
+ * @param third
+ *   The third parameter name (the without parameter).
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ */
+#ifndef _di_fll_program_print_error_parameter_cannot_use_with_without_
+  extern f_status_t fll_program_print_error_parameter_cannot_use_with_without(const fl_print_t print, const f_string_static_t symbol_first, const f_string_static_t symbol_second, const f_string_static_t symbol_third, const f_string_static_t first, const f_string_static_t second, const f_string_static_t third);
+#endif // _di_fll_program_print_error_parameter_cannot_use_with_without_
+
+/**
  * Print message about one parameter not being allowed to be used when processing a pipe.
  *
  * This is only printed when verbosity is not set to quiet.

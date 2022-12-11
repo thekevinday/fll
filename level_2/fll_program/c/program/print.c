@@ -98,6 +98,27 @@ extern "C" {
   }
 #endif // _di_fll_program_print_error_parameter_cannot_use_with_
 
+#ifndef _di_fll_program_print_error_parameter_cannot_use_with_without_
+  f_status_t fll_program_print_error_parameter_cannot_use_with_without(const fl_print_t print, const f_string_static_t symbol_first, const f_string_static_t symbol_second, const f_string_static_t symbol_third, const f_string_static_t first, const f_string_static_t second, const f_string_static_t third) {
+
+    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+
+    f_file_stream_lock(print.to);
+
+    fl_print_format("%[%QCannot specify the '%]", print.to, print.set->error, print.prefix, print.set->error);
+    fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol_first, first, print.set->notable);
+    fl_print_format("%[' parameter with the '%]", print.to, print.set->error, print.set->error);
+    fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol_second, second, print.set->notable);
+    fl_print_format("%[' parameter without the '%]", print.to, print.set->error, print.set->error);
+    fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol_third, third, print.set->notable);
+    fl_print_format("%[' parameter.%]%r", print.to, print.set->error, print.set->error, f_string_eol_s);
+
+    f_file_stream_unlock(print.to);
+
+    return F_none;
+  }
+#endif // _di_fll_program_print_error_parameter_cannot_use_with_without_
+
 #ifndef _di_fll_program_print_error_parameter_cannot_use_with_pipe_
   f_status_t fll_program_print_error_parameter_cannot_use_with_pipe(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t parameter) {
 
