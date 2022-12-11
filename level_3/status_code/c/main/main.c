@@ -4,6 +4,10 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
   fll_program_data_t data = fll_program_data_t_initialize;
   status_code_setting_t setting = status_code_setting_t_initialize;
+  setting.program_name = &status_code_program_name_s;
+  setting.program_name_long = &status_code_program_name_long_s;
+  setting.status_string_from = &fll_status_string_from;
+  setting.status_string_to = &f_status_string_to;
 
   f_console_parameter_t parameters[] = status_code_console_parameter_t_initialize;
   data.parameters.array = parameters;

@@ -1,32 +1,20 @@
 /**
  * FLL - Level 3
  *
- * Project: UTF-8
+ * Project: Status Code
  * API Version: 0.7
  * Licenses: lgpl-2.1-or-later
  *
- * This is intended to support Unicode 15.0.
- *
- * This is a program for handling basic UTF-8 related conversions.
- *   - Convert from UTF-8 character to bytesequence.
- *   - Convert from Unicode Codepoint (such as U+0000) to bytesequence.
- *   - Convert from UTF-8 bytesequence to character.
- *   - Convert from UTF-8 bytesequence to Unicode Codepoint (such as U+0000).
+ * This program provides status code to/from string translation.
  */
-#ifndef _utf8_h
-#define _utf8_h
+#ifndef _status_code_h
+#define _status_code_h
 
 // Libc includes.
-#include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-
-// If limits.h does not provide PATH_MAX, define it instead of relying on <linux/limits.h>.
-#ifndef PATH_MAX
-#define PATH_MAX 4096
-#endif /* PATH_MAX */
 
 // FLL-0 includes.
 #include <fll/level_0/type.h>
@@ -35,29 +23,28 @@
 #include <fll/level_0/string.h>
 #include <fll/level_0/utf.h>
 #include <fll/level_0/color.h>
-#include <fll/level_0/console.h>
 #include <fll/level_0/conversion.h>
-#include <fll/level_0/file.h>
-#include <fll/level_0/path.h>
+#include <fll/level_0/console.h>
 #include <fll/level_0/pipe.h>
 #include <fll/level_0/print.h>
 #include <fll/level_0/signal.h>
+#include <fll/level_0/status_string.h>
 
 // FLL-1 includes.
 #include <fll/level_1/conversion.h>
 #include <fll/level_1/print.h>
 #include <fll/level_1/string.h>
-#include <fll/level_1/utf.h>
 
 // FLL-2 includes.
 #include <fll/level_2/error.h>
 #include <fll/level_2/print.h>
 #include <fll/level_2/program.h>
+#include <fll/level_2/status_string.h>
 
-// UTF-8 includes.
-#include <program/utf8/common.h>
-#include <program/utf8/common-print.h>
-#include <program/utf8/print.h>
+// Status Code includes.
+#include <program/status_code/main/common.h>
+#include <program/status_code/main/common-print.h>
+#include <program/status_code/main/print.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -87,12 +74,12 @@ extern "C" {
  *
  *     F_parameter (with error bit) if main is NULL or setting is NULL.
  */
-#ifndef _di_utf8_main_
-  extern void utf8_main(fll_program_data_t * const main, utf8_setting_t * const setting);
-#endif // _di_utf8_main_
+#ifndef _di_status_code_main_
+  extern void status_code_main(fll_program_data_t * const main, status_code_setting_t * const setting);
+#endif // _di_status_code_main_
 
 #ifdef __cplusplus
 } // extern "C"
 #endif
 
-#endif // _utf8_h
+#endif // _status_code_h

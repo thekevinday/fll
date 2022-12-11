@@ -14,8 +14,15 @@ main:
 
 using_default:
   build settings
-  build settings.fss_status_code
+  build settings.main
+  build settings.fss
 
 using_mode:
   build settings parameter:'mode:value'
-  build settings.fss_status_code parameter:'mode:value'
+  build settings.main parameter:'mode:value'
+  build settings.fss parameter:'mode:value'
+
+install:
+  shell ./install.sh parameter:'work'
+  shell ./install.sh parameter:'work' -s data/build/settings.main
+  shell ./install.sh parameter:'work' -s data/build/settings.fss

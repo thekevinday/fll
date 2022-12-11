@@ -1,5 +1,4 @@
 #include "status_code.h"
-#include "private-common.h"
 #include "print.h"
 
 #ifdef __cplusplus
@@ -91,7 +90,13 @@ extern "C" {
 
     f_print_dynamic_raw(setting->line_first, print.to);
 
-    fll_program_print_help_header(print, status_code_program_name_long_s, status_code_program_version_s);
+    fll_program_print_help_header(
+      print,
+      setting->program_name_long
+        ? *setting->program_name_long
+        : status_code_program_name_long_s,
+      status_code_program_version_s
+    );
 
     fll_program_print_help_option_standard(print);
 
@@ -105,7 +110,13 @@ extern "C" {
     f_print_dynamic_raw(f_string_eol_s, print.to);
     f_print_dynamic_raw(f_string_eol_s, print.to);
 
-    fll_program_print_help_usage(print, status_code_program_name_s, status_code_program_help_parameters_s);
+    fll_program_print_help_usage(
+      print,
+      setting->program_name
+        ? *setting->program_name
+        : status_code_program_name_s,
+      status_code_program_help_parameters_s
+    );
 
     f_print_dynamic_raw(setting->line_last, print.to);
 

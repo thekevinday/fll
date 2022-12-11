@@ -5,15 +5,15 @@
  * API Version: 0.7
  * Licenses: lgpl-2.1-or-later
  *
- * This is the IKI Read program.
+ * This is the IKI Write program.
  *
  * This program utilizes the Featureless Linux Library.
- * This program processes files or other input in fss format and stores the results in the iki_read_main_t.
+ * This program processes files or other input in fss format.
  *
  * This processes in accordance to the IKI specification.
  */
-#ifndef _iki_read_h
-#define _iki_read_h
+#ifndef _iki_write_h
+#define _iki_write_h
 
 // Libc includes.
 #include <dirent.h>
@@ -41,19 +41,19 @@
 #include <fll/level_1/conversion.h>
 #include <fll/level_1/iki.h>
 #include <fll/level_1/print.h>
-#include <fll/level_1/signal.h>
 #include <fll/level_1/string.h>
 
 // FLL-2 includes.
 #include <fll/level_2/error.h>
 #include <fll/level_2/file.h>
+#include <fll/level_2/iki.h>
 #include <fll/level_2/print.h>
 #include <fll/level_2/program.h>
 
-// IKI Read includes.
-#include <program/iki_read/common.h>
-#include <program/iki_read/common-print.h>
-#include <program/iki_read/print.h>
+// IKI Write includes.
+#include <program/iki_write/main/common.h>
+#include <program/iki_write/main/common-print.h>
+#include <program/iki_write/main/print.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -81,15 +81,21 @@ extern "C" {
  *     F_false on success when performing verification and verify failed.
  *     F_interrupt on (exit) signal received.
  *
+ *     F_failure (with error bit) on processing failure.
  *     F_parameter (with error bit) if main is NULL or setting is NULL.
- *     F_failure (with error bit) for any other failure.
+ *
+ *     Errors (with error bit) from: f_iki_object_is().
+ *     Errors (with error bit) from: fll_iki_content_escape().
+ *
+ * @see f_iki_object_is()
+ * @see fll_iki_content_escape()
  */
-#ifndef _di_iki_read_main_
-  extern void iki_read_main(fll_program_data_t * const main, iki_read_setting_t * const setting);
-#endif // _di_iki_read_main_
+#ifndef _di_iki_write_main_
+  extern void iki_write_main(fll_program_data_t * const main, iki_write_setting_t * const setting);
+#endif // _di_iki_write_main_
 
 #ifdef __cplusplus
 } // extern "C"
 #endif
 
-#endif // _iki_read_h
+#endif // _iki_write_h

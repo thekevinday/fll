@@ -1,26 +1,32 @@
 /**
  * FLL - Level 3
  *
- * Project: IKI
+ * Project: UTF-8
  * API Version: 0.7
  * Licenses: lgpl-2.1-or-later
  *
- * This is the IKI Write program.
+ * This is intended to support Unicode 15.0.
  *
- * This program utilizes the Featureless Linux Library.
- * This program processes files or other input in fss format.
- *
- * This processes in accordance to the IKI specification.
+ * This is a program for handling basic UTF-8 related conversions.
+ *   - Convert from UTF-8 character to bytesequence.
+ *   - Convert from Unicode Codepoint (such as U+0000) to bytesequence.
+ *   - Convert from UTF-8 bytesequence to character.
+ *   - Convert from UTF-8 bytesequence to Unicode Codepoint (such as U+0000).
  */
-#ifndef _iki_write_h
-#define _iki_write_h
+#ifndef _utf8_h
+#define _utf8_h
 
 // Libc includes.
-#include <dirent.h>
+#include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+
+// If limits.h does not provide PATH_MAX, define it instead of relying on <linux/limits.h>.
+#ifndef PATH_MAX
+#define PATH_MAX 4096
+#endif /* PATH_MAX */
 
 // FLL-0 includes.
 #include <fll/level_0/type.h>
@@ -32,28 +38,26 @@
 #include <fll/level_0/console.h>
 #include <fll/level_0/conversion.h>
 #include <fll/level_0/file.h>
-#include <fll/level_0/iki.h>
+#include <fll/level_0/path.h>
 #include <fll/level_0/pipe.h>
 #include <fll/level_0/print.h>
 #include <fll/level_0/signal.h>
 
 // FLL-1 includes.
 #include <fll/level_1/conversion.h>
-#include <fll/level_1/iki.h>
 #include <fll/level_1/print.h>
 #include <fll/level_1/string.h>
+#include <fll/level_1/utf.h>
 
 // FLL-2 includes.
 #include <fll/level_2/error.h>
-#include <fll/level_2/file.h>
-#include <fll/level_2/iki.h>
 #include <fll/level_2/print.h>
 #include <fll/level_2/program.h>
 
-// IKI Write includes.
-#include <program/iki_write/common.h>
-#include <program/iki_write/common-print.h>
-#include <program/iki_write/print.h>
+// UTF-8 includes.
+#include <program/utf8/main/common.h>
+#include <program/utf8/main/common-print.h>
+#include <program/utf8/main/print.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -81,21 +85,14 @@ extern "C" {
  *     F_false on success when performing verification and verify failed.
  *     F_interrupt on (exit) signal received.
  *
- *     F_failure (with error bit) on processing failure.
  *     F_parameter (with error bit) if main is NULL or setting is NULL.
- *
- *     Errors (with error bit) from: f_iki_object_is().
- *     Errors (with error bit) from: fll_iki_content_escape().
- *
- * @see f_iki_object_is()
- * @see fll_iki_content_escape()
  */
-#ifndef _di_iki_write_main_
-  extern void iki_write_main(fll_program_data_t * const main, iki_write_setting_t * const setting);
-#endif // _di_iki_write_main_
+#ifndef _di_utf8_main_
+  extern void utf8_main(fll_program_data_t * const main, utf8_setting_t * const setting);
+#endif // _di_utf8_main_
 
 #ifdef __cplusplus
 } // extern "C"
 #endif
 
-#endif // _iki_write_h
+#endif // _utf8_h

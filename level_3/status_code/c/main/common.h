@@ -49,19 +49,11 @@ extern "C" {
  * The program name.
  */
 #ifndef _di_status_code_program_name_s_
-  #ifdef _status_code_as_fss_status_code
-    #define STATUS_CODE_program_name_s      "fss_status_code"
-    #define STATUS_CODE_program_name_long_s "FSS Status Code"
+  #define STATUS_CODE_program_name_s      "status_code"
+  #define STATUS_CODE_program_name_long_s "Status Code"
 
-    #define STATUS_CODE_program_name_s_length      15
-    #define STATUS_CODE_program_name_long_s_length 15
-  #else
-    #define STATUS_CODE_program_name_s      "status_code"
-    #define STATUS_CODE_program_name_long_s "Status Code"
-
-    #define STATUS_CODE_program_name_s_length      11
-    #define STATUS_CODE_program_name_long_s_length 11
-  #endif // _status_code_as_fss_status_code
+  #define STATUS_CODE_program_name_s_length      11
+  #define STATUS_CODE_program_name_long_s_length 11
 
   extern const f_string_static_t status_code_program_name_s;
   extern const f_string_static_t status_code_program_name_long_s;
@@ -230,7 +222,7 @@ extern "C" {
  * line_first: A string expected to represent either "\n" or NULL to allow for easy handling of when to print first new line or not.
  * line_last:  A string expected to represent either "\n" or NULL to allow for easy handling of when to print last new line or not.
  *
- * status_string_from: A pointer to the status string function (usually either f_status_string_from() or fll_fss_status_string_from()).
+ * status_string_from: A pointer to the status string function (usually either fll_status_string_from() or fll_fss_status_string_from()).
  * status_string_to:   A pointer to the status string function (usually either f_status_string_to() or fll_fss_status_string_to()).
  */
 #ifndef _di_status_code_setting_t_
@@ -242,6 +234,9 @@ extern "C" {
     f_string_static_t line_first;
     f_string_static_t line_last;
 
+    const f_string_static_t *program_name;
+    const f_string_static_t *program_name_long;
+
     f_status_t (*status_string_from)(const f_string_static_t name, f_status_t * const code);
     f_status_t (*status_string_to)(const f_status_t code, f_string_static_t * const name);
   } status_code_setting_t;
@@ -252,8 +247,10 @@ extern "C" {
       F_none, \
       f_string_static_t_initialize, \
       f_string_static_t_initialize, \
-      &fll_status_string_from, \
-      &f_status_string_to, \
+      0, \
+      0, \
+      0, \
+      0, \
     }
 #endif // _di_status_code_setting_t_
 

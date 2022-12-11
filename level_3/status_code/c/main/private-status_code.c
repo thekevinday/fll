@@ -1,5 +1,4 @@
 #include "status_code.h"
-#include "private-common.h"
 #include "private-status_code.h"
 
 #ifdef __cplusplus
