@@ -38,6 +38,8 @@ extern "C" {
 
     fss_write_print_help_pipe(setting, print);
 
+    fss_write_print_help_end_next(setting, print);
+
     fl_print_format("%r  The FSS-000E (Payload) specification does not support quoted names, therefore the parameters '%[%r%r%]'", print.to, f_string_eol_s, print.set->notable, f_console_symbol_long_normal_s, fss_write_long_single_s, print.set->notable);
     fl_print_format(" and '%[%r%r%]' do nothing.%r%r", print.to, print.set->notable, f_console_symbol_long_normal_s, fss_write_long_double_s, print.set->notable, f_string_eol_s, f_string_eol_s);
 

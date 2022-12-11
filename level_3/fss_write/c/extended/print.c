@@ -21,6 +21,8 @@ extern "C" {
 
     fss_write_print_help_pipe(setting, print);
 
+    fss_write_print_help_end_next(setting, print);
+
     fl_print_format("%r  The FSS-0001 (Extended) specification does not support multi-line Content, therefore the parameter '%[%r%r%]'", print.to, f_string_eol_s, print.set->notable, f_console_symbol_long_normal_s, fss_write_long_prepend_s, print.set->notable);
     fl_print_format(" does nothing.%r%r", print.to, f_string_eol_s, f_string_eol_s);
 

@@ -27,10 +27,13 @@ extern "C" {
   const f_string_static_t fss_write_short_as_s = macro_f_string_static_t_initialize(FSS_WRITE_short_as_s, 0, FSS_WRITE_short_as_s_length);
   const f_string_static_t fss_write_short_backtick_s = macro_f_string_static_t_initialize(FSS_WRITE_short_backtick_s, 0, FSS_WRITE_short_backtick_s_length);
   const f_string_static_t fss_write_short_content_s = macro_f_string_static_t_initialize(FSS_WRITE_short_content_s, 0, FSS_WRITE_short_content_s_length);
+  const f_string_static_t fss_write_short_content_end_s = macro_f_string_static_t_initialize(FSS_WRITE_short_content_end_s, 0, FSS_WRITE_short_content_end_s_length);
+  const f_string_static_t fss_write_short_content_next_s = macro_f_string_static_t_initialize(FSS_WRITE_short_content_next_s, 0, FSS_WRITE_short_content_next_s_length);
   const f_string_static_t fss_write_short_double_s = macro_f_string_static_t_initialize(FSS_WRITE_short_double_s, 0, FSS_WRITE_short_double_s_length);
   const f_string_static_t fss_write_short_file_s = macro_f_string_static_t_initialize(FSS_WRITE_short_file_s, 0, FSS_WRITE_short_file_s_length);
   const f_string_static_t fss_write_short_ignore_s = macro_f_string_static_t_initialize(FSS_WRITE_short_ignore_s, 0, FSS_WRITE_short_ignore_s_length);
   const f_string_static_t fss_write_short_object_s = macro_f_string_static_t_initialize(FSS_WRITE_short_object_s, 0, FSS_WRITE_short_object_s_length);
+  const f_string_static_t fss_write_short_object_open_s = macro_f_string_static_t_initialize(FSS_WRITE_short_object_open_s, 0, FSS_WRITE_short_object_open_s_length);
   const f_string_static_t fss_write_short_partial_s = macro_f_string_static_t_initialize(FSS_WRITE_short_partial_s, 0, FSS_WRITE_short_partial_s_length);
   const f_string_static_t fss_write_short_prepend_s = macro_f_string_static_t_initialize(FSS_WRITE_short_prepend_s, 0, FSS_WRITE_short_prepend_s_length);
   const f_string_static_t fss_write_short_single_s = macro_f_string_static_t_initialize(FSS_WRITE_short_single_s, 0, FSS_WRITE_short_single_s_length);
@@ -39,10 +42,13 @@ extern "C" {
   const f_string_static_t fss_write_long_as_s = macro_f_string_static_t_initialize(FSS_WRITE_long_as_s, 0, FSS_WRITE_long_as_s_length);
   const f_string_static_t fss_write_long_backtick_s = macro_f_string_static_t_initialize(FSS_WRITE_long_backtick_s, 0, FSS_WRITE_long_backtick_s_length);
   const f_string_static_t fss_write_long_content_s = macro_f_string_static_t_initialize(FSS_WRITE_long_content_s, 0, FSS_WRITE_long_content_s_length);
+  const f_string_static_t fss_write_long_content_end_s = macro_f_string_static_t_initialize(FSS_WRITE_long_content_end_s, 0, FSS_WRITE_long_content_end_s_length);
+  const f_string_static_t fss_write_long_content_next_s = macro_f_string_static_t_initialize(FSS_WRITE_long_content_next_s, 0, FSS_WRITE_long_content_next_s_length);
   const f_string_static_t fss_write_long_double_s = macro_f_string_static_t_initialize(FSS_WRITE_long_double_s, 0, FSS_WRITE_long_double_s_length);
   const f_string_static_t fss_write_long_file_s = macro_f_string_static_t_initialize(FSS_WRITE_long_file_s, 0, FSS_WRITE_long_file_s_length);
   const f_string_static_t fss_write_long_ignore_s = macro_f_string_static_t_initialize(FSS_WRITE_long_ignore_s, 0, FSS_WRITE_long_ignore_s_length);
   const f_string_static_t fss_write_long_object_s = macro_f_string_static_t_initialize(FSS_WRITE_long_object_s, 0, FSS_WRITE_long_object_s_length);
+  const f_string_static_t fss_write_long_object_open_s = macro_f_string_static_t_initialize(FSS_WRITE_long_object_open_s, 0, FSS_WRITE_long_object_open_s_length);
   const f_string_static_t fss_write_long_partial_s = macro_f_string_static_t_initialize(FSS_WRITE_long_partial_s, 0, FSS_WRITE_long_partial_s_length);
   const f_string_static_t fss_write_long_prepend_s = macro_f_string_static_t_initialize(FSS_WRITE_long_prepend_s, 0, FSS_WRITE_long_prepend_s_length);
   const f_string_static_t fss_write_long_single_s = macro_f_string_static_t_initialize(FSS_WRITE_long_single_s, 0, FSS_WRITE_long_single_s_length);
@@ -554,6 +560,89 @@ extern "C" {
 
     if (main->parameters.array[fss_write_parameter_partial_e].result & f_console_result_found_e) {
       setting->flag |= fss_write_flag_partial_e;
+    }
+
+    {
+      const uint32_t has[] = {
+        fss_write_parameter_content_end_e,
+        fss_write_parameter_content_next_e,
+        fss_write_parameter_object_open_e,
+      };
+
+      const uint16_t has_flag[] = {
+        fss_write_flag_content_end_e,
+        fss_write_flag_content_next_e,
+        fss_write_flag_object_open_e,
+      };
+
+      const f_string_static_t has_string[] = {
+        fss_write_long_content_end_s,
+        fss_write_long_content_next_s,
+        fss_write_long_object_open_s,
+      };
+
+      const uint16_t has_cannots[][2] = {
+        { fss_write_parameter_content_next_e, fss_write_parameter_object_open_e },
+        { fss_write_parameter_content_end_e, fss_write_parameter_object_open_e },
+        { fss_write_parameter_content_end_e, fss_write_parameter_content_next_e },
+      };
+
+      const f_string_static_t has_cannots_string[][2] = {
+        { fss_write_long_content_next_s, fss_write_long_object_open_s },
+        { fss_write_long_content_end_s, fss_write_long_object_open_s },
+        { fss_write_long_content_end_s, fss_write_long_content_next_s },
+      };
+
+      for (uint8_t i = 0; i < 3; ++i) {
+
+        if (main->parameters.array[has[i]].result & f_console_result_found_e) {
+          if (setting->flag & (fss_write_flag_object_e | fss_write_flag_content_e)) {
+            if (!(setting->flag & fss_write_flag_partial_e)) {
+              setting->status = F_status_set_error(F_parameter);
+
+              fss_write_print_line_first_locked(setting, main->error);
+
+              fll_program_print_error_parameter_cannot_use_with_without(
+                main->error,
+                f_console_symbol_long_normal_s,
+                f_console_symbol_long_normal_s,
+                f_console_symbol_long_normal_s,
+                has_string[i],
+                (setting->flag & fss_write_flag_object_e)
+                  ? fss_write_long_object_s
+                  : fss_write_long_content_s,
+                fss_write_long_partial_s
+              );
+
+              fss_write_print_line_last_locked(setting, main->error);
+
+              return;
+            }
+          }
+
+          if (main->parameters.array[has_cannots[i][0]].result & f_console_result_found_e) {
+            setting->status = F_status_set_error(F_parameter);
+
+            fss_write_print_line_first_locked(setting, main->error);
+            fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_normal_s, f_console_symbol_long_normal_s, has_string[i], has_cannots_string[i][0]);
+            fss_write_print_line_last_locked(setting, main->error);
+
+            return;
+          }
+
+          if (main->parameters.array[has_cannots[i][1]].result & f_console_result_found_e) {
+            setting->status = F_status_set_error(F_parameter);
+
+            fss_write_print_line_first_locked(setting, main->error);
+            fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_normal_s, f_console_symbol_long_normal_s, has_string[i], has_cannots_string[i][1]);
+            fss_write_print_line_last_locked(setting, main->error);
+
+            return;
+          }
+
+          setting->flag |= has_flag[i];
+        }
+      } // for
     }
 
     if (setting->flag & (fss_write_flag_object_e | fss_write_flag_content_e)) {

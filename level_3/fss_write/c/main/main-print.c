@@ -50,6 +50,8 @@ extern "C" {
 
     fss_write_print_help_pipe(setting, print);
 
+    fss_write_print_help_end_next(setting, print);
+
     f_print_dynamic_raw(f_string_eol_s, print.to);
 
     fl_print_format("  The '%[%r%r%]' parameter supports the following standards with the specified possible case-sensitive values:%r", print.to, print.set->notable, f_console_symbol_long_normal_s, fss_write_long_as_s, print.set->notable, f_string_eol_s);

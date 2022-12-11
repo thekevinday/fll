@@ -378,8 +378,8 @@ extern "C" {
 
     fss_write_setting_t * const setting = macro_fss_write_setting(void_setting);
 
-    if ((!(setting->flag & fss_write_flag_partial_e) || (setting->flag & fss_write_flag_partial_e) && (setting->flag & fss_write_flag_object_e)) && setting->object) {
-      if (!(setting->flag & fss_write_flag_partial_e) && setting->contents && setting->contents->used) {
+    if ((!(setting->flag & fss_write_flag_partial_e) || (setting->flag & fss_write_flag_partial_e) && (setting->flag & fss_write_flag_object_e))) {
+      if (setting->object && !(setting->flag & fss_write_flag_partial_e) && setting->contents && setting->contents->used) {
         if (setting->object->used) {
           setting->range.start = 0;
           setting->range.stop = setting->object->used - 1;
@@ -417,73 +417,105 @@ extern "C" {
         }
       }
       else {
-        if (setting->object->used) {
-          setting->range.start = 0;
-          setting->range.stop = setting->object->used - 1;
-        }
-        else {
-          setting->range.start = 1;
-          setting->range.stop = 0;
+        if (setting->object) {
+          if (setting->object->used) {
+            setting->range.start = 0;
+            setting->range.stop = setting->object->used - 1;
+          }
+          else {
+            setting->range.start = 1;
+            setting->range.stop = 0;
+          }
+
+          setting->status = fl_fss_basic_list_object_write(
+            *setting->object,
+            (setting->flag & fss_write_flag_partial_e)
+              ? (setting->flag & fss_write_flag_trim_e)
+                ? f_fss_complete_trim_e
+                : f_fss_complete_none_e
+              : (setting->flag & fss_write_flag_trim_e)
+                ? f_fss_complete_full_trim_e
+                : f_fss_complete_full_e,
+            setting->state,
+            &setting->range,
+            &setting->buffer
+          );
+
+          if (F_status_set_fine(setting->status) == F_none_eol) {
+            setting->status = F_status_set_error(F_support_not);
+
+            fss_write_print_line_first_locked(setting, main->error);
+            fss_write_print_error_unsupported_eol(setting, main->error);
+            fss_write_print_line_last_locked(setting, main->error);
+
+            return;
+          }
+
+          if (F_status_is_error(setting->status)) {
+            fss_write_print_error(setting, main->error, macro_fss_write_f(fl_fss_basic_list_object_write));
+
+            return;
+          }
         }
 
-        setting->status = fl_fss_basic_list_object_write(
-          *setting->object,
-          (setting->flag & fss_write_flag_partial_e)
-            ? (setting->flag & fss_write_flag_trim_e)
-              ? f_fss_complete_partial_trim_e
-              : f_fss_complete_partial_e
-            : (setting->flag & fss_write_flag_trim_e)
-              ? f_fss_complete_full_trim_e
-              : f_fss_complete_full_e,
+        if ((setting->flag & fss_write_flag_partial_e) && !(setting->flag & fss_write_flag_content_e) || !(setting->flag & (fss_write_flag_object_e | fss_write_flag_content_e))) {
+          if (setting->flag & fss_write_flag_object_open_e) {
+            setting->status = f_string_dynamic_append(f_fss_basic_list_open_s, &setting->buffer);
+
+            if (F_status_is_error_not(setting->status)) {
+              setting->status = f_string_dynamic_append(f_fss_basic_list_open_end_s, &setting->buffer);
+            }
+
+            if (F_status_is_error(setting->status)) {
+              fss_write_print_error(setting, main->error, macro_fss_write_f(f_string_dynamic_append));
+
+              return;
+            }
+          }
+        }
+      }
+    }
+    else {
+      if (setting->contents && setting->contents->used && setting->contents->array[0].used) {
+        setting->range.start = 0;
+        setting->range.stop = setting->contents->array[0].used - 1;
+
+        const f_string_static_t *prepend = 0;
+
+        if (setting->flag & fss_write_flag_prepend_e) {
+          const f_array_length_t index = main->parameters.array[fss_write_parameter_prepend_e].values.array[main->parameters.array[fss_write_parameter_prepend_e].values.used - 1];
+
+          prepend = &main->parameters.arguments.array[index];
+        }
+
+        setting->status = fl_fss_basic_list_content_write(
+          setting->contents->array[0],
+          setting->object
+            ? f_fss_complete_full_e
+            : f_fss_complete_none_e,
+          prepend,
           setting->state,
           &setting->range,
           &setting->buffer
         );
 
-        if (F_status_set_fine(setting->status) == F_none_eol) {
-          setting->status = F_status_set_error(F_support_not);
-
-          fss_write_print_line_first_locked(setting, main->error);
-          fss_write_print_error_unsupported_eol(setting, main->error);
-          fss_write_print_line_last_locked(setting, main->error);
-
-          return;
-        }
-
         if (F_status_is_error(setting->status)) {
-          fss_write_print_error(setting, main->error, macro_fss_write_f(fl_fss_basic_list_object_write));
+          fss_write_print_error(setting, main->error, macro_fss_write_f(fl_fss_payload_content_write));
 
           return;
         }
       }
-    }
-    else if (setting->contents && setting->contents->used && setting->contents->array[0].used) {
-      setting->range.start = 0;
-      setting->range.stop = setting->contents->array[0].used - 1;
 
-      const f_string_static_t *prepend = 0;
+      if ((setting->flag & fss_write_flag_partial_e) && !(setting->flag & fss_write_flag_object_e) || !(setting->flag & (fss_write_flag_object_e | fss_write_flag_content_e))) {
+        if (setting->flag & fss_write_flag_content_end_e) {
+          setting->status = f_string_dynamic_append(f_fss_basic_list_close_s, &setting->buffer);
 
-      if (setting->flag & fss_write_flag_prepend_e) {
-        const f_array_length_t index = main->parameters.array[fss_write_parameter_prepend_e].values.array[main->parameters.array[fss_write_parameter_prepend_e].values.used - 1];
+          if (F_status_is_error(setting->status)) {
+            fss_write_print_error(setting, main->error, macro_fss_write_f(f_string_dynamic_append));
 
-        prepend = &main->parameters.arguments.array[index];
-      }
-
-      setting->status = fl_fss_basic_list_content_write(
-        setting->contents->array[0],
-        setting->object
-          ? f_fss_complete_full_e
-          : f_fss_complete_none_e,
-        prepend,
-        setting->state,
-        &setting->range,
-        &setting->buffer
-      );
-
-      if (F_status_is_error(setting->status)) {
-        fss_write_print_error(setting, main->error, macro_fss_write_f(fl_fss_payload_content_write));
-
-        return;
+            return;
+          }
+        }
       }
     }
 

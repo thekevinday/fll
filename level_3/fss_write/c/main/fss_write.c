@@ -30,7 +30,7 @@ extern "C" {
       if (F_status_is_error(setting->status)) return;
     }
 
-    if (setting->flag & (fss_write_flag_object_e | fss_write_flag_content_e)) {
+    if (setting->flag & (fss_write_flag_object_e | fss_write_flag_content_e | fss_write_flag_object_open_e | fss_write_flag_content_next_e | fss_write_flag_content_end_e)) {
       setting->process_normal(main, setting);
       if (F_status_is_error(setting->status)) return;
     }
@@ -61,34 +61,45 @@ extern "C" {
     setting->content = 0;
     setting->contents = 0;
 
-    for (f_array_length_t i = 0; i < length; ++i) {
+    if (length) {
+      for (f_array_length_t i = 0; i < length; ++i) {
 
-      // @todo replace all signal checks with forked main process that independently checks and assigns main->signal_received.
-      if (!((++main->signal_check) % fss_write_signal_check_d)) {
-        if (fll_program_standard_signal_received(main)) {
-          setting->status = F_status_set_error(F_interrupt);
+        // @todo replace all signal checks with forked main process that independently checks and assigns main->signal_received.
+        if (!((++main->signal_check) % fss_write_signal_check_d)) {
+          if (fll_program_standard_signal_received(main)) {
+            setting->status = F_status_set_error(F_interrupt);
 
-          return;
+            return;
+          }
+
+          main->signal_check = 0;
         }
 
-        main->signal_check = 0;
-      }
+        if (setting->objects.used) {
+          setting->object = &setting->objects.array[i];
+        }
 
-      if (setting->objects.used) {
-        setting->object = &setting->objects.array[i];
-      }
+        if (setting->contentss.used) {
+          setting->contents = &setting->contentss.array[i];
+        }
 
-      if (setting->contentss.used) {
-        setting->contents = &setting->contentss.array[i];
-      }
+        if (setting->ignoress.used) {
+          setting->ignores = &setting->ignoress.array[i];
+        }
 
-      if (setting->ignoress.used) {
-        setting->ignores = &setting->ignoress.array[i];
-      }
+        setting->process_set(main, setting);
+        if (F_status_is_error(setting->status)) break;
+      } // for
+    }
+    else {
+      if (setting->flag & (fss_write_flag_object_open_e | fss_write_flag_content_next_e | fss_write_flag_content_end_e)) {
+        setting->object = 0;
+        setting->contents = 0;
+        setting->ignores = 0;
 
-      setting->process_set(main, setting);
-      if (F_status_is_error(setting->status)) break;
-    } // for
+        setting->process_set(main, setting);
+      }
+    }
   }
 #endif // _di_fss_write_process_normal_data_
 
@@ -406,37 +417,49 @@ extern "C" {
 
     setting->buffer.used = 0;
 
-    if ((!(setting->flag & fss_write_flag_partial_e) || (setting->flag & fss_write_flag_partial_e) && (setting->flag & fss_write_flag_object_e)) && setting->object) {
-      if (setting->object->used) {
-        setting->range.start = 0;
-        setting->range.stop = setting->object->used - 1;
-      }
-      else {
-        setting->range.start = 1;
-        setting->range.stop = 0;
+    if ((!(setting->flag & fss_write_flag_partial_e) || (setting->flag & fss_write_flag_partial_e) && (setting->flag & fss_write_flag_object_e)) && setting->object || (setting->flag & fss_write_flag_object_open_e)) {
+
+      if (setting->object) {
+        if (setting->object->used) {
+          setting->range.start = 0;
+          setting->range.stop = setting->object->used - 1;
+        }
+        else {
+          setting->range.start = 1;
+          setting->range.stop = 0;
+        }
       }
 
       setting->process_object(main, void_setting);
       if (F_status_is_error(setting->status)) return;
     }
 
-    if ((!(setting->flag & fss_write_flag_partial_e) || (setting->flag & fss_write_flag_partial_e) && (setting->flag & fss_write_flag_content_e)) && setting->contents) {
-      for (f_array_length_t i = 0; i < setting->contents->used; ++i) {
+    if ((!(setting->flag & fss_write_flag_partial_e) || (setting->flag & fss_write_flag_partial_e) && (setting->flag & fss_write_flag_content_e)) && setting->contents || (setting->flag & (fss_write_flag_content_next_e | fss_write_flag_content_end_e))) {
 
-        if (setting->contents->array[i].used) {
-          setting->range.start = 0;
-          setting->range.stop = setting->contents->array[i].used - 1;
-        }
-        else {
-          setting->range.start = 1;
-          setting->range.stop = 0;
-        }
+      if (setting->contents && setting->contents->used) {
+        for (f_array_length_t i = 0; i < setting->contents->used; ++i) {
 
-        setting->content = &setting->contents->array[i];
+          if (setting->contents->array[i].used) {
+            setting->range.start = 0;
+            setting->range.stop = setting->contents->array[i].used - 1;
+          }
+          else {
+            setting->range.start = 1;
+            setting->range.stop = 0;
+          }
 
-        setting->process_content(main, void_setting, i + 1 == setting->contents->used);
+          setting->content = &setting->contents->array[i];
+
+          setting->process_content(main, void_setting, i + 1 == setting->contents->used);
+          if (F_status_is_error(setting->status)) return;
+        } // for
+      }
+      else {
+        setting->content = 0;
+
+        setting->process_content(main, void_setting, F_true);
         if (F_status_is_error(setting->status)) return;
-      } // for
+      }
     }
 
     if (setting->buffer.used) {
