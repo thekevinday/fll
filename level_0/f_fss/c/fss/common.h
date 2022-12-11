@@ -188,6 +188,7 @@ extern "C" {
  *   - next:         Complete as if this is a piece of a set (such as FSS-0001, adding a separating space).
  *   - partial:      Complete, but do not add terminating EOL, where applicable.
  *   - partial_trim: Complete, but do not add terminating EOL and remove any leading or trailing whitespace, where applicable.
+ *   - trim:         Only print the Object or Content, trimmed where applicable, without any closing or terminating characters.
  */
 #ifndef _di_f_fss_complete_e_
   enum {
@@ -198,6 +199,7 @@ extern "C" {
     f_fss_complete_next_e,
     f_fss_complete_partial_e,
     f_fss_complete_partial_trim_e,
+    f_fss_complete_trim_e,
   }; // enum
 #endif // _di_f_fss_complete_e_
 

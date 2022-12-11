@@ -243,11 +243,11 @@ f_status_t fl_fss_extended_object_write(const f_string_static_t object, const ui
       destination->string[destination->used++] = quote ? quote : f_fss_quote_double_s.string[0];
     }
 
-    if (complete == f_fss_complete_partial_e || complete == f_fss_complete_partial_trim_e || complete == f_fss_complete_full_e || complete == f_fss_complete_full_trim_e) {
+    if (complete == f_fss_complete_partial_e || complete == f_fss_complete_partial_trim_e || complete == f_fss_complete_full_e || complete == f_fss_complete_full_trim_e || complete == f_fss_complete_trim_e) {
       if (status == F_none_stop || status == F_none_eos || status == F_data_not_stop || status == F_data_not_eos) {
         f_status_t status2 = F_none;
 
-        if (complete == f_fss_complete_full_trim_e) {
+        if (complete == f_fss_complete_full_trim_e || complete == f_fss_complete_trim_e) {
           status2 = private_fl_fss_basic_write_object_trim(quote ? quote : f_fss_quote_double_s.string[0], destination_used, state, destination);
 
           if (F_status_is_error(status2)) {
@@ -257,15 +257,17 @@ f_status_t fl_fss_extended_object_write(const f_string_static_t object, const ui
           }
         }
 
-        status2 = f_string_dynamic_increase(state.step_large, destination);
+        if (complete != f_fss_complete_trim_e) {
+          status2 = f_string_dynamic_increase(state.step_large, destination);
 
-        if (F_status_is_error(status2)) {
-          destination->used = destination_used;
+          if (F_status_is_error(status2)) {
+            destination->used = destination_used;
 
-          return status2;
+            return status2;
+          }
+
+          destination->string[destination->used++] = f_fss_extended_open_s.string[0];
         }
-
-        destination->string[destination->used++] = f_fss_extended_open_s.string[0];
       }
     }
 

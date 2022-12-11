@@ -968,8 +968,8 @@ extern "C" {
       return status;
     }
 
-    if (complete == f_fss_complete_partial_e || complete == f_fss_complete_partial_trim_e || complete == f_fss_complete_full_e || complete == f_fss_complete_full_trim_e) {
-      if (complete == f_fss_complete_full_trim_e) {
+    if (complete == f_fss_complete_partial_e || complete == f_fss_complete_partial_trim_e || complete == f_fss_complete_full_e || complete == f_fss_complete_full_trim_e || complete == f_fss_complete_trim_e) {
+      if (complete == f_fss_complete_full_trim_e || complete == f_fss_complete_trim_e) {
         status = private_fl_fss_basic_list_write_object_trim(destination_used, state, destination);
 
         if (F_status_is_error(status)) {
@@ -979,18 +979,20 @@ extern "C" {
         }
       }
 
-      status = f_string_dynamic_increase(state.step_small + 2, destination);
+      if (complete != f_fss_complete_trim_e) {
+        status = f_string_dynamic_increase(state.step_small + 2, destination);
 
-      if (F_status_is_error(status)) {
-        destination->used = destination_used;
+        if (F_status_is_error(status)) {
+          destination->used = destination_used;
 
-        return status;
-      }
+          return status;
+        }
 
-      destination->string[destination->used++] = f_fss_basic_list_open_s.string[0];
+        destination->string[destination->used++] = f_fss_basic_list_open_s.string[0];
 
-      if (complete == f_fss_complete_full_e || complete == f_fss_complete_full_trim_e) {
-        destination->string[destination->used++] = f_fss_basic_list_open_end_s.string[0];
+        if (complete == f_fss_complete_full_e || complete == f_fss_complete_full_trim_e) {
+          destination->string[destination->used++] = f_fss_basic_list_open_end_s.string[0];
+        }
       }
     }
 
