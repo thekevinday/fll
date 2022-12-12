@@ -36,27 +36,32 @@ Bootstrap Readme Documentation:
     cp -vR build/programs/shared/* /usr/bin/
     cp -vR build/settings/* /etc/
 
-  Alternatively, a primitive install script is provided to help install\:
-    ./install.sh
-
   If one of the build sub-directories, such as includes, libraries, programs, and settings, is empty or missing after a successful build, then there are no files of that type to install.
 
-  Build Tree Structure Example (using the status_code-0.6.2 project)\:
+  Build Tree Structure Example (using the FLL status_code-0.6.2 project)\:
     build/
     ├── documents
     ├── includes
-    │   └── level_3
-    │       └── status_code.h
+    │   └── program
+    │       └── status_code
+    │           ├── common.h
+    │           └── status_code.h
     ├── libraries
     │   ├── script
     │   ├── shared
     │   │   ├── libstatus_code.so -> libstatus_code.so.0
-    │   │   ├── libstatus_code.so.0 -> libstatus_code.so.0.6.2
+    │   │   ├── libstatus_code.so.0 -> libstatus_code.so.0.6
+    │   │   ├── libstatus_code.so.0.6 -> libstatus_code.so.0.6.2
     │   │   └── libstatus_code.so.0.6.2
     │   └── static
     │       └── libstatus_code.a
     ├── objects
+    │   ├── common.o
+    │   ├── private-common.o
     │   ├── private-status_code.o
+    │   ├── script
+    │   ├── shared
+    │   ├── static
     │   └── status_code.o
     ├── programs
     │   ├── script
@@ -66,26 +71,28 @@ Bootstrap Readme Documentation:
     │       └── status_code
     ├── settings
     └── stage
-        ├── libraries_shared.built
-        ├── libraries_static.built
-        ├── objects_static.built
-        ├── programs_shared.built
-        ├── programs_static.built
-        ├── skeleton.built
-        ├── sources_headers.built
-        ├── sources_script.built
-        └── sources_settings.built
-
+        ├── library_shared-settings.built
+        ├── library_static-settings.built
+        ├── objects_static-settings.built
+        ├── program_shared-settings.built
+        ├── program_static-settings.built
+        ├── skeleton-settings.built
+        ├── sources_headers-settings.built
+        ├── sources_script-settings.built
+        └── sources_settings-settings.built
 
   Work Tree Structure Example at /tmp/work (using the status_code-0.6.2 project)\:
     /tmp/work/
     ├── includes
-    │   └── level_3
-    │       └── status_code.h
+    │   └── program
+    │       └── status_code
+    │           ├── common.h
+    │           └── status_code.h
     ├── libraries
     │   ├── shared
     │   │   ├── libstatus_code.so -> libstatus_code.so.0
-    │   │   ├── libstatus_code.so.0 -> libstatus_code.so.0.6.2
+    │   │   ├── libstatus_code.so.0 -> libstatus_code.so.0.6
+    │   │   ├── libstatus_code.so.0.6 -> libstatus_code.so.0.6.2
     │   │   └── libstatus_code.so.0.6.2
     │   └── static
     │       └── libstatus_code.a

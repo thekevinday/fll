@@ -49,5 +49,5 @@ Readme Documentation:
   Use it as an example or explicitly call it (such as: "bash build/scripts/bootstrap-example.sh monolithic 0.6.0").
 
   See: dependencies for specific dependencies of this project.
-  See: readme.bootstrap for bootstrap compiling (or just regular compiling) any part of the FLL and notes on installing.
-  See: readme.build for Featureless Make compiling and notes on installing.
+  See: readme.bootstrap.txt for bootstrap compiling (or just regular compiling) any part of the FLL and notes on installing.
+  See: readme.build.txt for Featureless Make compiling and notes on installing.
