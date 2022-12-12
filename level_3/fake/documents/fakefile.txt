@@ -63,6 +63,8 @@ Fakefile Documentation:
       Absolute paths that start with "./" are relative to the project root rather than the importing file.
       Absolute paths that start with "/" are treated normally.
 
+      This is neither implemented nor supported by Featureless Make 0.6.x and earlier.
+
     - code:"indexer"\:
       This represents the name of the indexer program to use, such as code:"ar".
       An indexer is often called a linker.

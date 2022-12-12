@@ -103,7 +103,8 @@ Settings Documentation:
 
   - code:"build_script"\:
     When code:"yes", the build process will build any scripts, such as a Bash script.
-    This is currently not implemented.
+
+    This is neither implemented nor supported by Featureless Make 0.6.x and earlier.
 
   - code:"build_shared"\:
     When code:"yes", the build process will compile any source code for any supported language that supports shared library linking.
@@ -356,6 +357,8 @@ Settings Documentation:
     Absolute paths that start with "./" are relative to the project root rather than the importing file.
     Absolute paths that start with "/" are treated normally.
 
+    This is neither implemented nor supported by Featureless Make 0.6.x and earlier.
+
   - code:"modes"\:
     A collection of available build modes.
     Build modes provide custom variants of the build process where certain bold:"settings" are appended onto others.
@@ -379,7 +382,8 @@ Settings Documentation:
     A sub-path representing the destination where the built library script files are placed.
 
     This defaults to code:"script".
-    This is currently not implemented.
+
+    This is neither implemented nor supported by Featureless Make 0.6.x and earlier.
 
   - code:"path_library_shared"\:
     A sub-path representing the destination where the built shared library files are placed.
@@ -395,7 +399,8 @@ Settings Documentation:
     A sub-path representing the destination where the built object script files are placed.
 
     This defaults to code:"script".
-    This is currently not implemented.
+
+    This is neither implemented nor supported by Featureless Make 0.6.x and earlier.
 
   - code:"path_object_shared"\:
     A sub-path representing the destination where the built object library files are placed.
@@ -411,7 +416,8 @@ Settings Documentation:
     A sub-path representing the destination where the built program script files are placed.
 
     This defaults to code:"script".
-    This is currently not implemented.
+
+    This is neither implemented nor supported by Featureless Make 0.6.x and earlier.
 
   - code:"path_program_shared"\:
     A sub-path representing the destination where the built shared program files are placed.
