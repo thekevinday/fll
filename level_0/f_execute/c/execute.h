@@ -11,7 +11,9 @@
 #define _F_execute_h
 
 // Include pre-requirements.
-#define _GNU_SOURCE
+#ifndef _GNU_SOURCE
+  #define _GNU_SOURCE
+#endif // _GNU_SOURCE
 
 // Libc includes.
 #include <sched.h>
