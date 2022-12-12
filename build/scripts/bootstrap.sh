@@ -177,7 +177,13 @@ bootstrap_main() {
     p=
   fi
 
-  settings_file="${path_data}build/$settings_name"
+  # If the settings_name has a directory separator, then assume it is a path to the settings file.
+  if [[ $(echo $settings_name | grep -s -o '/') == "" ]] ; then
+    settings_file="${path_data}build/$settings_name"
+  else
+    settings_file="$settings_name"
+  fi
+
   settings_defines="${path_data}build/defines"
   path_settings="${path_data}settings/"
   path_build_stage="${path_build}stage/"
