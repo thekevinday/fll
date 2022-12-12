@@ -10,7 +10,7 @@
 #
 
 Settings Documentation:
-  This describes intent and purposes of the build bold:"settings" file settings.
+  This describes intent and purposes of the build bold:"settings" file bold:"settings".
   The bold:"settings" file is designed for very simple compilations that represent a single named program and/or a single named library.
   For specific details on the allowed formatting, see the file:"settings.txt" under the specifications folder.
 
@@ -188,7 +188,7 @@ Settings Documentation:
 
   - code:"build_sources_script"\:
     A collection of script files.
-    These are settings files used by the project and are simply copied over to the build directory.
+    These are script files used by the project and are simply copied over to the build directory.
     Unless a pre-process script (or in theory post-process script) is configured to alter these, they are not modified.
     Unlike the code:"compile_language" setting code:"bash", this is not for built Bash script, but is instead for any valid scripting language (including Bash).
     These could be in any language.
@@ -348,7 +348,7 @@ Settings Documentation:
 
   - code:"modes"\:
     A collection of available build modes.
-    Build modes provide custom variants of the build process where certain settings are appended onto others.
+    Build modes provide custom variants of the build process where certain bold:"settings" are appended onto others.
     See the file:"settings.txt" specification for a list of which setting names this applies to.
 
   - code:"modes_default"\:

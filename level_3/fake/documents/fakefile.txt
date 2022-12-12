@@ -52,7 +52,7 @@ Fakefile Documentation:
         - code:"warn": Designates to continue on and if in verbose mode then print a warning.
         - code:"ignore": Designates to do nothing.
 
-      The return code for programs can still be retrieved through using the reserved IKI vaiable code:"return".
+      The return code for programs can still be retrieved through using the reserved IKI variable code:"return".
 
     - code:"indexer"\:
       This represents the name of the indexer program to use, such as code:"ar".

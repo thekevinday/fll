@@ -19,8 +19,8 @@ Settings Specification:
   Additional restrictions are applied to each Content depending on each specific Object name (see below).
 
   Object Names and their respective Content purpose/restrictions\:
-    - code:"build_compiler": Must only be a valid filename.
-    - code:"build_indexer": Must only be a valid filename.
+    - code:"build_compiler": Only one Content, which must only be a valid filename.
+    - code:"build_indexer": Only one Content, which must only be a valid filename.
     - code:"build_indexer_arguments": Zero or more arguments supported by the indexer specified in code:"build_indexer".
     - code:"build_language": Must only be one of: code:"bash", code:"c", or code:"c++".
     - code:"build_libraries": Must only contain any number of valid library include arguments that are valid for the compiler defined in "build_compiler" Object.
@@ -92,8 +92,8 @@ Settings Specification:
     - code:"path_sources": Must only be a valid directory path or not specified.
     - code:"path_sources_object": Must only be a valid directory path or not specified.
     - code:"preserve_path_headers": Must only be one of code:"yes" or code:"no".
-    - code:"process_post": Must contain only a single valid filename.
-    - code:"process_pre": Must contain only a single valid filename.
+    - code:"process_post": Only one Content, which must only be a valid filename.
+    - code:"process_pre": Only one Content, which must only be a valid filename.
     - code:"search_exclusive": Must only one of: code:"yes" or code:"no".
     - code:"search_shared": Must only one of: code:"yes" or code:"no".
     - code:"search_static": Must only one of: code:"yes" or code:"no".
