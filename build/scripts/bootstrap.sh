@@ -182,6 +182,9 @@ bootstrap_main() {
     settings_file="${path_data}build/$settings_name"
   else
     settings_file="$settings_name"
+
+    # Extract the settings name from the path.
+    settings_name=$(basename $settings_name)
   fi
 
   settings_defines="${path_data}build/defines"
@@ -889,7 +892,7 @@ bootstrap_prepare_build() {
     return $failure
   fi
 
-  touch ${project_built}.prepared
+  touch ${project_built}-${settings_name}.prepared
 }
 
 bootstrap_operation_build() {
@@ -1346,7 +1349,7 @@ bootstrap_operation_build() {
     fi
 
     if [[ $failure -eq 0 ]] ; then
-      touch ${project_built_shared}.built
+      touch ${project_built_shared}-${settings_name}.built
     fi
   fi
 
@@ -1467,7 +1470,7 @@ bootstrap_operation_build() {
     fi
 
     if [[ $failure -eq 0 ]] ; then
-      touch ${project_built_static}.built
+      touch ${project_built_static}-${settings_name}.built
     fi
   fi
 
@@ -2623,15 +2626,15 @@ bootstrap_operation_clean() {
   done
 
   if [[ -f ${project_built}.prepared ]] ; then
-    rm $verbose_common -f ${project_built}.prepared
+    rm $verbose_common -f ${project_built}-${settings_name}.prepared
   fi
 
-  if [[ -f ${project_built_shared}.built ]] ; then
-    rm $verbose_common -f ${project_built_shared}.built
+  if [[ -f ${project_built_shared}-${settings_name}.built ]] ; then
+    rm $verbose_common -f ${project_built_shared}-${settings_name}.built
   fi
 
-  if [[ -f ${project_built_static}.built ]] ; then
-    rm $verbose_common -f ${project_built_static}.built
+  if [[ -f ${project_built_static}-${settings_name}.built ]] ; then
+    rm $verbose_common -f ${project_built_static}-${settings_name}.built
   fi
 }
 
