@@ -40,6 +40,7 @@ Fakefile Specification:
     - code:"define": First Content represents variable name (case-sensitive), remaining Content represents the value.
     - code:"environment": Zero or more Content representing valid environment variable names (alpha-numeric with underscore, but cannot begin with a number).
     - code:"fail": Only one Content, which must be either code:"exit", code:"warn" or code:"ignore" (quotes not required) (case-sensitive).
+    - code:"import": Only one Content, which must only be a valid filename.
     - code:"indexer": Only one Content, which must only be a valid filename.
     - code:"indexer_arguments: Zero or more arguments supported by the indexer specified in code:"build_indexer".
     - code:"load_build": Only one Content, which must be either code:"yes" or code:"no" (quotes not required) (case-sensitive).

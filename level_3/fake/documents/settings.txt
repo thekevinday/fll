@@ -346,6 +346,16 @@ Settings Documentation:
 
     This defaults to code:"yes".
 
+  - code:"import"\:
+    Load this bold:"settings" file at this point in the bold:"settings" file.
+    This can be an absolute or a relative path.
+    This is intended to reduce repition and likely should be placed at the top of the bold:"settings" file.
+    This a non-recursive operation and the imported file itself cannot perform an import.
+    Loaded values are processed as if they are in the file at the spot where the import setting is specified.
+    Relative paths are relative to the importing file.
+    Absolute paths that start with "./" are relative to the project root rather than the importing file.
+    Absolute paths that start with "/" are treated normally.
+
   - code:"modes"\:
     A collection of available build modes.
     Build modes provide custom variants of the build process where certain bold:"settings" are appended onto others.

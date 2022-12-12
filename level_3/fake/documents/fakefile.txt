@@ -54,6 +54,15 @@ Fakefile Documentation:
 
       The return code for programs can still be retrieved through using the reserved IKI variable code:"return".
 
+    - code:"import"\:
+      Load this bold:"fakefile".
+      The code:"settings" section data from the imported bold:"fakefile" is treated as if it were appended to the end of the current bold:"fakefile" code:"setting" section.
+      Each section in the imported bole:"fakefile" is treated as if it were appended to either the end of a matching section, if found, or appended at the end of the bold:"fakefile", if no matches are found.
+      This a non-recursive operation and the imported file itself cannot perform an import.
+      Relative paths are relative to the importing file.
+      Absolute paths that start with "./" are relative to the project root rather than the importing file.
+      Absolute paths that start with "/" are treated normally.
+
     - code:"indexer"\:
       This represents the name of the indexer program to use, such as code:"ar".
       An indexer is often called a linker.

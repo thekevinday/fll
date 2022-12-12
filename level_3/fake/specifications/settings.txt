@@ -76,6 +76,7 @@ Settings Specification:
     - code:"flags_shared": Must only contain any number of parameters supported by the compiler specified in code:"build_compiler".
     - code:"flags_static": Must only contain any number of parameters supported by the compiler specified in code:"build_compiler".
     - code:"has_path_standard": Must only one of: code:"yes" or code:"no".
+    - code:"import": Only one Content, which must only be a valid filename.
     - code:"modes": Any valid word character, character:'-', or character:'+'.
     - code:"modes_default": May only be a single complete Content word defined in code:"modes" Object.
     - code:"path_headers": Must be a single valid path.
