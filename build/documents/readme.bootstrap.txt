@@ -36,61 +36,89 @@ Bootstrap Readme Documentation:
     cp -vR build/programs/shared/* /usr/bin/
     cp -vR build/settings/* /etc/
 
-  Alternatively, a primitive install script is provided to help install\:
-    ./install.sh
-
   If one of the build sub-directories, such as includes, libraries, programs, and settings, is empty or missing after a successful build, then there are no files of that type to install.
 
   Build Tree Structure Example (using the status_code-0.7.0 project)\:
     build/
     ├── documents
     ├── includes
-    │   └── level_3
-    │       └── status_code.h
+    │   └── program
+    │       └── status_code
+    │           ├── fss
+    │           │   ├── common.h
+    │           │   └── status_code.h
+    │           └── main
+    │               ├── common.h
+    │               ├── common-print.h
+    │               ├── print.h
+    │               └── status_code.h
     ├── libraries
     │   ├── script
     │   ├── shared
     │   │   ├── libstatus_code.so -> libstatus_code.so.0
-    │   │   ├── libstatus_code.so.0 -> libstatus_code.so.0.7.0
+    │   │   ├── libstatus_code.so.0 -> libstatus_code.so.0.7
+    │   │   ├── libstatus_code.so.0.7 -> libstatus_code.so.0.7.0
     │   │   └── libstatus_code.so.0.7.0
     │   └── static
     │       └── libstatus_code.a
     ├── objects
-    │   ├── private-status_code.o
-    │   └── status_code.o
+    │   ├── config.o
+    │   ├── fss
+    │   │   ├── common.o
+    │   │   └── status_code.o
+    │   ├── main
+    │   │   ├── common.o
+    │   │   ├── common-print.o
+    │   │   ├── print.o
+    │   │   ├── private-status_code.o
+    │   │   └── status_code.o
+    │   ├── script
+    │   ├── shared
+    │   └── static
     ├── programs
     │   ├── script
     │   ├── shared
+    │   │   ├── fss_status_code
     │   │   └── status_code
     │   └── static
+    │       ├── fss_status_code
     │       └── status_code
     ├── settings
     └── stage
-        ├── libraries_shared.built
-        ├── libraries_static.built
-        ├── objects_static.built
-        ├── programs_shared.built
-        ├── programs_static.built
-        ├── skeleton.built
-        ├── sources_headers.built
-        ├── sources_script.built
-        └── sources_settings.built
-
+        ├── library_shared-settings.built
+        ├── library_static-settings.built
+        ├── objects_static-settings.built
+        ├── program_shared-settings.fss.built
+        ├── program_shared-settings.main.built
+        ├── skeleton-settings.built
+        ├── skeleton-settings.fss.built
+        ├── skeleton-settings.main.built
+        ├── sources_headers-settings.built
+        ├── sources_script-settings.built
+        ├── sources_script-settings.fss.built
+        ├── sources_script-settings.main.built
+        ├── sources_settings-settings.built
+        ├── sources_settings-settings.fss.built
+        └── sources_settings-settings.main.built
 
   Work Tree Structure Example at /tmp/work (using the status_code-0.7.0 project)\:
     /tmp/work/
     ├── includes
-    │   └── level_3
-    │       └── status_code.h
-    ├── libraries
-    │   ├── shared
-    │   │   ├── libstatus_code.so -> libstatus_code.so.0
-    │   │   ├── libstatus_code.so.0 -> libstatus_code.so.0.7.0
-    │   │   └── libstatus_code.so.0.7.0
-    │   └── static
-    │       └── libstatus_code.a
-    └── programs
+    │   └── program
+    │       └── status_code
+    │           ├── fss
+    │           │   ├── common.h
+    │           │   └── status_code.h
+    │           └── main
+    │               ├── common.h
+    │               ├── common-print.h
+    │               ├── print.h
+    │               └── status_code.h
+    └── libraries
         ├── shared
-        │   └── status_code
+        │   ├── libstatus_code.so -> libstatus_code.so.0
+        │   ├── libstatus_code.so.0 -> libstatus_code.so.0.7
+        │   ├── libstatus_code.so.0.7 -> libstatus_code.so.0.7.0
+        │   └── libstatus_code.so.0.7.0
         └── static
-            └── status_code
+            └── libstatus_code.a

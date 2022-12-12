@@ -25,61 +25,74 @@ Build Readme Documentation:
     fake build
 
   Build Example, using "make"\:
+    fake
+
+  Build Example, explicitly using "make"\:
     fake make
 
-  Build Tree Structure Example (using the status_code-0.7.0 project)\:
+  Build Tree Structure Example (using the FLL status_code-0.7.0 project)\:
     build/
     ├── documents
     ├── includes
-    │   └── level_3
-    │       └── status_code.h
+    │   └── program
+    │       └── status_code
+    │           ├── fss
+    │           │   ├── common.h
+    │           │   └── status_code.h
+    │           └── main
+    │               ├── common.h
+    │               ├── common-print.h
+    │               ├── print.h
+    │               └── status_code.h
     ├── libraries
     │   ├── script
     │   ├── shared
     │   │   ├── libstatus_code.so -> libstatus_code.so.0
-    │   │   ├── libstatus_code.so.0 -> libstatus_code.so.0.7.0
+    │   │   ├── libstatus_code.so.0 -> libstatus_code.so.0.7
+    │   │   ├── libstatus_code.so.0.7 -> libstatus_code.so.0.7.0
     │   │   └── libstatus_code.so.0.7.0
     │   └── static
     │       └── libstatus_code.a
     ├── objects
-    │   ├── private-status_code.o
-    │   └── status_code.o
+    │   ├── config.o
+    │   ├── fss
+    │   │   ├── common.o
+    │   │   └── status_code.o
+    │   ├── main
+    │   │   ├── common.o
+    │   │   ├── common-print.o
+    │   │   ├── print.o
+    │   │   ├── private-status_code.o
+    │   │   └── status_code.o
+    │   ├── script
+    │   ├── shared
+    │   └── static
     ├── programs
     │   ├── script
     │   ├── shared
+    │   │   ├── fss_status_code
     │   │   └── status_code
     │   └── static
+    │       ├── fss_status_code
     │       └── status_code
     ├── settings
     └── stage
-        ├── libraries_shared.built
-        ├── libraries_static.built
-        ├── objects_static.built
-        ├── programs_shared.built
-        ├── programs_static.built
-        ├── skeleton.built
-        ├── sources_headers.built
-        ├── sources_script.built
-        └── sources_settings.built
-
-  Work Tree Structure Example at '/tmp/work' (using the status_code-0.7.0 project)\:
-    /tmp/work/
-    ├── includes
-    │   └── level_3
-    │       └── status_code.h
-    ├── libraries
-    │   ├── shared
-    │   │   ├── libstatus_code.so -> libstatus_code.so.0
-    │   │   ├── libstatus_code.so.0 -> libstatus_code.so.0.7.0
-    │   │   └── libstatus_code.so.0.7.0
-    │   └── static
-    │       └── libstatus_code.a
-    └── programs
-        ├── shared
-        │   └── status_code
-        └── static
-            └── status_code
+        ├── library_shared-settings.built
+        ├── library_static-settings.built
+        ├── objects_static-settings.built
+        ├── program_shared-settings.fss.built
+        ├── program_shared-settings.main.built
+        ├── skeleton-settings.built
+        ├── skeleton-settings.fss.built
+        ├── skeleton-settings.main.built
+        ├── sources_headers-settings.built
+        ├── sources_script-settings.built
+        ├── sources_script-settings.fss.built
+        ├── sources_script-settings.main.built
+        ├── sources_settings-settings.built
+        ├── sources_settings-settings.fss.built
+        └── sources_settings-settings.main.built
 
   See: FLL Fake project documents for further details on how to use the Fake system.
   See: FLL Fake project specifications for how to configure the build FSS files and make FSS files.
-  See: readme.bootstrap for notes on installing.
+  See: readme.bootstrap.txt for notes on installing.
