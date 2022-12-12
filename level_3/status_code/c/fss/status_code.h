@@ -45,7 +45,7 @@
 #include <program/status_code/main/common.h>
 #include <program/status_code/main/common-print.h>
 #include <program/status_code/fss/common.h>
-#include <program/status_code/print.h>
+#include <program/status_code/main/print.h>
 
 #ifdef __cplusplus
 extern "C" {
