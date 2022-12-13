@@ -3,29 +3,29 @@
 # license: open-standard-license-1.0
 #
 # This file (assumed to be named settings.txt) can be more easily read using the following iki_read commands:
-#   iki_read settings.txt +Q -w -WWW character "'" "'" code '"' '"' bold '"' '"'
+#   iki_read settings.txt +Q -w -WW character "'" "'" code '"' '"'
 #
 # To read the "Settings Specification" section of this file, use this command sequence:
-#   fss_basic_list_read settings.txt +Q -cn "Settings Specification" | iki_read +Q -w -WWW character "'" "'" code '"' '"' bold '"' '"'
+#   fss_basic_list_read settings.txt +Q -cn "Settings Specification" | iki_read +Q -w -WW character "'" "'" code '"' '"'
 #
 
 Settings Specification:
   The build settings bold:"settings" file follows the code:"FSS-0001 (Extended)" format.
 
-  Each Object represents a settings property name.
+  Each bold:"Object" represents a settings property name.
   There is only a distinct set of setting property names (see below).
 
-  Each Content represents the values associated with that property.
-  Additional restrictions are applied to each Content depending on each specific Object name (see below).
+  Each bold:"Content" represents the values associated with that property.
+  Additional restrictions are applied to each bold:"Content" depending on each specific bold:"Object" name (see below).
 
-  Object Names and their respective Content purpose/restrictions\:
-    - code:"build_compiler": Only one Content, which must only be a valid filename.
-    - code:"build_indexer": Only one Content, which must only be a valid filename.
+  bold:"Object" names and their respective bold:"Content" purpose/restrictions\:
+    - code:"build_compiler": Only one bold:"Content", which must only be a valid filename.
+    - code:"build_indexer": Only one bold:"Content", which must only be a valid filename.
     - code:"build_indexer_arguments": Zero or more arguments supported by the indexer specified in code:"build_indexer".
     - code:"build_language": Must only be one of: code:"bash", code:"c", or code:"c++".
-    - code:"build_libraries": Must only contain any number of valid library include arguments that are valid for the compiler defined in "build_compiler" Object.
-    - code:"build_libraries_shared": Must only contain any number of valid library include arguments that are valid for the compiler defined in "build_compiler" Object.
-    - code:"build_libraries_static": Must only contain any number of valid library include arguments that are valid for the compiler defined in "build_compiler" Object.
+    - code:"build_libraries": Must only contain any number of valid library include arguments that are valid for the compiler defined in "build_compiler" bold:"Object".
+    - code:"build_libraries_shared": Must only contain any number of valid library include arguments that are valid for the compiler defined in "build_compiler" bold:"Object".
+    - code:"build_libraries_static": Must only contain any number of valid library include arguments that are valid for the compiler defined in "build_compiler" bold:"Object".
     - code:"build_name": Must only contain characters allowed in a filename.
     - code:"build_objects_library": Must only contain any number of valid object file names relative to the appropriate code:"path_object_*" path.
     - code:"build_objects_library_shared": Must only contain any number of valid object file names relative to the code:"path_object_shared" path.
@@ -76,9 +76,9 @@ Settings Specification:
     - code:"flags_shared": Must only contain any number of parameters supported by the compiler specified in code:"build_compiler".
     - code:"flags_static": Must only contain any number of parameters supported by the compiler specified in code:"build_compiler".
     - code:"has_path_standard": Must only one of: code:"yes" or code:"no".
-    - code:"import": Only one Content, which must only be a valid filename.
+    - code:"import": Only one bold:"Content", which must only be a valid filename.
     - code:"modes": Any valid word character, character:'-', or character:'+'.
-    - code:"modes_default": May only be a single complete Content word defined in code:"modes" Object.
+    - code:"modes_default": May only be a single complete bold:"Content" word defined in code:"modes" bold:"Object".
     - code:"path_headers": Must be a single valid path.
     - code:"path_language": Must be a single valid path.
     - code:"path_library_script": Must be a single valid path.
@@ -93,8 +93,8 @@ Settings Specification:
     - code:"path_sources": Must only be a valid directory path or not specified.
     - code:"path_sources_object": Must only be a valid directory path or not specified.
     - code:"preserve_path_headers": Must only be one of code:"yes" or code:"no".
-    - code:"process_post": Only one Content, which must only be a valid filename.
-    - code:"process_pre": Only one Content, which must only be a valid filename.
+    - code:"process_post": Only one bold:"Content", which must only be a valid filename.
+    - code:"process_pre": Only one bold:"Content", which must only be a valid filename.
     - code:"search_exclusive": Must only one of: code:"yes" or code:"no".
     - code:"search_shared": Must only one of: code:"yes" or code:"no".
     - code:"search_static": Must only one of: code:"yes" or code:"no".
@@ -109,4 +109,4 @@ Settings Specification:
     - code:"version_nano_prefix": Must be zero or more valid filename characters.
     - code:"version_target": Must only be one of: code:"major", code:"minor", code:"micro", or code:"nano".
 
-  All Object names support having a code:"-" and a code:"mode" name, such as code:"build_libraries-individual" for a mode called code:"individual", except for the code:"modes" and the code:"modes_default" Object names.
+  All bold:"Object" names support having a code:"-" and a code:"mode" name, such as code:"build_libraries-individual" for a mode called code:"individual", except for the code:"modes" and the code:"modes_default" bold:"Object" names.
