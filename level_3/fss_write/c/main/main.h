@@ -16,6 +16,22 @@ extern "C" {
 #endif
 
 /**
+ * Standard program entry point.
+ *
+ * @param argc
+ *   The number of arguments.
+ * @param argv
+ *   The array of arguments.
+ * @param envp
+ *   The array of all environment variables on program start.
+ *
+ * @return
+ *   0 on success.
+ *   1 on error.
+ */
+extern int main(const int argc, const f_string_t *argv, const f_string_t *envp);
+
+/**
  * Process printing help for when not specifying "--as".
  *
  * @param main
