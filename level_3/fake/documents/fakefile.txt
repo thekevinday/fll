@@ -1,33 +1,33 @@
-# fss-0002
+# fss-0002 iki-0000
 #
 # license: open-standard-license-1.0
 #
 # This file (assumed to be named fakefile.txt) can be more easily read using the following iki_read commands:
-#   iki_read fakefile.txt +Q -w -rr abbreviation-ASCII ASCII abbreviation-HTML HTML -WWW character "'" "'" code '"' '"' bold '"' '"'
+#   iki_read fakefile.txt +Q -w -rrr abbreviation-ASCII ASCII abbreviation-GCC GCC abbreviation-HTML HTML -WW character "'" "'" code '"' '"'
 #
 # To read the "Fakefile Documentation" section of this file, use this command sequence:
-#   fss_basic_list_read fakefile.txt +Q -cn "Fakefile Documentation" | iki_read +Q -w -rr abbreviation-ASCII ASCII abbreviation-HTML HTML -WWW character "'" "'" code '"' '"' bold '"' '"'
+#   fss_basic_list_read fakefile.txt +Q -cn "Fakefile Documentation" | iki_read +Q -w -rrr abbreviation-ASCII ASCII abbreviation-GCC GCC abbreviation-HTML HTML -WW character "'" "'" code '"' '"'
 #
 
 Fakefile Documentation:
-  This describes intent and purposes of the bold:"fakefile" file settings.
+  This describes intent and purposes of the file:"fakefile" file settings.
   For specific details on the allowed formatting, see the file:"fakefile.txt" under the specifications folder.
 
   All files specified are relative to the project root.
 
   The reserved Section Names are defined as follows\:
   - code:"settings"\:
-    Any configuration specific to this bold:"fakefile" is stored here.
+    Any configuration specific to this file:"fakefile" is stored here.
     This includes the declaration of define and parameter IKI variable substitution values.
 
-    The build settings may also be specified in the Settings Section.
+    The build settings may also be specified in the bold:"Settings Section".
 
     The following settings are available (in addition to the build settings)\:
     - code:"compiler"\:
       This represents the name of the compiler program to use, such as code:"gcc".
 
       The programs code:"gcc" and code:"clang" are known to work.
-      Many of the parameters in the settings file can be changed if using a non-GCC, but there may be certain hard-coded functionality that may need to be changed.
+      Many of the parameters in the settings file can be changed if not using abbreviation-GCC:"GNU Compiler Collection", but there may be certain hard-coded functionality that may need to be changed.
 
       When specified and code:"load_build" is code:"true", then this will override the code:"build_compiler" specified in the loaded build settings.
 
@@ -40,7 +40,7 @@ Fakefile Documentation:
       This represents all environment variables that are exposed when executing sub-programs.
       This is not auto-populated for environment variables defined in the code:"define" setting.
 
-      When defined with no Content, then this means that no environment variables are exposed.
+      When defined with no bold:"Content", then this means that no environment variables are exposed.
       When not defined at all, then all environment variables are exposed.
       Environment variables may still be exposed if code:"load_build" is code:"true" and the build setting file defines any environment variable names.
 
@@ -52,16 +52,16 @@ Fakefile Documentation:
         - code:"warn": Designates to continue on and if in verbose mode then print a warning.
         - code:"ignore": Designates to do nothing.
 
-      The return code for programs can still be retrieved through using the reserved IKI variable code:"return".
+      The return code for programs can still be retrieved through using the reserved bold:"IKI" variable code:"return".
 
     - code:"import"\:
-      Load this bold:"fakefile".
-      The code:"settings" section data from the imported bold:"fakefile" is treated as if it were appended to the end of the current bold:"fakefile" code:"setting" section.
-      Each section in the imported bole:"fakefile" is treated as if it were appended to either the end of a matching section, if found, or appended at the end of the bold:"fakefile", if no matches are found.
+      Load this file:"fakefile".
+      The code:"settings" section data from the imported file:"fakefile" is treated as if it were appended to the end of the current file:"fakefile" code:"setting" section.
+      Each section in the imported file:"fakefile" is treated as if it were appended to either the end of a matching section, if found, or appended at the end of the file:"fakefile", if no matches are found.
       This a non-recursive operation and the imported file itself cannot perform an import.
       Relative paths are relative to the importing file.
-      Absolute paths that start with "./" are relative to the project root rather than the importing file.
-      Absolute paths that start with "/" are treated normally.
+      Absolute paths that start with code:"./" are relative to the project root rather than the importing file.
+      Absolute paths that start with code:"/" are treated normally.
 
     - code:"indexer"\:
       This represents the name of the indexer program to use, such as code:"ar".
@@ -83,14 +83,14 @@ Fakefile Documentation:
       This defines an IKI variable name to substitute with the value.
       This replaces the value of any existing environment variable with this name.
 
-      The first Content value represents the IKI variable name.
-      All Content values after the first represent the values the matching IKI variable is replaced with.
+      The first bold:"Content" value represents the bold:"IKI" variable name.
+      All bold:"Content" values after the first represent the values the matching bold:"IKI" variable is replaced with.
 
       The parameter variable name code:"return" is used to store the return result of a code:"run" or code:"shell" operation.
       Setting this here only sets the default code:"return" parameter variable value.
 
   - code:"main"\:
-    This is the main entry point when processing the bold:"fakefile".
+    This is the main entry point when processing the file:"fakefile".
     This is processed top-down until the end of the list is reached.
 
     The following operations are available\:
@@ -106,44 +106,44 @@ Fakefile Documentation:
       Run the fake build operation as if code:"fake build" was run instead of code:"fake make".
       Command line arguments are automatically passed to the fake build operation.
 
-      Accepts an optional Content that is a file name to a build settings file to use instead of the default.
-      This file name is relative to the data build directory (which can be changed by -D/--data parameter).
+      Accepts an optional bold:"Content" that is a file name to a build settings file to use instead of the default.
+      This file name is relative to the data build directory (which can be changed by code:"-D/--data" parameter).
 
       If the optional file name Content is specified, then it also supports additional modes to use instead of the default mode.
 
-      When no additional Content after the code:"build" is specified, then the default (or program supplied) settings file and modes are used.
-      When the first Content after the code:"build" is specified as an empty string, then the default (or program supplied) settings file is used.
-      When the second Content after the code:"build" (and there is no third Content), then no modes are used.
+      When no additional bold:"Content" after the code:"build" is specified, then the default (or program supplied) settings file and modes are used.
+      When the first bold:"Content" after the code:"build" is specified as an empty string, then the default (or program supplied) settings file is used.
+      When the second bold:"Content" after the code:"build" (and there is no third bold:"Content"), then no modes are used.
 
     - code:"break"\:
       Perform an exit from the current make operation.
       This only exists the current depth.
       If the depth is at the top (aka: 0), then this is identical to the code:"exit" section operation.
-      The second Content may be either 'succeed' or 'fail' to designate on whether or not to exit as success or failure.
+      The second bold:"Content" may be either code:"succeed" or code:"failure" to designate on whether or not to exit as a success or as a failure.
       When set to code:"failure" this will trigger any failure (with message), depending on the current fail state.
 
     - code:"clean"\:
       Run the fake clean operation as if code:"fake clean" was run instead of code:"fake make".
-      Command line arguments are automatically passed to the fake build operation.
+      Command line arguments are automatically passed to the build operation.
 
     - code:"clone"\:
       Copy all files (and directories), preserving all properties, into the last content.
       If there are more than one file (or directory) being copied, then the final path must be a directory.
 
-      All Content, except last, represents the files to clone.
-      The last Content represents the destination file (or directory) to clone to.
+      All bold:"Content", except last, represents the files to clone.
+      The last bold:"Content" represents the destination file (or directory) to clone to.
 
     - code:"compile"\:
       Execute the compiler program, such as code:"gcc".
 
-      All Content are passed as arguments to the respective code:"gcc" program.
+      All bold:"Content" are passed as arguments to the respective code:"gcc" program.
 
     - code:"copy"\:
       Copy all files (and directories) into the last content.
       If there are more than one file (or directory) being copied, then the final path must be a directory.
 
-      All Content, except last, represents the files to copy.
-      The last Content represents the destination file (or directory) to copy to.
+      All bold:"Content", except last, represents the files to copy.
+      The last bold:"Content" represents the destination file (or directory) to copy to.
 
     - code:"define"\:
       This represents an environment variable to define on run.
@@ -153,7 +153,7 @@ Fakefile Documentation:
     - code:"delete"\:
       Delete one or more files or directories.
 
-      All Content must be the file or directory to be deleted.
+      All bold:"Content" must be the file or directory to be deleted.
 
       If the path is a directory and is not empty, then this will not delete the directory.
 
@@ -164,7 +164,7 @@ Fakefile Documentation:
       Performs a programmatic code:"else" condition.
       Must be specified following a valid if operation (and the operation it affects).
 
-      This has no Content.
+      This has no bold:"Content".
 
       An else operation may not follow this.
       An if operation may immediately follow to represent an code:"else if" condition.
@@ -172,15 +172,15 @@ Fakefile Documentation:
     - code:"exit"\:
       Perform an exit from the entire make operation.
       This always exits completely, regardless of the operation depth.
-      The second Content may be either 'success' or 'failure' to designate on whether or not to exit as success or failure.
+      The second bold:"Content" may be either code:"success" or code:"failure" to designate on whether or not to exit as success or failure.
 
       When set to code:"failure" this will trigger a failure message.
-      When set to code:"failure", the fail state will be forcibly changed to code:"fail" regardless of the current fail state.
+      When set to code:"failure", the fail state will be forcibly changed to code:"failure" regardless of the current fail state.
 
     - code:"fail"\:
       Toggle how the to handle an operation failure.
 
-      The first Content may be one of the following\:
+      The first bold:"Content" may be one of the following\:
         code:"exit": Set failure handler to exit on failure.
         code:"warn": Set failure handler to print a warning on failure but continue on.
         code:"ignore": Set failure handler to continue on regardless of failure.
@@ -188,8 +188,8 @@ Fakefile Documentation:
     - code:"group"\:
       Change the group role for a given file.
 
-      The first Content represents the group to assign.
-      The second Content represents the file to assign the group to.
+      The first bold:"Content" represents the group to assign.
+      The second bold:"Content" represents the file to assign the group to.
 
     - code:"groups"\:
       Identical to group operation, except this will recursively apply the mode to all files within the given file, if that file is a directory file path.
@@ -198,7 +198,7 @@ Fakefile Documentation:
       Performs a programmatic code:"if" condition.
       May be specified following a valid code:"else" operation.
 
-      The Content represents a set of conditions to perform.
+      The bold:"Content" represents a set of conditions to perform.
 
       The code:"if" operation may be used in conjunction with the code:"and", code:"or", and the code:"else" operations.
 
@@ -347,23 +347,23 @@ Fakefile Documentation:
     - code:"index"\:
       Execute the linker program, such as code:"ar".
 
-      All Content are passed as arguments to the respective code:"ar" program.
+      All bold:"Content" are passed as arguments to the respective code:"ar" program.
 
     - code:"link"\:
       Create a symbolic link from some point to some target.
 
-      The first Content, when there are more than 2 arguments, may be either code:"force" or code:"strict".
-      The second to last Content represents the target file.
-      The last Content represents the point file.
+      The first bold:"Content", when there are more than 2 arguments, may be either code:"force" or code:"strict".
+      The second to last bold:"Content" represents the target file.
+      The last bold:"Content" represents the point file.
 
-      The code:"force" Content designates that the point file will be overwritten if the file already exists.
-      The code:"strict" Content requires that the target file already exists.
+      The code:"force" bold:"Content" designates that the point file will be overwritten if the file already exists.
+      The code:"strict" bold:"Content" requires that the target file already exists.
 
     - code:"mode"\:
       Change the mode permissions for a given file.
 
-      The first Content represents the mode to assign.
-      The second Content represents the file to assign the mode to.
+      The first bold:"Content" represents the mode to assign.
+      The second bold:"Content" represents the file to assign the mode to.
 
     - code:"modes"\:
       Identical to mode operation, except this will recursively apply the mode to all files within the given file, if that file is a directory file path.
@@ -372,13 +372,13 @@ Fakefile Documentation:
       Move all files (and directories) into the last content.
       If there are more than one file (or directory) being copied, then the final path must be a directory.
 
-      All Content, except last, represents the files to move.
-      The last Content represents the destination file (or directory) to move to.
+      All bold:"Content", except last, represents the files to move.
+      The last bold:"Content" represents the destination file (or directory) to move to.
 
     - code:"operate"\:
       Begin execution of another Section.
 
-      The first Content represents the name of the Section Object to execute.
+      The first bold:"Content" represents the name of the Section Object to execute.
       This may be neither the code:"settings" Section no the code:"main" Section.
       Recursion is prohibited, a Section that is already on the operation stack may not be called again.
       Once the operation is off the stack, it can then be called again.
@@ -394,14 +394,14 @@ Fakefile Documentation:
     - code:"owner"\:
       Change the owner role for a given file.
 
-      The first Content represents the role to assign.
-      The second Content represents the file to assign the role to.
+      The first bold:"Content" represents the role to assign.
+      The second bold:"Content" represents the file to assign the role to.
 
     - code:"owners"\:
       Identical to owner operation, except this will recursively apply the mode to all files within the given file, if that file is a directory file path.
 
     - code:"parameter"\:
-      This represents a variable defined within the scope of the bold:"fakefile".
+      This represents a variable defined within the scope of the file:"fakefile".
       This is not exported as an environment variable and is therefore not visible to any executed programs or scripts.
       This replaces the value of any existing parameter variable with this name.
       The reserved parameter variable names (see IKI vocabulary context section below) may not be changed by this.
@@ -410,7 +410,7 @@ Fakefile Documentation:
       Pop a directory path of the path stack, thereby changing to the previous directory on the stack.
       This is a change directory command similar to a back button in a browser.
 
-      This has no Content.
+      This has no bold:"Content".
 
       This does not generate an error if the path stack is empty.
       If the directory popping to no longer exists, then an error occurs.
@@ -419,7 +419,7 @@ Fakefile Documentation:
       Print the content to the output screen.
       This always prints a newline at the end.
 
-      All Content is printed, and if no Content is provided, an empty line is printed.
+      All bold:"Content" is printed, and if no bold:"Content" is provided, an empty line is printed.
 
       The following escape sequences are supported for printing special characters\:
         - character:"\f": Form Feed.
@@ -445,8 +445,8 @@ Fakefile Documentation:
       Manually execute a remote program or script.
       This program must be in the appropriate PATH environment or otherwise automatically detected when calling without a specific path to the program or script.
 
-      The first Content represents the program or script name.
-      All Content after the first are passed to the program or script when running.
+      The first bold:"Content" represents the program or script name.
+      All bold:"Content" after the first are passed to the program or script when running.
 
       After this executes the return result is made available via the code:"return" parameter variable name.
       Any existing value associated with code:"return" gets replaced.
@@ -455,8 +455,8 @@ Fakefile Documentation:
       Manually execute a remote program or script using a specific path to the program or script.
       This does not require the program to exist in PATH, but the path to the program or script must be relative to the project path.
 
-      The first Content represents the program or script name.
-      All Content after the first are passed to the program or script when running.
+      The first bold:"Content" represents the program or script name.
+      All bold:"Content" after the first are passed to the program or script when running.
 
       After this executes the return result is made available via the code:"return" parameter variable name.
       Any existing value associated with code:"return" gets replaced.
@@ -469,30 +469,30 @@ Fakefile Documentation:
       Change to the directory within the project root path tree, pushing the previous directory onto the path stack.
       The previous path is saved onto the path stack and may later be code:"popped" off.
 
-      The first Content represents the path to change directory into.
+      The first bold:"Content" represents the path to change directory into.
 
     - code:"top"\:
       Change to the project root path, clearing the directory path stack.
 
-      This has no Content.
+      This has no bold:"Content".
       If the project root path no longer exists, then an error occurs.
 
     - code:"touch"\:
       Manually create a new file or a directory within the project root or update its last changed timestamp if the file already exists.
 
-      The first Content must be either code:"file" or code:"directory".
-      The remaining Content must be a path to the file.
+      The first bold:"Content" must be either code:"file" or code:"directory".
+      The remaining bold:"Content" must be a path to the file.
 
     - code:"write"\:
       Write strings to a file within the project root.
-      The Content after the first Content is appended to the file.
+      The bold:"Content" after the first bold:"Content" is appended to the file.
 
-      The first Content represents the file to write to.
-      If there is no Content beyond the first, then the file is truncated (all content within the file is deleted).
+      The first bold:"Content" represents the file to write to.
+      If there is no bold:"Content" beyond the first, then the file is truncated (all content within the file is deleted).
 
       In all cases, if the file does not exist, the file is created.
 
-      When only the first Content exists, this acts similar to the code:"touch" operation.
+      When only the first bold:"Content" exists, this acts similar to the code:"touch" operation.
       The major difference between the two is that the code:"touch" operation does not alter the content within the file.
       This does alter the content within the file.
 
@@ -611,7 +611,7 @@ Fakefile Documentation:
     - code:"work:value"\:
       This variable holds the value part of the code:"work" program parameters, such as code:"work/".
 
-  The Content code:"no_dereference" may be specified in certain cases relating to files.
+  The bold:"Content" code:"no_dereference" may be specified in certain cases relating to files.
   These cases operate on a file that can be a link itself or the link target.
   The default behavior is normally to dereference the link target.
 
