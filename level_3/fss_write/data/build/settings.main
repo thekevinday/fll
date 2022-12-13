@@ -28,8 +28,6 @@ build_libraries-monolithic -lfll
 
 build_sources_program main/main.c main/main-print.c
 
-build_sources_headers main/main.h main/main-print.h
-
 build_script yes
 build_shared yes
 build_static no
