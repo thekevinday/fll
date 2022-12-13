@@ -27,10 +27,10 @@ extern "C" {
       f_string_static_t sources_script = f_string_static_t_initialize;
 
       fake_skeleton_path_source_length(data, &f_string_empty_s, &sources);
-      fake_skeleton_path_source_length(data, &fake_path_part_bash_s, &sources_bash);
       fake_skeleton_path_source_length(data, &fake_path_part_c_s, &sources_c);
       fake_skeleton_path_source_length(data, &fake_path_part_cpp_s, &sources_cpp);
       fake_skeleton_path_source_length(data, &fake_path_part_script_s, &sources_script);
+      fake_skeleton_path_source_length(data, &fake_path_part_shell_s, &sources_bash);
 
       f_char_t sources_string[sources.used + 1];
       f_char_t sources_bash_string[sources_bash.used + 1];
@@ -45,10 +45,10 @@ extern "C" {
       sources_script.string = sources_script_string;
 
       fake_skeleton_path_source_string(data, &f_string_empty_s, &sources);
-      fake_skeleton_path_source_string(data, &fake_path_part_bash_s, &sources_bash);
       fake_skeleton_path_source_string(data, &fake_path_part_c_s, &sources_c);
       fake_skeleton_path_source_string(data, &fake_path_part_cpp_s, &sources_cpp);
       fake_skeleton_path_source_string(data, &fake_path_part_script_s, &sources_script);
+      fake_skeleton_path_source_string(data, &fake_path_part_shell_s, &sources_bash);
 
       const f_string_static_t *parameters_value[] = {
         &data->path_build,

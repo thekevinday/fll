@@ -1,19 +1,5 @@
 #include "fake.h"
 
-/**
- * Standard entry point for fake program.
- *
- * @param argc
- *   The number of arguments.
- * @param argv
- *   The array of arguments.
- *
- * @return
- *   0 on success.
- *   1 on error.
- *
- * @see exit()
- */
 int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
   fll_program_data_t data = fll_program_data_t_initialize;

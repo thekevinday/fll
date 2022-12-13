@@ -17,12 +17,7 @@ extern "C" {
   const f_string_static_t fake_program_help_parameters_s = macro_f_string_static_t_initialize(FAKE_program_help_parameters_s, 0, FAKE_program_help_parameters_s_length);
 #endif // _di_fake_program_help_parameter_s_
 
-/**
- * The build operation utilizes pre-defined path structures.
- * These structures are hard-coded by their individual pieces to be constructed later on.
- */
 #ifndef _di_fake_path_s_
-  const f_string_static_t fake_path_part_bash_s = macro_f_string_static_t_initialize(FAKE_path_part_bash_s, 0, FAKE_path_part_bash_s_length);
   const f_string_static_t fake_path_part_build_s = macro_f_string_static_t_initialize(FAKE_path_part_build_s, 0, FAKE_path_part_build_s_length);
   const f_string_static_t fake_path_part_c_s = macro_f_string_static_t_initialize(FAKE_path_part_c_s, 0, FAKE_path_part_c_s_length);
   const f_string_static_t fake_path_part_cpp_s = macro_f_string_static_t_initialize(FAKE_path_part_cpp_s, 0, FAKE_path_part_cpp_s_length);
@@ -37,6 +32,7 @@ extern "C" {
   const f_string_static_t fake_path_part_script_s = macro_f_string_static_t_initialize(FAKE_path_part_script_s, 0, FAKE_path_part_script_s_length);
   const f_string_static_t fake_path_part_settings_s = macro_f_string_static_t_initialize(FAKE_path_part_settings_s, 0, FAKE_path_part_settings_s_length);
   const f_string_static_t fake_path_part_shared_s = macro_f_string_static_t_initialize(FAKE_path_part_shared_s, 0, FAKE_path_part_shared_s_length);
+  const f_string_static_t fake_path_part_shell_s = macro_f_string_static_t_initialize(FAKE_path_part_shell_s, 0, FAKE_path_part_shell_s_length);
   const f_string_static_t fake_path_part_specifications_s = macro_f_string_static_t_initialize(FAKE_path_part_specifications_s, 0, FAKE_path_part_specifications_s_length);
   const f_string_static_t fake_path_part_stage_s = macro_f_string_static_t_initialize(FAKE_path_part_stage_s, 0, FAKE_path_part_stage_s_length);
   const f_string_static_t fake_path_part_static_s = macro_f_string_static_t_initialize(FAKE_path_part_static_s, 0, FAKE_path_part_static_s_length);
@@ -70,6 +66,7 @@ extern "C" {
   const f_string_static_t fake_build_language_bash_s = macro_f_string_static_t_initialize(FAKE_build_language_bash_s, 0, FAKE_build_language_bash_s_length);
   const f_string_static_t fake_build_language_c_s = macro_f_string_static_t_initialize(FAKE_build_language_c_s, 0, FAKE_build_language_c_s_length);
   const f_string_static_t fake_build_language_cpp_s = macro_f_string_static_t_initialize(FAKE_build_language_cpp_s, 0, FAKE_build_language_cpp_s_length);
+  const f_string_static_t fake_build_language_zsh_s = macro_f_string_static_t_initialize(FAKE_build_language_zsh_s, 0, FAKE_build_language_zsh_s_length);
 #endif // _di_fake_build_language_s_
 
 #ifndef _di_fake_build_version_s_

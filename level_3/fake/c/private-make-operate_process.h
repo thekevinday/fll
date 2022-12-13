@@ -50,7 +50,7 @@ extern "C" {
  *   - "\v": Vertical Tab.
  *   - "\\": Backslash Character (may require additional slashes in certain circumstances.)
  *   - "\0": NULL Character.
- *   - "\U+": Unicode Sequence (followed by a valid Unicode sequence with a minimum 4 hexidecimal digits and a maximum of 6 hexidecimal digits).
+ *   - "\U+": Unicode Sequence (followed by a valid Unicode sequence with a minimum 4 hexadecimal digits and a maximum of 6 hexadecimal digits).
  *   - "\!": Non-printing separator, allowing for "\U+000A\ 5" to be equivalent to "\n5".
  *
  * If the Unicode is invalid, then nothing is copied for that character (the invalid character is skipped when printing).
@@ -58,7 +58,7 @@ extern "C" {
  *   - "\U+000A": Prints a new line, equivalent to "\n".
  *   - "\U+2E19": Prints the Unicode feather-like character "⸙".
  *
- * Only ASCII alpha-numeric hexidecimal digits are allowed in the Unicode sequence (upper or lower case).
+ * Only ASCII alpha-numeric hexadecimal digits are allowed in the Unicode sequence (upper or lower case).
  *
  * Invalid or unknown escape sequences are not copied.
  *

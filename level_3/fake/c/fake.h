@@ -125,23 +125,6 @@ extern "C" {
   extern f_status_t fake_main(fll_program_data_t * const main, fake_setting_t * const setting);
 #endif // _di_fake_main_
 
-/**
- * Deallocate main.
- *
- * @param main
- *   The main program data.
- *
- * @return
- *   F_none on success.
- *
- *   Status codes (with error bit) are returned on any problem.
- *
- * @see fake_main()
- */
-#ifndef _di_fake_main_delete_
-  extern f_status_t fake_main_delete(fll_program_data_t * const main);
-#endif // _di_fake_main_delete_
-
 #ifdef __cplusplus
 } // extern "C"
 #endif

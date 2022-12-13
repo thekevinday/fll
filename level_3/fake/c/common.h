@@ -64,6 +64,7 @@ extern "C" {
  */
 #ifndef _di_fake_program_help_parameter_s_
   #define FAKE_program_help_parameters_s "operation"
+
   #define FAKE_program_help_parameters_s_length 9
 
   extern const f_string_static_t fake_program_help_parameters_s;
@@ -74,7 +75,6 @@ extern "C" {
  * These structures are hard-coded by their individual pieces to be constructed later on.
  */
 #ifndef _di_fake_path_s_
-  #define FAKE_path_part_bash_s           "bash"           F_path_separator_s
   #define FAKE_path_part_build_s          "build"          F_path_separator_s
   #define FAKE_path_part_c_s              "c"              F_path_separator_s
   #define FAKE_path_part_cpp_s            "c++"            F_path_separator_s
@@ -89,11 +89,11 @@ extern "C" {
   #define FAKE_path_part_script_s         "script"         F_path_separator_s
   #define FAKE_path_part_settings_s       "settings"       F_path_separator_s
   #define FAKE_path_part_shared_s         "shared"         F_path_separator_s
+  #define FAKE_path_part_shell_s          "shell"          F_path_separator_s
   #define FAKE_path_part_specifications_s "specifications" F_path_separator_s
   #define FAKE_path_part_stage_s          "stage"          F_path_separator_s
   #define FAKE_path_part_static_s         "static"         F_path_separator_s
 
-  #define FAKE_path_part_bash_s_length           4 + F_path_separator_s_length
   #define FAKE_path_part_build_s_length          5 + F_path_separator_s_length
   #define FAKE_path_part_c_s_length              1 + F_path_separator_s_length
   #define FAKE_path_part_cpp_s_length            3 + F_path_separator_s_length
@@ -108,11 +108,11 @@ extern "C" {
   #define FAKE_path_part_script_s_length         6 + F_path_separator_s_length
   #define FAKE_path_part_settings_s_length       8 + F_path_separator_s_length
   #define FAKE_path_part_shared_s_length         6 + F_path_separator_s_length
+  #define FAKE_path_part_shell_s_length          5 + F_path_separator_s_length
   #define FAKE_path_part_specifications_s_length 14 + F_path_separator_s_length
   #define FAKE_path_part_stage_s_length          5 + F_path_separator_s_length
   #define FAKE_path_part_static_s_length         6 + F_path_separator_s_length
 
-  extern const f_string_static_t fake_path_part_bash_s;
   extern const f_string_static_t fake_path_part_build_s;
   extern const f_string_static_t fake_path_part_c_s;
   extern const f_string_static_t fake_path_part_cpp_s;
@@ -127,6 +127,7 @@ extern "C" {
   extern const f_string_static_t fake_path_part_script_s;
   extern const f_string_static_t fake_path_part_settings_s;
   extern const f_string_static_t fake_path_part_shared_s;
+  extern const f_string_static_t fake_path_part_shell_s;
   extern const f_string_static_t fake_path_part_specifications_s;
   extern const f_string_static_t fake_path_part_stage_s;
   extern const f_string_static_t fake_path_part_static_s;
@@ -140,13 +141,13 @@ extern "C" {
   #define FAKE_file_dependencies_s "dependencies"
   #define FAKE_file_process_pre_s  "process_pre.sh"
   #define FAKE_file_process_post_s "process_post.sh"
-  #define FAKE_file_readme_s       "readme"
+  #define FAKE_file_readme_s       "readme.txt"
 
   #define FAKE_file_defines_s_length      7
   #define FAKE_file_dependencies_s_length 12
   #define FAKE_file_process_pre_s_length  14
   #define FAKE_file_process_post_s_length 15
-  #define FAKE_file_readme_s_length       6
+  #define FAKE_file_readme_s_length       10
 
   extern const f_string_static_t fake_file_defines_s;
   extern const f_string_static_t fake_file_dependencies_s;
@@ -159,10 +160,15 @@ extern "C" {
  * Default allocations.
  *
  * Set to at least 4 to provide a UTF-8 friendly allocation step.
+ *
+ * fake_default_allocation_*_d:
+ *   - large: A buffer size used for large allocations.
+ *   - pipe:  A buffer size used for processing piped data.
+ *   - small: A buffer size used for small allocations.
  */
 #ifndef _di_fake_default_d_
-  #define fake_default_allocation_pipe_d  16384
   #define fake_default_allocation_large_d 64
+  #define fake_default_allocation_pipe_d  16384
   #define fake_default_allocation_small_d 8
 #endif // _di_fake_default_d_
 
@@ -206,30 +212,46 @@ extern "C" {
 
 /**
  * The build language enumerations.
+ *
+ * fake_build_language_type_*_e:
+ *   - bash: The GNU Bash language.
+ *   - c:    The C language.
+ *   - cpp:  The C++ language.
+ *   - zsh:  The ZSH language (Similar to and somewhat compatible with GNU Bash).
  */
 #ifndef _di_fake_build_language_e_
   enum {
     fake_build_language_type_bash_e = 1,
     fake_build_language_type_c_e,
     fake_build_language_type_cpp_e,
+    fake_build_language_type_zsh_e,
   }; // enum
 #endif // _di_fake_build_language_e_
 
 /**
  * The build language strings.
+ *
+ * fake_build_language_*_s:
+ *   - bash: The GNU Bash language.
+ *   - c:    The C language.
+ *   - cpp:  The C++ language.
+ *   - zsh:  The ZSH language (Similar to and somewhat compatible with GNU Bash).
  */
 #ifndef _di_fake_build_language_s_
   #define FAKE_build_language_bash_s "bash"
   #define FAKE_build_language_c_s    "c"
   #define FAKE_build_language_cpp_s  "c++"
+  #define FAKE_build_language_zsh_s  "zsh"
 
   #define FAKE_build_language_bash_s_length 4
   #define FAKE_build_language_c_s_length    1
   #define FAKE_build_language_cpp_s_length  3
+  #define FAKE_build_language_zsh_s_length  3
 
   extern const f_string_static_t fake_build_language_bash_s;
   extern const f_string_static_t fake_build_language_c_s;
   extern const f_string_static_t fake_build_language_cpp_s;
+  extern const f_string_static_t fake_build_language_zsh_s;
 #endif // _di_fake_build_language_s_
 
 /**
@@ -266,6 +288,12 @@ extern "C" {
 
 /**
  * The program operation enumerations.
+ *
+ * fake_operation_*_e:
+ *   - build:    The build operation.
+ *   - clean:    The clean operation.
+ *   - make:     The make operation.
+ *   - skeleton: The skeleton operation.
  */
 #ifndef _di_fake_operation_e_
   enum {
@@ -278,12 +306,17 @@ extern "C" {
 
 /**
  * The program defines.
+ *
+ * fake_signal_*_d:
+ *   - check:       The normal signal check (@fixme is needed anymore as-is?).
+ *   - check_tiny:  The tiny check (@fixme is needed anymore as-is?).
+ *   - check_short: The short signal check (@fixme this is used everywhere).
  */
-#ifndef _di_fake_d_
+#ifndef _di_fake_signal_d_
   #define fake_signal_check_d       500000
   #define fake_signal_check_tiny_d  4
   #define fake_signal_check_short_d 16
-#endif // _di_fake_d_
+#endif // _di_fake_signal_d_
 
 /**
  * The main program parameters.
@@ -505,6 +538,7 @@ extern "C" {
  *
  * flag: Flags passed to the main function.
  *
+ * state: The state data used when processing the FSS data.
  * status: The main status code, generally used by the load settings and main functions.
  *
  * line_first: A string expected to represent either "\n" or NULL to allow for easy handling of when to print first new line or not.
@@ -514,6 +548,7 @@ extern "C" {
   typedef struct {
     uint16_t flag;
 
+    f_state_t state;
     f_status_t status;
 
     f_string_static_t line_first;
@@ -524,6 +559,7 @@ extern "C" {
     { \
       fake_main_flag_none_e, \
       F_none, \
+      f_state_t_initialize, \
       f_string_static_t_initialize, \
       f_string_static_t_initialize, \
     }
