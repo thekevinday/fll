@@ -32,7 +32,7 @@ Disabling Functions:
   All other functions in the abbreviation:"FLL" can be removed.
   The compiled binaries should be analyzed and the dependencies can be extracted.
 
-  Something like the following needs to be done to get the list of functions from the strong:"fake" program\:
+  Something like the following needs to be done to get the list of functions from the bold:"fake" program\:
   script:"
     rm -f unsorted.txt ; nm -Dgu -f p libfake.so | grep -oP '^(f|fl|fll)_[^\s]+' | sed -e '/_s$/d' -e '/_c$/d' >> unsorted.txt
     sort unsorted.txt | uniq > sorted.txt
