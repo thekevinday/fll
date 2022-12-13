@@ -1,37 +1,46 @@
-# fss-0002
+# fss-0002 iki-0000
+#
+# license: cc-by-sa-4.0
+#
+# This file (assumed to be named readme.build.txt) can be more easily read using the following iki_read commands:
+#   iki_read readme.build.txt +Q -w -rr abbreviation-FLL FLL abbreviation-FSS FSS -WW character "'" "'" code '"' '"'
+#
+# To read the "Build Readme Documentation" section of this file, use this command sequence:
+#   fss_basic_list_read readme.build.txt +Q -cn "Build Readme Documentation" | iki_read +Q -w -rr abbreviation-FLL FLL abbreviation-FSS FSS -WW character "'" "'" code '"' '"'
+#
 
 Build Readme Documentation:
-  The Featureless Make, or Fake, is a build system opposing the GNU Make build (and install) system.
+  The bold:"Featureless Make", or code:"fake", is a build system opposing the bold:"GNU Make" build (and install) system.
 
-  The GNU Make system is powerful, but introduces too much unecessary functionality.
-  In opposition to parts of how GNU Make works but also in honor of the success of the GNU Make system, the Featureless Make system follows the following concepts\:
+  The bold:"GNU Make" system is powerful, but introduces too much unecessary functionality.
+  In opposition to parts of how bold:"GNU Make" works but also in honor of the success of the bold:"GNU Make" system, the bold:"Featureless Make" system follows the following concepts\:
   - A build system is just that, a build system. Do not attempt to install, leave that to the distributor or individual installer.
   - A build system should not be trying to guess what is or is not on the system, instead, allow the distributor or individual installer to just specify what they want.
-  - Provide a simple configuration design by using Featureless Settings Specification, or FSS.
+  - Provide a simple configuration design by using the bold:"Featureless Settings Specification".
   - Provide advanced functionality to provide flexibility with different system designs.
   - Userspace execution calling is expensive, attempt to avoid such overhead by providing built-in functionality where reasonably possible.
-  - There should never need to be a "configure" script, like GNU Autoconf.
+  - There should never need to be a code:"configure" script, like bold:"GNU Autoconf".
 
-  The Fake is designed to specifically build the FLL and encourages the use of Fake to build FLL.
+  The code:"fake" is designed to specifically build the abbreviation-FLL:"Featureless Linux Library" and encourages the use of code:"fake" to build abbreviation-FLL:"Featureless Linux Library".
 
-  The Fake provides two main build operations\:
-  - build: a lean purely FSS based build process, designed around specific but simple project designs (explicitly used by FLL).
-  - make: a more powerful build process design to be more akin to GNU Make.
+  The code:"fake" provides two main build operations\:
+  - code:"build": a lean purely abbreviation-FSS:"Featureless Settings Specification" based build process, designed around specific but simple project designs (explicitly used by abbreviation-FLL:"Featureless Linux Library").
+  - code:"make": a more powerful build process design to be more akin to bold:"GNU Make".
 
-  The Fake supports custom development environments using the "work" directory concept, such as "fake build -w /tmp/work".
-  The "work" directory structure is identical to the build directory structure.
+  The code:"fake" supports custom development environments using the file:"work" directory concept, such as code:"fake build -w /tmp/work".
+  The file:"work" directory structure is identical to the build directory structure.
 
-  Build Example, using "build"\:
-    fake build
+  Build Example, Using code:"build"\:
+    code:"fake build"
 
-  Build Example, using "make"\:
-    fake
+  Build Example, Using code:"make"\:
+    code:"fake"
 
-  Build Example, explicitly using "make"\:
-    fake make
+  Build Example, Explicitly Using code:"make"\:
+    code:"fake make"
 
-  Build Tree Structure Example (using the FLL status_code-0.7.0 project)\:
-    build/
+  Build Tree Structure Example (using the abbreviation-FLL:"Featureless Linux Library" code:"status_code-0.7.0" project)\:
+    block:"build/
     ├── documents
     ├── includes
     │   └── program
@@ -91,8 +100,8 @@ Build Readme Documentation:
         ├── sources_script-settings.main.built
         ├── sources_settings-settings.built
         ├── sources_settings-settings.fss.built
-        └── sources_settings-settings.main.built
+        └── sources_settings-settings.main.built"
 
-  See: FLL Fake project documents for further details on how to use the Fake system.
-  See: FLL Fake project specifications for how to configure the build FSS files and make FSS files.
-  See: readme.bootstrap.txt for notes on installing.
+  See: abbreviation-FLL:"Featureless Linux Library" code:"fake" project documents for further details on how to use the bold:"Featureless Make" system.
+  See: abbreviation-FLL:"Featureless Linux Library" code:"fake" project specifications for how to configure the build abbreviation-FSS:"Featureless Settings Specification" files and make abbreviation-FSS:"Featureless Settings Specification" files.
+  See: file:"readme.bootstrap.txt" for notes on installing.
