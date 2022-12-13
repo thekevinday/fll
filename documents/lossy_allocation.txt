@@ -1,0 +1,37 @@
+# fss-0002
+#
+# license: cc-by-sa-4.0
+#
+
+Lossy Allocation:
+  The Featureless Linux Library and related projects utilize what is called bold:"Lossy Allocation".
+
+  One of the original theories behind the Featureless Linux Library (and Featureless Make) is that of memory allocations being expensive.
+  The original theory asserted that performing three allocations when a single is requested can improve performance while maintaining a minimal amount of memory waste.
+  This behavior is termed bold:"Lossy Allocation".
+
+  Over time this theory has proven to not only be correct but also an understatement.
+  The project now chooses a default allocation size of eight rather than three.
+  This has a more significant cost in memory but the overall performance gain and resource usage appears to provide more benefits than the losses from over-allocating memory.
+  The Featureless Linux Library attempts to only allocate memory when needed and this results in the memory footprint being as small as possible when ignoring the lossy aspects.
+
+  There are cases where there is expected to be a large buffer allocated rather than a small buffer allocation.
+  This is often the case when loading and processing files.
+  The bold:"Lossy Allocation" is now fine tuned to have two different size types\:
+    1) Small Allocations.
+    2) Large Allocations.
+
+  The bold:"Small Allocations" are generally set to eight.
+  The bold:"Large Allocations" are set to different sizes such as 64, 4096, and 16384.
+
+  The decision upon when to perform this, which one, and how much are not offloaded to the programmer, the compiler, or the distributor.
+  Many of the projects provide a way to customize these settings.
+  In some cases this data is passed through states or variable properties and can be fine-tuned.
+  In other cases this uses a hard-coded value determined by a define macro.
+
+  The project is being slowly migrated into having less hard-coded values and more state or variable related methods.
+
+  Due to the nature of the bold:"Lossy Allocation", programs using this might end up using more memory than needed.
+  Most of the allocations in the library are performed as needed.
+  This means that if one wants to reduce bold:"Lossy Allocation" chances then one need only pre-allocate the expected memory usage.
+  This avoids extra memory allocations and will reduce the program overhead beyond that achieved by bold:"Lossy Allocation".
