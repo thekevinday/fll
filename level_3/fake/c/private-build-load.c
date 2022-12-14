@@ -82,14 +82,17 @@ extern "C" {
       return;
     }
 
+    // Strip the build settings name from the build arguments to generate a list of modes.
     f_string_statics_t modes_custom = f_string_statics_t_initialize;
-    const f_string_statics_t *modes_custom_ptr = 0;
+    modes_custom.used = build_arguments && build_arguments->used > 1 ? build_arguments->used - 1 : 0;
+    modes_custom.size = 0;
 
-    if (build_arguments && build_arguments->used > 1) {
-      modes_custom.array = build_arguments->array + 1;
-      modes_custom.used = build_arguments->used - 1;
-      modes_custom_ptr = &modes_custom;
-    }
+    f_string_static_t modes_custom_array[modes_custom.used];
+    modes_custom.array = modes_custom_array;
+
+    for (f_array_length_t i = 0; i < modes_custom.used; ++i) {
+      modes_custom.array[i] = build_arguments->array[i + 1];
+    } // for
 
     f_string_static_t path_file = f_string_static_t_initialize;
 
@@ -157,7 +160,19 @@ extern "C" {
             fll_error_print(data->main->error, F_status_set_fine(*status), "f_fss_apply_delimit", F_true);
           }
           else {
-            fake_build_load_setting_process(data, F_true, path_file, modes_custom_ptr, buffer, objects, contents, setting, status);
+            fake_build_load_setting_process(
+              data,
+              F_true,
+              path_file,
+              modes_custom.used
+                ? &modes_custom
+                : 0,
+              buffer,
+              objects,
+              contents,
+              setting,
+              status
+            );
           }
         }
 
@@ -545,24 +560,22 @@ extern "C" {
 
     if (*status == F_none) {
       const int total_build_libraries = setting->build_libraries.used;
-      const f_string_dynamics_t *modes = &setting->modes_default;
+
+      // Custom modes are always used if provided, otherwise if any mode is specified, the entire defaults is replaced.
+      const f_string_statics_t * const modes = modes_custom && modes_custom->used
+        ? modes_custom
+        : data->mode.used
+          ? &data->mode
+          : &setting->modes_default;
 
       f_string_dynamic_t settings_mode_names[fake_build_setting_total_d];
 
-      memset(settings_mode_names, 0, sizeof(f_string_dynamic_t) * fake_build_setting_total_d);
+      memset(settings_mode_names, 0, sizeof(f_string_statics_t) * fake_build_setting_total_d);
 
       bool found = F_false;
 
       f_array_length_t i = 0;
       f_array_length_t j = 0;
-
-      // Custom modes are always used if provided, otherwise if any mode is specified, the entire defaults is replaced.
-      if (modes_custom) {
-        modes = modes_custom;
-      }
-      else if (data->mode.used) {
-        modes = &data->mode;
-      }
 
       for (; i < modes->used; ++i) {
 

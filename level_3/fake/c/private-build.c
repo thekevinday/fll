@@ -844,7 +844,23 @@ extern "C" {
 
         fl_print_format("%[' with modes '%]", data->main->output.to, data->main->context.set.important, data->main->context.set.important);
 
-        f_string_dynamics_t * const modes = data->mode.used ? &data->mode : &data_build.setting.modes_default;
+        f_string_statics_t modes_custom = f_string_statics_t_initialize;
+        modes_custom.used = build_arguments && build_arguments->used > 1 ? build_arguments->used - 1 : 0;
+        modes_custom.size = 0;
+
+        f_string_static_t modes_custom_array[modes_custom.used];
+        modes_custom.array = modes_custom_array;
+
+        for (f_array_length_t i = 0; i < modes_custom.used; ++i) {
+          modes_custom.array[i] = build_arguments->array[i + 1];
+        } // for
+
+        // Custom modes are always used if provided, otherwise if any mode is specified, the entire defaults is replaced.
+        const f_string_statics_t * const modes = modes_custom.used
+          ? &modes_custom
+          : data->mode.used
+            ? &data->mode
+            : &data_build.setting.modes_default;
 
         for (f_array_length_t i = 0; i < modes->used; ) {
 
