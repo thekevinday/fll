@@ -12,7 +12,9 @@ extern "C" {
     setting->status = F_none;
 
     if (setting->flag & fss_write_flag_help_e) {
-      setting->process_help(main, (void *) setting);
+      if (setting->process_help) {
+        setting->process_help(main, (void *) setting);
+      }
 
       return;
     }
@@ -26,13 +28,17 @@ extern "C" {
     setting->escaped.used = 0;
 
     if (main->pipe & fll_program_data_pipe_input_e) {
-      setting->process_pipe(main, setting);
-      if (F_status_is_error(setting->status)) return;
+      if (setting->process_pipe) {
+        setting->process_pipe(main, setting);
+        if (F_status_is_error(setting->status)) return;
+      }
     }
 
     if (setting->flag & (fss_write_flag_object_e | fss_write_flag_content_e | fss_write_flag_object_open_e | fss_write_flag_content_next_e | fss_write_flag_content_end_e)) {
-      setting->process_normal(main, setting);
-      if (F_status_is_error(setting->status)) return;
+      if (setting->process_normal) {
+        setting->process_normal(main, setting);
+        if (F_status_is_error(setting->status)) return;
+      }
     }
 
     // Ensure a new line is always put at the end of the program execution.
@@ -55,6 +61,8 @@ extern "C" {
 
 #ifndef _di_fss_write_process_normal_data_
   void fss_write_process_normal_data(fll_program_data_t * const main, fss_write_setting_t * const setting, const f_array_length_t length) {
+
+    if (!setting->process_set) return;
 
     setting->ignores = 0;
     setting->object = 0;
@@ -107,6 +115,8 @@ extern "C" {
   void fss_write_process_pipe(fll_program_data_t * const main, void * const void_setting) {
 
     fss_write_setting_t * const setting = macro_fss_write_setting(void_setting);
+
+    if (!setting->process_set) return;
 
     f_status_t status_pipe = F_none;
     f_file_t input = f_file_t_initialize;
@@ -430,35 +440,39 @@ extern "C" {
         }
       }
 
-      setting->process_object(main, void_setting);
-      if (F_status_is_error(setting->status)) return;
+      if (setting->process_object) {
+        setting->process_object(main, void_setting);
+        if (F_status_is_error(setting->status)) return;
+      }
     }
 
     if ((!(setting->flag & fss_write_flag_partial_e) || (setting->flag & fss_write_flag_partial_e) && (setting->flag & fss_write_flag_content_e)) && setting->contents || (setting->flag & (fss_write_flag_content_next_e | fss_write_flag_content_end_e))) {
 
-      if (setting->contents && setting->contents->used) {
-        for (f_array_length_t i = 0; i < setting->contents->used; ++i) {
+      if (setting->process_content) {
+        if (setting->contents && setting->contents->used) {
+          for (f_array_length_t i = 0; i < setting->contents->used; ++i) {
 
-          if (setting->contents->array[i].used) {
-            setting->range.start = 0;
-            setting->range.stop = setting->contents->array[i].used - 1;
-          }
-          else {
-            setting->range.start = 1;
-            setting->range.stop = 0;
-          }
+            if (setting->contents->array[i].used) {
+              setting->range.start = 0;
+              setting->range.stop = setting->contents->array[i].used - 1;
+            }
+            else {
+              setting->range.start = 1;
+              setting->range.stop = 0;
+            }
 
-          setting->content = &setting->contents->array[i];
+            setting->content = &setting->contents->array[i];
 
-          setting->process_content(main, void_setting, i + 1 == setting->contents->used);
+            setting->process_content(main, void_setting, i + 1 == setting->contents->used);
+            if (F_status_is_error(setting->status)) return;
+          } // for
+        }
+        else {
+          setting->content = 0;
+
+          setting->process_content(main, void_setting, F_true);
           if (F_status_is_error(setting->status)) return;
-        } // for
-      }
-      else {
-        setting->content = 0;
-
-        setting->process_content(main, void_setting, F_true);
-        if (F_status_is_error(setting->status)) return;
+        }
       }
     }
 
