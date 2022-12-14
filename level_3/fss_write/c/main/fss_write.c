@@ -36,7 +36,7 @@ extern "C" {
 
     if (setting->flag & (fss_write_flag_object_e | fss_write_flag_content_e | fss_write_flag_object_open_e | fss_write_flag_content_next_e | fss_write_flag_content_end_e)) {
       if (setting->process_normal) {
-        setting->process_normal(main, setting);
+        setting->process_normal(main, (void *) setting);
         if (F_status_is_error(setting->status)) return;
       }
     }

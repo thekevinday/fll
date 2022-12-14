@@ -184,12 +184,12 @@ extern "C" {
 #endif // _di_status_code_parameter_d_
 
 /**
- * Flags used to represent flags passed to the main function.
+ * Flags passed to the main function or program.
  *
  * When number mode is not specified, then mode is "string" mode (there is no flag for "string" mode).
  *
  * status_code_main_flag_*_e:
- *   - none:    No modes in use.
+ *   - none:    No flags set.
  *   - error:   Check if status is "error".
  *   - fine:    Check if status is "fine".
  *   - help:    Print help.
@@ -276,7 +276,7 @@ extern "C" {
  *
  * This prints error messages as appropriate.
  *
- * If either main or setting is NULL, then this immediately retuns without doing anything.
+ * If either main or setting is NULL, then this immediately returns without doing anything.
  *
  * @param arguments
  *   The parameters passed to the process (often referred to as command line arguments).

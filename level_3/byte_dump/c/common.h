@@ -354,10 +354,10 @@ extern "C" {
 #endif // _di_byte_dump_parameter_d_
 
 /**
- * Flags used to represent flags passed to the main function.
+ * Flags passed to the main function or program.
  *
  * byte_dump_main_flag_*_e:
- *   - none:          No modes in use.
+ *   - none:          No flags set.
  *   - file_from:     Using a specified source file.
  *   - file_to:       Using a specified destination file.
  *   - help:          Print help.

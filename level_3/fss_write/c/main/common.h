@@ -284,10 +284,10 @@ extern "C" {
 #endif // _di_fss_write_parameter_d_
 
 /**
- * Flags used to represent flags passed to the main function.
+ * Flags passed to the main function or program.
  *
  * fss_write_flag_*_e:
- *   - none:             No modes in use.
+ *   - none:             No flags set.
  *   - content:          The Content being written is specified.
  *   - content_end:      The Content end characters are to be printed.
  *   - content_multiple: Designate that multiple Content is allowed for an Object for this standard rather than a single Content per Object.
@@ -352,9 +352,6 @@ extern "C" {
  * object:   A pointer to a specific Object used during processing.
  * content:  A pointer to a specific Content used during processing.
  * contents: A pointer to a specific set of Content used during processing.
- *
- * program_name:      The short name of the program.
- * program_name_long: The human friendly name of the program.
  *
  * process_content: Process a single Content.
  * process_help:    Process help (generally printing help).
@@ -451,7 +448,7 @@ extern "C" {
  *
  * This prints error messages as appropriate.
  *
- * If either main or setting is NULL, then this immediately retuns without doing anything.
+ * If either main or setting is NULL, then this immediately returns without doing anything.
  *
  * @param arguments
  *   The parameters passed to the process (often referred to as command line arguments).

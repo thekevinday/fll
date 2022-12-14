@@ -391,7 +391,7 @@ extern "C" {
  * symbol_long:   The NULL terminated multi-character string, such as 'help' in '--help'.
  * symbol_simple: The NULL terminated parameter that has no prefix, such as 'all' in 'make all'.
  * values_total:  Designates that a parameter will have a given number of values arguments, such as 'blue' in '--color blue'.
- * flag:          A set of bits for providing.
+ * flag:          A set of bits for providing states associated with the parameter.
  * result:        A set of bits representing if and how the parameter is found (such as '-h' vs '--help').
  * location:      The last location in argv[] where this parameter is found.
  * location_sub:  The last sub-location at location in argv (only used by short parameters, such as -h or +l).

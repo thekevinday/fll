@@ -309,7 +309,7 @@ extern "C" {
  * Modes used to designate how to the input and output are to be processed.
  *
  * utf8_mode_*_e:
- *   - none: No modes in use.
+ *   - none: No flags set.
  *
  * utf8_mode_from_*_e:
  *   - bytesequence: The input format is bytesequence.
@@ -334,10 +334,10 @@ extern "C" {
 #endif // _di_utf8_modes_e_
 
 /**
- * Flags used to represent flags passed to the main function.
+ * Flags passed to the main function or program.
  *
  * utf8_main_flag_*_e:
- *   - none:           No modes in use.
+ *   - none:           No flags set.
  *   - file_from:      Using a specified source file.
  *   - file_to:        Using a specified destination file.
  *   - header:         Enable printing of headers.
@@ -455,7 +455,7 @@ extern "C" {
  *
  * This prints error messages as appropriate.
  *
- * If either main or setting is NULL, then this immediately retuns without doing anything.
+ * If either main or setting is NULL, then this immediately returns without doing anything.
  *
  * @param arguments
  *   The parameters passed to the process (often referred to as command line arguments).

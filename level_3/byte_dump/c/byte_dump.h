@@ -104,7 +104,7 @@ extern "C" {
  *
  * This prints error messages as appropriate.
  *
- * If either main or setting is NULL, then this immediately retuns without doing anything.
+ * If either main or setting is NULL, then this immediately returns without doing anything.
  *
  * @param arguments
  *   The parameters passed to the process (often referred to as command line arguments).

@@ -243,10 +243,10 @@ extern "C" {
 #endif // _di_iki_read_substitution_t_
 
 /**
- * Flags used to represent flags passed to the main function.
+ * Flags passed to the main function or program.
  *
  * iki_read_main_flag_*_e:
- *   - none:       No modes in use.
+ *   - none:       No flags set.
  *   - at:         Selecting at a specific index.
  *   - content:    Print Contents.
  *   - help:       Print help.
@@ -382,7 +382,7 @@ extern "C" {
  *
  * This prints error messages as appropriate.
  *
- * If either main or setting is NULL, then this immediately retuns without doing anything.
+ * If either main or setting is NULL, then this immediately returns without doing anything.
  *
  * @param arguments
  *   The parameters passed to the process (often referred to as command line arguments).
