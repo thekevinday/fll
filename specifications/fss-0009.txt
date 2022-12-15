@@ -16,6 +16,7 @@ Featureless Settings Specification: 0009 - Reverse Mapping:
   White space separates an Object from the Content.
   An Object may be preceded by a newline, in which case means that the Object has no Content.
   If only printing white spaces or non-printable characters precedes a valid Object, then that Object is considered to have no Content.
+  An Object may be quoted to include whitespace where a single quote character:"'" (unicode:"U+0027"), a double quote character:'"' (unicode:"U+0022"), or a backtick character:'`' (unicode:"U+0060") are used to quote.
 
   Content exists on the same line as the Object.
   Content is represented as a single Content column that begins at a newline.
