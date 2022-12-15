@@ -316,7 +316,7 @@ Fakefile Documentation:
           For example, code:"if parameter verbose silent" would test if both the code:"verbose" and the code:"silent" variables are defined via the code:"parameter" setting.
 
           Reserved parameters that represent program arguments, three forms are available.
-          For example, the program argument -w/--work has the reserved word code:"work" and has three forms\:
+          For example, the program argument code:"-w/--work" has the reserved word code:"work" and has three forms\:
             1) code:"work".
             2) code:"work:option".
             3) code:"work:value".
@@ -326,6 +326,9 @@ Fakefile Documentation:
           In the case of form 3, the code:"if parameter work:value" would be true if the argument is passed to the program and has a non-zero value.
 
           Some reserved parameters, such as the code:"verbosity", has no code:"value" and in this case would always return false for code:"if parameter verbosity:value".
+
+          Multi-valued reserved parameters expand into multiple parameters (such as when using multiple code:"-m/--mode").
+          Avoid this behavior by wrapping the the bold:"IKI" variable in quotes.
 
           The following are reserved parameters\:
             - code:"build": Associated with code:"-b/--build" parameter.

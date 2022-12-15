@@ -458,8 +458,8 @@ extern "C" {
                 unmatched = F_false;
                 separate = F_false;
 
-                // Quoted IKI Content or unquoted IKI Content that are reserved words and entirely represent a single parameter should expand into a single argument.
-                if (content.array[i].start == iki_data->variable.array[0].start && content.array[i].stop == iki_data->variable.array[0].stop || quotes.array[i]) {
+                // Quoted IKI Content entirely represent a single parameter should expand into a single argument.
+                if (quotes.array[i]) {
 
                   // Pre-allocate memory to reduce number of allocations.
                   l = parameter->used;
