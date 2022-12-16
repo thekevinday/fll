@@ -1,68 +1,76 @@
-# fss-0002
+# fss-0002 iki-0000
 #
 # license: cc-by-sa-4.0
 #
+# This file (assumed to be named threads.txt) can be more easily read using the following iki_read commands:
+#   iki_read threads.txt +Q -w -r FLL FLL -WW character "'" "'" code '"' '"'
+#
+# To read the "Threads Documentation" section of this file, use this command sequence:
+#   fss_basic_list_read threads.txt +Q -cn "Threads Documentation" | iki_read +Q -w -r FLL FLL -WW character "'" "'" code '"' '"'
+#
 
 Threads Documentation:
-  With the inclusion of the f_thread project, the Featureless Linux Library supports and uses threads by default.
-  This essentially adds -pthread to all level and monolithic builds with all projects depending on f_thread requiring passing -pthread.
+  With the inclusion of the code:"f_thread" project, the Featureless Linux Library supports and uses threads by default.
+  This essentially adds code:"-pthread" to all level and monolithic builds with all projects depending on code:"f_thread" requiring passing -pthread.
 
-  To compile without this thread support, remove all occurances of "-pthread" from each of the build settings files.
-  Be sure to remove f_thread project from the compile list as well (which can be found either in the individual projects build settings file or the appropriate level or monolithic build settings file).
+  To compile without this thread support, remove all occurances of code:"-pthread" from each of the build settings files.
+  Be sure to remove code:"f_thread" project from the compile list as well (which can be found either in the individual projects build settings file or the appropriate level or monolithic build settings file).
 
-  Any project or library depending on f_thread must have -pthread passed to guarantee a correct and valid compilation.
+  Any project or library depending on f_thread must have code:"-pthread" passed to guarantee a correct and valid compilation.
 
-  Some projects that optionally support pthreads may support the macro _di_pthread_support_ for disabling threads.
+  Some projects that optionally support pthreads may support the macro code:"_di_pthread_support_" for disabling threads.
 
-  Thread support is a very common functionality and there may be changes to the FLL scripts and fakefile to support the options "--disable-thread" and "--enable-thread" to make utilizing threads slightly easier.
+  Thread support is a very common functionality and there may be changes to the FLL:"Featureless Linux Library" scripts and file:"fakefile" to support the options "--disable-thread" and "--enable-thread" to make utilizing threads slightly easier.
   Some libraries and programs in this project require threads to work and will not compile with threads disabled.
 
 GLIBC Problems:
-  Some versions of GLIBC butcher static linking in some way or another.
-  One of the problems encountered is that with compiling against threads (-pthread) some programs may get messages like\:
-    multiple definition of `__lll_lock_wait_private' ... libpthread.a(lowlevellock.o): in function `__lll_unlock_wake_private' ...
+  Some versions of bold:"GLIBC" butcher static linking in some way or another.
+  One of the problems encountered is that with compiling against threads (code:"-pthread") some programs may get messages like\:
+    block:"
+      multiple definition of `__lll_lock_wait_private' ... libpthread.a(lowlevellock.o): in function `__lll_unlock_wake_private' ...
+    "
 
-  An immediate solution would be to fix the GLIBC and set __lll_lock_wait_private to a weak_function.
-  This is not practical for most users, so it may be that thread support in statically compiled libraries for GLIBC will not be possible.
-  An alternative could be to use a more sane libc instead of GLIBC (if you can find one, like musl-libc).
+  An immediate solution would be to fix the bold:"GLIBC" and set code:"__lll_lock_wait_private" to a code:"weak_function".
+  This is not practical for most users, so it may be that thread support in statically compiled libraries for bold:"GLIBC" will not be possible.
+  An alternative could be to use a more sane libc instead of bold:"GLIBC" (if you can find one, like bold:"musl-libc").
 
   There needs to be more investigation into the cause of this.
   Maybe there is some way to fix this during compile or link time without having to fix GLIBC or use a different libc for static linking.
 
 Valgrind Debugging:
-  The tool "helgrind" in valgrind allows for debugging threads (such as valgrind --tool=helgrrind controller).
+  The tool code:"helgrind" in valgrind allows for debugging threads (such as code:"valgrind --tool=helgrind" controller).
 
-  The way in which the "active" lock is used will result in out of order locks.
-  This causes "helgrind" to produce a lot of warnings about locks being out of order.
-  Therefore, it is stongly recommended to use the parameter "--track-lockorders=no".
+  The way in which the code:"active" lock is used will result in out of order locks.
+  This causes code:"helgrind" to produce a lot of warnings about locks being out of order.
+  Therefore, it is stongly recommended to use the parameter code:"--track-lockorders=no".
 
 Thread Cancellation Problems:
-  The POSIX standard designates thread cancellation via pthread_cancel() (which is provided via f_thread_cancel()).
-  This cancellation approach works such that when pthread_cancel() the thread is immediately terminated at a cancellation point.
-  The POSIX standard designates the detecting and acting on a cancellation point via pthread_testcancel() (which is provided via f_thread_cancel_test()).
+  The bold:"POSIX" standard designates thread cancellation via code:"pthread_cancel()" (which is provided via code:"f_thread_cancel()").
+  This cancellation approach works such that when code:"pthread_cancel()" the thread is immediately terminated at a cancellation point.
+  The bold:"POSIX" standard designates the detecting and acting on a cancellation point via code:"pthread_testcancel()" (which is provided via code:"f_thread_cancel_test()").
 
-  The pthread_testcancel() operates such that if pthread_cancel() was ever used for some thread with pthread_testcancel() that thread immediately exits.
-  There is no opportunity for the thread calling pthread_testcancel() to do any cleanup.
+  The code:"pthread_testcancel()" operates such that if code:"pthread_cancel()" was ever used for some thread with code:"pthread_testcancel()" that thread immediately exits.
+  There is no opportunity for the thread calling code:"pthread_testcancel()" to do any cleanup.
 
-  The POSIX standard designates a way to perform exit tasks via pthread_cleanup_push() and pthread_cleanup_pop().
+  The bold:"POSIX" standard designates a way to perform exit tasks via code:"pthread_cleanup_push()" and code:"pthread_cleanup_pop()".
   These are allowed to be implemented as macros.
 
-  The POSIX standard then provides a number of POSIX functions that must act as a cancellation point (essentially they call pthread_testcancel() at act as if they do).
+  The bold:"POSIX" standard then provides a number of bold:"POSIX" functions that must act as a cancellation point (essentially they call code:"pthread_testcancel()" at act as if they do).
 
-  What all of this means is that the POSIX cancellation system is unusable, useless, and dangerous (except in a very restricted set of project designs).
+  What all of this means is that the bold:"POSIX" cancellation system is unusable, useless, and dangerous (except in a very restricted set of project designs).
 
-  The Featureless Linux Library is designed to encourage everything to be functional and non-global.
-  The pthread_cleanup_push() and pthread_cleanup_pop() functions cannot be safely and reliable used because they not only may be macros but the Featureless Linux Library allows for the design to be in multiple scopes.
-  The pthread_testcancel() is incredibly dangerous and can very easily result in segmentation faults, memory leaks, dead locks, and other security concerns.
+  The FLL:"Featureless Linux Library" is designed to encourage everything to be functional and non-global.
+  The code:"pthread_cleanup_push()" and code:"pthread_cleanup_pop()" functions cannot be safely and reliable used because they not only may be macros but the FLL:"Featureless Linux Library" allows for the design to be in multiple scopes.
+  The code:"pthread_testcancel()" is incredibly dangerous and can very easily result in segmentation faults, memory leaks, dead locks, and other security concerns.
 
-  The cancellation functions, such as sleep(), may require being either interrupted through an interrupt signal or be cancelled via pthread_testcancel().
-  The pthread_testcancel() may need to be used in these cases.
+  The cancellation functions, such as code:"sleep()", may require being either interrupted through an interrupt signal or be cancelled via code:"pthread_testcancel()".
+  The code:"pthread_testcancel()" may need to be used in these cases.
 
-  Therefore, avoid using any design or functions that may force or require the use of pthread_testcancel() but when forced to be very careful to clear up resources and locks to make sure that if a cancellation occurs that nothing bad can happen.
+  Therefore, avoid using any design or functions that may force or require the use of code:"pthread_testcancel()" but when forced to be very careful to clear up resources and locks to make sure that if a cancellation occurs that nothing bad can happen.
   A better approach would be to use timed checks on some variable shared between all affected functions and scopes that designates cancellation.
   That way when a cancellation is reseived through the custom variable, the functions can actually handle the situation, safely and properly, before cancelling.
 
 C/C++ Standard:
   Newer C/C++ standards provide thread support.
-  This is ideally much better than POSIX in that it will be more portable.
+  This is ideally much better than bold:"POSIX" in that it will be more portable.
   At this time, most C/C++ compilers do not implement this thread support.

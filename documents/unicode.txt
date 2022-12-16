@@ -1,10 +1,16 @@
-# fss-0002
+# fss-0002 iki-0000
 #
 # license: cc-by-sa-4.0
 #
+# This file (assumed to be named unicode.txt) can be more easily read using the following iki_read commands:
+#   iki_read unicode.txt +Q -w -r FLL FLL -WW character "'" "'" code '"' '"'
+#
+# To read the "Unicode Documentation" section of this file, use this command sequence:
+#   fss_basic_list_read unicode.txt +Q -cn "Unicode Documentation" | iki_read +Q -w -r FLL FLL -WW character "'" "'" code '"' '"'
+#
 
-Unicode:
-  This project attempts to support Unicode 15.0.
+Unicode Documentation:
+  This project attempts to support bold:"Unicode 15.0".
 
   Given the scale of Unicode in conjunction with the knowledege and availability of the developers behind this project this is goal is likely not met.
   The intent is to reach compatibility, therefore fixes, improvements, and corrections will continue to be made as they are discovered and time is available.

@@ -1,36 +1,42 @@
-# fss-0002
+# fss-0002 iki-0000
 #
 # license: cc-by-sa-4.0
 #
+# This file (assumed to be named return_codes.txt) can be more easily read using the following iki_read commands:
+#   iki_read return_codes.txt +Q -w -rr API API FLL FLL -WW character "'" "'" code '"' '"'
+#
+# To read the "Implicit Return Types for f_status_t" section of this file, use this command sequence:
+#   fss_basic_list_read return_codes.txt +Q -cn "Implicit Return Types for f_status_t" | iki_read +Q -w -rr API API FLL FLL -WW character "'" "'" code '"' '"'
+#
 
 Implicit Return Types for f_status_t:
-  When f_status_t is used as the return type, there are a common set of status codes that should always be expected as a possible return value.
+  When code:"f_status_t" is used as the return type, there are a common set of status codes that should always be expected as a possible return value.
   These are implicit expectations even if they are not explicitly documented.
   Any function that doesn't support these must document the exceptional state.
 
-  F_failure\:
+  code:"F_failure"\:
     This may be returned for any general error.
     This is often used as the failsafe error code so that an error code of some sort is always returned on error.
 
-  F_parameter\:
+  code:"F_parameter"\:
     This is always potentially returned for any function whose parameter requires a validity checked.
-    Much of this functionality can be optionally disabled, but the client using the API need not be aware.
+    Much of this functionality can be optionally disabled, but the client using the API:"Application Programming Interface" need not be aware.
 
-  F_implemented_not\:
+  code:"F_implemented_not"\:
     This is used to designate that the function or some part of the function is not supported.
-    This is primarily used by individuals altering the project but maintaing API compatibility.
-    Any function must therefore support returning F_implemented_not.
+    This is primarily used by individuals altering the project but maintaing API:"Application Programming Interface" compatibility.
+    Any function must therefore support returning code:"F_implemented_not".
 
     There are some projects that can be enabled/disabled such as f_capability and f_threads.
-    These should explicitly document returning F_implemented_not.
+    These should explicitly document returning code:"F_implemented_not".
 
 Common Return Types for f_status_t:
-  There are some f_status_t return types that are not required to be returned but are used quite often that they might seem required.
+  There are some code:"f_status_t" return types that are not required to be returned but are used quite often that they might seem required.
 
-  F_none\:
+  code:"F_none"\:
     This general designates that no error occurred.
     This is a generic status code used all over the place.
 
-  F_memory_not\:
+  code:"F_memory_not"\:
     This general designates that the operation ran out of memory.
     This is a generic status code used all over the place.

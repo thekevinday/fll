@@ -1,10 +1,16 @@
-# fss-0002
+# fss-0002 iki-0000
 #
 # license: cc-by-sa-4.0
 #
+# This file (assumed to be named style_guide.txt) can be more easily read using the following iki_read commands:
+#   iki_read style_guide.txt +Q -w -rrr ABI ABI API API FLL FLL -WW character "'" "'" code '"' '"'
+#
+# To read the "Style Guide" section of this file, use this command sequence:
+#   fss_basic_list_read style_guide.txt +Q -cn "Style Guide" | iki_read +Q -w -rrr ABI ABI API API FLL FLL -WW character "'" "'" code '"' '"'
+#
 
 Style Guide:
-  The Featureless Linux Library uses a set of styles and practices designed in hopes to communicate both explicitly and implicitly multiple meanings and contexts.
+  The FLL:"Featureless Linux Library" uses a set of styles and practices designed in hopes to communicate both explicitly and implicitly multiple meanings and contexts.
   The idea is that code should be readable like a story rather than be a mash of characters jumbled together into as few lines as possible.
   This design has a tendency to go against the norm given that longer lines (such as 120 characters or more) may be common.
 
@@ -35,9 +41,9 @@ Naming Structure:
   All files, programs, functions, and comments that have specific meaning follow this general naming structure.
   This structure may be similar to camel-casing or snake-casing, but it is not nor is it intended to match them.
 
-  These special names may only contain word characters, underscore "_", and dash "-".
+  These special names may only contain word characters, underscore character:"_" (unicode:"U+005F"), and dash character:"-" (unicode:"U+002D").
 
-  The underscore "_" and dash "-" are explicitly intended to communicate separation of context or not.
+  The underscore character:"_" (unicode:"U+005F") and dash character:"-" (unicode:"U+002D") are explicitly intended to communicate separation of context or not.
   The underscore character represents a space separating multiple words, logic, concepts, or ideas represented by the previous words and should share meaning.
   The dash character represents a break in the words, logic, concepts, or ideas.
 
@@ -45,29 +51,28 @@ Naming Structure:
   - In the event that a dash cannot be used, fall back to an underscore.
   - In the event that an underscore cannot be used, fall back to a dash.
   - In the event that both underscore and dash cannot be used, it is fine to have neither.
-  - For software that uses plus "+", it may become necessary to replace the dash with the plus, but this should be avoided.
+  - For software that uses plus character:"+" (unicode:"U+002B"), it may become necessary to replace the dash with the plus, but this should be avoided.
   - Other language-specific (compiler languages, spoken languages, written languages, etc..) restrictions may apply that prevent or alter this style.
 
   In general, these special names should always be lower case and this is encouraged.
   The use of upper case is not forbidden and is encouraged to be used for special communication or language-specific purposes.
 
-  Consider the following to better understand how and when to use the underscore and dash to implicitly communicate context\:
-  Take the words "my", "red", "cat", "dog", and "apple".
+  Consider the following to better understand how and when to use the underscore character:"_" (unicode:"U+005F") and dash character:"-" (unicode:"U+002D") to implicitly communicate context\:
+  Take the words italic:"my", italic:"red", italic:"cat", italic:"dog", and italic:"apple".
 
-  If you wanted to communicate that the structure of a document is focused on "my red X", then you can use the following naming structure to communicate this\:
-  1) my_red-cat, my_red-dog, my_red-apple.
+  If you wanted to communicate that the structure of a document is focused on code:"my red X", then you can use the following naming structure to communicate this\:
+    1) code:"my_red-cat, my_red-dog, my_red-apple".
 
-  If you wanted, instead, to communicate that the structure is focused on "my X", then you can use the following naming structure to communicate this\:
-  2) my-red_cat, my-red_dog, my-red_apple.
+  If you wanted, instead, to communicate that the structure is focused on code:"my X", then you can use the following naming structure to communicate this\:
+    2) code:"my-red_cat, my-red_dog, my-red_apple".
 
   By following this logic, another person can more easily identify your logic and make changes or fixes.
   Let us say that somebody wants to add "happy" to the context\:
+    1) This can become: code:"my_red-happy_cat, my_red-happy_dog, my_red-apple".
+    2) This can become: code:"my-happy_cat, my-happy_dog, my-red_apple".
 
-  1) This can become: my_red-happy_cat, my_red-happy_dog, my_red-apple.
-  2) This can become: my-happy_cat, my-happy_dog, my-red_apple.
-
-  The person who added "happy" might have fixed a situation where there is no red cat or dog and while understanding that there is no happy apple.
-  However, in case (1) because "my_red" is grouped together by the underscore, it is clear that there is a "my_red" must be preserved and there is red cat and red dog, so happy is added to the cat and dog but not the apple without removing the "red".
+  The person who added code:"happy" might have fixed a situation where there is no red cat or dog and while understanding that there is no happy apple.
+  However, in case italic:"(1)" because code:"my_red" is grouped together by the underscore, it is clear that there is a code:"my_red" must be preserved and there is red cat and red dog, so happy is added to the cat and dog but not the apple without removing the code:"red".
 
 Purpose of Defines:
   There are several types of defines, often wrapped in code:"#ifndef" blocks, for both communicating a type of define and the purpose of the define.
@@ -88,41 +93,49 @@ Commas in Sets:
   This project requires that, so long as it is allowed by the language (in terms of valid syntax, etc..), items in a list must always end in a comma.
 
   Example Grammatically Correct Way\:
-  - char list[] = {
-      'a',
-      'b',
-      'c'
-    };
+    block:"
+      char list[] = {
+        'a',
+        'b',
+        'c'
+      };
+    "
 
-  Example FLL Correct Way\:
-  - char list[] = {
-      'a',
-      'b',
-      'c',
-    };
+  Example FLL:"Featureless Linux Library" Correct Way\:
+    block:"
+      char list[] = {
+        'a',
+        'b',
+        'c',
+      };
+    "
 
 Loops and Newlines:
   All loops, except loops with only 0 or 1 lines within it, add an extra new line after the loop condition part (or before the loop condition part for post-increment loops).
 
-  All pre-increment loops will have their loop type (such as "while", or "for") in a comment inline with the closing brace.
+  All pre-increment loops will have their loop type (such as code:"while", or code:"for") in a comment inline with the closing brace.
 
-  A for loop would like like\:
-    for (int x = 0; x < y; ++x) {
+  A code:"for" loop would like like\:
+    block:"
+      for (int x = 0; x < y; ++x) {
 
-      do_something();
-      do_something_else();
-    } // while
+        do_something();
+        do_something_else();
+      } // while
+    "
 
-  A do while loop would like like\:
-    do {
-      do_something();
-      do_something_else();
+  A code:"do while" loop would like like\:
+    block:"
+      do {
+        do_something();
+        do_something_else();
 
-    } while (true);
+      } while (true);
+    "
 
 Returns, Breaks, Continues, Gotos, and Newlines:
   Operations that change the flow of a block or a function must have a newline before them, except in certain conditions.
-  This includes "return" statements, "break" statements, "continue" statements, and "goto" statements.
+  This includes code:"return" statements, code:"break" statements, code:"continue" statements, and code:"goto" statements.
 
   Exceptions to this includes one line flow change operations directly tied to a function called before it.
   These are meant to be treated as an accessory to the function.
@@ -133,59 +146,59 @@ Returns, Breaks, Continues, Gotos, and Newlines:
 
 Return Code Names:
   The return code names are C-language specific names used by this project as the status or return codes for functions and programs.
-  To uniquely identify these, they follow the naming structure "(A)_(b)", where "(A)" is replaced with an upper-case character representing the project level (or name) and "(b)" is replaced with the lower-case status code name using words that are underscore separated.
+  To uniquely identify these, they follow the naming structure code:"(A)_(b)", where code:"(A)" is replaced with an upper-case character representing the project level (or name) and code:"(b)" is replaced with the lower-case status code name using words that are underscore separated.
 
   These are enumerations but they do not follow the enumeration style guide and are an exception to it.
 
   Examples\:
-  - F_none
-  - F_signal_file_size_limit
+  - code:"F_none".
+  - code:"F_signal_file_size_limit".
 
 Global String Constant Names:
   The C-language specific global names are used in two ways\:
   1) Via a define (macro).
   2) As a variable at the global scope.
 
-  These follow the naming structure "(A)_(b)_s" or "(a)_(b)_s".
-  The "(A)" represents upper-case characters used for the project level (or similar purposes).
-  The "(a)" represents lower-case characters used for the project level (or similar purposes).
-  The "(b)" represents lower-case characters used for the name.
+  These follow the naming structure code:"(A)_(b)_s" or code:"(a)_(b)_s".
+  The code:"(A)" represents upper-case characters used for the project level (or similar purposes).
+  The code:"(a)" represents lower-case characters used for the project level (or similar purposes).
+  The code:"(b)" represents lower-case characters used for the name.
 
-  The trailing "_s" designates that this is a string.
+  The trailing code:"_s" designates that this is a string.
 
   The upper-case variant is to be used for the defines.
   The lower-case variant is to be used for the variables, such as global consant strings.
   Replacement macros may use eithe depending on which of these they are replacing and the way in which they are performing the replacement.
 
-  A special case define that describes the length of the string is of the forms: (A)_(b)_s_length.
+  A special case define that describes the length of the string is of the forms: code:"(A)_(b)_s_length".
 
   Examples\:
-  - F_file_open_mode_truncate_s: as a define, such as: #define F_file_open_mode_truncate_s "w".
-  - F_file_open_mode_truncate_s_length: as a define, such as: #define F_file_open_mode_truncate_s_length 1.
-  - f_file_open_mode_truncate_s: as a variable, such as: extern const f_string_t f_file_open_mode_truncate_s;.
+  - code:"F_file_open_mode_truncate_s": as a define, such as: code:'#define F_file_open_mode_truncate_s "w"'.
+  - code:"F_file_open_mode_truncate_s_length": as a define, such as: code:'#define F_file_open_mode_truncate_s_length 1'.
+  - code:"f_file_open_mode_truncate_s": as a variable, such as: code:"extern const f_string_t f_file_open_mode_truncate_s;".
 
 Global Character Constant Names:
-  The C-language specific global names are identical to the "Global String Constant Names" except that they represent a single 1-byte character.
+  The C-language specific global names are identical to the strong:"Global String Constant Names" except that they represent a single 1-byte character.
 
-  These are of the form "(A)_(b)_c" or "(a)_(b)_c".
+  These are of the form code:"(A)_(b)_c" or code:"(a)_(b)_c".
 
-  The trailing "_c" designates that this is a 1-byte character.
+  The trailing code:"_c" designates that this is a 1-byte character.
 
 Enumeration Names:
-  The C-language specific enumeration names follow the naming structure "(a)_(b)_e".
-  The "(a)" represents lower-case characters used for the project level (or similar purposes).
-  The "(b)" represents lower-case characters used for the name.
+  The C-language specific enumeration names follow the naming structure code:"(a)_(b)_e".
+  The code:"(a)" represents lower-case characters used for the project level (or similar purposes).
+  The code:"(b)" represents lower-case characters used for the name.
 
-  The trailing "_e" designates that this is an enumeration.
+  The trailing code:"_e" designates that this is an enumeration.
 
   Examples\:
-  - f_console_verbosity_quiet_e
-  - f_fss_basic_e
-  - fss_extended_list_read_parameter_at_e
+  - code:"f_console_verbosity_quiet_e".
+  - code:"f_fss_basic_e".
+  - code:"fss_extended_list_read_parameter_at_e".
 
 Wrapping Define Names:
   Most, if not all, of the code that follows this style guide is to be wrapped in some sort of define.
-  These are formally referred to as Wrapping Defines or Wrapping Define Names.
+  These are formally referred to as bold:"Wrapping Defines" or bold:"Wrapping Define Names".
 
   These C-language specific define names (also known as macro names) used for wrapping always begin and end in an underscore.
 
@@ -193,94 +206,94 @@ Wrapping Define Names:
   1) The disable wrapping define name (this is the most common).
   2) The enable wrapping define name (this is for special cases or less common cases).
 
-  The format for the disable wrapping defines is "_di_(a)_(b)_".
-  The "(a)" is replaced with the name representing the block that is being wrapped.
-  The "(b)" represents the type of the wrapping define, which may already be provided by "(a)" (as with types, the "f_string_t" typedef would have a wrapping define name of "_di_f_string_t_".
-  This macro must be explicitly defined to "disable" the wrapped block, such as passing "-D_di_f_string_t_" to the compiler.
-  These are commonly used with an "#ifndef" block.
+  The format for the disable wrapping defines is code:"_di_(a)_(b)_".
+  The code:"(a)" is replaced with the name representing the block that is being wrapped.
+  The code:"(b)" represents the type of the wrapping define, which may already be provided by code:"(a)" (as with types, the code:"f_string_t" typedef would have a wrapping define name of code:"_di_f_string_t_".
+  This macro must be explicitly defined to italic:"disable" the wrapped block, such as passing code:"-D_di_f_string_t_" to the compiler.
+  These are commonly used with an code:"#ifndef" block.
 
-  The format for the enable wrapping defines is "_en_(a)_(b)_".
-  This is exactly the same as the disable wrapping define, except it has "en" instead of "di".
-  This macro must be explicitly defined to "enable" the wrapped block, such as passing "-D_en_f_type_number_32_t_" to the compiler.
+  The format for the enable wrapping defines is code:"_en_(a)_(b)_".
+  This is exactly the same as the disable wrapping define, except it has code:"en" instead of code:"di".
+  This macro must be explicitly defined to italic:"enable" the wrapped block, such as passing code:"-D_en_f_type_number_32_t_" to the compiler.
 
-  Both the enable and disable types must end in an "#endif" block that has the comment representing the block, such as "#endif // _di_fl_print_format_".
+  Both the enable and disable types must end in an code:"#endif" block that has the comment representing the block, such as code:"#endif // _di_fl_print_format_".
 
   This helps encourages the concept of using these when passing them as arguments.
-  A wrapping define name such as -D_di_fl_print_format_ would be the wrapping define name for the function fl_print_format().
+  A wrapping define name such as code:"-D_di_fl_print_format_" would be the wrapping define name for the function code:"fl_print_format()".
 
 Constant Define Names:
-  The define names representing the C-language specific define names (also known as macro names) used to represent constant data follow the naming structure "(A)_(b)_(c).
-  The "(A)" represents upper-case characters representing the project level (or something similar).
-  The "(b)" represents lower-case characters using words, function names, structure names, or category names that are underscore separated.
-  The "(c)" represents lower-case type-description character, such as "_d", "_c", or "_s".
+  The define names representing the C-language specific define names (also known as macro names) used to represent constant data follow the naming structure code:"(A)_(b)_(c)".
+  The code:"(A)" represents upper-case characters representing the project level (or something similar).
+  The code:"(b)" represents lower-case characters using words, function names, structure names, or category names that are underscore separated.
+  The code:"(c)" represents lower-case type-description character, such as code:"_d", code:"_c", or code:"_s".
 
   Examples\:
-  - F_file_mode_special_sticky_d
-  - F_attribute_visibility_internal_d
-  - FL_diectory_recurse_depth_max_d
-  - FAKE_program_name_s
+  - code:"F_file_mode_special_sticky_d".
+  - code:"F_attribute_visibility_internal_d".
+  - code:"FL_diectory_recurse_depth_max_d".
+  - code:"FAKE_program_name_s".
 
 Header Define Names:
-  The header define are used to wrap the header file and are of the form "_(a)_(b)_h".
-  The "(a)" represents lower-case characters representing the project level (or something similar).
-  The "(b)" represents lower-case characters representing the file name without the extenson and dashes.
+  The header define are used to wrap the header file and are of the form code:"_(a)_(b)_h".
+  The code:"(a)" represents lower-case characters representing the project level (or something similar).
+  The code:"(b)" represents lower-case characters representing the file name without the extenson and dashes.
 
-  Do not forget the leading "_".
-  The trailing "_h" designates that this is a header file name define.
+  Do not forget the leading code:"_".
+  The trailing code:"_h" designates that this is a header file name define.
 
 Macro Replacement Names:
-  All C-language specific define names defines are considered macro names but for the purpose of this style guide the ones that are formally considered macros are prefixed with "macro_".
+  All C-language specific define names defines are considered macro names but for the purpose of this style guide the ones that are formally considered macros are prefixed with code:"macro_".
   These macro defines represent the traditional concept and use of a macro and are most often used to represent a macro function.
 
   These macro defines are intended to simulate functions and therefore follow the naming styles similar to that of functions.
-  The "Type Definition Names" section describs the naming of this in details.
+  The bold:"Type Definition Names" section describs the naming of this in details.
 
 Type Definition Names:
-  The C-language specific type definition names follow the naming structure "(a)_(b)_t".
-  The "(a)" represents lower-case characters representing the project level (or something similar).
-  The "(b)" represents lower-case characters representing the name using words that are underscore separated.
+  The C-language specific type definition names follow the naming structure code:"(a)_(b)_t".
+  The code:"(a)" represents lower-case characters representing the project level (or something similar).
+  The code:"(b)" represents lower-case characters representing the name using words that are underscore separated.
 
-  The trailing "_t" designates that this is a type definition.
+  The trailing code:"_t" designates that this is a type definition.
 
   In addition to the type definition, special defines (macros) are provided that are specific to type definitions are an exception to the Define Names rules.
-  - Each type definition should have an initializer and that initializer name follows the naming structure "(a)_(b)_t_initialize" where "_initialize" is appended to the type definition name.
+  - Each type definition should have an initializer and that initializer name follows the naming structure code:"(a)_(b)_t_initialize" where code:"_initialize" is appended to the type definition name.
   - Each type definition may have special defines (macros) used as functions for helping with special operations such as complex initialization, allocation, and deallocation.
-    These special case defines are an exception to the Define Name rules and follow the naming structure "macro_(a)_(b)_t_(c)" where "macro_" is prepended to the type definition name and the (c) is just like (b) but is used to communicate the special purpose.
+    These special case defines are an exception to the Define Name rules and follow the naming structure code:"macro_(a)_(b)_t_(c)" where code:"macro_" is prepended to the type definition name and the code:"(c)" is just like code:"(b)" but is used to communicate the special purpose.
 
   Examples\:
-  - f_string_static_t
-  - f_status_t
-  - macro_f_account_t_clear
-  - macro_f_string_dynamic_t_resize
+  - code:"f_string_static_t".
+  - code:"f_status_t".
+  - code:"macro_f_account_t_clear".
+  - code:"macro_f_string_dynamic_t_resize".
 
 Function Names:
-  The C-language specific function names follow the naming structure "(a)_(b)" or "private_(a)_(b)", where "(a)" is replaced with an lower-case character representing the project level (or name) and "(b)" is replaced with the lower-case name using words that are underscore separated.
+  The C-language specific function names follow the naming structure code:"(a)_(b)" or code:"private_(a)_(b)", where code:"(a)" is replaced with an lower-case character representing the project level (or name) and code:"(b)" is replaced with the lower-case name using words that are underscore separated.
 
-  The leading "private_" is used to designate that this is a private function.
+  The leading code:"private_" is used to designate that this is a private function.
 
   There are also special practices.
-    - For FLL projects, each project has a level.
-      Each project within some level is prepended to functions with their level representation characters of: "f" (level 0), "fl" (level 1), and "fll" (level 2).
+    - For FLL:"Featureless Linux Library" projects, each project has a level.
+      Each project within some level is prepended to functions with their level representation characters of: code:"f" (level 0), code:"fl" (level 1), and code:"fll" (level 2).
 
     - For programs, each program has a project name.
       The program name, or a short alias of the program name, is prepended to functions.
 
-    - For programs, the "main" function does not do this and is always called "main" without modification.
+    - For programs, the code:"main" function does not do this and is always called code:"main" without modification.
 
   Examples\:
-  - f_fss_basic_e
-  - fl_conversion_string_to_binary_signed
-  - fake_print_help
+  - code:"f_fss_basic_e".
+  - code:"fl_conversion_string_to_binary_signed".
+  - code:"fake_print_help".
 
 File Names:
   The C-language specific file names follow the simple naming structure utilizing word characters, underscores, and dashes.
-  Special cases will have prefixes, such a "private-".
+  Special cases will have prefixes, such a code:"private-".
 
-  The "private-" special case is intended for private files (aka: not intended to be exposed via the API or ABI).
+  The code:"private-" special case is intended for private files (aka: not intended to be exposed via the API:"Application Programming Interface" or ABI:"Application Binary Interface").
 
 Returns, Breaks, Continues, and Gotos Function Accessories:
   To avoid excessive newline spacing, certain one-line operations that are tightly coupled to a function are treated as an accessory to the function.
   As an accessory to some function, these one-line operations must not have a line between them and the function that they are an accessory of unless there is an excessive amount.
 
   These function accessories are operations that change the flow of a block or a function.
-  This includes "return" statements, "break" statements, "continue" statements, and "goto" statements.
+  This includes code:"return" statements, code:"break" statements, code:"continue" statements, and code:"goto" statements.

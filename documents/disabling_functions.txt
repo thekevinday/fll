@@ -1,23 +1,29 @@
-# fss-0002
+# fss-0002 iki-0000
 #
 # license: cc-by-sa-4.0
 #
+# This file (assumed to be named disabling_functions.txt) can be more easily read using the following iki_read commands:
+#   iki_read disabling_functions.txt +Q -w -rr API API FLL FLL -WW character "'" "'" code '"' '"'
+#
+# To read the "Disabling Functions" section of this file, use this command sequence:
+#   fss_basic_list_read disabling_functions.txt +Q -cn "Disabling Functions" | iki_read +Q -w -rr API API FLL FLL -WW character "'" "'" code '"' '"'
+#
 
 Disabling Functions:
-  The Featureless Linux Library is designed in a modular fassion despite the primary language not being an object-oriented language.
-  This is loosely refered to as emphasis:"functional-oriented programming".
+  The FLL:"Featureless Linux Library" is designed in a modular fassion despite the primary language not being an object-oriented language.
+  This is loosely refered to as italic:"functional-oriented programming".
 
   The resulting library can, and should, be trimmed down to contain only what is needed.
   There are two ways this is done\:
-  1) The abbreviation:"FLL" is broken up into individual projects and can be perceived as a conceptial emphasis:"class object".
+  1) The FLL:"Featureless Linux Library" is broken up into individual projects and can be perceived as a conceptial italic:"class object".
   2) Each individual public function within each project is wrapped in if-def logic to designate that this function is to be disabled.
 
-  This approach allows for someone to override the existing function by easily replacing the abbreviation:"FLL" function with their own.
+  This approach allows for someone to override the existing function by easily replacing the FLL:"Featureless Linux Library" function with their own.
   This also allows for removing, or disabling, functions entirely.
 
   The focus of this is on the disabling of functions.
 
-  Each public function has its abbreviation:"API" exposed via a header file.
+  Each public function has its API:"Application Programming Interface" exposed via a header file.
   This header file describes the list of public functions that are available.
   Looking at each header file, one can find each function is wrapped in special ifdef macros.
   The macros are of the form code:"_di_XXX_" where code:"XXX" represents the function name.
@@ -28,11 +34,11 @@ Disabling Functions:
   The code:"-D_di_f_file_access_" can be added to the code:"data/build/settings" file like this: code:"defines -D_di_f_file_access_".
 
   One good use of this is to disable all of the functions that are not needed for some environment.
-  Lets say that only the Featureless Make program is needed.
-  All other functions in the abbreviation:"FLL" can be removed.
+  Lets say that only the bold:"Featureless Make" program is needed.
+  All other functions in the FLL:"Featureless Linux Library" can be removed.
   The compiled binaries should be analyzed and the dependencies can be extracted.
 
-  Something like the following needs to be done to get the list of functions from the bold:"fake" program\:
+  Something like the following needs to be done to get the list of functions from the file:"fake" program\:
   script:"
     rm -f unsorted.txt ; nm -Dgu -f p libfake.so | grep -oP '^(f|fl|fll)_[^\s]+' | sed -e '/_s$/d' -e '/_c$/d' >> unsorted.txt
     sort unsorted.txt | uniq > sorted.txt

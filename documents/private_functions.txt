@@ -1,6 +1,12 @@
-# fss-0002
+# fss-0002 iki-0000
 #
 # license: cc-by-sa-4.0
+#
+# This file (assumed to be named private_functions.txt) can be more easily read using the following iki_read commands:
+#   iki_read private_functions.txt +Q -w -rr FLL FLL GCC GCC -WW character "'" "'" code '"' '"'
+#
+# To read the "Private Functions" section of this file, use this command sequence:
+#   fss_basic_list_read private_functions.txt +Q -cn "Private Functions" | iki_read +Q -w -rr FLL FLL GCC GCC -WW character "'" "'" code '"' '"'
 #
 
 Private Functions:
@@ -13,15 +19,15 @@ Private Functions:
 
   One of those disadvantages is possible redundant code.
   The c-programming language does not have private functions by any normal means.
-  The use of the f_gcc_attribute_visibility_internal helps simulate private functions.
-  Such functionality only works in supporting GCC compilers.
+  The use of the code:"f_gcc_attribute_visibility_internal" helps simulate private functions.
+  Such functionality only works in supporting GCC:"GNU Compiler Collection" compilers.
 
   These synthetic private functions are implemented as an exception to the objectives for maintainability and redundancy purposes.
   Such implementations should be kept to a bare minimum.
 
   Functions defined as private will not be normally exposed through the public headers files.
-  Such functions will be prefixed with 'private_'.
+  Such functions will be prefixed with code:"private_".
 
-  The header files and source files for these private functions will be prefixed with "private-".
-  Normally, this product uses underscores for names, but, as a special name, the dash "-" is used.
-  Normally, the names begin with the project name (such as directory_type.h instead of type_directory.h), but as a special case to further separate private files, this is prefixed onto source files (such as private-directory.h).
+  The header files and source files for these private functions will be prefixed with code:"private-".
+  Normally, this product uses underscores character:"_" (unicode:"U+005F") for names, but, as a special name, the dash chararacter:"-" (unicode:"U+002D") is used.
+  Normally, the names begin with the project name (such as file:"directory_type.h" instead of file:"type_directory.h"), but as a special case to further separate private files, this is prefixed onto source files (such as file:"private-directory.h").

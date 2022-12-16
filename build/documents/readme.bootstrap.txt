@@ -3,14 +3,14 @@
 # license: cc-by-sa-4.0
 #
 # This file (assumed to be named readme.bootstrap.txt) can be more easily read using the following iki_read commands:
-#   iki_read readme.bootstrap.txt +Q -w -rr abbreviation-FLL FLL abbreviation-FSS FSS -WW character "'" "'" code '"' '"'
+#   iki_read readme.bootstrap.txt +Q -w -rr FLL FLL FSS FSS -WW character "'" "'" code '"' '"'
 #
 # To read the "Bootstrap Readme Documentation" section of this file, use this command sequence:
-#   fss_basic_list_read readme.bootstrap.txt +Q -cn "Bootstrap Readme Documentation" | iki_read +Q -w -rr abbreviation-FLL FLL abbreviation-FSS FSS -WW character "'" "'" code '"' '"'
+#   fss_basic_list_read readme.bootstrap.txt +Q -cn "Bootstrap Readme Documentation" | iki_read +Q -w -rr FLL FLL FSS FSS -WW character "'" "'" code '"' '"'
 #
 
 Bootstrap Readme Documentation:
-  The abbreviation-FLL:"Featureless Linux Library" provides a special bootstrap script in case the bold:"Featureless Make" is not currently installed.
+  The FLL:"Featureless Linux Library" provides a special bootstrap script in case the bold:"Featureless Make" is not currently installed.
 
   The bold:"GNU Bash" scripts, called file:"bootstrap.sh" and file:"install.sh", are provided to perform this bootstrap process.
 
@@ -48,65 +48,69 @@ Bootstrap Readme Documentation:
   If one of the build sub-directories, such as includes, libraries, programs, and settings, is empty or missing after a successful build, then there are no files of that type to install.
 
   Build tree structure example (using the abbreviation-FLL:"Featureless Linux Library" code:"status_code-0.6.2" project)\:
-    block:"build/
-    ├── documents
-    ├── includes
-    │   └── program
-    │       └── status_code
-    │           ├── common.h
-    │           └── status_code.h
-    ├── libraries
-    │   ├── script
-    │   ├── shared
-    │   │   ├── libstatus_code.so -> libstatus_code.so.0
-    │   │   ├── libstatus_code.so.0 -> libstatus_code.so.0.6
-    │   │   ├── libstatus_code.so.0.6 -> libstatus_code.so.0.6.2
-    │   │   └── libstatus_code.so.0.6.2
-    │   └── static
-    │       └── libstatus_code.a
-    ├── objects
-    │   ├── common.o
-    │   ├── private-common.o
-    │   ├── private-status_code.o
-    │   ├── script
-    │   ├── shared
-    │   ├── static
-    │   └── status_code.o
-    ├── programs
-    │   ├── script
-    │   ├── shared
-    │   │   └── status_code
-    │   └── static
-    │       └── status_code
-    ├── settings
-    └── stage
-        ├── library_shared-settings.built
-        ├── library_static-settings.built
-        ├── objects_static-settings.built
-        ├── program_shared-settings.built
-        ├── program_static-settings.built
-        ├── skeleton-settings.built
-        ├── sources_headers-settings.built
-        ├── sources_script-settings.built
-        └── sources_settings-settings.built"
+    block:"
+      build/
+      ├── documents
+      ├── includes
+      │   └── program
+      │       └── status_code
+      │           ├── common.h
+      │           └── status_code.h
+      ├── libraries
+      │   ├── script
+      │   ├── shared
+      │   │   ├── libstatus_code.so -> libstatus_code.so.0
+      │   │   ├── libstatus_code.so.0 -> libstatus_code.so.0.6
+      │   │   ├── libstatus_code.so.0.6 -> libstatus_code.so.0.6.2
+      │   │   └── libstatus_code.so.0.6.2
+      │   └── static
+      │       └── libstatus_code.a
+      ├── objects
+      │   ├── common.o
+      │   ├── private-common.o
+      │   ├── private-status_code.o
+      │   ├── script
+      │   ├── shared
+      │   ├── static
+      │   └── status_code.o
+      ├── programs
+      │   ├── script
+      │   ├── shared
+      │   │   └── status_code
+      │   └── static
+      │       └── status_code
+      ├── settings
+      └── stage
+          ├── library_shared-settings.built
+          ├── library_static-settings.built
+          ├── objects_static-settings.built
+          ├── program_shared-settings.built
+          ├── program_static-settings.built
+          ├── skeleton-settings.built
+          ├── sources_headers-settings.built
+          ├── sources_script-settings.built
+          └── sources_settings-settings.built
+    "
 
   Work tree Structure example at file:"/tmp/work" (using the abbreviation-FLL:"Featureless Linux Library" code:"status_code-0.6.2" project)\:
-    block:"/tmp/work/
-    ├── includes
-    │   └── program
-    │       └── status_code
-    │           ├── common.h
-    │           └── status_code.h
-    ├── libraries
-    │   ├── shared
-    │   │   ├── libstatus_code.so -> libstatus_code.so.0
-    │   │   ├── libstatus_code.so.0 -> libstatus_code.so.0.6
-    │   │   ├── libstatus_code.so.0.6 -> libstatus_code.so.0.6.2
-    │   │   └── libstatus_code.so.0.6.2
-    │   └── static
-    │       └── libstatus_code.a
-    └── programs
-        ├── shared
-        │   └── status_code
-        └── static
-            └── status_code"
+    block:"
+      /tmp/work/
+      ├── includes
+      │   └── program
+      │       └── status_code
+      │           ├── common.h
+      │           └── status_code.h
+      ├── libraries
+      │   ├── shared
+      │   │   ├── libstatus_code.so -> libstatus_code.so.0
+      │   │   ├── libstatus_code.so.0 -> libstatus_code.so.0.6
+      │   │   ├── libstatus_code.so.0.6 -> libstatus_code.so.0.6.2
+      │   │   └── libstatus_code.so.0.6.2
+      │   └── static
+      │       └── libstatus_code.a
+      └── programs
+          ├── shared
+          │   └── status_code
+          └── static
+              └── status_code
+    "

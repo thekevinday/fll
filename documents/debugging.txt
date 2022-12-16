@@ -1,6 +1,12 @@
-# fss-0002
+# fss-0002 iki-0000
 #
 # license: cc-by-sa-4.0
+#
+# This file (assumed to be named debugging.txt) can be more easily read using the following iki_read commands:
+#   iki_read debugging.txt +Q -w -rrr FLL FLL GCC GCC GUI GUI -WW character "'" "'" code '"' '"'
+#
+# To read the "Debugging" section of this file, use this command sequence:
+#   fss_basic_list_read debugging.txt +Q -cn "Debugging" | iki_read +Q -w -rrr FLL FLL GCC GCC GUI GUI -WW character "'" "'" code '"' '"'
 #
 
 Debugging:
@@ -8,50 +14,56 @@ Debugging:
   This documentation briefly touches on a small set of these used by this project.
 
   The following are notable tools to consider when debugging\:
-    - strace
-    - gdb
-    - valgrind
-    - GCC's -fanalyzer (and CLang's equivalent)
-    - massif-visualizer
-    - valkyrie
+    - file:"strace".
+    - file:"gdb"
+    - file:"valgrind".
+    - GCC:"GNU Compile Collection"'s code:"-fanalyzer" (and bold:"CLang"'s equivalent).
+    - file:"massif-visualizer".
+    - file:"valkyrie".
 
 Valgrind:
-  The "valgrind" program has three important tools:
+  The file:"valgrind" program has three important tools\:
     1) The default tool, which is to check for memory leaks.
-    2) The thread anyalzing tool called "helgrind".
-    3) The heap usage analyzing tool called "massif".
+    2) The thread anyalzing tool called code:"helgrind".
+    3) The heap usage analyzing tool called code:"massif".
 
-  The default behavior shows memory leaks when run against a program (such as fake), a messages like the following are desired\:
-    - "in use at exit: 0 bytes in 0 blocks".
-    - "All heap blocks were freed -- no leaks are possible".
+  The default behavior shows memory leaks when run against a program (such as file:"fake"), a messages like the following are desired\:
+    - code:"in use at exit: 0 bytes in 0 blocks".
+    - code:"All heap blocks were freed -- no leaks are possible".
 
-  The "..total heap usage" is just that a total heap usage throughout the lifespan of the program.
-  This does not represent the total usage at any moment in time (for that look into massif).
-
-  Example execution\:
-    valgrind fake make
-
-  The thread analyzing tool called "helgrind" is described in the "threads.txt" documentation given that it is thread-focused.
-
-  The heap usage analyzing tool called "massif" is a helpful in identifying situations where the compiled code is using large amounts of memory.
-  A massif file is generated on exit and a good tool for visualizng this is called "massif-visualizer".
+  The code:"..total heap usage" is just that a total heap usage throughout the lifespan of the program.
+  This does not represent the total usage at any moment in time (for that look into code:"massif").
 
   Example execution\:
-    valgrind --tool=massif fake make
-    massif-visualizer massif.out.1234
+    block:"
+      valgrind fake make
+    "
 
-  A GUI that is helpful in using valgrind is called "valkyrie".
-  The "valkyrie" program does not support massif at the time of this writing but it eventually may.
-  The "valkyrie" program does support the default valgrind tool and the helgrind tools.
+  The thread analyzing tool called code:"helgrind" is described in the file:"threads.txt" documentation given that it is thread-focused.
 
-  When working with valgrind's massif tool, several libc functions (or other functions external to this project) may get in the way of the analysis.
+  The heap usage analyzing tool called code:"massif" is a helpful in identifying situations where the compiled code is using large amounts of memory.
+  A code:"massif" file is generated on exit and a good tool for visualizng this is called code:"massif-visualizer".
+
+  Example execution\:
+    block:"
+      valgrind --tool=massif fake make
+      massif-visualizer massif.out.1234
+    "
+
+  A GUI:"Graphical User Interface" that is helpful in using valgrind is called file:"valkyrie".
+  The file:"valkyrie" program does not support code:"massif" at the time of this writing but it eventually may.
+  The file:"valkyrie" program does support the default file:"valgrind" tool and the helgrind tools.
+
+  When working with code:"valgrind"'s code:"massif" tool, several libc functions (or other functions external to this project) may get in the way of the analysis.
   These functions should be disabled.
-  Example valgrind massif execution disabling some common GLibc functions:
-    valgrind --tool=massif --ignore-fn=_IO_file_doallocate --ignore-fn=ftw_startup --ignore-fn=__alloc_dir fake clean build
+  Example code:"valgrind" code:"massif" execution disabling some common bold:"GLibc" functions\:
+    block:"
+      valgrind --tool=massif --ignore-fn=_IO_file_doallocate --ignore-fn=ftw_startup --ignore-fn=__alloc_dir fake clean build
+    "
 
-GCC's -fanalyzer (and CLang's equivalent):
-  The code analyzer provided by GCC (and also CLang, through similar means) attempts to determine insecure or otherwise bad coding practices.
+GCC:"GNU Compile Collection"'s code:"-fanalyzer" (and bold:"CLang"'s equivalent)\:
+  The code analyzer provided by GCC:"GNU Compile Collection" (and also bold:"CLang", through similar means) attempts to determine insecure or otherwise bad coding practices.
 
-  This focuses on the GCC -fanalyzer.
+  This focuses on the GCC:"GNU Compile Collection" code:"-fanalyzer".
 
-  The analyzer is easily enabled by just appending "-fanalyzer" to the "flags" in data/build/settings or directly passing "-fanalyzer" to the gcc command.o
+  The analyzer is easily enabled by just appending code:"-fanalyzer" to the bold:"flags" in file:"data/build/settings" or directly passing code:"-fanalyzer" to the code:"gcc command.o".
