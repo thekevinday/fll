@@ -19,7 +19,7 @@ Time Documentation:
   1 (Earth) minute = 60000000000 Time or 60 GT (GigaTime).
   1 (Earth) second = 1000000000 Time or 1 GT (GigaTime).
 
-  Consequentially, 1 day in units of Time is easily represented as 86.4 TT (TeraTime).
+  Consequentially, 1 day is easily represented in units of Time as 86.4 TT (TeraTime).
 
   The Time may be stored in its "year string format".
   In this format, a Year may be prepended to the Time followed by a single colon ':' to associate a year with the Time.
@@ -40,4 +40,4 @@ Time Documentation:
   1 (Earth) second = 1 EpochTime
   1 GT (GigaTime) = 1 EpochTime
 
-  Consequentially, 1 day in units of EpochTime is easily represented as 86.4 KE (KiloEpochTime).
+  Consequentially, 1 day is easily represented in units of EpochTime as 86.4 KE (KiloEpochTime).
