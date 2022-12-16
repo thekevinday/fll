@@ -1,12 +1,12 @@
-# fss-0002
+# fss-0002 iki-0000
 #
 # license: open-standard-license-1.0
 #
 # This file (assumed to be named time.txt) can be more easily read using the following iki_read commands:
 #   iki_read time.txt +Q -r UTC UTC -w -WW character "'" "'" code '"' '"'
 #
-# To read the "IKI Specification: 0000 - Unrestricted" section of this file, use this command sequence:
-#   fss_basic_list_read time.txt +Q -cn "Time Specification" | iki_read +Q -r UTC UTC -w -WW character "'" "'" code '"' '"'
+# To read the "Time Documentation" section of this file, use this command sequence:
+#   fss_basic_list_read time.txt +Q -cn "Time Documentation" | iki_read +Q -r UTC UTC -w -WW character "'" "'" code '"' '"'
 #
 
 Time Documentation:
