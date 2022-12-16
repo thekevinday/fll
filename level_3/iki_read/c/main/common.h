@@ -192,31 +192,31 @@ extern "C" {
 
   #define iki_read_console_parameter_t_initialize \
     { \
-      macro_f_console_parameter_t_initialize4(f_console_standard_short_help_s,          f_console_standard_long_help_s,          0, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize4(f_console_standard_short_light_s,         f_console_standard_long_light_s,         0, f_console_flag_inverse_e), \
-      macro_f_console_parameter_t_initialize4(f_console_standard_short_dark_s,          f_console_standard_long_dark_s,          0, f_console_flag_inverse_e), \
-      macro_f_console_parameter_t_initialize4(f_console_standard_short_no_color_s,      f_console_standard_long_no_color_s,      0, f_console_flag_inverse_e), \
-      macro_f_console_parameter_t_initialize4(f_console_standard_short_quiet_s,         f_console_standard_long_quiet_s,         0, f_console_flag_inverse_e), \
-      macro_f_console_parameter_t_initialize4(f_console_standard_short_error_s,         f_console_standard_long_error_s,         0, f_console_flag_inverse_e), \
-      macro_f_console_parameter_t_initialize4(f_console_standard_short_normal_s,        f_console_standard_long_normal_s,        0, f_console_flag_inverse_e), \
-      macro_f_console_parameter_t_initialize4(f_console_standard_short_verbose_s,       f_console_standard_long_verbose_s,       0, f_console_flag_inverse_e), \
-      macro_f_console_parameter_t_initialize4(f_console_standard_short_debug_s,         f_console_standard_long_debug_s,         0, f_console_flag_inverse_e), \
-      macro_f_console_parameter_t_initialize4(f_console_standard_short_version_s,       f_console_standard_long_version_s,       0, f_console_flag_inverse_e), \
-      macro_f_console_parameter_t_initialize4(f_console_standard_short_line_first_no_s, f_console_standard_long_line_first_no_s, 0, f_console_flag_inverse_e), \
-      macro_f_console_parameter_t_initialize4(f_console_standard_short_line_last_no_s,  f_console_standard_long_line_last_no_s,  0, f_console_flag_inverse_e), \
+      macro_f_console_parameter_t_initialize4(f_console_standard_short_help_s,          f_console_standard_long_help_s,          0, f_console_flag_normal_e, 0), \
+      macro_f_console_parameter_t_initialize4(f_console_standard_short_light_s,         f_console_standard_long_light_s,         0, f_console_flag_inverse_e, 0), \
+      macro_f_console_parameter_t_initialize4(f_console_standard_short_dark_s,          f_console_standard_long_dark_s,          0, f_console_flag_inverse_e, 0), \
+      macro_f_console_parameter_t_initialize4(f_console_standard_short_no_color_s,      f_console_standard_long_no_color_s,      0, f_console_flag_inverse_e, 0), \
+      macro_f_console_parameter_t_initialize4(f_console_standard_short_quiet_s,         f_console_standard_long_quiet_s,         0, f_console_flag_inverse_e, 0), \
+      macro_f_console_parameter_t_initialize4(f_console_standard_short_error_s,         f_console_standard_long_error_s,         0, f_console_flag_inverse_e, 0), \
+      macro_f_console_parameter_t_initialize4(f_console_standard_short_normal_s,        f_console_standard_long_normal_s,        0, f_console_flag_inverse_e, 0), \
+      macro_f_console_parameter_t_initialize4(f_console_standard_short_verbose_s,       f_console_standard_long_verbose_s,       0, f_console_flag_inverse_e, 0), \
+      macro_f_console_parameter_t_initialize4(f_console_standard_short_debug_s,         f_console_standard_long_debug_s,         0, f_console_flag_inverse_e, 0), \
+      macro_f_console_parameter_t_initialize4(f_console_standard_short_version_s,       f_console_standard_long_version_s,       0, f_console_flag_inverse_e, 0), \
+      macro_f_console_parameter_t_initialize4(f_console_standard_short_line_first_no_s, f_console_standard_long_line_first_no_s, 0, f_console_flag_inverse_e, 0), \
+      macro_f_console_parameter_t_initialize4(f_console_standard_short_line_last_no_s,  f_console_standard_long_line_last_no_s,  0, f_console_flag_inverse_e, 0), \
       \
-      macro_f_console_parameter_t_initialize2(iki_read_short_at_s.string, iki_read_long_at_s.string, 0, 1, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize2(iki_read_short_content_s.string, iki_read_long_content_s.string, 0, 0, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize2(iki_read_short_line_s.string, iki_read_long_line_s.string, 0, 1, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize2(iki_read_short_literal_s.string, iki_read_long_literal_s.string, 0, 0, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize2(iki_read_short_name_s.string, iki_read_long_name_s.string, 0, 1, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize2(iki_read_short_object_s.string, iki_read_long_object_s.string, 0, 0, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize2(iki_read_short_reassign_s.string, iki_read_long_reassign_s.string, 0, 3, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize2(iki_read_short_replace_s.string, iki_read_long_replace_s.string, 0, 2, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize2(iki_read_short_substitute_s.string, iki_read_long_substitute_s.string, 0, 3, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize2(iki_read_short_total_s.string, iki_read_long_total_s.string, 0, 0, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize2(iki_read_short_whole_s.string, iki_read_long_whole_s.string, 0, 0, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize2(iki_read_short_wrap_s.string, iki_read_long_wrap_s.string, 0, 3, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize2(iki_read_short_at_s.string, iki_read_long_at_s.string, 0, 1, f_console_flag_normal_e, 0), \
+      macro_f_console_parameter_t_initialize2(iki_read_short_content_s.string, iki_read_long_content_s.string, 0, 0, f_console_flag_normal_e, 0), \
+      macro_f_console_parameter_t_initialize2(iki_read_short_line_s.string, iki_read_long_line_s.string, 0, 1, f_console_flag_normal_e, 0), \
+      macro_f_console_parameter_t_initialize2(iki_read_short_literal_s.string, iki_read_long_literal_s.string, 0, 0, f_console_flag_normal_e, 0), \
+      macro_f_console_parameter_t_initialize2(iki_read_short_name_s.string, iki_read_long_name_s.string, 0, 1, f_console_flag_normal_e, 0), \
+      macro_f_console_parameter_t_initialize2(iki_read_short_object_s.string, iki_read_long_object_s.string, 0, 0, f_console_flag_normal_e, 0), \
+      macro_f_console_parameter_t_initialize2(iki_read_short_reassign_s.string, iki_read_long_reassign_s.string, 0, 3, f_console_flag_normal_e, 0), \
+      macro_f_console_parameter_t_initialize2(iki_read_short_replace_s.string, iki_read_long_replace_s.string, 0, 2, f_console_flag_normal_e, 0), \
+      macro_f_console_parameter_t_initialize2(iki_read_short_substitute_s.string, iki_read_long_substitute_s.string, 0, 3, f_console_flag_normal_e, 0), \
+      macro_f_console_parameter_t_initialize2(iki_read_short_total_s.string, iki_read_long_total_s.string, 0, 0, f_console_flag_normal_e, 0), \
+      macro_f_console_parameter_t_initialize2(iki_read_short_whole_s.string, iki_read_long_whole_s.string, 0, 0, f_console_flag_normal_e, 0), \
+      macro_f_console_parameter_t_initialize2(iki_read_short_wrap_s.string, iki_read_long_wrap_s.string, 0, 3, f_console_flag_normal_e, 0), \
     }
 
   #define iki_read_total_parameters_d 24

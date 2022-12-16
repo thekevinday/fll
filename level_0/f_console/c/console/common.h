@@ -381,6 +381,31 @@ extern "C" {
 #endif // _di_f_console_verbosity_
 
 /**
+ * Provide a helper structure for referencing the argc and argv standard main arguments.
+ *
+ * This is intended to only store the argc and argv and should not be treated as dynamic.
+ *
+ * argc: The total number of arguments in argv.
+ *
+ * argv: An array of strings representing arguments passed to some program.
+ * envp: Any array of strings representing all environment variables at the time the program is called.
+ *
+ * macro_f_console_arguments_t_initialize() initializes the structure.
+ */
+#ifndef _di_f_console_arguments_t_
+  typedef struct {
+    const f_number_unsigned_t argc;
+
+    const f_string_t *argv;
+    const f_string_t *envp;
+  } f_console_arguments_t;
+
+  #define f_console_arguments_t_initialize { 0, 0, 0 }
+
+  #define macro_f_console_arguments_t_initialize(argc, argv, envp) { argc, argv, envp }
+#endif // _di_f_console_arguments_t_
+
+/**
  * Provide a structure for describing console parameters for the console processing functions to use.
  *
  * The short parameters are prepended with either '-' or '+'.
@@ -398,6 +423,7 @@ extern "C" {
  * locations:     All locations within argv where this parameter is found (order is preserved).
  * locations_sub: All sub-locations within argv where this parameter is found (order is preserved).
  * values:        An array of locations representing where in the argv[] the values arguments are found.
+ * callback:      A callback to perform when matched in order to handle condition values (@fixme this is prototyped and unused stub and needs to have a structure properly defined.) On parameter match, this is called rather than the normal functions.
  *
  * The macro_f_console_parameter_t_initialize() all arguments.
  * The macro_f_console_parameter_t_initialize2() reduced arguments.
@@ -422,6 +448,8 @@ extern "C" {
     f_array_lengths_t locations;
     f_array_lengths_t locations_sub;
     f_array_lengths_t values;
+
+    f_status_t (*callback)(void * const main, void * const setting, void * const parameters, const f_console_arguments_t arguments);
   } f_console_parameter_t;
 
   #define f_console_parameter_t_initialize { \
@@ -436,9 +464,10 @@ extern "C" {
     f_array_lengths_t_initialize, \
     f_array_lengths_t_initialize, \
     f_array_lengths_t_initialize, \
+    0, \
   }
 
-  #define macro_f_console_parameter_t_initialize(symbol_short, symbol_long, symbol_simple, values_total, flag, result, location, location_sub, locations, locations_sub, values) { \
+  #define macro_f_console_parameter_t_initialize(symbol_short, symbol_long, symbol_simple, values_total, flag, result, location, location_sub, locations, locations_sub, values, callback) { \
     symbol_short, \
     symbol_long, \
     symbol_simple, \
@@ -451,9 +480,10 @@ extern "C" {
     locations, \
     locations_sub, \
     values, \
+    callback, \
   }
 
-  #define macro_f_console_parameter_t_initialize2(symbol_short, symbol_long, symbol_simple, values_total, flag) { \
+  #define macro_f_console_parameter_t_initialize2(symbol_short, symbol_long, symbol_simple, values_total, flag, callback) { \
     symbol_short, \
     symbol_long, \
     symbol_simple, \
@@ -465,9 +495,10 @@ extern "C" {
     f_array_lengths_t_initialize, \
     f_array_lengths_t_initialize, \
     f_array_lengths_t_initialize, \
+    callback, \
   }
 
-  #define macro_f_console_parameter_t_initialize3(symbol_short, symbol_long, symbol_simple, values_total, flag) { \
+  #define macro_f_console_parameter_t_initialize3(symbol_short, symbol_long, symbol_simple, values_total, flag, callback) { \
     symbol_short.string, \
     symbol_long.string, \
     symbol_simple.string, \
@@ -479,9 +510,10 @@ extern "C" {
     f_array_lengths_t_initialize, \
     f_array_lengths_t_initialize, \
     f_array_lengths_t_initialize, \
+    callback, \
   }
 
-  #define macro_f_console_parameter_t_initialize4(symbol_short, symbol_long, values_total, flag) { \
+  #define macro_f_console_parameter_t_initialize4(symbol_short, symbol_long, values_total, flag, callback) { \
     symbol_short.string, \
     symbol_long.string, \
     0, \
@@ -493,9 +525,10 @@ extern "C" {
     f_array_lengths_t_initialize, \
     f_array_lengths_t_initialize, \
     f_array_lengths_t_initialize, \
+    callback, \
   }
 
-  #define macro_f_console_parameter_t_initialize5(symbol_short, values_total, flag) { \
+  #define macro_f_console_parameter_t_initialize5(symbol_short, values_total, flag, callback) { \
     symbol_short.string, \
     0, \
     0, \
@@ -507,9 +540,10 @@ extern "C" {
     f_array_lengths_t_initialize, \
     f_array_lengths_t_initialize, \
     f_array_lengths_t_initialize, \
+    callback, \
   }
 
-  #define macro_f_console_parameter_t_initialize6(symbol_long, values_total, flag) { \
+  #define macro_f_console_parameter_t_initialize6(symbol_long, values_total, flag, callback) { \
     0, \
     symbol_long.string, \
     0, \
@@ -521,9 +555,10 @@ extern "C" {
     f_array_lengths_t_initialize, \
     f_array_lengths_t_initialize, \
     f_array_lengths_t_initialize, \
+    callback \
   }
 
-  #define macro_f_console_parameter_t_initialize7(symbol_simple, values_total, flag) { \
+  #define macro_f_console_parameter_t_initialize7(symbol_simple, values_total, flag, callback) { \
     0, \
     0, \
     symbol_simple.string, \
@@ -535,6 +570,7 @@ extern "C" {
     f_array_lengths_t_initialize, \
     f_array_lengths_t_initialize, \
     f_array_lengths_t_initialize, \
+    callback, \
   }
 #endif // _di_f_console_parameter_t_
 
@@ -564,31 +600,6 @@ extern "C" {
 
   #define macro_f_console_parameters_t_initialize(parameter, used) { parameter, f_string_dynamics_t_initialize, f_array_lengths_t_initialize, used }
 #endif // _di_f_console_parameters_t_
-
-/**
- * Provide a helper structure for referencing the argc and argv standard main arguments.
- *
- * This is intended to only store the argc and argv and should not be treated as dynamic.
- *
- * argc: The total number of arguments in argv.
- *
- * argv: An array of strings representing arguments passed to some program.
- * envp: Any array of strings representing all environment variables at the time the program is called.
- *
- * macro_f_console_arguments_t_initialize() initializes the structure.
- */
-#ifndef _di_f_console_arguments_t_
-  typedef struct {
-    const f_number_unsigned_t argc;
-
-    const f_string_t *argv;
-    const f_string_t *envp;
-  } f_console_arguments_t;
-
-  #define f_console_arguments_t_initialize { 0, 0, 0 }
-
-  #define macro_f_console_arguments_t_initialize(argc, argv, envp) { argc, argv, envp }
-#endif // _di_f_console_arguments_t_
 
 /**
  * Delete any dynamic allocated data on the parameters object.
