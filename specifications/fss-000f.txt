@@ -21,12 +21,12 @@ Featureless Settings Specification: 000f - Simple Packet:
 
   The Control Block is the first block in the packet and is considered endianless.
   There exists only a single byte within the Control Block.
-  Regardless of the endianness of the packet, the leftmost bit is always the emphasis:"string" or emphasis:"binary" bit.
+  Regardless of the endianness of the packet, the leftmost bit is always the italic:"string" or italic:"binary" bit.
   The second bit following that bit represents the endianness bit.
 
-  The emphasis:"string" or emphasis:"binary" bit, a value of 0 designates that the packet is in string format and a value of 1 designates that the packet is in binary format.
+  The italic:"string" or italic:"binary" bit, a value of 0 designates that the packet is in string format and a value of 1 designates that the packet is in binary format.
   While the packet might be considered to be in string format, it is technically always in binary format due to the Control Block and Size Block.
-  This means that the bit designating the packet as a emphasis:"string" packet or a emphasis:"binary" packet is referring to whether or not the Payload Block is in emphasis:"string" format or is in emphasis:"binary" format.
+  This means that the bit designating the packet as a italic:"string" packet or a italic:"binary" packet is referring to whether or not the Payload Block is in italic:"string" format or is in italic:"binary" format.
 
   The endianness bit designates whether or not the packet is in big endian or little endian format.
   A bit value of 0 designates that this packet is in little endian and a value of 1 designates that this packet is in big endian format.
@@ -44,8 +44,8 @@ Featureless Settings Specification: 000f - Simple Packet:
 
   The Payload Block is not defined by this standard of that that it exists and should be in code:"FSS-000e (Payload)" format.
   The code:"FSS-000e (Payload)" may be represented in either string format or binary format.
-  The code:"FSS-000e (Payload)" may contain multiple emphasis:"header"(s) but may only contain a single emphasis:"payload".
-  With this in mind, it is recommended that only a single emphasis:"header" be supported in the Payload Block.
+  The code:"FSS-000e (Payload)" may contain multiple italic:"header"(s) but may only contain a single italic:"payload".
+  With this in mind, it is recommended that only a single italic:"header" be supported in the Payload Block.
 
   See the file:"fss-000e.txt" specification file for details on the syntax rules for the Payload Block.
 

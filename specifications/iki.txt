@@ -14,8 +14,8 @@ IKI Specifications:
 
   The IKI syntax provides a vocabulary name (with specific context associated with it) followed by quoted value that is associated with the given vocabulary name.
   The vocabulary represents a list of allowed variable names that may also have specific contextual meaning defined by a given IKI specification.
-  The variable name is considered the emphasis:"Object" and is also considered the vocabulary.
-  The variable value is considered the emphasis:"Content".
+  The variable name is considered the italic:"Object" and is also considered the vocabulary.
+  The variable value is considered the italic:"Content".
 
   The IKI format will use code:"iki-0000" to represent an IKI with no explicitly defined vocabulary.
   Whereas code:"iki-0001" and beyond represent a specific IKI vocabulary.

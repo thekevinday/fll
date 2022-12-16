@@ -3,14 +3,14 @@
 # license: cc-by-sa-4.0
 #
 # This file (assumed to be named readme.bootstrap.txt) can be more easily read using the following iki_read commands:
-#   iki_read readme.bootstrap.txt +Q -w -rr abbreviation-FLL FLL abbreviation-FSS FSS -WW character "'" "'" code '"' '"'
+#   iki_read readme.bootstrap.txt +Q -w -rr FLL FLL FSS FSS -WW character "'" "'" code '"' '"'
 #
 # To read the "Bootstrap Readme Documentation" section of this file, use this command sequence:
-#   fss_basic_list_read readme.bootstrap.txt +Q -cn "Bootstrap Readme Documentation" | iki_read +Q -w -rr abbreviation-FLL FLL abbreviation-FSS FSS -WW character "'" "'" code '"' '"'
+#   fss_basic_list_read readme.bootstrap.txt +Q -cn "Bootstrap Readme Documentation" | iki_read +Q -w -rr FLL FLL FSS FSS -WW character "'" "'" code '"' '"'
 #
 
 Bootstrap Readme Documentation:
-  The abbreviation-FLL:"Featureless Linux Library" provides a special bootstrap script in case the bold:"Featureless Make" is not currently installed.
+  The FLL:"Featureless Linux Library" provides a special bootstrap script in case the bold:"Featureless Make" is not currently installed.
 
   The bold:"GNU Bash" scripts, called file:"bootstrap.sh" and file:"install.sh", are provided to perform this bootstrap process.
 
@@ -47,87 +47,91 @@ Bootstrap Readme Documentation:
 
   If one of the build sub-directories, such as includes, libraries, programs, and settings, is empty or missing after a successful build, then there are no files of that type to install.
 
-  Build Tree Structure Example (using the abbreviation-FLL:"Featureless Linux Library" code:"status_code-0.7.0" project)\:
-    block:"build/
-    ├── documents
-    ├── includes
-    │   └── program
-    │       └── status_code
-    │           ├── fss
-    │           │   ├── common.h
-    │           │   └── status_code.h
-    │           └── main
-    │               ├── common.h
-    │               ├── common-print.h
-    │               ├── print.h
-    │               └── status_code.h
-    ├── libraries
-    │   ├── script
-    │   ├── shared
-    │   │   ├── libstatus_code.so -> libstatus_code.so.0
-    │   │   ├── libstatus_code.so.0 -> libstatus_code.so.0.7
-    │   │   ├── libstatus_code.so.0.7 -> libstatus_code.so.0.7.0
-    │   │   └── libstatus_code.so.0.7.0
-    │   └── static
-    │       └── libstatus_code.a
-    ├── objects
-    │   ├── config.o
-    │   ├── fss
-    │   │   ├── common.o
-    │   │   └── status_code.o
-    │   ├── main
-    │   │   ├── common.o
-    │   │   ├── common-print.o
-    │   │   ├── print.o
-    │   │   ├── private-status_code.o
-    │   │   └── status_code.o
-    │   ├── script
-    │   ├── shared
-    │   └── static
-    ├── programs
-    │   ├── script
-    │   ├── shared
-    │   │   ├── fss_status_code
-    │   │   └── status_code
-    │   └── static
-    │       ├── fss_status_code
-    │       └── status_code
-    ├── settings
-    └── stage
-        ├── library_shared-settings.built
-        ├── library_static-settings.built
-        ├── objects_static-settings.built
-        ├── program_shared-settings.fss.built
-        ├── program_shared-settings.main.built
-        ├── skeleton-settings.built
-        ├── skeleton-settings.fss.built
-        ├── skeleton-settings.main.built
-        ├── sources_headers-settings.built
-        ├── sources_script-settings.built
-        ├── sources_script-settings.fss.built
-        ├── sources_script-settings.main.built
-        ├── sources_settings-settings.built
-        ├── sources_settings-settings.fss.built
-        └── sources_settings-settings.main.built"
+  Build Tree Structure Example (using the FLL:"Featureless Linux Library" code:"status_code-0.7.0" project)\:
+    block:"
+      build/
+      ├── documents
+      ├── includes
+      │   └── program
+      │       └── status_code
+      │           ├── fss
+      │           │   ├── common.h
+      │           │   └── status_code.h
+      │           └── main
+      │               ├── common.h
+      │               ├── common-print.h
+      │               ├── print.h
+      │               └── status_code.h
+      ├── libraries
+      │   ├── script
+      │   ├── shared
+      │   │   ├── libstatus_code.so -> libstatus_code.so.0
+      │   │   ├── libstatus_code.so.0 -> libstatus_code.so.0.7
+      │   │   ├── libstatus_code.so.0.7 -> libstatus_code.so.0.7.0
+      │   │   └── libstatus_code.so.0.7.0
+      │   └── static
+      │       └── libstatus_code.a
+      ├── objects
+      │   ├── config.o
+      │   ├── fss
+      │   │   ├── common.o
+      │   │   └── status_code.o
+      │   ├── main
+      │   │   ├── common.o
+      │   │   ├── common-print.o
+      │   │   ├── print.o
+      │   │   ├── private-status_code.o
+      │   │   └── status_code.o
+      │   ├── script
+      │   ├── shared
+      │   └── static
+      ├── programs
+      │   ├── script
+      │   ├── shared
+      │   │   ├── fss_status_code
+      │   │   └── status_code
+      │   └── static
+      │       ├── fss_status_code
+      │       └── status_code
+      ├── settings
+      └── stage
+          ├── library_shared-settings.built
+          ├── library_static-settings.built
+          ├── objects_static-settings.built
+          ├── program_shared-settings.fss.built
+          ├── program_shared-settings.main.built
+          ├── skeleton-settings.built
+          ├── skeleton-settings.fss.built
+          ├── skeleton-settings.main.built
+          ├── sources_headers-settings.built
+          ├── sources_script-settings.built
+          ├── sources_script-settings.fss.built
+          ├── sources_script-settings.main.built
+          ├── sources_settings-settings.built
+          ├── sources_settings-settings.fss.built
+          └── sources_settings-settings.main.built
+    "
 
-  Work Tree Sructure Example at file:"/tmp/work" (using the abbreviation-FLL:"Featureless Linux Library" code:"status_code-0.7.0" project)\:
-    block:"/tmp/work/
-    ├── includes
-    │   └── program
-    │       └── status_code
-    │           ├── fss
-    │           │   ├── common.h
-    │           │   └── status_code.h
-    │           └── main
-    │               ├── common.h
-    │               ├── common-print.h
-    │               ├── print.h
-    │               └── status_code.h
-    └── libraries
-        ├── shared
-        │   ├── libstatus_code.so -> libstatus_code.so.0
-        │   ├── libstatus_code.so.0 -> libstatus_code.so.0.7
-        │   ├── libstatus_code.so.0.7 -> libstatus_code.so.0.7.0
-        │   └── libstatus_code.so.0.7.0
-        └── static
-            └── libstatus_code.a"
+  Work Tree Sructure Example at file:"/tmp/work" (using the FLL:"Featureless Linux Library" code:"status_code-0.7.0" project)\:
+    block:"
+      /tmp/work/
+      ├── includes
+      │   └── program
+      │       └── status_code
+      │           ├── fss
+      │           │   ├── common.h
+      │           │   └── status_code.h
+      │           └── main
+      │               ├── common.h
+      │               ├── common-print.h
+      │               ├── print.h
+      │               └── status_code.h
+      └── libraries
+          ├── shared
+          │   ├── libstatus_code.so -> libstatus_code.so.0
+          │   ├── libstatus_code.so.0 -> libstatus_code.so.0.7
+          │   ├── libstatus_code.so.0.7 -> libstatus_code.so.0.7.0
+          │   └── libstatus_code.so.0.7.0
+          └── static
+              └── libstatus_code.a
+    "

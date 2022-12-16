@@ -1,19 +1,25 @@
-# fss-0002
+# fss-0002 iki-0000
 #
 # license: cc-by-sa-4.0
 #
+# This file (assumed to be named lossy_allocation.txt) can be more easily read using the following iki_read commands:
+#   iki_read lossy_allocation.txt +Q -w -r FLL FLL -WW character "'" "'" code '"' '"'
+#
+# To read the "Lossy Allocation" section of this file, use this command sequence:
+#   fss_basic_list_read lossy_allocation.txt +Q -cn "Lossy Allocation" | iki_read +Q -w -r FLL FLL -WW character "'" "'" code '"' '"'
+#
 
 Lossy Allocation:
-  The Featureless Linux Library and related projects utilize what is called bold:"Lossy Allocation".
+  The FLL:"Featureless Linux Library" and related projects utilize what is called bold:"Lossy Allocation".
 
-  One of the original theories behind the Featureless Linux Library (and Featureless Make) is that of memory allocations being expensive.
+  One of the original theories behind the FLL:"Featureless Linux Library" (and bold:"Featureless Make") is that of memory allocations being expensive.
   The original theory asserted that performing three allocations when a single is requested can improve performance while maintaining a minimal amount of memory waste.
   This behavior is termed bold:"Lossy Allocation".
 
   Over time this theory has proven to not only be correct but also an understatement.
   The project now chooses a default allocation size of eight rather than three.
   This has a more significant cost in memory but the overall performance gain and resource usage appears to provide more benefits than the losses from over-allocating memory.
-  The Featureless Linux Library attempts to only allocate memory when needed and this results in the memory footprint being as small as possible when ignoring the lossy aspects.
+  The FLL:"Featureless Linux Library" attempts to only allocate memory when needed and this results in the memory footprint being as small as possible when ignoring the lossy aspects.
 
   There are cases where there is expected to be a large buffer allocated rather than a small buffer allocation.
   This is often the case when loading and processing files.

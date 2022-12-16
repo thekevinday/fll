@@ -16,7 +16,7 @@ IKI Specification: 0002 - Simple Script:
   This vocabulary may be further extended but must at least support the taxonomy defined here.
   Flexibility on interpretation is intended so that the context can be more fine-tuned and customized.
 
-  The taxonomy for the emphasis:"context", emphasis:"define", and emphasis:"parameter" are intentionally not defined here and left open.
+  The taxonomy for the italic:"context", italic:"define", and italic:"parameter" are intentionally not defined here and left open.
   One utilizing this should document the taxonomy for each of these as desired.
 
   Vocabulary\:

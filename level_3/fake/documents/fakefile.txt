@@ -3,10 +3,10 @@
 # license: open-standard-license-1.0
 #
 # This file (assumed to be named fakefile.txt) can be more easily read using the following iki_read commands:
-#   iki_read fakefile.txt +Q -w -rrr abbreviation-ASCII ASCII abbreviation-GCC GCC abbreviation-HTML HTML -WW character "'" "'" code '"' '"'
+#   iki_read fakefile.txt +Q -w -rrr ASCII ASCII GCC GCC HTML HTML -WW character "'" "'" code '"' '"'
 #
 # To read the "Fakefile Documentation" section of this file, use this command sequence:
-#   fss_basic_list_read fakefile.txt +Q -cn "Fakefile Documentation" | iki_read +Q -w -rrr abbreviation-ASCII ASCII abbreviation-GCC GCC abbreviation-HTML HTML -WW character "'" "'" code '"' '"'
+#   fss_basic_list_read fakefile.txt +Q -cn "Fakefile Documentation" | iki_read +Q -w -rrr ASCII ASCII GCC GCC HTML HTML -WW character "'" "'" code '"' '"'
 #
 
 Fakefile Documentation:
@@ -27,7 +27,7 @@ Fakefile Documentation:
       This represents the name of the compiler program to use, such as code:"gcc".
 
       The programs code:"gcc" and code:"clang" are known to work.
-      Many of the parameters in the settings file can be changed if not using abbreviation-GCC:"GNU Compiler Collection", but there may be certain hard-coded functionality that may need to be changed.
+      Many of the parameters in the settings file can be changed if not using GCC:"GNU Compiler Collection", but there may be certain hard-coded functionality that may need to be changed.
 
       When specified and code:"load_build" is code:"true", then this will override the code:"build_compiler" specified in the loaded build settings.
 
@@ -440,7 +440,7 @@ Fakefile Documentation:
         - code:"\U+000A": Prints a new line, equivalent to character:"\n".
         - code:"\U+2E19": Prints the Unicode feather-like character character:"⸙".
 
-      Only abbreviation-ASCII:"American Standard Code for Information Interchange" alpha-numeric hexidecimal digits are allowed in the Unicode sequence (upper or lower case).
+      Only ASCII:"American Standard Code for Information Interchange" alpha-numeric hexidecimal digits are allowed in the Unicode sequence (upper or lower case).
 
       Invalid or unknown escape sequences are not printed.
 
@@ -518,7 +518,7 @@ Fakefile Documentation:
         - code:"\U+000A": Prints a new line, equivalent to character:"\n".
         - code:"\U+2E19": Prints the Unicode feather-like character character:"⸙".
 
-      Only abbreviation-ASCII:"American Standard Code for Information Interchange" alpha-numeric hexidecimal digits are allowed in the Unicode sequence (upper or lower case).
+      Only ASCII:"American Standard Code for Information Interchange" alpha-numeric hexidecimal digits are allowed in the Unicode sequence (upper or lower case).
 
       Invalid or unknown escape sequences are not printed.
 
@@ -539,9 +539,9 @@ Fakefile Documentation:
       - code:"error": Designate as an error, often printed in red.
       - code:"important": Designate as important.
       - code:"normal": Explicitly designate normal text.
-      - code:"notable": Designate as notable (similar to code:"strong" or code:"bold" in abbreviation-HTML:"Hyper Text Markup Language").
+      - code:"notable": Designate as notable (similar to code:"strong" or code:"bold" in HTML:"Hyper Text Markup Language").
       - code:"reset": Remove the context.
-      - code:"standout": Designate to make notable (similar to code:"italic" or code:"emphasis" in abbreviation-HTML:"Hyper Text Markup Language").
+      - code:"standout": Designate to make notable (similar to code:"italic" or code:"emphasis" in HTML:"Hyper Text Markup Language").
       - code:"success": Designate as a success, often printed in bright green.
       - code:"title": Designate as a title.
       - code:"warning": Designate as a warning, often printed in some shade of orange.

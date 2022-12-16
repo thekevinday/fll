@@ -3,10 +3,10 @@
 # license: open-standard-license-1.0
 #
 # This file (assumed to be named settings.txt) can be more easily read using the following iki_read commands:
-#   iki_read settings.txt +Q -w -rrr abbreviation-ASCII ASCII abbreviation-FLL FLL abbreviation-GCC GCC -WW character "'" "'" code '"' '"'
+#   iki_read settings.txt +Q -w -rrr ASCII ASCII FLL FLL GCC GCC -WW character "'" "'" code '"' '"'
 #
 # To read the "Settings Documentation" section of this file, use this command sequence:
-#   fss_basic_list_read settings.txt +Q -cn "Settings Documentation" | iki_read +Q -w -rr abbreviation-ASCII ASCII abbreviation-FLL FLL -WW character "'" "'" code '"' '"'
+#   fss_basic_list_read settings.txt +Q -cn "Settings Documentation" | iki_read +Q -w -rr ASCII ASCII FLL FLL -WW character "'" "'" code '"' '"'
 #
 
 Settings Documentation:
@@ -20,7 +20,7 @@ Settings Documentation:
     This defaults to code:"gcc" (the bold:"GNU C Compiler").
 
     The programs code:"gcc" and code:"clang" are known to work.
-    Many of the parameters in the bold:"settings" file can be changed if not using abbreviation-GCC:"GNU Compiler Collection", but there may be certain hard-coded functionality that may need to be changed.
+    Many of the parameters in the bold:"settings" file can be changed if not using GCC:"GNU Compiler Collection", but there may be certain hard-coded functionality that may need to be changed.
 
   - code:"build_indexer"\:
     This represents the name of the indexer program to use, such as code:"ar".
@@ -42,58 +42,58 @@ Settings Documentation:
   - code:"build_libraries"\:
     A collection of libraries to be linked against.
     This should include the compiler specific parameter parts, such as the code:"-l" prefix in code:"-lc".
-    The order of these may matter if the compiler (such as abbreviation-GCC:"GNU Compiler Collection" or a linker via abbreviation-GCC:"GNU Compiler Collection") is order sensitive.
+    The order of these may matter if the compiler (such as GCC:"GNU Compiler Collection" or a linker via GCC:"GNU Compiler Collection") is order sensitive.
 
   - code:"build_libraries_shared"\:
     A collection of libraries to be linked against.
     This should include the compiler specific parameter parts, such as the code:"-l" prefix in code:"-lc".
-    The order of these may matter if the compiler (such as abbreviation-GCC:"GNU Compiler Collection" or a linker via abbreviation-GCC:"GNU Compiler Collection") is order sensitive.
+    The order of these may matter if the compiler (such as GCC:"GNU Compiler Collection" or a linker via GCC:"GNU Compiler Collection") is order sensitive.
     These are applied to only shared builds.
 
   - code:"build_libraries_static"\:
     A collection of libraries to be linked against.
     This should include the compiler specific parameter parts, such as the code:"-l" prefix in code:"-lc".
-    The order of these may matter if the compiler (such as abbreviation-GCC:"GNU Compiler Collection" or a linker via abbreviation-GCC:"GNU Compiler Collection") is order sensitive.
+    The order of these may matter if the compiler (such as GCC:"GNU Compiler Collection" or a linker via GCC:"GNU Compiler Collection") is order sensitive.
     These are applied to only static builds.
 
   - code:"build_objects_library"\:
     A collection of object files to be compile with when building libraries.
     These are intended to represent already compiled object files.
     These paths are relative to the code:"path_object_script", code:"path_object_shared", or code:"path_object_static".
-    The order of these may matter if the compiler (such as abbreviation-GCC:"GNU Compiler Collection" or a linker via abbreviation-GCC:"GNU Compiler Collection") is order sensitive.
+    The order of these may matter if the compiler (such as GCC:"GNU Compiler Collection" or a linker via GCC:"GNU Compiler Collection") is order sensitive.
 
   - code:"build_objects_library_shared"\:
     A collection of object files to be compile with when building shared libraries.
     These are intended to represent already compiled object files.
     These paths are relative to the code:"path_object_shared".
-    The order of these may matter if the compiler (such as abbreviation-GCC:"GNU Compiler Collection" or a linker via abbreviation-GCC:"GNU Compiler Collection") is order sensitive.
+    The order of these may matter if the compiler (such as GCC:"GNU Compiler Collection" or a linker via GCC:"GNU Compiler Collection") is order sensitive.
     These are applied to only shared builds.
 
   - code:"build_objects_library_static"\:
     A collection of object files to be compile with when building static libraries.
     These are intended to represent already compiled object files.
     These paths are relative to the code:"path_object_static".
-    The order of these may matter if the compiler (such as abbreviation-GCC:"GNU Compiler Collection" or a linker via abbreviation-GCC:"GNU Compiler Collection") is order sensitive.
+    The order of these may matter if the compiler (such as GCC:"GNU Compiler Collection" or a linker via GCC:"GNU Compiler Collection") is order sensitive.
     These are applied to only static builds.
 
   - code:"build_objects_program"\:
     A collection of object files to be compile with when building programs.
     These are intended to represent already compiled object files.
     These paths are relative to the code:"path_object_script", code:"path_object_shared", or code:"path_object_static".
-    The order of these may matter if the compiler (such as abbreviation-GCC:"GNU Compiler Collection" or a linker via abbreviation-GCC:"GNU Compiler Collection") is order sensitive.
+    The order of these may matter if the compiler (such as GCC:"GNU Compiler Collection" or a linker via GCC:"GNU Compiler Collection") is order sensitive.
 
   - code:"build_objects_program_shared"\:
     A collection of object files to be compile with when building shared programs.
     These are intended to represent already compiled object files.
     These paths are relative to the code:"path_object_shared".
-    The order of these may matter if the compiler (such as abbreviation-GCC:"GNU Compiler Collection" or a linker via abbreviation-GCC:"GNU Compiler Collection") is order sensitive.
+    The order of these may matter if the compiler (such as GCC:"GNU Compiler Collection" or a linker via GCC:"GNU Compiler Collection") is order sensitive.
     These are applied to only shared builds.
 
   - code:"build_objects_program_static"\:
     A collection of object files to be compile with when building static programs.
     These are intended to represent already compiled object files.
     These paths are relative to the code:"path_object_static".
-    The order of these may matter if the compiler (such as abbreviation-GCC:"GNU Compiler Collection" or a linker via abbreviation-GCC:"GNU Compiler Collection") is order sensitive.
+    The order of these may matter if the compiler (such as GCC:"GNU Compiler Collection" or a linker via GCC:"GNU Compiler Collection") is order sensitive.
     These are applied to only static builds.
 
   - code:"build_name"\:
@@ -111,19 +111,19 @@ Settings Documentation:
   - code:"build_sources_headers"\:
     A collection of header files.
     May include a relative sub-path to each individual header (such as: code:"level_0/a.h level_0/b.h level_1/c.h").
-    The order of these may matter if the compiler (such as abbreviation-GCC:"GNU Compiler Collection" or a linker via abbreviation-GCC:"GNU Compiler Collection") is order sensitive.
+    The order of these may matter if the compiler (such as GCC:"GNU Compiler Collection" or a linker via GCC:"GNU Compiler Collection") is order sensitive.
 
   - code:"build_sources_headers_shared"\:
     A collection of header files.
     May include a relative sub-path to each individual header (such as: code:"level_0/a.h level_0/b.h level_1/c.h").
-    The order of these may matter if the compiler (such as abbreviation-GCC:"GNU Compiler Collection" or a linker via abbreviation-GCC:"GNU Compiler Collection") is order sensitive.
+    The order of these may matter if the compiler (such as GCC:"GNU Compiler Collection" or a linker via GCC:"GNU Compiler Collection") is order sensitive.
     Be careful not to have any conflicting names between this and build_sources_headers_static in case of when static and shared builds are both enabled.
     These are applied to only shared builds.
 
   - code:"build_sources_headers_static"\:
     A collection of header files.
     May include a relative sub-path to each individual header (such as: code:"level_0/a.h level_0/b.h level_1/c.h").
-    The order of these may matter if the compiler (such as abbreviation-GCC:"GNU Compiler Collection" or a linker via abbreviation-GCC:"GNU Compiler Collection") is order sensitive.
+    The order of these may matter if the compiler (such as GCC:"GNU Compiler Collection" or a linker via GCC:"GNU Compiler Collection") is order sensitive.
     These files are used when compiling the library.
     Be careful not to have any conflicting names between this and build_sources_headers_shared in case of when static and shared builds are both enabled.
     These are applied to only static builds.
@@ -131,18 +131,18 @@ Settings Documentation:
   - code:"build_sources_library"\:
     A collection of library related source files.
     May include a relative sub-path to each individual source file (such as: code:"level_0/a.c level_0/b.c level_1/c.c").
-    The order of these may matter if the compiler (such as abbreviation-GCC:"GNU Compiler Collection" or a linker via abbreviation-GCC:"GNU Compiler Collection") is order sensitive.
+    The order of these may matter if the compiler (such as GCC:"GNU Compiler Collection" or a linker via GCC:"GNU Compiler Collection") is order sensitive.
 
   - code:"build_sources_library_shared"\:
     A collection of library related source files.
     May include a relative sub-path to each individual source file (such as: code:"level_0/a.c level_0/b.c level_1/c.c").
-    The order of these may matter if the compiler (such as abbreviation-GCC:"GNU Compiler Collection" or a linker via abbreviation-GCC:"GNU Compiler Collection") is order sensitive.
+    The order of these may matter if the compiler (such as GCC:"GNU Compiler Collection" or a linker via GCC:"GNU Compiler Collection") is order sensitive.
     These are applied to only shared builds.
 
   - code:"build_sources_library_static"\:
     A collection of library related source files.
     May include a relative sub-path to each individual source file (such as: code:"level_0/a.c level_0/b.c level_1/c.c").
-    The order of these may matter if the compiler (such as abbreviation-GCC:"GNU Compiler Collection" or a linker via abbreviation-GCC:"GNU Compiler Collection") is order sensitive.
+    The order of these may matter if the compiler (such as GCC:"GNU Compiler Collection" or a linker via GCC:"GNU Compiler Collection") is order sensitive.
     These are applied to only static builds.
 
   - code:"build_sources_object"\:
@@ -171,19 +171,19 @@ Settings Documentation:
   - code:"build_sources_program"\:
     A collection of program related source files.
     May include a relative sub-path to each individual source file (such as: code:"level_0/a.c level_0/b.c level_1/c.c").
-    The order of these may matter if the compiler (such as abbreviation-GCC:"GNU Compiler Collection" or a linker via abbreviation-GCC:"GNU Compiler Collection") is order sensitive.
+    The order of these may matter if the compiler (such as GCC:"GNU Compiler Collection" or a linker via GCC:"GNU Compiler Collection") is order sensitive.
     These files are used when compiling the program.
 
   - code:"build_sources_program_shared"\:
     A collection of program related source files.
     May include a relative sub-path to each individual source file (such as: code:"level_0/a.c level_0/b.c level_1/c.c").
-    The order of these may matter if the compiler (such as abbreviation-GCC:"GNU Compiler Collection" or a linker via abbreviation-GCC:"GNU Compiler Collection") is order sensitive.
+    The order of these may matter if the compiler (such as GCC:"GNU Compiler Collection" or a linker via GCC:"GNU Compiler Collection") is order sensitive.
     These files are used when compiling the program for shared builds.
 
   - code:"build_sources_program_static"\:
     A collection of program related source files.
     May include a relative sub-path to each individual source file (such as: code:"level_0/a.c level_0/b.c level_1/c.c").
-    The order of these may matter if the compiler (such as abbreviation-GCC:"GNU Compiler Collection" or a linker via abbreviation-GCC:"GNU Compiler Collection") is order sensitive.
+    The order of these may matter if the compiler (such as GCC:"GNU Compiler Collection" or a linker via GCC:"GNU Compiler Collection") is order sensitive.
     These files are used when compiling the program for static builds.
 
   - code:"build_sources_script"\:
@@ -367,7 +367,7 @@ Settings Documentation:
 
   - code:"path_headers"\:
     A sub-path in which headers are to be installed under.
-    For example, the abbreviation-FLL:"Featureless Linux Library" project might use the code:"level_0", code:"level_1", etc.. headers without requiring that structure within the source.
+    For example, the FLL:"Featureless Linux Library" project might use the code:"level_0", code:"level_1", etc.. headers without requiring that structure within the source.
     A resulting build destination for a code:"path_headers" of code:"level_0" would be something like code:"build/includes/level_0/".
     If code:"path_headers" is code:"level_0", code:"preserve_path_headers" is code:"yes", and code:"build_sources_headers" has code:"xxx/a.h yyy/zzz/b.h", then the headers would be at: code:"build/includes/level_0/xxx/a.h build/includes/level_0/yyy/zzz/b.h"
 
@@ -508,7 +508,7 @@ Settings Documentation:
     With a structure of code:"A.B.C", the major version prefix would be before the character:"A".
     This is only added if code:"version_major" is not empty.
 
-    This defaults to the abbreviation-ASCII:"American Standard Code for Information Interchange" period character character:".".
+    This defaults to the ASCII:"American Standard Code for Information Interchange" period character character:".".
 
   - code:"version_minor"\:
     The minor version number (or in theory any characters allowed in a filename).
@@ -522,7 +522,7 @@ Settings Documentation:
     With a structure of code:"A.B.C", the minor version prefix would be the character:"." before the character:"B".
     This is only added if code:"version_minor" is not empty.
 
-    This defaults to the abbreviation-ASCII:"American Standard Code for Information Interchange" period character character:".".
+    This defaults to the ASCII:"American Standard Code for Information Interchange" period character character:".".
 
   - code:"version_micro"\:
     The micro version number (or in theory any characters allowed in a filename).
@@ -536,7 +536,7 @@ Settings Documentation:
     With a structure of code:"A.B.C", the micro version prefix would be the character:"." before the character:"C".
     This is only added if code:"version_micro" is not empty.
 
-    This defaults to the abbreviation-ASCII:"American Standard Code for Information Interchange" period character character:".".
+    This defaults to the ASCII:"American Standard Code for Information Interchange" period character character:".".
 
   - code:"version_nano"\:
     The nano version number (or in theory any characters allowed in a filename).
@@ -550,7 +550,7 @@ Settings Documentation:
     With a structure of code:"A.B.C.D", the minor version would be the character:"." before the character:"D".
     This is only added if code:"version_nano" is not empty.
 
-    This defaults to the abbreviation-ASCII:"American Standard Code for Information Interchange" period character character:".".
+    This defaults to the ASCII:"American Standard Code for Information Interchange" period character character:".".
 
   - code:"version_target"\:
     Designates which version should be used when linking the shared library.
