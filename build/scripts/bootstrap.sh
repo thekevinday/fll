@@ -231,14 +231,6 @@ bootstrap_main() {
     return 1
   fi
 
-  bootstrap_load_settings_has
-
-  if [[ $? -ne 0 ]] ; then
-    bootstrap_cleanup
-
-    return 1
-  fi
-
   bootstrap_id "build_name"
   project_built="${path_build_stage}${variables[$key]}"
   if [[ $process != "" ]] ; then
@@ -690,23 +682,52 @@ bootstrap_id() {
     "version_target-mode") let key=173;;
 
     "has-build_compiler") let key=174;;
-    "has-has_path_standard") let key=175;;
-    "has-path_library_script") let key=176;;
-    "has-path_library_shared") let key=177;;
-    "has-path_library_static") let key=178;;
-    "has-path_object_script") let key=179;;
-    "has-path_object_shared") let key=180;;
-    "has-path_object_static") let key=181;;
-    "has-path_program_script") let key=182;;
-    "has-path_program_shared") let key=183;;
-    "has-path_program_static") let key=184;;
-    "has-path_sources") let key=185;;
-    "has-path_sources_object") let key=186;;
-    "has-search_shared") let key=187;;
-    "has-version_major_prefix") let key=188;;
-    "has-version_micro_prefix") let key=189;;
-    "has-version_minor_prefix") let key=190;;
-    "has-version_nano_prefix") let key=191;;
+    "has-build_indexer") let key=175;;
+    "has-build_indexer_arguments") let key=176;;
+    "has-build_name") let key=177;;
+    "has-has_path_standard") let key=178;;
+    "has-path_library_script") let key=179;;
+    "has-path_library_shared") let key=180;;
+    "has-path_library_static") let key=181;;
+    "has-path_object_script") let key=182;;
+    "has-path_object_shared") let key=183;;
+    "has-path_object_static") let key=184;;
+    "has-path_program_script") let key=185;;
+    "has-path_program_shared") let key=186;;
+    "has-path_program_static") let key=187;;
+    "has-path_sources") let key=188;;
+    "has-path_sources_object") let key=189;;
+    "has-search_exclusive") let key=190;;
+    "has-search_shared") let key=191;;
+    "has-search_static") let key=192;;
+    "has-version_major_prefix") let key=193;;
+    "has-version_micro_prefix") let key=194;;
+    "has-version_minor_prefix") let key=195;;
+    "has-version_nano_prefix") let key=196;;
+
+    "has-build_compiler-mode") let key=197;;
+    "has-build_indexer-mode") let key=198;;
+    "has-build_indexer_arguments-mode") let key=199;;
+    "has-build_name-mode") let key=200;;
+    "has-has_path_standard-mode") let key=201;;
+    "has-path_library_script-mode") let key=202;;
+    "has-path_library_shared-mode") let key=203;;
+    "has-path_library_static-mode") let key=204;;
+    "has-path_object_script-mode") let key=205;;
+    "has-path_object_shared-mode") let key=206;;
+    "has-path_object_static-mode") let key=207;;
+    "has-path_program_script-mode") let key=208;;
+    "has-path_program_shared-mode") let key=209;;
+    "has-path_program_static-mode") let key=210;;
+    "has-path_sources-mode") let key=211;;
+    "has-path_sources_object-mode") let key=212;;
+    "has-search_exclusive-mode") let key=213;;
+    "has-search_shared-mode") let key=214;;
+    "has-search_static-mode") let key=215;;
+    "has-version_major_prefix-mode") let key=216;;
+    "has-version_micro_prefix-mode") let key=217;;
+    "has-version_minor_prefix-mode") let key=218;;
+    "has-version_nano_prefix-mode") let key=219;;
   esac
 }
 
@@ -756,11 +777,36 @@ bootstrap_load_settings() {
       if [[ $verbosity != "quiet" ]] ; then
         echo -e "${c_warning}WARNING: Failed to find index for '${c_notice}${i}${c_warning}' when calling ${c_notice}bootstrap_id()${c_warning}.${c_reset}"
       fi
-    else
-      value=$(grep -s -o "^[[:space:]]*${i}[[:space:]].*\$" $settings_file | sed -e "s|^[[:space:]]*${i}\>||" -e 's|^[[:space:]]*||')
 
-      if [[ $value != "" ]] ; then
+      key=
+      bootstrap_id "has-${i}"
+      if [[ $key != "" ]] ; then
+        variables[$key]="no"
+      fi
+    else
+      if [[ $(grep -s -o "^[[:space:]]*${i}[[:space:]].*\$" $settings_file) != "" ]] ; then
+        value=$(grep -s -o "^[[:space:]]*${i}[[:space:]].*\$" $settings_file | sed -e "s|^[[:space:]]*${i}\>||" -e 's|^[[:space:]]*||')
         variables[$key]="$value"
+
+        key=
+        bootstrap_id "has-${i}"
+        if [[ $key != "" ]] ; then
+          variables[$key]="yes"
+        fi
+      elif [[ $(grep -s -o "^[[:space:]]*${i}\$" $settings_file) != "" ]] ; then
+        variables[$key]=""
+
+        key=
+        bootstrap_id "has-${i}"
+        if [[ $key != "" ]] ; then
+          variables[$key]="yes"
+        fi
+      else
+        key=
+        bootstrap_id "has-${i}"
+        if [[ $key != "" ]] ; then
+          variables[$key]="no"
+        fi
       fi
     fi
   done
@@ -774,11 +820,36 @@ bootstrap_load_settings() {
       if [[ $verbosity != "quiet" ]] ; then
         echo -e "${c_warning}WARNING: Failed to find index for '${c_notice}${i}${c_warning}' when calling ${c_notice}bootstrap_id()${c_warning}.${c_reset}"
       fi
-    else
-      value=$(grep -s -o "^[[:space:]]*${i}[[:space:]].*\$" $settings_file | sed -e "s|^[[:space:]]*${i}\>||" -e 's|^[[:space:]]*||')
 
-      if [[ $value != "" ]] ; then
+      key=
+      bootstrap_id "has-${i}"
+      if [[ $key != "" ]] ; then
+        variables[$key]="no"
+      fi
+    else
+      if [[ $(grep -s -o "^[[:space:]]*${i}[[:space:]].*\$" $settings_file) != "" ]] ; then
+        value=$(grep -s -o "^[[:space:]]*${i}[[:space:]].*\$" $settings_file | sed -e "s|^[[:space:]]*${i}\>||" -e 's|^[[:space:]]*||')
         variables[$key]="$value"
+
+        key=
+        bootstrap_id "has-${i}"
+        if [[ $key != "" ]] ; then
+          variables[$key]="yes"
+        fi
+      elif [[ $(grep -s -o "^[[:space:]]*${i}\$" $settings_file) != "" ]] ; then
+        variables[$key]=""
+
+        key=
+        bootstrap_id "has-${i}"
+        if [[ $key != "" ]] ; then
+          variables[$key]="yes"
+        fi
+      else
+        key=
+        bootstrap_id "has-${i}"
+        if [[ $key != "" ]] ; then
+          variables[$key]="no"
+        fi
       fi
     fi
   done
@@ -801,11 +872,36 @@ bootstrap_load_settings_mode() {
         if [[ $verbosity != "quiet" ]] ; then
           echo -e "${c_warning}WARNING: Failed to find index for '${c_notice}$i-$m${c_warning}' when calling ${c_notice}bootstrap_id()${c_warning}.${c_reset}"
         fi
-      else
-        value=$(grep -s -o "^[[:space:]]*${i}-${m}[[:space:]].*\$" $settings_file | sed -e "H;/${i}-${m}/h;\$!d;x" | sed -e "s|^[[:space:]]*${i}-${m}\>||" -e 's|^[[:space:]]*||')
 
-        if [[ $value != "" ]] ; then
+        key=
+        bootstrap_id "has-${i}-mode"
+        if [[ $key != "" ]] ; then
+          variables[$key]="no"
+        fi
+      else
+        if [[ $(grep -s -o "^[[:space:]]*${i}-${m}[[:space:]].*\$" $settings_file) != "" ]] ; then
+          value=$(grep -s -o "^[[:space:]]*${i}-${m}[[:space:]].*\$" $settings_file | sed -e "H;/${i}-${m}/h;\$!d;x" | sed -e "s|^[[:space:]]*${i}-${m}\>||" -e 's|^[[:space:]]*||')
           variables[$key]="$value"
+
+          key=
+          bootstrap_id "has-${i}-mode"
+          if [[ $key != "" ]] ; then
+            variables[$key]="yes"
+          fi
+        elif [[ $(grep -s -o "^[[:space:]]*${i}-${m}\$" $settings_file) != "" ]] ; then
+          variables[$key]=""
+
+          key=
+          bootstrap_id "has-${i}-mode"
+          if [[ $key != "" ]] ; then
+            variables[$key]="yes"
+          fi
+        else
+          key=
+          bootstrap_id "has-${i}-mode"
+          if [[ $key != "" ]] ; then
+            variables[$key]="no"
+          fi
         fi
       fi
     done
@@ -819,40 +915,37 @@ bootstrap_load_settings_mode() {
         if [[ $verbosity != "quiet" ]] ; then
           echo -e "${c_warning}WARNING: Failed to find index for '${c_notice}${i}-${m}${c_warning}' when calling ${c_notice}bootstrap_id()${c_warning}.${c_reset}"
         fi
-      else
-        value=$(grep -s -o "^[[:space:]]*${i}-${m}[[:space:]].*\$" $settings_file | sed -e "s|^[[:space:]]*${i}-${m}\>||" -e 's|^[[:space:]]*||')
 
-        if [[ $value != "" ]] ; then
-          variables[$key]="$value"
+        key=
+        bootstrap_id "has-${i}-mode"
+        if [[ $key != "" ]] ; then
+          variables[$key]="no"
         fi
-      fi
-    done
-  done
-}
-
-bootstrap_load_settings_has() {
-  local i=
-  local m=
-  local key=
-
-  for i in build_compiler build_indexer build_shared has_path_standard path_library_script path_library_shared path_library_static path_object_script path_object_shared path_object_static path_program_script path_program_shared path_program_static path_sources path_sources_object search_shared version_major_prefix version_minor_prefix version_micro_prefix version_nano_prefix ; do
-
-    bootstrap_id "has-${i}"
-
-    if [[ $(grep -s -o "^[[:space:]]*${i}\>" $settings_file | sed -e "s|^[[:space:]]*||") ]] ; then
-      variables[$key]="yes"
-    else
-      variables[$key]="no"
-    fi
-
-    for m in $modes ; do
-
-      bootstrap_id "has-${i}-mode"
-
-      if [[ $(grep -s -o "^[[:space:]]*${i}-${m}\>" $settings_file | sed -e "s|^[[:space:]]*||") ]] ; then
-        variables[$key]="yes"
       else
-        variables[$key]="no"
+        if [[ $(grep -s -o "^[[:space:]]*${i}-${m}[[:space:]].*\$" $settings_file) != "" ]] ; then
+          value=$(grep -s -o "^[[:space:]]*${i}-${m}[[:space:]].*\$" $settings_file | sed -e "s|^[[:space:]]*${i}-${m}\>||" -e 's|^[[:space:]]*||')
+          variables[$key]="$value"
+
+          key=
+          bootstrap_id "has-${i}"
+          if [[ $key != "" ]] ; then
+            variables[$key]="yes"
+          fi
+        elif [[ $(grep -s -o "^[[:space:]]*${i}-${m}\$" $settings_file) != "" ]] ; then
+          variables[$key]=""
+
+          key=
+          bootstrap_id "has-${i}"
+          if [[ $key != "" ]] ; then
+            variables[$key]="yes"
+          fi
+        else
+          key=
+          bootstrap_id "has-${i}-mode"
+          if [[ $key != "" ]] ; then
+            variables[$key]="no"
+          fi
+        fi
       fi
     done
   done
@@ -1486,104 +1579,184 @@ bootstrap_operation_build() {
 bootstrap_operation_build_prepare_defaults() {
   local key=
 
-  bootstrap_id "has-version_major_prefix"
+  bootstrap_id "has-version_major_prefix-mode"
   if [[ ${variables[$key]} != "yes" ]] ; then
-    version_major_prefix="."
+
+    bootstrap_id "has-version_major_prefix"
+    if [[ ${variables[$key]} != "yes" ]] ; then
+      version_major_prefix="."
+    fi
   fi
 
-  bootstrap_id "has-version_minor_prefix"
+  bootstrap_id "has-version_minor_prefix-mode"
   if [[ ${variables[$key]} != "yes" ]] ; then
-    version_minor_prefix="."
+
+    bootstrap_id "has-version_minor_prefix"
+    if [[ ${variables[$key]} != "yes" ]] ; then
+      version_minor_prefix="."
+    fi
   fi
 
-  bootstrap_id "has-version_micro_prefix"
+  bootstrap_id "has-version_micro_prefix-mode"
   if [[ ${variables[$key]} != "yes" ]] ; then
-    version_micro_prefix="."
+
+    bootstrap_id "has-version_micro_prefix"
+    if [[ ${variables[$key]} != "yes" ]] ; then
+      version_micro_prefix="."
+    fi
   fi
 
-  bootstrap_id "has-version_nano_prefix"
+  bootstrap_id "has-version_nano_prefix-mode"
   if [[ ${variables[$key]} != "yes" ]] ; then
-    version_nano_prefix="."
+
+    bootstrap_id "has-version_nano_prefix"
+    if [[ ${variables[$key]} != "yes" ]] ; then
+      version_nano_prefix="."
+    fi
   fi
 
-  bootstrap_id "has-build_compiler"
+  bootstrap_id "has-build_compiler-mode"
   if [[ ${variables[$key]} != "yes" ]] ; then
-    build_compiler="gcc"
+
+    bootstrap_id "has-build_compiler"
+    if [[ ${variables[$key]} != "yes" ]] ; then
+      build_compiler="gcc"
+    fi
   fi
 
-  bootstrap_id "has-build_indexer"
+  bootstrap_id "has-build_indexer-mode"
   if [[ ${variables[$key]} != "yes" ]] ; then
-    build_indexer="ar"
+
+    bootstrap_id "has-build_indexer"
+    if [[ ${variables[$key]} != "yes" ]] ; then
+      build_indexer="ar"
+    fi
   fi
 
-  bootstrap_id "has-path_library_script"
+  bootstrap_id "has-path_library_script-mode"
   if [[ ${variables[$key]} != "yes" ]] ; then
-    path_library_script="script/"
+
+    bootstrap_id "has-path_library_script"
+    if [[ ${variables[$key]} != "yes" ]] ; then
+      path_library_script="script/"
+    fi
   fi
 
-  bootstrap_id "has-path_library_shared"
+  bootstrap_id "has-path_library_shared-mode"
   if [[ ${variables[$key]} != "yes" ]] ; then
-    path_library_shared="shared/"
+
+    bootstrap_id "has-path_library_shared"
+    if [[ ${variables[$key]} != "yes" ]] ; then
+      path_library_shared="shared/"
+    fi
   fi
 
-  bootstrap_id "has-path_library_static"
+  bootstrap_id "has-path_library_static-mode"
   if [[ ${variables[$key]} != "yes" ]] ; then
-    path_library_static="static/"
+
+    bootstrap_id "has-path_library_static"
+    if [[ ${variables[$key]} != "yes" ]] ; then
+      path_library_static="static/"
+    fi
   fi
 
-  bootstrap_id "has-path_object_script"
+  bootstrap_id "has-path_object_script-mode"
   if [[ ${variables[$key]} != "yes" ]] ; then
-    path_object_script="script/"
+
+    bootstrap_id "has-path_object_script"
+    if [[ ${variables[$key]} != "yes" ]] ; then
+      path_object_script="script/"
+    fi
   fi
 
-  bootstrap_id "has-path_object_shared"
+  bootstrap_id "has-path_object_shared-mode"
   if [[ ${variables[$key]} != "yes" ]] ; then
-    path_object_shared="shared/"
+
+    bootstrap_id "has-path_object_shared"
+    if [[ ${variables[$key]} != "yes" ]] ; then
+      path_object_shared="shared/"
+    fi
   fi
 
-  bootstrap_id "has-path_object_static"
+  bootstrap_id "has-path_object_static-mode"
   if [[ ${variables[$key]} != "yes" ]] ; then
-    path_object_static="static/"
+
+    bootstrap_id "has-path_object_static"
+    if [[ ${variables[$key]} != "yes" ]] ; then
+      path_object_static="static/"
+    fi
   fi
 
-  bootstrap_id "has-path_program_script"
+  bootstrap_id "has-path_program_script-mode"
   if [[ ${variables[$key]} != "yes" ]] ; then
-    path_program_script="script/"
+
+    bootstrap_id "has-path_program_script"
+    if [[ ${variables[$key]} != "yes" ]] ; then
+      path_program_script="script/"
+    fi
   fi
 
-  bootstrap_id "has-path_program_shared"
+  bootstrap_id "has-path_program_shared-mode"
   if [[ ${variables[$key]} != "yes" ]] ; then
-    path_program_shared="shared/"
+
+    bootstrap_id "has-path_program_shared"
+    if [[ ${variables[$key]} != "yes" ]] ; then
+      path_program_shared="shared/"
+    fi
   fi
 
-  bootstrap_id "has-path_program_static"
+  bootstrap_id "has-path_program_static-mode"
   if [[ ${variables[$key]} != "yes" ]] ; then
-    path_program_static="static/"
+
+    bootstrap_id "has-path_program_static"
+    if [[ ${variables[$key]} != "yes" ]] ; then
+      path_program_static="static/"
+    fi
   fi
 
-  bootstrap_id "has-path_sources"
+  bootstrap_id "has-path_sources-mode"
   if [[ ${variables[$key]} != "yes" ]] ; then
-    path_sources="sources/"
+
+    bootstrap_id "has-path_sources"
+    if [[ ${variables[$key]} != "yes" ]] ; then
+      path_sources="sources/"
+    fi
   fi
 
-  bootstrap_id "has-path_sources_object"
+  bootstrap_id "has-path_sources_object-mode"
   if [[ ${variables[$key]} != "yes" ]] ; then
-    path_sources_object="sources/"
+
+    bootstrap_id "has-path_sources_object"
+    if [[ ${variables[$key]} != "yes" ]] ; then
+      path_sources_object="sources/"
+    fi
   fi
 
-  bootstrap_id "has-has_path_standard"
+  bootstrap_id "has-has_path_standard-mode"
   if [[ ${variables[$key]} != "yes" ]] ; then
-    has_path_standard="yes"
+
+    bootstrap_id "has-has_path_standard"
+    if [[ ${variables[$key]} != "yes" ]] ; then
+      has_path_standard="yes"
+    fi
   fi
 
-  bootstrap_id "has-search_shared"
+  bootstrap_id "has-search_shared-mode"
   if [[ ${variables[$key]} != "yes" ]] ; then
-    search_shared="yes"
+
+    bootstrap_id "has-search_shared"
+    if [[ ${variables[$key]} != "yes" ]] ; then
+      search_shared="yes"
+    fi
   fi
 
-  bootstrap_id "has-build_shared"
+  bootstrap_id "has-build_shared-mode"
   if [[ ${variables[$key]} != "yes" ]] ; then
-    build_shared="yes"
+
+    bootstrap_id "has-build_shared"
+    if [[ ${variables[$key]} != "yes" ]] ; then
+      build_shared="yes"
+    fi
   fi
 }
 
@@ -2234,138 +2407,165 @@ bootstrap_operation_build_prepare_programs() {
 bootstrap_operation_build_prepare_remaining() {
   local key=
 
-  bootstrap_id "build_name-mode"
-  if [[ ${variables[$key]} != "" ]] ; then
-    build_name=${variables[$key]}
-  fi
-
-  bootstrap_id "build_compiler-mode"
-  if [[ ${variables[$key]} != "" ]] ; then
+  bootstrap_id "has-build_compiler-mode"
+  if [[ ${variables[$key]} == "yes" ]] ; then
+    bootstrap_id "build_compiler-mode"
     build_compiler=${variables[$key]}
   fi
 
-  bootstrap_id "build_indexer-mode"
-  if [[ ${variables[$key]} != "" ]] ; then
+  bootstrap_id "has-build_indexer-mode"
+  if [[ ${variables[$key]} == "yes" ]] ; then
+    bootstrap_id "build_indexer-mode"
     build_indexer=${variables[$key]}
   fi
 
-  bootstrap_id "build_indexer_arguments-mode"
-  if [[ ${variables[$key]} != "" ]] ; then
+  bootstrap_id "has-build_indexer_arguments-mode"
+  if [[ ${variables[$key]} == "yes" ]] ; then
+    bootstrap_id "build_indexer_arguments-mode"
     build_indexer_arguments=${variables[$key]}
   fi
 
-  bootstrap_id "version_major-mode"
-  if [[ ${variables[$key]} != "" ]] ; then
+  bootstrap_id "has-build_name-mode"
+  if [[ ${variables[$key]} == "yes" ]] ; then
+    bootstrap_id "build_name-mode"
+    build_name=${variables[$key]}
+  fi
+
+  bootstrap_id "has-version_major-mode"
+  if [[ ${variables[$key]} == "yes" ]] ; then
+    bootstrap_id "version_major-mode"
     version_major=${variables[$key]}
   fi
 
-  bootstrap_id "version_major_prefix-mode"
-  if [[ ${variables[$key]} != "" ]] ; then
+  bootstrap_id "has-version_major_prefix-mode"
+  if [[ ${variables[$key]} == "yes" ]] ; then
+    bootstrap_id "version_major_prefix-mode"
     version_major_prefix=${variables[$key]}
   fi
 
-  bootstrap_id "version_minor-mode"
-  if [[ ${variables[$key]} != "" ]] ; then
+  bootstrap_id "has-version_minor-mode"
+  if [[ ${variables[$key]} == "yes" ]] ; then
+    bootstrap_id "version_minor-mode"
     version_minor=${variables[$key]}
   fi
 
-  bootstrap_id "version_minor_prefix-mode"
-  if [[ ${variables[$key]} != "" ]] ; then
+  bootstrap_id "has-version_minor_prefix-mode"
+  if [[ ${variables[$key]} == "yes" ]] ; then
+    bootstrap_id "version_minor_prefix-mode"
     version_minor_prefix=${variables[$key]}
   fi
 
-  bootstrap_id "version_micro-mode"
-  if [[ ${variables[$key]} != "" ]] ; then
+  bootstrap_id "has-version_micro-mode"
+  if [[ ${variables[$key]} == "yes" ]] ; then
+    bootstrap_id "version_micro-mode"
     version_micro=${variables[$key]}
   fi
 
-  bootstrap_id "version_micro_prefix-mode"
-  if [[ ${variables[$key]} != "" ]] ; then
+  bootstrap_id "has-version_micro_prefix-mode"
+  if [[ ${variables[$key]} == "yes" ]] ; then
+    bootstrap_id "version_micro_prefix-mode"
     version_micro_prefix=${variables[$key]}
   fi
 
-  bootstrap_id "version_nano-mode"
-  if [[ ${variables[$key]} != "" ]] ; then
+  bootstrap_id "has-version_nano-mode"
+  if [[ ${variables[$key]} == "yes" ]] ; then
+    bootstrap_id "version_nano-mode"
     version_nano=${variables[$key]}
   fi
 
-  bootstrap_id "version_nano_prefix-mode"
-  if [[ ${variables[$key]} != "" ]] ; then
+  bootstrap_id "has-version_nano_prefix-mode"
+  if [[ ${variables[$key]} == "yes" ]] ; then
+    bootstrap_id "version_nano_prefix-mode"
     version_nano_prefix=${variables[$key]}
   fi
 
-  bootstrap_id "path_headers-mode"
-  if [[ ${variables[$key]} != "" ]] ; then
+  bootstrap_id "has-path_headers-mode"
+  if [[ ${variables[$key]} == "yes" ]] ; then
+    bootstrap_id "path_headers-mode"
     path_headers=${variables[$key]}
   fi
 
-  bootstrap_id "preserve_path_headers-mode"
-  if [[ ${variables[$key]} != "" ]] ; then
+  bootstrap_id "has-preserve_path_headers-mode"
+  if [[ ${variables[$key]} == "yes" ]] ; then
+    bootstrap_id "preserve_path_headers-mode"
     preserve_path_headers=${variables[$key]}
   fi
 
-  bootstrap_id "path_library_script-mode"
-  if [[ ${variables[$key]} != "" ]] ; then
+  bootstrap_id "has-path_library_script-mode"
+  if [[ ${variables[$key]} == "yes" ]] ; then
+    bootstrap_id "path_library_script-mode"
     path_library_script=${variables[$key]}
   fi
 
-  bootstrap_id "path_library_shared-mode"
-  if [[ ${variables[$key]} != "" ]] ; then
+  bootstrap_id "has-path_library_shared-mode"
+  if [[ ${variables[$key]} == "yes" ]] ; then
+    bootstrap_id "path_library_shared-mode"
     path_library_shared=${variables[$key]}
   fi
 
-  bootstrap_id "path_library_static-mode"
-  if [[ ${variables[$key]} != "" ]] ; then
+  bootstrap_id "has-path_library_static-mode"
+  if [[ ${variables[$key]} == "yes" ]] ; then
+    bootstrap_id "path_library_static-mode"
     path_library_static=${variables[$key]}
   fi
 
-  bootstrap_id "path_object_script-mode"
-  if [[ ${variables[$key]} != "" ]] ; then
+  bootstrap_id "has-path_object_script-mode"
+  if [[ ${variables[$key]} == "yes" ]] ; then
+    bootstrap_id "path_object_script-mode"
     path_object_script=${variables[$key]}
   fi
 
-  bootstrap_id "path_object_shared-mode"
-  if [[ ${variables[$key]} != "" ]] ; then
+  bootstrap_id "has-path_object_shared-mode"
+  if [[ ${variables[$key]} == "yes" ]] ; then
+    bootstrap_id "path_object_shared-mode"
     path_object_shared=${variables[$key]}
   fi
 
-  bootstrap_id "path_object_static-mode"
-  if [[ ${variables[$key]} != "" ]] ; then
+  bootstrap_id "has-path_object_static-mode"
+  if [[ ${variables[$key]} == "yes" ]] ; then
+    bootstrap_id "path_object_static-mode"
     path_object_static=${variables[$key]}
   fi
 
-  bootstrap_id "path_program_script-mode"
-  if [[ ${variables[$key]} != "" ]] ; then
+  bootstrap_id "has-path_program_script-mode"
+  if [[ ${variables[$key]} == "yes" ]] ; then
+    bootstrap_id "path_program_script-mode"
     path_program_script=${variables[$key]}
   fi
 
-  bootstrap_id "path_program_shared-mode"
-  if [[ ${variables[$key]} != "" ]] ; then
+  bootstrap_id "has-path_program_shared-mode"
+  if [[ ${variables[$key]} == "yes" ]] ; then
+    bootstrap_id "path_program_shared-mode"
     path_program_shared=${variables[$key]}
   fi
 
-  bootstrap_id "path_program_static-mode"
-  if [[ ${variables[$key]} != "" ]] ; then
+  bootstrap_id "has-path_program_static-mode"
+  if [[ ${variables[$key]} == "yes" ]] ; then
+    bootstrap_id "path_program_static-mode"
     path_program_static=${variables[$key]}
   fi
 
-  bootstrap_id "has_path_standard-mode"
-  if [[ ${variables[$key]} != "" ]] ; then
+  bootstrap_id "has-has_path_standard-mode"
+  if [[ ${variables[$key]} == "yes" ]] ; then
+    bootstrap_id "has_path_standard-mode"
     has_path_standard=${variables[$key]}
   fi
 
-  bootstrap_id "search_exclusive-mode"
-  if [[ ${variables[$key]} != "" ]] ; then
+  bootstrap_id "has-search_exclusive-mode"
+  if [[ ${variables[$key]} == "yes" ]] ; then
+    bootstrap_id "search_exclusive-mode"
     search_exclusive=${variables[$key]}
   fi
 
-  bootstrap_id "search_shared-mode"
-  if [[ ${variables[$key]} != "" ]] ; then
+  bootstrap_id "has-search_shared-mode"
+  if [[ ${variables[$key]} == "yes" ]] ; then
+    bootstrap_id "search_shared-mode"
     search_shared=${variables[$key]}
   fi
 
-  bootstrap_id "search_static-mode"
-  if [[ ${variables[$key]} != "" ]] ; then
+  bootstrap_id "has-search_static-mode"
+  if [[ ${variables[$key]} == "yes" ]] ; then
+    bootstrap_id "search_static-mode"
     search_static=${variables[$key]}
   fi
 }
@@ -2646,7 +2846,6 @@ bootstrap_cleanup() {
   unset bootstrap_id
   unset bootstrap_load_settings
   unset bootstrap_load_settings_mode
-  unset bootstrap_load_settings_has
   unset bootstrap_prepare_build
   unset bootstrap_operation_build
   unset bootstrap_operation_build_prepare_defaults
