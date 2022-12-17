@@ -50,6 +50,7 @@ package_main() {
   local path_build=build/
   local path_destination=package/
   local path_sources=./
+  local prepend=
   local verbosity=normal
   local verbose=
   local verbose_common=
@@ -108,6 +109,8 @@ package_main() {
           mode_level="yes"
         elif [[ $p == "-m" || $p == "--monolithic" ]] ; then
           mode_monolithic="yes"
+        elif [[ $p == "-P" || $p == "--prepend" ]] ; then
+          grab_next=prepend
         elif [[ $p == "-p" || $p == "--program" ]] ; then
           mode_program="yes"
         elif [[ $p == "-s" || $p == "--sources" ]] ; then
@@ -129,6 +132,10 @@ package_main() {
           path_sources=$(echo $p | sed -e 's|^//*|/|' -e 's|/*$|/|')
         elif [[ $grab_next == "stand_alone" ]] ; then
           mode_stand_alone="$mode_stand_alone$p "
+        elif [[ $grab_next == "prepend" ]] ; then
+
+          # Provide a bare minimal sanitizer that probably doesn't catch everything that it ideally should.
+          prepend=$(echo $p | sed -e 's|[\!~\`@#$%^&*();:><?/"\\]||g' -e 's@|@@g' -e "s|'||g" -e "s|\s*||g")
         fi
 
         grab_next=
@@ -380,6 +387,7 @@ package_help() {
   echo -e " -${c_important}i${c_reset}, --${c_important}individual${c_reset}   Build packages by individual package (levels 0. 1. and 2)."
   echo -e " -${c_important}l${c_reset}, --${c_important}level${c_reset}        Build packages by level (levels 0. 1. and 2)."
   echo -e " -${c_important}m${c_reset}, --${c_important}monolithic${c_reset}   Build a monolithic package (levels 0. 1. and 2)."
+  echo -e " -${c_important}P${c_reset}, --${c_important}prepend${c_reset}      Prepend a string (with a restricted character set) before the built directory name."
   echo -e " -${c_important}p${c_reset}, --${c_important}program${c_reset}      Build program packages (level 3)."
   echo -e " -${c_important}s${c_reset}, --${c_important}sources${c_reset}      Specify a custom sources directory."
   echo -e " -${c_important}S${c_reset}, --${c_important}stand_alone${c_reset}  Build a specified program package as stand alone."
@@ -1318,8 +1326,8 @@ package_operation_clean() {
 
       for i in $mode_stand_alone ; do
 
-        if [[ -d ${path_destination}stand_alone/${i}-${version}/ ]] ; then
-          rm $verbose_common -Rf ${path_destination}stand_alone/${i}-${version}/
+        if [[ -d ${path_destination}stand_alone/${prepend}${i}-${version}/ ]] ; then
+          rm $verbose_common -Rf ${path_destination}stand_alone/${prepend}${i}-${version}/
 
           if [[ $? -ne 0 ]] ; then
             let failure=1
@@ -1330,7 +1338,7 @@ package_operation_clean() {
 
         if [[ $verbosity != "quiet" ]] ; then
           echo
-          echo "Cleaned '${path_destination}stand_alone/${i}-${version}/'."
+          echo "Cleaned '${path_destination}stand_alone/${prepend}${i}-${version}/'."
         fi
       done
 
@@ -1655,11 +1663,11 @@ package_operation_individual() {
   for directory in ${path_sources}level_0/* ${path_sources}level_1/* ${path_sources}level_2/* ; do
 
     name="$(echo $directory | sed -e "s|${path_sources}level_0/||" -e "s|${path_sources}level_1/||" -e "s|${path_sources}level_2/||")"
-    package="${path_destination}individual/${name}-${version}/"
+    package="${path_destination}individual/${prepend}${name}-${version}/"
 
     if [[ $verbosity != "quiet" ]] ; then
       echo
-      echo -e "${c_highlight}Packaging Project${c_reset} (individual) ${c_notice}${name}-${version}${c_reset}${c_highlight}.${c_reset}"
+      echo -e "${c_highlight}Packaging Project${c_reset} (individual) ${c_notice}${prepend}${name}-${version}${c_reset}${c_highlight}.${c_reset}"
     fi
 
     package_create_base_files
@@ -1700,11 +1708,11 @@ package_operation_level() {
   for level in level_0 level_1 level_2 ; do
 
     name="fll-$level"
-    package="${path_destination}level/${name}-${version}/"
+    package="${path_destination}level/${prepend}${name}-${version}/"
 
     if [[ $verbosity != "quiet" ]] ; then
       echo
-      echo -e "${c_highlight}Packaging Project${c_reset} (level) ${c_notice}${name}-${version}${c_reset}${c_highlight}.${c_reset}"
+      echo -e "${c_highlight}Packaging Project${c_reset} (level) ${c_notice}${prepend}${name}-${version}${c_reset}${c_highlight}.${c_reset}"
     fi
 
     if [[ ! -d $path_build$level ]] ; then
@@ -1817,11 +1825,11 @@ package_operation_monolithic() {
   local path_name=
 
   name="fll"
-  package="${path_destination}monolithic/${name}-${version}/"
+  package="${path_destination}monolithic/${prepend}${name}-${version}/"
 
   if [[ $verbosity != "quiet" ]] ; then
     echo
-    echo -e "${c_highlight}Packaging Project${c_reset} (monolithic) ${c_notice}${name}-${version}${c_reset}${c_highlight}.${c_reset}"
+    echo -e "${c_highlight}Packaging Project${c_reset} (monolithic) ${c_notice}${prepend}${name}-${version}${c_reset}${c_highlight}.${c_reset}"
   fi
 
   if [[ ! -d ${path_build}monolithic ]] ; then
@@ -2087,11 +2095,11 @@ package_operation_program() {
   for directory in ${path_sources}level_3/* ; do
 
     name="$(echo $directory | sed -e "s|${path_sources}level_3/||")"
-    package="${path_destination}program/${name}-${version}/"
+    package="${path_destination}program/${prepend}${name}-${version}/"
 
     if [[ $verbosity != "quiet" ]] ; then
       echo
-      echo -e "${c_highlight}Packaging Project${c_reset} (program) ${c_notice}${name}-${version}${c_reset}${c_highlight}.${c_reset}"
+      echo -e "${c_highlight}Packaging Project${c_reset} (program) ${c_notice}${prepend}${name}-${version}${c_reset}${c_highlight}.${c_reset}"
     fi
 
     package_create_base_files
@@ -2154,11 +2162,11 @@ package_operation_stand_alone() {
   for name in $mode_stand_alone ; do
 
     directory="${path_sources}level_3/${name}"
-    package="${path_destination}stand_alone/${name}-${version}/"
+    package="${path_destination}stand_alone/${prepend}${name}-${version}/"
 
     if [[ $verbosity != "quiet" ]] ; then
       echo
-      echo -e "${c_highlight}Packaging Project${c_reset} (stand_alone) ${c_notice}${name}-${version}${c_reset}${c_highlight}.${c_reset}"
+      echo -e "${c_highlight}Packaging Project${c_reset} (stand_alone) ${c_notice}${prepend}${name}-${version}${c_reset}${c_highlight}.${c_reset}"
     fi
 
     package_create_base_files
