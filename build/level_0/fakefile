@@ -1,5 +1,5 @@
 # fss-0005 iki-0002
-  
+
 settings:
   fail exit
   modes monolithic clang test
