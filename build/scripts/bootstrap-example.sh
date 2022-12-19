@@ -35,7 +35,7 @@ verbose_common=
 color=
 shared=
 static=
-version=0.6.2
+version=0.6.3
 clang=
 shell_command=bash
 

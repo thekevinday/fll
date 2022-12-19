@@ -22,7 +22,7 @@ extern "C" {
 #ifndef _di_firewall_program_version_
   #define FIREWALL_program_version_major_s F_string_ascii_0_s
   #define FIREWALL_program_version_minor_s F_string_ascii_6_s
-  #define FIREWALL_program_version_micro_s F_string_ascii_2_s
+  #define FIREWALL_program_version_micro_s F_string_ascii_3_s
 
   #define FIREWALL_program_version_major_s_length F_string_ascii_0_s_length
   #define FIREWALL_program_version_minor_s_length F_string_ascii_6_s_length

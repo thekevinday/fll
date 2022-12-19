@@ -8,7 +8,7 @@ build_name utf8
 
 version_major 0
 version_minor 6
-version_micro 2
+version_micro 3
 version_file micro
 version_target minor
 

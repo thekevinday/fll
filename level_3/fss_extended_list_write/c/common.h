@@ -22,7 +22,7 @@ extern "C" {
 #ifndef _di_fss_extended_list_write_program_version_
   #define FSS_EXTENDED_LIST_WRITE_program_version_major_s F_string_ascii_0_s
   #define FSS_EXTENDED_LIST_WRITE_program_version_minor_s F_string_ascii_6_s
-  #define FSS_EXTENDED_LIST_WRITE_program_version_micro_s F_string_ascii_2_s
+  #define FSS_EXTENDED_LIST_WRITE_program_version_micro_s F_string_ascii_3_s
 
   #define FSS_EXTENDED_LIST_WRITE_program_version_major_s_length F_string_ascii_0_s_length
   #define FSS_EXTENDED_LIST_WRITE_program_version_minor_s_length F_string_ascii_6_s_length
