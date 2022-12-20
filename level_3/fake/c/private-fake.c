@@ -577,6 +577,13 @@ extern "C" {
 
     // Check only expected operations (fake_operation_clean_e and fake_operation_skeleton_e should not call this function).
     if (data->operation == fake_operation_make_e) {
+      if (data->main->parameters.array[fake_parameter_fakefile_e].result == f_console_result_none_e) {
+        if (data->path_build.used && f_file_exists(data->path_build, F_false) != F_true) {
+          if (f_file_exists(fake_default_fakefile_s, F_false) == F_true) {
+            parameters_required[1] = F_false;
+          }
+        }
+      }
 
       // If a custom --data or a custom --fakefile parameter is passed and uses an absolute or relative to current path, then do not check.
       if (data->main->parameters.array[fake_parameter_fakefile_e].result & f_console_result_value_e) {
