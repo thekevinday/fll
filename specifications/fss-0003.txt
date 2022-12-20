@@ -13,20 +13,20 @@ Featureless Settings Specification: 0003 - Extended List:
   Each Object starts at the beginning of a line and white space to the left of the Object is not treated as an object.
   An open-brace character:"{" (unicode:"U+007B") followed by any white space until a newline terminates a possible valid Object.
   An Object is not considered fully valid until a valid close-brace character:"}" (unicode:"U+007D") is found, designating the end of the Content.
-  Non-white space printable characters may not follow the open-brace of a valid Object.
+  Non-white space printable characters may not follow the open-brace character:"{" (unicode:"U+007B") of a valid Object.
 
-  Content is represented as a single Content column of every line following a valid object until the end of file (or string) or until a non-delimited close-brace character:"}".
+  Content is represented as a single Content column of every line following a valid object until the end of file (or string) or until a non-delimited close-brace character:"}" (unicode:"U+007D").
   Any Content column that could be interpreted as an end of Content must be delimited if it should be part of the Content.
-  White space may follow a valid close-brace but a terminating newline must be present to designate a valid end of Content.
+  White space may follow a valid close-brace character:"}" (unicode:"U+007D") but a terminating newline must be present to designate a valid end of Content.
 
   There is no single-quote, double-quote, or backtick delimitation in this specification.
-  Only the open-brace that would result in a valid Object or the close-brace that would terminate valid Content can be delimited.
-  When inside potentially valid Content (which follows a valid Object) the open-brace cannot be delimited because this standard is not-recursive.
+  Only an open-brace character:"{" (unicode:"U+007B") that would result in a valid Object or the close-brace character:"}" (unicode:"U+007D") that would terminate valid Content can be delimited.
+  When inside potentially valid Content (which follows a valid Object) the open-brace character:"{" (unicode:"U+007B") cannot be delimited because this standard is not-recursive.
   When not inside any potentially valid Content (that is, there is no previous unclosed Object), then the Object may be delimited.
-  Likewise, the close-brace may only be delimited if it is within any potentially valid Content.
+  Likewise, the close-brace character:"}" (unicode:"U+007D") may only be delimited if it is within any potentially valid Content.
 
-  Each delimit slash in a delimitable open-brace is treated as a potential delimit such that two slashes represents a single delimited slash (code:"\\{" would represent code:"\{").
-  Only the first delimit slash in a delimitable close-brace is treated as a potential delimit (code:"\\\}" would represent code:"\\}").
+  Each delimit slash in a delimitable open-brace character:"{" (unicode:"U+007B") is treated as a potential delimit such that two slashes represents a single delimited slash (code:"\\{" would represent code:"\{").
+  Only the first delimit slash in a delimitable close-brace character:"}" (unicode:"U+007D") is treated as a potential delimit (code:"\\\}" would represent code:"\\}").
 
   Empty Objects are allowed, that is, the length of the object may be zero.
 

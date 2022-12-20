@@ -18,7 +18,7 @@ Featureless Settings Specification: 0002 - Basic List:
   Any Content that could be interpreted as a valid Object must have the colon delimited.
 
   There is no single-quote, double-quote, or backtick delimitation in this specification.
-  Only the colon that would result in a valid Object can be delimited.
+  Only a colon character:":" (unicode:"U+003A") that would result in a valid Object can be delimited.
 
   Empty Objects are allowed, that is, the length of the object may be zero.
 
