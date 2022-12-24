@@ -35,7 +35,7 @@ extern "C" {
         }
       }
       else {
-        main->context.mode = f_color_mode_color_not_e;
+        main->context.mode = f_color_mode_not_e;
       }
     }
 

@@ -160,7 +160,6 @@ extern "C" {
     fl_print_format("  For the pipe, an Object is terminated by either a Backspace character '%[\\b%]' (%[U+0008%])", print.to, print.set->notable, print.set->notable, print.set->notable, print.set->notable);
     fl_print_format(" or a Form Feed character '%[\\f%]' (%[U+000C%]).%r", print.to, print.set->notable, print.set->notable, print.set->notable, print.set->notable, f_string_eol_s);
     fl_print_format("  The end of the pipe represents the end of any Object or Content.%r", print.to, f_string_eol_s);
-
   }
 #endif // _di_fss_write_print_help_pipe_
 

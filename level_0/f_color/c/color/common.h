@@ -398,7 +398,7 @@ extern "C" {
 #ifndef _di_f_color_mode_e_
   enum {
     f_color_mode_none_e = 0,
-    f_color_mode_color_not_e,
+    f_color_mode_not_e,
     f_color_mode_dark_e,
     f_color_mode_light_e,
   }; // enum

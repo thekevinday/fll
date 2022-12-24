@@ -24,7 +24,7 @@ extern "C" {
         return;
       }
 
-      if (data_make->main->context.mode == f_color_mode_color_not_e) {
+      if (data_make->main->context.mode == f_color_mode_not_e) {
         if (data_make->main->parameters.array[fake_parameter_no_color_e].flag & f_console_flag_normal_e) {
           *status = f_string_dynamic_append(f_console_symbol_short_normal_s, &data_make->parameter.color.array[data_make->parameter.color.used]);
         }

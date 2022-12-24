@@ -149,7 +149,7 @@ extern "C" {
         choices.array = choices_array;
         choices.used = 3;
 
-        const uint8_t modes[3] = { f_color_mode_color_not_e, f_color_mode_light_e, f_color_mode_dark_e };
+        const uint8_t modes[3] = { f_color_mode_not_e, f_color_mode_light_e, f_color_mode_dark_e };
 
         setting->status = fll_program_parameter_process_context(choices, modes, F_true, main);
 

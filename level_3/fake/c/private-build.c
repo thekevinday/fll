@@ -576,7 +576,7 @@ extern "C" {
       else if (data->main->context.mode == f_color_mode_light_e) {
         memcpy(argument_string + f_console_symbol_short_inverse_s.used, f_console_standard_short_light_s.string, sizeof(f_char_t) * f_console_standard_short_light_s.used);
       }
-      else if (data->main->context.mode == f_color_mode_color_not_e) {
+      else if (data->main->context.mode == f_color_mode_not_e) {
         memcpy(argument_string + f_console_symbol_short_inverse_s.used, f_console_standard_short_no_color_s.string, sizeof(f_char_t) * f_console_standard_short_no_color_s.used);
       }
 

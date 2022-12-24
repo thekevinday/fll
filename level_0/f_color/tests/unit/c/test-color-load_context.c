@@ -27,7 +27,7 @@ void test__f_color_load_context__works(void **state) {
 
   uint8_t modes[4] = {
     f_color_mode_none_e,
-    f_color_mode_color_not_e,
+    f_color_mode_not_e,
     f_color_mode_dark_e,
     f_color_mode_light_e,
   };
@@ -58,7 +58,7 @@ void test__f_color_load_context__works(void **state) {
 
       assert_int_equal(status, statuss[j]);
 
-      if (modes[j] == f_color_mode_color_not_e) {
+      if (modes[j] == f_color_mode_not_e) {
         assert_ptr_equal(context.set.reset.before, &f_string_empty_s);
         assert_ptr_equal(context.set.reset.after, &f_string_empty_s);
 

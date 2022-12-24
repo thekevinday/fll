@@ -39,7 +39,7 @@ extern "C" {
  * If you wish to use non-standard colors either redefine this function or don't use it.
  *
  * This only supports the following color modes:
- *   - f_color_mode_color_not_e
+ *   - f_color_mode_not_e
  *   - f_color_mode_dark_e
  *   - f_color_mode_light_e
  *

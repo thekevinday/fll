@@ -13,7 +13,7 @@ extern "C" {
 
     context->mode = mode;
 
-    if (mode == f_color_mode_color_not_e) {
+    if (mode == f_color_mode_not_e) {
       macro_f_color_t_set_none(context->list);
 
       context->format.begin = f_string_empty_s;
