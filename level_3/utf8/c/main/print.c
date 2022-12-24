@@ -347,7 +347,7 @@ extern "C" {
 #ifndef _di_utf8_print_line_first_locked_
   f_status_t utf8_print_line_first_locked(utf8_setting_t * const setting, const fl_print_t print) {
 
-    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+    if (!setting || print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
 
     if (!F_status_is_error(setting->status)) {
       if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
@@ -363,7 +363,7 @@ extern "C" {
 #ifndef _di_utf8_print_line_first_unlocked_
   f_status_t utf8_print_line_first_unlocked(utf8_setting_t * const setting, const fl_print_t print) {
 
-    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+    if (!setting || print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
 
     if (!F_status_is_error(setting->status)) {
       if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
@@ -379,7 +379,7 @@ extern "C" {
 #ifndef _di_utf8_print_line_last_locked_
   f_status_t utf8_print_line_last_locked(utf8_setting_t * const setting, const fl_print_t print) {
 
-    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+    if (!setting || print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
 
     if (!F_status_is_error(setting->status)) {
       if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
@@ -395,7 +395,7 @@ extern "C" {
 #ifndef _di_utf8_print_line_last_unlocked_
   f_status_t utf8_print_line_last_unlocked(utf8_setting_t * const setting, const fl_print_t print) {
 
-    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+    if (!setting || print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
 
     if (!F_status_is_error(setting->status)) {
       if (print.verbosity == f_console_verbosity_error_e) return F_output_not;

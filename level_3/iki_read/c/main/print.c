@@ -137,7 +137,7 @@ extern "C" {
 #ifndef _di_iki_read_print_line_first_locked_
   f_status_t iki_read_print_line_first_locked(iki_read_setting_t * const setting, const fl_print_t print) {
 
-    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+    if (!setting || print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
 
     if (!F_status_is_error(setting->status)) {
       if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
@@ -152,7 +152,7 @@ extern "C" {
 #ifndef _di_iki_read_print_line_first_unlocked_
   f_status_t iki_read_print_line_first_unlocked(iki_read_setting_t * const setting, const fl_print_t print) {
 
-    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+    if (!setting || print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
 
     if (!F_status_is_error(setting->status)) {
       if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
@@ -167,7 +167,7 @@ extern "C" {
 #ifndef _di_iki_read_print_line_last_locked_
   f_status_t iki_read_print_line_last_locked(iki_read_setting_t * const setting, const fl_print_t print) {
 
-    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+    if (!setting || print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
 
     if (!F_status_is_error(setting->status)) {
       if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
@@ -182,7 +182,7 @@ extern "C" {
 #ifndef _di_iki_read_print_line_last_unlocked_
   f_status_t iki_read_print_line_last_unlocked(iki_read_setting_t * const setting, const fl_print_t print) {
 
-    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+    if (!setting || print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
 
     if (!F_status_is_error(setting->status)) {
       if (print.verbosity == f_console_verbosity_error_e) return F_output_not;

@@ -112,7 +112,7 @@ extern "C" {
 #ifndef _di_byte_dump_print_line_last_locked_
   f_status_t byte_dump_print_line_last_locked(byte_dump_setting_t * const setting, const fl_print_t print) {
 
-    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+    if (!setting || print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
     if (setting->flag & byte_dump_main_flag_verify_e) return;
 
     if (!F_status_is_error(setting->status)) {
@@ -129,7 +129,7 @@ extern "C" {
 #ifndef _di_byte_dump_print_line_last_unlocked_
   f_status_t byte_dump_print_line_last_unlocked(byte_dump_setting_t * const setting, const fl_print_t print) {
 
-    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+    if (!setting || print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
     if (setting->flag & byte_dump_main_flag_verify_e) return;
 
     if (!F_status_is_error(setting->status)) {

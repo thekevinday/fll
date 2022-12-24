@@ -51,7 +51,7 @@ extern "C" {
 #ifndef _di_control_print_line_first_locked_
   f_status_t control_print_line_first_locked(control_setting_t * const setting, const fl_print_t print) {
 
-    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+    if (!setting || print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
     if (setting->flag & control_main_flag_verify_e) return;
 
     if (!F_status_is_error(setting->status)) {
@@ -68,7 +68,7 @@ extern "C" {
 #ifndef _di_control_print_line_first_unlocked_
   f_status_t control_print_line_first_unlocked(control_setting_t * const setting, const fl_print_t print) {
 
-    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+    if (!setting || print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
     if (setting->flag & control_main_flag_verify_e) return;
 
     if (!F_status_is_error(setting->status)) {
@@ -85,7 +85,7 @@ extern "C" {
 #ifndef _di_control_print_line_last_locked_
   f_status_t control_print_line_last_locked(control_setting_t * const setting, const fl_print_t print) {
 
-    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+    if (!setting || print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
     if (setting->flag & control_main_flag_verify_e) return;
 
     if (!F_status_is_error(setting->status)) {
@@ -102,7 +102,7 @@ extern "C" {
 #ifndef _di_control_print_line_last_unlocked_
   f_status_t control_print_line_last_unlocked(control_setting_t * const setting, const fl_print_t print) {
 
-    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+    if (!setting || print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
     if (setting->flag & control_main_flag_verify_e) return;
 
     if (!F_status_is_error(setting->status)) {
