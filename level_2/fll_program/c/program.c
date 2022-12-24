@@ -11,13 +11,13 @@ extern "C" {
     {
       if (choices.used) {
         f_status_t status = F_none;
-        f_array_length_t decision = 0;
+        f_array_length_t choice = 0;
 
         if (right) {
-          status = f_console_parameter_prioritize_right(main->parameters, choices, &decision);
+          status = f_console_parameter_prioritize_right(main->parameters, choices, &choice);
         }
         else {
-          status = f_console_parameter_prioritize_left(main->parameters, choices, &decision);
+          status = f_console_parameter_prioritize_left(main->parameters, choices, &choice);
         }
 
         if (F_status_is_error(status)) return status;
@@ -26,7 +26,7 @@ extern "C" {
           main->context.mode = modes[choices.used - 1];
         }
         else {
-          main->context.mode = modes[decision];
+          main->context.mode = modes[choice];
         }
 
         if (main->context.mode == f_color_mode_dark_e || main->context.mode == f_color_mode_light_e) {
