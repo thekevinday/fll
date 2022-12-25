@@ -293,7 +293,7 @@ extern "C" {
   f_status_t f_signal_wait(const sigset_t * const set, siginfo_t * const information) {
 
     if (sigwaitinfo(set, information) == -1) {
-      if (errno == EINTR) return F_status_set_error(F_interrupt);
+      if (errno == EINTR) return F_interrupt;
       if (errno == EINVAL) return F_status_set_error(F_parameter);
 
       return F_status_set_error(F_failure);
@@ -308,7 +308,7 @@ extern "C" {
 
     if (sigtimedwait(set, information, timeout) == -1) {
       if (errno == EAGAIN) return F_time_out;
-      if (errno == EINTR) return F_status_set_error(F_interrupt);
+      if (errno == EINTR) return F_interrupt;
       if (errno == EINVAL) return F_status_set_error(F_parameter);
 
       return F_status_set_error(F_failure);

@@ -367,8 +367,8 @@ extern "C" {
  *
  * @return
  *   F_none if signal is found.
+ *   F_interrupt if interrupted by a signal other than one specified in the signal set.
  *
- *   F_interrupt (with error bit) if interrupted by a signal other than one specified in the signal set.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   F_failure (with error bit) for any other error.
@@ -392,9 +392,9 @@ extern "C" {
  *
  * @return
  *   F_none if signal is found before time out.
+ *   F_interrupt if interrupted by a signal other than one specified in the signal set.
  *   F_time_out if no signal is find by the time out.
  *
- *   F_interrupt (with error bit) if interrupted by a signal other than one specified in the signal set.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   F_failure (with error bit) for any other error.
