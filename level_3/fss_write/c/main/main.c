@@ -43,9 +43,11 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 }
 
 #ifndef _di_fss_write_main_process_help_
-  void fss_write_main_process_help(fll_program_data_t * const main, void * const setting) {
+  void fss_write_main_process_help(fll_program_data_t * const main, void * const void_setting) {
 
-    fss_write_main_print_help(macro_fss_write_setting(setting), main->message);
+    if (!main || !void_setting) return;
+
+    fss_write_main_print_help(macro_fss_write_setting(void_setting), main->message);
   }
 #endif // _di_fss_write_main_process_help_
 

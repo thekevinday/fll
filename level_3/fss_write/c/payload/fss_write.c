@@ -6,14 +6,18 @@ extern "C" {
 #endif
 
 #ifndef _di_fss_write_payload_process_help_
-  void fss_write_payload_process_help(fll_program_data_t * const main, void * const setting) {
+  void fss_write_payload_process_help(fll_program_data_t * const main, void * const void_setting) {
 
-    fss_write_payload_print_help(macro_fss_write_setting(setting), main->message);
+    if (!main || !void_setting) return;
+
+    fss_write_payload_print_help(macro_fss_write_setting(void_setting), main->message);
   }
 #endif // _di_fss_write_payload_process_help_
 
 #ifndef _di_fss_write_payload_process_pipe_
   void fss_write_payload_process_pipe(fll_program_data_t * const main, void * const void_setting) {
+
+    if (!main || !void_setting) return;
 
     f_status_t status_pipe = F_none;
     f_file_t input = f_file_t_initialize;
@@ -375,6 +379,8 @@ extern "C" {
 
 #ifndef _di_fss_write_payload_process_set_
   void fss_write_payload_process_set(fll_program_data_t * const main, void * const void_setting) {
+
+    if (!main || !void_setting) return;
 
     fss_write_setting_t * const setting = macro_fss_write_setting(void_setting);
 

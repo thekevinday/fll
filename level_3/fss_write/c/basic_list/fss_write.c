@@ -8,6 +8,8 @@ extern "C" {
 #ifndef _di_fss_write_basic_list_process_content_
   void fss_write_basic_list_process_content(fll_program_data_t * const main, void * const void_setting, const bool last) {
 
+    if (!main || !void_setting) return;
+
     fss_write_setting_t * const setting = macro_fss_write_setting(void_setting);
 
     if (setting->content) {
@@ -54,14 +56,18 @@ extern "C" {
 #endif // _di_fss_write_basic_list_process_content_
 
 #ifndef _di_fss_write_basic_list_process_help_
-  void fss_write_basic_list_process_help(fll_program_data_t * const main, void * const setting) {
+  void fss_write_basic_list_process_help(fll_program_data_t * const main, void * const void_setting) {
 
-    fss_write_basic_list_print_help(setting, main->message);
+    if (!main || !void_setting) return;
+
+    fss_write_basic_list_print_help(void_setting, main->message);
   }
 #endif // _di_fss_write_basic_list_process_help_
 
 #ifndef _di_fss_write_basic_list_process_object_
   void fss_write_basic_list_process_object(fll_program_data_t * const main, void * const void_setting) {
+
+    if (!main || !void_setting) return;
 
     fss_write_setting_t * const setting = macro_fss_write_setting(void_setting);
 

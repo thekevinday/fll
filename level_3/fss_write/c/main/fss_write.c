@@ -47,14 +47,14 @@ extern "C" {
 #endif // _di_fss_write_main_
 
 #ifndef _di_fss_write_process_normal_
-  void fss_write_process_normal(fll_program_data_t * const main, void * const setting) {
+  void fss_write_process_normal(fll_program_data_t * const main, void * const void_setting) {
 
     fss_write_process_normal_data(
       main,
-      macro_fss_write_setting(setting),
-      (macro_fss_write_setting(setting)->flag & fss_write_flag_object_e)
-        ? macro_fss_write_setting(setting)->objects.used
-        : macro_fss_write_setting(setting)->contentss.used
+      macro_fss_write_setting(void_setting),
+      (macro_fss_write_setting(void_setting)->flag & fss_write_flag_object_e)
+        ? macro_fss_write_setting(void_setting)->objects.used
+        : macro_fss_write_setting(void_setting)->contentss.used
     );
   }
 #endif // _di_fss_write_process_normal_
