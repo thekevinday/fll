@@ -10,6 +10,8 @@ extern "C" {
 #ifndef _di_control_print_help_
   f_status_t control_print_help(const fll_program_data_t * const main) {
 
+    if (!main) return F_output_not;
+
     flockfile(main->output.to.stream);
 
     fll_program_print_help_header(main->output.to, main->context, control_program_name_long_s, control_program_version_s);

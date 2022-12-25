@@ -15,6 +15,8 @@ extern "C" {
 #ifndef _di_controller_print_help_
   f_status_t controller_print_help(controller_main_t * const main) {
 
+    if (!main) return F_output_not;
+
     controller_lock_print(main->output.to, 0);
 
     fll_program_print_help_header(main->output.to, main->context, *main->program_name_long, controller_program_version_s);

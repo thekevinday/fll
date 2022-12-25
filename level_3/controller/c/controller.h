@@ -91,6 +91,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
  *
  * @see controller_main()
  */
