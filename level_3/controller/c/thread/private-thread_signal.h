@@ -62,8 +62,6 @@ extern "C" {
 /**
  * Thread for handling signals/interrupts during normal operations.
  *
- * Currently this only handles signals to exist, but may be updated to handle interrupt and hangup signals.
- *
  * @param arguments
  *   The thread arguments.
  *   Must be of type controller_global_t.
@@ -79,8 +77,6 @@ extern "C" {
 
 /**
  * Thread for handling signals/interrupts during other operations.
- *
- * Currently this only handles signals to exist, but may be updated to handle interrupt and hangup signals.
  *
  * @param arguments
  *   The thread arguments.
