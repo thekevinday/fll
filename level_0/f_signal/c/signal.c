@@ -27,7 +27,7 @@ extern "C" {
       if (!signal) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!signal->id) {
+    if (signal->id == -1) {
       return F_data_not;
     }
 
