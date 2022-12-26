@@ -81,19 +81,19 @@ extern "C" {
     status = f_console_parameter_process(arguments, parameters);
     if (F_status_is_error(status)) return status;
 
-    f_console_parameter_id_t decision = choices.id[2];
+    f_console_parameter_id_t choice = choices.id[2];
 
     if (right) {
-      status = f_console_parameter_prioritize_right(*parameters, choices, &decision);
+      status = f_console_parameter_prioritize_right(*parameters, choices, &choice);
     }
     else {
-      status = f_console_parameter_prioritize_left(*parameters, choices, &decision);
+      status = f_console_parameter_prioritize_left(*parameters, choices, &choice);
     }
 
     if (F_status_is_error(status)) return status;
 
     // Load colors unless told not to.
-    if (decision == choices.id[0]) {
+    if (choice == choices.id[0]) {
       context->mode = F_color_mode_no_color_d;
     }
     else {
@@ -102,7 +102,7 @@ extern "C" {
       macro_f_color_context_t_new(allocation_status, (*context));
       if (F_status_is_error(status)) return status;
 
-      status = f_color_load_context(decision == choices.id[1], context);
+      status = f_color_load_context(choice == choices.id[1], context);
     }
 
     return status;
