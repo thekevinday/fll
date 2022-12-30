@@ -88,11 +88,13 @@ extern "C" {
  *   - endian_little: Use little-endian rather than host byte order or big-endian when converting.
  *   - negative:      Treat the string as a negative number.
  */
-#ifndef _di_fl_conversion_data_flag_d_
-  #define FL_conversion_data_flag_endian_big_d    0x1
-  #define FL_conversion_data_flag_endian_little_d 0x2
-  #define FL_conversion_data_flag_negative_d      0x4
-#endif // _di_fl_conversion_data_flag_d_
+#ifndef _di_fl_conversion_data_flag_e_
+  enum {
+    fl_conversion_data_flag_endian_big_e    = 0x1,
+    fl_conversion_data_flag_endian_little_e = 0x2,
+    fl_conversion_data_flag_negative_e      = 0x4,
+  };
+#endif // _di_fl_conversion_data_flag_e_
 
 #ifdef __cplusplus
 } // extern "C"

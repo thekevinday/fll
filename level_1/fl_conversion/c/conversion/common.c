@@ -26,11 +26,11 @@ extern "C" {
   #endif // _di_fl_conversion_data_base_16_c_
 
   #ifndef _di_fl_conversion_data_endian_big_c_
-    const fl_conversion_data_t fl_conversion_data_endian_big_c = macro_fl_conversion_data_t_initialize(10, FL_conversion_data_flag_endian_big_d);
+    const fl_conversion_data_t fl_conversion_data_endian_big_c = macro_fl_conversion_data_t_initialize(10, fl_conversion_data_flag_endian_big_e);
   #endif // _di_fl_conversion_data_endian_big_c_
 
   #ifndef _di_fl_conversion_data_endian_little_c_
-    const fl_conversion_data_t fl_conversion_data_endian_little_c = macro_fl_conversion_data_t_initialize(10, FL_conversion_data_flag_endian_little_d);
+    const fl_conversion_data_t fl_conversion_data_endian_little_c = macro_fl_conversion_data_t_initialize(10, fl_conversion_data_flag_endian_little_e);
   #endif // _di_fl_conversion_data_endian_little_c_
 #endif // _di_fl_conversion_data_c_
 

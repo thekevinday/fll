@@ -22,15 +22,15 @@ extern "C" {
         if (digits) {
           ++digits;
 
-          if (flag & FL_conversion_data_flag_negative_d) {
+          if (flag & fl_conversion_data_flag_negative_e) {
             if (digits > F_conversion_digits_binary_signed_d) {
               return F_status_set_error(F_number_underflow);
             }
 
-            if (flag & FL_conversion_data_flag_endian_big_d) {
+            if (flag & fl_conversion_data_flag_endian_big_e) {
               converted >>= 1;
             }
-            else if (flag & FL_conversion_data_flag_endian_little_d) {
+            else if (flag & fl_conversion_data_flag_endian_little_e) {
               converted <<= 1;
             }
             else {
@@ -48,10 +48,10 @@ extern "C" {
               return F_status_set_error(F_number_overflow);
             }
 
-            if (flag & FL_conversion_data_flag_endian_big_d) {
+            if (flag & fl_conversion_data_flag_endian_big_e) {
               converted >>= 1;
             }
-            else if (flag & FL_conversion_data_flag_endian_little_d) {
+            else if (flag & fl_conversion_data_flag_endian_little_e) {
               converted <<= 1;
             }
             else {
@@ -68,7 +68,7 @@ extern "C" {
         else if (digit) {
           digits = 1;
 
-          if (flag & FL_conversion_data_flag_negative_d) {
+          if (flag & fl_conversion_data_flag_negative_e) {
             converted = (f_number_unsigned_t) (0 - digit);
           }
           else {
@@ -108,10 +108,10 @@ extern "C" {
             return F_status_set_error(F_number_overflow);
           }
 
-          if (flag & FL_conversion_data_flag_endian_big_d) {
+          if (flag & fl_conversion_data_flag_endian_big_e) {
             converted >>= 1;
           }
-          else if (flag & FL_conversion_data_flag_endian_little_d) {
+          else if (flag & fl_conversion_data_flag_endian_little_e) {
             converted <<= 1;
           }
           else {
@@ -172,7 +172,7 @@ extern "C" {
         if (digits) {
           ++digits;
 
-          if (data.flag & FL_conversion_data_flag_negative_d) {
+          if (data.flag & fl_conversion_data_flag_negative_e) {
             if (digits > F_conversion_digits_decimal_signed_d) {
               if ((converted * data.base) - digit < F_number_t_size_negative_d || (converted * data.base) - digit > converted) {
                 return F_status_set_error(F_number_underflow);
@@ -196,7 +196,7 @@ extern "C" {
         else if (digit) {
           digits = 1;
 
-          if (data.flag & FL_conversion_data_flag_negative_d) {
+          if (data.flag & fl_conversion_data_flag_negative_e) {
             converted = (f_number_unsigned_t) (0 - digit);
           }
           else {
@@ -211,7 +211,7 @@ extern "C" {
 
     // Ensure bytes are in correct order by reversing bytes if requested byte order is different than the host byte order.
     #ifdef _is_F_endian_big
-      if (data.flag & FL_conversion_data_flag_endian_little_d) {
+      if (data.flag & fl_conversion_data_flag_endian_little_e) {
         *number = macro_f_utf_char_t_from_char_1_le(macro_f_utf_char_t_to_char_1_be(converted))
                 | macro_f_utf_char_t_from_char_2_le(macro_f_utf_char_t_to_char_2_be(converted))
                 | macro_f_utf_char_t_from_char_3_le(macro_f_utf_char_t_to_char_3_be(converted))
@@ -220,7 +220,7 @@ extern "C" {
         return F_none;
       }
     #else
-      if (data.flag & FL_conversion_data_flag_endian_big_d) {
+      if (data.flag & fl_conversion_data_flag_endian_big_e) {
         *number = macro_f_utf_char_t_from_char_1_be(macro_f_utf_char_t_to_char_1_le(converted))
                 | macro_f_utf_char_t_from_char_2_be(macro_f_utf_char_t_to_char_2_le(converted))
                 | macro_f_utf_char_t_from_char_3_be(macro_f_utf_char_t_to_char_3_le(converted))
@@ -289,7 +289,7 @@ extern "C" {
 
     // Ensure bytes are in correct order by reversing bytes if requested byte order is different than the host byte order.
     #ifdef _is_F_endian_big
-      if (data.flag & FL_conversion_data_flag_endian_little_d) {
+      if (data.flag & fl_conversion_data_flag_endian_little_e) {
         *number = macro_f_utf_char_t_from_char_1_le(macro_f_utf_char_t_to_char_1_be(converted))
                 | macro_f_utf_char_t_from_char_2_le(macro_f_utf_char_t_to_char_2_be(converted))
                 | macro_f_utf_char_t_from_char_3_le(macro_f_utf_char_t_to_char_3_be(converted))
@@ -298,7 +298,7 @@ extern "C" {
         return F_none;
       }
     #else
-      if (data.flag & FL_conversion_data_flag_endian_big_d) {
+      if (data.flag & fl_conversion_data_flag_endian_big_e) {
         *number = macro_f_utf_char_t_from_char_1_be(macro_f_utf_char_t_to_char_1_le(converted))
                 | macro_f_utf_char_t_from_char_2_be(macro_f_utf_char_t_to_char_2_le(converted))
                 | macro_f_utf_char_t_from_char_3_be(macro_f_utf_char_t_to_char_3_le(converted))
@@ -453,10 +453,10 @@ extern "C" {
     fl_conversion_data_t data = macro_fl_conversion_data_t_initialize(mode, flag);
 
     if (vector == -1) {
-      data.flag |= FL_conversion_data_flag_negative_d;
+      data.flag |= fl_conversion_data_flag_negative_e;
     }
-    else if (data.flag & FL_conversion_data_flag_negative_d) {
-      data.flag -= FL_conversion_data_flag_negative_d;
+    else if (data.flag & fl_conversion_data_flag_negative_e) {
+      data.flag -= fl_conversion_data_flag_negative_e;
     }
 
     if (mode == 10 || mode == 16 || mode == 12 || mode == 8) {
@@ -596,8 +596,8 @@ extern "C" {
 
     fl_conversion_data_t data = macro_fl_conversion_data_t_initialize(mode, flag);
 
-    if (data.flag & FL_conversion_data_flag_negative_d) {
-      data.flag -= FL_conversion_data_flag_negative_d;
+    if (data.flag & fl_conversion_data_flag_negative_e) {
+      data.flag -= fl_conversion_data_flag_negative_e;
     }
 
     if (mode == 10 || mode == 16 || mode == 12 || mode == 8) {
