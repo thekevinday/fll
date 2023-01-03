@@ -25,6 +25,13 @@ extern void test__f_signal_close__fails(void **state);
 extern void test__f_signal_close__parameter_checking(void **state);
 
 /**
+ * Test that function works but returns F_data_not when file descriptor is -1.
+ *
+ * @see f_signal_close()
+ */
+extern void test__f_signal_close__returns_data_not(void **state);
+
+/**
  * Test that function works.
  *
  * @see f_signal_close()

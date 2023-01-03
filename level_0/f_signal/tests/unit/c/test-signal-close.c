@@ -27,6 +27,8 @@ void test__f_signal_close__fails(void **state) {
     F_failure,
   };
 
+  signal.id = 0;
+
   for (int i = 0; i < 6; ++i) {
 
     will_return(__wrap_close, true);
@@ -47,12 +49,25 @@ void test__f_signal_close__parameter_checking(void **state) {
   }
 }
 
-void test__f_signal_close__works(void **state) {
+void test__f_signal_close__returns_data_not(void **state) {
 
   f_signal_t signal = f_signal_t_initialize;
 
   {
-    will_return(__wrap_close, false);
+    const f_status_t status = f_signal_close(&signal);
+
+    assert_int_equal(status, F_data_not);
+  }
+}
+
+void test__f_signal_close__works(void **state) {
+
+  f_signal_t signal = f_signal_t_initialize;
+
+  signal.id = 0;
+
+  {
+    will_return(__wrap_close, 0);
 
     const f_status_t status = f_signal_close(&signal);
 
