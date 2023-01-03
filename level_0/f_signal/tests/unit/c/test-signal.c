@@ -23,6 +23,7 @@ int main(void) {
     cmocka_unit_test(test__f_signal_action__works),
 
     cmocka_unit_test(test__f_signal_close__fails),
+    cmocka_unit_test(test__f_signal_close__returns_data_not),
     cmocka_unit_test(test__f_signal_close__works),
 
     cmocka_unit_test(test__f_signal_mask__fails),
