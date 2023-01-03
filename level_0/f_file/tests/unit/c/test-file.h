@@ -47,6 +47,7 @@
 #include "test-file-group_read.h"
 #include "test-file-is.h"
 #include "test-file-is_at.h"
+#include "test-file-is_stat.h"
 #include "test-file-link.h"
 #include "test-file-link_at.h"
 #include "test-file-link_hard.h"

@@ -1,0 +1,34 @@
+/**
+ * FLL - Level 0
+ *
+ * Project: File
+ * API Version: 0.7
+ * Licenses: lgpl-2.1-or-later
+ *
+ * Test the file project.
+ */
+#ifndef _TEST__F_file_is_stat_h
+#define _TEST__F_file_is_stat_h
+
+/**
+ * Test that function fails.
+ *
+ * @see f_file_is_stat()
+ */
+extern void test__f_file_is_stat__fails(void **state);
+
+/**
+ * Test that function works and returns F_false.
+ *
+ * @see f_file_is_stat()
+ */
+extern void test__f_file_is_stat__returns_false(void **state);
+
+/**
+ * Test that function works and returns F_true.
+ *
+ * @see f_file_is_stat()
+ */
+extern void test__f_file_is_stat__returns_true(void **state);
+
+#endif // _TEST__F_file_is_stat_h

@@ -480,6 +480,15 @@ extern "C" {
   }
 #endif // _di_f_file_is_at_
 
+#ifndef _di_f_file_is_stat_
+  f_status_t f_file_is_stat(const struct stat stat_file, const int type) {
+
+    if (macro_f_file_type_get(stat_file.st_mode) == type) return F_true;
+
+    return F_false;
+  }
+#endif // _di_f_file_is_stat_
+
 #ifndef _di_f_file_link_
   f_status_t f_file_link(const f_string_static_t target, const f_string_static_t point) {
 

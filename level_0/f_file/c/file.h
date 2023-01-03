@@ -772,6 +772,25 @@ extern "C" {
 #endif // _di_f_file_is_at_
 
 /**
+ * Identify whether or not a file exists at the given path and if that file is a specific type using the statistics file data.
+ *
+ * This does not require access on the file itself.
+ * This only requires a populated statistics file structure.
+ *
+ * @param stat_file
+ *   The statistics read.
+ * @param type
+ *   The type of the file.
+ *
+ * @return
+ *   F_true if path was found and path is type.
+ *   F_false if path was found and path is not type.
+ */
+#ifndef _di_f_file_is_stat_
+  extern f_status_t f_file_is_stat(const struct stat stat_file, const int type);
+#endif // _di_f_file_is_stat_
+
+/**
  * Create a symbolic link to a file.
  *
  * This will not replace existing files/links.

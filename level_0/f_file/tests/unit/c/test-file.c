@@ -124,6 +124,10 @@ int main(void) {
     cmocka_unit_test(test__f_file_is_at__returns_false),
     cmocka_unit_test(test__f_file_is_at__returns_true),
 
+    cmocka_unit_test(test__f_file_is_stat__fails),
+    cmocka_unit_test(test__f_file_is_stat__returns_false),
+    cmocka_unit_test(test__f_file_is_stat__returns_true),
+
     cmocka_unit_test(test__f_file_link__fails),
     cmocka_unit_test(test__f_file_link__returns_data_not),
     cmocka_unit_test(test__f_file_link__works),
@@ -369,6 +373,7 @@ int main(void) {
       cmocka_unit_test(test__f_file_group_read__parameter_checking),
       // f_file_is() doesn't use parameter checking.
       // f_file_is_at() doesn't use parameter checking.
+      // f_file_is_stat() doesn't use parameter checking.
       // f_file_link() doesn't use parameter checking.
       // f_file_link_at() doesn't use parameter checking.
       // f_file_link_hard() doesn't use parameter checking.
