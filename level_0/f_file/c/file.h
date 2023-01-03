@@ -1150,7 +1150,7 @@ extern "C" {
  *
  *   See the f_file_mode_t documentation for details.
  * @param replace
- *   The determined modes that are to be replaced, such as: F_file_mode_t_replace_owner_d.
+ *   (optional) The determined modes that are to be replaced, such as: F_file_mode_t_replace_owner_d.
  *   This uses bitwise data.
  *
  *   The flags F_file_mode_t_replace_* are used to designate which mask bits are to be replaced.
@@ -1158,6 +1158,8 @@ extern "C" {
  *   A value of 0 means that there are no replacements being made.
  *
  *   Replacements replace the entire existing mode values where as "add" and "subtract" add or subtract modes, respectively, to the existing mode values.
+ *
+ *   Set to NULL to not use.
  *
  * @return
  *   F_none on success.

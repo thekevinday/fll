@@ -920,7 +920,6 @@ extern "C" {
   f_status_t f_file_mode_from_string(const f_string_static_t code, const mode_t umask, f_file_mode_t * const mode, uint8_t * const replace) {
     #ifndef _di_level_0_parameter_checking_
       if (!mode) return F_status_set_error(F_parameter);
-      if (!replace) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
     if (!code.used) return F_data_not;
@@ -1269,7 +1268,10 @@ extern "C" {
 
     if (syntax) {
       *mode = mode_result;
-      *replace = replace_result;
+
+      if (replace) {
+        *replace = replace_result;
+      }
 
       return F_none;
     }

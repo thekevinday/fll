@@ -203,14 +203,6 @@ void test__f_file_mode_from_string__parameter_checking(void **state) {
   }
 
   {
-    f_file_mode_t mode_file = f_file_mode_t_initialize;
-
-    const f_status_t status = f_file_mode_from_string(f_string_empty_s, 0, &mode_file, 0);
-
-    assert_int_equal(status, F_status_set_error(F_parameter));
-  }
-
-  {
     uint8_t replace = 0;
 
     const f_status_t status = f_file_mode_from_string(f_string_empty_s, 0, 0, &replace);
@@ -226,6 +218,14 @@ void test__f_file_mode_from_string__returns_data_not(void **state) {
       uint8_t replace = 0;
 
       const f_status_t status = f_file_mode_from_string(f_string_empty_s, 0, &mode_file, &replace);
+
+      assert_int_equal(F_status_set_fine(status), F_data_not);
+    }
+
+    {
+      f_file_mode_t mode_file = f_file_mode_t_initialize;
+
+      const f_status_t status = f_file_mode_from_string(f_string_empty_s, 0, &mode_file, 0);
 
       assert_int_equal(F_status_set_fine(status), F_data_not);
     }
