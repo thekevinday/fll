@@ -136,21 +136,27 @@ void test__f_file_is__returns_true(void **state) {
     F_file_type_socket_d,
   };
 
-  for (int i = 0; i < 8; ++i) {
+  for (int j = 0; j < 8; ++j) {
 
     struct stat statistics;
 
     memset(&statistics, 0, sizeof(struct stat));
 
-    statistics.st_mode = 1 | types[i];
+    statistics.st_mode = 1 | types[j];
 
-    will_return(__wrap_lstat, false);
-    will_return(__wrap_lstat, &statistics);
-    will_return(__wrap_lstat, 0);
+    for (int i = 0; i < 8; ++i) {
 
-    const f_status_t status = f_file_is(path, types[i], F_false);
+      // Skip what would return false.
+      if (j != i) continue;
 
-    assert_int_equal(status, F_true);
+      will_return(__wrap_lstat, false);
+      will_return(__wrap_lstat, &statistics);
+      will_return(__wrap_lstat, 0);
+
+      const f_status_t status = f_file_is(path, types[i], F_false);
+
+      assert_int_equal(status, F_true);
+    } // for
   } // for
 }
 
