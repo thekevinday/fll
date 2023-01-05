@@ -82,6 +82,8 @@ extern "C" {
     fl_print_format("  When piping data to this program, the piped data is treated as if it were prepended to the %[%r%]", file.stream, context.set.notable, fake_make_parameter_variable_fakefile_s, context.set.notable);
     fl_print_format(" or the %[%r%], depending on the operation.%r%r", file.stream, context.set.notable, fake_make_parameter_variable_settings_s, context.set.notable, f_string_eol_s, f_string_eol_s);
 
+    fl_print_format("  A section name from the fakefile that does not conflict with an operation name may be specified when performing the %[%r%] operation.%r%r", file.stream, context.set.notable, fake_other_operation_make_s, context.set.notable, f_string_eol_s, f_string_eol_s);
+
     funlockfile(file.stream);
 
     return F_none;
@@ -276,14 +278,6 @@ extern "C" {
     }
     else {
       operations[0] = fake_operation_make_e;
-
-      if (!main->process_pipe && main->parameters.remaining.used) {
-        status = F_status_set_error(F_parameter);
-
-        if (main->error.verbosity != f_console_verbosity_quiet_e) {
-          fll_print_format("%r%[%QYou failed to specify a valid operation.%]%r", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context, f_string_eol_s);
-        }
-      }
     }
 
     if (F_status_is_error_not(status)) {

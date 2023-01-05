@@ -63,8 +63,8 @@ extern "C" {
  * The program help related data.
  */
 #ifndef _di_fake_program_help_parameters_
-  #define FAKE_program_help_parameters_s "operation"
-  #define FAKE_program_help_parameters_s_length 9
+  #define FAKE_program_help_parameters_s "operation / section"
+  #define FAKE_program_help_parameters_s_length 19
 
   extern const f_string_static_t fake_program_help_parameters_s;
 #endif // _di_fake_program_help_parameters_
