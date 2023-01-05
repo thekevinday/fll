@@ -173,14 +173,6 @@ extern "C" {
     }
     else {
       operations[0] = fake_operation_make_e;
-
-      if (!(main->pipe & fll_program_data_pipe_input_e) && main->parameters.remaining.used) {
-        status = F_status_set_error(F_parameter);
-
-        if (main->error.verbosity > f_console_verbosity_quiet_e) {
-          fll_print_format("%r%[%QYou failed to specify a valid operation.%]%r", main->error.to, f_string_eol_s, main->error.context, main->error.prefix, main->error.context, f_string_eol_s);
-        }
-      }
     }
 
     if (F_status_is_error_not(status)) {
