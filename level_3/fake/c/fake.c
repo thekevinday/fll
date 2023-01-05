@@ -80,7 +80,7 @@ extern "C" {
     fl_print_format(" '%[./my_fakefile%]' is used if found, but if it is not found then no other paths are attempted.%r%r", file.stream, context.set.notable, context.set.notable, f_string_eol_s, f_string_eol_s);
 
     fl_print_format("  When piping data to this program, the piped data is treated as if it were prepended to the %[%r%]", file.stream, context.set.notable, fake_make_parameter_variable_fakefile_s, context.set.notable);
-    fl_print_format("or the %[%r%], depending on the operation.%r%r", file.stream, context.set.notable, fake_make_parameter_variable_settings_s, context.set.notable, f_string_eol_s, f_string_eol_s);
+    fl_print_format(" or the %[%r%], depending on the operation.%r%r", file.stream, context.set.notable, fake_make_parameter_variable_settings_s, context.set.notable, f_string_eol_s, f_string_eol_s);
 
     funlockfile(file.stream);
 
