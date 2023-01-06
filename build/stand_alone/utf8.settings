@@ -12,7 +12,7 @@ version_micro 3
 version_file micro
 version_target minor
 
-modes stand_alone
+modes stand_alone clang
 modes_default stand_alone
 
 build_compiler gcc
