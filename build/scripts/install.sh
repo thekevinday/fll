@@ -659,12 +659,10 @@ install_perform_install() {
         file=
       fi
 
-      if [[ $file != "" ]] ; then
-        if [[ $enable_static_programs == "yes" ]] ; then
-          if [[ $verbosity != "quiet" ]] ; then
-            echo
-            echo -e "${c_highlight}Installing (${c_notice}static${c_highlight}) Programs to: ${c_reset}${c_notice}${destination_programs_static}${c_reset}${c_highlight}.${c_reset}"
-          fi
+      if [[ $file != "" && $enable_static_programs == "yes" ]] ; then
+        if [[ $verbosity != "quiet" ]] ; then
+          echo
+          echo -e "${c_highlight}Installing (${c_notice}static${c_highlight}) Programs to: ${c_reset}${c_notice}${destination_programs_static}${c_reset}${c_highlight}.${c_reset}"
         fi
 
         cp $verbose_common -R ${path_build}${path_programs}${path_static}* $destination_programs_static
