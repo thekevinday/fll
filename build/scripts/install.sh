@@ -543,7 +543,7 @@ install_perform_install() {
     fi
 
     if [[ $failure == "" ]] ; then
-      destination_prefix=$work
+      destination_prefix=${work}
       destination_programs=${work}programs/
       destination_programs_static=${destination_programs}static/
       destination_programs_shared=${destination_programs}shared/
@@ -572,7 +572,7 @@ install_perform_install() {
         echo -e "${c_highlight}Installing Includes to: ${c_reset}${c_notice}${destination_includes}${c_reset}${c_highlight}.${c_reset}"
       fi
 
-      cp $verbose_common -R ${path_build}${path_includes}* $destination_includes
+      cp $verbose_common -R ${path_build}${path_includes}* ${destination_includes}
 
       if [[ $? -ne 0 ]] ; then
         if [[ $verbosity != "quiet" ]] ; then
@@ -603,7 +603,7 @@ install_perform_install() {
           echo -e "${c_highlight}Installing (${c_notice}static${c_highlight}) Libraries to: ${c_reset}${c_notice}${destination_libraries_static}${c_reset}${c_highlight}.${c_reset}"
         fi
 
-        cp $verbose_common -R ${path_build}${path_libraries}${path_static}* $destination_libraries_static
+        cp $verbose_common -R ${path_build}${path_libraries}${path_static}* ${destination_libraries_static}
 
         if [[ $? -ne 0 ]] ; then
           if [[ $verbosity != "quiet" ]] ; then
@@ -633,7 +633,7 @@ install_perform_install() {
           echo -e "${c_highlight}Installing (${c_notice}shared${c_highlight}) Libraries to: ${c_reset}${c_notice}${destination_libraries_shared}${c_reset}${c_highlight}.${c_reset}"
         fi
 
-        cp $verbose_common -R ${path_build}${path_libraries}${path_shared}* $destination_libraries_shared
+        cp $verbose_common -R ${path_build}${path_libraries}${path_shared}* ${destination_libraries_shared}
 
         if [[ $? -ne 0 ]] ; then
           if [[ $verbosity != "quiet" ]] ; then
@@ -665,7 +665,7 @@ install_perform_install() {
           echo -e "${c_highlight}Installing (${c_notice}static${c_highlight}) Programs to: ${c_reset}${c_notice}${destination_programs_static}${c_reset}${c_highlight}.${c_reset}"
         fi
 
-        cp $verbose_common -R ${path_build}${path_programs}${path_static}* $destination_programs_static
+        cp $verbose_common -R ${path_build}${path_programs}${path_static}* ${destination_programs_static}
 
         if [[ $? -ne 0 ]] ; then
           if [[ $verbosity != "quiet" ]] ; then
@@ -695,7 +695,7 @@ install_perform_install() {
           echo -e "${c_highlight}Installing (${c_notice}shared${c_highlight}) Programs to: ${c_reset}${c_notice}${destination_programs_shared}${c_reset}${c_highlight}.${c_reset}"
         fi
 
-        cp $verbose_common -R ${path_build}${path_programs}${path_shared}* $destination_programs_shared
+        cp $verbose_common -R ${path_build}${path_programs}${path_shared}* ${destination_programs_shared}
 
         if [[ $? -ne 0 ]] ; then
           if [[ $verbosity != "quiet" ]] ; then
