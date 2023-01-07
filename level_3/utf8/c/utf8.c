@@ -50,7 +50,7 @@ extern "C" {
 
     fll_program_print_help_usage(file, context, utf8_program_name_s, utf8_program_help_parameters_s);
 
-    fl_print_format("  The default behavior is to assume the expected input is byte sequence from the command line to be output to the screen as codepoints.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
+    fl_print_format("  The default behavior is to assume the expected input is byte sequences from the command line to be output to the screen as codepoints.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
 
     fl_print_format("  Multiple input sources are allowed but only a single output destination is allowed.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
 
