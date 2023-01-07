@@ -54,6 +54,7 @@ extern "C" {
         &data->path_build,
         &data->path_data,
         &data->path_data_build,
+        &data->path_data_documentation,
         &data->path_data_settings,
         &data->path_documents,
         &data->path_licenses,
@@ -76,7 +77,7 @@ extern "C" {
         &fake_path_part_specifications_s,
       };
 
-      for (uint8_t i = 0; i < 23; ++i) {
+      for (uint8_t i = 0; i < 24; ++i) {
 
         status = fake_skeleton_operate_directory_create(data, *parameters_value[i]);
 

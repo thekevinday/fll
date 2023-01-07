@@ -15,6 +15,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fake_build_strings_
+const f_string_static_t fake_build_documentation_files_s = macro_f_string_static_t_initialize(FAKE_build_documentation_files_s, 0, FAKE_build_documentation_files_s_length);
   const f_string_static_t fake_build_header_files_s = macro_f_string_static_t_initialize(FAKE_build_header_files_s, 0, FAKE_build_header_files_s_length);
   const f_string_static_t fake_build_header_files_shared_s = macro_f_string_static_t_initialize(FAKE_build_header_files_shared_s, 0, FAKE_build_header_files_shared_s_length);
   const f_string_static_t fake_build_header_files_static_s = macro_f_string_static_t_initialize(FAKE_build_header_files_static_s, 0, FAKE_build_header_files_static_s_length);
@@ -884,6 +885,8 @@ extern "C" {
     fake_build_skeleton(data, &data_build, mode.directory, stage.file_skeleton, &status);
 
     data->main->child = fake_build_execute_process_script(data, &data_build, data_build.setting.process_pre, stage.file_process_pre, &status);
+
+    fake_build_copy(data, mode, fake_build_documentation_files_s, data->path_data_documentation, data->path_build_documentation, data_build.setting.build_sources_documentation, stage.file_sources_documentation, 0, &status);
 
     fake_build_copy(data, mode, fake_build_setting_files_s, data->path_data_settings, data->path_build_settings, data_build.setting.build_sources_setting, stage.file_sources_settings, 0, &status);
 

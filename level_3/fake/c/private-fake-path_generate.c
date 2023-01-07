@@ -21,11 +21,12 @@ extern "C" {
       };
 
       const uint8_t parameters_size[] = {
-        7,
-        2,
+        8,
+        3,
       };
 
       f_string_dynamic_t *parameters_value_0[] = {
+        &data->path_build_documentation,
         &data->path_build_documents,
         &data->path_build_includes,
         &data->path_build_libraries,
@@ -37,6 +38,7 @@ extern "C" {
 
       f_string_dynamic_t *parameters_value_1[] = {
         &data->path_data_build,
+        &data->path_data_documentation,
         &data->path_data_settings,
       };
 
@@ -64,6 +66,7 @@ extern "C" {
 
     {
       const f_string_static_t parameters_source[] = {
+        fake_path_part_documentation_s,
         fake_path_part_documents_s,
         fake_path_part_includes_s,
         fake_path_part_libraries_s,
@@ -72,12 +75,14 @@ extern "C" {
         fake_path_part_settings_s,
         fake_path_part_stage_s,
         fake_path_part_build_s,
+        fake_path_part_documentation_s,
         fake_path_part_settings_s,
         fake_path_part_documents_s,
         fake_path_part_licenses_s,
       };
 
       f_string_dynamic_t * const parameters_value[] = {
+        &data->path_build_documentation,
         &data->path_build_documents,
         &data->path_build_includes,
         &data->path_build_libraries,
@@ -86,12 +91,13 @@ extern "C" {
         &data->path_build_settings,
         &data->path_build_stage,
         &data->path_data_build,
+        &data->path_data_documentation,
         &data->path_data_settings,
         &data->path_documents,
         &data->path_licenses,
       };
 
-      for (i = 0; i < 11; ++i) {
+      for (i = 0; i < 13; ++i) {
 
         status = f_string_dynamic_append_nulless(parameters_source[i], parameters_value[i]);
 

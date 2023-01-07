@@ -90,6 +90,7 @@ extern "C" {
   #define FAKE_path_part_c_s              "c"              F_path_separator_s
   #define FAKE_path_part_cpp_s            "c++"            F_path_separator_s
   #define FAKE_path_part_data_s           "data"           F_path_separator_s
+  #define FAKE_path_part_documentation_s  "documentation"  F_path_separator_s
   #define FAKE_path_part_documents_s      "documents"      F_path_separator_s
   #define FAKE_path_part_includes_s       "includes"       F_path_separator_s
   #define FAKE_path_part_libraries_s      "libraries"      F_path_separator_s
@@ -109,6 +110,7 @@ extern "C" {
   #define FAKE_path_part_c_s_length              1 + F_path_separator_s_length
   #define FAKE_path_part_cpp_s_length            3 + F_path_separator_s_length
   #define FAKE_path_part_data_s_length           4 + F_path_separator_s_length
+  #define FAKE_path_part_documentation_s_length  13 + F_path_separator_s_length
   #define FAKE_path_part_documents_s_length      9 + F_path_separator_s_length
   #define FAKE_path_part_includes_s_length       8 + F_path_separator_s_length
   #define FAKE_path_part_libraries_s_length      9 + F_path_separator_s_length
@@ -128,6 +130,7 @@ extern "C" {
   extern const f_string_static_t fake_path_part_c_s;
   extern const f_string_static_t fake_path_part_cpp_s;
   extern const f_string_static_t fake_path_part_data_s;
+  extern const f_string_static_t fake_path_part_documentation_s;
   extern const f_string_static_t fake_path_part_documents_s;
   extern const f_string_static_t fake_path_part_includes_s;
   extern const f_string_static_t fake_path_part_libraries_s;
