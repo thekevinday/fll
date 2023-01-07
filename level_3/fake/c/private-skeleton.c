@@ -101,11 +101,11 @@ extern "C" {
     }
 
     if (F_status_is_error_not(status)) {
-      status = fake_skeleton_operate_file_create(data, data->file_data_build_process_post_s, F_true, fake_make_skeleton_content_process_post_s);
+      status = fake_skeleton_operate_file_create(data, data->file_data_build_process_post, F_true, fake_make_skeleton_content_process_post_s);
     }
 
     if (F_status_is_error_not(status)) {
-      status = fake_skeleton_operate_file_create(data, data->file_data_build_process_pre_s, F_true, fake_make_skeleton_content_process_pre_s);
+      status = fake_skeleton_operate_file_create(data, data->file_data_build_process_pre, F_true, fake_make_skeleton_content_process_pre_s);
     }
 
     if (F_status_is_error_not(status)) {

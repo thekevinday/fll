@@ -68,8 +68,8 @@ extern "C" {
  * file_data_build_defines:        The defines build file data.
  * file_data_build_dependencies:   The dependencies build file data.
  * file_data_build_fakefile:       The fakefile build file data.
- * file_data_build_process_post_s: The process_post_s build file data.
- * file_data_build_process_pre_s:  The process_pre_s build file data.
+ * file_data_build_process_post:   The process_post_s build file data.
+ * file_data_build_process_pre:    The process_pre_s build file data.
  * file_data_build_settings:       The settings build file data.
  *
  * file_documents_readme: The documents readme file data.
@@ -135,8 +135,8 @@ extern "C" {
     f_string_dynamic_t file_data_build_defines;
     f_string_dynamic_t file_data_build_dependencies;
     f_string_dynamic_t file_data_build_fakefile;
-    f_string_dynamic_t file_data_build_process_post_s;
-    f_string_dynamic_t file_data_build_process_pre_s;
+    f_string_dynamic_t file_data_build_process_post;
+    f_string_dynamic_t file_data_build_process_pre;
     f_string_dynamic_t file_data_build_settings;
 
     f_string_dynamic_t file_documents_readme;
@@ -612,7 +612,7 @@ extern "C" {
   #define FAKE_build_setting_name_build_sources_program_shared_s "build_sources_program_shared"
   #define FAKE_build_setting_name_build_sources_program_static_s "build_sources_program_static"
   #define FAKE_build_setting_name_build_sources_script_s         "build_sources_script"
-  #define FAKE_build_setting_name_build_sources_settings_s       "build_sources_setting"
+  #define FAKE_build_setting_name_build_sources_setting_s        "build_sources_setting"
   #define FAKE_build_setting_name_build_static_s                 "build_static"
   #define FAKE_build_setting_name_defines_s                      "defines"
   #define FAKE_build_setting_name_defines_library_s              "defines_library"
@@ -707,7 +707,7 @@ extern "C" {
   #define FAKE_build_setting_name_build_sources_program_shared_s_length 28
   #define FAKE_build_setting_name_build_sources_program_static_s_length 28
   #define FAKE_build_setting_name_build_sources_script_s_length         20
-  #define FAKE_build_setting_name_build_sources_settings_s_length       22
+  #define FAKE_build_setting_name_build_sources_setting_s_length        21
   #define FAKE_build_setting_name_build_static_s_length                 12
   #define FAKE_build_setting_name_environment_s_length                  11
   #define FAKE_build_setting_name_defines_s_length                      7
@@ -802,7 +802,7 @@ extern "C" {
   extern const f_string_static_t fake_build_setting_name_build_sources_program_shared_s;
   extern const f_string_static_t fake_build_setting_name_build_sources_program_static_s;
   extern const f_string_static_t fake_build_setting_name_build_sources_script_s;
-  extern const f_string_static_t fake_build_setting_name_build_sources_settings_s;
+  extern const f_string_static_t fake_build_setting_name_build_sources_setting_s;
   extern const f_string_static_t fake_build_setting_name_build_static_s;
   extern const f_string_static_t fake_build_setting_name_defines_s;
   extern const f_string_static_t fake_build_setting_name_defines_library_s;

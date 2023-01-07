@@ -13,6 +13,8 @@ extern "C" {
     uint8_t i = 0;
 
     {
+      uint8_t j = 0;
+
       const f_string_dynamic_t *parameters_source[] = {
         &data->path_build,
         &data->path_data,
@@ -46,7 +48,7 @@ extern "C" {
       for (i = 0; i < 2; ++i) {
 
         // Initialize all string lengths to 0.
-        for (uint8_t j = 0; j < parameters_size[i]; ++j) {
+        for (j = 0; j < parameters_size[i]; ++j) {
           parameters_value[i][j]->used = 0;
         } // for
 
@@ -140,8 +142,8 @@ extern "C" {
         &data->file_data_build_defines,
         &data->file_data_build_dependencies,
         &data->file_data_build_fakefile,
-        &data->file_data_build_process_post_s,
-        &data->file_data_build_process_pre_s,
+        &data->file_data_build_process_post,
+        &data->file_data_build_process_pre,
         &data->file_data_build_settings,
       };
 
@@ -209,8 +211,8 @@ extern "C" {
         &data->path_build_programs_static,
         &data->file_data_build_defines,
         &data->file_data_build_dependencies,
-        &data->file_data_build_process_post_s,
-        &data->file_data_build_process_pre_s,
+        &data->file_data_build_process_post,
+        &data->file_data_build_process_pre,
         &data->file_data_build_fakefile,
         &data->file_data_build_settings,
         &data->file_documents_readme,
