@@ -28,7 +28,7 @@ build_sources_program main.c
 
 build_sources_headers firewall.h common.h
 
-build_sources_setting default-blacklist default-whitelist example-device-firewall firewall-first firewall-last firewall-other
+build_sources_setting network
 
 build_script yes
 build_shared yes

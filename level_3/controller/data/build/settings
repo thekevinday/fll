@@ -38,7 +38,7 @@ build_sources_program main.c main-common.c
 
 build_sources_headers controller.h common.h
 
-build_sources_setting entries example rules
+build_sources_setting controller
 
 build_script yes
 build_shared yes
