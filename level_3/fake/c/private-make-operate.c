@@ -959,7 +959,7 @@ extern "C" {
         fake_build_setting_name_build_sources_program_s,
         fake_build_setting_name_build_sources_program_shared_s,
         fake_build_setting_name_build_sources_program_static_s,
-        fake_build_setting_name_build_sources_settings_s,
+        fake_build_setting_name_build_sources_setting_s,
         fake_build_setting_name_build_sources_script_s,
         fake_build_setting_name_defines_s,
         fake_build_setting_name_defines_library_s,

@@ -41,7 +41,7 @@ extern "C" {
   const f_string_static_t fake_build_setting_name_build_sources_program_shared_s = macro_f_string_static_t_initialize(FAKE_build_setting_name_build_sources_program_shared_s, 0, FAKE_build_setting_name_build_sources_program_shared_s_length);
   const f_string_static_t fake_build_setting_name_build_sources_program_static_s = macro_f_string_static_t_initialize(FAKE_build_setting_name_build_sources_program_static_s, 0, FAKE_build_setting_name_build_sources_program_static_s_length);
   const f_string_static_t fake_build_setting_name_build_sources_script_s = macro_f_string_static_t_initialize(FAKE_build_setting_name_build_sources_script_s, 0, FAKE_build_setting_name_build_sources_script_s_length);
-  const f_string_static_t fake_build_setting_name_build_sources_settings_s = macro_f_string_static_t_initialize(FAKE_build_setting_name_build_sources_settings_s, 0, FAKE_build_setting_name_build_sources_settings_s_length);
+  const f_string_static_t fake_build_setting_name_build_sources_setting_s = macro_f_string_static_t_initialize(FAKE_build_setting_name_build_sources_setting_s, 0, FAKE_build_setting_name_build_sources_setting_s_length);
   const f_string_static_t fake_build_setting_name_build_static_s = macro_f_string_static_t_initialize(FAKE_build_setting_name_build_static_s, 0, FAKE_build_setting_name_build_static_s_length);
   const f_string_static_t fake_build_setting_name_defines_s = macro_f_string_static_t_initialize(FAKE_build_setting_name_defines_s, 0, FAKE_build_setting_name_defines_s_length);
   const f_string_static_t fake_build_setting_name_defines_library_s = macro_f_string_static_t_initialize(FAKE_build_setting_name_defines_library_s, 0, FAKE_build_setting_name_defines_library_s_length);
@@ -369,8 +369,8 @@ extern "C" {
 
     f_string_dynamic_resize(0, &data->file_data_build_defines);
     f_string_dynamic_resize(0, &data->file_data_build_dependencies);
-    f_string_dynamic_resize(0, &data->file_data_build_process_post_s);
-    f_string_dynamic_resize(0, &data->file_data_build_process_pre_s);
+    f_string_dynamic_resize(0, &data->file_data_build_process_post);
+    f_string_dynamic_resize(0, &data->file_data_build_process_pre);
     f_string_dynamic_resize(0, &data->file_data_build_fakefile);
     f_string_dynamic_resize(0, &data->file_data_build_settings);
 
