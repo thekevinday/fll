@@ -302,15 +302,15 @@ extern "C" {
 
     fll_program_print_help_option(print, utf8_short_from_bytesequence_s, utf8_long_from_bytesequence_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "The expected input format is byte sequence (character data).");
     fll_program_print_help_option(print, utf8_short_from_codepoint_s, utf8_long_from_codepoint_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "   The expected input format is codepoint (such as U+0000).");
-    fll_program_print_help_option(print, utf8_short_from_file_s, utf8_long_from_file_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "        Use the given print.to as the input source.");
+    fll_program_print_help_option(print, utf8_short_from_file_s, utf8_long_from_file_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "        Use the given output as the input source.");
 
     f_print_dynamic_raw(f_string_eol_s, print.to);
 
-    fll_program_print_help_option(print, utf8_short_to_bytesequence_s, utf8_long_to_bytesequence_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "The print.to format is byte sequence (character data).");
-    fll_program_print_help_option(print, utf8_short_to_codepoint_s, utf8_long_to_codepoint_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "   The print.to format is codepoint (such as U+0000).");
-    fll_program_print_help_option(print, utf8_short_to_combining_s, utf8_long_to_combining_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "   The print.to format is to print whether or not character is combining or not.");
-    fll_program_print_help_option(print, utf8_short_to_file_s, utf8_long_to_file_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "        Use the given print.to as the print.to destination.");
-    fll_program_print_help_option(print, utf8_short_to_width_s, utf8_long_to_width_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "       The print.to format is to print the width of a character (either 0, 1, or 2).");
+    fll_program_print_help_option(print, utf8_short_to_bytesequence_s, utf8_long_to_bytesequence_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "The output format is byte sequence (character data).");
+    fll_program_print_help_option(print, utf8_short_to_codepoint_s, utf8_long_to_codepoint_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "   The output format is codepoint (such as U+0000).");
+    fll_program_print_help_option(print, utf8_short_to_combining_s, utf8_long_to_combining_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "   The output format is to print whether or not character is combining or not.");
+    fll_program_print_help_option(print, utf8_short_to_file_s, utf8_long_to_file_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "        Use the given file as the output destination.");
+    fll_program_print_help_option(print, utf8_short_to_width_s, utf8_long_to_width_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "       The output format is to print the width of a character (either 0, 1, or 2).");
 
     f_print_dynamic_raw(f_string_eol_s, print.to);
 
@@ -324,9 +324,9 @@ extern "C" {
 
     fll_program_print_help_usage(print, utf8_program_name_s, utf8_program_help_parameters_s);
 
-    fl_print_format("%r  The default behavior is to assume the expected input is byte sequences from the command line to be print.to to the screen as codepoints.%r%r", print.to, f_string_eol_s, f_string_eol_s, f_string_eol_s);
+    fl_print_format("%r  The default behavior is to assume the expected input is byte sequences from the command line to be output to the screen as codepoints.%r%r", print.to, f_string_eol_s, f_string_eol_s, f_string_eol_s);
 
-    fl_print_format("  Multiple input sources are allowed but only a single print.to destination is allowed.%r%r", print.to, f_string_eol_s, f_string_eol_s);
+    fl_print_format("  Multiple input sources are allowed but only a single output destination is allowed.%r%r", print.to, f_string_eol_s, f_string_eol_s);
 
     fl_print_format("  When using the parameter '%[%r%r%]', no data is printed and 0 is returned if valid or 1 is returned if invalid.%r%r", print.to, print.set->notable, f_console_symbol_long_normal_s, utf8_long_verify_s, print.set->notable, f_string_eol_s, f_string_eol_s);
 
