@@ -324,7 +324,7 @@ extern "C" {
 
     fll_program_print_help_usage(print, utf8_program_name_s, utf8_program_help_parameters_s);
 
-    fl_print_format("%r  The default behavior is to assume the expected input is byte sequence from the command line to be print.to to the screen as codepoints.%r%r", print.to, f_string_eol_s, f_string_eol_s, f_string_eol_s);
+    fl_print_format("%r  The default behavior is to assume the expected input is byte sequences from the command line to be print.to to the screen as codepoints.%r%r", print.to, f_string_eol_s, f_string_eol_s, f_string_eol_s);
 
     fl_print_format("  Multiple input sources are allowed but only a single print.to destination is allowed.%r%r", print.to, f_string_eol_s, f_string_eol_s);
 
