@@ -1,0 +1,5 @@
+ALl files within this project unless otherwise specified are copyrighted by Kevin Day, 2023.
+
+Source code and related files are under lgpl-2.1-or-later.
+Specifications and related files are under open-standard-license-1.0.
+Documentation and related files are under cc-by-sa-4.0.
