@@ -28,6 +28,7 @@ extern "C" {
   const f_string_static_t fake_build_setting_name_build_objects_program_static_s = macro_f_string_static_t_initialize(FAKE_build_setting_name_build_objects_program_static_s, 0, FAKE_build_setting_name_build_objects_program_static_s_length);
   const f_string_static_t fake_build_setting_name_build_script_s = macro_f_string_static_t_initialize(FAKE_build_setting_name_build_script_s, 0, FAKE_build_setting_name_build_script_s_length);
   const f_string_static_t fake_build_setting_name_build_shared_s = macro_f_string_static_t_initialize(FAKE_build_setting_name_build_shared_s, 0, FAKE_build_setting_name_build_shared_s_length);
+  const f_string_static_t fake_build_setting_name_build_sources_documentation_s = macro_f_string_static_t_initialize(FAKE_build_setting_name_build_sources_documentation_s, 0, FAKE_build_setting_name_build_sources_documentation_s_length);
   const f_string_static_t fake_build_setting_name_build_sources_headers_s = macro_f_string_static_t_initialize(FAKE_build_setting_name_build_sources_headers_s, 0, FAKE_build_setting_name_build_sources_headers_s_length);
   const f_string_static_t fake_build_setting_name_build_sources_headers_shared_s = macro_f_string_static_t_initialize(FAKE_build_setting_name_build_sources_headers_shared_s, 0, FAKE_build_setting_name_build_sources_headers_shared_s_length);
   const f_string_static_t fake_build_setting_name_build_sources_headers_static_s = macro_f_string_static_t_initialize(FAKE_build_setting_name_build_sources_headers_static_s, 0, FAKE_build_setting_name_build_sources_headers_static_s_length);
@@ -118,6 +119,7 @@ extern "C" {
   const f_string_static_t fake_build_stage_program_static_s = macro_f_string_static_t_initialize(FAKE_build_stage_program_static_s, 0, FAKE_build_stage_program_static_s_length);
   const f_string_static_t fake_build_stage_separate_s = macro_f_string_static_t_initialize(FAKE_build_stage_separate_s, 0, FAKE_build_stage_separate_s_length);
   const f_string_static_t fake_build_stage_skeleton_s = macro_f_string_static_t_initialize(FAKE_build_stage_skeleton_s, 0, FAKE_build_stage_skeleton_s_length);
+  const f_string_static_t fake_build_stage_sources_documentation_s = macro_f_string_static_t_initialize(FAKE_build_stage_sources_documentation_s, 0, FAKE_build_stage_sources_documentation_s_length);
   const f_string_static_t fake_build_stage_sources_headers_s = macro_f_string_static_t_initialize(FAKE_build_stage_sources_headers_s, 0, FAKE_build_stage_sources_headers_s_length);
   const f_string_static_t fake_build_stage_sources_script_s = macro_f_string_static_t_initialize(FAKE_build_stage_sources_script_s, 0, FAKE_build_stage_sources_script_s_length);
   const f_string_static_t fake_build_stage_sources_settings_s = macro_f_string_static_t_initialize(FAKE_build_stage_sources_settings_s, 0, FAKE_build_stage_sources_settings_s_length);
@@ -327,6 +329,7 @@ extern "C" {
     f_string_dynamic_resize(0, &data->settings);
 
     f_string_dynamic_resize(0, &data->path_build);
+    f_string_dynamic_resize(0, &data->path_build_documentation);
     f_string_dynamic_resize(0, &data->path_build_documents);
     f_string_dynamic_resize(0, &data->path_build_includes);
     f_string_dynamic_resize(0, &data->path_build_libraries);
@@ -347,7 +350,7 @@ extern "C" {
 
     f_string_dynamic_resize(0, &data->path_data);
     f_string_dynamic_resize(0, &data->path_data_build);
-
+    f_string_dynamic_resize(0, &data->path_data_documentation);
     f_string_dynamic_resize(0, &data->path_data_settings);
 
     f_string_dynamic_resize(0, &data->path_documents);

@@ -108,6 +108,11 @@ Settings Documentation:
   - code:"build_shared"\:
     When code:"yes", the build process will compile any source code for any supported language that supports shared library linking.
 
+  - code:"build_sources_documentation"\:
+    A collection of documentation files.
+    These are documentation files used by the project and are simply copied over to the build directory.
+    Unless a pre-process script (or in theory post-process script) is configured to alter these, they are not modified.
+
   - code:"build_sources_headers"\:
     A collection of header files.
     May include a relative sub-path to each individual header (such as: code:"level_0/a.h level_0/b.h level_1/c.h").

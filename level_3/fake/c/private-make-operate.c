@@ -951,6 +951,7 @@ extern "C" {
         fake_build_setting_name_build_libraries_s,
         fake_build_setting_name_build_libraries_shared_s,
         fake_build_setting_name_build_libraries_static_s,
+        fake_build_setting_name_build_sources_documentation_s,
         fake_build_setting_name_build_sources_headers_s,
         fake_build_setting_name_build_sources_headers_shared_s,
         fake_build_setting_name_build_sources_headers_static_s,
@@ -989,6 +990,7 @@ extern "C" {
         data_make->setting_build.build_libraries,
         data_make->setting_build.build_libraries_shared,
         data_make->setting_build.build_libraries_static,
+        data_make->setting_build.build_sources_documentation,
         data_make->setting_build.build_sources_headers,
         data_make->setting_build.build_sources_headers_shared,
         data_make->setting_build.build_sources_headers_static,
@@ -1027,6 +1029,7 @@ extern "C" {
         0,                                         // build_libraries
         0,                                         // build_libraries_shared
         0,                                         // build_libraries_static
+        0,                                         // build_sources_documentation
         0,                                         // build_sources_headers
         0,                                         // build_sources_headers_shared
         0,                                         // build_sources_headers_static
@@ -1061,7 +1064,7 @@ extern "C" {
         0,                                         // modes_default
       };
 
-      for (uint8_t i = 0; i < 35; ++i) {
+      for (uint8_t i = 0; i < 36; ++i) {
 
         status = fl_string_dynamic_partial_compare_string(dynamics_name[i].string, data_make->buffer, dynamics_name[i].used, range_name);
 

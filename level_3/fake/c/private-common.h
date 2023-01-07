@@ -29,6 +29,7 @@ extern "C" {
  * settings: The settings data.
  *
  * path_build:                  The build path.
+ * path_build_documentation:    The build documentation path.
  * path_build_documents:        The build documents path.
  * path_build_includes:         The build includes path.
  * path_build_libraries:        The build libraries path.
@@ -46,9 +47,10 @@ extern "C" {
  * path_build_settings:         The build settings path.
  * path_build_stage:            The build stage path.
  *
- * path_data:                The data path.
- * path_data_build:          The data_build path.
- * path_data_build_settings: The data_build_settings path.
+ * path_data:               The data path.
+ * path_data_build:         The build data path.
+ * path_data_documentation: The documentation data path.
+ * path_data_settings:      The settings data path.
  *
  * path_documents: The documents path.
  * path_licenses:  The licenses path.
@@ -94,6 +96,7 @@ extern "C" {
     f_string_dynamic_t settings;
 
     f_string_dynamic_t path_build;
+    f_string_dynamic_t path_build_documentation;
     f_string_dynamic_t path_build_documents;
     f_string_dynamic_t path_build_includes;
     f_string_dynamic_t path_build_libraries;
@@ -113,6 +116,7 @@ extern "C" {
 
     f_string_dynamic_t path_data;
     f_string_dynamic_t path_data_build;
+    f_string_dynamic_t path_data_documentation;
     f_string_dynamic_t path_data_settings;
 
     f_string_dynamic_t path_documents;
@@ -151,6 +155,8 @@ extern "C" {
       0, \
       0, \
       0, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
@@ -263,6 +269,7 @@ extern "C" {
  * build_objects_program:        The build_objects_program setting.
  * build_objects_program_shared: The build_objects_program_shared setting.
  * build_objects_program_static: The build_objects_program_static setting.
+ * build_sources_documentation:  The build_sources_documentation setting.
  * build_sources_headers:        The build_sources_headers setting.
  * build_sources_headers_shared: The build_sources_headers_shared setting.
  * build_sources_headers_static: The build_sources_headers_static setting.
@@ -366,6 +373,7 @@ extern "C" {
     f_string_dynamics_t build_objects_program;
     f_string_dynamics_t build_objects_program_shared;
     f_string_dynamics_t build_objects_program_static;
+    f_string_dynamics_t build_sources_documentation;
     f_string_dynamics_t build_sources_headers;
     f_string_dynamics_t build_sources_headers_shared;
     f_string_dynamics_t build_sources_headers_static;
@@ -496,6 +504,7 @@ extern "C" {
     f_string_dynamics_t_initialize, \
     f_string_dynamics_t_initialize, \
     f_string_dynamics_t_initialize, \
+    f_string_dynamics_t_initialize, \
   }
 
   #define macro_fake_build_setting_t_delete_simple(setting) \
@@ -538,6 +547,7 @@ extern "C" {
     macro_f_string_dynamics_t_delete_simple(setting.build_objects_program) \
     macro_f_string_dynamics_t_delete_simple(setting.build_objects_program_shared) \
     macro_f_string_dynamics_t_delete_simple(setting.build_objects_program_static) \
+    macro_f_string_dynamics_t_delete_simple(setting.build_sources_documentation) \
     macro_f_string_dynamics_t_delete_simple(setting.build_sources_headers) \
     macro_f_string_dynamics_t_delete_simple(setting.build_sources_headers_shared) \
     macro_f_string_dynamics_t_delete_simple(setting.build_sources_headers_static) \
@@ -599,6 +609,7 @@ extern "C" {
   #define FAKE_build_setting_name_build_objects_program_static_s "build_objects_program_static"
   #define FAKE_build_setting_name_build_script_s                 "build_script"
   #define FAKE_build_setting_name_build_shared_s                 "build_shared"
+  #define FAKE_build_setting_name_build_sources_documentation_s  "build_sources_documentation"
   #define FAKE_build_setting_name_build_sources_headers_s        "build_sources_headers"
   #define FAKE_build_setting_name_build_sources_headers_shared_s "build_sources_headers_shared"
   #define FAKE_build_setting_name_build_sources_headers_static_s "build_sources_headers_static"
@@ -694,6 +705,7 @@ extern "C" {
   #define FAKE_build_setting_name_build_objects_program_static_s_length 28
   #define FAKE_build_setting_name_build_script_s_length                 12
   #define FAKE_build_setting_name_build_shared_s_length                 12
+  #define FAKE_build_setting_name_build_sources_documentation_s_length  27
   #define FAKE_build_setting_name_build_sources_headers_s_length        21
   #define FAKE_build_setting_name_build_sources_headers_shared_s_length 28
   #define FAKE_build_setting_name_build_sources_headers_static_s_length 28
@@ -789,6 +801,7 @@ extern "C" {
   extern const f_string_static_t fake_build_setting_name_build_objects_program_static_s;
   extern const f_string_static_t fake_build_setting_name_build_script_s;
   extern const f_string_static_t fake_build_setting_name_build_shared_s;
+  extern const f_string_static_t fake_build_setting_name_build_sources_documentation_s;
   extern const f_string_static_t fake_build_setting_name_build_sources_headers_s;
   extern const f_string_static_t fake_build_setting_name_build_sources_headers_shared_s;
   extern const f_string_static_t fake_build_setting_name_build_sources_headers_static_s;
@@ -862,7 +875,7 @@ extern "C" {
   extern const f_string_static_t fake_build_setting_name_version_nano_prefix_s;
   extern const f_string_static_t fake_build_setting_name_version_target_s;
 
-  #define fake_build_setting_total_d 88
+  #define fake_build_setting_total_d 89
 #endif // _di_fake_build_setting_t_
 
 #ifndef _di_fake_build_stage_t_
@@ -880,6 +893,7 @@ extern "C" {
     f_string_dynamic_t file_program_shared;
     f_string_dynamic_t file_program_static;
     f_string_dynamic_t file_skeleton;
+    f_string_dynamic_t file_sources_documentation;
     f_string_dynamic_t file_sources_headers;
     f_string_dynamic_t file_sources_script;
     f_string_dynamic_t file_sources_settings;
@@ -902,9 +916,10 @@ extern "C" {
     f_string_dynamic_t_initialize, \
     f_string_dynamic_t_initialize, \
     f_string_dynamic_t_initialize, \
+    f_string_dynamic_t_initialize, \
   }
 
-  #define fake_build_stage_total_d 16
+  #define fake_build_stage_total_d 17
 
   #define macro_fake_build_stage_t_delete_simple(stage) \
     macro_f_string_dynamic_t_delete_simple(stage.file_library_script) \
@@ -920,47 +935,50 @@ extern "C" {
     macro_f_string_dynamic_t_delete_simple(stage.file_program_shared) \
     macro_f_string_dynamic_t_delete_simple(stage.file_program_static) \
     macro_f_string_dynamic_t_delete_simple(stage.file_skeleton) \
+    macro_f_string_dynamic_t_delete_simple(stage.file_sources_documentation) \
     macro_f_string_dynamic_t_delete_simple(stage.file_sources_headers) \
     macro_f_string_dynamic_t_delete_simple(stage.file_sources_script) \
     macro_f_string_dynamic_t_delete_simple(stage.file_sources_settings)
 
-  #define FAKE_build_stage_built_s            ".built"
-  #define FAKE_build_stage_library_script_s   "library_script"
-  #define FAKE_build_stage_library_shared_s   "library_shared"
-  #define FAKE_build_stage_library_static_s   "library_static"
-  #define FAKE_build_stage_object_script_s    "object_script"
-  #define FAKE_build_stage_object_shared_s    "object_shared"
-  #define FAKE_build_stage_object_static_s    "object_static"
-  #define FAKE_build_stage_objects_static_s   "objects_static"
-  #define FAKE_build_stage_process_post_s     "process_post"
-  #define FAKE_build_stage_process_pre_s      "process_pre"
-  #define FAKE_build_stage_program_script_s   "program_script"
-  #define FAKE_build_stage_program_shared_s   "program_shared"
-  #define FAKE_build_stage_program_static_s   "program_static"
-  #define FAKE_build_stage_separate_s         "-"
-  #define FAKE_build_stage_skeleton_s         "skeleton"
-  #define FAKE_build_stage_sources_headers_s  "sources_headers"
-  #define FAKE_build_stage_sources_script_s   "sources_script"
-  #define FAKE_build_stage_sources_settings_s "sources_settings"
+  #define FAKE_build_stage_built_s                 ".built"
+  #define FAKE_build_stage_library_script_s        "library_script"
+  #define FAKE_build_stage_library_shared_s        "library_shared"
+  #define FAKE_build_stage_library_static_s        "library_static"
+  #define FAKE_build_stage_object_script_s         "object_script"
+  #define FAKE_build_stage_object_shared_s         "object_shared"
+  #define FAKE_build_stage_object_static_s         "object_static"
+  #define FAKE_build_stage_objects_static_s        "objects_static"
+  #define FAKE_build_stage_process_post_s          "process_post"
+  #define FAKE_build_stage_process_pre_s           "process_pre"
+  #define FAKE_build_stage_program_script_s        "program_script"
+  #define FAKE_build_stage_program_shared_s        "program_shared"
+  #define FAKE_build_stage_program_static_s        "program_static"
+  #define FAKE_build_stage_separate_s              "-"
+  #define FAKE_build_stage_skeleton_s              "skeleton"
+  #define FAKE_build_stage_sources_documentation_s "sources_documentation"
+  #define FAKE_build_stage_sources_headers_s       "sources_headers"
+  #define FAKE_build_stage_sources_script_s        "sources_script"
+  #define FAKE_build_stage_sources_settings_s      "sources_settings"
 
-  #define FAKE_build_stage_built_s_length            6
-  #define FAKE_build_stage_library_script_s_length   14
-  #define FAKE_build_stage_library_shared_s_length   14
-  #define FAKE_build_stage_library_static_s_length   14
-  #define FAKE_build_stage_object_script_s_length    13
-  #define FAKE_build_stage_object_shared_s_length    13
-  #define FAKE_build_stage_object_static_s_length    13
-  #define FAKE_build_stage_objects_static_s_length   14
-  #define FAKE_build_stage_process_post_s_length     12
-  #define FAKE_build_stage_process_pre_s_length      11
-  #define FAKE_build_stage_program_script_s_length   14
-  #define FAKE_build_stage_program_shared_s_length   14
-  #define FAKE_build_stage_program_static_s_length   14
-  #define FAKE_build_stage_separate_s_length         1
-  #define FAKE_build_stage_skeleton_s_length         8
-  #define FAKE_build_stage_sources_headers_s_length  15
-  #define FAKE_build_stage_sources_script_s_length   14
-  #define FAKE_build_stage_sources_settings_s_length 16
+  #define FAKE_build_stage_built_s_length                 6
+  #define FAKE_build_stage_library_script_s_length        14
+  #define FAKE_build_stage_library_shared_s_length        14
+  #define FAKE_build_stage_library_static_s_length        14
+  #define FAKE_build_stage_object_script_s_length         13
+  #define FAKE_build_stage_object_shared_s_length         13
+  #define FAKE_build_stage_object_static_s_length         13
+  #define FAKE_build_stage_objects_static_s_length        14
+  #define FAKE_build_stage_process_post_s_length          12
+  #define FAKE_build_stage_process_pre_s_length           11
+  #define FAKE_build_stage_program_script_s_length        14
+  #define FAKE_build_stage_program_shared_s_length        14
+  #define FAKE_build_stage_program_static_s_length        14
+  #define FAKE_build_stage_separate_s_length              1
+  #define FAKE_build_stage_skeleton_s_length              8
+  #define FAKE_build_stage_sources_documentation_s_length 21
+  #define FAKE_build_stage_sources_headers_s_length       15
+  #define FAKE_build_stage_sources_script_s_length        14
+  #define FAKE_build_stage_sources_settings_s_length      16
 
   extern const f_string_static_t fake_build_stage_built_s;
   extern const f_string_static_t fake_build_stage_library_script_s;
@@ -977,6 +995,7 @@ extern "C" {
   extern const f_string_static_t fake_build_stage_program_static_s;
   extern const f_string_static_t fake_build_stage_separate_s;
   extern const f_string_static_t fake_build_stage_skeleton_s;
+  extern const f_string_static_t fake_build_stage_sources_documentation_s;
   extern const f_string_static_t fake_build_stage_sources_headers_s;
   extern const f_string_static_t fake_build_stage_sources_script_s;
   extern const f_string_static_t fake_build_stage_sources_settings_s;

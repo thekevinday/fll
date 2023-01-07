@@ -31,6 +31,7 @@ extern "C" {
 
     const f_string_static_t *directorys[] = {
       &data->path_build,
+      &data->path_build_documentation,
       &data->path_build_documents,
       &data->path_build_includes,
       &data->path_build_libraries,
@@ -56,7 +57,7 @@ extern "C" {
 
     bool created = F_false;
 
-    for (uint8_t i = 0; i < 18; ++i) {
+    for (uint8_t i = 0; i < 19; ++i) {
 
       if (!directorys[i]->used) continue;
 

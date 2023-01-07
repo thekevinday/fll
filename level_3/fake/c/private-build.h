@@ -13,18 +13,21 @@ extern "C" {
 #endif
 
 #ifndef _di_fake_build_strings_
+  #define FAKE_build_documentation_files_s "documentation files"
   #define FAKE_build_header_files_s        "header files"
   #define FAKE_build_header_files_shared_s "shared header files"
   #define FAKE_build_header_files_static_s "static header files"
   #define FAKE_build_scripts_s             "scripts"
   #define FAKE_build_setting_files_s       "setting files"
 
+  #define FAKE_build_documentation_files_s_length 19
   #define FAKE_build_header_files_s_length        12
   #define FAKE_build_header_files_shared_s_length 19
   #define FAKE_build_header_files_static_s_length 19
   #define FAKE_build_scripts_s_length             7
   #define FAKE_build_setting_files_s_length       13
 
+  extern const f_string_static_t fake_build_documentation_files_s;
   extern const f_string_static_t fake_build_header_files_s;
   extern const f_string_static_t fake_build_header_files_shared_s;
   extern const f_string_static_t fake_build_header_files_static_s;

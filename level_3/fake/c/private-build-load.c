@@ -298,6 +298,7 @@ extern "C" {
       fake_build_setting_name_build_objects_program_static_s,
       fake_build_setting_name_build_script_s,
       fake_build_setting_name_build_shared_s,
+      fake_build_setting_name_build_sources_documentation_s,
       fake_build_setting_name_build_sources_headers_s,
       fake_build_setting_name_build_sources_headers_shared_s,
       fake_build_setting_name_build_sources_headers_static_s,
@@ -389,6 +390,7 @@ extern "C" {
       &setting->build_objects_program_static,
       &build_script,
       &build_shared,
+      &setting->build_sources_documentation,
       &setting->build_sources_headers,
       &setting->build_sources_headers_shared,
       &setting->build_sources_headers_static,
@@ -480,6 +482,7 @@ extern "C" {
       F_false, // setting->build_objects_program_stat
       F_false, // build_script
       F_false, // build_shared
+      F_false, // setting->build_sources_documentation
       F_false, // setting->build_sources_headers
       F_false, // setting->build_sources_headers_shar
       F_false, // setting->build_sources_headers_stat
@@ -870,40 +873,40 @@ extern "C" {
         settings_matches[7],  // build_name
         settings_matches[14], // build_script
         settings_matches[15], // build_shared
-        settings_matches[22], // build_sources_object
-        settings_matches[23], // build_sources_object_shared
-        settings_matches[24], // build_sources_object_static
-        settings_matches[30], // build_static
-        settings_matches[56], // has_path_standard
-        settings_matches[59], // path_headers
-        settings_matches[60], // path_language
-        settings_matches[61], // path_library_script
-        settings_matches[62], // path_library_shared
-        settings_matches[63], // path_library_static
-        settings_matches[64], // path_object_script
-        settings_matches[65], // path_object_shared
-        settings_matches[66], // path_object_static
-        settings_matches[67], // path_program_script
-        settings_matches[68], // path_program_shared
-        settings_matches[69], // path_program_static
-        settings_matches[70], // path_sources
-        settings_matches[71], // path_sources_object
-        settings_matches[72], // preserve_path_headers
-        settings_matches[73], // process_post
-        settings_matches[74], // process_pre
-        settings_matches[75], // search_exclusive
-        settings_matches[76], // search_shared
-        settings_matches[77], // search_static
-        settings_matches[78], // version_file
-        settings_matches[79], // version_major
-        settings_matches[80], // version_major_prefix
-        settings_matches[81], // version_micro
-        settings_matches[82], // version_micro_prefix
-        settings_matches[83], // version_minor
-        settings_matches[84], // version_minor_prefix
-        settings_matches[85], // version_nano
-        settings_matches[86], // version_nano_prefix
-        settings_matches[87], // version_target
+        settings_matches[23], // build_sources_object
+        settings_matches[24], // build_sources_object_shared
+        settings_matches[25], // build_sources_object_static
+        settings_matches[31], // build_static
+        settings_matches[57], // has_path_standard
+        settings_matches[60], // path_headers
+        settings_matches[61], // path_language
+        settings_matches[62], // path_library_script
+        settings_matches[63], // path_library_shared
+        settings_matches[64], // path_library_static
+        settings_matches[65], // path_object_script
+        settings_matches[66], // path_object_shared
+        settings_matches[67], // path_object_static
+        settings_matches[68], // path_program_script
+        settings_matches[69], // path_program_shared
+        settings_matches[70], // path_program_static
+        settings_matches[71], // path_sources
+        settings_matches[72], // path_sources_object
+        settings_matches[73], // preserve_path_headers
+        settings_matches[74], // process_post
+        settings_matches[75], // process_pre
+        settings_matches[76], // search_exclusive
+        settings_matches[77], // search_shared
+        settings_matches[78], // search_static
+        settings_matches[79], // version_file
+        settings_matches[80], // version_major
+        settings_matches[81], // version_major_prefix
+        settings_matches[82], // version_micro
+        settings_matches[83], // version_micro_prefix
+        settings_matches[84], // version_minor
+        settings_matches[85], // version_minor_prefix
+        settings_matches[86], // version_nano
+        settings_matches[87], // version_nano_prefix
+        settings_matches[88], // version_target
       };
 
       const f_string_static_t settings_single_string_default[] = {
@@ -1497,6 +1500,7 @@ extern "C" {
       fake_build_stage_program_shared_s,
       fake_build_stage_program_static_s,
       fake_build_stage_skeleton_s,
+      fake_build_stage_sources_documentation_s,
       fake_build_stage_sources_headers_s,
       fake_build_stage_sources_script_s,
       fake_build_stage_sources_settings_s,
@@ -1516,6 +1520,7 @@ extern "C" {
       &stage->file_program_shared,
       &stage->file_program_static,
       &stage->file_skeleton,
+      &stage->file_sources_documentation,
       &stage->file_sources_headers,
       &stage->file_sources_script,
       &stage->file_sources_settings,

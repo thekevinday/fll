@@ -35,6 +35,7 @@ Settings Specification:
     - code:"build_objects_program_static": Must only contain any number of valid object file names relative to the code:"path_object_static" path.
     - code:"build_script": Must only one of: code:"yes" or code:"no".
     - code:"build_shared": Must only one of: code:"yes" or code:"no".
+    - code:"build_sources_documentation": Must only contain any number of valid filenames.
     - code:"build_sources_headers": Must only contain any number of valid filenames.
     - code:"build_sources_headers_shared": Must only contain any number of valid filenames.
     - code:"build_sources_headers_static": Must only contain any number of valid filenames.
