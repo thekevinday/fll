@@ -28,6 +28,8 @@ build_sources_program main.c
 
 build_sources_headers firewall.h common.h
 
+build_sources_documentation man
+
 build_sources_setting network
 
 build_script yes

@@ -48,6 +48,8 @@ build_sources_program fll/level_2/program.c fll/level_2/program/common.c fll/lev
 build_sources_program program/byte_dump/byte_dump.c program/byte_dump/common.c program/byte_dump/private-common.c program/byte_dump/private-byte_dump.c
 build_sources_program program/byte_dump/main.c
 
+build_sources_documentation man
+
 build_script yes
 build_shared yes
 build_static no
