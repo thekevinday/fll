@@ -10,7 +10,7 @@
 #
 
 Dependencies Specification:
-  The build settings bold:"dependencies" file follows the code:"FSS-0001 (Extended)" format.
+  The build settings file:"dependencies" file follows the code:"FSS-0001 (Extended)" format.
 
   Each Object represents a specific project name as it would be linked against.
   Each Content represents associated information, such as a version number.

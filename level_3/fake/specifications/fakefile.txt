@@ -13,7 +13,7 @@ Fakefile Specification:
   The file:"fakefile" file follows the code:"FSS-0005 (Somewhat Basic List)" format with a sub-format of code:"IKI-0002 (Simple Script)".
 
   A file:"fakefile" is broken up into multiple bold:"Basic Lists", referred to as bold:"Sections", with two special purpose reserved bold:"Sections".
-  The bold:"Sections" are broken up into multiple bold:"Extended Objects" and their respective bold:"Contents", referred to as bold"Section Operations".
+  The bold:"Sections" are broken up into multiple bold:"Extended Objects" and their respective bold:"Contents", referred to as bold:"Section Operations".
 
   Each of these non-reserved Sections acts as a set to perform some set of bold:"Section Operations".
   Each of these bold:"Section Operations" perform a single command or action based on a set of reserved bold:"Section Operation" types.
