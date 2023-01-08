@@ -47,10 +47,10 @@ extern "C" {
     fl_print_format(" %[%r%r%] parameter may be specified.%r%r", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_identify_long_content_s, context.set.notable, f_string_eol_s, f_string_eol_s);
 
     fl_print_format("  An FSS file is identified by the following format: '%[# Object-Content%]'", file.stream, context.set.notable, context.set.notable);
-    fl_print_format(" where the Object, is a machine-name representing the name and may only consist of \"word\" characters and the Content is a 4-digit hexidecimal number representing a particular variant of the Object.%r", file.stream, f_string_eol_s);
+    fl_print_format(" where the Object, is a machine-name representing the name and may only consist of 'word' characters and the Content is a 4-digit hexidecimal number representing a particular variant of the Object.%r", file.stream, f_string_eol_s);
     fl_print_format("  This identifier, if provided, must exist on the first line in a file and must begin with the pound character: '#'.%r", file.stream, f_string_eol_s);
     fl_print_format("  Whitespace must follow this pound character.%r", file.stream, f_string_eol_s);
-    fl_print_format("  There may be multiple Object and Content pairs, separated by white space, such as: \"# fss-0002 fss-0000 iki-0002\".%r%r", file.stream, f_string_eol_s, f_string_eol_s);
+    fl_print_format("  There may be multiple Object and Content pairs, separated by white space, such as: '# fss-0002 fss-0000 iki-0002'.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
 
     funlockfile(file.stream);
 

@@ -26,9 +26,9 @@ extern "C" {
 
     f_print_dynamic_raw(f_string_eol_s, file.stream);
 
-    fll_program_print_help_option(file, context, fss_embedded_list_write_short_file_s, fss_embedded_list_write_long_file_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Specify a file to send data to.");
     fll_program_print_help_option(file, context, fss_embedded_list_write_short_content_s, fss_embedded_list_write_long_content_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "The Content to write.");
     fll_program_print_help_option(file, context, fss_embedded_list_write_short_double_s, fss_embedded_list_write_long_double_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Use double quotes (default).");
+    fll_program_print_help_option(file, context, fss_embedded_list_write_short_file_s, fss_embedded_list_write_long_file_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Specify a file to send data to.");
     fll_program_print_help_option(file, context, fss_embedded_list_write_short_ignore_s, fss_embedded_list_write_long_ignore_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Ignore a given range within a Content.");
     fll_program_print_help_option(file, context, fss_embedded_list_write_short_object_s, fss_embedded_list_write_long_object_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " The Object to write.");
     fll_program_print_help_option(file, context, fss_embedded_list_write_short_partial_s, fss_embedded_list_write_long_partial_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "Do not write a complete Object and Content set.");

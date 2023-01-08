@@ -109,7 +109,7 @@ extern "C" {
     fl_print_format("  The parameters %[%r%r%]", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_extended_list_read_long_columns_s, context.set.notable);
     fl_print_format(" and %[%r%r%]", file.stream, context.set.notable, f_console_symbol_long_enable_s, fss_extended_list_read_long_select_s, context.set.notable);
     fl_print_format(" refer to a Content column.%r", file.stream, f_string_eol_s);
-    fl_print_format("  The word \"column\" is being loosely defined to refer to a specific Content.%r", file.stream, f_string_eol_s);
+    fl_print_format("  The word 'column' is being loosely defined to refer to a specific Content.%r", file.stream, f_string_eol_s);
     fl_print_format("  This is not to be confused with a depth.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
 
     funlockfile(file.stream);
