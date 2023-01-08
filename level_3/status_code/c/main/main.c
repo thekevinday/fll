@@ -8,6 +8,7 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
   setting.program_name_long = &status_code_program_name_long_s;
   setting.status_string_from = &fll_status_string_from;
   setting.status_string_to = &f_status_string_to;
+  setting.status_string_help_detail = &status_code_print_help_detail;
 
   f_console_parameter_t parameters[] = status_code_console_parameter_t_initialize;
   data.parameters.array = parameters;

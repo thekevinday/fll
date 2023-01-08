@@ -108,6 +108,26 @@ extern "C" {
 #endif // _di_status_code_print_help_
 
 /**
+ * Print help detailed part of the help.
+ *
+ * This is designed to be called from within status_code_print_help().
+ * This neither locks nor unlocks the stream and expects the stream to be unlocked.
+ *
+ * @param setting
+ *   The main program settings.
+ *   (Must be of type status_code_setting_t.)
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   The output structure to print to.
+ *
+ * @see status_code_print_help()
+ */
+#ifndef _di_status_code_print_help_detail_
+  extern void status_code_print_help_detail(void * const setting, const fl_print_t print);
+#endif // _di_status_code_print_help_detail_
+
+/**
  * Print first new line, unless verbosity says otherwise.
  *
  * This is generally either the first line in the program or the first line printed before an error message.

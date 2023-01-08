@@ -71,9 +71,16 @@ extern "C" {
 
 /**
  * The program defines.
+ *
+ * macro_status_code_setting:
+ *   - Used to represent a cast to ((status_code_setting_t *) setting).
+ *   - Simplifies the number of parenthesis used to make code slightly cleaner.
+ *   - Is wrapped in a parenthesis and not a block.
  */
 #ifndef _di_status_code_d_
   #define status_code_signal_check_d 20000
+
+  #define macro_status_code_setting(setting) ((status_code_setting_t *) setting)
 #endif // _di_status_code_d_
 
 /**
@@ -222,8 +229,9 @@ extern "C" {
  * line_first: A string expected to represent either "\n" or NULL to allow for easy handling of when to print first new line or not.
  * line_last:  A string expected to represent either "\n" or NULL to allow for easy handling of when to print last new line or not.
  *
- * status_string_from: A pointer to the status string function (usually either fll_status_string_from() or fll_fss_status_string_from()).
- * status_string_to:   A pointer to the status string function (usually either f_status_string_to() or fll_fss_status_string_to()).
+ * status_string_from:        A pointer to the status string function (usually either fll_status_string_from() or fll_fss_status_string_from()).
+ * status_string_to:          A pointer to the status string function (usually either f_status_string_to() or fll_fss_status_string_to()).
+ * status_string_help_detail: Print additional, more detailed help, in the help page (The setting paramete must be of type status_code_setting_t).
  */
 #ifndef _di_status_code_setting_t_
   typedef struct {
@@ -239,6 +247,7 @@ extern "C" {
 
     f_status_t (*status_string_from)(const f_string_static_t name, f_status_t * const code);
     f_status_t (*status_string_to)(const f_status_t code, f_string_static_t * const name);
+    void (*status_string_help_detail)(void * const setting, const fl_print_t print);
   } status_code_setting_t;
 
   #define status_code_setting_t_initialize \
@@ -247,6 +256,7 @@ extern "C" {
       F_none, \
       f_string_static_t_initialize, \
       f_string_static_t_initialize, \
+      0, \
       0, \
       0, \
       0, \

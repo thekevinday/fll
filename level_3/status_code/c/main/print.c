@@ -118,6 +118,10 @@ extern "C" {
       status_code_program_help_parameters_s
     );
 
+    if (setting->status_string_help_detail) {
+      setting->status_string_help_detail(setting, print);
+    }
+
     f_print_dynamic_raw(setting->line_last, print.to);
 
     f_file_stream_flush(print.to);
@@ -126,6 +130,25 @@ extern "C" {
     return F_none;
   }
 #endif // _di_status_code_print_help_
+
+#ifndef _di_status_code_print_help_detail_
+  void status_code_print_help_detail(void * const void_setting, const fl_print_t print) {
+
+    fl_print_format("  The FLL programs use a %[16-bit unsigned integer%] to represent the return status of programs and functions.%r%r", print.to, print.set->notable, print.set->notable, f_string_eol_s, f_string_eol_s);
+
+    fl_print_format("  Programs may print a generic error with one of these codes.%r", print.to, f_string_eol_s);
+    fl_print_format("  This is a tool for converting to or converting from these codes.%r%r", print.to, f_string_eol_s, f_string_eol_s);
+
+    fl_print_format("  The %[16-bit unsigned integer%] also has the first two high-order bits used to represent flags.%r", print.to, print.set->notable, print.set->notable, f_string_eol_s);
+    fl_print_format("  These flags are the %[error%] bit and the %[warning%] bit.%r", print.to, print.set->notable, print.set->notable, print.set->notable, print.set->notable, f_string_eol_s);
+    fl_print_format("  When neither of these flags are set, then the status is considered %[fine%].%r%r", print.to, print.set->notable, print.set->notable, f_string_eol_s, f_string_eol_s);
+
+    fl_print_format("  These codes stop at the %[F_status_code_last%] code.%r%r", print.to, print.set->notable, print.set->notable, f_string_eol_s, f_string_eol_s);
+
+    fl_print_format("  Each code will be printed on its own line.%r", print.to, print.set->notable, print.set->notable, f_string_eol_s);
+    fl_print_format("  Errors regarding each code may be printed on its own line.%r", print.to, f_string_eol_s);
+  }
+#endif // _di_status_code_print_help_detail_
 
 #ifndef _di_status_code_print_line_first_locked_
   f_status_t status_code_print_line_first_locked(status_code_setting_t * const setting, const fl_print_t print) {
