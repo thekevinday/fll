@@ -33,6 +33,22 @@ extern "C" {
 
     fll_program_print_help_usage(file, context, fss_status_code_program_name_s, fss_status_code_program_help_parameters_s);
 
+    fl_print_format("  The FLL programs use a %[16-bit unsigned integer%] to represent the return status of programs and functions.%r%r", file.stream, context.set.notable, context.set.notable, f_string_eol_s, f_string_eol_s);
+
+    fl_print_format("  Programs may print a generic error with one of these codes.%r", file.stream, f_string_eol_s);
+    fl_print_format("  This is a tool for converting to or converting from these codes.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
+
+    fl_print_format("  The %[16-bit unsigned integer%] also has the first two high-order bits used to represent flags.%r", file.stream, context.set.notable, context.set.notable, f_string_eol_s);
+    fl_print_format("  These flags are the %[error%] bit and the %[warning%] bit.%r", file.stream, context.set.notable, context.set.notable, context.set.notable, context.set.notable, f_string_eol_s);
+    fl_print_format("  When neither of these flags are set, then the status is considered %[fine%].%r%r", file.stream, context.set.notable, context.set.notable, f_string_eol_s, f_string_eol_s);
+
+    fl_print_format("  This operates identical to the %[status_codes%] program except that this program handles additional codes regarding FSS.%r", file.stream, context.set.notable, context.set.notable, f_string_eol_s);
+    fl_print_format("  These special codes numericaly appear after the %[F_status_code_last%] code.%r", file.stream, context.set.notable, context.set.notable, f_string_eol_s);
+    fl_print_format("  These codes stop at the %[F_fss_status_code_last%] code.%r%r", file.stream, context.set.notable, context.set.notable, f_string_eol_s, f_string_eol_s);
+
+    fl_print_format("  Each code will be printed on its own line.%r", file.stream, f_string_eol_s);
+    fl_print_format("  Errors regarding each code may be printed on its own line.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
+
     funlockfile(file.stream);
 
     return F_none;
