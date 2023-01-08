@@ -28,6 +28,8 @@ build_sources_program main/main.c
 
 build_sources_headers main/iki_read.h main/common.h main/common-print.h main/print.h
 
+build_sources_documentation man
+
 build_script yes
 build_shared yes
 build_static no
