@@ -1,0 +1,112 @@
+.TH IKI_READ "1" "January 2023" "FLL - IKI Read 0.6.3" "User Commands"
+.SH NAME
+iki_read \- Read text, processing IKI variables.
+.SH SYNOPSIS
+.B iki_read
+[\fI\,OPTIONS\/\fR] [\fI\,FILENAMES\/\fR]
+.SH DESCRIPTION
+.PP
+This program will find and print \fBVariables\fR, \fBVocabularies\fR, or \fBContent\fR following the IKI standard, without focusing on any particular \fBVocabulary\fR specification.
+
+The \fB\-\-replace\fR option requires 2 additional parameters: \fB<vocabulary> <with>\fR.
+  \fBvocabulary\fR: The name of the \fBVocabulary\fR whose \fBContent\fR is to be substituted.
+  \fBwith\fR: The new string to use as the substitute.
+
+The \fBVocabulary\fR is case-sensitive and must exactly match.
+
+The \fB\-\-reassign\fR and the \fB\-\-substitute\fR options require 3 additional parameters: \fB<vocabulary> <replace> <with>\fR.
+  \fBvocabulary\fR: The name of the \fBVocabulary\fR whose \fBContent\fR is to be substituted.
+  \fBreplace\fR: The \fBContent\fR matching this exact string will be substituted.
+  \fBwith\fR: The new string to use as the substitute.
+
+The \fBVocabulary\fR and replacement are case-sensitive and must exactly match.
+
+The \fB\-\-wrap\fR option requires 3 additional parameters: \fB<vocabulary> <before> <after>\fR.
+  \fBvocabulary\fR: The name of the \fBVocabulary\fR whose \fBContent\fR is to be wrapped.
+  \fBbefore\fR: The string to prepend.
+  \fBafter\fR: The string to append.
+
+The \fBVocabulary\fR is case-sensitive and must exactly match.
+
+The difference between \fB\-\-replace\fR and \fB\-\-substitute\fR is that the \fB\-\-replace\fR option substitutes all matching \fBVocabulary\fR names and the \fB\-\-substitute\fR option substitutes all matching \fBVocabulary\fR names that must also have the given matching \fBContent\fR.
+
+The \fB\-\-reassign\fR option is identical to the \fB\-\-substitute\fR option except that the \fB\-\-wrap\fR option is ignored (not applied).
+
+The \fB\-\-substitute\fR option takes priority over the \fB\-\-replace\fR option when matching the same \fBVariable\fR.
+
+The default behavior is to only display \fBContent\fR portion of the IKI \fBVariable\fR.
+.SH OPTIONS
+.TP
+\fB\{+h, ++help\fR
+Print the help message.
+.TP
+\fB+d, ++dark\fR
+Output using colors that show up better on dark backgrounds
+.TP
+\fB+l, ++light\fR
+Output using colors that show up better on light backgrounds.
+.TP
+\fB+n, ++no_color\fR
+Do not print using color.
+.TP
+\fB+Q, ++quiet\fR
+Decrease verbosity, silencing most output.
+.TP
+\fB+E, ++error\fR
+Decrease verbosity, using only error output.
+.TP
+\fB+N, ++normal\fR
+Set verbosity to normal.
+.TP
+\fB+V, ++verbose\fR
+Increase verbosity beyond normal output.
+.TP
+\fB+D, ++debug\fR
+Enable debugging, significantly increasing verbosity beyond normal output.
+.TP
+\fB+v, ++version\fR
+Print only the version number.
+.TP
+\fB\-a, \-\-at\fR
+Select Variable at this numeric index.
+.TP
+\fB\-l, \-\-line\fR
+Print only the Variables at the given line within the file.
+.TP
+\fB\-n, \-\-name\fR
+Select Variables with this name.
+.TP
+\fB\-w, \-\-whole\fR
+Print all of the data instead of just the IKI Variable data.
+.TP
+\fB\-c, \-\-content\fR
+Print the Variable value (aka: Content) (default).
+.TP
+\fB\-L, \-\-literal\fR
+Print the entire Variable (aka: Object, Content, and syntax).
+.TP
+\fB\-o, \-\-object\fR
+Print the Variable name (aka: Vocabulary) (aka: Object).
+.TP
+\fB\-t, \-\-total\fR
+Print the total number of Variables.
+.TP
+\fB\-R, \-\-reassign\fR
+Re-assign the Variable for the given name and matching Content value with the given string.
+.TP
+\fB\-r, \-\-replace\fR
+Simple substitution, replacing the Variable for the given name with the given string.
+.TP
+\fB\-s, \-\-substitute\fR
+Substitute the Variable for the given name and matching Content value with the given string.
+.TP
+\fB\-W, \-\-wrap\fR
+Prepend and append strings for the given name.
+.SH FILENAMES
+.TP
+Any number of files to read.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2023 Kevin Day, GNU LGPL Version 2.1 or later.
