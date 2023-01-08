@@ -38,6 +38,8 @@ build_sources_program main.c main-common.c
 
 build_sources_headers controller.h common.h print.h
 
+build_sources_documentation man
+
 build_sources_setting controller
 
 build_script yes

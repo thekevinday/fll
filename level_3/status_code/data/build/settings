@@ -31,6 +31,8 @@ build_sources_library fss/status_code.c fss/common.c
 build_sources_headers main/status_code.h main/common.h main/common-print.h main/print.h
 build_sources_headers fss/status_code.h fss/common.h
 
+build_sources_documentation man
+
 build_script yes
 build_shared yes
 build_static no

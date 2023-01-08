@@ -103,7 +103,7 @@ extern "C" {
     fl_print_format("  The parameters %[%r%r%]", print.to, print.set->notable, f_console_symbol_long_normal_s, fss_payload_read_long_columns_s, print.set->notable);
     fl_print_format(" and %[%r%r%]", print.to, print.set->notable, f_console_symbol_long_normal_s, fss_payload_read_long_select_s, print.set->notable);
     fl_print_format(" refer to a Content column.%r", print.to, f_string_eol_s);
-    fl_print_format("  The word \"column\" is being loosely defined to refer to a specific Content.%r", print.to, f_string_eol_s);
+    fl_print_format("  The word 'column' is being loosely defined to refer to a specific Content.%r", print.to, f_string_eol_s);
     fl_print_format("  This is not to be confused with a depth.%r%r", print.to, f_string_eol_s, f_string_eol_s);
 
     fl_print_format("  As an exceptional case, a %[%r%r%] of", print.to, print.set->notable, f_console_symbol_long_normal_s, fss_payload_read_long_depth_s, print.set->notable);

@@ -75,6 +75,8 @@ build_sources_program program/fake/private-fake.c program/fake/private-fake-path
 
 build_sources_program program/fake/main.c
 
+build_sources_documentation man
+
 build_script yes
 build_shared yes
 build_static no

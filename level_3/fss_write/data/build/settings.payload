@@ -28,6 +28,8 @@ build_libraries-monolithic -lfll
 
 build_sources_program payload/main.c
 
+build_sources_documentation man
+
 build_script yes
 build_shared yes
 build_static no

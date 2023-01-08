@@ -1,0 +1,698 @@
+.TH CONTROLLER "1" "January 2023" "FLL - Controller 0.7.0" "User Commands"
+.SH NAME
+controller \- Perform a series of operations in a manner similar to that of an init program.
+.SH SYNOPSIS
+.B controller
+[\fI\,OPTIONS\/\fR] [\fI\,ENTRY\/\fR]
+.SH DESCRIPTION
+.PP
+This program performs a series of operations described by an \fBentry\fR file.
+This includes error handling.
+
+The \fBentry\fR file consists of several rules defined in individual \fBrule\fR files.
+Thee \fBrule\fR file allows for both programs and scripts to be executed.
+Any scripting language whose program supports piping commands to it are effectively supported scripting languages.
+
+Upon completion, this program may optionally process an \fBexit\fR file whose name is identical to the \fBentry\fR used.
+
+When both the \fB\-\-simulate\fR parameter and the \fB\-\-validate\fR parameter are specified, then additional information on each would be executed rule is printed but no simulation is performed.
+
+The default interrupt behavior is to operate as if the \fB\-\-interruptible\fR parameter is passed.
+
+Specify an empty string for the \fB\-\-pid\fR parameter to disable pid file creation for this program.
+.SH OPTIONS
+.TP
+\fB\{+h, ++help\fR
+Print the help message.
+.TP
+\fB+d, ++dark\fR
+Output using colors that show up better on dark backgrounds
+.TP
+\fB+l, ++light\fR
+Output using colors that show up better on light backgrounds.
+.TP
+\fB+n, ++no_color\fR
+Do not print using color.
+.TP
+\fB+Q, ++quiet\fR
+Decrease verbosity, silencing most output.
+.TP
+\fB+E, ++error\fR
+Decrease verbosity, using only error output.
+.TP
+\fB+N, ++normal\fR
+Set verbosity to normal.
+.TP
+\fB+V, ++verbose\fR
+Increase verbosity beyond normal output.
+.TP
+\fB+D, ++debug\fR
+Enable debugging, significantly increasing verbosity beyond normal output.
+.TP
+\fB+v, ++version\fR
+Print only the version number.
+.TP
+\fB\-c, \-\-cgroup\fR
+Specify a custom control group file path, such as '/sys/fs/cgroup/'.
+.TP
+\fB\-d, \-\-daemon\fR
+Run in daemon only mode (do not process the entry).
+.TP
+\fB\-I, \-\-init\fR
+The program will run as an init replacement.
+.TP
+\fB\-i, \-\-interruptible\fR
+Designate that this program can be interrupted by a signal.
+.TP
+\fB\-p, \-\-pid\fR
+Specify a custom pid file path, such as 'controller/run/default.pid'.
+.TP
+\fB\-s, \-\-settings\fR
+Specify a custom settings path, such as 'controller/'.
+.TP
+\fB\-S, \-\-simulate\fR
+Run as a simulation.
+.TP
+\fB\-k, \-\-socket\fR
+Specify a custom socket file path, such as 'controller/run/default.socket'.
+.TP
+\fB\-U, \-\-uninterruptible\fR
+Designate that this program cannot be interrupted by a signal.
+.TP
+\fB\-v, \-\-validate\fR
+Validate the settings (entry and rules) without running (does not simulate).
+.SH ENTRY
+.TP
+The name of an \fBentry\fR.
+.SH ACTIONS SPECIFICATION
+.PP
+This describes the intent and purpose of the actions provided for individual Rules (or things related to a Rule).
+
+Each Action represents a specific intent and purpose but many of these actions are customizable via the rule file.
+One should expect an Action to operate as described here but the system administrator or distributor is fully capable of doing something different.
+For those doing something different, appropriate documentation is suggested.
+
+These actions should be usable by any \fBcontrol\fR program that communicates with this \fBcontroller\fR program.
+Should any \fBcontrol\fR or \fBcontroller\fR program implementation not support any particular Action for any reason, one should report that the Action is unsupported.
+
+Freeze Action:
+  The Freeze Action is an extension of a Control Group.
+  This is internal to the \fBcontroller\fR program and is not customizable via any Rule file.
+  For a customizable \fBfreeze\fR-like capability, look into the Pause and Resume Actions.
+  This is the complement of the Thaw Action.
+
+  This designates that a processes Control Group is to be frozen.
+  All Rules (or any process not controlled by the \fBcontroller\fR) that is within the same Control Group will be frozen.
+
+  This must not attempt to freeze (or unfreeze) the Control Group that the \fBcontroller\fR belongs to.
+  Therefore, if a Rule does not specify a Control Group, then it is likely that the Freeze Action will be unsupported for that Rule/Control Group.
+
+Kill Action:
+  Forcefully terminate some process controlled by the \fBcontroller\fR.
+  This action cannot be blocked and it is recommended to use a Stop Action instead for a more proper termination.
+
+Pause Action:
+  The Pause Action will pause (or freeze) the process controlled by the Rule.
+  Although similar to the Freeze Action, this is intended to communicate to an individual process and inform to Pause.
+  This is complemented by the Resume Action.
+
+Restart Action:
+  The Restart Action will either perform a Stop Action and then a Restart Action or it will perform the Restart Action designated in some Rule file.
+  Ideally this should inform some process to perform its own restart routines.
+
+Resume Action:
+  The Resume Action will unpause (or unfreeze) the process controlled by the Rule.
+  Although similar to the Thaw Action, this is intended to communicate to an individual process and inform to Resume.
+  This is complemented by the Pause Action.
+
+Reload Action:
+  The Reload Action will perform the Reload Action designated in some Rule file.
+  Ideally this should inform some process to perform its own reload routines.
+  Many programs often differentiate the concept \fBreload\fR from the concept "restart" in that the program remains running during a \fBreload\fR.
+
+Start Action:
+  The Start Action will perform the Start Action designated in some Rule file.
+  This action should be used to start some program or script.
+  This is the action called by Entry file.
+  This is complemented by the Stop Action.
+
+Stop Action:
+  The Stop Action will perform the Stop Action designated in some Rule file.
+  This action should be used to stop some program or script.
+  This is the action called for all running controlled processes on shutdown.
+  This is complemented by the Start Action.
+
+Thaw Action:
+  The Thaw Action is an extension of a Control Group.
+  This is internal to the \fBcontroller\fR program and is not customizable via any Rule file.
+  For a customizable \fBthaw\fR-like capability, look into the \fBpause\fR and \fBresume\fR Actions.
+  This is complemented by the Freeze Action.
+
+  This designates that a processes Control Group is to be unfrozen.
+  All Rules (or any process not controlled by the \fBcontroller\fR) that is within the same Control Group will be unfrozen.
+
+  This must not attempt to thaw (or unthaw) the Control Group that the \fBcontroller\fR belongs to.
+  Therefore, if a Rule does not specify a Control Group, then it is likely that the Thaw Action will be unsupported for that Rule/Control Group.
+.SH ENTRY SPECIFICATION
+.PP
+This describes the intent and purpose of an Entry file.
+
+An Entry file, such as \fBdefault.entry\fR, is intended to store a set of rules in which the controller will process on execution.
+These are used to run some set of commands, such as booting a system.
+
+The \fBmain\fR Item Object is always executed first (Therefore \fBmain\fR is both reserved and required).
+All other Basic List Objects are not executed unless either an \fBitem\fR or a \fBfailsafe\fR specifies a valid Item name.
+Execution of all Items is top-down.
+
+The \fBsettings\fR item Object:
+  Represents Entry settings and is not an \fBitem\fR that can be executed.
+  A number of settings are supported, but if this Item Object is not specified, then defaults are used.
+  The following settings are available: \fBcontrol\fR, \fBcontrol_group\fR, \fBcontrol_mode\fR, \fBcontrol_user\fR, \fBdefine\fR, \fBmode\fR, \fBparameter\fR, \fBpid\fR, \fBpid_file\fR, \fBsession\fR, \fBshow\fR.
+
+  The \fBcontrol\fR setting:
+    Represents the path to the socket file in which the Controller uses to communicate over with clients such as a Control program.
+    A relative path is relative to the Controller PID directory.
+    An absolute path is treated exactly as the path given.
+    If no socket setting is specified, then no socket will be made available.
+    This socket file is only created once \fBready\fR mode is achieved.
+
+    Providing \fBreadonly\fR after the socket path instructs the Controller program not to create or delete the Socket file because the file system is assumed to be readonly.
+    The socket file itself must therefore already exist.
+    This should be possible in the cases of file systems that have pre-created a socket file at the designated path.
+    When \fBreadonly\fR, the group, mode, and user are also not processed effectively resulting in the \fBcontrol_group\fR, \fBcontrol_mode\fR, and \fBcontrol_user\fR settings being ignored.
+
+    Future versions might expand this into supporting network addresses in addition to socket files.
+
+  The \fBcontrol_group\fR setting:
+    Represents the group name or group ID to assign to the socket file as the group.
+
+  The \fBcontrol_mode\fR setting:
+    Represents the file mode assigned to the socket file.
+    This could either be the string version that might look like \fBu+rw-x,g+r-wx,o-rwx\fR or a numeric value like \fB0750\fR.
+
+  The \fBcontrol_user\fR setting:
+    Represents the user name or user ID to assign to the socket file as the owner.
+
+  The \fBdefine\fR setting:
+    Use this to define an environment variable (this overwrites any existing environment variable with this name).
+    A define is both exported as an environment variable as well as exposed as an IKI variable.
+    Example IKI variable substitution: for \fBdefine PATH /bin:/sbin\fR, the associated IKI variable would look like: PATH.
+
+    All environment variables, including those defined using this, must be in the \fBenvironment\fR list in any given Rule to be exported to the executed process.
+    Environment variables added here that are not added to the environment are still exposed as an IKI variable.
+
+    This is only expanded within any Rule operated on by this Entry.
+
+  The \fBmode\fR setting:
+    Represents the mode in which the Entry is operating in.
+    The following modes are supported: \fBprogram\fR and \fBservice\fR.
+
+    The \fBprogram\fR mode:
+      Designates that the Entry operates as a program and exits when complete.
+      Will call the \fBexit\fR with the same name as this Entry, but with the extension \fBexit\fR, such as \fBdefault.exit\fR.
+      Supports the Item Action \fBexecute\fR to execute a program (switching the \fBcontroller\fR program entirely with the executed process).
+
+    The \fBservice\fR mode:
+      Designates that the Entry operates as a service and will sit and wait for control commands when complete.
+      Will call the \fBexit\fR with the same name as this Entry, but with the extension \fBexit\fR, such as \fBdefault.exit\fR.
+      Does not support the Item Action \fBexecute\fR.
+      This is the default mode.
+
+  The \fBparameter\fR setting:
+    Use this to define an IKI variable name and value.
+    These do not conflict with environment variables and are not exposed as environment variables.
+    Example IKI variable substitution: for \fBparameter hello world\fR, the associated IKI variable would look like: hello.
+
+    This is only expanded within any Rule operated on by this Entry.
+
+  The \fBpid\fR setting:
+    Represents how the Entry PID file is generated or not.
+    The following modes are supported: \fBdisable\fR, \fBrequire\fR, and \fBready\fR.
+    For \fBdisable\fR, not PID file representing the Entry is created.
+    For \fBrequire\fR, check to see if the PID file exists for an Entry at startup and then when \fBready\fR create a PID file, display error on PID file already exists or on failure and then fail.
+    For \fBready\fR, when \fBready\fR create a PID file, display error on failure and then fail (does not check if PID file exists).
+
+  The \fBpid_file\fR setting:
+    When \fBpid\fR is not disabled this represents the path to the PID file.
+    If \fB-p\fR or \fB--pid\fR is passed to the controller program, then this value is ignored in favor of the value passed along the command line.
+
+  The \fBsession\fR setting:
+    Represents the default way in which child processes are executed.
+    This default can be overridden by individual Rules.
+    For \fBnew\fR, Execute Rule processes in a new session setting the process group to the executed process' id (making the executed process a \fBcontrolling terminal\fR).
+    For \fBsame\fR, Execute Rule processes in the same session where the process group is set to the parent process id.
+
+  The \fBshow\fR setting:
+    Represents the way Entry processing presents information to the screen.
+    This applies only to the Entry and Rule processing itself and does not handle the output of programs and scripts being executed by some Entry or Rule.
+    The following show options are supported: \fBnormal\fR and \fBinit\fR.
+    For \fBnormal\fR, will not report the start or stop of some Entry or Rule execution but will report any errors or warnings as appropriate.
+    For \fBinit\fR, will report when starting programs and may include reporting success and failure status.
+
+  The \fBtimeout\fR setting:
+    Represents the default timeouts for the Entry.
+    See the \fBtimeout\fR Action below for details.
+
+The \fBmain\fR item Object:
+  Each \fBitem\fR supports the following Action Names: \fBconsider\fR, \fBexecute\fR, \fBfailsafe\fR, \fBfreeze\fR, \fBitem\fR, \fBkill\fR, \fBpause\fR, \fBreload\fR, \fBrestart\fR, \fBready\fR, \fBresume\fR, \fBstart\fR, \fBstop\fR, and \fBtimeout\fR.
+  Of those types, the following are considered a \fBrule\fR Action: \fBfreeze\fR, \fBkill\fR, \fBpause\fR, \fBreload\fR, \fBrestart\fR, \fBresume\fR, \fBstart\fR, \fBstop\fR, and \fBthaw\fR.
+
+  The \fBconsider\fR Item Action:
+    A special case of a \fBrule\fR Action.
+    All Action Parameters are the same as with the \fBrule\fR Action Parameters.
+    The difference is that \fBconsider\fR is only processed (instead of being processed and executed) and when some \fBrule\fR Action designates that this consideration is required (via \fBneed\fR), wanted (via \fBwant\fR), or wished for (via \fBwish\fR) from the within the Rule file.
+    If this is determined to be executed, then this is immediately executed when needed, wanted or wished for and applies all properties as appropriate (such as \fBasynchronous\fR, for example).
+    If this is determined not to be executed, then this \fBconsider\fR is ignored as if it was never there in the first place.
+
+  The \fBexecute\fR Item Action:
+    Execute into the specified program.
+    On successful execution, the controller program will no longer be running and will be replaced with the designated program.
+    This Item Action is only supported when operating in \fBprogram\fR mode.
+
+  The \fBfailsafe\fR Item Action:
+    Accepts only a valid Item Name in which will be executed when a failure is detected.
+    Only a single \fBfailsafe\fR Item Action may function at a time.
+    Each successive \fBfailsafe\fR Item Action specified replaces the previously defined \fBfailsafe\fR Item Action (in a top-down manner).
+    When operating in \fBfailsafe\fR, the \fBrequire\fR Item Action is ignored (given that it is meaningless once operating in \fBfailsafe\fR mode).
+
+  The \fBfreeze\fR Item Action:
+    A \fBrule\fR Action for freezing some Control Group.
+    This Item Action will process the \fBfreeze\fR inner Content of the named Rule.
+    This is specific to Control Groups and is not yet fully implemented.
+    Once implemented this documentation will need to be updated and clarified.
+
+  The \fBitem\fR Item Action:
+    Accepts only a valid Item Name in which will be immediately executed.
+    Any valid Item Name, except for the reserved \fBmain\fR, may be used.
+
+  The \fBkill\fR Item Action:
+    A \fBrule\fR Action for forcibly terminating some process.
+    This Item Action will process the \fBkill\fR inner Content of the named Rule.
+
+  The \fBpause\fR Item Action:
+    A \fBrule\fR Action for pausing some process.
+    This Item Action will process the \fBpause\fR inner Content of the named Rule.
+
+  The \fBreload\fR Item Action:
+    A \fBrule\fR Action for pausing some process.
+    This Item Action will process the \fBreload\fR inner Content of the named Rule.
+
+  The \fBrestart\fR Item Action:
+    A \fBrule\fR Action for pausing some process.
+    This Item Action will process the \fBrestart\fR inner Content of the named Rule.
+
+  The \fBresume\fR Item Action:
+    A \fBrule\fR Action for pausing some process.
+    This Item Action will process the \fBresume\fR inner Content of the named Rule.
+
+  The \fBready\fR Item Action:
+    Instructs the controller program when it is safe to perform normal tasks, such as creating the PID file.
+    When not specified, the state is always assumed to be ready.
+    For example, the controller program may be used as a full blown \fBinit\fR replacement and therefore may need to mount the /var/run/ directory.
+    If the PID file is created at program start, then the /var/run/controller.pid would be written before the /var/run/ directory is ready.
+    This could be a problem, such as on a read-only file system the PID creation fails and controller bails out on error.
+    Adding \fBready\fR essentially specifies a point in time in the Entry in which things are expected to be safe for such basic operations.
+    When the optional \fBwait\fR is provided, then \fBready\fR will wait for all currently started asynchronous processes to complete before operating.
+
+  The \fBstart\fR Item Action:
+    A \fBrule\fR Action for pausing some process.
+    This Item Action will process the \fBstart\fR inner Content of the named Rule.
+
+  The \fBstop\fR Item Action:
+    A \fBrule\fR Action for pausing some process.
+    This Item Action will process the \fBstop\fR inner Content of the named Rule.
+
+  The \fBthaw\fR Item Action:
+    A \fBrule\fR Action for unfreezing some Control Group.
+    This Item Action will process the \fBthaw\fR inner Content of the named Rule.
+    This is specific to Control Groups and is not yet fully implemented.
+    Once implemented this documentation will need to be updated and clarified.
+
+  The \fBtimeout\fR Item Action:
+    (This is not currently fully implemented, only \fBexit\fR is implemented.)
+    Provides default global settings for each of the four special situations: \fBexit\fR, \fBkill\fR, \fBstart\fR, and \fBstop\fR.
+    Each of these may only have a single one exist at a time (one \fBexit\fR, one \fBkill\fR, one \fBstart\fR, and one \fBstop\fR).
+    Each successive \fBtimeout\fR Item Action, specific to each Action Name (such as \fBstart\fR), specified replaces the previously defined \fBtimeout\fR Action (in a top-down manner).
+    The second Content for each of these, when specified, may be a 0 or greater whole number representing the number of MegaTime (MT) (equivalent to milliseconds).
+    For \fBkill\fR, this represents the number of MegaTime to wait after stopping some Rule and that Rule has not yet stopped to forcefully stop the Rule (aka kill the Rule).
+    For \fBstart\fR, this represents the number of MegaTime to wait after starting some Rule before assuming something went wrong and the Rule is returned as failed.
+    For \fBstop\fR, this represents the number of MegaTime to wait after stopping some Rule before assuming something went wrong and the Rule is returned as failed.
+    If the second Content is not specified, then this disables the type (prevents the specified timeout action).
+    For \fBexit\fR, this represents the number of MegaTime to wait when the Controller program is exiting (such as having received a terminate signal).
+    In this case, a terminate signal is sent to all child processes.
+    The \fBexit\fR timeout represents the amount of time to wait after sending the terminate signal before sending a kill signal to each child process still running.
+    When disabled, the program will not send a kill signal will continue running until all child processes to terminate.
+    The \fBexit\fR timeout does not get applied to any Rule.
+.SH EXIT SPECIFICATION
+.PP
+This describes the intent and purpose of an Exit file.
+
+An Exit file, such as \fBdefault.exit\fR, is intended to store a set of rules in which the controller will process on execution.
+These are used to run some set of commands, such as shutting down a system.
+
+An Exit is a special variation or subset of an Entry.
+
+The \fBsettings\fR Item Object:
+  Represents Exit settings and is not an \fBitem\fR that can be executed.
+  A number of settings are supported, but if this Item Object is not specified, then defaults are used.
+  The following settings are available: \fBpid\fR and \fBshow\fR.
+
+  The \fBdefine\fR setting:
+    Use this to define an environment variable (this overwrites any existing environment variable with this name).
+    A define is both exported as an environment variable as well as exposed as an IKI variable.
+    Example IKI variable substitution: for \fBdefine PATH /bin:/sbin\fR, the associated IKI variable would look like: PATH.
+
+    All environment variables, including those defined using this, must be in the \fBenvironment\fR list in any given Rule to be exported to the executed process.
+    Environment variables added here that are not added to the environment are still exposed as an IKI variable.
+
+    This is only expanded within any Rule operated on by this Exit.
+
+  The \fBparameter\fR setting:
+    Use this to define an IKI variable name and value.
+    These do not conflict with environment variables and are not exposed as environment variables.
+    Example IKI variable substitution: for \fBparameter hello world\fR, the associated IKI variable would look like: hello.
+
+    This is only expanded within any Rule operated on by this Exit.
+
+  The \fBpid\fR setting:
+    Represents how the Exit PID file is generated or not.
+    The following modes are supported: \fBdisable\fR, \fBrequire\fR, and \fBready\fR.
+    For \fBdisable\fR, not PID file representing the Exit is created.
+    For \fBrequire\fR, check to see if the PID file exists for an Exit at startup and then when \fBready\fR create a PID file, display error on PID file already exists or on failure and then fail.
+    For \fBready\fR, when \fBready\fR create a PID file, display error on failure and then fail (does not check if PID file exists).
+
+  The \fBshow\fR setting:
+    Represents the way Exit processing presents information to the screen.
+    This applies only to the Exit and Rule processing itself and does not handle the output of programs and scripts being executed by some Exit or Rule.
+    The following show options are supported: \fBnormal\fR and \fBinit\fR.
+    For \fBnormal\fR, will not report the start or stop of some Exit or Rule execution but will report any errors or warnings as appropriate.
+    For \fBinit\fR, will report when starting programs and may include reporting success and failure status.
+
+  The \fBtimeout\fR setting:
+    Represents the default timeouts for the Exit.
+    See the \fBtimeout\fR Action below for details.
+
+The \fBmain\fR Item Object:
+  Is always executed first (Therefore \fBmain\fR is both reserved and required).
+  All other Basic List Objects are not executed unless either an \fBitem\fR or a \fBfailsafe\fR specifies a valid Item name.
+  Execution of all Items are top-down.
+
+  Each \fBitem\fR supports the following Action Names: \fBconsider\fR, \fBexecute\fR, \fBfailsafe\fR, \fBfreeze\fR, \fBitem\fR, \fBkill\fR, \fBpause\fR, \fBreload\fR, \fBrestart\fR, \fBready\fR, \fBresume\fR, \fBstart\fR, \fBstop\fR, and \fBtimeout\fR.
+  Of those types, the following are considered a \fBrule\fR Action: \fBfreeze\fR, \fBkill\fR, \fBpause\fR, \fBreload\fR, \fBrestart\fR, \fBresume\fR, \fBstart\fR, \fBstop\fR, and \fBthaw\fR.
+
+  The \fBconsider\fR Item Action:
+    A special case of a \fBrule\fR Action.
+    All Action Parameters are the same as with the \fBrule\fR Action Parameters.
+    The difference is that \fBconsider\fR is only processed (instead of being processed and executed) and when some \fBrule\fR Action designates that this consideration is required (via \fBneed\fR), wanted (via \fBwant\fR), or wished for (via \fBwish\fR) from the within the Rule file.
+    If this is determined to be executed, then this is immediately executed when needed, wanted or wished for and applies all properties as appropriate (such as \fBasynchronous\fR, for example).
+    If this is determined not to be executed, then this \fBconsider\fR is ignored as if it was never there in the first place.
+
+  The \fBexecute\fR Item Action:
+    Execute into the specified program.
+    On successful execution, the controller program will no longer be running and will be replaced with the designated program.
+    This Item Action is only supported when operating in \fBprogram\fR mode.
+
+  The \fBfailsafe\fR Item Action:
+    Accepts only a valid Item Name in which will be executed when a failure is detected.
+    Only a single \fBfailsafe\fR Item Action may function at a time.
+    Each successive \fBfailsafe\fR Item Action specified replaces the previously defined \fBfailsafe\fR Item Action (in a top-down manner).
+    When operating in \fBfailsafe\fR, the \fBrequire\fR Item Action is ignored (given that it is meaningless once operating in \fBfailsafe\fR mode).
+
+  The \fBfreeze\fR Item Action:
+    A \fBrule\fR Action for freezing some Control Group.
+    This Item Action will process the \fBfreeze\fR inner Content of the named Rule.
+    This is specific to Control Groups and is not yet fully implemented.
+    Once implemented this documentation will need to be updated and clarified.
+
+  The \fBitem\fR Item Action:
+    Accepts only a valid Item Name in which will be immediately executed.
+    Any valid Item Name, except for the reserved \fBmain\fR, may be used.
+
+  The \fBkill\fR Item Action:
+    A \fBrule\fR Action for forcibly terminating some process.
+    This Item Action will process the \fBkill\fR inner Content of the named Rule.
+
+  The \fBpause\fR Item Action:
+    A \fBrule\fR Action for pausing some process.
+    This Item Action will process the \fBpause\fR inner Content of the named Rule.
+
+  The \fBreload\fR Item Action:
+    A \fBrule\fR Action for pausing some process.
+    This Item Action will process the \fBreload\fR inner Content of the named Rule.
+
+  The \fBrestart\fR Item Action:
+    A \fBrule\fR Action for pausing some process.
+    This Item Action will process the \fBrestart\fR inner Content of the named Rule.
+
+  The \fBresume\fR Item Action:
+    A \fBrule\fR Action for pausing some process.
+    This Item Action will process the \fBresume\fR inner Content of the named Rule.
+
+  The \fBready\fR Action:
+    Instructs the controller program when it is safe to perform normal tasks, such as creating the PID file.
+    When not specified, the state is always assumed to be ready.
+    For example, the controller program may be used as a full blown \fBinit\fR replacement and therefore may need to mount the /var/run/ directory.
+    If the PID file is created at program start, then the /var/run/controller.pid would be written before the /var/run/ directory is ready.
+    This could be a problem, such as on a read-only file system the PID creation fails and controller bails out on error.
+    Adding \fBready\fR essentially specifies a point in time in the Exit in which things are expected to be safe for such basic operations.
+    When the optional \fBwait\fR is provided, then \fBready\fR will wait for all currently started asynchronous processes to complete before operating.
+
+  The \fBstart\fR Item Action:
+    A \fBrule\fR Action for pausing some process.
+    This Item Action will process the \fBstart\fR inner Content of the named Rule.
+
+  The \fBstop\fR Item Action:
+    A \fBrule\fR Action for pausing some process.
+    This Item Action will process the \fBstop\fR inner Content of the named Rule.
+
+  The \fBthaw\fR Item Action:
+    A \fBrule\fR Action for unfreezing some Control Group.
+    This Item Action will process the \fBthaw\fR inner Content of the named Rule.
+    This is specific to Control Groups and is not yet fully implemented.
+    Once implemented this documentation will need to be updated and clarified.
+
+  The \fBtimeout\fR Item Action:
+    (This is not currently fully implemented, only \fBexit\fR is implemented.)
+    Provides default global settings for each of the four special situations: \fBexit\fR, \fBkill\fR, \fBstart\fR, and \fBstop\fR.
+    Each of these may only have a single one exist at a time (one \fBexit\fR, one \fBkill\fR, one \fBstart\fR, and one \fBstop\fR).
+    Each successive \fBtimeout\fR Item Action, specific to each Action Name (such as \fBstart\fR), specified replaces the previously defined \fBtimeout\fR Action (in a top-down manner).
+    The second Content for each of these, when specified, may be a 0 or greater whole number representing the number of MegaTime (MT) (equivalent to milliseconds).
+    For \fBkill\fR, this represents the number of MegaTime to wait after stopping some Rule and that Rule has not yet stopped to forcefully stop the Rule (aka kill the Rule).
+    For \fBstart\fR, this represents the number of MegaTime to wait after starting some Rule before assuming something went wrong and the Rule is returned as failed.
+    For \fBstop\fR, this represents the number of MegaTime to wait after stopping some Rule before assuming something went wrong and the Rule is returned as failed.
+    If the second Content is not specified, then this disables the type (prevents the specified timeout action).
+
+    For \fBexit\fR, this represents the number of MegaTime to wait when the Controller program is exiting (such as having received a terminate signal).
+    In this case, a terminate signal is sent to all child processes.
+    The \fBexit\fR timeout represents the amount of time to wait after sending the terminate signal before sending a kill signal to each child process still running.
+    When disabled, the program will not send a kill signal will continue running until all child processes to terminate.
+    The \fBexit\fR timeout does not get applied to any Rule.
+.SH PACKET SPECIFICATION
+.PP
+Describes how a packet is designed and intended to be used.
+
+The \fBpacket\fR is the general category in which multiple types of packets belong.
+This describes the different packets based on their \fBtype\fR.
+
+Each packet begins with a control block and a size block followed by a payload block.
+
+  The control block:
+    The leading bit (starting from the left) designates the the format of the payload, which is 0 for string and 1 for binary.
+    The second bit (starting from the left) designates the the byte order for the rest of the packet, which 0 is for little endian and 1 is for big endian.
+    The remaining 6-bits are reserved for future use.
+
+  The size block:
+    The size block represents the size of the entire packet (the control block, the size blocks, and the payload block).
+    This number is a single 32-bit unsigned integer.
+
+    Example packet structure:
+      [ Control Block ] [ Size Block                                  ] [ Payload Block         ]
+      [ 0b10000000    ] [ 0b00000000 0b00000000 0b00000100 0b11010010 ] [ size: 1229 (1234 \- 5) ]
+
+  The payload block:
+    This block is represented by the \fBFSS-000E (Payload)\fR specification and its structure ad use is described in the next sections.
+
+    The following types of payload are received or sent:
+    1) controller payload.
+    2) error payload.
+    3) init payload.
+
+The controller payload:
+  Commands being sent to the controller and their respective responses utilize a \fBcontroller\fR payload.
+  These are pre-defined commands to rules or the controller program itself.
+  Commands such as starting or stopping some rule, for example.
+  A controller payload is also sent in response to a controller payload request to represent a success.
+
+    The \fBnow\fR condition designates that the kexec, reboot, or shutdown is to begin immediately.
+    The \fBat\fR condition designates that the kexec, reboot, or shutdown is to begin once a specific date and time is reached by the system clock.
+    The \fBin\fR condition designates that the kexec, reboot, or shutdown is to begin once a specific amount of time is passed by the system clock since the execution of this command started.
+
+  For these \fBtime\fR conditions, different units of time should be supported, such as \fBseconds\fR, \fBdays\fR, \fByears\fR as standard time, Time, or UNIX Time (Epoch Time).
+
+  The normal \fBcontroller\fR payload commands are any valid Rule Action that performs some action.
+  This does not include Actions that provide some setting or configuration (such as \fBwith_pid\fR).
+  Some of the supported commands are: \fBfreeze\fR, \fBkill\fR, \fBpause\fR, \fBreload\fR, \fBrerun\fR, \fBrestart\fR, \fBresume\fR, \fBstart\fR, \fBstop\fR, or \fBthaw\fR.
+  Multiple commands may be sent multiple \fBaction\fR headers.
+  The \fBaction\fR headers are order sensitive, executing from top to bottom, and one does not start until the previous successfully completes.
+
+  Multiple \fBstatus\fR headers may exist in the response so long as they each match an \fBaction\fR in the request.
+
+  The \fBpayload\fR is expected to be empty and have a length of 0 for a request.
+  The \fBpayload\fR may have an \fBFSS-0000 (Basic)\fR format containing a single Object \fBmessage\fR to represent a message associated with an action.
+  Multiple \fBmessage\fR may exist in the response so long as they each match an \fBaction\fR in the request.
+
+The error payload:
+  The error payload is intended to communicate some sort of failure.
+  The error payload is only sent in response to some request (and not in response to another response).
+  The control (the client) is not expected to send error payloads and the controller (the service) should send an error in response to an error payload or ignore it entirely.
+  The \fBstatus\fR from the \fBheader\fR designates the status code as either a status code name string or a status code number (where a number may have error and warning bits).
+  The \fBpayload\fR will contain a NULL terminated string representing the message used to describe the error.
+
+The init payload:
+  The init payload is intended exclusively for the \fBinit\fR operation mode and is expected to only be available when running as \fBinit\fR.
+  This is used to provide special actions, namely \fBkexec\fR, \fBreboot\fR, and \fBshutdown\fR.
+
+  The \fBkexec\fR is for booting into another kernel, which may effectively be the same as a \fBreboot\fR ("kexec" is currently neither supported nor implemented).
+  The \fBreboot\fR is for rebooting the machine (currently not implemented).
+  The \fBshutdown\fR is for shutting down the machine (currently not implemented).
+  These three commands are configurable to fire off based on conditions.
+.SH RULE SPECIFICATION
+.PP
+This describes the intent and purpose of a Rule file.
+
+A Rule file, such as \fBssh.rule\fR, is intended to designate what to execute.
+
+The rule file is read top-down, except for the outer most list \fBsettings\fR, which is intended to store setting data for this rule.
+Multiple outer most list Objects may be specified and they are executed as provided, in a top-down manner.
+
+The \fBsettings\fR Rule Type has the following \fBFSS-0001 (Extended)\fR Content:
+  \fBaffinity\fR: Define one or more processors to restrict this rule by with each number representing a specific processor by its id (starting at 0).
+  \fBcapability\fR: Define a set of capabilities in which to use, using the capability \fBtext\fR format (such as \fB= cap_chown+ep\fR).
+  \fBcgroup\fR: Define a cgroup (control group) in which everything within this rule executes under.
+  \fBdefine\fR: A single environment variable name and its associated value that is automatically exposed to processes executed within this rule.
+  \fBengine\fR: An executable name of a script, such as \fBbash\fR, to use for the \fBscript\fR Rule Type (which likely defaults to \fBbash\fR if not specified).
+  \fBenvironment\fR: A set of environment variables to expose to the processes executed within this rule (PATH is always exposed).
+  \fBgroup\fR: A set of group names or IDs to execute as with the first group being the primary group and all remaining being supplementary groups.
+  \fBlimit\fR: Define a resource limit to use (multiple limits may be specified, but only once for each type).
+  \fBname\fR: A name used to represent this rule, which is printed to the user, screen, logs, etc...
+  \fBnice\fR: A single niceness value to run all processes executed within this rule as (-20 gets to be greediest in CPU usage and 19 being the nicest in CPU usage).
+  \fBon\fR: Define a Rule Action in which a specified dependency is needed, wanted, or wished for.
+  \fBparameter\fR: An IKI name and its associated value for use in this rule file.
+  \fBpath\fR: A single Content used to set a custom PATH environment variable value.
+  \fBscheduler\fR: A valid name of a scheduler to use followed by an optional priority number.
+  \fBtimeout\fR: A set of timeouts to wait for in which to perform a set action or to consider failure.
+  \fBuser\fR: A single user name or ID to execute as.
+
+The \fBcapability\fR setting:
+  If the user the controller program is run as does not have the desired capabilities already, they cannot be added.
+  This essentially maintains or reduces the capabilities already available.
+  Due to capabilities only being a draft in the POSIX standard, one may expect \fBcapabilities\fR support may not be available and in such a case this setting will do nothing.
+  If the dependent project (f_capability) does not have libcap support enabled, then capabilities will be unsupported by the compilation of this project.
+
+The \fBcontrol\fR setting:
+  The first argument is either \fBexisting\fR or \fBnew\fR, where for \fBexisting\fR the process is run inside the existing control used by the parent and when \fBnew\fR the process is executed within a new control group namespace entirely.
+
+The \fBdefine\fR setting:
+  Use this to define an environment variable (this overwrites any existing environment variable with this name).
+  A define is both exported as an environment variable as well as exposed as an IKI variable.
+  Example IKI variable substitution: for \fBdefine PATH /bin:/sbin\fR, the associated IKI variable would look like: PATH.
+
+  All environment variables, including those defined using this, must be in the \fBenvironment\fR list to be exported to the executed process.
+  Environment variables added here that are not added to the environment are still exposed as an IKI variable.
+
+The \fBengine\fR setting:
+  This engine is used for both \fBscript\fR and \fButility\fR Rule Types.
+  The program that engine refers to must accept a standard input pipe to be supported.
+  Additional parameters may be passed to the engine.
+
+The \fBgroup\fR and \fBuser\fR settings:
+  Only users and groups that the user the controller program is being run as is allowed to use may be used.
+
+The \fBlimit\fR setting:
+  The first parameter must be one of: \fBas\fR, \fBcore\fR, \fBcpu\fR, \fBdata\fR, \fBfsize\fR, \fBlocks\fR, \fBmemlock\fR, \fBmsgqueue\fR, \fBnice\fR, \fBnofile\fR, \fBnproc\fR, \fBrss\fR, \fBrtprio\fR, \fBrttime\fR, \fBsigpending\fR, or \fBstack\fR.
+  The second parameter represents the soft limit.
+  The third parameter represents the hard limit.
+  This may be specified multiply times, but only once for each type.
+
+The \fBon\fR setting:
+  The first parameter represents the Action the dependency exists under and must be one of: \fBfreeze\fR, \fBkill\fR, \fBpause\fR, \fBreload\fR, \fBrestart\fR, \fBresume\fR, \fBstart\fR, \fBstop\fR, or \fBthaw\fR.
+  The second parameter represents how the dependency is required and must be one of: \fBneed\fR, \fBwant\fR, or \fBwish\fR.
+  The third parameter is a partial path to the rule file.
+  The fourth parameter represents the name of the rule file.
+
+  In the case of the second parameter:
+    A \fBneed\fR designates that the dependent rule is required to be executed (must exist and must succeed).
+    A \fBwant\fR designates that the dependent rule is to be executed (may exist and if it does, then it must succeed).
+    A \fBwish\fR designates that the dependent rule is to be executed (may exist and if it does, but it does not need to succeed).
+
+    In the case of \fBwant\fR and \fBwish\fR, if the desired rule is either not found or is otherwise disabled, then this will not fail or otherwise block the wanting or wishing rule.
+
+The \fBpath\fR setting:
+  When specified, the \fBPATH\fR environment variable is automatically added to the \fBenvironment\fR setting.
+
+The \fBparameter\fR setting:
+  Use this to define an IKI variable name and value.
+  These do not conflict with environment variables and are not exposed as environment variables.
+  Example IKI variable substitution: for \fBparameter hello world\fR, the associated IKI variable would look like: hello.
+
+The \fBscheduler\fR setting:
+  The valid range of the priority number is dependent on the scheduler.
+  For example, non-real-time schedulers (such as \fBidle\fR) only support a value of 0 whereas real-time schedulers (such as \fBfifo\fR) only support an inclusive range of 1 to 99.
+  Supported non-real-time schedulers are: \fBbatch\fR, \fBidle\fR, and \fBother\fR (aka: normal/default).
+  Supported real-time schedulers are: \fBdeadline\fR, \fBfifo\fR, \fBround_robin\fR.
+
+The \fBtimeout\fR setting:
+  (This is not currently implemented.)
+  Provides settings for each of the three special situations: \fBkill\fR, \fBstart\fR, and \fBstop\fR.
+  Each of these may only have a single one exist at a time (one \fBkill\fR, one \fBstart\fR, and one \fBstop\fR).
+  Each successive \fBtimeout\fR Item Action, specific to each Action Name (such as \fBstart\fR), specified replaces the previously defined \fBtimeout\fR Action (in a top-down manner).
+  The second Content for each of these, when specified, may be a 0 or greater whole number representing the number of MegaTime (MT) (equivalent to milliseconds).
+  For \fBkill\fR, this represents the number of MegaTime to wait after stopping some Rule and that Rule has not yet stopped to forcefully stop the Rule (aka kill the Rule).
+  For \fBstart\fR, this represents the number of MegaTime to wait after starting some Rule before assuming something went wrong and the Rule is returned as failed.
+  For \fBstop\fR, this represents the number of MegaTime to wait after stopping some Rule before assuming something went wrong and the Rule is returned as failed.
+  If the second Content is not specified, then this disables the type (prevents the specified timeout action).
+
+There are four available Rule Types to choose from: \fBcommand\fR, \fBservice\fR, \fBscript\fR, and \fButility\fR.
+
+The \fBcommand\fR Rule Type provides a simple command to run under the different circumstances: \fBstart\fR, \fBstop\fR, \fBrestart\fR, and \fBreload\fR.
+A \fBcommand\fR always operates in the foreground.
+
+The \fBservice\fR Rule Type provides a \fBcommand\fR accompanied with a PID file (Process Identifier file).
+
+The \fBscript\fR Rule Type provides a series of lines to be executed by some engine, such as GNU Bash.
+This \fBscript\fR operates in the foreground, but individual things done within the script may operate in foreground or background.
+The last return state is treated as an error, so be sure to finish the script with a return code of 0 to designate no error and any other whole number, such a 1, to designate an error.
+Therefore passing \fBexit 1\fR would return as an error and passing \fBexit 0\fR would return as a success.
+A \fBscript\fR is assumed to be in GNU Bash, which is the default expected behavior, but the specification does not explicitly require this.
+Another scripting language can be used but changing this incurs the responsibility to ensure all rules are updated to the appropriate scripting language.
+
+The \fButility\fR Rule Type provides a \fBscript\fR accompanied with a PID file (Process Identifier file).
+
+There are nine Rule Actions used to execute ("freeze", \fBkill\fR, \fBpause\fR, \fBreload\fR, \fBrestart\fR, \fBresume\fR, \fBstart\fR, \fBstop\fR, and \fBthaw\fR):
+  When \fBrestart\fR Object's Content is not provided, then \fBstart\fR and \fBstop\fR is called when the rule is executed using the restart Action, if both \fBstart\fR and \fBstop\fR are provided.
+  When \fBreload\fR, \fBstart\fR, or \fBstop\fR Object's Content are not provided, then no respective Action is performed.
+
+  Commands are conditionally available depending on the presence of these, such as if \fBstop\fR is not provided then \fBstop\fR (and \fBrestart\fR) will not be available for the \fBcontrol\fR program(s) to use.
+
+Thee are additional Rule Actions not used to execute ("pid_file", \fBrerun\fR, and \fBwith\fR):
+  The \fBpid_file\fR Object's Content designates the path to the PID file created by the called program.
+
+  The \fBrerun\fR Object's Content designates how to re-run a given execution Rule type.
+    The first Content represents the execution type, which may be one of: \fBfreeze\fR, \fBkill\fR, \fBpause\fR, \fBreload\fR, \fBrestart\fR, \fBresume\fR, \fBstart\fR, \fBstop\fR, and \fBthaw\fR.
+
+    The second Content represents when to run this re-run is triggered, which is either \fBsuccess\fR (return code of 0) or \fBfailure\fR (return code is not 0).
+
+    The third Content and more represent additional options for fine tuning how the re-run is Performed:
+      When \fBdelay\fR, followed by a number of MegaTime (MT) (equivalent to milliseconds) in which to wait before attempting the re-run.
+      When \fBmax\fR, followed by a positive number or the number 0 designating the maximum number of re-runs to perform.
+      When \fBreset\fR, the \fBmax\fR re-run counter is reset for the opposite re-run when this re-run is triggered, such as:
+        A \fBrerun start success reset\fR and a \fBrerun failure max 10\fR, the failure counter would reset to 0 when the \fBsuccess\fR re-run is performed and not when the \fBfailure\fR re-run is performed.
+
+      A \fBmax\fR of 0 designates that the re-run will happen infinitely.
+
+  The \fBwith\fR Object's Content designates special flags designating very specific behavior to be applied to any single Rule Type.
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, GNU LGPL Version 2.1 or later.

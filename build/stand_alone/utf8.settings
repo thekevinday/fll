@@ -52,6 +52,8 @@ build_sources_program program/utf8/private-common.c program/utf8/private-utf8.c 
 
 build_sources_program program/utf8/main.c
 
+build_sources_documentation man
+
 build_script yes
 build_shared yes
 build_static no
