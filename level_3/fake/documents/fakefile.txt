@@ -446,7 +446,7 @@ Fakefile Documentation:
 
     - code:"run"\:
       Manually execute a remote program or script.
-      This program must be in the appropriate PATH environment or otherwise automatically detected when calling without a specific path to the program or script.
+      This program must be in the appropriate code:"PATH" environment or otherwise automatically detected when calling without a specific path to the program or script.
 
       The first bold:"Content" represents the program or script name.
       All bold:"Content" after the first are passed to the program or script when running.
@@ -456,7 +456,7 @@ Fakefile Documentation:
 
     - code:"shell"\:
       Manually execute a remote program or script using a specific path to the program or script.
-      This does not require the program to exist in PATH, but the path to the program or script must be relative to the project path.
+      This does not require the program to exist in code:"PATH", but the path to the program or script must be relative to the project path.
 
       The first bold:"Content" represents the program or script name.
       All bold:"Content" after the first are passed to the program or script when running.
