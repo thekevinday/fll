@@ -82,7 +82,7 @@ extern "C" {
   #define FLL_fss_status_status_code_last_s  "F_fss_status_code_last"
 
   #define FLL_fss_status_status_code_first_s_length 23
-  #define FLL_fss_status_status_code_last_s_length  21
+  #define FLL_fss_status_status_code_last_s_length  22
 
   extern const f_string_static_t fll_fss_status_status_code_first_s;
   extern const f_string_static_t fll_fss_status_status_code_last_s;
