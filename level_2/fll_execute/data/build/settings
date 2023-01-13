@@ -51,7 +51,7 @@ environment PATH LD_LIBRARY_PATH
 
 #defines -D_di_libcap_
 defines -D_libcap_legacy_only_ -D_pthread_attr_unsupported_ -D_pthread_sigqueue_unsupported_
-defines-individual_threadless -D_di_pthread_support_
+defines-individual_threadless -D_di_thread_support_
 
 flags -O2 -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-parentheses
 flags-clang -Wno-logical-op-parentheses
