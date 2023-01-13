@@ -300,10 +300,10 @@ extern "C" {
     }
 
     if (parameter && parameter->signals) {
-      #ifdef _di_pthread_support_
+      #ifdef _di_thread_support_
         f_signal_mask(SIG_BLOCK, &parameter->signals->block, 0);
         f_signal_mask(SIG_UNBLOCK, &parameter->signals->block_not, 0);
-      #else // _di_pthread_support_
+      #else // _di_thread_support_
         if (parameter->option & FL_execute_parameter_option_threadsafe_d) {
           f_thread_signal_mask(SIG_BLOCK, &parameter->signals->block, 0);
           f_thread_signal_mask(SIG_UNBLOCK, &parameter->signals->block_not, 0);
@@ -312,7 +312,7 @@ extern "C" {
           f_signal_mask(SIG_BLOCK, &parameter->signals->block, 0);
           f_signal_mask(SIG_UNBLOCK, &parameter->signals->block_not, 0);
         }
-      #endif // _di_pthread_support_
+      #endif // _di_thread_support_
     }
 
     if (parameter && parameter->environment) {
@@ -488,10 +488,10 @@ extern "C" {
     }
 
     if (parameter && parameter->signals) {
-      #ifdef _di_pthread_support_
+      #ifdef _di_thread_support_
         f_signal_mask(SIG_BLOCK, &parameter->signals->block, 0);
         f_signal_mask(SIG_UNBLOCK, &parameter->signals->block_not, 0);
-      #else // _di_pthread_support_
+      #else // _di_thread_support_
         if (parameter->option & FL_execute_parameter_option_threadsafe_d) {
           f_thread_signal_mask(SIG_BLOCK, &parameter->signals->block, 0);
           f_thread_signal_mask(SIG_UNBLOCK, &parameter->signals->block_not, 0);
@@ -500,7 +500,7 @@ extern "C" {
           f_signal_mask(SIG_BLOCK, &parameter->signals->block, 0);
           f_signal_mask(SIG_UNBLOCK, &parameter->signals->block_not, 0);
         }
-      #endif // _di_pthread_support_
+      #endif // _di_thread_support_
     }
 
     if (parameter && parameter->environment) {
