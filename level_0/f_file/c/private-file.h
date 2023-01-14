@@ -38,13 +38,19 @@ extern "C" {
  *
  * @see close()
  *
+ * @see f_file_clone()
+ * @see f_file_clone_at()
  * @see f_file_close()
+ * @see f_file_close_flush()
  * @see f_file_copy()
+ * @see f_file_copy_at()
+ * @see f_file_create()
+ * @see f_file_create_at()
  * @see f_file_stream_close()
  */
-#if !defined(_di_f_file_close_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_stream_close_)
+#if !defined(_di_f_file_clone_) || !defined(_di_f_file_clone_at_) || !defined(_di_f_file_close_) || !defined(_di_f_file_close_flush_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_copy_at_) || !defined(_di_f_file_create_) || !defined(_di_f_file_create_at_) || !defined(_di_f_file_stream_close_)
   extern f_status_t private_f_file_close(f_file_t * const file) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_file_close_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_stream_close_)
+#endif // !defined(_di_f_file_clone_) || !defined(_di_f_file_clone_at_) || !defined(_di_f_file_close_) || !defined(_di_f_file_close_flush_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_copy_at_) || !defined(_di_f_file_create_) || !defined(_di_f_file_create_at_) || !defined(_di_f_file_stream_close_)
 
 /**
  * Copy a file.
@@ -446,18 +452,21 @@ extern "C" {
  *   F_support_not (with error bit) if the file system or file type does not support flushing.
  *   F_file_synchronize (with error bit) on any other failure.
  *
+ * @see fsync()
+ *
+ * @see f_file_clone()
  * @see f_file_clone_at()
  * @see f_file_close()
+ * @see f_file_close_flush()
  * @see f_file_copy()
  * @see f_file_copy_at()
  * @see f_file_create()
  * @see f_file_create_at()
- * @see f_file_flush()
  * @see f_file_stream_close()
  */
-#if !defined(_di_f_file_clone_at_) || !defined(_di_f_file_close_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_copy_at_) || !defined(_di_f_file_create_) || !defined(_di_f_file_create_at_) || !defined(_di_f_file_flush_) || !defined(_di_f_file_stream_close_)
+#if !defined(_di_f_file_clone_) || !defined(_di_f_file_clone_at_) || !defined(_di_f_file_close_) || !defined(_di_f_file_close_flush_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_copy_at_) || !defined(_di_f_file_create_) || !defined(_di_f_file_create_at_) || !defined(_di_f_file_stream_close_)
   extern f_status_t private_f_file_flush(const f_file_t file) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_file_clone_at_) || !defined(_di_f_file_close_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_copy_at_) || !defined(_di_f_file_create_) || !defined(_di_f_file_create_at_) || !defined(_di_f_file_flush_) || !defined(_di_f_file_stream_close_)
+#endif // !defined(_di_f_file_clone_) || !defined(_di_f_file_clone_at_) || !defined(_di_f_file_close_) || !defined(_di_f_file_close_flush_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_copy_at_) || !defined(_di_f_file_create_) || !defined(_di_f_file_create_at_) || !defined(_di_f_file_stream_close_)
 
 /**
  * Private implementation of f_file_link().
