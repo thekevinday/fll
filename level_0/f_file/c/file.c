@@ -312,7 +312,22 @@ extern "C" {
 
     if (!path.used) return F_data_not;
 
-    return private_f_file_create_fifo_at(at_id, path, mode);
+    if (mkfifoat(at_id, path.string, mode) < 0) {
+      if (errno == EACCES) return F_status_set_error(F_access_denied);
+      if (errno == EBADF) return F_status_set_error(F_directory_descriptor);
+      if (errno == EDQUOT) return F_status_set_error(F_filesystem_quota_block);
+      if (errno == EEXIST) return F_status_set_error(F_file_found);
+      if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
+      if (errno == ENOENT) return F_status_set_error(F_file_found_not);
+      if (errno == ENOSPC) return F_status_set_error(F_space_not);
+      if (errno == ENOTDIR) return F_status_set_error(F_directory_not);
+      if (errno == EPERM) return F_status_set_error(F_prohibited);
+      if (errno == EROFS) return F_status_set_error(F_read_only);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
   }
 #endif // _di_f_file_create_fifo_at_
 
@@ -1323,7 +1338,23 @@ extern "C" {
 
     if (!path.used) return F_data_not;
 
-    return private_f_file_mode_set_at(at_id, path, mode);
+    if (fchmodat(at_id, path.string, mode, 0) < 0) {
+      if (errno == EACCES) return F_status_set_error(F_access_denied);
+      if (errno == EBADF) return F_status_set_error(F_directory_descriptor);
+      if (errno == EFAULT) return F_status_set_error(F_buffer);
+      if (errno == EIO) return F_status_set_error(F_input_output);
+      if (errno == ELOOP) return F_status_set_error(F_loop);
+      if (errno == ENAMETOOLONG) return F_status_set_error(F_name);
+      if (errno == ENOENT) return F_status_set_error(F_file_found_not);
+      if (errno == ENOMEM) return F_status_set_error(F_memory_not);
+      if (errno == ENOTDIR) return F_status_set_error(F_directory_not);
+      if (errno == EPERM) return F_status_set_error(F_access_mode);
+      if (errno == EROFS) return F_status_set_error(F_read_only);
+
+      return F_status_set_error(F_failure);
+    }
+
+    return F_none;
   }
 #endif // _di_f_file_mode_set_at_
 

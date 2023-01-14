@@ -78,7 +78,7 @@ extern "C" {
   }
 #endif // !defined(_di_f_utf_string_triples_append_all_) || !defined(_di_f_utf_string_tripless_append_) || !defined(_di_f_utf_string_tripless_append_all_)
 
-#if !defined(_di_f_utf_string_triples_decrease_by_) || !defined(_di_f_utf_string_triples_increase_) || !defined(_di_f_utf_string_triples_increase_by_) || !defined(_di_f_utf_string_triples_terminate_) || !defined(_di_f_utf_string_triples_terminate_after_)
+#if !defined(_di_f_utf_string_triples_decrease_by_) || !defined(_di_f_utf_string_triples_increase_) || !defined(_di_f_utf_string_triples_increase_by_)
   f_status_t private_f_utf_string_triples_resize(const f_array_length_t length, f_utf_string_triples_t * const triples) {
 
     if (triples->used + length > F_array_length_t_size_d) {
@@ -110,7 +110,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // !defined(_di_f_utf_string_triples_decrease_by_) || !defined(_di_f_utf_string_triples_increase_) || !defined(_di_f_utf_string_triples_increase_by_) || !defined(_di_f_utf_string_triples_terminate_) || !defined(_di_f_utf_string_triples_terminate_after_)
+#endif // !defined(_di_f_utf_string_triples_decrease_by_) || !defined(_di_f_utf_string_triples_increase_) || !defined(_di_f_utf_string_triples_increase_by_)
 
 #if !defined(_di_f_utf_string_tripless_adjust_) || !defined(_di_f_utf_string_tripless_decimate_by_)
   f_status_t private_f_utf_string_tripless_adjust(const f_array_length_t length, f_utf_string_tripless_t * const tripless) {
@@ -140,7 +140,7 @@ extern "C" {
   }
 #endif // !defined(_di_f_utf_string_tripless_adjust_) || !defined(_di_f_utf_string_tripless_decimate_by_)
 
-#if !defined(_di_f_utf_string_tripless_decrease_by_) || !defined(_di_f_utf_string_tripless_increase_) || !defined(_di_f_utf_string_tripless_increase_by_) || !defined(_di_f_utf_string_tripless_terminate_) || !defined(_di_f_utf_string_tripless_terminate_after_)
+#if !defined(_di_f_utf_string_tripless_decrease_by_) || !defined(_di_f_utf_string_tripless_increase_) || !defined(_di_f_utf_string_tripless_increase_by_)
   f_status_t private_f_utf_string_tripless_resize(const f_array_length_t length, f_utf_string_tripless_t * const tripless) {
 
     if (tripless->used + length > F_array_length_t_size_d) {
@@ -166,7 +166,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // !defined(_di_f_utf_string_tripless_decrease_by_) || !defined(_di_f_utf_string_tripless_increase_) || !defined(_di_f_utf_string_tripless_increase_by_) || !defined(_di_f_utf_string_tripless_terminate_) || !defined(_di_f_utf_string_tripless_terminate_after_)
+#endif // !defined(_di_f_utf_string_tripless_decrease_by_) || !defined(_di_f_utf_string_tripless_increase_) || !defined(_di_f_utf_string_tripless_increase_by_)
 
 #ifdef __cplusplus
 } // extern "C"

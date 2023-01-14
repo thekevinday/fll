@@ -82,7 +82,7 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  *
- * @see f_memory_adjust()
+ * @see f_memory_resize()
  * @see f_string_ranges_append()
  * @see f_string_ranges_append_all()
  * @see f_string_ranges_decrease_by()

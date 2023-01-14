@@ -82,27 +82,22 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  *
- * @see f_memory_adjust()
+ * @see f_memory_resize()
  * @see f_string_maps_append()
  * @see f_string_maps_append_all()
  * @see f_string_maps_decrease_by()
  * @see f_string_maps_increase()
  * @see f_string_maps_increase_by()
  * @see f_string_maps_resize()
- * @see f_string_maps_terminate()
- * @see f_string_maps_terminate_after()
  * @see f_string_mapss_append()
  * @see f_string_mapss_append_all()
  * @see f_string_mapss_decrease_by()
  * @see f_string_mapss_increase()
  * @see f_string_mapss_increase_by()
- * @see f_string_mapss_terminate()
- * @see f_string_mapss_terminate_after()
  */
-
-#if !defined(_di_f_string_maps_append_) || !defined(_di_f_string_maps_append_all_) || !defined(_di_f_string_maps_decrease_by_) || !defined(_di_f_string_maps_increase_) || !defined(_di_f_string_maps_increase_by_) || !defined(_di_f_string_maps_resize_) || !defined(_di_f_string_maps_terminate_) || !defined(_di_f_string_maps_terminate_after_) || !defined(_di_f_string_mapss_append_) || !defined(_di_f_string_mapss_append_all_) || !defined(_di_f_string_mapss_decrease_by_) || !defined(_di_f_string_mapss_increase_) || !defined(_di_f_string_mapss_increase_by_) || !defined(_di_f_string_mapss_terminate_) || !defined(_di_f_string_mapss_terminate_after_)
+#if !defined(_di_f_string_maps_append_) || !defined(_di_f_string_maps_append_all_) || !defined(_di_f_string_maps_decrease_by_) || !defined(_di_f_string_maps_increase_) || !defined(_di_f_string_maps_increase_by_) || !defined(_di_f_string_maps_resize_) || !defined(_di_f_string_mapss_append_) || !defined(_di_f_string_mapss_append_all_) || !defined(_di_f_string_mapss_decrease_by_) || !defined(_di_f_string_mapss_increase_) || !defined(_di_f_string_mapss_increase_by_)
   extern f_status_t private_f_string_maps_resize(const f_array_length_t length, f_string_maps_t * const maps) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_string_maps_append_) || !defined(_di_f_string_maps_append_all_) || !defined(_di_f_string_maps_decrease_by_) || !defined(_di_f_string_maps_increase_) || !defined(_di_f_string_maps_increase_by_) || !defined(_di_f_string_maps_resize_) || !defined(_di_f_string_maps_terminate_) || !defined(_di_f_string_maps_terminate_after_) || !defined(_di_f_string_mapss_append_) || !defined(_di_f_string_mapss_append_all_) || !defined(_di_f_string_mapss_decrease_by_) || !defined(_di_f_string_mapss_increase_) || !defined(_di_f_string_mapss_increase_by_) || !defined(_di_f_string_mapss_terminate_) || !defined(_di_f_string_mapss_terminate_after_)
+#endif // !defined(_di_f_string_maps_append_) || !defined(_di_f_string_maps_append_all_) || !defined(_di_f_string_maps_decrease_by_) || !defined(_di_f_string_maps_increase_) || !defined(_di_f_string_maps_increase_by_) || !defined(_di_f_string_maps_resize_) || !defined(_di_f_string_mapss_append_) || !defined(_di_f_string_mapss_append_all_) || !defined(_di_f_string_mapss_decrease_by_) || !defined(_di_f_string_mapss_increase_) || !defined(_di_f_string_mapss_increase_by_)
 
 /**
  * Private implementation for resizing.
@@ -145,16 +140,14 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  *
- * @see f_memory_adjust()
+ * @see f_memory_resize()
  * @see f_string_mapss_decrease_by()
  * @see f_string_mapss_increase()
  * @see f_string_mapss_increase_by()
- * @see f_string_mapss_terminate()
- * @see f_string_mapss_terminate_after()
  */
-#if !defined(_di_f_string_mapss_decrease_by_) || !defined(_di_f_string_mapss_increase_) || !defined(_di_f_string_mapss_increase_by_) || !defined(_di_f_string_mapss_terminate_) || !defined(_di_f_string_mapss_terminate_after_)
+#if !defined(_di_f_string_mapss_decrease_by_) || !defined(_di_f_string_mapss_increase_) || !defined(_di_f_string_mapss_increase_by_)
   extern f_status_t private_f_string_mapss_resize(const f_array_length_t length, f_string_mapss_t * const mapss) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_string_mapss_decrease_by_) || !defined(_di_f_string_mapss_increase_) || !defined(_di_f_string_mapss_increase_by_) || !defined(_di_f_string_mapss_terminate_) || !defined(_di_f_string_mapss_terminate_after_)
+#endif // !defined(_di_f_string_mapss_decrease_by_) || !defined(_di_f_string_mapss_increase_) || !defined(_di_f_string_mapss_increase_by_)
 
 #ifdef __cplusplus
 } // extern "C"

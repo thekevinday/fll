@@ -229,7 +229,7 @@ extern "C" {
       fl_print_format("%[%Q%]", data->main->error.to.stream, data->main->error.notable, source, data->main->error.notable);
     }
   }
-#endif // #ifndef _di_fake_print_error_build_operation_file_message_
+#endif // _di_fake_print_error_build_operation_file_message_
 
 #ifndef _di_fake_print_error_fss
   bool fake_print_error_fss(fake_data_t * const data, const f_status_t status, const char *function, const f_string_static_t path_file, const f_string_range_t range, const bool fallback) {

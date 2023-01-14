@@ -29,7 +29,6 @@ extern "C" {
  *   - set:   Set the capability.
  */
 #ifndef _di_f_capability_t_
-
   enum {
     f_capability_value_type_effective_e = 0,
     f_capability_value_type_permitted_e,
@@ -41,7 +40,7 @@ extern "C" {
     f_capability_flag_type_set_e,
   };
 
-  // provide stubs in the event that libcap is disabled.
+  // Provide stubs in the event that libcap is disabled.
   #ifdef _di_libcap_
     typedef void * cap_t;
     typedef int cap_flag_t;

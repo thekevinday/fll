@@ -42,18 +42,16 @@ extern "C" {
  * @see close()
  *
  * @see f_file_clone()
- * @see f_file_clone_at()
  * @see f_file_close()
  * @see f_file_close_flush()
  * @see f_file_copy()
- * @see f_file_copy_at()
  * @see f_file_create()
  * @see f_file_create_at()
  * @see f_file_stream_close()
  */
-#if !defined(_di_f_file_clone_) || !defined(_di_f_file_clone_at_) || !defined(_di_f_file_close_) || !defined(_di_f_file_close_flush_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_copy_at_) || !defined(_di_f_file_create_) || !defined(_di_f_file_create_at_) || !defined(_di_f_file_stream_close_)
+#if !defined(_di_f_file_clone_) || !defined(_di_f_file_close_) || !defined(_di_f_file_close_flush_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_create_) || !defined(_di_f_file_create_at_) || !defined(_di_f_file_stream_close_)
   extern f_status_t private_f_file_close(const bool flush, int * const id) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_file_clone_) || !defined(_di_f_file_clone_at_) || !defined(_di_f_file_close_) || !defined(_di_f_file_close_flush_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_copy_at_) || !defined(_di_f_file_create_) || !defined(_di_f_file_create_at_) || !defined(_di_f_file_stream_close_)
+#endif // !defined(_di_f_file_clone_) || !defined(_di_f_file_close_) || !defined(_di_f_file_close_flush_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_create_) || !defined(_di_f_file_create_at_) || !defined(_di_f_file_stream_close_)
 
 /**
  * Copy a file.
@@ -237,46 +235,6 @@ extern "C" {
 #endif // !defined(_di_f_file_copy_)
 
 /**
- * Private implementation for creating directories.
- *
- * Intended to be shared to each of the different implementation variations.
- *
- * @param at_id
- *   The file descriptor in which the directory will be created within.
- * @param path
- *   The path file name.
- * @param mode
- *   The directory mode to use when creating.
- *
- * @return
- *   F_none on success.
- *
- *   F_access_denied (with error bit) on access denied.
- *   F_buffer (with error bit) if the buffer is invalid.
- *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
- *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
- *   F_directory_link_max (with error bit) max links limit reached or exceeded.
- *   F_file_found (with error bit) if a file was found while exclusive is TRUE.
- *   F_file_found_not (with error bit) if file at path was not found.
- *   F_filesystem_quota_block (with error bit) if file system's disk blocks or inodes are exhausted.
- *   F_loop (with error bit) on loop error.
- *   F_memory_not (with error bit) if out of memory.
- *   F_name (with error bit) on path name error.
- *   F_parameter (with error bit) if a parameter is invalid.
- *   F_prohibited (with error bit) if file system does not allow for making changes.
- *   F_read_only (with error bit) if file is read-only.
- *   F_space_not (with error bit) if file system is out of space (or file system quota is reached).
- *   F_failure (with error bit) for any other error.
- *
- * @see mkdirat()
- *
- * @see f_file_copy_at()
- */
-#if !defined(_di_f_file_copy_at_)
-  extern f_status_t private_f_file_create_directory_at(const int at_id, const f_string_static_t path, const mode_t mode) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_file_copy_at_)
-
-/**
  * Private implementation of private_f_file_create_fifo().
  *
  * Intended to be shared to each of the different implementation variations.
@@ -310,44 +268,6 @@ extern "C" {
 #if !defined(_di_f_file_create_fifo_) || !defined(_di_f_file_copy_)
   extern f_status_t private_f_file_create_fifo(const f_string_static_t path, const mode_t mode) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_file_create_fifo_) || !defined(_di_f_file_copy_)
-
-/**
- * Private implementation of private_f_file_create_fifo_at().
- *
- * Intended to be shared to each of the different implementation variations.
- *
- * @param at_id
- *   The parent directory, as an open directory file descriptor, in which path is relative to.
- * @param path
- *   The path file name.
- * @param mode
- *   The file mode to assign.
- *
- * @return
- *   F_none on success.
- *
- *   F_access_denied (with error bit) on access denied.
- *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
- *   F_directory_descriptor (with error bit) for bad directory descriptor for at_id.
- *   F_file_found (with error bit) if a file was found while exclusive is TRUE.
- *   F_filesystem_quota_block (with error bit) if file system's disk blocks or ififos are exhausted.
- *   F_loop (with error bit) on loop error.
- *   F_memory_not (with error bit) if out of memory.
- *   F_name (with error bit) on path name error.
- *   F_parameter (with error bit) if a parameter is invalid.
- *   F_prohibited (with error bit) if file system does not allow for making changes.
- *   F_space_not (with error bit) if file system is out of space (or file system quota is reached).
- *   F_supported_not (with error bit) for unsupported file types.
- *   F_failure (with error bit) for any other error.
- *
- * @see mkfifoat()
- *
- * @see f_file_create_fifo_at()
- * @see f_file_copy_at()
- */
-#if !defined(_di_f_file_create_fifo_at_) || !defined(_di_f_file_copy_at_)
-  extern f_status_t private_f_file_create_fifo_at(const int at_id, const f_string_static_t path, const mode_t mode) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_file_create_fifo_at_) || !defined(_di_f_file_copy_at_)
 
 /**
  * Private implementation of f_file_create_node().
@@ -428,13 +348,12 @@ extern "C" {
  *
  * @see mknodat()
  *
- * @see f_file_copy_at()
  * @see f_file_create_device_at()
  * @see f_file_create_node_at()
  */
-#if !defined(_di_f_file_create_device_at_) || !defined(_di_f_file_create_node_at_) || !defined(_di_f_file_copy_at_)
+#if !defined(_di_f_file_create_device_at_) || !defined(_di_f_file_create_node_at_)
   extern f_status_t private_f_file_create_node_at(const int at_id, const f_string_static_t path, const mode_t mode, const dev_t device) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_file_create_device_at_) || !defined(_di_f_file_create_node_at_) || !defined(_di_f_file_copy_at_)
+#endif // !defined(_di_f_file_create_device_at_) || !defined(_di_f_file_create_node_at_)
 
 /**
  * Private implementation of f_file_flush().
@@ -458,18 +377,16 @@ extern "C" {
  * @see fsync()
  *
  * @see f_file_clone()
- * @see f_file_clone_at()
  * @see f_file_close()
  * @see f_file_close_flush()
  * @see f_file_copy()
- * @see f_file_copy_at()
  * @see f_file_create()
  * @see f_file_create_at()
  * @see f_file_stream_close()
  */
-#if !defined(_di_f_file_clone_) || !defined(_di_f_file_clone_at_) || !defined(_di_f_file_close_) || !defined(_di_f_file_close_flush_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_copy_at_) || !defined(_di_f_file_create_) || !defined(_di_f_file_create_at_) || !defined(_di_f_file_stream_close_)
+#if !defined(_di_f_file_clone_) || !defined(_di_f_file_close_) || !defined(_di_f_file_close_flush_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_create_) || !defined(_di_f_file_create_at_) || !defined(_di_f_file_stream_close_)
   extern f_status_t private_f_file_flush(const int id) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_file_clone_) || !defined(_di_f_file_clone_at_) || !defined(_di_f_file_close_) || !defined(_di_f_file_close_flush_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_copy_at_) || !defined(_di_f_file_create_) || !defined(_di_f_file_create_at_) || !defined(_di_f_file_stream_close_)
+#endif // !defined(_di_f_file_clone_) || !defined(_di_f_file_close_) || !defined(_di_f_file_close_flush_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_create_) || !defined(_di_f_file_create_at_) || !defined(_di_f_file_stream_close_)
 
 /**
  * Private implementation of f_file_link().
@@ -623,14 +540,13 @@ extern "C" {
  *
  * @see readlinkat()
  *
- * @see f_file_copy_at()
  * @see f_file_link_read_at()
  * @see f_string_dynamic_increase_by()
  * @see f_string_dynamic_terminate_after()
  */
-#if !defined(_di_f_file_link_read_at_) || !defined(_di_f_file_copy_at_)
+#if !defined(_di_f_file_link_read_at_)
   extern f_status_t private_f_file_link_read_at(const int at_id, const f_string_static_t path, const off_t size, f_string_dynamic_t * const target) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_file_link_read_at_) || !defined(_di_f_file_copy_at_)
+#endif // !defined(_di_f_file_link_read_at_)
 
 /**
  * Private implementation of f_file_mode_set().
@@ -665,41 +581,6 @@ extern "C" {
 #if !defined(_di_f_file_mode_set_) || !defined(_di_f_file_copy_)
   extern f_status_t private_f_file_mode_set(const f_string_static_t path, const mode_t mode) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_file_mode_set_) || !defined(_di_f_file_copy_)
-
-/**
- * Private implementation of f_file_mode_set_at().
- *
- * Intended to be shared to each of the different implementation variations.
- *
- * @param at_id
- *   The parent directory, as an open directory file descriptor, in which path is relative to.
- * @param path
- *   The path file name.
- * @param mode
- *   The new mode to use.
- *
- * @return
- *   F_none on success.
- *
- *   F_access_denied (with error bit) on access denied.
- *   F_access_mode (with error bit) if the current user does not have access to assign the file mode.
- *   F_file_found_not (with error bit) if file at path was not found.
- *   F_directory (with error bit) on invalid directory.
- *   F_input_output (with error bit) on I/O error.
- *   F_loop (with error bit) on loop error.
- *   F_memory_not (with error bit) if out of memory.
- *   F_name (with error bit) on path name error.
- *   F_parameter (with error bit) if a parameter is invalid.
- *   F_read_only (with error bit) if file is read-only.
- *   F_failure (with error bit) for any other error.
- *
- * @see fchmodat()
- *
- * @see f_file_mode_set_at()
- */
-#if !defined(_di_f_file_mode_set_at_)
-  extern f_status_t private_f_file_mode_set_at(const int at_id, const f_string_static_t path, const mode_t mode) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_file_mode_set_at_)
 
 /**
  * Private implementation of f_file_open().
@@ -758,14 +639,12 @@ extern "C" {
  *
  * @see openat()
  *
- * @see f_file_copy_at()
- * @see f_file_clone_at()
+ * @see f_file_create_at()
  * @see f_file_open_at()
- * @see f_file_copy_at()
  */
-#if !defined(_di_f_file_copy_at_) || !defined(_di_f_file_clone_at_) || !defined(_di_f_file_open_at_) || !defined(_di_f_file_copy_at_)
+#if !defined(_di_f_file_create_at_) || !defined(_di_f_file_open_at_)
   extern f_status_t private_f_file_open_at(const int at_id, const f_string_static_t path, const mode_t mode, f_file_t * const file) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_file_copy_at_) || !defined(_di_f_file_clone_at_) || !defined(_di_f_file_open_at_) || !defined(_di_f_file_copy_at_)
+#endif // !defined(_di_f_file_create_at_) || !defined(_di_f_file_open_at_)
 
 /**
  * Private implementation of f_file_role_change().
@@ -1017,9 +896,9 @@ extern "C" {
  * @see f_file_stream_write_range()
  * @see f_file_stream_write_until()
  */
-#if !defined(f_file_stream_write) || !defined(_di_f_file_stream_write_block_) || !defined(f_file_stream_write_until) || !defined(f_file_stream_write_range)
+#if !defined(_di_f_file_stream_write_) || !defined(_di_f_file_stream_write_block_) || !defined(_di_f_file_stream_write_until) || !defined(_di_f_file_stream_write_range)
   extern f_status_t private_f_file_stream_write_until(const f_file_t file, const f_string_static_t buffer, const f_array_length_t total, f_array_length_t * const written) F_attribute_visibility_internal_d;
-#endif // !defined(f_file_stream_write) || !defined(_di_f_file_stream_write_block_) || !defined(f_file_stream_write_until) || !defined(f_file_stream_write_range)
+#endif // !defined(_di_f_file_stream_write_) || !defined(_di_f_file_stream_write_block_) || !defined(_di_f_file_stream_write_until) || !defined(_di_f_file_stream_write_range)
 
 /**
  * Private implementation of f_file_write_until().
@@ -1057,9 +936,9 @@ extern "C" {
  * @see f_file_write_range()
  * @see f_file_write_until()
  */
-#if !defined(f_file_write) || !defined(_di_f_file_write_block_) || !defined(f_file_write_until) || !defined(f_file_write_range)
+#if !defined(_di_f_file_write_) || !defined(_di_f_file_write_block_) || !defined(_di_f_file_write_until) || !defined(_di_f_file_write_range)
   extern f_status_t private_f_file_write_until(const f_file_t file, const f_string_static_t buffer, const f_array_length_t total, f_array_length_t * const written) F_attribute_visibility_internal_d;
-#endif // !defined(f_file_write) || !defined(_di_f_file_write_block_) || !defined(f_file_write_until) || !defined(f_file_write_range)
+#endif // !defined(_di_f_file_write_) || !defined(_di_f_file_write_block_) || !defined(_di_f_file_write_until) || !defined(_di_f_file_write_range)
 
 #ifdef __cplusplus
 } // extern "C"

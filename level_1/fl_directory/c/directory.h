@@ -153,7 +153,7 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_directory_exists().
  *
- * @see f_file_clone()
+ * @see f_directory_exists()
  */
 #ifndef _di_fl_directory_clone_content_
   extern f_status_t fl_directory_clone_content(const f_string_static_t source, const f_string_static_t destination, const fl_directory_recurse_t recurse);

@@ -65,8 +65,6 @@ extern "C" {
  *
  * @see f_print_character_safely()
  * @see f_print_safely()
- * @see f_print_safely_dynamic()
- * @see f_print_safely_dynamic_partial()
  * @see f_print_safely_terminated()
  * @see f_print_except_safely()
  * @see f_print_except_dynamic_safely()
@@ -75,9 +73,9 @@ extern "C" {
  * @see f_print_except_in_dynamic_safely()
  * @see f_print_except_in_dynamic_partial_safely()
  */
-#if !defined(_di_f_print_character_safely_) || !defined(_di_f_print_safely_) || !defined(_di_f_print_safely_dynamic_) || !defined(_di_f_print_safely_dynamic_partial_) || !defined(_di_f_print_safely_terminated_) || !defined(_di_f_print_except_safely_) || !defined(_di_f_print_except_dynamic_safely_) || !defined(_di_f_print_except_dynamic_partial_safely_) || !defined(_di_f_print_except_in_safely_) || !defined(_di_f_print_except_in_dynamic_safely_) || !defined(_di_f_print_except_in_dynamic_partial_safely_)
+#if !defined(_di_f_print_character_safely_) || !defined(_di_f_print_safely_) || !defined(_di_f_print_safely_terminated_) || !defined(_di_f_print_except_safely_) || !defined(_di_f_print_except_dynamic_safely_) || !defined(_di_f_print_except_dynamic_partial_safely_) || !defined(_di_f_print_except_in_safely_) || !defined(_di_f_print_except_in_dynamic_safely_) || !defined(_di_f_print_except_in_dynamic_partial_safely_)
   extern f_status_t private_f_print_character_safely(const f_char_t character, FILE * const stream) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_print_character_safely_) || !defined(_di_f_print_safely_) || !defined(_di_f_print_safely_dynamic_) || !defined(_di_f_print_safely_dynamic_partial_) || !defined(_di_f_print_safely_terminated_) || !defined(_di_f_print_except_safely_) || !defined(_di_f_print_except_dynamic_safely_) || !defined(_di_f_print_except_dynamic_partial_safely_) || !defined(_di_f_print_except_in_safely_) || !defined(_di_f_print_except_in_dynamic_safely_) || !defined(_di_f_print_except_in_dynamic_partial_safely_)
+#endif // !defined(_di_f_print_character_safely_) || !defined(_di_f_print_safely_) || !defined(_di_f_print_safely_terminated_) || !defined(_di_f_print_except_safely_) || !defined(_di_f_print_except_dynamic_safely_) || !defined(_di_f_print_except_dynamic_partial_safely_) || !defined(_di_f_print_except_in_safely_) || !defined(_di_f_print_except_in_dynamic_safely_) || !defined(_di_f_print_except_in_dynamic_partial_safely_)
 
 /**
  * Private implementation of f_print_character_safely_get().
@@ -519,8 +517,6 @@ extern "C" {
  * @see f_print_except_in_safely_
  * @see f_print_except_safely()
  * @see f_print_raw_safely()
- * @see f_print_raw_safely_dynamic()
- * @see f_print_raw_safely_dynamic_partial()
  * @see f_print_safely()
  * @see f_print_safely_terminated()
  * @see f_print_to_dynamic_partial_safely()
@@ -533,9 +529,9 @@ extern "C" {
  * @see f_print_to_except_safely()
  * @see f_print_to_safely()
  */
-#if !defined(_di_f_print_character_safely_get_) || !defined(_di_f_print_dynamic_partial_safely_) || !defined(_di_f_print_dynamic_safely_) || !defined(_di_f_print_except_dynamic_partial_safely_) || !defined(_di_f_print_except_dynamic_safely_) || !defined(_di_f_print_except_in_dynamic_safely_) || !defined(_di_f_print_except_in_dynamic_partial_safely_) || !defined(_di_f_print_except_in_safely_) || !defined(_di_f_print_except_safely_) || !defined(_di_f_print_raw_safely_) || !defined(_di_f_print_raw_safely_dynamic_) || !defined(_di_f_print_raw_safely_dynamic_partial_) || !defined(_di_f_print_safely_) || !defined(_di_f_print_safely_terminated_) || !defined(_di_f_print_to_dynamic_partial_safely_) || !defined(_di_f_print_to_dynamic_safely_) || !defined(_di_f_print_to_except_dynamic_partial_safely_) || !defined(_di_f_print_to_except_dynamic_safely_) || !defined(_di_f_print_to_except_in_dynamic_safely_) || !defined(_di_f_print_to_except_in_dynamic_partial_safely_) || !defined(_di_f_print_to_except_in_safely_) || !defined(_di_f_print_to_except_safely_) || !defined(_di_f_print_to_safely_)
+#if !defined(_di_f_print_character_safely_get_) || !defined(_di_f_print_dynamic_partial_safely_) || !defined(_di_f_print_dynamic_safely_) || !defined(_di_f_print_except_dynamic_partial_safely_) || !defined(_di_f_print_except_dynamic_safely_) || !defined(_di_f_print_except_in_dynamic_safely_) || !defined(_di_f_print_except_in_dynamic_partial_safely_) || !defined(_di_f_print_except_in_safely_) || !defined(_di_f_print_except_safely_) || !defined(_di_f_print_raw_safely_) || !defined(_di_f_print_safely_) || !defined(_di_f_print_safely_terminated_) || !defined(_di_f_print_to_dynamic_partial_safely_) || !defined(_di_f_print_to_dynamic_safely_) || !defined(_di_f_print_to_except_dynamic_partial_safely_) || !defined(_di_f_print_to_except_dynamic_safely_) || !defined(_di_f_print_to_except_in_dynamic_safely_) || !defined(_di_f_print_to_except_in_dynamic_partial_safely_) || !defined(_di_f_print_to_except_in_safely_) || !defined(_di_f_print_to_except_safely_) || !defined(_di_f_print_to_safely_)
   extern const f_string_static_t private_f_print_safely_get(const f_string_t character, const f_array_length_t width_max) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_print_character_safely_get_) || !defined(_di_f_print_dynamic_partial_safely_) || !defined(_di_f_print_dynamic_safely_) || !defined(_di_f_print_except_dynamic_partial_safely_) || !defined(_di_f_print_except_dynamic_safely_) || !defined(_di_f_print_except_in_dynamic_safely_) || !defined(_di_f_print_except_in_dynamic_partial_safely_) || !defined(_di_f_print_except_in_safely_) || !defined(_di_f_print_except_safely_) || !defined(_di_f_print_raw_safely_) || !defined(_di_f_print_raw_safely_dynamic_) || !defined(_di_f_print_raw_safely_dynamic_partial_) || !defined(_di_f_print_safely_) || !defined(_di_f_print_safely_terminated_) || !defined(_di_f_print_to_dynamic_partial_safely_) || !defined(_di_f_print_to_dynamic_safely_) || !defined(_di_f_print_to_except_dynamic_partial_safely_) || !defined(_di_f_print_to_except_dynamic_safely_) || !defined(_di_f_print_to_except_in_dynamic_safely_) || !defined(_di_f_print_to_except_in_dynamic_partial_safely_) || !defined(_di_f_print_to_except_in_safely_) || !defined(_di_f_print_to_except_safely_) || !defined(_di_f_print_to_safely_)
+#endif // !defined(_di_f_print_character_safely_get_) || !defined(_di_f_print_dynamic_partial_safely_) || !defined(_di_f_print_dynamic_safely_) || !defined(_di_f_print_except_dynamic_partial_safely_) || !defined(_di_f_print_except_dynamic_safely_) || !defined(_di_f_print_except_in_dynamic_safely_) || !defined(_di_f_print_except_in_dynamic_partial_safely_) || !defined(_di_f_print_except_in_safely_) || !defined(_di_f_print_except_safely_) || !defined(_di_f_print_raw_safely_) || !defined(_di_f_print_safely_) || !defined(_di_f_print_safely_terminated_) || !defined(_di_f_print_to_dynamic_partial_safely_) || !defined(_di_f_print_to_dynamic_safely_) || !defined(_di_f_print_to_except_dynamic_partial_safely_) || !defined(_di_f_print_to_except_dynamic_safely_) || !defined(_di_f_print_to_except_in_dynamic_safely_) || !defined(_di_f_print_to_except_in_dynamic_partial_safely_) || !defined(_di_f_print_to_except_in_safely_) || !defined(_di_f_print_to_except_safely_) || !defined(_di_f_print_to_safely_)
 
 /**
  * Private implementation of f_print_terminated().
@@ -587,15 +583,11 @@ extern "C" {
  * @see f_print_except_raw_safely()
  * @see f_print_except_safely()
  * @see f_print_raw_safely()
- * @see f_print_raw_safely_dynamic()
- * @see f_print_raw_safely_dynamic_partial()
  * @see f_print_safely()
- * @see f_print_safely_dynamic()
- * @see f_print_safely_dynamic_partial()
  */
-#if !defined(_di_f_print_except_dynamic_partial_raw_) || !defined(_di_f_print_except_dynamic_partial_safely_) || !defined(_di_f_print_except_dynamic_raw_) || !defined(_di_f_print_except_dynamic_safely_) || !defined(_di_f_print_except_in_dynamic_partial_raw_safely_) || !defined(_di_f_print_except_in_dynamic_partial_safely_) || !defined(_di_f_print_except_in_dynamic_raw_safely_) || !defined(_di_f_print_except_in_dynamic_safely_) || !defined(_di_f_print_except_in_raw_safely_) || !defined(_di_f_print_except_in_safely_) || !defined(_di_f_print_except_raw_safely_) || !defined(_di_f_print_except_safely_) || !defined(_di_f_print_raw_safely_) || !defined(_di_f_print_raw_safely_dynamic_) || !defined(_di_f_print_raw_safely_dynamic_partial_) || !defined(_di_f_print_safely_) || !defined(_di_f_print_safely_dynamic_) || !defined(_di_f_print_safely_dynamic_partial_)
+#if !defined(_di_f_print_except_dynamic_partial_raw_) || !defined(_di_f_print_except_dynamic_partial_safely_) || !defined(_di_f_print_except_dynamic_raw_) || !defined(_di_f_print_except_dynamic_safely_) || !defined(_di_f_print_except_in_dynamic_partial_raw_safely_) || !defined(_di_f_print_except_in_dynamic_partial_safely_) || !defined(_di_f_print_except_in_dynamic_raw_safely_) || !defined(_di_f_print_except_in_dynamic_safely_) || !defined(_di_f_print_except_in_raw_safely_) || !defined(_di_f_print_except_in_safely_) || !defined(_di_f_print_except_raw_safely_) || !defined(_di_f_print_except_safely_) || !defined(_di_f_print_raw_safely_) || !defined(_di_f_print_safely_)
   extern uint8_t private_f_print_width_max(const f_string_t string, const f_array_length_t at) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_print_except_dynamic_partial_raw_) || !defined(_di_f_print_except_dynamic_partial_safely_) || !defined(_di_f_print_except_dynamic_raw_) || !defined(_di_f_print_except_dynamic_safely_) || !defined(_di_f_print_except_in_dynamic_partial_raw_safely_) || !defined(_di_f_print_except_in_dynamic_partial_safely_) || !defined(_di_f_print_except_in_dynamic_raw_safely_) || !defined(_di_f_print_except_in_dynamic_safely_) || !defined(_di_f_print_except_in_raw_safely_) || !defined(_di_f_print_except_in_safely_) || !defined(_di_f_print_except_raw_safely_) || !defined(_di_f_print_except_safely_) || !defined(_di_f_print_raw_safely_) || !defined(_di_f_print_raw_safely_dynamic_) || !defined(_di_f_print_raw_safely_dynamic_partial_) || !defined(_di_f_print_safely_) || !defined(_di_f_print_safely_dynamic_) || !defined(_di_f_print_safely_dynamic_partial_)
+#endif // !defined(_di_f_print_except_dynamic_partial_raw_) || !defined(_di_f_print_except_dynamic_partial_safely_) || !defined(_di_f_print_except_dynamic_raw_) || !defined(_di_f_print_except_dynamic_safely_) || !defined(_di_f_print_except_in_dynamic_partial_raw_safely_) || !defined(_di_f_print_except_in_dynamic_partial_safely_) || !defined(_di_f_print_except_in_dynamic_raw_safely_) || !defined(_di_f_print_except_in_dynamic_safely_) || !defined(_di_f_print_except_in_raw_safely_) || !defined(_di_f_print_except_in_safely_) || !defined(_di_f_print_except_raw_safely_) || !defined(_di_f_print_except_safely_) || !defined(_di_f_print_raw_safely_) || !defined(_di_f_print_safely_)
 
 #ifdef __cplusplus
 } // extern "C"

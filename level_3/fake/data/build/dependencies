@@ -23,6 +23,7 @@ f_path
 f_pipe
 f_print
 f_signal
+f_thread
 
 fl_control_group
 fl_conversion

@@ -36,10 +36,11 @@ extern "C" {
  *   F_failure (with error bit) for any other failure, failures might be populated with individual status codes.
  *
  * @see fl_directory_clone()
+ * @see fl_directory_clone_content()
  */
-#if !defined(_di_fl_directory_clone_)
+#if !defined(_di_fl_directory_clone_) || !defined(_di_fl_directory_clone_content_)
   extern f_status_t private_fl_directory_clone(const f_string_static_t source, const f_string_static_t destination, const fl_directory_recurse_t recurse, const f_number_unsigned_t depth) F_attribute_visibility_internal_d;
-#endif // !defined(_di_fl_directory_clone_)
+#endif // !defined(_di_fl_directory_clone_) || !defined(_di_fl_directory_clone_content_)
 
 /**
  * A special function intended to be used directly by private_fl_directory_clone().
@@ -94,10 +95,11 @@ extern "C" {
  *   F_failure (with error bit) for any other failure, failures might be populated with individual status codes.
  *
  * @see fl_directory_copy()
+ * @see fl_directory_copy_content()
  */
-#if !defined(_di_fl_directory_copy_)
+#if !defined(_di_fl_directory_copy_) || !defined(_di_fl_directory_copy_content_)
   extern f_status_t private_fl_directory_copy(const f_string_static_t source, const f_string_static_t destination, const f_mode_t mode, const fl_directory_recurse_t recurse, const f_number_unsigned_t depth) F_attribute_visibility_internal_d;
-#endif // !defined(_di_fl_directory_copy_)
+#endif // !defined(_di_fl_directory_copy_) || !defined(_di_fl_directory_copy_content_)
 
 /**
  * A special function intended to be used directly by private_fl_directory_copy().
@@ -125,10 +127,11 @@ extern "C" {
  *   F_failure (with error bit) for any other failure, failures might be populated with individual status codes.
  *
  * @see fl_directory_copy()
+ * @see fl_directory_copy_content()
  */
-#if !defined(_di_fl_directory_copy_file_)
+#if !defined(_di_fl_directory_copy_) || !defined(_di_fl_directory_copy_content_)
   extern f_status_t private_fl_directory_copy_file(const f_string_static_t file, const f_string_static_t source, const f_string_static_t destination, const f_mode_t mode, const fl_directory_recurse_t recurse) F_attribute_visibility_internal_d;
-#endif // !defined(_di_fl_directory_copy_file_)
+#endif // !defined(_di_fl_directory_copy_) || !defined(_di_fl_directory_copy_content_)
 
 /**
  * A special function intended to be used directly by fl_directory_list().
@@ -170,12 +173,14 @@ extern "C" {
  * @see f_string_dynamics_increase_by()
  *
  * @see fl_directory_clone()
- * @see fl_directory_list()
+ * @see fl_directory_clone_content()
  * @see fl_directory_copy()
+ * @see fl_directory_copy_content()
+ * @see fl_directory_list()
  */
-#if !defined(_di_fl_directory_clone_) || !defined(_di_fl_directory_copy_) || !defined(_di_fl_directory_list_)
+#if !defined(_di_fl_directory_clone_) || !defined(_di_fl_directory_clone_content_) || !defined(_di_fl_directory_copy_) || !defined(_di_fl_directory_copy_content_) || !defined(_di_fl_directory_list_)
   extern f_status_t private_fl_directory_list(const f_string_static_t path, int (*filter)(const struct dirent *), int (*sort)(const struct dirent **, const struct dirent **), const bool dereference, f_directory_listing_t * const listing) F_attribute_visibility_internal_d;
-#endif // !defined(_di_fl_directory_clone_) || !defined(_di_fl_directory_copy_) || !defined(_di_fl_directory_list_)
+#endif // !defined(_di_fl_directory_clone_) || !defined(_di_fl_directory_clone_content_) || !defined(_di_fl_directory_copy_) || !defined(_di_fl_directory_copy_content_) || !defined(_di_fl_directory_list_)
 
 /**
  * Private implementation of fl_directory_path_push().
