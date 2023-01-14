@@ -876,7 +876,7 @@ extern "C" {
   }
 #endif // !defined(_di_f_print_except_safely_) || !defined(_di_f_print_except_dynamic_safely_) || !defined(_di_f_print_except_dynamic_partial_safely_)
 
-#if !defined(_di_f_print_raw_) || !defined(_di_f_print_raw_dynamic_) || !defined(_di_f_print_raw_dynamic_partial_)
+#if !defined(_di_f_print_dynamic_partial_raw_) || !defined(_di_f_print_dynamic_partial_raw_safely_) || !defined(_di_f_print_dynamic_raw_) || !defined(_di_f_print_dynamic_raw_safely_) || !defined(_di_f_print_raw_) || !defined(_di_f_print_raw_safely_)
   f_status_t private_f_print_raw(const f_string_t string, const f_array_length_t length, FILE * const stream) {
 
     f_array_length_t count = 0;
@@ -920,9 +920,9 @@ extern "C" {
 
     return F_none;
   }
-#endif // !defined(_di_f_print_raw_) || !defined(_di_f_print_raw_dynamic_) || !defined(_di_f_print_raw_dynamic_partial_)
+#endif // !defined(_di_f_print_dynamic_partial_raw_) || !defined(_di_f_print_dynamic_partial_raw_safely_) || !defined(_di_f_print_dynamic_raw_) || !defined(_di_f_print_dynamic_raw_safely_) || !defined(_di_f_print_raw_) || !defined(_di_f_print_raw_safely_)
 
-#if !defined(_di_f_print_raw_safely_) || !defined(_di_f_print_raw_safely_dynamic_) || !defined(_di_f_print_raw_safely_dynamic_partial_)
+#if !defined(_di_f_print_dynamic_partial_raw_safely_) || !defined(_di_f_print_dynamic_raw_safely_) || !defined(_di_f_print_raw_safely_)
   f_status_t private_f_print_raw_safely(const f_string_t string, const f_array_length_t length, FILE * const stream) {
 
     register f_array_length_t i = 0;
@@ -1003,9 +1003,9 @@ extern "C" {
 
     return F_none;
   }
-#endif // !defined(_di_f_print_raw_safely_) || !defined(_di_f_print_raw_safely_dynamic_) || !defined(_di_f_print_raw_safely_dynamic_partial_)
+#endif // !defined(_di_f_print_dynamic_partial_raw_safely_) || !defined(_di_f_print_dynamic_raw_safely_) || !defined(_di_f_print_raw_safely_)
 
-#if !defined(_di_f_print_safely_) || !defined(_di_f_print_safely_dynamic_) || !defined(_di_f_print_safely_dynamic_partial_)
+#if !defined(_di_f_print_dynamic_partial_safely_) || !defined(_di_f_print_dynamic_safely_) || !defined(_di_f_print_safely_)
   f_status_t private_f_print_safely(const f_string_t string, const f_array_length_t length, FILE * const stream) {
 
     register f_array_length_t i = 0;
@@ -1099,7 +1099,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // !defined(_di_f_print_safely_) || !defined(_di_f_print_safely_dynamic_) || !defined(_di_f_print_safely_dynamic_partial_)
+#endif // !defined(_di_f_print_dynamic_partial_safely_) || !defined(_di_f_print_dynamic_safely_) || !defined(_di_f_print_safely_)
 
 #if !defined(_di_f_print_character_safely_get_) || !defined(_di_f_print_dynamic_partial_safely_) || !defined(_di_f_print_dynamic_safely_) || !defined(_di_f_print_except_dynamic_partial_safely_) || !defined(_di_f_print_except_dynamic_safely_) || !defined(_di_f_print_except_in_dynamic_safely_) || !defined(_di_f_print_except_in_dynamic_partial_safely_) || !defined(_di_f_print_except_in_safely_) || !defined(_di_f_print_except_safely_) || !defined(_di_f_print_raw_safely_) || !defined(_di_f_print_raw_safely_dynamic_) || !defined(_di_f_print_raw_safely_dynamic_partial_) || !defined(_di_f_print_safely_) || !defined(_di_f_print_safely_terminated_) || !defined(_di_f_print_to_dynamic_partial_safely_) || !defined(_di_f_print_to_dynamic_safely_) || !defined(_di_f_print_to_except_dynamic_partial_safely_) || !defined(_di_f_print_to_except_dynamic_safely_) || !defined(_di_f_print_to_except_in_dynamic_safely_) || !defined(_di_f_print_to_except_in_dynamic_partial_safely_) || !defined(_di_f_print_to_except_in_safely_) || !defined(_di_f_print_to_except_safely_) || !defined(_di_f_print_to_safely_)
   const f_string_static_t private_f_print_safely_get(const f_string_t character, const f_array_length_t width_max) {

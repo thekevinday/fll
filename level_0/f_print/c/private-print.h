@@ -258,7 +258,6 @@ extern "C" {
  * @see f_print_except_in_raw_safely()
  * @see f_print_except_in_dynamic_raw_safely()
  * @see f_print_except_in_dynamic_partial_raw_safely()
- * @see f_utf_is_valid()
  */
 #if !defined(_di_f_print_except_in_raw_safely_) || !defined(_di_f_print_except_dynamic_in_raw_safely_) || !defined(_di_f_print_except_in_dynamic_partial_raw_safely_)
   extern f_status_t private_f_print_except_in_raw_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except_at, f_string_ranges_t except_in, FILE * const stream) F_attribute_visibility_internal_d;
@@ -296,7 +295,6 @@ extern "C" {
  * @see f_print_except_in_safely()
  * @see f_print_except_in_dynamic_safely()
  * @see f_print_except_in_dynamic_partial_safely()
- * @see f_utf_is_valid()
  */
 #if !defined(_di_f_print_except_in_safely_) || !defined(_di_f_print_except_dynamic_in_safely_) || !defined(_di_f_print_except_in_dynamic_partial_safely_)
   extern f_status_t private_f_print_except_in_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except_at, f_string_ranges_t except_in, FILE * const stream) F_attribute_visibility_internal_d;
@@ -399,7 +397,6 @@ extern "C" {
  * @see f_print_except_safely()
  * @see f_print_except_dynamic_safely()
  * @see f_print_except_dynamic_partial_safely()
- * @see f_utf_is_valid()
  */
 #if !defined(_di_f_print_except_safely_) || !defined(_di_f_print_except_dynamic_safely_) || !defined(_di_f_print_except_dynamic_partial_safely_)
   extern f_status_t private_f_print_except_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t stop, const f_array_lengths_t except, FILE * const stream) F_attribute_visibility_internal_d;
@@ -426,13 +423,16 @@ extern "C" {
  *
  * @see fwrite_unlocked()
  *
+ * @see f_print_dynamic_partial_raw()
+ * @see f_print_dynamic_partial_raw_safely()
+ * @see f_print_dynamic_raw()
+ * @see f_print_dynamic_raw_safely()
  * @see f_print_raw()
- * @see f_print_raw_dynamic()
- * @see f_print_raw_dynamic_partial()
+ * @see f_print_raw_safely())
  */
-#if !defined(_di_f_print_raw_) || !defined(_di_f_print_raw_dynamic_) || !defined(_di_f_print_raw_dynamic_partial_)
+#if !defined(_di_f_print_dynamic_partial_raw_) || !defined(_di_f_print_dynamic_partial_raw_safely_) || !defined(_di_f_print_dynamic_raw_) || !defined(_di_f_print_dynamic_raw_safely_) || !defined(_di_f_print_raw_) || !defined(_di_f_print_raw_safely_)
   extern f_status_t private_f_print_raw(const f_string_t string, const f_array_length_t length, FILE * const stream) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_print_raw_) || !defined(_di_f_print_raw_dynamic_) || !defined(_di_f_print_raw_dynamic_partial_)
+#endif // !defined(_di_f_print_dynamic_partial_raw_) || !defined(_di_f_print_dynamic_partial_raw_safely_) || !defined(_di_f_print_dynamic_raw_) || !defined(_di_f_print_dynamic_raw_safely_) || !defined(_di_f_print_raw_) || !defined(_di_f_print_raw_safely_)
 
 /**
  * Private implementation of f_print_raw_safely().
@@ -455,14 +455,13 @@ extern "C" {
  *
  * @see fwrite_unlocked()
  *
+ * @see f_print_dynamic_partial_raw_safely()
+ * @see f_print_dynamic_raw_safely()
  * @see f_print_raw_safely()
- * @see f_print_raw_safely_dynamic()
- * @see f_print_raw_safely_dynamic_partial()
- * @see f_utf_is_valid()
  */
-#if !defined(_di_f_print_raw_safely_) || !defined(_di_f_print_raw_safely_dynamic_) || !defined(_di_f_print_raw_safely_dynamic_partial_)
+#if !defined(_di_f_print_dynamic_partial_raw_safely_) || !defined(_di_f_print_dynamic_raw_safely_) || !defined(_di_f_print_raw_safely_)
   extern f_status_t private_f_print_raw_safely(const f_string_t string, const f_array_length_t length, FILE * const stream) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_print_raw_safely_) || !defined(_di_f_print_raw_safely_dynamic_) || !defined(_di_f_print_raw_safely_dynamic_partial_)
+#endif // !defined(_di_f_print_dynamic_partial_raw_safely_) || !defined(_di_f_print_dynamic_raw_safely_) || !defined(_di_f_print_raw_safely_)
 
 /**
  * Private implementation of f_print_safely().
@@ -485,14 +484,13 @@ extern "C" {
  *
  * @see fwrite_unlocked()
  *
+ * @see f_print_dynamic_partial_safely()
+ * @see f_print_dynamic_safely()
  * @see f_print_safely()
- * @see f_print_safely_dynamic()
- * @see f_print_safely_dynamic_partial()
- * @see f_utf_is_valid()
  */
-#if !defined(_di_f_print_safely_) || !defined(_di_f_print_safely_dynamic_) || !defined(_di_f_print_safely_dynamic_partial_)
+#if !defined(_di_f_print_dynamic_partial_safely_) || !defined(_di_f_print_dynamic_safely_) || !defined(_di_f_print_safely_)
   extern f_status_t private_f_print_safely(const f_string_t string, const f_array_length_t length, FILE * const stream) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_print_safely_) || !defined(_di_f_print_safely_dynamic_) || !defined(_di_f_print_safely_dynamic_partial_)
+#endif // !defined(_di_f_print_dynamic_partial_safely_) || !defined(_di_f_print_dynamic_safely_) || !defined(_di_f_print_safely_)
 
 /**
  * Private implementation of f_print_safely_get().
