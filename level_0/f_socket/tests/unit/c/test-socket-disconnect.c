@@ -101,7 +101,7 @@ void test__f_socket_disconnect__fails_for_close_unknown(void **state) {
 
     const f_status_t status = f_socket_disconnect(&socket, 100);
 
-    assert_int_equal(status, F_status_set_error(F_supported_not));
+    assert_int_equal(status, F_status_set_error(F_support_not));
     assert_int_equal(socket.id, 1);
   }
 }

@@ -22,7 +22,7 @@ void test__f_thread_join_try__fails(void **state) {
     F_busy,
     F_status_set_error(F_deadlock),
     F_status_set_error(F_parameter),
-    F_status_set_error(F_supported_not),
+    F_status_set_error(F_support_not),
     F_status_set_error(F_found_not),
     F_status_set_error(F_failure),
   };

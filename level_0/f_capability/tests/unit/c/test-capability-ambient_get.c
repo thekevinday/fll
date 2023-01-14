@@ -16,7 +16,7 @@ void test__f_capability_ambient_get__fails(void **state) {
 
       const f_status_t status = f_capability_ambient_get(value, &ambient);
 
-      assert_int_equal(F_status_set_fine(status), F_supported_not);
+      assert_int_equal(F_status_set_fine(status), F_support_not);
       assert_int_equal(ambient, -1);
     }
   #endif // !defined(_di_libcap_) && !defined(_libcap_legacy_only_)

@@ -93,7 +93,7 @@ void test__f_file_create_device__returns_supported_not(void **state) {
 
       const f_status_t status = f_file_create_device(path, modes[i], 0, 0);
 
-      assert_int_equal(F_status_set_fine(status), F_supported_not);
+      assert_int_equal(F_status_set_fine(status), F_support_not);
     } // for
   }
 }

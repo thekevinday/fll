@@ -58,7 +58,7 @@ void test__f_socket_accept__fails(void **state) {
     F_stream_not,
     F_protocol,
     F_prohibited,
-    F_supported_not,
+    F_support_not,
     F_protocol_not,
     F_time_out,
     F_block,

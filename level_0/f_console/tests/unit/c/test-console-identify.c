@@ -18,7 +18,7 @@ void test__f_console_identify__parameter_checking(void **state) {
 
 void test__f_console_identify__works(void **state) {
 
-  f_console_id_t id = f_console_id_t_initialize;
+  f_console_result_t id = f_console_result_t_initialize;
 
   {
     const f_string_t input = f_string_t_initialize;

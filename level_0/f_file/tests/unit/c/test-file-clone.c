@@ -367,7 +367,7 @@ void test__f_file_clone__fails_for_other(void **state) {
 
       const f_status_t status = f_file_clone(path, path, 0, f_file_stat_flag_exclusive_e);
 
-      assert_int_equal(F_status_set_fine(status), F_supported_not);
+      assert_int_equal(F_status_set_fine(status), F_support_not);
     } // for
   }
 }
@@ -453,7 +453,7 @@ void test__f_file_clone__fails_for_regular(void **state) {
       F_memory_not,
       F_space_not,
       F_file_type_not_directory,
-      F_supported_not,
+      F_support_not,
       F_number_overflow,
       F_prohibited,
       F_read_only,
@@ -755,7 +755,7 @@ void test__f_file_clone__fails_for_regular(void **state) {
       F_memory_not,
       F_space_not,
       F_file_type_not_directory,
-      F_supported_not,
+      F_support_not,
       F_number_overflow,
       F_prohibited,
       F_read_only,
@@ -837,7 +837,7 @@ void test__f_file_clone__fails_for_regular(void **state) {
       F_memory_not,
       F_space_not,
       F_file_type_not_directory,
-      F_supported_not,
+      F_support_not,
       F_number_overflow,
       F_prohibited,
       F_read_only,

@@ -31,7 +31,7 @@ void test__f_capability_file_set__fails(void **state) {
       F_memory_not,
       F_directory_not,
       F_prohibited,
-      F_supported_not,
+      F_support_not,
       F_failure,
     };
 

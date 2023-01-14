@@ -21,7 +21,7 @@ void test__f_socket_listen__fails(void **state) {
     F_busy_address,
     F_file_descriptor,
     F_socket_not,
-    F_supported_not,
+    F_support_not,
     F_failure,
   };
 

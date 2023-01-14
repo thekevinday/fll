@@ -20,7 +20,7 @@ void test__f_thread_join__fails(void **state) {
   f_status_t statuss[] = {
     F_deadlock,
     F_parameter,
-    F_supported_not,
+    F_support_not,
     F_found_not,
     F_failure,
   };

@@ -354,7 +354,7 @@ void test__f_status_string_to__works(void **state) {
     F_success,
     F_success_not,
     F_supported,
-    F_supported_not,
+    F_support_not,
     F_syntax,
     F_syntax_not,
     F_terminate,

@@ -20,10 +20,10 @@ void test__f_file_flush__fails(void **state) {
   f_status_t statuss[] = {
     F_file_descriptor,
     F_filesystem_quota_block,
-    F_supported_not,
+    F_support_not,
     F_input_output,
     F_space_not,
-    F_supported_not,
+    F_support_not,
     F_file_synchronize,
   };
 

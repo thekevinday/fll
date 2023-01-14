@@ -19,7 +19,7 @@ void test__f_thread_scheduler_parameter_get__fails(void **state) {
   };
 
   f_status_t statuss[] = {
-    F_supported_not,
+    F_support_not,
     F_failure,
   };
 

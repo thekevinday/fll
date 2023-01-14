@@ -21,7 +21,7 @@ void test__f_signal_queue__fails(void **state) {
 
   f_status_t statuss[] = {
     F_resource_not,
-    F_supported_not,
+    F_support_not,
     F_parameter,
     F_found_not,
     F_failure,

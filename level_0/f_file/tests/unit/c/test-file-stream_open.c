@@ -52,7 +52,7 @@ void test__f_file_stream_open__fails(void **state) {
     F_read_only,
     F_busy,
     F_directory,
-    F_supported_not,
+    F_support_not,
     F_number_overflow,
     F_failure,
   };
