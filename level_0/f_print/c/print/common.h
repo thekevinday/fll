@@ -207,7 +207,7 @@ extern "C" {
   #define F_print_format_flag_width_d           0x4000
   #define F_print_format_flag_width_value_d     0x8000
   #define F_print_format_flag_zeros_leading_d   0x10000
-#endif // _di_f_print_format_flags_
+#endif // _di_f_print_format_flag_
 
 /**
  * Provide type format flags.
