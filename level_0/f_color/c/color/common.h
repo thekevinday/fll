@@ -846,7 +846,7 @@ extern "C" {
     macro_f_string_dynamic_t_destroy_simple(context.title, size) \
     macro_f_string_dynamic_t_destroy_simple(context.warning, size) \
     macro_f_color_context_t_clear(context)
-#endif // _di_f_color__context_t_
+#endif // _di_f_color_context_t_
 
 /**
  * Delete any dynamic allocated data on the color context object.
