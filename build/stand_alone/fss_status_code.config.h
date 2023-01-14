@@ -1,9 +1,10 @@
 // A config.h file for defining all code being disabled for compiling the stand alone FSS Status Code.
 // To assist in building this file use (may need to omit --defined-only): "nm --defined-only -f p programs/shared/fss_status_code | grep -oP '^(f|fl|fll|macro)_[^\s]+'".
-// To get the list of all possible functions, use something like: "grep -hor '#define _di_f_.*\>' level_0/f_color/" | sed -e 's|^#define |#define |g' | sort | uniq.
+// To get the list of all possible functions, use something like: "grep -horP '\b_di_f_\w*\b' level_0/f_color/".
 //
-// Example: for i in f_type f_status f_memory f_type_array f_string f_utf f_color f_console f_conversion f_file f_fss f_pipe f_print f_signal f_status_string ; do grep -hor '#define _di_f_.*\>' level_0/$i >> /tmp/all.txt ; grep -hor '#define _di_macro_.*\>' level_0/$i >> /tmp/all.txt ; done
-//          sort /tmp/all.txt | uniq > /tmp/sorted.txt
+// Example: echo > /tmp/all.txt
+//          for i in f_type f_status f_memory f_type_array f_string f_utf f_color f_console f_conversion f_file f_pipe f_print f_signal ; do grep -horP '\b_di_f_\w*\b' level_0/$i/c >> /tmp/all.txt ; grep -horP '\b_di_macro_\w*\b' level_0/$i/c >> /tmp/all.txt ; done
+//          sort /tmp/all.txt | uniq > /tmp/sorted.txt && sed -i -e 's|^_|#define &|g'
 
 #define _di_f_array_lengths_adjust_
 #define _di_f_array_lengths_append_
@@ -99,7 +100,7 @@
 //#define _di_f_conversion_character_to_octal_
 //#define _di_f_conversion_data_flag_
 //#define _di_f_conversion_data_t_
-//#define _di_f_conversion_data_t_defines_
+#define _di_f_conversion_data_t_defines_
 //#define _di_f_conversion_digits_d_
 //#define _di_f_conversion_number_signed_print_
 #define _di_f_conversion_number_signed_to_string_
@@ -107,6 +108,8 @@
 #define _di_f_conversion_number_unsigned_to_string_
 
 #define _di_f_date_t_
+
+#define _di_f_directory_mode_
 
 #define _di_f_file_access_
 #define _di_f_file_access_at_
@@ -125,7 +128,7 @@
 #define _di_f_file_create_node_
 #define _di_f_file_create_node_at_
 //#define _di_f_file_defaults_
-//#define _di_f_file_descriptor_
+#define _di_f_file_descriptor_
 #define _di_f_file_exists_
 #define _di_f_file_exists_at_
 //#define _di_f_file_flag_
@@ -164,7 +167,7 @@
 #define _di_f_file_role_change_
 #define _di_f_file_role_change_at_
 #define _di_f_file_seek_
-//#define _di_f_file_seeks_
+#define _di_f_file_seeks_
 #define _di_f_file_size_
 #define _di_f_file_size_at_
 #define _di_f_file_size_by_id_
@@ -188,7 +191,7 @@
 #define _di_f_file_touch_at_
 #define _di_f_file_type_
 #define _di_f_file_type_at_
-//#define _di_f_file_types_
+#define _di_f_file_types_
 #define _di_f_file_umask_get_
 #define _di_f_file_umask_set_
 #define _di_f_file_write_
@@ -314,9 +317,9 @@
 #define _di_f_fss_skip_past_space_
 #define _di_f_fss_state_flags_
 #define _di_f_fss_status_codes_
-#define _di_f_fss_status_error_
-#define _di_f_fss_status_success_
-#define _di_f_fss_status_warning_
+//#define _di_f_fss_status_error_
+//#define _di_f_fss_status_success_
+//#define _di_f_fss_status_warning_
 #define _di_f_fss_strings_
 #define _di_f_fss_types_t_
 
@@ -414,10 +417,10 @@
 #define _di_f_int8s_t_
 #define _di_f_int8_t_
 
-//#define _di_f_memory_adjust_
+#define _di_f_memory_adjust_
 //#define _di_f_memory_default_allocation_step_
-//#define _di_f_memory_delete_
-//#define _di_f_memory_destroy_
+#define _di_f_memory_delete_
+#define _di_f_memory_destroy_
 #define _di_f_memory_new_
 #define _di_f_memory_new_aligned_
 //#define _di_f_memory_resize_
@@ -448,11 +451,21 @@
 #define _di_f_print_dynamic_partial_raw_
 #define _di_f_print_dynamic_partial_raw_safely_
 #define _di_f_print_dynamic_partial_safely_
+#define _di_f_print_dynamic_partial_to_
+#define _di_f_print_dynamic_partial_to_raw_
+#define _di_f_print_dynamic_partial_to_raw_safely_
+#define _di_f_print_dynamic_partial_to_safely_
 //#define _di_f_print_dynamic_raw_
 //#define _di_f_print_dynamic_raw_safely_
 //#define _di_f_print_dynamic_safely_
+#define _di_f_print_dynamic_to_
+#define _di_f_print_dynamic_to_raw_
 #define _di_f_print_except_
 #define _di_f_print_except_dynamic_
+#define _di_f_print_except_dynamic_in_
+#define _di_f_print_except_dynamic_in_raw_
+#define _di_f_print_except_dynamic_in_raw_safely_
+#define _di_f_print_except_dynamic_in_safely_
 #define _di_f_print_except_dynamic_partial_
 #define _di_f_print_except_dynamic_partial_raw_
 #define _di_f_print_except_dynamic_partial_raw_safely_
@@ -477,7 +490,7 @@
 #define _di_f_print_except_safely_
 //#define _di_f_print_format_flag_
 //#define _di_f_print_format_type_
-////#define _di_f_print_raw_
+//#define _di_f_print_raw_
 //#define _di_f_print_raw_safely_
 #define _di_f_print_raw_terminated_
 //#define _di_f_print_safely_
@@ -709,9 +722,9 @@
 #define _di_f_string_map_multiss_increase_
 #define _di_f_string_map_multiss_increase_by_
 #define _di_f_string_map_multiss_resize_
-//#define _di_f_string_map_multiss_t_
-//#define _di_f_string_map_multis_t_
-//#define _di_f_string_map_multi_t_
+#define _di_f_string_map_multiss_t_
+#define _di_f_string_map_multis_t_
+#define _di_f_string_map_multi_t_
 #define _di_f_string_maps_adjust_
 #define _di_f_string_maps_append_
 #define _di_f_string_maps_append_all_
@@ -728,9 +741,9 @@
 #define _di_f_string_mapss_increase_
 #define _di_f_string_mapss_increase_by_
 #define _di_f_string_mapss_resize_
-//#define _di_f_string_mapss_t_
-//#define _di_f_string_maps_t_
-//#define _di_f_string_map_t_
+#define _di_f_string_mapss_t_
+#define _di_f_string_maps_t_
+#define _di_f_string_map_t_
 #define _di_f_string_mash_
 #define _di_f_string_mash_nulless_
 #define _di_f_string_mish_
@@ -757,9 +770,9 @@
 #define _di_f_string_quantityss_increase_
 #define _di_f_string_quantityss_increase_by_
 #define _di_f_string_quantityss_resize_
-//#define _di_f_string_quantityss_t_
-//#define _di_f_string_quantitys_t_
-//#define _di_f_string_quantity_t_
+#define _di_f_string_quantityss_t_
+#define _di_f_string_quantitys_t_
+#define _di_f_string_quantity_t_
 #define _di_f_string_ranges_adjust_
 #define _di_f_string_ranges_append_
 #define _di_f_string_ranges_append_all_
@@ -803,9 +816,9 @@
 #define _di_f_string_tripless_increase_
 #define _di_f_string_tripless_increase_by_
 #define _di_f_string_tripless_resize_
-//#define _di_f_string_tripless_t_
-//#define _di_f_string_triples_t_
-//#define _di_f_string_triple_t_
+#define _di_f_string_tripless_t_
+#define _di_f_string_triples_t_
+#define _di_f_string_triple_t_
 
 #define _di_f_time_spec_t_
 #define _di_f_time_t_
@@ -993,7 +1006,7 @@
 #define _di_f_utf_string_dynamic_decimate_by_
 #define _di_f_utf_string_dynamic_decrease_by_
 #define _di_f_utf_string_dynamic_increase_
-//#define _di_f_utf_string_dynamic_increase_by_
+#define _di_f_utf_string_dynamic_increase_by_
 #define _di_f_utf_string_dynamic_mash_
 #define _di_f_utf_string_dynamic_mash_nulless_
 #define _di_f_utf_string_dynamic_mish_
@@ -1038,7 +1051,7 @@
 //#define _di_f_utf_string_dynamics_t_
 //#define _di_f_utf_string_dynamic_t_
 #define _di_f_utf_string_dynamic_terminate_
-//#define _di_f_utf_string_dynamic_terminate_after_
+#define _di_f_utf_string_dynamic_terminate_after_
 #define _di_f_utf_string_empty_s_
 #define _di_f_utf_string_map_multis_adjust_
 #define _di_f_utf_string_map_multis_append_
@@ -1056,9 +1069,9 @@
 #define _di_f_utf_string_map_multiss_increase_
 #define _di_f_utf_string_map_multiss_increase_by_
 #define _di_f_utf_string_map_multiss_resize_
-//#define _di_f_utf_string_map_multiss_t_
-//#define _di_f_utf_string_map_multis_t_
-//#define _di_f_utf_string_map_multi_t_
+#define _di_f_utf_string_map_multiss_t_
+#define _di_f_utf_string_map_multis_t_
+#define _di_f_utf_string_map_multi_t_
 #define _di_f_utf_string_maps_adjust_
 #define _di_f_utf_string_maps_append_
 #define _di_f_utf_string_maps_append_all_
@@ -1075,9 +1088,9 @@
 #define _di_f_utf_string_mapss_increase_
 #define _di_f_utf_string_mapss_increase_by_
 #define _di_f_utf_string_mapss_resize_
-//#define _di_f_utf_string_mapss_t_
-//#define _di_f_utf_string_maps_t_
-//#define _di_f_utf_string_map_t_
+#define _di_f_utf_string_mapss_t_
+#define _di_f_utf_string_maps_t_
+#define _di_f_utf_string_map_t_
 #define _di_f_utf_string_mash_
 #define _di_f_utf_string_mash_nulless_
 #define _di_f_utf_string_mish_
@@ -1109,9 +1122,9 @@
 #define _di_f_utf_string_tripless_increase_
 #define _di_f_utf_string_tripless_increase_by_
 #define _di_f_utf_string_tripless_resize_
-//#define _di_f_utf_string_tripless_t_
-//#define _di_f_utf_string_triples_t_
-//#define _di_f_utf_string_triple_t_
+#define _di_f_utf_string_tripless_t_
+#define _di_f_utf_string_triples_t_
+#define _di_f_utf_string_triple_t_
 #define _di_f_utf_substitute_
 #define _di_f_utf_unicode_from_
 #define _di_f_utf_unicode_string_to_
@@ -1121,10 +1134,18 @@
 //#define _di_fl_conversion_data_flag_
 //#define _di_fl_conversion_data_t_
 //#define _di_fl_conversion_data_t_defines_
+#define _di_fl_conversion_dynamic_partial_to_binary_signed_
+#define _di_fl_conversion_dynamic_partial_to_binary_unsigned_
+#define _di_fl_conversion_dynamic_partial_to_decimal_signed_
+#define _di_fl_conversion_dynamic_partial_to_decimal_unsigned_
 #define _di_fl_conversion_dynamic_partial_to_signed_
 #define _di_fl_conversion_dynamic_partial_to_signed_detect_
 #define _di_fl_conversion_dynamic_partial_to_unsigned_
 #define _di_fl_conversion_dynamic_partial_to_unsigned_detect_
+#define _di_fl_conversion_dynamic_to_binary_signed_
+#define _di_fl_conversion_dynamic_to_binary_unsigned_
+#define _di_fl_conversion_dynamic_to_decimal_signed_
+#define _di_fl_conversion_dynamic_to_decimal_unsigned_
 #define _di_fl_conversion_dynamic_to_signed_
 #define _di_fl_conversion_dynamic_to_signed_detect_
 #define _di_fl_conversion_dynamic_to_unsigned_
@@ -1236,9 +1257,11 @@
 #define _di_fll_error_file_type_
 #define _di_fll_error_parameter_integer_print_
 //#define _di_fll_error_print_
+
 #define _di_fll_file_mode_set_all_
 #define _di_fll_file_move_
 #define _di_fll_file_role_change_all_
+
 #define _di_fll_fss_basic_list_read_
 #define _di_fll_fss_basic_list_write_
 #define _di_fll_fss_basic_read_
@@ -1269,6 +1292,7 @@
 //#define _di_fll_fss_status_string_to_
 #define _di_fll_fss_status_success_
 #define _di_fll_fss_status_warning_
+
 #define _di_fll_print_
 #define _di_fll_print_character_
 #define _di_fll_print_character_safely_
@@ -1349,6 +1373,7 @@
 #define _di_fll_print_trim_raw_
 #define _di_fll_print_trim_raw_safely_
 #define _di_fll_print_trim_safely_
+
 //#define _di_fll_program_data_delete_
 #define _di_fll_program_data_destroy_
 //#define _di_fll_program_data_t_
@@ -1395,4 +1420,3 @@
 #define _di_macro_f_memory_structures_increase_
 #define _di_macro_f_memory_structures_increase_by_
 #define _di_macro_f_memory_structures_resize_
-
