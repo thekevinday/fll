@@ -101,7 +101,7 @@ extern "C" {
  * custom:     A structure (defined by caller/parent) for holding custom data to be passed along to the interrupt() or one of the functions. May be NULL.
  * data:       A structure (defined by function) for holding data relevant to the function. May be NULL. May be required.
  */
-#ifndef _di_f_type_state_t_
+#ifndef _di_f_state_t_
   typedef struct {
     uint16_t step_large;
     uint16_t step_small;
@@ -137,7 +137,7 @@ extern "C" {
     state.callbacks = 0; \
     state.custom = 0; \
     state.data = 0;
-#endif // _di_f_type_state_t_
+#endif // _di_f_state_t_
 
 /**
  * Conditional 128-bit support.
@@ -580,7 +580,7 @@ extern "C" {
  * size:  Total amount of allocated space.
  * used:  Total number of allocated spaces used.
  */
-#ifndef _di_int8s_t_
+#ifndef _di_f_int8s_t_
   typedef struct {
     int8_t *array;
 
@@ -592,7 +592,7 @@ extern "C" {
 
   #define macro_f_int8s_t_initialize(array, size, used) { array, size, used }
   #define macro_f_int8s_t_initialize2(array, length) { array, length, length }
-#endif // _di_int8s_t_
+#endif // _di_f_int8s_t_
 
 /**
  * An array of an array of array int8_t.
@@ -603,7 +603,7 @@ extern "C" {
  * size:  Total amount of allocated space.
  * used:  Total number of allocated spaces used.
  */
-#ifndef _di_int8ss_t_
+#ifndef _di_f_int8ss_t_
   typedef struct {
     f_int8s_t *array;
 
@@ -615,7 +615,7 @@ extern "C" {
 
   #define macro_f_int8ss_t_initialize(array, size, used) { array, size, used }
   #define macro_f_int8ss_t_initialize2(array, length) { array, length, length }
-#endif // _di_int8ss_t_
+#endif // _di_f_int8ss_t_
 
 /**
  * An array of array uint8_t.
@@ -626,7 +626,7 @@ extern "C" {
  * size:  Total amount of allocated space.
  * used:  Total number of allocated spaces used.
  */
-#ifndef _di_uint8s_t_
+#ifndef _di_f_uint8s_t_
   typedef struct {
     uint8_t *array;
 
@@ -638,7 +638,7 @@ extern "C" {
 
   #define macro_f_uint8s_t_initialize(array, size, used) { array, size, used }
   #define macro_f_uint8s_t_initialize2(array, length) { array, length, length }
-#endif // _di_uint8s_t_
+#endif // _di_f_uint8s_t_
 
 /**
  * An array of an array of array uint8_t.
@@ -649,7 +649,7 @@ extern "C" {
  * size:  Total amount of allocated space.
  * used:  Total number of allocated spaces used.
  */
-#ifndef _di_uint8ss_t_
+#ifndef _di_f_uint8ss_t_
   typedef struct {
     f_uint8s_t *array;
 
@@ -661,7 +661,7 @@ extern "C" {
 
   #define macro_f_uint8ss_t_initialize(array, size, used) { array, size, used }
   #define macro_f_uint8ss_t_initialize2(array, length) { array, length, length }
-#endif // _di_uint8ss_t_
+#endif // _di_f_uint8ss_t_
 
 /**
  * An array of array int16_t.
@@ -672,7 +672,7 @@ extern "C" {
  * size:  Total amount of allocated space.
  * used:  Total number of allocated spaces used.
  */
-#ifndef _di_int16s_t_
+#ifndef _di_f_int16s_t_
   typedef struct {
     int16_t *array;
 
@@ -684,7 +684,7 @@ extern "C" {
 
   #define macro_f_int16s_t_initialize(array, size, used) { array, size, used }
   #define macro_f_int16s_t_initialize2(array, length) { array, length, length }
-#endif // _di_int16s_t_
+#endif // _di_f_int16s_t_
 
 /**
  * An array of an array of array int16_t.
@@ -695,7 +695,7 @@ extern "C" {
  * size:  Total amount of allocated space.
  * used:  Total number of allocated spaces used.
  */
-#ifndef _di_int16ss_t_
+#ifndef _di_f_int16ss_t_
   typedef struct {
     f_int16s_t *array;
 
@@ -707,7 +707,7 @@ extern "C" {
 
   #define macro_f_int16ss_t_initialize(array, size, used) { array, size, used }
   #define macro_f_int16ss_t_initialize2(array, length) { array, length, length }
-#endif // _di_int16ss_t_
+#endif // _di_f_int16ss_t_
 
 /**
  * An array of array uint16_t.
@@ -718,7 +718,7 @@ extern "C" {
  * size:  Total amount of allocated space.
  * used:  Total number of allocated spaces used.
  */
-#ifndef _di_uint16s_t_
+#ifndef _di_f_uint16s_t_
   typedef struct {
     uint16_t *array;
 
@@ -730,7 +730,7 @@ extern "C" {
 
   #define macro_f_uint16s_t_initialize(array, size, used) { array, size, used }
   #define macro_f_uint16s_t_initialize2(array, length) { array, length, length }
-#endif // _di_uint16s_t_
+#endif // _di_f_uint16s_t_
 
 /**
  * An array of an array of array uint16_t.
@@ -741,7 +741,7 @@ extern "C" {
  * size:  Total amount of allocated space.
  * used:  Total number of allocated spaces used.
  */
-#ifndef _di_uint16ss_t_
+#ifndef _di_f_uint16ss_t_
   typedef struct {
     f_uint16s_t *array;
 
@@ -753,7 +753,7 @@ extern "C" {
 
   #define macro_f_uint16s_t_initialize(array, size, used) { array, size, used }
   #define macro_f_uint16s_t_initialize2(array, length) { array, length, length }
-#endif // _di_uint16ss_t_
+#endif // _di_f_uint16ss_t_
 
 /**
  * An array of array int32_t.
@@ -764,7 +764,7 @@ extern "C" {
  * size:  Total amount of allocated space.
  * used:  Total number of allocated spaces used.
  */
-#ifndef _di_int32s_t_
+#ifndef _di_f_int32s_t_
   typedef struct {
     int32_t *array;
 
@@ -776,7 +776,7 @@ extern "C" {
 
   #define macro_f_int32s_t_initialize(array, size, used) { array, size, used }
   #define macro_f_int32s_t_initialize2(array, length) { array, length, length }
-#endif // _di_int32s_t_
+#endif // _di_f_int32s_t_
 
 /**
  * An array of an array of array int32_t.
@@ -787,7 +787,7 @@ extern "C" {
  * size:  Total amount of allocated space.
  * used:  Total number of allocated spaces used.
  */
-#ifndef _di_int32ss_t_
+#ifndef _di_f_int32ss_t_
   typedef struct {
     f_int32s_t *array;
 
@@ -799,7 +799,7 @@ extern "C" {
 
   #define macro_f_int32ss_t_initialize(array, size, used) { array, size, used }
   #define macro_f_int32ss_t_initialize2(array, length) { array, length, length }
-#endif // _di_int32ss_t_
+#endif // _di_f_int32ss_t_
 
 /**
  * An array of array uint32_t.
@@ -810,7 +810,7 @@ extern "C" {
  * size:  Total amount of allocated space.
  * used:  Total number of allocated spaces used.
  */
-#ifndef _di_uint32s_t_
+#ifndef _di_f_uint32s_t_
   typedef struct {
     uint32_t *array;
 
@@ -822,7 +822,7 @@ extern "C" {
 
   #define macro_f_uint32s_t_initialize(array, size, used) { array, size, used }
   #define macro_f_uint32s_t_initialize2(array, length) { array, length, length }
-#endif // _di_uint32s_t_
+#endif // _di_f_uint32s_t_
 
 /**
  * An array of an array of array uint32_t.
@@ -833,7 +833,7 @@ extern "C" {
  * size:  Total amount of allocated space.
  * used:  Total number of allocated spaces used.
  */
-#ifndef _di_uint32ss_t_
+#ifndef _di_f_uint32ss_t_
   typedef struct {
     f_uint32s_t *array;
 
@@ -845,7 +845,7 @@ extern "C" {
 
   #define macro_f_uint32ss_t_initialize(array, size, used) { array, size, used }
   #define macro_f_uint32ss_t_initialize2(array, length) { array, length, length }
-#endif // _di_uint32ss_t_
+#endif // _di_f_uint32ss_t_
 
 /**
  * An array of array int64_t.
@@ -856,7 +856,7 @@ extern "C" {
  * size:  Total amount of allocated space.
  * used:  Total number of allocated spaces used.
  */
-#ifndef _di_int64s_t_
+#ifndef _di_f_int64s_t_
   typedef struct {
     int64_t *array;
 
@@ -868,7 +868,7 @@ extern "C" {
 
   #define macro_f_int64s_t_initialize(array, size, used) { array, size, used }
   #define macro_f_int64s_t_initialize2(array, length) { array, length, length }
-#endif // _di_int64s_t_
+#endif // _di_f_int64s_t_
 
 /**
  * An array of an array of array int64_t.
@@ -879,7 +879,7 @@ extern "C" {
  * size:  Total amount of allocated space.
  * used:  Total number of allocated spaces used.
  */
-#ifndef _di_int64ss_t_
+#ifndef _di_f_int64ss_t_
   typedef struct {
     f_int64s_t *array;
 
@@ -891,7 +891,7 @@ extern "C" {
 
   #define macro_f_int64ss_t_initialize(array, size, used) { array, size, used }
   #define macro_f_int64ss_t_initialize2(array, length) { array, length, length }
-#endif // _di_int64ss_t_
+#endif // _di_f_int64ss_t_
 
 /**
  * An array of array uint64_t.
@@ -902,7 +902,7 @@ extern "C" {
  * size:  Total amount of allocated space.
  * used:  Total number of allocated spaces used.
  */
-#ifndef _di_uint64s_t_
+#ifndef _di_f_uint64s_t_
   typedef struct {
     uint64_t *array;
 
@@ -914,7 +914,7 @@ extern "C" {
 
   #define macro_f_uint64s_t_initialize(array, size, used) { array, size, used }
   #define macro_f_uint64s_t_initialize2(array, length) { array, length, length }
-#endif // _di_uint64s_t_
+#endif // _di_f_uint64s_t_
 
 /**
  * An array of an array of array uint64_t.
@@ -925,7 +925,7 @@ extern "C" {
  * size:  Total amount of allocated space.
  * used:  Total number of allocated spaces used.
  */
-#ifndef _di_uint64ss_t_
+#ifndef _di_f_uint64ss_t_
   typedef struct {
     f_uint64s_t *array;
 
@@ -937,7 +937,7 @@ extern "C" {
 
   #define macro_f_uint64ss_t_initialize(array, size, used) { array, size, used }
   #define macro_f_uint64ss_t_initialize2(array, length) { array, length, length }
-#endif // _di_uint64ss_t_
+#endif // _di_f_uint64ss_t_
 
 /**
  * Provide a 128-bit type wrapper, which could be either 64-bit or 128-bit depending on support.
@@ -948,23 +948,23 @@ extern "C" {
  */
 #ifndef __SIZEOF_INT128__
 
-  #ifndef _di_int128_t_
+  #ifndef _di_f_int128_t_
     typedef __int128_t int128_t;
-  #endif // _di_int128_t_
+  #endif // _di_f_int128_t_
 
-  #ifndef _di_uint128_t_
+  #ifndef _di_f_uint128_t_
     typedef __uint128_t uint128_t;
-  #endif // _di_uint128_t_
+  #endif // _di_f_uint128_t_
 
 #else // __SIZEOF_INT128__
 
-  #ifndef _di_int128_t_
+  #ifndef _di_f_int128_t_
     typedef int64_t int128_t;
-  #endif // _di_int128_t_
+  #endif // _di_f_int128_t_
 
-  #ifndef _di_uint128_t_
+  #ifndef _di_f_uint128_t_
     typedef uint64_t uint128_t;
-  #endif // _di_uint128_t_
+  #endif // _di_f_uint128_t_
 
 #endif // __SIZEOF_INT128__
 
@@ -977,7 +977,7 @@ extern "C" {
  * size:  Total amount of allocated space.
  * used:  Total number of allocated spaces used.
  */
-#ifndef _di_int128s_t_
+#ifndef _di_f_int128s_t_
   typedef struct {
     int128_t *array;
 
@@ -989,7 +989,7 @@ extern "C" {
 
   #define macro_f_int128s_t_initialize(array, size, used) { array, size, used }
   #define macro_f_int128s_t_initialize2(array, length) { array, length, length }
-#endif // _di_int128s_t_
+#endif // _di_f_int128s_t_
 
 /**
  * An array of and array of int128_t.
@@ -1000,7 +1000,7 @@ extern "C" {
  * size:  Total amount of allocated space.
  * used:  Total number of allocated spaces used.
  */
-#ifndef _di_int128ss_t_
+#ifndef _di_f_int128ss_t_
   typedef struct {
     f_int128s_t *array;
 
@@ -1012,7 +1012,7 @@ extern "C" {
 
   #define macro_f_int128ss_t_initialize(array, size, used) { array, size, used }
   #define macro_f_int128ss_t_initialize2(array, length) { array, length, length }
-#endif // _di_int128ss_t_
+#endif // _di_f_int128ss_t_
 
 /**
  * An array of uint128_t.
@@ -1023,7 +1023,7 @@ extern "C" {
  * size:  Total amount of allocated space.
  * used:  Total number of allocated spaces used.
  */
-#ifndef _di_uint128s_t_
+#ifndef _di_f_uint128s_t_
   typedef struct {
     uint128_t *array;
 
@@ -1035,7 +1035,7 @@ extern "C" {
 
   #define macro_f_uint128s_t_initialize(array, size, used) { array, size, used }
   #define macro_f_uint128s_t_initialize2(array, length) { array, length, length }
-#endif // _di_uint128s_t_
+#endif // _di_f_uint128s_t_
 
 /**
  * An array of and array of uint128_t.
@@ -1046,7 +1046,7 @@ extern "C" {
  * size:  Total amount of allocated space.
  * used:  Total number of allocated spaces used.
  */
-#ifndef _di_uint128ss_t_
+#ifndef _di_f_uint128ss_t_
   typedef struct {
     f_uint128s_t *array;
 
@@ -1058,7 +1058,7 @@ extern "C" {
 
   #define macro_f_uint128ss_t_initialize(array, size, used) { array, size, used }
   #define macro_f_uint128ss_t_initialize2(array, length) { array, length, length }
-#endif // _di_uint128ss_t_
+#endif // _di_f_uint128ss_t_
 
 /**
  * This holds an array of f_status_t.
