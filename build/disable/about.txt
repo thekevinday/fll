@@ -23,7 +23,9 @@ These files are generated like the following:
 Make sure the parameter checking files do not exist.
 # sed -i -e '/_di_level_0_parameter_checking_/d' -e '/_di_level_1_parameter_checking_/d' -e '/_di_level_2_parameter_checking_/d' build/disable/level_?/*.h
 
-There are some defines that need to be manually removed if they don't belong, such as "_di_pthread_support_" and "_di_libcap_".
+Make sure to remove known special cases that are pulled in by the above process but should not exist.
+# sed -i -e '/#define _di_libcap_/d' build/disable/level_?/*.h
+# sed -i -e '/#define _di_thread_support_/d' build/disable/level_?/*.h
 
 Use these files to construct a list of all defines to potentially disable based on the "dependencies" of a given project.
 Consider the following example using the fake dependencies for the stand alone builds.

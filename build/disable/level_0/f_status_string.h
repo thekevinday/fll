@@ -18,5 +18,5 @@
 #define _di_f_status_signal_s_
 #define _di_f_status_socket_s_
 #define _di_f_status_string_s_
-#define _di_f_status_string_to_s_
+#define _di_f_status_string_to_
 #define _di_f_status_terminal_s_
