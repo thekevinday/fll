@@ -21,6 +21,7 @@
 #define _di_f_file_group_read_
 #define _di_f_file_is_
 #define _di_f_file_is_at_
+#define _di_f_file_is_stat_
 #define _di_f_file_link_
 #define _di_f_file_link_at_
 #define _di_f_file_link_hard_

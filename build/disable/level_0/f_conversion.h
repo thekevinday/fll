@@ -16,3 +16,4 @@
 #define _di_f_conversion_number_signed_to_string_
 #define _di_f_conversion_number_unsigned_print_
 #define _di_f_conversion_number_unsigned_to_string_
+#define _di_f_type_number_64_t_

@@ -6,7 +6,7 @@
 #define _di_fl_conversion_data_c_
 #define _di_fl_conversion_data_endian_big_c_
 #define _di_fl_conversion_data_endian_little_c_
-#define _di_fl_conversion_data_flag_d_
+#define _di_fl_conversion_data_flag_e_
 #define _di_fl_conversion_data_t_
 #define _di_fl_conversion_dynamic_partial_to_signed_
 #define _di_fl_conversion_dynamic_partial_to_signed_detect_
