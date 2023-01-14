@@ -56,16 +56,14 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  *
- * @see f_memory_adjust()
+ * @see f_memory_resize()
  * @see f_string_quantityss_decrease_by()
  * @see f_string_quantityss_increase()
  * @see f_string_quantityss_increase_by()
- * @see f_string_quantityss_terminate()
- * @see f_string_quantityss_terminate_after()
  */
-#if !defined(_di_f_string_quantityss_decrease_by_) || !defined(_di_f_string_quantityss_increase_) || !defined(_di_f_string_quantityss_increase_by_) || !defined(_di_f_string_quantityss_terminate_) || !defined(_di_f_string_quantityss_terminate_after_)
+#if !defined(_di_f_string_quantityss_decrease_by_) || !defined(_di_f_string_quantityss_increase_) || !defined(_di_f_string_quantityss_increase_by_)
   extern f_status_t private_f_string_quantityss_resize(const f_array_length_t length, f_string_quantityss_t * const quantityss) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_string_quantityss_decrease_by_) || !defined(_di_f_string_quantityss_increase_) || !defined(_di_f_string_quantityss_increase_by_) || !defined(_di_f_string_quantityss_terminate_) || !defined(_di_f_string_quantityss_terminate_after_)
+#endif // !defined(_di_f_string_quantityss_decrease_by_) || !defined(_di_f_string_quantityss_increase_) || !defined(_di_f_string_quantityss_increase_by_)
 
 #ifdef __cplusplus
 } // extern "C"

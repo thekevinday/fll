@@ -33,6 +33,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_adjust().
  *
  * @see f_memory_adjust()
+ *
  * @see f_utf_string_triples_adjust()
  */
 #if !defined(_di_f_utf_string_triples_adjust_) || !defined(_di_f_utf_string_triples_decimate_by_)
@@ -57,6 +58,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  *
  * @see f_memory_resize()
+ *
  * @see f_utf_string_triples_append_all()
  * @see f_utf_string_tripless_append()
  * @see f_utf_string_tripless_append_all()
@@ -82,16 +84,15 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  *
- * @see f_memory_adjust()
+ * @see f_memory_resize()
+ *
  * @see f_utf_string_triples_decrease_by()
  * @see f_utf_string_triples_increase()
  * @see f_utf_string_triples_increase_by()
- * @see f_utf_string_triples_terminate()
- * @see f_utf_string_triples_terminate_after()
  */
-#if !defined(_di_f_utf_string_triples_decrease_by_) || !defined(_di_f_utf_string_triples_increase_) || !defined(_di_f_utf_string_triples_increase_by_) || !defined(_di_f_utf_string_triples_terminate_) || !defined(_di_f_utf_string_triples_terminate_after_)
+#if !defined(_di_f_utf_string_triples_decrease_by_) || !defined(_di_f_utf_string_triples_increase_) || !defined(_di_f_utf_string_triples_increase_by_)
   extern f_status_t private_f_utf_string_triples_resize(const f_array_length_t length, f_utf_string_triples_t * const triples) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_utf_string_triples_decrease_by_) || !defined(_di_f_utf_string_triples_increase_) || !defined(_di_f_utf_string_triples_increase_by_) || !defined(_di_f_utf_string_triples_terminate_) || !defined(_di_f_utf_string_triples_terminate_after_)
+#endif // !defined(_di_f_utf_string_triples_decrease_by_) || !defined(_di_f_utf_string_triples_increase_) || !defined(_di_f_utf_string_triples_increase_by_)
 
 #ifdef __cplusplus
 } // extern "C"

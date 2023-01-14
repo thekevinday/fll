@@ -38,6 +38,8 @@ extern "C" {
  *
  * @see memcpy()
  *
+ * @see f_memory_resize()
+ *
  * @see f_utf_string_append()
  * @see f_utf_string_append_assure()
  * @see f_utf_string_dynamic_append()
@@ -52,9 +54,9 @@ extern "C" {
  * @see f_utf_string_maps_append()
  * @see f_utf_string_triples_append()
  */
-#if !defined(_di_f_utf_string_append_) || !defined(_di_f_utf_string_append_assure_) || !defined(_di_f_utf_string_dynamic_append_) || !defined(_di_f_utf_string_dynamic_append_assure_) || !defined(_di_f_utf_string_dynamic_mash_) || !defined(f_utf_string_dynamic_partial_append_) || !defined(_di_f_utf_string_dynamic_partial_append_assure_) || !defined(_di_f_utf_string_dynamic_partial_mash_) || !defined(_di_f_utf_string_dynamics_append_) || !defined(_di_f_utf_string_map_multis_append_) || !defined(_di_f_utf_string_mash_) || !defined(_di_f_utf_string_maps_append_) || !defined(_di_f_utf_string_triples_append_)
+#if !defined(_di_f_utf_string_append_) || !defined(_di_f_utf_string_append_assure_) || !defined(_di_f_utf_string_dynamic_append_) || !defined(_di_f_utf_string_dynamic_append_assure_) || !defined(_di_f_utf_string_dynamic_mash_) || !defined(_di_f_utf_string_dynamic_partial_append_) || !defined(_di_f_utf_string_dynamic_partial_append_assure_) || !defined(_di_f_utf_string_dynamic_partial_mash_) || !defined(_di_f_utf_string_dynamics_append_) || !defined(_di_f_utf_string_map_multis_append_) || !defined(_di_f_utf_string_mash_) || !defined(_di_f_utf_string_maps_append_) || !defined(_di_f_utf_string_triples_append_)
   extern f_status_t private_f_utf_string_append(const f_utf_string_t source, const f_array_length_t length, f_utf_string_dynamic_t * const destination) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_utf_string_append_) || !defined(_di_f_utf_string_append_assure_) || !defined(_di_f_utf_string_dynamic_append_) || !defined(_di_f_utf_string_dynamic_append_assure_) || !defined(_di_f_utf_string_dynamic_mash_) || !defined(f_utf_string_dynamic_partial_append_) || !defined(_di_f_utf_string_dynamic_partial_append_assure_) || !defined(_di_f_utf_string_dynamic_partial_mash_) || !defined(_di_f_utf_string_dynamics_append_) || !defined(_di_f_utf_string_map_multis_append_) || !defined(_di_f_utf_string_mash_) || !defined(_di_f_utf_string_maps_append_) || !defined(_di_f_utf_string_triples_append_)
+#endif // !defined(_di_f_utf_string_append_) || !defined(_di_f_utf_string_append_assure_) || !defined(_di_f_utf_string_dynamic_append_) || !defined(_di_f_utf_string_dynamic_append_assure_) || !defined(_di_f_utf_string_dynamic_mash_) || !defined(_di_f_utf_string_dynamic_partial_append_) || !defined(_di_f_utf_string_dynamic_partial_append_assure_) || !defined(_di_f_utf_string_dynamic_partial_mash_) || !defined(_di_f_utf_string_dynamics_append_) || !defined(_di_f_utf_string_map_multis_append_) || !defined(_di_f_utf_string_mash_) || !defined(_di_f_utf_string_maps_append_) || !defined(_di_f_utf_string_triples_append_)
 
 /**
  * Private implementation of f_utf_string_append_nulless().
@@ -73,7 +75,11 @@ extern "C" {
  *
  *   F_string_too_large (with error bit) if the combined string is too large.
  *
+ *   Errors (with error bit) from: f_memory_resize().
+ *
  * @see memcpy()
+ *
+ * @see f_memory_resize()
  *
  * @see f_utf_string_append_assure_nulless()
  * @see f_utf_string_append_nulless()
@@ -111,6 +117,8 @@ extern "C" {
  * @see memcopy()
  * @see memmove()
  *
+ * @see f_memory_resize()
+ *
  * @see f_utf_string_dynamic_mish()
  * @see f_utf_string_dynamic_partial_mish()
  * @see f_utf_string_dynamic_partial_prepend_assure()
@@ -147,6 +155,8 @@ extern "C" {
  * @see memcopy()
  * @see memmove()
  *
+ * @see f_memory_resize()
+ *
  * @see f_utf_string_dynamic_mish_nulless()
  * @see f_utf_string_dynamic_partial_mish_nulless()
  * @see f_utf_string_dynamic_partial_prepend_assure_nulless()
@@ -160,7 +170,6 @@ extern "C" {
 #if !defined(_di_f_utf_string_dynamic_mish_nulless_) || !defined(_di_f_utf_string_dynamic_partial_mish_nulless_) || !defined(_di_f_utf_string_dynamic_partial_prepend_assure_nulless_) || !defined(_di_f_utf_string_dynamic_partial_prepend_nulless_) || !defined(_di_f_utf_string_dynamic_prepend_assure_nulless_) || !defined(_di_f_utf_string_dynamic_prepend_nulless_) || !defined(_di_f_utf_string_mish_nulless_) || !defined(_di_f_utf_string_prepend_assure_nulless_) || !defined(_di_f_utf_string_prepend_nulless_)
   extern f_status_t private_f_utf_string_prepend_nulless(const f_utf_string_t source, f_array_length_t length, f_utf_string_dynamic_t * const destination) F_attribute_visibility_internal_d;
 #endif // !defined(_di_f_utf_string_dynamic_mish_nulless_) || !defined(_di_f_utf_string_dynamic_partial_mish_nulless_) || !defined(_di_f_utf_string_dynamic_partial_prepend_assure_nulless_) || !defined(_di_f_utf_string_dynamic_partial_prepend_nulless_) || !defined(_di_f_utf_string_dynamic_prepend_assure_nulless_) || !defined(_di_f_utf_string_dynamic_prepend_nulless_) || !defined(_di_f_utf_string_mish_nulless_) || !defined(_di_f_utf_string_prepend_assure_nulless_) || !defined(_di_f_utf_string_prepend_nulless_)
-
 
 #ifdef __cplusplus
 } // extern "C"

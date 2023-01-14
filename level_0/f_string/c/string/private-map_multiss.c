@@ -37,7 +37,7 @@ extern "C" {
   }
 #endif // !defined(_di_f_string_map_multiss_adjust_) || !defined(_di_f_string_map_multiss_decimate_by_)
 
-#if !defined(_di_f_string_map_multiss_decrease_by_) || !defined(_di_f_string_map_multiss_increase_) || !defined(_di_f_string_map_multiss_increase_by_) || !defined(_di_f_string_map_multiss_terminate_) || !defined(_di_f_string_map_multiss_terminate_after_)
+#if !defined(_di_f_string_map_multiss_decrease_by_) || !defined(_di_f_string_map_multiss_increase_) || !defined(_di_f_string_map_multiss_increase_by_)
   f_status_t private_f_string_map_multiss_resize(const f_array_length_t length, f_string_map_multiss_t * const map_multiss) {
 
     if (map_multiss->used + length > F_array_length_t_size_d) {
@@ -63,7 +63,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // !defined(_di_f_string_map_multiss_decrease_by_) || !defined(_di_f_string_map_multiss_increase_) || !defined(_di_f_string_map_multiss_increase_by_) || !defined(_di_f_string_map_multiss_terminate_) || !defined(_di_f_string_map_multiss_terminate_after_)
+#endif // !defined(_di_f_string_map_multiss_decrease_by_) || !defined(_di_f_string_map_multiss_increase_) || !defined(_di_f_string_map_multiss_increase_by_)
 
 #ifdef __cplusplus
 } // extern "C"

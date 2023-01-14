@@ -33,6 +33,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_adjust().
  *
  * @see f_memory_adjust()
+ *
  * @see f_utf_string_tripless_adjust()
  */
 #if !defined(_di_f_utf_string_tripless_adjust_) || !defined(_di_f_utf_string_tripless_decimate_by_)
@@ -56,16 +57,15 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_memory_resize().
  *
- * @see f_memory_adjust()
+ * @see f_memory_resize()
+ *
  * @see f_utf_string_tripless_decrease_by()
  * @see f_utf_string_tripless_increase()
  * @see f_utf_string_tripless_increase_by()
- * @see f_utf_string_tripless_terminate()
- * @see f_utf_string_tripless_terminate_after()
  */
-#if !defined(_di_f_utf_string_tripless_decrease_by_) || !defined(_di_f_utf_string_tripless_increase_) || !defined(_di_f_utf_string_tripless_increase_by_) || !defined(_di_f_utf_string_tripless_terminate_) || !defined(_di_f_utf_string_tripless_terminate_after_)
+#if !defined(_di_f_utf_string_tripless_decrease_by_) || !defined(_di_f_utf_string_tripless_increase_) || !defined(_di_f_utf_string_tripless_increase_by_)
   extern f_status_t private_f_utf_string_tripless_resize(const f_array_length_t length, f_utf_string_tripless_t * const tripless) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_utf_string_tripless_decrease_by_) || !defined(_di_f_utf_string_tripless_increase_) || !defined(_di_f_utf_string_tripless_increase_by_) || !defined(_di_f_utf_string_tripless_terminate_) || !defined(_di_f_utf_string_tripless_terminate_after_)
+#endif // !defined(_di_f_utf_string_tripless_decrease_by_) || !defined(_di_f_utf_string_tripless_increase_) || !defined(_di_f_utf_string_tripless_increase_by_)
 
 #ifdef __cplusplus
 } // extern "C"

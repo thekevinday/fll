@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-#if !defined(_di_fll_error_print_) || !defined(_di_fll_error_file_print_) || !defined(_di_fll_error_number_print_)
+#if !defined(_di_fll_error_print_) || !defined(_di_fll_error_file_print_)
   f_status_t private_fll_error_print(const fl_print_t print, const f_status_t status, const char *function, const bool fallback) {
 
     if (status == F_access_denied) {
@@ -257,9 +257,9 @@ extern "C" {
 
     return F_true;
   }
-#endif // !defined(_di_fll_error_print_) || !defined(_di_fll_error_file_print_) || !defined(_di_fll_error_number_print_)
+#endif // !defined(_di_fll_error_print_) || !defined(_di_fll_error_file_print_)
 
-#if !defined(_di_fll_error_print_) || !defined(_di_fll_error_file_print_) || !defined(_di_fll_error_number_print_)
+#if !defined(_di_fll_error_print_) || !defined(_di_fll_error_file_print_)
   void private_fll_error_print_function(const fl_print_t print, const char *function) {
 
     if (function) {
@@ -268,7 +268,7 @@ extern "C" {
       fl_print_format("%[()", print.to, print.context);
     }
   }
-#endif // !defined(_di_fll_error_print_) || !defined(_di_fll_error_file_print_) || !defined(_di_fll_error_number_print_)
+#endif // !defined(_di_fll_error_print_) || !defined(_di_fll_error_file_print_)
 
 #ifdef __cplusplus
 } // extern "C"

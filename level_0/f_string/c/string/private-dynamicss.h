@@ -33,6 +33,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_adjust().
  *
  * @see f_memory_adjust()
+ *
  * @see f_string_dynamicss_adjust()
  * @see f_string_dynamicss_append()
  * @see f_string_dynamicss_decimate_by()
@@ -61,6 +62,7 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  *
  * @see f_memory_resize()
+ *
  * @see f_string_dynamicss_append_all()
  * @see f_string_dynamicss_decrease_by()
  * @see f_string_dynamicss_increase()
