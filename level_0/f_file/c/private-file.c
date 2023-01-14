@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-#if !defined(_di_f_file_close_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_stream_close_)
+#if !defined(_di_f_file_clone_) || !defined(_di_f_file_clone_at_) || !defined(_di_f_file_close_) || !defined(_di_f_file_close_flush_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_copy_at_) || !defined(_di_f_file_create_) || !defined(_di_f_file_create_at_) || !defined(_di_f_file_stream_close_)
   f_status_t private_f_file_close(const bool flush, int * const id) {
 
     if (*id == -1) {
@@ -36,7 +36,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // !defined(_di_f_file_close_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_stream_close_)
+#endif // !defined(_di_f_file_clone_) || !defined(_di_f_file_clone_at_) || !defined(_di_f_file_close_) || !defined(_di_f_file_close_flush_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_copy_at_) || !defined(_di_f_file_create_) || !defined(_di_f_file_create_at_) || !defined(_di_f_file_stream_close_)
 
 #if !defined(_di_f_file_copy_) || !defined(_di_f_file_clone_)
   f_status_t private_f_file_copy_content(const f_string_static_t source, const f_string_static_t destination, const f_number_unsigned_t size_block) {
@@ -327,7 +327,7 @@ extern "C" {
   }
 #endif // !defined(_di_f_file_create_device_at_) || !defined(_di_f_file_create_node_at_) || !defined(_di_f_file_copy_at_)
 
-#if !defined(_di_f_file_flush_) || !defined(_di_f_file_close_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_stream_close_)
+#if !defined(_di_f_file_clone_) || !defined(_di_f_file_clone_at_) || !defined(_di_f_file_close_) || !defined(_di_f_file_close_flush_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_copy_at_) || !defined(_di_f_file_create_) || !defined(_di_f_file_create_at_) || !defined(_di_f_file_stream_close_)
   f_status_t private_f_file_flush(const int id) {
 
     if (fsync(id) < 0) {
@@ -343,7 +343,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // !defined(_di_f_file_flush_) || !defined(_di_f_file_close_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_stream_close_)
+#endif // !defined(_di_f_file_clone_) || !defined(_di_f_file_clone_at_) || !defined(_di_f_file_close_) || !defined(_di_f_file_close_flush_) || !defined(_di_f_file_copy_) || !defined(_di_f_file_copy_at_) || !defined(_di_f_file_create_) || !defined(_di_f_file_create_at_) || !defined(_di_f_file_stream_close_)
 
 #if !defined(_di_f_file_link_) || !defined(_di_f_file_copy_)
   f_status_t private_f_file_link(const f_string_static_t target, const f_string_static_t point) {
