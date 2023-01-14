@@ -332,7 +332,7 @@ extern "C" {
  *   - signed_16:                "ii", "II",   Type is a int16_t digit.
  *   - signed_32:                "i", "I",     Type is a int32_t digit.
  *   - signed_64:                "il", "IL",   Type is a signed int64_t digit.
- *   - signed_128:               "ill", "ILL", Type is a f_int_128_t digit.
+ *   - signed_128:               "ill", "ILL", Type is a f_int128_t digit.
  *   - number:                   "in", "IN",   Type is a f_number_signed_t digit.
  *   - size:                     "z", "Z",     Type is a size_t digit.
  *   - string:                   "s",          Type is a NULL terminated string, where the string is printed as-is.
@@ -345,7 +345,7 @@ extern "C" {
  *   - unsigned_16:              "ui", "UI",   Type is a uint16_t digit.
  *   - unsigned_32:              "u", "U",     Type is a uint32_t digit.
  *   - unsigned_64:              "ul", "UL",   Type is a uint64_t digit.
- *   - unsigned_128:             "ull", "ULL", Type is a f_uint_128_t digit.
+ *   - unsigned_128:             "ull", "ULL", Type is a f_uint128_t digit.
  *   - unsigned_number:          "un", "UN",   Type is a f_number_unsigned_t digit (which by default is what f_array_length_t is a type of).
  *
  * @see fprintf()

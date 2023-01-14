@@ -1044,7 +1044,7 @@ extern "C" {
             *status = f_conversion_number_signed_print((f_number_signed_t) va_arg(apl, int64_t), conversion_data, file);
           }
           else if (type == f_print_format_type_signed_128_e) {
-            *status = f_conversion_number_signed_print((f_number_signed_t) va_arg(apl, f_int_128_t), conversion_data, file);
+            *status = f_conversion_number_signed_print((f_number_signed_t) va_arg(apl, f_int128_t), conversion_data, file);
           }
           else if (type == f_print_format_type_signed_number_e) {
             *status = f_conversion_number_signed_print(va_arg(apl, f_number_signed_t), conversion_data, file);
@@ -1069,7 +1069,7 @@ extern "C" {
             *status = f_conversion_number_unsigned_print((f_number_unsigned_t) va_arg(apl, uint64_t), conversion_data, file);
           }
           else if (type == f_print_format_type_unsigned_128_e) {
-            *status = f_conversion_number_unsigned_print((f_number_unsigned_t) va_arg(apl, f_uint_128_t), conversion_data, file);
+            *status = f_conversion_number_unsigned_print((f_number_unsigned_t) va_arg(apl, f_uint128_t), conversion_data, file);
           }
           else if (type == f_print_format_type_unsigned_number_e) {
             *status = f_conversion_number_unsigned_print(va_arg(apl, f_number_unsigned_t), conversion_data, file);

@@ -147,15 +147,15 @@ extern "C" {
  * This should work in GCC, but other compilers this may not be available.
  * When not supported, these will fallback to 64-bit.
  */
-#ifndef _di_f_int_128_t_
+#ifndef _di_f_int128_t_
   #ifdef __SIZEOF_INT128__
-    typedef __int128_t  f_int_128_t;
-    typedef __uint128_t f_uint_128_t;
+    typedef __int128_t  f_int128_t;
+    typedef __uint128_t f_uint128_t;
   #else
-    typedef int64_t  f_int_128_t;
-    typedef uint64_t f_uint_128_t;
+    typedef int64_t  f_int128_t;
+    typedef uint64_t f_uint128_t;
   #endif // __SIZEOF_INT128__
-#endif // _di_f_int_128_t_
+#endif // _di_f_int128_t_
 
 /**
  * Defines the maximum size to be supported.
@@ -188,7 +188,7 @@ extern "C" {
   #define F_type_size_64_positive_d 0x7ffffffffffffffe
   #define F_type_size_64_unsigned_d 0xfffffffffffffffe
 
-  #ifndef _di_f_int_128_t_
+  #ifdef __SIZEOF_INT128__
     #define F_type_size_128_negative_d 0x7fffffffffffffffffffffff
     #define F_type_size_128_positive_d 0x7ffffffffffffffffffffffe
     #define F_type_size_128_unsigned_d 0xfffffffffffffffffffffffe
@@ -196,7 +196,7 @@ extern "C" {
     #define F_type_size_128_negative_d F_type_size_64_negative_d
     #define F_type_size_128_positive_d F_type_size_64_positive_d
     #define F_type_size_128_unsigned_d F_type_size_64_unsigned_d
-  #endif // _di_f_int_128_t_
+  #endif // __SIZEOF_INT128__
 
   #define F_type_size_max_8_negative_d 0x80
   #define F_type_size_max_8_positive_d 0x7f
@@ -214,7 +214,7 @@ extern "C" {
   #define F_type_size_max_64_positive_d 0x7fffffffffffffff
   #define F_type_size_max_64_unsigned_d 0xffffffffffffffff
 
-  #ifndef _di_f_int_128_t_
+  #ifdef __SIZEOF_INT128__
     #define F_type_size_max_128_negative_d 0x800000000000000000000000
     #define F_type_size_max_128_positive_d 0x7fffffffffffffffffffffff
     #define F_type_size_max_128_unsigned_d 0xffffffffffffffffffffffff
@@ -222,7 +222,7 @@ extern "C" {
     #define F_type_size_max_128_negative_d F_type_size_max_64_negative_d
     #define F_type_size_max_128_positive_d F_type_size_max_64_positive_d
     #define F_type_size_max_128_unsigned_d F_type_size_max_64_unsigned_d
-  #endif // _di_f_int_128_t_
+  #endif // __SIZEOF_INT128__
 #endif // _di_f_type_sizes_d_
 
 /**
@@ -264,8 +264,8 @@ extern "C" {
   #define F_number_t_size_max_positive_d F_type_size_max_32_positive_d
   #define F_number_t_size_max_negative_d F_type_size_max_32_negative_d
 #elif defined(_en_f_type_number_128_t_)
-  typedef f_int_128_t  f_number_signed_t;
-  typedef f_uint_128_t f_number_unsigned_t;
+  typedef f_int128_t  f_number_signed_t;
+  typedef f_uint128_t f_number_unsigned_t;
 
   #define f_number_signed_t_initialize 0
   #define f_number_unsigned_t_initialize 0
@@ -951,8 +951,7 @@ extern "C" {
  *
  * This provides the types without the normal "f_" leading prefixes to be more in line with the core types like int64_t.
  */
-#ifndef __SIZEOF_INT128__
-
+#ifdef __SIZEOF_INT128__
   #ifndef _di_f_int128_t_
     typedef __int128_t int128_t;
   #endif // _di_f_int128_t_
@@ -960,9 +959,7 @@ extern "C" {
   #ifndef _di_f_uint128_t_
     typedef __uint128_t uint128_t;
   #endif // _di_f_uint128_t_
-
 #else // __SIZEOF_INT128__
-
   #ifndef _di_f_int128_t_
     typedef int64_t int128_t;
   #endif // _di_f_int128_t_
@@ -970,7 +967,6 @@ extern "C" {
   #ifndef _di_f_uint128_t_
     typedef uint64_t uint128_t;
   #endif // _di_f_uint128_t_
-
 #endif // __SIZEOF_INT128__
 
 /**

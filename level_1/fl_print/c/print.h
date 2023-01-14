@@ -128,8 +128,8 @@ extern "C" {
  *   - "iii" "III":  Type is a int8_t digit.
  *   - "ii", "II":   Type is a int16_t digit.
  *   - "i", "I":     Type is a int32_t digit.
- *   - "il", "IL":   Type is a signed int64_t digit.
- *   - "ill", "ILL": Type is a f_int_128_t digit.
+ *   - "il", "IL":   Type is a int64_t digit.
+ *   - "ill", "ILL": Type is a f_int128_t digit.
  *   - "in", "IN":   Type is a f_number_signed_t digit.
  *   - "z", "Z":     Type is a size_t digit.
  *   - "s":          Type is a NULL terminated string, where the string is printed as-is.
@@ -142,7 +142,7 @@ extern "C" {
  *   - "ui", "UI":   Type is a uint16_t digit.
  *   - "u", "U":     Type is a uint32_t digit.
  *   - "ul", "UL":   Type is a uint64_t digit.
- *   - "ull", "ULL": Type is a f_uint_128_t digit.
+ *   - "ull", "ULL": Type is a f_uint128_t digit.
  *   - "un", "UN":   Type is a f_number_unsigned_t digit (which by default is what f_array_length_t is a type of).
  *
  * The following are control characters and their replacements for "safe" printing (unknown is used for invalid UTF-8 sequences):
