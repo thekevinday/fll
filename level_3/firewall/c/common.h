@@ -394,11 +394,11 @@ extern "C" {
       macro_f_console_parameter_t_initialize(f_console_standard_short_verbose_s.string, f_console_standard_long_verbose_s.string, 0, 0, f_console_type_inverse_e), \
       macro_f_console_parameter_t_initialize(f_console_standard_short_debug_s.string, f_console_standard_long_debug_s.string, 0, 0, f_console_type_inverse_e), \
       macro_f_console_parameter_t_initialize(f_console_standard_short_version_s.string, f_console_standard_long_version_s.string, 0, 0, f_console_type_inverse_e), \
-      macro_f_console_parameter_t_initialize(0, 0, firewall_command_start_s.string, F_false, f_console_type_other_e), \
-      macro_f_console_parameter_t_initialize(0, 0, firewall_command_stop_s.string, F_false, f_console_type_other_e), \
-      macro_f_console_parameter_t_initialize(0, 0, firewall_command_restart_s.string, F_false, f_console_type_other_e), \
-      macro_f_console_parameter_t_initialize(0, 0, firewall_command_lock_s.string, F_false, f_console_type_other_e), \
-      macro_f_console_parameter_t_initialize(0, 0, firewall_command_show_s.string, F_false, f_console_type_other_e), \
+      macro_f_console_parameter_t_initialize(0, 0, firewall_command_start_s.string, 0, f_console_type_other_e), \
+      macro_f_console_parameter_t_initialize(0, 0, firewall_command_stop_s.string, 0, f_console_type_other_e), \
+      macro_f_console_parameter_t_initialize(0, 0, firewall_command_restart_s.string, 0, f_console_type_other_e), \
+      macro_f_console_parameter_t_initialize(0, 0, firewall_command_lock_s.string, 0, f_console_type_other_e), \
+      macro_f_console_parameter_t_initialize(0, 0, firewall_command_show_s.string, 0, f_console_type_other_e), \
     }
 
   #define firewall_total_parameters_d 15
