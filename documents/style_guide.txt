@@ -178,11 +178,18 @@ Global String Constant Names:
   - code:"f_file_open_mode_truncate_s": as a variable, such as: code:"extern const f_string_t f_file_open_mode_truncate_s;".
 
 Global Character Constant Names:
-  The C-language specific global names are identical to the strong:"Global String Constant Names" except that they represent a single 1-byte character.
+  These C-language specific global names are identical to the strong:"Global String Constant Names" except that they represent a single 1-byte character.
 
   These are of the form code:"(A)_(b)_c" or code:"(a)_(b)_c".
 
   The trailing code:"_c" designates that this is a 1-byte character.
+
+Global Data Constant Names:
+  These C-language specific global names are identical to the strong:"Global String Constant Names" except that they represent any other type of global data.
+
+  These are of the form code:"(A)_(b)_g" or code:"(a)_(b)_g".
+
+  The trailing code:"_g" designates that this is global data.
 
 Enumeration Names:
   The C-language specific enumeration names follow the naming structure code:"(a)_(b)_e".
