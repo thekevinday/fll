@@ -56,7 +56,7 @@ extern "C" {
     if (!result) {
 
       // @todo in order to get this working, the recursive function that calls this needs to be rewritten with more flexibility or provide a higher-level equivalent function.
-      fll_print_format("Removed '%S'.%r", F_type_input_d, path, f_string_eol_s);
+      fll_print_format("Removed '%S'.%r", F_type_output_d, path, f_string_eol_s);
     }
 
     return result;
