@@ -280,7 +280,7 @@ extern "C" {
 #endif // _en_f_type_number_128_t_
 
 /**
- * Standard Input/Output types.
+ * Standard file types defines.
  *
  * F_type_*_d:
  *   - error:  Standard error stream.
@@ -292,7 +292,7 @@ extern "C" {
  *   - input:  Standard input file descriptor.
  *   - output: Standard output file descriptor.
  */
-#ifndef _di_f_type_input_output_d_
+#ifndef _di_f_type_d_
   #define F_type_error_d  stderr
   #define F_type_input_d  stdin
   #define F_type_output_d stdout
@@ -300,7 +300,7 @@ extern "C" {
   #define F_type_descriptor_error_d  STDERR_FILENO
   #define F_type_descriptor_input_d  STDIN_FILENO
   #define F_type_descriptor_output_d STDOUT_FILENO
-#endif // _di_f_type_input_output_d_
+#endif // _di_f_type_d_
 
 /**
  * Defines a variable to be used by arrays.
