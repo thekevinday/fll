@@ -48,7 +48,7 @@ extern "C" {
  *   Set to a valid file descriptor to print to on successful operation.
  *   This is passed to the verbose function if that function pointer is not -1.
  * verbose:
- *   Set to 0 to not print on successful operation.
+ *   Set output.id to -1 and output.stream to 0 to not print on successful operation.
  *   Set to address of a function to be called for printing such that:
  *     - The first parameter represents the output file type.
  *     - The second parameter represents the source string.
