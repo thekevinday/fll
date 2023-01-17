@@ -52,7 +52,7 @@ extern "C" {
           fl_print_format("%[%r%]", data->main->error.to.stream, data->main->error.notable, fake_build_setting_name_environment_s, data->main->error.notable);
           fl_print_format("%[' is too large.%]%r", data->main->error.to.stream, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-          flockfile(data->main->error.to.stream);
+          funlockfile(data->main->error.to.stream);
         }
 
         *status = F_status_set_error(F_array_too_large);
