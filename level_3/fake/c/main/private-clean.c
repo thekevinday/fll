@@ -9,14 +9,14 @@ extern "C" {
 #ifndef _di_fake_clean_operate_
   f_status_t fake_clean_operate(fake_data_t * const data) {
 
-    if (data->main->output.verbosity != f_console_verbosity_quiet_e && data->main->output.verbosity != f_console_verbosity_error_e) {
-      f_file_stream_lock(data->main->output);
+    if (data->main->message.verbosity != f_console_verbosity_quiet_e && data->main->message.verbosity != f_console_verbosity_error_e) {
+      f_file_stream_lock(data->main->message.to);
 
-      fl_print_format("%r%[Deleting all files within build directory '%]", data->main->output.to, f_string_eol_s, data->main->context.set.important, data->main->context.set.important);
-      fl_print_format("%[%Q%]", data->main->output.to, data->main->context.set.notable, data->path_build, data->main->context.set.notable);
-      fl_print_format("%['.%]%r", data->main->output.to, data->main->context.set.important, data->main->context.set.important, f_string_eol_s);
+      fl_print_format("%r%[Deleting all files within build directory '%]", data->main->message.to, f_string_eol_s, data->main->context.set.important, data->main->context.set.important);
+      fl_print_format("%[%Q%]", data->main->message.to, data->main->context.set.notable, data->path_build, data->main->context.set.notable);
+      fl_print_format("%['.%]%r", data->main->message.to, data->main->context.set.important, data->main->context.set.important, f_string_eol_s);
 
-      f_file_stream_unlock(data->main->output);
+      f_file_stream_unlock(data->main->message.to);
     }
 
     f_status_t status = F_none;
@@ -55,8 +55,10 @@ extern "C" {
 
     if (!result) {
 
+      const f_file_t output = macro_f_file_t_initialize_stream(F_type_output_d);
+
       // @todo in order to get this working, the recursive function that calls this needs to be rewritten with more flexibility or provide a higher-level equivalent function.
-      fll_print_format("Removed '%S'.%r", F_type_input_d, path, f_string_eol_s);
+      fll_print_format("Removed '%S'.%r", output, path, f_string_eol_s);
     }
 
     return result;

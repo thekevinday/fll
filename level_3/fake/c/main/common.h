@@ -468,7 +468,7 @@ extern "C" {
 
   #define fake_console_parameter_t_initialize \
     { \
-      macro_f_console_parameter_t_initialize4(f_console_standard_short_help_s,          f_console_standard_long_help_s,          0, f_console_flag_normal_e, 0), \
+      macro_f_console_parameter_t_initialize4(f_console_standard_short_help_s,          f_console_standard_long_help_s,          0, f_console_flag_normal_e,  0), \
       macro_f_console_parameter_t_initialize4(f_console_standard_short_light_s,         f_console_standard_long_light_s,         0, f_console_flag_inverse_e, 0), \
       macro_f_console_parameter_t_initialize4(f_console_standard_short_dark_s,          f_console_standard_long_dark_s,          0, f_console_flag_inverse_e, 0), \
       macro_f_console_parameter_t_initialize4(f_console_standard_short_no_color_s,      f_console_standard_long_no_color_s,      0, f_console_flag_inverse_e, 0), \
@@ -481,25 +481,27 @@ extern "C" {
       macro_f_console_parameter_t_initialize4(f_console_standard_short_line_first_no_s, f_console_standard_long_line_first_no_s, 0, f_console_flag_inverse_e, 0), \
       macro_f_console_parameter_t_initialize4(f_console_standard_short_line_last_no_s,  f_console_standard_long_line_last_no_s,  0, f_console_flag_inverse_e, 0), \
       \
-      macro_f_console_parameter_t_initialize2(fake_short_define_s.string, fake_long_define_s.string, 0, 1, f_console_flag_normal_e, 0), \
-      macro_f_console_parameter_t_initialize2(fake_short_fakefile_s.string, fake_long_fakefile_s.string, 0, 1, f_console_flag_normal_e, 0), \
-      macro_f_console_parameter_t_initialize2(fake_short_mode_s.string, fake_long_mode_s.string, 0, 1, f_console_flag_normal_e, 0), \
-      macro_f_console_parameter_t_initialize2(fake_short_process_s.string, fake_long_process_s.string, 0, 1, f_console_flag_normal_e, 0), \
-      macro_f_console_parameter_t_initialize2(fake_short_settings_s.string, fake_long_settings_s.string, 0, 1, f_console_flag_normal_e, 0), \
-      macro_f_console_parameter_t_initialize2(fake_short_path_build_s.string, fake_long_path_build_s.string, 0, 1, f_console_flag_normal_e, 0), \
-      macro_f_console_parameter_t_initialize2(fake_short_path_data_s.string, fake_long_path_data_s.string, 0, 1, f_console_flag_normal_e, 0), \
-      macro_f_console_parameter_t_initialize2(fake_short_path_sources_s.string, fake_long_path_sources_s.string, 0, 1, f_console_flag_normal_e, 0), \
-      macro_f_console_parameter_t_initialize2(fake_short_path_work_s.string, fake_long_path_work_s.string, 0, 1, f_console_flag_normal_e, 0), \
-      macro_f_console_parameter_t_initialize2(0, fake_long_documents_disabled_s.string, 0, 0, f_console_flag_normal_e, 0), \
-      macro_f_console_parameter_t_initialize2(0, fake_long_documents_enabled_s.string, 0, 0, f_console_flag_normal_e, 0), \
-      macro_f_console_parameter_t_initialize2(0, fake_long_shared_disabled_s.string, 0, 0, f_console_flag_normal_e, 0), \
-      macro_f_console_parameter_t_initialize2(0, fake_long_shared_enabled_s.string, 0, 0, f_console_flag_normal_e, 0), \
-      macro_f_console_parameter_t_initialize2(0, fake_long_static_disabled_s.string, 0, 0, f_console_flag_normal_e, 0), \
-      macro_f_console_parameter_t_initialize2(0, fake_long_static_enabled_s.string, 0, 0, f_console_flag_normal_e, 0), \
-      macro_f_console_parameter_t_initialize2(0, 0, fake_other_operation_build_s.string, 0, f_console_flag_simple_e), \
-      macro_f_console_parameter_t_initialize2(0, 0, fake_other_operation_clean_s.string, 0, f_console_flag_simple_e), \
-      macro_f_console_parameter_t_initialize2(0, 0, fake_other_operation_make_s.string, 0, f_console_flag_simple_e), \
-      macro_f_console_parameter_t_initialize2(0, 0, fake_other_operation_skeleton_s.string, 0, f_console_flag_simple_e), \
+      macro_f_console_parameter_t_initialize4(fake_short_define_s,       fake_long_define_s,             1, f_console_flag_normal_e, 0), \
+      macro_f_console_parameter_t_initialize4(fake_short_fakefile_s,     fake_long_fakefile_s,           1, f_console_flag_normal_e, 0), \
+      macro_f_console_parameter_t_initialize4(fake_short_mode_s,         fake_long_mode_s,               1, f_console_flag_normal_e, 0), \
+      macro_f_console_parameter_t_initialize4(fake_short_process_s,      fake_long_process_s,            1, f_console_flag_normal_e, 0), \
+      macro_f_console_parameter_t_initialize4(fake_short_settings_s,     fake_long_settings_s,           1, f_console_flag_normal_e, 0), \
+      macro_f_console_parameter_t_initialize4(fake_short_path_build_s,   fake_long_path_build_s,         1, f_console_flag_normal_e, 0), \
+      macro_f_console_parameter_t_initialize4(fake_short_path_data_s,    fake_long_path_data_s,          1, f_console_flag_normal_e, 0), \
+      macro_f_console_parameter_t_initialize4(fake_short_path_sources_s, fake_long_path_sources_s,       1, f_console_flag_normal_e, 0), \
+      macro_f_console_parameter_t_initialize4(fake_short_path_work_s,    fake_long_path_work_s,          1, f_console_flag_normal_e, 0), \
+      \
+      macro_f_console_parameter_t_initialize6(fake_long_documents_disabled_s, 0, f_console_flag_normal_e, 0), \
+      macro_f_console_parameter_t_initialize6(fake_long_documents_enabled_s,  0, f_console_flag_normal_e, 0), \
+      macro_f_console_parameter_t_initialize6(fake_long_shared_disabled_s,    0, f_console_flag_normal_e, 0), \
+      macro_f_console_parameter_t_initialize6(fake_long_shared_enabled_s,     0, f_console_flag_normal_e, 0), \
+      macro_f_console_parameter_t_initialize6(fake_long_static_disabled_s,    0, f_console_flag_normal_e, 0), \
+      macro_f_console_parameter_t_initialize6(fake_long_static_enabled_s,     0, f_console_flag_normal_e, 0), \
+      \
+      macro_f_console_parameter_t_initialize7(fake_other_operation_build_s.string,    0, f_console_flag_simple_e, 0), \
+      macro_f_console_parameter_t_initialize7(fake_other_operation_clean_s.string,    0, f_console_flag_simple_e, 0), \
+      macro_f_console_parameter_t_initialize7(fake_other_operation_make_s.string,     0, f_console_flag_simple_e, 0), \
+      macro_f_console_parameter_t_initialize7(fake_other_operation_skeleton_s.string, 0, f_console_flag_simple_e, 0), \
     }
 
   #define fake_total_parameters_d 31
@@ -512,8 +514,8 @@ extern "C" {
  *   - none:          No flags set.
  *   - file_from:     Using a specified source file.
  *   - file_to:       Using a specified destination file.
- *   - help:          Print help.
  *   - header:        Enable printing of headers.
+ *   - help:          Print help.
  *   - separate:      Enable printing of separators.
  *   - strip_invalid: Using strip invalid character mode.
  *   - verify:        Using verify mode.

@@ -59,10 +59,10 @@ extern "C" {
 #ifndef _di_fss_identify_print_line_first_locked_
   f_status_t fss_identify_print_line_first_locked(fss_identify_setting_t * const setting, const fl_print_t print) {
 
-    if (!setting || print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+    if (!setting || print.verbosity < f_console_verbosity_error_e) return F_output_not;
 
-    if (!F_status_is_error(setting->status)) {
-      if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
+    if (F_status_is_error_not(setting->status)) {
+      if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
     }
 
     f_print_dynamic_raw(setting->line_first, print.to);
@@ -74,10 +74,10 @@ extern "C" {
 #ifndef _di_fss_identify_print_line_first_unlocked_
   f_status_t fss_identify_print_line_first_unlocked(fss_identify_setting_t * const setting, const fl_print_t print) {
 
-    if (!setting || print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+    if (!setting || print.verbosity < f_console_verbosity_error_e) return F_output_not;
 
-    if (!F_status_is_error(setting->status)) {
-      if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
+    if (F_status_is_error_not(setting->status)) {
+      if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
     }
 
     fll_print_dynamic_raw(setting->line_first, print.to);
@@ -89,10 +89,10 @@ extern "C" {
 #ifndef _di_fss_identify_print_line_last_locked_
   f_status_t fss_identify_print_line_last_locked(fss_identify_setting_t * const setting, const fl_print_t print) {
 
-    if (!setting || print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+    if (!setting || print.verbosity < f_console_verbosity_error_e) return F_output_not;
 
-    if (!F_status_is_error(setting->status)) {
-      if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
+    if (F_status_is_error_not(setting->status)) {
+      if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
       if (setting->flag & (fss_identify_main_flag_verify_e | fss_identify_main_flag_file_to_e)) return F_output_not;
     }
 
@@ -105,10 +105,10 @@ extern "C" {
 #ifndef _di_fss_identify_print_line_last_unlocked_
   f_status_t fss_identify_print_line_last_unlocked(fss_identify_setting_t * const setting, const fl_print_t print) {
 
-    if (!setting || print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+    if (!setting || print.verbosity < f_console_verbosity_error_e) return F_output_not;
 
-    if (!F_status_is_error(setting->status)) {
-      if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
+    if (F_status_is_error_not(setting->status)) {
+      if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
       if (setting->flag & (fss_identify_main_flag_verify_e | fss_identify_main_flag_file_to_e)) return F_output_not;
     }
 

@@ -18,7 +18,8 @@ extern "C" {
  * @param data
  *   The program data.
  * @param status
- *   The error status code to report on.
+ *   The status to use.
+ *   This is provided, ignoring data.setting->status, for thread-safety reasons.
  * @param function
  *   The name of the function where the error happened.
  * @param operation

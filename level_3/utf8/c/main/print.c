@@ -8,11 +8,7 @@ extern "C" {
 #ifndef _di_utf8_print_error_
   f_status_t utf8_print_error(utf8_setting_t * const setting, const fl_print_t print, const f_string_t function) {
 
-    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
-
-    if (!F_status_is_error(setting->status)) {
-      if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
-    }
+    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
 
     utf8_print_line_first_locked(setting, print);
     fll_error_print(print, F_status_set_fine(setting->status), function, F_true);
@@ -25,12 +21,8 @@ extern "C" {
 #ifndef _di_utf8_print_error_decode_
   f_status_t utf8_print_error_decode(utf8_setting_t * const setting, const fl_print_t print, const f_status_t status, const f_string_static_t invalid) {
 
-    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
     if (setting->flag & (utf8_main_flag_strip_invalid_e | utf8_main_flag_verify_e)) return F_output_not;
-
-    if (!F_status_is_error(setting->status)) {
-      if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
-    }
 
     utf8_print_line_first_unlocked(setting, print);
 
@@ -68,11 +60,7 @@ extern "C" {
 #ifndef _di_utf8_print_error_encode_
   f_status_t utf8_print_error_encode(utf8_setting_t * const setting, const fl_print_t print, const f_status_t status, const uint32_t codepoint) {
 
-    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
-
-    if (!F_status_is_error(setting->status)) {
-      if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
-    }
+    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
 
     utf8_print_line_first_unlocked(setting, print);
 
@@ -95,11 +83,7 @@ extern "C" {
 #ifndef _di_utf8_print_error_file_
   f_status_t utf8_print_error_file(utf8_setting_t * const setting, const fl_print_t print, const f_string_t function, const f_string_static_t name, const f_string_static_t operation, const uint8_t type) {
 
-    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
-
-    if (!F_status_is_error(setting->status)) {
-      if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
-    }
+    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
 
     utf8_print_line_first_locked(setting, print);
     fll_error_file_print(print, F_status_set_fine(setting->status), function, F_true, name, operation, type);
@@ -112,11 +96,7 @@ extern "C" {
 #ifndef _di_utf8_print_error_no_from_
   f_status_t utf8_print_error_no_from(utf8_setting_t * const setting, const fl_print_t print) {
 
-    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
-
-    if (!F_status_is_error(setting->status)) {
-      if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
-    }
+    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
 
     fll_print_format("%[%QNo from sources are specified, please pipe data, designate a file, or add parameters.%]%r", print.to, print.set->error, print.prefix, print.set->error, f_string_eol_s);
 
@@ -127,11 +107,7 @@ extern "C" {
 #ifndef _di_utf8_print_error_parameter_file_name_empty_
   f_status_t utf8_print_error_parameter_file_name_empty(utf8_setting_t * const setting, const fl_print_t print, const f_array_length_t index) {
 
-    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
-
-    if (!F_status_is_error(setting->status)) {
-      if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
-    }
+    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
 
     f_file_stream_lock(print.to);
 
@@ -150,11 +126,7 @@ extern "C" {
 #ifndef _di_utf8_print_error_parameter_file_not_found_
   f_status_t utf8_print_error_parameter_file_not_found(utf8_setting_t * const setting, const fl_print_t print, const bool from, const f_string_static_t name) {
 
-    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
-
-    if (!F_status_is_error(setting->status)) {
-      if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
-    }
+    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
 
     f_file_stream_lock(print.to);
 
@@ -173,11 +145,7 @@ extern "C" {
 #ifndef _di_utf8_print_error_parameter_file_to_too_many_
   f_status_t utf8_print_error_parameter_file_to_too_many(utf8_setting_t * const setting, const fl_print_t print) {
 
-    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
-
-    if (!F_status_is_error(setting->status)) {
-      if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
-    }
+    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
 
     utf8_print_line_first_locked(setting, print);
 
@@ -347,10 +315,10 @@ extern "C" {
 #ifndef _di_utf8_print_line_first_locked_
   f_status_t utf8_print_line_first_locked(utf8_setting_t * const setting, const fl_print_t print) {
 
-    if (!setting || print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+    if (!setting || print.verbosity < f_console_verbosity_error_e) return F_output_not;
 
-    if (!F_status_is_error(setting->status)) {
-      if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
+    if (F_status_is_error_not(setting->status)) {
+      if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
       if (setting->flag & (utf8_main_flag_verify_e | utf8_main_flag_file_to_e)) return F_output_not;
     }
 
@@ -363,10 +331,10 @@ extern "C" {
 #ifndef _di_utf8_print_line_first_unlocked_
   f_status_t utf8_print_line_first_unlocked(utf8_setting_t * const setting, const fl_print_t print) {
 
-    if (!setting || print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+    if (!setting || print.verbosity < f_console_verbosity_error_e) return F_output_not;
 
-    if (!F_status_is_error(setting->status)) {
-      if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
+    if (F_status_is_error_not(setting->status)) {
+      if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
       if (setting->flag & (utf8_main_flag_verify_e | utf8_main_flag_file_to_e)) return F_output_not;
     }
 
@@ -379,10 +347,10 @@ extern "C" {
 #ifndef _di_utf8_print_line_last_locked_
   f_status_t utf8_print_line_last_locked(utf8_setting_t * const setting, const fl_print_t print) {
 
-    if (!setting || print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+    if (!setting || print.verbosity < f_console_verbosity_error_e) return F_output_not;
 
-    if (!F_status_is_error(setting->status)) {
-      if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
+    if (F_status_is_error_not(setting->status)) {
+      if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
       if (setting->flag & (utf8_main_flag_verify_e | utf8_main_flag_file_to_e)) return F_output_not;
     }
 
@@ -395,10 +363,10 @@ extern "C" {
 #ifndef _di_utf8_print_line_last_unlocked_
   f_status_t utf8_print_line_last_unlocked(utf8_setting_t * const setting, const fl_print_t print) {
 
-    if (!setting || print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+    if (!setting || print.verbosity < f_console_verbosity_error_e) return F_output_not;
 
-    if (!F_status_is_error(setting->status)) {
-      if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
+    if (F_status_is_error_not(setting->status)) {
+      if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
       if (setting->flag & (utf8_main_flag_verify_e | utf8_main_flag_file_to_e)) return F_output_not;
     }
 

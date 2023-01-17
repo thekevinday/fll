@@ -1,7 +1,7 @@
 /**
  * FLL - Level 3
  *
- * Project: UTF-8
+ * Project: UTF8
  * API Version: 0.7
  * Licenses: lgpl-2.1-or-later
  */
@@ -11,6 +11,91 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+/**
+ * Print generic error message regarding a function failing in some way.
+ *
+ * @param setting
+ *   The main program settings.
+ *
+ *   This does not alter setting.status.
+ * @param status
+ *   The status to use.
+ *   This is provided, ignoring setting.status, for thread-safety reasons.
+ * @param print
+ *   Designates the how and where to print.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ *
+ * @see fll_error_print()
+ */
+#ifndef _di_fake_print_error_
+  extern f_status_t fake_print_error(fake_setting_t * const setting, const f_status_t status, const fl_print_t print, const f_string_t function);
+#endif // _di_fake_print_error_
+
+/**
+ * Print error message for when an operation fails.
+ *
+ * @param setting
+ *   The main program settings.
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   Designates the how and where to print.
+ * @param operation
+ *   The name of the operation that failed.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ */
+#ifndef _di_fake_print_error_failure_operation_
+  extern f_status_t fake_print_error_failure_operation(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t operation);
+#endif // _di_fake_print_error_failure_operation_
+
+/**
+ * Print error message for when an operation fails.
+ *
+ * @param setting
+ *   The main program settings.
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   Designates the how and where to print.
+ * @param script
+ *   The name of the script that failed.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ */
+#ifndef _di_fake_print_error_failure_script_
+  extern f_status_t fake_print_error_failure_script(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t script);
+#endif // _di_fake_print_error_failure_script_
+
+/**
+ * Print error message for when two designated operations cannot be used together.
+ *
+ * @param setting
+ *   The main program settings.
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   Designates the how and where to print.
+ * @param operation_1
+ *   The symbol for the operation that cannot be used.
+ * @param operation_2
+ *   The second operation that cannot be used.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ */
+#ifndef _di_fake_print_error_parameter_operation_not_with_
+  extern f_status_t fake_print_error_parameter_operation_not_with(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t operation_1, const f_string_static_t operation_2);
+#endif // _di_fake_print_error_parameter_operation_not_with_
 
 /**
  * Print help.
@@ -24,6 +109,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_fake_print_help_
   extern f_status_t fake_print_help(fake_setting_t * const setting, const fl_print_t print);
@@ -116,6 +202,24 @@ extern "C" {
 #ifndef _di_fake_print_line_last_unlocked_
   extern f_status_t fake_print_line_last_unlocked(fake_setting_t * const setting, const fl_print_t print);
 #endif // _di_fake_print_line_last_unlocked_
+
+/**
+ * Print message for when all operates successfully complete.
+ *
+ * @param setting
+ *   The main program settings.
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   Designates the how and where to print.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ */
+#ifndef _di_fake_print_operation_all_complete_
+  extern f_status_t fake_print_operation_all_complete(fake_setting_t * const setting, const fl_print_t print);
+#endif // _di_fake_print_operation_all_complete_
 
 #ifdef __cplusplus
 } // extern "C"

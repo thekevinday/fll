@@ -11,11 +11,11 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    if (data->main->output.verbosity != f_console_verbosity_quiet_e && data->main->output.verbosity != f_console_verbosity_error_e) {
-      fll_print_format("%rGenerating skeleton structure.%r", data->main->output.to, f_string_eol_s, f_string_eol_s);
+    if (data->main->message.verbosity != f_console_verbosity_quiet_e && data->main->message.verbosity != f_console_verbosity_error_e) {
+      fll_print_format("%rGenerating skeleton structure.%r", data->main->message.to, f_string_eol_s, f_string_eol_s);
 
-      if (data->main->output.verbosity >= f_console_verbosity_verbose_e) {
-        fll_print_dynamic(f_string_eol_s, data->main->output.to);
+      if (data->main->message.verbosity >= f_console_verbosity_verbose_e) {
+        fll_print_dynamic(f_string_eol_s, data->main->message.to);
       }
     }
 
@@ -88,8 +88,8 @@ extern "C" {
         }
       } // for
 
-      if (data->main->output.verbosity >= f_console_verbosity_verbose_e) {
-        fll_print_dynamic(f_string_eol_s, data->main->output.to);
+      if (data->main->message.verbosity >= f_console_verbosity_verbose_e) {
+        fll_print_dynamic(f_string_eol_s, data->main->message.to);
       }
     }
 
@@ -136,7 +136,7 @@ extern "C" {
 
     if (status == F_true) {
       if (data->main->error.verbosity >= f_console_verbosity_verbose_e) {
-        fll_print_format("Directory '%Q' already exists.%r", data->main->output.to, path, f_string_eol_s);
+        fll_print_format("Directory '%Q' already exists.%r", data->main->message.to, path, f_string_eol_s);
       }
 
       return F_none;
@@ -144,13 +144,13 @@ extern "C" {
 
     if (status == F_false) {
       if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
-        f_file_stream_lock(data->main->error);
+        f_file_stream_lock(data->main->error.to);
 
         fl_print_format("%r%[%QThe path '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
         fl_print_format("%[%Q%]", data->main->error.to, data->main->error.notable, path, data->main->error.notable);
         fl_print_format("%[' exists but is not a directory.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-        f_file_stream_unlock(data->main->error);
+        f_file_stream_unlock(data->main->error.to);
       }
 
       return F_status_set_warning(F_failure);
@@ -160,13 +160,13 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_file_found_not) {
-          f_file_stream_lock(data->main->error);
+          f_file_stream_lock(data->main->error.to);
 
           fl_print_format("%r%[%QThe path '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
           fl_print_format("%[%Q%]", data->main->error.to, data->main->error.notable, path, data->main->error.notable);
           fl_print_format("%[' could not be created, a parent directory does not exist.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-          f_file_stream_unlock(data->main->error);
+          f_file_stream_unlock(data->main->error.to);
         }
         else {
           fll_error_file_print(data->main->error, F_status_set_fine(status), "f_directory_create", F_true, path, f_file_operation_create_s, fll_error_file_type_directory_e);
@@ -176,7 +176,7 @@ extern "C" {
       }
 
       if (data->main->error.verbosity >= f_console_verbosity_verbose_e) {
-        fll_print_format("Directory '%Q' created.%r", data->main->output.to, path, f_string_eol_s);
+        fll_print_format("Directory '%Q' created.%r", data->main->message.to, path, f_string_eol_s);
       }
     }
     else if (F_status_is_error(status)) {
@@ -200,7 +200,7 @@ extern "C" {
 
     if (status == F_true) {
       if (data->main->error.verbosity >= f_console_verbosity_verbose_e) {
-        fll_print_format("File '%Q' already exists.%r", data->main->output.to, path, f_string_eol_s);
+        fll_print_format("File '%Q' already exists.%r", data->main->message.to, path, f_string_eol_s);
       }
 
       return F_none;
@@ -212,7 +212,7 @@ extern "C" {
 
       if (status == F_true) {
         if (data->main->error.verbosity >= f_console_verbosity_verbose_e) {
-          fll_print_format("File '%Q' already exists (as a symbolic link).%r", data->main->output.to, path, f_string_eol_s);
+          fll_print_format("File '%Q' already exists (as a symbolic link).%r", data->main->message.to, path, f_string_eol_s);
         }
 
         return F_none;
@@ -221,7 +221,7 @@ extern "C" {
 
     if (status == F_false) {
       if (data->main->error.verbosity >= f_console_verbosity_verbose_e) {
-        fll_print_format("File '%Q' already exists but is not a regular file (or symbolic link).%r", data->main->output.to, path, f_string_eol_s);
+        fll_print_format("File '%Q' already exists but is not a regular file (or symbolic link).%r", data->main->message.to, path, f_string_eol_s);
       }
 
       return F_status_set_warning(F_none);
@@ -237,13 +237,13 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_file_found_not) {
-          f_file_stream_lock(data->main->error);
+          f_file_stream_lock(data->main->error.to);
 
           fl_print_format("%r%[%QThe file '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
           fl_print_format("%[%Q%]", data->main->error.to, data->main->error.notable, path, data->main->error.notable);
           fl_print_format("%[' could not be created, a parent directory does not exist.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-          f_file_stream_unlock(data->main->error);
+          f_file_stream_unlock(data->main->error.to);
         }
         else {
           fll_error_file_print(data->main->error, F_status_set_fine(status), "f_file_create", F_true, path, f_file_operation_create_s, fll_error_file_type_file_e);
@@ -253,7 +253,7 @@ extern "C" {
       }
 
       if (data->main->error.verbosity >= f_console_verbosity_verbose_e) {
-        fll_print_format("File '%Q' created.%r", data->main->output.to, path, f_string_eol_s);
+        fll_print_format("File '%Q' created.%r", data->main->message.to, path, f_string_eol_s);
       }
 
       if (content.used) {
@@ -282,7 +282,7 @@ extern "C" {
         }
 
         if (data->main->error.verbosity >= f_console_verbosity_verbose_e) {
-          fll_print_format("File '%Q' pre-populated.%r", data->main->output.to, path, f_string_eol_s);
+          fll_print_format("File '%Q' pre-populated.%r", data->main->message.to, path, f_string_eol_s);
         }
 
         f_file_stream_flush(file);

@@ -16,7 +16,7 @@ extern "C" {
     if (F_status_is_error(*status)) return;
 
     if (fll_program_standard_signal_received(data_make->main)) {
-      fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
+      fll_program_print_signal_received(data_make->main->warning, data_make->setting->line_first, data_make->main->signal_received);
 
       *status = F_status_set_error(F_interrupt);
 
@@ -120,7 +120,7 @@ extern "C" {
 
           if (!(i % fake_signal_check_short_d)) {
             if (fll_program_standard_signal_received(data_make->main)) {
-              fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
+              fll_program_print_signal_received(data_make->main->warning, data_make->setting->line_first, data_make->main->signal_received);
 
               *status = F_status_set_error(F_interrupt);
 
@@ -450,13 +450,13 @@ extern "C" {
         }
         else {
           if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
-            f_file_stream_lock(data->main->error);
+            f_file_stream_lock(data->main->error.to);
 
             fl_print_format("%r%[%QInvalid characters in the define setting name '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
             fl_print_format("%[%Q%]", data->main->error.to, data->main->error.notable, define.array[i].name, data->main->error.notable);
             fl_print_format("%[', only alpha-numeric ASCII characters and underscore (without a leading digit) are allowed.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-            f_file_stream_unlock(data->main->error);
+            f_file_stream_unlock(data->main->error.to);
           }
 
           status = F_status_set_error(F_failure);

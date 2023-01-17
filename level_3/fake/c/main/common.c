@@ -215,9 +215,9 @@ extern "C" {
 
     f_string_static_t * const args = main->parameters.arguments.array;
 
-    if (main->parameters.array[fake_parameter_strip_invalid_e].result & f_console_result_found_e) {
-      setting->flag |= fake_main_flag_strip_invalid_e;
-    }
+    //if (main->parameters.array[fake_parameter_strip_invalid_e].result & f_console_result_found_e) {
+    //  setting->flag |= fake_main_flag_strip_invalid_e;
+    //}
   }
 #endif // _di_fake_setting_load_
 

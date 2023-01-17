@@ -205,7 +205,7 @@ extern "C" {
       for (j = i + 1; j < depths->used; ++j) {
 
         if (depths->array[i].depth == depths->array[j].depth) {
-          f_file_stream_lock(data->main->error);
+          f_file_stream_lock(data->main->error.to);
 
           fl_print_format("%r%[%QThe value '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
           fl_print_format("%[%ul%]", data->main->error.to, data->main->error.notable, depths->array[i].depth, data->main->error.notable);
@@ -213,12 +213,12 @@ extern "C" {
           fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_normal_s, fss_embedded_list_read_long_depth_s, data->main->error.notable);
           fl_print_format("%['.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-          f_file_stream_unlock(data->main->error);
+          f_file_stream_unlock(data->main->error.to);
 
           return F_status_set_error(F_parameter);
         }
         else if (depths->array[i].depth > depths->array[j].depth) {
-          f_file_stream_lock(data->main->error);
+          f_file_stream_lock(data->main->error.to);
 
           fl_print_format("%r%[%QThe parameter '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
           fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_normal_s, fss_embedded_list_read_long_depth_s, data->main->error.notable);
@@ -228,7 +228,7 @@ extern "C" {
           fl_print_format("%[%ul%]", data->main->error.to, data->main->error.notable, depths->array[j].depth, data->main->error.notable);
           fl_print_format("%['.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-          f_file_stream_unlock(data->main->error);
+          f_file_stream_unlock(data->main->error.to);
 
           return F_status_set_error(F_parameter);
         }

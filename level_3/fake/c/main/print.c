@@ -5,8 +5,85 @@
 extern "C" {
 #endif
 
+#ifndef _di_fake_print_error_
+  f_status_t fake_print_error(fake_setting_t * const setting, const f_status_t status, const fl_print_t print, const f_string_t function) {
+
+    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
+
+    fake_print_line_first_locked(setting, print);
+    fll_error_print(print, F_status_set_fine(status), function, F_true);
+
+    return F_none;
+  }
+#endif // _di_fake_print_error_
+
+#ifndef _di_fake_print_error_failure_operation_
+  f_status_t fake_print_error_failure_operation(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t operation) {
+
+    if (!setting || print.verbosity < f_console_verbosity_error_e) return F_output_not;
+
+    f_file_stream_lock(print.to);
+
+    fake_print_line_first_unlocked(setting, print);
+
+    fl_print_format("%[%QThe operation '%]", print.to, print.context, print.prefix, print.context);
+    fl_print_format("%[%Q%]", print.to, print.notable, operation, print.notable);
+    fl_print_format("%[' failed.%]%r", print.to, print.context, print.context, f_string_eol_s);
+
+    f_file_stream_unlock(print.to);
+
+    return F_none;
+  }
+#endif // _di_fake_print_error_failure_operation_
+
+#ifndef _di_fake_print_error_failure_script_
+  f_status_t fake_print_error_failure_script(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t script) {
+
+    if (!setting || print.verbosity < f_console_verbosity_error_e) return F_output_not;
+
+    f_file_stream_lock(print.to);
+
+    fake_print_line_first_unlocked(setting, print);
+
+    fl_print_format("%[%QFailed to execute script '%]", print.to, print.context, print.prefix, print.context);
+    fl_print_format("%[%Q%]", print.to, print.notable, script, print.notable);
+    fl_print_format("%['.%]%r", print.to, print.context, print.context, f_string_eol_s);
+
+    f_file_stream_unlock(print.to);
+
+    return F_none;
+  }
+#endif // _di_fake_print_error_failure_script_
+
+#ifndef _di_fake_print_error_parameter_operation_not_with_
+  f_status_t fake_print_error_parameter_operation_not_with(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t operation_1, const f_string_static_t operation_2) {
+
+    if (!setting || print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+
+    if (!F_status_is_error(setting->status)) {
+      if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
+    }
+
+    f_file_stream_lock(print.to);
+
+    fake_print_line_first_unlocked(setting, print);
+
+    fl_print_format("%[%QThe operation '%]", print.to, print.context, print.prefix, print.context);
+    fl_print_format("%[%r%]", print.to, print.notable, operation_1, print.notable);
+    fl_print_format("%[' cannot be specified with the operation '%]", print.to, print.context, print.context);
+    fl_print_format("%[%r%]", print.to, print.notable, operation_2, print.notable);
+    fl_print_format("%['.%]%r", print.to, print.context, print.context, f_string_eol_s);
+
+    f_file_stream_unlock(print.to);
+
+    return F_none;
+  }
+#endif // _di_fake_print_error_parameter_operation_not_with_
+
 #ifndef _di_fake_print_help_
   f_status_t fake_print_help(fake_setting_t * const setting, const fl_print_t print) {
+
+    if (!setting) return F_output_not;
 
     f_file_stream_lock(print.to);
 
@@ -70,11 +147,11 @@ extern "C" {
     fl_print_format("  When piping data to this program, the piped data is treated as if it were prepended to the %[%r%]", print.to, print.set->notable, fake_make_parameter_variable_fakefile_s, print.set->notable);
     fl_print_format(" or the %[%r%], depending on the operation.%r", print.to, print.set->notable, fake_make_parameter_variable_settings_s, print.set->notable, f_string_eol_s);
 
-    fl_print_format("  A section name from the fakefile that does not conflict with an operation name may be specified when performing the %[%r%] operation.%r%r", file.stream, context.set.notable, fake_other_operation_make_s, context.set.notable, f_string_eol_s, f_string_eol_s);
+    fl_print_format("  A section name from the fakefile that does not conflict with an operation name may be specified when performing the %[%r%] operation.%r", print.to, print.set->notable, fake_other_operation_make_s, print.set->notable, f_string_eol_s);
 
     f_print_dynamic_raw(setting->line_last, print.to);
 
-    f_file_stream_flush(output);
+    f_file_stream_flush(print.to);
     f_file_stream_unlock(print.to);
 
     return F_none;
@@ -84,10 +161,10 @@ extern "C" {
 #ifndef _di_fake_print_line_first_locked_
   f_status_t fake_print_line_first_locked(fake_setting_t * const setting, const fl_print_t print) {
 
-    if (!setting || print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+    if (!setting || print.verbosity < f_console_verbosity_error_e) return F_output_not;
 
-    if (!F_status_is_error(setting->status)) {
-      if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
+    if (F_status_is_error_not(setting->status)) {
+      if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
     }
 
     f_print_dynamic_raw(setting->line_first, print.to);
@@ -99,10 +176,10 @@ extern "C" {
 #ifndef _di_fake_print_line_first_unlocked_
   f_status_t fake_print_line_first_unlocked(fake_setting_t * const setting, const fl_print_t print) {
 
-    if (!setting || print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+    if (!setting || print.verbosity < f_console_verbosity_error_e) return F_output_not;
 
-    if (!F_status_is_error(setting->status)) {
-      if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
+    if (F_status_is_error_not(setting->status)) {
+      if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
     }
 
     fll_print_dynamic_raw(setting->line_first, print.to);
@@ -114,10 +191,10 @@ extern "C" {
 #ifndef _di_fake_print_line_last_locked_
   f_status_t fake_print_line_last_locked(fake_setting_t * const setting, const fl_print_t print) {
 
-    if (!setting || print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+    if (!setting || print.verbosity < f_console_verbosity_error_e) return F_output_not;
 
-    if (!F_status_is_error(setting->status)) {
-      if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
+    if (F_status_is_error_not(setting->status)) {
+      if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
     }
 
     fll_print_dynamic_raw(setting->line_last, print.to);
@@ -129,10 +206,10 @@ extern "C" {
 #ifndef _di_fake_print_line_last_unlocked_
   f_status_t fake_print_line_last_unlocked(fake_setting_t * const setting, const fl_print_t print) {
 
-    if (!setting || print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+    if (!setting || print.verbosity < f_console_verbosity_error_e) return F_output_not;
 
-    if (!F_status_is_error(setting->status)) {
-      if (print.verbosity == f_console_verbosity_error_e) return F_output_not;
+    if (F_status_is_error_not(setting->status)) {
+      if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
     }
 
     f_print_dynamic_raw(setting->line_last, print.to);
@@ -140,6 +217,25 @@ extern "C" {
     return F_none;
   }
 #endif // _di_fake_print_line_last_unlocked_
+
+#ifndef _di_fake_print_operation_all_complete_
+  f_status_t fake_print_operation_all_complete(fake_setting_t * const setting, const fl_print_t print) {
+
+    if (!setting || print.verbosity < f_console_verbosity_normal_e) return F_output_not;
+    if (F_status_is_error(setting->status)) return F_output_not;
+
+    f_file_stream_lock(print.to);
+
+    fake_print_line_first_unlocked(setting, print);
+
+    fl_print_format("All operations complete.%r", print.to, f_string_eol_s, f_string_eol_s);
+
+    f_file_stream_flush(print.to);
+    f_file_stream_unlock(print.to);
+
+    return F_none;
+  }
+#endif // _di_fake_print_operation_all_complete_
 
 #ifdef __cplusplus
 } // extern "C"

@@ -30,13 +30,13 @@ extern "C" {
     }
 
     if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
-      f_file_stream_lock(data_make->output.to);
+      f_file_stream_lock(data_make->message.to);
 
-      fl_print_format("%rBreaking as '", data_make->main->output.to, f_string_eol_s);
-      fl_print_format("%[%Q%]", data_make->main->output.to, data_make->main->context.set.notable, data_make->cache_arguments.used ? data_make->cache_arguments.array[0] : fake_make_operation_argument_success_s, data_make->main->context.set.notable);
-      fl_print_format("'.%r", data_make->main->output.to, f_string_eol_s);
+      fl_print_format("%rBreaking as '", data_make->main->message.to, f_string_eol_s);
+      fl_print_format("%[%Q%]", data_make->main->message.to, data_make->main->context.set.notable, data_make->cache_arguments.used ? data_make->cache_arguments.array[0] : fake_make_operation_argument_success_s, data_make->main->context.set.notable);
+      fl_print_format("'.%r", data_make->main->message.to, f_string_eol_s);
 
-      f_file_stream_unlock(data_make->output.to);
+      f_file_stream_unlock(data_make->message.to);
     }
 
     return status;
@@ -216,7 +216,7 @@ extern "C" {
 
     if (clone) {
       if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
-        recurse.output = data_make->main->output.to;
+        recurse.output = data_make->main->message.to;
         recurse.verbose = fake_verbose_print_clone;
       }
 
@@ -226,7 +226,7 @@ extern "C" {
       macro_f_mode_t_set_default_umask(mode, data_make->main->umask);
 
       if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
-        recurse.output = data_make->main->output.to;
+        recurse.output = data_make->main->message.to;
         recurse.verbose = fake_verbose_print_copy;
       }
     }
@@ -327,12 +327,12 @@ extern "C" {
         }
 
         if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
-          f_file_stream_lock(data_make->output.to);
+          f_file_stream_lock(data_make->message.to);
 
-          fl_print_format("%r%s '%[%Q%]' to '", data_make->main->output.to, f_string_eol_s, clone ? "Cloned" : "Copied", data_make->main->context.set.notable, data_make->cache_arguments.array[i], data_make->main->context.set.notable);
-          fl_print_format("%[%Q%]'.%r", data_make->main->output.to, data_make->main->context.set.notable, destination, data_make->main->context.set.notable, f_string_eol_s);
+          fl_print_format("%r%s '%[%Q%]' to '", data_make->main->message.to, f_string_eol_s, clone ? "Cloned" : "Copied", data_make->main->context.set.notable, data_make->cache_arguments.array[i], data_make->main->context.set.notable);
+          fl_print_format("%[%Q%]'.%r", data_make->main->message.to, data_make->main->context.set.notable, destination, data_make->main->context.set.notable, f_string_eol_s);
 
-          f_file_stream_unlock(data_make->output.to);
+          f_file_stream_unlock(data_make->message.to);
         }
       }
       else if (F_status_is_error(status_file)) {
@@ -362,7 +362,7 @@ extern "C" {
       fll_error_print(data_make->error, F_status_set_fine(status), "f_environment_set", F_true);
     }
     else if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
-      fll_print_format("%rDefined environment variable '%[%Q%]'.%r", data_make->main->output.to, f_string_eol_s, data_make->main->context.set.notable, data_make->cache_arguments.array[0], data_make->main->context.set.notable, f_string_eol_s);
+      fll_print_format("%rDefined environment variable '%[%Q%]'.%r", data_make->main->message.to, f_string_eol_s, data_make->main->context.set.notable, data_make->cache_arguments.array[0], data_make->main->context.set.notable, f_string_eol_s);
     }
 
     return status;
@@ -413,7 +413,7 @@ extern "C" {
 
         if (F_status_set_fine(status) == F_file_found_not) {
           if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
-            fll_print_format("%rThe directory '%[%Q%]' does not exist.%r", data_make->main->output.to, f_string_eol_s, data_make->main->context.set.notable, data_make->cache_arguments.array[i], data_make->main->context.set.notable, f_string_eol_s);
+            fll_print_format("%rThe directory '%[%Q%]' does not exist.%r", data_make->main->message.to, f_string_eol_s, data_make->main->context.set.notable, data_make->cache_arguments.array[i], data_make->main->context.set.notable, f_string_eol_s);
           }
 
           status = F_none;
@@ -426,7 +426,7 @@ extern "C" {
         }
 
         if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
-          fll_print_format("%rRemoved '%[%Q%]'.%r", data_make->main->output.to, f_string_eol_s, data_make->main->context.set.notable, data_make->cache_arguments.array[i], data_make->main->context.set.notable, f_string_eol_s);
+          fll_print_format("%rRemoved '%[%Q%]'.%r", data_make->main->message.to, f_string_eol_s, data_make->main->context.set.notable, data_make->cache_arguments.array[i], data_make->main->context.set.notable, f_string_eol_s);
         }
       }
       else {
@@ -434,7 +434,7 @@ extern "C" {
 
         if (F_status_set_fine(status) == F_file_found_not) {
           if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
-            fll_print_format("%rThe file '%[%Q%]' does not exist.%r", data_make->main->output.to, f_string_eol_s, data_make->main->context.set.notable, data_make->cache_arguments.array[i], data_make->main->context.set.notable, f_string_eol_s);
+            fll_print_format("%rThe file '%[%Q%]' does not exist.%r", data_make->main->message.to, f_string_eol_s, data_make->main->context.set.notable, data_make->cache_arguments.array[i], data_make->main->context.set.notable, f_string_eol_s);
           }
 
           status = F_none;
@@ -447,7 +447,7 @@ extern "C" {
         }
 
         if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
-          fll_print_format("%rRemoved '%[%Q%]'.%r", data_make->main->output.to, f_string_eol_s, data_make->main->context.set.notable, data_make->cache_arguments.array[i], data_make->main->context.set.notable, f_string_eol_s);
+          fll_print_format("%rRemoved '%[%Q%]'.%r", data_make->main->message.to, f_string_eol_s, data_make->main->context.set.notable, data_make->cache_arguments.array[i], data_make->main->context.set.notable, f_string_eol_s);
         }
       }
     } // for
@@ -482,7 +482,7 @@ extern "C" {
     }
 
     if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
-      fll_print_format("%rExiting as '%[%Q%]'.%r", data_make->main->output.to, f_string_eol_s, data_make->main->context.set.notable, data_make->cache_arguments.used ? data_make->cache_arguments.array[0] : fake_make_operation_argument_success_s, data_make->main->context.set.notable, f_string_eol_s);
+      fll_print_format("%rExiting as '%[%Q%]'.%r", data_make->main->message.to, f_string_eol_s, data_make->main->context.set.notable, data_make->cache_arguments.used ? data_make->cache_arguments.array[0] : fake_make_operation_argument_success_s, data_make->main->context.set.notable, f_string_eol_s);
     }
 
     return status;
@@ -519,23 +519,23 @@ extern "C" {
     }
 
     if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
-      f_file_stream_lock(data_make->output.to);
+      f_file_stream_lock(data_make->message.to);
 
-      f_print_terminated("Set failure state to '", data_make->main->output.to);
+      f_print_terminated("Set failure state to '", data_make->main->message.to);
 
       if (data_make->setting_make.fail == fake_make_operation_fail_type_exit_e) {
-        fl_print_format("%[%r%]", data_make->main->output.to, data_make->main->context.set.notable, fake_make_operation_argument_exit_s, data_make->main->context.set.notable);
+        fl_print_format("%[%r%]", data_make->main->message.to, data_make->main->context.set.notable, fake_make_operation_argument_exit_s, data_make->main->context.set.notable);
       }
       else if (data_make->setting_make.fail == fake_make_operation_fail_type_warn_e) {
-        fl_print_format("%[%r%]", data_make->main->output.to, data_make->main->context.set.notable, fake_make_operation_argument_warn_s, data_make->main->context.set.notable);
+        fl_print_format("%[%r%]", data_make->main->message.to, data_make->main->context.set.notable, fake_make_operation_argument_warn_s, data_make->main->context.set.notable);
       }
       else {
-        fl_print_format("%[%r%]", data_make->main->output.to, data_make->main->context.set.notable, fake_make_operation_argument_ignore_s, data_make->main->context.set.notable);
+        fl_print_format("%[%r%]", data_make->main->message.to, data_make->main->context.set.notable, fake_make_operation_argument_ignore_s, data_make->main->context.set.notable);
       }
 
-      fl_print_format("'.%r", data_make->main->output.to, f_string_eol_s);
+      fl_print_format("'.%r", data_make->main->message.to, f_string_eol_s);
 
-      f_file_stream_unlock(data_make->output.to);
+      f_file_stream_unlock(data_make->message.to);
     }
   }
 #endif // _di_fake_make_operate_process_type_fail_
@@ -581,12 +581,12 @@ extern "C" {
       }
 
       if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
-        f_file_stream_lock(data_make->output.to);
+        f_file_stream_lock(data_make->message.to);
 
-        fl_print_format("%r group of '%[%r%]", data_make->main->output.to, all ? "Recursively changed" : "Changed", data_make->main->context.set.notable, data_make->cache_arguments.array[i], data_make->main->context.set.notable);
-        fl_print_format("' to %[%ul%].%r", data_make->main->output.to, data_make->main->context.set.notable, id, data_make->main->context.set.notable, f_string_eol_s);
+        fl_print_format("%r group of '%[%r%]", data_make->main->message.to, all ? "Recursively changed" : "Changed", data_make->main->context.set.notable, data_make->cache_arguments.array[i], data_make->main->context.set.notable);
+        fl_print_format("' to %[%ul%].%r", data_make->main->message.to, data_make->main->context.set.notable, id, data_make->main->context.set.notable, f_string_eol_s);
 
-        f_file_stream_unlock(data_make->output.to);
+        f_file_stream_unlock(data_make->message.to);
       }
     } // for
 
@@ -1363,12 +1363,12 @@ extern "C" {
     }
 
     if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
-      f_file_stream_lock(data_make->output.to);
+      f_file_stream_lock(data_make->message.to);
 
-      fl_print_format("Created symbolic link from '%[%Q%]", data_make->main->output.to, data_make->main->context.set.notable, data_make->cache_arguments.array[data_make->cache_arguments.used - 1], data_make->main->context.set.notable);
-      fl_print_format("' to %[%Q%].%r", data_make->main->output.to, data_make->main->context.set.notable, data_make->cache_arguments.array[0], data_make->main->context.set.notable, f_string_eol_s);
+      fl_print_format("Created symbolic link from '%[%Q%]", data_make->main->message.to, data_make->main->context.set.notable, data_make->cache_arguments.array[data_make->cache_arguments.used - 1], data_make->main->context.set.notable);
+      fl_print_format("' to %[%Q%].%r", data_make->main->message.to, data_make->main->context.set.notable, data_make->cache_arguments.array[0], data_make->main->context.set.notable, f_string_eol_s);
 
-      f_file_stream_unlock(data_make->output.to);
+      f_file_stream_unlock(data_make->message.to);
     }
 
     return F_none;
@@ -1426,7 +1426,7 @@ extern "C" {
       }
 
       if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
-        fll_print_format("Changed mode of '%Q' to %#@u.%r", data_make->main->output.to, data_make->cache_arguments.array[i], mode, f_string_eol_s);
+        fll_print_format("Changed mode of '%Q' to %#@u.%r", data_make->main->message.to, data_make->cache_arguments.array[i], mode, f_string_eol_s);
       }
     } // for
 
@@ -1446,7 +1446,7 @@ extern "C" {
     f_string_static_t destination = f_string_static_t_initialize;
 
     if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
-      recurse.output = data_make->main->output.to;
+      recurse.output = data_make->main->message.to;
       recurse.verbose = fake_verbose_print_move;
     }
 
@@ -1593,7 +1593,7 @@ extern "C" {
       }
 
       if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
-        fll_print_format("%s owner of '%Q' to %u.%r", data_make->main->output.to, all ? "Recursively changed" : "Changed", data_make->cache_arguments.array[i], id, f_string_eol_s);
+        fll_print_format("%s owner of '%Q' to %u.%r", data_make->main->message.to, all ? "Recursively changed" : "Changed", data_make->cache_arguments.array[i], id, f_string_eol_s);
       }
     } // for
 
@@ -1712,12 +1712,12 @@ extern "C" {
       // The created relative path is for verbosity purposes and as such its failure to be processed should not be treated as a failure of the function.
       if (F_status_is_error(status)) {
         fll_error_print(data_make->error, F_status_set_fine(status), "fake_make_path_relative", F_true);
-        fll_print_format("Changed to project path '%[%Q%]'.%r", data_make->main->output.to, data_make->main->context.set.notable, argument, data_make->main->context.set.notable, f_string_eol_s);
+        fll_print_format("Changed to project path '%[%Q%]'.%r", data_make->main->message.to, data_make->main->context.set.notable, argument, data_make->main->context.set.notable, f_string_eol_s);
 
         return F_status_set_error(F_failure);
       }
 
-      fll_print_format("Changed to project path '%[%Q%]'.%r", data_make->main->output.to, data_make->main->context.set.notable, data_make->cache_path, data_make->main->context.set.notable, f_string_eol_s);
+      fll_print_format("Changed to project path '%[%Q%]'.%r", data_make->main->message.to, data_make->main->context.set.notable, data_make->cache_path, data_make->main->context.set.notable, f_string_eol_s);
     }
 
     return F_none;
@@ -1773,12 +1773,12 @@ extern "C" {
       } // for
     }
 
-    f_file_stream_lock(data_make->output.to);
+    f_file_stream_lock(data_make->message.to);
 
-    fll_print_dynamic_raw(data_make->cache_1, data_make->main->output.to);
-    fll_print_dynamic_raw(f_string_eol_s, data_make->main->output.to);
+    fll_print_dynamic_raw(data_make->cache_1, data_make->main->message.to);
+    fll_print_dynamic_raw(f_string_eol_s, data_make->main->message.to);
 
-    f_file_stream_unlock(data_make->output.to);
+    f_file_stream_unlock(data_make->message.to);
 
     return F_none;
   }
@@ -1846,10 +1846,10 @@ extern "C" {
         // The created relative path is for verbosity purposes and as such its failure to be processed should not be treated as a failure of the function.
         if (F_status_is_error(status)) {
           fll_error_print(data_make->error, F_status_set_fine(status), "fake_make_path_relative", F_true);
-          fll_print_format("Changed to project path '%[%Q%]'.%r", data_make->main->output.to, data_make->main->context.set.notable, data_make->path.stack.array[data_make->path.stack.used], data_make->main->context.set.notable, f_string_eol_s);
+          fll_print_format("Changed to project path '%[%Q%]'.%r", data_make->main->message.to, data_make->main->context.set.notable, data_make->path.stack.array[data_make->path.stack.used], data_make->main->context.set.notable, f_string_eol_s);
         }
         else {
-          fll_print_format("Changed to project path '%[%Q%]'.%r", data_make->main->output.to, data_make->main->context.set.notable, data_make->cache_path, data_make->main->context.set.notable, f_string_eol_s);
+          fll_print_format("Changed to project path '%[%Q%]'.%r", data_make->main->message.to, data_make->main->context.set.notable, data_make->cache_path, data_make->main->context.set.notable, f_string_eol_s);
         }
       }
 
@@ -1874,7 +1874,7 @@ extern "C" {
     }
 
     if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
-      fll_print_format("Changed to project path ''.%r", data_make->main->output.to, f_string_eol_s);
+      fll_print_format("Changed to project path ''.%r", data_make->main->message.to, f_string_eol_s);
     }
 
     // Clear stack, except for the project root.
@@ -1928,7 +1928,7 @@ extern "C" {
       }
 
       if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
-        fll_print_format("Touched '%[%Q%]'.%r", data_make->main->output.to, data_make->main->context.set.notable, data_make->cache_arguments.array[i], data_make->main->context.set.notable, f_string_eol_s);
+        fll_print_format("Touched '%[%Q%]'.%r", data_make->main->message.to, data_make->main->context.set.notable, data_make->cache_arguments.array[i], data_make->main->context.set.notable, f_string_eol_s);
       }
     } // for
 

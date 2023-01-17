@@ -13,13 +13,23 @@ extern "C" {
 #endif
 
 /**
- * The program data.
+ * The program flags.
  *
  * fake_data_flag_*:
  *   - has_operation: Designate that an operation is explicitly passed.
+ */
+#ifndef _di_fake_data_flag_e_
+  enum {
+    fake_data_flag_operation_e = 0x1,
+  };
+#endif // _di_fake_data_flag_e_
+
+/**
+ * The program data.
  *
- * argv: The argument structure in the progam data parameters for simplifying syntax.
- * at:   The processed at parameter value.
+ * main:    The main program data.
+ * setting: The settings data.
+ * argv:    The argument structure in the progam data parameters for simplifying syntax.
  *
  * flag:      A set of flags, such as designating that no operations are provided.
  * operation: A code representing the currrent operation.
@@ -80,12 +90,9 @@ extern "C" {
  * mode:   The mode data.
  */
 #ifndef _di_fake_data_t_
-  enum {
-    fake_data_flag_has_operation_e = 0x1,
-  };
-
   typedef struct {
     fll_program_data_t *main;
+    fake_setting_t *setting;
     f_string_static_t *argv;
 
     uint8_t flag;
@@ -151,6 +158,7 @@ extern "C" {
 
   #define fake_data_t_initialize \
     { \
+      0, \
       0, \
       0, \
       0, \

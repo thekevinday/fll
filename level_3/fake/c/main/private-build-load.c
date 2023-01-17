@@ -44,7 +44,7 @@ extern "C" {
     if (environment->used + data_build->setting.environment.used > environment->size) {
       if (environment->used + data_build->setting.environment.used > f_environment_max_length_d) {
         if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
-          f_file_stream_lock(data->main->error);
+          f_file_stream_lock(data->main->error.to);
 
           fl_print_format("%r%[%QThe values for the setting '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
           fl_print_format("%[%r%]", data->main->error.to, data->main->error.notable, fake_build_setting_name_environment_s, data->main->error.notable);
@@ -52,7 +52,7 @@ extern "C" {
           fl_print_format("%[%r%]", data->main->error.to, data->main->error.notable, fake_build_setting_name_environment_s, data->main->error.notable);
           fl_print_format("%[' is too large.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-          f_file_stream_lock(data->main->error);
+          f_file_stream_unlock(data->main->error.to);
         }
 
         *status = F_status_set_error(F_array_too_large);
@@ -75,7 +75,7 @@ extern "C" {
     if (F_status_is_error(*status)) return;
 
     if (fll_program_standard_signal_received(data->main)) {
-      fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
+      fll_program_print_signal_received(data->main->warning, data->setting->line_first, data->main->signal_received);
 
       *status = F_status_set_error(F_interrupt);
 
@@ -99,7 +99,7 @@ extern "C" {
     if (build_arguments && build_arguments->used) {
       path_file.used = data->path_data_build.used + build_arguments->array[0].used;
     }
-    else if (!process_pipe || (data->flag & fake_data_flag_has_operation_e)) {
+    else if (!process_pipe || (data->flag & fake_data_flag_operation_e)) {
       path_file.used = data->file_data_build_settings.used;
     }
     else {
@@ -114,7 +114,7 @@ extern "C" {
       memcpy(path_file_string, data->path_data_build.string, sizeof(f_char_t) * data->path_data_build.used);
       memcpy(path_file_string + data->path_data_build.used, build_arguments->array[0].string, sizeof(f_char_t) * build_arguments->array[0].used);
     }
-    else if (!process_pipe || (data->flag & fake_data_flag_has_operation_e)) {
+    else if (!process_pipe || (data->flag & fake_data_flag_operation_e)) {
       memcpy(path_file_string, data->file_data_build_settings.string, sizeof(f_char_t) * data->file_data_build_settings.used);
     }
     else {
@@ -138,7 +138,7 @@ extern "C" {
       }
 
       if (F_status_is_error_not(*status)) {
-        if (build_arguments && build_arguments->used || !process_pipe || (data->flag & fake_data_flag_has_operation_e)) {
+        if (build_arguments && build_arguments->used || !process_pipe || (data->flag & fake_data_flag_operation_e)) {
           *status = fake_file_buffer(data, path_file, process_pipe ? F_false : F_true, &buffer);
         }
       }
@@ -200,7 +200,7 @@ extern "C" {
       for (uint8_t i = 0; i < 1; ++i) {
 
         if (!settings[i]->used) {
-          f_file_stream_lock(data->main->error);
+          f_file_stream_lock(data->main->error.to);
 
           fl_print_format("%r%[%QThe setting '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
           fl_print_format("%[%Q%]", data->main->error.to, data->main->error.notable, names[i], data->main->error.notable);
@@ -208,7 +208,7 @@ extern "C" {
           fl_print_format("%[%Q%]", data->main->error.to, data->main->error.notable, path_file, data->main->error.notable);
           fl_print_format("%['.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-          f_file_stream_unlock(data->main->error);
+          f_file_stream_unlock(data->main->error.to);
 
           failed = F_true;
         }
@@ -231,7 +231,7 @@ extern "C" {
     if (F_status_is_error(*status) && buffer.used) return;
 
     if (fll_program_standard_signal_received(data->main)) {
-      fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
+      fll_program_print_signal_received(data->main->warning, data->setting->line_first, data->main->signal_received);
 
       *status = F_status_set_error(F_interrupt);
 
@@ -596,7 +596,7 @@ extern "C" {
 
         if (found == F_false) {
           if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
-            f_file_stream_lock(data->main->error);
+            f_file_stream_lock(data->main->error.to);
 
             fl_print_format("%r%[%QThe specified mode '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
             fl_print_format("%[%Q%]", data->main->error.to, data->main->error.notable, modes->array[i], data->main->error.notable);
@@ -604,7 +604,7 @@ extern "C" {
             fl_print_format("%[%Q%]", data->main->error.to, data->main->error.notable, path_file, data->main->error.notable);
             fl_print_format("%['.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-            f_file_stream_unlock(data->main->error);
+            f_file_stream_unlock(data->main->error.to);
           }
 
           error_printed = F_true;
@@ -690,13 +690,13 @@ extern "C" {
     if (F_status_is_error(*status)) {
       if (*status == F_status_set_error(F_string_too_large)) {
         if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
-          f_file_stream_unlock(data->main->error);
+          f_file_stream_unlock(data->main->error.to);
 
           fl_print_format("%r%[%QA setting in the file '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
           fl_print_format("%[%Q%]", data->main->error.to, data->main->error.notable, path_file, data->main->error.notable);
           fl_print_format("%[' is too long.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-          f_file_stream_unlock(data->main->error);
+          f_file_stream_unlock(data->main->error.to);
         }
       }
       else if (!error_printed) {
@@ -1159,7 +1159,7 @@ extern "C" {
             *settings_single_bool[i] = F_true;
 
             if (data->main->warning.verbosity >= f_console_verbosity_verbose_e) {
-              f_file_stream_lock(data->main->warning);
+              f_file_stream_lock(data->main->warning.to);
 
               fl_print_format("%r%[%QThe setting '%]", data->main->warning.to, f_string_eol_s, data->main->warning.context, data->main->warning.prefix, data->main->warning.context);
               fl_print_format("%[%r%]", data->main->warning.to, data->main->warning.notable, settings_single_name[i], data->main->warning.notable);
@@ -1173,7 +1173,7 @@ extern "C" {
               fl_print_format("%[%r%]", data->main->warning.to, data->main->warning.notable, fake_common_setting_bool_yes_s, data->main->warning.notable);
               fl_print_format("%['.%]%r", data->main->warning.to, data->main->warning.context, data->main->warning.context, f_string_eol_s);
 
-              f_file_stream_unlock(data->main->warning);
+              f_file_stream_unlock(data->main->warning.to);
             }
           }
         }
@@ -1191,7 +1191,7 @@ extern "C" {
             *settings_single_language[i] = fake_build_language_type_c_e;
 
             if (data->main->warning.verbosity >= f_console_verbosity_verbose_e) {
-              f_file_stream_lock(data->main->warning);
+              f_file_stream_lock(data->main->warning.to);
 
               fl_print_format("%r%[%QThe setting '%]", data->main->warning.to, f_string_eol_s, data->main->warning.context, data->main->warning.prefix, data->main->warning.context);
               fl_print_format("%[%r%]", data->main->warning.to, data->main->warning.notable, settings_single_name[i], data->main->warning.notable);
@@ -1207,7 +1207,7 @@ extern "C" {
               fl_print_format("%[%r%]", data->main->warning.to, data->main->warning.notable, fake_build_language_c_s, data->main->warning.notable);
               fl_print_format("%['.%]%r", data->main->warning.to, data->main->warning.context, data->main->warning.context, f_string_eol_s);
 
-              f_file_stream_unlock(data->main->warning);
+              f_file_stream_unlock(data->main->warning.to);
             }
           }
         }
@@ -1228,7 +1228,7 @@ extern "C" {
             *settings_single_version[i] = settings_single_version_default[i];
 
             if (data->main->warning.verbosity >= f_console_verbosity_verbose_e) {
-              f_file_stream_lock(data->main->warning);
+              f_file_stream_lock(data->main->warning.to);
 
               fl_print_format("%r%[%QThe setting '%]", data->main->warning.to, f_string_eol_s, data->main->warning.context, data->main->warning.prefix, data->main->warning.context);
               fl_print_format("%[%r%]", data->main->warning.to, data->main->warning.notable, settings_single_name[i], data->main->warning.notable);
@@ -1246,7 +1246,7 @@ extern "C" {
               fl_print_format("%[%r%]", data->main->warning.to, data->main->warning.notable, settings_single_version_default_name[i], data->main->warning.notable);
               fl_print_format("%['.%]%r", data->main->warning.to, data->main->warning.context, data->main->warning.context, f_string_eol_s);
 
-              f_file_stream_unlock(data->main->warning);
+              f_file_stream_unlock(data->main->warning.to);
             }
           }
         }
@@ -1289,7 +1289,7 @@ extern "C" {
           setting->version_file = fake_build_version_type_micro_e;
 
           if (data->main->warning.verbosity >= f_console_verbosity_verbose_e) {
-            f_file_stream_lock(data->main->warning);
+            f_file_stream_lock(data->main->warning.to);
 
             fl_print_format("%r%[%QThe setting '%]", data->main->warning.to, f_string_eol_s, data->main->warning.context, data->main->warning.prefix, data->main->warning.context);
             fl_print_format("%[%r%]", data->main->warning.to, data->main->warning.notable, fake_build_setting_name_version_file_s, data->main->warning.notable);
@@ -1299,7 +1299,7 @@ extern "C" {
             fl_print_format("%[%r%]", data->main->warning.to, data->main->warning.notable, fake_build_version_micro_s, data->main->warning.notable);
             fl_print_format("%['.%]%r", data->main->warning.to, data->main->warning.context, data->main->warning.context, f_string_eol_s);
 
-            f_file_stream_unlock(data->main->warning);
+            f_file_stream_unlock(data->main->warning.to);
           }
         }
 
@@ -1307,7 +1307,7 @@ extern "C" {
           setting->version_target = fake_build_version_type_major_e;
 
           if (data->main->warning.verbosity >= f_console_verbosity_verbose_e) {
-            f_file_stream_lock(data->main->warning);
+            f_file_stream_lock(data->main->warning.to);
 
             fl_print_format("%r%[%QThe setting '%]", data->main->warning.to, f_string_eol_s, data->main->warning.context, data->main->warning.prefix, data->main->warning.context);
             fl_print_format("%[%r%]", data->main->warning.to, data->main->warning.notable, fake_build_setting_name_version_target_s, data->main->warning.notable);
@@ -1317,7 +1317,7 @@ extern "C" {
             fl_print_format("%[%r%]", data->main->warning.to, data->main->warning.notable, fake_build_version_major_s, data->main->warning.notable);
             fl_print_format("%['.%]%r", data->main->warning.to, data->main->warning.context, data->main->warning.context, f_string_eol_s);
 
-            f_file_stream_unlock(data->main->warning);
+            f_file_stream_unlock(data->main->warning.to);
           }
         }
       }
@@ -1393,7 +1393,7 @@ extern "C" {
         }
 
         if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
-          f_file_stream_lock(data->main->error);
+          f_file_stream_lock(data->main->error.to);
 
           fl_print_format("%r%[%QThe parameters '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
           fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_normal_s, fake_long_shared_disabled_s, data->main->error.notable);
@@ -1403,7 +1403,7 @@ extern "C" {
           fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_normal_s, setting->build_shared ? fake_long_shared_enabled_s : fake_long_shared_disabled_s, data->main->error.notable);
           fl_print_format("%['.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-          f_file_stream_unlock(data->main->error);
+          f_file_stream_unlock(data->main->error.to);
         }
       }
       else {
@@ -1428,7 +1428,7 @@ extern "C" {
         }
 
         if (data->main->error.verbosity >= f_console_verbosity_verbose_e) {
-          f_file_stream_lock(data->main->error);
+          f_file_stream_lock(data->main->error.to);
 
           fl_print_format("%r%[%QThe parameters '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
           fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_normal_s, fake_long_static_disabled_s, data->main->error.notable);
@@ -1438,7 +1438,7 @@ extern "C" {
           fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_normal_s, setting->build_static ? fake_long_static_enabled_s : fake_long_static_disabled_s, data->main->error.notable);
           fl_print_format("%['.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-          f_file_stream_unlock(data->main->error);
+          f_file_stream_unlock(data->main->error.to);
         }
       }
       else {
@@ -1454,7 +1454,7 @@ extern "C" {
     if (setting->build_language == fake_build_language_type_c_e || setting->build_language == fake_build_language_type_cpp_e) {
       if (setting->build_shared == F_false && setting->build_static == F_false) {
         if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
-          f_file_stream_lock(data->main->error);
+          f_file_stream_lock(data->main->error.to);
 
           fl_print_format("%r%[%QThe build settings '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
           fl_print_format("%[%r%]", data->main->error.to, data->main->error.notable, fake_build_setting_name_build_shared_s, data->main->error.notable);
@@ -1464,7 +1464,7 @@ extern "C" {
           fl_print_format("%[%r%]", data->main->error.to, data->main->error.notable, setting->build_language == fake_build_language_type_c_e ? fake_build_language_c_s : fake_build_language_cpp_s, data->main->error.notable);
           fl_print_format("%['.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
-          f_file_stream_unlock(data->main->error);
+          f_file_stream_unlock(data->main->error.to);
         }
 
         *status = F_status_set_error(F_failure);
@@ -1479,7 +1479,7 @@ extern "C" {
     if (F_status_is_error(*status)) return;
 
     if (fll_program_standard_signal_received(data->main)) {
-      fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
+      fll_program_print_signal_received(data->main->warning, data->setting->line_first, data->main->signal_received);
 
       *status = F_status_set_error(F_interrupt);
 

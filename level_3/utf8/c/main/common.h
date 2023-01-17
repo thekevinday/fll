@@ -1,7 +1,7 @@
 /**
  * FLL - Level 3
  *
- * Project: UTF-8
+ * Project: UTF8
  * API Version: 0.7
  * Licenses: lgpl-2.1-or-later
  *
@@ -275,7 +275,7 @@ extern "C" {
 
   #define utf8_console_parameter_t_initialize \
     { \
-      macro_f_console_parameter_t_initialize4(f_console_standard_short_help_s,          f_console_standard_long_help_s,          0, f_console_flag_normal_e, 0), \
+      macro_f_console_parameter_t_initialize4(f_console_standard_short_help_s,          f_console_standard_long_help_s,          0, f_console_flag_normal_e,  0), \
       macro_f_console_parameter_t_initialize4(f_console_standard_short_light_s,         f_console_standard_long_light_s,         0, f_console_flag_inverse_e, 0), \
       macro_f_console_parameter_t_initialize4(f_console_standard_short_dark_s,          f_console_standard_long_dark_s,          0, f_console_flag_inverse_e, 0), \
       macro_f_console_parameter_t_initialize4(f_console_standard_short_no_color_s,      f_console_standard_long_no_color_s,      0, f_console_flag_inverse_e, 0), \

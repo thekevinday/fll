@@ -287,7 +287,7 @@ extern "C" {
     if (!program.used && !arguments.used) return F_data_not;
 
     if (fll_program_standard_signal_received(data_make->main)) {
-      fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
+      fll_program_print_signal_received(data_make->main->warning, data_make->setting->line_first, data_make->main->signal_received);
 
       return F_status_set_error(F_interrupt);
     }
@@ -323,32 +323,32 @@ extern "C" {
     }
 
     if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
-      f_file_stream_lock(data_make->output.to);
+      f_file_stream_lock(data_make->message.to);
 
       f_array_length_t i = 0;
 
       if (program.used) {
-        f_print_dynamic_safely(program, data_make->main->output.to);
+        f_print_dynamic_safely(program, data_make->main->message.to);
       }
       else {
         i = 1;
 
-        f_print_dynamic_safely(arguments.array[0], data_make->main->output.to);
+        f_print_dynamic_safely(arguments.array[0], data_make->main->message.to);
       }
 
       for (; i < arguments.used; ++i) {
 
         if (arguments.array[i].used) {
-          fll_print_format(" %Q", data_make->main->output.to, arguments.array[i]);
+          fll_print_format(" %Q", data_make->main->message.to, arguments.array[i]);
         }
       } // for
 
-      f_print_dynamic_raw(f_string_eol_s, data_make->main->output.to);
+      f_print_dynamic_raw(f_string_eol_s, data_make->main->message.to);
 
-      f_file_stream_unlock(data_make->output.to);
+      f_file_stream_unlock(data_make->message.to);
 
       // Flush to stdout before executing command.
-      f_file_stream_flush(data_make->main->output.to);
+      f_file_stream_flush(data_make->main->message.to);
     }
 
     int return_code = 0;
@@ -363,7 +363,7 @@ extern "C" {
     status = fll_execute_program(program, arguments, &parameter, 0, (void *) &return_code);
 
     if (fll_program_standard_signal_received(data_make->main)) {
-      fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
+      fll_program_print_signal_received(data_make->main->warning, data_make->setting->line_first, data_make->main->signal_received);
 
       return F_status_set_error(F_interrupt);
     }

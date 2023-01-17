@@ -7,7 +7,7 @@ extern "C" {
 #ifndef _di_fss_write_payload_print_error_payload_not_last_
   f_status_t fss_write_payload_print_error_payload_not_last(fss_write_setting_t * const setting, const fl_print_t print) {
 
-    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+    if (!setting || print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
 
     f_file_stream_lock(print.to);
 

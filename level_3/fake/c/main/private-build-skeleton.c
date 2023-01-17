@@ -51,8 +51,8 @@ extern "C" {
       &path_headers,
     };
 
-    if (data->main->output.verbosity != f_console_verbosity_quiet_e && data->main->output.verbosity != f_console_verbosity_error_e) {
-      fll_print_format("%r%[Creating base build directories.%]%r", data->main->output.to, f_string_eol_s, data->main->context.set.important, data->main->context.set.important, f_string_eol_s);
+    if (data->main->message.verbosity != f_console_verbosity_quiet_e && data->main->message.verbosity != f_console_verbosity_error_e) {
+      fll_print_format("%r%[Creating base build directories.%]%r", data->main->message.to, f_string_eol_s, data->main->context.set.important, data->main->context.set.important, f_string_eol_s);
     }
 
     bool created = F_false;
@@ -113,7 +113,7 @@ extern "C" {
       }
 
       if (created && data->main->error.verbosity >= f_console_verbosity_verbose_e) {
-        fll_print_format("Created directory '%Q'.%r", data->main->output.to, *directorys[i], f_string_eol_s);
+        fll_print_format("Created directory '%Q'.%r", data->main->message.to, *directorys[i], f_string_eol_s);
       }
     } // for
 

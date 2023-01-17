@@ -17,33 +17,33 @@ extern "C" {
   f_status_t fake_make_operate(fake_data_t * const data) {
 
     if (fll_program_standard_signal_received(data->main)) {
-      fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
+      fll_program_print_signal_received(data->main->warning, data->setting->line_first, data->main->signal_received);
 
       return F_status_set_error(F_interrupt);
     }
 
-    if (data->main->output.verbosity != f_console_verbosity_quiet_e && data->main->output.verbosity != f_console_verbosity_error_e) {
-      f_file_stream_lock(data->main->output);
+    if (data->main->message.verbosity != f_console_verbosity_quiet_e && data->main->message.verbosity != f_console_verbosity_error_e) {
+      f_file_stream_lock(data->main->message.to);
 
-      fl_print_format("%r%[Now making using '%]", data->main->output.to, f_string_eol_s, data->main->context.set.important, data->main->context.set.important);
-      fl_print_format("%[%Q%]", data->main->output.to, data->main->context.set.notable, data->fakefile, data->main->context.set.notable);
+      fl_print_format("%r%[Now making using '%]", data->main->message.to, f_string_eol_s, data->main->context.set.important, data->main->context.set.important);
+      fl_print_format("%[%Q%]", data->main->message.to, data->main->context.set.notable, data->fakefile, data->main->context.set.notable);
 
       if (data->mode.used) {
-        fl_print_format("%[' with modes '%]", data->main->output.to, data->main->context.set.important, data->main->context.set.important);
+        fl_print_format("%[' with modes '%]", data->main->message.to, data->main->context.set.important, data->main->context.set.important);
 
         for (f_array_length_t i = 0; i < data->mode.used; ) {
 
-          fl_print_format("%[%Q%]", data->main->output.to, data->main->context.set.notable, data->mode.array[i], data->main->context.set.notable);
+          fl_print_format("%[%Q%]", data->main->message.to, data->main->context.set.notable, data->mode.array[i], data->main->context.set.notable);
 
           if (++i < data->mode.used) {
-            fl_print_format("%[', '%]", data->main->output.to, data->main->context.set.important, data->main->context.set.important);
+            fl_print_format("%[', '%]", data->main->message.to, data->main->context.set.important, data->main->context.set.important);
           }
         } // for
       }
 
-      fl_print_format("%['.%]%r", data->main->output.to, data->main->context.set.important, data->main->context.set.important, f_string_eol_s);
+      fl_print_format("%['.%]%r", data->main->message.to, data->main->context.set.important, data->main->context.set.important, f_string_eol_s);
 
-      f_file_stream_unlock(data->main->output);
+      f_file_stream_unlock(data->main->message.to);
     }
 
     f_status_t status = F_none;
@@ -126,7 +126,7 @@ extern "C" {
       data_make.error.set = &data->main->context.set;
     }
 
-    data_make.error.verbosity = data->main->output.verbosity;
+    data_make.error.verbosity = data->main->message.verbosity;
 
     if (data->main->parameters.remaining.used) {
       f_array_length_t i = 0;
@@ -1250,14 +1250,14 @@ extern "C" {
 
     const f_fss_named_t *section = &data_make->fakefile.array[id_section];
 
-    if (data_make->main->output.verbosity != f_console_verbosity_quiet_e && data_make->main->output.verbosity != f_console_verbosity_error_e) {
-      f_file_stream_lock(data_make->output.to);
+    if (data_make->main->message.verbosity != f_console_verbosity_quiet_e && data_make->main->message.verbosity != f_console_verbosity_error_e) {
+      f_file_stream_lock(data_make->message.to);
 
-      fl_print_format("%r%[Processing Section '%]", data_make->main->output.to, f_string_eol_s, data_make->main->context.set.important, data_make->main->context.set.important);
-      fl_print_format("%[%/Q%]", data_make->main->output.to, data_make->main->context.set.notable, data_make->buffer, section->name, data_make->main->context.set.notable);
-      fl_print_format("%['.%]%r", data_make->main->output.to, data_make->main->context.set.important, data_make->main->context.set.important, f_string_eol_s);
+      fl_print_format("%r%[Processing Section '%]", data_make->main->message.to, f_string_eol_s, data_make->main->context.set.important, data_make->main->context.set.important);
+      fl_print_format("%[%/Q%]", data_make->main->message.to, data_make->main->context.set.notable, data_make->buffer, section->name, data_make->main->context.set.notable);
+      fl_print_format("%['.%]%r", data_make->main->message.to, data_make->main->context.set.important, data_make->main->context.set.important, f_string_eol_s);
 
-      f_file_stream_unlock(data_make->output.to);
+      f_file_stream_unlock(data_make->message.to);
     }
 
     if (!section->objects.used) {
@@ -1361,7 +1361,7 @@ extern "C" {
 
       if (!(i % fake_signal_check_short_d)) {
         if (fll_program_standard_signal_received(data_make->main)) {
-          fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
+          fll_program_print_signal_received(data_make->main->warning, data_make->setting->line_first, data_make->main->signal_received);
 
           *status = F_status_set_error(F_interrupt);
 

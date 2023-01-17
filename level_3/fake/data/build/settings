@@ -27,16 +27,16 @@ build_libraries-individual -lf_account -lf_capability -lf_color -lf_console -lf_
 build_libraries-level -lfll_2 -lfll_1 -lfll_0
 build_libraries-monolithic -lfll
 
-build_sources_library fake.c common.c print.c
-build_sources_library private-build.c private-build-library.c private-build-load.c private-build-object.c private-build-objects.c private-build-program.c private-build-skeleton.c
-build_sources_library private-clean.c private-common.c private-make.c private-print.c private-skeleton.c
-build_sources_library private-make-load_fakefile.c private-make-load_parameters.c
-build_sources_library private-make-operate.c private-make-operate_block.c private-make-operate_process.c private-make-operate_process_type.c private-make-operate_validate.c private-make-operate_validate_type.c
-build_sources_library private-fake.c private-fake-path_generate.c
+build_sources_library main/fake.c main/common.c main/common-print.c main/print.c
+build_sources_library main/private-build.c main/private-build-library.c main/private-build-load.c main/private-build-object.c main/private-build-objects.c main/private-build-program.c main/private-build-skeleton.c
+build_sources_library main/private-clean.c main/private-common.c main/private-make.c main/private-print.c main/private-skeleton.c
+build_sources_library main/private-make-load_fakefile.c main/private-make-load_parameters.c
+build_sources_library main/private-make-operate.c main/private-make-operate_block.c main/private-make-operate_process.c main/private-make-operate_process_type.c main/private-make-operate_validate.c main/private-make-operate_validate_type.c
+build_sources_library main/private-fake.c main/private-fake-path_generate.c
 
-build_sources_program main.c
+build_sources_program main/main.c
 
-build_sources_headers fake.h common.h print.h
+build_sources_headers main/fake.h main/common.h main/common-print.h main/print.h
 
 build_sources_documentation man
 

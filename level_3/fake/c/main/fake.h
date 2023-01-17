@@ -90,8 +90,9 @@
 #include <fll/level_2/program.h>
 
 // Featureless Make includes.
-#include <program/fake/common.h>
-#include <program/fake/print.h>
+#include <program/fake/main/common.h>
+#include <program/fake/main/common-print.h>
+#include <program/fake/main/print.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -110,19 +111,24 @@ extern "C" {
  *
  * @param main
  *   The main program data.
+ * @param setting
+ *   The main program settings.
+ *   Must be of type (fake_setting_t *).
+ *
+ *   This is used by the main thread and should not be modified within individual threads.
+ *
+ *   This alters setting.status:
+ *     F_none on success.
+ *     F_child if this is a child process returning.
+ *
+ *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ *     F_parameter (with error bit) if main is NULL or setting is NULL.
+ *
  * @param arguments
  *   The parameters passed to the process.
- *
- * @return
- *   F_none on success.
- *   F_child if this is a child process returning.
- *
- *   F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
- *
- *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_main_
-  extern f_status_t fake_main(fll_program_data_t * const main, fake_setting_t * const setting);
+  extern void fake_main(fll_program_data_t * const main, fake_setting_t * const setting);
 #endif // _di_fake_main_
 
 #ifdef __cplusplus
