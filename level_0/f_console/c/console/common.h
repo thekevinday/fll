@@ -360,15 +360,16 @@ extern "C" {
  * Provide the standard verbosity codes.
  *
  * Intended to be used for the basic/standard verbosity modes for all programs following this practice.
+ * The options are subjective in interpretation of the verbosity but are expected to be follow the general interpretation.
  *
  * These are expected to be in numeric order such that the smallest number is the least verbose and the highest number is the most verbose.
  *
  * f_console_verbosity_*:
- *   - quiet:   Verbosity is set to quiet.
- *   - error:   Verbosity is set to error.
- *   - normal:  Verbosity is set to normal.
- *   - verbose: Verbosity is set to verbose.
- *   - debug:   Verbosity is set to debug.
+ *   - quiet:   Verbosity is set to quiet; decrease verbosity, print less, in some use cases this could mean printing nothing.
+ *   - error:   Verbosity is set to error; similar to quiet, except that error messages are printed (this is less verbose than "normal").
+ *   - normal:  Verbosity is set to normal; use normal printing (don't use debug/quiet/verbose).
+ *   - verbose: Verbosity is set to verbose; increase verbosity, print more, in some use cases this could mean printing just about everything.
+ *   - debug:   Verbosity is set to debug; enable debugging, which will likely increase output verbosity.
  */
 #ifndef _di_f_console_verbosity_
   enum {
