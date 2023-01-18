@@ -2,23 +2,15 @@
 #
 # Builds the fss_write library and all programs.
 #
-# An optional "install" is provided as a convience and a sort of documentation.
-# This "install" only provides a very basic setup and it is strongly recommended to install manually or through some other means.
-#
 
 settings:
   fail exit
   modes individual level monolithic clang test
 
   environment PATH LD_LIBRARY_PATH
+  environment LANG LC_ALL LC_COLLATE LC_CTYPE LC_FASTMSG LC_MESSAGES LC_MONETARY LC_NUMERIC LC_TIME LOCPATH NLSPATH
 
 main:
-  if parameter mode
-    operate using_mode
-  else
-    operate using_default
-
-using_default:
   build settings
   build settings.main
   build settings.basic
@@ -28,22 +20,25 @@ using_default:
   build settings.embedded_list
   build settings.payload
 
-using_mode:
-  build settings parameter:'mode:value'
-  build settings.main parameter:'mode:value'
-  build settings.basic parameter:'mode:value'
-  build settings.basic_list parameter:'mode:value'
-  build settings.extended parameter:'mode:value'
-  build settings.extended_list parameter:'mode:value'
-  build settings.embedded_list parameter:'mode:value'
-  build settings.payload parameter:'mode:value'
-
 install:
-  shell ./install.sh parameter:'work'
-  shell ./install.sh parameter:'work' -s data/build/settings.main
-  shell ./install.sh parameter:'work' -s data/build/settings.basic
-  shell ./install.sh parameter:'work' -s data/build/settings.basic_list
-  shell ./install.sh parameter:'work' -s data/build/settings.extended
-  shell ./install.sh parameter:'work' -s data/build/settings.extended_list
-  shell ./install.sh parameter:'work' -s data/build/settings.embedded_list
-  shell ./install.sh parameter:'work' -s data/build/settings.payload
+  shell ./install.sh parameter:'work' parameter:'verbosity' parameter:'color'
+  shell ./install.sh parameter:'work' parameter:'verbosity' parameter:'color' -s data/build/settings.main
+  shell ./install.sh parameter:'work' parameter:'verbosity' parameter:'color' -s data/build/settings.basic
+  shell ./install.sh parameter:'work' parameter:'verbosity' parameter:'color' -s data/build/settings.basic_list
+  shell ./install.sh parameter:'work' parameter:'verbosity' parameter:'color' -s data/build/settings.extended
+  shell ./install.sh parameter:'work' parameter:'verbosity' parameter:'color' -s data/build/settings.extended_list
+  shell ./install.sh parameter:'work' parameter:'verbosity' parameter:'color' -s data/build/settings.embedded_list
+  shell ./install.sh parameter:'work' parameter:'verbosity' parameter:'color' -s data/build/settings.payload
+
+help:
+  print
+  print context:'title'Fakefile Options for FSS Write Software.context:'reset'
+
+  print
+  print The following operations are available\:
+  print "  - context:'notable'help:context:'reset'    Perform the help operation, printing this message."
+  print "  - context:'notable'install:context:'reset' A helper operation that simply calls the ./install.sh script with default settings."
+  print "  - context:'notable'main:context:'reset'    The default compilation using the build settings mode."
+
+  print
+  print The context:'notable'install context:'reset'operation supports the context:'notable'work,context:'reset' context:'notable'verbosity,context:'reset' and context:'notable'color context:'reset'parameters.

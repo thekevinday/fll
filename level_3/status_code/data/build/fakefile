@@ -5,24 +5,27 @@ settings:
   modes individual level monolithic clang test
 
   environment PATH LD_LIBRARY_PATH
+  environment LANG LC_ALL LC_COLLATE LC_CTYPE LC_FASTMSG LC_MESSAGES LC_MONETARY LC_NUMERIC LC_TIME LOCPATH NLSPATH
 
 main:
-  if parameter mode
-    operate using_mode
-  else
-    operate using_default
-
-using_default:
   build settings
   build settings.main
   build settings.fss
 
-using_mode:
-  build settings parameter:'mode:value'
-  build settings.main parameter:'mode:value'
-  build settings.fss parameter:'mode:value'
-
 install:
-  shell ./install.sh parameter:'work'
-  shell ./install.sh parameter:'work' -s data/build/settings.main
-  shell ./install.sh parameter:'work' -s data/build/settings.fss
+  shell ./install.sh parameter:'work' parameter:'verbosity' parameter:'color'
+  shell ./install.sh parameter:'work' parameter:'verbosity' parameter:'color' -s data/build/settings.main
+  shell ./install.sh parameter:'work' parameter:'verbosity' parameter:'color' -s data/build/settings.fss
+
+help:
+  print
+  print context:'title'Fakefile Options for Status Code Software.context:'reset'
+
+  print
+  print The following operations are available\:
+  print "  - context:'notable'help:context:'reset'    Perform the help operation, printing this message."
+  print "  - context:'notable'install:context:'reset' A helper operation that simply calls the ./install.sh script with default settings."
+  print "  - context:'notable'main:context:'reset'    The default compilation using the build settings mode."
+
+  print
+  print The context:'notable'install context:'reset'operation supports the context:'notable'work,context:'reset' context:'notable'verbosity,context:'reset' and context:'notable'color context:'reset'parameters.
