@@ -230,54 +230,54 @@ Fakefile Documentation:
       For all conditions that rely on numbers, only whole numbers are (currently) supported.
 
       conditions\:
-        - code:"== \"left\" \"right\""\:
+        - code:"== 'left' 'right'"\:
           Compare all parameters to be equal.
           Requires 2 or more after the code:"==".
           For example, code:"if == 'a' 'b' 'c' 'd'" would test: code:"'a' == 'b' && 'b' == 'c' && 'c' == 'd'".
           This performs only string-based comparisons.
 
-        - code:"> \"left string\" \"right string\""\:
+        - code:"> 'left string' 'right string'"\:
           Compare code:"left" to code:"right" for greater than.
           Requires 2 or more after the code:">".
           For example, code:"if > 0 1 2 3" would test: code:"0 > 1 && 1 > 2 && 2 > 3".
           This performs only number-based comparisons.
 
-        - code:"< \"left string\" \"right string\""\:
+        - code:"< 'left string' 'right string'"\:
           Compare code:"left" to code:"right" for less than.
           Requires 2 or more after the code:">".
           For example, code:"if < 0 1 2 3" would test: code:"0 < 1 && 1 < 2 && 2 < 3".
           This performs only number-based comparisons.
 
-        - code:">= \"left string\" \"right string\""\:
+        - code:">= 'left string' 'right string'"\:
           Compare code:"left" to code:"right" for greater than or equal to.
           Requires 2 or more after the code:">=".
           For example, code:"if >= 0 1 2 3" would test: code:"0 >= 1 && 1 >= 2 && 2 >= 3".
           This performs only number-based comparisons.
 
-        - code:"<= \"left string\" \"right string\""\:
+        - code:"<= 'left string' 'right string'"\:
           Compare code:"left" to code:"right" for less than or equal to.
           Requires 2 or more after the code:">=".
           For example, code:"if <= 0 1 2 3" would test: code:"0 <= 1 && 1 <= 2 && 2 <= 3".
           This performs only number-based comparisons.
 
-        - code:"<> \"left\" \"right\""\:
+        - code:"<> 'left' 'right'"\:
           Compare all parameters to be not equal.
           Requires 2 or more after the code:"==".
           For example, code:"if <> 'a' 'b' 'c'" would test: code:"'a' <> 'b' && 'b' <> 'c' && 'a' <> 'c'".
           This performs only string-based comparisons.
 
-        - code:"define \"some define name\""\:
+        - code:"define 'some define name'"\:
           Test if one or more names are defined as an environment variable.
           For example, code:"if define PWD SHELL" would test if both the code:"PWD" and the code:"SHELL" variables are defined via the environment variables.
 
-        - code:"exist \"file path\""\:
+        - code:"exist 'file path'"\:
           Test if file exists.
           For example, code:"if exist \"a.txt\" \"b.txt\"" would test if both the file code:"a.txt" and code:"b.txt" exist.
 
         - code:"failure"\:
           Test if the previous section operation failed.
 
-        - code:"group \"some mode\" \"some file\""\:
+        - code:"group 'some mode' 'some file'"\:
           For example, code:"if group friends a.txt b.txt" would test if both file code:"a.txt" and code:"b.txt" have a group named code:"we".
 
         - code:"is block character directory fifo link regular socket for \"file path\""\:
@@ -285,7 +285,7 @@ Fakefile Documentation:
           The given types must be followed by code:"for" to designate where the the file paths begin.
           For example, code:"if is regular directory for \"a.txt\" \"b.txt\"" would test if both the file code:"a.txt" and code:"b.txt" exist and are either of type code:"regular" or type code:"directory".
 
-        - code:"mode is/has \"some mode\" \"some file\""\:
+        - code:"mode is/has 'some mode' 'some file'"\:
           Test if one or more files has the exact mode (code:"is") or has at least the given modes (code:"has").
           For example, code:"if mode is u+r a.txt b.txt" would test if both file code:"a.txt" and code:"b.txt" only have owner set to read.
           For example, code:"if mode has u+r a.txt b.txt" would test if both file code:"a.txt" and code:"b.txt" has owner set to read, and all other modes can be anything.
@@ -307,11 +307,11 @@ Fakefile Documentation:
             - code:"if not parameter work"
             - code:"if not exist documentation.txt"
 
-        - code:"owner \"some mode\" \"some file\""\:
+        - code:"owner 'some mode' 'some file'"\:
           Test if one or more files has the given owner.
           For example, code:"if owner me a.txt b.txt" would test if both file code:"a.txt" and code:"b.txt" have an owner named code:"me".
 
-        - code:"parameter \"some parameter name\""\:
+        - code:"parameter 'some parameter name'"\:
           Test if one or more names are defined as a code:"parameter" variable.
           For example, code:"if parameter verbose silent" would test if both the code:"verbose" and the code:"silent" variables are defined via the code:"parameter" setting.
 
