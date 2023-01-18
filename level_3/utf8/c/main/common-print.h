@@ -47,6 +47,8 @@ extern "C" {
     utf8_f_fll_program_parameter_process_context_e,
     utf8_f_fll_program_parameter_process_verbosity_e,
     utf8_f_utf8_detect_codepoint_e,
+    utf8_f_utf8_process_file_bytesequence_e,
+    utf8_f_utf8_process_file_codepoint_e,
   }; // enum
 #endif // _di_utf8_f_e_
 

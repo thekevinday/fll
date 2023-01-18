@@ -7,9 +7,9 @@ extern "C" {
 #endif
 
 #ifndef _di_fake_print_error_build_operation_file_
-  bool fake_print_error_build_operation_file(fake_data_t * const data, const f_status_t status, const f_string_static_t function, const f_string_static_t operation, const f_string_static_t source, const f_string_static_t destination, const f_string_static_t how, const bool fallback) {
+  bool fake_print_error_build_operation_file(fake_data_t * const data, const f_status_t status, const f_string_t function, const f_string_static_t operation, const f_string_static_t source, const f_string_static_t destination, const f_string_static_t how, const bool fallback) {
 
-    if (f_status_set_fine(status) == F_file_found_not) {
+    if (F_status_set_fine(status) == F_file_found_not) {
       if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
         f_file_stream_lock(data->main->error.to);
 
@@ -25,12 +25,12 @@ extern "C" {
       return F_false;
     }
 
-    if (f_status_set_fine(status) == F_parameter) {
+    if (F_status_set_fine(status) == F_parameter) {
       if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
         f_file_stream_lock(data->main->error.to);
 
         fl_print_format("%r%[%QInvalid parameter when calling '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
-        fl_print_format("%[%S%]", data->main->error.to, data->main->error.notable, function, data->main->error.notable);
+        fl_print_format("%[%Q%]", data->main->error.to, data->main->error.notable, function, data->main->error.notable);
         fl_print_format("%[() to %Q '%]", data->main->error.to, data->main->error.context, operation, data->main->error.context);
 
         fake_print_error_build_operation_file_message(data, operation, source, destination, how);
@@ -43,7 +43,7 @@ extern "C" {
       return F_false;
     }
 
-    if (f_status_set_fine(status) == F_name) {
+    if (F_status_set_fine(status) == F_name) {
       if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
         f_file_stream_lock(data->main->error.to);
 
@@ -66,7 +66,7 @@ extern "C" {
       return F_false;
     }
 
-    if (f_status_set_fine(status) == F_memory_not) {
+    if (F_status_set_fine(status) == F_memory_not) {
       if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
         f_file_stream_lock(data->main->error.to);
 
@@ -82,7 +82,7 @@ extern "C" {
       return F_false;
     }
 
-    if (f_status_set_fine(status) == F_number_overflow) {
+    if (F_status_set_fine(status) == F_number_overflow) {
       if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
         f_file_stream_lock(data->main->error.to);
 
@@ -98,7 +98,7 @@ extern "C" {
       return F_false;
     }
 
-    if (f_status_set_fine(status) == F_directory) {
+    if (F_status_set_fine(status) == F_directory) {
       if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
         f_file_stream_lock(data->main->error.to);
 
@@ -114,7 +114,7 @@ extern "C" {
       return F_false;
     }
 
-    if (f_status_set_fine(status) == F_access_denied) {
+    if (F_status_set_fine(status) == F_access_denied) {
       if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
         f_file_stream_lock(data->main->error.to);
 
@@ -130,7 +130,7 @@ extern "C" {
       return F_false;
     }
 
-    if (f_status_set_fine(status) == F_loop) {
+    if (F_status_set_fine(status) == F_loop) {
       if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
         f_file_stream_lock(data->main->error.to);
 
@@ -146,7 +146,7 @@ extern "C" {
       return F_false;
     }
 
-    if (f_status_set_fine(status) == F_prohibited) {
+    if (F_status_set_fine(status) == F_prohibited) {
       if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
         f_file_stream_lock(data->main->error.to);
 
@@ -162,7 +162,7 @@ extern "C" {
       return F_false;
     }
 
-    if (f_status_set_fine(status) == F_directory_found_not) {
+    if (F_status_set_fine(status) == F_directory_found_not) {
       if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
         f_file_stream_lock(data->main->error.to);
 
@@ -178,7 +178,7 @@ extern "C" {
       return F_false;
     }
 
-    if (f_status_set_fine(status) == F_failure) {
+    if (F_status_set_fine(status) == F_failure) {
       if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
         f_file_stream_lock(data->main->error.to);
 
@@ -194,11 +194,11 @@ extern "C" {
       return F_false;
     }
 
-    if (fll_error_print(data->main->error, f_status_set_fine(status), function, F_false) == F_known_not && fallback && data->main->error.verbosity > f_console_verbosity_quiet_e) {
+    if (fll_error_print(data->main->error, F_status_set_fine(status), function, F_false) == F_known_not && fallback && data->main->error.verbosity > f_console_verbosity_quiet_e) {
       f_file_stream_lock(data->main->error.to);
 
       fl_print_format("%r%[UNKNOWN %Q(%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
-      fl_print_format("%[%ui%]", data->main->error.to, data->main->error.notable, f_status_set_fine(status), data->main->error.notable);
+      fl_print_format("%[%ui%]", data->main->error.to, data->main->error.notable, F_status_set_fine(status), data->main->error.notable);
       fl_print_format("%[) occurred while trying to %Q '%]", data->main->error.to, data->main->error.context, operation, data->main->error.context);
 
       fake_print_error_build_operation_file_message(data, operation, source, destination, how);
@@ -332,9 +332,9 @@ extern "C" {
   void fake_print_error_requires_more_arguments(fake_make_data_t * const data_make) {
 
     if (data_make->error.verbosity == f_console_verbosity_quiet_e) return;
-    if (!data_make->error.to) return;
+    if (!data_make->main->error.to.stream) return;
 
-    fll_print_format("%r%[%QRequires more arguments.%]%r", data_make->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context, f_string_eol_s);
+    fll_print_format("%r%[%QRequires more arguments.%]%r", data_make->main->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context, f_string_eol_s);
   }
 #endif // _di_fake_print_error_requires_more_arguments_
 
@@ -342,9 +342,9 @@ extern "C" {
   void fake_print_error_too_many_arguments(fake_make_data_t * const data_make) {
 
     if (data_make->error.verbosity == f_console_verbosity_quiet_e) return;
-    if (!data_make->error.to) return;
+    if (!data_make->main->error.to.stream) return;
 
-    fll_print_format("%r%[%QHas too many arguments.%]%r", data_make->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context, f_string_eol_s);
+    fll_print_format("%r%[%QHas too many arguments.%]%r", data_make->main->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context, f_string_eol_s);
   }
 #endif // _di_fake_print_error_too_many_arguments_
 
@@ -352,22 +352,22 @@ extern "C" {
   void fake_print_error_argument_empty(fake_make_data_t * const data_make, const f_array_length_t index) {
 
     if (data_make->error.verbosity == f_console_verbosity_quiet_e) return;
-    if (!data_make->error.to) return;
+    if (!data_make->main->error.to.stream) return;
 
-    f_file_stream_lock(data_make->error.to);
+    f_file_stream_lock(data_make->main->error.to);
 
-    fl_print_format("%r%[%QThe %]", data_make->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
-    fl_print_format("%[%un%]", data_make->error.to, data_make->error.notable, index, data_make->error.notable);
-    fl_print_format("%[ argument must not be an empty string.%]%r", data_make->error.to, data_make->error.context, data_make->error.context, f_string_eol_s);
+    fl_print_format("%r%[%QThe %]", data_make->main->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
+    fl_print_format("%[%un%]", data_make->main->error.to, data_make->error.notable, index, data_make->error.notable);
+    fl_print_format("%[ argument must not be an empty string.%]%r", data_make->main->error.to, data_make->error.context, data_make->error.context, f_string_eol_s);
 
-    f_file_stream_unlock(data_make->error.to);
+    f_file_stream_unlock(data_make->main->error.to);
   }
 #endif // _di_fake_print_error_argument_empty_
 
 #ifndef _di_fake_print_message_section_operation_failed_
   void fake_print_message_section_operation_failed(fake_data_t * const data, const fl_print_t print, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name) {
 
-    if (print.verbosity == f_console_verbosity_quiet_e || !print.to) return;
+    if (print.verbosity == f_console_verbosity_quiet_e || !print.to.stream) return;
 
     f_array_length_t line = 1;
     f_state_t state = f_state_t_initialize;
@@ -391,7 +391,7 @@ extern "C" {
 #ifndef _di_fake_print_message_section_operation_link_argument_unknown_
   void fake_print_message_section_operation_link_argument_unknown(fake_data_t * const data, const fl_print_t print, const f_string_static_t argument) {
 
-    if (print.verbosity == f_console_verbosity_quiet_e || !print.to) return;
+    if (print.verbosity == f_console_verbosity_quiet_e || !print.to.stream) return;
 
     f_file_stream_lock(print.to);
 
@@ -411,7 +411,7 @@ extern "C" {
 #ifndef _di_fake_print_message_section_operation_link_point_exists_
   void fake_print_message_section_operation_link_point_exists(fake_data_t * const data, const fl_print_t print, const f_string_static_t argument) {
 
-    if (print.verbosity == f_console_verbosity_quiet_e || !print.to) return;
+    if (print.verbosity == f_console_verbosity_quiet_e || !print.to.stream) return;
 
     f_file_stream_lock(print.to);
 
@@ -427,7 +427,7 @@ extern "C" {
 #ifndef _di_fake_print_message_section_operation_link_target_exists_not_
   void fake_print_message_section_operation_link_target_exists_not(fake_data_t * const data, const fl_print_t print, const f_string_static_t argument) {
 
-    if (print.verbosity == f_console_verbosity_quiet_e || !print.to) return;
+    if (print.verbosity == f_console_verbosity_quiet_e || !print.to.stream) return;
 
     f_file_stream_lock(print.to);
 
@@ -443,7 +443,7 @@ extern "C" {
 #ifndef _di_fake_print_message_section_operation_path_outside_
   void fake_print_message_section_operation_path_outside(fake_data_t * const data, const fl_print_t print, const f_status_t status, const char *function, const f_string_static_t path) {
 
-    if (data->main->error.verbosity == f_console_verbosity_quiet_e || !print.to) return;
+    if (data->main->error.verbosity == f_console_verbosity_quiet_e || !print.to.stream) return;
 
     f_file_stream_lock(data->main->error.to);
 
@@ -463,7 +463,7 @@ extern "C" {
 #ifndef _di_fake_print_message_section_operation_path_stack_max_
   void fake_print_message_section_operation_path_stack_max(fake_data_t * const data, fl_print_t print, const f_status_t status, const char *function, const f_string_static_t path) {
 
-    if (data->main->error.verbosity == f_console_verbosity_quiet_e || !print.to) return;
+    if (data->main->error.verbosity == f_console_verbosity_quiet_e || !print.to.stream) return;
 
     if (status == F_array_too_large) {
       f_file_stream_lock(data->main->error.to);
@@ -490,7 +490,7 @@ extern "C" {
 #ifndef _di_fake_print_message_section_operation_stack_max_
   void fake_print_message_section_operation_stack_max(fake_data_t * const data, fl_print_t print, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name, const f_array_length_t stack_max) {
 
-    if (data->main->error.verbosity == f_console_verbosity_quiet_e || !print.to) return;
+    if (data->main->error.verbosity == f_console_verbosity_quiet_e || !print.to.stream) return;
 
     f_array_length_t line = 1;
     f_state_t state = f_state_t_initialize;
@@ -516,7 +516,7 @@ extern "C" {
 #ifndef _di_fake_print_message_section_operation_unknown_
   void fake_print_message_section_operation_unknown(fake_data_t * const data, const fl_print_t print, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name) {
 
-    if (data->main->error.verbosity == f_console_verbosity_quiet_e || !print.to) return;
+    if (data->main->error.verbosity == f_console_verbosity_quiet_e || !print.to.stream) return;
 
     f_array_length_t line = 1;
     f_state_t state = f_state_t_initialize;
@@ -542,7 +542,7 @@ extern "C" {
 
     if (data->main->warning.verbosity == f_console_verbosity_quiet_e) return;
 
-    f_file_stream_lock(data->main->warning);
+    f_file_stream_lock(data->main->warning.to);
 
     fl_print_format("%r%[%QThe fakefile '%]", data->main->warning.to, f_string_eol_s, data->main->warning.context, data->main->warning.prefix, data->main->warning.context);
     fl_print_format("%[%Q%]", data->main->warning.to, data->main->warning.notable, path_file, data->main->warning.notable);
@@ -552,7 +552,7 @@ extern "C" {
     fl_print_format("%[%/Q%]", data->main->warning.to, data->main->warning.notable, buffer, range_object, data->main->warning.notable);
     fl_print_format("%['.%]%r", data->main->warning.to, data->main->warning.context, data->main->warning.context, f_string_eol_s);
 
-    f_file_stream_unlock(data->main->warning);
+    f_file_stream_unlock(data->main->warning.to);
   }
 #endif // _di_fake_print_warning_settings_content_empty_
 
@@ -561,7 +561,7 @@ extern "C" {
 
     if (data->main->warning.verbosity == f_console_verbosity_quiet_e) return;
 
-    f_file_stream_lock(data->main->warning);
+    f_file_stream_lock(data->main->warning.to);
 
     fl_print_format("%r%[%QThe fakefile '%]", data->main->warning.to, f_string_eol_s, data->main->warning.context, data->main->warning.prefix, data->main->warning.context);
     fl_print_format("%[%Q%]", data->main->warning.to, data->main->warning.notable, path_file, data->main->warning.notable);
@@ -573,7 +573,7 @@ extern "C" {
     fl_print_format("%[%/Q%]", data->main->warning.to, data->main->warning.notable, buffer, range_object, data->main->warning.notable);
     fl_print_format("%['.%]%r", data->main->warning.to, data->main->warning.context, data->main->warning.context, f_string_eol_s);
 
-    f_file_stream_unlock(data->main->warning);
+    f_file_stream_unlock(data->main->warning.to);
   }
 #endif // _di_fake_print_warning_settings_content_invalid_
 
@@ -582,7 +582,7 @@ extern "C" {
 
     if (data->main->warning.verbosity == f_console_verbosity_quiet_e) return;
 
-    f_file_stream_lock(data->main->warning);
+    f_file_stream_lock(data->main->warning.to);
 
     fl_print_format("%r%[%QThe fakefile '%]", data->main->warning.to, f_string_eol_s, data->main->warning.context, data->main->warning.prefix, data->main->warning.context);
     fl_print_format("%[%r%]", data->main->warning.to, data->main->warning.notable, name_object, data->main->warning.notable);
@@ -590,7 +590,7 @@ extern "C" {
     fl_print_format("%[%Q%]", data->main->warning.to, data->main->warning.notable, path_file, data->main->warning.notable);
     fl_print_format("%[' may only have a single property, only using the first.%]%r", data->main->warning.to, data->main->warning.context, data->main->warning.context, f_string_eol_s);
 
-    f_file_stream_unlock(data->main->warning);
+    f_file_stream_unlock(data->main->warning.to);
   }
 #endif // _di_fake_print_warning_settings_content_multiple_
 
@@ -599,7 +599,7 @@ extern "C" {
 
     if (data->main->warning.verbosity == f_console_verbosity_quiet_e) return;
 
-    f_file_stream_lock(data->main->warning);
+    f_file_stream_lock(data->main->warning.to);
 
     fl_print_format("%r%[%QThe object '%]", data->main->warning.to, f_string_eol_s, data->main->warning.context, data->main->warning.prefix, data->main->warning.context);
     fl_print_format("%[%r%]", data->main->warning.to, data->main->warning.notable, name_object, data->main->warning.notable);
@@ -607,7 +607,7 @@ extern "C" {
     fl_print_format("%[%Q%]", data->main->warning.to, data->main->warning.notable, path_file, data->main->warning.notable);
     fl_print_format("%[' may only be specified once, only using the first.%]%r", data->main->warning.to, data->main->warning.context, data->main->warning.context, f_string_eol_s);
 
-    f_file_stream_unlock(data->main->warning);
+    f_file_stream_unlock(data->main->warning.to);
   }
 #endif // _di_fake_print_warning_settings_object_multiple_
 

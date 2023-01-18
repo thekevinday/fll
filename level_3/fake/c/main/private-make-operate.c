@@ -86,7 +86,7 @@ extern "C" {
 
     fake_make_load_parameters(&data_make, &status);
 
-    fake_make_load_fakefile(&data_make, main->pipe & fll_program_data_pipe_input_e, &status);
+    fake_make_load_fakefile(&data_make, data->main->pipe & fll_program_data_pipe_input_e, &status);
 
     if (F_status_is_error(status)) {
       fake_make_data_delete(&data_make);
@@ -114,7 +114,7 @@ extern "C" {
       data_make.error.suffix = f_string_empty_s;
       data_make.error.context = data->main->context.set.warning;
       data_make.error.notable = data->main->context.set.notable;
-      data_make.error.to.stream = F_type_warning_d;
+      data_make.error.to.stream = F_type_output_d;
       data_make.error.to.id = F_type_descriptor_output_d;
       data_make.error.set = &data->main->context.set;
     }
@@ -167,9 +167,9 @@ extern "C" {
 
           flockfile(data->main->error.to.stream);
 
-          fl_print_format("%r%[%QThe argument '%]", data->main->error.to.stream, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
-          fl_print_format("%[%Q%]", data->main->error.to.stream, data->main->error.notable, data->main->parameters.arguments.array[index], data->main->error.notable);
-          fl_print_format("%[' is not a valid section name.%]%r", data->main->error.to.stream, data->main->error.context, data->main->error.context, f_string_eol_s);
+          fl_print_format("%r%[%QThe argument '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
+          fl_print_format("%[%Q%]", data->main->error.to, data->main->error.notable, data->main->parameters.arguments.array[index], data->main->error.notable);
+          fl_print_format("%[' is not a valid section name.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
           funlockfile(data->main->error.to.stream);
         }
@@ -201,11 +201,11 @@ extern "C" {
               if (F_status_is_error(status_path) && data->main->warning.verbosity >= f_console_verbosity_verbose_e) {
                 flockfile(data->main->warning.to.stream);
 
-                fl_print_format("%r%[%QFailed change back to orignal path '%]", data->main->warning.to.stream, f_string_eol_s, data->main->warning.context, data->main->warning.prefix, data->main->warning.context);
-                fl_print_format("%[%Q%]", data->main->warning.to.stream, data->main->warning.notable, data_make.path.stack.array[0], data->main->warning.notable);
-                fl_print_format("%[', status code =%] ", data->main->warning.to.stream, data->main->warning.context, data->main->warning.context);
-                fl_print_format("%[%ui%]", data->main->warning.to.stream, data->main->warning.notable, F_status_set_fine(status_path), data->main->warning.notable);
-                fl_print_format("%['.%]%r", data->main->warning.to.stream, data->main->warning.context, data->main->warning.context, f_string_eol_s);
+                fl_print_format("%r%[%QFailed change back to orignal path '%]", data->main->warning.to, f_string_eol_s, data->main->warning.context, data->main->warning.prefix, data->main->warning.context);
+                fl_print_format("%[%Q%]", data->main->warning.to, data->main->warning.notable, data_make.path.stack.array[0], data->main->warning.notable);
+                fl_print_format("%[', status code =%] ", data->main->warning.to, data->main->warning.context, data->main->warning.context);
+                fl_print_format("%[%ui%]", data->main->warning.to, data->main->warning.notable, F_status_set_fine(status_path), data->main->warning.notable);
+                fl_print_format("%['.%]%r", data->main->warning.to, data->main->warning.context, data->main->warning.context, f_string_eol_s);
 
                 funlockfile(data->main->warning.to.stream);
               }
@@ -233,7 +233,7 @@ extern "C" {
         const f_status_t status_path = f_path_change_at(data_make.path.top.id);
 
         if (F_status_is_error(status_path) && data->main->warning.verbosity >= f_console_verbosity_verbose_e) {
-          f_file_stream_lock(data->main->warning);
+          f_file_stream_lock(data->main->warning.to);
 
           fl_print_format("%r%[%QFailed change back to orignal path '%]", data->main->warning.to, f_string_eol_s, data->main->warning.context, data->main->warning.prefix, data->main->warning.context);
           fl_print_format("%[%Q%]", data->main->warning.to, data->main->warning.notable, data_make.path.stack.array[0], data->main->warning.notable);
@@ -241,7 +241,7 @@ extern "C" {
           fl_print_format("%[%ui%]", data->main->warning.to, data->main->warning.notable, F_status_set_fine(status_path), data->main->warning.notable);
           fl_print_format("%['.%]%r", data->main->warning.to, data->main->warning.context, data->main->warning.context, f_string_eol_s);
 
-          f_file_stream_unlock(data->main->warning);
+          f_file_stream_unlock(data->main->warning.to);
         }
       }
     }
@@ -1251,13 +1251,13 @@ extern "C" {
     const f_fss_named_t *section = &data_make->fakefile.array[id_section];
 
     if (data_make->main->message.verbosity != f_console_verbosity_quiet_e && data_make->main->message.verbosity != f_console_verbosity_error_e) {
-      f_file_stream_lock(data_make->message.to);
+      f_file_stream_lock(data_make->main->message.to);
 
       fl_print_format("%r%[Processing Section '%]", data_make->main->message.to, f_string_eol_s, data_make->main->context.set.important, data_make->main->context.set.important);
       fl_print_format("%[%/Q%]", data_make->main->message.to, data_make->main->context.set.notable, data_make->buffer, section->name, data_make->main->context.set.notable);
       fl_print_format("%['.%]%r", data_make->main->message.to, data_make->main->context.set.important, data_make->main->context.set.important, f_string_eol_s);
 
-      f_file_stream_unlock(data_make->message.to);
+      f_file_stream_unlock(data_make->main->message.to);
     }
 
     if (!section->objects.used) {
@@ -1361,7 +1361,7 @@ extern "C" {
 
       if (!(i % fake_signal_check_short_d)) {
         if (fll_program_standard_signal_received(data_make->main)) {
-          fll_program_print_signal_received(data_make->main->warning, data_make->setting->line_first, data_make->main->signal_received);
+          fll_program_print_signal_received(data_make->main->warning, data_make->data->setting->line_first, data_make->main->signal_received);
 
           *status = F_status_set_error(F_interrupt);
 
@@ -1432,8 +1432,8 @@ extern "C" {
           data_make->error.suffix = f_string_empty_s;
           data_make->error.context = data_make->main->context.set.error;
           data_make->error.notable = data_make->main->context.set.notable;
-          data_make->error.to = F_type_error_d;
-          data_make->error.to.id = F_type_descriptor_error_d;
+          data_make->main->error.to.stream = F_type_error_d;
+          data_make->main->error.to.id = F_type_descriptor_error_d;
           data_make->error.set = &data_make->main->context.set;
         }
 
@@ -1486,27 +1486,27 @@ extern "C" {
     if (F_status_set_error(*status) == F_interrupt) return 0;
 
     if (i == section->objects.used && F_status_is_error_not(*status) && (state_process.operation == fake_make_operation_type_and_e || state_process.operation == fake_make_operation_type_else_e || state_process.operation == fake_make_operation_type_if_e || state_process.operation == fake_make_operation_type_or_e)) {
-      if (data_make->data->main->error.verbosity > f_console_verbosity_quiet_e && data_make->error.to) {
-        f_file_stream_lock(data_make->error.to);
+      if (data_make->data->main->error.verbosity > f_console_verbosity_quiet_e && data_make->main->error.to.stream) {
+        f_file_stream_lock(data_make->main->error.to);
 
-        fl_print_format("%r%[%QIncomplete '%]", data_make->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
+        fl_print_format("%r%[%QIncomplete '%]", data_make->main->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
 
         if (state_process.operation == fake_make_operation_type_and_e) {
-          fl_print_format("%[%r%]", data_make->error.to, data_make->error.notable, fake_make_operation_and_s, data_make->error.notable);
+          fl_print_format("%[%r%]", data_make->main->error.to, data_make->error.notable, fake_make_operation_and_s, data_make->error.notable);
         }
         else if (state_process.operation == fake_make_operation_type_else_e) {
-          fl_print_format("%[%r%]", data_make->error.to, data_make->error.notable, fake_make_operation_else_s, data_make->error.notable);
+          fl_print_format("%[%r%]", data_make->main->error.to, data_make->error.notable, fake_make_operation_else_s, data_make->error.notable);
         }
         else if (state_process.operation == fake_make_operation_type_if_e) {
-          fl_print_format("%[%r%]", data_make->error.to, data_make->error.notable, fake_make_operation_if_s, data_make->error.notable);
+          fl_print_format("%[%r%]", data_make->main->error.to, data_make->error.notable, fake_make_operation_if_s, data_make->error.notable);
         }
         else {
-          fl_print_format("%[%r%]", data_make->error.to, data_make->error.notable, fake_make_operation_or_s, data_make->error.notable);
+          fl_print_format("%[%r%]", data_make->main->error.to, data_make->error.notable, fake_make_operation_or_s, data_make->error.notable);
         }
 
-        fl_print_format("%[' at end of the section.%]%r", data_make->error.to, data_make->error.context, data_make->error.context, f_string_eol_s);
+        fl_print_format("%[' at end of the section.%]%r", data_make->main->error.to, data_make->error.context, data_make->error.context, f_string_eol_s);
 
-        f_file_stream_unlock(data_make->error.to);
+        f_file_stream_unlock(data_make->main->error.to);
       }
 
       fake_print_message_section_operation_failed(data_make->data, data_make->error, data_make->buffer, section->name, section->objects.array[section->objects.used - 1]);

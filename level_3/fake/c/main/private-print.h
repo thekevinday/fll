@@ -45,7 +45,7 @@ extern "C" {
  * @see fake_print_error_build_operation_file_message();
  */
 #ifndef _di_fake_print_error_operation_file_
-  extern bool fake_print_error_build_operation_file(fake_data_t * const data, const f_status_t status, const char *function, const f_string_static_t operation, const f_string_static_t source, const f_string_static_t destination, const f_string_static_t how, const bool fallback) F_attribute_visibility_internal_d;
+  extern bool fake_print_error_build_operation_file(fake_data_t * const data, const f_status_t status, const f_string_t function, const f_string_static_t operation, const f_string_static_t source, const f_string_static_t destination, const f_string_static_t how, const bool fallback) F_attribute_visibility_internal_d;
 #endif // _di_fake_print_error_operation_file_
 
 /**

@@ -14,6 +14,8 @@ extern "C" {
     "fll_program_parameter_process_context",
     "fll_program_parameter_process_verbosity",
     "utf8_detect_codepoint",
+    "utf8_process_file_bytesequence",
+    "utf8_process_file_codepoint",
   };
 #endif // _di_utf8_f_a_
 

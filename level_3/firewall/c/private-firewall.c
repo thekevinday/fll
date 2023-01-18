@@ -290,13 +290,13 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
     // If the remaining rule does not match as firewall_rule_s, then it is an invalid rule.
     else if (fl_string_dynamic_compare_string(local->buffer.string + local->rule_objects.array[i].start, firewall_rule_s, length) == F_equal_to_not) {
       if (length) {
-        f_file_stream_lock(data->main->warning);
+        f_file_stream_lock(data->main->warning.to);
 
         fl_print_format("%r%[%QAt line %ul, the object '%]", data->main->warning.to, f_string_eol_s, data->main->warning.context, data->main->warning.prefix, i, data->main->warning.context, data->main->warning.notable);
         fl_print_format("%[%/Q%]", data->main->warning.to, data->main->warning.notable, local->buffer, local->rule_objects.array[i], data->main->warning.notable);
         fl_print_format("%[' is invalid.%]%r", data->main->warning.to, data->main->warning.context, data->main->warning.context, f_string_eol_s);
 
-        f_file_stream_unlock(data->main->warning);
+        f_file_stream_unlock(data->main->warning.to);
       }
       else {
         fll_print_format("%r%[%QAt line %ul, the object is missing.%]%r", data->main->warning.to, f_string_eol_s, data->main->warning.context, data->main->warning.prefix, i, data->main->warning.context, f_string_eol_s);
@@ -309,7 +309,7 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
       length = (local->rule_objects.array[i].stop - local->rule_objects.array[i].start) + 1;
 
       if (length) {
-        f_file_stream_lock(data->main->warning);
+        f_file_stream_lock(data->main->warning.to);
 
         fl_print_format("%r%[%QAt line %ul, the object '%]", data->main->warning.to, f_string_eol_s, data->main->warning.context, data->main->warning.prefix, i, data->main->warning.context);
         fl_print_format("%[%/Q%]", data->main->warning.to, data->main->warning.notable, local->buffer, local->rule_objects.array[i], data->main->warning.notable);
@@ -317,7 +317,7 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
         fl_print_format("%[%/Q%]", data->main->warning.to, data->main->warning.notable, local->buffer, local->rule_contents.array[i].array[0], data->main->warning.notable);
         fl_print_format("%['.%]%r", data->main->warning.to, data->main->warning.context, data->main->warning.context, f_string_eol_s);
 
-        f_file_stream_unlock(data->main->warning);
+        f_file_stream_unlock(data->main->warning.to);
       }
       else {
         fll_print_format("%r%[%QAt line %ul, the object has no content.%]%r", data->main->warning.to, f_string_eol_s, data->main->warning.context, data->main->warning.prefix, i, data->main->warning.context, f_string_eol_s);
@@ -515,13 +515,13 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
       else {
         length = (local->rule_objects.array[i].stop - local->rule_objects.array[i].start) + 1;
 
-        f_file_stream_lock(data->main->warning);
+        f_file_stream_lock(data->main->warning.to);
 
         fl_print_format("%r%[%QAt line %ul, the object '%]", data->main->warning.to, f_string_eol_s, data->main->warning.context, data->main->warning.prefix, i, data->main->warning.context);
         fl_print_format("%[%/Q%]", data->main->warning.to, data->main->warning.notable, local->buffer, local->rule_objects.array[i], data->main->warning.notable);
         fl_print_format("%]%[' has no content.%]%r", data->main->warning.to, data->main->warning.context, data->main->warning.context, f_string_eol_s);
 
-        f_file_stream_unlock(data->main->warning);
+        f_file_stream_unlock(data->main->warning.to);
 
         break;
       }

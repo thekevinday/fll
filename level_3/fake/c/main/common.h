@@ -498,10 +498,10 @@ extern "C" {
       macro_f_console_parameter_t_initialize6(fake_long_static_disabled_s,    0, f_console_flag_normal_e, 0), \
       macro_f_console_parameter_t_initialize6(fake_long_static_enabled_s,     0, f_console_flag_normal_e, 0), \
       \
-      macro_f_console_parameter_t_initialize7(fake_other_operation_build_s.string,    0, f_console_flag_simple_e, 0), \
-      macro_f_console_parameter_t_initialize7(fake_other_operation_clean_s.string,    0, f_console_flag_simple_e, 0), \
-      macro_f_console_parameter_t_initialize7(fake_other_operation_make_s.string,     0, f_console_flag_simple_e, 0), \
-      macro_f_console_parameter_t_initialize7(fake_other_operation_skeleton_s.string, 0, f_console_flag_simple_e, 0), \
+      macro_f_console_parameter_t_initialize7(fake_other_operation_build_s,    0, f_console_flag_simple_e, 0), \
+      macro_f_console_parameter_t_initialize7(fake_other_operation_clean_s,    0, f_console_flag_simple_e, 0), \
+      macro_f_console_parameter_t_initialize7(fake_other_operation_make_s,     0, f_console_flag_simple_e, 0), \
+      macro_f_console_parameter_t_initialize7(fake_other_operation_skeleton_s, 0, f_console_flag_simple_e, 0), \
     }
 
   #define fake_total_parameters_d 31
@@ -543,7 +543,7 @@ extern "C" {
  *
  * flag: Flags passed to the main function.
  *
- * state: The state data used when processing the FSS data.
+ * state:  The state data used when processing the FSS data.
  * status: The main status code, generally used by the load settings and main functions.
  *
  * line_first: A string expected to represent either "\n" or NULL to allow for easy handling of when to print first new line or not.
@@ -563,8 +563,8 @@ extern "C" {
   #define fake_setting_t_initialize \
     { \
       fake_main_flag_none_e, \
-      F_none, \
       f_state_t_initialize, \
+      F_none, \
       f_string_static_t_initialize, \
       f_string_static_t_initialize, \
     }

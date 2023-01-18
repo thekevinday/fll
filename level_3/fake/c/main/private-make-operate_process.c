@@ -287,7 +287,7 @@ extern "C" {
     if (!program.used && !arguments.used) return F_data_not;
 
     if (fll_program_standard_signal_received(data_make->main)) {
-      fll_program_print_signal_received(data_make->main->warning, data_make->setting->line_first, data_make->main->signal_received);
+      fll_program_print_signal_received(data_make->main->warning, data_make->data->setting->line_first, data_make->main->signal_received);
 
       return F_status_set_error(F_interrupt);
     }
@@ -323,7 +323,7 @@ extern "C" {
     }
 
     if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
-      f_file_stream_lock(data_make->message.to);
+      f_file_stream_lock(data_make->main->message.to);
 
       f_array_length_t i = 0;
 
@@ -345,7 +345,7 @@ extern "C" {
 
       f_print_dynamic_raw(f_string_eol_s, data_make->main->message.to);
 
-      f_file_stream_unlock(data_make->message.to);
+      f_file_stream_unlock(data_make->main->message.to);
 
       // Flush to stdout before executing command.
       f_file_stream_flush(data_make->main->message.to);
@@ -363,7 +363,7 @@ extern "C" {
     status = fll_execute_program(program, arguments, &parameter, 0, (void *) &return_code);
 
     if (fll_program_standard_signal_received(data_make->main)) {
-      fll_program_print_signal_received(data_make->main->warning, data_make->setting->line_first, data_make->main->signal_received);
+      fll_program_print_signal_received(data_make->main->warning, data_make->data->setting->line_first, data_make->main->signal_received);
 
       return F_status_set_error(F_interrupt);
     }
@@ -372,14 +372,14 @@ extern "C" {
       if (F_status_set_fine(status) == F_interrupt) return status;
 
       if (F_status_set_fine(status) == F_file_found_not) {
-        if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to) {
-          f_file_stream_lock(data_make->error.to);
+        if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->main->error.to.stream) {
+          f_file_stream_lock(data_make->main->error.to);
 
-          fl_print_format("%r%[%QFailed to find program '%]", data_make->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
-          fl_print_format("%[%Q%]", data_make->error.to, data_make->error.notable, program, data_make->error.notable);
-          fl_print_format("%[' for executing.%]%r", data_make->error.to, data_make->error.context, data_make->error.context, f_string_eol_s);
+          fl_print_format("%r%[%QFailed to find program '%]", data_make->main->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
+          fl_print_format("%[%Q%]", data_make->main->error.to, data_make->error.notable, program, data_make->error.notable);
+          fl_print_format("%[' for executing.%]%r", data_make->main->error.to, data_make->error.context, data_make->error.context, f_string_eol_s);
 
-          f_file_stream_unlock(data_make->error.to);
+          f_file_stream_unlock(data_make->main->error.to);
         }
       }
       else if (F_status_set_fine(status) != F_failure) {
@@ -440,14 +440,14 @@ extern "C" {
       return status;
     }
 
-    if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to) {
-      f_file_stream_lock(data_make->error.to);
+    if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->main->error.to.stream) {
+      f_file_stream_lock(data_make->main->error.to);
 
-      fl_print_format("%r%[%QFailed with return code %]", data_make->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
-      fl_print_format("%[%i%]", data_make->error.to, data_make->error.notable, return_code, data_make->error.notable);
-      fl_print_format("%[.%]%r", data_make->error.to, data_make->error.context, data_make->error.context, f_string_eol_s);
+      fl_print_format("%r%[%QFailed with return code %]", data_make->main->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
+      fl_print_format("%[%i%]", data_make->main->error.to, data_make->error.notable, return_code, data_make->error.notable);
+      fl_print_format("%[.%]%r", data_make->main->error.to, data_make->error.context, data_make->error.context, f_string_eol_s);
 
-      f_file_stream_unlock(data_make->error.to);
+      f_file_stream_unlock(data_make->main->error.to);
     }
 
     if (data_make->setting_make.fail == fake_make_operation_fail_type_exit_e) return F_status_set_error(F_failure);

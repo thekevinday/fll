@@ -53,7 +53,7 @@ extern "C" {
       }
 
       if (F_status_is_error(setting->status) && F_status_set_fine(setting->status) != F_utf_fragment && F_status_set_fine(setting->status) != F_complete_not_utf) {
-        utf8_print_error_file(setting, main->error, setting->mode & utf8_mode_from_bytesequence_e ? "utf8_process_file_bytesequence" : "utf8_process_file_codepoint", f_string_empty_s, f_file_operation_process_s, fll_error_file_type_pipe_e);
+        utf8_print_error_file(setting, main->error, setting->mode & utf8_mode_from_bytesequence_e ? macro_utf8_f(utf8_process_file_bytesequence) : macro_utf8_f(utf8_process_file_codepoint), f_string_empty_s, f_file_operation_process_s, fll_error_file_type_pipe_e);
       }
     }
 
@@ -118,7 +118,7 @@ extern "C" {
         }
 
         if (F_status_is_error(setting->status) && F_status_set_fine(setting->status) != F_utf_fragment && F_status_set_fine(setting->status) != F_complete_not_utf) {
-          utf8_print_error_file(setting, main->error, setting->mode & utf8_mode_from_bytesequence_e ? "utf8_process_file_bytesequence" : "utf8_process_file_codepoint", setting->path_files_from.array[i], f_file_operation_process_s, fll_error_file_type_file_e);
+          utf8_print_error_file(setting, main->error, setting->mode & utf8_mode_from_bytesequence_e ? macro_utf8_f(utf8_process_file_bytesequence) : utf8_process_file_bytesequence(utf8_process_file_codepoint), setting->path_files_from.array[i], f_file_operation_process_s, fll_error_file_type_file_e);
 
           break;
         }
