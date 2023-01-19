@@ -178,9 +178,7 @@ extern "C" {
   #define FAKE_default_path_sources_s "sources" F_path_separator_s
   #define FAKE_default_path_work_s    ""
 
-  #define FAKE_default_define_s   ""
   #define FAKE_default_fakefile_s "fakefile"
-  #define FAKE_default_mode_s     ""
   #define FAKE_default_process_s  ""
   #define FAKE_default_settings_s "settings"
 
@@ -189,9 +187,7 @@ extern "C" {
   #define FAKE_default_path_sources_s_length 7 + F_path_separator_s_length
   #define FAKE_default_path_work_s_length    0
 
-  #define FAKE_default_define_s_length   0
   #define FAKE_default_fakefile_s_length 8
-  #define FAKE_default_mode_s_length     0
   #define FAKE_default_process_s_length  0
   #define FAKE_default_settings_s_length 8
 
@@ -200,9 +196,7 @@ extern "C" {
   extern const f_string_static_t fake_default_path_sources_s;
   extern const f_string_static_t fake_default_path_work_s;
 
-  extern const f_string_static_t fake_default_define_s;
   extern const f_string_static_t fake_default_fakefile_s;
-  extern const f_string_static_t fake_default_mode_s;
   extern const f_string_static_t fake_default_process_s;
   extern const f_string_static_t fake_default_settings_s;
 #endif // _di_fake_defaults_

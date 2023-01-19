@@ -60,9 +60,7 @@ extern "C" {
   const f_string_static_t fake_default_path_sources_s = macro_f_string_static_t_initialize(FAKE_default_path_sources_s, 0, FAKE_default_path_sources_s_length);
   const f_string_static_t fake_default_path_work_s = macro_f_string_static_t_initialize(FAKE_default_path_work_s, 0, FAKE_default_path_work_s_length);
 
-  const f_string_static_t fake_default_define_s = macro_f_string_static_t_initialize(FAKE_default_define_s, 0, FAKE_default_define_s_length);
   const f_string_static_t fake_default_fakefile_s = macro_f_string_static_t_initialize(FAKE_default_fakefile_s, 0, FAKE_default_fakefile_s_length);
-  const f_string_static_t fake_default_mode_s = macro_f_string_static_t_initialize(FAKE_default_mode_s, 0, FAKE_default_mode_s_length);
   const f_string_static_t fake_default_process_s = macro_f_string_static_t_initialize(FAKE_default_process_s, 0, FAKE_default_process_s_length);
   const f_string_static_t fake_default_settings_s = macro_f_string_static_t_initialize(FAKE_default_settings_s, 0, FAKE_default_settings_s_length);
 #endif // _di_fake_defaults_
