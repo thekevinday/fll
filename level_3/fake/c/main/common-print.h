@@ -43,14 +43,20 @@ extern "C" {
     fake_f_f_console_parameter_process_e,
     fake_f_f_file_is_e,
     fake_f_f_file_name_base_e,
+    fake_f_f_string_append_e,
     fake_f_f_string_dynamic_append_e,
     fake_f_f_string_dynamic_append_nulless_e,
+    fake_f_f_string_dynamic_increase_by_e,
     fake_f_f_string_dynamic_mash_e,
     fake_f_f_string_dynamic_resize_e,
+    fake_f_f_uint8s_increase_by_e,
+    fake_f_f_utf_is_word_dash_plus_e,
     fake_f_fl_directory_copy_e,
     fake_f_fll_execute_arguments_add_e,
     fake_f_fll_execute_arguments_add_parameter_set_e,
     fake_f_fll_execute_program_e,
+    fake_f_fll_program_parameter_process_context_e,
+    fake_f_fll_program_parameter_process_verbosity_e,
   }; // enum
 #endif // _di_fake_f_e_
 

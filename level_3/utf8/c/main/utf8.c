@@ -11,7 +11,13 @@ extern "C" {
 #ifndef _di_utf8_main_
   void utf8_main(fll_program_data_t * const main, utf8_setting_t * const setting) {
 
-    if (!main || !setting || F_status_is_error(setting->status)) return;
+    if (!main || !setting) return;
+
+    if (F_status_is_error(setting->status)) {
+      utf8_print_line_last_locked(setting, main->error);
+
+      return;
+    }
 
     setting->status = F_none;
 
@@ -118,7 +124,7 @@ extern "C" {
         }
 
         if (F_status_is_error(setting->status) && F_status_set_fine(setting->status) != F_utf_fragment && F_status_set_fine(setting->status) != F_complete_not_utf) {
-          utf8_print_error_file(setting, main->error, setting->mode & utf8_mode_from_bytesequence_e ? macro_utf8_f(utf8_process_file_bytesequence) : utf8_process_file_bytesequence(utf8_process_file_codepoint), setting->path_files_from.array[i], f_file_operation_process_s, fll_error_file_type_file_e);
+          utf8_print_error_file(setting, main->error, setting->mode & utf8_mode_from_bytesequence_e ? macro_utf8_f(utf8_process_file_bytesequence) : macro_utf8_f(utf8_process_file_codepoint), setting->path_files_from.array[i], f_file_operation_process_s, fll_error_file_type_file_e);
 
           break;
         }
@@ -169,12 +175,13 @@ extern "C" {
 
     if (F_status_is_error(setting->status)) {
       utf8_print_line_last_locked(setting, main->error);
-    }
-    else if (setting->status != F_interrupt) {
-      utf8_print_line_last_locked(setting, main->message);
+
+      return;
     }
 
-    if (F_status_is_error(setting->status) || setting->status == F_interrupt) return;
+    if (setting->status == F_interrupt) return;
+
+    utf8_print_line_last_locked(setting, main->message);
 
     if (setting->flag & utf8_main_flag_verify_e) {
       setting->status = valid;

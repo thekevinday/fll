@@ -15,7 +15,6 @@ extern "C" {
       if (main->error.verbosity != f_console_verbosity_quiet_e) {
         iki_write_print_line_first_locked(setting, main->error);
         fll_program_print_error_missing_variable_not_zero(main->error, iki_write_object_s);
-        iki_write_print_line_last_locked(setting, main->error);
       }
 
       return;

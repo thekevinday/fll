@@ -13,7 +13,6 @@ extern "C" {
 
     fss_write_print_line_first_unlocked(setting, print);
     fl_print_format("%[%QThe payload may only be specified last.%]%r", print.to, print.set->error, print.prefix, print.set->error, f_string_eol_s);
-    fss_write_print_line_last_unlocked(setting, print);
 
     f_file_stream_unlock(print.to);
 

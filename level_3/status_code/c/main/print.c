@@ -12,7 +12,6 @@ extern "C" {
 
     status_code_print_line_first_locked(setting, print);
     fll_error_print(print, F_status_set_fine(setting->status), function, F_true);
-    status_code_print_line_last_locked(setting, print);
 
     return F_none;
   }

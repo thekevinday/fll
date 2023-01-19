@@ -7,7 +7,13 @@ extern "C" {
 #ifndef _di_fss_write_main_
   void fss_write_main(fll_program_data_t * const main, fss_write_setting_t * const setting) {
 
-    if (!main || !setting || F_status_is_error(setting->status)) return;
+    if (!main || !setting) return;
+
+    if (F_status_is_error(setting->status)) {
+      fss_write_print_line_last_locked(setting, main->error);
+
+      return;
+    }
 
     setting->status = F_none;
 
@@ -30,19 +36,23 @@ extern "C" {
     if (main->pipe & fll_program_data_pipe_input_e) {
       if (setting->process_pipe) {
         setting->process_pipe(main, setting);
-        if (F_status_is_error(setting->status)) return;
       }
     }
 
-    if (setting->flag & (fss_write_flag_object_e | fss_write_flag_content_e | fss_write_flag_object_open_e | fss_write_flag_content_next_e | fss_write_flag_content_end_e)) {
-      if (setting->process_normal) {
-        setting->process_normal(main, (void *) setting);
-        if (F_status_is_error(setting->status)) return;
+    if (F_status_is_error_not(setting->status)) {
+      if (setting->flag & (fss_write_flag_object_e | fss_write_flag_content_e | fss_write_flag_object_open_e | fss_write_flag_content_next_e | fss_write_flag_content_end_e)) {
+        if (setting->process_normal) {
+          setting->process_normal(main, (void *) setting);
+        }
       }
     }
 
-    // Ensure a new line is always put at the end of the program execution.
-    fss_write_print_line_last_locked(setting, main->message);
+    if (F_status_is_error(setting->status)) {
+      fss_write_print_line_last_locked(setting, main->error);
+    }
+    else if (setting->status != F_interrupt) {
+      fss_write_print_line_last_locked(setting, main->message);
+    }
   }
 #endif // _di_fss_write_main_
 

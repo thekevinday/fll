@@ -411,7 +411,6 @@ extern "C" {
 
           fss_write_print_line_first_locked(setting, main->error);
           fss_write_print_error_unsupported_eol(setting, main->error);
-          fss_write_print_line_last_locked(setting, main->error);
 
           return;
         }
@@ -452,7 +451,6 @@ extern "C" {
 
             fss_write_print_line_first_locked(setting, main->error);
             fss_write_print_error_unsupported_eol(setting, main->error);
-            fss_write_print_line_last_locked(setting, main->error);
 
             return;
           }

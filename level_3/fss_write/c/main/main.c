@@ -178,9 +178,6 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
         if (setting->flag & fss_write_flag_help_e) {
           fss_write_main_process_help(main, setting);
         }
-        else {
-          fss_write_print_line_last_locked(setting, main->error);
-        }
 
         return;
       }
@@ -196,7 +193,6 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
       fss_write_print_line_first_locked(setting, main->error);
       fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, fss_write_long_as_s);
-      fss_write_print_line_last_locked(setting, main->error);
 
       return;
     }

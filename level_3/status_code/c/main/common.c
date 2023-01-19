@@ -150,7 +150,6 @@ extern "C" {
 
           status_code_print_line_first_locked(setting, main->error);
           status_code_print_error_cannot_error_warning_number(setting, main->error);
-          status_code_print_line_last_locked(setting, main->error);
 
           return;
         }
@@ -161,7 +160,6 @@ extern "C" {
 
         status_code_print_line_first_locked(setting, main->error);
         fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_normal_s, f_console_symbol_long_normal_s, status_code_long_error_s, status_code_long_fine_s);
-        status_code_print_line_last_locked(setting, main->error);
 
         return;
       }
@@ -171,7 +169,6 @@ extern "C" {
 
       status_code_print_line_first_locked(setting, main->error);
       fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_normal_s, f_console_symbol_long_normal_s, status_code_long_warning_s, status_code_long_fine_s);
-      status_code_print_line_last_locked(setting, main->error);
 
       return;
     }
@@ -181,7 +178,6 @@ extern "C" {
 
       status_code_print_line_first_locked(setting, main->error);
       status_code_print_error_no_status_codes(setting, main->error);
-      status_code_print_line_last_locked(setting, main->error);
 
       return;
     }

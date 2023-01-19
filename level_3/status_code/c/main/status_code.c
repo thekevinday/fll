@@ -8,7 +8,13 @@ extern "C" {
 #ifndef _di_status_code_main_
   void status_code_main(fll_program_data_t * const main, status_code_setting_t * const setting) {
 
-    if (!main || !setting || F_status_is_error(setting->status)) return;
+    if (!main || !setting) return;
+
+    if (F_status_is_error(setting->status)) {
+      status_code_print_line_last_locked(setting, main->error);
+
+      return;
+    }
 
     if (!setting->status_string_from || !setting->status_string_to) {
 

@@ -188,6 +188,7 @@ extern "C" {
   }
 #endif // _di_fake_pipe_buffer_
 
+// @todo move this into the common.
 #ifndef _di_fake_process_console_parameters_
   f_status_t fake_process_console_parameters(fake_data_t * const data) {
 

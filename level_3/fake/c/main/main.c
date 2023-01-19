@@ -4,6 +4,9 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
   fll_program_data_t data = fll_program_data_t_initialize;
   fake_setting_t setting = fake_setting_t_initialize;
+  setting.flag |= fake_main_flag_enable_documents_e;
+  setting.flag |= fake_main_flag_enable_shared_e;
+  setting.flag |= fake_main_flag_enable_static_e;
 
   f_console_parameter_t parameters[] = fake_console_parameter_t_initialize;
   data.parameters.array = parameters;

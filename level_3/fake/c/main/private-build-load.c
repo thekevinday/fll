@@ -1381,9 +1381,9 @@ extern "C" {
       }
     }
 
-    if (data->main->parameters.array[fake_parameter_shared_disabled_e].result & f_console_result_found_e) {
-      if (data->main->parameters.array[fake_parameter_shared_enabled_e].result & f_console_result_found_e) {
-        if (data->main->parameters.array[fake_parameter_shared_enabled_e].location > data->main->parameters.array[fake_parameter_shared_disabled_e].location) {
+    if (data->main->parameters.array[fake_parameter_shared_disable_e].result & f_console_result_found_e) {
+      if (data->main->parameters.array[fake_parameter_shared_enable_e].result & f_console_result_found_e) {
+        if (data->main->parameters.array[fake_parameter_shared_enable_e].location > data->main->parameters.array[fake_parameter_shared_disable_e].location) {
           setting->build_shared = F_true;
           setting->search_shared = F_true;
         }
@@ -1411,14 +1411,14 @@ extern "C" {
         setting->search_shared = F_false;
       }
     }
-    else if (data->main->parameters.array[fake_parameter_shared_enabled_e].result & f_console_result_found_e) {
+    else if (data->main->parameters.array[fake_parameter_shared_enable_e].result & f_console_result_found_e) {
       setting->build_shared = F_true;
       setting->search_shared = F_true;
     }
 
-    if (data->main->parameters.array[fake_parameter_static_disabled_e].result & f_console_result_found_e) {
-      if (data->main->parameters.array[fake_parameter_static_enabled_e].result & f_console_result_found_e) {
-        if (data->main->parameters.array[fake_parameter_static_enabled_e].location > data->main->parameters.array[fake_parameter_static_disabled_e].location) {
+    if (data->main->parameters.array[fake_parameter_static_disable_e].result & f_console_result_found_e) {
+      if (data->main->parameters.array[fake_parameter_static_enable_e].result & f_console_result_found_e) {
+        if (data->main->parameters.array[fake_parameter_static_enable_e].location > data->main->parameters.array[fake_parameter_static_disable_e].location) {
           setting->build_static = F_true;
           setting->search_static = F_true;
         }
@@ -1446,7 +1446,7 @@ extern "C" {
         setting->search_static = F_false;
       }
     }
-    else if (data->main->parameters.array[fake_parameter_static_enabled_e].result & f_console_result_found_e) {
+    else if (data->main->parameters.array[fake_parameter_static_enable_e].result & f_console_result_found_e) {
       setting->build_static = F_true;
       setting->search_static = F_true;
     }

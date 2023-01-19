@@ -440,7 +440,7 @@ extern "C" {
     f_string_t symbol_long;
     f_string_t symbol_simple;
 
-    uint16_t values_total;
+    f_array_length_t values_total;
 
     f_console_flag_t flag;
     f_console_result_t result;

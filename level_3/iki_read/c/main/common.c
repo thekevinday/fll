@@ -160,7 +160,6 @@ extern "C" {
 
       iki_read_print_line_first_locked(setting, main->error);
       fll_program_print_error_missing_file(main->error);
-      iki_read_print_line_last_locked(setting, main->error);
 
       return;
     }
@@ -171,7 +170,6 @@ extern "C" {
 
         iki_read_print_line_first_locked(setting, main->error);
         fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_normal_s, f_console_symbol_long_normal_s, iki_read_long_at_s, iki_read_long_whole_s);
-        iki_read_print_line_last_locked(setting, main->error);
 
         return;
       }
@@ -187,7 +185,6 @@ extern "C" {
 
         iki_read_print_line_first_locked(setting, main->error);
         fll_program_print_error_parameter_integer_not(main->error, f_console_symbol_long_normal_s, iki_read_long_at_s, main->parameters.arguments.array[index]);
-        iki_read_print_line_last_locked(setting, main->error);
 
         return;
       }
@@ -199,7 +196,6 @@ extern "C" {
 
       iki_read_print_line_first_locked(setting, main->error);
       fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, iki_read_long_at_s);
-      iki_read_print_line_last_locked(setting, main->error);
 
       return;
     }
@@ -216,7 +212,6 @@ extern "C" {
 
         iki_read_print_line_first_locked(setting, main->error);
         fll_program_print_error_parameter_integer_not(main->error, f_console_symbol_long_normal_s, iki_read_long_line_s, main->parameters.arguments.array[index]);
-        iki_read_print_line_last_locked(setting, main->error);
 
         return;
       }
@@ -228,7 +223,6 @@ extern "C" {
 
       iki_read_print_line_first_locked(setting, main->error);
       fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, iki_read_long_line_s);
-      iki_read_print_line_last_locked(setting, main->error);
 
       return;
     }
@@ -282,7 +276,6 @@ extern "C" {
 
       iki_read_print_line_first_locked(setting, main->error);
       fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, iki_read_long_name_s);
-      iki_read_print_line_last_locked(setting, main->error);
 
       return;
     }
@@ -293,7 +286,6 @@ extern "C" {
 
         iki_read_print_line_first_locked(setting, main->error);
         fll_program_print_error_parameter_missing_value_requires_amount(main->error, f_console_symbol_long_normal_s, iki_read_long_replace_s, iki_read_string_two_s);
-        iki_read_print_line_last_locked(setting, main->error);
 
         return;
       }
@@ -378,7 +370,6 @@ extern "C" {
 
         iki_read_print_line_first_locked(setting, main->error);
         fll_program_print_error_parameter_missing_value_requires_amount(main->error, f_console_symbol_long_normal_s, iki_read_long_wrap_s, iki_read_string_three_s);
-        iki_read_print_line_last_locked(setting, main->error);
 
         return;
       }
@@ -475,7 +466,6 @@ extern "C" {
 
           iki_read_print_line_first_locked(setting, main->error);
           fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_normal_s, f_console_symbol_long_normal_s, iki_read_long_literal_s, names[i]);
-          iki_read_print_line_last_locked(setting, main->error);
 
           return;
         }
@@ -501,7 +491,6 @@ extern "C" {
 
           iki_read_print_line_first_locked(setting, main->error);
           fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_normal_s, f_console_symbol_long_normal_s, iki_read_long_object_s, names[i]);
-          iki_read_print_line_last_locked(setting, main->error);
 
           return;
         }
@@ -515,7 +504,6 @@ extern "C" {
 
         iki_read_print_line_first_locked(setting, main->error);
         fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_normal_s, f_console_symbol_long_normal_s, iki_read_long_content_s, iki_read_long_total_s);
-        iki_read_print_line_last_locked(setting, main->error);
 
         return;
       }
@@ -528,7 +516,6 @@ extern "C" {
 
         iki_read_print_line_first_locked(setting, main->error);
         fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_normal_s, f_console_symbol_long_normal_s, iki_read_long_total_s, iki_read_long_wrap_s);
-        iki_read_print_line_last_locked(setting, main->error);
 
         return;
       }
@@ -582,7 +569,6 @@ extern "C" {
         if (F_status_is_error(setting->status)) {
           iki_read_print_line_first_locked(setting, main->error);
           fll_error_file_print(main->error, F_status_set_fine(setting->status), "f_file_exists", F_true, setting->files.array[setting->files.used], f_file_operation_verify_s, fll_error_file_type_file_e);
-          iki_read_print_line_last_locked(setting, main->error);
 
           return;
         }
@@ -601,7 +587,6 @@ extern "C" {
 
       iki_read_print_line_first_locked(setting, main->error);
       fll_program_print_error_parameter_missing_value_requires_amount(main->error, f_console_symbol_long_normal_s, name, iki_read_string_three_s);
-      iki_read_print_line_last_locked(setting, main->error);
 
       return F_false;
     }

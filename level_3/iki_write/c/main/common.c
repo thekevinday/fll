@@ -141,7 +141,6 @@ extern "C" {
 
         iki_write_print_line_first_locked(setting, main->error);
         fll_program_print_error_parameter_must_specify_once(main->error, f_console_symbol_long_normal_s, iki_write_long_file_s);
-        iki_write_print_line_last_locked(setting, main->error);
 
         return;
       }
@@ -156,7 +155,6 @@ extern "C" {
       if (F_status_is_error(setting->status)) {
         iki_write_print_line_first_locked(setting, main->error);
         fll_error_file_print(main->error, F_status_set_fine(setting->status), "f_file_stream_open", F_true, main->parameters.arguments.array[index], f_file_operation_open_s, fll_error_file_type_file_e);
-        iki_write_print_line_last_locked(setting, main->error);
 
         return;
       }
@@ -168,7 +166,6 @@ extern "C" {
 
       iki_write_print_line_first_locked(setting, main->error);
       fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, iki_write_long_file_s);
-      iki_write_print_line_last_locked(setting, main->error);
 
       return;
     }
@@ -203,7 +200,6 @@ extern "C" {
 
       iki_write_print_line_first_locked(setting, main->error);
       fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, iki_write_long_object_s);
-      iki_write_print_line_last_locked(setting, main->error);
 
       return;
     }
@@ -238,7 +234,6 @@ extern "C" {
 
       iki_write_print_line_first_locked(setting, main->error);
       fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, iki_write_long_content_s);
-      iki_write_print_line_last_locked(setting, main->error);
 
       return;
     }
@@ -248,7 +243,6 @@ extern "C" {
 
       iki_write_print_line_first_locked(setting, main->error);
       iki_write_print_error_main_missing(setting, main->error);
-      iki_write_print_line_last_locked(setting, main->error);
 
       return;
     }

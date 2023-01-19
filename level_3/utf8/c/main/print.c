@@ -12,7 +12,6 @@ extern "C" {
 
     utf8_print_line_first_locked(setting, print);
     fll_error_print(print, F_status_set_fine(setting->status), function, F_true);
-    utf8_print_line_last_locked(setting, print);
 
     return F_none;
   }
@@ -87,7 +86,6 @@ extern "C" {
 
     utf8_print_line_first_locked(setting, print);
     fll_error_file_print(print, F_status_set_fine(setting->status), function, F_true, name, operation, type);
-    utf8_print_line_last_locked(setting, print);
 
     return F_none;
   }

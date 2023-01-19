@@ -80,6 +80,31 @@ extern "C" {
   }
 #endif // _di_fake_print_error_parameter_operation_not_with_
 
+#ifndef _di_fake_print_error_parameter_value_too_long_
+  f_status_t fake_print_error_parameter_value_too_long(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t value) {
+
+    if (!setting || print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+
+    if (!F_status_is_error(setting->status)) {
+      if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
+    }
+
+    f_file_stream_lock(print.to);
+
+    fake_print_line_first_unlocked(setting, print);
+
+    fl_print_format("%[%QThe value '%]", print.to, print.context, print.prefix, print.context);
+    fl_print_format("%[%Q%]", print.to, print.notable, value, print.notable);
+    fl_print_format("%[' for the parameter '%]", print.to, print.context, print.prefix, print.context);
+    fl_print_format("%[%Q%Q%]", print.to, print.notable, symbol, name, print.notable);
+    fl_print_format("%[' is too long.%]%r", print.to, print.context, print.context, f_string_eol_s);
+
+    f_file_stream_unlock(print.to);
+
+    return F_none;
+  }
+#endif // _di_fake_print_error_parameter_too_value_long_
+
 #ifndef _di_fake_print_help_
   f_status_t fake_print_help(fake_setting_t * const setting, const fl_print_t print) {
 

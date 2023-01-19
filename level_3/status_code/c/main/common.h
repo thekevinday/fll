@@ -181,10 +181,10 @@ extern "C" {
       macro_f_console_parameter_t_initialize4(f_console_standard_short_line_first_no_s, f_console_standard_long_line_first_no_s, 0, f_console_flag_inverse_e, 0), \
       macro_f_console_parameter_t_initialize4(f_console_standard_short_line_last_no_s,  f_console_standard_long_line_last_no_s,  0, f_console_flag_inverse_e, 0), \
       \
-      macro_f_console_parameter_t_initialize4(status_code_short_fine_s,    status_code_long_fine_s,    0, f_console_flag_normal_e, 0) \
-      macro_f_console_parameter_t_initialize4(status_code_short_warning_s, status_code_long_warning_s, 0, f_console_flag_normal_e, 0) \
-      macro_f_console_parameter_t_initialize4(status_code_short_error_s,   status_code_long_error_s,   0, f_console_flag_normal_e, 0) \
-      macro_f_console_parameter_t_initialize4(status_code_short_number_s,  status_code_long_number_s,  0, f_console_flag_normal_e, 0) \
+      macro_f_console_parameter_t_initialize4(status_code_short_fine_s,    status_code_long_fine_s,    0, f_console_flag_normal_e, 0), \
+      macro_f_console_parameter_t_initialize4(status_code_short_warning_s, status_code_long_warning_s, 0, f_console_flag_normal_e, 0), \
+      macro_f_console_parameter_t_initialize4(status_code_short_error_s,   status_code_long_error_s,   0, f_console_flag_normal_e, 0), \
+      macro_f_console_parameter_t_initialize4(status_code_short_number_s,  status_code_long_number_s,  0, f_console_flag_normal_e, 0), \
     }
 
   #define status_code_total_parameters_d 16

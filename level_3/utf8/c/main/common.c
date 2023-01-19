@@ -170,17 +170,11 @@ extern "C" {
         }
 
         if (choices.array[choice] == utf8_parameter_from_bytesequence_e) {
-          if (setting->mode & utf8_mode_from_codepoint_e) {
-            setting->mode -= utf8_mode_from_codepoint_e;
-          }
-
+          setting->mode -= setting->mode & utf8_mode_from_codepoint_e;
           setting->mode |= utf8_mode_from_bytesequence_e;
         }
         else if (choices.array[choice] == utf8_parameter_from_codepoint_e) {
-          if (setting->mode & utf8_mode_from_bytesequence_e) {
-            setting->mode -= utf8_mode_from_bytesequence_e;
-          }
-
+          setting->mode -= setting->mode & utf8_mode_from_bytesequence_e;
           setting->mode |= utf8_mode_from_codepoint_e;
         }
       }
@@ -201,43 +195,22 @@ extern "C" {
         }
 
         if (choices.array[choice] == utf8_parameter_to_bytesequence_e) {
-          if (setting->mode & utf8_mode_to_codepoint_e) {
-            setting->mode -= utf8_mode_to_codepoint_e;
-          }
-
-          if (setting->mode & utf8_mode_to_combining_e) {
-            setting->mode -= utf8_mode_to_combining_e;
-          }
-
-          if (setting->mode & utf8_mode_to_width_e) {
-            setting->mode -= utf8_mode_to_width_e;
-          }
+          setting->mode -= setting->mode & utf8_mode_to_codepoint_e;
+          setting->mode -= setting->mode & utf8_mode_to_combining_e;
+          setting->mode -= setting->mode & utf8_mode_to_width_e;
 
           setting->mode |= utf8_mode_to_bytesequence_e;
         }
         else if (choices.array[choice] == utf8_parameter_to_codepoint_e) {
-          if (setting->mode & utf8_mode_to_bytesequence_e) {
-            setting->mode -= utf8_mode_to_bytesequence_e;
-          }
-
-          if (setting->mode & utf8_mode_to_combining_e) {
-            setting->mode -= utf8_mode_to_combining_e;
-          }
-
-          if (setting->mode & utf8_mode_to_width_e) {
-            setting->mode -= utf8_mode_to_width_e;
-          }
+          setting->mode -= setting->mode & utf8_mode_to_bytesequence_e;
+          setting->mode -= setting->mode & utf8_mode_to_combining_e;
+          setting->mode -= setting->mode & utf8_mode_to_width_e;
 
           setting->mode |= utf8_mode_to_codepoint_e;
         }
         else if (choices.array[choice] == utf8_parameter_to_combining_e) {
-          if (setting->mode & utf8_mode_to_bytesequence_e) {
-            setting->mode -= utf8_mode_to_bytesequence_e;
-          }
-
-          if (setting->mode & utf8_mode_to_codepoint_e) {
-            setting->mode -= utf8_mode_to_codepoint_e;
-          }
+          setting->mode -= setting->mode & utf8_mode_to_bytesequence_e;
+          setting->mode -= setting->mode & utf8_mode_to_codepoint_e;
 
           // --to_width may be specified with --to_combining.
           if (main->parameters.array[utf8_parameter_to_width_e].result & f_console_result_found_e) {
@@ -247,13 +220,8 @@ extern "C" {
           setting->mode |= utf8_mode_to_combining_e;
         }
         else if (choices.array[choice] == utf8_parameter_to_width_e) {
-          if (setting->mode & utf8_mode_to_bytesequence_e) {
-            setting->mode -= utf8_mode_to_bytesequence_e;
-          }
-
-          if (setting->mode & utf8_mode_to_codepoint_e) {
-            setting->mode -= utf8_mode_to_codepoint_e;
-          }
+          setting->mode -= setting->mode & utf8_mode_to_bytesequence_e;
+          setting->mode -= setting->mode & utf8_mode_to_codepoint_e;
 
           // --to_width may be specified with --to_combining.
           if (main->parameters.array[utf8_parameter_to_combining_e].result & f_console_result_found_e) {
@@ -282,7 +250,6 @@ extern "C" {
         setting->status = F_status_set_error(F_parameter);
 
         utf8_print_error_parameter_file_to_too_many(setting, main->error);
-        utf8_print_line_last_locked(setting, main->error);
 
         return;
       }
@@ -323,7 +290,6 @@ extern "C" {
       else {
         utf8_print_line_first_locked(setting, main->error);
         utf8_print_error_parameter_file_name_empty(setting, main->error, main->parameters.array[utf8_parameter_to_file_e].values.array[0]);
-        utf8_print_line_last_locked(setting, main->error);
 
         setting->status = F_status_set_error(F_parameter);
 
@@ -335,16 +301,12 @@ extern "C" {
 
       utf8_print_line_first_locked(setting, main->error);
       fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, utf8_long_to_file_s);
-      utf8_print_line_last_locked(setting, main->error);
 
       return;
     }
     else {
       main->output.to = main->message.to;
-
-      if (setting->flag & utf8_main_flag_file_to_e) {
-        setting->flag -= utf8_main_flag_file_to_e;
-      }
+      setting->flag -= setting->flag & utf8_main_flag_file_to_e;
     }
 
     if (main->parameters.array[utf8_parameter_from_file_e].result & f_console_result_value_e) {
@@ -395,11 +357,7 @@ extern "C" {
         }
       } // for
 
-      if (F_status_is_error(setting->status)) {
-        utf8_print_line_last_locked(setting, main->error);
-
-        return;
-      }
+      if (F_status_is_error(setting->status)) return;
 
       setting->flag |= utf8_main_flag_file_from_e;
     }
@@ -408,14 +366,11 @@ extern "C" {
 
       utf8_print_line_first_locked(setting, main->error);
       fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, utf8_long_from_file_s);
-      utf8_print_line_last_locked(setting, main->error);
 
       return;
     }
     else {
-      if (setting->flag & utf8_main_flag_file_from_e) {
-        setting->flag -= utf8_main_flag_file_from_e;
-      }
+      setting->flag -= setting->flag & utf8_main_flag_file_from_e;
     }
 
     if (main->parameters.remaining.used) {
@@ -445,7 +400,6 @@ extern "C" {
 
       utf8_print_line_first_locked(setting, main->error);
       utf8_print_error_no_from(setting, main->error);
-      utf8_print_line_last_locked(setting, main->error);
 
       return;
     }

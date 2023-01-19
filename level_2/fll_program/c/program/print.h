@@ -75,15 +75,15 @@ extern "C" {
  * @param print
  *   The output structure.
  *   This locks, uses, and unlocks the file stream.
- * @param symbol_first
+ * @param symbol_1
  *   The symbol string prepended to the first parameter.
  *   This is usually f_console_symbol_long_normal_s.
- * @param symbol_second
+ * @param symbol_2
  *   The symbol string prepended to the second parameter.
  *   This is usually f_console_symbol_long_normal_s.
- * @param first
+ * @param name_1
  *   The first parameter name.
- * @param second
+ * @param name_2
  *   The second parameter name.
  *
  * @return
@@ -91,7 +91,7 @@ extern "C" {
  *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_fll_program_print_error_parameter_both_specified_same_amount_
-  extern f_status_t fll_program_print_error_parameter_both_specified_same_amount(const fl_print_t print, const f_string_static_t symbol_first, const f_string_static_t symbol_second, const f_string_static_t first, const f_string_static_t second);
+  extern f_status_t fll_program_print_error_parameter_both_specified_same_amount(const fl_print_t print, const f_string_static_t symbol_1, const f_string_static_t symbol_2, const f_string_static_t name_1, const f_string_static_t name_2);
 #endif // _di_fll_program_print_error_parameter_both_specified_same_amount_
 
 /**
@@ -107,20 +107,20 @@ extern "C" {
  * @param print
  *   The output structure.
  *   This locks, uses, and unlocks the file stream.
- * @param symbol_first
+ * @param symbol_1
  *   The symbol string prepended to the first parameter.
  *   This is usually f_console_symbol_long_normal_s.
- * @param symbol_second
+ * @param symbol_2
  *   The symbol string prepended to the second parameter.
  *   This is usually f_console_symbol_long_normal_s.
- * @param symbol_third
+ * @param symbol_3
  *   The symbol string prepended to the third parameter.
  *   This is usually f_console_symbol_long_normal_s.
- * @param first
+ * @param name_1
  *   The first parameter name.
- * @param second
+ * @param name_2
  *   The second parameter name.
- * @param third
+ * @param name_3
  *   The third parameter name, representing the "without" parameter.
  *   The first and second parameter must be specified the same amount of times without this parameter.
  *
@@ -129,7 +129,7 @@ extern "C" {
  *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_fll_program_print_error_parameter_both_specified_same_amount_without_
-  extern f_status_t fll_program_print_error_parameter_both_specified_same_amount_without(const fl_print_t print, const f_string_static_t symbol_first, const f_string_static_t symbol_second, const f_string_static_t symbol_third, const f_string_static_t first, const f_string_static_t second, const f_string_static_t third);
+  extern f_status_t fll_program_print_error_parameter_both_specified_same_amount_without(const fl_print_t print, const f_string_static_t symbol_1, const f_string_static_t symbol_2, const f_string_static_t symbol_3, const f_string_static_t name_1, const f_string_static_t name_2, const f_string_static_t name_3);
 #endif // _di_fll_program_print_error_parameter_both_specified_same_amount_without_
 
 /**
@@ -145,15 +145,15 @@ extern "C" {
  * @param print
  *   The output structure.
  *   This locks, uses, and unlocks the file stream.
- * @param symbol_first
+ * @param symbol_1
  *   The symbol string prepended to the first parameter.
  *   This is usually f_console_symbol_long_normal_s.
- * @param symbol_second
+ * @param symbol_2
  *   The symbol string prepended to the second parameter.
  *   This is usually f_console_symbol_long_normal_s.
- * @param first
+ * @param name_1
  *   The first parameter name.
- * @param second
+ * @param name_2
  *   The second parameter name.
  *
  * @return
@@ -161,7 +161,7 @@ extern "C" {
  *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_fll_program_print_error_parameter_cannot_use_with_
-  extern f_status_t fll_program_print_error_parameter_cannot_use_with(const fl_print_t print, const f_string_static_t symbol_first, const f_string_static_t symbol_second, const f_string_static_t first, const f_string_static_t second);
+  extern f_status_t fll_program_print_error_parameter_cannot_use_with(const fl_print_t print, const f_string_static_t symbol_1, const f_string_static_t symbol_2, const f_string_static_t name_1, const f_string_static_t name_2);
 #endif // _di_fll_program_print_error_parameter_cannot_use_with_
 
 /**
@@ -177,20 +177,20 @@ extern "C" {
  * @param print
  *   The output structure.
  *   This locks, uses, and unlocks the file stream.
- * @param symbol_first
+ * @param symbol_1
  *   The symbol string prepended to the first parameter.
  *   This is usually f_console_symbol_long_normal_s.
- * @param symbol_second
+ * @param symbol_2
  *   The symbol string prepended to the second parameter.
  *   This is usually f_console_symbol_long_normal_s.
- * @param symbol_third
+ * @param symbol_3
  *   The symbol string prepended to the second parameter.
  *   This is usually f_console_symbol_long_normal_s.
- * @param first
+ * @param name_1
  *   The first parameter name (the parameter that cannot be used with the second parameter).
- * @param second
+ * @param name_2
  *   The second parameter name.
- * @param third
+ * @param name_3
  *   The third parameter name (the without parameter).
  *
  * @return
@@ -198,7 +198,7 @@ extern "C" {
  *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_fll_program_print_error_parameter_cannot_use_with_without_
-  extern f_status_t fll_program_print_error_parameter_cannot_use_with_without(const fl_print_t print, const f_string_static_t symbol_first, const f_string_static_t symbol_second, const f_string_static_t symbol_third, const f_string_static_t first, const f_string_static_t second, const f_string_static_t third);
+  extern f_status_t fll_program_print_error_parameter_cannot_use_with_without(const fl_print_t print, const f_string_static_t symbol_1, const f_string_static_t symbol_2, const f_string_static_t symbol_3, const f_string_static_t name_1, const f_string_static_t name_2, const f_string_static_t name_3);
 #endif // _di_fll_program_print_error_parameter_cannot_use_with_without_
 
 /**
@@ -217,7 +217,7 @@ extern "C" {
  * @param symbol
  *   The symbol string prepended to the first parameter.
  *   This is usually f_console_symbol_long_normal_s.
- * @param parameter
+ * @param name
  *   The parameter name.
  *
  * @return
@@ -225,7 +225,7 @@ extern "C" {
  *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_fll_program_print_error_parameter_cannot_use_with_pipe_
-  extern f_status_t fll_program_print_error_parameter_cannot_use_with_pipe(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t parameter);
+  extern f_status_t fll_program_print_error_parameter_cannot_use_with_pipe(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name);
 #endif // _di_fll_program_print_error_parameter_cannot_use_with_pipe_
 
 /**
@@ -241,24 +241,24 @@ extern "C" {
  * @param print
  *   The output structure.
  *   This locks, uses, and unlocks the file stream.
- * @param symbol_first
+ * @param symbol_1
  *   The symbol string prepended to the first parameter.
  *   This is usually f_console_symbol_long_normal_s.
- * @param symbol_second
+ * @param symbol_2
  *   The symbol string prepended to the second parameter.
  *   This is usually f_console_symbol_long_normal_s.
- * @param symbol_third
+ * @param symbol_3
  *   The symbol string prepended to the third parameter.
  *   This is usually f_console_symbol_long_normal_s.
- * @param first
+ * @param name_1
  *   The first parameter name.
  *
  *   This represents the parameter that imposes the exclusive or relation on the second and third parameters.
- * @param second
+ * @param name_2
  *   The second parameter name.
  *
  *   This represents the parameter that is an exclusive or with the third parameter.
- * @param third
+ * @param name_3
  *   The second parameter name.
  *
  *   This represents the parameter that is an exclusive or with the second parameter.
@@ -268,7 +268,7 @@ extern "C" {
  *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_fll_program_print_error_parameter_allows_either_xor_
-  extern f_status_t fll_program_print_error_parameter_cannot_use_with_xor(const fl_print_t print, const f_string_static_t symbol_first, const f_string_static_t symbol_second, const f_string_static_t symbol_third, const f_string_static_t first, const f_string_static_t second, const f_string_static_t third);
+  extern f_status_t fll_program_print_error_parameter_cannot_use_with_xor(const fl_print_t print, const f_string_static_t symbol_1, const f_string_static_t symbol_2, const f_string_static_t symbol_3, const f_string_static_t name_1, const f_string_static_t name_2, const f_string_static_t name_3);
 #endif // _di_fll_program_print_error_parameter_allows_either_xor_
 
 /**
@@ -288,7 +288,7 @@ extern "C" {
  *   The symbol string prepended to both parameters.
  *   This locks, uses, and unlocks the file stream.
  *   This is usually f_console_symbol_long_normal_s.
- * @param parameter
+ * @param name
  *   The parameter name.
  * @param value
  *   The value.
@@ -298,7 +298,7 @@ extern "C" {
  *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_fll_program_print_error_parameter_integer_not_
-  extern f_status_t fll_program_print_error_parameter_integer_not(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t parameter, const f_string_static_t value);
+  extern f_status_t fll_program_print_error_parameter_integer_not(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t value);
 #endif // _di_fll_program_print_error_parameter_integer_not_
 
 /**
@@ -318,7 +318,7 @@ extern "C" {
  *   The symbol string prepended to both parameters.
  *   This locks, uses, and unlocks the file stream.
  *   This is usually f_console_symbol_long_normal_s.
- * @param parameter
+ * @param name
  *   The parameter name.
  * @param value
  *   The value.
@@ -328,7 +328,7 @@ extern "C" {
  *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_fll_program_print_error_parameter_integer_not_negative_
-  extern f_status_t fll_program_print_error_parameter_integer_not_negative(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t parameter, const f_string_static_t value);
+  extern f_status_t fll_program_print_error_parameter_integer_not_negative(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t value);
 #endif // _di_fll_program_print_error_parameter_integer_not_negative_
 
 /**
@@ -348,7 +348,7 @@ extern "C" {
  *   The symbol string prepended to both parameters.
  *   This locks, uses, and unlocks the file stream.
  *   This is usually f_console_symbol_long_normal_s.
- * @param parameter
+ * @param name
  *   The parameter name.
  * @param value
  *   The value.
@@ -358,7 +358,7 @@ extern "C" {
  *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_fll_program_print_error_parameter_integer_not_positive_
-  extern f_status_t fll_program_print_error_parameter_integer_not_positive(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t parameter, const f_string_static_t value);
+  extern f_status_t fll_program_print_error_parameter_integer_not_positive(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t value);
 #endif // _di_fll_program_print_error_parameter_integer_not_positive_
 
 /**
@@ -378,7 +378,7 @@ extern "C" {
  *   The symbol string prepended to both parameters.
  *   This locks, uses, and unlocks the file stream.
  *   This is usually f_console_symbol_long_normal_s.
- * @param parameter
+ * @param name
  *   The parameter name.
  *
  * @return
@@ -386,7 +386,7 @@ extern "C" {
  *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_fll_program_print_error_parameter_missing_value_
-  f_status_t fll_program_print_error_parameter_missing_value(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t parameter);
+  f_status_t fll_program_print_error_parameter_missing_value(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name);
 #endif // _di_fll_program_print_error_parameter_missing_value_
 
 /**
@@ -406,7 +406,7 @@ extern "C" {
  *   The symbol string prepended to both parameters.
  *   This locks, uses, and unlocks the file stream.
  *   This is usually f_console_symbol_long_normal_s.
- * @param parameter
+ * @param name
  *   The parameter name.
  * @param amount
  *   A string representing the amount of missing parameters.
@@ -416,7 +416,7 @@ extern "C" {
  *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_fll_program_print_error_parameter_missing_value_requires_amount_
-  f_status_t fll_program_print_error_parameter_missing_value_requires_amount(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t parameter, const f_string_static_t amount);
+  f_status_t fll_program_print_error_parameter_missing_value_requires_amount(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t amount);
 #endif // _di_fll_program_print_error_parameter_missing_value_requires_amount_
 
 /**
@@ -436,7 +436,7 @@ extern "C" {
  *   The symbol string prepended to both parameters.
  *   This locks, uses, and unlocks the file stream.
  *   This is usually f_console_symbol_long_normal_s.
- * @param parameter
+ * @param name
  *   The parameter name.
  *
  * @return
@@ -444,7 +444,7 @@ extern "C" {
  *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_fll_program_print_error_parameter_must_specify_once_
-  extern f_status_t fll_program_print_error_parameter_must_specify_once(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t parameter);
+  extern f_status_t fll_program_print_error_parameter_must_specify_once(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name);
 #endif // _di_fll_program_print_error_parameter_must_specify_once_
 
 /**
@@ -464,7 +464,7 @@ extern "C" {
  *   The symbol string prepended to both parameters.
  *   This locks, uses, and unlocks the file stream.
  *   This is usually f_console_symbol_long_normal_s.
- * @param parameter
+ * @param name
  *   The parameter name.
  * @param value
  *   The value.
@@ -474,7 +474,7 @@ extern "C" {
  *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_fll_program_print_error_parameter_must_specify_once_value_
-  extern f_status_t fll_program_print_error_parameter_must_specify_once_value(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t parameter, const f_string_static_t value);
+  extern f_status_t fll_program_print_error_parameter_must_specify_once_value(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t value);
 #endif // _di_fll_program_print_error_parameter_must_specify_once_value_
 
 /**
@@ -494,7 +494,7 @@ extern "C" {
  *   The symbol string prepended to both parameters.
  *   This locks, uses, and unlocks the file stream.
  *   This is usually f_console_symbol_long_normal_s.
- * @param parameter
+ * @param name
  *   The parameter name.
  * @param value_start
  *   The range start value.
@@ -506,8 +506,29 @@ extern "C" {
  *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_fll_program_print_error_parameter_range_start_before_stop_
-  extern f_status_t fll_program_print_error_parameter_range_start_before_stop(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t parameter, const f_string_static_t value_start, const f_string_static_t value_stop);
+  extern f_status_t fll_program_print_error_parameter_range_start_before_stop(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t value_start, const f_string_static_t value_stop);
 #endif // _di_fll_program_print_error_parameter_range_start_before_stop_
+
+/**
+ * Print error message for when the parameter value is too long.
+ *
+ * @param print
+ *   The output structure.
+ *   This locks, uses, and unlocks the file stream.
+ * @param symbol
+ *   The symbol string prepended to both parameters.
+ *   This locks, uses, and unlocks the file stream.
+ *   This is usually f_console_symbol_long_normal_s.
+ * @param name
+ *   The parameter name.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ */
+#ifndef _di_fll_program_print_error_parameter_value_too_long_
+  extern f_status_t fll_program_print_error_parameter_value_too_long(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name);
+#endif // _di_fll_program_print_error_parameter_value_too_long_
 
 /**
  * Print a message about the pipe having an invalid form-feed character '\f' (U+000C).

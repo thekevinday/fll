@@ -16,7 +16,13 @@ extern "C" {
 #ifndef _di_fake_main_
   void fake_main(fll_program_data_t * const main, fake_setting_t * const setting) {
 
-    if (!main || !setting || F_status_is_error(setting->status)) return;
+    if (!main || !setting) return;
+
+    if (F_status_is_error(setting->status)) {
+      fake_print_line_last_locked(setting, main->error);
+
+      return;
+    }
 
     setting->status = F_none;
 
@@ -294,13 +300,11 @@ extern "C" {
       }
     }
 
-    if (setting->status != F_child) {
-      if (F_status_is_error(setting->status)) {
-        fake_print_line_last_locked(setting, main->error);
-      }
-      else if (setting->status != F_interrupt) {
-        fake_print_line_last_locked(setting, main->message);
-      }
+    if (F_status_is_error(setting->status)) {
+      fake_print_line_last_locked(setting, main->error);
+    }
+    else if (setting->status != F_interrupt && setting->status != F_child) {
+      fake_print_line_last_locked(setting, main->message);
     }
 
     fake_data_delete(&data);

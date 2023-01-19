@@ -184,9 +184,7 @@ extern "C" {
   #define FAKE_default_path_sources_s "sources" F_path_separator_s
   #define FAKE_default_path_work_s    ""
 
-  #define FAKE_default_define_s   ""
   #define FAKE_default_fakefile_s "fakefile"
-  #define FAKE_default_mode_s     ""
   #define FAKE_default_process_s  ""
   #define FAKE_default_settings_s "settings"
 
@@ -195,9 +193,7 @@ extern "C" {
   #define FAKE_default_path_sources_s_length 7 + F_path_separator_s_length
   #define FAKE_default_path_work_s_length    0
 
-  #define FAKE_default_define_s_length   0
   #define FAKE_default_fakefile_s_length 8
-  #define FAKE_default_mode_s_length     0
   #define FAKE_default_process_s_length  0
   #define FAKE_default_settings_s_length 8
 
@@ -206,9 +202,7 @@ extern "C" {
   extern const f_string_static_t fake_default_path_sources_s;
   extern const f_string_static_t fake_default_path_work_s;
 
-  extern const f_string_static_t fake_default_define_s;
   extern const f_string_static_t fake_default_fakefile_s;
-  extern const f_string_static_t fake_default_mode_s;
   extern const f_string_static_t fake_default_process_s;
   extern const f_string_static_t fake_default_settings_s;
 #endif // _di_fake_default_s_
@@ -453,12 +447,12 @@ extern "C" {
     fake_parameter_path_sources_e,
     fake_parameter_path_work_e,
 
-    fake_parameter_documents_disabled_e,
-    fake_parameter_documents_enabled_e,
-    fake_parameter_shared_disabled_e,
-    fake_parameter_shared_enabled_e,
-    fake_parameter_static_disabled_e,
-    fake_parameter_static_enabled_e,
+    fake_parameter_documents_disable_e,
+    fake_parameter_documents_enable_e,
+    fake_parameter_shared_disable_e,
+    fake_parameter_shared_enable_e,
+    fake_parameter_static_disable_e,
+    fake_parameter_static_enable_e,
 
     fake_parameter_operation_build_e,
     fake_parameter_operation_clean_e,
@@ -511,27 +505,33 @@ extern "C" {
  * Flags passed to the main function or program.
  *
  * fake_main_flag_*_e:
- *   - none:          No flags set.
- *   - file_from:     Using a specified source file.
- *   - file_to:       Using a specified destination file.
- *   - header:        Enable printing of headers.
- *   - help:          Print help.
- *   - separate:      Enable printing of separators.
- *   - strip_invalid: Using strip invalid character mode.
- *   - verify:        Using verify mode.
- *   - version:       Print version.
+ *   - none:             No flags set.
+ *   - enable_documents: Enable documents, as-in --enable-doc (not specifying means --disable-doc).
+ *   - enable_shared:    Enable shared, as-in --enable-shared (not specifying means --disable-shared).
+ *   - enable_static:    Enable static, as-in --enable-static (not specifying means --disable-static).
+ *   - file_from:        Using a specified source file.
+ *   - file_to:          Using a specified destination file.
+ *   - header:           Enable printing of headers.
+ *   - help:             Print help.
+ *   - separate:         Enable printing of separators.
+ *   - strip_invalid:    Using strip invalid character mode.
+ *   - verify:           Using verify mode.
+ *   - version:          Print version.
  */
 #ifndef _di_fake_main_flag_e_
   enum {
-    fake_main_flag_none_e          = 0x0,
-    fake_main_flag_file_from_e     = 0x1,
-    fake_main_flag_file_to_e       = 0x2,
-    fake_main_flag_header_e        = 0x4,
-    fake_main_flag_help_e          = 0x8,
-    fake_main_flag_separate_e      = 0x10,
-    fake_main_flag_strip_invalid_e = 0x20,
-    fake_main_flag_verify_e        = 0x40,
-    fake_main_flag_version_e       = 0x80,
+    fake_main_flag_none_e             = 0x0,
+    fake_main_flag_enable_documents_e = 0x1,
+    fake_main_flag_enable_shared_e    = 0x2,
+    fake_main_flag_enable_static_e    = 0x4,
+    fake_main_flag_file_from_e        = 0x8,
+    fake_main_flag_file_to_e          = 0x10,
+    fake_main_flag_header_e           = 0x20,
+    fake_main_flag_help_e             = 0x40,
+    fake_main_flag_separate_e         = 0x80,
+    fake_main_flag_strip_invalid_e    = 0x100,
+    fake_main_flag_verify_e           = 0x200,
+    fake_main_flag_version_e          = 0x400,
   }; // enum
 #endif // _di_fake_main_flag_e_
 
@@ -548,6 +548,67 @@ extern "C" {
  *
  * line_first: A string expected to represent either "\n" or NULL to allow for easy handling of when to print first new line or not.
  * line_last:  A string expected to represent either "\n" or NULL to allow for easy handling of when to print last new line or not.
+ *
+ * build:    The build directory.
+ * data:     The data directory.
+ * fakefile: The fakefile file path.
+ * process:  The process name.
+ * settings: The settings file path.
+ * sources:  The sources directory.
+ * work:     The work directory.
+ *
+ * path_build:                  The build path.
+ * path_build_documentation:    The build documentation path.
+ * path_build_documents:        The build documents path.
+ * path_build_includes:         The build includes path.
+ * path_build_libraries:        The build libraries path.
+ * path_build_libraries_script: The build libraries_script path.
+ * path_build_libraries_shared: The build libraries_shared path.
+ * path_build_libraries_static: The build libraries_static path.
+ * path_build_objects:          The build objects path.
+ * path_build_objects_script:   The build objects_script path.
+ * path_build_objects_shared:   The build objects_shared path.
+ * path_build_objects_static:   The build objects_static path.
+ * path_build_programs:         The build programs path.
+ * path_build_programs_script:  The build programs_script path.
+ * path_build_programs_shared:  The build programs_shared path.
+ * path_build_programs_static:  The build programs_static path.
+ * path_build_settings:         The build settings path.
+ * path_build_stage:            The build stage path.
+ *
+ * path_data:               The data path.
+ * path_data_build:         The build data path.
+ * path_data_documentation: The documentation data path.
+ * path_data_settings:      The settings data path.
+ *
+ * path_documents: The documents path.
+ * path_licenses:  The licenses path.
+ * path_sources:   The sources path.
+ *
+ * path_work:                  The work path.
+ * path_work_includes:         The includes work path.
+ * path_work_libraries:        The libraries work path.
+ * path_work_libraries_script: The libraries_script work path.
+ * path_work_libraries_shared: The libraries_shared work path.
+ * path_work_libraries_static: The libraries_static work path.
+ * path_work_programs:         The programs work path.
+ * path_work_programs_script:  The programs_script work path.
+ * path_work_programs_shared:  The programs_shared work path.
+ * path_work_programs_static:  The programs_static work path.
+ *
+ * file_data_build_defines:      The defines build file data.
+ * file_data_build_dependencies: The dependencies build file data.
+ * file_data_build_fakefile:     The fakefile build file data.
+ * file_data_build_process_post: The process_post_s build file data.
+ * file_data_build_process_pre:  The process_pre_s build file data.
+ * file_data_build_settings:     The settings build file data.
+ *
+ * file_documents_readme: The documents readme file data.
+
+ * defines: The define data.
+ * modes:   The mode data.
+ *
+ * operations: The operations, in the order in which they are given.
  */
 #ifndef _di_fake_setting_t_
   typedef struct {
@@ -558,6 +619,70 @@ extern "C" {
 
     f_string_static_t line_first;
     f_string_static_t line_last;
+
+    f_string_dynamic_t build;
+    f_string_dynamic_t data;
+    f_string_dynamic_t fakefile;
+    f_string_dynamic_t process;
+    f_string_dynamic_t settings;
+    f_string_dynamic_t sources;
+    f_string_dynamic_t work;
+
+    f_string_dynamic_t path_build;
+    f_string_dynamic_t path_build_documentation;
+    f_string_dynamic_t path_build_documents;
+    f_string_dynamic_t path_build_includes;
+    f_string_dynamic_t path_build_libraries;
+    f_string_dynamic_t path_build_libraries_script;
+    f_string_dynamic_t path_build_libraries_shared;
+    f_string_dynamic_t path_build_libraries_static;
+    f_string_dynamic_t path_build_objects;
+    f_string_dynamic_t path_build_objects_script;
+    f_string_dynamic_t path_build_objects_shared;
+    f_string_dynamic_t path_build_objects_static;
+    f_string_dynamic_t path_build_programs;
+    f_string_dynamic_t path_build_programs_script;
+    f_string_dynamic_t path_build_programs_shared;
+    f_string_dynamic_t path_build_programs_static;
+    f_string_dynamic_t path_build_settings;
+    f_string_dynamic_t path_build_stage;
+
+    f_string_dynamic_t path_data;
+    f_string_dynamic_t path_data_build;
+    f_string_dynamic_t path_data_documentation;
+    f_string_dynamic_t path_data_settings;
+
+    f_string_dynamic_t path_documents;
+
+    f_string_dynamic_t path_licenses;
+
+    f_string_dynamic_t path_sources;
+
+    f_string_dynamic_t path_work;
+    f_string_dynamic_t path_work_includes;
+    f_string_dynamic_t path_work_libraries;
+    f_string_dynamic_t path_work_libraries_script;
+    f_string_dynamic_t path_work_libraries_shared;
+    f_string_dynamic_t path_work_libraries_static;
+    f_string_dynamic_t path_work_programs;
+    f_string_dynamic_t path_work_programs_script;
+    f_string_dynamic_t path_work_programs_shared;
+    f_string_dynamic_t path_work_programs_static;
+
+    // @fixme there is overlap here with setting->fakefile and similar.
+    f_string_dynamic_t file_data_build_defines;
+    f_string_dynamic_t file_data_build_dependencies;
+    f_string_dynamic_t file_data_build_fakefile;
+    f_string_dynamic_t file_data_build_process_post;
+    f_string_dynamic_t file_data_build_process_pre;
+    f_string_dynamic_t file_data_build_settings;
+
+    f_string_dynamic_t file_documents_readme;
+
+    f_string_dynamics_t defines; // @todo conside instead: f_string_maps_t defines;
+    f_string_dynamics_t modes;
+
+    f_uint8s_t operations;
   } fake_setting_t;
 
   #define fake_setting_t_initialize \
@@ -567,6 +692,58 @@ extern "C" {
       F_none, \
       f_string_static_t_initialize, \
       f_string_static_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamics_t_initialize, \
+      f_string_dynamics_t_initialize, \
+      f_uint8s_t_initialize, \
     }
 #endif // _di_fake_setting_t_
 

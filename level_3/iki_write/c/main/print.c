@@ -12,7 +12,6 @@ extern "C" {
 
     iki_write_print_line_first_locked(setting, print);
     fll_error_print(print, F_status_set_fine(setting->status), function, F_true);
-    iki_write_print_line_last_locked(setting, print);
 
     return F_none;
   }
@@ -25,7 +24,6 @@ extern "C" {
 
     iki_write_print_line_first_locked(setting, print);
     fll_error_file_print(print, F_status_set_fine(setting->status), function, F_true, name, operation, type);
-    iki_write_print_line_last_locked(setting, print);
 
     return F_none;
   }
@@ -62,8 +60,6 @@ extern "C" {
     fl_print_format("%[%QThe object '%]", print.to, print.set->error, print.prefix, print.set->error);
     fl_print_format("%[%Q%]", print.to, print.set->notable, object, print.set->notable);
     fl_print_format("%[' is not a valid IKI Object.%]%r", print.to, print.set->error, print.set->error, f_string_eol_s);
-
-    iki_write_print_line_last_unlocked(setting, print);
 
     f_file_stream_unlock(print.to);
 

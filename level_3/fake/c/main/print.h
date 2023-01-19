@@ -85,9 +85,9 @@ extern "C" {
  * @param print
  *   Designates the how and where to print.
  * @param operation_1
- *   The symbol for the operation that cannot be used.
+ *   The name of the first operation that cannot be used.
  * @param operation_2
- *   The second operation that cannot be used.
+ *   The name of the second operation that cannot be used.
  *
  * @return
  *   F_none on success.
@@ -96,6 +96,30 @@ extern "C" {
 #ifndef _di_fake_print_error_parameter_operation_not_with_
   extern f_status_t fake_print_error_parameter_operation_not_with(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t operation_1, const f_string_static_t operation_2);
 #endif // _di_fake_print_error_parameter_operation_not_with_
+
+/**
+ * Print error message for when the parameter value is too long.
+ *
+ * @param setting
+ *   The main program settings.
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   Designates the how and where to print.
+ * @param symbol
+ *   The symbol of the parameter.
+ * @param name
+ *   The name of the parameter.
+ * @param value
+ *   The value that is too long.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ */
+#ifndef _di_fake_print_error_parameter_value_too_long_
+  extern f_status_t fake_print_error_parameter_value_too_long(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name);
+#endif // _di_fake_print_error_parameter_too_value_long_
 
 /**
  * Print help.

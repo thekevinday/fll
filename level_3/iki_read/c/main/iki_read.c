@@ -9,7 +9,13 @@ extern "C" {
 #ifndef _di_iki_read_main_
   void iki_read_main(fll_program_data_t * const main, iki_read_setting_t * const setting) {
 
-    if (!main || !setting || F_status_is_error(setting->status)) return;
+    if (!main || !setting) return;
+
+    if (F_status_is_error(setting->status)) {
+      iki_read_print_line_last_locked(setting, main->error);
+
+      return;
+    }
 
     setting->status = F_none;
 
@@ -39,11 +45,10 @@ extern "C" {
       }
       else {
         iki_read_process_buffer(main, setting);
-        if (F_status_is_error(setting->status)) return;
       }
     }
 
-    if (setting->files.used) {
+    if (F_status_is_error_not(setting->status) && setting->files.used) {
       f_file_t file = f_file_t_initialize;
       off_t size_block = 0;
       off_t size_file = 0;
@@ -57,7 +62,7 @@ extern "C" {
 
             setting->status = F_status_set_error(F_interrupt);
 
-            return;
+            break;
           }
 
           main->signal_check = 0;
@@ -71,7 +76,7 @@ extern "C" {
         if (F_status_is_error(setting->status)) {
           iki_read_print_error_file(setting, main->error, macro_iki_read_f(f_file_stream_open), setting->files.array[i], f_file_operation_process_s, fll_error_file_type_file_e);
 
-          return;
+          break;
         }
 
         setting->status = f_file_descriptor(&file);
@@ -79,7 +84,7 @@ extern "C" {
         if (F_status_is_error(setting->status)) {
           iki_read_print_error_file(setting, main->error, macro_iki_read_f(f_file_descriptor), setting->files.array[i], f_file_operation_process_s, fll_error_file_type_file_e);
 
-          return;
+          break;
         }
 
         size_file = 0;
@@ -146,7 +151,7 @@ extern "C" {
         f_file_stream_close(&file);
 
         iki_read_process_buffer(main, setting);
-        if (F_status_is_error(setting->status)) return;
+        if (F_status_is_error(setting->status)) break;
 
         setting->buffer.used = 0;
       } // for
@@ -154,13 +159,15 @@ extern "C" {
       if (F_status_is_error(setting->status)) {
         f_file_stream_flush(file);
         f_file_stream_close(&file);
-
-        return;
       }
     }
 
-    // Ensure a new line is always put at the end of the program execution.
-    iki_read_print_line_last_locked(setting, main->message);
+    if (F_status_is_error(setting->status)) {
+      iki_read_print_line_last_locked(setting, main->error);
+    }
+    else if (setting->status != F_interrupt) {
+      iki_read_print_line_last_locked(setting, main->message);
+    }
   }
 #endif // _di_iki_read_main_
 
