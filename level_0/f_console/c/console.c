@@ -399,17 +399,8 @@ extern "C" {
       parameters->arguments.array[parameters->arguments.used++].size = 0;
     } // for
 
-    if (F_status_is_error(status)) {
-      f_array_lengths_resize(0, &needs_value);
-
-      return status;
-    }
-
-    if (needs_value.used) {
-      status = F_complete_not;
-    }
-    else {
-      status = F_none;
+    if (F_status_is_error_not(status)) {
+      status = needs_value.used ? F_complete_not : F_none;
     }
 
     f_array_lengths_resize(0, &needs_value);
