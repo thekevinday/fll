@@ -76,6 +76,30 @@ extern "C" {
 #endif // _di_fake_print_error_failure_script_
 
 /**
+ * Print error message for when the parameter value contains a non-word, non-minus, and non-plus character.
+ *
+ * @param setting
+ *   The main program settings.
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   Designates the how and where to print.
+ * @param symbol
+ *   The symbol of the parameter.
+ * @param name
+ *   The name of the parameter.
+ * @param value
+ *   The value that is invalid.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ */
+#ifndef _di_fake_print_error_parameter_not_word_
+  extern f_status_t fake_print_error_parameter_not_word(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t value);
+#endif // _di_fake_print_error_parameter_not_word_
+
+/**
  * Print error message for when two designated operations cannot be used together.
  *
  * @param setting

@@ -16,6 +16,7 @@ extern "C" {
     "f_string_dynamic_increase_by",
     "f_string_dynamic_mash",
     "f_string_dynamic_resize",
+    "f_string_dynamics_increase_by",
     "f_uint8s_increase_by",
     "f_utf_is_word_dash_plus",
     "fl_directory_copy",

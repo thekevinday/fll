@@ -354,6 +354,12 @@ extern "C" {
 
     fll_print_dynamic_raw(setting->line_last, print.to);
 
+    // Two lines are printed because the normal final end of line is never printed by design.
+    // If this is an error or the header flag is set, then the normal end of line is printed by design so do not print this second new line.
+    if (F_status_is_error_not(setting->status) && !(setting->flag & utf8_main_flag_header_e)) {
+      fll_print_dynamic_raw(setting->line_last, print.to);
+    }
+
     return F_none;
   }
 #endif // _di_utf8_print_line_last_locked_

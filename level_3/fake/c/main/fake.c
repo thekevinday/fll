@@ -38,103 +38,11 @@ extern "C" {
       return;
     }
 
+    // @todo everything below is old, mostly.
     fake_data_t data = fake_data_t_initialize;
     data.main = main;
     data.setting = setting;
     data.argv = main->parameters.arguments.array;
-
-    // @todo move operations processing into the common settings loader.
-    f_array_length_t operations_length = main->parameters.array[fake_parameter_operation_build_e].locations.used;
-
-    operations_length += main->parameters.array[fake_parameter_operation_clean_e].locations.used;
-    operations_length += main->parameters.array[fake_parameter_operation_make_e].locations.used;
-    operations_length += main->parameters.array[fake_parameter_operation_skeleton_e].locations.used;
-
-    // Ensure the default operation always exists.
-    if (operations_length) {
-      data.flag |= fake_data_flag_operation_e;
-    }
-    else {
-      operations_length = 1;
-    }
-
-    uint8_t operations[operations_length];
-    f_string_static_t operations_name = f_string_static_t_initialize;
-
-    if (data.flag & fake_data_flag_operation_e) {
-      f_array_length_t locations[operations_length];
-      f_array_length_t locations_length = 0;
-      f_array_length_t i = 0;
-      f_array_length_t j = 0;
-      f_array_length_t k = 0;
-
-      for (; i < main->parameters.array[fake_parameter_operation_build_e].locations.used; ++i, ++locations_length) {
-
-        operations[locations_length] = fake_operation_build_e;
-        locations[locations_length] = main->parameters.array[fake_parameter_operation_build_e].locations.array[i];
-      } // for
-
-      for (i = 0; i < main->parameters.array[fake_parameter_operation_clean_e].locations.used; ++i) {
-
-        for (j = 0; j < locations_length; ++j) {
-
-          if (main->parameters.array[fake_parameter_operation_clean_e].locations.array[i] < locations[j]) {
-            for (k = locations_length; k > j; --k) {
-              locations[k] = locations[k - 1];
-              operations[k] = operations[k - 1];
-            } // for
-
-            break;
-          }
-        } // for
-
-        locations[j] = main->parameters.array[fake_parameter_operation_clean_e].locations.array[i];
-        operations[j] = fake_operation_clean_e;
-        ++locations_length;
-      } // for
-
-      for (i = 0; i < main->parameters.array[fake_parameter_operation_make_e].locations.used; ++i) {
-
-        for (j = 0; j < locations_length; ++j) {
-
-          if (main->parameters.array[fake_parameter_operation_make_e].locations.array[i] < locations[j]) {
-            for (k = locations_length; k > j; --k) {
-              locations[k] = locations[k - 1];
-              operations[k] = operations[k - 1];
-            } // for
-
-            break;
-          }
-        } // for
-
-        locations[j] = main->parameters.array[fake_parameter_operation_make_e].locations.array[i];
-        operations[j] = fake_operation_make_e;
-        ++locations_length;
-      } // for
-
-      for (i = 0; i < main->parameters.array[fake_parameter_operation_skeleton_e].locations.used; ++i) {
-
-        for (j = 0; j < locations_length; ++j) {
-
-          if (main->parameters.array[fake_parameter_operation_skeleton_e].locations.array[i] < locations[j]) {
-            for (k = locations_length; k > j; --k) {
-
-              locations[k] = locations[k - 1];
-              operations[k] = operations[k - 1];
-            } // for
-
-            break;
-          }
-        } // for
-
-        locations[j] = main->parameters.array[fake_parameter_operation_skeleton_e].locations.array[i];
-        operations[j] = fake_operation_skeleton_e;
-        ++locations_length;
-      } // for
-    }
-    else {
-      operations[0] = fake_operation_make_e;
-    }
 
     if (F_status_is_error_not(setting->status)) {
       if (main->parameters.array[fake_parameter_operation_build_e].locations.used && main->parameters.array[fake_parameter_operation_make_e].locations.used) {
@@ -162,7 +70,7 @@ extern "C" {
       {
         uint8_t i = 0;
 
-        if ((main->pipe & fll_program_data_pipe_input_e) && !(data.flag & fake_data_flag_operation_e)) {
+        if ((main->pipe & fll_program_data_pipe_input_e) && !(data.setting->flag & fake_data_flag_operation_e)) {
           data.file_data_build_fakefile.used = 0;
 
           setting->status = f_string_dynamic_append(f_string_ascii_minus_s, &data.file_data_build_fakefile);

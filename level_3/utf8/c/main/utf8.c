@@ -33,6 +33,10 @@ extern "C" {
       return;
     }
 
+    if (!(setting->flag & utf8_main_flag_header_e)) {
+      utf8_print_line_first_locked(setting, main->message);
+    }
+
     f_status_t valid = F_true;
 
     if (main->pipe & fll_program_data_pipe_input_e) {
@@ -148,22 +152,6 @@ extern "C" {
         utf8_print_section_header_parameter(setting, main->output, main->parameters.remaining.array[i]);
 
         setting->status = utf8_process_text(main, setting, main->parameters.arguments.array[main->parameters.remaining.array[i]]);
-
-        if (setting->mode & utf8_mode_to_bytesequence_e) {
-          if (setting->flag & utf8_main_flag_header_e) {
-            fll_print_dynamic_raw(f_string_eol_s, main->output.to);
-          }
-          else if ((setting->flag & utf8_main_flag_separate_e) && i + 1 < main->parameters.remaining.used) {
-            fll_print_dynamic_raw(f_string_eol_s, main->output.to);
-          }
-        }
-        else {
-          if (!(setting->flag & (utf8_main_flag_file_to_e | utf8_main_flag_header_e | utf8_main_flag_verify_e))) {
-            if (!(setting->flag & utf8_main_flag_separate_e)) {
-              fll_print_dynamic_raw(f_string_eol_s, main->output.to);
-            }
-          }
-        }
 
         if (setting->flag & utf8_main_flag_verify_e) {
           if (setting->status == F_false) {

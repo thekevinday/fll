@@ -58,7 +58,7 @@ extern "C" {
     setting->flag = 0;
 
     // Load parameters.
-    setting->status = f_console_parameter_process(arguments, &main->parameters);
+    setting->status = f_console_parameter_process(arguments, &main->parameters, 0);
 
     if (F_status_is_error(setting->status)) {
       iki_write_print_error(setting, main->error, macro_iki_write_f(f_console_parameter_process));

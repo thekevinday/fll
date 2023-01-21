@@ -386,7 +386,7 @@ extern "C" {
  *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_fll_program_print_error_parameter_missing_value_
-  f_status_t fll_program_print_error_parameter_missing_value(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name);
+  extern f_status_t fll_program_print_error_parameter_missing_value(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name);
 #endif // _di_fll_program_print_error_parameter_missing_value_
 
 /**
@@ -416,7 +416,7 @@ extern "C" {
  *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_fll_program_print_error_parameter_missing_value_requires_amount_
-  f_status_t fll_program_print_error_parameter_missing_value_requires_amount(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t amount);
+  extern f_status_t fll_program_print_error_parameter_missing_value_requires_amount(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t amount);
 #endif // _di_fll_program_print_error_parameter_missing_value_requires_amount_
 
 /**
@@ -476,6 +476,34 @@ extern "C" {
 #ifndef _di_fll_program_print_error_parameter_must_specify_once_value_
   extern f_status_t fll_program_print_error_parameter_must_specify_once_value(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t value);
 #endif // _di_fll_program_print_error_parameter_must_specify_once_value_
+
+/**
+ * Print message about parameter processing failure.
+ *
+ * This is only printed when verbosity is not set to quiet.
+ *
+ * This uses the following:
+ *   - print.set->error: For the error context.
+ *   - print.set->strong: For the highlighting context
+ *   - print.prefix: For the prefixing a string to the message (such as "ERROR:").
+ *
+ * @param print
+ *   The output structure.
+ *   This locks, uses, and unlocks the file stream.
+ * @param symbol
+ *   The symbol string prepended to both parameters.
+ *   This locks, uses, and unlocks the file stream.
+ *   This is usually f_console_symbol_long_normal_s.
+ * @param name
+ *   The parameter name.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ */
+#ifndef _di_fll_program_print_error_parameter_process_
+  extern f_status_t fll_program_print_error_parameter_process(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name);
+#endif // _di_fll_program_print_error_parameter_process_
 
 /**
  * Print message about a specific value only being allowed to be used once for the parameter.

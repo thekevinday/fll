@@ -17,6 +17,133 @@ extern "C" {
 #endif
 
 /**
+ * The maximum size for a single parameter (the length of the string representing the parameter).
+ *
+ * The ideal parameter value is F_array_length_t_size_d, which generally defaults to 2^64 (unsigned).
+ * However, the libc/POSIX appears to limit this to 2^63 (signed).
+ */
+#ifndef _di_f_console_length_size_d_
+  #define F_console_parameter_size_d F_string_t_size_d
+#endif // _di_f_console_length_size_d_
+
+/**
+ * Provide console flags.
+ *
+ * The flags are bits or sets of bits used for designating different states of the parameter.
+ *
+ * The disabled flag prevents it from being processed at all and will be treated as other data.
+ * If the flag should still be processed, then do not set disabled flag and instead just ignore it when found.
+ *
+ * f_console_flag_*e:
+ *   - none:    No flag data is set.
+ *   - normal:  Parameters using minus sign, such as '--help' ("inverse" and "additional" bits are 0.
+ *   - inverse: Parameters using plus sign, such as '++version'.
+ *   - simple:  Parameters using neither minus nor plus sign, such as 'build'.
+ *   - complex: Parameters that provide a set of additional parameters, similar to 'git clone http:s//..' (Not yet implemented).
+ *   - disable: This parameter is disabled (does not get processed).
+ *
+ * f_console_flag_mask_*:
+ *   - type:  A mask for selecting the bits representing all possible type value flags.
+ *   - state: A mask for selecting the bits representing all possible state flags.
+ */
+#ifndef _di_f_console_flag_e_
+  enum {
+    f_console_flag_none_e    = 0x0,
+
+    // Type flags.
+    f_console_flag_normal_e  = 0x1,
+    f_console_flag_inverse_e = 0x2,
+    f_console_flag_simple_e  = 0x4,
+    f_console_flag_complex_e = 0x8,
+
+    // State flags.
+    f_console_flag_disable_e = 0x10,
+  }; // enum
+
+  #define f_console_flag_mask_type_d  0xf
+  #define f_console_flag_mask_state_d 0x10
+#endif // _di_f_console_flag_e_
+
+/**
+ * Result values that represent the type of command found.
+ *
+ * Here "alone" refers to '-', or '++', in that they only have the symbols (whereas '-x', or '++x' would not be alone).
+ *
+ * f_console_result_*e:
+ *   - none:    No flags are set.
+ *   - found:   The parameter has been found.
+ *   - normal:  The normal prefix character ("-" by default) has been found.
+ *   - inverse: The inverse prefix character ("+" by default) has been found.
+ *   - short:   The found prefix is short (only a single character, such as "-" or "+").
+ *   - long:    The found prefix is long (two characters, such as "--" or "++").
+ *   - alone:   The prefix character is by itself (such as only "-" rather than "-h").
+ *   - value:   One or more values associated with the parameter have been found.
+ */
+#ifndef _di_f_console_result_e_
+  enum {
+    f_console_result_none_e    = 0x0,
+    f_console_result_found_e   = 0x1,
+    f_console_result_normal_e  = 0x2,
+    f_console_result_inverse_e = 0x4,
+    f_console_result_short_e   = 0x8,
+    f_console_result_long_e    = 0x10,
+    f_console_result_alone_e   = 0x20,
+    f_console_result_value_e   = 0x40,
+  }; // enum
+#endif // _di_f_console_result_e_
+
+/**
+ * Provide the standard verbosity codes.
+ *
+ * Intended to be used for the basic/standard verbosity modes for all programs following this practice.
+ * The options are subjective in interpretation of the verbosity but are expected to be follow the general interpretation.
+ *
+ * These are expected to be in numeric order such that the smallest number is the least verbose and the highest number is the most verbose.
+ *
+ * f_console_verbosity_*:
+ *   - none:    No verbosity is configured, this should either be treated as equivalent to quiet or as no verbosity is defined.
+ *   - quiet:   Verbosity is set to quiet; decrease verbosity, print less, in some use cases this could mean printing nothing.
+ *   - error:   Verbosity is set to error; similar to quiet, except that error messages are printed (this is less verbose than "normal").
+ *   - normal:  Verbosity is set to normal; use normal printing (don't use debug/quiet/verbose).
+ *   - verbose: Verbosity is set to verbose; increase verbosity, print more, in some use cases this could mean printing just about everything.
+ *   - debug:   Verbosity is set to debug; enable debugging, which will likely increase output verbosity.
+ */
+#ifndef _di_f_console_verbosity_e_
+  enum {
+    f_console_verbosity_none_e = 0,
+    f_console_verbosity_quiet_e,
+    f_console_verbosity_error_e,
+    f_console_verbosity_normal_e,
+    f_console_verbosity_verbose_e,
+    f_console_verbosity_debug_e,
+  }; // enum
+#endif // _di_f_console_verbosity_e_
+
+/**
+ * Provide a special type explicitly intended to be used for f_console_parameter_state_t.
+ *
+ * f_console_parameter_state_type_*_e:
+ *   - none:            No type set.
+ *   - identify:        Perform identify processing.
+ *   - match_normal:    Perform short or long parameter match processing.
+ *   - match_not:       Perform no parameter match processing.
+ *   - match_remaining: Perform remaining parameter match processing.
+ *   - value_need:      Perform value is needed processing.
+ *   - wrap_up:         Perform wrap up processing.
+ */
+#ifndef _di_f_console_parameter_state_type_e_
+  enum {
+    f_console_parameter_state_type_none_e = 0,
+    f_console_parameter_state_type_identify_e,
+    f_console_parameter_state_type_match_normal_e,
+    f_console_parameter_state_type_match_not_e,
+    f_console_parameter_state_type_match_remaining_e,
+    f_console_parameter_state_type_value_need_e,
+    f_console_parameter_state_type_wrap_up_e,
+  }; // enum
+#endif // _di_f_console_parameter_state_type_e_
+
+/**
  * The symbols passed to the program for option handling.
  *
  * For historical reasons the "-" is the normal symbol and "+" is the inverse.
@@ -50,6 +177,288 @@ extern "C" {
     extern const f_string_static_t f_console_symbol_long_inverse_s;
   #endif // _di_f_console_symbol_long_inverse_s_
 #endif // _di_f_console_symbol_s_
+
+/**
+ * Provide console flag data type.
+ */
+#ifndef _di_f_console_flag_t_
+  typedef uint8_t f_console_flag_t;
+
+  #define f_console_flag_t_initialize f_console_flag_none_e
+#endif // _di_f_console_flag_t_
+
+/**
+ * The console result data type.
+ */
+#ifndef _di_f_console_result_t_
+  typedef uint8_t f_console_result_t;
+
+  #define f_console_result_t_initialize f_console_result_none_e
+#endif // _di_f_console_result_t_
+
+/**
+ * Provide a helper structure for referencing the argc and argv standard main arguments.
+ *
+ * This is intended to only store the argc and argv and should not be treated as dynamic.
+ *
+ * argc: The total number of arguments in argv.
+ *
+ * argv: An array of strings representing arguments passed to some program.
+ * envp: Any array of strings representing all environment variables at the time the program is called.
+ *
+ * macro_f_console_arguments_t_initialize() initializes the structure.
+ */
+#ifndef _di_f_console_arguments_t_
+  typedef struct {
+    const f_number_unsigned_t argc;
+
+    const f_string_t *argv;
+    const f_string_t *envp;
+  } f_console_arguments_t;
+
+  #define f_console_arguments_t_initialize { 0, 0, 0 }
+
+  #define macro_f_console_arguments_t_initialize(argc, argv, envp) { argc, argv, envp }
+#endif // _di_f_console_arguments_t_
+
+/**
+ * State exclusively intended to be used by f_console_parameter_process() and the associated callback.
+ *
+ * How these are used is tightly coupled to the f_console_parameter_process().
+ * The f_console_parameter_process() function should be read for the detailed explanation on how to use these.
+ * The description here is a relatively generalized description.
+ *
+ * Any changes to the f_console_parameter_process() code likely requires changes or re-interpretation of these properties.
+ */
+#ifndef _di_f_console_parameter_state_t_
+  typedef struct {
+    uint8_t type;
+    uint8_t depth;
+    bool found;
+
+    f_status_t status;
+    f_console_result_t result;
+
+    unsigned long location;
+    f_array_length_t location_sub;
+    f_array_length_t increment_by;
+    f_array_lengths_t value_need;
+  } f_console_parameter_state_t;
+
+  #define f_console_parameter_state_t_initialize { \
+    f_console_parameter_state_type_none_e, \
+    0, \
+    F_false, \
+    F_none, \
+    f_console_result_t_initialize, \
+    0, \
+    0, \
+    0, \
+    f_array_lengths_t_initialize, \
+  }
+#endif // _di_f_console_parameter_state_t_
+
+/**
+ * Provide a structure for describing console parameters for the console processing functions to use.
+ *
+ * The short parameters are prepended with either '-' or '+'.
+ * The long parameters are prepended with either '--' or '++'.
+ * The simple parameters have no prefix characters.
+ *
+ * symbol_short:  The NULL terminated single character string, such as 'h' in '-h'.
+ * symbol_long:   The NULL terminated multi-character string, such as 'help' in '--help'.
+ * symbol_simple: The NULL terminated parameter that has no prefix, such as 'all' in 'make all'.
+ * values_total:  Designates that a parameter will have a given number of values arguments, such as 'blue' in '--color blue'.
+ * flag:          A set of bits for providing states associated with the parameter.
+ * result:        A set of bits representing if and how the parameter is found (such as '-h' vs '--help').
+ * location:      The last location in argv[] where this parameter is found.
+ * location_sub:  The last sub-location at location in argv (only used by short parameters, such as -h or +l).
+ * locations:     All locations within argv where this parameter is found (order is preserved).
+ * locations_sub: All sub-locations within argv where this parameter is found (order is preserved).
+ * values:        An array of locations representing where in the argv[] the values arguments are found.
+ *
+ * The macro_f_console_parameter_t_initialize_1() all arguments.
+ * The macro_f_console_parameter_t_initialize_2() reduced arguments.
+ * The macro_f_console_parameter_t_initialize_3() reduced arguments, strings are of f_string_static_t, has short, long, and simple.
+ * The macro_f_console_parameter_t_initialize_4() reduced arguments, strings are of f_string_static_t, has short and long.
+ * The macro_f_console_parameter_t_initialize_5() reduced arguments, strings are of f_string_static_t, has short.
+ * The macro_f_console_parameter_t_initialize_6() reduced arguments, strings are of f_string_static_t, has long.
+ * The macro_f_console_parameter_t_initialize_7() reduced arguments, strings are of f_string_static_t, has simple.
+ */
+#ifndef _di_f_console_parameter_t_
+  typedef struct {
+    f_string_t symbol_short;
+    f_string_t symbol_long;
+    f_string_t symbol_simple;
+
+    f_array_length_t values_total;
+
+    f_console_flag_t flag;
+    f_console_result_t result;
+    f_array_length_t location;
+    f_array_length_t location_sub;
+    f_array_lengths_t locations;
+    f_array_lengths_t locations_sub;
+    f_array_lengths_t values;
+  } f_console_parameter_t;
+
+  #define f_console_parameter_t_initialize { \
+    0, \
+    0, \
+    0, \
+    f_console_flag_t_initialize, \
+    f_console_result_t_initialize, \
+    f_array_length_t_initialize, \
+    f_array_length_t_initialize, \
+    f_array_length_t_initialize, \
+    f_array_lengths_t_initialize, \
+    f_array_lengths_t_initialize, \
+    f_array_lengths_t_initialize, \
+  }
+
+  #define macro_f_console_parameter_t_initialize_1(symbol_short, symbol_long, symbol_simple, values_total, flag, result, location, location_sub, locations, locations_sub, values) { \
+    symbol_short, \
+    symbol_long, \
+    symbol_simple, \
+    values_total, \
+    flag, \
+    result, \
+    total, \
+    location, \
+    location_sub, \
+    locations, \
+    locations_sub, \
+    values, \
+  }
+
+  #define macro_f_console_parameter_t_initialize_2(symbol_short, symbol_long, symbol_simple, values_total, flag) { \
+    symbol_short, \
+    symbol_long, \
+    symbol_simple, \
+    values_total, \
+    flag, \
+    f_console_result_none_e, \
+    0, \
+    0, \
+    f_array_lengths_t_initialize, \
+    f_array_lengths_t_initialize, \
+    f_array_lengths_t_initialize, \
+  }
+
+  #define macro_f_console_parameter_t_initialize_3(symbol_short, symbol_long, symbol_simple, values_total, flag) { \
+    symbol_short.string, \
+    symbol_long.string, \
+    symbol_simple.string, \
+    values_total, \
+    flag, \
+    f_console_result_none_e, \
+    0, \
+    0, \
+    f_array_lengths_t_initialize, \
+    f_array_lengths_t_initialize, \
+    f_array_lengths_t_initialize, \
+  }
+
+  #define macro_f_console_parameter_t_initialize_4(symbol_short, symbol_long, values_total, flag) { \
+    symbol_short.string, \
+    symbol_long.string, \
+    0, \
+    values_total, \
+    flag, \
+    f_console_result_none_e, \
+    0, \
+    0, \
+    f_array_lengths_t_initialize, \
+    f_array_lengths_t_initialize, \
+    f_array_lengths_t_initialize, \
+  }
+
+  #define macro_f_console_parameter_t_initialize_5(symbol_short, values_total, flag) { \
+    symbol_short.string, \
+    0, \
+    0, \
+    values_total, \
+    flag, \
+    f_console_result_none_e, \
+    0, \
+    0, \
+    f_array_lengths_t_initialize, \
+    f_array_lengths_t_initialize, \
+    f_array_lengths_t_initialize, \
+  }
+
+  #define macro_f_console_parameter_t_initialize_6(symbol_long, values_total, flag) { \
+    0, \
+    symbol_long.string, \
+    0, \
+    values_total, \
+    flag, \
+    f_console_result_none_e, \
+    0, \
+    0, \
+    f_array_lengths_t_initialize, \
+    f_array_lengths_t_initialize, \
+    f_array_lengths_t_initialize, \
+    callback \
+  }
+
+  #define macro_f_console_parameter_t_initialize_7(symbol_simple, values_total, flag) { \
+    0, \
+    0, \
+    symbol_simple.string, \
+    values_total, \
+    flag, \
+    f_console_result_none_e, \
+    0, \
+    0, \
+    f_array_lengths_t_initialize, \
+    f_array_lengths_t_initialize, \
+    f_array_lengths_t_initialize, \
+  }
+#endif // _di_f_console_parameter_t_
+
+/**
+ * Provide a helper structure for references and processing parameters.
+ *
+ * Designed for passing this to a function as a single argument.
+ *
+ * This is not intended to be dynamically allocated, so there is no "size" property.
+ *
+ * array:     Intended to be populated with an array of f_console_parameter_t whose size is defined by the "used" property.
+ * arguments: An array of arguments pointing to the argv[] strings with the string lengths already calculated (This is a dynamic array of f_string_static_t).
+ * remaining: An array of indexes within the arguments representing unmatched parameters.
+ * length:    The total number of parameters in the parameters array.
+ * callback:  A callback to perform when matched in order to handle condition values.
+ *
+ * The callback function arguments:
+ *   - arguments:  The console arguments being processed.
+ *   - parameters: A pointer to this parameter structure and must be of type f_console_parameter_t.
+ *   - state:      The state information shared between the processing function and any callbacks.
+ *   - data:       The structure determined by the caller for passing to the parameter processing function and is intended to be used for updating based on results.
+ *
+ * The callback function state.status interpretations:
+ *   - F_none:     On no error and processing complete.
+ *   - F_break:    To tell the caller to break out of the loop (based on depth, when applicable).
+ *   - F_continue: To tell the caller to continue the loop (based on depth, when applicable).
+ *   - F_process:  To tell the caller to perform the built in functionality.
+ *   - Any status with error bit set is treated as an error and calling function returns.
+ */
+#ifndef _di_f_console_parameters_t_
+  typedef struct {
+    f_console_parameter_t *array;
+
+    f_string_dynamics_t arguments;
+    f_array_lengths_t remaining;
+
+    f_array_length_t used;
+
+    void (*callback)(const f_console_arguments_t arguments, void * const parameters, f_console_parameter_state_t * const state, void * const data);
+  } f_console_parameters_t;
+
+  #define f_console_parameters_t_initialize {0, f_string_dynamics_t_initialize, f_array_lengths_t_initialize, 0, 0 }
+
+  #define macro_f_console_parameters_t_initialize(parameter, used, callback) { parameter, f_string_dynamics_t_initialize, f_array_lengths_t_initialize, used, callback }
+#endif // _di_f_console_parameters_t_
 
 /**
  * Create some standard command line parameter options required/expected by the kevux/fss/fll specifications.
@@ -261,346 +670,6 @@ extern "C" {
     extern const f_string_static_t f_console_standard_long_version_s;
   #endif // _di_f_console_standard_long_version_s_
 #endif // _di_f_console_standard_s_
-
-/**
- * The maximum size for a single parameter (the length of the string representing the parameter).
- *
- * The ideal parameter value is F_array_length_t_size_d, which generally defaults to 2^64 (unsigned).
- * However, the libc/POSIX appears to limit this to 2^63 (signed).
- */
-#ifndef _di_f_console_length_size_
-  #define F_console_parameter_size_d F_string_t_size_d
-#endif // _di_f_console_length_size_
-
-/**
- * Provide console flag data type.
- */
-#ifndef _di_f_console_flag_t_
-  typedef uint8_t f_console_flag_t;
-
-  #define f_console_flag_t_initialize 0
-#endif // _di_f_console_flag_t_
-
-/**
- * Provide console flags.
- *
- * The flags are bits or sets of bits used for designating different states of the parameter.
- *
- * The disabled flag prevents it from being processed at all and will be treated as other data.
- * If the flag should still be processed, then do not set disabled flag and instead just ignore it when found.
- *
- * f_console_flag_*e:
- *   - none:    No flag data is set.
- *   - normal:  Parameters using minus sign, such as '--help' ("inverse" and "additional" bits are 0.
- *   - inverse: Parameters using plus sign, such as '++version'.
- *   - simple:  Parameters using neither minus nor plus sign, such as 'build'.
- *   - complex: Parameters that provide a set of additional parameters, similar to 'git clone http:s//..' (Not yet implemented).
- *   - disable: This parameter is disabled (does not get processed).
- *
- * f_console_flag_mask_*:
- *   - type:  A mask for selecting the bits representing all possible type value flags.
- *   - state: A mask for selecting the bits representing all possible state flags.
- */
-#ifndef _di_f_console_flag_e_
-  enum {
-    f_console_flag_none_e    = 0x0,
-
-    // Type flags.
-    f_console_flag_normal_e  = 0x1,
-    f_console_flag_inverse_e = 0x2,
-    f_console_flag_simple_e  = 0x4,
-    f_console_flag_complex_e = 0x8,
-
-    // State flags.
-    f_console_flag_disable_e = 0x10,
-  }; // enum
-
-  #define f_console_flag_mask_type_d  0xf
-  #define f_console_flag_mask_state_d 0x10
-#endif // _di_f_console_flag_e_
-
-/**
- * The console result data type.
- */
-#ifndef _di_f_console_result_t_
-  typedef uint8_t f_console_result_t;
-
-  #define f_console_result_t_initialize 0
-#endif // _di_f_console_result_t_
-
-/**
- * Result values that represent the type of command found.
- *
- * Here "alone" refers to '-', or '++', in that they only have the symbols (whereas '-x', or '++x' would not be alone).
- *
- * f_console_result_*e:
- *   - none:    No flags are set.
- *   - found:   The parameter has been found.
- *   - normal:  The normal prefix character ("-" by default) has been found.
- *   - inverse: The inverse prefix character ("+" by default) has been found.
- *   - short:   The found prefix is short (only a single character, such as "-" or "+").
- *   - long:    The found prefix is long (two characters, such as "--" or "++").
- *   - alone:   The prefix character is by itself (such as only "-" rather than "-h").
- *   - value:   One or more values associated with the parameter have been found.
- */
-#ifndef _di_f_console_result_e_
-  enum {
-    f_console_result_none_e    = 0x0,
-    f_console_result_found_e   = 0x1,
-    f_console_result_normal_e  = 0x2,
-    f_console_result_inverse_e = 0x4,
-    f_console_result_short_e   = 0x8,
-    f_console_result_long_e    = 0x10,
-    f_console_result_alone_e   = 0x20,
-    f_console_result_value_e   = 0x40,
-  }; // enum
-#endif // _di_f_console_result_e_
-
-/**
- * Provide the standard verbosity codes.
- *
- * Intended to be used for the basic/standard verbosity modes for all programs following this practice.
- * The options are subjective in interpretation of the verbosity but are expected to be follow the general interpretation.
- *
- * These are expected to be in numeric order such that the smallest number is the least verbose and the highest number is the most verbose.
- *
- * f_console_verbosity_*:
- *   - quiet:   Verbosity is set to quiet; decrease verbosity, print less, in some use cases this could mean printing nothing.
- *   - error:   Verbosity is set to error; similar to quiet, except that error messages are printed (this is less verbose than "normal").
- *   - normal:  Verbosity is set to normal; use normal printing (don't use debug/quiet/verbose).
- *   - verbose: Verbosity is set to verbose; increase verbosity, print more, in some use cases this could mean printing just about everything.
- *   - debug:   Verbosity is set to debug; enable debugging, which will likely increase output verbosity.
- */
-#ifndef _di_f_console_verbosity_
-  enum {
-    f_console_verbosity_quiet_e = 1,
-    f_console_verbosity_error_e,
-    f_console_verbosity_normal_e,
-    f_console_verbosity_verbose_e,
-    f_console_verbosity_debug_e,
-  };
-#endif // _di_f_console_verbosity_
-
-/**
- * Provide a helper structure for referencing the argc and argv standard main arguments.
- *
- * This is intended to only store the argc and argv and should not be treated as dynamic.
- *
- * argc: The total number of arguments in argv.
- *
- * argv: An array of strings representing arguments passed to some program.
- * envp: Any array of strings representing all environment variables at the time the program is called.
- *
- * macro_f_console_arguments_t_initialize() initializes the structure.
- */
-#ifndef _di_f_console_arguments_t_
-  typedef struct {
-    const f_number_unsigned_t argc;
-
-    const f_string_t *argv;
-    const f_string_t *envp;
-  } f_console_arguments_t;
-
-  #define f_console_arguments_t_initialize { 0, 0, 0 }
-
-  #define macro_f_console_arguments_t_initialize(argc, argv, envp) { argc, argv, envp }
-#endif // _di_f_console_arguments_t_
-
-/**
- * Provide a structure for describing console parameters for the console processing functions to use.
- *
- * The short parameters are prepended with either '-' or '+'.
- * The long parameters are prepended with either '--' or '++'.
- * The simple parameters have no prefix characters.
- *
- * symbol_short:  The NULL terminated single character string, such as 'h' in '-h'.
- * symbol_long:   The NULL terminated multi-character string, such as 'help' in '--help'.
- * symbol_simple: The NULL terminated parameter that has no prefix, such as 'all' in 'make all'.
- * values_total:  Designates that a parameter will have a given number of values arguments, such as 'blue' in '--color blue'.
- * flag:          A set of bits for providing states associated with the parameter.
- * result:        A set of bits representing if and how the parameter is found (such as '-h' vs '--help').
- * location:      The last location in argv[] where this parameter is found.
- * location_sub:  The last sub-location at location in argv (only used by short parameters, such as -h or +l).
- * locations:     All locations within argv where this parameter is found (order is preserved).
- * locations_sub: All sub-locations within argv where this parameter is found (order is preserved).
- * values:        An array of locations representing where in the argv[] the values arguments are found.
- * callback:      A callback to perform when matched in order to handle condition values (@fixme this is prototyped and unused stub and needs to have a structure properly defined.) On parameter match, this is called rather than the normal functions.
- *
- * The macro_f_console_parameter_t_initialize() all arguments.
- * The macro_f_console_parameter_t_initialize2() reduced arguments.
- * The macro_f_console_parameter_t_initialize3() reduced arguments, strings are of f_string_static_t, has short, long, and simple.
- * The macro_f_console_parameter_t_initialize4() reduced arguments, strings are of f_string_static_t, has short and long.
- * The macro_f_console_parameter_t_initialize5() reduced arguments, strings are of f_string_static_t, has short.
- * The macro_f_console_parameter_t_initialize6() reduced arguments, strings are of f_string_static_t, has long.
- * The macro_f_console_parameter_t_initialize7() reduced arguments, strings are of f_string_static_t, has simple.
- */
-#ifndef _di_f_console_parameter_t_
-  typedef struct {
-    f_string_t symbol_short;
-    f_string_t symbol_long;
-    f_string_t symbol_simple;
-
-    f_array_length_t values_total;
-
-    f_console_flag_t flag;
-    f_console_result_t result;
-    f_array_length_t location;
-    f_array_length_t location_sub;
-    f_array_lengths_t locations;
-    f_array_lengths_t locations_sub;
-    f_array_lengths_t values;
-
-    f_status_t (*callback)(void * const main, void * const setting, void * const parameters, const f_console_arguments_t arguments);
-  } f_console_parameter_t;
-
-  #define f_console_parameter_t_initialize { \
-    0, \
-    0, \
-    0, \
-    f_console_flag_t_initialize, \
-    f_console_result_t_initialize, \
-    f_array_length_t_initialize, \
-    f_array_length_t_initialize, \
-    f_array_length_t_initialize, \
-    f_array_lengths_t_initialize, \
-    f_array_lengths_t_initialize, \
-    f_array_lengths_t_initialize, \
-    0, \
-  }
-
-  #define macro_f_console_parameter_t_initialize(symbol_short, symbol_long, symbol_simple, values_total, flag, result, location, location_sub, locations, locations_sub, values, callback) { \
-    symbol_short, \
-    symbol_long, \
-    symbol_simple, \
-    values_total, \
-    flag, \
-    result, \
-    total, \
-    location, \
-    location_sub, \
-    locations, \
-    locations_sub, \
-    values, \
-    callback, \
-  }
-
-  #define macro_f_console_parameter_t_initialize2(symbol_short, symbol_long, symbol_simple, values_total, flag, callback) { \
-    symbol_short, \
-    symbol_long, \
-    symbol_simple, \
-    values_total, \
-    flag, \
-    f_console_result_none_e, \
-    0, \
-    0, \
-    f_array_lengths_t_initialize, \
-    f_array_lengths_t_initialize, \
-    f_array_lengths_t_initialize, \
-    callback, \
-  }
-
-  #define macro_f_console_parameter_t_initialize3(symbol_short, symbol_long, symbol_simple, values_total, flag, callback) { \
-    symbol_short.string, \
-    symbol_long.string, \
-    symbol_simple.string, \
-    values_total, \
-    flag, \
-    f_console_result_none_e, \
-    0, \
-    0, \
-    f_array_lengths_t_initialize, \
-    f_array_lengths_t_initialize, \
-    f_array_lengths_t_initialize, \
-    callback, \
-  }
-
-  #define macro_f_console_parameter_t_initialize4(symbol_short, symbol_long, values_total, flag, callback) { \
-    symbol_short.string, \
-    symbol_long.string, \
-    0, \
-    values_total, \
-    flag, \
-    f_console_result_none_e, \
-    0, \
-    0, \
-    f_array_lengths_t_initialize, \
-    f_array_lengths_t_initialize, \
-    f_array_lengths_t_initialize, \
-    callback, \
-  }
-
-  #define macro_f_console_parameter_t_initialize5(symbol_short, values_total, flag, callback) { \
-    symbol_short.string, \
-    0, \
-    0, \
-    values_total, \
-    flag, \
-    f_console_result_none_e, \
-    0, \
-    0, \
-    f_array_lengths_t_initialize, \
-    f_array_lengths_t_initialize, \
-    f_array_lengths_t_initialize, \
-    callback, \
-  }
-
-  #define macro_f_console_parameter_t_initialize6(symbol_long, values_total, flag, callback) { \
-    0, \
-    symbol_long.string, \
-    0, \
-    values_total, \
-    flag, \
-    f_console_result_none_e, \
-    0, \
-    0, \
-    f_array_lengths_t_initialize, \
-    f_array_lengths_t_initialize, \
-    f_array_lengths_t_initialize, \
-    callback \
-  }
-
-  #define macro_f_console_parameter_t_initialize7(symbol_simple, values_total, flag, callback) { \
-    0, \
-    0, \
-    symbol_simple.string, \
-    values_total, \
-    flag, \
-    f_console_result_none_e, \
-    0, \
-    0, \
-    f_array_lengths_t_initialize, \
-    f_array_lengths_t_initialize, \
-    f_array_lengths_t_initialize, \
-    callback, \
-  }
-#endif // _di_f_console_parameter_t_
-
-/**
- * Provide a helper structure for references and processing parameters.
- *
- * Designed for passing this to a function as a single argument.
- *
- * This is not intended to be dynamically allocated, so there is no "size" property.
- *
- * array:     Intended to be populated with an array of f_console_parameter_t whose size is defined by the "used" property.
- * arguments: An array of arguments pointing to the argv[] strings with the string lengths already calculated (This is a dynamic array of f_string_static_t).
- * remaining: An array of indexes within the arguments representing unmatched parameters.
- * length:    The total number of parameters in the parameters array.
- */
-#ifndef _di_f_console_parameters_t_
-  typedef struct {
-    f_console_parameter_t *array;
-
-    f_string_dynamics_t arguments;
-    f_array_lengths_t remaining;
-
-    f_array_length_t used;
-  } f_console_parameters_t;
-
-  #define f_console_parameters_t_initialize {0, f_string_dynamics_t_initialize, f_array_lengths_t_initialize, 0 }
-
-  #define macro_f_console_parameters_t_initialize(parameter, used) { parameter, f_string_dynamics_t_initialize, f_array_lengths_t_initialize, used }
-#endif // _di_f_console_parameters_t_
 
 /**
  * Delete any dynamic allocated data on the parameters object.

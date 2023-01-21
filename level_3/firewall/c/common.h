@@ -386,24 +386,24 @@ extern "C" {
 
   #define firewall_console_parameter_t_initialize \
     { \
-      macro_f_console_parameter_t_initialize4(f_console_standard_short_help_s,          f_console_standard_long_help_s,          0, f_console_flag_normal_e,  0), \
-      macro_f_console_parameter_t_initialize4(f_console_standard_short_light_s,         f_console_standard_long_light_s,         0, f_console_flag_inverse_e, 0), \
-      macro_f_console_parameter_t_initialize4(f_console_standard_short_dark_s,          f_console_standard_long_dark_s,          0, f_console_flag_inverse_e, 0), \
-      macro_f_console_parameter_t_initialize4(f_console_standard_short_no_color_s,      f_console_standard_long_no_color_s,      0, f_console_flag_inverse_e, 0), \
-      macro_f_console_parameter_t_initialize4(f_console_standard_short_quiet_s,         f_console_standard_long_quiet_s,         0, f_console_flag_inverse_e, 0), \
-      macro_f_console_parameter_t_initialize4(f_console_standard_short_error_s,         f_console_standard_long_error_s,         0, f_console_flag_inverse_e, 0), \
-      macro_f_console_parameter_t_initialize4(f_console_standard_short_normal_s,        f_console_standard_long_normal_s,        0, f_console_flag_inverse_e, 0), \
-      macro_f_console_parameter_t_initialize4(f_console_standard_short_verbose_s,       f_console_standard_long_verbose_s,       0, f_console_flag_inverse_e, 0), \
-      macro_f_console_parameter_t_initialize4(f_console_standard_short_debug_s,         f_console_standard_long_debug_s,         0, f_console_flag_inverse_e, 0), \
-      macro_f_console_parameter_t_initialize4(f_console_standard_short_version_s,       f_console_standard_long_version_s,       0, f_console_flag_inverse_e, 0), \
-      macro_f_console_parameter_t_initialize4(f_console_standard_short_line_first_no_s, f_console_standard_long_line_first_no_s, 0, f_console_flag_inverse_e, 0), \
-      macro_f_console_parameter_t_initialize4(f_console_standard_short_line_last_no_s,  f_console_standard_long_line_last_no_s,  0, f_console_flag_inverse_e, 0), \
+      macro_f_console_parameter_t_initialize_4(f_console_standard_short_help_s,          f_console_standard_long_help_s,          0, f_console_flag_normal_e,  0), \
+      macro_f_console_parameter_t_initialize_4(f_console_standard_short_light_s,         f_console_standard_long_light_s,         0, f_console_flag_inverse_e), \
+      macro_f_console_parameter_t_initialize_4(f_console_standard_short_dark_s,          f_console_standard_long_dark_s,          0, f_console_flag_inverse_e), \
+      macro_f_console_parameter_t_initialize_4(f_console_standard_short_no_color_s,      f_console_standard_long_no_color_s,      0, f_console_flag_inverse_e), \
+      macro_f_console_parameter_t_initialize_4(f_console_standard_short_quiet_s,         f_console_standard_long_quiet_s,         0, f_console_flag_inverse_e), \
+      macro_f_console_parameter_t_initialize_4(f_console_standard_short_error_s,         f_console_standard_long_error_s,         0, f_console_flag_inverse_e), \
+      macro_f_console_parameter_t_initialize_4(f_console_standard_short_normal_s,        f_console_standard_long_normal_s,        0, f_console_flag_inverse_e), \
+      macro_f_console_parameter_t_initialize_4(f_console_standard_short_verbose_s,       f_console_standard_long_verbose_s,       0, f_console_flag_inverse_e), \
+      macro_f_console_parameter_t_initialize_4(f_console_standard_short_debug_s,         f_console_standard_long_debug_s,         0, f_console_flag_inverse_e), \
+      macro_f_console_parameter_t_initialize_4(f_console_standard_short_version_s,       f_console_standard_long_version_s,       0, f_console_flag_inverse_e), \
+      macro_f_console_parameter_t_initialize_4(f_console_standard_short_line_first_no_s, f_console_standard_long_line_first_no_s, 0, f_console_flag_inverse_e), \
+      macro_f_console_parameter_t_initialize_4(f_console_standard_short_line_last_no_s,  f_console_standard_long_line_last_no_s,  0, f_console_flag_inverse_e), \
       \
-      macro_f_console_parameter_t_initialize7(firewall_command_start_s,   0, f_console_flag_simple_e), \
-      macro_f_console_parameter_t_initialize7(firewall_command_stop_s,    0, f_console_flag_simple_e), \
-      macro_f_console_parameter_t_initialize7(firewall_command_restart_s, 0, f_console_flag_simple_e), \
-      macro_f_console_parameter_t_initialize7(firewall_command_lock_s,    0, f_console_flag_simple_e), \
-      macro_f_console_parameter_t_initialize7(firewall_command_show_s,    0, f_console_flag_simple_e), \
+      macro_f_console_parameter_t_initialize_7(firewall_command_start_s,   0, f_console_flag_simple_e), \
+      macro_f_console_parameter_t_initialize_7(firewall_command_stop_s,    0, f_console_flag_simple_e), \
+      macro_f_console_parameter_t_initialize_7(firewall_command_restart_s, 0, f_console_flag_simple_e), \
+      macro_f_console_parameter_t_initialize_7(firewall_command_lock_s,    0, f_console_flag_simple_e), \
+      macro_f_console_parameter_t_initialize_7(firewall_command_show_s,    0, f_console_flag_simple_e), \
     }
 
   #define firewall_total_parameters_d 17

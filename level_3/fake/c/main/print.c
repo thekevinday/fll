@@ -55,6 +55,31 @@ extern "C" {
   }
 #endif // _di_fake_print_error_failure_script_
 
+#ifndef _di_fake_print_error_parameter_not_word_
+  f_status_t fake_print_error_parameter_not_word(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t value) {
+
+    if (!setting || print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+
+    if (!F_status_is_error(setting->status)) {
+      if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
+    }
+
+    f_file_stream_lock(print.to);
+
+    fake_print_line_first_unlocked(setting, print);
+
+    fl_print_format("%[%QThe '%]", print.to, print.context, print.prefix, print.context);
+    fl_print_format("%[%Q%Q%]", print.to, print.notable, symbol, name, print.notable);
+    fl_print_format("%[' parameter value '%]", print.to, print.context, print.context);
+    fl_print_format("%[%Q%]", print.to, print.notable, value, print.notable);
+    fl_print_format("%[' contains non-word, non-dash, and non-plus characters.%]%r", print.to, print.context, print.context, f_string_eol_s);
+
+    f_file_stream_unlock(print.to);
+
+    return F_none;
+  }
+#endif // _di_fake_print_error_parameter_not_word_
+
 #ifndef _di_fake_print_error_parameter_operation_not_with_
   f_status_t fake_print_error_parameter_operation_not_with(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t operation_1, const f_string_static_t operation_2) {
 
@@ -69,9 +94,9 @@ extern "C" {
     fake_print_line_first_unlocked(setting, print);
 
     fl_print_format("%[%QThe operation '%]", print.to, print.context, print.prefix, print.context);
-    fl_print_format("%[%r%]", print.to, print.notable, operation_1, print.notable);
+    fl_print_format("%[%Q%]", print.to, print.notable, operation_1, print.notable);
     fl_print_format("%[' cannot be specified with the operation '%]", print.to, print.context, print.context);
-    fl_print_format("%[%r%]", print.to, print.notable, operation_2, print.notable);
+    fl_print_format("%[%Q%]", print.to, print.notable, operation_2, print.notable);
     fl_print_format("%['.%]%r", print.to, print.context, print.context, f_string_eol_s);
 
     f_file_stream_unlock(print.to);

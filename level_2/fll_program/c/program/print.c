@@ -286,6 +286,23 @@ extern "C" {
   }
 #endif // _di_fll_program_print_error_parameter_must_specify_once_value_
 
+#ifndef _di_fll_program_print_error_parameter_process_
+  f_status_t fll_program_print_error_parameter_process(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name) {
+
+    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+
+    f_file_stream_lock(print.to);
+
+    fl_print_format("%[%QFailure while processing the parameter '%]", print.to, print.set->error, print.prefix, print.set->error);
+    fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol, name, print.set->notable);
+    fl_print_format("%['.%]%r", print.to, print.set->error, print.set->error, f_string_eol_s);
+
+    f_file_stream_unlock(print.to);
+
+    return F_none;
+  }
+#endif // _di_fll_program_print_error_parameter_process_
+
 #ifndef _di_fll_program_print_error_parameter_range_start_before_stop_
   f_status_t fll_program_print_error_parameter_range_start_before_stop(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t value_start, const f_string_static_t value_stop) {
 

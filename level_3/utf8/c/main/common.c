@@ -95,7 +95,7 @@ extern "C" {
     setting->flag = 0;
 
     // Load parameters.
-    setting->status = f_console_parameter_process(arguments, &main->parameters);
+    setting->status = f_console_parameter_process(arguments, &main->parameters, 0);
 
     if (F_status_is_error(setting->status)) {
       utf8_print_error(setting, main->error, macro_utf8_f(f_console_parameter_process));
@@ -376,10 +376,10 @@ extern "C" {
     if (main->parameters.remaining.used) {
       setting->remaining.used = 0;
 
-      setting->status = f_string_dynamics_resize(main->parameters.remaining.used, &setting->remaining);
+      setting->status = f_string_dynamics_increase_by(main->parameters.remaining.used, &setting->remaining);
 
       if (F_status_is_error(setting->status)) {
-        utf8_print_error(setting, main->error, macro_utf8_f(f_string_dynamic_append_nulless));
+        utf8_print_error(setting, main->error, macro_utf8_f(f_string_dynamics_increase_by));
 
         return;
       }

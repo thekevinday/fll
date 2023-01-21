@@ -251,33 +251,33 @@ extern "C" {
 
   #define fss_write_console_parameter_t_initialize \
     { \
-      macro_f_console_parameter_t_initialize4(f_console_standard_short_help_s,          f_console_standard_long_help_s,          0, f_console_flag_normal_e,  0), \
-      macro_f_console_parameter_t_initialize4(f_console_standard_short_light_s,         f_console_standard_long_light_s,         0, f_console_flag_inverse_e, 0), \
-      macro_f_console_parameter_t_initialize4(f_console_standard_short_dark_s,          f_console_standard_long_dark_s,          0, f_console_flag_inverse_e, 0), \
-      macro_f_console_parameter_t_initialize4(f_console_standard_short_no_color_s,      f_console_standard_long_no_color_s,      0, f_console_flag_inverse_e, 0), \
-      macro_f_console_parameter_t_initialize4(f_console_standard_short_quiet_s,         f_console_standard_long_quiet_s,         0, f_console_flag_inverse_e, 0), \
-      macro_f_console_parameter_t_initialize4(f_console_standard_short_error_s,         f_console_standard_long_error_s,         0, f_console_flag_inverse_e, 0), \
-      macro_f_console_parameter_t_initialize4(f_console_standard_short_normal_s,        f_console_standard_long_normal_s,        0, f_console_flag_inverse_e, 0), \
-      macro_f_console_parameter_t_initialize4(f_console_standard_short_verbose_s,       f_console_standard_long_verbose_s,       0, f_console_flag_inverse_e, 0), \
-      macro_f_console_parameter_t_initialize4(f_console_standard_short_debug_s,         f_console_standard_long_debug_s,         0, f_console_flag_inverse_e, 0), \
-      macro_f_console_parameter_t_initialize4(f_console_standard_short_version_s,       f_console_standard_long_version_s,       0, f_console_flag_inverse_e, 0), \
-      macro_f_console_parameter_t_initialize4(f_console_standard_short_line_first_no_s, f_console_standard_long_line_first_no_s, 0, f_console_flag_inverse_e, 0), \
-      macro_f_console_parameter_t_initialize4(f_console_standard_short_line_last_no_s,  f_console_standard_long_line_last_no_s,  0, f_console_flag_inverse_e, 0), \
+      macro_f_console_parameter_t_initialize_4(f_console_standard_short_help_s,          f_console_standard_long_help_s,          0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_4(f_console_standard_short_light_s,         f_console_standard_long_light_s,         0, f_console_flag_inverse_e), \
+      macro_f_console_parameter_t_initialize_4(f_console_standard_short_dark_s,          f_console_standard_long_dark_s,          0, f_console_flag_inverse_e), \
+      macro_f_console_parameter_t_initialize_4(f_console_standard_short_no_color_s,      f_console_standard_long_no_color_s,      0, f_console_flag_inverse_e), \
+      macro_f_console_parameter_t_initialize_4(f_console_standard_short_quiet_s,         f_console_standard_long_quiet_s,         0, f_console_flag_inverse_e), \
+      macro_f_console_parameter_t_initialize_4(f_console_standard_short_error_s,         f_console_standard_long_error_s,         0, f_console_flag_inverse_e), \
+      macro_f_console_parameter_t_initialize_4(f_console_standard_short_normal_s,        f_console_standard_long_normal_s,        0, f_console_flag_inverse_e), \
+      macro_f_console_parameter_t_initialize_4(f_console_standard_short_verbose_s,       f_console_standard_long_verbose_s,       0, f_console_flag_inverse_e), \
+      macro_f_console_parameter_t_initialize_4(f_console_standard_short_debug_s,         f_console_standard_long_debug_s,         0, f_console_flag_inverse_e), \
+      macro_f_console_parameter_t_initialize_4(f_console_standard_short_version_s,       f_console_standard_long_version_s,       0, f_console_flag_inverse_e), \
+      macro_f_console_parameter_t_initialize_4(f_console_standard_short_line_first_no_s, f_console_standard_long_line_first_no_s, 0, f_console_flag_inverse_e), \
+      macro_f_console_parameter_t_initialize_4(f_console_standard_short_line_last_no_s,  f_console_standard_long_line_last_no_s,  0, f_console_flag_inverse_e), \
       \
-      macro_f_console_parameter_t_initialize4(fss_write_short_as_s,           fss_write_long_as_s,           1, f_console_flag_normal_e, 0), \
-      macro_f_console_parameter_t_initialize4(fss_write_short_backtick_s,     fss_write_long_backtick_s,     0, f_console_flag_normal_e, 0), \
-      macro_f_console_parameter_t_initialize4(fss_write_short_content_s,      fss_write_long_content_s,      1, f_console_flag_normal_e, 0), \
-      macro_f_console_parameter_t_initialize4(fss_write_short_content_end_s,  fss_write_long_content_end_s,  0, f_console_flag_normal_e, 0), \
-      macro_f_console_parameter_t_initialize4(fss_write_short_content_next_s, fss_write_long_content_next_s, 0, f_console_flag_normal_e, 0), \
-      macro_f_console_parameter_t_initialize4(fss_write_short_double_s,       fss_write_long_double_s,       0, f_console_flag_normal_e, 0), \
-      macro_f_console_parameter_t_initialize4(fss_write_short_file_s,         fss_write_long_file_s,         1, f_console_flag_normal_e, 0), \
-      macro_f_console_parameter_t_initialize4(fss_write_short_ignore_s,       fss_write_long_ignore_s,       2, f_console_flag_normal_e, 0), \
-      macro_f_console_parameter_t_initialize4(fss_write_short_object_s,       fss_write_long_object_s,       1, f_console_flag_normal_e, 0), \
-      macro_f_console_parameter_t_initialize4(fss_write_short_object_open_s,  fss_write_long_object_open_s,  0, f_console_flag_normal_e, 0), \
-      macro_f_console_parameter_t_initialize4(fss_write_short_partial_s,      fss_write_long_partial_s,      0, f_console_flag_normal_e, 0), \
-      macro_f_console_parameter_t_initialize4(fss_write_short_prepend_s,      fss_write_long_prepend_s,      1, f_console_flag_normal_e, 0), \
-      macro_f_console_parameter_t_initialize4(fss_write_short_single_s,       fss_write_long_single_s,       0, f_console_flag_normal_e, 0), \
-      macro_f_console_parameter_t_initialize4(fss_write_short_trim_s,         fss_write_long_trim_s,         0, f_console_flag_normal_e, 0), \
+      macro_f_console_parameter_t_initialize_4(fss_write_short_as_s,           fss_write_long_as_s,           1, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_4(fss_write_short_backtick_s,     fss_write_long_backtick_s,     0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_4(fss_write_short_content_s,      fss_write_long_content_s,      1, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_4(fss_write_short_content_end_s,  fss_write_long_content_end_s,  0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_4(fss_write_short_content_next_s, fss_write_long_content_next_s, 0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_4(fss_write_short_double_s,       fss_write_long_double_s,       0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_4(fss_write_short_file_s,         fss_write_long_file_s,         1, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_4(fss_write_short_ignore_s,       fss_write_long_ignore_s,       2, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_4(fss_write_short_object_s,       fss_write_long_object_s,       1, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_4(fss_write_short_object_open_s,  fss_write_long_object_open_s,  0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_4(fss_write_short_partial_s,      fss_write_long_partial_s,      0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_4(fss_write_short_prepend_s,      fss_write_long_prepend_s,      1, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_4(fss_write_short_single_s,       fss_write_long_single_s,       0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_4(fss_write_short_trim_s,         fss_write_long_trim_s,         0, f_console_flag_normal_e), \
     }
 
   #define fss_write_total_parameters_d 26

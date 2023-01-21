@@ -183,12 +183,10 @@ extern "C" {
     setting->flag = 0;
 
     // Load parameters.
-    setting->status = f_console_parameter_process(arguments, &main->parameters);
+    setting->status = f_console_parameter_process(arguments, &main->parameters, (void *) setting);
 
     if (F_status_is_error(setting->status)) {
-
-      fake_print_line_first_locked(setting, main->error);
-      fll_error_print(main->error, F_status_set_fine(setting->status), macro_fake_f(f_console_parameter_process), F_true);
+      fake_print_error(setting, F_status_set_fine(setting->status), macro_fake_f(f_console_parameter_process));
 
       return;
     }
@@ -208,8 +206,7 @@ extern "C" {
         setting->status = fll_program_parameter_process_context(choices, modes, F_true, main);
 
         if (F_status_is_error(setting->status)) {
-          fake_print_line_first_locked(setting, main->error);
-          fll_error_print(main->error, F_status_set_fine(setting->status), macro_fake_f(fll_program_parameter_process_context), F_true);
+          fake_print_error(setting, F_status_set_fine(setting->status), macro_fake_f(fll_program_parameter_process_context));
 
           return;
         }
@@ -240,8 +237,7 @@ extern "C" {
         setting->status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, main);
 
         if (F_status_is_error(setting->status)) {
-          fake_print_line_first_locked(setting, main->error);
-          fll_error_print(main->error, F_status_set_fine(setting->status), macro_fake_f(fll_program_parameter_process_verbosity), F_true);
+          fake_print_error(setting, F_status_set_fine(setting->status), macro_fake_f(fll_program_parameter_process_verbosity));
 
           return;
         }
@@ -264,249 +260,345 @@ extern "C" {
       return;
     }
 
-    uint8_t i = 0;
     f_array_length_t j = 0;
-    f_array_length_t width_max = 0;
     f_array_length_t index = 0;
 
     {
-      const uint8_t enables[] = {
-        fake_parameter_documents_enable_e,
-        fake_parameter_shared_enable_e,
-        fake_parameter_static_enable_e,
-      };
+      uint8_t i = 0;
 
-      const uint8_t disables[] = {
-        fake_parameter_documents_enable_e,
-        fake_parameter_shared_enable_e,
-        fake_parameter_static_enable_e,
-      };
+      {
+        const uint8_t enables[] = {
+          fake_parameter_documents_enable_e,
+          fake_parameter_shared_enable_e,
+          fake_parameter_static_enable_e,
+        };
 
-      const uint16_t flags[] = {
-        fake_main_flag_enable_documents_e,
-        fake_main_flag_enable_shared_e,
-        fake_main_flag_enable_static_e,
-      };
+        const uint8_t disables[] = {
+          fake_parameter_documents_enable_e,
+          fake_parameter_shared_enable_e,
+          fake_parameter_static_enable_e,
+        };
 
-      for (; i < 3; ++i) {
+        const uint16_t flags[] = {
+          fake_main_flag_enable_documents_e,
+          fake_main_flag_enable_shared_e,
+          fake_main_flag_enable_static_e,
+        };
 
-        if (main->parameters.array[enables[i]].result & f_console_result_found_e) {
-          if (main->parameters.array[disables[i]].result & f_console_result_found_e) {
-            if (main->parameters.array[enables[i]].location < main->parameters.array[disables[i]].location) {
-              setting->flag -= setting->flag & flags[i];
+        for (; i < 3; ++i) {
+
+          if (main->parameters.array[enables[i]].result & f_console_result_found_e) {
+            if (main->parameters.array[disables[i]].result & f_console_result_found_e) {
+              if (main->parameters.array[enables[i]].location < main->parameters.array[disables[i]].location) {
+                setting->flag -= setting->flag & flags[i];
+              }
+              else {
+                setting->flag |= flags[i];
+              }
             }
             else {
               setting->flag |= flags[i];
             }
           }
-          else {
-            setting->flag |= flags[i];
+          else if (main->parameters.array[disables[i]].result & f_console_result_found_e) {
+            setting->flag -= setting->flag & flags[i];
           }
-        }
-        else if (main->parameters.array[disables[i]].result & f_console_result_found_e) {
-          setting->flag -= setting->flag & flags[i];
-        }
-      } // for
-    }
+        } // for
+      }
 
-    {
-      const f_array_length_t parameters[] = {
-        fake_parameter_fakefile_e,
-        fake_parameter_mode_e,
-        fake_parameter_path_build_e,
-        fake_parameter_path_data_e,
-        fake_parameter_path_sources_e,
-        fake_parameter_path_work_e,
-        fake_parameter_process_e,
-        fake_parameter_settings_e,
-        fake_parameter_sources_e,
-      };
+      {
+        const f_array_length_t parameters[] = {
+          fake_parameter_fakefile_e,
+          fake_parameter_path_build_e,
+          fake_parameter_path_data_e,
+          fake_parameter_path_sources_e,
+          fake_parameter_path_work_e,
+          fake_parameter_process_e,
+          fake_parameter_settings_e,
+          fake_parameter_sources_e,
+        };
 
-      const f_string_static_t names[] = {
-        fake_long_fakefile_s,
-        fake_long_mode_s,
-        fake_long_path_build_s,
-        fake_long_path_data_s,
-        fake_long_path_sources_s,
-        fake_long_path_work_s,
-        fake_long_process_s,
-        fake_long_settings_s,
-        fake_long_sources_s,
-      };
+        const f_string_static_t names[] = {
+          fake_long_fakefile_s,
+          fake_long_path_build_s,
+          fake_long_path_data_s,
+          fake_long_path_sources_s,
+          fake_long_path_work_s,
+          fake_long_process_s,
+          fake_long_settings_s,
+          fake_long_sources_s,
+        };
 
-      const f_string_dynamic_t variable[] = {
-        &setting->fakefile,
-        &setting->mode,
-        &setting->path_build,
-        &setting->path_data,
-        &setting->path_sources,
-        &setting->path_work,
-        &setting->process,
-        &setting->settings,
-        &setting->sources,
-      };
+        f_string_dynamic_t * const variable[] = {
+          &setting->fakefile,
+          &setting->path_build,
+          &setting->path_data,
+          &setting->path_sources,
+          &setting->path_work,
+          &setting->process,
+          &setting->settings,
+          &setting->sources,
+        };
 
-      bool validate_word[] = {
-        F_false, // fake_parameter_fakefile_e
-        F_false, // fake_parameter_mode_e
-        F_false, // fake_parameter_path_build_e
-        F_false, // fake_parameter_path_data_e
-        F_false, // fake_parameter_path_sources_e
-        F_false, // fake_parameter_path_work_e
-        F_true,  // fake_parameter_process_e
-        F_false, // fake_parameter_settings_e
-        F_false, // fake_parameter_sources_e
-      };
+        f_string_static_t * const defaults[] = {
+          &fake_default_fakefile_s, // fake_parameter_fakefile_e
+          0,                        // fake_parameter_path_build_e
+          0,                        // fake_parameter_path_data_e
+          0,                        // fake_parameter_path_sources_e
+          0,                        // fake_parameter_path_work_e
+          &fake_default_process_s,  // fake_parameter_process_e
+          &fake_default_settings_s, // fake_parameter_settings_e
+          0,                        // fake_parameter_sources_e
+        };
 
-      f_string_static_t *defaults[] = {
-        &fake_default_fakefile_s, // fake_parameter_fakefile_e
-        0,                        // fake_parameter_mode_e
-        0,                        // fake_parameter_path_build_e
-        0,                        // fake_parameter_path_data_e
-        0,                        // fake_parameter_path_sources_e
-        0,                        // fake_parameter_path_work_e
-        &fake_default_process_s,  // fake_parameter_process_e
-        &fake_default_settings_s, // fake_parameter_settings_e
-        0,                        // fake_parameter_sources_e
-      };
+        for (i = 0; i < 8; ++i) {
 
-      for (i = 0; i < 9; ++i) {
+          if (main->parameters.array[parameters[i]].result & f_console_result_found_e) {
+            setting->status = F_status_set_error(F_parameter);
 
-        if (main->parameters.array[parameters[i]].result & f_console_result_found_e) {
-          setting->status = F_status_set_error(F_parameter);
+            fake_print_line_first_locked(setting, main->error);
 
-          fake_print_line_first_locked(setting, main->error);
-          fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, names[i]);
+            fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, names[i]);
 
-          return;
-        }
+            return;
+          }
 
-        if (main->parameters.array[parameters[i]].result & f_console_result_additional_e) {
-          index = data->main->parameters.array[parameters[i]].values.array[0];
+          if (main->parameters.array[parameters[i]].result & f_console_result_additional_e) {
+            index = data->main->parameters.array[parameters[i]].values.array[data->main->parameters.array[parameters[i]].values.used - 1];
 
-          if (data->main->parameters.arguments.array[index].used) {
-            if (validate_word[i]) {
-              width_max = 0;
+            if (data->main->parameters.arguments.array[index].used) {
+              if (parameters[i] == fake_parameter_process_e) {
+                for (j = 0; j < data->main->parameters.arguments.array[index].used; ++j) {
 
-              for (j = 0; j < data->main->parameters.arguments.array[index].used; ++j) {
+                  setting->status = f_utf_is_word_dash_plus(data->main->parameters.arguments.array[index].string + j, data->main->parameters.arguments.array[index].used - j, F_false);
 
-                width_max = data->main->parameters.arguments.array[index].used - j;
+                  if (F_status_is_error(setting->status)) {
+                    if (print.verbosity > f_console_verbosity_quiet_e) {
+                      fake_print_line_first_locked(setting, print);
 
-                status = f_utf_is_word_dash_plus(data->main->parameters.arguments.array[index].string + j, width_max, F_false);
+                      if (fll_error_print(data->main->error, F_status_set_fine(setting->status), macro_fake_f(f_utf_is_word_dash_plus), F_false) == F_false) {
+                        fll_program_print_error_parameter_process(data->main->error, F_status_set_fine(setting->status), f_console_symbol_long_normal_s, names[i]);
+                      }
+                    }
 
-                if (F_status_is_error(status)) {
-                  fll_error_print(data->main->error, F_status_set_fine(status), macro_fake_f(f_string_dynamic_increase_by), F_true);
-
-                  if (fll_error_print(data->main->error, F_status_set_fine(status), macro_fake_f(f_utf_is_word_dash_plus), F_false) == F_known_not && data->main->error.verbosity > f_console_verbosity_quiet_e) {
-                    f_file_stream_lock(data->main->error.to);
-
-                    fl_print_format("%r%[%QFailed to process the parameter '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
-                    fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_normal_s, fake_long_process_s, data->main->error.notable);
-                    fl_print_format("%['.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
-
-                    f_file_stream_unlock(data->main->error.to);
+                    return;
                   }
 
-                  return status;
-                }
+                  if (setting->status == F_false) {
+                    setting->status = F_status_set_error(F_parameter);
 
-                if (status == F_false) {
-                  if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
-                    f_file_stream_lock(data->main->error.to);
+                    fake_print_error_parameter_not_word(setting, data->main->error, f_console_symbol_long_normal_s, names[i], data->main->parameters.arguments.array[index]);
 
-                    fl_print_format("%r%[%QThe '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
-                    fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_normal_s, fake_long_process_s, data->main->error.notable);
-                    fl_print_format("%[' parameters value '%]", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
-                    fl_print_format("%[%Q%]", data->main->error.to, data->main->error.notable, data->main->parameters.arguments.array[index], data->main->error.notable);
-                    fl_print_format("%[' contains non-word, non-dash, and non-plus characters.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
-
-                    f_file_stream_unlock(data->main->error.to);
+                    return;
                   }
+                } // for
+              }
 
-                  return F_status_set_error(F_parameter);
+              // De-allocate memory before replacing it with a statically allocated string.
+              if (variable[i]->size) {
+                setting->status = f_string_dynamic_resize(0, variable[i]);
+
+                if (F_status_is_error(setting->status)) {
+                  fake_print_error(setting, F_status_set_fine(setting->status), macro_fake_f(f_string_dynamic_resize));
+
+                  return;
                 }
-              } // for
+              }
+
+              variable[i]->string = data->main->parameters.arguments.array[index].string;
+              variable[i]->used = data->main->parameters.arguments.array[index].used;
+              variable[i]->size = 0;
+
+              setting->status = F_none;
+            }
+          }
+          else if (defaults[i]) {
+
+            // De-allocate memory before replacing it with a statically allocated string.
+            if (variable[i]->size) {
+              setting->status = f_string_dynamic_resize(0, variable[i]);
+
+              if (F_status_is_error(setting->status)) {
+                fake_print_error(setting, F_status_set_fine(setting->status), macro_fake_f(f_string_dynamic_resize));
+
+                return;
+              }
             }
 
-            status = f_string_dynamic_increase_by(data->main->parameters.arguments.array[index].used + 1, parameters_value[i]);
+            variable[i]->string = defaults[i]->string;
+            variable[i]->used = defaults[i]->used;
+            variable[i]->size = 0;
+          }
+        } // for
+      }
 
-            if (F_status_is_error(status)) {
-              fll_error_print(data->main->error, F_status_set_fine(status), macro_fake_f(f_string_dynamic_increase_by), F_true);
+      {
+        const f_array_length_t parameters[] = {
+          fake_parameter_define_e,
+          fake_parameter_mode_e,
+        };
 
-              return status;
-            }
+        const f_string_static_t names[] = {
+          fake_long_define_s,
+          fake_long_mode_s,
+        };
 
-            setting->status = f_string_dynamic_append(data->main->parameters.arguments.array[index], parameters_value[i]);
+        f_string_dynamics_t * const variable[] = {
+          &setting->define,
+          &setting->mode,
+        };
+
+        for (i = 0; i < 2; ++i) {
+
+          if (main->parameters.array[parameters[i]].result & f_console_result_found_e) {
+            setting->status = F_status_set_error(F_parameter);
+
+            fake_print_line_first_locked(setting, main->error);
+
+            fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, names[i]);
+
+            return;
+          }
+
+          if (main->parameters.array[parameters[i]].result & f_console_result_additional_e) {
+            variable[i]->used = 0;
+
+            setting->status = f_string_dynamics_increase_by(data->main->parameters.array[parameters[i]].values.used, variable[i]);
 
             if (F_status_is_error(setting->status)) {
-              if (status == F_status_set_error(F_string_too_large)) {
-                if (print.verbosity < f_console_verbosity_normal_e) {
-                  fake_print_line_first_locked(setting, main->error);
-                  fake_print_error_parameter_value_too_long(data->main->error, f_console_symbol_long_normal_s, names[i]);
-                }
-              }
-              else {
-                fll_error_print(data->main->error, F_status_set_fine(status), macro_fake_f(f_string_append), F_true);
-              }
+              fake_print_error(setting, main->error, macro_fake_f(f_string_dynamics_increase_by));
 
               return;
             }
 
-            status = F_none;
+            for (; variable[i]->used < data->main->parameters.array[parameters[i]].values.used; ) {
+
+              // De-allocate memory before replacing it with a statically allocated string.
+              if (variable[i]->size) {
+                setting->status = f_string_dynamic_resize(0, variable[i]);
+
+                if (F_status_is_error(setting->status)) {
+                  fake_print_error(setting, F_status_set_fine(setting->status), macro_fake_f(f_string_dynamic_resize));
+
+                  return;
+                }
+              }
+
+              index = data->main->parameters.array[parameters[i]].values.array[variable[i]->used];
+
+              variable[i]->array[variable[i]->used].string = main->parameters.arguments.array[index].string;
+              variable[i]->array[variable[i]->used].used = main->parameters.arguments.array[index].used;
+              variable[i]->array[variable[i]->used++].size = 0;
+            } // for
           }
-        }
-        else if (defaults[i]) {
-        }
-      } // for
+        } // for
+      }
     }
 
-    // @todo define (multi valued map)
-    if (main->parameters.array[fake_parameter_define_e].result & f_console_result_found_e) {
-      setting->status = F_status_set_error(F_parameter);
+    {
+      f_array_length_t locations = main->parameters.array[fake_parameter_operation_build_e].locations.used;
+      locations += main->parameters.array[fake_parameter_operation_clean_e].locations.used;
+      locations += main->parameters.array[fake_parameter_operation_make_e].locations.used;
+      locations += main->parameters.array[fake_parameter_operation_skeleton_e].locations.used;
 
-      fake_print_line_first_locked(setting, main->error);
-      fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, fake_long_define_s);
+      setting->operations.used = 0;
 
-      return;
-    }
+      setting->status = f_uint8s_increase_by(locations ? locations : 1, &setting->operations);
 
-    //f_string_static_t * const args = main->parameters.arguments.array;
-
-    /*
-     * fake_process_console_parameters
-    fake_parameter_operation_build_e,
-    fake_parameter_operation_clean_e,
-    fake_parameter_operation_make_e,
-    fake_parameter_operation_skeleton_e,
-    */
-
-    f_array_length_t operations_length = main->parameters.array[fake_parameter_operation_build_e].locations.used;
-
-    operations_length += main->parameters.array[fake_parameter_operation_clean_e].locations.used;
-    operations_length += main->parameters.array[fake_parameter_operation_make_e].locations.used;
-    operations_length += main->parameters.array[fake_parameter_operation_skeleton_e].locations.used;
-
-    setting->operations.used = 0;
-
-    setting->status = f_uint8s_increase_by(operations_length ? operations_length : 1, &setting->operations);
-
-    if (F_status_is_error(setting->status)) {
-      fake_print_error(setting, main->error, macro_fake_f(f_uint8s_increase_by));
-
-      return;
-    }
-
-    // Ensure the default operation always exists.
-    if (operations_length) {
-      data.flag |= fake_data_flag_operation_e;
-    }
-    else {
-      setting->status = f_uint8s_increase_by(1, &setting->operations);
-
-      if (F_status_is_error(status)) {
+      if (F_status_is_error(setting->status)) {
         fake_print_error(setting, main->error, macro_fake_f(f_uint8s_increase_by));
 
         return;
+      }
+
+      if (locations) {
+        data.flag |= fake_data_flag_operation_e;
+
+        f_array_length_t i = 0;
+
+        //f_string_static_t * const args = main->parameters.arguments.array;
+
+        /*
+          fake_process_console_parameters
+          fake_parameter_operation_build_e,
+          fake_parameter_operation_clean_e,
+          fake_parameter_operation_make_e,
+          fake_parameter_operation_skeleton_e,
+        */
+        /*
+        f_array_length_t locations[operations_length];
+        f_array_length_t locations_length = 0;
+        f_array_length_t i = 0;
+        f_array_length_t j = 0;
+        f_array_length_t k = 0;
+
+        for (; i < main->parameters.array[fake_parameter_operation_build_e].locations.used; ++i, ++locations_length) {
+
+          operations[locations_length] = fake_operation_build_e;
+          locations[locations_length] = main->parameters.array[fake_parameter_operation_build_e].locations.array[i];
+        } // for
+
+        for (i = 0; i < main->parameters.array[fake_parameter_operation_clean_e].locations.used; ++i) {
+
+          for (j = 0; j < locations_length; ++j) {
+
+            if (main->parameters.array[fake_parameter_operation_clean_e].locations.array[i] < locations[j]) {
+              for (k = locations_length; k > j; --k) {
+                locations[k] = locations[k - 1];
+                operations[k] = operations[k - 1];
+              } // for
+
+              break;
+            }
+          } // for
+
+          locations[j] = main->parameters.array[fake_parameter_operation_clean_e].locations.array[i];
+          operations[j] = fake_operation_clean_e;
+          ++locations_length;
+        } // for
+
+        for (i = 0; i < main->parameters.array[fake_parameter_operation_make_e].locations.used; ++i) {
+
+          for (j = 0; j < locations_length; ++j) {
+
+            if (main->parameters.array[fake_parameter_operation_make_e].locations.array[i] < locations[j]) {
+              for (k = locations_length; k > j; --k) {
+                locations[k] = locations[k - 1];
+                operations[k] = operations[k - 1];
+              } // for
+
+              break;
+            }
+          } // for
+
+          locations[j] = main->parameters.array[fake_parameter_operation_make_e].locations.array[i];
+          operations[j] = fake_operation_make_e;
+          ++locations_length;
+        } // for
+
+        for (i = 0; i < main->parameters.array[fake_parameter_operation_skeleton_e].locations.used; ++i) {
+
+          for (j = 0; j < locations_length; ++j) {
+
+            if (main->parameters.array[fake_parameter_operation_skeleton_e].locations.array[i] < locations[j]) {
+              for (k = locations_length; k > j; --k) {
+
+                locations[k] = locations[k - 1];
+                operations[k] = operations[k - 1];
+              } // for
+
+              break;
+            }
+          } // for
+
+          locations[j] = main->parameters.array[fake_parameter_operation_skeleton_e].locations.array[i];
+          operations[j] = fake_operation_skeleton_e;
+          ++locations_length;
+        } // for
+        */
+      }
+      else {
+        setting->operations.array[setting->operations.used++] = fake_parameter_operation_make_e;
       }
     }
   }

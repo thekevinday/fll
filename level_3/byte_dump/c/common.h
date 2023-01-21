@@ -319,36 +319,36 @@ extern "C" {
 
   #define byte_dump_console_parameter_t_initialize \
     { \
-      macro_f_console_parameter_t_initialize4(f_console_standard_short_help_s,          f_console_standard_long_help_s,          0, f_console_flag_normal_e,  0), \
-      macro_f_console_parameter_t_initialize4(f_console_standard_short_light_s,         f_console_standard_long_light_s,         0, f_console_flag_inverse_e, 0), \
-      macro_f_console_parameter_t_initialize4(f_console_standard_short_dark_s,          f_console_standard_long_dark_s,          0, f_console_flag_inverse_e, 0), \
-      macro_f_console_parameter_t_initialize4(f_console_standard_short_no_color_s,      f_console_standard_long_no_color_s,      0, f_console_flag_inverse_e, 0), \
-      macro_f_console_parameter_t_initialize4(f_console_standard_short_quiet_s,         f_console_standard_long_quiet_s,         0, f_console_flag_inverse_e, 0), \
-      macro_f_console_parameter_t_initialize4(f_console_standard_short_error_s,         f_console_standard_long_error_s,         0, f_console_flag_inverse_e, 0), \
-      macro_f_console_parameter_t_initialize4(f_console_standard_short_normal_s,        f_console_standard_long_normal_s,        0, f_console_flag_inverse_e, 0), \
-      macro_f_console_parameter_t_initialize4(f_console_standard_short_verbose_s,       f_console_standard_long_verbose_s,       0, f_console_flag_inverse_e, 0), \
-      macro_f_console_parameter_t_initialize4(f_console_standard_short_debug_s,         f_console_standard_long_debug_s,         0, f_console_flag_inverse_e, 0), \
-      macro_f_console_parameter_t_initialize4(f_console_standard_short_version_s,       f_console_standard_long_version_s,       0, f_console_flag_inverse_e, 0), \
-      macro_f_console_parameter_t_initialize4(f_console_standard_short_line_first_no_s, f_console_standard_long_line_first_no_s, 0, f_console_flag_inverse_e, 0), \
-      macro_f_console_parameter_t_initialize4(f_console_standard_short_line_last_no_s,  f_console_standard_long_line_last_no_s,  0, f_console_flag_inverse_e, 0), \
+      macro_f_console_parameter_t_initialize_4(f_console_standard_short_help_s,          f_console_standard_long_help_s,          0, f_console_flag_normal_e,  0), \
+      macro_f_console_parameter_t_initialize_4(f_console_standard_short_light_s,         f_console_standard_long_light_s,         0, f_console_flag_inverse_e), \
+      macro_f_console_parameter_t_initialize_4(f_console_standard_short_dark_s,          f_console_standard_long_dark_s,          0, f_console_flag_inverse_e), \
+      macro_f_console_parameter_t_initialize_4(f_console_standard_short_no_color_s,      f_console_standard_long_no_color_s,      0, f_console_flag_inverse_e), \
+      macro_f_console_parameter_t_initialize_4(f_console_standard_short_quiet_s,         f_console_standard_long_quiet_s,         0, f_console_flag_inverse_e), \
+      macro_f_console_parameter_t_initialize_4(f_console_standard_short_error_s,         f_console_standard_long_error_s,         0, f_console_flag_inverse_e), \
+      macro_f_console_parameter_t_initialize_4(f_console_standard_short_normal_s,        f_console_standard_long_normal_s,        0, f_console_flag_inverse_e), \
+      macro_f_console_parameter_t_initialize_4(f_console_standard_short_verbose_s,       f_console_standard_long_verbose_s,       0, f_console_flag_inverse_e), \
+      macro_f_console_parameter_t_initialize_4(f_console_standard_short_debug_s,         f_console_standard_long_debug_s,         0, f_console_flag_inverse_e), \
+      macro_f_console_parameter_t_initialize_4(f_console_standard_short_version_s,       f_console_standard_long_version_s,       0, f_console_flag_inverse_e), \
+      macro_f_console_parameter_t_initialize_4(f_console_standard_short_line_first_no_s, f_console_standard_long_line_first_no_s, 0, f_console_flag_inverse_e), \
+      macro_f_console_parameter_t_initialize_4(f_console_standard_short_line_last_no_s,  f_console_standard_long_line_last_no_s,  0, f_console_flag_inverse_e), \
       \
-      macro_f_console_parameter_t_initialize4(byte_dump_short_binary_s,      byte_dump_long_binary_s,      0, f_console_flag_normal_e, 0), \
-      macro_f_console_parameter_t_initialize4(byte_dump_short_decimal_s,     byte_dump_long_decimal_s,     0, f_console_flag_normal_e, 0), \
-      macro_f_console_parameter_t_initialize4(byte_dump_short_duodecimal_s,  byte_dump_long_duodecimal_s,  0, f_console_flag_normal_e, 0), \
-      macro_f_console_parameter_t_initialize4(byte_dump_short_hexidecimal_s, byte_dump_long_hexidecimal_s, 0, f_console_flag_normal_e, 0), \
-      macro_f_console_parameter_t_initialize4(byte_dump_short_octal_s,       byte_dump_long_octal_s,       0, f_console_flag_normal_e, 0), \
-      macro_f_console_parameter_t_initialize4(byte_dump_short_unicode_s,     byte_dump_long_unicode_s,     0, f_console_flag_normal_e, 0), \
-      macro_f_console_parameter_t_initialize4(byte_dump_short_first_s,       byte_dump_long_first_s,       1, f_console_flag_normal_e, 0), \
-      macro_f_console_parameter_t_initialize4(byte_dump_short_last_s,        byte_dump_long_last_s,        1, f_console_flag_normal_e, 0), \
-      macro_f_console_parameter_t_initialize4(byte_dump_short_narrow_s,      byte_dump_long_narrow_s,      0, f_console_flag_normal_e, 0), \
-      macro_f_console_parameter_t_initialize4(byte_dump_short_placeholder_s, byte_dump_long_placeholder_s, 0, f_console_flag_normal_e, 0), \
-      macro_f_console_parameter_t_initialize4(byte_dump_short_text_s,        byte_dump_long_text_s,        0, f_console_flag_normal_e, 0), \
-      macro_f_console_parameter_t_initialize4(byte_dump_short_wide_s,        byte_dump_long_wide_s,        0, f_console_flag_normal_e, 0), \
-      macro_f_console_parameter_t_initialize4(byte_dump_short_width_s,       byte_dump_long_width_s,       1, f_console_flag_normal_e, 0), \
+      macro_f_console_parameter_t_initialize_4(byte_dump_short_binary_s,      byte_dump_long_binary_s,      0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_4(byte_dump_short_decimal_s,     byte_dump_long_decimal_s,     0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_4(byte_dump_short_duodecimal_s,  byte_dump_long_duodecimal_s,  0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_4(byte_dump_short_hexidecimal_s, byte_dump_long_hexidecimal_s, 0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_4(byte_dump_short_octal_s,       byte_dump_long_octal_s,       0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_4(byte_dump_short_unicode_s,     byte_dump_long_unicode_s,     0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_4(byte_dump_short_first_s,       byte_dump_long_first_s,       1, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_4(byte_dump_short_last_s,        byte_dump_long_last_s,        1, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_4(byte_dump_short_narrow_s,      byte_dump_long_narrow_s,      0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_4(byte_dump_short_placeholder_s, byte_dump_long_placeholder_s, 0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_4(byte_dump_short_text_s,        byte_dump_long_text_s,        0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_4(byte_dump_short_wide_s,        byte_dump_long_wide_s,        0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_4(byte_dump_short_width_s,       byte_dump_long_width_s,       1, f_console_flag_normal_e), \
       \
-      macro_f_console_parameter_t_initialize6(byte_dump_long_normal_s, 0, f_console_flag_normal_e, 0), \
-      macro_f_console_parameter_t_initialize6(byte_dump_long_simple_s, 0, f_console_flag_normal_e, 0), \
-      macro_f_console_parameter_t_initialize6(byte_dump_long_classic_s, 0, f_console_flag_normal_e, 0), \
+      macro_f_console_parameter_t_initialize_6(byte_dump_long_normal_s, 0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_6(byte_dump_long_simple_s, 0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_6(byte_dump_long_classic_s, 0, f_console_flag_normal_e), \
     }
 
   #define byte_dump_total_parameters_d 28

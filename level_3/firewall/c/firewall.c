@@ -20,7 +20,7 @@ extern "C" {
     main->child = 0;
 
     // Load parameters.
-    status = f_console_parameter_process(arguments, &main->parameters);
+    status = f_console_parameter_process(arguments, &main->parameters, 0);
     if (F_status_is_error(status)) return;
 
     {

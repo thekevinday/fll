@@ -78,7 +78,7 @@ extern "C" {
     setting->flag = 0;
 
     // Load parameters.
-    setting->status = f_console_parameter_process(arguments, &main->parameters);
+    setting->status = f_console_parameter_process(arguments, &main->parameters, 0);
 
     if (F_status_is_error(setting->status)) {
       fss_basic_list_read_print_line_first_locked(setting, main->error);

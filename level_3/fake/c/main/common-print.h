@@ -49,6 +49,7 @@ extern "C" {
     fake_f_f_string_dynamic_increase_by_e,
     fake_f_f_string_dynamic_mash_e,
     fake_f_f_string_dynamic_resize_e,
+    fake_f_f_string_dynamics_increase_by_e,
     fake_f_f_uint8s_increase_by_e,
     fake_f_f_utf_is_word_dash_plus_e,
     fake_f_fl_directory_copy_e,

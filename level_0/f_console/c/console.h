@@ -153,10 +153,15 @@ extern "C" {
  *   - May not be grouped and must be separated from any subsequent parameter, such as: "tar extract create file".
  *   - Additional parameters must immediately follow the parameter, such as "tar extract file file.tar.gz create".
  *
+ * Any changes to this function may likely require changes to f_console_parameter_state_t and callbacks.
+ *
  * @param arguments
  *   The parameters passed to the process.
  * @param parameters
  *   The console parameters to look for.
+ * @param data
+ *   (optional) A variable passed to the callback, if provided.
+ *   Set to NULL to not use.
  *
  * @return
  *   F_none on success.
@@ -176,7 +181,7 @@ extern "C" {
  * @see f_utf_char_to_character()
  */
 #ifndef _di_f_console_parameter_process_
-  extern f_status_t f_console_parameter_process(const f_console_arguments_t arguments, f_console_parameters_t * const parameters);
+  extern f_status_t f_console_parameter_process(const f_console_arguments_t arguments, f_console_parameters_t * const parameters, void * const data);
 #endif // _di_f_console_parameter_process_
 
 #ifdef __cplusplus
