@@ -170,7 +170,7 @@ extern "C" {
     parameters->arguments.array[parameters->arguments.used].used = strnlen(arguments.argv[0], F_console_parameter_size_d);
     parameters->arguments.array[parameters->arguments.used++].size = 0;
 
-    f_console_id_t result = 0;
+    f_console_id_t result = f_console_id_t_initialize;
     bool found = F_false;
 
     // Parameter 0 represents the program name so skip it.
