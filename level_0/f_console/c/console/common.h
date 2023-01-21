@@ -219,13 +219,13 @@ extern "C" {
     f_console_result_none_e = 1,
     f_console_result_found_e,
     f_console_result_additional_e,
-  };
+  }; // enum
 
   enum {
     f_console_type_normal_e = 1,
     f_console_type_inverse_e,
     f_console_type_other_e,
-  };
+  }; // enum
 #endif // _di_f_console_types_t_
 
 /**
@@ -247,7 +247,7 @@ extern "C" {
     f_console_verbosity_normal_e,
     f_console_verbosity_verbose_e,
     f_console_verbosity_debug_e,
-  };
+  }; // enum
 #endif // _di_f_console_verbosity_
 
 /**
