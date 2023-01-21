@@ -11,9 +11,7 @@ extern "C" {
       if (!environment) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_f
 
-    if (!arguments.envp) {
-      return F_data_not;
-    }
+    if (!arguments.envp) return F_data_not;
 
     f_array_length_t total = 0;
 
@@ -21,9 +19,7 @@ extern "C" {
       ++total;
     } // while
 
-    if (!total) {
-      return F_data_not;
-    }
+    if (!total) return F_data_not;
 
     {
       const f_status_t status = f_string_maps_increase_by(total, environment);
@@ -81,13 +77,8 @@ extern "C" {
       if (!choices.id) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!choices.used) {
-      return F_data_not;
-    }
-
-    if (!parameters.used) {
-      return F_data_not;
-    }
+    if (!choices.used) return F_data_not;
+    if (!parameters.used) return F_data_not;
 
     f_array_length_t location = 0;
     f_array_length_t location_sub = 0;
@@ -95,9 +86,7 @@ extern "C" {
 
     for (f_array_length_t i = 0; i < choices.used; ++i) {
 
-      if (choices.id[i] > parameters.used) {
-        return F_status_set_error(F_parameter);
-      }
+      if (choices.id[i] > parameters.used) return F_status_set_error(F_parameter);
 
       if (parameters.array[choices.id[i]].result == f_console_result_found_e) {
         if (!location || parameters.array[choices.id[i]].location < location) {
@@ -113,9 +102,7 @@ extern "C" {
     } // for
 
     // The first parameter location (argc = 0) is the program name, therefore if the location is 0, then no matches were found.
-    if (!location) {
-      return F_data_not;
-    }
+    if (!location) return F_data_not;
 
     *decision = priority;
 
@@ -130,13 +117,8 @@ extern "C" {
       if (!choices.id) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!choices.used) {
-      return F_data_not;
-    }
-
-    if (!parameters.used) {
-      return F_data_not;
-    }
+    if (!choices.used) return F_data_not;
+    if (!parameters.used) return F_data_not;
 
     f_array_length_t location = 0;
     f_array_length_t location_sub = 0;
@@ -144,9 +126,7 @@ extern "C" {
 
     for (f_array_length_t i = 0; i < choices.used; ++i) {
 
-      if (choices.id[i] > parameters.used) {
-        return F_status_set_error(F_parameter);
-      }
+      if (choices.id[i] > parameters.used) return F_status_set_error(F_parameter);
 
       if (parameters.array[choices.id[i]].result == f_console_result_found_e) {
         if (!location || parameters.array[choices.id[i]].location > location) {
@@ -180,9 +160,7 @@ extern "C" {
 
     parameters->arguments.used = 0;
 
-    if (!arguments.argc || !arguments.argv || !arguments.argv[0]) {
-      return F_data_not;
-    }
+    if (!arguments.argc || !arguments.argv || !arguments.argv[0]) return F_data_not;
 
     f_status_t status = f_string_dynamics_increase_by(arguments.argc, &parameters->arguments);
     if (F_status_is_error(status)) return status;
@@ -231,7 +209,7 @@ extern "C" {
         --needs_value.used;
 
         // Pop the matched parameter off of the top of the needs_value array.
-        for (f_array_length_t i = 0; i < needs_value.used; ++i) {
+        for (i = 0; i < needs_value.used; ++i) {
           needs_value.array[i] = needs_value.array[i + 1];
         } // for
 
@@ -366,9 +344,7 @@ extern "C" {
         for (i = 0; i < parameters->used; ++i) {
 
           if (parameters->array[i].type != f_console_type_other_e) continue;
-
           if (!parameters->array[i].symbol_other) continue;
-
           if (strncmp(arguments.argv[location], parameters->array[i].symbol_other, parameters->arguments.array[location].used + 1) != 0) continue;
 
           status = f_array_lengths_increase(F_memory_default_allocation_small_d, &parameters->array[i].locations);
