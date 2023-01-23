@@ -554,19 +554,19 @@ extern "C" {
       return F_status_set_error(F_interrupt);
     }
 
-    const f_string_static_t parameters_name[] = {
+    const f_string_static_t names[] = {
       fake_long_path_build_s,
       fake_long_path_data_s,
       fake_long_path_work_s,
     };
 
-    const f_string_dynamic_t parameters_value[] = {
+    const f_string_dynamic_t values[] = {
       data->path_build,
       data->path_data,
       data->path_work,
     };
 
-    uint8_t parameters_required[] = {
+    uint8_t requireds[] = {
       F_false,
       data->main->process_pipe ? F_false : F_true,
       F_false,
@@ -579,41 +579,31 @@ extern "C" {
       if (data->main->parameters.array[fake_parameter_fakefile_e].result == f_console_result_none_e) {
         if (data->path_build.used && f_file_exists(data->path_build, F_false) != F_true) {
           if (f_file_exists(fake_default_fakefile_s, F_false) == F_true) {
-            parameters_required[1] = F_false;
-          }
-        }
-      }
-
-      // If a custom --data or a custom --fakefile parameter is passed and uses an absolute or relative to current path, then do not check.
-      if (data->main->parameters.array[fake_parameter_fakefile_e].result == f_console_result_additional_e) {
-        const f_array_length_t index = data->main->parameters.array[fake_parameter_fakefile_e].values.array[data->main->parameters.array[fake_parameter_fakefile_e].values.used - 1];
-
-        if (f_path_is_absolute(data->main->parameters.arguments.array[index]) == F_true || f_path_is_relative_current(data->main->parameters.arguments.array[index]) == F_true) {
-          parameters_required[1] = F_none;
-        }
-        else {
-          status = f_file_exists(data->main->parameters.arguments.array[index], F_true);
-
-          if (F_status_is_error_not(status) && status == F_true) {
-            parameters_required[1] = F_none;
+            requireds[1] = F_false;
           }
         }
       }
     }
-    else if (data->operation == fake_operation_build_e) {
 
-      // If a custom --data or a custom --settings parameter is passed and uses an absolute or relative to current path, then do not check.
-      if (data->main->parameters.array[fake_parameter_settings_e].result == f_console_result_additional_e) {
-        const f_array_length_t index = data->main->parameters.array[fake_parameter_settings_e].values.array[data->main->parameters.array[fake_parameter_settings_e].values.used - 1];
+    // If a custom --data or a custom --fakefile parameter is passed and uses an absolute or relative to current path, then do not check.
+    if (data->operation == fake_operation_make_e || data->operation == fake_operation_build_e) {
+      f_console_parameter_t * const parameter = &data->main->parameters.array[
+        data->operation == fake_operation_make_e
+          ? fake_parameter_fakefile_e
+          : fake_parameter_settings_e
+        ];
+
+      if (parameter->result == f_console_result_additional_e) {
+        const f_array_length_t index = parameter->values.array[parameter->values.used - 1];
 
         if (f_path_is_absolute(data->main->parameters.arguments.array[index]) == F_true || f_path_is_relative_current(data->main->parameters.arguments.array[index]) == F_true) {
-          parameters_required[1] = F_none;
+          requireds[1] = F_none;
         }
         else {
           status = f_file_exists(data->main->parameters.arguments.array[index], F_true);
 
           if (F_status_is_error_not(status) && status == F_true) {
-            parameters_required[1] = F_none;
+            requireds[1] = F_none;
           }
         }
       }
@@ -623,26 +613,26 @@ extern "C" {
 
     for (uint8_t i = 0; i < 3; ++i) {
 
-      if (parameters_required[i] != F_none && parameters_value[i].used) {
+      if (requireds[i] != F_none && values[i].used) {
         memset(&directory_stat, 0, sizeof(struct stat));
 
-        status = f_file_stat(parameters_value[i], F_true, &directory_stat);
+        status = f_file_stat(values[i], F_true, &directory_stat);
 
         if (status == F_status_set_error(F_file_found_not)) status = F_status_set_error(F_directory_found_not);
 
         if (F_status_is_error(status)) {
-          if (F_status_set_fine(status) != F_directory_found_not || parameters_required[i]) {
-            fll_error_file_print(data->main->error, F_status_set_fine(status), "f_file_stat", F_true, parameters_value[i], f_file_operation_access_s, fll_error_file_type_directory_e);
+          if (F_status_set_fine(status) != F_directory_found_not || requireds[i]) {
+            fll_error_file_print(data->main->error, F_status_set_fine(status), "f_file_stat", F_true, values[i], f_file_operation_access_s, fll_error_file_type_directory_e);
 
             return status;
           }
         }
       }
-      else if (parameters_required[i] == F_true) {
+      else if (requireds[i] == F_true) {
         flockfile(data->main->error.to.stream);
 
         fl_print_format("%r%[%QNo valid path for the (required) directory parameter '%]", data->main->error.to.stream, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
-        fl_print_format("%[%r%r%]", data->main->error.to.stream, data->main->error.notable, f_console_symbol_long_enable_s, parameters_name[i], data->main->error.notable);
+        fl_print_format("%[%r%r%]", data->main->error.to.stream, data->main->error.notable, f_console_symbol_long_enable_s, names[i], data->main->error.notable);
         fl_print_format("%[' was found.%]%r", data->main->error.to.stream, data->main->error.context, data->main->error.context, f_string_eol_s);
 
         funlockfile(data->main->error.to.stream);
