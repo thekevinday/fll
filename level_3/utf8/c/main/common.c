@@ -88,14 +88,14 @@ extern "C" {
 #endif // _di_utf8_setting_delete_
 
 #ifndef _di_utf8_setting_load_
-  void utf8_setting_load(const f_console_arguments_t arguments, fll_program_data_t * const main, utf8_setting_t * const setting) {
+  void utf8_setting_load(const f_console_arguments_t arguments, f_state_t state, fll_program_data_t * const main, utf8_setting_t * const setting) {
 
     if (!main || !setting) return;
 
     setting->flag = 0;
 
     // Load parameters.
-    setting->status = f_console_parameter_process(arguments, &main->parameters, 0);
+    setting->status = f_console_parameter_process(state, arguments, &main->parameters, 0);
 
     if (F_status_is_error(setting->status)) {
       utf8_print_error(setting, main->error, macro_utf8_f(f_console_parameter_process));

@@ -74,12 +74,12 @@ extern "C" {
 #endif // _di_fss_write_setting_delete_
 
 #ifndef _di_fss_write_setting_load_
-  void fss_write_setting_load(const f_console_arguments_t arguments, fll_program_data_t * const main, fss_write_setting_t * const setting, void (*callback)(const f_console_arguments_t arguments, fll_program_data_t * const main, fss_write_setting_t * const setting)) {
+  void fss_write_setting_load(const f_console_arguments_t arguments, f_state_t state, fll_program_data_t * const main, fss_write_setting_t * const setting, void (*callback)(const f_console_arguments_t arguments, f_state_t state, fll_program_data_t * const main, fss_write_setting_t * const setting)) {
 
     if (!main || !setting) return;
 
     // Load parameters.
-    setting->status = f_console_parameter_process(arguments, &main->parameters, 0);
+    setting->status = f_console_parameter_process(state, arguments, &main->parameters, 0);
 
     if (F_status_is_error(setting->status)) {
       fss_write_print_error(setting, main->error, macro_fss_write_f(f_console_parameter_process));
@@ -153,7 +153,7 @@ extern "C" {
     }
 
     if (callback) {
-      callback(arguments, main, setting);
+      callback(arguments, state, main, setting);
       if (F_status_is_error(setting->status)) return;
 
       if (setting->status == F_done) {

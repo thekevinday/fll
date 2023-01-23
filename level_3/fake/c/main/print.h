@@ -36,6 +36,33 @@ extern "C" {
 #endif // _di_fake_print_error_
 
 /**
+ * Print file related error message regarding a function failing in some way.
+ *
+ * @param setting
+ *   The main program settings.
+ *
+ *   This does not alter setting.status.
+ * @param status
+ *   The status to use.
+ *   This is provided, ignoring setting.status, for thread-safety reasons.
+ * @param print
+ *   Designates the how and where to print.
+ * @param name
+ *   The name of the file or directory.
+ * @param operation
+ *   The operation that fails, such as 'create' or 'access'.
+ * @param type
+ *   A valid file type code from the fll_error_file_type enum.
+ *
+ * @return
+ *   F_true is returned if the status code has no print message.
+ *   F_false is returned on successful print of known errors.
+ */
+#ifndef _di_fake_print_error_file_
+  extern f_status_t fake_print_error_file(fake_setting_t * const setting, const f_status_t status, const fl_print_t print, const f_string_t function, const f_string_static_t name, const f_string_static_t operation, const uint8_t type);
+#endif // _di_fake_print_error_file_
+
+/**
  * Print error message for when an operation fails.
  *
  * @param setting
@@ -45,14 +72,14 @@ extern "C" {
  * @param print
  *   Designates the how and where to print.
  * @param operation
- *   The name of the operation that failed.
+ *   The identifier of the operation that failed.
  *
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_fake_print_error_failure_operation_
-  extern f_status_t fake_print_error_failure_operation(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t operation);
+  extern f_status_t fake_print_error_failure_operation(fake_setting_t * const setting, const fl_print_t print, const uint8_t operation);
 #endif // _di_fake_print_error_failure_operation_
 
 /**
@@ -74,6 +101,30 @@ extern "C" {
 #ifndef _di_fake_print_error_failure_script_
   extern f_status_t fake_print_error_failure_script(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t script);
 #endif // _di_fake_print_error_failure_script_
+
+/**
+ * Print error message for when the parameter value is an empty string.
+ *
+ * @param setting
+ *   The main program settings.
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   Designates the how and where to print.
+ * @param symbol
+ *   The symbol of the parameter.
+ * @param name
+ *   The name of the parameter.
+ * @param value
+ *   The value that is invalid.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ */
+#ifndef _di_fake_print_error_parameter_not_empty_
+  extern f_status_t fake_print_error_parameter_not_empty(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t value);
+#endif // _di_fake_print_error_parameter_not_empty_
 
 /**
  * Print error message for when the parameter value contains a non-word, non-minus, and non-plus character.

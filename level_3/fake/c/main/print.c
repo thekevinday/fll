@@ -17,8 +17,20 @@ extern "C" {
   }
 #endif // _di_fake_print_error_
 
+#ifndef _di_fake_print_error_file_
+  f_status_t fake_print_error_file(fake_setting_t * const setting, const f_status_t status, const fl_print_t print, const f_string_t function, const f_string_static_t name, const f_string_static_t operation, const uint8_t type) {
+
+    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
+
+    fake_print_line_first_locked(setting, print);
+    fll_error_file_print(print, F_status_set_fine(status), function, F_true, name, operation, type);
+
+    return F_none;
+  }
+#endif // _di_fake_print_error_file_
+
 #ifndef _di_fake_print_error_failure_operation_
-  f_status_t fake_print_error_failure_operation(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t operation) {
+  f_status_t fake_print_error_failure_operation(fake_setting_t * const setting, const fl_print_t print, const uint8_t operation) {
 
     if (!setting || print.verbosity < f_console_verbosity_error_e) return F_output_not;
 
@@ -26,9 +38,22 @@ extern "C" {
 
     fake_print_line_first_unlocked(setting, print);
 
-    fl_print_format("%[%QThe operation '%]", print.to, print.context, print.prefix, print.context);
-    fl_print_format("%[%Q%]", print.to, print.notable, operation, print.notable);
-    fl_print_format("%[' failed.%]%r", print.to, print.context, print.context, f_string_eol_s);
+    fl_print_format("%[%QThe operation '%]%[", print.to, print.context, print.prefix, print.context, print.notable);
+
+    if (data.operation == fake_operation_build_e) {
+      f_print_dynamic(print.to, fake_other_operation_build_s);
+    }
+    else if (data.operation == fake_operation_clean_e) {
+      f_print_dynamic(print.to, fake_other_operation_clean_s);
+    }
+    else if (data.operation == fake_operation_make_e) {
+      f_print_dynamic(print.to, fake_other_operation_make_s);
+    }
+    else if (data.operation == fake_operation_skeleton_e) {
+      f_print_dynamic(print.to, fake_other_operation_skeleton_s);
+    }
+
+    fl_print_format("%]%[' failed.%]%r", print.to, print.notable, print.context, print.context, f_string_eol_s);
 
     f_file_stream_unlock(print.to);
 
@@ -54,6 +79,29 @@ extern "C" {
     return F_none;
   }
 #endif // _di_fake_print_error_failure_script_
+
+#ifndef _di_fake_print_error_parameter_not_empty_
+  f_status_t fake_print_error_parameter_not_empty(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t value) {
+
+    if (!setting || print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+
+    if (!F_status_is_error(setting->status)) {
+      if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
+    }
+
+    f_file_stream_lock(print.to);
+
+    fake_print_line_first_unlocked(setting, print);
+
+    fl_print_format("%[%QThe '%]", print.to, print.context, print.prefix, print.context);
+    fl_print_format("%[%Q%Q%]", print.to, print.notable, symbol, name, print.notable);
+    fl_print_format("%[' parameter must not be empty and must not contain only white space.%]%r", print.to, print.context, print.context, f_string_eol_s);
+
+    f_file_stream_unlock(print.to);
+
+    return F_none;
+  }
+#endif // _di_fake_print_error_parameter_not_empty_
 
 #ifndef _di_fake_print_error_parameter_not_word_
   f_status_t fake_print_error_parameter_not_word(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t value) {

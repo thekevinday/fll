@@ -322,12 +322,6 @@ extern "C" {
 #ifndef _di_fake_data_delete_
   f_status_t fake_data_delete(fake_data_t * const data) {
 
-    f_string_dynamics_resize(0, &data->define);
-    f_string_dynamic_resize(0, &data->fakefile);
-    f_string_dynamics_resize(0, &data->mode);
-    f_string_dynamic_resize(0, &data->process);
-    f_string_dynamic_resize(0, &data->settings);
-
     f_string_dynamic_resize(0, &data->path_build);
     f_string_dynamic_resize(0, &data->path_build_documentation);
     f_string_dynamic_resize(0, &data->path_build_documents);

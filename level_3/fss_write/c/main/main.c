@@ -27,8 +27,9 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
   {
     const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize(argc, argv, envp);
+    f_state_t state = f_state_t_initialize;
 
-    fss_write_setting_load(arguments, &data, &setting, &fss_write_main_setting_load_as);
+    fss_write_setting_load(arguments, state, &data, &setting, &fss_write_main_setting_load_as);
   }
 
   fss_write_main(&data, &setting);
@@ -52,7 +53,7 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 #endif // _di_fss_write_main_process_help_
 
 #ifndef _di_fss_write_main_setting_load_as_
-  void fss_write_main_setting_load_as(const f_console_arguments_t arguments, fll_program_data_t * const main, fss_write_setting_t * const setting) {
+  void fss_write_main_setting_load_as(const f_console_arguments_t arguments, f_state_t state, fll_program_data_t * const main, fss_write_setting_t * const setting) {
 
     if (!main || !setting || F_status_is_error(setting->status) || (setting->flag & fss_write_flag_version_e)) return;
 

@@ -84,21 +84,6 @@ extern "C" {
 #endif // _di_fake_pipe_buffer_
 
 /**
- * Validate console arguments and print any relating error messages.
- *
- * @param data
- *   The program data.
- *
- * @return
- *   F_none on success.
- *
- *   Status codes (with error bit) are returned on any problem.
- */
-#ifndef _di_fake_process_console_parameters_
-  extern f_status_t fake_process_console_parameters(fake_data_t * const data) F_attribute_visibility_internal_d;
-#endif // _di_validate_console_parameters_
-
-/**
  * Validate directories and print any relating error messages.
  *
  * This should not be called for skeleton as in that case the directories probably do not exist.

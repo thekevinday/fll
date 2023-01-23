@@ -51,10 +51,10 @@ extern "C" {
  * Provide default settings.
  */
 #ifndef _di_fake_default_s_
-  const f_string_static_t fake_default_path_build_s = macro_f_string_static_t_initialize(FAKE_default_path_build_s, 0, FAKE_default_path_build_s_length);
-  const f_string_static_t fake_default_path_data_s = macro_f_string_static_t_initialize(FAKE_default_path_data_s, 0, FAKE_default_path_data_s_length);
-  const f_string_static_t fake_default_path_sources_s = macro_f_string_static_t_initialize(FAKE_default_path_sources_s, 0, FAKE_default_path_sources_s_length);
-  const f_string_static_t fake_default_path_work_s = macro_f_string_static_t_initialize(FAKE_default_path_work_s, 0, FAKE_default_path_work_s_length);
+  const f_string_static_t fake_default_build_s = macro_f_string_static_t_initialize(FAKE_default_build_s, 0, FAKE_default_build_s_length);
+  const f_string_static_t fake_default_data_s = macro_f_string_static_t_initialize(FAKE_default_data_s, 0, FAKE_default_data_s_length);
+  const f_string_static_t fake_default_sources_s = macro_f_string_static_t_initialize(FAKE_default_sources_s, 0, FAKE_default_sources_s_length);
+  const f_string_static_t fake_default_work_s = macro_f_string_static_t_initialize(FAKE_default_work_s, 0, FAKE_default_work_s_length);
 
   const f_string_static_t fake_default_fakefile_s = macro_f_string_static_t_initialize(FAKE_default_fakefile_s, 0, FAKE_default_fakefile_s_length);
   const f_string_static_t fake_default_process_s = macro_f_string_static_t_initialize(FAKE_default_process_s, 0, FAKE_default_process_s_length);
@@ -123,48 +123,6 @@ extern "C" {
     f_string_dynamic_resize(0, &setting->settings);
     f_string_dynamic_resize(0, &setting->sources);
     f_string_dynamic_resize(0, &setting->work);
-    f_string_dynamic_resize(0, &setting->path_build);
-    f_string_dynamic_resize(0, &setting->path_build_documentation);
-    f_string_dynamic_resize(0, &setting->path_build_documents);
-    f_string_dynamic_resize(0, &setting->path_build_includes);
-    f_string_dynamic_resize(0, &setting->path_build_libraries);
-    f_string_dynamic_resize(0, &setting->path_build_libraries_script);
-    f_string_dynamic_resize(0, &setting->path_build_libraries_shared);
-    f_string_dynamic_resize(0, &setting->path_build_libraries_static);
-    f_string_dynamic_resize(0, &setting->path_build_objects);
-    f_string_dynamic_resize(0, &setting->path_build_objects_script);
-    f_string_dynamic_resize(0, &setting->path_build_objects_shared);
-    f_string_dynamic_resize(0, &setting->path_build_objects_static);
-    f_string_dynamic_resize(0, &setting->path_build_programs);
-    f_string_dynamic_resize(0, &setting->path_build_programs_script);
-    f_string_dynamic_resize(0, &setting->path_build_programs_shared);
-    f_string_dynamic_resize(0, &setting->path_build_programs_static);
-    f_string_dynamic_resize(0, &setting->path_build_settings);
-    f_string_dynamic_resize(0, &setting->path_build_stage);
-    f_string_dynamic_resize(0, &setting->path_data);
-    f_string_dynamic_resize(0, &setting->path_data_build);
-    f_string_dynamic_resize(0, &setting->path_data_documentation);
-    f_string_dynamic_resize(0, &setting->path_data_settings);
-    f_string_dynamic_resize(0, &setting->path_documents);
-    f_string_dynamic_resize(0, &setting->path_licenses);
-    f_string_dynamic_resize(0, &setting->path_sources);
-    f_string_dynamic_resize(0, &setting->path_work);
-    f_string_dynamic_resize(0, &setting->path_work_includes);
-    f_string_dynamic_resize(0, &setting->path_work_libraries);
-    f_string_dynamic_resize(0, &setting->path_work_libraries_script);
-    f_string_dynamic_resize(0, &setting->path_work_libraries_shared);
-    f_string_dynamic_resize(0, &setting->path_work_libraries_static);
-    f_string_dynamic_resize(0, &setting->path_work_programs);
-    f_string_dynamic_resize(0, &setting->path_work_programs_script);
-    f_string_dynamic_resize(0, &setting->path_work_programs_shared);
-    f_string_dynamic_resize(0, &setting->path_work_programs_static);
-    f_string_dynamic_resize(0, &setting->file_data_build_defines);
-    f_string_dynamic_resize(0, &setting->file_data_build_dependencies);
-    f_string_dynamic_resize(0, &setting->file_data_build_fakefile);
-    f_string_dynamic_resize(0, &setting->file_data_build_process_post);
-    f_string_dynamic_resize(0, &setting->file_data_build_process_pre);
-    f_string_dynamic_resize(0, &setting->file_data_build_settings);
-    f_string_dynamic_resize(0, &setting->file_documents_readme);
 
     f_string_dynamics_resize(0, &setting->defines);
     f_string_dynamics_resize(0, &setting->modes);
@@ -176,17 +134,15 @@ extern "C" {
 #endif // _di_fake_setting_delete_
 
 #ifndef _di_fake_setting_load_
-  void fake_setting_load(const f_console_arguments_t arguments, fll_program_data_t * const main, fake_setting_t * const setting) {
+  void fake_setting_load(const f_console_arguments_t arguments, f_state_t state, fll_program_data_t * const main, fake_setting_t * const setting) {
 
     if (!main || !setting) return;
 
-    setting->flag = 0;
-
     // Load parameters.
-    setting->status = f_console_parameter_process(arguments, &main->parameters, (void *) setting);
+    setting->status = f_console_parameter_process(arguments, state, &main->parameters, (void *) setting);
 
     if (F_status_is_error(setting->status)) {
-      fake_print_error(setting, F_status_set_fine(setting->status), macro_fake_f(f_console_parameter_process));
+      fake_print_error(setting, setting->status, main->error, macro_fake_f(f_console_parameter_process));
 
       return;
     }
@@ -206,7 +162,7 @@ extern "C" {
         setting->status = fll_program_parameter_process_context(choices, modes, F_true, main);
 
         if (F_status_is_error(setting->status)) {
-          fake_print_error(setting, F_status_set_fine(setting->status), macro_fake_f(fll_program_parameter_process_context));
+          fake_print_error(setting, setting->status, main->error, macro_fake_f(fll_program_parameter_process_context));
 
           return;
         }
@@ -237,7 +193,7 @@ extern "C" {
         setting->status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, main);
 
         if (F_status_is_error(setting->status)) {
-          fake_print_error(setting, F_status_set_fine(setting->status), macro_fake_f(fll_program_parameter_process_verbosity));
+          fake_print_error(setting, setting->status, main->error, macro_fake_f(fll_program_parameter_process_verbosity));
 
           return;
         }
@@ -315,7 +271,6 @@ extern "C" {
           fake_parameter_path_work_e,
           fake_parameter_process_e,
           fake_parameter_settings_e,
-          fake_parameter_sources_e,
         };
 
         const f_string_static_t names[] = {
@@ -326,32 +281,47 @@ extern "C" {
           fake_long_path_work_s,
           fake_long_process_s,
           fake_long_settings_s,
-          fake_long_sources_s,
         };
 
         f_string_dynamic_t * const variable[] = {
           &setting->fakefile,
-          &setting->path_build,
-          &setting->path_data,
-          &setting->path_sources,
-          &setting->path_work,
+          &setting->build,
+          &setting->data,
+          &setting->sources,
+          &setting->work,
           &setting->process,
           &setting->settings,
-          &setting->sources,
         };
 
-        f_string_static_t * const defaults[] = {
-          &fake_default_fakefile_s, // fake_parameter_fakefile_e
-          0,                        // fake_parameter_path_build_e
-          0,                        // fake_parameter_path_data_e
-          0,                        // fake_parameter_path_sources_e
-          0,                        // fake_parameter_path_work_e
-          &fake_default_process_s,  // fake_parameter_process_e
-          &fake_default_settings_s, // fake_parameter_settings_e
-          0,                        // fake_parameter_sources_e
+        f_string_dynamic_resize(0, &setting->build);
+        f_string_dynamic_resize(0, &setting->data);
+        f_string_dynamic_resize(0, &setting->fakefile);
+        f_string_dynamic_resize(0, &setting->process);
+        f_string_dynamic_resize(0, &setting->settings);
+        f_string_dynamic_resize(0, &setting->sources);
+        f_string_dynamic_resize(0, &setting->work);
+
+        const f_string_static_t defaults[] = {
+          fake_default_fakefile_s,
+          fake_default_build_s,
+          fake_default_data_s,
+          fake_default_sources_s,
+          fake_default_work_s,
+          fake_default_process_s,
+          fake_default_settings_s,
         };
 
-        for (i = 0; i < 8; ++i) {
+        const bool cleanups[] = {
+          F_false, // fake_parameter_fakefile_e
+          F_true,  // fake_parameter_path_build_e
+          F_true,  // fake_parameter_path_data_e
+          F_false, // fake_parameter_path_sources_e
+          F_true,  // fake_parameter_path_work_e
+          F_false, // fake_parameter_process_e
+          F_false, // fake_parameter_settings_e
+        };
+
+        for (i = 0; i < 7; ++i) {
 
           if (main->parameters.array[parameters[i]].result & f_console_result_found_e) {
             setting->status = F_status_set_error(F_parameter);
@@ -363,7 +333,7 @@ extern "C" {
             return;
           }
 
-          if (main->parameters.array[parameters[i]].result & f_console_result_additional_e) {
+          if (main->parameters.array[parameters[i]].result & f_console_result_value_e) {
             index = data->main->parameters.array[parameters[i]].values.array[data->main->parameters.array[parameters[i]].values.used - 1];
 
             if (data->main->parameters.arguments.array[index].used) {
@@ -394,39 +364,65 @@ extern "C" {
                 } // for
               }
 
-              // De-allocate memory before replacing it with a statically allocated string.
-              if (variable[i]->size) {
-                setting->status = f_string_dynamic_resize(0, variable[i]);
+              if (cleanups[i]) {
+                status = f_path_directory_cleanup(data->main->parameters.arguments.array[index], parameters_value[i]);
 
                 if (F_status_is_error(setting->status)) {
-                  fake_print_error(setting, F_status_set_fine(setting->status), macro_fake_f(f_string_dynamic_resize));
+                  if (print.verbosity > f_console_verbosity_quiet_e) {
+                    fake_print_line_first_locked(setting, print);
+
+                    if (fll_error_print(data->main->error, F_status_set_fine(setting->status), macro_fake_f(f_path_directory_cleanup), F_false) == F_false) {
+                      fll_program_print_error_parameter_process(data->main->error, F_status_set_fine(setting->status), f_console_symbol_long_normal_s, names[i]);
+                    }
+                  }
 
                   return;
                 }
               }
+              else {
 
-              variable[i]->string = data->main->parameters.arguments.array[index].string;
-              variable[i]->used = data->main->parameters.arguments.array[index].used;
-              variable[i]->size = 0;
+                // De-allocate memory before replacing it with a statically allocated string.
+                if (variable[i]->size) {
+                  setting->status = f_string_dynamic_resize(0, variable[i]);
+
+                  if (F_status_is_error(setting->status)) {
+                    fake_print_error(setting, setting->status, main->error, macro_fake_f(f_string_dynamic_resize));
+
+                    return;
+                  }
+                }
+
+                variable[i]->string = data->main->parameters.arguments.array[index].string;
+                variable[i]->used = data->main->parameters.arguments.array[index].used;
+                variable[i]->size = 0;
+              }
+
+              if (!variable[i]->used) {
+                setting->status = F_status_set_error(F_parameter);
+
+                fake_print_error_parameter_not_empty(setting, data->main->error, f_console_symbol_long_normal_s, names[i], data->main->parameters.arguments.array[index]);
+
+                return;
+              }
 
               setting->status = F_none;
             }
           }
-          else if (defaults[i]) {
+          else {
 
             // De-allocate memory before replacing it with a statically allocated string.
             if (variable[i]->size) {
               setting->status = f_string_dynamic_resize(0, variable[i]);
 
               if (F_status_is_error(setting->status)) {
-                fake_print_error(setting, F_status_set_fine(setting->status), macro_fake_f(f_string_dynamic_resize));
+                fake_print_error(setting, setting->status, main->error, macro_fake_f(f_string_dynamic_resize));
 
                 return;
               }
             }
 
-            variable[i]->string = defaults[i]->string;
-            variable[i]->used = defaults[i]->used;
+            variable[i]->string = defaults[i].string;
+            variable[i]->used = defaults[i].used;
             variable[i]->size = 0;
           }
         } // for
@@ -460,149 +456,137 @@ extern "C" {
             return;
           }
 
-          if (main->parameters.array[parameters[i]].result & f_console_result_additional_e) {
-            variable[i]->used = 0;
-
-            setting->status = f_string_dynamics_increase_by(data->main->parameters.array[parameters[i]].values.used, variable[i]);
+          if (main->parameters.array[parameters[i]].result & f_console_result_value_e) {
+            setting->status = fll_program_parameter_additional_rip(data->main->parameters.arguments.array, data->main->parameters.array[parameters[i]].values, variable[i]);
 
             if (F_status_is_error(setting->status)) {
-              fake_print_error(setting, main->error, macro_fake_f(f_string_dynamics_increase_by));
+              if (print.verbosity > f_console_verbosity_quiet_e) {
+                fake_print_line_first_locked(setting, print);
+
+                if (fll_error_print(data->main->error, F_status_set_fine(setting->status), macro_fake_f(fll_program_parameter_additional_rip), F_false) == F_false) {
+                  fll_program_print_error_parameter_process(data->main->error, F_status_set_fine(setting->status), f_console_symbol_long_normal_s, names[i]);
+                }
+              }
 
               return;
             }
 
-            for (; variable[i]->used < data->main->parameters.array[parameters[i]].values.used; ) {
+            if (parameters[i] == fake_parameter_mode_e) {
+              f_array_length_t i = 0;
+              f_array_length_t j = 0;
+              f_array_length_t width_max = 0;
 
-              // De-allocate memory before replacing it with a statically allocated string.
-              if (variable[i]->size) {
-                setting->status = f_string_dynamic_resize(0, variable[i]);
+              for (; i < data->mode.used; ++i) {
 
-                if (F_status_is_error(setting->status)) {
-                  fake_print_error(setting, F_status_set_fine(setting->status), macro_fake_f(f_string_dynamic_resize));
+                for (j = 0; j < data->mode.array[i].used; ++j) {
 
-                  return;
-                }
-              }
+                  width_max = data->mode.array[i].used - j;
 
-              index = data->main->parameters.array[parameters[i]].values.array[variable[i]->used];
+                  setting->status = f_utf_is_word_dash_plus(data->main->parameters.arguments.array[i].string + j, data->main->parameters.arguments.array[i].used - j, F_false);
 
-              variable[i]->array[variable[i]->used].string = main->parameters.arguments.array[index].string;
-              variable[i]->array[variable[i]->used].used = main->parameters.arguments.array[index].used;
-              variable[i]->array[variable[i]->used++].size = 0;
-            } // for
+                  if (F_status_is_error(setting->status)) {
+                    if (print.verbosity > f_console_verbosity_quiet_e) {
+                      fake_print_line_first_locked(setting, print);
+
+                      if (fll_error_print(data->main->error, F_status_set_fine(setting->status), macro_fake_f(f_utf_is_word_dash_plus), F_false) == F_false) {
+                        fll_program_print_error_parameter_process(data->main->error, F_status_set_fine(setting->status), f_console_symbol_long_normal_s, names[i]);
+                      }
+                    }
+
+                    return;
+                  }
+
+                  if (setting->status == F_false) {
+                    setting->status = F_status_set_error(F_parameter);
+
+                    fake_print_error_parameter_not_word(setting, data->main->error, f_console_symbol_long_normal_s, names[i], data->main->parameters.arguments.array[index]);
+
+                    return;
+                  }
+                } // for
+              } // for
+            }
           }
         } // for
       }
     }
 
-    {
-      f_array_length_t locations = main->parameters.array[fake_parameter_operation_build_e].locations.used;
-      locations += main->parameters.array[fake_parameter_operation_clean_e].locations.used;
-      locations += main->parameters.array[fake_parameter_operation_make_e].locations.used;
-      locations += main->parameters.array[fake_parameter_operation_skeleton_e].locations.used;
+    if (setting->operations.used) {
+      setting->flag |= fake_data_flag_operation_e;
+    }
+    else {
+      setting->flag |= fake_data_flag_operation_make_e;
+      setting->flag -= setting->flag & fake_data_flag_operation_e;
 
-      setting->operations.used = 0;
-
-      setting->status = f_uint8s_increase_by(locations ? locations : 1, &setting->operations);
+      setting->status = f_uint8s_increase_by(1, &setting->operations);
 
       if (F_status_is_error(setting->status)) {
-        fake_print_error(setting, main->error, macro_fake_f(f_uint8s_increase_by));
+        fake_print_error(setting, setting->status, main->error, macro_fake_f(f_uint8s_increase_by));
 
         return;
       }
 
-      if (locations) {
-        data.flag |= fake_data_flag_operation_e;
-
-        f_array_length_t i = 0;
-
-        //f_string_static_t * const args = main->parameters.arguments.array;
-
-        /*
-          fake_process_console_parameters
-          fake_parameter_operation_build_e,
-          fake_parameter_operation_clean_e,
-          fake_parameter_operation_make_e,
-          fake_parameter_operation_skeleton_e,
-        */
-        /*
-        f_array_length_t locations[operations_length];
-        f_array_length_t locations_length = 0;
-        f_array_length_t i = 0;
-        f_array_length_t j = 0;
-        f_array_length_t k = 0;
-
-        for (; i < main->parameters.array[fake_parameter_operation_build_e].locations.used; ++i, ++locations_length) {
-
-          operations[locations_length] = fake_operation_build_e;
-          locations[locations_length] = main->parameters.array[fake_parameter_operation_build_e].locations.array[i];
-        } // for
-
-        for (i = 0; i < main->parameters.array[fake_parameter_operation_clean_e].locations.used; ++i) {
-
-          for (j = 0; j < locations_length; ++j) {
-
-            if (main->parameters.array[fake_parameter_operation_clean_e].locations.array[i] < locations[j]) {
-              for (k = locations_length; k > j; --k) {
-                locations[k] = locations[k - 1];
-                operations[k] = operations[k - 1];
-              } // for
-
-              break;
-            }
-          } // for
-
-          locations[j] = main->parameters.array[fake_parameter_operation_clean_e].locations.array[i];
-          operations[j] = fake_operation_clean_e;
-          ++locations_length;
-        } // for
-
-        for (i = 0; i < main->parameters.array[fake_parameter_operation_make_e].locations.used; ++i) {
-
-          for (j = 0; j < locations_length; ++j) {
-
-            if (main->parameters.array[fake_parameter_operation_make_e].locations.array[i] < locations[j]) {
-              for (k = locations_length; k > j; --k) {
-                locations[k] = locations[k - 1];
-                operations[k] = operations[k - 1];
-              } // for
-
-              break;
-            }
-          } // for
-
-          locations[j] = main->parameters.array[fake_parameter_operation_make_e].locations.array[i];
-          operations[j] = fake_operation_make_e;
-          ++locations_length;
-        } // for
-
-        for (i = 0; i < main->parameters.array[fake_parameter_operation_skeleton_e].locations.used; ++i) {
-
-          for (j = 0; j < locations_length; ++j) {
-
-            if (main->parameters.array[fake_parameter_operation_skeleton_e].locations.array[i] < locations[j]) {
-              for (k = locations_length; k > j; --k) {
-
-                locations[k] = locations[k - 1];
-                operations[k] = operations[k - 1];
-              } // for
-
-              break;
-            }
-          } // for
-
-          locations[j] = main->parameters.array[fake_parameter_operation_skeleton_e].locations.array[i];
-          operations[j] = fake_operation_skeleton_e;
-          ++locations_length;
-        } // for
-        */
-      }
-      else {
-        setting->operations.array[setting->operations.used++] = fake_parameter_operation_make_e;
-      }
+      setting->operations.array[setting->operations.used++] = fake_operation_make_e;
     }
   }
 #endif // _di_fake_setting_load_
+
+#ifndef _di_fake_setting_load_parameter_callback_
+  void fake_setting_load_parameter_callback(const f_console_arguments_t arguments, void * const void_parameters, f_console_parameter_state_t * const state, void * const void_data) {
+
+    if (!state) return;
+
+    if (!parameters || !data || state->type != f_console_parameter_state_type_match_other_e)) {
+      state->status = F_process;
+
+      return;
+    }
+
+    f_console_parameters_t * const parameters = (f_console_parameters_t * const) void_parameters;
+    fake_setting_t * const setting = (fake_setting_t * const) void_data;
+
+    state->status = f_uint8s_increase(fake_default_allocation_small_d, &setting->operations);
+
+    if (F_status_is_error(state->status)) {
+      fake_print_error(setting, state->status, main->error, macro_fake_f(f_uint8s_increase));
+
+      return;
+    }
+
+    switch (state.match) {
+      case fake_parameter_operation_build_e:
+        setting->operations.array[setting->operations.used++] = fake_operation_build_e;
+        setting->flag |= fake_data_flag_operation_build_e;
+
+        break;
+
+      case fake_parameter_operation_clean_e:
+        setting->operations.array[setting->operations.used++] = fake_operation_clean_e;
+        setting->flag |= fake_data_flag_operation_clean_e;
+
+        break;
+
+      case fake_parameter_operation_make_e:
+        setting->operations.array[setting->operations.used++] = fake_operation_make_e;
+        setting->flag |= fake_data_flag_operation_make_e;
+
+        break;
+
+      case fake_parameter_operation_skeleton_e:
+        setting->operations.array[setting->operations.used++] = fake_operation_skeleton_e;
+        setting->flag |= fake_data_flag_operation_skeleton_e;
+
+        break;
+
+      default:
+        state->status = F_process;
+
+        return;
+    }
+
+    state->status = F_none;
+  }
+#endif // _di_fake_setting_load_parameter_callback_
 
 #ifndef _di_fake_setting_unload_
   f_status_t fake_setting_unload(fll_program_data_t * const main, fake_setting_t * const setting) {

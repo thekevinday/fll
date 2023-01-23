@@ -117,7 +117,16 @@ extern "C" {
     void *data;
   } f_state_t;
 
-  #define f_state_t_initialize { F_memory_default_allocation_large_d, F_memory_default_allocation_small_d, 0, 0, 0, 0, 0, 0 }
+  #define f_state_t_initialize { \
+    F_memory_default_allocation_large_d, \
+    F_memory_default_allocation_small_d, \
+    0, \
+    0, \
+    0, \
+    0, \
+    0, \
+    0, \
+  }
 
   #define macro_f_state_t_initialize(step_large, step_small, flag, handle, interrupt, callbacks, custom, data) { \
     step_large, \

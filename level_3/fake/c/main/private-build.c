@@ -389,7 +389,7 @@ const f_string_static_t fake_build_documentation_files_s = macro_f_string_static
 
     for (f_array_length_t i = 0; i < files.used; ++i) {
 
-      if (!(i % fake_signal_check_short_d)) {
+      if (!((++data->main->signal_check) % fake_signal_check_short_d)) {
         if (fll_program_standard_signal_received(data->main)) {
           fll_program_print_signal_received(data->main->warning, data->setting->line_first, data->main->signal_received);
 
@@ -398,7 +398,7 @@ const f_string_static_t fake_build_documentation_files_s = macro_f_string_static
           break;
         }
 
-        data->main->signal_check = 0;
+        main->signal_check = 0;
       }
 
       if (!files.array[i].used) continue;

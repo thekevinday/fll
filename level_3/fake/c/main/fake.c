@@ -38,181 +38,176 @@ extern "C" {
       return;
     }
 
-    // @todo everything below is old, mostly.
+    if ((setting->flag & fake_data_flag_operation_build_e) && (setting->flag & fake_data_flag_operation_make_e)) {
+      setting->status = F_status_set_error(F_parameter);
+
+      fake_print_error_parameter_operation_not_with(setting, main->error, fake_other_operation_build_s, fake_other_operation_make_s);
+
+      return;
+    }
+
     fake_data_t data = fake_data_t_initialize;
     data.main = main;
     data.setting = setting;
-    data.argv = main->parameters.arguments.array;
 
-    if (F_status_is_error_not(setting->status)) {
-      if (main->parameters.array[fake_parameter_operation_build_e].locations.used && main->parameters.array[fake_parameter_operation_make_e].locations.used) {
-        setting->status = F_status_set_error(F_parameter);
+    setting->status = fake_path_generate(&data); // @todo needs to be updated regarding the new data structure.
 
-        fake_print_error_parameter_operation_not_with(setting, main->error, fake_other_operation_build_s, fake_other_operation_make_s);
+    if (F_status_is_error(setting->status)) {
+      fake_data_delete(&data);
+
+      return;
+    }
+
+    if ((main->pipe & fll_program_data_pipe_input_e) && !(data.setting->flag & fake_data_flag_operation_e)) {
+      data.file_data_build_fakefile.used = 0;
+
+      setting->status = f_string_dynamic_append(f_string_ascii_minus_s, &data.file_data_build_fakefile);
+
+      if (F_status_is_error(setting->status)) {
+        fake_print_error(setting, setting->status, main->error, macro_fake_f(f_string_dynamic_append));
+      }
+      else {
+        setting->fakefile.used = 0;
+
+        setting->status = f_string_dynamic_append(f_string_ascii_minus_s, &setting->fakefile);
       }
     }
 
-    if (F_status_is_error_not(setting->status)) {
-      bool validate_parameter_paths = F_true;
+    {
+      f_array_length_t i = 0;
 
-      setting->status = fake_process_console_parameters(&data);
-
-      if (F_status_is_error_not(setting->status)) {
-        setting->status = fake_path_generate(&data);
-      }
-
-      if (F_status_is_error(setting->status)) {
-        fake_data_delete(&data);
-
-        return;
-      }
-
+      // Pre-process and perform validation when "clean" is before a "build" or "make" command as a safety check.
       {
-        uint8_t i = 0;
+        uint8_t has_clean = F_false;
 
-        if ((main->pipe & fll_program_data_pipe_input_e) && !(data.setting->flag & fake_data_flag_operation_e)) {
-          data.file_data_build_fakefile.used = 0;
+        for (; i < setting->operations.used; ++i) {
 
-          setting->status = f_string_dynamic_append(f_string_ascii_minus_s, &data.file_data_build_fakefile);
-
-          if (F_status_is_error(setting->status)) {
-            fake_print_error(setting, setting->status, main->error, macro_fake_f(f_string_dynamic_append));
+          if (setting->operations.array[i] == fake_operation_clean_e) {
+            has_clean = F_true;
           }
-          else {
-            data.fakefile.used = 0;
+          else if (setting->operations.array[i] == fake_operation_build_e || setting->operations.array[i] == fake_operation_make_e) {
 
-            setting->status = f_string_dynamic_append(f_string_ascii_minus_s, &data.fakefile);
-          }
-        }
+            // If the first operation is clean and a make or build operation exists, then the clean operation requires the appropriate settings file or fakefile file.
+            if (has_clean) {
+              data.operation = setting->operations.array[i];
 
-        // Pre-process and perform validation when "clean" is before a "build" or "make" command as a safety check.
-        if (operations_length) {
-          for (uint8_t has_clean = F_false; i < operations_length; ++i) {
+              setting->status = fake_validate_parameter_paths(&data);
 
-            if (operations[i] == fake_operation_clean_e) {
-              has_clean = F_true;
-            }
-            else if (operations[i] == fake_operation_build_e || operations[i] == fake_operation_make_e) {
+              if (F_status_is_error_not(setting->status) && !(main->pipe & fll_program_data_pipe_input_e)) {
+                setting->status = f_file_is(
+                  setting->operations.array[i] == fake_operation_build_e
+                    ? data.file_data_build_settings
+                    : data.file_data_build_fakefile,
+                  F_file_type_regular_d, F_false
+                );
 
-              // If the first operation is clean and a make or build operation exists, then the clean operation requires the appropriate settings file or fakefile file.
-              if (has_clean) {
-                operations_name = fake_other_operation_clean_s;
-                data.operation = operations[i];
+                if (setting->status == F_false) {
+                  setting->status = F_status_set_error(F_file_not);
+                }
 
-                setting->status = fake_validate_parameter_paths(&data);
-
-                if (F_status_is_error_not(setting->status) && !(main->pipe & fll_program_data_pipe_input_e)) {
-                  f_string_static_t *path = 0;
-
-                  if (operations[i] == fake_operation_build_e) {
-                    path = &data.file_data_build_settings;
-                  }
-                  else {
-                    path = &data.file_data_build_fakefile;
-                  }
-
-                  setting->status = f_file_is(*path, F_file_type_regular_d, F_false);
-
-                  if (setting->status == F_false) {
-                    setting->status = F_status_set_error(F_file_not);
-                  }
-
-                  if (F_status_is_error(setting->status)) {
-                    fll_error_file_print(data.main->error, F_status_set_fine(setting->status), "f_file_is", F_true, *path, fake_common_file_path_access_s, fll_error_file_type_file_e);
-                  }
+                if (F_status_is_error(setting->status)) {
+                  fake_print_error_file(
+                    setting,
+                    F_status_set_fine(setting->status),
+                    main->error,
+                    macro_fake_f(f_file_is),
+                    setting->operations.array[i] == fake_operation_build_e
+                      ? data.file_data_build_settings
+                      : data.file_data_build_fakefile,
+                    fake_common_file_path_access_s,
+                    fll_error_file_type_file_e
+                  );
                 }
               }
+            }
+
+            break;
+          }
+
+          if (!((++main->signal_check) % fake_signal_check_short_d)) {
+            if (fll_program_standard_signal_received(main)) {
+              fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
+
+              setting->status = F_status_set_error(F_interrupt);
 
               break;
             }
-          } // for
-        }
 
-        if (F_status_is_error_not(setting->status)) {
-          for (i = 0; i < operations_length; ++i) {
-
-            data.operation = operations[i];
-
-            if (data.operation == fake_operation_build_e) {
-              operations_name = fake_other_operation_build_s;
-            }
-            else if (data.operation == fake_operation_clean_e) {
-              operations_name = fake_other_operation_clean_s;
-            }
-            else if (data.operation == fake_operation_make_e) {
-              operations_name = fake_other_operation_make_s;
-            }
-            else if (data.operation == fake_operation_skeleton_e) {
-              operations_name = fake_other_operation_skeleton_s;
-            }
-
-            if (data.operation == fake_operation_build_e) {
-              if (validate_parameter_paths) {
-                setting->status = fake_validate_parameter_paths(&data);
-                validate_parameter_paths = F_false;
-              }
-
-              if (F_status_is_error_not(setting->status)) {
-                setting->status = fake_build_operate(&data, 0, main->pipe & fll_program_data_pipe_input_e);
-              }
-            }
-            else if (data.operation == fake_operation_clean_e) {
-              setting->status = fake_clean_operate(&data);
-
-              // Reset in case next operation needs files.
-              validate_parameter_paths = F_true;
-            }
-            else if (data.operation == fake_operation_make_e) {
-              if (validate_parameter_paths) {
-                setting->status = fake_validate_parameter_paths(&data);
-                validate_parameter_paths = F_false;
-              }
-
-              if (F_status_is_error_not(setting->status)) {
-                setting->status = fake_make_operate(&data);
-                if (setting->status == F_child) break;
-              }
-            }
-            else if (data.operation == fake_operation_skeleton_e) {
-              setting->status = fake_skeleton_operate(&data);
-
-              // Skeleton is supposed to guarantee these.
-              validate_parameter_paths = F_false;
-            }
-
-            if (setting->status == F_child) break;
-
-            if (F_status_set_fine(setting->status) == F_interrupt || !(i % fake_signal_check_short_d)) {
-              if (fll_program_standard_signal_received(main)) {
-                fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
-
-                setting->status = F_status_set_error(F_interrupt);
-
-                break;
-              }
-
-              main->signal_check = 0;
-            }
-
-            if (F_status_is_error(setting->status)) break;
-          } // for
-        }
-
-        if (F_status_is_error(setting->status)) {
-          fake_print_error_failure_operation(setting, main->error, operations_name);
-        }
+            main->signal_check = 0;
+          }
+        } // for
       }
 
-      if (setting->status != F_child) {
-        fake_print_operation_all_complete(setting, main->message);
+      {
+        bool check_paths = F_true;
+
+        for (i = 0; i < setting->operations.used; ++i) {
+
+          data.operation = setting->operations.array[i];
+
+          if (data.operation == fake_operation_build_e) {
+            if (check_paths) {
+              setting->status = fake_validate_parameter_paths(&data);
+              check_paths = F_false;
+            }
+
+            if (F_status_is_error_not(setting->status)) {
+              setting->status = fake_build_operate(&data, 0, main->pipe & fll_program_data_pipe_input_e);
+            }
+          }
+          else if (data.operation == fake_operation_clean_e) {
+            setting->status = fake_clean_operate(&data);
+
+            // Reset in case next operation needs files.
+            check_paths = F_true;
+          }
+          else if (data.operation == fake_operation_make_e) {
+            if (check_paths) {
+              setting->status = fake_validate_parameter_paths(&data);
+              check_paths = F_false;
+            }
+
+            if (F_status_is_error_not(setting->status)) {
+              setting->status = fake_make_operate(&data);
+              if (setting->status == F_child) break;
+            }
+          }
+          else if (data.operation == fake_operation_skeleton_e) {
+            setting->status = fake_skeleton_operate(&data);
+
+            // Skeleton is supposed to guarantee these.
+            check_paths = F_false;
+          }
+
+          if (setting->status == F_child) break;
+
+          if (!((++main->signal_check) % fake_signal_check_short_d)) {
+            if (fll_program_standard_signal_received(main)) {
+              fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
+
+              setting->status = F_status_set_error(F_interrupt);
+
+              break;
+            }
+
+            main->signal_check = 0;
+          }
+
+          if (F_status_is_error(setting->status)) break;
+        } // for
       }
     }
 
     if (F_status_is_error(setting->status)) {
+      fake_print_error_failure_operation(setting, main->error, data.operation);
       fake_print_line_last_locked(setting, main->error);
     }
-    else if (setting->status != F_interrupt && setting->status != F_child) {
-      fake_print_line_last_locked(setting, main->message);
+    else if (setting->status != F_child) {
+      fake_print_operation_all_complete(setting, main->message);
+
+      if (setting->status != F_interrupt) {
+        fake_print_line_last_locked(setting, main->message);
+      }
     }
 
     fake_data_delete(&data);

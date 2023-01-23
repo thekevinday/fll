@@ -188,363 +188,6 @@ extern "C" {
   }
 #endif // _di_fake_pipe_buffer_
 
-// @todo move this into the common.
-#ifndef _di_fake_process_console_parameters_
-  f_status_t fake_process_console_parameters(fake_data_t * const data) {
-
-    f_status_t status = F_none;
-
-    {
-      const uint8_t parameters_id[] = {
-        fake_parameter_fakefile_e,
-        fake_parameter_process_e,
-        fake_parameter_settings_e,
-      };
-
-      const f_string_static_t parameters_name[] = {
-        fake_long_fakefile_s,
-        fake_long_process_s,
-        fake_long_settings_s,
-      };
-
-      const f_string_static_t parameter_defaults[] = {
-        fake_default_fakefile_s,
-        fake_default_process_s,
-        fake_default_settings_s,
-      };
-
-      f_string_dynamic_t * const parameters_value[] = {
-        &data->fakefile,
-        &data->process,
-        &data->settings,
-      };
-
-      bool parameters_validate_word[] = {
-        F_false,
-        F_true,
-        F_false,
-      };
-
-      for (uint8_t i = 0; i < 3; ++i) {
-
-        if (data->main->parameters.array[parameters_id[i]].result & f_console_result_found_e) {
-          fake_print_error_parameter_missing_value(data, parameters_name[i]);
-
-          return F_status_set_error(F_parameter);
-        }
-
-        if (data->main->parameters.array[parameters_id[i]].result & f_console_result_value_e) {
-          if (data->main->parameters.array[parameters_id[i]].locations.used > 1) {
-            fake_print_error_parameter_too_many(data, parameters_name[i]);
-
-            return F_status_set_error(F_parameter);
-          }
-
-          f_array_length_t index = data->main->parameters.array[parameters_id[i]].values.array[0];
-
-          if (data->main->parameters.arguments.array[index].used) {
-            if (parameters_validate_word[i]) {
-              f_array_length_t j = 0;
-              f_array_length_t width_max = 0;
-
-              for (j = 0; j < data->main->parameters.arguments.array[index].used; ++j) {
-
-                width_max = data->main->parameters.arguments.array[index].used - j;
-
-                status = f_utf_is_word_dash_plus(data->main->parameters.arguments.array[index].string + j, width_max, F_false);
-
-                if (F_status_is_error(status)) {
-                  if (fll_error_print(data->main->error, F_status_set_fine(status), "f_utf_is_word_dash_plus", F_false) == F_known_not && data->main->error.verbosity > f_console_verbosity_quiet_e) {
-                    f_file_stream_lock(data->main->error.to);
-
-                    fl_print_format("%r%[%QFailed to process the parameter '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
-                    fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_normal_s, fake_long_process_s, data->main->error.notable);
-                    fl_print_format("%['.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
-
-                    f_file_stream_unlock(data->main->error.to);
-                  }
-
-                  return status;
-                }
-
-                if (status == F_false) {
-                  if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
-                    f_file_stream_lock(data->main->error.to);
-
-                    fl_print_format("%r%[%QThe '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
-                    fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_normal_s, fake_long_process_s, data->main->error.notable);
-                    fl_print_format("%[' parameters value '%]", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
-                    fl_print_format("%[%Q%]", data->main->error.to, data->main->error.notable, data->main->parameters.arguments.array[index], data->main->error.notable);
-                    fl_print_format("%[' contains non-word, non-dash, and non-plus characters.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
-
-                    f_file_stream_unlock(data->main->error.to);
-                  }
-
-                  return F_status_set_error(F_parameter);
-                }
-              } // for
-            }
-
-            status = f_string_dynamic_increase_by(data->main->parameters.arguments.array[index].used + 1, parameters_value[i]);
-
-            if (F_status_is_error(status)) {
-              fll_error_print(data->main->error, F_status_set_fine(status), "f_string_dynamic_increase_by", F_true);
-
-              return status;
-            }
-
-            status = f_string_dynamic_append(data->main->parameters.arguments.array[index], parameters_value[i]);
-
-            if (F_status_is_error(status)) {
-              if (status == F_status_set_error(F_string_too_large)) {
-                if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
-                  f_file_stream_lock(data->main->error.to);
-
-                  fl_print_format("%r%[%QThe parameter '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
-                  fl_print_format("%[%r%Q%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_normal_s, parameters_name[i], data->main->error.notable);
-                  fl_print_format("%[' is too long.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
-
-                  f_file_stream_unlock(data->main->error.to);
-                }
-              }
-              else {
-                fll_error_print(data->main->error, F_status_set_fine(status), "f_string_append", F_true);
-              }
-
-              return status;
-            }
-
-            status = F_none;
-          }
-
-          if (!data->main->parameters.arguments.array[index].used || status == F_data_not) {
-            if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
-              f_file_stream_lock(data->main->error.to);
-
-              fl_print_format("%r%[%QThe parameter '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
-              fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_normal_s, parameters_name[i], data->main->error.notable);
-              fl_print_format("%[' must not be empty and must not contain only white space.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
-
-              f_file_stream_unlock(data->main->error.to);
-            }
-          }
-        }
-        else if (parameter_defaults[i].used) {
-          parameters_value[i]->used = 0;
-
-          status = f_string_dynamic_increase_by(parameter_defaults[i].used + 1, parameters_value[i]);
-
-          if (F_status_is_error(status)) {
-            fll_error_print(data->main->error, F_status_set_fine(status), "f_string_dynamic_increase_by", F_true);
-
-            return status;
-          }
-
-          status = f_string_dynamic_append(parameter_defaults[i], parameters_value[i]);
-
-          if (F_status_is_error(status)) {
-            fll_error_print(data->main->error, F_status_set_fine(status), "f_string_dynamic_append", F_true);
-
-            return status;
-          }
-        }
-      } // for
-    }
-
-    if (data->main->parameters.array[fake_parameter_define_e].result & f_console_result_found_e) {
-      fake_print_error_parameter_missing_value(data, fake_long_define_s);
-
-      return F_status_set_error(F_parameter);
-    }
-
-    {
-      const uint8_t parameters_id[] = {
-        fake_parameter_path_build_e,
-        fake_parameter_path_data_e,
-        fake_parameter_path_work_e,
-      };
-
-      const f_string_static_t parameters_name[] = {
-        fake_long_path_build_s,
-        fake_long_path_data_s,
-        fake_long_path_work_s,
-      };
-
-      const f_string_static_t parameter_defaults[] = {
-        fake_default_path_build_s,
-        fake_default_path_data_s,
-        fake_default_path_work_s,
-      };
-
-      f_string_dynamic_t * const parameters_value[] = {
-        &data->path_build,
-        &data->path_data,
-        &data->path_work,
-      };
-
-      for (uint8_t i = 0; i < 3; ++i) {
-
-        if (data->main->parameters.array[parameters_id[i]].result & f_console_result_found_e) {
-          fake_print_error_parameter_missing_value(data, parameters_name[i]);
-
-          return F_status_set_error(F_parameter);
-        }
-
-        if (data->main->parameters.array[parameters_id[i]].result & f_console_result_value_e) {
-          if (data->main->parameters.array[parameters_id[i]].values.used > 1) {
-            fake_print_error_parameter_too_many(data, parameters_name[i]);
-
-            return F_status_set_error(F_parameter);
-          }
-
-          const f_array_length_t index = data->main->parameters.array[parameters_id[i]].values.array[data->main->parameters.array[parameters_id[i]].values.used - 1];
-
-          parameters_value[i]->used = 0;
-
-          status = f_string_dynamic_increase_by(data->main->parameters.arguments.array[index].used + 1, parameters_value[i]);
-
-          if (F_status_is_error(status)) {
-            fll_error_print(data->main->error, F_status_set_fine(status), "f_string_dynamic_increase_by", F_true);
-
-            return status;
-          }
-
-          status = f_path_directory_cleanup(data->main->parameters.arguments.array[index], parameters_value[i]);
-
-          if (F_status_is_error(status)) {
-            if (fll_error_print(data->main->error, F_status_set_fine(status), "f_path_directory_cleanup", F_false) == F_known_not && data->main->error.verbosity > f_console_verbosity_quiet_e) {
-              f_file_stream_lock(data->main->error.to);
-
-              fl_print_format("%r%[%QFailed to process parameter '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
-              fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_normal_s, parameters_name[i], data->main->error.notable);
-              fl_print_format("%['.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
-
-              f_file_stream_unlock(data->main->error.to);
-            }
-
-            return status;
-          }
-        }
-        else if (parameter_defaults[i].used) {
-          parameters_value[i]->used = 0;
-
-          status = f_string_dynamic_increase_by(parameter_defaults[i].used + 1, parameters_value[i]);
-
-          if (F_status_is_error(status)) {
-            fll_error_print(data->main->error, F_status_set_fine(status), "f_string_dynamic_increase_by", F_true);
-
-            return status;
-          }
-
-          status = f_string_dynamic_append(parameter_defaults[i], parameters_value[i]);
-
-          if (F_status_is_error(status)) {
-            if (fll_error_print(data->main->error, F_status_set_fine(status), " f_string_dynamic_append", F_false) == F_known_not && data->main->error.verbosity > f_console_verbosity_quiet_e) {
-              f_file_stream_lock(data->main->error.to);
-
-              fl_print_format("%r%[%QFailed to load default for the parameter '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
-              fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_normal_s, parameters_name[i], data->main->error.notable);
-              fl_print_format("%['.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
-
-              f_file_stream_unlock(data->main->error.to);
-            }
-
-            return status;
-          }
-        }
-      } // for
-    }
-
-    if (data->main->parameters.array[fake_parameter_define_e].result & f_console_result_value_e) {
-      status = fll_program_parameter_additional_rip(data->main->parameters.arguments.array, data->main->parameters.array[fake_parameter_define_e].values, &data->define);
-
-      if (F_status_is_error(status)) {
-        if (fll_error_print(data->main->error, F_status_set_fine(status), "fll_program_parameter_additional_rip", F_false) == F_known_not && data->main->error.verbosity > f_console_verbosity_quiet_e) {
-          f_file_stream_lock(data->main->error.to);
-
-          fl_print_format("%r%[%QFailed to process the parameter '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
-          fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_normal_s, fake_long_define_s, data->main->error.notable);
-          fl_print_format("%['.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
-
-          f_file_stream_unlock(data->main->error.to);
-        }
-
-        return status;
-      }
-    }
-
-    if (data->main->parameters.array[fake_parameter_mode_e].result & f_console_result_found_e) {
-      fake_print_error_parameter_missing_value(data, fake_long_mode_s);
-
-      return F_status_set_error(F_parameter);
-    }
-
-    if (data->main->parameters.array[fake_parameter_mode_e].result & f_console_result_value_e) {
-      status = fll_program_parameter_additional_rip(data->main->parameters.arguments.array, data->main->parameters.array[fake_parameter_mode_e].values, &data->mode);
-
-      if (F_status_is_error(status)) {
-        if (fll_error_print(data->main->error, F_status_set_fine(status), "fll_program_parameter_additional_rip", F_false) == F_known_not && data->main->error.verbosity > f_console_verbosity_quiet_e) {
-          f_file_stream_lock(data->main->error.to);
-
-          fl_print_format("%r%[%QFailed to process the parameter '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
-          fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_normal_s, fake_long_mode_s, data->main->error.notable);
-          fl_print_format("%['.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
-
-          f_file_stream_unlock(data->main->error.to);
-        }
-
-        return status;
-      }
-
-      f_array_length_t i = 0;
-      f_array_length_t j = 0;
-      f_array_length_t width_max = 0;
-
-      for (; i < data->mode.used; ++i) {
-
-        for (j = 0; j < data->mode.array[i].used; ++j) {
-
-          width_max = data->mode.array[i].used - j;
-
-          status = f_utf_is_word_dash_plus(data->mode.array[i].string + j, width_max, F_false);
-
-          if (F_status_is_error(status)) {
-            if (fll_error_print(data->main->error, F_status_set_fine(status), "f_utf_is_word_dash_plus", F_false) == F_known_not && data->main->error.verbosity > f_console_verbosity_quiet_e) {
-              f_file_stream_lock(data->main->error.to);
-
-              fl_print_format("%r%[%QFailed to process the parameter '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
-              fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_normal_s, fake_long_mode_s, data->main->error.notable);
-              fl_print_format("%['.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
-
-              f_file_stream_unlock(data->main->error.to);
-            }
-
-            return status;
-          }
-
-          if (status == F_false) {
-            if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
-              f_file_stream_lock(data->main->error.to);
-
-              fl_print_format("%r%[%QThe '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
-              fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_normal_s, fake_long_mode_s, data->main->error.notable);
-              fl_print_format("%[' parameters value '%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_normal_s, fake_long_mode_s, data->main->error.notable);
-              fl_print_format("%[%Q%]", data->main->error.to, data->main->error.notable, data->mode.array[i], data->main->error.notable);
-              fl_print_format("%[' contains non-word, non-dash, and non-plus characters.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
-
-              f_file_stream_unlock(data->main->error.to);
-            }
-
-            return F_status_set_error(F_parameter);
-          }
-        } // for
-      } // for
-    }
-
-    return F_none;
-  }
-#endif // _di_fake_process_console_parameters_
-
 #ifndef _di_fake_validate_parameter_paths_
   f_status_t fake_validate_parameter_paths(fake_data_t * const data) {
 
@@ -554,19 +197,19 @@ extern "C" {
       return F_status_set_error(F_interrupt);
     }
 
-    const f_string_static_t parameters_name[] = {
+    const f_string_static_t names[] = {
       fake_long_path_build_s,
       fake_long_path_data_s,
       fake_long_path_work_s,
     };
 
-    const f_string_dynamic_t parameters_value[] = {
+    const f_string_dynamic_t values[] = {
       data->path_build,
       data->path_data,
       data->path_work,
     };
 
-    uint8_t parameters_required[] = {
+    uint8_t requireds[] = {
       F_false,
       (data->main->pipe & fll_program_data_pipe_input_e) ? F_false : F_true,
       F_false,
@@ -579,41 +222,31 @@ extern "C" {
       if (data->main->parameters.array[fake_parameter_fakefile_e].result == f_console_result_none_e) {
         if (data->path_build.used && f_file_exists(data->path_build, F_false) != F_true) {
           if (f_file_exists(fake_default_fakefile_s, F_false) == F_true) {
-            parameters_required[1] = F_false;
-          }
-        }
-      }
-
-      // If a custom --data or a custom --fakefile parameter is passed and uses an absolute or relative to current path, then do not check.
-      if (data->main->parameters.array[fake_parameter_fakefile_e].result & f_console_result_value_e) {
-        const f_array_length_t index = data->main->parameters.array[fake_parameter_fakefile_e].values.array[data->main->parameters.array[fake_parameter_fakefile_e].values.used - 1];
-
-        if (f_path_is_absolute(data->main->parameters.arguments.array[index]) == F_true || f_path_is_relative_current(data->main->parameters.arguments.array[index]) == F_true) {
-          parameters_required[1] = F_none;
-        }
-        else {
-          status = f_file_exists(data->main->parameters.arguments.array[index], F_true);
-
-          if (F_status_is_error_not(status) && status == F_true) {
-            parameters_required[1] = F_none;
+            requireds[1] = F_false;
           }
         }
       }
     }
-    else if (data->operation == fake_operation_build_e) {
 
-      // If a custom --data or a custom --settings parameter is passed and uses an absolute or relative to current path, then do not check.
-      if (data->main->parameters.array[fake_parameter_settings_e].result & f_console_result_value_e) {
-        const f_array_length_t index = data->main->parameters.array[fake_parameter_settings_e].values.array[data->main->parameters.array[fake_parameter_settings_e].values.used - 1];
+    // If a custom --data or a custom --fakefile parameter is passed and uses an absolute or relative to current path, then do not check.
+    if (data->operation == fake_operation_make_e || data->operation == fake_operation_build_e) {
+      f_console_parameter_t * const parameter = &data->main->parameters.array[
+        data->operation == fake_operation_make_e
+          ? fake_parameter_fakefile_e
+          : fake_parameter_settings_e
+        ];
+
+      if (parameter->result & f_console_result_value_e) {
+        const f_array_length_t index = parameter->values.array[parameter->values.used - 1];
 
         if (f_path_is_absolute(data->main->parameters.arguments.array[index]) == F_true || f_path_is_relative_current(data->main->parameters.arguments.array[index]) == F_true) {
-          parameters_required[1] = F_none;
+          requireds[1] = F_none;
         }
         else {
           status = f_file_exists(data->main->parameters.arguments.array[index], F_true);
 
           if (F_status_is_error_not(status) && status == F_true) {
-            parameters_required[1] = F_none;
+            requireds[1] = F_none;
           }
         }
       }
@@ -623,26 +256,26 @@ extern "C" {
 
     for (uint8_t i = 0; i < 3; ++i) {
 
-      if (parameters_required[i] != F_none && parameters_value[i].used) {
+      if (requireds[i] != F_none && values[i].used) {
         memset(&directory_stat, 0, sizeof(struct stat));
 
-        status = f_file_stat(parameters_value[i], F_true, &directory_stat);
+        status = f_file_stat(values[i], F_true, &directory_stat);
 
         if (status == F_status_set_error(F_file_found_not)) status = F_status_set_error(F_directory_found_not);
 
         if (F_status_is_error(status)) {
-          if (F_status_set_fine(status) != F_directory_found_not || parameters_required[i]) {
-            fll_error_file_print(data->main->error, F_status_set_fine(status), "f_file_stat", F_true, parameters_value[i], f_file_operation_access_s, fll_error_file_type_directory_e);
+          if (F_status_set_fine(status) != F_directory_found_not || requireds[i]) {
+            fll_error_file_print(data->main->error, F_status_set_fine(status), "f_file_stat", F_true, values[i], f_file_operation_access_s, fll_error_file_type_directory_e);
 
             return status;
           }
         }
       }
-      else if (parameters_required[i] == F_true) {
+      else if (requireds[i] == F_true) {
         f_file_stream_lock(data->main->error.to);
 
         fl_print_format("%r%[%QNo valid path for the (required) directory parameter '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
-        fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_normal_s, parameters_name[i], data->main->error.notable);
+        fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_normal_s, names[i], data->main->error.notable);
         fl_print_format("%[' was found.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
         f_file_stream_unlock(data->main->error.to);

@@ -11,6 +11,7 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
   f_console_parameter_t parameters[] = fake_console_parameter_t_initialize;
   data.parameters.array = parameters;
   data.parameters.used = fake_total_parameters_d;
+  data.parameters.callback = &fake_setting_load_parameter_callback;
   data.environment = envp;
 
   if (f_pipe_input_exists()) {
@@ -23,8 +24,9 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
   {
     const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize(argc, argv, envp);
+    f_state_t state = f_state_t_initialize;
 
-    fake_setting_load(arguments, &data, &setting);
+    fake_setting_load(arguments, state, &data, &setting);
   }
 
   fake_main(&data, &setting);

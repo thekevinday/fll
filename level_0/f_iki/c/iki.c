@@ -105,7 +105,7 @@ extern "C" {
       while (range->start <= range->stop && range->start < buffer->used) {
 
         if (state.interrupt) {
-          status = state.interrupt((void *) &state, 0);
+          status = state.interrupt((void * const) &state, 0);
 
           if (F_status_set_fine(status) == F_interrupt) {
             status = F_status_set_error(F_interrupt);
@@ -149,7 +149,7 @@ extern "C" {
       while (F_status_is_error_not(status) && range->start <= range->stop && range->start < buffer->used) {
 
         if (state.interrupt) {
-          status = state.interrupt((void *) &state, 0);
+          status = state.interrupt((void * const) &state, 0);
 
           if (F_status_set_fine(status) == F_interrupt) {
             status = F_status_set_error(F_interrupt);
@@ -192,7 +192,7 @@ extern "C" {
           while (range->start <= range->stop && range->start < buffer->used) {
 
             if (state.interrupt) {
-              status = state.interrupt((void *) &state, 0);
+              status = state.interrupt((void * const) &state, 0);
 
               if (F_status_set_fine(status) == F_interrupt) {
                 status = F_status_set_error(F_interrupt);
@@ -290,7 +290,7 @@ extern "C" {
         while (range->start <= range->stop && range->start < buffer->used) {
 
           if (state.interrupt) {
-            status = state.interrupt((void *) &state, 0);
+            status = state.interrupt((void * const) &state, 0);
 
             if (F_status_set_fine(status) == F_interrupt) {
               status = F_status_set_error(F_interrupt);

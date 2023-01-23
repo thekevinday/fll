@@ -612,14 +612,14 @@ extern "C" {
 #endif // _di_controller_setting_delete_
 
 #ifndef _di_controller_setting_load_
-  void controller_setting_load(const f_console_arguments_t arguments, fll_program_data_t * const main, controller_setting_t * const setting) {
+  void controller_setting_load(const f_console_arguments_t arguments, f_state_t state, fll_program_data_t * const main, controller_setting_t * const setting) {
 
     if (!main || !setting) return;
 
     setting->flag = 0;
 
     // Load parameters.
-    setting->status = f_console_parameter_process(arguments, &main->parameters, 0);
+    setting->status = f_console_parameter_process(state, arguments, &main->parameters, 0);
 
     if (F_status_is_error(setting->status)) {
       controller_print_line_first_locked(setting, main->error);

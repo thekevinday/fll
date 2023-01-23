@@ -136,6 +136,26 @@ extern "C" {
   #endif // _di_f_console_symbol_long_inverse_s_
 #endif // _di_f_console_symbol_s_
 
+#ifndef _di_f_console_parameter_state_delete_
+  f_status_t f_console_parameter_state_delete(f_console_parameter_state_t * const state) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!state) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return f_array_lengths_resize(0, &state->needs);
+  }
+#endif // _di_f_console_parameter_state_delete_
+
+#ifndef _di_f_console_parameter_state_destroy_
+  f_status_t f_console_parameter_state_destroy(f_console_parameter_state_t * const state) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!state) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return f_array_lengths_adjust(0, &state->needs);
+  }
+#endif // _di_f_console_parameter_state_destroy_
+
 #ifndef _di_f_console_parameters_delete_
   f_status_t f_console_parameters_delete(f_console_parameters_t * const parameters) {
     #ifndef _di_level_0_parameter_checking_

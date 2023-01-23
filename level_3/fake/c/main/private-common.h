@@ -15,19 +15,115 @@ extern "C" {
 /**
  * The program data.
  *
+ * operation: A code representing the currrent operation.
+ *
  * main:    The main program data.
  * setting: The settings data.
- * argv:    The argument structure in the progam data parameters for simplifying syntax.
  *
- * operation: A code representing the currrent operation.
+ * path_build:                  The build path.
+ * path_build_documentation:    The build documentation path.
+ * path_build_documents:        The build documents path.
+ * path_build_includes:         The build includes path.
+ * path_build_libraries:        The build libraries path.
+ * path_build_libraries_script: The build libraries_script path.
+ * path_build_libraries_shared: The build libraries_shared path.
+ * path_build_libraries_static: The build libraries_static path.
+ * path_build_objects:          The build objects path.
+ * path_build_objects_script:   The build objects_script path.
+ * path_build_objects_shared:   The build objects_shared path.
+ * path_build_objects_static:   The build objects_static path.
+ * path_build_programs:         The build programs path.
+ * path_build_programs_script:  The build programs_script path.
+ * path_build_programs_shared:  The build programs_shared path.
+ * path_build_programs_static:  The build programs_static path.
+ * path_build_settings:         The build settings path.
+ * path_build_stage:            The build stage path.
+ *
+ * path_data:               The data path.
+ * path_data_build:         The build data path.
+ * path_data_documentation: The documentation data path.
+ * path_data_settings:      The settings data path.
+ *
+ * path_documents: The documents path.
+ * path_licenses:  The licenses path.
+ * path_sources:   The sources path.
+ *
+ * path_work:                  The work path.
+ * path_work_includes:         The includes work path.
+ * path_work_libraries:        The libraries work path.
+ * path_work_libraries_script: The libraries_script work path.
+ * path_work_libraries_shared: The libraries_shared work path.
+ * path_work_libraries_static: The libraries_static work path.
+ * path_work_programs:         The programs work path.
+ * path_work_programs_script:  The programs_script work path.
+ * path_work_programs_shared:  The programs_shared work path.
+ * path_work_programs_static:  The programs_static work path.
+ *
+ * file_data_build_defines:      The defines build file data.
+ * file_data_build_dependencies: The dependencies build file data.
+ * file_data_build_fakefile:     The fakefile build file data.
+ * file_data_build_process_post: The process_post_s build file data.
+ * file_data_build_process_pre:  The process_pre_s build file data.
+ * file_data_build_settings:     The settings build file data.
+ *
+ * file_documents_readme: The documents readme file data.
  */
 #ifndef _di_fake_data_t_
   typedef struct {
+    uint8_t operation;
+
     fll_program_data_t *main;
     fake_setting_t *setting;
-    f_string_static_t *argv; // @todo this might be removable now that settings exists.
 
-    uint8_t operation;
+    f_string_dynamic_t path_build;
+    f_string_dynamic_t path_build_documentation;
+    f_string_dynamic_t path_build_documents;
+    f_string_dynamic_t path_build_includes;
+    f_string_dynamic_t path_build_libraries;
+    f_string_dynamic_t path_build_libraries_script;
+    f_string_dynamic_t path_build_libraries_shared;
+    f_string_dynamic_t path_build_libraries_static;
+    f_string_dynamic_t path_build_objects;
+    f_string_dynamic_t path_build_objects_script;
+    f_string_dynamic_t path_build_objects_shared;
+    f_string_dynamic_t path_build_objects_static;
+    f_string_dynamic_t path_build_programs;
+    f_string_dynamic_t path_build_programs_script;
+    f_string_dynamic_t path_build_programs_shared;
+    f_string_dynamic_t path_build_programs_static;
+    f_string_dynamic_t path_build_settings;
+    f_string_dynamic_t path_build_stage;
+
+    f_string_dynamic_t path_data;
+    f_string_dynamic_t path_data_build;
+    f_string_dynamic_t path_data_documentation;
+    f_string_dynamic_t path_data_settings;
+
+    f_string_dynamic_t path_documents;
+
+    f_string_dynamic_t path_licenses;
+
+    f_string_dynamic_t path_sources;
+
+    f_string_dynamic_t path_work;
+    f_string_dynamic_t path_work_includes;
+    f_string_dynamic_t path_work_libraries;
+    f_string_dynamic_t path_work_libraries_script;
+    f_string_dynamic_t path_work_libraries_shared;
+    f_string_dynamic_t path_work_libraries_static;
+    f_string_dynamic_t path_work_programs;
+    f_string_dynamic_t path_work_programs_script;
+    f_string_dynamic_t path_work_programs_shared;
+    f_string_dynamic_t path_work_programs_static;
+
+    f_string_dynamic_t file_data_build_defines;
+    f_string_dynamic_t file_data_build_dependencies;
+    f_string_dynamic_t file_data_build_fakefile;
+    f_string_dynamic_t file_data_build_process_post;
+    f_string_dynamic_t file_data_build_process_pre;
+    f_string_dynamic_t file_data_build_settings;
+
+    f_string_dynamic_t file_documents_readme;
   } fake_data_t;
 
   #define fake_data_t_initialize \
@@ -35,7 +131,48 @@ extern "C" {
       0, \
       0, \
       0, \
-      0, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
     }
 #endif // _di_fake_main_t_
 

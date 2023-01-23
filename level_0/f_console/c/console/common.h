@@ -123,22 +123,24 @@ extern "C" {
  * Provide a special type explicitly intended to be used for f_console_parameter_state_t.
  *
  * f_console_parameter_state_type_*_e:
- *   - none:            No type set.
- *   - identify:        Perform identify processing.
- *   - match_normal:    Perform short or long parameter match processing.
- *   - match_not:       Perform no parameter match processing.
- *   - match_remaining: Perform remaining parameter match processing.
- *   - value_need:      Perform value is needed processing.
- *   - wrap_up:         Perform wrap up processing.
+ *   - none:         No type set.
+ *   - identify:     Perform identify processing.
+ *   - match_normal: Perform short or long parameter match processing.
+ *   - match_not:    Perform no parameter match processi
+ *   - match_other:  Perform other parameter match processing.ng.
+ *   - need:         Perform value is needed processing.
+ *   - wrap_up:      Perform wrap up processing.
  */
 #ifndef _di_f_console_parameter_state_type_e_
   enum {
     f_console_parameter_state_type_none_e = 0,
     f_console_parameter_state_type_identify_e,
-    f_console_parameter_state_type_match_normal_e,
-    f_console_parameter_state_type_match_not_e,
-    f_console_parameter_state_type_match_remaining_e,
-    f_console_parameter_state_type_value_need_e,
+    f_console_parameter_state_type_long_e,
+    f_console_parameter_state_type_miss_e,
+    f_console_parameter_state_type_short_e,
+    f_console_parameter_state_type_short_preprocess_e,
+    f_console_parameter_state_type_simple_e,
+    f_console_parameter_state_type_need_e,
     f_console_parameter_state_type_wrap_up_e,
   }; // enum
 #endif // _di_f_console_parameter_state_type_e_
@@ -229,31 +231,112 @@ extern "C" {
  * The description here is a relatively generalized description.
  *
  * Any changes to the f_console_parameter_process() code likely requires changes or re-interpretation of these properties.
+ *
+ * type:  Describe the kind of processing is being performed.
+ * depth: Designate how many loops to break or continue out of (0 = one loop, 1 = two loops).
+ * width: Used like a cache to store width results such as from macro_f_utf_byte_width_is().
+ * found: Designate that the currently process parameter has been matched.
+ *
+ * status: The return status.
+ * result: The parameter result state determined by the appropriate f_console_identify() or similar call.
+ * state:  The state information used during pocessing (this primarily utilizes the interrupt and the allocation steps).
+ *
+ * at:           The location in the parameters array currently being processed (not all types use this).
+ * location:     The current location within the argv array.
+ * location_sub: The current location within the argv[location] string.
+ * increment_by: The amount of characters being processed within the argv[location] for the current pass.
+ * need:         The number of additional parameters that need to be grabbed.
+ *
+ * The expected processing of each type (f_console_parameter_state_type_*_e) is as follows:
+ *   - identify:          Determine what type of parameter is being processed.
+ *                        Set status to F_process to perform normal operations after executing the callback.
+ *                        Set status to F_break or F_continue to break or continue after executing the callback.
+ *                        The depth is not used for this type.
+ *
+ *   - long:              A long parameter is being processed.
+ *                        Set status to F_process to perform normal operations after executing the callback.
+ *                        Set status to F_break or F_continue to break or continue after executing the callback.
+ *                        The depth can be from 0 to 1.
+ *                        This utilizes "at".
+ *
+ *   - miss:              A no parameter has been matched at the location situation is being processed.
+ *                        This is generally used to populate the parameters.remaining array.
+ *                        Set status to F_process to perform normal operations after executing the callback.
+ *                        Set status to F_break or F_continue to break or continue after executing the callback.
+ *                        The depth is not used for this type.
+ *
+ *   - short:             A short parameter is being processed.
+ *                        Set status to F_process to perform normal operations after executing the callback.
+ *                        Set status to F_break or F_continue to break or continue after executing the callback.
+ *                        The depth can be from 0 to 2.
+ *                        This utilizes "at".
+ *
+ *   - short_preprocess:  A short parameter is being pre-processed.
+ *                        Set status to F_process to perform normal operations after executing the callback.
+ *                        Set status to F_break or F_continue to break or continue after executing the callback.
+ *                        The depth can be from 0 to 2.
+ *                        This utilizes "at".
+ *
+ *   - simple:            A simple parameter is being processed.
+ *                        Set status to F_process to perform normal operations after executing the callback.
+ *                        Set status to F_break or F_continue to break or continue after executing the callback.
+ *                        The depth can be set up to 1.
+ *                        This utilizes "at".
+ *
+ *   - need:              Additional parameters are needed based on the match variable.
+ *                        This is processed for every location before any parameter matching is performed.
+ *                        Set status to F_process to perform normal operations after executing the callback.
+ *                        Set status to F_break or F_continue to break or continue after executing the callback.
+ *                        The depth is not used for this type.
+ *                        This utilizes "at".
+ *
+ *   - wrap_up:           This is called after all parameters have been processed or when the main loop has been broken out of.
+ *                        This is used to perform after processing clean up and data management.
+ *                        Set status to F_process to perform normal operations after executing the callback.
+ *                        The F_break, F_continue, and depth are not used for this type.
+ *
+ * When using the callback, then the responsibility of ensuring the proper and secure handling of the data is on in the callback.
+ * Failure to properly handle this can lead to integrity and security issues.
+ *
+ * The result is used to determine what type of parameter is being processed (a short, a long, a remaining, etc..).
+ *
+ * The location_sub should start after any of the symbols (for example for '--parameter', the symbol is the two '-', so the initial location_sub should be 2).
+ *
+ * The increment_by is generally set to 1 when performing the short matches and is generally set to the entire length of the string (minus the length of the symbol) for long matches.
+ * Each character in a short parameter potentially represents a parameter.
+ * There will be a loop pass for each character in the short string due to the value of the increment_by.
+ *
+ * The need represents the total number of arguments that are needed by the parameter that is just matched.
+ * The index of the parameter that is just matched is stored in the "match" variable.
  */
 #ifndef _di_f_console_parameter_state_t_
   typedef struct {
     uint8_t type;
     uint8_t depth;
+    uint8_t width;
     bool found;
 
     f_status_t status;
     f_console_result_t result;
+    f_state_t state;
 
-    unsigned long location;
+    f_array_length_t at;
+    f_array_length_t location;
     f_array_length_t location_sub;
-    f_array_length_t increment_by;
-    f_array_lengths_t value_need;
+    f_array_lengths_t needs;
   } f_console_parameter_state_t;
 
   #define f_console_parameter_state_t_initialize { \
     f_console_parameter_state_type_none_e, \
     0, \
+    0, \
     F_false, \
     F_none, \
     f_console_result_t_initialize, \
-    0, \
-    0, \
-    0, \
+    f_state_t_initialize, \
+    f_array_length_t_initialize, \
+    f_array_length_t_initialize, \
+    f_array_length_t_initialize, \
     f_array_lengths_t_initialize, \
   }
 #endif // _di_f_console_parameter_state_t_
@@ -265,47 +348,54 @@ extern "C" {
  * The long parameters are prepended with either '--' or '++'.
  * The simple parameters have no prefix characters.
  *
- * symbol_short:  The NULL terminated single character string, such as 'h' in '-h'.
- * symbol_long:   The NULL terminated multi-character string, such as 'help' in '--help'.
- * symbol_simple: The NULL terminated parameter that has no prefix, such as 'all' in 'make all'.
- * values_total:  Designates that a parameter will have a given number of values arguments, such as 'blue' in '--color blue'.
- * flag:          A set of bits for providing states associated with the parameter.
- * result:        A set of bits representing if and how the parameter is found (such as '-h' vs '--help').
- * location:      The last location in argv[] where this parameter is found.
- * location_sub:  The last sub-location at location in argv (only used by short parameters, such as -h or +l).
+ * match_short:  The NULL terminated single character string, such as 'h' in '-h'.
+ * match_long:   The NULL terminated multi-character string, such as 'help' in '--help'.
+ * match_simple: The NULL terminated parameter that has no prefix, such as 'all' in 'make all'.
+ *
+ * values_total: Designates that a parameter will have a given number of values arguments, such as 'blue' in '--color blue'.
+ *
+ * flag:   A set of bits for providing states associated with the parameter.
+ * result: A set of bits representing if and how the parameter is found (such as '-h' vs '--help').
+ *
+ * location:     The last location in argv[] where this parameter is found.
+ * location_sub: The last sub-location at location in argv (only used by short parameters, such as -h or +l).
+ *
  * locations:     All locations within argv where this parameter is found (order is preserved).
  * locations_sub: All sub-locations within argv where this parameter is found (order is preserved).
- * values:        An array of locations representing where in the argv[] the values arguments are found.
+ *
+ * values: An array of locations representing where in the argv[] the values arguments are found.
  *
  * The macro_f_console_parameter_t_initialize_1() all arguments.
- * The macro_f_console_parameter_t_initialize_2() reduced arguments.
- * The macro_f_console_parameter_t_initialize_3() reduced arguments, strings are of f_string_static_t, has short, long, and simple.
- * The macro_f_console_parameter_t_initialize_4() reduced arguments, strings are of f_string_static_t, has short and long.
- * The macro_f_console_parameter_t_initialize_5() reduced arguments, strings are of f_string_static_t, has short.
- * The macro_f_console_parameter_t_initialize_6() reduced arguments, strings are of f_string_static_t, has long.
- * The macro_f_console_parameter_t_initialize_7() reduced arguments, strings are of f_string_static_t, has simple.
+ * The macro_f_console_parameter_t_initialize_2() reduced arguments has short, long, and simple.
+ * The macro_f_console_parameter_t_initialize_3() reduced arguments has short and long.
+ * The macro_f_console_parameter_t_initialize_4() reduced arguments has short.
+ * The macro_f_console_parameter_t_initialize_5() reduced arguments has long.
+ * The macro_f_console_parameter_t_initialize_6() reduced arguments has simple.
  */
 #ifndef _di_f_console_parameter_t_
   typedef struct {
-    f_string_t symbol_short;
-    f_string_t symbol_long;
-    f_string_t symbol_simple;
+    f_string_static_t match_short;
+    f_string_static_t match_long;
+    f_string_static_t match_simple;
 
     f_array_length_t values_total;
 
     f_console_flag_t flag;
     f_console_result_t result;
+
     f_array_length_t location;
     f_array_length_t location_sub;
+
     f_array_lengths_t locations;
     f_array_lengths_t locations_sub;
+
     f_array_lengths_t values;
   } f_console_parameter_t;
 
   #define f_console_parameter_t_initialize { \
-    0, \
-    0, \
-    0, \
+    f_string_static_t_initialize, \
+    f_string_static_t_initialize, \
+    f_string_static_t_initialize, \
     f_console_flag_t_initialize, \
     f_console_result_t_initialize, \
     f_array_length_t_initialize, \
@@ -316,10 +406,10 @@ extern "C" {
     f_array_lengths_t_initialize, \
   }
 
-  #define macro_f_console_parameter_t_initialize_1(symbol_short, symbol_long, symbol_simple, values_total, flag, result, location, location_sub, locations, locations_sub, values) { \
-    symbol_short, \
-    symbol_long, \
-    symbol_simple, \
+  #define macro_f_console_parameter_t_initialize_1(match_short, match_long, match_simple, values_total, flag, result, location, location_sub, locations, locations_sub, values) { \
+    match_short, \
+    match_long, \
+    match_simple, \
     values_total, \
     flag, \
     result, \
@@ -331,10 +421,10 @@ extern "C" {
     values, \
   }
 
-  #define macro_f_console_parameter_t_initialize_2(symbol_short, symbol_long, symbol_simple, values_total, flag) { \
-    symbol_short, \
-    symbol_long, \
-    symbol_simple, \
+  #define macro_f_console_parameter_t_initialize_2(match_short, match_long, match_simple, values_total, flag) { \
+    match_short, \
+    match_long, \
+    match_simple, \
     values_total, \
     flag, \
     f_console_result_none_e, \
@@ -345,10 +435,10 @@ extern "C" {
     f_array_lengths_t_initialize, \
   }
 
-  #define macro_f_console_parameter_t_initialize_3(symbol_short, symbol_long, symbol_simple, values_total, flag) { \
-    symbol_short.string, \
-    symbol_long.string, \
-    symbol_simple.string, \
+  #define macro_f_console_parameter_t_initialize_3(match_short, match_long, values_total, flag) { \
+    match_short, \
+    match_long, \
+    f_string_empty_s, \
     values_total, \
     flag, \
     f_console_result_none_e, \
@@ -359,10 +449,10 @@ extern "C" {
     f_array_lengths_t_initialize, \
   }
 
-  #define macro_f_console_parameter_t_initialize_4(symbol_short, symbol_long, values_total, flag) { \
-    symbol_short.string, \
-    symbol_long.string, \
-    0, \
+  #define macro_f_console_parameter_t_initialize_4(match_short, values_total, flag) { \
+    match_short, \
+    f_string_empty_s, \
+    f_string_empty_s, \
     values_total, \
     flag, \
     f_console_result_none_e, \
@@ -373,10 +463,10 @@ extern "C" {
     f_array_lengths_t_initialize, \
   }
 
-  #define macro_f_console_parameter_t_initialize_5(symbol_short, values_total, flag) { \
-    symbol_short.string, \
-    0, \
-    0, \
+  #define macro_f_console_parameter_t_initialize_5(match_long, values_total, flag) { \
+    f_string_empty_s, \
+    match_long, \
+    f_string_empty_s, \
     values_total, \
     flag, \
     f_console_result_none_e, \
@@ -387,25 +477,10 @@ extern "C" {
     f_array_lengths_t_initialize, \
   }
 
-  #define macro_f_console_parameter_t_initialize_6(symbol_long, values_total, flag) { \
-    0, \
-    symbol_long.string, \
-    0, \
-    values_total, \
-    flag, \
-    f_console_result_none_e, \
-    0, \
-    0, \
-    f_array_lengths_t_initialize, \
-    f_array_lengths_t_initialize, \
-    f_array_lengths_t_initialize, \
-    callback \
-  }
-
-  #define macro_f_console_parameter_t_initialize_7(symbol_simple, values_total, flag) { \
-    0, \
-    0, \
-    symbol_simple.string, \
+  #define macro_f_console_parameter_t_initialize_6(match_simple, values_total, flag) { \
+    f_string_empty_s, \
+    f_string_empty_s, \
+    match_simple, \
     values_total, \
     flag, \
     f_console_result_none_e, \
@@ -428,11 +503,12 @@ extern "C" {
  * arguments: An array of arguments pointing to the argv[] strings with the string lengths already calculated (This is a dynamic array of f_string_static_t).
  * remaining: An array of indexes within the arguments representing unmatched parameters.
  * length:    The total number of parameters in the parameters array.
- * callback:  A callback to perform when matched in order to handle condition values.
+ *
+ * callback: A callback to perform when matched in order to handle condition values.
  *
  * The callback function arguments:
  *   - arguments:  The console arguments being processed.
- *   - parameters: A pointer to this parameter structure and must be of type f_console_parameter_t.
+ *   - parameters: A pointer to this parameter structure and must be of type f_console_parameters_t.
  *   - state:      The state information shared between the processing function and any callbacks.
  *   - data:       The structure determined by the caller for passing to the parameter processing function and is intended to be used for updating based on results.
  *
@@ -442,22 +518,35 @@ extern "C" {
  *   - F_continue: To tell the caller to continue the loop (based on depth, when applicable).
  *   - F_process:  To tell the caller to perform the built in functionality.
  *   - Any status with error bit set is treated as an error and calling function returns.
+ *
+ * When using the callback, then the responsibility of ensuring the proper and secure handling of the data is on in the callback.
+ * Failure to properly handle this can lead to integrity and security issues.
  */
 #ifndef _di_f_console_parameters_t_
   typedef struct {
     f_console_parameter_t *array;
-
     f_string_dynamics_t arguments;
     f_array_lengths_t remaining;
-
     f_array_length_t used;
 
     void (*callback)(const f_console_arguments_t arguments, void * const parameters, f_console_parameter_state_t * const state, void * const data);
   } f_console_parameters_t;
 
-  #define f_console_parameters_t_initialize {0, f_string_dynamics_t_initialize, f_array_lengths_t_initialize, 0, 0 }
+  #define f_console_parameters_t_initialize { \
+    0, \
+    f_string_dynamics_t_initialize, \
+    f_array_lengths_t_initialize, \
+    0, \
+    0 \
+  }
 
-  #define macro_f_console_parameters_t_initialize(parameter, used, callback) { parameter, f_string_dynamics_t_initialize, f_array_lengths_t_initialize, used, callback }
+  #define macro_f_console_parameters_t_initialize(parameters, used, callback) { \
+    parameters, \
+    f_string_dynamics_t_initialize, \
+    f_array_lengths_t_initialize, \
+    used, \
+    callback \
+  }
 #endif // _di_f_console_parameters_t_
 
 /**
@@ -670,6 +759,48 @@ extern "C" {
     extern const f_string_static_t f_console_standard_long_version_s;
   #endif // _di_f_console_standard_long_version_s_
 #endif // _di_f_console_standard_s_
+
+/**
+ * Delete any dynamic allocated data on the state object.
+ *
+ * @param state
+ *   The state object.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_string_dynamics_resize().
+ *   Errors (with error bit) from: f_array_lengths_resize().
+ *
+ * @see f_string_dynamics_resize()
+ * @see f_array_lengths_resize()
+ */
+#ifndef _di_f_console_parameter_state_delete_
+  extern f_status_t f_console_parameter_state_delete(f_console_parameter_state_t * const state);
+#endif // _di_f_console_parameter_state_delete_
+
+/**
+ * Destroy any dynamic allocated data on the state object.
+ *
+ * @param state
+ *   A state for providing flags and handling interrupts during long running operations.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_string_dynamics_adjust().
+ *   Errors (with error bit) from: f_array_lengths_adjust().
+ *
+ * @see f_string_dynamics_adjust()
+ * @see f_array_lengths_adjust()
+ */
+#ifndef _di_f_console_parameter_state_destroy_
+  extern f_status_t f_console_parameter_state_destroy(f_console_parameter_state_t * const state);
+#endif // _di_f_console_parameter_state_destroy_
 
 /**
  * Delete any dynamic allocated data on the parameters object.

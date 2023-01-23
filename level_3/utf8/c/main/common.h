@@ -275,31 +275,31 @@ extern "C" {
 
   #define utf8_console_parameter_t_initialize \
     { \
-      macro_f_console_parameter_t_initialize_4(f_console_standard_short_help_s,          f_console_standard_long_help_s,          0, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize_4(f_console_standard_short_light_s,         f_console_standard_long_light_s,         0, f_console_flag_inverse_e), \
-      macro_f_console_parameter_t_initialize_4(f_console_standard_short_dark_s,          f_console_standard_long_dark_s,          0, f_console_flag_inverse_e), \
-      macro_f_console_parameter_t_initialize_4(f_console_standard_short_no_color_s,      f_console_standard_long_no_color_s,      0, f_console_flag_inverse_e), \
-      macro_f_console_parameter_t_initialize_4(f_console_standard_short_quiet_s,         f_console_standard_long_quiet_s,         0, f_console_flag_inverse_e), \
-      macro_f_console_parameter_t_initialize_4(f_console_standard_short_error_s,         f_console_standard_long_error_s,         0, f_console_flag_inverse_e), \
-      macro_f_console_parameter_t_initialize_4(f_console_standard_short_normal_s,        f_console_standard_long_normal_s,        0, f_console_flag_inverse_e), \
-      macro_f_console_parameter_t_initialize_4(f_console_standard_short_verbose_s,       f_console_standard_long_verbose_s,       0, f_console_flag_inverse_e), \
-      macro_f_console_parameter_t_initialize_4(f_console_standard_short_debug_s,         f_console_standard_long_debug_s,         0, f_console_flag_inverse_e), \
-      macro_f_console_parameter_t_initialize_4(f_console_standard_short_version_s,       f_console_standard_long_version_s,       0, f_console_flag_inverse_e), \
-      macro_f_console_parameter_t_initialize_4(f_console_standard_short_line_first_no_s, f_console_standard_long_line_first_no_s, 0, f_console_flag_inverse_e), \
-      macro_f_console_parameter_t_initialize_4(f_console_standard_short_line_last_no_s,  f_console_standard_long_line_last_no_s,  0, f_console_flag_inverse_e), \
+      macro_f_console_parameter_t_initialize_3(f_console_standard_short_help_s,          f_console_standard_long_help_s,          0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(f_console_standard_short_light_s,         f_console_standard_long_light_s,         0, f_console_flag_inverse_e), \
+      macro_f_console_parameter_t_initialize_3(f_console_standard_short_dark_s,          f_console_standard_long_dark_s,          0, f_console_flag_inverse_e), \
+      macro_f_console_parameter_t_initialize_3(f_console_standard_short_no_color_s,      f_console_standard_long_no_color_s,      0, f_console_flag_inverse_e), \
+      macro_f_console_parameter_t_initialize_3(f_console_standard_short_quiet_s,         f_console_standard_long_quiet_s,         0, f_console_flag_inverse_e), \
+      macro_f_console_parameter_t_initialize_3(f_console_standard_short_error_s,         f_console_standard_long_error_s,         0, f_console_flag_inverse_e), \
+      macro_f_console_parameter_t_initialize_3(f_console_standard_short_normal_s,        f_console_standard_long_normal_s,        0, f_console_flag_inverse_e), \
+      macro_f_console_parameter_t_initialize_3(f_console_standard_short_verbose_s,       f_console_standard_long_verbose_s,       0, f_console_flag_inverse_e), \
+      macro_f_console_parameter_t_initialize_3(f_console_standard_short_debug_s,         f_console_standard_long_debug_s,         0, f_console_flag_inverse_e), \
+      macro_f_console_parameter_t_initialize_3(f_console_standard_short_version_s,       f_console_standard_long_version_s,       0, f_console_flag_inverse_e), \
+      macro_f_console_parameter_t_initialize_3(f_console_standard_short_line_first_no_s, f_console_standard_long_line_first_no_s, 0, f_console_flag_inverse_e), \
+      macro_f_console_parameter_t_initialize_3(f_console_standard_short_line_last_no_s,  f_console_standard_long_line_last_no_s,  0, f_console_flag_inverse_e), \
       \
-      macro_f_console_parameter_t_initialize_4(utf8_short_from_bytesequence_s, utf8_long_from_bytesequence_s, 0, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize_4(utf8_short_from_codepoint_s,    utf8_long_from_codepoint_s,    0, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize_4(utf8_short_from_file_s,         utf8_long_from_file_s,         1, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize_4(utf8_short_headers_s,           utf8_long_headers_s,           0, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize_4(utf8_short_separate_s,          utf8_long_separate_s,          0, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize_4(utf8_short_strip_invalid_s,     utf8_long_strip_invalid_s,     0, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize_4(utf8_short_to_bytesequence_s,   utf8_long_to_bytesequence_s,   0, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize_4(utf8_short_to_codepoint_s,      utf8_long_to_codepoint_s,      0, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize_4(utf8_short_to_combining_s,      utf8_long_to_combining_s,      0, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize_4(utf8_short_to_file_s,           utf8_long_to_file_s,           1, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize_4(utf8_short_to_width_s,          utf8_long_to_width_s,          0, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize_4(utf8_short_verify_s,            utf8_long_verify_s,            0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(utf8_short_from_bytesequence_s, utf8_long_from_bytesequence_s, 0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(utf8_short_from_codepoint_s,    utf8_long_from_codepoint_s,    0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(utf8_short_from_file_s,         utf8_long_from_file_s,         1, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(utf8_short_headers_s,           utf8_long_headers_s,           0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(utf8_short_separate_s,          utf8_long_separate_s,          0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(utf8_short_strip_invalid_s,     utf8_long_strip_invalid_s,     0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(utf8_short_to_bytesequence_s,   utf8_long_to_bytesequence_s,   0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(utf8_short_to_codepoint_s,      utf8_long_to_codepoint_s,      0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(utf8_short_to_combining_s,      utf8_long_to_combining_s,      0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(utf8_short_to_file_s,           utf8_long_to_file_s,           1, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(utf8_short_to_width_s,          utf8_long_to_width_s,          0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(utf8_short_verify_s,            utf8_long_verify_s,            0, f_console_flag_normal_e), \
     }
 
   #define utf8_total_parameters_d 24
@@ -459,6 +459,8 @@ extern "C" {
  *
  * @param arguments
  *   The parameters passed to the process (often referred to as command line arguments).
+ * @param state
+ *   A state for providing flags and handling interrupts during long running operations.
  * @param main
  *   The main program data.
  * @param setting
@@ -474,7 +476,7 @@ extern "C" {
  * @see fll_program_parameter_process_context()
  */
 #ifndef _di_utf8_setting_load_
-  extern void utf8_setting_load(const f_console_arguments_t arguments, fll_program_data_t * const main, utf8_setting_t * const setting);
+  extern void utf8_setting_load(const f_console_arguments_t arguments, f_state_t state, fll_program_data_t * const main, utf8_setting_t * const setting);
 #endif // _di_utf8_setting_load_
 
 /**

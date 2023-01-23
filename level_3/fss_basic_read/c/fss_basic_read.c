@@ -154,10 +154,10 @@ extern "C" {
         };
 
         const uint8_t parameter_match[] = {
-          f_console_result_additional_e,
-          f_console_result_additional_e,
+          f_console_result_value_e,
+          f_console_result_value_e,
           f_console_result_found_e,
-          f_console_result_additional_e,
+          f_console_result_value_e,
           f_console_result_found_e,
         };
 
