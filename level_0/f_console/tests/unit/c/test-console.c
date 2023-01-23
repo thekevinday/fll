@@ -31,6 +31,7 @@ int main(void) {
     cmocka_unit_test(test__f_console_parameter_prioritize_right__fails),
     cmocka_unit_test(test__f_console_parameter_prioritize_right__works),
 
+    cmocka_unit_test(test__f_console_parameter_process__incomplete_arguments),
     cmocka_unit_test(test__f_console_parameter_process__no_arguments_no_program),
     cmocka_unit_test(test__f_console_parameter_process__no_arguments),
     cmocka_unit_test(test__f_console_parameter_process__null_arguments),

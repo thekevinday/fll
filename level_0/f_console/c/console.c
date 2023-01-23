@@ -165,30 +165,30 @@ extern "C" {
     f_status_t status = f_string_dynamics_increase_by(arguments.argc, &parameters->arguments);
     if (F_status_is_error(status)) return status;
 
+    f_array_lengths_t needs = f_array_lengths_t_initialize;
+
+    status = f_array_lengths_increase(F_memory_default_allocation_small_d, &needs);
+    if (F_status_is_error(status)) return status;
+
     // Append the program name parameter.
     parameters->arguments.array[parameters->arguments.used].string = arguments.argv[0];
     parameters->arguments.array[parameters->arguments.used].used = strnlen(arguments.argv[0], F_console_parameter_size_d);
     parameters->arguments.array[parameters->arguments.used++].size = 0;
 
     f_console_id_t result = f_console_id_t_initialize;
-    bool found = F_false;
 
     // Parameter 0 represents the program name so skip it.
     unsigned long location = 1;
 
-    f_array_length_t sub_location = 0;
-    f_array_length_t increment_by = 0;
-
+    f_array_length_t location_sub = 0;
     f_array_length_t i = 0;
-    f_array_length_t values = 0;
+    f_array_length_t j = 0;
 
-    uint8_t console_short = f_console_none_e;
-    uint8_t console_long = f_console_none_e;
-    uint8_t console_type = f_console_type_normal_e;
-
-    f_array_lengths_t needs_value = f_array_lengths_t_initialize;
+    f_utf_char_t utf_argument = 0;
+    f_utf_char_t utf_console = 0;
 
     uint8_t width = 0;
+    bool found = F_false;
 
     while (location < arguments.argc && arguments.argv[location]) {
 
@@ -197,191 +197,185 @@ extern "C" {
       parameters->arguments.array[parameters->arguments.used++].size = 0;
 
       // Additional parameters must always follow what requests them.
-      if (needs_value.used > 0) {
-        i = needs_value.array[0];
-
-        status = f_array_lengths_increase(F_memory_default_allocation_small_d, &parameters->array[i].values);
-        if (F_status_is_error(status)) break;
+      if (needs.used) {
+        i = needs.array[0];
 
         parameters->array[i].result = f_console_result_additional_e;
-        parameters->array[i].values.array[parameters->array[i].values.used++] = location;
+        parameters->array[i].values.array[parameters->array[i].values.used++] = location++;
 
-        --needs_value.used;
+        --needs.used;
 
-        // Pop the matched parameter off of the top of the needs_value array.
-        for (i = 0; i < needs_value.used; ++i) {
-          needs_value.array[i] = needs_value.array[i + 1];
+        for (i = 0; i < needs.used; ++i) {
+          needs.array[i] = needs.array[i + 1];
         } // for
-
-        ++location;
 
         continue;
       }
 
       private_f_console_identify(arguments.argv[location], &result);
 
-      // Process the current parameter.
-      if (result == f_console_short_enable_e || result == f_console_short_disable_e) {
-        increment_by = 1;
-        sub_location = 1;
-      }
-      else if (result == f_console_long_enable_e || result == f_console_long_disable_e) {
-        increment_by = parameters->arguments.array[location].used;
-        sub_location = 2;
-      }
-      else {
-        increment_by = parameters->arguments.array[location].used;
-        sub_location = 0;
-      }
-
-      // Handle the normal commands.
-      if (result == f_console_short_enable_e || result == f_console_long_enable_e) {
-        console_short = f_console_short_enable_e;
-        console_long = f_console_long_enable_e;
-        console_type = f_console_type_normal_e;
-      }
-      else if (result == f_console_short_disable_e || result == f_console_long_disable_e) {
-        console_short = f_console_short_disable_e;
-        console_long = f_console_long_disable_e;
-        console_type = f_console_type_inverse_e;
-      }
-      else {
-        console_short = f_console_none_e;
-      }
-
       found = F_false;
 
-      if (console_short != f_console_none_e) {
+      if (result == f_console_short_enable_e || result == f_console_short_disable_e) {
 
-        // The sub_location is used on a per increment basis (such as 'tar -xcf', the '-' would have an increment of 1, therefore x, c, and f would all be three separate parameters).
-        while (sub_location < parameters->arguments.array[location].used) {
+        // Perform pre-process.
+        for (location_sub = 1; location_sub < parameters->arguments.array[location].used; ++location_sub) {
+
+          found = F_false;
 
           for (i = 0; i < parameters->used; ++i) {
 
-            if (parameters->array[i].type != console_type) continue;
+            if (parameters->array[i].type != (result == f_console_short_enable_e ? f_console_type_normal_e : f_console_type_inverse_e)) continue;
+            if (!parameters->array[i].symbol_short) continue;
+            if (arguments.argv[location][location_sub] != *parameters->array[i].symbol_short) continue;
 
-            if (result == console_short) {
-              if (!parameters->array[i].symbol_short) continue;
+            width = macro_f_utf_byte_width_is(arguments.argv[location][location_sub]);
 
-              width = macro_f_utf_byte_width_is(arguments.argv[location][sub_location]);
+            if (width) {
+              utf_argument = 0;
+              utf_console = 0;
 
-              if (width > 0) {
-                increment_by = width;
-              }
-
-              if (arguments.argv[location][sub_location] != *parameters->array[i].symbol_short) continue;
-
-              if (width > 0) {
-                f_utf_char_t character_argument_utf = 0;
-                f_utf_char_t character_console_utf = 0;
-
-                f_number_unsigned_t width_max = parameters->arguments.array[location].used - sub_location;
-
-                status = f_utf_char_to_character(arguments.argv[location] + sub_location, width_max, &character_argument_utf);
-                if (F_status_is_error(status)) break;
-
-                width_max = strlen(parameters->array[i].symbol_short);
-
-                status = f_utf_char_to_character((f_string_t) parameters->array[i].symbol_short, width_max, &character_console_utf);
-                if (F_status_is_error(status)) break;
-
-                if (character_argument_utf != character_console_utf) continue;
-              }
-            }
-            else if (result == console_long) {
-              if (!parameters->array[i].symbol_long) continue;
-
-              if (strncmp(&arguments.argv[location][sub_location], parameters->array[i].symbol_long, increment_by + 1) != 0) {
-                continue;
-              }
-            }
-            else {
-              continue;
-            }
-
-            status = f_array_lengths_increase(F_memory_default_allocation_small_d, &parameters->array[i].locations);
-            if (F_status_is_error(status)) break;
-
-            status = f_array_lengths_increase(F_memory_default_allocation_small_d, &parameters->array[i].locations_sub);
-            if (F_status_is_error(status)) break;
-
-            found = F_true;
-
-            parameters->array[i].locations.array[parameters->array[i].locations.used++] = location;
-
-            parameters->array[i].result = f_console_result_found_e;
-            parameters->array[i].location = location;
-            parameters->array[i].location_sub = 0;
-
-            if (result == console_short) {
-              parameters->array[i].location_sub = sub_location;
-              parameters->array[i].locations_sub.array[parameters->array[i].locations_sub.used++] = sub_location;
-            }
-            else {
-              parameters->array[i].locations_sub.array[parameters->array[i].locations_sub.used++] = 0;
-            }
-
-            if (parameters->array[i].values_total) {
-              status = f_array_lengths_increase_by(parameters->array[i].values_total, &needs_value);
+              status = f_utf_char_to_character(arguments.argv[location] + location_sub, parameters->arguments.array[location].used - location_sub, &utf_argument);
               if (F_status_is_error(status)) break;
 
-              for (values = 0; values < parameters->array[i].values_total; ++values) {
-                needs_value.array[needs_value.used++] = i;
-              } // for
+              status = f_utf_char_to_character((f_string_t) parameters->array[i].symbol_short, strlen(parameters->array[i].symbol_short), &utf_console);
+              if (F_status_is_error(status)) break;
+
+              if (utf_argument != utf_console) continue;
             }
+
+            found = F_true;
 
             break;
           } // for
 
           if (F_status_is_error(status)) break;
-
-          sub_location += increment_by;
-        } // while
+          if (!found) break;
+        } // for
 
         if (F_status_is_error(status)) break;
+
+        // The entire string references valid parameters.
+        if (found) {
+          location_sub = 1;
+          needs.used = 0;
+
+          status = f_array_lengths_increase_by(parameters->arguments.array[location].used, &needs);
+          if (F_status_is_error(status)) break;
+
+          // The location_sub is used on a per-increment basis (such as 'tar -xcf', the '-' would have an increment of 1, therefore x, c, and f would all be three separate parameters).
+          while (location_sub < parameters->arguments.array[location].used) {
+
+            width = macro_f_utf_byte_width_is(arguments.argv[location][location_sub]);
+
+            if (width) {
+              utf_argument = 0;
+              utf_console = 0;
+
+              status = f_utf_char_to_character(arguments.argv[location] + location_sub, parameters->arguments.array[location].used - location_sub, &utf_argument);
+              if (F_status_is_error(status)) break;
+
+              status = f_utf_char_to_character((f_string_t) parameters->array[i].symbol_short, strlen(parameters->array[i].symbol_short), &utf_console);
+              if (F_status_is_error(status)) break;
+
+              if (utf_argument != utf_console) continue;
+            }
+            else {
+              width = 1;
+            }
+
+            for (i = 0; i < parameters->used; ++i) {
+
+              if (parameters->array[i].type != (result == f_console_short_enable_e ? f_console_type_normal_e : f_console_type_inverse_e)) continue;
+              if (!parameters->array[i].symbol_short) continue;
+              if (arguments.argv[location][location_sub] != *parameters->array[i].symbol_short) continue;
+
+              status = f_array_lengths_increase(F_memory_default_allocation_small_d, &parameters->array[i].locations);
+              if (F_status_is_error(status)) break;
+
+              status = f_array_lengths_increase(F_memory_default_allocation_small_d, &parameters->array[i].locations_sub);
+              if (F_status_is_error(status)) break;
+
+              if (parameters->array[i].location != location) {
+                parameters->array[i].locations.array[parameters->array[i].locations.used++] = location;
+              }
+
+              parameters->array[i].result = f_console_result_found_e;
+              parameters->array[i].location = location;
+              parameters->array[i].location_sub = location_sub;
+              parameters->array[i].locations_sub.array[parameters->array[i].locations_sub.used++] = location_sub;
+
+              for (j = 0; j < parameters->array[i].values_total; ++j) {
+                needs.array[needs.used++] = i;
+              } // for
+
+              status = f_array_lengths_increase_by(needs.used, &parameters->array[i].values);
+              if (F_status_is_error(status)) break;
+
+              break;
+            } // for
+
+            if (F_status_is_error(status)) break;
+
+            location_sub += width;
+          } // while
+        }
       }
       else {
-        for (i = 0; i < parameters->used; ++i) {
+        if (result == f_console_long_enable_e || result == f_console_long_disable_e) {
+          location_sub = 2;
+          needs.used = 0;
 
-          if (parameters->array[i].type != f_console_type_other_e) continue;
-          if (!parameters->array[i].symbol_other) continue;
-          if (strncmp(arguments.argv[location], parameters->array[i].symbol_other, parameters->arguments.array[location].used + 1) != 0) continue;
+          for (i = 0; i < parameters->used; ++i) {
 
+            if (parameters->array[i].type != (result == f_console_long_enable_e ? f_console_type_normal_e : f_console_type_inverse_e)) continue;
+            if (!parameters->array[i].symbol_long) continue;
+            if (strncmp(&arguments.argv[location][location_sub], parameters->array[i].symbol_long, parameters->arguments.array[location].used + 1)) continue;
+
+            found = F_true;
+
+            break;
+          } // for
+        }
+        else {
+          for (i = 0; i < parameters->used; ++i) {
+
+            if (parameters->array[i].type != f_console_type_other_e) continue;
+            if (!parameters->array[i].symbol_other) continue;
+            if (strncmp(arguments.argv[location], parameters->array[i].symbol_other, parameters->arguments.array[location].used + 1)) continue;
+
+            found = F_true;
+
+            break;
+          } // for
+        }
+
+        if (found) {
           status = f_array_lengths_increase(F_memory_default_allocation_small_d, &parameters->array[i].locations);
           if (F_status_is_error(status)) break;
 
           status = f_array_lengths_increase(F_memory_default_allocation_small_d, &parameters->array[i].locations_sub);
           if (F_status_is_error(status)) break;
 
-          parameters->array[i].locations.array[parameters->array[i].locations.used++] = location;
-          parameters->array[i].locations_sub.array[parameters->array[i].locations_sub.used++] = 0;
-
           parameters->array[i].result = f_console_result_found_e;
           parameters->array[i].location = location;
           parameters->array[i].location_sub = 0;
+          parameters->array[i].locations.array[parameters->array[i].locations.used++] = location;
+          parameters->array[i].locations_sub.array[parameters->array[i].locations_sub.used++] = 0;
 
-          if (parameters->array[i].values_total) {
-            if (needs_value.used + parameters->array[i].values_total > needs_value.size) {
-              status = f_array_lengths_resize(needs_value.used + parameters->array[i].values_total, &needs_value);
-              if (F_status_is_error(status)) break;
-            }
+          for (j = 0; j < parameters->array[i].values_total; ++j) {
+            needs.array[needs.used++] = i;
+          } // for
 
-            for (values = 0; values < parameters->array[i].values_total; ++values) {
-              needs_value.array[needs_value.used++] = i;
-            } // for
-          }
-
-          found = F_true;
-
-          break;
-        } // for
-
-        if (F_status_is_error(status)) break;
+          status = f_array_lengths_increase_by(needs.used, &parameters->array[i].values);
+          if (F_status_is_error(status)) break;
+        }
       }
 
-      if (!found) {
+      if (F_status_is_error(status)) break;
 
-        // Populate list of remaining parameters->array that are not associated with anything.
+      // Add the missed parameter to the remaining array.
+      if (!found) {
         status = f_array_lengths_increase(F_memory_default_allocation_small_d, &parameters->remaining);
         if (F_status_is_error(status)) break;
 
@@ -400,10 +394,10 @@ extern "C" {
     } // for
 
     if (F_status_is_error_not(status)) {
-      status = needs_value.used ? F_complete_not : F_none;
+      status = needs.used ? F_complete_not : F_none;
     }
 
-    f_array_lengths_resize(0, &needs_value);
+    f_array_lengths_resize(0, &needs);
 
     return status;
   }

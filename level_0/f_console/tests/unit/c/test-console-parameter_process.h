@@ -13,6 +13,13 @@
 // f_console_parameter_process() only returns memory failures.
 
 /**
+ * Test that function works with incomplete arguments.
+ *
+ * @see f_console_parameter_process()
+ */
+extern void test__f_console_parameter_process__incomplete_arguments(void **state);
+
+/**
  * Test that function works with no (argv) arguments (but does have program name).
  *
  * @see f_console_parameter_process()

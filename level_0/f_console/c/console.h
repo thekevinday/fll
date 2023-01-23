@@ -169,10 +169,12 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_array_lengths_increase().
  *   Errors (with error bit) from: f_array_lengths_increase_by().
+ *   Errors (with error bit) from: f_string_dynamics_increase_by().
  *   Errors (with error bit) from: f_utf_char_to_character().
  *
  * @see f_array_lengths_increase()
  * @see f_array_lengths_increase_by()
+ * @see f_string_dynamics_increase_by()
  * @see f_utf_char_to_character()
  */
 #ifndef _di_f_console_parameter_process_
