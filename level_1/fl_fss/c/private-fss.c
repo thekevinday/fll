@@ -273,48 +273,7 @@ extern "C" {
     }
 
     // Identify where the object ends.
-    if (!quote_found) {
-      status = F_none;
-
-      while (range->start <= range->stop && range->start < buffer.used) {
-
-        if (state.interrupt) {
-          status = state.interrupt((void *) &state, 0);
-
-          if (F_status_set_fine(status) == F_interrupt) {
-            status = F_status_set_error(F_interrupt);
-
-            break;
-          }
-        }
-
-        status = f_fss_is_space(state, buffer, *range);
-        if (F_status_is_error(status)) return status;
-
-        if (status == F_true) break;
-
-        status = f_utf_buffer_increment(buffer, range, 1);
-        if (F_status_is_error(status)) break;
-      } // while
-
-      if (F_status_is_error(status)) return status;
-
-      found->stop = range->start - 1;
-
-      if (buffer.string[range->start] == f_fss_eol_s.string[0]) {
-
-        // Move the start position to after the EOL.
-        ++range->start;
-
-        return F_fss_found_object_content_not;
-      }
-
-      status = f_utf_buffer_increment(buffer, range, 1);
-      if (F_status_is_error(status)) return status;
-
-      return F_fss_found_object;
-    }
-    else {
+    if (quote_found) {
       f_array_length_t first_slash = 0;
       f_array_length_t slash_count = 0;
       f_array_length_t location = 0;
@@ -675,6 +634,47 @@ extern "C" {
 
         return F_end_not_group_stop;
       }
+    }
+    else {
+      status = F_none;
+
+      while (range->start <= range->stop && range->start < buffer.used) {
+
+        if (state.interrupt) {
+          status = state.interrupt((void *) &state, 0);
+
+          if (F_status_set_fine(status) == F_interrupt) {
+            status = F_status_set_error(F_interrupt);
+
+            break;
+          }
+        }
+
+        status = f_fss_is_space(state, buffer, *range);
+        if (F_status_is_error(status)) return status;
+
+        if (status == F_true) break;
+
+        status = f_utf_buffer_increment(buffer, range, 1);
+        if (F_status_is_error(status)) break;
+      } // while
+
+      if (F_status_is_error(status)) return status;
+
+      found->stop = range->start - 1;
+
+      if (buffer.string[range->start] == f_fss_eol_s.string[0]) {
+
+        // Move the start position to after the EOL.
+        ++range->start;
+
+        return F_fss_found_object_content_not;
+      }
+
+      status = f_utf_buffer_increment(buffer, range, 1);
+      if (F_status_is_error(status)) return status;
+
+      return F_fss_found_object;
     }
 
     // Seek to the EOL when no valid object is found.
