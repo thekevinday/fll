@@ -192,15 +192,7 @@ extern "C" {
     if (F_status_is_error_not(status)) {
       if (main->parameters.array[fss_basic_list_write_parameter_object_e].locations.used || main->parameters.array[fss_basic_list_write_parameter_content_e].locations.used) {
         if (main->parameters.array[fss_basic_list_write_parameter_object_e].locations.used) {
-          if (main->parameters.array[fss_basic_list_write_parameter_object_e].locations.used != main->parameters.array[fss_basic_list_write_parameter_object_e].values.used) {
-            fss_basic_list_write_error_parameter_value_missing_print(main, f_console_symbol_long_enable_s, fss_basic_list_write_long_object_s);
-            status = F_status_set_error(F_parameter);
-          }
-          else if (main->parameters.array[fss_basic_list_write_parameter_content_e].locations.used != main->parameters.array[fss_basic_list_write_parameter_content_e].values.used) {
-            fss_basic_list_write_error_parameter_value_missing_print(main, f_console_symbol_long_enable_s, fss_basic_list_write_long_content_s);
-            status = F_status_set_error(F_parameter);
-          }
-          else if (main->parameters.array[fss_basic_list_write_parameter_object_e].locations.used != main->parameters.array[fss_basic_list_write_parameter_content_e].locations.used && main->parameters.array[fss_basic_list_write_parameter_partial_e].result == f_console_result_none_e) {
+          if (main->parameters.array[fss_basic_list_write_parameter_object_e].locations_sub.used != main->parameters.array[fss_basic_list_write_parameter_content_e].locations_sub.used && main->parameters.array[fss_basic_list_write_parameter_partial_e].result == f_console_result_none_e) {
             fss_basic_list_write_error_parameter_same_times_print(main);
             status = F_status_set_error(F_parameter);
           }
@@ -259,11 +251,7 @@ extern "C" {
           }
         }
         else if (main->parameters.array[fss_basic_list_write_parameter_content_e].locations.used) {
-          if (main->parameters.array[fss_basic_list_write_parameter_content_e].locations.used != main->parameters.array[fss_basic_list_write_parameter_content_e].values.used) {
-            fss_basic_list_write_error_parameter_value_missing_print(main, f_console_symbol_long_enable_s, fss_basic_list_write_long_content_s);
-            status = F_status_set_error(F_parameter);
-          }
-          else if (!main->parameters.array[fss_basic_list_write_parameter_partial_e].locations.used) {
+          if (!main->parameters.array[fss_basic_list_write_parameter_partial_e].locations.used) {
             fss_basic_list_write_error_parameter_same_times_print(main);
             status = F_status_set_error(F_parameter);
           }

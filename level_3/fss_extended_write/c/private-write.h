@@ -13,7 +13,7 @@ extern "C" {
 #endif
 
 /**
- * Print an message about the object and content parameters not being specified the correct number of times.
+ * Print an error message about the object and content parameters not being specified at least the same number of times when partial is not requested.
  *
  * @param main
  *   The main program data.
@@ -22,9 +22,9 @@ extern "C" {
  *   F_none on success.
  *   F_failure (with error bit) for any other failure.
  */
-#ifndef _di_fss_extended_write_error_parameter_at_least_once_print_
-  void fss_extended_write_error_parameter_at_least_once(fll_program_data_t * const main) F_attribute_visibility_internal_d;
-#endif // _di_fss_extended_write_error_parameter_at_least_once_print_
+#ifndef _di_fss_extended_write_error_parameter_same_times_at_least_print_
+  void fss_extended_write_error_parameter_same_times_at_least_print(fll_program_data_t * const main) F_attribute_visibility_internal_d;
+#endif // _di_fss_extended_write_error_parameter_same_times_at_least_print_
 
 /**
  * Print an message about a parameter missing a value.
