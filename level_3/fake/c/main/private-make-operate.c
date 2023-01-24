@@ -616,7 +616,6 @@ extern "C" {
 
                         break;
                       }
-
                     }
 
                     *status = f_string_dynamic_append_nulless(reserved_value[k]->array[l], &data_make->cache_arguments.array[data_make->cache_arguments.used]);
@@ -781,7 +780,7 @@ extern "C" {
           }
         }
 
-        if (!(content.array[i].start == iki_data->variable.array[0].start && content.array[i].stop == iki_data->variable.array[0].stop && !quotes.array[i]) || !quotes.array[i] || i + 1 == content.used) {
+        if (!(content.array[i].start == iki_data->variable.array[0].start && content.array[i].stop == iki_data->variable.array[0].stop && !quotes.array[i]) || i + 1 == content.used) {
           ++data_make->cache_arguments.used;
 
           *status = f_string_dynamics_increase(fake_default_allocation_small_d, &data_make->cache_arguments);
@@ -1169,10 +1168,6 @@ extern "C" {
 
         if (F_status_is_error_not(status)) {
           status = f_string_dynamic_append_nulless(*context, &data_make->cache_arguments.array[data_make->cache_arguments.used]);
-
-          if (F_status_is_error_not(status)) {
-            ++data_make->cache_arguments.used;
-          }
         }
       }
 
