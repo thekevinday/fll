@@ -630,30 +630,14 @@ extern "C" {
 
     if (setting->flag & (fss_write_flag_object_e | fss_write_flag_content_e)) {
       if (setting->flag & fss_write_flag_object_e) {
-        if (main->parameters.array[fss_write_parameter_object_e].locations.used != main->parameters.array[fss_write_parameter_object_e].values.used) {
-          setting->status = F_status_set_error(F_parameter);
+        if (setting->flag & fss_write_flag_content_multiple_e) {
+          if (main->parameters.array[fss_write_parameter_object_e].locations_sub.used > main->parameters.array[fss_write_parameter_content_e].locations_sub.used && !(setting->flag & fss_write_flag_partial_e)) {
+            setting->status = F_status_set_error(F_parameter);
 
-          fss_write_print_line_first_locked(setting, main->error);
-          fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, fss_write_long_object_s);
+            fss_write_print_error_parameter_same_times_at_least(setting, main->error);
 
-          return;
-        }
-
-        if (main->parameters.array[fss_write_parameter_content_e].locations.used != main->parameters.array[fss_write_parameter_content_e].values.used) {
-          setting->status = F_status_set_error(F_parameter);
-
-          fss_write_print_line_first_locked(setting, main->error);
-          fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, fss_write_long_content_s);
-
-          return;
-        }
-
-        if (main->parameters.array[fss_write_parameter_object_e].locations.used > main->parameters.array[fss_write_parameter_content_e].locations.used && !(setting->flag & fss_write_flag_partial_e)) {
-          setting->status = F_status_set_error(F_parameter);
-
-          fss_write_print_error_parameter_same_times_at_least(setting, main->error);
-
-          return;
+            return;
+          }
         }
 
         if ((setting->flag & fss_write_flag_content_e) && (setting->flag & fss_write_flag_partial_e)) {

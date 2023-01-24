@@ -37,10 +37,10 @@ extern "C" {
 
     fss_write_print_line_first_unlocked(setting, print);
     fl_print_format("%[%QMust specify the '%]", print.to, print.context, print.prefix, print.context);
-    fl_print_format("%[%r%r%]", print.to, print.notable, f_console_symbol_long_normal_s, fss_write_long_object_s, print.notable);
-    fl_print_format("%[' parameter and the '%]", print.to, print.context, print.context);
     fl_print_format("%[%r%r%]", print.to, print.notable, f_console_symbol_long_normal_s, fss_write_long_content_s, print.notable);
-    fl_print_format("%[' parameter at least the same number of times when not specifying the '%]", print.to, print.context, print.context);
+    fl_print_format("%[' parameter at least the same number of times as the '%]", print.to, print.context, print.context);
+    fl_print_format("%[%r%r%]", print.to, print.notable, f_console_symbol_long_normal_s, fss_write_long_object_s, print.notable);
+    fl_print_format("%[' parameter when not specifying the '%]", print.to, print.context, print.context);
     fl_print_format("%[%r%r%]", print.to, print.notable, f_console_symbol_long_normal_s, fss_write_long_partial_s, print.notable);
     fl_print_format("%[' parameter.%]%r", print.to, print.context, print.context, f_string_eol_s);
 
