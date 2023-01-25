@@ -284,6 +284,9 @@ extern "C" {
     // 1 = is parameter, 2 = is define, 3 = is context.
     uint8_t is = 0;
 
+    // 0x1 = has parameter, 0x2 = has define, 0x4 = has context, 0x8 = non-context data appended.
+    uint8_t iki_type = 0;
+
     bool unmatched = F_true;
     bool separate = F_false;
 
@@ -423,6 +426,8 @@ extern "C" {
           }
         }
 
+        iki_type = 0;
+
         for (j = 0; j < iki_data->variable.used; ++j) {
 
           is = 0;
@@ -431,18 +436,21 @@ extern "C" {
 
           if (*status == F_equal_to) {
             is = 2;
+            iki_type |= 0x2;
           }
           else if (*status == F_equal_to_not) {
             *status = fl_string_dynamic_partial_compare_string(vocabulary_parameter.string, data_make->buffer, vocabulary_parameter.used, iki_data->vocabulary.array[j]);
 
             if (*status == F_equal_to) {
               is = 1;
+              iki_type |= 0x1;
             }
             else if (*status == F_equal_to_not) {
               *status = fl_string_dynamic_partial_compare_string(vocabulary_context.string, data_make->buffer, vocabulary_context.used, iki_data->vocabulary.array[j]);
 
               if (*status == F_equal_to) {
                 is = 3;
+                iki_type |= 0x4;
               }
             }
           }
@@ -604,6 +612,8 @@ extern "C" {
 
                     if (!reserved_value[k]->array[l].used) continue;
 
+                    iki_type |= 0x8;
+
                     // Unquoted use separate parameters rather then being separated by a space.
                     if (separate) {
                       ++data_make->cache_arguments.used;
@@ -725,6 +735,10 @@ extern "C" {
 
                 break;
               }
+
+              if (*status == F_true) {
+                iki_type |= 0x8;
+              }
             }
           }
           else if (is == 2) {
@@ -735,6 +749,10 @@ extern "C" {
 
               break;
             }
+
+            if (*status == F_true) {
+              iki_type |= 0x8;
+            }
           }
           else if (is == 3) {
             *status = fake_make_operate_expand_context(data_make, quotes.array[i], iki_data->content.array[j]);
@@ -744,6 +762,8 @@ extern "C" {
 
               break;
             }
+
+            // Context is intended to merge with existing lines and so 0x8 bit is not subtracted.
           }
 
           // Make sure to copy content between multiple IKI variables within the same content.
@@ -779,7 +799,7 @@ extern "C" {
           }
         }
 
-        if (!(content.array[i].start == iki_data->variable.array[0].start && content.array[i].stop == iki_data->variable.array[0].stop && !quotes.array[i]) || i + 1 == content.used) {
+        if (!(content.array[i].start == iki_data->variable.array[0].start && content.array[i].stop == iki_data->variable.array[0].stop && !quotes.array[i]) || (iki_type & 0xb) && !quotes.array[i] || i && content.used > 1 && i + 1 == content.used) {
           ++data_make->cache_arguments.used;
 
           *status = f_string_dynamics_increase(fake_default_allocation_small_d, &data_make->cache_arguments);
@@ -1115,7 +1135,9 @@ extern "C" {
 
     if (F_status_is_error(status)) return status;
 
-    return F_true;
+    if (value.used) return F_true;
+
+    return F_data_not;
   }
 #endif // _di_fake_make_operate_expand_build_
 
@@ -1214,7 +1236,9 @@ extern "C" {
       ++data_make->cache_arguments.used;
     }
 
-    return F_true;
+    if (data_make->cache_2.used) return F_true;
+
+    return F_data_not;
   }
 #endif // _di_fake_make_operate_expand_environment_
 
