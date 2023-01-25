@@ -839,9 +839,9 @@ extern "C" {
   f_status_t fake_make_operate_expand_build(fake_make_data_t * const data_make, const uint8_t quote, const f_string_range_t range_name) {
 
     f_status_t status = F_none;
-    f_string_dynamic_t value = f_string_dynamic_t_initialize;
-
     bool unmatched = F_true;
+
+    data_make->cache_1.used = 0;
 
     {
       const f_string_static_t uint8_name[] = {
@@ -863,7 +863,7 @@ extern "C" {
         if (status == F_equal_to) {
           unmatched = F_false;
 
-          status = f_conversion_number_unsigned_to_string(uint8_value[i], f_conversion_data_base_10_c, &value);
+          status = f_conversion_number_unsigned_to_string(uint8_value[i], f_conversion_data_base_10_c, &data_make->cache_1);
 
           break;
         }
@@ -899,10 +899,10 @@ extern "C" {
           unmatched = F_false;
 
           if (bool_value[i]) {
-            status = f_string_dynamic_append(fake_common_setting_bool_yes_s, &value);
+            status = f_string_dynamic_append(fake_common_setting_bool_yes_s, &data_make->cache_1);
           }
           else {
-            status = f_string_dynamic_append(fake_common_setting_bool_no_s, &value);
+            status = f_string_dynamic_append(fake_common_setting_bool_no_s, &data_make->cache_1);
           }
 
           break;
@@ -958,7 +958,7 @@ extern "C" {
         if (status == F_equal_to) {
           unmatched = F_false;
 
-          status = f_string_dynamic_append_nulless(dynamic_value[i], &value);
+          status = f_string_dynamic_append_nulless(dynamic_value[i], &data_make->cache_1);
 
           break;
         }
@@ -1092,7 +1092,7 @@ extern "C" {
 
           for (f_array_length_t j = 0; j < dynamics_value[i].used; ++j) {
 
-            status = f_string_dynamic_mash(f_string_space_s, dynamics_value[i].array[j], &value);
+            status = f_string_dynamic_mash(f_string_space_s, dynamics_value[i].array[j], &data_make->cache_1);
             if (F_status_is_error(status)) break;
           } // for
 
@@ -1105,26 +1105,17 @@ extern "C" {
       } // for
     }
 
-    if (F_status_is_error(status)) {
-      f_string_dynamic_resize(0, &value);
-
-      return status;
-    }
-
-    if (unmatched) {
-      f_string_dynamic_resize(0, &value);
-
-      return F_false;
-    }
+    if (F_status_is_error(status)) return status;
+    if (unmatched) return F_false;
 
     if (quote) {
-      status = f_string_dynamic_append_nulless(value, &data_make->cache_arguments.array[data_make->cache_arguments.used]);
+      status = f_string_dynamic_append_nulless(data_make->cache_1, &data_make->cache_arguments.array[data_make->cache_arguments.used]);
     }
     else {
       status = f_string_dynamics_increase_by(fake_default_allocation_small_d, &data_make->cache_arguments);
 
       if (F_status_is_error_not(status)) {
-        status = f_string_dynamic_append_nulless(value, &data_make->cache_arguments.array[data_make->cache_arguments.used]);
+        status = f_string_dynamic_append_nulless(data_make->cache_1, &data_make->cache_arguments.array[data_make->cache_arguments.used]);
 
         if (F_status_is_error_not(status)) {
           ++data_make->cache_arguments.used;
@@ -1132,11 +1123,8 @@ extern "C" {
       }
     }
 
-    f_string_dynamic_resize(0, &value);
-
     if (F_status_is_error(status)) return status;
-
-    if (value.used) return F_true;
+    if (data_make->cache_1.used) return F_true;
 
     return F_data_not;
   }
