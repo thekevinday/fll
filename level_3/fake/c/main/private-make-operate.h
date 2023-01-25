@@ -88,6 +88,7 @@ extern "C" {
  *   The range representing the variable content name string within the data_make->buffer.
  *
  * @return
+ *   F_data_not on success, but nothing is added (data length to append is 0).
  *   F_true on success and match expanded.
  *   F_false on no matches to expand.
  *
@@ -116,6 +117,7 @@ extern "C" {
  *   The range representing the variable content name string within the data_make->buffer.
  *
  * @return
+ *   F_data_not on success, but nothing is added (data length to append is 0).
  *   F_true on success and match expanded.
  *   F_false on no matches to expand.
  *
