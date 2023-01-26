@@ -88,7 +88,6 @@ extern "C" {
     }
 
     {
-      f_array_length_t choice = 0;
       f_uint16s_t choices = f_uint16s_t_initialize;
 
       // Identify and prioritize "color context" parameters.
@@ -407,8 +406,6 @@ extern "C" {
         f_array_length_t k = 0;
         f_array_length_t total = 0;
         f_array_length_t index = 0;
-        f_number_unsigned_t number_start = 0;
-        f_number_unsigned_t number_stop = 0;
 
         // Construct the array without allocating any more memory for the string data by setting this as a static string (used > 0, size = 0).
         while (i < values_ignore->used) {

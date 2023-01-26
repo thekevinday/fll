@@ -134,7 +134,6 @@ extern "C" {
     input.size_read = setting->state.step_large;
 
     f_array_length_t total = 0;
-    f_array_length_t length = 0;
     f_array_length_t ignore = 0;
     f_string_range_t range = f_string_range_t_initialize;
 
