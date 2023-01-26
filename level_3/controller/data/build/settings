@@ -8,7 +8,7 @@ version_micro 0
 version_file micro
 version_target minor
 
-modes individual level monolithic clang test as_init
+modes individual level monolithic clang test fanalyzer as_init
 modes_default monolithic
 
 build_compiler gcc
@@ -73,6 +73,7 @@ defines-as_init -D_controller_as_init_
 flags -O2 -z now -g -pthread -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-parentheses -Wno-missing-braces
 flags-clang -Wno-logical-op-parentheses
 flags-test -O0 -fstack-protector -Wall
+flags-fanalyzer -fanalyzer
 flags-coverage -O0 --coverage -fprofile-abs-path -fprofile-dir=build/coverage/
 
 flags_library -fPIC

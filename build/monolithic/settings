@@ -8,7 +8,7 @@ version_micro 0
 version_file micro
 version_target minor
 
-modes monolithic monolithic_threadless clang test
+modes monolithic monolithic_threadless clang test fanalyzer
 modes_default monolithic
 
 build_compiler gcc
@@ -161,7 +161,8 @@ defines-monolithic_threadless -D_di_pthread_support_
 
 flags -O2 -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-parentheses
 flags-clang -Wno-logical-op-parentheses
-flags-test -fstack-protector
+flags-test -fstack-protector -Wall
+flags-fanalyzer -fanalyzer
 flags-monolithic -pthread
 
 flags_library -fPIC
