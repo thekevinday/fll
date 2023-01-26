@@ -25,6 +25,7 @@ extern "C" {
  *   F_child on child process exiting.
  *
  *   F_interrupt (with error bit) on receiving a process signal, such as an interrupt signal.
+ *   F_parameter (with error bit) on invalid parameter passed.
  *
  *   Errors (with error bit) from: f_string_dynamic_append().
  *   Errors (with error bit) from: f_string_dynamic_partial_append().
@@ -53,6 +54,7 @@ extern f_status_t firewall_perform_commands(firewall_data_t * const data, firewa
  *   F_child on child process exiting.
  *
  *   F_interrupt (with error bit) on receiving a process signal, such as an interrupt signal.
+ *   F_parameter (with error bit) on invalid parameter passed.
  *
  *   Status codes (with error bit) are returned on any problem.
  */
@@ -69,6 +71,7 @@ extern f_status_t firewall_create_custom_chains(firewall_data_t * const data, fi
  *   F_child on child process exiting.
  *
  *   F_interrupt (with error bit) on receiving a process signal, such as an interrupt signal.
+ *   F_parameter (with error bit) on invalid parameter passed.
  *
  *   Status codes (with error bit) are returned on any problem.
  */
