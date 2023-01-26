@@ -117,6 +117,7 @@ extern "C" {
 
         range.start = 0;
         range.stop = setting->block.used - 1;
+        status_pipe = F_none;
       }
 
       // Start Object.
@@ -139,7 +140,7 @@ extern "C" {
           break;
         }
 
-        for (; range.start <= range.stop; ++range.start) {
+        for (; range.start <= range.stop && range.start < setting->block.used; ++range.start) {
 
           // Do not handle start/end while inside an ignore set.
           if (!(flag & 0x2)) {
@@ -248,7 +249,7 @@ extern "C" {
             break;
           }
 
-          for (; range.start <= range.stop; ++range.start) {
+          for (; range.start <= range.stop && range.start < setting->block.used; ++range.start) {
 
             // Do not handle start/end while inside an ignore set.
             if (!(flag & 0x2)) {
