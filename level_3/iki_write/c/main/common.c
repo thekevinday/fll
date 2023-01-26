@@ -67,7 +67,6 @@ extern "C" {
     }
 
     {
-      f_array_length_t choice = 0;
       f_uint16s_t choices = f_uint16s_t_initialize;
 
       // Identify and prioritize "color context" parameters.
