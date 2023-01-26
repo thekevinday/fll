@@ -224,28 +224,10 @@ extern "C" {
     controller_state_interrupt_t custom = macro_controller_state_interrupt_t_initialize(is_normal, global.thread);
     f_state_t state = macro_f_state_t_initialize(controller_common_allocation_large_d, controller_common_allocation_small_d, 0, 0, &controller_thread_signal_state_fss, 0, (void *) &custom, 0);
 
+    cache->comments.used = 0;
+    cache->delimits.used = 0;
+
     if (method == controller_rule_action_method_extended_list_e) {
-      cache->comments.used = 0;
-      cache->delimits.used = 0;
-      cache->content_action.used = 0;
-      cache->content_actions.used = 0;
-      cache->object_actions.used = 0;
-
-      for (; actions->used; --actions->used) {
-
-        for (; actions->array[actions->used - 1].parameters.used; --actions->array[actions->used - 1].parameters.used) {
-          actions->array[actions->used - 1].parameters.array[actions->array[actions->used - 1].parameters.used - 1].used = 0;
-        } // for
-
-        for (; actions->array[actions->used - 1].ikis.used; --actions->array[actions->used - 1].ikis.used) {
-
-          actions->array[actions->used - 1].ikis.array[actions->array[actions->used - 1].ikis.used - 1].content.used = 0;
-          actions->array[actions->used - 1].ikis.array[actions->array[actions->used - 1].ikis.used - 1].delimits.used = 0;
-          actions->array[actions->used - 1].ikis.array[actions->array[actions->used - 1].ikis.used - 1].variable.used = 0;
-          actions->array[actions->used - 1].ikis.array[actions->array[actions->used - 1].ikis.used - 1].vocabulary.used = 0;
-        } // for
-      } // for
-
       status = fl_fss_extended_list_content_read(cache->buffer_item, state, range, &cache->content_action, &cache->delimits, &cache->comments);
 
       if (F_status_is_error(status)) {
@@ -382,9 +364,6 @@ extern "C" {
       }
     }
     else {
-      cache->content_action.used = 0;
-      cache->delimits.used = 0;
-
       status = fl_fss_extended_content_read(cache->buffer_item, state, range, &cache->content_action, 0, &cache->delimits);
 
       if (F_status_is_error(status)) {
@@ -3691,6 +3670,9 @@ extern "C" {
 
     {
       f_array_length_t i = 0;
+      f_array_length_t j = 0;
+      f_array_length_t k = 0;
+      f_array_length_t l = 0;
 
       for (i = 0; i < rule->cgroup.groups.size; ++i) {
         rule->cgroup.groups.array[i].used = 0;
@@ -3700,7 +3682,7 @@ extern "C" {
         rule->status[i] = F_known_not;
       } // for
 
-      for (i = 0; i < cache->content_items.used; ++i) {
+      for (i = 0; i < cache->content_items.size; ++i) {
         cache->content_items.array[i].used = 0;
       } // for
 
@@ -3712,6 +3694,66 @@ extern "C" {
         rule->ons.array[i].need.used = 0;
         rule->ons.array[i].want.used = 0;
         rule->ons.array[i].wish.used = 0;
+      } // for
+
+      for (i = 0; i < rule->items.size; ++i) {
+
+        rule->items.array[i].type = 0;
+        rule->items.array[i].with = 0;
+        rule->items.array[i].line = 0;
+        rule->items.array[i].pid_file.used = 0;
+        rule->items.array[i].actions.used = 0;
+
+        for (j = 0; j < controller_rule_action_execute_type__enum_size_e; ++j) {
+
+          rule->items.array[i].reruns[j].is = 0;
+
+          macro_controller_rule_rerun_item_initialize(rule->items.array[i].reruns[j].failure);
+          macro_controller_rule_rerun_item_initialize(rule->items.array[i].reruns[j].success);
+        } // for
+
+        for (j = 0; j < rule->items.array[i].actions.size; ++j) {
+
+          rule->items.array[i].actions.array[j].type = 0;
+          rule->items.array[i].actions.array[j].line = 0;
+          rule->items.array[i].actions.array[j].status = F_none;
+          rule->items.array[i].actions.array[j].parameters.used = 0;
+          rule->items.array[i].actions.array[j].ikis.used = 0;
+
+          for (k = 0; k < rule->items.array[i].actions.array[j].parameters.size; ++k) {
+            rule->items.array[i].actions.array[j].parameters.array[k].used = 0;
+          } // for
+
+          for (k = 0; k < rule->items.array[i].actions.array[j].ikis.size; ++k) {
+
+            rule->items.array[i].actions.array[j].ikis.array[k].content.used = 0;
+            rule->items.array[i].actions.array[j].ikis.array[k].delimits.used = 0;
+            rule->items.array[i].actions.array[j].ikis.array[k].variable.used = 0;
+            rule->items.array[i].actions.array[j].ikis.array[k].vocabulary.used = 0;
+
+            for (l = 0; l < rule->items.array[i].actions.array[j].ikis.array[k].content.size; ++l) {
+
+              rule->items.array[i].actions.array[j].ikis.array[k].content.array[l].start = 1;
+              rule->items.array[i].actions.array[j].ikis.array[k].content.array[l].stop = 0;
+            } // for
+
+            for (l = 0; l < rule->items.array[i].actions.array[j].ikis.array[k].delimits.size; ++l) {
+              rule->items.array[i].actions.array[j].ikis.array[k].delimits.array[l] = 0;
+            } // for
+
+            for (l = 0; l < rule->items.array[i].actions.array[j].ikis.array[k].variable.size; ++l) {
+
+              rule->items.array[i].actions.array[j].ikis.array[k].variable.array[l].start = 1;
+              rule->items.array[i].actions.array[j].ikis.array[k].variable.array[l].stop = 0;
+            } // for
+
+            for (l = 0; l < rule->items.array[i].actions.array[j].ikis.array[k].vocabulary.size; ++l) {
+
+              rule->items.array[i].actions.array[j].ikis.array[k].vocabulary.array[l].start = 1;
+              rule->items.array[i].actions.array[j].ikis.array[k].vocabulary.array[l].stop = 0;
+            } // for
+          } // for
+        } // for
       } // for
     }
 
@@ -4340,7 +4382,7 @@ extern "C" {
             status_return = status;
           }
 
-          // get the current line number within the settings item.
+          // Get the current line number within the settings item.
           cache->action.line_item = line_item;
           f_fss_count_lines(state, cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
 
@@ -4489,7 +4531,7 @@ extern "C" {
             status_return = status;
           }
 
-          // get the current line number within the settings item.
+          // Get the current line number within the settings item.
           cache->action.line_item = line_item;
           f_fss_count_lines(state, cache->buffer_item, cache->object_actions.array[i].start, &cache->action.line_item);
 
@@ -5662,7 +5704,7 @@ extern "C" {
     f_array_length_t i = 0;
     f_array_length_t j = 0;
 
-    // find at least one of the requested action.
+    // Find at least one of the requested action.
     {
       bool missing = F_true;
 
@@ -5708,10 +5750,10 @@ extern "C" {
 
     fl_print_format("%rRule %[%Q%] {%r", main->output.to, f_string_eol_s, main->context.set.title, rule.alias, main->context.set.title, f_string_eol_s);
 
-    // name.
+    // Name.
     fl_print_format("  %[%r%] %Q%r", main->output.to, main->context.set.important, controller_name_s, main->context.set.important, rule.name, f_string_eol_s);
 
-    // capability.
+    // Capability.
     fl_print_format("  %[%r%] ", main->output.to, main->context.set.important, controller_capability_s, main->context.set.important);
 
     if (f_capability_supported()) {
@@ -5729,7 +5771,7 @@ extern "C" {
       fl_print_format("%[(unsupported)%]%r", main->output.to, main->context.set.warning, main->context.set.warning, f_string_eol_s);
     }
 
-    // control group.
+    // Control Group.
     fl_print_format("  %[%r%]", main->output.to, main->context.set.important, controller_cgroup_s, main->context.set.important);
 
     if (rule.has & controller_rule_has_cgroup_d) {
