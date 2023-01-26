@@ -240,6 +240,7 @@ extern "C" {
 
         range.start = 0;
         range.stop = block.used - 1;
+        status_pipe = F_none;
       }
 
       if (!state || state == 0x1) {
@@ -260,7 +261,7 @@ extern "C" {
           }
         }
 
-        for (; range.start <= range.stop; ++range.start) {
+        for (; range.start <= range.stop && range.start < block.used; ++range.start) {
 
           if (block.string[range.start] == fss_payload_write_pipe_content_start_s.string[0]) {
             state = 0x2;
@@ -336,7 +337,7 @@ extern "C" {
             break;
           }
 
-          for (; range.start <= range.stop; ++range.start) {
+          for (; range.start <= range.stop && range.start < block.used; ++range.start) {
 
             if (block.string[range.start] == fss_payload_write_pipe_content_start_s.string[0]) {
               if (main->error.verbosity != f_console_verbosity_quiet_e) {

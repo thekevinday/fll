@@ -201,6 +201,7 @@ extern "C" {
           fll_error_print(main->error, F_status_set_fine(status_pipe), "f_file_read_block", F_true);
 
           status_pipe = F_status_set_error(F_pipe);
+
           break;
         }
 
@@ -212,28 +213,24 @@ extern "C" {
 
       if (!state || state == 0x1) {
         if (!state) {
-          if (contents.used) {
-            for (i = 0; i < contents.used; ++i) {
-              contents.array[i].used = 0;
-            } // for
-          }
+          for (i = 0; i < contents.used; ++i) {
+            contents.array[i].used = 0;
+          } // for
 
           object.used = 0;
           contents.used = 0;
-
           state = 0x1;
         }
 
-        if (object.used + block.used > object.size) {
-          status = f_string_dynamic_increase_by(block.used, &object);
+        status = f_string_dynamic_increase_by(block.used, &object);
 
-          if (F_status_is_error(status)) {
-            fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_increase_by", F_true);
-            break;
-          }
+        if (F_status_is_error(status)) {
+          fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_increase_by", F_true);
+
+          break;
         }
 
-        for (; range.start <= range.stop; ++range.start) {
+        for (; range.start <= range.stop && range.start < block.used; ++range.start) {
 
           if (block.string[range.start] == fss_extended_write_pipe_content_start_s.string[0]) {
             state = 0x2;
@@ -268,13 +265,12 @@ extern "C" {
       }
 
       if (state == 0x2) {
-        if (contents.used + 1 > contents.size) {
-          status = f_string_dynamics_increase_by(F_fss_default_allocation_step_d, &contents);
+        status = f_string_dynamics_increase_by(F_fss_default_allocation_step_d, &contents);
 
-          if (F_status_is_error(status)) {
-            fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamics_increase_by", F_true);
-            break;
-          }
+        if (F_status_is_error(status)) {
+          fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamics_increase_by", F_true);
+
+          break;
         }
 
         state = 0x3;
@@ -290,17 +286,15 @@ extern "C" {
         }
 
         if (total) {
-          for (; range.start <= range.stop; ++range.start) {
+          for (; range.start <= range.stop && range.start < block.used; ++range.start) {
 
             if (block.string[range.start] == fss_extended_write_pipe_content_start_s.string[0]) {
-              if (contents.used + 1 > contents.size) {
-                status = f_string_dynamics_increase_by(F_fss_default_allocation_step_d, &contents);
+              status = f_string_dynamics_increase_by(F_fss_default_allocation_step_d, &contents);
 
-                if (F_status_is_error(status)) {
-                  fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamics_increase_by", F_true);
+              if (F_status_is_error(status)) {
+                fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamics_increase_by", F_true);
 
-                  break;
-                }
+                break;
               }
 
               ++contents.used;
@@ -329,14 +323,12 @@ extern "C" {
               break;
             }
 
-            if (contents.array[contents.used - 1].used + 1 > contents.array[contents.used - 1].size) {
-              status = f_string_dynamic_increase_by(F_fss_default_allocation_step_d, &contents.array[contents.used - 1]);
+            status = f_string_dynamic_increase_by(F_fss_default_allocation_step_d, &contents.array[contents.used - 1]);
 
-              if (F_status_is_error(status)) {
-                fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_increase_by", F_true);
+            if (F_status_is_error(status)) {
+              fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_increase_by", F_true);
 
-                break;
-              }
+              break;
             }
 
             contents.array[contents.used - 1].string[contents.array[contents.used - 1].used++] = block.string[range.start];
