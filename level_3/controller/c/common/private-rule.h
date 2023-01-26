@@ -33,6 +33,12 @@ extern "C" {
     0, \
     5000, \
     0, \
+
+  #define macro_controller_rule_rerun_item_initialize(item) { \
+    item.reset = F_false; \
+    item.count = 0; \
+    item.delay = 5000; \
+    item.max = 0; \
   }
 #endif // _di_controller_rule_rerun_item_t_
 
