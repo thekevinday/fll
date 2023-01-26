@@ -175,8 +175,6 @@ extern "C" {
         }
       }
       else {
-        int result = 0;
-
         for (i = 0; i < data->main->parameters.remaining.used; ++i) {
 
           index = data->main->parameters.remaining.array[i];
