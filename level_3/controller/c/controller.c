@@ -71,11 +71,7 @@ extern "C" {
     }
 
     if (main->parameters.array[controller_parameter_version_e].result & f_console_result_found_e) {
-      controller_lock_print(main->output.to, 0);
-
-      fll_program_print_version(main->message, controller_program_version_s);
-
-      controller_unlock_print_flush(main->output.to, 0);
+      fll_program_print_version(main->message, (setting->line_first.used ? 0x1 : 0x0) | (setting->line_last.used ? 0x2 : 0x0), controller_program_version_s);
 
       return F_none;
     }

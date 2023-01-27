@@ -149,7 +149,7 @@ extern "C" {
     }
 
     if (main->parameters.array[byte_dump_parameter_version_e].result & f_console_result_found_e) {
-      fll_program_print_version(main->message, byte_dump_program_version_s);
+      fll_program_print_version(main->message, (setting->line_first.used ? 0x1 : 0x0) | (setting->line_last.used ? 0x2 : 0x0), byte_dump_program_version_s);
 
       return F_none;
     }

@@ -26,7 +26,7 @@ extern "C" {
     }
 
     if (setting->flag & fss_write_flag_version_e) {
-      fll_program_print_version(main->message, fss_write_program_version_s);
+      fll_program_print_version(main->message, (setting->line_first.used ? 0x1 : 0x0) | (setting->line_last.used ? 0x2 : 0x0), fss_write_program_version_s);
 
       return;
     }

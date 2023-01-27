@@ -66,7 +66,7 @@ extern "C" {
     }
 
     if (main->parameters.array[fss_embedded_list_read_parameter_version_e].result & f_console_result_found_e) {
-      fll_program_print_version(main->message, fss_embedded_list_read_program_version_s);
+      fll_program_print_version(main->message, (setting->line_first.used ? 0x1 : 0x0) | (setting->line_last.used ? 0x2 : 0x0), fss_embedded_list_read_program_version_s);
 
       return F_none;
     }

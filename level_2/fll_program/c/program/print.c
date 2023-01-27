@@ -519,10 +519,22 @@ extern "C" {
 #endif // _di_fll_program_print_signal_received_
 
 #ifndef _di_fll_program_print_version_
-  f_status_t fll_program_print_version(const fl_print_t print, const f_string_static_t version) {
+  f_status_t fll_program_print_version(const fl_print_t print, const uint8_t first_last, const f_string_static_t version) {
+
+    f_file_stream_lock(print.to);
+
+    if (first_last & 0x1) {
+      f_print_dynamic_raw(f_string_eol_s, print.to);
+    }
 
     f_print_dynamic(version, print.to);
     f_print_dynamic_raw(f_string_eol_s, print.to);
+
+    if (first_last & 0x2) {
+      f_print_dynamic_raw(f_string_eol_s, print.to);
+    }
+
+    f_file_stream_unlock(print.to);
 
     return F_none;
   }

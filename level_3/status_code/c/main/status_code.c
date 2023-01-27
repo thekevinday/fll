@@ -40,7 +40,7 @@ extern "C" {
     }
 
     if (setting->flag & status_code_main_flag_version_e) {
-      fll_program_print_version(main->message, status_code_program_version_s);
+      fll_program_print_version(main->message, (setting->line_first.used ? 0x1 : 0x0) | (setting->line_last.used ? 0x2 : 0x0), status_code_program_version_s);
 
       return;
     }
