@@ -78,9 +78,8 @@ extern "C" {
       } while (status == F_fss_found_object_not);
 
       if (status == F_none_eos || status == F_none_stop) {
-        ++contents->array[contents->used].used;
+        ++contents->array[contents->used++].used;
         ++objects->used;
-        ++contents->used;
 
         return status;
       }
