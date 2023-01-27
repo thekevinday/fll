@@ -193,6 +193,7 @@ extern "C" {
 
   enum {
     fss_basic_list_read_parameter_help_e,
+    fss_basic_list_read_parameter_copyright_e,
     fss_basic_list_read_parameter_light_e,
     fss_basic_list_read_parameter_dark_e,
     fss_basic_list_read_parameter_no_color_e,
@@ -223,7 +224,8 @@ extern "C" {
 
   #define fss_basic_list_read_console_parameter_t_initialize \
     { \
-      macro_f_console_parameter_t_initialize_3(f_console_standard_short_help_s,          f_console_standard_long_help_s,          0, f_console_flag_normal_e,  0), \
+      macro_f_console_parameter_t_initialize_3(f_console_standard_short_help_s,          f_console_standard_long_help_s,          0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(f_console_standard_short_copyright_s,     f_console_standard_long_copyright_s,     0, f_console_flag_inverse_e), \
       macro_f_console_parameter_t_initialize_3(f_console_standard_short_light_s,         f_console_standard_long_light_s,         0, f_console_flag_inverse_e), \
       macro_f_console_parameter_t_initialize_3(f_console_standard_short_dark_s,          f_console_standard_long_dark_s,          0, f_console_flag_inverse_e), \
       macro_f_console_parameter_t_initialize_3(f_console_standard_short_no_color_s,      f_console_standard_long_no_color_s,      0, f_console_flag_inverse_e), \
@@ -252,7 +254,7 @@ extern "C" {
       macro_f_console_parameter_t_initialize_3(fss_basic_list_read_short_trim_s, fss_basic_list_read_long_trim_s, 0, 0, f_console_flag_normal_e), \
     }
 
-  #define fss_basic_list_read_total_parameters_d 26
+  #define fss_basic_list_read_total_parameters_d 27
 #endif // _di_fss_basic_list_read_parameter_d_
 
 /**
@@ -310,6 +312,7 @@ extern "C" {
  *
  * fss_basic_list_read_main_flag_*_e:
  *   - none:          No flags set.
+ *   - copyright:     Print copyright.
  *   - file_from:     Using a specified source file.
  *   - file_to:       Using a specified destination file.
  *   - help:          Print help.
@@ -322,14 +325,15 @@ extern "C" {
 #ifndef _di_fss_basic_list_read_main_flag_e_
   enum {
     fss_basic_list_read_main_flag_none_e          = 0x0,
-    fss_basic_list_read_main_flag_file_from_e     = 0x1,
-    fss_basic_list_read_main_flag_file_to_e       = 0x2,
-    fss_basic_list_read_main_flag_header_e        = 0x4,
-    fss_basic_list_read_main_flag_help_e          = 0x8,
-    fss_basic_list_read_main_flag_separate_e      = 0x10,
-    fss_basic_list_read_main_flag_strip_invalid_e = 0x20,
-    fss_basic_list_read_main_flag_verify_e        = 0x40,
-    fss_basic_list_read_main_flag_version_e       = 0x80,
+    fss_basic_list_read_main_flag_copyright_e     = 0x1,
+    fss_basic_list_read_main_flag_file_from_e     = 0x2,
+    fss_basic_list_read_main_flag_file_to_e       = 0x4,
+    fss_basic_list_read_main_flag_header_e        = 0x8,
+    fss_basic_list_read_main_flag_help_e          = 0x10,
+    fss_basic_list_read_main_flag_separate_e      = 0x20,
+    fss_basic_list_read_main_flag_strip_invalid_e = 0x40,
+    fss_basic_list_read_main_flag_verify_e        = 0x80,
+    fss_basic_list_read_main_flag_version_e       = 0x100,
   }; // enum
 #endif // _di_fss_basic_list_read_main_flag_e_
 

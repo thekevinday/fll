@@ -142,8 +142,6 @@ extern "C" {
       }
     }
 
-    status = F_none;
-
     if (main->parameters.array[byte_dump_parameter_help_e].result & f_console_result_found_e) {
       byte_dump_print_help(setting, main->message);
 
@@ -155,6 +153,14 @@ extern "C" {
 
       return F_none;
     }
+
+    if (main->parameters.array[byte_dump_parameter_copyright_e].result & f_console_result_found_e) {
+      fll_program_print_copyright(main->message, (setting->line_first.used ? 0x1 : 0x0) | (setting->line_last.used ? 0x2 : 0x0));
+
+      return F_none;
+    }
+
+    status = F_none;
 
     if (main->parameters.remaining.used || (main->pipe & fll_program_data_pipe_input_e)) {
       if (main->parameters.array[byte_dump_parameter_width_e].result & f_console_result_found_e) {

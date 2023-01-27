@@ -562,6 +562,7 @@ extern "C" {
  * This is not strictly a requirement, but expect level 3 projects to work this way.
  *
  * The following options are subjective in interpretation of the verbosity but are expected to be follow the general interpretation:
+ *   - copyright:     Display copyright, if compiled in (consider combining with quiet, verbose, and normal).
  *   - debug:         Enable debugging, which will likely increase output verbosity.
  *   - error:         Similar to quiet, except that error messages are printed (this is less verbose than "normal").
  *   - normal:        Use normal printing (don't use debug/quiet/verbose).
@@ -587,6 +588,7 @@ extern "C" {
  *     - To avoid problems with the status code after a program is forcibly killed, the status_out environment variable should be cleared at program start.
  */
 #ifndef _di_f_console_standard_s_
+  #define F_console_standard_short_copyright_s     "C"
   #define F_console_standard_short_dark_s          "d"
   #define F_console_standard_short_debug_s         "D"
   #define F_console_standard_short_error_s         "E"
@@ -602,6 +604,7 @@ extern "C" {
   #define F_console_standard_short_verbose_s       "V"
   #define F_console_standard_short_version_s       "v"
 
+  #define F_console_standard_short_copyright_s_length     1
   #define F_console_standard_short_dark_s_length          1
   #define F_console_standard_short_debug_s_length         1
   #define F_console_standard_short_error_s_length         1
@@ -617,6 +620,7 @@ extern "C" {
   #define F_console_standard_short_verbose_s_length       1
   #define F_console_standard_short_version_s_length       1
 
+  #define F_console_standard_long_copyright_s     "copyright"
   #define F_console_standard_long_dark_s          "dark"
   #define F_console_standard_long_debug_s         "debug"
   #define F_console_standard_long_error_s         "error"
@@ -632,6 +636,7 @@ extern "C" {
   #define F_console_standard_long_verbose_s       "verbose"
   #define F_console_standard_long_version_s       "version"
 
+  #define F_console_standard_long_copyright_s_length     9
   #define F_console_standard_long_dark_s_length          4
   #define F_console_standard_long_debug_s_length         5
   #define F_console_standard_long_error_s_length         5
@@ -646,6 +651,10 @@ extern "C" {
   #define F_console_standard_long_status_out_s_length    10
   #define F_console_standard_long_verbose_s_length       7
   #define F_console_standard_long_version_s_length       7
+
+  #ifndef _di_f_console_standard_short_copyright_s_
+    extern const f_string_static_t f_console_standard_short_copyright_s;
+  #endif // _di_f_console_standard_short_copyright_s_
 
   #ifndef _di_f_console_standard_short_dark_s_
     extern const f_string_static_t f_console_standard_short_dark_s;
@@ -702,6 +711,10 @@ extern "C" {
   #ifndef _di_f_console_standard_short_version_s_
     extern const f_string_static_t f_console_standard_short_version_s;
   #endif // _di_f_console_standard_short_version_s_
+
+  #ifndef _di_f_console_standard_long_copyright_s_
+    extern const f_string_static_t f_console_standard_long_copyright_s;
+  #endif // _di_f_console_standard_long_copyright_s_
 
   #ifndef _di_f_console_standard_long_dark_s_
     extern const f_string_static_t f_console_standard_long_dark_s;

@@ -17,6 +17,25 @@ extern "C" {
 #endif
 
 /**
+ * Print Featureless Linux Library copyright.
+ *
+ * @param print
+ *   The output structure to print to.
+ *   The print.verbosity is used to determine how much detail is printed (except for when _di_detailed_copyright_ is set).
+ * @param uint8_t
+ *   Bitwise variable representing whether or not to print the first and last new line.
+ *   Set bit 0x1 to printing first line.
+ *   Set bit 0x2 to printing last line.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ */
+#ifndef _di_fll_program_print_copyright_
+  extern f_status_t fll_program_print_copyright(const fl_print_t print, const uint8_t first_last);
+#endif // _di_fll_program_print_copyright_
+
+/**
  * Print an error message when a file is not provided.
  *
  * This is only printed when verbosity is not set to quiet.

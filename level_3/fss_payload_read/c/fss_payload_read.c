@@ -59,8 +59,6 @@ extern "C" {
       }
     }
 
-    status = F_none;
-
     if (main->parameters.array[fss_payload_read_parameter_help_e].result & f_console_result_found_e) {
       fss_payload_read_print_help(setting, main->message);
 
@@ -72,6 +70,14 @@ extern "C" {
 
       return status;
     }
+
+    if (main->parameters.array[fss_payload_read_parameter_copyright_e].result & f_console_result_found_e) {
+      fll_program_print_copyright(main->message, (setting->line_first.used ? 0x1 : 0x0) | (setting->line_last.used ? 0x2 : 0x0));
+
+      return status;
+    }
+
+    status = F_none;
 
     // Provide a range designating where within the buffer a particular file exists, using a statically allocated array.
     fss_payload_read_file_t files_array[main->parameters.remaining.used + 1];

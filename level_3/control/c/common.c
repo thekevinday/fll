@@ -270,6 +270,12 @@ extern "C" {
       return;
     }
 
+    if (main->parameters.array[control_parameter_copyright_e].result & f_console_result_found_e) {
+      setting->flag |= control_main_flag_copyright_e;
+
+      return;
+    }
+
     f_string_static_t * const args = main->parameters.arguments.array;
 
     if (main->parameters.array[control_parameter_strip_invalid_e].result & f_console_result_found_e) {

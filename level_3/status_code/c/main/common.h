@@ -148,6 +148,7 @@ extern "C" {
 
   enum {
     status_code_parameter_help_e,
+    status_code_parameter_copyright_e,
     status_code_parameter_light_e,
     status_code_parameter_dark_e,
     status_code_parameter_no_color_e,
@@ -169,6 +170,7 @@ extern "C" {
   #define status_code_console_parameter_t_initialize \
     { \
       macro_f_console_parameter_t_initialize_3(f_console_standard_short_help_s,          f_console_standard_long_help_s,          0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(f_console_standard_short_copyright_s,     f_console_standard_long_copyright_s,     0, f_console_flag_inverse_e), \
       macro_f_console_parameter_t_initialize_3(f_console_standard_short_light_s,         f_console_standard_long_light_s,         0, f_console_flag_inverse_e), \
       macro_f_console_parameter_t_initialize_3(f_console_standard_short_dark_s,          f_console_standard_long_dark_s,          0, f_console_flag_inverse_e), \
       macro_f_console_parameter_t_initialize_3(f_console_standard_short_no_color_s,      f_console_standard_long_no_color_s,      0, f_console_flag_inverse_e), \
@@ -187,7 +189,7 @@ extern "C" {
       macro_f_console_parameter_t_initialize_3(status_code_short_number_s,  status_code_long_number_s,  0, f_console_flag_normal_e), \
     }
 
-  #define status_code_total_parameters_d 16
+  #define status_code_total_parameters_d 17
 #endif // _di_status_code_parameter_d_
 
 /**
@@ -196,23 +198,25 @@ extern "C" {
  * When number mode is not specified, then mode is "string" mode (there is no flag for "string" mode).
  *
  * status_code_main_flag_*_e:
- *   - none:    No flags set.
- *   - error:   Check if status is "error".
- *   - fine:    Check if status is "fine".
- *   - help:    Print help.
- *   - number:  Operate in number mode.
- *   - version: Print version.
- *   - warning: Check if status is "warning".
+ *   - none:      No flags set.
+ *   - copyright: Print copyright.
+ *   - error:     Check if status is "error".
+ *   - fine:      Check if status is "fine".
+ *   - help:      Print help.
+ *   - number:    Operate in number mode.
+ *   - version:   Print version.
+ *   - warning:   Check if status is "warning".
  */
 #ifndef _di_status_code_main_flag_e_
   enum {
-    status_code_main_flag_none_e    = 0x0,
-    status_code_main_flag_error_e   = 0x1,
-    status_code_main_flag_fine_e    = 0x2,
-    status_code_main_flag_help_e    = 0x4,
-    status_code_main_flag_number_e  = 0x8,
-    status_code_main_flag_version_e = 0x10,
-    status_code_main_flag_warning_e = 0x20,
+    status_code_main_flag_none_e      = 0x0,
+    status_code_main_flag_copyright_e = 0x1,
+    status_code_main_flag_error_e     = 0x2,
+    status_code_main_flag_fine_e      = 0x4,
+    status_code_main_flag_help_e      = 0x8,
+    status_code_main_flag_number_e    = 0x10,
+    status_code_main_flag_version_e   = 0x20,
+    status_code_main_flag_warning_e   = 0x40,
   };
 #endif // _di_status_code_main_flag_e_
 

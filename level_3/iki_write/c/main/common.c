@@ -134,6 +134,12 @@ extern "C" {
       return;
     }
 
+    if (main->parameters.array[iki_write_parameter_copyright_e].result & f_console_result_found_e) {
+      setting->flag |= iki_write_main_flag_copyright_e;
+
+      return;
+    }
+
     if (main->parameters.array[iki_write_parameter_file_e].result & f_console_result_value_e && main->parameters.array[iki_write_parameter_file_e].values.used) {
       if (main->parameters.array[iki_write_parameter_file_e].values.used > 1) {
         setting->status = F_status_set_error(F_parameter);

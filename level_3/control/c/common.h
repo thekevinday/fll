@@ -95,6 +95,7 @@ extern "C" {
 
   enum {
     control_parameter_help_e = 0,
+    control_parameter_copyright_e,
     control_parameter_light_e,
     control_parameter_dark_e,
     control_parameter_no_color_e,
@@ -115,7 +116,8 @@ extern "C" {
 
   #define control_console_parameter_t_initialize \
     { \
-      macro_f_console_parameter_t_initialize_3(f_console_standard_short_help_s,          f_console_standard_long_help_s,          0, f_console_flag_normal_e,  0), \
+      macro_f_console_parameter_t_initialize_3(f_console_standard_short_help_s,          f_console_standard_long_help_s,          0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(f_console_standard_short_copyright_s,     f_console_standard_long_copyright_s,     0, f_console_flag_inverse_e), \
       macro_f_console_parameter_t_initialize_3(f_console_standard_short_light_s,         f_console_standard_long_light_s,         0, f_console_flag_inverse_e), \
       macro_f_console_parameter_t_initialize_3(f_console_standard_short_dark_s,          f_console_standard_long_dark_s,          0, f_console_flag_inverse_e), \
       macro_f_console_parameter_t_initialize_3(f_console_standard_short_no_color_s,      f_console_standard_long_no_color_s,      0, f_console_flag_inverse_e), \
@@ -134,7 +136,7 @@ extern "C" {
       macro_f_console_parameter_t_initialize_3(control_short_socket_s,   control_long_socket_s,   1, f_console_flag_normal_e), \
     }
 
-  #define control_total_parameters_d 16
+  #define control_total_parameters_d 17
 #endif // _di_control_parameter_d_
 
 /**
@@ -192,6 +194,7 @@ extern "C" {
  *
  * control_main_flag_*_e:
  *   - none:          No flags set.
+ *   - copyright:     Print copyright.
  *   - file_from:     Using a specified source file.
  *   - file_to:       Using a specified destination file.
  *   - help:          Print help.
@@ -204,14 +207,15 @@ extern "C" {
 #ifndef _di_control_main_flag_e_
   enum {
     control_main_flag_none_e          = 0x0,
-    control_main_flag_file_from_e     = 0x1,
-    control_main_flag_file_to_e       = 0x2,
-    control_main_flag_header_e        = 0x4,
-    control_main_flag_help_e          = 0x8,
-    control_main_flag_separate_e      = 0x10,
-    control_main_flag_strip_invalid_e = 0x20,
-    control_main_flag_verify_e        = 0x40,
-    control_main_flag_version_e       = 0x80,
+    control_main_flag_copyright_e     = 0x1,
+    control_main_flag_file_from_e     = 0x2,
+    control_main_flag_file_to_e       = 0x4,
+    control_main_flag_header_e        = 0x8,
+    control_main_flag_help_e          = 0x10,
+    control_main_flag_separate_e      = 0x20,
+    control_main_flag_strip_invalid_e = 0x40,
+    control_main_flag_verify_e        = 0x80,
+    control_main_flag_version_e       = 0x100,
   }; // enum
 #endif // _di_control_main_flag_e_
 

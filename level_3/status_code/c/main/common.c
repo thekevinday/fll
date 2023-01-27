@@ -124,6 +124,12 @@ extern "C" {
 
         return;
       }
+
+      if (main->parameters.array[status_code_parameter_copyright_e].result & f_console_result_found_e) {
+        setting->flag |= status_code_main_flag_copyright_e;
+
+        return;
+      }
     }
 
     if (main->parameters.array[status_code_parameter_error_e].result & f_console_result_found_e) {

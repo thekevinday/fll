@@ -185,6 +185,7 @@ extern "C" {
 
   enum {
     fss_payload_read_parameter_help_e,
+    fss_payload_read_parameter_copyright_e,
     fss_payload_read_parameter_light_e,
     fss_payload_read_parameter_dark_e,
     fss_payload_read_parameter_no_color_e,
@@ -215,7 +216,8 @@ extern "C" {
 
   #define fss_payload_read_console_parameter_t_initialize \
     { \
-      macro_f_console_parameter_t_initialize_3(f_console_standard_short_help_s,          f_console_standard_long_help_s,          0, f_console_flag_normal_e,  0), \
+      macro_f_console_parameter_t_initialize_3(f_console_standard_short_help_s,          f_console_standard_long_help_s,          0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(f_console_standard_short_copyright_s,     f_console_standard_long_copyright_s,     0, f_console_flag_inverse_e), \
       macro_f_console_parameter_t_initialize_3(f_console_standard_short_light_s,         f_console_standard_long_light_s,         0, f_console_flag_inverse_e), \
       macro_f_console_parameter_t_initialize_3(f_console_standard_short_dark_s,          f_console_standard_long_dark_s,          0, f_console_flag_inverse_e), \
       macro_f_console_parameter_t_initialize_3(f_console_standard_short_no_color_s,      f_console_standard_long_no_color_s,      0, f_console_flag_inverse_e), \
@@ -244,7 +246,7 @@ extern "C" {
       macro_f_console_parameter_t_initialize_3(fss_payload_read_short_trim_s, fss_payload_read_long_trim_s, 0, 0, f_console_flag_normal_e), \
     }
 
-  #define fss_payload_read_total_parameters_d 26
+  #define fss_payload_read_total_parameters_d 27
 #endif // _di_fss_payload_read_parameter_d_
 
 /**
@@ -304,6 +306,7 @@ extern "C" {
  *   - none:       No flags set.
  *   - at:         Selecting at a specific index.
  *   - content:    Print Contents.
+ *   - copyright:  Print copyright.
  *   - help:       Print help.
  *   - literal:    Print as literal data (printing entire variable).
  *   - line:       Selecting at a specific line.
@@ -322,18 +325,19 @@ extern "C" {
     fss_payload_read_main_flag_none_e       = 0x0,
     fss_payload_read_main_flag_at_e         = 0x1,
     fss_payload_read_main_flag_content_e    = 0x2,
-    fss_payload_read_main_flag_help_e       = 0x4,
-    fss_payload_read_main_flag_literal_e    = 0x8,
-    fss_payload_read_main_flag_line_e       = 0x10,
-    fss_payload_read_main_flag_name_e       = 0x20,
-    fss_payload_read_main_flag_object_e     = 0x40,
-    fss_payload_read_main_flag_reassign_e   = 0x80,
-    fss_payload_read_main_flag_replace_e    = 0x100,
-    fss_payload_read_main_flag_substitute_e = 0x200,
-    fss_payload_read_main_flag_total_e      = 0x400,
-    fss_payload_read_main_flag_version_e    = 0x800,
-    fss_payload_read_main_flag_whole_e      = 0x1000,
-    fss_payload_read_main_flag_wrap_e       = 0x2000,
+    fss_payload_read_main_flag_copyright_e  = 0x4,
+    fss_payload_read_main_flag_help_e       = 0x8,
+    fss_payload_read_main_flag_literal_e    = 0x10,
+    fss_payload_read_main_flag_line_e       = 0x20,
+    fss_payload_read_main_flag_name_e       = 0x40,
+    fss_payload_read_main_flag_object_e     = 0x80,
+    fss_payload_read_main_flag_reassign_e   = 0x100,
+    fss_payload_read_main_flag_replace_e    = 0x200,
+    fss_payload_read_main_flag_substitute_e = 0x400,
+    fss_payload_read_main_flag_total_e      = 0x800,
+    fss_payload_read_main_flag_version_e    = 0x1000,
+    fss_payload_read_main_flag_whole_e      = 0x2000,
+    fss_payload_read_main_flag_wrap_e       = 0x4000,
   }; // enum
 #endif // _di_fss_payload_read_main_flag_e_
 

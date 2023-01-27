@@ -245,6 +245,12 @@ extern "C" {
       return;
     }
 
+    if (main->parameters.array[utf8_parameter_copyright_e].result & f_console_result_found_e) {
+      setting->flag |= utf8_main_flag_copyright_e;
+
+      return;
+    }
+
     if (main->parameters.array[utf8_parameter_to_file_e].result & f_console_result_value_e) {
       if (main->parameters.array[utf8_parameter_to_file_e].values.used > 1) {
         setting->status = F_status_set_error(F_parameter);

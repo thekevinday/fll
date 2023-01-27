@@ -59,16 +59,8 @@ extern "C" {
       }
     }
 
-    fss_embedded_list_read_data_t data = fss_embedded_list_read_data_t_initialize;
-    data.main = main;
-    data.argv = main->parameters.arguments.array;
-
-    status = F_none;
-
     if (main->parameters.array[fss_embedded_list_read_parameter_help_e].result & f_console_result_found_e) {
       fss_embedded_list_read_print_help(setting, main->message);
-
-      fss_embedded_list_read_data_delete(&data);
 
       return F_none;
     }
@@ -76,10 +68,20 @@ extern "C" {
     if (main->parameters.array[fss_embedded_list_read_parameter_version_e].result & f_console_result_found_e) {
       fll_program_print_version(main->message, fss_embedded_list_read_program_version_s);
 
-      fss_embedded_list_read_data_delete(&data);
+      return F_none;
+    }
+
+    if (main->parameters.array[fss_embedded_list_read_parameter_copyright_e].result & f_console_result_found_e) {
+      fll_program_print_copyright(main->message, (setting->line_first.used ? 0x1 : 0x0) | (setting->line_last.used ? 0x2 : 0x0));
 
       return F_none;
     }
+
+    status = F_none;
+
+    fss_embedded_list_read_data_t data = fss_embedded_list_read_data_t_initialize;
+    data.main = main;
+    data.argv = main->parameters.arguments.array;
 
     if (F_status_is_error_not(status) && (main->parameters.array[fss_embedded_list_read_parameter_total_e].result & f_console_result_found_e)) {
       if (main->parameters.array[fss_embedded_list_read_parameter_columns_e].result & f_console_result_found_e) {

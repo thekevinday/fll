@@ -151,6 +151,10 @@ extern "C" {
       setting->flag |= fss_write_flag_version_e;
     }
 
+    if (main->parameters.array[fss_write_parameter_copyright_e].result & f_console_result_found_e) {
+      setting->flag |= fss_write_flag_copyright_e;
+    }
+
     if (callback) {
       callback(arguments, state, main, setting);
       if (F_status_is_error(setting->status)) return;

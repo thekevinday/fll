@@ -284,6 +284,7 @@ extern "C" {
 
   enum {
     byte_dump_parameter_help_e,
+    byte_dump_parameter_copyright_e,
     byte_dump_parameter_light_e,
     byte_dump_parameter_dark_e,
     byte_dump_parameter_no_color_e,
@@ -319,7 +320,8 @@ extern "C" {
 
   #define byte_dump_console_parameter_t_initialize \
     { \
-      macro_f_console_parameter_t_initialize_3(f_console_standard_short_help_s,          f_console_standard_long_help_s,          0, f_console_flag_normal_e,  0), \
+      macro_f_console_parameter_t_initialize_3(f_console_standard_short_help_s,          f_console_standard_long_help_s,          0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(f_console_standard_short_copyright_s,     f_console_standard_long_copyright_s,     0, f_console_flag_normal_e), \
       macro_f_console_parameter_t_initialize_3(f_console_standard_short_light_s,         f_console_standard_long_light_s,         0, f_console_flag_inverse_e), \
       macro_f_console_parameter_t_initialize_3(f_console_standard_short_dark_s,          f_console_standard_long_dark_s,          0, f_console_flag_inverse_e), \
       macro_f_console_parameter_t_initialize_3(f_console_standard_short_no_color_s,      f_console_standard_long_no_color_s,      0, f_console_flag_inverse_e), \
@@ -351,7 +353,7 @@ extern "C" {
       macro_f_console_parameter_t_initialize_5(byte_dump_long_classic_s, 0, f_console_flag_normal_e), \
     }
 
-  #define byte_dump_total_parameters_d 28
+  #define byte_dump_total_parameters_d 29
 #endif // _di_byte_dump_parameter_d_
 
 /**

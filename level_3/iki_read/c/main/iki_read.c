@@ -31,6 +31,12 @@ extern "C" {
       return;
     }
 
+    if (setting->flag & iki_read_main_flag_copyright_e) {
+      fll_program_print_copyright(main->message, (setting->line_first.used ? 0x1 : 0x0) | (setting->line_last.used ? 0x2 : 0x0));
+
+      return;
+    }
+
     if (main->pipe & fll_program_data_pipe_input_e) {
       f_file_t file = f_file_t_initialize;
 

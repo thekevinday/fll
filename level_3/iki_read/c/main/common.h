@@ -164,6 +164,7 @@ extern "C" {
 
   enum {
     iki_read_parameter_help_e,
+    iki_read_parameter_copyright_e,
     iki_read_parameter_light_e,
     iki_read_parameter_dark_e,
     iki_read_parameter_no_color_e,
@@ -193,6 +194,7 @@ extern "C" {
   #define iki_read_console_parameter_t_initialize \
     { \
       macro_f_console_parameter_t_initialize_3(f_console_standard_short_help_s,          f_console_standard_long_help_s,          0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(f_console_standard_short_copyright_s,     f_console_standard_long_copyright_s,     0, f_console_flag_inverse_e), \
       macro_f_console_parameter_t_initialize_3(f_console_standard_short_light_s,         f_console_standard_long_light_s,         0, f_console_flag_inverse_e), \
       macro_f_console_parameter_t_initialize_3(f_console_standard_short_dark_s,          f_console_standard_long_dark_s,          0, f_console_flag_inverse_e), \
       macro_f_console_parameter_t_initialize_3(f_console_standard_short_no_color_s,      f_console_standard_long_no_color_s,      0, f_console_flag_inverse_e), \
@@ -219,7 +221,7 @@ extern "C" {
       macro_f_console_parameter_t_initialize_3(iki_read_short_wrap_s,       iki_read_long_wrap_s,       3, f_console_flag_normal_e), \
     }
 
-  #define iki_read_total_parameters_d 24
+  #define iki_read_total_parameters_d 25
 #endif // _di_iki_read_parameter_d_
 
 #ifndef _di_iki_read_substitution_t_
@@ -249,6 +251,7 @@ extern "C" {
  *   - none:       No flags set.
  *   - at:         Selecting at a specific index.
  *   - content:    Print Contents.
+ *   - copyright:  Print copyright.
  *   - help:       Print help.
  *   - literal:    Print as literal data (printing entire variable).
  *   - line:       Selecting at a specific line.
@@ -267,18 +270,19 @@ extern "C" {
     iki_read_main_flag_none_e       = 0x0,
     iki_read_main_flag_at_e         = 0x1,
     iki_read_main_flag_content_e    = 0x2,
-    iki_read_main_flag_help_e       = 0x4,
-    iki_read_main_flag_literal_e    = 0x8,
-    iki_read_main_flag_line_e       = 0x10,
-    iki_read_main_flag_name_e       = 0x20,
-    iki_read_main_flag_object_e     = 0x40,
-    iki_read_main_flag_reassign_e   = 0x80,
-    iki_read_main_flag_replace_e    = 0x100,
-    iki_read_main_flag_substitute_e = 0x200,
-    iki_read_main_flag_total_e      = 0x400,
-    iki_read_main_flag_version_e    = 0x800,
-    iki_read_main_flag_whole_e      = 0x1000,
-    iki_read_main_flag_wrap_e       = 0x2000,
+    iki_read_main_flag_copyright_e  = 0x4,
+    iki_read_main_flag_help_e       = 0x8,
+    iki_read_main_flag_literal_e    = 0x10,
+    iki_read_main_flag_line_e       = 0x20,
+    iki_read_main_flag_name_e       = 0x40,
+    iki_read_main_flag_object_e     = 0x80,
+    iki_read_main_flag_reassign_e   = 0x100,
+    iki_read_main_flag_replace_e    = 0x200,
+    iki_read_main_flag_substitute_e = 0x400,
+    iki_read_main_flag_total_e      = 0x800,
+    iki_read_main_flag_version_e    = 0x1000,
+    iki_read_main_flag_whole_e      = 0x2000,
+    iki_read_main_flag_wrap_e       = 0x4000,
   };
 #endif // _di_iki_read_main_flag_e_
 

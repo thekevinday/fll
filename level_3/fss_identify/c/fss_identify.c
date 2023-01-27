@@ -58,8 +58,6 @@ extern "C" {
       }
     }
 
-    status = F_none;
-
     if (main->parameters.array[fss_identify_parameter_help_e].result & f_console_result_found_e) {
       fss_identify_print_help(setting, main->message);
 
@@ -71,6 +69,14 @@ extern "C" {
 
       return F_none;
     }
+
+    if (main->parameters.array[fss_identify_parameter_copyright_e].result & f_console_result_found_e) {
+      fll_program_print_copyright(main->message, (setting->line_first.used ? 0x1 : 0x0) | (setting->line_last.used ? 0x2 : 0x0));
+
+      return F_none;
+    }
+
+    status = F_none;
 
     fss_identify_data_t data = fss_identify_data_t_initialize;
 

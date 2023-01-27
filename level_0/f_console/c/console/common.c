@@ -5,6 +5,10 @@ extern "C" {
 #endif
 
 #ifndef _di_f_console_standard_s_
+  #ifndef _di_f_console_standard_short_copyright_s_
+    const f_string_static_t f_console_standard_short_copyright_s = macro_f_string_static_t_initialize(F_console_standard_short_copyright_s, 0, F_console_standard_short_copyright_s_length);
+  #endif // _di_f_console_standard_short_copyright_s_
+
   #ifndef _di_f_console_standard_short_dark_s_
     const f_string_static_t f_console_standard_short_dark_s = macro_f_string_static_t_initialize(F_console_standard_short_dark_s, 0, F_console_standard_short_dark_s_length);
   #endif // _di_f_console_standard_short_dark_s_
@@ -60,6 +64,10 @@ extern "C" {
   #ifndef _di_f_console_standard_short_version_s_
     const f_string_static_t f_console_standard_short_version_s = macro_f_string_static_t_initialize(F_console_standard_short_version_s, 0, F_console_standard_short_version_s_length);
   #endif // _di_f_console_standard_short_version_s_
+
+  #ifndef _di_f_console_standard_long_copyright_s_
+    const f_string_static_t f_console_standard_long_copyright_s = macro_f_string_static_t_initialize(F_console_standard_long_copyright_s, 0, F_console_standard_long_copyright_s_length);
+  #endif // _di_f_console_standard_long_copyright_s_
 
   #ifndef _di_f_console_standard_long_dark_s_
     const f_string_static_t f_console_standard_long_dark_s = macro_f_string_static_t_initialize(F_console_standard_long_dark_s, 0, F_console_standard_long_dark_s_length);

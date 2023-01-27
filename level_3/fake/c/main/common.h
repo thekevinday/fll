@@ -424,6 +424,7 @@ extern "C" {
 
   enum {
     fake_parameter_help_e,
+    fake_parameter_copyright_e,
     fake_parameter_light_e,
     fake_parameter_dark_e,
     fake_parameter_no_color_e,
@@ -463,6 +464,7 @@ extern "C" {
   #define fake_console_parameter_t_initialize \
     { \
       macro_f_console_parameter_t_initialize_3(f_console_standard_short_help_s,          f_console_standard_long_help_s,          0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(f_console_standard_short_copyright_s,     f_console_standard_long_copyright_s,     0, f_console_flag_inverse_e), \
       macro_f_console_parameter_t_initialize_3(f_console_standard_short_light_s,         f_console_standard_long_light_s,         0, f_console_flag_inverse_e), \
       macro_f_console_parameter_t_initialize_3(f_console_standard_short_dark_s,          f_console_standard_long_dark_s,          0, f_console_flag_inverse_e), \
       macro_f_console_parameter_t_initialize_3(f_console_standard_short_no_color_s,      f_console_standard_long_no_color_s,      0, f_console_flag_inverse_e), \
@@ -498,7 +500,7 @@ extern "C" {
       macro_f_console_parameter_t_initialize_6(fake_other_operation_skeleton_s, 0, f_console_flag_simple_e), \
     }
 
-  #define fake_total_parameters_d 31
+  #define fake_total_parameters_d 32
 #endif // _di_fake_parameter_d_
 
 /**
@@ -506,6 +508,7 @@ extern "C" {
  *
  * fake_main_flag_*_e:
  *   - none:               No flags set.
+ *   - copyright:          Print copyright.
  *   - enable_documents:   Enable documents, as-in --enable-doc (not specifying means --disable-doc).
  *   - enable_shared:      Enable shared, as-in --enable-shared (not specifying means --disable-shared).
  *   - enable_static:      Enable static, as-in --enable-static (not specifying means --disable-static).
@@ -526,22 +529,23 @@ extern "C" {
 #ifndef _di_fake_main_flag_e_
   enum {
     fake_main_flag_none_e               = 0x0,
-    fake_main_flag_enable_documents_e   = 0x1,
-    fake_main_flag_enable_shared_e      = 0x2,
-    fake_main_flag_enable_static_e      = 0x4,
-    fake_main_flag_file_from_e          = 0x8,
-    fake_main_flag_file_to_e            = 0x10,
-    fake_main_flag_header_e             = 0x20,
-    fake_main_flag_help_e               = 0x40,
-    fake_data_flag_operation_e          = 0x80,
-    fake_data_flag_operation_build_e    = 0x100,
-    fake_data_flag_operation_clean_e    = 0x200,
-    fake_data_flag_operation_make_e     = 0x400,
-    fake_data_flag_operation_skeleton_e = 0x800,
-    fake_main_flag_separate_e           = 0x1000,
-    fake_main_flag_strip_invalid_e      = 0x2000,
-    fake_main_flag_verify_e             = 0x4000,
-    fake_main_flag_version_e            = 0x8000,
+    fake_main_flag_copyright_e          = 0x1,
+    fake_main_flag_enable_documents_e   = 0x2,
+    fake_main_flag_enable_shared_e      = 0x4,
+    fake_main_flag_enable_static_e      = 0x8,
+    fake_main_flag_file_from_e          = 0x10,
+    fake_main_flag_file_to_e            = 0x20,
+    fake_main_flag_header_e             = 0x40,
+    fake_main_flag_help_e               = 0x80,
+    fake_data_flag_operation_e          = 0x100,
+    fake_data_flag_operation_build_e    = 0x200,
+    fake_data_flag_operation_clean_e    = 0x400,
+    fake_data_flag_operation_make_e     = 0x800,
+    fake_data_flag_operation_skeleton_e = 0x1000,
+    fake_main_flag_separate_e           = 0x2000,
+    fake_main_flag_strip_invalid_e      = 0x4000,
+    fake_main_flag_verify_e             = 0x8000,
+    fake_main_flag_version_e            = 0x10000,
   }; // enum
 #endif // _di_fake_main_flag_e_
 
@@ -574,7 +578,7 @@ extern "C" {
  */
 #ifndef _di_fake_setting_t_
   typedef struct {
-    uint16_t flag;
+    uint32_t flag;
 
     f_state_t state;
     f_status_t status;

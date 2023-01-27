@@ -59,8 +59,6 @@ extern "C" {
       }
     }
 
-    status = F_none;
-
     if (main->parameters.array[control_parameter_help_e].result & f_console_result_found_e) {
       control_print_help(main);
 
@@ -72,6 +70,14 @@ extern "C" {
 
       return F_none;
     }
+
+    if (main->parameters.array[control_parameter_copyright_e].result & f_console_result_found_e) {
+      fll_program_print_copyright(main->message, (setting->line_first.used ? 0x1 : 0x0) | (setting->line_last.used ? 0x2 : 0x0));
+
+      return F_none;
+    }
+
+    status = F_none;
 
     {
       uint8_t ids[] = {

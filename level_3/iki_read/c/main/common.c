@@ -152,6 +152,12 @@ extern "C" {
 
         return;
       }
+
+      if (main->parameters.array[iki_read_parameter_copyright_e].result & f_console_result_found_e) {
+        setting->flag |= iki_read_main_flag_copyright_e;
+
+        return;
+      }
     }
 
     if (!(main->parameters.remaining.used || (main->pipe & fll_program_data_pipe_input_e))) {

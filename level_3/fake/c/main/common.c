@@ -216,6 +216,12 @@ extern "C" {
       return;
     }
 
+    if (main->parameters.array[fake_parameter_copyright_e].result & f_console_result_found_e) {
+      setting->flag |= fake_main_flag_copyright_e;
+
+      return;
+    }
+
     f_array_length_t j = 0;
     f_array_length_t index = 0;
 

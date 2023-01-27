@@ -221,6 +221,7 @@ extern "C" {
 
   enum {
     fss_write_parameter_help_e,
+    fss_write_parameter_copyright_e,
     fss_write_parameter_light_e,
     fss_write_parameter_dark_e,
     fss_write_parameter_no_color_e,
@@ -252,6 +253,7 @@ extern "C" {
   #define fss_write_console_parameter_t_initialize \
     { \
       macro_f_console_parameter_t_initialize_3(f_console_standard_short_help_s,          f_console_standard_long_help_s,          0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(f_console_standard_short_copyright_s,     f_console_standard_long_copyright_s,     0, f_console_flag_inverse_e), \
       macro_f_console_parameter_t_initialize_3(f_console_standard_short_light_s,         f_console_standard_long_light_s,         0, f_console_flag_inverse_e), \
       macro_f_console_parameter_t_initialize_3(f_console_standard_short_dark_s,          f_console_standard_long_dark_s,          0, f_console_flag_inverse_e), \
       macro_f_console_parameter_t_initialize_3(f_console_standard_short_no_color_s,      f_console_standard_long_no_color_s,      0, f_console_flag_inverse_e), \
@@ -280,7 +282,7 @@ extern "C" {
       macro_f_console_parameter_t_initialize_3(fss_write_short_trim_s,         fss_write_long_trim_s,         0, f_console_flag_normal_e), \
     }
 
-  #define fss_write_total_parameters_d 26
+  #define fss_write_total_parameters_d 27
 #endif // _di_fss_write_parameter_d_
 
 /**
@@ -292,6 +294,7 @@ extern "C" {
  *   - content_end:      The Content end characters are to be printed.
  *   - content_multiple: Designate that multiple Content is allowed for an Object for this standard rather than a single Content per Object.
  *   - content_next:     The Content next characters are to be printed.
+ *   - copyright:        Print copyright.
  *   - file_to:          Using a specified destination file.
  *   - help:             Print help.
  *   - ignore:           Ignore a given range within a Content (specify flag before setting loading to designate ignores is supported by standard).
@@ -309,15 +312,16 @@ extern "C" {
     fss_write_flag_content_end_e      = 0x2,
     fss_write_flag_content_multiple_e = 0x4,
     fss_write_flag_content_next_e     = 0x8,
-    fss_write_flag_file_to_e          = 0x10,
-    fss_write_flag_help_e             = 0x20,
-    fss_write_flag_ignore_e           = 0x40,
-    fss_write_flag_object_e           = 0x80,
-    fss_write_flag_object_open_e      = 0x100,
-    fss_write_flag_partial_e          = 0x200,
-    fss_write_flag_prepend_e          = 0x400,
-    fss_write_flag_trim_e             = 0x800,
-    fss_write_flag_version_e          = 0x1000,
+    fss_write_flag_copyright_e        = 0x10,
+    fss_write_flag_file_to_e          = 0x20,
+    fss_write_flag_help_e             = 0x40,
+    fss_write_flag_ignore_e           = 0x80,
+    fss_write_flag_object_e           = 0x100,
+    fss_write_flag_object_open_e      = 0x200,
+    fss_write_flag_partial_e          = 0x400,
+    fss_write_flag_prepend_e          = 0x800,
+    fss_write_flag_trim_e             = 0x1000,
+    fss_write_flag_version_e          = 0x2000,
   }; // enum
 #endif // _di_fss_write_flag_e_
 

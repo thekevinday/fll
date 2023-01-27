@@ -5,6 +5,40 @@
 extern "C" {
 #endif
 
+#ifndef _di_fll_program_print_copyright_
+  f_status_t fll_program_print_copyright(const fl_print_t print, const uint8_t first_last) {
+
+    f_file_stream_lock(print.to);
+
+    if (first_last & 0x1) {
+      f_print_dynamic_raw(f_string_eol_s, print.to);
+    }
+
+    fl_print_format("Copyright © 2007-2023 Kevin Day.%r", print.to, f_string_eol_s);
+
+    #ifndef _di_detailed_copyright_
+      if (print.verbosity > f_console_verbosity_quiet_e) {
+        if (print.verbosity > f_console_verbosity_normal_e) {
+          fl_print_format("%rThis program comes with ABSOLUTELY NO WARRANTY.%r", print.to, f_string_eol_s, f_string_eol_s);
+          fl_print_format("This is free software, and you are welcome to modify or redistribute in accordance to the license.%r", print.to, f_string_eol_s);
+        }
+
+        fl_print_format("%rSource code license lgpl-2.1-or-later.%r", print.to, f_string_eol_s, f_string_eol_s);
+        fl_print_format("Standard and specification license open-standard-license-1.0.%r", print.to, f_string_eol_s);
+        fl_print_format("Documentation license cc-by-sa-4.0.%r", print.to, f_string_eol_s);
+      }
+    #endif // _di_detailed_copyright_
+
+    if (first_last & 0x2) {
+      f_print_dynamic_raw(f_string_eol_s, print.to);
+    }
+
+    f_file_stream_unlock(print.to);
+
+    return F_none;
+  }
+#endif // _di_fll_program_print_copyright_
+
 #ifndef _di_fll_program_print_error_missing_file_
   f_status_t fll_program_print_error_missing_file(const fl_print_t print) {
 
@@ -409,6 +443,7 @@ extern "C" {
   f_status_t fll_program_print_help_option_standard(const fl_print_t print) {
 
     private_fll_program_print_help_option(print, f_console_standard_short_help_s, f_console_standard_long_help_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "         Print this help message.");
+    private_fll_program_print_help_option(print, f_console_standard_short_copyright_s, f_console_standard_long_copyright_s, f_console_symbol_short_inverse_s, f_console_symbol_long_inverse_s, "    Print the copyright.");
     private_fll_program_print_help_option(print, f_console_standard_short_dark_s, f_console_standard_long_dark_s, f_console_symbol_short_inverse_s, f_console_symbol_long_inverse_s, "         Output using colors that show up better on dark backgrounds.");
     private_fll_program_print_help_option(print, f_console_standard_short_light_s, f_console_standard_long_light_s, f_console_symbol_short_inverse_s, f_console_symbol_long_inverse_s, "        Output using colors that show up better on light backgrounds.");
     private_fll_program_print_help_option(print, f_console_standard_short_no_color_s, f_console_standard_long_no_color_s, f_console_symbol_short_inverse_s, f_console_symbol_long_inverse_s, "     Do not print using color.");
