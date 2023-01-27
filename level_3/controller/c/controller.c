@@ -12,6 +12,30 @@
 extern "C" {
 #endif
 
+#ifndef _di_controller_print_copyright_
+  f_status_t controller_print_copyright(const f_file_t file, const bool full) {
+
+    flockfile(file.stream);
+
+    fl_print_format("%rCopyright © 2007-2023 Kevin Day.%r", file.stream, f_string_eol_s, f_string_eol_s);
+
+    #ifndef _di_detailed_copyright_
+      if (full) {
+        fl_print_format("%rThis program comes with ABSOLUTELY NO WARRANTY.%r", file.stream, f_string_eol_s, f_string_eol_s);
+        fl_print_format("This is free software, and you are welcome to modify or redistribute in accordance to the license.%r", file.stream, f_string_eol_s);
+      }
+    #endif // _di_detailed_copyright_
+
+    fl_print_format("%rSource code license lgpl-2.1-or-later.%r", file.stream, f_string_eol_s, f_string_eol_s);
+    fl_print_format("Standard and specification license open-standard-license-1.0.%r", file.stream, f_string_eol_s);
+    fl_print_format("Documentation license cc-by-sa-4.0.%r%r", file.stream, f_string_eol_s, f_string_eol_s);
+
+    funlockfile(file.stream);
+
+    return F_none;
+  }
+#endif // _di_controller_print_copyright_
+
 #ifndef _di_controller_print_help_
   f_status_t controller_print_help(controller_main_t * const main) {
 
@@ -143,10 +167,6 @@ extern "C" {
       }
     }
 
-    f_string_static_t * const argv = main->parameters.arguments.array;
-
-    status = F_none;
-
     if (main->parameters.array[controller_parameter_help_e].result == f_console_result_found_e) {
       controller_print_help(main);
 
@@ -162,6 +182,16 @@ extern "C" {
 
       return F_none;
     }
+
+    if (main->parameters.array[controller_parameter_copyright_e].result == f_console_result_found_e) {
+      controller_print_copyright(main->output.to, main->output.verbosity > f_console_verbosity_error_e);
+
+      return F_none;
+    }
+
+    status = F_none;
+
+    f_string_static_t * const argv = main->parameters.arguments.array;
 
     controller_setting_t setting = controller_setting_t_initialize;
 

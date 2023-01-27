@@ -5,6 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_f_console_standard_s_
+  const f_string_static_t f_console_standard_short_copyright_s = macro_f_string_static_t_initialize((f_string_t) F_console_standard_short_copyright_s, 0, F_console_standard_short_copyright_s_length);
   const f_string_static_t f_console_standard_short_dark_s = macro_f_string_static_t_initialize((f_string_t) F_console_standard_short_dark_s, 0, F_console_standard_short_dark_s_length);
   const f_string_static_t f_console_standard_short_debug_s = macro_f_string_static_t_initialize((f_string_t) F_console_standard_short_debug_s, 0, F_console_standard_short_debug_s_length);
   const f_string_static_t f_console_standard_short_error_s = macro_f_string_static_t_initialize((f_string_t) F_console_standard_short_error_s, 0, F_console_standard_short_error_s_length);
@@ -18,6 +19,7 @@ extern "C" {
   const f_string_static_t f_console_standard_short_verbose_s = macro_f_string_static_t_initialize((f_string_t) F_console_standard_short_verbose_s, 0, F_console_standard_short_verbose_s_length);
   const f_string_static_t f_console_standard_short_version_s = macro_f_string_static_t_initialize((f_string_t) F_console_standard_short_version_s, 0, F_console_standard_short_version_s_length);
 
+  const f_string_static_t f_console_standard_long_copyright_s = macro_f_string_static_t_initialize((f_string_t) F_console_standard_long_copyright_s, 0, F_console_standard_long_copyright_s_length);
   const f_string_static_t f_console_standard_long_dark_s = macro_f_string_static_t_initialize((f_string_t) F_console_standard_long_dark_s, 0, F_console_standard_long_dark_s_length);
   const f_string_static_t f_console_standard_long_debug_s = macro_f_string_static_t_initialize((f_string_t) F_console_standard_long_debug_s, 0, F_console_standard_long_debug_s_length);
   const f_string_static_t f_console_standard_long_error_s = macro_f_string_static_t_initialize((f_string_t) F_console_standard_long_error_s, 0, F_console_standard_long_error_s_length);

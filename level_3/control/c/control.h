@@ -58,6 +58,22 @@ extern "C" {
 #endif
 
 /**
+ * Print copyright.
+ *
+ * @param file
+ *   The file to print to.
+ * @param detail
+ *   If TRUE, then the detailed copyright is printed (unless _di_detailed_copyright_ is set).
+ *   If FALSE, then the short copyright is printed.
+ *
+ * @return
+ *   F_none on success.
+ */
+#ifndef _di_control_print_copyright_
+  extern f_status_t control_print_copyright(const f_file_t file, const bool detail);
+#endif // _di_control_print_copyright_
+
+/**
  * Print help.
  *
  * @param main

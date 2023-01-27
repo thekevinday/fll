@@ -95,6 +95,7 @@ extern "C" {
 
   enum {
     control_parameter_help_e = 0,
+    control_parameter_copyright_e,
     control_parameter_light_e,
     control_parameter_dark_e,
     control_parameter_no_color_e,
@@ -114,6 +115,7 @@ extern "C" {
   #define control_console_parameter_t_initialize \
     { \
       macro_f_console_parameter_t_initialize(f_console_standard_short_help_s.string, f_console_standard_long_help_s.string, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(f_console_standard_short_copyright_s.string, f_console_standard_long_copyright_s.string, 0, 0, f_console_type_inverse_e), \
       macro_f_console_parameter_t_initialize(f_console_standard_short_light_s.string, f_console_standard_long_light_s.string, 0, 0, f_console_type_inverse_e), \
       macro_f_console_parameter_t_initialize(f_console_standard_short_dark_s.string, f_console_standard_long_dark_s.string, 0, 0, f_console_type_inverse_e), \
       macro_f_console_parameter_t_initialize(f_console_standard_short_no_color_s.string, f_console_standard_long_no_color_s.string, 0, 0, f_console_type_inverse_e), \
@@ -129,7 +131,7 @@ extern "C" {
       macro_f_console_parameter_t_initialize(control_short_socket_s.string, control_long_socket_s.string, 0, 1, f_console_type_normal_e), \
     }
 
-  #define control_total_parameters_d 14
+  #define control_total_parameters_d 15
 #endif // _di_control_parameters_
 
 /**

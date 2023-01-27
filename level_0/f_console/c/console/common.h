@@ -92,11 +92,12 @@ extern "C" {
  *   - verbose: Increase verbosity, print more, in some use cases this could mean printing just about everything.
  *
  * The following are less subjective in interpretation but do allow some flexibility.
- *   - dark:     Do display color intended for dark backgrounds (often the default behavior) when printing to the console. Other contexts may be acceptable (such as voice inflections, or lack-thereof) for audio.)
- *   - help:     Display the help text. This does not define how the text is displayed only that the text is displayed.
- *   - light:    Do display color intended for light backgrounds when printing to the console. Other contexts may be acceptable (such as voice inflections, or lack-thereof) for audio.)
- *   - no_color: Do not display color when printing to the console. Other contexts may be acceptable (such as voice inflections, or lack-thereof) for audio.)
- *   - version:  Should always print only the version number, no colors, but what represents the version number is undefined by this project.
+ *   - copyright: Display copyright, if compiled in (consider combining with quiet, verbose, and normal).
+ *   - dark:      Do display color intended for dark backgrounds (often the default behavior) when printing to the console. Other contexts may be acceptable (such as voice inflections, or lack-thereof) for audio.)
+ *   - help:      Display the help text. This does not define how the text is displayed only that the text is displayed.
+ *   - light:     Do display color intended for light backgrounds when printing to the console. Other contexts may be acceptable (such as voice inflections, or lack-thereof) for audio.)
+ *   - no_color:  Do not display color when printing to the console. Other contexts may be acceptable (such as voice inflections, or lack-thereof) for audio.)
+ *   - version:   Should always print only the version number, no colors, but what represents the version number is undefined by this project.
  *
  * The following options are for special purposes:
  *   - status_in:  Is intended to accept the name of an environment variable in which to read the status from.
@@ -108,6 +109,7 @@ extern "C" {
  *     - To avoid problems with the status code after a program is forcibly killed, the status_out environment variable should be cleared at program start.
  */
 #ifndef _di_f_console_standard_s_
+  #define F_console_standard_short_copyright_s  "C"
   #define F_console_standard_short_dark_s       "d"
   #define F_console_standard_short_debug_s      "D"
   #define F_console_standard_short_error_s      "E"
@@ -121,6 +123,7 @@ extern "C" {
   #define F_console_standard_short_verbose_s    "V"
   #define F_console_standard_short_version_s    "v"
 
+  #define F_console_standard_short_copyright_s_length  1
   #define F_console_standard_short_dark_s_length       1
   #define F_console_standard_short_debug_s_length      1
   #define F_console_standard_short_error_s_length      1
@@ -134,6 +137,7 @@ extern "C" {
   #define F_console_standard_short_verbose_s_length    1
   #define F_console_standard_short_version_s_length    1
 
+  #define F_console_standard_long_copyright_s  "copyright"
   #define F_console_standard_long_dark_s       "dark"
   #define F_console_standard_long_debug_s      "debug"
   #define F_console_standard_long_error_s      "error"
@@ -147,6 +151,7 @@ extern "C" {
   #define F_console_standard_long_verbose_s    "verbose"
   #define F_console_standard_long_version_s    "version"
 
+  #define F_console_standard_long_copyright_s_length  9
   #define F_console_standard_long_dark_s_length       4
   #define F_console_standard_long_debug_s_length      5
   #define F_console_standard_long_error_s_length      5
@@ -160,6 +165,7 @@ extern "C" {
   #define F_console_standard_long_verbose_s_length    7
   #define F_console_standard_long_version_s_length    7
 
+  extern const f_string_static_t f_console_standard_short_copyright_s;
   extern const f_string_static_t f_console_standard_short_dark_s;
   extern const f_string_static_t f_console_standard_short_debug_s;
   extern const f_string_static_t f_console_standard_short_error_s;
@@ -173,6 +179,7 @@ extern "C" {
   extern const f_string_static_t f_console_standard_short_verbose_s;
   extern const f_string_static_t f_console_standard_short_version_s;
 
+  extern const f_string_static_t f_console_standard_long_copyright_s;
   extern const f_string_static_t f_console_standard_long_dark_s;
   extern const f_string_static_t f_console_standard_long_debug_s;
   extern const f_string_static_t f_console_standard_long_error_s;

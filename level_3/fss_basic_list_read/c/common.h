@@ -186,6 +186,7 @@ extern "C" {
 
   enum {
     fss_basic_list_read_parameter_help_e,
+    fss_basic_list_read_parameter_copyright_e,
     fss_basic_list_read_parameter_light_e,
     fss_basic_list_read_parameter_dark_e,
     fss_basic_list_read_parameter_no_color_e,
@@ -215,6 +216,7 @@ extern "C" {
   #define fss_basic_list_read_console_parameter_t_initialize \
     { \
       macro_f_console_parameter_t_initialize(f_console_standard_short_help_s.string, f_console_standard_long_help_s.string, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(f_console_standard_short_copyright_s.string, f_console_standard_long_copyright_s.string, 0, 0, f_console_type_inverse_e), \
       macro_f_console_parameter_t_initialize(f_console_standard_short_light_s.string, f_console_standard_long_light_s.string, 0, 0, f_console_type_inverse_e), \
       macro_f_console_parameter_t_initialize(f_console_standard_short_dark_s.string, f_console_standard_long_dark_s.string, 0, 0, f_console_type_inverse_e), \
       macro_f_console_parameter_t_initialize(f_console_standard_short_no_color_s.string, f_console_standard_long_no_color_s.string, 0, F_false, f_console_type_inverse_e), \
@@ -240,7 +242,7 @@ extern "C" {
       macro_f_console_parameter_t_initialize(fss_basic_list_read_short_trim_s.string, fss_basic_list_read_long_trim_s.string, 0, 0, f_console_type_normal_e), \
     }
 
-  #define fss_basic_list_read_total_parameters_d 24
+  #define fss_basic_list_read_total_parameters_d 25
 #endif // _di_fss_basic_list_read_parameters_
 
 /**

@@ -239,6 +239,7 @@ extern "C" {
 
   enum {
     utf8_parameter_help_e,
+    utf8_parameter_copyright_e,
     utf8_parameter_light_e,
     utf8_parameter_dark_e,
     utf8_parameter_no_color_e,
@@ -269,6 +270,7 @@ extern "C" {
   #define utf8_console_parameter_t_initialize \
     { \
       macro_f_console_parameter_t_initialize(f_console_standard_short_help_s.string, f_console_standard_long_help_s.string, 0, 0, f_console_type_normal_e), \
+      macro_f_console_parameter_t_initialize(f_console_standard_short_copyright_s.string, f_console_standard_long_copyright_s.string, 0, 0, f_console_type_inverse_e), \
       macro_f_console_parameter_t_initialize(f_console_standard_short_light_s.string, f_console_standard_long_light_s.string, 0, 0, f_console_type_inverse_e), \
       macro_f_console_parameter_t_initialize(f_console_standard_short_dark_s.string, f_console_standard_long_dark_s.string, 0, 0, f_console_type_inverse_e), \
       macro_f_console_parameter_t_initialize(f_console_standard_short_no_color_s.string, f_console_standard_long_no_color_s.string, 0, 0, f_console_type_inverse_e), \
@@ -292,7 +294,7 @@ extern "C" {
       macro_f_console_parameter_t_initialize(utf8_short_verify_s.string, utf8_long_verify_s.string, 0, 0, f_console_type_normal_e), \
     }
 
-  #define utf8_total_parameters_d 22
+  #define utf8_total_parameters_d 23
 #endif // _di_utf8_parameters_
 
 /**

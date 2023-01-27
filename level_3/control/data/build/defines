@@ -1,5 +1,7 @@
 # fss-0000
 
+_di_detailed_copyright_ Disable the detailed copyright message (saves a small amount of space).
+
 _controller_as_init_ The controller program is compiled as an init replacement and this control program should treat it as such.
 _override_controller_name_socket_ Use this as the default custom file name representing the controller program socket.
 _override_controller_name_socket_length_ The number of bytes representing the string in _override_controller_name_socket_ (not including the terminating NULL).
