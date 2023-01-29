@@ -932,7 +932,7 @@ extern "C" {
         fake_path_part_script_s,                     // path_program_script
         fake_path_part_shared_s,                     // path_program_shared
         fake_path_part_static_s,                     // path_program_static
-        f_string_empty_s,                            // path_sources
+        data->path_sources,                          // path_sources
         f_string_empty_s,                            // path_sources_object
         f_string_empty_s,                            // preserve_path_headers
         f_string_empty_s,                            // process_post
@@ -1371,8 +1371,8 @@ extern "C" {
 
     if (F_status_is_error(*status)) return;
 
-    if (data->main->parameters.array[fake_parameter_path_sources_e].result == f_console_result_additional_e && data->path_sources.used) {
-      *status = f_string_dynamic_append_assure(f_path_separator_s, &data->path_sources);
+    if (data->main->parameters.array[fake_parameter_path_sources_e].result == f_console_result_additional_e && setting->path_sources.used) {
+      *status = f_string_dynamic_append_assure(f_path_separator_s, &setting->path_sources);
 
       if (F_status_is_error(*status)) {
         fll_error_print(data->main->error, F_status_set_fine(*status), "f_string_dynamic_append_assure", F_true);
