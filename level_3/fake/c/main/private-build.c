@@ -634,36 +634,42 @@ const f_string_static_t fake_build_documentation_files_s = macro_f_string_static
       }
 
       const f_string_static_t prefixs[] = {
-        f_console_symbol_short_normal_s,
-        f_console_symbol_short_normal_s,
-        f_console_symbol_short_normal_s,
-        f_console_symbol_short_normal_s,
-        f_console_symbol_short_normal_s,
-        f_console_symbol_short_normal_s,
-        f_console_symbol_short_normal_s,
+        f_console_symbol_short_normal_s, // fake_short_build_s
+        f_console_symbol_short_normal_s, // fake_short_data_s
+        f_console_symbol_short_normal_s, // fake_short_define_s
+        f_console_symbol_short_normal_s, // fake_short_documents_s
+        f_console_symbol_short_normal_s, // fake_short_licenses_s
+        f_console_symbol_short_normal_s, // fake_short_process_s
+        f_console_symbol_short_normal_s, // fake_short_settings_s
+        f_console_symbol_short_normal_s, // fake_short_sources_s
+        f_console_symbol_short_normal_s, // fake_short_work_s
       };
 
       const f_string_static_t names[] = {
+        fake_short_build_s,
+        fake_short_data_s,
         fake_short_define_s,
+        fake_short_documents_s,
+        fake_short_licenses_s,
         fake_short_process_s,
         fake_short_settings_s,
-        fake_short_path_build_s,
-        fake_short_path_data_s,
-        fake_short_path_sources_s,
-        fake_short_path_work_s,
+        fake_short_sources_s,
+        fake_short_work_s,
       };
 
       const f_string_static_t values[] = {
-        defines,
-        data->setting->process,
-        data->setting->settings,
         data->setting->build,
         data->setting->data,
+        defines,
+        data->setting->documents,
+        data->setting->licenses,
+        data->setting->process,
+        data->setting->settings,
         data->setting->sources,
         data->setting->work,
       };
 
-      *status = fll_execute_arguments_add_parameter_set(prefixs, names, values, 7, &arguments);
+      *status = fll_execute_arguments_add_parameter_set(prefixs, names, values, 9, &arguments);
 
       f_string_dynamic_resize(0, &defines);
 

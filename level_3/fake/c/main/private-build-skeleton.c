@@ -30,7 +30,7 @@ extern "C" {
     path_headers_string[path_headers.used] = 0;
 
     const f_string_static_t directorys[] = {
-      data->setting->build,
+      data->path_build,
       data->path_build_documentation,
       data->path_build_documents,
       data->path_build_includes,
@@ -56,6 +56,7 @@ extern "C" {
     }
 
     bool created = F_false;
+    f_array_length_t j = 0;
 
     for (uint8_t i = 0; i < 19; ++i) {
 
@@ -63,11 +64,11 @@ extern "C" {
 
       created = F_false;
 
-      for (f_array_length_t j = 0; j < directorys[i].used; ++j) {
+      for (j = 0; j < directorys[i].used; ++j) {
 
-        if (directorys[i].string[j] != f_path_separator_s.string[0]) continue;
+        if (f_path_separator_s.used && directorys[i].string[j] != f_path_separator_s.string[0]) continue;
 
-        directorys[i].string[j] = 0;
+        directorys[i].string[j] = 0; // @fixme this is an error because static strings might be in use.
 
         *status = f_directory_exists(directorys[i]);
 
@@ -88,7 +89,7 @@ extern "C" {
         if (F_status_is_error(*status)) break;
       } // for
 
-      if (F_status_is_fine(*status) && directorys[i].string[directorys[i].used - 1] != f_path_separator_s.string[0]) {
+      if (F_status_is_fine(*status) && directorys[i].used && f_path_separator_s.used && directorys[i].string[directorys[i].used - 1] != f_path_separator_s.string[0]) {
         *status = f_directory_exists(directorys[i]);
 
         if (F_status_is_error_not(*status)) {

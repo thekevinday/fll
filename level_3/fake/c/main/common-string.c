@@ -75,31 +75,29 @@ extern "C" {
 #endif // _di_fake_build_version_s_
 
 #ifndef _di_fake_parameter_s_
+  const f_string_static_t fake_short_build_s = macro_f_string_static_t_initialize(FAKE_short_build_s, 0, FAKE_short_build_s_length);
+  const f_string_static_t fake_short_data_s = macro_f_string_static_t_initialize(FAKE_short_data_s, 0, FAKE_short_data_s_length);
   const f_string_static_t fake_short_define_s = macro_f_string_static_t_initialize(FAKE_short_define_s, 0, FAKE_short_define_s_length);
+  const f_string_static_t fake_short_documents_s = macro_f_string_static_t_initialize(FAKE_short_documents_s, 0, FAKE_short_documents_s_length);
   const f_string_static_t fake_short_fakefile_s = macro_f_string_static_t_initialize(FAKE_short_fakefile_s, 0, FAKE_short_fakefile_s_length);
+  const f_string_static_t fake_short_licenses_s = macro_f_string_static_t_initialize(FAKE_short_licenses_s, 0, FAKE_short_licenses_s_length);
   const f_string_static_t fake_short_mode_s = macro_f_string_static_t_initialize(FAKE_short_mode_s, 0, FAKE_short_mode_s_length);
   const f_string_static_t fake_short_process_s = macro_f_string_static_t_initialize(FAKE_short_process_s, 0, FAKE_short_process_s_length);
   const f_string_static_t fake_short_settings_s = macro_f_string_static_t_initialize(FAKE_short_settings_s, 0, FAKE_short_settings_s_length);
+  const f_string_static_t fake_short_sources_s = macro_f_string_static_t_initialize(FAKE_short_sources_s, 0, FAKE_short_sources_s_length);
+  const f_string_static_t fake_short_work_s = macro_f_string_static_t_initialize(FAKE_short_work_s, 0, FAKE_short_work_s_length);
 
-  const f_string_static_t fake_short_path_build_s = macro_f_string_static_t_initialize(FAKE_short_path_build_s, 0, FAKE_short_path_build_s_length);
-  const f_string_static_t fake_short_path_data_s = macro_f_string_static_t_initialize(FAKE_short_path_data_s, 0, FAKE_short_path_data_s_length);
-  const f_string_static_t fake_short_path_documents_s = macro_f_string_static_t_initialize(FAKE_short_path_documents_s, 0, FAKE_short_path_documents_s_length);
-  const f_string_static_t fake_short_path_licenses_s = macro_f_string_static_t_initialize(FAKE_short_path_licenses_s, 0, FAKE_short_path_licenses_s_length);
-  const f_string_static_t fake_short_path_sources_s = macro_f_string_static_t_initialize(FAKE_short_path_sources_s, 0, FAKE_short_path_sources_s_length);
-  const f_string_static_t fake_short_path_work_s = macro_f_string_static_t_initialize(FAKE_short_path_work_s, 0, FAKE_short_path_work_s_length);
-
+  const f_string_static_t fake_long_build_s = macro_f_string_static_t_initialize(FAKE_long_build_s, 0, FAKE_long_build_s_length);
+  const f_string_static_t fake_long_data_s = macro_f_string_static_t_initialize(FAKE_long_data_s, 0, FAKE_long_data_s_length);
   const f_string_static_t fake_long_define_s = macro_f_string_static_t_initialize(FAKE_long_define_s, 0, FAKE_long_define_s_length);
+  const f_string_static_t fake_long_documents_s = macro_f_string_static_t_initialize(FAKE_long_documents_s, 0, FAKE_long_documents_s_length);
   const f_string_static_t fake_long_fakefile_s = macro_f_string_static_t_initialize(FAKE_long_fakefile_s, 0, FAKE_long_fakefile_s_length);
+  const f_string_static_t fake_long_licenses_s = macro_f_string_static_t_initialize(FAKE_long_licenses_s, 0, FAKE_long_licenses_s_length);
   const f_string_static_t fake_long_mode_s = macro_f_string_static_t_initialize(FAKE_long_mode_s, 0, FAKE_long_mode_s_length);
   const f_string_static_t fake_long_process_s = macro_f_string_static_t_initialize(FAKE_long_process_s, 0, FAKE_long_process_s_length);
   const f_string_static_t fake_long_settings_s = macro_f_string_static_t_initialize(FAKE_long_settings_s, 0, FAKE_long_settings_s_length);
-
-  const f_string_static_t fake_long_path_build_s = macro_f_string_static_t_initialize(FAKE_long_path_build_s, 0, FAKE_long_path_build_s_length);
-  const f_string_static_t fake_long_path_data_s = macro_f_string_static_t_initialize(FAKE_long_path_data_s, 0, FAKE_long_path_data_s_length);
-  const f_string_static_t fake_long_path_documents_s = macro_f_string_static_t_initialize(FAKE_long_path_documents_s, 0, FAKE_long_path_documents_s_length);
-  const f_string_static_t fake_long_path_licenses_s = macro_f_string_static_t_initialize(FAKE_long_path_licenses_s, 0, FAKE_long_path_licenses_s_length);
-  const f_string_static_t fake_long_path_sources_s = macro_f_string_static_t_initialize(FAKE_long_path_sources_s, 0, FAKE_long_path_sources_s_length);
-  const f_string_static_t fake_long_path_work_s = macro_f_string_static_t_initialize(FAKE_long_path_work_s, 0, FAKE_long_path_work_s_length);
+  const f_string_static_t fake_long_sources_s = macro_f_string_static_t_initialize(FAKE_long_sources_s, 0, FAKE_long_sources_s_length);
+  const f_string_static_t fake_long_work_s = macro_f_string_static_t_initialize(FAKE_long_work_s, 0, FAKE_long_work_s_length);
 
   const f_string_static_t fake_long_documents_disabled_s = macro_f_string_static_t_initialize(FAKE_long_documents_disabled_s, 0, FAKE_long_documents_disabled_s_length);
   const f_string_static_t fake_long_documents_enabled_s = macro_f_string_static_t_initialize(FAKE_long_documents_enabled_s, 0, FAKE_long_documents_enabled_s_length);

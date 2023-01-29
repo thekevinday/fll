@@ -36,9 +36,9 @@ extern "C" {
  * The program defines.
  *
  * fake_signal_*_d:
- *   - check:       The normal signal check (@fixme is needed anymore as-is?).
- *   - check_tiny:  The tiny check (@fixme is needed anymore as-is?).
- *   - check_short: The short signal check (@fixme this is used everywhere).
+ *   - check:       The normal signal check.
+ *   - check_tiny:  The tiny check.
+ *   - check_short: The short signal check.
  */
 #ifndef _di_fake_signal_d_
   #define fake_signal_check_d       500000
@@ -100,9 +100,9 @@ extern "C" {
  * fake_main_flag_*_e:
  *   - none:               No flags set.
  *   - copyright:          Print copyright.
- *   - enable_documents:   Enable documents, as-in --enable-doc (not specifying means --disable-doc).
- *   - enable_shared:      Enable shared, as-in --enable-shared (not specifying means --disable-shared).
- *   - enable_static:      Enable static, as-in --enable-static (not specifying means --disable-static).
+ *   - enable_documents:   Enable documents, as in --enable-doc (not specifying means --disable-doc).
+ *   - enable_shared:      Enable shared, as in --enable-shared (not specifying means --disable-shared).
+ *   - enable_static:      Enable static, as in --enable-static (not specifying means --disable-static).
  *   - file_from:          Using a specified source file.
  *   - file_to:            Using a specified destination file.
  *   - header:             Enable printing of headers.
@@ -159,18 +159,17 @@ extern "C" {
     fake_parameter_line_first_no_e,
     fake_parameter_line_last_no_e,
 
+    fake_parameter_build_e,
+    fake_parameter_data_e,
     fake_parameter_define_e,
+    fake_parameter_documents_e,
     fake_parameter_fakefile_e,
+    fake_parameter_licenses_e,
     fake_parameter_mode_e,
     fake_parameter_process_e,
     fake_parameter_settings_e,
-
-    fake_parameter_path_build_e,
-    fake_parameter_path_data_e,
-    fake_parameter_path_documents_e,
-    fake_parameter_path_licenses_e,
-    fake_parameter_path_sources_e,
-    fake_parameter_path_work_e,
+    fake_parameter_sources_e,
+    fake_parameter_work_e,
 
     fake_parameter_documents_disable_e,
     fake_parameter_documents_enable_e,
@@ -201,17 +200,17 @@ extern "C" {
       macro_f_console_parameter_t_initialize_3(f_console_standard_short_line_first_no_s, f_console_standard_long_line_first_no_s, 0, f_console_flag_inverse_e), \
       macro_f_console_parameter_t_initialize_3(f_console_standard_short_line_last_no_s,  f_console_standard_long_line_last_no_s,  0, f_console_flag_inverse_e), \
       \
-      macro_f_console_parameter_t_initialize_3(fake_short_define_s,         fake_long_define_s,             1, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize_3(fake_short_fakefile_s,       fake_long_fakefile_s,           1, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize_3(fake_short_mode_s,           fake_long_mode_s,               1, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize_3(fake_short_process_s,        fake_long_process_s,            1, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize_3(fake_short_settings_s,       fake_long_settings_s,           1, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize_3(fake_short_path_build_s,     fake_long_path_build_s,         1, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize_3(fake_short_path_data_s,      fake_long_path_data_s,          1, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize_3(fake_short_path_documents_s, fake_long_path_documents_s,     1, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize_3(fake_short_path_sources_s,   fake_long_path_sources_s,       1, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize_3(fake_short_path_licenses_s,  fake_long_path_licenses_s,      1, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize_3(fake_short_path_work_s,      fake_long_path_work_s,          1, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(fake_short_build_s,     fake_long_build_s,         1, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(fake_short_data_s,      fake_long_data_s,          1, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(fake_short_define_s,    fake_long_define_s,        1, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(fake_short_documents_s, fake_long_documents_s,     1, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(fake_short_fakefile_s,  fake_long_fakefile_s,      1, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(fake_short_licenses_s,  fake_long_licenses_s,      1, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(fake_short_mode_s,      fake_long_mode_s,          1, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(fake_short_process_s,   fake_long_process_s,       1, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(fake_short_settings_s,  fake_long_settings_s,      1, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(fake_short_sources_s,   fake_long_sources_s,       1, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(fake_short_work_s,      fake_long_work_s,          1, f_console_flag_normal_e), \
       \
       macro_f_console_parameter_t_initialize_5(fake_long_documents_disabled_s, 0, f_console_flag_normal_e), \
       macro_f_console_parameter_t_initialize_5(fake_long_documents_enabled_s,  0, f_console_flag_normal_e), \

@@ -304,7 +304,9 @@ extern "C" {
       fake_make_parameter_variable_color_s,
       fake_make_parameter_variable_data_s,
       fake_make_parameter_variable_define_s,
+      fake_make_parameter_variable_documents_s,
       fake_make_parameter_variable_fakefile_s,
+      fake_make_parameter_variable_licenses_s,
       fake_make_parameter_variable_mode_s,
       fake_make_parameter_variable_process_s,
       fake_make_parameter_variable_settings_s,
@@ -315,7 +317,9 @@ extern "C" {
       fake_make_parameter_variable_option_color_s,
       fake_make_parameter_variable_option_data_s,
       fake_make_parameter_variable_option_define_s,
+      fake_make_parameter_variable_option_documents_s,
       fake_make_parameter_variable_option_fakefile_s,
+      fake_make_parameter_variable_option_licenses_s,
       fake_make_parameter_variable_option_mode_s,
       fake_make_parameter_variable_option_process_s,
       fake_make_parameter_variable_option_settings_s,
@@ -326,7 +330,9 @@ extern "C" {
       fake_make_parameter_variable_value_color_s,
       fake_make_parameter_variable_value_data_s,
       fake_make_parameter_variable_value_define_s,
+      fake_make_parameter_variable_value_documents_s,
       fake_make_parameter_variable_value_fakefile_s,
+      fake_make_parameter_variable_value_licenses_s,
       fake_make_parameter_variable_value_mode_s,
       fake_make_parameter_variable_value_process_s,
       fake_make_parameter_variable_value_settings_s,
@@ -340,7 +346,9 @@ extern "C" {
       &data_make->parameter.color,
       &data_make->parameter.data,
       &data_make->parameter.define,
+      &data_make->parameter.documents,
       &data_make->parameter.fakefile,
+      &data_make->parameter.licenses,
       &data_make->parameter.mode,
       &data_make->parameter.process,
       &data_make->parameter.settings,
@@ -351,7 +359,9 @@ extern "C" {
       &data_make->parameter_option.color,
       &data_make->parameter_option.data,
       &data_make->parameter_option.define,
+      &data_make->parameter_option.documents,
       &data_make->parameter_option.fakefile,
+      &data_make->parameter_option.licenses,
       &data_make->parameter_option.mode,
       &data_make->parameter_option.process,
       &data_make->parameter_option.settings,
@@ -362,7 +372,9 @@ extern "C" {
       &data_make->parameter_value.color,
       &data_make->parameter_value.data,
       &data_make->parameter_value.define,
+      &data_make->parameter_value.documents,
       &data_make->parameter_value.fakefile,
+      &data_make->parameter_value.licenses,
       &data_make->parameter_value.mode,
       &data_make->parameter_value.process,
       &data_make->parameter_value.settings,
@@ -553,7 +565,7 @@ extern "C" {
               unmatched = F_false;
             }
             else {
-              for (k = 0; k < 33; ++k) {
+              for (k = 0; k < 39; ++k) {
 
                 if (fl_string_dynamic_partial_compare_string(reserved_name[k].string, data_make->buffer, reserved_name[k].used, iki_data->content.array[j]) != F_equal_to) {
                   continue;

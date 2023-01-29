@@ -265,68 +265,80 @@ extern "C" {
 
     {
       const f_string_static_t parameter[] = {
+        fake_short_build_s,
+        fake_short_data_s,
+        fake_short_documents_s,
         fake_short_fakefile_s,
-        fake_short_path_build_s,
-        fake_short_path_data_s,
-        fake_short_path_sources_s,
-        fake_short_path_work_s,
+        fake_short_licenses_s,
         fake_short_process_s,
         fake_short_settings_s,
+        fake_short_sources_s,
+        fake_short_work_s,
       };
 
-      const f_console_parameter_t *console[] = {
-        &data_make->main->parameters.array[fake_parameter_fakefile_e],
-        &data_make->main->parameters.array[fake_parameter_path_build_e],
-        &data_make->main->parameters.array[fake_parameter_path_data_e],
-        &data_make->main->parameters.array[fake_parameter_path_sources_e],
-        &data_make->main->parameters.array[fake_parameter_path_work_e],
-        &data_make->main->parameters.array[fake_parameter_process_e],
-        &data_make->main->parameters.array[fake_parameter_settings_e],
+      const f_console_parameter_t console[] = {
+        data_make->main->parameters.array[fake_parameter_build_e],
+        data_make->main->parameters.array[fake_parameter_data_e],
+        data_make->main->parameters.array[fake_parameter_documents_e],
+        data_make->main->parameters.array[fake_parameter_fakefile_e],
+        data_make->main->parameters.array[fake_parameter_licenses_e],
+        data_make->main->parameters.array[fake_parameter_process_e],
+        data_make->main->parameters.array[fake_parameter_settings_e],
+        data_make->main->parameters.array[fake_parameter_sources_e],
+        data_make->main->parameters.array[fake_parameter_work_e],
       };
 
-      const f_string_dynamic_t *source[] = {
-        &data_make->data->setting->fakefile,
-        &data_make->data->setting->build,
-        &data_make->data->setting->data,
-        &data_make->data->setting->sources,
-        &data_make->data->setting->work,
-        &data_make->data->setting->process,
-        &data_make->data->setting->settings,
+      const f_string_dynamic_t source[] = {
+        data_make->data->setting->build,
+        data_make->data->setting->data,
+        data_make->data->setting->documents,
+        data_make->data->setting->fakefile,
+        data_make->data->setting->licenses,
+        data_make->data->setting->process,
+        data_make->data->setting->settings,
+        data_make->data->setting->sources,
+        data_make->data->setting->work,
       };
 
       f_string_dynamics_t * const destination[] = {
-        &data_make->parameter.fakefile,
         &data_make->parameter.build,
         &data_make->parameter.data,
-        &data_make->parameter.sources,
-        &data_make->parameter.work,
+        &data_make->parameter.documents,
+        &data_make->parameter.fakefile,
+        &data_make->parameter.licenses,
         &data_make->parameter.process,
         &data_make->parameter.settings,
+        &data_make->parameter.sources,
+        &data_make->parameter.work,
       };
 
       f_string_dynamics_t * const destination_option[] = {
-        &data_make->parameter_option.fakefile,
         &data_make->parameter_option.build,
         &data_make->parameter_option.data,
-        &data_make->parameter_option.sources,
-        &data_make->parameter_option.work,
+        &data_make->parameter_option.documents,
+        &data_make->parameter_option.fakefile,
+        &data_make->parameter_option.licenses,
         &data_make->parameter_option.process,
         &data_make->parameter_option.settings,
+        &data_make->parameter_option.sources,
+        &data_make->parameter_option.work,
       };
 
       f_string_dynamics_t * const destination_value[] = {
-        &data_make->parameter_value.fakefile,
         &data_make->parameter_value.build,
         &data_make->parameter_value.data,
-        &data_make->parameter_value.sources,
-        &data_make->parameter_value.work,
+        &data_make->parameter_value.documents,
+        &data_make->parameter_value.fakefile,
+        &data_make->parameter_value.licenses,
         &data_make->parameter_value.process,
         &data_make->parameter_value.settings,
+        &data_make->parameter_value.sources,
+        &data_make->parameter_value.work,
       };
 
-      for (uint8_t i = 0; i < 7; ++i) {
+      for (uint8_t i = 0; i < 9; ++i) {
 
-        if (!(console[i]->result & f_console_result_found_e)) continue;
+        if (!(console[i].result & f_console_result_found_e)) continue;
 
         if (destination[i]->used + 2 > destination[i]->size) {
           *status = f_string_dynamics_increase_by(fake_default_allocation_small_d, destination[i]);
@@ -350,10 +362,10 @@ extern "C" {
           return;
         }
 
-        if (console[i]->flag & f_console_flag_normal_e) {
+        if (console[i].flag & f_console_flag_normal_e) {
           *status = f_string_dynamic_append_nulless(f_console_symbol_short_normal_s, &destination[i]->array[destination[i]->used]);
         }
-        else if (console[i]->flag & f_console_flag_inverse_e) {
+        else if (console[i].flag & f_console_flag_inverse_e) {
           *status = f_string_dynamic_append_nulless(f_console_symbol_short_inverse_s, &destination[i]->array[destination[i]->used]);
         }
 
@@ -382,10 +394,10 @@ extern "C" {
           return;
         }
 
-        *status = f_string_dynamic_append_nulless(*source[i], &destination[i]->array[destination[i]->used]);
+        *status = f_string_dynamic_append_nulless(source[i], &destination[i]->array[destination[i]->used]);
 
         if (F_status_is_error_not(*status)) {
-          *status = f_string_dynamic_append_nulless(*source[i], &destination_value[i]->array[destination_value[i]->used]);
+          *status = f_string_dynamic_append_nulless(source[i], &destination_value[i]->array[destination_value[i]->used]);
         }
 
         if (F_status_is_error(*status)) {

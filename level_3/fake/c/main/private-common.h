@@ -39,7 +39,6 @@ extern "C" {
  * path_build_settings:         The build settings path.
  * path_build_stage:            The build stage path.
  *
- * path_data:               The data path.
  * path_data_build:         The build data path.
  * path_data_documentation: The documentation data path.
  * path_data_settings:      The settings data path.
@@ -48,7 +47,6 @@ extern "C" {
  * path_licenses:  The licenses path.
  * path_sources:   The sources path.
  *
- * path_work:                  The work path.
  * path_work_includes:         The includes work path.
  * path_work_libraries:        The libraries work path.
  * path_work_libraries_script: The libraries_script work path.
@@ -75,6 +73,7 @@ extern "C" {
     fll_program_data_t *main;
     fake_setting_t *setting;
 
+    f_string_dynamic_t path_build;
     f_string_dynamic_t path_build_documentation;
     f_string_dynamic_t path_build_documents;
     f_string_dynamic_t path_build_includes;
@@ -126,6 +125,7 @@ extern "C" {
       0, \
       0, \
       0, \
+      f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
@@ -1472,7 +1472,9 @@ extern "C" {
   #define FAKE_make_parameter_variable_current_s   "current"
   #define FAKE_make_parameter_variable_data_s      "data"
   #define FAKE_make_parameter_variable_define_s    "define"
+  #define FAKE_make_parameter_variable_documents_s "documents"
   #define FAKE_make_parameter_variable_fakefile_s  "fakefile"
+  #define FAKE_make_parameter_variable_licenses_s  "licenses"
   #define FAKE_make_parameter_variable_mode_s      "mode"
   #define FAKE_make_parameter_variable_process_s   "process"
   #define FAKE_make_parameter_variable_return_s    "return"
@@ -1486,7 +1488,9 @@ extern "C" {
   #define FAKE_make_parameter_variable_option_color_s     FAKE_make_parameter_variable_color_s FAKE_make_parameter_iki_option_s
   #define FAKE_make_parameter_variable_option_data_s      FAKE_make_parameter_variable_data_s FAKE_make_parameter_iki_option_s
   #define FAKE_make_parameter_variable_option_define_s    FAKE_make_parameter_variable_define_s FAKE_make_parameter_iki_option_s
+  #define FAKE_make_parameter_variable_option_documents_s FAKE_make_parameter_variable_documents_s FAKE_make_parameter_iki_option_s
   #define FAKE_make_parameter_variable_option_fakefile_s  FAKE_make_parameter_variable_fakefile_s FAKE_make_parameter_iki_option_s
+  #define FAKE_make_parameter_variable_option_licenses_s  FAKE_make_parameter_variable_licenses_s FAKE_make_parameter_iki_option_s
   #define FAKE_make_parameter_variable_option_mode_s      FAKE_make_parameter_variable_mode_s FAKE_make_parameter_iki_option_s
   #define FAKE_make_parameter_variable_option_process_s   FAKE_make_parameter_variable_process_s FAKE_make_parameter_iki_option_s
   #define FAKE_make_parameter_variable_option_settings_s  FAKE_make_parameter_variable_settings_s FAKE_make_parameter_iki_option_s
@@ -1498,7 +1502,9 @@ extern "C" {
   #define FAKE_make_parameter_variable_value_color_s     FAKE_make_parameter_variable_color_s FAKE_make_parameter_iki_value_s
   #define FAKE_make_parameter_variable_value_data_s      FAKE_make_parameter_variable_data_s FAKE_make_parameter_iki_value_s
   #define FAKE_make_parameter_variable_value_define_s    FAKE_make_parameter_variable_define_s FAKE_make_parameter_iki_value_s
+  #define FAKE_make_parameter_variable_value_documents_s FAKE_make_parameter_variable_documents_s FAKE_make_parameter_iki_value_s
   #define FAKE_make_parameter_variable_value_fakefile_s  FAKE_make_parameter_variable_fakefile_s FAKE_make_parameter_iki_value_s
+  #define FAKE_make_parameter_variable_value_licenses_s  FAKE_make_parameter_variable_licenses_s FAKE_make_parameter_iki_value_s
   #define FAKE_make_parameter_variable_value_mode_s      FAKE_make_parameter_variable_mode_s FAKE_make_parameter_iki_value_s
   #define FAKE_make_parameter_variable_value_process_s   FAKE_make_parameter_variable_process_s FAKE_make_parameter_iki_value_s
   #define FAKE_make_parameter_variable_value_settings_s  FAKE_make_parameter_variable_settings_s FAKE_make_parameter_iki_value_s
@@ -1514,7 +1520,10 @@ extern "C" {
   #define FAKE_make_parameter_variable_current_s_length   7
   #define FAKE_make_parameter_variable_data_s_length      4
   #define FAKE_make_parameter_variable_define_s_length    6
+  #define FAKE_make_parameter_variable_documents_s_length 9
   #define FAKE_make_parameter_variable_fakefile_s_length  8
+  #define FAKE_make_parameter_variable_licenses_s_length  8
+  #define FAKE_make_parameter_variable_data_s_length      4
   #define FAKE_make_parameter_variable_mode_s_length      4
   #define FAKE_make_parameter_variable_process_s_length   7
   #define FAKE_make_parameter_variable_return_s_length    6
@@ -1528,7 +1537,9 @@ extern "C" {
   #define FAKE_make_parameter_variable_option_color_s_length     FAKE_make_parameter_variable_color_s_length + FAKE_make_parameter_iki_option_s_length
   #define FAKE_make_parameter_variable_option_data_s_length      FAKE_make_parameter_variable_data_s_length + FAKE_make_parameter_iki_option_s_length
   #define FAKE_make_parameter_variable_option_define_s_length    FAKE_make_parameter_variable_define_s_length + FAKE_make_parameter_iki_option_s_length
+  #define FAKE_make_parameter_variable_option_documents_s_length FAKE_make_parameter_variable_documents_s_length + FAKE_make_parameter_iki_option_s_length
   #define FAKE_make_parameter_variable_option_fakefile_s_length  FAKE_make_parameter_variable_fakefile_s_length + FAKE_make_parameter_iki_option_s_length
+  #define FAKE_make_parameter_variable_option_licenses_s_length  FAKE_make_parameter_variable_licenses_s_length + FAKE_make_parameter_iki_option_s_length
   #define FAKE_make_parameter_variable_option_mode_s_length      FAKE_make_parameter_variable_mode_s_length + FAKE_make_parameter_iki_option_s_length
   #define FAKE_make_parameter_variable_option_process_s_length   FAKE_make_parameter_variable_process_s_length + FAKE_make_parameter_iki_option_s_length
   #define FAKE_make_parameter_variable_option_settings_s_length  FAKE_make_parameter_variable_settings_s_length + FAKE_make_parameter_iki_option_s_length
@@ -1539,8 +1550,10 @@ extern "C" {
   #define FAKE_make_parameter_variable_value_build_s_length     FAKE_make_parameter_variable_build_s_length + FAKE_make_parameter_iki_value_s_length
   #define FAKE_make_parameter_variable_value_color_s_length     FAKE_make_parameter_variable_color_s_length + FAKE_make_parameter_iki_value_s_length
   #define FAKE_make_parameter_variable_value_data_s_length      FAKE_make_parameter_variable_data_s_length + FAKE_make_parameter_iki_value_s_length
+  #define FAKE_make_parameter_variable_value_documents_s_length FAKE_make_parameter_variable_documents_s_length + FAKE_make_parameter_iki_value_s_length
   #define FAKE_make_parameter_variable_value_define_s_length    FAKE_make_parameter_variable_define_s_length + FAKE_make_parameter_iki_value_s_length
   #define FAKE_make_parameter_variable_value_fakefile_s_length  FAKE_make_parameter_variable_fakefile_s_length + FAKE_make_parameter_iki_value_s_length
+  #define FAKE_make_parameter_variable_value_licenses_s_length  FAKE_make_parameter_variable_licenses_s_length + FAKE_make_parameter_iki_value_s_length
   #define FAKE_make_parameter_variable_value_mode_s_length      FAKE_make_parameter_variable_mode_s_length + FAKE_make_parameter_iki_value_s_length
   #define FAKE_make_parameter_variable_value_process_s_length   FAKE_make_parameter_variable_process_s_length + FAKE_make_parameter_iki_value_s_length
   #define FAKE_make_parameter_variable_value_settings_s_length  FAKE_make_parameter_variable_settings_s_length + FAKE_make_parameter_iki_value_s_length
@@ -1556,7 +1569,9 @@ extern "C" {
   extern const f_string_static_t fake_make_parameter_variable_current_s;
   extern const f_string_static_t fake_make_parameter_variable_data_s;
   extern const f_string_static_t fake_make_parameter_variable_define_s;
+  extern const f_string_static_t fake_make_parameter_variable_documents_s;
   extern const f_string_static_t fake_make_parameter_variable_fakefile_s;
+  extern const f_string_static_t fake_make_parameter_variable_licenses_s;
   extern const f_string_static_t fake_make_parameter_variable_mode_s;
   extern const f_string_static_t fake_make_parameter_variable_process_s;
   extern const f_string_static_t fake_make_parameter_variable_return_s;
@@ -1570,7 +1585,9 @@ extern "C" {
   extern const f_string_static_t fake_make_parameter_variable_option_color_s;
   extern const f_string_static_t fake_make_parameter_variable_option_data_s;
   extern const f_string_static_t fake_make_parameter_variable_option_define_s;
+  extern const f_string_static_t fake_make_parameter_variable_option_documents_s;
   extern const f_string_static_t fake_make_parameter_variable_option_fakefile_s;
+  extern const f_string_static_t fake_make_parameter_variable_option_licenses_s;
   extern const f_string_static_t fake_make_parameter_variable_option_mode_s;
   extern const f_string_static_t fake_make_parameter_variable_option_process_s;
   extern const f_string_static_t fake_make_parameter_variable_option_settings_s;
@@ -1582,7 +1599,9 @@ extern "C" {
   extern const f_string_static_t fake_make_parameter_variable_value_color_s;
   extern const f_string_static_t fake_make_parameter_variable_value_data_s;
   extern const f_string_static_t fake_make_parameter_variable_value_define_s;
+  extern const f_string_static_t fake_make_parameter_variable_value_documents_s;
   extern const f_string_static_t fake_make_parameter_variable_value_fakefile_s;
+  extern const f_string_static_t fake_make_parameter_variable_value_licenses_s;
   extern const f_string_static_t fake_make_parameter_variable_value_mode_s;
   extern const f_string_static_t fake_make_parameter_variable_value_process_s;
   extern const f_string_static_t fake_make_parameter_variable_value_settings_s;
@@ -1595,7 +1614,9 @@ extern "C" {
     f_string_dynamics_t color;
     f_string_dynamics_t data;
     f_string_dynamics_t define;
+    f_string_dynamics_t documents;
     f_string_dynamics_t fakefile;
+    f_string_dynamics_t licenses;
     f_string_dynamics_t mode;
     f_string_dynamics_t process;
     f_string_dynamics_t settings;
@@ -1616,6 +1637,8 @@ extern "C" {
     f_string_dynamics_t_initialize, \
     f_string_dynamics_t_initialize, \
     f_string_dynamics_t_initialize, \
+    f_string_dynamics_t_initialize, \
+    f_string_dynamics_t_initialize, \
   }
 
   #define macro_fake_make_parameter_delete_simple(parameter) \
@@ -1623,7 +1646,9 @@ extern "C" {
     macro_f_string_dynamics_t_delete_simple(parameter.color) \
     macro_f_string_dynamics_t_delete_simple(parameter.data) \
     macro_f_string_dynamics_t_delete_simple(parameter.define) \
+    macro_f_string_dynamics_t_delete_simple(parameter.documents) \
     macro_f_string_dynamics_t_delete_simple(parameter.fakefile) \
+    macro_f_string_dynamics_t_delete_simple(parameter.licenses) \
     macro_f_string_dynamics_t_delete_simple(parameter.mode) \
     macro_f_string_dynamics_t_delete_simple(parameter.process) \
     macro_f_string_dynamics_t_delete_simple(parameter.settings) \

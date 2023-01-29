@@ -244,31 +244,29 @@ extern "C" {
  * The main program parameters.
  */
 #ifndef _di_fake_parameter_s_
-  #define FAKE_short_define_s   "d"
-  #define FAKE_short_fakefile_s "f"
-  #define FAKE_short_mode_s     "m"
-  #define FAKE_short_process_s  "p"
-  #define FAKE_short_settings_s "s"
+  #define FAKE_short_build_s     "b"
+  #define FAKE_short_data_s      "D"
+  #define FAKE_short_define_s    "d"
+  #define FAKE_short_documents_s "O"
+  #define FAKE_short_fakefile_s  "f"
+  #define FAKE_short_licenses_s  "l"
+  #define FAKE_short_mode_s      "m"
+  #define FAKE_short_process_s   "p"
+  #define FAKE_short_settings_s  "s"
+  #define FAKE_short_sources_s   "S"
+  #define FAKE_short_work_s      "w"
 
-  #define FAKE_short_path_build_s     "b"
-  #define FAKE_short_path_data_s      "D"
-  #define FAKE_short_path_documents_s "O"
-  #define FAKE_short_path_licenses_s  "l"
-  #define FAKE_short_path_sources_s   "S"
-  #define FAKE_short_path_work_s      "w"
-
-  #define FAKE_long_define_s   "define"
-  #define FAKE_long_fakefile_s "fakefile"
-  #define FAKE_long_mode_s     "mode"
-  #define FAKE_long_process_s  "process"
-  #define FAKE_long_settings_s "settings"
-
-  #define FAKE_long_path_build_s     "build"
-  #define FAKE_long_path_data_s      "data"
-  #define FAKE_long_path_documents_s "documents"
-  #define FAKE_long_path_licenses_s  "licenses"
-  #define FAKE_long_path_sources_s   "sources"
-  #define FAKE_long_path_work_s      "work"
+  #define FAKE_long_build_s     "build"
+  #define FAKE_long_data_s      "data"
+  #define FAKE_long_define_s    "define"
+  #define FAKE_long_documents_s "documents"
+  #define FAKE_long_fakefile_s  "fakefile"
+  #define FAKE_long_licenses_s  "licenses"
+  #define FAKE_long_mode_s      "mode"
+  #define FAKE_long_process_s   "process"
+  #define FAKE_long_settings_s  "settings"
+  #define FAKE_long_sources_s   "sources"
+  #define FAKE_long_work_s      "work"
 
   // These special parameters are provided in such a way that they mimic the traditional ./configure script.
   #define FAKE_long_documents_disabled_s "disable-doc"
@@ -283,31 +281,29 @@ extern "C" {
   #define FAKE_other_operation_make_s     "make"
   #define FAKE_other_operation_skeleton_s "skeleton"
 
-  #define FAKE_short_define_s_length   1
-  #define FAKE_short_fakefile_s_length 1
-  #define FAKE_short_mode_s_length     1
-  #define FAKE_short_process_s_length  1
-  #define FAKE_short_settings_s_length 1
+  #define FAKE_short_build_s_length     1
+  #define FAKE_short_data_s_length      1
+  #define FAKE_short_define_s_length    1
+  #define FAKE_short_documents_s_length 1
+  #define FAKE_short_fakefile_s_length  1
+  #define FAKE_short_licenses_s_length  1
+  #define FAKE_short_mode_s_length      1
+  #define FAKE_short_process_s_length   1
+  #define FAKE_short_settings_s_length  1
+  #define FAKE_short_sources_s_length   1
+  #define FAKE_short_work_s_length      1
 
-  #define FAKE_short_path_build_s_length     1
-  #define FAKE_short_path_data_s_length      1
-  #define FAKE_short_path_documents_s_length 1
-  #define FAKE_short_path_licenses_s_length  1
-  #define FAKE_short_path_sources_s_length   1
-  #define FAKE_short_path_work_s_length      1
-
-  #define FAKE_long_define_s_length   6
-  #define FAKE_long_fakefile_s_length 8
-  #define FAKE_long_mode_s_length     4
-  #define FAKE_long_process_s_length  7
-  #define FAKE_long_settings_s_length 8
-
-  #define FAKE_long_path_build_s_length     5
-  #define FAKE_long_path_data_s_length      4
-  #define FAKE_long_path_documents_s_length 9
-  #define FAKE_long_path_licenses_s_length  8
-  #define FAKE_long_path_sources_s_length   7
-  #define FAKE_long_path_work_s_length      4
+  #define FAKE_long_build_s_length     5
+  #define FAKE_long_data_s_length      4
+  #define FAKE_long_define_s_length    6
+  #define FAKE_long_documents_s_length 9
+  #define FAKE_long_fakefile_s_length  8
+  #define FAKE_long_licenses_s_length  8
+  #define FAKE_long_mode_s_length      4
+  #define FAKE_long_process_s_length   7
+  #define FAKE_long_settings_s_length  8
+  #define FAKE_long_sources_s_length   7
+  #define FAKE_long_work_s_length      4
 
   #define FAKE_long_documents_disabled_s_length 11
   #define FAKE_long_documents_enabled_s_length  10
@@ -321,31 +317,29 @@ extern "C" {
   #define FAKE_other_operation_make_s_length     4
   #define FAKE_other_operation_skeleton_s_length 8
 
+  extern const f_string_static_t fake_short_build_s;
+  extern const f_string_static_t fake_short_data_s;
   extern const f_string_static_t fake_short_define_s;
+  extern const f_string_static_t fake_short_documents_s;
   extern const f_string_static_t fake_short_fakefile_s;
+  extern const f_string_static_t fake_short_licenses_s;
   extern const f_string_static_t fake_short_mode_s;
   extern const f_string_static_t fake_short_process_s;
   extern const f_string_static_t fake_short_settings_s;
+  extern const f_string_static_t fake_short_sources_s;
+  extern const f_string_static_t fake_short_work_s;
 
-  extern const f_string_static_t fake_short_path_build_s;
-  extern const f_string_static_t fake_short_path_data_s;
-  extern const f_string_static_t fake_short_path_documents_s;
-  extern const f_string_static_t fake_short_path_licenses_s;
-  extern const f_string_static_t fake_short_path_sources_s;
-  extern const f_string_static_t fake_short_path_work_s;
-
+  extern const f_string_static_t fake_long_build_s;
+  extern const f_string_static_t fake_long_data_s;
   extern const f_string_static_t fake_long_define_s;
+  extern const f_string_static_t fake_long_documents_s;
   extern const f_string_static_t fake_long_fakefile_s;
+  extern const f_string_static_t fake_long_licenses_s;
   extern const f_string_static_t fake_long_mode_s;
   extern const f_string_static_t fake_long_process_s;
   extern const f_string_static_t fake_long_settings_s;
-
-  extern const f_string_static_t fake_long_path_build_s;
-  extern const f_string_static_t fake_long_path_data_s;
-  extern const f_string_static_t fake_long_path_documents_s;
-  extern const f_string_static_t fake_long_path_licenses_s;
-  extern const f_string_static_t fake_long_path_sources_s;
-  extern const f_string_static_t fake_long_path_work_s;
+  extern const f_string_static_t fake_long_sources_s;
+  extern const f_string_static_t fake_long_work_s;
 
   extern const f_string_static_t fake_long_documents_disabled_s;
   extern const f_string_static_t fake_long_documents_enabled_s;

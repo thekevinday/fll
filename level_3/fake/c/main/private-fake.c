@@ -139,7 +139,7 @@ extern "C" {
         return status;
       }
 
-      status = f_file_read(file, buffer);
+      status = f_file_stream_read(file, buffer);
 
       f_file_stream_flush(file);
       f_file_stream_close(&file);
@@ -211,22 +211,33 @@ extern "C" {
     }
 
     const f_string_static_t names[] = {
-      fake_long_path_build_s,
-      fake_long_path_data_s,
-      fake_long_path_work_s,
+      fake_long_build_s,
+      fake_long_data_s,
+      fake_long_documents_s,
+      fake_long_licenses_s,
+      fake_long_sources_s,
+      fake_long_work_s,
     };
 
     const f_string_dynamic_t values[] = {
       data->setting->build,
       data->setting->data,
+      data->setting->documents,
+      data->setting->licenses,
+      data->setting->sources,
       data->setting->work,
     };
 
     uint8_t requireds[] = {
-      F_false,
-      (data->main->pipe & fll_program_data_pipe_input_e) ? F_false : F_true,
-      F_false,
+      F_false, // fake_long_build_s
+      (data->main->pipe & fll_program_data_pipe_input_e) ? F_false : F_true, // fake_long_data_s
+      F_false, // fake_long_documents_s
+      F_false, // fake_long_licenses_s
+      F_false, // fake_long_sources_s
+      F_false, // fake_long_work_s
     };
+
+    struct stat directory_stat;
 
     f_status_t status = F_none;
 
@@ -235,7 +246,7 @@ extern "C" {
       if (data->main->parameters.array[fake_parameter_fakefile_e].result == f_console_result_none_e) {
         if (data->setting->build.used && f_file_exists(data->setting->build, F_false) != F_true) {
           if (f_file_exists(fake_default_fakefile_s, F_false) == F_true) {
-            requireds[1] = F_false;
+            requireds[1] = F_false; // fake_long_data_s
           }
         }
       }
@@ -253,21 +264,19 @@ extern "C" {
         const f_array_length_t index = parameter->values.array[parameter->values.used - 1];
 
         if (f_path_is_absolute(data->main->parameters.arguments.array[index]) == F_true || f_path_is_relative_current(data->main->parameters.arguments.array[index]) == F_true) {
-          requireds[1] = F_none;
+          requireds[1] = F_none; // fake_long_data_s
         }
         else {
           status = f_file_exists(data->main->parameters.arguments.array[index], F_true);
 
           if (F_status_is_error_not(status) && status == F_true) {
-            requireds[1] = F_none;
+            requireds[1] = F_none; // fake_long_data_s
           }
         }
       }
     }
 
-    struct stat directory_stat;
-
-    for (uint8_t i = 0; i < 3; ++i) {
+    for (uint8_t i = 0; i < 6; ++i) {
 
       if (requireds[i] != F_none && values[i].used) {
         memset(&directory_stat, 0, sizeof(struct stat));

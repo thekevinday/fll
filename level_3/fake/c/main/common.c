@@ -172,64 +172,76 @@ extern "C" {
 
       {
         const f_array_length_t parameters[] = {
+          fake_parameter_build_e,
+          fake_parameter_data_e,
+          fake_parameter_documents_e,
           fake_parameter_fakefile_e,
-          fake_parameter_path_build_e,
-          fake_parameter_path_data_e,
-          fake_parameter_path_sources_e,
-          fake_parameter_path_work_e,
+          fake_parameter_licenses_e,
           fake_parameter_process_e,
           fake_parameter_settings_e,
+          fake_parameter_sources_e,
+          fake_parameter_work_e,
         };
 
         const f_string_static_t names[] = {
+          fake_long_build_s,
+          fake_long_data_s,
           fake_long_fakefile_s,
-          fake_long_path_build_s,
-          fake_long_path_data_s,
-          fake_long_path_sources_s,
-          fake_long_path_work_s,
+          fake_long_documents_s,
+          fake_long_licenses_s,
           fake_long_process_s,
           fake_long_settings_s,
+          fake_long_sources_s,
+          fake_long_work_s,
         };
 
         f_string_dynamic_t * const variable[] = {
-          &setting->fakefile,
           &setting->build,
           &setting->data,
-          &setting->sources,
-          &setting->work,
+          &setting->documents,
+          &setting->fakefile,
+          &setting->licenses,
           &setting->process,
           &setting->settings,
+          &setting->sources,
+          &setting->work,
         };
 
-        f_string_dynamic_resize(0, &setting->build);
-        f_string_dynamic_resize(0, &setting->data);
-        f_string_dynamic_resize(0, &setting->fakefile);
-        f_string_dynamic_resize(0, &setting->process);
-        f_string_dynamic_resize(0, &setting->settings);
-        f_string_dynamic_resize(0, &setting->sources);
-        f_string_dynamic_resize(0, &setting->work);
+        setting->build.used = 0;
+        setting->data.used = 0;
+        setting->documents.used = 0;
+        setting->fakefile.used = 0;
+        setting->licenses.used = 0;
+        setting->process.used = 0;
+        setting->settings.used = 0;
+        setting->sources.used = 0;
+        setting->work.used = 0;
 
         const f_string_static_t defaults[] = {
-          fake_default_fakefile_s,
           fake_default_build_s,
           fake_default_data_s,
-          fake_default_sources_s,
-          fake_default_work_s,
+          fake_default_documents_s,
+          fake_default_fakefile_s,
+          fake_default_licenses_s,
           fake_default_process_s,
           fake_default_settings_s,
+          fake_default_sources_s,
+          fake_default_work_s,
         };
 
         const bool cleanups[] = {
+          F_true,  // fake_parameter_build_e
+          F_true,  // fake_parameter_data_e
+          F_true,  // fake_parameter_documents_e
           F_false, // fake_parameter_fakefile_e
-          F_true,  // fake_parameter_path_build_e
-          F_true,  // fake_parameter_path_data_e
-          F_false, // fake_parameter_path_sources_e
-          F_true,  // fake_parameter_path_work_e
+          F_true,  // fake_parameter_licenses_e
           F_false, // fake_parameter_process_e
           F_false, // fake_parameter_settings_e
+          F_false, // fake_parameter_sources_e
+          F_true,  // fake_parameter_work_e
         };
 
-        for (i = 0; i < 7; ++i) {
+        for (i = 0; i < 9; ++i) {
 
           if (main->parameters.array[parameters[i]].result & f_console_result_found_e) {
             setting->status = F_status_set_error(F_parameter);

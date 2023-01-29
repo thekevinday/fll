@@ -21,11 +21,12 @@ extern "C" {
       };
 
       const uint8_t parameters_size[] = {
-        8,
+        9,
         3,
       };
 
       f_string_dynamic_t *values_0[] = {
+        &data->path_build,
         &data->path_build_documentation,
         &data->path_build_documents,
         &data->path_build_includes,

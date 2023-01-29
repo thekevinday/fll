@@ -51,7 +51,7 @@ extern "C" {
       fake_skeleton_path_source_string(data, &fake_path_part_shell_s, &sources_bash);
 
       const f_string_static_t path[] = {
-        data->setting->build,
+        data->path_build,
         data->setting->data,
         data->path_data_build,
         data->path_data_documentation,
