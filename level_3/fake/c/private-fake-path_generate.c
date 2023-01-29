@@ -185,6 +185,7 @@ extern "C" {
     if (f_path_is(data->settings) == F_true || f_file_exists(data->settings, F_true) == F_true) {
       data->file_data_build_settings.used = 0;
     }
+
     {
       const f_string_static_t parameters_source[] = {
         fake_path_part_script_s,
