@@ -574,7 +574,7 @@ Fakefile Documentation:
       This supports both code:":option" and code:":value".
 
     - code:"define"\:
-      This variable holds the code:"data" program parameters, such as code:"-d define/".
+      This variable holds the code:"define" program parameters, such as code:"-d define/".
       This supports both code:":option" and code:":value".
 
     - code:"fakefile"\:
@@ -598,7 +598,7 @@ Fakefile Documentation:
       This supports both code:":option" and code:":value".
 
     - code:"sources"\:
-      This variable holds the code:"data" program parameters, such as code:"-S sources/".
+      This variable holds the code:"sources" program parameters, such as code:"-S sources/".
       This supports both code:":option" and code:":value".
 
     - code:"verbosity"\:
