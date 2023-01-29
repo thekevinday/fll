@@ -124,12 +124,12 @@ extern "C" {
         status = F_true;
       }
 
-      name_function = "f_file_open";
+      name_function = "f_file_stream_open";
       status = f_file_stream_open(path_file, f_string_empty_s, &file);
 
       if (F_status_is_error_not(status)) {
-        name_function = "f_file_read";
-        status = f_file_read(file, buffer);
+        name_function = "f_file_stream_read";
+        status = f_file_stream_read(file, buffer);
 
         f_file_stream_close(F_true, &file);
       }
