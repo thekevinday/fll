@@ -248,7 +248,7 @@
 //#define _di_f_file_open_modes_
 //#define _di_f_file_operation_strings_
 //#define _di_f_file_owner_read_
-//#define _di_f_file_read_
+#define _di_f_file_read_
 //#define _di_f_file_read_block_
 #define _di_f_file_read_until_
 //#define _di_f_file_remove_
@@ -269,7 +269,7 @@
 //#define _di_f_file_stream_close_
 //#define _di_f_file_stream_open_
 #define _di_f_file_stream_open_descriptor_
-#define _di_f_file_stream_read_
+//#define _di_f_file_stream_read_
 //#define _di_f_file_stream_read_block_
 #define _di_f_file_stream_read_until_
 #define _di_f_file_stream_reopen_
