@@ -17,10 +17,6 @@ extern "C" {
   const f_string_static_t fake_program_help_parameters_s = macro_f_string_static_t_initialize(FAKE_program_help_parameters_s, 0, FAKE_program_help_parameters_s_length);
 #endif // _di_fake_program_help_parameters_
 
-/**
- * The build operation utilizes pre-defined path structures.
- * These structures are hard-coded by their individual pieces to be constructed later on.
- */
 #ifndef _di_fake_path_
   const f_string_static_t fake_path_part_bash_s = macro_f_string_static_t_initialize(FAKE_path_part_bash_s, 0, FAKE_path_part_bash_s_length);
   const f_string_static_t fake_path_part_build_s = macro_f_string_static_t_initialize(FAKE_path_part_build_s, 0, FAKE_path_part_build_s_length);
@@ -51,9 +47,6 @@ extern "C" {
   const f_string_static_t fake_file_readme_s = macro_f_string_static_t_initialize(FAKE_file_readme_s, 0, FAKE_file_readme_s_length);
 #endif // _di_fake_file_
 
-/**
- * Provide default settings.
- */
 #ifndef _di_fake_defaults_
   const f_string_static_t fake_default_path_build_s = macro_f_string_static_t_initialize(FAKE_default_path_build_s, 0, FAKE_default_path_build_s_length);
   const f_string_static_t fake_default_path_data_s = macro_f_string_static_t_initialize(FAKE_default_path_data_s, 0, FAKE_default_path_data_s_length);
