@@ -300,7 +300,7 @@ extern "C" {
 #ifndef _di_fake_skeleton_path_source_length_
   void fake_skeleton_path_source_length(fake_data_t * const data, const f_string_static_t *partial, f_string_static_t * const source) {
 
-    source->used = data->path_sources.used + fake_default_path_sources_s.used + partial->used;
+    source->used = data->path_sources.used + partial->used;
   }
 #endif // _di_fake_skeleton_path_source_length_
 
@@ -311,9 +311,6 @@ extern "C" {
 
     memcpy(source->string, data->path_sources.string, sizeof(f_char_t) * data->path_sources.used);
     source->used += data->path_sources.used;
-
-    memcpy(source->string, fake_default_path_sources_s.string, sizeof(f_char_t) * fake_default_path_sources_s.used);
-    source->used += fake_default_path_sources_s.used;
 
     memcpy(source->string + source->used, partial->string, sizeof(f_char_t) * partial->used);
     source->used += partial->used;

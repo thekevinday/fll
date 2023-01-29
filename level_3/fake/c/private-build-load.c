@@ -932,7 +932,7 @@ extern "C" {
         fake_path_part_script_s,                     // path_program_script
         fake_path_part_shared_s,                     // path_program_shared
         fake_path_part_static_s,                     // path_program_static
-        fake_default_path_sources_s,                 // path_sources
+        f_string_empty_s,                            // path_sources
         f_string_empty_s,                            // path_sources_object
         f_string_empty_s,                            // preserve_path_headers
         f_string_empty_s,                            // process_post
