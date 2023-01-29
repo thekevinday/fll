@@ -322,7 +322,6 @@ extern "C" {
 #ifndef _di_fake_data_delete_
   f_status_t fake_data_delete(fake_data_t * const data) {
 
-    f_string_dynamic_resize(0, &data->path_build);
     f_string_dynamic_resize(0, &data->path_build_documentation);
     f_string_dynamic_resize(0, &data->path_build_documents);
     f_string_dynamic_resize(0, &data->path_build_includes);
@@ -340,9 +339,7 @@ extern "C" {
     f_string_dynamic_resize(0, &data->path_build_programs_static);
     f_string_dynamic_resize(0, &data->path_build_settings);
     f_string_dynamic_resize(0, &data->path_build_stage);
-    f_string_dynamic_resize(0, &data->path_work);
 
-    f_string_dynamic_resize(0, &data->path_data);
     f_string_dynamic_resize(0, &data->path_data_build);
     f_string_dynamic_resize(0, &data->path_data_documentation);
     f_string_dynamic_resize(0, &data->path_data_settings);
@@ -351,9 +348,6 @@ extern "C" {
 
     f_string_dynamic_resize(0, &data->path_licenses);
 
-    f_string_dynamic_resize(0, &data->path_sources);
-
-    f_string_dynamic_resize(0, &data->path_work);
     f_string_dynamic_resize(0, &data->path_work_includes);
     f_string_dynamic_resize(0, &data->path_work_libraries);
     f_string_dynamic_resize(0, &data->path_work_libraries_script);

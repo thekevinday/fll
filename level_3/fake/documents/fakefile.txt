@@ -334,7 +334,9 @@ Fakefile Documentation:
             - code:"current": The absolute path to the current working directory (present working directory) (Always has a trailing forward slash).
             - code:"data": Associated with code:"-D/--data" parameter.
             - code:"define": Associated with code:"-d/--define" parameter.
+            - code:"documents": Associated with code:"-O/--documents" parameter.
             - code:"fakefile": Associated with code:"-f/--fakefile" parameter.
+            - code:"licenses": Associated with code:"-l/--licenses" parameter.
             - code:"mode": Associated with code:"-m/--mode" parameter and possibly with the build settings default mode code:"modes_default".
             - code:"process": Associated with code:"-p/--process" parameter.
             - code:"return": Contains the return value of a previous operation that produces a return code.
@@ -572,11 +574,19 @@ Fakefile Documentation:
       This supports both code:":option" and code:":value".
 
     - code:"define"\:
-      This variable holds the code:"data" program parameters, such as code:"-d define/".
+      This variable holds the code:"define" program parameters, such as code:"-d define/".
+      This supports both code:":option" and code:":value".
+
+    - code:"documents"\:
+      This variable holds the code:"documents" program parameters, such as code:"-O documents/".
       This supports both code:":option" and code:":value".
 
     - code:"fakefile"\:
       This variable holds the code:"fakefile" program parameters, such as code:"-f fakefile".
+      This supports both code:":option" and code:":value".
+
+    - code:"licenses"\:
+      This variable holds the code:"licenses" program parameters, such as code:"-l licenses/".
       This supports both code:":option" and code:":value".
 
     - code:"mode"\:
@@ -596,7 +606,7 @@ Fakefile Documentation:
       This supports both code:":option" and code:":value".
 
     - code:"sources"\:
-      This variable holds the code:"data" program parameters, such as code:"-S sources/".
+      This variable holds the code:"sources" program parameters, such as code:"-S sources/".
       This supports both code:":option" and code:":value".
 
     - code:"verbosity"\:

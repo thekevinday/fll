@@ -51,8 +51,10 @@
 #include <fll/level_2/program.h>
 
 // IKI Read includes.
-#include <program/iki_read/main/common.h>
 #include <program/iki_read/main/common-print.h>
+#include <program/iki_read/main/common-string.h>
+#include <program/iki_read/main/common-type.h>
+#include <program/iki_read/main/common.h>
 #include <program/iki_read/main/print.h>
 
 #ifdef __cplusplus

@@ -51,8 +51,10 @@
 #include <fll/level_2/program.h>
 
 // IKI Write includes.
-#include <program/iki_write/main/common.h>
 #include <program/iki_write/main/common-print.h>
+#include <program/iki_write/main/common-string.h>
+#include <program/iki_write/main/common-type.h>
+#include <program/iki_write/main/common.h>
 #include <program/iki_write/main/print.h>
 
 #ifdef __cplusplus

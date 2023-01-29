@@ -36,7 +36,60 @@ extern "C" {
 #endif // _di_fake_print_error_
 
 /**
+ * Print generic error message regarding a function failing in some way, setting fallback to F_false and returning result.
+ *
+ * @param setting
+ *   The main program settings.
+ *
+ *   This does not alter setting.status.
+ * @param status
+ *   The status to use.
+ *   This is provided, ignoring setting.status, for thread-safety reasons.
+ * @param print
+ *   Designates the how and where to print.
+ *
+ * @return
+ *   F_true is returned if the status code has no print message.
+ *   F_false is returned on successful print of known errors.
+ *   F_output_not on success, but no printing is performed.
+ *
+ * @see fll_error_print()
+ */
+#ifndef _di_fake_print_error_fallback_
+  extern f_status_t fake_print_error_fallback(fake_setting_t * const setting, const f_status_t status, const fl_print_t print, const f_string_t function);
+#endif // _di_fake_print_error_fallback_
+
+/**
  * Print file related error message regarding a function failing in some way.
+ *
+ * @param setting
+ *   The main program settings.
+ *
+ *   This does not alter setting.status.
+ * @param status
+ *   The status to use.
+ *   This is provided, ignoring setting.status, for thread-safety reasons.
+ * @param print
+ *   Designates the how and where to print.
+ * @param name
+ *   The name of the file or directory.
+ * @param operation
+ *   The operation that fails, such as 'create' or 'access'.
+ * @param type
+ *   A valid file type code from the fll_error_file_type enum.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ *
+ * @see fll_error_file_print()
+ */
+#ifndef _di_fake_print_error_file_
+  extern f_status_t fake_print_error_file(fake_setting_t * const setting, const f_status_t status, const fl_print_t print, const f_string_t function, const f_string_static_t name, const f_string_static_t operation, const uint8_t type);
+#endif // _di_fake_print_error_file_
+
+/**
+ * Print file related error message regarding a function failing in some way, setting fallback to F_false and returning result..
  *
  * @param setting
  *   The main program settings.
@@ -57,10 +110,13 @@ extern "C" {
  * @return
  *   F_true is returned if the status code has no print message.
  *   F_false is returned on successful print of known errors.
+ *   F_output_not on success, but no printing is performed.
+ *
+ * @see fll_error_file_print()
  */
-#ifndef _di_fake_print_error_file_
-  extern f_status_t fake_print_error_file(fake_setting_t * const setting, const f_status_t status, const fl_print_t print, const f_string_t function, const f_string_static_t name, const f_string_static_t operation, const uint8_t type);
-#endif // _di_fake_print_error_file_
+#ifndef _di_fake_print_error_file_fallback_
+  extern f_status_t fake_print_error_file_fallback(fake_setting_t * const setting, const f_status_t status, const fl_print_t print, const f_string_t function, const f_string_static_t name, const f_string_static_t operation, const uint8_t type);
+#endif // _di_fake_print_error_file_fallback_
 
 /**
  * Print error message for when an operation fails.
@@ -171,30 +227,6 @@ extern "C" {
 #ifndef _di_fake_print_error_parameter_operation_not_with_
   extern f_status_t fake_print_error_parameter_operation_not_with(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t operation_1, const f_string_static_t operation_2);
 #endif // _di_fake_print_error_parameter_operation_not_with_
-
-/**
- * Print error message for when the parameter value is too long.
- *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.status.
- * @param print
- *   Designates the how and where to print.
- * @param symbol
- *   The symbol of the parameter.
- * @param name
- *   The name of the parameter.
- * @param value
- *   The value that is too long.
- *
- * @return
- *   F_none on success.
- *   F_output_not on success, but no printing is performed.
- */
-#ifndef _di_fake_print_error_parameter_value_too_long_
-  extern f_status_t fake_print_error_parameter_value_too_long(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name);
-#endif // _di_fake_print_error_parameter_too_value_long_
 
 /**
  * Print help.

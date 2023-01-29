@@ -90,8 +90,10 @@
 #include <fll/level_2/program.h>
 
 // Featureless Make includes.
-#include <program/fake/main/common.h>
 #include <program/fake/main/common-print.h>
+#include <program/fake/main/common-string.h>
+#include <program/fake/main/common-type.h>
+#include <program/fake/main/common.h>
 #include <program/fake/main/print.h>
 
 #ifdef __cplusplus

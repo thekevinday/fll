@@ -25,7 +25,7 @@ build_libraries-individual -lfll_error -lfll_file -lfll_fss -lfll_print -lfll_pr
 build_libraries-level -lfll_2 -lfll_1 -lfll_0
 build_libraries-monolithic -lfll
 
-build_sources_library main/fss_write.c main/common.c main/common-print.c main/print.c
+build_sources_library main/fss_write.c main/common.c main/common-print.c main/common-string.c main/common-type.c main/print.c
 build_sources_library basic/fss_write.c basic/common.c basic/print.c
 build_sources_library basic_list/fss_write.c basic_list/common.c basic_list/print.c
 build_sources_library embedded_list/fss_write.c embedded_list/common.c embedded_list/print.c
@@ -33,7 +33,7 @@ build_sources_library extended/fss_write.c extended/common.c extended/print.c
 build_sources_library extended_list/fss_write.c extended_list/common.c extended_list/print.c
 build_sources_library payload/fss_write.c payload/common.c payload/print.c
 
-build_sources_headers main/fss_write.h main/common.h main/common-print.h main/print.h main/private-common.h
+build_sources_headers main/fss_write.h main/common.h main/common-print.h main/common-string.h main/common-type.h main/print.h main/private-common.h
 build_sources_headers basic/fss_write.h basic/common.h basic/print.h basic/private-common.h
 build_sources_headers basic_list/fss_write.h basic_list/common.h basic_list/print.h
 build_sources_headers embedded_list/fss_write.h embedded_list/common.h embedded_list/print.h

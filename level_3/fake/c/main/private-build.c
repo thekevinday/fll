@@ -65,7 +65,7 @@ const f_string_static_t fake_build_documentation_files_s = macro_f_string_static
       } // for
     }
 
-    if (data->path_work.used && F_status_is_error_not(*status)) {
+    if (data->setting->work.used && F_status_is_error_not(*status)) {
       f_string_static_t buffer = f_string_static_t_initialize;
 
       if (F_status_is_error_not(*status)) {
@@ -334,11 +334,11 @@ const f_string_static_t fake_build_documentation_files_s = macro_f_string_static
       }
     }
 
-    for (i = 0; i < data->define.used && F_status_is_error_not(*status); ++i) {
+    for (i = 0; i < data->setting->defines.used && F_status_is_error_not(*status); ++i) {
 
-      if (!data->define.array[i].used) continue;
+      if (!data->setting->defines.array[i].used) continue;
 
-      *status = fll_execute_arguments_add(data->define.array[i], arguments);
+      *status = fll_execute_arguments_add(data->setting->defines.array[i], arguments);
     } // for
   }
 #endif // _di_fake_build_arguments_standard_add_
@@ -398,7 +398,7 @@ const f_string_static_t fake_build_documentation_files_s = macro_f_string_static
           break;
         }
 
-        main->signal_check = 0;
+        data->main->signal_check = 0;
       }
 
       if (!files.array[i].used) continue;
@@ -444,13 +444,10 @@ const f_string_static_t fake_build_documentation_files_s = macro_f_string_static
 
             if (F_status_set_fine(*status) != F_failure) {
               fake_print_error(data->setting, *status, data->main->error, macro_fake_f(fl_directory_copy));
-              fll_error_print(data->main->error, F_status_set_fine(*status), "", F_true);
             }
-
-            break;
           }
           else if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
-            fake_print_error_build_operation_file(data, F_status_set_fine(*status), "fl_directory_copy", fake_common_file_directory_copy_s, f_file_operation_to_s, path_source, destination_directory, F_true);
+            fake_print_error_build_operation_file(data, F_status_set_fine(*status), macro_fake_f(fl_directory_copy), fake_common_file_directory_copy_s, f_file_operation_to_s, path_source, destination_directory, F_true);
           }
 
           break;
@@ -463,8 +460,7 @@ const f_string_static_t fake_build_documentation_files_s = macro_f_string_static
         *status = f_string_dynamic_append_nulless(destination, &destination_file);
 
         if (F_status_is_error(*status)) {
-          fake_print_error(data->setting, *status, data->main->error, macro_fake_f(f_string_dynamic_resize));
-          fll_error_print(data->main->error, F_status_set_fine(*status), "f_string_dynamic_append_nulless", F_true);
+          fake_print_error(data->setting, *status, data->main->error, macro_fake_f(f_string_dynamic_append_nulless));
 
           break;
         }
@@ -473,8 +469,7 @@ const f_string_static_t fake_build_documentation_files_s = macro_f_string_static
           *status = f_string_dynamic_append_nulless(destination, &destination_directory);
 
           if (F_status_is_error(*status)) {
-            fake_print_error(data->setting, *status, data->main->error, macro_fake_f(f_string_dynamic_resize));
-            fll_error_print(data->main->error, F_status_set_fine(*status), "f_string_dynamic_append_nulless", F_true);
+            fake_print_error(data->setting, *status, data->main->error, macro_fake_f(f_string_dynamic_append_nulless));
 
             break;
           }
@@ -485,8 +480,7 @@ const f_string_static_t fake_build_documentation_files_s = macro_f_string_static
           *status = f_file_name_directory(buffer, &destination_directory);
 
           if (F_status_is_error(*status)) {
-            fake_print_error(data->setting, *status, data->main->error, macro_fake_f(f_string_dynamic_resize));
-            fll_error_print(data->main->error, F_status_set_fine(*status), "f_file_name_directory", F_true);
+            fake_print_error(data->setting, *status, data->main->error, macro_fake_f(f_file_name_directory));
 
             break;
           }
@@ -494,7 +488,7 @@ const f_string_static_t fake_build_documentation_files_s = macro_f_string_static
           *status = fl_directory_create(destination_directory, F_file_mode_all_rwx_d);
 
           if (F_status_is_error(*status)) {
-            fll_error_file_print(data->main->error, F_status_set_fine(*status), "fl_directory_create", F_true, destination_directory, f_file_operation_create_s, fll_error_file_type_directory_e);
+            fake_print_error_file(data->setting, *status, data->main->error, macro_fake_f(fl_directory_create), destination_directory, f_file_operation_create_s, fll_error_file_type_directory_e);
 
             break;
           }
@@ -502,8 +496,7 @@ const f_string_static_t fake_build_documentation_files_s = macro_f_string_static
           *status = f_string_append(path_source.string + perserve_offset, path_source.used - perserve_offset, &destination_file);
 
           if (F_status_is_error(*status)) {
-            fake_print_error(data->setting, *status, data->main->error, macro_fake_f(f_string_dynamic_resize));
-            fll_error_print(data->main->error, F_status_set_fine(*status), "f_string_append", F_true);
+            fake_print_error(data->setting, *status, data->main->error, macro_fake_f(f_string_append));
 
             break;
           }
@@ -512,8 +505,7 @@ const f_string_static_t fake_build_documentation_files_s = macro_f_string_static
           *status = f_file_name_base(path_source, &destination_file);
 
           if (F_status_is_error(*status)) {
-            fake_print_error(data->setting, *status, data->main->error, macro_fake_f(f_string_dynamic_resize));
-            fll_error_print(data->main->error, F_status_set_fine(*status), "f_file_name_base", F_true);
+            fake_print_error(data->setting, *status, data->main->error, macro_fake_f(f_file_name_base));
 
             break;
           }
@@ -532,7 +524,7 @@ const f_string_static_t fake_build_documentation_files_s = macro_f_string_static
         }
       }
       else if (F_status_is_error(*status)) {
-        fll_error_file_print(data->main->error, F_status_set_fine(*status), "f_directory_is", F_true, path_source, f_file_operation_create_s, fll_error_file_type_file_e);
+        fake_print_error_file(data->setting, *status, data->main->error, macro_fake_f(f_directory_is), path_source, f_file_operation_create_s, fll_error_file_type_file_e);
 
         break;
       }
@@ -624,10 +616,10 @@ const f_string_static_t fake_build_documentation_files_s = macro_f_string_static
     {
       f_string_dynamic_t defines = f_string_dynamic_t_initialize;
 
-      if (data->define.used) {
-        for (f_array_length_t i = 0; i < data->define.used; ++i) {
+      if (data->setting->defines.used) {
+        for (f_array_length_t i = 0; i < data->setting->defines.used; ++i) {
 
-          *status = f_string_dynamic_mash(f_string_space_s, data->define.array[i], &defines);
+          *status = f_string_dynamic_mash(f_string_space_s, data->setting->defines.array[i], &defines);
           if (F_status_is_error(*status)) break;
         } // for
 
@@ -641,7 +633,7 @@ const f_string_static_t fake_build_documentation_files_s = macro_f_string_static
         }
       }
 
-      const f_string_static_t parameters_prefix[] = {
+      const f_string_static_t prefixs[] = {
         f_console_symbol_short_normal_s,
         f_console_symbol_short_normal_s,
         f_console_symbol_short_normal_s,
@@ -651,7 +643,7 @@ const f_string_static_t fake_build_documentation_files_s = macro_f_string_static
         f_console_symbol_short_normal_s,
       };
 
-      const f_string_static_t parameters_name[] = {
+      const f_string_static_t names[] = {
         fake_short_define_s,
         fake_short_process_s,
         fake_short_settings_s,
@@ -661,17 +653,17 @@ const f_string_static_t fake_build_documentation_files_s = macro_f_string_static
         fake_short_path_work_s,
       };
 
-      const f_string_static_t parameters_value[] = {
+      const f_string_static_t values[] = {
         defines,
-        data->process,
-        data->settings,
-        data->path_build,
-        data->path_data,
-        data->path_sources,
-        data->path_work,
+        data->setting->process,
+        data->setting->settings,
+        data->setting->build,
+        data->setting->data,
+        data->setting->sources,
+        data->setting->work,
       };
 
-      *status = fll_execute_arguments_add_parameter_set(parameters_prefix, parameters_name, parameters_value, 7, &arguments);
+      *status = fll_execute_arguments_add_parameter_set(prefixs, names, values, 7, &arguments);
 
       f_string_dynamic_resize(0, &defines);
 
@@ -833,7 +825,7 @@ const f_string_static_t fake_build_documentation_files_s = macro_f_string_static
         fl_print_format("%r%[Building%] ", data->main->message.to, f_string_eol_s, data->main->context.set.important, data->main->context.set.important);
         fl_print_format("%[%Q%]", data->main->message.to, data->main->context.set.notable, data_build.setting.build_name, data->main->context.set.notable);
         fl_print_format("%[ using '%]", data->main->message.to, data->main->context.set.important, data->main->context.set.important);
-        fl_print_format("%[%Q%]", data->main->message.to, data->main->context.set.notable, data->settings, data->main->context.set.notable);
+        fl_print_format("%[%Q%]", data->main->message.to, data->main->context.set.notable, data->setting->settings, data->main->context.set.notable);
 
         fl_print_format("%[' with modes '%]", data->main->message.to, data->main->context.set.important, data->main->context.set.important);
 
@@ -851,8 +843,8 @@ const f_string_static_t fake_build_documentation_files_s = macro_f_string_static
         // Custom modes are always used if provided, otherwise if any mode is specified, the entire defaults is replaced.
         const f_string_statics_t * const modes = modes_custom.used
           ? &modes_custom
-          : data->mode.used
-            ? &data->mode
+          : data->setting->modes.used
+            ? &data->setting->modes
             : &data_build.setting.modes_default;
 
         for (f_array_length_t i = 0; i < modes->used; ) {
@@ -990,7 +982,7 @@ const f_string_static_t fake_build_documentation_files_s = macro_f_string_static
 #ifndef _di_fake_build_path_source_length_
   void fake_build_path_source_length(fake_data_t * const data, fake_build_data_t * const data_build, f_string_static_t * const setting_path_source, f_string_static_t * const source) {
 
-    source->used = data->path_sources.used;
+    source->used = data->setting->sources.used;
 
     if (setting_path_source->used) {
       source->used += setting_path_source->used;
@@ -1017,8 +1009,8 @@ const f_string_static_t fake_build_documentation_files_s = macro_f_string_static
 
     source->used = 0;
 
-    memcpy(source->string, data->path_sources.string, sizeof(f_char_t) * data->path_sources.used);
-    source->used += data->path_sources.used;
+    memcpy(source->string, data->setting->sources.string, sizeof(f_char_t) * data->setting->sources.used);
+    source->used += data->setting->sources.used;
 
     memcpy(source->string + source->used, setting_path_source->string, sizeof(f_char_t) * setting_path_source->used);
     source->used += setting_path_source->used;
@@ -1144,7 +1136,7 @@ const f_string_static_t fake_build_documentation_files_s = macro_f_string_static
     *status = f_file_touch(file, mode.regular, F_false);
 
     if (F_status_is_error(*status)) {
-      fll_error_file_print(data->main->error, F_status_set_fine(*status), "f_file_touch", F_true, file, f_file_operation_touch_s, fll_error_file_type_file_e);
+      fake_print_error_file(data->setting, *status, data->main->error, macro_fake_f(f_file_touch), file, f_file_operation_touch_s, fll_error_file_type_file_e);
     }
   }
 #endif // _di_fake_build_touch_

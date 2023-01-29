@@ -39,14 +39,14 @@ void firewall_print_error_on_allocation_failure(const fl_print_t output) {
   fll_print_format("%r%[%QUnable to allocate memory.%]%r", output.to, f_string_eol_s, output.context, output.prefix, output.context, f_string_eol_s);
 }
 
-void firewall_print_error_on_invalid_parameter(const fl_print_t output, const char *function) {
+void firewall_print_error_on_invalid_parameter(const fl_print_t output, const f_string_t function) {
 
   if (output.verbosity == f_console_verbosity_quiet_e) return;
 
   fll_print_format("%r%[%QInvalid parameter when calling %s().%]%r", output.to, f_string_eol_s, output.context, output.prefix, function, output.context, f_string_eol_s);
 }
 
-void firewall_print_error_on_invalid_parameter_for_file(const fl_print_t output, const char *function, const f_string_static_t filename) {
+void firewall_print_error_on_invalid_parameter_for_file(const fl_print_t output, const f_string_t function, const f_string_static_t filename) {
 
   if (output.verbosity == f_console_verbosity_quiet_e) return;
 
@@ -71,14 +71,14 @@ void firewall_print_error_on_operation(const fl_print_t output, const f_string_s
   f_file_stream_unlock(output.to);
 }
 
-void firewall_print_error_on_unhandled(const fl_print_t output, const char *function, const f_status_t status) {
+void firewall_print_error_on_unhandled(const fl_print_t output, const f_string_t function, const f_status_t status) {
 
   if (output.verbosity == f_console_verbosity_quiet_e) return;
 
   fll_print_format("%r%[%QAn unhandled error (%ui) has occurred while calling %s().%]%r", output.to, f_string_eol_s, output.context, output.prefix, status, function, output.context, f_string_eol_s);
 }
 
-void firewall_print_error_on_unhandled_for_file(const fl_print_t output, const char *function, const f_status_t status, const f_string_static_t filename) {
+void firewall_print_error_on_unhandled_for_file(const fl_print_t output, const f_string_t function, const f_status_t status, const f_string_static_t filename) {
 
   if (output.verbosity == f_console_verbosity_quiet_e) return;
 

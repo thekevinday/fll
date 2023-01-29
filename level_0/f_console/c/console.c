@@ -550,7 +550,7 @@ extern "C" {
             }
 
             if (parameters->array[i].flag & f_console_flag_disable_e) continue;
-            if (!(parameters->array[i].flag & f_console_result_alone_e)) continue;
+            if (!(parameters->array[i].flag & f_console_flag_simple_e)) continue;
             if (!parameters->array[i].match_simple.used && !parameters->array[i].match_simple.string) continue;
             if (strncmp(arguments.argv[state.location], parameters->array[i].match_simple.string, parameters->array[i].match_simple.used + 1)) continue;
 

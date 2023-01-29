@@ -42,8 +42,10 @@
 #include <fll/level_2/status_string.h>
 
 // Status Code includes.
-#include <program/status_code/main/common.h>
 #include <program/status_code/main/common-print.h>
+#include <program/status_code/main/common-string.h>
+#include <program/status_code/main/common-type.h>
+#include <program/status_code/main/common.h>
 #include <program/status_code/main/print.h>
 
 #ifdef __cplusplus

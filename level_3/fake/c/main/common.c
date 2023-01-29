@@ -1,115 +1,9 @@
 #include "fake.h"
+#include "private-common.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-#ifndef _di_fake_program_version_s_
-  const f_string_static_t fake_program_version_s = macro_f_string_static_t_initialize(FAKE_program_version_s, 0, FAKE_program_version_s_length);
-#endif // _di_fake_program_version_s_
-
-#ifndef _di_fake_program_name_s_
-  const f_string_static_t fake_program_name_s = macro_f_string_static_t_initialize(FAKE_program_name_s, 0, FAKE_program_name_s_length);
-  const f_string_static_t fake_program_name_long_s = macro_f_string_static_t_initialize(FAKE_program_name_long_s, 0, FAKE_program_name_long_s_length);
-#endif // _di_fake_program_name_s_
-
-#ifndef _di_fake_program_help_parameter_s_
-  const f_string_static_t fake_program_help_parameters_s = macro_f_string_static_t_initialize(FAKE_program_help_parameters_s, 0, FAKE_program_help_parameters_s_length);
-#endif // _di_fake_program_help_parameter_s_
-
-#ifndef _di_fake_path_s_
-  const f_string_static_t fake_path_part_build_s = macro_f_string_static_t_initialize(FAKE_path_part_build_s, 0, FAKE_path_part_build_s_length);
-  const f_string_static_t fake_path_part_c_s = macro_f_string_static_t_initialize(FAKE_path_part_c_s, 0, FAKE_path_part_c_s_length);
-  const f_string_static_t fake_path_part_cpp_s = macro_f_string_static_t_initialize(FAKE_path_part_cpp_s, 0, FAKE_path_part_cpp_s_length);
-  const f_string_static_t fake_path_part_data_s = macro_f_string_static_t_initialize(FAKE_path_part_data_s, 0, FAKE_path_part_data_s_length);
-  const f_string_static_t fake_path_part_documentation_s = macro_f_string_static_t_initialize(FAKE_path_part_documentation_s, 0, FAKE_path_part_documentation_s_length);
-  const f_string_static_t fake_path_part_documents_s = macro_f_string_static_t_initialize(FAKE_path_part_documents_s, 0, FAKE_path_part_documents_s_length);
-  const f_string_static_t fake_path_part_includes_s = macro_f_string_static_t_initialize(FAKE_path_part_includes_s, 0, FAKE_path_part_includes_s_length);
-  const f_string_static_t fake_path_part_libraries_s = macro_f_string_static_t_initialize(FAKE_path_part_libraries_s, 0, FAKE_path_part_libraries_s_length);
-  const f_string_static_t fake_path_part_licenses_s = macro_f_string_static_t_initialize(FAKE_path_part_licenses_s, 0, FAKE_path_part_licenses_s_length);
-  const f_string_static_t fake_path_part_objects_s = macro_f_string_static_t_initialize(FAKE_path_part_objects_s, 0, FAKE_path_part_objects_s_length);
-  const f_string_static_t fake_path_part_process_s = macro_f_string_static_t_initialize(FAKE_path_part_process_s, 0, FAKE_path_part_process_s_length);
-  const f_string_static_t fake_path_part_programs_s = macro_f_string_static_t_initialize(FAKE_path_part_programs_s, 0, FAKE_path_part_programs_s_length);
-  const f_string_static_t fake_path_part_script_s = macro_f_string_static_t_initialize(FAKE_path_part_script_s, 0, FAKE_path_part_script_s_length);
-  const f_string_static_t fake_path_part_settings_s = macro_f_string_static_t_initialize(FAKE_path_part_settings_s, 0, FAKE_path_part_settings_s_length);
-  const f_string_static_t fake_path_part_shared_s = macro_f_string_static_t_initialize(FAKE_path_part_shared_s, 0, FAKE_path_part_shared_s_length);
-  const f_string_static_t fake_path_part_shell_s = macro_f_string_static_t_initialize(FAKE_path_part_shell_s, 0, FAKE_path_part_shell_s_length);
-  const f_string_static_t fake_path_part_specifications_s = macro_f_string_static_t_initialize(FAKE_path_part_specifications_s, 0, FAKE_path_part_specifications_s_length);
-  const f_string_static_t fake_path_part_stage_s = macro_f_string_static_t_initialize(FAKE_path_part_stage_s, 0, FAKE_path_part_stage_s_length);
-  const f_string_static_t fake_path_part_static_s = macro_f_string_static_t_initialize(FAKE_path_part_static_s, 0, FAKE_path_part_static_s_length);
-#endif // _di_fake_path_s_
-
-#ifndef _di_fake_file_s_
-  const f_string_static_t fake_file_defines_s = macro_f_string_static_t_initialize(FAKE_file_defines_s, 0, FAKE_file_defines_s_length);
-  const f_string_static_t fake_file_dependencies_s = macro_f_string_static_t_initialize(FAKE_file_dependencies_s, 0, FAKE_file_dependencies_s_length);
-  const f_string_static_t fake_file_process_pre_s = macro_f_string_static_t_initialize(FAKE_file_process_pre_s, 0, FAKE_file_process_pre_s_length);
-  const f_string_static_t fake_file_process_post_s = macro_f_string_static_t_initialize(FAKE_file_process_post_s, 0, FAKE_file_process_post_s_length);
-  const f_string_static_t fake_file_readme_s = macro_f_string_static_t_initialize(FAKE_file_readme_s, 0, FAKE_file_readme_s_length);
-#endif // _di_fake_file_s_
-
-/**
- * Provide default settings.
- */
-#ifndef _di_fake_default_s_
-  const f_string_static_t fake_default_build_s = macro_f_string_static_t_initialize(FAKE_default_build_s, 0, FAKE_default_build_s_length);
-  const f_string_static_t fake_default_data_s = macro_f_string_static_t_initialize(FAKE_default_data_s, 0, FAKE_default_data_s_length);
-  const f_string_static_t fake_default_sources_s = macro_f_string_static_t_initialize(FAKE_default_sources_s, 0, FAKE_default_sources_s_length);
-  const f_string_static_t fake_default_work_s = macro_f_string_static_t_initialize(FAKE_default_work_s, 0, FAKE_default_work_s_length);
-
-  const f_string_static_t fake_default_fakefile_s = macro_f_string_static_t_initialize(FAKE_default_fakefile_s, 0, FAKE_default_fakefile_s_length);
-  const f_string_static_t fake_default_process_s = macro_f_string_static_t_initialize(FAKE_default_process_s, 0, FAKE_default_process_s_length);
-  const f_string_static_t fake_default_settings_s = macro_f_string_static_t_initialize(FAKE_default_settings_s, 0, FAKE_default_settings_s_length);
-#endif // _di_fake_default_s_
-
-#ifndef _di_fake_build_language_s_
-  const f_string_static_t fake_build_language_bash_s = macro_f_string_static_t_initialize(FAKE_build_language_bash_s, 0, FAKE_build_language_bash_s_length);
-  const f_string_static_t fake_build_language_c_s = macro_f_string_static_t_initialize(FAKE_build_language_c_s, 0, FAKE_build_language_c_s_length);
-  const f_string_static_t fake_build_language_cpp_s = macro_f_string_static_t_initialize(FAKE_build_language_cpp_s, 0, FAKE_build_language_cpp_s_length);
-  const f_string_static_t fake_build_language_zsh_s = macro_f_string_static_t_initialize(FAKE_build_language_zsh_s, 0, FAKE_build_language_zsh_s_length);
-#endif // _di_fake_build_language_s_
-
-#ifndef _di_fake_build_version_s_
-  const f_string_static_t fake_build_version_major_s = macro_f_string_static_t_initialize(FAKE_build_version_major_s, 0, FAKE_build_version_major_s_length);
-  const f_string_static_t fake_build_version_minor_s = macro_f_string_static_t_initialize(FAKE_build_version_minor_s, 0, FAKE_build_version_minor_s_length);
-  const f_string_static_t fake_build_version_micro_s = macro_f_string_static_t_initialize(FAKE_build_version_micro_s, 0, FAKE_build_version_micro_s_length);
-  const f_string_static_t fake_build_version_nano_s = macro_f_string_static_t_initialize(FAKE_build_version_nano_s, 0, FAKE_build_version_nano_s_length);
-#endif // _di_fake_build_version_s_
-
-#ifndef _di_fake_parameter_d_
-  const f_string_static_t fake_short_define_s = macro_f_string_static_t_initialize(FAKE_short_define_s, 0, FAKE_short_define_s_length);
-  const f_string_static_t fake_short_fakefile_s = macro_f_string_static_t_initialize(FAKE_short_fakefile_s, 0, FAKE_short_fakefile_s_length);
-  const f_string_static_t fake_short_mode_s = macro_f_string_static_t_initialize(FAKE_short_mode_s, 0, FAKE_short_mode_s_length);
-  const f_string_static_t fake_short_process_s = macro_f_string_static_t_initialize(FAKE_short_process_s, 0, FAKE_short_process_s_length);
-  const f_string_static_t fake_short_settings_s = macro_f_string_static_t_initialize(FAKE_short_settings_s, 0, FAKE_short_settings_s_length);
-
-  const f_string_static_t fake_short_path_build_s = macro_f_string_static_t_initialize(FAKE_short_path_build_s, 0, FAKE_short_path_build_s_length);
-  const f_string_static_t fake_short_path_data_s = macro_f_string_static_t_initialize(FAKE_short_path_data_s, 0, FAKE_short_path_data_s_length);
-  const f_string_static_t fake_short_path_sources_s = macro_f_string_static_t_initialize(FAKE_short_path_sources_s, 0, FAKE_short_path_sources_s_length);
-  const f_string_static_t fake_short_path_work_s = macro_f_string_static_t_initialize(FAKE_short_path_work_s, 0, FAKE_short_path_work_s_length);
-
-  const f_string_static_t fake_long_define_s = macro_f_string_static_t_initialize(FAKE_long_define_s, 0, FAKE_long_define_s_length);
-  const f_string_static_t fake_long_fakefile_s = macro_f_string_static_t_initialize(FAKE_long_fakefile_s, 0, FAKE_long_fakefile_s_length);
-  const f_string_static_t fake_long_mode_s = macro_f_string_static_t_initialize(FAKE_long_mode_s, 0, FAKE_long_mode_s_length);
-  const f_string_static_t fake_long_process_s = macro_f_string_static_t_initialize(FAKE_long_process_s, 0, FAKE_long_process_s_length);
-  const f_string_static_t fake_long_settings_s = macro_f_string_static_t_initialize(FAKE_long_settings_s, 0, FAKE_long_settings_s_length);
-
-  const f_string_static_t fake_long_path_build_s = macro_f_string_static_t_initialize(FAKE_long_path_build_s, 0, FAKE_long_path_build_s_length);
-  const f_string_static_t fake_long_path_data_s = macro_f_string_static_t_initialize(FAKE_long_path_data_s, 0, FAKE_long_path_data_s_length);
-  const f_string_static_t fake_long_path_sources_s = macro_f_string_static_t_initialize(FAKE_long_path_sources_s, 0, FAKE_long_path_sources_s_length);
-  const f_string_static_t fake_long_path_work_s = macro_f_string_static_t_initialize(FAKE_long_path_work_s, 0, FAKE_long_path_work_s_length);
-
-  const f_string_static_t fake_long_documents_disabled_s = macro_f_string_static_t_initialize(FAKE_long_documents_disabled_s, 0, FAKE_long_documents_disabled_s_length);
-  const f_string_static_t fake_long_documents_enabled_s = macro_f_string_static_t_initialize(FAKE_long_documents_enabled_s, 0, FAKE_long_documents_enabled_s_length);
-  const f_string_static_t fake_long_shared_disabled_s = macro_f_string_static_t_initialize(FAKE_long_shared_disabled_s, 0, FAKE_long_shared_disabled_s_length);
-  const f_string_static_t fake_long_shared_enabled_s = macro_f_string_static_t_initialize(FAKE_long_shared_enabled_s, 0, FAKE_long_shared_enabled_s_length);
-  const f_string_static_t fake_long_static_disabled_s = macro_f_string_static_t_initialize(FAKE_long_static_disabled_s, 0, FAKE_long_static_disabled_s_length);
-  const f_string_static_t fake_long_static_enabled_s = macro_f_string_static_t_initialize(FAKE_long_static_enabled_s, 0, FAKE_long_static_enabled_s_length);
-
-  const f_string_static_t fake_other_operation_build_s = macro_f_string_static_t_initialize(FAKE_other_operation_build_s, 0, FAKE_other_operation_build_s_length);
-  const f_string_static_t fake_other_operation_clean_s = macro_f_string_static_t_initialize(FAKE_other_operation_clean_s, 0, FAKE_other_operation_clean_s_length);
-  const f_string_static_t fake_other_operation_make_s = macro_f_string_static_t_initialize(FAKE_other_operation_make_s, 0, FAKE_other_operation_make_s_length);
-  const f_string_static_t fake_other_operation_skeleton_s = macro_f_string_static_t_initialize(FAKE_other_operation_skeleton_s, 0, FAKE_other_operation_skeleton_s_length);
-#endif // _di_fake_parameter_d_
 
 #ifndef _di_fake_setting_delete_
   f_status_t fake_setting_delete(fake_setting_t * const setting) {
@@ -118,7 +12,9 @@ extern "C" {
 
     f_string_dynamic_resize(0, &setting->build);
     f_string_dynamic_resize(0, &setting->data);
+    f_string_dynamic_resize(0, &setting->documents);
     f_string_dynamic_resize(0, &setting->fakefile);
+    f_string_dynamic_resize(0, &setting->licenses);
     f_string_dynamic_resize(0, &setting->process);
     f_string_dynamic_resize(0, &setting->settings);
     f_string_dynamic_resize(0, &setting->sources);
@@ -138,8 +34,18 @@ extern "C" {
 
     if (!main || !setting) return;
 
-    // Load parameters.
-    setting->status = f_console_parameter_process(arguments, state, &main->parameters, (void *) setting);
+    main->output.to.id = F_type_descriptor_output_d;
+    main->output.to.stream = F_type_output_d;
+    main->output.to.flag = F_file_flag_create_d | F_file_flag_write_only_d | F_file_flag_append_d;
+
+    {
+      fake_data_t data = fake_data_t_initialize;
+      data.main = main;
+      data.setting = setting;
+
+      // Load parameters.
+      setting->status = f_console_parameter_process(state, arguments, &main->parameters, (void *) &data);
+    }
 
     if (F_status_is_error(setting->status)) {
       fake_print_error(setting, setting->status, main->error, macro_fake_f(f_console_parameter_process));
@@ -199,10 +105,6 @@ extern "C" {
         }
       }
     }
-
-    main->output.to.id = F_type_descriptor_output_d;
-    main->output.to.stream = F_type_output_d;
-    main->output.to.flag = F_file_flag_create_d | F_file_flag_write_only_d | F_file_flag_append_d;
 
     if (main->parameters.array[fake_parameter_help_e].result & f_console_result_found_e) {
       setting->flag |= fake_main_flag_help_e;
@@ -340,20 +242,20 @@ extern "C" {
           }
 
           if (main->parameters.array[parameters[i]].result & f_console_result_value_e) {
-            index = data->main->parameters.array[parameters[i]].values.array[data->main->parameters.array[parameters[i]].values.used - 1];
+            index = main->parameters.array[parameters[i]].values.array[main->parameters.array[parameters[i]].values.used - 1];
 
-            if (data->main->parameters.arguments.array[index].used) {
+            if (main->parameters.arguments.array[index].used) {
               if (parameters[i] == fake_parameter_process_e) {
-                for (j = 0; j < data->main->parameters.arguments.array[index].used; ++j) {
+                for (j = 0; j < main->parameters.arguments.array[index].used; ++j) {
 
-                  setting->status = f_utf_is_word_dash_plus(data->main->parameters.arguments.array[index].string + j, data->main->parameters.arguments.array[index].used - j, F_false);
+                  setting->status = f_utf_is_word_dash_plus(main->parameters.arguments.array[index].string + j, main->parameters.arguments.array[index].used - j, F_false);
 
                   if (F_status_is_error(setting->status)) {
-                    if (print.verbosity > f_console_verbosity_quiet_e) {
-                      fake_print_line_first_locked(setting, print);
+                    if (main->error.verbosity > f_console_verbosity_quiet_e) {
+                      fake_print_line_first_locked(setting, main->error);
 
-                      if (fll_error_print(data->main->error, F_status_set_fine(setting->status), macro_fake_f(f_utf_is_word_dash_plus), F_false) == F_false) {
-                        fll_program_print_error_parameter_process(data->main->error, F_status_set_fine(setting->status), f_console_symbol_long_normal_s, names[i]);
+                      if (fake_print_error_fallback(setting, setting->status, main->error, macro_fake_f(f_utf_is_word_dash_plus)) == F_false) {
+                        fll_program_print_error_parameter_process(main->error, f_console_symbol_long_normal_s, names[i]);
                       }
                     }
 
@@ -363,7 +265,7 @@ extern "C" {
                   if (setting->status == F_false) {
                     setting->status = F_status_set_error(F_parameter);
 
-                    fake_print_error_parameter_not_word(setting, data->main->error, f_console_symbol_long_normal_s, names[i], data->main->parameters.arguments.array[index]);
+                    fake_print_error_parameter_not_word(setting, main->error, f_console_symbol_long_normal_s, names[i], main->parameters.arguments.array[index]);
 
                     return;
                   }
@@ -371,14 +273,14 @@ extern "C" {
               }
 
               if (cleanups[i]) {
-                status = f_path_directory_cleanup(data->main->parameters.arguments.array[index], parameters_value[i]);
+                setting->status = f_path_directory_cleanup(main->parameters.arguments.array[index], variable[i]);
 
                 if (F_status_is_error(setting->status)) {
-                  if (print.verbosity > f_console_verbosity_quiet_e) {
-                    fake_print_line_first_locked(setting, print);
+                  if (main->error.verbosity > f_console_verbosity_quiet_e) {
+                    fake_print_line_first_locked(setting, main->error);
 
-                    if (fll_error_print(data->main->error, F_status_set_fine(setting->status), macro_fake_f(f_path_directory_cleanup), F_false) == F_false) {
-                      fll_program_print_error_parameter_process(data->main->error, F_status_set_fine(setting->status), f_console_symbol_long_normal_s, names[i]);
+                    if (fake_print_error_fallback(setting, setting->status, main->error, macro_fake_f(f_path_directory_cleanup)) == F_false) {
+                      fll_program_print_error_parameter_process(main->error, f_console_symbol_long_normal_s, names[i]);
                     }
                   }
 
@@ -398,15 +300,15 @@ extern "C" {
                   }
                 }
 
-                variable[i]->string = data->main->parameters.arguments.array[index].string;
-                variable[i]->used = data->main->parameters.arguments.array[index].used;
+                variable[i]->string = main->parameters.arguments.array[index].string;
+                variable[i]->used = main->parameters.arguments.array[index].used;
                 variable[i]->size = 0;
               }
 
               if (!variable[i]->used) {
                 setting->status = F_status_set_error(F_parameter);
 
-                fake_print_error_parameter_not_empty(setting, data->main->error, f_console_symbol_long_normal_s, names[i], data->main->parameters.arguments.array[index]);
+                fake_print_error_parameter_not_empty(setting, main->error, f_console_symbol_long_normal_s, names[i], main->parameters.arguments.array[index]);
 
                 return;
               }
@@ -446,8 +348,8 @@ extern "C" {
         };
 
         f_string_dynamics_t * const variable[] = {
-          &setting->define,
-          &setting->mode,
+          &setting->defines,
+          &setting->modes,
         };
 
         for (i = 0; i < 2; ++i) {
@@ -463,14 +365,14 @@ extern "C" {
           }
 
           if (main->parameters.array[parameters[i]].result & f_console_result_value_e) {
-            setting->status = fll_program_parameter_additional_rip(data->main->parameters.arguments.array, data->main->parameters.array[parameters[i]].values, variable[i]);
+            setting->status = fll_program_parameter_additional_rip(main->parameters.arguments.array, main->parameters.array[parameters[i]].values, variable[i]);
 
             if (F_status_is_error(setting->status)) {
-              if (print.verbosity > f_console_verbosity_quiet_e) {
-                fake_print_line_first_locked(setting, print);
+              if (main->error.verbosity > f_console_verbosity_quiet_e) {
+                fake_print_line_first_locked(setting, main->error);
 
-                if (fll_error_print(data->main->error, F_status_set_fine(setting->status), macro_fake_f(fll_program_parameter_additional_rip), F_false) == F_false) {
-                  fll_program_print_error_parameter_process(data->main->error, F_status_set_fine(setting->status), f_console_symbol_long_normal_s, names[i]);
+                if (fake_print_error_fallback(setting, setting->status, main->error, macro_fake_f(fll_program_parameter_additional_rip)) == F_false) {
+                  fll_program_print_error_parameter_process(main->error, f_console_symbol_long_normal_s, names[i]);
                 }
               }
 
@@ -482,20 +384,20 @@ extern "C" {
               f_array_length_t j = 0;
               f_array_length_t width_max = 0;
 
-              for (; i < data->mode.used; ++i) {
+              for (; i < setting->modes.used; ++i) {
 
-                for (j = 0; j < data->mode.array[i].used; ++j) {
+                for (j = 0; j < setting->modes.array[i].used; ++j) {
 
-                  width_max = data->mode.array[i].used - j;
+                  width_max = setting->modes.array[i].used - j;
 
-                  setting->status = f_utf_is_word_dash_plus(data->main->parameters.arguments.array[i].string + j, data->main->parameters.arguments.array[i].used - j, F_false);
+                  setting->status = f_utf_is_word_dash_plus(main->parameters.arguments.array[i].string + j, main->parameters.arguments.array[i].used - j, F_false);
 
                   if (F_status_is_error(setting->status)) {
-                    if (print.verbosity > f_console_verbosity_quiet_e) {
-                      fake_print_line_first_locked(setting, print);
+                    if (main->error.verbosity > f_console_verbosity_quiet_e) {
+                      fake_print_line_first_locked(setting, main->error);
 
-                      if (fll_error_print(data->main->error, F_status_set_fine(setting->status), macro_fake_f(f_utf_is_word_dash_plus), F_false) == F_false) {
-                        fll_program_print_error_parameter_process(data->main->error, F_status_set_fine(setting->status), f_console_symbol_long_normal_s, names[i]);
+                      if (fake_print_error_fallback(setting, setting->status, main->error, macro_fake_f(f_utf_is_word_dash_plus)) == F_false) {
+                        fll_program_print_error_parameter_process(main->error, f_console_symbol_long_normal_s, names[i]);
                       }
                     }
 
@@ -505,7 +407,7 @@ extern "C" {
                   if (setting->status == F_false) {
                     setting->status = F_status_set_error(F_parameter);
 
-                    fake_print_error_parameter_not_word(setting, data->main->error, f_console_symbol_long_normal_s, names[i], data->main->parameters.arguments.array[index]);
+                    fake_print_error_parameter_not_word(setting, main->error, f_console_symbol_long_normal_s, names[i], main->parameters.arguments.array[index]);
 
                     return;
                   }
@@ -518,11 +420,11 @@ extern "C" {
     }
 
     if (setting->operations.used) {
-      setting->flag |= fake_data_flag_operation_e;
+      setting->flag |= fake_main_flag_operation_e;
     }
     else {
-      setting->flag |= fake_data_flag_operation_make_e;
-      setting->flag -= setting->flag & fake_data_flag_operation_e;
+      setting->flag |= fake_main_flag_operation_make_e;
+      setting->flag -= setting->flag & fake_main_flag_operation_e;
 
       setting->status = f_uint8s_increase_by(1, &setting->operations);
 
@@ -542,45 +444,45 @@ extern "C" {
 
     if (!state) return;
 
-    if (!parameters || !data || state->type != f_console_parameter_state_type_match_other_e)) {
+    if (!void_parameters || !void_data || (state->type != f_console_parameter_state_type_simple_e && state->type != f_console_parameter_state_type_miss_e)) {
       state->status = F_process;
 
       return;
     }
 
     f_console_parameters_t * const parameters = (f_console_parameters_t * const) void_parameters;
-    fake_setting_t * const setting = (fake_setting_t * const) void_data;
+    fake_data_t * const data = (fake_data_t * const) void_data;
 
-    state->status = f_uint8s_increase(fake_default_allocation_small_d, &setting->operations);
+    state->status = f_uint8s_increase(fake_default_allocation_small_d, &data->setting->operations);
 
     if (F_status_is_error(state->status)) {
-      fake_print_error(setting, state->status, main->error, macro_fake_f(f_uint8s_increase));
+      fake_print_error(data->setting, state->status, data->main->error, macro_fake_f(f_uint8s_increase));
 
       return;
     }
 
-    switch (state.match) {
+    switch (state->at) {
       case fake_parameter_operation_build_e:
-        setting->operations.array[setting->operations.used++] = fake_operation_build_e;
-        setting->flag |= fake_data_flag_operation_build_e;
+        data->setting->operations.array[data->setting->operations.used++] = fake_operation_build_e;
+        data->setting->flag |= fake_main_flag_operation_build_e;
 
         break;
 
       case fake_parameter_operation_clean_e:
-        setting->operations.array[setting->operations.used++] = fake_operation_clean_e;
-        setting->flag |= fake_data_flag_operation_clean_e;
+        data->setting->operations.array[data->setting->operations.used++] = fake_operation_clean_e;
+        data->setting->flag |= fake_main_flag_operation_clean_e;
 
         break;
 
       case fake_parameter_operation_make_e:
-        setting->operations.array[setting->operations.used++] = fake_operation_make_e;
-        setting->flag |= fake_data_flag_operation_make_e;
+        data->setting->operations.array[data->setting->operations.used++] = fake_operation_make_e;
+        data->setting->flag |= fake_main_flag_operation_make_e;
 
         break;
 
       case fake_parameter_operation_skeleton_e:
-        setting->operations.array[setting->operations.used++] = fake_operation_skeleton_e;
-        setting->flag |= fake_data_flag_operation_skeleton_e;
+        data->setting->operations.array[data->setting->operations.used++] = fake_operation_skeleton_e;
+        data->setting->flag |= fake_main_flag_operation_skeleton_e;
 
         break;
 

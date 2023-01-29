@@ -123,13 +123,15 @@ extern "C" {
  * Provide a special type explicitly intended to be used for f_console_parameter_state_t.
  *
  * f_console_parameter_state_type_*_e:
- *   - none:         No type set.
- *   - identify:     Perform identify processing.
- *   - match_normal: Perform short or long parameter match processing.
- *   - match_not:    Perform no parameter match processi
- *   - match_other:  Perform other parameter match processing.ng.
- *   - need:         Perform value is needed processing.
- *   - wrap_up:      Perform wrap up processing.
+ *   - none:             No type set.
+ *   - identify:         Perform identify processing.
+ *   - long:             Perform long parameter match processing.
+ *   - miss:             Perform no parameter match processi
+ *   - short:            Perform short parameter match processing.
+ *   - short_preprocess: Perform short parameter match processing.
+ *   - simple:           Perform simple parameter match processing.
+ *   - need:             Perform value is needed processing.
+ *   - wrap_up:          Perform wrap up processing.
  */
 #ifndef _di_f_console_parameter_state_type_e_
   enum {

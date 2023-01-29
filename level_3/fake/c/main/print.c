@@ -17,6 +17,19 @@ extern "C" {
   }
 #endif // _di_fake_print_error_
 
+#ifndef _di_fake_print_error_fallback_
+  f_status_t fake_print_error_fallback(fake_setting_t * const setting, const f_status_t status, const fl_print_t print, const f_string_t function) {
+
+    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
+
+    fake_print_line_first_locked(setting, print);
+
+    if (fll_error_print(print, F_status_set_fine(status), function, F_false) == F_known_not) return F_false;
+
+    return F_true;
+  }
+#endif // _di_fake_print_error_fallback_
+
 #ifndef _di_fake_print_error_file_
   f_status_t fake_print_error_file(fake_setting_t * const setting, const f_status_t status, const fl_print_t print, const f_string_t function, const f_string_static_t name, const f_string_static_t operation, const uint8_t type) {
 
@@ -29,6 +42,19 @@ extern "C" {
   }
 #endif // _di_fake_print_error_file_
 
+#ifndef _di_fake_print_error_file_fallback_
+  f_status_t fake_print_error_file_fallback(fake_setting_t * const setting, const f_status_t status, const fl_print_t print, const f_string_t function, const f_string_static_t name, const f_string_static_t operation, const uint8_t type) {
+
+    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
+
+    fake_print_line_first_locked(setting, print);
+
+    if (fll_error_file_print(print, F_status_set_fine(status), function, F_false, name, operation, type) == F_known_not) return F_false;
+
+    return F_true;
+  }
+#endif // _di_fake_print_error_file_fallback_
+
 #ifndef _di_fake_print_error_failure_operation_
   f_status_t fake_print_error_failure_operation(fake_setting_t * const setting, const fl_print_t print, const uint8_t operation) {
 
@@ -40,17 +66,17 @@ extern "C" {
 
     fl_print_format("%[%QThe operation '%]%[", print.to, print.context, print.prefix, print.context, print.notable);
 
-    if (data.operation == fake_operation_build_e) {
-      f_print_dynamic(print.to, fake_other_operation_build_s);
+    if (operation == fake_operation_build_e) {
+      f_print_dynamic(fake_other_operation_build_s, print.to);
     }
-    else if (data.operation == fake_operation_clean_e) {
-      f_print_dynamic(print.to, fake_other_operation_clean_s);
+    else if (operation == fake_operation_clean_e) {
+      f_print_dynamic(fake_other_operation_clean_s, print.to);
     }
-    else if (data.operation == fake_operation_make_e) {
-      f_print_dynamic(print.to, fake_other_operation_make_s);
+    else if (operation == fake_operation_make_e) {
+      f_print_dynamic(fake_other_operation_make_s, print.to);
     }
-    else if (data.operation == fake_operation_skeleton_e) {
-      f_print_dynamic(print.to, fake_other_operation_skeleton_s);
+    else if (operation == fake_operation_skeleton_e) {
+      f_print_dynamic(fake_other_operation_skeleton_s, print.to);
     }
 
     fl_print_format("%]%[' failed.%]%r", print.to, print.notable, print.context, print.context, f_string_eol_s);
@@ -153,31 +179,6 @@ extern "C" {
   }
 #endif // _di_fake_print_error_parameter_operation_not_with_
 
-#ifndef _di_fake_print_error_parameter_value_too_long_
-  f_status_t fake_print_error_parameter_value_too_long(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t value) {
-
-    if (!setting || print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
-
-    if (!F_status_is_error(setting->status)) {
-      if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
-    }
-
-    f_file_stream_lock(print.to);
-
-    fake_print_line_first_unlocked(setting, print);
-
-    fl_print_format("%[%QThe value '%]", print.to, print.context, print.prefix, print.context);
-    fl_print_format("%[%Q%]", print.to, print.notable, value, print.notable);
-    fl_print_format("%[' for the parameter '%]", print.to, print.context, print.prefix, print.context);
-    fl_print_format("%[%Q%Q%]", print.to, print.notable, symbol, name, print.notable);
-    fl_print_format("%[' is too long.%]%r", print.to, print.context, print.context, f_string_eol_s);
-
-    f_file_stream_unlock(print.to);
-
-    return F_none;
-  }
-#endif // _di_fake_print_error_parameter_too_value_long_
-
 #ifndef _di_fake_print_help_
   f_status_t fake_print_help(fake_setting_t * const setting, const fl_print_t print) {
 
@@ -201,10 +202,12 @@ extern "C" {
 
     f_print_dynamic_raw(f_string_eol_s, print.to);
 
-    fll_program_print_help_option(print, fake_short_path_build_s, fake_long_path_build_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "  Specify a custom build directory.");
-    fll_program_print_help_option(print, fake_short_path_data_s, fake_long_path_data_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "   Specify a custom path to the data files.");
-    fll_program_print_help_option(print, fake_short_path_sources_s, fake_long_path_sources_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "Specify a custom path to the source files.");
-    fll_program_print_help_option(print, fake_short_path_work_s, fake_long_path_work_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "   Use includes/libraries/programs from this directory instead of system.");
+    fll_program_print_help_option(print, fake_short_path_build_s, fake_long_path_build_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "    Specify a custom build directory.");
+    fll_program_print_help_option(print, fake_short_path_data_s, fake_long_path_data_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "     Specify a custom path to the data files.");
+    fll_program_print_help_option(print, fake_short_path_documents_s, fake_long_path_documents_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "Specify a custom path to the documents files.");
+    fll_program_print_help_option(print, fake_short_path_licenses_s, fake_long_path_licenses_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, " Specify a custom path to the licenses files.");
+    fll_program_print_help_option(print, fake_short_path_sources_s, fake_long_path_sources_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "  Specify a custom path to the source files.");
+    fll_program_print_help_option(print, fake_short_path_work_s, fake_long_path_work_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "     Use includes/libraries/programs from this directory instead of system.");
 
     fl_print_format("%r%r %[Special Options:%] ", print.to, f_string_eol_s, f_string_eol_s, print.set->important, print.set->important);
 
@@ -238,7 +241,7 @@ extern "C" {
 
     fl_print_format("  For example, with '%[%r%r my_fakefile%]' the fakefile at", print.to, print.set->notable, f_console_symbol_long_normal_s, fake_long_fakefile_s, print.set->notable);
     fl_print_format(" '%[./my_fakefile%]' is used if found, but if it is not found then", print.to, print.set->notable, print.set->notable);
-    fl_print_format(" '%[./%r%rmy_fakefile%]' is used if found.%r", print.to, print.set->notable, fake_default_path_data_s, fake_default_path_build_s, print.set->notable, f_string_eol_s);
+    fl_print_format(" '%[./%r%rmy_fakefile%]' is used if found.%r", print.to, print.set->notable, fake_default_data_s, fake_default_build_s, print.set->notable, f_string_eol_s);
     fl_print_format("  For example, with '%[%r%r ./my_fakefile%]' the fakefile at", print.to, print.set->notable, f_console_symbol_long_normal_s, fake_long_fakefile_s, print.set->notable);
     fl_print_format(" '%[./my_fakefile%]' is used if found, but if it is not found then no other paths are attempted.%r%r", print.to, print.set->notable, print.set->notable, f_string_eol_s, f_string_eol_s);
 

@@ -13,7 +13,7 @@ extern "C" {
       f_file_stream_lock(data->main->message.to);
 
       fl_print_format("%r%[Deleting all files within build directory '%]", data->main->message.to, f_string_eol_s, data->main->context.set.important, data->main->context.set.important);
-      fl_print_format("%[%Q%]", data->main->message.to, data->main->context.set.notable, data->path_build, data->main->context.set.notable);
+      fl_print_format("%[%Q%]", data->main->message.to, data->main->context.set.notable, data->setting->build, data->main->context.set.notable);
       fl_print_format("%['.%]%r", data->main->message.to, data->main->context.set.important, data->main->context.set.important, f_string_eol_s);
 
       f_file_stream_unlock(data->main->message.to);
@@ -22,22 +22,22 @@ extern "C" {
     f_status_t status = F_none;
 
     if (data->main->error.verbosity >= f_console_verbosity_verbose_e) {
-      status = f_directory_remove_custom(data->path_build, F_directory_descriptors_max_d, F_true, fake_clean_remove_recursively_verbosely);
+      status = f_directory_remove_custom(data->setting->build, F_directory_descriptors_max_d, F_true, fake_clean_remove_recursively_verbosely);
     }
     else {
-      status = f_directory_remove(data->path_build, F_directory_descriptors_max_d, F_true);
+      status = f_directory_remove(data->setting->build, F_directory_descriptors_max_d, F_true);
     }
 
     if (F_status_set_fine(status) == F_file_found_not || F_status_set_fine(status) == F_directory) {
       if (data->main->error.verbosity >= f_console_verbosity_verbose_e) {
-        fll_print_format("The build directory '%[%Q%]' does not exist.%r", data->main->warning.to, data->main->context.set.notable, data->path_build, data->main->context.set.notable, f_string_eol_s);
+        fll_print_format("The build directory '%[%Q%]' does not exist.%r", data->main->warning.to, data->main->context.set.notable, data->setting->build, data->main->context.set.notable, f_string_eol_s);
       }
 
       status = F_none;
     }
 
     if (F_status_is_error(status)) {
-      fll_error_file_print(data->main->error, F_status_set_fine(status), "f_directory_remove", F_true, data->path_build, f_file_operation_delete_s, fll_error_file_type_directory_e);
+      fake_print_error_file(data->setting, status, data->main->error, macro_fake_f(f_directory_remove), data->setting->build, f_file_operation_delete_s, fll_error_file_type_directory_e);
 
       return status;
     }

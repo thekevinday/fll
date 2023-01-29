@@ -136,7 +136,7 @@ extern void firewall_print_error_on_allocation_failure(const fl_print_t output) 
  * @param function
  *   The function that failed.
  */
-extern void firewall_print_error_on_invalid_parameter(const fl_print_t output, const char *function) F_attribute_visibility_internal_d;
+extern void firewall_print_error_on_invalid_parameter(const fl_print_t output, const f_string_t function) F_attribute_visibility_internal_d;
 
 /**
  * Print an invalid parameter error for the given function.
@@ -148,7 +148,7 @@ extern void firewall_print_error_on_invalid_parameter(const fl_print_t output, c
  * @param filename
  *   The name of the file.
  */
-extern void firewall_print_error_on_invalid_parameter_for_file(const fl_print_t output, const char *function, const f_string_static_t filename) F_attribute_visibility_internal_d;
+extern void firewall_print_error_on_invalid_parameter_for_file(const fl_print_t output, const f_string_t function, const f_string_static_t filename) F_attribute_visibility_internal_d;
 
 /**
  * Print an error about the given operation failed.
@@ -172,7 +172,7 @@ extern void firewall_print_error_on_operation(const fl_print_t output, const f_s
  * @param status
  *   The failure status code.
  */
-extern void firewall_print_error_on_unhandled(const fl_print_t output, const char *function, const f_status_t status) F_attribute_visibility_internal_d;
+extern void firewall_print_error_on_unhandled(const fl_print_t output, const f_string_t function, const f_status_t status) F_attribute_visibility_internal_d;
 
 /**
  * Print an unhandled error for the given function for some given file.
@@ -186,7 +186,7 @@ extern void firewall_print_error_on_unhandled(const fl_print_t output, const cha
  * @param filename
  *   The name of the file.
  */
-extern void firewall_print_error_on_unhandled_for_file(const fl_print_t output, const char *function, const f_status_t status, const f_string_static_t filename) F_attribute_visibility_internal_d;
+extern void firewall_print_error_on_unhandled_for_file(const fl_print_t output, const f_string_t function, const f_status_t status, const f_string_static_t filename) F_attribute_visibility_internal_d;
 
 /**
  * Check to see if a process signal is received.

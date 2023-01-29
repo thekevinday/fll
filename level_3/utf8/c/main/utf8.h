@@ -55,8 +55,10 @@
 #include <fll/level_2/program.h>
 
 // UTF-8 includes.
-#include <program/utf8/main/common.h>
 #include <program/utf8/main/common-print.h>
+#include <program/utf8/main/common-string.h>
+#include <program/utf8/main/common-type.h>
+#include <program/utf8/main/common.h>
 #include <program/utf8/main/print.h>
 
 #ifdef __cplusplus

@@ -44,7 +44,7 @@ extern "C" {
       return;
     }
 
-    if ((setting->flag & fake_data_flag_operation_build_e) && (setting->flag & fake_data_flag_operation_make_e)) {
+    if ((setting->flag & fake_main_flag_operation_build_e) && (setting->flag & fake_main_flag_operation_make_e)) {
       setting->status = F_status_set_error(F_parameter);
 
       fake_print_error_parameter_operation_not_with(setting, main->error, fake_other_operation_build_s, fake_other_operation_make_s);
@@ -56,7 +56,7 @@ extern "C" {
     data.main = main;
     data.setting = setting;
 
-    setting->status = fake_path_generate(&data); // @todo needs to be updated regarding the new data structure.
+    setting->status = fake_path_generate(&data);
 
     if (F_status_is_error(setting->status)) {
       fake_data_delete(&data);
@@ -64,7 +64,7 @@ extern "C" {
       return;
     }
 
-    if ((main->pipe & fll_program_data_pipe_input_e) && !(data.setting->flag & fake_data_flag_operation_e)) {
+    if ((main->pipe & fll_program_data_pipe_input_e) && !(data.setting->flag & fake_main_flag_operation_e)) {
       data.file_data_build_fakefile.used = 0;
 
       setting->status = f_string_dynamic_append(f_string_ascii_minus_s, &data.file_data_build_fakefile);

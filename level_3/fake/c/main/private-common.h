@@ -75,7 +75,6 @@ extern "C" {
     fll_program_data_t *main;
     fake_setting_t *setting;
 
-    f_string_dynamic_t path_build;
     f_string_dynamic_t path_build_documentation;
     f_string_dynamic_t path_build_documents;
     f_string_dynamic_t path_build_includes;
@@ -94,18 +93,14 @@ extern "C" {
     f_string_dynamic_t path_build_settings;
     f_string_dynamic_t path_build_stage;
 
-    f_string_dynamic_t path_data;
     f_string_dynamic_t path_data_build;
     f_string_dynamic_t path_data_documentation;
     f_string_dynamic_t path_data_settings;
 
-    f_string_dynamic_t path_documents;
+    f_string_dynamic_t path_documents; // @todo: make this a settings configurable parameter, moving it to fake_setting_t.
 
-    f_string_dynamic_t path_licenses;
+    f_string_dynamic_t path_licenses; // @todo: make this a settings configurable parameter, moving it to fake_setting_t.
 
-    f_string_dynamic_t path_sources;
-
-    f_string_dynamic_t path_work;
     f_string_dynamic_t path_work_includes;
     f_string_dynamic_t path_work_libraries;
     f_string_dynamic_t path_work_libraries_script;
@@ -131,10 +126,6 @@ extern "C" {
       0, \
       0, \
       0, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
@@ -1678,6 +1669,7 @@ extern "C" {
  * id_main:          Index of the "main" Section.
  * main:             The main program data.
  * data:             The Fake make program data.
+ * setting:          The settings data.
  */
 #ifndef _di_fake_make_data_t_
   typedef struct {
@@ -1706,6 +1698,7 @@ extern "C" {
 
     fll_program_data_t *main;
     fake_data_t *data;
+    fake_setting_t *setting;
   } fake_make_data_t;
 
   #define fake_make_data_t_initialize { \
@@ -1724,6 +1717,7 @@ extern "C" {
     f_string_dynamic_t_initialize, \
     f_string_dynamics_t_initialize, \
     f_iki_data_t_initialize, \
+    0, \
     0, \
     0, \
     0, \

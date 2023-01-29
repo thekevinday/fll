@@ -21,11 +21,11 @@ build_libraries-individual -lfll_error -lfll_iki -lfll_print -lfll_program -lfl_
 build_libraries-level -lfll_2 -lfll_1 -lfll_0
 build_libraries-monolithic -lfll
 
-build_sources_library main/iki_write.c main/common.c main/common-print.c main/print.c main/private-common.c main/private-write.c
+build_sources_library main/iki_write.c main/common.c main/common-print.c main/common-string.c main/common-type.c main/print.c main/private-common.c main/private-write.c
 
 build_sources_program main/main.c
 
-build_sources_headers main/iki_write.h main/common.h main/common-print.h main/print.h
+build_sources_headers main/iki_write.h main/common.h main/common-print.h main/common-string.h main/common-type.h main/print.h
 
 build_sources_documentation man
 

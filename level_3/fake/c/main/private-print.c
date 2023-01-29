@@ -13,7 +13,9 @@ extern "C" {
       if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
         f_file_stream_lock(data->main->error.to);
 
-        fl_print_format("%r%[%QFailed to find '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
+        fake_print_line_first_locked(data->setting, data->main->error);
+
+        fl_print_format("%[%QFailed to find '%]", data->main->error.to, data->main->error.context, data->main->error.prefix, data->main->error.context);
 
         fake_print_error_build_operation_file_message(data, operation, source, destination, how);
 
@@ -29,7 +31,9 @@ extern "C" {
       if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
         f_file_stream_lock(data->main->error.to);
 
-        fl_print_format("%r%[%QInvalid parameter when calling '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
+        fake_print_line_first_locked(data->setting, data->main->error);
+
+        fl_print_format("%[%QInvalid parameter when calling '%]", data->main->error.to, data->main->error.context, data->main->error.prefix, data->main->error.context);
         fl_print_format("%[%Q%]", data->main->error.to, data->main->error.notable, function, data->main->error.notable);
         fl_print_format("%[() to %Q '%]", data->main->error.to, data->main->error.context, operation, data->main->error.context);
 
@@ -47,7 +51,9 @@ extern "C" {
       if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
         f_file_stream_lock(data->main->error.to);
 
-        fl_print_format("%r%[%QInvalid name for '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
+        fake_print_line_first_locked(data->setting, data->main->error);
+
+        fl_print_format("%[%QInvalid name for '%]", data->main->error.to, data->main->error.context, data->main->error.prefix, data->main->error.context);
 
         if (source.used) {
           fl_print_format("%[%Q%]", data->main->error.to, data->main->error.notable, source, data->main->error.notable);
@@ -70,7 +76,9 @@ extern "C" {
       if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
         f_file_stream_lock(data->main->error.to);
 
-        fl_print_format("%r%[%QUnable to allocate memory, while trying to %Q '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, operation, data->main->error.context);
+        fake_print_line_first_locked(data->setting, data->main->error);
+
+        fl_print_format("%[%QUnable to allocate memory, while trying to %Q '%]", data->main->error.to, data->main->error.context, data->main->error.prefix, operation, data->main->error.context);
 
         fake_print_error_build_operation_file_message(data, operation, source, destination, how);
 
@@ -86,7 +94,9 @@ extern "C" {
       if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
         f_file_stream_lock(data->main->error.to);
 
-        fl_print_format("%r%[%QOverflow while trying to %Q '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, operation, data->main->error.context);
+        fake_print_line_first_locked(data->setting, data->main->error);
+
+        fl_print_format("%[%QOverflow while trying to %Q '%]", data->main->error.to, data->main->error.context, data->main->error.prefix, operation, data->main->error.context);
 
         fake_print_error_build_operation_file_message(data, operation, source, destination, how);
 
@@ -102,7 +112,9 @@ extern "C" {
       if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
         f_file_stream_lock(data->main->error.to);
 
-        fl_print_format("%r%[%QInvalid directory while trying to %Q '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, operation, data->main->error.context);
+        fake_print_line_first_locked(data->setting, data->main->error);
+
+        fl_print_format("%[%QInvalid directory while trying to %Q '%]", data->main->error.to, data->main->error.context, data->main->error.prefix, operation, data->main->error.context);
 
         fake_print_error_build_operation_file_message(data, operation, source, destination, how);
 
@@ -118,7 +130,9 @@ extern "C" {
       if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
         f_file_stream_lock(data->main->error.to);
 
-        fl_print_format("%r%[%QAccess denied while trying to %Q '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, operation, data->main->error.context);
+        fake_print_line_first_locked(data->setting, data->main->error);
+
+        fl_print_format("%[%QAccess denied while trying to %Q '%]", data->main->error.to, data->main->error.context, data->main->error.prefix, operation, data->main->error.context);
 
         fake_print_error_build_operation_file_message(data, operation, source, destination, how);
 
@@ -134,7 +148,9 @@ extern "C" {
       if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
         f_file_stream_lock(data->main->error.to);
 
-        fl_print_format("%r%[%QLoop while trying to %Q '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, operation, data->main->error.context);
+        fake_print_line_first_locked(data->setting, data->main->error);
+
+        fl_print_format("%[%QLoop while trying to %Q '%]", data->main->error.to, data->main->error.context, data->main->error.prefix, operation, data->main->error.context);
 
         fake_print_error_build_operation_file_message(data, operation, source, destination, how);
 
@@ -150,7 +166,9 @@ extern "C" {
       if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
         f_file_stream_lock(data->main->error.to);
 
-        fl_print_format("%r%[%QProhibited by system while trying to %Q '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, operation, data->main->error.context);
+        fake_print_line_first_locked(data->setting, data->main->error);
+
+        fl_print_format("%[%QProhibited by system while trying to %Q '%]", data->main->error.to, data->main->error.context, data->main->error.prefix, operation, data->main->error.context);
 
         fake_print_error_build_operation_file_message(data, operation, source, destination, how);
 
@@ -166,7 +184,9 @@ extern "C" {
       if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
         f_file_stream_lock(data->main->error.to);
 
-        fl_print_format("%r%[%QFailed to %Q '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, operation, data->main->error.context);
+        fake_print_line_first_locked(data->setting, data->main->error);
+
+        fl_print_format("%[%QFailed to %Q '%]", data->main->error.to, data->main->error.context, data->main->error.prefix, operation, data->main->error.context);
 
         fake_print_error_build_operation_file_message(data, operation, source, destination, how);
 
@@ -182,7 +202,9 @@ extern "C" {
       if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
         f_file_stream_lock(data->main->error.to);
 
-        fl_print_format("%r%[%QFailed to %Q '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, operation, data->main->error.context);
+        fake_print_line_first_locked(data->setting, data->main->error);
+
+        fl_print_format("%[%QFailed to %Q '%]", data->main->error.to, data->main->error.context, data->main->error.prefix, operation, data->main->error.context);
 
         fake_print_error_build_operation_file_message(data, operation, source, destination, how);
 
@@ -197,7 +219,9 @@ extern "C" {
     if (fll_error_print(data->main->error, F_status_set_fine(status), function, F_false) == F_known_not && fallback && data->main->error.verbosity > f_console_verbosity_quiet_e) {
       f_file_stream_lock(data->main->error.to);
 
-      fl_print_format("%r%[UNKNOWN %Q(%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
+      fake_print_line_first_locked(data->setting, data->main->error);
+
+      fl_print_format("%[UNKNOWN %Q(%]", data->main->error.to, data->main->error.context, data->main->error.prefix, data->main->error.context);
       fl_print_format("%[%ui%]", data->main->error.to, data->main->error.notable, F_status_set_fine(status), data->main->error.notable);
       fl_print_format("%[) occurred while trying to %Q '%]", data->main->error.to, data->main->error.context, operation, data->main->error.context);
 
@@ -232,7 +256,7 @@ extern "C" {
 #endif // _di_fake_print_error_build_operation_file_message_
 
 #ifndef _di_fake_print_error_fss
-  bool fake_print_error_fss(fake_data_t * const data, const f_status_t status, const char *function, const f_string_static_t path_file, const f_string_range_t range, const bool fallback) {
+  bool fake_print_error_fss(fake_data_t * const data, const f_status_t status, const f_string_t function, const f_string_static_t path_file, const f_string_range_t range, const bool fallback) {
 
     if (status == F_file_found_not) {
       if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
@@ -441,48 +465,50 @@ extern "C" {
 #endif // _di_fake_print_message_section_operation_link_target_exists_not_
 
 #ifndef _di_fake_print_message_section_operation_path_outside_
-  void fake_print_message_section_operation_path_outside(fake_data_t * const data, const fl_print_t print, const f_status_t status, const char *function, const f_string_static_t path) {
+  void fake_print_message_section_operation_path_outside(fake_data_t * const data, const fl_print_t print, const f_status_t status, const f_string_t function, const f_string_static_t path) {
 
-    if (data->main->error.verbosity == f_console_verbosity_quiet_e || !print.to.stream) return;
+    if (print.verbosity == f_console_verbosity_quiet_e || !print.to.stream) return;
 
-    f_file_stream_lock(data->main->error.to);
+    f_file_stream_lock(print.to);
 
     if (F_status_set_fine(status) == F_false) {
-      fl_print_format("%r%[%QThe path '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
-      fl_print_format("%[%Q%]", data->main->error.to, data->main->error.notable, path, data->main->error.notable);
-      fl_print_format("%[' is outside the project root.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
+      fake_print_line_first_locked(data->setting, data->main->error);
+
+      fl_print_format("%[%QThe path '%]", print.to, print.context, print.prefix, print.context);
+      fl_print_format("%[%Q%]", print.to, print.notable, path, print.notable);
+      fl_print_format("%[' is outside the project root.%]%r", print.to, print.context, print.context, f_string_eol_s);
     }
     else {
-      fll_error_file_print(data->main->error, F_status_set_fine(status), function, F_true, path, fake_common_file_path_determine_real_s, fll_error_file_type_file_e);
+      fake_print_error_file(data->setting, status, print, function, path, fake_common_file_path_determine_real_s, fll_error_file_type_file_e);
     }
 
-    f_file_stream_unlock(data->main->error.to);
+    f_file_stream_unlock(print.to);
   }
 #endif // _di_fake_print_message_section_operation_path_outside_
 
 #ifndef _di_fake_print_message_section_operation_path_stack_max_
-  void fake_print_message_section_operation_path_stack_max(fake_data_t * const data, fl_print_t print, const f_status_t status, const char *function, const f_string_static_t path) {
+  void fake_print_message_section_operation_path_stack_max(fake_data_t * const data, fl_print_t print, const f_status_t status, const f_string_t function, const f_string_static_t path) {
 
-    if (data->main->error.verbosity == f_console_verbosity_quiet_e || !print.to.stream) return;
+    if (print.verbosity == f_console_verbosity_quiet_e || !print.to.stream) return;
 
     if (status == F_array_too_large) {
-      f_file_stream_lock(data->main->error.to);
+      f_file_stream_lock(print.to);
 
-      fl_print_format("%r%[%QMaximum stack size reached while processing path '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
-      fl_print_format("%[%Q%]", data->main->error.to, data->main->error.notable, path, data->main->error.notable);
-      fl_print_format("%['", data->main->error.to, data->main->error.context);
+      fl_print_format("%r%[%QMaximum stack size reached while processing path '%]", print.to, f_string_eol_s, print.context, print.prefix, print.context);
+      fl_print_format("%[%Q%]", print.to, print.notable, path, print.notable);
+      fl_print_format("%['", print.to, print.context);
 
       if (function) {
-        fl_print_format(" while calling%] %[%S%]", data->main->error.to, data->main->error.context, data->main->error.notable, function, data->main->error.notable);
-        fl_print_format("%[()", data->main->error.to, data->main->error.context);
+        fl_print_format(" while calling%] %[%S%]", print.to, print.context, print.notable, function, print.notable);
+        fl_print_format("%[()", print.to, print.context);
       }
 
-      fl_print_format(".%]%r", data->main->error.to, data->main->error.context, f_string_eol_s);
+      fl_print_format(".%]%r", print.to, print.context, f_string_eol_s);
 
-      f_file_stream_unlock(data->main->error.to);
+      f_file_stream_unlock(print.to);
     }
     else {
-      fll_error_file_print(print, status, function, F_true, path, fake_common_file_path_change_to_s, fll_error_file_type_directory_e);
+      fake_print_error_file(data->setting, status, print, function, path, fake_common_file_path_change_to_s, fll_error_file_type_directory_e);
     }
   }
 #endif // _di_fake_print_message_section_operation_path_stack_max_
@@ -490,50 +516,50 @@ extern "C" {
 #ifndef _di_fake_print_message_section_operation_stack_max_
   void fake_print_message_section_operation_stack_max(fake_data_t * const data, fl_print_t print, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name, const f_array_length_t stack_max) {
 
-    if (data->main->error.verbosity == f_console_verbosity_quiet_e || !print.to.stream) return;
+    if (print.verbosity == f_console_verbosity_quiet_e || !print.to.stream) return;
 
     f_array_length_t line = 1;
     f_state_t state = f_state_t_initialize;
 
     f_fss_count_lines(state, buffer, operation_name.start, &line);
 
-    f_file_stream_lock(data->main->error.to);
+    f_file_stream_lock(print.to);
 
-    fl_print_format("%r%[%QThe section operation '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
-    fl_print_format("%[%/Q%]", data->main->error.to, data->main->error.notable, buffer, operation_name, data->main->error.notable);
-    fl_print_format("%[' from section '%]", data->main->error.to, data->main->error.context, buffer, data->main->error.context);
-    fl_print_format("%[%/Q%]", data->main->error.to, data->main->error.notable, buffer, section_name, data->main->error.notable);
-    fl_print_format("%[' on line%] ", data->main->error.to, data->main->error.context, data->main->error.context);
-    fl_print_format("%[%ul%]", data->main->error.to, data->main->error.notable, line, data->main->error.notable);
-    fl_print_format("%[' cannot be processed because the max stack depth of%] ", data->main->error.to, data->main->error.context, data->main->error.context);
-    fl_print_format("%[%ul%]", data->main->error.to, data->main->error.notable, stack_max, data->main->error.notable);
-    fl_print_format(" %[has been reached.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
+    fl_print_format("%r%[%QThe section operation '%]", print.to, f_string_eol_s, print.context, print.prefix, print.context);
+    fl_print_format("%[%/Q%]", print.to, print.notable, buffer, operation_name, print.notable);
+    fl_print_format("%[' from section '%]", print.to, print.context, buffer, print.context);
+    fl_print_format("%[%/Q%]", print.to, print.notable, buffer, section_name, print.notable);
+    fl_print_format("%[' on line%] ", print.to, print.context, print.context);
+    fl_print_format("%[%ul%]", print.to, print.notable, line, print.notable);
+    fl_print_format("%[' cannot be processed because the max stack depth of%] ", print.to, print.context, print.context);
+    fl_print_format("%[%ul%]", print.to, print.notable, stack_max, print.notable);
+    fl_print_format(" %[has been reached.%]%r", print.to, print.context, print.context, f_string_eol_s);
 
-    f_file_stream_unlock(data->main->error.to);
+    f_file_stream_unlock(print.to);
   }
 #endif // _di_fake_print_message_section_operation_stack_max_
 
 #ifndef _di_fake_print_message_section_operation_unknown_
   void fake_print_message_section_operation_unknown(fake_data_t * const data, const fl_print_t print, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name) {
 
-    if (data->main->error.verbosity == f_console_verbosity_quiet_e || !print.to.stream) return;
+    if (print.verbosity == f_console_verbosity_quiet_e || !print.to.stream) return;
 
     f_array_length_t line = 1;
     f_state_t state = f_state_t_initialize;
 
     f_fss_count_lines(state, buffer, operation_name.start, &line);
 
-    f_file_stream_lock(data->main->error.to);
+    f_file_stream_lock(print.to);
 
-    fl_print_format("%r%[%QThe section operation '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
-    fl_print_format("%[%/Q%]", data->main->error.to, data->main->error.notable, buffer, operation_name, data->main->error.notable);
-    fl_print_format("%[' from section '%]", data->main->error.to, data->main->error.context, buffer, data->main->error.context);
-    fl_print_format("%[%/Q%]", data->main->error.to, data->main->error.notable, buffer, section_name, data->main->error.notable);
-    fl_print_format("%[' on line%] ", data->main->error.to, data->main->error.context, data->main->error.context);
-    fl_print_format("%[%ul%]", data->main->error.to, data->main->error.notable, line, data->main->error.notable);
-    fl_print_format(" %[is not a known operation name.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
+    fl_print_format("%r%[%QThe section operation '%]", print.to, f_string_eol_s, print.context, print.prefix, print.context);
+    fl_print_format("%[%/Q%]", print.to, print.notable, buffer, operation_name, print.notable);
+    fl_print_format("%[' from section '%]", print.to, print.context, buffer, print.context);
+    fl_print_format("%[%/Q%]", print.to, print.notable, buffer, section_name, print.notable);
+    fl_print_format("%[' on line%] ", print.to, print.context, print.context);
+    fl_print_format("%[%ul%]", print.to, print.notable, line, print.notable);
+    fl_print_format(" %[is not a known operation name.%]%r", print.to, print.context, print.context, f_string_eol_s);
 
-    f_file_stream_unlock(data->main->error.to);
+    f_file_stream_unlock(print.to);
   }
 #endif // _di_fake_print_message_section_operation_unknown_
 

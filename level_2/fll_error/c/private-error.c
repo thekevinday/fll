@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #if !defined(_di_fll_error_print_) || !defined(_di_fll_error_file_print_)
-  f_status_t private_fll_error_print(const fl_print_t print, const f_status_t status, const char *function, const bool fallback) {
+  f_status_t private_fll_error_print(const fl_print_t print, const f_status_t status, const f_string_t function, const bool fallback) {
 
     if (status == F_access_denied) {
       if (print.verbosity != f_console_verbosity_quiet_e) {
@@ -260,7 +260,7 @@ extern "C" {
 #endif // !defined(_di_fll_error_print_) || !defined(_di_fll_error_file_print_)
 
 #if !defined(_di_fll_error_print_) || !defined(_di_fll_error_file_print_)
-  void private_fll_error_print_function(const fl_print_t print, const char *function) {
+  void private_fll_error_print_function(const fl_print_t print, const f_string_t function) {
 
     if (function) {
       fl_print_format(" when calling function%] ", print.to, print.context);

@@ -43,8 +43,10 @@
 #include <fll/level_2/program.h>
 
 // FSS Write includes.
-#include <program/fss_write/main/common.h>
 #include <program/fss_write/main/common-print.h>
+#include <program/fss_write/main/common-string.h>
+#include <program/fss_write/main/common-type.h>
+#include <program/fss_write/main/common.h>
 #include <program/fss_write/extended/common.h>
 #include <program/fss_write/main/print.h>
 #include <program/fss_write/extended/print.h>

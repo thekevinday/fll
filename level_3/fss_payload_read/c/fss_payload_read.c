@@ -136,6 +136,7 @@ extern "C" {
             f_file_stream_unlock(main->error.to);
 
             status = F_status_set_error(F_parameter);
+
             break;
           }
         } // for

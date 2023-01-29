@@ -307,7 +307,7 @@ extern "C" {
       status = fl_environment_load_names(data_make->setting_build.environment, &data_make->environment);
 
       if (F_status_is_error(status)) {
-        fll_error_print(data_make->error, F_status_set_fine(status), "fl_environment_load_names", F_true);
+        fake_print_error(data_make->setting, status, data_make->main->error, macro_fake_f(fl_environment_load_names));
 
         return status;
       }
@@ -316,7 +316,7 @@ extern "C" {
       status = f_environment_get_all(&data_make->environment);
 
       if (F_status_is_error(status)) {
-        fll_error_print(data_make->error, F_status_set_fine(status), "f_environment_get_all", F_true);
+        fake_print_error(data_make->setting, status, data_make->main->error, macro_fake_f(f_environment_get_all));
 
         return status;
       }
@@ -383,7 +383,7 @@ extern "C" {
         }
       }
       else if (F_status_set_fine(status) != F_failure) {
-        fll_error_print(data_make->error, F_status_set_fine(status), "fll_execute_program", F_true);
+        fake_print_error(data_make->setting, status, data_make->main->error, macro_fake_f(fll_execute_program));
       }
     }
 
@@ -407,7 +407,7 @@ extern "C" {
       }
 
       if (F_status_is_error(status)) {
-        fll_error_print(data_make->error, F_status_set_fine(status), "f_string_dynamic_append", F_true);
+        fake_print_error(data_make->setting, status, data_make->main->error, macro_fake_f(f_string_dynamic_append));
       }
 
       return status;
@@ -419,7 +419,7 @@ extern "C" {
       status = f_conversion_number_signed_to_string(WEXITSTATUS(return_code), f_conversion_data_base_10_c, &number);
 
       if (F_status_is_error(status)) {
-        fll_error_print(data_make->error, F_status_set_fine(status), "f_conversion_number_signed_to_string", F_true);
+        fake_print_error(data_make->setting, status, data_make->main->error, macro_fake_f(f_conversion_number_signed_to_string));
 
         f_string_dynamic_resize(0, &number);
 
@@ -435,7 +435,7 @@ extern "C" {
     }
 
     if (F_status_is_error(status)) {
-      fll_error_print(data_make->error, F_status_set_fine(status), "f_string_dynamic_append", F_true);
+      fake_print_error(data_make->setting, status, data_make->main->error, macro_fake_f(f_string_dynamic_append));
 
       return status;
     }

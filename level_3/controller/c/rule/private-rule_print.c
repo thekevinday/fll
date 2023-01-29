@@ -11,7 +11,7 @@ extern "C" {
 #endif // _di_controller_rule_print_string_s_
 
 #ifndef _di_controller_rule_print_error_
-  void controller_rule_print_error(controller_thread_t * const thread, const fl_print_t print, const controller_cache_action_t cache, const f_status_t status, const char *function, const bool fallback, const bool item) {
+  void controller_rule_print_error(controller_thread_t * const thread, const fl_print_t print, const controller_cache_action_t cache, const f_status_t status, const f_string_t function, const bool fallback, const bool item) {
 
     if (print.verbosity == f_console_verbosity_quiet_e) return;
     if (status == F_interrupt) return;

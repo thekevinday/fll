@@ -49,7 +49,7 @@ extern "C" {
  * @see controller_rule_print_error_cache()
  */
 #ifndef _di_controller_rule_print_error_
-  extern void controller_rule_print_error(controller_thread_t * const thread, const fl_print_t print, const controller_cache_action_t cache, const f_status_t status, const char *function, const bool fallback, const bool item) F_attribute_visibility_internal_d;
+  extern void controller_rule_print_error(controller_thread_t * const thread, const fl_print_t print, const controller_cache_action_t cache, const f_status_t status, const f_string_t function, const bool fallback, const bool item) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_print_error_
 
 /**

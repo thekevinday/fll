@@ -50,39 +50,39 @@ extern "C" {
       fake_skeleton_path_source_string(data, &fake_path_part_script_s, &sources_script);
       fake_skeleton_path_source_string(data, &fake_path_part_shell_s, &sources_bash);
 
-      const f_string_static_t *parameters_value[] = {
-        &data->path_build,
-        &data->path_data,
-        &data->path_data_build,
-        &data->path_data_documentation,
-        &data->path_data_settings,
-        &data->path_documents,
-        &data->path_licenses,
-        &data->path_sources,
-        &sources,
-        &sources_bash,
-        &sources_c,
-        &sources_cpp,
-        &sources_script,
-        &data->path_work,
-        &data->path_work_includes,
-        &data->path_work_libraries,
-        &data->path_work_libraries_script,
-        &data->path_work_libraries_shared,
-        &data->path_work_libraries_static,
-        &data->path_work_programs,
-        &data->path_work_programs_script,
-        &data->path_work_programs_shared,
-        &data->path_work_programs_static,
-        &fake_path_part_specifications_s,
+      const f_string_static_t path[] = {
+        data->setting->build,
+        data->setting->data,
+        data->path_data_build,
+        data->path_data_documentation,
+        data->path_data_settings,
+        data->path_documents,
+        data->path_licenses,
+        data->setting->sources,
+        sources,
+        sources_bash,
+        sources_c,
+        sources_cpp,
+        sources_script,
+        data->setting->work,
+        data->path_work_includes,
+        data->path_work_libraries,
+        data->path_work_libraries_script,
+        data->path_work_libraries_shared,
+        data->path_work_libraries_static,
+        data->path_work_programs,
+        data->path_work_programs_script,
+        data->path_work_programs_shared,
+        data->path_work_programs_static,
+        fake_path_part_specifications_s,
       };
 
       for (uint8_t i = 0; i < 24; ++i) {
 
-        status = fake_skeleton_operate_directory_create(data, *parameters_value[i]);
+        status = fake_skeleton_operate_directory_create(data, path[i]);
 
         if (F_status_is_error(status)) {
-          fll_error_print(data->main->error, F_status_set_fine(status), "fake_skeleton_operate_directory_create", F_true);
+          fake_print_error(data->setting, status, data->main->error, macro_fake_f(fake_skeleton_operate_directory_create));
 
           return status;
         }
@@ -169,7 +169,7 @@ extern "C" {
           f_file_stream_unlock(data->main->error.to);
         }
         else {
-          fll_error_file_print(data->main->error, F_status_set_fine(status), "f_directory_create", F_true, path, f_file_operation_create_s, fll_error_file_type_directory_e);
+          fake_print_error_file(data->setting, status, data->main->error, macro_fake_f(f_directory_create), path, f_file_operation_create_s, fll_error_file_type_directory_e);
         }
 
         return status;
@@ -180,7 +180,7 @@ extern "C" {
       }
     }
     else if (F_status_is_error(status)) {
-      fll_error_file_print(data->main->error, F_status_set_fine(status), "f_directory_exists", F_true, path, f_file_operation_create_s, fll_error_file_type_directory_e);
+      fake_print_error_file(data->setting, status, data->main->error, macro_fake_f(f_directory_exists), path, f_file_operation_create_s, fll_error_file_type_directory_e);
 
       return status;
     }
@@ -246,7 +246,7 @@ extern "C" {
           f_file_stream_unlock(data->main->error.to);
         }
         else {
-          fll_error_file_print(data->main->error, F_status_set_fine(status), "f_file_create", F_true, path, f_file_operation_create_s, fll_error_file_type_file_e);
+          fake_print_error_file(data->setting, status, data->main->error, macro_fake_f(f_file_create), path, f_file_operation_create_s, fll_error_file_type_file_e);
         }
 
         return status;
@@ -265,7 +265,7 @@ extern "C" {
         status = f_file_open(path, 0, &file);
 
         if (F_status_is_error(status)) {
-          fll_error_file_print(data->main->error, F_status_set_fine(status), "f_file_open", F_true, path, fake_common_file_populate_pre_s, fll_error_file_type_file_e);
+          fake_print_error_file(data->setting, status, data->main->error, macro_fake_f(f_file_open), path, fake_common_file_populate_pre_s, fll_error_file_type_file_e);
 
           return status;
         }
@@ -273,7 +273,7 @@ extern "C" {
         status = f_file_write(file, content, 0);
 
         if (F_status_is_error(status)) {
-          fll_error_file_print(data->main->error, F_status_set_fine(status), "f_file_write", F_true, path, fake_common_file_populate_pre_s, fll_error_file_type_file_e);
+          fake_print_error_file(data->setting, status, data->main->error, macro_fake_f(f_file_write), path, fake_common_file_populate_pre_s, fll_error_file_type_file_e);
 
           f_file_stream_flush(file);
           f_file_stream_close(&file);
@@ -290,7 +290,7 @@ extern "C" {
       }
     }
     else if (F_status_is_error(status)) {
-      fll_error_file_print(data->main->error, F_status_set_fine(status), "f_file_is", F_true, path, f_file_operation_create_s, fll_error_file_type_file_e);
+      fake_print_error_file(data->setting, status, data->main->error, macro_fake_f(f_file_is), path, f_file_operation_create_s, fll_error_file_type_file_e);
 
       return status;
     }
@@ -302,7 +302,7 @@ extern "C" {
 #ifndef _di_fake_skeleton_path_source_length_
   void fake_skeleton_path_source_length(fake_data_t * const data, const f_string_static_t *partial, f_string_static_t * const source) {
 
-    source->used = data->path_sources.used + fake_default_path_sources_s.used + partial->used;
+    source->used = data->setting->sources.used + partial->used;
   }
 #endif // _di_fake_skeleton_path_source_length_
 
@@ -311,11 +311,8 @@ extern "C" {
 
     source->used = 0;
 
-    memcpy(source->string, data->path_sources.string, sizeof(f_char_t) * data->path_sources.used);
-    source->used += data->path_sources.used;
-
-    memcpy(source->string, fake_default_path_sources_s.string, sizeof(f_char_t) * fake_default_path_sources_s.used);
-    source->used += fake_default_path_sources_s.used;
+    memcpy(source->string, data->setting->sources.string, sizeof(f_char_t) * data->setting->sources.used);
+    source->used += data->setting->sources.used;
 
     memcpy(source->string + source->used, partial->string, sizeof(f_char_t) * partial->used);
     source->used += partial->used;

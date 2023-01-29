@@ -74,7 +74,7 @@ extern "C" {
         *status = f_fss_apply_delimit(state, delimits, &data_make->buffer);
 
         if (F_status_is_error(*status)) {
-          fll_error_print(data_make->main->error, F_status_set_fine(*status), "f_fss_apply_delimit", F_true);
+          fake_print_error(data_make->setting, *status, data_make->main->error, macro_fake_f(f_fss_apply_delimit));
         }
 
         delimits.used = 0;
@@ -103,7 +103,7 @@ extern "C" {
       }
 
       if (F_status_is_error(*status)) {
-        fll_error_print(data_make->main->error, F_status_set_fine(*status), "macro_f_fss_nameds_t_resize", F_true);
+        fake_print_error(data_make->setting, *status, data_make->main->error, macro_fake_f(macro_f_fss_nameds_t_resize));
 
         macro_f_fss_set_t_delete_simple(settings);
         macro_f_fss_objects_t_delete_simple(list_objects);
@@ -151,7 +151,7 @@ extern "C" {
             *status = f_fss_apply_delimit(state, delimits, &data_make->buffer);
 
             if (F_status_is_error(*status)) {
-              fll_error_print(data_make->main->error, F_status_set_fine(*status), "f_fss_apply_delimit", F_true);
+              fake_print_error(data_make->setting, *status, data_make->main->error, macro_fake_f(f_fss_apply_delimit));
 
               break;
             }
@@ -192,7 +192,7 @@ extern "C" {
             *status = f_fss_apply_delimit(state, delimits, &data_make->buffer);
 
             if (F_status_is_error(*status)) {
-              fll_error_print(data_make->main->error, F_status_set_fine(*status), "f_fss_apply_delimit", F_true);
+              fake_print_error(data_make->setting, *status, data_make->main->error, macro_fake_f(f_fss_apply_delimit));
 
               break;
             }
@@ -234,24 +234,24 @@ extern "C" {
 
       // Always have the parameter variable "return" map at index 0 and be pre-initialized.
       {
-        char *function_name = "macro_f_string_map_multis_t_resize";
+        f_string_t function_name = macro_fake_f(macro_f_string_map_multis_t_resize);
 
         macro_f_string_map_multis_t_resize(*status, data_make->setting_make.parameter, fake_default_allocation_small_d);
 
         if (F_status_is_error_not(*status)) {
           data_make->setting_make.parameter.used = 1;
 
-          function_name = "f_string_dynamic_append";
+          function_name = macro_fake_f(f_string_dynamic_append);
           *status = f_string_dynamic_append(fake_make_setting_return_s, &data_make->setting_make.parameter.array[0].name);
         }
 
         if (F_status_is_error_not(*status)) {
-          function_name = "f_string_dynamics_resize";
+          function_name = macro_fake_f(f_string_dynamics_resize);
           *status = f_string_dynamics_resize(1, &data_make->setting_make.parameter.array[0].value);
         }
 
         if (F_status_is_error(*status)) {
-          fll_error_print(data_make->main->error, F_status_set_fine(*status), function_name, F_true);
+          fake_print_error(data_make->setting, *status, data_make->main->error, function_name);
 
           macro_f_fss_set_t_delete_simple(settings);
 
@@ -302,7 +302,7 @@ extern "C" {
         fake_build_load_setting(data_make->data, 0, F_false, &data_make->setting_build, status);
 
         if (F_status_is_error(*status) && *status != F_status_set_error(F_interrupt)) {
-          fll_error_print(data_make->main->error, F_status_set_fine(*status), "fake_build_load_setting", F_true);
+          fake_print_error(data_make->setting, *status, data_make->main->error, macro_fake_f(fake_build_load_setting));
         }
       }
 
@@ -327,7 +327,7 @@ extern "C" {
 
       if (F_status_is_error(*status)) {
         if (F_status_set_fine(*status) != F_interrupt) {
-          fll_error_print(data_make->main->error, F_status_set_fine(*status), "f_string_dynamic_partial_append", F_true);
+          fake_print_error(data_make->setting, *status, data_make->main->error, macro_fake_f(f_string_dynamic_partial_append));
         }
 
         macro_f_fss_set_t_delete_simple(settings);
@@ -405,7 +405,7 @@ extern "C" {
       status = fll_fss_snatch_map_apart(data_make->buffer, settings->objects, settings->contents, settings_name, 2, settings_value, 0, 0);
 
       if (F_status_is_error(status)) {
-        fll_error_print(data->main->error, F_status_set_fine(status), "fll_fss_snatch_map_apart", F_true);
+        fake_print_error(data->setting, status, data->main->error, macro_fake_f(fll_fss_snatch_map_apart));
 
         macro_f_string_map_multis_t_delete_simple(define);
 
@@ -432,7 +432,7 @@ extern "C" {
             status = f_string_dynamic_mash(f_string_space_s, define.array[i].value.array[j], &combined);
 
             if (F_status_is_error(status)) {
-              fll_error_print(data->main->error, F_status_set_fine(status), "f_string_dynamic_mash", F_true);
+              fake_print_error(data->setting, status, data->main->error, macro_fake_f(f_string_dynamic_mash));
 
               break;
             }
@@ -443,7 +443,7 @@ extern "C" {
           status = f_environment_set(define.array[i].name, combined, F_true);
 
           if (F_status_is_error(status)) {
-            fll_error_print(data->main->error, F_status_set_fine(status), "f_environment_set", F_true);
+            fake_print_error(data->setting, status, data->main->error, macro_fake_f(f_environment_set));
 
             break;
           }
@@ -493,7 +493,7 @@ extern "C" {
       status = f_string_dynamic_partial_append_nulless(data_make->buffer, content->array[i], &name_define);
 
       if (F_status_is_error(status)) {
-        fll_error_print(data_make->main->error, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true);
+        fake_print_error(data_make->setting, status, data_make->main->error, macro_fake_f(f_string_dynamic_partial_append_nulless));
 
         break;
       }
@@ -508,7 +508,7 @@ extern "C" {
           status = f_string_dynamics_increase(fake_default_allocation_small_d, &data_make->setting_build.environment);
 
           if (F_status_is_error(status)) {
-            fll_error_print(data_make->main->error, F_status_set_fine(status), "f_string_dynamics_increase", F_true);
+            fake_print_error(data_make->setting, status, data_make->main->error, macro_fake_f(f_string_dynamics_increase));
 
             break;
           }
@@ -518,7 +518,7 @@ extern "C" {
           status = f_string_dynamic_increase_by(name_define.used + 1, &data_make->setting_build.environment.array[data_make->setting_build.environment.used]);
 
           if (F_status_is_error(status)) {
-            fll_error_print(data_make->main->error, F_status_set_fine(status), "f_string_dynamic_increase_by", F_true);
+            fake_print_error(data_make->setting, status, data_make->main->error, macro_fake_f(f_string_dynamic_increase_by));
 
             break;
           }
@@ -526,7 +526,7 @@ extern "C" {
           status = f_string_dynamic_append_nulless(name_define, &data_make->setting_build.environment.array[data_make->setting_build.environment.used]);
 
           if (F_status_is_error(status)) {
-            fll_error_print(data_make->main->error, F_status_set_fine(status), "f_string_dynamic_append_nulless", F_true);
+            fake_print_error(data_make->setting, status, data_make->main->error, macro_fake_f(f_string_dynamic_append_nulless));
 
             break;
           }
@@ -624,7 +624,7 @@ extern "C" {
             status = f_string_dynamic_partial_append_nulless(data_make->buffer, content->array[i], &data_make->setting_make.parameter.array[0].value.array[0]);
 
             if (F_status_is_error(status)) {
-              fll_error_print(data_make->main->error, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true);
+              fake_print_error(data_make->setting, status, data_make->main->error, macro_fake_f(f_string_dynamic_partial_append_nulless));
 
               break;
             }
@@ -632,7 +632,7 @@ extern "C" {
             status = f_string_dynamic_append_assure(f_string_space_s, &data_make->setting_make.parameter.array[0].value.array[0]);
 
             if (F_status_is_error(status)) {
-              fll_error_print(data_make->main->error, F_status_set_fine(status), "f_string_dynamic_append_assure", F_true);
+              fake_print_error(data_make->setting, status, data_make->main->error, macro_fake_f(f_string_dynamic_append_assure));
 
               break;
             }
