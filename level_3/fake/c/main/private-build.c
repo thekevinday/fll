@@ -665,7 +665,7 @@ const f_string_static_t fake_build_documentation_files_s = macro_f_string_static
         data->setting->licenses,
         data->setting->process,
         data->setting->settings,
-        data->setting->sources,
+        data_build->setting.path_sources,
         data->setting->work,
       };
 
@@ -988,7 +988,7 @@ const f_string_static_t fake_build_documentation_files_s = macro_f_string_static
 #ifndef _di_fake_build_path_source_length_
   void fake_build_path_source_length(fake_data_t * const data, fake_build_data_t * const data_build, f_string_static_t * const setting_path_source, f_string_static_t * const source) {
 
-    source->used = data->setting->sources.used;
+    source->used = 0;
 
     if (setting_path_source->used) {
       source->used += setting_path_source->used;
@@ -1014,9 +1014,6 @@ const f_string_static_t fake_build_documentation_files_s = macro_f_string_static
   void fake_build_path_source_string(fake_data_t * const data, fake_build_data_t * const data_build, f_string_static_t * const setting_path_source, f_string_static_t * const source) {
 
     source->used = 0;
-
-    memcpy(source->string, data->setting->sources.string, sizeof(f_char_t) * data->setting->sources.used);
-    source->used += data->setting->sources.used;
 
     memcpy(source->string + source->used, setting_path_source->string, sizeof(f_char_t) * setting_path_source->used);
     source->used += setting_path_source->used;
