@@ -5,13 +5,13 @@ This is an informal document representing the not yet formalized Open Standard L
 This license applies to the Standards and their Specifications and designates legal requirements on Implementations of the Standard and their respective Specifications.
 
 Terminology:
-- Standard: A set of rules and guidelines.
-- Specification: A specific interpretation or clarification of a Standard, such as the documentation that describes how to use or follow a Standard.
-- Implementation: The applying of some Standard or Specification.
-- API: Application Programming Interface*.
-- ABI: Application Binary Interface**.
-- Service: Any action or labor performed by one party for another party (such as one person helping another person).
-- Protocol: In the context of computers and software, this is a Standard focused on communication between two parties (often referring to Internet communication).
+  - Standard: A set of rules and guidelines.
+  - Specification: A specific interpretation or clarification of a Standard, such as the documentation that describes how to use or follow a Standard.
+  - Implementation: The applying of some Standard or Specification.
+  - API: Application Programming Interface*.
+  - ABI: Application Binary Interface**.
+  - Service: Any action or labor performed by one party for another party (such as one person helping another person).
+  - Protocol: In the context of computers and software, this is a Standard focused on communication between two parties (often referring to Internet communication).
 
 * The API term is commonly mis-represented as Services or Protocols (such as "Web API").
   An API instructs a programmer how to use a dependency when programming some software that utilizes said dependency.
