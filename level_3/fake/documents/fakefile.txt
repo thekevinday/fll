@@ -272,7 +272,7 @@ Fakefile Documentation:
 
         - code:"exist 'file path'"\:
           Test if file exists.
-          For example, code:"if exist \"a.txt\" \"b.txt\"" would test if both the file code:"a.txt" and code:"b.txt" exist.
+          For example, code:"if exist 'a.txt' 'b.txt'" would test if both the file code:"a.txt" and code:"b.txt" exist.
 
         - code:"failure"\:
           Test if the previous section operation failed.
@@ -280,10 +280,10 @@ Fakefile Documentation:
         - code:"group 'some mode' 'some file'"\:
           For example, code:"if group friends a.txt b.txt" would test if both file code:"a.txt" and code:"b.txt" have a group named code:"we".
 
-        - code:"is block character directory fifo link regular socket for \"file path\""\:
+        - code:"is block character directory fifo link regular socket for 'file path'"\:
           Test if one or more files exist and if each file is any of the given types.
           The given types must be followed by code:"for" to designate where the the file paths begin.
-          For example, code:"if is regular directory for \"a.txt\" \"b.txt\"" would test if both the file code:"a.txt" and code:"b.txt" exist and are either of type code:"regular" or type code:"directory".
+          For example, code:"if is regular directory for 'a.txt' 'b.txt'" would test if both the file code:"a.txt" and code:"b.txt" exist and are either of type code:"regular" or type code:"directory".
 
         - code:"mode is/has 'some mode' 'some file'"\:
           Test if one or more files has the exact mode (code:"is") or has at least the given modes (code:"has").
@@ -336,7 +336,9 @@ Fakefile Documentation:
             - code:"current": The absolute path to the current working directory (present working directory) (Always has a trailing forward slash).
             - code:"data": Associated with code:"-D/--data" parameter.
             - code:"define": Associated with code:"-d/--define" parameter.
+            - code:"documents": Associated with code:"-O/--documents" parameter (This is neither implemented nor supported by Featureless Make 0.6.x and earlier).
             - code:"fakefile": Associated with code:"-f/--fakefile" parameter.
+            - code:"licenses": Associated with code:"-l/--licenses" parameter (This is neither implemented nor supported by Featureless Make 0.6.x and earlier).
             - code:"mode": Associated with code:"-m/--mode" parameter and possibly with the build settings default mode code:"modes_default".
             - code:"process": Associated with code:"-p/--process" parameter.
             - code:"return": Contains the return value of a previous operation that produces a return code.
@@ -528,12 +530,12 @@ Fakefile Documentation:
   - code:"context"\:
     The context Object represents a name representing simple context or complex combination of context.
     Context should wrap some text such that if some text begins with some context, the context should be reset at the end.
-    The most basic context is color context, such as: code:"context:\"notice\" This is emphasized text context:\"reset\"".
+    The most basic context is color context, such as: code:"context\:'notice' This is emphasized text context\:'reset'".
 
     The use of IKI in this way is acceptable but it is not perfect.
     IKI is not designed to be a replacement to markup.
-    The markup code:"<strong>Example</strong>" vs the IKI code:"context:\"notable\" Example context:\"notable\"" has obvious differences in the spaces.
-    The IKI by design cannot be used like this: code:"context:\"notable\"Examplecontext:\"notable\"" because the word code:"Example" and the word code:"context" collide.
+    The markup code:"<strong>Example</strong>" vs the IKI code:"context\:'notable' Example context\:'notable'" has obvious differences in the spaces.
+    The IKI by design cannot be used like this: code:"context\:'notable'Examplecontext\:'notable'" because the word code:"Example" and the word code:"context" collide.
 
     This context will respect the programs code:"++light", code:"++dark", and code:"++no_color" parameters.
 
@@ -577,9 +579,19 @@ Fakefile Documentation:
       This variable holds the code:"define" program parameters, such as code:"-d define/".
       This supports both code:":option" and code:":value".
 
+    - code:"documents"\:
+      This variable holds the code:"documents" program parameters, such as code:"-O documents/".
+      This supports both code:":option" and code:":value".
+      This is neither implemented nor supported by Featureless Make 0.6.x and earlier.
+
     - code:"fakefile"\:
       This variable holds the code:"fakefile" program parameters, such as code:"-f fakefile".
       This supports both code:":option" and code:":value".
+
+    - code:"licenses"\:
+      This variable holds the code:"licenses" program parameters, such as code:"-l licenses/".
+      This supports both code:":option" and code:":value".
+      This is neither implemented nor supported by Featureless Make 0.6.x and earlier.
 
     - code:"mode"\:
       This variable holds the code:"fakefile" program parameters, such as code:"-m monolithic".
