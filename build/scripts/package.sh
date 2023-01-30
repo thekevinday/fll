@@ -131,7 +131,7 @@ package_main() {
         elif [[ $grab_next == "path_sources" ]] ; then
           path_sources=$(echo $p | sed -e 's|^//*|/|' -e 's|/*$|/|')
         elif [[ $grab_next == "stand_alone" ]] ; then
-          mode_stand_alone="$mode_stand_alone$p "
+          mode_stand_alone="${mode_stand_alone}${p} "
         elif [[ $grab_next == "prepend" ]] ; then
 
           # Provide a bare minimal sanitizer that probably doesn't catch everything that it ideally should.
@@ -167,6 +167,12 @@ package_main() {
   if [[ $mode_stand_alone != "" ]] ; then
     for i in $mode_stand_alone ; do
 
+      if [[ $i == "all" ]] ; then
+        mode_stand_alone="all"
+
+        break
+      fi
+
       if [[ ! -f build/stand_alone/$i.settings ]] ; then
         if [[ $verbosity != "quiet" ]] ; then
           echo -e "${c_error}ERROR: Unknown or unsupported stand alone program '${c_notice}$i${c_error}'.${c_reset}"
@@ -177,6 +183,15 @@ package_main() {
         return 1
       fi
     done
+
+    if [[ $mode_stand_alone == "all" ]] ; then
+      mode_stand_alone=
+
+      for i in build/stand_alone/*.settings ; do
+
+        mode_stand_alone="${mode_stand_alone}$(echo $i | sed -e 's|build/stand_alone/||' -e 's|\.settings$||') "
+      done
+    fi
   fi
 
   if [[ $operation == "build" || $operation == "rebuild" ]] ; then
@@ -1343,7 +1358,7 @@ package_operation_clean() {
       done
 
       rmdir $verbose_common --ignore-fail-on-non-empty ${path_destination}stand_alone
-    else
+
       if [[ $verbosity != "quiet" ]] ; then
         echo
         echo "Cleaned '${path_destination}stand_alone'."
