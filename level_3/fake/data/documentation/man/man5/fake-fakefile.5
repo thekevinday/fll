@@ -1,0 +1,759 @@
+.TH fake-fakefile "5" "January 2023" "FLL - Featureless Make 0.7.0" "File Formats"
+.SH NAME
+Featureless Make \- "fakefile" file.
+.SH SYNOPSIS
+.B fakefile
+.SH DESCRIPTION
+.PP
+This describes intent and purposes of the fakefile file settings.
+For specific details on the allowed formatting, see the fakefile.txt under the specifications folder.
+
+All files specified are relative to the project root.
+
+The reserved Section Names are defined as follows:
+\- \fBsettings\fR:
+  Any configuration specific to this fakefile is stored here.
+  This includes the declaration of define and parameter IKI variable substitution values.
+
+  The build settings may also be specified in the Settings Section.
+
+  The following settings are available (in addition to the build settings):
+  \- \fBcompiler\fR:
+    This represents the name of the compiler program to use, such as \fBgcc\fR.
+
+    The programs \fBgcc\fR and \fBclang\fR are known to work.
+    Many of the parameters in the settings file can be changed if not using GCC, but there may be certain hard\-coded functionality that may need to be changed.
+
+    When specified and \fBload_build\fR is \fBtrue\fR, then this will override the \fBbuild_compiler\fR specified in the loaded build settings.
+
+  \- \fBdefine\fR:
+    This represents an environment variable to define on run.
+    The environment variable name is case\-sensitive.
+    This replaces the value of any existing environment variable with this name.
+
+  \- \fBenvironment\fR:
+    This represents all environment variables that are exposed when executing sub\-programs.
+    This is not auto\-populated for environment variables defined in the \fBdefine\fR setting.
+
+    When defined with no Content, then this means that no environment variables are exposed.
+    When not defined at all, then all environment variables are exposed.
+    Environment variables may still be exposed if \fBload_build\fR is \fBtrue\fR and the build setting file defines any environment variable names.
+
+  \- \fBfail\fR:
+    Designates the fail mode when running external programs, such as through the \fBrun\fR or \fBshell\fR operations.
+
+    There are three options:
+      \- \fBexit\fR: Designates to exit the program on failure, printing an error message.
+      \- \fBwarn\fR: Designates to continue on and if in verbose mode then print a warning.
+      \- \fBignore\fR: Designates to do nothing.
+
+    The return code for programs can still be retrieved through using the reserved IKI variable \fBreturn\fR.
+
+  \- \fBimport\fR:
+    Load this fakefile.
+    The \fBsettings\fR section data from the imported fakefile is treated as if it were appended to the end of the current fakefile \fBsetting\fR section.
+    Each section in the imported fakefile is treated as if it were appended to either the end of a matching section, if found, or appended at the end of the fakefile, if no matches are found.
+    This a non\-recursive operation and the imported file itself cannot perform an import.
+    Relative paths are relative to the importing file.
+    Absolute paths that start with \fB./\fR are relative to the project root rather than the importing file.
+    Absolute paths that start with \fB/\fR are treated normally.
+
+  \- \fBindexer\fR:
+    This represents the name of the indexer program to use, such as \fBar\fR.
+    An indexer is often called a linker.
+
+    Similar to \fBbuild_compiler\fR, any linker that supports the \fBar\fR program parameters is effectively supported.
+
+    When specified and \fBload_build\fR is \fBtrue\fR, then this will override the \fBbuild_indexer\fR specified in the loaded build settings.
+
+  \- \fBindexer_arguments\fR:
+    This represents arguments needed to build an archive file from object files, such as \fBrcs\fR.
+    These arguments are placed immediately before the object files passed to the \fBindexer\fR program.
+
+  \- \fBload_build\fR:
+    This represents whether or not to load the load the build settings file.
+    The first Content value may be \fBtrue\fR to load the build settings and \fBfalse\fR to not load the build settings file.
+
+  \- \fBparameter\fR:
+    This defines an IKI variable name to substitute with the value.
+    This replaces the value of any existing environment variable with this name.
+
+    The first Content value represents the IKI variable name.
+    All Content values after the first represent the values the matching IKI variable is replaced with.
+
+    The parameter variable name \fBreturn\fR is used to store the return result of a \fBrun\fR or \fBshell\fR operation.
+    Setting this here only sets the default \fBreturn\fR parameter variable value.
+
+\- \fBmain\fR:
+  This is the main entry point when processing the fakefile.
+  This is processed top\-down until the end of the list is reached.
+
+  The following operations are available:
+  \- \fBand\fR:
+    A special type of an \fBif\fR operation.
+    May only be specified following a valid \fBif\fR, \fBand\fR, or \fBor\fR operation.
+    This is executed only if the previous \fBif\fR operation result is true.
+
+    When executed, this performs the test and returns true or false as appropriate.
+    When not executed, this passes through the result of the previous \fBif\fR, \fBand\fR, or \fBor\fR operation.
+
+  \- \fBbuild\fR:
+    Run the fake build operation as if \fBfake build\fR was run instead of \fBfake make\fR.
+    Command line arguments are automatically passed to the fake build operation.
+
+    Accepts an optional Content that is a file name to a build settings file to use instead of the default.
+    This file name is relative to the data build directory (which can be changed by \fB\-D/\-\-data\fR parameter).
+
+    If the optional file name Content is specified, then it also supports additional modes to use instead of the default mode.
+
+    When no additional Content after the \fBbuild\fR is specified, then the default (or program supplied) settings file and modes are used.
+    When the first Content after the \fBbuild\fR is specified as an empty string, then the default (or program supplied) settings file is used.
+    When the second Content after the \fBbuild\fR (and there is no third Content), then no modes are used.
+
+  \- \fBbreak\fR:
+    Perform an exit from the current make operation.
+    This only exists the current depth.
+    If the depth is at the top (aka: 0), then this is identical to the \fBexit\fR section operation.
+    The second Content may be either \fBsucceed\fR or \fBfailure\fR to designate on whether or not to exit as a success or as a failure.
+    When set to \fBfailure\fR this will trigger any failure (with message), depending on the current fail state.
+
+  \- \fBclean\fR:
+    Run the fake clean operation as if \fBfake clean\fR was run instead of \fBfake make\fR.
+    Command line arguments are automatically passed to the build operation.
+
+  \- \fBclone\fR:
+    Copy all files (and directories), preserving all properties, into the last content.
+    If there are more than one file (or directory) being copied, then the final path must be a directory.
+
+    All Content, except last, represents the files to clone.
+    The last Content represents the destination file (or directory) to clone to.
+
+  \- \fBcompile\fR:
+    Execute the compiler program, such as \fBgcc\fR.
+
+    All Content are passed as arguments to the respective \fBgcc\fR program.
+
+  \- \fBcopy\fR:
+    Copy all files (and directories) into the last content.
+    If there are more than one file (or directory) being copied, then the final path must be a directory.
+
+    All Content, except last, represents the files to copy.
+    The last Content represents the destination file (or directory) to copy to.
+
+  \- \fBdefine\fR:
+    This represents an environment variable to define on run.
+    The environment variable name is case\-sensitive.
+    This replaces the value of any existing environment variable with this name.
+
+  \- \fBdelete\fR:
+    Delete one or more files or directories.
+
+    All Content must be the file or directory to be deleted.
+
+    If the path is a directory and is not empty, then this will not delete the directory.
+
+  \- \fBdeletes\fR:
+    Identical to \fBdelete\fR, except that when the path is a directory and is not empty, then this will delete the directory.
+
+  \- \fBelse\fR:
+    Performs a programmatic \fBelse\fR condition.
+    Must be specified following a valid if operation (and the operation it affects).
+
+    This has no Content.
+
+    An else operation may not follow this.
+    An if operation may immediately follow to represent an \fBelse if\fR condition.
+
+  \- \fBexit\fR:
+    Perform an exit from the entire make operation.
+    This always exits completely, regardless of the operation depth.
+    The second Content may be either \fBsuccess\fR or \fBfailure\fR to designate on whether or not to exit as success or failure.
+
+    When set to \fBfailure\fR this will trigger a failure message.
+    When set to \fBfailure\fR, the fail state will be forcibly changed to \fBfailure\fR regardless of the current fail state.
+
+  \- \fBfail\fR:
+    Toggle how the to handle an operation failure.
+
+    The first Content may be one of the following:
+      \fBexit\fR: Set failure handler to exit on failure.
+      \fBwarn\fR: Set failure handler to print a warning on failure but continue on.
+      \fBignore\fR: Set failure handler to continue on regardless of failure.
+
+  \- \fBgroup\fR:
+    Change the group role for a given file.
+
+    The first Content represents the group to assign.
+    The second Content represents the file to assign the group to.
+
+  \- \fBgroups\fR:
+    Identical to group operation, except this will recursively apply the mode to all files within the given file, if that file is a directory file path.
+
+  \- \fBif\fR:
+    Performs a programmatic \fBif\fR condition.
+    May be specified following a valid \fBelse\fR operation.
+
+    The Content represents a set of conditions to perform.
+
+    The \fBif\fR operation may be used in conjunction with the \fBand\fR, \fBor\fR, and the \fBelse\fR operations.
+
+    The conditional logic is different from normal logic found in most software programs.
+    There is only one order of operation, a top\-down design where the current operation relates to the previous operation.
+    This is mostly relevant when \fBif\fR operation is followed by an \fBand\fR or an \fBor\fR operation.
+
+    Consider the following:
+      \fBif parameter xxx
+      or parameter yyy
+      and parameter zzz
+        print first
+      else
+      if parameter www
+        print second
+      else
+        print third\fR
+
+    The resulting logic is as follows:
+      1) If \fBxxx\fR is defined, then...
+      2) If result from (1) is TRUE or if \fByyy\fR is defined, then...
+      3) If result from (2) is TRUE and if \fBzzz\fR is defined, then...
+      4) If result from (3) is FALSE, then...
+      5) If result from (4) is TRUE, then...
+      6) If result from (5) is FALSE, then...
+
+    For all conditions that rely on numbers, only whole numbers are (currently) supported.
+
+    conditions:
+      \- \fB== 'left' 'right'\fR:
+        Compare all parameters to be equal.
+        Requires 2 or more after the \fB==\fR.
+        For example, \fBif == 'a' 'b' 'c' 'd'\fR would test: \fB'a' == 'b' && 'b' == 'c' && 'c' == 'd'\fR.
+        This performs only string\-based comparisons.
+
+      \- \fB> 'left string' 'right string'\fR:
+        Compare \fBleft\fR to \fBright\fR for greater than.
+        Requires 2 or more after the \fB>\fR.
+        For example, \fBif > 0 1 2 3\fR would test: \fB0 > 1 && 1 > 2 && 2 > 3\fR.
+        This performs only number\-based comparisons.
+
+      \- \fB< 'left string' 'right string'\fR:
+        Compare \fBleft\fR to \fBright\fR for less than.
+        Requires 2 or more after the \fB>\fR.
+        For example, \fBif < 0 1 2 3\fR would test: \fB0 < 1 && 1 < 2 && 2 < 3\fR.
+        This performs only number\-based comparisons.
+
+      \- \fB>= 'left string' 'right string'\fR:
+        Compare \fBleft\fR to \fBright\fR for greater than or equal to.
+        Requires 2 or more after the \fB>=\fR.
+        For example, \fBif >= 0 1 2 3\fR would test: \fB0 >= 1 && 1 >= 2 && 2 >= 3\fR.
+        This performs only number\-based comparisons.
+
+      \- \fB<= 'left string' 'right string'\fR:
+        Compare \fBleft\fR to \fBright\fR for less than or equal to.
+        Requires 2 or more after the \fB>=\fR.
+        For example, \fBif <= 0 1 2 3\fR would test: \fB0 <= 1 && 1 <= 2 && 2 <= 3\fR.
+        This performs only number\-based comparisons.
+
+      \- \fB<> 'left' 'right'\fR:
+        Compare all parameters to be not equal.
+        Requires 2 or more after the \fB==\fR.
+        For example, \fBif <> 'a' 'b' 'c'\fR would test: \fB'a' <> 'b' && 'b' <> 'c' && 'a' <> 'c'\fR.
+        This performs only string\-based comparisons.
+
+      \- \fBdefine 'some define name'\fR:
+        Test if one or more names are defined as an environment variable.
+        For example, \fBif define PWD SHELL\fR would test if both the \fBPWD\fR and the \fBSHELL\fR variables are defined via the environment variables.
+
+      \- \fBexist 'file path'\fR:
+        Test if file exists.
+        For example, \fBif exist 'a.txt' 'b.txt'\fR would test if both the file \fBa.txt\fR and \fBb.txt\fR exist.
+
+      \- \fBfailure\fR:
+        Test if the previous section operation failed.
+
+      \- \fBgroup 'some mode' 'some file'\fR:
+        For example, \fBif group friends a.txt b.txt\fR would test if both file \fBa.txt\fR and \fBb.txt\fR have a group named \fBwe\fR.
+
+      \- \fBis block character directory fifo link regular socket for 'file path'\fR:
+        Test if one or more files exist and if each file is any of the given types.
+        The given types must be followed by \fBfor\fR to designate where the the file paths begin.
+        For example, \fBif is regular directory for 'a.txt' 'b.txt'\fR would test if both the file \fBa.txt\fR and \fBb.txt\fR exist and are either of type \fBregular\fR or type \fBdirectory\fR.
+
+      \- \fBmode is/has 'some mode' 'some file'\fR:
+        Test if one or more files has the exact mode (\fBis\fR) or has at least the given modes (\fBhas\fR).
+        For example, \fBif mode is u+r a.txt b.txt\fR would test if both file \fBa.txt\fR and \fBb.txt\fR only have owner set to read.
+        For example, \fBif mode has u+r a.txt b.txt\fR would test if both file \fBa.txt\fR and \fBb.txt\fR has owner set to read, and all other modes can be anything.
+
+      \- \fBnot\fR:
+        Perform the test expecting a false result rather than a true result.
+        This is to be immediately followed by a valid if condition as well as all appropriate valid content associated with that if condition.
+
+        Only the following if conditions are supported:
+          \- \fBdefine\fR.
+          \- \fBexist\fR.
+          \- \fBgroup\fR.
+          \- \fBis\fR.
+          \- \fBmode\fR.
+          \- \fBowner\fR.
+          \- \fBparameter\fR.
+
+        Examples:
+          \- \fBif not parameter work\fR
+          \- \fBif not exist documentation.txt\fR
+
+      \- \fBowner 'some mode' 'some file'\fR:
+        Test if one or more files has the given owner.
+        For example, \fBif owner me a.txt b.txt\fR would test if both file \fBa.txt\fR and \fBb.txt\fR have an owner named \fBme\fR.
+
+      \- \fBparameter 'some parameter name'\fR:
+        Test if one or more names are defined as a \fBparameter\fR variable.
+        For example, \fBif parameter verbose silent\fR would test if both the \fBverbose\fR and the \fBsilent\fR variables are defined via the \fBparameter\fR setting.
+
+        Reserved parameters that represent program arguments, three forms are available.
+        For example, the program argument \fB\-w/\-\-work\fR has the reserved word \fBwork\fR and has three forms:
+          1) \fBwork\fR.
+          2) \fBwork:option\fR.
+          3) \fBwork:value\fR.
+
+        In the case of form 1, the \fBif parameter work\fR would be true if the argument is passed to the program or a default is provided.
+        In the case of form 2, the \fBif parameter work:option\fR would be true if the argument is passed to the program.
+        In the case of form 3, the \fBif parameter work:value\fR would be true if the argument is passed to the program and has a non\-zero value.
+
+        Some reserved parameters, such as the \fBverbosity\fR, has no \fBvalue\fR and in this case would always return false for \fBif parameter verbosity:value\fR.
+
+        Multi\-valued reserved parameters expand into multiple parameters (such as when using multiple \fB\-m/\-\-mode\fR).
+        Avoid this behavior by wrapping the the IKI variable in quotes.
+
+        The following are reserved parameters:
+          \- \fBbuild\fR: Associated with \fB\-b/\-\-build\fR parameter.
+          \- \fBcolor\fR: Associated with \fB+d/++dark\fR, \fB+l/++light\fR, and \fB+n/++no_color\fR parameters.
+          \- \fBcurrent\fR: The absolute path to the current working directory (present working directory) (Always has a trailing forward slash).
+          \- \fBdata\fR: Associated with \fB\-D/\-\-data\fR parameter.
+          \- \fBdefine\fR: Associated with \fB\-d/\-\-define\fR parameter.
+          \- \fBdocuments\fR: Associated with \fB\-O/\-\-documents\fR parameter.
+          \- \fBfakefile\fR: Associated with \fB\-f/\-\-fakefile\fR parameter.
+          \- \fBlicenses\fR: Associated with \fB\-l/\-\-licenses\fR parameter.
+          \- \fBmode\fR: Associated with \fB\-m/\-\-mode\fR parameter and possibly with the build settings default mode \fBmodes_default\fR.
+          \- \fBprocess\fR: Associated with \fB\-p/\-\-process\fR parameter.
+          \- \fBreturn\fR: Contains the return value of a previous operation that produces a return code.
+          \- \fBsettings\fR: Associated with \fB\-s/\-\-settings\fR parameter.
+          \- \fBsources\fR: Associated with \fB\-S/\-\-sources\fR parameter.
+          \- \fBtop\fR: The absolute path to the \fBtop\fR directory, which is the base project directory (Always has a trailing forward slash).
+          \- \fBverbosity\fR: Associated with \fB+Q/++quiet\fR, \fB+E/++error\fR, \fB+N/++normal\fR, \fB+V/++verbose\fR, and \fB+D/++debug\fR parameters.
+          \- \fBwork\fR: Associated with \fB\-w/\-\-work\fR parameter.
+
+      \- \fBsucceed\fR:
+        Test if the previous section operation succeeded.
+
+  \- \fBindex\fR:
+    Execute the linker program, such as \fBar\fR.
+
+    All Content are passed as arguments to the respective \fBar\fR program.
+
+  \- \fBlink\fR:
+    Create a symbolic link from some point to some target.
+
+    The first Content, when there are more than 2 arguments, may be either \fBforce\fR or \fBstrict\fR.
+    The second to last Content represents the target file.
+    The last Content represents the point file.
+
+    The \fBforce\fR Content designates that the point file will be overwritten if the file already exists.
+    The \fBstrict\fR Content requires that the target file already exists.
+
+  \- \fBmode\fR:
+    Change the mode permissions for a given file.
+
+    The first Content represents the mode to assign.
+    The second Content represents the file to assign the mode to.
+
+  \- \fBmodes\fR:
+    Identical to mode operation, except this will recursively apply the mode to all files within the given file, if that file is a directory file path.
+
+  \- \fBmove\fR:
+    Move all files (and directories) into the last content.
+    If there are more than one file (or directory) being copied, then the final path must be a directory.
+
+    All Content, except last, represents the files to move.
+    The last Content represents the destination file (or directory) to move to.
+
+  \- \fBoperate\fR:
+    Begin execution of another Section.
+
+    The first Content represents the name of the Section Object to execute.
+    This may be neither the \fBsettings\fR Section no the \fBmain\fR Section.
+    Recursion is prohibited, a Section that is already on the operation stack may not be called again.
+    Once the operation is off the stack, it can then be called again.
+
+  \- \fBor\fR:
+    A special type of an \fBif\fR operation.
+    May only be specified following a valid \fBif\fR, \fBand\fR, or \fBor\fR operation.
+    This is executed only if the previous \fBif\fR operation result is false.
+
+    When executed, this performs the test and returns true or false as appropriate.
+    When not executed, this passes through the result of the previous \fBif\fR, \fBand\fR, or \fBor\fR operation.
+
+  \- \fBowner\fR:
+    Change the owner role for a given file.
+
+    The first Content represents the role to assign.
+    The second Content represents the file to assign the role to.
+
+  \- \fBowners\fR:
+    Identical to owner operation, except this will recursively apply the mode to all files within the given file, if that file is a directory file path.
+
+  \- \fBparameter\fR:
+    This represents a variable defined within the scope of the fakefile.
+    This is not exported as an environment variable and is therefore not visible to any executed programs or scripts.
+    This replaces the value of any existing parameter variable with this name.
+    The reserved parameter variable names (see IKI vocabulary context section below) may not be changed by this.
+
+  \- \fBpop\fR:
+    Pop a directory path of the path stack, thereby changing to the previous directory on the stack.
+    This is a change directory command similar to a back button in a browser.
+
+    This has no Content.
+
+    This does not generate an error if the path stack is empty.
+    If the directory popping to no longer exists, then an error occurs.
+
+  \- \fBprint\fR:
+    Print the content to the output screen.
+    This always prints a newline at the end.
+
+    All Content is printed, and if no Content is provided, an empty line is printed.
+
+    The following escape sequences are supported for printing special characters:
+      \- \fB\f\fR: Form Feed.
+      \- \fB\n\fR: New Line.
+      \- \fB\r\fR: Carriage Return.
+      \- \fB\t\fR: Tab.
+      \- \fB\v\fR: Vertical Tab.
+      \- \fB\\fR: Backslash Character (may require additional slashes in certain circumstances.)
+      \- \fB\0\fR: NULL Character.
+      \- \fB\U+\fR: Unicode Sequence (followed by a valid Unicode sequence with a minimum 4 hexidecimal digits and a maximum of 6 hexidecimal digits).
+      \- \fB\!\fR: Non\-printing separator, allowing for \fB\U+000A\!5\fR to be equivalent to \fB\n5\fR.
+
+    If the Unicode is invalid, then nothing is printed for that character (the invalid character is skipped when printing).
+    Example Unicodes:
+      \- \fB\U+000A\fR: Prints a new line, equivalent to \fB\n\fR.
+      \- \fB\U+2E19\fR: Prints the Unicode feather\-like character \fB⸙\fR.
+
+    Only ASCII alpha\-numeric hexidecimal digits are allowed in the Unicode sequence (upper or lower case).
+
+    Invalid or unknown escape sequences are not printed.
+
+  \- \fBrun\fR:
+    Manually execute a remote program or script.
+    This program must be in the appropriate \fBPATH\fR environment or otherwise automatically detected when calling without a specific path to the program or script.
+
+    The first Content represents the program or script name.
+    All Content after the first are passed to the program or script when running.
+
+    After this executes the return result is made available via the \fBreturn\fR parameter variable name.
+    Any existing value associated with \fBreturn\fR gets replaced.
+
+  \- \fBshell\fR:
+    Manually execute a remote program or script using a specific path to the program or script.
+    This does not require the program to exist in \fBPATH\fR, but the path to the program or script must be relative to the project path.
+
+    The first Content represents the program or script name.
+    All Content after the first are passed to the program or script when running.
+
+    After this executes the return result is made available via the \fBreturn\fR parameter variable name.
+    Any existing value associated with \fBreturn\fR gets replaced.
+
+  \- \fBskeleton\fR:
+    Run the fake skeleton operation as if \fBfake skeleton\fR was run instead of \fBfake make\fR.
+    Command line arguments are automatically passed to the fake skeleton operation.
+
+  \- \fBto\fR:
+    Change to the directory within the project root path tree, pushing the previous directory onto the path stack.
+    The previous path is saved onto the path stack and may later be \fBpopped\fR off.
+
+    The first Content represents the path to change directory into.
+
+  \- \fBtop\fR:
+    Change to the project root path, clearing the directory path stack.
+
+    This has no Content.
+    If the project root path no longer exists, then an error occurs.
+
+  \- \fBtouch\fR:
+    Manually create a new file or a directory within the project root or update its last changed timestamp if the file already exists.
+
+    The first Content must be either \fBfile\fR or \fBdirectory\fR.
+    The remaining Content must be a path to the file.
+
+  \- \fBwrite\fR:
+    Write strings to a file within the project root.
+    The Content after the first Content is appended to the file.
+
+    The first Content represents the file to write to.
+    If there is no Content beyond the first, then the file is truncated (all content within the file is deleted).
+
+    In all cases, if the file does not exist, the file is created.
+
+    When only the first Content exists, this acts similar to the \fBtouch\fR operation.
+    The major difference between the two is that the \fBtouch\fR operation does not alter the content within the file.
+    This does alter the content within the file.
+
+    A single space is printed between each argument.
+    To preserve spaces, wrap the message in quotes (single or double).
+
+    The following escape sequences are supported for printing special characters:
+      \- \fB\f\fR: Form Feed.
+      \- \fB\n\fR: New Line.
+      \- \fB\r\fR: Carriage Return.
+      \- \fB\t\fR: Tab.
+      \- \fB\v\fR: Vertical Tab.
+      \- \fB\\fR: Backslash Character (may require additional slashes in certain circumstances.)
+      \- \fB\0\fR: NULL Character.
+      \- \fB\U+\fR: Unicode Sequence (followed by a valid Unicode sequence with a minimum 4 hexidecimal digits and a maximum of 6 hexidecimal digits).
+      \- \fB\!\fR: Non\-printing separator, allowing for \fB\U+000A\!5\fR to be equivalent to \fB\n5\fR.
+
+    If the Unicode is invalid, then nothing is printed for that character (the invalid character is skipped when printing).
+    Example Unicodes:
+      \- \fB\U+000A\fR: Prints a new line, equivalent to \fB\n\fR.
+      \- \fB\U+2E19\fR: Prints the Unicode feather\-like character \fB⸙\fR.
+
+    Only ASCII alpha\-numeric hexidecimal digits are allowed in the Unicode sequence (upper or lower case).
+
+    Invalid or unknown escape sequences are not printed.
+
+The IKI vocabulary context is supported and is further clarified as follows:
+\- \fBcontext\fR:
+  The context Object represents a name representing simple context or complex combination of context.
+  Context should wrap some text such that if some text begins with some context, the context should be reset at the end.
+  The most basic context is color context, such as: \fBcontext\:'notice' This is emphasized text context\:'reset'\fR.
+
+  The use of IKI in this way is acceptable but it is not perfect.
+  IKI is not designed to be a replacement to markup.
+  The markup \fB<strong>Example</strong>\fR vs the IKI \fBcontext\:'notable' Example context\:'notable'\fR has obvious differences in the spaces.
+  The IKI by design cannot be used like this: \fBcontext\:'notable'Examplecontext\:'notable'\fR because the word \fBExample\fR and the word \fBcontext\fR collide.
+
+  This context will respect the programs \fB++light\fR, \fB++dark\fR, and \fB++no_color\fR parameters.
+
+  The following context are available:
+    \- \fBerror\fR: Designate as an error, often printed in red.
+    \- \fBimportant\fR: Designate as important.
+    \- \fBnormal\fR: Explicitly designate normal text.
+    \- \fBnotable\fR: Designate as notable (similar to \fBstrong\fR or \fBbold\fR in HTML).
+    \- \fBreset\fR: Remove the context.
+    \- \fBstandout\fR: Designate to make notable (similar to \fBitalic\fR or \fBemphasis\fR in HTML).
+    \- \fBsuccess\fR: Designate as a success, often printed in bright green.
+    \- \fBtitle\fR: Designate as a title.
+    \- \fBwarning\fR: Designate as a warning, often printed in some shade of orange.
+
+\- \fBdefine\fR:
+  The define Object represents environment variables passed to the program or created by the program.
+  The value represents the environment variable name and is case\-sensitive.
+  This IKI variable gets substituted with the environment variable's value or NULL if not defined.
+  The \fBsettings\fR list supports declaring custom environment variables (which overwrite any existing environment variable with the same name).
+
+\- \fBparameter\fR:
+  The parameter Object represents a variable that is to be substituted.
+  The value represents the variable name and is case\-sensitive.
+  This IKI variable gets substituted with the value defined in the \fBsettings\fR list or NULL if not defined.
+  The value may contain an additional \fB:option\fR or \fB:value\fR at the end of the name to designate getting only part of the parameter.
+
+  The following are reserved parameter variable names:
+  \- \fBbuild\fR:
+    This variable holds the \fBbuild\fR program parameters, such as \fB\-b build/\fR.
+    This supports both \fB:option\fR and \fB:value\fR.
+
+  \- \fBcolor\fR:
+    This variable holds the color related program parameters, such as \fB+n\fR.
+    This supports both \fB:option\fR and \fB:value\fR (value is always an empty string).
+
+  \- \fBdata\fR:
+    This variable holds the \fBdata\fR program parameters, such as \fB\-D data/\fR.
+    This supports both \fB:option\fR and \fB:value\fR.
+
+  \- \fBdefine\fR:
+    This variable holds the \fBdefine\fR program parameters, such as \fB\-d define/\fR.
+    This supports both \fB:option\fR and \fB:value\fR.
+
+  \- \fBdocuments\fR:
+    This variable holds the \fBdocuments\fR program parameters, such as \fB\-O documents/\fR.
+    This supports both \fB:option\fR and \fB:value\fR.
+
+  \- \fBfakefile\fR:
+    This variable holds the \fBfakefile\fR program parameters, such as \fB\-f fakefile\fR.
+    This supports both \fB:option\fR and \fB:value\fR.
+
+  \- \fBlicenses\fR:
+    This variable holds the \fBlicenses\fR program parameters, such as \fB\-l licenses/\fR.
+    This supports both \fB:option\fR and \fB:value\fR.
+
+  \- \fBmode\fR:
+    This variable holds the \fBfakefile\fR program parameters, such as \fB\-m monolithic\fR.
+    This supports both \fB:option\fR and \fB:value\fR.
+
+  \- \fBprocess\fR:
+    This variable holds the \fBprocess\fR program parameters, such as \fB\-p process_name\fR.
+    This supports both \fB:option\fR and \fB:value\fR.
+
+  \- \fBreturn\fR:
+    This variable holds the return status from a previously run user\-space applications, which happens with the \fBrun\fR and \fBshell\fR section operations.
+    This does not represent the return code for each line, just only those lines that run user\-space applications.
+
+  \- \fBsettings\fR:
+    This variable holds the \fBsettings\fR program parameters, such as \fB\-s settings\fR.
+    This supports both \fB:option\fR and \fB:value\fR.
+
+  \- \fBsources\fR:
+    This variable holds the \fBsources\fR program parameters, such as \fB\-S sources/\fR.
+    This supports both \fB:option\fR and \fB:value\fR.
+
+  \- \fBverbosity\fR:
+    This variable holds the verbosity related program parameters, such as \fB+V\fR.
+    This supports both \fB:option\fR and \fB:value\fR (value is always an empty string).
+
+  \- \fBwork\fR:
+    This variable holds the \fBwork\fR program parameters, such as \fB\-w work/\fR.
+    This supports both \fB:option\fR and \fB:value\fR.
+
+  An example of getting just the \fB:option\fR or \fB:value\fR part of a parameter for the \fBwork\fR parameters:
+  \- \fBwork:option\fR:
+    This variable holds the option part of the \fBwork\fR program parameters, such as \fB\-w\fR.
+
+  \- \fBwork:value\fR:
+    This variable holds the value part of the \fBwork\fR program parameters, such as \fBwork/\fR.
+
+The Content \fBno_dereference\fR may be specified in certain cases relating to files.
+These cases operate on a file that can be a link itself or the link target.
+The default behavior is normally to dereference the link target.
+
+For example, consider a symbolic link, called \fBsome_file\fR, that points to a file that does not exist (which means that the link in question is a broken link).
+The Operation \fBif exist some_file\fR would return false.
+The Operation \fBif no_dereference exist some_file\fR would return true.
+This is because the symbolic link itself, \fBsome_file\fR, does exist but the file it is pointing to does not.
+The \fBno_dereference\fR is ignored for conditions that do not need it.
+.SH SPECIFICATION
+.PP
+The fakefile file follows the \fBFSS\-0005 (Somewhat Basic List)\fR format with a sub\-format of \fBIKI\-0002 (Simple Script)\fR.
+
+A fakefile is broken up into multiple Basic Lists, referred to as Sections, with two special purpose reserved Sections.
+The Sections are broken up into multiple Extended Objects and their respective Contents, referred to as Section Operations.
+
+Each of these non\-reserved Sections acts as a set to perform some set of Section Operations.
+Each of these Section Operations perform a single command or action based on a set of reserved Section Operation types.
+Each of these Section Operations have a set of Arguments associated with them.
+
+How these Arguments are interpreted and processed are specific to each Operation type.
+The Section Operations are represented by the Extended Object name and the Extended Content represents the Operation Arguments.
+Each of these Section Operations support IKI variable substitution within their respective Arguments.
+The Operation Extended Object does not support IKI variable substitution.
+The reserved Settings Section does not support IKI variable substitution.
+
+The \fBIKI\-0002 (Simple Script)\fR vocabulary context is further clarified as follows:
+  \- \fBcontext\fR: The value is case\-sensitive variable name.
+  \- \fBdefine\fR: The value must be a case\-sensitive valid environment variable name (alpha\-numeric or underscore, but no leading digits).
+  \- \fBparameter\fR: The value is a case\-sensitive variable name.
+    \- Many parameters also support \fB:option\fR and \fB:value\fR appended at the end of the value.
+
+The reserved Section Objects are:
+  \- \fBsettings\fR: contains a list of Settings Objects and Content in \fBFSS\-0001 (Extended)\fR format.
+  \- \fBmain:\fR contains a list of Operation Objects and Content in \fBFSS\-0001 (Extended)\fR format.
+
+The Settings Objects are:
+  \- \fBcompiler\fR: Only one Content, which must only be a valid filename.
+  \- \fBdefine\fR: First Content represents variable name (case\-sensitive), remaining Content represents the value.
+  \- \fBenvironment\fR: Zero or more Content representing valid environment variable names (alpha\-numeric with underscore, but cannot begin with a number).
+  \- \fBfail\fR: Only one Content, which must be either \fBexit\fR, \fBwarn\fR or \fBignore\fR (quotes not required) (case\-sensitive).
+  \- \fBimport\fR: Only one Content, which must only be a valid filename.
+  \- \fBindexer\fR: Only one Content, which must only be a valid filename.
+  \- \fBindexer_arguments: Zero or more arguments supported by the indexer specified in code:\fRbuild_indexer".
+  \- \fBload_build\fR: Only one Content, which must be either \fByes\fR or \fBno\fR (quotes not required) (case\-sensitive).
+  \- \fBparameter\fR: First Content represents variable name (case\-sensitive), remaining Content represents the value.
+
+The build settings may also be specified in the Settings Section.
+
+The Section Operation Objects are:
+  \- \fBand\fR: One or more Content. First Content is the condition or \fBno_dereference\fR (when \fBno_dereference\fR, then the second Content is the condition, etc..), remaining Content are specific to the condition.
+  \- \fBbreak\fR: Zero or one Content. If specified, First Content must be one of \fBsuccess\fR or \fBfailure\fR.
+  \- \fBbuild\fR: Zero or more Content. First Content represents file name of the settings file to use, second Content and on represent custom modes to use.
+  \- \fBclean\fR: Zero Content.
+  \- \fBclone\fR: Two or more Content representing paths to files.
+  \- \fBcompile\fR: One or more Content as parameters to compiler.
+  \- \fBcopy\fR: Two or more Content representing paths to files.
+  \- \fBdefine\fR: First Content represents variable name (case\-sensitive), remaining Content represents the value.
+  \- \fBdelete\fR: One or more Content representing paths to files.
+  \- \fBdeletes\fR: One or more Content representing paths to files.
+  \- \fBelse\fR: Zero Content.
+  \- \fBexit\fR: Zero or one Content. If specified, first Content must be one of \fBsucceed\fR or \fBfail\fR.
+  \- \fBfail\fR: One Content. First Content must be one of \fBexit\fR, \fBwarn\fR, or \fBignore\fR (case\-sensitive).
+  \- \fBgroup\fR: Two or more Content. First Content is group name, number, or \fBno_dereference\fR (when \fBno_dereference\fR, then the second Content is the group name or number, etc..), remaining Content are paths to files.
+  \- \fBgroups\fR: Two or more Content. First Content is group name, number, or \fBno_dereference\fR (when \fBno_dereference\fR, then the second Content is the group name or number, etc..), remaining Content are paths to files.
+  \- \fBif\fR: One or more Content. First Content is the condition or is \fBno_dereference\fR (when \fBno_dereference\fR, then the second Content is the condition, etc..), remaining Content are specific to the condition.
+  \- \fBindex\fR: One or more Content.
+  \- \fBlink\fR: Two to Four Content. The first and second Content may be either \fBforce\fR or \fBstrict\fR, the second to last Content is the link target file, and the last Content is the pointer file (the link).
+  \- \fBmode\fR: Two or more Content. First Content is the mode, remaining Content are paths to files.
+  \- \fBmodes\fR: Two or more Content. First Content is the mode, remaining Content are paths to files.
+  \- \fBmove\fR: Two or more Content representing paths to files.
+  \- \fBoperate\fR: One Content. First Content is the name of a valid Section Object, except for the reserved Section Objects.
+  \- \fBor\fR: One or more Content. First Content is the condition or \fBno_dereference\fR (when \fBno_dereference\fR, then the second Content is the condition, etc..), remaining Content are specific to the condition.
+  \- \fBowner\fR: Two or more Content. First Content is owner name, number, or \fBno_dereference\fR (when \fBno_dereference\fR, then the second Content is the owner name or number, etc..), remaining Content are paths to files.
+  \- \fBowners\fR: Two or more Content. First Content is owner name, number, or \fBno_dereference\fR (when \fBno_dereference\fR, then the second Content is the owner name or number, etc..), remaining Content are paths to files.
+  \- \fBparameter\fR: First Content represents variable name (case\-sensitive), remaining Content represents the value.
+  \- \fBpop\fR: Zero Content.
+  \- \fBprint\fR: Zero or more Content.
+  \- \fBrun\fR: One or more Content. First Content is the name of the program (or script) and all remaining Content are passed as arguments to the named program (or script).
+  \- \fBshell\fR: One or more Content. First Content is the file path of the program (or script) and all remaining Content are passed as arguments to the named program (or script).
+  \- \fBskeleton\fR: Zero Content.
+  \- \fBto\fR: One Content. First Content is the directory path.
+  \- \fBtop\fR: Zero Content.
+  \- \fBtouch\fR: Two or more Content. First Content is one of \fBfile\fR or \fBdirectory\fR, remaining Content are paths to files.
+  \- \fBwrite\fR: One or more Content. First Content the file to write to, remaining Content represent the string to write.
+
+  The \fBif\fR Section Operation conditions are:
+    \- \fB==\fR: Two or more Content.
+    \- \fB>\fR: Two or more Content.
+    \- \fB<\fR: Two or more Content.
+    \- \fB>=\fR: Two or more Content.
+    \- \fB<=\fR: Two or more Content.
+    \- \fB<>\fR: Two or more Content.
+    \- \fBdefine\fR: One or more Content are valid environment variable name.
+    \- \fBexist\fR: One or more Content representing the files to check the existence of.
+    \- \fBfailure\fR: has no other Content.
+    \- \fBgroup\fR: First Content is the name of a group. Second or more Content are paths to files.
+    \- \fBis\fR: First Content is a list of \fBblock\fR, \fBcharacter\fR, \fBno_dereference\fR, \fBdirectory\fR, \fBfifo\fR, \fBlink\fR, \fBregular\fR , or \fBsocket\fR followed by "for" and then the remaining Content that are paths to files.
+    \- \fBmode\fR: First Content is either \fBhas\fR, \fBis\fR, or \fBno_dereference\fR. Second Content is a valid file mode. Third or more Content are paths to files.
+    \- \fBno_dereference\fR: A non\-condition inserted before any of \fBexist\fR, \fBis\fR, and \fBmode\fR (then the second Content is the actual condition followed by any Content associated with that condition).
+    \- \fBnot\fR: First Content is one of \fBdefine\fR, \fBexist\fR, \fBgroup\fR, \fBis\fR, \fBmode\fR, \fBno_dereference\fR, \fBowner\fR, or \fBparameter\fR and all remaining Content are based on the first Content's \fBif\fR Section Operation Content rules.
+    \- \fBowner\fR: First Content is the name of an owner. Second or more Content are paths to files.
+    \- \fBparameter\fR: One or more Content are valid IKI names.
+    \- \fBsuccess\fR: has no other Content.
+
+The \fBif\fR Section Operation conditions and numbers:
+  The numbers may be represented in any of the forms:
+    1) \fBdecimal\fR: all numbers without a base\-type prefix are of base\-type 10, referred to as decimal.
+    2) \fBbinary\fR: all numbers with the prefix \fB0b\fR (uppercase or lowercase \fBb\fR) are of base\-type 2, referred to as binary.
+    3) \fBoctal\fR: all numbers with the prefix \fB0o\fR (that is zero followed by the letter \fBo\fR, uppercase or lowercase \fBo\fR) are of base\-type 8, referred to as octal.
+    4) \fBduodecimal\fR: all numbers with the prefix \fB0d\fR (uppercase or lowercase \fBd\fR) are of base\-type 12, referred to as duodecimal.
+    5) \fBhexadecimal\fR: all numbers with the prefix \fB0x\fR (uppercase or lowercase \fBx\fR) are of base\-type 16, referred to as hexadecimal.
+
+  (At this time) The numbers may be of a max value of 2^64, or 18446744073709551615, positive or negative.
+  (At this time) The numbers may only be whole numbers.
+  Note: There are plans to impose no limits on the number size or any decimal values, but this requires significant work is not to be implemented at this time.
+  Once this restriction is lifted, it should be conditional upon an implementation for what the maximum supported numbers or digits may be.
+
+  Only the following \fBif\fR Section Operation conditions use these operators:
+    \- \fB>\fR
+    \- \fB<\fR
+    \- \fB>=\fR
+    \- \fB<=\fR
+
+The \fBif\fR Section Operation condition \fBparameter\fR:
+  The following reserved words are available for parameter names: \fBbuild\fR, \fBcolor\fR, \fBcurrent\fR, \fBdata\fR, \fBdocuments\fR, \fBdefine\fR, \fBfakefile\fR, \fBlicenses\fR, \fBmode\fR, \fBprocess\fR, \fBreturn\fR, \fBsettings\fR, \fBsources\fR, \fBtop\fR, \fBverbosity\fR, and \fBwork\fR.
+  Each of the reserved words supports having \fB:option\fR and \fB:value\fR appended, such as: \fBwork:value\fR.
+.SH SEE ALSO
+.PP
+\fBfake\fR(1),
+\fBfake\-defines\fR(5),
+\fBfake\-dependencies\fR(5),
+\fBfake\-settings\fR(5)
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, Open Standard License 1.0 or later.

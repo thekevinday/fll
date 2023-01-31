@@ -1,0 +1,28 @@
+.TH fake-dependencies "5" "January 2023" "FLL - Featureless Make 0.7.0" "File Formats"
+.SH NAME
+Featureless Make \- "dependencies" file.
+.SH SYNOPSIS
+.B dependencies
+.SH DESCRIPTION
+.PP
+This file is originally intended for dependencies provided by the \fBFeatureless Linux Library\fR project.
+Order matters, and the provided order represents the order of dependencies.
+The first entry therefore has no preceding dependency and the last dependency could potentially depend on all dependencies above it.
+.SH SPECIFICATION
+.PP
+The build settings dependencies file follows the \fBFSS-0001 (Extended)\fR format.
+
+Each Object represents a specific project name as it would be linked against.
+Each Content represents associated information, such as a version number.
+Future versions of this will clarify what and how Content, such as version numbers, are to be used and processed.
+.SH SEE ALSO
+.PP
+\fBfake\fR(1),
+\fBfake\-defines\fR(5),
+\fBfake\-fakefile\fR(5),
+\fBfake\-settings\fR(5)
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, Open Standard License 1.0 or later.
