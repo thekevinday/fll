@@ -1,0 +1,682 @@
+.TH fake-settings "5" "January 2023" "FLL - Featureless Make 0.6.4" "File Formats"
+.SH NAME
+Featureless Make \- "settings" file.
+.SH SYNOPSIS
+.B settings
+.SH DESCRIPTION
+.PP
+This describes intent and purposes of the build settings file settings.
+The settings file is designed for very simple compilations that represent a single named program and/or a single named library.
+For specific details on the allowed formatting, see the settings.txt under the specifications folder.
+
+\- \fBbuild_compiler\fR:
+  This represents the name of the compiler program to use, such as \fBgcc\fR.
+
+  This defaults to \fBgcc\fR (the GNU C Compiler).
+
+  The programs \fBgcc\fR and \fBclang\fR are known to work.
+  Many of the parameters in the settings file can be changed if not using GNU Compiler Collection, but there may be certain hard\-coded functionality that may need to be changed.
+
+\- \fBbuild_indexer\fR:
+  This represents the name of the indexer program to use, such as \fBar\fR.
+  An indexer is often called a linker.
+
+  This defaults to \fBar\fR (the GNU \fBar\fR program).
+  Similar to \fBbuild_compiler\fR, any linker that supports the \fBar\fR program parameters is effectively supported.
+
+\- \fBbuild_indexer_arguments\fR:
+  This represents arguments needed to build an archive file from object files, such as \fBrcs\fR.
+  These arguments are placed immediately before the object files passed to the \fBindexer\fR program.
+
+\- \fBbuild_language\fR:
+  The programming language to build with.
+  The languages \fBc\fR and \fBc++\fR are supported (with \fBbash\fR as a consideration for support).
+  The \fBbash\fR language is not currently implemented and needs some consideration because there is nothing to compile.
+  The \fBbash\fR language will likely build a set of individual scripts, and perhaps script dependencies, into a single Bash script.
+
+\- \fBbuild_libraries\fR:
+  A collection of libraries to be linked against.
+  This should include the compiler specific parameter parts, such as the \fB\-l\fR prefix in \fB\-lc\fR.
+  The order of these may matter if the compiler (such as GNU Compiler Collection or a linker via GNU Compiler Collection) is order sensitive.
+
+\- \fBbuild_libraries_shared\fR:
+  A collection of libraries to be linked against.
+  This should include the compiler specific parameter parts, such as the \fB\-l\fR prefix in \fB\-lc\fR.
+  The order of these may matter if the compiler (such as GNU Compiler Collection or a linker via GNU Compiler Collection) is order sensitive.
+  These are applied to only shared builds.
+
+\- \fBbuild_libraries_static\fR:
+  A collection of libraries to be linked against.
+  This should include the compiler specific parameter parts, such as the \fB\-l\fR prefix in \fB\-lc\fR.
+  The order of these may matter if the compiler (such as GNU Compiler Collection or a linker via GNU Compiler Collection) is order sensitive.
+  These are applied to only static builds.
+
+\- \fBbuild_objects_library\fR:
+  A collection of object files to be compile with when building libraries.
+  These are intended to represent already compiled object files.
+  These paths are relative to the \fBpath_object_script\fR, \fBpath_object_shared\fR, or \fBpath_object_static\fR.
+  The order of these may matter if the compiler (such as GNU Compiler Collection or a linker via GNU Compiler Collection) is order sensitive.
+
+\- \fBbuild_objects_library_shared\fR:
+  A collection of object files to be compile with when building shared libraries.
+  These are intended to represent already compiled object files.
+  These paths are relative to the \fBpath_object_shared\fR.
+  The order of these may matter if the compiler (such as GNU Compiler Collection or a linker via GNU Compiler Collection) is order sensitive.
+  These are applied to only shared builds.
+
+\- \fBbuild_objects_library_static\fR:
+  A collection of object files to be compile with when building static libraries.
+  These are intended to represent already compiled object files.
+  These paths are relative to the \fBpath_object_static\fR.
+  The order of these may matter if the compiler (such as GNU Compiler Collection or a linker via GNU Compiler Collection) is order sensitive.
+  These are applied to only static builds.
+
+\- \fBbuild_objects_program\fR:
+  A collection of object files to be compile with when building programs.
+  These are intended to represent already compiled object files.
+  These paths are relative to the \fBpath_object_script\fR, \fBpath_object_shared\fR, or \fBpath_object_static\fR.
+  The order of these may matter if the compiler (such as GNU Compiler Collection or a linker via GNU Compiler Collection) is order sensitive.
+
+\- \fBbuild_objects_program_shared\fR:
+  A collection of object files to be compile with when building shared programs.
+  These are intended to represent already compiled object files.
+  These paths are relative to the \fBpath_object_shared\fR.
+  The order of these may matter if the compiler (such as GNU Compiler Collection or a linker via GNU Compiler Collection) is order sensitive.
+  These are applied to only shared builds.
+
+\- \fBbuild_objects_program_static\fR:
+  A collection of object files to be compile with when building static programs.
+  These are intended to represent already compiled object files.
+  These paths are relative to the \fBpath_object_static\fR.
+  The order of these may matter if the compiler (such as GNU Compiler Collection or a linker via GNU Compiler Collection) is order sensitive.
+  These are applied to only static builds.
+
+\- \fBbuild_name\fR:
+  The name of the build, which often represent the project name.
+  If program sources are specified, then this will be used as the program name.
+  If library sources are specified, then this will be used in the library name, such as \fBlibX.so\fR where \fBX\fR would be the \fBbuild_name\fR value.
+
+\- \fBbuild_script\fR:
+  When \fByes\fR, the build process will build any scripts, such as a Bash script.
+
+  This is neither implemented nor supported by Featureless Make 0.6.x and earlier.
+
+\- \fBbuild_shared\fR:
+  When \fByes\fR, the build process will compile any source code for any supported language that supports shared library linking.
+
+\- \fBbuild_sources_documentation\fR:
+  A collection of documentation files.
+  These are documentation files used by the project and are simply copied over to the build directory.
+  Unless a pre\-process script (or in theory post\-process script) is configured to alter these, they are not modified.
+
+\- \fBbuild_sources_headers\fR:
+  A collection of header files.
+  May include a relative sub\-path to each individual header (such as: \fBlevel_0/a.h level_0/b.h level_1/c.h\fR).
+  The order of these may matter if the compiler (such as GNU Compiler Collection or a linker via GNU Compiler Collection) is order sensitive.
+
+\- \fBbuild_sources_headers_shared\fR:
+  A collection of header files.
+  May include a relative sub\-path to each individual header (such as: \fBlevel_0/a.h level_0/b.h level_1/c.h\fR).
+  The order of these may matter if the compiler (such as GNU Compiler Collection or a linker via GNU Compiler Collection) is order sensitive.
+  Be careful not to have any conflicting names between this and build_sources_headers_static in case of when static and shared builds are both enabled.
+  These are applied to only shared builds.
+
+\- \fBbuild_sources_headers_static\fR:
+  A collection of header files.
+  May include a relative sub\-path to each individual header (such as: \fBlevel_0/a.h level_0/b.h level_1/c.h\fR).
+  The order of these may matter if the compiler (such as GNU Compiler Collection or a linker via GNU Compiler Collection) is order sensitive.
+  These files are used when compiling the library.
+  Be careful not to have any conflicting names between this and build_sources_headers_shared in case of when static and shared builds are both enabled.
+  These are applied to only static builds.
+
+\- \fBbuild_sources_library\fR:
+  A collection of library related source files.
+  May include a relative sub\-path to each individual source file (such as: \fBlevel_0/a.c level_0/b.c level_1/c.c\fR).
+  The order of these may matter if the compiler (such as GNU Compiler Collection or a linker via GNU Compiler Collection) is order sensitive.
+
+\- \fBbuild_sources_library_shared\fR:
+  A collection of library related source files.
+  May include a relative sub\-path to each individual source file (such as: \fBlevel_0/a.c level_0/b.c level_1/c.c\fR).
+  The order of these may matter if the compiler (such as GNU Compiler Collection or a linker via GNU Compiler Collection) is order sensitive.
+  These are applied to only shared builds.
+
+\- \fBbuild_sources_library_static\fR:
+  A collection of library related source files.
+  May include a relative sub\-path to each individual source file (such as: \fBlevel_0/a.c level_0/b.c level_1/c.c\fR).
+  The order of these may matter if the compiler (such as GNU Compiler Collection or a linker via GNU Compiler Collection) is order sensitive.
+  These are applied to only static builds.
+
+\- \fBbuild_sources_object\fR:
+  A single source file used for generating an object file.
+  The source file is located within the path designated by \fBpath_sources_object\fR.
+  The built object does not get linked and therefore no linker arguments apply.
+  The built object file is named using the \fBbuild_name\fR with the \fB.o\fR extension.
+  May include a relative sub\-path to each individual source file (such as: \fBlevel_0/a.c\fR).
+
+\- \fBbuild_sources_object_shared\fR:
+  A single source file used for generating an object file.
+  The source file is located within the path designated by \fBpath_sources_object\fR.
+  The built object does not get linked and therefore no linker arguments apply.
+  The built object file is named using the \fBbuild_name\fR with the \fB.o\fR extension.
+  May include a relative sub\-path to each individual source file (such as: \fBlevel_0/a.c\fR).
+  These are applied to only shared builds.
+
+\- \fBbuild_sources_object_static\fR:
+  A single source file used for generating an object file.
+  The source file is located within the path designated by \fBpath_sources_object\fR.
+  The built object does not get linked and therefore no linker arguments apply.
+  The built object file is named using the \fBbuild_name\fR with the \fB.o\fR extension.
+  May include a relative sub\-path to each individual source file (such as: \fBlevel_0/a.c\fR).
+  These are applied to only static builds.
+
+\- \fBbuild_sources_program\fR:
+  A collection of program related source files.
+  May include a relative sub\-path to each individual source file (such as: \fBlevel_0/a.c level_0/b.c level_1/c.c\fR).
+  The order of these may matter if the compiler (such as GNU Compiler Collection or a linker via GNU Compiler Collection) is order sensitive.
+  These files are used when compiling the program.
+
+\- \fBbuild_sources_program_shared\fR:
+  A collection of program related source files.
+  May include a relative sub\-path to each individual source file (such as: \fBlevel_0/a.c level_0/b.c level_1/c.c\fR).
+  The order of these may matter if the compiler (such as GNU Compiler Collection or a linker via GNU Compiler Collection) is order sensitive.
+  These files are used when compiling the program for shared builds.
+
+\- \fBbuild_sources_program_static\fR:
+  A collection of program related source files.
+  May include a relative sub\-path to each individual source file (such as: \fBlevel_0/a.c level_0/b.c level_1/c.c\fR).
+  The order of these may matter if the compiler (such as GNU Compiler Collection or a linker via GNU Compiler Collection) is order sensitive.
+  These files are used when compiling the program for static builds.
+
+\- \fBbuild_sources_script\fR:
+  A collection of script files.
+  These are script files used by the project and are simply copied over to the build directory.
+  Unless a pre\-process script (or in theory post\-process script) is configured to alter these, they are not modified.
+  Unlike the \fBcompile_language\fR setting \fBbash\fR, this is not for built Bash script, but is instead for any valid scripting language (including Bash).
+  These could be in any language.
+
+\- \fBbuild_sources_setting\fR:
+  A collection of settings files.
+  These are settings files used by the project and are simply copied over to the build directory.
+  Unless a pre\-process script (or in theory post\-process script) is configured to alter these, they are not modified.
+
+\- \fBbuild_static\fR:
+  When \fByes\fR, the build process will compile any source code for any supported language that supports static library linking.
+
+\- \fBdefines\fR:
+  A collection of macro names.
+  This includes the any compiler specific parameters required by the \fBbuild_compiler\fR, such as the \fB\-D\fR used by \fBgcc\fR and \fBclang\fR.
+  These will be appended to the compiler for compiled languages such as \fBC\fR and \fBC++\fR.
+  These are applied to both shared and static builds.
+
+\- \fBdefines_library\fR:
+  A collection of macro names.
+  This includes the any compiler specific parameters required by the \fBbuild_compiler\fR, such as the \fB\-D\fR used by \fBgcc\fR and \fBclang\fR.
+  These will be appended to the compiler for compiled languages such as \fBC\fR and \fBC++\fR.
+  These are applied to only library builds.
+
+\- \fBdefines_library_shared\fR:
+  A collection of macro names.
+  This includes the any compiler specific parameters required by the \fBbuild_compiler\fR, such as the \fB\-D\fR used by \fBgcc\fR and \fBclang\fR.
+  These will be appended to the compiler for compiled languages such as \fBC\fR and \fBC++\fR.
+  These are applied to only shared library builds.
+
+\- \fBdefines_library_static\fR:
+  A collection of macro names.
+  This includes the any compiler specific parameters required by the \fBbuild_compiler\fR, such as the \fB\-D\fR used by \fBgcc\fR and \fBclang\fR.
+  These will be appended to the compiler for compiled languages such as \fBC\fR and \fBC++\fR.
+  These are applied to only static library builds.
+
+\- \fBdefines_object\fR:
+  A collection of macro names.
+  This includes the any compiler specific parameters required by the \fBbuild_compiler\fR, such as the \fB\-D\fR used by \fBgcc\fR and \fBclang\fR.
+  These will be appended to the compiler for compiled languages such as \fBC\fR and \fBC++\fR.
+  These are applied to only object builds.
+
+\- \fBdefines_object_shared\fR:
+  A collection of macro names.
+  This includes the any compiler specific parameters required by the \fBbuild_compiler\fR, such as the \fB\-D\fR used by \fBgcc\fR and \fBclang\fR.
+  These will be appended to the compiler for compiled languages such as \fBC\fR and \fBC++\fR.
+  These are applied to only shared object builds.
+
+\- \fBdefines_object_static\fR:
+  A collection of macro names.
+  This includes the any compiler specific parameters required by the \fBbuild_compiler\fR, such as the \fB\-D\fR used by \fBgcc\fR and \fBclang\fR.
+  These will be appended to the compiler for compiled languages such as \fBC\fR and \fBC++\fR.
+  These are applied to only static object builds.
+
+\- \fBdefines_program\fR:
+  A collection of macro names.
+  This includes the any compiler specific parameters required by the \fBbuild_compiler\fR, such as the \fB\-D\fR used by \fBgcc\fR and \fBclang\fR.
+  These will be appended to the compiler for compiled languages such as \fBC\fR and \fBC++\fR.
+  These are applied to only program builds.
+
+\- \fBdefines_program_shared\fR:
+  A collection of macro names.
+  This includes the any compiler specific parameters required by the \fBbuild_compiler\fR, such as the \fB\-D\fR used by \fBgcc\fR and \fBclang\fR.
+  These will be appended to the compiler for compiled languages such as \fBC\fR and \fBC++\fR.
+  These are applied to only shared program builds.
+
+\- \fBdefines_program_static\fR:
+  A collection of macro names.
+  This includes the any compiler specific parameters required by the \fBbuild_compiler\fR, such as the \fB\-D\fR used by \fBgcc\fR and \fBclang\fR.
+  These will be appended to the compiler for compiled languages such as \fBC\fR and \fBC++\fR.
+  These are applied to only shared program builds.
+
+\- \fBdefines_shared\fR:
+  A collection of macro names.
+  This includes the any compiler specific parameters required by the \fBbuild_compiler\fR, such as the \fB\-D\fR used by \fBgcc\fR and \fBclang\fR.
+  These will be appended to the compiler for compiled languages such as \fBC\fR and \fBC++\fR.
+  These are applied to only shared builds.
+
+\- \fBdefines_static\fR:
+  A collection of macro names.
+  This includes the any compiler specific parameters required by the \fBbuild_compiler\fR, such as the \fB\-D\fR used by \fBgcc\fR and \fBclang\fR.
+  These will be appended to the compiler for compiled languages such as \fBC\fR and \fBC++\fR.
+  These are applied to only static builds.
+
+\- \fBenvironment\fR:
+  A collection of environment names to pass from the callers environment into the executed programs environment.
+  When provided, all environment variables are removed when calling user\-space programs, such as \fBgcc\fR.
+  To remove all environment variables define this with no Content.
+  When not provided, all environment variables are loaded.
+
+\- \fBflags\fR:
+  A collection of any flag supported by the \fBbuild_compiler\fR, such as \fBgcc\fR.
+  This includes the any compiler specific parameters to defined this, such as the \fB\-f\fR used by \fBgcc\fR and \fBclang\fR.
+  These are applied to both shared and static builds.
+
+\- \fBflags_library\fR:
+  A collection of any flag supported by the \fBbuild_compiler\fR, such as \fBgcc\fR.
+  This includes the any compiler specific parameters to defined this, such as the \fB\-f\fR used by \fBgcc\fR and \fBclang\fR.
+  These are applied when building a library.
+
+\- \fBflags_library_shared\fR:
+  A collection of any flag supported by the \fBbuild_compiler\fR, such as \fBgcc\fR.
+  This includes the any compiler specific parameters to defined this, such as the \fB\-f\fR used by \fBgcc\fR and \fBclang\fR.
+  These are applied to only library shared builds.
+
+\- \fBflags_library_static\fR:
+  A collection of any flag supported by the \fBbuild_compiler\fR, such as \fBgcc\fR.
+  This includes the any compiler specific parameters to defined this, such as the \fB\-f\fR used by \fBgcc\fR and \fBclang\fR.
+  These are applied to only library static builds.
+
+\- \fBflags_object\fR:
+  A collection of any flag supported by the \fBbuild_compiler\fR, such as \fBgcc\fR.
+  This includes the any compiler specific parameters to defined this, such as the \fB\-f\fR used by \fBgcc\fR and \fBclang\fR.
+  These are applied when building an object.
+
+\- \fBflags_object_shared\fR:
+  A collection of any flag supported by the \fBbuild_compiler\fR, such as \fBgcc\fR.
+  This includes the any compiler specific parameters to defined this, such as the \fB\-f\fR used by \fBgcc\fR and \fBclang\fR.
+  These are applied to only object shared builds.
+
+\- \fBflags_object_static\fR:
+  A collection of any flag supported by the \fBbuild_compiler\fR, such as \fBgcc\fR.
+  This includes the any compiler specific parameters to defined this, such as the \fB\-f\fR used by \fBgcc\fR and \fBclang\fR.
+  These are applied to only object static builds.
+
+\- \fBflags_program\fR:
+  A collection of any flag supported by the \fBbuild_compiler\fR, such as \fBgcc\fR.
+  This includes the any compiler specific parameters to defined this, such as the \fB\-f\fR used by \fBgcc\fR and \fBclang\fR.
+  These are applied when building a program.
+
+\- \fBflags_program_shared\fR:
+  A collection of any flag supported by the \fBbuild_compiler\fR, such as \fBgcc\fR.
+  This includes the any compiler specific parameters to defined this, such as the \fB\-f\fR used by \fBgcc\fR and \fBclang\fR.
+  These are applied to only program shared builds.
+
+\- \fBflags_program_static\fR:
+  A collection of any flag supported by the \fBbuild_compiler\fR, such as \fBgcc\fR.
+  This includes the any compiler specific parameters to defined this, such as the \fB\-f\fR used by \fBgcc\fR and \fBclang\fR.
+  These are applied to only program static builds.
+
+\- \fBflags_shared\fR:
+  A collection of any flag supported by the \fBbuild_compiler\fR, such as \fBgcc\fR.
+  This includes the any compiler specific parameters to defined this, such as the \fB\-f\fR used by \fBgcc\fR and \fBclang\fR.
+  These are applied to only shared builds.
+
+\- \fBflags_static\fR:
+  A collection of any flag supported by the \fBbuild_compiler\fR, such as \fBgcc\fR.
+  This includes the any compiler specific parameters to defined this, such as the \fB\-f\fR used by \fBgcc\fR and \fBclang\fR.
+  These are applied to only static builds.
+
+\- \fBhas_path_standard\fR:
+  When \fByes\fR, the sources path will be built using the sources path with the language, such as \fBsources/c/\fR.
+  When \fBno\fR, the default sources path structure is not used and instead \fBpath_sources\fR is used.
+  When the parameter \fB\-S/\-\-sources\fR is specified, such as \fB\-S xxx\fR, then when this is set to \fByes\fR is used then the path would be \fBxxx/c/\fR and when this is set to \fBno\fR then the path would be \fBxxx/\fR.
+
+  This defaults to \fByes\fR.
+
+\- \fBimport\fR:
+  Load this settings file at this point in the settings file.
+  This can be an absolute or a relative path.
+  This is intended to reduce repition and likely should be placed at the top of the settings file.
+  This a non\-recursive operation and the imported file itself cannot perform an import.
+  Loaded values are processed as if they are in the file at the spot where the import setting is specified.
+  Relative paths are relative to the importing file.
+  Absolute paths that start with "./" are relative to the project root rather than the importing file.
+  Absolute paths that start with "/" are treated normally.
+
+  This is neither implemented nor supported by Featureless Make 0.6.x and earlier.
+
+\- \fBmodes\fR:
+  A collection of available build modes.
+  Build modes provide custom variants of the build process where certain settings are appended onto others.
+  See the settings.txt specification for a list of which setting names this applies to.
+
+\- \fBmodes_default\fR:
+  The name of the default mode to use when no mode is specified.
+  This must be one of the modes specified in the \fBmodes\fR setting.
+
+\- \fBpath_headers\fR:
+  A sub\-path in which headers are to be installed under.
+  For example, the FLL project might use the \fBlevel_0\fR, \fBlevel_1\fR, etc.. headers without requiring that structure within the source.
+  A resulting build destination for a \fBpath_headers\fR of \fBlevel_0\fR would be something like \fBbuild/includes/level_0/\fR.
+  If \fBpath_headers\fR is \fBlevel_0\fR, \fBpreserve_path_headers\fR is \fByes\fR, and \fBbuild_sources_headers\fR has \fBxxx/a.h yyy/zzz/b.h\fR, then the headers would be at: \fBbuild/includes/level_0/xxx/a.h build/includes/level_0/yyy/zzz/b.h\fR
+
+\- \fBpath_language\fR:
+  A sub\-path in which to find the source files for the currently defined language.
+  If the \fBbuild_language\fR is changed, it is recommended to change this as well to match.
+
+\- \fBpath_library_script\fR:
+  A sub\-path representing the destination where the built library script files are placed.
+
+  This defaults to \fBscript\fR.
+
+  This is neither implemented nor supported by Featureless Make 0.6.x and earlier.
+
+\- \fBpath_library_shared\fR:
+  A sub\-path representing the destination where the built shared library files are placed.
+
+  This defaults to \fBshared\fR.
+
+\- \fBpath_library_static\fR:
+  A sub\-path representing the destination where the built shared library files are placed.
+
+  This defaults to \fBstatic\fR.
+
+\- \fBpath_object_script\fR:
+  A sub\-path representing the destination where the built object script files are placed.
+
+  This defaults to \fBscript\fR.
+
+  This is neither implemented nor supported by Featureless Make 0.6.x and earlier.
+
+\- \fBpath_object_shared\fR:
+  A sub\-path representing the destination where the built object library files are placed.
+
+  This defaults to \fBshared\fR.
+
+\- \fBpath_object_static\fR:
+  A sub\-path representing the destination where the built object library files are placed.
+
+  This defaults to \fBstatic\fR.
+
+\- \fBpath_program_script\fR:
+  A sub\-path representing the destination where the built program script files are placed.
+
+  This defaults to \fBscript\fR.
+
+  This is neither implemented nor supported by Featureless Make 0.6.x and earlier.
+
+\- \fBpath_program_shared\fR:
+  A sub\-path representing the destination where the built shared program files are placed.
+
+  This defaults to \fBshared\fR.
+
+\- \fBpath_program_static\fR:
+  A sub\-path representing the destination where built shared program files are placed.
+
+  This defaults to \fBstatic\fR.
+
+\- \fBpath_sources\fR:
+  A sub\-path representing where the source files are found.
+
+  This defaults to \fBsources\fR.
+
+\- \fBpath_sources_object\fR:
+  A sub\-path representing where the object source files are found.
+  This is used by \fBbuild_sources_object\fR.
+
+  This defaults to \fBsources\fR.
+
+\- \fBpreserve_path_headers\fR:
+  When this is \fByes\fR, then the relative directory structure in the source (as defined in \fBbuild_sources_headers\fR) is preserved.
+  If the \fBbuild_sources_headers\fR has the header files \fBxxx/a.h yyy/zzz/b.h\fR and this is \fByes\fR, then the directories \fBxxx/\fR and \fByyy/zzz/\fR are created and the files are stored within them.
+  If the \fBbuild_sources_headers\fR has the header files \fBxxx/a.h yyy/zzz/b.h\fR and this is \fBno\fR, then the directories \fBxxx/\fR and \fByyy/zzz/\fR are stripped before installing.
+  When this is \fBno\fR and the \fBbuild_sources_headers\fR has header files \fBxxx/a.h yyy/a.h\fR, then one of the \fBa.h\fR files will be overwritten, depending on order they were supplied.
+
+\- \fBprocess_post\fR:
+  The filename (relative to the data/build/ directory) of a script to execute after the \fBbuild\fR operation successfully completes.
+  A small subset of parameters from the main execution are passed to this script during execution as parameters (using short parameter codes):
+    Color context parameters, such as: \fB+l\fR, \fB+n\fR, and \fB+d\fR.
+    Operation mode, such as: \fBbuild\fR, \fBclean\fR, \fBmake\fR, or \fBskeleton\fR.
+    Verbosity parameters, such as: \fB+q\fR, \fB+D\fR, or \fB+V\fR.
+    Define parameters, such as \fB\-d X\fR or \fB\-d Y\fR, whereas \fBX\fR or \fBY\fR are any valid argument associated with \fB\-d\fR.
+    Process parameter, such as \fB\-p X\fR, whereas \fBX\fR is any valid argument associated with \fB\-p\fR.
+    Settings parameter, such as \fB\-s X', whereas code:\fRX" is any valid argument associated with \fB\-s\fR.
+    Build Path parameter, such as \fB\-b X', whereas code:\fRX" is any valid argument associated with \fB\-b\fR.
+    Data Path parameter, such as \fB\-D X', whereas code:\fRX" is any valid argument associated with \fB\-D\fR.
+    Sources Path parameter, such as \fB\-S X', whereas code:\fRX" is any valid argument associated with \fB\-S\fR.
+    Work Path parameter, such as \fB\-w X', whereas code:\fRX" is any valid argument associated with \fB\-w\fR.
+
+\- \fBprocess_pre\fR:
+  The filename (relative to the data/build/ directory) of a script to execute before the \fBbuild\fR operation is executed.
+  A small subset of parameters from the main execution are passed to this script during execution as parameters (using short parameter codes):
+    Color context parameters, such as: \fB+l\fR, \fB+n\fR, and \fB+d\fR.
+    Operation mode, such as: \fBbuild\fR, \fBclean\fR, \fBmake\fR, or \fBskeleton\fR.
+    Verbosity parameters, such as: \fB+q\fR, \fB+D\fR, or \fB+V\fR.
+    Define parameters, such as \fB\-d X\fR or \fB\-d Y\fR, whereas \fBX\fR or \fBY\fR are any valid argument associated with \fB\-d\fR.
+    Process parameter, such as \fB\-p X\fR, whereas \fBX\fR is any valid argument associated with \fB\-p\fR.
+    Settings parameter, such as \fB\-s X', whereas code:\fRX" is any valid argument associated with \fB\-s\fR.
+    Build Path parameter, such as \fB\-b X', whereas code:\fRX" is any valid argument associated with \fB\-b\fR.
+    Data Path parameter, such as \fB\-D X', whereas code:\fRX" is any valid argument associated with \fB\-D\fR.
+    Sources Path parameter, such as \fB\-S X', whereas code:\fRX" is any valid argument associated with \fB\-S\fR.
+    Work Path parameter, such as \fB\-w X', whereas code:\fRX" is any valid argument associated with \fB\-w\fR.
+
+\- \fBsearch_exclusive\fR:
+  When \fByes\fR, the search path during compile for shared libraries will only include shared library paths.
+  When \fBno\fR, the search path during compile time for shared libraries will include shared library paths followed by static library paths.
+  Setting this to \fByes\fR helps prevent static libraries from ending up in shared libraries (very useful when bootstrapping a system).
+  Setting this to \fBno\fR allows for including static libraries if no shared libraries are found but static are.
+  This does not alter search paths introduced automatically by the \fBbuild_compiler\fR or \fBbuild_indexer\fR, so it is still possible for static libraries to end up even when this is set to \fByes\fR.
+
+\- \fBsearch_shared\fR:
+  When \fByes\fR, shared library paths are searched during compile.
+  Both this and \fBsearch_static\fR cannot be \fBno\fR at the same time.
+
+  This defaults to \fByes\fR.
+
+\- \fBsearch_shared\fR:
+  When \fByes\fR, static library paths are searched during compile.
+  Both this and search_shared cannot be \fBno\fR at the same time.
+
+\- \fBversion_file\fR:
+  Designates which version should be used when building the symbolic links.
+  Any version prefixes are used as defined.
+  A Symbolic link is created against this created file such that \fBlibX.so\fR is a link to \fBlibX.so.A\fR.
+  For all files other than when file is \fBmajor\fR, another symbolic link is created against this such that \fBlibX.so.A\fR is a link to \fBlibX.so.A.X\fR such that X is the respective \fBB\fR, \fBB.C', or code:\fRB.C.D" as described below.
+  The default file is \fBmajor\fR.
+  When \fBmajor\fR is used, the file created is \fBlibX.so.A\fR, whereas \fBX\fR is the \fBbuild_name\fR and \fBA\fR is the major version.
+  When \fBminor\fR is used, the file created is \fBlibX.so.A.B\fR, whereas \fBX\fR is the \fBbuild_name\fR and \fBA.B\fR is the major and minor versions, respectively.
+  When \fBmicro\fR is used, the file created is \fBlibX.so.A.B.C\fR, whereas \fBX\fR is the \fBbuild_name\fR and \fBA.B.C\fR is the major, minor, and micro versions, respectively.
+  When \fBnano\fR is used, the file created is \fBlibX.so.A.B.C.D\fR, whereas \fBX\fR is the \fBbuild_name\fR and \fBA.B.C.D\fR is the major, minor, micro, and nano versions, respectively.
+
+\- \fBversion_major\fR:
+  The major version number (or in theory any characters allowed in a filename).
+  This should generally be a positive number or 0.
+  Anything else is currently untested but allowed.
+  With a structure of \fBA.B.C\fR, the major version would be the \fBA\fR.
+
+\- \fBversion_major_prefix\fR:
+  The version major prefix is the character used to designate the start of the major version.
+  This can zero or more characters.
+  With a structure of \fBA.B.C\fR, the major version prefix would be before the \fBA\fR.
+  This is only added if \fBversion_major\fR is not empty.
+
+  This defaults to the ASCII period character \fB.\fR.
+
+\- \fBversion_minor\fR:
+  The minor version number (or in theory any characters allowed in a filename).
+  This should generally be a positive number or 0.
+  Anything else is currently untested but allowed.
+  With a structure of \fBA.B.C\fR, the minor version would be the \fBB\fR.
+
+\- \fBversion_minor_prefix\fR:
+  The version minor prefix is the character used to separate the major from the minor.
+  This can zero or more characters.
+  With a structure of \fBA.B.C\fR, the minor version prefix would be the \fB.\fR before the \fBB\fR.
+  This is only added if \fBversion_minor\fR is not empty.
+
+  This defaults to the ASCII period character \fB.\fR.
+
+\- \fBversion_micro\fR:
+  The micro version number (or in theory any characters allowed in a filename).
+  This should generally be a positive number or 0.
+  Anything else is currently untested but allowed.
+  With a structure of \fBA.B.C\fR, the micro version would be the \fBC\fR.
+
+\- \fBversion_micro_prefix\fR:
+  The version micro prefix is the character used to separate the minor from the micro.
+  This can zero or more characters.
+  With a structure of \fBA.B.C\fR, the micro version prefix would be the \fB.\fR before the \fBC\fR.
+  This is only added if \fBversion_micro\fR is not empty.
+
+  This defaults to the ASCII period character \fB.\fR.
+
+\- \fBversion_nano\fR:
+  The nano version number (or in theory any characters allowed in a filename).
+  This should generally be a positive number or 0.
+  Anything else is currently untested but allowed.
+  With a structure of \fBA.B.C.D\fR, the micro version prefix would be the \fB.\fR before the \fBD\fR.
+
+\- \fBversion_nano_prefix\fR:
+  The version nano prefix is the character used to separate the micro from the nano.
+  This can zero or more characters.
+  With a structure of \fBA.B.C.D\fR, the minor version would be the \fB.\fR before the \fBD\fR.
+  This is only added if \fBversion_nano\fR is not empty.
+
+  This defaults to the ASCII period character \fB.\fR.
+
+\- \fBversion_target\fR:
+  Designates which version should be used when linking the shared library.
+  Any version prefixes are used as defined.
+  The default target is \fBmicro\fR.
+  When \fBmajor\fR is used, a shared library is generated with \fB\-Wl,\-soname,libX.so.A\fR, whereas \fBX\fR is the \fBbuild_name\fR and \fBA\fR is the major version.
+  When \fBminor\fR is used, a shared library is generated with \fB\-Wl,\-soname,libX.so.A.B\fR, whereas \fBX\fR is the \fBbuild_name\fR and \fBA.B\fR is the major and minor versions, respectively.
+  When \fBmicro\fR is used, a shared library is generated with \fB\-Wl,\-soname,libX.so.A.B.C\fR, whereas \fBX\fR is the \fBbuild_name\fR and \fBA.B.C\fR is the major, minor, and micro versions, respectively.
+  When \fBnano\fR is used, a shared library is generated with \fB\-Wl,\-soname,libX.so.A.B.C.D\fR, whereas \fBX\fR is the \fBbuild_name\fR and \fBA.B.C.D\fR is the major, minor, micro, and nano versions, respectively.
+.SH SPECIFICATION
+.PP
+The build settings settings file follows the \fBFSS\-0001 (Extended)\fR format.
+
+Each Object represents a settings property name.
+There is only a distinct set of setting property names (see below).
+
+Each Content represents the values associated with that property.
+Additional restrictions are applied to each Content depending on each specific Object name (see below).
+
+Object names and their respective Content purpose/restrictions:
+  \- \fBbuild_compiler\fR: Only one Content, which must only be a valid filename.
+  \- \fBbuild_indexer\fR: Only one Content, which must only be a valid filename.
+  \- \fBbuild_indexer_arguments\fR: Zero or more arguments supported by the indexer specified in \fBbuild_indexer\fR.
+  \- \fBbuild_language\fR: Must only be one of: \fBbash\fR, \fBc\fR, or \fBc++\fR.
+  \- \fBbuild_libraries\fR: Must only contain any number of valid library include arguments that are valid for the compiler defined in "build_compiler" Object.
+  \- \fBbuild_libraries_shared\fR: Must only contain any number of valid library include arguments that are valid for the compiler defined in "build_compiler" Object.
+  \- \fBbuild_libraries_static\fR: Must only contain any number of valid library include arguments that are valid for the compiler defined in "build_compiler" Object.
+  \- \fBbuild_name\fR: Must only contain characters allowed in a filename.
+  \- \fBbuild_objects_library\fR: Must only contain any number of valid object file names relative to the appropriate \fBpath_object_*\fR path.
+  \- \fBbuild_objects_library_shared\fR: Must only contain any number of valid object file names relative to the \fBpath_object_shared\fR path.
+  \- \fBbuild_objects_library_static\fR: Must only contain any number of valid object file names relative to the \fBpath_object_static\fR path.
+  \- \fBbuild_objects_program\fR: Must only contain any number of valid object file names relative to the appropriate \fBpath_object_*\fR path.
+  \- \fBbuild_objects_program_shared\fR: Must only contain any number of valid object file names relative to the \fBpath_object_shared\fR path.
+  \- \fBbuild_objects_program_static\fR: Must only contain any number of valid object file names relative to the \fBpath_object_static\fR path.
+  \- \fBbuild_script\fR: Must only one of: \fByes\fR or \fBno\fR.
+  \- \fBbuild_shared\fR: Must only one of: \fByes\fR or \fBno\fR.
+  \- \fBbuild_sources_documentation\fR: Must only contain any number of valid filenames.
+  \- \fBbuild_sources_headers\fR: Must only contain any number of valid filenames.
+  \- \fBbuild_sources_headers_shared\fR: Must only contain any number of valid filenames.
+  \- \fBbuild_sources_headers_static\fR: Must only contain any number of valid filenames.
+  \- \fBbuild_sources_library\fR: Must only contain any number of valid filenames.
+  \- \fBbuild_sources_library_shared\fR: Must only contain any number of valid filenames.
+  \- \fBbuild_sources_library_static\fR: Must only contain any number of valid filenames.
+  \- \fBbuild_sources_object\fR: Must only contain any number of valid filenames.
+  \- \fBbuild_sources_object_shared\fR: Must only contain any number of valid filenames.
+  \- \fBbuild_sources_object_static\fR: Must only contain any number of valid filenames.
+  \- \fBbuild_sources_program\fR: Must only contain any number of valid filenames.
+  \- \fBbuild_sources_program_shared\fR: Must only contain any number of valid filenames.
+  \- \fBbuild_sources_program_static\fR: Must only contain any number of valid filenames.
+  \- \fBbuild_sources_script\fR: Must only contain any number of valid filenames.
+  \- \fBbuild_sources_setting\fR: Must only contain any number of valid filenames.
+  \- \fBbuild_static\fR: Must only one of: \fByes\fR or \fBno\fR.
+  \- \fBdefines\fR: Must only contain any number of valid macro names supported by the compiler specified in \fBbuild_compiler\fR.
+  \- \fBdefines_library\fR: Must only contain any number of valid macro names supported by the compiler specified in \fBbuild_compiler\fR.
+  \- \fBdefines_library_shared\fR: Must only contain any number of valid macro names supported by the compiler specified in \fBbuild_compiler\fR.
+  \- \fBdefines_library_static\fR: Must only contain any number of valid macro names supported by the compiler specified in \fBbuild_compiler\fR.
+  \- \fBdefines_object\fR: Must only contain any number of valid macro names supported by the compiler specified in \fBbuild_compiler\fR.
+  \- \fBdefines_object_shared\fR: Must only contain any number of valid macro names supported by the compiler specified in \fBbuild_compiler\fR.
+  \- \fBdefines_object_static\fR: Must only contain any number of valid macro names supported by the compiler specified in \fBbuild_compiler\fR.
+  \- \fBdefines_program\fR: Must only contain any number of valid macro names supported by the compiler specified in \fBbuild_compiler\fR.
+  \- \fBdefines_program_shared\fR: Must only contain any number of valid macro names supported by the compiler specified in \fBbuild_compiler\fR.
+  \- \fBdefines_program_static\fR: Must only contain any number of valid macro names supported by the compiler specified in \fBbuild_compiler\fR.
+  \- \fBdefines_shared\fR: Must only contain any number of valid macro names supported by the compiler specified in \fBbuild_compiler\fR.
+  \- \fBdefines_static\fR: Must only contain any number of valid macro names supported by the compiler specified in \fBbuild_compiler\fR.
+  \- \fBenvironment\fR: Environment variable names, case\-sensitive, usually uppercase. May only contain characters allowed in an environment variable.
+  \- \fBflags\fR: Must only contain any number of parameters supported by the compiler specified in \fBbuild_compiler\fR.
+  \- \fBflags_library\fR: Must only contain any number of parameters supported by the compiler specified in \fBbuild_compiler\fR.
+  \- \fBflags_library_shared\fR: Must only contain any number of parameters supported by the compiler specified in \fBbuild_compiler\fR.
+  \- \fBflags_library_static\fR: Must only contain any number of parameters supported by the compiler specified in \fBbuild_compiler\fR.
+  \- \fBflags_object\fR: Must only contain any number of parameters supported by the compiler specified in \fBbuild_compiler\fR.
+  \- \fBflags_object_shared\fR: Must only contain any number of parameters supported by the compiler specified in \fBbuild_compiler\fR.
+  \- \fBflags_object_static\fR: Must only contain any number of parameters supported by the compiler specified in \fBbuild_compiler\fR.
+  \- \fBflags_program\fR: Must only contain any number of parameters supported by the compiler specified in \fBbuild_compiler\fR.
+  \- \fBflags_program_shared\fR: Must only contain any number of parameters supported by the compiler specified in \fBbuild_compiler\fR.
+  \- \fBflags_program_static\fR: Must only contain any number of parameters supported by the compiler specified in \fBbuild_compiler\fR.
+  \- \fBflags_shared\fR: Must only contain any number of parameters supported by the compiler specified in \fBbuild_compiler\fR.
+  \- \fBflags_static\fR: Must only contain any number of parameters supported by the compiler specified in \fBbuild_compiler\fR.
+  \- \fBhas_path_standard\fR: Must only one of: \fByes\fR or \fBno\fR.
+  \- \fBimport\fR: Only one Content, which must only be a valid filename.
+  \- \fBmodes\fR: Any valid word character, \fB\-\fR, or \fB+\fR.
+  \- \fBmodes_default\fR: May only be a single complete Content word defined in \fBmodes\fR Object.
+  \- \fBpath_headers\fR: Must be a single valid path.
+  \- \fBpath_language\fR: Must be a single valid path.
+  \- \fBpath_library_script\fR: Must be a single valid path.
+  \- \fBpath_library_shared\fR: Must be a single valid path.
+  \- \fBpath_library_static\fR: Must be a single valid path.
+  \- \fBpath_object_script\fR: Must be a single valid path.
+  \- \fBpath_object_shared\fR: Must be a single valid path.
+  \- \fBpath_object_static\fR: Must be a single valid path.
+  \- \fBpath_program_script\fR: Must be a single valid path.
+  \- \fBpath_program_shared\fR: Must be a single valid path.
+  \- \fBpath_program_static\fR: Must be a single valid path.
+  \- \fBpath_sources\fR: Must only be a valid directory path or not specified.
+  \- \fBpath_sources_object\fR: Must only be a valid directory path or not specified.
+  \- \fBpreserve_path_headers\fR: Must only be one of \fByes\fR or \fBno\fR.
+  \- \fBprocess_post\fR: Only one Content, which must only be a valid filename.
+  \- \fBprocess_pre\fR: Only one Content, which must only be a valid filename.
+  \- \fBsearch_exclusive\fR: Must only one of: \fByes\fR or \fBno\fR.
+  \- \fBsearch_shared\fR: Must only one of: \fByes\fR or \fBno\fR.
+  \- \fBsearch_static\fR: Must only one of: \fByes\fR or \fBno\fR.
+  \- \fBversion_file\fR: Must only be one of: \fBmajor\fR, \fBminor\fR, \fBmicro\fR, or \fBnano\fR.
+  \- \fBversion_major\fR: Must only be a single value containing valid filename characters.
+  \- \fBversion_major_prefix\fR: Must be zero or more valid filename characters.
+  \- \fBversion_micro\fR: Must only be a single value containing valid filename characters.
+  \- \fBversion_micro_prefix\fR: Must be zero or more valid filename characters.
+  \- \fBversion_minor\fR: Must only be a single value containing valid filename characters.
+  \- \fBversion_minor_prefix\fR: Must be zero or more valid filename characters.
+  \- \fBversion_nano\fR: Must only be a single value containing valid filename characters.
+  \- \fBversion_nano_prefix\fR: Must be zero or more valid filename characters.
+  \- \fBversion_target\fR: Must only be one of: \fBmajor\fR, \fBminor\fR, \fBmicro\fR, or \fBnano\fR.
+
+All Object names support having a \fB\-\fR and a \fBmode\fR name, such as \fBbuild_libraries\-individual\fR for a mode called \fBindividual\fR, except for the \fBmodes\fR and the \fBmodes_default\fR Object names.
+.SH SEE ALSO
+.PP
+\fBfake\fR(1),
+\fBfake\-defines\fR(5),
+\fBfake\-dependencies\fR(5),
+\fBfake\-fakefile\fR(5)
+.SH AUTHOR
+Written by Kevin Day.
+.SH COPYRIGHT
+.PP
+Copyright \(co 2007-2023 Kevin Day, Open Standard License 1.0 or later.
