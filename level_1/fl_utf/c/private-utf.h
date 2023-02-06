@@ -43,9 +43,9 @@ extern "C" {
  * @see fl_utf_string_dynamic_compare()
  * @see fl_utf_string_dynamic_partial_compare()
  */
-#if !defined(_di_fl_utfl_string_compare_) || !defined(_di_fl_utfl_string_dynamic_compare_) || !defined(_di_fl_utfl_string_dynamic_partial_compare_)
+#if !defined(_di_fl_utf_string_compare_) || !defined(_di_fl_utf_string_dynamic_compare_) || !defined(_di_fl_utf_string_dynamic_partial_compare_)
   extern f_status_t private_fl_utf_string_compare(const f_utf_string_t string1, const f_utf_string_t string2, const f_array_length_t offset1, const f_array_length_t offset2, const f_array_length_t stop1, const f_array_length_t stop2) F_attribute_visibility_internal_d;
-#endif // !defined(_di_fl_utfl_string_compare_) || !defined(_di_fl_utfl_string_dynamic_compare_) || !defined(_di_fl_utfl_string_dynamic_partial_compare_)
+#endif // !defined(_di_fl_utf_string_compare_) || !defined(_di_fl_utf_string_dynamic_compare_) || !defined(_di_fl_utf_string_dynamic_partial_compare_)
 
 /**
  * Private implementation of fl_utf_string_compare_trim().

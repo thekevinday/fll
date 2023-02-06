@@ -6,7 +6,7 @@
 extern "C" {
 #endif
 
-#if !defined(_di_f_utf_character_is_control_) || !defined(_di_f_utf_is_control_)
+#if !defined(_di_f_utf_character_is_alphabetic_) || !defined(_di_f_utf_character_is_control_) || !defined(_di_f_utf_is_alphabetic_) || !defined(_di_f_utf_is_control_)
   f_status_t private_f_utf_character_is_control(const f_utf_char_t sequence) {
 
     if (macro_f_utf_char_t_width_is(sequence) == 2) {
@@ -127,7 +127,7 @@ extern "C" {
 
     return F_false;
   }
-#endif // !defined(_di_f_utf_character_is_control_) || !defined(_di_f_utf_is_control_)
+#endif // !defined(_di_f_utf_character_is_alphabetic_) || !defined(_di_f_utf_character_is_control_) || !defined(_di_f_utf_is_alphabetic_) || !defined(_di_f_utf_is_control_)
 
 #if !defined(_di_f_utf_character_is_control_code_) || !defined(_di_f_utf_is_control_code_)
   f_status_t private_f_utf_character_is_control_code(const f_utf_char_t sequence) {
@@ -142,7 +142,7 @@ extern "C" {
 
     return F_false;
   }
-#endif // !defined(_di_f_utf_character_is_control_code_) || !defined(_di_f_utf_is_contro_codel_)
+#endif // !defined(_di_f_utf_character_is_control_code_) || !defined(_di_f_utf_is_control_code_)
 
 #if !defined(_di_f_utf_character_is_control_format_) || !defined(_di_f_utf_is_control_format_)
   f_status_t private_f_utf_character_is_control_format(const f_utf_char_t sequence) {
