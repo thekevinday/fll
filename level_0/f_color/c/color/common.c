@@ -4,7 +4,7 @@
 extern "C" {
 #endif
 
-#ifndef _di_f_color_strings_s_
+#ifndef _di_f_color_string_s_
   const f_string_static_t f_color_string_begin_s = macro_f_string_static_t_initialize(F_color_string_begin_s, 0, F_color_string_begin_s_length);
   const f_string_static_t f_color_string_end_s = macro_f_string_static_t_initialize(F_color_string_end_s, 0, F_color_string_end_s_length);
   const f_string_static_t f_color_string_medium_s = macro_f_string_static_t_initialize(F_color_string_medium_s, 0, F_color_string_medium_s_length);
@@ -47,7 +47,7 @@ extern "C" {
   const f_string_static_t f_color_string_code_bright_purple_bg_s = macro_f_string_static_t_initialize(F_color_string_code_bright_purple_bg_s, 0, F_color_string_code_bright_purple_bg_s_length);
   const f_string_static_t f_color_string_code_bright_teal_bg_s = macro_f_string_static_t_initialize(F_color_string_code_bright_teal_bg_s, 0, F_color_string_code_bright_teal_bg_s_length);
   const f_string_static_t f_color_string_code_bright_white_bg_s = macro_f_string_static_t_initialize(F_color_string_code_bright_white_bg_s, 0, F_color_string_code_bright_white_bg_s_length);
-#endif // _di_f_color_strings_s_
+#endif // _di_f_color_string_s_
 
 #ifndef _di_f_color_terminal_s_
   const f_string_static_t f_color_terminal_name_s = macro_f_string_static_t_initialize(F_color_terminal_name_s, 0, F_color_terminal_name_s_length);

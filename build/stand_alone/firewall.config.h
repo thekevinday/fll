@@ -4,7 +4,7 @@
 //
 // Example: echo > /tmp/all.txt
 //          for i in f_type f_status f_memory f_type_array f_string f_utf f_color f_console f_conversion f_file f_pipe f_print f_signal ; do grep -horP '\b_di_f_\w*\b' level_0/$i/c >> /tmp/all.txt ; grep -horP '\b_di_macro_\w*\b' level_0/$i/c >> /tmp/all.txt ; done
-//          sort /tmp/all.txt | uniq > /tmp/sorted.txt && sed -i -e 's|^_|#define &|g'
+//          sort /tmp/all.txt | uniq | sed -e 's|^_|#define &|g' > /tmp/sorted.txt
 
 #define _di_f_array_lengths_adjust_
 #define _di_f_array_lengths_append_
@@ -108,7 +108,6 @@
 //#define _di_f_color_set_string_empty_s_
 //#define _di_f_color_set_t_
 //#define _di_f_color_string_s_
-//#define _di_f_color_strings_s_
 //#define _di_f_color_t_
 //#define _di_f_color_terminal_s_
 
@@ -1364,7 +1363,6 @@
 #define _di_f_utf_is_alphabetic_numeric_
 #define _di_f_utf_is_ascii_
 //#define _di_f_utf_is_combining_
-#define _di_f_utf_is_contro_codel_
 //#define _di_f_utf_is_control_
 #define _di_f_utf_is_control_code_
 #define _di_f_utf_is_control_format_

@@ -34,12 +34,14 @@ extern "C" {
  *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
  *   F_utf_not (with error bit) if unicode is an invalid Unicode character.
  *
+ * @see f_utf_character_is_alphabetic()
  * @see f_utf_character_is_control()
+ * @see f_utf_is_alphabetic()
  * @see f_utf_is_control()
  */
-#if !defined(_di_f_utf_character_is_control_) || !defined(_di_f_utf_is_control_)
+#if !defined(_di_f_utf_character_is_alphabetic_) || !defined(_di_f_utf_character_is_control_) || !defined(_di_f_utf_is_alphabetic_) || !defined(_di_f_utf_is_control_)
   extern f_status_t private_f_utf_character_is_control(const f_utf_char_t sequence) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_utf_character_is_control_) || !defined(_di_f_utf_is_control_)
+#endif // !defined(_di_f_utf_character_is_alphabetic_) || !defined(_di_f_utf_character_is_control_) || !defined(_di_f_utf_is_alphabetic_) || !defined(_di_f_utf_is_control_)
 
 /**
  * Private implementation of f_utf_character_is_control_code().

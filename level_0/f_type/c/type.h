@@ -947,7 +947,6 @@ extern "C" {
  * This provides the types without the normal "f_" leading prefixes to be more in line with the core types like int64_t.
  */
 #ifdef __SIZEOF_INT128__
-
   #ifndef _di_f_int128_t_
     typedef __int128_t int128_t;
   #endif // _di_f_int128_t_
@@ -955,9 +954,7 @@ extern "C" {
   #ifndef _di_f_uint128_t_
     typedef __uint128_t uint128_t;
   #endif // _di_f_uint128_t_
-
 #else // __SIZEOF_INT128__
-
   #ifndef _di_f_int128_t_
     typedef int64_t int128_t;
   #endif // _di_f_int128_t_
@@ -965,7 +962,6 @@ extern "C" {
   #ifndef _di_f_uint128_t_
     typedef uint64_t uint128_t;
   #endif // _di_f_uint128_t_
-
 #endif // __SIZEOF_INT128__
 
 /**
