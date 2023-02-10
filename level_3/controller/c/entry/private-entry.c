@@ -892,7 +892,7 @@ extern "C" {
         controller_lock_print(global->main->output.to, global->thread);
 
         fl_print_format("%rProcessing %r%r item '", global->main->output.to.stream, f_string_eol_s, failsafe ? controller_entry_print_failsafe_s : f_string_empty_s, is_entry ? controller_entry_s : controller_exit_s);
-        fl_print_format("%[%Q%]'.%r", global->main->output.to.stream, global->main->context.set.notable, cache->action.name_item, global->main->context.set.notable, f_string_eol_s);
+        fl_print_format("%[%Q%]'.%r", global->main->output.to.stream, global->main->context.set.title, cache->action.name_item, global->main->context.set.notable, f_string_eol_s);
 
         controller_unlock_print_flush(global->main->output.to, global->thread);
       }
