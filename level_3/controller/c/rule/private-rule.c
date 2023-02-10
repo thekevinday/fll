@@ -224,8 +224,27 @@ extern "C" {
     controller_state_interrupt_t custom = macro_controller_state_interrupt_t_initialize(is_normal, global.thread);
     f_state_t state = macro_f_state_t_initialize(controller_common_allocation_large_d, controller_common_allocation_small_d, 0, 0, &controller_thread_signal_state_fss, 0, (void *) &custom, 0);
 
+    f_array_length_t i = 0;
+
+    for (; i < cache->comments.size; ++i) {
+
+      cache->comments.array[i].start = 1;
+      cache->comments.array[i].stop = 0;
+    } // for
+
+    for (i = 0; i < cache->delimits.size; ++i) {
+      cache->delimits.array[i] = 0;
+    } // for
+
+    for (i = 0; i < cache->content_action.size; ++i) {
+
+      cache->content_action.array[i].start = 1;
+      cache->content_action.array[i].stop = 0;
+    } // for
+
     cache->comments.used = 0;
     cache->delimits.used = 0;
+    cache->content_action.used = 0;
 
     if (method == controller_rule_action_method_extended_list_e) {
       status = fl_fss_extended_list_content_read(cache->buffer_item, state, range, &cache->content_action, &cache->delimits, &cache->comments);
@@ -322,9 +341,7 @@ extern "C" {
           return status;
         }
 
-        f_array_length_t i = 0;
-
-        for (; i < cache->object_actions.used; ++i) {
+        for (i = 0; i < cache->object_actions.used; ++i) {
 
           status = controller_rule_actions_increase_by(controller_common_allocation_small_d, actions);
 
@@ -478,7 +495,7 @@ extern "C" {
             return F_status_set_error(F_valid_not);
           }
 
-          for (f_array_length_t i = 2; i < cache->content_action.used; ++i) {
+          for (i = 2; i < cache->content_action.used; ++i) {
 
             if (fl_string_dynamic_partial_compare_string(controller_delay_s.string, cache->buffer_item, controller_delay_s.used, cache->content_action.array[i]) == F_equal_to) {
               status = controller_rule_action_read_rerun_number(global, controller_delay_s.string, cache, &i, &rerun_item->delay);
@@ -509,7 +526,7 @@ extern "C" {
           } // for
         }
         else if (type == controller_rule_action_type_with_e) {
-          for (f_array_length_t i = 0; i < cache->content_action.used; ++i) {
+          for (i = 0; i < cache->content_action.used; ++i) {
 
             if (fl_string_dynamic_partial_compare_string(controller_full_path_s.string, cache->buffer_item, controller_full_path_s.used, cache->content_action.array[i]) == F_equal_to) {
               item->with |= controller_with_full_path_d;
@@ -572,7 +589,7 @@ extern "C" {
           actions->array[actions->used].line = cache->action.line_action;
           actions->array[actions->used].status = F_known_not;
 
-          for (f_array_length_t i = 0; i < cache->content_action.used; ++i) {
+          for (i = 0; i < cache->content_action.used; ++i) {
 
             status = f_string_dynamic_partial_mash_nulless(f_string_space_s, cache->buffer_item, cache->content_action.array[i], &actions->array[actions->used].parameters.array[0]);
             if (F_status_is_error(status)) break;
@@ -728,7 +745,9 @@ extern "C" {
     macro_f_control_group_t_delete_simple(destination->cgroup)
     f_capability_delete(&destination->capability);
 
-    for (f_array_length_t i = 0; i < controller_rule_action_type__enum_size_e; ++i) {
+    f_array_length_t i = 0;
+
+    for (; i < controller_rule_action_type__enum_size_e; ++i) {
       destination->status[i] = source.status[i];
     } // for
 
@@ -760,21 +779,17 @@ extern "C" {
     destination->scheduler.policy = source.scheduler.policy;
     destination->scheduler.priority = source.scheduler.priority;
 
-    {
-      f_array_length_t i = 0;
+    for (i = 0; i < destination->ons.size; ++i) {
 
-      for (; i < destination->ons.size; ++i) {
+      destination->ons.array[i].action = 0;
+      destination->ons.array[i].need.used = 0;
+      destination->ons.array[i].want.used = 0;
+      destination->ons.array[i].wish.used = 0;
+    } // for
 
-        destination->ons.array[i].action = 0;
-        destination->ons.array[i].need.used = 0;
-        destination->ons.array[i].want.used = 0;
-        destination->ons.array[i].wish.used = 0;
-      } // for
-
-      for (i = 0; i < destination->engine_arguments.size; ++i) {
-        destination->engine_arguments.array[i].used = 0;
-      } // for
-    }
+    for (i = 0; i < destination->engine_arguments.size; ++i) {
+      destination->engine_arguments.array[i].used = 0;
+    } // for
 
     destination->ons.used = 0;
     destination->items.used = 0;
@@ -811,7 +826,7 @@ extern "C" {
         if (F_status_is_error(status)) return status;
       }
 
-      for (f_array_length_t i = 0; i < source.ons.used; ++i) {
+      for (i = 0; i < source.ons.used; ++i) {
 
         destination->ons.array[i].action = source.ons.array[i].action;
 
@@ -870,10 +885,9 @@ extern "C" {
         if (F_status_is_error(status)) return status;
       }
 
-      f_array_length_t i = 0;
       f_array_length_t j = 0;
 
-      for (; i < source.items.used; ++i) {
+      for (i = 0; i < source.items.used; ++i) {
 
         item_source = &source.items.array[i];
         item_destination = &destination->items.array[i];
