@@ -104,11 +104,63 @@ extern "C" {
     f_array_length_t first = 0;
     f_array_length_t total = 0;
 
+    // Do a quick pre-process of PATH to approximate the amount of parts needed, reducing the number of allocations.
     for (; i <= path.used; ++i) {
+      if (path.string[i] == f_path_separator_variable_s.string[0]) ++total;
+    } // for
+
+    #ifdef _en_kevux_path_architecture_bits_
+      total *= 3;
+    #endif // _en_kevux_path_architecture_bits_
+
+    if (total) {
+      status = f_string_dynamics_increase_by(total, paths);
+      if (F_status_is_error(status)) return status;
+
+      total = 0;
+    }
+
+    #ifdef _en_kevux_path_architecture_bits_
+      f_string_dynamic_t architecture_bits = f_string_dynamic_t_initialize;
+
+      if (f_path_architecture_bits_s.used) {
+        status = f_environment_get(f_path_architecture_bits_s, &architecture_bits);
+        if (F_status_is_error(status)) return status;
+      }
+
+      if (architecture_bits.used) {
+        status = f_string_dynamic_append_assure(f_path_separator_s, &architecture_bits);
+
+        if (F_status_is_error(status)) {
+          f_string_dynamic_resize(0, &architecture_bits);
+
+          return status;
+        }
+      } else if (!architecture_bits.used && f_path_architecture_bits_default_s.used) {
+        architecture_bits.string = f_path_architecture_bits_default_s.string;
+        architecture_bits.used = f_path_architecture_bits_default_s.used;
+        architecture_bits.size = f_path_architecture_bits_default_s.size;
+      }
+    #endif // _en_kevux_path_architecture_bits_
+
+    for (i = 0; i <= path.used; ++i) {
 
       if (i == path.used || path.string[i] == f_path_separator_variable_s.string[0]) {
-        status = f_string_dynamics_increase(F_memory_default_allocation_small_d, paths);
-        if (F_status_is_error(status)) return status;
+        #ifdef _en_kevux_path_architecture_bits_
+          if (paths->used + 3 > paths->size) {
+            status = f_string_dynamics_increase(F_memory_default_allocation_small_d + 2, paths);
+          }
+        #else
+          status = f_string_dynamics_increase(F_memory_default_allocation_small_d, paths);
+        #endif // _en_kevux_path_architecture_bits_
+
+        if (F_status_is_error(status)) {
+          #ifdef _en_kevux_path_architecture_bits_
+            f_string_dynamic_resize(0, &architecture_bits);
+          #endif // _en_kevux_path_architecture_bits_
+
+          return status;
+        }
 
         if (!i) {
           paths->array[paths->used++].used = 0;
@@ -136,8 +188,51 @@ extern "C" {
             buffer[k++] = f_path_separator_s.string[0];
           }
 
+          #ifdef _en_kevux_path_architecture_bits_
+            if (f_path_architecture_bits_s.used) {
+              status = f_string_dynamic_increase_by(k + f_path_architecture_bits_s.used, &paths->array[paths->used]);
+
+              if (F_status_is_error(status)) {
+                #ifdef _en_kevux_path_architecture_bits_
+                  f_string_dynamic_resize(0, &architecture_bits);
+                #endif // _en_kevux_path_architecture_bits_
+
+                return status;
+              }
+
+              memcpy(paths->array[paths->used].string, buffer, sizeof(f_char_t) * k);
+              memcpy(paths->array[paths->used].string + k, architecture_bits.string, sizeof(f_char_t) * architecture_bits.used);
+
+              paths->array[paths->used++].used = k + architecture_bits.used;
+            }
+
+            if (f_path_architecture_bits_scripts_s.used) {
+              status = f_string_dynamic_increase_by(k + f_path_architecture_bits_scripts_s.used, &paths->array[paths->used]);
+
+              if (F_status_is_error(status)) {
+                #ifdef _en_kevux_path_architecture_bits_
+                  f_string_dynamic_resize(0, &architecture_bits);
+                #endif // _en_kevux_path_architecture_bits_
+
+                return status;
+              }
+
+              memcpy(paths->array[paths->used].string, buffer, sizeof(f_char_t) * k);
+              memcpy(paths->array[paths->used].string + k, f_path_architecture_bits_scripts_s.string, sizeof(f_char_t) * f_path_architecture_bits_scripts_s.used);
+
+              paths->array[paths->used++].used = k + f_path_architecture_bits_scripts_s.used;
+            }
+          #endif // _en_kevux_path_architecture_bits_
+
           status = f_string_dynamic_increase_by(k, &paths->array[paths->used]);
-          if (F_status_is_error(status)) return status;
+
+          if (F_status_is_error(status)) {
+            #ifdef _en_kevux_path_architecture_bits_
+              f_string_dynamic_resize(0, &architecture_bits);
+            #endif // _en_kevux_path_architecture_bits_
+
+            return status;
+          }
 
           memcpy(paths->array[paths->used].string, buffer, sizeof(f_char_t) * k);
 
@@ -150,6 +245,10 @@ extern "C" {
         first = i + 1;
       }
     } // for
+
+    #ifdef _en_kevux_path_architecture_bits_
+      f_string_dynamic_resize(0, &architecture_bits);
+    #endif // _en_kevux_path_architecture_bits_
 
     return F_none;
   }
@@ -182,11 +281,63 @@ extern "C" {
     f_array_length_t last = path.used;
     f_array_length_t total = 0;
 
+    // Do a quick pre-process of PATH to approximate the amount of parts needed, reducing the number of allocations.
+    for (; i <= path.used; ++i) {
+      if (path.string[i] == f_path_separator_variable_s.string[0]) ++total;
+    } // for
+
+    #ifdef _en_kevux_path_architecture_bits_
+      total *= 3;
+    #endif // _en_kevux_path_architecture_bits_
+
+    if (total) {
+      status = f_string_dynamics_increase_by(total, paths);
+      if (F_status_is_error(status)) return status;
+
+      total = 0;
+    }
+
+    #ifdef _en_kevux_path_architecture_bits_
+      f_string_dynamic_t architecture_bits = f_string_dynamic_t_initialize;
+
+      if (f_path_architecture_bits_s.used) {
+        status = f_environment_get(f_path_architecture_bits_s, &architecture_bits);
+        if (F_status_is_error(status)) return status;
+      }
+
+      if (architecture_bits.used) {
+        status = f_string_dynamic_append_assure(f_path_separator_s, &architecture_bits);
+
+        if (F_status_is_error(status)) {
+          f_string_dynamic_resize(0, &architecture_bits);
+
+          return status;
+        }
+      } else if (!architecture_bits.used && f_path_architecture_bits_default_s.used) {
+        architecture_bits.string = f_path_architecture_bits_default_s.string;
+        architecture_bits.used = f_path_architecture_bits_default_s.used;
+        architecture_bits.size = f_path_architecture_bits_default_s.size;
+      }
+    #endif // _en_kevux_path_architecture_bits_
+
     for (; i <= path.used; ++i, --r) {
 
       if (i == path.used || path.string[r] == f_path_separator_variable_s.string[0]) {
-        status = f_string_dynamics_increase(F_memory_default_allocation_small_d, paths);
-        if (F_status_is_error(status)) return status;
+        #ifdef _en_kevux_path_architecture_bits_
+          if (paths->used + 3 > paths->size) {
+            status = f_string_dynamics_increase(F_memory_default_allocation_small_d + 2, paths);
+          }
+        #else
+          status = f_string_dynamics_increase(F_memory_default_allocation_small_d, paths);
+        #endif // _en_kevux_path_architecture_bits_
+
+        if (F_status_is_error(status)) {
+          #ifdef _en_kevux_path_architecture_bits_
+            f_string_dynamic_resize(0, &architecture_bits);
+          #endif // _en_kevux_path_architecture_bits_
+
+          return status;
+        }
 
         if (!i) {
           paths->array[paths->used++].used = 0;
@@ -214,8 +365,51 @@ extern "C" {
             buffer[k++] = f_path_separator_s.string[0];
           }
 
+          #ifdef _en_kevux_path_architecture_bits_
+            if (f_path_architecture_bits_s.used) {
+              status = f_string_dynamic_increase_by(k + f_path_architecture_bits_s.used, &paths->array[paths->used]);
+
+              if (F_status_is_error(status)) {
+                #ifdef _en_kevux_path_architecture_bits_
+                  f_string_dynamic_resize(0, &architecture_bits);
+                #endif // _en_kevux_path_architecture_bits_
+
+                return status;
+              }
+
+              memcpy(paths->array[paths->used].string, buffer, sizeof(f_char_t) * k);
+              memcpy(paths->array[paths->used].string + k, architecture_bits.string, sizeof(f_char_t) * architecture_bits.used);
+
+              paths->array[paths->used++].used = k + architecture_bits.used;
+            }
+
+            if (f_path_architecture_bits_scripts_s.used) {
+              status = f_string_dynamic_increase_by(k + f_path_architecture_bits_scripts_s.used, &paths->array[paths->used]);
+
+              if (F_status_is_error(status)) {
+                #ifdef _en_kevux_path_architecture_bits_
+                  f_string_dynamic_resize(0, &architecture_bits);
+                #endif // _en_kevux_path_architecture_bits_
+
+                return status;
+              }
+
+              memcpy(paths->array[paths->used].string, buffer, sizeof(f_char_t) * k);
+              memcpy(paths->array[paths->used].string + k, f_path_architecture_bits_scripts_s.string, sizeof(f_char_t) * f_path_architecture_bits_scripts_s.used);
+
+              paths->array[paths->used++].used = k + f_path_architecture_bits_scripts_s.used;
+            }
+          #endif // _en_kevux_path_architecture_bits_
+
           status = f_string_dynamic_increase_by(k, &paths->array[paths->used]);
-          if (F_status_is_error(status)) return status;
+
+          if (F_status_is_error(status)) {
+            #ifdef _en_kevux_path_architecture_bits_
+              f_string_dynamic_resize(0, &architecture_bits);
+            #endif // _en_kevux_path_architecture_bits_
+
+            return status;
+          }
 
           memcpy(paths->array[paths->used].string, buffer, sizeof(f_char_t) * k);
 
@@ -228,6 +422,10 @@ extern "C" {
         last = r - 1;
       }
     } // for
+
+    #ifdef _en_kevux_path_architecture_bits_
+      f_string_dynamic_resize(0, &architecture_bits);
+    #endif // _en_kevux_path_architecture_bits_
 
     return F_none;
   }

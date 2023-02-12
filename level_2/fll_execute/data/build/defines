@@ -2,5 +2,6 @@
 
 _di_libcap_ Disable libcap support, allow for compiling and linking without libcap (-lcap).
 _di_thread_support_ Disable support for compiling and depending on pthreads (and projects like f_thread).
+
 _pthread_attr_unsupported_ Disable non-portable functionality associated with pthread_attr.
 _pthread_sigqueue_unsupported_ Disable GNU specific sigqueue().

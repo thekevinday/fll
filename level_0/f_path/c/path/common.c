@@ -36,6 +36,12 @@ extern "C" {
   #ifndef _di_f_path_present_working_old_s_
     const f_string_static_t f_path_present_working_old_s = macro_f_string_static_t_initialize(F_path_present_working_old_s, 0, F_path_present_working_old_s_length);
   #endif // _di_f_path_present_working_old_s_
+
+  #ifdef _en_kevux_path_architecture_bits_
+    const f_string_static_t f_path_architecture_bits_s = macro_f_string_static_t_initialize(F_path_architecture_bits_s, 0, F_path_architecture_bits_s_length);
+    const f_string_static_t f_path_architecture_bits_default_s = macro_f_string_static_t_initialize(F_path_architecture_bits_default_s, 0, F_path_architecture_bits_default_s_length);
+    const f_string_static_t f_path_architecture_bits_scripts_s = macro_f_string_static_t_initialize(F_path_architecture_bits_scripts_s, 0, F_path_architecture_bits_scripts_s_length);
+  #endif // _en_kevux_path_architecture_bits_
 #endif // _di_f_path_d_
 
 #if defined(_di_f_path_tree_s_) && !defined(_di_f_path_tree_hierarchy_standard_d_) && !defined(_di_f_path_tree_kevux_standard_d_)

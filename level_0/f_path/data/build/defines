@@ -1,2 +1,7 @@
 # fss-0000
 
+_en_kevux_path_architecture_bits_ Enable Kevux architecture bits handling in PATH.
+_en_kevux_path_architecture_bits_default_name_ If defined, then this is a string representing the architecture bits (without the path separator "/") such as "x64".
+_en_kevux_path_architecture_bits_default_length_ If _en_kevux_path_architecture_bits_default_name_ is defined, then this must be defined as the string length of _en_kevux_path_architecture_bits_default_name_ (without the trailing NULL character), such as 3 for "x64". Set to 0 to disable _en_kevux_path_architecture_bits_default_name_ (preventing default).
+_en_kevux_path_architecture_bits_scripts_name_ If defined, then this is a string representing the architecture bits (without the path separator "/") such as "script".
+_en_kevux_path_architecture_bits_scripts_length_ If _en_kevux_path_architecture_bits_scripts_name_ is defined, then this must be defined as the string length of _en_kevux_path_architecture_bits_scripts_name_ (without the trailing NULL character), such as 7 for "scripts". Set to 0 to disable _en_kevux_path_architecture_bits_scripts_name_ (preventing default).

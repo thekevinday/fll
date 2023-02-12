@@ -318,7 +318,7 @@ extern "C" {
 
         if (F_status_is_error(status)) {
 
-          // Do not consider PATH is not available (or not valid?) to be an error.
+          // Do not consider PATH to be not available (or not valid?) to be an error.
           if (F_status_set_fine(status) == F_valid_not || F_status_set_fine(status) == F_failure) {
             status = F_none;
           }
