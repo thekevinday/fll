@@ -67,7 +67,7 @@ bootstrap_main() {
   local override_path_data=
   local override_path_sources=
   local override_path_work=
-  local defines_override=
+  local define_extra=
   local process=
   local verbosity=normal
   local verbose=
@@ -120,8 +120,8 @@ bootstrap_main() {
         elif [[ $p == "+v" || $p == "++version" ]] ; then
           echo $version
           return
-        elif [[ $p == "-d" || $p == "--defines" ]] ; then
-          grab_next=defines_override
+        elif [[ $p == "-d" || $p == "--define" ]] ; then
+          grab_next=define_extra
         elif [[ $p == "-m" || $p == "--mode" ]] ; then
           grab_next="mode"
         elif [[ $p == "-p" || $p == "--process" ]] ; then
@@ -154,8 +154,8 @@ bootstrap_main() {
           operation_failure=fail-multiple
         fi
       else
-        if [[ $grab_next == "defines_override" ]] ; then
-          defines_override="$p"
+        if [[ $grab_next == "define_extra" ]] ; then
+          define_extra="${define_extra}${p} "
         elif [[ $grab_next == "mode" ]] ; then
           modes="$modes$p "
         elif [[ $grab_next == "process" ]] ; then
@@ -358,16 +358,6 @@ bootstrap_main() {
     return 1
   fi
 
-  if [[ $defines_override != "" && $(echo "$defines_override" | grep -s -o "[^_[:alnum:][:space:]]") != "" ]] ; then
-    if [[ $verbosity != "quiet" ]] ; then
-      echo -e "${c_error}ERROR: The defines override ${c_notice}${defines_override}${c_error} includes invalid characters, only alphanumeric, whitespace, and underscore are allowed.${c_reset}"
-    fi
-
-    bootstrap_cleanup
-
-    return 1
-  fi
-
   bootstrap_id "build_name"
   project_label="${variables[$key]}"
 
@@ -491,7 +481,7 @@ bootstrap_help() {
   echo -e " +${c_important}v${c_reset}, ++${c_important}version${c_reset}   Print the version number of this program."
   echo
   echo -e "${c_highlight}Bootstrap Options:${c_reset}"
-  echo -e " -${c_important}d${c_reset}, --${c_important}defines${c_reset}    Override custom defines with these defines."
+  echo -e " -${c_important}d${c_reset}, --${c_important}define${c_reset}     Append an additional define after defines from settings file."
   echo -e " -${c_important}m${c_reset}, --${c_important}mode${c_reset}       Use this mode when processing the build settings."
   echo -e " -${c_important}p${c_reset}, --${c_important}process${c_reset}    Process name for storing build states."
   echo -e " -${c_important}s${c_reset}, --${c_important}settings${c_reset}   Use this settings file, from within the source settings directory."
@@ -1396,10 +1386,10 @@ bootstrap_operation_build() {
       fi
 
       if [[ $verbosity == "verbose" ]] ; then
-        echo $build_compiler $sources -c -o ${path_build}objects/${path_object_shared}${build_name}.o $arguments_shared $arguments_include $libraries $libraries_shared $flags $flags_shared $flags_object $flags_object_shared $defines $defines_shared $defines_object $defines_object_shared
+        echo $build_compiler $sources -c -o ${path_build}objects/${path_object_shared}${build_name}.o $arguments_shared $arguments_include $libraries $libraries_shared $flags $flags_shared $flags_object $flags_object_shared $defines $defines_shared $defines_object $defines_object_shared $define_extra
       fi
 
-      $build_compiler $sources -c -o ${path_build}objects/${path_object_shared}${build_name}.o $arguments_shared $arguments_include $libraries $libraries_shared $flags $flags_shared $flags_object $flags_object_shared $defines $defines_shared $defines_object $defines_object_shared || failure=1
+      $build_compiler $sources -c -o ${path_build}objects/${path_object_shared}${build_name}.o $arguments_shared $arguments_include $libraries $libraries_shared $flags $flags_shared $flags_object $flags_object_shared $defines $defines_shared $defines_object $defines_object_shared $define_extra || failure=1
     fi
 
     if [[ $sources_library != "" || $sources_library_shared != "" ]] ; then
@@ -1416,10 +1406,10 @@ bootstrap_operation_build() {
       done
 
       if [[ $verbosity == "verbose" ]] ; then
-        echo $build_compiler $sources -shared -Wl,-soname,lib${build_name}.so${version_target} -o ${path_build}libraries/${path_library_shared}lib${build_name}.so${version_file} $arguments_shared $arguments_include $libraries $libraries_shared $flags $flags_shared $flags_library $flags_library_shared $defines $defines_shared $defines_library $defines_library_shared
+        echo $build_compiler $sources -shared -Wl,-soname,lib${build_name}.so${version_target} -o ${path_build}libraries/${path_library_shared}lib${build_name}.so${version_file} $arguments_shared $arguments_include $libraries $libraries_shared $flags $flags_shared $flags_library $flags_library_shared $defines $defines_shared $defines_library $defines_library_shared $define_extra
       fi
 
-      $build_compiler $sources -shared -Wl,-soname,lib${build_name}.so${version_target} -o ${path_build}libraries/${path_library_shared}lib${build_name}.so$version_file $arguments_shared $arguments_include $libraries $libraries_shared $flags $flags_shared $flags_library $flags_library_shared $defines $defines_shared $defines_library $defines_library_shared || failure=1
+      $build_compiler $sources -shared -Wl,-soname,lib${build_name}.so${version_target} -o ${path_build}libraries/${path_library_shared}lib${build_name}.so$version_file $arguments_shared $arguments_include $libraries $libraries_shared $flags $flags_shared $flags_library $flags_library_shared $defines $defines_shared $defines_library $defines_library_shared $define_extra || failure=1
 
       if [[ $failure -eq 0 ]] ; then
         if [[ $version_file_value != "major" ]] ; then
@@ -1467,10 +1457,10 @@ bootstrap_operation_build() {
       done
 
       if [[ $verbosity == "verbose" ]] ; then
-        echo $build_compiler $sources -o ${path_build}programs/${path_program_shared}${build_name} $arguments_shared $arguments_include $links $libraries $libraries_shared $flags $flags_shared $flags_program $flags_program_shared $defines $defines_shared $defines_program $defines_program_shared
+        echo $build_compiler $sources -o ${path_build}programs/${path_program_shared}${build_name} $arguments_shared $arguments_include $links $libraries $libraries_shared $flags $flags_shared $flags_program $flags_program_shared $defines $defines_shared $defines_program $defines_program_shared $define_extra
       fi
 
-      $build_compiler $sources -o ${path_build}programs/${path_program_shared}${build_name} $arguments_shared $arguments_include $links $libraries $libraries_shared $flags $flags_shared $flags_program $flags_program_shared $defines $defines_shared $defines_program $defines_program_shared || failure=1
+      $build_compiler $sources -o ${path_build}programs/${path_program_shared}${build_name} $arguments_shared $arguments_include $links $libraries $libraries_shared $flags $flags_shared $flags_program $flags_program_shared $defines $defines_shared $defines_program $defines_program_shared $define_extra || failure=1
     fi
 
     if [[ $failure -eq 0 ]] ; then
@@ -1516,10 +1506,10 @@ bootstrap_operation_build() {
       fi
 
       if [[ $verbosity == "verbose" ]] ; then
-        echo $build_compiler $sources -c -o ${path_build}objects/${path_object_static}${build_name}.o $arguments_static $arguments_include $libraries $libraries_static $flags $flags_static $flags_object $flags_object_static $defines $defines_static $defines_object $defines_object_static
+        echo $build_compiler $sources -c -o ${path_build}objects/${path_object_static}${build_name}.o $arguments_static $arguments_include $libraries $libraries_static $flags $flags_static $flags_object $flags_object_static $defines $defines_static $defines_object $defines_object_static $define_extra
       fi
 
-      $build_compiler $sources -c -o ${path_build}objects/${path_object_static}${build_name}.o $arguments_static $arguments_include $libraries $libraries_static $flags $flags_static $flags_object $flags_object_static $defines $defines_static $defines_object $defines_object_static || failure=1
+      $build_compiler $sources -c -o ${path_build}objects/${path_object_static}${build_name}.o $arguments_static $arguments_include $libraries $libraries_static $flags $flags_static $flags_object $flags_object_static $defines $defines_static $defines_object $defines_object_static $define_extra || failure=1
     fi
 
     if [[ $sources_library != "" || $sources_library_static != "" ]] ; then
@@ -1549,10 +1539,10 @@ bootstrap_operation_build() {
         sources="${sources}${path_build}objects/$directory/$n.o "
 
         if [[ $verbosity == "verbose" ]] ; then
-          echo $build_compiler ${path_sources}${path_language}${i} -c -static -o ${path_build}objects/${directory}/${n}.o $arguments_static $arguments_include $libraries $libraries_static $flags $flags_static $flags_library $flags_library_static $defines $defines_static $defines_library $defines_library_static
+          echo $build_compiler ${path_sources}${path_language}${i} -c -static -o ${path_build}objects/${directory}/${n}.o $arguments_static $arguments_include $libraries $libraries_static $flags $flags_static $flags_library $flags_library_static $defines $defines_static $defines_library $defines_library_static $define_extra
         fi
 
-        $build_compiler ${path_sources}${path_language}${i} -c -static -o ${path_build}objects/${directory}/${n}.o $arguments_static $arguments_include $libraries $libraries_static $flags $flags_static $flags_library $flags_library_static $defines $defines_static $defines_library $defines_library_static || failure=1
+        $build_compiler ${path_sources}${path_language}${i} -c -static -o ${path_build}objects/${directory}/${n}.o $arguments_static $arguments_include $libraries $libraries_static $flags $flags_static $flags_library $flags_library_static $defines $defines_static $defines_library $defines_library_static $define_extra || failure=1
 
         if [[ $failure -eq 1 ]] ; then
           break;
@@ -1588,10 +1578,10 @@ bootstrap_operation_build() {
       done
 
       if [[ $verbosity == "verbose" ]] ; then
-        echo $build_compiler $sources -static -o ${path_build}programs/${path_program_static}${build_name} $arguments_static $arguments_include $links $libraries $libraries_static $flags $flags_static $flags_program $flags_program_static $defines $defines_static $defines_program $defines_program_static
+        echo $build_compiler $sources -static -o ${path_build}programs/${path_program_static}${build_name} $arguments_static $arguments_include $links $libraries $libraries_static $flags $flags_static $flags_program $flags_program_static $defines $defines_static $defines_program $defines_program_static $define_extra
       fi
 
-      $build_compiler $sources -static -o ${path_build}programs/${path_program_static}${build_name} $arguments_static $arguments_include $links $libraries $libraries_static $flags $flags_static $flags_program $flags_program_static $defines $defines_static $defines_program $defines_program_static || failure=1
+      $build_compiler $sources -static -o ${path_build}programs/${path_program_static}${build_name} $arguments_static $arguments_include $links $libraries $libraries_static $flags $flags_static $flags_program $flags_program_static $defines $defines_static $defines_program $defines_program_static $define_extra || failure=1
     fi
 
     if [[ $failure -eq 0 ]] ; then
@@ -1898,16 +1888,6 @@ bootstrap_operation_build_prepare_defines() {
     defines_static=${variables[$key]}
   else
     defines_static="$defines_static ${variables[$key]}"
-  fi
-
-  if [[ $defines_override != "" ]] ; then
-    defines="$defines_override"
-    defines_library=
-    defines_object_library=
-    defines_object_program=
-    defines_program=
-    defines_shared=
-    defines_static=
   fi
 }
 
