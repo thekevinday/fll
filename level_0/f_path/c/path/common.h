@@ -66,6 +66,67 @@ extern "C" {
   extern const f_string_static_t f_path_home_wildcard_s;
   extern const f_string_static_t f_path_present_working_s;
   extern const f_string_static_t f_path_present_working_old_s;
+
+  /**
+   * Provide Kevux ARCHITECTURE_BITS environment variable handling support.
+   *
+   * Non-Kevux systems should not need this and enabling this might cause problems.
+   *
+   * This uses the defines for customizing the architecture bits (and scripts) path:
+   *   - _en_kevux_path_architecture_bits_default_name_
+   *   - _en_kevux_path_architecture_bits_default_length_
+   *   - _en_kevux_path_architecture_bits_scripts_name_
+   *   - _en_kevux_path_architecture_bits_scripts_length_
+   *
+   * The path separator should not be specified for these defines because it is automatically appended.
+   * Disable either the default or scripts by setting the length to 0.
+   *
+   * F_path_*_s:
+   *   - architecture_bits:          The architecture bits environment variable (usually is "ARCHITECTURE_BITS").
+   *   - architecture_bits_default:  The default architecture bits string with a trailing path separator, such as "x64/".
+   *   - architecture_bits_scripts:  The default architecture bits string with a trailing path separator, such as "scripts/".
+   */
+  #ifdef _en_kevux_path_architecture_bits_
+    #define F_path_architecture_bits_s "ARCHITECTURE_BITS"
+
+    #define F_path_architecture_bits_s_length 17
+
+    #if defined(_en_kevux_path_architecture_bits_default_name_) && defined(_en_kevux_path_architecture_bits_default_length_)
+      #if _en_kevux_path_architecture_bits_default_length_ == 0
+        #define F_path_architecture_bits_default_s F_string_empty_s
+
+        #define F_path_architecture_bits_default_s_length F_string_empty_s_length
+      #else
+        #define F_path_architecture_bits_default_s _en_kevux_path_architecture_bits_default_name_
+
+        #define F_path_architecture_bits_default_s_length _en_kevux_path_architecture_bits_default_length_ + F_path_separator_s_length
+      #endif // _en_kevux_path_architecture_bits_default_length_ == 0
+    #else
+      #define F_path_architecture_bits_default_s "x64" F_path_separator_s
+
+      #define F_path_architecture_bits_default_s_length 3 + F_path_separator_s_length
+    #endif // !defined(_en_kevux_path_architecture_bits_default_name_) || !defined(_en_kevux_path_architecture_bits_default_length_)
+
+    #if defined(_en_kevux_path_architecture_bits_scripts_name_) && defined(_en_kevux_path_architecture_bits_scripts_length_)
+      #if _en_kevux_path_architecture_bits_scripts_length_ == 0
+        #define F_path_architecture_bits_scripts_s F_string_empty_s
+
+        #define F_path_architecture_bits_scripts_s_length F_string_empty_s_length
+      #else
+        #define F_path_architecture_bits_scripts_s _en_kevux_path_architecture_bits_scripts_name_
+
+        #define F_path_architecture_bits_scripts_s_length _en_kevux_path_architecture_bits_scripts_length_ + F_path_separator_s_length
+      #endif // _en_kevux_path_architecture_bits_scripts_length_ == 0
+    #else
+      #define F_path_architecture_bits_scripts_s "scripts" F_path_separator_s
+
+      #define F_path_architecture_bits_scripts_s_length 7 + F_path_separator_s_length
+    #endif // !defined(_en_kevux_path_architecture_bits_scripts_name_) || !defined(_en_kevux_path_architecture_bits_scripts_length_)
+
+    extern const f_string_static_t f_path_architecture_bits_s;
+    extern const f_string_static_t f_path_architecture_bits_default_s;
+    extern const f_string_static_t f_path_architecture_bits_scripts_s;
+  #endif // _en_kevux_path_architecture_bits_
 #endif // _di_f_path_defines_
 
 /**

@@ -111,9 +111,11 @@ extern "C" {
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ *   Errors (with error bit) from: f_environment_get() (only when _en_kevux_path_architecture_bits_ is defined).
  *   Errors (with error bit) from: f_string_dynamics_increase().
  *   Errors (with error bit) from: f_string_dynamics_increase_by().
  *
+ * @see f_environment_get()
  * @see f_string_dynamics_increase()
  * @see f_string_dynamics_increase_by()
  */
@@ -143,9 +145,11 @@ extern "C" {
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
+ *   Errors (with error bit) from: f_environment_get() (only when _en_kevux_path_architecture_bits_ is defined).
  *   Errors (with error bit) from: f_string_dynamics_increase().
  *   Errors (with error bit) from: f_string_dynamics_increase_by().
  *
+ * @see f_environment_get()
  * @see f_string_dynamics_increase()
  * @see f_string_dynamics_increase_by()
  */
