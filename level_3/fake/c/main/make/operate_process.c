@@ -1,13 +1,11 @@
-#include "fake.h"
-#include "private-common.h"
-#include "private-fake.h"
-#include "private-build.h"
-#include "private-clean.h"
-#include "private-make-operate.h"
-#include "private-make-operate_process.h"
-#include "private-make-operate_process_type.h"
-#include "private-print.h"
-#include "private-skeleton.h"
+#include "../fake.h"
+#include "../build.h"
+#include "../clean.h"
+#include "../print.h"
+#include "../skeleton.h"
+#include "operate.h"
+#include "operate_process.h"
+#include "operate_process_type.h"
 
 #ifdef __cplusplus
 extern "C" {

@@ -1,6 +1,5 @@
-#include "fake.h"
-#include "private-common.h"
-#include "private-make-load_parameters.h"
+#include "../fake.h"
+#include "load_parameters.h"
 
 #ifdef __cplusplus
 extern "C" {

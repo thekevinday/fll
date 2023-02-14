@@ -1,9 +1,8 @@
-#include "fake.h"
-#include "private-common.h"
-#include "private-make.h"
-#include "private-make-operate_validate.h"
-#include "private-make-operate_validate_type.h"
-#include "private-print.h"
+#include "../fake.h"
+#include "../print.h"
+#include "../make.h"
+#include "operate_validate.h"
+#include "operate_validate_type.h"
 
 #ifdef __cplusplus
 extern "C" {

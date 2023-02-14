@@ -1,13 +1,11 @@
-#include "fake.h"
-#include "private-common.h"
-#include "private-fake.h"
-#include "private-make-load_parameters.h"
-#include "private-make-load_fakefile.h"
-#include "private-make-operate.h"
-#include "private-make-operate_block.h"
-#include "private-make-operate_process.h"
-#include "private-make-operate_validate.h"
-#include "private-print.h"
+#include "../fake.h"
+#include "../print.h"
+#include "load_parameters.h"
+#include "load_fakefile.h"
+#include "operate.h"
+#include "operate_block.h"
+#include "operate_process.h"
+#include "operate_validate.h"
 
 #ifdef __cplusplus
 extern "C" {

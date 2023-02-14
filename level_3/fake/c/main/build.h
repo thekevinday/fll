@@ -12,7 +12,7 @@
 extern "C" {
 #endif
 
-#ifndef _di_fake_build_strings_
+#ifndef _di_fake_build_s_
   #define FAKE_build_documentation_files_s "documentation files"
   #define FAKE_build_header_files_s        "header files"
   #define FAKE_build_header_files_shared_s "shared header files"
@@ -33,7 +33,7 @@ extern "C" {
   extern const f_string_static_t fake_build_header_files_static_s;
   extern const f_string_static_t fake_build_scripts_s;
   extern const f_string_static_t fake_build_setting_files_s;
-#endif // _di_fake_build_strings_
+#endif // _di_fake_build_s_
 
 /**
  * Build Types.
@@ -43,13 +43,13 @@ extern "C" {
  *   - object:  An object build type.
  *   - program: A program build type.
  */
-#ifndef _di_fake_build_types_
+#ifndef _di_fake_build_type_e_
   enum {
     fake_build_type_library_e = 1,
     fake_build_type_object_e,
     fake_build_type_program_e,
   };
-#endif // _di_fake_build_types_
+#endif // _di_fake_build_type_e_
 
 /**
  * Add the standard arguments for building a library/program.

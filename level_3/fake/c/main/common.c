@@ -1,5 +1,4 @@
 #include "fake.h"
-#include "private-common.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -518,6 +517,87 @@ extern "C" {
     return F_none;
   }
 #endif // _di_fake_setting_unload_
+
+#ifndef _di_fake_data_delete_
+  f_status_t fake_data_delete(fake_data_t * const data) {
+
+    f_string_dynamic_resize(0, &data->path_build);
+    f_string_dynamic_resize(0, &data->path_build_documentation);
+    f_string_dynamic_resize(0, &data->path_build_documents);
+    f_string_dynamic_resize(0, &data->path_build_includes);
+    f_string_dynamic_resize(0, &data->path_build_libraries);
+    f_string_dynamic_resize(0, &data->path_build_libraries_script);
+    f_string_dynamic_resize(0, &data->path_build_libraries_shared);
+    f_string_dynamic_resize(0, &data->path_build_libraries_static);
+    f_string_dynamic_resize(0, &data->path_build_objects);
+    f_string_dynamic_resize(0, &data->path_build_objects_script);
+    f_string_dynamic_resize(0, &data->path_build_objects_shared);
+    f_string_dynamic_resize(0, &data->path_build_objects_static);
+    f_string_dynamic_resize(0, &data->path_build_programs);
+    f_string_dynamic_resize(0, &data->path_build_programs_script);
+    f_string_dynamic_resize(0, &data->path_build_programs_shared);
+    f_string_dynamic_resize(0, &data->path_build_programs_static);
+    f_string_dynamic_resize(0, &data->path_build_settings);
+    f_string_dynamic_resize(0, &data->path_build_stage);
+
+    f_string_dynamic_resize(0, &data->path_data_build);
+    f_string_dynamic_resize(0, &data->path_data_documentation);
+    f_string_dynamic_resize(0, &data->path_data_settings);
+
+    f_string_dynamic_resize(0, &data->path_documents);
+
+    f_string_dynamic_resize(0, &data->path_licenses);
+
+    f_string_dynamic_resize(0, &data->path_work_includes);
+    f_string_dynamic_resize(0, &data->path_work_libraries);
+    f_string_dynamic_resize(0, &data->path_work_libraries_script);
+    f_string_dynamic_resize(0, &data->path_work_libraries_shared);
+    f_string_dynamic_resize(0, &data->path_work_libraries_static);
+    f_string_dynamic_resize(0, &data->path_work_programs);
+    f_string_dynamic_resize(0, &data->path_work_programs_script);
+    f_string_dynamic_resize(0, &data->path_work_programs_shared);
+    f_string_dynamic_resize(0, &data->path_work_programs_static);
+
+    f_string_dynamic_resize(0, &data->file_data_build_defines);
+    f_string_dynamic_resize(0, &data->file_data_build_dependencies);
+    f_string_dynamic_resize(0, &data->file_data_build_process_post);
+    f_string_dynamic_resize(0, &data->file_data_build_process_pre);
+    f_string_dynamic_resize(0, &data->file_data_build_fakefile);
+    f_string_dynamic_resize(0, &data->file_data_build_settings);
+
+    f_string_dynamic_resize(0, &data->file_documents_readme);
+
+    return F_none;
+  }
+#endif // _di_fake_data_delete_
+
+#ifndef _di_fake_make_data_delete_
+  f_status_t fake_make_data_delete(fake_make_data_t * const data) {
+
+    macro_fake_build_setting_t_delete_simple(data->setting_build);
+    macro_fake_make_setting_t_delete_simple(data->setting_make);
+
+    f_string_maps_resize(0, &data->environment);
+
+    macro_fake_make_parameter_delete_simple(data->parameter);
+    macro_fake_make_parameter_delete_simple(data->parameter_option);
+    macro_fake_make_parameter_delete_simple(data->parameter_value);
+    macro_fake_make_path_delete_simple(data->path);
+
+    f_fss_nameds_resize(0, &data->fakefile);
+
+    f_string_dynamic_resize(0, &data->buffer);
+    f_string_dynamic_resize(0, &data->cache_1);
+    f_string_dynamic_resize(0, &data->cache_2);
+    f_string_dynamic_resize(0, &data->cache_path);
+
+    f_string_dynamics_resize(0, &data->cache_arguments);
+
+    f_iki_data_delete(&data->cache_iki);
+
+    return F_none;
+  }
+#endif // _di_fake_make_data_delete_
 
 #ifdef __cplusplus
 } // extern "C"

@@ -1,6 +1,5 @@
-#include "fake.h"
-#include "private-common.h"
-#include "private-fake-path_generate.h"
+#include "../fake.h"
+#include "path_generate.h"
 
 #ifdef __cplusplus
 extern "C" {

@@ -1,27 +1,26 @@
 #include "fake.h"
-#include "private-common.h"
-#include "private-fake.h"
-#include "private-build.h"
-#include "private-build-library.h"
-#include "private-build-load.h"
-#include "private-build-object.h"
-#include "private-build-objects.h"
-#include "private-build-program.h"
-#include "private-build-skeleton.h"
-#include "private-print.h"
+#include "build.h"
+#include "build/library.h"
+#include "build/load.h"
+#include "build/object.h"
+#include "build/objects.h"
+#include "build/print.h"
+#include "build/program.h"
+#include "build/skeleton.h"
+#include "print.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#ifndef _di_fake_build_strings_
+#ifndef _di_fake_build_s_
 const f_string_static_t fake_build_documentation_files_s = macro_f_string_static_t_initialize(FAKE_build_documentation_files_s, 0, FAKE_build_documentation_files_s_length);
   const f_string_static_t fake_build_header_files_s = macro_f_string_static_t_initialize(FAKE_build_header_files_s, 0, FAKE_build_header_files_s_length);
   const f_string_static_t fake_build_header_files_shared_s = macro_f_string_static_t_initialize(FAKE_build_header_files_shared_s, 0, FAKE_build_header_files_shared_s_length);
   const f_string_static_t fake_build_header_files_static_s = macro_f_string_static_t_initialize(FAKE_build_header_files_static_s, 0, FAKE_build_header_files_static_s_length);
   const f_string_static_t fake_build_scripts_s = macro_f_string_static_t_initialize(FAKE_build_scripts_s, 0, FAKE_build_scripts_s_length);
   const f_string_static_t fake_build_setting_files_s = macro_f_string_static_t_initialize(FAKE_build_setting_files_s, 0, FAKE_build_setting_files_s_length);
-#endif // _di_fake_build_strings_
+#endif // _di_fake_build_s_
 
 #ifndef _di_fake_build_arguments_standard_add_
   void fake_build_arguments_standard_add(fake_data_t * const data, fake_build_data_t * const data_build, const bool is_shared, const uint8_t type, f_string_dynamics_t *arguments, f_status_t *status) {
@@ -514,7 +513,7 @@ const f_string_static_t fake_build_documentation_files_s = macro_f_string_static
         *status = f_file_copy(path_source, destination_file, mode, F_file_default_read_size_d, f_file_stat_flag_reference_e);
 
         if (F_status_is_error(*status)) {
-          fake_print_error_build_operation_file(data, F_status_set_fine(*status), "f_file_copy", f_file_operation_copy_s, f_file_operation_to_s, path_source, destination_file, F_true);
+          fake_print_error_build_operation_file(data, F_status_set_fine(*status), macro_fake_f(f_file_copy), f_file_operation_copy_s, f_file_operation_to_s, path_source, destination_file, F_true);
 
           break;
         }

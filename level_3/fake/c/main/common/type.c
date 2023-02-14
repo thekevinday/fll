@@ -1,5 +1,4 @@
-#include "fake.h"
-#include "private-common.h"
+#include "../fake.h"
 
 #ifdef __cplusplus
 extern "C" {

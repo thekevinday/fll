@@ -1,8 +1,6 @@
-#include "fake.h"
-#include "private-common.h"
-#include "private-fake.h"
-#include "private-build.h"
-#include "private-build-program.h"
+#include "../fake.h"
+#include "../build.h"
+#include "program.h"
 
 #ifdef __cplusplus
 extern "C" {
