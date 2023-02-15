@@ -603,10 +603,10 @@ extern "C" {
     flockfile(data->main->warning.to.stream);
 
     fl_print_format("%r%[%QThe fakefile '%]", data->main->warning.to.stream, f_string_eol_s, data->main->warning.context, data->main->warning.prefix, data->main->warning.context);
-    fl_print_format("%[%r%]", data->main->warning.to.stream, data->main->warning.notable, name_object, data->main->warning.notable);
-    fl_print_format("%[' in the file '%]", data->main->warning.to.stream, data->main->warning.context, data->main->warning.context);
-    fl_print_format("%[%Q%]", data->main->warning.to.stream, data->main->warning.notable, path_file, data->main->warning.notable);
-    fl_print_format("%[' may only have a single property, only using the first.%]%r", data->main->warning.to.stream, data->main->warning.context, data->main->warning.context, f_string_eol_s);
+    fl_print_format("%[%r%]", data->main->warning.to.stream, data->main->warning.notable, path_file, data->main->warning.notable);
+    fl_print_format("%[' may only have a single content for the object '%]", data->main->warning.to.stream, data->main->warning.context, data->main->warning.context);
+    fl_print_format("%[%Q%]", data->main->warning.to.stream, data->main->warning.notable, name_object, data->main->warning.notable);
+    fl_print_format("%[', only using the first.%]%r", data->main->warning.to.stream, data->main->warning.context, data->main->warning.context, f_string_eol_s);
 
     funlockfile(data->main->warning.to.stream);
   }
@@ -621,7 +621,7 @@ extern "C" {
 
     fl_print_format("%r%[%QThe object '%]", data->main->warning.to.stream, f_string_eol_s, data->main->warning.context, data->main->warning.prefix, data->main->warning.context);
     fl_print_format("%[%r%]", data->main->warning.to.stream, data->main->warning.notable, name_object, data->main->warning.notable);
-    fl_print_format("%[' in the file '%]", data->main->warning.to.stream, data->main->warning.context, data->main->warning.context);
+    fl_print_format("%[' in the fakefile '%]", data->main->warning.to.stream, data->main->warning.context, data->main->warning.context);
     fl_print_format("%[%Q%]", data->main->warning.to.stream, data->main->warning.notable, path_file, data->main->warning.notable);
     fl_print_format("%[' may only be specified once, only using the first.%]%r", data->main->warning.to.stream, data->main->warning.context, data->main->warning.context, f_string_eol_s);
 
