@@ -513,9 +513,9 @@ extern "C" {
             break;
           }
 
-          data_make->setting_build.environment.array[data_make->setting_build.environment.used].used = 0;
+          data_make->setting_build.environment.array[j].used = 0;
 
-          status = f_string_dynamic_increase_by(name_define.used + 1, &data_make->setting_build.environment.array[data_make->setting_build.environment.used]);
+          status = f_string_dynamic_increase_by(name_define.used + 1, &data_make->setting_build.environment.array[j]);
 
           if (F_status_is_error(status)) {
             fll_error_print(data_make->main->error, F_status_set_fine(status), "f_string_dynamic_increase_by", F_true);
@@ -523,7 +523,7 @@ extern "C" {
             break;
           }
 
-          status = f_string_dynamic_append_nulless(name_define, &data_make->setting_build.environment.array[data_make->setting_build.environment.used]);
+          status = f_string_dynamic_append_nulless(name_define, &data_make->setting_build.environment.array[j]);
 
           if (F_status_is_error(status)) {
             fll_error_print(data_make->main->error, F_status_set_fine(status), "f_string_dynamic_append_nulless", F_true);
@@ -533,14 +533,26 @@ extern "C" {
 
           ++data_make->setting_build.environment.used;
         }
-        else if (data_make->main->warning.verbosity >= f_console_verbosity_verbose_e) {
-          flockfile(data_make->main->warning.to.stream);
+        else if (j < data_make->setting_build.environment.used) {
+          if (data_make->main->warning.verbosity >= f_console_verbosity_verbose_e) {
+            flockfile(data_make->main->warning.to.stream);
 
-          fl_print_format("%r%[%QThe environment name '%]", data_make->main->warning.to.stream, f_string_eol_s, data_make->main->warning.context, data_make->main->warning.prefix, data_make->main->warning.context);
-          fl_print_format("%[%Q%]", data_make->main->warning.to.stream, data_make->main->warning.notable, name_define, data_make->main->warning.notable);
-          fl_print_format("%[' is already added.%]%r", data_make->main->warning.to.stream, data_make->main->warning.context, data_make->main->warning.context, f_string_eol_s);
+            fl_print_format("%r%[%QThe environment name '%]", data_make->main->warning.to.stream, f_string_eol_s, data_make->main->warning.context, data_make->main->warning.prefix, data_make->main->warning.context);
+            fl_print_format("%[%Q%]", data_make->main->warning.to.stream, data_make->main->warning.notable, name_define, data_make->main->warning.notable);
+            fl_print_format("%[' is already added, replacing previous value.%]%r", data_make->main->warning.to.stream, data_make->main->warning.context, data_make->main->warning.context, f_string_eol_s);
 
-          funlockfile(data_make->main->warning.to.stream);
+            funlockfile(data_make->main->warning.to.stream);
+          }
+
+          data_make->setting_build.environment.array[j].used = 0;
+
+          status = f_string_dynamic_append_nulless(name_define, &data_make->setting_build.environment.array[j]);
+
+          if (F_status_is_error(status)) {
+            fll_error_print(data_make->main->error, F_status_set_fine(status), "f_string_dynamic_append_nulless", F_true);
+
+            break;
+          }
         }
       }
       else if (data_make->main->warning.verbosity >= f_console_verbosity_verbose_e) {

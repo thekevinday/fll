@@ -20,6 +20,8 @@ Fakefile Documentation:
     Any configuration specific to this file:"fakefile" is stored here.
     This includes the declaration of define and parameter IKI variable substitution values.
 
+    If multiple bold:"Objects" of the same name exist and that bold:"Object" only supports a single value, then only the bold:"Content" from the last same named bold:"Object" is used.
+
     The build settings may also be specified in the bold:"Settings Section".
 
     The following settings are available (in addition to the build settings)\:
