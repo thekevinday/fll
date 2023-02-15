@@ -367,6 +367,16 @@ extern "C" {
       &data_make->parameter_value.work,
     };
 
+    *status = f_string_dynamics_increase(fake_default_allocation_small_d, &data_make->cache_arguments);
+
+    if (F_status_is_error(*status)) {
+      fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamics_increase", F_true);
+
+      return;
+    }
+
+    data_make->cache_arguments.array[data_make->cache_arguments.used].used = 0;
+
     for (; i < content.used; ++i) {
 
       iki_data->variable.used = 0;
@@ -386,6 +396,8 @@ extern "C" {
 
             break;
           }
+
+          data_make->cache_arguments.array[data_make->cache_arguments.used].used = 0;
         }
 
         continue;
@@ -623,6 +635,8 @@ extern "C" {
 
                         break;
                       }
+
+                      data_make->cache_arguments.array[data_make->cache_arguments.used].used = 0;
                     }
 
                     *status = f_string_dynamic_append_nulless(reserved_value[k]->array[l], &data_make->cache_arguments.array[data_make->cache_arguments.used]);
@@ -702,6 +716,8 @@ extern "C" {
 
                           break;
                         }
+
+                        data_make->cache_arguments.array[data_make->cache_arguments.used].used = 0;
                       }
                     }
 
@@ -807,6 +823,8 @@ extern "C" {
 
             break;
           }
+
+          data_make->cache_arguments.array[data_make->cache_arguments.used].used = 0;
         }
       }
       else {
@@ -827,6 +845,8 @@ extern "C" {
 
           break;
         }
+
+        data_make->cache_arguments.array[data_make->cache_arguments.used].used = 0;
       }
     } // for
   }
@@ -1105,19 +1125,12 @@ extern "C" {
     if (F_status_is_error(status)) return status;
     if (unmatched) return F_false;
 
-    if (quote) {
-      status = f_string_dynamic_append_nulless(data_make->cache_1, &data_make->cache_arguments.array[data_make->cache_arguments.used]);
-    }
-    else {
-      status = f_string_dynamics_increase_by(fake_default_allocation_small_d, &data_make->cache_arguments);
+    status = f_string_dynamic_append_nulless(data_make->cache_1, &data_make->cache_arguments.array[data_make->cache_arguments.used]);
 
-      if (F_status_is_error_not(status)) {
-        status = f_string_dynamic_append_nulless(data_make->cache_1, &data_make->cache_arguments.array[data_make->cache_arguments.used]);
+    if (F_status_is_error_not(status) && !quote) {
+      ++data_make->cache_arguments.used;
 
-        if (F_status_is_error_not(status)) {
-          ++data_make->cache_arguments.used;
-        }
-      }
+      status = f_string_dynamics_increase(fake_default_allocation_small_d, &data_make->cache_arguments);
     }
 
     if (F_status_is_error(status)) return status;
@@ -1167,17 +1180,7 @@ extern "C" {
     } // for
 
     if (context) {
-      if (quote) {
-        status = f_string_dynamic_append_nulless(*context, &data_make->cache_arguments.array[data_make->cache_arguments.used]);
-      }
-      else {
-        status = f_string_dynamics_increase_by(fake_default_allocation_small_d, &data_make->cache_arguments);
-
-        if (F_status_is_error_not(status)) {
-          status = f_string_dynamic_append_nulless(*context, &data_make->cache_arguments.array[data_make->cache_arguments.used]);
-        }
-      }
-
+      status = f_string_dynamic_append_nulless(*context, &data_make->cache_arguments.array[data_make->cache_arguments.used]);
       if (F_status_is_error(status)) return status;
     }
 
@@ -1206,11 +1209,7 @@ extern "C" {
     if (F_status_is_error(status)) return status;
     if (status == F_exist_not) return F_false;
 
-    status = f_string_dynamics_increase(fake_default_allocation_small_d, &data_make->cache_arguments);
-
-    if (F_status_is_error_not(status)) {
-      status = f_string_dynamic_increase_by(data_make->cache_2.used + 1, &data_make->cache_arguments.array[data_make->cache_arguments.used]);
-    }
+    status = f_string_dynamic_increase_by(data_make->cache_2.used + 1, &data_make->cache_arguments.array[data_make->cache_arguments.used]);
 
     if (F_status_is_error_not(status)) {
       status = f_string_dynamic_append_nulless(data_make->cache_2, &data_make->cache_arguments.array[data_make->cache_arguments.used]);
@@ -1220,6 +1219,9 @@ extern "C" {
 
     if (!quote) {
       ++data_make->cache_arguments.used;
+
+      status = f_string_dynamics_increase(fake_default_allocation_small_d, &data_make->cache_arguments);
+      if (F_status_is_error(status)) return status;
     }
 
     if (data_make->cache_2.used) return F_true;
