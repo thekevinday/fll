@@ -263,10 +263,10 @@ extern "C" {
   const f_string_static_t fake_common_setting_list_s = macro_f_string_static_t_initialize(FAKE_common_setting_list_s, 0, FAKE_common_setting_list_s_length);
 #endif // _di_fake_common_
 
-#ifndef _di_fake_make_section_
-  const f_string_static_t fake_make_section_main_s = macro_f_string_static_t_initialize(FAKE_make_section_main_s, 0, FAKE_make_section_main_s_length);
-  const f_string_static_t fake_make_section_settings_s = macro_f_string_static_t_initialize(FAKE_make_section_settings_s, 0, FAKE_make_section_settings_s_length);
-#endif // _di_fake_make_section_
+#ifndef _di_fake_make_item_
+  const f_string_static_t fake_make_item_main_s = macro_f_string_static_t_initialize(FAKE_make_item_main_s, 0, FAKE_make_item_main_s_length);
+  const f_string_static_t fake_make_item_settings_s = macro_f_string_static_t_initialize(FAKE_make_item_settings_s, 0, FAKE_make_item_settings_s_length);
+#endif // _di_fake_make_item_
 
 #ifndef _di_fake_make_setting_t_
   const f_string_static_t fake_make_setting_compiler_s = macro_f_string_static_t_initialize(FAKE_make_setting_compiler_s, 0, FAKE_make_setting_compiler_s_length);

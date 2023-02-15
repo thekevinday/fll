@@ -5,8 +5,8 @@
  * API Version: 0.7
  * Licenses: lgpl-2.1-or-later
  */
-#ifndef _PRIVATE_fake_print_h
-#define _PRIVATE_fake_print_h
+#ifndef _fake_fake_print_h
+#define _fake_fake_print_h
 
 #ifdef __cplusplus
 extern "C" {
@@ -16,4 +16,4 @@ extern "C" {
 } // extern "C"
 #endif
 
-#endif // _PRIVATE_fake_print_h
+#endif // _fake_fake_print_h

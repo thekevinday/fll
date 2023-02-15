@@ -5,8 +5,8 @@
  * API Version: 0.7
  * Licenses: lgpl-2.1-or-later
  */
-#ifndef _PRIVATE_make_operate_validate_type_h
-#define _PRIVATE_make_operate_validate_type_h
+#ifndef _fake_make_operate_validate_type_h
+#define _fake_make_operate_validate_type_h
 
 #ifdef __cplusplus
 extern "C" {
@@ -372,4 +372,4 @@ extern "C" {
 } // extern "C"
 #endif
 
-#endif // _PRIVATE_make_operate_validate_type_h
+#endif // _fake_make_operate_validate_type_h

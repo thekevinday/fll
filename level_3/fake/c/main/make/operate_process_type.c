@@ -1699,7 +1699,7 @@ extern "C" {
     f_status_t status = f_path_change(*argument);
 
     if (F_status_is_error(status)) {
-      fake_print_message_section_operation_path_stack_max(data_make->data, data_make->error, F_status_set_fine(status), "f_path_change", *argument);
+      fake_print_message_section_operation_path_stack_max(data_make->data, data_make->error, F_status_set_fine(status), macro_fake_f(f_path_change), *argument);
 
       return F_status_set_error(F_failure);
     }
@@ -1811,14 +1811,14 @@ extern "C" {
     status = f_path_change(data_make->cache_arguments.array[0]);
 
     if (F_status_is_error(status)) {
-      fake_print_message_section_operation_path_stack_max(data_make->data, data_make->error, F_status_set_fine(status), "f_path_change", data_make->cache_arguments.array[0]);
+      fake_print_message_section_operation_path_stack_max(data_make->data, data_make->error, F_status_set_fine(status), macro_fake_f(f_path_change), data_make->cache_arguments.array[0]);
     }
     else {
       status = f_string_dynamics_increase_by(fake_default_allocation_small_d, &data_make->path.stack);
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_array_too_large) {
-          fake_print_message_section_operation_path_stack_max(data_make->data, data_make->error, F_array_too_large, "f_string_dynamics_increase_by", fake_common_file_path_stack_s);
+          fake_print_message_section_operation_path_stack_max(data_make->data, data_make->error, F_array_too_large, macro_fake_f(f_string_dynamics_increase_by), fake_common_file_path_stack_s);
 
           return F_status_set_error(F_failure);
         }

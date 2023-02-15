@@ -794,16 +794,16 @@ extern "C" {
   extern const f_string_static_t fake_common_setting_list_s;
 #endif // _di_fake_common_s_
 
-#ifndef _di_fake_make_section_s_
-  #define FAKE_make_section_main_s     "main"
-  #define FAKE_make_section_settings_s "settings"
+#ifndef _di_fake_make_item_s_
+  #define FAKE_make_item_main_s     "main"
+  #define FAKE_make_item_settings_s "settings"
 
-  #define FAKE_make_section_main_s_length     4
-  #define FAKE_make_section_settings_s_length 8
+  #define FAKE_make_item_main_s_length     4
+  #define FAKE_make_item_settings_s_length 8
 
-  extern const f_string_static_t fake_make_section_main_s;
-  extern const f_string_static_t fake_make_section_settings_s;
-#endif // _di_fake_make_section_s_
+  extern const f_string_static_t fake_make_item_main_s;
+  extern const f_string_static_t fake_make_item_settings_s;
+#endif // _di_fake_make_item_s_
 
 #ifndef _di_fake_make_setting_s_
   #define FAKE_make_setting_compiler_s          "compiler"

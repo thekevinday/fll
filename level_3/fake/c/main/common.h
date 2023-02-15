@@ -662,9 +662,9 @@
  * fake_make_section_*_d:
  *   - stack_max: Maximum stack call depth.
  */
-#ifndef _di_fake_make_section_d_
+#ifndef _di_fake_make_item_d_
   #define fake_make_section_stack_max_d 8192
-#endif // _di_fake_make_section_d_
+#endif // _di_fake_make_item_d_
 
 #ifndef _di_fake_make_setting_t_
   typedef struct {
