@@ -199,7 +199,7 @@ extern "C" {
               if (F_status_is_error(status_path) && data->main->warning.verbosity >= f_console_verbosity_verbose_e) {
                 flockfile(data->main->warning.to.stream);
 
-                fl_print_format("%r%[%QFailed change back to orignal path '%]", data->main->warning.to.stream, f_string_eol_s, data->main->warning.context, data->main->warning.prefix, data->main->warning.context);
+                fl_print_format("%r%[%QFailed change back to original path '%]", data->main->warning.to.stream, f_string_eol_s, data->main->warning.context, data->main->warning.prefix, data->main->warning.context);
                 fl_print_format("%[%Q%]", data->main->warning.to.stream, data->main->warning.notable, data_make.path.stack.array[0], data->main->warning.notable);
                 fl_print_format("%[', status code =%] ", data->main->warning.to.stream, data->main->warning.context, data->main->warning.context);
                 fl_print_format("%[%ui%]", data->main->warning.to.stream, data->main->warning.notable, F_status_set_fine(status_path), data->main->warning.notable);
@@ -233,7 +233,7 @@ extern "C" {
         if (F_status_is_error(status_path) && data->main->warning.verbosity >= f_console_verbosity_verbose_e) {
           flockfile(data->main->warning.to.stream);
 
-          fl_print_format("%r%[%QFailed change back to orignal path '%]", data->main->warning.to.stream, f_string_eol_s, data->main->warning.context, data->main->warning.prefix, data->main->warning.context);
+          fl_print_format("%r%[%QFailed change back to original path '%]", data->main->warning.to.stream, f_string_eol_s, data->main->warning.context, data->main->warning.prefix, data->main->warning.context);
           fl_print_format("%[%Q%]", data->main->warning.to.stream, data->main->warning.notable, data_make.path.stack.array[0], data->main->warning.notable);
           fl_print_format("%[', status code =%] ", data->main->warning.to.stream, data->main->warning.context, data->main->warning.context);
           fl_print_format("%[%ui%]", data->main->warning.to.stream, data->main->warning.notable, F_status_set_fine(status_path), data->main->warning.notable);
