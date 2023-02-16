@@ -82,7 +82,7 @@ extern "C" {
 #ifndef _di_fake_data_t_
   enum {
     fake_data_flag_has_operation_e = 0x1,
-  };
+  }; // enum
 
   typedef struct {
     fll_program_data_t *main;
@@ -312,7 +312,7 @@ extern "C" {
 #ifndef _di_fake_build_setting_t_
   enum {
     data_build_setting_flag_has_environment_e = 0x1,
-  };
+  }; // enum
 
   typedef struct {
     uint8_t flag;
@@ -1348,7 +1348,7 @@ extern "C" {
     fake_make_operation_type_top_e,
     fake_make_operation_type_touch_e,
     fake_make_operation_type_write_e,
-  };
+  }; // enum
 
   // Total does not include "fake_make_operation_type_none_e".
   #define fake_make_operation_total_d 35
@@ -1490,13 +1490,13 @@ extern "C" {
     fake_make_operation_if_type_if_parameter_e,
     fake_make_operation_if_type_if_owner_e,
     fake_make_operation_if_type_if_success_e,
-  };
+  }; // enum
 
   enum {
     fake_make_operation_fail_type_exit_e = 1,
-    fake_make_operation_fail_type_warn_e,
     fake_make_operation_fail_type_ignore_e,
-  };
+    fake_make_operation_fail_type_warn_e,
+  }; // enum
 
   #define fake_make_operation_recursion_depth_max_d 65535
 #endif // _di_fake_make_operation_
@@ -1810,7 +1810,7 @@ extern "C" {
     fake_state_process_block_operate_e,
     fake_state_process_block_skip_e,
     fake_state_process_block_done_e,
-  };
+  }; // enum
 #endif // _di_fake_state_process_block_
 
 /**
@@ -1828,7 +1828,7 @@ extern "C" {
     fake_condition_result_false_e,
     fake_condition_result_true_e,
     fake_condition_result_error_e,
-  };
+  }; // enum
 #endif // _di_fake_condition_result_
 
 #ifndef _di_fake_skeleton_content_

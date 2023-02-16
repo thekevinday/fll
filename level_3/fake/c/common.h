@@ -209,7 +209,7 @@ extern "C" {
     fake_build_language_type_bash_e = 1,
     fake_build_language_type_c_e,
     fake_build_language_type_cpp_e,
-  };
+  }; // enum
 
   #define FAKE_build_language_bash_s "bash"
   #define FAKE_build_language_c_s    "c"
@@ -233,7 +233,7 @@ extern "C" {
     fake_build_version_type_minor_e,
     fake_build_version_type_micro_e,
     fake_build_version_type_nano_e,
-  };
+  }; // enum
 
   #define FAKE_build_version_major_s "major"
   #define FAKE_build_version_minor_s "minor"
@@ -260,7 +260,7 @@ extern "C" {
     fake_operation_clean_e,
     fake_operation_make_e,
     fake_operation_skeleton_e,
-  };
+  }; // enum
 
   #define fake_signal_check_d       500000
   #define fake_signal_check_tiny_d  4
@@ -412,7 +412,7 @@ extern "C" {
     fake_parameter_operation_clean_e,
     fake_parameter_operation_make_e,
     fake_parameter_operation_skeleton_e,
-  };
+  }; // enum
 
   #define fake_console_parameter_t_initialize \
     { \
