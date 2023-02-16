@@ -214,29 +214,29 @@ extern "C" {
       parameter_file_path.used = data->path_build_libraries_shared.used;
       parameter_linker.used = fake_build_parameter_library_shared_prefix_s.used;
 
-      if (data_build->setting.version_file == fake_build_version_type_major_e) {
+      if (data_build->setting.version_file == fake_build_version_major_e) {
         parameter_file_path.used += parameter_file_name_major.used;
       }
-      else if (data_build->setting.version_file == fake_build_version_type_minor_e) {
+      else if (data_build->setting.version_file == fake_build_version_minor_e) {
         parameter_file_path.used += parameter_file_name_minor.used;
       }
-      else if (data_build->setting.version_file == fake_build_version_type_micro_e) {
+      else if (data_build->setting.version_file == fake_build_version_micro_e) {
         parameter_file_path.used += parameter_file_name_micro.used;
       }
-      else if (data_build->setting.version_file == fake_build_version_type_nano_e) {
+      else if (data_build->setting.version_file == fake_build_version_nano_e) {
         parameter_file_path.used += parameter_file_name_nano.used;
       }
 
-      if (data_build->setting.version_target == fake_build_version_type_major_e) {
+      if (data_build->setting.version_target == fake_build_version_major_e) {
         parameter_linker.used += parameter_file_name_major.used;
       }
-      else if (data_build->setting.version_target == fake_build_version_type_minor_e) {
+      else if (data_build->setting.version_target == fake_build_version_minor_e) {
         parameter_linker.used += parameter_file_name_minor.used;
       }
-      else if (data_build->setting.version_target == fake_build_version_type_micro_e) {
+      else if (data_build->setting.version_target == fake_build_version_micro_e) {
         parameter_linker.used += parameter_file_name_micro.used;
       }
-      else if (data_build->setting.version_target == fake_build_version_type_nano_e) {
+      else if (data_build->setting.version_target == fake_build_version_nano_e) {
         parameter_linker.used += parameter_file_name_nano.used;
       }
 
@@ -252,29 +252,29 @@ extern "C" {
       memcpy(parameter_file_path_string, data->path_build_libraries_shared.string, sizeof(f_char_t) * data->path_build_libraries_shared.used);
       memcpy(parameter_linker_string, fake_build_parameter_library_shared_prefix_s.string, sizeof(f_char_t) * fake_build_parameter_library_shared_prefix_s.used);
 
-      if (data_build->setting.version_file == fake_build_version_type_major_e) {
+      if (data_build->setting.version_file == fake_build_version_major_e) {
         memcpy(parameter_file_path_string + data->path_build_libraries_shared.used, parameter_file_name_major_string, sizeof(f_char_t) * parameter_file_name_major.used);
       }
-      else if (data_build->setting.version_file == fake_build_version_type_minor_e) {
+      else if (data_build->setting.version_file == fake_build_version_minor_e) {
         memcpy(parameter_file_path_string + data->path_build_libraries_shared.used, parameter_file_name_minor_string, sizeof(f_char_t) * parameter_file_name_minor.used);
       }
-      else if (data_build->setting.version_file == fake_build_version_type_micro_e) {
+      else if (data_build->setting.version_file == fake_build_version_micro_e) {
         memcpy(parameter_file_path_string + data->path_build_libraries_shared.used, parameter_file_name_micro_string, sizeof(f_char_t) * parameter_file_name_micro.used);
       }
-      else if (data_build->setting.version_file == fake_build_version_type_nano_e) {
+      else if (data_build->setting.version_file == fake_build_version_nano_e) {
         memcpy(parameter_file_path_string + data->path_build_libraries_shared.used, parameter_file_name_nano_string, sizeof(f_char_t) * parameter_file_name_nano.used);
       }
 
-      if (data_build->setting.version_target == fake_build_version_type_major_e) {
+      if (data_build->setting.version_target == fake_build_version_major_e) {
         memcpy(parameter_linker_string + fake_build_parameter_library_shared_prefix_s.used, parameter_file_name_major_string, sizeof(f_char_t) * parameter_file_name_major.used);
       }
-      else if (data_build->setting.version_target == fake_build_version_type_minor_e) {
+      else if (data_build->setting.version_target == fake_build_version_minor_e) {
         memcpy(parameter_linker_string + fake_build_parameter_library_shared_prefix_s.used, parameter_file_name_minor_string, sizeof(f_char_t) * parameter_file_name_minor.used);
       }
-      else if (data_build->setting.version_target == fake_build_version_type_micro_e) {
+      else if (data_build->setting.version_target == fake_build_version_micro_e) {
         memcpy(parameter_linker_string + fake_build_parameter_library_shared_prefix_s.used, parameter_file_name_micro_string, sizeof(f_char_t) * parameter_file_name_micro.used);
       }
-      else if (data_build->setting.version_target == fake_build_version_type_nano_e) {
+      else if (data_build->setting.version_target == fake_build_version_nano_e) {
         memcpy(parameter_linker_string + fake_build_parameter_library_shared_prefix_s.used, parameter_file_name_nano_string, sizeof(f_char_t) * parameter_file_name_nano.used);
       }
 
@@ -342,7 +342,7 @@ extern "C" {
       }
     }
 
-    if (data_build->setting.version_file != fake_build_version_type_major_e && parameter_file_name_major.used) {
+    if (data_build->setting.version_file != fake_build_version_major_e && parameter_file_name_major.used) {
       f_string_static_t parameter_file_path = f_string_static_t_initialize;
 
       {
@@ -367,7 +367,7 @@ extern "C" {
         }
       }
 
-      if (data_build->setting.version_file != fake_build_version_type_minor_e && parameter_file_name_minor.used) {
+      if (data_build->setting.version_file != fake_build_version_minor_e && parameter_file_name_minor.used) {
         {
           parameter_file_path.used = data->path_build_libraries_shared.used + parameter_file_name_minor.used;
 
@@ -396,7 +396,7 @@ extern "C" {
           }
         }
 
-        if (data_build->setting.version_file != fake_build_version_type_micro_e && parameter_file_name_micro.used) {
+        if (data_build->setting.version_file != fake_build_version_micro_e && parameter_file_name_micro.used) {
           parameter_file_path.used = data->path_build_libraries_shared.used + parameter_file_name_micro.used;
 
           f_char_t parameter_file_path_string[parameter_file_path.used + 1];

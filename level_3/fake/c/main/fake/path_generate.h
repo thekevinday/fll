@@ -24,7 +24,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_path_generate_
-  extern f_status_t fake_path_generate(fake_data_t * const data) F_attribute_visibility_internal_d;
+  extern f_status_t fake_path_generate(fake_data_t * const data);
 #endif // _di_fake_path_generate_
 
 /**
@@ -47,7 +47,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_path_generate_string_dynamic_
-  extern f_status_t fake_path_generate_string_dynamic(fake_data_t * const data, const f_string_dynamic_t source, f_string_dynamic_t *destination[], const uint8_t size) F_attribute_visibility_internal_d;
+  extern f_status_t fake_path_generate_string_dynamic(fake_data_t * const data, const f_string_dynamic_t source, f_string_dynamic_t *destination[], const uint8_t size);
 #endif // _di_fake_path_generate_string_dynamic_
 
 #ifdef __cplusplus

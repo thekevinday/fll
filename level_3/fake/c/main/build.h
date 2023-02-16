@@ -71,7 +71,7 @@ extern "C" {
  * @see fll_execute_arguments_add()
  */
 #ifndef _di_fake_build_arguments_standard_add_
-  extern void fake_build_arguments_standard_add(fake_data_t * const data, fake_build_data_t * const data_build, const bool is_shared, const uint8_t type, f_string_dynamics_t *arguments, f_status_t *status) F_attribute_visibility_internal_d;
+  extern void fake_build_arguments_standard_add(fake_data_t * const data, fake_build_data_t * const data_build, const bool is_shared, const uint8_t type, f_string_dynamics_t *arguments, f_status_t *status);
 #endif // _di_fake_build_arguments_standard_add_
 
 /**
@@ -109,7 +109,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_copy_
-  extern void fake_build_copy(fake_data_t * const data, const f_mode_t mode, const f_string_static_t label, const f_string_static_t source, const f_string_static_t destination, const f_string_statics_t files, const f_string_static_t file_stage, const f_array_length_t perserve_offset, f_status_t *status) F_attribute_visibility_internal_d;
+  extern void fake_build_copy(fake_data_t * const data, const f_mode_t mode, const f_string_static_t label, const f_string_static_t source, const f_string_static_t destination, const f_string_statics_t files, const f_string_static_t file_stage, const f_array_length_t perserve_offset, f_status_t *status);
 #endif // _di_fake_build_copy_
 
 /**
@@ -134,7 +134,7 @@ extern "C" {
  *   This generally is only needed when F_child is returned, where this holds the return status of the child process.
  */
 #ifndef _di_fake_build_execute_process_script_
-  extern int fake_build_execute_process_script(fake_data_t * const data, fake_build_data_t * const data_build, const f_string_static_t process_script, const f_string_static_t file_stage, f_status_t *status) F_attribute_visibility_internal_d;
+  extern int fake_build_execute_process_script(fake_data_t * const data, fake_build_data_t * const data_build, const f_string_static_t process_script, const f_string_static_t file_stage, f_status_t *status);
 #endif // _di_fake_build_execute_process_script_
 
 /**
@@ -178,7 +178,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_objects_add_
-  extern f_status_t fake_build_objects_add(fake_data_t * const data, fake_build_data_t * const data_build, const f_string_static_t *path, const f_string_statics_t *generic, const f_string_statics_t *specific, f_string_dynamics_t *arguments) F_attribute_visibility_internal_d;
+  extern f_status_t fake_build_objects_add(fake_data_t * const data, fake_build_data_t * const data_build, const f_string_static_t *path, const f_string_statics_t *generic, const f_string_statics_t *specific, f_string_dynamics_t *arguments);
 #endif // _di_fake_build_objects_add_
 
 /**
@@ -207,7 +207,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_operate_
-  extern f_status_t fake_build_operate(fake_data_t * const data, const f_string_statics_t * const build_arguments, const bool process_pipe) F_attribute_visibility_internal_d;
+  extern f_status_t fake_build_operate(fake_data_t * const data, const f_string_statics_t * const build_arguments, const bool process_pipe);
 #endif // _di_fake_build_operate_
 
 /**
@@ -226,7 +226,7 @@ extern "C" {
  *   The path_sources.size is ignored.
  */
 #ifndef _di_fake_build_path_source_length_
-  extern void fake_build_path_source_length(fake_data_t * const data, fake_build_data_t * const data_build, f_string_static_t * const setting_path_source, f_string_static_t * const source) F_attribute_visibility_internal_d;
+  extern void fake_build_path_source_length(fake_data_t * const data, fake_build_data_t * const data_build, f_string_static_t * const setting_path_source, f_string_static_t * const source);
 #endif // _di_fake_build_path_source_length_
 
 /**
@@ -245,7 +245,7 @@ extern "C" {
  *   The path_sources.size is ignored.
  */
 #ifndef _di_fake_build_path_source_string_
-  extern void fake_build_path_source_string(fake_data_t * const data, fake_build_data_t * const data_build, f_string_static_t * const setting_path_source, f_string_static_t * const source) F_attribute_visibility_internal_d;
+  extern void fake_build_path_source_string(fake_data_t * const data, fake_build_data_t * const data_build, f_string_static_t * const setting_path_source, f_string_static_t * const source);
 #endif // _di_fake_build_path_source_string_
 
 /**
@@ -268,7 +268,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_sources_add_
-  extern f_status_t fake_build_sources_add(fake_data_t * const data, fake_build_data_t * const data_build, const f_string_statics_t *generic, const f_string_statics_t *specific, f_string_dynamics_t *arguments) F_attribute_visibility_internal_d;
+  extern f_status_t fake_build_sources_add(fake_data_t * const data, fake_build_data_t * const data_build, const f_string_statics_t *generic, const f_string_statics_t *specific, f_string_dynamics_t *arguments);
 #endif // _di_fake_build_sources_add_
 
 /**
@@ -291,7 +291,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_sources_object_add_
-  extern f_status_t fake_build_sources_object_add(fake_data_t * const data, fake_build_data_t * const data_build, const f_string_static_t *generic, const f_string_static_t *specific, f_string_dynamics_t *arguments) F_attribute_visibility_internal_d;
+  extern f_status_t fake_build_sources_object_add(fake_data_t * const data, fake_build_data_t * const data_build, const f_string_static_t *generic, const f_string_static_t *specific, f_string_dynamics_t *arguments);
 #endif // _di_fake_build_sources_object_add_
 
 /**
@@ -307,7 +307,7 @@ extern "C" {
  * @see f_file_touch()
  */
 #ifndef _di_fake_build_touch_
-  extern void fake_build_touch(fake_data_t * const data, const f_string_dynamic_t file, f_status_t *status) F_attribute_visibility_internal_d;
+  extern void fake_build_touch(fake_data_t * const data, const f_string_dynamic_t file, f_status_t *status);
 #endif // _di_fake_build_touch_
 
 #ifdef __cplusplus

@@ -251,6 +251,8 @@ extern "C" {
  *
  * This is generally either the first line in the program or the first line printed before an error message.
  *
+ * Once the first line is processed (printed or not), then this will print new lines normally.
+ *
  * This function locks and then unlocks the input stream when printing.
  *
  * @param setting
@@ -272,6 +274,8 @@ extern "C" {
  * Print first new line, unless verbosity says otherwise.
  *
  * This is generally either the first line in the program or the first line printed before an error message.
+ *
+ * Once the first line is processed (printed or not), then this will print new lines normally.
  *
  * This function neither locks nor unlocks the input stream.
  *
@@ -385,7 +389,7 @@ extern "C" {
  * @see fake_print_error_build_operation_file_message();
  */
 #ifndef _di_fake_print_error_operation_file_
-  extern bool fake_print_error_build_operation_file(fake_data_t * const data, const f_status_t status, const f_string_t function, const f_string_static_t operation, const f_string_static_t source, const f_string_static_t destination, const f_string_static_t how, const bool fallback) F_attribute_visibility_internal_d;
+  extern bool fake_print_error_build_operation_file(fake_data_t * const data, const f_status_t status, const f_string_t function, const f_string_static_t operation, const f_string_static_t source, const f_string_static_t destination, const f_string_static_t how, const bool fallback);
 #endif // _di_fake_print_error_operation_file_
 
 /**
@@ -410,7 +414,7 @@ extern "C" {
  * @see fake_print_error_build_operation_file()
  */
 #ifndef _di_fake_print_error_build_operation_file_message_
-  extern void fake_print_error_build_operation_file_message(fake_data_t * const data, const f_string_static_t operation, const f_string_static_t source, const f_string_static_t destination, const f_string_static_t how) F_attribute_visibility_internal_d;
+  extern void fake_print_error_build_operation_file_message(fake_data_t * const data, const f_string_static_t operation, const f_string_static_t source, const f_string_static_t destination, const f_string_static_t how);
 #endif // _di_fake_print_error_build_operation_file_message_
 
 /**
@@ -438,7 +442,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_error_fss_
-  extern bool fake_print_error_fss(fake_data_t * const data, const f_status_t status, const f_string_t function, const f_string_static_t path_file, const f_string_range_t range, const bool fallback) F_attribute_visibility_internal_d;
+  extern bool fake_print_error_fss(fake_data_t * const data, const f_status_t status, const f_string_t function, const f_string_static_t path_file, const f_string_range_t range, const bool fallback);
 #endif // _di_fake_print_error_fss_
 
 /**
@@ -454,7 +458,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_error_parameter_missing_value_
-  extern void fake_print_error_parameter_missing_value(fake_data_t * const data, const f_string_static_t parameter) F_attribute_visibility_internal_d;
+  extern void fake_print_error_parameter_missing_value(fake_data_t * const data, const f_string_static_t parameter);
 #endif // _di_fake_print_error_parameter_missing_value_
 
 /**
@@ -470,7 +474,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_error_parameter_too_many_
-  extern void fake_print_error_parameter_too_many(fake_data_t * const data, const f_string_static_t parameter) F_attribute_visibility_internal_d;
+  extern void fake_print_error_parameter_too_many(fake_data_t * const data, const f_string_static_t parameter);
 #endif // _di_fake_print_error_parameter_too_many_
 
 /**
@@ -482,7 +486,7 @@ extern "C" {
  * @see fll_print_format()
  */
 #ifndef _di_fake_print_error_requires_more_arguments_
-  extern void fake_print_error_requires_more_arguments(fake_make_data_t * const data_make) F_attribute_visibility_internal_d;
+  extern void fake_print_error_requires_more_arguments(fake_make_data_t * const data_make);
 #endif // _di_fake_print_error_requires_more_arguments_
 
 /**
@@ -494,7 +498,7 @@ extern "C" {
  * @see fll_print_format()
  */
 #ifndef _di_fake_print_error_too_many_arguments_
-  extern void fake_print_error_too_many_arguments(fake_make_data_t * const data_make) F_attribute_visibility_internal_d;
+  extern void fake_print_error_too_many_arguments(fake_make_data_t * const data_make);
 #endif // _di_fake_print_error_too_many_arguments_
 
 /**
@@ -508,7 +512,7 @@ extern "C" {
  * @see fll_print_format()
  */
 #ifndef _di_fake_print_error_argument_empty_
-  extern void fake_print_error_argument_empty(fake_make_data_t * const data_make, const f_array_length_t index) F_attribute_visibility_internal_d;
+  extern void fake_print_error_argument_empty(fake_make_data_t * const data_make, const f_array_length_t index);
 #endif // _di_fake_print_error_argument_empty_
 
 /**
@@ -530,7 +534,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_message_section_operation_failed_
-  extern void fake_print_message_section_operation_failed(fake_data_t * const data, const fl_print_t print, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name) F_attribute_visibility_internal_d;
+  extern void fake_print_message_section_operation_failed(fake_data_t * const data, const fl_print_t print, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name);
 #endif // _di_fake_print_message_section_operation_failed_
 
 /**
@@ -548,7 +552,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_message_section_operation_link_argument_unknown_
-  extern void fake_print_message_section_operation_link_argument_unknown(fake_data_t * const data, const fl_print_t print, const f_string_static_t argument) F_attribute_visibility_internal_d;
+  extern void fake_print_message_section_operation_link_argument_unknown(fake_data_t * const data, const fl_print_t print, const f_string_static_t argument);
 #endif // _di_fake_print_message_section_operation_link_argument_unknown_
 
 /**
@@ -566,7 +570,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_message_section_operation_link_point_exists_
-  extern void fake_print_message_section_operation_link_point_exists(fake_data_t * const data, const fl_print_t print, const f_string_static_t argument) F_attribute_visibility_internal_d;
+  extern void fake_print_message_section_operation_link_point_exists(fake_data_t * const data, const fl_print_t print, const f_string_static_t argument);
 #endif // _di_fake_print_message_section_operation_link_point_exists_
 
 /**
@@ -584,7 +588,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_message_section_operation_link_target_exists_not_
-  extern void fake_print_message_section_operation_link_target_exists_not(fake_data_t * const data, const fl_print_t print, const f_string_static_t argument) F_attribute_visibility_internal_d;
+  extern void fake_print_message_section_operation_link_target_exists_not(fake_data_t * const data, const fl_print_t print, const f_string_static_t argument);
 #endif // _di_fake_print_message_section_operation_link_target_exists_not_
 
 /**
@@ -607,7 +611,7 @@ extern "C" {
  * @see fll_error_file_print()
  */
 #ifndef _di_fake_print_message_section_operation_path_outside_
-  extern void fake_print_message_section_operation_path_outside(fake_data_t * const data, const fl_print_t print, const f_status_t status, const f_string_t function, const f_string_static_t path) F_attribute_visibility_internal_d;
+  extern void fake_print_message_section_operation_path_outside(fake_data_t * const data, const fl_print_t print, const f_status_t status, const f_string_t function, const f_string_static_t path);
 #endif // _fake_print_message_section_operation_path_outside_
 
 /**
@@ -631,7 +635,7 @@ extern "C" {
  * @see fll_error_file_print()
  */
 #ifndef _di_fake_print_message_section_operation_path_stack_max_
-  extern void fake_print_message_section_operation_path_stack_max(fake_data_t * const data, fl_print_t error, const f_status_t status, const f_string_t function, const f_string_static_t path) F_attribute_visibility_internal_d;
+  extern void fake_print_message_section_operation_path_stack_max(fake_data_t * const data, fl_print_t error, const f_status_t status, const f_string_t function, const f_string_static_t path);
 #endif // _di_fake_print_message_section_operation_path_stack_max_
 
 /**
@@ -655,7 +659,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_message_section_operation_stack_max_
-  extern void fake_print_message_section_operation_stack_max(fake_data_t * const data, const fl_print_t print, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name, const f_array_length_t stack_max) F_attribute_visibility_internal_d;
+  extern void fake_print_message_section_operation_stack_max(fake_data_t * const data, const fl_print_t print, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name, const f_array_length_t stack_max);
 #endif // _di_fake_print_message_section_operation_stack_max_
 
 /**
@@ -677,7 +681,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_message_section_operation_unknown_
-  extern void fake_print_message_section_operation_unknown(fake_data_t * const data, const fl_print_t print, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name) F_attribute_visibility_internal_d;
+  extern void fake_print_message_section_operation_unknown(fake_data_t * const data, const fl_print_t print, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name);
 #endif // _di_fake_print_message_section_operation_unknown_
 
 #ifdef __cplusplus

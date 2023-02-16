@@ -26,7 +26,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_skeleton_operate_
-  extern f_status_t fake_skeleton_operate(fake_data_t * const data) F_attribute_visibility_internal_d;
+  extern f_status_t fake_skeleton_operate(fake_data_t * const data);
 #endif // _di_fake_skeleton_operate_
 
 /**
@@ -44,7 +44,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_skeleton_operate_directory_create_
-  extern f_status_t fake_skeleton_operate_directory_create(fake_data_t * const data, const f_string_static_t path) F_attribute_visibility_internal_d;
+  extern f_status_t fake_skeleton_operate_directory_create(fake_data_t * const data, const f_string_static_t path);
 #endif // _di_fake_skeleton_operate_directory_create_
 
 /**
@@ -67,7 +67,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_skeleton_operate_file_create_
-  extern f_status_t fake_skeleton_operate_file_create(fake_data_t * const data, const f_string_static_t path, const bool executable, const f_string_static_t content) F_attribute_visibility_internal_d;
+  extern f_status_t fake_skeleton_operate_file_create(fake_data_t * const data, const f_string_static_t path, const bool executable, const f_string_static_t content);
 #endif // _di_fake_skeleton_operate_file_create_
 
 /**
@@ -84,7 +84,7 @@ extern "C" {
  *   The path_sources.size is ignored.
  */
 #ifndef _di_fake_skeleton_path_source_length_
-  extern void fake_skeleton_path_source_length(fake_data_t * const data, const f_string_static_t *partial, f_string_static_t * const source) F_attribute_visibility_internal_d;
+  extern void fake_skeleton_path_source_length(fake_data_t * const data, const f_string_static_t *partial, f_string_static_t * const source);
 #endif // _di_fake_skeleton_path_source_length_
 
 /**
@@ -101,7 +101,7 @@ extern "C" {
  *   The path_sources.size is ignored.
  */
 #ifndef _di_fake_skeleton_path_source_string_
-  extern void fake_skeleton_path_source_string(fake_data_t * const data, const f_string_static_t *partial, f_string_static_t * const source) F_attribute_visibility_internal_d;
+  extern void fake_skeleton_path_source_string(fake_data_t * const data, const f_string_static_t *partial, f_string_static_t * const source);
 #endif // _di_fake_skeleton_path_source_string_
 
 #ifdef __cplusplus

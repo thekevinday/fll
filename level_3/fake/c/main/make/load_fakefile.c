@@ -2,7 +2,8 @@
 #include "../build/load.h"
 #include "load_fakefile.h"
 #include "operate_validate.h"
-#include "print.h"
+#include "print-error.h"
+#include "print-warning.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -244,7 +245,7 @@ extern "C" {
 
       data_make->setting_make.parameter.array[0].value.used = 1;
       data_make->setting_make.load_build = F_false;
-      data_make->setting_make.fail = fake_make_operation_fail_type_exit_e;
+      data_make->setting_make.fail = fake_make_operation_fail_exit_e;
 
       if (settings.objects.used) {
         for (f_array_length_t i = 0; i < settings.objects.used; ++i) {
@@ -539,13 +540,13 @@ extern "C" {
 
     if (content->used) {
       if (fl_string_dynamic_partial_compare_string(fake_make_operation_argument_exit_s.string, data_make->buffer, fake_make_operation_argument_exit_s.used, content->array[content->used - 1]) == F_equal_to) {
-        data_make->setting_make.fail = fake_make_operation_fail_type_exit_e;
+        data_make->setting_make.fail = fake_make_operation_fail_exit_e;
       }
       else if (fl_string_dynamic_partial_compare_string(fake_make_operation_argument_warn_s.string, data_make->buffer, fake_make_operation_argument_warn_s.used, content->array[content->used - 1]) == F_equal_to) {
-        data_make->setting_make.fail = fake_make_operation_fail_type_warn_e;
+        data_make->setting_make.fail = fake_make_operation_fail_warn_e;
       }
       else if (fl_string_dynamic_partial_compare_string(fake_make_operation_argument_ignore_s.string, data_make->buffer, fake_make_operation_argument_ignore_s.used, content->array[content->used - 1]) == F_equal_to) {
-        data_make->setting_make.fail = fake_make_operation_fail_type_ignore_e;
+        data_make->setting_make.fail = fake_make_operation_fail_ignore_e;
       }
       else {
         fake_make_print_warning_settings_content_invalid(data_make->setting, data_make->main->warning, data_make->data->file_data_build_fakefile, data_make->buffer, *object, content->array[content->used - 1], fake_make_item_settings_s);

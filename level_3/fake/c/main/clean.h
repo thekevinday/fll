@@ -26,7 +26,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_clean_operate_
-  extern f_status_t fake_clean_operate(fake_data_t * const data) F_attribute_visibility_internal_d;
+  extern f_status_t fake_clean_operate(fake_data_t * const data);
 #endif // _di_fake_clean_operate_
 
 /**
@@ -55,7 +55,7 @@ extern "C" {
  * @see remove()
  */
 #if !defined(_di_fake_clean_operate_)
-  extern int fake_clean_remove_recursively_verbosely(const char * const path, const struct stat *file_stat, int type, struct FTW *entity) F_attribute_visibility_internal_d;
+  extern int fake_clean_remove_recursively_verbosely(const char * const path, const struct stat *file_stat, int type, struct FTW *entity);
 #endif // !defined(_di_fake_clean_operate_)
 
 #ifdef __cplusplus

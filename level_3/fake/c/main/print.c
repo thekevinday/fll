@@ -267,7 +267,14 @@ extern "C" {
       if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
     }
 
-    f_print_dynamic_raw(setting->line_first, print.to);
+    if (setting->flag & fake_main_flag_print_first_e) {
+      fll_print_dynamic_raw(setting->line_first, print.to);
+
+      setting->flag -= fake_main_flag_print_first_e;
+    }
+    else {
+      fll_print_dynamic_raw(f_string_eol_s, print.to);
+    }
 
     return F_none;
   }
@@ -282,7 +289,14 @@ extern "C" {
       if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
     }
 
-    fll_print_dynamic_raw(setting->line_first, print.to);
+    if (setting->flag & fake_main_flag_print_first_e) {
+      fll_print_dynamic_raw(setting->line_first, print.to);
+
+      setting->flag -= fake_main_flag_print_first_e;
+    }
+    else {
+      fll_print_dynamic_raw(f_string_eol_s, print.to);
+    }
 
     return F_none;
   }

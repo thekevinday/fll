@@ -36,7 +36,7 @@ extern "C" {
  *   This generally is only needed when F_child is returned, where this holds the return status of the child process.
  */
 #ifndef _di_fake_make_operate_process_
-  extern int fake_make_operate_process(fake_make_data_t * const data_make, const f_string_range_t section_name, fake_state_process_t * const state_process, f_array_lengths_t * const section_stack, f_status_t * const status) F_attribute_visibility_internal_d;
+  extern int fake_make_operate_process(fake_make_data_t * const data_make, const f_string_range_t section_name, fake_state_process_t * const state_process, f_array_lengths_t * const section_stack, f_status_t * const status);
 #endif // _di_fake_make_operate_process_
 
 /**
@@ -83,7 +83,7 @@ extern "C" {
  * @see f_utf_unicode_string_to()
  */
 #ifndef _di_fake_make_operate_process_buffer_escape_
-  extern f_status_t fake_make_operate_process_buffer_escape(fake_make_data_t * const data_make, const f_string_static_t source, f_string_dynamic_t * const destination) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_process_buffer_escape(fake_make_data_t * const data_make, const f_string_static_t source, f_string_dynamic_t * const destination);
 #endif // _di_fake_make_operate_process_buffer_escape_
 
 /**
@@ -108,7 +108,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_operate_process_execute_
-  extern f_status_t fake_make_operate_process_execute(fake_make_data_t * const data_make, const f_string_static_t program, const f_string_statics_t arguments, const bool as_shell) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_process_execute(fake_make_data_t * const data_make, const f_string_static_t program, const f_string_statics_t arguments, const bool as_shell);
 #endif // _di_fake_make_operate_process_execute_
 
 /**
@@ -123,9 +123,9 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_failure on identifying the return code as an error code and fail mode is not set to fake_make_operation_fail_type_exit_e.
+ *   F_failure on identifying the return code as an error code and fail mode is not set to fake_make_operation_fail_exit_e.
  *
- *   F_failure (with error bit) on identifying the return code as an error code and fail mode is set to fake_make_operation_fail_type_exit_e.
+ *   F_failure (with error bit) on identifying the return code as an error code and fail mode is set to fake_make_operation_fail_exit_e.
  *
  *   Errors (with error bit) from: f_conversion_number_signed_to_string().
  *   Errors (with error bit) from: f_string_append().
@@ -136,7 +136,7 @@ extern "C" {
  * @see f_string_dynamic_append()
  */
 #ifndef _di_fake_make_operate_process_return_
-  extern f_status_t fake_make_operate_process_return(fake_make_data_t * const data_make, const int return_code) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_process_return(fake_make_data_t * const data_make, const int return_code);
 #endif // _di_fake_make_operate_process_return_
 
 /**
@@ -156,7 +156,7 @@ extern "C" {
  *   Errors (with error bit) from: fake_make_operate_process_execute().
  */
 #ifndef _di_fake_make_operate_process_run_
-  extern f_status_t fake_make_operate_process_run(fake_make_data_t * const data_make, const bool as_shell) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_process_run(fake_make_data_t * const data_make, const bool as_shell);
 #endif // _di_fake_make_operate_process_run_
 
 #ifdef __cplusplus

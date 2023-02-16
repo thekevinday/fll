@@ -466,7 +466,7 @@ extern "C" {
       status = F_status_set_error(F_signal_quit);
 
       // Forcing exit forces fail mode.
-      data_make->setting_make.fail = fake_make_operation_fail_type_exit_e;
+      data_make->setting_make.fail = fake_make_operation_fail_exit_e;
       data_make->error.prefix = fl_print_error_s;
       data_make->error.suffix = f_string_empty_s;
       data_make->error.context = data_make->main->context.set.error;
@@ -491,7 +491,7 @@ extern "C" {
   void fake_make_operate_process_type_fail(fake_make_data_t * const data_make) {
 
     if (fl_string_dynamic_compare(fake_make_operation_argument_exit_s, data_make->cache_arguments.array[0]) == F_equal_to) {
-      data_make->setting_make.fail = fake_make_operation_fail_type_exit_e;
+      data_make->setting_make.fail = fake_make_operation_fail_exit_e;
       data_make->error.prefix = fl_print_error_s;
       data_make->error.suffix = f_string_empty_s;
       data_make->error.context = data_make->main->context.set.error;
@@ -501,7 +501,7 @@ extern "C" {
       data_make->error.set = &data_make->main->context.set;
     }
     else if (fl_string_dynamic_compare(fake_make_operation_argument_warn_s, data_make->cache_arguments.array[0]) == F_equal_to) {
-      data_make->setting_make.fail = fake_make_operation_fail_type_warn_e;
+      data_make->setting_make.fail = fake_make_operation_fail_warn_e;
       data_make->error.prefix = fl_print_warning_s;
       data_make->error.suffix = f_string_empty_s;
       data_make->error.context = data_make->main->context.set.warning;
@@ -511,7 +511,7 @@ extern "C" {
       data_make->error.set = &data_make->main->context.set;
     }
     else {
-      data_make->setting_make.fail = fake_make_operation_fail_type_ignore_e;
+      data_make->setting_make.fail = fake_make_operation_fail_ignore_e;
       data_make->main->error.to.stream = 0;
       data_make->main->error.to.id = -1;
     }
@@ -521,10 +521,10 @@ extern "C" {
 
       f_print_terminated("Set failure state to '", data_make->main->message.to);
 
-      if (data_make->setting_make.fail == fake_make_operation_fail_type_exit_e) {
+      if (data_make->setting_make.fail == fake_make_operation_fail_exit_e) {
         fl_print_format("%[%r%]", data_make->main->message.to, data_make->main->context.set.notable, fake_make_operation_argument_exit_s, data_make->main->context.set.notable);
       }
-      else if (data_make->setting_make.fail == fake_make_operation_fail_type_warn_e) {
+      else if (data_make->setting_make.fail == fake_make_operation_fail_warn_e) {
         fl_print_format("%[%r%]", data_make->main->message.to, data_make->main->context.set.notable, fake_make_operation_argument_warn_s, data_make->main->context.set.notable);
       }
       else {
@@ -566,7 +566,7 @@ extern "C" {
       }
 
       if (all) {
-        status = fll_file_role_change_all(data_make->cache_arguments.array[i], -1, id, dereference, fake_make_operation_recursion_depth_max_d);
+        status = fll_file_role_change_all(data_make->cache_arguments.array[i], -1, id, dereference, fake_common_max_recursion_depth_d);
       }
       else {
         status = f_file_role_change(data_make->cache_arguments.array[i], -1, id, dereference);
@@ -1411,7 +1411,7 @@ extern "C" {
       }
 
       if (all) {
-        status = fll_file_mode_set_all(data_make->cache_arguments.array[i], F_true, mode, fake_make_operation_recursion_depth_max_d);
+        status = fll_file_mode_set_all(data_make->cache_arguments.array[i], F_true, mode, fake_common_max_recursion_depth_d);
       }
       else {
         status = f_file_mode_set(data_make->cache_arguments.array[i], mode);
@@ -1578,7 +1578,7 @@ extern "C" {
       }
 
       if (all) {
-        status = fll_file_role_change_all(data_make->cache_arguments.array[i], id, -1, dereference, fake_make_operation_recursion_depth_max_d);
+        status = fll_file_role_change_all(data_make->cache_arguments.array[i], id, -1, dereference, fake_common_max_recursion_depth_d);
       }
       else {
         status = f_file_role_change(data_make->cache_arguments.array[i], id, -1, dereference);

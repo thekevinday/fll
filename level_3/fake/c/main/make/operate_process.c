@@ -448,7 +448,7 @@ extern "C" {
       f_file_stream_unlock(data_make->main->error.to);
     }
 
-    if (data_make->setting_make.fail == fake_make_operation_fail_type_exit_e) return F_status_set_error(F_failure);
+    if (data_make->setting_make.fail == fake_make_operation_fail_exit_e) return F_status_set_error(F_failure);
 
     return F_failure;
   }

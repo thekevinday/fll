@@ -36,7 +36,7 @@ extern "C" {
  *   This generally is only needed when F_child is returned, where this holds the return status of the child process.
  */
 #ifndef _di_fake_build_objects_static_
-  extern int fake_build_objects_static(fake_data_t * const data, fake_build_data_t * const data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t * const status) F_attribute_visibility_internal_d;
+  extern int fake_build_objects_static(fake_data_t * const data, fake_build_data_t * const data_build, const f_mode_t mode, const f_string_static_t file_stage, f_status_t * const status);
 #endif // _di_fake_build_objects_static_
 
 #ifdef __cplusplus

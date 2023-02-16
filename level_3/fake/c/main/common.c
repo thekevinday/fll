@@ -261,13 +261,11 @@ extern "C" {
 
                   setting->status = f_utf_is_word_dash_plus(main->parameters.arguments.array[index].string + j, main->parameters.arguments.array[index].used - j, F_false);
 
-                  if (F_status_is_error(setting->status)) {
-                    if (main->error.verbosity > f_console_verbosity_quiet_e) {
-                      fake_print_line_first_locked(setting, main->error);
+                  // @todo fix this to print an error about the actual invalid character so that it can be investigated.
 
-                      if (fake_print_error_fallback(setting, setting->status, main->error, macro_fake_f(f_utf_is_word_dash_plus)) == F_false) {
-                        fll_program_print_error_parameter_process(main->error, f_console_symbol_long_normal_s, names[i]);
-                      }
+                  if (F_status_is_error(setting->status)) {
+                    if (fake_print_error_fallback(setting, setting->status, main->error, macro_fake_f(f_utf_is_word_dash_plus)) == F_false) {
+                      fll_program_print_error_parameter_process(main->error, f_console_symbol_long_normal_s, names[i]);
                     }
 
                     return;
@@ -404,12 +402,10 @@ extern "C" {
                   setting->status = f_utf_is_word_dash_plus(main->parameters.arguments.array[i].string + j, main->parameters.arguments.array[i].used - j, F_false);
 
                   if (F_status_is_error(setting->status)) {
-                    if (main->error.verbosity > f_console_verbosity_quiet_e) {
-                      fake_print_line_first_locked(setting, main->error);
+                    // @todo fix this to print an error about the actual invalid character so that it can be investigated.
 
-                      if (fake_print_error_fallback(setting, setting->status, main->error, macro_fake_f(f_utf_is_word_dash_plus)) == F_false) {
-                        fll_program_print_error_parameter_process(main->error, f_console_symbol_long_normal_s, names[i]);
-                      }
+                    if (fake_print_error_fallback(setting, setting->status, main->error, macro_fake_f(f_utf_is_word_dash_plus)) == F_false) {
+                      fll_program_print_error_parameter_process(main->error, f_console_symbol_long_normal_s, names[i]);
                     }
 
                     return;

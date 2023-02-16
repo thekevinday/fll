@@ -22,7 +22,7 @@ extern "C" {
  *   The operation and if-condition states.
  */
 #ifndef _di_fake_make_operate_block_prepare_
-  extern void fake_make_operate_block_prepare(fake_state_process_t * const state_process) F_attribute_visibility_internal_d;
+  extern void fake_make_operate_block_prepare(fake_state_process_t * const state_process);
 #endif // _di_fake_make_operate_block_prepare_
 
 /**
@@ -39,7 +39,7 @@ extern "C" {
  *   The status code.
  */
 #ifndef _di_fake_make_operate_block_postprocess_
-  extern void fake_make_operate_block_postprocess(const bool last, fake_state_process_t * const state_process, f_status_t * const status) F_attribute_visibility_internal_d;
+  extern void fake_make_operate_block_postprocess(const bool last, fake_state_process_t * const state_process, f_status_t * const status);
 #endif // _di_fake_make_operate_block_postprocess_
 
 #ifdef __cplusplus

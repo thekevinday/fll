@@ -70,9 +70,9 @@ build_sources_program fll/level_2/program.c fll/level_2/program/common.c fll/lev
 build_sources_library program/fake/main/build.c program/fake/main/clean.c program/fake/main/common.c program/fake/main/fake.c program/fake/main/make.c program/fake/main/print.c program/fake/main/private-common.c program/fake/main/private-fake.c program/fake/main/private-print.c program/fake/main/skeleton.c
 build_sources_library program/fake/main/build/library.c program/fake/main/build/load.c program/fake/main/build/object.c program/fake/main/build/objects.c program/fake/main/build/print.c program/fake/main/build/program.c program/fake/main/build/skeleton.c
 build_sources_library program/fake/main/clean/print.c
-build_sources_library program/fake/main/common/print.c program/fake/main/common/string.c program/fake/main/common/type.c
+build_sources_library program/fake/main/common/define.c program/fake/main/common/enumeration.c program/fake/main/common/print.c program/fake/main/common/string.c program/fake/main/common/type.c
 build_sources_library program/fake/main/fake/path_generate.c program/fake/main/fake/print.c
-build_sources_library program/fake/main/make/load_fakefile.c program/fake/main/make/load_parameters.c program/fake/main/make/operate_block.c program/fake/main/make/operate.c program/fake/main/make/operate_process.c program/fake/main/make/operate_process_type.c program/fake/main/make/operate_validate.c program/fake/main/make/operate_validate_type.c program/fake/main/make/print.c
+build_sources_library program/fake/main/make/load_fakefile.c program/fake/main/make/load_parameters.c program/fake/main/make/operate_block.c program/fake/main/make/operate.c program/fake/main/make/operate_process.c program/fake/main/make/operate_process_type.c program/fake/main/make/operate_validate.c program/fake/main/make/operate_validate_type.c program/fake/main/make/print.c program/fake/main/make/print-error.c program/fake/main/make/print-warning.c
 build_sources_library program/fake/main/skeleton/print.c
 
 build_sources_program program/fake/main/main.c

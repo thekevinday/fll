@@ -879,7 +879,7 @@ const f_string_static_t fake_build_documentation_files_s = macro_f_string_static
 
     fake_build_copy(data, mode, fake_build_setting_files_s, data->path_data_settings, data->path_build_settings, data_build.setting.build_sources_setting, stage.file_sources_settings, 0, &status);
 
-    if (data_build.setting.build_language == fake_build_language_type_bash_e) {
+    if (data_build.setting.build_language == fake_build_language_bash_e) {
       fake_build_object_script(data, &data_build, mode, stage.file_object_script, &status);
 
       fake_build_library_script(data, &data_build, mode, stage.file_library_script, &status);
@@ -994,13 +994,13 @@ const f_string_static_t fake_build_documentation_files_s = macro_f_string_static
     }
 
     if (data_build->setting.has_path_standard) {
-      if (data_build->setting.build_language == fake_build_language_type_c_e) {
+      if (data_build->setting.build_language == fake_build_language_c_e) {
         source->used += fake_build_language_c_s.used;
       }
-      else if (data_build->setting.build_language == fake_build_language_type_cpp_e) {
+      else if (data_build->setting.build_language == fake_build_language_cpp_e) {
         source->used += fake_build_language_cpp_s.used;
       }
-      else if (data_build->setting.build_language == fake_build_language_type_bash_e) {
+      else if (data_build->setting.build_language == fake_build_language_bash_e) {
         source->used += fake_build_language_bash_s.used;
       }
 
@@ -1018,15 +1018,15 @@ const f_string_static_t fake_build_documentation_files_s = macro_f_string_static
     source->used += setting_path_source->used;
 
     if (data_build->setting.has_path_standard) {
-      if (data_build->setting.build_language == fake_build_language_type_c_e) {
+      if (data_build->setting.build_language == fake_build_language_c_e) {
         memcpy(source->string + source->used, fake_build_language_c_s.string, sizeof(f_char_t) * fake_build_language_c_s.used);
         source->used += fake_build_language_c_s.used;
       }
-      else if (data_build->setting.build_language == fake_build_language_type_cpp_e) {
+      else if (data_build->setting.build_language == fake_build_language_cpp_e) {
         memcpy(source->string + source->used, fake_build_language_cpp_s.string, sizeof(f_char_t) * fake_build_language_cpp_s.used);
         source->used += fake_build_language_cpp_s.used;
       }
-      else if (data_build->setting.build_language == fake_build_language_type_bash_e) {
+      else if (data_build->setting.build_language == fake_build_language_bash_e) {
         memcpy(source->string + source->used, fake_build_language_bash_s.string, sizeof(f_char_t) * fake_build_language_bash_s.used);
         source->used += fake_build_language_bash_s.used;
       }

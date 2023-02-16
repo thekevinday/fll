@@ -34,7 +34,7 @@ extern "C" {
  * @see fake_build_load_setting()
  */
 #ifndef _di_fake_make_load_fakefile_
-  extern void fake_make_load_fakefile(fake_make_data_t * const data_make, const bool process_pipe, f_status_t * const status) F_attribute_visibility_internal_d;
+  extern void fake_make_load_fakefile(fake_make_data_t * const data_make, const bool process_pipe, f_status_t * const status);
 #endif // _di_fake_make_load_fakefile_
 
 /**
@@ -48,7 +48,7 @@ extern "C" {
  *   The setting content.
  */
 #ifndef _di_fake_make_load_fakefile_setting_build_
-  extern void fake_make_load_fakefile_setting_build(fake_make_data_t * const data_make, f_fss_object_t * const object, f_fss_content_t * const content) F_attribute_visibility_internal_d;
+  extern void fake_make_load_fakefile_setting_build(fake_make_data_t * const data_make, f_fss_object_t * const object, f_fss_content_t * const content);
 #endif // _di_fake_make_load_fakefile_setting_build_
 
 /**
@@ -64,7 +64,7 @@ extern "C" {
  *   A pointer to the range that representing the compiler setting within the buffer.
  */
 #ifndef _di_fake_make_load_fakefile_setting_compiler_
-  extern void fake_make_load_fakefile_setting_compiler(fake_make_data_t * const data_make, f_fss_object_t * const object, f_fss_content_t * const content, f_string_range_t **range_compiler) F_attribute_visibility_internal_d;
+  extern void fake_make_load_fakefile_setting_compiler(fake_make_data_t * const data_make, f_fss_object_t * const object, f_fss_content_t * const content, f_string_range_t **range_compiler);
 #endif // _di_fake_make_load_fakefile_setting_compiler_
 
 /**
@@ -89,7 +89,7 @@ extern "C" {
  * @see fll_fss_snatch_map_apart()
  */
 #ifndef _di_fake_make_load_fakefile_setting_define_and_parameter_
-  extern f_status_t fake_make_load_fakefile_setting_define_and_parameter(fake_data_t * const data, fake_make_data_t * const data_make, f_fss_set_t * const settings) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_load_fakefile_setting_define_and_parameter(fake_data_t * const data, fake_make_data_t * const data_make, f_fss_set_t * const settings);
 #endif // _di_fake_make_load_fakefile_setting_define_and_parameter_
 
 /**
@@ -112,7 +112,7 @@ extern "C" {
  * @see f_string_dynamics_increase()
  */
 #ifndef _di_fake_make_load_fakefile_setting_environment_
-  extern f_status_t fake_make_load_fakefile_setting_environment(fake_make_data_t * const data_make, f_fss_content_t * const content) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_load_fakefile_setting_environment(fake_make_data_t * const data_make, f_fss_content_t * const content);
 #endif // _di_fake_make_load_fakefile_setting_environment_
 
 /**
@@ -126,7 +126,7 @@ extern "C" {
  *   The setting content.
  */
 #ifndef _di_fake_make_load_fakefile_setting_fail_
-  extern void fake_make_load_fakefile_setting_fail(fake_make_data_t * const data_make, f_fss_object_t * const object, f_fss_content_t * const content) F_attribute_visibility_internal_d;
+  extern void fake_make_load_fakefile_setting_fail(fake_make_data_t * const data_make, f_fss_object_t * const object, f_fss_content_t * const content);
 #endif // _di_fake_make_load_fakefile_setting_fail_
 
 /**
@@ -142,7 +142,7 @@ extern "C" {
  *   A pointer to the range that representing the indexer setting within the buffer.
  */
 #ifndef _di_fake_make_load_fakefile_setting_indexer_
-  extern void fake_make_load_fakefile_setting_indexer(fake_make_data_t * const data_make, f_fss_object_t * const object, f_fss_content_t * const content, f_string_range_t **range_indexer) F_attribute_visibility_internal_d;
+  extern void fake_make_load_fakefile_setting_indexer(fake_make_data_t * const data_make, f_fss_object_t * const object, f_fss_content_t * const content, f_string_range_t **range_indexer);
 #endif // _di_fake_make_load_fakefile_setting_indexer_
 
 /**
@@ -170,7 +170,7 @@ extern "C" {
  * @see fake_make_load_fakefile_setting_define_and_parameter()
  */
 #ifndef _di_fake_make_load_fakefile_setting_parameter_
-  extern f_status_t fake_make_load_fakefile_setting_parameter(fake_make_data_t * const data_make, f_fss_object_t * const object, f_fss_content_t * const content) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_load_fakefile_setting_parameter(fake_make_data_t * const data_make, f_fss_object_t * const object, f_fss_content_t * const content);
 #endif // _di_fake_make_load_fakefile_setting_parameter_
 
 #ifdef __cplusplus

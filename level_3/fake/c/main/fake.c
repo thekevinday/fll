@@ -323,8 +323,8 @@ extern "C" {
           return status;
         }
 
-        if (size_file > fake_common_initial_buffer_max_d) {
-          size_file = fake_common_initial_buffer_max_d;
+        if (size_file > fake_common_max_initial_buffer_d) {
+          size_file = fake_common_max_initial_buffer_d;
         }
 
         status = f_string_dynamic_increase_by(size_file, buffer);
@@ -381,7 +381,7 @@ extern "C" {
     file.stream = F_type_input_d;
     file.size_read = fake_default_allocation_pipe_d;
 
-    status = f_string_dynamic_increase_by(fake_common_initial_buffer_max_d, buffer);
+    status = f_string_dynamic_increase_by(fake_common_max_initial_buffer_d, buffer);
 
     if (F_status_is_error(status)) {
       const f_string_static_t message = macro_f_string_static_t_initialize("allocate buffer size for", 0, 24);

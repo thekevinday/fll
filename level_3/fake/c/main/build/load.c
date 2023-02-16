@@ -1030,7 +1030,7 @@ extern "C" {
         0,                                           // search_exclusive
         0,                                           // search_shared
         0,                                           // search_static
-        fake_build_version_type_micro_e,             // version_file
+        fake_build_version_micro_e,             // version_file
         0,                                           // version_major
         0,                                           // version_major_prefix
         0,                                           // version_micro
@@ -1039,7 +1039,7 @@ extern "C" {
         0,                                           // version_minor_prefix
         0,                                           // version_nano
         0,                                           // version_nano_prefix
-        fake_build_version_type_major_e,             // version_target
+        fake_build_version_major_e,             // version_target
       };
 
       const f_string_static_t settings_single_version_default_name[] = {
@@ -1177,16 +1177,16 @@ extern "C" {
         }
         else if (settings_single_type[i] == 4) {
           if (fl_string_dynamic_compare_trim(settings_single_source[i]->array[settings_single_source[i]->used - 1], fake_build_language_bash_s) == F_equal_to) {
-            *settings_single_language[i] = fake_build_language_type_bash_e;
+            *settings_single_language[i] = fake_build_language_bash_e;
           }
           else if (fl_string_dynamic_compare_trim(settings_single_source[i]->array[settings_single_source[i]->used - 1], fake_build_language_c_s) == F_equal_to) {
-            *settings_single_language[i] = fake_build_language_type_c_e;
+            *settings_single_language[i] = fake_build_language_c_e;
           }
           else if (fl_string_dynamic_compare_trim(settings_single_source[i]->array[settings_single_source[i]->used - 1], fake_build_language_cpp_s) == F_equal_to) {
-            *settings_single_language[i] = fake_build_language_type_cpp_e;
+            *settings_single_language[i] = fake_build_language_cpp_e;
           }
           else {
-            *settings_single_language[i] = fake_build_language_type_c_e;
+            *settings_single_language[i] = fake_build_language_c_e;
 
             if (data->main->warning.verbosity >= f_console_verbosity_verbose_e) {
               f_file_stream_lock(data->main->warning.to);
@@ -1211,16 +1211,16 @@ extern "C" {
         }
         else if (settings_single_type[i] == 5) {
           if (fl_string_dynamic_compare_trim(settings_single_source[i]->array[settings_single_source[i]->used - 1], fake_build_version_major_s) == F_equal_to) {
-            *settings_single_version[i] = fake_build_version_type_major_e;
+            *settings_single_version[i] = fake_build_version_major_e;
           }
           else if (fl_string_dynamic_compare_trim(settings_single_source[i]->array[settings_single_source[i]->used - 1], fake_build_version_minor_s) == F_equal_to) {
-            *settings_single_version[i] = fake_build_version_type_minor_e;
+            *settings_single_version[i] = fake_build_version_minor_e;
           }
           else if (fl_string_dynamic_compare_trim(settings_single_source[i]->array[settings_single_source[i]->used - 1], fake_build_version_micro_s) == F_equal_to) {
-            *settings_single_version[i] = fake_build_version_type_micro_e;
+            *settings_single_version[i] = fake_build_version_micro_e;
           }
           else if (fl_string_dynamic_compare_trim(settings_single_source[i]->array[settings_single_source[i]->used - 1], fake_build_version_nano_s) == F_equal_to) {
-            *settings_single_version[i] = fake_build_version_type_nano_e;
+            *settings_single_version[i] = fake_build_version_nano_e;
           }
           else {
             *settings_single_version[i] = settings_single_version_default[i];
@@ -1284,7 +1284,7 @@ extern "C" {
 
       if (F_status_is_error_not(*status)) {
         if (checks && !setting->version_file) {
-          setting->version_file = fake_build_version_type_micro_e;
+          setting->version_file = fake_build_version_micro_e;
 
           if (data->main->warning.verbosity >= f_console_verbosity_verbose_e) {
             f_file_stream_lock(data->main->warning.to);
@@ -1302,7 +1302,7 @@ extern "C" {
         }
 
         if (checks && !setting->version_target) {
-          setting->version_target = fake_build_version_type_major_e;
+          setting->version_target = fake_build_version_major_e;
 
           if (data->main->warning.verbosity >= f_console_verbosity_verbose_e) {
             f_file_stream_lock(data->main->warning.to);
@@ -1449,7 +1449,7 @@ extern "C" {
       setting->search_static = F_true;
     }
 
-    if (setting->build_language == fake_build_language_type_c_e || setting->build_language == fake_build_language_type_cpp_e) {
+    if (setting->build_language == fake_build_language_c_e || setting->build_language == fake_build_language_cpp_e) {
       if (setting->build_shared == F_false && setting->build_static == F_false) {
         if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
           f_file_stream_lock(data->main->error.to);
@@ -1459,7 +1459,7 @@ extern "C" {
           fl_print_format("%[' and '%]", data->main->error.to, data->main->error.context, data->main->error.context);
           fl_print_format("%[%r%]", data->main->error.to, data->main->error.notable, fake_build_setting_name_build_static_s, data->main->error.notable);
           fl_print_format("%[' cannot both be false when using the language '%]", data->main->error.to, data->main->error.context, data->main->error.context);
-          fl_print_format("%[%r%]", data->main->error.to, data->main->error.notable, setting->build_language == fake_build_language_type_c_e ? fake_build_language_c_s : fake_build_language_cpp_s, data->main->error.notable);
+          fl_print_format("%[%r%]", data->main->error.to, data->main->error.notable, setting->build_language == fake_build_language_c_e ? fake_build_language_c_s : fake_build_language_cpp_s, data->main->error.notable);
           fl_print_format("%['.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
           f_file_stream_unlock(data->main->error.to);
