@@ -625,18 +625,18 @@ extern "C" {
             break;
           }
 
-          *status = f_string_dynamic_append(settings_name[j], &settings_mode_names[j]);
+          *status = f_string_dynamic_append_nulless(settings_name[j], &settings_mode_names[j]);
 
           if (F_status_is_error_not(*status)) {
-            *status = f_string_dynamic_append(f_string_ascii_minus_s, &settings_mode_names[j]);
+            *status = f_string_dynamic_append_nulless(f_string_ascii_minus_s, &settings_mode_names[j]);
           }
 
           if (F_status_is_error_not(*status)) {
-            *status = f_string_dynamic_append(modes->array[i], &settings_mode_names[j]);
+            *status = f_string_dynamic_append_nulless(modes->array[i], &settings_mode_names[j]);
           }
 
           if (F_status_is_error(*status)) {
-            function = "f_string_dynamic_append";
+            function = "f_string_dynamic_append_nulless";
 
             break;
           }
