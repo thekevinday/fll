@@ -52,7 +52,7 @@ extern "C" {
         status = f_account_group_id_by_name(buffer, id);
 
         if (F_status_is_error(status)) {
-          fake_print_error(data->setting, status, data->main->error, macro_fake_f(f_account_group_id_by_name));
+          fake_print_error(data->setting, data->main->error, status, macro_fake_f(f_account_group_id_by_name));
 
           return F_status_set_error(status);
         }
@@ -74,7 +74,7 @@ extern "C" {
         return F_none;
       }
 
-      fake_print_error(data->setting, status, data->main->error, macro_fake_f(fl_conversion_dynamic_to_unsigned_detect));
+      fake_print_error(data->setting, data->main->error, status, macro_fake_f(fl_conversion_dynamic_to_unsigned_detect));
 
       return F_status_set_error(status);
     }
@@ -101,7 +101,7 @@ extern "C" {
   f_status_t fake_make_get_id_mode(fake_data_t * const data, const fl_print_t print, const f_string_static_t buffer, f_file_mode_t *mode, uint8_t *replace) {
 
     if (!buffer.used) {
-      fake_print_error(data->setting, F_parameter, data->main->error, macro_fake_f(fake_make_get_id_mode));
+      fake_print_error(data->setting, data->main->error, F_parameter, macro_fake_f(fake_make_get_id_mode));
 
       return F_status_set_error(F_parameter);
     }
@@ -120,7 +120,7 @@ extern "C" {
           f_file_stream_unlock(data->main->error.to);
         }
         else {
-          fake_print_error(data->setting, status, print, macro_fake_f(fll_execute_arguments_add));
+          fake_print_error(data->setting, print, status, macro_fake_f(fll_execute_arguments_add));
         }
       }
 
@@ -145,7 +145,7 @@ extern "C" {
         status = f_account_id_by_name(buffer, id);
 
         if (F_status_is_error(status)) {
-          fake_print_error(data->setting, status, data->main->error, macro_fake_f(f_account_id_by_name));
+          fake_print_error(data->setting, data->main->error, status, macro_fake_f(f_account_id_by_name));
 
           return F_status_set_error(status);
         }
@@ -167,7 +167,7 @@ extern "C" {
         return F_none;
       }
 
-      fake_print_error(data->setting, status, data->main->error, macro_fake_f(fl_conversion_dynamic_to_unsigned_detect));
+      fake_print_error(data->setting, data->main->error, status, macro_fake_f(fl_conversion_dynamic_to_unsigned_detect));
 
       return F_status_set_error(status);
     }

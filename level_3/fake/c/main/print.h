@@ -19,11 +19,13 @@ extern "C" {
  *   The main program settings.
  *
  *   This does not alter setting.status.
+ * @param print
+ *   Designates the how and where to print.
  * @param status
  *   The status to use.
  *   This is provided, ignoring setting.status, for thread-safety reasons.
- * @param print
- *   Designates the how and where to print.
+ * @param function
+ *   The function name.
  *
  * @return
  *   F_none on success.
@@ -32,7 +34,7 @@ extern "C" {
  * @see fll_error_print()
  */
 #ifndef _di_fake_print_error_
-  extern f_status_t fake_print_error(fake_setting_t * const setting, const f_status_t status, const fl_print_t print, const f_string_t function);
+  extern f_status_t fake_print_error(fake_setting_t * const setting, const fl_print_t print, const f_status_t status, const f_string_t function);
 #endif // _di_fake_print_error_
 
 /**
@@ -42,11 +44,13 @@ extern "C" {
  *   The main program settings.
  *
  *   This does not alter setting.status.
+ * @param print
+ *   Designates the how and where to print.
  * @param status
  *   The status to use.
  *   This is provided, ignoring setting.status, for thread-safety reasons.
- * @param print
- *   Designates the how and where to print.
+ * @param function
+ *   The function name.
  *
  * @return
  *   F_true is returned if the status code has no print message.
@@ -56,7 +60,7 @@ extern "C" {
  * @see fll_error_print()
  */
 #ifndef _di_fake_print_error_fallback_
-  extern f_status_t fake_print_error_fallback(fake_setting_t * const setting, const f_status_t status, const fl_print_t print, const f_string_t function);
+  extern f_status_t fake_print_error_fallback(fake_setting_t * const setting, const fl_print_t print, const f_status_t status, const f_string_t function);
 #endif // _di_fake_print_error_fallback_
 
 /**
@@ -85,7 +89,7 @@ extern "C" {
  * @see fll_error_file_print()
  */
 #ifndef _di_fake_print_error_file_
-  extern f_status_t fake_print_error_file(fake_setting_t * const setting, const f_status_t status, const fl_print_t print, const f_string_t function, const f_string_static_t name, const f_string_static_t operation, const uint8_t type);
+  extern f_status_t fake_print_error_file(fake_setting_t * const setting, const fl_print_t print, const f_status_t status, const f_string_t function, const f_string_static_t name, const f_string_static_t operation, const uint8_t type);
 #endif // _di_fake_print_error_file_
 
 /**
@@ -95,11 +99,11 @@ extern "C" {
  *   The main program settings.
  *
  *   This does not alter setting.status.
+ * @param print
+ *   Designates the how and where to print.
  * @param status
  *   The status to use.
  *   This is provided, ignoring setting.status, for thread-safety reasons.
- * @param print
- *   Designates the how and where to print.
  * @param name
  *   The name of the file or directory.
  * @param operation
@@ -115,7 +119,7 @@ extern "C" {
  * @see fll_error_file_print()
  */
 #ifndef _di_fake_print_error_file_fallback_
-  extern f_status_t fake_print_error_file_fallback(fake_setting_t * const setting, const f_status_t status, const fl_print_t print, const f_string_t function, const f_string_static_t name, const f_string_static_t operation, const uint8_t type);
+  extern f_status_t fake_print_error_file_fallback(fake_setting_t * const setting, const fl_print_t print, const f_status_t status, const f_string_t function, const f_string_static_t name, const f_string_static_t operation, const uint8_t type);
 #endif // _di_fake_print_error_file_fallback_
 
 /**
@@ -359,8 +363,12 @@ extern "C" {
 /**
  * Print build operation file error messages.
  *
- * @param data
- *   The program data.
+ * @param setting
+ *   The main program settings.
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   Designates the how and where to print.
  * @param status
  *   The status to use.
  *   This is provided, ignoring data.setting->status, for thread-safety reasons.
@@ -389,7 +397,7 @@ extern "C" {
  * @see fake_print_error_build_operation_file_message();
  */
 #ifndef _di_fake_print_error_operation_file_
-  extern bool fake_print_error_build_operation_file(fake_data_t * const data, const f_status_t status, const f_string_t function, const f_string_static_t operation, const f_string_static_t source, const f_string_static_t destination, const f_string_static_t how, const bool fallback);
+  extern f_status_t fake_print_error_build_operation_file(fake_setting_t * const setting, const fl_print_t print, const f_status_t status, const f_string_t function, const f_string_static_t operation, const f_string_static_t source, const f_string_static_t destination, const f_string_static_t how, const bool fallback);
 #endif // _di_fake_print_error_operation_file_
 
 /**
@@ -397,8 +405,12 @@ extern "C" {
  *
  * This prints the "copy source to destination" part of the message.
  *
- * @param data
- *   The program data.
+ * @param setting
+ *   The main program settings.
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   Designates the how and where to print.
  * @param operation
  *   The operation performed.
  * @param source
@@ -414,14 +426,18 @@ extern "C" {
  * @see fake_print_error_build_operation_file()
  */
 #ifndef _di_fake_print_error_build_operation_file_message_
-  extern void fake_print_error_build_operation_file_message(fake_data_t * const data, const f_string_static_t operation, const f_string_static_t source, const f_string_static_t destination, const f_string_static_t how);
+  extern void fake_print_error_build_operation_file_message(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t operation, const f_string_static_t source, const f_string_static_t destination, const f_string_static_t how);
 #endif // _di_fake_print_error_build_operation_file_message_
 
 /**
  * Print FSS error messages.
  *
- * @param data
- *   The program data.
+ * @param setting
+ *   The main program settings.
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   Designates the how and where to print.
  * @param status
  *   The error status code to report on.
  * @param function
@@ -442,23 +458,31 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_error_fss_
-  extern bool fake_print_error_fss(fake_data_t * const data, const f_status_t status, const f_string_t function, const f_string_static_t path_file, const f_string_range_t range, const bool fallback);
+  extern f_status_t fake_print_error_fss(fake_setting_t * const setting, const fl_print_t print, const f_status_t status, const f_string_t function, const f_string_static_t path_file, const f_string_range_t range, const bool fallback);
 #endif // _di_fake_print_error_fss_
 
 /**
  * Print an error message for when the parameter is missing its accompanying value.
  *
- * @param data
- *   The program data.
+ * @param setting
+ *   The main program settings.
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   Designates the how and where to print.
  * @param parameter
  *   The parameter name.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
  *
  * @see f_file_stream_lock()
  * @see f_file_stream_unlock()
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_error_parameter_missing_value_
-  extern void fake_print_error_parameter_missing_value(fake_data_t * const data, const f_string_static_t parameter);
+  extern f_status_t fake_print_error_parameter_missing_value(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t parameter);
 #endif // _di_fake_print_error_parameter_missing_value_
 
 /**
@@ -469,12 +493,16 @@ extern "C" {
  * @param parameter
  *   The parameter name.
  *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ *
  * @see f_file_stream_lock()
  * @see f_file_stream_unlock()
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_error_parameter_too_many_
-  extern void fake_print_error_parameter_too_many(fake_data_t * const data, const f_string_static_t parameter);
+  extern f_status_t fake_print_error_parameter_too_many(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t parameter);
 #endif // _di_fake_print_error_parameter_too_many_
 
 /**
@@ -483,10 +511,14 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ *
  * @see fll_print_format()
  */
 #ifndef _di_fake_print_error_requires_more_arguments_
-  extern void fake_print_error_requires_more_arguments(fake_make_data_t * const data_make);
+  extern f_status_t fake_print_error_requires_more_arguments(fake_setting_t * const setting, const fl_print_t print);
 #endif // _di_fake_print_error_requires_more_arguments_
 
 /**
@@ -495,10 +527,14 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ *
  * @see fll_print_format()
  */
 #ifndef _di_fake_print_error_too_many_arguments_
-  extern void fake_print_error_too_many_arguments(fake_make_data_t * const data_make);
+  extern f_status_t fake_print_error_too_many_arguments(fake_setting_t * const setting, const fl_print_t print);
 #endif // _di_fake_print_error_too_many_arguments_
 
 /**
@@ -509,10 +545,14 @@ extern "C" {
  * @param index
  *   The index of the argument that is an empty string.
  *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ *
  * @see fll_print_format()
  */
 #ifndef _di_fake_print_error_argument_empty_
-  extern void fake_print_error_argument_empty(fake_make_data_t * const data_make, const f_array_length_t index);
+  extern f_status_t fake_print_error_argument_empty(fake_setting_t * const setting, const fl_print_t print, const f_array_length_t index);
 #endif // _di_fake_print_error_argument_empty_
 
 /**
@@ -529,12 +569,16 @@ extern "C" {
  * @param operation_name
  *   The range within the buffer representing the operation name within the section.
  *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ *
  * @see f_file_stream_lock()
  * @see f_file_stream_unlock()
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_message_section_operation_failed_
-  extern void fake_print_message_section_operation_failed(fake_data_t * const data, const fl_print_t print, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name);
+  extern f_status_t fake_print_message_section_operation_failed(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name);
 #endif // _di_fake_print_message_section_operation_failed_
 
 /**
@@ -547,12 +591,16 @@ extern "C" {
  * @param argument
  *   The argument that is unknown by the link operation.
  *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ *
  * @see f_file_stream_lock()
  * @see f_file_stream_unlock()
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_message_section_operation_link_argument_unknown_
-  extern void fake_print_message_section_operation_link_argument_unknown(fake_data_t * const data, const fl_print_t print, const f_string_static_t argument);
+  extern f_status_t fake_print_message_section_operation_link_argument_unknown(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t argument);
 #endif // _di_fake_print_message_section_operation_link_argument_unknown_
 
 /**
@@ -565,12 +613,16 @@ extern "C" {
  * @param argument
  *   The argument representing the point file.
  *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ *
  * @see f_file_stream_lock()
  * @see f_file_stream_unlock()
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_message_section_operation_link_point_exists_
-  extern void fake_print_message_section_operation_link_point_exists(fake_data_t * const data, const fl_print_t print, const f_string_static_t argument);
+  extern f_status_t fake_print_message_section_operation_link_point_exists(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t argument);
 #endif // _di_fake_print_message_section_operation_link_point_exists_
 
 /**
@@ -583,12 +635,16 @@ extern "C" {
  * @param argument
  *   The argument representing the point file.
  *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ *
  * @see f_file_stream_lock()
  * @see f_file_stream_unlock()
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_message_section_operation_link_target_exists_not_
-  extern void fake_print_message_section_operation_link_target_exists_not(fake_data_t * const data, const fl_print_t print, const f_string_static_t argument);
+  extern f_status_t fake_print_message_section_operation_link_target_exists_not(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t argument);
 #endif // _di_fake_print_message_section_operation_link_target_exists_not_
 
 /**
@@ -605,13 +661,17 @@ extern "C" {
  * @param path
  *   The path that is outside of the project path.
  *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ *
  * @see f_file_stream_lock()
  * @see f_file_stream_unlock()
  * @see fl_print_format()
  * @see fll_error_file_print()
  */
 #ifndef _di_fake_print_message_section_operation_path_outside_
-  extern void fake_print_message_section_operation_path_outside(fake_data_t * const data, const fl_print_t print, const f_status_t status, const f_string_t function, const f_string_static_t path);
+  extern f_status_t fake_print_message_section_operation_path_outside(fake_setting_t * const setting, const fl_print_t print, const f_status_t status, const f_string_t function, const f_string_static_t path);
 #endif // _fake_print_message_section_operation_path_outside_
 
 /**
@@ -629,13 +689,17 @@ extern "C" {
  * @param path
  *   The path to the directory.
  *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ *
  * @see f_file_stream_lock()
  * @see f_file_stream_unlock()
  * @see fl_print_format()
  * @see fll_error_file_print()
  */
 #ifndef _di_fake_print_message_section_operation_path_stack_max_
-  extern void fake_print_message_section_operation_path_stack_max(fake_data_t * const data, fl_print_t error, const f_status_t status, const f_string_t function, const f_string_static_t path);
+  extern f_status_t fake_print_message_section_operation_path_stack_max(fake_setting_t * const setting, const fl_print_t print, const f_status_t status, const f_string_t function, const f_string_static_t path);
 #endif // _di_fake_print_message_section_operation_path_stack_max_
 
 /**
@@ -654,12 +718,16 @@ extern "C" {
  * @param stack_max
  *   The max stack depth.
  *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ *
  * @see f_file_stream_lock()
  * @see f_file_stream_unlock()
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_message_section_operation_stack_max_
-  extern void fake_print_message_section_operation_stack_max(fake_data_t * const data, const fl_print_t print, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name, const f_array_length_t stack_max);
+  extern f_status_t fake_print_message_section_operation_stack_max(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name, const f_array_length_t stack_max);
 #endif // _di_fake_print_message_section_operation_stack_max_
 
 /**
@@ -676,12 +744,16 @@ extern "C" {
  * @param operation_name
  *   The range within the buffer representing the operation name within the section.
  *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ *
  * @see f_file_stream_lock()
  * @see f_file_stream_unlock()
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_message_section_operation_unknown_
-  extern void fake_print_message_section_operation_unknown(fake_data_t * const data, const fl_print_t print, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name);
+  extern f_status_t fake_print_message_section_operation_unknown(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name);
 #endif // _di_fake_print_message_section_operation_unknown_
 
 #ifdef __cplusplus

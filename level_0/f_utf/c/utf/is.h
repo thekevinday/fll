@@ -46,6 +46,7 @@ extern "C" {
  * @return
  *   F_true if a UTF-8 alphabet character.
  *   F_false if not a UTF-8 alphabet character.
+ *   F_data_not if width_max is less than 1.
  *
  *   F_complete_not_utf (with error bit set) if character is an incomplete UTF-8 sequence.
  *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
@@ -82,6 +83,7 @@ extern "C" {
  * @return
  *   F_true if a UTF-8 alphabet character.
  *   F_false if not a UTF-8 alpha-numeric character.
+ *   F_data_not if width_max is less than 1.
  *
  *   F_complete_not_utf (with error bit set) if character is an incomplete UTF-8 sequence.
  *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
@@ -109,6 +111,7 @@ extern "C" {
  * @return
  *   F_true if a UTF-8 alphabet character.
  *   F_false if not a UTF-8 alpha-numeric character.
+ *   F_data_not if width_max is less than 1.
  *
  *   F_complete_not_utf (with error bit set) if character is an incomplete UTF-8 sequence.
  *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
@@ -133,6 +136,7 @@ extern "C" {
  * @return
  *   F_true if an ASCII character.
  *   F_false if not an ASCII character.
+ *   F_data_not if width_max is less than 1.
  *
  *   F_complete_not_utf (with error bit set) if character is an incomplete UTF-8 sequence.
  *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
@@ -155,6 +159,7 @@ extern "C" {
  * @return
  *   F_true if a UTF-8 combining character.
  *   F_false if not a UTF-8 combining character.
+ *   F_data_not if width_max is less than 1.
  *
  *   F_complete_not_utf (with error bit set) if character is an incomplete UTF-8 sequence.
  *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
@@ -181,6 +186,7 @@ extern "C" {
  * @return
  *   F_true if a UTF-8 control character.
  *   F_false if not a UTF-8 control character.
+ *   F_data_not if width_max is less than 1.
  *
  *   F_complete_not_utf (with error bit set) if character is an incomplete UTF-8 sequence.
  *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
@@ -207,6 +213,7 @@ extern "C" {
  * @return
  *   F_true if a UTF-8 control code character.
  *   F_false if not a UTF-8 control code character.
+ *   F_data_not if width_max is less than 1.
  *
  *   F_complete_not_utf (with error bit set) if character is an incomplete UTF-8 sequence.
  *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
@@ -232,6 +239,7 @@ extern "C" {
  * @return
  *   F_true if a UTF-8 control format character.
  *   F_false if not a UTF-8 control format character.
+ *   F_data_not if width_max is less than 1.
  *
  *   F_complete_not_utf (with error bit set) if character is an incomplete UTF-8 sequence.
  *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
@@ -256,6 +264,7 @@ extern "C" {
  * @return
  *   F_true if a UTF-8 control picture character.
  *   F_false if not a UTF-8 control picture character.
+ *   F_data_not if width_max is less than 1.
  *
  *   F_complete_not_utf (with error bit set) if character is an incomplete UTF-8 sequence.
  *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
@@ -290,6 +299,7 @@ extern "C" {
  * @return
  *   F_true if a UTF-8 digit character.
  *   F_false if not a UTF-8 digit character.
+ *   F_data_not if width_max is less than 1.
  *
  *   F_complete_not_utf (with error bit set) if character is an incomplete UTF-8 sequence.
  *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
@@ -314,6 +324,7 @@ extern "C" {
  * @return
  *   F_true if a UTF-8 emoji character.
  *   F_false if not a UTF-8 emoji character.
+ *   F_data_not if width_max is less than 1.
  *
  *   F_complete_not_utf (with error bit set) if character is an incomplete UTF-8 sequence.
  *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
@@ -367,6 +378,7 @@ extern "C" {
  * @return
  *   F_true if a UTF-8 graph.
  *   F_false if not a UTF-8 graph.
+ *   F_data_not if width_max is less than 1.
  *
  *   F_complete_not_utf (with error bit set) if character is an incomplete UTF-8 sequence.
  *   F_maybe (with error bit) if this could be a graph but width is not long enough.
@@ -395,6 +407,7 @@ extern "C" {
  * @return
  *   F_true if a UTF-8 numeric character.
  *   F_false if not a UTF-8 numeric character.
+ *   F_data_not if width_max is less than 1.
  *
  *   F_complete_not_utf (with error bit set) if character is an incomplete UTF-8 sequence.
  *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
@@ -419,6 +432,7 @@ extern "C" {
  * @return
  *   F_true if a UTF-8 phonetic character.
  *   F_false if not a UTF-8 phonetic character.
+ *   F_data_not if width_max is less than 1.
  *
  *   F_complete_not_utf (with error bit set) if character is an incomplete UTF-8 sequence.
  *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
@@ -441,6 +455,7 @@ extern "C" {
  * @return
  *   F_true if a UTF-8 punctuation character.
  *   F_false if not a UTF-8 punctuation character.
+ *   F_data_not if width_max is less than 1.
  *
  *   F_complete_not_utf (with error bit set) if character is an incomplete UTF-8 sequence.
  *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
@@ -463,6 +478,7 @@ extern "C" {
  * @return
  *   F_true if a UTF-8 punctuation character.
  *   F_false if not a UTF-8 punctuation character.
+ *   F_data_not if width_max is less than 1.
  *
  *   F_complete_not_utf (with error bit set) if character is an incomplete UTF-8 sequence.
  *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
@@ -485,6 +501,7 @@ extern "C" {
  * @return
  *   F_true if a UTF-8 subscript character.
  *   F_false if not a UTF-8 subscript character.
+ *   F_data_not if width_max is less than 1.
  *
  *   F_complete_not_utf (with error bit set) if character is an incomplete UTF-8 sequence.
  *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
@@ -507,6 +524,7 @@ extern "C" {
  * @return
  *   F_true if a UTF-8 superscript character.
  *   F_false if not a UTF-8 superscript character.
+ *   F_data_not if width_max is less than 1.
  *
  *   F_complete_not_utf (with error bit set) if character is an incomplete UTF-8 sequence.
  *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
@@ -529,6 +547,7 @@ extern "C" {
  * @return
  *   F_true if a UTF-8 symbol character.
  *   F_false if not a UTF-8 symbol character.
+ *   F_data_not if width_max is less than 1.
  *
  *   F_complete_not_utf (with error bit set) if character is an incomplete UTF-8 sequence.
  *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
@@ -551,6 +570,7 @@ extern "C" {
  * @return
  *   F_true if an unassigned UTF-8 character.
  *   F_false if not an unassigned UTF-8 character.
+ *   F_data_not if width_max is less than 1.
  *
  *   F_complete_not_utf (with error bit set) if character is an incomplete UTF-8 sequence.
  *   F_parameter (with error bit) if a parameter is unassigned.
@@ -581,6 +601,7 @@ extern "C" {
  * @return
  *   F_true if a valid UTF-8 character or is an ASCII character.
  *   F_false if not a valid UTF-8 character.
+ *   F_data_not if width_max is less than 1.
  *
  *   F_complete_not_utf (with error bit set) if character is an incomplete UTF-8 sequence.
  *   F_failure (with error bit) if width_max is not long enough to convert.
@@ -615,6 +636,7 @@ extern "C" {
  * @return
  *   F_true if a UTF-8 white space.
  *   F_false if not a UTF-8 white space.
+ *   F_data_not if width_max is less than 1.
  *
  *   F_complete_not_utf (with error bit set) if character is an incomplete UTF-8 sequence.
  *   F_maybe (with error bit) if this could be a white space but width is not long enough.
@@ -646,6 +668,7 @@ extern "C" {
  * @return
  *   F_true if a UTF-8 (modifier) white space.
  *   F_false if not a UTF-8 (modifier) white space.
+ *   F_data_not if width_max is less than 1.
  *
  *   F_complete_not_utf (with error bit set) if character is an incomplete UTF-8 sequence.
  *   F_maybe (with error bit) if this could be a white space but width is not long enough.
@@ -672,6 +695,7 @@ extern "C" {
  * @return
  *   F_true if a UTF-8 (other) white space.
  *   F_false if not a UTF-8 (other) white space.
+ *   F_data_not if width_max is less than 1.
  *
  *   F_complete_not_utf (with error bit set) if character is an incomplete UTF-8 sequence.
  *   F_maybe (with error bit) if this could be a white space but width is not long enough.
@@ -698,6 +722,7 @@ extern "C" {
  * @return
  *   F_true if a UTF-8 (zero-width) white space.
  *   F_false if not a UTF-8 (zero-width) white space.
+ *   F_data_not if width_max is less than 1.
  *
  *   F_complete_not_utf (with error bit set) if character is an incomplete UTF-8 sequence.
  *   F_maybe (with error bit) if this could be a white space but width is not long enough.
@@ -727,6 +752,7 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not if width_max is less than 1.
  *
  *   F_complete_not_utf (with error bit set) if character is an incomplete UTF-8 sequence.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -756,6 +782,7 @@ extern "C" {
  * @return
  *   F_true if a UTF-8 word character.
  *   F_false if not a UTF-8 word character.
+ *   F_data_not if width_max is less than 1.
  *
  *   F_complete_not_utf (with error bit set) if character is an incomplete UTF-8 sequence.
  *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
@@ -791,6 +818,7 @@ extern "C" {
  * @return
  *   F_true if a UTF-8 word or dash character.
  *   F_false if not a UTF-8 word or dash character.
+ *   F_data_not if width_max is less than 1.
  *
  *   F_complete_not_utf (with error bit set) if character is an incomplete UTF-8 sequence.
  *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
@@ -828,6 +856,7 @@ extern "C" {
  * @return
  *   F_true if a UTF-8 word or dash character.
  *   F_false if not a UTF-8 word or dash character.
+ *   F_data_not if width_max is less than 1.
  *
  *   F_complete_not_utf (with error bit set) if character is an incomplete UTF-8 sequence.
  *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
@@ -854,6 +883,7 @@ extern "C" {
  * @return
  *   F_true if a UTF-8 white space.
  *   F_false if not a UTF-8 white space.
+ *   F_data_not if width_max is less than 1.
  *
  *   F_complete_not_utf (with error bit set) if character is an incomplete UTF-8 sequence.
  *   F_maybe (with error bit) if this could be a white space but width is not long enough.

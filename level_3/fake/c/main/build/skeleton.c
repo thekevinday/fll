@@ -106,7 +106,7 @@ extern "C" {
           continue;
         }
 
-        fake_print_error_file(data->setting, *status, data->main->error, macro_fake_f(f_directory_create), directorys[i], f_file_operation_create_s, fll_error_file_type_directory_e);
+        fake_print_error_file(data->setting, data->main->error, *status, macro_fake_f(f_directory_create), directorys[i], f_file_operation_create_s, fll_error_file_type_directory_e);
 
         return;
       }

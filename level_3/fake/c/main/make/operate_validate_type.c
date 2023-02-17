@@ -12,7 +12,7 @@ extern "C" {
   f_status_t fake_make_operate_validate_type_break(fake_make_data_t * const data_make) {
 
     if (data_make->cache_arguments.used > 1) {
-      fake_print_error_too_many_arguments(data_make);
+      fake_print_error_too_many_arguments(data_make->setting, data_make->main->error);
 
       return F_status_set_error(F_failure);
     }
@@ -72,7 +72,7 @@ extern "C" {
         }
 
         if (F_status_is_error(status)) {
-          fake_print_error_file(data_make->setting, status, data_make->main->error, macro_fake_f(f_file_is), path_file, f_file_operation_find_s, fll_error_file_type_file_e);
+          fake_print_error_file(data_make->setting, data_make->main->error, status, macro_fake_f(f_file_is), path_file, f_file_operation_find_s, fll_error_file_type_file_e);
 
           return F_status_set_error(F_failure);
         }
@@ -108,7 +108,7 @@ extern "C" {
   f_status_t fake_make_operate_validate_type_clean_top_skeleton(fake_make_data_t * const data_make) {
 
     if (data_make->cache_arguments.used) {
-      fake_print_error_too_many_arguments(data_make);
+      fake_print_error_too_many_arguments(data_make->setting, data_make->main->error);
 
       return F_status_set_error(F_failure);
     }
@@ -129,7 +129,7 @@ extern "C" {
         status_file = fake_make_assure_inside_project(data_make, data_make->cache_arguments.array[i]);
 
         if (F_status_is_error(status_file)) {
-          fake_print_message_section_operation_path_outside(data_make->data, data_make->error, F_status_set_fine(status_file), macro_fake_f(fake_make_assure_inside_project), data_make->cache_path.used ? data_make->cache_path : data_make->cache_arguments.array[i]);
+          fake_print_message_section_operation_path_outside(data_make->setting, data_make->error, F_status_set_fine(status_file), macro_fake_f(fake_make_assure_inside_project), data_make->cache_path.used ? data_make->cache_path : data_make->cache_arguments.array[i]);
 
           status = F_status_set_error(F_failure);
         }
@@ -172,7 +172,7 @@ extern "C" {
         }
 
         if (F_status_is_error(status_file)) {
-          fake_print_error_file(data_make->setting, status_file, data_make->main->error, macro_fake_f(f_directory_is), data_make->cache_arguments.array[data_make->cache_arguments.used - 1], f_file_operation_find_s, fll_error_file_type_directory_e);
+          fake_print_error_file(data_make->setting, data_make->main->error, status_file, macro_fake_f(f_directory_is), data_make->cache_arguments.array[data_make->cache_arguments.used - 1], f_file_operation_find_s, fll_error_file_type_directory_e);
 
           status = F_status_set_error(F_failure);
         }
@@ -204,7 +204,7 @@ extern "C" {
       return status;
     }
 
-    fake_print_error_requires_more_arguments(data_make);
+    fake_print_error_requires_more_arguments(data_make->setting, data_make->main->error);
 
     return F_status_set_error(F_failure);
   }
@@ -214,7 +214,7 @@ extern "C" {
   f_status_t fake_make_operate_validate_type_compile(fake_make_data_t * const data_make) {
 
     if (!data_make->cache_arguments.used) {
-      fake_print_error_requires_more_arguments(data_make);
+      fake_print_error_requires_more_arguments(data_make->setting, data_make->main->error);
 
       return F_status_set_error(F_failure);
     }
@@ -444,7 +444,7 @@ extern "C" {
       // Identify and convert to the appropriate if not condition.
       if (state_process->condition == fake_make_operation_if_type_if_not_e) {
         if (data_make->cache_arguments.used < 1 + k) {
-          fake_print_error_requires_more_arguments(data_make);
+          fake_print_error_requires_more_arguments(data_make->setting, data_make->main->error);
 
           return F_status_set_error(F_failure);
         }
@@ -483,7 +483,7 @@ extern "C" {
 
           // The success and failure operations minimum is also the maximum.
           if (data_make->cache_arguments.used > if_type_minimum[i]) {
-            fake_print_error_too_many_arguments(data_make);
+            fake_print_error_too_many_arguments(data_make->setting, data_make->main->error);
 
             return F_status_set_error(F_failure);
           }
@@ -493,7 +493,7 @@ extern "C" {
 
         if (state_process->condition == fake_make_operation_if_type_if_equal_e || state_process->condition == fake_make_operation_if_type_if_equal_not_e) {
           if (data_make->cache_arguments.used < 2 + k) {
-            fake_print_error_requires_more_arguments(data_make);
+            fake_print_error_requires_more_arguments(data_make->setting, data_make->main->error);
 
             return F_status_set_error(F_failure);
           }
@@ -615,7 +615,7 @@ extern "C" {
               status_file = fake_make_assure_inside_project(data_make, data_make->cache_arguments.array[i]);
 
               if (F_status_is_error(status_file)) {
-                fake_print_message_section_operation_path_outside(data_make->data, data_make->error, F_status_set_fine(status_file), "fake_make_assure_inside_project", data_make->cache_path.used ? data_make->cache_path : data_make->cache_arguments.array[i]);
+                fake_print_message_section_operation_path_outside(data_make->setting, data_make->error, F_status_set_fine(status_file), "fake_make_assure_inside_project", data_make->cache_path.used ? data_make->cache_path : data_make->cache_arguments.array[i]);
 
                 status = F_status_set_error(F_failure);
               }
@@ -629,7 +629,7 @@ extern "C" {
                 }
 
                 if (F_status_is_error(status_file)) {
-                  fake_print_error_file(data_make->setting, status_file, data_make->main->error, macro_fake_f(f_file_exists), data_make->cache_arguments.array[i], f_file_operation_find_s, fll_error_file_type_file_e);
+                  fake_print_error_file(data_make->setting, data_make->main->error, status_file, macro_fake_f(f_file_exists), data_make->cache_arguments.array[i], f_file_operation_find_s, fll_error_file_type_file_e);
 
                   status = F_status_set_error(F_failure);
                 }
@@ -644,7 +644,7 @@ extern "C" {
 
         if (state_process->condition == fake_make_operation_if_type_if_greater_e || state_process->condition == fake_make_operation_if_type_if_greater_equal_e || state_process->condition == fake_make_operation_if_type_if_less_e || state_process->condition == fake_make_operation_if_type_if_less_equal_e) {
           if (data_make->cache_arguments.used < 2 + k) {
-            fake_print_error_requires_more_arguments(data_make);
+            fake_print_error_requires_more_arguments(data_make->setting, data_make->main->error);
 
             return F_status_set_error(F_failure);
           }
@@ -707,7 +707,7 @@ extern "C" {
       return F_none;
     }
 
-    fake_print_error_requires_more_arguments(data_make);
+    fake_print_error_requires_more_arguments(data_make->setting, data_make->main->error);
 
     return F_status_set_error(F_failure);
   }
@@ -725,7 +725,7 @@ extern "C" {
         status_file = fake_make_assure_inside_project(data_make, data_make->cache_arguments.array[i]);
 
         if (F_status_is_error(status_file)) {
-          fake_print_message_section_operation_path_outside(data_make->data, data_make->error, F_status_set_fine(status_file), macro_fake_f(fake_make_assure_inside_project), data_make->cache_path.used ? data_make->cache_path : data_make->cache_arguments.array[i]);
+          fake_print_message_section_operation_path_outside(data_make->setting, data_make->error, F_status_set_fine(status_file), macro_fake_f(fake_make_assure_inside_project), data_make->cache_path.used ? data_make->cache_path : data_make->cache_arguments.array[i]);
 
           status = F_status_set_error(F_failure);
         }
@@ -768,7 +768,7 @@ extern "C" {
         }
 
         if (F_status_is_error(status_file)) {
-          fake_print_error_file(data_make->setting, status_file, data_make->main->error, macro_fake_f(f_directory_is), data_make->cache_arguments.array[data_make->cache_arguments.used - 1], f_file_operation_identify_s, fll_error_file_type_directory_e);
+          fake_print_error_file(data_make->setting, data_make->main->error, status_file, macro_fake_f(f_directory_is), data_make->cache_arguments.array[data_make->cache_arguments.used - 1], f_file_operation_identify_s, fll_error_file_type_directory_e);
 
           status = F_status_set_error(F_failure);
         }
@@ -800,7 +800,7 @@ extern "C" {
       return status;
     }
 
-    fake_print_error_requires_more_arguments(data_make);
+    fake_print_error_requires_more_arguments(data_make->setting, data_make->main->error);
 
     return F_status_set_error(F_failure);
   }
@@ -837,7 +837,7 @@ extern "C" {
       return F_none;
     }
 
-    fake_print_error_requires_more_arguments(data_make);
+    fake_print_error_requires_more_arguments(data_make->setting, data_make->main->error);
 
     return F_status_set_error(F_failure);
   }
@@ -855,7 +855,7 @@ extern "C" {
         status_file = fake_make_assure_inside_project(data_make, data_make->cache_arguments.array[i]);
 
         if (F_status_is_error(status_file)) {
-          fake_print_message_section_operation_path_outside(data_make->data, data_make->error, F_status_set_fine(status_file), macro_fake_f(fake_make_assure_inside_project), data_make->cache_path.used ? data_make->cache_path : data_make->cache_arguments.array[i]);
+          fake_print_message_section_operation_path_outside(data_make->setting, data_make->error, F_status_set_fine(status_file), macro_fake_f(fake_make_assure_inside_project), data_make->cache_path.used ? data_make->cache_path : data_make->cache_arguments.array[i]);
 
           status = F_status_set_error(F_failure);
         }
@@ -864,7 +864,7 @@ extern "C" {
       return status;
     }
 
-    fake_print_error_requires_more_arguments(data_make);
+    fake_print_error_requires_more_arguments(data_make->setting, data_make->main->error);
 
     return F_status_set_error(F_failure);
   }
@@ -920,7 +920,7 @@ extern "C" {
     }
 
     if (data_make->cache_arguments.used) {
-      fake_print_error_too_many_arguments(data_make);
+      fake_print_error_too_many_arguments(data_make->setting, data_make->main->error);
 
       return F_status_set_error(F_failure);
     }
@@ -933,7 +933,7 @@ extern "C" {
   f_status_t fake_make_operate_validate_type_exit(fake_make_data_t * const data_make) {
 
     if (data_make->cache_arguments.used > 1) {
-      fake_print_error_too_many_arguments(data_make);
+      fake_print_error_too_many_arguments(data_make->setting, data_make->main->error);
 
       return F_status_set_error(F_failure);
     }
@@ -985,7 +985,7 @@ extern "C" {
       return F_none;
     }
 
-    fake_print_error_requires_more_arguments(data_make);
+    fake_print_error_requires_more_arguments(data_make->setting, data_make->main->error);
 
     return F_status_set_error(F_failure);
   }
@@ -995,7 +995,7 @@ extern "C" {
   f_status_t fake_make_operate_validate_type_index(fake_make_data_t * const data_make) {
 
     if (!data_make->cache_arguments.used) {
-      fake_print_error_requires_more_arguments(data_make);
+      fake_print_error_requires_more_arguments(data_make->setting, data_make->main->error);
 
       return F_status_set_error(F_failure);
     }
@@ -1022,7 +1022,7 @@ extern "C" {
   f_status_t fake_make_operate_validate_type_link(fake_make_data_t * const data_make) {
 
     if (data_make->cache_arguments.used > 4) {
-      fake_print_error_too_many_arguments(data_make);
+      fake_print_error_too_many_arguments(data_make->setting, data_make->main->error);
 
       return F_status_set_error(F_failure);
     }
@@ -1042,7 +1042,7 @@ extern "C" {
           flag |= 0x2;
         }
         else {
-          fake_print_message_section_operation_link_argument_unknown(data_make->data, data_make->error, data_make->cache_arguments.array[0]);
+          fake_print_message_section_operation_link_argument_unknown(data_make->setting, data_make->error, data_make->cache_arguments.array[0]);
 
           status = F_status_set_error(F_failure);
         }
@@ -1055,7 +1055,7 @@ extern "C" {
             flag |= 0x2;
           }
           else {
-            fake_print_message_section_operation_link_argument_unknown(data_make->data, data_make->error, data_make->cache_arguments.array[1]);
+            fake_print_message_section_operation_link_argument_unknown(data_make->setting, data_make->error, data_make->cache_arguments.array[1]);
 
             status = F_status_set_error(F_failure);
           }
@@ -1065,14 +1065,14 @@ extern "C" {
       status_file = fake_make_assure_inside_project(data_make, data_make->cache_arguments.array[data_make->cache_arguments.used - 1]);
 
       if (F_status_is_error(status_file)) {
-        fake_print_message_section_operation_path_outside(data_make->data, data_make->error, F_status_set_fine(status_file), macro_fake_f(fake_make_assure_inside_project), data_make->cache_path.used ? data_make->cache_path : data_make->cache_arguments.array[data_make->cache_arguments.used - 1]);
+        fake_print_message_section_operation_path_outside(data_make->setting, data_make->error, F_status_set_fine(status_file), macro_fake_f(fake_make_assure_inside_project), data_make->cache_path.used ? data_make->cache_path : data_make->cache_arguments.array[data_make->cache_arguments.used - 1]);
 
         status = F_status_set_error(F_failure);
       }
       else {
         if (!(flag & 0x1)) {
           if (!data_make->cache_path.used || f_file_exists(data_make->cache_path, F_false) == F_true) {
-            fake_print_message_section_operation_link_point_exists(data_make->data, data_make->error, data_make->cache_arguments.array[data_make->cache_arguments.used - 1]);
+            fake_print_message_section_operation_link_point_exists(data_make->setting, data_make->error, data_make->cache_arguments.array[data_make->cache_arguments.used - 1]);
 
             status = F_status_set_error(F_failure);
           }
@@ -1082,14 +1082,14 @@ extern "C" {
           status_file = fake_make_assure_inside_project(data_make, data_make->cache_arguments.array[data_make->cache_arguments.used - 2]);
 
           if (F_status_is_error(status_file)) {
-            fake_print_message_section_operation_path_outside(data_make->data, data_make->error, F_status_set_fine(status_file), macro_fake_f(fake_make_assure_inside_project), data_make->cache_arguments.array[data_make->cache_arguments.used - 2]);
+            fake_print_message_section_operation_path_outside(data_make->setting, data_make->error, F_status_set_fine(status_file), macro_fake_f(fake_make_assure_inside_project), data_make->cache_arguments.array[data_make->cache_arguments.used - 2]);
 
             status = F_status_set_error(F_failure);
           }
 
           if ((flag & 0x2) && F_status_is_error_not(status_file)) {
             if (f_file_exists(data_make->cache_arguments.array[data_make->cache_arguments.used - 2], F_false) != F_true) {
-              fake_print_message_section_operation_link_target_exists_not(data_make->data, data_make->error, data_make->cache_arguments.array[data_make->cache_arguments.used - 2]);
+              fake_print_message_section_operation_link_target_exists_not(data_make->setting, data_make->error, data_make->cache_arguments.array[data_make->cache_arguments.used - 2]);
 
               status = F_status_set_error(F_failure);
             }
@@ -1111,7 +1111,7 @@ extern "C" {
           status_file = f_file_name_directory(full, &data_make->cache_path);
 
           if (F_status_is_error(status_file)) {
-            fake_print_error_file(data_make->setting, status_file, data_make->main->error, macro_fake_f(f_file_name_directory), full, f_file_operation_analyze_s, fll_error_file_type_path_e);
+            fake_print_error_file(data_make->setting, data_make->main->error, status_file, macro_fake_f(f_file_name_directory), full, f_file_operation_analyze_s, fll_error_file_type_path_e);
 
             status = F_status_set_error(F_failure);
           }
@@ -1120,7 +1120,7 @@ extern "C" {
             status_file = f_string_dynamic_append_assure(f_path_separator_s, &data_make->cache_path);
 
             if (F_status_is_error(status_file)) {
-              fake_print_error(data_make->setting, status_file, data_make->main->error, macro_fake_f(f_string_dynamic_append_assure));
+              fake_print_error(data_make->setting, data_make->main->error, status_file, macro_fake_f(f_string_dynamic_append_assure));
 
               status = F_status_set_error(F_failure);
             }
@@ -1128,7 +1128,7 @@ extern "C" {
               status_file = f_string_dynamic_append(data_make->cache_arguments.array[data_make->cache_arguments.used - 2], &data_make->cache_path);
 
               if (F_status_is_error(status_file)) {
-                fake_print_error(data_make->setting, status_file, data_make->main->error, macro_fake_f(f_string_dynamic_append));
+                fake_print_error(data_make->setting, data_make->main->error, status_file, macro_fake_f(f_string_dynamic_append));
 
                 status = F_status_set_error(F_failure);
               }
@@ -1146,14 +1146,14 @@ extern "C" {
               status_file = fake_make_assure_inside_project(data_make, target);
 
               if (F_status_is_error(status_file)) {
-                fake_print_message_section_operation_path_outside(data_make->data, data_make->error, F_status_set_fine(status_file), macro_fake_f(fake_make_assure_inside_project), target);
+                fake_print_message_section_operation_path_outside(data_make->setting, data_make->error, F_status_set_fine(status_file), macro_fake_f(fake_make_assure_inside_project), target);
 
                 status = F_status_set_error(F_failure);
               }
 
               if ((flag & 0x2) && F_status_is_error_not(status_file)) {
                 if (f_file_exists(target, F_false) != F_true) {
-                  fake_print_message_section_operation_link_target_exists_not(data_make->data, data_make->error, target);
+                  fake_print_message_section_operation_link_target_exists_not(data_make->setting, data_make->error, target);
 
                   status = F_status_set_error(F_failure);
                 }
@@ -1171,7 +1171,7 @@ extern "C" {
       return status;
     }
 
-    fake_print_error_requires_more_arguments(data_make);
+    fake_print_error_requires_more_arguments(data_make->setting, data_make->main->error);
 
     return F_status_set_error(F_failure);
   }
@@ -1191,7 +1191,7 @@ extern "C" {
           status_file = fake_make_assure_inside_project(data_make, data_make->cache_arguments.array[i]);
 
           if (F_status_is_error(status_file)) {
-            fake_print_message_section_operation_path_outside(data_make->data, data_make->error, F_status_set_fine(status_file), macro_fake_f(fake_make_assure_inside_project), data_make->cache_path.used ? data_make->cache_path : data_make->cache_arguments.array[i]);
+            fake_print_message_section_operation_path_outside(data_make->setting, data_make->error, F_status_set_fine(status_file), macro_fake_f(fake_make_assure_inside_project), data_make->cache_path.used ? data_make->cache_path : data_make->cache_arguments.array[i]);
 
             status = F_status_set_error(F_failure);
           }
@@ -1239,7 +1239,7 @@ extern "C" {
         }
 
         if (F_status_is_error(status)) {
-          fake_print_error_file(data_make->setting, status, data_make->main->error, macro_fake_f(f_directory_is), data_make->cache_arguments.array[data_make->cache_arguments.used - 1], f_file_operation_identify_s, fll_error_file_type_directory_e);
+          fake_print_error_file(data_make->setting, data_make->main->error, status, macro_fake_f(f_directory_is), data_make->cache_arguments.array[data_make->cache_arguments.used - 1], f_file_operation_identify_s, fll_error_file_type_directory_e);
 
           return F_status_set_error(F_failure);
         }
@@ -1271,7 +1271,7 @@ extern "C" {
       return F_none;
     }
 
-    fake_print_error_requires_more_arguments(data_make);
+    fake_print_error_requires_more_arguments(data_make->setting, data_make->main->error);
 
     return F_status_set_error(F_failure);
   }
@@ -1281,7 +1281,7 @@ extern "C" {
   f_status_t fake_make_operate_validate_type_operate(fake_make_data_t * const data_make, f_array_lengths_t * const section_stack) {
 
     if (data_make->cache_arguments.used > 1) {
-      fake_print_error_too_many_arguments(data_make);
+      fake_print_error_too_many_arguments(data_make->setting, data_make->main->error);
 
       return F_status_set_error(F_failure);
     }
@@ -1328,7 +1328,7 @@ extern "C" {
       return F_none;
     }
 
-    fake_print_error_requires_more_arguments(data_make);
+    fake_print_error_requires_more_arguments(data_make->setting, data_make->main->error);
 
     return F_status_set_error(F_failure);
   }
@@ -1388,7 +1388,7 @@ extern "C" {
       return status;
     }
 
-    fake_print_error_requires_more_arguments(data_make);
+    fake_print_error_requires_more_arguments(data_make->setting, data_make->main->error);
 
     return F_status_set_error(F_failure);
   }
@@ -1430,7 +1430,7 @@ extern "C" {
 
           if (F_status_is_error(status_file)) {
             if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->main->error.to.stream) {
-              fake_print_error_file(data_make->setting, status_file, data_make->main->error, macro_fake_f(f_file_is), data_make->cache_arguments.array[i], f_file_operation_find_s, fll_error_file_type_directory_e);
+              fake_print_error_file(data_make->setting, data_make->main->error, status_file, macro_fake_f(f_file_is), data_make->cache_arguments.array[i], f_file_operation_find_s, fll_error_file_type_directory_e);
             }
 
             status = F_status_set_error(F_failure);
@@ -1441,7 +1441,7 @@ extern "C" {
       }
     }
 
-    fake_print_error_requires_more_arguments(data_make);
+    fake_print_error_requires_more_arguments(data_make->setting, data_make->main->error);
 
     return F_status_set_error(F_failure);
   }
@@ -1451,7 +1451,7 @@ extern "C" {
   f_status_t fake_make_operate_validate_type_pop(fake_make_data_t * const data_make) {
 
     if (data_make->cache_arguments.used) {
-      fake_print_error_too_many_arguments(data_make);
+      fake_print_error_too_many_arguments(data_make->setting, data_make->main->error);
 
       return F_status_set_error(F_failure);
     }
@@ -1472,7 +1472,7 @@ extern "C" {
   f_status_t fake_make_operate_validate_type_run(fake_make_data_t * const data_make) {
 
     if (!data_make->cache_arguments.used) {
-      fake_print_error_requires_more_arguments(data_make);
+      fake_print_error_requires_more_arguments(data_make->setting, data_make->main->error);
 
       return F_status_set_error(F_failure);
     }
@@ -1485,7 +1485,7 @@ extern "C" {
   f_status_t fake_make_operate_validate_type_to(fake_make_data_t * const data_make) {
 
     if (data_make->cache_arguments.used > 1) {
-      fake_print_error_too_many_arguments(data_make);
+      fake_print_error_too_many_arguments(data_make->setting, data_make->main->error);
 
       return F_status_set_error(F_failure);
     }
@@ -1510,7 +1510,7 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->main->error.to.stream) {
-            fake_print_error_file(data_make->setting, status, data_make->main->error, macro_fake_f(f_file_is), data_make->data->file_data_build_fakefile, f_file_operation_find_s, fll_error_file_type_file_e);
+            fake_print_error_file(data_make->setting, data_make->main->error, status, macro_fake_f(f_file_is), data_make->data->file_data_build_fakefile, f_file_operation_find_s, fll_error_file_type_file_e);
           }
 
           return F_status_set_error(F_failure);
@@ -1540,7 +1540,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    fake_print_error_requires_more_arguments(data_make);
+    fake_print_error_requires_more_arguments(data_make->setting, data_make->main->error);
 
     return F_status_set_error(F_failure);
   }
@@ -1575,7 +1575,7 @@ extern "C" {
         status_file = fake_make_assure_inside_project(data_make, data_make->cache_arguments.array[i]);
 
         if (F_status_is_error(status_file)) {
-          fake_print_message_section_operation_path_outside(data_make->data, data_make->error, F_status_set_fine(status_file), macro_fake_f(fake_make_assure_inside_project), data_make->cache_path.used ? data_make->cache_path : data_make->cache_arguments.array[i]);
+          fake_print_message_section_operation_path_outside(data_make->setting, data_make->error, F_status_set_fine(status_file), macro_fake_f(fake_make_assure_inside_project), data_make->cache_path.used ? data_make->cache_path : data_make->cache_arguments.array[i]);
 
           status = F_status_set_error(F_failure);
         }
@@ -1584,7 +1584,7 @@ extern "C" {
       return status;
     }
 
-    fake_print_error_requires_more_arguments(data_make);
+    fake_print_error_requires_more_arguments(data_make->setting, data_make->main->error);
 
     return F_status_set_error(F_failure);
   }
@@ -1595,7 +1595,7 @@ extern "C" {
 
     if (data_make->cache_arguments.used) {
       if (!data_make->cache_arguments.array[0].used) {
-        fake_print_error_argument_empty(data_make, 1);
+        fake_print_error_argument_empty(data_make->setting, data_make->error, 1);
 
         return F_status_set_error(F_failure);
       }
@@ -1603,7 +1603,7 @@ extern "C" {
       const f_status_t status = fake_make_assure_inside_project(data_make, data_make->cache_arguments.array[0]);
 
       if (F_status_is_error(status)) {
-        fake_print_message_section_operation_path_outside(data_make->data, data_make->error, status, macro_fake_f(fake_make_assure_inside_project), data_make->cache_path.used ? data_make->cache_path : data_make->cache_arguments.array[0]);
+        fake_print_message_section_operation_path_outside(data_make->setting, data_make->error, status, macro_fake_f(fake_make_assure_inside_project), data_make->cache_path.used ? data_make->cache_path : data_make->cache_arguments.array[0]);
 
         return F_status_set_error(F_failure);
       }
@@ -1611,7 +1611,7 @@ extern "C" {
       return F_none;
     }
 
-    fake_print_error_requires_more_arguments(data_make);
+    fake_print_error_requires_more_arguments(data_make->setting, data_make->main->error);
 
     return F_status_set_error(F_failure);
   }

@@ -32,18 +32,12 @@ extern "C" {
 
 #ifndef _di_f_utf_is_alphabetic_
   f_status_t f_utf_is_alphabetic(const f_string_t sequence, const f_array_length_t width_max) {
-    #ifndef _di_level_0_parameter_checking_
-      if (width_max < 1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+
+    if (width_max < 1) return F_data_not;
 
     if (macro_f_utf_byte_width_is(*sequence)) {
-      if (macro_f_utf_byte_width_is(*sequence) > width_max) {
-        return F_status_set_error(F_complete_not_utf);
-      }
-
-      if (macro_f_utf_byte_width_is(*sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_byte_width_is(*sequence) > width_max) return F_status_set_error(F_complete_not_utf);
+      if (macro_f_utf_byte_width_is(*sequence) == 1) return F_status_set_error(F_utf_fragment);
 
       f_utf_char_t utf = 0;
 
@@ -63,18 +57,12 @@ extern "C" {
 
 #ifndef _di_f_utf_is_alphabetic_digit_
   f_status_t f_utf_is_alphabetic_digit(const f_string_t sequence, const f_array_length_t width_max, uint64_t * const value) {
-    #ifndef _di_level_0_parameter_checking_
-      if (width_max < 1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+
+    if (width_max < 1) return F_data_not;
 
     if (macro_f_utf_byte_width_is(*sequence)) {
-      if (macro_f_utf_byte_width_is(*sequence) > width_max) {
-        return F_status_set_error(F_complete_not_utf);
-      }
-
-      if (macro_f_utf_byte_width_is(*sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_byte_width_is(*sequence) > width_max) return F_status_set_error(F_complete_not_utf);
+      if (macro_f_utf_byte_width_is(*sequence) == 1) return F_status_set_error(F_utf_fragment);
 
       f_utf_char_t utf = 0;
 
@@ -94,18 +82,12 @@ extern "C" {
 
 #ifndef _di_f_utf_is_alphabetic_numeric_
   f_status_t f_utf_is_alphabetic_numeric(const f_string_t sequence, const f_array_length_t width_max) {
-    #ifndef _di_level_0_parameter_checking_
-      if (width_max < 1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+
+    if (width_max < 1) return F_data_not;
 
     if (macro_f_utf_byte_width_is(*sequence)) {
-      if (macro_f_utf_byte_width_is(*sequence) > width_max) {
-        return F_status_set_error(F_complete_not_utf);
-      }
-
-      if (macro_f_utf_byte_width_is(*sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_byte_width_is(*sequence) > width_max) return F_status_set_error(F_complete_not_utf);
+      if (macro_f_utf_byte_width_is(*sequence) == 1) return F_status_set_error(F_utf_fragment);
 
       f_utf_char_t utf = 0;
 
@@ -125,18 +107,12 @@ extern "C" {
 
 #ifndef _di_f_utf_is_ascii_
   f_status_t f_utf_is_ascii(const f_string_t sequence, const f_array_length_t width_max) {
-    #ifndef _di_level_0_parameter_checking_
-      if (width_max < 1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+
+    if (width_max < 1) return F_data_not;
 
     if (macro_f_utf_byte_width_is(*sequence)) {
-      if (macro_f_utf_byte_width_is(*sequence) > width_max) {
-        return F_status_set_error(F_complete_not_utf);
-      }
-
-      if (macro_f_utf_byte_width_is(*sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_byte_width_is(*sequence) > width_max) return F_status_set_error(F_complete_not_utf);
+      if (macro_f_utf_byte_width_is(*sequence) == 1) return F_status_set_error(F_utf_fragment);
 
       return F_false;
     }
@@ -147,18 +123,12 @@ extern "C" {
 
 #ifndef _di_f_utf_is_combining_
   f_status_t f_utf_is_combining(const f_string_t sequence, const f_array_length_t width_max) {
-    #ifndef _di_level_0_parameter_checking_
-      if (width_max < 1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+
+    if (width_max < 1) return F_data_not;
 
     if (macro_f_utf_byte_width_is(*sequence)) {
-      if (macro_f_utf_byte_width_is(*sequence) > width_max) {
-        return F_status_set_error(F_complete_not_utf);
-      }
-
-      if (macro_f_utf_byte_width_is(*sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_byte_width_is(*sequence) > width_max) return F_status_set_error(F_complete_not_utf);
+      if (macro_f_utf_byte_width_is(*sequence) == 1) return F_status_set_error(F_utf_fragment);
 
       f_utf_char_t utf = 0;
 
@@ -177,18 +147,12 @@ extern "C" {
 
 #ifndef _di_f_utf_is_control_
   f_status_t f_utf_is_control(const f_string_t sequence, const f_array_length_t width_max) {
-    #ifndef _di_level_0_parameter_checking_
-      if (width_max < 1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+
+    if (width_max < 1) return F_data_not;
 
     if (macro_f_utf_byte_width_is(*sequence)) {
-      if (macro_f_utf_byte_width_is(*sequence) > width_max) {
-        return F_status_set_error(F_complete_not_utf);
-      }
-
-      if (macro_f_utf_byte_width_is(*sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_byte_width_is(*sequence) > width_max) return F_status_set_error(F_complete_not_utf);
+      if (macro_f_utf_byte_width_is(*sequence) == 1) return F_status_set_error(F_utf_fragment);
 
       f_utf_char_t utf = 0;
 
@@ -208,18 +172,12 @@ extern "C" {
 
 #ifndef _di_f_utf_is_control_code_
   f_status_t f_utf_is_control_code(const f_string_t sequence, const f_array_length_t width_max) {
-    #ifndef _di_level_0_parameter_checking_
-      if (width_max < 1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+
+    if (width_max < 1) return F_data_not;
 
     if (macro_f_utf_byte_width_is(*sequence)) {
-      if (macro_f_utf_byte_width_is(*sequence) > width_max) {
-        return F_status_set_error(F_complete_not_utf);
-      }
-
-      if (macro_f_utf_byte_width_is(*sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_byte_width_is(*sequence) > width_max) return F_status_set_error(F_complete_not_utf);
+      if (macro_f_utf_byte_width_is(*sequence) == 1) return F_status_set_error(F_utf_fragment);
 
       f_utf_char_t utf = 0;
 
@@ -239,18 +197,12 @@ extern "C" {
 
 #ifndef _di_f_utf_is_control_format_
   f_status_t f_utf_is_control_format(const f_string_t sequence, const f_array_length_t width_max) {
-    #ifndef _di_level_0_parameter_checking_
-      if (width_max < 1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+
+    if (width_max < 1) return F_data_not;
 
     if (macro_f_utf_byte_width_is(*sequence)) {
-      if (macro_f_utf_byte_width_is(*sequence) > width_max) {
-        return F_status_set_error(F_complete_not_utf);
-      }
-
-      if (macro_f_utf_byte_width_is(*sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_byte_width_is(*sequence) > width_max) return F_status_set_error(F_complete_not_utf);
+      if (macro_f_utf_byte_width_is(*sequence) == 1) return F_status_set_error(F_utf_fragment);
 
       f_utf_char_t utf = 0;
 
@@ -269,22 +221,13 @@ extern "C" {
 
 #ifndef _di_f_utf_is_control_picture_
   f_status_t f_utf_is_control_picture(const f_string_t sequence, const f_array_length_t width_max) {
-    #ifndef _di_level_0_parameter_checking_
-      if (width_max < 1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+
+    if (width_max < 1) return F_data_not;
 
     if (macro_f_utf_byte_width_is(*sequence)) {
-      if (macro_f_utf_byte_width_is(*sequence) > width_max) {
-        return F_status_set_error(F_complete_not_utf);
-      }
-
-      if (macro_f_utf_byte_width_is(*sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
-
-      if (macro_f_utf_byte_width_is(*sequence) != 3) {
-        return F_false;
-      }
+      if (macro_f_utf_byte_width_is(*sequence) > width_max) return F_status_set_error(F_complete_not_utf);
+      if (macro_f_utf_byte_width_is(*sequence) == 1) return F_status_set_error(F_utf_fragment);
+      if (macro_f_utf_byte_width_is(*sequence) != 3) return F_false;
 
       f_utf_char_t utf = 0;
 
@@ -303,18 +246,12 @@ extern "C" {
 
 #ifndef _di_f_utf_is_digit_
   f_status_t f_utf_is_digit(const f_string_t sequence, const f_array_length_t width_max, uint64_t * const value) {
-    #ifndef _di_level_0_parameter_checking_
-      if (width_max < 1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+
+    if (width_max < 1) return F_data_not;
 
     if (macro_f_utf_byte_width_is(*sequence)) {
-      if (macro_f_utf_byte_width_is(*sequence) > width_max) {
-        return F_status_set_error(F_complete_not_utf);
-      }
-
-      if (macro_f_utf_byte_width_is(*sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_byte_width_is(*sequence) > width_max) return F_status_set_error(F_complete_not_utf);
+      if (macro_f_utf_byte_width_is(*sequence) == 1) return F_status_set_error(F_utf_fragment);
 
       f_utf_char_t utf = 0;
 
@@ -332,18 +269,12 @@ extern "C" {
 
 #ifndef _di_f_utf_is_emoji_
   f_status_t f_utf_is_emoji(const f_string_t sequence, const f_array_length_t width_max) {
-    #ifndef _di_level_0_parameter_checking_
-      if (width_max < 1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+
+    if (width_max < 1) return F_data_not;
 
     if (macro_f_utf_byte_width_is(*sequence)) {
-      if (macro_f_utf_byte_width_is(*sequence) > width_max) {
-        return F_status_set_error(F_complete_not_utf);
-      }
-
-      if (macro_f_utf_byte_width_is(*sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_byte_width_is(*sequence) > width_max) return F_status_set_error(F_complete_not_utf);
+      if (macro_f_utf_byte_width_is(*sequence) == 1) return F_status_set_error(F_utf_fragment);
 
       f_utf_char_t utf = 0;
 
@@ -362,9 +293,7 @@ extern "C" {
 #ifndef _di_f_utf_is_fragment_
   f_status_t f_utf_is_fragment(const f_string_t sequence) {
 
-    if (macro_f_utf_byte_width_is(*sequence) == 1) {
-      return F_true;
-    }
+    if (macro_f_utf_byte_width_is(*sequence) == 1) return F_true;
 
     return F_false;
   }
@@ -372,18 +301,12 @@ extern "C" {
 
 #ifndef _di_f_utf_is_graph_
   f_status_t f_utf_is_graph(const f_string_t sequence, const f_array_length_t width_max) {
-    #ifndef _di_level_0_parameter_checking_
-      if (width_max < 1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+
+    if (width_max < 1) return F_data_not;
 
     if (macro_f_utf_byte_width_is(*sequence)) {
-      if (macro_f_utf_byte_width_is(*sequence) > width_max) {
-        return F_status_set_error(F_complete_not_utf);
-      }
-
-      if (macro_f_utf_byte_width_is(*sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_byte_width_is(*sequence) > width_max) return F_status_set_error(F_complete_not_utf);
+      if (macro_f_utf_byte_width_is(*sequence) == 1) return F_status_set_error(F_utf_fragment);
 
       f_utf_char_t utf = 0;
 
@@ -416,18 +339,12 @@ extern "C" {
 
 #ifndef _di_f_utf_is_numeric_
   f_status_t f_utf_is_numeric(const f_string_t sequence, const f_array_length_t width_max) {
-    #ifndef _di_level_0_parameter_checking_
-      if (width_max < 1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+
+    if (width_max < 1) return F_data_not;
 
     if (macro_f_utf_byte_width_is(*sequence)) {
-      if (macro_f_utf_byte_width_is(*sequence) > width_max) {
-        return F_status_set_error(F_complete_not_utf);
-      }
-
-      if (macro_f_utf_byte_width_is(*sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_byte_width_is(*sequence) > width_max) return F_status_set_error(F_complete_not_utf);
+      if (macro_f_utf_byte_width_is(*sequence) == 1) return F_status_set_error(F_utf_fragment);
 
       f_utf_char_t utf = 0;
 
@@ -447,18 +364,12 @@ extern "C" {
 
 #ifndef _di_f_utf_is_phonetic_
   f_status_t f_utf_is_phonetic(const f_string_t sequence, const f_array_length_t width_max) {
-    #ifndef _di_level_0_parameter_checking_
-      if (width_max < 1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+
+    if (width_max < 1) return F_data_not;
 
     if (macro_f_utf_byte_width_is(*sequence)) {
-      if (macro_f_utf_byte_width_is(*sequence) > width_max) {
-        return F_status_set_error(F_complete_not_utf);
-      }
-
-      if (macro_f_utf_byte_width_is(*sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_byte_width_is(*sequence) > width_max) return F_status_set_error(F_complete_not_utf);
+      if (macro_f_utf_byte_width_is(*sequence) == 1) return F_status_set_error(F_utf_fragment);
 
       f_utf_char_t utf = 0;
 
@@ -477,18 +388,12 @@ extern "C" {
 
 #ifndef _di_f_utf_is_private_
   f_status_t f_utf_is_private(const f_string_t sequence, const f_array_length_t width_max) {
-    #ifndef _di_level_0_parameter_checking_
-      if (width_max < 1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+
+    if (width_max < 1) return F_data_not;
 
     if (macro_f_utf_byte_width_is(*sequence)) {
-      if (macro_f_utf_byte_width_is(*sequence) > width_max) {
-        return F_status_set_error(F_complete_not_utf);
-      }
-
-      if (macro_f_utf_byte_width_is(*sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_byte_width_is(*sequence) > width_max) return F_status_set_error(F_complete_not_utf);
+      if (macro_f_utf_byte_width_is(*sequence) == 1) return F_status_set_error(F_utf_fragment);
 
       f_utf_char_t utf = 0;
 
@@ -507,18 +412,12 @@ extern "C" {
 
 #ifndef _di_f_utf_is_punctuation_
   f_status_t f_utf_is_punctuation(const f_string_t sequence, const f_array_length_t width_max) {
-    #ifndef _di_level_0_parameter_checking_
-      if (width_max < 1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+
+    if (width_max < 1) return F_data_not;
 
     if (macro_f_utf_byte_width_is(*sequence)) {
-      if (macro_f_utf_byte_width_is(*sequence) > width_max) {
-        return F_status_set_error(F_complete_not_utf);
-      }
-
-      if (macro_f_utf_byte_width_is(*sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_byte_width_is(*sequence) > width_max) return F_status_set_error(F_complete_not_utf);
+      if (macro_f_utf_byte_width_is(*sequence) == 1) return F_status_set_error(F_utf_fragment);
 
       f_utf_char_t utf = 0;
 
@@ -566,18 +465,12 @@ extern "C" {
 
 #ifndef _di_f_utf_is_subscript_
   f_status_t f_utf_is_subscript(const f_string_t sequence, const f_array_length_t width_max) {
-    #ifndef _di_level_0_parameter_checking_
-      if (width_max < 1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+
+    if (width_max < 1) return F_data_not;
 
     if (macro_f_utf_byte_width_is(*sequence)) {
-      if (macro_f_utf_byte_width_is(*sequence) > width_max) {
-        return F_status_set_error(F_complete_not_utf);
-      }
-
-      if (macro_f_utf_byte_width_is(*sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_byte_width_is(*sequence) > width_max) return F_status_set_error(F_complete_not_utf);
+      if (macro_f_utf_byte_width_is(*sequence) == 1) return F_status_set_error(F_utf_fragment);
 
       f_utf_char_t utf = 0;
 
@@ -595,18 +488,12 @@ extern "C" {
 
 #ifndef _di_f_utf_is_superscript_
   f_status_t f_utf_is_superscript(const f_string_t sequence, const f_array_length_t width_max) {
-    #ifndef _di_level_0_parameter_checking_
-      if (width_max < 1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+
+    if (width_max < 1) return F_data_not;
 
     if (macro_f_utf_byte_width_is(*sequence)) {
-      if (macro_f_utf_byte_width_is(*sequence) > width_max) {
-        return F_status_set_error(F_complete_not_utf);
-      }
-
-      if (macro_f_utf_byte_width_is(*sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_byte_width_is(*sequence) > width_max) return F_status_set_error(F_complete_not_utf);
+      if (macro_f_utf_byte_width_is(*sequence) == 1) return F_status_set_error(F_utf_fragment);
 
       f_utf_char_t utf = 0;
 
@@ -624,18 +511,12 @@ extern "C" {
 
 #ifndef _di_f_utf_is_symbol_
   f_status_t f_utf_is_symbol(const f_string_t sequence, const f_array_length_t width_max) {
-    #ifndef _di_level_0_parameter_checking_
-      if (width_max < 1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+
+    if (width_max < 1) return F_data_not;
 
     if (macro_f_utf_byte_width_is(*sequence)) {
-      if (macro_f_utf_byte_width_is(*sequence) > width_max) {
-        return F_status_set_error(F_complete_not_utf);
-      }
-
-      if (macro_f_utf_byte_width_is(*sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_byte_width_is(*sequence) > width_max) return F_status_set_error(F_complete_not_utf);
+      if (macro_f_utf_byte_width_is(*sequence) == 1) return F_status_set_error(F_utf_fragment);
 
       f_utf_char_t utf = 0;
 
@@ -668,18 +549,12 @@ extern "C" {
 
 #ifndef _di_f_utf_is_unassigned_
   f_status_t f_utf_is_unassigned(const f_string_t sequence, const f_array_length_t width_max) {
-    #ifndef _di_level_0_parameter_checking_
-      if (width_max < 1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+
+    if (width_max < 1) return F_data_not;
 
     if (macro_f_utf_byte_width_is(*sequence)) {
-      if (macro_f_utf_byte_width_is(*sequence) > width_max) {
-        return F_status_set_error(F_complete_not_utf);
-      }
-
-      if (macro_f_utf_byte_width_is(*sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_byte_width_is(*sequence) > width_max) return F_status_set_error(F_complete_not_utf);
+      if (macro_f_utf_byte_width_is(*sequence) == 1) return F_status_set_error(F_utf_fragment);
 
       f_utf_char_t utf = 0;
 
@@ -698,18 +573,12 @@ extern "C" {
 
 #ifndef _di_f_utf_is_valid_
   f_status_t f_utf_is_valid(const f_string_t sequence, const f_array_length_t width_max) {
-    #ifndef _di_level_0_parameter_checking_
-      if (width_max < 1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+
+    if (width_max < 1) return F_data_not;
 
     if (macro_f_utf_byte_width_is(*sequence)) {
-      if (macro_f_utf_byte_width_is(*sequence) > width_max) {
-        return F_status_set_error(F_complete_not_utf);
-      }
-
-      if (macro_f_utf_byte_width_is(*sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_byte_width_is(*sequence) > width_max) return F_status_set_error(F_complete_not_utf);
+      if (macro_f_utf_byte_width_is(*sequence) == 1) return F_status_set_error(F_utf_fragment);
 
       f_utf_char_t utf = 0;
 
@@ -728,18 +597,12 @@ extern "C" {
 
 #ifndef _di_f_utf_is_whitespace_
   f_status_t f_utf_is_whitespace(const f_string_t sequence, const f_array_length_t width_max, const bool strict) {
-    #ifndef _di_level_0_parameter_checking_
-      if (width_max < 1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+
+    if (width_max < 1) return F_data_not;
 
     if (macro_f_utf_byte_width_is(*sequence)) {
-      if (macro_f_utf_byte_width_is(*sequence) > width_max) {
-        return F_status_set_error(F_complete_not_utf);
-      }
-
-      if (macro_f_utf_byte_width_is(*sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_byte_width_is(*sequence) > width_max) return F_status_set_error(F_complete_not_utf);
+      if (macro_f_utf_byte_width_is(*sequence) == 1) return F_status_set_error(F_utf_fragment);
 
       f_utf_char_t utf = 0;
 
@@ -759,18 +622,12 @@ extern "C" {
 
 #ifndef _di_f_utf_is_whitespace_modifier_
   f_status_t f_utf_is_whitespace_modifier(const f_string_t sequence, const f_array_length_t width_max) {
-    #ifndef _di_level_0_parameter_checking_
-      if (width_max < 1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+
+    if (width_max < 1) return F_data_not;
 
     if (macro_f_utf_byte_width_is(*sequence)) {
-      if (macro_f_utf_byte_width_is(*sequence) > width_max) {
-        return F_status_set_error(F_complete_not_utf);
-      }
-
-      if (macro_f_utf_byte_width_is(*sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_byte_width_is(*sequence) > width_max) return F_status_set_error(F_complete_not_utf);
+      if (macro_f_utf_byte_width_is(*sequence) == 1) return F_status_set_error(F_utf_fragment);
 
       f_utf_char_t utf = 0;
 
@@ -789,18 +646,12 @@ extern "C" {
 
 #ifndef _di_f_utf_is_whitespace_other_
   f_status_t f_utf_is_whitespace_other(const f_string_t sequence, const f_array_length_t width_max) {
-    #ifndef _di_level_0_parameter_checking_
-      if (width_max < 1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+
+    if (width_max < 1) return F_data_not;
 
     if (macro_f_utf_byte_width_is(*sequence)) {
-      if (macro_f_utf_byte_width_is(*sequence) > width_max) {
-        return F_status_set_error(F_complete_not_utf);
-      }
-
-      if (macro_f_utf_byte_width_is(*sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_byte_width_is(*sequence) > width_max) return F_status_set_error(F_complete_not_utf);
+      if (macro_f_utf_byte_width_is(*sequence) == 1) return F_status_set_error(F_utf_fragment);
 
       f_utf_char_t utf = 0;
 
@@ -819,18 +670,12 @@ extern "C" {
 
 #ifndef _di_f_utf_is_whitespace_zero_width_
   f_status_t f_utf_is_whitespace_zero_width(const f_string_t sequence, const f_array_length_t width_max) {
-    #ifndef _di_level_0_parameter_checking_
-      if (width_max < 1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+
+    if (width_max < 1) return F_data_not;
 
     if (macro_f_utf_byte_width_is(*sequence)) {
-      if (macro_f_utf_byte_width_is(*sequence) > width_max) {
-        return F_status_set_error(F_complete_not_utf);
-      }
-
-      if (macro_f_utf_byte_width_is(*sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_byte_width_is(*sequence) > width_max) return F_status_set_error(F_complete_not_utf);
+      if (macro_f_utf_byte_width_is(*sequence) == 1) return F_status_set_error(F_utf_fragment);
 
       f_utf_char_t utf = 0;
 
@@ -851,13 +696,8 @@ extern "C" {
   f_status_t f_utf_is_wide(const f_string_t sequence, const f_array_length_t width_max) {
 
     if (macro_f_utf_byte_width_is(*sequence)) {
-      if (macro_f_utf_byte_width_is(*sequence) > width_max) {
-        return F_status_set_error(F_complete_not_utf);
-      }
-
-      if (macro_f_utf_byte_width_is(*sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_byte_width_is(*sequence) > width_max) return F_status_set_error(F_complete_not_utf);
+      if (macro_f_utf_byte_width_is(*sequence) == 1) return F_status_set_error(F_utf_fragment);
 
       f_utf_char_t utf = 0;
 
@@ -876,18 +716,12 @@ extern "C" {
 
 #ifndef _di_f_utf_is_word_
   f_status_t f_utf_is_word(const f_string_t sequence, const f_array_length_t width_max, const bool strict) {
-    #ifndef _di_level_0_parameter_checking_
-      if (width_max < 1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+
+    if (width_max < 1) return F_data_not;
 
     if (macro_f_utf_byte_width_is(*sequence)) {
-      if (macro_f_utf_byte_width_is(*sequence) > width_max) {
-        return F_status_set_error(F_complete_not_utf);
-      }
-
-      if (macro_f_utf_byte_width_is(*sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_byte_width_is(*sequence) > width_max) return F_status_set_error(F_complete_not_utf);
+      if (macro_f_utf_byte_width_is(*sequence) == 1) return F_status_set_error(F_utf_fragment);
 
       f_utf_char_t utf = 0;
 
@@ -909,18 +743,12 @@ extern "C" {
 
 #ifndef _di_f_utf_is_word_dash_
   f_status_t f_utf_is_word_dash(const f_string_t sequence, const f_array_length_t width_max, const bool strict) {
-    #ifndef _di_level_0_parameter_checking_
-      if (width_max < 1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+
+    if (width_max < 1) return F_data_not;
 
     if (macro_f_utf_byte_width_is(*sequence)) {
-      if (macro_f_utf_byte_width_is(*sequence) > width_max) {
-        return F_status_set_error(F_complete_not_utf);
-      }
-
-      if (macro_f_utf_byte_width_is(*sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_byte_width_is(*sequence) > width_max) return F_status_set_error(F_complete_not_utf);
+      if (macro_f_utf_byte_width_is(*sequence) == 1) return F_status_set_error(F_utf_fragment);
 
       f_utf_char_t utf = 0;
 
@@ -942,18 +770,12 @@ extern "C" {
 
 #ifndef _di_f_utf_is_word_dash_plus_
   f_status_t f_utf_is_word_dash_plus(const f_string_t sequence, const f_array_length_t width_max, const bool strict) {
-    #ifndef _di_level_0_parameter_checking_
-      if (width_max < 1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+
+    if (width_max < 1) return F_data_not;
 
     if (macro_f_utf_byte_width_is(*sequence)) {
-      if (macro_f_utf_byte_width_is(*sequence) > width_max) {
-        return F_status_set_error(F_complete_not_utf);
-      }
-
-      if (macro_f_utf_byte_width_is(*sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_byte_width_is(*sequence) > width_max) return F_status_set_error(F_complete_not_utf);
+      if (macro_f_utf_byte_width_is(*sequence) == 1) return F_status_set_error(F_utf_fragment);
 
       f_utf_char_t utf = 0;
 
@@ -961,6 +783,7 @@ extern "C" {
         const f_status_t status = private_f_utf_char_to_character(sequence, width_max, &utf);
         if (F_status_is_error(status)) return status;
       }
+
       return private_f_utf_character_is_word_dash_plus(utf, strict);
     }
 
@@ -974,18 +797,12 @@ extern "C" {
 
 #ifndef _di_f_utf_is_zero_width_
   f_status_t f_utf_is_zero_width(const f_string_t sequence, const f_array_length_t width_max) {
-    #ifndef _di_level_0_parameter_checking_
-      if (width_max < 1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+
+    if (width_max < 1) return F_data_not;
 
     if (macro_f_utf_byte_width_is(*sequence)) {
-      if (macro_f_utf_byte_width_is(*sequence) > width_max) {
-        return F_status_set_error(F_complete_not_utf);
-      }
-
-      if (macro_f_utf_byte_width_is(*sequence) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_byte_width_is(*sequence) > width_max) return F_status_set_error(F_complete_not_utf);
+      if (macro_f_utf_byte_width_is(*sequence) == 1) return F_status_set_error(F_utf_fragment);
 
       f_utf_char_t utf = 0;
 
@@ -1002,15 +819,9 @@ extern "C" {
     }
 
     // These control characters are considered zero-width spaces.
-    if (*sequence >= 0x00 && *sequence < 0x09) {
-      return F_true;
-    }
-    else if (*sequence > 0x0b && *sequence < 0x20) {
-      return F_true;
-    }
-    else if (*sequence == 0x7f) {
-      return F_true;
-    }
+    if (*sequence >= 0x00 && *sequence < 0x09) return F_true;
+    if (*sequence > 0x0b && *sequence < 0x20) return F_true;
+    if (*sequence == 0x7f) return F_true;
 
     return F_false;
   }

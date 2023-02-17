@@ -32,7 +32,7 @@ extern "C" {
     *status = fake_build_objects_add(data, data_build, &data->path_build_objects_shared, &data_build->setting.build_objects_program, &data_build->setting.build_objects_program_shared, &arguments);
 
     if (F_status_is_error(*status)) {
-      fake_print_error(data->setting, *status, data->main->error, macro_fake_f(fake_build_objects_add));
+      fake_print_error(data->setting, data->main->error, *status, macro_fake_f(fake_build_objects_add));
 
       f_string_dynamics_resize(0, &arguments);
 
@@ -42,7 +42,7 @@ extern "C" {
     *status = fake_build_sources_add(data, data_build, &data_build->setting.build_sources_program, &data_build->setting.build_sources_program_shared, &arguments);
 
     if (F_status_is_error(*status)) {
-      fake_print_error(data->setting, *status, data->main->error, macro_fake_f(fake_build_sources_add));
+      fake_print_error(data->setting, data->main->error, *status, macro_fake_f(fake_build_sources_add));
 
       f_string_dynamics_resize(0, &arguments);
 
@@ -92,7 +92,7 @@ extern "C" {
     fake_build_arguments_standard_add(data, data_build, F_true, fake_build_type_program_e, &arguments, status);
 
     if (F_status_is_error(*status)) {
-      fake_print_error(data->setting, *status, data->main->error, macro_fake_f(fll_execute_arguments_add));
+      fake_print_error(data->setting, data->main->error, *status, macro_fake_f(fll_execute_arguments_add));
 
       macro_f_string_dynamics_t_delete_simple(arguments);
 
@@ -126,7 +126,7 @@ extern "C" {
     *status = fake_build_objects_add(data, data_build, &data->path_build_objects_static, &data_build->setting.build_objects_program, &data_build->setting.build_objects_program_static, &arguments);
 
     if (F_status_is_error(*status)) {
-      fake_print_error(data->setting, *status, data->main->error, macro_fake_f(fake_build_objects_add));
+      fake_print_error(data->setting, data->main->error, *status, macro_fake_f(fake_build_objects_add));
 
       f_string_dynamics_resize(0, &arguments);
 
@@ -136,7 +136,7 @@ extern "C" {
     *status = fake_build_sources_add(data, data_build, &data_build->setting.build_sources_program, &data_build->setting.build_sources_program_static, &arguments);
 
     if (F_status_is_error(*status)) {
-      fake_print_error(data->setting, *status, data->main->error, macro_fake_f(fake_build_sources_add));
+      fake_print_error(data->setting, data->main->error, *status, macro_fake_f(fake_build_sources_add));
 
       f_string_dynamics_resize(0, &arguments);
 
@@ -196,7 +196,7 @@ extern "C" {
     fake_build_arguments_standard_add(data, data_build, F_false, fake_build_type_program_e, &arguments, status);
 
     if (F_status_is_error(*status)) {
-      fake_print_error(data->setting, *status, data->main->error, macro_fake_f(fll_execute_arguments_add));
+      fake_print_error(data->setting, data->main->error, *status, macro_fake_f(fll_execute_arguments_add));
 
       macro_f_string_dynamics_t_delete_simple(arguments);
 

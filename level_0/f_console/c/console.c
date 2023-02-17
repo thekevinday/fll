@@ -662,7 +662,7 @@ extern "C" {
     }
 
     if (state.status == F_process) {
-      state.status == F_none;
+      state.status = F_none;
 
       for (; state.location < arguments.argc && arguments.argv[state.location]; ++state.location) {
 

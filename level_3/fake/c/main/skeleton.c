@@ -81,7 +81,7 @@ extern "C" {
         status = fake_skeleton_operate_directory_create(data, path[i]);
 
         if (F_status_is_error(status)) {
-          fake_print_error(data->setting, status, data->main->error, macro_fake_f(fake_skeleton_operate_directory_create));
+          fake_print_error(data->setting, data->main->error, status, macro_fake_f(fake_skeleton_operate_directory_create));
 
           return status;
         }
@@ -168,7 +168,7 @@ extern "C" {
           f_file_stream_unlock(data->main->error.to);
         }
         else {
-          fake_print_error_file(data->setting, status, data->main->error, macro_fake_f(f_directory_create), path, f_file_operation_create_s, fll_error_file_type_directory_e);
+          fake_print_error_file(data->setting, data->main->error, status, macro_fake_f(f_directory_create), path, f_file_operation_create_s, fll_error_file_type_directory_e);
         }
 
         return status;
@@ -179,7 +179,7 @@ extern "C" {
       }
     }
     else if (F_status_is_error(status)) {
-      fake_print_error_file(data->setting, status, data->main->error, macro_fake_f(f_directory_exists), path, f_file_operation_create_s, fll_error_file_type_directory_e);
+      fake_print_error_file(data->setting, data->main->error, status, macro_fake_f(f_directory_exists), path, f_file_operation_create_s, fll_error_file_type_directory_e);
 
       return status;
     }
@@ -245,7 +245,7 @@ extern "C" {
           f_file_stream_unlock(data->main->error.to);
         }
         else {
-          fake_print_error_file(data->setting, status, data->main->error, macro_fake_f(f_file_create), path, f_file_operation_create_s, fll_error_file_type_file_e);
+          fake_print_error_file(data->setting, data->main->error, status, macro_fake_f(f_file_create), path, f_file_operation_create_s, fll_error_file_type_file_e);
         }
 
         return status;
@@ -264,7 +264,7 @@ extern "C" {
         status = f_file_open(path, 0, &file);
 
         if (F_status_is_error(status)) {
-          fake_print_error_file(data->setting, status, data->main->error, macro_fake_f(f_file_open), path, fake_common_file_populate_pre_s, fll_error_file_type_file_e);
+          fake_print_error_file(data->setting, data->main->error, status, macro_fake_f(f_file_open), path, fake_common_file_populate_pre_s, fll_error_file_type_file_e);
 
           return status;
         }
@@ -272,7 +272,7 @@ extern "C" {
         status = f_file_write(file, content, 0);
 
         if (F_status_is_error(status)) {
-          fake_print_error_file(data->setting, status, data->main->error, macro_fake_f(f_file_write), path, fake_common_file_populate_pre_s, fll_error_file_type_file_e);
+          fake_print_error_file(data->setting, data->main->error, status, macro_fake_f(f_file_write), path, fake_common_file_populate_pre_s, fll_error_file_type_file_e);
 
           f_file_stream_flush(file);
           f_file_stream_close(&file);
@@ -289,7 +289,7 @@ extern "C" {
       }
     }
     else if (F_status_is_error(status)) {
-      fake_print_error_file(data->setting, status, data->main->error, macro_fake_f(f_file_is), path, f_file_operation_create_s, fll_error_file_type_file_e);
+      fake_print_error_file(data->setting, data->main->error, status, macro_fake_f(f_file_is), path, f_file_operation_create_s, fll_error_file_type_file_e);
 
       return status;
     }

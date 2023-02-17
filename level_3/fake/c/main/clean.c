@@ -36,7 +36,7 @@ extern "C" {
     }
 
     if (F_status_is_error(status)) {
-      fake_print_error_file(data->setting, status, data->main->error, macro_fake_f(f_directory_remove), data->setting->build, f_file_operation_delete_s, fll_error_file_type_directory_e);
+      fake_print_error_file(data->setting, data->main->error, status, macro_fake_f(f_directory_remove), data->setting->build, f_file_operation_delete_s, fll_error_file_type_directory_e);
 
       return status;
     }

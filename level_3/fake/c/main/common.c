@@ -47,7 +47,7 @@ extern "C" {
     }
 
     if (F_status_is_error(setting->status)) {
-      fake_print_error(setting, setting->status, main->error, macro_fake_f(f_console_parameter_process));
+      fake_print_error(setting, main->error, setting->status, macro_fake_f(f_console_parameter_process));
 
       return;
     }
@@ -67,7 +67,7 @@ extern "C" {
         setting->status = fll_program_parameter_process_context(choices, modes, F_true, main);
 
         if (F_status_is_error(setting->status)) {
-          fake_print_error(setting, setting->status, main->error, macro_fake_f(fll_program_parameter_process_context));
+          fake_print_error(setting, main->error, setting->status, macro_fake_f(fll_program_parameter_process_context));
 
           return;
         }
@@ -98,7 +98,7 @@ extern "C" {
         setting->status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, main);
 
         if (F_status_is_error(setting->status)) {
-          fake_print_error(setting, setting->status, main->error, macro_fake_f(fll_program_parameter_process_verbosity));
+          fake_print_error(setting, main->error, setting->status, macro_fake_f(fll_program_parameter_process_verbosity));
 
           return;
         }
@@ -264,7 +264,7 @@ extern "C" {
                   // @todo fix this to print an error about the actual invalid character so that it can be investigated.
 
                   if (F_status_is_error(setting->status)) {
-                    if (fake_print_error_fallback(setting, setting->status, main->error, macro_fake_f(f_utf_is_word_dash_plus)) == F_false) {
+                    if (fake_print_error_fallback(setting, main->error, setting->status, macro_fake_f(f_utf_is_word_dash_plus)) == F_false) {
                       fll_program_print_error_parameter_process(main->error, f_console_symbol_long_normal_s, names[i]);
                     }
 
@@ -288,7 +288,7 @@ extern "C" {
                   if (main->error.verbosity > f_console_verbosity_quiet_e) {
                     fake_print_line_first_locked(setting, main->error);
 
-                    if (fake_print_error_fallback(setting, setting->status, main->error, macro_fake_f(f_path_directory_cleanup)) == F_false) {
+                    if (fake_print_error_fallback(setting, main->error, setting->status, macro_fake_f(f_path_directory_cleanup)) == F_false) {
                       fll_program_print_error_parameter_process(main->error, f_console_symbol_long_normal_s, names[i]);
                     }
                   }
@@ -303,7 +303,7 @@ extern "C" {
                   setting->status = f_string_dynamic_resize(0, variable[i]);
 
                   if (F_status_is_error(setting->status)) {
-                    fake_print_error(setting, setting->status, main->error, macro_fake_f(f_string_dynamic_resize));
+                    fake_print_error(setting, main->error, setting->status, macro_fake_f(f_string_dynamic_resize));
 
                     return;
                   }
@@ -332,7 +332,7 @@ extern "C" {
               setting->status = f_string_dynamic_resize(0, variable[i]);
 
               if (F_status_is_error(setting->status)) {
-                fake_print_error(setting, setting->status, main->error, macro_fake_f(f_string_dynamic_resize));
+                fake_print_error(setting, main->error, setting->status, macro_fake_f(f_string_dynamic_resize));
 
                 return;
               }
@@ -361,6 +361,8 @@ extern "C" {
           &setting->modes,
         };
 
+        f_array_length_t width_max = 0;
+
         for (i = 0; i < 2; ++i) {
 
           if (main->parameters.array[parameters[i]].result & f_console_result_found_e) {
@@ -380,7 +382,7 @@ extern "C" {
               if (main->error.verbosity > f_console_verbosity_quiet_e) {
                 fake_print_line_first_locked(setting, main->error);
 
-                if (fake_print_error_fallback(setting, setting->status, main->error, macro_fake_f(fll_program_parameter_additional_rip)) == F_false) {
+                if (fake_print_error_fallback(setting, main->error, setting->status, macro_fake_f(fll_program_parameter_additional_rip)) == F_false) {
                   fll_program_print_error_parameter_process(main->error, f_console_symbol_long_normal_s, names[i]);
                 }
               }
@@ -389,36 +391,29 @@ extern "C" {
             }
 
             if (parameters[i] == fake_parameter_mode_e) {
-              f_array_length_t i = 0;
-              f_array_length_t j = 0;
-              f_array_length_t width_max = 0;
+              for (j = 0; j < main->parameters.arguments.array[i].used; ++j) {
 
-              for (; i < setting->modes.used; ++i) {
+                width_max = main->parameters.arguments.array[i].used - j;
 
-                for (j = 0; j < setting->modes.array[i].used; ++j) {
+                setting->status = f_utf_is_word_dash_plus(main->parameters.arguments.array[i].string + j, width_max, F_false);
 
-                  width_max = setting->modes.array[i].used - j;
+                if (F_status_is_error(setting->status)) {
+                  // @todo fix this to print an error about the actual invalid character so that it can be investigated.
 
-                  setting->status = f_utf_is_word_dash_plus(main->parameters.arguments.array[i].string + j, main->parameters.arguments.array[i].used - j, F_false);
-
-                  if (F_status_is_error(setting->status)) {
-                    // @todo fix this to print an error about the actual invalid character so that it can be investigated.
-
-                    if (fake_print_error_fallback(setting, setting->status, main->error, macro_fake_f(f_utf_is_word_dash_plus)) == F_false) {
-                      fll_program_print_error_parameter_process(main->error, f_console_symbol_long_normal_s, names[i]);
-                    }
-
-                    return;
+                  if (fake_print_error_fallback(setting, main->error, setting->status, macro_fake_f(f_utf_is_word_dash_plus)) == F_false) {
+                    fll_program_print_error_parameter_process(main->error, f_console_symbol_long_normal_s, names[i]);
                   }
 
-                  if (setting->status == F_false) {
-                    setting->status = F_status_set_error(F_parameter);
+                  return;
+                }
 
-                    fake_print_error_parameter_not_word(setting, main->error, f_console_symbol_long_normal_s, names[i], main->parameters.arguments.array[index]);
+                if (setting->status == F_false) {
+                  setting->status = F_status_set_error(F_parameter);
 
-                    return;
-                  }
-                } // for
+                  fake_print_error_parameter_not_word(setting, main->error, f_console_symbol_long_normal_s, names[i], main->parameters.arguments.array[i]);
+
+                  return;
+                }
               } // for
             }
           }
@@ -436,7 +431,7 @@ extern "C" {
       setting->status = f_uint8s_increase_by(1, &setting->operations);
 
       if (F_status_is_error(setting->status)) {
-        fake_print_error(setting, setting->status, main->error, macro_fake_f(f_uint8s_increase_by));
+        fake_print_error(setting, main->error, setting->status, macro_fake_f(f_uint8s_increase_by));
 
         return;
       }
@@ -463,7 +458,7 @@ extern "C" {
     state->status = f_uint8s_increase(fake_default_allocation_small_d, &data->setting->operations);
 
     if (F_status_is_error(state->status)) {
-      fake_print_error(data->setting, state->status, data->main->error, macro_fake_f(f_uint8s_increase));
+      fake_print_error(data->setting, data->main->error, state->status, macro_fake_f(f_uint8s_increase));
 
       return;
     }

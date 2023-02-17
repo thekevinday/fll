@@ -68,7 +68,7 @@ extern "C" {
       setting->status = f_string_dynamic_append(f_string_ascii_minus_s, &data.file_data_build_fakefile);
 
       if (F_status_is_error(setting->status)) {
-        fake_print_error(setting, setting->status, main->error, macro_fake_f(f_string_dynamic_append));
+        fake_print_error(setting, main->error, setting->status, macro_fake_f(f_string_dynamic_append));
       }
       else {
         setting->fakefile.used = 0;
@@ -112,8 +112,8 @@ extern "C" {
                 if (F_status_is_error(setting->status)) {
                   fake_print_error_file(
                     setting,
-                    F_status_set_fine(setting->status),
                     main->error,
+                    F_status_set_fine(setting->status),
                     macro_fake_f(f_file_is),
                     setting->operations.array[i] == fake_operation_build_e
                       ? data.file_data_build_settings
@@ -286,7 +286,7 @@ extern "C" {
         }
       }
       else {
-        fake_print_error(data->setting, *status, data->main->error, macro_fake_f(fll_execute_program));
+        fake_print_error(data->setting, data->main->error, *status, macro_fake_f(fll_execute_program));
       }
     }
 
@@ -306,7 +306,7 @@ extern "C" {
     f_status_t status = f_file_exists(path_file, F_true);
 
     if (F_status_is_error(status)) {
-      fake_print_error_file(data->setting, status, data->main->error, macro_fake_f(f_file_exists), path_file, f_file_operation_find_s, fll_error_file_type_file_e);
+      fake_print_error_file(data->setting, data->main->error, status, macro_fake_f(f_file_exists), path_file, f_file_operation_find_s, fll_error_file_type_file_e);
 
       return status;
     }
@@ -318,7 +318,7 @@ extern "C" {
         status = f_file_size(path_file, F_true, &size_file);
 
         if (F_status_is_error(status)) {
-          fake_print_error_file(data->setting, status, data->main->error, macro_fake_f(f_file_size), path_file, f_file_operation_read_s, fll_error_file_type_file_e);
+          fake_print_error_file(data->setting, data->main->error, status, macro_fake_f(f_file_size), path_file, f_file_operation_read_s, fll_error_file_type_file_e);
 
           return status;
         }
@@ -332,7 +332,7 @@ extern "C" {
         if (F_status_is_error(status)) {
           const f_string_static_t message = macro_f_string_static_t_initialize("allocate buffer size for", 0, 24);
 
-          fake_print_error_file(data->setting, status, data->main->error, macro_fake_f(f_string_dynamic_increase_by), path_file, message, fll_error_file_type_file_e);
+          fake_print_error_file(data->setting, data->main->error, status, macro_fake_f(f_string_dynamic_increase_by), path_file, message, fll_error_file_type_file_e);
 
           return status;
         }
@@ -345,7 +345,7 @@ extern "C" {
       status = f_file_stream_open(path_file, f_string_empty_s, &file);
 
       if (F_status_is_error(status)) {
-        fake_print_error_file(data->setting, status, data->main->error, macro_fake_f(f_file_stream_open), path_file, f_file_operation_open_s, fll_error_file_type_file_e);
+        fake_print_error_file(data->setting, data->main->error, status, macro_fake_f(f_file_stream_open), path_file, f_file_operation_open_s, fll_error_file_type_file_e);
 
         return status;
       }
@@ -356,14 +356,14 @@ extern "C" {
       f_file_stream_close(&file);
 
       if (F_status_is_error(status)) {
-        fake_print_error_file(data->setting, status, data->main->error, macro_fake_f(f_file_read), path_file, f_file_operation_read_s, fll_error_file_type_file_e);
+        fake_print_error_file(data->setting, data->main->error, status, macro_fake_f(f_file_read), path_file, f_file_operation_read_s, fll_error_file_type_file_e);
       }
     }
     else {
       if (required) {
         status = F_status_set_error(F_file_found_not);
 
-        fake_print_error_file(data->setting, status, data->main->error, macro_fake_f(f_file_exists), path_file, f_file_operation_find_s, fll_error_file_type_file_e);
+        fake_print_error_file(data->setting, data->main->error, status, macro_fake_f(f_file_exists), path_file, f_file_operation_find_s, fll_error_file_type_file_e);
       }
     }
 
@@ -385,7 +385,7 @@ extern "C" {
 
     if (F_status_is_error(status)) {
       const f_string_static_t message = macro_f_string_static_t_initialize("allocate buffer size for", 0, 24);
-      fake_print_error_file(data->setting, status, data->main->error, macro_fake_f(f_string_dynamic_increase_by), f_string_ascii_minus_s, message, fll_error_file_type_file_e);
+      fake_print_error_file(data->setting, data->main->error, status, macro_fake_f(f_string_dynamic_increase_by), f_string_ascii_minus_s, message, fll_error_file_type_file_e);
 
       return status;
     }
@@ -405,7 +405,7 @@ extern "C" {
     } while (F_status_is_fine(status) && status != F_interrupt && status != F_none_eof);
 
     if (F_status_is_error(status)) {
-      fake_print_error_file(data->setting, status, data->main->error, macro_fake_f(f_file_stream_read_block), f_string_ascii_minus_s, f_file_operation_read_s, fll_error_file_type_file_e);
+      fake_print_error_file(data->setting, data->main->error, status, macro_fake_f(f_file_stream_read_block), f_string_ascii_minus_s, f_file_operation_read_s, fll_error_file_type_file_e);
     }
 
     return status;
@@ -498,7 +498,7 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           if (F_status_set_fine(status) != F_directory_found_not || requireds[i]) {
-            fake_print_error_file(data->setting, status, data->main->error, macro_fake_f(f_file_stat), values[i], f_file_operation_access_s, fll_error_file_type_directory_e);
+            fake_print_error_file(data->setting, data->main->error, status, macro_fake_f(f_file_stat), values[i], f_file_operation_access_s, fll_error_file_type_directory_e);
 
             return status;
           }

@@ -32,7 +32,7 @@ extern "C" {
         *status = fl_environment_load_name(variables[i], environment);
 
         if (F_status_is_error(*status)) {
-          fake_print_error(data->setting, *status, data->main->error, macro_fake_f(fl_environment_load_name));
+          fake_print_error(data->setting, data->main->error, *status, macro_fake_f(fl_environment_load_name));
 
           return;
         }
@@ -62,7 +62,7 @@ extern "C" {
     *status = fl_environment_load_names(data_build->setting.environment, environment);
 
     if (F_status_is_error(*status)) {
-      fake_print_error(data->setting, *status, data->main->error, macro_fake_f(fl_environment_load_names));
+      fake_print_error(data->setting, data->main->error, *status, macro_fake_f(fl_environment_load_names));
     }
   }
 #endif // _di_fake_build_load_environment_
@@ -149,13 +149,13 @@ extern "C" {
         *status = fll_fss_extended_read(buffer, state, &range, &objects, &contents, 0, 0, &delimits, 0);
 
         if (F_status_is_error(*status)) {
-          fake_print_error_fss(data, F_status_set_fine(*status), macro_fake_f(fll_fss_extended_read), data->file_data_build_settings, range, F_true);
+          fake_print_error_fss(data->setting, data->main->error, *status, macro_fake_f(fll_fss_extended_read), data->file_data_build_settings, range, F_true);
         }
         else {
           *status = f_fss_apply_delimit(state, delimits, &buffer);
 
           if (F_status_is_error(*status)) {
-            fake_print_error(data->setting, *status, data->main->error, macro_fake_f(f_fss_apply_delimit));
+            fake_print_error(data->setting, data->main->error, *status, macro_fake_f(f_fss_apply_delimit));
           }
           else {
             fake_build_load_setting_process(
@@ -623,14 +623,14 @@ extern "C" {
             break;
           }
 
-          *status = f_string_dynamic_append(settings_name[j], &settings_mode_names[j]);
+          *status = f_string_dynamic_append_nulless(settings_name[j], &settings_mode_names[j]);
 
           if (F_status_is_error_not(*status)) {
-            *status = f_string_dynamic_append(f_string_ascii_minus_s, &settings_mode_names[j]);
+            *status = f_string_dynamic_append_nulless(f_string_ascii_minus_s, &settings_mode_names[j]);
           }
 
           if (F_status_is_error_not(*status)) {
-            *status = f_string_dynamic_append(modes->array[i], &settings_mode_names[j]);
+            *status = f_string_dynamic_append_nulless(modes->array[i], &settings_mode_names[j]);
           }
 
           if (F_status_is_error(*status)) {
@@ -698,7 +698,7 @@ extern "C" {
         }
       }
       else if (!error_printed) {
-        fake_print_error(data->setting, *status, data->main->error, function);
+        fake_print_error(data->setting, data->main->error, *status, function);
       }
     }
     else {
@@ -1138,7 +1138,7 @@ extern "C" {
           *status = f_string_dynamic_append(settings_single_string_default[i], settings_single_destination[i]);
 
           if (F_status_is_error(*status)) {
-            fake_print_error(data->setting, *status, data->main->error, macro_fake_f(f_string_dynamic_append));
+            fake_print_error(data->setting, data->main->error, *status, macro_fake_f(f_string_dynamic_append));
 
             break;
           }
@@ -1257,7 +1257,7 @@ extern "C" {
             *status = f_path_directory_cleanup(settings_single_source[i]->array[settings_single_source[i]->used - 1], settings_single_destination[i]);
 
             if (F_status_is_error(*status)) {
-              fake_print_error(data->setting, *status, data->main->error, macro_fake_f(f_path_directory_cleanup));
+              fake_print_error(data->setting, data->main->error, *status, macro_fake_f(f_path_directory_cleanup));
 
               break;
             }
@@ -1266,7 +1266,7 @@ extern "C" {
             *status = f_string_dynamic_increase_by(settings_single_source[i]->array[settings_single_source[i]->used - 1].used + 1, settings_single_destination[i]);
 
             if (F_status_is_error(*status)) {
-              fake_print_error(data->setting, *status, data->main->error, macro_fake_f(f_string_dynamic_increase_by));
+              fake_print_error(data->setting, data->main->error, *status, macro_fake_f(f_string_dynamic_increase_by));
 
               break;
             }
@@ -1274,7 +1274,7 @@ extern "C" {
             *status = f_string_dynamic_append_nulless(settings_single_source[i]->array[settings_single_source[i]->used - 1], settings_single_destination[i]);
 
             if (F_status_is_error(*status)) {
-              fake_print_error(data->setting, *status, data->main->error, macro_fake_f(f_string_dynamic_append_nulless));
+              fake_print_error(data->setting, data->main->error, *status, macro_fake_f(f_string_dynamic_append_nulless));
 
               break;
             }
@@ -1373,7 +1373,7 @@ extern "C" {
       *status = f_string_dynamic_append_assure(f_path_separator_s, &setting->path_sources);
 
       if (F_status_is_error(*status)) {
-        fake_print_error(data->setting, *status, data->main->error, macro_fake_f(f_string_dynamic_append_assure));
+        fake_print_error(data->setting, data->main->error, *status, macro_fake_f(f_string_dynamic_append_assure));
 
         return;
       }
@@ -1536,7 +1536,7 @@ extern "C" {
     }
 
     if (F_status_is_error(*status)) {
-      fake_print_error(data->setting, *status, data->main->error, macro_fake_f(f_file_name_base));
+      fake_print_error(data->setting, data->main->error, *status, macro_fake_f(f_file_name_base));
 
       return;
     }
@@ -1568,7 +1568,7 @@ extern "C" {
       }
 
       if (F_status_is_error(*status)) {
-        fake_print_error(data->setting, *status, data->main->error, macro_fake_f(f_string_dynamic_append_nulless));
+        fake_print_error(data->setting, data->main->error, *status, macro_fake_f(f_string_dynamic_append_nulless));
 
         break;
       }

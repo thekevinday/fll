@@ -18,7 +18,7 @@ extern "C" {
       }
 
       if (F_status_is_error(*status)) {
-        fake_print_error(data_make->setting, *status, data_make->main->error, macro_fake_f(f_string_dynamics_increase_by));
+        fake_print_error(data_make->setting, data_make->main->error, *status, macro_fake_f(f_string_dynamics_increase_by));
 
         return;
       }
@@ -65,7 +65,7 @@ extern "C" {
       }
 
       if (F_status_is_error(*status)) {
-        fake_print_error(data_make->setting, *status, data_make->main->error, macro_fake_f(f_string_dynamic_append));
+        fake_print_error(data_make->setting, data_make->main->error, *status, macro_fake_f(f_string_dynamic_append));
 
         return;
       }
@@ -82,7 +82,7 @@ extern "C" {
       }
 
       if (F_status_is_error(*status)) {
-        fake_print_error(data_make->setting, *status, data_make->main->error, macro_fake_f(f_string_dynamics_increase_by));
+        fake_print_error(data_make->setting, data_make->main->error, *status, macro_fake_f(f_string_dynamics_increase_by));
 
         return;
       }
@@ -141,7 +141,7 @@ extern "C" {
       }
 
       if (F_status_is_error(*status)) {
-        fake_print_error(data_make->setting, *status, data_make->main->error, macro_fake_f(f_string_dynamic_append));
+        fake_print_error(data_make->setting, data_make->main->error, *status, macro_fake_f(f_string_dynamic_append));
 
         return;
       }
@@ -194,7 +194,7 @@ extern "C" {
             *status = f_string_dynamics_increase_by(fake_default_allocation_small_d, destination[i]);
 
             if (F_status_is_error(*status)) {
-              fake_print_error(data_make->setting, *status, data_make->main->error, macro_fake_f(f_string_dynamics_increase_by));
+              fake_print_error(data_make->setting, data_make->main->error, *status, macro_fake_f(f_string_dynamics_increase_by));
 
               return;
             }
@@ -207,7 +207,7 @@ extern "C" {
           }
 
           if (F_status_is_error(*status)) {
-            fake_print_error(data_make->setting, *status, data_make->main->error, macro_fake_f(f_string_dynamics_increase));
+            fake_print_error(data_make->setting, data_make->main->error, *status, macro_fake_f(f_string_dynamics_increase));
 
             return;
           }
@@ -228,7 +228,7 @@ extern "C" {
           }
 
           if (F_status_is_error(*status)) {
-            fake_print_error(data_make->setting, *status, data_make->main->error, macro_fake_f(f_string_dynamic_append_nulless));
+            fake_print_error(data_make->setting, data_make->main->error, *status, macro_fake_f(f_string_dynamic_append_nulless));
 
             return;
           }
@@ -239,7 +239,7 @@ extern "C" {
           *status = f_string_dynamics_increase_by(fake_default_allocation_small_d, destination[i]);
 
           if (F_status_is_error(*status)) {
-            fake_print_error(data_make->setting, *status, data_make->main->error, macro_fake_f(f_string_dynamics_increase_by));
+            fake_print_error(data_make->setting, data_make->main->error, *status, macro_fake_f(f_string_dynamics_increase_by));
 
             return;
           }
@@ -251,7 +251,7 @@ extern "C" {
           }
 
           if (F_status_is_error(*status)) {
-            fake_print_error(data_make->setting, *status, data_make->main->error, macro_fake_f(f_string_dynamic_append_nulless));
+            fake_print_error(data_make->setting, data_make->main->error, *status, macro_fake_f(f_string_dynamic_append_nulless));
 
             return;
           }
@@ -343,7 +343,7 @@ extern "C" {
           *status = f_string_dynamics_increase_by(fake_default_allocation_small_d, destination[i]);
 
           if (F_status_is_error(*status)) {
-            fake_print_error(data_make->setting, *status, data_make->main->error, macro_fake_f(f_string_dynamics_increase_by));
+            fake_print_error(data_make->setting, data_make->main->error, *status, macro_fake_f(f_string_dynamics_increase_by));
 
             return;
           }
@@ -356,7 +356,7 @@ extern "C" {
         }
 
         if (F_status_is_error(*status)) {
-          fake_print_error(data_make->setting, *status, data_make->main->error, macro_fake_f(f_string_dynamics_increase));
+          fake_print_error(data_make->setting, data_make->main->error, *status, macro_fake_f(f_string_dynamics_increase));
 
           return;
         }
@@ -377,7 +377,7 @@ extern "C" {
         }
 
         if (F_status_is_error(*status)) {
-          fake_print_error(data_make->setting, *status, data_make->main->error, macro_fake_f(f_string_dynamic_append_nulless));
+          fake_print_error(data_make->setting, data_make->main->error, *status, macro_fake_f(f_string_dynamic_append_nulless));
 
           return;
         }
@@ -388,7 +388,7 @@ extern "C" {
         *status = f_string_dynamics_increase_by(fake_default_allocation_small_d, destination[i]);
 
         if (F_status_is_error(*status)) {
-          fake_print_error(data_make->setting, *status, data_make->main->error, macro_fake_f(f_string_dynamics_increase_by));
+          fake_print_error(data_make->setting, data_make->main->error, *status, macro_fake_f(f_string_dynamics_increase_by));
 
           return;
         }
@@ -400,7 +400,7 @@ extern "C" {
         }
 
         if (F_status_is_error(*status)) {
-          fake_print_error(data_make->setting, *status, data_make->main->error, macro_fake_f(f_string_dynamic_append_nulless));
+          fake_print_error(data_make->setting, data_make->main->error, *status, macro_fake_f(f_string_dynamic_append_nulless));
 
           return;
         }
