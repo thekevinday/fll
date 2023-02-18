@@ -203,7 +203,13 @@ extern "C" {
     }
 
     if (F_status_is_error(setting->status)) {
-      fake_print_error_failure_operation(setting, main->error, data.operation);
+      if (F_status_set_fine(setting->status) == F_interrupt) {
+        fake_print_operation_cancelled(setting, main->message, data.operation);
+      }
+      else {
+        fake_print_error_failure_operation(setting, main->error, data.operation);
+      }
+
       fake_print_line_last_locked(setting, main->error);
     }
     else if (setting->status != F_child) {

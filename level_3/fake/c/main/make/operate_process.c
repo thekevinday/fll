@@ -6,6 +6,8 @@
 #include "operate.h"
 #include "operate_process.h"
 #include "operate_process_type.h"
+#include "print.h"
+#include "print-error.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -320,43 +322,16 @@ extern "C" {
       }
     }
 
-    if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
-      f_file_stream_lock(data_make->main->message.to);
+    fake_make_print_program_verbose(data_make->setting, data_make->main->message, program, arguments);
 
-      f_array_length_t i = 0;
-
-      if (program.used) {
-        f_print_dynamic_safely(program, data_make->main->message.to);
-      }
-      else {
-        i = 1;
-
-        f_print_dynamic_safely(arguments.array[0], data_make->main->message.to);
-      }
-
-      for (; i < arguments.used; ++i) {
-
-        if (arguments.array[i].used) {
-          fll_print_format(" %Q", data_make->main->message.to, arguments.array[i]);
-        }
-      } // for
-
-      f_print_dynamic_raw(f_string_eol_s, data_make->main->message.to);
-
-      f_file_stream_unlock(data_make->main->message.to);
-
-      // Flush to stdout before executing command.
-      f_file_stream_flush(data_make->main->message.to);
-    }
-
-    int return_code = 0;
-
-    // child processes should receive all signals, without blocking.
+    // Child processes should receive all signals, without blocking.
     f_signal_how_t signals = f_signal_how_t_initialize;
     f_signal_set_empty(&signals.block);
     f_signal_set_fill(&signals.block_not);
 
     fl_execute_parameter_t parameter = macro_fl_execute_parameter_t_initialize(as_shell ? 0 : FL_execute_parameter_option_path_d, 0, &data_make->environment, &signals, 0);
+
+    int return_code = 0;
 
     status = fll_execute_program(program, arguments, &parameter, 0, (void *) &return_code);
 
@@ -370,15 +345,7 @@ extern "C" {
       if (F_status_set_fine(status) == F_interrupt) return status;
 
       if (F_status_set_fine(status) == F_file_found_not) {
-        if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->main->error.to.stream) {
-          f_file_stream_lock(data_make->main->error.to);
-
-          fl_print_format("%r%[%QFailed to find program '%]", data_make->main->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
-          fl_print_format("%[%Q%]", data_make->main->error.to, data_make->error.notable, program, data_make->error.notable);
-          fl_print_format("%[' for executing.%]%r", data_make->main->error.to, data_make->error.context, data_make->error.context, f_string_eol_s);
-
-          f_file_stream_unlock(data_make->main->error.to);
-        }
+        fake_make_print_error_program_not_found(data_make->setting, data_make->main->error, program);
       }
       else if (F_status_set_fine(status) != F_failure) {
         fake_print_error(data_make->setting, data_make->main->error, status, macro_fake_f(fll_execute_program));
@@ -438,15 +405,7 @@ extern "C" {
       return status;
     }
 
-    if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->main->error.to.stream) {
-      f_file_stream_lock(data_make->main->error.to);
-
-      fl_print_format("%r%[%QFailed with return code %]", data_make->main->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
-      fl_print_format("%[%i%]", data_make->main->error.to, data_make->error.notable, return_code, data_make->error.notable);
-      fl_print_format("%[.%]%r", data_make->main->error.to, data_make->error.context, data_make->error.context, f_string_eol_s);
-
-      f_file_stream_unlock(data_make->main->error.to);
-    }
+    fake_make_print_error_program_failed(data_make->setting, data_make->main->error, return_code);
 
     if (data_make->setting_make.fail == fake_make_operation_fail_exit_e) return F_status_set_error(F_failure);
 

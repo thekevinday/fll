@@ -161,9 +161,9 @@ extern "C" {
         &data_make->main->parameters.array[fake_parameter_mode_e],
       };
 
-      const f_string_dynamics_t *source[] = {
-        &data_make->data->setting->defines,
-        &data_make->data->setting->modes,
+      const f_string_dynamics_t source[] = {
+        data_make->data->setting->defines,
+        data_make->data->setting->modes,
       };
 
       f_string_dynamics_t * const destination[] = {
@@ -181,14 +181,13 @@ extern "C" {
         &data_make->parameter_value.mode,
       };
 
-      uint8_t i = 0;
       f_array_length_t j = 0;
 
-      for (; i < 2; ++i) {
+      for (uint8_t i = 0; i < 2; ++i) {
 
         if (!(console[i]->result & f_console_result_found_e)) continue;
 
-        for (j = 0; j < source[i]->used; ++j) {
+        for (j = 0; j < source[i].used; ++j) {
 
           if (destination[i]->used + 2 > destination[i]->size) {
             *status = f_string_dynamics_increase_by(fake_default_allocation_small_d, destination[i]);
@@ -244,10 +243,10 @@ extern "C" {
             return;
           }
 
-          *status = f_string_dynamic_append_nulless(source[i]->array[j], &destination[i]->array[destination[i]->used]);
+          *status = f_string_dynamic_append_nulless(source[i].array[j], &destination[i]->array[destination[i]->used]);
 
           if (F_status_is_error_not(*status)) {
-            *status = f_string_dynamic_append_nulless(source[i]->array[j], &destination_value[i]->array[destination_value[i]->used]);
+            *status = f_string_dynamic_append_nulless(source[i].array[j], &destination_value[i]->array[destination_value[i]->used]);
           }
 
           if (F_status_is_error(*status)) {
@@ -275,16 +274,16 @@ extern "C" {
         fake_short_work_s,
       };
 
-      const f_console_parameter_t console[] = {
-        data_make->main->parameters.array[fake_parameter_build_e],
-        data_make->main->parameters.array[fake_parameter_data_e],
-        data_make->main->parameters.array[fake_parameter_documents_e],
-        data_make->main->parameters.array[fake_parameter_fakefile_e],
-        data_make->main->parameters.array[fake_parameter_licenses_e],
-        data_make->main->parameters.array[fake_parameter_process_e],
-        data_make->main->parameters.array[fake_parameter_settings_e],
-        data_make->main->parameters.array[fake_parameter_sources_e],
-        data_make->main->parameters.array[fake_parameter_work_e],
+      const f_console_parameter_t *console[] = {
+        &data_make->main->parameters.array[fake_parameter_build_e],
+        &data_make->main->parameters.array[fake_parameter_data_e],
+        &data_make->main->parameters.array[fake_parameter_documents_e],
+        &data_make->main->parameters.array[fake_parameter_fakefile_e],
+        &data_make->main->parameters.array[fake_parameter_licenses_e],
+        &data_make->main->parameters.array[fake_parameter_process_e],
+        &data_make->main->parameters.array[fake_parameter_settings_e],
+        &data_make->main->parameters.array[fake_parameter_sources_e],
+        &data_make->main->parameters.array[fake_parameter_work_e],
       };
 
       const f_string_dynamic_t source[] = {
@@ -337,7 +336,7 @@ extern "C" {
 
       for (uint8_t i = 0; i < 9; ++i) {
 
-        if (!(console[i].result & f_console_result_found_e)) continue;
+        if (!(console[i]->result & f_console_result_found_e)) continue;
 
         if (destination[i]->used + 2 > destination[i]->size) {
           *status = f_string_dynamics_increase_by(fake_default_allocation_small_d, destination[i]);
@@ -361,10 +360,10 @@ extern "C" {
           return;
         }
 
-        if (console[i].flag & f_console_flag_normal_e) {
+        if (console[i]->flag & f_console_flag_normal_e) {
           *status = f_string_dynamic_append_nulless(f_console_symbol_short_normal_s, &destination[i]->array[destination[i]->used]);
         }
-        else if (console[i].flag & f_console_flag_inverse_e) {
+        else if (console[i]->flag & f_console_flag_inverse_e) {
           *status = f_string_dynamic_append_nulless(f_console_symbol_short_inverse_s, &destination[i]->array[destination[i]->used]);
         }
 

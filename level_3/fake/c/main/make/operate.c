@@ -552,7 +552,7 @@ extern "C" {
                     } // for
                   } // for
 
-                  *status = f_string_dynamic_increase_by(l, &data_make->cache_arguments.array[data_make->cache_arguments.used]);
+                  *status = f_string_dynamic_increase_by(l + f_string_space_s.used + 1, &data_make->cache_arguments.array[data_make->cache_arguments.used]);
 
                   if (F_status_is_error(*status)) {
                     fake_print_error(data_make->setting, data_make->main->error, *status, macro_fake_f(f_string_dynamic_increase_by));
@@ -650,7 +650,7 @@ extern "C" {
                       } // for
                     } // for
 
-                    *status = f_string_dynamic_increase_by(l, &data_make->cache_arguments.array[data_make->cache_arguments.used]);
+                    *status = f_string_dynamic_increase_by(l + f_string_space_s.used + 1, &data_make->cache_arguments.array[data_make->cache_arguments.used]);
 
                     if (F_status_is_error(*status)) {
                       fake_print_error(data_make->setting, data_make->main->error, *status, macro_fake_f(f_string_dynamic_increase_by));
@@ -826,6 +826,7 @@ extern "C" {
 
     f_status_t status = F_none;
     bool unmatched = F_true;
+    uint8_t i = 0;
 
     data_make->cache_1.used = 0;
 
@@ -842,7 +843,7 @@ extern "C" {
         data_make->setting_build.version_target,
       };
 
-      for (uint8_t i = 0; i < 3; ++i) {
+      for (; i < 3; ++i) {
 
         status = fl_string_dynamic_partial_compare_string(uint8_name[i].string, data_make->buffer, uint8_name[i].used, range_name);
 
@@ -877,7 +878,7 @@ extern "C" {
         data_make->setting_build.search_static,
       };
 
-      for (uint8_t i = 0; i < 7; ++i) {
+      for (i = 0; i < 7; ++i) {
 
         status = fl_string_dynamic_partial_compare_string(bool_name[i].string, data_make->buffer, bool_name[i].used, range_name);
 
@@ -937,7 +938,7 @@ extern "C" {
         data_make->setting_build.version_minor,
       };
 
-      for (uint8_t i = 0; i < 17; ++i) {
+      for (i = 0; i < 17; ++i) {
 
         status = fl_string_dynamic_partial_compare_string(dynamic_name[i].string, data_make->buffer, dynamic_name[i].used, range_name);
 
@@ -1069,14 +1070,16 @@ extern "C" {
         0,                                         // modes_default
       };
 
-      for (uint8_t i = 0; i < 36; ++i) {
+      f_array_length_t j = 0;
+
+      for (i = 0; i < 36; ++i) {
 
         status = fl_string_dynamic_partial_compare_string(dynamics_name[i].string, data_make->buffer, dynamics_name[i].used, range_name);
 
         if (status == F_equal_to) {
           unmatched = F_false;
 
-          for (f_array_length_t j = 0; j < dynamics_value[i].used; ++j) {
+          for (j = 0; j < dynamics_value[i].used; ++j) {
 
             status = f_string_dynamic_mash(f_string_space_s, dynamics_value[i].array[j], &data_make->cache_1);
             if (F_status_is_error(status)) break;
@@ -1165,7 +1168,7 @@ extern "C" {
     data_make->cache_1.used = 0;
     data_make->cache_2.used = 0;
 
-    status = f_string_dynamic_increase_by((range_name.stop - range_name.start) + 1, &data_make->cache_1);
+    status = f_string_dynamic_increase_by((range_name.stop - range_name.start) + 2, &data_make->cache_1);
 
     if (F_status_is_error_not(status)) {
       status = f_string_dynamic_partial_append_nulless(data_make->buffer, range_name, &data_make->cache_1);
@@ -1457,28 +1460,7 @@ extern "C" {
     if (F_status_set_error(*status) == F_interrupt) return 0;
 
     if (i == section->objects.used && F_status_is_error_not(*status) && (state_process.operation == fake_make_operation_type_and_e || state_process.operation == fake_make_operation_type_else_e || state_process.operation == fake_make_operation_type_if_e || state_process.operation == fake_make_operation_type_or_e)) {
-      if (data_make->data->main->error.verbosity > f_console_verbosity_quiet_e && data_make->main->error.to.stream) {
-        f_file_stream_lock(data_make->main->error.to);
-
-        fl_print_format("%r%[%QIncomplete '%]", data_make->main->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
-
-        if (state_process.operation == fake_make_operation_type_and_e) {
-          fl_print_format("%[%r%]", data_make->main->error.to, data_make->error.notable, fake_make_operation_and_s, data_make->error.notable);
-        }
-        else if (state_process.operation == fake_make_operation_type_else_e) {
-          fl_print_format("%[%r%]", data_make->main->error.to, data_make->error.notable, fake_make_operation_else_s, data_make->error.notable);
-        }
-        else if (state_process.operation == fake_make_operation_type_if_e) {
-          fl_print_format("%[%r%]", data_make->main->error.to, data_make->error.notable, fake_make_operation_if_s, data_make->error.notable);
-        }
-        else {
-          fl_print_format("%[%r%]", data_make->main->error.to, data_make->error.notable, fake_make_operation_or_s, data_make->error.notable);
-        }
-
-        fl_print_format("%[' at end of the section.%]%r", data_make->main->error.to, data_make->error.context, data_make->error.context, f_string_eol_s);
-
-        f_file_stream_unlock(data_make->main->error.to);
-      }
+      fake_make_print_error_operation_incomplete(data_make->setting, data_make->main->error, state_process.operation);
 
       fake_print_message_section_operation_failed(data_make->setting, data_make->error, data_make->buffer, section->name, section->objects.array[section->objects.used - 1]);
 

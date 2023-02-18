@@ -353,6 +353,39 @@ extern "C" {
   }
 #endif // _di_fake_print_operation_all_complete_
 
+#ifndef _di_fake_print_operation_cancelled_
+  f_status_t fake_print_operation_cancelled(fake_setting_t * const setting, const fl_print_t print, const uint8_t operation) {
+
+    if (!setting || print.verbosity < f_console_verbosity_normal_e) return F_output_not;
+
+    f_file_stream_lock(print.to);
+
+    fake_print_line_first_unlocked(setting, print);
+
+    fl_print_format("%[The operation '%]%[", print.to, print.context, print.context, print.notable);
+
+    if (operation == fake_operation_build_e) {
+      f_print_dynamic(fake_other_operation_build_s, print.to);
+    }
+    else if (operation == fake_operation_clean_e) {
+      f_print_dynamic(fake_other_operation_clean_s, print.to);
+    }
+    else if (operation == fake_operation_make_e) {
+      f_print_dynamic(fake_other_operation_make_s, print.to);
+    }
+    else if (operation == fake_operation_skeleton_e) {
+      f_print_dynamic(fake_other_operation_skeleton_s, print.to);
+    }
+
+    fl_print_format("%]%[' is cancelled.%]%r", print.to, print.notable, print.context, print.context, f_string_eol_s);
+
+    f_file_stream_flush(print.to);
+    f_file_stream_unlock(print.to);
+
+    return F_none;
+  }
+#endif // _di_fake_print_operation_cancelled_
+
 #ifndef _di_fake_print_error_build_operation_file_
   f_status_t fake_print_error_build_operation_file(fake_setting_t * const setting, const fl_print_t print, const f_status_t status, const f_string_t function, const f_string_static_t operation, const f_string_static_t source, const f_string_static_t destination, const f_string_static_t how, const bool fallback) {
 
@@ -676,25 +709,6 @@ extern "C" {
     return F_true;
   }
 #endif // _di_fake_print_error_fss
-
-#ifndef _di_fake_print_error_parameter_missing_value_
-  f_status_t fake_print_error_parameter_missing_value(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t parameter) {
-
-    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
-
-    f_file_stream_lock(print.to);
-
-    fake_print_line_first_unlocked(setting, print);
-
-    fl_print_format("%[%QThe parameter '%]", print.to, print.context, print.prefix, print.context);
-    fl_print_format("%[%r%r%]", print.to, print.notable, f_console_symbol_long_normal_s, parameter, print.notable);
-    fl_print_format("%[' is specified, but no value is given.%]%r", print.to, print.context, print.context, f_string_eol_s);
-
-    f_file_stream_unlock(print.to);
-
-    return F_none;
-  }
-#endif // _di_fake_print_error_parameter_missing_value_
 
 #ifndef _di_fake_print_error_parameter_too_many_
   f_status_t fake_print_error_parameter_too_many(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t parameter) {

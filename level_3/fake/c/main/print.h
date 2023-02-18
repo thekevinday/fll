@@ -361,6 +361,26 @@ extern "C" {
 #endif // _di_fake_print_operation_all_complete_
 
 /**
+ * Print message for when the operation is cancelled.
+ *
+ * @param setting
+ *   The main program settings.
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   Designates the how and where to print.
+ * @param operation
+ *   The identifier of the operation that failed.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ */
+#ifndef _di_fake_print_operation_cancelled_
+  extern f_status_t fake_print_operation_cancelled(fake_setting_t * const setting, const fl_print_t print, const uint8_t operation);
+#endif // _di_fake_print_operation_cancelled_
+
+/**
  * Print build operation file error messages.
  *
  * @param setting
@@ -460,30 +480,6 @@ extern "C" {
 #ifndef _di_fake_print_error_fss_
   extern f_status_t fake_print_error_fss(fake_setting_t * const setting, const fl_print_t print, const f_status_t status, const f_string_t function, const f_string_static_t path_file, const f_string_range_t range, const bool fallback);
 #endif // _di_fake_print_error_fss_
-
-/**
- * Print an error message for when the parameter is missing its accompanying value.
- *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.status.
- * @param print
- *   Designates the how and where to print.
- * @param parameter
- *   The parameter name.
- *
- * @return
- *   F_none on success.
- *   F_output_not on success, but no printing is performed.
- *
- * @see f_file_stream_lock()
- * @see f_file_stream_unlock()
- * @see fl_print_format()
- */
-#ifndef _di_fake_print_error_parameter_missing_value_
-  extern f_status_t fake_print_error_parameter_missing_value(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t parameter);
-#endif // _di_fake_print_error_parameter_missing_value_
 
 /**
  * Print an error message for when the parameter is specified too many times.

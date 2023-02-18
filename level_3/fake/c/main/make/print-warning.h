@@ -99,6 +99,27 @@ extern "C" {
 #endif // _di_fake_make_print_warning_fakefile_empty_
 
 /**
+ * Print warning about a file not being found.
+ *
+ * @param setting
+ *   The main program settings.
+ *   (Must be of type fake_setting_t.)
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   The output structure to print to.
+ * @param file
+ *   The name or path of the file that is not found.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ */
+#ifndef _di_fake_make_print_warning_file_not_found_
+  extern f_status_t fake_make_print_warning_file_not_found(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t file);
+#endif // _di_fake_make_print_warning_file_not_found_
+
+/**
  * Print message when fake settings content is empty.
  *
  * @param setting

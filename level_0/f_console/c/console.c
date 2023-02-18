@@ -216,7 +216,7 @@ extern "C" {
         if (state.status == F_process) {
           i = state.needs.array[0];
 
-          parameters->array[i].result = f_console_result_value_e;
+          parameters->array[i].result |= f_console_result_value_e;
           parameters->array[i].values.array[parameters->array[i].values.used++] = state.location++;
         }
 
@@ -436,7 +436,7 @@ extern "C" {
                   parameters->array[i].locations.array[parameters->array[i].locations.used++] = state.location;
                 }
 
-                parameters->array[i].result = f_console_result_found_e;
+                parameters->array[i].result |= state.result | f_console_result_found_e;
                 parameters->array[i].location = state.location;
                 parameters->array[i].location_sub = state.location_sub;
                 parameters->array[i].locations_sub.array[parameters->array[i].locations_sub.used++] = state.location_sub;
@@ -603,7 +603,7 @@ extern "C" {
           state.status = f_array_lengths_increase(state_passed.step_small, &parameters->array[i].locations_sub);
           if (F_status_is_error(state.status)) break;
 
-          parameters->array[i].result = f_console_result_found_e;
+          parameters->array[i].result |= state.result | f_console_result_found_e;
           parameters->array[i].location = state.location;
           parameters->array[i].location_sub = 0;
           parameters->array[i].locations.array[parameters->array[i].locations.used++] = state.location;

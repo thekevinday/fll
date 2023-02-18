@@ -242,12 +242,14 @@ extern "C" {
 
         for (i = 0; i < 9; ++i) {
 
-          if (main->parameters.array[parameters[i]].result & f_console_result_found_e) {
+          if ((main->parameters.array[parameters[i]].result & f_console_result_found_e) && !(main->parameters.array[parameters[i]].result & f_console_result_value_e)) {
             setting->status = F_status_set_error(F_parameter);
 
-            fake_print_line_first_locked(setting, main->error);
+            if (main->error.verbosity > f_console_verbosity_quiet_e) {
+              fake_print_line_first_locked(setting, main->error);
 
-            fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, names[i]);
+              fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, names[i]);
+            }
 
             return;
           }
@@ -365,12 +367,14 @@ extern "C" {
 
         for (i = 0; i < 2; ++i) {
 
-          if (main->parameters.array[parameters[i]].result & f_console_result_found_e) {
+          if ((main->parameters.array[parameters[i]].result & f_console_result_found_e) && !(main->parameters.array[parameters[i]].result & f_console_result_value_e)) {
             setting->status = F_status_set_error(F_parameter);
 
-            fake_print_line_first_locked(setting, main->error);
+            if (main->error.verbosity > f_console_verbosity_quiet_e) {
+              fake_print_line_first_locked(setting, main->error);
 
-            fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, names[i]);
+              fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, names[i]);
+            }
 
             return;
           }

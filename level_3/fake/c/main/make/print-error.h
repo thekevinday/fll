@@ -72,16 +72,79 @@ extern "C" {
  *   The output structure to print to.
  * @param fakefile
  *   The name or path of the file that is empty.
- * @param item
+ * @param section
  *   The name of the missing section.
  *
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
  */
-#ifndef _di_fake_make_print_error_fakefile_item_missing_
-  extern f_status_t fake_make_print_error_fakefile_item_missing(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t fakefile, const f_string_static_t item);
-#endif // _di_fake_make_print_error_fakefile_item_missing_
+#ifndef _di_fake_make_print_error_fakefile_section_missing_
+  extern f_status_t fake_make_print_error_fakefile_section_missing(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t fakefile, const f_string_static_t section);
+#endif // _di_fake_make_print_error_fakefile_section_missing_
+
+/**
+ * Print error about an incomplete operation at the end of a section.
+ *
+ * @param setting
+ *   The main program settings.
+ *   (Must be of type fake_setting_t.)
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   The output structure to print to.
+ * @param operation
+ *   The code of the operation.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ */
+#ifndef _di_fake_make_print_error_operation_incomplete_
+  extern f_status_t fake_make_print_error_operation_incomplete(fake_setting_t * const setting, const fl_print_t print, const uint8_t operation);
+#endif // _di_fake_make_print_error_operation_incomplete_
+
+/**
+ * Print error about program failed.
+ *
+ * @param setting
+ *   The main program settings.
+ *   (Must be of type fake_setting_t.)
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   The output structure to print to.
+ * @param return_code
+ *   The return code from the program.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ */
+#ifndef _di_fake_make_print_error_program_failed_
+  extern f_status_t fake_make_print_error_program_failed(fake_setting_t * const setting, const fl_print_t print, const int return_code);
+#endif // _di_fake_make_print_error_program_failed_
+
+/**
+ * Print error about program not being found.
+ *
+ * @param setting
+ *   The main program settings.
+ *   (Must be of type fake_setting_t.)
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   The output structure to print to.
+ * @param program
+ *   The program name.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ */
+#ifndef _di_fake_make_print_error_program_not_found_
+  extern f_status_t fake_make_print_error_program_not_found(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t program);
+#endif // _di_fake_make_print_error_program_not_found_
 
 #ifdef __cplusplus
 } // extern "C"

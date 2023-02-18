@@ -204,7 +204,7 @@ extern "C" {
       }
 
       if (missing_main) {
-        fake_make_print_error_fakefile_item_missing(data_make->setting, data_make->main->warning, data_make->data->file_data_build_fakefile, fake_make_item_main_s);
+        fake_make_print_error_fakefile_section_missing(data_make->setting, data_make->main->warning, data_make->data->file_data_build_fakefile, fake_make_item_main_s);
 
         *status = F_status_set_error(F_failure);
 

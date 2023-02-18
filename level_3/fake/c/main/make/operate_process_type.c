@@ -7,6 +7,9 @@
 #include "operate.h"
 #include "operate_process.h"
 #include "operate_process_type.h"
+#include "print.h"
+#include "print-error.h"
+#include "print-warning.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -27,15 +30,7 @@ extern "C" {
       return F_none;
     }
 
-    if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
-      f_file_stream_lock(data_make->main->message.to);
-
-      fl_print_format("%rBreaking as '", data_make->main->message.to, f_string_eol_s);
-      fl_print_format("%[%Q%]", data_make->main->message.to, data_make->main->context.set.notable, data_make->cache_arguments.used ? data_make->cache_arguments.array[0] : fake_make_operation_argument_success_s, data_make->main->context.set.notable);
-      fl_print_format("'.%r", data_make->main->message.to, f_string_eol_s);
-
-      f_file_stream_unlock(data_make->main->message.to);
-    }
+    fake_make_print_operate_break_verbose(data_make->setting, data_make->main->message, data_make->cache_arguments);
 
     return status;
   }
@@ -324,14 +319,7 @@ extern "C" {
           return F_status_set_error(F_failure);
         }
 
-        if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
-          f_file_stream_lock(data_make->main->message.to);
-
-          fl_print_format("%r%s '%[%Q%]' to '", data_make->main->message.to, f_string_eol_s, clone ? "Cloned" : "Copied", data_make->main->context.set.notable, data_make->cache_arguments.array[i], data_make->main->context.set.notable);
-          fl_print_format("%[%Q%]'.%r", data_make->main->message.to, data_make->main->context.set.notable, destination, data_make->main->context.set.notable, f_string_eol_s);
-
-          f_file_stream_unlock(data_make->main->message.to);
-        }
+        fake_make_print_operate_copy_verbose(data_make->setting, data_make->main->message, clone, data_make->cache_arguments.array[i], destination);
       }
       else if (F_status_is_error(status_file)) {
         fake_print_error_file(data_make->setting, data_make->main->error, status_file, macro_fake_f(f_directory_is), data_make->cache_arguments.array[i], f_file_operation_identify_s, fll_error_file_type_directory_e);
@@ -359,8 +347,8 @@ extern "C" {
     if (F_status_is_error(status)) {
       fake_print_error(data_make->setting, data_make->main->error, status, macro_fake_f(f_environment_set));
     }
-    else if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
-      fll_print_format("%rDefined environment variable '%[%Q%]'.%r", data_make->main->message.to, f_string_eol_s, data_make->main->context.set.notable, data_make->cache_arguments.array[0], data_make->main->context.set.notable, f_string_eol_s);
+    else {
+      fake_make_print_operate_define_verbose(data_make->setting, data_make->main->message, data_make->cache_arguments.array[0]);
     }
 
     return status;
@@ -383,15 +371,7 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_file_found_not) {
-          if (data_make->main->warning.verbosity >= f_console_verbosity_verbose_e) {
-            f_file_stream_lock(data_make->main->warning.to);
-
-            fl_print_format("%r%[%QThe file '%]", data_make->main->warning.to, data_make->main->warning.prefix, f_string_eol_s);
-            fl_print_format("%[%Q%]", data_make->main->warning.to, data_make->main->warning.notable, data_make->cache_arguments.array[i], data_make->main->warning.notable);
-            fl_print_format("%[' cannot be found.%]%r", data_make->main->warning.to, f_string_eol_s);
-
-            f_file_stream_unlock(data_make->main->warning.to);
-          }
+          fake_make_print_warning_file_not_found(data_make->setting, data_make->main->warning, data_make->cache_arguments.array[i]);
 
           status = F_none;
         }
@@ -410,9 +390,7 @@ extern "C" {
         }
 
         if (F_status_set_fine(status) == F_file_found_not) {
-          if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
-            fll_print_format("%rThe directory '%[%Q%]' does not exist.%r", data_make->main->message.to, f_string_eol_s, data_make->main->context.set.notable, data_make->cache_arguments.array[i], data_make->main->context.set.notable, f_string_eol_s);
-          }
+          fake_make_print_operate_file_not_found_verbose(data_make->setting, data_make->main->message, F_true, data_make->cache_arguments.array[i]);
 
           status = F_none;
         }
@@ -422,17 +400,13 @@ extern "C" {
 
           return F_status_set_error(F_failure);
         }
-
-        if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
-          fll_print_format("%rRemoved '%[%Q%]'.%r", data_make->main->message.to, f_string_eol_s, data_make->main->context.set.notable, data_make->cache_arguments.array[i], data_make->main->context.set.notable, f_string_eol_s);
-        }
       }
       else {
         status = f_file_remove(data_make->cache_arguments.array[i]);
 
         if (F_status_set_fine(status) == F_file_found_not) {
           if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
-            fll_print_format("%rThe file '%[%Q%]' does not exist.%r", data_make->main->message.to, f_string_eol_s, data_make->main->context.set.notable, data_make->cache_arguments.array[i], data_make->main->context.set.notable, f_string_eol_s);
+            fake_make_print_operate_file_not_found_verbose(data_make->setting, data_make->main->message, F_false, data_make->cache_arguments.array[i]);
           }
 
           status = F_none;
@@ -443,11 +417,9 @@ extern "C" {
 
           return F_status_set_error(F_failure);
         }
-
-        if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
-          fll_print_format("%rRemoved '%[%Q%]'.%r", data_make->main->message.to, f_string_eol_s, data_make->main->context.set.notable, data_make->cache_arguments.array[i], data_make->main->context.set.notable, f_string_eol_s);
-        }
       }
+
+      fake_make_print_operate_delete_verbose(data_make->setting, data_make->main->message, data_make->cache_arguments.array[i]);
     } // for
 
     return F_none;
