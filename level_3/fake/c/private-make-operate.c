@@ -583,7 +583,7 @@ extern "C" {
                     } // for
                   } // for
 
-                  *status = f_string_dynamic_increase_by(l, &data_make->cache_arguments.array[data_make->cache_arguments.used]);
+                  *status = f_string_dynamic_increase_by(l + f_string_space_s.used + 1, &data_make->cache_arguments.array[data_make->cache_arguments.used]);
 
                   if (F_status_is_error(*status)) {
                     fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamic_increase_by", F_true);
@@ -681,7 +681,7 @@ extern "C" {
                       } // for
                     } // for
 
-                    *status = f_string_dynamic_increase_by(l, &data_make->cache_arguments.array[data_make->cache_arguments.used]);
+                    *status = f_string_dynamic_increase_by(l + f_string_space_s.used + 1, &data_make->cache_arguments.array[data_make->cache_arguments.used]);
 
                     if (F_status_is_error(*status)) {
                       fll_error_print(data_make->error, F_status_set_fine(*status), "f_string_dynamic_increase_by", F_true);
@@ -1196,7 +1196,7 @@ extern "C" {
     data_make->cache_1.used = 0;
     data_make->cache_2.used = 0;
 
-    status = f_string_dynamic_increase_by((range_name.stop - range_name.start) + 1, &data_make->cache_1);
+    status = f_string_dynamic_increase_by((range_name.stop - range_name.start) + 2, &data_make->cache_1);
 
     if (F_status_is_error_not(status)) {
       status = f_string_dynamic_partial_append_nulless(data_make->buffer, range_name, &data_make->cache_1);
