@@ -477,7 +477,15 @@ extern "C" {
         }
 
         if (F_status_is_error(status)) {
-          if (main->error.verbosity != f_console_verbosity_quiet_e) {
+          if (F_status_set_fine(status) == F_interrupt) {
+            flockfile(main->output.to.stream);
+
+            fl_print_format("%rThe operation '%[%r%]", main->output.to.stream, f_string_eol_s, main->output.notable, operations_name, main->output.notable);
+            fl_print_format("' is cancelled.%r", main->output.to.stream, f_string_eol_s);
+
+            funlockfile(main->output.to.stream);
+          }
+          else if (main->error.verbosity != f_console_verbosity_quiet_e) {
             flockfile(main->error.to.stream);
 
             fl_print_format("%r%[%QThe operation '%]", main->error.to.stream, f_string_eol_s, main->error.context, main->error.prefix, main->error.context);
