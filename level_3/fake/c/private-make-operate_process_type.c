@@ -1712,12 +1712,12 @@ extern "C" {
       // The created relative path is for verbosity purposes and as such its failure to be processed should not be treated as a failure of the function.
       if (F_status_is_error(status)) {
         fll_error_print(data_make->error, F_status_set_fine(status), "fake_make_path_relative", F_true);
-        fll_print_format("Changed to project path '%[%Q%]'.%r", data_make->main->output.to.stream, data_make->main->context.set.notable, argument, data_make->main->context.set.notable, f_string_eol_s);
+        fll_print_format("Changed project path to '%[%Q%]'.%r", data_make->main->output.to.stream, data_make->main->context.set.notable, argument, data_make->main->context.set.notable, f_string_eol_s);
 
         return F_status_set_error(F_failure);
       }
 
-      fll_print_format("Changed to project path '%[%Q%]'.%r", data_make->main->output.to.stream, data_make->main->context.set.notable, data_make->cache_path, data_make->main->context.set.notable, f_string_eol_s);
+      fll_print_format("Changed project path to '%[%Q%]'.%r", data_make->main->output.to.stream, data_make->main->context.set.notable, data_make->cache_path, data_make->main->context.set.notable, f_string_eol_s);
     }
 
     return F_none;
@@ -1846,10 +1846,10 @@ extern "C" {
         // The created relative path is for verbosity purposes and as such its failure to be processed should not be treated as a failure of the function.
         if (F_status_is_error(status)) {
           fll_error_print(data_make->error, F_status_set_fine(status), "fake_make_path_relative", F_true);
-          fll_print_format("Changed to project path '%[%Q%]'.%r", data_make->main->output.to.stream, data_make->main->context.set.notable, data_make->path.stack.array[data_make->path.stack.used], data_make->main->context.set.notable, f_string_eol_s);
+          fll_print_format("Changed project path to '%[%Q%]'.%r", data_make->main->output.to.stream, data_make->main->context.set.notable, data_make->path.stack.array[data_make->path.stack.used], data_make->main->context.set.notable, f_string_eol_s);
         }
         else {
-          fll_print_format("Changed to project path '%[%Q%]'.%r", data_make->main->output.to.stream, data_make->main->context.set.notable, data_make->cache_path, data_make->main->context.set.notable, f_string_eol_s);
+          fll_print_format("Changed project path to '%[%Q%]'.%r", data_make->main->output.to.stream, data_make->main->context.set.notable, data_make->cache_path, data_make->main->context.set.notable, f_string_eol_s);
         }
       }
 
@@ -1874,7 +1874,7 @@ extern "C" {
     }
 
     if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
-      fll_print_format("Changed to project path ''.%r", data_make->main->output.to.stream, f_string_eol_s);
+      fll_print_format("Changed project path to ''.%r", data_make->main->output.to.stream, f_string_eol_s);
     }
 
     // Clear stack, except for the project root.
