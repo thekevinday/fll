@@ -1426,7 +1426,7 @@ extern "C" {
       }
 
       if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
-        fll_print_format("Changed mode of '%Q' to %#@u.%r", data_make->main->output.to.stream, data_make->cache_arguments.array[i], mode, f_string_eol_s);
+        fll_print_format("Changed mode of '%[%Q%]' to %[%#@u%].%r", data_make->main->output.to.stream, data_make->main->context.set.notable, data_make->cache_arguments.array[i], data_make->main->context.set.notable, data_make->main->context.set.notable, mode, data_make->main->context.set.notable, f_string_eol_s);
       }
     } // for
 
