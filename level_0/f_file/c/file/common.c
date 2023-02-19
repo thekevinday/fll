@@ -21,6 +21,10 @@ extern "C" {
     const f_string_static_t f_file_type_name_fifo_s = macro_f_string_static_t_initialize(F_file_type_name_fifo_s, 0, F_file_type_name_fifo_s_length);
   #endif // _di_f_file_type_name_fifo_s_
 
+  #ifndef _di_f_file_type_name_file_s_
+    const f_string_static_t f_file_type_name_file_s = macro_f_string_static_t_initialize(F_file_type_name_file_s, 0, F_file_type_name_file_s_length);
+  #endif // _di_f_file_type_name_file_s_
+
   #ifndef _di_f_file_type_name_link_s_
     const f_string_static_t f_file_type_name_link_s = macro_f_string_static_t_initialize(F_file_type_name_link_s, 0, F_file_type_name_link_s_length);
   #endif // _di_f_file_type_name_link_s_

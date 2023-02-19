@@ -322,7 +322,7 @@ extern "C" {
       }
     }
 
-    fake_make_print_program_verbose(data_make->setting, data_make->main->message, program, arguments);
+    fake_make_print_operate_program_verbose(data_make->setting, data_make->main->message, program, arguments);
 
     // Child processes should receive all signals, without blocking.
     f_signal_how_t signals = f_signal_how_t_initialize;

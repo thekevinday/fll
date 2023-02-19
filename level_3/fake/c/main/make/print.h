@@ -44,7 +44,8 @@ extern "C" {
  * @param print
  *   The output structure to print to.
  * @param arguments
- *   The arguments passed to the break operation.
+ *   The arguments where the first argument, if defined, is the exiting as string.
+ *   Set arguments.used to 0 to use the default "success" exiting as string.
  *
  * @return
  *   F_none on success.
@@ -123,6 +124,28 @@ extern "C" {
 #endif // _di_fake_make_print_operate_delete_verbose_
 
 /**
+ * Print operate exiting as verbose message.
+ *
+ * @param setting
+ *   The main program settings.
+ *   (Must be of type fake_setting_t.)
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   The output structure to print to.
+ * @param arguments
+ *   The arguments where the first argument, if defined, is the exiting as string.
+ *   Set arguments.used to 0 to use the default "success" exiting as string.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ */
+#ifndef _di_fake_make_print_operate_exiting_as_verbose_
+  extern f_status_t fake_make_print_operate_exiting_as_verbose(fake_setting_t * const setting, const fl_print_t print, const f_string_statics_t arguments);
+#endif // _di_fake_make_print_operate_exiting_as_verbose_
+
+/**
  * Print operate file or directory not found verbose message.
  *
  * @param setting
@@ -147,6 +170,165 @@ extern "C" {
 #endif // _di_fake_make_print_operate_file_not_found_verbose_
 
 /**
+ * Print verbose program message.
+ *
+ * @param setting
+ *   The main program settings.
+ *   (Must be of type fake_setting_t.)
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   The output structure to print to.
+ * @param program
+ *   The program name.
+ * @param arguments
+ *   The arguments pass to the program.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ */
+#ifndef _di_fake_make_print_operate_program_verbose_
+  extern f_status_t fake_make_print_operate_program_verbose(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t program, const f_string_statics_t arguments);
+#endif // _di_fake_make_print_operate_program_verbose_
+
+/**
+ * Print verbose message about setting failure state.
+ *
+ * @param setting
+ *   The main program settings.
+ *   (Must be of type fake_setting_t.)
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   The output structure to print to.
+ * @param fail
+ *   The failure state code being set to.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ */
+#ifndef _di_fake_make_print_operate_set_failure_state_verbose_
+  extern f_status_t fake_make_print_operate_set_failure_state_verbose(fake_setting_t * const setting, const fl_print_t print, const uint8_t fail);
+#endif // _di_fake_make_print_operate_set_failure_state_verbose_
+
+/**
+ * Print verbose message about setting the file mode.
+ *
+ * @param setting
+ *   The main program settings.
+ *   (Must be of type fake_setting_t.)
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   The output structure to print to.
+ * @param path
+ *   The file path having the mode changed.
+ * @param mode
+ *   The mode being changed to.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ */
+#ifndef _di_fake_make_print_operate_set_mode_verbose_
+  extern f_status_t fake_make_print_operate_set_mode_verbose(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t path, const mode_t mode);
+#endif // _di_fake_make_print_operate_set_mode_verbose_
+
+/**
+ * Print verbose message about changing the project path.
+ *
+ * @param setting
+ *   The main program settings.
+ *   (Must be of type fake_setting_t.)
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   The output structure to print to.
+ * @param path
+ *   The path being changed to.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ */
+#ifndef _di_fake_make_print_operate_set_path_verbose_
+  extern f_status_t fake_make_print_operate_set_path_verbose(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t path);
+#endif // _di_fake_make_print_operate_set_path_verbose_
+
+/**
+ * Print verbose message about setting owner or group.
+ *
+ * @param setting
+ *   The main program settings.
+ *   (Must be of type fake_setting_t.)
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   The output structure to print to.
+ * @param what
+ *   Bitwise flags tweaking the message printed.
+ *   - 0x1 = When set, print as recursive; When not set, print as non-recursive.
+ *   - 0x2 = When set, print as Owner; When not set, print as Group.
+ * @param role
+ *   A string representing the owner or group name.
+ * @param id
+ *   The uid_t or gid_t representing the owner or group.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ */
+#ifndef _di_fake_make_print_operate_set_role_verbose_
+  extern f_status_t fake_make_print_operate_set_role_verbose(fake_setting_t * const setting, const fl_print_t print, const uint8_t what, f_string_static_t role, f_number_unsigned_t id);
+#endif // _di_fake_make_print_operate_set_role_verbose_
+
+/**
+ * Print verbose message about create a symbolic link.
+ *
+ * @param setting
+ *   The main program settings.
+ *   (Must be of type fake_setting_t.)
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   The output structure to print to.
+ * @param source
+ *   A string the symbolic link is from.
+ * @param destination
+ *   A string the symbolic link is to.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ */
+#ifndef _di_fake_make_print_operate_symbolic_link_verbose_
+  extern f_status_t fake_make_print_operate_symbolic_link_verbose(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t source, const f_string_static_t destination);
+#endif // _di_fake_make_print_operate_symbolic_link_verbose_
+
+/**
+ * Print verbose message about touching a file.
+ *
+ * @param setting
+ *   The main program settings.
+ *   (Must be of type fake_setting_t.)
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   The output structure to print to.
+ * @param path
+ *   The file path being touched.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ */
+#ifndef _di_fake_make_print_operate_touch_verbose_
+  extern f_status_t fake_make_print_operate_touch_verbose(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t path);
+#endif // _di_fake_make_print_operate_touch_verbose_
+
+/**
  * Print the processing section message.
  *
  * @param setting
@@ -168,29 +350,6 @@ extern "C" {
 #ifndef _di_fake_make_print_processing_section_
   extern f_status_t fake_make_print_processing_section(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t buffer, const f_fss_named_t section);
 #endif // _di_fake_make_print_processing_section_
-
-/**
- * Print verbose program message.
- *
- * @param setting
- *   The main program settings.
- *   (Must be of type fake_setting_t.)
- *
- *   This does not alter setting.status.
- * @param print
- *   The output structure to print to.
- * @param program
- *   The program name.
- * @param arguments
- *   The arguments pass to the program.
- *
- * @return
- *   F_none on success.
- *   F_output_not on success, but no printing is performed.
- */
-#ifndef _di_fake_make_print_program_verbose_
-  extern f_status_t fake_make_print_program_verbose(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t program, const f_string_statics_t arguments);
-#endif // _di_fake_make_print_program_verbose_
 
 #ifdef __cplusplus
 } // extern "C"

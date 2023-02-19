@@ -80,6 +80,7 @@ extern "C" {
  *  - character: A string representing the character file type.
  *  - directory: A string representing the directory file type.
  *  - fifo:      A string representing the fifo file type.
+ *  - file:      A string representing the common term for a regular file.
  *  - link:      A string representing the link file type.
  *  - regular:   A string representing the regular file type.
  *  - socket:    A string representing the socket file type.
@@ -89,6 +90,7 @@ extern "C" {
   #define F_file_type_name_character_s "character"
   #define F_file_type_name_directory_s "directory"
   #define F_file_type_name_fifo_s      "fifo"
+  #define F_file_type_name_file_s      "file"
   #define F_file_type_name_link_s      "link"
   #define F_file_type_name_regular_s   "regular"
   #define F_file_type_name_socket_s    "socket"
@@ -97,6 +99,7 @@ extern "C" {
   #define F_file_type_name_character_s_length 9
   #define F_file_type_name_directory_s_length 9
   #define F_file_type_name_fifo_s_length      4
+  #define F_file_type_name_file_s_length      4
   #define F_file_type_name_link_s_length      4
   #define F_file_type_name_regular_s_length   7
   #define F_file_type_name_socket_s_length    6
@@ -116,6 +119,10 @@ extern "C" {
   #ifndef _di_f_file_type_name_fifo_s_
     extern const f_string_static_t f_file_type_name_fifo_s;
   #endif // _di_f_file_type_name_fifo_s_
+
+  #ifndef _di_f_file_type_name_file_s_
+    extern const f_string_static_t f_file_type_name_file_s;
+  #endif // _di_f_file_type_name_file_s_
 
   #ifndef _di_f_file_type_name_link_s_
     extern const f_string_static_t f_file_type_name_link_s;
