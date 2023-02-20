@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #if !defined(_di_fll_error_print_) || !defined(_di_fll_error_file_print_)
-  f_status_t private_fll_error_print(const fl_print_t print, const f_status_t status, const f_string_t function, const bool fallback) {
+  f_status_t private_fll_error_print(const fl_print_t print, const f_status_t status, const f_string_t function, const uint8_t flag) {
 
     if (status == F_access_denied) {
       if (print.verbosity != f_console_verbosity_quiet_e) {
@@ -240,7 +240,7 @@ extern "C" {
       return F_false;
     }
 
-    if (fallback && print.verbosity != f_console_verbosity_quiet_e) {
+    if ((flag & fll_error_file_flag_fallback_e) && print.verbosity != f_console_verbosity_quiet_e) {
       if (print.verbosity != f_console_verbosity_quiet_e) {
         flockfile(print.to.stream);
 
@@ -267,6 +267,21 @@ extern "C" {
       fl_print_format("%[%S%]", print.to, print.notable, function, print.notable);
       fl_print_format("%[()", print.to, print.context);
     }
+  }
+#endif // !defined(_di_fll_error_print_) || !defined(_di_fll_error_file_print_)
+
+#if !defined(_di_fll_error_print_) || !defined(_di_fll_error_file_print_)
+  void private_fll_error_print_unable_to(const fl_print_t print, const f_string_static_t operation, const f_string_static_t name, const f_string_static_t type, const f_string_t message) {
+
+    if (print.verbosity < f_console_verbosity_error_e) return;
+
+    flockfile(print.to.stream);
+
+    fl_print_format("%[%QUnable to %Q %Q '%]", print.to, print.context, print.prefix, operation, type, print.context);
+    fl_print_format("%[%Q%]", print.to, print.notable, name, print.notable);
+    fl_print_format("%['%S%S.%]%r", print.to, print.context, message ? ", " : "", message ? message : "", print.context, f_string_eol_s);
+
+    funlockfile(print.to.stream);
   }
 #endif // !defined(_di_fll_error_print_) || !defined(_di_fll_error_file_print_)
 

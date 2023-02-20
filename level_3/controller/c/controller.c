@@ -37,7 +37,7 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           controller_print_line_first_locked(setting, main->error);
-          fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process_context", F_true);
+          fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process_context", fll_error_file_flag_fallback_e);
           controller_print_line_last_locked(setting, main->error);
 
           return;
@@ -56,7 +56,7 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           controller_print_line_first_locked(setting, main->error);
-          fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process_verbosity", F_true);
+          fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process_verbosity", fll_error_file_flag_fallback_e);
           controller_print_line_last_locked(setting, main->error);
 
           return;
@@ -103,7 +103,7 @@ extern "C" {
     }
 
     if (F_status_is_error(status)) {
-      fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_append", F_true);
+      fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_append", fll_error_file_flag_fallback_e);
 
       return status;
     }
@@ -119,7 +119,7 @@ extern "C" {
     status = f_path_current(F_false, &setting.path_current);
 
     if (F_status_is_error(status)) {
-      fll_error_print(main->error, F_status_set_fine(status), "f_path_current", F_true);
+      fll_error_print(main->error, F_status_set_fine(status), "f_path_current", fll_error_file_flag_fallback_e);
     }
     else {
       if (main->parameters.array[controller_parameter_settings_e].result & f_console_result_found_e) {
@@ -141,7 +141,7 @@ extern "C" {
         status = controller_path_canonical_relative(&setting, argv[index], &setting.path_setting);
 
         if (F_status_is_error(status)) {
-          fll_error_file_print(main->error, F_status_set_fine(status), "controller_path_canonical_relative", F_true, argv[index], f_file_operation_verify_s, fll_error_file_type_path_e);
+          fll_error_file_print(main->error, F_status_set_fine(status), "controller_path_canonical_relative", fll_error_file_flag_fallback_e, argv[index], f_file_operation_verify_s, fll_error_file_type_path_e);
         }
       }
       else {
@@ -155,7 +155,7 @@ extern "C" {
         }
 
         if (F_status_is_error(status)) {
-          fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_append", F_true);
+          fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_append", fll_error_file_flag_fallback_e);
         }
       }
     }
@@ -183,7 +183,7 @@ extern "C" {
           status = controller_path_canonical_relative(&setting, argv[index], &setting.path_pid);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "controller_path_canonical_relative", F_true, argv[index], f_file_operation_verify_s, fll_error_file_type_path_e);
+            fll_error_file_print(main->error, F_status_set_fine(status), "controller_path_canonical_relative", fll_error_file_flag_fallback_e, argv[index], f_file_operation_verify_s, fll_error_file_type_path_e);
           }
         }
       }
@@ -214,7 +214,7 @@ extern "C" {
       }
 
       if (F_status_is_error(status)) {
-        fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_append", F_true);
+        fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_append", fll_error_file_flag_fallback_e);
       }
     }
 
@@ -239,13 +239,13 @@ extern "C" {
           status = controller_path_canonical_relative(&setting, argv[index], &setting.path_cgroup);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "controller_path_canonical_relative", F_true, argv[index], f_file_operation_verify_s, fll_error_file_type_path_e);
+            fll_error_file_print(main->error, F_status_set_fine(status), "controller_path_canonical_relative", fll_error_file_flag_fallback_e, argv[index], f_file_operation_verify_s, fll_error_file_type_path_e);
           }
           else {
             status = f_string_append_assure(F_path_separator_s, 1, &setting.path_cgroup);
 
             if (F_status_is_error(status)) {
-              fll_error_print(main->error, F_status_set_fine(status), "f_string_append_assure", F_true);
+              fll_error_print(main->error, F_status_set_fine(status), "f_string_append_assure", fll_error_file_flag_fallback_e);
             }
           }
         }
@@ -327,13 +327,13 @@ extern "C" {
         }
 
         if (F_status_is_error(status)) {
-          fll_error_print(main->error, F_status_set_fine(status), "f_string_append_nulless", F_true);
+          fll_error_print(main->error, F_status_set_fine(status), "f_string_append_nulless", fll_error_file_flag_fallback_e);
         }
         else {
           status = f_string_append_assure(F_path_separator_s, 1, &setting.path_cgroup);
 
           if (F_status_is_error(status)) {
-            fll_error_print(main->error, F_status_set_fine(status), "f_string_append_assure", F_true);
+            fll_error_print(main->error, F_status_set_fine(status), "f_string_append_assure", fll_error_file_flag_fallback_e);
           }
         }
       }
@@ -368,7 +368,7 @@ extern "C" {
           controller_unlock_print_flush(main->warning.to, 0);
         }
         else if (F_status_set_fine(status_delete) != F_interrupt) {
-          fll_error_file_print(main->warning, F_status_set_fine(status_delete), "controller_file_pid_delete", F_true, setting.path_pid, f_file_operation_delete_s, fll_error_file_type_file_e);
+          fll_error_file_print(main->warning, F_status_set_fine(status_delete), "controller_file_pid_delete", fll_error_file_flag_fallback_e, setting.path_pid, f_file_operation_delete_s, fll_error_file_type_file_e);
         }
       }
     }

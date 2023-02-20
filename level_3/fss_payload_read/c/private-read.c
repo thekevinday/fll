@@ -71,7 +71,7 @@ extern "C" {
         status = fss_payload_read_depths_resize(depth_size, &data->depths);
 
         if (F_status_is_error(status)) {
-          fll_error_print(main->error, F_status_set_fine(status), "fss_payload_read_depths_resize", F_true);
+          fll_error_print(main->error, F_status_set_fine(status), "fss_payload_read_depths_resize", fll_error_file_flag_fallback_e);
 
           return status;
         }
@@ -162,7 +162,7 @@ extern "C" {
           }
 
           if (F_status_is_error(status)) {
-            fll_error_print(main->error, F_status_set_fine(status), (main->parameters.array[fss_payload_read_parameter_trim_e].result & f_console_result_found_e) ? "fl_string_dynamic_rip" : "f_string_dynamic_append", F_true);
+            fll_error_print(main->error, F_status_set_fine(status), (main->parameters.array[fss_payload_read_parameter_trim_e].result & f_console_result_found_e) ? "fl_string_dynamic_rip" : "f_string_dynamic_append", fll_error_file_flag_fallback_e);
 
             return status;
           }
@@ -264,7 +264,7 @@ extern "C" {
         }
       }
       else {
-        fll_error_file_print(main->error, F_status_set_fine(status), "fll_fss_payload_read", F_true, file_name, f_file_operation_process_s, fll_error_file_type_file_e);
+        fll_error_file_print(main->error, F_status_set_fine(status), "fll_fss_payload_read", fll_error_file_flag_fallback_e, file_name, f_file_operation_process_s, fll_error_file_type_file_e);
       }
 
       return status;
@@ -287,7 +287,7 @@ extern "C" {
         if (F_status_is_error(status)) {
           const f_string_static_t file_name = fss_payload_read_file_identify(input.start, data->files);
 
-          fll_error_file_print(main->error, F_status_set_fine(status), "fll_fss_extended_read", F_true, file_name, f_file_operation_process_s, fll_error_file_type_file_e);
+          fll_error_file_print(main->error, F_status_set_fine(status), "fll_fss_extended_read", fll_error_file_flag_fallback_e, file_name, f_file_operation_process_s, fll_error_file_type_file_e);
 
           return status;
         }

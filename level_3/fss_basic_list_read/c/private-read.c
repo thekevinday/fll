@@ -71,7 +71,7 @@ extern "C" {
         status = fss_basic_list_read_depths_resize(depth_size, &data->depths);
 
         if (F_status_is_error(status)) {
-          fll_error_print(main->error, F_status_set_fine(status), "fss_basic_list_read_depths_resize", F_true);
+          fll_error_print(main->error, F_status_set_fine(status), "fss_basic_list_read_depths_resize", fll_error_file_flag_fallback_e);
 
           return status;
         }
@@ -162,7 +162,7 @@ extern "C" {
           }
 
           if (F_status_is_error(status)) {
-            fll_error_print(main->error, F_status_set_fine(status), (main->parameters.array[fss_basic_list_read_parameter_trim_e].result & f_console_result_found_e) ? "fl_string_dynamic_rip" : "f_string_dynamic_append", F_true);
+            fll_error_print(main->error, F_status_set_fine(status), (main->parameters.array[fss_basic_list_read_parameter_trim_e].result & f_console_result_found_e) ? "fl_string_dynamic_rip" : "f_string_dynamic_append", fll_error_file_flag_fallback_e);
 
             return status;
           }
@@ -255,7 +255,7 @@ extern "C" {
     const f_status_t status = fll_fss_basic_list_read(data->buffer, state, &input, &data->objects, &data->contents, &data->delimits_object, &data->delimits_content, &data->comments);
 
     if (F_status_is_error(status)) {
-      fll_error_file_print(main->error, F_status_set_fine(status), "fll_fss_basic_list_read", F_true, fss_basic_list_read_file_identify(input.start, data->files), f_file_operation_process_s, fll_error_file_type_file_e);
+      fll_error_file_print(main->error, F_status_set_fine(status), "fll_fss_basic_list_read", fll_error_file_flag_fallback_e, fss_basic_list_read_file_identify(input.start, data->files), f_file_operation_process_s, fll_error_file_type_file_e);
 
       return status;
     }

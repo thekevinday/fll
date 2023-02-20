@@ -130,7 +130,7 @@ extern "C" {
 
       if (F_status_is_error(setting->status)) {
         iki_write_print_line_first_locked(setting, main->error);
-        fll_error_file_print(main->error, F_status_set_fine(setting->status), "f_file_stream_open", F_true, main->parameters.arguments.array[index], f_file_operation_open_s, fll_error_file_type_file_e);
+        fll_error_file_print(main->error, F_status_set_fine(setting->status), "f_file_stream_open", fll_error_file_flag_fallback_e, main->parameters.arguments.array[index], f_file_operation_open_s, fll_error_file_type_file_e);
 
         return;
       }

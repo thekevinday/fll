@@ -643,7 +643,7 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
                 status = f_fss_apply_delimit(state, delimits, &local_buffer);
 
                 if (F_status_is_error(status)) {
-                  fll_error_print(data->main->error, F_status_set_fine(status), "f_fss_apply_delimit", F_true);
+                  fll_error_print(data->main->error, F_status_set_fine(status), "f_fss_apply_delimit", fll_error_file_flag_fallback_e);
                 }
               }
 
@@ -1233,7 +1233,7 @@ f_status_t firewall_buffer_rules(firewall_data_t * const data, const f_string_st
     status = f_fss_apply_delimit(state, delimits, &local->buffer);
 
     if (F_status_is_error(status)) {
-      fll_error_print(data->main->error, F_status_set_fine(status), "f_fss_apply_delimit", F_true);
+      fll_error_print(data->main->error, F_status_set_fine(status), "f_fss_apply_delimit", fll_error_file_flag_fallback_e);
     }
   }
 
@@ -1257,7 +1257,7 @@ f_status_t firewall_process_rules(firewall_data_t * const data, f_string_range_t
     status = f_fss_apply_delimit(state, delimits, &local->buffer);
 
     if (F_status_is_error(status)) {
-      fll_error_print(data->main->error, F_status_set_fine(status), "f_fss_apply_delimit", F_true);
+      fll_error_print(data->main->error, F_status_set_fine(status), "f_fss_apply_delimit", fll_error_file_flag_fallback_e);
     }
   }
 

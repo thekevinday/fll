@@ -37,6 +37,22 @@ extern "C" {
 #endif // _di_fll_error_file_type_e_
 
 /**
+ * File error printing flags.
+ *
+ * fll_error_file_flag_*:
+ *   - none:     No flag set.
+ *   - fallback: Fallback error message for unknown errors.
+ *   - simple:   Do not print the extra message, if applicable.
+ */
+#ifndef _di_fll_error_file_flag_e_
+  enum {
+    fll_error_file_flag_none_e     = 0,
+    fll_error_file_flag_fallback_e = 0x1,
+    fll_error_file_flag_simple_e   = 0x2,
+  }; // enum
+#endif // _di_fll_error_file_flag_e_
+
+/**
  * Error file types.
  *
  * fll_error_file_type_*:

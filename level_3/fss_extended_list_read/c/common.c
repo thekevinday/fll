@@ -88,7 +88,7 @@ extern "C" {
 
     if (F_status_is_error(setting->status)) {
       fss_extended_list_read_print_line_first_locked(setting, main->error);
-      fll_error_print(main->error, F_status_set_fine(setting->status), "f_console_parameter_process", F_true);
+      fll_error_print(main->error, F_status_set_fine(setting->status), "f_console_parameter_process", fll_error_file_flag_fallback_e);
       fss_extended_list_read_print_line_last_locked(setting, main->error);
 
       return;
@@ -110,7 +110,7 @@ extern "C" {
 
         if (F_status_is_error(setting->status)) {
           fss_extended_list_read_print_line_first_locked(setting, main->error);
-          fll_error_print(main->error, F_status_set_fine(setting->status), "fll_program_parameter_process_context", F_true);
+          fll_error_print(main->error, F_status_set_fine(setting->status), "fll_program_parameter_process_context", fll_error_file_flag_fallback_e);
           fss_extended_list_read_print_line_last_locked(setting, main->error);
 
           return;
@@ -143,7 +143,7 @@ extern "C" {
 
         if (F_status_is_error(setting->status)) {
           fss_extended_list_read_print_line_first_locked(setting, main->error);
-          fll_error_print(main->error, F_status_set_fine(setting->status), "fll_program_parameter_process_verbosity", F_true);
+          fll_error_print(main->error, F_status_set_fine(setting->status), "fll_program_parameter_process_verbosity", fll_error_file_flag_fallback_e);
           fss_extended_list_read_print_line_last_locked(setting, main->error);
 
           return;

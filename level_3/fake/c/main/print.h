@@ -93,6 +93,37 @@ extern "C" {
 #endif // _di_fake_print_error_file_
 
 /**
+ * Print file related error message regarding a function failing in some way.
+ *
+ * This prints a simple message to avoid "Unable to find file..., because file cannot be found." type of messages.
+ *
+ * @param setting
+ *   The main program settings.
+ *
+ *   This does not alter setting.status.
+ * @param status
+ *   The status to use.
+ *   This is provided, ignoring setting.status, for thread-safety reasons.
+ * @param print
+ *   Designates the how and where to print.
+ * @param name
+ *   The name of the file or directory.
+ * @param operation
+ *   The operation that fails, such as 'create' or 'access'.
+ * @param type
+ *   A valid file type code from the fll_error_file_type enum.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ *
+ * @see fll_error_file_print()
+ */
+#ifndef _di_fake_print_error_file_simple_
+  extern f_status_t fake_print_error_file_simple(fake_setting_t * const setting, const fl_print_t print, const f_status_t status, const f_string_t function, const f_string_static_t name, const f_string_static_t operation, const uint8_t type);
+#endif // _di_fake_print_error_file_simple_
+
+/**
  * Print file related error message regarding a function failing in some way, setting fallback to F_false and returning result..
  *
  * @param setting

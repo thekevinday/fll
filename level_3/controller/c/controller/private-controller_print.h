@@ -26,13 +26,13 @@ extern "C" {
  * @param function
  *   The name of the function where the error happened.
  *   Set to 0 to disable.
- * @param fallback
- *   Set to F_true to print the fallback error message for unknown errors.
+ * @param flag
+ *   One of the fll_error_file_flag_*_e flags.
  *
  * @see fll_error_print()
  */
 #ifndef _di_controller_print_error_
-  extern void controller_print_error(controller_thread_t * const thread, const fl_print_t print, const f_status_t status, const f_string_t function, const bool fallback) F_attribute_visibility_internal_d;
+  extern void controller_print_error(controller_thread_t * const thread, const fl_print_t print, const f_status_t status, const f_string_t function, const uint8_t flag) F_attribute_visibility_internal_d;
 #endif // _di_controller_print_error_
 
 /**
@@ -49,8 +49,8 @@ extern "C" {
  * @param function
  *   The name of the function where the error happened.
  *   Set to 0 to disable.
- * @param fallback
- *   Set to F_true to print the fallback error message for unknown errors.
+ * @param flag
+ *   One of the fll_error_file_flag_*_e flags.
  * @param name
  *   The name of the file or directory.
  * @param operation
@@ -61,7 +61,7 @@ extern "C" {
  * @see fll_error_file_print()
  */
 #ifndef _di_controller_print_error_file_
-  extern void controller_print_error_file(controller_thread_t * const thread, const fl_print_t print, const f_status_t status, const f_string_t function, const bool fallback, const f_string_static_t name, const f_string_static_t operation, const uint8_t type) F_attribute_visibility_internal_d;
+  extern void controller_print_error_file(controller_thread_t * const thread, const fl_print_t print, const f_status_t status, const f_string_t function, const uint8_t flag, const f_string_static_t name, const f_string_static_t operation, const uint8_t type) F_attribute_visibility_internal_d;
 #endif // _di_controller_print_error_file_
 
 #ifdef __cplusplus

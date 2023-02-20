@@ -11,7 +11,7 @@ extern "C" {
     if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
 
     status_code_print_line_first_locked(setting, print);
-    fll_error_print(print, F_status_set_fine(setting->status), function, F_true);
+    fll_error_print(print, F_status_set_fine(setting->status), function, fll_error_file_flag_fallback_e);
 
     return F_none;
   }

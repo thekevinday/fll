@@ -110,7 +110,7 @@ extern "C" {
       status = fss_embedded_list_read_depths_resize(i, depths);
 
       if (F_status_is_error(status)) {
-        fll_error_print(data->main->error, F_status_set_fine(status), "fss_embedded_list_read_main_preprocess_depth", F_true);
+        fll_error_print(data->main->error, F_status_set_fine(status), "fss_embedded_list_read_main_preprocess_depth", fll_error_file_flag_fallback_e);
 
         return status;
       }
@@ -180,7 +180,7 @@ extern "C" {
             status = fl_string_dynamic_rip(argv[values_order[i]], &depths->array[depths->used].value_name);
 
             if (F_status_is_error(status)) {
-              fll_error_print(data->main->error, F_status_set_fine(status), "fl_string_dynamic_rip", F_true);
+              fll_error_print(data->main->error, F_status_set_fine(status), "fl_string_dynamic_rip", fll_error_file_flag_fallback_e);
 
               return status;
             }
@@ -189,7 +189,7 @@ extern "C" {
             status = f_string_dynamic_append(argv[values_order[i]], &depths->array[depths->used].value_name);
 
             if (F_status_is_error(status)) {
-              fll_error_print(data->main->error, F_status_set_fine(status), "f_string_dynamic_append", F_true);
+              fll_error_print(data->main->error, F_status_set_fine(status), "f_string_dynamic_append", fll_error_file_flag_fallback_e);
 
               return status;
             }

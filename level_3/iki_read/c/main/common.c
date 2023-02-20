@@ -523,7 +523,7 @@ extern "C" {
 
         if (F_status_is_error(setting->status)) {
           iki_read_print_line_first_locked(setting, main->error);
-          fll_error_file_print(main->error, F_status_set_fine(setting->status), "f_file_exists", F_true, setting->files.array[setting->files.used], f_file_operation_verify_s, fll_error_file_type_file_e);
+          fll_error_file_print(main->error, F_status_set_fine(setting->status), "f_file_exists", fll_error_file_flag_fallback_e, setting->files.array[setting->files.used], f_file_operation_verify_s, fll_error_file_type_file_e);
 
           return;
         }

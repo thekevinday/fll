@@ -45,15 +45,16 @@ extern "C" {
  * @param function
  *   The name of the function where the error happened.
  *   Set to 0 to disable.
- * @param fallback
- *   Set to F_true to print the fallback error message for unknown errors.
+ * @param flag
+ *   One of the fll_error_file_flag_*_e flags.
+ *   Consider passing fll_error_file_flag_simple_e, on errors like file not find while trying to find file.
  *
  * @return
  *   F_false is returned on successful print of known errors.
  *   F_true is returned if the status code is unknown.
  */
 #ifndef _di_fll_error_print_
-  extern f_status_t fll_error_print(const fl_print_t print, const f_status_t status, const f_string_t function, const bool fallback);
+  extern f_status_t fll_error_print(const fl_print_t print, const f_status_t status, const f_string_t function, const uint8_t flag);
 #endif // _di_fll_error_print_
 
 /**
@@ -67,8 +68,9 @@ extern "C" {
  * @param function
  *   The name of the function where the error happened.
  *   Set to 0 to disable.
- * @param fallback
- *   Set to F_true to print the fallback error message for unknown errors.
+ * @param flag
+ *   One of the fll_error_file_flag_*_e flags.
+ *   Consider passing fll_error_file_flag_simple_e, on errors like file not find while trying to find file.
  * @param name
  *   The name of the file or directory.
  * @param operation
@@ -81,7 +83,7 @@ extern "C" {
  *   F_false is returned on successful print of known errors.
  */
 #ifndef _di_fll_error_file_print_
-  extern f_status_t fll_error_file_print(const fl_print_t print, const f_status_t status, const f_string_t function, const bool fallback, const f_string_static_t name, const f_string_static_t operation, const uint8_t type);
+  extern f_status_t fll_error_file_print(const fl_print_t print, const f_status_t status, const f_string_t function, const uint8_t flag, const f_string_static_t name, const f_string_static_t operation, const uint8_t type);
 #endif // _di_fll_error_file_print_
 
 /**
@@ -95,8 +97,9 @@ extern "C" {
  * @param function
  *   The name of the function where the error happened.
  *   Set to 0 to disable.
- * @param fallback
- *   Set to F_true to print the fallback error message for unknown errors.
+ * @param flag
+ *   One of the fll_error_file_flag_*_e flags.
+ *   Consider passing fll_error_file_flag_simple_e, on errors like file not find while trying to find file.
  * @param parameter
  *   The name of the parameter.
  * @param argument
@@ -107,7 +110,7 @@ extern "C" {
  *   F_false is returned on successful print of known errors.
  */
 #ifndef _di_fll_error_parameter_integer_print_
-  extern f_status_t fll_error_parameter_integer_print(const fl_print_t print, const f_status_t status, const f_string_t function, const bool fallback, const f_string_static_t parameter, const f_string_static_t argument);
+  extern f_status_t fll_error_parameter_integer_print(const fl_print_t print, const f_status_t status, const f_string_t function, const uint8_t flag, const f_string_static_t parameter, const f_string_static_t argument);
 #endif // _di_fll_error_parameter_integer_print_
 
 #ifdef __cplusplus

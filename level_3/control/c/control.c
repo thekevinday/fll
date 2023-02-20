@@ -32,7 +32,7 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           control_print_line_first_locked(setting, main->error)
-          fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process_context", F_true);
+          fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process_context", fll_error_file_flag_fallback_e);
           control_print_line_last_locked(setting, main->error);
 
           return;
@@ -51,7 +51,7 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           control_print_line_first_locked(setting, main->error);
-          fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process_verbosity", F_true);
+          fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process_verbosity", fll_error_file_flag_fallback_e);
           control_print_line_last_locked(setting, main->error);
 
           return;
@@ -154,7 +154,7 @@ extern "C" {
                 control_print_error_request_packet_too_large(main);
               }
               else {
-                fll_error_print(main->error, F_status_set_fine(status), "control_packet_build", F_true);
+                fll_error_print(main->error, F_status_set_fine(status), "control_packet_build", fll_error_file_flag_fallback_e);
               }
             }
           }
@@ -163,7 +163,7 @@ extern "C" {
             status = control_packet_send(main, &data);
 
             if (F_status_is_error(status)) {
-              fll_error_print(main->error, F_status_set_fine(status), "control_packet_send", F_true);
+              fll_error_print(main->error, F_status_set_fine(status), "control_packet_send", fll_error_file_flag_fallback_e);
             }
           }
 
@@ -177,7 +177,7 @@ extern "C" {
                 control_print_error_response_packet_valid_not(main);
               }
               else {
-                fll_error_print(main->error, F_status_set_fine(status), "control_packet_receive", F_true);
+                fll_error_print(main->error, F_status_set_fine(status), "control_packet_receive", fll_error_file_flag_fallback_e);
               }
             }
             else {
@@ -186,7 +186,7 @@ extern "C" {
               // Print the error message only if the error message is not already printed.
               if (F_status_is_error(status)) {
                 if (header.type != control_payload_type_error_e && (header.type != control_payload_type_controller_e || F_status_set_fine(status) != header.status || (header.status != F_failure && header.status != F_busy))) {
-                  fll_error_print(main->error, F_status_set_fine(status), "control_packet_process", F_true);
+                  fll_error_print(main->error, F_status_set_fine(status), "control_packet_process", fll_error_file_flag_fallback_e);
                 }
               }
             }

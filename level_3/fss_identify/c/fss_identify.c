@@ -31,7 +31,7 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           fss_identify_print_line_first_locked(setting, main->error);
-          fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process_context", F_true);
+          fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process_context", fll_error_file_flag_fallback_e);
           fss_identify_print_line_last_locked(setting, main->error);
 
           return;
@@ -50,7 +50,7 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           fss_identify_print_line_first_locked(setting, main->error);
-          fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process_verbosity", F_true);
+          fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process_verbosity", fll_error_file_flag_fallback_e);
           fss_identify_print_line_last_locked(setting, main->error);
 
           return;
@@ -154,7 +154,7 @@ extern "C" {
           status = f_string_dynamic_resize(length, &data.name);
 
           if (F_status_is_error(status)) {
-            fll_error_print(main->error, F_status_set_fine(status), "f_utf_is_word", F_true);
+            fll_error_print(main->error, F_status_set_fine(status), "f_utf_is_word", fll_error_file_flag_fallback_e);
           }
         }
 
@@ -165,7 +165,7 @@ extern "C" {
             status = f_utf_is_word_dash(data.argv[index].string + i, length, F_true);
 
             if (F_status_is_error(status)) {
-              fll_error_print(main->error, F_status_set_fine(status), "f_utf_is_word_dash", F_true);
+              fll_error_print(main->error, F_status_set_fine(status), "f_utf_is_word_dash", fll_error_file_flag_fallback_e);
 
               break;
             }
@@ -233,7 +233,7 @@ extern "C" {
         status = f_file_stream_open(data.argv[main->parameters.remaining.array[i]], f_string_empty_s, &file);
 
         if (F_status_is_error(status)) {
-          fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, data.argv[main->parameters.remaining.array[i]], f_file_operation_open_s, fll_error_file_type_file_e);
+          fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", fll_error_file_flag_fallback_e, data.argv[main->parameters.remaining.array[i]], f_file_operation_open_s, fll_error_file_type_file_e);
         }
         else {
           status = fss_identify_load_line(main, file, data.argv[main->parameters.remaining.array[i]], &buffer, &range);

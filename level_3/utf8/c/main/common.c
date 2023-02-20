@@ -273,7 +273,7 @@ extern "C" {
 
         if (F_status_is_error(setting->status)) {
           utf8_print_line_first_locked(setting, main->error);
-          fll_error_print(main->error, F_status_set_fine(setting->status), macro_utf8_f(f_string_dynamic_append_nulless), F_true);
+          fll_error_print(main->error, F_status_set_fine(setting->status), macro_utf8_f(f_string_dynamic_append_nulless), fll_error_file_flag_fallback_e);
 
           break;
         }

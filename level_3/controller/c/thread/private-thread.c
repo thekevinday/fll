@@ -192,7 +192,7 @@ extern "C" {
 
     if (F_status_is_error(status)) {
       if (main->error.verbosity > f_console_verbosity_quiet_e) {
-        fll_error_print(main->error, status, "controller_lock_create", F_true);
+        fll_error_print(main->error, status, "controller_lock_create", fll_error_file_flag_fallback_e);
       }
     }
     else {

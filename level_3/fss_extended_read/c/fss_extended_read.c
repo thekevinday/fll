@@ -32,7 +32,7 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           fss_extended_read_print_line_first_locked(setting, main->error);
-          fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process_context", F_true);
+          fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process_context", fll_error_file_flag_fallback_e);
           fss_extended_read_print_line_last_locked(setting, main->error);
 
           return;
@@ -51,7 +51,7 @@ extern "C" {
 
         if (F_status_is_error(status)) {
           fss_extended_read_print_line_first_locked(setting, main->error);
-          fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process_verbosity", F_true);
+          fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process_verbosity", fll_error_file_flag_fallback_e);
           fss_extended_read_print_line_last_locked(setting, main->error);
 
           return;
@@ -385,7 +385,7 @@ extern "C" {
         status = f_file_stream_read(file, &data.buffer);
 
         if (F_status_is_error(status)) {
-          fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_read", F_true, f_string_ascii_minus_s, f_file_operation_read_s, fll_error_file_type_pipe_e);
+          fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_read", fll_error_file_flag_fallback_e, f_string_ascii_minus_s, f_file_operation_read_s, fll_error_file_type_pipe_e);
         }
         else if (data.buffer.used) {
           data.files.array[0].range.stop = data.buffer.used - 1;
@@ -395,7 +395,7 @@ extern "C" {
           status = f_string_dynamic_append_assure(f_string_eol_s, &data.buffer);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "f_string_append_assure", F_true, f_string_ascii_minus_s, f_file_operation_read_s, fll_error_file_type_pipe_e);
+            fll_error_file_print(main->error, F_status_set_fine(status), "f_string_append_assure", fll_error_file_flag_fallback_e, f_string_ascii_minus_s, f_file_operation_read_s, fll_error_file_type_pipe_e);
           }
         }
         else {
@@ -430,7 +430,7 @@ extern "C" {
           status = f_file_stream_open(data.argv[main->parameters.remaining.array[i]], f_string_empty_s, &file);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, data.argv[main->parameters.remaining.array[i]], f_file_operation_open_s, fll_error_file_type_file_e);
+            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", fll_error_file_flag_fallback_e, data.argv[main->parameters.remaining.array[i]], f_file_operation_open_s, fll_error_file_type_file_e);
 
             break;
           }
@@ -440,7 +440,7 @@ extern "C" {
           status = f_file_size_by_id(file.id, &size_file);
 
           if (F_status_is_error(status)) {
-            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_size_by_id", F_true, data.argv[main->parameters.remaining.array[i]], f_file_operation_read_s, fll_error_file_type_file_e);
+            fll_error_file_print(main->error, F_status_set_fine(status), "f_file_size_by_id", fll_error_file_flag_fallback_e, data.argv[main->parameters.remaining.array[i]], f_file_operation_read_s, fll_error_file_type_file_e);
 
             f_file_stream_flush(file);
             f_file_stream_close(&file);
@@ -467,7 +467,7 @@ extern "C" {
             }
 
             if (F_status_is_error(status)) {
-              fll_error_file_print(main->error, F_status_set_fine(status), "f_string_dynamic_resize", F_true, data.argv[main->parameters.remaining.array[i]], f_file_operation_process_s, fll_error_file_type_file_e);
+              fll_error_file_print(main->error, F_status_set_fine(status), "f_string_dynamic_resize", fll_error_file_flag_fallback_e, data.argv[main->parameters.remaining.array[i]], f_file_operation_process_s, fll_error_file_type_file_e);
 
               f_file_stream_flush(file);
               f_file_stream_close(&file);
@@ -495,7 +495,7 @@ extern "C" {
 
             if (F_status_is_error(status)) {
               if (F_status_set_fine(status) != F_interrupt) {
-                fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_read_until", F_true, data.argv[main->parameters.remaining.array[i]], f_file_operation_read_s, fll_error_file_type_file_e);
+                fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_read_until", fll_error_file_flag_fallback_e, data.argv[main->parameters.remaining.array[i]], f_file_operation_read_s, fll_error_file_type_file_e);
               }
 
               break;
@@ -510,7 +510,7 @@ extern "C" {
               status = f_string_dynamic_append_assure(f_string_eol_s, &data.buffer);
 
               if (F_status_is_error(status)) {
-                fll_error_file_print(main->error, F_status_set_fine(status), "f_string_append_assure", F_true, f_string_ascii_minus_s, f_file_operation_read_s, fll_error_file_type_pipe_e);
+                fll_error_file_print(main->error, F_status_set_fine(status), "f_string_append_assure", fll_error_file_flag_fallback_e, f_string_ascii_minus_s, f_file_operation_read_s, fll_error_file_type_pipe_e);
               }
             }
           }

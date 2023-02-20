@@ -624,7 +624,7 @@ extern "C" {
     }
 
     if (F_status_is_error(status)) {
-      fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_append", F_true);
+      fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_append", fll_error_file_flag_fallback_e);
 
       return status;
     }
@@ -635,7 +635,7 @@ extern "C" {
       status = f_file_stream_open(data->cache.small, f_file_open_mode_read_s, &file);
 
       if (F_status_is_error(status)) {
-        fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", F_true, data->cache.small, f_file_operation_open_s, fll_error_file_type_file_e);
+        fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_open", fll_error_file_flag_fallback_e, data->cache.small, f_file_operation_open_s, fll_error_file_type_file_e);
 
         return status;
       }
@@ -646,7 +646,7 @@ extern "C" {
       f_file_stream_close(&file);
 
       if (F_status_is_error(status)) {
-        fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_read", F_true, data->cache.small, f_file_operation_read_s, fll_error_file_type_file_e);
+        fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_read", fll_error_file_flag_fallback_e, data->cache.small, f_file_operation_read_s, fll_error_file_type_file_e);
 
         return status;
       }
@@ -661,13 +661,13 @@ extern "C" {
     status = fll_fss_extended_read(data->cache.large, state, &range, &objects, &contents, 0, 0, &delimits, 0);
 
     if (F_status_is_error(status)) {
-      fll_error_file_print(main->error, F_status_set_fine(status), "fll_fss_extended_read", F_true, data->cache.small, f_file_operation_process_s, fll_error_file_type_file_e);
+      fll_error_file_print(main->error, F_status_set_fine(status), "fll_fss_extended_read", fll_error_file_flag_fallback_e, data->cache.small, f_file_operation_process_s, fll_error_file_type_file_e);
     }
     else {
       status = f_fss_apply_delimit(state, delimits, &data->cache.large);
 
       if (F_status_is_error(status)) {
-        fll_error_file_print(main->error, F_status_set_fine(status), "f_fss_apply_delimit", F_true, data->cache.small, f_file_operation_process_s, fll_error_file_type_file_e);
+        fll_error_file_print(main->error, F_status_set_fine(status), "f_fss_apply_delimit", fll_error_file_flag_fallback_e, data->cache.small, f_file_operation_process_s, fll_error_file_type_file_e);
       }
     }
 
@@ -720,10 +720,10 @@ extern "C" {
 
       if (F_status_is_error(status)) {
         if (main->parameters.array[control_parameter_socket_e].result & f_console_result_value_e || !parameter_hass[1]) {
-          fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_append", F_true);
+          fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_append", fll_error_file_flag_fallback_e);
         }
         else {
-          fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true);
+          fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", fll_error_file_flag_fallback_e);
         }
       }
 
@@ -731,7 +731,7 @@ extern "C" {
 
       if (F_status_is_error(status) || status == F_false) {
         if (F_status_is_error(status)) {
-          fll_error_file_print(main->error, F_status_set_fine(status), "f_file_exists", F_true, data->cache.small, f_file_operation_find_s, fll_error_file_type_directory_e);
+          fll_error_file_print(main->error, F_status_set_fine(status), "f_file_exists", fll_error_file_flag_fallback_e, data->cache.small, f_file_operation_find_s, fll_error_file_type_directory_e);
 
           if (main->error.verbosity > f_console_verbosity_quiet_e) {
             fll_print_dynamic_raw(f_string_eol_s, main->error.to);
@@ -748,7 +748,7 @@ extern "C" {
         status = f_string_dynamic_append_assure(f_path_separator_s, &data->cache.small);
 
         if (F_status_is_error(status)) {
-          fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_append_assure", F_true);
+          fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_append_assure", fll_error_file_flag_fallback_e);
         }
         else {
           uint8_t append_ids[] = {
@@ -785,10 +785,10 @@ extern "C" {
 
             if (F_status_is_error(status)) {
               if ((append_ids[i] && main->parameters.array[append_ids[i]].result & f_console_result_value_e) || !append_hass[i]) {
-                fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_append", F_true);
+                fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_append", fll_error_file_flag_fallback_e);
               }
               else {
-                fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", F_true);
+                fll_error_print(main->error, F_status_set_fine(status), "f_string_dynamic_partial_append_nulless", fll_error_file_flag_fallback_e);
               }
 
               break;
@@ -800,7 +800,7 @@ extern "C" {
 
             if (F_status_is_error(status) || status == F_false) {
               if (F_status_is_error(status)) {
-                fll_error_file_print(main->error, F_status_set_fine(status), "f_file_exists", F_true, data->cache.small, f_file_operation_find_s, fll_error_file_type_directory_e);
+                fll_error_file_print(main->error, F_status_set_fine(status), "f_file_exists", fll_error_file_flag_fallback_e, data->cache.small, f_file_operation_find_s, fll_error_file_type_directory_e);
 
                 if (main->error.verbosity > f_console_verbosity_quiet_e) {
                   fll_print_dynamic_raw(f_string_eol_s, main->error.to);
@@ -827,7 +827,7 @@ extern "C" {
         status = f_socket_create(&data->socket);
 
         if (F_status_is_error(status)) {
-          fll_error_print(main->error, F_status_set_fine(status), "f_socket_create", F_true);
+          fll_error_print(main->error, F_status_set_fine(status), "f_socket_create", fll_error_file_flag_fallback_e);
 
           control_print_error_socket_file_failed(main, data->cache.small);
         }
@@ -837,7 +837,7 @@ extern "C" {
         status = f_socket_connect(data->socket);
 
         if (F_status_is_error(status)) {
-          fll_error_print(main->error, F_status_set_fine(status), "f_socket_connect", F_true);
+          fll_error_print(main->error, F_status_set_fine(status), "f_socket_connect", fll_error_file_flag_fallback_e);
 
           control_print_error_socket_file_failed(main, data->cache.small);
         }

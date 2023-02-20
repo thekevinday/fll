@@ -108,7 +108,7 @@ extern "C" {
 #endif // _di_controller_entry_print_error_cache_
 
 #ifndef _di_controller_entry_print_error_file_
-  void controller_entry_print_error_file(const bool is_entry, const fl_print_t print, const controller_cache_action_t cache, const f_status_t status, const f_string_t function, const bool fallback, const f_string_static_t name, const f_string_static_t operation, const uint8_t type, controller_thread_t *thread) {
+  void controller_entry_print_error_file(const bool is_entry, const fl_print_t print, const controller_cache_action_t cache, const f_status_t status, const f_string_t function, const uint8_t flag, const f_string_static_t name, const f_string_static_t operation, const uint8_t type, controller_thread_t *thread) {
 
     if (print.verbosity == f_console_verbosity_quiet_e) return;
     if (status == F_interrupt) return;
@@ -116,7 +116,7 @@ extern "C" {
     // fll_error_file_print() automatically locks, so manually handle only the mutex locking and flushing rather than calling controller_lock_print().
     f_thread_mutex_lock(&thread->lock.print);
 
-    fll_error_file_print(print, status, function, fallback, name, operation, type);
+    fll_error_file_print(print, status, function, flag, name, operation, type);
 
     f_file_stream_lock(print.to);
 

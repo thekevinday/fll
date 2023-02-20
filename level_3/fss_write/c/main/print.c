@@ -10,7 +10,7 @@ extern "C" {
     if (!setting || print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
 
     fss_write_print_line_first_locked(setting, print);
-    fll_error_print(print, F_status_set_fine(setting->status), function, F_true);
+    fll_error_print(print, F_status_set_fine(setting->status), function, fll_error_file_flag_fallback_e);
 
     return F_none;
   }
@@ -22,7 +22,7 @@ extern "C" {
     if (!setting || print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
 
     fss_write_print_line_first_locked(setting, print);
-    fll_error_file_print(print, F_status_set_fine(setting->status), function, F_true, name, operation, type);
+    fll_error_file_print(print, F_status_set_fine(setting->status), function, fll_error_file_flag_fallback_e, name, operation, type);
 
     return F_none;
   }

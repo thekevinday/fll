@@ -11,7 +11,7 @@ extern "C" {
 
     fake_print_line_first_locked(setting, print);
 
-    fll_error_print(print, F_status_set_fine(status), function, F_true);
+    fll_error_print(print, F_status_set_fine(status), function, fll_error_file_flag_fallback_e);
 
     return F_none;
   }
@@ -24,7 +24,7 @@ extern "C" {
 
     fake_print_line_first_locked(setting, print);
 
-    if (fll_error_print(print, F_status_set_fine(status), function, F_false) == F_known_not) return F_false;
+    if (fll_error_print(print, F_status_set_fine(status), function, fll_error_file_flag_none_e) == F_known_not) return F_false;
 
     return F_true;
   }
@@ -37,11 +37,24 @@ extern "C" {
 
     fake_print_line_first_locked(setting, print);
 
-    fll_error_file_print(print, F_status_set_fine(status), function, F_true, name, operation, type);
+    fll_error_file_print(print, F_status_set_fine(status), function, fll_error_file_flag_fallback_e, name, operation, type);
 
     return F_none;
   }
 #endif // _di_fake_print_error_file_
+
+#ifndef _di_fake_print_error_file_simple_
+  f_status_t fake_print_error_file_simple(fake_setting_t * const setting, const fl_print_t print, const f_status_t status, const f_string_t function, const f_string_static_t name, const f_string_static_t operation, const uint8_t type) {
+
+    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
+
+    fake_print_line_first_locked(setting, print);
+
+    fll_error_file_print(print, F_status_set_fine(status), function, fll_error_file_flag_simple_e, name, operation, type);
+
+    return F_none;
+  }
+#endif // _di_fake_print_error_file_simple_
 
 #ifndef _di_fake_print_error_file_fallback_
   f_status_t fake_print_error_file_fallback(fake_setting_t * const setting, const fl_print_t print, const f_status_t status, const f_string_t function, const f_string_static_t name, const f_string_static_t operation, const uint8_t type) {
@@ -50,7 +63,7 @@ extern "C" {
 
     fake_print_line_first_locked(setting, print);
 
-    if (fll_error_file_print(print, F_status_set_fine(status), function, F_false, name, operation, type) == F_known_not) return F_false;
+    if (fll_error_file_print(print, F_status_set_fine(status), function, fll_error_file_flag_none_e, name, operation, type) == F_known_not) return F_false;
 
     return F_true;
   }
@@ -596,7 +609,7 @@ extern "C" {
       return F_false;
     }
 
-    if (fll_error_print(print, F_status_set_fine(status), function, F_false) == F_known_not && fallback && print.verbosity > f_console_verbosity_quiet_e) {
+    if (fll_error_print(print, F_status_set_fine(status), function, fll_error_file_flag_none_e) == F_known_not && fallback && print.verbosity > f_console_verbosity_quiet_e) {
       f_file_stream_lock(print.to);
 
       fake_print_line_first_unlocked(setting, print);
@@ -692,7 +705,7 @@ extern "C" {
       return F_false;
     }
 
-    if (fll_error_print(print, status, function, F_false) == F_known_not && fallback && print.verbosity > f_console_verbosity_quiet_e) {
+    if (fll_error_print(print, status, function, fll_error_file_flag_none_e) == F_known_not && fallback && print.verbosity > f_console_verbosity_quiet_e) {
       f_file_stream_lock(print.to);
 
       fake_print_line_first_unlocked(setting, print);

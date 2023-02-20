@@ -34,7 +34,7 @@ extern "C" {
         status = f_string_dynamic_resize(buffer->size + file.size_read, buffer);
 
         if (F_status_is_error(status)) {
-          fll_error_file_print(main->error, F_status_set_fine(status), "f_string_dynamic_resize", F_true, file_name.used ? file_name : f_string_ascii_minus_s, f_file_operation_read_s, file_name.used ? fll_error_file_type_file_e : fll_error_file_type_pipe_e);
+          fll_error_file_print(main->error, F_status_set_fine(status), "f_string_dynamic_resize", fll_error_file_flag_fallback_e, file_name.used ? file_name : f_string_ascii_minus_s, f_file_operation_read_s, file_name.used ? fll_error_file_type_file_e : fll_error_file_type_pipe_e);
 
           return status;
         }
@@ -43,7 +43,7 @@ extern "C" {
       status = f_file_stream_read_block(file, buffer);
 
       if (F_status_is_error(status)) {
-        fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_read_block", F_true, file_name.used ? file_name : f_string_ascii_minus_s, f_file_operation_read_s, file_name.used ? fll_error_file_type_file_e : fll_error_file_type_pipe_e);
+        fll_error_file_print(main->error, F_status_set_fine(status), "f_file_stream_read_block", fll_error_file_flag_fallback_e, file_name.used ? file_name : f_string_ascii_minus_s, f_file_operation_read_s, file_name.used ? fll_error_file_type_file_e : fll_error_file_type_pipe_e);
 
         return status;
       }
@@ -74,7 +74,7 @@ extern "C" {
     status = fll_fss_identify(buffer, range, &ids);
 
     if (F_status_is_error(status)) {
-      fll_error_file_print(main->error, F_status_set_fine(status), "fll_fss_identify", F_true, file_name.used ? file_name : f_string_ascii_pipe_s, f_file_operation_read_s, file_name.used ? fll_error_file_type_file_e : fll_error_file_type_pipe_e);
+      fll_error_file_print(main->error, F_status_set_fine(status), "fll_fss_identify", fll_error_file_flag_fallback_e, file_name.used ? file_name : f_string_ascii_pipe_s, f_file_operation_read_s, file_name.used ? fll_error_file_type_file_e : fll_error_file_type_pipe_e);
 
       f_fll_ids_resize(0, &ids);
 
