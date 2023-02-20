@@ -94,7 +94,7 @@ extern "C" {
       }
       else {
         if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
-          fll_print_format("%r%[%QFilename argument must not be an empty string.%]%r", data_make->error.to.stream, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context, f_string_eol_s);
+          fll_print_format("%r%[%QFile name argument must not be an empty string.%]%r", data_make->error.to.stream, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context, f_string_eol_s);
         }
 
         return F_status_set_error(F_failure);
@@ -825,7 +825,7 @@ extern "C" {
         if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
           flockfile(data_make->error.to.stream);
 
-          fl_print_format("%r%[%QInvalid characters in the define setting name '%]", data_make->error.to.stream, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
+          fl_print_format("%r%[%QInvalid characters in the define name '%]", data_make->error.to.stream, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
           fl_print_format("%[%Q%]", data_make->error.to.stream, data_make->error.notable, data_make->cache_arguments.array[0], data_make->error.notable);
           fl_print_format("%[', only alpha-numeric ASCII characters and underscore (without a leading digit) is allowed.%]%r", data_make->error.to.stream, data_make->error.context, data_make->error.context, f_string_eol_s);
 
@@ -1543,7 +1543,7 @@ extern "C" {
       }
 
       if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
-        fll_print_format("%r%[%QFilename argument must not be an empty string.%]%r", data_make->error.to.stream, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context, f_string_eol_s);
+        fll_print_format("%r%[%QFile name argument must not be an empty string.%]%r", data_make->error.to.stream, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context, f_string_eol_s);
       }
 
       return F_status_set_error(F_failure);

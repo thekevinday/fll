@@ -452,7 +452,7 @@ extern "C" {
           if (data->main->error.verbosity != f_console_verbosity_quiet_e) {
             flockfile(data->main->error.to.stream);
 
-            fl_print_format("%r%[%QInvalid characters in the define setting name '%]", data->main->error.to.stream, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
+            fl_print_format("%r%[%QInvalid characters in the define name '%]", data->main->error.to.stream, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
             fl_print_format("%[%Q%]", data->main->error.to.stream, data->main->error.notable, define.array[i].name, data->main->error.notable);
             fl_print_format("%[', only alpha-numeric ASCII characters and underscore (without a leading digit) are allowed.%]%r", data->main->error.to.stream, data->main->error.context, data->main->error.context, f_string_eol_s);
 
