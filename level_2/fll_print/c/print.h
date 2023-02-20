@@ -40,6 +40,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: f_print().
  *
  *   Errors (with error bit) from: f_print().
@@ -62,6 +64,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: f_print_character().
  *
  *   Errors (with error bit) from: f_print_character().
@@ -84,6 +88,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: f_print_character_safely().
  *
  *   Errors (with error bit) from: f_print_character_safely().
@@ -106,6 +112,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: f_print_dynamic().
  *
  *   Errors (with error bit) from: f_print_dynamic().
@@ -130,6 +138,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: f_print_dynamic_partial().
  *
  *   Errors (with error bit) from: f_print_dynamic_partial().
@@ -154,6 +164,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: f_print_dynamic_partial_raw().
  *
  *   Errors (with error bit) from: f_print_dynamic_partial_raw().
@@ -178,6 +190,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: f_print_dynamic_partial_raw_safely().
  *
  *   Errors (with error bit) from: f_print_dynamic_partial_raw_safely().
@@ -202,6 +216,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: f_print_dynamic_partial_safely().
  *
  *   Errors (with error bit) from: f_print_dynamic_partial_safely().
@@ -224,6 +240,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: f_print_dynamic_raw().
  *
  *   Errors (with error bit) from: f_print_dynamic_raw().
@@ -246,6 +264,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: f_print_dynamic_raw_safely().
  *
  *   Errors (with error bit) from: f_print_dynamic_raw_safely().
@@ -268,6 +288,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: f_print_dynamic_safely().
  *
  *   Errors (with error bit) from: f_print_dynamic_safely().
@@ -297,6 +319,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: f_print_except().
  *
  *   Errors (with error bit) from: f_print_except().
@@ -322,6 +346,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: f_print_except_dynamic().
  *
  *   Errors (with error bit) from: f_print_except_dynamic().
@@ -349,6 +375,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: f_print_except_dynamic_partial().
  *
  *   Errors (with error bit) from: f_print_except_dynamic_partial().
@@ -376,6 +404,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: f_print_except_dynamic_partial_raw().
  *
  *   Errors (with error bit) from: f_print_except_dynamic_partial_raw().
@@ -403,6 +433,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: f_print_except_dynamic_partial_raw_safely().
  *
  *   Errors (with error bit) from: f_print_except_dynamic_partial_raw_safely().
@@ -430,6 +462,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: f_print_except_dynamic_partial_safely().
  *
  *   Errors (with error bit) from: f_print_except_dynamic_partial_safely().
@@ -455,6 +489,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: f_print_except_dynamic_raw().
  *
  *   Errors (with error bit) from: f_print_except_dynamic_raw().
@@ -480,6 +516,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: f_print_except_dynamic_raw_safely().
  *
  *   Errors (with error bit) from: f_print_except_dynamic_raw_safely().
@@ -505,6 +543,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: f_print_except_dynamic_safely().
  *
  *   Errors (with error bit) from: f_print_except_dynamic_safely().
@@ -537,6 +577,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: f_print_except_in().
  *
  *   Errors (with error bit) from: f_print_except_in().
@@ -569,6 +611,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: f_print_except_in_raw().
  *
  *   Errors (with error bit) from: f_print_except_in_raw().
@@ -601,6 +645,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: f_print_except_in_raw_safely().
  *
  *   Errors (with error bit) from: f_print_except_in_raw_safely().
@@ -633,6 +679,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: f_print_except_in_safely().
  *
  *   Errors (with error bit) from: f_print_except_in_safely().
@@ -661,6 +709,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: f_print_except_in_dynamic().
  *
  *   Errors (with error bit) from: f_print_except_in_dynamic().
@@ -691,6 +741,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: f_print_except_in_dynamic_partial().
  *
  *   Errors (with error bit) from: f_print_except_in_dynamic_partial().
@@ -721,6 +773,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: f_print_except_in_dynamic_partial_raw().
  *
  *   Errors (with error bit) from: f_print_except_in_dynamic_partial_raw().
@@ -751,6 +805,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: f_print_except_in_dynamic_partial_raw_safely().
  *
  *   Errors (with error bit) from: f_print_except_in_dynamic_partial_raw_safely().
@@ -781,6 +837,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: f_print_except_in_dynamic_partial_safely().
  *
  *   Errors (with error bit) from: f_print_except_in_dynamic_partial_safely().
@@ -809,6 +867,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: f_print_except_in_dynamic_raw().
  *
  *   Errors (with error bit) from: f_print_except_in_dynamic_raw().
@@ -837,6 +897,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: f_print_except_in_dynamic_raw_safely().
  *
  *   Errors (with error bit) from: f_print_except_in_dynamic_raw_safely().
@@ -865,6 +927,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: f_print_except_in_dynamic_safely().
  *
  *   Errors (with error bit) from: f_print_except_in_dynamic_safely().
@@ -894,6 +958,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: f_print_except_raw().
  *
  *   Errors (with error bit) from: f_print_except_raw().
@@ -923,6 +989,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: f_print_except_raw_safely().
  *
  *   Errors (with error bit) from: f_print_except_raw_safely().
@@ -952,6 +1020,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: f_print_except_safely().
  *
  *   Errors (with error bit) from: f_print_except_safely().
@@ -977,6 +1047,8 @@ extern "C" {
  *   Additional arguments relating to the string.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: fl_print_format().
  *
  *   Errors (with error bit) from: fl_print_format().
@@ -1003,9 +1075,19 @@ extern "C" {
  *   The variable arguments list.
  * @param status
  *   The status is stored here rather then via the return.
+ *   Set to NULL to not use.
  *
  * @return
- *   Result from: fl_print_format_convert().
+ *   This returns a string at either the start position (if nothing done or an error occurred) or at the character last processed.
+ *   The caller is expected to increment past this if they wish to continue processing the string.
+ *
+ *   The status parameter will be set as follows:
+ *
+ *     F_stream_not if file.stream is NULL.
+ *
+ *     Success from: fl_print_format_convert().
+ *
+ *     Errors (with error bit) from: fl_print_format_convert().
  *
  * @see flockfile()
  * @see funlockfile()
@@ -1027,6 +1109,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: f_print_raw().
  *
  *   Errors (with error bit) from: f_print_raw().
@@ -1051,6 +1135,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: f_print_raw_safely().
  *
  *   Errors (with error bit) from: f_print_raw_safely().
@@ -1073,6 +1159,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: f_print_raw_terminated().
  *
  *   Errors (with error bit) from: f_print_raw_terminated().
@@ -1097,6 +1185,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: f_print_safely().
  *
  *   Errors (with error bit) from: f_print_safely().
@@ -1121,6 +1211,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: f_print_safely_terminated().
  *
  *   Errors (with error bit) from: f_print_safely_terminated().
@@ -1146,6 +1238,8 @@ extern "C" {
  *   The va_start(ap, string) and va_end(ap) is required to be called outside this function.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: fl_print_string_va().
  *
  *   Errors (with error bit) from: fl_print_string_va().
@@ -1168,6 +1262,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: f_print_terminated().
  *
  *   Errors (with error bit) from: f_print_terminated().
@@ -1192,6 +1288,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: fl_print_trim().
  *
  *   Errors (with error bit) from: fl_print_trim().
@@ -1216,6 +1314,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: fl_print_trim_raw().
  *
  *   Errors (with error bit) from: fl_print_trim_raw().
@@ -1240,6 +1340,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: fl_print_trim_raw_safely().
  *
  *   Errors (with error bit) from: fl_print_trim_raw_safely().
@@ -1264,6 +1366,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: fl_print_trim_safely().
  *
  *   Errors (with error bit) from: fl_print_trim_safely().
@@ -1286,6 +1390,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: fl_print_trim_dynamic().
  *
  *   Errors (with error bit) from: fl_print_trim_dynamic().
@@ -1308,6 +1414,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: fl_print_trim_dynamic_raw().
  *
  *   Errors (with error bit) from: fl_print_trim_dynamic_raw().
@@ -1330,6 +1438,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: fl_print_trim_dynamic_raw_safely().
  *
  *   Errors (with error bit) from: fl_print_trim_dynamic_raw_safely().
@@ -1352,6 +1462,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: fl_print_trim_dynamic_safely().
  *
  *   Errors (with error bit) from: fl_print_trim_dynamic_safely().
@@ -1376,6 +1488,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: fl_print_trim_dynamic_partial().
  *
  *   Errors (with error bit) from: fl_print_trim_dynamic_partial().
@@ -1400,6 +1514,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: fl_print_trim_dynamic_partial_raw().
  *
  *   Errors (with error bit) from: fl_print_trim_dynamic_partial_raw().
@@ -1424,6 +1540,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: f_print_except_dynamic_partial().
  *
  *   Errors (with error bit) from: f_print_except_dynamic_partial().
@@ -1448,6 +1566,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: f_print_except_dynamic_partial().
  *
  *   Errors (with error bit) from: f_print_except_dynamic_partial().
@@ -1477,6 +1597,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: fl_print_trim_except().
  *
  *   Errors (with error bit) from: fl_print_trim_except().
@@ -1506,6 +1628,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: fl_print_trim_except_raw().
  *
  *   Errors (with error bit) from: fl_print_trim_except_raw().
@@ -1535,6 +1659,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: fl_print_trim_except_raw_safely().
  *
  *   Errors (with error bit) from: fl_print_trim_except_raw_safely().
@@ -1564,6 +1690,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: fl_print_trim_except_safely().
  *
  *   Errors (with error bit) from: fl_print_trim_except_safely().
@@ -1589,6 +1717,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: fl_print_trim_except_dynamic().
  *
  *   Errors (with error bit) from: fl_print_trim_except_dynamic().
@@ -1614,6 +1744,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: fl_print_trim_except_dynamic_raw().
  *
  *   Errors (with error bit) from: fl_print_trim_except_dynamic_raw().
@@ -1639,6 +1771,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: fl_print_trim_except_dynamic_raw_safely().
  *
  *   Errors (with error bit) from: fl_print_trim_except_dynamic_raw_safely().
@@ -1664,6 +1798,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: fl_print_trim_except_dynamic_safely().
  *
  *   Errors (with error bit) from: fl_print_trim_except_dynamic_safely().
@@ -1696,6 +1832,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: fl_print_trim_except_in().
  *
  *   Errors (with error bit) from: fl_print_trim_except_in().
@@ -1728,6 +1866,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: fl_print_trim_except_in_raw().
  *
  *   Errors (with error bit) from: fl_print_trim_except_in_raw().
@@ -1760,6 +1900,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: fl_print_trim_except_in_raw_safely().
  *
  *   Errors (with error bit) from: fl_print_trim_except_in_raw_safely().
@@ -1792,6 +1934,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: fl_print_trim_except_in_safely().
  *
  *   Errors (with error bit) from: fl_print_trim_except_in_safely().
@@ -1820,6 +1964,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: fl_print_trim_except_in_dynamic().
  *
  *   Errors (with error bit) from: fl_print_trim_except_in_dynamic().
@@ -1848,6 +1994,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: fl_print_trim_except_in_dynamic_raw().
  *
  *   Errors (with error bit) from: fl_print_trim_except_in_dynamic_raw().
@@ -1876,6 +2024,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: fl_print_trim_except_in_dynamic_raw_safely().
  *
  *   Errors (with error bit) from: fl_print_trim_except_in_dynamic_raw_safely().
@@ -1904,6 +2054,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: fl_print_trim_except_in_dynamic_safely().
  *
  *   Errors (with error bit) from: fl_print_trim_except_in_dynamic_safely().
@@ -1934,6 +2086,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: fl_print_trim_except_in_dynamic_partial().
  *
  *   Errors (with error bit) from: fl_print_trim_except_in_dynamic_partial().
@@ -1964,6 +2118,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: fl_print_trim_except_in_dynamic_partial_raw().
  *
  *   Errors (with error bit) from: fl_print_trim_except_in_dynamic_partial_raw().
@@ -1994,6 +2150,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: fl_print_trim_except_in_dynamic_partial_raw_safely().
  *
  *   Errors (with error bit) from: fl_print_trim_except_in_dynamic_partial_raw_safely().
@@ -2024,6 +2182,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: fl_print_trim_except_in_dynamic_partial_safely().
  *
  *   Errors (with error bit) from: fl_print_trim_except_in_dynamic_partial_safely().
@@ -2051,6 +2211,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: fl_print_trim_except_dynamic_partial().
  *
  *   Errors (with error bit) from: fl_print_trim_except_dynamic_partial().
@@ -2078,6 +2240,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: fl_print_trim_except_dynamic_partial_raw().
  *
  *   Errors (with error bit) from: fl_print_trim_except_dynamic_partial_raw().
@@ -2105,6 +2269,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: fl_print_trim_except_dynamic_partial_raw_safely().
  *
  *   Errors (with error bit) from: fl_print_trim_except_dynamic_partial_raw_safely().
@@ -2132,6 +2298,8 @@ extern "C" {
  *   The file structure containing a valid stream to output to, including standard streams such as stdout and stderr.
  *
  * @return
+ *   F_stream_not if file.stream is NULL.
+ *
  *   Success from: fl_print_trim_except_dynamic_partial_safely().
  *
  *   Errors (with error bit) from: fl_print_trim_except_dynamic_partial_safely().

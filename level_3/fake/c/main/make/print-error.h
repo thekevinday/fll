@@ -24,17 +24,15 @@ extern "C" {
  *   This does not alter setting.status.
  * @param print
  *   The output structure to print to.
- * @param parameters
- *   The console parameters.
- * @param index
- *   An index within the console parameters arguments that represents the invalid argument.
+ * @param name
+ *   The invalid section name.
  *
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_fake_make_print_error_argument_invalid_section_
-  extern f_status_t fake_make_print_error_argument_invalid_section(fake_setting_t * const setting, const fl_print_t print, const f_console_parameters_t parameters, const f_array_length_t index);
+  extern f_status_t fake_make_print_error_argument_invalid_section(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t name);
 #endif // _di_fake_make_print_error_argument_invalid_section_
 
 /**
@@ -151,6 +149,25 @@ extern "C" {
 #endif // _di_fake_make_print_error_content_not_directory_
 
 /**
+ * Print error about a define name being an empty string.
+ *
+ * @param setting
+ *   The main program settings.
+ *   (Must be of type fake_setting_t.)
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   The output structure to print to.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ */
+#ifndef _di_fake_make_print_error_define_name_empty_
+  extern f_status_t fake_make_print_error_define_name_empty(fake_setting_t * const setting, const fl_print_t print);
+#endif // _di_fake_make_print_error_define_name_empty_
+
+/**
  * Print error about a file not being of a specific type.
  *
  * @param setting
@@ -216,6 +233,48 @@ extern "C" {
 #endif // _di_fake_make_print_error_operation_incomplete_
 
 /**
+ * Print error about an operation recursion not being allowed.
+ *
+ * @param setting
+ *   The main program settings.
+ *   (Must be of type fake_setting_t.)
+ *
+ *   This does not alter setting.status.
+ * @param buffer
+ *   The buffer containing the range to use.
+ * @param range
+ *   The range within the buffer representing the operation name.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ */
+#ifndef _di_fake_make_print_error_operation_recursion_
+  extern f_status_t fake_make_print_error_operation_recursion(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t buffer, const f_string_range_t range);
+#endif // _di_fake_make_print_error_operation_recursion_
+
+/**
+ * Print error about an operation section not being found.
+ *
+ * @param setting
+ *   The main program settings.
+ *   (Must be of type fake_setting_t.)
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   The output structure to print to.
+ * @param name
+ *   The name of the operation.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ */
+#ifndef _di_fake_make_print_error_operation_section_not_found_
+  extern f_status_t fake_make_print_error_operation_section_not_found(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t name);
+#endif // _di_fake_make_print_error_operation_section_not_found_
+
+/**
  * Print error about number being out of range.
  *
  * @param setting
@@ -239,6 +298,25 @@ extern "C" {
 #ifndef _di_fake_make_print_error_out_of_range_number_
   extern f_status_t fake_make_print_error_out_of_range_number(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t number, const f_number_unsigned_t minimum, const f_number_unsigned_t maximum);
 #endif // _di_fake_make_print_error_out_of_range_number_
+
+/**
+ * Print error about attempting to pop last path off the project path stack.
+ *
+ * @param setting
+ *   The main program settings.
+ *   (Must be of type fake_setting_t.)
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   The output structure to print to.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ */
+#ifndef _di_fake_make_print_error_pop_last_path_
+  extern f_status_t fake_make_print_error_pop_last_path(fake_setting_t * const setting, const fl_print_t print);
+#endif // _di_fake_make_print_error_pop_last_path_
 
 /**
  * Print error about program failed.
@@ -281,6 +359,79 @@ extern "C" {
 #ifndef _di_fake_make_print_error_program_not_found_
   extern f_status_t fake_make_print_error_program_not_found(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t program);
 #endif // _di_fake_make_print_error_program_not_found_
+
+/**
+ * Print error about attempting to assign to a reserved parameter name.
+ *
+ * @param setting
+ *   The main program settings.
+ *   (Must be of type fake_setting_t.)
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   The output structure to print to.
+ * @param name
+ *   The reserved parameter name.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ */
+#ifndef _di_fake_make_print_error_reserved_parameter_name_
+  extern f_status_t fake_make_print_error_reserved_parameter_name(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t name);
+#endif // _di_fake_make_print_error_reserved_parameter_name_
+
+/**
+ * Print a simple error message with a single string message.
+ *
+ * This is primarily used by numerous error print functions to reduce code.
+ * This is not used for any error print functions that has more complex format structures.
+ *
+ * @param setting
+ *   The main program settings.
+ *   (Must be of type fake_setting_t.)
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   The output structure to print to.
+ * @param message
+ *   The string to print.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ */
+#ifndef _di_fake_make_print_error_simple_
+  extern f_status_t fake_make_print_error_simple(fake_setting_t * const setting, const fl_print_t print, const f_string_t message);
+#endif // _di_fake_make_print_error_simple_
+
+/**
+ * Print a simple error message with a before string, an after string, and a string variable.
+ *
+ * This is primarily used by numerous error print functions to reduce code.
+ * This is not used for any error print functions that has more complex format structures.
+ *
+ * @param setting
+ *   The main program settings.
+ *   (Must be of type fake_setting_t.)
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   The output structure to print to.
+ * @param before
+ *   The string being printed before the variable.
+ * @param variable
+ *   The string representing the variable.
+ * @param before
+ *   The string being printed after the variable.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ */
+#ifndef _di_fake_make_print_error_simple_variable_
+  extern f_status_t fake_make_print_error_simple_variable(fake_setting_t * const setting, const fl_print_t print, const f_string_t before, const f_string_static_t variable, const f_string_t after);
+#endif // _di_fake_make_print_error_simple_variable_
 
 /**
  * Print error about number not being supported.

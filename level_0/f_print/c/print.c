@@ -33,10 +33,8 @@ static inline f_status_t private_inline_f_print_write_unlocked(const f_string_t 
 
 #ifndef _di_f_print_
   f_status_t f_print(const f_string_t string, const f_array_length_t length, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!file.stream) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
+    if (!file.stream) return F_stream_not;
     if (!length || !string) return F_data_not;
 
     return private_f_print(string, length, file);
@@ -45,9 +43,8 @@ static inline f_status_t private_inline_f_print_write_unlocked(const f_string_t 
 
 #ifndef _di_f_print_character_
   f_status_t f_print_character(const f_char_t character, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!file.stream) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+
+    if (!file.stream) return F_stream_not;
 
     clearerr_unlocked(file.stream);
 
@@ -57,9 +54,8 @@ static inline f_status_t private_inline_f_print_write_unlocked(const f_string_t 
 
 #ifndef _di_f_print_character_safely_
   f_status_t f_print_character_safely(const f_char_t character, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!file.stream) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+
+    if (!file.stream) return F_stream_not;
 
     clearerr_unlocked(file.stream);
 
@@ -95,13 +91,9 @@ static inline f_status_t private_inline_f_print_write_unlocked(const f_string_t 
 
 #ifndef _di_f_print_dynamic_
   f_status_t f_print_dynamic(const f_string_static_t buffer, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!file.stream) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.used || !buffer.string) {
-      return F_data_not;
-    }
+    if (!file.stream) return F_stream_not;
+    if (!buffer.used || !buffer.string) return F_data_not;
 
     return private_f_print(buffer.string, buffer.used, file);
   }
@@ -109,13 +101,9 @@ static inline f_status_t private_inline_f_print_write_unlocked(const f_string_t 
 
 #ifndef _di_f_print_dynamic_partial_
   f_status_t f_print_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!file.stream) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) {
-      return F_data_not;
-    }
+    if (!file.stream) return F_stream_not;
+    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) return F_data_not;
 
     f_array_length_t length = (range.stop - range.start) + 1;
 
@@ -129,13 +117,9 @@ static inline f_status_t private_inline_f_print_write_unlocked(const f_string_t 
 
 #ifndef _di_f_print_dynamic_partial_raw_
   f_status_t f_print_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!file.stream) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) {
-      return F_data_not;
-    }
+    if (!file.stream) return F_stream_not;
+    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) return F_data_not;
 
     f_array_length_t length = (range.stop - range.start) + 1;
 
@@ -149,13 +133,9 @@ static inline f_status_t private_inline_f_print_write_unlocked(const f_string_t 
 
 #ifndef _di_f_print_dynamic_partial_raw_safely_
   f_status_t f_print_dynamic_partial_raw_safely(const f_string_static_t buffer, const f_string_range_t range, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!file.stream) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) {
-      return F_data_not;
-    }
+    if (!file.stream) return F_stream_not;
+    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) return F_data_not;
 
     f_array_length_t length = (range.stop - range.start) + 1;
 
@@ -169,13 +149,9 @@ static inline f_status_t private_inline_f_print_write_unlocked(const f_string_t 
 
 #ifndef _di_f_print_dynamic_partial_safely_
   f_status_t f_print_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!file.stream) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) {
-      return F_data_not;
-    }
+    if (!file.stream) return F_stream_not;
+    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) return F_data_not;
 
     f_array_length_t length = (range.stop - range.start) + 1;
 
@@ -189,10 +165,8 @@ static inline f_status_t private_inline_f_print_write_unlocked(const f_string_t 
 
 #ifndef _di_f_print_dynamic_raw_
   f_status_t f_print_dynamic_raw(const f_string_static_t buffer, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!file.stream) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
+    if (!file.stream) return F_stream_not;
     if (!buffer.used || !buffer.string) return F_data_not;
 
     return private_f_print_raw(buffer.string, buffer.used, file);
@@ -201,10 +175,8 @@ static inline f_status_t private_inline_f_print_write_unlocked(const f_string_t 
 
 #ifndef _di_f_print_dynamic_raw_safely_
   f_status_t f_print_dynamic_raw_safely(const f_string_static_t buffer, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!file.stream) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
+    if (!file.stream) return F_stream_not;
     if (!buffer.used || !buffer.string) return F_data_not;
 
     return private_f_print_raw_safely(buffer.string, buffer.used, file);
@@ -213,10 +185,8 @@ static inline f_status_t private_inline_f_print_write_unlocked(const f_string_t 
 
 #ifndef _di_f_print_dynamic_safely_
   f_status_t f_print_dynamic_safely(const f_string_static_t buffer, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!file.stream) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
+    if (!file.stream) return F_stream_not;
     if (!buffer.used || !buffer.string) return F_data_not;
 
     return private_f_print_safely(buffer.string, buffer.used, file);
@@ -225,10 +195,8 @@ static inline f_status_t private_inline_f_print_write_unlocked(const f_string_t 
 
 #ifndef _di_f_print_except_
   f_status_t f_print_except(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!file.stream) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
+    if (!file.stream) return F_stream_not;
     if (!length || !string) return F_data_not;
 
     return private_f_print_except(string, offset, length, except, file);
@@ -237,10 +205,8 @@ static inline f_status_t private_inline_f_print_write_unlocked(const f_string_t 
 
 #ifndef _di_f_print_except_dynamic_
   f_status_t f_print_except_dynamic(const f_string_static_t buffer, const f_array_lengths_t except, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!file.stream) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
+    if (!file.stream) return F_stream_not;
     if (!buffer.used || !buffer.string) return F_data_not;
 
     return private_f_print_except(buffer.string, 0, buffer.used, except, file);
@@ -249,13 +215,9 @@ static inline f_status_t private_inline_f_print_write_unlocked(const f_string_t 
 
 #ifndef _di_f_print_except_dynamic_partial_
   f_status_t f_print_except_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!file.stream) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) {
-      return F_data_not;
-    }
+    if (!file.stream) return F_stream_not;
+    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) return F_data_not;
 
     f_array_length_t length = (range.stop - range.start) + 1;
 
@@ -269,13 +231,9 @@ static inline f_status_t private_inline_f_print_write_unlocked(const f_string_t 
 
 #ifndef _di_f_print_except_dynamic_partial_raw_
   f_status_t f_print_except_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!file.stream) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) {
-      return F_data_not;
-    }
+    if (!file.stream) return F_stream_not;
+    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) return F_data_not;
 
     f_array_length_t length = (range.stop - range.start) + 1;
 
@@ -289,13 +247,9 @@ static inline f_status_t private_inline_f_print_write_unlocked(const f_string_t 
 
 #ifndef _di_f_print_except_dynamic_partial_raw_safely_
   f_status_t f_print_except_dynamic_partial_raw_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!file.stream) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) {
-      return F_data_not;
-    }
+    if (!file.stream) return F_stream_not;
+    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) return F_data_not;
 
     f_array_length_t length = (range.stop - range.start) + 1;
 
@@ -309,13 +263,9 @@ static inline f_status_t private_inline_f_print_write_unlocked(const f_string_t 
 
 #ifndef _di_f_print_except_dynamic_partial_safely_
   f_status_t f_print_except_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!file.stream) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) {
-      return F_data_not;
-    }
+    if (!file.stream) return F_stream_not;
+    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) return F_data_not;
 
     f_array_length_t length = (range.stop - range.start) + 1;
 
@@ -329,10 +279,8 @@ static inline f_status_t private_inline_f_print_write_unlocked(const f_string_t 
 
 #ifndef _di_f_print_except_dynamic_raw_
   f_status_t f_print_except_dynamic_raw(const f_string_static_t buffer, const f_array_lengths_t except, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!file.stream) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
+    if (!file.stream) return F_stream_not;
     if (!buffer.used || !buffer.string) return F_data_not;
 
     return private_f_print_except_raw(buffer.string, 0, buffer.used, except, file);
@@ -341,10 +289,8 @@ static inline f_status_t private_inline_f_print_write_unlocked(const f_string_t 
 
 #ifndef _di_f_print_except_dynamic_raw_safely_
   f_status_t f_print_except_dynamic_raw_safely(const f_string_static_t buffer, const f_array_lengths_t except, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!file.stream) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
+    if (!file.stream) return F_stream_not;
     if (!buffer.used || !buffer.string) return F_data_not;
 
     return private_f_print_except_raw_safely(buffer.string, 0, buffer.used, except, file);
@@ -353,10 +299,8 @@ static inline f_status_t private_inline_f_print_write_unlocked(const f_string_t 
 
 #ifndef _di_f_print_except_dynamic_safely_
   f_status_t f_print_except_dynamic_safely(const f_string_static_t buffer, const f_array_lengths_t except, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!file.stream) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
+    if (!file.stream) return F_stream_not;
     if (!buffer.used || !buffer.string) return F_data_not;
 
     return private_f_print_except_safely(buffer.string, 0, buffer.used, except, file);
@@ -365,13 +309,9 @@ static inline f_status_t private_inline_f_print_write_unlocked(const f_string_t 
 
 #ifndef _di_f_print_except_in_
   f_status_t f_print_except_in(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!file.stream) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
-    if (!length || !string) {
-      return F_data_not;
-    }
+    if (!file.stream) return F_stream_not;
+    if (!length || !string) return F_data_not;
 
     return private_f_print_except_in(string, offset, length, except_at, except_in, file);
   }
@@ -379,10 +319,8 @@ static inline f_status_t private_inline_f_print_write_unlocked(const f_string_t 
 
 #ifndef _di_f_print_except_in_dynamic_
   f_status_t f_print_except_in_dynamic(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!file.stream) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
+    if (!file.stream) return F_stream_not;
     if (!buffer.used || !buffer.string) return F_data_not;
 
     return private_f_print_except_in(buffer.string, 0, buffer.used, except_at, except_in, file);
@@ -391,13 +329,9 @@ static inline f_status_t private_inline_f_print_write_unlocked(const f_string_t 
 
 #ifndef _di_f_print_except_in_dynamic_partial_
   f_status_t f_print_except_in_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!file.stream) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) {
-      return F_data_not;
-    }
+    if (!file.stream) return F_stream_not;
+    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) return F_data_not;
 
     f_array_length_t length = (range.stop - range.start) + 1;
 
@@ -411,13 +345,9 @@ static inline f_status_t private_inline_f_print_write_unlocked(const f_string_t 
 
 #ifndef _di_f_print_except_in_dynamic_partial_raw_
   f_status_t f_print_except_in_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!file.stream) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) {
-      return F_data_not;
-    }
+    if (!file.stream) return F_stream_not;
+    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) return F_data_not;
 
     f_array_length_t length = (range.stop - range.start) + 1;
 
@@ -431,13 +361,9 @@ static inline f_status_t private_inline_f_print_write_unlocked(const f_string_t 
 
 #ifndef _di_f_print_except_in_dynamic_partial_raw_safely_
   f_status_t f_print_except_in_dynamic_partial_raw_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!file.stream) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) {
-      return F_data_not;
-    }
+    if (!file.stream) return F_stream_not;
+    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) return F_data_not;
 
     f_array_length_t length = (range.stop - range.start) + 1;
 
@@ -451,13 +377,9 @@ static inline f_status_t private_inline_f_print_write_unlocked(const f_string_t 
 
 #ifndef _di_f_print_except_in_dynamic_partial_safely_
   f_status_t f_print_except_in_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!file.stream) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) {
-      return F_data_not;
-    }
+    if (!file.stream) return F_stream_not;
+    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) return F_data_not;
 
     f_array_length_t length = (range.stop - range.start) + 1;
 
@@ -471,10 +393,8 @@ static inline f_status_t private_inline_f_print_write_unlocked(const f_string_t 
 
 #ifndef _di_f_print_except_in_dynamic_raw_
   f_status_t f_print_except_in_dynamic_raw(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!file.stream) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
+    if (!file.stream) return F_stream_not;
     if (!buffer.used || !buffer.string) return F_data_not;
 
     return private_f_print_except_in_raw(buffer.string, 0, buffer.used, except_at, except_in, file);
@@ -483,10 +403,8 @@ static inline f_status_t private_inline_f_print_write_unlocked(const f_string_t 
 
 #ifndef _di_f_print_except_in_dynamic_raw_safely_
   f_status_t f_print_except_in_dynamic_raw_safely(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!file.stream) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
+    if (!file.stream) return F_stream_not;
     if (!buffer.used || !buffer.string) return F_data_not;
 
     return private_f_print_except_in_raw_safely(buffer.string, 0, buffer.used, except_at, except_in, file);
@@ -495,10 +413,8 @@ static inline f_status_t private_inline_f_print_write_unlocked(const f_string_t 
 
 #ifndef _di_f_print_except_in_dynamic_safely_
   f_status_t f_print_except_in_dynamic_safely(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!file.stream) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
+    if (!file.stream) return F_stream_not;
     if (!buffer.used || !buffer.string) return F_data_not;
 
     return private_f_print_except_in_safely(buffer.string, 0, buffer.used, except_at, except_in, file);
@@ -507,13 +423,9 @@ static inline f_status_t private_inline_f_print_write_unlocked(const f_string_t 
 
 #ifndef _di_f_print_except_in_raw_
   f_status_t f_print_except_in_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!file.stream) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
-    if (!length || !string) {
-      return F_data_not;
-    }
+    if (!file.stream) return F_stream_not;
+    if (!length || !string) return F_data_not;
 
     return private_f_print_except_in_raw(string, offset, length, except_at, except_in, file);
   }
@@ -521,13 +433,9 @@ static inline f_status_t private_inline_f_print_write_unlocked(const f_string_t 
 
 #ifndef _di_f_print_except_in_raw_safely_
   f_status_t f_print_except_in_raw_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!file.stream) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
-    if (!length || !string) {
-      return F_data_not;
-    }
+    if (!file.stream) return F_stream_not;
+    if (!length || !string) return F_data_not;
 
     return private_f_print_except_in_raw_safely(string, offset, length, except_at, except_in, file);
   }
@@ -535,13 +443,9 @@ static inline f_status_t private_inline_f_print_write_unlocked(const f_string_t 
 
 #ifndef _di_f_print_except_in_safely_
   f_status_t f_print_except_in_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!file.stream) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
-    if (!length || !string) {
-      return F_data_not;
-    }
+    if (!file.stream) return F_stream_not;
+    if (!length || !string) return F_data_not;
 
     return private_f_print_except_in_safely(string, offset, length, except_at, except_in, file);
   }
@@ -549,13 +453,9 @@ static inline f_status_t private_inline_f_print_write_unlocked(const f_string_t 
 
 #ifndef _di_f_print_except_raw_
   f_status_t f_print_except_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!file.stream) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
-    if (!length || !string) {
-      return F_data_not;
-    }
+    if (!file.stream) return F_stream_not;
+    if (!length || !string) return F_data_not;
 
     return private_f_print_except_raw(string, offset, length, except, file);
   }
@@ -563,13 +463,9 @@ static inline f_status_t private_inline_f_print_write_unlocked(const f_string_t 
 
 #ifndef _di_f_print_except_raw_safely_
   f_status_t f_print_except_raw_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!file.stream) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
-    if (!length || !string) {
-      return F_data_not;
-    }
+    if (!file.stream) return F_stream_not;
+    if (!length || !string) return F_data_not;
 
     return private_f_print_except_raw_safely(string, offset, length, except, file);
   }
@@ -577,13 +473,9 @@ static inline f_status_t private_inline_f_print_write_unlocked(const f_string_t 
 
 #ifndef _di_f_print_except_safely_
   f_status_t f_print_except_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!file.stream) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
-    if (!length || !string) {
-      return F_data_not;
-    }
+    if (!file.stream) return F_stream_not;
+    if (!length || !string) return F_data_not;
 
     return private_f_print_except_safely(string, offset, length, except, file);
   }
@@ -591,13 +483,9 @@ static inline f_status_t private_inline_f_print_write_unlocked(const f_string_t 
 
 #ifndef _di_f_print_raw_
   f_status_t f_print_raw(const f_string_t string, const f_array_length_t length, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!file.stream) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
-    if (!length || !string) {
-      return F_data_not;
-    }
+    if (!file.stream) return F_stream_not;
+    if (!length || !string) return F_data_not;
 
     return private_f_print_raw(string, length, file);
   }
@@ -605,13 +493,9 @@ static inline f_status_t private_inline_f_print_write_unlocked(const f_string_t 
 
 #ifndef _di_f_print_raw_safely_
   f_status_t f_print_raw_safely(const f_string_t string, const f_array_length_t length, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!file.stream) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
-    if (!length || !string) {
-      return F_data_not;
-    }
+    if (!file.stream) return F_stream_not;
+    if (!length || !string) return F_data_not;
 
     return private_f_print_raw_safely(string, length, file);
   }
@@ -619,13 +503,9 @@ static inline f_status_t private_inline_f_print_write_unlocked(const f_string_t 
 
 #ifndef _di_f_print_raw_terminated_
   f_status_t f_print_raw_terminated(const f_string_t string, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!file.stream) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
-    if (!string) {
-      return F_data_not;
-    }
+    if (!file.stream) return F_stream_not;
+    if (!string) return F_data_not;
 
     // The f_print_raw_terminated() and f_print_terminated() are functionality identical due to being NULL terminated.
     return private_f_print_terminated(string, file);
@@ -634,13 +514,9 @@ static inline f_status_t private_inline_f_print_write_unlocked(const f_string_t 
 
 #ifndef _di_f_print_safely_
   f_status_t f_print_safely(const f_string_t string, const f_array_length_t length, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!file.stream) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
-    if (!length || !string) {
-      return F_data_not;
-    }
+    if (!file.stream) return F_stream_not;
+    if (!length || !string) return F_data_not;
 
     return private_f_print_safely(string, length, file);
   }
@@ -655,13 +531,9 @@ static inline f_status_t private_inline_f_print_write_unlocked(const f_string_t 
 
 #ifndef _di_f_print_safely_terminated_
   f_status_t f_print_safely_terminated(const f_string_t string, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!file.stream) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
-    if (!string) {
-      return F_data_not;
-    }
+    if (!file.stream) return F_stream_not;
+    if (!string) return F_data_not;
 
     f_array_length_t start = 0;
     f_array_length_t total = 0;
@@ -765,13 +637,9 @@ static inline f_status_t private_inline_f_print_write_unlocked(const f_string_t 
 
 #ifndef _di_f_print_terminated_
   f_status_t f_print_terminated(const f_string_t string, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!file.stream) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
-    if (!string) {
-      return F_data_not;
-    }
+    if (!file.stream) return F_stream_not;
+    if (!string) return F_data_not;
 
     return private_f_print_terminated(string, file);
   }

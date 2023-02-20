@@ -193,6 +193,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success but there is nothing to print.
+ *   F_stream_not if file.stream is NULL.
  *
  *   F_eos (with error bit) on EOS reached.
  *   F_output (with error bit) on failure to print to the output file.
@@ -243,6 +245,7 @@ extern "C" {
  *   The variable arguments list.
  * @param status
  *   The status is stored here rather then via the return.
+ *   Set to NULL to not use.
  *
  * @return
  *   This returns a string at either the start position (if nothing done or an error occurred) or at the character last processed.
@@ -251,6 +254,8 @@ extern "C" {
  *   The status parameter will be set as follows:
  *
  *     F_none on success.
+ *     F_data_not on success but there is nothing to print.
+ *     F_stream_not if file.stream is NULL.
  *
  *     F_output (with error bit) on failure to print to the output file.
  *     F_parameter (with error bit) if a parameter is invalid.
@@ -302,6 +307,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_data_not on success but there is nothing to print.
+ *   F_stream_not if file.stream is NULL.
  *
  *   F_eos (with error bit) on EOS reached.
  *   F_output (with error bit) on failure to print to the output file.
@@ -354,6 +361,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not on success but there is nothing to print.
+ *   F_stream_not if file.stream is NULL.
  *
  *   F_complete_not_utf_stop (with error bit) if character is an incomplete UTF-8 fragment at end of the string.
  *   F_output (with error bit) on error when printing to output.
@@ -397,6 +405,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not on success but there is nothing to print.
+ *   F_stream_not if file.stream is NULL.
  *
  *   F_output (with error bit) on error when printing to output.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -437,6 +446,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not on success but there is nothing to print.
+ *   F_stream_not if file.stream is NULL.
  *
  *   F_output (with error bit) on error when printing to output.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -477,6 +487,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not on success but there is nothing to print.
+ *   F_stream_not if file.stream is NULL.
  *
  *   F_output (with error bit) on error when printing to output.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -517,6 +528,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not on success but there is nothing to print.
+ *   F_stream_not if file.stream is NULL.
  *
  *   F_complete_not_utf_stop (with error bit) if character is an incomplete UTF-8 fragment at end of the string.
  *   F_output (with error bit) on error when printing to output.
@@ -561,6 +573,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not on success but there is nothing to print.
+ *   F_stream_not if file.stream is NULL.
  *
  *   F_output (with error bit) on error when printing to output.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -603,6 +616,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not on success but there is nothing to print.
+ *   F_stream_not if file.stream is NULL.
  *
  *   F_output (with error bit) on error when printing to output.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -644,6 +658,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not on success but there is nothing to print.
+ *   F_stream_not if file.stream is NULL.
  *
  *   F_output (with error bit) on error when printing to output.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -686,6 +701,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not on success but there is nothing to print.
+ *   F_stream_not if file.stream is NULL.
  *
  *   F_complete_not_utf_stop (with error bit) if character is an incomplete UTF-8 fragment at end of the string.
  *   F_output (with error bit) on error when printing to output.
@@ -732,6 +748,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not on success but there is nothing to print.
+ *   F_stream_not if file.stream is NULL.
  *
  *   F_output (with error bit) on error when printing to output.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -776,6 +793,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not on success but there is nothing to print.
+ *   F_stream_not if file.stream is NULL.
  *
  *   F_output (with error bit) on error when printing to output.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -819,6 +837,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not on success but there is nothing to print.
+ *   F_stream_not if file.stream is NULL.
  *
  *   F_output (with error bit) on error when printing to output.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -866,6 +885,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not on success but there is nothing to print.
+ *   F_stream_not if file.stream is NULL.
  *
  *   F_complete_not_utf_stop (with error bit) if character is an incomplete UTF-8 fragment at end of the string.
  *   F_output (with error bit) on error when printing to output.
@@ -917,6 +937,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not on success but there is nothing to print.
+ *   F_stream_not if file.stream is NULL.
  *
  *   F_output (with error bit) on error when printing to output.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -966,6 +987,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not on success but there is nothing to print.
+ *   F_stream_not if file.stream is NULL.
  *
  *   F_output (with error bit) on error when printing to output.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -1014,6 +1036,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not on success but there is nothing to print.
+ *   F_stream_not if file.stream is NULL.
  *
  *   F_output (with error bit) on error when printing to output.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -1058,6 +1081,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not on success but there is nothing to print.
+ *   F_stream_not if file.stream is NULL.
  *
  *   F_complete_not_utf_stop (with error bit) if character is an incomplete UTF-8 fragment at end of the string.
  *   F_output (with error bit) on error when printing to output.
@@ -1106,6 +1130,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not on success but there is nothing to print.
+ *   F_stream_not if file.stream is NULL.
  *
  *   F_output (with error bit) on error when printing to output.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -1152,6 +1177,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not on success but there is nothing to print.
+ *   F_stream_not if file.stream is NULL.
  *
  *   F_output (with error bit) on error when printing to output.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -1197,6 +1223,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not on success but there is nothing to print.
+ *   F_stream_not if file.stream is NULL.
  *
  *   F_output (with error bit) on error when printing to output.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -1248,6 +1275,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not on success but there is nothing to print.
+ *   F_stream_not if file.stream is NULL.
  *
  *   F_complete_not_utf_stop (with error bit) if character is an incomplete UTF-8 fragment at end of the string.
  *   F_output (with error bit) on error when printing to output.
@@ -1303,6 +1331,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not on success but there is nothing to print.
+ *   F_stream_not if file.stream is NULL.
  *
  *   F_output (with error bit) on error when printing to output.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -1356,6 +1385,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not on success but there is nothing to print.
+ *   F_stream_not if file.stream is NULL.
  *
  *   F_output (with error bit) on error when printing to output.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -1408,6 +1438,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not on success but there is nothing to print.
+ *   F_stream_not if file.stream is NULL.
  *
  *   F_output (with error bit) on error when printing to output.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -1458,6 +1489,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not on success but there is nothing to print.
+ *   F_stream_not if file.stream is NULL.
  *
  *   F_complete_not_utf_stop (with error bit) if character is an incomplete UTF-8 fragment at end of the string.
  *   F_output (with error bit) on error when printing to output.
@@ -1510,6 +1542,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not on success but there is nothing to print.
+ *   F_stream_not if file.stream is NULL.
  *
  *   F_output (with error bit) on error when printing to output.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -1560,6 +1593,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not on success but there is nothing to print.
+ *   F_stream_not if file.stream is NULL.
  *
  *   F_output (with error bit) on error when printing to output.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -1609,6 +1643,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not on success but there is nothing to print.
+ *   F_stream_not if file.stream is NULL.
  *
  *   F_output (with error bit) on error when printing to output.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -1659,6 +1694,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not on success but there is nothing to print.
+ *   F_stream_not if file.stream is NULL.
  *
  *   F_complete_not_utf_stop (with error bit) if character is an incomplete UTF-8 fragment at end of the string.
  *   F_output (with error bit) on error when printing to output.
@@ -1713,6 +1749,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not on success but there is nothing to print.
+ *   F_stream_not if file.stream is NULL.
  *
  *   F_output (with error bit) on error when printing to output.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -1764,6 +1801,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not on success but there is nothing to print.
+ *   F_stream_not if file.stream is NULL.
  *
  *   F_output (with error bit) on error when printing to output.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -1815,6 +1853,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not on success but there is nothing to print.
+ *   F_stream_not if file.stream is NULL.
  *
  *   F_output (with error bit) on error when printing to output.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -1861,6 +1900,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not on success but there is nothing to print.
+ *   F_stream_not if file.stream is NULL.
  *
  *   F_complete_not_utf_stop (with error bit) if character is an incomplete UTF-8 fragment at end of the string.
  *   F_output (with error bit) on error when printing to output.
@@ -1911,6 +1951,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not on success but there is nothing to print.
+ *   F_stream_not if file.stream is NULL.
  *
  *   F_output (with error bit) on error when printing to output.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -1958,6 +1999,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not on success but there is nothing to print.
+ *   F_stream_not if file.stream is NULL.
  *
  *   F_output (with error bit) on error when printing to output.
  *   F_parameter (with error bit) if a parameter is invalid.
@@ -2005,6 +2047,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not on success but there is nothing to print.
+ *   F_stream_not if file.stream is NULL.
  *
  *   F_output (with error bit) on error when printing to output.
  *   F_parameter (with error bit) if a parameter is invalid.

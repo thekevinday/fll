@@ -142,7 +142,7 @@ extern "C" {
       } // for
 
       if (F_status_is_error(status)) {
-        fake_make_print_error_argument_invalid_section(data->setting, data->main->error, data->main->parameters, data->main->parameters.remaining.array[i]);
+        fake_make_print_error_argument_invalid_section(data->setting, data->main->error, data->main->parameters.arguments.array[data->main->parameters.remaining.array[i]]);
       }
       else {
         int result = 0;
