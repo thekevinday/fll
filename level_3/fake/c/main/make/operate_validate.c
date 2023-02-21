@@ -91,16 +91,10 @@ extern "C" {
   f_status_t fake_make_operate_validate_define_name(const f_string_static_t name) {
 
     if (!name.used) return F_none;
-
-    if (!isalpha(name.string[0]) && name.string[0] != '_') {
-      return F_false;
-    }
+    if (!isalpha(name.string[0]) && name.string[0] != '_') return F_false;
 
     for (f_array_length_t i = 1; i < name.used; ++i) {
-
-      if (!isalnum(name.string[i]) && name.string[i] != '_') {
-        return F_false;
-      }
+      if (!isalnum(name.string[i]) && name.string[i] != '_') return F_false;
     } // for
 
     return F_true;

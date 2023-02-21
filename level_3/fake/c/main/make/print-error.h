@@ -112,10 +112,6 @@ extern "C" {
  *   This does not alter setting.status.
  * @param print
  *   The output structure to print to.
- * @param fakefile
- *   The name or path of the file that is empty.
- * @param section
- *   The name of the missing section.
  *
  * @return
  *   F_none on success.
@@ -191,7 +187,28 @@ extern "C" {
 #endif // _di_fake_make_print_error_file_type_
 
 /**
- * Print error about how using something immediately after a condition statement.
+ * Print error about a indexer not being specified.
+ *
+ * @param setting
+ *   The main program settings.
+ *   (Must be of type fake_setting_t.)
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   The output structure to print to.
+ * @param action
+ *   The action that cannot be performed due to a lack of a compiler.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ */
+#ifndef _di_fake_make_print_error_indexer_not_specified_
+  extern f_status_t fake_make_print_error_indexer_not_specified(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t action);
+#endif // _di_fake_make_print_error_indexer_not_specified_
+
+/**
+ * Print error about how using something after a condition statement.
  *
  * @param setting
  *   The main program settings.
@@ -207,9 +224,66 @@ extern "C" {
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
  */
-#ifndef _di_fake_make_print_error_not_after_condition_
-  extern f_status_t fake_make_print_error_not_after_condition(fake_setting_t * const setting, const fl_print_t print, const f_string_t message);
-#endif // _di_fake_make_print_error_not_after_condition_
+#ifndef _di_fake_make_print_error_after_condition_
+  extern f_status_t fake_make_print_error_after_condition(fake_setting_t * const setting, const fl_print_t print, const f_string_t message);
+#endif // _di_fake_make_print_error_after_condition_
+
+/**
+ * Print error about how using something after a condition statement, for the "may only" case.
+ *
+ * @param setting
+ *   The main program settings.
+ *   (Must be of type fake_setting_t.)
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   The output structure to print to.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ */
+#ifndef _di_fake_make_print_error_after_condition_may_only_
+  extern f_status_t fake_make_print_error_after_condition_may_only(fake_setting_t * const setting, const fl_print_t print);
+#endif // _di_fake_make_print_error_after_condition_may_only_
+
+/**
+ * Print error about how using something after a condition statement, for the "must not" case.
+ *
+ * @param setting
+ *   The main program settings.
+ *   (Must be of type fake_setting_t.)
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   The output structure to print to.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ */
+#ifndef _di_fake_make_print_error_after_condition_must_not_
+  extern f_status_t fake_make_print_error_after_condition_must_not(fake_setting_t * const setting, const fl_print_t print);
+#endif // _di_fake_make_print_error_after_condition_must_not_
+
+/**
+ * Print error about how using something after a condition statement, for the "no preceding" case.
+ *
+ * @param setting
+ *   The main program settings.
+ *   (Must be of type fake_setting_t.)
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   The output structure to print to.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ */
+#ifndef _di_fake_make_print_error_after_condition_no_preceding_
+  extern f_status_t fake_make_print_error_after_condition_no_preceding(fake_setting_t * const setting, const fl_print_t print);
+#endif // _di_fake_make_print_error_after_condition_no_preceding_
 
 /**
  * Print error about an incomplete operation at the end of a section.
@@ -385,7 +459,7 @@ extern "C" {
  * Print a simple error message with a single string message.
  *
  * This is primarily used by numerous error print functions to reduce code.
- * This is not used for any error print functions that has more complex format structures.
+ * This is not used for any error print functions that has complex format structures.
  *
  * @param setting
  *   The main program settings.
@@ -409,7 +483,7 @@ extern "C" {
  * Print a simple error message with a before string, an after string, and a string variable.
  *
  * This is primarily used by numerous error print functions to reduce code.
- * This is not used for any error print functions that has more complex format structures.
+ * This is not used for any error print functions that has complex format structures.
  *
  * @param setting
  *   The main program settings.
@@ -422,7 +496,7 @@ extern "C" {
  *   The string being printed before the variable.
  * @param variable
  *   The string representing the variable.
- * @param before
+ * @param after
  *   The string being printed after the variable.
  *
  * @return
@@ -432,6 +506,25 @@ extern "C" {
 #ifndef _di_fake_make_print_error_simple_variable_
   extern f_status_t fake_make_print_error_simple_variable(fake_setting_t * const setting, const fl_print_t print, const f_string_t before, const f_string_static_t variable, const f_string_t after);
 #endif // _di_fake_make_print_error_simple_variable_
+
+/**
+ * Print error about a target file name being an empty string.
+ *
+ * @param setting
+ *   The main program settings.
+ *   (Must be of type fake_setting_t.)
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   The output structure to print to.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ */
+#ifndef _di_fake_make_print_error_target_file_name_empty_
+  extern f_status_t fake_make_print_error_target_file_name_empty(fake_setting_t * const setting, const fl_print_t print);
+#endif // _di_fake_make_print_error_target_file_name_empty_
 
 /**
  * Print error about number not being supported.

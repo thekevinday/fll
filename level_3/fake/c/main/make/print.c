@@ -41,17 +41,7 @@ extern "C" {
 #ifndef _di_fake_make_print_operate_break_verbose_
   f_status_t fake_make_print_operate_break_verbose(fake_setting_t * const setting, const fl_print_t print, const f_string_statics_t arguments) {
 
-    if (print.verbosity < f_console_verbosity_verbose_e) return F_output_not;
-
-    f_file_stream_lock(print.to);
-
-    fake_print_line_first_unlocked(setting, print);
-
-    fl_print_format("Breaking as '%[%Q%]'.%r", print.to, print.set->notable, arguments.used ? arguments.array[0] : fake_make_operation_argument_success_s, print.set->notable, f_string_eol_s);
-
-    f_file_stream_unlock(print.to);
-
-    return F_none;
+    return fake_make_print_simple_variable_operate_verbose(setting, print, "Breaking as", arguments.used ? arguments.array[0] : fake_make_operation_argument_success_s);
   }
 #endif // _di_fake_make_print_operate_break_verbose_
 
@@ -76,51 +66,21 @@ extern "C" {
 #ifndef _di_fake_make_print_operate_define_verbose_
   f_status_t fake_make_print_operate_define_verbose(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t variable) {
 
-    if (print.verbosity < f_console_verbosity_verbose_e) return F_output_not;
-
-    f_file_stream_lock(print.to);
-
-    fake_print_line_first_unlocked(setting, print);
-
-    fll_print_format("Defined environment variable '%[%Q%]'.%r", print.to, print.set->notable, variable, print.set->notable, f_string_eol_s);
-
-    f_file_stream_unlock(print.to);
-
-    return F_none;
+    return fake_make_print_simple_variable_operate_verbose(setting, print, "Defined environment variable", variable);
   }
 #endif // _di_fake_make_print_operate_define_verbose_
 
 #ifndef _di_fake_make_print_operate_delete_verbose_
   f_status_t fake_make_print_operate_delete_verbose(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t path) {
 
-    if (print.verbosity < f_console_verbosity_verbose_e) return F_output_not;
-
-    f_file_stream_lock(print.to);
-
-    fake_print_line_first_unlocked(setting, print);
-
-    fll_print_format("Removed '%[%Q%]'.%r", print.to, print.set->notable, path, print.set->notable, f_string_eol_s);
-
-    f_file_stream_unlock(print.to);
-
-    return F_none;
+    return fake_make_print_simple_variable_operate_verbose(setting, print, "Removed", path);
   }
 #endif // _di_fake_make_print_operate_delete_verbose_
 
 #ifndef _di_fake_make_print_operate_exiting_as_verbose_
   f_status_t fake_make_print_operate_exiting_as_verbose(fake_setting_t * const setting, const fl_print_t print, const f_string_statics_t arguments) {
 
-    if (print.verbosity < f_console_verbosity_verbose_e) return F_output_not;
-
-    f_file_stream_lock(print.to);
-
-    fake_print_line_first_unlocked(setting, print);
-
-    fl_print_format("Exiting as '%[%Q%]'.%r", print.to, print.set->notable, arguments.used ? arguments.array[0] : fake_make_operation_argument_success_s, print.set->notable, f_string_eol_s);
-
-    f_file_stream_unlock(print.to);
-
-    return F_none;
+    return fake_make_print_simple_variable_operate_verbose(setting, print, "Exiting as", arguments.used ? arguments.array[0] : fake_make_operation_argument_success_s);
   }
 #endif // _di_fake_make_print_operate_exiting_as_verbose_
 
@@ -223,17 +183,7 @@ extern "C" {
 #ifndef _di_fake_make_print_operate_set_path_verbose_
   f_status_t fake_make_print_operate_set_path_verbose(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t path) {
 
-    if (print.verbosity < f_console_verbosity_verbose_e) return F_output_not;
-
-    f_file_stream_lock(print.to);
-
-    fake_print_line_first_unlocked(setting, print);
-
-    fl_print_format("Changed project path to '%[%Q%]'.%r", print.to, print.set->notable, path, print.set->notable, f_string_eol_s);
-
-    f_file_stream_unlock(print.to);
-
-    return F_none;
+    return fake_make_print_simple_variable_operate_verbose(setting, print, "Changed project path to", path);
   }
 #endif // _di_fake_make_print_operate_set_path_verbose_
 
@@ -276,17 +226,7 @@ extern "C" {
 #ifndef _di_fake_make_print_operate_touch_verbose_
   f_status_t fake_make_print_operate_touch_verbose(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t path) {
 
-    if (print.verbosity < f_console_verbosity_verbose_e) return F_output_not;
-
-    f_file_stream_lock(print.to);
-
-    fake_print_line_first_unlocked(setting, print);
-
-    fl_print_format("Touched '%[%Q%]'.%r", print.to, print.set->notable, path, print.set->notable, f_string_eol_s);
-
-    f_file_stream_unlock(print.to);
-
-    return F_none;
+    return fake_make_print_simple_variable_operate_verbose(setting, print, "Touched", path);
   }
 #endif // _di_fake_make_print_operate_touch_verbose_
 
@@ -308,6 +248,23 @@ extern "C" {
     return F_none;
   }
 #endif // _di_fake_make_print_processing_section_
+
+#ifndef _di_fake_make_print_simple_variable_operate_verbose_
+  f_status_t fake_make_print_simple_variable_operate_verbose(fake_setting_t * const setting, const fl_print_t print, const f_string_t message, const f_string_static_t variable) {
+
+    if (print.verbosity < f_console_verbosity_verbose_e) return F_output_not;
+
+    f_file_stream_lock(print.to);
+
+    fake_print_line_first_unlocked(setting, print);
+
+    fll_print_format("%S '%[%Q%]'.%r", print.to, message, print.set->notable, variable, print.set->notable, f_string_eol_s);
+
+    f_file_stream_unlock(print.to);
+
+    return F_none;
+  }
+#endif // _di_fake_make_print_simple_variable_operate_verbose_
 
 #ifdef __cplusplus
 } // extern "C"

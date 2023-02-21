@@ -873,21 +873,11 @@ extern "C" {
     if (F_status_is_error(status)) {
       state_process->condition_result = fake_condition_result_error_e;
 
-      if (data_make->main->error.verbosity > f_console_verbosity_quiet_e && data_make->main->error.to.stream) {
-        f_file_stream_lock(data_make->main->error.to);
-
-        if ((i == 1 && number_left > F_number_t_size_unsigned_d) || (i > 1 && number_right > F_number_t_size_unsigned_d)) {
-          fl_print_format("%r%[%QThe number '%]", data_make->main->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
-          fl_print_format("%[%Q%]", data_make->main->error.to, data_make->error.notable, data_make->cache_arguments.array[i], data_make->error.notable);
-          fl_print_format("%[' may only be between the ranges -%un to %un.%]%r", data_make->main->error.to, data_make->error.context, F_number_t_size_unsigned_d, F_number_t_size_unsigned_d, data_make->error.context, f_string_eol_s);
-        }
-        else {
-          fl_print_format("%r%[%QInvalid or unsupported number provided '%]", data_make->main->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
-          fl_print_format("%[%Q%]", data_make->main->error.to, data_make->error.notable, data_make->cache_arguments.array[i], data_make->error.notable);
-          fl_print_format("%['.%]%r", data_make->main->error.to, data_make->error.context, F_number_t_size_unsigned_d, F_number_t_size_unsigned_d, data_make->error.context, f_string_eol_s);
-        }
-
-        f_file_stream_unlock(data_make->main->error.to);
+      if ((i == 1 && number_left > F_number_t_size_unsigned_d) || (i > 1 && number_right > F_number_t_size_unsigned_d)) {
+        fake_make_print_error_out_of_range_number(data_make->setting, data_make->main->error, data_make->cache_arguments.array[i], F_number_t_size_unsigned_d, F_number_t_size_unsigned_d);
+      }
+      else {
+        fake_make_print_error_unsupported_number(data_make->setting, data_make->main->error, data_make->cache_arguments.array[i]);
       }
 
       return F_status_set_error(F_failure);

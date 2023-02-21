@@ -351,6 +351,32 @@ extern "C" {
   extern f_status_t fake_make_print_processing_section(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t buffer, const f_fss_named_t section);
 #endif // _di_fake_make_print_processing_section_
 
+/**
+ * Print simple operate verbose message with a value.
+ *
+ * This is primarily used by numerous print functions to reduce code.
+ * This is not used for any print functions that has complex format structures.
+ *
+ * @param setting
+ *   The main program settings.
+ *   (Must be of type fake_setting_t.)
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   The output structure to print to.
+ * @param message
+ *   The message to print.
+ * @param variable
+ *   The string representing the variable.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ */
+#ifndef _di_fake_make_print_simple_variable_operate_verbose_
+  extern f_status_t fake_make_print_simple_variable_operate_verbose(fake_setting_t * const setting, const fl_print_t print, const f_string_t message, const f_string_static_t variable);
+#endif // _di_fake_make_print_simple_variable_operate_verbose_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

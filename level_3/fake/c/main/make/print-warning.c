@@ -29,74 +29,28 @@ extern "C" {
 #ifndef _di_fake_make_print_warning_environment_name_already_added_
   f_status_t fake_make_print_warning_environment_name_already_added(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t name) {
 
-    if (print.verbosity < f_console_verbosity_verbose_e) return F_output_not;
-
-    f_file_stream_lock(print.to);
-
-    fake_print_line_first_unlocked(setting, print);
-
-    fl_print_format("%[%QThe environment name '%]", print.to, print.context, print.prefix, print.context);
-    fl_print_format("%[%Q%]", print.to, print.notable, name, print.notable);
-    fl_print_format("%[' is already added, replacing previous value.%]%r", print.to, print.context, print.context, f_string_eol_s);
-
-    f_file_stream_unlock(print.to);
-
-    return F_none;
+    return fake_make_print_warning_simple_variable(setting, print, "The environment name", name, "is already added, replacing previous value");
   }
 #endif // _di_fake_make_print_warning_environment_name_already_added_
 
 #ifndef _di_fake_make_print_warning_environment_name_invalid_
   f_status_t fake_make_print_warning_environment_name_invalid(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t name) {
 
-    if (print.verbosity < f_console_verbosity_verbose_e) return F_output_not;
-
-    f_file_stream_lock(print.to);
-
-    fake_print_line_first_unlocked(setting, print);
-
-    fl_print_format("%[%QThe environment name '%]", print.to, print.context, print.prefix, print.context);
-    fl_print_format("%[%Q%]", print.to, print.notable, name, print.notable);
-    fl_print_format("%[' is invalid, ignoring.%]%r", print.to, print.context, print.context, f_string_eol_s);
-
-    f_file_stream_unlock(print.to);
-
-    return F_none;
+    return fake_make_print_warning_simple_variable(setting, print, "The environment name", name, "is invalid, ignoring");
   }
 #endif // _di_fake_make_print_warning_environment_name_invalid_
 
 #ifndef _di_fake_make_print_warning_fakefile_empty_
   f_status_t fake_make_print_warning_fakefile_empty(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t fakefile) {
 
-    if (print.verbosity < f_console_verbosity_verbose_e) return F_output_not;
-
-    f_file_stream_lock(print.to);
-
-    fake_print_line_first_unlocked(setting, print);
-
-    fl_print_format("%[%QThe fakefile '%]", print.to, print.context, print.prefix, print.context);
-    fl_print_format("%[%Q%]", print.to, print.notable, fakefile, print.notable);
-    fl_print_format("%[' is empty.%]%r", print.to, print.context, print.context, f_string_eol_s);
-
-    f_file_stream_unlock(print.to);
-
-    return F_none;
+    return fake_make_print_warning_simple_variable(setting, print, "The fakefile", fakefile, "is empty");
   }
 #endif // _di_fake_make_print_warning_fakefile_empty_
 
 #ifndef _di_fake_make_print_warning_file_not_found_
   f_status_t fake_make_print_warning_file_not_found(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t file) {
 
-    if (print.verbosity < f_console_verbosity_verbose_e) return F_output_not;
-
-    f_file_stream_lock(print.to);
-
-    fl_print_format("%[%QThe file '%]", print.to, print.context, print.prefix, print.context);
-    fl_print_format("%[%Q%]", print.to, print.notable, file, print.notable);
-    fl_print_format("%[' cannot be found.%]%r", print.to, print.context, print.prefix, print.context, f_string_eol_s);
-
-    f_file_stream_unlock(print.to);
-
-    return F_none;
+    return fake_make_print_warning_simple_variable(setting, print, "The file", file, "cannot be found");
   }
 #endif // _di_fake_make_print_warning_file_not_found_
 
@@ -112,7 +66,7 @@ extern "C" {
     fl_print_format("%[%QThe fakefile '%]", print.to, print.context, print.prefix, print.context);
     fl_print_format("%[%Q%]", print.to, print.notable, fakefile, print.notable);
     fl_print_format("%[' has empty content for the '%]", print.to, print.context, print.context);
-    fl_print_format("%[%r%]", print.to, print.notable, name, print.notable);
+    fl_print_format("%[%Q%]", print.to, print.notable, name, print.notable);
     fl_print_format("%[' object '%]", print.to, print.context, print.context);
     fl_print_format("%[%/Q%]", print.to, print.notable, buffer, range, print.notable);
     fl_print_format("%['.%]%r", print.to, print.context, print.context, f_string_eol_s);
@@ -137,7 +91,7 @@ extern "C" {
     fl_print_format("%[' has invalid content '%]", print.to, print.context, print.context);
     fl_print_format("%[%/Q%]", print.to, print.notable, buffer, content, print.notable);
     fl_print_format("%[' for the '%]", print.to, print.context, print.context);
-    fl_print_format("%[%r%]", print.to, print.notable, name, print.notable);
+    fl_print_format("%[%Q%]", print.to, print.notable, name, print.notable);
     fl_print_format("%[' object '%]", print.to, print.context, print.context);
     fl_print_format("%[%/Q%]", print.to, print.notable, buffer, object, print.notable);
     fl_print_format("%['.%]%r", print.to, print.context, print.context, f_string_eol_s);
@@ -151,26 +105,19 @@ extern "C" {
 #ifndef _di_fake_make_print_warning_settings_content_multiple_
   f_status_t fake_make_print_warning_settings_content_multiple(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t fakefile, const f_string_static_t name) {
 
-    if (print.verbosity < f_console_verbosity_verbose_e) return F_output_not;
-
-    f_file_stream_lock(print.to);
-
-    fake_print_line_first_unlocked(setting, print);
-
-    fl_print_format("%[%QThe fakefile '%]", print.to, print.context, print.prefix, print.context);
-    fl_print_format("%[%r%]", print.to, print.notable, fakefile, print.notable);
-    fl_print_format("%[' may only have a single content for the object '%]", print.to, print.context, print.context);
-    fl_print_format("%[%Q%]", print.to, print.notable, name, print.notable);
-    fl_print_format("%[', only using the first.%]%r", print.to, print.context, print.context, f_string_eol_s);
-
-    f_file_stream_unlock(print.to);
-
-    return F_none;
+    return fake_make_print_warning_simple_variables(setting, print, "The fakefile", fakefile, "may only have a single content for the object", name, ", only using the first");
   }
 #endif // _di_fake_make_print_warning_settings_content_multiple_
 
 #ifndef _di_fake_make_print_warning_settings_object_multiple_
-  f_status_t fake_make_print_warning_settings_object_multiple(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t fakefile, const f_string_static_t label, const f_string_static_t name) {
+  f_status_t fake_make_print_warning_settings_object_multiple(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t fakefile, const f_string_static_t name) {
+
+    return fake_make_print_warning_simple_variables(setting, print, "The object", name, "in the fakefile", fakefile, "may only be specified once, only using the first");
+  }
+#endif // _di_fake_make_print_warning_settings_object_multiple_
+
+#ifndef _di_fake_make_print_warning_simple_variable_
+  f_status_t fake_make_print_warning_simple_variable(fake_setting_t * const setting, const fl_print_t print, const f_string_t before, const f_string_static_t variable, const f_string_t after) {
 
     if (print.verbosity < f_console_verbosity_verbose_e) return F_output_not;
 
@@ -178,17 +125,36 @@ extern "C" {
 
     fake_print_line_first_unlocked(setting, print);
 
-    fl_print_format("%[%QThe object '%]", print.to, print.context, print.prefix, print.context);
-    fl_print_format("%[%r%]", print.to, print.notable, name, print.notable);
-    fl_print_format("%[' in the fakefile '%]", print.to, print.context, print.context);
-    fl_print_format("%[%Q%]", print.to, print.notable, fakefile, print.notable);
-    fl_print_format("%[' may only be specified once, only using the first.%]%r", print.to, print.context, print.context, f_string_eol_s);
+    fl_print_format("%[%Q%S '%]", print.to, print.context, print.prefix, before, print.context);
+    fl_print_format("%[%Q%]", print.to, print.notable, variable, print.notable);
+    fl_print_format("%['%S.%]%r", print.to, print.context, after, print.context, f_string_eol_s);
 
     f_file_stream_unlock(print.to);
 
     return F_none;
   }
-#endif // _di_fake_make_print_warning_settings_object_multiple_
+#endif // _di_fake_make_print_warning_simple_variable_
+
+#ifndef _di_fake_make_print_warning_simple_variables_
+  f_status_t fake_make_print_warning_simple_variables(fake_setting_t * const setting, const fl_print_t print, const f_string_t before, const f_string_static_t first, const f_string_t between, const f_string_static_t second, const f_string_t after) {
+
+    if (print.verbosity < f_console_verbosity_verbose_e) return F_output_not;
+
+    f_file_stream_lock(print.to);
+
+    fake_print_line_first_unlocked(setting, print);
+
+    fl_print_format("%[%Q%S '%]", print.to, print.context, print.prefix, before, print.context);
+    fl_print_format("%[%Q%]", print.to, print.notable, first, print.notable);
+    fl_print_format("%[' %S '%]", print.to, print.context, between, print.context);
+    fl_print_format("%[%Q%]", print.to, print.notable, second, print.notable);
+    fl_print_format("%['%S.%]%r", print.to, print.context, after, print.context, f_string_eol_s);
+
+    f_file_stream_unlock(print.to);
+
+    return F_none;
+  }
+#endif // _di_fake_make_print_warning_simple_variables_
 
 #ifdef __cplusplus
 } // extern "C"

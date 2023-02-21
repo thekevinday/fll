@@ -64,7 +64,7 @@ extern "C" {
     fl_print_format("%[%QThe fakefile '%]", print.to, print.context, print.prefix, print.context);
     fl_print_format("%[%Q%]", print.to, print.notable, fakefile, print.notable);
     fl_print_format("%[' is missing the required '%]", print.to, print.context, print.context);
-    fl_print_format("%[%r%]", print.to, print.notable, section, print.notable);
+    fl_print_format("%[%Q%]", print.to, print.notable, section, print.notable);
     fl_print_format("%[' section.%]%r", print.to, print.context, print.context, f_string_eol_s);
 
     f_file_stream_unlock(print.to);
@@ -99,8 +99,15 @@ extern "C" {
   }
 #endif // _di_fake_make_print_error_file_type_
 
-#ifndef _di_fake_make_print_error_not_after_condition_
-  f_status_t fake_make_print_error_not_after_condition(fake_setting_t * const setting, const fl_print_t print, const f_string_t message) {
+#ifndef _di_fake_make_print_error_indexer_not_specified_
+  f_status_t fake_make_print_error_indexer_not_specified(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t action) {
+
+    return fake_make_print_error_simple_variable(setting, print, "No indexer has been specified, cannot perform", action, " section operation");
+  }
+#endif // _di_fake_make_print_error_indexer_not_specified_
+
+#ifndef _di_fake_make_print_error_after_condition_
+  f_status_t fake_make_print_error_after_condition(fake_setting_t * const setting, const fl_print_t print, const f_string_t message) {
 
     if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
 
@@ -108,7 +115,7 @@ extern "C" {
 
     fake_print_line_first_unlocked(setting, print);
 
-    fl_print_format("%[%Q%S used immediately after another '%]", print.to, print.context, print.prefix, message, print.context);
+    fl_print_format("%[%Q%S '%]", print.to, print.context, print.prefix, message, print.context);
     fl_print_format("%[%r%]", print.to, print.notable, fake_make_operation_if_s, print.notable);
     fl_print_format("%[', '%]", print.to, print.context, print.context);
     fl_print_format("%[%r%]", print.to, print.notable, fake_make_operation_and_s, print.notable);
@@ -120,7 +127,28 @@ extern "C" {
 
     return F_none;
   }
-#endif // _di_fake_make_print_error_not_after_condition_
+#endif // _di_fake_make_print_error_after_condition_
+
+#ifndef _di_fake_make_print_error_after_condition_may_only_
+  f_status_t fake_make_print_error_after_condition_may_only(fake_setting_t * const setting, const fl_print_t print) {
+
+    return fake_make_print_error_after_condition(setting, print, "May only be used immediately after");
+  }
+#endif // _di_fake_make_print_error_after_condition_may_only_
+
+#ifndef _di_fake_make_print_error_after_condition_must_not_
+  f_status_t fake_make_print_error_after_condition_must_not(fake_setting_t * const setting, const fl_print_t print) {
+
+    return fake_make_print_error_after_condition(setting, print, "Must not be used immediately after");
+  }
+#endif // _di_fake_make_print_error_after_condition_must_not_
+
+#ifndef _di_fake_make_print_error_after_condition_no_preceding_
+  f_status_t fake_make_print_error_after_condition_no_preceding(fake_setting_t * const setting, const fl_print_t print) {
+
+    return fake_make_print_error_after_condition(setting, print, "Has no preceding");
+  }
+#endif // _di_fake_make_print_error_after_condition_no_preceding_
 
 #ifndef _di_fake_make_print_error_operation_incomplete_
   f_status_t fake_make_print_error_operation_incomplete(fake_setting_t * const setting, const fl_print_t print, const uint8_t operation) {
@@ -275,10 +303,17 @@ extern "C" {
   }
 #endif // _di_fake_make_print_error_simple_variable_
 
+#ifndef _di_fake_make_print_error_target_file_name_empty_
+  f_status_t fake_make_print_error_target_file_name_empty(fake_setting_t * const setting, const fl_print_t print) {
+
+    return fake_make_print_error_simple(setting, print, "Target file name argument must not be an empty string");
+  }
+#endif // _di_fake_make_print_error_target_file_name_empty_
+
 #ifndef _di_fake_make_print_error_unsupported_number_
   f_status_t fake_make_print_error_unsupported_number(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t number) {
 
-    return fake_make_print_error_simple_variable(setting, print, "setting, print, Invalid or unsupported number provided", number, 0);
+    return fake_make_print_error_simple_variable(setting, print, "Invalid or unsupported number provided", number, 0);
   }
 #endif // _di_fake_make_print_error_unsupported_number_
 

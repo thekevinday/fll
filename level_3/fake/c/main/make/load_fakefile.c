@@ -123,7 +123,7 @@ extern "C" {
 
           if (fl_string_dynamic_partial_compare_string(fake_make_item_settings_s.string, data_make->buffer, fake_make_item_settings_s.used, list_objects.array[i]) == F_equal_to) {
             if (!missing_settings) {
-              fake_make_print_warning_settings_object_multiple(data_make->setting, data_make->main->warning, data_make->data->file_data_build_fakefile, fake_common_setting_list_s, fake_make_item_settings_s);
+              fake_make_print_warning_settings_object_multiple(data_make->setting, data_make->main->warning, data_make->data->file_data_build_fakefile, fake_make_item_settings_s);
 
               continue;
             }
@@ -154,7 +154,7 @@ extern "C" {
 
           if (fl_string_dynamic_partial_compare_string(fake_make_item_main_s.string, data_make->buffer, fake_make_item_main_s.used, list_objects.array[i]) == F_equal_to) {
             if (!missing_main) {
-              fake_make_print_warning_settings_object_multiple(data_make->setting, data_make->main->warning, data_make->data->file_data_build_fakefile, fake_common_setting_list_s, fake_make_item_main_s);
+              fake_make_print_warning_settings_object_multiple(data_make->setting, data_make->main->warning, data_make->data->file_data_build_fakefile, fake_make_item_main_s);
 
               continue;
             }

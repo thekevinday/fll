@@ -178,14 +178,14 @@ extern "C" {
 
     if (state_process->operation == fake_make_operation_type_if_e) {
       if (state_process->operation_previous == fake_make_operation_type_if_e) {
-        fake_make_print_error_not_after_condition(data_make->setting, data_make->main->error, "Must not be");
+        fake_make_print_error_after_condition_must_not(data_make->setting, data_make->main->error);
 
         return F_status_set_error(F_failure);
       }
     }
     else {
       if (!(state_process->operation_previous == fake_make_operation_type_if_e || state_process->operation_previous == fake_make_operation_type_and_e || state_process->operation_previous == fake_make_operation_type_or_e)) {
-        fake_make_print_error_not_after_condition(data_make->setting, data_make->main->error, "May only be");
+        fake_make_print_error_after_condition_may_only(data_make->setting, data_make->main->error);
 
         return F_status_set_error(F_failure);
       }
@@ -715,53 +715,19 @@ extern "C" {
   f_status_t fake_make_operate_validate_type_else(fake_make_data_t * const data_make, fake_state_process_t * const state_process) {
 
     if (state_process->operation_previous == fake_make_operation_type_else_e) {
-      //fake_make_print_operate_set_path_verbose(data_make->setting, data_make->main->error, f_string_empty_s);
-
-      if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->main->error.to.stream) {
-        f_file_stream_lock(data_make->main->error.to);
-
-        fl_print_format("%r%[%QMust not be used immediately after another '%]", data_make->main->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
-        fl_print_format("%[%r%]", data_make->main->error.to, data_make->error.notable, fake_make_operation_else_s, data_make->error.notable);
-        fl_print_format("%[' section operation.%]%r", data_make->main->error.to, data_make->error.context, data_make->error.context, f_string_eol_s);
-
-        f_file_stream_unlock(data_make->main->error.to);
-      }
+      fake_make_print_error_after_condition_must_not(data_make->setting, data_make->main->error);
 
       return F_status_set_error(F_failure);
     }
 
     if (state_process->operation_previous == fake_make_operation_type_if_e || state_process->operation_previous == fake_make_operation_type_and_e || state_process->operation_previous == fake_make_operation_type_or_e) {
-      //fake_make_print_operate_set_path_verbose(data_make->setting, data_make->main->error, f_string_empty_s);
-
-      if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->main->error.to.stream) {
-        f_file_stream_lock(data_make->main->error.to);
-
-        fl_print_format("%r%[%QMust not be used immediately after an '%]", data_make->main->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
-        fl_print_format("%[%r%]", data_make->main->error.to, data_make->error.notable, fake_make_operation_if_s, data_make->error.notable);
-        fl_print_format("%[', '%]", data_make->main->error.to, data_make->error.context, data_make->error.context);
-        fl_print_format("%[%r%]", data_make->main->error.to, data_make->error.notable, fake_make_operation_and_s, data_make->error.notable);
-        fl_print_format("%[', or '%]", data_make->main->error.to, data_make->error.context, data_make->error.context);
-        fl_print_format("%[%r%]", data_make->main->error.to, data_make->error.notable, fake_make_operation_or_s, data_make->error.notable);
-        fl_print_format("%[' section operation.%]%r", data_make->main->error.to, data_make->error.context, data_make->error.context, f_string_eol_s);
-
-        f_file_stream_unlock(data_make->main->error.to);
-      }
+      fake_make_print_error_after_condition_must_not(data_make->setting, data_make->main->error);
 
       return F_status_set_error(F_failure);
     }
 
     if (!state_process->block) {
-      //fake_make_print_operate_set_path_verbose(data_make->setting, data_make->main->error, f_string_empty_s);
-
-      if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->main->error.to.stream) {
-        fl_print_format("%r%[%QHas no preceding '%]", data_make->main->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
-        fl_print_format("%[%r%]", data_make->main->error.to, data_make->error.notable, fake_make_operation_if_s, data_make->error.notable);
-        fl_print_format("%[', '%]", data_make->main->error.to, data_make->error.context, data_make->error.context);
-        fl_print_format("%[%r%]", data_make->main->error.to, data_make->error.notable, fake_make_operation_and_s, data_make->error.notable);
-        fl_print_format("%[', or '%]", data_make->main->error.to, data_make->error.context, data_make->error.context);
-        fl_print_format("%[%r%]", data_make->main->error.to, data_make->error.notable, fake_make_operation_or_s, data_make->error.notable);
-        fl_print_format("%[' section operation.%]%r", data_make->main->error.to, data_make->error.context, data_make->error.context, f_string_eol_s);
-      }
+      fake_make_print_error_after_condition_no_preceding(data_make->setting, data_make->main->error);
 
       return F_status_set_error(F_failure);
     }
@@ -832,17 +798,7 @@ extern "C" {
     }
 
     if (!data_make->setting_build.build_indexer.used) {
-      //fake_make_print_operate_set_path_verbose(data_make->setting, data_make->main->error, f_string_empty_s);
-
-      if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->main->error.to.stream) {
-        f_file_stream_lock(data_make->main->error.to);
-
-        fl_print_format("%r%[%QNo indexer has been specified, cannot perform '%]", data_make->main->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
-        fl_print_format("%[%r%]", data_make->main->error.to, data_make->error.notable, fake_make_operation_index_s, data_make->error.notable);
-        fl_print_format("%[' section operation.%]%r", data_make->main->error.to, data_make->error.context, data_make->error.context, f_string_eol_s);
-
-        f_file_stream_unlock(data_make->main->error.to);
-      }
+      fake_make_print_error_indexer_not_specified(data_make->setting, data_make->main->error, fake_make_operation_index_s);
 
       return F_status_set_error(F_failure);
     }
@@ -995,11 +951,9 @@ extern "C" {
           }
         }
         else {
-          //fake_make_print_operate_set_path_verbose(data_make->setting, data_make->main->error, f_string_empty_s);
+          fake_make_print_error_target_file_name_empty(data_make->setting, data_make->main->error);
 
-          if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->main->error.to.stream) {
-            fll_print_format("%r%[%QTarget filename argument must not be an empty string.%]%r", data_make->main->error.to, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context, f_string_eol_s);
-          }
+          status = F_status_set_error(F_failure);
         }
       }
 
