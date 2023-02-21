@@ -1164,8 +1164,10 @@ extern "C" {
         }
         else {
           if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
-            fll_print_format("%r%[%QTarget filename argument must not be an empty string.%]%r", data_make->error.to.stream, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context, f_string_eol_s);
+            fll_print_format("%r%[%QTarget file name argument must not be an empty string.%]%r", data_make->error.to.stream, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context, f_string_eol_s);
           }
+
+          status = F_status_set_error(F_failure);
         }
       }
 
