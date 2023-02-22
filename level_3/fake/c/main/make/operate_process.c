@@ -8,6 +8,7 @@
 #include "operate_process_type.h"
 #include "print.h"
 #include "print-error.h"
+#include "print-verbose.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -322,7 +323,7 @@ extern "C" {
       }
     }
 
-    fake_make_print_operate_program_verbose(data_make->setting, data_make->main->message, program, arguments);
+    fake_make_print_verbose_operate_program(data_make->setting, data_make->main->message, program, arguments);
 
     // Child processes should receive all signals, without blocking.
     f_signal_how_t signals = f_signal_how_t_initialize;

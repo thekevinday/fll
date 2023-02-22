@@ -97,6 +97,8 @@
 #include <program/fake/main/common/type.h>
 #include <program/fake/main/common.h>
 #include <program/fake/main/print.h>
+#include <program/fake/main/print-error.h>
+#include <program/fake/main/print-warning.h>
 
 #ifdef __cplusplus
 extern "C" {

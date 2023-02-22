@@ -9,6 +9,7 @@
 #include "operate_process_type.h"
 #include "print.h"
 #include "print-error.h"
+#include "print-verbose.h"
 #include "print-warning.h"
 
 #ifdef __cplusplus
@@ -30,7 +31,7 @@ extern "C" {
       return F_none;
     }
 
-    fake_make_print_operate_break_verbose(data_make->setting, data_make->main->message, data_make->cache_arguments);
+    fake_make_print_verbose_operate_break(data_make->setting, data_make->main->message, data_make->cache_arguments);
 
     return status;
   }
@@ -319,7 +320,7 @@ extern "C" {
           return F_status_set_error(F_failure);
         }
 
-        fake_make_print_operate_copy_verbose(data_make->setting, data_make->main->message, clone, data_make->cache_arguments.array[i], destination);
+        fake_make_print_verbose_operate_copy(data_make->setting, data_make->main->message, clone, data_make->cache_arguments.array[i], destination);
       }
       else if (F_status_is_error(status_file)) {
         fake_print_error_file(data_make->setting, data_make->main->error, status_file, macro_fake_f(f_directory_is), data_make->cache_arguments.array[i], f_file_operation_identify_s, fll_error_file_type_directory_e);
@@ -348,7 +349,7 @@ extern "C" {
       fake_print_error(data_make->setting, data_make->main->error, status, macro_fake_f(f_environment_set));
     }
     else {
-      fake_make_print_operate_define_verbose(data_make->setting, data_make->main->message, data_make->cache_arguments.array[0]);
+      fake_make_print_verbose_operate_define(data_make->setting, data_make->main->message, data_make->cache_arguments.array[0]);
     }
 
     return status;
@@ -390,7 +391,7 @@ extern "C" {
         }
 
         if (F_status_set_fine(status) == F_file_found_not) {
-          fake_make_print_operate_file_not_found_verbose(data_make->setting, data_make->main->message, F_true, data_make->cache_arguments.array[i]);
+          fake_make_print_verbose_operate_file_not_found(data_make->setting, data_make->main->message, F_true, data_make->cache_arguments.array[i]);
 
           status = F_none;
         }
@@ -406,7 +407,7 @@ extern "C" {
 
         if (F_status_set_fine(status) == F_file_found_not) {
           if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
-            fake_make_print_operate_file_not_found_verbose(data_make->setting, data_make->main->message, F_false, data_make->cache_arguments.array[i]);
+            fake_make_print_verbose_operate_file_not_found(data_make->setting, data_make->main->message, F_false, data_make->cache_arguments.array[i]);
           }
 
           status = F_none;
@@ -419,7 +420,7 @@ extern "C" {
         }
       }
 
-      fake_make_print_operate_delete_verbose(data_make->setting, data_make->main->message, data_make->cache_arguments.array[i]);
+      fake_make_print_verbose_operate_delete(data_make->setting, data_make->main->message, data_make->cache_arguments.array[i]);
     } // for
 
     return F_none;
@@ -451,7 +452,7 @@ extern "C" {
       return F_none;
     }
 
-    fake_make_print_operate_exiting_as_verbose(data_make->setting, data_make->main->message, data_make->cache_arguments);
+    fake_make_print_verbose_operate_exiting_as(data_make->setting, data_make->main->message, data_make->cache_arguments);
 
     return status;
   }
@@ -486,7 +487,7 @@ extern "C" {
       data_make->main->error.to.id = -1;
     }
 
-    fake_make_print_operate_set_failure_state_verbose(data_make->setting, data_make->main->message, data_make->setting_make.fail);
+    fake_make_print_verbose_operate_set_failure_state(data_make->setting, data_make->main->message, data_make->setting_make.fail);
   }
 #endif // _di_fake_make_operate_process_type_fail_
 
@@ -512,7 +513,7 @@ extern "C" {
       status = fake_make_assure_inside_project(data_make, data_make->cache_arguments.array[i]);
 
       if (F_status_is_error(status)) {
-        fake_print_message_section_operation_path_outside(data_make->setting, data_make->error, status, macro_fake_f(fake_make_assure_inside_project), data_make->cache_path.used ? data_make->cache_path : data_make->cache_arguments.array[i]);
+        fake_print_error_operation_path_outside(data_make->setting, data_make->error, status, macro_fake_f(fake_make_assure_inside_project), data_make->cache_path.used ? data_make->cache_path : data_make->cache_arguments.array[i]);
 
         continue;
       }
@@ -530,7 +531,7 @@ extern "C" {
         return F_status_set_error(F_failure);
       }
 
-      fake_make_print_operate_set_role_verbose(data_make->setting, data_make->main->message, all ? 0x1 : 0x0, data_make->cache_arguments.array[i], (f_number_unsigned_t) id);
+      fake_make_print_verbose_operate_set_role(data_make->setting, data_make->main->message, all ? 0x1 : 0x0, data_make->cache_arguments.array[i], (f_number_unsigned_t) id);
     } // for
 
     return F_none;
@@ -1295,7 +1296,7 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    fake_make_print_operate_symbolic_link_verbose(data_make->setting, data_make->main->message, data_make->cache_arguments.array[data_make->cache_arguments.used - 1], data_make->cache_arguments.array[0]);
+    fake_make_print_verbose_operate_symbolic_link(data_make->setting, data_make->main->message, data_make->cache_arguments.array[data_make->cache_arguments.used - 1], data_make->cache_arguments.array[0]);
 
     return F_none;
   }
@@ -1351,7 +1352,7 @@ extern "C" {
         return F_status_set_error(F_failure);
       }
 
-      fake_make_print_operate_set_mode_verbose(data_make->setting, data_make->main->message, data_make->cache_arguments.array[i], mode);
+      fake_make_print_verbose_operate_set_mode(data_make->setting, data_make->main->message, data_make->cache_arguments.array[i], mode);
     } // for
 
     return F_none;
@@ -1498,7 +1499,7 @@ extern "C" {
       status = fake_make_assure_inside_project(data_make, data_make->cache_arguments.array[i]);
 
       if (F_status_is_error(status)) {
-        fake_print_message_section_operation_path_outside(data_make->setting, data_make->error, status, macro_fake_f(fake_make_assure_inside_project), data_make->cache_path.used ? data_make->cache_path : data_make->cache_arguments.array[i]);
+        fake_print_error_operation_path_outside(data_make->setting, data_make->error, status, macro_fake_f(fake_make_assure_inside_project), data_make->cache_path.used ? data_make->cache_path : data_make->cache_arguments.array[i]);
 
         continue;
       }
@@ -1516,7 +1517,7 @@ extern "C" {
         return F_status_set_error(F_failure);
       }
 
-      fake_make_print_operate_set_role_verbose(data_make->setting, data_make->main->message, all ? 0x3 : 0x2, data_make->cache_arguments.array[i], (f_number_unsigned_t) id);
+      fake_make_print_verbose_operate_set_role(data_make->setting, data_make->main->message, all ? 0x3 : 0x2, data_make->cache_arguments.array[i], (f_number_unsigned_t) id);
     } // for
 
     return F_none;
@@ -1623,7 +1624,7 @@ extern "C" {
     f_status_t status = f_path_change(*argument);
 
     if (F_status_is_error(status)) {
-      fake_print_message_section_operation_path_stack_max(data_make->setting, data_make->error, F_status_set_fine(status), macro_fake_f(f_path_change), *argument);
+      fake_print_error_operation_path_stack_max(data_make->setting, data_make->error, F_status_set_fine(status), macro_fake_f(f_path_change), *argument);
 
       return F_status_set_error(F_failure);
     }
@@ -1635,12 +1636,12 @@ extern "C" {
       if (F_status_is_error(status)) {
         fake_print_error(data_make->setting, data_make->main->error, status, macro_fake_f(fake_make_path_relative));
 
-        fake_make_print_operate_set_path_verbose(data_make->setting, data_make->main->message, *argument);
+        fake_make_print_verbose_operate_set_path(data_make->setting, data_make->main->message, *argument);
 
         return F_status_set_error(F_failure);
       }
 
-      fake_make_print_operate_set_path_verbose(data_make->setting, data_make->main->message, data_make->cache_path);
+      fake_make_print_verbose_operate_set_path(data_make->setting, data_make->main->message, data_make->cache_path);
     }
 
     return F_none;
@@ -1723,7 +1724,7 @@ extern "C" {
     f_status_t status = fake_make_assure_inside_project(data_make, data_make->cache_arguments.array[0]);
 
     if (F_status_is_error(status)) {
-      fake_print_message_section_operation_path_outside(data_make->setting, data_make->error, status, macro_fake_f(fake_make_assure_inside_project), data_make->cache_path.used ? data_make->cache_path : data_make->cache_arguments.array[0]);
+      fake_print_error_operation_path_outside(data_make->setting, data_make->error, status, macro_fake_f(fake_make_assure_inside_project), data_make->cache_path.used ? data_make->cache_path : data_make->cache_arguments.array[0]);
 
       if (F_status_set_fine(status) == F_false) {
         status = F_status_set_error(F_failure);
@@ -1735,14 +1736,14 @@ extern "C" {
     status = f_path_change(data_make->cache_arguments.array[0]);
 
     if (F_status_is_error(status)) {
-      fake_print_message_section_operation_path_stack_max(data_make->setting, data_make->error, F_status_set_fine(status), macro_fake_f(f_path_change), data_make->cache_arguments.array[0]);
+      fake_print_error_operation_path_stack_max(data_make->setting, data_make->error, F_status_set_fine(status), macro_fake_f(f_path_change), data_make->cache_arguments.array[0]);
     }
     else {
       status = f_string_dynamics_increase_by(fake_default_allocation_small_d, &data_make->path.stack);
 
       if (F_status_is_error(status)) {
         if (F_status_set_fine(status) == F_array_too_large) {
-          fake_print_message_section_operation_path_stack_max(data_make->setting, data_make->error, F_array_too_large, macro_fake_f(f_string_dynamics_increase_by), fake_common_file_path_stack_s);
+          fake_print_error_operation_path_stack_max(data_make->setting, data_make->error, F_array_too_large, macro_fake_f(f_string_dynamics_increase_by), fake_common_file_path_stack_s);
 
           return F_status_set_error(F_failure);
         }
@@ -1770,10 +1771,10 @@ extern "C" {
         if (F_status_is_error(status)) {
           fake_print_error(data_make->setting, data_make->main->error, status, macro_fake_f(fake_make_path_relative));
 
-          fake_make_print_operate_set_path_verbose(data_make->setting, data_make->main->message, data_make->path.stack.array[data_make->path.stack.used]);
+          fake_make_print_verbose_operate_set_path(data_make->setting, data_make->main->message, data_make->path.stack.array[data_make->path.stack.used]);
         }
         else {
-          fake_make_print_operate_set_path_verbose(data_make->setting, data_make->main->message, data_make->cache_path);
+          fake_make_print_verbose_operate_set_path(data_make->setting, data_make->main->message, data_make->cache_path);
         }
       }
 
@@ -1791,13 +1792,13 @@ extern "C" {
       f_status_t status = f_path_change_at(data_make->path.top.id);
 
       if (F_status_is_error(status)) {
-        fake_print_message_section_operation_path_stack_max(data_make->setting, data_make->error, F_status_set_fine(status), macro_fake_f(f_path_change), data_make->cache_arguments.array[0]);
+        fake_print_error_operation_path_stack_max(data_make->setting, data_make->error, F_status_set_fine(status), macro_fake_f(f_path_change), data_make->cache_arguments.array[0]);
 
         return F_status_set_error(F_failure);
       }
     }
 
-    fake_make_print_operate_set_path_verbose(data_make->setting, data_make->main->message, f_string_empty_s);
+    fake_make_print_verbose_operate_set_path(data_make->setting, data_make->main->message, f_string_empty_s);
 
     // Clear stack, except for the project root.
     for (f_array_length_t i = 1; i < data_make->path.stack.used; ++i) {
@@ -1849,7 +1850,7 @@ extern "C" {
         }
       }
 
-      fake_make_print_operate_touch_verbose(data_make->setting, data_make->main->message, data_make->cache_arguments.array[i]);
+      fake_make_print_verbose_operate_touch(data_make->setting, data_make->main->message, data_make->cache_arguments.array[i]);
     } // for
 
     return F_none;

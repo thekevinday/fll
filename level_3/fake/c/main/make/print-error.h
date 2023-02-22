@@ -456,58 +456,6 @@ extern "C" {
 #endif // _di_fake_make_print_error_reserved_parameter_name_
 
 /**
- * Print a simple error message with a single string message.
- *
- * This is primarily used by numerous error print functions to reduce code.
- * This is not used for any error print functions that has complex format structures.
- *
- * @param setting
- *   The main program settings.
- *   (Must be of type fake_setting_t.)
- *
- *   This does not alter setting.status.
- * @param print
- *   The output structure to print to.
- * @param message
- *   The string to print.
- *
- * @return
- *   F_none on success.
- *   F_output_not on success, but no printing is performed.
- */
-#ifndef _di_fake_make_print_error_simple_
-  extern f_status_t fake_make_print_error_simple(fake_setting_t * const setting, const fl_print_t print, const f_string_t message);
-#endif // _di_fake_make_print_error_simple_
-
-/**
- * Print a simple error message with a before string, an after string, and a string variable.
- *
- * This is primarily used by numerous error print functions to reduce code.
- * This is not used for any error print functions that has complex format structures.
- *
- * @param setting
- *   The main program settings.
- *   (Must be of type fake_setting_t.)
- *
- *   This does not alter setting.status.
- * @param print
- *   The output structure to print to.
- * @param before
- *   The string being printed before the variable.
- * @param variable
- *   The string representing the variable.
- * @param after
- *   The string being printed after the variable.
- *
- * @return
- *   F_none on success.
- *   F_output_not on success, but no printing is performed.
- */
-#ifndef _di_fake_make_print_error_simple_variable_
-  extern f_status_t fake_make_print_error_simple_variable(fake_setting_t * const setting, const fl_print_t print, const f_string_t before, const f_string_static_t variable, const f_string_t after);
-#endif // _di_fake_make_print_error_simple_variable_
-
-/**
  * Print error about a target file name being an empty string.
  *
  * @param setting

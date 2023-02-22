@@ -221,66 +221,6 @@ extern "C" {
   extern f_status_t fake_make_print_warning_settings_object_multiple(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t fakefile, const f_string_static_t name);
 #endif // _di_fake_make_print_warning_settings_object_multiple_
 
-/**
- * Print a simple warning message with a before string, an after string, and a string variable.
- *
- * This is primarily used by numerous error print functions to reduce code.
- * This is not used for any error print functions that has more format structures.
- *
- * @param setting
- *   The main program settings.
- *   (Must be of type fake_setting_t.)
- *
- *   This does not alter setting.status.
- * @param print
- *   The output structure to print to.
- * @param before
- *   The string being printed before the variable.
- * @param variable
- *   The string representing the variable.
- * @param after
- *   The string being printed after the variable.
- *
- * @return
- *   F_none on success.
- *   F_output_not on success, but no printing is performed.
- */
-#ifndef _di_fake_make_print_warning_simple_variable_
-  extern f_status_t fake_make_print_warning_simple_variable(fake_setting_t * const setting, const fl_print_t print, const f_string_t before, const f_string_static_t variable, const f_string_t after);
-#endif // _di_fake_make_print_warning_simple_variable_
-
-/**
- * Print a simple warning message with a before string, a middle strng, an after string, and two string variables.
- *
- * This is primarily used by numerous error print functions to reduce code.
- * This is not used for any error print functions that has more format structures.
- *
- * @param setting
- *   The main program settings.
- *   (Must be of type fake_setting_t.)
- *
- *   This does not alter setting.status.
- * @param print
- *   The output structure to print to.
- * @param before
- *   The string being printed before the variable.
- * @param first
- *   The string representing the first variable.
- * @param between
- *   The string being printed before the variable.
- * @param second
- *   The string representing the second variable.
- * @param after
- *   The string being printed after the variable.
- *
- * @return
- *   F_none on success.
- *   F_output_not on success, but no printing is performed.
- */
-#ifndef _di_fake_make_print_warning_simple_variables_
-  extern f_status_t fake_make_print_warning_simple_variables(fake_setting_t * const setting, const fl_print_t print, const f_string_t before, const f_string_static_t first, const f_string_t between, const f_string_static_t second, const f_string_t after);
-#endif // _di_fake_make_print_warning_simple_variables_
-
 #ifdef __cplusplus
 } // extern "C"
 #endif

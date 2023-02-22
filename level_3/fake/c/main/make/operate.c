@@ -1355,13 +1355,13 @@ extern "C" {
       } // for
 
       if (!state_process.operation) {
-        fake_print_message_section_operation_unknown(data_make->setting, data_make->error, data_make->buffer, section->name, section->objects.array[i]);
+        fake_print_error_operation_unknown(data_make->setting, data_make->error, data_make->buffer, section->name, section->objects.array[i]);
 
         *status = F_status_set_error(F_valid_not);
       }
       else if (state_process.operation == fake_make_operation_type_operate_e) {
         if (section_stack->used == fake_common_max_stack_d) {
-          fake_print_message_section_operation_stack_max(data_make->setting, data_make->error, data_make->buffer, section->name, section->objects.array[i], fake_common_max_stack_d);
+          fake_print_error_operation_stack_max(data_make->setting, data_make->error, data_make->buffer, section->name, section->objects.array[i], fake_common_max_stack_d);
 
           *status = F_status_set_error(F_recurse);
         }
@@ -1411,7 +1411,7 @@ extern "C" {
           data_make->error.set = &data_make->main->context.set;
         }
 
-        fake_print_message_section_operation_failed(data_make->setting, data_make->error, data_make->buffer, section->name, section->objects.array[i]);
+        fake_print_error_operation_failed(data_make->setting, data_make->error, data_make->buffer, section->name, section->objects.array[i]);
 
         // F_signal_abort is used by the break section operation.
         if (F_status_set_fine(*status) == F_signal_abort) break;
@@ -1462,7 +1462,7 @@ extern "C" {
     if (i == section->objects.used && F_status_is_error_not(*status) && (state_process.operation == fake_make_operation_type_and_e || state_process.operation == fake_make_operation_type_else_e || state_process.operation == fake_make_operation_type_if_e || state_process.operation == fake_make_operation_type_or_e)) {
       fake_make_print_error_operation_incomplete(data_make->setting, data_make->main->error, state_process.operation);
 
-      fake_print_message_section_operation_failed(data_make->setting, data_make->error, data_make->buffer, section->name, section->objects.array[section->objects.used - 1]);
+      fake_print_error_operation_failed(data_make->setting, data_make->error, data_make->buffer, section->name, section->objects.array[section->objects.used - 1]);
 
       *status = F_status_set_error(F_failure);
     }

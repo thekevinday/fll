@@ -13,255 +13,173 @@ extern "C" {
 #endif
 
 /**
- * Print generic error message regarding a function failing in some way.
+ * Print a simple context message with prefix and a single string message.
+ *
+ * This is primarily used by numerous error print functions to reduce code.
+ * This is not used for any error print functions that has complex format structures.
  *
  * @param setting
  *   The main program settings.
+ *   (Must be of type fake_setting_t.)
  *
  *   This does not alter setting.status.
  * @param print
- *   Designates the how and where to print.
- * @param status
- *   The status to use.
- *   This is provided, ignoring setting.status, for thread-safety reasons.
- * @param function
- *   The function name.
+ *   The output structure to print to.
+ * @param message
+ *   The string to print.
  *
- * @return
- *   F_none on success.
- *   F_output_not on success, but no printing is performed.
+ * @see f_file_stream_lock()
+ * @see f_file_stream_unlock()
+ * @see fl_print_format()
  *
- * @see fll_error_print()
+ * @see fake_print_line_first_unlocked()
  */
-#ifndef _di_fake_print_error_
-  extern f_status_t fake_print_error(fake_setting_t * const setting, const fl_print_t print, const f_status_t status, const f_string_t function);
-#endif // _di_fake_print_error_
+#ifndef _di_fake_print_context_simple_
+  extern void fake_print_context_simple(fake_setting_t * const setting, const fl_print_t print, const f_string_t message);
+#endif // _di_fake_print_context_simple_
 
 /**
- * Print generic error message regarding a function failing in some way, setting fallback to F_false and returning result.
+ * Print a variable context message with a before string, an after string, and a string variable.
+ *
+ * This is primarily used by numerous context print functions to reduce code.
+ * This is not used for any context print functions that has complex format structures.
  *
  * @param setting
  *   The main program settings.
+ *   (Must be of type fake_setting_t.)
  *
  *   This does not alter setting.status.
  * @param print
- *   Designates the how and where to print.
- * @param status
- *   The status to use.
- *   This is provided, ignoring setting.status, for thread-safety reasons.
- * @param function
- *   The function name.
+ *   The output structure to print to.
+ * @param before
+ *   The string being printed before the variable.
+ *   Likely should have a space added at the end of the string.
+ *   Set to NULL to disable.
+ * @param variable
+ *   The string representing the variable.
+ * @param after
+ *   The string being printed after the variable.
+ *   Likely should have a space added at the start of the string.
+ *   Set to NULL to disable.
  *
- * @return
- *   F_true is returned if the status code has no print message.
- *   F_false is returned on successful print of known errors.
- *   F_output_not on success, but no printing is performed.
+ * @see f_file_stream_lock()
+ * @see f_file_stream_unlock()
+ * @see fl_print_format()
  *
- * @see fll_error_print()
+ * @see fake_print_line_first_unlocked()
  */
-#ifndef _di_fake_print_error_fallback_
-  extern f_status_t fake_print_error_fallback(fake_setting_t * const setting, const fl_print_t print, const f_status_t status, const f_string_t function);
-#endif // _di_fake_print_error_fallback_
+#ifndef _di_fake_print_context_simple_variable_
+  extern void fake_print_context_simple_variable(fake_setting_t * const setting, const fl_print_t print, const f_string_t before, const f_string_static_t variable, const f_string_t after);
+#endif // _di_fake_print_context_simple_variable_
 
 /**
- * Print file related error message regarding a function failing in some way.
+ * Print a parameter context message with a before string, an after string, a string symbol, and a parameter name.
+ *
+ * This is primarily used by numerous context print functions to reduce code.
+ * This is not used for any context print functions that has complex format structures.
  *
  * @param setting
  *   The main program settings.
- *
- *   This does not alter setting.status.
- * @param status
- *   The status to use.
- *   This is provided, ignoring setting.status, for thread-safety reasons.
- * @param print
- *   Designates the how and where to print.
- * @param name
- *   The name of the file or directory.
- * @param operation
- *   The operation that fails, such as 'create' or 'access'.
- * @param type
- *   A valid file type code from the fll_error_file_type enum.
- *
- * @return
- *   F_none on success.
- *   F_output_not on success, but no printing is performed.
- *
- * @see fll_error_file_print()
- */
-#ifndef _di_fake_print_error_file_
-  extern f_status_t fake_print_error_file(fake_setting_t * const setting, const fl_print_t print, const f_status_t status, const f_string_t function, const f_string_static_t name, const f_string_static_t operation, const uint8_t type);
-#endif // _di_fake_print_error_file_
-
-/**
- * Print file related error message regarding a function failing in some way.
- *
- * This prints a simple message to avoid "Unable to find file..., because file cannot be found." type of messages.
- *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.status.
- * @param status
- *   The status to use.
- *   This is provided, ignoring setting.status, for thread-safety reasons.
- * @param print
- *   Designates the how and where to print.
- * @param name
- *   The name of the file or directory.
- * @param operation
- *   The operation that fails, such as 'create' or 'access'.
- * @param type
- *   A valid file type code from the fll_error_file_type enum.
- *
- * @return
- *   F_none on success.
- *   F_output_not on success, but no printing is performed.
- *
- * @see fll_error_file_print()
- */
-#ifndef _di_fake_print_error_file_simple_
-  extern f_status_t fake_print_error_file_simple(fake_setting_t * const setting, const fl_print_t print, const f_status_t status, const f_string_t function, const f_string_static_t name, const f_string_static_t operation, const uint8_t type);
-#endif // _di_fake_print_error_file_simple_
-
-/**
- * Print file related error message regarding a function failing in some way, setting fallback to F_false and returning result..
- *
- * @param setting
- *   The main program settings.
+ *   (Must be of type fake_setting_t.)
  *
  *   This does not alter setting.status.
  * @param print
- *   Designates the how and where to print.
- * @param status
- *   The status to use.
- *   This is provided, ignoring setting.status, for thread-safety reasons.
- * @param name
- *   The name of the file or directory.
- * @param operation
- *   The operation that fails, such as 'create' or 'access'.
- * @param type
- *   A valid file type code from the fll_error_file_type enum.
- *
- * @return
- *   F_true is returned if the status code has no print message.
- *   F_false is returned on successful print of known errors.
- *   F_output_not on success, but no printing is performed.
- *
- * @see fll_error_file_print()
- */
-#ifndef _di_fake_print_error_file_fallback_
-  extern f_status_t fake_print_error_file_fallback(fake_setting_t * const setting, const fl_print_t print, const f_status_t status, const f_string_t function, const f_string_static_t name, const f_string_static_t operation, const uint8_t type);
-#endif // _di_fake_print_error_file_fallback_
-
-/**
- * Print error message for when an operation fails.
- *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.status.
- * @param print
- *   Designates the how and where to print.
- * @param operation
- *   The identifier of the operation that failed.
- *
- * @return
- *   F_none on success.
- *   F_output_not on success, but no printing is performed.
- */
-#ifndef _di_fake_print_error_failure_operation_
-  extern f_status_t fake_print_error_failure_operation(fake_setting_t * const setting, const fl_print_t print, const uint8_t operation);
-#endif // _di_fake_print_error_failure_operation_
-
-/**
- * Print error message for when an operation fails.
- *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.status.
- * @param print
- *   Designates the how and where to print.
- * @param script
- *   The name of the script that failed.
- *
- * @return
- *   F_none on success.
- *   F_output_not on success, but no printing is performed.
- */
-#ifndef _di_fake_print_error_failure_script_
-  extern f_status_t fake_print_error_failure_script(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t script);
-#endif // _di_fake_print_error_failure_script_
-
-/**
- * Print error message for when the parameter value is an empty string.
- *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.status.
- * @param print
- *   Designates the how and where to print.
+ *   The output structure to print to.
+ * @param before
+ *   The string being printed before the variable.
+ *   Likely should have a space added at the end of the string.
+ *   Set to NULL to disable.
  * @param symbol
- *   The symbol of the parameter.
+ *   The string representing the symbol for the parameter.
+ *   Set to NULL to disable.
  * @param name
- *   The name of the parameter.
- * @param value
- *   The value that is invalid.
+ *   The string representing the parameter name.
+ *   May be an empty string (like f_string_empty_s) to not print anything.
+ * @param after
+ *   The string being printed after the variable.
+ *   Likely should have a space added at the start of the string.
+ *   Set to NULL to disable.
  *
- * @return
- *   F_none on success.
- *   F_output_not on success, but no printing is performed.
+ * @see f_file_stream_lock()
+ * @see f_file_stream_unlock()
+ * @see fl_print_format()
+ *
+ * @see fake_print_line_first_unlocked()
  */
-#ifndef _di_fake_print_error_parameter_not_empty_
-  extern f_status_t fake_print_error_parameter_not_empty(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t value);
-#endif // _di_fake_print_error_parameter_not_empty_
+#ifndef _di_fake_print_context_wrapped_parameter_
+  extern void fake_print_context_wrapped_parameter(fake_setting_t * const setting, const fl_print_t print, const f_string_t before, const f_string_static_t symbol, const f_string_static_t name, const f_string_t after);
+#endif // _di_fake_print_context_wrapped_parameter_
 
 /**
- * Print error message for when the parameter value contains a non-word, non-minus, and non-plus character.
+ * Print a wrapped context message with a before string, an after string, and a string variable.
+ *
+ * This is primarily used by numerous context print functions to reduce code.
+ * This is not used for any context print functions that has complex format structures.
  *
  * @param setting
  *   The main program settings.
+ *   (Must be of type fake_setting_t.)
  *
  *   This does not alter setting.status.
  * @param print
- *   Designates the how and where to print.
- * @param symbol
- *   The symbol of the parameter.
- * @param name
- *   The name of the parameter.
- * @param value
- *   The value that is invalid.
+ *   The output structure to print to.
+ * @param before
+ *   The string being printed before the variable.
+ *   Likely should have a space added at the end of the string.
+ *   Set to NULL to disable.
+ * @param variable
+ *   The string representing the variable.
+ * @param after
+ *   The string being printed after the variable.
+ *   Likely should have a space added at the start of the string.
+ *   Set to NULL to disable.
  *
- * @return
- *   F_none on success.
- *   F_output_not on success, but no printing is performed.
+ * @see f_file_stream_lock()
+ * @see f_file_stream_unlock()
+ * @see fl_print_format()
+ *
+ * @see fake_print_line_first_unlocked()
  */
-#ifndef _di_fake_print_error_parameter_not_word_
-  extern f_status_t fake_print_error_parameter_not_word(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t value);
-#endif // _di_fake_print_error_parameter_not_word_
+#ifndef _di_fake_print_context_wrapped_variable_
+  extern void fake_print_context_wrapped_variable(fake_setting_t * const setting, const fl_print_t print, const f_string_t before, const f_string_static_t variable, const f_string_t after);
+#endif // _di_fake_print_context_wrapped_variable_
 
 /**
- * Print error message for when two designated operations cannot be used together.
+ * Print a wrapped context message with a before string, a middle strng, an after string, and two string variables.
+ *
+ * This is primarily used by numerous context print functions to reduce code.
+ * This is not used for any context print functions that has more format structures.
  *
  * @param setting
  *   The main program settings.
+ *   (Must be of type fake_setting_t.)
  *
  *   This does not alter setting.status.
  * @param print
- *   Designates the how and where to print.
- * @param operation_1
- *   The name of the first operation that cannot be used.
- * @param operation_2
- *   The name of the second operation that cannot be used.
+ *   The output structure to print to.
+ * @param before
+ *   The string being printed before the variable.
+ *   Likely should have a space added at the end of the string.
+ * @param first
+ *   The string representing the first variable.
+ * @param between
+ *   The string being printed before the variable.
+ *   Likely should have a space added at the start and end of the string.
+ * @param second
+ *   The string representing the second variable.
+ * @param after
+ *   The string being printed after the variable.
+ *   Likely should have a space added at the start of the string.
  *
- * @return
- *   F_none on success.
- *   F_output_not on success, but no printing is performed.
+ * @see f_file_stream_lock()
+ * @see f_file_stream_unlock()
+ * @see fl_print_format()
+ *
+ * @see fake_print_line_first_unlocked()
  */
-#ifndef _di_fake_print_error_parameter_operation_not_with_
-  extern f_status_t fake_print_error_parameter_operation_not_with(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t operation_1, const f_string_static_t operation_2);
-#endif // _di_fake_print_error_parameter_operation_not_with_
+#ifndef _di_fake_print_context_wrapped_variables_
+  extern void fake_print_context_wrapped_variables(fake_setting_t * const setting, const fl_print_t print, const f_string_t before, const f_string_static_t first, const f_string_t between, const f_string_static_t second, const f_string_t after);
+#endif // _di_fake_print_context_wrapped_variables_
 
 /**
  * Print help.
@@ -412,376 +330,74 @@ extern "C" {
 #endif // _di_fake_print_operation_cancelled_
 
 /**
- * Print build operation file error messages.
+ * Print simple message.
+ *
+ * This is primarily used by numerous print functions to reduce code.
+ * This is not used for any print functions that has complex format structures.
  *
  * @param setting
  *   The main program settings.
+ *   (Must be of type fake_setting_t.)
  *
  *   This does not alter setting.status.
  * @param print
- *   Designates the how and where to print.
- * @param status
- *   The status to use.
- *   This is provided, ignoring data.setting->status, for thread-safety reasons.
- * @param function
- *   The name of the function where the error happened.
- * @param operation
- *   The operation performed.
- * @param source
- *   The operation source.
- * @param destination
- *   The operation destination, if applicable.
- *   Set destination.used to 0 to disable.
- * @param how
- *   The how the operation is perform, such as "to" in "copy" source "to" destination.
- * @param fallback
- *   Set to F_true to print the fallback error message for unknown errors.
- *
- * @return
- *   F_true is returned if the status code has no print message.
- *   F_false is returned on successful print of known errors.
- *
- * @see f_file_stream_lock()
- * @see f_file_stream_unlock()
- * @see fl_print_format()
- *
- * @see fake_print_error_build_operation_file_message();
+ *   The output structure to print to.
+ * @param message
+ *   The message to print.
  */
-#ifndef _di_fake_print_error_operation_file_
-  extern f_status_t fake_print_error_build_operation_file(fake_setting_t * const setting, const fl_print_t print, const f_status_t status, const f_string_t function, const f_string_static_t operation, const f_string_static_t source, const f_string_static_t destination, const f_string_static_t how, const bool fallback);
-#endif // _di_fake_print_error_operation_file_
+#ifndef _di_fake_print_simple_
+  extern void fake_print_simple(fake_setting_t * const setting, const fl_print_t print, const f_string_t message);
+#endif // _di_fake_print_simple_
 
 /**
- * Helper function for printing build operation file error messages.
+ * Print simple verbose message with a value.
  *
- * This prints the "copy source to destination" part of the message.
+ * This is primarily used by numerous print functions to reduce code.
+ * This is not used for any print functions that has complex format structures.
  *
  * @param setting
  *   The main program settings.
+ *   (Must be of type fake_setting_t.)
  *
  *   This does not alter setting.status.
  * @param print
- *   Designates the how and where to print.
- * @param operation
- *   The operation performed.
- * @param source
- *   The operation source.
- * @param destination
- *   The operation destination, if applicable.
- *   Set destination.used to 0 to disable.
- * @param how
- *   The how the operation is perform, such as "to" in "copy" source "to" destination.
- *
- * @see fl_print_format()
- *
- * @see fake_print_error_build_operation_file()
+ *   The output structure to print to.
+ * @param message
+ *   The message to print.
+ * @param variable
+ *   The string representing the variable.
  */
-#ifndef _di_fake_print_error_build_operation_file_message_
-  extern void fake_print_error_build_operation_file_message(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t operation, const f_string_static_t source, const f_string_static_t destination, const f_string_static_t how);
-#endif // _di_fake_print_error_build_operation_file_message_
+#ifndef _di_fake_print_simple_variable_
+  extern void fake_print_simple_variable(fake_setting_t * const setting, const fl_print_t print, const f_string_t message, const f_string_static_t variable);
+#endif // _di_fake_print_simple_variable_
 
 /**
- * Print FSS error messages.
+ * Print wrapped message with a value.
+ *
+ * This is primarily used by numerous print functions to reduce code.
+ * This is not used for any print functions that has complex format structures.
  *
  * @param setting
  *   The main program settings.
+ *   (Must be of type fake_setting_t.)
  *
  *   This does not alter setting.status.
  * @param print
- *   Designates the how and where to print.
- * @param status
- *   The error status code to report on.
- * @param function
- *   The function call that returned the error.
- * @param path_file
- *   The path to the file.
- * @param range
- *   The range representing the position in the buffer such that range.start is where the error happened.
- * @param fallback
- *   Set to F_true to print the fallback error message for unknown errors.
- *
- * @return
- *   F_true is returned if the status code has no print message.
- *   F_false is returned on successful print of known errors.
- *
- * @see f_file_stream_lock()
- * @see f_file_stream_unlock()
- * @see fl_print_format()
+ *   The output structure to print to.
+ * @param before
+ *   The string being printed before the variable.
+ *   Likely should have a space added at the end of the string.
+ *   Set to NULL to disable.
+ * @param variable
+ *   The string representing the variable.
+ * @param after
+ *   The string being printed after the variable.
+ *   Likely should have a space added at the start of the string.
+ *   Set to NULL to disable.
  */
-#ifndef _di_fake_print_error_fss_
-  extern f_status_t fake_print_error_fss(fake_setting_t * const setting, const fl_print_t print, const f_status_t status, const f_string_t function, const f_string_static_t path_file, const f_string_range_t range, const bool fallback);
-#endif // _di_fake_print_error_fss_
-
-/**
- * Print an error message for when the parameter is specified too many times.
- *
- * @param data
- *   The program data.
- * @param parameter
- *   The parameter name.
- *
- * @return
- *   F_none on success.
- *   F_output_not on success, but no printing is performed.
- *
- * @see f_file_stream_lock()
- * @see f_file_stream_unlock()
- * @see fl_print_format()
- */
-#ifndef _di_fake_print_error_parameter_too_many_
-  extern f_status_t fake_print_error_parameter_too_many(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t parameter);
-#endif // _di_fake_print_error_parameter_too_many_
-
-/**
- * Print an error message for when there are more arguments are required (such as to a fakefile operation).
- *
- * @param data_make
- *   All make related setting data, including data from the fakefile and the build settings file.
- *
- * @return
- *   F_none on success.
- *   F_output_not on success, but no printing is performed.
- *
- * @see fll_print_format()
- */
-#ifndef _di_fake_print_error_requires_more_arguments_
-  extern f_status_t fake_print_error_requires_more_arguments(fake_setting_t * const setting, const fl_print_t print);
-#endif // _di_fake_print_error_requires_more_arguments_
-
-/**
- * Print an error message for when there are too many arguments passed (such as to a fakefile operation).
- *
- * @param data_make
- *   All make related setting data, including data from the fakefile and the build settings file.
- *
- * @return
- *   F_none on success.
- *   F_output_not on success, but no printing is performed.
- *
- * @see fll_print_format()
- */
-#ifndef _di_fake_print_error_too_many_arguments_
-  extern f_status_t fake_print_error_too_many_arguments(fake_setting_t * const setting, const fl_print_t print);
-#endif // _di_fake_print_error_too_many_arguments_
-
-/**
- * Print an error message for when an argument is an empty string.
- *
- * @param data_make
- *   All make related setting data, including data from the fakefile and the build settings file.
- * @param index
- *   The index of the argument that is an empty string.
- *
- * @return
- *   F_none on success.
- *   F_output_not on success, but no printing is performed.
- *
- * @see fll_print_format()
- */
-#ifndef _di_fake_print_error_argument_empty_
-  extern f_status_t fake_print_error_argument_empty(fake_setting_t * const setting, const fl_print_t print, const f_array_length_t index);
-#endif // _di_fake_print_error_argument_empty_
-
-/**
- * Print error messages when processing some fakefile section, for a specific line and operation, and that operation failed.
- *
- * @param data
- *   The program data.
- * @param print
- *   Designates how the section error/warning should be printed.
- * @param buffer
- *   The buffer containing the fakefile data.
- * @param section_name
- *   The range within the buffer representing the section name.
- * @param operation_name
- *   The range within the buffer representing the operation name within the section.
- *
- * @return
- *   F_none on success.
- *   F_output_not on success, but no printing is performed.
- *
- * @see f_file_stream_lock()
- * @see f_file_stream_unlock()
- * @see fl_print_format()
- */
-#ifndef _di_fake_print_message_section_operation_failed_
-  extern f_status_t fake_print_message_section_operation_failed(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name);
-#endif // _di_fake_print_message_section_operation_failed_
-
-/**
- * Print error messages when a given link argument is unknown.
- *
- * @param data
- *   The program data.
- * @param print
- *   Designates how the section error/warning should be printed.
- * @param argument
- *   The argument that is unknown by the link operation.
- *
- * @return
- *   F_none on success.
- *   F_output_not on success, but no printing is performed.
- *
- * @see f_file_stream_lock()
- * @see f_file_stream_unlock()
- * @see fl_print_format()
- */
-#ifndef _di_fake_print_message_section_operation_link_argument_unknown_
-  extern f_status_t fake_print_message_section_operation_link_argument_unknown(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t argument);
-#endif // _di_fake_print_message_section_operation_link_argument_unknown_
-
-/**
- * Print error messages when a given link point file already exists.
- *
- * @param data
- *   The program data.
- * @param print
- *   Designates how the section error/warning should be printed.
- * @param argument
- *   The argument representing the point file.
- *
- * @return
- *   F_none on success.
- *   F_output_not on success, but no printing is performed.
- *
- * @see f_file_stream_lock()
- * @see f_file_stream_unlock()
- * @see fl_print_format()
- */
-#ifndef _di_fake_print_message_section_operation_link_point_exists_
-  extern f_status_t fake_print_message_section_operation_link_point_exists(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t argument);
-#endif // _di_fake_print_message_section_operation_link_point_exists_
-
-/**
- * Print error messages when a given link target file does not already exist.
- *
- * @param data
- *   The program data.
- * @param print
- *   Designates how the section error/warning should be printed.
- * @param argument
- *   The argument representing the point file.
- *
- * @return
- *   F_none on success.
- *   F_output_not on success, but no printing is performed.
- *
- * @see f_file_stream_lock()
- * @see f_file_stream_unlock()
- * @see fl_print_format()
- */
-#ifndef _di_fake_print_message_section_operation_link_target_exists_not_
-  extern f_status_t fake_print_message_section_operation_link_target_exists_not(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t argument);
-#endif // _di_fake_print_message_section_operation_link_target_exists_not_
-
-/**
- * Print error messages when processing some fakefile section, for a specific line and operation, and that operation has a path outside of the project root.
- *
- * @param data
- *   The program data.
- * @param print
- *   Designates how the section error/warning should be printed.
- * @param status
- *   The status code representing an error.
- * @param function
- *   The name of the function where the error happened.
- * @param path
- *   The path that is outside of the project path.
- *
- * @return
- *   F_none on success.
- *   F_output_not on success, but no printing is performed.
- *
- * @see f_file_stream_lock()
- * @see f_file_stream_unlock()
- * @see fl_print_format()
- * @see fll_error_file_print()
- */
-#ifndef _di_fake_print_message_section_operation_path_outside_
-  extern f_status_t fake_print_message_section_operation_path_outside(fake_setting_t * const setting, const fl_print_t print, const f_status_t status, const f_string_t function, const f_string_static_t path);
-#endif // _fake_print_message_section_operation_path_outside_
-
-/**
- * Print error messages when processing some fakefile section, for a specific line and operation.
- *
- * @param data
- *   The program data.
- * @param error
- *   Designates how the section error/warning should be printed.
- * @param status
- *   The status code representing an error.
- * @param function
- *   The name of the function where the error happened.
- *   Set to 0 to disable.
- * @param path
- *   The path to the directory.
- *
- * @return
- *   F_none on success.
- *   F_output_not on success, but no printing is performed.
- *
- * @see f_file_stream_lock()
- * @see f_file_stream_unlock()
- * @see fl_print_format()
- * @see fll_error_file_print()
- */
-#ifndef _di_fake_print_message_section_operation_path_stack_max_
-  extern f_status_t fake_print_message_section_operation_path_stack_max(fake_setting_t * const setting, const fl_print_t print, const f_status_t status, const f_string_t function, const f_string_static_t path);
-#endif // _di_fake_print_message_section_operation_path_stack_max_
-
-/**
- * Print error messages when processing some fakefile section, for a specific line and operation, and that the max stack depth is reached.
- *
- * @param data
- *   The program data.
- * @param print
- *   Designates how the section error/warning should be printed.
- * @param buffer
- *   The buffer containing the fakefile data.
- * @param section_name
- *   The range within the buffer representing the section name.
- * @param operation_name
- *   The range within the buffer representing the operation name within the section.
- * @param stack_max
- *   The max stack depth.
- *
- * @return
- *   F_none on success.
- *   F_output_not on success, but no printing is performed.
- *
- * @see f_file_stream_lock()
- * @see f_file_stream_unlock()
- * @see fl_print_format()
- */
-#ifndef _di_fake_print_message_section_operation_stack_max_
-  extern f_status_t fake_print_message_section_operation_stack_max(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name, const f_array_length_t stack_max);
-#endif // _di_fake_print_message_section_operation_stack_max_
-
-/**
- * Print error messages when processing some fakefile section, for a specific line and operation, and that operation is invalid.
- *
- * @param data
- *   The program data.
- * @param print
- *   Designates how the section error/warning should be printed.
- * @param buffer
- *   The buffer containing the fakefile data.
- * @param section_name
- *   The range within the buffer representing the section name.
- * @param operation_name
- *   The range within the buffer representing the operation name within the section.
- *
- * @return
- *   F_none on success.
- *   F_output_not on success, but no printing is performed.
- *
- * @see f_file_stream_lock()
- * @see f_file_stream_unlock()
- * @see fl_print_format()
- */
-#ifndef _di_fake_print_message_section_operation_unknown_
-  extern f_status_t fake_print_message_section_operation_unknown(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name);
-#endif // _di_fake_print_message_section_operation_unknown_
+#ifndef _di_fake_print_wrapped_variable_
+  extern void fake_print_wrapped_variable(fake_setting_t * const setting, const fl_print_t print, const f_string_t before, const f_string_static_t variable, const f_string_t after);
+#endif // _di_fake_print_wrapped_variable_
 
 #ifdef __cplusplus
 } // extern "C"

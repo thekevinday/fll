@@ -4,194 +4,90 @@
 extern "C" {
 #endif
 
-#ifndef _di_fake_print_error_
-  f_status_t fake_print_error(fake_setting_t * const setting, const fl_print_t print, const f_status_t status, const f_string_t function) {
+#ifndef _di_fake_print_context_simple_
+  void fake_print_context_simple(fake_setting_t * const setting, const fl_print_t print, const f_string_t message) {
 
-    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
-
-    fake_print_line_first_locked(setting, print);
-
-    fll_error_print(print, F_status_set_fine(status), function, fll_error_file_flag_fallback_e);
-
-    return F_none;
-  }
-#endif // _di_fake_print_error_
-
-#ifndef _di_fake_print_error_fallback_
-  f_status_t fake_print_error_fallback(fake_setting_t * const setting, const fl_print_t print, const f_status_t status, const f_string_t function) {
-
-    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
-
-    fake_print_line_first_locked(setting, print);
-
-    if (fll_error_print(print, F_status_set_fine(status), function, fll_error_file_flag_none_e) == F_known_not) return F_false;
-
-    return F_true;
-  }
-#endif // _di_fake_print_error_fallback_
-
-#ifndef _di_fake_print_error_file_
-  f_status_t fake_print_error_file(fake_setting_t * const setting, const fl_print_t print, const f_status_t status, const f_string_t function, const f_string_static_t name, const f_string_static_t operation, const uint8_t type) {
-
-    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
-
-    fake_print_line_first_locked(setting, print);
-
-    fll_error_file_print(print, F_status_set_fine(status), function, fll_error_file_flag_fallback_e, name, operation, type);
-
-    return F_none;
-  }
-#endif // _di_fake_print_error_file_
-
-#ifndef _di_fake_print_error_file_simple_
-  f_status_t fake_print_error_file_simple(fake_setting_t * const setting, const fl_print_t print, const f_status_t status, const f_string_t function, const f_string_static_t name, const f_string_static_t operation, const uint8_t type) {
-
-    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
-
-    fake_print_line_first_locked(setting, print);
-
-    fll_error_file_print(print, F_status_set_fine(status), function, fll_error_file_flag_simple_e, name, operation, type);
-
-    return F_none;
-  }
-#endif // _di_fake_print_error_file_simple_
-
-#ifndef _di_fake_print_error_file_fallback_
-  f_status_t fake_print_error_file_fallback(fake_setting_t * const setting, const fl_print_t print, const f_status_t status, const f_string_t function, const f_string_static_t name, const f_string_static_t operation, const uint8_t type) {
-
-    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
-
-    fake_print_line_first_locked(setting, print);
-
-    if (fll_error_file_print(print, F_status_set_fine(status), function, fll_error_file_flag_none_e, name, operation, type) == F_known_not) return F_false;
-
-    return F_true;
-  }
-#endif // _di_fake_print_error_file_fallback_
-
-#ifndef _di_fake_print_error_failure_operation_
-  f_status_t fake_print_error_failure_operation(fake_setting_t * const setting, const fl_print_t print, const uint8_t operation) {
-
-    if (!setting || print.verbosity < f_console_verbosity_error_e) return F_output_not;
+    if (!setting) return;
 
     f_file_stream_lock(print.to);
 
     fake_print_line_first_unlocked(setting, print);
 
-    fl_print_format("%[%QThe operation '%]%[", print.to, print.context, print.prefix, print.context, print.notable);
-
-    if (operation == fake_operation_build_e) {
-      f_print_dynamic(fake_other_operation_build_s, print.to);
-    }
-    else if (operation == fake_operation_clean_e) {
-      f_print_dynamic(fake_other_operation_clean_s, print.to);
-    }
-    else if (operation == fake_operation_make_e) {
-      f_print_dynamic(fake_other_operation_make_s, print.to);
-    }
-    else if (operation == fake_operation_skeleton_e) {
-      f_print_dynamic(fake_other_operation_skeleton_s, print.to);
-    }
-
-    fl_print_format("%]%[' failed.%]%r", print.to, print.notable, print.context, print.context, f_string_eol_s);
+    fl_print_format("%[%Q%S.%]%r", print.to, print.context, print.prefix, message, print.context, f_string_eol_s);
 
     f_file_stream_unlock(print.to);
-
-    return F_none;
   }
-#endif // _di_fake_print_error_failure_operation_
+#endif // _di_fake_print_context_simple_
 
-#ifndef _di_fake_print_error_failure_script_
-  f_status_t fake_print_error_failure_script(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t script) {
+#ifndef _di_fake_print_context_simple_variable_
+  void fake_print_context_simple_variable(fake_setting_t * const setting, const fl_print_t print, const f_string_t before, const f_string_static_t variable, const f_string_t after) {
 
-    if (!setting || print.verbosity < f_console_verbosity_error_e) return F_output_not;
+    if (!setting) return;
 
     f_file_stream_lock(print.to);
 
     fake_print_line_first_unlocked(setting, print);
 
-    fl_print_format("%[%QFailed to execute script '%]", print.to, print.context, print.prefix, print.context);
-    fl_print_format("%[%Q%]", print.to, print.notable, script, print.notable);
-    fl_print_format("%['.%]%r", print.to, print.context, print.context, f_string_eol_s);
+    fl_print_format("%[%Q%S'%]", print.to, print.context, print.prefix, before, print.context);
+    fl_print_format("%[%Q%]", print.to, print.notable, variable, print.notable);
+    fl_print_format("%['%S.%]%r", print.to, print.context, after, print.context, f_string_eol_s);
 
     f_file_stream_unlock(print.to);
-
-    return F_none;
   }
-#endif // _di_fake_print_error_failure_script_
+#endif // _di_fake_print_context_simple_variable_
 
-#ifndef _di_fake_print_error_parameter_not_empty_
-  f_status_t fake_print_error_parameter_not_empty(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t value) {
+#ifndef _di_fake_print_context_wrapped_parameter_
+  void fake_print_context_wrapped_parameter(fake_setting_t * const setting, const fl_print_t print, const f_string_t before, const f_string_static_t symbol, const f_string_static_t name, const f_string_t after) {
 
-    if (!setting || print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
-
-    if (!F_status_is_error(setting->status)) {
-      if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
-    }
+    if (!setting) return;
 
     f_file_stream_lock(print.to);
 
     fake_print_line_first_unlocked(setting, print);
 
-    fl_print_format("%[%QThe '%]", print.to, print.context, print.prefix, print.context);
+    fl_print_format("%[%Q%S'%]", print.to, print.context, print.prefix, before, print.context);
     fl_print_format("%[%Q%Q%]", print.to, print.notable, symbol, name, print.notable);
-    fl_print_format("%[' parameter must not be empty and must not contain only white space.%]%r", print.to, print.context, print.context, f_string_eol_s);
+    fl_print_format("%['%S.%]%r", print.to, print.context, after, print.context, f_string_eol_s);
 
     f_file_stream_unlock(print.to);
-
-    return F_none;
   }
-#endif // _di_fake_print_error_parameter_not_empty_
+#endif // _di_fake_print_context_wrapped_parameter_
 
-#ifndef _di_fake_print_error_parameter_not_word_
-  f_status_t fake_print_error_parameter_not_word(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t value) {
+#ifndef _di_fake_print_context_wrapped_variable_
+  void fake_print_context_wrapped_variable(fake_setting_t * const setting, const fl_print_t print, const f_string_t before, const f_string_static_t variable, const f_string_t after) {
 
-    if (!setting || print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
-
-    if (!F_status_is_error(setting->status)) {
-      if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
-    }
+    if (!setting) return;
 
     f_file_stream_lock(print.to);
 
     fake_print_line_first_unlocked(setting, print);
 
-    fl_print_format("%[%QThe '%]", print.to, print.context, print.prefix, print.context);
-    fl_print_format("%[%Q%Q%]", print.to, print.notable, symbol, name, print.notable);
-    fl_print_format("%[' parameter value '%]", print.to, print.context, print.context);
-    fl_print_format("%[%Q%]", print.to, print.notable, value, print.notable);
-    fl_print_format("%[' contains non-word, non-dash, and non-plus characters.%]%r", print.to, print.context, print.context, f_string_eol_s);
+    fl_print_format("%[%Q%S'%]", print.to, print.context, print.prefix, before, print.context);
+    fl_print_format("%[%Q%]", print.to, print.notable, variable, print.notable);
+    fl_print_format("%['%S.%]%r", print.to, print.context, after, print.context, f_string_eol_s);
 
     f_file_stream_unlock(print.to);
-
-    return F_none;
   }
-#endif // _di_fake_print_error_parameter_not_word_
+#endif // _di_fake_print_context_wrapped_variable_
 
-#ifndef _di_fake_print_error_parameter_operation_not_with_
-  f_status_t fake_print_error_parameter_operation_not_with(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t operation_1, const f_string_static_t operation_2) {
+#ifndef _di_fake_print_context_wrapped_variables_
+  void fake_print_context_wrapped_variables(fake_setting_t * const setting, const fl_print_t print, const f_string_t before, const f_string_static_t first, const f_string_t between, const f_string_static_t second, const f_string_t after) {
 
-    if (!setting || print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
-
-    if (!F_status_is_error(setting->status)) {
-      if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
-    }
+    if (!setting) return;
 
     f_file_stream_lock(print.to);
 
     fake_print_line_first_unlocked(setting, print);
 
-    fl_print_format("%[%QThe operation '%]", print.to, print.context, print.prefix, print.context);
-    fl_print_format("%[%Q%]", print.to, print.notable, operation_1, print.notable);
-    fl_print_format("%[' cannot be specified with the operation '%]", print.to, print.context, print.context);
-    fl_print_format("%[%Q%]", print.to, print.notable, operation_2, print.notable);
-    fl_print_format("%['.%]%r", print.to, print.context, print.context, f_string_eol_s);
+    fl_print_format("%[%Q%S'%]", print.to, print.context, print.prefix, before, print.context);
+    fl_print_format("%[%Q%]", print.to, print.notable, first, print.notable);
+    fl_print_format("%['%S'%]", print.to, print.context, between, print.context);
+    fl_print_format("%[%Q%]", print.to, print.notable, second, print.notable);
+    fl_print_format("%['%S.%]%r", print.to, print.context, after, print.context, f_string_eol_s);
 
     f_file_stream_unlock(print.to);
-
-    return F_none;
   }
-#endif // _di_fake_print_error_parameter_operation_not_with_
+#endif // _di_fake_print_context_wrapped_variables_
 
 #ifndef _di_fake_print_help_
   f_status_t fake_print_help(fake_setting_t * const setting, const fl_print_t print) {
@@ -399,604 +295,44 @@ extern "C" {
   }
 #endif // _di_fake_print_operation_cancelled_
 
-#ifndef _di_fake_print_error_build_operation_file_
-  f_status_t fake_print_error_build_operation_file(fake_setting_t * const setting, const fl_print_t print, const f_status_t status, const f_string_t function, const f_string_static_t operation, const f_string_static_t source, const f_string_static_t destination, const f_string_static_t how, const bool fallback) {
-
-    if (F_status_set_fine(status) == F_file_found_not) {
-      if (print.verbosity > f_console_verbosity_quiet_e) {
-        f_file_stream_lock(print.to);
-
-        fake_print_line_first_unlocked(setting, print);
-
-        fl_print_format("%[%QFailed to find '%]", print.to, print.context, print.prefix, print.context);
-
-        fake_print_error_build_operation_file_message(setting, print, operation, source, destination, how);
-
-        fl_print_format("%['.%]%r", print.to, print.context, print.context, f_string_eol_s);
-
-        f_file_stream_unlock(print.to);
-      }
-
-      return F_false;
-    }
-
-    if (F_status_set_fine(status) == F_parameter) {
-      if (print.verbosity > f_console_verbosity_quiet_e) {
-        f_file_stream_lock(print.to);
-
-        fake_print_line_first_unlocked(setting, print);
-
-        fl_print_format("%[%QInvalid parameter when calling '%]", print.to, print.context, print.prefix, print.context);
-        fl_print_format("%[%Q%]", print.to, print.notable, function, print.notable);
-        fl_print_format("%[() to %Q '%]", print.to, print.context, operation, print.context);
-
-        fake_print_error_build_operation_file_message(setting, print, operation, source, destination, how);
-
-        fl_print_format("%['.%]%r", print.to, print.context, print.context, f_string_eol_s);
-
-        f_file_stream_unlock(print.to);
-      }
-
-      return F_false;
-    }
-
-    if (F_status_set_fine(status) == F_name) {
-      if (print.verbosity > f_console_verbosity_quiet_e) {
-        f_file_stream_lock(print.to);
-
-        fake_print_line_first_unlocked(setting, print);
-
-        fl_print_format("%[%QInvalid name for '%]", print.to, print.context, print.prefix, print.context);
-
-        if (source.used) {
-          fl_print_format("%[%Q%]", print.to, print.notable, source, print.notable);
-        }
-
-        if (destination.used) {
-          fl_print_format("%[' or '%]", print.to, print.context, print.context);
-          fl_print_format("%[%Q%]", print.to, print.notable, destination, print.notable);
-        }
-
-        fl_print_format("%['.%]%r", print.to, print.context, print.context, f_string_eol_s);
-
-        f_file_stream_unlock(print.to);
-      }
-
-      return F_false;
-    }
-
-    if (F_status_set_fine(status) == F_memory_not) {
-      if (print.verbosity > f_console_verbosity_quiet_e) {
-        f_file_stream_lock(print.to);
-
-        fake_print_line_first_unlocked(setting, print);
-
-        fl_print_format("%[%QUnable to allocate memory, while trying to %Q '%]", print.to, print.context, print.prefix, operation, print.context);
-
-        fake_print_error_build_operation_file_message(setting, print, operation, source, destination, how);
-
-        fl_print_format("%['.%]%r", print.to, print.context, print.context, f_string_eol_s);
-
-        f_file_stream_unlock(print.to);
-      }
-
-      return F_false;
-    }
-
-    if (F_status_set_fine(status) == F_number_overflow) {
-      if (print.verbosity > f_console_verbosity_quiet_e) {
-        f_file_stream_lock(print.to);
-
-        fake_print_line_first_unlocked(setting, print);
-
-        fl_print_format("%[%QOverflow while trying to %Q '%]", print.to, print.context, print.prefix, operation, print.context);
-
-        fake_print_error_build_operation_file_message(setting, print, operation, source, destination, how);
-
-        fl_print_format("%['.%]%r", print.to, print.context, print.context, f_string_eol_s);
-
-        f_file_stream_unlock(print.to);
-      }
-
-      return F_false;
-    }
-
-    if (F_status_set_fine(status) == F_directory) {
-      if (print.verbosity > f_console_verbosity_quiet_e) {
-        f_file_stream_lock(print.to);
-
-        fake_print_line_first_unlocked(setting, print);
-
-        fl_print_format("%[%QInvalid directory while trying to %Q '%]", print.to, print.context, print.prefix, operation, print.context);
-
-        fake_print_error_build_operation_file_message(setting, print, operation, source, destination, how);
-
-        fl_print_format("%['.%]%r", print.to, print.context, print.context, f_string_eol_s);
-
-        f_file_stream_unlock(print.to);
-      }
-
-      return F_false;
-    }
-
-    if (F_status_set_fine(status) == F_access_denied) {
-      if (print.verbosity > f_console_verbosity_quiet_e) {
-        f_file_stream_lock(print.to);
-
-        fake_print_line_first_unlocked(setting, print);
-
-        fl_print_format("%[%QAccess denied while trying to %Q '%]", print.to, print.context, print.prefix, operation, print.context);
-
-        fake_print_error_build_operation_file_message(setting, print, operation, source, destination, how);
-
-        fl_print_format("%['.%]%r", print.to, print.context, print.context, f_string_eol_s);
-
-        f_file_stream_unlock(print.to);
-      }
-
-      return F_false;
-    }
-
-    if (F_status_set_fine(status) == F_loop) {
-      if (print.verbosity > f_console_verbosity_quiet_e) {
-        f_file_stream_lock(print.to);
-
-        fake_print_line_first_unlocked(setting, print);
-
-        fl_print_format("%[%QLoop while trying to %Q '%]", print.to, print.context, print.prefix, operation, print.context);
-
-        fake_print_error_build_operation_file_message(setting, print, operation, source, destination, how);
-
-        fl_print_format("%['.%]%r", print.to, print.context, print.context, f_string_eol_s);
-
-        f_file_stream_unlock(print.to);
-      }
-
-      return F_false;
-    }
-
-    if (F_status_set_fine(status) == F_prohibited) {
-      if (print.verbosity > f_console_verbosity_quiet_e) {
-        f_file_stream_lock(print.to);
-
-        fake_print_line_first_unlocked(setting, print);
-
-        fl_print_format("%[%QProhibited by system while trying to %Q '%]", print.to, print.context, print.prefix, operation, print.context);
-
-        fake_print_error_build_operation_file_message(setting, print, operation, source, destination, how);
-
-        fl_print_format("%['.%]%r", print.to, print.context, print.context, f_string_eol_s);
-
-        f_file_stream_unlock(print.to);
-      }
-
-      return F_false;
-    }
-
-    if (F_status_set_fine(status) == F_directory_found_not) {
-      if (print.verbosity > f_console_verbosity_quiet_e) {
-        f_file_stream_lock(print.to);
-
-        fake_print_line_first_unlocked(setting, print);
-
-        fl_print_format("%[%QFailed to %Q '%]", print.to, print.context, print.prefix, operation, print.context);
-
-        fake_print_error_build_operation_file_message(setting, print, operation, source, destination, how);
-
-        fl_print_format("%[' due to an invalid directory in the path.%]%r", print.to, print.context, print.context, f_string_eol_s);
-
-        f_file_stream_unlock(print.to);
-      }
-
-      return F_false;
-    }
-
-    if (F_status_set_fine(status) == F_failure) {
-      if (print.verbosity > f_console_verbosity_quiet_e) {
-        f_file_stream_lock(print.to);
-
-        fake_print_line_first_unlocked(setting, print);
-
-        fl_print_format("%[%QFailed to %Q '%]", print.to, print.context, print.prefix, operation, print.context);
-
-        fake_print_error_build_operation_file_message(setting, print, operation, source, destination, how);
-
-        fl_print_format("%['.%]%r", print.to, print.context, print.context, f_string_eol_s);
-
-        f_file_stream_unlock(print.to);
-      }
-
-      return F_false;
-    }
-
-    if (fll_error_print(print, F_status_set_fine(status), function, fll_error_file_flag_none_e) == F_known_not && fallback && print.verbosity > f_console_verbosity_quiet_e) {
-      f_file_stream_lock(print.to);
-
-      fake_print_line_first_unlocked(setting, print);
-
-      fl_print_format("%[UNKNOWN %Q(%]", print.to, print.context, print.prefix, print.context);
-      fl_print_format("%[%ui%]", print.to, print.notable, F_status_set_fine(status), print.notable);
-      fl_print_format("%[) occurred while trying to %Q '%]", print.to, print.context, operation, print.context);
-
-      fake_print_error_build_operation_file_message(setting, print, operation, source, destination, how);
-
-      fl_print_format("%['.%]%r", print.to, print.context, print.context, f_string_eol_s);
-
-      f_file_stream_unlock(print.to);
-    }
-
-    return F_true;
-  }
-#endif // _di_fake_print_error_build_operation_file_
-
-#ifndef _di_fake_print_error_build_operation_file_message_
-  void fake_print_error_build_operation_file_message(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t operation, const f_string_static_t source, const f_string_static_t destination, const f_string_static_t how) {
-
-    if (source.used) {
-      fl_print_format("%[%Q%]", print.to, print.notable, source, print.notable);
-    }
-
-    fl_print_format("%[while trying to %Q '%]", print.to, print.context, operation, print.context);
-
-    if (destination.used) {
-      fl_print_format("%[' %Q '%]", print.to, print.context, how, print.context);
-      fl_print_format("%[%Q%]", print.to, print.notable, destination, print.notable);
-    }
-    else if (source.used) {
-      fl_print_format("%[%Q%]", print.to, print.notable, source, print.notable);
-    }
-  }
-#endif // _di_fake_print_error_build_operation_file_message_
-
-#ifndef _di_fake_print_error_fss
-  f_status_t fake_print_error_fss(fake_setting_t * const setting, const fl_print_t print, const f_status_t status, const f_string_t function, const f_string_static_t path_file, const f_string_range_t range, const bool fallback) {
-
-    if (status == F_file_found_not) {
-      if (print.verbosity > f_console_verbosity_quiet_e) {
-        f_file_stream_lock(print.to);
-
-        fake_print_line_first_unlocked(setting, print);
-
-        fl_print_format("%[%QOccurred on invalid UTF-8 character at stop position (at '%]", print.to, print.context, print.prefix, print.context);
-        fl_print_format("%[%un%]", print.to, print.notable, range.start, print.notable);
-        fl_print_format("%[ of setting file '%]", print.to, print.context, print.context);
-        fl_print_format("%[%Q%]", print.to, print.notable, path_file, print.notable);
-        fl_print_format("%[').%]%r", print.to, print.context, print.context, f_string_eol_s);
-
-        f_file_stream_unlock(print.to);
-      }
-
-      return F_false;
-    }
-
-    if (status == F_complete_not_utf || status == F_complete_not_utf_eos || status == F_complete_not_utf_stop) {
-      if (print.verbosity > f_console_verbosity_quiet_e) {
-        f_file_stream_lock(print.to);
-
-        fake_print_line_first_unlocked(setting, print);
-
-        fl_print_format("%[%QOccurred on invalid UTF-8 character at %s (at '%]", print.to, print.context, print.prefix, status == F_complete_not_utf_eos ? "end of string" : "stop point of string", print.context);
-        fl_print_format("%[%un%]", print.to, print.notable, range.start, print.notable);
-        fl_print_format("%[ of setting file '%]", print.to, print.context, print.context);
-        fl_print_format("%[%Q%]", print.to, print.notable, path_file, print.notable);
-        fl_print_format("%[').%]%r", print.to, print.context, print.context, f_string_eol_s);
-
-        f_file_stream_unlock(print.to);
-      }
-
-      return F_false;
-    }
-
-    if (status == F_complete_not_utf_stop) {
-      if (print.verbosity > f_console_verbosity_quiet_e) {
-        f_file_stream_lock(print.to);
-
-        fake_print_line_first_unlocked(setting, print);
-
-        fl_print_format("%[%QOccurred on invalid UTF-8 character at stop point of string (at '%]", print.to, print.context, print.prefix, print.context);
-        fl_print_format("%[%un%]", print.to, print.notable, range.start, print.notable);
-        fl_print_format("%[ of setting file '%]", print.to, print.context, print.context);
-        fl_print_format("%[%Q%]", print.to, print.notable, path_file, print.notable);
-        fl_print_format("%[').%]%r", print.to, print.context, print.context, f_string_eol_s);
-
-        f_file_stream_unlock(print.to);
-      }
-
-      return F_false;
-    }
-
-    if (fll_error_print(print, status, function, fll_error_file_flag_none_e) == F_known_not && fallback && print.verbosity > f_console_verbosity_quiet_e) {
-      f_file_stream_lock(print.to);
-
-      fake_print_line_first_unlocked(setting, print);
-
-      fl_print_format("%[UNKNOWN %Q(%]", print.to, print.context, print.prefix, print.context);
-      fl_print_format("%[%ui%]", print.to, print.notable, status, print.notable);
-      fl_print_format("%[) in function '%]", print.to, print.context, print.context);
-      fl_print_format("%[%Q%]", print.to, print.notable, function, print.notable);
-      fl_print_format("%[().%]%r", print.to, print.context, print.context, f_string_eol_s);
-
-      f_file_stream_unlock(print.to);
-    }
-
-    return F_true;
-  }
-#endif // _di_fake_print_error_fss
-
-#ifndef _di_fake_print_error_parameter_too_many_
-  f_status_t fake_print_error_parameter_too_many(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t parameter) {
-
-    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
-
-    f_file_stream_lock(print.to);
-
-    fl_print_format("%[%QThe parameter '%]", print.to, print.context, print.prefix, print.context);
-    fl_print_format("%[%r%r%]", print.to, print.notable, f_console_symbol_long_normal_s, parameter, print.notable);
-    fl_print_format("%[' was specified too many times.%]%r", print.to, print.context, print.context, f_string_eol_s);
-
-    f_file_stream_unlock(print.to);
-
-    return F_none;
-  }
-#endif // _di_fake_print_error_parameter_too_many_
-
-#ifndef _di_fake_print_error_requires_more_arguments_
-  f_status_t fake_print_error_requires_more_arguments(fake_setting_t * const setting, const fl_print_t print) {
-
-    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
-    if (!print.to.stream) return F_output_not;
+#ifndef _di_fake_print_simple_
+  void fake_print_simple(fake_setting_t * const setting, const fl_print_t print, const f_string_t message) {
 
     f_file_stream_lock(print.to);
 
     fake_print_line_first_unlocked(setting, print);
 
-    fl_print_format("%[%QRequires more arguments.%]%r", print.to, print.context, print.prefix, print.context, f_string_eol_s);
+    fll_print_format("%S.%r", print.to, message, f_string_eol_s);
 
     f_file_stream_unlock(print.to);
-
-    return F_none;
   }
-#endif // _di_fake_print_error_requires_more_arguments_
+#endif // _di_fake_print_simple_
 
-#ifndef _di_fake_print_error_too_many_arguments_
-  f_status_t fake_print_error_too_many_arguments(fake_setting_t * const setting, const fl_print_t print) {
-
-    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
-    if (!print.to.stream) return F_output_not;
+#ifndef _di_fake_print_simple_variable_
+  void fake_print_simple_variable(fake_setting_t * const setting, const fl_print_t print, const f_string_t message, const f_string_static_t variable) {
 
     f_file_stream_lock(print.to);
 
     fake_print_line_first_unlocked(setting, print);
 
-    fll_print_format("%[%QHas too many arguments.%]%r", print.to, print.context, print.prefix, print.context, f_string_eol_s);
+    fll_print_format("%S '%[%Q%]'.%r", print.to, message, print.set->notable, variable, print.set->notable, f_string_eol_s);
 
     f_file_stream_unlock(print.to);
-
-    return F_none;
   }
-#endif // _di_fake_print_error_too_many_arguments_
+#endif // _di_fake_print_simple_variable_
 
-#ifndef _di_fake_print_error_argument_empty_
-  f_status_t fake_print_error_argument_empty(fake_setting_t * const setting, const fl_print_t print, const f_array_length_t index) {
-
-    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
-    if (!print.to.stream) return F_output_not;
+#ifndef _di_fake_print_wrapped_variable_
+  void fake_print_wrapped_variable(fake_setting_t * const setting, const fl_print_t print, const f_string_t before, const f_string_static_t variable, const f_string_t after) {
 
     f_file_stream_lock(print.to);
 
     fake_print_line_first_unlocked(setting, print);
 
-    fl_print_format("%[%QThe %]", print.to, f_string_eol_s, print.context, print.prefix, print.context);
-    fl_print_format("%[%un%]", print.to, print.notable, index, print.notable);
-    fl_print_format("%[ argument must not be an empty string.%]%r", print.to, print.context, print.context, f_string_eol_s);
+    fll_print_format("%S'%[%Q%]'%S.%r", print.to, before, print.set->notable, variable, print.set->notable, after, f_string_eol_s);
 
     f_file_stream_unlock(print.to);
-
-    return F_none;
   }
-#endif // _di_fake_print_error_argument_empty_
-
-#ifndef _di_fake_print_message_section_operation_failed_
-  f_status_t fake_print_message_section_operation_failed(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name) {
-
-    if (print.verbosity == f_console_verbosity_quiet_e || !print.to.stream) return F_output_not;
-
-    f_array_length_t line = 1;
-    f_state_t state = f_state_t_initialize;
-
-    f_fss_count_lines(state, buffer, operation_name.start, &line);
-
-    f_file_stream_lock(print.to);
-
-    fake_print_line_first_unlocked(setting, print);
-
-    fl_print_format("%[%QThe section operation '%]", print.to, print.context, print.prefix, print.context);
-    fl_print_format("%[%/Q%]", print.to, print.notable, buffer, operation_name, print.notable);
-    fl_print_format("%[' from section '%]", print.to, print.context, print.context);
-    fl_print_format("%[%/Q%]", print.to, print.notable, buffer, section_name, print.notable);
-    fl_print_format("%[' on line%] ", print.to, print.context, print.context);
-    fl_print_format("%[%un%]", print.to, print.notable, line, print.notable);
-    fl_print_format(" %[failed.%]%r", print.to, print.context, print.context, f_string_eol_s);
-
-    f_file_stream_unlock(print.to);
-
-    return F_none;
-  }
-#endif // _di_fake_print_message_section_operation_failed_
-
-#ifndef _di_fake_print_message_section_operation_link_argument_unknown_
-  f_status_t fake_print_message_section_operation_link_argument_unknown(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t argument) {
-
-    if (print.verbosity == f_console_verbosity_quiet_e || !print.to.stream) return F_output_not;
-
-    f_file_stream_lock(print.to);
-
-    fake_print_line_first_unlocked(setting, print);
-
-    fl_print_format("%[%QThe argument '%]", print.to, print.context, print.prefix, print.context);
-    fl_print_format("%[%Q%]", print.to, print.notable, argument, print.notable);
-    fl_print_format("%[' is not not valid and may only be one of either '%]", print.to, print.context, print.context);
-    fl_print_format("%[%r%]", print.to, print.notable, fake_make_operation_argument_force_s, print.notable);
-    fl_print_format("%[' or '%]", print.to, print.context, print.context);
-    fl_print_format("%[%r%]", print.to, print.notable, fake_make_operation_argument_strict_s, print.notable);
-    fl_print_format("%['.%]%r", print.to, print.context, print.context, f_string_eol_s);
-
-    f_file_stream_unlock(print.to);
-
-    return F_none;
-  }
-#endif // _di_fake_print_message_section_operation_link_argument_unknown_
-
-#ifndef _di_fake_print_message_section_operation_link_point_exists_
-  f_status_t fake_print_message_section_operation_link_point_exists(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t argument) {
-
-    if (print.verbosity == f_console_verbosity_quiet_e || !print.to.stream) return F_output_not;
-
-    f_file_stream_lock(print.to);
-
-    fake_print_line_first_unlocked(setting, print);
-
-    fl_print_format("%[%QThe point file '%]", print.to, print.context, print.prefix, print.context);
-    fl_print_format("%[%Q%]", print.to, print.notable, argument, print.notable);
-    fl_print_format("%[' already exists.%]%r", print.to, print.context, print.context, f_string_eol_s);
-
-    f_file_stream_unlock(print.to);
-
-    return F_none;
-  }
-#endif // _di_fake_print_message_section_operation_link_point_exists_
-
-#ifndef _di_fake_print_message_section_operation_link_target_exists_not_
-  f_status_t fake_print_message_section_operation_link_target_exists_not(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t argument) {
-
-    if (print.verbosity == f_console_verbosity_quiet_e || !print.to.stream) return F_output_not;
-
-    f_file_stream_lock(print.to);
-
-    fake_print_line_first_unlocked(setting, print);
-
-    fl_print_format("%[%QThe target file '%]", print.to, print.context, print.prefix, print.context);
-    fl_print_format("%[%Q%]", print.to, print.notable, argument, print.notable);
-    fl_print_format("%[' does not exist.%]%r", print.to, print.context, print.context, f_string_eol_s);
-
-    f_file_stream_unlock(print.to);
-
-    return F_none;
-  }
-#endif // _di_fake_print_message_section_operation_link_target_exists_not_
-
-#ifndef _di_fake_print_message_section_operation_path_outside_
-  f_status_t fake_print_message_section_operation_path_outside(fake_setting_t * const setting, const fl_print_t print, const f_status_t status, const f_string_t function, const f_string_static_t path) {
-
-    if (print.verbosity == f_console_verbosity_quiet_e || !print.to.stream) return F_output_not;
-
-    if (F_status_set_fine(status) == F_false) {
-      f_file_stream_lock(print.to);
-
-      fake_print_line_first_unlocked(setting, print);
-
-      fl_print_format("%[%QThe path '%]", print.to, print.context, print.prefix, print.context);
-      fl_print_format("%[%Q%]", print.to, print.notable, path, print.notable);
-      fl_print_format("%[' is outside the project root.%]%r", print.to, print.context, print.context, f_string_eol_s);
-
-      f_file_stream_unlock(print.to);
-    }
-    else {
-      fake_print_error_file(setting, print, status, function, path, fake_common_file_path_determine_real_s, fll_error_file_type_file_e);
-    }
-
-    return F_none;
-  }
-#endif // _di_fake_print_message_section_operation_path_outside_
-
-#ifndef _di_fake_print_message_section_operation_path_stack_max_
-  f_status_t fake_print_message_section_operation_path_stack_max(fake_setting_t * const setting, const fl_print_t print, const f_status_t status, const f_string_t function, const f_string_static_t path) {
-
-    if (print.verbosity == f_console_verbosity_quiet_e || !print.to.stream) return F_output_not;
-
-    if (status == F_array_too_large) {
-      f_file_stream_lock(print.to);
-
-      fake_print_line_first_unlocked(setting, print);
-
-      fl_print_format("%[%QMaximum stack size reached while processing path '%]", print.to, print.context, print.prefix, print.context);
-      fl_print_format("%[%Q%]", print.to, print.notable, path, print.notable);
-      fl_print_format("%['", print.to, print.context);
-
-      if (function) {
-        fl_print_format(" while calling%] %[%S%]", print.to, print.context, print.notable, function, print.notable);
-        fl_print_format("%[()", print.to, print.context);
-      }
-
-      fl_print_format(".%]%r", print.to, print.context, f_string_eol_s);
-
-      f_file_stream_unlock(print.to);
-    }
-    else {
-      fake_print_error_file(setting, print, status, function, path, fake_common_file_path_change_to_s, fll_error_file_type_directory_e);
-    }
-
-    return F_none;
-  }
-#endif // _di_fake_print_message_section_operation_path_stack_max_
-
-#ifndef _di_fake_print_message_section_operation_stack_max_
-  f_status_t fake_print_message_section_operation_stack_max(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name, const f_array_length_t stack_max) {
-
-    if (print.verbosity == f_console_verbosity_quiet_e || !print.to.stream) return F_output_not;
-
-    f_array_length_t line = 1;
-    f_state_t state = f_state_t_initialize;
-
-    f_fss_count_lines(state, buffer, operation_name.start, &line);
-
-    f_file_stream_lock(print.to);
-
-    fake_print_line_first_unlocked(setting, print);
-
-    fl_print_format("%[%QThe section operation '%]", print.to, print.context, print.prefix, print.context);
-    fl_print_format("%[%/Q%]", print.to, print.notable, buffer, operation_name, print.notable);
-    fl_print_format("%[' from section '%]", print.to, print.context, buffer, print.context);
-    fl_print_format("%[%/Q%]", print.to, print.notable, buffer, section_name, print.notable);
-    fl_print_format("%[' on line%] ", print.to, print.context, print.context);
-    fl_print_format("%[%ul%]", print.to, print.notable, line, print.notable);
-    fl_print_format("%[' cannot be processed because the max stack depth of%] ", print.to, print.context, print.context);
-    fl_print_format("%[%ul%]", print.to, print.notable, stack_max, print.notable);
-    fl_print_format(" %[has been reached.%]%r", print.to, print.context, print.context, f_string_eol_s);
-
-    f_file_stream_unlock(print.to);
-
-    return F_none;
-  }
-#endif // _di_fake_print_message_section_operation_stack_max_
-
-#ifndef _di_fake_print_message_section_operation_unknown_
-  f_status_t fake_print_message_section_operation_unknown(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name) {
-
-    if (print.verbosity == f_console_verbosity_quiet_e || !print.to.stream) return F_output_not;
-
-    f_array_length_t line = 1;
-    f_state_t state = f_state_t_initialize;
-
-    f_fss_count_lines(state, buffer, operation_name.start, &line);
-
-    f_file_stream_lock(print.to);
-
-    fake_print_line_first_unlocked(setting, print);
-
-    fl_print_format("%[%QThe section operation '%]", print.to, print.context, print.prefix, print.context);
-    fl_print_format("%[%/Q%]", print.to, print.notable, buffer, operation_name, print.notable);
-    fl_print_format("%[' from section '%]", print.to, print.context, buffer, print.context);
-    fl_print_format("%[%/Q%]", print.to, print.notable, buffer, section_name, print.notable);
-    fl_print_format("%[' on line%] ", print.to, print.context, print.context);
-    fl_print_format("%[%ul%]", print.to, print.notable, line, print.notable);
-    fl_print_format(" %[is not a known operation name.%]%r", print.to, print.context, print.context, f_string_eol_s);
-
-    f_file_stream_unlock(print.to);
-
-    return F_none;
-  }
-#endif // _di_fake_print_message_section_operation_unknown_
+#endif // _di_fake_print_wrapped_variable_
 
 #ifdef __cplusplus
 } // extern "C"
