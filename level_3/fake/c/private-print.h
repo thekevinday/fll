@@ -60,10 +60,12 @@ extern "C" {
  * @param source
  *   The operation source.
  * @param destination
- *   The operation destination, if applicable.
+ *   (optional) The operation destination, if applicable.
  *   Set destination.used to 0 to disable.
  * @param how
- *   The how the operation is perform, such as "to" in "copy" source "to" destination.
+ *   (optional) The how the operation is perform, such as "to" in "copy" source "to" destination.
+ *   Not optional when destination.used is not 0.
+ *   Not used when destination.used is 0.
  *
  * @see fl_print_format()
  *
