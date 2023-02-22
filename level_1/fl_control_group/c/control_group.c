@@ -29,7 +29,7 @@ extern "C" {
 
       if (!control_group.groups.array[i].used) continue;
 
-      path.used = control_group.path.used + control_group.groups.array[i].used + F_control_group_path_system_suffix_s_length;
+      path.used = control_group.path.used + control_group.groups.array[i].used + f_control_group_path_system_suffix_s.used;
 
       f_char_t path_string[path.used + 1];
       path.string = path_string;
@@ -39,7 +39,7 @@ extern "C" {
       }
 
       memcpy(path.string + control_group.path.used, control_group.groups.array[i].string, sizeof(f_char_t) * control_group.groups.array[i].used);
-      memcpy(path.string + control_group.path.used + F_control_group_path_system_default_s_length, F_control_group_path_system_suffix_s, sizeof(f_char_t) * F_control_group_path_system_suffix_s_length);
+      memcpy(path.string + control_group.path.used + control_group.groups.array[i].used, f_control_group_path_system_suffix_s.string, sizeof(f_char_t) * f_control_group_path_system_suffix_s.used);
 
       path.string[path.used] = 0;
 

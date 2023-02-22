@@ -12,10 +12,7 @@ extern "C" {
     if (control_group.path.used) {
       status = f_directory_exists(control_group.path);
       if (F_status_is_error(status)) return status;
-
-      if (status == F_false) {
-        return F_status_set_error(F_directory_not);
-      }
+      if (status == F_false) return F_status_set_error(F_directory_not);
     }
 
     f_string_static_t path = f_string_static_t_initialize;
