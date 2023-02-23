@@ -169,14 +169,19 @@ extern "C" {
   }
 #endif // _di_fake_print_help_
 
+#ifndef _di_fake_print_important_simple_
+  void fake_print_important_simple(fake_setting_t * const setting, const fl_print_t print, const f_string_t message) {
+
+    const fl_print_t custom = macro_fl_print_t_initialize(print.to, print.verbosity, f_string_empty_s, f_string_empty_s, print.set->important, print.set->notable, print.set);
+
+    fake_print_context_simple(setting, custom, message);
+  }
+#endif // _di_fake_print_important_simple_
+
 #ifndef _di_fake_print_line_first_locked_
   f_status_t fake_print_line_first_locked(fake_setting_t * const setting, const fl_print_t print) {
 
-    if (!setting || print.verbosity < f_console_verbosity_error_e) return F_output_not;
-
-    if (F_status_is_error_not(setting->status)) {
-      if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
-    }
+    if (!setting) return F_output_not;
 
     if (setting->flag & fake_main_flag_print_first_e) {
       fll_print_dynamic_raw(setting->line_first, print.to);
@@ -194,11 +199,7 @@ extern "C" {
 #ifndef _di_fake_print_line_first_unlocked_
   f_status_t fake_print_line_first_unlocked(fake_setting_t * const setting, const fl_print_t print) {
 
-    if (!setting || print.verbosity < f_console_verbosity_error_e) return F_output_not;
-
-    if (F_status_is_error_not(setting->status)) {
-      if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
-    }
+    if (!setting) return F_output_not;
 
     if (setting->flag & fake_main_flag_print_first_e) {
       fll_print_dynamic_raw(setting->line_first, print.to);
@@ -216,11 +217,7 @@ extern "C" {
 #ifndef _di_fake_print_line_last_locked_
   f_status_t fake_print_line_last_locked(fake_setting_t * const setting, const fl_print_t print) {
 
-    if (!setting || print.verbosity < f_console_verbosity_error_e) return F_output_not;
-
-    if (F_status_is_error_not(setting->status)) {
-      if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
-    }
+    if (!setting) return F_output_not;
 
     fll_print_dynamic_raw(setting->line_last, print.to);
 
@@ -231,11 +228,7 @@ extern "C" {
 #ifndef _di_fake_print_line_last_unlocked_
   f_status_t fake_print_line_last_unlocked(fake_setting_t * const setting, const fl_print_t print) {
 
-    if (!setting || print.verbosity < f_console_verbosity_error_e) return F_output_not;
-
-    if (F_status_is_error_not(setting->status)) {
-      if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
-    }
+    if (!setting) return F_output_not;
 
     f_print_dynamic_raw(setting->line_last, print.to);
 
@@ -315,7 +308,7 @@ extern "C" {
 
     fake_print_line_first_unlocked(setting, print);
 
-    fll_print_format("%S '%[%Q%]'.%r", print.to, message, print.set->notable, variable, print.set->notable, f_string_eol_s);
+    fll_print_format("%S'%[%Q%]'.%r", print.to, message, print.set->notable, variable, print.set->notable, f_string_eol_s);
 
     f_file_stream_unlock(print.to);
   }
@@ -333,6 +326,25 @@ extern "C" {
     f_file_stream_unlock(print.to);
   }
 #endif // _di_fake_print_wrapped_variable_
+
+#ifndef _di_fake_print_wrapped_variables_
+  void fake_print_wrapped_variables(fake_setting_t * const setting, const fl_print_t print, const f_string_t before, const f_string_static_t first, const f_string_t between, const f_string_static_t second, const f_string_t after) {
+
+    if (!setting) return;
+
+    f_file_stream_lock(print.to);
+
+    fake_print_line_first_unlocked(setting, print);
+
+    fl_print_format("%S'", print.to, before);
+    fl_print_format("%[%Q%]", print.to, print.notable, first, print.notable);
+    fl_print_format("'%S'", print.to, between);
+    fl_print_format("%[%Q%]", print.to, print.notable, second, print.notable);
+    fl_print_format("'%S.%r", print.to, after, f_string_eol_s);
+
+    f_file_stream_unlock(print.to);
+  }
+#endif // _di_fake_print_wrapped_variables_
 
 #ifdef __cplusplus
 } // extern "C"

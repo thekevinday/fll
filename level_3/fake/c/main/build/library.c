@@ -1,5 +1,6 @@
 #include "../fake.h"
 #include "../build.h"
+#include "print.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -22,9 +23,7 @@ extern "C" {
     if (F_status_is_error(*status) || f_file_exists(file_stage, F_true) == F_true || *status == F_child) return data->main->child;
     if (!data_build->setting.build_sources_library.used && !data_build->setting.build_sources_library_shared.used) return 0;
 
-    if (data->main->message.verbosity != f_console_verbosity_quiet_e && data->main->message.verbosity != f_console_verbosity_error_e) {
-      fll_print_format("%r%[Compiling shared library.%]%r", data->main->message.to, f_string_eol_s, data->main->context.set.important, data->main->context.set.important, f_string_eol_s);
-    }
+    fake_build_print_compile_library_shared(data->setting, data->main->message);
 
     f_string_dynamics_t arguments = f_string_dynamics_t_initialize;
 
@@ -326,10 +325,10 @@ extern "C" {
 
       *status = f_file_link(parameter_file_name_major, parameter_file_path);
 
-      if (F_status_is_error_not(*status) && data->main->error.verbosity >= f_console_verbosity_verbose_e) {
-        fll_print_format("Linked file '%Q' to '%Q'.%r", data->main->message.to, parameter_file_path, parameter_file_name_major, f_string_eol_s);
+      if (F_status_is_error_not(*status)) {
+        fake_build_print_linked_file(data->setting, data->main->message, parameter_file_path, parameter_file_name_major);
       }
-      else if (F_status_is_error(*status)) {
+      else {
         if (F_status_set_fine(*status) == F_file_found) {
           fake_print_error_file(data->setting, data->main->error, *status, macro_fake_f(f_file_link), parameter_file_path, f_file_operation_link_s, fll_error_file_type_file_e);
 
@@ -357,10 +356,10 @@ extern "C" {
 
         *status = f_file_link(parameter_file_name_minor, parameter_file_path);
 
-        if (F_status_is_error_not(*status) && data->main->error.verbosity >= f_console_verbosity_verbose_e) {
-          fll_print_format("Linked file '%Q' to '%Q'.%r", data->main->message.to, parameter_file_path, parameter_file_name_minor, f_string_eol_s);
+        if (F_status_is_error_not(*status)) {
+          fake_build_print_linked_file(data->setting, data->main->message, parameter_file_path, parameter_file_name_minor);
         }
-        else if (F_status_is_error(*status)) {
+        else {
           fake_print_error_file(data->setting, data->main->error, *status, macro_fake_f(f_file_link), F_status_set_fine(*status) == F_file_found ? parameter_file_path : parameter_file_name_minor, f_file_operation_link_s, fll_error_file_type_file_e);
 
           return 0;
@@ -380,10 +379,10 @@ extern "C" {
 
           *status = f_file_link(parameter_file_name_micro, parameter_file_path);
 
-          if (F_status_is_error_not(*status) && data->main->error.verbosity >= f_console_verbosity_verbose_e) {
-            fll_print_format("Linked file '%Q' to '%Q'.%r", data->main->message.to, parameter_file_path, parameter_file_name_micro, f_string_eol_s);
+          if (F_status_is_error_not(*status)) {
+            fake_build_print_linked_file(data->setting, data->main->message, parameter_file_path, parameter_file_name_micro);
           }
-          else if (F_status_is_error(*status)) {
+          else {
             if (F_status_set_fine(*status) == F_file_found) {
               fake_print_error_file(data->setting, data->main->error, *status, macro_fake_f(f_file_link), parameter_file_path, f_file_operation_link_s, fll_error_file_type_file_e);
 
@@ -408,10 +407,10 @@ extern "C" {
 
           *status = f_file_link(parameter_file_name_nano, parameter_file_path);
 
-          if (F_status_is_error_not(*status) && data->main->error.verbosity >= f_console_verbosity_verbose_e) {
-            fll_print_format("Linked file '%Q' to '%Q'.%r", data->main->message.to, parameter_file_path, parameter_file_name_nano, f_string_eol_s);
+          if (F_status_is_error_not(*status)) {
+            fake_build_print_linked_file(data->setting, data->main->message, parameter_file_path, parameter_file_name_nano);
           }
-          else if (F_status_is_error(*status)) {
+          else {
             if (F_status_set_fine(*status) == F_file_found) {
               fake_print_error_file(data->setting, data->main->error, *status, macro_fake_f(f_file_link), parameter_file_path, f_file_operation_link_s, fll_error_file_type_file_e);
 
@@ -438,9 +437,7 @@ extern "C" {
     if (F_status_is_error(*status) || f_file_exists(file_stage, F_true) == F_true || *status == F_child) return data->main->child;
     if (!data_build->setting.build_sources_library.used && !data_build->setting.build_sources_library_static.used) return 0;
 
-    if (data->main->message.verbosity != f_console_verbosity_quiet_e && data->main->message.verbosity != f_console_verbosity_error_e) {
-      fll_print_format("%r%[Compiling static library.%]%r", data->main->message.to, f_string_eol_s, data->main->context.set.important, data->main->context.set.important, f_string_eol_s);
-    }
+    fake_build_print_compile_library_static(data->setting, data->main->message);
 
     f_string_dynamic_t file_name = f_string_dynamic_t_initialize;
     f_string_dynamic_t source_path = f_string_dynamic_t_initialize;

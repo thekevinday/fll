@@ -1,6 +1,8 @@
 #include "../fake.h"
 #include "../build.h"
 #include "skeleton.h"
+#include "print.h"
+#include "print-verbose.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -49,9 +51,7 @@ extern "C" {
       path_headers,
     };
 
-    if (data->main->message.verbosity != f_console_verbosity_quiet_e && data->main->message.verbosity != f_console_verbosity_error_e) {
-      fll_print_format("%r%[Creating base build directories.%]%r", data->main->message.to, f_string_eol_s, data->main->context.set.important, data->main->context.set.important, f_string_eol_s);
-    }
+    fake_build_print_skeleton_build_base(data->setting, data->main->message);
 
     bool created = F_false;
     f_array_length_t j = 0;
@@ -111,8 +111,8 @@ extern "C" {
         return;
       }
 
-      if (created && data->main->error.verbosity >= f_console_verbosity_verbose_e) {
-        fll_print_format("Created directory '%Q'.%r", data->main->message.to, directorys[i], f_string_eol_s);
+      if (created) {
+        fake_build_print_verbose_create_directory(data->setting, data->main->message, directorys[i]);
       }
     } // for
 

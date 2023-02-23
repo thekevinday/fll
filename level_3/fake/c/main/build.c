@@ -827,7 +827,9 @@ const f_string_static_t fake_build_documentation_files_s = macro_f_string_static
       if (data->main->message.verbosity != f_console_verbosity_quiet_e && data->main->message.verbosity != f_console_verbosity_error_e) {
         f_file_stream_lock(data->main->message.to);
 
-        fl_print_format("%r%[Building%] ", data->main->message.to, f_string_eol_s, data->main->context.set.important, data->main->context.set.important);
+        fake_print_line_first_unlocked(data->setting, data->main->message);
+
+        fl_print_format("%[Building%] ", data->main->message.to, data->main->context.set.important, data->main->context.set.important);
         fl_print_format("%[%Q%]", data->main->message.to, data->main->context.set.notable, data_build.setting.build_name, data->main->context.set.notable);
         fl_print_format("%[ using '%]", data->main->message.to, data->main->context.set.important, data->main->context.set.important);
         fl_print_format("%[%Q%]", data->main->message.to, data->main->context.set.notable, data->setting->settings, data->main->context.set.notable);

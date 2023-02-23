@@ -284,7 +284,9 @@ extern "C" {
         if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
           f_file_stream_lock(data->main->error.to);
 
-          fl_print_format("%r%[%QFailed to find program '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
+          fake_print_line_first_unlocked(data->setting, data->main->error);
+
+          fl_print_format("%[%QFailed to find program '%]", data->main->error.to, data->main->error.context, data->main->error.prefix, data->main->error.context);
           fl_print_format("%[%Q%]", data->main->error.to, data->main->error.notable, program, data->main->error.notable);
           fl_print_format("%[' for executing.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 
@@ -513,7 +515,9 @@ extern "C" {
       else if (requireds[i] == F_true) {
         f_file_stream_lock(data->main->error.to);
 
-        fl_print_format("%r%[%QNo valid path for the (required) directory parameter '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
+        fake_print_line_first_unlocked(data->setting, data->main->error);
+
+        fl_print_format("%[%QNo valid path for the (required) directory parameter '%]", data->main->error.to, data->main->error.context, data->main->error.prefix, data->main->error.context);
         fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_normal_s, names[i], data->main->error.notable);
         fl_print_format("%[' was found.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
 

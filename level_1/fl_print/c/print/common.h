@@ -83,7 +83,13 @@ extern "C" {
   }
 
   #define macro_fl_print_t_initialize(to, verbosity, prefix, suffix, context, notable, set) { \
-    to, verbosity, prefix, suffix, context, notable, set \
+    to, \
+    verbosity, \
+    prefix, \
+    suffix, \
+    context, \
+    notable, \
+    set, \
   }
 
   #define macro_fl_print_t_initialize_debug()               macro_fl_print_t_initialize(macro_f_file_t_initialize2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d), f_console_verbosity_normal_e, fl_print_debug_s, f_string_static_t_initialize, f_color_set_t_initialize, f_color_set_t_initialize, 0)

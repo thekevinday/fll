@@ -1,6 +1,7 @@
 #include "../fake.h"
 #include "../build.h"
 #include "object.h"
+#include "print.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -23,9 +24,7 @@ extern "C" {
     if (F_status_is_error(*status) || f_file_exists(file_stage, F_true) == F_true || *status == F_child) return data->main->child;
     if (!data_build->setting.build_sources_object.used && !data_build->setting.build_sources_object_shared.used) return 0;
 
-    if (data->main->message.verbosity != f_console_verbosity_quiet_e && data->main->message.verbosity != f_console_verbosity_error_e) {
-      fll_print_format("%r%[Compiling shared object.%]%r", data->main->message.to, f_string_eol_s, data->main->context.set.important, data->main->context.set.important, f_string_eol_s);
-    }
+    fake_build_print_compile_object_shared(data->setting, data->main->message);
 
     f_string_dynamics_t arguments = f_string_dynamics_t_initialize;
 
@@ -94,9 +93,7 @@ extern "C" {
     if (F_status_is_error(*status) || f_file_exists(file_stage, F_true) == F_true || *status == F_child) return data->main->child;
     if (!data_build->setting.build_sources_object.used && !data_build->setting.build_sources_object_static.used) return 0;
 
-    if (data->main->message.verbosity != f_console_verbosity_quiet_e && data->main->message.verbosity != f_console_verbosity_error_e) {
-      fll_print_format("%r%[Compiling static object.%]%r", data->main->message.to, f_string_eol_s, data->main->context.set.important, data->main->context.set.important, f_string_eol_s);
-    }
+    fake_build_print_compile_object_static(data->setting, data->main->message);
 
     f_string_dynamics_t arguments = f_string_dynamics_t_initialize;
 

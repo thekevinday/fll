@@ -1,6 +1,9 @@
 #include "../fake.h"
 #include "../build.h"
 #include "objects.h"
+#include "print.h"
+#include "print-error.h"
+#include "print-verbose.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -12,9 +15,7 @@ extern "C" {
     if (F_status_is_error(*status) || f_file_exists(file_stage, F_true) == F_true || *status == F_child) return data->main->child;
     if (!data_build->setting.build_sources_library.used) return 0;
 
-    if (data->main->message.verbosity != f_console_verbosity_quiet_e && data->main->message.verbosity != f_console_verbosity_error_e) {
-      fll_print_format("%r%[Compiling objects for static library.%]%r", data->main->message.to, f_string_eol_s, data->main->context.set.important, data->main->context.set.important, f_string_eol_s);
-    }
+    fake_build_print_compile_object_static_library(data->setting, data->main->message);
 
     f_string_dynamics_t arguments = f_string_dynamics_t_initialize;
 
@@ -99,15 +100,7 @@ extern "C" {
           *status = f_directory_exists(destination_path);
 
           if (*status == F_false) {
-            if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
-              f_file_stream_lock(data->main->error.to);
-
-              fl_print_format("%r%[%QThe path '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
-              fl_print_format("%[%Q%]", data->main->error.to, data->main->error.notable, destination_path, data->main->error.notable);
-              fl_print_format("%[' exists but is not a directory.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
-
-              f_file_stream_unlock(data->main->error.to);
-            }
+            fake_build_print_error_exist_not_directory(data->setting, data->main->message, destination_path);
 
             *status = F_status_set_error(F_failure);
 
@@ -119,13 +112,7 @@ extern "C" {
 
             if (F_status_is_error(*status)) {
               if (F_status_set_fine(*status) == F_file_found_not) {
-                f_file_stream_lock(data->main->error.to);
-
-                fl_print_format("%r%[%QThe path '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
-                fl_print_format("%[%Q%]", data->main->error.to, data->main->error.notable, destination_path, data->main->error.notable);
-                fl_print_format("%[' could not be created, a parent directory does not exist.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
-
-                f_file_stream_unlock(data->main->error.to);
+                fake_build_print_error_cannot_create_due_to_parent(data->setting, data->main->message, destination_path);
               }
               else {
                 fake_print_error_file(data->setting, data->main->error, *status, macro_fake_f(f_directory_create), destination_path, f_file_operation_create_s, fll_error_file_type_directory_e);
@@ -134,9 +121,7 @@ extern "C" {
               break;
             }
 
-            if (data->main->error.verbosity >= f_console_verbosity_verbose_e) {
-              fll_print_format("Directory '%Q' created.%r", data->main->message.to, destination_path, f_string_eol_s);
-            }
+            fake_build_print_verbose_create_directory(data->setting, data->main->message, destination_path);
           }
 
           if (F_status_is_error(*status)) {

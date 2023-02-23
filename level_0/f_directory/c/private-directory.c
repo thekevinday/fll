@@ -61,9 +61,7 @@ extern "C" {
 #if !defined(_di_f_directory_remove_)
   int private_f_directory_remove_recursively(const char * const path, const struct stat *file_stat, int type, struct FTW *entity) {
 
-    if (!entity->level) {
-      return 0;
-    }
+    if (!entity->level) return 0;
 
     return remove(path);
   }
