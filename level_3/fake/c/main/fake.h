@@ -16,24 +16,30 @@
  *
  * The built sources are placed in the build directory with the following structure:
  *   - build/
- *     - data/
- *     - documents/
- *     - includes/
- *     - libraries/
- *       - script/
- *       - shared/
- *       - static/
- *     - objects/
- *     - programs/
- *       - script/
- *       - shared/
- *       - static/
- *     - settings/
- *     - stage/
+ *     ├── data
+ *     ├── documentation
+ *     ├── documents
+ *     ├── includes
+ *     ├── libraries
+ *     │   ├── script
+ *     │   ├── shared
+ *     │   └── static
+ *     ├── objects
+ *     │   ├── script
+ *     │   ├── shared
+ *     │   └── static
+ *     ├── programs
+ *     │   ├── script
+ *     │   ├── shared
+ *     │   └── static
+ *     ├── settings
+ *     └── stage
  *
  * The "data/" directory contains all file data, such as firmware or files commonly found under /usr/share in a standard GNU Linux system.
- * The "documents/" directory contains all documentation after any build-time processing.
- * The "libraries/" and "programs/" directories contains the sub-directories "script/", "shared/", and "static/".
+ * The "documentation/" directory contains special documentation files such as man pages.
+ * The "documents/" directory contains all other documents, data, and documentation.
+ * The "includes/" directory contains all include files (such as C header files).
+ * The "libraries/", "objects/", and "programs/" directories contains the sub-directories "script/", "shared/", and "static/".
  * The "libraries/" directory will contain compiled libraries or library-like scripts in their respective sub-directories.
  * The "objects/" directory will contain any compile object files.
  * The "programs/" directory will contain compiled programs or program-like scripts in their respective sub-directories.

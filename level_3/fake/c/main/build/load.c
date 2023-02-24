@@ -1,6 +1,8 @@
 #include "../fake.h"
 #include "../print.h"
 #include "load.h"
+#include "print-error.h"
+#include "print-warning.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -198,15 +200,7 @@ extern "C" {
       for (uint8_t i = 0; i < 1; ++i) {
 
         if (!settings[i]->used) {
-          f_file_stream_lock(data->main->error.to);
-
-          fl_print_format("%r%[%QThe setting '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
-          fl_print_format("%[%Q%]", data->main->error.to, data->main->error.notable, names[i], data->main->error.notable);
-          fl_print_format("%[' is required but is not specified in the settings file '%]", data->main->error.to, data->main->error.context, data->main->error.context);
-          fl_print_format("%[%Q%]", data->main->error.to, data->main->error.notable, path_file, data->main->error.notable);
-          fl_print_format("%['.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
-
-          f_file_stream_unlock(data->main->error.to);
+          fake_build_print_error_missing_required_setting(data->setting, data->main->warning, names[i], path_file);
 
           failed = F_true;
         }
@@ -593,17 +587,7 @@ extern "C" {
         } // for
 
         if (found == F_false) {
-          if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
-            f_file_stream_lock(data->main->error.to);
-
-            fl_print_format("%r%[%QThe specified mode '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
-            fl_print_format("%[%Q%]", data->main->error.to, data->main->error.notable, modes->array[i], data->main->error.notable);
-            fl_print_format("%[' is not a valid mode, according to '%]", data->main->error.to, data->main->error.context, data->main->error.context);
-            fl_print_format("%[%Q%]", data->main->error.to, data->main->error.notable, path_file, data->main->error.notable);
-            fl_print_format("%['.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
-
-            f_file_stream_unlock(data->main->error.to);
-          }
+          fake_build_print_error_mode_invalid(data->setting, data->main->warning, modes->array[i], path_file);
 
           error_printed = F_true;
           *status = F_status_set_error(F_parameter);
@@ -687,15 +671,7 @@ extern "C" {
 
     if (F_status_is_error(*status)) {
       if (*status == F_status_set_error(F_string_too_large)) {
-        if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
-          f_file_stream_unlock(data->main->error.to);
-
-          fl_print_format("%r%[%QA setting in the file '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
-          fl_print_format("%[%Q%]", data->main->error.to, data->main->error.notable, path_file, data->main->error.notable);
-          fl_print_format("%[' is too long.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
-
-          f_file_stream_unlock(data->main->error.to);
-        }
+        fake_build_print_error_setting_too_long(data->setting, data->main->warning, path_file);
       }
       else if (!error_printed) {
         fake_print_error(data->setting, data->main->error, *status, function);
@@ -1030,7 +1006,7 @@ extern "C" {
         0,                                           // search_exclusive
         0,                                           // search_shared
         0,                                           // search_static
-        fake_build_version_micro_e,             // version_file
+        fake_build_version_micro_e,                  // version_file
         0,                                           // version_major
         0,                                           // version_major_prefix
         0,                                           // version_micro
@@ -1039,7 +1015,7 @@ extern "C" {
         0,                                           // version_minor_prefix
         0,                                           // version_nano
         0,                                           // version_nano_prefix
-        fake_build_version_major_e,             // version_target
+        fake_build_version_major_e,                  // version_target
       };
 
       const f_string_static_t settings_single_version_default_name[] = {
@@ -1047,13 +1023,13 @@ extern "C" {
         f_string_empty_s,                            // build_indexer
         f_string_empty_s,                            // build_language
         f_string_empty_s,                            // build_name
-        f_string_empty_s,                            // build_script
-        f_string_empty_s,                            // build_shared
+        fake_common_setting_bool_yes_s,              // build_script
+        fake_common_setting_bool_yes_s,              // build_shared
         f_string_empty_s,                            // build_sources_object
         f_string_empty_s,                            // build_sources_object_shared
         f_string_empty_s,                            // build_sources_object_static
-        f_string_empty_s,                            // build_static
-        f_string_empty_s,                            // has_path_standard
+        fake_common_setting_bool_yes_s,              // build_static
+        fake_common_setting_bool_yes_s,              // has_path_standard
         f_string_empty_s,                            // path_headers
         f_string_empty_s,                            // path_language
         f_string_empty_s,                            // path_library_script
@@ -1067,12 +1043,12 @@ extern "C" {
         f_string_empty_s,                            // path_program_static
         f_string_empty_s,                            // path_sources
         f_string_empty_s,                            // path_sources_object
-        f_string_empty_s,                            // preserve_path_headers
+        fake_common_setting_bool_yes_s,              // preserve_path_headers
         f_string_empty_s,                            // process_post
         f_string_empty_s,                            // process_pre
-        f_string_empty_s,                            // search_exclusive
-        f_string_empty_s,                            // search_shared
-        f_string_empty_s,                            // search_static
+        fake_common_setting_bool_yes_s,              // search_exclusive
+        fake_common_setting_bool_yes_s,              // search_shared
+        fake_common_setting_bool_yes_s,              // search_static
         fake_build_version_micro_s,                  // version_file
         f_string_empty_s,                            // version_major
         f_string_empty_s,                            // version_major_prefix
@@ -1156,23 +1132,7 @@ extern "C" {
           else {
             *settings_single_bool[i] = F_true;
 
-            if (data->main->warning.verbosity >= f_console_verbosity_verbose_e) {
-              f_file_stream_lock(data->main->warning.to);
-
-              fl_print_format("%r%[%QThe setting '%]", data->main->warning.to, f_string_eol_s, data->main->warning.context, data->main->warning.prefix, data->main->warning.context);
-              fl_print_format("%[%r%]", data->main->warning.to, data->main->warning.notable, settings_single_name[i], data->main->warning.notable);
-              fl_print_format("%[' in the file '%]", data->main->warning.to, data->main->warning.context, data->main->warning.context);
-              fl_print_format("%[%Q%]", data->main->warning.to, data->main->warning.notable, path_file, data->main->warning.notable);
-              fl_print_format("%[' may be either '%]", data->main->warning.to, data->main->warning.context, data->main->warning.context);
-              fl_print_format("%[%r%]", data->main->warning.to, data->main->warning.notable, fake_common_setting_bool_yes_s, data->main->warning.notable);
-              fl_print_format("%[' or '%]", data->main->warning.to, data->main->warning.context, data->main->warning.context);
-              fl_print_format("%[%r%]", data->main->warning.to, data->main->warning.notable, fake_common_setting_bool_no_s, data->main->warning.notable);
-              fl_print_format("%[', defaulting to '%]", data->main->warning.to, data->main->warning.context, data->main->warning.context);
-              fl_print_format("%[%r%]", data->main->warning.to, data->main->warning.notable, fake_common_setting_bool_yes_s, data->main->warning.notable);
-              fl_print_format("%['.%]%r", data->main->warning.to, data->main->warning.context, data->main->warning.context, f_string_eol_s);
-
-              f_file_stream_unlock(data->main->warning.to);
-            }
+            fake_build_print_warning_setting_boolean_may_only_be(data->setting, data->main->warning, settings_single_name[i], path_file, settings_single_version_default_name[i]);
           }
         }
         else if (settings_single_type[i] == 4) {
@@ -1188,25 +1148,7 @@ extern "C" {
           else {
             *settings_single_language[i] = fake_build_language_c_e;
 
-            if (data->main->warning.verbosity >= f_console_verbosity_verbose_e) {
-              f_file_stream_lock(data->main->warning.to);
-
-              fl_print_format("%r%[%QThe setting '%]", data->main->warning.to, f_string_eol_s, data->main->warning.context, data->main->warning.prefix, data->main->warning.context);
-              fl_print_format("%[%r%]", data->main->warning.to, data->main->warning.notable, settings_single_name[i], data->main->warning.notable);
-              fl_print_format("%[' in the file '%]", data->main->warning.to, data->main->warning.context, data->main->warning.context);
-              fl_print_format("%[%Q%]", data->main->warning.to, data->main->warning.notable, path_file, data->main->warning.notable);
-              fl_print_format("%[' may only be one of '%]", data->main->warning.to, data->main->warning.context, data->main->warning.context);
-              fl_print_format("%[%r%]", data->main->warning.to, data->main->warning.notable, fake_build_language_bash_s, data->main->warning.notable);
-              fl_print_format("%[', '%]", data->main->warning.to, data->main->warning.context, data->main->warning.context);
-              fl_print_format("%[%r%]", data->main->warning.to, data->main->warning.notable, fake_build_language_c_s, data->main->warning.notable);
-              fl_print_format("%[', or '%]", data->main->warning.to, data->main->warning.context, data->main->warning.context);
-              fl_print_format("%[%r%]", data->main->warning.to, data->main->warning.notable, fake_build_language_cpp_s, data->main->warning.notable);
-              fl_print_format("%[', defaulting to '%]", data->main->warning.to, data->main->warning.context, data->main->warning.context);
-              fl_print_format("%[%r%]", data->main->warning.to, data->main->warning.notable, fake_build_language_c_s, data->main->warning.notable);
-              fl_print_format("%['.%]%r", data->main->warning.to, data->main->warning.context, data->main->warning.context, f_string_eol_s);
-
-              f_file_stream_unlock(data->main->warning.to);
-            }
+            fake_build_print_warning_setting_language_may_only_be(data->setting, data->main->warning, settings_single_name[i], path_file, fake_build_language_c_s);
           }
         }
         else if (settings_single_type[i] == 5) {
@@ -1225,27 +1167,7 @@ extern "C" {
           else {
             *settings_single_version[i] = settings_single_version_default[i];
 
-            if (data->main->warning.verbosity >= f_console_verbosity_verbose_e) {
-              f_file_stream_lock(data->main->warning.to);
-
-              fl_print_format("%r%[%QThe setting '%]", data->main->warning.to, f_string_eol_s, data->main->warning.context, data->main->warning.prefix, data->main->warning.context);
-              fl_print_format("%[%r%]", data->main->warning.to, data->main->warning.notable, settings_single_name[i], data->main->warning.notable);
-              fl_print_format("%[' in the file '%]", data->main->warning.to, data->main->warning.context, data->main->warning.context);
-              fl_print_format("%[%Q%]", data->main->warning.to, data->main->warning.notable, path_file, data->main->warning.notable);
-              fl_print_format("%[' may only be one of '%]", data->main->warning.to, data->main->warning.context, data->main->warning.context);
-              fl_print_format("%[%r%]", data->main->warning.to, data->main->warning.notable, fake_build_version_major_s, data->main->warning.notable);
-              fl_print_format("%[', '%]", data->main->warning.to, data->main->warning.context, data->main->warning.context);
-              fl_print_format("%[%r%]", data->main->warning.to, data->main->warning.notable, fake_build_version_minor_s, data->main->warning.notable);
-              fl_print_format("%[', '%]", data->main->warning.to, data->main->warning.context, data->main->warning.context);
-              fl_print_format("%[%r%]", data->main->warning.to, data->main->warning.notable, fake_build_version_micro_s, data->main->warning.notable);
-              fl_print_format("%[', or '%]", data->main->warning.to, data->main->warning.context, data->main->warning.context);
-              fl_print_format("%[%r%]", data->main->warning.to, data->main->warning.notable, fake_build_version_nano_s, data->main->warning.notable);
-              fl_print_format("%[', defaulting to '%]", data->main->warning.to, data->main->warning.context, data->main->warning.context);
-              fl_print_format("%[%r%]", data->main->warning.to, data->main->warning.notable, settings_single_version_default_name[i], data->main->warning.notable);
-              fl_print_format("%['.%]%r", data->main->warning.to, data->main->warning.context, data->main->warning.context, f_string_eol_s);
-
-              f_file_stream_unlock(data->main->warning.to);
-            }
+            fake_build_print_warning_setting_version_may_only_be(data->setting, data->main->warning, settings_single_name[i], path_file, settings_single_version_default_name[i]);
           }
         }
         else if (settings_single_destination[i]) {
@@ -1286,37 +1208,13 @@ extern "C" {
         if (checks && !setting->version_file) {
           setting->version_file = fake_build_version_micro_e;
 
-          if (data->main->warning.verbosity >= f_console_verbosity_verbose_e) {
-            f_file_stream_lock(data->main->warning.to);
-
-            fl_print_format("%r%[%QThe setting '%]", data->main->warning.to, f_string_eol_s, data->main->warning.context, data->main->warning.prefix, data->main->warning.context);
-            fl_print_format("%[%r%]", data->main->warning.to, data->main->warning.notable, fake_build_setting_name_version_file_s, data->main->warning.notable);
-            fl_print_format("%[' in the file '%]", data->main->warning.to, data->main->warning.context, data->main->warning.context);
-            fl_print_format("%[%Q%]", data->main->warning.to, data->main->warning.notable, path_file, data->main->warning.notable);
-            fl_print_format("%[' is required, defaulting to '%]", data->main->warning.to, data->main->warning.context, data->main->warning.context);
-            fl_print_format("%[%r%]", data->main->warning.to, data->main->warning.notable, fake_build_version_micro_s, data->main->warning.notable);
-            fl_print_format("%['.%]%r", data->main->warning.to, data->main->warning.context, data->main->warning.context, f_string_eol_s);
-
-            f_file_stream_unlock(data->main->warning.to);
-          }
+          fake_build_print_warning_setting_required_default_to(data->setting, data->main->warning, fake_build_setting_name_version_file_s, path_file, fake_build_version_micro_s);
         }
 
         if (checks && !setting->version_target) {
           setting->version_target = fake_build_version_major_e;
 
-          if (data->main->warning.verbosity >= f_console_verbosity_verbose_e) {
-            f_file_stream_lock(data->main->warning.to);
-
-            fl_print_format("%r%[%QThe setting '%]", data->main->warning.to, f_string_eol_s, data->main->warning.context, data->main->warning.prefix, data->main->warning.context);
-            fl_print_format("%[%r%]", data->main->warning.to, data->main->warning.notable, fake_build_setting_name_version_target_s, data->main->warning.notable);
-            fl_print_format("%[' in the file '%]", data->main->warning.to, data->main->warning.context, data->main->warning.context);
-            fl_print_format("%[%Q%]", data->main->warning.to, data->main->warning.notable, path_file, data->main->warning.notable);
-            fl_print_format("%[' is required, defaulting to '%]", data->main->warning.to, data->main->warning.context, data->main->warning.context);
-            fl_print_format("%[%r%]", data->main->warning.to, data->main->warning.notable, fake_build_version_major_s, data->main->warning.notable);
-            fl_print_format("%['.%]%r", data->main->warning.to, data->main->warning.context, data->main->warning.context, f_string_eol_s);
-
-            f_file_stream_unlock(data->main->warning.to);
-          }
+          fake_build_print_warning_setting_required_default_to(data->setting, data->main->warning, fake_build_setting_name_version_target_s, path_file, fake_build_version_major_s);
         }
       }
     }
@@ -1390,19 +1288,7 @@ extern "C" {
           setting->search_shared = F_false;
         }
 
-        if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
-          f_file_stream_lock(data->main->error.to);
-
-          fl_print_format("%r%[%QThe parameters '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
-          fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_normal_s, fake_long_shared_disabled_s, data->main->error.notable);
-          fl_print_format("%[' and '%]", data->main->error.to, data->main->error.context, data->main->error.context);
-          fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_normal_s, fake_long_shared_enabled_s, data->main->error.notable);
-          fl_print_format("%[' contradict, defaulting to '%]", data->main->error.to, data->main->error.context, data->main->error.context);
-          fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_normal_s, setting->build_shared ? fake_long_shared_enabled_s : fake_long_shared_disabled_s, data->main->error.notable);
-          fl_print_format("%['.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
-
-          f_file_stream_unlock(data->main->error.to);
-        }
+        fake_build_print_warning_parameters_contradict(data->setting, data->main->warning, f_console_symbol_long_normal_s, fake_long_shared_disabled_s, f_console_symbol_long_normal_s, fake_long_shared_enabled_s, f_console_symbol_long_normal_s, setting->build_shared ? fake_long_shared_enabled_s : fake_long_shared_disabled_s);
       }
       else {
         setting->build_shared = F_false;
@@ -1425,19 +1311,7 @@ extern "C" {
           setting->search_static = F_false;
         }
 
-        if (data->main->error.verbosity >= f_console_verbosity_verbose_e) {
-          f_file_stream_lock(data->main->error.to);
-
-          fl_print_format("%r%[%QThe parameters '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
-          fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_normal_s, fake_long_static_disabled_s, data->main->error.notable);
-          fl_print_format("%[' and '%]", data->main->error.to, data->main->error.context, data->main->error.context);
-          fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_normal_s, fake_long_static_enabled_s, data->main->error.notable);
-          fl_print_format("%[' contradict, defaulting to '%]", data->main->error.to, data->main->error.context, data->main->error.context);
-          fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_normal_s, setting->build_static ? fake_long_static_enabled_s : fake_long_static_disabled_s, data->main->error.notable);
-          fl_print_format("%['.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
-
-          f_file_stream_unlock(data->main->error.to);
-        }
+        fake_build_print_warning_parameters_contradict(data->setting, data->main->warning, f_console_symbol_long_normal_s, fake_long_static_disabled_s, f_console_symbol_long_normal_s, fake_long_static_enabled_s, f_console_symbol_long_normal_s, setting->build_static ? fake_long_static_enabled_s : fake_long_static_disabled_s);
       }
       else {
         setting->build_static = F_false;
@@ -1451,19 +1325,7 @@ extern "C" {
 
     if (setting->build_language == fake_build_language_c_e || setting->build_language == fake_build_language_cpp_e) {
       if (setting->build_shared == F_false && setting->build_static == F_false) {
-        if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
-          f_file_stream_lock(data->main->error.to);
-
-          fl_print_format("%r%[%QThe build settings '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
-          fl_print_format("%[%r%]", data->main->error.to, data->main->error.notable, fake_build_setting_name_build_shared_s, data->main->error.notable);
-          fl_print_format("%[' and '%]", data->main->error.to, data->main->error.context, data->main->error.context);
-          fl_print_format("%[%r%]", data->main->error.to, data->main->error.notable, fake_build_setting_name_build_static_s, data->main->error.notable);
-          fl_print_format("%[' cannot both be false when using the language '%]", data->main->error.to, data->main->error.context, data->main->error.context);
-          fl_print_format("%[%r%]", data->main->error.to, data->main->error.notable, setting->build_language == fake_build_language_c_e ? fake_build_language_c_s : fake_build_language_cpp_s, data->main->error.notable);
-          fl_print_format("%['.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
-
-          f_file_stream_unlock(data->main->error.to);
-        }
+        fake_build_print_warning_setting_both_cannot_when_language(data->setting, data->main->warning, fake_build_setting_name_build_shared_s, fake_build_setting_name_build_static_s, setting->build_language == fake_build_language_c_e ? fake_build_language_c_s : fake_build_language_cpp_s);
 
         *status = F_status_set_error(F_failure);
       }

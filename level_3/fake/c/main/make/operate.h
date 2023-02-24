@@ -4,6 +4,10 @@
  * Project: Featureless Make
  * API Version: 0.7
  * Licenses: lgpl-2.1-or-later
+ *
+ * Provides make operate functionality.
+ *
+ * This is auto-included and should not need to be explicitly included.
  */
 #ifndef _fake_make_operate_h
 #define _fake_make_operate_h

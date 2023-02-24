@@ -123,7 +123,7 @@ extern "C" {
 
           if (fl_string_dynamic_partial_compare_string(fake_make_item_settings_s.string, data_make->buffer, fake_make_item_settings_s.used, list_objects.array[i]) == F_equal_to) {
             if (!missing_settings) {
-              fake_make_print_warning_settings_object_multiple(data_make->setting, data_make->main->warning, data_make->data->file_data_build_fakefile, fake_make_item_settings_s);
+              fake_make_print_warning_setting_object_multiple(data_make->setting, data_make->main->warning, data_make->data->file_data_build_fakefile, fake_make_item_settings_s);
 
               continue;
             }
@@ -154,7 +154,7 @@ extern "C" {
 
           if (fl_string_dynamic_partial_compare_string(fake_make_item_main_s.string, data_make->buffer, fake_make_item_main_s.used, list_objects.array[i]) == F_equal_to) {
             if (!missing_main) {
-              fake_make_print_warning_settings_object_multiple(data_make->setting, data_make->main->warning, data_make->data->file_data_build_fakefile, fake_make_item_main_s);
+              fake_make_print_warning_setting_object_multiple(data_make->setting, data_make->main->warning, data_make->data->file_data_build_fakefile, fake_make_item_main_s);
 
               continue;
             }
@@ -334,15 +334,15 @@ extern "C" {
         data_make->setting_make.load_build = F_false;
       }
       else {
-        fake_make_print_warning_settings_content_invalid(data_make->setting, data_make->main->warning, data_make->data->file_data_build_fakefile, data_make->buffer, *object, content->array[0], fake_make_item_settings_s);
+        fake_make_print_warning_setting_content_invalid(data_make->setting, data_make->main->warning, data_make->data->file_data_build_fakefile, data_make->buffer, *object, content->array[0], fake_make_item_settings_s);
       }
 
       if (content->used > 1) {
-        fake_make_print_warning_settings_content_multiple(data_make->setting, data_make->main->warning, data_make->data->file_data_build_fakefile, fake_make_setting_load_build_s);
+        fake_make_print_warning_setting_content_multiple(data_make->setting, data_make->main->warning, data_make->data->file_data_build_fakefile, fake_make_setting_load_build_s);
       }
     }
     else {
-      fake_make_print_warning_settings_content_empty(data_make->setting, data_make->main->warning, data_make->data->file_data_build_fakefile, data_make->buffer, *object, fake_make_setting_load_build_s);
+      fake_make_print_warning_setting_content_empty(data_make->setting, data_make->main->warning, data_make->data->file_data_build_fakefile, data_make->buffer, *object, fake_make_setting_load_build_s);
     }
   }
 #endif // _di_fake_make_load_fakefile_setting_build_
@@ -354,11 +354,11 @@ extern "C" {
       *range_compiler = &content->array[content->used - 1];
 
       if (content->used > 1) {
-        fake_make_print_warning_settings_content_multiple(data_make->setting, data_make->main->warning, data_make->data->file_data_build_fakefile, fake_make_setting_compiler_s);
+        fake_make_print_warning_setting_content_multiple(data_make->setting, data_make->main->warning, data_make->data->file_data_build_fakefile, fake_make_setting_compiler_s);
       }
     }
     else {
-      fake_make_print_warning_settings_content_empty(data_make->setting, data_make->main->warning, data_make->data->file_data_build_fakefile, data_make->buffer, *object, fake_make_setting_compiler_s);
+      fake_make_print_warning_setting_content_empty(data_make->setting, data_make->main->warning, data_make->data->file_data_build_fakefile, data_make->buffer, *object, fake_make_setting_compiler_s);
     }
   }
 #endif // _di_fake_make_load_fakefile_setting_compiler_
@@ -549,15 +549,15 @@ extern "C" {
         data_make->setting_make.fail = fake_make_operation_fail_ignore_e;
       }
       else {
-        fake_make_print_warning_settings_content_invalid(data_make->setting, data_make->main->warning, data_make->data->file_data_build_fakefile, data_make->buffer, *object, content->array[content->used - 1], fake_make_item_settings_s);
+        fake_make_print_warning_setting_content_invalid(data_make->setting, data_make->main->warning, data_make->data->file_data_build_fakefile, data_make->buffer, *object, content->array[content->used - 1], fake_make_item_settings_s);
       }
 
       if (content->used > 1) {
-        fake_make_print_warning_settings_content_multiple(data_make->setting, data_make->main->warning, data_make->data->file_data_build_fakefile, fake_make_setting_fail_s);
+        fake_make_print_warning_setting_content_multiple(data_make->setting, data_make->main->warning, data_make->data->file_data_build_fakefile, fake_make_setting_fail_s);
       }
     }
     else {
-      fake_make_print_warning_settings_content_empty(data_make->setting, data_make->main->warning, data_make->data->file_data_build_fakefile, data_make->buffer, *object, fake_make_setting_fail_s);
+      fake_make_print_warning_setting_content_empty(data_make->setting, data_make->main->warning, data_make->data->file_data_build_fakefile, data_make->buffer, *object, fake_make_setting_fail_s);
     }
   }
 #endif // _di_fake_make_load_fakefile_setting_fail_
@@ -569,11 +569,11 @@ extern "C" {
       *range_indexer = &content->array[content->used - 1];
 
       if (content->used > 1) {
-        fake_make_print_warning_settings_content_multiple(data_make->setting, data_make->main->warning, data_make->data->file_data_build_fakefile, fake_make_setting_indexer_s);
+        fake_make_print_warning_setting_content_multiple(data_make->setting, data_make->main->warning, data_make->data->file_data_build_fakefile, fake_make_setting_indexer_s);
       }
     }
     else {
-      fake_make_print_warning_settings_content_empty(data_make->setting, data_make->main->warning, data_make->data->file_data_build_fakefile, data_make->buffer, *object, fake_make_setting_indexer_s);
+      fake_make_print_warning_setting_content_empty(data_make->setting, data_make->main->warning, data_make->data->file_data_build_fakefile, data_make->buffer, *object, fake_make_setting_indexer_s);
     }
   }
 #endif // _di_fake_make_load_fakefile_setting_indexer_
@@ -614,7 +614,7 @@ extern "C" {
       }
     }
     else {
-      fake_make_print_warning_settings_content_empty(data_make->setting, data_make->main->warning, data_make->data->file_data_build_fakefile, data_make->buffer, *object, fake_make_setting_return_s);
+      fake_make_print_warning_setting_content_empty(data_make->setting, data_make->main->warning, data_make->data->file_data_build_fakefile, data_make->buffer, *object, fake_make_setting_return_s);
     }
 
     return F_none;

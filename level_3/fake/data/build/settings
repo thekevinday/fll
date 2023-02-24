@@ -28,7 +28,7 @@ build_libraries-level -lfll_2 -lfll_1 -lfll_0
 build_libraries-monolithic -lfll
 
 build_sources_library main/build.c main/clean.c main/common.c main/fake.c main/make.c main/print.c main/print-error.c main/print-warning.c main/skeleton.c
-build_sources_library main/build/library.c main/build/load.c main/build/object.c main/build/objects.c main/build/print.c main/build/print-error.c main/build/print-verbose.c main/build/program.c main/build/skeleton.c
+build_sources_library main/build/library.c main/build/load.c main/build/object.c main/build/objects.c main/build/print.c main/build/print-error.c main/build/print-verbose.c main/build/print-warning.c main/build/program.c main/build/skeleton.c
 build_sources_library main/clean/print.c
 build_sources_library main/common/define.c main/common/enumeration.c main/common/print.c main/common/string.c main/common/type.c
 build_sources_library main/fake/path_generate.c
@@ -37,11 +37,11 @@ build_sources_library main/make/load_fakefile.c main/make/load_parameters.c main
 build_sources_program main/main.c
 
 build_sources_headers main/build.h main/clean.h main/common.h main/fake.h main/make.h main/print.h main/print-error.h main/print-warning.h main/skeleton.h
-build_sources_headers main/build/library.h main/build/load.h main/build/object.h main/build/objects.h main/build/print.h main/build/print-error.h main/build/print-verbose.h main/build/program.h main/build/skeleton.h
+build_sources_headers main/build/library.h main/build/load.h main/build/object.h main/build/objects.h main/build/print.h main/build/print-error.h main/build/print-verbose.h main/build/print-warning.h main/build/program.h main/build/skeleton.h
 build_sources_headers main/clean/print.h
 build_sources_headers main/common/define.h main/common/enumeration.h main/common/print.h main/common/string.h main/common/type.h
 build_sources_headers main/fake/path_generate.h
-build_sources_headers main/make/load_fakefile.h main/make/load_parameters.h main/make/operate_block.h main/make/operate.h main/make/operate_process.h main/make/operate_process_type.h main/make/operate_validate.h main/make/operate_validate_type.h main/make/print.h main/make/print-error.h main/make/print-verbose.h main/make/print-warning.h
+build_sources_headers main/make/load_fakefile.h main/make/load_parameters.h main/make/operate_block.h main/make/operate.h main/make/operate_process.h main/make/operate_process_type.h main/make/operate_validate.h main/make/operate_validate_type.h main/make/print.h main/make/print-error.h main/make/print-verbose.h main/make/print-warning.h main/make/print-warning.h
 
 build_sources_documentation man
 

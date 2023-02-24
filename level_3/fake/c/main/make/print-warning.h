@@ -4,6 +4,10 @@
  * Project: Featureless Make
  * API Version: 0.7
  * Licenses: lgpl-2.1-or-later
+ *
+ * Provides make warning print functionality.
+ *
+ * This is auto-included and should not need to be explicitly included.
  */
 #ifndef _fake_make_print_warning_h
 #define _fake_make_print_warning_h
@@ -142,9 +146,9 @@ extern "C" {
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
  */
-#ifndef _di_fake_make_print_warning_settings_content_empty_
-  extern f_status_t fake_make_print_warning_settings_content_empty(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t fakefile, const f_string_dynamic_t buffer, const f_string_range_t range, const f_string_static_t name);
-#endif // _di_fake_make_print_warning_settings_content_empty_
+#ifndef _di_fake_make_print_warning_setting_content_empty_
+  extern f_status_t fake_make_print_warning_setting_content_empty(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t fakefile, const f_string_dynamic_t buffer, const f_string_range_t range, const f_string_static_t name);
+#endif // _di_fake_make_print_warning_setting_content_empty_
 
 /**
  * Print warning message when fake settings content is invalid.
@@ -171,9 +175,9 @@ extern "C" {
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
  */
-#ifndef _di_fake_make_print_warning_settings_content_invalid_
-  extern f_status_t fake_make_print_warning_settings_content_invalid(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t fakefile, const f_string_dynamic_t buffer, const f_string_range_t object, const f_string_range_t content, const f_string_static_t name);
-#endif // _di_fake_make_print_warning_settings_content_invalid_
+#ifndef _di_fake_make_print_warning_setting_content_invalid_
+  extern f_status_t fake_make_print_warning_setting_content_invalid(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t fakefile, const f_string_dynamic_t buffer, const f_string_range_t object, const f_string_range_t content, const f_string_static_t name);
+#endif // _di_fake_make_print_warning_setting_content_invalid_
 
 /**
  * Print warning message when settings content has too many values.
@@ -194,9 +198,9 @@ extern "C" {
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
  */
-#ifndef _di_fake_make_print_warning_settings_content_multiple_
-  extern f_status_t fake_make_print_warning_settings_content_multiple(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t fakefile, const f_string_static_t name);
-#endif // _di_fake_make_print_warning_settings_content_multiple_
+#ifndef _di_fake_make_print_warning_setting_content_multiple_
+  extern f_status_t fake_make_print_warning_setting_content_multiple(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t fakefile, const f_string_static_t name);
+#endif // _di_fake_make_print_warning_setting_content_multiple_
 
 /**
  * Print warning message when fakefile has too many objects with the same name.
@@ -217,9 +221,9 @@ extern "C" {
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
  */
-#ifndef _di_fake_make_print_warning_settings_object_multiple_
-  extern f_status_t fake_make_print_warning_settings_object_multiple(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t fakefile, const f_string_static_t name);
-#endif // _di_fake_make_print_warning_settings_object_multiple_
+#ifndef _di_fake_make_print_warning_setting_object_multiple_
+  extern f_status_t fake_make_print_warning_setting_object_multiple(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t fakefile, const f_string_static_t name);
+#endif // _di_fake_make_print_warning_setting_object_multiple_
 
 #ifdef __cplusplus
 } // extern "C"

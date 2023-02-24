@@ -53,6 +53,27 @@ extern "C" {
   }
 #endif // _di_fake_print_context_wrapped_parameter_
 
+#ifndef _di_fake_print_context_wrapped_parameters_
+  void fake_print_context_wrapped_parameters(fake_setting_t * const setting, const fl_print_t print, const f_string_t before, const f_string_static_t symbol_1, const f_string_static_t name_1, const f_string_t between_1, const f_string_static_t symbol_2, const f_string_static_t name_2, const f_string_t between_2, const f_string_static_t symbol_3, const f_string_static_t name_3, const f_string_t after) {
+
+    if (!setting) return;
+
+    f_file_stream_lock(print.to);
+
+    fake_print_line_first_unlocked(setting, print);
+
+    fl_print_format("%[%Q%S'%]", print.to, print.context, print.prefix, before, print.context);
+    fl_print_format("%[%Q%Q%]", print.to, print.notable, symbol_1, name_1, print.notable);
+    fl_print_format("%['%S'%]%r", print.to, print.context, between_1, print.context);
+    fl_print_format("%[%Q%Q%]", print.to, print.notable, symbol_2, name_2, print.notable);
+    fl_print_format("%['%S'%]%r", print.to, print.context, between_2, print.context);
+    fl_print_format("%[%Q%Q%]", print.to, print.notable, symbol_3, name_3, print.notable);
+    fl_print_format("%['%S.%]%r", print.to, print.context, after, print.context, f_string_eol_s);
+
+    f_file_stream_unlock(print.to);
+  }
+#endif // _di_fake_print_context_wrapped_parameters_
+
 #ifndef _di_fake_print_context_wrapped_variable_
   void fake_print_context_wrapped_variable(fake_setting_t * const setting, const fl_print_t print, const f_string_t before, const f_string_static_t variable, const f_string_t after) {
 

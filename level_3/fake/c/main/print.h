@@ -4,6 +4,10 @@
  * Project: UTF8
  * API Version: 0.7
  * Licenses: lgpl-2.1-or-later
+ *
+ * Provides print functionality.
+ *
+ * This is auto-included and should not need to be explicitly included.
  */
 #ifndef _fake_print_h
 #define _fake_print_h
@@ -91,10 +95,9 @@ extern "C" {
  *   Set to NULL to disable.
  * @param symbol
  *   The string representing the symbol for the parameter.
- *   Set to NULL to disable.
+ *   Set to f_string_empty_s to disable.
  * @param name
  *   The string representing the parameter name.
- *   May be an empty string (like f_string_empty_s) to not print anything.
  * @param after
  *   The string being printed after the variable.
  *   Likely should have a space added at the start of the string.
@@ -108,6 +111,61 @@ extern "C" {
  */
 #ifndef _di_fake_print_context_wrapped_parameter_
   extern void fake_print_context_wrapped_parameter(fake_setting_t * const setting, const fl_print_t print, const f_string_t before, const f_string_static_t symbol, const f_string_static_t name, const f_string_t after);
+#endif // _di_fake_print_context_wrapped_parameter_
+
+/**
+ * Print a parameter context message with a there parameters, with symbols, and wrapping strings.
+ *
+ * This is primarily used by numerous print functions to reduce code.
+ * This is not used for any print functions that has complex format structures.
+ *
+ * @param setting
+ *   The main program settings.
+ *   (Must be of type fake_setting_t.)
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   The output structure to print to.
+ * @param before
+ *   The string being printed before the variable.
+ *   Likely should have a space added at the end of the string.
+ *   Set to NULL to disable.
+ * @param symbol_1
+ *   The string representing the symbol for the parameter.
+ *   Set to f_string_empty_s to disable.
+ * @param name_1
+ *   The string representing the parameter name.
+ * @param middle_1
+ *   The string being printed before the variable.
+ *   Likely should have a space added at the end of the string.
+ *   Set to NULL to disable.
+ * @param symbol_2
+ *   The string representing the symbol for the parameter.
+ *   Set to f_string_empty_s to disable.
+ * @param name_2
+ *   The string representing the parameter name.
+ * @param middle_2
+ *   The string being printed before the variable.
+ *   Likely should have a space added at the end of the string.
+ *   Set to NULL to disable.
+ * @param symbol_3
+ *   The string representing the symbol for the parameter.
+ *   Set to f_string_empty_s to disable.
+ * @param name_3
+ *   The string representing the parameter name.
+ * @param after
+ *   The string being printed after the variable.
+ *   Likely should have a space added at the start of the string.
+ *   Set to NULL to disable.
+ *
+ * @see f_file_stream_lock()
+ * @see f_file_stream_unlock()
+ * @see fl_print_format()
+ *
+ * @see fake_print_line_first_unlocked()
+ */
+#ifndef _di_fake_print_context_wrapped_parameter_
+  extern void fake_print_context_wrapped_parameters(fake_setting_t * const setting, const fl_print_t print, const f_string_t before, const f_string_static_t symbol_1, const f_string_static_t name_1, const f_string_t between_1, const f_string_static_t symbol_2, const f_string_static_t name_2, const f_string_t between_2, const f_string_static_t symbol_3, const f_string_static_t name_3, const f_string_t after);
 #endif // _di_fake_print_context_wrapped_parameter_
 
 /**

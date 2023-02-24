@@ -5,9 +5,9 @@
  * API Version: 0.7
  * Licenses: lgpl-2.1-or-later
  *
- * Provides the path generate functionality for the fake program.
+ * Provides path generate functionality.
  *
- * This is to be specifically included by the fake program sources and not anywhere else.
+ * This is auto-included and should not need to be explicitly included.
  */
 #ifndef _fake_fake_path_generate_h
 #define _fake_fake_path_generate_h

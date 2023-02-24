@@ -4,6 +4,10 @@
  * Project: Featureless Make
  * API Version: 0.7
  * Licenses: lgpl-2.1-or-later
+ *
+ * Provides build object functionality.
+ *
+ * This is auto-included and should not need to be explicitly included.
  */
 #ifndef _PRIVATE_build_object_h
 #define _PRIVATE_build_object_h
