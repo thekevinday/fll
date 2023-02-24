@@ -600,9 +600,9 @@ extern "C" {
 
             fl_print_format("%r%[%QThe specified mode '%]", data->main->error.to.stream, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
             fl_print_format("%[%Q%]", data->main->error.to.stream, data->main->error.notable, modes->array[i], data->main->error.notable);
-            fl_print_format("%[' is not a valid mode, according to '%]", data->main->error.to.stream, data->main->error.context, data->main->error.context);
+            fl_print_format("%[' in the settings file '%]", data->main->error.to.stream, data->main->error.context, data->main->error.context);
             fl_print_format("%[%Q%]", data->main->error.to.stream, data->main->error.notable, path_file, data->main->error.notable);
-            fl_print_format("%['.%]%r", data->main->error.to.stream, data->main->error.context, data->main->error.context, f_string_eol_s);
+            fl_print_format("%[' is not a valid mode.%]%r", data->main->error.to.stream, data->main->error.context, data->main->error.context, f_string_eol_s);
 
             funlockfile(data->main->error.to.stream);
           }
@@ -692,7 +692,7 @@ extern "C" {
         if (data->main->error.verbosity != f_console_verbosity_quiet_e) {
           funlockfile(data->main->error.to.stream);
 
-          fl_print_format("%r%[%QA setting in the file '%]", data->main->error.to.stream, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
+          fl_print_format("%r%[%QA setting in the settings file '%]", data->main->error.to.stream, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
           fl_print_format("%[%Q%]", data->main->error.to.stream, data->main->error.notable, path_file, data->main->error.notable);
           fl_print_format("%[' is too long.%]%r", data->main->error.to.stream, data->main->error.context, data->main->error.context, f_string_eol_s);
 
