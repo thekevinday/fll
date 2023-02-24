@@ -1392,18 +1392,18 @@ extern "C" {
           setting->search_shared = F_false;
         }
 
-        if (data->main->error.verbosity >= f_console_verbosity_verbose_e) {
-          flockfile(data->main->error.to.stream);
+        if (data->main->warning.verbosity >= f_console_verbosity_verbose_e) {
+          flockfile(data->main->warning.to.stream);
 
-          fl_print_format("%r%[%QThe parameters '%]", data->main->error.to.stream, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
-          fl_print_format("%[%r%r%]", data->main->error.to.stream, data->main->error.notable, f_console_symbol_long_enable_s, fake_long_shared_disabled_s, data->main->error.notable);
-          fl_print_format("%[' and '%]", data->main->error.to.stream, data->main->error.context, data->main->error.context);
-          fl_print_format("%[%r%r%]", data->main->error.to.stream, data->main->error.notable, f_console_symbol_long_enable_s, fake_long_shared_enabled_s, data->main->error.notable);
-          fl_print_format("%[' contradict, defaulting to '%]", data->main->error.to.stream, data->main->error.context, data->main->error.context);
-          fl_print_format("%[%r%r%]", data->main->error.to.stream, data->main->error.notable, f_console_symbol_long_enable_s, setting->build_shared ? fake_long_shared_enabled_s : fake_long_shared_disabled_s, data->main->error.notable);
-          fl_print_format("%['.%]%r", data->main->error.to.stream, data->main->error.context, data->main->error.context, f_string_eol_s);
+          fl_print_format("%r%[%QThe parameters '%]", data->main->warning.to.stream, f_string_eol_s, data->main->warning.context, data->main->warning.prefix, data->main->warning.context);
+          fl_print_format("%[%r%r%]", data->main->warning.to.stream, data->main->warning.notable, f_console_symbol_long_enable_s, fake_long_shared_disabled_s, data->main->warning.notable);
+          fl_print_format("%[' and '%]", data->main->warning.to.stream, data->main->warning.context, data->main->warning.context);
+          fl_print_format("%[%r%r%]", data->main->warning.to.stream, data->main->warning.notable, f_console_symbol_long_enable_s, fake_long_shared_enabled_s, data->main->warning.notable);
+          fl_print_format("%[' contradict, defaulting to '%]", data->main->warning.to.stream, data->main->warning.context, data->main->warning.context);
+          fl_print_format("%[%r%r%]", data->main->warning.to.stream, data->main->warning.notable, f_console_symbol_long_enable_s, setting->build_shared ? fake_long_shared_enabled_s : fake_long_shared_disabled_s, data->main->warning.notable);
+          fl_print_format("%['.%]%r", data->main->warning.to.stream, data->main->warning.context, data->main->warning.context, f_string_eol_s);
 
-          funlockfile(data->main->error.to.stream);
+          funlockfile(data->main->warning.to.stream);
         }
       }
       else {
@@ -1427,18 +1427,18 @@ extern "C" {
           setting->search_static = F_false;
         }
 
-        if (data->main->error.verbosity >= f_console_verbosity_verbose_e) {
-          flockfile(data->main->error.to.stream);
+        if (data->main->warning.verbosity >= f_console_verbosity_verbose_e) {
+          flockfile(data->main->warning.to.stream);
 
-          fl_print_format("%r%[%QThe parameters '%]", data->main->error.to.stream, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
-          fl_print_format("%[%r%r%]", data->main->error.to.stream, data->main->error.notable, f_console_symbol_long_enable_s, fake_long_static_disabled_s, data->main->error.notable);
-          fl_print_format("%[' and '%]", data->main->error.to.stream, data->main->error.context, data->main->error.context);
-          fl_print_format("%[%r%r%]", data->main->error.to.stream, data->main->error.notable, f_console_symbol_long_enable_s, fake_long_static_enabled_s, data->main->error.notable);
-          fl_print_format("%[' contradict, defaulting to '%]", data->main->error.to.stream, data->main->error.context, data->main->error.context);
-          fl_print_format("%[%r%r%]", data->main->error.to.stream, data->main->error.notable, f_console_symbol_long_enable_s, setting->build_static ? fake_long_static_enabled_s : fake_long_static_disabled_s, data->main->error.notable);
-          fl_print_format("%['.%]%r", data->main->error.to.stream, data->main->error.context, data->main->error.context, f_string_eol_s);
+          fl_print_format("%r%[%QThe parameters '%]", data->main->warning.to.stream, f_string_eol_s, data->main->warning.context, data->main->warning.prefix, data->main->warning.context);
+          fl_print_format("%[%r%r%]", data->main->warning.to.stream, data->main->warning.notable, f_console_symbol_long_enable_s, fake_long_static_disabled_s, data->main->warning.notable);
+          fl_print_format("%[' and '%]", data->main->warning.to.stream, data->main->warning.context, data->main->warning.context);
+          fl_print_format("%[%r%r%]", data->main->warning.to.stream, data->main->warning.notable, f_console_symbol_long_enable_s, fake_long_static_enabled_s, data->main->warning.notable);
+          fl_print_format("%[' contradict, defaulting to '%]", data->main->warning.to.stream, data->main->warning.context, data->main->warning.context);
+          fl_print_format("%[%r%r%]", data->main->warning.to.stream, data->main->warning.notable, f_console_symbol_long_enable_s, setting->build_static ? fake_long_static_enabled_s : fake_long_static_disabled_s, data->main->warning.notable);
+          fl_print_format("%['.%]%r", data->main->warning.to.stream, data->main->warning.context, data->main->warning.context, f_string_eol_s);
 
-          funlockfile(data->main->error.to.stream);
+          funlockfile(data->main->warning.to.stream);
         }
       }
       else {
