@@ -21,17 +21,8 @@ extern "C" {
   f_status_t fake_print_error_argument_empty(fake_setting_t * const setting, const fl_print_t print, const f_array_length_t index) {
 
     if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
-    if (!print.to.stream) return F_output_not;
 
-    f_file_stream_lock(print.to);
-
-    fake_print_line_first_unlocked(setting, print);
-
-    fl_print_format("%[%QThe %]", print.to, f_string_eol_s, print.context, print.prefix, print.context);
-    fl_print_format("%[%un%]", print.to, print.notable, index, print.notable);
-    fl_print_format("%[ argument must not be an empty string.%]%r", print.to, print.context, print.context, f_string_eol_s);
-
-    f_file_stream_unlock(print.to);
+    fake_print_context_wrapped_number(setting, print, "The ", (f_number_unsigned_t) index, " argument must not be an empty string");
 
     return F_none;
   }
@@ -188,9 +179,9 @@ extern "C" {
 #endif // _di_fake_print_error_build_operation_file_
 
 #ifndef _di_fake_print_error_build_operation_file_full_
-  void fake_print_error_build_operation_file_full(fake_setting_t * const setting, const fl_print_t print, const f_string_t before, const f_string_static_t operation, const f_string_static_t source, const f_string_static_t destination, const f_string_static_t how, const f_string_t after) {
+  f_status_t fake_print_error_build_operation_file_full(fake_setting_t * const setting, const fl_print_t print, const f_string_t before, const f_string_static_t operation, const f_string_static_t source, const f_string_static_t destination, const f_string_static_t how, const f_string_t after) {
 
-    if (!setting) return;
+    if (!setting || print.verbosity < f_console_verbosity_error_e) return F_output_not;
 
     f_file_stream_lock(print.to);
 
@@ -208,6 +199,8 @@ extern "C" {
     fl_print_format("%S.%]%r", print.to, print.context, after, print.context, f_string_eol_s);
 
     f_file_stream_unlock(print.to);
+
+    return F_none;
   }
 #endif // _di_fake_print_error_build_operation_file_full_
 
@@ -227,6 +220,17 @@ extern "C" {
     fl_print_format("%['", print.to, print.context, print.context);
   }
 #endif // _di_fake_print_error_build_operation_file_partial_
+
+#ifndef _di_fake_print_error_directory_create_parent_missing_
+  f_status_t fake_print_error_directory_create_parent_missing(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t path) {
+
+    if (!setting || print.verbosity < f_console_verbosity_error_e) return F_output_not;
+
+    fake_print_context_wrapped_variable(setting, print, "The directory ", path, " could not be created, a parent directory is missing or invalid");
+
+    return F_none;
+  }
+#endif // _di_fake_print_error_directory_create_parent_missing_
 
 #ifndef _di_fake_print_error_failure_operation_
   f_status_t fake_print_error_failure_operation(fake_setting_t * const setting, const fl_print_t print, const uint8_t operation) {
@@ -296,6 +300,17 @@ extern "C" {
     return F_none;
   }
 #endif // _di_fake_print_error_file_
+
+#ifndef _di_fake_print_error_file_create_parent_missing_
+  f_status_t fake_print_error_file_create_parent_missing(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t path) {
+
+    if (!setting || print.verbosity < f_console_verbosity_error_e) return F_output_not;
+
+    fake_print_context_wrapped_variable(setting, print, "The file ", path, " could not be created, a parent directory is missing or invalid");
+
+    return F_none;
+  }
+#endif // _di_fake_print_error_file_create_parent_missing_
 
 #ifndef _di_fake_print_error_file_fallback_
   f_status_t fake_print_error_file_fallback(fake_setting_t * const setting, const fl_print_t print, const f_status_t status, const f_string_t function, const f_string_static_t name, const f_string_static_t operation, const uint8_t type) {
@@ -397,6 +412,39 @@ extern "C" {
     return F_none;
   }
 #endif // _di_fake_print_error_fss_message_
+
+#ifndef _di_fake_print_error_group_not_found_
+  f_status_t fake_print_error_group_not_found(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t group) {
+
+    if (!setting || print.verbosity < f_console_verbosity_error_e) return F_output_not;
+
+    fake_print_context_wrapped_variable(setting, print, "The group ", group, " is not found");
+
+    return F_none;
+  }
+#endif // _di_fake_print_error_group_not_found_
+
+#ifndef _di_fake_print_error_mode_invalid_
+  f_status_t fake_print_error_mode_invalid(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t mode) {
+
+    if (!setting || print.verbosity < f_console_verbosity_error_e) return F_output_not;
+
+    fake_print_context_wrapped_variable(setting, print, "The mode ", mode, " is invalid");
+
+    return F_none;
+  }
+#endif // _di_fake_print_error_mode_invalid_
+
+#ifndef _di_fake_print_error_number_too_large_
+  f_status_t fake_print_error_number_too_large(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t number) {
+
+    if (!setting || print.verbosity < f_console_verbosity_error_e) return F_output_not;
+
+    fake_print_context_wrapped_variable(setting, print, "The number ", number, " is too large");
+
+    return F_none;
+  }
+#endif // _di_fake_print_error_number_too_large_
 
 #ifndef _di_fake_print_error_operation_failed_
   f_status_t fake_print_error_operation_failed(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name) {
@@ -651,6 +699,17 @@ extern "C" {
     return F_none;
   }
 #endif // _di_fake_print_error_too_many_arguments_
+
+#ifndef _di_fake_print_error_user_not_found_
+  f_status_t fake_print_error_user_not_found(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t user) {
+
+    if (!setting || print.verbosity < f_console_verbosity_error_e) return F_output_not;
+
+    fake_print_context_wrapped_variable(setting, print, "The user ", user, " is not found");
+
+    return F_none;
+  }
+#endif // _di_fake_print_error_user_not_found_
 
 #ifdef __cplusplus
 } // extern "C"

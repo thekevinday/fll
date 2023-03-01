@@ -72,8 +72,6 @@ extern "C" {
  *   The global data.
  * @param buffer
  *   The buffer containing the content.
- * @param state
- *   The state data for passing to fl_iki_read().
  * @param object
  *   (optional) The range representing where the object is found within the buffer.
  *   Set pointer address to 0 to disable.
@@ -82,6 +80,8 @@ extern "C" {
  *   Set pointer address to 0 to disable.
  * @param action
  *   The rule action.
+ * @param state
+ *   The state data for passing to fl_iki_read().
  *
  * @return
  *   F_none on success.
@@ -101,7 +101,7 @@ extern "C" {
  * @see fl_iki_read()
  */
 #ifndef _di_controller_rule_parameters_read_
-  extern f_status_t controller_rule_parameters_read(const controller_global_t global, const f_string_static_t buffer, const f_state_t state, f_fss_object_t * const object, f_fss_content_t * const content, controller_rule_action_t * const action) F_attribute_visibility_internal_d;
+  extern f_status_t controller_rule_parameters_read(const controller_global_t global, const f_string_static_t buffer, f_fss_object_t * const object, f_fss_content_t * const content, controller_rule_action_t * const action, f_state_t * const state) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_parameters_read_
 
 /**

@@ -165,7 +165,7 @@ extern "C" {
 
     for (; i < length; ++i) {
 
-      size = strnlen(listing[i]->d_name, F_directory_name_max_d);
+      size = strnlen(listing[i]->d_name, F_directory_max_name_d);
 
       // There is no reason to include "." and ".." in the directory listing.
       if (!strncmp(listing[i]->d_name, f_directory_back_s.string, f_directory_back_s.used + 1) || !strncmp(listing[i]->d_name, f_directory_current_s.string, f_directory_current_s.used + 1)) {
@@ -174,7 +174,7 @@ extern "C" {
         continue;
       }
 
-      status = f_string_dynamics_increase(F_directory_default_allocation_step_d, names);
+      status = f_string_dynamics_increase(F_memory_default_allocation_small_d, names);
 
       if (F_status_is_error(status)) {
         for (; i < length; ++i) {

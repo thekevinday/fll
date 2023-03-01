@@ -155,25 +155,25 @@ extern "C" {
  *
  * Any changes to this function may likely require changes to f_console_parameter_state_t and callbacks.
  *
- * @param state
- *   A state for providing flags and handling interrupts during long running operations.
  * @param arguments
  *   The parameters passed to the process.
  * @param parameters
  *   The console parameters to look for.
+ * @param state
+ *   A state for providing flags and handling interrupts during long running operations.
+ *
+ *   This alters state.status:
+ *     F_none on success.
+ *     F_data_not if argc is 0, argv is a NULL pointer, or if argv[0] is NULL.
+ *     F_complete_not if "values" parameters were expected but not found.
+ *
+ *     F_array_too_large (with error bit) if a buffer would exceed max length.
+ *     F_failure (with error bit) if width is not long enough to convert when processing arguments as UTF-8.
+ *     F_interrupt (with error bit) if an interrupt is received via the state.interrupt callback.
+ *     F_parameter (with error bit) if a parameter is invalid.
  * @param data
  *   (optional) A variable passed to the callback, if provided.
  *   Set to NULL to not use.
- *
- * @return
- *   F_none on success.
- *   F_data_not if argc is 0, argv is a NULL pointer, or if argv[0] is NULL.
- *   F_complete_not if "values" parameters were expected but not found.
- *
- *   F_array_too_large (with error bit) if a buffer would exceed max length.
- *   F_failure (with error bit) if width is not long enough to convert when processing arguments as UTF-8.
- *   F_interrupt (with error bit) if an interrupt is received via the state.interrupt callback.
- *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_array_lengths_increase().
  *   Errors (with error bit) from: f_array_lengths_increase_by().
@@ -186,7 +186,7 @@ extern "C" {
  * @see f_utf_char_to_character()
  */
 #ifndef _di_f_console_parameter_process_
-  extern f_status_t f_console_parameter_process(f_state_t state, const f_console_arguments_t arguments, f_console_parameters_t * const parameters, void * const data);
+  extern void f_console_parameter_process(const f_console_arguments_t arguments, f_console_parameters_t * const parameters, f_state_t * const state, void * const data);
 #endif // _di_f_console_parameter_process_
 
 #ifdef __cplusplus

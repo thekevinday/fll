@@ -70,7 +70,7 @@ extern "C" {
  *
  * All state values may be NULL, in which case they are to be ignored.
  *
- * The general interpretation of the return results of interrupt() or any of the functions should have an error bit to designate an error and not an error bit to designate no error.
+ * The general interpretation of the state.status results of interrupt() or any of the functions should have an error bit to designate an error and not an error bit to designate not an error.
  * In the case of interrupt(), the F_interrupt and F_interrupt_not must be returned as appropriate and if not an error (the F_interrupt and F_interrupt_not may have an error bit).
  * To keep the logic simple, it is recommended that F_interrupt always be returned with the error bit set.
  *
@@ -78,7 +78,6 @@ extern "C" {
  * This allows for the error to be processed with all relevant data before the function returns.
  *
  * These two callbacks (handle() and interrupt()) accept the following parameters:
- *   - error:    The current status code (with error bit as appropriate) (only passed to handle()).
  *   - state:    The state data. Must be of type f_state_t. Must not be NULL.
  *   - internal: Additional data passed by the function being called, often containing internal data to the called function. May be NULL.
  *
@@ -89,16 +88,17 @@ extern "C" {
  *   The function "bob_does()" maintains a state (f_state_t) called "bob_state".
  *   The function "bob_does()" will call "f_talk()" that accepts a state (f_state_t) and defines the data structure type "f_interject_t" to be called interject.
  *   While "f_talk()" executes, "bob_interrupts()" is periodically with the state (f_state_t) "bob_state" as the first parameter and the data structure (f_interject_t) "interject" as the second parameter.
- *   If Bob interjects the talk, then bob_interrupts() would return F_interrupt.
- *   If Bob does not interject the talk, then bob_interrupts() would return F_interrupt_not.
+ *   If Bob interjects the talk, then bob_interrupts() would set state.status to F_interrupt.
+ *   If Bob does not interject the talk, then bob_interrupts() would set state.status to F_interrupt_not.
  *   This response is handled within f_talk().
- *   The f_talk() function will then return status when done and might immediately return with F_interrupt (with error bit) if bob_interrupts() returns F_interrupt (with/without error bit).
+ *   The f_talk() function will then set the state.status when done and might immediately set state.status to F_interrupt (with error bit) if bob_interrupts() returns F_interrupt (with/without error bit).
  *
  * step_large: The allocation step to use for large buffers.
  * step_small: The allocation step to use for small buffers.
  * flag:       A 32-bit digit intended for provided flags that are defined by the function.
+ * status:     The status used while processing (This should hold the error passed to the handle callback and should be updated as necessary).
  * handle:     A function to call on a specific error (allowing for the error to be handled before function returns). May be NULL.
- * interrupt:  A function to call for checking to see if an interrupt is to be called (return result is passed to and handled by caller). May be NULL.
+ * interrupt:  A function to call for checking to see if an interrupt is to be called. May be NULL.
  * callbacks:  A structure (defined by function/project using this) of additional functions to call. May be NULL.
  * custom:     A structure (defined by caller/parent) for holding custom data to be passed along to the interrupt() or one of the functions. May be NULL.
  * data:       A structure (defined by function) for holding data relevant to the function. May be NULL. May be required.
@@ -107,10 +107,11 @@ extern "C" {
   typedef struct {
     uint16_t step_large;
     uint16_t step_small;
-    uint32_t flag;
+    f_status_t status;
+    uint64_t flag;
 
-    f_status_t (*handle)(const f_status_t error, void * const state, void * const internal);
-    f_status_t (*interrupt)(void * const state, void * const internal);
+    void (*handle)(void * const state, void * const internal);
+    void (*interrupt)(void * const state, void * const internal);
 
     void *callbacks;
     void *custom;
@@ -120,6 +121,7 @@ extern "C" {
   #define f_state_t_initialize { \
     F_memory_default_allocation_large_d, \
     F_memory_default_allocation_small_d, \
+    F_none, \
     0, \
     0, \
     0, \
@@ -128,9 +130,10 @@ extern "C" {
     0, \
   }
 
-  #define macro_f_state_t_initialize(step_large, step_small, flag, handle, interrupt, callbacks, custom, data) { \
+  #define macro_f_state_t_initialize_1(step_large, step_small, status, flag, handle, interrupt, callbacks, custom, data) { \
     step_large, \
     step_small, \
+    status, \
     flag, \
     handle, \
     interrupt, \
@@ -142,6 +145,7 @@ extern "C" {
   #define macro_f_state_t_clear(state) \
     state.step_large = 0; \
     state.step_small = 0; \
+    state.status = F_none; \
     state.flag = 0; \
     state.handle = 0; \
     state.interrupt = 0; \

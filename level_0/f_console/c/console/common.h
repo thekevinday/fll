@@ -239,9 +239,8 @@ extern "C" {
  * width: Used like a cache to store width results such as from macro_f_utf_byte_width_is().
  * found: Designate that the currently process parameter has been matched.
  *
- * status: The return status.
  * result: The parameter result state determined by the appropriate f_console_identify() or similar call.
- * state:  The state information used during pocessing (this primarily utilizes the interrupt and the allocation steps).
+ * state:  A pointer to the state information.
  *
  * at:           The location in the parameters array currently being processed (not all types use this).
  * location:     The current location within the argv array.
@@ -318,9 +317,8 @@ extern "C" {
     uint8_t width;
     bool found;
 
-    f_status_t status;
     f_console_result_t result;
-    f_state_t state;
+    f_state_t *state;
 
     f_array_length_t at;
     f_array_length_t location;
@@ -333,9 +331,8 @@ extern "C" {
     0, \
     0, \
     F_false, \
-    F_none, \
     f_console_result_t_initialize, \
-    f_state_t_initialize, \
+    0, \
     f_array_length_t_initialize, \
     f_array_length_t_initialize, \
     f_array_length_t_initialize, \

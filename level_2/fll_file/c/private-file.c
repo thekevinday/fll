@@ -22,7 +22,7 @@ extern "C" {
     status = fl_directory_list(path, 0, 0, dereference, &listing);
 
     if (F_status_is_error(status)) {
-      macro_f_directory_listing_t_delete_simple(listing);
+      f_directory_listing_delete(&listing);
 
       return status;
     }
@@ -98,7 +98,7 @@ extern "C" {
       }
     } // for
 
-    f_string_dynamics_resize(0, &listing.directory);
+    f_directory_listing_delete(&listing);
 
     if (F_status_is_error(status)) return status;
 
@@ -123,7 +123,7 @@ extern "C" {
     status = fl_directory_list(path, 0, 0, dereference, &listing);
 
     if (F_status_is_error(status)) {
-      macro_f_directory_listing_t_delete_simple(listing);
+      f_directory_listing_delete(&listing);
 
       return status;
     }
@@ -199,7 +199,7 @@ extern "C" {
       } // for
     }
 
-    f_string_dynamics_resize(0, &listing.directory);
+    f_directory_listing_delete(&listing);
 
     if (F_status_is_error(status)) return status;
 

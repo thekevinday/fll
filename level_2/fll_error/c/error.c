@@ -106,7 +106,7 @@ extern "C" {
 
         fl_print_format("%[%QFailed to %Q %Q '%]", print.to, print.context, print.prefix, operation, type_name, print.context);
         fl_print_format("%[%Q%]", print.to, print.notable, name, print.notable);
-        fl_print_format("%[', already in an error state.%]%r", print.to, print.context, print.context, f_string_eol_s);
+        fl_print_format("%[', already in an error state->%]%r", print.to, print.context, print.context, f_string_eol_s);
 
         funlockfile(print.to.stream);
       }

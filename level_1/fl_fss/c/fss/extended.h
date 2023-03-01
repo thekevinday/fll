@@ -36,15 +36,6 @@ extern "C" {
  *
  * @param buffer
  *   The buffer to read from.
- * @param state
- *   A state for providing flags and handling interrupts during long running operations.
- *   There is no print_error().
- *   There is no functions structure.
- *   There is no data structure passed to these functions.
- *
- *   When interrupt() returns, only F_interrupt and F_interrupt_not are processed.
- *   Error bit designates an error but must be passed along with F_interrupt.
- *   All other statuses are ignored.
  * @param range
  *   The start/stop location within the buffer to be processed.
  *   The start location will be updated as the buffer is being processed.
@@ -57,6 +48,15 @@ extern "C" {
  *   Set pointer address to 0 to not use.
  * @param delimits
  *   A delimits array representing where delimits exist within the buffer.
+ * @param state
+ *   A state for providing flags and handling interrupts during long running operations.
+ *   There is no print_error().
+ *   There is no functions structure.
+ *   There is no data structure passed to these functions.
+ *
+ *   When interrupt() returns, only F_interrupt and F_interrupt_not are processed.
+ *   Error bit designates an error but must be passed along with F_interrupt.
+ *   All other statuses are ignored.
  *
  * @return
  *   F_fss_found_content on success and content was found (start location is at end of content).
@@ -93,7 +93,7 @@ extern "C" {
  * @see fl_fss_extended_content_read()
  */
 #ifndef _di_fl_fss_extended_content_read_
-  extern f_status_t fl_fss_extended_content_read(const f_string_static_t buffer, f_state_t state, f_string_range_t * const range, f_fss_content_t * const found, f_uint8s_t * const quotes, f_fss_delimits_t * const delimits);
+  extern void fl_fss_extended_content_read(const f_string_static_t buffer, f_string_range_t * const range, f_fss_content_t * const found, f_uint8s_t * const quotes, f_fss_delimits_t * const delimits, f_state_t * const state);
 #endif // _di_fl_fss_extended_content_read_
 
 /**
@@ -115,6 +115,10 @@ extern "C" {
  *   If f_fss_complete_end_e, then the content followed by any appropriate "end" character designating the last content for some object, printing final newline, if applicable.
  *   If f_fss_complete_partial_e, this will write any appropriate open and close aspects of this content, except for the final newline.
  *   If f_fss_complete_full_e, this will write any appropriate open and close aspects of this content, including the final newline.
+ * @param range
+ *   The start/stop location within the content string to write as an content.
+ * @param destination
+ *   The buffer where the content is written to.
  * @param state
  *   A state for providing flags and handling interrupts during long running operations.
  *   There is no print_error().
@@ -124,10 +128,6 @@ extern "C" {
  *   When interrupt() returns, only F_interrupt and F_interrupt_not are processed.
  *   Error bit designates an error but must be passed along with F_interrupt.
  *   All other statuses are ignored.
- * @param range
- *   The start/stop location within the content string to write as an content.
- * @param destination
- *   The buffer where the content is written to.
  *
  * @return
  *   F_none on success.
@@ -158,7 +158,7 @@ extern "C" {
  * @see fl_fss_extended_content_write()
  */
 #ifndef _di_fl_fss_extended_content_write_
-  extern f_status_t fl_fss_extended_content_write(const f_string_static_t content, const uint8_t quote, const uint8_t complete, f_state_t state, f_string_range_t * const range, f_string_dynamic_t * const destination);
+  extern void fl_fss_extended_content_write(const f_string_static_t content, const uint8_t quote, const uint8_t complete, f_string_range_t * const range, f_string_dynamic_t * const destination, f_state_t * const state);
 #endif // _di_fl_fss_extended_content_write_
 
 /**
@@ -168,15 +168,6 @@ extern "C" {
  *
  * @param buffer
  *   The buffer to read from.
- * @param state
- *   A state for providing flags and handling interrupts during long running operations.
- *   There is no print_error().
- *   There is no functions structure.
- *   There is no data structure passed to these functions.
- *
- *   When interrupt() returns, only F_interrupt and F_interrupt_not are processed.
- *   Error bit designates an error but must be passed along with F_interrupt.
- *   All other statuses are ignored.
  * @param range
  *   The start/stop location within the buffer to be processed.
  *   The start location will be updated as the buffer is being processed.
@@ -189,6 +180,15 @@ extern "C" {
  *   Set pointer address to 0 to not use.
  * @param delimits
  *   A delimits array representing where delimits exist within the buffer.
+ * @param state
+ *   A state for providing flags and handling interrupts during long running operations.
+ *   There is no print_error().
+ *   There is no functions structure.
+ *   There is no data structure passed to these functions.
+ *
+ *   When interrupt() returns, only F_interrupt and F_interrupt_not are processed.
+ *   Error bit designates an error but must be passed along with F_interrupt.
+ *   All other statuses are ignored.
  *
  * @return
  *   F_fss_found_object on success and object was found (start location is at end of object).
@@ -230,7 +230,7 @@ extern "C" {
  * @see fl_fss_extended_content_read()
  */
 #ifndef _di_fl_fss_extended_object_read_
-  extern f_status_t fl_fss_extended_object_read(const f_string_static_t buffer, f_state_t state, f_string_range_t * const range, f_fss_object_t * const found, uint8_t * const quote, f_fss_delimits_t * const delimits);
+  extern void fl_fss_extended_object_read(const f_string_static_t buffer, f_string_range_t * const range, f_fss_object_t * const found, uint8_t * const quote, f_fss_delimits_t * const delimits, f_state_t * const state);
 #endif // _di_fl_fss_extended_object_read_
 
 /**
@@ -251,6 +251,10 @@ extern "C" {
  *   If f_fss_complete_none_e, then only the object name is written.
  *   If f_fss_complete_full_e, this will write any appropriate open and close aspects of this object.
  *   If f_fss_complete_partial_e, this will write any appropriate open and close aspects of this object.
+ * @param range
+ *   The start/stop location within the object string to write as an object.
+ * @param destination
+ *   The buffer where the object is written to.
  * @param state
  *   A state for providing flags and handling interrupts during long running operations.
  *   There is no print_error().
@@ -260,10 +264,6 @@ extern "C" {
  *   When interrupt() returns, only F_interrupt and F_interrupt_not are processed.
  *   Error bit designates an error but must be passed along with F_interrupt.
  *   All other statuses are ignored.
- * @param range
- *   The start/stop location within the object string to write as an object.
- * @param destination
- *   The buffer where the object is written to.
  *
  * @return
  *   F_none on success.
@@ -289,7 +289,7 @@ extern "C" {
  * @see f_string_dynamic_increase_by()
  */
 #ifndef _di_fl_fss_extended_object_write_
-  extern f_status_t fl_fss_extended_object_write(const f_string_static_t object, const uint8_t quote, const uint8_t complete, f_state_t state, f_string_range_t * const range, f_string_dynamic_t * const destination);
+  extern void fl_fss_extended_object_write(const f_string_static_t object, const uint8_t quote, const uint8_t complete, f_string_range_t * const range, f_string_dynamic_t * const destination, f_state_t * const state);
 #endif // _di_fl_fss_extended_object_write_
 
 #ifdef __cplusplus

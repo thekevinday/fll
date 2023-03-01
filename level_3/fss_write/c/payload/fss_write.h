@@ -124,8 +124,6 @@ extern "C" {
  *
  * @param arguments
  *   The parameters passed to the process (often referred to as command line arguments).
- * @param state
- *   A state for providing flags and handling interrupts during long running operations.
  * @param main
  *   The main program data.
  * @param setting
@@ -143,11 +141,13 @@ extern "C" {
  *   This alters setting.status:
  *     F_none on success.
  *     F_data_not on success but nothing was provided to operate with.
+ * @param state
+ *   A state for providing flags and handling interrupts during long running operations.
  *
  * @see fss_write_setting_load()
  */
 #ifndef _di_fss_write_payload_setting_load_
-  extern void fss_write_payload_setting_load(const f_console_arguments_t arguments, f_state_t state, fll_program_data_t * const main, fss_write_setting_t * const setting);
+  extern void fss_write_payload_setting_load(const f_console_arguments_t arguments, fll_program_data_t * const main, fss_write_setting_t * const setting, f_state_t * const state);
 #endif // _di_fss_write_payload_setting_load_
 
 #ifdef __cplusplus

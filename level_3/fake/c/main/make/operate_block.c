@@ -60,7 +60,7 @@ extern "C" {
       return;
     }
 
-    // When done processing an operation within an if/else condition, update the process state.
+    // When done processing an operation within an if/else condition, update the process state->
     if (state_process->block == fake_state_process_block_done_e) {
       // Nothing to do.
     }

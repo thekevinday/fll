@@ -15,47 +15,62 @@ extern "C" {
 #endif // _di_fll_file_mode_set_all_
 
 #ifndef _di_fll_file_move_
-  f_status_t fll_file_move(const f_string_static_t source, const f_string_static_t destination, const fl_directory_recurse_t recurse) {
+  void fll_file_move(const f_string_static_t source, const f_string_static_t destination, f_directory_recurse_t * const recurse) {
+    #ifndef _di_level_2_parameter_checking_
+      if (!recurse) return;
+    #endif // _di_level_2_parameter_checking_
 
-    if (!source.used || !destination.used) return F_data_not;
+    if (!source.used || !destination.used) {
+      recurse->state.status = F_data_not;
 
-    f_status_t status = f_file_rename(source, destination);
-
-    if (F_status_set_fine(status) != F_mount) {
-      if (status == F_none && (!recurse.output.stream || recurse.output.id != -1) && recurse.verbose) {
-        recurse.verbose(recurse.output, source, destination);
-      }
-
-      return status;
+      return;
     }
 
-    status = f_file_is(source, F_file_type_directory_d, !(recurse.flag & f_file_stat_flag_reference_e));
+    recurse->state.status = f_file_rename(source, destination);
 
-    if (status == F_file_found_not) return F_status_set_error(status);
-    if (F_status_is_error(status)) return status;
+    if (F_status_set_fine(recurse->state.status) != F_mount) {
+      if (recurse->state.status == F_none && recurse->verbose) {
+        recurse->verbose(source, destination, recurse);
+      }
 
-    if (status == F_true) {
-      status = fl_directory_clone(source, destination, recurse);
-      if (F_status_is_error(status)) return status;
+      return;
+    }
 
-      status = f_directory_remove(source, recurse.depth_max, F_false);
+    recurse->state.status = f_file_is(source, F_file_type_directory_d, !(recurse->flag & f_file_stat_flag_reference_e));
 
-      if (status == F_none && (!recurse.output.stream || recurse.output.id != -1) && recurse.verbose) {
-        recurse.verbose(recurse.output, source, destination);
+    if (recurse->state.status == F_file_found_not) {
+      recurse->state.status = F_status_set_error(recurse->state.status);
+    }
+
+    if (F_status_is_error(recurse->state.status)) return;
+
+    if (recurse->state.status == F_true) {
+      const uint8_t flag_original = recurse->flag;
+
+      recurse->flag = f_directory_recurse_flag_clone_e;
+
+      fl_directory_copy(source, destination, recurse);
+
+      recurse->flag = flag_original;
+
+      if (F_status_is_error(recurse->state.status)) return;
+
+      recurse->state.status = f_directory_remove(source, recurse->max_depth, F_false);
+
+      if (recurse->state.status == F_none && recurse->verbose) {
+        recurse->verbose(source, destination, recurse);
       }
     }
     else {
-      status = f_file_clone(source, destination, recurse.size_block, recurse.flag);
-      if (F_status_is_error(status)) return status;
+      recurse->state.status = f_file_clone(source, destination, recurse->size_block, recurse->flag);
+      if (F_status_is_error(recurse->state.status)) return;
 
-      status = f_file_remove(source);
+      recurse->state.status = f_file_remove(source);
 
-      if (status == F_none && (!recurse.output.stream || recurse.output.id != -1) && recurse.verbose) {
-        recurse.verbose(recurse.output, source, destination);
+      if (recurse->state.status == F_none && recurse->verbose) {
+        recurse->verbose(source, destination, recurse);
       }
     }
-
-    return status;
   }
 #endif // _di_fll_file_move_
 

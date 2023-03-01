@@ -12,9 +12,7 @@ extern "C" {
       if (quote.string[0] != f_iki_syntax_quote_single_s.string[0] && quote.string[0] != f_iki_syntax_quote_double_s.string[0] && quote.string[0] != f_iki_syntax_quote_backtick_s.string[0]) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!content.used) {
-      return F_data_not;
-    }
+    if (!content.used) return F_data_not;
 
     return private_f_iki_content_partial_is(content.string, content.used, quote.string[0]);
   }
@@ -27,17 +25,9 @@ extern "C" {
       if (quote.string[0] != f_iki_syntax_quote_single_s.string[0] && quote.string[0] != f_iki_syntax_quote_double_s.string[0] && quote.string[0] != f_iki_syntax_quote_backtick_s.string[0]) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!content.used) {
-      return F_data_not;
-    }
-
-    if (range.start > range.stop) {
-      return F_data_not_stop;
-    }
-
-    if (range.start >= content.used) {
-      return F_data_not_eos;
-    }
+    if (!content.used) return F_data_not;
+    if (range.start > range.stop) return F_data_not_stop;
+    if (range.start >= content.used) return F_data_not_eos;
 
     return private_f_iki_content_partial_is(content.string + range.start, (range.stop - range.start) + 1, quote.string[0]);
   }
@@ -46,9 +36,7 @@ extern "C" {
 #ifndef _di_f_iki_object_is_
   f_status_t f_iki_object_is(const f_string_static_t object) {
 
-    if (!object.used) {
-      return F_data_not;
-    }
+    if (!object.used) return F_data_not;
 
     return private_f_iki_object_partial_is(object.string, object.used);
   }
@@ -57,35 +45,44 @@ extern "C" {
 #ifndef _di_f_iki_object_partial_is_
   f_status_t f_iki_object_partial_is(const f_string_static_t object, const f_string_range_t range) {
 
-    if (!object.used) {
-      return F_data_not;
-    }
-
-    if (range.start > range.stop) {
-      return F_data_not_stop;
-    }
-
-    if (range.start >= object.used) {
-      return F_data_not_eos;
-    }
+    if (!object.used) return F_data_not;
+    if (range.start > range.stop) return F_data_not_stop;
+    if (range.start >= object.used) return F_data_not_eos;
 
     return private_f_iki_object_partial_is(object.string + range.start, (range.stop - range.start) + 1);
   }
 #endif // _di_f_iki_object_partial_is_
 
 #ifndef _di_f_iki_read_
-  f_status_t f_iki_read(const f_state_t state, f_string_static_t * const buffer, f_string_range_t * const range, f_iki_data_t * const data) {
+  void f_iki_read(f_string_static_t * const buffer, f_string_range_t * const range, f_iki_data_t * const data, f_state_t * const state) {
     #ifndef _di_level_0_parameter_checking_
-      if (!buffer) return F_status_set_error(F_parameter);
-      if (!range) return F_status_set_error(F_parameter);
-      if (!data) return F_status_set_error(F_parameter);
+      if (!state) return;
+
+      if (!buffer || !range || !data) {
+        state->status = F_status_set_error(F_parameter);
+
+        return;
+      }
     #endif // _di_level_0_parameter_checking_
 
-    if (!buffer->used) return F_data_not;
-    if (range->start > range->stop) return F_data_not_stop;
-    if (range->start >= buffer->used) return F_data_not_eos;
+    if (!buffer->used) {
+      state->status = F_data_not;
 
-    f_status_t status = F_none;
+      return;
+    }
+
+    if (range->start > range->stop) {
+      state->status = F_data_not_stop;
+
+      return;
+    }
+
+    if (range->start >= buffer->used) {
+      state->status = F_data_not_eos;
+
+      return;
+    }
+
     f_array_length_t width_max = 0;
 
     if (width_max > buffer->used - range->start) {
@@ -104,58 +101,48 @@ extern "C" {
       // Find the start of the vocabulary name.
       while (range->start <= range->stop && range->start < buffer->used) {
 
-        if (state.interrupt) {
-          status = state.interrupt((void * const) &state, 0);
-
-          if (F_status_set_fine(status) == F_interrupt) {
-            status = F_status_set_error(F_interrupt);
-
-            break;
-          }
+        if (state->interrupt) {
+          state->interrupt((void * const) &state, 0);
+          if (F_status_set_fine(state->status) == F_interrupt) break;
         }
 
         width_max = buffer->used - range->start;
 
-        status = f_utf_is_word_dash_plus(buffer->string + range->start, width_max, F_false);
+        state->status = f_utf_is_word_dash_plus(buffer->string + range->start, width_max, F_false);
 
-        if (F_status_is_error(status)) {
-          if (F_status_set_fine(status) == F_utf_fragment || F_status_set_fine(status) == F_complete_not_utf) {
-            if (state.flag & f_iki_state_flag_utf_fail_on_valid_not_e) break;
+        if (F_status_is_error(state->status)) {
+          if (F_status_set_fine(state->status) == F_utf_fragment || F_status_set_fine(state->status) == F_complete_not_utf) {
+            if (state->flag & f_iki_state_flag_utf_fail_on_valid_not_e) break;
 
-            status = F_false;
+            state->status = F_false;
           }
           else {
             break;
           }
         }
 
-        if (status == F_true) {
+        if (state->status == F_true) {
           found_vocabulary.start = range->start;
           found_vocabulary.stop = range->start;
 
-          status = f_utf_buffer_increment(*buffer, range, 1);
-          if (F_status_is_error(status)) break;
+          state->status = f_utf_buffer_increment(*buffer, range, 1);
+          if (F_status_is_error(state->status)) break;
 
-          status = F_true;
+          state->status = F_true;
 
           break;
         }
 
-        status = f_utf_buffer_increment(*buffer, range, 1);
-        if (F_status_is_error(status)) break;
+        state->status = f_utf_buffer_increment(*buffer, range, 1);
+        if (F_status_is_error(state->status)) break;
       } // while
 
       // Find the end of the vocabulary name.
-      while (F_status_is_error_not(status) && range->start <= range->stop && range->start < buffer->used) {
+      while (F_status_is_error_not(state->status) && range->start <= range->stop && range->start < buffer->used) {
 
-        if (state.interrupt) {
-          status = state.interrupt((void * const) &state, 0);
-
-          if (F_status_set_fine(status) == F_interrupt) {
-            status = F_status_set_error(F_interrupt);
-
-            break;
-          }
+        if (state->interrupt) {
+          state->interrupt((void * const) &state, 0);
+          if (F_status_set_fine(state->status) == F_interrupt) break;
         }
 
         if (buffer->string[range->start] == f_iki_syntax_placeholder_s.string[0]) {
@@ -166,18 +153,18 @@ extern "C" {
 
         if (buffer->string[range->start] == f_iki_syntax_separator_s.string[0]) {
           do {
-            status = f_utf_buffer_increment(*buffer, range, 1);
-          } while (F_status_is_fine(status) && buffer->string[range->start] == f_iki_syntax_placeholder_s.string[0] && range->start <= range->stop && range->start < buffer->used);
+            state->status = f_utf_buffer_increment(*buffer, range, 1);
+          } while (F_status_is_fine(state->status) && buffer->string[range->start] == f_iki_syntax_placeholder_s.string[0] && range->start <= range->stop && range->start < buffer->used);
 
-          if (F_status_is_error(status) || range->start > range->stop || range->start >= buffer->used) break;
+          if (F_status_is_error(state->status) || range->start > range->stop || range->start >= buffer->used) break;
 
           // Found a valid vocabulary name.
           if (buffer->string[range->start] == f_iki_syntax_quote_single_s.string[0] || buffer->string[range->start] == f_iki_syntax_quote_double_s.string[0] || buffer->string[range->start] == f_iki_syntax_quote_backtick_s.string[0]) {
-            status = F_true;
+            state->status = F_true;
             quote = buffer->string[range->start];
           }
           else {
-            status = F_next;
+            state->status = F_next;
           }
 
           break;
@@ -191,14 +178,9 @@ extern "C" {
           // The slash only needs to be delimited if it were to otherwise be a valid vocabulary name.
           while (range->start <= range->stop && range->start < buffer->used) {
 
-            if (state.interrupt) {
-              status = state.interrupt((void * const) &state, 0);
-
-              if (F_status_set_fine(status) == F_interrupt) {
-                status = F_status_set_error(F_interrupt);
-
-                break;
-              }
+            if (state->interrupt) {
+              state->interrupt((void * const) &state, 0);
+              if (F_status_set_fine(state->status) == F_interrupt) break;
             }
 
             if (buffer->string[range->start] == f_iki_syntax_placeholder_s.string[0]) {
@@ -211,15 +193,15 @@ extern "C" {
 
               // Save delimit for a would-be valid IKI that is now delimited.
               if (buffer->string[range->start] == f_iki_syntax_quote_single_s.string[0] || buffer->string[range->start] == f_iki_syntax_quote_double_s.string[0] || buffer->string[range->start] == f_iki_syntax_quote_backtick_s.string[0]) {
-                status = f_array_lengths_increase(state.step_small, &data->delimits);
-                if (F_status_is_error(status)) break;
+                state->status = f_array_lengths_increase(state->step_small, &data->delimits);
+                if (F_status_is_error(state->status)) break;
 
                 data->delimits.array[data->delimits.used++] = vocabulary_slash_first;
 
                 ++range->start;
               }
 
-              status = F_next;
+              state->status = F_next;
 
               break;
             }
@@ -228,56 +210,56 @@ extern "C" {
               separator_found = F_true;
             }
             else if (buffer->string[range->start] != f_iki_syntax_slash_s.string[0]) {
-              status = F_next;
+              state->status = F_next;
 
               break;
             }
 
-            status = f_utf_buffer_increment(*buffer, range, 1);
-            if (F_status_is_error(status)) break;
+            state->status = f_utf_buffer_increment(*buffer, range, 1);
+            if (F_status_is_error(state->status)) break;
           } // while
 
-          if (status == F_true) break;
-          if (F_status_is_error(status) || range->start > range->stop || range->start >= buffer->used || status == F_next) break;
+          if (state->status == F_true) break;
+          if (F_status_is_error(state->status) || range->start > range->stop || range->start >= buffer->used || state->status == F_next) break;
         }
         else {
           width_max = buffer->used - range->start;
 
-          status = f_utf_is_word_dash_plus(buffer->string + range->start, width_max, F_false);
+          state->status = f_utf_is_word_dash_plus(buffer->string + range->start, width_max, F_false);
 
-          if (F_status_is_error(status)) {
-            if (F_status_set_fine(status) == F_utf_fragment || F_status_set_fine(status) == F_complete_not_utf) {
-              if (state.flag & f_iki_state_flag_utf_fail_on_valid_not_e) break;
+          if (F_status_is_error(state->status)) {
+            if (F_status_set_fine(state->status) == F_utf_fragment || F_status_set_fine(state->status) == F_complete_not_utf) {
+              if (state->flag & f_iki_state_flag_utf_fail_on_valid_not_e) break;
 
-              status = F_false;
+              state->status = F_false;
             }
             else {
               break;
             }
           }
 
-          if (status == F_true) {
+          if (state->status == F_true) {
             found_vocabulary.stop = range->start;
           }
 
           // Not a valid IKI vocabulary name.
           else {
-            status = f_utf_buffer_increment(*buffer, range, 1);
-            if (F_status_is_error(status)) break;
+            state->status = f_utf_buffer_increment(*buffer, range, 1);
+            if (F_status_is_error(state->status)) break;
 
-            status = F_next;
+            state->status = F_next;
 
             break;
           }
         }
 
-        status = f_utf_buffer_increment(*buffer, range, 1);
-        if (F_status_is_error(status)) break;
+        state->status = f_utf_buffer_increment(*buffer, range, 1);
+        if (F_status_is_error(state->status)) break;
       } // while
 
-      if (F_status_is_error(status) || range->start > range->stop || range->start >= buffer->used) break;
+      if (F_status_is_error(state->status) || range->start > range->stop || range->start >= buffer->used) break;
 
-      if (status == F_next) {
+      if (state->status == F_next) {
         quote = 0;
 
         continue;
@@ -289,14 +271,9 @@ extern "C" {
 
         while (range->start <= range->stop && range->start < buffer->used) {
 
-          if (state.interrupt) {
-            status = state.interrupt((void * const) &state, 0);
-
-            if (F_status_set_fine(status) == F_interrupt) {
-              status = F_status_set_error(F_interrupt);
-
-              break;
-            }
+          if (state->interrupt) {
+            state->interrupt((void * const) &state, 0);
+            if (F_status_set_fine(state->status) == F_interrupt) break;
           }
 
           if (buffer->string[range->start] == f_iki_syntax_placeholder_s.string[0]) {
@@ -306,14 +283,14 @@ extern "C" {
           }
 
           if (buffer->string[range->start] == quote) {
-            status = f_string_ranges_increase(state.step_small, &data->variable);
-            if (F_status_is_error(status)) break;
+            state->status = f_string_ranges_increase(state->step_small, &data->variable);
+            if (F_status_is_error(state->status)) break;
 
-            status = f_string_ranges_increase(state.step_small, &data->vocabulary);
-            if (F_status_is_error(status)) break;
+            state->status = f_string_ranges_increase(state->step_small, &data->vocabulary);
+            if (F_status_is_error(state->status)) break;
 
-            status = f_string_ranges_increase(state.step_small, &data->content);
-            if (F_status_is_error(status)) break;
+            state->status = f_string_ranges_increase(state->step_small, &data->content);
+            if (F_status_is_error(state->status)) break;
 
             data->variable.array[data->variable.used].start = found_vocabulary.start;
             data->variable.array[data->variable.used++].stop = range->start;
@@ -324,10 +301,17 @@ extern "C" {
             data->content.array[data->content.used].start = found_content;
             data->content.array[data->content.used++].stop = range->start - 1;
 
-            if (++range->start > range->stop) return F_none_stop;
-            if (range->start >= buffer->used) return F_none_eos;
+            if (++range->start > range->stop) {
+              state->status = F_none_stop;
+            }
+            else if (range->start >= buffer->used) {
+              state->status = F_none_eos;
+            }
+            else {
+              state->status = F_none;
+            }
 
-            return F_none;
+            return;
           }
 
           if (buffer->string[range->start] == f_iki_syntax_slash_s.string[0]) {
@@ -351,8 +335,8 @@ extern "C" {
                   ++content_slash_delimits;
                 }
 
-                status = f_array_lengths_increase_by(content_slash_delimits, &data->delimits);
-                if (F_status_is_error(status)) break;
+                state->status = f_array_lengths_increase_by(content_slash_delimits, &data->delimits);
+                if (F_status_is_error(state->status)) break;
 
                 content_range.start = content_slash_first;
                 content_range.stop = range->stop;
@@ -364,22 +348,22 @@ extern "C" {
                     ++i;
                   }
 
-                  status = f_utf_buffer_increment(*buffer, (&content_range), 1);
-                  if (F_status_is_error(status)) break;
+                  state->status = f_utf_buffer_increment(*buffer, (&content_range), 1);
+                  if (F_status_is_error(state->status)) break;
                 } // while
 
-                if (F_status_is_error(status)) break;
+                if (F_status_is_error(state->status)) break;
 
                 // Valid content's ending quote is not delimited, save and return.
                 if (content_slash_total % 2 == 0) {
-                  status = f_string_ranges_increase(state.step_small, &data->variable);
-                  if (F_status_is_error(status)) break;
+                  state->status = f_string_ranges_increase(state->step_small, &data->variable);
+                  if (F_status_is_error(state->status)) break;
 
-                  status = f_string_ranges_increase(state.step_small, &data->vocabulary);
-                  if (F_status_is_error(status)) break;
+                  state->status = f_string_ranges_increase(state->step_small, &data->vocabulary);
+                  if (F_status_is_error(state->status)) break;
 
-                  status = f_string_ranges_increase(state.step_small, &data->content);
-                  if (F_status_is_error(status)) break;
+                  state->status = f_string_ranges_increase(state->step_small, &data->content);
+                  if (F_status_is_error(state->status)) break;
 
                   data->variable.array[data->variable.used].start = found_vocabulary.start;
                   data->variable.array[data->variable.used++].stop = range->start;
@@ -390,10 +374,17 @@ extern "C" {
                   data->content.array[data->content.used].start = found_content;
                   data->content.array[data->content.used++].stop = range->start - 1;
 
-                  if (++range->start > range->stop) return F_none_stop;
-                  if (range->start >= buffer->used) return F_none_eos;
+                  if (++range->start > range->stop) {
+                    state->status = F_none_stop;
+                  }
+                  else if (range->start >= buffer->used) {
+                    state->status = F_none_eos;
+                  }
+                  else {
+                    state->status = F_none;
+                  }
 
-                  return F_none;
+                  return;
                 }
 
                 break;
@@ -403,42 +394,40 @@ extern "C" {
 
               ++content_slash_total;
 
-              status = f_utf_buffer_increment(*buffer, range, 1);
-              if (F_status_is_error(status)) break;
+              state->status = f_utf_buffer_increment(*buffer, range, 1);
+              if (F_status_is_error(state->status)) break;
             } // while
 
-            if (F_status_is_error(status)) break;
+            if (F_status_is_error(state->status)) break;
           }
 
-          status = f_utf_buffer_increment(*buffer, range, 1);
-          if (F_status_is_error(status)) break;
+          state->status = f_utf_buffer_increment(*buffer, range, 1);
+          if (F_status_is_error(state->status)) break;
         } // while
 
         quote = 0;
       }
 
-      if (F_status_is_error(status) || range->start > range->stop || range->start >= buffer->used) break;
+      if (F_status_is_error(state->status) || range->start > range->stop || range->start >= buffer->used) break;
 
-      status = f_utf_buffer_increment(*buffer, range, 1);
-      if (F_status_is_error(status)) break;
+      state->status = f_utf_buffer_increment(*buffer, range, 1);
+      if (F_status_is_error(state->status)) break;
 
     } while (range->start <= range->stop && range->start < buffer->used);
 
-    if (F_status_set_fine(status) == F_complete_not_utf_eos || F_status_set_fine(status) == F_complete_not_utf_stop) {
-      if (!(state.flag & f_iki_state_flag_utf_fail_on_valid_not_e)) {
-        status = F_status_set_fine(status);
+    if (F_status_set_fine(state->status) == F_complete_not_utf_eos || F_status_set_fine(state->status) == F_complete_not_utf_stop) {
+      if (!(state->flag & f_iki_state_flag_utf_fail_on_valid_not_e)) {
+        state->status = F_status_set_fine(state->status);
       }
     }
 
-    if (F_status_is_error(status)) {
+    if (F_status_is_error(state->status)) {
       data->delimits.used = delimits_used;
 
-      return status;
+      return;
     }
 
-    if (range->start > range->stop) return F_data_not_stop;
-
-    return F_data_not_eos;
+    state->status = (range->start > range->stop) ? F_data_not_stop : F_data_not_eos;
   }
 #endif // _di_f_iki_read_
 

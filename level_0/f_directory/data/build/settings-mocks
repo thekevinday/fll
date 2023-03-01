@@ -30,7 +30,7 @@ build_language c
 build_libraries -lc
 build_libraries-individual -lf_memory -lf_string
 
-build_sources_library directory.c directory/common.c private-directory.c ../../tests/unit/c/mock-directory.c
+build_sources_library directory.c directory/common.c directory/type.c private-directory.c directory/private-type.c ../../tests/unit/c/mock-directory.c
 
 build_sources_headers directory.h directory/common.h directory/type.h
 

@@ -5,21 +5,22 @@ extern "C" {
 #endif
 
 #ifndef _di_fl_iki_read_
-  f_status_t fl_iki_read(const f_state_t state, f_string_static_t * const buffer, f_string_range_t * const range, f_iki_data_t * const data) {
+  void fl_iki_read(f_string_static_t * const buffer, f_string_range_t * const range, f_iki_data_t * const data, f_state_t * const state) {
     #ifndef _di_level_1_parameter_checking_
-      if (!buffer) return F_status_set_error(F_parameter);
-      if (!range) return F_status_set_error(F_parameter);
+      if (!state) return;
+
+      if (!buffer || !range) {
+        state->status = F_status_set_error(F_parameter);
+
+        return;
+      }
     #endif // _di_level_1_parameter_checking_
 
-    f_status_t status = F_none;
-
     do {
-      status = f_iki_read(state, buffer, range, data);
-      if (F_status_is_error(status)) return status;
+      f_iki_read(buffer, range, data, state);
+      if (F_status_is_error(state->status)) return;
 
     } while (range->start <= range->stop && range->start < buffer->used);
-
-    return status;
   }
 #endif // _di_fl_iki_read_
 

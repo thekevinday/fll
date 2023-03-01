@@ -150,7 +150,7 @@ extern "C" {
 /**
  * Resize the string uint32s array to a larger size.
  *
- * This will resize making the string larger based on the given length.
+ * This will resize making the array larger based on the given length.
  * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
@@ -328,7 +328,7 @@ extern "C" {
 /**
  * Resize the string uint32ss array to a larger size.
  *
- * This will resize making the string larger based on the given length.
+ * This will resize making the array larger based on the given length.
  * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *

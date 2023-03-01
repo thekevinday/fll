@@ -104,6 +104,7 @@
 #include <program/fake/main/common.h>
 #include <program/fake/main/print.h>
 #include <program/fake/main/print-error.h>
+#include <program/fake/main/print-verbose.h>
 #include <program/fake/main/print-warning.h>
 
 #ifdef __cplusplus
@@ -232,48 +233,6 @@ extern "C" {
 #ifndef _di_fake_validate_parameter_paths_
   extern f_status_t fake_validate_parameter_paths(fake_data_t * const data);
 #endif // _di_fake_validate_parameter_paths_
-
-/**
- * Helper function for performing a verbose print for a file clone operation.
- *
- * @param output
- *   A file to print to.
- * @param source
- *   The source string.
- * @param destination
- *   The destination string.
- */
-#ifndef _di_fake_verbose_print_clone_
-  extern void fake_verbose_print_clone(const f_file_t output, const f_string_static_t source, const f_string_static_t destination);
-#endif // _di_fake_verbose_print_clone_
-
-/**
- * Helper function for performing a verbose print for a file copy operation.
- *
- * @param output
- *   A file to print to.
- * @param source
- *   The source string.
- * @param destination
- *   The destination string.
- */
-#ifndef _di_fake_verbose_print_copy_
-  extern void fake_verbose_print_copy(const f_file_t output, const f_string_static_t source, const f_string_static_t destination);
-#endif // _di_fake_verbose_print_copy_
-
-/**
- * Helper function for performing a verbose print for a file move operation.
- *
- * @param output
- *   A file to print to.
- * @param source
- *   The source string.
- * @param destination
- *   The destination string.
- */
-#ifndef _di_fake_verbose_print_move_
-  extern void fake_verbose_print_move(const f_file_t output, const f_string_static_t source, const f_string_static_t destination);
-#endif // _di_fake_verbose_print_move_
 
 #ifdef __cplusplus
 } // extern "C"

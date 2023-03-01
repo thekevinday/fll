@@ -18,9 +18,9 @@ extern "C" {
         (setting->flag & fss_write_flag_partial_e)
           ? f_fss_complete_partial_e
           : f_fss_complete_full_e,
-        setting->state,
         &setting->range,
-        &setting->buffer
+        &setting->buffer,
+        setting->state
       );
 
       if (F_status_set_fine(setting->status) == F_none_eol) {

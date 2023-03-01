@@ -37,15 +37,6 @@ extern "C" {
  *
  * @param buffer
  *   The buffer to read from.
- * @param state
- A state for providing flags and handling interrupts during long running operations.
- *   There is no print_error().
- *   There is no functions structure.
- *   There is no data structure passed to these functions.
- *
- *   When interrupt() returns, only F_interrupt and F_interrupt_not are processed.
- *   Error bit designates an error but must be passed along with F_interrupt.
- *   All other statuses are ignored.
  * @param range
  *   The range within the buffer that is currently being read.
  * @param objects
@@ -62,33 +53,42 @@ extern "C" {
  * @param comments
  *   An array of ranges representing where comments are found within any valid content.
  *   This only stores comments found within valid content only.
+ * @param state
+ *   A state for providing flags and handling interrupts during long running operations.
+ *   There is no print_error().
+ *   There is no functions structure.
+ *   There is no data structure passed to these functions.
  *
- * @return
- *   F_none on success.
- *   F_none_eos on success after reaching the end of the buffer.
- *   F_none_stop on success after reaching stopping point.
- *   F_data_not_eos no data to write due start location being greater than or equal to buffer size.
- *   F_data_not_stop no data to write due start location being greater than stop location.
+ *   When interrupt() returns, only F_interrupt and F_interrupt_not are processed.
+ *   Error bit designates an error but must be passed along with F_interrupt.
+ *   All other statuses are ignored.
  *
- *   F_fss_found_object_content_not (with error bit) When payload Content is missing.
- *   F_data_not_eos (with error bit) no data to write due start location being greater than or equal to buffer size, except that no "payload" is found.
- *   F_data_not_stop (with error bit) no data to write due start location being greater than stop location, except that no "payload" is found.
- *   F_none (with error bit) on success, except that no "payload" is found.
- *   F_none_eos (with error bit) on success after reaching the end of the buffer, except that no "payload" is found.
- *   F_none_stop (with error bit) on success after reaching stopping point, except that no "payload" is found.
- *   F_number_overflow (with error bit) if the maximum buffer size is reached.
- *   F_parameter (with error bit) if a parameter is invalid.
+ *   This alters state.status:
+ *     F_none on success.
+ *     F_none_eos on success after reaching the end of the buffer.
+ *     F_none_stop on success after reaching stopping point.
+ *     F_data_not_eos no data to write due start location being greater than or equal to buffer size.
+ *     F_data_not_stop no data to write due start location being greater than stop location.
  *
- *   Errors (with error bit) from: fl_fss_basic_list_content_read().
- *   Errors (with error bit) from: fl_fss_basic_list_object_read().
+ *     F_fss_found_object_content_not (with error bit) When payload Content is missing.
+ *     F_data_not_eos (with error bit) no data to write due start location being greater than or equal to buffer size, except that no "payload" is found.
+ *     F_data_not_stop (with error bit) no data to write due start location being greater than stop location, except that no "payload" is found.
+ *     F_none (with error bit) on success, except that no "payload" is found.
+ *     F_none_eos (with error bit) on success after reaching the end of the buffer, except that no "payload" is found.
+ *     F_none_stop (with error bit) on success after reaching stopping point, except that no "payload" is found.
+ *     F_number_overflow (with error bit) if the maximum buffer size is reached.
+ *     F_parameter (with error bit) if a parameter is invalid.
  *
- *   F_number_overflow (with error bit) if the maximum buffer size is reached.
+ *     Errors (with error bit) from: fl_fss_basic_list_content_read().
+ *     Errors (with error bit) from: fl_fss_basic_list_object_read().
  *
- *   Errors (with error bit) from: f_string_ranges_increase().
- *   Errors (with error bit) from: f_string_rangess_increase().
- *   Errors (with error bit) from: f_uint8s_increase().
- *   Errors (with error bit) from: fl_fss_basic_list_content_read().
- *   Errors (with error bit) from: fl_fss_basic_list_object_read().
+ *     F_number_overflow (with error bit) if the maximum buffer size is reached.
+ *
+ *     Errors (with error bit) from: f_string_ranges_increase().
+ *     Errors (with error bit) from: f_string_rangess_increase().
+ *     Errors (with error bit) from: f_uint8s_increase().
+ *     Errors (with error bit) from: fl_fss_basic_list_content_read().
+ *     Errors (with error bit) from: fl_fss_basic_list_object_read().
  *
  * @see f_string_ranges_increase()
  * @see f_string_rangess_increase()
@@ -97,7 +97,7 @@ extern "C" {
  * @see fl_fss_basic_list_object_read()
  */
 #ifndef _di_fll_fss_payload_read_
-  extern f_status_t fll_fss_payload_read(const f_string_static_t buffer, f_state_t state, f_string_range_t * const range, f_fss_objects_t * const objects, f_fss_contents_t * const contents, f_fss_delimits_t * const objects_delimits, f_fss_delimits_t * const contents_delimits, f_fss_comments_t * const comments);
+  extern void fll_fss_payload_read(const f_string_static_t buffer, f_string_range_t * const range, f_fss_objects_t * const objects, f_fss_contents_t * const contents, f_fss_delimits_t * const objects_delimits, f_fss_delimits_t * const contents_delimits, f_fss_comments_t * const comments, f_state_t * const state);
 #endif // _di_fll_fss_payload_read_
 
 /**
@@ -120,8 +120,10 @@ extern "C" {
  *   A string to prepend at the start of each line in content, such as spaces.
  *   This will not be prepended for the Object "payload".
  *   Set the pointer address to 0 to disable.
+ * @param destination
+ *   The buffer to append to.
  * @param state
- A state for providing flags and handling interrupts during long running operations.
+ *   A state for providing flags and handling interrupts during long running operations.
  *   There is no print_error().
  *   There is no functions structure.
  *   There is no data structure passed to these functions.
@@ -129,28 +131,26 @@ extern "C" {
  *   When interrupt() returns, only F_interrupt and F_interrupt_not are processed.
  *   Error bit designates an error but must be passed along with F_interrupt.
  *   All other statuses are ignored.
- * @param destination
- *   The buffer to append to.
  *
- * @return
- *   F_none on success.
- *   F_none_eos on success after reaching the end of the buffer.
- *   F_none_stop on success after reaching stopping point.
- *   F_data_not_eos no data to write due start location being greater than or equal to buffer size.
- *   F_data_not_stop no data to write due start location being greater than stop location.
+ *   This alters state.status:
+ *     F_none on success.
+ *     F_none_eos on success after reaching the end of the buffer.
+ *     F_none_stop on success after reaching stopping point.
+ *     F_data_not_eos no data to write due start location being greater than or equal to buffer size.
+ *     F_data_not_stop no data to write due start location being greater than stop location.
  *
- *   F_parameter (with error bit) if a parameter is invalid.
+ *     F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_string_dynamic_increase().
- *   Errors (with error bit) from: fl_fss_basic_list_content_write().
- *   Errors (with error bit) from: fl_fss_basic_list_object_write().
+ *     Errors (with error bit) from: f_string_dynamic_increase().
+ *     Errors (with error bit) from: fl_fss_basic_list_content_write().
+ *     Errors (with error bit) from: fl_fss_basic_list_object_write().
  *
  * @see f_string_dynamic_increase()
  * @see fl_fss_basic_list_content_write()
  * @see fl_fss_basic_list_object_write()
  */
 #ifndef _di_fll_fss_payload_write_
-  extern f_status_t fll_fss_payload_write(const f_string_static_t object, const f_string_static_t content, const bool trim, const f_string_static_t * const content_prepend, f_state_t state, f_string_dynamic_t * const destination);
+  extern void fll_fss_payload_write(const f_string_static_t object, const f_string_static_t content, const bool trim, const f_string_static_t * const content_prepend, f_string_dynamic_t * const destination, f_state_t * const state);
 #endif // _di_fll_fss_payload_write_
 
 #ifdef __cplusplus

@@ -60,7 +60,7 @@ extern "C" {
 #endif // _di_controller_rule_find_
 
 #ifndef _di_controller_rule_parameters_read_
-  f_status_t controller_rule_parameters_read(const controller_global_t global, const f_string_static_t buffer, const f_state_t state, f_fss_object_t * const object, f_fss_content_t * const content, controller_rule_action_t * const action) {
+  f_status_t controller_rule_parameters_read(const controller_global_t global, const f_string_static_t buffer, f_fss_object_t * const object, f_fss_content_t * const content, controller_rule_action_t * const action, f_state_t * const state) {
 
     f_status_t status = F_none;
 
@@ -153,7 +153,7 @@ extern "C" {
           range.start = 0;
           range.stop = action->parameters.array[action->parameters.used].used - 1;
 
-          status = fl_iki_read(state, &action->parameters.array[action->parameters.used], &range, &action->ikis.array[action->ikis.used]);
+          status = fl_iki_read(&action->parameters.array[action->parameters.used], &range, &action->ikis.array[action->ikis.used], state);
 
           if (F_status_is_error(status)) {
             controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "fl_iki_read", F_true);
@@ -305,7 +305,7 @@ extern "C" {
 
             f_string_range_t range_iki = macro_f_string_range_t_initialize2(actions->array[actions->used].parameters.array[0].used);
 
-            status = fl_iki_read(state, &actions->array[actions->used].parameters.array[0], &range_iki, &actions->array[actions->used].ikis.array[0]);
+            status = fl_iki_read(&actions->array[actions->used].parameters.array[0], &range_iki, &actions->array[actions->used].ikis.array[0], state);
 
             if (F_status_is_error(status)) {
               controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "fl_iki_read", F_true);
@@ -610,7 +610,7 @@ extern "C" {
 
             f_string_range_t range_iki = macro_f_string_range_t_initialize2(actions->array[actions->used].parameters.array[0].used);
 
-            status = fl_iki_read(state, &actions->array[actions->used].parameters.array[0], &range_iki, &actions->array[actions->used].ikis.array[0]);
+            status = fl_iki_read(&actions->array[actions->used].parameters.array[0], &range_iki, &actions->array[actions->used].ikis.array[0], state);
 
             if (F_status_is_error(status)) {
               controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "fl_iki_read", F_true);
@@ -2389,7 +2389,7 @@ extern "C" {
         cache->delimits.used = 0;
 
         // The current line is not an Extended List object, so the next possibility is a Basic List (and Extended List, both use the same Object structure).
-        status = fl_fss_extended_object_read(cache->buffer_item, state, &range, &cache->range_action, 0, &cache->delimits);
+        fl_fss_extended_object_read(cache->buffer_item, &range, &cache->range_action, 0, &cache->delimits, state);
 
         if (F_status_is_error(status)) {
           controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "fl_fss_extended_object_read", F_true);

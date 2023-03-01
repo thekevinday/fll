@@ -33,15 +33,6 @@ extern "C" {
  *
  * @param buffer
  *   The buffer to read from.
- * @param state
- A state for providing flags and handling interrupts during long running operations.
- *   There is no print_error().
- *   There is no functions structure.
- *   There is no data structure passed to these functions.
- *
- *   When interrupt() returns, only F_interrupt and F_interrupt_not are processed.
- *   Error bit designates an error but must be passed along with F_interrupt.
- *   All other statuses are ignored.
  * @param range
  *   The range within the buffer that is currently being read.
  * @param objects
@@ -58,24 +49,33 @@ extern "C" {
  * @param comments
  *   An array of ranges representing where comments are found within any valid content.
  *   This only stores comments found within valid content only.
+ * @param state
+ *   A state for providing flags and handling interrupts during long running operations.
+ *   There is no print_error().
+ *   There is no functions structure.
+ *   There is no data structure passed to these functions.
  *
- * @return
- *   F_none on success (both valid object and valid content found with start location is at end of content).
- *   F_none_eos on success after reaching the end of the buffer (both valid object and valid content found with start location is at end of buffer).
- *   F_none_stop on success after reaching stopping point (both valid object and valid content found with start location is at stop point).
- *   F_data_not_eol if there is no data to write and EOL was reached.
- *   F_data_not_eos no data to write due start location being greater than or equal to buffer size.
- *   F_data_not_stop no data to write due start location being greater than stop location.
- *   F_fss_found_object_content_not on success and object was found but no content was found (start location is at end of object).
+ *   When interrupt() returns, only F_interrupt and F_interrupt_not are processed.
+ *   Error bit designates an error but must be passed along with F_interrupt.
+ *   All other statuses are ignored.
  *
- *   F_number_overflow (with error bit) if the maximum buffer size is reached.
- *   F_parameter (with error bit) if a parameter is invalid.
+ *   This alters state.status:
+ *     F_none on success (both valid object and valid content found with start location is at end of content).
+ *     F_none_eos on success after reaching the end of the buffer (both valid object and valid content found with start location is at end of buffer).
+ *     F_none_stop on success after reaching stopping point (both valid object and valid content found with start location is at stop point).
+ *     F_data_not_eol if there is no data to write and EOL was reached.
+ *     F_data_not_eos no data to write due start location being greater than or equal to buffer size.
+ *     F_data_not_stop no data to write due start location being greater than stop location.
+ *     F_fss_found_object_content_not on success and object was found but no content was found (start location is at end of object).
  *
- *   Errors (with error bit) from: f_string_ranges_increase().
- *   Errors (with error bit) from: f_string_rangess_increase().
- *   Errors (with error bit) from: f_uint8s_increase().
- *   Errors (with error bit) from: fl_fss_extended_list_content_read().
- *   Errors (with error bit) from: fl_fss_extended_list_object_read().
+ *     F_number_overflow (with error bit) if the maximum buffer size is reached.
+ *     F_parameter (with error bit) if a parameter is invalid.
+ *
+ *     Errors (with error bit) from: f_string_ranges_increase().
+ *     Errors (with error bit) from: f_string_rangess_increase().
+ *     Errors (with error bit) from: f_uint8s_increase().
+ *     Errors (with error bit) from: fl_fss_extended_list_content_read().
+ *     Errors (with error bit) from: fl_fss_extended_list_object_read().
  *
  * @see f_string_ranges_increase()
  * @see f_string_rangess_increase()
@@ -84,7 +84,7 @@ extern "C" {
  * @see fl_fss_extended_list_object_read()
  */
 #ifndef _di_fll_fss_extended_list_read_
-  extern f_status_t fll_fss_extended_list_read(const f_string_static_t buffer, f_state_t state, f_string_range_t * const range, f_fss_objects_t * const objects, f_fss_contents_t * const contents, f_fss_delimits_t * const objects_delimits, f_fss_delimits_t * const contents_delimits, f_fss_comments_t * const comments);
+  extern void fll_fss_extended_list_read(const f_string_static_t buffer, f_string_range_t * const range, f_fss_objects_t * const objects, f_fss_contents_t * const contents, f_fss_delimits_t * const objects_delimits, f_fss_delimits_t * const contents_delimits, f_fss_comments_t * const comments, f_state_t * const state);
 #endif // _di_fll_fss_extended_list_read_
 
 /**
@@ -102,8 +102,10 @@ extern "C" {
  *   These ranges are only checked/ignored if there is a valid nested object open or a valid nested object close.
  *   Any valid nested object open or valid nested object close inside an ingore range will not be escaped.
  *   Set the pointer address to 0 to disable.
+ * @param destination
+ *   The buffer where the content is written to.
  * @param state
- A state for providing flags and handling interrupts during long running operations.
+ *   A state for providing flags and handling interrupts during long running operations.
  *   There is no print_error().
  *   There is no functions structure.
  *   There is no data structure passed to these functions.
@@ -111,28 +113,26 @@ extern "C" {
  *   When interrupt() returns, only F_interrupt and F_interrupt_not are processed.
  *   Error bit designates an error but must be passed along with F_interrupt.
  *   All other statuses are ignored.
- * @param destination
- *   The buffer where the content is written to.
  *
- * @return
- *   F_none on success.
- *   F_none_eos on success after reaching the end of the buffer.
- *   F_none_stop on success after reaching stopping point.
- *   F_data_not_eos no data to write due start location being greater than or equal to buffer size.
- *   F_data_not_stop no data to write due start location being greater than stop location.
+ *   This alters state.status:
+ *     F_none on success.
+ *     F_none_eos on success after reaching the end of the buffer.
+ *     F_none_stop on success after reaching stopping point.
+ *     F_data_not_eos no data to write due start location being greater than or equal to buffer size.
+ *     F_data_not_stop no data to write due start location being greater than stop location.
  *
- *   F_parameter (with error bit) if a parameter is invalid.
+ *     F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: f_string_dynamic_increase().
- *   Errors (with error bit) from: fl_fss_extended_list_content_write().
- *   Errors (with error bit) from: fl_fss_extended_list_object_write().
+ *     Errors (with error bit) from: f_string_dynamic_increase().
+ *     Errors (with error bit) from: fl_fss_extended_list_content_write().
+ *     Errors (with error bit) from: fl_fss_extended_list_object_write().
  *
  * @see f_string_dynamic_increase()
  * @see fl_fss_extended_list_content_write()
  * @see fl_fss_extended_list_object_write()
  */
 #ifndef _di_fll_fss_extended_list_write_
-  extern f_status_t fll_fss_extended_list_write(const f_string_static_t object, const f_string_static_t content, const f_string_static_t *content_prepend, const f_string_ranges_t *ignore, f_state_t state, f_string_dynamic_t * const destination);
+  extern void fll_fss_extended_list_write(const f_string_static_t object, const f_string_static_t content, const f_string_static_t *content_prepend, const f_string_ranges_t *ignore, f_string_dynamic_t * const destination, f_state_t * const state);
 #endif // _di_fll_fss_extended_list_write_
 
 #ifdef __cplusplus

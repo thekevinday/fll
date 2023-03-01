@@ -22,14 +22,14 @@ extern "C" {
 #endif // _di_iki_write_setting_delete_
 
 #ifndef _di_iki_write_setting_load_
-  void iki_write_setting_load(const f_console_arguments_t arguments, f_state_t state, fll_program_data_t * const main, iki_write_setting_t * const setting) {
+  void iki_write_setting_load(const f_console_arguments_t arguments, f_state_t * const state, fll_program_data_t * const main, iki_write_setting_t * const setting) {
 
     if (!main || !setting) return;
 
     setting->flag = 0;
 
     // Load parameters.
-    setting->status = f_console_parameter_process(state, arguments, &main->parameters, 0);
+    setting->status = f_console_parameter_process(arguments, state, &main->parameters, 0);
 
     if (F_status_is_error(setting->status)) {
       iki_write_print_error(setting, main->error, macro_iki_write_f(f_console_parameter_process));

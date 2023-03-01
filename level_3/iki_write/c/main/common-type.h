@@ -109,7 +109,7 @@ extern "C" {
  *
  * flag: Flags passed to the main function.
  *
- * status: The main status code, generally used by the load settings and main functions.
+ * state: The state information.
  *
  * line_first: A string expected to represent either "\n" or NULL to allow for easy handling of when to print first new line or not.
  * line_last:  A string expected to represent either "\n" or NULL to allow for easy handling of when to print last new line or not.
@@ -128,7 +128,7 @@ extern "C" {
   typedef struct {
     uint16_t flag;
 
-    f_status_t status;
+    f_state_t state;
 
     f_string_static_t line_first;
     f_string_static_t line_last;
@@ -147,7 +147,7 @@ extern "C" {
   #define iki_write_setting_t_initialize \
     { \
       iki_write_main_flag_none_e, \
-      F_none, \
+      f_state_t_initialize, \
       f_string_static_t_initialize, \
       f_string_static_t_initialize, \
       f_string_dynamic_t_initialize, \

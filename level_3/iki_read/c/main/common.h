@@ -71,7 +71,7 @@ extern "C" {
  * @see fll_program_parameter_process_verbosity()
  */
 #ifndef _di_iki_read_setting_load_
-  extern void iki_read_setting_load(const f_console_arguments_t arguments, f_state_t state, fll_program_data_t * const main, iki_read_setting_t * const setting);
+  extern void iki_read_setting_load(const f_console_arguments_t arguments, f_state_t * const state, fll_program_data_t * const main, iki_read_setting_t * const setting);
 #endif // _di_iki_read_setting_load_
 
 /**

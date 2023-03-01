@@ -1,187 +1,207 @@
 #include "basic.h"
 #include "../private-fss.h"
-#include "macro.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 #ifndef _di_fl_fss_basic_content_read_
-  f_status_t fl_fss_basic_content_read(const f_string_static_t buffer, f_state_t state, f_string_range_t * const range, f_fss_content_t * const found, f_fss_delimits_t * const delimits) {
+  void fl_fss_basic_content_read(const f_string_static_t buffer, f_string_range_t * const range, f_fss_content_t * const found, f_fss_delimits_t * const delimits, f_state_t * const state) {
     #ifndef _di_level_1_parameter_checking_
-      if (!range) return F_status_set_error(F_parameter);
-      if (!found) return F_status_set_error(F_parameter);
-      if (!delimits) return F_status_set_error(F_parameter);
+      if (!state) return;
+
+      if (!range || !found || !delimits) {
+        state->status = F_status_set_error(F_parameter);
+
+        return;
+      }
     #endif // _di_level_1_parameter_checking_
 
-    f_status_t status = f_fss_skip_past_space(state, buffer, range);
-    if (F_status_is_error(status)) return status;
+    f_fss_skip_past_space(buffer, range, state);
+    if (F_status_is_error(state->status)) return;
 
-    if (status == F_none_eol) {
+    if (state->status == F_none_eol) {
       ++range->start;
+      state->status = F_fss_found_content_not;
 
-      return F_fss_found_content_not;
+      return;
     }
 
-    if (status == F_none_eos) return F_data_not_eos;
-    if (status == F_none_stop) return F_data_not_stop;
+    if (state->status == F_none_eos) {
+      state->status = F_data_not_eos;
 
-    status = f_string_ranges_increase(state.step_small, found);
-    if (F_status_is_error(status)) return status;
+      return;
+    }
+
+    if (state->status == F_none_stop) {
+      state->status = F_data_not_stop;
+
+      return;
+    }
+
+    state->status = f_string_ranges_increase(state->step_small, found);
+    if (F_status_is_error(state->status)) return;
 
     found->array[found->used].start = range->start;
 
     for (;; ++range->start) {
 
-      if (state.interrupt) {
-        status = state.interrupt((void *) &state, 0);
-
-        if (F_status_set_fine(status) == F_interrupt) {
-          status = F_status_set_error(F_interrupt);
-
-          break;
-        }
+      if (state->interrupt) {
+        state->interrupt((void *) &state, 0);
+        if (F_status_set_fine(state->status) == F_interrupt) break;
       }
 
-      status = f_fss_skip_past_delimit(state, buffer, range);
-      if (F_status_is_error(status)) break;
+      f_fss_skip_past_delimit(buffer, range, state);
+      if (F_status_is_error(state->status)) break;
 
-      if (status == F_none_eos || status == F_none_stop) return status;
+      if (state->status == F_none_eos || state->status == F_none_stop) return;
       if (buffer.string[range->start] == f_fss_basic_close_s.string[0]) break;
     } // for
 
-    if (F_status_is_error(status)) return status;
+    if (F_status_is_error(state->status)) return;
 
     found->array[found->used++].stop = range->start - 1;
 
-    status = f_utf_buffer_increment(buffer, range, 1);
-    if (F_status_is_error(status)) return status;
+    state->status = f_utf_buffer_increment(buffer, range, 1);
+    if (F_status_is_error(state->status)) return;
 
-    return F_fss_found_content;
+    state->status = F_fss_found_content;
   }
 #endif // _di_fl_fss_basic_content_read_
 
 #ifndef _di_fl_fss_basic_content_write_
-  f_status_t fl_fss_basic_content_write(const f_string_static_t content, const uint8_t complete, f_state_t state, f_string_range_t * const range, f_string_dynamic_t * const destination) {
+  void fl_fss_basic_content_write(const f_string_static_t content, const uint8_t complete, f_string_range_t * const range, f_string_dynamic_t * const destination, f_state_t * const state) {
     #ifndef _di_level_1_parameter_checking_
-      if (!range) return F_status_set_error(F_parameter);
-      if (!destination) return F_status_set_error(F_parameter);
+      if (!state) return;
+
+      if (!range || !destination) {
+        state->status = F_status_set_error(F_parameter);
+
+        return;
+      }
     #endif // _di_level_1_parameter_checking_
 
-    f_status_t status = F_none;
+    state->status = F_none;
 
-    status = f_fss_skip_past_delimit(state, content, range);
-    if (F_status_is_error(status)) return status;
+    f_fss_skip_past_delimit(content, range, state);
+    if (F_status_is_error(state->status)) return;
 
     if (range->start > range->stop || range->start >= content.used) {
 
       // Content should be terminated, even if empty.
       if (complete == f_fss_complete_full_e || complete == f_fss_complete_full_trim_e || complete == f_fss_complete_end_e) {
-        status = f_string_dynamic_increase(state.step_large, destination);
-        if (F_status_is_error(status)) return status;
+        state->status = f_string_dynamic_increase(state->step_large, destination);
+        if (F_status_is_error(state->status)) return;
 
         destination->string[destination->used++] = f_fss_basic_close_s.string[0];
       }
 
-      if (range->start > range->stop) return F_data_not_stop;
+      state->status = range->start > range->stop ? F_data_not_stop : F_data_not_eos;
 
-      return F_data_not_eos;
+      return;
     }
 
     const f_array_length_t destination_used = destination->used;
 
     for (; range->start <= range->stop && range->start < content.used; ++range->start) {
 
-      if (state.interrupt) {
-        status = state.interrupt((void *) &state, 0);
-
-        if (F_status_set_fine(status) == F_interrupt) return F_status_set_error(F_interrupt);
+      if (state->interrupt) {
+        state->interrupt((void *) &state, 0);
+        if (F_status_set_fine(state->status) == F_interrupt) return;
       }
 
       if (content.string[range->start] == f_fss_eol_s.string[0]) {
         destination->used = destination_used;
+        state->status = F_status_set_error(F_none_eol);
 
-        return F_status_set_error(F_none_eol);
+        return;
       }
 
       if (content.string[range->start] == f_fss_placeholder_s.string[0]) continue;
 
-      status = f_string_dynamic_increase(state.step_large, destination);
+      state->status = f_string_dynamic_increase(state->step_large, destination);
 
-      if (F_status_is_error(status)) {
+      if (F_status_is_error(state->status)) {
         destination->used = destination_used;
 
-        return status;
+        return;
       }
 
       destination->string[destination->used++] = content.string[range->start];
     } // for
 
     if (complete == f_fss_complete_full_e || complete == f_fss_complete_full_trim_e || complete == f_fss_complete_end_e) {
-      status = f_string_dynamic_increase(state.step_large, destination);
+      state->status = f_string_dynamic_increase(state->step_large, destination);
 
-      if (F_status_is_error(status)) {
+      if (F_status_is_error(state->status)) {
         destination->used = destination_used;
 
-        return status;
+        return;
       }
 
       destination->string[destination->used++] = f_fss_basic_close_s.string[0];
     }
 
-    if (range->start > range->stop) return F_none_stop;
-
-    return F_none_eos;
+    if (range->start > range->stop) state->status = F_none_stop;
+    else state->status = F_none_eos;
   }
 #endif // _di_fl_fss_basic_content_write_
 
 #ifndef _di_fl_fss_basic_object_read_
-  f_status_t fl_fss_basic_object_read(const f_string_static_t buffer, f_state_t state, f_string_range_t * const range, f_fss_object_t * const found, uint8_t * const quote, f_fss_delimits_t * const delimits) {
+  void fl_fss_basic_object_read(const f_string_static_t buffer, f_string_range_t * const range, f_fss_object_t * const found, uint8_t * const quote, f_fss_delimits_t * const delimits, f_state_t * const state) {
     #ifndef _di_level_1_parameter_checking_
-      if (!range) return F_status_set_error(F_parameter);
-      if (!found) return F_status_set_error(F_parameter);
-      if (!delimits) return F_status_set_error(F_parameter);
+      if (!state) return;
+
+      if (!range || !found || !delimits) {
+        state->status = F_status_set_error(F_parameter);
+
+        return;
+      }
     #endif // _di_level_1_parameter_checking_
 
     const f_array_length_t delimits_used = delimits->used;
 
-    const f_status_t status = private_fl_fss_basic_read(buffer, F_true, state, range, found, quote, delimits);
+    private_fl_fss_basic_read(buffer, F_true, range, found, quote, delimits, state);
 
-    if (F_status_is_error(status) || status == F_fss_found_object_not || status == F_data_not || status == F_data_not_eos || status == F_data_not_stop) {
+    if (F_status_is_error(state->status) || state->status == F_fss_found_object_not || state->status == F_data_not || state->status == F_data_not_eos || state->status == F_data_not_stop) {
       delimits->used = delimits_used;
     }
-
-    return status;
   }
 #endif // _di_fl_fss_basic_object_read_
 
 #ifndef _di_fl_fss_basic_object_write_
-  f_status_t fl_fss_basic_object_write(const f_string_static_t object, const uint8_t quote, const uint8_t complete, f_state_t state, f_string_range_t * const range, f_string_dynamic_t * const destination) {
+  void fl_fss_basic_object_write(const f_string_static_t object, const uint8_t quote, const uint8_t complete, f_string_range_t * const range, f_string_dynamic_t * const destination, f_state_t * const state) {
     #ifndef _di_level_1_parameter_checking_
-      if (!range) return F_status_set_error(F_parameter);
-      if (!destination) return F_status_set_error(F_parameter);
+      if (!state) return;
+
+      if (!range || !destination) {
+        state->status = F_status_set_error(F_parameter);
+
+        return;
+      }
     #endif // _di_level_1_parameter_checking_
 
     const f_array_length_t destination_used = destination->used;
 
-    f_status_t status = private_fl_fss_basic_write(F_true, object, quote ? quote : f_fss_quote_double_s.string[0], state, range, destination);
+    private_fl_fss_basic_write(F_true, object, quote ? quote : f_fss_quote_double_s.string[0], range, destination, state);
 
-    if (F_status_is_error(status)) {
+    if (F_status_is_error(state->status)) {
       destination->used = destination_used;
 
-      return status;
+      return;
     }
 
-    if (status == F_data_not_stop || status == F_data_not_eos) {
+    if (state->status == F_data_not_stop || state->status == F_data_not_eos) {
 
       // Objects cannot be empty, so write a quote empty string.
       {
-        const f_status_t status_allocation = f_string_dynamic_increase_by(state.step_small + 2, destination);
+        const f_status_t status = f_string_dynamic_increase_by(state->step_small + 2, destination);
 
-        if (F_status_is_error(status_allocation)) {
+        if (F_status_is_error(status)) {
           destination->used = destination_used;
+          state->status = status;
 
-          return status_allocation;
+          return;
         }
       }
 
@@ -190,38 +210,38 @@ extern "C" {
     }
 
     if (complete == f_fss_complete_partial_e || complete == f_fss_complete_partial_trim_e || complete == f_fss_complete_full_e || complete == f_fss_complete_full_trim_e || complete == f_fss_complete_trim_e) {
-      if (status == F_none_stop || status == F_none_eos || status == F_data_not_stop || status == F_data_not_eos) {
-        f_status_t status2 = F_none;
+      if (state->status == F_none_stop || state->status == F_none_eos || state->status == F_data_not_stop || state->status == F_data_not_eos) {
+        const f_status_t status_original = state->status;
 
         if (complete == f_fss_complete_full_trim_e || complete == f_fss_complete_trim_e) {
-          status2 = private_fl_fss_basic_write_object_trim(quote ? quote : f_fss_quote_double_s.string[0], destination_used, state, destination);
+          private_fl_fss_basic_write_object_trim(quote ? quote : f_fss_quote_double_s.string[0], destination_used, destination, state);
 
-          if (F_status_is_error(status2)) {
+          if (F_status_is_error(state->status)) {
             destination->used = destination_used;
 
-            return status2;
+            return;
           }
         }
 
         if (complete != f_fss_complete_trim_e) {
-          status2 = f_string_dynamic_increase(state.step_large, destination);
+          state->status = f_string_dynamic_increase(state->step_large, destination);
 
-          if (F_status_is_error(status2)) {
+          if (F_status_is_error(state->status)) {
             destination->used = destination_used;
 
-            return status2;
+            return;
           }
 
           destination->string[destination->used++] = f_fss_basic_open_s.string[0];
         }
+
+        state->status = status_original;
       }
     }
 
-    if (F_status_is_error(status)) {
+    if (F_status_is_error(state->status)) {
       destination->used = destination_used;
     }
-
-    return status;
   }
 #endif // _di_fl_fss_basic_object_write_
 

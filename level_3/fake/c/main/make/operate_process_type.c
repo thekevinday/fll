@@ -205,13 +205,13 @@ extern "C" {
     const f_array_length_t total = data_make->cache_arguments.used - 1;
     f_string_static_t destination = f_string_static_t_initialize;
 
-    fl_directory_recurse_t recurse = fl_directory_recurse_t_initialize;
+    f_directory_recurse_t recurse = f_directory_recurse_t_initialize;
     f_mode_t mode = f_mode_t_initialize;
 
     if (clone) {
       if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
         recurse.output = data_make->main->message.to;
-        recurse.verbose = fake_verbose_print_clone;
+        recurse.verbose = fake_print_verbose_clone;
       }
 
       recurse.flag = f_file_stat_flag_group_e | f_file_stat_flag_owner_e;
@@ -221,7 +221,7 @@ extern "C" {
 
       if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
         recurse.output = data_make->main->message.to;
-        recurse.verbose = fake_verbose_print_copy;
+        recurse.verbose = fake_print_verbose_copy;
       }
     }
 
@@ -317,6 +317,8 @@ extern "C" {
         if (F_status_is_error(status_file)) {
           fake_print_error_file(data_make->setting, data_make->main->error, status_file, clone ? macro_fake_f(f_file_clone) : macro_fake_f(f_file_copy), data_make->cache_arguments.array[i], clone ? f_file_operation_clone_s : f_file_operation_copy_s, fll_error_file_type_file_e);
 
+          f_directory_recurse_delete(&recurse);
+
           return F_status_set_error(F_failure);
         }
 
@@ -325,9 +327,13 @@ extern "C" {
       else if (F_status_is_error(status_file)) {
         fake_print_error_file(data_make->setting, data_make->main->error, status_file, macro_fake_f(f_directory_is), data_make->cache_arguments.array[i], f_file_operation_identify_s, fll_error_file_type_directory_e);
 
+        f_directory_recurse_delete(&recurse);
+
         return F_status_set_error(F_failure);
       }
     } // for
+
+    f_directory_recurse_delete(&recurse);
 
     return F_none;
   }
@@ -361,7 +367,7 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    const int recursion_max = all ? F_directory_descriptors_max_d : 0;
+    const int recursion_max = all ? F_directory_max_descriptors_d : 0;
     struct stat file_stat;
 
     for (f_array_length_t i = 0; i < data_make->cache_arguments.used; ++i) {
@@ -1269,7 +1275,7 @@ extern "C" {
 
     if ((flag & 0x1) && f_file_exists(data_make->cache_arguments.array[data_make->cache_arguments.used - 1], F_false) == F_true) {
       if (f_directory_is(data_make->cache_arguments.array[data_make->cache_arguments.used - 1]) == F_true) {
-        status = f_directory_remove(data_make->cache_arguments.array[data_make->cache_arguments.used - 1], F_directory_descriptors_max_d, F_false);
+        status = f_directory_remove(data_make->cache_arguments.array[data_make->cache_arguments.used - 1], F_directory_max_descriptors_d, F_false);
 
         if (F_status_is_error(status)) {
           fake_print_error_file(data_make->setting, data_make->main->error, status, macro_fake_f(f_directory_remove), data_make->cache_arguments.array[data_make->cache_arguments.used - 1], f_file_operation_delete_s, fll_error_file_type_directory_e);
@@ -1366,13 +1372,13 @@ extern "C" {
 
     const f_array_length_t total = data_make->cache_arguments.used -1;
 
-    fl_directory_recurse_t recurse = fl_directory_recurse_t_initialize;
+    f_directory_recurse_t recurse = f_directory_recurse_t_initialize;
 
     f_string_static_t destination = f_string_static_t_initialize;
 
     if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
       recurse.output = data_make->main->message.to;
-      recurse.verbose = fake_verbose_print_move;
+      recurse.verbose = fake_print_verbose_move;
     }
 
     bool existing = F_true;

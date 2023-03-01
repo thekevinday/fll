@@ -183,7 +183,7 @@ extern "C" {
 /**
  * Resize all parts of the named structure to a larger size.
  *
- * This will resize making the string larger based on the given length.
+ * This will resize making the array larger based on the given length.
  * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *
@@ -210,7 +210,7 @@ extern "C" {
  * @param length
  *   The new size to use.
  * @param named
- *   The named structure to resize.
+ *   The named array to resize.
  *
  * @return
  *   F_none on success.
@@ -311,7 +311,7 @@ extern "C" {
 /**
  * Resize the nameds array to a larger size.
  *
- * This will resize making the string larger based on the given length.
+ * This will resize making the array larger based on the given length.
  * If the given length is too large for the buffer, then attempt to set max buffer size (F_array_length_t_size_d).
  * If already set to the maximum buffer size, then the resize will fail.
  *

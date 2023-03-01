@@ -5,358 +5,221 @@
 extern "C" {
 #endif
 
-#if !defined(_di_fl_directory_clone_) || !defined(_di_fl_directory_clone_content_)
-  f_status_t private_fl_directory_clone(const f_string_static_t source, const f_string_static_t destination, const fl_directory_recurse_t recurse, const f_number_unsigned_t depth) {
+#if !defined(_di_fl_directory_copy_)
+  void private_fl_directory_copy_recurse(f_directory_recurse_t * const recurse) {
 
-    f_status_t status = F_none;
-    f_directory_listing_t listing = f_directory_listing_t_initialize;
+    f_string_dynamics_t directories = f_string_dynamics_t_initialize;
+    f_string_dynamics_t directories_original = f_string_dynamics_t_initialize;
 
-    status = private_fl_directory_list(source, 0, 0, F_false, &listing);
+    directories_original.array = recurse->listing.directory.array;
+    directories_original.used = recurse->listing.directory.used;
+    directories_original.size = recurse->listing.directory.size;
 
-    if (F_status_is_error(status)) {
-      macro_f_directory_listing_t_delete_simple(listing);
+    recurse->listing.directory.array = directories.array;
+    recurse->listing.directory.used = directories.used;
+    recurse->listing.directory.size = directories.size;
 
-      return status;
+    recurse->state.status = private_fl_directory_list(*recurse->source, 0, 0, recurse->flag & f_directory_recurse_flag_dereference_e, &recurse->listing);
+
+    if (F_status_is_error(recurse->state.status)) {
+
+      // Only the directory is to be freed because all others are preserved between recursions.
+      f_string_dynamics_resize(0, &directories);
+
+      return;
     }
 
-    status = F_none;
-
-    f_array_length_t failures_used = recurse.failures ? recurse.failures->used : 0;
+    recurse->state.status = F_none;
 
     {
       f_string_dynamics_t * const list[] = {
-        &listing.block,
-        &listing.character,
-        &listing.regular,
-        &listing.link,
-        &listing.fifo,
-        &listing.socket,
-        &listing.unknown,
+        &recurse->listing.block,
+        &recurse->listing.character,
+        &recurse->listing.regular,
+        &recurse->listing.link,
+        &recurse->listing.fifo,
+        &recurse->listing.socket,
+        &recurse->listing.unknown,
       };
 
-      uint8_t i = 0;
       f_array_length_t j = 0;
 
-      for (; i < 7; ++i) {
+      for (uint8_t i = 0; i < 7; ++i) {
 
-        for (j = 0; F_status_is_fine(status) && j < list[i]->used; ++j) {
-          status = private_fl_directory_clone_file(list[i]->array[j], source, destination, recurse);
+        for (j = 0; F_status_is_fine(recurse->state.status) && j < list[i]->used; ++j) {
+          private_fl_directory_copy_recurse_file(list[i]->array[j], recurse);
         } // for
 
-        f_string_dynamics_resize(0, list[i]);
-      } // for
-    }
+        list[i]->used = 0;
 
-    for (f_array_length_t i = 0; F_status_is_fine(status) && i < listing.directory.used; ++i) {
+        // Use an upper limit when retaining memory between recursion calls.
+        if (list[i]->size > F_directory_max_list_d) {
+          recurse->state.status = f_string_dynamics_resize(F_directory_max_list_d, list[i]);
+          if (F_status_is_error(recurse->state.status)) break;
+        }
 
-      f_string_static_t source_sub = f_string_static_t_initialize;
-      f_string_static_t destination_sub = f_string_static_t_initialize;
+        for (j = 0; j < list[i]->used; ++j) {
 
-      source_sub.used = source.used + listing.directory.array[i].used + 1;
-      source_sub.size = source_sub.used;
+          list[i]->array[j].used = 0;
 
-      destination_sub.used = destination.used + listing.directory.array[i].used + 1;
-      destination_sub.size = destination_sub.used;
-
-      f_char_t path_source_sub[source_sub.used + 1];
-      f_char_t path_destination_sub[destination_sub.used + 1];
-
-      memcpy(path_source_sub, source.string, sizeof(f_char_t) * source.used);
-      memcpy(path_source_sub + source.used + 1, listing.directory.array[i].string, sizeof(f_char_t) * listing.directory.array[i].used);
-
-      memcpy(path_destination_sub, destination.string, sizeof(f_char_t) * destination.used);
-      memcpy(path_destination_sub + destination.used + 1, listing.directory.array[i].string, sizeof(f_char_t) * listing.directory.array[i].used);
-
-      path_source_sub[source.used] = f_path_separator_s.string[0];
-      path_source_sub[source_sub.used] = 0;
-
-      path_destination_sub[destination.used] = f_path_separator_s.string[0];
-      path_destination_sub[destination_sub.used] = 0;
-
-      source_sub.string = path_source_sub;
-      destination_sub.string = path_destination_sub;
-
-      status = f_directory_exists(source_sub);
-      if (F_status_is_error(status)) break;
-
-      if (status == F_false) {
-        status = F_status_set_error(F_directory);
-
-        break;
-      }
-
-      {
-        struct stat source_stat;
-
-        memset(&source_stat, 0, sizeof(struct stat));
-
-        status = f_file_stat(source_sub, F_false, &source_stat);
-        if (F_status_is_error(status)) break;
-
-        status = f_directory_exists(destination_sub);
-        if (F_status_is_error(status)) break;
-
-        if (status == F_true) {
-          if (recurse.flag & f_file_stat_flag_exclusive_e) {
-            status = F_status_set_error(F_directory_found);
-
-            break;
+          if (list[i]->array[j].size > F_directory_max_string_d) {
+            recurse->state.status = f_string_dynamic_resize(F_directory_max_string_d, &list[i]->array[j]);
+            if (F_status_is_error(recurse->state.status)) break;
           }
-
-          status = f_file_mode_set(destination_sub, source_stat.st_mode);
-          if (F_status_is_error(status)) break;
-        }
-        else {
-          status = f_directory_create(destination_sub, source_stat.st_mode);
-          if (F_status_is_error(status)) break;
-        }
-
-        if (recurse.flag & (f_file_stat_flag_group_e | f_file_stat_flag_owner_e)) {
-          status = f_file_role_change(destination_sub, source_stat.st_uid, source_stat.st_gid, F_true);
-          if (F_status_is_error(status)) break;
-        }
-      }
-
-      if (depth < recurse.depth_max) {
-        status = private_fl_directory_clone(source_sub, destination_sub, recurse, depth + 1);
-
-        if (status == F_none && (!recurse.output.stream || recurse.output.id != -1) && recurse.verbose) {
-          recurse.verbose(recurse.output, source_sub, destination_sub);
-        }
-      }
-    } // for
-
-    f_string_dynamics_resize(0, &listing.directory);
-    if (F_status_is_error(status)) return status;
-
-    if (recurse.failures && failures_used < recurse.failures->used) {
-      return F_failure;
-    }
-
-    return F_none;
-  }
-#endif // !defined(_di_fl_directory_clone_) || !defined(_di_fl_directory_clone_content_)
-
-#if !defined(_di_fl_directory_clone_file_)
-  f_status_t private_fl_directory_clone_file(const f_string_static_t file, const f_string_static_t source, const f_string_static_t destination, const fl_directory_recurse_t recurse) {
-
-    f_string_static_t path_source = f_string_static_t_initialize;
-    f_string_static_t path_destination = f_string_static_t_initialize;
-
-    path_source.used = source.used + file.used + 2;
-    path_destination.used = destination.used + file.used + 2;
-
-    f_char_t path_source_string[path_source.used];
-    f_char_t path_destination_string[path_destination.used];
-
-    path_source.string = path_source_string;
-    path_destination.string = path_destination_string;
-
-    memcpy(path_source_string, source.string, sizeof(f_char_t) * source.used);
-    memcpy(path_source_string + source.used + 1, file.string, sizeof(f_char_t) * file.used);
-    path_source_string[source.used] = f_path_separator_s.string[0];
-    path_source_string[source.used + file.used + 1] = 0;
-
-    memcpy(path_destination_string, destination.string, sizeof(f_char_t) * destination.used);
-    memcpy(path_destination_string + destination.used + 1, file.string, sizeof(f_char_t) * file.used);
-    path_destination_string[destination.used] = f_path_separator_s.string[0];
-    path_destination_string[destination.used + file.used + 1] = 0;
-
-    f_status_t status = f_file_clone(path_source, path_destination, recurse.size_block, recurse.flag);
-
-    if (F_status_is_error(status) || status == F_support_not) {
-      if (status == F_status_set_error(F_memory_not)) {
-        return F_status_set_error(status);
-      }
-
-      if (!recurse.failures) return F_failure;
-
-      const f_status_t status_failure = status;
-
-      macro_f_memory_structure_increment(status, (*recurse.failures), 1, F_memory_default_allocation_small_d, macro_f_directory_statuss_t_resize, F_array_too_large);
-      if (F_status_is_error(status)) return status;
-
-      f_directory_status_t failure = f_directory_status_t_initialize;
-      f_array_length_t size = 0;
-
-      // identify if failure was because of source or destination.
-      struct stat source_stat;
-
-      memset(&source_stat, 0, sizeof(struct stat));
-
-      status = f_file_stat(source, F_false, &source_stat);
-      if (F_status_is_error(status)) {
-        if (status == F_status_set_error(F_string_too_large)) {
-          size = F_string_t_size_d - 1;
-        }
-        else {
-          size = source.used + file.used + 1;
-        }
-
-        macro_f_directory_status_t_resize(status, failure, size + 1);
-        if (F_status_is_error(status)) return status;
-
-        memcpy(failure.path.string, path_source.string, sizeof(f_char_t) * size);
-        failure.path.string[size] = 0;
-      }
-      else {
-        if (status == F_status_set_error(F_string_too_large)) {
-          size = F_string_t_size_d - 1;
-        }
-        else {
-          size = destination.used + file.used + 1;
-        }
-
-        macro_f_directory_status_t_resize(status, failure, size + 1);
-        if (F_status_is_error(status)) return status;
-
-        memcpy(failure.path.string, path_destination.string, sizeof(f_char_t) * size);
-        failure.path.string[size] = 0;
-      }
-
-      recurse.failures->array[recurse.failures->used].path.string = failure.path.string;
-      recurse.failures->array[recurse.failures->used].path.used = size;
-      recurse.failures->array[recurse.failures->used].path.size = size + 1;
-      recurse.failures->array[recurse.failures->used++].status = status_failure;
-
-      return F_failure;
-    }
-
-    if ((!recurse.output.stream || recurse.output.id != -1) && recurse.verbose) {
-      recurse.verbose(recurse.output, path_source, path_destination);
-    }
-
-    return F_none;
-  }
-#endif // !defined(_di_fl_directory_clone_file_)
-
-#if !defined(_di_fl_directory_copy_) || !defined(_di_fl_directory_copy_content_)
-  f_status_t private_fl_directory_copy(const f_string_static_t source, const f_string_static_t destination, const f_mode_t mode, const fl_directory_recurse_t recurse, const f_number_unsigned_t depth) {
-
-    f_status_t status = F_none;
-    f_directory_listing_t listing = f_directory_listing_t_initialize;
-
-    status = private_fl_directory_list(source, 0, 0, F_false, &listing);
-
-    if (F_status_is_error(status)) {
-      macro_f_directory_listing_t_delete_simple(listing);
-
-      return status;
-    }
-
-    status = F_none;
-
-    f_array_length_t failures_used = recurse.failures ? recurse.failures->used : 0;
-
-    {
-      f_string_dynamics_t * const list[] = {
-        &listing.block,
-        &listing.character,
-        &listing.regular,
-        &listing.link,
-        &listing.fifo,
-        &listing.socket,
-        &listing.unknown,
-      };
-
-      uint8_t i = 0;
-      f_array_length_t j = 0;
-
-      for (; i < 7; ++i) {
-
-        for (j = 0; F_status_is_fine(status) && j < list[i]->used; ++j) {
-          status = private_fl_directory_copy_file(list[i]->array[j], source, destination, mode, recurse);
         } // for
-
-        f_string_dynamics_resize(0, list[i]);
       } // for
     }
 
-    for (f_array_length_t i = 0; F_status_is_fine(status) && i < listing.directory.used; ++i) {
+    if (F_status_is_error_not(recurse->state.status)) {
+      for (f_array_length_t i = 0; i < recurse->listing.directory.used; ++i) {
 
-      f_string_static_t source_sub = f_string_static_t_initialize;
-      f_string_static_t destination_sub = f_string_static_t_initialize;
+        if (recurse->state.interrupt) {
+          recurse->state.interrupt((void *) &recurse->state, (void *) recurse);
+          if (F_status_set_fine(recurse->state.status) == F_interrupt) break;
+        }
 
-      source_sub.used = source.used + listing.directory.array[i].used + 1;
-      source_sub.size = source_sub.used;
+        f_string_static_t source_sub = f_string_static_t_initialize;
+        f_string_static_t destination_sub = f_string_static_t_initialize;
 
-      destination_sub.used = destination.used + listing.directory.array[i].used + 1;
-      destination_sub.size = destination_sub.used;
+        source_sub.used = recurse->source->used + recurse->listing.directory.array[i].used + 1;
+        source_sub.size = source_sub.used;
 
-      f_char_t path_source_sub[source_sub.used + 1];
-      f_char_t path_destination_sub[destination_sub.used + 1];
+        destination_sub.used = recurse->destination->used + recurse->listing.directory.array[i].used + 1;
+        destination_sub.size = destination_sub.used;
 
-      memcpy(path_source_sub, source.string, sizeof(f_char_t) * source.used);
-      memcpy(path_source_sub + source.used + 1, listing.directory.array[i].string, sizeof(f_char_t) * listing.directory.array[i].used);
+        f_char_t path_source_sub[source_sub.used + 1];
+        f_char_t path_destination_sub[destination_sub.used + 1];
 
-      memcpy(path_destination_sub, destination.string, destination.used);
-      memcpy(path_destination_sub + destination.used + 1, listing.directory.array[i].string, sizeof(f_char_t) * listing.directory.array[i].used);
+        memcpy(path_source_sub, recurse->source->string, sizeof(f_char_t) * recurse->source->used);
+        memcpy(path_source_sub + recurse->source->used + 1, recurse->listing.directory.array[i].string, sizeof(f_char_t) * recurse->listing.directory.array[i].used);
 
-      path_source_sub[source.used] = f_path_separator_s.string[0];
-      path_source_sub[source_sub.used] = 0;
+        memcpy(path_destination_sub, recurse->destination->string, sizeof(f_char_t) * recurse->destination->used);
+        memcpy(path_destination_sub + recurse->destination->used + 1, recurse->listing.directory.array[i].string, sizeof(f_char_t) * recurse->listing.directory.array[i].used);
 
-      path_destination_sub[destination.used] = f_path_separator_s.string[0];
-      path_destination_sub[destination_sub.used] = 0;
+        path_source_sub[recurse->source->used] = f_path_separator_s.string[0];
+        path_source_sub[source_sub.used] = 0;
 
-      source_sub.string = path_source_sub;
-      destination_sub.string = path_destination_sub;
+        path_destination_sub[recurse->destination->used] = f_path_separator_s.string[0];
+        path_destination_sub[destination_sub.used] = 0;
 
-      status = f_directory_exists(source_sub);
-      if (F_status_is_error(status)) break;
+        source_sub.string = path_source_sub;
+        destination_sub.string = path_destination_sub;
 
-      if (status == F_false) {
-        status = F_status_set_error(F_directory);
+        recurse->state.status = f_directory_exists(source_sub);
+        if (F_status_is_error(recurse->state.status)) break;
 
-        break;
-      }
-
-      status = f_directory_exists(destination_sub);
-      if (F_status_is_error(status)) break;
-
-      if (status == F_true) {
-        if (recurse.flag & f_file_stat_flag_exclusive_e) {
-          status = F_status_set_error(F_directory_found);
+        if (recurse->state.status == F_false) {
+          recurse->state.status = F_status_set_error(F_directory);
 
           break;
         }
 
-        status = f_file_mode_set(destination_sub, mode.directory);
-        if (F_status_is_error(status)) break;
-      }
-      else {
-        status = f_directory_create(destination_sub, mode.directory);
-        if (F_status_is_error(status)) break;
-      }
+        if (recurse->flag & f_directory_recurse_flag_clone_e) {
+          struct stat source_stat;
 
-      if (depth < recurse.depth_max) {
-        status = private_fl_directory_copy(source_sub, destination_sub, mode, recurse, depth + 1);
+          memset(&source_stat, 0, sizeof(struct stat));
 
-        if (status == F_none && (!recurse.output.stream || recurse.output.id != -1) && recurse.verbose) {
-          recurse.verbose(recurse.output, source_sub, destination_sub);
+          recurse->state.status = f_file_stat(source_sub, recurse->flag & f_directory_recurse_flag_dereference_e, &source_stat);
+          if (F_status_is_error(recurse->state.status)) break;
+
+          recurse->state.status = f_directory_exists(destination_sub);
+          if (F_status_is_error(recurse->state.status)) break;
+
+          if (recurse->state.status == F_true) {
+            if (recurse->flag & f_directory_recurse_flag_exclusive_e) {
+              recurse->state.status = F_status_set_error(F_directory_found);
+
+              break;
+            }
+
+            recurse->state.status = f_file_mode_set(destination_sub, source_stat.st_mode);
+            if (F_status_is_error(recurse->state.status)) break;
+          }
+          else {
+            recurse->state.status = f_directory_create(destination_sub, source_stat.st_mode);
+            if (F_status_is_error(recurse->state.status)) break;
+          }
+
+          if (recurse->flag & (f_directory_recurse_flag_group_e | f_directory_recurse_flag_owner_e)) {
+            recurse->state.status = f_file_role_change(destination_sub, (recurse->flag & f_directory_recurse_flag_owner_e) ? source_stat.st_uid : -1, (recurse->flag & f_directory_recurse_flag_group_e) ? source_stat.st_gid : -1, recurse->flag & f_directory_recurse_flag_dereference_e);
+            if (F_status_is_error(recurse->state.status)) break;
+          }
         }
-      }
-    } // for
+        else {
+          if (recurse->state.status == F_true) {
+            if (recurse->flag & f_directory_recurse_flag_exclusive_e) {
+              recurse->state.status = F_status_set_error(F_directory_found);
 
-    f_string_dynamics_resize(0, &listing.directory);
+              break;
+            }
 
-    if (F_status_is_error(status)) return status;
+            recurse->state.status = f_file_mode_set(destination_sub, recurse->mode.directory);
+            if (F_status_is_error(recurse->state.status)) break;
+          }
+          else {
+            recurse->state.status = f_directory_create(destination_sub, recurse->mode.directory);
+            if (F_status_is_error(recurse->state.status)) break;
+          }
+        }
 
-    if (recurse.failures && failures_used < recurse.failures->used) {
-      return F_failure;
+        if (recurse->depth < recurse->max_depth) {
+          recurse->source = (f_string_static_t * const) & source_sub;
+          recurse->destination = (f_string_static_t * const) & destination_sub;
+
+          ++recurse->depth;
+
+          private_fl_directory_copy_recurse(recurse);
+
+          // Data must be restored after recursion.
+          recurse->source = (f_string_static_t * const) & source_sub;
+          recurse->destination = (f_string_static_t * const) & destination_sub;
+
+          // Success inside the recursed function is handled inside the recursed function, so handle at the current depth.
+          if (recurse->state.status == F_none) {
+            --recurse->depth;
+
+            if (recurse->verbose) {
+              recurse->verbose(source_sub, destination_sub, recurse);
+            }
+          }
+
+          // Errors in the recursed function are handled outside the recursed function here.
+          if (F_status_is_error(recurse->state.status)) {
+            if (recurse->state.handle) {
+              recurse->state.handle(&recurse->state, (void *) &recurse);
+            }
+
+            recurse->state.status = F_failure;
+          }
+
+          // Error is now handled, so update the depth and exit.
+          if (recurse->state.status == F_failure) {
+            --recurse->depth;
+
+            break;
+          }
+        }
+
+        recurse->state.status = F_none;
+      } // for
     }
 
-    return F_none;
-  }
-#endif // !defined(_di_fl_directory_copy_) || !defined(_di_fl_directory_copy_content_)
+    recurse->listing.directory.array = directories_original.array;
+    recurse->listing.directory.used = directories_original.used;
+    recurse->listing.directory.size = directories_original.size;
 
-#if !defined(_di_fl_directory_copy_) || !defined(_di_fl_directory_copy_content_)
-  f_status_t private_fl_directory_copy_file(const f_string_static_t file, const f_string_static_t source, const f_string_static_t destination, const f_mode_t mode, const fl_directory_recurse_t recurse) {
+    f_string_dynamics_resize(0, &directories);
+  }
+#endif // !defined(_di_fl_directory_copy_)
+
+#if !defined(_di_fl_directory_copy_)
+  void private_fl_directory_copy_recurse_file(const f_string_static_t file, f_directory_recurse_t * const recurse) {
 
     f_string_static_t path_source = f_string_static_t_initialize;
     f_string_static_t path_destination = f_string_static_t_initialize;
 
-    path_source.used = source.used + file.used + 2;
-    path_destination.used = destination.used + file.used + 2;
+    path_source.used = recurse->source->used + file.used + 2;
+    path_destination.used = recurse->destination->used + file.used + 2;
 
     f_char_t path_source_string[path_source.used];
     f_char_t path_destination_string[path_destination.used];
@@ -364,88 +227,59 @@ extern "C" {
     path_source.string = path_source_string;
     path_destination.string = path_destination_string;
 
-    memcpy(path_source_string, source.string, sizeof(f_char_t) * source.used);
-    memcpy(path_source_string + source.used + 1, file.string, sizeof(f_char_t) * file.used);
-    path_source_string[source.used] = f_path_separator_s.string[0];
-    path_source_string[source.used + file.used + 1] = 0;
+    memcpy(path_source_string, recurse->source->string, sizeof(f_char_t) * recurse->source->used);
+    memcpy(path_source_string + recurse->source->used + 1, file.string, sizeof(f_char_t) * file.used);
+    path_source_string[recurse->source->used] = f_path_separator_s.string[0];
+    path_source_string[recurse->source->used + file.used + 1] = 0;
 
-    memcpy(path_destination_string, destination.string, sizeof(f_char_t) * destination.used);
-    memcpy(path_destination_string + destination.used + 1, file.string, sizeof(f_char_t) * file.used);
-    path_destination_string[destination.used] = f_path_separator_s.string[0];
-    path_destination_string[destination.used + file.used + 1] = 0;
+    memcpy(path_destination_string, recurse->destination->string, sizeof(f_char_t) * recurse->destination->used);
+    memcpy(path_destination_string + recurse->destination->used + 1, file.string, sizeof(f_char_t) * file.used);
+    path_destination_string[recurse->destination->used] = f_path_separator_s.string[0];
+    path_destination_string[recurse->destination->used + file.used + 1] = 0;
 
-    f_status_t status = f_file_copy(path_source, path_destination, mode, recurse.size_block, recurse.flag);
+    f_status_t status = F_none;
+    int flag = (recurse->flag & f_directory_recurse_flag_dereference_e) ? 0 : f_file_stat_flag_reference_e;
+
+    if (recurse->flag & f_directory_recurse_flag_exclusive_e) {
+      flag |= f_file_stat_flag_exclusive_e;
+    }
+
+    if (recurse->flag & f_directory_recurse_flag_group_e) {
+      flag |= f_file_stat_flag_group_e;
+    }
+
+    if (recurse->flag & f_directory_recurse_flag_owner_e) {
+      flag |= f_file_stat_flag_owner_e;
+    }
+
+    if (recurse->flag & f_directory_recurse_flag_clone_e) {
+      recurse->state.status = f_file_clone(path_source, path_destination, recurse->size_block, flag);
+    }
+    else {
+      recurse->state.status = f_file_copy(path_source, path_destination, recurse->mode, recurse->size_block, flag);
+    }
 
     if (F_status_is_error(status) || status == F_support_not) {
-      if (status == F_status_set_error(F_memory_not)) {
-        return F_status_set_error(status);
+      if (recurse->state.handle) {
+        recurse->state.handle(&recurse->state, (void *) &recurse);
       }
 
-      if (!recurse.failures) {
-        return F_failure;
-      }
+      if (status == F_status_set_error(F_memory_not)) return;
 
-      const f_status_t status_failure = status;
+      recurse->state.status = F_failure;
 
-      macro_f_memory_structure_increment(status, (*recurse.failures), 1, F_memory_default_allocation_small_d, macro_f_directory_statuss_t_resize, F_array_too_large);
-      if (F_status_is_error(status)) return status;
-
-      f_directory_status_t failure = f_directory_status_t_initialize;
-      f_array_length_t size = 0;
-
-      // identify if failure was because of source or destination.
-      struct stat source_stat;
-
-      memset(&source_stat, 0, sizeof(struct stat));
-
-      status = f_file_stat(source, F_false, &source_stat);
-
-      if (F_status_is_error(status)) {
-        if (status == F_status_set_error(F_string_too_large)) {
-          size = F_string_t_size_d - 1;
-        }
-        else {
-          size = source.used + file.used + 1;
-        }
-
-        macro_f_directory_status_t_resize(status, failure, size + 1);
-        if (F_status_is_error(status)) return status;
-
-        memcpy(failure.path.string, path_source.string, sizeof(f_char_t) * size);
-        failure.path.string[size] = 0;
-      }
-      else {
-        if (status == F_status_set_error(F_string_too_large)) {
-          size = F_string_t_size_d - 1;
-        }
-        else {
-          size = destination.used + file.used + 1;
-        }
-
-        macro_f_directory_status_t_resize(status, failure, size + 1);
-        if (F_status_is_error(status)) return status;
-
-        memcpy(failure.path.string, path_destination.string, sizeof(f_char_t) * size);
-        failure.path.string[size] = 0;
-      }
-
-      recurse.failures->array[recurse.failures->used].path.string = failure.path.string;
-      recurse.failures->array[recurse.failures->used].path.used = size;
-      recurse.failures->array[recurse.failures->used].path.size = size + 1;
-      recurse.failures->array[recurse.failures->used++].status = status_failure;
-
-      return F_failure;
+      return;
     }
 
-    if ((!recurse.output.stream || recurse.output.id != -1) && recurse.verbose) {
-      recurse.verbose(recurse.output, path_source, path_destination);
+    if (recurse->verbose) {
+      recurse->verbose(path_source, path_destination, (void *) recurse);
     }
 
-    return F_none;
+    recurse->state.status = F_none;
   }
-#endif // !defined(_di_fl_directory_copy_) || !defined(_di_fl_directory_copy_content_)
+#endif // !defined(_di_fl_directory_copy_)
 
-#if !defined(_di_fl_directory_clone_) || !defined(_di_fl_directory_copy_) || !defined(_di_fl_directory_copy_content_) || !defined(_di_fl_directory_list_)
+#if !defined(_di_fl_directory_copy_) || !defined(_di_fl_directory_list_)
   f_status_t private_fl_directory_list(const f_string_static_t path, int (*filter)(const struct dirent *), int (*sort)(const struct dirent **, const struct dirent **), const bool dereference, f_directory_listing_t * const listing) {
 
     struct dirent **entity = 0;
@@ -495,7 +329,7 @@ extern "C" {
     for (; i < length; ++i) {
 
       name_directory.string = (f_string_t) entity[i]->d_name;
-      name_directory.used = strnlen(name_directory.string, F_directory_name_max_d);
+      name_directory.used = strnlen(name_directory.string, F_directory_max_name_d);
 
       // There is no reason to include "." and ".." in the directory listing.
       if (!strncmp(name_directory.string, "..", 3) || !strncmp(name_directory.string, ".", 2)) {
@@ -537,7 +371,7 @@ extern "C" {
       }
 
       if (names->used == names->size) {
-        status = f_string_dynamics_increase_by(F_directory_default_allocation_step_d, names);
+        status = f_string_dynamics_increase_by(F_memory_default_allocation_small_d, names);
         if (F_status_is_error(status)) break;
       }
 
@@ -565,7 +399,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // !defined(_di_fl_directory_clone_) || !defined(_di_fl_directory_copy_) || !defined(_di_fl_directory_copy_content_) || !defined(_di_fl_directory_list_)
+#endif // !defined(_di_fl_directory_copy_) || !defined(_di_fl_directory_list_)
 
 #if !defined(_di_fl_directory_path_push_) || !defined(_di_fl_directory_path_push_dynamic_)
   f_status_t private_fl_directory_path_push(const f_string_static_t source, f_string_dynamic_t * const destination) {

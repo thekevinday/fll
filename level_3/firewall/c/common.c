@@ -113,7 +113,7 @@ extern "C" {
 #endif // _di_firewall_setting_delete_
 
 #ifndef _di_firewall_setting_load_
-  void firewall_setting_load(const f_console_arguments_t arguments, f_state_t state, fll_program_data_t * const main, firewall_setting_t * const setting) {
+  void firewall_setting_load(const f_console_arguments_t arguments, fll_program_data_t * const main, firewall_setting_t * const setting, f_state_t * const state) {
 
     if (!main || !setting) return;
 

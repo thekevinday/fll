@@ -53,7 +53,7 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 #endif // _di_fss_write_main_process_help_
 
 #ifndef _di_fss_write_main_setting_load_as_
-  void fss_write_main_setting_load_as(const f_console_arguments_t arguments, f_state_t state, fll_program_data_t * const main, fss_write_setting_t * const setting) {
+  void fss_write_main_setting_load_as(const f_console_arguments_t arguments, fll_program_data_t * const main, fss_write_setting_t * const setting, f_state_t * const state) {
 
     if (!main || !setting || F_status_is_error(setting->status) || (setting->flag & fss_write_flag_version_e)) return;
 

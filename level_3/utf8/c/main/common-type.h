@@ -168,7 +168,7 @@ extern "C" {
  * mode: The input/output mode (see utf8_modes_e).
  * flag: Flags passed to the main function.
  *
- * status: The main status code, generally used by the load settings and main functions.
+ * state: The state information.
  *
  * valid:     Designate the output context set for valid characters.
  * valid_not: Designate the output context set for invalid characters.
@@ -191,7 +191,7 @@ extern "C" {
     uint8_t mode;
     uint16_t flag;
 
-    f_status_t status;
+    f_state_t state;
 
     f_color_set_t valid;
     f_color_set_t valid_not;
@@ -214,7 +214,7 @@ extern "C" {
     { \
       utf8_mode_from_bytesequence_e | utf8_mode_to_codepoint_e, \
       utf8_main_flag_none_e, \
-      F_none, \
+      f_state_initialize_t, \
       f_color_set_t_initialize, \
       f_color_set_t_initialize, \
       f_string_static_t_initialize, \

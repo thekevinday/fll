@@ -71,7 +71,7 @@ extern "C" {
 #endif // _di_fss_payload_read_setting_delete_
 
 #ifndef _di_fss_payload_read_setting_load_
-  void fss_payload_read_setting_load(const f_console_arguments_t arguments, f_state_t state, fll_program_data_t * const main, fss_payload_read_setting_t * const setting) {
+  void fss_payload_read_setting_load(const f_console_arguments_t arguments, f_state_t * const state, fll_program_data_t * const main, fss_payload_read_setting_t * const setting) {
 
     if (!main || !setting) return;
 

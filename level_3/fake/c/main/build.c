@@ -377,11 +377,11 @@ const f_string_static_t fake_build_documentation_files_s = macro_f_string_static
 
     memcpy(path_source.string, source.string, sizeof(f_char_t) * source.used);
 
-    fl_directory_recurse_t recurse = fl_directory_recurse_t_initialize;
+    f_directory_recurse_t recurse = f_directory_recurse_t_initialize;
 
     if (data->main->error.verbosity >= f_console_verbosity_verbose_e) {
       recurse.output = data->main->message.to;
-      recurse.verbose = fake_verbose_print_copy;
+      recurse.verbose = fake_print_verbose_copy;
     }
 
     recurse.failures = &failures;
@@ -532,6 +532,8 @@ const f_string_static_t fake_build_documentation_files_s = macro_f_string_static
     } // for
 
     macro_f_directory_statuss_t_delete_simple(failures);
+
+    f_directory_recurse_delete(&recurse);
 
     f_string_dynamic_resize(0, &path_source);
     f_string_dynamic_resize(0, &destination_file);

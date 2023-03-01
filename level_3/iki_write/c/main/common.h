@@ -42,8 +42,6 @@ extern "C" {
  *
  * @param arguments
  *   The parameters passed to the process (often referred to as command line arguments).
- * @param state
- *   A state for providing flags and handling interrupts during long running operations.
  * @param main
  *   The main program data.
  * @param setting
@@ -57,6 +55,8 @@ extern "C" {
  *     Errors (with error bit) from: f_string_dynamics_resize().
  *     Errors (with error bit) from: fll_program_parameter_process_context().
  *     Errors (with error bit) from: fll_program_parameter_process_verbosity().
+ * @param state
+ *   A state for providing flags and handling interrupts during long running operations.
  *
  * @see f_console_parameter_process()
  * @see f_file_stream_open()
@@ -65,7 +65,7 @@ extern "C" {
  * @see fll_program_parameter_process_verbosity()
  */
 #ifndef _di_iki_write_setting_load_
-  extern void iki_write_setting_load(const f_console_arguments_t arguments, f_state_t state, fll_program_data_t * const main, iki_write_setting_t * const setting);
+  extern void iki_write_setting_load(const f_console_arguments_t arguments, fll_program_data_t * const main, iki_write_setting_t * const setting, f_state_t * const state);
 #endif // _di_iki_write_setting_load_
 
 /**

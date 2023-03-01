@@ -36,6 +36,23 @@ extern "C" {
   }
 #endif // _di_fake_print_context_simple_variable_
 
+#ifndef _di_fake_print_context_wrapped_number_
+  void fake_print_context_wrapped_number(fake_setting_t * const setting, const fl_print_t print, const f_string_t before, const f_number_unsigned_t number, const f_string_t after) {
+
+    if (!setting) return;
+
+    f_file_stream_lock(print.to);
+
+    fake_print_line_first_unlocked(setting, print);
+
+    fl_print_format("%[%Q%S'%]", print.to, print.context, print.prefix, before, print.context);
+    fl_print_format("%[%un%]", print.to, print.notable, number, print.notable);
+    fl_print_format("%['%S.%]%r", print.to, print.context, after, print.context, f_string_eol_s);
+
+    f_file_stream_unlock(print.to);
+  }
+#endif // _di_fake_print_context_wrapped_number_
+
 #ifndef _di_fake_print_context_wrapped_parameter_
   void fake_print_context_wrapped_parameter(fake_setting_t * const setting, const fl_print_t print, const f_string_t before, const f_string_static_t symbol, const f_string_static_t name, const f_string_t after) {
 
@@ -109,6 +126,17 @@ extern "C" {
     f_file_stream_unlock(print.to);
   }
 #endif // _di_fake_print_context_wrapped_variables_
+
+#ifndef _di_fake_print_generating_skeleton_
+  f_status_t fake_print_generating_skeleton(fake_setting_t * const setting, const fl_print_t print) {
+
+    if (!setting || print.verbosity < f_console_verbosity_normal_e) return F_output_not;
+
+    fake_print_simple(setting, print, "Generating skeleton structure");
+
+    return F_none;
+  }
+#endif // _di_fake_print_generating_skeleton_
 
 #ifndef _di_fake_print_help_
   f_status_t fake_print_help(fake_setting_t * const setting, const fl_print_t print) {
@@ -261,7 +289,6 @@ extern "C" {
   f_status_t fake_print_operation_all_complete(fake_setting_t * const setting, const fl_print_t print) {
 
     if (!setting || print.verbosity < f_console_verbosity_normal_e) return F_output_not;
-    if (F_status_is_error(setting->status)) return F_output_not;
 
     f_file_stream_lock(print.to);
 

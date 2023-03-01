@@ -1747,12 +1747,13 @@ extern "C" {
 #endif // _di_f_thread_semaphore_file_delete_
 
 #ifndef _di_f_thread_semaphore_file_open_
-  f_status_t f_thread_semaphore_file_open(const f_string_static_t name, const int flag, const mode_t mode, unsigned int value, f_thread_semaphore_t **semaphore) {
+  f_status_t f_thread_semaphore_file_open(const f_string_static_t name, const int flag, mode_t * const mode, unsigned int value, f_thread_semaphore_t **semaphore) {
     #ifndef _di_level_0_parameter_checking_
       if (!semaphore) return F_status_set_error(F_parameter);
+      if ((flag & O_CREAT) && !mode) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (flag & O_CREAT) {
+    if ((flag & O_CREAT) || mode) {
       *semaphore = sem_open(name.string, flag, mode, value);
     }
     else {

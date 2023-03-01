@@ -374,7 +374,7 @@ extern "C" {
 
       range = content.array[i];
 
-      *status = fl_iki_read(state, &data_make->buffer, &range, iki_data);
+      *status = fl_iki_read(&data_make->buffer, &range, iki_data, state);
 
       if (F_status_is_error(*status)) {
         if (F_status_set_fine(*status) != F_interrupt) {

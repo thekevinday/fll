@@ -134,15 +134,6 @@ extern "C" {
  * This will update the buffer at the given range with any placeholders to escaped data.
  * Calling this more than once on the same buffer range could result in multiple escaping.
  *
- * @param state
- *   A state for providing flags and handling interrupts during long running operations.
- *   There is no print_error().
- *   There is no functions structure.
- *   There is no data structure passed to these functions.
- *
- *   When interrupt() returns, only F_interrupt and F_interrupt_not are processed.
- *   Error bit designates an error but must be passed along with F_interrupt.
- *   All other statuses are ignored.
  * @param buffer
  *   The string to process.
  * @param range
@@ -152,26 +143,36 @@ extern "C" {
  *   A start location past the stop location or buffer used means that the entire range was processed.
  * @param data
  *   The IKI variable data.
+ * @param state
+ *   A state for providing flags and handling interrupts during long running operations.
+ *   There is no print_error().
+ *   There is no functions structure.
+ *   There is no data structure passed to these functions.
+ *   This must not be NULL.
  *
- * @return
- *   F_none on success and an IKI vocabulary name was found.
- *   F_none_eos on success and an IKI vocabulary name was found and end of string was reached.
- *   F_none_stop on success and an IKI vocabulary name was found and stop point was reached.
- *   F_complete_not_utf_eos on success but string ended on incomplete UTF-8 and f_iki_state_flag_utf_fail_on_valid_not_e is not set.
- *   F_complete_not_utf_stop on success but stop point reached on incomplete UTF-8 and f_iki_state_flag_utf_fail_on_valid_not_e is not set.
- *   F_data_not on success, but there were no IKI vocabulary names found.
- *   F_data_not_eos on success and EOS was reached, but there were no IKI vocabulary names found.
- *   F_data_not_stop on success and stop point was reached, but there were no IKI vocabulary names found.
+ *   When interrupt() returns, only F_interrupt and F_interrupt_not are processed.
+ *   Error bit designates an error but must be passed along with F_interrupt.
+ *   All other statuses are ignored.
  *
- *   F_complete_not_utf_eos (with error bit) on success but string ended on incomplete UTF-8 and f_iki_state_flag_utf_fail_on_valid_not_e is set.
- *   F_complete_not_utf_stop (with error bit) on success but stop point reached on incomplete UTF-8 and f_iki_state_flag_utf_fail_on_valid_not_e is set.
- *   F_interrupt (with error bit) if stopping due to an interrupt.
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
- *   F_string_too_large (with error bit) if a string length is too large to store in the buffer.
+ *   This alters state.status:
+ *     F_none on success and an IKI vocabulary name was found.
+ *     F_none_eos on success and an IKI vocabulary name was found and end of string was reached.
+ *     F_none_stop on success and an IKI vocabulary name was found and stop point was reached.
+ *     F_complete_not_utf_eos on success but string ended on incomplete UTF-8 and f_iki_state_flag_utf_fail_on_valid_not_e is not set.
+ *     F_complete_not_utf_stop on success but stop point reached on incomplete UTF-8 and f_iki_state_flag_utf_fail_on_valid_not_e is not set.
+ *     F_data_not on success, but there were no IKI vocabulary names found.
+ *     F_data_not_eos on success and EOS was reached, but there were no IKI vocabulary names found.
+ *     F_data_not_stop on success and stop point was reached, but there were no IKI vocabulary names found.
+ *
+ *     F_complete_not_utf_eos (with error bit) on success but string ended on incomplete UTF-8 and f_iki_state_flag_utf_fail_on_valid_not_e is set.
+ *     F_complete_not_utf_stop (with error bit) on success but stop point reached on incomplete UTF-8 and f_iki_state_flag_utf_fail_on_valid_not_e is set.
+ *     F_interrupt (with error bit) if stopping due to an interrupt.
+ *     F_memory_not (with error bit) on out of memory.
+ *     F_parameter (with error bit) if a parameter is invalid.
+ *     F_string_too_large (with error bit) if a string length is too large to store in the buffer.
  */
 #ifndef _di_f_iki_read_
-  extern f_status_t f_iki_read(const f_state_t state, f_string_static_t * const buffer, f_string_range_t * const range, f_iki_data_t * const data);
+  extern void f_iki_read(f_string_static_t * const buffer, f_string_range_t * const range, f_iki_data_t * const data, f_state_t * const state);
 #endif // _di_f_iki_read_
 
 #ifdef __cplusplus

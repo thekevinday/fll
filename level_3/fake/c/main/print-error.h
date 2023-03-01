@@ -35,7 +35,11 @@ extern "C" {
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
  *
- * @see fll_error_print()
+ * @see f_file_stream_lock()
+ * @see f_file_stream_unlock()
+ * @see fl_print_format()
+ *
+ * @see fake_print_line_first_unlocked()
  */
 #ifndef _di_fake_print_error_
   extern f_status_t fake_print_error(fake_setting_t * const setting, const fl_print_t print, const f_status_t status, const f_string_t function);
@@ -44,8 +48,12 @@ extern "C" {
 /**
  * Print an error message for when an argument is an empty string.
  *
- * @param data_make
- *   All make related setting data, including data from the fakefile and the build settings file.
+ * @param setting
+ *   The main program settings.
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   Designates the how and where to print.
  * @param index
  *   The index of the argument that is an empty string.
  *
@@ -53,7 +61,7 @@ extern "C" {
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
  *
- * @see fll_print_format()
+ * @see fake_print_context_wrapped_number()
  */
 #ifndef _di_fake_print_error_argument_empty_
   extern f_status_t fake_print_error_argument_empty(fake_setting_t * const setting, const fl_print_t print, const f_array_length_t index);
@@ -93,14 +101,14 @@ extern "C" {
  * @see f_file_stream_unlock()
  * @see fl_print_format()
  *
- * @see fake_print_error_build_operation_file_partial();
+ * @see fake_print_line_first_unlocked()
  */
 #ifndef _di_fake_print_error_build_operation_file_
   extern f_status_t fake_print_error_build_operation_file(fake_setting_t * const setting, const fl_print_t print, const f_status_t status, const f_string_t function, const f_string_static_t operation, const f_string_static_t source, const f_string_static_t destination, const f_string_static_t how, const bool fallback);
 #endif // _di_fake_print_error_build_operation_file_
 
 /**
- * Helper function for printing build operation file error messages.
+ * Print build operation file error messages.
  *
  * This prints the "copy source to destination" part of the message.
  *
@@ -134,7 +142,7 @@ extern "C" {
  * @see fake_print_line_first_unlocked()
  */
 #ifndef _di_fake_print_error_build_operation_file_full_
-  extern void fake_print_error_build_operation_file_full(fake_setting_t * const setting, const fl_print_t print, const f_string_t before, const f_string_static_t operation, const f_string_static_t source, const f_string_static_t destination, const f_string_static_t how, const f_string_t after);
+  extern f_status_t fake_print_error_build_operation_file_full(fake_setting_t * const setting, const fl_print_t print, const f_string_t before, const f_string_static_t operation, const f_string_static_t source, const f_string_static_t destination, const f_string_static_t how, const f_string_t after);
 #endif // _di_fake_print_error_build_operation_file_full_
 
 /**
@@ -165,6 +173,28 @@ extern "C" {
 #ifndef _di_fake_print_error_build_operation_file_partial_
   extern void fake_print_error_build_operation_file_partial(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t operation, const f_string_static_t source, const f_string_static_t destination, const f_string_static_t how);
 #endif // _di_fake_print_error_build_operation_file_partial_
+
+/**
+ * Print error message regarding file create directory failure due to a missing or invalid parent directory.
+ *
+ * @param setting
+ *   The main program settings.
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   Designates the how and where to print.
+ * @param path
+ *   The name of the file or directory.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ *
+ * @see fake_print_context_wrapped_variable()
+ */
+#ifndef _di_fake_print_error_file_create_parent_missing_
+  extern f_status_t fake_print_error_file_create_parent_missing(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t path);
+#endif // _di_fake_print_error_file_create_parent_missing_
 
 /**
  * Print error message for when an operation fails.
@@ -272,6 +302,28 @@ extern "C" {
 #ifndef _di_fake_print_error_file_
   extern f_status_t fake_print_error_file(fake_setting_t * const setting, const fl_print_t print, const f_status_t status, const f_string_t function, const f_string_static_t name, const f_string_static_t operation, const uint8_t type);
 #endif // _di_fake_print_error_file_
+
+/**
+ * Print error message regarding file create failure due to a missing or invalid parent directory.
+ *
+ * @param setting
+ *   The main program settings.
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   Designates the how and where to print.
+ * @param path
+ *   The name of the file or directory.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ *
+ * @see fake_print_context_wrapped_variable()
+ */
+#ifndef _di_fake_print_error_directory_create_parent_missing_
+  extern f_status_t fake_print_error_directory_create_parent_missing(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t path);
+#endif // _di_fake_print_error_directory_create_parent_missing_
 
 /**
  * Print file related error message regarding a function failing in some way, setting fallback to F_false and returning result..
@@ -409,6 +461,72 @@ extern "C" {
 #ifndef _di_fake_print_error_fss_message_
   extern f_status_t fake_print_error_fss_message(fake_setting_t * const setting, const fl_print_t print, const f_string_t prefix, const f_string_t before, const f_number_unsigned_t number, const f_string_t middle, const f_string_static_t variable, const f_string_t after);
 #endif // _di_fake_print_error_fss_message_
+
+/**
+ * Print error message regarding the group not being found.
+ *
+ * @param setting
+ *   The main program settings.
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   Designates the how and where to print.
+ * @param group
+ *   A string representing the group (either as a name or as a group ID).
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ *
+ * @see fake_print_context_wrapped_variable()
+ */
+#ifndef _di_fake_print_error_group_not_found_
+  extern f_status_t fake_print_error_group_not_found(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t group);
+#endif // _di_fake_print_error_group_not_found_
+
+/**
+ * Print error message regarding the mode being invalid.
+ *
+ * @param setting
+ *   The main program settings.
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   Designates the how and where to print.
+ * @param mode
+ *   A string representing the invalid mode.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ *
+ * @see fake_print_context_wrapped_variable()
+ */
+#ifndef _di_fake_print_error_mode_invalid_
+  extern f_status_t fake_print_error_mode_invalid(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t mode);
+#endif // _di_fake_print_error_mode_invalid_
+
+/**
+ * Print error message regarding the number being too large.
+ *
+ * @param setting
+ *   The main program settings.
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   Designates the how and where to print.
+ * @param number
+ *   A string representing the number that is too large.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ *
+ * @see fake_print_context_wrapped_variable()
+ */
+#ifndef _di_fake_print_error_number_too_large_
+  extern f_status_t fake_print_error_number_too_large(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t number);
+#endif // _di_fake_print_error_number_too_large_
 
 /**
  * Print error messages when processing some fakefile section, for a specific line and operation, and that operation failed.
@@ -742,6 +860,28 @@ extern "C" {
 #ifndef _di_fake_print_error_too_many_arguments_
   extern f_status_t fake_print_error_too_many_arguments(fake_setting_t * const setting, const fl_print_t print);
 #endif // _di_fake_print_error_too_many_arguments_
+
+/**
+ * Print error message regarding the user not being found.
+ *
+ * @param setting
+ *   The main program settings.
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   Designates the how and where to print.
+ * @param user
+ *   A string representing the user (either as a name or as a user ID).
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ *
+ * @see fake_print_context_wrapped_variable()
+ */
+#ifndef _di_fake_print_error_user_not_found_
+  extern f_status_t fake_print_error_user_not_found(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t user);
+#endif // _di_fake_print_error_user_not_found_
 
 #ifdef __cplusplus
 } // extern "C"

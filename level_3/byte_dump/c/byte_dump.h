@@ -108,8 +108,6 @@ extern "C" {
  *
  * @param arguments
  *   The parameters passed to the process (often referred to as command line arguments).
- * @param state
- *   A state for providing flags and handling interrupts during long running operations.
  * @param main
  *   The main program data.
  * @param setting
@@ -120,12 +118,14 @@ extern "C" {
  *
  *     Errors (with error bit) from: f_console_parameter_process().
  *     Errors (with error bit) from: fll_program_parameter_process_context().
+ * @param state
+ *   A state for providing flags and handling interrupts during long running operations.
  *
  * @see f_console_parameter_process()
  * @see fll_program_parameter_process_context()
  */
 #ifndef _di_byte_dump_setting_load_
-  extern void byte_dump_setting_load(const f_console_arguments_t arguments, f_state_t state, fll_program_data_t * const main, byte_dump_setting_t * const setting);
+  extern void byte_dump_setting_load(const f_console_arguments_t arguments, fll_program_data_t * const main, byte_dump_setting_t * const setting, f_state_t * const state);
 #endif // _di_byte_dump_setting_load_
 
 /**

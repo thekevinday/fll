@@ -590,7 +590,6 @@ extern "C" {
  *   The path file name.
  * @param mode
  *   The file mode to open in.
- *   Set to 0 to not use.
  * @param file
  *   The data related to the file being opened.
  *   This will be updated with the file descriptor.
@@ -623,7 +622,6 @@ extern "C" {
  *   The path file name.
  * @param mode
  *   The file mode to open in.
- *   Set to 0 to not use.
  * @param file
  *   The data related to the file being opened.
  *   This will be updated with the file descriptor.

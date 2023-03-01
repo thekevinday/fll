@@ -79,20 +79,52 @@ extern "C" {
 /**
  * Provide limitations and related defines.
  *
- * The directory max descriptors is more of a default than a rule.
- * This is generally used for nftw() recursive operations to reduce the number of open file descriptors during recursion.
+ * The F_directory_max_list_d and F_directory_max_string_d parameters are used in recursive calls that general re-use memory space.
+ * These designate that there be a maximum size to preserve to keep from preserving exceptionally large memory allocation sizes.
+ *
+ * F_directory_max_*_d:
+ *   - descriptors:   The maximum directory descriptors, and is generally used for nftw().
+ *   - list:          The maximum directory list length to preserve between recursive calls.
+ *   - name:          The maximum name of a directory.
+ *   - recurse_depth: The maximum recursion depth.
+ *   - string:        The maximum directory list name length to preserve between recursive calls.
  */
-#ifndef _di_f_directory_d_
-  #define F_directory_default_allocation_step_d F_memory_default_allocation_small_d
-
-  #define F_directory_descriptors_max_d 255
+#ifndef _di_f_directory_max_d_
+  #define F_directory_max_descriptors_d   255
+  #define F_directory_max_recurse_depth_d 65535
+  #define F_directory_max_list_d          2048
+  #define F_directory_max_string_d        256
 
   #ifdef NAME_MAX
-    #define F_directory_name_max_d NAME_MAX
+    #define F_directory_max_name_d NAME_MAX
   #else
-    #define F_directory_name_max_d 255
+    #define F_directory_max_name_d 255
   #endif // NAME_MAX
-#endif // _di_f_directory_d_
+#endif // _di_f_directory_max_d_
+
+/**
+ * Directory recurse flags.
+ *
+ * f_directory_recurse_flag_*:
+ *   - none:        No flags are set.
+ *   - clone:       Operate as clone instead of as copy, if applicable.
+ *   - dereference: Dereference symbolic links rather than operating on the link itself.
+ *   - exclusive:   File flag requiring that a file does not already exist.
+ *   - group:       File flag representing copying the group.
+ *   - owner:       File flag representing copying the owner.
+ *   - top:         Operate on top directory and not just inside the directory.
+ */
+#ifndef _di_f_directory_recurse_flag_e_
+  enum {
+    f_directory_recurse_flag_none_e        = 0,
+    f_directory_recurse_flag_clone_e       = 0x1,
+    f_directory_recurse_flag_dereference_e = 0x2,
+    f_directory_recurse_flag_exclusive_e   = 0x4,
+    f_directory_recurse_flag_group_e       = 0x8,
+    f_directory_recurse_flag_owner_e       = 0x10,
+    f_directory_recurse_flag_top_e         = 0x20,
+  }; // enum
+#endif // _di_f_directory_recurse_flag_e_
 
 #ifdef __cplusplus
 } // extern "C"

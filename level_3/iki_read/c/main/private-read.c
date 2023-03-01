@@ -165,7 +165,7 @@ extern "C" {
     {
       const f_state_t state = macro_f_state_t_initialize(iki_read_common_allocation_large_d, iki_read_common_allocation_small_d, 0, 0, &fll_program_standard_signal_state, 0, (void *) main, 0);
 
-      setting->status = fl_iki_read(state, &setting->buffer, buffer_range, &setting->data);
+      setting->status = fl_iki_read(&setting->buffer, buffer_range, &setting->data, state);
     }
 
     if (F_status_is_error(setting->status)) {
@@ -278,7 +278,7 @@ extern "C" {
     {
       const f_state_t state = macro_f_state_t_initialize(iki_read_common_allocation_large_d, iki_read_common_allocation_small_d, 0, 0, &fll_program_standard_signal_state, 0, (void *) main, 0);
 
-      setting->status = fl_iki_read(state, &setting->buffer, &range, &setting->data);
+      setting->status = fl_iki_read(&setting->buffer, &range, &setting->data, state);
     }
 
     if (F_status_is_error(setting->status)) {
@@ -392,7 +392,7 @@ extern "C" {
     {
       f_state_t state = macro_f_state_t_initialize(iki_read_common_allocation_large_d, iki_read_common_allocation_small_d, 0, 0, &fll_program_standard_signal_state, 0, (void *) main, 0);
 
-      setting->status = fl_iki_read(state, &setting->buffer, &range, &setting->data);
+      setting->status = fl_iki_read(&setting->buffer, &range, &setting->data, state);
     }
 
     if (F_status_is_error(setting->status)) {

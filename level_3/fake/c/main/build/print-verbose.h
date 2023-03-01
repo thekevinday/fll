@@ -32,7 +32,7 @@ extern "C" {
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
  *
- * @see fake_print_simple()
+ * @see fake_print_simple_variable()
  */
 #ifndef _di_fake_build_print_verbose_create_directory_
   extern f_status_t fake_build_print_verbose_create_directory(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t directory);

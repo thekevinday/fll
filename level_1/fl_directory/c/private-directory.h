@@ -15,62 +15,6 @@ extern "C" {
 #endif
 
 /**
- * Private implementation of fl_directory_clone().
- *
- * Intended to be shared to each of the different implementation variations.
- *
- * @param source
- *   The source file path.
- *   Must be NULL terminated.
- * @param destination
- *   The destination file path.
- *   Must be NULL terminated.
- * @param recurse
- *   The directory recurse data.
- * @param depth
- *   The current depth.
- *
- * @return
- *   F_none on success.
- *
- *   F_failure (with error bit) for any other failure, failures might be populated with individual status codes.
- *
- * @see fl_directory_clone()
- */
-#if !defined(_di_fl_directory_clone_) || !defined(_di_fl_directory_clone_content_)
-  extern f_status_t private_fl_directory_clone(const f_string_static_t source, const f_string_static_t destination, const fl_directory_recurse_t recurse, const f_number_unsigned_t depth) F_attribute_visibility_internal_d;
-#endif // !defined(_di_fl_directory_clone_) || !defined(_di_fl_directory_clone_content_)
-
-/**
- * A special function intended to be used directly by private_fl_directory_clone().
- *
- * Will only clone a single file and record any detected errors.
- *
- * @param file
- *   The name of the file within source to clone into destination.
- *   Must be NULL terminated.
- * @param source
- *   The source file path.
- *   Must be NULL terminated.
- * @param destination
- *   The destination file path.
- *   Must be NULL terminated.
- * @param recurse
- *   The directory recurse data.
- *
- * @return
- *   F_none on success.
- *
- *   F_array_too_large (with error bit) if a buffer would exceed max length.
- *   F_failure (with error bit) for any other failure, failures might be populated with individual status codes.
- *
- * @see fl_directory_clone()
- */
-#if !defined(_di_fl_directory_clone_file_)
-  extern f_status_t private_fl_directory_clone_file(const f_string_static_t file, const f_string_static_t source, const f_string_static_t destination, const fl_directory_recurse_t recurse) F_attribute_visibility_internal_d;
-#endif // !defined(_di_fl_directory_clone_file_)
-
-/**
  * Private implementation of fl_directory_copy().
  *
  * Intended to be shared to each of the different implementation variations.
@@ -81,8 +25,6 @@ extern "C" {
  * @param destination
  *   The destination file path.
  *   Must be NULL terminated.
- * @param mode
- *   The mode for each file type.
  * @param recurse
  *   The directory recurse data.
  * @param depth
@@ -94,14 +36,13 @@ extern "C" {
  *   F_failure (with error bit) for any other failure, failures might be populated with individual status codes.
  *
  * @see fl_directory_copy()
- * @see fl_directory_copy_content()
  */
-#if !defined(_di_fl_directory_copy_) || !defined(_di_fl_directory_copy_content_)
-  extern f_status_t private_fl_directory_copy(const f_string_static_t source, const f_string_static_t destination, const f_mode_t mode, const fl_directory_recurse_t recurse, const f_number_unsigned_t depth) F_attribute_visibility_internal_d;
-#endif // !defined(_di_fl_directory_copy_) || !defined(_di_fl_directory_copy_content_)
+#if !defined(_di_fl_directory_copy_)
+  extern void private_fl_directory_copy_recurse(f_directory_recurse_t * const recurse) F_attribute_visibility_internal_d;
+#endif // !defined(_di_fl_directory_copy_)
 
 /**
- * A special function intended to be used directly by private_fl_directory_copy().
+ * A special function intended to be used directly by private_fl_directory_copy_recurse().
  *
  * Will only copy a single file and record any detected errors.
  *
@@ -125,12 +66,11 @@ extern "C" {
  *   F_array_too_large (with error bit) if a buffer would exceed max length.
  *   F_failure (with error bit) for any other failure, failures might be populated with individual status codes.
  *
- * @see fl_directory_copy()
- * @see fl_directory_copy_content()
+ * @see fl_directory_clone()
  */
-#if !defined(_di_fl_directory_copy_) || !defined(_di_fl_directory_copy_content_)
-  extern f_status_t private_fl_directory_copy_file(const f_string_static_t file, const f_string_static_t source, const f_string_static_t destination, const f_mode_t mode, const fl_directory_recurse_t recurse) F_attribute_visibility_internal_d;
-#endif // !defined(_di_fl_directory_copy_) || !defined(_di_fl_directory_copy_content_)
+#if !defined(_di_fl_directory_copy_)
+  extern void private_fl_directory_copy_recurse_file(const f_string_static_t file, f_directory_recurse_t * const recurse) F_attribute_visibility_internal_d;
+#endif // !defined(_di_fl_directory_copy_)
 
 /**
  * A special function intended to be used directly by fl_directory_list().
@@ -171,15 +111,12 @@ extern "C" {
  * @see f_file_stat_at()
  * @see f_string_dynamics_increase_by()
  *
- * @see fl_directory_clone()
- * @see fl_directory_clone_content()
  * @see fl_directory_copy()
- * @see fl_directory_copy_content()
  * @see fl_directory_list()
  */
-#if !defined(_di_fl_directory_clone_) || !defined(_di_fl_directory_clone_content_) || !defined(_di_fl_directory_copy_) || !defined(_di_fl_directory_copy_content_) || !defined(_di_fl_directory_list_)
+#if !defined(_di_fl_directory_copy_) || !defined(_di_fl_directory_list_)
   extern f_status_t private_fl_directory_list(const f_string_static_t path, int (*filter)(const struct dirent *), int (*sort)(const struct dirent **, const struct dirent **), const bool dereference, f_directory_listing_t * const listing) F_attribute_visibility_internal_d;
-#endif // !defined(_di_fl_directory_clone_) || !defined(_di_fl_directory_clone_content_) || !defined(_di_fl_directory_copy_) || !defined(_di_fl_directory_copy_content_) || !defined(_di_fl_directory_list_)
+#endif // !defined(_di_fl_directory_copy_) || !defined(_di_fl_directory_list_)
 
 /**
  * Private implementation of fl_directory_path_push().

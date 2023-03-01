@@ -35,8 +35,6 @@ extern "C" {
  * This does not verify if any vocabulary name is known.
  * This only finds complete vocabulary names and their respective content.
  *
- * @param state
- *   A state for providing flags and handling interrupts during long running operations.
  * @param buffer
  *   The string to process.
  * @param range
@@ -46,25 +44,28 @@ extern "C" {
  *   A start location past the stop location or buffer used means that the entire range was processed.
  * @param data
  *   The IKI data.
+ * @param state
+ *   A state for providing flags and handling interrupts during long running operations.
+ *   This must not be NULL.
  *
- * @return
- *   F_none on success and an IKI vocabulary name was found.
- *   F_none_stop on success and an IKI vocabulary name was found and stop point was reached.
- *   F_none_eos on success and an IKI vocabulary name was found and end of string was reached.
- *   F_complete_not_utf_eos on success and EOS was reached, but at an incomplete UTF-8 sequence.
- *   F_complete_not_utf_stop on success and stop point was reached, but at an incomplete UTF-8 sequence.
- *   F_data_not_eos on success and EOS was reached, but there were no IKI vocabularie names found.
- *   F_data_not_stop on success and stop point was reached, but there were no IKI vocabularie names found.
+ *   This alters state.status:
+ *     F_none on success and an IKI vocabulary name was found.
+ *     F_none_stop on success and an IKI vocabulary name was found and stop point was reached.
+ *     F_none_eos on success and an IKI vocabulary name was found and end of string was reached.
+ *     F_complete_not_utf_eos on success and EOS was reached, but at an incomplete UTF-8 sequence.
+ *     F_complete_not_utf_stop on success and stop point was reached, but at an incomplete UTF-8 sequence.
+ *     F_data_not_eos on success and EOS was reached, but there were no IKI vocabularie names found.
+ *     F_data_not_stop on success and stop point was reached, but there were no IKI vocabularie names found.
  *
- *   F_parameter (with error bit) if a parameter is invalid.
+ *     F_parameter (with error bit) if a parameter is invalid.
  *
- *   Success from: f_iki_read().
- *   Errors (with error bit) from: f_iki_read().
+ *     Success from: f_iki_read().
+ *     Errors (with error bit) from: f_iki_read().
  *
  * @see f_iki_read()
  */
 #ifndef _di_fl_iki_read_
-  extern f_status_t fl_iki_read(const f_state_t state, f_string_static_t * const buffer, f_string_range_t * const range, f_iki_data_t * const data);
+  extern void fl_iki_read(f_string_static_t * const buffer, f_string_range_t * const range, f_iki_data_t * const data, f_state_t * const state);
 #endif // _di_fl_iki_read_
 
 #ifdef __cplusplus

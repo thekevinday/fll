@@ -86,14 +86,35 @@ extern "C" {
 #endif // _di_fl_directory_create_
 
 /**
- * Copy a directory and its contents, as well as its file mode and possibly the owner and group.
+ * Copy (or clone) a directories contents (and possibly the directory itself).
  *
- * The paths must not contain NULL except for the terminating NULL.
- * The paths must be NULL terminated.
+ * The file mode, owner, and group may conditionally be preserved when not cloning (when copying).
  *
- * Symbolic links are not followed, they are copied as the symbolic link itself.
+ * The source and destination must not contain NULL except for the terminating NULL.
+ * The source and destination must be NULL terminated.
+ *
+ * Symbolic links are by default not followed, they are copied as the symbolic link itself.
+ * Set the f_directory_recurse_flag_dereference_e to follow the symbolic links rather than copying the link itself.
  *
  * This does not copy unknown file types.
+ *
+ * If recurse.flag has f_directory_recurse_flag_top_e set, then this operates on the top directory otherwise only the content within the directory is operated on.
+ *
+ * If recurse.flag has f_directory_recurse_flag_clone_e set, then this operates a clone operation rather than a copy operation.
+ *
+ * When using f_directory_recurse_flag_clone_e, the recurse.mode is not used.
+ * When not using f_directory_recurse_flag_clone_e, the recurse.mode is used and should be set accordingly.
+ * To not used recurse.mode, set the point to NULL.
+ *
+ * The recurse.state.handle() callback is used for processing and reporting errors.
+ * This is not intended to replace the error state with a non error.
+ * To do so will likely cause problems and undefined behavior.
+ *
+ * The recurse.state.verbose() callback is used for printing success messages (generally when in verbose mode).
+ *
+ * The recurse.state.interrupt() callback is used during some loops.
+ *
+ * The recurse.state.custom is available to be defined by the caller for all recurse.state callbacks.
  *
  * @param source
  *   The source file path.
@@ -103,144 +124,34 @@ extern "C" {
  *   Must be NULL terminated.
  * @param recurse
  *   The directory recurse data.
+ *   This must not be NULL.
  *
- * @return
- *   F_none on success.
- *   F_data_not if source.used or destination.used is 0.
+ *   This alters recurse.state.status:
+ *     F_none on success.
+ *     F_data_not if source.used or destination.used is 0.
  *
- *   F_directory_not (with error bit) if the source directory does not exist.
- *   F_failure (with error bit) for any other failure, failures might be populated with individual status codes.
+ *     F_directory_not (with error bit) if the source directory does not exist.
+ *     F_failure (with error bit) for any other failure, failures might be populated with individual status codes.
  *
- *   Errors (with error bit) from: f_directory_create().
- *   Errors (with error bit) from: f_directory_exists().
- *   Errors (with error bit) from: f_file_mode_set().
- *   Errors (with error bit) from: f_file_role_change().
- *   Errors (with error bit) from: f_file_stat().
+ *     Errors (with error bit) from: f_directory_create().
+ *     Errors (with error bit) from: f_directory_exists().
+ *     Errors (with error bit) from: f_string_dynamic_resize().
+ *     Errors (with error bit) from: f_string_dynamics_resize().
+ *     Errors (with error bit) from: f_file_mode_set().
+ *     Errors (with error bit) from: f_file_role_change().
+ *     Errors (with error bit) from: f_file_stat().
  *
  * @see f_directory_create()
  * @see f_directory_exists()
+ * @see f_string_dynamic_resize()
+ * @see f_string_dynamics_resize()
  * @see f_file_mode_set()
  * @see f_file_role_change()
  * @see f_file_stat()
  */
-#ifndef _di_fl_directory_clone_
-  extern f_status_t fl_directory_clone(const f_string_static_t source, const f_string_static_t destination, const fl_directory_recurse_t recurse);
-#endif // _di_fl_directory_clone_
-
-/**
- * Copy a directory contents, as well as its file mode and possibly the owner and group.
- *
- * When cloning the contents of a directory, both the source and the destination paths must already exist and be directories, regardless of exclusive boolean.
- *
- * The paths must not contain NULL except for the terminating NULL.
- * The paths must be NULL terminated.
- *
- * Symbolic links are not followed, they are copied as the symbolic link itself.
- *
- * This does not copy unknown file types.
- *
- * @param source
- *   The source file path.
- *   Must be NULL terminated.
- * @param destination
- *   The destination file path.
- *   Must be NULL terminated.
- * @param recurse
- *   The directory recurse data.
- *
- * @return
- *   F_none on success.
- *   F_data_not if source.used or destination.used is 0.
- *
- *   F_directory_not (with error bit) if either the source or destination directory does not exist.
- *   F_failure (with error bit) for any other failure, failures might be populated with individual status codes.
- *
- *   Errors (with error bit) from: f_directory_exists().
- *
- * @see f_directory_exists()
- */
-#ifndef _di_fl_directory_clone_content_
-  extern f_status_t fl_directory_clone_content(const f_string_static_t source, const f_string_static_t destination, const fl_directory_recurse_t recurse);
-#endif // _di_fl_directory_clone_content_
-
-/**
- * Copy a directory and its contents.
- *
- * The paths must not contain NULL except for the terminating NULL.
- * The paths must be NULL terminated.
- *
- * Symbolic links are not followed, they are copied as the symbolic link itself.
- *
- * This does not copy unknown file types.
- *
- * @param source
- *   The source file path.
- *   Must be NULL terminated.
- * @param destination
- *   The destination file path.
- *   Must be NULL terminated.
- * @param mode
- *   The directory modes.
- * @param recurse
- *   The directory recurse data.
- *
- * @return
- *   F_none on success.
- *   F_data_not if source.used or destination.used is 0.
- *
- *   F_directory_found (with error bit) if the destination directory is found and recurse.flag has f_file_stat_flag_exclusive_e.
- *   F_directory_not (with error bit) if the source directory does not exist.
- *   F_failure (with error bit) for any other failure, failures might be populated with individual status codes.
- *
- *   Errors (with error bit) from: f_directory_create().
- *   Errors (with error bit) from: f_directory_exists().
- *   Errors (with error bit) from: f_file_mode_set().
- *   Errors (with error bit) from: f_file_role_change().
- *   Errors (with error bit) from: f_file_stat().
- *
- * @see f_file_copy()
- */
 #ifndef _di_fl_directory_copy_
-  extern f_status_t fl_directory_copy(const f_string_static_t source, const f_string_static_t destination, const f_mode_t mode, const fl_directory_recurse_t recurse);
+  extern void fl_directory_copy(const f_string_static_t source, const f_string_static_t destination, f_directory_recurse_t * const recurse);
 #endif // _di_fl_directory_copy_
-
-/**
- * Copy a directory contents.
- *
- * When copying the contents of a directory, both the source and the destination paths must already exist and be directories, regardless of exclusive boolean.
- *
- * The paths must not contain NULL except for the terminating NULL.
- * The paths must be NULL terminated.
- *
- * Symbolic links are not followed, they are copied as the symbolic link itself.
- *
- * This does not copy unknown file types.
- *
- * @param source
- *   The source file path.
- *   Must be NULL terminated.
- * @param destination
- *   The destination file path.
- *   Must be NULL terminated.
- * @param mode
- *   The directory modes.
- * @param recurse
- *   The directory recurse data.
- *
- * @return
- *   F_none on success.
- *   F_data_not if source.used or destination.used is 0.
- *
- *   F_directory_not (with error bit) if either the source or the destination directory does not exist.
- *   F_failure (with error bit) for any other failure, failures might be populated with individual status codes.
- *
- *   Errors (with error bit) from: f_directory_exists().
- *
- * @see f_file_copy()
- */
-#ifndef _di_fl_directory_copy_content_
-  extern f_status_t fl_directory_copy_content(const f_string_static_t source, const f_string_static_t destination, const f_mode_t mode, const fl_directory_recurse_t recurse);
-#endif // _di_fl_directory_copy_content_
 
 /**
  * For some given path, print the names of each file and/or directory inside the directory, stored as a directory listing.

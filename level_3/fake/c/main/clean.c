@@ -23,10 +23,10 @@ extern "C" {
     f_status_t status = F_none;
 
     if (data->main->error.verbosity >= f_console_verbosity_verbose_e) {
-      status = f_directory_remove_custom(data->setting->build, F_directory_descriptors_max_d, F_true, fake_clean_remove_recursively_verbosely);
+      status = f_directory_remove_custom(data->setting->build, F_directory_max_descriptors_d, F_true, fake_clean_remove_recursively_verbosely);
     }
     else {
-      status = f_directory_remove(data->setting->build, F_directory_descriptors_max_d, F_true);
+      status = f_directory_remove(data->setting->build, F_directory_max_descriptors_d, F_true);
     }
 
     if (F_status_set_fine(status) == F_file_found_not || F_status_set_fine(status) == F_directory) {

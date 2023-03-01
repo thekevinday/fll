@@ -61,7 +61,6 @@ extern "C" {
  * flag: Flags passed to the main function.
  *
  * state:  The state data used when processing the FSS data.
- * status: The main status code, generally used by the load settings and main functions.
  *
  * line_first: A string expected to represent either "\n" or NULL to allow for easy handling of when to print first new line or not.
  * line_last:  A string expected to represent either "\n" or NULL to allow for easy handling of when to print last new line or not.
@@ -84,7 +83,6 @@ extern "C" {
     uint32_t flag;
 
     f_state_t state;
-    f_status_t status;
 
     f_string_static_t line_first;
     f_string_static_t line_last;
@@ -109,7 +107,6 @@ extern "C" {
     { \
       fake_main_flag_print_first_e, \
       f_state_t_initialize, \
-      F_none, \
       f_string_static_t_initialize, \
       f_string_static_t_initialize, \
       f_string_dynamic_t_initialize, \

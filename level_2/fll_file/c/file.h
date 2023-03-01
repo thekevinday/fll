@@ -90,43 +90,44 @@ extern "C" {
  *   The path to copy to.
  * @param recurse
  *   The directory recurse data.
+ *   This must not be NULL.
  *
- * @return
- *   F_none on success.
+ *   This alters recurse.state.status:
+ *     F_none on success.
  *
- *   F_access_denied (with error bit) on access denied.
- *   F_buffer (with error bit) if the buffer is invalid.
- *   F_busy (with error bit) if file system is too busy to perform write.
- *   F_directory (with error bit) if a supposed directory in path is not actually a directory.
- *   F_directory_empty_not (with error bit) if the destination is a non-empty directory.
- *   F_file_found_not (with error bit) if file at path was not found.
- *   F_file_type_directory (with error bit) if destination is a directory but source is not.
- *   F_filesystem_quota_block (with error bit) if file system's disk blocks or inodes are exhausted.
- *   F_link (with error bit) if source or destination has the maxiumum associated links.
- *   F_loop (with error bit) on loop error.
- *   F_memory_not (with error bit) if out of memory.
- *   F_name (with error bit) on path name error.
- *   F_parameter (with error bit) if a parameter is invalid.
- *   F_prohibited (with error bit) if file system does not allow for making changes.
- *   F_read_only (with error bit) if file is read-only.
- *   F_space_not (with error bit) if file system is out of space (or file system quota is reached).
- *   F_failure (with error bit) for any other error, failures might be populated with individual status codes.
+ *     F_access_denied (with error bit) on access denied.
+ *     F_buffer (with error bit) if the buffer is invalid.
+ *     F_busy (with error bit) if file system is too busy to perform write.
+ *     F_directory (with error bit) if a supposed directory in path is not actually a directory.
+ *     F_directory_empty_not (with error bit) if the destination is a non-empty directory.
+ *     F_file_found_not (with error bit) if file at path was not found.
+ *     F_file_type_directory (with error bit) if destination is a directory but source is not.
+ *     F_filesystem_quota_block (with error bit) if file system's disk blocks or inodes are exhausted.
+ *     F_link (with error bit) if source or destination has the maxiumum associated links.
+ *     F_loop (with error bit) on loop error.
+ *     F_memory_not (with error bit) if out of memory.
+ *     F_name (with error bit) on path name error.
+ *     F_parameter (with error bit) if a parameter is invalid.
+ *     F_prohibited (with error bit) if file system does not allow for making changes.
+ *     F_read_only (with error bit) if file is read-only.
+ *     F_space_not (with error bit) if file system is out of space (or file system quota is reached).
+ *     F_failure (with error bit) for any other error, failures might be populated with individual status codes.
  *
- *   Errors (with error bit) from: f_directory_remove_custom().
- *   Errors (with error bit) from: f_file_is().
- *   Errors (with error bit) from: f_file_remove().
- *   Errors (with error bit) from: f_file_rename().
- *   Errors (with error bit) from: fl_directory_clone().
+ *     Errors (with error bit) from: f_directory_remove_custom().
+ *     Errors (with error bit) from: f_file_is().
+ *     Errors (with error bit) from: f_file_remove().
+ *     Errors (with error bit) from: f_file_rename().
+ *     Errors (with error bit) from: fl_directory_copy().
  *
  * @see f_directory_remove()
  * @see f_directory_remove_custom()
  * @see f_file_is()
  * @see f_file_remove()
  * @see f_file_rename()
- * @see fl_directory_clone()
+ * @see fl_directory_copy()
  */
 #ifndef _di_fll_file_move_
-  extern f_status_t fll_file_move(const f_string_static_t source, const f_string_static_t destination, const fl_directory_recurse_t recurse);
+  extern void fll_file_move(const f_string_static_t source, const f_string_static_t destination, f_directory_recurse_t * const recurse);
 #endif // _di_fll_file_move_
 
 /**

@@ -456,10 +456,6 @@ extern "C" {
 /**
  * File flag related to file statistics.
  *
- * These flags are meant to be bitwise for a uint8_t size type or larger.
- *
- * The f_file_stat_flag_none_e is expected to be 0, therefore it must be safe to use 0 directly.
- *
  * f_file_stat_flag_*:
  *   - none:      No flags are set (enables non-exclusive and dereference).
  *   - exclusive: Require that a file does not already exist.

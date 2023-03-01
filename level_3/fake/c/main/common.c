@@ -29,7 +29,7 @@ extern "C" {
 #endif // _di_fake_setting_delete_
 
 #ifndef _di_fake_setting_load_
-  void fake_setting_load(const f_console_arguments_t arguments, f_state_t state, fll_program_data_t * const main, fake_setting_t * const setting) {
+  void fake_setting_load(const f_console_arguments_t arguments, f_state_t * const state, fll_program_data_t * const main, fake_setting_t * const setting) {
 
     if (!main || !setting) return;
 
@@ -43,7 +43,7 @@ extern "C" {
       data.setting = setting;
 
       // Load parameters.
-      setting->status = f_console_parameter_process(state, arguments, &main->parameters, (void *) &data);
+      setting->status = f_console_parameter_process(arguments, &main->parameters, state, (void *) &data);
     }
 
     if (F_status_is_error(setting->status)) {
@@ -451,7 +451,7 @@ extern "C" {
     if (!state) return;
 
     if (!void_parameters || !void_data || (state->type != f_console_parameter_state_type_simple_e && state->type != f_console_parameter_state_type_miss_e)) {
-      state->status = F_process;
+      state->state->status = F_process;
 
       return;
     }
@@ -459,10 +459,10 @@ extern "C" {
     f_console_parameters_t * const parameters = (f_console_parameters_t * const) void_parameters;
     fake_data_t * const data = (fake_data_t * const) void_data;
 
-    state->status = f_uint8s_increase(fake_default_allocation_small_d, &data->setting->operations);
+    state->state->status = f_uint8s_increase(fake_default_allocation_small_d, &data->setting->operations);
 
-    if (F_status_is_error(state->status)) {
-      fake_print_error(data->setting, data->main->error, state->status, macro_fake_f(f_uint8s_increase));
+    if (F_status_is_error(state->state->status)) {
+      fake_print_error(data->setting, data->main->error, state->state->status, macro_fake_f(f_uint8s_increase));
 
       return;
     }
@@ -493,12 +493,12 @@ extern "C" {
         break;
 
       default:
-        state->status = F_process;
+        state->state->status = F_process;
 
         return;
     }
 
-    state->status = F_none;
+    state->state->status = F_none;
   }
 #endif // _di_fake_setting_load_parameter_callback_
 

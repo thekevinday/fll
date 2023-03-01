@@ -542,7 +542,7 @@ extern "C" {
 #endif // _di_fss_write_payload_process_set_
 
 #ifndef _di_fss_write_payload_setting_load_
-  void fss_write_payload_setting_load(const f_console_arguments_t arguments, f_state_t state, fll_program_data_t * const main, fss_write_setting_t * const setting) {
+  void fss_write_payload_setting_load(const f_console_arguments_t arguments, fll_program_data_t * const main, fss_write_setting_t * const setting, f_state_t * const state) {
 
     if (!main || !setting) return;
 

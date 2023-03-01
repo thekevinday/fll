@@ -213,7 +213,9 @@ extern "C" {
       fake_print_line_last_locked(setting, main->error);
     }
     else if (setting->status != F_child) {
-      fake_print_operation_all_complete(setting, main->message);
+      if (F_status_is_error_not(setting->status)) {
+        fake_print_operation_all_complete(setting, main->message);
+      }
 
       if (setting->status != F_interrupt) {
         fake_print_line_last_locked(setting, main->message);
@@ -530,24 +532,6 @@ extern "C" {
     return F_none;
   }
 #endif // _di_fake_validate_parameter_paths_
-
-#ifndef _di_fake_verbose_print_clone_
-  void fake_verbose_print_clone(const f_file_t output, const f_string_static_t source, const f_string_static_t destination) {
-    fll_print_format("Cloned '%Q' to '%Q'.%r", output, source, destination, f_string_eol_s);
-  }
-#endif // _di_fake_verbose_print_clone_
-
-#ifndef _di_fake_verbose_print_copy_
-  void fake_verbose_print_copy(const f_file_t output, const f_string_static_t source, const f_string_static_t destination) {
-    fll_print_format("Copied '%Q' to '%Q'.%r", output, source, destination, f_string_eol_s);
-  }
-#endif // _di_fake_verbose_print_copy_
-
-#ifndef _di_fake_verbose_print_move_
-  void fake_verbose_print_move(const f_file_t output, const f_string_static_t source, const f_string_static_t destination) {
-    fll_print_format("Moved '%Q' to '%Q'.%r", output, source, destination, f_string_eol_s);
-  }
-#endif // _di_fake_verbose_print_move_
 
 #ifdef __cplusplus
 } // extern "C"

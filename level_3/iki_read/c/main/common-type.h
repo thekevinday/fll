@@ -139,7 +139,7 @@ extern "C" {
  *
  * flag: Flags passed to the main function.
  *
- * status: The main status code, generally used by the load settings and main functions.
+ * state: The state information.
  *
  * at:   The position representing the "at" index.
  * line: The position representing the "line" index.
@@ -165,7 +165,7 @@ extern "C" {
   typedef struct {
     uint16_t flag;
 
-    f_status_t status;
+    f_state_t state;
 
     f_array_length_t at;
     f_array_length_t line;
@@ -191,7 +191,7 @@ extern "C" {
   #define iki_read_setting_t_initialize \
     { \
       iki_read_main_flag_none_e, \
-      F_none, \
+      f_state_t_initialize, \
       0, \
       0, \
       f_string_static_t_initialize, \

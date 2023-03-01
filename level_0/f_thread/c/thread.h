@@ -2296,10 +2296,14 @@ extern "C" {
  *   (optional) The file permissions to assign the semaphore.
  *   Ignored if O_CREAT is not used in flag.
  *   Ignored if the named semaphore already exists.
+ *   Not optional when O_CREAT flag is set.
+ *   Set to NULL to not use.
  * @param value
  *   (optional) The value to initially assign the semaphore on creation.
  *   Ignored if O_CREAT is not used in flag.
  *   Ignored if the named semaphore already exists.
+ *   Not optional when O_CREAT flag is set.
+ *   Ignored when mode is NULL.
  * @param semaphore
  *   The thread semaphore.
  *
@@ -2321,7 +2325,7 @@ extern "C" {
  * @see sem_open()
  */
 #ifndef _di_f_thread_semaphore_file_open_
-  extern f_status_t f_thread_semaphore_file_open(const f_string_static_t name, const int flag, const mode_t mode, unsigned int value, f_thread_semaphore_t **semaphore);
+  extern f_status_t f_thread_semaphore_file_open(const f_string_static_t name, const int flag, mode_t * const mode, unsigned int value, f_thread_semaphore_t **semaphore);
 #endif // _di_f_thread_semaphore_file_open_
 
 /**

@@ -445,7 +445,7 @@ extern "C" {
  *
  * flag: Flags passed to the main function.
  *
- * status: The main status code, generally used by the load settings and main functions.
+ * state: The state information.
  *
  * line_first: A string expected to represent either "\n" or NULL to allow for easy handling of when to print first new line or not.
  * line_last:  A string expected to represent either "\n" or NULL to allow for easy handling of when to print last new line or not.
@@ -454,7 +454,7 @@ extern "C" {
   typedef struct {
     uint16_t flag;
 
-    f_status_t status;
+    f_state_t state;
 
     f_string_static_t line_first;
     f_string_static_t line_last;
@@ -463,7 +463,7 @@ extern "C" {
   #define firewall_setting_t_initialize \
     { \
       firewall_main_flag_none_e, \
-      F_none, \
+      f_state_t_initialize, \
       f_string_static_t_initialize, \
       f_string_static_t_initialize, \
     }
@@ -495,8 +495,6 @@ extern "C" {
  *
  * @param arguments
  *   The parameters passed to the process (often referred to as command line arguments).
- * @param state
- *   A state for providing flags and handling interrupts during long running operations.
  * @param main
  *   The main program data.
  * @param setting
@@ -507,12 +505,14 @@ extern "C" {
  *
  *     Errors (with error bit) from: f_console_parameter_process().
  *     Errors (with error bit) from: fll_program_parameter_process_context().
+ * @param state
+ *   A state for providing flags and handling interrupts during long running operations.
  *
  * @see f_console_parameter_process()
  * @see fll_program_parameter_process_context()
  */
 #ifndef _di_firewall_setting_load_
-  extern void firewall_setting_load(const f_console_arguments_t arguments, f_state_t state, fll_program_data_t * const main, firewall_setting_t * const setting);
+  extern void firewall_setting_load(const f_console_arguments_t arguments, fll_program_data_t * const main, firewall_setting_t * const setting, f_state_t * const state);
 #endif // _di_firewall_setting_load_
 
 /**

@@ -160,8 +160,6 @@ extern "C" {
  *
  * flag: Flags passed to the main function.
  *
- * status: The main status code, generally used by the load settings and main functions.
- *
  * state: The state data used when processing the FSS data.
  * range: A range used as a buffer during processing.
  *
@@ -194,8 +192,6 @@ extern "C" {
 #ifndef _di_fss_write_setting_t_
   typedef struct {
     uint16_t flag;
-
-    f_status_t status;
 
     f_state_t state;
     f_string_range_t range;
@@ -231,7 +227,6 @@ extern "C" {
   #define fss_write_setting_t_initialize \
     { \
       fss_write_flag_none_e, \
-      F_none, \
       macro_f_state_t_initialize(fss_write_default_allocation_large_d, fss_write_default_allocation_small_d, 0, 0, &fll_program_standard_signal_state, 0, 0, 0), \
       f_string_range_t_initialize, \
       f_string_static_t_initialize, \

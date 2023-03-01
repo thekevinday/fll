@@ -77,6 +77,40 @@ extern "C" {
 #endif // _di_fake_print_context_simple_variable_
 
 /**
+ * Print a variable context message with a before string, an after string, and an unsigned number variable.
+ *
+ * This is primarily used by numerous print functions to reduce code.
+ * This is not used for any print functions that has complex format structures.
+ *
+ * @param setting
+ *   The main program settings.
+ *   (Must be of type fake_setting_t.)
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   The output structure to print to.
+ * @param before
+ *   The string being printed before the variable.
+ *   Likely should have a space added at the end of the string.
+ *   Set to NULL to disable.
+ * @param number
+ *   The number representing the variable.
+ * @param after
+ *   The string being printed after the variable.
+ *   Likely should have a space added at the start of the string.
+ *   Set to NULL to disable.
+ *
+ * @see f_file_stream_lock()
+ * @see f_file_stream_unlock()
+ * @see fl_print_format()
+ *
+ * @see fake_print_line_first_unlocked()
+ */
+#ifndef _di_fake_print_context_wrapped_number_
+  extern void fake_print_context_wrapped_number(fake_setting_t * const setting, const fl_print_t print, const f_string_t before, const f_number_unsigned_t number, const f_string_t after);
+#endif // _di_fake_print_context_wrapped_number_
+
+/**
  * Print a parameter context message with a before string, an after string, a string symbol, and a parameter name.
  *
  * This is primarily used by numerous print functions to reduce code.
@@ -238,6 +272,27 @@ extern "C" {
 #ifndef _di_fake_print_context_wrapped_variables_
   extern void fake_print_context_wrapped_variables(fake_setting_t * const setting, const fl_print_t print, const f_string_t before, const f_string_static_t first, const f_string_t between, const f_string_static_t second, const f_string_t after);
 #endif // _di_fake_print_context_wrapped_variables_
+
+/**
+ * Print a message about generating skeleton.
+ *
+ * @param setting
+ *   The main program settings.
+ *   (Must be of type fake_setting_t.)
+ *
+ *   This does not alter setting.status.
+ * @param print
+ *   The output structure to print to.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ *
+ * @see fake_print_line_first_unlocked()
+ */
+#ifndef _di_fake_print_generating_skeleton_
+  extern f_status_t fake_print_generating_skeleton(fake_setting_t * const setting, const fl_print_t print);
+#endif // _di_fake_print_generating_skeleton_
 
 /**
  * Print help.
