@@ -72,7 +72,7 @@ extern "C" {
 
           if (fl_string_dynamic_partial_compare_string(f_fss_string_payload_s.string, buffer, f_fss_string_payload_s.used, objects->array[objects->used]) == F_equal_to) {
             status2 = f_string_ranges_increase(state.step_small, &contents->array[contents->used]);
-            if (F_status_is_error(status)) return status;
+            if (F_status_is_error(status2)) return status2;
 
             contents->array[contents->used].used = 1;
             contents->array[contents->used].array[0].start = range->start;

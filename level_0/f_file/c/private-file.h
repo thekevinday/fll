@@ -113,10 +113,6 @@ extern "C" {
  *   The path file name.
  * @param mode
  *   The file mode to open in.
- * @param file
- *   The data related to the file being opened.
- *   This will be updated with the file descriptor.
- *   This will be updated with the create flag (ignoring and overriding existing file.flag).
  * @param exclusive
  *   If TRUE, will fail when file already exists.
  *   If FALSE, will not fail if file already exists.
@@ -157,10 +153,6 @@ extern "C" {
  *
  * @param at_id
  *   The parent directory, as an open directory file descriptor, in which path is relative to.
- * @param file
- *   The data related to the file being opened.
- *   This will be updated with the file descriptor.
- *   This will be updated with the create flag (ignoring and overriding existing file.flag).
  * @param path
  *   The path file name.
  * @param mode
@@ -591,7 +583,6 @@ extern "C" {
  *   The path file name.
  * @param mode
  *   The file mode to open in.
- *   Set to 0 to not use.
  * @param file
  *   The data related to the file being opened.
  *   This will be updated with the file descriptor.
@@ -624,7 +615,6 @@ extern "C" {
  *   The path file name.
  * @param mode
  *   The file mode to open in.
- *   Set to 0 to not use.
  * @param file
  *   The data related to the file being opened.
  *   This will be updated with the file descriptor.

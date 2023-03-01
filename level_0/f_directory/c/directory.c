@@ -8,9 +8,7 @@ extern "C" {
 #ifndef _di_f_directory_create_
   f_status_t f_directory_create(const f_string_static_t path, const mode_t mode) {
 
-    if (!path.used) {
-      return F_data_not;
-    }
+    if (!path.used) return F_data_not;
 
     return private_f_directory_create(path, mode);
   }
@@ -19,9 +17,7 @@ extern "C" {
 #ifndef _di_f_directory_create_at_
   f_status_t f_directory_create_at(const int at_id, const f_string_static_t path, const mode_t mode) {
 
-    if (!path.used) {
-      return F_data_not;
-    }
+    if (!path.used) return F_data_not;
 
     return private_f_directory_create_at(at_id, path, mode);
   }
@@ -30,9 +26,7 @@ extern "C" {
 #ifndef _di_f_directory_exists_
   f_status_t f_directory_exists(const f_string_static_t path) {
 
-    if (!path.used) {
-      return F_data_not;
-    }
+    if (!path.used) return F_data_not;
 
     struct stat file_stat;
 
@@ -51,9 +45,7 @@ extern "C" {
       return F_status_set_error(F_file_stat);
     }
 
-    if ((file_stat.st_mode & S_IFMT) == S_IFDIR) {
-      return F_true;
-    }
+    if ((file_stat.st_mode & S_IFMT) == S_IFDIR) return F_true;
 
     return F_false;
   }
@@ -62,9 +54,7 @@ extern "C" {
 #ifndef _di_f_directory_exists_at_
   f_status_t f_directory_exists_at(const int at_id, const f_string_static_t path, const int flag) {
 
-    if (!path.used) {
-      return F_data_not;
-    }
+    if (!path.used) return F_data_not;
 
     struct stat file_stat;
 
@@ -84,9 +74,7 @@ extern "C" {
       return F_status_set_error(F_file_stat);
     }
 
-    if ((file_stat.st_mode & S_IFMT) == S_IFDIR) {
-      return F_true;
-    }
+    if ((file_stat.st_mode & S_IFMT) == S_IFDIR) return F_true;
 
     return F_false;
   }
@@ -95,9 +83,7 @@ extern "C" {
 #ifndef _di_f_directory_is_
   f_status_t f_directory_is(const f_string_static_t path) {
 
-    if (!path.used) {
-      return F_data_not;
-    }
+    if (!path.used) return F_data_not;
 
     struct stat file_stat;
 
@@ -127,9 +113,7 @@ extern "C" {
 #ifndef _di_f_directory_is_at_
   f_status_t f_directory_is_at(const int at_id, const f_string_static_t path, const int flag) {
 
-    if (!path.used) {
-      return F_data_not;
-    }
+    if (!path.used) return F_data_not;
 
     struct stat file_stat;
 
@@ -149,9 +133,7 @@ extern "C" {
       return F_status_set_error(F_file_stat);
     }
 
-    if ((file_stat.st_mode & S_IFMT) == S_IFDIR) {
-      return F_true;
-    }
+    if ((file_stat.st_mode & S_IFMT) == S_IFDIR) return F_true;
 
     return F_false;
   }
@@ -163,9 +145,7 @@ extern "C" {
       if (!names) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!path.used) {
-      return F_data_not;
-    }
+    if (!path.used) return F_data_not;
 
     struct dirent **listing = 0;
     f_status_t status = F_none;
@@ -228,13 +208,8 @@ extern "C" {
       f_memory_delete(1, sizeof(struct dirent *), (void *) &listing);
     }
 
-    if (F_status_is_error(status)) {
-      return status;
-    }
-
-    if (!length) {
-      return F_directory_empty;
-    }
+    if (F_status_is_error(status)) return status;
+    if (!length) return F_directory_empty;
 
     return F_none;
   }
@@ -246,9 +221,7 @@ extern "C" {
       if (!id) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!path.used) {
-      return F_data_not;
-    }
+    if (!path.used) return F_data_not;
 
     int flag = F_directory_flag_directory_d | F_directory_flag_close_execute_d | F_directory_flag_path_d;
 
@@ -287,9 +260,7 @@ extern "C" {
       if (!id) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!path.used) {
-      return F_data_not;
-    }
+    if (!path.used) return F_data_not;
 
     int flag = F_directory_flag_directory_d | F_directory_flag_close_execute_d | F_directory_flag_path_d;
 
@@ -329,9 +300,7 @@ extern "C" {
       if (depth_max < 0) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!path.used) {
-      return F_data_not;
-    }
+    if (!path.used) return F_data_not;
 
     int result = 0;
 
@@ -345,9 +314,7 @@ extern "C" {
     else {
 
       // Not recursively deleting and the path is requested to be preserved, so there is nothing to delete.
-      if (preserve) {
-        return F_none;
-      }
+      if (preserve) return F_none;
 
       result = remove(path.string);
     }
@@ -383,9 +350,7 @@ extern "C" {
       if (depth_max < 0) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (!path.used) {
-      return F_data_not;
-    }
+    if (!path.used) return F_data_not;
 
     int result = 0;
 
@@ -399,9 +364,7 @@ extern "C" {
     else {
 
       // Not recursively deleting and the path is requested to be preserved, so there is nothing to delete.
-      if (preserve) {
-        return F_none;
-      }
+      if (preserve) return F_none;
 
       result = remove(path.string);
     }
@@ -434,19 +397,14 @@ extern "C" {
 #ifndef _di_f_directory_touch_
   f_status_t f_directory_touch(const f_string_static_t path, const mode_t mode) {
 
-    if (!path.used) {
-      return F_data_not;
-    }
+    if (!path.used) return F_data_not;
 
     struct stat file_stat;
 
     memset(&file_stat, 0, sizeof(struct stat));
 
     if (stat(path.string, &file_stat) < 0) {
-      if (errno == ENOENT) {
-        return private_f_directory_create(path, mode);
-      }
-
+      if (errno == ENOENT) return private_f_directory_create(path, mode);
       if (errno == EACCES) return F_status_set_error(F_access_denied);
       if (errno == EFAULT) return F_status_set_error(F_buffer);
       if (errno == ELOOP) return F_status_set_error(F_loop);
@@ -481,9 +439,7 @@ extern "C" {
 #ifndef _di_f_directory_touch_at_
   f_status_t f_directory_touch_at(const int at_id, const f_string_static_t path, const mode_t mode, const int flag) {
 
-    if (!path.used) {
-      return F_data_not;
-    }
+    if (!path.used) return F_data_not;
 
     struct stat file_stat;
 

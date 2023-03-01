@@ -801,6 +801,7 @@ extern "C" {
 #ifndef _di_fl_fss_extended_list_object_write_
   f_status_t fl_fss_extended_list_object_write(const f_string_static_t object, const uint8_t complete, f_state_t state, f_string_range_t * const range, f_string_dynamic_t * const destination) {
     #ifndef _di_level_1_parameter_checking_
+      if (!range) return F_status_set_error(F_parameter);
       if (!destination) return F_status_set_error(F_parameter);
     #endif // _di_level_1_parameter_checking_
 

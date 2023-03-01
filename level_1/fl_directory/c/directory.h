@@ -124,7 +124,7 @@ extern "C" {
 #endif // _di_fl_directory_clone_
 
 /**
- * Copy a directory contents, as well as its file mode and possibly the owner and group.
+ * Copy a directory contents but not the directory itself, as well as its file mode and possibly the owner and group.
  *
  * When cloning the contents of a directory, both the source and the destination paths must already exist and be directories, regardless of exclusive boolean.
  *
@@ -203,7 +203,7 @@ extern "C" {
 /**
  * Copy a directory contents.
  *
- * When copying the contents of a directory, both the source and the destination paths must already exist and be directories, regardless of exclusive boolean.
+ * When copying the contents of a directory but not the directory itself, both the source and the destination paths must already exist and be directories, regardless of exclusive boolean.
  *
  * The paths must not contain NULL except for the terminating NULL.
  * The paths must be NULL terminated.

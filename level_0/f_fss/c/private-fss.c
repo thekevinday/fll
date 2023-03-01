@@ -11,7 +11,9 @@ extern "C" {
     f_status_t status = F_none;
 
     for (f_array_length_t i = length; i < items->size; ++i) {
+
       macro_f_fss_item_t_adjust(status, items->array[i], 0)
+      if (F_status_is_error(status)) return status;
     } // for
 
     status = f_memory_adjust(items->size, length, sizeof(f_fss_item_t), (void **) & items->array);
@@ -36,7 +38,9 @@ extern "C" {
     f_status_t status = F_none;
 
     for (f_array_length_t i = length; i < items->size; ++i) {
+
       macro_f_fss_item_t_resize(status, items->array[i], 0)
+      if (F_status_is_error(status)) return status;
     } // for
 
     status = f_memory_resize(items->size, length, sizeof(f_fss_item_t), (void **) & items->array);
@@ -94,6 +98,7 @@ extern "C" {
     f_status_t status = F_none;
 
     for (f_array_length_t i = length; i < nameds->size; ++i) {
+
       status = private_f_fss_named_adjust(0, &nameds->array[i]);
       if (F_status_is_error(status)) return status;
     } // for
@@ -120,6 +125,7 @@ extern "C" {
     f_status_t status = F_none;
 
     for (f_array_length_t i = length; i < nameds->size; ++i) {
+
       status = private_f_fss_named_resize(0, &nameds->array[i]);
       if (F_status_is_error(status)) return status;
     } // for
@@ -143,6 +149,7 @@ extern "C" {
     f_status_t status = F_none;
 
     for (f_array_length_t i = length; i < nest->size; ++i) {
+
       status = private_f_fss_items_adjust(0, &nest->depth[i]);
       if (F_status_is_error(status)) return status;
     } // for
@@ -169,6 +176,7 @@ extern "C" {
     f_status_t status = F_none;
 
     for (f_array_length_t i = length; i < nest->size; ++i) {
+
       status = private_f_fss_items_resize(0, &nest->depth[i]);
       if (F_status_is_error(status)) return status;
     } // for
@@ -192,6 +200,7 @@ extern "C" {
     f_status_t status = F_none;
 
     for (f_array_length_t i = length; i < nests->size; ++i) {
+
       status = private_f_fss_nest_adjust(0, &nests->array[i]);
       if (F_status_is_error(status)) return status;
     } // for
@@ -218,6 +227,7 @@ extern "C" {
     f_status_t status = F_none;
 
     for (f_array_length_t i = length; i < nests->size; ++i) {
+
       status = private_f_fss_nest_resize(0, &nests->array[i]);
       if (F_status_is_error(status)) return status;
     } // for

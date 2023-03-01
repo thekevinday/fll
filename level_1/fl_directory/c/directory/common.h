@@ -17,7 +17,7 @@ extern "C" {
 #endif
 
 /**
- * An association of a path and a status code.
+ * A structure containing directory recursion information.
  *
  * The allocation macros apply to the path.
  *
