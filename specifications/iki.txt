@@ -16,12 +16,17 @@ IKI Specifications:
   The vocabulary represents a list of allowed variable names that may also have specific contextual meaning defined by a given IKI specification.
   The variable name is considered the italic:"Object" and is also considered the vocabulary.
   The variable value is considered the italic:"Content".
+  The variable name may be wrapped by a single open bracket, character:"[" (unicode:"U+005B"), at the start and a single close bracket, character:"]" (unicode:"U+005D"), at the end.
+
+  The wrapping characters characters are not part of the variable name and must not be contained within a variable name.
+  The wrapping characters do not support escaping.
+  Both wrapping characters must be specified or neither.
 
   The IKI format will use code:"iki-0000" to represent an IKI with no explicitly defined vocabulary.
   Whereas code:"iki-0001" and beyond represent a specific IKI vocabulary.
 
-  A potential IKI variable name starts on word (or character:"_", character:"-", character:"+") characters.
-  White space and non-word (and non character:"_", character:"-", character:"+") character punctuations may not exist as part of the variable name.
+  A potential IKI variable name starts on word character or one of character:"_" (unicode:"U+005F"), character:"-" (unicode:"U+002D"), character:"+" (unicode:"U+002B"), character:"[" (unicode:"U+005B")).
+  White space, non-word, and non character:"_" (unicode:"U+005F"), character:"-" (unicode:"U+002D"), character:"+" (unicode:"U+002B")) character punctuations may not exist as part of the variable name.
   The only Unicode dash-like characters allowed as a "dash" are those intended to connect, such as the Unicode hyphens (unicode:"U+2010" and unicode:"U+2011").
 
   Any potential IKI data must be escaped to make it treated as non-IKI data by prepending a backslash character:"\\" before the colon character:":" that is before the opening quote (single, double, or backtic). Potential IKI data refers to any valid IKI sequence without considering the closing single quote character:"'" (unicode:"U+0027"), closing double quote character:'"' (unicode:"U+0022"), or closing backtick character:'`' (unicode:"U+0060").
@@ -36,6 +41,8 @@ IKI Specifications:
     code:"\x" = any character.
     code:"\W" = any non-word character, discluding character:"_", character:"-", character:"+" (and Unicode equivalents).
     code:"\e" = an optional escape sequence of any number of backslashes, such as character:"\\".
+    code:"[" = a single conditionally optional open bracket, character:"[" (unicode:"U+005B").
+    code:"]" = a single conditionally optional close bracket, character:"]" (unicode:"U+005D").
     code:"*" = zero or more occurrences.
     code:"~" = one or more occurrences, or zero if at start of file.
 
@@ -43,7 +50,7 @@ IKI Specifications:
     code:"\x*\W~\*:*"
 
   Structure\:
-    code:"\o\e:\q\c\q"
+    code:"[\o\e:]\q\c\q"
 
   After Structure\:
     code:""
@@ -55,21 +62,29 @@ IKI Specifications:
 
     Other times I want to render a url such as this example url: url\:'http://www.example.com/url with space/'.
 
-    There are no comments, except for maybe the FSS header (which would not resolve to any IKI syntax anyway).
+    There are no comments, except for maybe the FSS\:"Featureless Settings Specification" header (which would not resolve to any IKI syntax anyway).
 
     Quotes may be included, such as: code\:"const char *string = \"My \\\"quoted\\\" C string.\";".
 
     The following emphasis\:"is escaped to not be treated as IKI data".'
 
+    The conditionally optional open and close brackets allow for putting a variable directly next to another word character like: [context]\:"strong"this[context]\:"strong".
+
   Objects (also called vocabulary or variable name) would be\:
-    1) emphasis
-    2) url
-    3) code
+    1) FSS
+    2) emphasis
+    3) url
+    4) code
+    5) context
+    6) context
 
   Contents (also called variable value) would be\:
-    1.1) emphasize some text
-    2.1) http://www.example.com/url with space/
-    3.1) const char *string = "My \"quoted\" C string.";
+    1.1) Featureless Settings Specification
+    2.1) emphasize some text
+    3.1) http://www.example.com/url with space/
+    4.1) const char *string = "My \"quoted\" C string.";
+    5.1) strong
+    6.1) strong
 
   The following are core specifications (each with a common name associated with the specification number)\:
   - fss-0000: Unrestricted
