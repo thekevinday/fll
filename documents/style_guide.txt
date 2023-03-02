@@ -22,6 +22,7 @@ General Style Guides:
   - Commas in Sets.
   - Loops and Newlines.
   - Returns, Breaks, Continues, Gotos, and Newlines.
+  - Braces, Blocks, and One Liners.
 
 Specific Style Guides:
   - Return Code Names.
@@ -143,6 +144,21 @@ Returns, Breaks, Continues, Gotos, and Newlines:
   Any of these used in a switch statement to represent an action on a particular case is an exception to this rule.
 
   As an exception, this newline requirement may also be disregarded when combined with a set of one-line if, then, and else conditions.
+
+Braces, Blocks, and One Liners:
+  Most code, in general, is to be wrapped in bracks as appropriate for the needed or desired block structure.
+
+  There are seveal cases where one-liners are highler recommended and encouraged.
+  Operations that change the flow of a block, like a code:"return" statement or a code:"break" state make sense to be in a single line.
+
+  The one liner statements may also be on the immediate next line from relating code.
+
+  An example of the one liner looks like\:
+    block:"
+      if (x == 0) return;
+      if (x == 1) break;
+      if (x == 2) continue;
+    "
 
 Return Code Names:
   The return code names are C-language specific names used by this project as the status or return codes for functions and programs.
