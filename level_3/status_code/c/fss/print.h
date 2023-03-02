@@ -22,7 +22,7 @@ extern "C" {
  *   The main program settings.
  *   (Must be of type status_code_setting_t.)
  *
- *   This does not alter setting.status.
+ *   This does not alter setting.state.status.
  * @param print
  *   The output structure to print to.
  *

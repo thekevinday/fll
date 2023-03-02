@@ -23,7 +23,7 @@ extern "C" {
  *   The main program settings.
  *   (Must be of type fake_setting_t.)
  *
- *   This does not alter setting.status.
+ *   This does not alter setting.state.status.
  * @param print
  *   The output structure to print to.
  * @param arguments
@@ -45,7 +45,7 @@ extern "C" {
  *   The main program settings.
  *   (Must be of type fake_setting_t.)
  *
- *   This does not alter setting.status.
+ *   This does not alter setting.state.status.
  * @param print
  *   The output structure to print to.
  * @param clone
@@ -71,7 +71,7 @@ extern "C" {
  *   The main program settings.
  *   (Must be of type fake_setting_t.)
  *
- *   This does not alter setting.status.
+ *   This does not alter setting.state.status.
  * @param print
  *   The output structure to print to.
  * @param variable
@@ -92,7 +92,7 @@ extern "C" {
  *   The main program settings.
  *   (Must be of type fake_setting_t.)
  *
- *   This does not alter setting.status.
+ *   This does not alter setting.state.status.
  * @param print
  *   The output structure to print to.
  * @param path
@@ -113,7 +113,7 @@ extern "C" {
  *   The main program settings.
  *   (Must be of type fake_setting_t.)
  *
- *   This does not alter setting.status.
+ *   This does not alter setting.state.status.
  * @param print
  *   The output structure to print to.
  * @param arguments
@@ -135,7 +135,7 @@ extern "C" {
  *   The main program settings.
  *   (Must be of type fake_setting_t.)
  *
- *   This does not alter setting.status.
+ *   This does not alter setting.state.status.
  * @param print
  *   The output structure to print to.
  * @param is_directory
@@ -159,7 +159,7 @@ extern "C" {
  *   The main program settings.
  *   (Must be of type fake_setting_t.)
  *
- *   This does not alter setting.status.
+ *   This does not alter setting.state.status.
  * @param print
  *   The output structure to print to.
  * @param program
@@ -182,7 +182,7 @@ extern "C" {
  *   The main program settings.
  *   (Must be of type fake_setting_t.)
  *
- *   This does not alter setting.status.
+ *   This does not alter setting.state.status.
  * @param print
  *   The output structure to print to.
  * @param fail
@@ -203,7 +203,7 @@ extern "C" {
  *   The main program settings.
  *   (Must be of type fake_setting_t.)
  *
- *   This does not alter setting.status.
+ *   This does not alter setting.state.status.
  * @param print
  *   The output structure to print to.
  * @param path
@@ -226,7 +226,7 @@ extern "C" {
  *   The main program settings.
  *   (Must be of type fake_setting_t.)
  *
- *   This does not alter setting.status.
+ *   This does not alter setting.state.status.
  * @param print
  *   The output structure to print to.
  * @param path
@@ -247,7 +247,7 @@ extern "C" {
  *   The main program settings.
  *   (Must be of type fake_setting_t.)
  *
- *   This does not alter setting.status.
+ *   This does not alter setting.state.status.
  * @param print
  *   The output structure to print to.
  * @param what
@@ -274,7 +274,7 @@ extern "C" {
  *   The main program settings.
  *   (Must be of type fake_setting_t.)
  *
- *   This does not alter setting.status.
+ *   This does not alter setting.state.status.
  * @param print
  *   The output structure to print to.
  * @param source
@@ -297,7 +297,7 @@ extern "C" {
  *   The main program settings.
  *   (Must be of type fake_setting_t.)
  *
- *   This does not alter setting.status.
+ *   This does not alter setting.state.status.
  * @param print
  *   The output structure to print to.
  * @param path

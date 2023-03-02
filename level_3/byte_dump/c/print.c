@@ -81,7 +81,7 @@ extern "C" {
     if (!setting || print.verbosity < f_console_verbosity_error_e) return F_output_not;
     if (setting->flag & byte_dump_main_flag_verify_e) return;
 
-    if (F_status_is_error_not(setting->status)) {
+    if (F_status_is_error_not(setting->state.status)) {
       if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
       if (setting->flag & byte_dump_main_flag_file_to_e) return F_output_not;
     }
@@ -98,7 +98,7 @@ extern "C" {
     if (!setting || print.verbosity < f_console_verbosity_error_e) return F_output_not;
     if (setting->flag & byte_dump_main_flag_verify_e) return;
 
-    if (F_status_is_error_not(setting->status)) {
+    if (F_status_is_error_not(setting->state.status)) {
       if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
       if (setting->flag & byte_dump_main_flag_file_to_e) return F_output_not;
     }
@@ -115,7 +115,7 @@ extern "C" {
     if (!setting || print.verbosity < f_console_verbosity_error_e) return F_output_not;
     if (setting->flag & byte_dump_main_flag_verify_e) return;
 
-    if (F_status_is_error_not(setting->status)) {
+    if (F_status_is_error_not(setting->state.status)) {
       if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
       if (setting->flag & byte_dump_main_flag_file_to_e) return F_output_not;
     }
@@ -132,7 +132,7 @@ extern "C" {
     if (!setting || print.verbosity < f_console_verbosity_error_e) return F_output_not;
     if (setting->flag & byte_dump_main_flag_verify_e) return;
 
-    if (F_status_is_error_not(setting->status)) {
+    if (F_status_is_error_not(setting->state.status)) {
       if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
       if (setting->flag & byte_dump_main_flag_file_to_e) return F_output_not;
     }

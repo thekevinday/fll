@@ -22,7 +22,7 @@ extern "C" {
  * @param setting
  *   The program main setting data.
  *
- *   This does not alter setting.status.
+ *   This does not alter setting.state.status.
  *
  * @return
  *   F_none on success.
@@ -47,7 +47,7 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This alters setting.status:
+ *   This alters setting.state.status:
  *     F_none on success.
  *     F_data_not on success but nothing was provided to operate with.
  *
@@ -82,7 +82,7 @@ extern "C" {
  *   The main program settings.
  *   All buffers are deallocated.
  *
- *   This does not alter setting.status.
+ *   This does not alter setting.state.status.
  *
  * @return
  *   F_none on success.

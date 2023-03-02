@@ -5,8 +5,8 @@
  * API Version: 0.7
  * Licenses: lgpl-2.1-or-later
  */
-#ifndef _PRIVATE_utf8_h
-#define _PRIVATE_utf8_h
+#ifndef _utf8_process_h
+#define _utf8_process_h
 
 #ifdef __cplusplus
 extern "C" {
@@ -23,14 +23,14 @@ extern "C" {
  *   This represent a single text data.
  *   This text is NULL terminated and can therefore not contain any NULLs.
  *
- * @return
- *   F_true on success and is valid.
- *   F_false on success and contains invalid sequences.
- *   F_interrupt on (exit) signal received.
+ *   This alters setting.state.status:
+ *     F_true on success and is valid.
+ *     F_false on success and contains invalid sequences.
+ *     F_interrupt on (exit) signal received.
  *
- *   Errors (with error bit) from: utf8_convert_bytesequence()
- *   Errors (with error bit) from: utf8_convert_codepoint()
- *   Errors (with error bit) from: utf8_detect_codepoint()
+ *     Errors (with error bit) from: utf8_convert_bytesequence()
+ *     Errors (with error bit) from: utf8_convert_codepoint()
+ *     Errors (with error bit) from: utf8_detect_codepoint()
  *
  * @see utf8_convert_bytesequence()
  * @see utf8_convert_codepoint()
@@ -38,7 +38,7 @@ extern "C" {
  * @see utf8_signal_received()
  */
 #ifndef _di_utf8_process_text_
-  extern f_status_t utf8_process_text(fll_program_data_t * const main, utf8_setting_t * const setting, f_string_static_t text) F_attribute_visibility_internal_d;
+  extern void utf8_process_text(fll_program_data_t * const main, utf8_setting_t * const setting, f_string_static_t text) F_attribute_visibility_internal_d;
 #endif // _di_utf8_process_text_
 
 /**
@@ -58,4 +58,4 @@ extern "C" {
 } // extern "C"
 #endif
 
-#endif // _PRIVATE_utf8_h
+#endif // _utf8_process_h

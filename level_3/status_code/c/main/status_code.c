@@ -10,28 +10,28 @@ extern "C" {
 
     if (!main || !setting) return;
 
-    if (F_status_is_error(setting->status)) {
+    if (F_status_is_error(setting->state.status)) {
       status_code_print_line_last_locked(setting, main->error);
 
       return;
     }
 
-    if (!setting->status_string_from || !setting->status_string_to) {
+    if (!setting->state.status_string_from || !setting->state.status_string_to) {
 
-      if (!setting->status_string_from) {
+      if (!setting->state.status_string_from) {
         status_code_print_error_invalid_callback(setting, main->error, macro_status_code_f(status_string_from));
       }
 
-      if (!setting->status_string_to) {
+      if (!setting->state.status_string_to) {
         status_code_print_error_invalid_callback(setting, main->error, macro_status_code_f(status_string_to));
       }
 
-      setting->status = F_status_set_error(F_parameter);
+      setting->state.status = F_status_set_error(F_parameter);
 
       return;
     }
 
-    setting->status = F_none;
+    setting->state.status = F_none;
 
     if (setting->flag & status_code_main_flag_help_e) {
       status_code_print_help(setting, main->message);
@@ -69,7 +69,7 @@ extern "C" {
 
               fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
 
-              setting->status = F_status_set_error(F_interrupt);
+              setting->state.status = F_status_set_error(F_interrupt);
 
               return;
             }
@@ -79,8 +79,8 @@ extern "C" {
 
           status2 = status_code_process_number(main, setting, main->parameters.arguments.array[main->parameters.remaining.array[i]]);
 
-          if (F_status_is_error(status2) && setting->status == F_none) {
-            setting->status = status2;
+          if (F_status_is_error(status2) && setting->state.status == F_none) {
+            setting->state.status = status2;
           }
         } // for
 
@@ -103,7 +103,7 @@ extern "C" {
 
               fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
 
-              setting->status = F_status_set_error(F_interrupt);
+              setting->state.status = F_status_set_error(F_interrupt);
 
               return;
             }
@@ -113,8 +113,8 @@ extern "C" {
 
           status2 = status_code_process_check(main, setting, main->parameters.arguments.array[main->parameters.remaining.array[i]]);
 
-          if (F_status_is_error(status2) && setting->status == F_none) {
-            setting->status = status2;
+          if (F_status_is_error(status2) && setting->state.status == F_none) {
+            setting->state.status = status2;
           }
         } // for
 
@@ -137,7 +137,7 @@ extern "C" {
 
               fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
 
-              setting->status = F_status_set_error(F_interrupt);
+              setting->state.status = F_status_set_error(F_interrupt);
 
               return;
             }
@@ -147,8 +147,8 @@ extern "C" {
 
           status2 = status_code_process_normal(main, setting, main->parameters.arguments.array[main->parameters.remaining.array[i]]);
 
-          if (F_status_is_error(status2) && setting->status == F_none) {
-            setting->status = status2;
+          if (F_status_is_error(status2) && setting->state.status == F_none) {
+            setting->state.status = status2;
           }
         } // for
 
@@ -156,11 +156,8 @@ extern "C" {
       }
     }
 
-    if (F_status_is_error(setting->status)) {
-      status_code_print_line_last_locked(setting, main->error);
-    }
-    else if (setting->status != F_interrupt) {
-      status_code_print_line_last_locked(setting, main->message);
+    if (F_status_is_error(setting->state.status)) {
+      status_code_print_line_last_locked(setting, F_status_set_fine(setting->state.status) == F_interrupt ? main->message : main->error);
     }
   }
 #endif // _di_status_code_main_

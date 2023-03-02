@@ -145,7 +145,7 @@ extern "C" {
   #define status_code_setting_t_initialize \
     { \
       status_code_main_flag_none_e, \
-      f_state_initialize_t, \
+      f_state_t_initialize, \
       f_string_static_t_initialize, \
       f_string_static_t_initialize, \
       0, \

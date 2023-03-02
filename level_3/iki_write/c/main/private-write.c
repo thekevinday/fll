@@ -10,7 +10,7 @@ extern "C" {
   void iki_write_process(fll_program_data_t * const main, iki_write_setting_t * const setting, const f_string_static_t object, const f_string_static_t content) {
 
     if (!object.used) {
-      setting->status = F_status_set_error(F_failure);
+      setting->state.status = F_status_set_error(F_failure);
 
       if (main->error.verbosity != f_console_verbosity_quiet_e) {
         iki_write_print_line_first_locked(setting, main->error);
@@ -20,17 +20,17 @@ extern "C" {
       return;
     }
 
-    setting->status = f_iki_object_is(object);
+    setting->state.status = f_iki_object_is(object);
 
-    if (setting->status == F_false) {
-      setting->status = F_status_set_error(F_failure);
+    if (setting->state.status == F_false) {
+      setting->state.status = F_status_set_error(F_failure);
 
       iki_write_print_error_object_not_valid(setting, main->error, object);
 
       return;
     }
 
-    if (F_status_is_error(setting->status)) {
+    if (F_status_is_error(setting->state.status)) {
       iki_write_print_error(setting, main->error, macro_iki_write_f(f_iki_object_is));
 
       return;
@@ -38,9 +38,9 @@ extern "C" {
 
     setting->escaped.used = 0;
 
-    setting->status = fll_iki_content_escape(content, setting->quote, &setting->escaped);
+    setting->state.status = fll_iki_content_escape(content, setting->quote, &setting->escaped);
 
-    if (F_status_is_error(setting->status)) {
+    if (F_status_is_error(setting->state.status)) {
       iki_write_print_error(setting, main->error, macro_iki_write_f(fll_iki_content_escape));
 
       return;

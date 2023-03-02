@@ -11,7 +11,7 @@ extern "C" {
     if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
 
     iki_read_print_line_first_locked(setting, print);
-    fll_error_print(print, F_status_set_fine(setting->status), function, fll_error_file_flag_fallback_e);
+    fll_error_print(print, F_status_set_fine(setting->state.status), function, fll_error_file_flag_fallback_e);
 
     return F_none;
   }
@@ -23,7 +23,7 @@ extern "C" {
     if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
 
     iki_read_print_line_first_locked(setting, print);
-    fll_error_file_print(print, F_status_set_fine(setting->status), function, fll_error_file_flag_fallback_e, name, operation, type);
+    fll_error_file_print(print, F_status_set_fine(setting->state.status), function, fll_error_file_flag_fallback_e, name, operation, type);
 
     return F_none;
   }
@@ -129,7 +129,7 @@ extern "C" {
 
     if (!setting || print.verbosity < f_console_verbosity_error_e) return F_output_not;
 
-    if (F_status_is_error_not(setting->status)) {
+    if (F_status_is_error_not(setting->state.status)) {
       if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
     }
 
@@ -144,7 +144,7 @@ extern "C" {
 
     if (!setting || print.verbosity < f_console_verbosity_error_e) return F_output_not;
 
-    if (F_status_is_error_not(setting->status)) {
+    if (F_status_is_error_not(setting->state.status)) {
       if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
     }
 
@@ -159,7 +159,7 @@ extern "C" {
 
     if (!setting || print.verbosity < f_console_verbosity_error_e) return F_output_not;
 
-    if (F_status_is_error_not(setting->status)) {
+    if (F_status_is_error_not(setting->state.status)) {
       if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
     }
 
@@ -174,7 +174,7 @@ extern "C" {
 
     if (!setting || print.verbosity < f_console_verbosity_error_e) return F_output_not;
 
-    if (F_status_is_error_not(setting->status)) {
+    if (F_status_is_error_not(setting->state.status)) {
       if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
     }
 

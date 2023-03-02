@@ -27,10 +27,9 @@ extern "C" {
 
     if (!main || !setting) return;
 
-    // Load parameters.
-    setting->status = f_console_parameter_process(state, arguments, &main->parameters, 0);
+    f_console_parameter_process(arguments, &main->parameters, &setting->state, 0);
 
-    if (F_status_is_error(setting->status)) {
+    if (F_status_is_error(setting->state.status)) {
       fss_write_print_error(setting, main->error, macro_fss_write_f(f_console_parameter_process));
 
       return;
@@ -47,9 +46,9 @@ extern "C" {
 
         const uint8_t modes[3] = { f_color_mode_not_e, f_color_mode_light_e, f_color_mode_dark_e };
 
-        setting->status = fll_program_parameter_process_context(choices, modes, F_true, main);
+        setting->state.status = fll_program_parameter_process_context(choices, modes, F_true, main);
 
-        if (F_status_is_error(setting->status)) {
+        if (F_status_is_error(setting->state.status)) {
           fss_write_print_error(setting, main->error, macro_fss_write_f(fll_program_parameter_process_context));
 
           return;
@@ -78,9 +77,9 @@ extern "C" {
 
         const uint8_t verbosity[5] = { f_console_verbosity_quiet_e, f_console_verbosity_error_e, f_console_verbosity_verbose_e, f_console_verbosity_debug_e, f_console_verbosity_normal_e };
 
-        setting->status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, main);
+        setting->state.status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, main);
 
-        if (F_status_is_error(setting->status)) {
+        if (F_status_is_error(setting->state.status)) {
           fss_write_print_error(setting, main->error, macro_fss_write_f(fll_program_parameter_process_verbosity));
 
           return;
@@ -106,10 +105,10 @@ extern "C" {
 
     if (callback) {
       callback(arguments, main, setting);
-      if (F_status_is_error(setting->status)) return;
+      if (F_status_is_error(setting->state.status)) return;
 
-      if (setting->status == F_done) {
-        setting->status = F_none;
+      if (setting->state.status == F_done) {
+        setting->state.status = F_none;
 
         return;
       }
@@ -120,7 +119,7 @@ extern "C" {
 
     if ((main->parameters.array[fss_write_parameter_file_e].result & f_console_result_value_e) && main->parameters.array[fss_write_parameter_file_e].values.used) {
       if (main->parameters.array[fss_write_parameter_file_e].values.used > 1) {
-        setting->status = F_status_set_error(F_parameter);
+        setting->state.status = F_status_set_error(F_parameter);
 
         fss_write_print_line_first_locked(setting, main->error);
         fll_program_print_error_parameter_must_specify_once(main->error, f_console_symbol_long_normal_s, fss_write_long_file_s);
@@ -133,9 +132,9 @@ extern "C" {
       main->output.to.id = -1;
       main->output.to.stream = 0;
 
-      setting->status = f_file_stream_open(main->parameters.arguments.array[index], f_string_empty_s, &main->output.to);
+      setting->state.status = f_file_stream_open(main->parameters.arguments.array[index], f_string_empty_s, &main->output.to);
 
-      if (F_status_is_error(setting->status)) {
+      if (F_status_is_error(setting->state.status)) {
         fss_write_print_error_file(setting, main->error, macro_fss_write_f(f_file_stream_open), main->parameters.arguments.array[index], f_file_operation_open_s, fll_error_file_type_file_e);
 
         return;
@@ -144,7 +143,7 @@ extern "C" {
       setting->flag |= fss_write_flag_file_to_e;
     }
     else if (main->parameters.array[fss_write_parameter_file_e].result & f_console_result_found_e) {
-      setting->status = F_status_set_error(F_parameter);
+      setting->state.status = F_status_set_error(F_parameter);
 
       fss_write_print_line_first_locked(setting, main->error);
       fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, fss_write_long_file_s);
@@ -157,9 +156,9 @@ extern "C" {
 
       setting->objects.used = 0;
 
-      setting->status = f_string_dynamics_resize(values->used, &setting->objects);
+      setting->state.status = f_string_dynamics_resize(values->used, &setting->objects);
 
-      if (F_status_is_error(setting->status)) {
+      if (F_status_is_error(setting->state.status)) {
         fss_write_print_error(setting, main->error, macro_fss_write_f(f_string_dynamics_resize));
 
         return;
@@ -178,7 +177,7 @@ extern "C" {
       setting->flag |= fss_write_flag_object_e;
     }
     else if (main->parameters.array[fss_write_parameter_object_e].result & f_console_result_found_e) {
-      setting->status = F_status_set_error(F_parameter);
+      setting->state.status = F_status_set_error(F_parameter);
 
       fss_write_print_line_first_locked(setting, main->error);
       fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, fss_write_long_object_s);
@@ -191,7 +190,7 @@ extern "C" {
       if (setting->flag & fss_write_flag_object_e) {
         if (!(setting->flag & fss_write_flag_content_multiple_e)) {
           if (main->parameters.array[fss_write_parameter_content_e].values.used > main->parameters.array[fss_write_parameter_object_e].values.used) {
-            setting->status = F_status_set_error(F_support_not);
+            setting->state.status = F_status_set_error(F_support_not);
 
             fss_write_print_error_one_content_only(setting, main->error);
 
@@ -210,9 +209,9 @@ extern "C" {
 
       setting->contentss.used = 0;
 
-      setting->status = f_string_dynamicss_increase_by(values_object->used, &setting->contentss);
+      setting->state.status = f_string_dynamicss_increase_by(values_object->used, &setting->contentss);
 
-      if (F_status_is_error(setting->status)) {
+      if (F_status_is_error(setting->state.status)) {
         fss_write_print_error(setting, main->error, macro_fss_write_f(f_string_dynamicss_increase_by));
 
         return;
@@ -241,9 +240,9 @@ extern "C" {
           break;
         }
 
-        setting->status = f_string_dynamics_increase_by(total, &setting->contentss.array[j]);
+        setting->state.status = f_string_dynamics_increase_by(total, &setting->contentss.array[j]);
 
-        if (F_status_is_error(setting->status)) {
+        if (F_status_is_error(setting->state.status)) {
           fss_write_print_error(setting, main->error, macro_fss_write_f(f_string_dynamics_increase_by));
 
           return;
@@ -266,7 +265,7 @@ extern "C" {
       setting->flag |= fss_write_flag_content_e;
     }
     else if (main->parameters.array[fss_write_parameter_content_e].result & f_console_result_found_e) {
-      setting->status = F_status_set_error(F_parameter);
+      setting->state.status = F_status_set_error(F_parameter);
 
       fss_write_print_line_first_locked(setting, main->error);
       fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, fss_write_long_content_s);
@@ -279,9 +278,9 @@ extern "C" {
 
       setting->prepend.used = 0;
 
-      setting->status = f_string_dynamic_append_nulless(main->parameters.arguments.array[index], &setting->prepend);
+      setting->state.status = f_string_dynamic_append_nulless(main->parameters.arguments.array[index], &setting->prepend);
 
-      if (F_status_is_error(setting->status)) {
+      if (F_status_is_error(setting->state.status)) {
         fss_write_print_error(setting, main->error, macro_fss_write_f(f_string_dynamic_append_nulless));
 
         return;
@@ -293,16 +292,16 @@ extern "C" {
 
         for (; range.start < main->parameters.arguments.array[index].used; range.start++) {
 
-          setting->status = f_fss_is_space(main->parameters.arguments.array[index], range, state);
+          setting->state.status = f_fss_is_space(main->parameters.arguments.array[index], range, state);
 
-          if (F_status_is_error(setting->status)) {
+          if (F_status_is_error(setting->state.status)) {
             fss_write_print_error(setting, main->error, macro_fss_write_f(f_fss_is_space));
 
             return;
           }
 
-          if (setting->status == F_false) {
-            setting->status = F_status_set_error(F_parameter);
+          if (setting->state.status == F_false) {
+            setting->state.status = F_status_set_error(F_parameter);
 
             fss_write_print_error_prepend_only_whitespace(setting, main->error);
 
@@ -314,7 +313,7 @@ extern "C" {
       setting->flag |= fss_write_flag_prepend_e;
     }
     else if (main->parameters.array[fss_write_parameter_prepend_e].result & f_console_result_found_e) {
-      setting->status = F_status_set_error(F_parameter);
+      setting->state.status = F_status_set_error(F_parameter);
 
       fss_write_print_line_first_locked(setting, main->error);
       fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, fss_write_long_prepend_s);
@@ -324,7 +323,7 @@ extern "C" {
 
     if ((main->parameters.array[fss_write_parameter_ignore_e].result & f_console_result_value_e) && main->parameters.array[fss_write_parameter_ignore_e].values.used) {
       if (main->parameters.array[fss_write_parameter_ignore_e].values.used % 2 != 0) {
-        setting->status = F_status_set_error(F_parameter);
+        setting->state.status = F_status_set_error(F_parameter);
 
         fss_write_print_line_first_locked(setting, main->error);
         fll_program_print_error_parameter_missing_value_requires_amount(main->error, f_console_symbol_long_normal_s, fss_write_long_ignore_s, fss_write_string_two_s);
@@ -346,9 +345,9 @@ extern "C" {
 
         setting->ignoress.used = 0;
 
-        setting->status = f_string_rangess_increase_by(values_data->used, &setting->ignoress);
+        setting->state.status = f_string_rangess_increase_by(values_data->used, &setting->ignoress);
 
-        if (F_status_is_error(setting->status)) {
+        if (F_status_is_error(setting->state.status)) {
           fss_write_print_error(setting, main->error, macro_fss_write_f(f_string_rangess_increase_by));
 
           return;
@@ -376,9 +375,9 @@ extern "C" {
             break;
           }
 
-          setting->status = f_string_ranges_increase_by(total, &setting->ignoress.array[j]);
+          setting->state.status = f_string_ranges_increase_by(total, &setting->ignoress.array[j]);
 
-          if (F_status_is_error(setting->status)) {
+          if (F_status_is_error(setting->state.status)) {
             fss_write_print_error(setting, main->error, macro_fss_write_f(f_string_ranges_increase_by));
 
             return;
@@ -388,9 +387,9 @@ extern "C" {
 
             index = values_ignore->array[i++];
 
-            setting->status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, main->parameters.arguments.array[index], &setting->ignoress.array[j].array[setting->ignoress.array[j].used].start);
+            setting->state.status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, main->parameters.arguments.array[index], &setting->ignoress.array[j].array[setting->ignoress.array[j].used].start);
 
-            if (F_status_is_error(setting->status)) {
+            if (F_status_is_error(setting->state.status)) {
               fss_write_print_line_first_locked(setting, main->error);
               fll_program_print_error_parameter_integer_not(main->error, f_console_symbol_long_normal_s, fss_write_long_ignore_s, main->parameters.arguments.array[index]);
 
@@ -399,9 +398,9 @@ extern "C" {
 
             index = values_ignore->array[i++];
 
-            setting->status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, main->parameters.arguments.array[index], &setting->ignoress.array[j].array[setting->ignoress.array[j].used].stop);
+            setting->state.status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, main->parameters.arguments.array[index], &setting->ignoress.array[j].array[setting->ignoress.array[j].used].stop);
 
-            if (F_status_is_error(setting->status)) {
+            if (F_status_is_error(setting->state.status)) {
               fss_write_print_line_first_locked(setting, main->error);
               fll_program_print_error_parameter_integer_not(main->error, f_console_symbol_long_normal_s, fss_write_long_ignore_s, main->parameters.arguments.array[index]);
 
@@ -409,7 +408,7 @@ extern "C" {
             }
 
             if (setting->ignoress.array[j].array[setting->ignoress.array[j].used].stop > setting->ignoress.array[j].array[setting->ignoress.array[j].used].start) {
-              setting->status = F_status_set_error(F_parameter);
+              setting->state.status = F_status_set_error(F_parameter);
 
               fss_write_print_line_first_locked(setting, main->error);
               fll_program_print_error_parameter_range_start_before_stop(
@@ -442,9 +441,9 @@ extern "C" {
 
           index = main->parameters.array[fss_write_parameter_ignore_e].values.array[i++];
 
-          setting->status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, main->parameters.arguments.array[index], &number.start);
+          setting->state.status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, main->parameters.arguments.array[index], &number.start);
 
-          if (F_status_is_error(setting->status)) {
+          if (F_status_is_error(setting->state.status)) {
             fss_write_print_line_first_locked(setting, main->error);
             fll_program_print_error_parameter_integer_not(main->error, f_console_symbol_long_normal_s, fss_write_long_ignore_s, main->parameters.arguments.array[index]);
 
@@ -453,9 +452,9 @@ extern "C" {
 
           index = main->parameters.array[fss_write_parameter_ignore_e].values.array[i++];
 
-          setting->status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, main->parameters.arguments.array[index], &number.stop);
+          setting->state.status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, main->parameters.arguments.array[index], &number.stop);
 
-          if (F_status_is_error(setting->status)) {
+          if (F_status_is_error(setting->state.status)) {
             fss_write_print_line_first_locked(setting, main->error);
             fll_program_print_error_parameter_integer_not(main->error, f_console_symbol_long_normal_s, fss_write_long_ignore_s, main->parameters.arguments.array[index]);
 
@@ -463,7 +462,7 @@ extern "C" {
           }
 
           if (number.start > number.stop) {
-            setting->status = F_status_set_error(F_parameter);
+            setting->state.status = F_status_set_error(F_parameter);
 
             fss_write_print_line_first_locked(setting, main->error);
             fll_program_print_error_parameter_range_start_before_stop(
@@ -480,7 +479,7 @@ extern "C" {
       }
     }
     else if (main->parameters.array[fss_write_parameter_ignore_e].result & f_console_result_found_e) {
-      setting->status = F_status_set_error(F_parameter);
+      setting->state.status = F_status_set_error(F_parameter);
 
       fss_write_print_line_first_locked(setting, main->error);
       fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, fss_write_long_ignore_s);
@@ -535,7 +534,7 @@ extern "C" {
         if (main->parameters.array[has[i]].result & f_console_result_found_e) {
           if (setting->flag & (fss_write_flag_object_e | fss_write_flag_content_e)) {
             if (!(setting->flag & fss_write_flag_partial_e)) {
-              setting->status = F_status_set_error(F_parameter);
+              setting->state.status = F_status_set_error(F_parameter);
 
               fss_write_print_line_first_locked(setting, main->error);
 
@@ -556,7 +555,7 @@ extern "C" {
           }
 
           if (main->parameters.array[has_cannots[i][0]].result & f_console_result_found_e) {
-            setting->status = F_status_set_error(F_parameter);
+            setting->state.status = F_status_set_error(F_parameter);
 
             fss_write_print_line_first_locked(setting, main->error);
             fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_normal_s, f_console_symbol_long_normal_s, has_string[i], has_cannots_string[i][0]);
@@ -565,7 +564,7 @@ extern "C" {
           }
 
           if (main->parameters.array[has_cannots[i][1]].result & f_console_result_found_e) {
-            setting->status = F_status_set_error(F_parameter);
+            setting->state.status = F_status_set_error(F_parameter);
 
             fss_write_print_line_first_locked(setting, main->error);
             fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_normal_s, f_console_symbol_long_normal_s, has_string[i], has_cannots_string[i][1]);
@@ -582,7 +581,7 @@ extern "C" {
       if (setting->flag & fss_write_flag_object_e) {
         if (setting->flag & fss_write_flag_content_multiple_e) {
           if (main->parameters.array[fss_write_parameter_object_e].locations_sub.used > main->parameters.array[fss_write_parameter_content_e].locations_sub.used && !(setting->flag & fss_write_flag_partial_e)) {
-            setting->status = F_status_set_error(F_parameter);
+            setting->state.status = F_status_set_error(F_parameter);
 
             fss_write_print_error_parameter_same_times_at_least(setting, main->error);
 
@@ -592,7 +591,7 @@ extern "C" {
 
         if ((setting->flag & fss_write_flag_content_e) && (setting->flag & fss_write_flag_partial_e)) {
           if (main->parameters.array[fss_write_parameter_content_e].result & f_console_result_value_e) {
-            setting->status = F_status_set_error(F_parameter);
+            setting->state.status = F_status_set_error(F_parameter);
 
             fss_write_print_line_first_locked(setting, main->error);
             fll_program_print_error_parameter_cannot_use_with_xor(main->error, f_console_symbol_long_normal_s, f_console_symbol_long_normal_s, f_console_symbol_long_normal_s, fss_write_long_partial_s, fss_write_long_object_s, fss_write_long_content_s);
@@ -646,7 +645,7 @@ extern "C" {
     }
 
     if (!(setting->flag & (fll_program_data_pipe_input_e | fss_write_flag_content_e | fss_write_parameter_object_e))) {
-      setting->status = F_data_not;
+      setting->state.status = F_data_not;
     }
   }
 #endif // _di_fss_write_setting_load_

@@ -83,7 +83,7 @@ extern "C" {
  *   The main program settings.
  *   Must be of type (fss_write_setting_t *).
  *
- *   This does not alter setting.status.
+ *   This does not alter setting.state.status.
  *
  * @return
  *   F_none on success.

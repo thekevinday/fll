@@ -22,7 +22,7 @@ extern "C" {
  * @param setting
  *   The program main setting data.
  *
- *   This does not alter setting.status.
+ *   This does not alter setting.state.status.
  *
  * @return
  *   F_none on success.
@@ -47,19 +47,17 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This alters setting.status:
+ *   This alters setting.state.status:
  *     F_none on success.
  *
  *     Errors (with error bit) from: f_console_parameter_process().
  *     Errors (with error bit) from: fll_program_parameter_process_context().
- * @param state
- *   A state for providing flags and handling interrupts during long running operations.
  *
  * @see f_console_parameter_process()
  * @see fll_program_parameter_process_context()
  */
 #ifndef _di_fake_setting_load_
-  extern void fake_setting_load(const f_console_arguments_t arguments, fll_program_data_t * const main, fake_setting_t * const setting, f_state_t * const state);
+  extern void fake_setting_load(const f_console_arguments_t arguments, fll_program_data_t * const main, fake_setting_t * const setting);
 #endif // _di_fake_setting_load_
 
 /**
@@ -95,7 +93,7 @@ extern "C" {
  *   The main program settings.
  *   All buffers are deallocated.
  *
- *   This does not alter setting.status.
+ *   This does not alter setting.state.status.
  *
  * @return
  *   F_none on success.

@@ -25,16 +25,16 @@ extern "C" {
  *   A byte sequences representing a single character to convert.
  *   This does not stop on NULL and will process all text until sequence.used.
  *
- * @return
- *   F_none on success.
- *   F_utf_not on invalid UTF-8 (which is still "success" when verifying).
+ *   This alters setting.state.status:
+ *     F_none on success.
+ *     F_utf_not on invalid UTF-8 (which is still "success" when verifying).
  *
- *   F_utf_not (with error bit) if not verifying and
+ *     F_utf_not (with error bit) if not verifying and
  *
- *   Errors (with error bit) from: f_utf_unicode_to()
+ *     Errors (with error bit) from: f_utf_unicode_to()
  */
 #ifndef _di_utf8_convert_bytesequence_
-  extern f_status_t utf8_convert_bytesequence(fll_program_data_t * const main, utf8_setting_t * const setting, const f_string_static_t sequence) F_attribute_visibility_internal_d;
+  extern void utf8_convert_bytesequence(fll_program_data_t * const main, utf8_setting_t * const setting, const f_string_static_t sequence) F_attribute_visibility_internal_d;
 #endif // _di_utf8_convert_bytesequence_
 
 /**
@@ -48,20 +48,20 @@ extern "C" {
  *   The file stream to process.
  *   This file may contain NULLs.
  *
- * @return
- *   F_true on success and is valid.
- *   F_false on success and contains invalid sequences.
- *   F_interrupt on (exit) signal received.
+ *   This alters setting.state.status:
+ *     F_true on success and is valid.
+ *     F_false on success and contains invalid sequences.
+ *     F_interrupt on (exit) signal received.
  *
- *   Errors (with error bit) from: utf8_convert_bytesequence()
- *   Errors (with error bit) from: utf8_detect_codepoint()
+ *     Errors (with error bit) from: utf8_convert_bytesequence()
+ *     Errors (with error bit) from: utf8_detect_codepoint()
  *
  * @see fll_program_standard_signal_received()
  * @see utf8_convert_bytesequence()
  * @see utf8_detect_codepoint()
  */
 #ifndef _di_utf8_process_file_bytesequence_
-  extern f_status_t utf8_process_file_bytesequence(fll_program_data_t * const main, utf8_setting_t * const setting, const f_file_t file) F_attribute_visibility_internal_d;
+  extern void utf8_process_file_bytesequence(fll_program_data_t * const main, utf8_setting_t * const setting, const f_file_t file) F_attribute_visibility_internal_d;
 #endif // _di_utf8_process_file_bytesequence_
 
 #ifdef __cplusplus

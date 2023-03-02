@@ -45,35 +45,35 @@ extern "C" {
     uint8_t state = 0;
 
     // This is processed in a single set, so there is only ever one Object added.
-    setting->status = f_string_dynamics_increase(setting->state.step_small, &setting->objects);
+    setting->state.status = f_string_dynamics_increase(setting->state.step_small, &setting->objects);
 
-    if (F_status_is_error(setting->status)) {
+    if (F_status_is_error(setting->state.status)) {
       fss_write_print_error(setting, main->error, macro_fss_write_f(f_string_dynamics_increase));
 
       return;
     }
 
     // This is processed in a single set, so there is only ever one Content added.
-    setting->status = f_string_dynamicss_increase(setting->state.step_small, &setting->contentss);
+    setting->state.status = f_string_dynamicss_increase(setting->state.step_small, &setting->contentss);
 
-    if (F_status_is_error(setting->status)) {
+    if (F_status_is_error(setting->state.status)) {
       fss_write_print_error(setting, main->error, macro_fss_write_f(f_string_dynamicss_increase));
 
       return;
     }
 
-    setting->status = f_string_dynamics_increase(setting->state.step_small, setting->contents);
+    setting->state.status = f_string_dynamics_increase(setting->state.step_small, setting->contents);
 
-    if (F_status_is_error(setting->status)) {
+    if (F_status_is_error(setting->state.status)) {
       fss_write_print_error(setting, main->error, macro_fss_write_f(f_string_dynamics_increase));
 
       return;
     }
 
     // This is processed in a single set, so there is only ever one Ignores added.
-    setting->status = f_string_rangess_increase(setting->state.step_small, &setting->ignoress);
+    setting->state.status = f_string_rangess_increase(setting->state.step_small, &setting->ignoress);
 
-    if (F_status_is_error(setting->status)) {
+    if (F_status_is_error(setting->state.status)) {
       fss_write_print_error(setting, main->error, macro_fss_write_f(f_string_rangess_increase));
 
       return;
@@ -90,7 +90,7 @@ extern "C" {
         if (fll_program_standard_signal_received(main)) {
           fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
 
-          setting->status = F_status_set_error(F_interrupt);
+          setting->state.status = F_status_set_error(F_interrupt);
 
           break;
         }
@@ -132,9 +132,9 @@ extern "C" {
         flag -= flag | 0x4;
         setting->contents->used = 0;
 
-        setting->status = f_string_dynamic_increase_by(setting->block.used, setting->object);
+        setting->state.status = f_string_dynamic_increase_by(setting->block.used, setting->object);
 
-        if (F_status_is_error(setting->status)) {
+        if (F_status_is_error(setting->state.status)) {
           fss_write_print_error(setting, main->error, macro_fss_write_f(f_string_dynamic_increase_by));
 
           break;
@@ -176,7 +176,7 @@ extern "C" {
           setting->object->string[setting->object->used++] = setting->block.string[range.start];
         } // for
 
-        if (F_status_is_error(setting->status)) break;
+        if (F_status_is_error(setting->state.status)) break;
 
         // If the start of Content was not found, then fetch the next block.
         if (state == 0x1) continue;
@@ -191,16 +191,16 @@ extern "C" {
         // Check to see if the Content supports multiple Content per Object.
         if (flag & 0x4) {
           if (!(setting->flag & fss_write_flag_content_multiple_e)) {
-            setting->status = F_status_set_error(F_support_not);
+            setting->state.status = F_status_set_error(F_support_not);
 
             fss_write_print_error_one_content_only(setting, main->error);
 
             break;
           }
 
-          setting->status = f_string_dynamics_increase(setting->state.step_small, setting->contents);
+          setting->state.status = f_string_dynamics_increase(setting->state.step_small, setting->contents);
 
-          if (F_status_is_error(setting->status)) {
+          if (F_status_is_error(setting->state.status)) {
             fss_write_print_error(setting, main->error, macro_fss_write_f(f_string_dynamics_increase));
 
             break;
@@ -217,9 +217,9 @@ extern "C" {
         // When payload is provided, all data at this point is part of the payload until the end of the pipe.
         if (fl_string_dynamic_compare(f_fss_payload_s, *setting->object) == F_equal_to) {
           if (total > 1) {
-            setting->status = f_string_dynamic_increase_by(total, &setting->contents->array[setting->contents->used]);
+            setting->state.status = f_string_dynamic_increase_by(total, &setting->contents->array[setting->contents->used]);
 
-            if (F_status_is_error(setting->status)) {
+            if (F_status_is_error(setting->state.status)) {
               fss_write_print_error(setting, main->error, macro_fss_write_f(f_string_dynamic_increase_by));
 
               break;
@@ -241,9 +241,9 @@ extern "C" {
         }
 
         if (total) {
-          setting->status = f_string_dynamic_increase_by(total, &setting->contents->array[setting->contents->used]);
+          setting->state.status = f_string_dynamic_increase_by(total, &setting->contents->array[setting->contents->used]);
 
-          if (F_status_is_error(setting->status)) {
+          if (F_status_is_error(setting->state.status)) {
             fss_write_print_error(setting, main->error, macro_fss_write_f(f_string_dynamic_increase_by));
 
             break;
@@ -254,7 +254,7 @@ extern "C" {
             // Do not handle start/end while inside an ignore set.
             if (!(flag & 0x2)) {
               if (setting->block.string[range.start] == fss_write_pipe_content_start_s.string[0]) {
-                setting->status = F_status_set_error(F_support_not);
+                setting->state.status = F_status_set_error(F_support_not);
 
                 fss_write_print_error_one_content_only(setting, main->error);
 
@@ -286,7 +286,7 @@ extern "C" {
             setting->contents->array[setting->contents->used].string[setting->contents->array[setting->contents->used].used++] = setting->block.string[range.start];
           } // for
 
-          if (F_status_is_error(setting->status)) break;
+          if (F_status_is_error(setting->state.status)) break;
 
           ++setting->contents->used;
           flag |= 0x4;
@@ -299,7 +299,7 @@ extern "C" {
       // End Object or Content set.
       if (state == 0x3) {
         fss_write_payload_process_set(main, void_setting);
-        if (F_status_is_error(setting->status)) break;
+        if (F_status_is_error(setting->state.status)) break;
 
         state = 0;
         flag |= 0x1;
@@ -317,9 +317,9 @@ extern "C" {
         if (setting->block.used && range.start <= range.stop) {
           length = (range.stop - range.start) + 1;
 
-          setting->status = f_string_dynamic_increase_by(length + 1, &setting->contents->array[setting->contents->used]);
+          setting->state.status = f_string_dynamic_increase_by(length + 1, &setting->contents->array[setting->contents->used]);
 
-          if (F_status_is_error(setting->status)) {
+          if (F_status_is_error(setting->state.status)) {
             fss_write_print_error(setting, main->error, macro_fss_write_f(f_string_dynamic_increase_by));
 
             break;
@@ -342,7 +342,7 @@ extern "C" {
     } // for
 
     // If the pipe ended before finishing, then attempt to wrap up.
-    if (F_status_is_error_not(setting->status) && status_pipe == F_none_eof && state) {
+    if (F_status_is_error_not(setting->state.status) && status_pipe == F_none_eof && state) {
       fss_write_payload_process_set(main, void_setting);
 
       flag |= 0x1;
@@ -357,17 +357,17 @@ extern "C" {
     setting->contentss.used = used_contentss;
     setting->ignoress.used = used_ignoress;
 
-    if (F_status_is_error_not(setting->status)) {
+    if (F_status_is_error_not(setting->state.status)) {
       if (flag & 0x1) {
         if (flag & 0x8) {
-          setting->status = F_payload;
+          setting->state.status = F_payload;
         }
         else {
-          setting->status = F_none;
+          setting->state.status = F_none;
         }
       }
       else {
-        setting->status = F_data_not;
+        setting->state.status = F_data_not;
       }
 
       // Payload.
@@ -396,7 +396,7 @@ extern "C" {
           setting->range.stop = 0;
         }
 
-        setting->status = fll_fss_payload_write(
+        setting->state.status = fll_fss_payload_write(
           *setting->object,
           setting->contents->array[0],
           (setting->flag & fss_write_flag_trim_e),
@@ -407,8 +407,8 @@ extern "C" {
           &setting->buffer
         );
 
-        if (F_status_set_fine(setting->status) == F_none_eol) {
-          setting->status = F_status_set_error(F_support_not);
+        if (F_status_set_fine(setting->state.status) == F_none_eol) {
+          setting->state.status = F_status_set_error(F_support_not);
 
           fss_write_print_line_first_locked(setting, main->error);
           fss_write_print_error_unsupported_eol(setting, main->error);
@@ -416,7 +416,7 @@ extern "C" {
           return;
         }
 
-        if (F_status_is_error(setting->status)) {
+        if (F_status_is_error(setting->state.status)) {
           fss_write_print_error(setting, main->error, macro_fss_write_f(fll_fss_payload_write));
 
           return;
@@ -433,7 +433,7 @@ extern "C" {
             setting->range.stop = 0;
           }
 
-          setting->status = fl_fss_basic_list_object_write(
+          setting->state.status = fl_fss_basic_list_object_write(
             *setting->object,
             (setting->flag & fss_write_flag_partial_e)
               ? (setting->flag & fss_write_flag_trim_e)
@@ -447,8 +447,8 @@ extern "C" {
             &setting->buffer
           );
 
-          if (F_status_set_fine(setting->status) == F_none_eol) {
-            setting->status = F_status_set_error(F_support_not);
+          if (F_status_set_fine(setting->state.status) == F_none_eol) {
+            setting->state.status = F_status_set_error(F_support_not);
 
             fss_write_print_line_first_locked(setting, main->error);
             fss_write_print_error_unsupported_eol(setting, main->error);
@@ -456,7 +456,7 @@ extern "C" {
             return;
           }
 
-          if (F_status_is_error(setting->status)) {
+          if (F_status_is_error(setting->state.status)) {
             fss_write_print_error(setting, main->error, macro_fss_write_f(fl_fss_basic_list_object_write));
 
             return;
@@ -465,13 +465,13 @@ extern "C" {
 
         if ((setting->flag & fss_write_flag_partial_e) && !(setting->flag & fss_write_flag_content_e) || !(setting->flag & (fss_write_flag_object_e | fss_write_flag_content_e))) {
           if (setting->flag & fss_write_flag_object_open_e) {
-            setting->status = f_string_dynamic_append(f_fss_basic_list_open_s, &setting->buffer);
+            setting->state.status = f_string_dynamic_append(f_fss_basic_list_open_s, &setting->buffer);
 
-            if (F_status_is_error_not(setting->status)) {
-              setting->status = f_string_dynamic_append(f_fss_basic_list_open_end_s, &setting->buffer);
+            if (F_status_is_error_not(setting->state.status)) {
+              setting->state.status = f_string_dynamic_append(f_fss_basic_list_open_end_s, &setting->buffer);
             }
 
-            if (F_status_is_error(setting->status)) {
+            if (F_status_is_error(setting->state.status)) {
               fss_write_print_error(setting, main->error, macro_fss_write_f(f_string_dynamic_append));
 
               return;
@@ -493,7 +493,7 @@ extern "C" {
           prepend = &main->parameters.arguments.array[index];
         }
 
-        setting->status = fl_fss_basic_list_content_write(
+        setting->state.status = fl_fss_basic_list_content_write(
           setting->contents->array[0],
           setting->object
             ? f_fss_complete_full_e
@@ -504,7 +504,7 @@ extern "C" {
           &setting->buffer
         );
 
-        if (F_status_is_error(setting->status)) {
+        if (F_status_is_error(setting->state.status)) {
           fss_write_print_error(setting, main->error, macro_fss_write_f(fl_fss_payload_content_write));
 
           return;
@@ -513,9 +513,9 @@ extern "C" {
 
       if ((setting->flag & fss_write_flag_partial_e) && !(setting->flag & fss_write_flag_object_e) || !(setting->flag & (fss_write_flag_object_e | fss_write_flag_content_e))) {
         if (setting->flag & fss_write_flag_content_end_e) {
-          setting->status = f_string_dynamic_append(f_fss_basic_list_close_s, &setting->buffer);
+          setting->state.status = f_string_dynamic_append(f_fss_basic_list_close_s, &setting->buffer);
 
-          if (F_status_is_error(setting->status)) {
+          if (F_status_is_error(setting->state.status)) {
             fss_write_print_error(setting, main->error, macro_fss_write_f(f_string_dynamic_append));
 
             return;
@@ -525,9 +525,9 @@ extern "C" {
     }
 
     if (!setting->object || !(setting->contents && setting->contents->used)) {
-      setting->status = f_string_dynamic_append(f_string_eol_s, &setting->buffer);
+      setting->state.status = f_string_dynamic_append(f_string_eol_s, &setting->buffer);
 
-      if (F_status_is_error(setting->status)) {
+      if (F_status_is_error(setting->state.status)) {
         fss_write_print_error(setting, main->error, macro_fss_write_f(f_string_dynamic_append));
 
         return;
@@ -537,7 +537,7 @@ extern "C" {
     fll_print_dynamic(setting->buffer, main->output.to);
 
     setting->buffer.used = 0;
-    setting->status = F_none;
+    setting->state.status = F_none;
   }
 #endif // _di_fss_write_payload_process_set_
 
@@ -554,7 +554,7 @@ extern "C" {
       for (f_array_length_t i = 0; i < values->used; ++i) {
 
         if (fl_string_dynamic_compare(argv[values->array[i]], fss_write_payload_s) == F_equal_to && i + 1 < values->used) {
-          setting->status = F_status_set_error(F_parameter);
+          setting->state.status = F_status_set_error(F_parameter);
 
           fss_write_payload_print_error_payload_not_last(setting, main->error);
 

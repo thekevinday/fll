@@ -130,7 +130,7 @@ extern "C" {
  *
  *   This is used by the main thread and should not be modified within individual threads.
  *
- *   This alters setting.status:
+ *   This alters setting.state.status:
  *     F_none on success.
  *     F_child if this is a child process returning.
  *

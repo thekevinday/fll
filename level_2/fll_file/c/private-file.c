@@ -13,9 +13,7 @@ extern "C" {
     status = f_directory_is(path);
     if (F_status_is_error(status)) return status;
 
-    if (status == F_false) {
-      return f_file_mode_set(path, mode);
-    }
+    if (status == F_false) return f_file_mode_set(path, mode);
 
     f_directory_listing_t listing = f_directory_listing_t_initialize;
 
@@ -114,9 +112,7 @@ extern "C" {
     status = f_directory_is(path);
     if (F_status_is_error(status)) return status;
 
-    if (status == F_false) {
-      return f_file_role_change(path, uid, gid, dereference);
-    }
+    if (status == F_false) return f_file_role_change(path, uid, gid, dereference);
 
     f_directory_listing_t listing = f_directory_listing_t_initialize;
 

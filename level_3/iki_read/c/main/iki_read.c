@@ -11,13 +11,13 @@ extern "C" {
 
     if (!main || !setting) return;
 
-    if (F_status_is_error(setting->status)) {
+    if (F_status_is_error(setting->state.status)) {
       iki_read_print_line_last_locked(setting, main->error);
 
       return;
     }
 
-    setting->status = F_none;
+    setting->state.status = F_none;
 
     if (setting->flag & iki_read_main_flag_help_e) {
       iki_read_print_help(setting, main->message);
@@ -44,9 +44,9 @@ extern "C" {
 
       setting->buffer.used = 0;
 
-      setting->status = f_file_read(file, &setting->buffer);
+      setting->state.status = f_file_read(file, &setting->buffer);
 
-      if (F_status_is_error(setting->status)) {
+      if (F_status_is_error(setting->state.status)) {
         iki_read_print_error_file(setting, main->error, macro_iki_read_f(f_file_read), f_string_ascii_minus_s, f_file_operation_process_s, fll_error_file_type_file_e);
       }
       else {
@@ -54,7 +54,7 @@ extern "C" {
       }
     }
 
-    if (F_status_is_error_not(setting->status) && setting->files.used) {
+    if (F_status_is_error_not(setting->state.status) && setting->files.used) {
       f_file_t file = f_file_t_initialize;
       off_t size_block = 0;
       off_t size_file = 0;
@@ -66,7 +66,7 @@ extern "C" {
           if (fll_program_standard_signal_received(main)) {
             fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
 
-            setting->status = F_status_set_error(F_interrupt);
+            setting->state.status = F_status_set_error(F_interrupt);
 
             break;
           }
@@ -77,17 +77,17 @@ extern "C" {
         file.stream = 0;
         file.id = -1;
 
-        setting->status = f_file_stream_open(setting->files.array[i], f_string_empty_s, &file);
+        setting->state.status = f_file_stream_open(setting->files.array[i], f_string_empty_s, &file);
 
-        if (F_status_is_error(setting->status)) {
+        if (F_status_is_error(setting->state.status)) {
           iki_read_print_error_file(setting, main->error, macro_iki_read_f(f_file_stream_open), setting->files.array[i], f_file_operation_process_s, fll_error_file_type_file_e);
 
           break;
         }
 
-        setting->status = f_file_descriptor(&file);
+        setting->state.status = f_file_descriptor(&file);
 
-        if (F_status_is_error(setting->status)) {
+        if (F_status_is_error(setting->state.status)) {
           iki_read_print_error_file(setting, main->error, macro_iki_read_f(f_file_descriptor), setting->files.array[i], f_file_operation_process_s, fll_error_file_type_file_e);
 
           break;
@@ -95,9 +95,9 @@ extern "C" {
 
         size_file = 0;
 
-        setting->status = f_file_size_by_id(file, &size_file);
+        setting->state.status = f_file_size_by_id(file, &size_file);
 
-        if (F_status_is_error(setting->status)) {
+        if (F_status_is_error(setting->state.status)) {
           iki_read_print_error_file(setting, main->error, macro_iki_read_f(f_file_size_by_id), setting->files.array[i], f_file_operation_analyze_s, fll_error_file_type_file_e);
 
           break;
@@ -122,9 +122,9 @@ extern "C" {
         }
 
         // Pre-allocate entire file buffer plus space for the terminating NULL.
-        setting->status = f_string_dynamic_increase_by(size_file + 1, &setting->buffer);
+        setting->state.status = f_string_dynamic_increase_by(size_file + 1, &setting->buffer);
 
-        if (F_status_is_error(setting->status)) {
+        if (F_status_is_error(setting->state.status)) {
           iki_read_print_error_file(setting, main->error, macro_iki_read_f(f_string_dynamic_increase_by), setting->files.array[i], f_file_operation_process_s, fll_error_file_type_file_e);
 
           break;
@@ -136,17 +136,17 @@ extern "C" {
           if (size_file > iki_read_block_max && fll_program_standard_signal_received(main)) {
             fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
 
-            setting->status = F_status_set_error(F_interrupt);
+            setting->state.status = F_status_set_error(F_interrupt);
 
             break;
           }
 
-          setting->status = f_file_stream_read_until(file, size_block, &setting->buffer);
-          if (F_status_is_error(setting->status)) break;
+          setting->state.status = f_file_stream_read_until(file, size_block, &setting->buffer);
+          if (F_status_is_error(setting->state.status)) break;
         } // for
 
-        if (F_status_is_error(setting->status)) {
-          if (F_status_set_fine(setting->status) != F_interrupt) {
+        if (F_status_is_error(setting->state.status)) {
+          if (F_status_set_fine(setting->state.status) != F_interrupt) {
             iki_read_print_error_file(setting, main->error, macro_iki_read_f(f_file_stream_read_until), setting->files.array[i], f_file_operation_process_s, fll_error_file_type_file_e);
           }
 
@@ -157,22 +157,19 @@ extern "C" {
         f_file_stream_close(&file);
 
         iki_read_process_buffer(main, setting);
-        if (F_status_is_error(setting->status)) break;
+        if (F_status_is_error(setting->state.status)) break;
 
         setting->buffer.used = 0;
       } // for
 
-      if (F_status_is_error(setting->status)) {
+      if (F_status_is_error(setting->state.status)) {
         f_file_stream_flush(file);
         f_file_stream_close(&file);
       }
     }
 
-    if (F_status_is_error(setting->status)) {
-      iki_read_print_line_last_locked(setting, main->error);
-    }
-    else if (setting->status != F_interrupt) {
-      iki_read_print_line_last_locked(setting, main->message);
+    if (F_status_is_error(setting->state.status)) {
+      iki_read_print_line_last_locked(setting, F_status_set_fine(setting->state.status) == F_interrupt ? main->message : main->error);
     }
   }
 #endif // _di_iki_read_main_

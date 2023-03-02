@@ -26,18 +26,18 @@ extern "C" {
  * @param mode
  *   The codepoint mode the text is currently in.
  *
- * @return
- *   F_none on success.
- *   F_utf_not on invalid UTF-8 (which is still "success" when verifying).
+ *   This alters setting.state.status:
+ *     F_none on success.
+ *     F_utf_not on invalid UTF-8 (which is still "success" when verifying).
  *
- *   F_utf_not (with error bit) if not verifying and the Unicode value is invalid.
+ *     F_utf_not (with error bit) if not verifying and the Unicode value is invalid.
  *
- *   Errors (with error bit) from: f_utf_unicode_to()
+ *     Errors (with error bit) from: f_utf_unicode_to()
  *
  * @see f_utf_unicode_to()
  */
 #ifndef _di_utf8_convert_codepoint_
-  extern f_status_t utf8_convert_codepoint(fll_program_data_t * const main, utf8_setting_t * const setting, const f_string_static_t unicode, uint8_t *mode) F_attribute_visibility_internal_d;
+  extern void utf8_convert_codepoint(fll_program_data_t * const main, utf8_setting_t * const setting, const f_string_static_t unicode, uint8_t *mode) F_attribute_visibility_internal_d;
 #endif // _di_utf8_convert_codepoint_
 
 /**
@@ -54,18 +54,18 @@ extern "C" {
  * @param mode
  *   The codepoint mode the text is currently in.
  *
- * @return
- *   F_none on success.
- *   F_valid_not on invalid raw (which is still "success" when verifying).
+ *   This alters setting.state.status:
+ *     F_none on success.
+ *     F_valid_not on invalid raw (which is still "success" when verifying).
  *
- *   F_valid_not (with error bit) if not verifying and the raw value is invalid.
+ *     F_valid_not (with error bit) if not verifying and the raw value is invalid.
  *
- *   Errors (with error bit) from: fl_conversion_dynamic_to_unsigned_detect()
+ *     Errors (with error bit) from: fl_conversion_dynamic_to_unsigned_detect()
  *
  * @see fl_conversion_dynamic_to_unsigned_detect()
  */
 #ifndef _di_utf8_convert_raw_
-  extern f_status_t utf8_convert_raw(fll_program_data_t * const main, utf8_setting_t * const setting, const f_string_static_t hex, uint8_t *mode) F_attribute_visibility_internal_d;
+  extern void utf8_convert_raw(fll_program_data_t * const main, utf8_setting_t * const setting, const f_string_static_t hex, uint8_t *mode) F_attribute_visibility_internal_d;
 #endif // _di_utf8_convert_raw_
 
 /**
@@ -80,15 +80,15 @@ extern "C" {
  * @param mode
  *   Designate the mode in which the curent state is being processed.
  *
- * @return
- *   F_none on success.
- *   F_next on success, but should not be processed (it is white space or NULL).
- *   F_space on success, but the character is whitespace.
+ *   This alters setting.state.status:
+ *     F_none on success.
+ *     F_next on success, but should not be processed (it is white space or NULL).
+ *     F_space on success, but the character is whitespace.
  *
- *   Errors (with error bit) from: f_utf_is_whitespace()
+ *     Errors (with error bit) from: f_utf_is_whitespace()
  */
 #ifndef _di_utf8_detect_codepoint_
-  extern f_status_t utf8_detect_codepoint(fll_program_data_t * const main, utf8_setting_t * const setting, const f_string_static_t unicode, uint8_t *mode) F_attribute_visibility_internal_d;
+  extern void utf8_detect_codepoint(fll_program_data_t * const main, utf8_setting_t * const setting, const f_string_static_t unicode, uint8_t *mode) F_attribute_visibility_internal_d;
 #endif // _di_utf8_detect_codepoint_
 
 /**
@@ -102,20 +102,20 @@ extern "C" {
  *   The file stream to process.
  *   This file may contain NULLs.
  *
- * @return
- *   F_true on success and is valid.
- *   F_false on success and contains invalid sequences.
- *   F_interrupt on (exit) signal received.
+ *   This alters setting.state.status:
+ *     F_true on success and is valid.
+ *     F_false on success and contains invalid sequences.
+ *     F_interrupt on (exit) signal received.
  *
- *   Errors (with error bit) from: utf8_convert_bytesequence()
- *   Errors (with error bit) from: utf8_detect_codepoint()
+ *     Errors (with error bit) from: utf8_convert_bytesequence()
+ *     Errors (with error bit) from: utf8_detect_codepoint()
  *
  * @see fll_program_standard_signal_received()
  * @see utf8_convert_bytesequence()
  * @see utf8_detect_codepoint()
  */
 #ifndef _di_utf8_process_file_codepoint_
-  extern f_status_t utf8_process_file_codepoint(fll_program_data_t * const main, utf8_setting_t * const setting, const f_file_t file) F_attribute_visibility_internal_d;
+  extern void utf8_process_file_codepoint(fll_program_data_t * const main, utf8_setting_t * const setting, const f_file_t file) F_attribute_visibility_internal_d;
 #endif // _di_utf8_process_file_codepoint_
 
 #ifdef __cplusplus

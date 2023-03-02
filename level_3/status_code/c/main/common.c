@@ -14,14 +14,13 @@ extern "C" {
 #endif // _di_status_code_setting_delete_
 
 #ifndef _di_status_code_setting_load_
-  void status_code_setting_load(const f_console_arguments_t arguments, f_state_t * const state, fll_program_data_t * const main, status_code_setting_t * const setting) {
+  void status_code_setting_load(const f_console_arguments_t arguments, fll_program_data_t * const main, status_code_setting_t * const setting) {
 
     if (!main || !setting) return;
 
-    // Load parameters.
-    setting->status = f_console_parameter_process(arguments, state, &main->parameters, 0);
+    f_console_parameter_process(arguments, &main->parameters, &setting->state, 0);
 
-    if (F_status_is_error(setting->status)) {
+    if (F_status_is_error(setting->state.status)) {
       status_code_print_error(setting, main->error, macro_status_code_f(f_console_parameter_process));
 
       return;
@@ -38,9 +37,9 @@ extern "C" {
 
         const uint8_t modes[3] = { f_color_mode_not_e, f_color_mode_light_e, f_color_mode_dark_e };
 
-        setting->status = fll_program_parameter_process_context(choices, modes, F_true, main);
+        setting->state.status = fll_program_parameter_process_context(choices, modes, F_true, main);
 
-        if (F_status_is_error(setting->status)) {
+        if (F_status_is_error(setting->state.status)) {
           status_code_print_error(setting, main->error, macro_status_code_f(fll_program_parameter_process_context));
 
           return;
@@ -69,9 +68,9 @@ extern "C" {
 
         const uint8_t verbosity[5] = { f_console_verbosity_quiet_e, f_console_verbosity_error_e, f_console_verbosity_verbose_e, f_console_verbosity_debug_e, f_console_verbosity_normal_e };
 
-        setting->status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, main);
+        setting->state.status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, main);
 
-        if (F_status_is_error(setting->status)) {
+        if (F_status_is_error(setting->state.status)) {
           status_code_print_error(setting, main->error, macro_status_code_f(fll_program_parameter_process_verbosity));
 
           return;
@@ -116,7 +115,7 @@ extern "C" {
     if (setting->flag & status_code_main_flag_error_e) {
       if (setting->flag & status_code_main_flag_warning_e) {
         if (!(setting->flag & status_code_main_flag_number_e)) {
-          setting->status = F_status_set_error(F_parameter);
+          setting->state.status = F_status_set_error(F_parameter);
 
           status_code_print_line_first_locked(setting, main->error);
           status_code_print_error_cannot_error_warning_number(setting, main->error);
@@ -126,7 +125,7 @@ extern "C" {
       }
 
       if (setting->flag & status_code_main_flag_fine_e) {
-        setting->status = F_status_set_error(F_parameter);
+        setting->state.status = F_status_set_error(F_parameter);
 
         status_code_print_line_first_locked(setting, main->error);
         fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_normal_s, f_console_symbol_long_normal_s, status_code_long_error_s, status_code_long_fine_s);
@@ -135,7 +134,7 @@ extern "C" {
       }
     }
     else if (setting->flag & status_code_main_flag_warning_e && setting->flag & status_code_main_flag_fine_e) {
-      setting->status = F_status_set_error(F_parameter);
+      setting->state.status = F_status_set_error(F_parameter);
 
       status_code_print_line_first_locked(setting, main->error);
       fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_normal_s, f_console_symbol_long_normal_s, status_code_long_warning_s, status_code_long_fine_s);
@@ -144,7 +143,7 @@ extern "C" {
     }
 
     if (main->parameters.remaining.used == 0 && !(main->pipe & fll_program_data_pipe_input_e)) {
-      setting->status = F_status_set_error(F_parameter);
+      setting->state.status = F_status_set_error(F_parameter);
 
       status_code_print_line_first_locked(setting, main->error);
       status_code_print_error_no_status_codes(setting, main->error);

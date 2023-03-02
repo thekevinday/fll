@@ -20,7 +20,7 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This alters setting.status:
+ *   This alters setting.state.status:
  *     F_none on success.
  *
  *     Errors (with error bit) from: f_iki_object_is().

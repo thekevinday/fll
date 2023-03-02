@@ -18,15 +18,15 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This does not alter setting.status.
- *
- *   Assumed to always be non-NULL.
+ *   This does not alter setting.state.status.
  * @param print
  *   Designates the how and where to print.
  *
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if setting is NULL.
  *
  * @see fll_error_print()
  */
@@ -42,18 +42,18 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This does not alter setting.status.
- *
- *   Assumed to always be non-NULL.
+ *   This does not alter setting.state.status.
  * @param invalid
  *   The byte sequence string or unicode codepoint string representing a single character to print.
  *
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_utf8_print_error_decode_
-  extern f_status_t utf8_print_error_decode(utf8_setting_t * const setting, const fl_print_t print, const f_status_t status, const f_string_static_t invalid);
+  extern f_status_t utf8_print_error_decode(utf8_setting_t * const setting, const fl_print_t print, const f_string_static_t invalid);
 #endif // _di_utf8_print_error_decode_
 
 /**
@@ -62,9 +62,7 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This does not alter setting.status.
- *
- *   Assumed to always be non-NULL.
+ *   This does not alter setting.state.status.
  * @param print
  *   Designates the how and where to print.
  * @param codepoint
@@ -73,9 +71,11 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_utf8_print_error_encode_
-  extern f_status_t utf8_print_error_encode(utf8_setting_t * const setting, const fl_print_t print, const f_status_t status, const uint32_t codepoint);
+  extern f_status_t utf8_print_error_encode(utf8_setting_t * const setting, const fl_print_t print, const uint32_t codepoint);
 #endif // _di_utf8_print_error_encode_
 
 /**
@@ -84,9 +84,7 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This does not alter setting.status.
- *
- *   Assumed to always be non-NULL.
+ *   This does not alter setting.state.status.
  * @param print
  *   Designates how printing is to be performed.
  * @param function
@@ -103,6 +101,8 @@ extern "C" {
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
  *
+ *   F_output_not (with error bit) if setting is NULL.
+ *
  * @see fll_error_file_print()
  */
 #ifndef _di_utf8_print_error_file_
@@ -115,15 +115,15 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This does not alter setting.status.
- *
- *   Assumed to always be non-NULL.
+ *   This does not alter setting.state.status.
  * @param print
  *   Designates how printing is to be performed.
  *
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_utf8_print_error_no_from_
   extern f_status_t utf8_print_error_no_from(utf8_setting_t * const setting, const fl_print_t print);
@@ -135,9 +135,7 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This does not alter setting.status.
- *
- *   Assumed to always be non-NULL.
+ *   This does not alter setting.state.status.
  * @param print
  *   Designates how printing is to be performed.
  * @param index
@@ -146,6 +144,8 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_utf8_print_error_parameter_file_name_empty_
   extern f_status_t utf8_print_error_parameter_file_name_empty(utf8_setting_t * const setting, const fl_print_t print, const f_array_length_t index);
@@ -157,9 +157,7 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This does not alter setting.status.
- *
- *   Assumed to always be non-NULL.
+ *   This does not alter setting.state.status.
  * @param print
  *   Designates how printing is to be performed.
  * @param from
@@ -171,6 +169,8 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_utf8_print_error_parameter_file_not_found_
   extern f_status_t utf8_print_error_parameter_file_not_found(utf8_setting_t * const setting, const fl_print_t print, const bool from, const f_string_static_t name);
@@ -182,15 +182,15 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This does not alter setting.status.
- *
- *   Assumed to always be non-NULL.
+ *   This does not alter setting.state.status.
  * @param print
  *   Designates how printing is to be performed.
  *
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_utf8_print_error_parameter_file_to_too_many_
   extern f_status_t utf8_print_error_parameter_file_to_too_many(utf8_setting_t * const setting, const fl_print_t print);
@@ -202,9 +202,7 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This does not alter setting.status.
- *
- *   Assumed to always be non-NULL.
+ *   This does not alter setting.state.status.
  * @param print
  *   Designates how printing is to be performed.
  * @param sequence
@@ -213,6 +211,8 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_utf8_print_bytesequence_
   extern f_status_t utf8_print_bytesequence(utf8_setting_t * const setting, const fl_print_t print, const f_string_static_t sequence);
@@ -226,9 +226,7 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This does not alter setting.status.
- *
- *   Assumed to always be non-NULL.
+ *   This does not alter setting.state.status.
  * @param print
  *   Designates how printing is to be performed.
  * @param invalid
@@ -237,6 +235,8 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if setting is NULL.
  *
  * @see utf8_print_combining_or_width()
  */
@@ -250,9 +250,7 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This does not alter setting.status.
- *
- *   Assumed to always be non-NULL.
+ *   This does not alter setting.state.status.
  * @param print
  *   Designates how printing is to be performed.
  * @param codepoint
@@ -262,6 +260,8 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_utf8_print_codepoint_
   extern f_status_t utf8_print_codepoint(utf8_setting_t * const setting, const fl_print_t print, const uint32_t codepoint);
@@ -273,9 +273,7 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This does not alter setting.status.
- *
- *   Assumed to always be non-NULL.
+ *   This does not alter setting.state.status.
  * @param print
  *   Designates how printing is to be performed.
  * @param sequence
@@ -286,6 +284,8 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_utf8_print_combining_or_width_
   extern f_status_t utf8_print_combining_or_width(utf8_setting_t * const setting, const fl_print_t print, const f_string_static_t sequence);
@@ -297,15 +297,15 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This does not alter setting.status.
- *
- *   Assumed to always be non-NULL.
+ *   This does not alter setting.state.status.
  * @param print
  *   Designates how printing is to be performed.
  *
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_utf8_print_combining_or_width_invalid_
   extern f_status_t utf8_print_combining_or_width_invalid(utf8_setting_t * const setting, const fl_print_t print);
@@ -317,15 +317,15 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This does not alter setting.status.
- *
- *   Assumed to always be non-NULL.
+ *   This does not alter setting.state.status.
  * @param print
  *   The output structure to print to.
  *
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_utf8_print_help_
   extern f_status_t utf8_print_help(utf8_setting_t * const setting, const fl_print_t print);
@@ -341,15 +341,15 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This does not alter setting.status.
- *
- *   Assumed to always be non-NULL.
+ *   This does not alter setting.state.status.
  * @param print
  *   Designates the how and where to print.
  *
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_utf8_print_line_first_locked_
   extern f_status_t utf8_print_line_first_locked(utf8_setting_t * const setting, const fl_print_t print);
@@ -365,15 +365,15 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This does not alter setting.status.
- *
- *   Assumed to always be non-NULL.
+ *   This does not alter setting.state.status.
  * @param print
  *   Designates the how and where to print.
  *
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_utf8_print_line_first_unlocked_
   extern f_status_t utf8_print_line_first_unlocked(utf8_setting_t * const setting, const fl_print_t print);
@@ -389,15 +389,15 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This does not alter setting.status.
- *
- *   Assumed to always be non-NULL.
+ *   This does not alter setting.state.status.
  * @param print
  *   Designates the how and where to print.
  *
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_utf8_print_line_last_locked_
   extern f_status_t utf8_print_line_last_locked(utf8_setting_t * const setting, const fl_print_t print);
@@ -413,15 +413,15 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This does not alter setting.status.
- *
- *   Assumed to always be non-NULL.
+ *   This does not alter setting.state.status.
  * @param print
  *   Designates the how and where to print.
  *
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_utf8_print_line_last_unlocked_
   extern f_status_t utf8_print_line_last_unlocked(utf8_setting_t * const setting, const fl_print_t print);
@@ -433,9 +433,7 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This does not alter setting.status.
- *
- *   Assumed to always be non-NULL.
+ *   This does not alter setting.state.status.
  * @param print
  *   Designates the how and where to print.
  * @param raw
@@ -446,6 +444,8 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_utf8_print_raw_bytesequence_
   extern f_status_t utf8_print_raw_bytesequence(utf8_setting_t * const setting, const fl_print_t print, const f_utf_char_t raw, const uint8_t width);
@@ -457,9 +457,7 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This does not alter setting.status.
- *
- *   Assumed to always be non-NULL.
+ *   This does not alter setting.state.status.
  * @param print
  *   Designates the how and where to print.
  * @param raw
@@ -468,6 +466,8 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_utf8_print_raw_codepoint_
   extern f_status_t utf8_print_raw_codepoint(utf8_setting_t * const setting, const fl_print_t print, const f_string_static_t raw);
@@ -479,9 +479,7 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This does not alter setting.status.
- *
- *   Assumed to always be non-NULL.
+ *   This does not alter setting.state.status.
  * @param print
  *   Designates the how and where to print.
  * @param width
@@ -490,6 +488,8 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if setting is NULL.
  *
  * @see utf8_print_width()
  */
@@ -503,9 +503,7 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This does not alter setting.status.
- *
- *   Assumed to always be non-NULL.
+ *   This does not alter setting.state.status.
  * @param print
  *   Designates the how and where to print.
  * @param name
@@ -516,6 +514,8 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_utf8_print_section_header_file_
   extern f_status_t utf8_print_section_header_file(utf8_setting_t * const setting, const fl_print_t print, const f_string_static_t name, const f_array_length_t index);
@@ -527,9 +527,7 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This does not alter setting.status.
- *
- *   Assumed to always be non-NULL.
+ *   This does not alter setting.state.status.
  * @param print
  *   Designates the how and where to print.
  * @param index
@@ -538,6 +536,8 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_utf8_print_section_header_parameter_
   extern f_status_t utf8_print_section_header_parameter(utf8_setting_t * const setting, const fl_print_t print, const f_array_length_t index);
@@ -549,15 +549,15 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This does not alter setting.status.
- *
- *   Assumed to always be non-NULL.
+ *   This does not alter setting.state.status.
  * @param print
  *   Designates the how and where to print.
  *
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_utf8_print_section_header_pipe_
   extern f_status_t utf8_print_section_header_pipe(utf8_setting_t * const setting, const fl_print_t print);
@@ -569,9 +569,7 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This does not alter setting.status.
- *
- *   Assumed to always be non-NULL.
+ *   This does not alter setting.state.status.
  * @param print
  *   Designates the how and where to print.
  * @param sequence
@@ -580,6 +578,8 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_utf8_print_width_
   extern f_status_t utf8_print_width(utf8_setting_t * const setting, const fl_print_t print, const f_string_static_t sequence);

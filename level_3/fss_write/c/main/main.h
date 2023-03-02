@@ -40,7 +40,7 @@ extern int main(const int argc, const f_string_t *argv, const f_string_t *envp);
  *   The main program settings.
  *   Must be of type (fss_write_setting_t *).
  *
- *   This does not alter setting.status.
+ *   This does not alter setting.state.status.
  *
  * @return
  *   F_none on success.
@@ -66,13 +66,13 @@ extern int main(const int argc, const f_string_t *argv, const f_string_t *envp);
  *
  *   This alters setting.process_help, setting.process_normal, and setting.process_pipe.
  *
- *   This alters setting.status:
+ *   This alters setting.state.status:
  *     F_none on success.
  *     F_interrupt on (exit) signal received.
  *
  *     F_parameter (with error bit) if main is NULL or setting is NULL.
  *
- *   This alters setting.status:
+ *   This alters setting.state.status:
  *     F_none on success.
  *     F_data_not on success but nothing was provided to operate with.
  *
@@ -81,8 +81,6 @@ extern int main(const int argc, const f_string_t *argv, const f_string_t *envp);
  *     Errors (with error bit) from: f_string_dynamics_resize().
  *     Errors (with error bit) from: fll_program_parameter_process_context().
  *     Errors (with error bit) from: fll_program_parameter_process_verbosity().
- * @param state
- *   A state for providing flags and handling interrupts during long running operations.
  *
  * @see f_console_parameter_process()
  * @see f_file_stream_open()
@@ -93,7 +91,7 @@ extern int main(const int argc, const f_string_t *argv, const f_string_t *envp);
  * @see fss_write_setting_load()
  */
 #ifndef _di_fss_write_main_setting_load_as_
-  extern void fss_write_main_setting_load_as(const f_console_arguments_t arguments, fll_program_data_t * const main, fss_write_setting_t * const setting, f_state_t * const state);
+  extern void fss_write_main_setting_load_as(const f_console_arguments_t arguments, fll_program_data_t * const main, fss_write_setting_t * const setting);
 #endif // _di_fss_write_main_setting_load_as_
 
 #ifdef __cplusplus

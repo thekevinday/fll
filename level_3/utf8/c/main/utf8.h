@@ -59,7 +59,10 @@
 #include <program/utf8/main/common-string.h>
 #include <program/utf8/main/common-type.h>
 #include <program/utf8/main/common.h>
+#include <program/utf8/main/bytesequence.h>
+#include <program/utf8/main/codepoint.h>
 #include <program/utf8/main/print.h>
+#include <program/utf8/main/process.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -81,12 +84,12 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This alters setting.status:
+ *   This alters setting.state.status:
  *     F_none on success.
  *     F_true on success when performing verification and verify passed.
  *     F_false on success when performing verification and verify failed.
- *     F_interrupt on (exit) signal received.
  *
+ *     F_interrupt (with error bit) on (exit) signal received.
  *     F_parameter (with error bit) if main is NULL or setting is NULL.
  */
 #ifndef _di_utf8_main_

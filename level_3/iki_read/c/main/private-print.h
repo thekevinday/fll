@@ -26,7 +26,7 @@ extern "C" {
  *   The setting.map_wraps is expected to be defined as a valid pointer to an array.
  *   The setting.map_replaces is expected to be defined as a valid pointer to an array.
  *
- *   This does not alter setting.status.
+ *   This does not alter setting.state.status.
  * @param index
  *   The index used to identify the desired range in variable, content, and ranges.
  */
@@ -42,7 +42,7 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This does not alter setting.status.
+ *   This does not alter setting.state.status.
  * @param index
  *   The index within the setting->map_wraps array to print.
  */
@@ -58,7 +58,7 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This does not alter setting.status.
+ *   This does not alter setting.state.status.
  * @param index
  *   The index within the setting->map_wraps array to print.
  */

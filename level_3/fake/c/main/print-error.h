@@ -22,7 +22,7 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This does not alter setting.status.
+ *   This does not alter setting.state.status.
  * @param print
  *   Designates the how and where to print.
  * @param status
@@ -51,7 +51,7 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This does not alter setting.status.
+ *   This does not alter setting.state.status.
  * @param print
  *   Designates the how and where to print.
  * @param index
@@ -73,7 +73,7 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This does not alter setting.status.
+ *   This does not alter setting.state.status.
  * @param print
  *   Designates the how and where to print.
  * @param status
@@ -115,7 +115,7 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This does not alter setting.status.
+ *   This does not alter setting.state.status.
  * @param print
  *   Designates the how and where to print.
  * @param before
@@ -153,7 +153,7 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This does not alter setting.status.
+ *   This does not alter setting.state.status.
  * @param print
  *   Designates the how and where to print.
  * @param operation
@@ -180,7 +180,7 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This does not alter setting.status.
+ *   This does not alter setting.state.status.
  * @param print
  *   Designates the how and where to print.
  * @param path
@@ -202,7 +202,7 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This does not alter setting.status.
+ *   This does not alter setting.state.status.
  * @param print
  *   Designates the how and where to print.
  * @param operation
@@ -228,7 +228,7 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This does not alter setting.status.
+ *   This does not alter setting.state.status.
  * @param print
  *   Designates the how and where to print.
  * @param script
@@ -250,7 +250,7 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This does not alter setting.status.
+ *   This does not alter setting.state.status.
  * @param print
  *   Designates the how and where to print.
  * @param status
@@ -278,7 +278,7 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This does not alter setting.status.
+ *   This does not alter setting.state.status.
  * @param status
  *   The status to use.
  *   This is provided, ignoring setting.status, for thread-safety reasons.
@@ -309,7 +309,7 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This does not alter setting.status.
+ *   This does not alter setting.state.status.
  * @param print
  *   Designates the how and where to print.
  * @param path
@@ -331,7 +331,7 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This does not alter setting.status.
+ *   This does not alter setting.state.status.
  * @param print
  *   Designates the how and where to print.
  * @param status
@@ -365,7 +365,7 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This does not alter setting.status.
+ *   This does not alter setting.state.status.
  * @param status
  *   The status to use.
  *   This is provided, ignoring setting.status, for thread-safety reasons.
@@ -396,7 +396,7 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This does not alter setting.status.
+ *   This does not alter setting.state.status.
  * @param print
  *   Designates the how and where to print.
  * @param status
@@ -434,7 +434,7 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This does not alter setting.status.
+ *   This does not alter setting.state.status.
  * @param print
  *   Designates the how and where to print.
  * @param status
@@ -468,7 +468,7 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This does not alter setting.status.
+ *   This does not alter setting.state.status.
  * @param print
  *   Designates the how and where to print.
  * @param group
@@ -490,7 +490,7 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This does not alter setting.status.
+ *   This does not alter setting.state.status.
  * @param print
  *   Designates the how and where to print.
  * @param mode
@@ -512,7 +512,7 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This does not alter setting.status.
+ *   This does not alter setting.state.status.
  * @param print
  *   Designates the how and where to print.
  * @param number
@@ -737,7 +737,7 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This does not alter setting.status.
+ *   This does not alter setting.state.status.
  * @param print
  *   Designates the how and where to print.
  * @param symbol
@@ -763,7 +763,7 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This does not alter setting.status.
+ *   This does not alter setting.state.status.
  * @param print
  *   Designates the how and where to print.
  * @param symbol
@@ -793,7 +793,7 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This does not alter setting.status.
+ *   This does not alter setting.state.status.
  * @param print
  *   Designates the how and where to print.
  * @param operation_1
@@ -867,7 +867,7 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This does not alter setting.status.
+ *   This does not alter setting.state.status.
  * @param print
  *   Designates the how and where to print.
  * @param user

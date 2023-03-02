@@ -22,7 +22,7 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This does not alter setting.status.
+ *   This does not alter setting.state.status.
  * @param print
  *   Designates the how and where to print.
  * @param path

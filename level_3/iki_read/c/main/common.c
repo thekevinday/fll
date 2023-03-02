@@ -25,16 +25,15 @@ extern "C" {
 #endif // _di_iki_read_setting_delete_
 
 #ifndef _di_iki_read_setting_load_
-  void iki_read_setting_load(const f_console_arguments_t arguments, f_state_t * const state, fll_program_data_t * const main, iki_read_setting_t * const setting) {
+  void iki_read_setting_load(const f_console_arguments_t arguments, fll_program_data_t * const main, iki_read_setting_t * const setting) {
 
     if (!main || !setting) return;
 
     setting->flag = 0;
 
-    // Load parameters.
-    setting->status = f_console_parameter_process(arguments, state, &main->parameters, 0);
+    f_console_parameter_process(arguments, &main->parameters, &setting->state, 0);
 
-    if (F_status_is_error(setting->status)) {
+    if (F_status_is_error(setting->state.status)) {
       iki_read_print_error(setting, main->error, macro_iki_read_f(f_console_parameter_process));
 
       return;
@@ -51,9 +50,9 @@ extern "C" {
 
         const uint8_t modes[3] = { f_color_mode_not_e, f_color_mode_light_e, f_color_mode_dark_e };
 
-        setting->status = fll_program_parameter_process_context(choices, modes, F_true, main);
+        setting->state.status = fll_program_parameter_process_context(choices, modes, F_true, main);
 
-        if (F_status_is_error(setting->status)) {
+        if (F_status_is_error(setting->state.status)) {
           iki_read_print_error(setting, main->error, macro_iki_read_f(fll_program_parameter_process_context));
 
           return;
@@ -82,9 +81,9 @@ extern "C" {
 
         const uint8_t verbosity[5] = { f_console_verbosity_quiet_e, f_console_verbosity_error_e, f_console_verbosity_verbose_e, f_console_verbosity_debug_e, f_console_verbosity_normal_e };
 
-        setting->status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, main);
+        setting->state.status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, main);
 
-        if (F_status_is_error(setting->status)) {
+        if (F_status_is_error(setting->state.status)) {
           iki_read_print_error(setting, main->error, macro_iki_read_f(fll_program_parameter_process_verbosity));
 
           return;
@@ -111,7 +110,7 @@ extern "C" {
     }
 
     if (!(main->parameters.remaining.used || (main->pipe & fll_program_data_pipe_input_e))) {
-      setting->status = F_status_set_error(F_parameter);
+      setting->state.status = F_status_set_error(F_parameter);
 
       iki_read_print_line_first_locked(setting, main->error);
       fll_program_print_error_missing_file(main->error);
@@ -121,7 +120,7 @@ extern "C" {
 
     if (main->parameters.array[iki_read_parameter_at_e].result & f_console_result_value_e) {
       if (main->parameters.array[iki_read_parameter_whole_e].result & f_console_result_found_e) {
-        setting->status = F_status_set_error(F_parameter);
+        setting->state.status = F_status_set_error(F_parameter);
 
         iki_read_print_line_first_locked(setting, main->error);
         fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_normal_s, f_console_symbol_long_normal_s, iki_read_long_at_s, iki_read_long_whole_s);
@@ -133,10 +132,10 @@ extern "C" {
 
       setting->at = 0;
 
-      setting->status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, main->parameters.arguments.array[index], &setting->at);
+      setting->state.status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, main->parameters.arguments.array[index], &setting->at);
 
-      if (F_status_is_error(setting->status)) {
-        setting->status = F_status_set_error(F_parameter);
+      if (F_status_is_error(setting->state.status)) {
+        setting->state.status = F_status_set_error(F_parameter);
 
         iki_read_print_line_first_locked(setting, main->error);
         fll_program_print_error_parameter_integer_not(main->error, f_console_symbol_long_normal_s, iki_read_long_at_s, main->parameters.arguments.array[index]);
@@ -147,7 +146,7 @@ extern "C" {
       setting->flag |= iki_read_main_flag_at_e;
     }
     else if (main->parameters.array[iki_read_parameter_at_e].result & f_console_result_found_e) {
-      setting->status = F_status_set_error(F_parameter);
+      setting->state.status = F_status_set_error(F_parameter);
 
       iki_read_print_line_first_locked(setting, main->error);
       fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, iki_read_long_at_s);
@@ -160,10 +159,10 @@ extern "C" {
 
       setting->line = 0;
 
-      setting->status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, main->parameters.arguments.array[index], &setting->line);
+      setting->state.status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, main->parameters.arguments.array[index], &setting->line);
 
-      if (F_status_is_error(setting->status)) {
-        setting->status = F_status_set_error(F_parameter);
+      if (F_status_is_error(setting->state.status)) {
+        setting->state.status = F_status_set_error(F_parameter);
 
         iki_read_print_line_first_locked(setting, main->error);
         fll_program_print_error_parameter_integer_not(main->error, f_console_symbol_long_normal_s, iki_read_long_line_s, main->parameters.arguments.array[index]);
@@ -174,7 +173,7 @@ extern "C" {
       setting->flag |= iki_read_main_flag_line_e;
     }
     else if (main->parameters.array[iki_read_parameter_line_e].result & f_console_result_found_e) {
-      setting->status = F_status_set_error(F_parameter);
+      setting->state.status = F_status_set_error(F_parameter);
 
       iki_read_print_line_first_locked(setting, main->error);
       fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, iki_read_long_line_s);
@@ -185,9 +184,9 @@ extern "C" {
     if (main->parameters.array[iki_read_parameter_name_e].result & f_console_result_value_e) {
       setting->names.used = 0;
 
-      setting->status = f_string_dynamics_increase_by(main->parameters.array[iki_read_parameter_name_e].values.used, &setting->names);
+      setting->state.status = f_string_dynamics_increase_by(main->parameters.array[iki_read_parameter_name_e].values.used, &setting->names);
 
-      if (F_status_is_error(setting->status)) {
+      if (F_status_is_error(setting->state.status)) {
         iki_read_print_error(setting, main->error, macro_iki_read_f(f_string_dynamics_increase_by));
 
         return;
@@ -209,16 +208,16 @@ extern "C" {
         setting->names.array[setting->names.used].used = 0;
 
         if (main->parameters.arguments.array[values->array[i]].used) {
-          setting->status = f_string_dynamics_append(main->parameters.arguments.array[values->array[i]], &setting->names);
-          if (F_status_is_error(setting->status)) break;
+          setting->state.status = f_string_dynamics_append(main->parameters.arguments.array[values->array[i]], &setting->names);
+          if (F_status_is_error(setting->state.status)) break;
         }
         else {
-          setting->status = f_string_dynamics_append(f_string_empty_s, &setting->names);
-          if (F_status_is_error(setting->status)) break;
+          setting->state.status = f_string_dynamics_append(f_string_empty_s, &setting->names);
+          if (F_status_is_error(setting->state.status)) break;
         }
       } // for
 
-      if (F_status_is_error(setting->status)) {
+      if (F_status_is_error(setting->state.status)) {
         iki_read_print_error(setting, main->error, macro_iki_read_f(f_string_dynamics_append));
 
         return;
@@ -227,7 +226,7 @@ extern "C" {
       setting->flag |= iki_read_main_flag_name_e;
     }
     else if (main->parameters.array[iki_read_parameter_name_e].result & f_console_result_found_e) {
-      setting->status = F_status_set_error(F_parameter);
+      setting->state.status = F_status_set_error(F_parameter);
 
       iki_read_print_line_first_locked(setting, main->error);
       fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, iki_read_long_name_s);
@@ -237,7 +236,7 @@ extern "C" {
 
     if (main->parameters.array[iki_read_parameter_replace_e].result != f_console_result_none_e) {
       if ((main->parameters.array[iki_read_parameter_replace_e].result & f_console_result_found_e) || main->parameters.array[iki_read_parameter_replace_e].values.used % 2 != 0) {
-        setting->status = F_status_set_error(F_parameter);
+        setting->state.status = F_status_set_error(F_parameter);
 
         iki_read_print_line_first_locked(setting, main->error);
         fll_program_print_error_parameter_missing_value_requires_amount(main->error, f_console_symbol_long_normal_s, iki_read_long_replace_s, iki_read_string_two_s);
@@ -247,9 +246,9 @@ extern "C" {
 
       setting->replace.used = 0;
 
-      setting->status = f_string_maps_increase_by(main->parameters.array[iki_read_parameter_replace_e].values.used / 2, &setting->replace);
+      setting->state.status = f_string_maps_increase_by(main->parameters.array[iki_read_parameter_replace_e].values.used / 2, &setting->replace);
 
-      if (F_status_is_error(setting->status)) {
+      if (F_status_is_error(setting->state.status)) {
         iki_read_print_error(setting, main->error, macro_iki_read_f(f_string_maps_increase_by));
 
         return;
@@ -276,14 +275,14 @@ extern "C" {
 
         // Static strings are being used, so if a dynamic string exists (size > 0), then de-allocate it.
         if (setting->replace.array[at].name.size) {
-          setting->status = f_string_dynamic_resize(0, &setting->replace.array[at].name);
+          setting->state.status = f_string_dynamic_resize(0, &setting->replace.array[at].name);
         }
 
-        if (F_status_is_error_not(setting->status) && setting->replace.array[at].value.size) {
-          setting->status = f_string_dynamic_resize(0, &setting->replace.array[at].value);
+        if (F_status_is_error_not(setting->state.status) && setting->replace.array[at].value.size) {
+          setting->state.status = f_string_dynamic_resize(0, &setting->replace.array[at].value);
         }
 
-        if (F_status_is_error(setting->status)) {
+        if (F_status_is_error(setting->state.status)) {
           iki_read_print_error(setting, main->error, macro_iki_read_f(f_string_dynamic_resize));
 
           return;
@@ -311,17 +310,17 @@ extern "C" {
       setting->flag |= iki_read_main_flag_reassign_e;
     }
 
-    if (F_status_is_error(setting->status)) return;
+    if (F_status_is_error(setting->state.status)) return;
 
     if (iki_read_setting_load_parameter_substitution(main, setting, main->parameters.array[iki_read_parameter_substitute_e], iki_read_long_substitute_s, &setting->substitute)) {
       setting->flag |= iki_read_main_flag_substitute_e;
     }
 
-    if (F_status_is_error(setting->status)) return;
+    if (F_status_is_error(setting->state.status)) return;
 
     if (main->parameters.array[iki_read_parameter_wrap_e].result != f_console_result_none_e) {
       if ((main->parameters.array[iki_read_parameter_wrap_e].result & f_console_result_found_e) || main->parameters.array[iki_read_parameter_wrap_e].values.used % 3 != 0) {
-        setting->status = F_status_set_error(F_parameter);
+        setting->state.status = F_status_set_error(F_parameter);
 
         iki_read_print_line_first_locked(setting, main->error);
         fll_program_print_error_parameter_missing_value_requires_amount(main->error, f_console_symbol_long_normal_s, iki_read_long_wrap_s, iki_read_string_three_s);
@@ -331,9 +330,9 @@ extern "C" {
 
       setting->wrap.used = 0;
 
-      setting->status = f_string_triples_increase_by(main->parameters.array[iki_read_parameter_wrap_e].values.used / 3, &setting->wrap);
+      setting->state.status = f_string_triples_increase_by(main->parameters.array[iki_read_parameter_wrap_e].values.used / 3, &setting->wrap);
 
-      if (F_status_is_error(setting->status)) {
+      if (F_status_is_error(setting->state.status)) {
         iki_read_print_error(setting, main->error, macro_iki_read_f(f_string_triples_increase_by));
 
         return;
@@ -360,18 +359,18 @@ extern "C" {
 
         // Static strings are being used, so if a dynamic string exists (size > 0), then de-allocate it.
         if (setting->wrap.array[at].a.size) {
-          setting->status = f_string_dynamic_resize(0, &setting->wrap.array[at].a);
+          setting->state.status = f_string_dynamic_resize(0, &setting->wrap.array[at].a);
         }
 
-        if (F_status_is_error_not(setting->status) && setting->wrap.array[at].b.size) {
-          setting->status = f_string_dynamic_resize(0, &setting->wrap.array[at].b);
+        if (F_status_is_error_not(setting->state.status) && setting->wrap.array[at].b.size) {
+          setting->state.status = f_string_dynamic_resize(0, &setting->wrap.array[at].b);
         }
 
-        if (F_status_is_error_not(setting->status) && setting->wrap.array[at].c.size) {
-          setting->status = f_string_dynamic_resize(0, &setting->wrap.array[at].c);
+        if (F_status_is_error_not(setting->state.status) && setting->wrap.array[at].c.size) {
+          setting->state.status = f_string_dynamic_resize(0, &setting->wrap.array[at].c);
         }
 
-        if (F_status_is_error(setting->status)) {
+        if (F_status_is_error(setting->state.status)) {
           iki_read_print_error(setting, main->error, macro_iki_read_f(f_string_dynamic_resize));
 
           return;
@@ -417,7 +416,7 @@ extern "C" {
       for (uint8_t i = 0; i < 3; ++i) {
 
         if (main->parameters.array[ids[i]].result & f_console_result_found_e) {
-          setting->status = F_status_set_error(F_parameter);
+          setting->state.status = F_status_set_error(F_parameter);
 
           iki_read_print_line_first_locked(setting, main->error);
           fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_normal_s, f_console_symbol_long_normal_s, iki_read_long_literal_s, names[i]);
@@ -442,7 +441,7 @@ extern "C" {
       for (uint8_t i = 0; i < 2; ++i) {
 
         if (main->parameters.array[ids[i]].result & f_console_result_found_e) {
-          setting->status = F_status_set_error(F_parameter);
+          setting->state.status = F_status_set_error(F_parameter);
 
           iki_read_print_line_first_locked(setting, main->error);
           fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_normal_s, f_console_symbol_long_normal_s, iki_read_long_object_s, names[i]);
@@ -455,7 +454,7 @@ extern "C" {
     }
     else if (main->parameters.array[iki_read_parameter_content_e].result & f_console_result_found_e) {
       if (main->parameters.array[iki_read_parameter_total_e].result & f_console_result_found_e) {
-        setting->status = F_status_set_error(F_parameter);
+        setting->state.status = F_status_set_error(F_parameter);
 
         iki_read_print_line_first_locked(setting, main->error);
         fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_normal_s, f_console_symbol_long_normal_s, iki_read_long_content_s, iki_read_long_total_s);
@@ -467,7 +466,7 @@ extern "C" {
     }
     else if (main->parameters.array[iki_read_parameter_total_e].result & f_console_result_found_e) {
       if (main->parameters.array[iki_read_parameter_whole_e].result & f_console_result_found_e) {
-        setting->status = F_status_set_error(F_parameter);
+        setting->state.status = F_status_set_error(F_parameter);
 
         iki_read_print_line_first_locked(setting, main->error);
         fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_normal_s, f_console_symbol_long_normal_s, iki_read_long_total_s, iki_read_long_wrap_s);
@@ -490,9 +489,9 @@ extern "C" {
     if (main->parameters.remaining.used) {
       setting->files.used = 0;
 
-      setting->status = f_string_dynamics_resize(main->parameters.remaining.used, &setting->files);
+      setting->state.status = f_string_dynamics_resize(main->parameters.remaining.used, &setting->files);
 
-      if (F_status_is_error(setting->status)) {
+      if (F_status_is_error(setting->state.status)) {
         iki_read_print_error(setting, main->error, macro_iki_read_f(f_string_dynamics_resize));
 
         return;
@@ -504,9 +503,9 @@ extern "C" {
 
         // Static strings are being used, so if a dynamic string exists (size > 0), then de-allocate it.
         if (setting->files.array[setting->files.used].size) {
-          setting->status = f_string_dynamic_resize(0, &setting->files.array[setting->files.used]);
+          setting->state.status = f_string_dynamic_resize(0, &setting->files.array[setting->files.used]);
 
-          if (F_status_is_error(setting->status)) {
+          if (F_status_is_error(setting->state.status)) {
             iki_read_print_error(setting, main->error, macro_iki_read_f(f_string_dynamic_resize));
 
             return;
@@ -519,11 +518,11 @@ extern "C" {
         setting->files.array[setting->files.used].used = main->parameters.arguments.array[index].used;
         setting->files.array[setting->files.used].size = 0;
 
-        setting->status = f_file_exists(setting->files.array[setting->files.used], F_true);
+        setting->state.status = f_file_exists(setting->files.array[setting->files.used], F_true);
 
-        if (F_status_is_error(setting->status)) {
+        if (F_status_is_error(setting->state.status)) {
           iki_read_print_line_first_locked(setting, main->error);
-          fll_error_file_print(main->error, F_status_set_fine(setting->status), "f_file_exists", fll_error_file_flag_fallback_e, setting->files.array[setting->files.used], f_file_operation_verify_s, fll_error_file_type_file_e);
+          fll_error_file_print(main->error, F_status_set_fine(setting->state.status), "f_file_exists", fll_error_file_flag_fallback_e, setting->files.array[setting->files.used], f_file_operation_verify_s, fll_error_file_type_file_e);
 
           return;
         }
@@ -538,7 +537,7 @@ extern "C" {
     if (!(parameter.result & f_console_result_found_e)) return F_false;
 
     if ((parameter.result & f_console_result_found_e) || parameter.values.used % 3 != 0) {
-      setting->status = F_status_set_error(F_parameter);
+      setting->state.status = F_status_set_error(F_parameter);
 
       iki_read_print_line_first_locked(setting, main->error);
       fll_program_print_error_parameter_missing_value_requires_amount(main->error, f_console_symbol_long_normal_s, name, iki_read_string_three_s);
@@ -548,9 +547,9 @@ extern "C" {
 
     triple->used = 0;
 
-    setting->status = f_string_triples_increase_by(parameter.values.used / 3, triple);
+    setting->state.status = f_string_triples_increase_by(parameter.values.used / 3, triple);
 
-    if (F_status_is_error(setting->status)) {
+    if (F_status_is_error(setting->state.status)) {
       iki_read_print_error(setting, main->error, macro_iki_read_f(f_string_triples_increase_by));
 
       return F_false;
@@ -579,18 +578,18 @@ extern "C" {
 
       // Static strings are being used, so if a dynamic string exists (size > 0), then de-allocate it.
       if (triple->array[at].a.size) {
-        setting->status = f_string_dynamic_resize(0, &triple->array[at].a);
+        setting->state.status = f_string_dynamic_resize(0, &triple->array[at].a);
       }
 
-      if (F_status_is_error_not(setting->status) && triple->array[at].b.size) {
-        setting->status = f_string_dynamic_resize(0, &triple->array[at].b);
+      if (F_status_is_error_not(setting->state.status) && triple->array[at].b.size) {
+        setting->state.status = f_string_dynamic_resize(0, &triple->array[at].b);
       }
 
-      if (F_status_is_error_not(setting->status) && triple->array[at].c.size) {
-        setting->status = f_string_dynamic_resize(0, &triple->array[at].c);
+      if (F_status_is_error_not(setting->state.status) && triple->array[at].c.size) {
+        setting->state.status = f_string_dynamic_resize(0, &triple->array[at].c);
       }
 
-      if (F_status_is_error(setting->status)) {
+      if (F_status_is_error(setting->state.status)) {
         iki_read_print_error(setting, main->error, macro_iki_read_f(f_string_dynamic_resize));
 
         return F_false;

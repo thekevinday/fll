@@ -27,7 +27,6 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
   {
     const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize(argc, argv, envp);
-    f_state_t state = f_state_t_initialize;
 
     fss_write_setting_load(arguments, state, &data, &setting, &fss_write_main_setting_load_as);
   }
@@ -55,7 +54,7 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 #ifndef _di_fss_write_main_setting_load_as_
   void fss_write_main_setting_load_as(const f_console_arguments_t arguments, fll_program_data_t * const main, fss_write_setting_t * const setting, f_state_t * const state) {
 
-    if (!main || !setting || F_status_is_error(setting->status) || (setting->flag & fss_write_flag_version_e)) return;
+    if (!main || !setting || F_status_is_error(setting->state.status) || (setting->flag & fss_write_flag_version_e)) return;
 
     setting->standard = fss_write_basic_standard_s;
     setting->process_content = &fss_write_basic_process_content;
@@ -160,22 +159,22 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
         }
         else {
           if (setting->flag & fss_write_flag_help_e) {
-            setting->status = F_status_set_error(F_parameter);
+            setting->state.status = F_status_set_error(F_parameter);
 
             break;
           }
 
-          if (setting->status != F_status_set_error(F_parameter)) {
+          if (setting->state.status != F_status_set_error(F_parameter)) {
             fss_write_print_line_first_locked(setting, main->error);
           }
 
-          setting->status = F_status_set_error(F_parameter);
+          setting->state.status = F_status_set_error(F_parameter);
 
           fss_write_main_print_error_format_unknown(main->error, argv[index]);
         }
       } // for
 
-      if (F_status_is_error(setting->status)) {
+      if (F_status_is_error(setting->state.status)) {
         if (setting->flag & fss_write_flag_help_e) {
           fss_write_main_process_help(main, setting);
         }
@@ -184,7 +183,7 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
       }
     }
     else if (main->parameters.array[fss_write_parameter_as_e].result & f_console_result_found_e) {
-      setting->status = F_status_set_error(F_parameter);
+      setting->state.status = F_status_set_error(F_parameter);
 
       if (setting->flag & fss_write_flag_help_e) {
         fss_write_main_process_help(main, setting);

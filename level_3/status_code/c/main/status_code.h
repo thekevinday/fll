@@ -68,7 +68,7 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This alters setting.status:
+ *   This alters setting.state.status:
  *     F_none on success.
  *     F_true on success when performing verification and verify passed.
  *     F_false on success when performing verification and verify failed.

@@ -22,16 +22,15 @@ extern "C" {
 #endif // _di_iki_write_setting_delete_
 
 #ifndef _di_iki_write_setting_load_
-  void iki_write_setting_load(const f_console_arguments_t arguments, f_state_t * const state, fll_program_data_t * const main, iki_write_setting_t * const setting) {
+  void iki_write_setting_load(const f_console_arguments_t arguments, fll_program_data_t * const main, iki_write_setting_t * const setting) {
 
     if (!main || !setting) return;
 
     setting->flag = 0;
 
-    // Load parameters.
-    setting->status = f_console_parameter_process(arguments, state, &main->parameters, 0);
+    f_console_parameter_process(arguments, &main->parameters, &setting->state, 0);
 
-    if (F_status_is_error(setting->status)) {
+    if (F_status_is_error(setting->state.status)) {
       iki_write_print_error(setting, main->error, macro_iki_write_f(f_console_parameter_process));
 
       return;
@@ -48,9 +47,9 @@ extern "C" {
 
         const uint8_t modes[3] = { f_color_mode_not_e, f_color_mode_light_e, f_color_mode_dark_e };
 
-        setting->status = fll_program_parameter_process_context(choices, modes, F_true, main);
+        setting->state.status = fll_program_parameter_process_context(choices, modes, F_true, main);
 
-        if (F_status_is_error(setting->status)) {
+        if (F_status_is_error(setting->state.status)) {
           iki_write_print_error(setting, main->error, macro_iki_write_f(fll_program_parameter_process_context));
 
           return;
@@ -79,9 +78,9 @@ extern "C" {
 
         const uint8_t verbosity[5] = { f_console_verbosity_quiet_e, f_console_verbosity_error_e, f_console_verbosity_verbose_e, f_console_verbosity_debug_e, f_console_verbosity_normal_e };
 
-        setting->status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, main);
+        setting->state.status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, main);
 
-        if (F_status_is_error(setting->status)) {
+        if (F_status_is_error(setting->state.status)) {
           iki_write_print_error(setting, main->error, macro_iki_write_f(fll_program_parameter_process_verbosity));
 
           return;
@@ -113,7 +112,7 @@ extern "C" {
 
     if (main->parameters.array[iki_write_parameter_file_e].result & f_console_result_value_e && main->parameters.array[iki_write_parameter_file_e].values.used) {
       if (main->parameters.array[iki_write_parameter_file_e].values.used > 1) {
-        setting->status = F_status_set_error(F_parameter);
+        setting->state.status = F_status_set_error(F_parameter);
 
         iki_write_print_line_first_locked(setting, main->error);
         fll_program_print_error_parameter_must_specify_once(main->error, f_console_symbol_long_normal_s, iki_write_long_file_s);
@@ -126,11 +125,11 @@ extern "C" {
       main->output.to.id = -1;
       main->output.to.stream = 0;
 
-      setting->status = f_file_stream_open(main->parameters.arguments.array[index], f_string_empty_s, &main->output.to);
+      setting->state.status = f_file_stream_open(main->parameters.arguments.array[index], f_string_empty_s, &main->output.to);
 
-      if (F_status_is_error(setting->status)) {
+      if (F_status_is_error(setting->state.status)) {
         iki_write_print_line_first_locked(setting, main->error);
-        fll_error_file_print(main->error, F_status_set_fine(setting->status), "f_file_stream_open", fll_error_file_flag_fallback_e, main->parameters.arguments.array[index], f_file_operation_open_s, fll_error_file_type_file_e);
+        fll_error_file_print(main->error, F_status_set_fine(setting->state.status), "f_file_stream_open", fll_error_file_flag_fallback_e, main->parameters.arguments.array[index], f_file_operation_open_s, fll_error_file_type_file_e);
 
         return;
       }
@@ -138,7 +137,7 @@ extern "C" {
       setting->flag |= iki_write_main_flag_file_to_e;
     }
     else if (main->parameters.array[iki_write_parameter_file_e].result & f_console_result_found_e) {
-      setting->status = F_status_set_error(F_parameter);
+      setting->state.status = F_status_set_error(F_parameter);
 
       iki_write_print_line_first_locked(setting, main->error);
       fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, iki_write_long_file_s);
@@ -151,9 +150,9 @@ extern "C" {
 
       setting->objects.used = 0;
 
-      setting->status = f_string_dynamics_resize(values->used, &setting->objects);
+      setting->state.status = f_string_dynamics_resize(values->used, &setting->objects);
 
-      if (F_status_is_error(setting->status)) {
+      if (F_status_is_error(setting->state.status)) {
         iki_write_print_error(setting, main->error, macro_iki_write_f(f_string_dynamics_resize));
 
         return;
@@ -172,7 +171,7 @@ extern "C" {
       setting->flag |= iki_write_main_flag_object_e;
     }
     else if (main->parameters.array[iki_write_parameter_object_e].result & f_console_result_found_e) {
-      setting->status = F_status_set_error(F_parameter);
+      setting->state.status = F_status_set_error(F_parameter);
 
       iki_write_print_line_first_locked(setting, main->error);
       fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, iki_write_long_object_s);
@@ -185,9 +184,9 @@ extern "C" {
 
       setting->contents.used = 0;
 
-      setting->status = f_string_dynamics_resize(values->used, &setting->contents);
+      setting->state.status = f_string_dynamics_resize(values->used, &setting->contents);
 
-      if (F_status_is_error(setting->status)) {
+      if (F_status_is_error(setting->state.status)) {
         iki_write_print_error(setting, main->error, macro_iki_write_f(f_string_dynamics_resize));
 
         return;
@@ -206,7 +205,7 @@ extern "C" {
       setting->flag |= iki_write_main_flag_content_e;
     }
     else if (main->parameters.array[iki_write_parameter_content_e].result & f_console_result_found_e) {
-      setting->status = F_status_set_error(F_parameter);
+      setting->state.status = F_status_set_error(F_parameter);
 
       iki_write_print_line_first_locked(setting, main->error);
       fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, iki_write_long_content_s);
@@ -215,7 +214,7 @@ extern "C" {
     }
 
     if (!(main->pipe & fll_program_data_pipe_input_e) && !(setting->flag & (iki_write_main_flag_content_e | iki_write_parameter_object_e))) {
-      setting->status = F_status_set_error(F_parameter);
+      setting->state.status = F_status_set_error(F_parameter);
 
       iki_write_print_line_first_locked(setting, main->error);
       iki_write_print_error_main_missing(setting, main->error);

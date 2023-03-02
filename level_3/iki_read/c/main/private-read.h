@@ -67,7 +67,7 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This alters setting.status:
+ *   This alters setting.state.status:
  *     F_true is returned if the range is processed.
  *     F_false is returned if the range is not processed.
  *     F_data_not if the range is processed, but the requested line is out of range.
@@ -88,7 +88,7 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This alters setting.status:
+ *   This alters setting.state.status:
  *     F_none on success.
  *     F_data_not on success, but nothing done.
  *

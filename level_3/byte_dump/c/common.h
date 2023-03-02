@@ -410,11 +410,46 @@ extern "C" {
   #define byte_dump_setting_t_initialize \
     { \
       byte_dump_main_flag_none_e, \
-      f_state_initialize_t, \
+      f_state_t_initialize, \
       f_string_static_t_initialize, \
       f_string_static_t_initialize, \
     }
 #endif // _di_byte_dump_setting_t_
+
+/**
+ * Perform the standard program setting load process.
+ *
+ * This prints error messages as appropriate.
+ *
+ * If either main or setting is NULL, then this immediately returns without doing anything.
+ *
+ * @param arguments
+ *   The parameters passed to the process (often referred to as command line arguments).
+ * @param main
+ *   The main program data.
+ * @param setting
+ *   The main program settings.
+ *
+ *   This alters setting.state.status:
+ *     F_none on success.
+ *
+ *     Errors (with error bit) from: f_console_parameter_process().
+ *     Errors (with error bit) from: f_file_stream_open().
+ *     Errors (with error bit) from: f_string_dynamics_resize().
+ *     Errors (with error bit) from: fll_program_parameter_process_context().
+ *     Errors (with error bit) from: fll_program_parameter_process_verbosity().
+ * @param state
+ *   A state for providing flags and handling interrupts during long running operations.
+ *
+ * @see f_console_parameter_process()
+ * @see f_file_stream_open()
+ * @see f_string_dynamics_resize()
+ * @see fll_program_parameter_process_context()
+ * @see fll_program_parameter_process_verbosity()
+ */
+#ifndef _di_byte_dump_setting_load_
+  extern void byte_dump_setting_load(const f_console_arguments_t arguments, fll_program_data_t * const main, byte_dump_setting_t * const setting);
+#endif // _di_byte_dump_setting_load_
 
 #ifdef __cplusplus
 } // extern "C"

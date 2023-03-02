@@ -16,13 +16,13 @@ extern "C" {
 
     if (!main || !setting) return;
 
-    if (F_status_is_error(setting->status)) {
+    if (F_status_is_error(setting->state.status)) {
       fake_print_line_last_locked(setting, main->error);
 
       return;
     }
 
-    setting->status = F_none;
+    setting->state.status = F_none;
 
     if (setting->flag & fake_main_flag_help_e) {
       fake_print_help(setting, main->message);
@@ -43,7 +43,7 @@ extern "C" {
     }
 
     if ((setting->flag & fake_main_flag_operation_build_e) && (setting->flag & fake_main_flag_operation_make_e)) {
-      setting->status = F_status_set_error(F_parameter);
+      setting->state.status = F_status_set_error(F_parameter);
 
       fake_print_error_parameter_operation_not_with(setting, main->error, fake_other_operation_build_s, fake_other_operation_make_s);
 
@@ -54,9 +54,9 @@ extern "C" {
     data.main = main;
     data.setting = setting;
 
-    setting->status = fake_path_generate(&data);
+    setting->state.status = fake_path_generate(&data);
 
-    if (F_status_is_error(setting->status)) {
+    if (F_status_is_error(setting->state.status)) {
       fake_data_delete(&data);
 
       return;
@@ -65,15 +65,15 @@ extern "C" {
     if ((main->pipe & fll_program_data_pipe_input_e) && !(data.setting->flag & fake_main_flag_operation_e)) {
       data.file_data_build_fakefile.used = 0;
 
-      setting->status = f_string_dynamic_append(f_string_ascii_minus_s, &data.file_data_build_fakefile);
+      setting->state.status = f_string_dynamic_append(f_string_ascii_minus_s, &data.file_data_build_fakefile);
 
-      if (F_status_is_error(setting->status)) {
-        fake_print_error(setting, main->error, setting->status, macro_fake_f(f_string_dynamic_append));
+      if (F_status_is_error(setting->state.status)) {
+        fake_print_error(setting, main->error, setting->state.status, macro_fake_f(f_string_dynamic_append));
       }
       else {
         setting->fakefile.used = 0;
 
-        setting->status = f_string_dynamic_append(f_string_ascii_minus_s, &setting->fakefile);
+        setting->state.status = f_string_dynamic_append(f_string_ascii_minus_s, &setting->fakefile);
       }
     }
 
@@ -95,25 +95,25 @@ extern "C" {
             if (has_clean) {
               data.operation = setting->operations.array[i];
 
-              setting->status = fake_validate_parameter_paths(&data);
+              setting->state.status = fake_validate_parameter_paths(&data);
 
-              if (F_status_is_error_not(setting->status) && !(main->pipe & fll_program_data_pipe_input_e)) {
-                setting->status = f_file_is(
+              if (F_status_is_error_not(setting->state.status) && !(main->pipe & fll_program_data_pipe_input_e)) {
+                setting->state.status = f_file_is(
                   setting->operations.array[i] == fake_operation_build_e
                     ? data.file_data_build_settings
                     : data.file_data_build_fakefile,
                   F_file_type_regular_d, F_false
                 );
 
-                if (setting->status == F_false) {
-                  setting->status = F_status_set_error(F_file_not);
+                if (setting->state.status == F_false) {
+                  setting->state.status = F_status_set_error(F_file_not);
                 }
 
-                if (F_status_is_error(setting->status)) {
+                if (F_status_is_error(setting->state.status)) {
                   fake_print_error_file(
                     setting,
                     main->error,
-                    F_status_set_fine(setting->status),
+                    F_status_set_fine(setting->state.status),
                     macro_fake_f(f_file_is),
                     setting->operations.array[i] == fake_operation_build_e
                       ? data.file_data_build_settings
@@ -132,7 +132,7 @@ extern "C" {
             if (fll_program_standard_signal_received(main)) {
               fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
 
-              setting->status = F_status_set_error(F_interrupt);
+              setting->state.status = F_status_set_error(F_interrupt);
 
               break;
             }
@@ -151,45 +151,45 @@ extern "C" {
 
           if (data.operation == fake_operation_build_e) {
             if (check_paths) {
-              setting->status = fake_validate_parameter_paths(&data);
+              setting->state.status = fake_validate_parameter_paths(&data);
               check_paths = F_false;
             }
 
-            if (F_status_is_error_not(setting->status)) {
-              setting->status = fake_build_operate(&data, 0, main->pipe & fll_program_data_pipe_input_e);
+            if (F_status_is_error_not(setting->state.status)) {
+              setting->state.status = fake_build_operate(&data, 0, main->pipe & fll_program_data_pipe_input_e);
             }
           }
           else if (data.operation == fake_operation_clean_e) {
-            setting->status = fake_clean_operate(&data);
+            setting->state.status = fake_clean_operate(&data);
 
             // Reset in case next operation needs files.
             check_paths = F_true;
           }
           else if (data.operation == fake_operation_make_e) {
             if (check_paths) {
-              setting->status = fake_validate_parameter_paths(&data);
+              setting->state.status = fake_validate_parameter_paths(&data);
               check_paths = F_false;
             }
 
-            if (F_status_is_error_not(setting->status)) {
-              setting->status = fake_make_operate(&data);
-              if (setting->status == F_child) break;
+            if (F_status_is_error_not(setting->state.status)) {
+              setting->state.status = fake_make_operate(&data);
+              if (setting->state.status == F_child) break;
             }
           }
           else if (data.operation == fake_operation_skeleton_e) {
-            setting->status = fake_skeleton_operate(&data);
+            setting->state.status = fake_skeleton_operate(&data);
 
             // Skeleton is supposed to guarantee these.
             check_paths = F_false;
           }
 
-          if (setting->status == F_child) break;
+          if (setting->state.status == F_child) break;
 
           if (!((++main->signal_check) % fake_signal_check_short_d)) {
             if (fll_program_standard_signal_received(main)) {
               fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
 
-              setting->status = F_status_set_error(F_interrupt);
+              setting->state.status = F_status_set_error(F_interrupt);
 
               break;
             }
@@ -197,13 +197,13 @@ extern "C" {
             main->signal_check = 0;
           }
 
-          if (F_status_is_error(setting->status)) break;
+          if (F_status_is_error(setting->state.status)) break;
         } // for
       }
     }
 
-    if (F_status_is_error(setting->status)) {
-      if (F_status_set_fine(setting->status) == F_interrupt) {
+    if (F_status_is_error(setting->state.status)) {
+      if (F_status_set_fine(setting->state.status) == F_interrupt) {
         fake_print_operation_cancelled(setting, main->message, data.operation);
       }
       else {
@@ -212,12 +212,12 @@ extern "C" {
 
       fake_print_line_last_locked(setting, main->error);
     }
-    else if (setting->status != F_child) {
-      if (F_status_is_error_not(setting->status)) {
+    else if (setting->state.status != F_child) {
+      if (F_status_is_error_not(setting->state.status)) {
         fake_print_operation_all_complete(setting, main->message);
       }
 
-      if (setting->status != F_interrupt) {
+      if (setting->state.status != F_interrupt) {
         fake_print_line_last_locked(setting, main->message);
       }
     }

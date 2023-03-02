@@ -22,12 +22,11 @@ build_libraries-individual -lfll_error -lfll_print -lfll_program -lfl_conversion
 build_libraries-level -lfll_2 -lfll_1 -lfll_0
 build_libraries-monolithic -lfll
 
-build_sources_library main/common.c main/common-print.c main/common-string.c main/common-type.c main/print.c main/utf8.c
-build_sources_library main/private-common.c main/private-utf8.c main/private-utf8_bytesequence.c main/private-utf8_codepoint.c
+build_sources_library main/common.c main/common-print.c main/common-string.c main/common-type.c main/bytesequence.c main/codepoint.c main/print.c main/process.c main/utf8.c
 
 build_sources_program main/main.c
 
-build_sources_headers main/common.h main/common-print.h main/common-string.h main/common-type.h main/print.h main/utf8.h
+build_sources_headers main/common.h main/common-print.h main/common-string.h main/common-type.h main/bytesequence.h main/codepoint.h main/print.h main/process.h main/utf8.h
 
 build_sources_documentation man
 

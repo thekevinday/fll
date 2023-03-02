@@ -1,5 +1,4 @@
 #include "utf8.h"
-#include "private-common.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -8,18 +7,20 @@ extern "C" {
 #ifndef _di_utf8_print_error_
   f_status_t utf8_print_error(utf8_setting_t * const setting, const fl_print_t print, const f_string_t function) {
 
+    if (!setting) return F_status_set_error(F_output_not);
     if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
 
     utf8_print_line_first_locked(setting, print);
-    fll_error_print(print, F_status_set_fine(setting->status), function, fll_error_file_flag_fallback_e);
+    fll_error_print(print, F_status_set_fine(setting->state.status), function, fll_error_file_flag_fallback_e);
 
     return F_none;
   }
 #endif // _di_utf8_print_error_
 
 #ifndef _di_utf8_print_error_decode_
-  f_status_t utf8_print_error_decode(utf8_setting_t * const setting, const fl_print_t print, const f_status_t status, const f_string_static_t invalid) {
+  f_status_t utf8_print_error_decode(utf8_setting_t * const setting, const fl_print_t print, const f_string_static_t invalid) {
 
+    if (!setting) return F_status_set_error(F_output_not);
     if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
     if (setting->flag & (utf8_main_flag_strip_invalid_e | utf8_main_flag_verify_e)) return F_output_not;
 
@@ -37,18 +38,18 @@ extern "C" {
       fl_print_format("%]", print.to, print.set->notable);
     }
 
-    if (F_status_set_fine(status) == F_utf_not) {
+    if (F_status_set_fine(setting->state.status) == F_utf_not) {
       fl_print_format("%[', not a valid UTF-8 character sequence.%]%r", print.to, print.set->error, print.set->error, f_string_eol_s);
     }
-    else if (F_status_set_fine(status) == F_complete_not_utf) {
+    else if (F_status_set_fine(setting->state.status) == F_complete_not_utf) {
       fl_print_format("%[', invalid UTF-8 (truncated).%]%r", print.to, print.set->error, print.set->error, f_string_eol_s);
     }
-    else if (F_status_set_fine(status) == F_utf_fragment) {
+    else if (F_status_set_fine(setting->state.status) == F_utf_fragment) {
       fl_print_format("%[', invalid UTF-8 fragment.%]%r", print.to, print.set->error, print.set->error, f_string_eol_s);
     }
     else {
       fl_print_format("%[', error status code%] ", print.to, print.set->error, print.set->error, f_string_eol_s);
-      fl_print_format("%[%ui%]", print.to, print.set->notable, F_status_set_fine(status), print.set->notable);
+      fl_print_format("%[%ui%]", print.to, print.set->notable, F_status_set_fine(setting->state.status), print.set->notable);
       fl_print_format("%[.%]%r", print.to, print.set->error, print.set->error, f_string_eol_s);
     }
 
@@ -57,8 +58,9 @@ extern "C" {
 #endif // _di_utf8_print_error_decode_
 
 #ifndef _di_utf8_print_error_encode_
-  f_status_t utf8_print_error_encode(utf8_setting_t * const setting, const fl_print_t print, const f_status_t status, const uint32_t codepoint) {
+  f_status_t utf8_print_error_encode(utf8_setting_t * const setting, const fl_print_t print, const uint32_t codepoint) {
 
+    if (!setting) return F_status_set_error(F_output_not);
     if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
 
     utf8_print_line_first_unlocked(setting, print);
@@ -66,12 +68,12 @@ extern "C" {
     fl_print_format("%[%QFailed to encode Unicode codepoint '%]", print.to, print.set->error, print.prefix, print.set->error);
     fl_print_format("%[U+%_U%]", print.to, print.set->notable, codepoint, print.set->notable);
 
-    if (F_status_set_fine(status) == F_utf_not) {
+    if (F_status_set_fine(setting->state.status) == F_utf_not) {
       fl_print_format("%[', not a valid Unicode codepoint.%]%r", print.to, print.set->error, print.set->error, f_string_eol_s);
     }
     else {
       fl_print_format("%[', error status code%] ", print.to, print.set->error, print.set->error, f_string_eol_s);
-      fl_print_format("%[%ui%]", print.to, print.set->notable, F_status_set_fine(status), print.set->notable);
+      fl_print_format("%[%ui%]", print.to, print.set->notable, F_status_set_fine(setting->state.status), print.set->notable);
       fl_print_format("%[.%]%r", print.to, print.set->error, print.set->error, f_string_eol_s);
     }
 
@@ -82,10 +84,11 @@ extern "C" {
 #ifndef _di_utf8_print_error_file_
   f_status_t utf8_print_error_file(utf8_setting_t * const setting, const fl_print_t print, const f_string_t function, const f_string_static_t name, const f_string_static_t operation, const uint8_t type) {
 
+    if (!setting) return F_status_set_error(F_output_not);
     if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
 
     utf8_print_line_first_locked(setting, print);
-    fll_error_file_print(print, F_status_set_fine(setting->status), function, fll_error_file_flag_fallback_e, name, operation, type);
+    fll_error_file_print(print, F_status_set_fine(setting->state.status), function, fll_error_file_flag_fallback_e, name, operation, type);
 
     return F_none;
   }
@@ -94,6 +97,7 @@ extern "C" {
 #ifndef _di_utf8_print_error_no_from_
   f_status_t utf8_print_error_no_from(utf8_setting_t * const setting, const fl_print_t print) {
 
+    if (!setting) return F_status_set_error(F_output_not);
     if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
 
     fll_print_format("%[%QNo from sources are specified, please pipe data, designate a file, or add parameters.%]%r", print.to, print.set->error, print.prefix, print.set->error, f_string_eol_s);
@@ -105,6 +109,7 @@ extern "C" {
 #ifndef _di_utf8_print_error_parameter_file_name_empty_
   f_status_t utf8_print_error_parameter_file_name_empty(utf8_setting_t * const setting, const fl_print_t print, const f_array_length_t index) {
 
+    if (!setting) return F_status_set_error(F_output_not);
     if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
 
     f_file_stream_lock(print.to);
@@ -124,6 +129,7 @@ extern "C" {
 #ifndef _di_utf8_print_error_parameter_file_not_found_
   f_status_t utf8_print_error_parameter_file_not_found(utf8_setting_t * const setting, const fl_print_t print, const bool from, const f_string_static_t name) {
 
+    if (!setting) return F_status_set_error(F_output_not);
     if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
 
     f_file_stream_lock(print.to);
@@ -143,6 +149,7 @@ extern "C" {
 #ifndef _di_utf8_print_error_parameter_file_to_too_many_
   f_status_t utf8_print_error_parameter_file_to_too_many(utf8_setting_t * const setting, const fl_print_t print) {
 
+    if (!setting) return F_status_set_error(F_output_not);
     if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
 
     utf8_print_line_first_locked(setting, print);
@@ -156,6 +163,8 @@ extern "C" {
 #ifndef _di_utf8_print_bytesequence_
   f_status_t utf8_print_bytesequence(utf8_setting_t * const setting, const fl_print_t print, const f_string_static_t sequence) {
 
+    if (!setting) return F_output_not;
+
     fl_print_format("%r%r%r", print.to, setting->prepend, sequence, setting->append);
 
     return F_none;
@@ -165,6 +174,7 @@ extern "C" {
 #ifndef _di_utf8_print_character_invalid_
   f_status_t utf8_print_character_invalid(utf8_setting_t * const setting, const fl_print_t print, const f_string_static_t invalid) {
 
+    if (!setting) return F_output_not;
     if (setting->flag & (utf8_main_flag_strip_invalid_e | utf8_main_flag_verify_e)) return F_output_not;
     if (!invalid.used) return F_output_not;
 
@@ -194,6 +204,8 @@ extern "C" {
 #ifndef _di_utf8_print_codepoint_
   f_status_t utf8_print_codepoint(utf8_setting_t * const setting, const fl_print_t print, const uint32_t codepoint) {
 
+    if (!setting) return F_output_not;
+
     if (codepoint < 0x10000) {
       fl_print_format("%rU+%04_U%r", print.to, setting->prepend, codepoint, setting->append);
     }
@@ -210,6 +222,8 @@ extern "C" {
 
 #ifndef _di_utf8_print_combining_or_width_
   f_status_t utf8_print_combining_or_width(utf8_setting_t * const setting, const fl_print_t print, const f_string_static_t sequence) {
+
+    if (!setting) return F_output_not;
 
     if (setting->mode & utf8_mode_to_combining_e) {
       f_status_t status = f_utf_is_combining(sequence.string, sequence.used);
@@ -245,6 +259,7 @@ extern "C" {
 #ifndef _di_utf8_print_combining_or_width_invalid_
   f_status_t utf8_print_combining_or_width_invalid(utf8_setting_t * const setting, const fl_print_t print) {
 
+    if (!setting) return F_output_not;
     if (setting->flag & (utf8_main_flag_strip_invalid_e | utf8_main_flag_verify_e)) return F_output_not;
 
     fl_print_format("%r%[%r%]%r", print.to, setting->prepend, setting->valid_not, utf8_string_unknown_s, setting->valid_not, setting->append);
@@ -255,6 +270,8 @@ extern "C" {
 
 #ifndef _di_utf8_print_help_
   f_status_t utf8_print_help(utf8_setting_t * const setting, const fl_print_t print) {
+
+    if (!setting) return F_output_not;
 
     f_file_stream_lock(print.to);
 
@@ -313,9 +330,10 @@ extern "C" {
 #ifndef _di_utf8_print_line_first_locked_
   f_status_t utf8_print_line_first_locked(utf8_setting_t * const setting, const fl_print_t print) {
 
-    if (!setting || print.verbosity < f_console_verbosity_error_e) return F_output_not;
+    if (!setting) return F_status_set_error(F_output_not);
+    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
 
-    if (F_status_is_error_not(setting->status)) {
+    if (F_status_is_error_not(setting->state.status)) {
       if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
       if (setting->flag & (utf8_main_flag_verify_e | utf8_main_flag_file_to_e)) return F_output_not;
     }
@@ -329,9 +347,10 @@ extern "C" {
 #ifndef _di_utf8_print_line_first_unlocked_
   f_status_t utf8_print_line_first_unlocked(utf8_setting_t * const setting, const fl_print_t print) {
 
-    if (!setting || print.verbosity < f_console_verbosity_error_e) return F_output_not;
+    if (!setting) return F_status_set_error(F_output_not);
+    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
 
-    if (F_status_is_error_not(setting->status)) {
+    if (F_status_is_error_not(setting->state.status)) {
       if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
       if (setting->flag & (utf8_main_flag_verify_e | utf8_main_flag_file_to_e)) return F_output_not;
     }
@@ -345,9 +364,10 @@ extern "C" {
 #ifndef _di_utf8_print_line_last_locked_
   f_status_t utf8_print_line_last_locked(utf8_setting_t * const setting, const fl_print_t print) {
 
-    if (!setting || print.verbosity < f_console_verbosity_error_e) return F_output_not;
+    if (!setting) return F_status_set_error(F_output_not);
+    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
 
-    if (F_status_is_error_not(setting->status)) {
+    if (F_status_is_error_not(setting->state.status)) {
       if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
       if (setting->flag & (utf8_main_flag_verify_e | utf8_main_flag_file_to_e)) return F_output_not;
     }
@@ -356,7 +376,7 @@ extern "C" {
 
     // Two lines are printed because the normal final end of line is never printed by design.
     // If this is an error or the header flag is set, then the normal end of line is printed by design so do not print this second new line.
-    if (F_status_is_error_not(setting->status) && !(setting->flag & utf8_main_flag_header_e)) {
+    if (F_status_is_error_not(setting->state.status) && !(setting->flag & utf8_main_flag_header_e)) {
       fll_print_dynamic_raw(setting->line_last, print.to);
     }
 
@@ -367,9 +387,10 @@ extern "C" {
 #ifndef _di_utf8_print_line_last_unlocked_
   f_status_t utf8_print_line_last_unlocked(utf8_setting_t * const setting, const fl_print_t print) {
 
-    if (!setting || print.verbosity < f_console_verbosity_error_e) return F_output_not;
+    if (!setting) return F_status_set_error(F_output_not);
+    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
 
-    if (F_status_is_error_not(setting->status)) {
+    if (F_status_is_error_not(setting->state.status)) {
       if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
       if (setting->flag & (utf8_main_flag_verify_e | utf8_main_flag_file_to_e)) return F_output_not;
     }
@@ -383,6 +404,7 @@ extern "C" {
 #ifndef _di_utf8_print_raw_bytesequence_
   f_status_t utf8_print_raw_bytesequence(utf8_setting_t * const setting, const fl_print_t print, const f_utf_char_t raw, const uint8_t width) {
 
+    if (!setting) return F_output_not;
     if (setting->flag & (utf8_main_flag_strip_invalid_e | utf8_main_flag_verify_e)) return F_output_not;
 
     f_string_static_t character = macro_f_string_static_t_initialize(0, 0, width);
@@ -424,6 +446,7 @@ extern "C" {
 #ifndef _di_utf8_print_raw_codepoint_
   f_status_t utf8_print_raw_codepoint(utf8_setting_t * const setting, const fl_print_t print, const f_string_static_t raw) {
 
+    if (!setting) return F_output_not;
     if (setting->flag & (utf8_main_flag_strip_invalid_e | utf8_main_flag_verify_e)) return F_output_not;
 
     fl_print_format("%r%[%r%]%r", print.to, setting->prepend, setting->valid_not, raw, setting->valid_not, setting->append);
@@ -435,6 +458,7 @@ extern "C" {
 #ifndef _di_utf8_print_raw_combining_or_width_
   f_status_t utf8_print_raw_combining_or_width(utf8_setting_t * const setting, const fl_print_t print, const uint8_t width) {
 
+    if (!setting) return F_output_not;
     if (setting->flag & (utf8_main_flag_strip_invalid_e | utf8_main_flag_verify_e)) return F_output_not;
 
     if (setting->mode & utf8_mode_to_combining_e) {
@@ -474,6 +498,7 @@ extern "C" {
 #ifndef _di_utf8_print_section_header_file_
   f_status_t utf8_print_section_header_file(utf8_setting_t * const setting, const fl_print_t print, const f_string_static_t name, const f_array_length_t index) {
 
+    if (!setting) return F_output_not;
     if (!(setting->flag & (utf8_main_flag_header_e | utf8_main_flag_separate_e))) return F_output_not;
     if (setting->flag & utf8_main_flag_verify_e) return F_output_not;
 
@@ -507,6 +532,7 @@ extern "C" {
 #ifndef _di_utf8_print_section_header_parameter_
   f_status_t utf8_print_section_header_parameter(utf8_setting_t * const setting, const fl_print_t print, const f_array_length_t index) {
 
+    if (!setting) return F_output_not;
     if (!(setting->flag & (utf8_main_flag_header_e | utf8_main_flag_separate_e))) return F_output_not;
     if (setting->flag & utf8_main_flag_verify_e) return F_output_not;
 
@@ -533,6 +559,7 @@ extern "C" {
 #ifndef _di_utf8_print_section_header_pipe_
   f_status_t utf8_print_section_header_pipe(utf8_setting_t * const setting, const fl_print_t print) {
 
+    if (!setting) return F_output_not;
     if (!(setting->flag & (utf8_main_flag_header_e | utf8_main_flag_separate_e))) return F_output_not;
     if (setting->flag & utf8_main_flag_verify_e) return F_output_not;
 
@@ -552,6 +579,9 @@ extern "C" {
 
 #ifndef _di_utf8_print_width_
   f_status_t utf8_print_width(utf8_setting_t * const setting, const fl_print_t print, const f_string_static_t sequence) {
+
+    if (!setting) return F_status_set_error(F_output_not);
+    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
 
     f_status_t status = f_utf_is_wide(sequence.string, sequence.used);
 

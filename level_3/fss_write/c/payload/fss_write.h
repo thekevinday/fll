@@ -65,7 +65,7 @@ extern "C" {
  *   The main program settings.
  *   Must be of type (fss_write_setting_t *).
  *
- *   This does not alter setting.status.
+ *   This does not alter setting.state.status.
  *
  * @return
  *   F_none on success.
@@ -84,7 +84,7 @@ extern "C" {
  *   The main program settings.
  *   Must be of type (fss_write_setting_t *).
  *
- *   This alters setting.status:
+ *   This alters setting.state.status:
  *     F_none on success.
  *     F_data_not on success but pipe contained no relevant data.
  *     F_payload on success and the payload has been printed.
@@ -105,7 +105,7 @@ extern "C" {
  *   The main program settings.
  *   Must be of type (fss_write_setting_t *).
  *
- *   This alters setting.status:
+ *   This alters setting.state.status:
  *     F_none on success.
  *     F_interrupt on (exit) signal received.
  *
@@ -131,23 +131,21 @@ extern "C" {
  *
  *   This alters setting.process_help, setting.process_normal, and setting.process_pipe.
  *
- *   This alters setting.status:
+ *   This alters setting.state.status:
  *     F_none on success.
  *     F_interrupt on (exit) signal received.
  *
  *     F_parameter (with error bit) if main is NULL or setting is NULL.
  *     F_parameter (with error bit) on parameter error.
  *
- *   This alters setting.status:
+ *   This alters setting.state.status:
  *     F_none on success.
  *     F_data_not on success but nothing was provided to operate with.
- * @param state
- *   A state for providing flags and handling interrupts during long running operations.
  *
  * @see fss_write_setting_load()
  */
 #ifndef _di_fss_write_payload_setting_load_
-  extern void fss_write_payload_setting_load(const f_console_arguments_t arguments, fll_program_data_t * const main, fss_write_setting_t * const setting, f_state_t * const state);
+  extern void fss_write_payload_setting_load(const f_console_arguments_t arguments, fll_program_data_t * const main, fss_write_setting_t * const setting);
 #endif // _di_fss_write_payload_setting_load_
 
 #ifdef __cplusplus

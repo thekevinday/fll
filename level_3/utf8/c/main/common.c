@@ -21,16 +21,15 @@ extern "C" {
 #endif // _di_utf8_setting_delete_
 
 #ifndef _di_utf8_setting_load_
-  void utf8_setting_load(const f_console_arguments_t arguments, f_state_t * const state, fll_program_data_t * const main, utf8_setting_t * const setting) {
+  void utf8_setting_load(const f_console_arguments_t arguments, fll_program_data_t * const main, utf8_setting_t * const setting) {
 
     if (!main || !setting) return;
 
     setting->flag = 0;
 
-    // Load parameters.
-    setting->status = f_console_parameter_process(arguments, state, &main->parameters, 0);
+    f_console_parameter_process(arguments, &main->parameters, &setting->state, 0);
 
-    if (F_status_is_error(setting->status)) {
+    if (F_status_is_error(setting->state.status)) {
       utf8_print_error(setting, main->error, macro_utf8_f(f_console_parameter_process));
 
       return;
@@ -48,9 +47,9 @@ extern "C" {
 
         const uint8_t modes[3] = { f_color_mode_not_e, f_color_mode_light_e, f_color_mode_dark_e };
 
-        setting->status = fll_program_parameter_process_context(choices, modes, F_true, main);
+        setting->state.status = fll_program_parameter_process_context(choices, modes, F_true, main);
 
-        if (F_status_is_error(setting->status)) {
+        if (F_status_is_error(setting->state.status)) {
           utf8_print_error(setting, main->error, macro_utf8_f(fll_program_parameter_process_context));
 
           return;
@@ -79,9 +78,9 @@ extern "C" {
 
         const uint8_t verbosity[5] = { f_console_verbosity_quiet_e, f_console_verbosity_error_e, f_console_verbosity_verbose_e, f_console_verbosity_debug_e, f_console_verbosity_normal_e };
 
-        setting->status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, main);
+        setting->state.status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, main);
 
-        if (F_status_is_error(setting->status)) {
+        if (F_status_is_error(setting->state.status)) {
           utf8_print_error(setting, main->error, macro_utf8_f(fll_program_parameter_process_verbosity));
 
           return;
@@ -94,9 +93,9 @@ extern "C" {
         choices.array = choices_array;
         choices.used = 2;
 
-        setting->status = f_console_parameter_prioritize_right(main->parameters, choices, &choice);
+        setting->state.status = f_console_parameter_prioritize_right(main->parameters, choices, &choice);
 
-        if (F_status_is_error(setting->status)) {
+        if (F_status_is_error(setting->state.status)) {
           utf8_print_error(setting, main->error, macro_utf8_f(f_console_parameter_prioritize_right));
 
           return;
@@ -119,9 +118,9 @@ extern "C" {
         choices.used = 4;
         choice = 1;
 
-        setting->status = f_console_parameter_prioritize_right(main->parameters, choices, &choice);
+        setting->state.status = f_console_parameter_prioritize_right(main->parameters, choices, &choice);
 
-        if (F_status_is_error(setting->status)) {
+        if (F_status_is_error(setting->state.status)) {
           utf8_print_error(setting, main->error, macro_utf8_f(f_console_parameter_prioritize_right));
 
           return;
@@ -186,7 +185,7 @@ extern "C" {
 
     if (main->parameters.array[utf8_parameter_to_file_e].result & f_console_result_value_e) {
       if (main->parameters.array[utf8_parameter_to_file_e].values.used > 1) {
-        setting->status = F_status_set_error(F_parameter);
+        setting->state.status = F_status_set_error(F_parameter);
 
         utf8_print_error_parameter_file_to_too_many(setting, main->error);
 
@@ -196,9 +195,9 @@ extern "C" {
       if (main->parameters.arguments.array[main->parameters.array[utf8_parameter_to_file_e].values.array[0]].used) {
         setting->path_files_to.used = 0;
 
-        setting->status = f_string_dynamics_increase_by(1, &setting->path_files_to);
+        setting->state.status = f_string_dynamics_increase_by(1, &setting->path_files_to);
 
-        if (F_status_is_error(setting->status)) {
+        if (F_status_is_error(setting->state.status)) {
           utf8_print_error(setting, main->error, macro_utf8_f(f_string_dynamics_increase_by));
 
           return;
@@ -206,9 +205,9 @@ extern "C" {
 
         setting->path_files_to.array[setting->path_files_to.used].used = 0;
 
-        setting->status = f_string_dynamic_append_nulless(main->parameters.arguments.array[main->parameters.array[utf8_parameter_to_file_e].values.array[0]], &setting->path_files_to.array[0]);
+        setting->state.status = f_string_dynamic_append_nulless(main->parameters.arguments.array[main->parameters.array[utf8_parameter_to_file_e].values.array[0]], &setting->path_files_to.array[0]);
 
-        if (F_status_is_error(setting->status)) {
+        if (F_status_is_error(setting->state.status)) {
           utf8_print_error(setting, main->error, macro_utf8_f(f_string_dynamic_append_nulless));
 
           return;
@@ -216,9 +215,9 @@ extern "C" {
 
         ++setting->path_files_to.used;
 
-        setting->status = f_file_stream_open(main->parameters.arguments.array[main->parameters.array[utf8_parameter_to_file_e].values.array[0]], f_file_open_mode_append_s, &main->output.to);
+        setting->state.status = f_file_stream_open(main->parameters.arguments.array[main->parameters.array[utf8_parameter_to_file_e].values.array[0]], f_file_open_mode_append_s, &main->output.to);
 
-        if (F_status_is_error(setting->status)) {
+        if (F_status_is_error(setting->state.status)) {
           utf8_print_error_file(setting, main->error, macro_utf8_f(f_file_stream_open), main->parameters.arguments.array[main->parameters.array[utf8_parameter_to_file_e].values.array[0]], f_file_operation_open_s, fll_error_file_type_file_e);
 
           return;
@@ -230,13 +229,13 @@ extern "C" {
         utf8_print_line_first_locked(setting, main->error);
         utf8_print_error_parameter_file_name_empty(setting, main->error, main->parameters.array[utf8_parameter_to_file_e].values.array[0]);
 
-        setting->status = F_status_set_error(F_parameter);
+        setting->state.status = F_status_set_error(F_parameter);
 
         return;
       }
     }
     else if (main->parameters.array[utf8_parameter_to_file_e].result & f_console_result_found_e) {
-      setting->status = F_status_set_error(F_parameter);
+      setting->state.status = F_status_set_error(F_parameter);
 
       utf8_print_line_first_locked(setting, main->error);
       fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, utf8_long_to_file_s);
@@ -251,9 +250,9 @@ extern "C" {
     if (main->parameters.array[utf8_parameter_from_file_e].result & f_console_result_value_e) {
       setting->path_files_from.used = 0;
 
-      setting->status = f_string_dynamics_increase_by(main->parameters.array[utf8_parameter_from_file_e].values.used, &setting->path_files_from);
+      setting->state.status = f_string_dynamics_increase_by(main->parameters.array[utf8_parameter_from_file_e].values.used, &setting->path_files_from);
 
-      if (F_status_is_error(setting->status)) {
+      if (F_status_is_error(setting->state.status)) {
         utf8_print_error(setting, main->error, macro_utf8_f(f_string_dynamics_increase_by));
 
         return;
@@ -269,11 +268,11 @@ extern "C" {
         index = main->parameters.array[utf8_parameter_from_file_e].values.array[i];
         setting->path_files_from.array[i].used = 0;
 
-        setting->status = f_string_dynamic_append_nulless(main->parameters.arguments.array[index], &setting->path_files_from.array[i]);
+        setting->state.status = f_string_dynamic_append_nulless(main->parameters.arguments.array[index], &setting->path_files_from.array[i]);
 
-        if (F_status_is_error(setting->status)) {
+        if (F_status_is_error(setting->state.status)) {
           utf8_print_line_first_locked(setting, main->error);
-          fll_error_print(main->error, F_status_set_fine(setting->status), macro_utf8_f(f_string_dynamic_append_nulless), fll_error_file_flag_fallback_e);
+          fll_error_print(main->error, F_status_set_fine(setting->state.status), macro_utf8_f(f_string_dynamic_append_nulless), fll_error_file_flag_fallback_e);
 
           break;
         }
@@ -282,26 +281,26 @@ extern "C" {
           if (f_file_exists(main->parameters.arguments.array[index], F_true) != F_true) {
             utf8_print_error_parameter_file_not_found(setting, main->error, F_true, main->parameters.arguments.array[index]);
 
-            if (F_status_is_error_not(setting->status)) {
-              setting->status = F_status_set_error(F_file_found_not);
+            if (F_status_is_error_not(setting->state.status)) {
+              setting->state.status = F_status_set_error(F_file_found_not);
             }
           }
         }
         else {
           utf8_print_error_parameter_file_name_empty(setting, main->error, index);
 
-          if (F_status_is_error_not(setting->status)) {
-            setting->status = F_status_set_error(F_parameter);
+          if (F_status_is_error_not(setting->state.status)) {
+            setting->state.status = F_status_set_error(F_parameter);
           }
         }
       } // for
 
-      if (F_status_is_error(setting->status)) return;
+      if (F_status_is_error(setting->state.status)) return;
 
       setting->flag |= utf8_main_flag_file_from_e;
     }
     else if (main->parameters.array[utf8_parameter_from_file_e].result & f_console_result_found_e) {
-      setting->status = F_status_set_error(F_parameter);
+      setting->state.status = F_status_set_error(F_parameter);
 
       utf8_print_line_first_locked(setting, main->error);
       fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, utf8_long_from_file_s);
@@ -315,9 +314,9 @@ extern "C" {
     if (main->parameters.remaining.used) {
       setting->remaining.used = 0;
 
-      setting->status = f_string_dynamics_increase_by(main->parameters.remaining.used, &setting->remaining);
+      setting->state.status = f_string_dynamics_increase_by(main->parameters.remaining.used, &setting->remaining);
 
-      if (F_status_is_error(setting->status)) {
+      if (F_status_is_error(setting->state.status)) {
         utf8_print_error(setting, main->error, macro_utf8_f(f_string_dynamics_increase_by));
 
         return;
@@ -335,7 +334,7 @@ extern "C" {
     }
 
     if (!(main->parameters.array[utf8_parameter_from_file_e].result & f_console_result_found_e) && !((main->pipe & fll_program_data_pipe_input_e) || main->parameters.remaining.used)) {
-      setting->status = F_status_set_error(F_parameter);
+      setting->state.status = F_status_set_error(F_parameter);
 
       utf8_print_line_first_locked(setting, main->error);
       utf8_print_error_no_from(setting, main->error);

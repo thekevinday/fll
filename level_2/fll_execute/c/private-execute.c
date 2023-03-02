@@ -85,7 +85,6 @@ extern "C" {
 
     if (as.id_groups) {
       if (setgroups(as.id_groups->used, (const gid_t *) as.id_groups->array) == -1) {
-
         if (parameter && parameter->option & FL_execute_parameter_option_exit_d) {
           exit(F_execute_group);
         }
@@ -197,9 +196,7 @@ extern "C" {
     int descriptors[2] = { -1, -1 };
 
     if (as) {
-      if (pipe(descriptors) == -1) {
-        return F_status_set_error(F_pipe);
-      }
+      if (pipe(descriptors) == -1) return F_status_set_error(F_pipe);
     }
 
     const pid_t id_process = fork();
@@ -232,9 +229,7 @@ extern "C" {
           // Close the write pipe for the parent when finished writing.
           close(descriptors[1]);
 
-          if (F_status_is_error(status)) {
-            return status;
-          }
+          if (F_status_is_error(status)) return status;
         }
       }
 
@@ -253,9 +248,7 @@ extern "C" {
 
       // This must explicitly check for 0 (as opposed to checking (!result)).
       if (result != 0) {
-        if (WIFEXITED(*((int *) result))) {
-          return F_none;
-        }
+        if (WIFEXITED(*((int *) result))) return F_none;
 
         return F_status_set_error(F_failure);
       }
@@ -378,9 +371,7 @@ extern "C" {
 
     int descriptors[2] = { -1, -1 };
 
-    if (pipe(descriptors) == -1) {
-      return F_status_set_error(F_pipe);
-    }
+    if (pipe(descriptors) == -1) return F_status_set_error(F_pipe);
 
     const pid_t id_process = fork();
 
@@ -421,9 +412,7 @@ extern "C" {
         // Close the write pipe for the parent when finished writing.
         close(descriptors[1]);
 
-        if (F_status_is_error(status)) {
-          return status;
-        }
+        if (F_status_is_error(status)) return status;
       }
 
       if (parameter && parameter->option & FL_execute_parameter_option_return_d) {
@@ -441,9 +430,7 @@ extern "C" {
 
       // This must explicitly check for 0 (as opposed to checking (!result)).
       if (result != 0) {
-        if (WIFEXITED(*((int *) result))) {
-          return F_none;
-        }
+        if (WIFEXITED(*((int *) result))) return F_none;
 
         return F_status_set_error(F_failure);
       }

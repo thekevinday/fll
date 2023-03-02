@@ -87,7 +87,7 @@ extern "C" {
   void iki_read_process_line(fll_program_data_t * const main, iki_read_setting_t * const setting, f_string_range_t *range) {
 
     if (!(setting->flag & iki_read_main_flag_line_e)) {
-      setting->status = F_false;
+      setting->state.status = F_false;
 
       return;
     }
@@ -108,10 +108,10 @@ extern "C" {
         if (setting->buffer.string[range->stop] == f_string_eol_s.string[0]) break;
       } // for
 
-      setting->status = F_true;
+      setting->state.status = F_true;
     }
     else {
-      setting->status = F_data_not;
+      setting->state.status = F_data_not;
     }
   }
 #endif // _di_iki_read_process_line_
@@ -122,8 +122,8 @@ extern "C" {
     if (setting->flag & iki_read_main_flag_total_e) {
       iki_read_process_buffer_total(main, setting);
 
-      if (F_status_is_error_not(setting->status)) {
-        setting->status = F_none;
+      if (F_status_is_error_not(setting->state.status)) {
+        setting->state.status = F_none;
       }
 
       return;
@@ -133,15 +133,15 @@ extern "C" {
 
     iki_read_process_line(main, setting, &buffer_range);
 
-    if (setting->status == F_true) {
+    if (setting->state.status == F_true) {
       if (buffer_range.start > setting->buffer.used) {
-        setting->status = F_data_not;
+        setting->state.status = F_data_not;
 
         return;
       }
     }
-    else if (setting->status == F_data_not) {
-      setting->status = F_data_not;
+    else if (setting->state.status == F_data_not) {
+      setting->state.status = F_data_not;
 
       return;
     }
@@ -153,8 +153,8 @@ extern "C" {
       iki_read_process_buffer_ranges(main, setting, &buffer_range);
     }
 
-    if (F_status_is_error_not(setting->status)) {
-      setting->status = F_none;
+    if (F_status_is_error_not(setting->state.status)) {
+      setting->state.status = F_none;
     }
   }
 #endif // _di_iki_read_process_buffer_
@@ -165,10 +165,10 @@ extern "C" {
     {
       const f_state_t state = macro_f_state_t_initialize(iki_read_common_allocation_large_d, iki_read_common_allocation_small_d, 0, 0, &fll_program_standard_signal_state, 0, (void *) main, 0);
 
-      setting->status = fl_iki_read(&setting->buffer, buffer_range, &setting->data, state);
+      setting->state.status = fl_iki_read(&setting->buffer, buffer_range, &setting->data, state);
     }
 
-    if (F_status_is_error(setting->status)) {
+    if (F_status_is_error(setting->state.status)) {
       iki_read_print_error(setting, main->error, macro_iki_read_f(fl_iki_read));
 
       return;
@@ -224,10 +224,10 @@ extern "C" {
       f_file_stream_unlock(main->output.to);
 
       if (unmatched) {
-        setting->status = F_data_not;
+        setting->state.status = F_data_not;
       }
       else {
-        setting->status = F_none;
+        setting->state.status = F_none;
       }
     }
     else {
@@ -242,10 +242,10 @@ extern "C" {
 
             f_file_stream_unlock(main->output.to);
 
-            setting->status = F_none;
+            setting->state.status = F_none;
           }
           else {
-            setting->status = F_data_not;
+            setting->state.status = F_data_not;
           }
         }
         else {
@@ -260,11 +260,11 @@ extern "C" {
 
           f_file_stream_unlock(main->output.to);
 
-          setting->status = F_none;
+          setting->state.status = F_none;
         }
       }
       else {
-        setting->status = F_data_not;
+        setting->state.status = F_data_not;
       }
     }
   }
@@ -278,10 +278,10 @@ extern "C" {
     {
       const f_state_t state = macro_f_state_t_initialize(iki_read_common_allocation_large_d, iki_read_common_allocation_small_d, 0, 0, &fll_program_standard_signal_state, 0, (void *) main, 0);
 
-      setting->status = fl_iki_read(&setting->buffer, &range, &setting->data, state);
+      setting->state.status = fl_iki_read(&setting->buffer, &range, &setting->data, state);
     }
 
-    if (F_status_is_error(setting->status)) {
+    if (F_status_is_error(setting->state.status)) {
       iki_read_print_error(setting, main->error, macro_iki_read_f(fl_iki_read));
 
       return;
@@ -296,7 +296,7 @@ extern "C" {
     if (!setting->data.variable.used) {
       fll_print_dynamic_partial(setting->buffer, buffer_range, main->output.to);
 
-      setting->status = F_none;
+      setting->state.status = F_none;
 
       return;
     }
@@ -361,7 +361,7 @@ extern "C" {
       f_file_stream_unlock(main->output.to);
     }
 
-    setting->status = F_none;
+    setting->state.status = F_none;
   }
 #endif // _di_iki_read_process_buffer_ranges_whole_
 
@@ -372,19 +372,19 @@ extern "C" {
 
     iki_read_process_line(main, setting, &range);
 
-    if (setting->status == F_true) {
+    if (setting->state.status == F_true) {
       if (range.start > setting->buffer.used) {
         fll_print_format("%r%r", main->output.to, f_string_ascii_0_s, f_string_eol_s);
 
-        setting->status = F_none;
+        setting->state.status = F_none;
 
         return;
       }
     }
-    else if (setting->status == F_data_not) {
+    else if (setting->state.status == F_data_not) {
       fll_print_format("%r%r", main->output.to, f_string_ascii_0_s, f_string_eol_s);
 
-      setting->status = F_none;
+      setting->state.status = F_none;
 
       return;
     }
@@ -392,10 +392,10 @@ extern "C" {
     {
       f_state_t state = macro_f_state_t_initialize(iki_read_common_allocation_large_d, iki_read_common_allocation_small_d, 0, 0, &fll_program_standard_signal_state, 0, (void *) main, 0);
 
-      setting->status = fl_iki_read(&setting->buffer, &range, &setting->data, state);
+      setting->state.status = fl_iki_read(&setting->buffer, &range, &setting->data, state);
     }
 
-    if (F_status_is_error(setting->status)) {
+    if (F_status_is_error(setting->state.status)) {
       iki_read_print_error(setting, main->error, macro_iki_read_f(fl_iki_read));
 
       return;
@@ -424,7 +424,7 @@ extern "C" {
 
             f_string_dynamic_resize(0, &name);
 
-            setting->status = F_status_set_error(F_interrupt);
+            setting->state.status = F_status_set_error(F_interrupt);
 
             return;
           }
@@ -435,9 +435,9 @@ extern "C" {
         index = main->parameters.array[iki_read_parameter_name_e].values.array[i];
         name.used = 0;
 
-        setting->status = f_string_dynamic_append_nulless(main->parameters.arguments.array[index], &name);
+        setting->state.status = f_string_dynamic_append_nulless(main->parameters.arguments.array[index], &name);
 
-        if (F_status_is_error(setting->status)) {
+        if (F_status_is_error(setting->state.status)) {
           iki_read_print_error(setting, main->error, macro_iki_read_f(f_string_dynamic_append_nulless));
 
           f_string_dynamic_resize(0, &name);
@@ -449,9 +449,9 @@ extern "C" {
 
         for (j = 0; j < setting->data.vocabulary.used; ++j) {
 
-          setting->status = fl_string_dynamic_partial_compare(name, setting->buffer, range, setting->data.vocabulary.array[j]);
+          setting->state.status = fl_string_dynamic_partial_compare(name, setting->buffer, range, setting->data.vocabulary.array[j]);
 
-          if (setting->status == F_equal_to) ++total;
+          if (setting->state.status == F_equal_to) ++total;
         } // for
       } // for
 
@@ -473,7 +473,7 @@ extern "C" {
 
     fll_print_format("%ul%r", main->output.to, total, f_string_eol_s);
 
-    setting->status = F_none;
+    setting->state.status = F_none;
   }
 #endif // _di_iki_read_process_buffer_total_
 

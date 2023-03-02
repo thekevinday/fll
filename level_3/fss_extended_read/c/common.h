@@ -372,7 +372,7 @@ extern "C" {
  * @param setting
  *   The program main setting data.
  *
- *   This does not alter setting.status.
+ *   This does not alter setting.state.status.
  *
  * @return
  *   F_none on success.
@@ -392,14 +392,12 @@ extern "C" {
  *
  * @param arguments
  *   The parameters passed to the process (often referred to as command line arguments).
- * @param state
- *   A state for providing flags and handling interrupts during long running operations.
  * @param main
  *   The main program data.
  * @param setting
  *   The main program settings.
  *
- *   This alters setting.status:
+ *   This alters setting.state.status:
  *     F_none on success.
  *
  *     Errors (with error bit) from: f_console_parameter_process().
@@ -409,7 +407,7 @@ extern "C" {
  * @see fll_program_parameter_process_context()
  */
 #ifndef _di_fss_extended_read_setting_load_
-  extern void fss_extended_read_setting_load(const f_console_arguments_t arguments, f_state_t * const state, fll_program_data_t * const main, fss_extended_read_setting_t * const setting);
+  extern void fss_extended_read_setting_load(const f_console_arguments_t arguments, fll_program_data_t * const main, fss_extended_read_setting_t * const setting);
 #endif // _di_fss_extended_read_setting_load_
 
 /**
@@ -421,7 +419,7 @@ extern "C" {
  *   The main program settings.
  *   All buffers are deallocated.
  *
- *   This does not alter setting.status.
+ *   This does not alter setting.state.status.
  *
  * @return
  *   F_none on success.

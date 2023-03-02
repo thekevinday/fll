@@ -68,7 +68,7 @@ extern "C" {
  * @param setting
  *   The main program settings.
  *
- *   This alters setting.status:
+ *   This alters setting.state.status:
  *     F_none on success.
  *     F_true on success when performing verification and verify passed.
  *     F_false on success when performing verification and verify failed.
@@ -89,7 +89,7 @@ extern "C" {
  *   The main program settings.
  *   Must be of type (fss_write_setting_t *).
  *
- *   This alters setting.status:
+ *   This alters setting.state.status:
  *     status from fss_write_process_normal_data().
  *
  *     Errors (with error bit) from fss_write_process_normal_data().
@@ -109,7 +109,7 @@ extern "C" {
  *   The main program settings.
  *   Must be of type (fss_write_setting_t *).
  *
- *   This alters setting.status:
+ *   This alters setting.state.status:
  *     F_none on success.
  *     F_interrupt on (exit) signal received.
  *
@@ -128,7 +128,7 @@ extern "C" {
  *   The main program settings.
  *   Must be of type (fss_write_setting_t *).
  *
- *   This alters setting.status:
+ *   This alters setting.state.status:
  *     F_none on success.
  *     F_data_not on success but pipe contained no relevant data.
  *     F_basic on success and the basic has been printed.
@@ -149,7 +149,7 @@ extern "C" {
  *   The main program settings.
  *   Must be of type (fss_write_setting_t *).
  *
- *   This alters setting.status:
+ *   This alters setting.state.status:
  *     F_none on success.
  *     F_interrupt on (exit) signal received.
  *

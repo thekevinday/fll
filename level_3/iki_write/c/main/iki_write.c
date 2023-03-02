@@ -11,13 +11,13 @@ extern "C" {
 
     if (!main || !setting) return;
 
-    if (F_status_is_error(setting->status)) {
+    if (F_status_is_error(setting->state.status)) {
       iki_write_print_line_last_locked(setting, main->error);
 
       return;
     }
 
-    setting->status = F_none;
+    setting->state.status = F_none;
 
     if (setting->flag & iki_write_main_flag_help_e) {
       iki_write_print_help(setting, main->message);
@@ -59,7 +59,7 @@ extern "C" {
       do {
         if (!((++main->signal_check) % iki_write_signal_check_d)) {
           if (fll_program_standard_signal_received(main)) {
-            setting->status = F_status_set_error(F_interrupt);
+            setting->state.status = F_status_set_error(F_interrupt);
 
             return;
           }
@@ -71,7 +71,7 @@ extern "C" {
           status = f_file_read(pipe, &setting->buffer);
 
           if (F_status_is_error(status)) {
-            setting->status = F_status_set_error(F_pipe);
+            setting->state.status = F_status_set_error(F_pipe);
 
             iki_write_print_error_file(setting, main->error, macro_iki_write_f(f_file_read), f_string_ascii_minus_s, f_file_operation_read_s, fll_error_file_type_pipe_e);
 
@@ -79,7 +79,7 @@ extern "C" {
           }
 
           if (!setting->buffer.used) {
-            setting->status = F_status_set_error(F_parameter);
+            setting->state.status = F_status_set_error(F_parameter);
 
             iki_write_print_line_first_locked(setting, main->error);
             fll_program_print_error_pipe_missing_content(main->error);
@@ -92,20 +92,20 @@ extern "C" {
         }
 
         previous = range.start;
-        setting->status = f_string_dynamic_seek_to(setting->buffer, f_string_ascii_feed_form_s.string[0], &range);
+        setting->state.status = f_string_dynamic_seek_to(setting->buffer, f_string_ascii_feed_form_s.string[0], &range);
 
-        if (setting->status == F_data_not_stop) {
-          setting->status = F_status_set_error(F_parameter);
+        if (setting->state.status == F_data_not_stop) {
+          setting->state.status = F_status_set_error(F_parameter);
         }
 
-        if (F_status_is_error(setting->status)) {
+        if (F_status_is_error(setting->state.status)) {
           iki_write_print_error(setting, main->error, macro_iki_write_f(f_string_dynamic_seek_to));
 
           return;
         }
 
         if (object_ended && previous == range.start) {
-          setting->status = F_status_set_error(F_parameter);
+          setting->state.status = F_status_set_error(F_parameter);
 
           iki_write_print_line_first_locked(setting, main->error);
           fll_program_print_error_pipe_invalid_form_feed(main->error);
@@ -121,9 +121,9 @@ extern "C" {
           setting->content.used = 0;
 
           if (setting->buffer.used) {
-            setting->status = f_string_dynamic_partial_append_nulless(setting->buffer, range, &setting->content);
+            setting->state.status = f_string_dynamic_partial_append_nulless(setting->buffer, range, &setting->content);
 
-            if (F_status_is_error(setting->status)) {
+            if (F_status_is_error(setting->state.status)) {
               iki_write_print_error(setting, main->error, macro_iki_write_f(f_string_dynamic_partial_append_nulless));
 
               return;
@@ -131,7 +131,7 @@ extern "C" {
           }
 
           iki_write_process(main, setting, setting->object, setting->content);
-          if (F_status_is_error(setting->status)) return;
+          if (F_status_is_error(setting->state.status)) return;
 
           fll_print_dynamic_raw(f_string_eol_s, main->output.to);
 
@@ -140,9 +140,9 @@ extern "C" {
         else {
           setting->object.used = 0;
 
-          setting->status = f_string_dynamic_partial_append_nulless(setting->buffer, range, &setting->object);
+          setting->state.status = f_string_dynamic_partial_append_nulless(setting->buffer, range, &setting->object);
 
-          if (F_status_is_error(setting->status)) {
+          if (F_status_is_error(setting->state.status)) {
             iki_write_print_error(setting, main->error, macro_iki_write_f(f_string_dynamic_partial_append_nulless));
 
             return;
@@ -164,7 +164,7 @@ extern "C" {
       } while (status != F_none_eof || setting->buffer.used || object_ended);
 
       if (object_ended) {
-        setting->status = F_status_set_error(F_parameter);
+        setting->state.status = F_status_set_error(F_parameter);
 
         iki_write_print_line_first_locked(setting, main->error);
         fll_program_print_error_pipe_object_without_content(main->error);
@@ -178,7 +178,7 @@ extern "C" {
 
       if (!((++main->signal_check) % iki_write_signal_check_d)) {
         if (fll_program_standard_signal_received(main)) {
-          setting->status = F_status_set_error(F_interrupt);
+          setting->state.status = F_status_set_error(F_interrupt);
 
           break;
         }
@@ -187,16 +187,13 @@ extern "C" {
       }
 
       iki_write_process(main, setting, setting->objects.array[i], setting->contents.array[i]);
-      if (F_status_is_error(setting->status)) break;
+      if (F_status_is_error(setting->state.status)) break;
 
       fll_print_dynamic_raw(f_string_eol_s, main->output.to);
     } // for
 
-    if (F_status_is_error(setting->status)) {
-      iki_write_print_line_last_locked(setting, main->error);
-    }
-    else if (setting->status != F_interrupt) {
-      iki_write_print_line_last_locked(setting, main->message);
+    if (F_status_is_error(setting->state.status)) {
+      iki_write_print_line_last_locked(setting, F_status_set_fine(setting->state.status) == F_interrupt ? main->message : main->error);
     }
   }
 #endif // _di_iki_write_main_

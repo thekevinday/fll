@@ -18,9 +18,8 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
   {
     const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize(argc, argv, envp);
-    f_state_t state = f_state_t_initialize;
 
-    byte_dump_setting_load(arguments, state, &data, &setting);
+    byte_dump_setting_load(arguments, &data, &setting);
   }
 
   byte_dump_main(&data, &setting);

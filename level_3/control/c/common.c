@@ -180,18 +180,17 @@ extern "C" {
 #endif // _di_control_setting_delete_
 
 #ifndef _di_control_setting_load_
-  void control_setting_load(const f_console_arguments_t arguments, f_state_t * const state, fll_program_data_t * const main, control_setting_t * const setting) {
+  void control_setting_load(const f_console_arguments_t arguments, fll_program_data_t * const main, control_setting_t * const setting) {
 
     if (!main || !setting) return;
 
     setting->flag = 0;
 
-    // Load parameters.
-    setting->status = f_console_parameter_process(arguments, state, &main->parameters, 0);
+    f_console_parameter_process(arguments, &main->parameters, &setting->state, 0);
 
-    if (F_status_is_error(setting->status)) {
+    if (F_status_is_error(setting->state.status)) {
       control_print_line_first_locked(setting, main->error);
-      fll_error_print(main->error, F_status_set_fine(setting->status), "f_console_parameter_process", fll_error_file_flag_fallback_e);
+      fll_error_print(main->error, F_status_set_fine(setting->state.status), "f_console_parameter_process", fll_error_file_flag_fallback_e);
       control_print_line_last_locked(setting, main->error);
 
       return;
@@ -209,11 +208,11 @@ extern "C" {
 
         const uint8_t modes[3] = { f_color_mode_not_e, f_color_mode_light_e, f_color_mode_dark_e };
 
-        setting->status = fll_program_parameter_process_context(choices, modes, F_true, main);
+        setting->state.status = fll_program_parameter_process_context(choices, modes, F_true, main);
 
-        if (F_status_is_error(setting->status)) {
+        if (F_status_is_error(setting->state.status)) {
           control_print_line_first_locked(setting, main->error);
-          fll_error_print(main->error, F_status_set_fine(setting->status), "fll_program_parameter_process_context", fll_error_file_flag_fallback_e);
+          fll_error_print(main->error, F_status_set_fine(setting->state.status), "fll_program_parameter_process_context", fll_error_file_flag_fallback_e);
           control_print_line_last_locked(setting, main->error);
 
           return;
@@ -242,11 +241,11 @@ extern "C" {
 
         const uint8_t verbosity[5] = { f_console_verbosity_quiet_e, f_console_verbosity_error_e, f_console_verbosity_verbose_e, f_console_verbosity_debug_e, f_console_verbosity_normal_e };
 
-        setting->status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, main);
+        setting->state.status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, main);
 
-        if (F_status_is_error(setting->status)) {
+        if (F_status_is_error(setting->state.status)) {
           control_print_line_first_locked(setting, main->error);
-          fll_error_print(main->error, F_status_set_fine(setting->status), "fll_program_parameter_process_verbosity", fll_error_file_flag_fallback_e);
+          fll_error_print(main->error, F_status_set_fine(setting->state.status), "fll_program_parameter_process_verbosity", fll_error_file_flag_fallback_e);
           control_print_line_last_locked(setting, main->error);
 
           return;

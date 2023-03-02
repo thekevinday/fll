@@ -47,8 +47,7 @@ build_sources_program fll/level_2/error.c fll/level_2/error/common.c fll/level_2
 build_sources_program fll/level_2/print.c
 build_sources_program fll/level_2/program.c fll/level_2/program/common.c fll/level_2/program/print.c fll/level_2/private-program.c
 
-build_sources_program program/utf8/common.c program/utf8/print.c program/utf8/utf8.c
-build_sources_program program/utf8/private-common.c program/utf8/private-utf8.c program/utf8/private-utf8_bytesequence.c program/utf8/private-utf8_codepoint.c
+build_sources_program program/utf8/common.c program/utf8/bytesequence.c program/utf8/codepoint.c program/utf8/print.c program/utf8/process.c program/utf8/utf8.c
 
 build_sources_program program/utf8/main.c
 

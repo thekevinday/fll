@@ -18,9 +18,8 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
   {
     const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize(argc, argv, envp);
-    f_state_t state = f_state_t_initialize;
 
-    utf8_setting_load(arguments, state, &data, &setting);
+    utf8_setting_load(arguments, &data, &setting);
   }
 
   utf8_main(&data, &setting);
@@ -31,5 +30,5 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
   fll_program_standard_set_down(&data);
 
-  return (F_status_is_error(setting.status) || setting.status == F_false) ? 1 : 0;
+  return (F_status_is_error(setting.state.status) || setting.state.status == F_false) ? 1 : 0;
 }

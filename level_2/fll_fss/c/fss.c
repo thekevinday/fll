@@ -15,9 +15,7 @@ extern "C" {
       if (buffer.string[range->start]) break;
     }
 
-    if (range->start > range->stop) {
-      return F_data_not;
-    }
+    if (range->start > range->stop) return F_data_not;
 
     // The first character must be a '#'.
     if (buffer.string[range->start] != f_fss_pound_s.string[0]) {
@@ -78,13 +76,7 @@ extern "C" {
 
     f_status_t status = f_utf_is_whitespace(buffer.string + range->start, (range->stop - range->start) + 1, F_false);
 
-    if (F_status_is_error(status)) {
-      if (F_status_set_fine(status) == F_maybe) {
-        return F_status_set_error(F_complete_not_utf);
-      }
-
-      return status;
-    }
+    if (F_status_is_error(status)) return (F_status_set_fine(status) == F_maybe) ? F_status_set_error(F_complete_not_utf) : status;
 
     if (status == F_false) {
 
@@ -164,21 +156,9 @@ extern "C" {
     } while (range->start <= range->stop);
 
     if (ids) {
-      if (ids->used) {
-        if (found_fss) {
-          return F_found;
-        }
-
-        return F_maybe;
-      }
+      if (ids->used) return found_fss ? F_found : F_maybe;
     }
-    else if (id.used) {
-      if (found_fss) {
-        return F_found;
-      }
-
-      return F_maybe;
-    }
+    else if (id.used) return found_fss ? F_found : F_maybe;
 
     return F_found_not;
   }
@@ -649,6 +629,7 @@ extern "C" {
 
           if (status == F_equal_to) {
             matched = F_true;
+
             break;
           }
         } // for

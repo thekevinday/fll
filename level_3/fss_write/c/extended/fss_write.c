@@ -13,7 +13,7 @@ extern "C" {
     fss_write_setting_t * const setting = macro_fss_write_setting(void_setting);
 
     if (setting->content) {
-      setting->status = fl_fss_extended_content_write(
+      setting->state.status = fl_fss_extended_content_write(
         *setting->content,
         setting->quote.used
           ? setting->quote.string[0]
@@ -28,8 +28,8 @@ extern "C" {
         &setting->buffer
       );
 
-      if (F_status_set_fine(setting->status) == F_none_eol) {
-        setting->status = F_status_set_error(F_support_not);
+      if (F_status_set_fine(setting->state.status) == F_none_eol) {
+        setting->state.status = F_status_set_error(F_support_not);
 
         fss_write_print_line_first_locked(setting, main->error);
         fss_write_print_error_unsupported_eol(setting, main->error);
@@ -37,7 +37,7 @@ extern "C" {
         return;
       }
 
-      if (F_status_is_error(setting->status)) {
+      if (F_status_is_error(setting->state.status)) {
         fss_write_print_error(setting, main->error, macro_fss_write_f(fl_fss_extended_content_write));
 
         return;
@@ -46,16 +46,16 @@ extern "C" {
 
     if ((setting->flag & fss_write_flag_partial_e) && !(setting->flag & fss_write_flag_object_e) || !(setting->flag & (fss_write_flag_object_e | fss_write_flag_content_e))) {
       if (setting->flag & fss_write_flag_content_end_e) {
-        setting->status = f_string_dynamic_append(f_fss_extended_close_s, &setting->buffer);
+        setting->state.status = f_string_dynamic_append(f_fss_extended_close_s, &setting->buffer);
 
-        if (F_status_is_error(setting->status)) {
+        if (F_status_is_error(setting->state.status)) {
           fss_write_print_error(setting, main->error, macro_fss_write_f(f_string_dynamic_append));
         }
       }
       else if (setting->flag & fss_write_flag_content_next_e) {
-        setting->status = f_string_dynamic_append(f_fss_extended_next_s, &setting->buffer);
+        setting->state.status = f_string_dynamic_append(f_fss_extended_next_s, &setting->buffer);
 
-        if (F_status_is_error(setting->status)) {
+        if (F_status_is_error(setting->state.status)) {
           fss_write_print_error(setting, main->error, macro_fss_write_f(f_string_dynamic_append));
         }
       }
@@ -80,7 +80,7 @@ extern "C" {
     fss_write_setting_t * const setting = macro_fss_write_setting(void_setting);
 
     if (setting->object) {
-      setting->status = fl_fss_extended_object_write(
+      setting->state.status = fl_fss_extended_object_write(
         *setting->object,
         setting->quote.used
           ? setting->quote.string[0]
@@ -97,8 +97,8 @@ extern "C" {
         &setting->buffer
       );
 
-      if (F_status_set_fine(setting->status) == F_none_eol) {
-        setting->status = F_status_set_error(F_support_not);
+      if (F_status_set_fine(setting->state.status) == F_none_eol) {
+        setting->state.status = F_status_set_error(F_support_not);
 
         fss_write_print_line_first_locked(setting, main->error);
         fss_write_print_error_unsupported_eol(setting, main->error);
@@ -106,7 +106,7 @@ extern "C" {
         return;
       }
 
-      if (F_status_is_error(setting->status)) {
+      if (F_status_is_error(setting->state.status)) {
         fss_write_print_error(setting, main->error, macro_fss_write_f(fl_fss_extended_object_write));
 
         return;
@@ -115,8 +115,8 @@ extern "C" {
 
     if ((setting->flag & fss_write_flag_partial_e) && !(setting->flag & fss_write_flag_content_e) || !(setting->flag & (fss_write_flag_object_e | fss_write_flag_content_e))) {
       if (setting->flag & fss_write_flag_object_open_e) {
-        setting->status = f_string_dynamic_append(f_fss_extended_open_s, &setting->buffer);
-        if (F_status_is_error(setting->status)) {
+        setting->state.status = f_string_dynamic_append(f_fss_extended_open_s, &setting->buffer);
+        if (F_status_is_error(setting->state.status)) {
           fss_write_print_error(setting, main->error, macro_fss_write_f(f_string_dynamic_append));
         }
       }

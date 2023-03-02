@@ -1,8 +1,4 @@
 #include "utf8.h"
-#include "private-common.h"
-#include "private-utf8.h"
-#include "private-utf8_bytesequence.h"
-#include "private-utf8_codepoint.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -13,13 +9,13 @@ extern "C" {
 
     if (!main || !setting) return;
 
-    if (F_status_is_error(setting->status)) {
+    if (F_status_is_error(setting->state.status)) {
       utf8_print_line_last_locked(setting, main->error);
 
       return;
     }
 
-    setting->status = F_none;
+    setting->state.status = F_none;
 
     if (setting->flag & utf8_main_flag_help_e) {
       utf8_print_help(setting, main->message);
@@ -51,13 +47,13 @@ extern "C" {
       utf8_print_section_header_pipe(setting, main->output);
 
       if (setting->mode & utf8_mode_from_bytesequence_e) {
-        setting->status = utf8_process_file_bytesequence(main, setting, file);
+        utf8_process_file_bytesequence(main, setting, file);
       }
       else {
-        setting->status = utf8_process_file_codepoint(main, setting, file);
+        utf8_process_file_codepoint(main, setting, file);
       }
 
-      if (F_status_is_error_not(setting->status)) {
+      if (F_status_is_error_not(setting->state.status)) {
         if (setting->mode & utf8_mode_to_bytesequence_e) {
           if (setting->flag & utf8_main_flag_header_e) {
             fll_print_dynamic_raw(f_string_eol_s, main->output.to);
@@ -68,20 +64,20 @@ extern "C" {
         }
       }
 
-      if (F_status_is_error(setting->status) && F_status_set_fine(setting->status) != F_utf_fragment && F_status_set_fine(setting->status) != F_complete_not_utf) {
+      if (F_status_is_error(setting->state.status) && F_status_set_fine(setting->state.status) != F_utf_fragment && F_status_set_fine(setting->state.status) != F_complete_not_utf) {
         utf8_print_error_file(setting, main->error, setting->mode & utf8_mode_from_bytesequence_e ? macro_utf8_f(utf8_process_file_bytesequence) : macro_utf8_f(utf8_process_file_codepoint), f_string_empty_s, f_file_operation_process_s, fll_error_file_type_pipe_e);
       }
     }
 
     // Process "from" files.
-    if (F_status_is_error_not(setting->status) && setting->status != F_interrupt && (setting->flag & utf8_main_flag_file_from_e)) {
+    if (F_status_is_error_not(setting->state.status) && (setting->flag & utf8_main_flag_file_from_e)) {
       f_file_t file = macro_f_file_t_initialize(0, -1, F_file_flag_read_only_d, 32768, F_file_default_write_size_d);
 
-      for (f_array_length_t i = 0; i < setting->path_files_from.used && setting->status != F_interrupt; ++i) {
+      for (f_array_length_t i = 0; i < setting->path_files_from.used && F_status_is_error_not(setting->state.status); ++i) {
 
         if (!((++main->signal_check) % utf8_signal_check_d)) {
           if (fll_program_standard_signal_received(main)) {
-            setting->status = F_status_set_error(F_interrupt);
+            setting->state.status = F_status_set_error(F_interrupt);
 
             break;
           }
@@ -91,31 +87,31 @@ extern "C" {
 
         utf8_print_section_header_file(setting, main->output, setting->path_files_from.array[i], i);
 
-        setting->status = f_file_stream_open(setting->path_files_from.array[i], f_string_empty_s, &file);
+        setting->state.status = f_file_stream_open(setting->path_files_from.array[i], f_string_empty_s, &file);
 
-        if (F_status_is_error(setting->status)) {
+        if (F_status_is_error(setting->state.status)) {
           utf8_print_error_file(setting, main->error, macro_utf8_f(f_file_stream_open), setting->path_files_from.array[i], f_file_operation_open_s, fll_error_file_type_file_e);
 
           break;
         }
 
         if (setting->mode & utf8_mode_from_bytesequence_e) {
-          setting->status = utf8_process_file_bytesequence(main, setting, file);
+          utf8_process_file_bytesequence(main, setting, file);
         }
         else {
-          setting->status = utf8_process_file_codepoint(main, setting, file);
+          utf8_process_file_codepoint(main, setting, file);
         }
 
         f_file_stream_flush(file);
         f_file_stream_close(&file);
 
         if (setting->flag & utf8_main_flag_verify_e) {
-          if (setting->status == F_false) {
+          if (setting->state.status == F_false) {
             valid = F_false;
           }
         }
 
-        if (F_status_is_error_not(setting->status)) {
+        if (F_status_is_error_not(setting->state.status)) {
           if (setting->mode & utf8_mode_to_bytesequence_e) {
             if (setting->flag & utf8_main_flag_header_e) {
               fll_print_dynamic_raw(f_string_eol_s, main->output.to);
@@ -133,7 +129,7 @@ extern "C" {
           }
         }
 
-        if (F_status_is_error(setting->status) && F_status_set_fine(setting->status) != F_utf_fragment && F_status_set_fine(setting->status) != F_complete_not_utf) {
+        if (F_status_is_error(setting->state.status) && F_status_set_fine(setting->state.status) != F_utf_fragment && F_status_set_fine(setting->state.status) != F_complete_not_utf) {
           utf8_print_error_file(setting, main->error, setting->mode & utf8_mode_from_bytesequence_e ? macro_utf8_f(utf8_process_file_bytesequence) : macro_utf8_f(utf8_process_file_codepoint), setting->path_files_from.array[i], f_file_operation_process_s, fll_error_file_type_file_e);
 
           break;
@@ -142,12 +138,12 @@ extern "C" {
     }
 
     // Process remaining parameters.
-    if (F_status_is_error_not(setting->status) && setting->status != F_interrupt && setting->remaining.used) {
-      for (f_array_length_t i = 0; F_status_is_error_not(setting->status) && i < setting->remaining.used; ++i) {
+    if (F_status_is_error_not(setting->state.status) && setting->remaining.used) {
+      for (f_array_length_t i = 0; F_status_is_error_not(setting->state.status) && i < setting->remaining.used; ++i) {
 
         if (!((++main->signal_check) % utf8_signal_check_d)) {
           if (fll_program_standard_signal_received(main)) {
-            setting->status = F_status_set_error(F_interrupt);
+            setting->state.status = F_status_set_error(F_interrupt);
 
             break;
           }
@@ -157,31 +153,31 @@ extern "C" {
 
         utf8_print_section_header_parameter(setting, main->output, main->parameters.remaining.array[i]);
 
-        setting->status = utf8_process_text(main, setting, main->parameters.arguments.array[main->parameters.remaining.array[i]]);
+        utf8_process_text(main, setting, main->parameters.arguments.array[main->parameters.remaining.array[i]]);
 
         if (setting->flag & utf8_main_flag_verify_e) {
-          if (setting->status == F_false) {
+          if (setting->state.status == F_false) {
             valid = F_false;
           }
         }
       } // for
     }
 
-    if (F_status_is_error(setting->status)) {
+    if (F_status_is_error(setting->state.status)) {
+      if (F_status_set_fine(setting->state.status) == F_interrupt) return;
+
       utf8_print_line_last_locked(setting, main->error);
 
       return;
     }
 
-    if (setting->status == F_interrupt) return;
-
     utf8_print_line_last_locked(setting, main->message);
 
     if (setting->flag & utf8_main_flag_verify_e) {
-      setting->status = valid;
+      setting->state.status = valid;
     }
     else {
-      setting->status = F_none;
+      setting->state.status = F_none;
     }
   }
 #endif // _di_utf8_main_
