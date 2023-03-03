@@ -35,7 +35,7 @@ extern "C" {
         if (setting->state.status == F_failure || setting->state.status == F_utf_not || setting->state.status == F_complete_not_utf || setting->state.status == F_utf_fragment || setting->state.status == F_valid_not) {
           valid_not = F_true;
 
-          utf8_print_character_invalid(setting, main->output, unicode);
+          utf8_print_data_character_invalid(setting, main->output, unicode);
         }
         else {
           setting->state.status = F_status_set_error(setting->state.status);
@@ -47,7 +47,7 @@ extern "C" {
       }
       else if (!(setting->flag & utf8_main_flag_verify_e)) {
         if (setting->mode & utf8_mode_to_codepoint_e) {
-          utf8_print_codepoint(setting, main->output, codepoint);
+          utf8_print_data_codepoint(setting, main->output, codepoint);
         }
         else {
           f_char_t byte[4] = { 0, 0, 0, 0 };
@@ -60,19 +60,19 @@ extern "C" {
               utf8_print_error_encode(setting, main->error, codepoint);
             }
             else {
-              utf8_print_combining_or_width_invalid(setting, main->output);
+              utf8_print_data_combining_or_width_invalid(setting, main->output);
             }
           }
           else if (setting->mode & utf8_mode_to_bytesequence_e) {
             setting->state.status = F_none;
             unicode.used = macro_f_utf_byte_width(unicode.string[0]);
 
-            utf8_print_bytesequence(setting, main->output, unicode);
+            utf8_print_data_bytesequence(setting, main->output, unicode);
           }
           else {
             setting->state.status = F_none;
 
-            utf8_print_combining_or_width(setting, main->output, unicode);
+            utf8_print_data_combining_or_width(setting, main->output, unicode);
           }
         }
       }
@@ -80,7 +80,7 @@ extern "C" {
     else if (*mode == utf8_codepoint_mode_bad_end_e) {
       setting->state.status = F_none;
 
-      utf8_print_character_invalid(setting, main->output, unicode);
+      utf8_print_data_character_invalid(setting, main->output, unicode);
     }
     else {
       setting->state.status = F_none;
@@ -134,7 +134,7 @@ extern "C" {
         if (setting->state.status == F_number || setting->state.status == F_utf_not || setting->state.status == F_complete_not_utf || setting->state.status == F_utf_fragment || setting->state.status == F_number_decimal || setting->state.status == F_number_negative || setting->state.status == F_number_positive || setting->state.status == F_number_overflow) {
           valid_not = F_true;
 
-          utf8_print_character_invalid(setting, main->output, hex);
+          utf8_print_data_character_invalid(setting, main->output, hex);
         }
         else {
           setting->state.status = F_status_set_error(setting->state.status);
@@ -154,20 +154,20 @@ extern "C" {
         }
 
         if (setting->mode & utf8_mode_to_bytesequence_e) {
-          utf8_print_raw_bytesequence(setting, main->output, raw, width);
+          utf8_print_data_raw_bytesequence(setting, main->output, raw, width);
         }
         else if (setting->mode & utf8_mode_to_codepoint_e) {
-          utf8_print_raw_codepoint(setting, main->output, setting->text);
+          utf8_print_data_raw_codepoint(setting, main->output, setting->text);
         }
         else {
-          utf8_print_raw_combining_or_width(setting, main->output, width);
+          utf8_print_data_raw_combining_or_width(setting, main->output, width);
         }
       }
     }
     else if (*mode == utf8_codepoint_mode_bad_end_e) {
       setting->state.status = F_none;
 
-      utf8_print_character_invalid(setting, main->output, hex);
+      utf8_print_data_character_invalid(setting, main->output, hex);
     }
     else {
       setting->state.status = F_none;

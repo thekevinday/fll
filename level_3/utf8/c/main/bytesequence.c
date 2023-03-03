@@ -26,7 +26,7 @@ extern "C" {
       if (setting->state.status == F_failure || setting->state.status == F_utf_not || setting->state.status == F_complete_not_utf || setting->state.status == F_utf_fragment || setting->state.status == F_valid_not) {
         valid_not = F_true;
 
-        utf8_print_character_invalid(setting, main->output, sequence);
+        utf8_print_data_character_invalid(setting, main->output, sequence);
       }
       else {
         setting->state.status = F_status_set_error(setting->state.status);
@@ -38,13 +38,13 @@ extern "C" {
     }
     else if (!(setting->flag & utf8_main_flag_verify_e)) {
       if (setting->mode & utf8_mode_to_bytesequence_e) {
-        utf8_print_bytesequence(setting, main->output, sequence);
+        utf8_print_data_bytesequence(setting, main->output, sequence);
       }
       else if (setting->mode & utf8_mode_to_codepoint_e) {
-        utf8_print_codepoint(setting, main->output, codepoint);
+        utf8_print_data_codepoint(setting, main->output, codepoint);
       }
       else {
-        utf8_print_combining_or_width(setting, main->output, sequence);
+        utf8_print_data_combining_or_width(setting, main->output, sequence);
       }
     }
 

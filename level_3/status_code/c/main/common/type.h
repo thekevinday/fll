@@ -36,26 +36,28 @@ extern "C" {
  * When number mode is not specified, then mode is "string" mode (there is no flag for "string" mode).
  *
  * status_code_main_flag_*_e:
- *   - none:      No flags set.
- *   - copyright: Print copyright.
- *   - error:     Check if status is "error".
- *   - fine:      Check if status is "fine".
- *   - help:      Print help.
- *   - number:    Operate in number mode.
- *   - version:   Print version.
- *   - warning:   Check if status is "warning".
+ *   - none:        No flags set.
+ *   - copyright:   Print copyright.
+ *   - error:       Check if status is "error".
+ *   - fine:        Check if status is "fine".
+ *   - help:        Print help.
+ *   - number:      Operate in number mode.
+ *   - print_first: When set, the first character printing logic is to be processed (this is usually automatic).
+ *   - version:     Print version.
+ *   - warning:     Check if status is "warning".
  */
 #ifndef _di_status_code_main_flag_e_
   enum {
-    status_code_main_flag_none_e      = 0x0,
-    status_code_main_flag_copyright_e = 0x1,
-    status_code_main_flag_error_e     = 0x2,
-    status_code_main_flag_fine_e      = 0x4,
-    status_code_main_flag_help_e      = 0x8,
-    status_code_main_flag_number_e    = 0x10,
-    status_code_main_flag_version_e   = 0x20,
-    status_code_main_flag_warning_e   = 0x40,
-  };
+    status_code_main_flag_none_e        = 0x0,
+    status_code_main_flag_copyright_e   = 0x1,
+    status_code_main_flag_error_e       = 0x2,
+    status_code_main_flag_fine_e        = 0x4,
+    status_code_main_flag_help_e        = 0x8,
+    status_code_main_flag_number_e      = 0x10,
+    status_code_main_flag_print_first_e = 0x20,
+    status_code_main_flag_version_e     = 0x40,
+    status_code_main_flag_warning_e     = 0x80,
+  }; // enum
 #endif // _di_status_code_main_flag_e_
 
 /**
@@ -139,12 +141,12 @@ extern "C" {
 
     f_status_t (*status_string_from)(const f_string_static_t name, f_status_t * const code);
     f_status_t (*status_string_to)(const f_status_t code, f_string_static_t * const name);
-    void (*status_string_help_detail)(void * const setting, const fl_print_t print);
+    f_status_t (*status_string_help_detail)(void * const setting, const fl_print_t print);
   } status_code_setting_t;
 
   #define status_code_setting_t_initialize \
     { \
-      status_code_main_flag_none_e, \
+      status_code_main_flag_print_first_e, \
       f_state_t_initialize, \
       f_string_static_t_initialize, \
       f_string_static_t_initialize, \

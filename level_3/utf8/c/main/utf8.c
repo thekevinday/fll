@@ -10,7 +10,7 @@ extern "C" {
     if (!main || !setting) return;
 
     if (F_status_is_error(setting->state.status)) {
-      utf8_print_line_last_locked(setting, main->error);
+      utf8_print_line_last(setting, main->message);
 
       return;
     }
@@ -35,16 +35,14 @@ extern "C" {
       return;
     }
 
-    if (!(setting->flag & utf8_main_flag_header_e)) {
-      utf8_print_line_first_locked(setting, main->message);
-    }
+    utf8_print_line_first(setting, main->message);
 
     f_status_t valid = F_true;
 
     if (main->pipe & fll_program_data_pipe_input_e) {
       const f_file_t file = macro_f_file_t_initialize(F_type_input_d, F_type_descriptor_input_d, F_file_flag_read_only_d, 32768, F_file_default_write_size_d);
 
-      utf8_print_section_header_pipe(setting, main->output);
+      utf8_print_data_section_header_pipe(setting, main->output);
 
       if (setting->mode & utf8_mode_from_bytesequence_e) {
         utf8_process_file_bytesequence(main, setting, file);
@@ -85,7 +83,7 @@ extern "C" {
           main->signal_check = 0;
         }
 
-        utf8_print_section_header_file(setting, main->output, setting->path_files_from.array[i], i);
+        utf8_print_data_section_header_file(setting, main->output, setting->path_files_from.array[i], i);
 
         setting->state.status = f_file_stream_open(setting->path_files_from.array[i], f_string_empty_s, &file);
 
@@ -151,7 +149,7 @@ extern "C" {
           main->signal_check = 0;
         }
 
-        utf8_print_section_header_parameter(setting, main->output, main->parameters.remaining.array[i]);
+        utf8_print_data_section_header_parameter(setting, main->output, i);
 
         utf8_process_text(main, setting, main->parameters.arguments.array[main->parameters.remaining.array[i]]);
 
@@ -163,15 +161,17 @@ extern "C" {
       } // for
     }
 
-    if (F_status_is_error(setting->state.status)) {
-      if (F_status_set_fine(setting->state.status) == F_interrupt) return;
+    if (F_status_set_fine(setting->state.status) == F_interrupt) return;
 
-      utf8_print_line_last_locked(setting, main->error);
-
-      return;
+    // Two lines are printed because the normal final end of line is never printed by design.
+    // If this is an error or the header flag is set, then the normal end of line is printed by design so do not print this second new line.
+    if (F_status_is_error_not(setting->state.status) && main->message.verbosity > f_console_verbosity_error_e && !(setting->flag & (utf8_main_flag_header_e | utf8_main_flag_separate_e))) {
+      fll_print_dynamic_raw(f_string_eol_s, main->message.to);
     }
 
-    utf8_print_line_last_locked(setting, main->message);
+    utf8_print_line_last(setting, main->message);
+
+    if (F_status_is_error(setting->state.status)) return;
 
     if (setting->flag & utf8_main_flag_verify_e) {
       setting->state.status = valid;

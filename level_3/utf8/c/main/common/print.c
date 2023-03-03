@@ -1,4 +1,4 @@
-#include "utf8.h"
+#include "../utf8.h"
 
 #ifdef __cplusplus
 extern "C" {

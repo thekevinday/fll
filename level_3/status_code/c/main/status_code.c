@@ -1,5 +1,4 @@
 #include "status_code.h"
-#include "private-status_code.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -16,13 +15,13 @@ extern "C" {
       return;
     }
 
-    if (!setting->state.status_string_from || !setting->state.status_string_to) {
+    if (!setting->status_string_from || !setting->status_string_to) {
 
-      if (!setting->state.status_string_from) {
+      if (!setting->status_string_from) {
         status_code_print_error_invalid_callback(setting, main->error, macro_status_code_f(status_string_from));
       }
 
-      if (!setting->state.status_string_to) {
+      if (!setting->status_string_to) {
         status_code_print_error_invalid_callback(setting, main->error, macro_status_code_f(status_string_to));
       }
 
@@ -51,7 +50,7 @@ extern "C" {
       return;
     }
 
-    f_status_t status2 = F_none;
+    f_status_t status = F_none;
 
     if (setting->flag & status_code_main_flag_number_e) {
       if (main->pipe & fll_program_data_pipe_input_e) {
@@ -77,17 +76,19 @@ extern "C" {
             main->signal_check = 0;
           }
 
-          status2 = status_code_process_number(main, setting, main->parameters.arguments.array[main->parameters.remaining.array[i]]);
+          status = setting->state.status;
 
-          if (F_status_is_error(status2) && setting->state.status == F_none) {
-            setting->state.status = status2;
+          status_code_process_number(main, setting, main->parameters.arguments.array[main->parameters.remaining.array[i]]);
+
+          if (F_status_is_error_not(setting->state.status)) {
+            setting->state.status = status;
           }
         } // for
 
         f_file_stream_unlock(main->output.to);
       }
     }
-    else if (setting->flag & status_code_main_flag_error_e || setting->flag & status_code_main_flag_warning_e || setting->flag & status_code_main_flag_fine_e) {
+    else if ((setting->flag & status_code_main_flag_error_e) || (setting->flag & status_code_main_flag_warning_e) || (setting->flag & status_code_main_flag_fine_e)) {
       if (main->pipe & fll_program_data_pipe_input_e) {
         // @todo call status_code_process_check() here for all main from pipe that is space separated.
       }
@@ -111,10 +112,12 @@ extern "C" {
             main->signal_check = 0;
           }
 
-          status2 = status_code_process_check(main, setting, main->parameters.arguments.array[main->parameters.remaining.array[i]]);
+          status = setting->state.status;
 
-          if (F_status_is_error(status2) && setting->state.status == F_none) {
-            setting->state.status = status2;
+          status_code_process_check(main, setting, main->parameters.arguments.array[main->parameters.remaining.array[i]]);
+
+          if (F_status_is_error_not(setting->state.status)) {
+            setting->state.status = status;
           }
         } // for
 
@@ -145,10 +148,12 @@ extern "C" {
             main->signal_check = 0;
           }
 
-          status2 = status_code_process_normal(main, setting, main->parameters.arguments.array[main->parameters.remaining.array[i]]);
+          status = setting->state.status;
 
-          if (F_status_is_error(status2) && setting->state.status == F_none) {
-            setting->state.status = status2;
+          status_code_process_normal(main, setting, main->parameters.arguments.array[main->parameters.remaining.array[i]]);
+
+          if (F_status_is_error_not(setting->state.status)) {
+            setting->state.status = status;
           }
         } // for
 

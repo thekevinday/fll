@@ -34,7 +34,7 @@ extern "C" {
  *     Errors (with error bit) from: f_utf_unicode_to()
  */
 #ifndef _di_utf8_convert_bytesequence_
-  extern void utf8_convert_bytesequence(fll_program_data_t * const main, utf8_setting_t * const setting, const f_string_static_t sequence) F_attribute_visibility_internal_d;
+  extern void utf8_convert_bytesequence(fll_program_data_t * const main, utf8_setting_t * const setting, const f_string_static_t sequence);
 #endif // _di_utf8_convert_bytesequence_
 
 /**
@@ -61,7 +61,7 @@ extern "C" {
  * @see utf8_detect_codepoint()
  */
 #ifndef _di_utf8_process_file_bytesequence_
-  extern void utf8_process_file_bytesequence(fll_program_data_t * const main, utf8_setting_t * const setting, const f_file_t file) F_attribute_visibility_internal_d;
+  extern void utf8_process_file_bytesequence(fll_program_data_t * const main, utf8_setting_t * const setting, const f_file_t file);
 #endif // _di_utf8_process_file_bytesequence_
 
 #ifdef __cplusplus

@@ -26,10 +26,18 @@ extern "C" {
  * @param print
  *   The output structure to print to.
  *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if setting is NULL.
+ *
+ * @see fl_print_format()
+ *
  * @see status_code_print_help()
  */
 #ifndef _di_status_code_fss_print_help_detail_
-  extern void status_code_fss_print_help_detail(void * const setting, const fl_print_t print);
+  extern f_status_t status_code_fss_print_help_detail(void * const setting, const fl_print_t print);
 #endif // _di_status_code_fss_print_help_detail_
 
 #ifdef __cplusplus

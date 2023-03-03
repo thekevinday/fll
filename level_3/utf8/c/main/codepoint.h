@@ -37,7 +37,7 @@ extern "C" {
  * @see f_utf_unicode_to()
  */
 #ifndef _di_utf8_convert_codepoint_
-  extern void utf8_convert_codepoint(fll_program_data_t * const main, utf8_setting_t * const setting, const f_string_static_t unicode, uint8_t *mode) F_attribute_visibility_internal_d;
+  extern void utf8_convert_codepoint(fll_program_data_t * const main, utf8_setting_t * const setting, const f_string_static_t unicode, uint8_t *mode);
 #endif // _di_utf8_convert_codepoint_
 
 /**
@@ -65,7 +65,7 @@ extern "C" {
  * @see fl_conversion_dynamic_to_unsigned_detect()
  */
 #ifndef _di_utf8_convert_raw_
-  extern void utf8_convert_raw(fll_program_data_t * const main, utf8_setting_t * const setting, const f_string_static_t hex, uint8_t *mode) F_attribute_visibility_internal_d;
+  extern void utf8_convert_raw(fll_program_data_t * const main, utf8_setting_t * const setting, const f_string_static_t hex, uint8_t *mode);
 #endif // _di_utf8_convert_raw_
 
 /**
@@ -88,7 +88,7 @@ extern "C" {
  *     Errors (with error bit) from: f_utf_is_whitespace()
  */
 #ifndef _di_utf8_detect_codepoint_
-  extern void utf8_detect_codepoint(fll_program_data_t * const main, utf8_setting_t * const setting, const f_string_static_t unicode, uint8_t *mode) F_attribute_visibility_internal_d;
+  extern void utf8_detect_codepoint(fll_program_data_t * const main, utf8_setting_t * const setting, const f_string_static_t unicode, uint8_t *mode);
 #endif // _di_utf8_detect_codepoint_
 
 /**
@@ -115,7 +115,7 @@ extern "C" {
  * @see utf8_detect_codepoint()
  */
 #ifndef _di_utf8_process_file_codepoint_
-  extern void utf8_process_file_codepoint(fll_program_data_t * const main, utf8_setting_t * const setting, const f_file_t file) F_attribute_visibility_internal_d;
+  extern void utf8_process_file_codepoint(fll_program_data_t * const main, utf8_setting_t * const setting, const f_file_t file);
 #endif // _di_utf8_process_file_codepoint_
 
 #ifdef __cplusplus

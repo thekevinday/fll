@@ -7,7 +7,9 @@ extern "C" {
 #endif
 
 #ifndef _di_status_code_fss_print_help_detail_
-  void status_code_fss_print_help_detail(void * const setting, const fl_print_t print) {
+  f_status_t status_code_fss_print_help_detail(void * const setting, const fl_print_t print) {
+
+    if (!setting) return F_status_set_error(F_output_not);
 
     fl_print_format("  The FLL programs use a %[16-bit unsigned integer%] to represent the return status of programs and functions.%r%r", print.to, print.set->notable, print.set->notable, f_string_eol_s, f_string_eol_s);
 
@@ -24,6 +26,8 @@ extern "C" {
 
     fl_print_format("  Each code will be printed on its own line.%r", print.to, f_string_eol_s);
     fl_print_format("  Errors regarding each code may be printed on its own line.%r", print.to, f_string_eol_s);
+
+    return F_none;
   }
 #endif // _di_status_code_fss_print_help_detail_
 

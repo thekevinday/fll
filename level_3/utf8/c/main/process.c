@@ -47,7 +47,6 @@ extern "C" {
         utf8_detect_codepoint(main, setting, text, &mode_codepoint);
 
         if (F_status_is_error(setting->state.status)) {
-          utf8_print_line_first_locked(setting, main->error);
           fll_error_print(main->error, F_status_set_fine(setting->state.status), macro_utf8_f(utf8_detect_codepoint), fll_error_file_flag_fallback_e);
 
           break;

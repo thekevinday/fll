@@ -69,6 +69,7 @@ extern "C" {
  *   - header:         Enable printing of headers.
  *   - help:           Print help.
  *   - pipe:           Use the input pipe.
+ *   - print_first:    When set, the first character printing logic is to be processed (this is usually automatic).
  *   - separate:       Enable printing of separators.
  *   - strip_invalid:  Using strip invalid character mode.
  *   - verify:         Using verify mode.
@@ -83,10 +84,11 @@ extern "C" {
     utf8_main_flag_header_e        = 0x8,
     utf8_main_flag_help_e          = 0x10,
     utf8_main_flag_pipe_e          = 0x20,
-    utf8_main_flag_separate_e      = 0x40,
-    utf8_main_flag_strip_invalid_e = 0x80,
-    utf8_main_flag_verify_e        = 0x100,
-    utf8_main_flag_version_e       = 0x200,
+    utf8_main_flag_print_first_e   = 0x40,
+    utf8_main_flag_separate_e      = 0x80,
+    utf8_main_flag_strip_invalid_e = 0x100,
+    utf8_main_flag_verify_e        = 0x200,
+    utf8_main_flag_version_e       = 0x400,
   }; // enum
 #endif // _di_utf8_main_flag_e_
 
@@ -246,7 +248,7 @@ extern "C" {
   #define utf8_setting_t_initialize \
     { \
       utf8_mode_from_bytesequence_e | utf8_mode_to_codepoint_e, \
-      utf8_main_flag_none_e, \
+      utf8_main_flag_print_first_e, \
       f_state_t_initialize, \
       f_color_set_t_initialize, \
       f_color_set_t_initialize, \
