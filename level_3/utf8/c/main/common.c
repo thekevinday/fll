@@ -25,7 +25,11 @@ extern "C" {
 
     if (!main || !setting) return;
 
+    setting->state.step_small = utf8_allocation_console_d;
+
     f_console_parameter_process(arguments, &main->parameters, &setting->state, 0);
+
+    setting->state.step_small = utf8_allocation_small_d;
 
     if (F_status_is_error(setting->state.status)) {
       utf8_print_line_first(setting, main->message);
@@ -190,6 +194,7 @@ extern "C" {
       if (main->parameters.array[utf8_parameter_to_file_e].values.used > 1) {
         setting->state.status = F_status_set_error(F_parameter);
 
+        utf8_print_line_first(setting, main->message);
         utf8_print_error_parameter_file_to_too_many(setting, main->error);
 
         return;

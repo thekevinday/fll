@@ -11,7 +11,6 @@ extern "C" {
 
     f_file_stream_lock(print.to);
 
-    fss_write_print_line_first_unlocked(setting, print);
     fl_print_format("%[%QThe payload may only be specified last.%]%r", print.to, print.set->error, print.prefix, print.set->error, f_string_eol_s);
 
     f_file_stream_unlock(print.to);
@@ -22,6 +21,8 @@ extern "C" {
 
 #ifndef _di_fss_write_payload_print_help_
   f_status_t fss_write_payload_print_help(fss_write_setting_t * const setting, const fl_print_t print) {
+
+    if (!setting) return F_status_set_error(F_output_not);
 
     f_file_stream_lock(print.to);
 

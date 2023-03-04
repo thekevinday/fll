@@ -53,7 +53,7 @@ extern "C" {
     while (range->start <= range->stop && range->start < buffer.used) {
 
       if (state->interrupt) {
-        state->interrupt((void *) &state, 0);
+        state->interrupt((void *) state, 0);
         if (F_status_set_fine(state->status) == F_interrupt) break;
       }
 
@@ -75,7 +75,7 @@ extern "C" {
         for (++range->start; range->start <= range->stop && range->start < buffer.used; ++range->start) {
 
           if (state->interrupt) {
-            state->interrupt((void *) &state, 0);
+            state->interrupt((void *) state, 0);
             if (F_status_set_fine(state->status) == F_interrupt) break;
           }
 
@@ -96,7 +96,7 @@ extern "C" {
           while (range->start <= range->stop && range->start < buffer.used) {
 
             if (state->interrupt) {
-              state->interrupt((void *) &state, 0);
+              state->interrupt((void *) state, 0);
               if (F_status_set_fine(state->status) == F_interrupt) break;
             }
 
@@ -142,7 +142,7 @@ extern "C" {
         while (range->start <= range->stop && range->start < buffer.used) {
 
           if (state->interrupt) {
-            state->interrupt((void *) &state, 0);
+            state->interrupt((void *) state, 0);
             if (F_status_set_fine(state->status) == F_interrupt) break;
           }
 
@@ -285,7 +285,7 @@ extern "C" {
     while (range->start <= range->stop && range->start < content.used) {
 
       if (state->interrupt) {
-        state->interrupt((void *) &state, 0);
+        state->interrupt((void *) state, 0);
         if (F_status_set_fine(state->status) == F_interrupt) break;
       }
 
@@ -311,7 +311,7 @@ extern "C" {
         for (++range->start; range->start <= range->stop && range->start < content.used; ++range->start) {
 
           if (state->interrupt) {
-            state->interrupt((void *) &state, 0);
+            state->interrupt((void *) state, 0);
             if (F_status_set_fine(state->status) == F_interrupt) {
               destination->used = destination_used;
 
@@ -615,7 +615,7 @@ extern "C" {
     while (range->start <= range->stop && range->start < buffer.used && buffer.string[range->start] != f_fss_eol_s.string[0]) {
 
       if (state->interrupt) {
-        state->interrupt((void *) &state, 0);
+        state->interrupt((void *) state, 0);
         if (F_status_set_fine(state->status) == F_interrupt) break;
       }
 
@@ -629,7 +629,7 @@ extern "C" {
         while (range->start <= range->stop && range->start < buffer.used && (buffer.string[range->start] == f_fss_placeholder_s.string[0] || buffer.string[range->start] == f_fss_slash_s.string[0])) {
 
           if (state->interrupt) {
-            state->interrupt((void *) &state, 0);
+            state->interrupt((void *) state, 0);
             if (F_status_set_fine(state->status) == F_interrupt) break;
           }
 
@@ -663,7 +663,7 @@ extern "C" {
           while (range->start <= range->stop && range->start < buffer.used) {
 
             if (state->interrupt) {
-              state->interrupt((void *) &state, 0);
+              state->interrupt((void *) state, 0);
               if (F_status_set_fine(state->status) == F_interrupt) break;
             }
 
@@ -758,7 +758,7 @@ extern "C" {
         while (range->start <= range->stop && range->start < buffer.used) {
 
           if (state->interrupt) {
-            state->interrupt((void *) &state, 0);
+            state->interrupt((void *) state, 0);
             if (F_status_set_fine(state->status) == F_interrupt) break;
           }
 
@@ -824,7 +824,7 @@ extern "C" {
     while (range->start <= range->stop && range->start < buffer.used && buffer.string[range->start] != f_fss_eol_s.string[0]) {
 
       if (state->interrupt) {
-        state->interrupt((void *) &state, 0);
+        state->interrupt((void *) state, 0);
         if (F_status_set_fine(state->status) == F_interrupt) break;
       }
 
@@ -925,7 +925,7 @@ extern "C" {
     while (range->start <= range->stop && range->start < object.used) {
 
       if (state->interrupt) {
-        state->interrupt((void *) &state, 0);
+        state->interrupt((void *) state, 0);
         if (F_status_set_fine(state->status) == F_interrupt) break;
       }
 
@@ -989,7 +989,7 @@ extern "C" {
     while (range->start <= range->stop && range->start < object.used) {
 
       if (state->interrupt) {
-        state->interrupt((void *) &state, 0);
+        state->interrupt((void *) state, 0);
         if (F_status_set_fine(state->status) == F_interrupt) break;
       }
 
@@ -999,7 +999,7 @@ extern "C" {
         for (++range->start; range->start <= range->stop && range->start < object.used; ++range->start) {
 
           if (state->interrupt) {
-            state->interrupt((void *) &state, 0);
+            state->interrupt((void *) state, 0);
 
             if (F_status_set_fine(state->status) == F_interrupt) {
               destination->used = destination_used;

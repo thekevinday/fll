@@ -18,9 +18,18 @@ extern "C" {
 
 /**
  * The program defines.
+ *
+ * iki_read_*:
+ *   - allocation_console: An allocation step used for small buffers specifically for console parameter.
+ *   - allocation_large:   An allocation step used for buffers that are anticipated to have large buffers.
+ *   - allocation_small:   An allocation step used for buffers that are anticipated to have small buffers.
+ *   - signal_check:       Number of iterations before performing signal check in non-threaded signal handling.
  */
 #ifndef _di_iki_read_d_
-  #define iki_read_signal_check_d 20000
+  #define iki_read_allocation_console_d 4
+  #define iki_read_allocation_large_d   256
+  #define iki_read_allocation_small_d   16
+  #define iki_read_signal_check_d       20000
 #endif // _di_iki_read_d_
 
 /**
@@ -191,7 +200,7 @@ extern "C" {
   #define iki_read_setting_t_initialize \
     { \
       iki_read_main_flag_none_e, \
-      f_state_t_initialize, \
+      macro_f_state_t_initialize_1(iki_read_allocation_large_d, iki_read_allocation_small_d, F_none, 0, 0, 0, 0, 0, 0), \
       0, \
       0, \
       f_string_static_t_initialize, \

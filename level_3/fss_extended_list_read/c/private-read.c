@@ -245,7 +245,7 @@ extern "C" {
 #ifndef _di_fss_extended_list_read_load_
   f_status_t fss_extended_list_read_load(fll_program_data_t * const main, fss_extended_list_read_data_t * const data) {
 
-    f_state_t state = macro_f_state_t_initialize(fss_extended_list_read_common_allocation_large_d, fss_extended_list_read_common_allocation_small_d, 0, 0, &fll_program_standard_signal_state, 0, (void *) main, 0);
+    f_state_t state = macro_f_state_t_initialize_1(fss_extended_list_read_common_allocation_large_d, fss_extended_list_read_common_allocation_small_d, 0, 0, &fll_program_standard_signal_handle, 0, (void *) main, 0);
     f_string_range_t input = macro_f_string_range_t_initialize2(data->buffer.used);
 
     data->delimits_object.used = 0;

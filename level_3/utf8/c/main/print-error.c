@@ -143,8 +143,6 @@ extern "C" {
     if (!setting) return F_status_set_error(F_output_not);
     if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
 
-    utf8_print_line_first(setting, print);
-
     fll_print_format("%[%QToo many '%r' files specified, there may only be one '%r' file.%]%r", print.to, print.set->error, print.prefix, utf8_string_to_s, utf8_string_to_s, print.set->error, f_string_eol_s);
 
     return F_none;

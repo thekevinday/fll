@@ -17,7 +17,12 @@ extern "C" {
 
     f_status_t status = F_none;
 
+    setting->state.step_small = controller_allocation_console_d;
+
     status = f_console_parameter_process(arguments, &main->parameters, &setting->state, 0);
+
+    setting->state.step_small = controller_allocation_small_d;
+
     if (F_status_is_error(status)) return;
 
     {

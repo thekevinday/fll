@@ -18,33 +18,44 @@ extern "C" {
 
 /**
  * The program defines.
+ *
+ * iki_write_*:
+ *   - allocation_console: An allocation step used for small buffers specifically for console parameter.
+ *   - allocation_large:   An allocation step used for buffers that are anticipated to have large buffers.
+ *   - allocation_small:   An allocation step used for buffers that are anticipated to have small buffers.
+ *   - signal_check:       Number of iterations before performing signal check in non-threaded signal handling.
  */
 #ifndef _di_iki_write_d_
-  #define iki_write_signal_check_d 20000
+  #define iki_write_allocation_console_d 4
+  #define iki_write_allocation_large_d   256
+  #define iki_write_allocation_small_d   16
+  #define iki_write_signal_check_d       20000
 #endif // _di_iki_write_d_
 
 /**
  * Flags passed to the main function or program.
  *
  * iki_write_main_flag_*_e:
- *   - none:       No flags set.
- *   - content:    The Content being written is specified.
- *   - copyright:  Print copyright.
- *   - file_to:    Using a specified destination file.
- *   - help:       Print help.
- *   - object:     The Object being written is specified.
- *   - version:    Print version.
+ *   - none:        No flags set.
+ *   - content:     The Content being written is specified.
+ *   - copyright:   Print copyright.
+ *   - file_to:     Using a specified destination file.
+ *   - help:        Print help.
+ *   - object:      The Object being written is specified.
+ *   - print_first: When set, the first character printing logic is to be processed (this is usually automatic).
+ *   - version:     Print version.
  */
 #ifndef _di_iki_write_main_flag_e_
   enum {
-    iki_write_main_flag_none_e      = 0x0,
-    iki_write_main_flag_content_e   = 0x1,
-    iki_write_main_flag_copyright_e = 0x2,
-    iki_write_main_flag_file_to_e   = 0x4,
-    iki_write_main_flag_help_e      = 0x8,
-    iki_write_main_flag_object_e    = 0x10,
-    iki_write_main_flag_version_e   = 0x20,
-  };
+    iki_write_main_flag_none_e        = 0x0,
+    iki_write_main_flag_content_e     = 0x1,
+    iki_write_main_flag_copyright_e   = 0x2,
+    iki_write_main_flag_file_to_e     = 0x4,
+    iki_write_main_flag_help_e        = 0x8,
+    iki_write_main_flag_object_e      = 0x10,
+    iki_write_main_flag_print_first_e = 0x20,
+    iki_write_main_flag_version_e     = 0x40,
+  }; // enum
 #endif // _di_iki_write_main_flag_e_
 
 /**
@@ -146,7 +157,7 @@ extern "C" {
 
   #define iki_write_setting_t_initialize \
     { \
-      iki_write_main_flag_none_e, \
+      iki_write_main_flag_print_first_e, \
       f_state_t_initialize, \
       f_string_static_t_initialize, \
       f_string_static_t_initialize, \

@@ -15,7 +15,7 @@ extern "C" {
   }
 #endif // !defined(_di_fll_program_print_help_option_) || !defined(_di_fll_program_print_help_option_standard_)
 
-#if !defined(_di_fll_program_standard_signal_received_) || !defined(_di_fll_program_standard_signal_state_)
+#if !defined(_di_fll_program_standard_signal_received_) || !defined(_di_fll_program_standard_signal_handle_)
   uint32_t private_fll_program_standard_signal_received(fll_program_data_t * const main) {
 
     if (!main || main->signal.id == -1) return 0;
@@ -40,7 +40,7 @@ extern "C" {
 
     return 0;
   }
-#endif // !defined(_di_fll_program_standard_signal_received_) || !defined(_di_fll_program_standard_signal_state_)
+#endif // !defined(_di_fll_program_standard_signal_received_) || !defined(_di_fll_program_standard_signal_handle_)
 
 #if !defined(_di_fll_program_parameter_process_context_) || !defined(_di_fll_program_parameter_process_empty_)
   void private_fll_program_parameter_process_empty(f_color_context_t * const context, f_color_set_t * const sets[]) {

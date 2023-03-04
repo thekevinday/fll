@@ -78,7 +78,7 @@ extern "C" {
  *   Designates the how and where to print.
  * @param status
  *   The status to use.
- *   This is provided, ignoring data.setting->status, for thread-safety reasons.
+ *   This is provided, ignoring setting->state.status, for thread-safety reasons.
  * @param function
  *   The name of the function where the error happened.
  * @param operation

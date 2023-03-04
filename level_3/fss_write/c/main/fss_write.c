@@ -10,14 +10,14 @@ extern "C" {
     if (!main || !setting) return;
 
     if (F_status_is_error(setting->state.status)) {
-      fss_write_print_line_last_locked(setting, main->error);
+      fss_write_print_line_last(setting, main->error);
 
       return;
     }
 
     setting->state.status = F_none;
 
-    if (setting->flag & fss_write_flag_help_e) {
+    if (setting->flag & fss_write_main_flag_help_e) {
       if (setting->process_help) {
         setting->process_help(main, (void *) setting);
       }
@@ -25,13 +25,13 @@ extern "C" {
       return;
     }
 
-    if (setting->flag & fss_write_flag_version_e) {
+    if (setting->flag & fss_write_main_flag_version_e) {
       fll_program_print_version(main->message, (setting->line_first.used ? 0x1 : 0x0) | (setting->line_last.used ? 0x2 : 0x0), fss_write_program_version_s);
 
       return;
     }
 
-    if (setting->flag & fss_write_flag_copyright_e) {
+    if (setting->flag & fss_write_main_flag_copyright_e) {
       fll_program_print_copyright(main->message, (setting->line_first.used ? 0x1 : 0x0) | (setting->line_last.used ? 0x2 : 0x0));
 
       return;
@@ -46,15 +46,11 @@ extern "C" {
     }
 
     if (F_status_is_error_not(setting->state.status)) {
-      if (setting->flag & (fss_write_flag_object_e | fss_write_flag_content_e | fss_write_flag_object_open_e | fss_write_flag_content_next_e | fss_write_flag_content_end_e)) {
+      if (setting->flag & (fss_write_main_flag_object_e | fss_write_main_flag_content_e | fss_write_main_flag_object_open_e | fss_write_main_flag_content_next_e | fss_write_main_flag_content_end_e)) {
         if (setting->process_normal) {
           setting->process_normal(main, (void *) setting);
         }
       }
-    }
-
-    if (F_status_is_error(setting->state.status)) {
-      fss_write_print_line_last_locked(setting, F_status_set_fine(setting->state.status) == F_interrupt ? main->message : main->error);
     }
   }
 #endif // _di_fss_write_main_
@@ -62,10 +58,12 @@ extern "C" {
 #ifndef _di_fss_write_process_normal_
   void fss_write_process_normal(fll_program_data_t * const main, void * const void_setting) {
 
+    if (!main || !void_setting) return;
+
     fss_write_process_normal_data(
       main,
       macro_fss_write_setting(void_setting),
-      (macro_fss_write_setting(void_setting)->flag & fss_write_flag_object_e)
+      (macro_fss_write_setting(void_setting)->flag & fss_write_main_flag_object_e)
         ? macro_fss_write_setting(void_setting)->objects.used
         : macro_fss_write_setting(void_setting)->contentss.used
     );
@@ -75,7 +73,7 @@ extern "C" {
 #ifndef _di_fss_write_process_normal_data_
   void fss_write_process_normal_data(fll_program_data_t * const main, fss_write_setting_t * const setting, const f_array_length_t length) {
 
-    if (!setting->process_set) return;
+    if (!main || !setting || !setting->process_set) return;
 
     setting->ignores = 0;
     setting->object = 0;
@@ -113,7 +111,7 @@ extern "C" {
       } // for
     }
     else {
-      if (setting->flag & (fss_write_flag_object_open_e | fss_write_flag_content_next_e | fss_write_flag_content_end_e)) {
+      if (setting->flag & (fss_write_main_flag_object_open_e | fss_write_main_flag_content_next_e | fss_write_main_flag_content_end_e)) {
         setting->object = 0;
         setting->contents = 0;
         setting->ignores = 0;
@@ -127,18 +125,15 @@ extern "C" {
 #ifndef _di_fss_write_process_pipe_
   void fss_write_process_pipe(fll_program_data_t * const main, void * const void_setting) {
 
+    if (!main || !void_setting) return;
+
     fss_write_setting_t * const setting = macro_fss_write_setting(void_setting);
 
     if (!setting->process_set) return;
 
-    f_status_t status_pipe = F_none;
-    f_file_t input = f_file_t_initialize;
-    input.id = F_type_descriptor_input_d;
-    input.size_read = setting->state.step_large;
-
-    f_array_length_t total = 0;
-    f_array_length_t ignore = 0;
-    f_string_range_t range = f_string_range_t_initialize;
+    if (main->message.verbosity > f_console_verbosity_error_e) {
+      fss_write_print_line_first(setting, main->message);
+    }
 
     const f_array_length_t used_objects = setting->objects.used;
     const f_array_length_t used_contentss = setting->contentss.used;
@@ -188,6 +183,16 @@ extern "C" {
 
       return;
     }
+
+    f_status_t status_pipe = F_none;
+
+    f_file_t input = f_file_t_initialize;
+    input.id = F_type_descriptor_input_d;
+    input.size_read = setting->state.step_large;
+
+    f_array_length_t total = 0;
+    f_array_length_t ignore = 0;
+    f_string_range_t range = f_string_range_t_initialize;
 
     // Reset all of the used data before starting the loop.
     setting->object->used = 0;
@@ -299,7 +304,7 @@ extern "C" {
 
         // Check to see if the Content supports multiple Content per Object.
         if (flag & 0x4) {
-          if (!(setting->flag & fss_write_flag_content_multiple_e)) {
+          if (!(setting->flag & fss_write_main_flag_content_multiple_e)) {
             setting->state.status = F_status_set_error(F_support_not);
 
             fss_write_print_error_one_content_only(setting, main->error);
@@ -337,7 +342,7 @@ extern "C" {
             // Do not handle start/end while inside an ignore set.
             if (!(flag & 0x2)) {
               if (setting->block.string[range.start] == fss_write_pipe_content_start_s.string[0]) {
-                if (!(setting->flag & fss_write_flag_content_multiple_e)) {
+                if (!(setting->flag & fss_write_main_flag_content_multiple_e)) {
                   setting->state.status = F_status_set_error(F_support_not);
 
                   fss_write_print_error_one_content_only(setting, main->error);
@@ -429,17 +434,28 @@ extern "C" {
     if (F_status_is_error_not(setting->state.status)) {
       setting->state.status = (flag & 0x1) ? F_none : F_data_not;
     }
+
+    if (F_status_is_error(setting->state.status)) {
+      fss_write_print_line_last(setting, main->message);
+    }
+    else if (!(setting->flag & (fss_write_main_flag_object_e | fss_write_main_flag_content_e | fss_write_main_flag_object_open_e | fss_write_main_flag_content_next_e | fss_write_main_flag_content_end_e))) {
+      if (main->message.verbosity > f_console_verbosity_error_e) {
+        fss_write_print_line_last(setting, main->message);
+      }
+    }
   }
 #endif // _di_fss_write_process_pipe_
 
 #ifndef _di_fss_write_process_set_
   void fss_write_process_set(fll_program_data_t * const main, void * const void_setting) {
 
+    if (!main || !void_setting) return;
+
     fss_write_setting_t * const setting = macro_fss_write_setting(void_setting);
 
     setting->buffer.used = 0;
 
-    if ((!(setting->flag & fss_write_flag_partial_e) || (setting->flag & fss_write_flag_partial_e) && (setting->flag & fss_write_flag_object_e)) && setting->object || (setting->flag & fss_write_flag_object_open_e)) {
+    if ((!(setting->flag & fss_write_main_flag_partial_e) || (setting->flag & fss_write_main_flag_partial_e) && (setting->flag & fss_write_main_flag_object_e)) && setting->object || (setting->flag & fss_write_main_flag_object_open_e)) {
 
       if (setting->object) {
         if (setting->object->used) {
@@ -458,7 +474,7 @@ extern "C" {
       }
     }
 
-    if ((!(setting->flag & fss_write_flag_partial_e) || (setting->flag & fss_write_flag_partial_e) && (setting->flag & fss_write_flag_content_e)) && setting->contents || (setting->flag & (fss_write_flag_content_next_e | fss_write_flag_content_end_e))) {
+    if ((!(setting->flag & fss_write_main_flag_partial_e) || (setting->flag & fss_write_main_flag_partial_e) && (setting->flag & fss_write_main_flag_content_e)) && setting->contents || (setting->flag & (fss_write_main_flag_content_next_e | fss_write_main_flag_content_end_e))) {
 
       if (setting->process_content) {
         if (setting->contents && setting->contents->used) {

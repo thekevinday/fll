@@ -1,4 +1,4 @@
-#include "iki_write.h"
+#include "../iki_write.h"
 
 #ifdef __cplusplus
 extern "C" {

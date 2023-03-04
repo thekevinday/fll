@@ -1,6 +1,4 @@
 #include "iki_write.h"
-#include "private-common.h"
-#include "private-write.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -12,10 +10,7 @@ extern "C" {
     if (!object.used) {
       setting->state.status = F_status_set_error(F_failure);
 
-      if (main->error.verbosity != f_console_verbosity_quiet_e) {
-        iki_write_print_line_first_locked(setting, main->error);
-        fll_program_print_error_missing_variable_not_zero(main->error, iki_write_object_s);
-      }
+      fll_program_print_error_missing_variable_not_zero(main->error, iki_write_object_s);
 
       return;
     }
@@ -25,12 +20,14 @@ extern "C" {
     if (setting->state.status == F_false) {
       setting->state.status = F_status_set_error(F_failure);
 
+      iki_write_print_line_first(setting, main->message);
       iki_write_print_error_object_not_valid(setting, main->error, object);
 
       return;
     }
 
     if (F_status_is_error(setting->state.status)) {
+      iki_write_print_line_first(setting, main->message);
       iki_write_print_error(setting, main->error, macro_iki_write_f(f_iki_object_is));
 
       return;
@@ -41,6 +38,7 @@ extern "C" {
     setting->state.status = fll_iki_content_escape(content, setting->quote, &setting->escaped);
 
     if (F_status_is_error(setting->state.status)) {
+      iki_write_print_line_first(setting, main->message);
       iki_write_print_error(setting, main->error, macro_iki_write_f(fll_iki_content_escape));
 
       return;

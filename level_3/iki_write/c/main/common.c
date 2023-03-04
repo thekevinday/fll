@@ -26,11 +26,14 @@ extern "C" {
 
     if (!main || !setting) return;
 
-    setting->flag = 0;
+    setting->state.step_small = iki_write_allocation_console_d;
 
     f_console_parameter_process(arguments, &main->parameters, &setting->state, 0);
 
+    setting->state.step_small = iki_write_allocation_small_d;
+
     if (F_status_is_error(setting->state.status)) {
+      iki_write_print_line_first(setting, main->message);
       iki_write_print_error(setting, main->error, macro_iki_write_f(f_console_parameter_process));
 
       return;
@@ -50,6 +53,7 @@ extern "C" {
         setting->state.status = fll_program_parameter_process_context(choices, modes, F_true, main);
 
         if (F_status_is_error(setting->state.status)) {
+          iki_write_print_line_first(setting, main->message);
           iki_write_print_error(setting, main->error, macro_iki_write_f(fll_program_parameter_process_context));
 
           return;
@@ -81,6 +85,7 @@ extern "C" {
         setting->state.status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, main);
 
         if (F_status_is_error(setting->state.status)) {
+          iki_write_print_line_first(setting, main->message);
           iki_write_print_error(setting, main->error, macro_iki_write_f(fll_program_parameter_process_verbosity));
 
           return;
@@ -114,7 +119,7 @@ extern "C" {
       if (main->parameters.array[iki_write_parameter_file_e].values.used > 1) {
         setting->state.status = F_status_set_error(F_parameter);
 
-        iki_write_print_line_first_locked(setting, main->error);
+        iki_write_print_line_first(setting, main->message);
         fll_program_print_error_parameter_must_specify_once(main->error, f_console_symbol_long_normal_s, iki_write_long_file_s);
 
         return;
@@ -128,7 +133,7 @@ extern "C" {
       setting->state.status = f_file_stream_open(main->parameters.arguments.array[index], f_string_empty_s, &main->output.to);
 
       if (F_status_is_error(setting->state.status)) {
-        iki_write_print_line_first_locked(setting, main->error);
+        iki_write_print_line_first(setting, main->message);
         fll_error_file_print(main->error, F_status_set_fine(setting->state.status), "f_file_stream_open", fll_error_file_flag_fallback_e, main->parameters.arguments.array[index], f_file_operation_open_s, fll_error_file_type_file_e);
 
         return;
@@ -139,7 +144,7 @@ extern "C" {
     else if (main->parameters.array[iki_write_parameter_file_e].result & f_console_result_found_e) {
       setting->state.status = F_status_set_error(F_parameter);
 
-      iki_write_print_line_first_locked(setting, main->error);
+      iki_write_print_line_first(setting, main->message);
       fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, iki_write_long_file_s);
 
       return;
@@ -153,6 +158,7 @@ extern "C" {
       setting->state.status = f_string_dynamics_resize(values->used, &setting->objects);
 
       if (F_status_is_error(setting->state.status)) {
+        iki_write_print_line_first(setting, main->message);
         iki_write_print_error(setting, main->error, macro_iki_write_f(f_string_dynamics_resize));
 
         return;
@@ -173,7 +179,7 @@ extern "C" {
     else if (main->parameters.array[iki_write_parameter_object_e].result & f_console_result_found_e) {
       setting->state.status = F_status_set_error(F_parameter);
 
-      iki_write_print_line_first_locked(setting, main->error);
+      iki_write_print_line_first(setting, main->message);
       fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, iki_write_long_object_s);
 
       return;
@@ -187,6 +193,7 @@ extern "C" {
       setting->state.status = f_string_dynamics_resize(values->used, &setting->contents);
 
       if (F_status_is_error(setting->state.status)) {
+        iki_write_print_line_first(setting, main->message);
         iki_write_print_error(setting, main->error, macro_iki_write_f(f_string_dynamics_resize));
 
         return;
@@ -207,7 +214,7 @@ extern "C" {
     else if (main->parameters.array[iki_write_parameter_content_e].result & f_console_result_found_e) {
       setting->state.status = F_status_set_error(F_parameter);
 
-      iki_write_print_line_first_locked(setting, main->error);
+      iki_write_print_line_first(setting, main->message);
       fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, iki_write_long_content_s);
 
       return;
@@ -216,7 +223,7 @@ extern "C" {
     if (!(main->pipe & fll_program_data_pipe_input_e) && !(setting->flag & (iki_write_main_flag_content_e | iki_write_parameter_object_e))) {
       setting->state.status = F_status_set_error(F_parameter);
 
-      iki_write_print_line_first_locked(setting, main->error);
+      iki_write_print_line_first(setting, main->message);
       iki_write_print_error_main_missing(setting, main->error);
 
       return;

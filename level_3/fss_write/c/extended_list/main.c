@@ -5,7 +5,7 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
   fll_program_data_t data = fll_program_data_t_initialize;
   fss_write_setting_t setting = fss_write_setting_t_initialize;
-  setting.state.data = (void *) &data;
+  setting.state.custom = (void *) &data;
   setting.standard = fss_write_extended_list_standard_s;
   setting.process_content = &fss_write_extended_list_process_content;
   setting.process_help = &fss_write_extended_list_process_help;
@@ -13,7 +13,7 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
   setting.process_object = &fss_write_extended_list_process_object;
   setting.process_pipe = &fss_write_process_pipe;
   setting.process_set = &fss_write_process_set;
-  setting.flag |= fss_write_flag_ignore_e;
+  setting.flag |= fss_write_main_flag_ignore_e;
 
   f_console_parameter_t parameters[] = fss_write_console_parameter_t_initialize;
   data.parameters.array = parameters;
@@ -30,7 +30,7 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
   {
     const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize(argc, argv, envp);
 
-    fss_write_setting_load(arguments, state, &data, &setting, 0);
+    fss_write_setting_load(arguments, &data, &setting, 0);
   }
 
   fss_write_main(&data, &setting);
@@ -41,5 +41,5 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
   fll_program_standard_set_down(&data);
 
-  return F_status_is_error(setting.status) ? 1 : 0;
+  return F_status_is_error(setting.state.status) ? 1 : 0;
 }

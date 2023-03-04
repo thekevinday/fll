@@ -349,19 +349,20 @@ extern "C" {
  *
  *   When constructing the f_state_t variable, a fll_program_data_t pointer must be passed into the f_state_t.custom variable.
  *   This requires the state.custom variable to be of type (fll_program_data_t *).
+ *   This must not be NULL.
+ *
+ *   This alters state.status:
+ *     F_interrupt_not if not interrupted.
+ *
+ *     F_interrupt (with error bit) if interrupted.
  * @param internal
  *   Not used.
  *
- * @return
- *   F_interrupt_not if not interrupted.
- *
- *   F_interrupt (with error bit) if interrupted.
- *
  * @see fll_program_standard_signal_received()
  */
-#ifndef _di_fll_program_standard_signal_state_
-  extern f_status_t fll_program_standard_signal_state(void * const state, void * const internal);
-#endif // _di_fll_program_standard_signal_state_
+#ifndef _di_fll_program_standard_signal_handle_
+  extern void fll_program_standard_signal_handle(void * const state, void * const internal);
+#endif // _di_fll_program_standard_signal_handle_
 
 #ifdef __cplusplus
 } // extern "C"

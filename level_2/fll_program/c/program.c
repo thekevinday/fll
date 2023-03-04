@@ -541,25 +541,32 @@ extern "C" {
   }
 #endif // _di_fll_program_standard_signal_received_
 
-#ifndef _di_fll_program_standard_signal_state_
-  f_status_t fll_program_standard_signal_state(void * const state, void * const internal) {
+#ifndef _di_fll_program_standard_signal_handle_
+  void fll_program_standard_signal_handle(void * const void_state, void * const internal) {
+    #ifndef _di_level_2_parameter_checking_
+      if (!void_state) return;
+    #endif // _di_level_2_parameter_checking_
 
-    if (!state) return F_interrupt_not;
+    f_state_t * const state = (f_state_t *) void_state;
 
-    f_state_t *state_ptr = (f_state_t *) state;
-    if (!state_ptr->custom) return F_interrupt_not;
+    if (!state->custom) {
+      state->status = F_interrupt_not;
 
-    fll_program_data_t *custom = (fll_program_data_t *) state_ptr->custom;
-
-    custom->signal_received = private_fll_program_standard_signal_received(custom);
-
-    if (custom->signal_received == F_signal_abort || custom->signal_received == F_signal_broken_pipe || custom->signal_received == F_signal_hangup || custom->signal_received == F_signal_interrupt || custom->signal_received == F_signal_quit || custom->signal_received == F_signal_termination) {
-      return F_status_set_error(F_interrupt);
+      return;
     }
 
-    return F_interrupt_not;
+    fll_program_data_t * const main = (fll_program_data_t *) state->custom;
+
+    main->signal_received = private_fll_program_standard_signal_received(main);
+
+    if (main->signal_received == F_signal_abort || main->signal_received == F_signal_broken_pipe || main->signal_received == F_signal_hangup || main->signal_received == F_signal_interrupt || main->signal_received == F_signal_quit || main->signal_received == F_signal_termination) {
+      state->status = F_status_set_error(F_interrupt);
+    }
+    else {
+      state->status = F_interrupt_not;
+    }
   }
-#endif // _di_fll_program_standard_signal_state_
+#endif // _di_fll_program_standard_signal_handle_
 
 #ifdef __cplusplus
 } // extern "C"

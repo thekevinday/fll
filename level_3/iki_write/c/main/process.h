@@ -4,9 +4,13 @@
  * Project: IKI
  * API Version: 0.7
  * Licenses: lgpl-2.1-or-later
+ *
+ * Provides the process functionality.
+ *
+ * This is auto-included and should not need to be explicitly included.
  */
-#ifndef _PRIVATE_write_h
-#define _PRIVATE_write_h
+#ifndef _PRIVATE_write_process_h
+#define _PRIVATE_write_process_h
 
 #ifdef __cplusplus
 extern "C" {
@@ -43,4 +47,4 @@ extern "C" {
 } // extern "C"
 #endif
 
-#endif // _PRIVATE_write_h
+#endif // _PRIVATE_write_process_h

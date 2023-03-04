@@ -7,7 +7,7 @@ extern "C" {
 #ifndef _di_utf8_print_help_
   f_status_t utf8_print_help(utf8_setting_t * const setting, const fl_print_t print) {
 
-    if (!setting) return F_output_not;
+    if (!setting) return F_status_set_error(F_output_not);
 
     f_file_stream_lock(print.to);
 
@@ -68,6 +68,10 @@ extern "C" {
 
     if (!setting) return F_status_set_error(F_output_not);
     if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
+
+    if (F_status_is_error_not(setting->state.status)) {
+      if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
+    }
 
     if (setting->flag & utf8_main_flag_print_first_e) {
       fll_print_dynamic_raw(setting->line_first, print.to);

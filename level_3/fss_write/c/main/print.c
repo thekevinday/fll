@@ -7,9 +7,9 @@ extern "C" {
 #ifndef _di_fss_write_print_error_
   f_status_t fss_write_print_error(fss_write_setting_t * const setting, const fl_print_t print, const f_string_t function) {
 
-    if (!setting || print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+    if (!setting) return F_status_set_error(F_output_not);
+    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
 
-    fss_write_print_line_first_locked(setting, print);
     fll_error_print(print, F_status_set_fine(setting->state.status), function, fll_error_file_flag_fallback_e);
 
     return F_none;
@@ -19,9 +19,9 @@ extern "C" {
 #ifndef _di_fss_write_print_error_file_
   f_status_t fss_write_print_error_file(fss_write_setting_t * const setting, const fl_print_t print, const f_string_t function, const f_string_static_t name, const f_string_static_t operation, const uint8_t type) {
 
-    if (!setting || print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+    if (!setting) return F_status_set_error(F_output_not);
+    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
 
-    fss_write_print_line_first_locked(setting, print);
     fll_error_file_print(print, F_status_set_fine(setting->state.status), function, fll_error_file_flag_fallback_e, name, operation, type);
 
     return F_none;
@@ -31,11 +31,11 @@ extern "C" {
 #ifndef _di_fss_write_print_error_parameter_same_times_at_least_
   f_status_t fss_write_print_error_parameter_same_times_at_least(fss_write_setting_t * const setting, const fl_print_t print) {
 
-    if (!setting || print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+    if (!setting) return F_status_set_error(F_output_not);
+    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
 
     f_file_stream_lock(print.to);
 
-    fss_write_print_line_first_unlocked(setting, print);
     fl_print_format("%[%QMust specify the '%]", print.to, print.context, print.prefix, print.context);
     fl_print_format("%[%r%r%]", print.to, print.notable, f_console_symbol_long_normal_s, fss_write_long_content_s, print.notable);
     fl_print_format("%[' parameter at least the same number of times as the '%]", print.to, print.context, print.context);
@@ -53,11 +53,11 @@ extern "C" {
 #ifndef _di_fss_write_print_error_one_content_only_
   f_status_t fss_write_print_error_one_content_only(fss_write_setting_t * const setting, const fl_print_t print) {
 
-    if (!setting || print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+    if (!setting) return F_status_set_error(F_output_not);
+    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
 
     f_file_stream_lock(print.to);
 
-    fss_write_print_line_first_unlocked(setting, print);
     fl_print_format("%[%QThe%] ", print.to, print.context, print.prefix, print.context);
     fl_print_format("%[%r%]", print.to, print.notable, setting->standard, print.notable);
     fl_print_format(" %[standard only supports one Content per Object.%]%r", print.to, print.context, print.context, f_string_eol_s);
@@ -71,7 +71,8 @@ extern "C" {
 #ifndef _fss_write_print_error_prepend_only_whitespace_
   f_status_t fss_write_print_error_prepend_only_whitespace(fss_write_setting_t * const setting, const fl_print_t print) {
 
-    if (!setting || print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+    if (!setting) return F_status_set_error(F_output_not);
+    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
 
     f_file_stream_lock(print.to);
 
@@ -88,11 +89,11 @@ extern "C" {
 #ifndef _di_fss_write_print_error_unsupported_eol_
   f_status_t fss_write_print_error_unsupported_eol(fss_write_setting_t * const setting, const fl_print_t print) {
 
-    if (!setting || print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+    if (!setting) return F_status_set_error(F_output_not);
+    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
 
     f_file_stream_lock(print.to);
 
-    fss_write_print_line_first_unlocked(setting, print);
     fl_print_format("%[%QThe%] ", print.to, print.context, print.prefix, print.context);
     fl_print_format("%[%r%]", print.to, print.notable, setting->standard, print.notable);
     fl_print_format(" %[standard does not support end of line character '%]", print.to, print.context, print.context);
@@ -109,6 +110,8 @@ extern "C" {
 
 #ifndef _di_fss_write_print_help_
   void fss_write_print_help(fss_write_setting_t * const setting, const fl_print_t print) {
+
+    if (!setting) return;
 
     fll_program_print_help_option_standard(print);
 
@@ -135,6 +138,8 @@ extern "C" {
 #ifndef _di_fss_write_print_help_end_next_
   void fss_write_print_help_end_next(fss_write_setting_t * const setting, const fl_print_t print) {
 
+    if (!setting);
+
     fl_print_format("%r  The '%[%r%r%]',", print.to, f_string_eol_s, print.set->notable, f_console_symbol_long_normal_s, fss_write_long_object_open_s, print.set->notable);
     fl_print_format(" '%[%r%r%]', and", print.to, print.set->notable, f_console_symbol_long_normal_s, fss_write_long_content_next_s, print.set->notable);
     fl_print_format(" '%[%r%r%]' help facilitate writing the designated data for when using", print.to, print.set->notable, f_console_symbol_long_normal_s, fss_write_long_content_end_s, print.set->notable);
@@ -148,6 +153,8 @@ extern "C" {
 #ifndef _di_fss_write_print_help_pipe_
   void fss_write_print_help_pipe(fss_write_setting_t * const setting, const fl_print_t print) {
 
+    if (!setting) return;
+
     fl_print_format("%r  The pipe uses the Backspace character '%[\\b%]' (%[U+0008%]) to designate the start of a Content.%r", print.to, f_string_eol_s, print.set->notable, print.set->notable, print.set->notable, print.set->notable, f_string_eol_s);
     fl_print_format("  The pipe uses the Form Feed character '%[\\f%]' (%[U+000C%]) to designate the end of the last Content.%r", print.to, print.set->notable, print.set->notable, print.set->notable, print.set->notable, f_string_eol_s);
     fl_print_format("  The pipe uses the Vertical Line character '%[\\v%]' (%[U+000B%]) is used to ignore a Content range (use this both before and after the range).%r", print.to, print.set->notable, print.set->notable, print.set->notable, print.set->notable, f_string_eol_s);
@@ -157,69 +164,43 @@ extern "C" {
   }
 #endif // _di_fss_write_print_help_pipe_
 
-#ifndef _di_fss_write_print_line_first_locked_
-  f_status_t fss_write_print_line_first_locked(fss_write_setting_t * const setting, const fl_print_t print) {
+#ifndef _di_fss_write_print_line_first_
+  f_status_t fss_write_print_line_first(fss_write_setting_t * const setting, const fl_print_t print) {
 
-    if (!setting || print.verbosity < f_console_verbosity_error_e) return F_output_not;
+    if (!setting) return F_status_set_error(F_output_not);
+    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
 
     if (F_status_is_error_not(setting->state.status)) {
       if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
-      if (setting->flag & fss_write_flag_file_to_e) return F_output_not;
+      if (setting->flag & fss_write_main_flag_file_to_e) return F_output_not;
     }
 
-    f_print_dynamic_raw(setting->line_first, print.to);
+    if (setting->flag & fss_write_main_flag_print_first_e) {
+      fll_print_dynamic_raw(setting->line_first, print.to);
+
+      setting->flag -= fss_write_main_flag_print_first_e;
+    }
 
     return F_none;
   }
-#endif // _di_fss_write_print_line_first_locked_
+#endif // _di_fss_write_print_line_first_
 
-#ifndef _di_fss_write_print_line_first_unlocked_
-  f_status_t fss_write_print_line_first_unlocked(fss_write_setting_t * const setting, const fl_print_t print) {
+#ifndef _di_fss_write_print_line_last_
+  f_status_t fss_write_print_line_last(fss_write_setting_t * const setting, const fl_print_t print) {
 
-    if (!setting || print.verbosity < f_console_verbosity_error_e) return F_output_not;
-
-    if (F_status_is_error_not(setting->state.status)) {
-      if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
-      if (setting->flag & fss_write_flag_file_to_e) return F_output_not;
-    }
-
-    fll_print_dynamic_raw(setting->line_first, print.to);
-
-    return F_none;
-  }
-#endif // _di_fss_write_print_line_first_unlocked_
-
-#ifndef _di_fss_write_print_line_last_locked_
-  f_status_t fss_write_print_line_last_locked(fss_write_setting_t * const setting, const fl_print_t print) {
-
-    if (!setting || print.verbosity < f_console_verbosity_error_e) return F_output_not;
+    if (!setting) return F_status_set_error(F_output_not);
+    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
 
     if (F_status_is_error_not(setting->state.status)) {
       if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
-      if (setting->flag & fss_write_flag_file_to_e) return F_output_not;
+      if (setting->flag & fss_write_main_flag_file_to_e) return F_output_not;
     }
 
     fll_print_dynamic_raw(setting->line_last, print.to);
 
     return F_none;
   }
-#endif // _di_fss_write_print_line_last_locked_
-
-#ifndef _di_fss_write_print_line_last_unlocked_
-  f_status_t fss_write_print_line_last_unlocked(fss_write_setting_t * const setting, const fl_print_t print) {
-
-    if (!setting || print.verbosity < f_console_verbosity_error_e) return F_output_not;
-
-    if (F_status_is_error_not(setting->state.status)) {
-      if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
-      if (setting->flag & fss_write_flag_file_to_e) return F_output_not;
-    }
-
-    f_print_dynamic_raw(setting->line_last, print.to);
-
-    return F_none;
-  }
-#endif // _di_fss_write_print_line_last_unlocked_
+#endif // _di_fss_write_print_line_last_
 
 #ifdef __cplusplus
 } // extern "C"

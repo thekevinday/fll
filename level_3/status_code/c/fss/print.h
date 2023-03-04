@@ -4,6 +4,10 @@
  * Project: Status Code
  * API Version: 0.7
  * Licenses: lgpl-2.1-or-later
+ *
+ * Provides the print functionality.
+ *
+ * This is auto-included and should not need to be explicitly included.
  */
 #ifndef _status_code_fss_print_h
 #define _status_code_fss_print_h

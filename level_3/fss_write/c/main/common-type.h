@@ -19,14 +19,18 @@ extern "C" {
 /**
  * The program default defines.
  *
- * fss_write_default_allocation_*:
- *   - large: An allocation step used for buffers that are anticipated to have large buffers.
- *   - small: An allocation step used for buffers that are anticipated to have small buffers.
+ * fss_write_*:
+ *   - allocation_console: An allocation step used for small buffers specifically for console parameter.
+ *   - allocation_large:   An allocation step used for buffers that are anticipated to have large buffers.
+ *   - allocation_small:   An allocation step used for buffers that are anticipated to have small buffers.
+ *   - signal_check:       Number of iterations before performing signal check in non-threaded signal handling.
  */
-#ifndef _di_fss_write_default_d_
-  #define fss_write_default_allocation_large_d 2048
-  #define fss_write_default_allocation_small_d 128
-#endif // _di_fss_write_default_d_
+#ifndef _di_fss_write_d_
+  #define fss_write_allocation_console_d 4
+  #define fss_write_allocation_large_d   2048
+  #define fss_write_allocation_small_d   128
+  #define iki_write_signal_check_d       20000
+#endif // _di_fss_write_d_
 
 /**
  * The program defines.
@@ -45,7 +49,7 @@ extern "C" {
 /**
  * Flags passed to the main function or program.
  *
- * fss_write_flag_*_e:
+ * fss_write_main_flag_*_e:
  *   - none:             No flags set.
  *   - content:          The Content being written is specified.
  *   - content_end:      The Content end characters are to be printed.
@@ -58,29 +62,30 @@ extern "C" {
  *   - object:           The Object being written is specified.
  *   - object_open:      The Object open characters are to be printed.
  *   - partial:          Do not write end of Object/Content character.
- *   - prepend:          Prepend the given white space characters to the start of each multi-line Content.
+ *   - print_first:      When set, the first character printing logic is to be processed (this is usually automatic).
  *   - trim:             Trim Object names.
  *   - version:          Print version.
  */
-#ifndef _di_fss_write_flag_e_
+#ifndef _di_fss_write_main_flag_e_
   enum {
-    fss_write_flag_none_e             = 0x0,
-    fss_write_flag_content_e          = 0x1,
-    fss_write_flag_content_end_e      = 0x2,
-    fss_write_flag_content_multiple_e = 0x4,
-    fss_write_flag_content_next_e     = 0x8,
-    fss_write_flag_copyright_e        = 0x10,
-    fss_write_flag_file_to_e          = 0x20,
-    fss_write_flag_help_e             = 0x40,
-    fss_write_flag_ignore_e           = 0x80,
-    fss_write_flag_object_e           = 0x100,
-    fss_write_flag_object_open_e      = 0x200,
-    fss_write_flag_partial_e          = 0x400,
-    fss_write_flag_prepend_e          = 0x800,
-    fss_write_flag_trim_e             = 0x1000,
-    fss_write_flag_version_e          = 0x2000,
+    fss_write_main_flag_none_e             = 0x0,
+    fss_write_main_flag_content_e          = 0x1,
+    fss_write_main_flag_content_end_e      = 0x2,
+    fss_write_main_flag_content_multiple_e = 0x4,
+    fss_write_main_flag_content_next_e     = 0x8,
+    fss_write_main_flag_copyright_e        = 0x10,
+    fss_write_main_flag_file_to_e          = 0x20,
+    fss_write_main_flag_help_e             = 0x40,
+    fss_write_main_flag_ignore_e           = 0x80,
+    fss_write_main_flag_object_e           = 0x100,
+    fss_write_main_flag_object_open_e      = 0x200,
+    fss_write_main_flag_partial_e          = 0x400,
+    fss_write_main_flag_prepend_e          = 0x800,
+    fss_write_main_flag_print_first_e      = 0x1000,
+    fss_write_main_flag_trim_e             = 0x2000,
+    fss_write_main_flag_version_e          = 0x4000,
   }; // enum
-#endif // _di_fss_write_flag_e_
+#endif // _di_fss_write_main_flag_e_
 
 /**
  * The main program parameters.
@@ -226,8 +231,8 @@ extern "C" {
 
   #define fss_write_setting_t_initialize \
     { \
-      fss_write_flag_none_e, \
-      macro_f_state_t_initialize(fss_write_default_allocation_large_d, fss_write_default_allocation_small_d, 0, 0, &fll_program_standard_signal_state, 0, 0, 0), \
+      fss_write_main_flag_none_e, \
+      macro_f_state_t_initialize_1(fss_write_allocation_large_d, fss_write_allocation_small_d, F_none, 0, 0, &fll_program_standard_signal_handle, 0, 0, 0), \
       f_string_range_t_initialize, \
       f_string_static_t_initialize, \
       f_string_static_t_initialize, \

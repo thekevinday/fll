@@ -42,7 +42,7 @@ extern "C" {
       data.main = main;
       data.setting = setting;
 
-      f_console_parameter_process(arguments, &main->parameters, &setting->state, (void *) &data);
+      f_console_parameter_process(arguments, &main->parameters, &setting->state.status, (void *) &data);
     }
 
     if (F_status_is_error(setting->state.status)) {

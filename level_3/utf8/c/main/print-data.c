@@ -7,7 +7,7 @@ extern "C" {
 #ifndef _di_utf8_print_data_bytesequence_
   f_status_t utf8_print_data_bytesequence(utf8_setting_t * const setting, const fl_print_t print, const f_string_static_t sequence) {
 
-    if (!setting) return F_output_not;
+    if (!setting) return F_status_set_error(F_output_not);
 
     fl_print_format("%r%r%r", print.to, setting->prepend, sequence, setting->append);
 
@@ -18,7 +18,7 @@ extern "C" {
 #ifndef _di_utf8_print_data_character_invalid_
   f_status_t utf8_print_data_character_invalid(utf8_setting_t * const setting, const fl_print_t print, const f_string_static_t invalid) {
 
-    if (!setting) return F_output_not;
+    if (!setting) return F_status_set_error(F_output_not);
     if (setting->flag & (utf8_main_flag_strip_invalid_e | utf8_main_flag_verify_e)) return F_output_not;
     if (!invalid.used) return F_output_not;
 
@@ -48,7 +48,7 @@ extern "C" {
 #ifndef _di_utf8_print_data_codepoint_
   f_status_t utf8_print_data_codepoint(utf8_setting_t * const setting, const fl_print_t print, const uint32_t codepoint) {
 
-    if (!setting) return F_output_not;
+    if (!setting) return F_status_set_error(F_output_not);
 
     if (codepoint < 0x10000) {
       fl_print_format("%rU+%04_U%r", print.to, setting->prepend, codepoint, setting->append);
@@ -67,7 +67,7 @@ extern "C" {
 #ifndef _di_utf8_print_data_combining_or_width_
   f_status_t utf8_print_data_combining_or_width(utf8_setting_t * const setting, const fl_print_t print, const f_string_static_t sequence) {
 
-    if (!setting) return F_output_not;
+    if (!setting) return F_status_set_error(F_output_not);
 
     if (setting->mode & utf8_mode_to_combining_e) {
       f_status_t status = f_utf_is_combining(sequence.string, sequence.used);
@@ -103,7 +103,7 @@ extern "C" {
 #ifndef _di_utf8_print_data_combining_or_width_invalid_
   f_status_t utf8_print_data_combining_or_width_invalid(utf8_setting_t * const setting, const fl_print_t print) {
 
-    if (!setting) return F_output_not;
+    if (!setting) return F_status_set_error(F_output_not);
     if (setting->flag & (utf8_main_flag_strip_invalid_e | utf8_main_flag_verify_e)) return F_output_not;
 
     fl_print_format("%r%[%r%]%r", print.to, setting->prepend, setting->valid_not, utf8_string_unknown_s, setting->valid_not, setting->append);

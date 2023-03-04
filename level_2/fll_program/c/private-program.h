@@ -61,11 +61,11 @@ extern "C" {
  * @see f_signal_read()
  *
  * @see fll_program_standard_signal_received()
- * @see fll_program_standard_signal_state()
+ * @see fll_program_standard_signal_handle()
  */
-#if !defined(_di_fll_program_standard_signal_received_) || !defined(_di_fll_program_standard_signal_state_)
+#if !defined(_di_fll_program_standard_signal_received_) || !defined(_di_fll_program_standard_signal_handle_)
   uint32_t private_fll_program_standard_signal_received(fll_program_data_t * const main) F_attribute_visibility_internal_d;
-#endif // !defined(_di_fll_program_standard_signal_received_) || !defined(_di_fll_program_standard_signal_state_)
+#endif // !defined(_di_fll_program_standard_signal_received_) || !defined(_di_fll_program_standard_signal_handle_)
 
 /**
  * Private implementation of fll_program_parameter_process_empty().

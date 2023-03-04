@@ -201,31 +201,9 @@ extern "C" {
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
  */
-#ifndef _di_fss_write_print_line_first_locked_
-  extern f_status_t fss_write_print_line_first_locked(fss_write_setting_t * const setting, const fl_print_t print);
-#endif // _di_fss_write_print_line_first_locked_
-
-/**
- * Print first new line, unless verbosity says otherwise.
- *
- * This is generally either the first line in the program or the first line printed before an error message.
- *
- * This function neither locks nor unlocks the input stream.
- *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.state.status.
- * @param print
- *   Designates the how and where to print.
- *
- * @return
- *   F_none on success.
- *   F_output_not on success, but no printing is performed.
- */
-#ifndef _di_fss_write_print_line_first_unlocked_
-  extern f_status_t fss_write_print_line_first_unlocked(fss_write_setting_t * const setting, const fl_print_t print);
-#endif // _di_fss_write_print_line_first_unlocked_
+#ifndef _di_fss_write_print_line_first_
+  extern f_status_t fss_write_print_line_first(fss_write_setting_t * const setting, const fl_print_t print);
+#endif // _di_fss_write_print_line_first_
 
 /**
  * Print last new line when the main is complete, unless verbosity says otherwise.
@@ -245,31 +223,9 @@ extern "C" {
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
  */
-#ifndef _di_fss_write_print_line_last_locked_
-  extern f_status_t fss_write_print_line_last_locked(fss_write_setting_t * const setting, const fl_print_t print);
-#endif // _di_fss_write_print_line_last_locked_
-
-/**
- * Print last new line when the main is complete, unless verbosity says otherwise.
- *
- * This is generally the very last line printed in the program.
- *
- * This function neither locks nor unlocks the input stream.
- *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.state.status.
- * @param print
- *   Designates the how and where to print.
- *
- * @return
- *   F_none on success.
- *   F_output_not on success, but no printing is performed.
- */
-#ifndef _di_fss_write_print_line_last_unlocked_
-  extern f_status_t fss_write_print_line_last_unlocked(fss_write_setting_t * const setting, const fl_print_t print);
-#endif // _di_fss_write_print_line_last_unlocked_
+#ifndef _di_fss_write_print_line_last_
+  extern f_status_t fss_write_print_line_last(fss_write_setting_t * const setting, const fl_print_t print);
+#endif // _di_fss_write_print_line_last_
 
 #ifdef __cplusplus
 } // extern "C"

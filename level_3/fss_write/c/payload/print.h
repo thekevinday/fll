@@ -45,6 +45,8 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_fss_write_payload_print_help_
   extern f_status_t fss_write_payload_print_help(fss_write_setting_t * const setting, const fl_print_t print);

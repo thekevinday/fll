@@ -60,6 +60,22 @@ extern "C" {
 #endif // _di_control_program_name_s_
 
 /**
+ * The program defines.
+ *
+ * control_*:
+ *   - allocation_console: An allocation step used for small buffers specifically for console parameter.
+ *   - allocation_large:   An allocation step used for buffers that are anticipated to have large buffers.
+ *   - allocation_small:   An allocation step used for buffers that are anticipated to have small buffers.
+ *   - signal_check:       Number of iterations before performing signal check in non-threaded signal handling.
+ */
+#ifndef _di_control_d_
+  #define control_allocation_console_d 4
+  #define control_allocation_large_d   256
+  #define control_allocation_small_d   16
+  #define control_signal_check_d       20000
+#endif // _di_control_d_
+
+/**
  * The main program parameters.
  */
 #ifndef _di_control_parameter_d_

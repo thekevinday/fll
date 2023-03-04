@@ -307,6 +307,8 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_fake_print_help_
   extern f_status_t fake_print_help(fake_setting_t * const setting, const fl_print_t print);
@@ -353,6 +355,8 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_fake_print_line_first_locked_
   extern f_status_t fake_print_line_first_locked(fake_setting_t * const setting, const fl_print_t print);
@@ -377,6 +381,8 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_fake_print_line_first_unlocked_
   extern f_status_t fake_print_line_first_unlocked(fake_setting_t * const setting, const fl_print_t print);
@@ -399,6 +405,8 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_fake_print_line_last_locked_
   extern f_status_t fake_print_line_last_locked(fake_setting_t * const setting, const fl_print_t print);
@@ -421,6 +429,8 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_fake_print_line_last_unlocked_
   extern f_status_t fake_print_line_last_unlocked(fake_setting_t * const setting, const fl_print_t print);
@@ -439,6 +449,8 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_fake_print_operation_all_complete_
   extern f_status_t fake_print_operation_all_complete(fake_setting_t * const setting, const fl_print_t print);
@@ -459,6 +471,8 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_fake_print_operation_cancelled_
   extern f_status_t fake_print_operation_cancelled(fake_setting_t * const setting, const fl_print_t print, const uint8_t operation);

@@ -12,7 +12,7 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
   fll_program_data_t data = fll_program_data_t_initialize;
   fss_write_setting_t setting = fss_write_setting_t_initialize;
-  setting.state.data = (void *) &data;
+  setting.state.custom = (void *) &data;
 
   f_console_parameter_t parameters[] = fss_write_console_parameter_t_initialize;
   data.parameters.array = parameters;
@@ -28,7 +28,7 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
   {
     const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize(argc, argv, envp);
 
-    fss_write_setting_load(arguments, state, &data, &setting, &fss_write_main_setting_load_as);
+    fss_write_setting_load(arguments, &data, &setting, &fss_write_main_setting_load_as);
   }
 
   fss_write_main(&data, &setting);
@@ -39,7 +39,7 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
   fll_program_standard_set_down(&data);
 
-  return F_status_is_error(setting.status) ? 1 : 0;
+  return F_status_is_error(setting.state.status) ? 1 : 0;
 }
 
 #ifndef _di_fss_write_main_process_help_
@@ -52,9 +52,9 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 #endif // _di_fss_write_main_process_help_
 
 #ifndef _di_fss_write_main_setting_load_as_
-  void fss_write_main_setting_load_as(const f_console_arguments_t arguments, fll_program_data_t * const main, fss_write_setting_t * const setting, f_state_t * const state) {
+  void fss_write_main_setting_load_as(const f_console_arguments_t arguments, fll_program_data_t * const main, fss_write_setting_t * const setting) {
 
-    if (!main || !setting || F_status_is_error(setting->state.status) || (setting->flag & fss_write_flag_version_e)) return;
+    if (!main || !setting || F_status_is_error(setting->state.status) || (setting->flag & fss_write_main_flag_version_e)) return;
 
     setting->standard = fss_write_basic_standard_s;
     setting->process_content = &fss_write_basic_process_content;
@@ -84,8 +84,8 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
           setting->process_pipe = &fss_write_process_pipe;
           setting->process_normal = &fss_write_process_normal;
           setting->process_set = &fss_write_process_set;
-          setting->flag -= setting->flag & fss_write_flag_ignore_e; // Not supported by basic.
-          setting->flag -= setting->flag & fss_write_flag_content_multiple_e; // Not supported by basic.
+          setting->flag -= setting->flag & fss_write_main_flag_ignore_e; // Not supported by basic.
+          setting->flag -= setting->flag & fss_write_main_flag_content_multiple_e; // Not supported by basic.
         }
         else if (fl_string_dynamic_compare(argv[index], fss_write_format_code_short_0001_s) == F_equal_to ||
                  fl_string_dynamic_compare(argv[index], fss_write_format_code_long_0001_s) == F_equal_to ||
@@ -98,8 +98,8 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
           setting->process_pipe = &fss_write_process_pipe;
           setting->process_normal = &fss_write_process_normal;
           setting->process_set = &fss_write_process_set;
-          setting->flag -= setting->flag & fss_write_flag_ignore_e; // Not supported by extended.
-          setting->flag |= fss_write_flag_content_multiple_e;
+          setting->flag -= setting->flag & fss_write_main_flag_ignore_e; // Not supported by extended.
+          setting->flag |= fss_write_main_flag_content_multiple_e;
         }
         else if (fl_string_dynamic_compare(argv[index], fss_write_format_code_short_0002_s) == F_equal_to ||
                  fl_string_dynamic_compare(argv[index], fss_write_format_code_long_0002_s) == F_equal_to ||
@@ -112,8 +112,8 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
           setting->process_pipe = &fss_write_process_pipe;
           setting->process_normal = &fss_write_process_normal;
           setting->process_set = &fss_write_process_set;
-          setting->flag -= setting->flag & fss_write_flag_ignore_e; // Not supported by basic list.
-          setting->flag -= setting->flag & fss_write_flag_content_multiple_e; // Not supported by basic list.
+          setting->flag -= setting->flag & fss_write_main_flag_ignore_e; // Not supported by basic list.
+          setting->flag -= setting->flag & fss_write_main_flag_content_multiple_e; // Not supported by basic list.
         }
         else if (fl_string_dynamic_compare(argv[index], fss_write_format_code_short_0003_s) == F_equal_to ||
                  fl_string_dynamic_compare(argv[index], fss_write_format_code_long_0003_s) == F_equal_to ||
@@ -126,8 +126,8 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
           setting->process_pipe = &fss_write_process_pipe;
           setting->process_normal = &fss_write_process_normal;
           setting->process_set = &fss_write_process_set;
-          setting->flag |= fss_write_flag_ignore_e;
-          setting->flag -= setting->flag & fss_write_flag_content_multiple_e; // Not supported by extended list.
+          setting->flag |= fss_write_main_flag_ignore_e;
+          setting->flag -= setting->flag & fss_write_main_flag_content_multiple_e; // Not supported by extended list.
         }
         else if (fl_string_dynamic_compare(argv[index], fss_write_format_code_short_0008_s) == F_equal_to ||
                  fl_string_dynamic_compare(argv[index], fss_write_format_code_long_0008_s) == F_equal_to ||
@@ -140,8 +140,8 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
           setting->process_pipe = &fss_write_process_pipe;
           setting->process_normal = &fss_write_process_normal;
           setting->process_set = &fss_write_process_set;
-          setting->flag |= fss_write_flag_ignore_e;
-          setting->flag |= fss_write_flag_content_multiple_e;
+          setting->flag |= fss_write_main_flag_ignore_e;
+          setting->flag |= fss_write_main_flag_content_multiple_e;
         }
         else if (fl_string_dynamic_compare(argv[index], fss_write_format_code_short_000e_s) == F_equal_to ||
                  fl_string_dynamic_compare(argv[index], fss_write_format_code_long_000e_s) == F_equal_to ||
@@ -154,18 +154,18 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
           setting->process_object = 0; // Not used by payload.
           setting->process_pipe = &fss_write_payload_process_pipe;
           setting->process_set = &fss_write_payload_process_set;
-          setting->flag -= setting->flag & fss_write_flag_ignore_e; // Not supported by payload.
-          setting->flag -= setting->flag & fss_write_flag_content_multiple_e; // Not supported by payload.
+          setting->flag -= setting->flag & fss_write_main_flag_ignore_e; // Not supported by payload.
+          setting->flag -= setting->flag & fss_write_main_flag_content_multiple_e; // Not supported by payload.
         }
         else {
-          if (setting->flag & fss_write_flag_help_e) {
+          if (setting->flag & fss_write_main_flag_help_e) {
             setting->state.status = F_status_set_error(F_parameter);
 
             break;
           }
 
           if (setting->state.status != F_status_set_error(F_parameter)) {
-            fss_write_print_line_first_locked(setting, main->error);
+            fss_write_print_line_first(setting, main->message);
           }
 
           setting->state.status = F_status_set_error(F_parameter);
@@ -175,7 +175,7 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
       } // for
 
       if (F_status_is_error(setting->state.status)) {
-        if (setting->flag & fss_write_flag_help_e) {
+        if (setting->flag & fss_write_main_flag_help_e) {
           fss_write_main_process_help(main, setting);
         }
 
@@ -185,13 +185,13 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
     else if (main->parameters.array[fss_write_parameter_as_e].result & f_console_result_found_e) {
       setting->state.status = F_status_set_error(F_parameter);
 
-      if (setting->flag & fss_write_flag_help_e) {
+      if (setting->flag & fss_write_main_flag_help_e) {
         fss_write_main_process_help(main, setting);
 
         return;
       }
 
-      fss_write_print_line_first_locked(setting, main->error);
+      fss_write_print_line_first(setting, main->message);
       fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, fss_write_long_as_s);
 
       return;

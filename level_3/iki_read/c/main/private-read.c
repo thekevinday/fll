@@ -162,11 +162,7 @@ extern "C" {
 #ifndef _di_iki_read_process_buffer_ranges_
   void iki_read_process_buffer_ranges(fll_program_data_t * const main, iki_read_setting_t * const setting, f_string_range_t *buffer_range) {
 
-    {
-      const f_state_t state = macro_f_state_t_initialize(iki_read_common_allocation_large_d, iki_read_common_allocation_small_d, 0, 0, &fll_program_standard_signal_state, 0, (void *) main, 0);
-
-      setting->state.status = fl_iki_read(&setting->buffer, buffer_range, &setting->data, state);
-    }
+    fl_iki_read(&setting->buffer, buffer_range, &setting->data, &setting->state);
 
     if (F_status_is_error(setting->state.status)) {
       iki_read_print_error(setting, main->error, macro_iki_read_f(fl_iki_read));
@@ -275,11 +271,7 @@ extern "C" {
 
     f_string_range_t range = buffer_range;
 
-    {
-      const f_state_t state = macro_f_state_t_initialize(iki_read_common_allocation_large_d, iki_read_common_allocation_small_d, 0, 0, &fll_program_standard_signal_state, 0, (void *) main, 0);
-
-      setting->state.status = fl_iki_read(&setting->buffer, &range, &setting->data, state);
-    }
+    fl_iki_read(&setting->buffer, &range, &setting->data, &setting->state);
 
     if (F_status_is_error(setting->state.status)) {
       iki_read_print_error(setting, main->error, macro_iki_read_f(fl_iki_read));
@@ -389,11 +381,7 @@ extern "C" {
       return;
     }
 
-    {
-      f_state_t state = macro_f_state_t_initialize(iki_read_common_allocation_large_d, iki_read_common_allocation_small_d, 0, 0, &fll_program_standard_signal_state, 0, (void *) main, 0);
-
-      setting->state.status = fl_iki_read(&setting->buffer, &range, &setting->data, state);
-    }
+    fl_iki_read(&setting->buffer, &range, &setting->data, &setting->state);
 
     if (F_status_is_error(setting->state.status)) {
       iki_read_print_error(setting, main->error, macro_iki_read_f(fl_iki_read));

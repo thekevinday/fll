@@ -4,6 +4,10 @@
  * Project: UTF8
  * API Version: 0.7
  * Licenses: lgpl-2.1-or-later
+ *
+ * Provides the bytesequence functionality.
+ *
+ * This is auto-included and should not need to be explicitly included.
  */
 #ifndef _PRIVATE_utf8_bytesequence_h
 #define _PRIVATE_utf8_bytesequence_h

@@ -7,6 +7,8 @@ extern "C" {
 #ifndef _di_fss_write_basic_list_print_help_
   f_status_t fss_write_basic_list_print_help(fss_write_setting_t * const setting, const fl_print_t print) {
 
+    if (!setting) return F_status_set_error(F_output_not);
+
     f_file_stream_lock(print.to);
 
     f_print_dynamic_raw(setting->line_first, print.to);

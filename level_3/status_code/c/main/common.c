@@ -18,7 +18,11 @@ extern "C" {
 
     if (!main || !setting) return;
 
+    setting->state.step_small = status_code_allocation_console_d;
+
     f_console_parameter_process(arguments, &main->parameters, &setting->state, 0);
+
+    setting->state.step_small = status_code_allocation_small_d;
 
     if (F_status_is_error(setting->state.status)) {
       status_code_print_error(setting, main->error, macro_status_code_f(f_console_parameter_process));
@@ -117,7 +121,7 @@ extern "C" {
         if (!(setting->flag & status_code_main_flag_number_e)) {
           setting->state.status = F_status_set_error(F_parameter);
 
-          status_code_print_line_first_locked(setting, main->error);
+          status_code_print_line_first(setting, main->message);
           status_code_print_error_cannot_error_warning_number(setting, main->error);
 
           return;
@@ -127,7 +131,7 @@ extern "C" {
       if (setting->flag & status_code_main_flag_fine_e) {
         setting->state.status = F_status_set_error(F_parameter);
 
-        status_code_print_line_first_locked(setting, main->error);
+        status_code_print_line_first(setting, main->message);
         fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_normal_s, f_console_symbol_long_normal_s, status_code_long_error_s, status_code_long_fine_s);
 
         return;
@@ -136,7 +140,7 @@ extern "C" {
     else if (setting->flag & status_code_main_flag_warning_e && setting->flag & status_code_main_flag_fine_e) {
       setting->state.status = F_status_set_error(F_parameter);
 
-      status_code_print_line_first_locked(setting, main->error);
+      status_code_print_line_first(setting, main->message);
       fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_normal_s, f_console_symbol_long_normal_s, status_code_long_warning_s, status_code_long_fine_s);
 
       return;
@@ -145,7 +149,7 @@ extern "C" {
     if (main->parameters.remaining.used == 0 && !(main->pipe & fll_program_data_pipe_input_e)) {
       setting->state.status = F_status_set_error(F_parameter);
 
-      status_code_print_line_first_locked(setting, main->error);
+      status_code_print_line_first(setting, main->message);
       status_code_print_error_no_status_codes(setting, main->error);
 
       return;

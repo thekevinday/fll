@@ -25,10 +25,10 @@ build_libraries-individual -lfll_error -lfll_print -lfll_program -lfll_status_st
 build_libraries-level -lfll_2 -lfll_1 -lfll_0
 build_libraries-monolithic -lfll
 
-build_sources_library main/status_code.c main/common.c main/common/print.c main/common/string.c main/common/type.c main/convert.c main/print.c main/print-error.c main/process.c
+build_sources_library main/status_code.c main/common.c main/common/print.c main/common/string.c main/common/type.c main/convert.c main/print.c main/print-data.c main/print-error.c main/process.c
 build_sources_library fss/status_code.c fss/common.c
 
-build_sources_headers main/status_code.h main/common.h main/common/print.h main/common/string.h main/common/type.h main/convert.h main/print.h main/print-error.h main/process.h
+build_sources_headers main/status_code.h main/common.h main/common/print.h main/common/string.h main/common/type.h main/convert.h main/print.h main/print-data.h main/print-error.h main/process.h
 build_sources_headers fss/status_code.h fss/common.h
 
 build_sources_documentation man

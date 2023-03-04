@@ -16,21 +16,23 @@
 extern "C" {
 #endif
 
-/***
- * Default allocations.
+/**
+ * The program defines.
  *
- * Set to at least 4 to provide a UTF-8 friendly allocation step.
- *
- * fake_default_allocation_*_d:
- *   - large: A buffer size used for large allocations.
- *   - pipe:  A buffer size used for processing piped data.
- *   - small: A buffer size used for small allocations.
+ * fake_*_d:
+ *   - allocation_console: An allocation step used for small buffers specifically for console parameter.
+ *   - allocation_large:   An allocation step used for buffers that are anticipated to have large buffers.
+ *   - allocation_pipe:    A buffer size used for processing piped data.
+ *   - allocation_small:   An allocation step used for buffers that are anticipated to have small buffers.
+ *   - signal_check:       Number of iterations before performing signal check in non-threaded signal handling.
  */
-#ifndef _di_fake_default_d_
-  #define fake_default_allocation_large_d 64
-  #define fake_default_allocation_pipe_d  16384
-  #define fake_default_allocation_small_d 8
-#endif // _di_fake_default_d_
+#ifndef _di_fake_d_
+  #define fake_allocation_console_d 4
+  #define fake_allocation_large_d   256
+  #define fake_allocation_pipe_d    16384
+  #define fake_allocation_small_d   16
+  #define fake_signal_check_d       20000
+#endif // _di_fake_d_
 
 /**
  * The program defines.

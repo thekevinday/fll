@@ -4,6 +4,8 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
   fll_program_data_t data = fll_program_data_t_initialize;
   iki_read_setting_t setting = iki_read_setting_t_initialize;
+  setting.state.custom = (void *) &data;
+  setting.state.handle = &fll_program_standard_signal_handle;
 
   f_console_parameter_t parameters[] = iki_read_console_parameter_t_initialize;
   data.parameters.array = parameters;
@@ -30,5 +32,5 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
   fll_program_standard_set_down(&data);
 
-  return F_status_is_error(setting.status) ? 1 : 0;
+  return F_status_is_error(setting.state.status) ? 1 : 0;
 }

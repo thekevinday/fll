@@ -29,9 +29,11 @@ extern "C" {
 
     if (!main || !setting) return;
 
-    setting->flag = 0;
+    setting->state.step_small = iki_read_allocation_console_d;
 
     f_console_parameter_process(arguments, &main->parameters, &setting->state, 0);
+
+    setting->state.step_small = iki_read_allocation_small_d;
 
     if (F_status_is_error(setting->state.status)) {
       iki_read_print_error(setting, main->error, macro_iki_read_f(f_console_parameter_process));

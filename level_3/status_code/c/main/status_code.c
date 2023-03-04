@@ -10,7 +10,7 @@ extern "C" {
     if (!main || !setting) return;
 
     if (F_status_is_error(setting->state.status)) {
-      status_code_print_line_last_locked(setting, main->error);
+      status_code_print_line_last(setting, main->message);
 
       return;
     }
@@ -48,6 +48,10 @@ extern "C" {
       fll_program_print_copyright(main->message, (setting->line_first.used ? 0x1 : 0x0) | (setting->line_last.used ? 0x2 : 0x0));
 
       return;
+    }
+
+    if (main->message.verbosity > f_console_verbosity_error_e) {
+      status_code_print_line_first(setting, main->message);
     }
 
     f_status_t status = F_none;
@@ -161,8 +165,8 @@ extern "C" {
       }
     }
 
-    if (F_status_is_error(setting->state.status)) {
-      status_code_print_line_last_locked(setting, F_status_set_fine(setting->state.status) == F_interrupt ? main->message : main->error);
+    if (F_status_is_error(setting->state.status) || main->message.verbosity > f_console_verbosity_error_e) {
+      status_code_print_line_last(setting, main->message);
     }
   }
 #endif // _di_status_code_main_

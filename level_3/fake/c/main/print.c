@@ -141,7 +141,7 @@ extern "C" {
 #ifndef _di_fake_print_help_
   f_status_t fake_print_help(fake_setting_t * const setting, const fl_print_t print) {
 
-    if (!setting) return F_output_not;
+    if (!setting) return F_status_set_error(F_output_not);
 
     f_file_stream_lock(print.to);
 
@@ -230,7 +230,7 @@ extern "C" {
 #ifndef _di_fake_print_line_first_locked_
   f_status_t fake_print_line_first_locked(fake_setting_t * const setting, const fl_print_t print) {
 
-    if (!setting) return F_output_not;
+    if (!setting) return F_status_set_error(F_output_not);
 
     if (setting->flag & fake_main_flag_print_first_e) {
       fll_print_dynamic_raw(setting->line_first, print.to);
@@ -248,7 +248,7 @@ extern "C" {
 #ifndef _di_fake_print_line_first_unlocked_
   f_status_t fake_print_line_first_unlocked(fake_setting_t * const setting, const fl_print_t print) {
 
-    if (!setting) return F_output_not;
+    if (!setting) return F_status_set_error(F_output_not);
 
     if (setting->flag & fake_main_flag_print_first_e) {
       fll_print_dynamic_raw(setting->line_first, print.to);
@@ -266,7 +266,7 @@ extern "C" {
 #ifndef _di_fake_print_line_last_locked_
   f_status_t fake_print_line_last_locked(fake_setting_t * const setting, const fl_print_t print) {
 
-    if (!setting) return F_output_not;
+    if (!setting) return F_status_set_error(F_output_not);
 
     fll_print_dynamic_raw(setting->line_last, print.to);
 
@@ -277,7 +277,7 @@ extern "C" {
 #ifndef _di_fake_print_line_last_unlocked_
   f_status_t fake_print_line_last_unlocked(fake_setting_t * const setting, const fl_print_t print) {
 
-    if (!setting) return F_output_not;
+    if (!setting) return F_status_set_error(F_output_not);
 
     f_print_dynamic_raw(setting->line_last, print.to);
 

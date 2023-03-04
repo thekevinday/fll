@@ -4,6 +4,10 @@
  * Project: Status Code
  * API Version: 0.7
  * Licenses: lgpl-2.1-or-later
+ *
+ * Provides the convert functionality.
+ *
+ * This is auto-included and should not need to be explicitly included.
  */
 #ifndef _PRIVATE_status_code_convert_h
 #define _PRIVATE_status_code_convert_h

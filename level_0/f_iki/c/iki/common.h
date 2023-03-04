@@ -22,12 +22,14 @@ extern "C" {
  * For a UTF-8 friendly allocation step, set to at least 4.
  *
  * F_iki_default_allocation_*:
- *   - large: The large allocation size.
- *   - small: The small allocation size, in particular used for allocation iki strings.
+ *   - console: An allocation step used for small buffers specifically for console parameter.
+ *   - large:   The large allocation size.
+ *   - small:   The small allocation size, in particular used for allocation iki strings.
  */
 #ifndef _di_f_iki_default_d_
-  #define F_iki_default_allocation_large_d F_memory_default_allocation_large_d
-  #define F_iki_default_allocation_small_d 8
+  #define F_iki_default_allocation_console_d 8
+  #define F_iki_default_allocation_large_d   F_memory_default_allocation_large_d
+  #define F_iki_default_allocation_small_d   8
 #endif // _di_f_iki_default_d_
 
 /**

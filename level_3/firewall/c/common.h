@@ -99,17 +99,19 @@ extern "C" {
 #endif // _di_firewall_path_s_
 
 /**
- * Default allocations.
- */
-#ifndef _di_firewall_default_d_
-  #define firewall_default_allocation_step_d F_memory_default_allocation_small_d
-#endif // _di_firewall_default_d_
-
-/**
  * The program defines.
+ *
+ * firewall_*:
+ *   - allocation_console: An allocation step used for small buffers specifically for console parameter.
+ *   - allocation_large:   An allocation step used for buffers that are anticipated to have large buffers.
+ *   - allocation_small:   An allocation step used for buffers that are anticipated to have small buffers.
+ *   - signal_check:       Number of iterations before performing signal check in non-threaded signal handling.
  */
 #ifndef _di_firewall_d_
-  #define firewall_signal_check_d 20000
+  #define firewall_allocation_console_d 4
+  #define firewall_allocation_large_d   256
+  #define firewall_allocation_small_d   16
+  #define firewall_signal_check_d       20000
 #endif // _di_firewall_d_
 
 /**

@@ -75,9 +75,11 @@ extern "C" {
 
     if (!main || !setting) return;
 
-    setting->flag = 0;
+    setting->state.step_small = fss_payload_read_allocation_console_d;
 
     f_console_parameter_process(arguments, &main->parameters, &setting->state, 0);
+
+    setting->state.step_small = fss_payload_read_allocation_small_d;
 
     if (F_status_is_error(setting->state.status)) {
       fss_payload_read_print_line_first_locked(setting, main->error);

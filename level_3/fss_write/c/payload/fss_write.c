@@ -22,7 +22,7 @@ extern "C" {
     f_status_t status_pipe = F_none;
     f_file_t input = f_file_t_initialize;
     input.id = F_type_descriptor_input_d;
-    input.size_read = fss_write_default_allocation_large_d;
+    input.size_read = fss_write_allocation_large_d;
 
     fss_write_setting_t * const setting = macro_fss_write_setting(void_setting);
 
@@ -190,9 +190,10 @@ extern "C" {
 
         // Check to see if the Content supports multiple Content per Object.
         if (flag & 0x4) {
-          if (!(setting->flag & fss_write_flag_content_multiple_e)) {
+          if (!(setting->flag & fss_write_main_flag_content_multiple_e)) {
             setting->state.status = F_status_set_error(F_support_not);
 
+            fss_write_print_line_first(setting, main->message);
             fss_write_print_error_one_content_only(setting, main->error);
 
             break;
@@ -256,6 +257,7 @@ extern "C" {
               if (setting->block.string[range.start] == fss_write_pipe_content_start_s.string[0]) {
                 setting->state.status = F_status_set_error(F_support_not);
 
+                fss_write_print_line_first(setting, main->message);
                 fss_write_print_error_one_content_only(setting, main->error);
 
                 break;
@@ -385,8 +387,8 @@ extern "C" {
 
     fss_write_setting_t * const setting = macro_fss_write_setting(void_setting);
 
-    if ((!(setting->flag & fss_write_flag_partial_e) || (setting->flag & fss_write_flag_partial_e) && (setting->flag & fss_write_flag_object_e))) {
-      if (setting->object && !(setting->flag & fss_write_flag_partial_e) && setting->contents && setting->contents->used) {
+    if ((!(setting->flag & fss_write_main_flag_partial_e) || (setting->flag & fss_write_main_flag_partial_e) && (setting->flag & fss_write_main_flag_object_e))) {
+      if (setting->object && !(setting->flag & fss_write_main_flag_partial_e) && setting->contents && setting->contents->used) {
         if (setting->object->used) {
           setting->range.start = 0;
           setting->range.stop = setting->object->used - 1;
@@ -396,21 +398,21 @@ extern "C" {
           setting->range.stop = 0;
         }
 
-        setting->state.status = fll_fss_payload_write(
+        fll_fss_payload_write(
           *setting->object,
           setting->contents->array[0],
-          (setting->flag & fss_write_flag_trim_e),
-          (setting->flag & fss_write_flag_prepend_e)
+          (setting->flag & fss_write_main_flag_trim_e),
+          (setting->flag & fss_write_main_flag_prepend_e)
             ? &setting->prepend
             : 0,
-          setting->state,
-          &setting->buffer
+          &setting->buffer,
+          &setting->state
         );
 
         if (F_status_set_fine(setting->state.status) == F_none_eol) {
           setting->state.status = F_status_set_error(F_support_not);
 
-          fss_write_print_line_first_locked(setting, main->error);
+          fss_write_print_line_first(setting, main->message);
           fss_write_print_error_unsupported_eol(setting, main->error);
 
           return;
@@ -433,24 +435,24 @@ extern "C" {
             setting->range.stop = 0;
           }
 
-          setting->state.status = fl_fss_basic_list_object_write(
+          fl_fss_basic_list_object_write(
             *setting->object,
-            (setting->flag & fss_write_flag_partial_e)
-              ? (setting->flag & fss_write_flag_trim_e)
+            (setting->flag & fss_write_main_flag_partial_e)
+              ? (setting->flag & fss_write_main_flag_trim_e)
                 ? f_fss_complete_trim_e
                 : f_fss_complete_none_e
-              : (setting->flag & fss_write_flag_trim_e)
+              : (setting->flag & fss_write_main_flag_trim_e)
                 ? f_fss_complete_full_trim_e
                 : f_fss_complete_full_e,
-            setting->state,
             &setting->range,
-            &setting->buffer
+            &setting->buffer,
+            &setting->state
           );
 
           if (F_status_set_fine(setting->state.status) == F_none_eol) {
             setting->state.status = F_status_set_error(F_support_not);
 
-            fss_write_print_line_first_locked(setting, main->error);
+            fss_write_print_line_first(setting, main->message);
             fss_write_print_error_unsupported_eol(setting, main->error);
 
             return;
@@ -463,8 +465,8 @@ extern "C" {
           }
         }
 
-        if ((setting->flag & fss_write_flag_partial_e) && !(setting->flag & fss_write_flag_content_e) || !(setting->flag & (fss_write_flag_object_e | fss_write_flag_content_e))) {
-          if (setting->flag & fss_write_flag_object_open_e) {
+        if ((setting->flag & fss_write_main_flag_partial_e) && !(setting->flag & fss_write_main_flag_content_e) || !(setting->flag & (fss_write_main_flag_object_e | fss_write_main_flag_content_e))) {
+          if (setting->flag & fss_write_main_flag_object_open_e) {
             setting->state.status = f_string_dynamic_append(f_fss_basic_list_open_s, &setting->buffer);
 
             if (F_status_is_error_not(setting->state.status)) {
@@ -487,21 +489,21 @@ extern "C" {
 
         const f_string_static_t *prepend = 0;
 
-        if (setting->flag & fss_write_flag_prepend_e) {
+        if (setting->flag & fss_write_main_flag_prepend_e) {
           const f_array_length_t index = main->parameters.array[fss_write_parameter_prepend_e].values.array[main->parameters.array[fss_write_parameter_prepend_e].values.used - 1];
 
           prepend = &main->parameters.arguments.array[index];
         }
 
-        setting->state.status = fl_fss_basic_list_content_write(
+        fl_fss_basic_list_content_write(
           setting->contents->array[0],
           setting->object
             ? f_fss_complete_full_e
             : f_fss_complete_none_e,
           prepend,
-          setting->state,
           &setting->range,
-          &setting->buffer
+          &setting->buffer,
+          &setting->state
         );
 
         if (F_status_is_error(setting->state.status)) {
@@ -511,8 +513,8 @@ extern "C" {
         }
       }
 
-      if ((setting->flag & fss_write_flag_partial_e) && !(setting->flag & fss_write_flag_object_e) || !(setting->flag & (fss_write_flag_object_e | fss_write_flag_content_e))) {
-        if (setting->flag & fss_write_flag_content_end_e) {
+      if ((setting->flag & fss_write_main_flag_partial_e) && !(setting->flag & fss_write_main_flag_object_e) || !(setting->flag & (fss_write_main_flag_object_e | fss_write_main_flag_content_e))) {
+        if (setting->flag & fss_write_main_flag_content_end_e) {
           setting->state.status = f_string_dynamic_append(f_fss_basic_list_close_s, &setting->buffer);
 
           if (F_status_is_error(setting->state.status)) {
@@ -542,7 +544,7 @@ extern "C" {
 #endif // _di_fss_write_payload_process_set_
 
 #ifndef _di_fss_write_payload_setting_load_
-  void fss_write_payload_setting_load(const f_console_arguments_t arguments, fll_program_data_t * const main, fss_write_setting_t * const setting, f_state_t * const state) {
+  void fss_write_payload_setting_load(const f_console_arguments_t arguments, fll_program_data_t * const main, fss_write_setting_t * const setting) {
 
     if (!main || !setting) return;
 
@@ -556,6 +558,7 @@ extern "C" {
         if (fl_string_dynamic_compare(argv[values->array[i]], fss_write_payload_s) == F_equal_to && i + 1 < values->used) {
           setting->state.status = F_status_set_error(F_parameter);
 
+          fss_write_print_line_first(setting, main->message);
           fss_write_payload_print_error_payload_not_last(setting, main->error);
 
           return;

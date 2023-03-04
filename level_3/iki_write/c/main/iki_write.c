@@ -1,6 +1,4 @@
 #include "iki_write.h"
-#include "private-common.h"
-#include "private-write.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -12,7 +10,7 @@ extern "C" {
     if (!main || !setting) return;
 
     if (F_status_is_error(setting->state.status)) {
-      iki_write_print_line_last_locked(setting, main->error);
+      iki_write_print_line_last(setting, main->message);
 
       return;
     }
@@ -35,6 +33,10 @@ extern "C" {
       fll_program_print_copyright(main->message, (setting->line_first.used ? 0x1 : 0x0) | (setting->line_last.used ? 0x2 : 0x0));
 
       return;
+    }
+
+    if (main->message.verbosity > f_console_verbosity_error_e) {
+      iki_write_print_line_first(setting, main->message);
     }
 
     setting->escaped.used = 0;
@@ -74,6 +76,7 @@ extern "C" {
             setting->state.status = F_status_set_error(F_pipe);
 
             iki_write_print_error_file(setting, main->error, macro_iki_write_f(f_file_read), f_string_ascii_minus_s, f_file_operation_read_s, fll_error_file_type_pipe_e);
+            iki_write_print_line_last(setting, main->message);
 
             return;
           }
@@ -81,9 +84,8 @@ extern "C" {
           if (!setting->buffer.used) {
             setting->state.status = F_status_set_error(F_parameter);
 
-            iki_write_print_line_first_locked(setting, main->error);
             fll_program_print_error_pipe_missing_content(main->error);
-            iki_write_print_line_last_locked(setting, main->error);
+            iki_write_print_line_last(setting, main->message);
 
             return;
           }
@@ -107,9 +109,8 @@ extern "C" {
         if (object_ended && previous == range.start) {
           setting->state.status = F_status_set_error(F_parameter);
 
-          iki_write_print_line_first_locked(setting, main->error);
           fll_program_print_error_pipe_invalid_form_feed(main->error);
-          iki_write_print_line_last_locked(setting, main->error);
+          iki_write_print_line_last(setting, main->message);
 
           return;
         }
@@ -166,9 +167,8 @@ extern "C" {
       if (object_ended) {
         setting->state.status = F_status_set_error(F_parameter);
 
-        iki_write_print_line_first_locked(setting, main->error);
         fll_program_print_error_pipe_object_without_content(main->error);
-        iki_write_print_line_last_locked(setting, main->error);
+        iki_write_print_line_last(setting, main->message);
 
         return;
       }
@@ -192,8 +192,8 @@ extern "C" {
       fll_print_dynamic_raw(f_string_eol_s, main->output.to);
     } // for
 
-    if (F_status_is_error(setting->state.status)) {
-      iki_write_print_line_last_locked(setting, F_status_set_fine(setting->state.status) == F_interrupt ? main->message : main->error);
+    if (F_status_is_error(setting->state.status) || main->message.verbosity > f_console_verbosity_error_e) {
+      iki_write_print_line_last(setting, main->message);
     }
   }
 #endif // _di_iki_write_main_

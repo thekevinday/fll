@@ -35,7 +35,9 @@ extern "C" {
       return;
     }
 
-    utf8_print_line_first(setting, main->message);
+    if (main->message.verbosity > f_console_verbosity_error_e) {
+      utf8_print_line_first(setting, main->message);
+    }
 
     f_status_t valid = F_true;
 

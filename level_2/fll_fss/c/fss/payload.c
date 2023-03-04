@@ -242,7 +242,7 @@ extern "C" {
         for (; i < content.used && i + F_fss_default_block_size_normal_d < content.used; i += F_fss_default_block_size_normal_d) {
 
           if (state->interrupt) {
-            state->interrupt((void *) &state, 0);
+            state->interrupt((void *) state, 0);
             if (F_status_set_fine(state->status) == F_interrupt) return;
           }
 

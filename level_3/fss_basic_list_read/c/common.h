@@ -60,10 +60,19 @@ extern "C" {
 #endif // _di_fss_basic_list_read_program_name_s_
 
 /**
- * The program signal defines.
+ * The program defines.
+ *
+ * fss_basic_list_read_*:
+ *   - allocation_console: An allocation step used for small buffers specifically for console parameter.
+ *   - allocation_large:   An allocation step used for buffers that are anticipated to have large buffers.
+ *   - allocation_small:   An allocation step used for buffers that are anticipated to have small buffers.
+ *   - signal_check:       Number of iterations before performing signal check in non-threaded signal handling.
  */
 #ifndef _di_fss_basic_list_read_d_
-  #define fss_basic_list_read_signal_check_d 20000
+  #define fss_basic_list_read_allocation_console_d 4
+  #define fss_basic_list_read_allocation_large_d   256
+  #define fss_basic_list_read_allocation_small_d   16
+  #define fss_basic_list_read_signal_check_d       20000
 #endif // _di_fss_basic_list_read_d_
 
 /**

@@ -4,6 +4,10 @@
  * Project: UTF8
  * API Version: 0.7
  * Licenses: lgpl-2.1-or-later
+ *
+ * Provides the print error functionality.
+ *
+ * This is auto-included and should not need to be explicitly included.
  */
 #ifndef _utf8_print_error_h
 #define _utf8_print_error_h
@@ -207,8 +211,6 @@ extern "C" {
  *   F_output_not (with error bit) if setting is NULL.
  *
  * @see fll_print_format()
- *
- * @see utf8_print_line_first()
  */
 #ifndef _di_utf8_print_error_parameter_file_to_too_many_
   extern f_status_t utf8_print_error_parameter_file_to_too_many(utf8_setting_t * const setting, const fl_print_t print);
