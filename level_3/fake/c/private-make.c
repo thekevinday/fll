@@ -90,6 +90,8 @@ extern "C" {
 
         funlockfile(data->main->error.to.stream);
       }
+
+      return F_status_set_error(F_failure);
     }
 
     *id = (gid_t) number;
@@ -183,6 +185,8 @@ extern "C" {
 
         funlockfile(data->main->error.to.stream);
       }
+
+      return F_status_set_error(F_failure);
     }
 
     *id = (uid_t) number;
