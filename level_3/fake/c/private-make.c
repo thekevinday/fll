@@ -69,7 +69,7 @@ extern "C" {
             funlockfile(data->main->error.to.stream);
           }
 
-          return F_status_set_error(F_failure);
+          return F_status_set_error(F_exist_not);
         }
 
         return F_none;
@@ -164,7 +164,7 @@ extern "C" {
             funlockfile(data->main->error.to.stream);
           }
 
-          return F_status_set_error(F_failure);
+          return F_status_set_error(F_exist_not);
         }
 
         return F_none;

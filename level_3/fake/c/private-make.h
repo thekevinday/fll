@@ -45,7 +45,6 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_exist_not if there is no group by the given name.
  *
  *   Status codes (with error bit) are returned on any problem.
  */
@@ -71,8 +70,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_exist_not if there is no mode by the given name.
  *
+ *   F_exist_not (with error bit) if there is no mode by the given name.
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_get_id_mode_
@@ -93,8 +92,8 @@ extern "C" {
  *
  * @return
  *   F_none on success.
- *   F_exist_not if there is no user by the given name.
  *
+ *   F_exist_not (with error bit) if there is no mode by the given name.
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_get_id_owner_
