@@ -1,0 +1,29 @@
+# fss-0005 iki-0002
+#
+# This is an example showing the return status code results.
+# This simulates a success and a failure return result.
+#
+
+setting:
+  # Set failure to "warng" to not exit (options are "exit" (default), "warn", and "ignore".
+  fail warn
+
+main:
+  print
+  print "Simulating Success Return:"
+
+  # The fake program probably exists, so use it for success.
+  run fake +v
+
+  print "Return code is 'parameter:"return"'."
+
+
+  print
+  print "Simulating Failure Return:"
+
+  # Trigger an error, if "exit" doesn't exist then this is an error but if it does then exit with value 1 to represent an error.
+  shell exit 1
+
+  print "Return code is 'parameter:"return"'."
+
+  exit success

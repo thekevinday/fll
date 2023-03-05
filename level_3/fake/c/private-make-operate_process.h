@@ -120,6 +120,8 @@ extern "C" {
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param return_code
  *   The return code to process.
+ * @param status
+ *   The status immediately prior to this operation.
  *
  * @return
  *   F_none on success.
@@ -136,7 +138,7 @@ extern "C" {
  * @see f_string_dynamic_append()
  */
 #ifndef _di_fake_make_operate_process_return_
-  extern f_status_t fake_make_operate_process_return(fake_make_data_t * const data_make, const int return_code) F_attribute_visibility_internal_d;
+  extern f_status_t fake_make_operate_process_return(fake_make_data_t * const data_make, const int return_code, const f_status_t status) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_process_return_
 
 /**

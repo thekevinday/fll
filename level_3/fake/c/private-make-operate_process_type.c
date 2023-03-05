@@ -49,7 +49,7 @@ extern "C" {
     const f_status_t status = fake_build_operate(data_make->data, data_make->cache_arguments.used ? &data_make->cache_arguments : 0, F_false);
     if (F_status_set_fine(status) == F_interrupt) return status;
 
-    return fake_make_operate_process_return(data_make, F_status_is_error(status) ? 1 : 0);
+    return fake_make_operate_process_return(data_make, F_status_is_error(status) ? 1 : 0, status);
   }
 #endif // _di_fake_make_operate_process_type_build_
 
@@ -59,7 +59,7 @@ extern "C" {
     const f_status_t status = fake_clean_operate(data_make->data);
     if (F_status_set_fine(status) == F_interrupt) return status;
 
-    return fake_make_operate_process_return(data_make, F_status_is_error(status) ? 1 : 0);
+    return fake_make_operate_process_return(data_make, F_status_is_error(status) ? 1 : 0, status);
   }
 #endif // _di_fake_make_operate_process_type_clean_
 
@@ -75,7 +75,7 @@ extern "C" {
       return result;
     }
 
-    *status = fake_make_operate_process_return(data_make, result);
+    *status = fake_make_operate_process_return(data_make, result, *status);
 
     return 0;
   }
@@ -1301,7 +1301,7 @@ extern "C" {
 
     if (*status == F_child) return result;
 
-    *status = fake_make_operate_process_return(data_make, result);
+    *status = fake_make_operate_process_return(data_make, result, *status);
 
     return 0;
   }
@@ -1790,7 +1790,7 @@ extern "C" {
     const f_status_t status = fake_skeleton_operate(data_make->data);
     if (F_status_set_fine(status) == F_interrupt) return status;
 
-    return fake_make_operate_process_return(data_make, F_status_is_error(status) ? 1 : 0);
+    return fake_make_operate_process_return(data_make, F_status_is_error(status) ? 1 : 0, status);
   }
 #endif // _di_fake_make_operate_process_type_skeleton_
 

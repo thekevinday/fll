@@ -387,72 +387,68 @@ extern "C" {
       }
     }
 
-    return fake_make_operate_process_return(data_make, return_code);
+    return fake_make_operate_process_return(data_make, return_code, status);
   }
 #endif // _di_fake_make_operate_process_execute_
 
 #ifndef _di_fake_make_operate_process_return_
-  f_status_t fake_make_operate_process_return(fake_make_data_t * const data_make, const int return_code) {
+  f_status_t fake_make_operate_process_return(fake_make_data_t * const data_make, const int return_code, const f_status_t status) {
 
-    f_status_t status = F_none;
+    f_status_t result = F_none;
 
     data_make->setting_make.parameter.array[0].value.array[0].used = 0;
-
-    if (!return_code) {
-      if (F_status_is_error(status)) {
-        status = f_string_dynamic_append(f_string_ascii_1_s, &data_make->setting_make.parameter.array[0].value.array[0]);
-      }
-      else {
-        status = f_string_dynamic_append(f_string_ascii_0_s, &data_make->setting_make.parameter.array[0].value.array[0]);
-      }
-
-      if (F_status_is_error(status)) {
-        fll_error_print(data_make->error, F_status_set_fine(status), "f_string_dynamic_append", F_true);
-      }
-
-      return status;
-    }
 
     if (return_code) {
       f_string_dynamic_t number = f_string_dynamic_t_initialize;
 
-      status = f_conversion_number_signed_to_string(WEXITSTATUS(return_code), f_conversion_data_base_10_c, &number);
+      result = f_conversion_number_signed_to_string(WEXITSTATUS(return_code), f_conversion_data_base_10_c, &number);
 
-      if (F_status_is_error(status)) {
-        fll_error_print(data_make->error, F_status_set_fine(status), "f_conversion_number_signed_to_string", F_true);
+      if (F_status_is_error(result)) {
+        fll_error_print(data_make->error, F_status_set_fine(result), "f_conversion_number_signed_to_string", F_true);
 
         f_string_dynamic_resize(0, &number);
 
-        return status;
+        return result;
       }
 
-      status = f_string_dynamic_append(number, &data_make->setting_make.parameter.array[0].value.array[0]);
+      result = f_string_dynamic_append(number, &data_make->setting_make.parameter.array[0].value.array[0]);
 
       f_string_dynamic_resize(0, &number);
-    }
-    else {
-      status = f_string_dynamic_append(f_string_ascii_0_s, &data_make->setting_make.parameter.array[0].value.array[0]);
+
+      if (F_status_is_error(result)) {
+        fll_error_print(data_make->error, F_status_set_fine(result), "f_string_dynamic_append", F_true);
+
+        return result;
+      }
+
+      if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
+        flockfile(data_make->error.to.stream);
+
+        fl_print_format("%r%[%QFailed with return code %]", data_make->error.to.stream, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
+        fl_print_format("%[%i%]", data_make->error.to.stream, data_make->error.notable, return_code, data_make->error.notable);
+        fl_print_format("%[.%]%r", data_make->error.to.stream, data_make->error.context, data_make->error.context, f_string_eol_s);
+
+        funlockfile(data_make->error.to.stream);
+      }
+
+      return data_make->setting_make.fail == fake_make_operation_fail_type_exit_e ? F_status_set_error(F_failure) : F_failure;
     }
 
     if (F_status_is_error(status)) {
-      fll_error_print(data_make->error, F_status_set_fine(status), "f_string_dynamic_append", F_true);
-
-      return status;
+      result = f_string_dynamic_append(f_string_ascii_1_s, &data_make->setting_make.parameter.array[0].value.array[0]);
+    }
+    else {
+      result = f_string_dynamic_append(f_string_ascii_0_s, &data_make->setting_make.parameter.array[0].value.array[0]);
     }
 
-    if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
-      flockfile(data_make->error.to.stream);
-
-      fl_print_format("%r%[%QFailed with return code %]", data_make->error.to.stream, f_string_eol_s, data_make->error.context, data_make->error.prefix, data_make->error.context);
-      fl_print_format("%[%i%]", data_make->error.to.stream, data_make->error.notable, return_code, data_make->error.notable);
-      fl_print_format("%[.%]%r", data_make->error.to.stream, data_make->error.context, data_make->error.context, f_string_eol_s);
-
-      funlockfile(data_make->error.to.stream);
+    if (F_status_is_error(result)) {
+      fll_error_print(data_make->error, F_status_set_fine(result), "f_string_dynamic_append", F_true);
+    }
+    else {
+      result = F_none;
     }
 
-    if (data_make->setting_make.fail == fake_make_operation_fail_type_exit_e) return F_status_set_error(F_failure);
-
-    return F_failure;
+    return result;
   }
 #endif // _di_fake_make_operate_process_return_
 
