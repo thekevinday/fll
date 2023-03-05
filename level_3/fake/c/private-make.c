@@ -42,6 +42,12 @@ extern "C" {
 #ifndef _di_fake_make_get_id_group_
   f_status_t fake_make_get_id_group(fake_data_t * const data, const fl_print_t print, const f_string_static_t buffer, gid_t *id) {
 
+    if (!buffer.used) {
+      fll_error_print(print, F_parameter, "fake_make_get_id_group", F_true);
+
+      return F_status_set_error(F_parameter);
+    }
+
     f_number_unsigned_t number = 0;
 
     f_status_t status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, buffer, &number);
@@ -136,6 +142,12 @@ extern "C" {
 
 #ifndef _di_fake_make_get_id_owner_
   f_status_t fake_make_get_id_owner(fake_data_t * const data, const fl_print_t print, const f_string_static_t buffer, uid_t *id) {
+
+    if (!buffer.used) {
+      fll_error_print(print, F_parameter, "fake_make_get_id_owner", F_true);
+
+      return F_status_set_error(F_parameter);
+    }
 
     f_number_unsigned_t number = 0;
 

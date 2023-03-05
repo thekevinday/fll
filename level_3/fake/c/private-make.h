@@ -110,6 +110,8 @@ extern "C" {
  *   The NULL terminated path to get the relative path of.
  *
  * @return
+ *   F_none on success.
+ *
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_path_relative_
