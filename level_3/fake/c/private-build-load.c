@@ -1549,7 +1549,9 @@ extern "C" {
 
       if (F_status_is_error_not(*status) && data->process.used) {
         *status = f_string_dynamic_append_nulless(data->process, values[i]);
+      }
 
+      if (F_status_is_error_not(*status)) {
         *status = f_string_dynamic_append_nulless(fake_build_stage_separate_s, values[i]);
       }
 
