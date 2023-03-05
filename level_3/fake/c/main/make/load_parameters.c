@@ -1,5 +1,4 @@
 #include "../fake.h"
-#include "load_parameters.h"
 
 #ifdef __cplusplus
 extern "C" {

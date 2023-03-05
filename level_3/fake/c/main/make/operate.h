@@ -136,25 +136,44 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
+ *
+ *   This alters data_make.setting.state.status:
+ *     F_none on success.
+ *     F_child on child process exiting.
+ *     F_signal_abort on abort signal received.
+ *     F_signal_quit on quit signal received.
+ *
+ *     F_failure (with error bit) on failure.
+ *     F_interrupt (with error bit) on interrupt signal received.
+ *     F_parameter (with error bit) on invalid parameter.
+ *     F_recurse (with error bit) is returned if unable to recurse to another operation section (usually max stack depth reached).
+ *     F_valid_not (with error bit) is returned if any part of the section is invalid, such as an invalid operation name.
+ *
+ *     Errors (with error bit) from: f_array_lengths_increase()
+ *     Errors (with error bit) from: fake_make_operate_block_postprocess()
+ *     Errors (with error bit) from: fake_make_operate_block_prepare()
+ *     Errors (with error bit) from: fake_make_operate_expand()
+ *     Errors (with error bit) from: fake_make_operate_process()
+ *     Errors (with error bit) from: fake_make_operate_validate()
  * @param id_section
  *   The array location id within the fakefile of the section to operate on.
  * @param section_stack
  *   The current operation stack.
- * @param status
- *   F_none on success.
- *
- *   F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
- *   F_recurse (with error bit) is returned if unable to recurse to another operation section (usually max stack depth reached).
- *   F_valid_not (with error bit) is returned if any part of the section is invalid, such as an invalid operation name.
- *
- *   Status codes (with error bit) are returned on any problem.
  *
  * @return
  *   The return code of the execution process.
  *   This generally is only needed when F_child is returned, where this holds the return status of the child process.
+ *
+ * @see f_array_lengths_increase()
+ * @see fll_program_print_signal_received()
+ * @see fake_make_operate_block_postprocess()
+ * @see fake_make_operate_block_prepare()
+ * @see fake_make_operate_expand()
+ * @see fake_make_operate_process()
+ * @see fake_make_operate_validate()
  */
 #ifndef _di_fake_make_operate_section_
-  extern int fake_make_operate_section(fake_make_data_t * const data_make, const f_array_length_t id_section, f_array_lengths_t *section_stack, f_status_t * const status);
+  extern int fake_make_operate_section(fake_make_data_t * const data_make, const f_array_length_t id_section, f_array_lengths_t *section_stack);
 #endif // _di_fake_make_operate_section_
 
 #ifdef __cplusplus

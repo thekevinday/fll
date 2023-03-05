@@ -1,6 +1,4 @@
 #include "iki_read.h"
-#include "private-common.h"
-#include "private-read.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -12,7 +10,7 @@ extern "C" {
     if (!main || !setting) return;
 
     if (F_status_is_error(setting->state.status)) {
-      iki_read_print_line_last_locked(setting, main->error);
+      iki_read_print_line_last(setting, main->message);
 
       return;
     }
@@ -36,6 +34,8 @@ extern "C" {
 
       return;
     }
+
+    iki_read_print_line_first(setting, main->message);
 
     if (main->pipe & fll_program_data_pipe_input_e) {
       f_file_t file = f_file_t_initialize;
@@ -169,7 +169,7 @@ extern "C" {
     }
 
     if (F_status_is_error(setting->state.status)) {
-      iki_read_print_line_last_locked(setting, F_status_set_fine(setting->state.status) == F_interrupt ? main->message : main->error);
+      iki_read_print_line_last(setting, main->message);
     }
   }
 #endif // _di_iki_read_main_

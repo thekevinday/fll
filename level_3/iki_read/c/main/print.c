@@ -1,36 +1,13 @@
 #include "iki_read.h"
-#include "private-common.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#ifndef _di_iki_read_print_error_
-  f_status_t iki_read_print_error(iki_read_setting_t * const setting, const fl_print_t print, const f_string_t function) {
-
-    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
-
-    iki_read_print_line_first_locked(setting, print);
-    fll_error_print(print, F_status_set_fine(setting->state.status), function, fll_error_file_flag_fallback_e);
-
-    return F_none;
-  }
-#endif // _di_iki_read_print_error_
-
-#ifndef _di_iki_read_print_error_file_
-  f_status_t iki_read_print_error_file(iki_read_setting_t * const setting, const fl_print_t print, const f_string_t function, const f_string_static_t name, const f_string_static_t operation, const uint8_t type) {
-
-    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
-
-    iki_read_print_line_first_locked(setting, print);
-    fll_error_file_print(print, F_status_set_fine(setting->state.status), function, fll_error_file_flag_fallback_e, name, operation, type);
-
-    return F_none;
-  }
-#endif // _di_iki_read_print_error_file_
-
 #ifndef _di_iki_read_print_help_
   f_status_t iki_read_print_help(iki_read_setting_t * const setting, const fl_print_t print) {
+
+    if (!setting) return F_status_set_error(F_output_not);
 
     f_file_stream_lock(print.to);
 
@@ -124,40 +101,31 @@ extern "C" {
   }
 #endif // _di_iki_read_print_help_
 
-#ifndef _di_iki_read_print_line_first_locked_
-  f_status_t iki_read_print_line_first_locked(iki_read_setting_t * const setting, const fl_print_t print) {
+#ifndef _di_iki_read_print_line_first_
+  f_status_t iki_read_print_line_first(iki_read_setting_t * const setting, const fl_print_t print) {
 
-    if (!setting || print.verbosity < f_console_verbosity_error_e) return F_output_not;
-
-    if (F_status_is_error_not(setting->state.status)) {
-      if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
-    }
-
-    f_print_dynamic_raw(setting->line_first, print.to);
-
-    return F_none;
-  }
-#endif // _di_iki_read_print_line_first_locked_
-
-#ifndef _di_iki_read_print_line_first_unlocked_
-  f_status_t iki_read_print_line_first_unlocked(iki_read_setting_t * const setting, const fl_print_t print) {
-
-    if (!setting || print.verbosity < f_console_verbosity_error_e) return F_output_not;
+    if (!setting) return F_status_set_error(F_output_not);
+    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
 
     if (F_status_is_error_not(setting->state.status)) {
       if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
     }
 
-    fll_print_dynamic_raw(setting->line_first, print.to);
+    if (setting->flag & iki_read_main_flag_print_first_e) {
+      fll_print_dynamic_raw(setting->line_first, print.to);
+
+      setting->flag -= iki_read_main_flag_print_first_e;
+    }
 
     return F_none;
   }
-#endif // _di_iki_read_print_line_first_unlocked_
+#endif // _di_iki_read_print_line_first_
 
-#ifndef _di_iki_read_print_line_last_locked_
-  f_status_t iki_read_print_line_last_locked(iki_read_setting_t * const setting, const fl_print_t print) {
+#ifndef _di_iki_read_print_line_last_
+  f_status_t iki_read_print_line_last(iki_read_setting_t * const setting, const fl_print_t print) {
 
-    if (!setting || print.verbosity < f_console_verbosity_error_e) return F_output_not;
+    if (!setting) return F_status_set_error(F_output_not);
+    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
 
     if (F_status_is_error_not(setting->state.status)) {
       if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
@@ -167,22 +135,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // _di_iki_read_print_line_last_locked_
-
-#ifndef _di_iki_read_print_line_last_unlocked_
-  f_status_t iki_read_print_line_last_unlocked(iki_read_setting_t * const setting, const fl_print_t print) {
-
-    if (!setting || print.verbosity < f_console_verbosity_error_e) return F_output_not;
-
-    if (F_status_is_error_not(setting->state.status)) {
-      if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
-    }
-
-    f_print_dynamic_raw(setting->line_last, print.to);
-
-    return F_none;
-  }
-#endif // _di_iki_read_print_line_last_unlocked_
+#endif // _di_iki_read_print_line_last_
 
 #ifdef __cplusplus
 } // extern "C"

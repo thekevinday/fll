@@ -1,5 +1,4 @@
 #include "fake.h"
-#include "clean.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -10,8 +9,6 @@ extern "C" {
 
     if (data->main->message.verbosity != f_console_verbosity_quiet_e && data->main->message.verbosity != f_console_verbosity_error_e) {
       f_file_stream_lock(data->main->message.to);
-
-      fake_print_line_first_unlocked(data->setting, data->main->message);
 
       fl_print_format("%[Deleting all files within build directory '%]", data->main->message.to, data->main->context.set.important, data->main->context.set.important);
       fl_print_format("%[%Q%]", data->main->message.to, data->main->context.set.notable, data->setting->build, data->main->context.set.notable);

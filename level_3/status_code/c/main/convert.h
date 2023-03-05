@@ -9,8 +9,8 @@
  *
  * This is auto-included and should not need to be explicitly included.
  */
-#ifndef _PRIVATE_status_code_convert_h
-#define _PRIVATE_status_code_convert_h
+#ifndef _status_code_convert_h
+#define _status_code_convert_h
 
 #ifdef __cplusplus
 extern "C" {
@@ -48,4 +48,4 @@ extern "C" {
 } // extern "C"
 #endif
 
-#endif // _PRIVATE_status_code_convert_h
+#endif // _status_code_convert_h

@@ -1,5 +1,4 @@
 #include "../fake.h"
-#include "print.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -8,11 +7,10 @@ extern "C" {
 #ifndef _di_fake_make_print_now_making_
   f_status_t fake_make_print_now_making(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t fakefile) {
 
+    if (!setting) return F_status_set_error(F_output_not);
     if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
 
     f_file_stream_lock(print.to);
-
-    fake_print_line_first_unlocked(setting, print);
 
     fl_print_format("%[Now making using '%]", print.to, print.set->important, print.set->important);
     fl_print_format("%[%Q%]", print.to, print.set->notable, fakefile, print.set->notable);
@@ -41,11 +39,10 @@ extern "C" {
 #ifndef _di_fake_make_print_processing_section_
   f_status_t fake_make_print_processing_section(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t buffer, const f_fss_named_t section) {
 
+    if (!setting) return F_status_set_error(F_output_not);
     if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
 
     f_file_stream_lock(print.to);
-
-    fake_print_line_first_unlocked(setting, print);
 
     fl_print_format("%[Processing Section '%]", print.to, print.set->important, print.set->important);
     fl_print_format("%[%/Q%]", print.to, print.set->notable, buffer, section.name, print.set->notable);

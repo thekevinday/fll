@@ -1,11 +1,4 @@
 #include "fake.h"
-#include "fake/path_generate.h"
-#include "build.h"
-#include "clean.h"
-#include "make.h"
-#include "make/operate.h"
-#include "print.h"
-#include "skeleton.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -17,7 +10,7 @@ extern "C" {
     if (!main || !setting) return;
 
     if (F_status_is_error(setting->state.status)) {
-      fake_print_line_last_locked(setting, main->error);
+      fake_print_line_last(setting, main->message);
 
       return;
     }
@@ -54,7 +47,7 @@ extern "C" {
     data.main = main;
     data.setting = setting;
 
-    setting->state.status = fake_path_generate(&data);
+    fake_path_generate(&data);
 
     if (F_status_is_error(setting->state.status)) {
       fake_data_delete(&data);
@@ -210,7 +203,7 @@ extern "C" {
         fake_print_error_failure_operation(setting, main->error, data.operation);
       }
 
-      fake_print_line_last_locked(setting, main->error);
+      fake_print_line_last(setting, main->message);
     }
     else if (setting->state.status != F_child) {
       if (F_status_is_error_not(setting->state.status)) {
@@ -218,7 +211,7 @@ extern "C" {
       }
 
       if (setting->state.status != F_interrupt) {
-        fake_print_line_last_locked(setting, main->message);
+        fake_print_line_last(setting, main->message);
       }
     }
 
@@ -262,12 +255,14 @@ extern "C" {
 
       *status = fll_execute_program(program, arguments, &parameter, 0, (void *) &return_code);
 
-      if (fll_program_standard_signal_received(data->main)) {
-        fll_program_print_signal_received(data->main->warning, data->setting->line_first, data->main->signal_received);
+      if (!((++data->main->signal_check) % fake_signal_check_d)) {
+        if (fll_program_standard_signal_received(data->main)) {
+          fll_program_print_signal_received(data->main->warning, data->setting->line_first, data->main->signal_received);
 
-        *status = F_status_set_error(F_interrupt);
+          *status = F_status_set_error(F_interrupt);
 
-        return 0;
+          return 0;
+        }
       }
 
       if (*status == F_child) return return_code;
@@ -286,8 +281,6 @@ extern "C" {
         if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
           f_file_stream_lock(data->main->error.to);
 
-          fake_print_line_first_unlocked(data->setting, data->main->error);
-
           fl_print_format("%[%QFailed to find program '%]", data->main->error.to, data->main->error.context, data->main->error.prefix, data->main->error.context);
           fl_print_format("%[%Q%]", data->main->error.to, data->main->error.notable, program, data->main->error.notable);
           fl_print_format("%[' for executing.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
@@ -305,130 +298,143 @@ extern "C" {
 #endif // _di_fake_execute_
 
 #ifndef _di_fake_file_buffer_
-  f_status_t fake_file_buffer(fake_data_t * const data, const f_string_static_t path_file, const bool required, f_string_dynamic_t * const buffer) {
+  void fake_file_buffer(fake_data_t * const data, const f_string_static_t path_file, const bool required, f_string_dynamic_t * const buffer) {
 
-    if (fll_program_standard_signal_received(data->main)) {
-      fll_program_print_signal_received(data->main->warning, data->setting->line_first, data->main->signal_received);
+    if (!((++data->main->signal_check) % fake_signal_check_d)) {
+      if (fll_program_standard_signal_received(data->main)) {
+        fll_program_print_signal_received(data->main->warning, data->setting->line_first, data->main->signal_received);
 
-      return F_status_set_error(F_interrupt);
+        data->setting.state.status = F_status_set_error(F_interrupt);
+
+        return;
+      }
     }
 
-    f_status_t status = f_file_exists(path_file, F_true);
+    data->setting.state.status = f_file_exists(path_file, F_true);
 
-    if (F_status_is_error(status)) {
-      fake_print_error_file(data->setting, data->main->error, status, macro_fake_f(f_file_exists), path_file, f_file_operation_find_s, fll_error_file_type_file_e);
+    if (F_status_is_error(data->setting.state.status)) {
+      fake_print_error_file(data->setting, data->main->error, macro_fake_f(f_file_exists), path_file, f_file_operation_find_s, fll_error_file_type_file_e);
 
-      return status;
+      return;
     }
 
-    if (status == F_true) {
+    if (data->setting.state.status == F_true) {
       {
         off_t size_file = 0;
 
-        status = f_file_size(path_file, F_true, &size_file);
+        data->setting.state.status = f_file_size(path_file, F_true, &size_file);
 
-        if (F_status_is_error(status)) {
-          fake_print_error_file(data->setting, data->main->error, status, macro_fake_f(f_file_size), path_file, f_file_operation_read_s, fll_error_file_type_file_e);
+        if (F_status_is_error(data->setting.state.status)) {
+          fake_print_error_file(data->setting, data->main->error, , macro_fake_f(f_file_size), path_file, f_file_operation_read_s, fll_error_file_type_file_e);
 
-          return status;
+          return;
         }
 
-        if (size_file > fake_common_max_initial_buffer_d) {
-          size_file = fake_common_max_initial_buffer_d;
+        if (size_file > fake_max_initial_buffer_d) {
+          size_file = fake_max_initial_buffer_d;
         }
 
-        status = f_string_dynamic_increase_by(size_file, buffer);
+        data->setting.state.status = f_string_dynamic_increase_by(size_file, buffer);
 
-        if (F_status_is_error(status)) {
+        if (F_status_is_error(data->setting.state.status)) {
           const f_string_static_t message = macro_f_string_static_t_initialize("allocate buffer size for", 0, 24);
 
-          fake_print_error_file(data->setting, data->main->error, status, macro_fake_f(f_string_dynamic_increase_by), path_file, message, fll_error_file_type_file_e);
+          fake_print_error_file(data->setting, data->main->error, macro_fake_f(f_string_dynamic_increase_by), path_file, message, fll_error_file_type_file_e);
 
-          return status;
+          return;
         }
 
-        status = F_true;
+        data->setting.state.status = F_true;
       }
 
       f_file_t file = f_file_t_initialize;
 
-      status = f_file_stream_open(path_file, f_string_empty_s, &file);
+      data->setting.state.status = f_file_stream_open(path_file, f_string_empty_s, &file);
 
-      if (F_status_is_error(status)) {
-        fake_print_error_file(data->setting, data->main->error, status, macro_fake_f(f_file_stream_open), path_file, f_file_operation_open_s, fll_error_file_type_file_e);
+      if (F_status_is_error(data->setting.state.status)) {
+        fake_print_error_file(data->setting, data->main->error, macro_fake_f(f_file_stream_open), path_file, f_file_operation_open_s, fll_error_file_type_file_e);
 
-        return status;
+        return;
       }
 
-      status = f_file_stream_read(file, buffer);
+      data->setting.state.status = f_file_stream_read(file, buffer);
 
       f_file_stream_flush(file);
       f_file_stream_close(&file);
 
-      if (F_status_is_error(status)) {
-        fake_print_error_file(data->setting, data->main->error, status, macro_fake_f(f_file_read), path_file, f_file_operation_read_s, fll_error_file_type_file_e);
+      if (F_status_is_error(data->setting.state.status)) {
+        fake_print_error_file(data->setting, data->main->error, macro_fake_f(f_file_read), path_file, f_file_operation_read_s, fll_error_file_type_file_e);
+      }
+      else {
+        data->setting.state.status = F_none;
       }
     }
     else {
       if (required) {
-        status = F_status_set_error(F_file_found_not);
+        data->setting.state.status = F_status_set_error(F_file_found_not);
 
-        fake_print_error_file(data->setting, data->main->error, status, macro_fake_f(f_file_exists), path_file, f_file_operation_find_s, fll_error_file_type_file_e);
+        fake_print_error_file(data->setting, data->main->error, macro_fake_f(f_file_exists), path_file, f_file_operation_find_s, fll_error_file_type_file_e);
       }
     }
-
-    return status;
   }
 #endif // _di_fake_file_buffer_
 
 #ifndef _di_fake_pipe_buffer_
-  f_status_t fake_pipe_buffer(fake_data_t * const data, f_string_dynamic_t * const buffer) {
+  void fake_pipe_buffer(fake_data_t * const data, f_string_dynamic_t * const buffer) {
 
-    f_status_t status = F_none;
+    if (!data || !buffer) return;
+
     f_file_t file = f_file_t_initialize;
 
     file.id = F_type_descriptor_input_d;
     file.stream = F_type_input_d;
     file.size_read = fake_default_allocation_pipe_d;
 
-    status = f_string_dynamic_increase_by(fake_common_max_initial_buffer_d, buffer);
+    data->setting.state.status = f_string_dynamic_increase_by(fake_max_initial_buffer_d, buffer);
 
-    if (F_status_is_error(status)) {
+    if (F_status_is_error(data->setting.state.status)) {
       const f_string_static_t message = macro_f_string_static_t_initialize("allocate buffer size for", 0, 24);
-      fake_print_error_file(data->setting, data->main->error, status, macro_fake_f(f_string_dynamic_increase_by), f_string_ascii_minus_s, message, fll_error_file_type_file_e);
+      fake_print_error_file(data->setting, data->main->error, macro_fake_f(f_string_dynamic_increase_by), f_string_ascii_minus_s, message, fll_error_file_type_file_e);
 
-      return status;
+      return;
     }
 
     // Reset the error state before processing.
     clearerr(F_type_input_d);
 
     do {
-      if (fll_program_standard_signal_received(data->main)) {
-        fll_program_print_signal_received(data->main->warning, data->setting->line_first, data->main->signal_received);
+      if (!((++data->main->signal_check) % fake_signal_check_d)) {
+        if (fll_program_standard_signal_received(data->main)) {
+          fll_program_print_signal_received(data->main->warning, data->setting->line_first, data->main->signal_received);
 
-        return F_status_set_error(F_interrupt);
+          f_file_stream_read_block = F_status_set_error(F_interrupt);
+
+          return;
+        }
       }
 
-      status = f_file_stream_read_block(file, buffer);
+      data->setting.state.status = f_file_stream_read_block(file, buffer);
 
-    } while (F_status_is_fine(status) && status != F_interrupt && status != F_none_eof);
+    } while (F_status_is_fine(data->setting.state.status) && data->setting.state.status != F_interrupt && data->setting.state.status != F_none_eof);
 
-    if (F_status_is_error(status)) {
-      fake_print_error_file(data->setting, data->main->error, status, macro_fake_f(f_file_stream_read_block), f_string_ascii_minus_s, f_file_operation_read_s, fll_error_file_type_file_e);
+    if (F_status_is_error(data->setting.state.status)) {
+      fake_print_error_file(data->setting, data->main->error, macro_fake_f(f_file_stream_read_block), f_string_ascii_minus_s, f_file_operation_read_s, fll_error_file_type_file_e);
     }
-
-    return status;
+    else {
+      data->setting.state.status = F_none;
+    }
   }
 #endif // _di_fake_pipe_buffer_
 
 #ifndef _di_fake_validate_parameter_paths_
   f_status_t fake_validate_parameter_paths(fake_data_t * const data) {
 
-    if (fll_program_standard_signal_received(data->main)) {
-      fll_program_print_signal_received(data->main->warning, data->setting->line_first, data->main->signal_received);
+    if (!((++data->main->signal_check) % fake_signal_check_d)) {
+      if (fll_program_standard_signal_received(data->main)) {
+        fll_program_print_signal_received(data->main->warning, data->setting->line_first, data->main->signal_received);
 
-      return F_status_set_error(F_interrupt);
+        return F_status_set_error(F_interrupt);
+      }
     }
 
     const f_string_static_t names[] = {
@@ -516,8 +522,6 @@ extern "C" {
       }
       else if (requireds[i] == F_true) {
         f_file_stream_lock(data->main->error.to);
-
-        fake_print_line_first_unlocked(data->setting, data->main->error);
 
         fl_print_format("%[%QNo valid path for the (required) directory parameter '%]", data->main->error.to, data->main->error.context, data->main->error.prefix, data->main->error.context);
         fl_print_format("%[%r%r%]", data->main->error.to, data->main->error.notable, f_console_symbol_long_normal_s, names[i], data->main->error.notable);

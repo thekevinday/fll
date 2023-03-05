@@ -1,14 +1,15 @@
 #include "../fake.h"
-#include "path_generate.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 #ifndef _di_fake_path_generate_
-  f_status_t fake_path_generate(fake_data_t * const data) {
+  void fake_path_generate(fake_data_t * const data) {
 
-    f_status_t status = F_none;
+    if (!data) return;
+
+    data->setting.state.status = F_none;
     uint8_t i = 0;
 
     {
@@ -54,12 +55,12 @@ extern "C" {
           values[i][j]->used = 0;
         } // for
 
-        status = fake_path_generate_string_dynamic(data, sources[i], values[i], parameters_size[i]);
+        fake_path_generate_string_dynamic(data, sources[i], values[i], parameters_size[i]);
 
-        if (F_status_is_error(status)) {
-          fake_print_error(data->setting, data->main->error, status, macro_fake_f(fake_path_generate_string_dynamic));
+        if (F_status_is_error(data->setting.state.status)) {
+          fake_print_error(data->setting, data->main->error, data->setting.state.status, macro_fake_f(fake_path_generate_string_dynamic));
 
-          return status;
+          return;
         }
       } // for
     }
@@ -99,12 +100,12 @@ extern "C" {
 
       for (i = 0; i < 13; ++i) {
 
-        status = f_string_dynamic_append_nulless(sources[i], values[i]);
+        data->setting.state.status = f_string_dynamic_append_nulless(sources[i], values[i]);
 
-        if (F_status_is_error(status)) {
-          fake_print_error(data->setting, data->main->error, status, macro_fake_f(f_string_dynamic_append_nulless));
+        if (F_status_is_error(data->setting.state.status)) {
+          fake_print_error(data->setting, data->main->error, macro_fake_f(f_string_dynamic_append_nulless));
 
-          return status;
+          return;
         }
       } // for
     }
@@ -167,12 +168,12 @@ extern "C" {
 
       for (i = 0; i < 5; ++i) {
 
-        status = fake_path_generate_string_dynamic(data, sources[i], values[i], parameters_size[i]);
+        fake_path_generate_string_dynamic(data, sources[i], values[i], parameters_size[i]);
 
-        if (F_status_is_error(status)) {
-          fake_print_error(data->setting, data->main->error, status, macro_fake_f(fake_path_generate_string_dynamic));
+        if (F_status_is_error(data->setting.state.status)) {
+          fake_print_error(data->setting, data->main->error, macro_fake_f(fake_path_generate_string_dynamic));
 
-          return status;
+          return;
         }
       } // for
     }
@@ -227,12 +228,12 @@ extern "C" {
 
       for (i = 0; i < 16; ++i) {
 
-        status = f_string_dynamic_append_nulless(sources[i], values[i]);
+        data->setting.state.status = f_string_dynamic_append_nulless(sources[i], values[i]);
 
-        if (F_status_is_error(status)) {
-          fake_print_error(data->setting, data->main->error, status, macro_fake_f(f_string_dynamic_append_nulless));
+        if (F_status_is_error(data->setting.state.status)) {
+          fake_print_error(data->setting, data->main->error, macro_fake_f(f_string_dynamic_append_nulless));
 
-          return status;
+          return;
         }
       } // for
     }
@@ -249,12 +250,12 @@ extern "C" {
 
           values[i]->used = 0;
 
-          status = f_string_dynamic_append_nulless(data->setting->work, values[i]);
+          data->setting.state.status = f_string_dynamic_append_nulless(data->setting->work, values[i]);
 
-          if (F_status_is_error(status)) {
-            fake_print_error(data->setting, data->main->error, status, macro_fake_f(f_string_dynamic_append_nulless));
+          if (F_status_is_error(data->setting.state.status)) {
+            fake_print_error(data->setting, data->main->error, macro_fake_f(f_string_dynamic_append_nulless));
 
-            return status;
+            return;
           }
         } // for
       }
@@ -274,12 +275,12 @@ extern "C" {
 
         for (i = 0; i < 3; ++i) {
 
-          status = f_string_dynamic_append_nulless(sources[i], values[i]);
+          data->setting.state.status = f_string_dynamic_append_nulless(sources[i], values[i]);
 
-          if (F_status_is_error(status)) {
-            fake_print_error(data->setting, data->main->error, status, macro_fake_f(f_string_dynamic_append_nulless));
+          if (F_status_is_error(data->setting.state.status)) {
+            fake_print_error(data->setting, data->main->error, macro_fake_f(f_string_dynamic_append_nulless));
 
-            return status;
+            return;
           }
         } // for
       }
@@ -314,12 +315,12 @@ extern "C" {
 
         for (i = 0; i < 2; ++i) {
 
-          status = fake_path_generate_string_dynamic(data, sources[i], values[i], parameters_size[i]);
+          data->setting.state.status = fake_path_generate_string_dynamic(data, sources[i], values[i], parameters_size[i]);
 
-          if (F_status_is_error(status)) {
-            fake_print_error(data->setting, data->main->error, status, macro_fake_f(fake_path_generate_string_dynamic));
+          if (F_status_is_error(data->setting.state.status)) {
+            fake_print_error(data->setting, data->main->error, macro_fake_f(fake_path_generate_string_dynamic));
 
-            return status;
+            return;
           }
         } // for
       }
@@ -345,33 +346,33 @@ extern "C" {
 
         for (i = 0; i < 6; ++i) {
 
-          status = f_string_dynamic_append_nulless(sources[i], values[i]);
+          data->setting.state.status = f_string_dynamic_append_nulless(sources[i], values[i]);
 
-          if (F_status_is_error(status)) {
-            fake_print_error(data->setting, data->main->error, status, macro_fake_f(f_string_dynamic_append_nulless));
+          if (F_status_is_error(data->setting.state.status)) {
+            fake_print_error(data->setting, data->main->error, data->setting.state.status, macro_fake_f(f_string_dynamic_append_nulless));
 
-            return status;
+            return;
           }
         } // for
       }
     }
 
-    return F_none;
+    data->setting.state.status = F_none;
   }
 #endif // _di_fake_path_generate_
 
 #ifndef _di_fake_path_generate_string_dynamic_
-  f_status_t fake_path_generate_string_dynamic(fake_data_t * const data, const f_string_dynamic_t source, f_string_dynamic_t *destination[], const uint8_t length) {
+  void fake_path_generate_string_dynamic(fake_data_t * const data, const f_string_dynamic_t source, f_string_dynamic_t *destination[], const uint8_t length) {
 
-    f_status_t status = F_none;
+    if (!data) return;
+
+    data->setting.state.status = F_none;
 
     for (uint8_t i = 0; i < length; ++i) {
 
-      status = f_string_dynamic_append_nulless(source, destination[i]);
-      if (F_status_is_error(status)) return status;
+      data->setting.state.status = f_string_dynamic_append_nulless(source, destination[i]);
+      if (F_status_is_error(data->setting.state.status)) break;
     } // for
-
-    return F_none;
   }
 #endif // _di_fake_path_generate_string_dynamic_
 

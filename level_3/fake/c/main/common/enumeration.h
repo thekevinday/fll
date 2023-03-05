@@ -153,59 +153,6 @@ extern "C" {
 #endif // _di_fake_main_flag_e_
 
 /**
- * The build language enumerations.
- *
- * fake_build_language_*_e:
- *   - bash: The GNU Bash language.
- *   - c:    The C language.
- *   - cpp:  The C++ language.
- *   - zsh:  The ZSH language (Similar to and somewhat compatible with GNU Bash).
- */
-#ifndef _di_fake_build_language_e_
-  enum {
-    fake_build_language_none_e = 0,
-    fake_build_language_bash_e,
-    fake_build_language_c_e,
-    fake_build_language_cpp_e,
-    fake_build_language_zsh_e,
-  }; // enum
-#endif // _di_fake_build_language_e_
-
-/**
- * Build settings flag enumeration.
- *
- * data_build_setting_flag_*:
- *   - none:            No flag set.
- *   - has_environment: Designate that the "environment" is specified in the "settings" Section of the Fakefile.
- */
-#ifndef _di_fake_build_setting_flag_e_
-  enum {
-    data_build_setting_flag_none_e            = 0x0,
-    data_build_setting_flag_has_environment_e = 0x1,
-  }; // enum
-#endif // _di_fake_build_setting_flag_e_
-
-/**
- * The program version enumerations.
- *
- * fake_build_version_*_e:
- *   - none:  No version number.
- *   - major: The major version number.
- *   - minor: The minor version number.
- *   - micro: The micro version number (sometimes called the patch version number).
- *   - nano:  The nano version number.
- */
-#ifndef _di_fake_build_version_e_
-  enum {
-    fake_build_version_none_e = 0,
-    fake_build_version_major_e,
-    fake_build_version_minor_e,
-    fake_build_version_micro_e,
-    fake_build_version_nano_e,
-  }; // enum
-#endif // _di_fake_build_version_e_
-
-/**
  * The program operation enumerations.
  *
  * fake_operation_*_e:

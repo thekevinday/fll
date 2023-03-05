@@ -22,13 +22,18 @@ extern "C" {
  * @param data
  *   The program data.
  *
- * @return
- *   F_none on success.
+ *   This alters data.setting.state.status:
+ *     F_none on success.
  *
- *   Status codes (with error bit) are returned on any problem.
+ *     Errors (with error bit) from: f_string_dynamic_append_nulless().
+ *     Errors (with error bit) from: fake_path_generate_string_dynamic().
+ *
+ * @see f_string_dynamic_append_nulless()
+ *
+ * @see fake_path_generate_string_dynamic()
  */
 #ifndef _di_fake_path_generate_
-  extern f_status_t fake_path_generate(fake_data_t * const data);
+  extern void fake_path_generate(fake_data_t * const data);
 #endif // _di_fake_path_generate_
 
 /**
@@ -36,8 +41,14 @@ extern "C" {
  *
  * The given source is applied to each destination.
  *
- * @param daa
+ * @param data
  *   The program data.
+ *
+ *   This alters data.setting.state.status:
+ *     F_none on success.
+ *
+ *     Errors (with error bit) from: f_string_dynamic_append_nulless().
+ *
  * @param source
  *   The string to copy from.
  * @param destination
@@ -45,13 +56,10 @@ extern "C" {
  * @param length
  *   The size of the values.
  *
- * @return
- *   F_none on success.
- *
- *   Status codes (with error bit) are returned on any problem.
+ * @see f_string_dynamic_append_nulless()
  */
 #ifndef _di_fake_path_generate_string_dynamic_
-  extern f_status_t fake_path_generate_string_dynamic(fake_data_t * const data, const f_string_dynamic_t source, f_string_dynamic_t *destination[], const uint8_t size);
+  extern void fake_path_generate_string_dynamic(fake_data_t * const data, const f_string_dynamic_t source, f_string_dynamic_t *destination[], const uint8_t size);
 #endif // _di_fake_path_generate_string_dynamic_
 
 #ifdef __cplusplus

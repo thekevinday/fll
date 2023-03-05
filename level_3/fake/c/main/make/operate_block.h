@@ -34,16 +34,18 @@ extern "C" {
  *
  * This is to be called once an operation is performed or skipped.
  *
+ * @param data_make
+ *   All make related setting data, including data from the fakefile and the build settings file.
+ *
+ *   This does not alter data_make.setting.state.status.
  * @param last
  *   If TRUE, then this is the last line.
  *   If FALSE, then this is not the last line.
  * @param state_process
  *   The operation and if-condition states.
- * @param status
- *   The status code.
  */
 #ifndef _di_fake_make_operate_block_postprocess_
-  extern void fake_make_operate_block_postprocess(const bool last, fake_state_process_t * const state_process, f_status_t * const status);
+  extern void fake_make_operate_block_postprocess(fake_make_data_t * const data_make, const bool last, fake_state_process_t * const state_process);
 #endif // _di_fake_make_operate_block_postprocess_
 
 #ifdef __cplusplus

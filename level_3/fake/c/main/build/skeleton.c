@@ -1,17 +1,15 @@
 #include "../fake.h"
-#include "../build.h"
-#include "skeleton.h"
-#include "print.h"
-#include "print-verbose.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 #ifndef _di_fake_build_skeleton_
-  void fake_build_skeleton(fake_data_t * const data, fake_build_data_t * const data_build, const mode_t mode, const f_string_static_t file_stage, f_status_t * const status) {
+  void fake_build_skeleton(fake_data_t * const data, fake_build_data_t * const data_build, const mode_t mode, const f_string_static_t file_stage) {
 
-    if (F_status_is_error(*status) || f_file_exists(file_stage, F_true) == F_true || *status == F_child) return;
+    if (!data || !data_build) return;
+    if (F_status_is_error(data->setting.state.status) || data->setting.state.status == F_child) return;
+    if (f_file_exists(file_stage, F_true) == F_true) return;
 
     f_string_static_t path_headers = f_string_static_t_initialize;
     path_headers.used = data->path_build_includes.used + data_build->setting.path_headers.used;
@@ -66,47 +64,57 @@ extern "C" {
 
         if (f_path_separator_s.used && directorys[i].string[j] != f_path_separator_s.string[0]) continue;
 
+        if (!((++main->signal_check) % fake_signal_check_d)) {
+          if (fll_program_standard_signal_received(data->main)) {
+            fll_program_print_signal_received(data->main->warning, data->setting->line_first, data->main->signal_received);
+
+            data->setting.state.status = F_status_set_error(F_interrupt);
+
+            return;
+          }
+        }
+
         directorys[i].string[j] = 0; // @fixme this is an error because static strings might be in use.
 
-        *status = f_directory_exists(directorys[i]);
+        data->setting.state.status = f_directory_exists(directorys[i]);
 
-        if (F_status_is_error(*status) || *status == F_false) {
+        if (F_status_is_error(data->setting.state.status) || data->setting.state.status == F_false) {
           directorys[i].string[j] = f_path_separator_s.string[0];
 
           break;
         }
 
-        if (*status == F_file_found_not) {
-          *status = f_directory_create(directorys[i], mode);
+        if (data->setting.state.status == F_file_found_not) {
+          data->setting.state.status = f_directory_create(directorys[i], mode);
 
           created = F_true;
         }
 
         directorys[i].string[j] = f_path_separator_s.string[0];
 
-        if (F_status_is_error(*status)) break;
+        if (F_status_is_error(data->setting.state.status)) break;
       } // for
 
-      if (F_status_is_fine(*status) && directorys[i].used && f_path_separator_s.used && directorys[i].string[directorys[i].used - 1] != f_path_separator_s.string[0]) {
-        *status = f_directory_exists(directorys[i]);
+      if (F_status_is_fine(data->setting.state.status) && directorys[i].used && f_path_separator_s.used && directorys[i].string[directorys[i].used - 1] != f_path_separator_s.string[0]) {
+        data->setting.state.status = f_directory_exists(directorys[i]);
 
-        if (F_status_is_error_not(*status)) {
-          if (*status == F_false) {
-            *status = f_directory_create(directorys[i], mode);
+        if (F_status_is_error_not(data->setting.state.status)) {
+          if (data->setting.state.status == F_false) {
+            data->setting.state.status = f_directory_create(directorys[i], mode);
 
             created = F_true;
           }
         }
       }
 
-      if (F_status_is_error(*status)) {
-        if (F_status_set_fine(*status) == F_file_found) {
-          *status = F_none;
+      if (F_status_is_error(data->setting.state.status)) {
+        if (F_status_set_fine(data->setting.state.status) == F_file_found) {
+          data->setting.state.status = F_none;
 
           continue;
         }
 
-        fake_print_error_file(data->setting, data->main->error, *status, macro_fake_f(f_directory_create), directorys[i], f_file_operation_create_s, fll_error_file_type_directory_e);
+        fake_print_error_file(data->setting, data->main->error, macro_fake_f(f_directory_create), directorys[i], f_file_operation_create_s, fll_error_file_type_directory_e);
 
         return;
       }
@@ -116,7 +124,11 @@ extern "C" {
       }
     } // for
 
-    fake_build_touch(data, file_stage, status);
+    fake_build_touch(data, file_stage);
+
+    if (F_status_is_error_not(data->setting.state.status)) {
+      data->setting.state.status = F_none;
+    }
   }
 #endif // _di_fake_build_skeleton_
 

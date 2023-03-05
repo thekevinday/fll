@@ -32,6 +32,12 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if setting is NULL.
+ *
+ * @see f_file_stream_lock()
+ * @see f_file_stream_unlock()
+ * @see fl_print_format()
  */
 #ifndef _di_fake_make_print_now_making_
   extern f_status_t fake_make_print_now_making(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t fakefile);
@@ -55,6 +61,12 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if setting is NULL.
+ *
+ * @see f_file_stream_lock()
+ * @see f_file_stream_unlock()
+ * @see fl_print_format()
  */
 #ifndef _di_fake_make_print_processing_section_
   extern f_status_t fake_make_print_processing_section(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t buffer, const f_fss_named_t section);

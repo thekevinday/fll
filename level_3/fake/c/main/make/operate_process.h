@@ -21,26 +21,89 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
+ *
+ *   This alters data_make.setting.state.status:
+ *     F_none on success.
+ *
+ *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ *
+ *     Errors (with error bit) from: fake_make_operate_process_run()
+ *     Errors (with error bit) from: fake_make_operate_process_type_break()
+ *     Errors (with error bit) from: fake_make_operate_process_type_build()
+ *     Errors (with error bit) from: fake_make_operate_process_type_clean()
+ *     Errors (with error bit) from: fake_make_operate_process_type_copy()
+ *     Errors (with error bit) from: fake_make_operate_process_type_compile()
+ *     Errors (with error bit) from: fake_make_operate_process_type_copy()
+ *     Errors (with error bit) from: fake_make_operate_process_type_define()
+ *     Errors (with error bit) from: fake_make_operate_process_type_deletes()
+ *     Errors (with error bit) from: fake_make_operate_process_type_deletes()
+ *     Errors (with error bit) from: fake_make_operate_process_type_exit()
+ *     Errors (with error bit) from: fake_make_operate_process_type_fail()
+ *     Errors (with error bit) from: fake_make_operate_process_type_groups()
+ *     Errors (with error bit) from: fake_make_operate_process_type_groups()
+ *     Errors (with error bit) from: fake_make_operate_process_type_condition()
+ *     Errors (with error bit) from: fake_make_operate_process_type_index()
+ *     Errors (with error bit) from: fake_make_operate_process_type_link()
+ *     Errors (with error bit) from: fake_make_operate_process_type_modes()
+ *     Errors (with error bit) from: fake_make_operate_process_type_modes()
+ *     Errors (with error bit) from: fake_make_operate_process_type_move()
+ *     Errors (with error bit) from: fake_make_operate_process_type_operate()
+ *     Errors (with error bit) from: fake_make_operate_process_type_owners()
+ *     Errors (with error bit) from: fake_make_operate_process_type_owners()
+ *     Errors (with error bit) from: fake_make_operate_process_type_parameter()
+ *     Errors (with error bit) from: fake_make_operate_process_type_pop()
+ *     Errors (with error bit) from: fake_make_operate_process_type_print()
+ *     Errors (with error bit) from: fake_make_operate_process_type_skeleton()
+ *     Errors (with error bit) from: fake_make_operate_process_type_to()
+ *     Errors (with error bit) from: fake_make_operate_process_type_top()
+ *     Errors (with error bit) from: fake_make_operate_process_type_touch()
+ *     Errors (with error bit) from: fake_make_operate_process_type_write()
  * @param section_name
  *   The section name.
  * @param state_process
  *   The operation and if-condition states.
  * @param section_stack
  *   The current operation stack.
- * @param status
- *   F_none on success.
- *
- *   F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
- *
- *   Status codes (with error bit) are returned on any problem.
  *
  * @return
  *   The return code of the execution process.
  *
  *   This generally is only needed when F_child is returned, where this holds the return status of the child process.
+ *
+ * @see fake_make_operate_process_run()
+ * @see fake_make_operate_process_type_break()
+ * @see fake_make_operate_process_type_build()
+ * @see fake_make_operate_process_type_clean()
+ * @see fake_make_operate_process_type_copy()
+ * @see fake_make_operate_process_type_compile()
+ * @see fake_make_operate_process_type_copy()
+ * @see fake_make_operate_process_type_define()
+ * @see fake_make_operate_process_type_deletes()
+ * @see fake_make_operate_process_type_deletes()
+ * @see fake_make_operate_process_type_exit()
+ * @see fake_make_operate_process_type_fail()
+ * @see fake_make_operate_process_type_groups()
+ * @see fake_make_operate_process_type_groups()
+ * @see fake_make_operate_process_type_condition()
+ * @see fake_make_operate_process_type_index()
+ * @see fake_make_operate_process_type_link()
+ * @see fake_make_operate_process_type_modes()
+ * @see fake_make_operate_process_type_modes()
+ * @see fake_make_operate_process_type_move()
+ * @see fake_make_operate_process_type_operate()
+ * @see fake_make_operate_process_type_owners()
+ * @see fake_make_operate_process_type_owners()
+ * @see fake_make_operate_process_type_parameter()
+ * @see fake_make_operate_process_type_pop()
+ * @see fake_make_operate_process_type_print()
+ * @see fake_make_operate_process_type_skeleton()
+ * @see fake_make_operate_process_type_to()
+ * @see fake_make_operate_process_type_top()
+ * @see fake_make_operate_process_type_touch()
+ * @see fake_make_operate_process_type_write()
  */
 #ifndef _di_fake_make_operate_process_
-  extern int fake_make_operate_process(fake_make_data_t * const data_make, const f_string_range_t section_name, fake_state_process_t * const state_process, f_array_lengths_t * const section_stack, f_status_t * const status);
+  extern int fake_make_operate_process(fake_make_data_t * const data_make, const f_string_range_t section_name, fake_state_process_t * const state_process, f_array_lengths_t * const section_stack);
 #endif // _di_fake_make_operate_process_
 
 /**

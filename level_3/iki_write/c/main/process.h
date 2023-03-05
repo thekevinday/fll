@@ -9,8 +9,8 @@
  *
  * This is auto-included and should not need to be explicitly included.
  */
-#ifndef _PRIVATE_write_process_h
-#define _PRIVATE_write_process_h
+#ifndef _iki_write_write_process_h
+#define _iki_write_write_process_h
 
 #ifdef __cplusplus
 extern "C" {
@@ -47,4 +47,4 @@ extern "C" {
 } // extern "C"
 #endif
 
-#endif // _PRIVATE_write_process_h
+#endif // _iki_write_write_process_h

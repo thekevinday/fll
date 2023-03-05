@@ -1,9 +1,4 @@
 #include "../fake.h"
-#include "../build.h"
-#include "objects.h"
-#include "print.h"
-#include "print-error.h"
-#include "print-verbose.h"
 
 #ifdef __cplusplus
 extern "C" {

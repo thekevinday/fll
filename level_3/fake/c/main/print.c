@@ -4,133 +4,11 @@
 extern "C" {
 #endif
 
-#ifndef _di_fake_print_context_simple_
-  void fake_print_context_simple(fake_setting_t * const setting, const fl_print_t print, const f_string_t message) {
-
-    if (!setting) return;
-
-    f_file_stream_lock(print.to);
-
-    fake_print_line_first_unlocked(setting, print);
-
-    fl_print_format("%[%Q%S.%]%r", print.to, print.context, print.prefix, message, print.context, f_string_eol_s);
-
-    f_file_stream_unlock(print.to);
-  }
-#endif // _di_fake_print_context_simple_
-
-#ifndef _di_fake_print_context_simple_variable_
-  void fake_print_context_simple_variable(fake_setting_t * const setting, const fl_print_t print, const f_string_t before, const f_string_static_t variable, const f_string_t after) {
-
-    if (!setting) return;
-
-    f_file_stream_lock(print.to);
-
-    fake_print_line_first_unlocked(setting, print);
-
-    fl_print_format("%[%Q%S'%]", print.to, print.context, print.prefix, before, print.context);
-    fl_print_format("%[%Q%]", print.to, print.notable, variable, print.notable);
-    fl_print_format("%['%S.%]%r", print.to, print.context, after, print.context, f_string_eol_s);
-
-    f_file_stream_unlock(print.to);
-  }
-#endif // _di_fake_print_context_simple_variable_
-
-#ifndef _di_fake_print_context_wrapped_number_
-  void fake_print_context_wrapped_number(fake_setting_t * const setting, const fl_print_t print, const f_string_t before, const f_number_unsigned_t number, const f_string_t after) {
-
-    if (!setting) return;
-
-    f_file_stream_lock(print.to);
-
-    fake_print_line_first_unlocked(setting, print);
-
-    fl_print_format("%[%Q%S'%]", print.to, print.context, print.prefix, before, print.context);
-    fl_print_format("%[%un%]", print.to, print.notable, number, print.notable);
-    fl_print_format("%['%S.%]%r", print.to, print.context, after, print.context, f_string_eol_s);
-
-    f_file_stream_unlock(print.to);
-  }
-#endif // _di_fake_print_context_wrapped_number_
-
-#ifndef _di_fake_print_context_wrapped_parameter_
-  void fake_print_context_wrapped_parameter(fake_setting_t * const setting, const fl_print_t print, const f_string_t before, const f_string_static_t symbol, const f_string_static_t name, const f_string_t after) {
-
-    if (!setting) return;
-
-    f_file_stream_lock(print.to);
-
-    fake_print_line_first_unlocked(setting, print);
-
-    fl_print_format("%[%Q%S'%]", print.to, print.context, print.prefix, before, print.context);
-    fl_print_format("%[%Q%Q%]", print.to, print.notable, symbol, name, print.notable);
-    fl_print_format("%['%S.%]%r", print.to, print.context, after, print.context, f_string_eol_s);
-
-    f_file_stream_unlock(print.to);
-  }
-#endif // _di_fake_print_context_wrapped_parameter_
-
-#ifndef _di_fake_print_context_wrapped_parameters_
-  void fake_print_context_wrapped_parameters(fake_setting_t * const setting, const fl_print_t print, const f_string_t before, const f_string_static_t symbol_1, const f_string_static_t name_1, const f_string_t between_1, const f_string_static_t symbol_2, const f_string_static_t name_2, const f_string_t between_2, const f_string_static_t symbol_3, const f_string_static_t name_3, const f_string_t after) {
-
-    if (!setting) return;
-
-    f_file_stream_lock(print.to);
-
-    fake_print_line_first_unlocked(setting, print);
-
-    fl_print_format("%[%Q%S'%]", print.to, print.context, print.prefix, before, print.context);
-    fl_print_format("%[%Q%Q%]", print.to, print.notable, symbol_1, name_1, print.notable);
-    fl_print_format("%['%S'%]%r", print.to, print.context, between_1, print.context);
-    fl_print_format("%[%Q%Q%]", print.to, print.notable, symbol_2, name_2, print.notable);
-    fl_print_format("%['%S'%]%r", print.to, print.context, between_2, print.context);
-    fl_print_format("%[%Q%Q%]", print.to, print.notable, symbol_3, name_3, print.notable);
-    fl_print_format("%['%S.%]%r", print.to, print.context, after, print.context, f_string_eol_s);
-
-    f_file_stream_unlock(print.to);
-  }
-#endif // _di_fake_print_context_wrapped_parameters_
-
-#ifndef _di_fake_print_context_wrapped_variable_
-  void fake_print_context_wrapped_variable(fake_setting_t * const setting, const fl_print_t print, const f_string_t before, const f_string_static_t variable, const f_string_t after) {
-
-    if (!setting) return;
-
-    f_file_stream_lock(print.to);
-
-    fake_print_line_first_unlocked(setting, print);
-
-    fl_print_format("%[%Q%S'%]", print.to, print.context, print.prefix, before, print.context);
-    fl_print_format("%[%Q%]", print.to, print.notable, variable, print.notable);
-    fl_print_format("%['%S.%]%r", print.to, print.context, after, print.context, f_string_eol_s);
-
-    f_file_stream_unlock(print.to);
-  }
-#endif // _di_fake_print_context_wrapped_variable_
-
-#ifndef _di_fake_print_context_wrapped_variables_
-  void fake_print_context_wrapped_variables(fake_setting_t * const setting, const fl_print_t print, const f_string_t before, const f_string_static_t first, const f_string_t between, const f_string_static_t second, const f_string_t after) {
-
-    if (!setting) return;
-
-    f_file_stream_lock(print.to);
-
-    fake_print_line_first_unlocked(setting, print);
-
-    fl_print_format("%[%Q%S'%]", print.to, print.context, print.prefix, before, print.context);
-    fl_print_format("%[%Q%]", print.to, print.notable, first, print.notable);
-    fl_print_format("%['%S'%]", print.to, print.context, between, print.context);
-    fl_print_format("%[%Q%]", print.to, print.notable, second, print.notable);
-    fl_print_format("%['%S.%]%r", print.to, print.context, after, print.context, f_string_eol_s);
-
-    f_file_stream_unlock(print.to);
-  }
-#endif // _di_fake_print_context_wrapped_variables_
-
 #ifndef _di_fake_print_generating_skeleton_
   f_status_t fake_print_generating_skeleton(fake_setting_t * const setting, const fl_print_t print) {
 
-    if (!setting || print.verbosity < f_console_verbosity_normal_e) return F_output_not;
+    if (!setting) return F_status_set_error(F_output_not);
+    if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
 
     fake_print_simple(setting, print, "Generating skeleton structure");
 
@@ -218,160 +96,68 @@ extern "C" {
   }
 #endif // _di_fake_print_help_
 
-#ifndef _di_fake_print_important_simple_
-  void fake_print_important_simple(fake_setting_t * const setting, const fl_print_t print, const f_string_t message) {
-
-    const fl_print_t custom = macro_fl_print_t_initialize(print.to, print.verbosity, f_string_empty_s, f_string_empty_s, print.set->important, print.set->notable, print.set);
-
-    fake_print_context_simple(setting, custom, message);
-  }
-#endif // _di_fake_print_important_simple_
-
-#ifndef _di_fake_print_line_first_locked_
-  f_status_t fake_print_line_first_locked(fake_setting_t * const setting, const fl_print_t print) {
+#ifndef _di_fake_print_line_first_
+  f_status_t fake_print_line_first(fake_setting_t * const setting, const fl_print_t print) {
 
     if (!setting) return F_status_set_error(F_output_not);
+    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
+
+    if (F_status_is_error_not(setting->state.status)) {
+      if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
+      if (setting->flag & fss_write_main_flag_file_to_e) return F_output_not;
+    }
 
     if (setting->flag & fake_main_flag_print_first_e) {
       fll_print_dynamic_raw(setting->line_first, print.to);
 
       setting->flag -= fake_main_flag_print_first_e;
     }
-    else {
-      fll_print_dynamic_raw(f_string_eol_s, print.to);
-    }
 
     return F_none;
   }
-#endif // _di_fake_print_line_first_locked_
+#endif // _di_fake_print_line_first_
 
-#ifndef _di_fake_print_line_first_unlocked_
-  f_status_t fake_print_line_first_unlocked(fake_setting_t * const setting, const fl_print_t print) {
-
-    if (!setting) return F_status_set_error(F_output_not);
-
-    if (setting->flag & fake_main_flag_print_first_e) {
-      fll_print_dynamic_raw(setting->line_first, print.to);
-
-      setting->flag -= fake_main_flag_print_first_e;
-    }
-    else {
-      fll_print_dynamic_raw(f_string_eol_s, print.to);
-    }
-
-    return F_none;
-  }
-#endif // _di_fake_print_line_first_unlocked_
-
-#ifndef _di_fake_print_line_last_locked_
-  f_status_t fake_print_line_last_locked(fake_setting_t * const setting, const fl_print_t print) {
+#ifndef _di_fake_print_line_last_
+  f_status_t fake_print_line_last(fake_setting_t * const setting, const fl_print_t print) {
 
     if (!setting) return F_status_set_error(F_output_not);
+    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
+
+    if (F_status_is_error_not(setting->state.status)) {
+      if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
+      if (setting->flag & fss_write_main_flag_file_to_e) return F_output_not;
+    }
 
     fll_print_dynamic_raw(setting->line_last, print.to);
 
     return F_none;
   }
-#endif // _di_fake_print_line_last_locked_
-
-#ifndef _di_fake_print_line_last_unlocked_
-  f_status_t fake_print_line_last_unlocked(fake_setting_t * const setting, const fl_print_t print) {
-
-    if (!setting) return F_status_set_error(F_output_not);
-
-    f_print_dynamic_raw(setting->line_last, print.to);
-
-    return F_none;
-  }
-#endif // _di_fake_print_line_last_unlocked_
-
-#ifndef _di_fake_print_operation_all_complete_
-  f_status_t fake_print_operation_all_complete(fake_setting_t * const setting, const fl_print_t print) {
-
-    if (!setting || print.verbosity < f_console_verbosity_normal_e) return F_output_not;
-
-    f_file_stream_lock(print.to);
-
-    fake_print_line_first_unlocked(setting, print);
-
-    fl_print_format("All operations complete.%r", print.to, f_string_eol_s, f_string_eol_s);
-
-    f_file_stream_flush(print.to);
-    f_file_stream_unlock(print.to);
-
-    return F_none;
-  }
-#endif // _di_fake_print_operation_all_complete_
-
-#ifndef _di_fake_print_operation_cancelled_
-  f_status_t fake_print_operation_cancelled(fake_setting_t * const setting, const fl_print_t print, const uint8_t operation) {
-
-    if (!setting || print.verbosity < f_console_verbosity_normal_e) return F_output_not;
-
-    f_file_stream_lock(print.to);
-
-    fake_print_line_first_unlocked(setting, print);
-
-    fl_print_format("%[The operation '%]%[", print.to, print.context, print.context, print.notable);
-
-    if (operation == fake_operation_build_e) {
-      f_print_dynamic(fake_other_operation_build_s, print.to);
-    }
-    else if (operation == fake_operation_clean_e) {
-      f_print_dynamic(fake_other_operation_clean_s, print.to);
-    }
-    else if (operation == fake_operation_make_e) {
-      f_print_dynamic(fake_other_operation_make_s, print.to);
-    }
-    else if (operation == fake_operation_skeleton_e) {
-      f_print_dynamic(fake_other_operation_skeleton_s, print.to);
-    }
-
-    fl_print_format("%]%[' is cancelled.%]%r", print.to, print.notable, print.context, print.context, f_string_eol_s);
-
-    f_file_stream_flush(print.to);
-    f_file_stream_unlock(print.to);
-
-    return F_none;
-  }
-#endif // _di_fake_print_operation_cancelled_
+#endif // _di_fake_print_line_last_
 
 #ifndef _di_fake_print_simple_
   void fake_print_simple(fake_setting_t * const setting, const fl_print_t print, const f_string_t message) {
 
-    f_file_stream_lock(print.to);
-
-    fake_print_line_first_unlocked(setting, print);
+    if (!setting) return;
 
     fll_print_format("%S.%r", print.to, message, f_string_eol_s);
-
-    f_file_stream_unlock(print.to);
   }
 #endif // _di_fake_print_simple_
 
 #ifndef _di_fake_print_simple_variable_
   void fake_print_simple_variable(fake_setting_t * const setting, const fl_print_t print, const f_string_t message, const f_string_static_t variable) {
 
-    f_file_stream_lock(print.to);
-
-    fake_print_line_first_unlocked(setting, print);
+    if (!setting) return;
 
     fll_print_format("%S'%[%Q%]'.%r", print.to, message, print.set->notable, variable, print.set->notable, f_string_eol_s);
-
-    f_file_stream_unlock(print.to);
   }
 #endif // _di_fake_print_simple_variable_
 
 #ifndef _di_fake_print_wrapped_variable_
   void fake_print_wrapped_variable(fake_setting_t * const setting, const fl_print_t print, const f_string_t before, const f_string_static_t variable, const f_string_t after) {
 
-    f_file_stream_lock(print.to);
-
-    fake_print_line_first_unlocked(setting, print);
+    if (!setting) return;
 
     fll_print_format("%S'%[%Q%]'%S.%r", print.to, before, print.set->notable, variable, print.set->notable, after, f_string_eol_s);
-
-    f_file_stream_unlock(print.to);
   }
 #endif // _di_fake_print_wrapped_variable_
 
@@ -381,8 +167,6 @@ extern "C" {
     if (!setting) return;
 
     f_file_stream_lock(print.to);
-
-    fake_print_line_first_unlocked(setting, print);
 
     fl_print_format("%S'", print.to, before);
     fl_print_format("%[%Q%]", print.to, print.notable, first, print.notable);

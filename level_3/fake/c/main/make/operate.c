@@ -1,14 +1,4 @@
 #include "../fake.h"
-#include "../print.h"
-#include "load_parameters.h"
-#include "load_fakefile.h"
-#include "operate.h"
-#include "operate_block.h"
-#include "operate_process.h"
-#include "operate_validate.h"
-#include "print.h"
-#include "print-error.h"
-#include "print-warning.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -17,10 +7,12 @@ extern "C" {
 #ifndef _di_fake_make_operate_
   f_status_t fake_make_operate(fake_data_t * const data) {
 
-    if (fll_program_standard_signal_received(data->main)) {
-      fll_program_print_signal_received(data->main->warning, data->setting->line_first, data->main->signal_received);
+    if (!((++data->main->signal_check) % fake_signal_check_d)) {
+      if (fll_program_standard_signal_received(data->main)) {
+        fll_program_print_signal_received(data->main->warning, data->setting->line_first, data->main->signal_received);
 
-      return F_status_set_error(F_interrupt);
+        return F_status_set_error(F_interrupt);
+      }
     }
 
     fake_make_print_now_making(data->setting, data->main->message, data->setting->fakefile);
@@ -231,7 +223,7 @@ extern "C" {
 
     f_iki_data_t *iki_data = &data_make->cache_iki;
 
-    f_state_t state = macro_f_state_t_initialize_1(fake_common_allocation_large_d, fake_common_allocation_small_d, F_none, 0, 0, &fll_program_standard_signal_handle, 0, (void *) data_make->main, 0);
+    f_state_t state = macro_f_state_t_initialize_1(fake_allocation_large_d, fake_allocation_small_d, F_none, 0, 0, &fll_program_standard_signal_handle, 0, (void *) data_make->main, 0);
 
     f_string_range_t range = f_string_range_t_initialize;
     f_string_map_multis_t *parameter = &data_make->setting_make.parameter;
@@ -1161,69 +1153,73 @@ extern "C" {
 #endif // _di_fake_make_operate_expand_context_
 
 #ifndef _di_fake_make_operate_expand_environment_
-  f_status_t fake_make_operate_expand_environment(fake_make_data_t * const data_make, const uint8_t quote, const f_string_range_t range_name) {
+  void fake_make_operate_expand_environment(fake_make_data_t * const data_make, const uint8_t quote, const f_string_range_t range_name) {
 
-    f_status_t status = F_none;
+    data->setting.state.status = F_none;
 
     data_make->cache_1.used = 0;
     data_make->cache_2.used = 0;
 
-    status = f_string_dynamic_increase_by((range_name.stop - range_name.start) + 2, &data_make->cache_1);
+    data->setting.state.status = f_string_dynamic_increase_by((range_name.stop - range_name.start) + 2, &data_make->cache_1);
 
-    if (F_status_is_error_not(status)) {
-      status = f_string_dynamic_partial_append_nulless(data_make->buffer, range_name, &data_make->cache_1);
+    if (F_status_is_error_not(data->setting.state.status)) {
+      data->setting.state.status = f_string_dynamic_partial_append_nulless(data_make->buffer, range_name, &data_make->cache_1);
     }
 
-    if (F_status_is_error_not(status)) {
-      status = f_environment_get(data_make->cache_1, &data_make->cache_2);
+    if (F_status_is_error_not(data->setting.state.status)) {
+      data->setting.state.status = f_environment_get(data_make->cache_1, &data_make->cache_2);
     }
 
-    if (F_status_is_error(status)) return status;
-    if (status == F_exist_not) return F_false;
+    if (F_status_is_error(data->setting.state.status)) return;
 
-    status = f_string_dynamics_increase(fake_default_allocation_small_d, &data_make->cache_arguments);
+    if (data->setting.state.status == F_exist_not) {
+      data->setting.state.status = F_false;
 
-    if (F_status_is_error_not(status)) {
-      status = f_string_dynamic_increase_by(data_make->cache_2.used + 1, &data_make->cache_arguments.array[data_make->cache_arguments.used]);
+      return;
     }
 
-    if (F_status_is_error_not(status)) {
-      status = f_string_dynamic_append_nulless(data_make->cache_2, &data_make->cache_arguments.array[data_make->cache_arguments.used]);
+    data->setting.state.status = f_string_dynamics_increase(fake_default_allocation_small_d, &data_make->cache_arguments);
+
+    if (F_status_is_error_not(data->setting.state.status)) {
+      data->setting.state.status = f_string_dynamic_increase_by(data_make->cache_2.used + 1, &data_make->cache_arguments.array[data_make->cache_arguments.used]);
     }
 
-    if (F_status_is_error(status)) return status;
+    if (F_status_is_error_not(data->setting.state.status)) {
+      data->setting.state.status = f_string_dynamic_append_nulless(data_make->cache_2, &data_make->cache_arguments.array[data_make->cache_arguments.used]);
+    }
+
+    if (F_status_is_error(data->setting.state.status)) return;
 
     if (!quote) {
       ++data_make->cache_arguments.used;
 
-      status = f_string_dynamics_increase(fake_default_allocation_small_d, &data_make->cache_arguments);
-      if (F_status_is_error(status)) return status;
+      data->setting.state.status = f_string_dynamics_increase(fake_default_allocation_small_d, &data_make->cache_arguments);
+      if (F_status_is_error(data->setting.state.status)) return;
     }
 
-    if (data_make->cache_2.used) return F_true;
-
-    return F_data_not;
+    data->setting.state.status = data_make->cache_2.used ? F_true : F_data_not;
   }
 #endif // _di_fake_make_operate_expand_environment_
 
 #ifndef _di_fake_make_operate_section_
-  int fake_make_operate_section(fake_make_data_t * const data_make, const f_array_length_t id_section, f_array_lengths_t * const section_stack, f_status_t * const status) {
+  int fake_make_operate_section(fake_make_data_t * const data_make, const f_array_length_t id_section, f_array_lengths_t * const section_stack) {
 
-    if (F_status_is_error(*status) || *status == F_child) return data_make->data->main->child;
+    if (!data_make || !section_stack) return 0;
+    if (F_status_is_error(data->setting.state.status) || data->setting.state.status == F_child) return data_make->data->main->child;
 
     if (id_section >= data_make->fakefile.used) {
-      *status = F_status_set_error(F_parameter);
+      data->setting.state.status = F_status_set_error(F_parameter);
 
-      fake_print_error(data_make->setting, data_make->error, F_parameter, macro_fake_f(fake_make_operate_section));
+      fake_print_error(data_make->setting, data_make->error, macro_fake_f(fake_make_operate_section));
 
       return 0;
     }
 
     // Add the operation id to the operation stack.
-    *status = f_array_lengths_increase(fake_default_allocation_small_d, section_stack);
+    data->setting.state.status = f_array_lengths_increase(fake_default_allocation_small_d, section_stack);
 
-    if (F_status_is_error(*status)) {
-      fake_print_error(data_make->setting, data_make->error, *status, macro_fake_f(f_array_lengths_increase));
+    if (F_status_is_error(data->setting.state.status)) {
+      fake_print_error(data_make->setting, data_make->error, macro_fake_f(f_array_lengths_increase));
 
       return 0;
     }
@@ -1321,7 +1317,7 @@ extern "C" {
     f_array_length_t i = 0;
     f_array_length_t j = 0;
 
-    for (i = 0; i < section->objects.used; ++i, *status = F_none) {
+    for (i = 0; i < section->objects.used; ++i, data->setting.state.status = F_none) {
 
       for (j = 0; j < data_make->cache_arguments.size; ++j) {
         data_make->cache_arguments.array[j].used = 0;
@@ -1333,11 +1329,11 @@ extern "C" {
       state_process.operation_previous = state_process.operation;
       state_process.operation = 0;
 
-      if (!(i % fake_signal_check_short_d)) {
+      if (!((++data_make->main->signal_check) % fake_signal_check_short_d)) {
         if (fll_program_standard_signal_received(data_make->main)) {
           fll_program_print_signal_received(data_make->main->warning, data_make->data->setting->line_first, data_make->main->signal_received);
 
-          *status = F_status_set_error(F_interrupt);
+          data->setting.state.status = F_status_set_error(F_interrupt);
 
           break;
         }
@@ -1345,7 +1341,7 @@ extern "C" {
         data_make->main->signal_check = 0;
       }
 
-      for (j = 0; j < fake_common_max_operation_d; ++j) {
+      for (j = 0; j < fake_max_operation_d; ++j) {
 
         if (fl_string_dynamic_partial_compare_string(operations_name[j].string, data_make->buffer, operations_name[j].used, section->objects.array[i]) == F_equal_to) {
           state_process.operation = operations_type[j];
@@ -1357,25 +1353,25 @@ extern "C" {
       if (!state_process.operation) {
         fake_print_error_operation_unknown(data_make->setting, data_make->error, data_make->buffer, section->name, section->objects.array[i]);
 
-        *status = F_status_set_error(F_valid_not);
+        data->setting.state.status = F_status_set_error(F_valid_not);
       }
       else if (state_process.operation == fake_make_operation_type_operate_e) {
-        if (section_stack->used == fake_common_max_stack_d) {
-          fake_print_error_operation_stack_max(data_make->setting, data_make->error, data_make->buffer, section->name, section->objects.array[i], fake_common_max_stack_d);
+        if (section_stack->used == fake_max_stack_d) {
+          fake_print_error_operation_stack_max(data_make->setting, data_make->error, data_make->buffer, section->name, section->objects.array[i], fake_max_stack_d);
 
-          *status = F_status_set_error(F_recurse);
+          data->setting.state.status = F_status_set_error(F_recurse);
         }
       }
 
-      fake_make_operate_expand(data_make, section->name, section->contents.array[i], section->quotess.array[i], status);
+      fake_make_operate_expand(data_make, section->name, section->contents.array[i], section->quotess.array[i]);
 
       fake_make_operate_block_prepare(&state_process);
 
       if (state_process.block != fake_state_process_block_done_e && state_process.block != fake_state_process_block_skip_e) {
-        fake_make_operate_validate(data_make, section->name, &state_process, section_stack, status);
+        fake_make_operate_validate(data_make, section->name, &state_process, section_stack);
       }
 
-      if (F_status_is_error(*status)) {
+      if (F_status_is_error(data->setting.state.status)) {
         if (state_process.block || state_process.operation == fake_make_operation_type_if_e || state_process.operation == fake_make_operation_type_and_e || state_process.operation == fake_make_operation_type_or_e) {
           state_process.success_block = F_false;
 
@@ -1387,20 +1383,20 @@ extern "C" {
       }
       else {
         if (!state_process.block || state_process.block == fake_state_process_block_operate_e) {
-          result = fake_make_operate_process(data_make, section->name, &state_process, section_stack, status);
-          if (*status == F_child) return result;
+          result = fake_make_operate_process(data_make, section->name, &state_process, section_stack);
+          if (data->setting.state.status == F_child) return result;
         }
 
-        fake_make_operate_block_postprocess(i == section->objects.used, &state_process, status);
+        fake_make_operate_block_postprocess(data_make, i == section->objects.used, &state_process);
       }
 
-      if (F_status_set_fine(*status) == F_interrupt) break;
+      if (F_status_set_fine(data->setting.state.status) == F_interrupt) break;
 
-      if (F_status_is_error(*status)) {
+      if (F_status_is_error(data->setting.state.status)) {
         state_process.success = F_false;
 
         // Break acts identical to fail when at the top of the stack.
-        if (F_status_set_fine(*status) == F_signal_abort && !section_stack->used) {
+        if (F_status_set_fine(data->setting.state.status) == F_signal_abort && !section_stack->used) {
           data_make->setting_make.fail = fake_make_operation_fail_exit_e;
           data_make->error.prefix = fl_print_error_s;
           data_make->error.suffix = f_string_empty_s;
@@ -1414,42 +1410,40 @@ extern "C" {
         fake_print_error_operation_failed(data_make->setting, data_make->error, data_make->buffer, section->name, section->objects.array[i]);
 
         // F_signal_abort is used by the break section operation.
-        if (F_status_set_fine(*status) == F_signal_abort) break;
+        if (F_status_set_fine(data->setting.state.status) == F_signal_abort) break;
 
         // F_signal_abort is used by the exit section operation.
-        if (F_status_set_fine(*status) == F_signal_quit) {
+        if (F_status_set_fine(data->setting.state.status) == F_signal_quit) {
           if (!section_stack->used) {
-            *status = F_status_set_error(F_failure);
+            data->setting.state.status = F_status_set_error(F_failure);
           }
 
           break;
         }
 
-        if (data_make->setting_make.fail == fake_make_operation_fail_exit_e) {
-          break;
-        }
+        if (data_make->setting_make.fail == fake_make_operation_fail_exit_e) break;
       }
-      else if (*status == F_signal_abort) {
+      else if (data->setting.state.status == F_signal_abort) {
         state_process.success = F_true;
 
         // F_signal_abort is used by the break section operation.
         break;
       }
-      else if (*status == F_signal_quit) {
+      else if (data->setting.state.status == F_signal_quit) {
         state_process.success = F_true;
 
         // F_signal_quit is used by the exit section operation.
         if (!section_stack->used) {
-          *status = F_none;
+          data->setting.state.status = F_none;
         }
 
         break;
       }
-      else if (*status == F_failure) {
+      else if (data->setting.state.status == F_failure) {
 
         // When F_failure (without the error bit) is returned, an error occured but the exit mode is not set to exit.
         // Record the success state and set the status to F_none.
-        *status = F_none;
+        data->setting.state.status = F_none;
         state_process.success = F_false;
       }
       else {
@@ -1457,19 +1451,19 @@ extern "C" {
       }
     } // for
 
-    if (F_status_set_error(*status) == F_interrupt) return 0;
+    if (F_status_set_error(data->setting.state.status) == F_interrupt) return 0;
 
-    if (i == section->objects.used && F_status_is_error_not(*status) && (state_process.operation == fake_make_operation_type_and_e || state_process.operation == fake_make_operation_type_else_e || state_process.operation == fake_make_operation_type_if_e || state_process.operation == fake_make_operation_type_or_e)) {
+    if (i == section->objects.used && F_status_is_error_not(data->setting.state.status) && (state_process.operation == fake_make_operation_type_and_e || state_process.operation == fake_make_operation_type_else_e || state_process.operation == fake_make_operation_type_if_e || state_process.operation == fake_make_operation_type_or_e)) {
       fake_make_print_error_operation_incomplete(data_make->setting, data_make->main->error, state_process.operation);
 
       fake_print_error_operation_failed(data_make->setting, data_make->error, data_make->buffer, section->name, section->objects.array[section->objects.used - 1]);
 
-      *status = F_status_set_error(F_failure);
+      data->setting.state.status = F_status_set_error(F_failure);
     }
 
     // Ensure an error is returned during recursion if the last known section operation failed, except for the main operation.
-    if (state_process.success == F_false && F_status_is_error_not(*status) && section_stack->used > 1) {
-      *status = F_status_set_error(F_failure);
+    if (state_process.success == F_false && F_status_is_error_not(data->setting.state.status) && section_stack->used > 1) {
+      data->setting.state.status = F_status_set_error(F_failure);
     }
 
     --section_stack->used;

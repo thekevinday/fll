@@ -7,6 +7,8 @@ extern "C" {
 #ifndef _di_fake_make_operate_block_prepare_
   void fake_make_operate_block_prepare(fake_state_process_t * const state_process) {
 
+    if (!state_process) return;
+
     if (state_process->block) {
       if (state_process->operation == fake_make_operation_type_and_e || state_process->operation == fake_make_operation_type_else_e || state_process->operation == fake_make_operation_type_if_e || state_process->operation == fake_make_operation_type_or_e) {
 
@@ -51,9 +53,11 @@ extern "C" {
 #endif // _di_fake_make_operate_block_prepare_
 
 #ifndef _di_fake_make_operate_block_postprocess_
-  void fake_make_operate_block_postprocess(const bool last, fake_state_process_t * const state_process, f_status_t * const status) {
+  void fake_make_operate_block_postprocess(fake_make_data_t * const data_make, const bool last, fake_state_process_t * const state_process) {
 
-    if (F_status_is_error(*status)) {
+    if (!data_make || !state_process) return;
+
+    if (F_status_is_error(data_make->setting.state.status)) {
       state_process->block_result = fake_condition_result_error_e;
       state_process->success_block = F_false;
 

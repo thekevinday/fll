@@ -9,8 +9,8 @@
  *
  * This is auto-included and should not need to be explicitly included.
  */
-#ifndef _PRIVATE_make_h
-#define _PRIVATE_make_h
+#ifndef _fake_make_h
+#define _fake_make_h
 
 #ifdef __cplusplus
 extern "C" {
@@ -125,4 +125,4 @@ extern "C" {
 } // extern "C"
 #endif
 
-#endif // _PRIVATE_make_h
+#endif // _fake_make_h

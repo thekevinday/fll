@@ -9,57 +9,23 @@
  *
  * This is auto-included and should not need to be explicitly included.
  */
-#ifndef _PRIVATE_build_h
-#define _PRIVATE_build_h
+#ifndef _fake_build_h
+#define _fake_build_h
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-#ifndef _di_fake_build_s_
-  #define FAKE_build_documentation_files_s "documentation files"
-  #define FAKE_build_header_files_s        "header files"
-  #define FAKE_build_header_files_shared_s "shared header files"
-  #define FAKE_build_header_files_static_s "static header files"
-  #define FAKE_build_scripts_s             "scripts"
-  #define FAKE_build_setting_files_s       "setting files"
-
-  #define FAKE_build_documentation_files_s_length 19
-  #define FAKE_build_header_files_s_length        12
-  #define FAKE_build_header_files_shared_s_length 19
-  #define FAKE_build_header_files_static_s_length 19
-  #define FAKE_build_scripts_s_length             7
-  #define FAKE_build_setting_files_s_length       13
-
-  extern const f_string_static_t fake_build_documentation_files_s;
-  extern const f_string_static_t fake_build_header_files_s;
-  extern const f_string_static_t fake_build_header_files_shared_s;
-  extern const f_string_static_t fake_build_header_files_static_s;
-  extern const f_string_static_t fake_build_scripts_s;
-  extern const f_string_static_t fake_build_setting_files_s;
-#endif // _di_fake_build_s_
-
-/**
- * Build Types.
- *
- * fake_build_type_*:
- *   - library: A library build type.
- *   - object:  An object build type.
- *   - program: A program build type.
- */
-#ifndef _di_fake_build_type_e_
-  enum {
-    fake_build_type_library_e = 1,
-    fake_build_type_object_e,
-    fake_build_type_program_e,
-  };
-#endif // _di_fake_build_type_e_
 
 /**
  * Add the standard arguments for building a library/program.
  *
  * @param data
  *   The program data.
+ *
+ *   This alters data.setting.state.status:
+ *     F_none on success.
+ *
+ *     Errors (with error bit) from: fll_execute_arguments_add()
  * @param data_build
  *   The build data.
  * @param is_shared
@@ -69,13 +35,11 @@ extern "C" {
  *   A build type from the fake_build_type_* enumeration.
  * @param arguments
  *   The arguments array to append to.
- * @param status
- *   The return status.
  *
  * @see fll_execute_arguments_add()
  */
 #ifndef _di_fake_build_arguments_standard_add_
-  extern void fake_build_arguments_standard_add(fake_data_t * const data, fake_build_data_t * const data_build, const bool is_shared, const uint8_t type, f_string_dynamics_t *arguments, f_status_t *status);
+  extern void fake_build_arguments_standard_add(fake_data_t * const data, fake_build_data_t * const data_build, const bool is_shared, const uint8_t type, f_string_dynamics_t *arguments);
 #endif // _di_fake_build_arguments_standard_add_
 
 /**
@@ -83,6 +47,21 @@ extern "C" {
  *
  * @param data
  *   The program data.
+ *
+ *   This alters data.setting.state.status:
+ *     F_none on success.
+ *
+ *     F_interrupt (with error bit) on interrupt signal received.
+ *
+ *     Errors (with error bit) from: f_directory_is()
+ *     Errors (with error bit) from: f_file_copy()
+ *     Errors (with error bit) from: f_file_name_base()
+ *     Errors (with error bit) from: f_file_name_directory()
+ *     Errors (with error bit) from: f_string_append()
+ *     Errors (with error bit) from: f_string_dynamic_append_nulless()
+ *     Errors (with error bit) from: f_string_dynamic_resize()
+ *     Errors (with error bit) from: fl_directory_create()
+ *     Errors (with error bit) from: fl_directory_copy()
  * @param mode
  *   The modes for each file type.
  * @param label
@@ -104,16 +83,20 @@ extern "C" {
  *
  *   Example: 'sources/c/level_0/fss.h' with a preseve of 10, would result in the path of 'level_0/fss.h' being preserved.
  *            Whereas a perserve_offset of 0 would result in a path of 'fss.h' being used (the 'level_0/' directory is not preserved).
- * @param status
- *   The return status.
  *
- * @return
- *   F_none on success.
- *
- *   Status codes (with error bit) are returned on any problem.
+ * @see f_directory_is()
+ * @see f_file_copy()
+ * @see f_file_name_base()
+ * @see f_file_name_directory()
+ * @see f_string_append()
+ * @see f_string_dynamic_append_nulless()
+ * @see f_string_dynamic_resize()
+ * @see fl_directory_create()
+ * @see fl_directory_copy()
+ * @see fll_program_print_signal_received()
  */
 #ifndef _di_fake_build_copy_
-  extern void fake_build_copy(fake_data_t * const data, const f_mode_t mode, const f_string_static_t label, const f_string_static_t source, const f_string_static_t destination, const f_string_statics_t files, const f_string_static_t file_stage, const f_array_length_t perserve_offset, f_status_t *status);
+  extern void fake_build_copy(fake_data_t * const data, const f_mode_t mode, const f_string_static_t label, const f_string_static_t source, const f_string_static_t destination, const f_string_statics_t files, const f_string_static_t file_stage, const f_array_length_t perserve_offset);
 #endif // _di_fake_build_copy_
 
 /**
@@ -121,6 +104,16 @@ extern "C" {
  *
  * @param data
  *   The program data.
+ *
+ *   This alters data.setting.state.status:
+ *     F_none on success.
+ *
+ *     Errors (with error bit) from: f_string_dynamic_append_nulless()
+ *     Errors (with error bit) from: f_string_dynamic_mash()
+ *     Errors (with error bit) from: fll_execute_arguments_add()
+ *     Errors (with error bit) from: fll_execute_arguments_add_parameter_set()
+ *     Errors (with error bit) from: fll_execute_program()
+ *     Errors (with error bit) from: fake_build_touch()
  * @param data_build
  *   The build data.
  * @param process_script
@@ -128,17 +121,20 @@ extern "C" {
  *   This is expected to be either setting.process_pre or setting.process_post.
  * @param file_stage
  *   The specific stage file path.
- * @param status
- *   F_none on success.
- *
- *   Status codes (with error bit) are returned on any problem.
  *
  * @return
  *   The return code of the execution process.
  *   This generally is only needed when F_child is returned, where this holds the return status of the child process.
+ *
+ * @see f_string_dynamic_append_nulless()
+ * @see f_string_dynamic_mash()
+ * @see fll_execute_arguments_add()
+ * @see fll_execute_arguments_add_parameter_set()
+ * @see fll_execute_program()
+ * @see fake_build_touch()
  */
 #ifndef _di_fake_build_execute_process_script_
-  extern int fake_build_execute_process_script(fake_data_t * const data, fake_build_data_t * const data_build, const f_string_static_t process_script, const f_string_static_t file_stage, f_status_t *status);
+  extern int fake_build_execute_process_script(fake_data_t * const data, fake_build_data_t * const data_build, const f_string_static_t process_script, const f_string_static_t file_stage);
 #endif // _di_fake_build_execute_process_script_
 
 /**
@@ -146,18 +142,20 @@ extern "C" {
  *
  * @param data
  *   The program data.
+ *
+ *   This alters data.setting.state.status:
+ *     F_none on success.
+ *
+ *     Errors (with error bit) from: f_file_name_base()
  * @param path
  *   The file path to get the file name from.
  * @param name
  *   The processed filename.
  *
- * @return
- *   F_none on success.
- *
- *   Status codes (with error bit) are returned on any problem.
+ * @see f_file_name_base()
  */
 #ifndef _di_fake_build_get_file_name_without_extension_
-  extern f_status_t fake_build_get_file_name_without_extension(fake_data_t * const data, const f_string_static_t path, f_string_dynamic_t *name);
+  extern void fake_build_get_file_name_without_extension(fake_data_t * const data, const f_string_static_t path, f_string_dynamic_t *name);
 #endif // _di_fake_build_get_file_name_without_extension_
 
 /**
@@ -165,6 +163,11 @@ extern "C" {
  *
  * @param data
  *   The program data.
+ *
+ *   This alters data.setting.state.status:
+ *     F_none on success.
+ *
+ *     Errors (with error bit) from: fll_execute_arguments_add()
  * @param data_build
  *   The build data.
  * @param path
@@ -176,10 +179,7 @@ extern "C" {
  * @param arguments
  *   The execute arguments array being updated.
  *
- * @return
- *   F_none on success.
- *
- *   Status codes (with error bit) are returned on any problem.
+ * @see fll_execute_arguments_add()
  */
 #ifndef _di_fake_build_objects_add_
   extern f_status_t fake_build_objects_add(fake_data_t * const data, fake_build_data_t * const data_build, const f_string_static_t *path, const f_string_statics_t *generic, const f_string_statics_t *specific, f_string_dynamics_t *arguments);
@@ -190,6 +190,29 @@ extern "C" {
  *
  * @param data
  *   The program data.
+ *
+ *   This alters data.setting.state.status:
+ *     F_none on success.
+ *
+ *     F_interrupt (with error bit) on interrupt signal received.
+ *
+ *     Errors (with error bit) from: fll_program_print_signal_received()
+ *     Errors (with error bit) from: fake_build_copy()
+ *     Errors (with error bit) from: fake_build_execute_process_script()
+ *     Errors (with error bit) from: fake_build_library_script()
+ *     Errors (with error bit) from: fake_build_library_shared()
+ *     Errors (with error bit) from: fake_build_library_static()
+ *     Errors (with error bit) from: fake_build_load_environment()
+ *     Errors (with error bit) from: fake_build_load_setting()
+ *     Errors (with error bit) from: fake_build_load_stage()
+ *     Errors (with error bit) from: fake_build_object_script()
+ *     Errors (with error bit) from: fake_build_object_shared()
+ *     Errors (with error bit) from: fake_build_object_static()
+ *     Errors (with error bit) from: fake_build_objects_static()
+ *     Errors (with error bit) from: fake_build_program_script()
+ *     Errors (with error bit) from: fake_build_program_shared()
+ *     Errors (with error bit) from: fake_build_program_static()
+ *     Errors (with error bit) from: fake_build_skeleton()
  * @param setting_file
  *   The name of the settings file to use.
  *   If setting_file.used is 0, then the default or program parameter supplied file is used.
@@ -205,13 +228,26 @@ extern "C" {
  *   If TRUE, then use the program input pipe.
  *   If FALSE, then ignore the program input pipe.
  *
- * @return
- *   F_none on success.
- *
- *   Status codes (with error bit) are returned on any problem.
+ * @see fll_program_print_signal_received()
+ * @see fake_build_copy()
+ * @see fake_build_execute_process_script()
+ * @see fake_build_library_script()
+ * @see fake_build_library_shared()
+ * @see fake_build_library_static()
+ * @see fake_build_load_environment()
+ * @see fake_build_load_setting()
+ * @see fake_build_load_stage()
+ * @see fake_build_object_script()
+ * @see fake_build_object_shared()
+ * @see fake_build_object_static()
+ * @see fake_build_objects_static()
+ * @see fake_build_program_script()
+ * @see fake_build_program_shared()
+ * @see fake_build_program_static()
+ * @see fake_build_skeleton()
  */
 #ifndef _di_fake_build_operate_
-  extern f_status_t fake_build_operate(fake_data_t * const data, const f_string_statics_t * const build_arguments, const bool process_pipe);
+  extern void fake_build_operate(fake_data_t * const data, const f_string_statics_t * const build_arguments, const bool process_pipe);
 #endif // _di_fake_build_operate_
 
 /**
@@ -318,4 +354,4 @@ extern "C" {
 } // extern "C"
 #endif
 
-#endif // _PRIVATE_build_h
+#endif // _fake_build_h

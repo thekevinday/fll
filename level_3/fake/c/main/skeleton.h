@@ -9,8 +9,8 @@
  *
  * This is auto-included and should not need to be explicitly included.
  */
-#ifndef _PRIVATE_skeleton_h
-#define _PRIVATE_skeleton_h
+#ifndef _fake_skeleton_h
+#define _fake_skeleton_h
 
 #ifdef __cplusplus
 extern "C" {
@@ -112,4 +112,4 @@ extern "C" {
 } // extern "C"
 #endif
 
-#endif // _PRIVATE_skeleton_h
+#endif // _fake_skeleton_h

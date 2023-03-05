@@ -1,6 +1,4 @@
 #include "../fake.h"
-#include "../build.h"
-#include "print.h"
 
 #ifdef __cplusplus
 extern "C" {

@@ -1,5 +1,4 @@
 #include "fake.h"
-#include "skeleton.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -144,7 +143,8 @@ extern "C" {
 
       return F_status_set_warning(F_failure);
     }
-    else if (status == F_file_found_not) {
+
+    if (status == F_file_found_not) {
       status = f_directory_create(path, F_file_mode_all_rwx_d);
 
       if (F_status_is_error(status)) {
@@ -201,7 +201,8 @@ extern "C" {
 
       return F_status_set_warning(F_none);
     }
-    else if (F_status_set_fine(status) == F_file_found_not) {
+
+    if (F_status_set_fine(status) == F_file_found_not) {
       mode_t mode = F_file_mode_all_rw_d;
 
       if (executable) {

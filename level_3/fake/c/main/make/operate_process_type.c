@@ -1,16 +1,4 @@
 #include "../fake.h"
-#include "../build.h"
-#include "../clean.h"
-#include "../make.h"
-#include "../print.h"
-#include "../skeleton.h"
-#include "operate.h"
-#include "operate_process.h"
-#include "operate_process_type.h"
-#include "print.h"
-#include "print-error.h"
-#include "print-verbose.h"
-#include "print-warning.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -38,12 +26,14 @@ extern "C" {
 #endif // _di_fake_make_operate_process_type_break_
 
 #ifndef _di_fake_make_operate_process_type_build_
-  f_status_t fake_make_operate_process_type_build(fake_make_data_t * const data_make) {
+  void fake_make_operate_process_type_build(fake_make_data_t * const data_make) {
 
-    const f_status_t status = fake_build_operate(data_make->data, data_make->cache_arguments.used ? &data_make->cache_arguments : 0, F_false);
-    if (F_status_set_fine(status) == F_interrupt) return status;
+    if (!data_make) return;
 
-    return fake_make_operate_process_return(data_make, F_status_is_error(status) ? 1 : 0);
+    fake_build_operate(data_make->data, data_make->cache_arguments.used ? &data_make->cache_arguments : 0, F_false);
+    if (F_status_set_fine(data->setting.state.status) == F_interrupt) return;
+
+    data->setting.state.status = fake_make_operate_process_return(data_make, F_status_is_error(data->setting.state.status) ? 1 : 0);
   }
 #endif // _di_fake_make_operate_process_type_build_
 
@@ -525,7 +515,7 @@ extern "C" {
       }
 
       if (all) {
-        status = fll_file_role_change_all(data_make->cache_arguments.array[i], -1, id, dereference, fake_common_max_recursion_depth_d);
+        status = fll_file_role_change_all(data_make->cache_arguments.array[i], -1, id, dereference, fake_max_recursion_depth_d);
       }
       else {
         status = f_file_role_change(data_make->cache_arguments.array[i], -1, id, dereference);
@@ -1346,7 +1336,7 @@ extern "C" {
       }
 
       if (all) {
-        status = fll_file_mode_set_all(data_make->cache_arguments.array[i], F_true, mode, fake_common_max_recursion_depth_d);
+        status = fll_file_mode_set_all(data_make->cache_arguments.array[i], F_true, mode, fake_max_recursion_depth_d);
       }
       else {
         status = f_file_mode_set(data_make->cache_arguments.array[i], mode);
@@ -1511,7 +1501,7 @@ extern "C" {
       }
 
       if (all) {
-        status = fll_file_role_change_all(data_make->cache_arguments.array[i], id, -1, dereference, fake_common_max_recursion_depth_d);
+        status = fll_file_role_change_all(data_make->cache_arguments.array[i], id, -1, dereference, fake_max_recursion_depth_d);
       }
       else {
         status = f_file_role_change(data_make->cache_arguments.array[i], id, -1, dereference);

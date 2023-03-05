@@ -102,10 +102,41 @@
 #include <program/fake/main/common/string.h>
 #include <program/fake/main/common/type.h>
 #include <program/fake/main/common.h>
+#include <program/fake/main/build.h>
+#include <program/fake/main/build/enumeration.h>
+#include <program/fake/main/build/library.h>
+#include <program/fake/main/build/load.h>
+#include <program/fake/main/build/object.h>
+#include <program/fake/main/build/objects.h>
+#include <program/fake/main/build/print.h>
+#include <program/fake/main/build/print/compile.h>
+#include <program/fake/main/build/print/error.h>
+#include <program/fake/main/build/print/verbose.h>
+#include <program/fake/main/build/print/warning.h>
+#include <program/fake/main/build/program.h>
+#include <program/fake/main/build/skeleton.h>
+#include <program/fake/main/build/string.h>
+#include <program/fake/main/clean.h>
+#include <program/fake/main/fake/path_generate.h>
+#include <program/fake/main/make.h>
+#include <program/fake/main/make/load_fakefile.h>
+#include <program/fake/main/make/operate.h>
+#include <program/fake/main/make/operate_block.h>
+#include <program/fake/main/make/operate_process.h>
+#include <program/fake/main/make/operate_process_type.h>
+#include <program/fake/main/make/operate_validate.h>
+#include <program/fake/main/make/operate_validate_type.h>
+#include <program/fake/main/make/print.h>
+#include <program/fake/main/make/print/error.h>
+#include <program/fake/main/make/print/verbose.h>
+#include <program/fake/main/make/print/warning.h>
 #include <program/fake/main/print.h>
-#include <program/fake/main/print-error.h>
-#include <program/fake/main/print-verbose.h>
-#include <program/fake/main/print-warning.h>
+#include <program/fake/main/print/context.h>
+#include <program/fake/main/print/error.h>
+#include <program/fake/main/print/operation.h>
+#include <program/fake/main/print/verbose.h>
+#include <program/fake/main/print/warning.h>
+#include <program/fake/main/skeleton.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -175,6 +206,19 @@ extern "C" {
  *
  * @param data
  *   The program data.
+ *
+ *   This alters data.setting.state.status:
+ *     F_none on success.
+ *     F_false on file not found and file is not required.
+ *
+ *     F_file_found_not (with error bit) if file is not found and file is required.
+ *     F_interrupt (with error bit) on interrupt signal received.
+ *
+ *     Errors (with error bit) from: f_file_exists()
+ *     Errors (with error bit) from: f_file_size()
+ *     Errors (with error bit) from: f_file_stream_open()
+ *     Errors (with error bit) from: f_file_stream_read()
+ *     Errors (with error bit) from: f_string_dynamic_increase_by()
  * @param path_file
  *   The path to the file to load.
  * @param required
@@ -183,17 +227,14 @@ extern "C" {
  * @param buffer
  *   A buffer containing the contents of the file.
  *
- * @return
- *   F_none on success.
- *   F_false on file not found and file is not required.
- *
- *   F_file_found_not (with error bit) if file is not found and file is required.
- *   F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
- *
- *   Status codes (with error bit) are returned on any problem.
+ * @see f_file_exists()
+ * @see f_file_size()
+ * @see f_file_stream_open()
+ * @see f_file_stream_read()
+ * @see f_string_dynamic_increase_by()
  */
 #ifndef _di_fake_file_buffer_
-  extern f_status_t fake_file_buffer(fake_data_t * const data, const f_string_static_t path_file, const bool required, f_string_dynamic_t * const buffer);
+  extern void fake_file_buffer(fake_data_t * const data, const f_string_static_t path_file, const bool required, f_string_dynamic_t * const buffer);
 #endif // _di_fake_file_buffer_
 
 /**
@@ -201,18 +242,22 @@ extern "C" {
  *
  * @param data
  *   The program data.
+ *
+ *   This alters data.setting.state.status:
+ *     F_none on success.
+ *
+ *     F_interrupt (with error bit) on interrupt signal received.
+ *
+ *     Errors (with error bit) from: f_file_stream_read_block()
+ *     Errors (with error bit) from: f_string_dynamic_increase_by()
  * @param buffer
  *   A buffer containing the contents of the file.
  *
- * @return
- *   F_none on success.
- *
- *   F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
- *
- *   Status codes (with error bit) are returned on any problem.
+ * @see f_file_stream_read_block()
+ * @see f_string_dynamic_increase_by()
  */
 #ifndef _di_fake_pipe_buffer_
-  extern f_status_t fake_pipe_buffer(fake_data_t * const data, f_string_dynamic_t * const buffer);
+  extern void fake_pipe_buffer(fake_data_t * const data, f_string_dynamic_t * const buffer);
 #endif // _di_fake_pipe_buffer_
 
 /**

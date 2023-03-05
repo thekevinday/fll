@@ -9,18 +9,53 @@
  *
  * This is auto-included and should not need to be explicitly included.
  */
-#ifndef _PRIVATE_build_load_h
-#define _PRIVATE_build_load_h
+#ifndef _fake_build_load_h
+#define _fake_build_load_h
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 /**
+ * Load the environment used when executing commands.
+ *
+ * @param data
+ *   The program data.
+ *
+ *   This alters data.setting.state.status:
+ *     F_none on success.
+ *
+ *     F_array_too_large (with error bit) if the environment variable values are too large.
+ *
+ *     Errors (with error bit) from: fl_environment_load_name().
+ *     Errors (with error bit) from: fl_environment_load_names().
+ * @param data_build
+ *   The build data.
+ * @param environment
+ *   The environment data.
+ *
+ * @see fl_environment_load_name()
+ * @see fl_environment_load_names()
+ */
+#ifndef _di_fake_build_load_environment_
+  extern void fake_build_load_environment(fake_data_t * const data, fake_build_data_t * const data_build, f_string_maps_t * const environment);
+#endif // _di_fake_build_load_environment_
+
+/**
  * Find the build setting file, load it, validate it, and process it.
  *
  * @param data
  *   The program data.
+ *
+ *   This alters data.setting.state.status:
+ *     F_none on success.
+ *
+ *     F_interrupt (with error bit) on interrupt signal received.
+ *
+ *     Errors (with error bit) from: f_fss_apply_delimit().
+ *     Errors (with error bit) from: f_string_dynamic_append_assure().
+ *     Errors (with error bit) from: fll_fss_extended_read().
+ *     Errors (with error bit) from: fake_build_load_setting_process().
  * @param build_arguments
  *   (optional) A set of custom arguments to pass to the build.
  *   The first argument represents the name of the settings file to use.
@@ -35,16 +70,15 @@ extern "C" {
  * @param setting
  *   All build related setting data from the build setting file are loaded into this.
  *   These setting will have any specified mode property applied.
- * @param status
- *   The return status.
  *
- * @return
- *   F_none on success.
- *
- *   Status codes (with error bit) are returned on any problem.
+ * @see f_fss_apply_delimit()
+ * @see f_string_dynamic_append_assure()
+ * @see fll_fss_extended_read()
+ * @see fll_program_print_signal_received()
+ * @see fake_build_load_setting_process()
  */
 #ifndef _di_fake_build_load_setting_
-  extern void fake_build_load_setting(fake_data_t * const data, const f_string_statics_t * const build_arguments, const bool process_pipe, fake_build_setting_t * const setting, f_status_t * const status);
+  extern void fake_build_load_setting(fake_data_t * const data, const f_string_statics_t * const build_arguments, const bool process_pipe, fake_build_setting_t * const setting);
 #endif // _di_fake_build_load_setting_
 
 /**
@@ -59,8 +93,6 @@ extern "C" {
  * @param setting
  *   All build related setting data from the build setting file are loaded into this.
  *   These setting will have any specified mode property applied.
- * @param status
- *   The return status.
  *
  * @return
  *   F_none on success.
@@ -68,7 +100,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_build_load_setting_override_
-  extern void fake_build_load_setting_override(fake_data_t * const data, fake_build_setting_t * const setting, f_status_t * const status);
+  extern void fake_build_load_setting_override(fake_data_t * const data, fake_build_setting_t * const setting);
 #endif // _di_fake_build_load_setting_override_
 
 /**
@@ -93,8 +125,6 @@ extern "C" {
  * @param setting
  *   All build related setting data from the build setting file are loaded into this.
  *   These setting will have any specified mode property applied.
- * @param status
- *   The return status.
  *
  * @return
  *   F_none on success.
@@ -110,53 +140,37 @@ extern "C" {
  * @see fll_fss_snatch_apart()
  */
 #ifndef _di_fake_build_load_setting_process_
-  extern void fake_build_load_setting_process(fake_data_t * const data, const bool checks, const f_string_static_t path_file, const f_string_statics_t * const modes_custom, const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, fake_build_setting_t * const setting, f_status_t * const status);
+  extern void fake_build_load_setting_process(fake_data_t * const data, const bool checks, const f_string_static_t path_file, const f_string_statics_t * const modes_custom, const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, fake_build_setting_t * const setting);
 #endif // _di_fake_build_load_setting_process_
-
-/**
- * Load the environment used when executing commands.
- *
- * @param data
- *   The program data.
- * @param data_build
- *   The build data.
- * @param environment
- *   The environment data.
- * @param status
- *   The return status.
- *
- * @return
- *   F_none on success.
- *
- *   Status codes (with error bit) are returned on any problem.
- */
-#ifndef _di_fake_build_load_environment_
-  extern void fake_build_load_environment(fake_data_t * const data, fake_build_data_t * const data_build, f_string_maps_t * const environment, f_status_t * const status);
-#endif // _di_fake_build_load_environment_
 
 /**
  * Load the stage file paths.
  *
  * @param data
  *   The program data.
+ *
+ *   This alters data.setting.state.status:
+ *     F_none on success.
+ *
+ *     F_interrupt (with error bit) on interrupt signal received.
+ *
+ *     Errors (with error bit) from: f_file_name_base().
+ *     Errors (with error bit) from: f_string_dynamic_append_nulless().
  * @param settings_file
  *   The path to the settings file.
  * @param stage
  *   All stage file paths.
- * @param status
- *   The return status.
  *
- * @return
- *   F_none on success.
- *
- *   Status codes (with error bit) are returned on any problem.
+ * @see f_file_name_base()
+ * @see f_string_dynamic_append_nulless()
+ * @see fll_program_print_signal_received()
  */
 #ifndef _di_fake_build_load_stage_
-  extern void fake_build_load_stage(fake_data_t * const data, const f_string_static_t settings_file, fake_build_stage_t * const stage, f_status_t * const status);
+  extern void fake_build_load_stage(fake_data_t * const data, const f_string_static_t settings_file, fake_build_stage_t * const stage);
 #endif // _di_fake_build_load_stage_
 
 #ifdef __cplusplus
 } // extern "C"
 #endif
 
-#endif // _PRIVATE_build_load_h
+#endif // _fake_build_load_h

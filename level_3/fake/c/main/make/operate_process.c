@@ -1,122 +1,113 @@
 #include "../fake.h"
-#include "../build.h"
-#include "../clean.h"
-#include "../print.h"
-#include "../skeleton.h"
-#include "operate.h"
-#include "operate_process.h"
-#include "operate_process_type.h"
-#include "print.h"
-#include "print-error.h"
-#include "print-verbose.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 #ifndef _di_fake_make_operate_process_
-  int fake_make_operate_process(fake_make_data_t * const data_make, const f_string_range_t section_name, fake_state_process_t * const state_process, f_array_lengths_t * const section_stack, f_status_t * const status) {
+  int fake_make_operate_process(fake_make_data_t * const data_make, const f_string_range_t section_name, fake_state_process_t * const state_process, f_array_lengths_t * const section_stack) {
 
-    if (*status == F_child) return data_make->data->main->child;
+    if (!data_make || !state_process || !section_stack) return 0;
+    if (data->setting.state.status == F_child) return data_make->data->main->child;
 
     if (state_process->operation == fake_make_operation_type_break_e) {
-      *status = fake_make_operate_process_type_break(data_make);
+      fake_make_operate_process_type_break(data_make);
     }
     else if (state_process->operation == fake_make_operation_type_build_e) {
-      *status = fake_make_operate_process_type_build(data_make);
+      fake_make_operate_process_type_build(data_make);
     }
     else if (state_process->operation == fake_make_operation_type_clean_e) {
-      *status = fake_make_operate_process_type_clean(data_make);
+      fake_make_operate_process_type_clean(data_make);
     }
     else if (state_process->operation == fake_make_operation_type_clone_e) {
-      *status = fake_make_operate_process_type_copy(data_make, F_true);
+      fake_make_operate_process_type_copy(data_make, F_true);
     }
     else if (state_process->operation == fake_make_operation_type_compile_e) {
       return fake_make_operate_process_type_compile(data_make, status);
     }
     else if (state_process->operation == fake_make_operation_type_copy_e) {
-      *status = fake_make_operate_process_type_copy(data_make, F_false);
+      fake_make_operate_process_type_copy(data_make, F_false);
     }
     else if (state_process->operation == fake_make_operation_type_define_e) {
-      *status = fake_make_operate_process_type_define(data_make);
+      fake_make_operate_process_type_define(data_make);
     }
     else if (state_process->operation == fake_make_operation_type_delete_e) {
-      *status = fake_make_operate_process_type_deletes(data_make, F_false);
+      fake_make_operate_process_type_deletes(data_make, F_false);
     }
     else if (state_process->operation == fake_make_operation_type_deletes_e) {
-      *status = fake_make_operate_process_type_deletes(data_make, F_true);
+      fake_make_operate_process_type_deletes(data_make, F_true);
     }
     else if (state_process->operation == fake_make_operation_type_else_e) {
       // There is nothing to do.
     }
     else if (state_process->operation == fake_make_operation_type_exit_e) {
-      *status = fake_make_operate_process_type_exit(data_make);
+      fake_make_operate_process_type_exit(data_make);
     }
     else if (state_process->operation == fake_make_operation_type_fail_e) {
       fake_make_operate_process_type_fail(data_make);
     }
     else if (state_process->operation == fake_make_operation_type_group_e) {
-      *status = fake_make_operate_process_type_groups(data_make, F_false);
+      fake_make_operate_process_type_groups(data_make, F_false);
     }
     else if (state_process->operation == fake_make_operation_type_groups_e) {
-      *status = fake_make_operate_process_type_groups(data_make, F_true);
+      fake_make_operate_process_type_groups(data_make, F_true);
     }
     else if (state_process->operation == fake_make_operation_type_if_e || state_process->operation == fake_make_operation_type_and_e || state_process->operation == fake_make_operation_type_or_e) {
-      *status = fake_make_operate_process_type_condition(data_make, state_process);
+      fake_make_operate_process_type_condition(data_make, state_process);
     }
     else if (state_process->operation == fake_make_operation_type_index_e) {
       return fake_make_operate_process_type_index(data_make, status);
     }
     else if (state_process->operation == fake_make_operation_type_link_e) {
-      *status = fake_make_operate_process_type_link(data_make);
+      fake_make_operate_process_type_link(data_make);
     }
     else if (state_process->operation == fake_make_operation_type_mode_e) {
-      *status = fake_make_operate_process_type_modes(data_make, F_false);
+      fake_make_operate_process_type_modes(data_make, F_false);
     }
     else if (state_process->operation == fake_make_operation_type_modes_e) {
-      *status = fake_make_operate_process_type_modes(data_make, F_true);
+      fake_make_operate_process_type_modes(data_make, F_true);
     }
     else if (state_process->operation == fake_make_operation_type_move_e) {
-      *status = fake_make_operate_process_type_move(data_make);
+      fake_make_operate_process_type_move(data_make);
     }
     else if (state_process->operation == fake_make_operation_type_operate_e) {
       return fake_make_operate_process_type_operate(data_make, section_stack, status);
     }
     else if (state_process->operation == fake_make_operation_type_owner_e) {
-      *status = fake_make_operate_process_type_owners(data_make, F_false);
+      fake_make_operate_process_type_owners(data_make, F_false);
     }
     else if (state_process->operation == fake_make_operation_type_owners_e) {
-      *status = fake_make_operate_process_type_owners(data_make, F_true);
+      fake_make_operate_process_type_owners(data_make, F_true);
     }
     else if (state_process->operation == fake_make_operation_type_parameter_e) {
-      *status = fake_make_operate_process_type_parameter(data_make);
+      fake_make_operate_process_type_parameter(data_make);
     }
     else if (state_process->operation == fake_make_operation_type_pop_e) {
-      *status = fake_make_operate_process_type_pop(data_make);
+      fake_make_operate_process_type_pop(data_make);
     }
     else if (state_process->operation == fake_make_operation_type_print_e) {
-      *status = fake_make_operate_process_type_print(data_make);
+      fake_make_operate_process_type_print(data_make);
     }
     else if (state_process->operation == fake_make_operation_type_run_e) {
-      *status = fake_make_operate_process_run(data_make, F_false);
+      fake_make_operate_process_run(data_make, F_false);
     }
     else if (state_process->operation == fake_make_operation_type_shell_e) {
-      *status = fake_make_operate_process_run(data_make, F_true);
+      fake_make_operate_process_run(data_make, F_true);
     }
     else if (state_process->operation == fake_make_operation_type_skeleton_e) {
-      *status = fake_make_operate_process_type_skeleton(data_make);
+      fake_make_operate_process_type_skeleton(data_make);
     }
     else if (state_process->operation == fake_make_operation_type_to_e) {
-      *status = fake_make_operate_process_type_to(data_make);
+      fake_make_operate_process_type_to(data_make);
     }
     else if (state_process->operation == fake_make_operation_type_top_e) {
-      *status = fake_make_operate_process_type_top(data_make);
+      fake_make_operate_process_type_top(data_make);
     }
     else if (state_process->operation == fake_make_operation_type_touch_e) {
-      *status = fake_make_operate_process_type_touch(data_make);
+      fake_make_operate_process_type_touch(data_make);
     }
     else if (state_process->operation == fake_make_operation_type_write_e) {
-      *status = fake_make_operate_process_type_write(data_make);
+      fake_make_operate_process_type_write(data_make);
     }
 
     return 0;

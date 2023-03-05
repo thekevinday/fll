@@ -9,8 +9,8 @@
  *
  * This is auto-included and should not need to be explicitly included.
  */
-#ifndef _PRIVATE_build_skeleton_h
-#define _PRIVATE_build_skeleton_h
+#ifndef _fake_build_skeleton_h
+#define _fake_build_skeleton_h
 
 #ifdef __cplusplus
 extern "C" {
@@ -21,26 +21,33 @@ extern "C" {
  *
  * @param data
  *   The program data.
+ *
+ *   This alters data.setting.state.status:
+ *     F_none on success.
+ *
+ *     F_interrupt (with error bit) on interrupt signal received.
+ *
+ *     Errors (with error bit) from: f_directory_create().
+ *     Errors (with error bit) from: f_directory_exists().
+ *     Errors (with error bit) from: fake_build_touch().
  * @param data_build
  *   The build data.
  * @param mode
  *   The directory mode.
  * @param file_stage
  *   The specific stage file path.
- * @param status
- *   The return status.
  *
- * @return
- *   F_none on success.
- *
- *   Status codes (with error bit) are returned on any problem.
+ * @see f_directory_create()
+ * @see f_directory_exists()
+ * @see fll_program_standard_signal_received()
+ * @see fake_build_touch()
  */
 #ifndef _di_fake_build_skeleton_
-  extern void fake_build_skeleton(fake_data_t * const data, fake_build_data_t * const data_build, const mode_t mode, const f_string_static_t file_stage, f_status_t * const status);
+  extern void fake_build_skeleton(fake_data_t * const data, fake_build_data_t * const data_build, const mode_t mode, const f_string_static_t file_stage);
 #endif // _di_fake_build_skeleton_
 
 #ifdef __cplusplus
 } // extern "C"
 #endif
 
-#endif // _PRIVATE_build_skeleton_h
+#endif // _fake_build_skeleton_h

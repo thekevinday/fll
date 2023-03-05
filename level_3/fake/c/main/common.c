@@ -46,6 +46,8 @@ extern "C" {
     }
 
     if (F_status_is_error(setting->state.status)) {
+      fake_print_line_first(setting, main->message);
+
       fake_print_error(setting, main->error, setting->state.status, macro_fake_f(f_console_parameter_process));
 
       return;
@@ -66,6 +68,8 @@ extern "C" {
         setting->state.status = fll_program_parameter_process_context(choices, modes, F_true, main);
 
         if (F_status_is_error(setting->state.status)) {
+          fake_print_line_first(setting, main->message);
+
           fake_print_error(setting, main->error, setting->state.status, macro_fake_f(fll_program_parameter_process_context));
 
           return;
@@ -97,6 +101,8 @@ extern "C" {
         setting->state.status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, main);
 
         if (F_status_is_error(setting->state.status)) {
+          fake_print_line_first(setting, main->message);
+
           fake_print_error(setting, main->error, setting->state.status, macro_fake_f(fll_program_parameter_process_verbosity));
 
           return;
@@ -245,7 +251,7 @@ extern "C" {
             setting->state.status = F_status_set_error(F_parameter);
 
             if (main->error.verbosity > f_console_verbosity_quiet_e) {
-              fake_print_line_first_locked(setting, main->error);
+              fake_print_line_first(setting, main->message);
 
               fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, names[i]);
             }
@@ -265,6 +271,8 @@ extern "C" {
                   // @todo fix this to print an error about the actual invalid character so that it can be investigated.
 
                   if (F_status_is_error(setting->state.status)) {
+                    fake_print_line_first(setting, main->message);
+
                     if (fake_print_error_fallback(setting, main->error, setting->state.status, macro_fake_f(f_utf_is_word_dash_plus)) == F_false) {
                       fll_program_print_error_parameter_process(main->error, f_console_symbol_long_normal_s, names[i]);
                     }
@@ -286,8 +294,10 @@ extern "C" {
                 setting->state.status = f_path_directory_cleanup(main->parameters.arguments.array[index], variable[i]);
 
                 if (F_status_is_error(setting->state.status)) {
+                  fake_print_line_first(setting, main->message);
+
                   if (main->error.verbosity > f_console_verbosity_quiet_e) {
-                    fake_print_line_first_locked(setting, main->error);
+                    fake_print_line_first(setting, main->message);
 
                     if (fake_print_error_fallback(setting, main->error, setting->state.status, macro_fake_f(f_path_directory_cleanup)) == F_false) {
                       fll_program_print_error_parameter_process(main->error, f_console_symbol_long_normal_s, names[i]);
@@ -304,6 +314,8 @@ extern "C" {
                   setting->state.status = f_string_dynamic_resize(0, variable[i]);
 
                   if (F_status_is_error(setting->state.status)) {
+                    fake_print_line_first(setting, main->message);
+
                     fake_print_error(setting, main->error, setting->state.status, macro_fake_f(f_string_dynamic_resize));
 
                     return;
@@ -333,6 +345,8 @@ extern "C" {
               setting->state.status = f_string_dynamic_resize(0, variable[i]);
 
               if (F_status_is_error(setting->state.status)) {
+                fake_print_line_first(setting, main->message);
+
                 fake_print_error(setting, main->error, setting->state.status, macro_fake_f(f_string_dynamic_resize));
 
                 return;
@@ -370,7 +384,7 @@ extern "C" {
             setting->state.status = F_status_set_error(F_parameter);
 
             if (main->error.verbosity > f_console_verbosity_quiet_e) {
-              fake_print_line_first_locked(setting, main->error);
+              fake_print_line_first(setting, main->message);
 
               fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, names[i]);
             }
@@ -383,7 +397,7 @@ extern "C" {
 
             if (F_status_is_error(setting->state.status)) {
               if (main->error.verbosity > f_console_verbosity_quiet_e) {
-                fake_print_line_first_locked(setting, main->error);
+                fake_print_line_first(setting, main->message);
 
                 if (fake_print_error_fallback(setting, main->error, setting->state.status, macro_fake_f(fll_program_parameter_additional_rip)) == F_false) {
                   fll_program_print_error_parameter_process(main->error, f_console_symbol_long_normal_s, names[i]);
@@ -401,8 +415,9 @@ extern "C" {
                 setting->state.status = f_utf_is_word_dash_plus(main->parameters.arguments.array[i].string + j, width_max, F_false);
 
                 if (F_status_is_error(setting->state.status)) {
-                  // @todo fix this to print an error about the actual invalid character so that it can be investigated.
+                  fake_print_line_first(setting, main->message);
 
+                  // @todo fix this to print an error about the actual invalid character so that it can be investigated.
                   if (fake_print_error_fallback(setting, main->error, setting->state.status, macro_fake_f(f_utf_is_word_dash_plus)) == F_false) {
                     fll_program_print_error_parameter_process(main->error, f_console_symbol_long_normal_s, names[i]);
                   }
@@ -434,6 +449,8 @@ extern "C" {
       setting->state.status = f_uint8s_increase_by(1, &setting->operations);
 
       if (F_status_is_error(setting->state.status)) {
+        fake_print_line_first(setting, main->message);
+
         fake_print_error(setting, main->error, setting->state.status, macro_fake_f(f_uint8s_increase_by));
 
         return;
@@ -461,6 +478,8 @@ extern "C" {
     state->state->status = f_uint8s_increase(fake_default_allocation_small_d, &data->setting->operations);
 
     if (F_status_is_error(state->state->status)) {
+      fake_print_line_first(setting, main->message);
+
       fake_print_error(data->setting, data->main->error, state->state->status, macro_fake_f(f_uint8s_increase));
 
       return;

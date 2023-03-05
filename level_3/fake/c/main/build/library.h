@@ -9,8 +9,8 @@
  *
  * This is auto-included and should not need to be explicitly included.
  */
-#ifndef _PRIVATE_build_library_h
-#define _PRIVATE_build_library_h
+#ifndef _fake_build_library_h
+#define _fake_build_library_h
 
 #ifdef __cplusplus
 extern "C" {
@@ -97,4 +97,4 @@ extern "C" {
 } // extern "C"
 #endif
 
-#endif // _PRIVATE_build_library_h
+#endif // _fake_build_library_h
