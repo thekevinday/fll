@@ -45,12 +45,14 @@ extern "C" {
 
       *status = fll_execute_program(program, arguments, &parameter, 0, (void *) &return_code);
 
-      if (fll_program_standard_signal_received(data->main)) {
-        fake_print_signal_received(data);
+      if (!((++data->main->signal_check) % fake_signal_check_d)) {
+        if (fll_program_standard_signal_received(data->main)) {
+          fake_print_signal_received(data);
 
-        *status = F_status_set_error(F_interrupt);
+          *status = F_status_set_error(F_interrupt);
 
-        return 0;
+          return 0;
+        }
       }
 
       if (*status == F_child) return return_code;
@@ -88,10 +90,12 @@ extern "C" {
 #ifndef _di_fake_file_buffer_
   f_status_t fake_file_buffer(fake_data_t * const data, const f_string_static_t path_file, const bool required, f_string_dynamic_t * const buffer) {
 
-    if (fll_program_standard_signal_received(data->main)) {
-      fake_print_signal_received(data);
+    if (!((++data->main->signal_check) % fake_signal_check_d)) {
+      if (fll_program_standard_signal_received(data->main)) {
+        fake_print_signal_received(data);
 
-      return F_status_set_error(F_interrupt);
+        return F_status_set_error(F_interrupt);
+      }
     }
 
     f_file_t file = f_file_t_initialize;
@@ -171,10 +175,12 @@ extern "C" {
     clearerr(F_type_input_d);
 
     do {
-      if (fll_program_standard_signal_received(data->main)) {
-        fake_print_signal_received(data);
+      if (!((++data->main->signal_check) % fake_signal_check_d)) {
+        if (fll_program_standard_signal_received(data->main)) {
+          fake_print_signal_received(data);
 
-        return F_status_set_error(F_interrupt);
+          return F_status_set_error(F_interrupt);
+        }
       }
 
       status = f_file_stream_read_block(file, buffer);
@@ -552,10 +558,12 @@ extern "C" {
 #ifndef _di_fake_validate_parameter_paths_
   f_status_t fake_validate_parameter_paths(fake_data_t * const data) {
 
-    if (fll_program_standard_signal_received(data->main)) {
-      fake_print_signal_received(data);
+    if (!((++data->main->signal_check) % fake_signal_check_d)) {
+      if (fll_program_standard_signal_received(data->main)) {
+        fake_print_signal_received(data);
 
-      return F_status_set_error(F_interrupt);
+        return F_status_set_error(F_interrupt);
+      }
     }
 
     const f_string_static_t names[] = {

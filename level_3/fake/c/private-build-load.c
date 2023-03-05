@@ -74,12 +74,14 @@ extern "C" {
 
     if (F_status_is_error(*status)) return;
 
-    if (fll_program_standard_signal_received(data->main)) {
-      fake_print_signal_received(data);
+    if (!((++data->main->signal_check) % fake_signal_check_d)) {
+      if (fll_program_standard_signal_received(data->main)) {
+        fake_print_signal_received(data);
 
-      *status = F_status_set_error(F_interrupt);
+        *status = F_status_set_error(F_interrupt);
 
-      return;
+        return;
+      }
     }
 
     // Strip the build settings name from the build arguments to generate a list of modes.
@@ -230,12 +232,14 @@ extern "C" {
 
     if (F_status_is_error(*status) && buffer.used) return;
 
-    if (fll_program_standard_signal_received(data->main)) {
-      fake_print_signal_received(data);
+    if (!((++data->main->signal_check) % fake_signal_check_d)) {
+      if (fll_program_standard_signal_received(data->main)) {
+        fake_print_signal_received(data);
 
-      *status = F_status_set_error(F_interrupt);
+        *status = F_status_set_error(F_interrupt);
 
-      return;
+        return;
+      }
     }
 
     bool error_printed = F_false;
@@ -1478,12 +1482,14 @@ extern "C" {
 
     if (F_status_is_error(*status)) return;
 
-    if (fll_program_standard_signal_received(data->main)) {
-      fake_print_signal_received(data);
+    if (!((++data->main->signal_check) % fake_signal_check_d)) {
+      if (fll_program_standard_signal_received(data->main)) {
+        fake_print_signal_received(data);
 
-      *status = F_status_set_error(F_interrupt);
+        *status = F_status_set_error(F_interrupt);
 
-      return;
+        return;
+      }
     }
 
     const f_string_static_t names[] = {

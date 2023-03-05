@@ -348,12 +348,14 @@ const f_string_static_t fake_build_documentation_files_s = macro_f_string_static
 
     if (F_status_is_error(*status)|| *status == F_child || f_file_exists(file_stage, F_true) == F_true) return;
 
-    if (fll_program_standard_signal_received(data->main)) {
-      fake_print_signal_received(data);
+    if (!((++data->main->signal_check) % fake_signal_check_d)) {
+      if (fll_program_standard_signal_received(data->main)) {
+        fake_print_signal_received(data);
 
-      *status = F_status_set_error(F_interrupt);
+        *status = F_status_set_error(F_interrupt);
 
-      return;
+        return;
+      }
     }
 
     f_directory_statuss_t failures = f_directory_statuss_t_initialize;
@@ -393,7 +395,7 @@ const f_string_static_t fake_build_documentation_files_s = macro_f_string_static
 
     for (f_array_length_t i = 0; i < files.used; ++i) {
 
-      if (!(i % fake_signal_check_short_d)) {
+      if (!((++data->main->signal_check) % fake_signal_check_short_d)) {
         if (fll_program_standard_signal_received(data->main)) {
           fake_print_signal_received(data);
 
@@ -714,7 +716,7 @@ const f_string_static_t fake_build_documentation_files_s = macro_f_string_static
 
     f_string_dynamics_resize(0, &arguments);
 
-    if (fll_program_standard_signal_received(data->main)) {
+    if (!((++data->main->signal_check) % fake_signal_check_d) && fll_program_standard_signal_received(data->main)) {
       fake_print_signal_received(data);
 
       *status = F_status_set_error(F_interrupt);
@@ -818,10 +820,12 @@ const f_string_static_t fake_build_documentation_files_s = macro_f_string_static
 #ifndef _di_fake_build_operate_
   f_status_t fake_build_operate(fake_data_t * const data, const f_string_statics_t * const build_arguments, const bool process_pipe) {
 
-    if (fll_program_standard_signal_received(data->main)) {
-      fake_print_signal_received(data);
+    if (!((++data->main->signal_check) % fake_signal_check_d)) {
+      if (fll_program_standard_signal_received(data->main)) {
+        fake_print_signal_received(data);
 
-      return F_status_set_error(F_interrupt);
+        return F_status_set_error(F_interrupt);
+      }
     }
 
     f_status_t status = F_none;
@@ -1134,12 +1138,14 @@ const f_string_static_t fake_build_documentation_files_s = macro_f_string_static
 
     if (F_status_is_error(*status)) return;
 
-    if (fll_program_standard_signal_received(data->main)) {
-      fake_print_signal_received(data);
+    if (!((++data->main->signal_check) % fake_signal_check_d)) {
+      if (fll_program_standard_signal_received(data->main)) {
+        fake_print_signal_received(data);
 
-      *status = F_status_set_error(F_interrupt);
+        *status = F_status_set_error(F_interrupt);
 
-      return;
+        return;
+      }
     }
 
     f_mode_t mode = f_mode_t_initialize;

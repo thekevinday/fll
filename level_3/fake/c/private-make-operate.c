@@ -16,10 +16,12 @@ extern "C" {
 #ifndef _di_fake_make_operate_
   f_status_t fake_make_operate(fake_data_t * const data) {
 
-    if (fll_program_standard_signal_received(data->main)) {
-      fake_print_signal_received(data);
+    if (!((++data->main->signal_check) % fake_signal_check_d)) {
+      if (fll_program_standard_signal_received(data->main)) {
+        fake_print_signal_received(data);
 
-      return F_status_set_error(F_interrupt);
+        return F_status_set_error(F_interrupt);
+      }
     }
 
     if (data->main->output.verbosity != f_console_verbosity_quiet_e && data->main->output.verbosity != f_console_verbosity_error_e) {
