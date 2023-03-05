@@ -346,7 +346,7 @@ const f_string_static_t fake_build_documentation_files_s = macro_f_string_static
 #ifndef _di_fake_build_copy_
   void fake_build_copy(fake_data_t * const data, const f_mode_t mode, const f_string_static_t label, const f_string_static_t source, const f_string_static_t destination, const f_string_statics_t files, const f_string_static_t file_stage, const f_array_length_t perserve_offset, f_status_t *status) {
 
-    if (F_status_is_error(*status) || f_file_exists(file_stage, F_true) == F_true || *status == F_child) return;
+    if (F_status_is_error(*status)|| *status == F_child || f_file_exists(file_stage, F_true) == F_true) return;
 
     if (fll_program_standard_signal_received(data->main)) {
       fake_print_signal_received(data);
@@ -553,7 +553,7 @@ const f_string_static_t fake_build_documentation_files_s = macro_f_string_static
 #ifndef _di_fake_build_execute_process_script_
   int fake_build_execute_process_script(fake_data_t * const data, fake_build_data_t * const data_build, const f_string_static_t process_script, const f_string_static_t file_stage, f_status_t *status) {
 
-    if (F_status_is_error(*status) || f_file_exists(file_stage, F_true) == F_true || *status == F_child) return data->main->child;
+    if (F_status_is_error(*status)|| *status == F_child || f_file_exists(file_stage, F_true) == F_true) return data->main->child;
     if (!process_script.used) return 0;
 
     f_string_dynamics_t arguments = f_string_dynamics_t_initialize;
