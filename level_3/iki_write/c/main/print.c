@@ -34,6 +34,7 @@ extern "C" {
     fll_program_print_help_option(print, iki_write_short_file_s, iki_write_long_file_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "    Specify a file to send data to.");
     fll_program_print_help_option(print, iki_write_short_object_s, iki_write_long_object_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "  The Object to write.");
     fll_program_print_help_option(print, iki_write_short_single_s, iki_write_long_single_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "  Use single quotes.");
+    fll_program_print_help_option(print, iki_write_short_wrap_s, iki_write_long_wrap_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "    Wrap the vocabulary name.");
 
     f_print_dynamic_raw(f_string_eol_s, print.to);
     f_print_dynamic_raw(f_string_eol_s, print.to);

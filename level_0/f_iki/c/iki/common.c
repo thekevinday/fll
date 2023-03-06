@@ -29,6 +29,14 @@ extern "C" {
   #ifndef _di_f_iki_syntax_slash_s_
     const f_string_static_t f_iki_syntax_slash_s = macro_f_string_static_t_initialize(F_iki_syntax_slash_s, 0, F_iki_syntax_slash_s_length);
   #endif // _di_f_iki_syntax_slash_s_
+
+  #ifndef _di_f_iki_syntax_wrap_open_s_
+    const f_string_static_t f_iki_syntax_wrap_open_s = macro_f_string_static_t_initialize(F_iki_syntax_wrap_open_s, 0, F_iki_syntax_wrap_open_s_length);
+  #endif // _di_f_iki_syntax_wrap_open_s_
+
+  #ifndef _di_f_iki_syntax_wrap_close_s_
+    const f_string_static_t f_iki_syntax_wrap_close_s = macro_f_string_static_t_initialize(F_iki_syntax_wrap_close_s, 0, F_iki_syntax_wrap_close_s_length);
+  #endif // _di_f_iki_syntax_wrap_close_s_
 #endif //_di_f_iki_syntax_s_
 
 #ifndef _di_f_iki_vocabulary_0001_s_

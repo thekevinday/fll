@@ -44,6 +44,7 @@ extern "C" {
  *   - object:      The Object being written is specified.
  *   - print_first: When set, the first character printing logic is to be processed (this is usually automatic).
  *   - version:     Print version.
+ *   - wrap:        Wrap the vocabulary.
  */
 #ifndef _di_iki_write_main_flag_e_
   enum {
@@ -55,6 +56,7 @@ extern "C" {
     iki_write_main_flag_object_e      = 0x10,
     iki_write_main_flag_print_first_e = 0x20,
     iki_write_main_flag_version_e     = 0x40,
+    iki_write_main_flag_wrap_e        = 0x80,
   }; // enum
 #endif // _di_iki_write_main_flag_e_
 
@@ -83,6 +85,7 @@ extern "C" {
     iki_write_parameter_file_e,
     iki_write_parameter_object_e,
     iki_write_parameter_single_e,
+    iki_write_parameter_wrap_e,
   }; // enum
 
   #define iki_write_console_parameter_t_initialize \
@@ -107,9 +110,10 @@ extern "C" {
       macro_f_console_parameter_t_initialize_3(iki_write_short_file_s,     iki_write_long_file_s,     1, f_console_flag_normal_e), \
       macro_f_console_parameter_t_initialize_3(iki_write_short_object_s,   iki_write_long_object_s,   1, f_console_flag_normal_e), \
       macro_f_console_parameter_t_initialize_3(iki_write_short_single_s,   iki_write_long_single_s,   0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(iki_write_short_wrap_s,     iki_write_long_wrap_s,     0, f_console_flag_normal_e), \
     }
 
-  #define iki_write_total_parameters_d 19
+  #define iki_write_total_parameters_d 20
 #endif // _di_iki_write_parameter_e_
 
 /**

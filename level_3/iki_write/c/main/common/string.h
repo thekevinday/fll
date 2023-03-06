@@ -80,6 +80,7 @@ extern "C" {
   #define IKI_WRITE_short_file_s     "f"
   #define IKI_WRITE_short_object_s   "o"
   #define IKI_WRITE_short_single_s   "s"
+  #define IKI_WRITE_short_wrap_s     "w"
 
   #define IKI_WRITE_long_backtick_s "backtick"
   #define IKI_WRITE_long_content_s  "content"
@@ -87,6 +88,7 @@ extern "C" {
   #define IKI_WRITE_long_file_s     "file"
   #define IKI_WRITE_long_object_s   "object"
   #define IKI_WRITE_long_single_s   "single"
+  #define IKI_WRITE_long_wrap_s     "wrap"
 
   #define IKI_WRITE_short_backtick_s_length 1
   #define IKI_WRITE_short_content_s_length  1
@@ -94,6 +96,7 @@ extern "C" {
   #define IKI_WRITE_short_file_s_length     1
   #define IKI_WRITE_short_object_s_length   1
   #define IKI_WRITE_short_single_s_length   1
+  #define IKI_WRITE_short_wrap_s_length     1
 
   #define IKI_WRITE_long_backtick_s_length 8
   #define IKI_WRITE_long_content_s_length  7
@@ -101,6 +104,7 @@ extern "C" {
   #define IKI_WRITE_long_file_s_length     4
   #define IKI_WRITE_long_object_s_length   6
   #define IKI_WRITE_long_single_s_length   6
+  #define IKI_WRITE_long_wrap_s_length     4
 
   extern const f_string_static_t iki_write_short_backtick_s;
   extern const f_string_static_t iki_write_short_content_s;
@@ -108,6 +112,7 @@ extern "C" {
   extern const f_string_static_t iki_write_short_file_s;
   extern const f_string_static_t iki_write_short_object_s;
   extern const f_string_static_t iki_write_short_single_s;
+  extern const f_string_static_t iki_write_short_wrap_s;
 
   extern const f_string_static_t iki_write_long_backtick_s;
   extern const f_string_static_t iki_write_long_content_s;
@@ -115,6 +120,7 @@ extern "C" {
   extern const f_string_static_t iki_write_long_file_s;
   extern const f_string_static_t iki_write_long_object_s;
   extern const f_string_static_t iki_write_long_single_s;
+  extern const f_string_static_t iki_write_long_wrap_s;
 #endif // _di_iki_write_parameter_s_
 
 #ifdef __cplusplus

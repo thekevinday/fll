@@ -95,6 +95,7 @@ extern "C" {
     const f_array_length_t delimits_used = data->delimits.used;
 
     uint8_t quote = 0;
+    uint8_t wrapped = F_false; // 0x0 (false) = not wapped, 0x1 (true) = wrapped, 0x2 = valid wrapped.
 
     do {
 
@@ -122,8 +123,10 @@ extern "C" {
         }
 
         if (state->status == F_true) {
-          found_vocabulary.start = range->start;
-          found_vocabulary.stop = range->start;
+          if (!wrapped) {
+            found_vocabulary.start = range->start;
+            found_vocabulary.stop = range->start;
+          }
 
           state->status = f_utf_buffer_increment(*buffer, range, 1);
           if (F_status_is_error(state->status)) break;
@@ -131,6 +134,17 @@ extern "C" {
           state->status = F_true;
 
           break;
+        }
+
+        // Wrapped must be followed by a valid vocabulary name.
+        if (buffer->string[range->start] == f_iki_syntax_wrap_open_s.string[0]) {
+          found_vocabulary.start = range->start;
+          found_vocabulary.stop = range->start;
+
+          wrapped = F_true;
+        }
+        else if (wrapped) {
+          wrapped = F_false;
         }
 
         state->status = f_utf_buffer_increment(*buffer, range, 1);
@@ -152,6 +166,14 @@ extern "C" {
         }
 
         if (buffer->string[range->start] == f_iki_syntax_separator_s.string[0]) {
+
+          // Wrapped must close in a wrap close before the seperator.
+          if (wrapped == F_true) {
+            state->status = F_next;
+
+            break;
+          }
+
           do {
             state->status = f_utf_buffer_increment(*buffer, range, 1);
           } while (F_status_is_fine(state->status) && buffer->string[range->start] == f_iki_syntax_placeholder_s.string[0] && range->start <= range->stop && range->start < buffer->used);
@@ -222,6 +244,22 @@ extern "C" {
           if (state->status == F_true) break;
           if (F_status_is_error(state->status) || range->start > range->stop || range->start >= buffer->used || state->status == F_next) break;
         }
+        else if (buffer->string[range->start] == f_iki_syntax_wrap_open_s.string[0]) {
+          state->status = F_next;
+
+          break;
+        }
+        else if (wrapped == F_true && buffer->string[range->start] == f_iki_syntax_wrap_close_s.string[0]) {
+          wrapped = 0x2;
+          found_vocabulary.stop = range->start;
+        }
+        else if (wrapped == 0x2) {
+
+          // Wrapped close must be immediately before a separator (ignoring any placeholders in between).
+          state->status = F_next;
+
+          break;
+        }
         else {
           width_max = buffer->used - range->start;
 
@@ -241,9 +279,9 @@ extern "C" {
           if (state->status == F_true) {
             found_vocabulary.stop = range->start;
           }
-
-          // Not a valid IKI vocabulary name.
           else {
+
+            // Not a valid IKI vocabulary name.
             state->status = f_utf_buffer_increment(*buffer, range, 1);
             if (F_status_is_error(state->status)) break;
 
@@ -261,6 +299,7 @@ extern "C" {
 
       if (state->status == F_next) {
         quote = 0;
+        wrapped = F_false;
 
         continue;
       }
@@ -295,8 +334,8 @@ extern "C" {
             data->variable.array[data->variable.used].start = found_vocabulary.start;
             data->variable.array[data->variable.used++].stop = range->start;
 
-            data->vocabulary.array[data->vocabulary.used].start = found_vocabulary.start;
-            data->vocabulary.array[data->vocabulary.used++].stop = found_vocabulary.stop;
+            data->vocabulary.array[data->vocabulary.used].start = wrapped ? found_vocabulary.start + f_iki_syntax_wrap_open_s.used : found_vocabulary.start;
+            data->vocabulary.array[data->vocabulary.used++].stop = wrapped ? found_vocabulary.stop - f_iki_syntax_wrap_close_s.used : found_vocabulary.stop;
 
             data->content.array[data->content.used].start = found_content;
             data->content.array[data->content.used++].stop = range->start - 1;
@@ -368,8 +407,8 @@ extern "C" {
                   data->variable.array[data->variable.used].start = found_vocabulary.start;
                   data->variable.array[data->variable.used++].stop = range->start;
 
-                  data->vocabulary.array[data->vocabulary.used].start = found_vocabulary.start;
-                  data->vocabulary.array[data->vocabulary.used++].stop = found_vocabulary.stop;
+                  data->vocabulary.array[data->vocabulary.used].start = wrapped ? found_vocabulary.start + f_iki_syntax_wrap_open_s.used : found_vocabulary.start;
+                  data->vocabulary.array[data->vocabulary.used++].stop = wrapped ? found_vocabulary.stop - f_iki_syntax_wrap_close_s.used : found_vocabulary.stop;
 
                   data->content.array[data->content.used].start = found_content;
                   data->content.array[data->content.used++].stop = range->start - 1;
@@ -406,6 +445,7 @@ extern "C" {
         } // while
 
         quote = 0;
+        wrapped = F_false;
       }
 
       if (F_status_is_error(state->status) || range->start > range->stop || range->start >= buffer->used) break;

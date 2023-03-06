@@ -44,7 +44,12 @@ extern "C" {
       return;
     }
 
-    fl_print_format("%Q%r%r%Q%r", main->output.to, object, f_iki_syntax_separator_s, setting->quote, setting->escaped, setting->quote);
+    if (setting->flag & iki_write_main_flag_wrap_e) {
+      fl_print_format("%r%Q%r%r%r%Q%r", main->output.to, f_iki_syntax_wrap_open_s, object, f_iki_syntax_wrap_close_s, f_iki_syntax_separator_s, setting->quote, setting->escaped, setting->quote);
+    }
+    else {
+      fl_print_format("%Q%r%r%Q%r", main->output.to, object, f_iki_syntax_separator_s, setting->quote, setting->escaped, setting->quote);
+    }
   }
 #endif // _di_iki_write_process_
 

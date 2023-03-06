@@ -229,6 +229,10 @@ extern "C" {
       return;
     }
 
+    if (main->parameters.array[iki_write_parameter_wrap_e].result & f_console_result_found_e) {
+      setting->flag |= iki_write_main_flag_wrap_e;
+    }
+
     setting->quote = f_iki_syntax_quote_double_s;
 
     if (main->parameters.array[iki_write_parameter_double_e].result & f_console_result_found_e) {
