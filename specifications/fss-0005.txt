@@ -10,7 +10,7 @@
 #
 
 Featureless Settings Specification: 0005 - Somewhat Basic List:
-  This is a code"fss-0002 (Basic List)" whose Content is then processed as code:"FSS-0001 (Extended)".
+  This is a code:"FSS-0002 (Basic List)" whose Content is then processed as code:"FSS-0001 (Extended)".
 
   All code:"FSS-0002 (Basic List)" escapes are applied before any code:"FSS-0001 (Extended)" is identified.
 
