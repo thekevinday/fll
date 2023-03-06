@@ -11,13 +11,13 @@
 
 Featureless Settings Specification: 0003 - Extended List:
   Each Object starts at the beginning of a line and white space to the left of the Object is not treated as an object.
-  An open-brace character:"{" (unicode:"U+007B") followed by any white space until a newline terminates a possible valid Object.
+  An open-brace character:"{" (unicode:"U+007B") followed by any white space until a new line terminates a possible valid Object.
   An Object is not considered fully valid until a valid close-brace character:"}" (unicode:"U+007D") is found, designating the end of the Content.
   Non-white space printable characters may not follow the open-brace character:"{" (unicode:"U+007B") of a valid Object.
 
   Content is represented as a single Content column of every line following a valid object until the end of file (or string) or until a non-delimited close-brace character:"}" (unicode:"U+007D").
   Any Content column that could be interpreted as an end of Content must be delimited if it should be part of the Content.
-  White space may follow a valid close-brace character:"}" (unicode:"U+007D") but a terminating newline must be present to designate a valid end of Content.
+  White space may follow a valid close-brace character:"}" (unicode:"U+007D") but a terminating new line must be present to designate a valid end of Content.
 
   There is no single-quote, double-quote, or backtick delimitation in this specification.
   Only an open-brace character:"{" (unicode:"U+007B") that would result in a valid Object or the close-brace character:"}" (unicode:"U+007D") that would terminate valid Content can be delimited.
@@ -31,10 +31,10 @@ Featureless Settings Specification: 0003 - Extended List:
   Empty Objects are allowed, that is, the length of the object may be zero.
 
   Key\:
-    code:"\s" = White space, except newline.
+    code:"\s" = White space, except new line.
     code:"\o" = Any printable character, except unescaped character:"{" (unicode:"U+007B").
     code:"\l" = Any printable character or white space, except unescaped character:"}" (unicode:"U+007D").
-    code:"\c" = Either white space or printable, including newline, that is not interpretable as an Object.
+    code:"\c" = Either white space or printable, including new line, that is not interpretable as an Object.
     code:"\n" = Newline.
     code:"*" = Zero or more occurrences.
 
@@ -58,7 +58,7 @@ Featureless Settings Specification: 0003 - Extended List:
 
     Second {
       Continues until EOS/EOF.
-      All white space, including newline (and leading white space) is "part of content."
+      All white space, including new line (and leading white space) is "part of content."
       # Valid comments are still ignored.
     }
 
@@ -71,4 +71,4 @@ Featureless Settings Specification: 0003 - Extended List:
          This: does not need to be delimited.
          }
     2.1) Continues until EOS/EOF.
-         All white space, including newline (and leading white space) is "part of content."
+         All white space, including new line (and leading white space) is "part of content."

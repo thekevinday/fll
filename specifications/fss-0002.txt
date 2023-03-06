@@ -11,7 +11,7 @@
 
 Featureless Settings Specification: 0002 - Basic List:
   Each Object starts at the beginning of a line and white space to the left of the Object is not treated as an object.
-  A colon character:":" (unicode:"U+003A") followed by any white space until a newline terminates a valid Object.
+  A colon character:":" (unicode:"U+003A") followed by any white space until a new line terminates a valid Object.
   Non-white space printable characters may not follow the colon of a valid Object.
 
   Content is represented as a single Content column of every line following a valid object until the end of file (or string) or until the next valid Object is found.
@@ -23,11 +23,11 @@ Featureless Settings Specification: 0002 - Basic List:
   Empty Objects are allowed, that is, the length of the object may be zero.
 
   Key\:
-    code:"\s" = White space, except newline.
+    code:"\s" = White space, except new line.
     code:"\o" = Any printable character, except unescaped character:":" (unicode:"U+003A").
     code:"\l" = Any printable character or white space, except unescaped character:":" (unicode:"U+003A").
-    code:"\c" = Either white space or printable, including newline, that not interpretable as an Object.
-    code:"\n" = Newline.
+    code:"\c" = Either white space or printable, including new line, that not interpretable as an Object.
+    code:"\n" = New line.
     code:"*" = Zero or more occurrences.
 
   Before Structure\:
@@ -48,7 +48,7 @@ Featureless Settings Specification: 0002 - Basic List:
       This Does\\\:
     Second\:
       Continues until EOS/EOF.
-      All white space, including newline (and leading white space) is "part of content."
+      All white space, including new line (and leading white space) is "part of content."
       # Valid comments are still ignored.
 
   Objects would be\:
@@ -60,4 +60,4 @@ Featureless Settings Specification: 0002 - Basic List:
          This: does not need to be delimited.
          This Does\:
     2.1) Continues until EOS/EOF.
-         All white space, including newline (and leading white space) is "part of content."
+         All white space, including new line (and leading white space) is "part of content."
