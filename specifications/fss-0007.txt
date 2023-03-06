@@ -27,7 +27,7 @@ Featureless Settings Specification: 0007 - Very Extended List:
 
     Second {
       Continues until EOS/EOF.
-      All white space, including newline (and leading white space) is "part of content."
+      All white space, including new line (and leading white space) is "part of content."
       # Valid comments are still ignored.
     }
 
@@ -62,11 +62,13 @@ Featureless Settings Specification: 0007 - Very Extended List:
     2.1.1) until
     2.1.2) EOS/EOF.
 
-    2.2.1) white space,
-    2.2.2) including
-    2.2.3) newline
-    2.2.4) (and
-    2.2.5) leading
-    2.2.6) white space)
-    2.2.7) is
-    2.2.8) part of content.
+    2.2.1) white
+    2.2.2) space,
+    2.2.3) including
+    2.2.4) new
+    2.2.5) line
+    2.2.6) (and
+    2.2.7) leading
+    2.2.8) white space)
+    2.2.9) is
+    2.2.10) part of content.

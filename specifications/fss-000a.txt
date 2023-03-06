@@ -14,22 +14,25 @@ Featureless Settings Specification: 000A - Extended Reverse Mapping:
 
   Each Object starts at the end of a line and white space to the left of the Object is not treated as an object.
   White space separates an Object from the Content.
-  An Object may be followed by a newline, in which case means that the Object has no Content.
+  An Object may be followed by a new line, in which case means that the Object has no Content.
   If only printing white spaces or non-printable characters follow a valid Object, then that Object is considered to have no Content.
   An Object may be quoted to include white space where a single quote character:"'" (unicode:"U+0027"), a double quote character:'"' (unicode:"U+0022"), or a backtick character:'`' (unicode:"U+0060") are used to quote.
   An Object is only considered quoted if the first and last character of the Object are the same quote.
   Any quote characters in a non-quoted Object are treated as part of the Object rather than as a quote.
+  An Object that properly starts with a quote character but is not properly terminated before the new line is reached is considered to be an Object terminating at the end of the line.
+  A quoted Objected terminating at the new line in this way preserves the quotes as part of the Object.
 
   Content exists on the same line as the Object.
   Content is represented as multiple Content columns.
   Content columns are white space separated parts within the Content is terminated by the start of the Object.
   Any number of Content columns may exist in the Content until the Object is reached.
+  Content follows the same quoting rules as an Object.
 
   Key\:
-    code:"\s" = White space, except newline.
-    code:"\b" = Either white space or printable, except newline.
+    code:"\s" = White space, except new line.
+    code:"\b" = Either white space or printable, except new line.
     code:"\q" = Non-white space or quoted white space (and non-white space) with no white space outside of the quotes.
-    code:"\n" = Newline.
+    code:"\n" = New line.
     code:"*" = Zero or more occurrences.
     code:"+" = One or more occurrences.
     code:"()*" = Grouping that repeats zero or more times.

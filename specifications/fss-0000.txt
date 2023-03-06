@@ -12,24 +12,26 @@
 Featureless Settings Specification: 0000 - Basic:
   Each Object starts at the beginning of a line and white space to the left of the Object is not treated as part of the object.
   White space separates an Object from the Content.
-  An Object may be preceded by a newline, in which case means that the Object has no Content.
+  An Object may be preceded by a new line character, in which case means that the Object has no Content.
   If only printing white spaces or non-printable characters follow a valid Object, then that Object is considered to have no Content.
   An Object may be quoted to include white space where a single quote character:"'" (unicode:"U+0027"), a double quote character:'"' (unicode:"U+0022"), or a backtick character:'`' (unicode:"U+0060") are used to quote.
   An Object is only considered quoted if the first and last character of the Object are the same quote.
   Any quote characters in a non-quoted Object are treated as part of the Object rather than as a quote.
+  An Object that properly starts with a quote character but is not properly terminated before the new line is reached is considered to be an Object terminating at the end of the line.
+  A quoted Objected terminating at the new line in this way preserves the quotes as part of the Object.
 
   Content exists on the same line as the Object.
-  Content is represented as a single Content column terminated by a newline.
-  Content column consists of everything following the first non-white space character until the newline.
-  Content column includes trailing white space before newline is reached.
+  Content is represented as a single Content column terminated by a new line.
+  Content column consists of everything following the first non-white space character until the new line.
+  Content column includes trailing white space before new line is reached.
   Content column does not include any of the leading white space.
   No delimits are supported in the Content.
 
   Key\:
-    code:"\s" = White space, except newline.
-    code:"\b" = Either white space or printable, except newline.
+    code:"\s" = White space, except new line.
+    code:"\b" = Either white space or printable, except new line.
     code:"\q" = Non-white space or quoted white space (and non-white space) with no white space outside of the quotes.
-    code:"\n" = Newline.
+    code:"\n" = New line.
     code:"*" = Zero or more occurrences.
     code:"+" = One or more occurrences.
 
@@ -45,7 +47,7 @@ Featureless Settings Specification: 0000 - Basic:
   Example\:
     # fss-0000
     # valid comments are ignored.
-    "The Object" Content until newline.
+    "The Object" Content until new line.
     Second object set.
 
   Object would be\:
@@ -53,5 +55,5 @@ Featureless Settings Specification: 0000 - Basic:
     2) Second
 
   Content would be\:
-    1.1) Content until newline.
+    1.1) Content until new line.
     2.1) object set.
