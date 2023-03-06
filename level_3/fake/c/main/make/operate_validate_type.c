@@ -428,7 +428,7 @@ extern "C" {
           else if (state_process->condition == fake_make_operation_if_type_if_group_e || state_process->condition == fake_make_operation_if_type_if_not_group_e) {
             gid_t id = 0;
 
-            if (F_status_is_error(fake_make_get_id_group(data_make->data, data_make->error, data_make->cache_arguments.array[k++], &id))) {
+            if (F_status_is_error(fake_make_get_id(data_make, data_make->cache_arguments.array[k++], (void *) &id))) {
               return F_status_set_error(F_failure);
             }
 
@@ -483,7 +483,7 @@ extern "C" {
           else if (state_process->condition == fake_make_operation_if_type_if_owner_e || state_process->condition == fake_make_operation_if_type_if_not_owner_e) {
             uid_t id = 0;
 
-            if (F_status_is_error(fake_make_get_id_owner(data_make->data, data_make->error, data_make->cache_arguments.array[k++], &id))) {
+            if (F_status_is_error(fake_make_get_id(data_make->data, data_make->error, data_make->cache_arguments.array[k++], (void *) &id))) {
               return F_status_set_error(F_failure);
             }
 

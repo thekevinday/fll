@@ -22,48 +22,64 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  *   The data_make.cache_path will be updated to reflect the full path to this file.
+ *
+ *   This alters data_make.setting.state.status:
+ *     F_true if inside the project.
+ *     F_false (with error bit) if path exists outside of the root project path.
+ *
+ *     Errors (with error bit) from: fll_path_canonical()
  * @param path
  *   file path to get the real path of.
  *
- * @return
- *   F_true if inside the project.
- *   F_false (with error bit) if path exists outside of the root project path.
- *
- *   Status codes (with error bit) are returned on any problem.
+ * @see fll_path_canonical()
  */
 #ifndef _di_fake_make_assure_inside_project_
-  extern f_status_t fake_make_assure_inside_project(fake_make_data_t * const data_make, const f_string_static_t path);
+  extern void fake_make_assure_inside_project(fake_make_data_t * const data_make, const f_string_static_t path);
 #endif // _di_fake_make_assure_inside_project_
 
 /**
  * Get the group id from either a string representing the number or a string representing the name.
  *
- * @param data
- *   The program data.
- * @param print
- *   The error/warning print data.
+ * @param data_make
+ *   All make related setting data, including data from the fakefile and the build settings file.
+ *   The data_make.cache_path will be updated to reflect the full path to this file.
+ *
+ *   This alters data_make.setting.state.status:
+ *     F_none on success.
+ *
+ *     F_failure (with error bit) on any error.
+ *     F_exist_not (with error bit) if there is no owner or group by the given name.
+ *     F_parameter (with error bit) on invalid parameter.
+ *
+ *     Errors (with error bit) from: fl_conversion_dynamic_to_unsigned_detect()
+ * @param
  * @param buffer
  *   The string containing the name or number.
  * @param id
- *   The detected group id.
+ *   The detected owner id or group id.
+ *   When is_owner is TRUE, then this must be of type (uid_t *).
+ *   When is_owner is TRUE, then this must be of type (gid_t *).
  *
- * @return
- *   F_none on success.
- *   F_exist_not if there is no group by the given name.
- *
- *   Status codes (with error bit) are returned on any problem.
+ * @see fl_conversion_dynamic_to_unsigned_detect()
  */
-#ifndef _di_fake_make_get_id_group_
-  f_status_t fake_make_get_id_group(fake_data_t * const data, const fl_print_t print, const f_string_static_t buffer, gid_t *id);
-#endif // _di_fake_make_get_id_group_
+#ifndef _di_fake_make_get_id_
+  extern void fake_make_get_id(fake_make_data_t * const data_make, const bool is_owner, const f_string_static_t buffer, void *id);
+#endif // _di_fake_make_get_id_
 
 /**
  * Get the mode id from either a string representing the number or a string representing the mode.
  *
- * @param data
- *   The program data.
- * @param print
- *   The error/warning print data.
+ * @param data_make
+ *   All make related setting data, including data from the fakefile and the build settings file.
+ *   The data_make.cache_path will be updated to reflect the full path to this file.
+ *
+ *   This alters data_make.setting.state.status:
+ *     F_none on success.
+ *
+ *     F_failure (with error bit) on any error.
+ *     F_parameter (with error bit) on invalid parameter.
+ *
+ *     Errors (with error bit) from: f_file_mode_from_string()
  * @param buffer
  *   The string containing the name or number.
  * @param mode
@@ -73,37 +89,11 @@ extern "C" {
  *   The determined modes that are to be replaced, such as: F_file_mode_t_replace_owner_d.
  *   This uses bitwise data.
  *
- * @return
- *   F_none on success.
- *   F_exist_not if there is no mode by the given name.
- *
- *   Status codes (with error bit) are returned on any problem.
+ * @see f_file_mode_from_string()
  */
 #ifndef _di_fake_make_get_id_mode_
-  f_status_t fake_make_get_id_mode(fake_data_t * const data, const fl_print_t print, const f_string_static_t buffer, f_file_mode_t *mode, uint8_t *replace);
+  extern void fake_make_get_id_mode(fake_make_data_t * const data_make, const f_string_static_t buffer, f_file_mode_t *mode, uint8_t *replace);
 #endif // _di_fake_make_get_id_mode_
-
-/**
- * Get the user id from either a string representing the number or a string representing the name.
- *
- * @param data
- *   The program data.
- * @param print
- *   The error/warning print data.
- * @param buffer
- *   The string containing the name or number.
- * @param id
- *   The detected user id.
- *
- * @return
- *   F_none on success.
- *   F_exist_not if there is no user by the given name.
- *
- *   Status codes (with error bit) are returned on any problem.
- */
-#ifndef _di_fake_make_get_id_owner_
-  f_status_t fake_make_get_id_owner(fake_data_t * const data, const fl_print_t print, const f_string_static_t buffer, uid_t *id);
-#endif // _di_fake_make_get_id_owner_
 
 /**
  * Get a path, relative to the project root.
@@ -111,14 +101,22 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  *   The relative path is stored in data_make.cache_path.
+ *
+ *   This alters data_make.setting.state.status:
+ *     F_none on success.
+ *
+ *     F_failure (with error bit) on any error.
+ *     F_parameter (with error bit) on invalid parameter.
+ *
+ *     Errors (with error bit) from: f_file_mode_from_string()
  * @param path
  *   The NULL terminated path to get the relative path of.
  *
- * @return
- *   Status codes (with error bit) are returned on any problem.
+ * @see f_string_dynamic_partial_append()
+ * @see f_string_dynamic_terminate()
  */
 #ifndef _di_fake_make_path_relative_
-  extern f_status_t fake_make_path_relative(fake_make_data_t * const data_make, const f_string_static_t path);
+  extern void fake_make_path_relative(fake_make_data_t * const data_make, const f_string_static_t path);
 #endif // _di_fake_make_path_relative_
 
 #ifdef __cplusplus

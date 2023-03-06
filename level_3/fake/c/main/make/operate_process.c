@@ -349,59 +349,59 @@ extern "C" {
 #endif // _di_fake_make_operate_process_execute_
 
 #ifndef _di_fake_make_operate_process_return_
-  f_status_t fake_make_operate_process_return(fake_make_data_t * const data_make, const int return_code) {
+  void fake_make_operate_process_return(fake_make_data_t * const data_make, const int return_code) {
 
-    f_status_t status = F_none;
+    if (!data_make) return;
 
     data_make->setting_make.parameter.array[0].value.array[0].used = 0;
-
-    if (!return_code) {
-      if (F_status_is_error(status)) {
-        status = f_string_dynamic_append(f_string_ascii_1_s, &data_make->setting_make.parameter.array[0].value.array[0]);
-      }
-      else {
-        status = f_string_dynamic_append(f_string_ascii_0_s, &data_make->setting_make.parameter.array[0].value.array[0]);
-      }
-
-      if (F_status_is_error(status)) {
-        fake_print_error(data_make->setting, data_make->main->error, status, macro_fake_f(f_string_dynamic_append));
-      }
-
-      return status;
-    }
 
     if (return_code) {
       f_string_dynamic_t number = f_string_dynamic_t_initialize;
 
-      status = f_conversion_number_signed_to_string(WEXITSTATUS(return_code), f_conversion_data_base_10_c, &number);
+      result = f_conversion_number_signed_to_string(WEXITSTATUS(return_code), f_conversion_data_base_10_c, &number);
 
       if (F_status_is_error(status)) {
-        fake_print_error(data_make->setting, data_make->main->error, status, macro_fake_f(f_conversion_number_signed_to_string));
+        fake_print_error(data_make->setting, data_make->main->error, macro_fake_f(f_conversion_number_signed_to_string));
 
         f_string_dynamic_resize(0, &number);
 
-        return status;
+        data_make->setting.state.status = result;
+
+        return;
       }
 
-      status = f_string_dynamic_append(number, &data_make->setting_make.parameter.array[0].value.array[0]);
+      result = f_string_dynamic_append(number, &data_make->setting_make.parameter.array[0].value.array[0]);
 
       f_string_dynamic_resize(0, &number);
+
+      if (F_status_is_error(result)) {
+        fake_print_error(data_make->setting, data_make->main->error, macro_fake_f(f_string_dynamic_append));
+
+        data_make->setting.state.status = result;
+
+        return;
+      }
+
+      fake_make_print_error_program_failed(data_make->setting, data_make->main->error, return_code);
+
+      data_make->setting.state.status = data_make->setting_make.fail == fake_make_operation_fail_type_exit_e ? F_status_set_error(F_failure) : F_failure;
+
+      return;
+    }
+
+    if (F_status_is_error(data_make->setting.state.status)) {
+      data_make->setting.state.status = f_string_dynamic_append(f_string_ascii_1_s, &data_make->setting_make.parameter.array[0].value.array[0]);
     }
     else {
-      status = f_string_dynamic_append(f_string_ascii_0_s, &data_make->setting_make.parameter.array[0].value.array[0]);
+      data_make->setting.state.status = f_string_dynamic_append(f_string_ascii_0_s, &data_make->setting_make.parameter.array[0].value.array[0]);
     }
 
-    if (F_status_is_error(status)) {
-      fake_print_error(data_make->setting, data_make->main->error, status, macro_fake_f(f_string_dynamic_append));
-
-      return status;
+    if (F_status_is_error(result)) {
+      fll_error_print(data_make->error, F_status_set_fine(result), "f_string_dynamic_append", F_true);
     }
-
-    fake_make_print_error_program_failed(data_make->setting, data_make->main->error, return_code);
-
-    if (data_make->setting_make.fail == fake_make_operation_fail_exit_e) return F_status_set_error(F_failure);
-
-    return F_failure;
+    else {
+      data_make->setting.state.status = F_none;
+    }
   }
 #endif // _di_fake_make_operate_process_return_
 

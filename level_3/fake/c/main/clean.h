@@ -22,15 +22,19 @@ extern "C" {
  * @param data
  *   The program data.
  *
- * @return
- *   F_none on success.
+ *   This alters data.setting.state.status:
+ *     F_none on success.
  *
- *   F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ *     F_interrupt (with error bit) on interrupt signal received.
  *
- *   Status codes (with error bit) are returned on any problem.
+ *     Errors (with error bit) from: f_directory_remove()
+ *     Errors (with error bit) from: f_directory_remove_custom()
+ *
+ * @see f_directory_remove()
+ * @see f_directory_remove_custom()
  */
 #ifndef _di_fake_clean_operate_
-  extern f_status_t fake_clean_operate(fake_data_t * const data);
+  extern void fake_clean_operate(fake_data_t * const data);
 #endif // _di_fake_clean_operate_
 
 /**

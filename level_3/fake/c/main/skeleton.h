@@ -30,7 +30,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_skeleton_operate_
-  extern f_status_t fake_skeleton_operate(fake_data_t * const data);
+  extern void fake_skeleton_operate(fake_data_t * const data);
 #endif // _di_fake_skeleton_operate_
 
 /**
@@ -48,7 +48,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_skeleton_operate_directory_create_
-  extern f_status_t fake_skeleton_operate_directory_create(fake_data_t * const data, const f_string_static_t path);
+  extern void fake_skeleton_operate_directory_create(fake_data_t * const data, const f_string_static_t path);
 #endif // _di_fake_skeleton_operate_directory_create_
 
 /**
@@ -71,7 +71,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_skeleton_operate_file_create_
-  extern f_status_t fake_skeleton_operate_file_create(fake_data_t * const data, const f_string_static_t path, const bool executable, const f_string_static_t content);
+  extern void fake_skeleton_operate_file_create(fake_data_t * const data, const f_string_static_t path, const bool executable, const f_string_static_t content);
 #endif // _di_fake_skeleton_operate_file_create_
 
 /**

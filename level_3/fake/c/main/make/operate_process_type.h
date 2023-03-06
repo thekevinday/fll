@@ -22,13 +22,14 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
- * @return
- *   F_none on success.
+ *   This alters data_make.setting.state.status:
+ *     F_none on success but not breaking.
+ *     F_signal_abort on normal break
  *
- *   F_failure (with error bit) on any error.
+ *     F_signal_abort (with error bit) on break on error.
  */
 #ifndef _di_fake_make_operate_process_type_break_
-  extern f_status_t fake_make_operate_process_type_break(fake_make_data_t * const data_make);
+  extern void fake_make_operate_process_type_break(fake_make_data_t * const data_make);
 #endif // _di_fake_make_operate_process_type_break_
 
 /**
@@ -37,18 +38,16 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
- * @return
- *   F_interrupt (with error bit) on interrupt.
+ *   This alters data_make.setting.state.status:
+ *     Success from: fake_build_operate()
  *
- *   Success from: fake_make_operate_process_return().
- *
- *   Errors (with error bit) from: fake_make_operate_process_return().
+ *     Errors (with error bit) from: fake_build_operate()
  *
  * @see fake_build_operate()
  * @see fake_make_operate_process_return()
  */
 #ifndef _di_fake_make_operate_process_type_build_
-  extern f_status_t fake_make_operate_process_type_build(fake_make_data_t * const data_make);
+  extern void fake_make_operate_process_type_build(fake_make_data_t * const data_make);
 #endif // _di_fake_make_operate_process_type_build_
 
 /**
@@ -57,18 +56,16 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
- * @return
- *   F_interrupt (with error bit) on interrupt.
+ *   This alters data_make.setting.state.status:
+ *     Success from: fake_clean_operate()
  *
- *   Success from: fake_make_operate_process_return().
- *
- *   Errors (with error bit) from: fake_make_operate_process_return().
+ *     Errors (with error bit) from: fake_clean_operate()
  *
  * @see fake_clean_operate()
  * @see fake_make_operate_process_return()
  */
 #ifndef _di_fake_make_operate_process_type_clean_
-  extern f_status_t fake_make_operate_process_type_clean(fake_make_data_t * const data_make);
+  extern void fake_make_operate_process_type_clean(fake_make_data_t * const data_make);
 #endif // _di_fake_make_operate_process_type_clean_
 
 /**
@@ -76,12 +73,11 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
- * @param status
- *   The status code.
  *
- *   Success from: fake_execute().
+ *   This alters data_make.setting.state.status:
+ *     Success from: fake_execute()
  *
- *   Errors (with error bit) from: fake_execute().
+ *     Errors (with error bit) from: fake_execute()
  *
  * @return
  *   The return code of the compile operation.
@@ -89,7 +85,7 @@ extern "C" {
  * @see fake_execute()
  */
 #ifndef _di_fake_make_operate_process_type_compile_
-  extern int fake_make_operate_process_type_compile(fake_make_data_t * const data_make, f_status_t * const status);
+  extern int fake_make_operate_process_type_compile(fake_make_data_t * const data_make);
 #endif // _di_fake_make_operate_process_type_compile_
 
 /**
@@ -97,6 +93,15 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
+ *
+ *   This alters data_make.setting.state.status:
+ *     F_none on success.
+ *
+ *     F_failure (with error bit) on any error.
+ *
+ *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ *
+ *     Errors (with error bit) from: ()
  * @param state_process
  *   The operation and if-condition states.
  *
@@ -106,7 +111,7 @@ extern "C" {
  *   F_failure (with error bit) on any error.
  */
 #ifndef _di_fake_make_operate_process_type_condition_
-  extern f_status_t fake_make_operate_process_type_condition(fake_make_data_t * const data_make, fake_state_process_t * const state_process);
+  extern void fake_make_operate_process_type_condition(fake_make_data_t * const data_make, fake_state_process_t * const state_process);
 #endif // _di_fake_make_operate_process_type_condition_
 
 /**
@@ -114,14 +119,18 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
+ *
+ *   This alters data_make.setting.state.status:
+ *     F_none on success.
+ *
+ *     F_failure (with error bit) on any error.
+ *
+ *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ *
+ *     Errors (with error bit) from: ()
  * @param clone
  *   If TRUE, perform a copy that is a clone (preserved timestamps, roles, and permissions).
  *   If FALSE, perforrm a normaly copy without preserving properties.
- *
- * @return
- *   F_none on success.
- *
- *   F_failure (with error bit) on any error.
  *
  * @see f_directory_is()
  * @see f_file_clone()
@@ -131,7 +140,7 @@ extern "C" {
  * @see fl_directory_copy()
  */
 #ifndef _di_fake_make_operate_process_type_copy_
-  extern f_status_t fake_make_operate_process_type_copy(fake_make_data_t * const data_make, const bool clone);
+  extern void fake_make_operate_process_type_copy(fake_make_data_t * const data_make, const bool clone);
 #endif // _di_fake_make_operate_process_type_copy_
 
 /**
@@ -139,6 +148,13 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
+ *
+ *   This alters data_make.setting.state.status:
+ *     F_none on success.
+ *
+ *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ *
+ *     Errors (with error bit) from: ()
  *
  * @return
  *   Success from: f_environment_set().
@@ -148,7 +164,7 @@ extern "C" {
  * @see f_environment_set()
  */
 #ifndef _di_fake_make_operate_process_type_define_
-  extern f_status_t fake_make_operate_process_type_define(fake_make_data_t * const data_make);
+  extern void fake_make_operate_process_type_define(fake_make_data_t * const data_make);
 #endif // _di_fake_make_operate_process_type_define_
 
 /**
@@ -156,14 +172,18 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
+ *
+ *   This alters data_make.setting.state.status:
+ *     F_none on success.
+ *
+ *     F_failure (with error bit) on any error.
+ *
+ *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ *
+ *     Errors (with error bit) from: ()
  * @param all
  *   If TRUE, then if the path is a directory, then recursively apply to all paths within the directory.
  *   If FALSE, then only apply to the given path.
- *
- * @return
- *   F_none on success.
- *
- *   F_failure (with error bit) on any error.
  *
  * @see f_file_remove()
  * @see f_file_stat()
@@ -171,7 +191,7 @@ extern "C" {
  * @see f_directory_remove_custom()
  */
 #ifndef _di_fake_make_operate_process_type_deletes_
-  extern f_status_t fake_make_operate_process_type_deletes(fake_make_data_t * const data_make, const bool all);
+  extern void fake_make_operate_process_type_deletes(fake_make_data_t * const data_make, const bool all);
 #endif // _di_fake_make_operate_process_type_deletes_
 
 /**
@@ -179,6 +199,15 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
+ *
+ *   This alters data_make.setting.state.status:
+ *     F_none on success.
+ *
+ *     F_failure (with error bit) on any error.
+ *
+ *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ *
+ *     Errors (with error bit) from: ()
  *
  * @return
  *   F_none on unknown exit type (only success and failure are known).
@@ -188,7 +217,7 @@ extern "C" {
  *   F_signal_quit (with error bit) to designate exit on failure.
  */
 #ifndef _di_fake_make_operate_process_type_exit_
-  extern f_status_t fake_make_operate_process_type_exit(fake_make_data_t * const data_make);
+  extern void fake_make_operate_process_type_exit(fake_make_data_t * const data_make);
 #endif // _di_fake_make_operate_process_type_exit_
 
 /**
@@ -196,6 +225,15 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
+ *
+ *   This alters data_make.setting.state.status:
+ *     F_none on success.
+ *
+ *     F_failure (with error bit) on any error.
+ *
+ *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ *
+ *     Errors (with error bit) from: ()
  */
 #ifndef _di_fake_make_operate_process_type_fail_
   extern void fake_make_operate_process_type_fail(fake_make_data_t * const data_make);
@@ -206,6 +244,15 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
+ *
+ *   This alters data_make.setting.state.status:
+ *     F_none on success.
+ *
+ *     F_failure (with error bit) on any error.
+ *
+ *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ *
+ *     Errors (with error bit) from: ()
  * @param all
  *   If TRUE, then if the path is a directory, then recursively apply to all paths within the directory.
  *   If FALSE, then only apply to the given path.
@@ -219,10 +266,10 @@ extern "C" {
  * @see fll_file_role_change_all()
  *
  * @see fake_make_assure_inside_project()
- * @see fake_make_get_id_group()
+ * @see fake_make_get_id()
  */
 #ifndef _di_fake_make_operate_process_type_groups_
-  extern f_status_t fake_make_operate_process_type_groups(fake_make_data_t * const data_make, const bool all);
+  extern void fake_make_operate_process_type_groups(fake_make_data_t * const data_make, const bool all);
 #endif // _di_fake_make_operate_process_type_groups_
 
 /**
@@ -230,6 +277,15 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
+ *
+ *   This alters data_make.setting.state.status:
+ *     F_none on success.
+ *
+ *     F_failure (with error bit) on any error.
+ *
+ *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ *
+ *     Errors (with error bit) from: ()
  * @param if_not
  *   When TRUE, perform the if not is.
  *   When FALSE, perform the if is.
@@ -245,6 +301,15 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
+ *
+ *   This alters data_make.setting.state.status:
+ *     F_none on success.
+ *
+ *     F_failure (with error bit) on any error.
+ *
+ *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ *
+ *     Errors (with error bit) from: ()
  * @param if_not
  *   When TRUE, perform the if not is.
  *   When FALSE, perform the if is.
@@ -259,7 +324,7 @@ extern "C" {
  * @see f_file_exists()
  */
 #ifndef _di_fake_make_operate_process_type_if_exist_
-  extern f_status_t fake_make_operate_process_type_if_exist(fake_make_data_t * const data_make, const bool if_not, fake_state_process_t *state_process);
+  extern void fake_make_operate_process_type_if_exist(fake_make_data_t * const data_make, const bool if_not, fake_state_process_t *state_process);
 #endif // _di_fake_make_operate_process_type_if_exist_
 
 /**
@@ -267,6 +332,15 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
+ *
+ *   This alters data_make.setting.state.status:
+ *     F_none on success.
+ *
+ *     F_failure (with error bit) on any error.
+ *
+ *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ *
+ *     Errors (with error bit) from: ()
  * @param state_process
  *   The operation process state.
  *
@@ -278,7 +352,7 @@ extern "C" {
  * @see fl_conversion_dynamic_partial_to_unsigned_detect()
  */
 #ifndef _di_fake_make_operate_process_type_if_greater_if_lesser_
-  extern f_status_t fake_make_operate_process_type_if_greater_if_lesser(fake_make_data_t * const data_make, fake_state_process_t *state_process);
+  extern void fake_make_operate_process_type_if_greater_if_lesser(fake_make_data_t * const data_make, fake_state_process_t *state_process);
 #endif // _di_fake_make_operate_process_type_if_greater_if_lesser_
 
 /**
@@ -286,6 +360,15 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
+ *
+ *   This alters data_make.setting.state.status:
+ *     F_none on success.
+ *
+ *     F_failure (with error bit) on any error.
+ *
+ *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ *
+ *     Errors (with error bit) from: ()
  * @param if_not
  *   When TRUE, perform the if not is.
  *   When FALSE, perform the if is.
@@ -299,10 +382,10 @@ extern "C" {
  *
  * @see f_file_group_read()
  *
- * @see fake_make_get_id_group()
+ * @see fake_make_get_id()
  */
 #ifndef _di_fake_make_operate_process_type_if_group_
-  extern f_status_t fake_make_operate_process_type_if_group(fake_make_data_t * const data_make, const bool if_not, fake_state_process_t *state_process);
+  extern void fake_make_operate_process_type_if_group(fake_make_data_t * const data_make, const bool if_not, fake_state_process_t *state_process);
 #endif // _di_fake_make_operate_process_type_if_group_
 
 /**
@@ -310,6 +393,15 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
+ *
+ *   This alters data_make.setting.state.status:
+ *     F_none on success.
+ *
+ *     F_failure (with error bit) on any error.
+ *
+ *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ *
+ *     Errors (with error bit) from: ()
  * @param if_not
  *   When TRUE, perform the if not is.
  *   When FALSE, perform the if is.
@@ -324,7 +416,7 @@ extern "C" {
  * @see f_file_mode_read()
  */
 #ifndef _di_fake_make_operate_process_type_if_is_
-  extern f_status_t fake_make_operate_process_type_if_is(fake_make_data_t * const data_make, const bool if_not, fake_state_process_t *state_process);
+  extern void fake_make_operate_process_type_if_is(fake_make_data_t * const data_make, const bool if_not, fake_state_process_t *state_process);
 #endif // _di_fake_make_operate_process_type_if_is_
 
 /**
@@ -332,6 +424,15 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
+ *
+ *   This alters data_make.setting.state.status:
+ *     F_none on success.
+ *
+ *     F_failure (with error bit) on any error.
+ *
+ *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ *
+ *     Errors (with error bit) from: ()
  * @param if_not
  *   When TRUE, perform the if not is.
  *   When FALSE, perform the if is.
@@ -349,7 +450,7 @@ extern "C" {
  * @see fake_make_get_id_mode()
  */
 #ifndef _di_fake_make_operate_process_type_if_mode_
-  extern f_status_t fake_make_operate_process_type_if_mode(fake_make_data_t * const data_make, const bool if_not, fake_state_process_t *state_process);
+  extern void fake_make_operate_process_type_if_mode(fake_make_data_t * const data_make, const bool if_not, fake_state_process_t *state_process);
 #endif // _di_fake_make_operate_process_type_if_mode_
 
 /**
@@ -357,6 +458,15 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
+ *
+ *   This alters data_make.setting.state.status:
+ *     F_none on success.
+ *
+ *     F_failure (with error bit) on any error.
+ *
+ *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ *
+ *     Errors (with error bit) from: ()
  * @param if_not
  *   When TRUE, perform the if not is.
  *   When FALSE, perform the if is.
@@ -370,10 +480,10 @@ extern "C" {
  *
  * @see f_file_owner_read()
  *
- * @see fake_make_get_id_owner()
+ * @see fake_make_get_id()
  */
 #ifndef _di_fake_make_operate_process_type_if_owner_
-  extern f_status_t fake_make_operate_process_type_if_owner(fake_make_data_t * const data_make, const bool if_not, fake_state_process_t *state_process);
+  extern void fake_make_operate_process_type_if_owner(fake_make_data_t * const data_make, const bool if_not, fake_state_process_t *state_process);
 #endif // _di_fake_make_operate_process_type_if_owner_
 
 /**
@@ -381,6 +491,15 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
+ *
+ *   This alters data_make.setting.state.status:
+ *     F_none on success.
+ *
+ *     F_failure (with error bit) on any error.
+ *
+ *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ *
+ *     Errors (with error bit) from: ()
  * @param if_not
  *   When TRUE, perform the if not is.
  *   When FALSE, perform the if is.
@@ -396,6 +515,15 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
+ *
+ *   This alters data_make.setting.state.status:
+ *     F_none on success.
+ *
+ *     F_failure (with error bit) on any error.
+ *
+ *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ *
+ *     Errors (with error bit) from: ()
  * @param status
  *   F_child on child process returning.
  *
@@ -419,6 +547,15 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
+ *   This alters data_make.setting.state.status:
+ *     F_none on success.
+ *
+ *     F_failure (with error bit) on any error.
+ *
+ *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ *
+ *     Errors (with error bit) from: ()
+ *
  * @return
  *   F_none on success.
  *
@@ -427,7 +564,7 @@ extern "C" {
  * @see f_file_link()
  */
 #ifndef _di_fake_make_operate_process_type_link_
-  extern f_status_t fake_make_operate_process_type_link(fake_make_data_t * const data_make);
+  extern void fake_make_operate_process_type_link(fake_make_data_t * const data_make);
 #endif // _di_fake_make_operate_process_type_link_
 
 /**
@@ -435,6 +572,15 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
+ *
+ *   This alters data_make.setting.state.status:
+ *     F_none on success.
+ *
+ *     F_failure (with error bit) on any error.
+ *
+ *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ *
+ *     Errors (with error bit) from: ()
  * @param all
  *   If TRUE, then if the path is a directory, then recursively apply to all paths within the directory.
  *   If FALSE, then only apply to the given path.
@@ -452,7 +598,7 @@ extern "C" {
  * @see fake_make_get_id_mode()
  */
 #ifndef _di_fake_make_operate_process_type_modes_
-  extern f_status_t fake_make_operate_process_type_modes(fake_make_data_t * const data_make, const bool all);
+  extern void fake_make_operate_process_type_modes(fake_make_data_t * const data_make, const bool all);
 #endif // _di_fake_make_operate_process_type_modes_
 
 /**
@@ -460,6 +606,15 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
+ *
+ *   This alters data_make.setting.state.status:
+ *     F_none on success.
+ *
+ *     F_failure (with error bit) on any error.
+ *
+ *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ *
+ *     Errors (with error bit) from: ()
  *
  * @return
  *   F_none on success.
@@ -471,7 +626,7 @@ extern "C" {
  * @see fll_file_move()
  */
 #ifndef _di_fake_make_operate_process_type_move_
-  extern f_status_t fake_make_operate_process_type_move(fake_make_data_t * const data_make);
+  extern void fake_make_operate_process_type_move(fake_make_data_t * const data_make);
 #endif // _di_fake_make_operate_process_type_move_
 
 /**
@@ -479,6 +634,15 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
+ *
+ *   This alters data_make.setting.state.status:
+ *     F_none on success.
+ *
+ *     F_failure (with error bit) on any error.
+ *
+ *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ *
+ *     Errors (with error bit) from: ()
  * @param section_stack
  *   The current operation stack.
  * @param status
@@ -502,6 +666,15 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
+ *
+ *   This alters data_make.setting.state.status:
+ *     F_none on success.
+ *
+ *     F_failure (with error bit) on any error.
+ *
+ *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ *
+ *     Errors (with error bit) from: ()
  * @param all
  *   If TRUE, then if the path is a directory, then recursively apply to all paths within the directory.
  *   If FALSE, then only apply to the given path.
@@ -515,10 +688,10 @@ extern "C" {
  * @see fll_file_role_change_all()
  *
  * @see fake_make_assure_inside_project()
- * @see fake_make_get_id_owner()
+ * @see fake_make_get_id()
  */
 #ifndef _di_fake_make_operate_process_type_owners_
-  extern f_status_t fake_make_operate_process_type_owners(fake_make_data_t * const data_make, const bool all);
+  extern void fake_make_operate_process_type_owners(fake_make_data_t * const data_make, const bool all);
 #endif // _di_fake_make_operate_process_type_owners_
 
 /**
@@ -526,6 +699,15 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
+ *
+ *   This alters data_make.setting.state.status:
+ *     F_none on success.
+ *
+ *     F_failure (with error bit) on any error.
+ *
+ *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ *
+ *     Errors (with error bit) from: ()
  *
  * @return
  *   F_none on success.
@@ -537,7 +719,7 @@ extern "C" {
  * @see f_string_map_multis_resize()
  */
 #ifndef _di_fake_make_operate_process_type_parameter_
-  extern f_status_t fake_make_operate_process_type_parameter(fake_make_data_t * const data_make);
+  extern void fake_make_operate_process_type_parameter(fake_make_data_t * const data_make);
 #endif // _di_fake_make_operate_process_type_parameter_
 
 /**
@@ -548,6 +730,15 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
+ *
+ *   This alters data_make.setting.state.status:
+ *     F_none on success.
+ *
+ *     F_failure (with error bit) on any error.
+ *
+ *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ *
+ *     Errors (with error bit) from: ()
  *
  * @return
  *   F_none on success.
@@ -560,7 +751,7 @@ extern "C" {
  * @see fake_make_path_relative()
  */
 #ifndef _di_fake_make_operate_process_type_pop_
-  extern f_status_t fake_make_operate_process_type_pop(fake_make_data_t * const data_make);
+  extern void fake_make_operate_process_type_pop(fake_make_data_t * const data_make);
 #endif // _di_fake_make_operate_process_type_pop_
 
 /**
@@ -569,6 +760,15 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  *   This resets and uses data_make.cache_1.
+ *
+ *   This alters data_make.setting.state.status:
+ *     F_none on success.
+ *
+ *     F_failure (with error bit) on any error.
+ *
+ *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ *
+ *     Errors (with error bit) from: ()
  * @param arguments
  *   The arguments for print operation.
  *
@@ -582,7 +782,7 @@ extern "C" {
  * @see f_string_dynamic_increase_by()
  */
 #ifndef _di_fake_make_operate_process_type_print_
-  extern f_status_t fake_make_operate_process_type_print(fake_make_data_t * const data_make);
+  extern void fake_make_operate_process_type_print(fake_make_data_t * const data_make);
 #endif // _di_fake_make_operate_process_type_print_
 
 /**
@@ -590,6 +790,15 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
+ *
+ *   This alters data_make.setting.state.status:
+ *     F_none on success.
+ *
+ *     F_failure (with error bit) on any error.
+ *
+ *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ *
+ *     Errors (with error bit) from: ()
  *
  * @return
  *   F_interrupt (with error bit) on interrupt.
@@ -602,7 +811,7 @@ extern "C" {
  * @see fake_skeleton_operate()
  */
 #ifndef _di_fake_make_operate_process_type_skeleton_
-  extern f_status_t fake_make_operate_process_type_skeleton(fake_make_data_t * const data_make);
+  extern void fake_make_operate_process_type_skeleton(fake_make_data_t * const data_make);
 #endif // _di_fake_make_operate_process_type_skeleton_
 
 /**
@@ -611,10 +820,18 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
- * @return
- *   F_none on success.
+ *   This alters data_make.setting.state.status:
+ *     F_none on success.
  *
- *   F_failure (with error bit) on any error.
+ *     F_failure (with error bit) on any error.
+ *
+ *     F_failure (with error bit) on any error.
+ *
+ *     Errors (with error bit) from: f_path_change()
+ *     Errors (with error bit) from: f_string_dynamic_append()
+ *     Errors (with error bit) from: f_string_dynamics_increase_by()
+ *     Errors (with error bit) from: fake_make_assure_inside_project()
+ *     Errors (with error bit) from: fake_make_path_relative()
  *
  * @see f_path_change()
  * @see f_string_dynamic_append()
@@ -624,7 +841,7 @@ extern "C" {
  * @see fake_make_path_relative()
  */
 #ifndef _di_fake_make_operate_process_type_to_
-  extern f_status_t fake_make_operate_process_type_to(fake_make_data_t * const data_make);
+  extern void fake_make_operate_process_type_to(fake_make_data_t * const data_make);
 #endif // _di_fake_make_operate_process_type_to_
 
 /**
@@ -632,6 +849,15 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
+ *
+ *   This alters data_make.setting.state.status:
+ *     F_none on success.
+ *
+ *     F_failure (with error bit) on any error.
+ *
+ *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ *
+ *     Errors (with error bit) from: ()
  *
  * @return
  *   F_none on success.
@@ -642,7 +868,7 @@ extern "C" {
  * @see f_string_dynamic_resize()
  */
 #ifndef _di_fake_make_operate_process_type_top_
-  extern f_status_t fake_make_operate_process_type_top(fake_make_data_t * const data_make);
+  extern void fake_make_operate_process_type_top(fake_make_data_t * const data_make);
 #endif // _di_fake_make_operate_process_type_top_
 
 /**
@@ -650,6 +876,15 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
+ *
+ *   This alters data_make.setting.state.status:
+ *     F_none on success.
+ *
+ *     F_failure (with error bit) on any error.
+ *
+ *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ *
+ *     Errors (with error bit) from: ()
  *
  * @return
  *   F_none on success.
@@ -660,7 +895,7 @@ extern "C" {
  * @see f_file_touch()
  */
 #ifndef _di_fake_make_operate_process_type_touch_
-  extern f_status_t fake_make_operate_process_type_touch(fake_make_data_t * const data_make);
+  extern void fake_make_operate_process_type_touch(fake_make_data_t * const data_make);
 #endif // _di_fake_make_operate_process_type_touch_
 
 /**
@@ -669,6 +904,15 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  *   This resets and uses data_make.cache_1.
+ *
+ *   This alters data_make.setting.state.status:
+ *     F_none on success.
+ *
+ *     F_failure (with error bit) on any error.
+ *
+ *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ *
+ *     Errors (with error bit) from: ()
  *
  * @return
  *   F_none on success.
@@ -680,7 +924,7 @@ extern "C" {
  * @see f_file_stream_write()
  */
 #ifndef _di_fake_make_operate_process_type_write_
-  extern f_status_t fake_make_operate_process_type_write(fake_make_data_t * const data_make);
+  extern void fake_make_operate_process_type_write(fake_make_data_t * const data_make);
 #endif // _di_fake_make_operate_process_type_write_
 
 #ifdef __cplusplus

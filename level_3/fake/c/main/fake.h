@@ -145,31 +145,31 @@ extern "C" {
 /**
  * Execute main program.
  *
- * If main.signal is non-zero, then this blocks and handles the following signals:
- *   - F_signal_abort
- *   - F_signal_broken_pipe
- *   - F_signal_hangup
- *   - F_signal_interrupt
- *   - F_signal_quit
- *   - F_signal_termination
- *
  * @param main
  *   The main program data.
  * @param setting
  *   The main program settings.
- *   Must be of type (fake_setting_t *).
- *
- *   This is used by the main thread and should not be modified within individual threads.
  *
  *   This alters setting.state.status:
  *     F_none on success.
  *     F_child if this is a child process returning.
  *
- *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
- *     F_parameter (with error bit) if main is NULL or setting is NULL.
+ *     F_interrupt (with error bit) on interrupt signal received.
  *
- * @param arguments
- *   The parameters passed to the process.
+ *     Errors (with error bit) from: f_string_dynamic_append()
+ *     Errors (with error bit) from: fake_build_operate()
+ *     Errors (with error bit) from: fake_make_operate()
+ *     Errors (with error bit) from: fake_path_generate()
+ *     Errors (with error bit) from: fake_skeleton_operate()
+ *     Errors (with error bit) from: fake_validate_parameter_paths()
+ *
+ * @see f_string_dynamic_append()
+ * @see fll_program_standard_signal_received()
+ * @see fake_build_operate()
+ * @see fake_make_operate()
+ * @see fake_path_generate()
+ * @see fake_skeleton_operate()
+ * @see fake_validate_parameter_paths()
  */
 #ifndef _di_fake_main_
   extern void fake_main(fll_program_data_t * const main, fake_setting_t * const setting);
@@ -182,20 +182,29 @@ extern "C" {
  *
  * @param data
  *   The program data.
+ *
+ *   This alters setting.state.status:
+ *     F_none on success.
+ *     F_child if this is a child process returning.
+ *
+ *     F_interrupt (with error bit) on interrupt signal received.
+ *     F_failure (with error bit) on execution failure.
+ *     F_file_found_not (with error bit) on could not execute program because program is not found.
+ *
+ *     Errors (with error bit) from: fll_execute_program()
  * @param environment
  *   The environment variable data.
  * @param program
  *   The program to be executed.
  * @param arguments
  *   The arguments to be passed to the program.
- * @param status
- *   The return status.
  *
  * @return
  *   The return code result from execution.
  *   A value of 1 is returned if status has the error bit set.
  *
- *   F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ * @see fll_execute_program()
+ * @see fll_program_standard_signal_received()
  */
 #ifndef _di_fake_execute_
   extern int fake_execute(fake_data_t * const data, const f_string_maps_t environment, const f_string_static_t program, const f_string_statics_t arguments, f_status_t * const status);
@@ -232,6 +241,7 @@ extern "C" {
  * @see f_file_stream_open()
  * @see f_file_stream_read()
  * @see f_string_dynamic_increase_by()
+ * @see fll_program_standard_signal_received()
  */
 #ifndef _di_fake_file_buffer_
   extern void fake_file_buffer(fake_data_t * const data, const f_string_static_t path_file, const bool required, f_string_dynamic_t * const buffer);
@@ -255,6 +265,7 @@ extern "C" {
  *
  * @see f_file_stream_read_block()
  * @see f_string_dynamic_increase_by()
+ * @see fll_program_standard_signal_received()
  */
 #ifndef _di_fake_pipe_buffer_
   extern void fake_pipe_buffer(fake_data_t * const data, f_string_dynamic_t * const buffer);
@@ -268,15 +279,20 @@ extern "C" {
  * @param data
  *   The program data.
  *
- * @return
- *   F_none on success.
+ *   This alters data.setting.state.status:
+ *     F_none on success.
  *
- *   F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ *     F_interrupt (with error bit) on interrupt signal received.
  *
- *   Status codes (with error bit) are returned on any problem.
+ *     Errors (with error bit) from: f_file_exists()
+ *     Errors (with error bit) from: f_file_stat()
+ *
+ * @see f_file_exists()
+ * @see f_file_stat()
+ * @see fll_program_standard_signal_received()
  */
 #ifndef _di_fake_validate_parameter_paths_
-  extern f_status_t fake_validate_parameter_paths(fake_data_t * const data);
+  extern void fake_validate_parameter_paths(fake_data_t * const data);
 #endif // _di_fake_validate_parameter_paths_
 
 #ifdef __cplusplus

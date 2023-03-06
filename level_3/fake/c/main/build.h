@@ -255,6 +255,8 @@ extern "C" {
  *
  * @param data
  *   The program data.
+ *
+ *   This does not alter data.setting.state.status.
  * @param data_build
  *   The build data.
  * @param setting_path_source
@@ -274,6 +276,8 @@ extern "C" {
  *
  * @param data
  *   The program data.
+ *
+ *   This does not alter data.setting.state.status.
  * @param data_build
  *   The build data.
  * @param setting_path_source
@@ -293,6 +297,11 @@ extern "C" {
  *
  * @param data
  *   The program data.
+ *
+ *   This alters data.setting.state.status:
+ *     F_none on success.
+ *
+ *     Errors (with error bit) from: fll_execute_arguments_add()
  * @param data_build
  *   The build data.
  * @param generic
@@ -302,13 +311,10 @@ extern "C" {
  * @param arguments
  *   The execute arguments array being updated.
  *
- * @return
- *   F_none on success.
- *
- *   Status codes (with error bit) are returned on any problem.
+ * @see fll_execute_arguments_add()
  */
 #ifndef _di_fake_build_sources_add_
-  extern f_status_t fake_build_sources_add(fake_data_t * const data, fake_build_data_t * const data_build, const f_string_statics_t *generic, const f_string_statics_t *specific, f_string_dynamics_t *arguments);
+  extern void fake_build_sources_add(fake_data_t * const data, fake_build_data_t * const data_build, const f_string_statics_t *generic, const f_string_statics_t *specific, f_string_dynamics_t *arguments);
 #endif // _di_fake_build_sources_add_
 
 /**
@@ -316,6 +322,11 @@ extern "C" {
  *
  * @param data
  *   The program data.
+ *
+ *   This alters data.setting.state.status:
+ *     F_none on success.
+ *
+ *     Errors (with error bit) from: fll_execute_arguments_add()
  * @param data_build
  *   The build data.
  * @param generic
@@ -325,13 +336,10 @@ extern "C" {
  * @param arguments
  *   The execute arguments array being updated.
  *
- * @return
- *   F_none on success.
- *
- *   Status codes (with error bit) are returned on any problem.
+ * @see fll_execute_arguments_add()
  */
 #ifndef _di_fake_build_sources_object_add_
-  extern f_status_t fake_build_sources_object_add(fake_data_t * const data, fake_build_data_t * const data_build, const f_string_static_t *generic, const f_string_static_t *specific, f_string_dynamics_t *arguments);
+  extern void fake_build_sources_object_add(fake_data_t * const data, fake_build_data_t * const data_build, const f_string_static_t *generic, const f_string_static_t *specific, f_string_dynamics_t *arguments);
 #endif // _di_fake_build_sources_object_add_
 
 /**
@@ -339,15 +347,21 @@ extern "C" {
  *
  * @param data
  *   The program data.
+ *
+ *   This alters data.setting.state.status:
+ *     F_none on success.
+ *
+ *     F_interrupt (with error bit) on interrupt signal received.
+ *
+ *     Errors (with error bit) from: f_file_touch()
  * @param file
  *   The file path to touch.
- * @param status
- *   The return status.
  *
  * @see f_file_touch()
+ * @see fll_program_print_signal_received()
  */
 #ifndef _di_fake_build_touch_
-  extern void fake_build_touch(fake_data_t * const data, const f_string_dynamic_t file, f_status_t *status);
+  extern void fake_build_touch(fake_data_t * const data, const f_string_dynamic_t file);
 #endif // _di_fake_build_touch_
 
 #ifdef __cplusplus

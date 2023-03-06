@@ -814,6 +814,8 @@ extern "C" {
 #ifndef _di_fake_build_path_source_length_
   void fake_build_path_source_length(fake_data_t * const data, fake_build_data_t * const data_build, f_string_static_t * const setting_path_source, f_string_static_t * const source) {
 
+    if (!data || !data_build || !setting_path_source || !source) return;
+
     source->used = 0;
 
     if (setting_path_source->used) {
@@ -837,7 +839,9 @@ extern "C" {
 #endif // _di_fake_build_path_source_length_
 
 #ifndef _di_fake_build_path_source_string_
-  void fake_build_path_source_string(fake_data_t * const data, fake_build_data_t * const data_build, f_string_static_t * const setting_path_source, f_string_static_t * const source) {
+  void fake_build_path_source_string(fake_data_t * const data, fake_build_data_t * const data_build, f_string_static_t * const setting_path_source) {
+
+    if (!data || !data_build || !setting_path_source) return;
 
     source->used = 0;
 
@@ -867,9 +871,10 @@ extern "C" {
 #endif // _di_fake_build_path_source_string_
 
 #ifndef _di_fake_build_sources_add_
-  f_status_t fake_build_sources_add(fake_data_t * const data, fake_build_data_t * const data_build, const f_string_statics_t *generic, const f_string_statics_t *specific, f_string_dynamics_t *arguments) {
+  void fake_build_sources_add(fake_data_t * const data, fake_build_data_t * const data_build, const f_string_statics_t *generic, const f_string_statics_t *specific, f_string_dynamics_t *arguments) {
 
-    f_status_t status = F_none;
+    if (!data || !data_build || !generic || !specific || !arguments) return;
+
     f_array_length_t i = 0;
     f_array_length_t j = 0;
 
@@ -897,19 +902,25 @@ extern "C" {
         source.used += sources[i]->array[j].used;
         source.string[source.used] = 0;
 
-        status = fll_execute_arguments_add(source, arguments);
-        if (F_status_is_error(status)) return status;
+        data->setting.state.status = fll_execute_arguments_add(source, arguments);
+        if (F_status_is_error(data->setting.state.status)) return;
       } // for
     } // for
 
-    return F_none;
+    data->setting.state.status = F_none;
   }
 #endif // _di_fake_build_sources_add_
 
 #ifndef _di_fake_build_sources_object_add_
-  f_status_t fake_build_sources_object_add(fake_data_t * const data, fake_build_data_t * const data_build, const f_string_static_t *generic, const f_string_static_t *specific, f_string_dynamics_t *arguments) {
+  void fake_build_sources_object_add(fake_data_t * const data, fake_build_data_t * const data_build, const f_string_static_t *generic, const f_string_static_t *specific, f_string_dynamics_t *arguments) {
 
-    if (!generic->used && !specific->used) return F_none;
+    if (!data || !data_build || !generic || !specific || !arguments) return;
+
+    if (!generic->used && !specific->used) {
+      data->setting.state.status = F_none;
+
+      return;
+    }
 
     f_string_static_t source = f_string_static_t_initialize;
 
@@ -938,10 +949,10 @@ extern "C" {
 
     source_string[source.used] = 0;
 
-    const f_status_t status = fll_execute_arguments_add(source, arguments);
-    if (F_status_is_error(status)) return status;
+    data->setting.state.status = fll_execute_arguments_add(source, arguments);
+    if (F_status_is_error(data->setting.state.status)) return;
 
-    return F_none;
+    data->setting.state.status = F_none;
   }
 #endif // _di_fake_build_sources_object_add_
 
@@ -969,6 +980,9 @@ extern "C" {
 
     if (F_status_is_error(data->setting.state.status)) {
       fake_print_error_file(data->setting, data->main->error, macro_fake_f(f_file_touch), file, f_file_operation_touch_s, fll_error_file_type_file_e);
+    }
+    else {
+      data->setting.state.status = F_none;
     }
   }
 #endif // _di_fake_build_touch_

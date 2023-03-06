@@ -60,13 +60,14 @@ extern "C" {
 
       setting->state.status = f_string_dynamic_append(f_string_ascii_minus_s, &data.file_data_build_fakefile);
 
-      if (F_status_is_error(setting->state.status)) {
-        fake_print_error(setting, main->error, setting->state.status, macro_fake_f(f_string_dynamic_append));
-      }
-      else {
+      if (F_status_is_error_not(setting->state.status)) {
         setting->fakefile.used = 0;
 
         setting->state.status = f_string_dynamic_append(f_string_ascii_minus_s, &setting->fakefile);
+      }
+
+      if (F_status_is_error(setting->state.status)) {
+        fake_print_error(setting, main->error, setting->state.status, macro_fake_f(f_string_dynamic_append));
       }
     }
 
@@ -88,7 +89,7 @@ extern "C" {
             if (has_clean) {
               data.operation = setting->operations.array[i];
 
-              setting->state.status = fake_validate_parameter_paths(&data);
+              fake_validate_parameter_paths(&data);
 
               if (F_status_is_error_not(setting->state.status) && !(main->pipe & fll_program_data_pipe_input_e)) {
                 setting->state.status = f_file_is(
@@ -106,7 +107,6 @@ extern "C" {
                   fake_print_error_file(
                     setting,
                     main->error,
-                    F_status_set_fine(setting->state.status),
                     macro_fake_f(f_file_is),
                     setting->operations.array[i] == fake_operation_build_e
                       ? data.file_data_build_settings
@@ -144,33 +144,33 @@ extern "C" {
 
           if (data.operation == fake_operation_build_e) {
             if (check_paths) {
-              setting->state.status = fake_validate_parameter_paths(&data);
+              fake_validate_parameter_paths(&data);
               check_paths = F_false;
             }
 
             if (F_status_is_error_not(setting->state.status)) {
-              setting->state.status = fake_build_operate(&data, 0, main->pipe & fll_program_data_pipe_input_e);
+              fake_build_operate(&data, 0, main->pipe & fll_program_data_pipe_input_e);
             }
           }
           else if (data.operation == fake_operation_clean_e) {
-            setting->state.status = fake_clean_operate(&data);
+            fake_clean_operate(&data);
 
             // Reset in case next operation needs files.
             check_paths = F_true;
           }
           else if (data.operation == fake_operation_make_e) {
             if (check_paths) {
-              setting->state.status = fake_validate_parameter_paths(&data);
+              fake_validate_parameter_paths(&data);
               check_paths = F_false;
             }
 
             if (F_status_is_error_not(setting->state.status)) {
-              setting->state.status = fake_make_operate(&data);
+              fake_make_operate(&data);
               if (setting->state.status == F_child) break;
             }
           }
           else if (data.operation == fake_operation_skeleton_e) {
-            setting->state.status = fake_skeleton_operate(&data);
+            fake_skeleton_operate(&data);
 
             // Skeleton is supposed to guarantee these.
             check_paths = F_false;
@@ -207,6 +207,8 @@ extern "C" {
     }
     else if (setting->state.status != F_child) {
       if (F_status_is_error_not(setting->state.status)) {
+        setting->state.status = F_none;
+
         fake_print_operation_all_complete(setting, main->message);
       }
 
@@ -220,9 +222,10 @@ extern "C" {
 #endif // _di_fake_main_
 
 #ifndef _di_fake_execute_
-  int fake_execute(fake_data_t * const data, const f_string_maps_t environment, const f_string_static_t program, const f_string_statics_t arguments, f_status_t * const status) {
+  int fake_execute(fake_data_t * const data, const f_string_maps_t environment, const f_string_static_t program, const f_string_statics_t arguments) {
 
-    if (F_status_is_error(*status)) return 1;
+    if (!data) return;
+    if (F_status_is_error(data->setting.state.status)) return 1;
 
     if (data->main->error.verbosity >= f_console_verbosity_verbose_e) {
       f_file_stream_lock(data->main->message.to);
@@ -253,31 +256,31 @@ extern "C" {
 
       fl_execute_parameter_t parameter = macro_fl_execute_parameter_t_initialize(0, 0, &environment, &signals, 0);
 
-      *status = fll_execute_program(program, arguments, &parameter, 0, (void *) &return_code);
+      data->setting.state.status = fll_execute_program(program, arguments, &parameter, 0, (void *) &return_code);
 
       if (!((++data->main->signal_check) % fake_signal_check_d)) {
         if (fll_program_standard_signal_received(data->main)) {
           fll_program_print_signal_received(data->main->warning, data->setting->line_first, data->main->signal_received);
 
-          *status = F_status_set_error(F_interrupt);
+          data->setting.state.status = F_status_set_error(F_interrupt);
 
           return 0;
         }
       }
 
-      if (*status == F_child) return return_code;
+      if (data->setting.state.status == F_child) return return_code;
     }
     else {
-      *status = F_status_set_error(F_file_found_not);
+      data->setting.state.status = F_status_set_error(F_file_found_not);
     }
 
     if (return_code != 0) {
-      *status = F_status_set_error(F_failure);
+      data->setting.state.status = F_status_set_error(F_failure);
     }
-    else if (F_status_is_error(*status)) {
+    else if (F_status_is_error(data->setting.state.status)) {
       return_code = 1;
 
-      if (F_status_set_fine(*status) == F_file_found_not) {
+      if (F_status_set_fine(data->setting.state.status) == F_file_found_not) {
         if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
           f_file_stream_lock(data->main->error.to);
 
@@ -289,7 +292,7 @@ extern "C" {
         }
       }
       else {
-        fake_print_error(data->setting, data->main->error, *status, macro_fake_f(fll_execute_program));
+        fake_print_error(data->setting, data->main->error, macro_fake_f(fll_execute_program));
       }
     }
 
@@ -427,13 +430,17 @@ extern "C" {
 #endif // _di_fake_pipe_buffer_
 
 #ifndef _di_fake_validate_parameter_paths_
-  f_status_t fake_validate_parameter_paths(fake_data_t * const data) {
+  void fake_validate_parameter_paths(fake_data_t * const data) {
+
+    if (!data) return;
 
     if (!((++data->main->signal_check) % fake_signal_check_d)) {
       if (fll_program_standard_signal_received(data->main)) {
         fll_program_print_signal_received(data->main->warning, data->setting->line_first, data->main->signal_received);
 
-        return F_status_set_error(F_interrupt);
+        data->setting.state.status = F_status_set_error(F_interrupt);
+
+        return
       }
     }
 
@@ -466,7 +473,7 @@ extern "C" {
 
     struct stat directory_stat;
 
-    f_status_t status = F_none;
+    data->setting.state.status = F_none;
 
     // Check only expected operations (fake_operation_clean_e and fake_operation_skeleton_e should not call this function).
     if (data->operation == fake_operation_make_e) {
@@ -494,9 +501,9 @@ extern "C" {
           requireds[1] = F_none; // fake_long_data_s
         }
         else {
-          status = f_file_exists(data->main->parameters.arguments.array[index], F_true);
+          data->setting.state.status = f_file_exists(data->main->parameters.arguments.array[index], F_true);
 
-          if (F_status_is_error_not(status) && status == F_true) {
+          if (F_status_is_error_not(data->setting.state.status) && data->setting.state.status == F_true) {
             requireds[1] = F_none; // fake_long_data_s
           }
         }
@@ -508,15 +515,17 @@ extern "C" {
       if (requireds[i] != F_none && values[i].used) {
         memset(&directory_stat, 0, sizeof(struct stat));
 
-        status = f_file_stat(values[i], F_true, &directory_stat);
+        data->setting.state.status = f_file_stat(values[i], F_true, &directory_stat);
 
-        if (status == F_status_set_error(F_file_found_not)) status = F_status_set_error(F_directory_found_not);
+        if (data->setting.state.status == F_status_set_error(F_file_found_not)) {
+          data->setting.state.status = F_status_set_error(F_directory_found_not);
+        }
 
-        if (F_status_is_error(status)) {
-          if (F_status_set_fine(status) != F_directory_found_not || requireds[i]) {
-            fake_print_error_file(data->setting, data->main->error, status, macro_fake_f(f_file_stat), values[i], f_file_operation_access_s, fll_error_file_type_directory_e);
+        if (F_status_is_error(data->setting.state.status)) {
+          if (F_status_set_fine(data->setting.state.status) != F_directory_found_not || requireds[i]) {
+            fake_print_error_file(data->setting, data->main->error, macro_fake_f(f_file_stat), values[i], f_file_operation_access_s, fll_error_file_type_directory_e);
 
-            return status;
+            return;
           }
         }
       }
@@ -529,11 +538,13 @@ extern "C" {
 
         f_file_stream_unlock(data->main->error.to);
 
-        return F_status_set_error(F_directory_found_not);
+        data->setting.state.status = F_status_set_error(F_directory_found_not);
+
+        return;
       }
     } // for
 
-    return F_none;
+    data->setting.state.status = F_none;
   }
 #endif // _di_fake_validate_parameter_paths_
 

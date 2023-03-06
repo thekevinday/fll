@@ -5,7 +5,9 @@ extern "C" {
 #endif
 
 #ifndef _di_fake_clean_operate_
-  f_status_t fake_clean_operate(fake_data_t * const data) {
+  void fake_clean_operate(fake_data_t * const data) {
+
+    if (!data) return;
 
     if (data->main->message.verbosity != f_console_verbosity_quiet_e && data->main->message.verbosity != f_console_verbosity_error_e) {
       f_file_stream_lock(data->main->message.to);
@@ -17,30 +19,29 @@ extern "C" {
       f_file_stream_unlock(data->main->message.to);
     }
 
-    f_status_t status = F_none;
+    data->setting.state.status = F_none;
 
     if (data->main->error.verbosity >= f_console_verbosity_verbose_e) {
-      status = f_directory_remove_custom(data->setting->build, F_directory_max_descriptors_d, F_true, fake_clean_remove_recursively_verbosely);
+      data->setting.state.status = f_directory_remove_custom(data->setting->build, F_directory_max_descriptors_d, F_true, fake_clean_remove_recursively_verbosely);
     }
     else {
-      status = f_directory_remove(data->setting->build, F_directory_max_descriptors_d, F_true);
+      data->setting.state.status = f_directory_remove(data->setting->build, F_directory_max_descriptors_d, F_true);
     }
 
-    if (F_status_set_fine(status) == F_file_found_not || F_status_set_fine(status) == F_directory) {
+    if (F_status_set_fine(data->setting.state.status) == F_file_found_not || F_status_set_fine(data->setting.state.status) == F_directory) {
       if (data->main->error.verbosity >= f_console_verbosity_verbose_e) {
         fll_print_format("The build directory '%[%Q%]' does not exist.%r", data->main->warning.to, data->main->context.set.notable, data->setting->build, data->main->context.set.notable, f_string_eol_s);
       }
 
-      status = F_none;
+      data->setting.state.status = F_none;
     }
 
-    if (F_status_is_error(status)) {
-      fake_print_error_file(data->setting, data->main->error, status, macro_fake_f(f_directory_remove), data->setting->build, f_file_operation_delete_s, fll_error_file_type_directory_e);
-
-      return status;
+    if (F_status_is_error(data->setting.state.status)) {
+      fake_print_error_file(data->setting, data->main->error, macro_fake_f(f_directory_remove), data->setting->build, f_file_operation_delete_s, fll_error_file_type_directory_e);
     }
-
-    return F_none;
+    else {
+      data->setting.state.status = F_none;
+    }
   }
 #endif // _di_fake_clean_operate_
 
