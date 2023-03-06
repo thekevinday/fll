@@ -140,6 +140,9 @@ extern "C" {
     if (status == F_none_stop) return F_data_not_stop;
     if (status == F_data_not) return status;
 
+    // Save the delimits used position in case of unterminated quote.
+    const f_array_length_t delimits_used = delimits->used;
+
     // Begin the search.
     found->start = range->start;
 
@@ -619,10 +622,18 @@ extern "C" {
         }
         else if (buffer.string[range->start] == f_fss_eol_s.string[0]) {
 
+          // The quote is incomplete, so treat the entire line as the Object as per the specification (including the quotes).
+          // The error bit is set to designate that the Object is found in an erroneous state (not having a terminating quote).
+          found->start -= 1;
+          found->stop = range->start - 1;
+
+          // The delimits cannot be preserved in this case as per specification.
+          delimits->used = delimits_used;
+
           // Move the start position to after the EOL.
           ++range->start;
 
-          return F_fss_found_object_not;
+          return F_status_set_error(F_fss_found_object_content_not);
         }
 
         status = f_utf_buffer_increment(buffer, range, 1);

@@ -128,6 +128,7 @@ extern "C" {
  *   F_end_not_group_eos if EOS was reached before the a group termination was reached.
  *   F_end_not_group_stop if stop point was reached before the a group termination was reached.
  *
+ *   F_fss_found_object_content_not (with error bit) If an unterminated quoted Object is found.
  *   F_interrupt (with error bit) if stopping due to an interrupt.
  *   F_none_eol (with error bit) after reaching an EOL, which is not supported by the standard.
  *   F_parameter (with error bit) if a parameter is invalid.

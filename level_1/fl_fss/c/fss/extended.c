@@ -43,11 +43,16 @@ extern "C" {
 
       status = private_fl_fss_basic_read(buffer, F_false, state, range, &content_partial, &quote, delimits);
 
-      if (status == F_fss_found_object || status == F_fss_found_object_content_not) {
+      if (status == F_fss_found_object || F_status_set_fine(status) == F_fss_found_object_content_not) {
         status_allocate = f_string_ranges_increase(state.step_small, found);
 
         if (F_status_is_error_not(status_allocate) && quotes) {
           status_allocate = f_uint8s_increase(state.step_small, quotes);
+        }
+
+        // The private function sets the error bit on unterminated quoted Object.
+        if (status == F_status_set_error(F_fss_found_object_content_not)) {
+          status = F_fss_found_object_content_not;
         }
 
         if (F_status_is_error(status_allocate)) {
@@ -197,6 +202,11 @@ extern "C" {
     const f_array_length_t delimits_used = delimits->used;
 
     const f_status_t status = private_fl_fss_basic_read(buffer, F_true, state, range, found, quote, delimits);
+
+    // The private function sets the error bit on unterminated quoted Object.
+    if (status == F_status_set_error(F_fss_found_object_content_not)) {
+      return F_fss_found_object_content_not;
+    }
 
     if (F_status_is_error(status) || status == F_fss_found_object_not || status == F_data_not || status == F_data_not_eos || status == F_data_not_stop) {
       delimits->used = delimits_used;
