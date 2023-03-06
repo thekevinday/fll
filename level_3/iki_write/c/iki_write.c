@@ -56,6 +56,7 @@ extern "C" {
     fll_program_print_help_option(file, context, iki_write_short_file_s, iki_write_long_file_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Specify a file to send data to.");
     fll_program_print_help_option(file, context, iki_write_short_object_s, iki_write_long_object_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " The Object to write.");
     fll_program_print_help_option(file, context, iki_write_short_single_s, iki_write_long_single_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, " Use single quotes.");
+    fll_program_print_help_option(file, context, iki_write_short_wrap_s, iki_write_long_wrap_s, f_console_symbol_short_enable_s, f_console_symbol_long_enable_s, "   Wrap the vocabulary name.");
 
     fll_program_print_help_usage(file, context, iki_write_program_name_s, f_string_empty_s);
 

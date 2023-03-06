@@ -43,18 +43,24 @@ extern "C" {
   #define F_iki_syntax_quote_double_s "\""
   #define F_iki_syntax_quote_single_s "\'"
   #define F_iki_syntax_slash_s        "\\"
+  #define F_iki_syntax_wrap_open_s    "["
+  #define F_iki_syntax_wrap_close_s   "]"
 
   #define F_iki_syntax_separator_s_length    1
   #define F_iki_syntax_placeholder_s_length  1
   #define F_iki_syntax_quote_double_s_length 1
   #define F_iki_syntax_quote_single_s_length 1
   #define F_iki_syntax_slash_s_length        1
+  #define F_iki_syntax_wrap_open_s_length    1
+  #define F_iki_syntax_wrap_close_s_length   1
 
   extern const f_string_static_t f_iki_syntax_separator_s;
   extern const f_string_static_t f_iki_syntax_placeholder_s;
   extern const f_string_static_t f_iki_syntax_quote_double_s;
   extern const f_string_static_t f_iki_syntax_quote_single_s;
   extern const f_string_static_t f_iki_syntax_slash_s;
+  extern const f_string_static_t f_iki_syntax_wrap_open_s;
+  extern const f_string_static_t f_iki_syntax_wrap_close_s;
 #endif //_di_f_iki_syntax_
 
 #ifndef _di_f_iki_vocabulary_0001_

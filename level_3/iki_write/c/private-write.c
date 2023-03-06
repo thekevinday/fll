@@ -54,7 +54,12 @@ extern "C" {
       return F_status_set_error(F_failure);
     }
 
-    fl_print_format("%Q%r%r%Q%r", output.stream, object, f_iki_syntax_separator_s, data->quote, *escaped, data->quote);
+    if (data->main->parameters.array[iki_write_parameter_wrap_e].result & f_console_result_found_e) {
+      fl_print_format("%r%Q%r%r%r%Q%r", output.stream, f_iki_syntax_wrap_open_s, object, f_iki_syntax_wrap_close_s, f_iki_syntax_separator_s, data->quote, *escaped, data->quote);
+    }
+    else {
+      fl_print_format("%Q%r%r%Q%r", output.stream, object, f_iki_syntax_separator_s, data->quote, *escaped, data->quote);
+    }
 
     return F_none;
   }
