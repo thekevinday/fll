@@ -163,7 +163,12 @@ extern "C" {
 
     private_fl_fss_basic_read(buffer, F_true, range, found, quote, delimits, state);
 
-    if (F_status_is_error(state->status) || state->status == F_fss_found_object_not || state->status == F_data_not || state->status == F_data_not_eos || state->status == F_data_not_stop) {
+    if (state->status == F_status_set_error(F_fss_found_object_content_not)) {
+
+      // The private function sets the error bit on unterminated quoted Object.
+      state->status = F_fss_found_object_content_not;
+    }
+    else if (F_status_is_error(state->status) || state->status == F_fss_found_object_not || state->status == F_data_not || state->status == F_data_not_eos || state->status == F_data_not_stop) {
       delimits->used = delimits_used;
     }
   }
