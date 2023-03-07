@@ -47,11 +47,11 @@ extern "C" {
  *   A delimits array representing where delimits exist within the buffer.
  * @param state
  *   A state for providing flags and handling interrupts during long running operations.
- *   There is no print_error().
- *   There is no functions structure.
+ *   There is no state.handle().
+ *   There is no "callbacks" structure.
  *   There is no data structure passed to these functions.
  *
- *   When interrupt() returns, only F_interrupt and F_interrupt_not are processed.
+ *   When state.interrupt() returns, only F_interrupt and F_interrupt_not are processed.
  *   Error bit designates an error but must be passed along with F_interrupt.
  *   All other statuses are ignored.
  *
@@ -104,11 +104,11 @@ extern "C" {
  *   The buffer where the content is written to.
  * @param state
  *   A state for providing flags and handling interrupts during long running operations.
- *   There is no print_error().
- *   There is no functions structure.
+ *   There is no state.handle().
+ *   There is no "callbacks" structure.
  *   There is no data structure passed to these functions.
  *
- *   When interrupt() returns, only F_interrupt and F_interrupt_not are processed.
+ *   When state.interrupt() returns, only F_interrupt and F_interrupt_not are processed.
  *   Error bit designates an error but must be passed along with F_interrupt.
  *
  * @return
@@ -155,11 +155,11 @@ extern "C" {
  *   A delimits array representing where delimits exist within the buffer.
  * @param state
  *   A state for providing flags and handling interrupts during long running operations.
- *   There is no print_error().
- *   There is no functions structure.
+ *   There is no state.handle().
+ *   There is no "callbacks" structure.
  *   There is no data structure passed to these functions.
  *
- *   When interrupt() returns, only F_interrupt and F_interrupt_not are processed.
+ *   When state.interrupt() returns, only F_interrupt and F_interrupt_not are processed.
  *   Error bit designates an error but must be passed along with F_interrupt.
  *   All other statuses are ignored.
  *
@@ -227,11 +227,11 @@ extern "C" {
  *   The buffer where the object is written to.
  * @param state
  *   A state for providing flags and handling interrupts during long running operations.
- *   There is no print_error().
- *   There is no functions structure.
+ *   There is no state.handle().
+ *   There is no "callbacks" structure.
  *   There is no data structure passed to these functions.
  *
- *   When interrupt() returns, only F_interrupt and F_interrupt_not are processed.
+ *   When state.interrupt() returns, only F_interrupt and F_interrupt_not are processed.
  *   Error bit designates an error but must be passed along with F_interrupt.
  *   All other statuses are ignored.
  *
