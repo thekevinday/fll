@@ -41,11 +41,11 @@ extern "C" {
  *   The buffer to read from.
  * @param state
  *   A state for providing flags and handling interrupts during long running operations.
- *   There is no print_error().
- *   There is no functions structure.
+ *   There is no state.handle().
+ *   There is no "callbacks" structure.
  *   There is no data structure passed to these functions.
  *
- *   When interrupt() returns, only F_interrupt and F_interrupt_not are processed.
+ *   When state.interrupt() returns, only F_interrupt and F_interrupt_not are processed.
  *   Error bit designates an error but must be passed along with F_interrupt.
  *   All other statuses are ignored.
  * @param range
@@ -122,11 +122,11 @@ extern "C" {
  *   Set the pointer address to 0 to disable.
  * @param state
  *   A state for providing flags and handling interrupts during long running operations.
- *   There is no print_error().
- *   There is no functions structure.
+ *   There is no state.handle().
+ *   There is no "callbacks" structure.
  *   There is no data structure passed to these functions.
  *
- *   When interrupt() returns, only F_interrupt and F_interrupt_not are processed.
+ *   When state.interrupt() returns, only F_interrupt and F_interrupt_not are processed.
  *   Error bit designates an error but must be passed along with F_interrupt.
  *   All other statuses are ignored.
  * @param range
@@ -173,11 +173,11 @@ extern "C" {
  *   The buffer to read from.
  * @param state
  *   A state for providing flags and handling interrupts during long running operations.
- *   There is no print_error().
- *   There is no functions structure.
+ *   There is no state.handle().
+ *   There is no "callbacks" structure.
  *   There is no data structure passed to these functions.
  *
- *   When interrupt() returns, only F_interrupt and F_interrupt_not are processed.
+ *   When state.interrupt() returns, only F_interrupt and F_interrupt_not are processed.
  *   Error bit designates an error but must be passed along with F_interrupt.
  *   All other statuses are ignored.
  * @param range
@@ -244,11 +244,11 @@ extern "C" {
  *   If f_fss_complete_partial_tim, this will write any appropriate open and close aspects of this object, but will omit whitespace before and after the object.
  * @param state
  *   A state for providing flags and handling interrupts during long running operations.
- *   There is no print_error().
- *   There is no functions structure.
+ *   There is no state.handle().
+ *   There is no "callbacks" structure.
  *   There is no data structure passed to these functions.
  *
- *   When interrupt() returns, only F_interrupt and F_interrupt_not are processed.
+ *   When state.interrupt() returns, only F_interrupt and F_interrupt_not are processed.
  *   Error bit designates an error but must be passed along with F_interrupt.
  *   All other statuses are ignored.
  * @param range

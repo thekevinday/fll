@@ -22,11 +22,11 @@ extern "C" {
  *   The buffer to seek through.
  * @param state
  *   A state for providing flags and handling interrupts during long running operations.
- *   There is no print_error().
- *   There is no functions structure.
+ *   There is no state.handle().
+ *   There is no "callbacks" structure.
  *   There is no data structure passed to these functions.
  *
- *   When interrupt() returns, only F_interrupt and F_interrupt_not are processed.
+ *   When state.interrupt() returns, only F_interrupt and F_interrupt_not are processed.
  *   Error bit designates an error but must be passed along with F_interrupt.
  *   All other statuses are ignored.
  * @param range
@@ -57,11 +57,11 @@ extern "C" {
  *   The destination.used value before any operations were performed.
  * @param state
  *   A state for providing flags and handling interrupts during long running operations.
- *   There is no print_error().
- *   There is no functions structure.
+ *   There is no state.handle().
+ *   There is no "callbacks" structure.
  *   There is no data structure passed to these functions.
  *
- *   When interrupt() returns, only F_interrupt and F_interrupt_not are processed.
+ *   When state.interrupt() returns, only F_interrupt and F_interrupt_not are processed.
  *   Error bit designates an error but must be passed along with F_interrupt.
  *   All other statuses are ignored.
  * @param destination
@@ -97,11 +97,11 @@ extern "C" {
  *   As Content, this does nothing special in regards to a leading '#'.
  * @param state
  *   A state for providing flags and handling interrupts during long running operations.
- *   There is no print_error().
- *   There is no functions structure.
+ *   There is no state.handle().
+ *   There is no "callbacks" structure.
  *   There is no data structure passed to these functions.
  *
- *   When interrupt() returns, only F_interrupt and F_interrupt_not are processed.
+ *   When state.interrupt() returns, only F_interrupt and F_interrupt_not are processed.
  *   Error bit designates an error but must be passed along with F_interrupt.
  *   All other statuses are ignored.
  * @param range
@@ -178,11 +178,11 @@ extern "C" {
  *   Otherwise, this is the type of quote to wrap the object in when writing.
  * @param state
  *   A state for providing flags and handling interrupts during long running operations.
- *   There is no print_error().
- *   There is no functions structure.
+ *   There is no state.handle().
+ *   There is no "callbacks" structure.
  *   There is no data structure passed to these functions.
  *
- *   When interrupt() returns, only F_interrupt and F_interrupt_not are processed.
+ *   When state.interrupt() returns, only F_interrupt and F_interrupt_not are processed.
  *   Error bit designates an error but must be passed along with F_interrupt.
  *   All other statuses are ignored.
  * @param range
@@ -232,11 +232,11 @@ extern "C" {
  *   The destination.used value before any operations were perfomed.
  * @param state
  *   A state for providing flags and handling interrupts during long running operations.
- *   There is no print_error().
- *   There is no functions structure.
+ *   There is no state.handle().
+ *   There is no "callbacks" structure.
  *   There is no data structure passed to these functions.
  *
- *   When interrupt() returns, only F_interrupt and F_interrupt_not are processed.
+ *   When state.interrupt() returns, only F_interrupt and F_interrupt_not are processed.
  *   Error bit designates an error but must be passed along with F_interrupt.
  *   All other statuses are ignored.
  * @param destination
