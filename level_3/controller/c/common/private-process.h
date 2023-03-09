@@ -60,7 +60,7 @@ extern "C" {
  * cache:        The cache used in this process.
  * child:        The process id of a child process, if one is running (when forking to execute a child process).
  * lock:         A read/write lock on the structure.
- * options:      Configuration options for this asynchronous thread.
+ * options:      Configuration options for this thread.
  * result:       The last return code from an execution of a process.
  * rule:         A copy of the rule actively being executed.
  * stack:        A stack used to represent dependencies as Rule ID's to avoid circular rule dependencies (If Rule A waits on Rule B, then Rule B must not wait on Rule A).

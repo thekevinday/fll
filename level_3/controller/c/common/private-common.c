@@ -49,6 +49,7 @@ extern "C" {
   const f_string_static_t controller_full_path_s = macro_f_string_static_t_initialize(CONTROLLER_full_path_s, 0, CONTROLLER_full_path_s_length);
   const f_string_static_t controller_group_s = macro_f_string_static_t_initialize(CONTROLLER_group_s, 0, CONTROLLER_group_s_length);
   const f_string_static_t controller_groups_s = macro_f_string_static_t_initialize(CONTROLLER_groups_s, 0, CONTROLLER_groups_s_length);
+  const f_string_static_t controller_helper_s = macro_f_string_static_t_initialize(CONTROLLER_helper_s, 0, CONTROLLER_helper_s_length);
   const f_string_static_t controller_how_s = macro_f_string_static_t_initialize(CONTROLLER_how_s, 0, CONTROLLER_how_s_length);
   const f_string_static_t controller_idle_s = macro_f_string_static_t_initialize(CONTROLLER_idle_s, 0, CONTROLLER_idle_s_length);
   const f_string_static_t controller_iki_s = macro_f_string_static_t_initialize(CONTROLLER_iki_s, 0, CONTROLLER_iki_s_length);

@@ -73,6 +73,7 @@ extern "C" {
   #define CONTROLLER_full_path_s     "full_path"
   #define CONTROLLER_group_s         "group"
   #define CONTROLLER_groups_s        "groups"
+  #define CONTROLLER_helper_s        "helper"
   #define CONTROLLER_how_s           "how"
   #define CONTROLLER_idle_s          "idle"
   #define CONTROLLER_iki_s           "iki"
@@ -204,6 +205,7 @@ extern "C" {
   #define CONTROLLER_full_path_s_length     9
   #define CONTROLLER_group_s_length         5
   #define CONTROLLER_groups_s_length        6
+  #define CONTROLLER_helper_s_length        6
   #define CONTROLLER_how_s_length           3
   #define CONTROLLER_idle_s_length          4
   #define CONTROLLER_iki_s_length           3
@@ -335,6 +337,7 @@ extern "C" {
   extern const f_string_static_t controller_full_path_s;
   extern const f_string_static_t controller_group_s;
   extern const f_string_static_t controller_groups_s;
+  extern const f_string_static_t controller_helper_s;
   extern const f_string_static_t controller_how_s;
   extern const f_string_static_t controller_idle_s;
   extern const f_string_static_t controller_iki_s;

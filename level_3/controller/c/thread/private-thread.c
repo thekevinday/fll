@@ -154,6 +154,21 @@ extern "C" {
   }
 #endif // _di_controller_thread_cleanup_
 
+#ifndef _di_controller_thread_detach_
+  f_status_t controller_thread_detach(f_thread_id_t * const id) {
+
+    if (!id || !*id) return F_data_not;
+
+    const f_status_t status = f_thread_detach(*id);
+
+    if (F_status_is_error_not(status) || F_status_set_fine(status) == F_found_not) {
+      *id = 0;
+    }
+
+    return status;
+  }
+#endif // _di_controller_thread_detach_
+
 #ifndef _di_controller_thread_is_enabled_
   f_status_t controller_thread_is_enabled(const bool is_normal, controller_thread_t * const thread) {
 
@@ -290,6 +305,9 @@ extern "C" {
 
       if (setting->mode == controller_setting_mode_service_e) {
         controller_thread_join(&thread.id_signal);
+      }
+      else if (setting->mode == controller_setting_mode_helper_e) {
+        status = controller_rule_wait_all(global, F_true, F_false, 0);
       }
       else if (setting->mode == controller_setting_mode_program_e) {
         status = controller_rule_wait_all(global, F_true, F_false);

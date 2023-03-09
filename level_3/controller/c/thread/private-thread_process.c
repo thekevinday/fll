@@ -49,14 +49,56 @@ extern "C" {
 
     // Only cancel when enabled.
     if (!controller_thread_is_enabled(is_normal, global.thread)) {
-
       f_thread_mutex_unlock(&global.thread->lock.cancel);
 
       return;
     }
 
+    struct timespec time;
+
+    controller_entry_t *entry = 0;
+    controller_process_t *process = 0;
+
+    f_status_t status = F_none;
+    f_array_length_t i = 0;
+    f_array_length_t j = 0;
+    pid_t pid = 0;
+
+    if (is_normal) {
+      entry = &global.setting->entry;
+    }
+    else {
+      entry = &global.setting->exit;
+    }
+
+    // A simple but inaccurate interval counter (expect this to be replaced in the future).
+    const f_number_unsigned_t interval_nanoseconds = entry->timeout_exit < 1000 ? (entry->timeout_exit < 100 ? 5000000 : 100000000) : 500000000;
+    const f_number_unsigned_t interval_milliseconds = entry->timeout_exit < 1000 ? (entry->timeout_exit < 100 ? 5 : 100) : 500;
+
+    time.tv_sec = 0;
+    time.tv_nsec = interval_nanoseconds;
+
+    if (global.setting->mode == controller_setting_mode_helper_e && global.main->parameters.array[controller_parameter_validate_e].result == f_console_result_none_e) {
+      int value = 0;
+      f_number_unsigned_t lapsed = 0;
+
+      for (i = 0; i < global.thread->processs.used; ++i) {
+
+        if (!global.thread->processs.array[i]) continue;
+        if (caller && i == caller->id) continue;
+
+        process = global.thread->processs.array[i];
+
+        if (!process->id_thread) continue;
+
+        controller_thread_detach(&process->id_thread);
+
+        process->id_thread = 0;
+      } // for
+    }
+
     // Use the alert lock to toggle enabled (using it as if it is a write like and a signal lock).
-    f_status_t status = f_thread_mutex_lock(&global.thread->lock.alert);
+    status = f_thread_mutex_lock(&global.thread->lock.alert);
 
     if (F_status_is_error(status)) {
       global.thread->enabled = controller_thread_enabled_not_e;
@@ -78,29 +120,6 @@ extern "C" {
       f_thread_mutex_unlock(&global.thread->lock.alert);
     }
 
-    struct timespec time;
-
-    controller_entry_t *entry = 0;
-    controller_process_t *process = 0;
-
-    f_array_length_t i = 0;
-    f_array_length_t j = 0;
-    pid_t pid = 0;
-
-    if (is_normal) {
-      entry = &global.setting->entry;
-    }
-    else {
-      entry = &global.setting->exit;
-    }
-
-    // A simple but inaccurate interval counter (expect this to be replaced in the future).
-    const f_number_unsigned_t interval_nanoseconds = entry->timeout_exit < 1000 ? (entry->timeout_exit < 100 ? 5000000 : 100000000) : 500000000;
-    const f_number_unsigned_t interval_milliseconds = entry->timeout_exit < 1000 ? (entry->timeout_exit < 100 ? 5 : 100) : 500;
-
-    time.tv_sec = 0;
-    time.tv_nsec = interval_nanoseconds;
-
     if (global.thread->id_cleanup) {
       f_thread_cancel(global.thread->id_cleanup);
       f_thread_join(global.thread->id_cleanup, 0);
@@ -121,6 +140,12 @@ extern "C" {
       f_thread_join(global.thread->id_signal, 0);
 
       global.thread->id_signal = 0;
+    }
+
+    if (global.setting->mode == controller_setting_mode_helper_e && global.main->parameters.array[controller_parameter_validate_e].result == f_console_result_none_e) {
+      f_thread_mutex_unlock(&global.thread->lock.cancel);
+
+      return;
     }
 
     for (; i < global.thread->processs.used; ++i) {

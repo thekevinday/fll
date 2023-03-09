@@ -33,7 +33,7 @@ Entry Specification:
       - code:"control_mode": Exactly one Content that is a valid file mode.
       - code:"control_user": Exactly one Content that is a user name or user id.
       - code:"define": Two Content, the first Content must be a case-sensitive valid environment variable name (alpha-numeric or underscore, but no leading digits).
-      - code:"mode": Exactly one Content that is one of code:"program" or code:"service".
+      - code:"mode": Exactly one Content that is one of code:"helper", code:"program", or code:"service".
       - code:"parameter": Two Content, the first Content must be a case-sensitive valid IKI name and the second being an IKI value.
       - code:"pid": Exactly one Content that is one of code:"disable", code:"require", or code:"ready".
       - code:"pid_file": Exactly one Content that is a relative or absolute path to a pid file.

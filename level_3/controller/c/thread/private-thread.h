@@ -26,6 +26,29 @@ extern "C" {
   extern void * controller_thread_cleanup(void * const arguments) F_attribute_visibility_internal_d;
 #endif // _di_controller_thread_cleanup_
 
+/***
+ * Detach a thread, assigning id to NULL on success.
+ *
+ * If the ID is not found, then it is also set to NULL.
+ *
+ * This should be called for asynchronous processes.
+ *
+ * @param id
+ *   The thread ID.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Success from: f_thread_detach().
+ *
+ *   Errors (with error bit) from: f_thread_detach().
+ *
+ * @see f_thread_detach()
+ */
+#ifndef _di_controller_thread_detach_
+  extern f_status_t controller_thread_detach(f_thread_id_t * const id) F_attribute_visibility_internal_d;
+#endif // _di_controller_thread_detach_
+
 /**
  * Check to see if thread is enabled for the normal operations like entry and control or for exit operations.
  *

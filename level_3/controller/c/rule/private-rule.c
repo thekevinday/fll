@@ -6272,7 +6272,6 @@ extern "C" {
             f_thread_unlock(&process_list[i]->active);
 
             if (f_thread_lock_write_try(&process_list[i]->active) == F_none) {
-
               controller_thread_join(&process_list[i]->id_thread);
 
               process_list[i]->state = controller_process_state_idle_e;
