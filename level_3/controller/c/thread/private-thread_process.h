@@ -41,12 +41,9 @@ extern "C" {
  *   If controller_thread_cancel_signal_e, then this was called from within the signal handling thread, so do not cancel the signal thread.
  *   If controller_thread_cancel_call_e, then this was not called from within the signal handling thread, so cancel the signal thread.
  *   If controller_thread_cancel_execute_e, then this was called from within the Entry/Exit for executing a process, so cancel the signal thread but not the Entry thread.
- * @param caller
- *   (optional) The process that is calling the cancel so that this process itself does not get cancelled.
- *   Set to NULL to not use.
  */
 #ifndef _di_controller_thread_process_cancel_
-  extern void controller_thread_process_cancel(const controller_global_t global, const bool is_normal, const uint8_t by, controller_process_t * const caller) F_attribute_visibility_internal_d;
+  extern void controller_thread_process_cancel(const controller_global_t global, const bool is_normal, const uint8_t by) F_attribute_visibility_internal_d;
 #endif // _di_controller_thread_process_cancel_
 
 /**

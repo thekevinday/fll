@@ -6177,16 +6177,9 @@ extern "C" {
 #endif // _di_controller_rule_validate_
 
 #ifndef _di_controller_rule_wait_all_
-  f_status_t controller_rule_wait_all(const controller_global_t global, const bool is_normal, const bool required, controller_process_t * const caller) {
+  f_status_t controller_rule_wait_all(const controller_global_t global, const bool is_normal, const bool required) {
 
-    f_status_t status_lock = F_none;
-
-    if (caller) {
-      status_lock = controller_lock_read_process(caller, global.thread, &global.thread->lock.process);
-    }
-    else {
-      status_lock = controller_lock_read(is_normal, global.thread, &global.thread->lock.process);
-    }
+    f_status_t status_lock = controller_lock_read(is_normal, global.thread, &global.thread->lock.process);
 
     if (F_status_is_error(status_lock)) {
       controller_lock_print_error_critical(global.main->error, F_status_set_fine(status_lock), F_true, global.thread);
@@ -6220,21 +6213,10 @@ extern "C" {
 
     for (i = 0; i < process_total; ++i) {
 
-      if (caller) {
-        if (!controller_thread_is_enabled_process(caller, global.thread)) break;
-      }
-      else {
-        if (!controller_thread_is_enabled(is_normal, global.thread)) break;
-      }
+      if (!controller_thread_is_enabled(is_normal, global.thread)) break;
 
       // Re-establish global process read lock to wait for or protect from the cleanup thread while checking the read process.
-      if (caller) {
-        status_lock = controller_lock_read_process(caller, global.thread, &global.thread->lock.process);
-      }
-      else {
-        status_lock = controller_lock_read(is_normal, global.thread, &global.thread->lock.process);
-      }
-
+      status_lock = controller_lock_read(is_normal, global.thread, &global.thread->lock.process);
       if (F_status_is_error(status_lock)) break;
 
       if (!process_list[i]) {
@@ -6243,12 +6225,7 @@ extern "C" {
         continue;
       }
 
-      if (caller) {
-        status_lock = controller_lock_read_process(caller, global.thread, &process_list[i]->active);
-      }
-      else {
-        status_lock = controller_lock_read(is_normal, global.thread, &process_list[i]->active);
-      }
+      status_lock = controller_lock_read(is_normal, global.thread, &process_list[i]->active);
 
       if (F_status_is_error(status_lock)) {
         f_thread_unlock(&global.thread->lock.process);
@@ -6259,60 +6236,7 @@ extern "C" {
       // Once the active lock is obtained, then the main process read lock can be safely released.
       f_thread_unlock(&global.thread->lock.process);
 
-      if (caller) {
-        if (caller) {
-          status_lock = controller_lock_read_process(caller, global.thread, &global.thread->lock.rule);
-        }
-        else {
-          status_lock = controller_lock_read(is_normal, global.thread, &global.thread->lock.rule);
-        }
-
-        if (F_status_is_error(status_lock)) {
-          f_thread_unlock(&process_list[i]->active);
-
-          break;
-        }
-
-        if (fl_string_dynamic_compare(caller->rule.alias, process_list[i]->rule.alias) == F_equal_to) {
-          f_thread_unlock(&global.thread->lock.rule);
-          f_thread_unlock(&process_list[i]->active);
-
-          continue;
-        }
-
-        skip = F_false;
-
-        for (j = 0; j < caller->stack.used; ++j) {
-
-          if (caller) {
-            if (!controller_thread_is_enabled_process(caller, global.thread)) break;
-          }
-          else {
-            if (!controller_thread_is_enabled(is_normal, global.thread)) break;
-          }
-
-          if (global.thread->processs.array[caller->stack.array[j]] && fl_string_dynamic_compare(process_list[i]->rule.alias, global.thread->processs.array[caller->stack.array[j]]->rule.alias) == F_equal_to) {
-            skip = F_true;
-          }
-
-          if (skip) break;
-        } // for
-
-        f_thread_unlock(&global.thread->lock.rule);
-
-        if (skip) {
-          f_thread_unlock(&process_list[i]->active);
-
-          continue;
-        }
-      }
-
-      if (caller) {
-        status_lock = controller_lock_read_process(caller, global.thread, &process_list[i]->lock);
-      }
-      else {
-        status_lock = controller_lock_read(is_normal, global.thread, &process_list[i]->lock);
-      }
+      status_lock = controller_lock_read(is_normal, global.thread, &process_list[i]->lock);
 
       if (F_status_is_error(status_lock)) {
         f_thread_unlock(&process_list[i]->active);
@@ -6334,12 +6258,7 @@ extern "C" {
         if (process_list[i]->state == controller_process_state_done_e) {
           f_thread_unlock(&process_list[i]->lock);
 
-          if (caller) {
-            status_lock = controller_lock_write_process(process_list[i], global.thread, &process_list[i]->lock);
-          }
-          else {
-            status_lock = controller_lock_write(is_normal, global.thread, &process_list[i]->lock);
-          }
+          status_lock = controller_lock_write(is_normal, global.thread, &process_list[i]->lock);
 
           if (F_status_is_error(status_lock)) {
             controller_lock_print_error_critical(global.main->error, F_status_set_fine(status_lock), F_false, global.thread);
@@ -6365,12 +6284,7 @@ extern "C" {
               f_thread_mutex_unlock(&process_list[i]->wait_lock);
             }
 
-            if (caller) {
-              status_lock = controller_lock_read_process(caller, global.thread, &process_list[i]->active);
-            }
-            else {
-              status_lock = controller_lock_read(is_normal, global.thread, &process_list[i]->active);
-            }
+            status_lock = controller_lock_read(is_normal, global.thread, &process_list[i]->active);
 
             if (F_status_is_error(status_lock)) {
               f_thread_unlock(&process_list[i]->lock);
@@ -6381,13 +6295,7 @@ extern "C" {
 
           f_thread_unlock(&process_list[i]->lock);
 
-          if (caller) {
-            status_lock = controller_lock_read_process(caller, global.thread, &process_list[i]->lock);
-          }
-          else {
-            status_lock = controller_lock_read(is_normal, global.thread, &process_list[i]->lock);
-          }
-
+          status_lock = controller_lock_read(is_normal, global.thread, &process_list[i]->lock);
           if (F_status_is_error(status_lock)) break;
         }
 
@@ -6424,12 +6332,7 @@ extern "C" {
           break;
         }
 
-        if (caller) {
-          status_lock = controller_lock_read_process(caller, global.thread, &process_list[i]->lock);
-        }
-        else {
-          status_lock = controller_lock_read(is_normal, global.thread, &process_list[i]->lock);
-        }
+        status_lock = controller_lock_read(is_normal, global.thread, &process_list[i]->lock);
 
         if (F_status_is_error(status_lock)) {
           f_thread_unlock(&process_list[i]->active);
@@ -6467,15 +6370,8 @@ extern "C" {
       return status_lock;
     }
 
-    if (caller) {
-      if (!controller_thread_is_enabled_process(caller, global.thread)) {
-        return F_status_set_error(F_interrupt);
-      }
-    }
-    else {
-      if (!controller_thread_is_enabled(is_normal, global.thread)) {
-        return F_status_set_error(F_interrupt);
-      }
+    if (!controller_thread_is_enabled(is_normal, global.thread)) {
+      return F_status_set_error(F_interrupt);
     }
 
     if (F_status_set_fine(status) == F_require) {
@@ -6491,9 +6387,9 @@ extern "C" {
 #endif // _di_controller_rule_wait_all_
 
 #ifndef _di_controller_rule_wait_all_process_type_
-  f_status_t controller_rule_wait_all_process_type(const controller_global_t global, const uint8_t type, const bool required, controller_process_t * const caller) {
+  f_status_t controller_rule_wait_all_process_type(const controller_global_t global, const uint8_t type, const bool required) {
 
-    return controller_rule_wait_all(global, type != controller_process_type_exit_e, required, caller);
+    return controller_rule_wait_all(global, type != controller_process_type_exit_e, required);
   }
 #endif // _di_controller_rule_wait_all_process_type_
 

@@ -759,10 +759,6 @@ extern "C" {
  * @param required
  *   If TRUE, then only process required rules and if a required rule has failed, return.
  *   If FALSE, process all waits, returning normally (required rules still result in failure).
- * @param caller
- *   The process representing the caller so that the process never waits on itself.
- *   (optional) set to 0 when calling from a thread that is not running/executing any process.
- *   Failure to set this to the process on a thread running/executing a process will likely result in a deadlock.
  *
  * @return
  *   F_none on success.
@@ -773,7 +769,7 @@ extern "C" {
  *   F_require (with error bit set) if a required process is in failed status when required is TRUE.
  */
 #ifndef _di_controller_rule_wait_all_
-  extern f_status_t controller_rule_wait_all(const controller_global_t global, const bool is_normal, const bool required, controller_process_t * const caller) F_attribute_visibility_internal_d;
+  extern f_status_t controller_rule_wait_all(const controller_global_t global, const bool is_normal, const bool required) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_wait_all_
 
 /**
@@ -786,10 +782,6 @@ extern "C" {
  * @param required
  *   If TRUE, then only process required rules and if a required rule has failed, return.
  *   If FALSE, process all waits, returning normally.
- * @param caller
- *   The process representing the caller so that the process never waits on itself.
- *   (optional) set to 0 when calling from a thread that is not running/executing any process.
- *   Failure to set this to the process on a thread running/executing a process will likely result in a deadlock.
  *
  * @return
  *   Success from controller_rule_wait_all().
@@ -799,7 +791,7 @@ extern "C" {
  * @see controller_rule_wait_all()
  */
 #ifndef _di_controller_rule_wait_all_process_type_
-  extern f_status_t controller_rule_wait_all_process_type(const controller_global_t global, const uint8_t type, const bool required, controller_process_t * const caller) F_attribute_visibility_internal_d;
+  extern f_status_t controller_rule_wait_all_process_type(const controller_global_t global, const uint8_t type, const bool required) F_attribute_visibility_internal_d;
 #endif // _di_controller_rule_wait_all_process_type_
 
 #ifdef __cplusplus

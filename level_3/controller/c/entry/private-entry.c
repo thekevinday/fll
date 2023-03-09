@@ -850,7 +850,6 @@ extern "C" {
     controller_entry_t *entry = is_entry ? &global->setting->entry : &global->setting->exit;
     controller_entry_action_t *entry_action = 0;
     controller_entry_actions_t *entry_actions = 0;
-    controller_process_t *process = 0;
 
     // An empty stack is used here because each rule here is the first rule run in the rule's scope.
     const f_array_lengths_t stack = f_array_lengths_t_initialize;
@@ -1017,7 +1016,7 @@ extern "C" {
             }
 
             if (!(global->main->parameters.array[controller_parameter_validate_e].result & f_console_result_found_e)) {
-              status = controller_rule_wait_all(*global, is_entry, F_false, process);
+              status = controller_rule_wait_all(*global, is_entry, F_false);
               if (F_status_is_error(status)) return status;
             }
           }
@@ -1325,7 +1324,7 @@ extern "C" {
 
           if (global->main->parameters.array[controller_parameter_simulate_e].result & f_console_result_found_e) return F_execute;
 
-          controller_thread_process_cancel(*global, is_entry, is_entry ? controller_thread_cancel_execute_e : controller_thread_cancel_exit_execute_e, process);
+          controller_thread_process_cancel(*global, is_entry, is_entry ? controller_thread_cancel_execute_e : controller_thread_cancel_exit_execute_e);
 
           int result = 0;
           int option = FL_execute_parameter_option_path_d;
@@ -1487,7 +1486,7 @@ extern "C" {
 
     // Check to see if any required processes failed, but do not do this if already operating in failsafe.
     if (F_status_is_error_not(status) && !failsafe && !(global->main->parameters.array[controller_parameter_validate_e].result & f_console_result_found_e)) {
-      const f_status_t status_wait = controller_rule_wait_all(*global, is_entry, F_true, 0);
+      const f_status_t status_wait = controller_rule_wait_all(*global, is_entry, F_true);
       if (F_status_is_error(status_wait)) return status_wait;
       if (status_wait == F_require) return F_status_set_error(F_require);
     }

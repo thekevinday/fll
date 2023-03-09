@@ -43,7 +43,7 @@ extern "C" {
 #endif // _di_controller_thread_process_
 
 #ifndef _di_controller_thread_process_cancel_
-  void controller_thread_process_cancel(const controller_global_t global, const bool is_normal, const uint8_t by, controller_process_t * const caller) {
+  void controller_thread_process_cancel(const controller_global_t global, const bool is_normal, const uint8_t by) {
 
     f_thread_mutex_lock(&global.thread->lock.cancel);
 
@@ -126,7 +126,6 @@ extern "C" {
     for (; i < global.thread->processs.used; ++i) {
 
       if (!global.thread->processs.array[i]) continue;
-      if (caller && i == caller->id) continue;
 
       process = global.thread->processs.array[i];
 
@@ -160,7 +159,6 @@ extern "C" {
       for (i = 0; i < global.thread->processs.used && lapsed < entry->timeout_exit; ++i) {
 
         if (!global.thread->processs.array[i]) continue;
-        if (caller && i == caller->id) continue;
 
         process = global.thread->processs.array[i];
 
@@ -222,7 +220,6 @@ extern "C" {
     for (i = 0; i < global.thread->processs.size; ++i) {
 
       if (!global.thread->processs.array[i]) continue;
-      if (caller && i == caller->id) continue;
 
       process = global.thread->processs.array[i];
 
@@ -393,7 +390,7 @@ extern "C" {
         global->thread->id_signal = 0;
       }
 
-      controller_thread_process_cancel(*global, F_false, controller_thread_cancel_exit_e, 0);
+      controller_thread_process_cancel(*global, F_false, controller_thread_cancel_exit_e);
     }
     else {
       if (F_status_is_error_not(f_thread_mutex_lock(&global->thread->lock.alert))) {

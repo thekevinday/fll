@@ -292,11 +292,11 @@ extern "C" {
         controller_thread_join(&thread.id_signal);
       }
       else if (setting->mode == controller_setting_mode_program_e) {
-        status = controller_rule_wait_all(global, F_true, F_false, 0);
+        status = controller_rule_wait_all(global, F_true, F_false);
       }
     }
 
-    controller_thread_process_cancel(global, F_true, controller_thread_cancel_call_e, 0);
+    controller_thread_process_cancel(global, F_true, controller_thread_cancel_call_e);
 
     controller_thread_process_exit(&global);
 
