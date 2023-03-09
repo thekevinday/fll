@@ -98,6 +98,9 @@ extern "C" {
     const f_number_unsigned_t interval_nanoseconds = entry->timeout_exit < 1000 ? (entry->timeout_exit < 100 ? 5000000 : 100000000) : 500000000;
     const f_number_unsigned_t interval_milliseconds = entry->timeout_exit < 1000 ? (entry->timeout_exit < 100 ? 5 : 100) : 500;
 
+    time.tv_sec = 0;
+    time.tv_nsec = interval_nanoseconds;
+
     if (global.thread->id_cleanup) {
       f_thread_cancel(global.thread->id_cleanup);
       f_thread_join(global.thread->id_cleanup, 0);
