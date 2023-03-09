@@ -850,7 +850,6 @@ extern "C" {
     controller_entry_t *entry = is_entry ? &global->setting->entry : &global->setting->exit;
     controller_entry_action_t *entry_action = 0;
     controller_entry_actions_t *entry_actions = 0;
-    controller_process_t *process = 0;
 
     // An empty stack is used here because each rule here is the first rule run in the rule's scope.
     const f_array_lengths_t stack = f_array_lengths_t_initialize;
@@ -1017,7 +1016,7 @@ extern "C" {
             }
 
             if (global->main->parameters.array[controller_parameter_validate_e].result == f_console_result_none_e) {
-              status = controller_rule_wait_all(*global, is_entry, F_false, process);
+              status = controller_rule_wait_all(*global, is_entry, F_false, 0);
               if (F_status_is_error(status)) return status;
             }
           }
@@ -1327,7 +1326,7 @@ extern "C" {
             return F_execute;
           }
 
-          controller_thread_process_cancel(*global, is_entry, is_entry ? controller_thread_cancel_execute_e : controller_thread_cancel_exit_execute_e, process);
+          controller_thread_process_cancel(*global, is_entry, is_entry ? controller_thread_cancel_execute_e : controller_thread_cancel_exit_execute_e, 0);
 
           int result = 0;
           int option = FL_execute_parameter_option_path_d;
