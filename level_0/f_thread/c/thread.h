@@ -2329,6 +2329,8 @@ extern "C" {
  *
  * This is a blocking function.
  *
+ * This causes the semaphore value to decrement.
+ *
  * @param semaphore
  *   The thread semaphore.
  *
@@ -2400,6 +2402,8 @@ extern "C" {
 
 /**
  * Unlock the semaphore.
+ *
+ * This causes the semaphore value to increment.
  *
  * @param semaphore
  *   The thread semaphore.
