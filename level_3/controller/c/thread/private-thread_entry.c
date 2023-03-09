@@ -4,6 +4,7 @@
 #include "../lock/private-lock_print.h"
 #include "../thread/private-thread.h"
 #include "private-thread_entry.h"
+#include "private-thread_process.h"
 #include "private-thread_signal.h"
 
 #ifdef __cplusplus
@@ -111,6 +112,16 @@ extern "C" {
           else if (*status != F_child) {
             entry->setting->ready = controller_setting_ready_done_e;
           }
+        }
+
+        if (F_status_is_error_not(*status) && *status != F_child && entry->global->main->parameters.array[controller_parameter_validate_e].result == f_console_result_none_e && entry->global->setting->mode == controller_setting_mode_helper_e) {
+          struct timespec time;
+          time.tv_sec = controller_thread_exit_helper_timeout_seconds_d;
+          time.tv_nsec = controller_thread_exit_helper_timeout_nanoseconds_d;
+
+          nanosleep(&time, 0);
+
+          controller_thread_process_cancel(*(entry->global), F_true, controller_thread_cancel_exit_e, 0);
         }
       }
     }

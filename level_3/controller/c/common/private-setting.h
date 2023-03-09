@@ -24,6 +24,7 @@ extern "C" {
  *   - abort: Abort received before finished processing Entry/Exit.
  *
  * controller_setting_mode_*:
+ *   - helper:  Run as a helper, exiting when finished prrocess entry (and any respective exit).
  *   - program: Run as a program, exiting when finished prrocess entry (and any respective exit).
  *   - service: Run as a service, listening for requests after processing entry.
  *
@@ -52,18 +53,19 @@ extern "C" {
     controller_setting_ready_done_e,
     controller_setting_ready_fail_e,
     controller_setting_ready_abort_e,
-  };
+  }; // enum
 
   enum {
     controller_setting_mode_service_e = 0,
+    controller_setting_mode_helper_e,
     controller_setting_mode_program_e,
-  };
+  }; // enum
 
   enum {
     controller_setting_flag_interruptible_e = 0x1,
     controller_setting_flag_pid_created_e   = 0x2,
     controller_setting_flag_failsafe_e      = 0x4,
-  };
+  }; // enum
 
   typedef struct {
     uint8_t flag;

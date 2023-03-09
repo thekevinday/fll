@@ -60,6 +60,9 @@ extern "C" {
   #define controller_thread_wait_timeout_4_seconds_d     20
   #define controller_thread_wait_timeout_4_nanoseconds_d 0
 
+  #define controller_thread_exit_helper_timeout_seconds_d     0
+  #define controller_thread_exit_helper_timeout_nanoseconds_d 100000000 // 0.1 seconds in nanoseconds.
+
   #define controller_thread_exit_ready_timeout_seconds_d     0
   #define controller_thread_exit_ready_timeout_nanoseconds_d 500000000 // 0.5 seconds in nanoseconds.
 

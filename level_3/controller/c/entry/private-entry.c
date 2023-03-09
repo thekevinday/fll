@@ -1251,6 +1251,7 @@ extern "C" {
                 }
 
                 ++cache->ats.array[at_j];
+
                 break;
               }
             }
@@ -1487,7 +1488,7 @@ extern "C" {
     }
 
     // Check to see if any required processes failed, but do not do this if already operating in failsafe.
-    if (F_status_is_error_not(status) && !failsafe && global->main->parameters.array[controller_parameter_validate_e].result == f_console_result_none_e) {
+    if (F_status_is_error_not(status) && !failsafe && global->main->parameters.array[controller_parameter_validate_e].result == f_console_result_none_e && global->setting->mode != controller_setting_mode_helper_e) {
       const f_status_t status_wait = controller_rule_wait_all(*global, is_entry, F_true, 0);
 
       if (F_status_is_error(status_wait)) {
@@ -2077,6 +2078,9 @@ extern "C" {
 
         if (fl_string_dynamic_partial_compare_string(controller_service_s.string, cache->buffer_file, controller_service_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
           global.setting->mode = controller_setting_mode_service_e;
+        }
+        else if (fl_string_dynamic_partial_compare_string(controller_helper_s.string, cache->buffer_file, controller_helper_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
+          global.setting->mode = controller_setting_mode_helper_e;
         }
         else if (fl_string_dynamic_partial_compare_string(controller_program_s.string, cache->buffer_file, controller_program_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
           global.setting->mode = controller_setting_mode_program_e;

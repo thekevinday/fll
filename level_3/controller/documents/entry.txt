@@ -60,10 +60,19 @@ Entry Documentation:
 
     - The code:"mode" setting\:
       Represents the mode in which the Entry is operating in.
-      The following modes are supported: code:"program" and code:"service".
+      The following modes are supported: code:"helper", code:"program", and code:"service".
+
+      - The code:"helper" mode\:
+        Designates that the Entry operates as a helper for starting programs or performing actions and exits when complete.
+        On exit, any background (asynchronous) processes are not cancelled.
+        If terminated, the foreground (synchronous) process is cancelled.
+        Will call the code:"exit" with the same name as this Entry, but with the extension code:"exit", such as code:"default.exit".
+        Supports the Item Action code:"execute" to execute a program (switching the code:"controller" program entirely with the executed process).
 
       - The code:"program" mode\:
         Designates that the Entry operates as a program and exits when complete.
+        On exit, any background (asynchronous) processes are also cancelled.
+        If terminated, the foreground (synchronous) process is cancelled.
         Will call the code:"exit" with the same name as this Entry, but with the extension code:"exit", such as code:"default.exit".
         Supports the Item Action code:"execute" to execute a program (switching the code:"controller" program entirely with the executed process).
 
