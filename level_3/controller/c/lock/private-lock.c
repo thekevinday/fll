@@ -14,6 +14,9 @@ extern "C" {
     f_status_t status = f_thread_mutex_create(0, &lock->alert);
     if (F_status_is_error(status)) return status;
 
+    status = f_thread_mutex_create(0, &lock->cancel);
+    if (F_status_is_error(status)) return status;
+
     status = f_thread_mutex_create(0, &lock->print);
     if (F_status_is_error(status)) return status;
 

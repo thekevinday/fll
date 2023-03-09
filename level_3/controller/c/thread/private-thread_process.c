@@ -45,8 +45,13 @@ extern "C" {
 #ifndef _di_controller_thread_process_cancel_
   void controller_thread_process_cancel(const controller_global_t global, const bool is_normal, const uint8_t by, controller_process_t * const caller) {
 
+    f_thread_mutex_lock(&global.thread->lock.cancel);
+
     // Only cancel when enabled.
     if (!controller_thread_is_enabled(is_normal, global.thread)) {
+
+      f_thread_mutex_unlock(&global.thread->lock.cancel);
+
       return;
     }
 
@@ -300,6 +305,8 @@ extern "C" {
         --process->path_pids.used;
       } // while
     } // for
+
+    f_thread_mutex_unlock(&global.thread->lock.cancel);
   }
 #endif // _di_controller_thread_process_cancel_
 
