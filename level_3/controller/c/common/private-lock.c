@@ -45,6 +45,7 @@ extern "C" {
   void controller_lock_delete_simple(controller_lock_t * const lock) {
 
     controller_lock_delete_mutex(&lock->alert);
+    controller_lock_delete_mutex(&lock->cancel);
     controller_lock_delete_mutex(&lock->print);
 
     controller_lock_delete_rw(&lock->process);

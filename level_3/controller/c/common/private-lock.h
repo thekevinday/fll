@@ -16,11 +16,13 @@ extern "C" {
  * A structure for sharing mutexes globally between different threads.
  *
  * The alert lock is intended for a generic waiting on alerts operations.
+ * The cancel lock is intended for preventing double cancellation calls (which can happen due to interrupts).
  * The print lock is intended to lock any activity printing to stdout/stderr.
  * The process lock is intended to lock any activity on the processs structure.
  * The rule lock is intended to lock any activity on the rules structure.
  *
  * alert:           The alert mutex lock for waking up on alerts.
+ * cancel:          The cancel mutex lock for locking the cancel operation.
  * print:           The print mutex lock.
  * process:         The process r/w lock.
  * rule:            The rule r/w lock.
@@ -29,6 +31,7 @@ extern "C" {
 #ifndef _di_controller_lock_t_
   typedef struct {
     f_thread_mutex_t alert;
+    f_thread_mutex_t cancel;
     f_thread_mutex_t print;
 
     f_thread_lock_t process;
@@ -38,6 +41,7 @@ extern "C" {
   } controller_lock_t;
 
   #define controller_lock_t_initialize { \
+    f_thread_mutex_t_initialize, \
     f_thread_mutex_t_initialize, \
     f_thread_mutex_t_initialize, \
     f_thread_lock_t_initialize, \
