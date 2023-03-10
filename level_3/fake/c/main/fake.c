@@ -225,7 +225,7 @@ extern "C" {
   int fake_execute(fake_data_t * const data, const f_string_maps_t environment, const f_string_static_t program, const f_string_statics_t arguments) {
 
     if (!data) return;
-    if (F_status_is_error(data->setting.state.status)) return 1;
+    if (F_status_is_error(data->setting->state.status)) return 1;
 
     if (data->main->error.verbosity >= f_console_verbosity_verbose_e) {
       f_file_stream_lock(data->main->message.to);
@@ -256,31 +256,31 @@ extern "C" {
 
       fl_execute_parameter_t parameter = macro_fl_execute_parameter_t_initialize(0, 0, &environment, &signals, 0);
 
-      data->setting.state.status = fll_execute_program(program, arguments, &parameter, 0, (void *) &return_code);
+      data->setting->state.status = fll_execute_program(program, arguments, &parameter, 0, (void *) &return_code);
 
       if (!((++data->main->signal_check) % fake_signal_check_d)) {
         if (fll_program_standard_signal_received(data->main)) {
           fll_program_print_signal_received(data->main->warning, data->setting->line_first, data->main->signal_received);
 
-          data->setting.state.status = F_status_set_error(F_interrupt);
+          data->setting->state.status = F_status_set_error(F_interrupt);
 
           return 0;
         }
       }
 
-      if (data->setting.state.status == F_child) return return_code;
+      if (data->setting->state.status == F_child) return return_code;
     }
     else {
-      data->setting.state.status = F_status_set_error(F_file_found_not);
+      data->setting->state.status = F_status_set_error(F_file_found_not);
     }
 
     if (return_code != 0) {
-      data->setting.state.status = F_status_set_error(F_failure);
+      data->setting->state.status = F_status_set_error(F_failure);
     }
-    else if (F_status_is_error(data->setting.state.status)) {
+    else if (F_status_is_error(setting->state.status)) {
       return_code = 1;
 
-      if (F_status_set_fine(data->setting.state.status) == F_file_found_not) {
+      if (F_status_set_fine(data->setting->state.status) == F_file_found_not) {
         if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
           f_file_stream_lock(data->main->error.to);
 
@@ -307,27 +307,27 @@ extern "C" {
       if (fll_program_standard_signal_received(data->main)) {
         fll_program_print_signal_received(data->main->warning, data->setting->line_first, data->main->signal_received);
 
-        data->setting.state.status = F_status_set_error(F_interrupt);
+        data->setting->state.status = F_status_set_error(F_interrupt);
 
         return;
       }
     }
 
-    data->setting.state.status = f_file_exists(path_file, F_true);
+    data->setting->state.status = f_file_exists(path_file, F_true);
 
-    if (F_status_is_error(data->setting.state.status)) {
+    if (F_status_is_error(setting->state.status)) {
       fake_print_error_file(data->setting, data->main->error, macro_fake_f(f_file_exists), path_file, f_file_operation_find_s, fll_error_file_type_file_e);
 
       return;
     }
 
-    if (data->setting.state.status == F_true) {
+    if (data->setting->state.status == F_true) {
       {
         off_t size_file = 0;
 
-        data->setting.state.status = f_file_size(path_file, F_true, &size_file);
+        data->setting->state.status = f_file_size(path_file, F_true, &size_file);
 
-        if (F_status_is_error(data->setting.state.status)) {
+        if (F_status_is_error(setting->state.status)) {
           fake_print_error_file(data->setting, data->main->error, , macro_fake_f(f_file_size), path_file, f_file_operation_read_s, fll_error_file_type_file_e);
 
           return;
@@ -337,9 +337,9 @@ extern "C" {
           size_file = fake_max_initial_buffer_d;
         }
 
-        data->setting.state.status = f_string_dynamic_increase_by(size_file, buffer);
+        data->setting->state.status = f_string_dynamic_increase_by(size_file, buffer);
 
-        if (F_status_is_error(data->setting.state.status)) {
+        if (F_status_is_error(setting->state.status)) {
           const f_string_static_t message = macro_f_string_static_t_initialize("allocate buffer size for", 0, 24);
 
           fake_print_error_file(data->setting, data->main->error, macro_fake_f(f_string_dynamic_increase_by), path_file, message, fll_error_file_type_file_e);
@@ -347,34 +347,34 @@ extern "C" {
           return;
         }
 
-        data->setting.state.status = F_true;
+        data->setting->state.status = F_true;
       }
 
       f_file_t file = f_file_t_initialize;
 
-      data->setting.state.status = f_file_stream_open(path_file, f_string_empty_s, &file);
+      data->setting->state.status = f_file_stream_open(path_file, f_string_empty_s, &file);
 
-      if (F_status_is_error(data->setting.state.status)) {
+      if (F_status_is_error(setting->state.status)) {
         fake_print_error_file(data->setting, data->main->error, macro_fake_f(f_file_stream_open), path_file, f_file_operation_open_s, fll_error_file_type_file_e);
 
         return;
       }
 
-      data->setting.state.status = f_file_stream_read(file, buffer);
+      data->setting->state.status = f_file_stream_read(file, buffer);
 
       f_file_stream_flush(file);
       f_file_stream_close(&file);
 
-      if (F_status_is_error(data->setting.state.status)) {
+      if (F_status_is_error(setting->state.status)) {
         fake_print_error_file(data->setting, data->main->error, macro_fake_f(f_file_read), path_file, f_file_operation_read_s, fll_error_file_type_file_e);
       }
       else {
-        data->setting.state.status = F_none;
+        data->setting->state.status = F_none;
       }
     }
     else {
       if (required) {
-        data->setting.state.status = F_status_set_error(F_file_found_not);
+        data->setting->state.status = F_status_set_error(F_file_found_not);
 
         fake_print_error_file(data->setting, data->main->error, macro_fake_f(f_file_exists), path_file, f_file_operation_find_s, fll_error_file_type_file_e);
       }
@@ -393,9 +393,9 @@ extern "C" {
     file.stream = F_type_input_d;
     file.size_read = fake_default_allocation_pipe_d;
 
-    data->setting.state.status = f_string_dynamic_increase_by(fake_max_initial_buffer_d, buffer);
+    data->setting->state.status = f_string_dynamic_increase_by(fake_max_initial_buffer_d, buffer);
 
-    if (F_status_is_error(data->setting.state.status)) {
+    if (F_status_is_error(setting->state.status)) {
       const f_string_static_t message = macro_f_string_static_t_initialize("allocate buffer size for", 0, 24);
       fake_print_error_file(data->setting, data->main->error, macro_fake_f(f_string_dynamic_increase_by), f_string_ascii_minus_s, message, fll_error_file_type_file_e);
 
@@ -416,15 +416,15 @@ extern "C" {
         }
       }
 
-      data->setting.state.status = f_file_stream_read_block(file, buffer);
+      data->setting->state.status = f_file_stream_read_block(file, buffer);
 
-    } while (F_status_is_fine(data->setting.state.status) && data->setting.state.status != F_interrupt && data->setting.state.status != F_none_eof);
+    } while (F_status_is_fine(data->setting->state.status) && data->setting->state.status != F_interrupt && data->setting->state.status != F_none_eof);
 
-    if (F_status_is_error(data->setting.state.status)) {
+    if (F_status_is_error(setting->state.status)) {
       fake_print_error_file(data->setting, data->main->error, macro_fake_f(f_file_stream_read_block), f_string_ascii_minus_s, f_file_operation_read_s, fll_error_file_type_file_e);
     }
     else {
-      data->setting.state.status = F_none;
+      data->setting->state.status = F_none;
     }
   }
 #endif // _di_fake_pipe_buffer_
@@ -438,7 +438,7 @@ extern "C" {
       if (fll_program_standard_signal_received(data->main)) {
         fll_program_print_signal_received(data->main->warning, data->setting->line_first, data->main->signal_received);
 
-        data->setting.state.status = F_status_set_error(F_interrupt);
+        data->setting->state.status = F_status_set_error(F_interrupt);
 
         return
       }
@@ -473,7 +473,7 @@ extern "C" {
 
     struct stat directory_stat;
 
-    data->setting.state.status = F_none;
+    data->setting->state.status = F_none;
 
     // Check only expected operations (fake_operation_clean_e and fake_operation_skeleton_e should not call this function).
     if (data->operation == fake_operation_make_e) {
@@ -501,9 +501,9 @@ extern "C" {
           requireds[1] = F_none; // fake_long_data_s
         }
         else {
-          data->setting.state.status = f_file_exists(data->main->parameters.arguments.array[index], F_true);
+          data->setting->state.status = f_file_exists(data->main->parameters.arguments.array[index], F_true);
 
-          if (F_status_is_error_not(data->setting.state.status) && data->setting.state.status == F_true) {
+          if (F_status_is_error_not(data->setting->state.status) && data->setting->state.status == F_true) {
             requireds[1] = F_none; // fake_long_data_s
           }
         }
@@ -515,14 +515,14 @@ extern "C" {
       if (requireds[i] != F_none && values[i].used) {
         memset(&directory_stat, 0, sizeof(struct stat));
 
-        data->setting.state.status = f_file_stat(values[i], F_true, &directory_stat);
+        data->setting->state.status = f_file_stat(values[i], F_true, &directory_stat);
 
-        if (data->setting.state.status == F_status_set_error(F_file_found_not)) {
-          data->setting.state.status = F_status_set_error(F_directory_found_not);
+        if (data->setting->state.status == F_status_set_error(F_file_found_not)) {
+          data->setting->state.status = F_status_set_error(F_directory_found_not);
         }
 
-        if (F_status_is_error(data->setting.state.status)) {
-          if (F_status_set_fine(data->setting.state.status) != F_directory_found_not || requireds[i]) {
+        if (F_status_is_error(setting->state.status)) {
+          if (F_status_set_fine(data->setting->state.status) != F_directory_found_not || requireds[i]) {
             fake_print_error_file(data->setting, data->main->error, macro_fake_f(f_file_stat), values[i], f_file_operation_access_s, fll_error_file_type_directory_e);
 
             return;
@@ -538,13 +538,13 @@ extern "C" {
 
         f_file_stream_unlock(data->main->error.to);
 
-        data->setting.state.status = F_status_set_error(F_directory_found_not);
+        data->setting->state.status = F_status_set_error(F_directory_found_not);
 
         return;
       }
     } // for
 
-    data->setting.state.status = F_none;
+    data->setting->state.status = F_none;
   }
 #endif // _di_fake_validate_parameter_paths_
 

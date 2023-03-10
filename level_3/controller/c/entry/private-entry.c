@@ -149,7 +149,7 @@ extern "C" {
       action->status = F_known_not;
       action->parameters.used = 0;
 
-      status = f_fss_count_lines(state, cache->buffer_file, cache->object_actions.array[i].start, &cache->action.line_action);
+      status = f_fss_count_lines(cache->buffer_file, cache->object_actions.array[i].start, &cache->action.line_action, &setting->state);
 
       if (F_status_is_error(status)) {
         controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "f_fss_count_lines", F_true, global.thread);
@@ -1666,7 +1666,7 @@ extern "C" {
             break;
           }
 
-          status = f_fss_count_lines(state, cache->buffer_file, cache->object_items.array[i].start, &cache->action.line_item);
+          status = f_fss_count_lines(cache->buffer_file, cache->object_items.array[i].start, &cache->action.line_item, &setting->state);
 
           if (F_status_is_error(status)) {
             controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "f_fss_count_lines", F_true, global.thread);
@@ -1911,7 +1911,7 @@ extern "C" {
 
       cache->action.line_action = 0;
 
-      status = f_fss_count_lines(state, cache->buffer_file, cache->object_actions.array[i].start, &cache->action.line_action);
+      status = f_fss_count_lines(cache->buffer_file, cache->object_actions.array[i].start, &cache->action.line_action, &setting->state);
 
       if (F_status_is_error(status)) {
         controller_entry_print_error(is_entry, global.main->error, cache->action, F_status_set_fine(status), "f_fss_count_lines", F_true, global.thread);

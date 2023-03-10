@@ -10,7 +10,7 @@ extern "C" {
     if (!setting) return F_status_set_error(F_output_not);
     if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
 
-    fll_error_print(print, F_status_set_fine(data->setting.state.status), function, fll_error_file_flag_fallback_e);
+    fll_error_print(print, F_status_set_fine(data->setting->state.status), function, fll_error_file_flag_fallback_e);
 
     return F_none;
   }
@@ -276,7 +276,7 @@ extern "C" {
     if (!setting) return F_status_set_error(F_output_not);
     if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
 
-    if (fll_error_print(print, F_status_set_fine(data->setting.state.status), function, fll_error_file_flag_none_e) == F_known_not) return F_false;
+    if (fll_error_print(print, F_status_set_fine(setting->state.status), function, fll_error_file_flag_none_e) == F_known_not) return F_false;
 
     return F_true;
   }
@@ -312,7 +312,7 @@ extern "C" {
     if (!setting) return F_status_set_error(F_output_not);
     if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
 
-    fll_error_file_print(print, F_status_set_fine(data->setting.state.status), function, fll_error_file_flag_simple_e, name, operation, type);
+    fll_error_file_print(print, F_status_set_fine(setting->state.status), function, fll_error_file_flag_simple_e, name, operation, type);
 
     return F_none;
   }
@@ -323,7 +323,7 @@ extern "C" {
 
     if (!setting) return F_status_set_error(F_output_not);
 
-    if (data->setting.state.status == F_file_found_not) {
+    if (setting->state.status == F_file_found_not) {
       if (print.verbosity > f_console_verbosity_quiet_e) {
         fake_print_error_fss_message(setting, print, 0, "Occurred on invalid UTF-8 character at stop position (at ", range.start, " of the setting file ", path_file, ")");
       }
@@ -331,11 +331,11 @@ extern "C" {
       return F_false;
     }
 
-    if (data->setting.state.status == F_complete_not_utf || data->setting.state.status == F_complete_not_utf_eos || data->setting.state.status == F_complete_not_utf_stop) {
+    if (setting->state.status == F_complete_not_utf || setting->state.status == F_complete_not_utf_eos || setting->state.status == F_complete_not_utf_stop) {
       if (print.verbosity > f_console_verbosity_quiet_e) {
         f_file_stream_lock(print.to);
 
-        fl_print_format("%[%QOccurred on invalid UTF-8 character at %s (at '%]", print.to, print.context, print.prefix, data->setting.state.status == F_complete_not_utf_eos ? "end of string" : "stop point of string", print.context);
+        fl_print_format("%[%QOccurred on invalid UTF-8 character at %s (at '%]", print.to, print.context, print.prefix, setting->state.status == F_complete_not_utf_eos ? "end of string" : "stop point of string", print.context);
         fl_print_format("%[%un%]", print.to, print.notable, range.start, print.notable);
         fl_print_format("%[ of the setting file '%]", print.to, print.context, print.context);
         fl_print_format("%[%Q%]", print.to, print.notable, path_file, print.notable);
@@ -347,7 +347,7 @@ extern "C" {
       return F_false;
     }
 
-    if (data->setting.state.status == F_complete_not_utf_stop) {
+    if (setting->state.status == F_complete_not_utf_stop) {
       if (print.verbosity > f_console_verbosity_quiet_e) {
         fake_print_error_fss_message(setting, print, 0, "Occurred on invalid UTF-8 character at stop point of string (at ", range.start, " of the setting file ", path_file, ")");
       }
@@ -355,13 +355,13 @@ extern "C" {
       return F_false;
     }
 
-    if (fll_error_print(print, data->setting.state.status, function, fll_error_file_flag_none_e) == F_known_not && fallback) {
+    if (fll_error_print(print, setting->state.status, function, fll_error_file_flag_none_e) == F_known_not && fallback) {
       if (print.verbosity > f_console_verbosity_quiet_e) {
         f_string_static_t function_s = f_string_static_t_initialize;
         function_s.string = function;
         function_s.used = strlen(function);
 
-        fake_print_error_fss_message(setting, print, "UNKNOWN ", 0, (f_number_unsigned_t) data->setting.state.status, ") in function ", function_s, "()");
+        fake_print_error_fss_message(setting, print, "UNKNOWN ", 0, (f_number_unsigned_t) setting->state.status, ") in function ", function_s, "()");
       }
     }
 
@@ -434,7 +434,7 @@ extern "C" {
     f_array_length_t line = 1;
     f_state_t state = f_state_t_initialize;
 
-    f_fss_count_lines(state, buffer, operation_name.start, &line);
+    f_fss_count_lines(buffer, operation_name.start, &line, &setting->state);
 
     f_file_stream_lock(print.to);
 
@@ -504,11 +504,11 @@ extern "C" {
     if (!setting) return F_status_set_error(F_output_not);
     if (print.verbosity < f_console_verbosity_verbose_e) return F_output_not;
 
-    if (F_status_set_fine(data->setting.state.status) == F_false) {
+    if (F_status_set_fine(data->setting->state.status) == F_false) {
       fake_print_context_wrapped_variable(setting, print, "The path ", path, " is outside the project root");
     }
     else {
-      fake_print_error_file(setting, print, data->setting.state.status, function, path, fake_common_file_path_determine_real_s, fll_error_file_type_file_e);
+      fake_print_error_file(setting, print, function, path, fake_common_file_path_determine_real_s, fll_error_file_type_file_e);
     }
 
     return F_none;
@@ -521,7 +521,7 @@ extern "C" {
     if (!setting) return F_status_set_error(F_output_not);
     if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
 
-    if (data->setting.state.status == F_array_too_large) {
+    if (setting->state.status == F_array_too_large) {
       f_file_stream_lock(print.to);
 
       fl_print_format("%[%QMaximum stack size reached while processing path '%]", print.to, print.context, print.prefix, print.context);
@@ -554,7 +554,7 @@ extern "C" {
     f_array_length_t line = 1;
     f_state_t state = f_state_t_initialize;
 
-    f_fss_count_lines(state, buffer, operation_name.start, &line);
+    f_fss_count_lines(buffer, operation_name.start, &line, &setting->state);
 
     f_file_stream_lock(print.to);
 
@@ -583,7 +583,7 @@ extern "C" {
     f_array_length_t line = 1;
     f_state_t state = f_state_t_initialize;
 
-    f_fss_count_lines(state, buffer, operation_name.start, &line);
+    f_fss_count_lines(buffer, operation_name.start, &line, &setting->state);
 
     f_file_stream_lock(print.to);
 

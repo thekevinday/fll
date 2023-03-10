@@ -8,7 +8,7 @@ extern "C" {
   void fake_build_skeleton(fake_data_t * const data, fake_build_data_t * const data_build, const mode_t mode, const f_string_static_t file_stage) {
 
     if (!data || !data_build) return;
-    if (F_status_is_error(data->setting.state.status) || data->setting.state.status == F_child) return;
+    if (F_status_is_error(data->setting->state.status) || data->setting->state.status == F_child) return;
     if (f_file_exists(file_stage, F_true) == F_true) return;
 
     f_string_static_t path_headers = f_string_static_t_initialize;
@@ -68,7 +68,7 @@ extern "C" {
           if (fll_program_standard_signal_received(data->main)) {
             fll_program_print_signal_received(data->main->warning, data->setting->line_first, data->main->signal_received);
 
-            data->setting.state.status = F_status_set_error(F_interrupt);
+            data->setting->state.status = F_status_set_error(F_interrupt);
 
             return;
           }
@@ -76,40 +76,40 @@ extern "C" {
 
         directorys[i].string[j] = 0; // @fixme this is an error because static strings might be in use.
 
-        data->setting.state.status = f_directory_exists(directorys[i]);
+        data->setting->state.status = f_directory_exists(directorys[i]);
 
-        if (F_status_is_error(data->setting.state.status) || data->setting.state.status == F_false) {
+        if (F_status_is_error(data->setting->state.status) || data->setting->state.status == F_false) {
           directorys[i].string[j] = f_path_separator_s.string[0];
 
           break;
         }
 
-        if (data->setting.state.status == F_file_found_not) {
-          data->setting.state.status = f_directory_create(directorys[i], mode);
+        if (data->setting->state.status == F_file_found_not) {
+          data->setting->state.status = f_directory_create(directorys[i], mode);
 
           created = F_true;
         }
 
         directorys[i].string[j] = f_path_separator_s.string[0];
 
-        if (F_status_is_error(data->setting.state.status)) break;
+        if (F_status_is_error(data->setting->state.status)) break;
       } // for
 
-      if (F_status_is_fine(data->setting.state.status) && directorys[i].used && f_path_separator_s.used && directorys[i].string[directorys[i].used - 1] != f_path_separator_s.string[0]) {
-        data->setting.state.status = f_directory_exists(directorys[i]);
+      if (F_status_is_fine(data->setting->state.status) && directorys[i].used && f_path_separator_s.used && directorys[i].string[directorys[i].used - 1] != f_path_separator_s.string[0]) {
+        data->setting->state.status = f_directory_exists(directorys[i]);
 
-        if (F_status_is_error_not(data->setting.state.status)) {
-          if (data->setting.state.status == F_false) {
-            data->setting.state.status = f_directory_create(directorys[i], mode);
+        if (F_status_is_error_not(data->setting->state.status)) {
+          if (data->setting->state.status == F_false) {
+            data->setting->state.status = f_directory_create(directorys[i], mode);
 
             created = F_true;
           }
         }
       }
 
-      if (F_status_is_error(data->setting.state.status)) {
-        if (F_status_set_fine(data->setting.state.status) == F_file_found) {
-          data->setting.state.status = F_none;
+      if (F_status_is_error(setting->state.status)) {
+        if (F_status_set_fine(data->setting->state.status) == F_file_found) {
+          data->setting->state.status = F_none;
 
           continue;
         }
@@ -126,8 +126,8 @@ extern "C" {
 
     fake_build_touch(data, file_stage);
 
-    if (F_status_is_error_not(data->setting.state.status)) {
-      data->setting.state.status = F_none;
+    if (F_status_is_error_not(data->setting->state.status)) {
+      data->setting->state.status = F_none;
     }
   }
 #endif // _di_fake_build_skeleton_

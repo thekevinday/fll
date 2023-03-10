@@ -8,7 +8,7 @@ extern "C" {
   void fake_build_load_environment(fake_data_t * const data, fake_build_data_t * const data_build, f_string_maps_t * const environment) {
 
     if (!data || !data_build || !environment) return;
-    if (F_status_is_error(data->setting.state.status)) return;
+    if (F_status_is_error(data->setting->state.status)) return;
 
     // Reset the environment.
     for (f_array_length_t i = 0; i < environment->used; ++i) {
@@ -28,9 +28,9 @@ extern "C" {
 
       for (uint8_t i = 0; i < 2; ++i) {
 
-        data->setting.state.status = fl_environment_load_name(variables[i], environment);
+        data->setting->state.status = fl_environment_load_name(variables[i], environment);
 
-        if (F_status_is_error(data->setting.state.status)) {
+        if (F_status_is_error(setting->state.status)) {
           fake_print_error(data->setting, data->main->error, macro_fake_f(fl_environment_load_name));
 
           return;
@@ -52,19 +52,19 @@ extern "C" {
           f_file_stream_unlock(data->main->error.to);
         }
 
-        data->setting.state.status = F_status_set_error(F_array_too_large);
+        data->setting->state.status = F_status_set_error(F_array_too_large);
 
         return;
       }
     }
 
-    data->setting.state.status = fl_environment_load_names(data_build->setting.environment, environment);
+    data->setting->state.status = fl_environment_load_names(data_build->setting.environment, environment);
 
-    if (F_status_is_error(data->setting.state.status)) {
+    if (F_status_is_error(setting->state.status)) {
       fake_print_error(data->setting, data->main->error, macro_fake_f(fl_environment_load_names));
     }
     else {
-      data->setting.state.status = F_none;
+      data->setting->state.status = F_none;
     }
   }
 #endif // _di_fake_build_load_environment_
@@ -73,13 +73,13 @@ extern "C" {
   void fake_build_load_setting(fake_data_t * const data, const f_string_statics_t * const build_arguments, const bool process_pipe, fake_build_setting_t * const setting) {
 
     if (!data || !setting) return;
-    if (F_status_is_error(data->setting.state.status)) return;
+    if (F_status_is_error(data->setting->state.status)) return;
 
     if (!((++data->main->signal_check) % fake_signal_check_d)) {
       if (fll_program_standard_signal_received(data->main)) {
         fll_program_print_signal_received(data->main->warning, data->setting->line_first, data->main->signal_received);
 
-        data->setting.state.status = F_status_set_error(F_interrupt);
+        data->setting->state.status = F_status_set_error(F_interrupt);
 
         return;
       }
@@ -132,36 +132,36 @@ extern "C" {
       if (process_pipe) {
         fake_pipe_buffer(data, &buffer);
 
-        if (F_status_is_error(data->setting.state.status)) {
+        if (F_status_is_error(setting->state.status)) {
           buffer.used = 0;
         }
         else {
-          data->setting.state.status = f_string_dynamic_append_assure(f_string_eol_s, &buffer);
+          data->setting->state.status = f_string_dynamic_append_assure(f_string_eol_s, &buffer);
         }
       }
 
-      if (F_status_is_error_not(data->setting.state.status)) {
+      if (F_status_is_error_not(data->setting->state.status)) {
         if (build_arguments && build_arguments->used || !process_pipe || (data->setting->flag & fake_main_flag_operation_e)) {
           fake_file_buffer(data, path_file, process_pipe ? F_false : F_true, &buffer);
         }
       }
 
-      if (F_status_is_error_not(data->setting.state.status)) {
+      if (F_status_is_error_not(data->setting->state.status)) {
         f_string_range_t range = macro_f_string_range_t_initialize2(buffer.used);
         f_fss_delimits_t delimits = f_fss_delimits_t_initialize;
 
-        // @todo make sure data->setting.state.custom = (void *) data->main;
+        // @todo make sure data->setting->state.custom = (void *) data->main;
         //f_state_t state = macro_f_state_t_initialize_1(fake_allocation_large_d, fake_allocation_small_d, F_none, 0, 0, &fll_program_standard_signal_handle, 0, (void *) data->main, 0);
 
-        data->setting.state.status = fll_fss_extended_read(buffer, &range, &objects, &contents, 0, 0, &delimits, 0, &data->setting.state);
+        data->setting->state.status = fll_fss_extended_read(buffer, &range, &objects, &contents, 0, 0, &delimits, 0, &data->setting.state);
 
-        if (F_status_is_error(data->setting.state.status)) {
+        if (F_status_is_error(setting->state.status)) {
           fake_print_error_fss(data->setting, data->main->error, macro_fake_f(fll_fss_extended_read), data->file_data_build_settings, range, F_true);
         }
         else {
-          data->setting.state.status = f_fss_apply_delimit(state, delimits, &buffer);
+          data->setting->state.status = f_fss_apply_delimit(state, delimits, &buffer);
 
-          if (F_status_is_error(data->setting.state.status)) {
+          if (F_status_is_error(setting->state.status)) {
             fake_print_error(data->setting, data->main->error, macro_fake_f(f_fss_apply_delimit));
           }
           else {
@@ -179,7 +179,7 @@ extern "C" {
     }
 
     // Error when required settings are not specified.
-    if (F_status_is_error_not(data->setting.state.status)) {
+    if (F_status_is_error_not(data->setting->state.status)) {
       bool failed = F_false;
 
       f_string_static_t * const settings[] = {
@@ -200,12 +200,12 @@ extern "C" {
       } // for
 
       if (failed) {
-        data->setting.state.status = F_status_set_error(F_failure);
+        data->setting->state.status = F_status_set_error(F_failure);
 
         return;
       }
 
-      data->setting.state.status = F_none;
+      data->setting->state.status = F_none;
     }
 
     fake_build_load_setting_override(data, setting);
@@ -1334,13 +1334,13 @@ extern "C" {
   void fake_build_load_stage(fake_data_t * const data, const f_string_static_t settings_file, fake_build_stage_t * const stage) {
 
     if (!data || !stage) return;
-    if (F_status_is_error(data->setting.state.status)) return;
+    if (F_status_is_error(data->setting->state.status)) return;
 
     if (!((++data->main->signal_check) % fake_signal_check_d)) {
       if (fll_program_standard_signal_received(data->main)) {
         fll_program_print_signal_received(data->main->warning, data->setting->line_first, data->main->signal_received);
 
-        data->setting.state.status = F_status_set_error(F_interrupt);
+        data->setting->state.status = F_status_set_error(F_interrupt);
 
         return;
       }
@@ -1386,18 +1386,18 @@ extern "C" {
       &stage->file_sources_settings,
     };
 
-    data->setting.state.status = F_none;
+    data->setting->state.status = F_none;
 
     f_string_dynamic_t settings_file_base = f_string_dynamic_t_initialize;
 
     if (settings_file.used) {
-      data->setting.state.status = f_file_name_base(settings_file, &settings_file_base);
+      data->setting->state.status = f_file_name_base(settings_file, &settings_file_base);
     }
     else {
-      data->setting.state.status = f_file_name_base(data->file_data_build_settings, &settings_file_base);
+      data->setting->state.status = f_file_name_base(data->file_data_build_settings, &settings_file_base);
     }
 
-    if (F_status_is_error(data->setting.state.status)) {
+    if (F_status_is_error(setting->state.status)) {
       fake_print_error(data->setting, data->main->error, macro_fake_f(f_file_name_base));
 
       return;
@@ -1405,33 +1405,33 @@ extern "C" {
 
     for (uint8_t i = 0; i < fake_build_stage_total_d; ++i) {
 
-      data->setting.state.status = f_string_dynamic_append_nulless(data->path_build_stage, values[i]);
+      data->setting->state.status = f_string_dynamic_append_nulless(data->path_build_stage, values[i]);
 
-      if (F_status_is_error_not(data->setting.state.status) && data->setting->process.used) {
-        data->setting.state.status = f_string_dynamic_append_nulless(data->setting->process, values[i]);
+      if (F_status_is_error_not(data->setting->state.status) && data->setting->process.used) {
+        data->setting->state.status = f_string_dynamic_append_nulless(data->setting->process, values[i]);
       }
 
-      if (F_status_is_error_not(data->setting.state.status)) {
-        data->setting.state.status = f_string_dynamic_append_nulless(fake_build_stage_separate_s, values[i]);
+      if (F_status_is_error_not(data->setting->state.status)) {
+        data->setting->state.status = f_string_dynamic_append_nulless(fake_build_stage_separate_s, values[i]);
       }
 
-      if (F_status_is_error_not(data->setting.state.status)) {
-        data->setting.state.status = f_string_dynamic_append_nulless(names[i], values[i]);
+      if (F_status_is_error_not(data->setting->state.status)) {
+        data->setting->state.status = f_string_dynamic_append_nulless(names[i], values[i]);
       }
 
-      if (F_status_is_error_not(data->setting.state.status)) {
-        data->setting.state.status = f_string_dynamic_append_nulless(fake_build_stage_separate_s, values[i]);
+      if (F_status_is_error_not(data->setting->state.status)) {
+        data->setting->state.status = f_string_dynamic_append_nulless(fake_build_stage_separate_s, values[i]);
       }
 
-      if (F_status_is_error_not(data->setting.state.status)) {
-        data->setting.state.status = f_string_dynamic_append_nulless(settings_file_base, values[i]);
+      if (F_status_is_error_not(data->setting->state.status)) {
+        data->setting->state.status = f_string_dynamic_append_nulless(settings_file_base, values[i]);
       }
 
-      if (F_status_is_error_not(data->setting.state.status)) {
-        data->setting.state.status = f_string_dynamic_append_nulless(fake_build_stage_built_s, values[i]);
+      if (F_status_is_error_not(data->setting->state.status)) {
+        data->setting->state.status = f_string_dynamic_append_nulless(fake_build_stage_built_s, values[i]);
       }
 
-      if (F_status_is_error(data->setting.state.status)) {
+      if (F_status_is_error(setting->state.status)) {
         fake_print_error(data->setting, data->main->error, macro_fake_f(f_string_dynamic_append_nulless));
 
         break;

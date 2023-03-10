@@ -24,6 +24,35 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
+ *
+ *   This alters data_make.setting.status:
+ *     F_none on success.
+ *
+ *     F_parameter (with error bit) on invalid parameter.
+ *
+ *     Errors (with error bit) from: fake_make_operate_validate_type_break()
+ *     Errors (with error bit) from: fake_make_operate_validate_type_build()
+ *     Errors (with error bit) from: fake_make_operate_validate_type_clean_top_skeleton()
+ *     Errors (with error bit) from: fake_make_operate_validate_type_clone()
+ *     Errors (with error bit) from: fake_make_operate_validate_type_compile()
+ *     Errors (with error bit) from: fake_make_operate_validate_type_copy()
+ *     Errors (with error bit) from: fake_make_operate_validate_type_define()
+ *     Errors (with error bit) from: fake_make_operate_validate_type_delete()
+ *     Errors (with error bit) from: fake_make_operate_validate_type_else()
+ *     Errors (with error bit) from: fake_make_operate_validate_type_exit()
+ *     Errors (with error bit) from: fake_make_operate_validate_type_exit()
+ *     Errors (with error bit) from: fake_make_operate_validate_type_permission()
+ *     Errors (with error bit) from: fake_make_operate_validate_type_condition()
+ *     Errors (with error bit) from: fake_make_operate_validate_type_index()
+ *     Errors (with error bit) from: fake_make_operate_validate_type_link()
+ *     Errors (with error bit) from: fake_make_operate_validate_type_move()
+ *     Errors (with error bit) from: fake_make_operate_validate_type_operate()
+ *     Errors (with error bit) from: fake_make_operate_validate_type_run()
+ *     Errors (with error bit) from: fake_make_operate_validate_type_parameter()
+ *     Errors (with error bit) from: fake_make_operate_validate_type_pop()
+ *     Errors (with error bit) from: fake_make_operate_validate_type_to()
+ *     Errors (with error bit) from: fake_make_operate_validate_type_touch()
+ *     Errors (with error bit) from: fake_make_operate_validate_type_write()
  * @param section_name
  *   The section name.
  * @param state_process
@@ -31,13 +60,33 @@ extern "C" {
  *   This condition will be updated by this as appropriate.
  * @param section_stack
  *   The current operation stack.
- * @param status
- *   The return status.
  *
- *   Status codes (with error bit) are returned on any problem.
+ * @see fake_make_operate_validate_type_break()
+ * @see fake_make_operate_validate_type_build()
+ * @see fake_make_operate_validate_type_clean_top_skeleton()
+ * @see fake_make_operate_validate_type_clone()
+ * @see fake_make_operate_validate_type_compile()
+ * @see fake_make_operate_validate_type_copy()
+ * @see fake_make_operate_validate_type_define()
+ * @see fake_make_operate_validate_type_delete()
+ * @see fake_make_operate_validate_type_else()
+ * @see fake_make_operate_validate_type_exit()
+ * @see fake_make_operate_validate_type_exit()
+ * @see fake_make_operate_validate_type_permission()
+ * @see fake_make_operate_validate_type_condition()
+ * @see fake_make_operate_validate_type_index()
+ * @see fake_make_operate_validate_type_link()
+ * @see fake_make_operate_validate_type_move()
+ * @see fake_make_operate_validate_type_operate()
+ * @see fake_make_operate_validate_type_run()
+ * @see fake_make_operate_validate_type_parameter()
+ * @see fake_make_operate_validate_type_pop()
+ * @see fake_make_operate_validate_type_to()
+ * @see fake_make_operate_validate_type_touch()
+ * @see fake_make_operate_validate_type_write()
  */
 #ifndef _di_fake_make_operate_validate_
-  extern void fake_make_operate_validate(fake_make_data_t * const data_make, const f_string_range_t section_name, fake_state_process_t * const state_process, f_array_lengths_t * const section_stack, f_status_t * const status);
+  extern void fake_make_operate_validate(fake_make_data_t * const data_make, const f_string_range_t section_name, fake_state_process_t * const state_process, f_array_lengths_t * const section_stack);
 #endif // _di_fake_make_operate_validate_
 
 /**
@@ -51,9 +100,12 @@ extern "C" {
  *   The variable name string to validate.
  *
  * @return
+ *   F_none if there is no string to validate (used = 0).
  *   F_true on valid.
  *   F_false on invalid.
- *   F_none if there is no string to validate (used = 0).
+ *
+ * @see isalpha()
+ * @see isalnum()
  */
 #ifndef _di_fake_make_operate_validate_define_name_
   extern f_status_t fake_make_operate_validate_define_name(const f_string_static_t name);

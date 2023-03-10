@@ -8,7 +8,7 @@ extern "C" {
   int fake_make_operate_process(fake_make_data_t * const data_make, const f_string_range_t section_name, fake_state_process_t * const state_process, f_array_lengths_t * const section_stack) {
 
     if (!data_make || !state_process || !section_stack) return 0;
-    if (data->setting.state.status == F_child) return data_make->data->main->child;
+    if (data->setting->state.status == F_child) return data_make->data->main->child;
 
     if (state_process->operation == fake_make_operation_type_break_e) {
       fake_make_operate_process_type_break(data_make);
