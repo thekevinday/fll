@@ -720,8 +720,9 @@ extern "C" {
     if (data_make->cache_arguments.used > 1) {
       f_status_t status = F_none;
       f_status_t status_file = F_none;
+      f_array_length_t i = 0;
 
-      for (f_array_length_t i = 0; i < data_make->cache_arguments.used; ++i) {
+      for (; i < data_make->cache_arguments.used; ++i) {
 
         status_file = fake_make_assure_inside_project(data_make, data_make->cache_arguments.array[i]);
 
@@ -732,7 +733,7 @@ extern "C" {
         }
       } // for
 
-      for (f_array_length_t i = 0; i < data_make->cache_arguments.used - 1; ++i) {
+      for (i = 0; i < data_make->cache_arguments.used - 1; ++i) {
 
         if (f_file_exists(data_make->cache_arguments.array[i], F_true) != F_true) {
           if (data_make->error.verbosity != f_console_verbosity_quiet_e && data_make->error.to.stream) {
@@ -1446,7 +1447,7 @@ extern "C" {
 
             status = F_status_set_error(F_failure);
           }
-        }
+        } // for
 
         return status;
       }

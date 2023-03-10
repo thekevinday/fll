@@ -50,6 +50,9 @@ extern "C" {
  *   F_true on valid.
  *   F_false on invalid.
  *   F_none if there is no string to validate (used = 0).
+ *
+ * @see isalpha()
+ * @see isalnum()
  */
 #ifndef _di_fake_make_operate_validate_define_name_
   extern f_status_t fake_make_operate_validate_define_name(const f_string_static_t name) F_attribute_visibility_internal_d;
