@@ -34,6 +34,10 @@ extern "C" {
     }
     else if (*status != F_child) {
       *status = controller_entry_preprocess(*entry->global, F_true, cache);
+
+      if ((entry->global->main->parameters.array[controller_parameter_simulate_e].result & f_console_result_found_e) && (entry->global->main->parameters.array[controller_parameter_validate_e].result & f_console_result_found_e)) {
+        controller_entry_setting_validate(*entry->global, F_true, cache);
+      }
     }
 
     if (F_status_is_error_not(*status) && *status != F_child) {
@@ -171,6 +175,10 @@ extern "C" {
     }
     else if (*status != F_child) {
       *status = controller_entry_preprocess(*entry->global, F_false, cache);
+
+      if ((entry->global->main->parameters.array[controller_parameter_simulate_e].result & f_console_result_found_e) && (entry->global->main->parameters.array[controller_parameter_validate_e].result & f_console_result_found_e)) {
+        controller_entry_setting_validate(*entry->global, F_false, cache);
+      }
     }
 
     if (F_status_is_error_not(*status) && *status != F_child && *status != F_file_found_not) {
