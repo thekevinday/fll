@@ -171,7 +171,7 @@ extern "C" {
     fl_print_format("%[%Q%]", global.main->error.to, global.main->error.notable, cache.action.name_action, global.main->error.notable);
     fl_print_format("%[' requires at least %]", global.main->error.to, global.main->error.context, global.main->error.context);
     fl_print_format("%[%un%]", global.main->error.to, global.main->error.notable, minimum, global.main->error.notable);
-    fl_print_format("%[' and at most %]", global.main->error.to, global.main->error.context, global.main->error.context);
+    fl_print_format("%[ and at most %]", global.main->error.to, global.main->error.context, global.main->error.context);
     fl_print_format("%[%un%]", global.main->error.to, global.main->error.notable, maximum, global.main->error.notable);
     fl_print_format("%[ Content.%]%r", global.main->error.to, global.main->error.context, global.main->error.context, f_string_eol_s);
 
