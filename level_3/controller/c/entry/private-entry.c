@@ -1931,10 +1931,40 @@ extern "C" {
       }
 
       if (is_entry && fl_string_dynamic_compare(controller_control_s, cache->action.name_action) == F_equal_to) {
-        if (cache->content_actions.array[i].used != 1) {
-          controller_entry_settings_read_print_setting_requires_exactly(global, is_entry, *cache, 1);
+        if (cache->content_actions.array[i].used < 1 || cache->content_actions.array[i].used > 2) {
+          controller_entry_settings_read_print_setting_requires_between(global, is_entry, *cache, 1, 2);
 
           continue;
+        }
+
+        if (cache->content_actions.array[i].used == 2) {
+          if (fl_string_dynamic_partial_compare_string(controller_readonly_s.string, cache->buffer_file, controller_readonly_s.used, cache->content_actions.array[i].array[1]) == F_equal_to) {
+            global.setting->control.flag |= controller_control_flag_readonly_e;
+          }
+          else {
+            if (global.main->error.verbosity > f_console_verbosity_quiet_e) {
+              controller_lock_print(global.main->error.to, global.thread);
+
+              fl_print_format("%r%[%QThe %r item setting '%]", global.main->error.to, f_string_eol_s, global.main->error.context, global.main->error.prefix, is_entry ? controller_entry_s : controller_exit_s, global.main->error.context);
+              fl_print_format("%[%Q%]", global.main->error.to, global.main->error.notable, controller_control_s, global.main->error.notable);
+              fl_print_format("%[' does not support the option '%]", global.main->error.to, global.main->error.context, global.main->error.context, f_string_eol_s);
+
+              fl_print_format("%[%/Q%]", global.main->error.to, global.main->error.notable, cache->buffer_file, cache->content_actions.array[i].array[1], global.main->error.notable);
+
+              fl_print_format("%['.%]%r", global.main->error.to, global.main->error.context, global.main->error.context, f_string_eol_s);
+
+              controller_entry_print_error_cache(is_entry, global.main->error, cache->action);
+
+              controller_unlock_print_flush(global.main->error.to, global.thread);
+
+              continue;
+            }
+          }
+        }
+        else {
+          if (global.setting->control.flag & controller_control_flag_readonly_e) {
+            global.setting->control.flag -= controller_control_flag_readonly_e;
+          }
         }
 
         cache->action.generic.used = 0;
@@ -1948,12 +1978,12 @@ extern "C" {
           break;
         }
 
+        global.setting->path_control.used = 0;
+
         status = controller_path_canonical_relative(global.setting, cache->action.generic, &global.setting->path_control);
 
         if (F_status_is_error(status)) {
           controller_entry_print_error_file(is_entry, global.main->error, cache->action, F_status_set_fine(status), "controller_path_canonical_relative", F_true, cache->action.generic, f_file_operation_analyze_s, fll_error_file_type_path_e, global.thread);
-
-          global.setting->path_control.used = 0;
 
           continue;
         }
@@ -2433,6 +2463,12 @@ extern "C" {
     if (global.setting->path_control.used) {
       fl_print_format(" %Q", global.main->output.to.stream, global.setting->path_control);
     }
+
+    fl_print_format("%r", global.main->output.to.stream, f_string_eol_s);
+
+
+    // Control Has.
+    fl_print_format("  %[%r%]", global.main->output.to.stream, global.main->context.set.important, controller_control_has_s, global.main->context.set.important);
 
     if (global.setting->control.flag & controller_control_flag_readonly_e) {
       fl_print_format(" %r", global.main->output.to.stream, controller_readonly_s);

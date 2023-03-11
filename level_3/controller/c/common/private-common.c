@@ -20,6 +20,7 @@ extern "C" {
   const f_string_static_t controller_consider_s = macro_f_string_static_t_initialize(CONTROLLER_consider_s, 0, CONTROLLER_consider_s_length);
   const f_string_static_t controller_control_s = macro_f_string_static_t_initialize(CONTROLLER_control_s, 0, CONTROLLER_control_s_length);
   const f_string_static_t controller_control_group_s = macro_f_string_static_t_initialize(CONTROLLER_control_group_s, 0, CONTROLLER_control_group_s_length);
+  const f_string_static_t controller_control_has_s = macro_f_string_static_t_initialize(CONTROLLER_control_has_s, 0, CONTROLLER_control_has_s_length);
   const f_string_static_t controller_control_mode_s = macro_f_string_static_t_initialize(CONTROLLER_control_mode_s, 0, CONTROLLER_control_mode_s_length);
   const f_string_static_t controller_control_user_s = macro_f_string_static_t_initialize(CONTROLLER_control_user_s, 0, CONTROLLER_control_user_s_length);
   const f_string_static_t controller_controller_s = macro_f_string_static_t_initialize(CONTROLLER_controller_s, 0, CONTROLLER_controller_s_length);
