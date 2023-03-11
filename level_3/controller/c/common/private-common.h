@@ -44,6 +44,7 @@ extern "C" {
   #define CONTROLLER_consider_s      "consider"
   #define CONTROLLER_control_s       "control"
   #define CONTROLLER_control_group_s "control_group"
+  #define CONTROLLER_control_has_s   "control_has"
   #define CONTROLLER_control_mode_s  "control_mode"
   #define CONTROLLER_control_user_s  "control_user"
   #define CONTROLLER_controller_s    "controller"
@@ -180,6 +181,7 @@ extern "C" {
   #define CONTROLLER_consider_s_length      8
   #define CONTROLLER_control_s_length       7
   #define CONTROLLER_control_group_s_length 13
+  #define CONTROLLER_control_has_s_length   11
   #define CONTROLLER_control_mode_s_length  12
   #define CONTROLLER_control_user_s_length  12
   #define CONTROLLER_controller_s_length    10
@@ -316,6 +318,7 @@ extern "C" {
   extern const f_string_static_t controller_consider_s;
   extern const f_string_static_t controller_control_s;
   extern const f_string_static_t controller_control_group_s;
+  extern const f_string_static_t controller_control_has_s;
   extern const f_string_static_t controller_control_mode_s;
   extern const f_string_static_t controller_control_user_s;
   extern const f_string_static_t controller_controller_s;
