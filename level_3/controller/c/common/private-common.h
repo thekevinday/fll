@@ -54,6 +54,7 @@ extern "C" {
   #define CONTROLLER_default_s       "default"
   #define CONTROLLER_define_s        "define"
   #define CONTROLLER_delay_s         "delay"
+  #define CONTROLLER_directory_s     "directory"
   #define CONTROLLER_disable_s       "disable"
   #define CONTROLLER_engine_s        "engine"
   #define CONTROLLER_entry_s         "entry"
@@ -68,6 +69,7 @@ extern "C" {
   #define CONTROLLER_failsafe_s      "failsafe"
   #define CONTROLLER_failure_s       "failure"
   #define CONTROLLER_fifo_s          "fifo"
+  #define CONTROLLER_file_s          "file"
   #define CONTROLLER_freeze_s        "freeze"
   #define CONTROLLER_fsize_s         "fsize"
   #define CONTROLLER_full_path_s     "full_path"
@@ -110,6 +112,7 @@ extern "C" {
   #define CONTROLLER_pid_file_s      "pid_file"
   #define CONTROLLER_processor_s     "processor"
   #define CONTROLLER_program_s       "program"
+  #define CONTROLLER_readonly_s      "readonly"
   #define CONTROLLER_ready_s         "ready"
   #define CONTROLLER_reboot_s        "reboot"
   #define CONTROLLER_reload_s        "reload"
@@ -186,6 +189,7 @@ extern "C" {
   #define CONTROLLER_default_s_length       7
   #define CONTROLLER_define_s_length        6
   #define CONTROLLER_delay_s_length         5
+  #define CONTROLLER_directory_s_length     9
   #define CONTROLLER_disable_s_length       7
   #define CONTROLLER_engine_s_length        6
   #define CONTROLLER_entry_s_length         5
@@ -200,6 +204,7 @@ extern "C" {
   #define CONTROLLER_failure_s_length       7
   #define CONTROLLER_failsafe_s_length      8
   #define CONTROLLER_fifo_s_length          4
+  #define CONTROLLER_file_s_length          4
   #define CONTROLLER_freeze_s_length        6
   #define CONTROLLER_fsize_s_length         5
   #define CONTROLLER_full_path_s_length     9
@@ -242,6 +247,7 @@ extern "C" {
   #define CONTROLLER_pid_file_s_length      8
   #define CONTROLLER_processor_s_length     9
   #define CONTROLLER_program_s_length       7
+  #define CONTROLLER_readonly_s_length      8
   #define CONTROLLER_ready_s_length         5
   #define CONTROLLER_reboot_s_length        6
   #define CONTROLLER_reload_s_length        6
@@ -290,6 +296,7 @@ extern "C" {
 
   #define CONTROLLER_Entry_s_length 5
   #define CONTROLLER_Exit_s_length  4
+  #define CONTROLLER_Item_s_length  4
 
   #define CONTROLLER_parameter_map_option_s_length 7
   #define CONTROLLER_parameter_map_value_s_length  6
@@ -318,6 +325,7 @@ extern "C" {
   extern const f_string_static_t controller_default_s;
   extern const f_string_static_t controller_define_s;
   extern const f_string_static_t controller_delay_s;
+  extern const f_string_static_t controller_directory_s;
   extern const f_string_static_t controller_disable_s;
   extern const f_string_static_t controller_engine_s;
   extern const f_string_static_t controller_entry_s;
@@ -332,6 +340,7 @@ extern "C" {
   extern const f_string_static_t controller_failsafe_s;
   extern const f_string_static_t controller_failure_s;
   extern const f_string_static_t controller_fifo_s;
+  extern const f_string_static_t controller_file_s;
   extern const f_string_static_t controller_freeze_s;
   extern const f_string_static_t controller_fsize_s;
   extern const f_string_static_t controller_full_path_s;
@@ -374,6 +383,7 @@ extern "C" {
   extern const f_string_static_t controller_pid_file_s;
   extern const f_string_static_t controller_processor_s;
   extern const f_string_static_t controller_program_s;
+  extern const f_string_static_t controller_readonly_s;
   extern const f_string_static_t controller_ready_s;
   extern const f_string_static_t controller_reboot_s;
   extern const f_string_static_t controller_reload_s;
@@ -422,6 +432,7 @@ extern "C" {
 
   extern const f_string_static_t controller_Entry_s;
   extern const f_string_static_t controller_Exit_s;
+  extern const f_string_static_t controller_Item_s;
 
   extern const f_string_static_t controller_parameter_map_option_s;
   extern const f_string_static_t controller_parameter_map_value_s;

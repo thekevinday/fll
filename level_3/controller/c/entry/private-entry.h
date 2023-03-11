@@ -234,6 +234,23 @@ extern "C" {
   f_status_t controller_entry_settings_read_map(const f_string_static_t buffer, const f_string_ranges_t ranges, f_string_maps_t *setting_maps) F_attribute_visibility_internal_d;
 #endif // _di_controller_entry_settings_read_map_
 
+/**
+ * Perform a simulated execution of the given entry.
+ *
+ * This simply prints information about the entry.
+ *
+ * @param global
+ *   The global data.
+ * @param is_entry
+ *   If TRUE, then this is an entry.
+ *   If FALSE, then this is an exit.
+ * @param cache
+ *   A structure for containing and caching relevant data.
+ */
+#ifndef _di_controller_entry_setting_validate_
+  extern void controller_entry_setting_validate(const controller_global_t global, const bool is_entry, controller_cache_t * const cache) F_attribute_visibility_internal_d;
+#endif // _di_controller_entry_setting_validate_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif
