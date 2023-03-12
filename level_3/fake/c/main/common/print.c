@@ -67,7 +67,6 @@ extern "C" {
     "f_uint8s_increase_by",
     "f_utf_is_word_dash_plus",
     "fl_conversion_dynamic_to_unsigned_detect",
-    "fl_directory_clone",
     "fl_directory_copy",
     "fl_directory_create",
     "fl_environment_load_name",

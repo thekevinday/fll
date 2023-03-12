@@ -107,7 +107,7 @@ extern "C" {
         }
       }
 
-      if (F_status_is_error(setting->state.status)) {
+      if (F_status_is_error(data->setting->state.status)) {
         if (F_status_set_fine(data->setting->state.status) == F_file_found) {
           data->setting->state.status = F_none;
 

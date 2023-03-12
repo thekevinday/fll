@@ -19,53 +19,47 @@ extern "C" {
 /**
  * Helper function for performing a verbose print for a file clone operation.
  *
- * @param setting
- *   The main program settings.
+ * This is intended to be passed as a callback to f_directory_recurse_t.verbose.
+ * The f_directory_recurse_t.state.custom must be the fake_data_t.
  *
- *   This does not alter setting.state.status.
- * @param print
- *   Designates the how and where to print.
  * @param source
  *   The source string.
  * @param destination
  *   The destination string.
+ * @param recurse
+ *   The recurse.state.custom must be a structure of type fake_data_t.
  *
- * @return
- *   F_none on success.
- *   F_output_not on success, but no printing is performed.
+ *   This alters recurse.state.status:
+ *     F_none on success.
+ *     F_output_not on success, but no printing is performed.
  *
- *   F_output_not (with error bit) if setting is NULL.
- *
- * @see fake_print_wrapped_variables()
+ * @see fll_print_format()
  */
 #ifndef _di_fake_print_verbose_clone_
-  extern f_status_t fake_print_verbose_clone(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t source, const f_string_static_t destination);
+  extern void fake_print_verbose_clone(const f_string_static_t source, const f_string_static_t destination, void * const recurse);
 #endif // _di_fake_print_verbose_clone_
 
 /**
  * Helper function for performing a verbose print for a file copy operation.
  *
- * @param setting
- *   The main program settings.
+ * This is intended to be passed as a callback to f_directory_recurse_t.verbose.
+ * The f_directory_recurse_t.state.custom must be the fake_data_t.
  *
- *   This does not alter setting.state.status.
- * @param print
- *   Designates the how and where to print.
  * @param source
  *   The source string.
  * @param destination
  *   The destination string.
+ * @param recurse
+ *   The recurse.state.custom must be a structure of type fake_data_t.
  *
- * @return
- *   F_none on success.
- *   F_output_not on success, but no printing is performed.
- *
- *   F_output_not (with error bit) if setting is NULL.
+ *   This alters recurse.state.status:
+ *     F_none on success.
+ *     F_output_not on success, but no printing is performed.
  *
  * @see fll_print_format()
  */
 #ifndef _di_fake_print_verbose_copy_
-  extern f_status_t fake_print_verbose_copy(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t source, const f_string_static_t destination);
+  extern void fake_print_verbose_copy(const f_string_static_t source, const f_string_static_t destination, void * const recurse);
 #endif // _di_fake_print_verbose_copy_
 
 /**
@@ -239,27 +233,24 @@ extern "C" {
 /**
 * Print a verbose message for when a file is moved.
  *
- * @param setting
- *   The main program settings.
+ * This is intended to be passed as a callback to f_directory_recurse_t.verbose.
+ * The f_directory_recurse_t.state.custom must be the fake_data_t.
  *
- *   This does not alter setting.state.status.
- * @param print
- *   Designates the how and where to print.
  * @param source
  *   The source string.
  * @param destination
  *   The destination string.
+ * @param recurse
+ *   The recurse.state.custom must be a structure of type fake_data_t.
  *
- * @return
- *   F_none on success.
- *   F_output_not on success, but no printing is performed.
- *
- *   F_output_not (with error bit) if setting is NULL.
+ *   This alters recurse.state.status:
+ *     F_none on success.
+ *     F_output_not on success, but no printing is performed.
  *
  * @see fll_print_format()
  */
 #ifndef _di_fake_print_verbose_move_
-  extern f_status_t fake_print_verbose_move(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t source, const f_string_static_t destination);
+  extern void fake_print_verbose_move(const f_string_static_t source, const f_string_static_t destination, void * const recurse);
 #endif // _di_fake_print_verbose_move_
 
 #ifdef __cplusplus

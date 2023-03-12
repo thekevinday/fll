@@ -66,7 +66,7 @@ extern "C" {
  *   F_array_too_large (with error bit) if a buffer would exceed max length.
  *   F_failure (with error bit) for any other failure, failures might be populated with individual status codes.
  *
- * @see fl_directory_clone()
+ * @see fl_directory_copy()
  */
 #if !defined(_di_fl_directory_copy_)
   extern void private_fl_directory_copy_recurse_file(const f_string_static_t file, f_directory_recurse_t * const recurse) F_attribute_visibility_internal_d;

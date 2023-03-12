@@ -183,7 +183,6 @@ extern "C" {
     0, \
     0, \
     0, \
-    0, \
   }
 
   #define macro_f_directory_recurse_t_initialize_1(max_depth, size_block, flag, depth, mode, state, listing, source, source_top, destination, destination_top, verbose) { \
@@ -209,7 +208,6 @@ extern "C" {
     mode, \
     state, \
     f_directory_listing_t_initialize, \
-    0, \
     0, \
     0, \
     0, \

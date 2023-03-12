@@ -99,16 +99,25 @@ extern "C" {
  *
  *     F_failure (with error bit) on any error.
  *
- *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
- *
- *     Errors (with error bit) from: ()
+ *     Errors (with error bit) from: fake_make_operate_process_type_if_define()
+ *     Errors (with error bit) from: fake_make_operate_process_type_if_exist()
+ *     Errors (with error bit) from: fake_make_operate_process_type_if_greater_if_lesser()
+ *     Errors (with error bit) from: fake_make_operate_process_type_if_group()
+ *     Errors (with error bit) from: fake_make_operate_process_type_if_is()
+ *     Errors (with error bit) from: fake_make_operate_process_type_if_mode()
+ *     Errors (with error bit) from: fake_make_operate_process_type_if_owner()
+ *     Errors (with error bit) from: fake_make_operate_process_type_if_parameter()
  * @param state_process
  *   The operation and if-condition states.
  *
- * @return
- *   F_none on success.
- *
- *   F_failure (with error bit) on any error.
+ * @see fake_make_operate_process_type_if_define()
+ * @see fake_make_operate_process_type_if_exist()
+ * @see fake_make_operate_process_type_if_greater_if_lesser()
+ * @see fake_make_operate_process_type_if_group()
+ * @see fake_make_operate_process_type_if_is()
+ * @see fake_make_operate_process_type_if_mode()
+ * @see fake_make_operate_process_type_if_owner()
+ * @see fake_make_operate_process_type_if_parameter()
  */
 #ifndef _di_fake_make_operate_process_type_condition_
   extern void fake_make_operate_process_type_condition(fake_make_data_t * const data_make, fake_state_process_t * const state_process);
@@ -127,7 +136,11 @@ extern "C" {
  *
  *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
  *
- *     Errors (with error bit) from: ()
+ *     Errors (with error bit) from: f_directory_is()
+ *     Errors (with error bit) from: f_file_clone()
+ *     Errors (with error bit) from: f_file_copy()
+ *     Errors (with error bit) from: f_file_name_base()
+ *     Errors (with error bit) from: fl_directory_copy()
  * @param clone
  *   If TRUE, perform a copy that is a clone (preserved timestamps, roles, and permissions).
  *   If FALSE, perforrm a normaly copy without preserving properties.
@@ -136,7 +149,6 @@ extern "C" {
  * @see f_file_clone()
  * @see f_file_copy()
  * @see f_file_name_base()
- * @see fl_directory_clone()
  * @see fl_directory_copy()
  */
 #ifndef _di_fake_make_operate_process_type_copy_
@@ -152,14 +164,9 @@ extern "C" {
  *   This alters data_make.setting.state.status:
  *     F_none on success.
  *
- *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ *     Success from: f_environment_set().
  *
- *     Errors (with error bit) from: ()
- *
- * @return
- *   Success from: f_environment_set().
- *
- *   Errors (with error bit) from: f_environment_set().
+ *     Errors (with error bit) from: f_environment_set()
  *
  * @see f_environment_set()
  */
@@ -180,7 +187,10 @@ extern "C" {
  *
  *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
  *
- *     Errors (with error bit) from: ()
+ *     Errors (with error bit) from: f_file_remove()
+ *     Errors (with error bit) from: f_file_stat()
+ *     Errors (with error bit) from: f_directory_remove()
+ *     Errors (with error bit) from: f_directory_remove_custom()
  * @param all
  *   If TRUE, then if the path is a directory, then recursively apply to all paths within the directory.
  *   If FALSE, then only apply to the given path.
@@ -201,13 +211,11 @@ extern "C" {
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
  *   This alters data_make.setting.state.status:
- *     F_none on success.
+ *     F_none on unknown exit type (only success and failure are known).
+ *     F_signal_quit to designate exit on success.
  *
  *     F_failure (with error bit) on any error.
- *
- *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
- *
- *     Errors (with error bit) from: ()
+ *     F_signal_quit (with error bit) to designate exit on failure.
  *
  * @return
  *   F_none on unknown exit type (only success and failure are known).
@@ -226,14 +234,7 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
- *   This alters data_make.setting.state.status:
- *     F_none on success.
- *
- *     F_failure (with error bit) on any error.
- *
- *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
- *
- *     Errors (with error bit) from: ()
+ *   This does not alter data_make.setting.state.status.
  */
 #ifndef _di_fake_make_operate_process_type_fail_
   extern void fake_make_operate_process_type_fail(fake_make_data_t * const data_make);
@@ -250,17 +251,13 @@ extern "C" {
  *
  *     F_failure (with error bit) on any error.
  *
- *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
- *
- *     Errors (with error bit) from: ()
+ *     Errors (with error bit) from: f_file_role_change()
+ *     Errors (with error bit) from: fll_file_role_change_all()
+ *     Errors (with error bit) from: fake_make_assure_inside_project()
+ *     Errors (with error bit) from: fake_make_get_id()
  * @param all
  *   If TRUE, then if the path is a directory, then recursively apply to all paths within the directory.
  *   If FALSE, then only apply to the given path.
- *
- * @return
- *   F_none on success.
- *
- *   F_failure (with error bit) on any error.
  *
  * @see f_file_role_change()
  * @see fll_file_role_change_all()
@@ -282,10 +279,6 @@ extern "C" {
  *     F_none on success.
  *
  *     F_failure (with error bit) on any error.
- *
- *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
- *
- *     Errors (with error bit) from: ()
  * @param if_not
  *   When TRUE, perform the if not is.
  *   When FALSE, perform the if is.
@@ -307,19 +300,12 @@ extern "C" {
  *
  *     F_failure (with error bit) on any error.
  *
- *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
- *
- *     Errors (with error bit) from: ()
+ *     Errors (with error bit) from: f_file_exists()
  * @param if_not
  *   When TRUE, perform the if not is.
  *   When FALSE, perform the if is.
  * @param state_process
  *   The operation process state.
- *
- * @return
- *   F_none on success.
- *
- *   F_failure (with error bit) on any error.
  *
  * @see f_file_exists()
  */
@@ -338,16 +324,9 @@ extern "C" {
  *
  *     F_failure (with error bit) on any error.
  *
- *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
- *
- *     Errors (with error bit) from: ()
+ *     Errors (with error bit) from: fl_conversion_dynamic_partial_to_unsigned_detect()
  * @param state_process
  *   The operation process state.
- *
- * @return
- *   F_none on success.
- *
- *   F_failure (with error bit) on any error.
  *
  * @see fl_conversion_dynamic_partial_to_unsigned_detect()
  */
@@ -366,19 +345,13 @@ extern "C" {
  *
  *     F_failure (with error bit) on any error.
  *
- *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
- *
- *     Errors (with error bit) from: ()
+ *     Errors (with error bit) from: f_file_group_read()
+ *     Errors (with error bit) from: fake_make_get_id()
  * @param if_not
  *   When TRUE, perform the if not is.
  *   When FALSE, perform the if is.
  * @param state_process
  *   The operation process state.
- *
- * @return
- *   F_none on success.
- *
- *   F_failure (with error bit) on any error.
  *
  * @see f_file_group_read()
  *
@@ -399,19 +372,12 @@ extern "C" {
  *
  *     F_failure (with error bit) on any error.
  *
- *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
- *
- *     Errors (with error bit) from: ()
+ *     Errors (with error bit) from: f_file_mode_read()
  * @param if_not
  *   When TRUE, perform the if not is.
  *   When FALSE, perform the if is.
  * @param state_process
  *   The operation process state.
- *
- * @return
- *   F_none on success.
- *
- *   F_failure (with error bit) on any error.
  *
  * @see f_file_mode_read()
  */
@@ -430,19 +396,14 @@ extern "C" {
  *
  *     F_failure (with error bit) on any error.
  *
- *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
- *
- *     Errors (with error bit) from: ()
+ *     Errors (with error bit) from: f_file_mode_read()
+ *     Errors (with error bit) from: f_file_mode_to_mode()
+ *     Errors (with error bit) from: fake_make_get_id_mode()
  * @param if_not
  *   When TRUE, perform the if not is.
  *   When FALSE, perform the if is.
  * @param state_process
  *   The operation process state.
- *
- * @return
- *   F_none on success.
- *
- *   F_failure (with error bit) on any error.
  *
  * @see f_file_mode_read()
  * @see f_file_mode_to_mode()
@@ -464,19 +425,13 @@ extern "C" {
  *
  *     F_failure (with error bit) on any error.
  *
- *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
- *
- *     Errors (with error bit) from: ()
+ *     Errors (with error bit) from: f_file_owner_read()
+ *     Errors (with error bit) from: fake_make_get_id()
  * @param if_not
  *   When TRUE, perform the if not is.
  *   When FALSE, perform the if is.
  * @param state_process
  *   The operation process state.
- *
- * @return
- *   F_none on success.
- *
- *   F_failure (with error bit) on any error.
  *
  * @see f_file_owner_read()
  *
@@ -496,10 +451,6 @@ extern "C" {
  *     F_none on success.
  *
  *     F_failure (with error bit) on any error.
- *
- *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
- *
- *     Errors (with error bit) from: ()
  * @param if_not
  *   When TRUE, perform the if not is.
  *   When FALSE, perform the if is.
@@ -521,15 +472,10 @@ extern "C" {
  *
  *     F_failure (with error bit) on any error.
  *
- *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ *     Success from: fake_make_operate_process_return().
  *
- *     Errors (with error bit) from: ()
- * @param status
- *   F_child on child process returning.
- *
- *   Success from: fake_make_operate_process_return().
- *
- *   Errors (with error bit) from: fake_make_operate_process_return().
+ *     Errors (with error bit) from: fake_execute()
+ *     Errors (with error bit) from: fake_make_operate_process_return()
  *
  * @return
  *   The return code of the index operation.
@@ -538,7 +484,7 @@ extern "C" {
  * @see fake_make_operate_process_return()
  */
 #ifndef _di_fake_make_operate_process_type_index_
-  extern int fake_make_operate_process_type_index(fake_make_data_t * const data_make, f_status_t * const status);
+  extern int fake_make_operate_process_type_index(fake_make_data_t * const data_make);
 #endif // _di_fake_make_operate_process_type_index_
 
 /**
@@ -552,14 +498,7 @@ extern "C" {
  *
  *     F_failure (with error bit) on any error.
  *
- *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
- *
- *     Errors (with error bit) from: ()
- *
- * @return
- *   F_none on success.
- *
- *   F_failure (with error bit) on any error.
+ *     Errors (with error bit) from: f_file_link()
  *
  * @see f_file_link()
  */
@@ -578,17 +517,14 @@ extern "C" {
  *
  *     F_failure (with error bit) on any error.
  *
- *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
- *
- *     Errors (with error bit) from: ()
+ *     Errors (with error bit) from: f_file_mode_determine()
+ *     Errors (with error bit) from: f_file_mode_read()
+ *     Errors (with error bit) from: f_file_mode_set()
+ *     Errors (with error bit) from: fll_file_mode_set_all()
+ *     Errors (with error bit) from: fake_make_get_id_mode()
  * @param all
  *   If TRUE, then if the path is a directory, then recursively apply to all paths within the directory.
  *   If FALSE, then only apply to the given path.
- *
- * @return
- *   F_none on success.
- *
- *   F_failure (with error bit) on any error.
  *
  * @see f_file_mode_determine()
  * @see f_file_mode_read()
@@ -612,14 +548,9 @@ extern "C" {
  *
  *     F_failure (with error bit) on any error.
  *
- *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
- *
- *     Errors (with error bit) from: ()
- *
- * @return
- *   F_none on success.
- *
- *   F_failure (with error bit) on any error.
+ *     Errors (with error bit) from: f_directory_is()
+ *     Errors (with error bit) from: f_file_name_base()
+ *     Errors (with error bit) from: fll_file_move()
  *
  * @see f_directory_is()
  * @see f_file_name_base()
@@ -640,17 +571,9 @@ extern "C" {
  *
  *     F_failure (with error bit) on any error.
  *
- *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
- *
- *     Errors (with error bit) from: ()
+ *     Errors (with error bit) from: fake_make_operate_section()
  * @param section_stack
  *   The current operation stack.
- * @param status
- *   The status code.
- *
- *   F_none on success.
- *
- *   F_failure (with error bit) on any error.
  *
  * @return
  *   The return code of the section operation.
@@ -658,7 +581,7 @@ extern "C" {
  * @see fake_make_operate_section()
  */
 #ifndef _di_fake_make_operate_process_type_operate_
-  extern int fake_make_operate_process_type_operate(fake_make_data_t * const data_make, f_array_lengths_t * const section_stack, f_status_t * const status);
+  extern int fake_make_operate_process_type_operate(fake_make_data_t * const data_make, f_array_lengths_t * const section_stack);
 #endif // _di_fake_make_operate_process_type_operate_
 
 /**
@@ -672,17 +595,13 @@ extern "C" {
  *
  *     F_failure (with error bit) on any error.
  *
- *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
- *
- *     Errors (with error bit) from: ()
+ *     Errors (with error bit) from: f_file_role_change()
+ *     Errors (with error bit) from: fll_file_role_change_all()
+ *     Errors (with error bit) from: fake_make_assure_inside_project()
+ *     Errors (with error bit) from: fake_make_get_id()
  * @param all
  *   If TRUE, then if the path is a directory, then recursively apply to all paths within the directory.
  *   If FALSE, then only apply to the given path.
- *
- * @return
- *   F_none on success.
- *
- *   F_failure (with error bit) on any error.
  *
  * @see f_file_role_change()
  * @see fll_file_role_change_all()
@@ -705,14 +624,9 @@ extern "C" {
  *
  *     F_failure (with error bit) on any error.
  *
- *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
- *
- *     Errors (with error bit) from: ()
- *
- * @return
- *   F_none on success.
- *
- *   F_failure (with error bit) on any error.
+ *     Errors (with error bit) from: f_string_dynamic_resize()
+ *     Errors (with error bit) from: f_string_dynamics_resize()
+ *     Errors (with error bit) from: f_string_map_multis_resize()
  *
  * @see f_string_dynamic_resize()
  * @see f_string_dynamics_resize()
@@ -738,12 +652,9 @@ extern "C" {
  *
  *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
  *
- *     Errors (with error bit) from: ()
- *
- * @return
- *   F_none on success.
- *
- *   F_failure (with error bit) on any error.
+ *     Errors (with error bit) from: f_path_change()
+ *     Errors (with error bit) from: f_string_dynamic_resize()
+ *     Errors (with error bit) from: fake_make_path_relative()
  *
  * @see f_path_change()
  * @see f_string_dynamic_resize()
@@ -766,20 +677,16 @@ extern "C" {
  *
  *     F_failure (with error bit) on any error.
  *
- *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
- *
- *     Errors (with error bit) from: ()
+ *     Errors (with error bit) from: f_string_dynamic_append()
+ *     Errors (with error bit) from: f_string_dynamic_increase_by()
+ *     Errors (with error bit) from: fake_make_operate_process_buffer_escape()
  * @param arguments
  *   The arguments for print operation.
  *
- * @return
- *   F_none on success.
- *
- *   F_failure (with error bit) on any error.
- *
- * @see fake_make_operate_process_buffer_escape()
  * @see f_string_dynamic_append()
  * @see f_string_dynamic_increase_by()
+ *
+ * @see fake_make_operate_process_buffer_escape()
  */
 #ifndef _di_fake_make_operate_process_type_print_
   extern void fake_make_operate_process_type_print(fake_make_data_t * const data_make);
@@ -798,14 +705,8 @@ extern "C" {
  *
  *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
  *
- *     Errors (with error bit) from: ()
- *
- * @return
- *   F_interrupt (with error bit) on interrupt.
- *
- *   Success from: fake_make_operate_process_return().
- *
- *   Errors (with error bit) from: fake_make_operate_process_return().
+ *     Errors (with error bit) from: fake_make_operate_process_return()
+ *     Errors (with error bit) from: fake_skeleton_operate()
  *
  * @see fake_make_operate_process_return()
  * @see fake_skeleton_operate()
@@ -822,8 +723,6 @@ extern "C" {
  *
  *   This alters data_make.setting.state.status:
  *     F_none on success.
- *
- *     F_failure (with error bit) on any error.
  *
  *     F_failure (with error bit) on any error.
  *
@@ -857,12 +756,8 @@ extern "C" {
  *
  *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
  *
- *     Errors (with error bit) from: ()
- *
- * @return
- *   F_none on success.
- *
- *   F_failure (with error bit) on any error.
+ *     Errors (with error bit) from: f_path_change_at()
+ *     Errors (with error bit) from: f_string_dynamic_resize()
  *
  * @see f_path_change_at()
  * @see f_string_dynamic_resize()
@@ -884,12 +779,8 @@ extern "C" {
  *
  *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
  *
- *     Errors (with error bit) from: ()
- *
- * @return
- *   F_none on success.
- *
- *   F_failure (with error bit) on any error.
+ *     Errors (with error bit) from: f_directory_touch()
+ *     Errors (with error bit) from: f_file_touch()
  *
  * @see f_directory_touch()
  * @see f_file_touch()
@@ -912,12 +803,9 @@ extern "C" {
  *
  *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
  *
- *     Errors (with error bit) from: ()
- *
- * @return
- *   F_none on success.
- *
- *   F_failure (with error bit) on any error.
+ *     Errors (with error bit) from: f_file_exists()
+ *     Errors (with error bit) from: f_file_stream_open()
+ *     Errors (with error bit) from: f_file_stream_write()
  *
  * @see f_file_exists()
  * @see f_file_stream_open()

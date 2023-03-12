@@ -23,22 +23,21 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
+ *
+ *   This alters data_make.settings.state.status:
+ *     F_none on success.
+ *
+ *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ *
+ *     Errors (with error bit) from: fake_build_load_setting().
  * @param process_pipe
  *   If TRUE, then use the program input pipe.
  *   If FALSE, then ignore the program input pipe.
- * @param status
- *   The return status.
- *
- *   F_none on success.
- *
- *   F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
- *
- *   Status codes (with error bit) are returned on any problem.
  *
  * @see fake_build_load_setting()
  */
 #ifndef _di_fake_make_load_fakefile_
-  extern void fake_make_load_fakefile(fake_make_data_t * const data_make, const bool process_pipe, f_status_t * const status);
+  extern void fake_make_load_fakefile(fake_make_data_t * const data_make, const bool process_pipe);
 #endif // _di_fake_make_load_fakefile_
 
 /**
@@ -46,6 +45,8 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
+ *
+ *   This does not alter data_make.setting.state.status.
  * @param object
  *   The setting object.
  * @param content
@@ -60,6 +61,8 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
+ *
+ *   This does not alter data_make.setting.state.status.
  * @param object
  *   The setting object.
  * @param content
@@ -76,24 +79,24 @@ extern "C" {
  *
  * @param data
  *   The program data.
+ *
+ *   This alters data_make.setting.state.status:
+ *     F_none on success.
+ *
+ *     Errors (with error bit) from: f_environment_set().
+ *     Errors (with error bit) from: f_string_dynamic_mash_nulless().
+ *     Errors (with error bit) from: fll_fss_snatch_map_apart().
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  * @param settings
  *   The settings data.
- *
- * @return
- *   F_none on success.
- *
- *   Errors (with error bit) from: f_environment_set().
- *   Errors (with error bit) from: f_string_dynamic_mash_nulless().
- *   Errors (with error bit) from: fll_fss_snatch_map_apart().
  *
  * @see f_environment_set()
  * @see f_string_dynamic_mash_nulless()
  * @see fll_fss_snatch_map_apart()
  */
 #ifndef _di_fake_make_load_fakefile_setting_define_and_parameter_
-  extern f_status_t fake_make_load_fakefile_setting_define_and_parameter(fake_data_t * const data, fake_make_data_t * const data_make, f_fss_set_t * const settings);
+  extern void fake_make_load_fakefile_setting_define_and_parameter(fake_data_t * const data, fake_make_data_t * const data_make, f_fss_set_t * const settings);
 #endif // _di_fake_make_load_fakefile_setting_define_and_parameter_
 
 /**
@@ -101,22 +104,22 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
+ *
+ *   This alters data_make.setting.state.status:
+ *     F_none on success.
+ *
+ *     Errors (with error bit) from: f_string_dynamic_append().
+ *     Errors (with error bit) from: f_string_dynamic_partial_append_nulless().
+ *     Errors (with error bit) from: f_string_dynamics_increase().
  * @param content
  *   The setting content.
- *
- * @return
- *   F_none on success.
- *
- *   Errors (with error bit) from: f_string_dynamic_append().
- *   Errors (with error bit) from: f_string_dynamic_partial_append_nulless().
- *   Errors (with error bit) from: f_string_dynamics_increase().
  *
  * @see f_string_dynamic_append()
  * @see f_string_dynamic_partial_append_nulless()
  * @see f_string_dynamics_increase()
  */
 #ifndef _di_fake_make_load_fakefile_setting_environment_
-  extern f_status_t fake_make_load_fakefile_setting_environment(fake_make_data_t * const data_make, f_fss_content_t * const content);
+  extern void fake_make_load_fakefile_setting_environment(fake_make_data_t * const data_make, f_fss_content_t * const content);
 #endif // _di_fake_make_load_fakefile_setting_environment_
 
 /**
@@ -124,6 +127,8 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
+ *
+ *   This does not alter data_make.setting.state.status.
  * @param object
  *   The setting object.
  * @param content
@@ -138,6 +143,8 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
+ *
+ *   This does not alter data_make.setting.state.status.
  * @param object
  *   The setting object.
  * @param content
@@ -157,16 +164,17 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
+ *
+ *   This alters data_make.setting.state.status:
+ *     F_none on success.
+ *
+ *     Errors (with error bit) from: f_string_append_assure().
+ *     Errors (with error bit) from: f_string_dynamic_partial_append_nulless().
+ *     Errors (with error bit) from: fake_make_load_fakefile_setting_define_and_parameter().
  * @param object
  *   The setting object.
  * @param content
  *   The setting content.
- *
- * @return
- *   F_none on success.
- *
- *   Errors (with error bit) from: f_string_append_assure().
- *   Errors (with error bit) from: f_string_dynamic_partial_append_nulless().
  *
  * @see f_string_append_assure()
  * @see f_string_dynamic_partial_append_nulless()
@@ -174,7 +182,7 @@ extern "C" {
  * @see fake_make_load_fakefile_setting_define_and_parameter()
  */
 #ifndef _di_fake_make_load_fakefile_setting_parameter_
-  extern f_status_t fake_make_load_fakefile_setting_parameter(fake_make_data_t * const data_make, f_fss_object_t * const object, f_fss_content_t * const content);
+  extern void fake_make_load_fakefile_setting_parameter(fake_make_data_t * const data_make, f_fss_object_t * const object, f_fss_content_t * const content);
 #endif // _di_fake_make_load_fakefile_setting_parameter_
 
 #ifdef __cplusplus

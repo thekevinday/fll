@@ -47,23 +47,23 @@ extern "C" {
     if (!buffer.used) {
       fake_print_error(data_make->setting, data_make->main->error, macro_fake_f(fake_make_get_id));
 
-      data.setting.state.status = F_status_set_error(F_parameter);
+      data_make->setting->state.status = F_status_set_error(F_parameter);
 
       return;
     }
 
     f_number_unsigned_t number = 0;
 
-    data.setting.state.status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, buffer, &number);
+    data_make->setting->state.status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, buffer, &number);
 
-    if (F_status_is_error(data.setting.state.status)) {
-      if (F_status_set_fine(data.setting.state.status) == F_number) {
+    if (F_status_is_error(data_make->setting->state.status)) {
+      if (F_status_set_fine(data_make->setting->state.status) == F_number) {
 
-        data.setting.state.status = is_owner
+        data_make->setting->state.status = is_owner
           ? f_account_id_by_name(buffer, (uid_t *) id)
           : f_account_group_id_by_name(buffer, (gid_t *) id);
 
-        if (F_status_is_error(data.setting.state.status)) {
+        if (F_status_is_error(data_make->setting->state.status)) {
           fake_print_error(
             data_make->setting,
             data_make->main->error,
@@ -74,13 +74,13 @@ extern "C" {
           );
         }
         else {
-          if (data.setting.state.status == F_exist_not) {
+          if (data_make->setting->state.status == F_exist_not) {
             fake_print_error_group_not_found(data_make->setting, data_make->main->error, buffer);
 
-            data.setting.state.status = F_status_set_error(F_exist_not);
+            data_make->setting->state.status = F_status_set_error(F_exist_not);
           }
           else {
-            data.setting.state.status = F_none;
+            data_make->setting->state.status = F_none;
           }
         }
       }
@@ -116,10 +116,10 @@ extern "C" {
       return;
     }
 
-    data.setting.state.status = f_file_mode_from_string(buffer, data->main->umask, mode, replace);
+    data_make->setting->state.status = f_file_mode_from_string(buffer, data->main->umask, mode, replace);
 
-    if (F_status_is_error(data.setting.state.status)) {
-      if (F_status_set_fine(data.setting.state.status) == F_syntax) {
+    if (F_status_is_error(data_make->setting->state.status)) {
+      if (F_status_set_fine(data_make->setting->state.status) == F_syntax) {
         fake_print_error_mode_invalid(data_make->setting, data_make->main->error, buffer);
       }
       else {

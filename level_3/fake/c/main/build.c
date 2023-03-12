@@ -183,8 +183,8 @@ extern "C" {
 
     data->setting->state.status = f_string_dynamic_resize(source.used, &path_source);
 
-    if (F_status_is_error(setting->state.status)) {
-      fake_print_error(data->setting, data->main->error, data->setting->state.status, macro_fake_f(f_string_dynamic_resize));
+    if (F_status_is_error(data->setting->state.status)) {
+      fake_print_error(data->setting, data->main->error, macro_fake_f(f_string_dynamic_resize));
 
       f_string_dynamic_resize(0, &path_source);
 
@@ -194,13 +194,9 @@ extern "C" {
     memcpy(path_source.string, source.string, sizeof(f_char_t) * source.used);
 
     f_directory_recurse_t recurse = f_directory_recurse_t_initialize;
-
-    if (data->main->error.verbosity >= f_console_verbosity_verbose_e) {
-      recurse.output = data->main->message.to;
-      recurse.verbose = fake_print_verbose_copy;
-    }
-
-    recurse.failures = &failures;
+    recurse.verbose = &fake_print_verbose_copy;
+    //recurse.failures = &failures; // @fixme this now needs to be handled by a callback in recurse (recurse.state.handle)., maybe make this a callback on f_directory_recurse_t?
+    recurse.mode = mode;
 
     for (f_array_length_t i = 0; i < files.used; ++i) {
 
@@ -222,8 +218,8 @@ extern "C" {
 
       data->setting->state.status = f_string_dynamic_append_nulless(files.array[i], &path_source);
 
-      if (F_status_is_error(setting->state.status)) {
-        fake_print_error(data->setting, data->main->error, data->setting->state.status, macro_fake_f(f_string_dynamic_append_nulless));
+      if (F_status_is_error(data->setting->state.status)) {
+        fake_print_error(data->setting, data->main->error, macro_fake_f(f_string_dynamic_append_nulless));
 
         break;
       }
@@ -235,31 +231,33 @@ extern "C" {
 
         data->setting->state.status = f_string_dynamic_append_nulless(destination, &destination_directory);
 
-        if (F_status_is_error(setting->state.status)) {
-          fake_print_error(data->setting, data->main->error, data->setting->state.status, macro_fake_f(f_string_dynamic_append_nulless));
+        if (F_status_is_error(data->setting->state.status)) {
+          fake_print_error(data->setting, data->main->error, macro_fake_f(f_string_dynamic_append_nulless));
 
           break;
         }
 
         data->setting->state.status = f_file_name_base(path_source, &destination_directory);
 
-        if (F_status_is_error(setting->state.status)) {
-          fake_print_error(data->setting, data->main->error, data->setting->state.status, macro_fake_f(f_file_name_base));
+        if (F_status_is_error(data->setting->state.status)) {
+          fake_print_error(data->setting, data->main->error, macro_fake_f(f_file_name_base));
 
           break;
         }
 
-        data->setting->state.status = fl_directory_copy(path_source, destination_directory, mode, recurse);
+        fl_directory_copy(path_source, destination_directory, &recurse);
 
-        if (F_status_is_error(setting->state.status)) {
+        if (F_status_is_error(data->setting->state.status)) {
           if (data->main->error.verbosity >= f_console_verbosity_verbose_e) {
+            /* // @fixme
             for (f_array_length_t j = 0; j < failures.used; ++j) {
 
               fake_print_error_build_operation_file(data->setting, data->main->error, macro_fake_f(fl_directory_copy), fake_common_file_directory_copy_s, f_file_operation_to_s, path_source, destination_directory, F_true);
             } // for
+            */
 
             if (F_status_set_fine(data->setting->state.status) != F_failure) {
-              fake_print_error(data->setting, data->main->error, data->setting->state.status, macro_fake_f(fl_directory_copy));
+              fake_print_error(data->setting, data->main->error, macro_fake_f(fl_directory_copy));
             }
           }
           else if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
@@ -275,8 +273,8 @@ extern "C" {
 
         data->setting->state.status = f_string_dynamic_append_nulless(destination, &destination_file);
 
-        if (F_status_is_error(setting->state.status)) {
-          fake_print_error(data->setting, data->main->error, data->setting->state.status, macro_fake_f(f_string_dynamic_append_nulless));
+        if (F_status_is_error(data->setting->state.status)) {
+          fake_print_error(data->setting, data->main->error, macro_fake_f(f_string_dynamic_append_nulless));
 
           break;
         }
@@ -284,8 +282,8 @@ extern "C" {
         if (perserve_offset && perserve_offset < path_source.used) {
           data->setting->state.status = f_string_dynamic_append_nulless(destination, &destination_directory);
 
-          if (F_status_is_error(setting->state.status)) {
-            fake_print_error(data->setting, data->main->error, data->setting->state.status, macro_fake_f(f_string_dynamic_append_nulless));
+          if (F_status_is_error(data->setting->state.status)) {
+            fake_print_error(data->setting, data->main->error, macro_fake_f(f_string_dynamic_append_nulless));
 
             break;
           }
@@ -295,24 +293,24 @@ extern "C" {
 
           data->setting->state.status = f_file_name_directory(buffer, &destination_directory);
 
-          if (F_status_is_error(setting->state.status)) {
-            fake_print_error(data->setting, data->main->error, data->setting->state.status, macro_fake_f(f_file_name_directory));
+          if (F_status_is_error(data->setting->state.status)) {
+            fake_print_error(data->setting, data->main->error, macro_fake_f(f_file_name_directory));
 
             break;
           }
 
           data->setting->state.status = fl_directory_create(destination_directory, F_file_mode_all_rwx_d);
 
-          if (F_status_is_error(setting->state.status)) {
-            fake_print_error_file(data->setting, data->main->error, data->setting->state.status, macro_fake_f(fl_directory_create), destination_directory, f_file_operation_create_s, fll_error_file_type_directory_e);
+          if (F_status_is_error(data->setting->state.status)) {
+            fake_print_error_file(data->setting, data->main->error, macro_fake_f(fl_directory_create), destination_directory, f_file_operation_create_s, fll_error_file_type_directory_e);
 
             break;
           }
 
           data->setting->state.status = f_string_append(path_source.string + perserve_offset, path_source.used - perserve_offset, &destination_file);
 
-          if (F_status_is_error(setting->state.status)) {
-            fake_print_error(data->setting, data->main->error, data->setting->state.status, macro_fake_f(f_string_append));
+          if (F_status_is_error(data->setting->state.status)) {
+            fake_print_error(data->setting, data->main->error, macro_fake_f(f_string_append));
 
             break;
           }
@@ -320,8 +318,8 @@ extern "C" {
         else {
           data->setting->state.status = f_file_name_base(path_source, &destination_file);
 
-          if (F_status_is_error(setting->state.status)) {
-            fake_print_error(data->setting, data->main->error, data->setting->state.status, macro_fake_f(f_file_name_base));
+          if (F_status_is_error(data->setting->state.status)) {
+            fake_print_error(data->setting, data->main->error, macro_fake_f(f_file_name_base));
 
             break;
           }
@@ -329,8 +327,8 @@ extern "C" {
 
         data->setting->state.status = f_file_copy(path_source, destination_file, mode, F_file_default_read_size_d, f_file_stat_flag_reference_e);
 
-        if (F_status_is_error(setting->state.status)) {
-          fake_print_error_build_operation_file(data->setting, data->main->error, data->setting->state.status, macro_fake_f(f_file_copy), f_file_operation_copy_s, f_file_operation_to_s, path_source, destination_file, F_true);
+        if (F_status_is_error(data->setting->state.status)) {
+          fake_print_error_build_operation_file(data->setting, data->main->error, macro_fake_f(f_file_copy), f_file_operation_copy_s, f_file_operation_to_s, path_source, destination_file, F_true);
 
           break;
         }
@@ -339,16 +337,14 @@ extern "C" {
           fll_print_format("Copied file '%Q' to '%Q'.%r", data->main->message.to, path_source, destination_file, f_string_eol_s);
         }
       }
-      else if (F_status_is_error(setting->state.status)) {
-        fake_print_error_file(data->setting, data->main->error, data->setting->state.status, macro_fake_f(f_directory_is), path_source, f_file_operation_create_s, fll_error_file_type_file_e);
+      else if (F_status_is_error(data->setting->state.status)) {
+        fake_print_error_file(data->setting, data->main->error, macro_fake_f(f_directory_is), path_source, f_file_operation_create_s, fll_error_file_type_file_e);
 
         break;
       }
 
       data->setting->state.status = F_none;
     } // for
-
-    macro_f_directory_statuss_t_delete_simple(failures);
 
     f_directory_recurse_delete(&recurse);
 
@@ -363,7 +359,7 @@ extern "C" {
 #ifndef _di_fake_build_execute_process_script_
   int fake_build_execute_process_script(fake_data_t * const data, fake_build_data_t * const data_build, const f_string_static_t process_script, const f_string_static_t file_stage) {
 
-    if (!data) return;
+    if (!data) return 0;
     if (F_status_is_error(data->setting->state.status) || f_file_exists(file_stage, F_true) == F_true || data->setting->state.status == F_child) return data->main->child;
     if (!process_script.used) return 0;
 
@@ -422,7 +418,7 @@ extern "C" {
       data->setting->state.status = fll_execute_arguments_add(argument, &arguments);
     }
 
-    if (F_status_is_error(setting->state.status)) {
+    if (F_status_is_error(data->setting->state.status)) {
       fake_print_error(data->setting, data->main->error, macro_fake_f(fll_execute_arguments_add));
 
       f_string_dynamics_resize(0, &arguments);
@@ -440,7 +436,7 @@ extern "C" {
           if (F_status_is_error(data->setting->state.status)) break;
         } // for
 
-        if (F_status_is_error(setting->state.status)) {
+        if (F_status_is_error(data->setting->state.status)) {
           fake_print_error(data->setting, data->main->error, macro_fake_f(f_string_dynamic_mash));
 
           f_string_dynamic_resize(0, &defines);
@@ -490,7 +486,7 @@ extern "C" {
 
       f_string_dynamic_resize(0, &defines);
 
-      if (F_status_is_error(setting->state.status)) {
+      if (F_status_is_error(data->setting->state.status)) {
         fake_print_error(data->setting, data->main->error, macro_fake_f(fll_execute_arguments_add_parameter_set));
 
         f_string_dynamics_resize(0, &arguments);
@@ -509,8 +505,8 @@ extern "C" {
       data->setting->state.status = f_string_dynamic_append_nulless(process_script, &path);
     }
 
-    if (F_status_is_error(setting->state.status)) {
-      fake_print_error(data->setting, data->main->error, data->setting->state.status, macro_fake_f(f_string_dynamic_append_nulless));
+    if (F_status_is_error(data->setting->state.status)) {
+      fake_print_error(data->setting, data->main->error, macro_fake_f(f_string_dynamic_append_nulless));
 
       f_string_dynamic_resize(0, &path);
       f_string_dynamics_resize(0, &arguments);
@@ -537,7 +533,7 @@ extern "C" {
       data->setting->state.status = F_status_set_error(F_interrupt);
     }
     else if (data->setting->state.status != F_child) {
-      if (F_status_is_error(setting->state.status)) {
+      if (F_status_is_error(data->setting->state.status)) {
         if (F_status_set_fine(data->setting->state.status) == F_failure) {
           fake_print_error_failure_script(data->setting, data->main->error, path);
         }
@@ -568,7 +564,7 @@ extern "C" {
 
     data->setting->state.status = f_file_name_base(path, name);
 
-    if (F_status_is_error(setting->state.status)) {
+    if (F_status_is_error(data->setting->state.status)) {
       fake_print_error(data->setting, data->main->error, macro_fake_f(f_file_name_base));
 
       return;
@@ -978,7 +974,7 @@ extern "C" {
 
     data->setting->state.status = f_file_touch(file, mode.regular, F_false);
 
-    if (F_status_is_error(setting->state.status)) {
+    if (F_status_is_error(data->setting->state.status)) {
       fake_print_error_file(data->setting, data->main->error, macro_fake_f(f_file_touch), file, f_file_operation_touch_s, fll_error_file_type_file_e);
     }
     else {

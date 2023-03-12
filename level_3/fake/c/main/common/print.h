@@ -100,7 +100,6 @@ extern "C" {
     fake_f_f_uint8s_increase_by_e,
     fake_f_f_utf_is_word_dash_plus_e,
     fake_f_fl_conversion_dynamic_to_unsigned_detect_e,
-    fake_f_fl_directory_clone_e,
     fake_f_fl_directory_copy_e,
     fake_f_fl_directory_create_e,
     fake_f_fl_environment_load_name_e,

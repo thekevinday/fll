@@ -207,7 +207,7 @@ extern "C" {
  * @see fll_program_standard_signal_received()
  */
 #ifndef _di_fake_execute_
-  extern int fake_execute(fake_data_t * const data, const f_string_maps_t environment, const f_string_static_t program, const f_string_statics_t arguments, f_status_t * const status);
+  extern int fake_execute(fake_data_t * const data, const f_string_maps_t environment, const f_string_static_t program, const f_string_statics_t arguments);
 #endif // _di_fake_execute_
 
 /**

@@ -25,16 +25,16 @@ extern "C" {
  * @param data
  *   The program data.
  *
- * @return
- *   F_none on success.
- *   F_data_not on success but fakefile is empty.
+ *   This alters data.setting.state.status:
+ *     F_none on success.
+ *     F_data_not on success but fakefile is empty.
  *
- *   F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
  *
- *   Status codes (with error bit) are returned on any problem.
+ *     Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_operate_
-  extern f_status_t fake_make_operate(fake_data_t * const data);
+  extern void fake_make_operate(fake_data_t * const data);
 #endif // _di_fake_make_operate_
 
 /**
@@ -44,19 +44,23 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
+ *
+ *   This alters data_make.setting.state.status:
+ *     F_none on success.
+ *     F_data_not on success but fakefile is empty.
+ *
+ *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ *
+ *     Status codes (with error bit) are returned on any problem.
  * @param section_name
  *   The section name.
  * @param content
  *   The content array.
  * @param quotes
  *   The array of quotes associated with the content.
- * @param status
- *   The return status.
- *
- *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_operate_expand_
-  extern void fake_make_operate_expand(fake_make_data_t * const data_make, const f_string_range_t section_name, const f_fss_content_t content, const f_uint8s_t quotes, f_status_t * const status);
+  extern void fake_make_operate_expand(fake_make_data_t * const data_make, const f_string_range_t section_name, const f_fss_content_t content, const f_uint8s_t quotes);
 #endif // _di_fake_make_operate_expand_
 
 /**
@@ -66,19 +70,19 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
+ *
+ *   This alters data.setting.state.status:
+ *     F_true on success and match expanded.
+ *     F_false on no matches to expand.
+ *
+ *     Status codes (with error bit) are returned on any problem.
  * @param quote
  *   The quote associated with the content.
  * @param range_name
  *   The range representing the variable content name string within the data_make->buffer.
- *
- * @return
- *   F_true on success and match expanded.
- *   F_false on no matches to expand.
- *
- *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_operate_expand_context_
-  extern f_status_t fake_make_operate_expand_context(fake_make_data_t * const data_make, const uint8_t quote, const f_string_range_t range_name);
+  extern void fake_make_operate_expand_context(fake_make_data_t * const data_make, const uint8_t quote, const f_string_range_t range_name);
 #endif // _di_fake_make_operate_expand_context_
 
 /**
@@ -86,20 +90,20 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
+ *
+ *   This alters data.setting.state.status:
+ *     F_data_not on success, but nothing is added (data length to append is 0).
+ *     F_true on success and match expanded.
+ *     F_false on no matches to expand.
+ *
+ *     Errors (with error bit) from: f_string_dynamic_append_nulless().
+ *     Errors (with error bit) from: f_string_dynamic_partial_append_nulless().
+ *     Errors (with error bit) from: f_string_dynamic_increase_by().
+ *     Errors (with error bit) from: f_string_dynamics_increase().
  * @param quote
  *   The quote associated with the content.
  * @param range_name
  *   The range representing the variable content name string within the data_make->buffer.
- *
- * @return
- *   F_data_not on success, but nothing is added (data length to append is 0).
- *   F_true on success and match expanded.
- *   F_false on no matches to expand.
- *
- *   Errors (with error bit) from: f_string_dynamic_append_nulless().
- *   Errors (with error bit) from: f_string_dynamic_partial_append_nulless().
- *   Errors (with error bit) from: f_string_dynamic_increase_by().
- *   Errors (with error bit) from: f_string_dynamics_increase().
  *
  * @see f_string_dynamic_append_nulless()
  * @see f_string_dynamic_partial_append_nulless()
@@ -107,7 +111,7 @@ extern "C" {
  * @see f_string_dynamics_increase()
  */
 #ifndef _di_fake_make_operate_expand_environment_
-  extern f_status_t fake_make_operate_expand_environment(fake_make_data_t * const data_make, const uint8_t quote, const f_string_range_t range_name);
+  extern void fake_make_operate_expand_environment(fake_make_data_t * const data_make, const uint8_t quote, const f_string_range_t range_name);
 #endif // _di_fake_make_operate_expand_environment_
 
 /**
@@ -115,20 +119,20 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
+ *
+ *   This alters data.setting.state.status:
+ *     F_data_not on success, but nothing is added (data length to append is 0).
+ *     F_true on success and match expanded.
+ *     F_false on no matches to expand.
+ *
+ *     Status codes (with error bit) are returned on any problem.
  * @param quote
  *   The quote associated with the content.
  * @param range_name
  *   The range representing the variable content name string within the data_make->buffer.
- *
- * @return
- *   F_data_not on success, but nothing is added (data length to append is 0).
- *   F_true on success and match expanded.
- *   F_false on no matches to expand.
- *
- *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_operate_expand_build_
-  extern f_status_t fake_make_operate_expand_build(fake_make_data_t * const data_make, const uint8_t quote, const f_string_range_t range_name);
+  extern void fake_make_operate_expand_build(fake_make_data_t * const data_make, const uint8_t quote, const f_string_range_t range_name);
 #endif // _di_fake_make_operate_expand_build_
 
 /**

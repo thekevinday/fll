@@ -5,29 +5,57 @@ extern "C" {
 #endif
 
 #ifndef _di_fake_print_verbose_clone_
-  f_status_t fake_print_verbose_clone(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t source, const f_string_static_t destination) {
+  void fake_print_verbose_clone(const f_string_static_t source, const f_string_static_t destination, void * const void_recurse) {
 
-    if (!setting) return F_status_set_error(F_output_not);
-    if (print.verbosity < f_console_verbosity_verbose_e) return F_output_not;
+    if (!void_recurse) return;
 
-    fake_print_wrapped_variables(setting, print, "Cloned ", source, " to ", destination, 0);
+    f_directory_recurse_t * const recurse = (f_directory_recurse_t * const) void_recurse;
 
-    return F_none;
+    if (!recurse->state.custom) {
+      recurse->state.status = F_output_not;
+
+      return;
+    }
+
+    fake_data_t * const data = (fake_data_t * const) recurse->state.custom;
+
+    if (data->main->message.verbosity < f_console_verbosity_verbose_e) {
+      recurse->state.status = F_output_not;
+
+      return;
+    }
+
+    fake_print_wrapped_variables(data->setting, data->main->message, "Cloned ", source, " to ", destination, 0);
   }
 #endif // _di_fake_print_verbose_clone_
 
 #ifndef _di_fake_print_verbose_copy_
-  f_status_t fake_print_verbose_copy(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t source, const f_string_static_t destination) {
+  void fake_print_verbose_copy(const f_string_static_t source, const f_string_static_t destination, void * const void_recurse) {
 
-    if (!setting) return F_status_set_error(F_output_not);
-    if (print.verbosity < f_console_verbosity_verbose_e) return F_output_not;
+    if (!void_recurse) return;
 
-    fll_print_format("Copied '%Q' to '%Q'.%r", output, source, destination, f_string_eol_s);
+    f_directory_recurse_t * const recurse = (f_directory_recurse_t * const) void_recurse;
+
+    if (!recurse->state.custom) {
+      recurse->state.status = F_output_not;
+
+      return;
+    }
+
+    fake_data_t * const data = (fake_data_t * const) recurse->state.custom;
+
+    if (data->main->message.verbosity < f_console_verbosity_verbose_e) {
+      recurse->state.status = F_output_not;
+
+      return;
+    }
+
+    fake_print_wrapped_variables(data->setting, data->main->message, "Copied ", source, " to ", destination, 0);
   }
 #endif // _di_fake_print_verbose_copy_
 
 #ifndef _di_fake_print_verbose_create_directory_
-  f_status_t fake_print_verbose_create_directory(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t path) {
+  void fake_print_verbose_create_directory(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t path) {
 
     if (!setting) return F_status_set_error(F_output_not);
     if (print.verbosity < f_console_verbosity_verbose_e) return F_output_not;
@@ -103,12 +131,27 @@ extern "C" {
 #endif // _di_fake_print_verbose_file_pre_populated_
 
 #ifndef _di_fake_print_verbose_move_
-  f_status_t fake_print_verbose_move(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t source, const f_string_static_t destination) {
+  void fake_print_verbose_move(const f_string_static_t source, const f_string_static_t destination, void * const void_recurse) {
 
-    if (!setting) return F_status_set_error(F_output_not);
-    if (print.verbosity < f_console_verbosity_verbose_e) return F_output_not;
+    if (!void_recurse) return;
 
-    fll_print_format("Moved '%Q' to '%Q'.%r", output, source, destination, f_string_eol_s);
+    f_directory_recurse_t * const recurse = (f_directory_recurse_t * const) void_recurse;
+
+    if (!recurse->state.custom) {
+      recurse->state.status = F_output_not;
+
+      return;
+    }
+
+    fake_data_t * const data = (fake_data_t * const) recurse->state.custom;
+
+    if (data->main->message.verbosity < f_console_verbosity_verbose_e) {
+      recurse->state.status = F_output_not;
+
+      return;
+    }
+
+    fake_print_wrapped_variables(data->setting, data->main->message, "Moved ", source, " to ", destination, 0);
   }
 #endif // _di_fake_print_verbose_move_
 

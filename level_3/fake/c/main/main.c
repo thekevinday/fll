@@ -7,6 +7,9 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
   setting.flag |= fake_main_flag_enable_documents_e;
   setting.flag |= fake_main_flag_enable_shared_e;
   setting.flag |= fake_main_flag_enable_static_e;
+  setting.state.step_large = fake_allocation_large_d;
+  setting.state.step_small = fake_allocation_small_d;
+  setting.state.custom = (void *) &data;
 
   f_console_parameter_t parameters[] = fake_console_parameter_t_initialize;
   data.parameters.array = parameters;

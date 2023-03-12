@@ -80,7 +80,7 @@ extern "C" {
         status = fake_skeleton_operate_directory_create(data, path[i]);
 
         if (F_status_is_error(status)) {
-          fake_print_error(data->setting, data->main->error, status, macro_fake_f(fake_skeleton_operate_directory_create));
+          fake_print_error(data->setting, data->main->error, macro_fake_f(fake_skeleton_operate_directory_create));
 
           return status;
         }

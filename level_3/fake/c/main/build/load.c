@@ -30,7 +30,7 @@ extern "C" {
 
         data->setting->state.status = fl_environment_load_name(variables[i], environment);
 
-        if (F_status_is_error(setting->state.status)) {
+        if (F_status_is_error(data->setting->state.status)) {
           fake_print_error(data->setting, data->main->error, macro_fake_f(fl_environment_load_name));
 
           return;
@@ -60,7 +60,7 @@ extern "C" {
 
     data->setting->state.status = fl_environment_load_names(data_build->setting.environment, environment);
 
-    if (F_status_is_error(setting->state.status)) {
+    if (F_status_is_error(data->setting->state.status)) {
       fake_print_error(data->setting, data->main->error, macro_fake_f(fl_environment_load_names));
     }
     else {
@@ -132,7 +132,7 @@ extern "C" {
       if (process_pipe) {
         fake_pipe_buffer(data, &buffer);
 
-        if (F_status_is_error(setting->state.status)) {
+        if (F_status_is_error(data->setting->state.status)) {
           buffer.used = 0;
         }
         else {
@@ -155,13 +155,13 @@ extern "C" {
 
         data->setting->state.status = fll_fss_extended_read(buffer, &range, &objects, &contents, 0, 0, &delimits, 0, &data->setting.state);
 
-        if (F_status_is_error(setting->state.status)) {
+        if (F_status_is_error(data->setting->state.status)) {
           fake_print_error_fss(data->setting, data->main->error, macro_fake_f(fll_fss_extended_read), data->file_data_build_settings, range, F_true);
         }
         else {
           data->setting->state.status = f_fss_apply_delimit(state, delimits, &buffer);
 
-          if (F_status_is_error(setting->state.status)) {
+          if (F_status_is_error(data->setting->state.status)) {
             fake_print_error(data->setting, data->main->error, macro_fake_f(f_fss_apply_delimit));
           }
           else {
@@ -671,7 +671,7 @@ extern "C" {
         fake_build_print_error_setting_too_long(data->setting, data->main->warning, path_file);
       }
       else if (!error_printed) {
-        fake_print_error(data->setting, data->main->error, *status, function);
+        fake_print_error(data->setting, data->main->error, function);
       }
     }
     else {
@@ -1111,7 +1111,7 @@ extern "C" {
           *status = f_string_dynamic_append(settings_single_string_default[i], settings_single_destination[i]);
 
           if (F_status_is_error(*status)) {
-            fake_print_error(data->setting, data->main->error, *status, macro_fake_f(f_string_dynamic_append));
+            fake_print_error(data->setting, data->main->error, macro_fake_f(f_string_dynamic_append));
 
             break;
           }
@@ -1176,7 +1176,7 @@ extern "C" {
             *status = f_path_directory_cleanup(settings_single_source[i]->array[settings_single_source[i]->used - 1], settings_single_destination[i]);
 
             if (F_status_is_error(*status)) {
-              fake_print_error(data->setting, data->main->error, *status, macro_fake_f(f_path_directory_cleanup));
+              fake_print_error(data->setting, data->main->error, macro_fake_f(f_path_directory_cleanup));
 
               break;
             }
@@ -1185,7 +1185,7 @@ extern "C" {
             *status = f_string_dynamic_increase_by(settings_single_source[i]->array[settings_single_source[i]->used - 1].used + 1, settings_single_destination[i]);
 
             if (F_status_is_error(*status)) {
-              fake_print_error(data->setting, data->main->error, *status, macro_fake_f(f_string_dynamic_increase_by));
+              fake_print_error(data->setting, data->main->error, macro_fake_f(f_string_dynamic_increase_by));
 
               break;
             }
@@ -1193,7 +1193,7 @@ extern "C" {
             *status = f_string_dynamic_append_nulless(settings_single_source[i]->array[settings_single_source[i]->used - 1], settings_single_destination[i]);
 
             if (F_status_is_error(*status)) {
-              fake_print_error(data->setting, data->main->error, *status, macro_fake_f(f_string_dynamic_append_nulless));
+              fake_print_error(data->setting, data->main->error, macro_fake_f(f_string_dynamic_append_nulless));
 
               break;
             }
@@ -1268,7 +1268,7 @@ extern "C" {
       *status = f_string_dynamic_append_assure(f_path_separator_s, &setting->path_sources);
 
       if (F_status_is_error(*status)) {
-        fake_print_error(data->setting, data->main->error, *status, macro_fake_f(f_string_dynamic_append_assure));
+        fake_print_error(data->setting, data->main->error, macro_fake_f(f_string_dynamic_append_assure));
 
         return;
       }
@@ -1397,7 +1397,7 @@ extern "C" {
       data->setting->state.status = f_file_name_base(data->file_data_build_settings, &settings_file_base);
     }
 
-    if (F_status_is_error(setting->state.status)) {
+    if (F_status_is_error(data->setting->state.status)) {
       fake_print_error(data->setting, data->main->error, macro_fake_f(f_file_name_base));
 
       return;
@@ -1431,7 +1431,7 @@ extern "C" {
         data->setting->state.status = f_string_dynamic_append_nulless(fake_build_stage_built_s, values[i]);
       }
 
-      if (F_status_is_error(setting->state.status)) {
+      if (F_status_is_error(data->setting->state.status)) {
         fake_print_error(data->setting, data->main->error, macro_fake_f(f_string_dynamic_append_nulless));
 
         break;

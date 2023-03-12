@@ -38,14 +38,19 @@ extern "C" {
     main->output.to.flag = F_file_flag_create_d | F_file_flag_write_only_d | F_file_flag_append_d;
 
     {
+      const uint16_t step_original = setting->state.step_small;
       fake_data_t data = fake_data_t_initialize;
       data.main = main;
       data.setting = setting;
 
+      setting->state.step_small = 4;
+
       f_console_parameter_process(arguments, &main->parameters, &setting->state.status, (void *) &data);
+
+      setting->state.step_small = step_original;
     }
 
-    if (F_status_is_error(setting->state.status)) {
+    if (F_status_is_error(main->setting->state.status)) {
       fake_print_line_first(setting, main->message);
 
       fake_print_error(setting, main->error, setting->state.status, macro_fake_f(f_console_parameter_process));
@@ -67,7 +72,7 @@ extern "C" {
 
         setting->state.status = fll_program_parameter_process_context(choices, modes, F_true, main);
 
-        if (F_status_is_error(setting->state.status)) {
+        if (F_status_is_error(main->setting->state.status)) {
           fake_print_line_first(setting, main->message);
 
           fake_print_error(setting, main->error, setting->state.status, macro_fake_f(fll_program_parameter_process_context));
@@ -100,7 +105,7 @@ extern "C" {
 
         setting->state.status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, main);
 
-        if (F_status_is_error(setting->state.status)) {
+        if (F_status_is_error(main->setting->state.status)) {
           fake_print_line_first(setting, main->message);
 
           fake_print_error(setting, main->error, setting->state.status, macro_fake_f(fll_program_parameter_process_verbosity));
@@ -270,7 +275,7 @@ extern "C" {
 
                   // @todo fix this to print an error about the actual invalid character so that it can be investigated.
 
-                  if (F_status_is_error(setting->state.status)) {
+                  if (F_status_is_error(main->setting->state.status)) {
                     fake_print_line_first(setting, main->message);
 
                     if (fake_print_error_fallback(setting, main->error, setting->state.status, macro_fake_f(f_utf_is_word_dash_plus)) == F_false) {
@@ -293,7 +298,7 @@ extern "C" {
               if (cleanups[i]) {
                 setting->state.status = f_path_directory_cleanup(main->parameters.arguments.array[index], variable[i]);
 
-                if (F_status_is_error(setting->state.status)) {
+                if (F_status_is_error(main->setting->state.status)) {
                   fake_print_line_first(setting, main->message);
 
                   if (main->error.verbosity > f_console_verbosity_quiet_e) {
@@ -313,7 +318,7 @@ extern "C" {
                 if (variable[i]->size) {
                   setting->state.status = f_string_dynamic_resize(0, variable[i]);
 
-                  if (F_status_is_error(setting->state.status)) {
+                  if (F_status_is_error(main->setting->state.status)) {
                     fake_print_line_first(setting, main->message);
 
                     fake_print_error(setting, main->error, setting->state.status, macro_fake_f(f_string_dynamic_resize));
@@ -344,7 +349,7 @@ extern "C" {
             if (variable[i]->size) {
               setting->state.status = f_string_dynamic_resize(0, variable[i]);
 
-              if (F_status_is_error(setting->state.status)) {
+              if (F_status_is_error(main->setting->state.status)) {
                 fake_print_line_first(setting, main->message);
 
                 fake_print_error(setting, main->error, setting->state.status, macro_fake_f(f_string_dynamic_resize));
@@ -395,7 +400,7 @@ extern "C" {
           if (main->parameters.array[parameters[i]].result & f_console_result_value_e) {
             setting->state.status = fll_program_parameter_additional_rip(main->parameters.arguments.array, main->parameters.array[parameters[i]].values, variable[i]);
 
-            if (F_status_is_error(setting->state.status)) {
+            if (F_status_is_error(main->setting->state.status)) {
               if (main->error.verbosity > f_console_verbosity_quiet_e) {
                 fake_print_line_first(setting, main->message);
 
@@ -414,7 +419,7 @@ extern "C" {
 
                 setting->state.status = f_utf_is_word_dash_plus(main->parameters.arguments.array[i].string + j, width_max, F_false);
 
-                if (F_status_is_error(setting->state.status)) {
+                if (F_status_is_error(main->setting->state.status)) {
                   fake_print_line_first(setting, main->message);
 
                   // @todo fix this to print an error about the actual invalid character so that it can be investigated.
@@ -448,7 +453,7 @@ extern "C" {
 
       setting->state.status = f_uint8s_increase_by(1, &setting->operations);
 
-      if (F_status_is_error(setting->state.status)) {
+      if (F_status_is_error(main->setting->state.status)) {
         fake_print_line_first(setting, main->message);
 
         fake_print_error(setting, main->error, setting->state.status, macro_fake_f(f_uint8s_increase_by));
@@ -475,7 +480,7 @@ extern "C" {
     f_console_parameters_t * const parameters = (f_console_parameters_t * const) void_parameters;
     fake_data_t * const data = (fake_data_t * const) void_data;
 
-    state->state->status = f_uint8s_increase(fake_default_allocation_small_d, &data->setting->operations);
+    state->state->status = f_uint8s_increase(fake_allocation_small_d, &data->setting->operations);
 
     if (F_status_is_error(state->state->status)) {
       fake_print_line_first(setting, main->message);

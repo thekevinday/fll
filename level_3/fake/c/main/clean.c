@@ -36,7 +36,7 @@ extern "C" {
       data->setting->state.status = F_none;
     }
 
-    if (F_status_is_error(setting->state.status)) {
+    if (F_status_is_error(data->setting->state.status)) {
       fake_print_error_file(data->setting, data->main->error, macro_fake_f(f_directory_remove), data->setting->build, f_file_operation_delete_s, fll_error_file_type_directory_e);
     }
     else {
