@@ -18,7 +18,7 @@ build_indexer_arguments rcs
 build_language c
 
 build_libraries -lc
-build_libraries-individual -lfl_directory -lf_color -lf_directory -lf_file -lf_memory -lf_path -lf_string -lf_type_array -lf_utf
+build_libraries-individual -lfl_directory -lf_color -lf_directory -lf_file -lf_memory -lf_path -lf_string -lf_utf
 
 build_sources_library file.c private-file.c
 
