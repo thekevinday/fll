@@ -21,6 +21,7 @@ f_limit
 f_path
 f_pipe
 f_print
+f_status_string
 f_signal
 f_thread
 

@@ -8,6 +8,7 @@ f_string
 f_utf
 f_color
 f_console
+f_conversion
 f_file
 f_iki
 f_pipe
