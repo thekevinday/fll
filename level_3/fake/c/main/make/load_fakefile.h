@@ -77,8 +77,8 @@ extern "C" {
 /**
  * Load the fakefile setting "parameter".
  *
- * @param data
- *   The program data.
+ * @param data_make
+ *   All make related setting data, including data from the fakefile and the build settings file.
  *
  *   This alters data_make.setting.state.status:
  *     F_none on success.
@@ -86,8 +86,6 @@ extern "C" {
  *     Errors (with error bit) from: f_environment_set().
  *     Errors (with error bit) from: f_string_dynamic_mash_nulless().
  *     Errors (with error bit) from: fll_fss_snatch_map_apart().
- * @param data_make
- *   All make related setting data, including data from the fakefile and the build settings file.
  * @param settings
  *   The settings data.
  *
@@ -96,7 +94,7 @@ extern "C" {
  * @see fll_fss_snatch_map_apart()
  */
 #ifndef _di_fake_make_load_fakefile_setting_define_and_parameter_
-  extern void fake_make_load_fakefile_setting_define_and_parameter(fake_data_t * const data, fake_make_data_t * const data_make, f_fss_set_t * const settings);
+  extern void fake_make_load_fakefile_setting_define_and_parameter(fake_make_data_t * const data_make, f_fss_set_t * const settings);
 #endif // _di_fake_make_load_fakefile_setting_define_and_parameter_
 
 /**

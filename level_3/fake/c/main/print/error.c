@@ -10,7 +10,7 @@ extern "C" {
     if (!setting) return F_status_set_error(F_output_not);
     if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
 
-    fll_error_print(print, F_status_set_fine(data->setting->state.status), function, fll_error_file_flag_fallback_e);
+    fll_error_print(print, F_status_set_fine(setting->state.status), function, fll_error_file_flag_fallback_e);
 
     return F_none;
   }
@@ -200,7 +200,7 @@ extern "C" {
 #ifndef _di_fake_print_error_build_operation_file_partial_
   void fake_print_error_build_operation_file_partial(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t operation, const f_string_static_t source, const f_string_static_t destination, const f_string_static_t how) {
 
-    if (!setting) return F_status_set_error(F_output_not);
+    if (!setting) return;
     if (print.verbosity < f_console_verbosity_error_e || !source.used) return;
 
     fl_print_format("%[while trying to %Q '%]", print.to, print.context, operation, print.context);
@@ -504,7 +504,7 @@ extern "C" {
     if (!setting) return F_status_set_error(F_output_not);
     if (print.verbosity < f_console_verbosity_verbose_e) return F_output_not;
 
-    if (F_status_set_fine(data->setting->state.status) == F_false) {
+    if (F_status_set_fine(setting->state.status) == F_false) {
       fake_print_context_wrapped_variable(setting, print, "The path ", path, " is outside the project root");
     }
     else {

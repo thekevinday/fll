@@ -55,9 +55,9 @@ extern "C" {
 #ifndef _di_fake_make_operate_block_postprocess_
   void fake_make_operate_block_postprocess(fake_make_data_t * const data_make, const bool last, fake_state_process_t * const state_process) {
 
-    if (!data_make || !state_process) return;
+    if (!data_make || !data_make->main || !data_make->setting || !state_process) return;
 
-    if (F_status_is_error(data_make->setting.state.status)) {
+    if (F_status_is_error(data_make->setting->state.status)) {
       state_process->block_result = fake_condition_result_error_e;
       state_process->success_block = F_false;
 

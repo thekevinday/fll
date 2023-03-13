@@ -7,7 +7,7 @@ extern "C" {
 #ifndef _di_fake_clean_operate_
   void fake_clean_operate(fake_data_t * const data) {
 
-    if (!data) return;
+    if (!data || !data->main || !data->setting) return;
 
     if (data->main->message.verbosity != f_console_verbosity_quiet_e && data->main->message.verbosity != f_console_verbosity_error_e) {
       f_file_stream_lock(data->main->message.to);
@@ -48,7 +48,7 @@ extern "C" {
 #if !defined(_di_fake_clean_operate_)
   int fake_clean_remove_recursively_verbosely(const char * const path, const struct stat *file_stat, int type, struct FTW *entity) {
 
-    if (!entity->level || !path) return 0;
+    if (!path || !entity || !entity->level) return 0;
 
     const int result = remove(path);
 

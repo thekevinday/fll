@@ -7,15 +7,15 @@ extern "C" {
 #ifndef _di_fake_make_assure_inside_project_
   void fake_make_assure_inside_project(fake_make_data_t * const data_make, const f_string_static_t path) {
 
-    if (!data_make) return;
+    if (!data_make || !data_make->main || !data_make->setting) return;
 
     data_make->cache_path.used = 0;
 
-    data.setting.state.status = fll_path_canonical(path, &data_make->cache_path);
-    if (F_status_is_error(data.setting.state.status)) return;
+    data_make->setting->state.status = fll_path_canonical(path, &data_make->cache_path);
+    if (F_status_is_error(data_make->setting->state.status)) return;
 
     if (data_make->cache_path.used < data_make->path.stack.array[0].used) {
-      data.setting.state.status = F_status_set_error(F_false);
+      data_make->setting->state.status = F_status_set_error(F_false);
 
       return;
     }
@@ -23,33 +23,33 @@ extern "C" {
     const f_string_range_t range = macro_f_string_range_t_initialize2(data_make->path.stack.array[0].used);
 
     if (range.start <= range.stop) {
-      data.setting.state.status = fl_string_dynamic_partial_compare(data_make->path.stack.array[0], data_make->cache_path, range, range);
-      if (F_status_is_error(data.setting.state.status)) return;
+      data_make->setting->state.status = fl_string_dynamic_partial_compare(data_make->path.stack.array[0], data_make->cache_path, range, range);
+      if (F_status_is_error(data_make->setting->state.status)) return;
 
-      if (data.setting.state.status) {
+      if (data_make->setting->state.status) {
         if (data_make->cache_path.used == data_make->path.stack.array[0].used || data_make->cache_path.string[data_make->path.stack.array[0].used] == f_path_separator_s.string[0]) {
-          data.setting.state.status = F_true;
+          data_make->setting->state.status = F_true;
 
           return;
         }
       }
     }
 
-    data.setting.state.status = F_status_set_error(F_false);
+    data_make->setting->state.status = F_status_set_error(F_false);
   }
 #endif // _di_fake_make_assure_inside_project_
 
 #ifndef _di_fake_make_get_id_
-  void fake_make_get_id(fake_make_data_t * const data_make, const bool is_owner, const f_string_static_t buffer, void *id) {
+  f_number_unsigned_t fake_make_get_id(fake_make_data_t * const data_make, const bool is_owner, const f_string_static_t buffer) {
 
-    if (!data || !id) return;
+    if (!data_make || !data_make->main || !data_make->setting) return 0;
 
     if (!buffer.used) {
       fake_print_error(data_make->setting, data_make->main->error, macro_fake_f(fake_make_get_id));
 
       data_make->setting->state.status = F_status_set_error(F_parameter);
 
-      return;
+      return 0;
     }
 
     f_number_unsigned_t number = 0;
@@ -57,20 +57,27 @@ extern "C" {
     data_make->setting->state.status = fl_conversion_dynamic_to_unsigned_detect(fl_conversion_data_base_10_c, buffer, &number);
 
     if (F_status_is_error(data_make->setting->state.status)) {
-      if (F_status_set_fine(data_make->setting->state.status) == F_number) {
 
-        data_make->setting->state.status = is_owner
-          ? f_account_id_by_name(buffer, (uid_t *) id)
-          : f_account_group_id_by_name(buffer, (gid_t *) id);
+      // When the buffer is not a number, then check to see if this is a group or owner name.
+      if (F_status_set_fine(data_make->setting->state.status) == F_number) {
+        if (is_owner) {
+          uid_t uid = 0;
+
+          data_make->setting->state.status = f_account_id_by_name(buffer, &uid);
+        }
+        else {
+          gid_t gid = 0;
+
+          data_make->setting->state.status = f_account_group_id_by_name(buffer, &gid);
+        }
 
         if (F_status_is_error(data_make->setting->state.status)) {
           fake_print_error(
             data_make->setting,
             data_make->main->error,
-            macro_fake_f(is_owner
-              ? f_account_id_by_name
-              : f_account_group_id_by_name
-            )
+            is_owner
+              ? macro_fake_f(f_account_id_by_name)
+              : macro_fake_f(f_account_group_id_by_name)
           );
         }
         else {
@@ -88,35 +95,35 @@ extern "C" {
         fake_print_error(data_make->setting, data_make->main->error, macro_fake_f(fl_conversion_dynamic_to_unsigned_detect));
       }
 
-      return;
+      return 0;
     }
 
     if (number > F_type_size_32_unsigned_d) {
       fake_print_error_number_too_large(data_make->setting, data_make->main->error, buffer);
 
-      data.setting.state.status = F_status_set_error(F_failure);
+      data_make->setting->state.status = F_status_set_error(F_failure);
 
-      return;
+      return 0;
     }
 
-    *id = is_owner ? (uid_t) number : (gid_t) number;
+    return number;
   }
 #endif // _di_fake_make_get_id_
 
 #ifndef _di_fake_make_get_id_mode_
   void fake_make_get_id_mode(fake_make_data_t * const data_make, const f_string_static_t buffer, f_file_mode_t *mode, uint8_t *replace) {
 
-    if (!data_make || !mode || !replace) return;
+    if (!data_make || !data_make->main || !data_make->setting || !mode || !replace) return;
 
     if (!buffer.used) {
       fake_print_error(data_make->setting, data_make->main->error, macro_fake_f(fake_make_get_id_mode));
 
-      data.setting.state.status = F_status_set_error(F_parameter);
+      data_make->setting->state.status = F_status_set_error(F_parameter);
 
       return;
     }
 
-    data_make->setting->state.status = f_file_mode_from_string(buffer, data->main->umask, mode, replace);
+    data_make->setting->state.status = f_file_mode_from_string(buffer, data_make->main->umask, mode, replace);
 
     if (F_status_is_error(data_make->setting->state.status)) {
       if (F_status_set_fine(data_make->setting->state.status) == F_syntax) {
@@ -127,7 +134,7 @@ extern "C" {
       }
     }
     else {
-      data.setting.state.status = F_none;
+      data_make->setting->state.status = F_none;
     }
   }
 #endif // _di_fake_make_get_id_mode_
@@ -135,18 +142,18 @@ extern "C" {
 #ifndef _di_fake_make_path_relative_
   void fake_make_path_relative(fake_make_data_t * const data_make, const f_string_static_t path) {
 
-    if (!data_make) return;
+    if (!data_make || !data_make->main || !data_make->setting) return;
 
     data_make->cache_path.used = 0;
 
     if (!path.used || path.used == data_make->path.stack.array[0].used) {
-      data.setting.state.status = F_none;
+      data_make->setting->state.status = F_none;
 
       return;
     }
 
     if (path.used < data_make->path.stack.array[0].used) {
-      data.setting.state.status = F_status_set_error(F_failure);
+      data_make->setting->state.status = F_status_set_error(F_failure);
 
       return;
     }
@@ -156,13 +163,13 @@ extern "C" {
     range.start = data_make->path.stack.array[0].used + 1;
     range.stop = range.start + (path.used - range.start) - 1;
 
-    data.setting.state.status = f_string_dynamic_partial_append(path, range, &data_make->cache_path);
-    if (F_status_is_error(data.setting.state.status)) return;
+    data_make->setting->state.status = f_string_dynamic_partial_append(path, range, &data_make->cache_path);
+    if (F_status_is_error(data_make->setting->state.status)) return;
 
-    data.setting.state.status = f_string_dynamic_terminate(&data_make->cache_path);
-    if (F_status_is_error(data.setting.state.status)) return;
+    data_make->setting->state.status = f_string_dynamic_terminate(&data_make->cache_path);
+    if (F_status_is_error(data_make->setting->state.status)) return;
 
-    data.setting.state.status = F_none;
+    data_make->setting->state.status = F_none;
   }
 #endif // _di_fake_make_path_relative_
 

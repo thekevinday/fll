@@ -7,6 +7,7 @@ extern "C" {
 #ifndef _di_fake_build_program_script_
   int fake_build_program_script(fake_data_t * const data, fake_build_data_t * const data_build, const f_mode_t mode, const f_string_static_t file_stage) {
 
+    if (!data || !data->main || !data->setting || !data_build) return 0;
     if (F_status_is_error(data->setting->state.status) || f_file_exists(file_stage, F_true) == F_true || data->setting->state.status == F_child) return data->main->child;
 
     fake_build_touch(data, file_stage);
@@ -18,6 +19,7 @@ extern "C" {
 #ifndef _di_fake_build_program_shared_
   int fake_build_program_shared(fake_data_t * const data, fake_build_data_t * const data_build, const f_mode_t mode, const f_string_static_t file_stage) {
 
+    if (!data || !data->main || !data->setting || !data_build) return 0;
     if (F_status_is_error(data->setting->state.status) || f_file_exists(file_stage, F_true) == F_true || data->setting->state.status == F_child) return data->main->child;
     if (!data_build->setting.build_sources_program.used && !data_build->setting.build_sources_program_shared.used) return 0;
 
@@ -25,7 +27,7 @@ extern "C" {
 
     f_string_dynamics_t arguments = f_string_dynamics_t_initialize;
 
-    data->setting->state.status = fake_build_objects_add(data, data_build, &data->path_build_objects_shared, &data_build->setting.build_objects_program, &data_build->setting.build_objects_program_shared, &arguments);
+    fake_build_objects_add(data, data_build, &data->path_build_objects_shared, &data_build->setting.build_objects_program, &data_build->setting.build_objects_program_shared, &arguments);
 
     if (F_status_is_error(data->setting->state.status)) {
       fake_print_error(data->setting, data->main->error, macro_fake_f(fake_build_objects_add));
@@ -35,7 +37,7 @@ extern "C" {
       return 0;
     }
 
-    data->setting->state.status = fake_build_sources_add(data, data_build, &data_build->setting.build_sources_program, &data_build->setting.build_sources_program_shared, &arguments);
+    fake_build_sources_add(data, data_build, &data_build->setting.build_sources_program, &data_build->setting.build_sources_program_shared, &arguments);
 
     if (F_status_is_error(data->setting->state.status)) {
       fake_print_error(data->setting, data->main->error, macro_fake_f(fake_build_sources_add));
@@ -85,7 +87,7 @@ extern "C" {
       data->setting->state.status = fll_execute_arguments_add(link_project_library, &arguments);
     }
 
-    fake_build_arguments_standard_add(data, data_build, F_true, fake_build_type_program_e, &arguments, status);
+    fake_build_arguments_standard_add(data, data_build, F_true, fake_build_type_program_e, &arguments);
 
     if (F_status_is_error(data->setting->state.status)) {
       fake_print_error(data->setting, data->main->error, macro_fake_f(fll_execute_arguments_add));
@@ -95,7 +97,7 @@ extern "C" {
       return 0;
     }
 
-    int result = fake_execute(data, data_build->environment, data_build->setting.build_compiler, arguments, status);
+    int result = fake_execute(data, data_build->environment, data_build->setting.build_compiler, arguments);
 
     macro_f_string_dynamics_t_delete_simple(arguments);
 
@@ -110,6 +112,7 @@ extern "C" {
 #ifndef _di_fake_build_program_static_
   int fake_build_program_static(fake_data_t * const data, fake_build_data_t * const data_build, const f_mode_t mode, const f_string_static_t file_stage) {
 
+    if (!data || !data->main || !data->setting || !data_build) return 0;
     if (F_status_is_error(data->setting->state.status) || f_file_exists(file_stage, F_true) == F_true || data->setting->state.status == F_child) return data->main->child;
     if (!data_build->setting.build_sources_program.used && !data_build->setting.build_sources_program_static.used) return 0;
 
@@ -117,7 +120,7 @@ extern "C" {
 
     f_string_dynamics_t arguments = f_string_dynamics_t_initialize;
 
-    data->setting->state.status = fake_build_objects_add(data, data_build, &data->path_build_objects_static, &data_build->setting.build_objects_program, &data_build->setting.build_objects_program_static, &arguments);
+    fake_build_objects_add(data, data_build, &data->path_build_objects_static, &data_build->setting.build_objects_program, &data_build->setting.build_objects_program_static, &arguments);
 
     if (F_status_is_error(data->setting->state.status)) {
       fake_print_error(data->setting, data->main->error, macro_fake_f(fake_build_objects_add));
@@ -127,7 +130,7 @@ extern "C" {
       return 0;
     }
 
-    data->setting->state.status = fake_build_sources_add(data, data_build, &data_build->setting.build_sources_program, &data_build->setting.build_sources_program_static, &arguments);
+    fake_build_sources_add(data, data_build, &data_build->setting.build_sources_program, &data_build->setting.build_sources_program_static, &arguments);
 
     if (F_status_is_error(data->setting->state.status)) {
       fake_print_error(data->setting, data->main->error, macro_fake_f(fake_build_sources_add));
@@ -187,7 +190,7 @@ extern "C" {
       } // for
     }
 
-    fake_build_arguments_standard_add(data, data_build, F_false, fake_build_type_program_e, &arguments, status);
+    fake_build_arguments_standard_add(data, data_build, F_false, fake_build_type_program_e, &arguments);
 
     if (F_status_is_error(data->setting->state.status)) {
       fake_print_error(data->setting, data->main->error, macro_fake_f(fll_execute_arguments_add));
@@ -197,7 +200,7 @@ extern "C" {
       return 0;
     }
 
-    int result = fake_execute(data, data_build->environment, data_build->setting.build_compiler, arguments, status);
+    int result = fake_execute(data, data_build->environment, data_build->setting.build_compiler, arguments);
 
     macro_f_string_dynamics_t_delete_simple(arguments);
 

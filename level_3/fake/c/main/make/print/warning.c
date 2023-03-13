@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_fake_make_print_warning_cannot_change_back_
-  f_status_t fake_make_print_warning_cannot_change_back(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t path, const f_status_t status) {
+  f_status_t fake_make_print_warning_cannot_change_back(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t path) {
 
     if (!setting) return F_status_set_error(F_output_not);
     if (print.verbosity < f_console_verbosity_verbose_e) return F_output_not;
@@ -15,7 +15,7 @@ extern "C" {
     fl_print_format("%[%QFailed change back to original path '%]", print.to, print.context, print.prefix, print.context);
     fl_print_format("%[%Q%]", print.to, print.notable, path, print.notable);
     fl_print_format("%[', status code =%] ", print.to, print.context, print.context);
-    fl_print_format("%[%ui%]", print.to, print.notable, F_status_set_fine(status), print.notable);
+    fl_print_format("%[%ui%]", print.to, print.notable, setting->state.status, print.notable);
     fl_print_format("%['.%]%r", print.to, print.context, print.context, f_string_eol_s);
 
     f_file_stream_unlock(print.to);

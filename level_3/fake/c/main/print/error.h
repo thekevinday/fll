@@ -366,8 +366,6 @@ extern "C" {
  *   This does not alter setting.state.status.
  * @param print
  *   Designates the how and where to print.
- * @param status
- *   The error status code to report on.
  * @param function
  *   The function call that returned the error.
  * @param path_file
@@ -391,7 +389,7 @@ extern "C" {
  * @see fake_print_error_fss_message()
  */
 #ifndef _di_fake_print_error_fss_
-  extern f_status_t fake_print_error_fss(fake_setting_t * const setting, const fl_print_t print, const f_status_t status, const f_string_t function, const f_string_static_t path_file, const f_string_range_t range, const bool fallback);
+  extern f_status_t fake_print_error_fss(fake_setting_t * const setting, const fl_print_t print, const f_string_t function, const f_string_static_t path_file, const f_string_range_t range, const bool fallback);
 #endif // _di_fake_print_error_fss_
 
 /**

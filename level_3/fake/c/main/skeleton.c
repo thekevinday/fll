@@ -5,9 +5,9 @@ extern "C" {
 #endif
 
 #ifndef _di_fake_skeleton_operate_
-  f_status_t fake_skeleton_operate(fake_data_t * const data) {
+  void fake_skeleton_operate(fake_data_t * const data) {
 
-    f_status_t status = F_none;
+    if (!data || !data->main || !data->setting) return;
 
     if (data->main->message.verbosity != f_console_verbosity_quiet_e && data->main->message.verbosity != f_console_verbosity_error_e) {
       fake_print_generating_skeleton(data->setting, data->main->message);
@@ -77,12 +77,12 @@ extern "C" {
 
       for (uint8_t i = 0; i < 24; ++i) {
 
-        status = fake_skeleton_operate_directory_create(data, path[i]);
+        fake_skeleton_operate_directory_create(data, path[i]);
 
-        if (F_status_is_error(status)) {
+        if (F_status_is_error(data->setting->state.status)) {
           fake_print_error(data->setting, data->main->error, macro_fake_f(fake_skeleton_operate_directory_create));
 
-          return status;
+          return;
         }
       } // for
 
@@ -91,135 +91,136 @@ extern "C" {
       }
     }
 
-    if (F_status_is_error_not(status)) {
-      status = fake_skeleton_operate_file_create(data, data->file_data_build_defines, F_false, fake_make_skeleton_content_defines_s);
-    }
+    fake_skeleton_operate_file_create(data, data->file_data_build_defines, F_false, fake_make_skeleton_content_defines_s);
+    if (F_status_is_error(data->setting->state.status)) return;
 
-    if (F_status_is_error_not(status)) {
-      status = fake_skeleton_operate_file_create(data, data->file_data_build_dependencies, F_false, fake_make_skeleton_content_dependencies_s);
-    }
+    fake_skeleton_operate_file_create(data, data->file_data_build_dependencies, F_false, fake_make_skeleton_content_dependencies_s);
+    if (F_status_is_error(data->setting->state.status)) return;
 
-    if (F_status_is_error_not(status)) {
-      status = fake_skeleton_operate_file_create(data, data->file_data_build_process_post, F_true, fake_make_skeleton_content_process_post_s);
-    }
+    fake_skeleton_operate_file_create(data, data->file_data_build_process_post, F_true, fake_make_skeleton_content_process_post_s);
+    if (F_status_is_error(data->setting->state.status)) return;
 
-    if (F_status_is_error_not(status)) {
-      status = fake_skeleton_operate_file_create(data, data->file_data_build_process_pre, F_true, fake_make_skeleton_content_process_pre_s);
-    }
+    fake_skeleton_operate_file_create(data, data->file_data_build_process_pre, F_true, fake_make_skeleton_content_process_pre_s);
+    if (F_status_is_error(data->setting->state.status)) return;
 
-    if (F_status_is_error_not(status)) {
-      status = fake_skeleton_operate_file_create(data, data->file_data_build_settings, F_false, fake_make_skeleton_content_settings_s);
-    }
+    fake_skeleton_operate_file_create(data, data->file_data_build_settings, F_false, fake_make_skeleton_content_settings_s);
+    if (F_status_is_error(data->setting->state.status)) return;
 
-    if (F_status_is_error_not(status)) {
-      status = fake_skeleton_operate_file_create(data, data->file_documents_readme, F_false, f_string_empty_s);
-    }
+    fake_skeleton_operate_file_create(data, data->file_documents_readme, F_false, f_string_empty_s);
+    if (F_status_is_error(data->setting->state.status)) return;
 
-    if (F_status_is_error_not(status)) {
-      status = fake_skeleton_operate_file_create(data, data->file_data_build_fakefile, F_false, fake_make_skeleton_content_fakefile_s);
-    }
+    fake_skeleton_operate_file_create(data, data->file_data_build_fakefile, F_false, fake_make_skeleton_content_fakefile_s);
+    if (F_status_is_error(data->setting->state.status)) return;
 
-    if (F_status_is_error(status)) return status;
-
-    return F_none;
+    data->setting->state.status = F_none;
   }
 #endif // _di_fake_skeleton_operate_
 
 #ifndef _di_fake_skeleton_operate_directory_create_
-  f_status_t fake_skeleton_operate_directory_create(fake_data_t * const data, const f_string_static_t path) {
+  void fake_skeleton_operate_directory_create(fake_data_t * const data, const f_string_static_t path) {
 
-    if (!path.used) return F_none;
+    if (!data || !data->main || !data->setting) return;
+    if (!path.used) return;
 
-    f_status_t status = f_directory_exists(path);
+    data->setting->state.status = f_directory_exists(path);
 
-    if (status == F_true) {
+    if (data->setting->state.status == F_true) {
       fake_print_verbose_directory_exists(data->setting, data->main->message, path);
 
-      return F_none;
+      data->setting->state.status = F_none;
+
+      return;
     }
 
-    if (status == F_false) {
+    if (data->setting->state.status == F_false) {
       fake_print_warning_path_exists_not_directory(data->setting, data->main->warning, path);
 
-      return F_status_set_warning(F_failure);
+      data->setting->state.status = F_status_set_warning(F_failure);
+
+      return;
     }
 
-    if (status == F_file_found_not) {
-      status = f_directory_create(path, F_file_mode_all_rwx_d);
+    if (data->setting->state.status == F_file_found_not) {
+      data->setting->state.status = f_directory_create(path, F_file_mode_all_rwx_d);
 
-      if (F_status_is_error(status)) {
-        if (F_status_set_fine(status) == F_file_found_not) {
+      if (F_status_is_error(data->setting->state.status)) {
+        if (F_status_set_fine(data->setting->state.status) == F_file_found_not) {
           fake_print_error_directory_create_parent_missing(data->setting, data->main->error, path);
         }
         else {
           fake_print_error_file(data->setting, data->main->error, macro_fake_f(f_directory_create), path, f_file_operation_create_s, fll_error_file_type_directory_e);
         }
 
-        return status;
+        return;
       }
 
       fake_print_verbose_create_directory(data->setting, data->main->message, path);
     }
-    else if (F_status_is_error(status)) {
+    else if (F_status_is_error(data->setting->state.status)) {
       fake_print_error_file(data->setting, data->main->error, macro_fake_f(f_directory_exists), path, f_file_operation_create_s, fll_error_file_type_directory_e);
 
-      return status;
+      return;
     }
 
-    return F_none;
+    data->setting->state.status = F_none;
   }
 #endif // _di_fake_skeleton_operate_directory_create_
 
 #ifndef _di_fake_skeleton_operate_file_create_
-  f_status_t fake_skeleton_operate_file_create(fake_data_t * const data, const f_string_static_t path, const bool executable, const f_string_static_t content) {
+  void fake_skeleton_operate_file_create(fake_data_t * const data, const f_string_static_t path, const bool executable, const f_string_static_t content) {
 
-    f_status_t status = F_none;
+    if (!data || !data->main || !data->setting) return;
+    if (!path.used) return;
 
-    if (!path.used) return F_none;
+    data->setting->state.status = f_file_is(path, F_file_type_regular_d, F_false);
 
-    status = f_file_is(path, F_file_type_regular_d, F_false);
-
-    if (status == F_true) {
+    if (data->setting->state.status == F_true) {
       fake_print_verbose_file_exists(data->setting, data->main->message, path);
 
-      return F_none;
+      data->setting->state.status = F_none;
+
+      return;
     }
 
     // symbolic links might also be fine.
-    if (status == F_false) {
-      status = f_file_is(path, F_file_type_link_d, F_false);
+    if (data->setting->state.status == F_false) {
+      data->setting->state.status = f_file_is(path, F_file_type_link_d, F_false);
 
-      if (status == F_true) {
+      if (data->setting->state.status == F_true) {
         fake_print_verbose_file_exists_as_link(data->setting, data->main->message, path);
 
-        return F_none;
+        data->setting->state.status = F_none;
+
+        return;
       }
     }
 
-    if (status == F_false) {
+    if (data->setting->state.status == F_false) {
       fake_print_verbose_file_exists_not_regular_or_link(data->setting, data->main->message, path);
 
-      return F_status_set_warning(F_none);
+      data->setting->state.status = F_status_set_warning(F_none);
+
+      return;
     }
 
-    if (F_status_set_fine(status) == F_file_found_not) {
+    if (F_status_set_fine(data->setting->state.status) == F_file_found_not) {
       mode_t mode = F_file_mode_all_rw_d;
 
       if (executable) {
         mode = F_file_mode_all_rwx_d;
       }
 
-      status = f_file_create(path, mode, F_true);
+      data->setting->state.status = f_file_create(path, mode, F_true);
 
-      if (F_status_is_error(status)) {
-        if (F_status_set_fine(status) == F_file_found_not) {
+      if (F_status_is_error(data->setting->state.status)) {
+        if (F_status_set_fine(data->setting->state.status) == F_file_found_not) {
           fake_print_error_file_create_parent_missing(data->setting, data->main->error, path);
         }
         else {
           fake_print_error_file(data->setting, data->main->error, macro_fake_f(f_file_create), path, f_file_operation_create_s, fll_error_file_type_file_e);
         }
 
-        return status;
+        return;
       }
 
       fake_print_verbose_create_file(data->setting, data->main->message, path);
@@ -230,23 +231,23 @@ extern "C" {
         file.flag = F_file_flag_append_wo_d;
         file.size_write = content.used;
 
-        status = f_file_open(path, 0, &file);
+        data->setting->state.status = f_file_open(path, 0, &file);
 
-        if (F_status_is_error(status)) {
+        if (F_status_is_error(data->setting->state.status)) {
           fake_print_error_file(data->setting, data->main->error, macro_fake_f(f_file_open), path, fake_common_file_populate_pre_s, fll_error_file_type_file_e);
 
-          return status;
+          return;
         }
 
-        status = f_file_write(file, content, 0);
+        data->setting->state.status = f_file_write(file, content, 0);
 
-        if (F_status_is_error(status)) {
+        if (F_status_is_error(data->setting->state.status)) {
           fake_print_error_file(data->setting, data->main->error, macro_fake_f(f_file_write), path, fake_common_file_populate_pre_s, fll_error_file_type_file_e);
 
           f_file_stream_flush(file);
           f_file_stream_close(&file);
 
-          return status;
+          return;
         }
 
         fake_print_verbose_file_pre_populated(data->setting, data->main->message, path);
@@ -255,13 +256,13 @@ extern "C" {
         f_file_stream_close(&file);
       }
     }
-    else if (F_status_is_error(status)) {
+    else if (F_status_is_error(data->setting->state.status)) {
       fake_print_error_file(data->setting, data->main->error, macro_fake_f(f_file_is), path, f_file_operation_create_s, fll_error_file_type_file_e);
 
-      return status;
+      return;
     }
 
-    return F_none;
+    data->setting->state.status = F_none;
   }
 #endif // _di_fake_skeleton_operate_file_create_
 

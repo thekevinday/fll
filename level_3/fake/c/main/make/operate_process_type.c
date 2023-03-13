@@ -7,7 +7,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_process_type_break_
   void fake_make_operate_process_type_break(fake_make_data_t * const data_make) {
 
-    if (!data_make) return;
+    if (!data_make || !data_make->main || !data_make->setting) return;
 
     data_make->setting->state.status = F_none;
 
@@ -30,31 +30,31 @@ extern "C" {
 #ifndef _di_fake_make_operate_process_type_build_
   void fake_make_operate_process_type_build(fake_make_data_t * const data_make) {
 
-    if (!data_make) return;
+    if (!data_make || !data_make->main || !data_make->setting) return;
 
     fake_build_operate(data_make->data, data_make->cache_arguments.used ? &data_make->cache_arguments : 0, F_false);
     if (F_status_set_fine(data_make->setting->state.status) == F_interrupt) return;
 
-    data_make->setting->state.status = fake_make_operate_process_return(data_make, F_status_is_error(data_make->setting->state.status) ? 1 : 0);
+    fake_make_operate_process_return(data_make, F_status_is_error(data_make->setting->state.status) ? 1 : 0);
   }
 #endif // _di_fake_make_operate_process_type_build_
 
 #ifndef _di_fake_make_operate_process_type_clean_
   void fake_make_operate_process_type_clean(fake_make_data_t * const data_make) {
 
-    if (!data_make) return;
+    if (!data_make || !data_make->main || !data_make->setting) return;
 
-    data_make->setting->state.status = fake_clean_operate(data_make->data);
+    fake_clean_operate(data_make->data);
     if (F_status_set_fine(data_make->setting->state.status) == F_interrupt) return;
 
-    data_make->setting->state.status = fake_make_operate_process_return(data_make, F_status_is_error(data_make->setting->state.status) ? 1 : 0);
+    fake_make_operate_process_return(data_make, F_status_is_error(data_make->setting->state.status) ? 1 : 0);
   }
 #endif // _di_fake_make_operate_process_type_clean_
 
 #ifndef _di_fake_make_operate_process_type_compile_
   int fake_make_operate_process_type_compile(fake_make_data_t * const data_make) {
 
-    if (!data_make) return;
+    if (!data_make) return 0;
 
     const int result = fake_execute(data_make->data, data_make->environment, data_make->setting_build.build_compiler, data_make->cache_arguments);
 
@@ -62,7 +62,7 @@ extern "C" {
       fake_print_error(data_make->setting, data_make->main->error, macro_fake_f(fake_execute));
     }
     else if (data_make->setting->state.status == F_child) {
-      return;
+      return result;
     }
 
     fake_make_operate_process_return(data_make, result);
@@ -74,7 +74,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_process_type_condition_
   void fake_make_operate_process_type_condition(fake_make_data_t * const data_make, fake_state_process_t * const state_process) {
 
-    if (!data_make) return;
+    if (!data_make || !data_make->main || !data_make->setting) return;
 
     data_make->setting->state.status = F_none;
 
@@ -195,7 +195,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_process_type_copy_
   void fake_make_operate_process_type_copy(fake_make_data_t * const data_make, const bool clone) {
 
-    if (!data_make) return;
+    if (!data_make || !data_make->main || !data_make->setting) return;
 
     const f_array_length_t total = data_make->cache_arguments.used - 1;
     f_string_static_t destination = f_string_static_t_initialize;
@@ -208,7 +208,7 @@ extern "C" {
     }
     else {
       recurse.verbose = fake_print_verbose_copy;
-      macro_f_mode_t_set_default_umask(recurse.state.mode, data_make->main->umask);
+      macro_f_mode_t_set_default_umask(recurse.mode, data_make->main->umask);
     }
 
     bool existing = F_true;
@@ -290,9 +290,11 @@ extern "C" {
           recurse.flag -= recurse.flag & f_directory_recurse_flag_clone_e;
         }
 
-        fl_directory_copy(data_make->cache_arguments.array[i], destination, mode, &recurse);
+        fl_directory_copy(data_make->cache_arguments.array[i], destination, &recurse);
 
-        if (F_status_is_error(data_make->setting->state.status)) {
+        if (F_status_is_error(recurse.state.status)) {
+          data_make->setting->state.status = recurse.state.status;
+
           fake_print_error_file(data_make->setting, data_make->main->error, macro_fake_f(fl_directory_copy), data_make->cache_arguments.array[i], clone ? f_file_operation_clone_s : f_file_operation_copy_s, fll_error_file_type_directory_e);
 
           data_make->setting->state.status = F_status_set_error(F_failure);
@@ -303,17 +305,15 @@ extern "C" {
           data_make->setting->state.status = f_file_clone(data_make->cache_arguments.array[i], destination, recurse.size_block, recurse.flag);
         }
         else {
-          data_make->setting->state.status = f_file_copy(data_make->cache_arguments.array[i], destination, mode, recurse.size_block, recurse.flag);
+          data_make->setting->state.status = f_file_copy(data_make->cache_arguments.array[i], destination, recurse.mode, recurse.size_block, recurse.flag);
         }
 
         if (F_status_is_error(data_make->setting->state.status)) {
           fake_print_error_file(data_make->setting, data_make->main->error, clone ? macro_fake_f(f_file_clone) : macro_fake_f(f_file_copy), data_make->cache_arguments.array[i], clone ? f_file_operation_clone_s : f_file_operation_copy_s, fll_error_file_type_file_e);
 
-          f_directory_recurse_delete(&recurse);
-
           data_make->setting->state.status = F_status_set_error(F_failure);
 
-          return;
+          break;
         }
 
         fake_make_print_verbose_operate_copy(data_make->setting, data_make->main->message, clone, data_make->cache_arguments.array[i], destination);
@@ -321,24 +321,24 @@ extern "C" {
       else if (F_status_is_error(data_make->setting->state.status)) {
         fake_print_error_file(data_make->setting, data_make->main->error, macro_fake_f(f_directory_is), data_make->cache_arguments.array[i], f_file_operation_identify_s, fll_error_file_type_directory_e);
 
-        f_directory_recurse_delete(&recurse);
-
         data_make->setting->state.status = F_status_set_error(F_failure);
 
-        return;
+        break;
       }
     } // for
 
     f_directory_recurse_delete(&recurse);
 
-    data_make->setting->state.status = F_none;
+    if (F_status_is_error_not(data_make->setting->state.status)) {
+      data_make->setting->state.status = F_none;
+    }
   }
 #endif // _di_fake_make_operate_process_type_copy_
 
 #ifndef _di_fake_make_operate_process_type_define_
   void fake_make_operate_process_type_define(fake_make_data_t * const data_make) {
 
-    if (!data_make) return;
+    if (!data_make || !data_make->main || !data_make->setting) return;
 
     if (data_make->cache_arguments.used > 1) {
       data_make->setting->state.status = f_environment_set(data_make->cache_arguments.array[0], data_make->cache_arguments.array[1], F_true);
@@ -361,7 +361,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_process_type_deletes_
   void fake_make_operate_process_type_deletes(fake_make_data_t * const data_make, const bool all) {
 
-    if (!data_make) return;
+    if (!data_make || !data_make->main || !data_make->setting) return;
 
     const int recursion_max = all ? F_directory_max_descriptors_d : 0;
     struct stat file_stat;
@@ -440,7 +440,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_process_type_exit_
   void fake_make_operate_process_type_exit(fake_make_data_t * const data_make) {
 
-    if (!data_make) return;
+    if (!data_make || !data_make->main || !data_make->setting) return;
 
     data_make->setting->state.status = F_none;
 
@@ -473,7 +473,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_process_type_fail_
   void fake_make_operate_process_type_fail(fake_make_data_t * const data_make) {
 
-    if (!data_make) return;
+    if (!data_make || !data_make->main || !data_make->setting) return;
 
     if (fl_string_dynamic_compare(fake_make_operation_argument_exit_s, data_make->cache_arguments.array[0]) == F_equal_to) {
       data_make->setting_make.fail = fake_make_operation_fail_exit_e;
@@ -508,7 +508,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_process_type_groups_
   void fake_make_operate_process_type_groups(fake_make_data_t * const data_make, const bool all) {
 
-    if (!data_make) return;
+    if (!data_make || !data_make->main || !data_make->setting) return;
 
     gid_t id = 0;
     bool dereference = F_true;
@@ -521,7 +521,7 @@ extern "C" {
       dereference = F_false;
     }
 
-    fake_make_get_id(data_make, F_false, data_make->cache_arguments.array[i++], (void *) &id);
+    id = (gid_t) fake_make_get_id(data_make, F_false, data_make->cache_arguments.array[i++]);
 
     if (F_status_is_error(data_make->setting->state.status)) {
       data_make->setting->state.status = F_status_set_error(F_failure);
@@ -562,7 +562,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_process_type_if_define_
   void fake_make_operate_process_type_if_define(fake_make_data_t * const data_make, const bool if_not, fake_state_process_t *state_process) {
 
-    if (!data_make || !state_process) return;
+    if (!data_make || !data_make->main || !data_make->setting || !state_process) return;
 
     state_process->condition_result = fake_condition_result_true_e;
 
@@ -593,7 +593,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_process_type_if_exist_
   void fake_make_operate_process_type_if_exist(fake_make_data_t * const data_make, const bool if_not, fake_state_process_t *state_process) {
 
-    if (!data_make || !state_process) return;
+    if (!data_make || !data_make->main || !data_make->setting || !state_process) return;
 
     f_array_length_t i = if_not ? 2 : 1;
     bool dereference = F_true;
@@ -657,7 +657,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_process_type_if_is_
   void fake_make_operate_process_type_if_is(fake_make_data_t * const data_make, const bool if_not, fake_state_process_t *state_process) {
 
-    if (!data_make || !state_process) return;
+    if (!data_make || !data_make->main || !data_make->setting || !state_process) return;
 
     // block     = 0x1 (0000 0001) link    = 0x10 (0001 0000)
     // character = 0x2 (0000 0010) regular = 0x20 (0010 0000)
@@ -783,7 +783,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_process_type_if_greater_if_lesser_
   void fake_make_operate_process_type_if_greater_if_lesser(fake_make_data_t * const data_make, fake_state_process_t *state_process) {
 
-    if (!data_make || !state_process) return;
+    if (!data_make || !data_make->main || !data_make->setting || !state_process) return;
 
     f_string_range_t range = f_string_range_t_initialize;
     f_number_unsigned_t number_left = 0;
@@ -929,7 +929,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_process_type_if_group_
   void fake_make_operate_process_type_if_group(fake_make_data_t * const data_make, const bool if_not, fake_state_process_t *state_process) {
 
-    if (!data_make || !state_process) return;
+    if (!data_make || !data_make->main || !data_make->setting || !state_process) return;
 
     uid_t id = 0;
     f_array_length_t i = if_not ? 2 : 1;
@@ -942,7 +942,7 @@ extern "C" {
       dereference = F_false;
     }
 
-    fake_make_get_id(data_make, F_true, data_make->cache_arguments.array[i++], (void *) &id);
+    id = (uid_t) fake_make_get_id(data_make, F_true, data_make->cache_arguments.array[i++]);
 
     if (F_status_is_error(data_make->setting->state.status)) {
       state_process->condition_result = fake_condition_result_error_e;
@@ -993,7 +993,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_process_type_if_mode_
   void fake_make_operate_process_type_if_mode(fake_make_data_t * const data_make, const bool if_not, fake_state_process_t *state_process) {
 
-    if (!data_make || !state_process) return;
+    if (!data_make || !data_make->main || !data_make->setting || !state_process) return;
 
     f_file_mode_t mode_rule = 0;
     mode_t mode_match = 0;
@@ -1090,7 +1090,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_process_type_if_owner_
   void fake_make_operate_process_type_if_owner(fake_make_data_t * const data_make, const bool if_not, fake_state_process_t *state_process) {
 
-    if (!data_make || !state_process) return;
+    if (!data_make || !data_make->main || !data_make->setting || !state_process) return;
 
     uid_t id = 0;
     f_array_length_t i = if_not ? 2 : 1;
@@ -1103,7 +1103,7 @@ extern "C" {
       dereference = F_false;
     }
 
-    fake_make_get_id(data_make, F_true, data_make->cache_arguments.array[i++], (void *) &id);
+    id = (uid_t) fake_make_get_id(data_make, F_true, data_make->cache_arguments.array[i++]);
 
     if (F_status_is_error(data_make->setting->state.status)) {
       state_process->condition_result = fake_condition_result_error_e;
@@ -1154,7 +1154,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_process_type_if_parameter_
   void fake_make_operate_process_type_if_parameter(fake_make_data_t * const data_make, const bool if_not, fake_state_process_t *state_process) {
 
-    if (!data_make || !state_process) return;
+    if (!data_make || !data_make->main || !data_make->setting || !state_process) return;
 
     const f_string_static_t reserved_name[] = {
       fake_make_parameter_variable_build_s,
@@ -1288,7 +1288,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_process_type_index_
   int fake_make_operate_process_type_index(fake_make_data_t * const data_make) {
 
-    if (!data_make) return;
+    if (!data_make) return 0;
 
     const int result = fake_execute(data_make->data, data_make->environment, data_make->setting_build.build_indexer, data_make->cache_arguments);
 
@@ -1307,7 +1307,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_process_type_link_
   void fake_make_operate_process_type_link(fake_make_data_t * const data_make) {
 
-    if (!data_make) return;
+    if (!data_make || !data_make->main || !data_make->setting) return;
 
     // 0x1 = force, 0x2 = strict.
     uint8_t flag = 0;
@@ -1374,7 +1374,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_process_type_modes_
   void fake_make_operate_process_type_modes(fake_make_data_t * const data_make, const bool all) {
 
-    if (!data_make) return;
+    if (!data_make || !data_make->main || !data_make->setting) return;
 
     data_make->setting->state.status = F_none;
 
@@ -1441,7 +1441,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_process_type_move_
   void fake_make_operate_process_type_move(fake_make_data_t * const data_make) {
 
-    if (!data_make) return;
+    if (!data_make || !data_make->main || !data_make->setting) return;
 
     const f_array_length_t total = data_make->cache_arguments.used -1;
 
@@ -1516,7 +1516,9 @@ extern "C" {
 
       fll_file_move(data_make->cache_arguments.array[i], destination, &recurse);
 
-      if (F_status_is_error(data_make->setting->state.status)) {
+      if (F_status_is_error(recurse.state.status)) {
+        data_make->setting->state.status = recurse.state.status;
+
         fake_print_error_file(data_make->setting, data_make->main->error, macro_fake_f(fll_file_move), data_make->cache_arguments.array[i], f_file_operation_move_s, fll_error_file_type_directory_e);
 
         data_make->setting->state.status = F_status_set_error(F_failure);
@@ -1562,7 +1564,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_process_type_owners_
   void fake_make_operate_process_type_owners(fake_make_data_t * const data_make, const bool all) {
 
-    if (!data_make) return;
+    if (!data_make || !data_make->main || !data_make->setting) return;
 
     uid_t id = 0;
     bool dereference = F_true;
@@ -1573,7 +1575,7 @@ extern "C" {
       dereference = F_false;
     }
 
-    fake_make_get_id(data_make, F_true, data_make->cache_arguments.array[i++], (void *) &id);
+    id = (uid_t) fake_make_get_id(data_make, F_true, data_make->cache_arguments.array[i++]);
 
     if (F_status_is_error(data_make->setting->state.status)) {
       fake_print_error(data_make->setting, data_make->main->error, macro_fake_f(fake_make_get_id));
@@ -1618,7 +1620,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_process_type_parameter_
   void fake_make_operate_process_type_parameter(fake_make_data_t * const data_make) {
 
-    if (!data_make) return;
+    if (!data_make || !data_make->main || !data_make->setting) return;
 
     bool found = F_false;
     f_array_length_t i = 0;
@@ -1714,7 +1716,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_process_type_pop_
   void fake_make_operate_process_type_pop(fake_make_data_t * const data_make) {
 
-    if (!data_make) return;
+    if (!data_make || !data_make->main || !data_make->setting) return;
 
     f_string_dynamic_t *argument = &data_make->path.stack.array[data_make->path.stack.used - 1];
 
@@ -1756,7 +1758,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_process_type_print_
   void fake_make_operate_process_type_print(fake_make_data_t * const data_make) {
 
-    if (!data_make) return;
+    if (!data_make || !data_make->main || !data_make->setting) return;
 
     data_make->cache_1.used = 0;
 
@@ -1822,7 +1824,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_process_type_skeleton_
   void fake_make_operate_process_type_skeleton(fake_make_data_t * const data_make) {
 
-    if (!data_make) return;
+    if (!data_make || !data_make->main || !data_make->setting) return;
 
     fake_skeleton_operate(data_make->data);
     if (F_status_set_fine(data_make->setting->state.status) == F_interrupt) return;
@@ -1834,7 +1836,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_process_type_to_
   void fake_make_operate_process_type_to(fake_make_data_t * const data_make) {
 
-    if (!data_make) return;
+    if (!data_make || !data_make->main || !data_make->setting) return;
 
     fake_make_assure_inside_project(data_make, data_make->cache_arguments.array[0]);
 
@@ -1911,7 +1913,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_process_type_top_
   void fake_make_operate_process_type_top(fake_make_data_t * const data_make) {
 
-    if (!data_make) return;
+    if (!data_make || !data_make->main || !data_make->setting) return;
 
     {
       data_make->setting->state.status = f_path_change_at(data_make->path.top.id);
@@ -1941,7 +1943,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_process_type_touch_
   void fake_make_operate_process_type_touch(fake_make_data_t * const data_make) {
 
-    if (!data_make) return;
+    if (!data_make || !data_make->main || !data_make->setting) return;
 
     f_mode_t mode = f_mode_t_initialize;
 
@@ -1992,7 +1994,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_process_type_write_
   void fake_make_operate_process_type_write(fake_make_data_t * const data_make) {
 
-    if (!data_make) return;
+    if (!data_make || !data_make->main || !data_make->setting) return;
 
     f_file_t file = f_file_t_initialize;
 

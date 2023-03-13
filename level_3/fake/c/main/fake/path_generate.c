@@ -7,7 +7,7 @@ extern "C" {
 #ifndef _di_fake_path_generate_
   void fake_path_generate(fake_data_t * const data) {
 
-    if (!data) return;
+    if (!data || !data->main || !data->setting) return;
 
     data->setting->state.status = F_none;
     uint8_t i = 0;
@@ -315,7 +315,7 @@ extern "C" {
 
         for (i = 0; i < 2; ++i) {
 
-          data->setting->state.status = fake_path_generate_string_dynamic(data, sources[i], values[i], parameters_size[i]);
+          fake_path_generate_string_dynamic(data, sources[i], values[i], parameters_size[i]);
 
           if (F_status_is_error(data->setting->state.status)) {
             fake_print_error(data->setting, data->main->error, macro_fake_f(fake_path_generate_string_dynamic));
@@ -364,7 +364,7 @@ extern "C" {
 #ifndef _di_fake_path_generate_string_dynamic_
   void fake_path_generate_string_dynamic(fake_data_t * const data, const f_string_dynamic_t source, f_string_dynamic_t *destination[], const uint8_t length) {
 
-    if (!data) return;
+    if (!data || !data->main || !data->setting) return;
 
     data->setting->state.status = F_none;
 

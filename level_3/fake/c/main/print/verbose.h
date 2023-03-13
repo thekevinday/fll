@@ -74,16 +74,10 @@ extern "C" {
  * @param path
  *   The name of the file.
  *
- * @return
- *   F_none on success.
- *   F_output_not on success, but no printing is performed.
- *
- *   F_output_not (with error bit) if setting is NULL.
- *
  * @see fake_print_simple_variable()
  */
 #ifndef _di_fake_print_verbose_create_directory_
-  extern f_status_t fake_print_verbose_create_directory(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t path);
+  extern void fake_print_verbose_create_directory(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t path);
 #endif // _di_fake_print_verbose_create_directory_
 
 /**

@@ -28,8 +28,6 @@ extern "C" {
  *   The output structure to print to.
  * @param path
  *   The path that cannot be changed back to.
- * @param status
- *   The status code representing the cause of the failure.
  *
  * @return
  *   F_none on success.
@@ -42,7 +40,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fake_make_print_warning_cannot_change_back_
-  extern f_status_t fake_make_print_warning_cannot_change_back(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t path, const f_status_t status);
+  extern f_status_t fake_make_print_warning_cannot_change_back(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t path);
 #endif // _di_fake_make_print_warning_cannot_change_back_
 
 /**

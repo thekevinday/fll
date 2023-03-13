@@ -17,7 +17,7 @@ extern "C" {
       return;
     }
 
-    fake_data_t * const data = (fake_data_t * const) recurse->state.custom;
+    fake_data_t * const data = (fake_data_t *) recurse->state.custom;
 
     if (data->main->message.verbosity < f_console_verbosity_verbose_e) {
       recurse->state.status = F_output_not;
@@ -42,7 +42,7 @@ extern "C" {
       return;
     }
 
-    fake_data_t * const data = (fake_data_t * const) recurse->state.custom;
+    fake_data_t * const data = (fake_data_t *) recurse->state.custom;
 
     if (data->main->message.verbosity < f_console_verbosity_verbose_e) {
       recurse->state.status = F_output_not;
@@ -57,12 +57,10 @@ extern "C" {
 #ifndef _di_fake_print_verbose_create_directory_
   void fake_print_verbose_create_directory(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t path) {
 
-    if (!setting) return F_status_set_error(F_output_not);
-    if (print.verbosity < f_console_verbosity_verbose_e) return F_output_not;
+    if (!setting) return;
+    if (print.verbosity < f_console_verbosity_verbose_e) return;
 
     fake_print_simple_variable(setting, print, "Created directory ", path);
-
-    return F_none;
   }
 #endif // _di_fake_print_verbose_create_directory_
 
@@ -143,7 +141,7 @@ extern "C" {
       return;
     }
 
-    fake_data_t * const data = (fake_data_t * const) recurse->state.custom;
+    fake_data_t * const data = (fake_data_t *) recurse->state.custom;
 
     if (data->main->message.verbosity < f_console_verbosity_verbose_e) {
       recurse->state.status = F_output_not;

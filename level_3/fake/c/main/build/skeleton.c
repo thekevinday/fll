@@ -7,7 +7,7 @@ extern "C" {
 #ifndef _di_fake_build_skeleton_
   void fake_build_skeleton(fake_data_t * const data, fake_build_data_t * const data_build, const mode_t mode, const f_string_static_t file_stage) {
 
-    if (!data || !data_build) return;
+    if (!data || !data->main || !data->setting || !data_build) return;
     if (F_status_is_error(data->setting->state.status) || data->setting->state.status == F_child) return;
     if (f_file_exists(file_stage, F_true) == F_true) return;
 
@@ -64,7 +64,7 @@ extern "C" {
 
         if (f_path_separator_s.used && directorys[i].string[j] != f_path_separator_s.string[0]) continue;
 
-        if (!((++main->signal_check) % fake_signal_check_d)) {
+        if (!((++data->main->signal_check) % fake_signal_check_d)) {
           if (fll_program_standard_signal_received(data->main)) {
             fll_program_print_signal_received(data->main->warning, data->setting->line_first, data->main->signal_received);
 

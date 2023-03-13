@@ -21,17 +21,16 @@ extern "C" {
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
- * @param status
- *   The return status.
  *
- *   F_none on success.
+ *   This alters data_make.settings.state.status:
+ *     F_none on success.
  *
- *   F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
  *
- *   Status codes (with error bit) are returned on any problem.
+ *     Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_make_load_parameters_
-  extern void fake_make_load_parameters(fake_make_data_t * const data_make, f_status_t * const status);
+  extern void fake_make_load_parameters(fake_make_data_t * const data_make);
 #endif // _di_fake_make_load_parameters_
 
 #ifdef __cplusplus

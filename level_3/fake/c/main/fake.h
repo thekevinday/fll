@@ -120,6 +120,7 @@
 #include <program/fake/main/fake/path_generate.h>
 #include <program/fake/main/make.h>
 #include <program/fake/main/make/load_fakefile.h>
+#include <program/fake/main/make/load_parameters.h>
 #include <program/fake/main/make/operate.h>
 #include <program/fake/main/make/operate_block.h>
 #include <program/fake/main/make/operate_process.h>

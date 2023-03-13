@@ -9,7 +9,7 @@ extern "C" {
 
     if (!main || !setting) return;
 
-    if (F_status_is_error(data->setting->state.status)) {
+    if (F_status_is_error(setting->state.status)) {
       fake_print_line_last(setting, main->message);
 
       return;
@@ -49,7 +49,7 @@ extern "C" {
 
     fake_path_generate(&data);
 
-    if (F_status_is_error(data->setting->state.status)) {
+    if (F_status_is_error(setting->state.status)) {
       fake_data_delete(&data);
 
       return;
@@ -66,8 +66,8 @@ extern "C" {
         setting->state.status = f_string_dynamic_append(f_string_ascii_minus_s, &setting->fakefile);
       }
 
-      if (F_status_is_error(data->setting->state.status)) {
-        fake_print_error(setting, main->error, setting->state.status, macro_fake_f(f_string_dynamic_append));
+      if (F_status_is_error(setting->state.status)) {
+        fake_print_error(setting, main->error, macro_fake_f(f_string_dynamic_append));
       }
     }
 
@@ -103,7 +103,7 @@ extern "C" {
                   setting->state.status = F_status_set_error(F_file_not);
                 }
 
-                if (F_status_is_error(data->setting->state.status)) {
+                if (F_status_is_error(setting->state.status)) {
                   fake_print_error_file(
                     setting,
                     main->error,
@@ -190,12 +190,12 @@ extern "C" {
             main->signal_check = 0;
           }
 
-          if (F_status_is_error(data->setting->state.status)) break;
+          if (F_status_is_error(setting->state.status)) break;
         } // for
       }
     }
 
-    if (F_status_is_error(data->setting->state.status)) {
+    if (F_status_is_error(setting->state.status)) {
       if (F_status_set_fine(setting->state.status) == F_interrupt) {
         fake_print_operation_cancelled(setting, main->message, data.operation);
       }
@@ -224,7 +224,7 @@ extern "C" {
 #ifndef _di_fake_execute_
   int fake_execute(fake_data_t * const data, const f_string_maps_t environment, const f_string_static_t program, const f_string_statics_t arguments) {
 
-    if (!data) return;
+    if (!data || !data->main || !data->setting) return 1;
     if (F_status_is_error(data->setting->state.status)) return 1;
 
     if (data->main->error.verbosity >= f_console_verbosity_verbose_e) {
@@ -328,7 +328,7 @@ extern "C" {
         data->setting->state.status = f_file_size(path_file, F_true, &size_file);
 
         if (F_status_is_error(data->setting->state.status)) {
-          fake_print_error_file(data->setting, data->main->error, , macro_fake_f(f_file_size), path_file, f_file_operation_read_s, fll_error_file_type_file_e);
+          fake_print_error_file(data->setting, data->main->error, macro_fake_f(f_file_size), path_file, f_file_operation_read_s, fll_error_file_type_file_e);
 
           return;
         }
@@ -385,7 +385,7 @@ extern "C" {
 #ifndef _di_fake_pipe_buffer_
   void fake_pipe_buffer(fake_data_t * const data, f_string_dynamic_t * const buffer) {
 
-    if (!data || !buffer) return;
+    if (!data || !data->main || !data->setting || !buffer) return;
 
     f_file_t file = f_file_t_initialize;
 
@@ -410,7 +410,7 @@ extern "C" {
         if (fll_program_standard_signal_received(data->main)) {
           fll_program_print_signal_received(data->main->warning, data->setting->line_first, data->main->signal_received);
 
-          f_file_stream_read_block = F_status_set_error(F_interrupt);
+          data->setting->state.status = F_status_set_error(F_interrupt);
 
           return;
         }
@@ -432,7 +432,7 @@ extern "C" {
 #ifndef _di_fake_validate_parameter_paths_
   void fake_validate_parameter_paths(fake_data_t * const data) {
 
-    if (!data) return;
+    if (!data || !data->main || !data->setting) return;
 
     if (!((++data->main->signal_check) % fake_signal_check_d)) {
       if (fll_program_standard_signal_received(data->main)) {
@@ -440,7 +440,7 @@ extern "C" {
 
         data->setting->state.status = F_status_set_error(F_interrupt);
 
-        return
+        return;
       }
     }
 

@@ -7,7 +7,7 @@ extern "C" {
 #ifndef _di_fake_build_library_script_
   int fake_build_library_script(fake_data_t * const data, fake_build_data_t * const data_build, const f_mode_t mode, const f_string_static_t file_stage) {
 
-    if (!data) return 0;
+    if (!data || !data->main || !data->setting) return 0;
 
     if (F_status_is_error(data->setting->state.status) || f_file_exists(file_stage, F_true) == F_true || data->setting->state.status == F_child) return data->main->child;
 
@@ -20,7 +20,7 @@ extern "C" {
 #ifndef _di_fake_build_library_shared_
   int fake_build_library_shared(fake_data_t * const data, fake_build_data_t * const data_build, const f_mode_t mode, const f_string_static_t file_stage) {
 
-    if (!data || !data_build) return 0;
+    if (!data || !data->main || !data->setting || !data_build) return 0;
 
     if (F_status_is_error(data->setting->state.status) || f_file_exists(file_stage, F_true) == F_true || data->setting->state.status == F_child) return data->main->child;
     if (!data_build->setting.build_sources_library.used && !data_build->setting.build_sources_library_shared.used) return 0;
@@ -29,9 +29,9 @@ extern "C" {
 
     f_string_dynamics_t arguments = f_string_dynamics_t_initialize;
 
-    data->setting->state.status = fake_build_objects_add(data, data_build, &data->path_build_objects_shared, &data_build->setting.build_objects_library, &data_build->setting.build_objects_library_shared, &arguments);
+    fake_build_objects_add(data, data_build, &data->path_build_objects_shared, &data_build->setting.build_objects_library, &data_build->setting.build_objects_library_shared, &arguments);
 
-    if (F_status_is_error(*data->setting->state.status)) {
+    if (F_status_is_error(data->setting->state.status)) {
       fake_print_error(data->setting, data->main->error, macro_fake_f(fake_build_objects_add));
 
       f_string_dynamics_resize(0, &arguments);
@@ -39,7 +39,7 @@ extern "C" {
       return 0;
     }
 
-    data->setting->state.status = fake_build_sources_add(data, data_build, &data_build->setting.build_sources_library, &data_build->setting.build_sources_library_shared, &arguments);
+    fake_build_sources_add(data, data_build, &data_build->setting.build_sources_library, &data_build->setting.build_sources_library_shared, &arguments);
 
     if (F_status_is_error(data->setting->state.status)) {
       fake_print_error(data->setting, data->main->error, macro_fake_f(fake_build_sources_add));
@@ -436,7 +436,7 @@ extern "C" {
 #ifndef _di_fake_build_library_static_
   int fake_build_library_static(fake_data_t * const data, fake_build_data_t * const data_build, const f_mode_t mode, const f_string_static_t file_stage) {
 
-    if (!data || !data_build) return 0;
+    if (!data || !data->main || !data->setting || !data_build) return 0;
 
     if (F_status_is_error(data->setting->state.status) || f_file_exists(file_stage, F_true) == F_true || data->setting->state.status == F_child) return data->main->child;
     if (!data_build->setting.build_sources_library.used && !data_build->setting.build_sources_library_static.used) return 0;
@@ -497,7 +497,7 @@ extern "C" {
 
           source_path.used = 0;
 
-          data->setting->state.status = fake_build_get_file_name_without_extension(data, sources[i]->array[j], &file_name);
+          fake_build_get_file_name_without_extension(data, sources[i]->array[j], &file_name);
 
           if (F_status_is_error(data->setting->state.status)) {
             fake_print_error(data->setting, data->main->error, macro_fake_f(fake_build_get_file_name_without_extension));
@@ -565,7 +565,7 @@ extern "C" {
     int result = data->main->child;
 
     if (F_status_is_error_not(data->setting->state.status)) {
-      result = fake_execute(data, data_build->environment, data_build->setting.build_indexer, arguments, status);
+      result = fake_execute(data, data_build->environment, data_build->setting.build_indexer, arguments);
     }
 
     f_string_dynamic_resize(0, &file_name);

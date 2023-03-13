@@ -45,15 +45,15 @@ extern "C" {
 
       setting->state.step_small = 4;
 
-      f_console_parameter_process(arguments, &main->parameters, &setting->state.status, (void *) &data);
+      f_console_parameter_process(arguments, &main->parameters, &setting->state, (void *) &data);
 
       setting->state.step_small = step_original;
     }
 
-    if (F_status_is_error(main->setting->state.status)) {
+    if (F_status_is_error(setting->state.status)) {
       fake_print_line_first(setting, main->message);
 
-      fake_print_error(setting, main->error, setting->state.status, macro_fake_f(f_console_parameter_process));
+      fake_print_error(setting, main->error, macro_fake_f(f_console_parameter_process));
 
       return;
     }
@@ -72,10 +72,10 @@ extern "C" {
 
         setting->state.status = fll_program_parameter_process_context(choices, modes, F_true, main);
 
-        if (F_status_is_error(main->setting->state.status)) {
+        if (F_status_is_error(setting->state.status)) {
           fake_print_line_first(setting, main->message);
 
-          fake_print_error(setting, main->error, setting->state.status, macro_fake_f(fll_program_parameter_process_context));
+          fake_print_error(setting, main->error, macro_fake_f(fll_program_parameter_process_context));
 
           return;
         }
@@ -105,10 +105,10 @@ extern "C" {
 
         setting->state.status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, main);
 
-        if (F_status_is_error(main->setting->state.status)) {
+        if (F_status_is_error(setting->state.status)) {
           fake_print_line_first(setting, main->message);
 
-          fake_print_error(setting, main->error, setting->state.status, macro_fake_f(fll_program_parameter_process_verbosity));
+          fake_print_error(setting, main->error, macro_fake_f(fll_program_parameter_process_verbosity));
 
           return;
         }
@@ -275,10 +275,10 @@ extern "C" {
 
                   // @todo fix this to print an error about the actual invalid character so that it can be investigated.
 
-                  if (F_status_is_error(main->setting->state.status)) {
+                  if (F_status_is_error(setting->state.status)) {
                     fake_print_line_first(setting, main->message);
 
-                    if (fake_print_error_fallback(setting, main->error, setting->state.status, macro_fake_f(f_utf_is_word_dash_plus)) == F_false) {
+                    if (fake_print_error_fallback(setting, main->error, macro_fake_f(f_utf_is_word_dash_plus)) == F_false) {
                       fll_program_print_error_parameter_process(main->error, f_console_symbol_long_normal_s, names[i]);
                     }
 
@@ -298,15 +298,15 @@ extern "C" {
               if (cleanups[i]) {
                 setting->state.status = f_path_directory_cleanup(main->parameters.arguments.array[index], variable[i]);
 
-                if (F_status_is_error(main->setting->state.status)) {
+                if (F_status_is_error(setting->state.status)) {
                   fake_print_line_first(setting, main->message);
 
                   if (main->error.verbosity > f_console_verbosity_quiet_e) {
                     fake_print_line_first(setting, main->message);
 
-                    if (fake_print_error_fallback(setting, main->error, setting->state.status, macro_fake_f(f_path_directory_cleanup)) == F_false) {
+                    /*if (fake_print_error_fallback(setting, main->error, macro_fake_f(f_path_directory_cleanup)) == F_false) {
                       fll_program_print_error_parameter_process(main->error, f_console_symbol_long_normal_s, names[i]);
-                    }
+                    }*/
                   }
 
                   return;
@@ -318,10 +318,10 @@ extern "C" {
                 if (variable[i]->size) {
                   setting->state.status = f_string_dynamic_resize(0, variable[i]);
 
-                  if (F_status_is_error(main->setting->state.status)) {
+                  if (F_status_is_error(setting->state.status)) {
                     fake_print_line_first(setting, main->message);
 
-                    fake_print_error(setting, main->error, setting->state.status, macro_fake_f(f_string_dynamic_resize));
+                    fake_print_error(setting, main->error, macro_fake_f(f_string_dynamic_resize));
 
                     return;
                   }
@@ -349,10 +349,10 @@ extern "C" {
             if (variable[i]->size) {
               setting->state.status = f_string_dynamic_resize(0, variable[i]);
 
-              if (F_status_is_error(main->setting->state.status)) {
+              if (F_status_is_error(setting->state.status)) {
                 fake_print_line_first(setting, main->message);
 
-                fake_print_error(setting, main->error, setting->state.status, macro_fake_f(f_string_dynamic_resize));
+                fake_print_error(setting, main->error, macro_fake_f(f_string_dynamic_resize));
 
                 return;
               }
@@ -400,13 +400,13 @@ extern "C" {
           if (main->parameters.array[parameters[i]].result & f_console_result_value_e) {
             setting->state.status = fll_program_parameter_additional_rip(main->parameters.arguments.array, main->parameters.array[parameters[i]].values, variable[i]);
 
-            if (F_status_is_error(main->setting->state.status)) {
+            if (F_status_is_error(setting->state.status)) {
               if (main->error.verbosity > f_console_verbosity_quiet_e) {
                 fake_print_line_first(setting, main->message);
 
-                if (fake_print_error_fallback(setting, main->error, setting->state.status, macro_fake_f(fll_program_parameter_additional_rip)) == F_false) {
+                /*if (fake_print_error_fallback(setting, main->error, macro_fake_f(fll_program_parameter_additional_rip)) == F_false) {
                   fll_program_print_error_parameter_process(main->error, f_console_symbol_long_normal_s, names[i]);
-                }
+                }*/
               }
 
               return;
@@ -419,13 +419,13 @@ extern "C" {
 
                 setting->state.status = f_utf_is_word_dash_plus(main->parameters.arguments.array[i].string + j, width_max, F_false);
 
-                if (F_status_is_error(main->setting->state.status)) {
+                if (F_status_is_error(setting->state.status)) {
                   fake_print_line_first(setting, main->message);
 
                   // @todo fix this to print an error about the actual invalid character so that it can be investigated.
-                  if (fake_print_error_fallback(setting, main->error, setting->state.status, macro_fake_f(f_utf_is_word_dash_plus)) == F_false) {
+                  /*if (fake_print_error_fallback(setting, main->error, macro_fake_f(f_utf_is_word_dash_plus)) == F_false) {
                     fll_program_print_error_parameter_process(main->error, f_console_symbol_long_normal_s, names[i]);
-                  }
+                  }*/
 
                   return;
                 }
@@ -453,10 +453,10 @@ extern "C" {
 
       setting->state.status = f_uint8s_increase_by(1, &setting->operations);
 
-      if (F_status_is_error(main->setting->state.status)) {
+      if (F_status_is_error(setting->state.status)) {
         fake_print_line_first(setting, main->message);
 
-        fake_print_error(setting, main->error, setting->state.status, macro_fake_f(f_uint8s_increase_by));
+        fake_print_error(setting, main->error, macro_fake_f(f_uint8s_increase_by));
 
         return;
       }
@@ -467,12 +467,12 @@ extern "C" {
 #endif // _di_fake_setting_load_
 
 #ifndef _di_fake_setting_load_parameter_callback_
-  void fake_setting_load_parameter_callback(const f_console_arguments_t arguments, void * const void_parameters, f_console_parameter_state_t * const state, void * const void_data) {
+  void fake_setting_load_parameter_callback(const f_console_arguments_t arguments, void * const void_parameters, f_console_parameter_state_t * const state_parameter, void * const void_data) {
 
-    if (!state) return;
+    if (!state_parameter || !state_parameter->state) return;
 
-    if (!void_parameters || !void_data || (state->type != f_console_parameter_state_type_simple_e && state->type != f_console_parameter_state_type_miss_e)) {
-      state->state->status = F_process;
+    if (!void_parameters || !void_data || (state_parameter->type != f_console_parameter_state_type_simple_e && state_parameter->type != f_console_parameter_state_type_miss_e)) {
+      state_parameter->state->status = F_process;
 
       return;
     }
@@ -480,17 +480,19 @@ extern "C" {
     f_console_parameters_t * const parameters = (f_console_parameters_t * const) void_parameters;
     fake_data_t * const data = (fake_data_t * const) void_data;
 
-    state->state->status = f_uint8s_increase(fake_allocation_small_d, &data->setting->operations);
+    if (!data->setting) return;
 
-    if (F_status_is_error(state->state->status)) {
-      fake_print_line_first(setting, main->message);
+    state_parameter->state->status = f_uint8s_increase(state_parameter->state->step_small, &data->setting->operations);
 
-      fake_print_error(data->setting, data->main->error, state->state->status, macro_fake_f(f_uint8s_increase));
+    if (F_status_is_error(state_parameter->state->status)) {
+      fake_print_line_first(data->setting, data->main->message);
+
+      fake_print_error(data->setting, data->main->error, macro_fake_f(f_uint8s_increase));
 
       return;
     }
 
-    switch (state->at) {
+    switch (state_parameter->at) {
       case fake_parameter_operation_build_e:
         data->setting->operations.array[data->setting->operations.used++] = fake_operation_build_e;
         data->setting->flag |= fake_main_flag_operation_build_e;
@@ -516,12 +518,12 @@ extern "C" {
         break;
 
       default:
-        state->state->status = F_process;
+        state_parameter->state->status = F_process;
 
         return;
     }
 
-    state->state->status = F_none;
+    state_parameter->state->status = F_none;
   }
 #endif // _di_fake_setting_load_parameter_callback_
 

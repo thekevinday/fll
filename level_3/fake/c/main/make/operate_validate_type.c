@@ -7,7 +7,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_validate_type_break_
   void fake_make_operate_validate_type_break(fake_make_data_t * const data_make) {
 
-    if (!data_make) return;
+    if (!data_make || !data_make->main || !data_make->setting) return;
 
     if (data_make->cache_arguments.used > 1) {
       fake_print_error_too_many_arguments(data_make->setting, data_make->main->error);
@@ -36,7 +36,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_validate_type_build_
   void fake_make_operate_validate_type_build(fake_make_data_t * const data_make) {
 
-    if (!data_make) return;
+    if (!data_make || !data_make->main || !data_make->setting) return;
 
     if (data_make->cache_arguments.used) {
       if (data_make->cache_arguments.array[0].used) {
@@ -84,7 +84,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_validate_type_clean_top_skeleton_
   void fake_make_operate_validate_type_clean_top_skeleton(fake_make_data_t * const data_make) {
 
-    if (!data_make) return;
+    if (!data_make || !data_make->main || !data_make->setting) return;
 
     if (data_make->cache_arguments.used) {
       fake_print_error_too_many_arguments(data_make->setting, data_make->main->error);
@@ -100,7 +100,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_validate_type_clone_
   void fake_make_operate_validate_type_clone(fake_make_data_t * const data_make) {
 
-    if (!data_make) return;
+    if (!data_make || !data_make->main || !data_make->setting) return;
 
     if (data_make->cache_arguments.used > 1) {
       f_status_t status = F_none;
@@ -172,7 +172,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_validate_type_compile_
   void fake_make_operate_validate_type_compile(fake_make_data_t * const data_make) {
 
-    if (!data_make) return;
+    if (!data_make || !data_make->main || !data_make->setting) return;
 
     if (!data_make->cache_arguments.used) {
       fake_print_error_requires_more_arguments(data_make->setting, data_make->main->error);
@@ -193,7 +193,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_validate_type_condition_
   void fake_make_operate_validate_type_condition(fake_make_data_t * const data_make, fake_state_process_t * const state_process) {
 
-    if (!data_make || !state_process) return;
+    if (!data_make || !data_make->main || !data_make->setting || !state_process) return;
 
     if (state_process->operation == fake_make_operation_type_if_e) {
       if (state_process->operation_previous == fake_make_operation_type_if_e) {
@@ -474,9 +474,7 @@ extern "C" {
             i = ++k;
           }
           else if (state_process->condition == fake_make_operation_if_type_if_group_e || state_process->condition == fake_make_operation_if_type_if_not_group_e) {
-            gid_t id = 0;
-
-            fake_make_get_id(data_make, F_false, data_make->cache_arguments.array[k++], (void *) &id);
+            fake_make_get_id(data_make, F_false, data_make->cache_arguments.array[k++]);
 
             if (F_status_is_error(data_make->setting->state.status)) {
               data_make->setting->state.status = F_status_set_error(F_failure);
@@ -537,9 +535,7 @@ extern "C" {
             }
           }
           else if (state_process->condition == fake_make_operation_if_type_if_owner_e || state_process->condition == fake_make_operation_if_type_if_not_owner_e) {
-            uid_t id = 0;
-
-            fake_make_get_id(data_make, F_true, data_make->cache_arguments.array[k++], (void *) &id);
+            fake_make_get_id(data_make, F_true, data_make->cache_arguments.array[k++]);
 
             if (F_status_is_error(data_make->setting->state.status)) {
               data_make->setting->state.status = F_status_set_error(F_failure);
@@ -657,7 +653,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_validate_type_copy_
   void fake_make_operate_validate_type_copy(fake_make_data_t * const data_make) {
 
-    if (!data_make) return;
+    if (!data_make || !data_make->main || !data_make->setting) return;
 
     if (data_make->cache_arguments.used > 1) {
       f_status_t status = F_none;
@@ -729,7 +725,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_validate_type_define_
   void fake_make_operate_validate_type_define(fake_make_data_t * const data_make) {
 
-    if (!data_make) return;
+    if (!data_make || !data_make->main || !data_make->setting) return;
 
     if (data_make->cache_arguments.used) {
       fake_make_operate_validate_define_name(data_make->cache_arguments.array[0]);
@@ -758,7 +754,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_validate_type_delete_
   void fake_make_operate_validate_type_delete(fake_make_data_t * const data_make) {
 
-    if (!data_make) return;
+    if (!data_make || !data_make->main || !data_make->setting) return;
 
     if (data_make->cache_arguments.used) {
       f_status_t status = F_none;
@@ -787,7 +783,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_validate_type_else_
   void fake_make_operate_validate_type_else(fake_make_data_t * const data_make, fake_state_process_t * const state_process) {
 
-    if (!data_make || !state_process) return;
+    if (!data_make || !data_make->main || !data_make->setting || !state_process) return;
 
     if (state_process->operation_previous == fake_make_operation_type_else_e) {
       fake_make_print_error_after_condition_must_not(data_make->setting, data_make->main->error);
@@ -828,7 +824,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_validate_type_exit_
   void fake_make_operate_validate_type_exit(fake_make_data_t * const data_make) {
 
-    if (!data_make) return;
+    if (!data_make || !data_make->main || !data_make->setting) return;
 
     if (data_make->cache_arguments.used > 1) {
       fake_print_error_too_many_arguments(data_make->setting, data_make->main->error);
@@ -857,7 +853,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_validate_type_fail_
   void fake_make_operate_validate_type_fail(fake_make_data_t * const data_make) {
 
-    if (!data_make) return;
+    if (!data_make || !data_make->main || !data_make->setting) return;
 
     if (data_make->cache_arguments.used) {
       if (fl_string_dynamic_compare(fake_make_operation_argument_exit_s, data_make->cache_arguments.array[0]) == F_equal_to_not) {
@@ -885,7 +881,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_validate_type_index_
   void fake_make_operate_validate_type_index(fake_make_data_t * const data_make) {
 
-    if (!data_make) return;
+    if (!data_make || !data_make->main || !data_make->setting) return;
 
     if (!data_make->cache_arguments.used) {
       fake_print_error_requires_more_arguments(data_make->setting, data_make->main->error);
@@ -906,7 +902,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_validate_type_link_
   void fake_make_operate_validate_type_link(fake_make_data_t * const data_make) {
 
-    if (!data_make) return;
+    if (!data_make || !data_make->main || !data_make->setting) return;
 
     if (data_make->cache_arguments.used > 4) {
       fake_print_error_too_many_arguments(data_make->setting, data_make->main->error);
@@ -1069,7 +1065,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_validate_type_move_
   void fake_make_operate_validate_type_move(fake_make_data_t * const data_make) {
 
-    if (!data_make) return;
+    if (!data_make || !data_make->main || !data_make->setting) return;
 
     if (data_make->cache_arguments.used > 1) {
       {
@@ -1154,7 +1150,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_validate_type_operate_
   void fake_make_operate_validate_type_operate(fake_make_data_t * const data_make, f_array_lengths_t * const section_stack) {
 
-    if (!data_make || !section_stack) return;
+    if (!data_make || !data_make->main || !data_make->setting || !section_stack) return;
 
     if (data_make->cache_arguments.used > 1) {
       fake_print_error_too_many_arguments(data_make->setting, data_make->main->error);
@@ -1206,7 +1202,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_validate_type_parameter_
   void fake_make_operate_validate_type_parameter(fake_make_data_t * const data_make) {
 
-    if (!data_make) return;
+    if (!data_make || !data_make->main || !data_make->setting) return;
 
     if (data_make->cache_arguments.used) {
       const f_string_static_t reserved_name[] = {
@@ -1269,7 +1265,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_validate_type_permission_
   void fake_make_operate_validate_type_permission(fake_make_data_t * const data_make, fake_state_process_t * const state_process) {
 
-    if (!data_make || !state_process) return;
+    if (!data_make || !data_make->main || !data_make->setting || !state_process) return;
 
     if (data_make->cache_arguments.used) {
       f_array_length_t i = 1;
@@ -1316,7 +1312,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_validate_type_pop_
   void fake_make_operate_validate_type_pop(fake_make_data_t * const data_make) {
 
-    if (!data_make) return;
+    if (!data_make || !data_make->main || !data_make->setting) return;
 
     if (data_make->cache_arguments.used) {
       fake_print_error_too_many_arguments(data_make->setting, data_make->main->error);
@@ -1340,7 +1336,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_validate_type_run_
   void fake_make_operate_validate_type_run(fake_make_data_t * const data_make) {
 
-    if (!data_make) return;
+    if (!data_make || !data_make->main || !data_make->setting) return;
 
     if (!data_make->cache_arguments.used) {
       fake_print_error_requires_more_arguments(data_make->setting, data_make->main->error);
@@ -1356,7 +1352,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_validate_type_to_
   void fake_make_operate_validate_type_to(fake_make_data_t * const data_make) {
 
-    if (!data_make) return;
+    if (!data_make || !data_make->main || !data_make->setting) return;
 
     if (data_make->cache_arguments.used > 1) {
       fake_print_error_too_many_arguments(data_make->setting, data_make->main->error);
@@ -1414,7 +1410,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_validate_type_touch_
   void fake_make_operate_validate_type_touch(fake_make_data_t * const data_make) {
 
-    if (!data_make) return;
+    if (!data_make || !data_make->main || !data_make->setting) return;
 
     if (data_make->cache_arguments.used > 1) {
       if (fl_string_dynamic_compare(fake_make_operation_argument_file_s, data_make->cache_arguments.array[0]) == F_equal_to_not) {

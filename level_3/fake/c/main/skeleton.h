@@ -22,12 +22,12 @@ extern "C" {
  * @param data
  *   The program data.
  *
- * @return
- *   F_none on success.
+ *   This alters data.setting.state.status:
+ *     F_none on success.
  *
- *   F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
  *
- *   Status codes (with error bit) are returned on any problem.
+ *     Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_skeleton_operate_
   extern void fake_skeleton_operate(fake_data_t * const data);
@@ -38,14 +38,14 @@ extern "C" {
  *
  * @param data
  *   The program data.
+ *
+ *   This alters data.setting.state.status:
+ *     F_none on success.
+ *
+ *     Status codes (with warning bit) are returned on certain problems that can be ignored.
+ *     Status codes (with error bit) are returned on any problem.
  * @param path
  *   The file path for the directory to create.
- *
- * @return
- *   F_none on success.
- *
- *   Status codes (with warning bit) are returned on certain problems that can be ignored.
- *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_skeleton_operate_directory_create_
   extern void fake_skeleton_operate_directory_create(fake_data_t * const data, const f_string_static_t path);
@@ -56,6 +56,12 @@ extern "C" {
  *
  * @param data
  *   The program data.
+ *
+ *   This alters data.setting.state.status:
+ *     F_none on success.
+ *
+ *     Status codes (with warning bit) are returned on certain problems that can be ignored.
+ *     Status codes (with error bit) are returned on any problem.
  * @param path
  *   The file path for the directory to create.
  * @param executable
@@ -63,12 +69,6 @@ extern "C" {
  *   Set to FALSE to not make the file executable.
  * @param content
  *   When creating a new file, write the content specified by this string to that file.
- *
- * @return
- *   F_none on success.
- *
- *   Status codes (with warning bit) are returned on certain problems that can be ignored.
- *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_fake_skeleton_operate_file_create_
   extern void fake_skeleton_operate_file_create(fake_data_t * const data, const f_string_static_t path, const bool executable, const f_string_static_t content);

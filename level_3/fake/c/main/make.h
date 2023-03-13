@@ -52,18 +52,22 @@ extern "C" {
  *     F_parameter (with error bit) on invalid parameter.
  *
  *     Errors (with error bit) from: fl_conversion_dynamic_to_unsigned_detect()
- * @param
+ * @param is_owner
+ *   If TRUE, then buffer represents a UID.
+ *   If FALSE, then buffer represents a GID.
  * @param buffer
  *   The string containing the name or number.
- * @param id
+ *
+ * @return
  *   The detected owner id or group id.
- *   When is_owner is TRUE, then this must be of type (uid_t *).
- *   When is_owner is TRUE, then this must be of type (gid_t *).
+ *   When is_owner is TRUE, then this should be cast to type (uid_t *).
+ *   When is_owner is TRUE, then this should be cast to type (gid_t *).
+ *   This is set to 0 on any error, check data_make.setting.state.status for error.
  *
  * @see fl_conversion_dynamic_to_unsigned_detect()
  */
 #ifndef _di_fake_make_get_id_
-  extern void fake_make_get_id(fake_make_data_t * const data_make, const bool is_owner, const f_string_static_t buffer, void *id);
+  extern f_number_unsigned_t fake_make_get_id(fake_make_data_t * const data_make, const bool is_owner, const f_string_static_t buffer);
 #endif // _di_fake_make_get_id_
 
 /**
