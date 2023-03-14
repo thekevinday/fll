@@ -45,7 +45,6 @@ build_sources_program fll/level_1/print.c fll/level_1/private-print.c fll/level_
 build_sources_program fll/level_1/string.c fll/level_1/private-string.c
 
 build_sources_program fll/level_2/error.c fll/level_2/error/common.c fll/level_2/private-error.c
-build_sources_program fll/level_2/fss.c fll/level_2/fss/basic.c fll/level_2/fss/basic_list.c fll/level_2/fss/embedded_list.c fll/level_2/fss/extended.c fll/level_2/fss/extended_list.c fll/level_2/fss/payload.c
 build_sources_program fll/level_2/fss_status_string.c
 build_sources_program fll/level_2/print.c
 build_sources_program fll/level_2/program.c fll/level_2/program/common.c fll/level_2/private-program.c
