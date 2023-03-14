@@ -550,7 +550,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // _di_f_utf_string_dynamic_partial_prepend_assure_nulless
+#endif // _di_f_utf_string_dynamic_partial_prepend_assure_nulless_
 
 #ifndef _di_f_utf_string_dynamic_partial_prepend_nulless_
   f_status_t f_utf_string_dynamic_partial_prepend_nulless(const f_utf_string_static_t source, const f_string_range_t range, f_utf_string_dynamic_t * const destination) {
@@ -564,7 +564,7 @@ extern "C" {
 
     return private_f_utf_string_prepend_nulless(source.string + range.start, (range.stop - range.start) + 1, destination);
   }
-#endif // _di_f_utf_string_dynamic_partial_prepend_nulless
+#endif // _di_f_utf_string_dynamic_partial_prepend_nulless_
 
 #ifndef _di_f_utf_string_dynamic_prepend_
   f_status_t f_utf_string_dynamic_prepend(const f_utf_string_static_t source, f_utf_string_dynamic_t * const destination) {

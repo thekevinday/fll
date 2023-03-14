@@ -926,9 +926,9 @@ extern "C" {
  * @see f_file_write_range()
  * @see f_file_write_until()
  */
-#if !defined(_di_f_file_write_) || !defined(_di_f_file_write_block_) || !defined(_di_f_file_write_until) || !defined(_di_f_file_write_range)
+#if !defined(_di_f_file_write_) || !defined(_di_f_file_write_block_) || !defined(_di_f_file_write_until_) || !defined(_di_f_file_write_range)
   extern f_status_t private_f_file_write_until(const f_file_t file, const f_string_static_t buffer, const f_array_length_t total, f_array_length_t * const written) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_file_write_) || !defined(_di_f_file_write_block_) || !defined(_di_f_file_write_until) || !defined(_di_f_file_write_range)
+#endif // !defined(_di_f_file_write_) || !defined(_di_f_file_write_block_) || !defined(_di_f_file_write_until_) || !defined(_di_f_file_write_range)
 
 #ifdef __cplusplus
 } // extern "C"

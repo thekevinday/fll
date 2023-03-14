@@ -1,4 +1,8 @@
 # fss-0001
+#
+# A custom build for compiling controller as a stand alone binary building in all of the FLL dependencies.
+# This will compile a program that does not have a libcontroller.so library.
+#
 
 build_name controller
 

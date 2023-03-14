@@ -218,9 +218,9 @@ extern "C" {
  * @see fl_fss_extended_object_write()
  * @see fl_fss_extended_content_write()
  */
-#if !defined(_di_fl_fss_basic_object_write) || !defined(_di_fl_fss_extended_object_write) || !defined(_di_fl_fss_extended_content_write_)
+#if !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_extended_object_write_) || !defined(_di_fl_fss_extended_content_write_)
   extern f_status_t private_fl_fss_basic_write(const bool object_as, const f_string_static_t object, const f_fss_quote_t quote, f_state_t state, f_string_range_t * const range, f_string_dynamic_t * const destination) F_attribute_visibility_internal_d;
-#endif // !defined(_di_fl_fss_basic_object_write) || !defined(_di_fl_fss_extended_object_write) || !defined(_di_fl_fss_extended_content_write_)
+#endif // !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_extended_object_write_) || !defined(_di_fl_fss_extended_content_write_)
 
 /**
  * Trim a given object used by the basic and extended object write functions.

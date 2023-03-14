@@ -693,7 +693,7 @@ extern "C" {
   }
 #endif // !defined(_di_f_file_stream_write_) || !defined(_di_f_file_stream_write_block_) || !defined(_di_f_file_stream_write_until) || !defined(_di_f_file_stream_write_range)
 
-#if !defined(_di_f_file_write_) || !defined(_di_f_file_write_block_) || !defined(_di_f_file_write_until) || !defined(_di_f_file_write_range)
+#if !defined(_di_f_file_write_) || !defined(_di_f_file_write_block_) || !defined(_di_f_file_write_until_) || !defined(_di_f_file_write_range)
   f_status_t private_f_file_write_until(const f_file_t file, const f_string_static_t buffer, const f_array_length_t total, f_array_length_t * const written) {
 
     *written = 0;
@@ -734,7 +734,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // !defined(_di_f_file_write_) || !defined(_di_f_file_write_block_) || !defined(_di_f_file_write_until) || !defined(_di_f_file_write_range)
+#endif // !defined(_di_f_file_write_) || !defined(_di_f_file_write_block_) || !defined(_di_f_file_write_until_) || !defined(_di_f_file_write_range)
 
 #ifdef __cplusplus
 } // extern "C"

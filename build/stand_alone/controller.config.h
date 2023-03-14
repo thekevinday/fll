@@ -1130,7 +1130,7 @@
 #define _di_f_thread_condition_wait_
 //#define _di_f_thread_condition_wait_timed_
 //#define _di_f_thread_create_
-#define _di_f_thread_detach_
+//#define _di_f_thread_detach_
 #define _di_f_thread_exit_
 #define _di_f_thread_ids_adjust_
 #define _di_f_thread_ids_decimate_by_

@@ -39,11 +39,13 @@ extern "C" {
  *
  * @see fl_string_compare()
  * @see fl_string_dynamic_compare()
+ * @see fl_string_dynamic_compare_string()
  * @see fl_string_dynamic_partial_compare()
+ * @see fl_string_dynamic_partial_compare_dynamic()
  */
-#if !defined(_di_fl_string_compare_) || !defined(_di_fl_string_dynamic_compare_) || !defined(_di_fl_string_dynamic_partial_compare_)
+#if !defined(_di_fl_string_compare_) || !defined(_di_fl_string_dynamic_compare_) || !defined(_di_fl_string_dynamic_compare_string_) || !defined(_di_fl_string_dynamic_partial_compare_) || !defined(_di_fl_string_dynamic_partial_compare_dynamic_)
   extern f_status_t private_fl_string_compare(const f_string_t string1, const f_string_t string2, const f_array_length_t offset1, const f_array_length_t offset2, const f_array_length_t stop1, const f_array_length_t stop2) F_attribute_visibility_internal_d;
-#endif // !defined(_di_fl_string_compare_) || !defined(_di_fl_string_dynamic_compare_) || !defined(_di_fl_string_dynamic_partial_compare_)
+#endif // !defined(_di_fl_string_compare_) || !defined(_di_fl_string_dynamic_compare_) || !defined(_di_fl_string_dynamic_compare_string_) || !defined(_di_fl_string_dynamic_partial_compare_) || !defined(_di_fl_string_dynamic_partial_compare_dynamic_)
 
 /**
  * Private implementation of fl_string_compare_except().

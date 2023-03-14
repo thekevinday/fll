@@ -1,7 +1,7 @@
 # fss-0001
 #
-# A custom build for compiling utf8 as a stand alone binary building in all of the FLL dependencies.
-# This will compile a program that does not have a libutf8.so library.
+# A custom build for compiling byte_dump as a stand alone binary building in all of the FLL dependencies.
+# This will compile a program that does not have a libbyte_dump.so library.
 #
 
 build_name byte_dump
