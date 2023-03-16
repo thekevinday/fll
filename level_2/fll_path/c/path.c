@@ -36,9 +36,7 @@ extern "C" {
       status = f_path_current(F_true, canonical);
       if (F_status_is_error(status)) return status;
 
-      if (!path.string[0] || path.used == 1) {
-        return F_none;
-      }
+      if (!path.string[0]) return F_none;
 
       at = 0;
     }
