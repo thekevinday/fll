@@ -31,6 +31,7 @@ extern "C" {
  * This processes the relative parts: './', '../', and extra '/'.
  * This does not process symbolic links.
  * This has a max size of F_string_t_size_d.
+ * This removes trailing slashes, but leaves the leading slash ('/' remains as-is, but '/a/' becomes '/a').
  *
  * An empty path (first character is NULL or path.used is 0) appends only the current path to canonical.
  *
