@@ -25,6 +25,10 @@ extern "C" {
     const f_string_static_t f_path_environment_s = macro_f_string_static_t_initialize(F_path_environment_s, 0, F_path_environment_s_length);
   #endif // _di_f_path_environment_s_
 
+  #ifndef _di_f_path_home_s_
+    const f_string_static_t f_path_home_s = macro_f_string_static_t_initialize(F_path_home_s, 0, F_path_home_s_length);
+  #endif // _di_f_path_home_s_
+
   #ifndef _di_f_path_home_wildcard_s_
     const f_string_static_t f_path_home_wildcard_s = macro_f_string_static_t_initialize(F_string_ascii_tilde_s, 0, F_string_ascii_tilde_s_length);
   #endif // _di_f_path_home_wildcard_s_
