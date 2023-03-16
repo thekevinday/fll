@@ -55,10 +55,19 @@ Execution of all Items is top\-down.
 
   \- The \fBmode\fR setting:
     Represents the mode in which the Entry is operating in.
-    The following modes are supported: \fBprogram\fR and \fBservice\fR.
+    The following modes are supported: \fBhelper\fR, \fBprogram\fR, and \fBservice\fR.
+
+    - The \fBhelper\fR mode:
+      Designates that the Entry operates as a helper for starting programs or performing actions and exits when complete.
+      On exit, any background (asynchronous) processes are not cancelled.
+      If terminated, the foreground (synchronous) process is cancelled.
+      Will call the \fBexit\fR with the same name as this Entry, but with the extension \fBexit\fR, such as \fBdefault.exit\fR.
+      Supports the Item Action \fBexecute\fR to execute a program (switching the \fBcontroller\fR program entirely with the executed process).
 
     \- The \fBprogram\fR mode:
       Designates that the Entry operates as a program and exits when complete.
+      On exit, any background (asynchronous) processes are also cancelled.
+      If terminated, the foreground (synchronous) process is cancelled.
       Will call the \fBexit\fR with the same name as this Entry, but with the extension \fBexit\fR, such as \fBdefault.exit\fR.
       Supports the Item Action \fBexecute\fR to execute a program (switching the \fBcontroller\fR program entirely with the executed process).
 
