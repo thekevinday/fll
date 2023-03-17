@@ -11,7 +11,8 @@ extern "C" {
 #ifndef _di_fake_build_skeleton_
   void fake_build_skeleton(fake_data_t * const data, fake_build_data_t * const data_build, const mode_t mode, const f_string_static_t file_stage, f_status_t * const status) {
 
-    if (F_status_is_error(*status)|| *status == F_child || f_file_exists(file_stage, F_true) == F_true) return;
+    if (*status == F_child) return;
+    if (F_status_is_error(*status) || f_file_exists(file_stage, F_true) == F_true);
 
     f_string_static_t path_headers = f_string_static_t_initialize;
     path_headers.used = data->path_build_includes.used + data_build->setting.path_headers.used;
