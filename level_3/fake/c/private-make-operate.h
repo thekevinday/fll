@@ -56,6 +56,27 @@ extern "C" {
 #endif // _di_fake_make_operate_expand_
 
 /**
+ * Perform the expand operation, specifically for the build settings.
+ *
+ * @param data_make
+ *   All make related setting data, including data from the fakefile and the build settings file.
+ * @param quote
+ *   The quote associated with the content.
+ * @param range_name
+ *   The range representing the variable content name string within the data_make->buffer.
+ *
+ * @return
+ *   F_data_not on success, but nothing is added (data length to append is 0).
+ *   F_true on success and match expanded.
+ *   F_false on no matches to expand.
+ *
+ *   Status codes (with error bit) are returned on any problem.
+ */
+#ifndef _di_fake_make_operate_expand_build_
+  extern f_status_t fake_make_operate_expand_build(fake_make_data_t * const data_make, const f_fss_quote_t quote, const f_string_range_t range_name) F_attribute_visibility_internal_d;
+#endif // _di_fake_make_operate_expand_build_
+
+/**
  * Perform the expand operation, specifically for the context variables.
  *
  * Unknown or unsupported context variables are expanded into an empty string.
@@ -105,27 +126,6 @@ extern "C" {
 #ifndef _di_fake_make_operate_expand_environment_
   extern f_status_t fake_make_operate_expand_environment(fake_make_data_t * const data_make, const f_fss_quote_t quote, const f_string_range_t range_name) F_attribute_visibility_internal_d;
 #endif // _di_fake_make_operate_expand_environment_
-
-/**
- * Perform the expand operation, specifically for the build settings.
- *
- * @param data_make
- *   All make related setting data, including data from the fakefile and the build settings file.
- * @param quote
- *   The quote associated with the content.
- * @param range_name
- *   The range representing the variable content name string within the data_make->buffer.
- *
- * @return
- *   F_data_not on success, but nothing is added (data length to append is 0).
- *   F_true on success and match expanded.
- *   F_false on no matches to expand.
- *
- *   Status codes (with error bit) are returned on any problem.
- */
-#ifndef _di_fake_make_operate_expand_build_
-  extern f_status_t fake_make_operate_expand_build(fake_make_data_t * const data_make, const f_fss_quote_t quote, const f_string_range_t range_name) F_attribute_visibility_internal_d;
-#endif // _di_fake_make_operate_expand_build_
 
 /**
  * Perform the make operations within the given section.
