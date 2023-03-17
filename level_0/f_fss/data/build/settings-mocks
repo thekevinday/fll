@@ -14,7 +14,7 @@ build_name f_fss
 
 version_major 0
 version_minor 6
-version_micro 4
+version_micro 5
 version_file micro
 version_target minor
 

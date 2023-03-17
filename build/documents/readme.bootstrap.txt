@@ -47,7 +47,7 @@ Bootstrap Readme Documentation:
 
   If one of the build sub-directories, such as includes, libraries, programs, and settings, is empty or missing after a successful build, then there are no files of that type to install.
 
-  Build tree structure example (using the abbreviation-FLL:"Featureless Linux Library" code:"status_code-0.6.4" project)\:
+  Build tree structure example (using the abbreviation-FLL:"Featureless Linux Library" code:"status_code-0.6.5" project)\:
     block:"
       build/
       ├── documents
@@ -61,8 +61,8 @@ Bootstrap Readme Documentation:
       │   ├── shared
       │   │   ├── libstatus_code.so -> libstatus_code.so.0
       │   │   ├── libstatus_code.so.0 -> libstatus_code.so.0.6
-      │   │   ├── libstatus_code.so.0.6 -> libstatus_code.so.0.6.4
-      │   │   └── libstatus_code.so.0.6.4
+      │   │   ├── libstatus_code.so.0.6 -> libstatus_code.so.0.6.5
+      │   │   └── libstatus_code.so.0.6.5
       │   └── static
       │       └── libstatus_code.a
       ├── objects
@@ -92,7 +92,7 @@ Bootstrap Readme Documentation:
           └── sources_settings-settings.built
     "
 
-  Work tree Structure example at file:"/tmp/work" (using the abbreviation-FLL:"Featureless Linux Library" code:"status_code-0.6.4" project)\:
+  Work tree Structure example at file:"/tmp/work" (using the abbreviation-FLL:"Featureless Linux Library" code:"status_code-0.6.5" project)\:
     block:"
       /tmp/work/
       ├── includes
@@ -104,8 +104,8 @@ Bootstrap Readme Documentation:
       │   ├── shared
       │   │   ├── libstatus_code.so -> libstatus_code.so.0
       │   │   ├── libstatus_code.so.0 -> libstatus_code.so.0.6
-      │   │   ├── libstatus_code.so.0.6 -> libstatus_code.so.0.6.4
-      │   │   └── libstatus_code.so.0.6.4
+      │   │   ├── libstatus_code.so.0.6 -> libstatus_code.so.0.6.5
+      │   │   └── libstatus_code.so.0.6.5
       │   └── static
       │       └── libstatus_code.a
       └── programs
