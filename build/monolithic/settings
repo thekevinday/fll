@@ -54,6 +54,7 @@ build_sources_library level_1/directory.c level_1/private-directory.c
 build_sources_library level_1/environment.c
 build_sources_library level_1/private-fss.c level_1/fss/basic.c level_1/fss/basic_list.c level_1/fss/embedded_list.c level_1/fss/extended.c level_1/fss/extended_list.c
 build_sources_library level_1/iki.c
+build_sources_library level_1/path.c
 build_sources_library level_1/print.c level_1/private-print.c level_1/print/common.c
 build_sources_library level_1/signal.c
 build_sources_library level_1/string.c level_1/private-string.c
@@ -67,7 +68,6 @@ build_sources_library level_2/file.c level_2/private-file.c
 build_sources_library level_2/fss.c level_2/fss/basic.c level_2/fss/basic_list.c level_2/fss/embedded_list.c level_2/fss/extended.c level_2/fss/extended_list.c level_2/fss/payload.c
 build_sources_library level_2/fss_status_string.c
 build_sources_library level_2/iki.c level_2/private-iki.c
-build_sources_library level_2/path.c
 build_sources_library level_2/print.c
 build_sources_library level_2/program.c level_2/program/common.c level_2/program/print.c level_2/private-program.c
 build_sources_library level_2/status_string.c
@@ -109,6 +109,7 @@ build_sources_headers level_1/environment.h
 build_sources_headers level_1/execute.h level_1/execute/common.h
 build_sources_headers level_1/fss.h level_1/fss/basic.h level_1/fss/basic_list.h level_1/fss/embedded_list.h level_1/fss/extended.h level_1/fss/extended_list.h
 build_sources_headers level_1/iki.h
+build_sources_headers level_1/path.h
 build_sources_headers level_1/print.h level_1/print/common.h
 build_sources_headers level_1/signal.h level_1/signal/common.h
 build_sources_headers level_1/string.h
@@ -122,7 +123,6 @@ build_sources_headers level_2/file.h
 build_sources_headers level_2/fss.h level_2/fss/basic.h level_2/fss/basic_list.h level_2/fss/embedded_list.h level_2/fss/extended.h level_2/fss/extended_list.h level_2/fss/payload.h
 build_sources_headers level_2/fss_status_string.h
 build_sources_headers level_2/iki.h
-build_sources_headers level_2/path.h
 build_sources_headers level_2/print.h
 build_sources_headers level_2/program.h level_2/program/common.h level_2/program/print.h
 build_sources_headers level_2/status_string.h

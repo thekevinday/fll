@@ -7,8 +7,8 @@
  *
  * Provides path-related functionality.
  */
-#ifndef _FLL_path_h
-#define _FLL_path_h
+#ifndef _FL_path_h
+#define _FL_path_h
 
 // Libc includes.
 #include <stdio.h>
@@ -56,12 +56,12 @@ extern "C" {
  * @see f_string_append_assure()
  * @see f_string_dynamic_append_assure()
  */
-#ifndef _di_fll_path_canonical_
-  extern f_status_t fll_path_canonical(const f_string_static_t path, f_string_dynamic_t * const canonical);
-#endif // _di_fll_path_canonical_
+#ifndef _di_fl_path_canonical_
+  extern f_status_t fl_path_canonical(const f_string_static_t path, f_string_dynamic_t * const canonical);
+#endif // _di_fl_path_canonical_
 
 #ifdef __cplusplus
 } // extern "C"
 #endif
 
-#endif // _FLL_path_h
+#endif // _FL_path_h

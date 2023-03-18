@@ -32,6 +32,7 @@ fl_environment
 fl_execute
 fl_fss
 fl_iki
+fl_path
 fl_print
 fl_string
 
@@ -39,6 +40,5 @@ fll_error
 fll_execute
 fll_file
 fll_fss
-fll_path
 fll_print
 fll_program

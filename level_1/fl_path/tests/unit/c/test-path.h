@@ -22,7 +22,7 @@
 #include <cmocka.h>
 
 // FLL-2 includes.
-#include <fll/level_2/path.h>
+#include <fll/level_1/path.h>
 
 // Mock includes.
 //#include "mock-path.h"

@@ -1954,7 +1954,7 @@ extern "C" {
         data_make->setting->state.status = f_file_touch(data_make->cache_arguments.array[i], mode.regular, F_false);
 
         if (F_status_is_error(data_make->setting->state.status)) {
-          if (F_status_is_error_not(fll_path_canonical(data_make->cache_arguments.array[i], &data_make->cache_path))) {
+          if (F_status_is_error_not(fl_path_canonical(data_make->cache_arguments.array[i], &data_make->cache_path))) {
             fake_print_error_file(data_make->setting, data_make->main->error, macro_fake_f(f_file_touch), data_make->cache_path, f_file_operation_touch_s, fll_error_file_type_file_e);
           }
           else {
@@ -1970,7 +1970,7 @@ extern "C" {
         data_make->setting->state.status = f_directory_touch(data_make->cache_arguments.array[i], mode.directory);
 
         if (F_status_is_error(data_make->setting->state.status)) {
-          if (F_status_is_error_not(fll_path_canonical(data_make->cache_arguments.array[i], &data_make->cache_path))) {
+          if (F_status_is_error_not(fl_path_canonical(data_make->cache_arguments.array[i], &data_make->cache_path))) {
             fake_print_error_file(data_make->setting, data_make->main->error, macro_fake_f(f_directory_touch), data_make->cache_path, f_file_operation_touch_s, fll_error_file_type_directory_e);
           }
           else {
@@ -2003,7 +2003,7 @@ extern "C" {
       data_make->setting->state.status = f_file_stream_open(data_make->cache_arguments.array[0], f_file_open_mode_truncate_s, &file);
 
       if (F_status_is_error(data_make->setting->state.status)) {
-        if (F_status_is_error_not(fll_path_canonical(data_make->cache_arguments.array[0], &data_make->cache_path))) {
+        if (F_status_is_error_not(fl_path_canonical(data_make->cache_arguments.array[0], &data_make->cache_path))) {
           fake_print_error_file(data_make->setting, data_make->main->error, macro_fake_f(f_file_stream_open), data_make->cache_path, f_file_operation_open_s, fll_error_file_type_file_e);
         }
         else {
@@ -2032,7 +2032,7 @@ extern "C" {
         data_make->setting->state.status = f_file_stream_open(data_make->cache_arguments.array[0], f_file_open_mode_append_s, &file);
 
         if (F_status_is_error(data_make->setting->state.status)) {
-          if (F_status_is_error_not(fll_path_canonical(data_make->cache_arguments.array[0], &data_make->cache_path))) {
+          if (F_status_is_error_not(fl_path_canonical(data_make->cache_arguments.array[0], &data_make->cache_path))) {
             fake_print_error_file(data_make->setting, data_make->main->error, macro_fake_f(f_file_stream_open), data_make->cache_path, f_file_operation_open_s, fll_error_file_type_file_e);
           }
           else {
@@ -2049,7 +2049,7 @@ extern "C" {
           fake_make_operate_process_buffer_escape(data_make, data_make->cache_arguments.array[i], &data_make->cache_1);
 
           if (F_status_is_error(data_make->setting->state.status)) {
-            if (F_status_is_error_not(fll_path_canonical(data_make->cache_arguments.array[0], &data_make->cache_path))) {
+            if (F_status_is_error_not(fl_path_canonical(data_make->cache_arguments.array[0], &data_make->cache_path))) {
               fake_print_error_file(data_make->setting, data_make->main->error, macro_fake_f(fake_make_operate_process_buffer_escape), data_make->cache_path, f_file_operation_write_s, fll_error_file_type_file_e);
             }
             else {
@@ -2062,7 +2062,7 @@ extern "C" {
           data_make->setting->state.status = f_file_stream_write(file, data_make->cache_1, 0);
 
           if (F_status_is_error(data_make->setting->state.status)) {
-            if (F_status_is_error_not(fll_path_canonical(data_make->cache_arguments.array[0], &data_make->cache_path))) {
+            if (F_status_is_error_not(fl_path_canonical(data_make->cache_arguments.array[0], &data_make->cache_path))) {
               fake_print_error_file(data_make->setting, data_make->main->error, macro_fake_f(f_file_stream_write), data_make->cache_path, f_file_operation_write_s, fll_error_file_type_file_e);
             }
             else {

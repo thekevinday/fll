@@ -27,6 +27,7 @@ build_sources_library directory.c private-directory.c
 build_sources_library environment.c
 build_sources_library private-fss.c fss/basic.c fss/basic_list.c fss/embedded_list.c fss/extended.c fss/extended_list.c
 build_sources_library iki.c
+build_sources_library path.c
 build_sources_library print.c private-print.c print/common.c
 build_sources_library signal.c
 build_sources_library string.c private-string.c
@@ -40,6 +41,7 @@ build_sources_headers environment.h
 build_sources_headers execute.h execute/common.h
 build_sources_headers fss.h fss/basic.h fss/basic_list.h fss/embedded_list.h fss/extended.h fss/extended_list.h
 build_sources_headers iki.h
+build_sources_headers path.h
 build_sources_headers print.h print/common.h
 build_sources_headers signal.h signal/common.h
 build_sources_headers string.h

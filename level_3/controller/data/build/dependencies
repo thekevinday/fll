@@ -33,6 +33,7 @@ fl_directory
 fl_environment
 fl_fss
 fl_iki
+fl_path
 fl_print
 fl_string
 
@@ -40,7 +41,6 @@ fll_control_group
 fll_error
 fll_execute
 fll_fss
-fll_path
 fll_print
 fll_program
 fll_status_string

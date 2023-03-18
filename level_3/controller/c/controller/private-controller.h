@@ -219,9 +219,9 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   Errors (with error bit) from: fll_path_canonical().
+ *   Errors (with error bit) from: fl_path_canonical().
  *
- * @see fll_path_canonical()
+ * @see fl_path_canonical()
  */
 #ifndef _di_controller_path_canonical_relative_
   extern f_status_t controller_path_canonical_relative(const controller_setting_t * const global, const f_string_static_t source, f_string_dynamic_t * const destination) F_attribute_visibility_internal_d;

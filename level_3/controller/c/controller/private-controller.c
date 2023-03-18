@@ -368,7 +368,7 @@ extern "C" {
   f_status_t controller_path_canonical_relative(const controller_setting_t * const setting, const f_string_static_t source, f_string_dynamic_t * const destination) {
 
     {
-      const f_status_t status = fll_path_canonical(source, destination);
+      const f_status_t status = fl_path_canonical(source, destination);
       if (F_status_is_error(status)) return status;
     }
 

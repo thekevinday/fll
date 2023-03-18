@@ -81,6 +81,7 @@
 #include <fll/level_1/directory.h>
 #include <fll/level_1/environment.h>
 #include <fll/level_1/iki.h>
+#include <fll/level_1/path.h>
 #include <fll/level_1/print.h>
 #include <fll/level_1/string.h>
 
@@ -91,7 +92,6 @@
 #include <fll/level_2/fss.h>
 #include <fll/level_2/fss/basic_list.h>
 #include <fll/level_2/fss/extended.h>
-#include <fll/level_2/path.h>
 #include <fll/level_2/print.h>
 #include <fll/level_2/program.h>
 

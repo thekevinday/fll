@@ -11,7 +11,7 @@ extern "C" {
 
     data_make->cache_path.used = 0;
 
-    data_make->setting->state.status = fll_path_canonical(path, &data_make->cache_path);
+    data_make->setting->state.status = fl_path_canonical(path, &data_make->cache_path);
     if (F_status_is_error(data_make->setting->state.status)) return;
 
     if (data_make->cache_path.used < data_make->path.stack.array[0].used) {

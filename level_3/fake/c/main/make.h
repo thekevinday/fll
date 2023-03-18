@@ -28,12 +28,12 @@ extern "C" {
  *     F_false (with error bit) if path exists outside of the root project path.
  *
  *     Errors (with error bit) from: fl_string_dynamic_partial_compare()
- *     Errors (with error bit) from: fll_path_canonical()
+ *     Errors (with error bit) from: fl_path_canonical()
  * @param path
  *   file path to get the real path of.
  *
  * @see fl_string_dynamic_partial_compare()
- * @see fll_path_canonical()
+ * @see fl_path_canonical()
  */
 #ifndef _di_fake_make_assure_inside_project_
   extern void fake_make_assure_inside_project(fake_make_data_t * const data_make, const f_string_static_t path);

@@ -28,7 +28,6 @@ build_sources_library file.c private-file.c
 build_sources_library fss.c fss/basic.c fss/basic_list.c fss/embedded_list.c fss/extended.c fss/extended_list.c fss/payload.c
 build_sources_library fss_status_string.c
 build_sources_library iki.c private-iki.c
-build_sources_library path.c
 build_sources_library print.c
 build_sources_library program.c program/common.c program/print.c private-program.c
 build_sources_library status_string.c
@@ -40,7 +39,6 @@ build_sources_headers file.h
 build_sources_headers fss.h fss/basic.h fss/basic_list.h fss/embedded_list.h fss/extended.h fss/extended_list.h fss/payload.h
 build_sources_headers fss_status_string.h
 build_sources_headers iki.h
-build_sources_headers path.h
 build_sources_headers print.h
 build_sources_headers program.h program/common.h program/print.h
 build_sources_headers status_string.h

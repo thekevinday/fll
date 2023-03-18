@@ -1,6 +1,6 @@
 # fss-0001
 
-build_name test-fll_path
+build_name test-fl_path
 
 version_major 0
 version_minor 6
@@ -18,7 +18,7 @@ build_indexer_arguments rcs
 build_language c
 
 build_libraries -lc -lcmocka
-build_libraries-individual -lf_memory -lf_path -lf_string -lfll_path
+build_libraries-individual -lf_memory -lf_path -lf_string -lfl_path
 
 build_sources_program test-path-canonical.c
 

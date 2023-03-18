@@ -4,11 +4,11 @@
 extern "C" {
 #endif
 
-#ifndef _di_fll_path_canonical_
-  f_status_t fll_path_canonical(const f_string_static_t path, f_string_dynamic_t * const canonical) {
-    #ifndef _di_level_2_parameter_checking_
+#ifndef _di_fl_path_canonical_
+  f_status_t fl_path_canonical(const f_string_static_t path, f_string_dynamic_t * const canonical) {
+    #ifndef _di_level_1_parameter_checking_
       if (!canonical) return F_status_set_error(F_parameter);
-    #endif // _di_level_2_parameter_checking_
+    #endif // _di_level_1_parameter_checking_
 
     f_status_t status = F_none;
 
@@ -139,7 +139,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // _di_fll_path_canonical_
+#endif // _di_fl_path_canonical_
 
 #ifdef __cplusplus
 } // extern "C"
