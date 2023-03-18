@@ -77,9 +77,11 @@
 #include <fll/level_0/signal.h>
 
 // FLL-1 includes.
+#include <fll/level_1/control_group.h>
 #include <fll/level_1/conversion.h>
 #include <fll/level_1/directory.h>
 #include <fll/level_1/environment.h>
+#include <fll/level_1/execute.h>
 #include <fll/level_1/iki.h>
 #include <fll/level_1/path.h>
 #include <fll/level_1/print.h>

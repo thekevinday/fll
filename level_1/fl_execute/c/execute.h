@@ -28,6 +28,9 @@
 #include <fll/level_0/status.h>
 #include <fll/level_0/memory.h>
 #include <fll/level_0/type_array.h>
+#include <fll/level_0/string.h>
+#include <fll/level_0/capability.h>
+#include <fll/level_0/control_group.h>
 #include <fll/level_0/execute.h>
 #include <fll/level_0/limit.h>
 #include <fll/level_0/signal.h>
