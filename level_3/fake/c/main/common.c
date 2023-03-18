@@ -4,30 +4,6 @@
 extern "C" {
 #endif
 
-#ifndef _di_fake_setting_delete_
-  f_status_t fake_setting_delete(fake_setting_t * const setting) {
-
-    if (!setting) return F_status_set_error(F_parameter);
-
-    f_string_dynamic_resize(0, &setting->build);
-    f_string_dynamic_resize(0, &setting->data);
-    f_string_dynamic_resize(0, &setting->documents);
-    f_string_dynamic_resize(0, &setting->fakefile);
-    f_string_dynamic_resize(0, &setting->licenses);
-    f_string_dynamic_resize(0, &setting->process);
-    f_string_dynamic_resize(0, &setting->settings);
-    f_string_dynamic_resize(0, &setting->sources);
-    f_string_dynamic_resize(0, &setting->work);
-
-    f_string_dynamics_resize(0, &setting->defines);
-    f_string_dynamics_resize(0, &setting->modes);
-
-    f_uint8s_resize(0, &setting->operations);
-
-    return F_none;
-  }
-#endif // _di_fake_setting_delete_
-
 #ifndef _di_fake_setting_load_
   void fake_setting_load(const f_console_arguments_t arguments, fll_program_data_t * const main, fake_setting_t * const setting) {
 
@@ -467,12 +443,12 @@ extern "C" {
 #endif // _di_fake_setting_load_
 
 #ifndef _di_fake_setting_load_parameter_callback_
-  void fake_setting_load_parameter_callback(const f_console_arguments_t arguments, void * const void_parameters, f_console_parameter_state_t * const state_parameter, void * const void_data) {
+  void fake_setting_load_parameter_callback(const f_console_arguments_t arguments, void * const void_parameters, f_console_parameter_state_t * const parameter_state, void * const void_data) {
 
-    if (!state_parameter || !state_parameter->state) return;
+    if (!parameter_state || !parameter_state->state) return;
 
-    if (!void_parameters || !void_data || (state_parameter->type != f_console_parameter_state_type_simple_e && state_parameter->type != f_console_parameter_state_type_miss_e)) {
-      state_parameter->state->status = F_process;
+    if (!void_parameters || !void_data || (parameter_state->type != f_console_parameter_state_type_simple_e && parameter_state->type != f_console_parameter_state_type_miss_e)) {
+      parameter_state->state->status = F_process;
 
       return;
     }
@@ -482,9 +458,9 @@ extern "C" {
 
     if (!data->setting) return;
 
-    state_parameter->state->status = f_uint8s_increase(state_parameter->state->step_small, &data->setting->operations);
+    parameter_state->state->status = f_uint8s_increase(parameter_state->state->step_small, &data->setting->operations);
 
-    if (F_status_is_error(state_parameter->state->status)) {
+    if (F_status_is_error(parameter_state->state->status)) {
       fake_print_line_first(data->setting, data->main->message);
 
       fake_print_error(data->setting, data->main->error, macro_fake_f(f_uint8s_increase));
@@ -492,7 +468,7 @@ extern "C" {
       return;
     }
 
-    switch (state_parameter->at) {
+    switch (parameter_state->at) {
       case fake_parameter_operation_build_e:
         data->setting->operations.array[data->setting->operations.used++] = fake_operation_build_e;
         data->setting->flag |= fake_main_flag_operation_build_e;
@@ -518,12 +494,12 @@ extern "C" {
         break;
 
       default:
-        state_parameter->state->status = F_process;
+        parameter_state->state->status = F_process;
 
         return;
     }
 
-    state_parameter->state->status = F_none;
+    parameter_state->state->status = F_none;
   }
 #endif // _di_fake_setting_load_parameter_callback_
 
@@ -537,87 +513,6 @@ extern "C" {
     return F_none;
   }
 #endif // _di_fake_setting_unload_
-
-#ifndef _di_fake_data_delete_
-  f_status_t fake_data_delete(fake_data_t * const data) {
-
-    f_string_dynamic_resize(0, &data->path_build);
-    f_string_dynamic_resize(0, &data->path_build_documentation);
-    f_string_dynamic_resize(0, &data->path_build_documents);
-    f_string_dynamic_resize(0, &data->path_build_includes);
-    f_string_dynamic_resize(0, &data->path_build_libraries);
-    f_string_dynamic_resize(0, &data->path_build_libraries_script);
-    f_string_dynamic_resize(0, &data->path_build_libraries_shared);
-    f_string_dynamic_resize(0, &data->path_build_libraries_static);
-    f_string_dynamic_resize(0, &data->path_build_objects);
-    f_string_dynamic_resize(0, &data->path_build_objects_script);
-    f_string_dynamic_resize(0, &data->path_build_objects_shared);
-    f_string_dynamic_resize(0, &data->path_build_objects_static);
-    f_string_dynamic_resize(0, &data->path_build_programs);
-    f_string_dynamic_resize(0, &data->path_build_programs_script);
-    f_string_dynamic_resize(0, &data->path_build_programs_shared);
-    f_string_dynamic_resize(0, &data->path_build_programs_static);
-    f_string_dynamic_resize(0, &data->path_build_settings);
-    f_string_dynamic_resize(0, &data->path_build_stage);
-
-    f_string_dynamic_resize(0, &data->path_data_build);
-    f_string_dynamic_resize(0, &data->path_data_documentation);
-    f_string_dynamic_resize(0, &data->path_data_settings);
-
-    f_string_dynamic_resize(0, &data->path_documents);
-
-    f_string_dynamic_resize(0, &data->path_licenses);
-
-    f_string_dynamic_resize(0, &data->path_work_includes);
-    f_string_dynamic_resize(0, &data->path_work_libraries);
-    f_string_dynamic_resize(0, &data->path_work_libraries_script);
-    f_string_dynamic_resize(0, &data->path_work_libraries_shared);
-    f_string_dynamic_resize(0, &data->path_work_libraries_static);
-    f_string_dynamic_resize(0, &data->path_work_programs);
-    f_string_dynamic_resize(0, &data->path_work_programs_script);
-    f_string_dynamic_resize(0, &data->path_work_programs_shared);
-    f_string_dynamic_resize(0, &data->path_work_programs_static);
-
-    f_string_dynamic_resize(0, &data->file_data_build_defines);
-    f_string_dynamic_resize(0, &data->file_data_build_dependencies);
-    f_string_dynamic_resize(0, &data->file_data_build_process_post);
-    f_string_dynamic_resize(0, &data->file_data_build_process_pre);
-    f_string_dynamic_resize(0, &data->file_data_build_fakefile);
-    f_string_dynamic_resize(0, &data->file_data_build_settings);
-
-    f_string_dynamic_resize(0, &data->file_documents_readme);
-
-    return F_none;
-  }
-#endif // _di_fake_data_delete_
-
-#ifndef _di_fake_make_data_delete_
-  f_status_t fake_make_data_delete(fake_make_data_t * const data) {
-
-    macro_fake_build_setting_t_delete_simple(data->setting_build);
-    macro_fake_make_setting_t_delete_simple(data->setting_make);
-
-    f_string_maps_resize(0, &data->environment);
-
-    macro_fake_make_parameter_delete_simple(data->parameter);
-    macro_fake_make_parameter_delete_simple(data->parameter_option);
-    macro_fake_make_parameter_delete_simple(data->parameter_value);
-    macro_fake_make_path_delete_simple(data->path);
-
-    f_fss_nameds_resize(0, &data->fakefile);
-
-    f_string_dynamic_resize(0, &data->buffer);
-    f_string_dynamic_resize(0, &data->cache_1);
-    f_string_dynamic_resize(0, &data->cache_2);
-    f_string_dynamic_resize(0, &data->cache_path);
-
-    f_string_dynamics_resize(0, &data->cache_arguments);
-
-    f_iki_data_delete(&data->cache_iki);
-
-    return F_none;
-  }
-#endif // _di_fake_make_data_delete_
 
 #ifdef __cplusplus
 } // extern "C"

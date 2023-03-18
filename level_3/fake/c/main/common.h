@@ -17,23 +17,6 @@ extern "C" {
 #endif
 
 /**
- * Delete the program main setting data.
- *
- * @param setting
- *   The program main setting data.
- *
- *   This does not alter setting.state.status.
- *
- * @return
- *   F_none on success.
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_fake_setting_delete_
-  extern f_status_t fake_setting_delete(fake_setting_t * const setting);
-#endif // _di_fake_setting_delete_
-
-/**
  * Perform the standard program setting load process.
  *
  * This prints error messages as appropriate.
@@ -51,10 +34,22 @@ extern "C" {
  *     F_none on success.
  *
  *     Errors (with error bit) from: f_console_parameter_process().
+ *     Errors (with error bit) from: f_path_directory_cleanup().
+ *     Errors (with error bit) from: f_string_dynamic_resize().
+ *     Errors (with error bit) from: f_utf_is_word_dash_plus().
+ *     Errors (with error bit) from: f_uint8s_increase_by().
+ *     Errors (with error bit) from: fll_program_parameter_additional_rip().
  *     Errors (with error bit) from: fll_program_parameter_process_context().
+ *     Errors (with error bit) from: fll_program_parameter_process_verbosity().
  *
  * @see f_console_parameter_process()
+ * @see f_path_directory_cleanup()
+ * @see f_string_dynamic_resize()
+ * @see f_utf_is_word_dash_plus()
+ * @see f_uint8s_increase_by()
+ * @see fll_program_parameter_additional_rip()
  * @see fll_program_parameter_process_context()
+ * @see fll_program_parameter_process_verbosity()
  */
 #ifndef _di_fake_setting_load_
   extern void fake_setting_load(const f_console_arguments_t arguments, fll_program_data_t * const main, fake_setting_t * const setting);
@@ -72,16 +67,23 @@ extern "C" {
  * @param parameters
  *   The parameters array (generally from main.parameters) representing all of the parameters to look for.
  *   This must be of type f_console_parameters_t.
- * @param state
+ * @param parameter_state
  *   The internal state data primarily managed by f_console_parameter_process().
  *   The state.status is used to represent the return status of this callback.
+ *
+ *   This alters parameter_state->state->status:
+ *     F_none on success.
+ *     F_process on success, designating that processing should be performed (see f_console_parameter_process()).
+ *
+ *     Errors (with error bit) from: f_uint8s_increase().
  * @param data
  *   This must be of the type fake_setting_t.
  *
  * @see f_console_parameter_process()
+ * @see f_uint8s_increase()
  */
 #ifndef _di_fake_setting_load_parameter_callback_
-  extern void fake_setting_load_parameter_callback(const f_console_arguments_t arguments, void * const parameters, f_console_parameter_state_t * const state, void * const data);
+  extern void fake_setting_load_parameter_callback(const f_console_arguments_t arguments, void * const parameters, f_console_parameter_state_t * const parameter_state, void * const data);
 #endif // _di_fake_setting_load_parameter_callback_
 
 /**
@@ -107,40 +109,6 @@ extern "C" {
 #ifndef _di_fake_setting_unload_
   extern f_status_t fake_setting_unload(fll_program_data_t * const main, fake_setting_t * const setting);
 #endif // _di_fake_setting_unload_
-
-/**
- * Deallocate data.
- *
- * @param data
- *   The program data.
- *
- * @return
- *   F_none on success.
- *
- *   Status codes (with error bit) are returned on any problem.
- *
- * @see fake_main()
- */
-#ifndef _di_fake_data_delete_
-  extern f_status_t fake_data_delete(fake_data_t * const data);
-#endif // _di_fake_data_delete_
-
-/**
- * Deallocate make data.
- *
- * @param data
- *   The make data.
- *
- * @return
- *   F_none on success.
- *
- * @see f_fss_nameds_resize()
- * @see f_string_dynamic_resize()
- * @see f_string_maps_resize()
- */
-#ifndef _di_fake_make_data_delete_
-  extern f_status_t fake_make_data_delete(fake_make_data_t * const data);
-#endif // _di_fake_make_data_delete_
 
 #ifdef __cplusplus
 } // extern "C"

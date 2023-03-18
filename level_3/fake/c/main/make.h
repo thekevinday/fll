@@ -27,10 +27,12 @@ extern "C" {
  *     F_true if inside the project.
  *     F_false (with error bit) if path exists outside of the root project path.
  *
+ *     Errors (with error bit) from: fl_string_dynamic_partial_compare()
  *     Errors (with error bit) from: fll_path_canonical()
  * @param path
  *   file path to get the real path of.
  *
+ * @see fl_string_dynamic_partial_compare()
  * @see fll_path_canonical()
  */
 #ifndef _di_fake_make_assure_inside_project_
@@ -51,6 +53,8 @@ extern "C" {
  *     F_exist_not (with error bit) if there is no owner or group by the given name.
  *     F_parameter (with error bit) on invalid parameter.
  *
+ *     Errors (with error bit) from: f_account_group_id_by_name()
+ *     Errors (with error bit) from: f_account_id_by_name()
  *     Errors (with error bit) from: fl_conversion_dynamic_to_unsigned_detect()
  * @param is_owner
  *   If TRUE, then buffer represents a UID.
@@ -64,6 +68,8 @@ extern "C" {
  *   When is_owner is TRUE, then this should be cast to type (gid_t *).
  *   This is set to 0 on any error, check data_make.setting.state.status for error.
  *
+ * @see f_account_group_id_by_name()
+ * @see f_account_id_by_name()
  * @see fl_conversion_dynamic_to_unsigned_detect()
  */
 #ifndef _di_fake_make_get_id_

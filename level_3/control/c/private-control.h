@@ -182,7 +182,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ *   F_interrupt (with error bit) on interrupt signal received.
  *   F_socket_not (with error bit) on socket related error preventing the socket from being created or connected to.
  *
  *   Errors (with error bit) from: f_file_exists().

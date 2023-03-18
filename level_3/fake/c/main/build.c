@@ -159,7 +159,8 @@ extern "C" {
   void fake_build_copy(fake_data_t * const data, const f_mode_t mode, const f_string_static_t label, const f_string_static_t source, const f_string_static_t destination, const f_string_statics_t files, const f_string_static_t file_stage, const f_array_length_t perserve_offset) {
 
     if (!data || !data->main || !data->setting) return;
-    if (F_status_is_error(data->setting->state.status) || f_file_exists(file_stage, F_true) == F_true || data->setting->state.status == F_child) return;
+    if (data->setting->state.status == F_child) return;
+    if (F_status_is_error(data->setting->state.status) || f_file_exists(file_stage, F_true) == F_true) return;
 
     if (!((++data->main->signal_check) % fake_signal_check_d)) {
       if (fll_program_standard_signal_received(data->main)) {
@@ -359,8 +360,9 @@ extern "C" {
 #ifndef _di_fake_build_execute_process_script_
   int fake_build_execute_process_script(fake_data_t * const data, fake_build_data_t * const data_build, const f_string_static_t process_script, const f_string_static_t file_stage) {
 
-    if (!data) return 0;
-    if (F_status_is_error(data->setting->state.status) || f_file_exists(file_stage, F_true) == F_true || data->setting->state.status == F_child) return data->main->child;
+    if (!data || !data->main || !data->setting || !data_build) return 0;
+    if (data->setting->state.status == F_child) return data->main->child;
+    if (F_status_is_error(data->setting->state.status) || f_file_exists(file_stage, F_true) == F_true) return 0;
     if (!process_script.used) return 0;
 
     f_string_dynamics_t arguments = f_string_dynamics_t_initialize;
@@ -802,8 +804,8 @@ extern "C" {
 
     fake_build_execute_process_script(data, &data_build, data_build.setting.process_post, stage.file_process_post);
 
-    macro_fake_build_main_delete_simple(data_build);
-    macro_fake_build_stage_t_delete_simple(stage);
+    fake_build_data_delete(&data_build);
+    fake_build_stage_delete(&stage);
   }
 #endif // _di_fake_build_operate_
 

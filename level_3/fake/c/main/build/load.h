@@ -52,10 +52,16 @@ extern "C" {
  *
  *     F_interrupt (with error bit) on interrupt signal received.
  *
+ *     F_failure (with error bit) on error.
+ *
  *     Errors (with error bit) from: f_fss_apply_delimit().
  *     Errors (with error bit) from: f_string_dynamic_append_assure().
  *     Errors (with error bit) from: fll_fss_extended_read().
+ *
+ *     Errors (with error bit) from: fake_build_load_setting_override().
  *     Errors (with error bit) from: fake_build_load_setting_process().
+ *     Errors (with error bit) from: fake_file_buffer().
+ *     Errors (with error bit) from: fake_pipe_buffer().
  * @param build_arguments
  *   (optional) A set of custom arguments to pass to the build.
  *   The first argument represents the name of the settings file to use.
@@ -75,7 +81,11 @@ extern "C" {
  * @see f_string_dynamic_append_assure()
  * @see fll_fss_extended_read()
  * @see fll_program_print_signal_received()
+ *
+ * @see fake_build_load_setting_override()
  * @see fake_build_load_setting_process()
+ * @see fake_file_buffer()
+ * @see fake_pipe_buffer()
  */
 #ifndef _di_fake_build_load_setting_
   extern void fake_build_load_setting(fake_data_t * const data, const f_string_statics_t * const build_arguments, const bool process_pipe, fake_build_setting_t * const setting);
@@ -86,18 +96,18 @@ extern "C" {
  *
  * @param data
  *   The program data.
- * @param path_file
- *   The path to the buffer.
- * @param buffer
- *   The loaded file data.
+ *
+ *   This alters data.setting.state.status:
+ *     F_none on success.
+ *
+ *     F_failure (with error bit) on error.
+ *
+ *     Errors (with error bit) from: f_string_dynamic_append_assure().
  * @param setting
  *   All build related setting data from the build setting file are loaded into this.
  *   These setting will have any specified mode property applied.
  *
- * @return
- *   F_none on success.
- *
- *   Status codes (with error bit) are returned on any problem.
+ * @see f_string_dynamic_append_assure()
  */
 #ifndef _di_fake_build_load_setting_override_
   extern void fake_build_load_setting_override(fake_data_t * const data, fake_build_setting_t * const setting);
@@ -108,6 +118,19 @@ extern "C" {
  *
  * @param data
  *   The program data.
+ *
+ *   This alters data.setting.state.status:
+ *     F_none on success.
+ *
+ *     F_interrupt (with error bit) on interrupt signal received.
+ *
+ *     F_failure (with error bit) on error.
+ *
+ *     Errors (with error bit) from: f_path_directory_cleanup().
+ *     Errors (with error bit) from: f_string_dynamic_append().
+ *     Errors (with error bit) from: f_string_dynamic_append_nulless().
+ *     Errors (with error bit) from: f_string_dynamic_increase_by().
+ *     Errors (with error bit) from: fll_fss_snatch_apart().
  * @param checks
  *   If TRUE, perform certain "required" sanity checks.
  *   If FALSE, do not perform certain "required" sanity checks (intended for a fakefile rather than a build settings file).
@@ -126,16 +149,9 @@ extern "C" {
  *   All build related setting data from the build setting file are loaded into this.
  *   These setting will have any specified mode property applied.
  *
- * @return
- *   F_none on success.
- *
- *   Errors (with error bit) from: f_path_directory_cleanup().
- *   Errors (with error bit) from: f_string_dynamic_append().
- *   Errors (with error bit) from: f_string_dynamic_increase_by().
- *   Errors (with error bit) from: fll_fss_snatch_apart().
- *
  * @see f_path_directory_cleanup()
  * @see f_string_dynamic_append()
+ * @see f_string_dynamic_append_nulless()
  * @see f_string_dynamic_increase_by()
  * @see fll_fss_snatch_apart()
  */

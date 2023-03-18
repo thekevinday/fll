@@ -25,7 +25,7 @@ extern "C" {
  *   This alters data_make.setting.state.status:
  *     F_none on success.
  *
- *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ *     F_interrupt (with error bit) on interrupt signal received.
  *
  *     Errors (with error bit) from: fake_make_operate_process_run()
  *     Errors (with error bit) from: fake_make_operate_process_type_break()
@@ -163,11 +163,13 @@ extern "C" {
  *     F_none on success.
  *     F_data_not if both program.used is 0 and arguments.used is 0.
  *
- *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ *     F_interrupt (with error bit) on interrupt signal received.
  *
  *     Errors (with error bit) from: f_environment_get_all().
  *     Errors (with error bit) from: fl_environment_load_names().
  *     Errors (with error bit) from: fll_execute_program().
+ *
+ *     Errors (with error bit) from: fake_make_operate_process_return().
  *
  *     Status codes (with error bit) are returned on any problem.
  * @param program
@@ -181,6 +183,9 @@ extern "C" {
  * @see f_environment_get_all()
  * @see fl_environment_load_names()
  * @see fll_execute_program()
+ * @see fll_program_standard_signal_received()
+ *
+ * @see fake_make_operate_process_return()
  */
 #ifndef _di_fake_make_operate_process_execute_
   extern void fake_make_operate_process_execute(fake_make_data_t * const data_make, const f_string_static_t program, const f_string_statics_t arguments, const bool as_shell);

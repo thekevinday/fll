@@ -8,7 +8,8 @@ extern "C" {
   int fake_build_program_script(fake_data_t * const data, fake_build_data_t * const data_build, const f_mode_t mode, const f_string_static_t file_stage) {
 
     if (!data || !data->main || !data->setting || !data_build) return 0;
-    if (F_status_is_error(data->setting->state.status) || f_file_exists(file_stage, F_true) == F_true || data->setting->state.status == F_child) return data->main->child;
+    if (data->setting->state.status == F_child) return data->main->child;
+    if (F_status_is_error(data->setting->state.status) || f_file_exists(file_stage, F_true) == F_true) return 0;
 
     fake_build_touch(data, file_stage);
 
@@ -20,7 +21,8 @@ extern "C" {
   int fake_build_program_shared(fake_data_t * const data, fake_build_data_t * const data_build, const f_mode_t mode, const f_string_static_t file_stage) {
 
     if (!data || !data->main || !data->setting || !data_build) return 0;
-    if (F_status_is_error(data->setting->state.status) || f_file_exists(file_stage, F_true) == F_true || data->setting->state.status == F_child) return data->main->child;
+    if (data->setting->state.status == F_child) return data->main->child;
+    if (F_status_is_error(data->setting->state.status) || f_file_exists(file_stage, F_true) == F_true) return 0;
     if (!data_build->setting.build_sources_program.used && !data_build->setting.build_sources_program_shared.used) return 0;
 
     fake_build_print_compile_program_shared(data->setting, data->main->message);
@@ -113,7 +115,8 @@ extern "C" {
   int fake_build_program_static(fake_data_t * const data, fake_build_data_t * const data_build, const f_mode_t mode, const f_string_static_t file_stage) {
 
     if (!data || !data->main || !data->setting || !data_build) return 0;
-    if (F_status_is_error(data->setting->state.status) || f_file_exists(file_stage, F_true) == F_true || data->setting->state.status == F_child) return data->main->child;
+    if (data->setting->state.status == F_child) return data->main->child;
+    if (F_status_is_error(data->setting->state.status) || f_file_exists(file_stage, F_true) == F_true) return 0;
     if (!data_build->setting.build_sources_program.used && !data_build->setting.build_sources_program_static.used) return 0;
 
     fake_build_print_compile_program_static(data->setting, data->main->message);

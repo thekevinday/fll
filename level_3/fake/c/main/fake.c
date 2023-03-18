@@ -52,6 +52,8 @@ extern "C" {
     if (F_status_is_error(setting->state.status)) {
       fake_data_delete(&data);
 
+      fake_print_line_last(setting, main->message);
+
       return;
     }
 
@@ -71,7 +73,7 @@ extern "C" {
       }
     }
 
-    {
+    if (F_status_is_error_not(setting->state.status)) {
       f_array_length_t i = 0;
 
       // Pre-process and perform validation when "clean" is before a "build" or "make" command as a safety check.

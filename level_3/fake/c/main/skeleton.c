@@ -119,8 +119,7 @@ extern "C" {
 #ifndef _di_fake_skeleton_operate_directory_create_
   void fake_skeleton_operate_directory_create(fake_data_t * const data, const f_string_static_t path) {
 
-    if (!data || !data->main || !data->setting) return;
-    if (!path.used) return;
+    if (!data || !data->main || !data->setting || !path.used) return;
 
     data->setting->state.status = f_directory_exists(path);
 
@@ -169,8 +168,7 @@ extern "C" {
 #ifndef _di_fake_skeleton_operate_file_create_
   void fake_skeleton_operate_file_create(fake_data_t * const data, const f_string_static_t path, const bool executable, const f_string_static_t content) {
 
-    if (!data || !data->main || !data->setting) return;
-    if (!path.used) return;
+    if (!data || !data->main || !data->setting || !path.used) return;
 
     data->setting->state.status = f_file_is(path, F_file_type_regular_d, F_false);
 
@@ -269,12 +267,16 @@ extern "C" {
 #ifndef _di_fake_skeleton_path_source_length_
   void fake_skeleton_path_source_length(fake_data_t * const data, const f_string_static_t *partial, f_string_static_t * const source) {
 
+    if (!data || !partial || !source) return;
+
     source->used = data->setting->sources.used + partial->used;
   }
 #endif // _di_fake_skeleton_path_source_length_
 
 #ifndef _di_fake_skeleton_path_source_string_
   void fake_skeleton_path_source_string(fake_data_t * const data, const f_string_static_t *partial, f_string_static_t * const source) {
+
+    if (!data || !partial || !source) return;
 
     source->used = 0;
 

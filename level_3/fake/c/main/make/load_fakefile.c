@@ -66,12 +66,12 @@ extern "C" {
         delimits.used = 0;
       }
 
-      macro_f_fss_comments_t_delete_simple(comments);
+      f_string_ranges_resize(0, &comments);
 
       if (F_status_is_error(data_make->setting->state.status)) {
-        macro_f_fss_objects_t_delete_simple(list_objects);
-        macro_f_fss_contents_t_delete_simple(list_contents);
-        macro_f_fss_delimits_t_delete_simple(delimits);
+        f_string_ranges_resize(0, &list_objects);
+        f_string_rangess_resize(0, &list_contents);
+        f_array_lengths_resize(0, &delimits);
 
         return;
       }
@@ -84,16 +84,16 @@ extern "C" {
       f_fss_set_t settings = f_fss_set_t_initialize;
 
       if (list_objects.used > data_make->fakefile.size) {
-        macro_f_fss_nameds_t_resize((data_make->setting->state.status), data_make->fakefile, list_objects.used);
+        data_make->setting->state.status = f_fss_nameds_resize(list_objects.used, &data_make->fakefile);
       }
 
       if (F_status_is_error(data_make->setting->state.status)) {
-        fake_print_error(data_make->setting, data_make->main->error, macro_fake_f(macro_f_fss_nameds_t_resize));
+        fake_print_error(data_make->setting, data_make->main->error, macro_fake_f(f_fss_nameds_resize));
 
-        macro_f_fss_set_t_delete_simple(settings);
-        macro_f_fss_objects_t_delete_simple(list_objects);
-        macro_f_fss_contents_t_delete_simple(list_contents);
-        macro_f_fss_delimits_t_delete_simple(delimits);
+        f_fss_set_resize(0, &settings);
+        f_string_ranges_resize(0, &list_objects);
+        f_string_rangess_resize(0, &list_contents);
+        f_array_lengths_resize(0, &delimits);
 
         return;
       }
@@ -187,12 +187,12 @@ extern "C" {
         } // for
       }
 
-      macro_f_fss_objects_t_delete_simple(list_objects);
-      macro_f_fss_contents_t_delete_simple(list_contents);
-      macro_f_fss_delimits_t_delete_simple(delimits);
+      f_string_ranges_resize(0, &list_objects);
+      f_string_rangess_resize(0, &list_contents);
+      f_array_lengths_resize(0, &delimits);
 
       if (F_status_is_error(data_make->setting->state.status)) {
-        macro_f_fss_set_t_delete_simple(settings);
+        f_fss_set_resize(0, &settings);
 
         return;
       }
@@ -202,7 +202,7 @@ extern "C" {
 
         data_make->setting->state.status = F_status_set_error(F_failure);
 
-        macro_f_fss_set_t_delete_simple(settings);
+        f_fss_set_resize(0, &settings);
 
         return;
       }
@@ -228,7 +228,7 @@ extern "C" {
         if (F_status_is_error(data_make->setting->state.status)) {
           fake_print_error(data_make->setting, data_make->main->error, function_name);
 
-          macro_f_fss_set_t_delete_simple(settings);
+          f_fss_set_resize(0, &settings);
 
           return;
         }
@@ -267,7 +267,7 @@ extern "C" {
         } // for
 
         if (F_status_is_error(data_make->setting->state.status)) {
-          macro_f_fss_set_t_delete_simple(settings);
+          f_fss_set_resize(0, &settings);
 
           return;
         }
@@ -282,7 +282,7 @@ extern "C" {
       }
 
       if (F_status_is_error(data_make->setting->state.status)) {
-        macro_f_fss_set_t_delete_simple(settings);
+        f_fss_set_resize(0, &settings);
 
         return;
       }
@@ -305,14 +305,14 @@ extern "C" {
           fake_print_error(data_make->setting, data_make->main->error, macro_fake_f(f_string_dynamic_partial_append));
         }
 
-        macro_f_fss_set_t_delete_simple(settings);
+        f_fss_set_resize(0, &settings);
 
         return;
       }
 
       fake_make_load_fakefile_setting_define_and_parameter(data_make, &settings);
 
-      macro_f_fss_set_t_delete_simple(settings);
+      f_fss_set_resize(0, &settings);
     }
 
     data_make->setting->state.status = F_none;

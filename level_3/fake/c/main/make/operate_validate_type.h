@@ -71,6 +71,10 @@ extern "C" {
  *     F_none on success.
  *
  *     F_failure (with error bit) on any error.
+ *
+ * @see f_directory_is()
+ *
+ * @see fake_make_assure_inside_project()
  */
 #ifndef _di_fake_make_operate_validate_type_clone_
   extern void fake_make_operate_validate_type_clone(fake_make_data_t * const data_make);
@@ -104,6 +108,12 @@ extern "C" {
  *     F_none on success.
  *
  *     F_failure (with error bit) on any error.
+ *
+ * @see f_file_exists()
+ *
+ * @see fake_make_assure_inside_project()
+ * @see fake_make_get_id()
+ * @see fake_make_get_id_mode()
  */
 #ifndef _di_fake_make_operate_validate_type_condition_
   extern void fake_make_operate_validate_type_condition(fake_make_data_t * const data_make, fake_state_process_t * const state_process);
@@ -119,6 +129,11 @@ extern "C" {
  *     F_none on success.
  *
  *     F_failure (with error bit) on any error.
+ *
+ * @see f_directory_is()
+ * @see f_file_exists()
+ *
+ * @see fake_make_assure_inside_project()
  */
 #ifndef _di_fake_make_operate_validate_type_copy_
   extern void fake_make_operate_validate_type_copy(fake_make_data_t * const data_make);
@@ -134,6 +149,8 @@ extern "C" {
  *     F_none on success.
  *
  *     F_failure (with error bit) on any error.
+ *
+ * @see fake_make_operate_validate_define_name()
  */
 #ifndef _di_fake_make_operate_validate_type_define_
   extern void fake_make_operate_validate_type_define(fake_make_data_t * const data_make);
@@ -149,6 +166,8 @@ extern "C" {
  *     F_none on success.
  *
  *     F_failure (with error bit) on any error.
+ *
+ * @see fake_make_assure_inside_project()
  */
 #ifndef _di_fake_make_operate_validate_type_delete_
   extern void fake_make_operate_validate_type_delete(fake_make_data_t * const data_make);
@@ -242,6 +261,12 @@ extern "C" {
  *     F_none on success.
  *
  *     F_failure (with error bit) on any error.
+ *
+ * @see f_file_name_directory()
+ * @see f_string_dynamic_append()
+ * @see f_string_dynamic_append_assure()
+ *
+ * @see fake_make_assure_inside_project()
  */
 #ifndef _di_fake_make_operate_validate_type_move_
   extern void fake_make_operate_validate_type_move(fake_make_data_t * const data_make);
@@ -292,6 +317,8 @@ extern "C" {
  *     F_none on success.
  *
  *     F_failure (with error bit) on any error.
+ *
+ * @see f_file_is()
  */
 #ifndef _di_fake_make_operate_validate_type_permission_
   extern void fake_make_operate_validate_type_permission(fake_make_data_t * const data_make, fake_state_process_t * const state_process);
@@ -337,6 +364,8 @@ extern "C" {
  *     F_none on success.
  *
  *     F_failure (with error bit) on any error.
+ *
+ * @see f_file_is()
  */
 #ifndef _di_fake_make_operate_validate_type_to_
   extern void fake_make_operate_validate_type_to(fake_make_data_t * const data_make);
@@ -352,6 +381,8 @@ extern "C" {
  *     F_none on success.
  *
  *     F_failure (with error bit) on any error.
+ *
+ * @see fake_make_assure_inside_project()
  */
 #ifndef _di_fake_make_operate_validate_type_touch_
   extern void fake_make_operate_validate_type_touch(fake_make_data_t * const data_make);
@@ -367,6 +398,8 @@ extern "C" {
  *     F_none on success.
  *
  *     F_failure (with error bit) on any error.
+ *
+ * @see fake_make_assure_inside_project()
  */
 #ifndef _di_fake_make_operate_validate_type_write_
   extern void fake_make_operate_validate_type_write(fake_make_data_t * const data_make);

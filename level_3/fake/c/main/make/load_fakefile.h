@@ -24,17 +24,53 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
- *   This alters data_make.settings.state.status:
+ *   This alters data_make.setting.state.status:
  *     F_none on success.
  *
- *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ *     F_interrupt (with error bit) on interrupt signal received.
+ *
+ *     Errors (with error bit) from: f_fss_apply_delimit().
+ *     Errors (with error bit) from: f_string_dynamic_append().
+ *     Errors (with error bit) from: f_string_dynamic_partial_append().
+ *     Errors (with error bit) from: f_string_dynamics_resize().
+ *     Errors (with error bit) from: f_string_map_multis_resize().
+ *     Errors (with error bit) from: fll_fss_basic_list_read().
+ *     Errors (with error bit) from: fll_fss_extended_read().
+ *     Errors (with error bit) from: fll_program_standard_signal_received().
  *
  *     Errors (with error bit) from: fake_build_load_setting().
+ *     Errors (with error bit) from: fake_make_load_fakefile_setting_build().
+ *     Errors (with error bit) from: fake_make_load_fakefile_setting_compiler().
+ *     Errors (with error bit) from: fake_make_load_fakefile_setting_define_and_parameter().
+ *     Errors (with error bit) from: fake_make_load_fakefile_setting_environment().
+ *     Errors (with error bit) from: fake_make_load_fakefile_setting_fail().
+ *     Errors (with error bit) from: fake_make_load_fakefile_setting_indexer().
+ *     Errors (with error bit) from: fake_make_load_fakefile_setting_parameter().
+ *     Errors (with error bit) from: fake_file_buffer().
+ *     Errors (with error bit) from: fake_pipe_buffer().
  * @param process_pipe
  *   If TRUE, then use the program input pipe.
  *   If FALSE, then ignore the program input pipe.
  *
+ * @see f_fss_apply_delimit()
+ * @see f_string_dynamic_append()
+ * @see f_string_dynamic_partial_append()
+ * @see f_string_dynamics_resize()
+ * @see f_string_map_multis_resize()
+ * @see fll_fss_basic_list_read()
+ * @see fll_fss_extended_read()
+ * @see fll_program_standard_signal_received()
+ *
  * @see fake_build_load_setting()
+ * @see fake_make_load_fakefile_setting_build()
+ * @see fake_make_load_fakefile_setting_compiler()
+ * @see fake_make_load_fakefile_setting_define_and_parameter()
+ * @see fake_make_load_fakefile_setting_environment()
+ * @see fake_make_load_fakefile_setting_fail()
+ * @see fake_make_load_fakefile_setting_indexer()
+ * @see fake_make_load_fakefile_setting_parameter()
+ * @see fake_file_buffer()
+ * @see fake_pipe_buffer()
  */
 #ifndef _di_fake_make_load_fakefile_
   extern void fake_make_load_fakefile(fake_make_data_t * const data_make, const bool process_pipe);
@@ -84,14 +120,22 @@ extern "C" {
  *     F_none on success.
  *
  *     Errors (with error bit) from: f_environment_set().
+ *     Errors (with error bit) from: f_string_dynamic_mash().
  *     Errors (with error bit) from: f_string_dynamic_mash_nulless().
  *     Errors (with error bit) from: fll_fss_snatch_map_apart().
+ *
+ *     Errors (with error bit) from: fake_build_load_setting_process().
+ *     Errors (with error bit) from: fake_make_operate_validate_define_name().
  * @param settings
  *   The settings data.
  *
  * @see f_environment_set()
+ * @see f_string_dynamic_mash()
  * @see f_string_dynamic_mash_nulless()
  * @see fll_fss_snatch_map_apart()
+ *
+ * @see fake_build_load_setting_process()
+ * @see fake_make_operate_validate_define_name()
  */
 #ifndef _di_fake_make_load_fakefile_setting_define_and_parameter_
   extern void fake_make_load_fakefile_setting_define_and_parameter(fake_make_data_t * const data_make, f_fss_set_t * const settings);
@@ -107,12 +151,16 @@ extern "C" {
  *     F_none on success.
  *
  *     Errors (with error bit) from: f_string_dynamic_append().
+ *     Errors (with error bit) from: f_string_dynamic_append_nulless().
+ *     Errors (with error bit) from: f_string_dynamic_increase_by().
  *     Errors (with error bit) from: f_string_dynamic_partial_append_nulless().
  *     Errors (with error bit) from: f_string_dynamics_increase().
  * @param content
  *   The setting content.
  *
  * @see f_string_dynamic_append()
+ * @see f_string_dynamic_append_nulless()
+ * @see f_string_dynamic_increase_by()
  * @see f_string_dynamic_partial_append_nulless()
  * @see f_string_dynamics_increase()
  */
@@ -167,6 +215,7 @@ extern "C" {
  *     F_none on success.
  *
  *     Errors (with error bit) from: f_string_append_assure().
+ *     Errors (with error bit) from: f_string_dynamic_append_assure().
  *     Errors (with error bit) from: f_string_dynamic_partial_append_nulless().
  *     Errors (with error bit) from: fake_make_load_fakefile_setting_define_and_parameter().
  * @param object
@@ -175,6 +224,7 @@ extern "C" {
  *   The setting content.
  *
  * @see f_string_append_assure()
+ * @see f_string_dynamic_append_assure()
  * @see f_string_dynamic_partial_append_nulless()
  *
  * @see fake_make_load_fakefile_setting_define_and_parameter()

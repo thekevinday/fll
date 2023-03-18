@@ -30,7 +30,7 @@ extern "C" {
  *   This alters data.setting.state.status:
  *     F_none on success.
  *
- *     Status codes (with error bit) are returned on any problem.
+ *     Errors (with error bit) from: fake_build_touch().
  * @param data_build
  *   The build data.
  * @param mode
@@ -41,6 +41,8 @@ extern "C" {
  * @return
  *   The return code of the execution process.
  *   This generally is only needed when F_child is returned, where this holds the return status of the child process.
+ *
+ * @see fake_build_touch()
  */
 #ifndef _di_fake_build_object_script_
   extern int fake_build_object_script(fake_data_t * const data, fake_build_data_t * const data_build, const f_mode_t mode, const f_string_static_t file_stage);
@@ -58,7 +60,10 @@ extern "C" {
  *   This alters data.setting.state.status:
  *     F_none on success.
  *
- *     Status codes (with error bit) are returned on any problem.
+ *     Errors (with error bit) from: fll_execute_arguments_add().
+ *
+ *     Errors (with error bit) from: fake_build_arguments_standard_add().
+ *     Errors (with error bit) from: fake_build_sources_object_add().
  * @param data_build
  *   The build data.
  * @param mode
@@ -69,6 +74,11 @@ extern "C" {
  * @return
  *   The return code of the execution process.
  *   This generally is only needed when F_child is returned, where this holds the return status of the child process.
+ *
+ * @see fll_execute_arguments_add()
+ *
+ * @see fake_build_arguments_standard_add()
+ * @see fake_build_sources_object_add()
  */
 #ifndef _di_fake_build_object_shared_
   extern int fake_build_object_shared(fake_data_t * const data, fake_build_data_t * const data_build, const f_mode_t mode, const f_string_static_t file_stage);
@@ -86,7 +96,11 @@ extern "C" {
  *   This alters data.setting.state.status:
  *     F_none on success.
  *
- *     Status codes (with error bit) are returned on any problem.
+ *     Errors (with error bit) from: fll_execute_arguments_add().
+ *
+ *     Errors (with error bit) from: fake_build_arguments_standard_add().
+ *     Errors (with error bit) from: fake_build_sources_object_add().
+ *     Errors (with error bit) from: fake_execute().
  * @param data_build
  *   The build data.
  * @param mode
@@ -97,6 +111,12 @@ extern "C" {
  * @return
  *   The return code of the execution process.
  *   This generally is only needed when F_child is returned, where this holds the return status of the child process.
+ *
+ * @see fll_execute_arguments_add()
+ *
+ * @see fake_build_arguments_standard_add()
+ * @see fake_build_sources_object_add()
+ * @see fake_execute()
  */
 #ifndef _di_fake_build_object_static_
   extern int fake_build_object_static(fake_data_t * const data, fake_build_data_t * const data_build, const f_mode_t mode, const f_string_static_t file_stage);

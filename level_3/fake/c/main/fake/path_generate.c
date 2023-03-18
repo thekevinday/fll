@@ -364,7 +364,7 @@ extern "C" {
 #ifndef _di_fake_path_generate_string_dynamic_
   void fake_path_generate_string_dynamic(fake_data_t * const data, const f_string_dynamic_t source, f_string_dynamic_t *destination[], const uint8_t length) {
 
-    if (!data || !data->main || !data->setting) return;
+    if (!data || !data->main || !data->setting || !destination) return;
 
     data->setting->state.status = F_none;
 

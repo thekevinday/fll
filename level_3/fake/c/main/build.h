@@ -113,6 +113,7 @@ extern "C" {
  *     Errors (with error bit) from: fll_execute_arguments_add()
  *     Errors (with error bit) from: fll_execute_arguments_add_parameter_set()
  *     Errors (with error bit) from: fll_execute_program()
+ *
  *     Errors (with error bit) from: fake_build_touch()
  * @param data_build
  *   The build data.
@@ -131,6 +132,7 @@ extern "C" {
  * @see fll_execute_arguments_add()
  * @see fll_execute_arguments_add_parameter_set()
  * @see fll_execute_program()
+ *
  * @see fake_build_touch()
  */
 #ifndef _di_fake_build_execute_process_script_
@@ -197,6 +199,7 @@ extern "C" {
  *     F_interrupt (with error bit) on interrupt signal received.
  *
  *     Errors (with error bit) from: fll_program_print_signal_received()
+ *
  *     Errors (with error bit) from: fake_build_copy()
  *     Errors (with error bit) from: fake_build_execute_process_script()
  *     Errors (with error bit) from: fake_build_library_script()
@@ -229,6 +232,7 @@ extern "C" {
  *   If FALSE, then ignore the program input pipe.
  *
  * @see fll_program_print_signal_received()
+ *
  * @see fake_build_copy()
  * @see fake_build_execute_process_script()
  * @see fake_build_library_script()

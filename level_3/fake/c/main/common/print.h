@@ -79,6 +79,7 @@ extern "C" {
     fake_f_f_file_touch_e,
     fake_f_f_file_write_e,
     fake_f_f_fss_apply_delimit_e,
+    fake_f_f_fss_nameds_resize_e,
     fake_f_f_path_change_e,
     fake_f_f_path_current_e,
     fake_f_f_path_directory_cleanup_e,
@@ -137,7 +138,6 @@ extern "C" {
     fake_f_fake_make_path_relative_e,
     fake_f_fake_path_generate_string_dynamic_e,
     fake_f_fake_skeleton_operate_directory_create_e,
-    fake_f_macro_f_fss_nameds_t_resize_e,
     fake_f_macro_f_string_map_multis_t_resize_e,
   }; // enum
 #endif // _di_fake_f_e_

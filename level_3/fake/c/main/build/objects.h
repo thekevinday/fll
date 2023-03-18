@@ -28,7 +28,17 @@ extern "C" {
  *   This alters data.settings.state.status:
  *     F_none on success.
  *
- *     Status codes (with error bit) are returned on any problem.
+ *     Errors (with error bit) from: f_directory_create().
+ *     Errors (with error bit) from: f_directory_exists().
+ *     Errors (with error bit) from: f_file_name_directory().
+ *     Errors (with error bit) from: f_string_dynamic_append_assure().
+ *     Errors (with error bit) from: f_string_dynamic_prepend().
+ *     Errors (with error bit) from: fll_execute_arguments_add().
+ *
+ *     Errors (with error bit) from: fake_build_arguments_standard_add().
+ *     Errors (with error bit) from: fake_build_get_file_name_without_extension().
+ *     Errors (with error bit) from: fake_build_objects_add().
+ *     Errors (with error bit) from: fake_execute().
  * @param data_build
  *   The build data.
  * @param mode
@@ -39,6 +49,18 @@ extern "C" {
  * @return
  *   The return code of the execution process.
  *   This generally is only needed when F_child is returned, where this holds the return status of the child process.
+ *
+ * @see f_directory_create()
+ * @see f_directory_exists()
+ * @see f_file_name_directory()
+ * @see f_string_dynamic_append_assure()
+ * @see f_string_dynamic_prepend()
+ * @see fll_execute_arguments_add()
+ *
+ * @see fake_build_arguments_standard_add()
+ * @see fake_build_get_file_name_without_extension()
+ * @see fake_build_objects_add()
+ * @see fake_execute()
  */
 #ifndef _di_fake_build_objects_static_
   extern int fake_build_objects_static(fake_data_t * const data, fake_build_data_t * const data_build, const f_mode_t mode, const f_string_static_t file_stage);

@@ -78,11 +78,13 @@ extern "C" {
  *     Success from: fake_execute()
  *
  *     Errors (with error bit) from: fake_execute()
+ *     Errors (with error bit) from: fake_make_operate_process_return()
  *
  * @return
  *   The return code of the compile operation.
  *
  * @see fake_execute()
+ * @see fake_make_operate_process_return()
  */
 #ifndef _di_fake_make_operate_process_type_compile_
   extern int fake_make_operate_process_type_compile(fake_make_data_t * const data_make);
@@ -134,7 +136,7 @@ extern "C" {
  *
  *     F_failure (with error bit) on any error.
  *
- *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ *     F_interrupt (with error bit) on interrupt signal received.
  *
  *     Errors (with error bit) from: f_directory_is()
  *     Errors (with error bit) from: f_file_clone()
@@ -185,7 +187,7 @@ extern "C" {
  *
  *     F_failure (with error bit) on any error.
  *
- *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ *     F_interrupt (with error bit) on interrupt signal received.
  *
  *     Errors (with error bit) from: f_file_remove()
  *     Errors (with error bit) from: f_file_stat()
@@ -650,7 +652,7 @@ extern "C" {
  *
  *     F_failure (with error bit) on any error.
  *
- *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ *     F_interrupt (with error bit) on interrupt signal received.
  *
  *     Errors (with error bit) from: f_path_change()
  *     Errors (with error bit) from: f_string_dynamic_resize()
@@ -703,7 +705,7 @@ extern "C" {
  *
  *     F_failure (with error bit) on any error.
  *
- *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ *     F_interrupt (with error bit) on interrupt signal received.
  *
  *     Errors (with error bit) from: fake_make_operate_process_return()
  *     Errors (with error bit) from: fake_skeleton_operate()
@@ -754,7 +756,7 @@ extern "C" {
  *
  *     F_failure (with error bit) on any error.
  *
- *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ *     F_interrupt (with error bit) on interrupt signal received.
  *
  *     Errors (with error bit) from: f_path_change_at()
  *     Errors (with error bit) from: f_string_dynamic_resize()
@@ -777,7 +779,7 @@ extern "C" {
  *
  *     F_failure (with error bit) on any error.
  *
- *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ *     F_interrupt (with error bit) on interrupt signal received.
  *
  *     Errors (with error bit) from: f_directory_touch()
  *     Errors (with error bit) from: f_file_touch()
@@ -801,7 +803,7 @@ extern "C" {
  *
  *     F_failure (with error bit) on any error.
  *
- *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ *     F_interrupt (with error bit) on interrupt signal received.
  *
  *     Errors (with error bit) from: f_file_exists()
  *     Errors (with error bit) from: f_file_stream_open()

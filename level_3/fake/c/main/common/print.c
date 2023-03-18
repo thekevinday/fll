@@ -46,6 +46,7 @@ extern "C" {
     "f_file_touch",
     "f_file_write",
     "f_fss_apply_delimit",
+    "f_fss_nameds_resize",
     "f_path_change",
     "f_path_current",
     "f_path_directory_cleanup",
@@ -105,7 +106,6 @@ extern "C" {
     "fake_make_path_relative",
     "fake_path_generate_string_dynamic",
     "fake_skeleton_operate_directory_create",
-    "macro_f_fss_nameds_t_resize",
     "macro_f_string_map_multis_t_resize",
   };
 #endif // _di_fake_f_a_

@@ -25,9 +25,13 @@ extern "C" {
  *   This alters data.setting.state.status:
  *     F_none on success.
  *
- *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ *     F_interrupt (with error bit) on interrupt signal received.
  *
- *     Status codes (with error bit) are returned on any problem.
+ *     Errors (with error bit) from: fake_skeleton_operate_directory_create()
+ *     Errors (with error bit) from: fake_skeleton_operate_file_create()
+ *
+ * @see fake_skeleton_operate_directory_create()
+ * @see fake_skeleton_operate_file_create()
  */
 #ifndef _di_fake_skeleton_operate_
   extern void fake_skeleton_operate(fake_data_t * const data);
@@ -42,10 +46,15 @@ extern "C" {
  *   This alters data.setting.state.status:
  *     F_none on success.
  *
- *     Status codes (with warning bit) are returned on certain problems that can be ignored.
- *     Status codes (with error bit) are returned on any problem.
+ *     F_failure (with warning bit) on path exists but is not a directory.
+ *
+ *     Errors (with error bit) from: f_directory_create()
+ *     Errors (with error bit) from: f_directory_exists()
  * @param path
  *   The file path for the directory to create.
+ *
+ * @see f_directory_create()
+ * @see f_directory_exists()
  */
 #ifndef _di_fake_skeleton_operate_directory_create_
   extern void fake_skeleton_operate_directory_create(fake_data_t * const data, const f_string_static_t path);
@@ -60,8 +69,12 @@ extern "C" {
  *   This alters data.setting.state.status:
  *     F_none on success.
  *
- *     Status codes (with warning bit) are returned on certain problems that can be ignored.
- *     Status codes (with error bit) are returned on any problem.
+ *     F_none (with warning bit) on file exists but is not a regular or a link.
+ *
+ *     Errors (with error bit) from: f_file_create()
+ *     Errors (with error bit) from: f_file_is()
+ *     Errors (with error bit) from: f_file_open()
+ *     Errors (with error bit) from: f_file_write()
  * @param path
  *   The file path for the directory to create.
  * @param executable
@@ -69,6 +82,11 @@ extern "C" {
  *   Set to FALSE to not make the file executable.
  * @param content
  *   When creating a new file, write the content specified by this string to that file.
+ *
+ * @see f_file_create()
+ * @see f_file_is()
+ * @see f_file_open()
+ * @see f_file_write()
  */
 #ifndef _di_fake_skeleton_operate_file_create_
   extern void fake_skeleton_operate_file_create(fake_data_t * const data, const f_string_static_t path, const bool executable, const f_string_static_t content);
@@ -79,6 +97,8 @@ extern "C" {
  *
  * @param data
  *   The program data.
+ *
+ *   This does not alter data.setting.state.status.
  * @param partial
  *   The partial path string, such as "bash".
  * @param source
@@ -96,6 +116,8 @@ extern "C" {
  *
  * @param data
  *   The program data.
+ *
+ *   This does not alter data.setting.state.status.
  * @param partial
  *   The partial path string, such as "bash".
  * @param source

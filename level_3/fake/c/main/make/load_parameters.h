@@ -22,12 +22,18 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
- *   This alters data_make.settings.state.status:
+ *   This alters data_make.setting.state.status:
  *     F_none on success.
  *
- *     F_interrupt (with error bit) on receiving a terminate process signal, such as an interrupt signal.
+ *     Errors (with error bit) from: f_string_dynamic_append().
+ *     Errors (with error bit) from: f_string_dynamic_append_nulless().
+ *     Errors (with error bit) from: f_string_dynamics_increase().
+ *     Errors (with error bit) from: f_string_dynamics_increase_by().
  *
- *     Status codes (with error bit) are returned on any problem.
+ * @see f_string_dynamic_append()
+ * @see f_string_dynamic_append_nulless()
+ * @see f_string_dynamics_increase()
+ * @see f_string_dynamics_increase_by()
  */
 #ifndef _di_fake_make_load_parameters_
   extern void fake_make_load_parameters(fake_make_data_t * const data_make);

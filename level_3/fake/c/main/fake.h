@@ -159,6 +159,7 @@ extern "C" {
  *
  *     Errors (with error bit) from: f_string_dynamic_append()
  *     Errors (with error bit) from: fake_build_operate()
+ *     Errors (with error bit) from: fake_clean_operate()
  *     Errors (with error bit) from: fake_make_operate()
  *     Errors (with error bit) from: fake_path_generate()
  *     Errors (with error bit) from: fake_skeleton_operate()
@@ -167,6 +168,7 @@ extern "C" {
  * @see f_string_dynamic_append()
  * @see fll_program_standard_signal_received()
  * @see fake_build_operate()
+ * @see fake_clean_operate()
  * @see fake_make_operate()
  * @see fake_path_generate()
  * @see fake_skeleton_operate()

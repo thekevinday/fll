@@ -29,6 +29,7 @@ extern "C" {
  *
  *     Errors (with error bit) from: f_directory_create().
  *     Errors (with error bit) from: f_directory_exists().
+ *
  *     Errors (with error bit) from: fake_build_touch().
  * @param data_build
  *   The build data.
@@ -40,6 +41,7 @@ extern "C" {
  * @see f_directory_create()
  * @see f_directory_exists()
  * @see fll_program_standard_signal_received()
+ *
  * @see fake_build_touch()
  */
 #ifndef _di_fake_build_skeleton_

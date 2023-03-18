@@ -30,6 +30,8 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ * @see fake_print_simple()
  */
 #ifndef _di_fake_print_generating_skeleton_
   extern f_status_t fake_print_generating_skeleton(fake_setting_t * const setting, const fl_print_t print);

@@ -199,7 +199,6 @@ extern "C" {
 
     const f_array_length_t total = data_make->cache_arguments.used - 1;
     f_string_static_t destination = f_string_static_t_initialize;
-
     f_directory_recurse_t recurse = f_directory_recurse_t_initialize;
 
     if (clone) {
