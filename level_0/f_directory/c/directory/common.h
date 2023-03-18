@@ -53,7 +53,7 @@ extern "C" {
  */
 #ifndef _di_f_directory_flag_d_
 
-  // directory open flags
+  // Directory open flags.
   #define F_directory_flag_append_d             O_APPEND
   #define F_directory_flag_asynchronous_d       O_ASYNC
   #define F_directory_flag_create_d             O_CREAT

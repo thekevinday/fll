@@ -726,7 +726,7 @@ extern "C" {
       F_directory_purge,
       F_directory_read,
       F_directory_stream,
-      F_directory_supported_not,
+      F_directory_support_not,
       F_directory_synchronize,
       F_directory_utf,
       F_directory_utf_not,

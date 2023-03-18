@@ -4,7 +4,7 @@
 extern "C" {
 #endif
 
-#ifndef _di_f_path_d_
+#ifndef _di_f_path_s_
   #ifndef _di_f_path_separator_s_
     const f_string_static_t f_path_separator_s = macro_f_string_static_t_initialize(F_string_ascii_slash_forward_s, 0, F_string_ascii_slash_forward_s_length);
   #endif // _di_f_path_separator_s_
@@ -46,7 +46,7 @@ extern "C" {
     const f_string_static_t f_path_architecture_bits_default_s = macro_f_string_static_t_initialize(F_path_architecture_bits_default_s, 0, F_path_architecture_bits_default_s_length);
     const f_string_static_t f_path_architecture_bits_scripts_s = macro_f_string_static_t_initialize(F_path_architecture_bits_scripts_s, 0, F_path_architecture_bits_scripts_s_length);
   #endif // _en_kevux_path_architecture_bits_
-#endif // _di_f_path_d_
+#endif // _di_f_path_s_
 
 #if defined(_di_f_path_tree_s_) && !defined(_di_f_path_tree_hierarchy_standard_d_) && !defined(_di_f_path_tree_kevux_standard_d_)
 

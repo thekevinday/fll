@@ -104,7 +104,7 @@ extern "C" {
 /**
  * The defines for conversion data.
  *
- * f_conversion_data_base_*:
+ * f_conversion_data_base_*_c:
  *   - 2:  Basic base-2 conversion structure.
  *   - 8:  Basic base-8 conversion structure.
  *   - 10: Basic base-10 conversion structure.
@@ -112,11 +112,25 @@ extern "C" {
  *   - 16: Basic base-16 conversion structure.
  */
 #ifndef _di_f_conversion_data_c_
-  extern const f_conversion_data_t f_conversion_data_base_2_c;
-  extern const f_conversion_data_t f_conversion_data_base_8_c;
-  extern const f_conversion_data_t f_conversion_data_base_10_c;
-  extern const f_conversion_data_t f_conversion_data_base_12_c;
-  extern const f_conversion_data_t f_conversion_data_base_16_c;
+  #ifndef _di_f_conversion_data_base_2_c_
+    extern const f_conversion_data_t f_conversion_data_base_2_c;
+  #endif // _di_f_conversion_data_base_2_c_
+
+  #ifndef _di_f_conversion_data_base_8_c_
+    extern const f_conversion_data_t f_conversion_data_base_8_c;
+  #endif // _di_f_conversion_data_base_8_c_
+
+  #ifndef _di_f_conversion_data_base_10_c_
+    extern const f_conversion_data_t f_conversion_data_base_10_c;
+  #endif // _di_f_conversion_data_base_10_c_
+
+  #ifndef _di_f_conversion_data_base_12_c_
+    extern const f_conversion_data_t f_conversion_data_base_12_c;
+  #endif // _di_f_conversion_data_base_12_c_
+
+  #ifndef _di_f_conversion_data_base_16_c_
+    extern const f_conversion_data_t f_conversion_data_base_16_c;
+  #endif // _di_f_conversion_data_base_16_c_
 #endif // _di_f_conversion_data_c_
 
 /**

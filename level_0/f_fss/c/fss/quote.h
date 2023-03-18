@@ -25,14 +25,14 @@ extern "C" {
  *   - double:   Quote type is a double quote.
  *   - single:   Quote type is a single quote.
  */
-#ifndef _di_f_fss_quote_type_
+#ifndef _di_f_fss_quote_type_e_
   enum {
     f_fss_quote_type_none_e = 0,
     f_fss_quote_type_backtick_e,
     f_fss_quote_type_double_e,
     f_fss_quote_type_single_e,
-  };
-#endif // _di_f_fss_quote_type_
+  }; // enum
+#endif // _di_f_fss_quote_type_e_
 
 #ifdef __cplusplus
 } // extern "C"

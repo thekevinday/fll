@@ -4,7 +4,7 @@
 extern "C" {
 #endif
 
-#ifndef _di_f_file_type_d_
+#ifndef _di_f_file_type_s_
   #ifndef _di_f_file_type_name_block_s_
     const f_string_static_t f_file_type_name_block_s = macro_f_string_static_t_initialize(F_file_type_name_block_s, 0, F_file_type_name_block_s_length);
   #endif // _di_f_file_type_name_block_s_
@@ -36,7 +36,7 @@ extern "C" {
   #ifndef _di_f_file_type_name_socket_s_
     const f_string_static_t f_file_type_name_socket_s = macro_f_string_static_t_initialize(F_file_type_name_socket_s, 0, F_file_type_name_socket_s_length);
   #endif // _di_f_file_type_name_socket_s_
-#endif // _di_f_file_type_d_
+#endif // _di_f_file_type_s_
 
 #ifndef _di_f_file_open_mode_s_
   #ifndef _di_f_file_open_mode_append_s_
@@ -141,9 +141,9 @@ extern "C" {
     const f_string_static_t f_file_operation_from_s = macro_f_string_static_t_initialize(F_file_operation_from_s, 0, F_file_operation_from_s_length);
   #endif // _di_f_file_operation_from_s_
 
-  #ifndef _di_f_file_operation__s_
+  #ifndef _di_f_file_operation_flush_s_
     const f_string_static_t f_file_operation_flush_s = macro_f_string_static_t_initialize(F_file_operation_flush_s, 0, F_file_operation_flush_s_length);
-  #endif // _di_f_file_operation__s_
+  #endif // _di_f_file_operation_flush_s_
 
   #ifndef _di_f_file_operation_get_group_s_
     const f_string_static_t f_file_operation_get_group_s = macro_f_string_static_t_initialize(F_file_operation_get_group_s, 0, F_file_operation_get_group_s_length);

@@ -155,7 +155,7 @@ extern "C" {
 
   #ifndef _di_f_color_code_bright_blue_bg_s_
     const f_string_static_t f_color_code_bright_blue_bg_s = macro_f_string_static_t_initialize(F_color_string_code_bright_blue_bg_s, 0, F_color_string_code_bright_blue_bg_s_length);
-  #endif // _di_f_color_code__s_
+  #endif // _di_f_color_code_bright_blue_bg_s_
 
   #ifndef _di_f_color_code_bright_purple_bg_s_
     const f_string_static_t f_color_code_bright_purple_bg_s = macro_f_string_static_t_initialize(F_color_string_code_bright_purple_bg_s, 0, F_color_string_code_bright_purple_bg_s_length);

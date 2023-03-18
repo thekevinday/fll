@@ -3318,8 +3318,8 @@ extern "C" {
         return F_none;
       }
 
-      if (fl_string_dynamic_compare(name, f_status_directory_supported_not_s) == F_equal_to) {
-        *code = F_directory_supported_not;
+      if (fl_string_dynamic_compare(name, f_status_directory_support_not_s) == F_equal_to) {
+        *code = F_directory_support_not;
 
         return F_none;
       }

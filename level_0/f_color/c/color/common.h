@@ -301,7 +301,7 @@ extern "C" {
 
   #ifndef _di_f_color_code_bright_blue_bg_s_
     extern const f_string_static_t f_color_code_bright_blue_bg_s;
-  #endif // _di_f_color_code__s_
+  #endif // _di_f_color_code_bright_blue_bg_s_
 
   #ifndef _di_f_color_code_bright_purple_bg_s_
     extern const f_string_static_t f_color_code_bright_purple_bg_s;

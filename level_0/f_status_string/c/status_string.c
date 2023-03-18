@@ -601,7 +601,7 @@ extern "C" {
     const f_string_static_t f_status_directory_purge_s = macro_f_string_static_t_initialize(F_status_directory_purge_s, 0, F_status_directory_purge_s_length);
     const f_string_static_t f_status_directory_read_s = macro_f_string_static_t_initialize(F_status_directory_read_s, 0, F_status_directory_read_s_length);
     const f_string_static_t f_status_directory_stream_s = macro_f_string_static_t_initialize(F_status_directory_stream_s, 0, F_status_directory_stream_s_length);
-    const f_string_static_t f_status_directory_supported_not_s = macro_f_string_static_t_initialize(F_status_directory_supported_not_s, 0, F_status_directory_supported_not_s_length);
+    const f_string_static_t f_status_directory_support_not_s = macro_f_string_static_t_initialize(F_status_directory_support_not_s, 0, F_status_directory_support_not_s_length);
     const f_string_static_t f_status_directory_synchronize_s = macro_f_string_static_t_initialize(F_status_directory_synchronize_s, 0, F_status_directory_synchronize_s_length);
     const f_string_static_t f_status_directory_utf_s = macro_f_string_static_t_initialize(F_status_directory_utf_s, 0, F_status_directory_utf_s_length);
     const f_string_static_t f_status_directory_utf_not_s = macro_f_string_static_t_initialize(F_status_directory_utf_not_s, 0, F_status_directory_utf_not_s_length);
@@ -3452,8 +3452,8 @@ extern "C" {
 
           break;
 
-        case F_directory_supported_not:
-          *name = f_status_directory_supported_not_s;
+        case F_directory_support_not:
+          *name = f_status_directory_support_not_s;
 
           break;
 

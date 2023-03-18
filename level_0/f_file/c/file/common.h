@@ -689,9 +689,9 @@ extern "C" {
     extern const f_string_static_t f_file_operation_from_s;
   #endif // _di_f_file_operation_from_s_
 
-  #ifndef _di_f_file_operation__s_
+  #ifndef _di_f_file_operation_flush_s_
     extern const f_string_static_t f_file_operation_flush_s;
-  #endif // _di_f_file_operation__s_
+  #endif // _di_f_file_operation_flush_s_
 
   #ifndef _di_f_file_operation_get_group_s_
     extern const f_string_static_t f_file_operation_get_group_s;

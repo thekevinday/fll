@@ -102,13 +102,23 @@ extern "C" {
  *   Errors (with error bit) from: f_memory_resize().
  *
  * @see f_uint8s_resize()
+ * @see f_uint8s_increase_by()
+ * @see f_uint8s_increase()
+ * @see f_uint8s_decrease_by()
+ * @see f_uint8s_resize()
  * @see f_uint8s_append()
  * @see f_uint8s_decimate_by()
  * @see f_uint8ss_append()
+ * @see f_uint8s_append()
+ * @see f_uint8s_append_all()
+ * @see f_uint8ss_append_all()
+ * @see f_uint8s_append()
+ * @see f_uint8ss_append()
+
  */
-#if !defined(_di_f_uint8s_resize_) || !defined(_di_f_uint8s_append_) || !defined(_di_f_uint8s_decimate_by_) || !defined(_di_f_uint8ss_append_)
+#if !defined(_di_f_uint8s_resize_) || !defined(_di_f_uint8s_increase_by_) || !defined(_di_f_uint8s_increase_) || !defined(_di_f_uint8s_decrease_by_) || !defined(_di_f_uint8s_resize_) || !defined(_di_f_uint8s_append_) || !defined(_di_f_uint8s_decimate_by_) || !defined(_di_f_uint8ss_append_) || !defined(_di_f_uint8s_append_) || !defined(_di_f_uint8s_append_all_) || !defined(_di_f_uint8ss_append_all_) || !defined(_di_f_uint8s_append_) || !defined(_di_f_uint8ss_append_)
   extern f_status_t private_f_uint8s_resize(const f_array_length_t length, f_uint8s_t *uint8s) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_uint8s_resize_) || !defined(_di_f_uint8s_append_) || !defined(_di_f_uint8s_decimate_by_) || !defined(_di_f_uint8ss_append_)
+#endif // !defined(_di_f_uint8s_resize_) || !defined(_di_f_uint8s_increase_by_) || !defined(_di_f_uint8s_increase_) || !defined(_di_f_uint8s_decrease_by_) || !defined(_di_f_uint8s_resize_) || !defined(_di_f_uint8s_append_) || !defined(_di_f_uint8s_decimate_by_) || !defined(_di_f_uint8ss_append_) || !defined(_di_f_uint8s_append_) || !defined(_di_f_uint8s_append_all_) || !defined(_di_f_uint8ss_append_all_) || !defined(_di_f_uint8s_append_) || !defined(_di_f_uint8ss_append_)
 
 /**
  * Private implementation for resizing the uint8ss array.

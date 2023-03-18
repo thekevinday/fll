@@ -305,7 +305,7 @@ extern "C" {
       closedir(parent);
 
       if (errno == EINVAL) return F_status_set_error(F_directory_stream);
-      if (errno == ENOTSUP) return F_status_set_error(F_directory_supported_not);
+      if (errno == ENOTSUP) return F_status_set_error(F_directory_support_not);
 
       return F_status_set_error(F_directory_descriptor);
     }

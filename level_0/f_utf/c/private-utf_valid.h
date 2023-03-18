@@ -34,12 +34,14 @@ extern "C" {
  *   F_utf_fragment (with error bit) if character is a UTF-8 fragment.
  *   F_utf_not (with error bit) if unicode is an invalid Unicode character.
  *
+ * @see f_utf_character_is_alphabetic()
  * @see f_utf_character_is_valid()
+ * @see f_utf_is_alphabetic()
  * @see f_utf_is_valid()
  */
-#if !defined(_di_f_utf_character_is_valid_) || !defined(_di_f_utf_is_valid_)
+#if !defined(_di_f_utf_character_is_alphabetic_) || !defined(_di_f_utf_character_is_valid_) || !defined(_di_f_utf_is_alphabetic_) || !defined(_di_f_utf_is_valid_)
   extern f_status_t private_f_utf_character_is_valid(const f_utf_char_t sequence) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_utf_character_is_valid_) || !defined(_di_f_utf_is_valid_)
+#endif // !defined(_di_f_utf_character_is_alphabetic_) || !defined(_di_f_utf_character_is_valid_) || !defined(_di_f_utf_is_alphabetic_) || !defined(_di_f_utf_is_valid_)
 
 #ifdef __cplusplus
 } // extern "C"

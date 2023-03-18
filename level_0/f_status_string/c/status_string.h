@@ -1709,47 +1709,47 @@ extern "C" {
   #endif // _di_f_status_filesystem_s_
 
   #ifndef _di_f_status_directory_s_
-    #define F_status_directory_s               "F_directory"
-    #define F_status_directory_close_s         "F_directory_close"
-    #define F_status_directory_closed_s        "F_directory_closed"
-    #define F_status_directory_descriptor_s    "F_directory_descriptor"
-    #define F_status_directory_empty_s         "F_directory_empty"
-    #define F_status_directory_empty_not_s     "F_directory_empty_not"
-    #define F_status_directory_found_s         "F_directory_found"
-    #define F_status_directory_found_not_s     "F_directory_found_not"
-    #define F_status_directory_flush_s         "F_directory_flush"
-    #define F_status_directory_link_max_s      "F_directory_link_max"
-    #define F_status_directory_not_s           "F_directory_not"
-    #define F_status_directory_open_s          "F_directory_open"
-    #define F_status_directory_purge_s         "F_directory_purge"
-    #define F_status_directory_read_s          "F_directory_read"
-    #define F_status_directory_stream_s        "F_directory_stream"
-    #define F_status_directory_supported_not_s "F_directory_supported_not"
-    #define F_status_directory_synchronize_s   "F_directory_synchronize"
-    #define F_status_directory_utf_s           "F_directory_utf"
-    #define F_status_directory_utf_not_s       "F_directory_utf_not"
-    #define F_status_directory_write_s         "F_directory_write"
+    #define F_status_directory_s             "F_directory"
+    #define F_status_directory_close_s       "F_directory_close"
+    #define F_status_directory_closed_s      "F_directory_closed"
+    #define F_status_directory_descriptor_s  "F_directory_descriptor"
+    #define F_status_directory_empty_s       "F_directory_empty"
+    #define F_status_directory_empty_not_s   "F_directory_empty_not"
+    #define F_status_directory_found_s       "F_directory_found"
+    #define F_status_directory_found_not_s   "F_directory_found_not"
+    #define F_status_directory_flush_s       "F_directory_flush"
+    #define F_status_directory_link_max_s    "F_directory_link_max"
+    #define F_status_directory_not_s         "F_directory_not"
+    #define F_status_directory_open_s        "F_directory_open"
+    #define F_status_directory_purge_s       "F_directory_purge"
+    #define F_status_directory_read_s        "F_directory_read"
+    #define F_status_directory_stream_s      "F_directory_stream"
+    #define F_status_directory_support_not_s "F_directory_support_not"
+    #define F_status_directory_synchronize_s "F_directory_synchronize"
+    #define F_status_directory_utf_s         "F_directory_utf"
+    #define F_status_directory_utf_not_s     "F_directory_utf_not"
+    #define F_status_directory_write_s       "F_directory_write"
 
-    #define F_status_directory_s_length               11
-    #define F_status_directory_close_s_length         17
-    #define F_status_directory_closed_s_length        18
-    #define F_status_directory_descriptor_s_length    22
-    #define F_status_directory_empty_s_length         17
-    #define F_status_directory_empty_not_s_length     21
-    #define F_status_directory_found_s_length         17
-    #define F_status_directory_found_not_s_length     21
-    #define F_status_directory_flush_s_length         17
-    #define F_status_directory_link_max_s_length      20
-    #define F_status_directory_not_s_length           15
-    #define F_status_directory_open_s_length          16
-    #define F_status_directory_purge_s_length         17
-    #define F_status_directory_read_s_length          16
-    #define F_status_directory_stream_s_length        18
-    #define F_status_directory_supported_not_s_length 25
-    #define F_status_directory_synchronize_s_length   23
-    #define F_status_directory_utf_s_length           15
-    #define F_status_directory_utf_not_s_length       19
-    #define F_status_directory_write_s_length         17
+    #define F_status_directory_s_length             11
+    #define F_status_directory_close_s_length       17
+    #define F_status_directory_closed_s_length      18
+    #define F_status_directory_descriptor_s_length  22
+    #define F_status_directory_empty_s_length       17
+    #define F_status_directory_empty_not_s_length   21
+    #define F_status_directory_found_s_length       17
+    #define F_status_directory_found_not_s_length   21
+    #define F_status_directory_flush_s_length       17
+    #define F_status_directory_link_max_s_length    20
+    #define F_status_directory_not_s_length         15
+    #define F_status_directory_open_s_length        16
+    #define F_status_directory_purge_s_length       17
+    #define F_status_directory_read_s_length        16
+    #define F_status_directory_stream_s_length      18
+    #define F_status_directory_support_not_s_length 23
+    #define F_status_directory_synchronize_s_length 23
+    #define F_status_directory_utf_s_length         15
+    #define F_status_directory_utf_not_s_length     19
+    #define F_status_directory_write_s_length       17
 
     extern const f_string_static_t f_status_directory_s;
     extern const f_string_static_t f_status_directory_close_s;
@@ -1766,7 +1766,7 @@ extern "C" {
     extern const f_string_static_t f_status_directory_purge_s;
     extern const f_string_static_t f_status_directory_read_s;
     extern const f_string_static_t f_status_directory_stream_s;
-    extern const f_string_static_t f_status_directory_supported_not_s;
+    extern const f_string_static_t f_status_directory_support_not_s;
     extern const f_string_static_t f_status_directory_synchronize_s;
     extern const f_string_static_t f_status_directory_utf_s;
     extern const f_string_static_t f_status_directory_utf_not_s;
