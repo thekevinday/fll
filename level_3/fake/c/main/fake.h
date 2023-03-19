@@ -149,11 +149,9 @@ extern "C" {
  * Execute main program.
  *
  * @param main
- *   The main program data.
- * @param setting
- *   The main program settings.
+ *   The main program and setting data.
  *
- *   This alters setting.state.status:
+ *   This alters main.setting.state.status:
  *     F_none on success.
  *     F_child if this is a child process returning.
  *
@@ -177,7 +175,7 @@ extern "C" {
  * @see fake_validate_parameter_paths()
  */
 #ifndef _di_fake_main_
-  extern void fake_main(fll_program_data_t * const main, fake_setting_t * const setting);
+  extern void fake_main(fake_main_t * const main);
 #endif // _di_fake_main_
 
 /**

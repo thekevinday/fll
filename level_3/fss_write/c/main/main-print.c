@@ -18,7 +18,7 @@ extern "C" {
 
     f_file_stream_lock(print.to);
 
-    fl_print_format("%[%QThe format '%]", print.to, print.set->error, print.prefix, print.set->error);
+    fl_print_format("%r%[%QThe format '%]", print.to, f_string_eol_s, print.set->error, print.prefix, print.set->error);
     fl_print_format("%[%Q%]", print.to, print.set->notable, value, print.set->notable);
     fl_print_format("%[' is not known for the parameter%] ", print.to, print.set->error, print.set->error);
     fl_print_format("%[%Q%Q%]", print.to, print.set->notable, f_console_symbol_long_normal_s, fss_write_long_as_s, print.set->notable);
@@ -36,8 +36,6 @@ extern "C" {
     if (!setting) return F_status_set_error(F_output_not);
 
     f_file_stream_lock(print.to);
-
-    f_print_dynamic_raw(setting->line_first, print.to);
 
     fll_program_print_help_header(print, fss_write_program_name_long_s, fss_write_program_version_s);
 
@@ -98,8 +96,6 @@ extern "C" {
 
     fl_print_format("  The %[%r%] format is the default when no ", print.to, print.set->notable, fss_write_basic_standard_s, print.set->notable);
     fl_print_format("'%[%r%r%]' is specified.%r", print.to, print.set->notable, f_console_symbol_long_normal_s, fss_write_long_as_s, print.set->notable, f_string_eol_s);
-
-    f_print_dynamic_raw(setting->line_last, print.to);
 
     f_file_stream_flush(print.to);
     f_file_stream_unlock(print.to);

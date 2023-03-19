@@ -11,8 +11,6 @@ extern "C" {
 
     f_file_stream_lock(print.to);
 
-    f_print_dynamic_raw(setting->line_first, print.to);
-
     fll_program_print_help_header(print, fss_write_extended_program_name_long_s, fss_write_program_version_s);
 
     fss_write_print_help(setting, print);
@@ -30,8 +28,6 @@ extern "C" {
 
     fl_print_format("  This program does not use the parameter '%[%r%r%]', which therefore does nothing.%r", print.to, print.set->notable, f_console_symbol_long_normal_s, fss_write_long_ignore_s, print.set->notable, f_string_eol_s);
     fl_print_format("  This parameter requires two values.%r", print.to, f_string_eol_s);
-
-    f_print_dynamic_raw(setting->line_last, print.to);
 
     f_file_stream_flush(print.to);
     f_file_stream_unlock(print.to);

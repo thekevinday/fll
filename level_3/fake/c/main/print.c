@@ -4,6 +4,56 @@
 extern "C" {
 #endif
 
+#ifndef _di_fake_print_building_
+  f_status_t fake_print_building(fake_setting_t * const setting, const fl_print_t print, const f_string_statics_t * const build_arguments, fake_build_setting_t * const setting_build) {
+
+    if (!setting || !setting_build) return F_status_set_error(F_output_not);
+    if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
+
+    f_file_stream_lock(print.to);
+
+    fl_print_format("%r%[Building%] ", print.to, f_string_eol_s, print.set->important, print.set->important);
+    fl_print_format("%[%Q%]", print.to, print.set->notable, setting_build->build_name, print.set->notable);
+    fl_print_format("%[ using '%]", print.to, print.set->important, print.set->important);
+    fl_print_format("%[%Q%]", print.to, print.set->notable, setting->settings, print.set->notable);
+
+    fl_print_format("%[' with modes '%]", print.to, print.set->important, print.set->important);
+
+    f_string_statics_t modes_custom = f_string_statics_t_initialize;
+    modes_custom.used = build_arguments && build_arguments->used > 1 ? build_arguments->used - 1 : 0;
+    modes_custom.size = 0;
+
+    f_string_static_t modes_custom_array[modes_custom.used];
+    modes_custom.array = modes_custom_array;
+
+    for (f_array_length_t i = 0; i < modes_custom.used; ++i) {
+      modes_custom.array[i] = build_arguments->array[i + 1];
+    } // for
+
+    // Custom modes are always used if provided, otherwise if any mode is specified, the entire defaults is replaced.
+    const f_string_statics_t * const modes = modes_custom.used
+      ? &modes_custom
+      : setting->modes.used
+        ? &setting->modes
+        : &setting_build->modes_default;
+
+    for (f_array_length_t i = 0; i < modes->used; ) {
+
+      fl_print_format("%[%Q%]", print.to, print.set->notable, modes->array[i], print.set->notable);
+
+      if (++i < modes->used) {
+        fl_print_format("%[', '%]", print.to, print.set->important, print.set->important);
+      }
+    } // for
+
+    fl_print_format("%['.%]%r", print.to, print.set->important, print.set->important, f_string_eol_s);
+
+    f_file_stream_unlock(print.to);
+
+    return F_none;
+  }
+#endif // _di_fake_print_building_
+
 #ifndef _di_fake_print_generating_skeleton_
   f_status_t fake_print_generating_skeleton(fake_setting_t * const setting, const fl_print_t print) {
 
@@ -22,8 +72,6 @@ extern "C" {
     if (!setting) return F_status_set_error(F_output_not);
 
     f_file_stream_lock(print.to);
-
-    f_print_dynamic_raw(setting->line_first, print.to);
 
     fll_program_print_help_header(print, fake_program_name_long_s, fake_program_version_s);
 
@@ -87,52 +135,12 @@ extern "C" {
 
     fl_print_format("  A section name from the fakefile that does not conflict with an operation name may be specified when performing the %[%r%] operation.%r", print.to, print.set->notable, fake_other_operation_make_s, print.set->notable, f_string_eol_s);
 
-    f_print_dynamic_raw(setting->line_last, print.to);
-
     f_file_stream_flush(print.to);
     f_file_stream_unlock(print.to);
 
     return F_none;
   }
 #endif // _di_fake_print_help_
-
-#ifndef _di_fake_print_line_first_
-  f_status_t fake_print_line_first(fake_setting_t * const setting, const fl_print_t print) {
-
-    if (!setting) return F_status_set_error(F_output_not);
-    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
-
-    if (F_status_is_error_not(setting->state.status)) {
-      if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
-      if (setting->flag & fake_main_flag_file_to_e) return F_output_not;
-    }
-
-    if (setting->flag & fake_main_flag_print_first_e) {
-      fll_print_dynamic_raw(setting->line_first, print.to);
-
-      setting->flag -= fake_main_flag_print_first_e;
-    }
-
-    return F_none;
-  }
-#endif // _di_fake_print_line_first_
-
-#ifndef _di_fake_print_line_last_
-  f_status_t fake_print_line_last(fake_setting_t * const setting, const fl_print_t print) {
-
-    if (!setting) return F_status_set_error(F_output_not);
-    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
-
-    if (F_status_is_error_not(setting->state.status)) {
-      if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
-      if (setting->flag & fake_main_flag_file_to_e) return F_output_not;
-    }
-
-    fll_print_dynamic_raw(setting->line_last, print.to);
-
-    return F_none;
-  }
-#endif // _di_fake_print_line_last_
 
 #ifndef _di_fake_print_simple_
   void fake_print_simple(fake_setting_t * const setting, const fl_print_t print, const f_string_t message) {

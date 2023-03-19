@@ -7,7 +7,7 @@ extern "C" {
 #ifndef _di_fake_print_context_important_simple_
   void fake_print_context_important_simple(fake_setting_t * const setting, const fl_print_t print, const f_string_t message) {
 
-    const fl_print_t custom = macro_fl_print_t_initialize(print.to, print.verbosity, f_string_empty_s, f_string_empty_s, print.set->important, print.set->notable, print.set);
+    const fl_print_t custom = macro_fl_print_t_initialize(print.to, print.verbosity, 0, f_string_empty_s, f_string_empty_s, print.set->important, print.set->notable, print.set, 0);
 
     fake_print_context_simple(setting, custom, message);
   }
@@ -66,6 +66,23 @@ extern "C" {
     f_file_stream_unlock(print.to);
   }
 #endif // _di_fake_print_context_wrapped_parameter_
+
+#ifndef _di_fake_print_context_wrapped_parameter_value_
+  void fake_print_context_wrapped_parameter_value(fake_setting_t * const setting, const fl_print_t print, const f_string_t before, const f_string_static_t symbol, const f_string_static_t name, const f_string_t between, const f_string_static_t value, const f_string_t after) {
+
+    if (!setting) return;
+
+    f_file_stream_lock(print.to);
+
+    fl_print_format("%[%Q%S'%]", print.to, print.context, print.prefix, before, print.context);
+    fl_print_format("%[%Q%Q%]", print.to, print.notable, symbol, name, print.notable);
+    fl_print_format("%['%S'%]%r", print.to, print.context, between, print.context);
+    fl_print_format("%[%Q%]", print.to, print.notable, value, print.notable);
+    fl_print_format("%['%S.%]%r", print.to, print.context, after, print.context, f_string_eol_s);
+
+    f_file_stream_unlock(print.to);
+  }
+#endif // _di_fake_print_context_wrapped_parameter_value_
 
 #ifndef _di_fake_print_context_wrapped_parameters_
   void fake_print_context_wrapped_parameters(fake_setting_t * const setting, const fl_print_t print, const f_string_t before, const f_string_static_t symbol_1, const f_string_static_t name_1, const f_string_t between_1, const f_string_static_t symbol_2, const f_string_static_t name_2, const f_string_t between_2, const f_string_static_t symbol_3, const f_string_static_t name_3, const f_string_t after) {

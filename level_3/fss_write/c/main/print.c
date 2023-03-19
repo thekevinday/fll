@@ -58,7 +58,7 @@ extern "C" {
 
     f_file_stream_lock(print.to);
 
-    fl_print_format("%[%QThe%] ", print.to, print.context, print.prefix, print.context);
+    fl_print_format("%r%[%QThe%] ", print.to, f_string_eol_s, print.context, print.prefix, print.context);
     fl_print_format("%[%r%]", print.to, print.notable, setting->standard, print.notable);
     fl_print_format(" %[standard only supports one Content per Object.%]%r", print.to, print.context, print.context, f_string_eol_s);
 
@@ -94,7 +94,7 @@ extern "C" {
 
     f_file_stream_lock(print.to);
 
-    fl_print_format("%[%QThe%] ", print.to, print.context, print.prefix, print.context);
+    fl_print_format("%r%[%QThe%] ", print.to, f_string_eol_s, print.context, print.prefix, print.context);
     fl_print_format("%[%r%]", print.to, print.notable, setting->standard, print.notable);
     fl_print_format(" %[standard does not support end of line character '%]", print.to, print.context, print.context);
     fl_print_format("%[\\n%]", print.to, print.set->notable, print.set->notable);
@@ -163,44 +163,6 @@ extern "C" {
     fl_print_format("  The end of the pipe represents the end of any Object or Content.%r", print.to, f_string_eol_s);
   }
 #endif // _di_fss_write_print_help_pipe_
-
-#ifndef _di_fss_write_print_line_first_
-  f_status_t fss_write_print_line_first(fss_write_setting_t * const setting, const fl_print_t print) {
-
-    if (!setting) return F_status_set_error(F_output_not);
-    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
-
-    if (F_status_is_error_not(setting->state.status)) {
-      if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
-      if (setting->flag & fss_write_main_flag_file_to_e) return F_output_not;
-    }
-
-    if (setting->flag & fss_write_main_flag_print_first_e) {
-      fll_print_dynamic_raw(setting->line_first, print.to);
-
-      setting->flag -= fss_write_main_flag_print_first_e;
-    }
-
-    return F_none;
-  }
-#endif // _di_fss_write_print_line_first_
-
-#ifndef _di_fss_write_print_line_last_
-  f_status_t fss_write_print_line_last(fss_write_setting_t * const setting, const fl_print_t print) {
-
-    if (!setting) return F_status_set_error(F_output_not);
-    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
-
-    if (F_status_is_error_not(setting->state.status)) {
-      if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
-      if (setting->flag & fss_write_main_flag_file_to_e) return F_output_not;
-    }
-
-    fll_print_dynamic_raw(setting->line_last, print.to);
-
-    return F_none;
-  }
-#endif // _di_fss_write_print_line_last_
 
 #ifdef __cplusplus
 } // extern "C"

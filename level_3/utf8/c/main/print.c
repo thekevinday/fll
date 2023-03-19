@@ -11,8 +11,6 @@ extern "C" {
 
     f_file_stream_lock(print.to);
 
-    f_print_dynamic_raw(setting->line_first, print.to);
-
     fll_program_print_help_header(print, utf8_program_name_long_s, utf8_program_version_s);
 
     fll_program_print_help_option_standard(print);
@@ -54,51 +52,12 @@ extern "C" {
     fl_print_format("'%[%r%]' character is printed to represent the combining and the digits are used to represent widths.%r", print.to, print.set->notable, utf8_string_combining_is_s, print.set->notable, f_string_eol_s);
     fl_print_format("  The combining characters should be considered 1-width by themselves or 0-width when combined.%r", print.to, f_string_eol_s);
 
-    f_print_dynamic_raw(setting->line_last, print.to);
-
     f_file_stream_flush(print.to);
     f_file_stream_unlock(print.to);
 
     return F_none;
   }
 #endif // _di_utf8_print_help_
-
-#ifndef _di_utf8_print_line_first_
-  f_status_t utf8_print_line_first(utf8_setting_t * const setting, const fl_print_t print) {
-
-    if (!setting) return F_status_set_error(F_output_not);
-    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
-
-    if (F_status_is_error_not(setting->state.status)) {
-      if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
-    }
-
-    if (setting->flag & utf8_main_flag_print_first_e) {
-      fll_print_dynamic_raw(setting->line_first, print.to);
-
-      setting->flag -= utf8_main_flag_print_first_e;
-    }
-
-    return F_none;
-  }
-#endif // _di_utf8_print_line_first_
-
-#ifndef _di_utf8_print_line_last_
-  f_status_t utf8_print_line_last(utf8_setting_t * const setting, const fl_print_t print) {
-
-    if (!setting) return F_status_set_error(F_output_not);
-    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
-
-    if (F_status_is_error_not(setting->state.status)) {
-      if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
-      if (setting->flag & (utf8_main_flag_verify_e | utf8_main_flag_file_to_e)) return F_output_not;
-    }
-
-    fll_print_dynamic_raw(setting->line_last, print.to);
-
-    return F_none;
-  }
-#endif // _di_utf8_print_line_last_
 
 #ifdef __cplusplus
 } // extern "C"

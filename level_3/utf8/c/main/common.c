@@ -31,8 +31,26 @@ extern "C" {
 
     setting->state.step_small = utf8_allocation_small_d;
 
+    // Identify and pocess first/last parameters.
+    if (main->parameters.array[utf8_parameter_line_first_no_e].result & f_console_result_found_e) {
+      setting->flag -= setting->flag & utf8_main_flag_print_first_e;
+    }
+    else {
+      setting->flag |= utf8_main_flag_print_first_e;
+    }
+
+    if (main->parameters.array[utf8_parameter_line_last_no_e].result & f_console_result_found_e) {
+      setting->flag -= setting->flag & utf8_main_flag_print_last_e;
+    }
+    else {
+      setting->flag |= utf8_main_flag_print_last_e;
+    }
+
     if (F_status_is_error(setting->state.status)) {
-      utf8_print_line_first(setting, main->message);
+      if ((setting->flag & utf8_main_flag_print_first_e) && main->message.verbosity > f_console_verbosity_error_e) {
+        fll_print_dynamic_raw(f_string_eol_s, main->message.to);
+      }
+
       utf8_print_error(setting, main->error, macro_utf8_f(f_console_parameter_process));
 
       return;
@@ -53,25 +71,14 @@ extern "C" {
         setting->state.status = fll_program_parameter_process_context(choices, modes, F_true, main);
 
         if (F_status_is_error(setting->state.status)) {
-          utf8_print_line_first(setting, main->message);
+          if ((setting->flag & utf8_main_flag_print_first_e) && main->message.verbosity > f_console_verbosity_error_e) {
+            fll_print_dynamic_raw(f_string_eol_s, main->message.to);
+          }
+
           utf8_print_error(setting, main->error, macro_utf8_f(fll_program_parameter_process_context));
 
           return;
         }
-      }
-
-      if (main->parameters.array[utf8_parameter_line_first_no_e].result & f_console_result_found_e) {
-        setting->line_first = f_string_empty_s;
-      }
-      else {
-        setting->line_first = f_string_eol_s;
-      }
-
-      if (main->parameters.array[utf8_parameter_line_last_no_e].result & f_console_result_found_e) {
-        setting->line_last = f_string_empty_s;
-      }
-      else {
-        setting->line_last = f_string_eol_s;
       }
 
       // Identify and prioritize "verbosity" parameters.
@@ -85,7 +92,10 @@ extern "C" {
         setting->state.status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, main);
 
         if (F_status_is_error(setting->state.status)) {
-          utf8_print_line_first(setting, main->message);
+          if ((setting->flag & utf8_main_flag_print_first_e) && main->message.verbosity > f_console_verbosity_error_e) {
+            fll_print_dynamic_raw(f_string_eol_s, main->message.to);
+          }
+
           utf8_print_error(setting, main->error, macro_utf8_f(fll_program_parameter_process_verbosity));
 
           return;
@@ -101,7 +111,10 @@ extern "C" {
         setting->state.status = f_console_parameter_prioritize_right(main->parameters, choices, &choice);
 
         if (F_status_is_error(setting->state.status)) {
-          utf8_print_line_first(setting, main->message);
+          if ((setting->flag & utf8_main_flag_print_first_e) && main->message.verbosity > f_console_verbosity_error_e) {
+            fll_print_dynamic_raw(f_string_eol_s, main->message.to);
+          }
+
           utf8_print_error(setting, main->error, macro_utf8_f(f_console_parameter_prioritize_right));
 
           return;
@@ -127,7 +140,10 @@ extern "C" {
         setting->state.status = f_console_parameter_prioritize_right(main->parameters, choices, &choice);
 
         if (F_status_is_error(setting->state.status)) {
-          utf8_print_line_first(setting, main->message);
+          if ((setting->flag & utf8_main_flag_print_first_e) && main->message.verbosity > f_console_verbosity_error_e) {
+            fll_print_dynamic_raw(f_string_eol_s, main->message.to);
+          }
+
           utf8_print_error(setting, main->error, macro_utf8_f(f_console_parameter_prioritize_right));
 
           return;
@@ -194,7 +210,10 @@ extern "C" {
       if (main->parameters.array[utf8_parameter_to_file_e].values.used > 1) {
         setting->state.status = F_status_set_error(F_parameter);
 
-        utf8_print_line_first(setting, main->message);
+        if ((setting->flag & utf8_main_flag_print_first_e) && main->message.verbosity > f_console_verbosity_error_e) {
+          fll_print_dynamic_raw(f_string_eol_s, main->message.to);
+        }
+
         utf8_print_error_parameter_file_to_too_many(setting, main->error);
 
         return;
@@ -206,7 +225,10 @@ extern "C" {
         setting->state.status = f_string_dynamics_increase_by(1, &setting->path_files_to);
 
         if (F_status_is_error(setting->state.status)) {
-          utf8_print_line_first(setting, main->message);
+          if ((setting->flag & utf8_main_flag_print_first_e) && main->message.verbosity > f_console_verbosity_error_e) {
+            fll_print_dynamic_raw(f_string_eol_s, main->message.to);
+          }
+
           utf8_print_error(setting, main->error, macro_utf8_f(f_string_dynamics_increase_by));
 
           return;
@@ -217,7 +239,10 @@ extern "C" {
         setting->state.status = f_string_dynamic_append_nulless(main->parameters.arguments.array[main->parameters.array[utf8_parameter_to_file_e].values.array[0]], &setting->path_files_to.array[0]);
 
         if (F_status_is_error(setting->state.status)) {
-          utf8_print_line_first(setting, main->message);
+          if ((setting->flag & utf8_main_flag_print_first_e) && main->message.verbosity > f_console_verbosity_error_e) {
+            fll_print_dynamic_raw(f_string_eol_s, main->message.to);
+          }
+
           utf8_print_error(setting, main->error, macro_utf8_f(f_string_dynamic_append_nulless));
 
           return;
@@ -228,6 +253,10 @@ extern "C" {
         setting->state.status = f_file_stream_open(main->parameters.arguments.array[main->parameters.array[utf8_parameter_to_file_e].values.array[0]], f_file_open_mode_append_s, &main->output.to);
 
         if (F_status_is_error(setting->state.status)) {
+          if ((setting->flag & utf8_main_flag_print_first_e) && main->message.verbosity > f_console_verbosity_error_e) {
+            fll_print_dynamic_raw(f_string_eol_s, main->message.to);
+          }
+
           utf8_print_error_file(setting, main->error, macro_utf8_f(f_file_stream_open), main->parameters.arguments.array[main->parameters.array[utf8_parameter_to_file_e].values.array[0]], f_file_operation_open_s, fll_error_file_type_file_e);
 
           return;
@@ -236,7 +265,10 @@ extern "C" {
         setting->flag |= utf8_main_flag_file_to_e;
       }
       else {
-        utf8_print_line_first(setting, main->message);
+        if ((setting->flag & utf8_main_flag_print_first_e) && main->message.verbosity > f_console_verbosity_error_e) {
+          fll_print_dynamic_raw(f_string_eol_s, main->message.to);
+        }
+
         utf8_print_error_parameter_file_name_empty(setting, main->error, main->parameters.array[utf8_parameter_to_file_e].values.array[0]);
 
         setting->state.status = F_status_set_error(F_parameter);
@@ -247,7 +279,10 @@ extern "C" {
     else if (main->parameters.array[utf8_parameter_to_file_e].result & f_console_result_found_e) {
       setting->state.status = F_status_set_error(F_parameter);
 
-      utf8_print_line_first(setting, main->message);
+        if ((setting->flag & utf8_main_flag_print_first_e) && main->message.verbosity > f_console_verbosity_error_e) {
+          fll_print_dynamic_raw(f_string_eol_s, main->message.to);
+        }
+
       fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, utf8_long_to_file_s);
 
       return;
@@ -263,7 +298,10 @@ extern "C" {
       setting->state.status = f_string_dynamics_increase_by(main->parameters.array[utf8_parameter_from_file_e].values.used, &setting->path_files_from);
 
       if (F_status_is_error(setting->state.status)) {
-        utf8_print_line_first(setting, main->message);
+        if ((setting->flag & utf8_main_flag_print_first_e) && main->message.verbosity > f_console_verbosity_error_e) {
+          fll_print_dynamic_raw(f_string_eol_s, main->message.to);
+        }
+
         utf8_print_error(setting, main->error, macro_utf8_f(f_string_dynamics_increase_by));
 
         return;
@@ -282,7 +320,10 @@ extern "C" {
         setting->state.status = f_string_dynamic_append_nulless(main->parameters.arguments.array[index], &setting->path_files_from.array[i]);
 
         if (F_status_is_error(setting->state.status)) {
-          utf8_print_line_first(setting, main->message);
+          if ((setting->flag & utf8_main_flag_print_first_e) && main->message.verbosity > f_console_verbosity_error_e) {
+            fll_print_dynamic_raw(f_string_eol_s, main->message.to);
+          }
+
           fll_error_print(main->error, F_status_set_fine(setting->state.status), macro_utf8_f(f_string_dynamic_append_nulless), fll_error_file_flag_fallback_e);
 
           break;
@@ -298,6 +339,12 @@ extern "C" {
           }
         }
         else {
+          if (F_status_is_error_not(setting->state.status)) {
+            if ((setting->flag & utf8_main_flag_print_first_e) && main->message.verbosity > f_console_verbosity_error_e) {
+              fll_print_dynamic_raw(f_string_eol_s, main->message.to);
+            }
+          }
+
           utf8_print_error_parameter_file_name_empty(setting, main->error, index);
 
           if (F_status_is_error_not(setting->state.status)) {
@@ -313,7 +360,10 @@ extern "C" {
     else if (main->parameters.array[utf8_parameter_from_file_e].result & f_console_result_found_e) {
       setting->state.status = F_status_set_error(F_parameter);
 
-      utf8_print_line_first(setting, main->message);
+      if ((setting->flag & utf8_main_flag_print_first_e) && main->message.verbosity > f_console_verbosity_error_e) {
+        fll_print_dynamic_raw(f_string_eol_s, main->message.to);
+      }
+
       fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, utf8_long_from_file_s);
 
       return;
@@ -328,7 +378,10 @@ extern "C" {
       setting->state.status = f_string_dynamics_increase_by(main->parameters.remaining.used, &setting->remaining);
 
       if (F_status_is_error(setting->state.status)) {
-        utf8_print_line_first(setting, main->message);
+        if ((setting->flag & utf8_main_flag_print_first_e) && main->message.verbosity > f_console_verbosity_error_e) {
+          fll_print_dynamic_raw(f_string_eol_s, main->message.to);
+        }
+
         utf8_print_error(setting, main->error, macro_utf8_f(f_string_dynamics_increase_by));
 
         return;
@@ -348,7 +401,10 @@ extern "C" {
     if (!(main->parameters.array[utf8_parameter_from_file_e].result & f_console_result_found_e) && !((main->pipe & fll_program_data_pipe_input_e) || main->parameters.remaining.used)) {
       setting->state.status = F_status_set_error(F_parameter);
 
-      utf8_print_line_first(setting, main->message);
+      if ((setting->flag & utf8_main_flag_print_first_e) && main->message.verbosity > f_console_verbosity_error_e) {
+        fll_print_dynamic_raw(f_string_eol_s, main->message.to);
+      }
+
       utf8_print_error_no_from(setting, main->error);
 
       return;

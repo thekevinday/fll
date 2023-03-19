@@ -51,7 +51,8 @@ extern "C" {
  *   - line:        Selecting at a specific line.
  *   - name:        Selecting using a specific Vocabulary name.
  *   - object:      Print Objects.
- *   - print_first: When set, the first character printing logic is to be processed (this is usually automatic).
+ *   - print_first: When set, print new line to message output on program begin after loading settings.
+ *   - print_last:  When set, print new line to message output on program end.
  *   - replace:     Using re-assignments.
  *   - replace:     Using replacements.
  *   - substitute:  Using substitutions.
@@ -72,13 +73,14 @@ extern "C" {
     iki_read_main_flag_name_e        = 0x40,
     iki_read_main_flag_object_e      = 0x80,
     iki_read_main_flag_print_first_e = 0x100,
-    iki_read_main_flag_reassign_e    = 0x200,
-    iki_read_main_flag_replace_e     = 0x400,
-    iki_read_main_flag_substitute_e  = 0x800,
-    iki_read_main_flag_total_e       = 0x1000,
-    iki_read_main_flag_version_e     = 0x2000,
-    iki_read_main_flag_whole_e       = 0x4000,
-    iki_read_main_flag_wrap_e        = 0x8000,
+    iki_read_main_flag_print_last_e  = 0x200,
+    iki_read_main_flag_reassign_e    = 0x400,
+    iki_read_main_flag_replace_e     = 0x800,
+    iki_read_main_flag_substitute_e  = 0x1000,
+    iki_read_main_flag_total_e       = 0x2000,
+    iki_read_main_flag_version_e     = 0x4000,
+    iki_read_main_flag_whole_e       = 0x8000,
+    iki_read_main_flag_wrap_e        = 0x10000,
   }; // enum
 #endif // _di_iki_read_main_flag_e_
 
@@ -161,9 +163,6 @@ extern "C" {
  * at:   The position representing the "at" index.
  * line: The position representing the "line" index.
  *
- * line_first: A string expected to represent either "\n" or NULL to allow for easy handling of when to print first new line or not.
- * line_last:  A string expected to represent either "\n" or NULL to allow for easy handling of when to print last new line or not.
- *
  * buffer: A buffer used for loading the files and other miscellaneous tasks.
  * name:   A string representing the IKI vocabulary name being selected.
  * files:  An array of all files to process (except for the input pipe).
@@ -187,9 +186,6 @@ extern "C" {
     f_array_length_t at;
     f_array_length_t line;
 
-    f_string_static_t line_first;
-    f_string_static_t line_last;
-
     f_string_dynamic_t buffer;
     f_string_dynamics_t names;
     f_string_dynamics_t files;
@@ -207,12 +203,10 @@ extern "C" {
 
   #define iki_read_setting_t_initialize \
     { \
-      iki_read_main_flag_print_first_e, \
+      iki_read_main_flag_none_e, \
       macro_f_state_t_initialize_1(iki_read_allocation_large_d, iki_read_allocation_small_d, F_none, 0, 0, 0, 0, 0, 0), \
       0, \
       0, \
-      f_string_static_t_initialize, \
-      f_string_static_t_initialize, \
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
       f_string_dynamics_t_initialize, \

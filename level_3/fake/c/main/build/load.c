@@ -7,7 +7,7 @@ extern "C" {
 #ifndef _di_fake_build_load_environment_
   void fake_build_load_environment(fake_data_t * const data, fake_build_data_t * const data_build, f_string_maps_t * const environment) {
 
-    if (!data || !data->main || !data->setting || !data_build || !environment) return;
+    if (!data || !data->program || !data->setting || !data_build || !environment) return;
     if (F_status_is_error(data->setting->state.status)) return;
 
     // Reset the environment.
@@ -31,7 +31,7 @@ extern "C" {
         data->setting->state.status = fl_environment_load_name(variables[i], environment);
 
         if (F_status_is_error(data->setting->state.status)) {
-          fake_print_error(data->setting, data->main->error, macro_fake_f(fl_environment_load_name));
+          fake_print_error(&data->program->error, macro_fake_f(fl_environment_load_name));
 
           return;
         }
@@ -40,16 +40,16 @@ extern "C" {
 
     if (environment->used + data_build->setting.environment.used > environment->size) {
       if (environment->used + data_build->setting.environment.used > f_environment_max_length_d) {
-        if (data->main->error.verbosity > f_console_verbosity_quiet_e) {
-          f_file_stream_lock(data->main->error.to);
+        if (data->program->error.verbosity > f_console_verbosity_quiet_e) {
+          f_file_stream_lock(data->program->error.to);
 
-          fl_print_format("%r%[%QThe values for the setting '%]", data->main->error.to, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
-          fl_print_format("%[%r%]", data->main->error.to, data->main->error.notable, fake_build_setting_name_environment_s, data->main->error.notable);
-          fl_print_format("%[' of setting file '%]", data->main->error.to, data->main->error.context, data->main->error.context);
-          fl_print_format("%[%r%]", data->main->error.to, data->main->error.notable, fake_build_setting_name_environment_s, data->main->error.notable);
-          fl_print_format("%[' is too large.%]%r", data->main->error.to, data->main->error.context, data->main->error.context, f_string_eol_s);
+          fl_print_format("%r%[%QThe values for the setting '%]", data->program->error.to, f_string_eol_s, data->program->error.context, data->program->error.prefix, data->program->error.context);
+          fl_print_format("%[%r%]", data->program->error.to, data->program->error.notable, fake_build_setting_name_environment_s, data->program->error.notable);
+          fl_print_format("%[' of setting file '%]", data->program->error.to, data->program->error.context, data->program->error.context);
+          fl_print_format("%[%r%]", data->program->error.to, data->program->error.notable, fake_build_setting_name_environment_s, data->program->error.notable);
+          fl_print_format("%[' is too large.%]%r", data->program->error.to, data->program->error.context, data->program->error.context, f_string_eol_s);
 
-          f_file_stream_unlock(data->main->error.to);
+          f_file_stream_unlock(data->program->error.to);
         }
 
         data->setting->state.status = F_status_set_error(F_array_too_large);
@@ -61,7 +61,7 @@ extern "C" {
     data->setting->state.status = fl_environment_load_names(data_build->setting.environment, environment);
 
     if (F_status_is_error(data->setting->state.status)) {
-      fake_print_error(data->setting, data->main->error, macro_fake_f(fl_environment_load_names));
+      fake_print_error(&data->program->error, macro_fake_f(fl_environment_load_names));
     }
     else {
       data->setting->state.status = F_none;
@@ -72,12 +72,12 @@ extern "C" {
 #ifndef _di_fake_build_load_setting_
   void fake_build_load_setting(fake_data_t * const data, const f_string_statics_t * const build_arguments, const bool process_pipe, fake_build_setting_t * const setting) {
 
-    if (!data || !data->main || !data->setting || !setting) return;
+    if (!data || !data->program || !data->setting || !setting) return;
     if (F_status_is_error(data->setting->state.status)) return;
 
-    if (!((++data->main->signal_check) % fake_signal_check_d)) {
-      if (fll_program_standard_signal_received(data->main)) {
-        fll_program_print_signal_received(data->main->warning, data->setting->line_first, data->main->signal_received);
+    if (!((++data->program->signal_check) % fake_signal_check_d)) {
+      if (fll_program_standard_signal_received(data->program)) {
+        fll_program_print_signal_received(data->program->warning, data->program->signal_received);
 
         data->setting->state.status = F_status_set_error(F_interrupt);
 
@@ -150,19 +150,19 @@ extern "C" {
         f_string_range_t range = macro_f_string_range_t_initialize2(buffer.used);
         f_fss_delimits_t delimits = f_fss_delimits_t_initialize;
 
-        // @todo make sure data->setting->state.custom = (void *) data->main;
-        //f_state_t state = macro_f_state_t_initialize_1(fake_allocation_large_d, fake_allocation_small_d, F_none, 0, 0, &fll_program_standard_signal_handle, 0, (void *) data->main, 0);
+        // @todo make sure data->setting->state.custom = (void *) data->program;
+        //f_state_t state = macro_f_state_t_initialize_1(fake_allocation_large_d, fake_allocation_small_d, F_none, 0, 0, &fll_program_standard_signal_handle, 0, (void *) data->program, 0);
 
         fll_fss_extended_read(buffer, &range, &objects, &contents, 0, 0, &delimits, 0, &data->setting->state);
 
         if (F_status_is_error(data->setting->state.status)) {
-          fake_print_error_fss(data->setting, data->main->error, macro_fake_f(fll_fss_extended_read), data->file_data_build_settings, range, F_true);
+          fake_print_error_fss(data->setting, data->program->error, macro_fake_f(fll_fss_extended_read), data->file_data_build_settings, range, F_true);
         }
         else {
           f_fss_apply_delimit(delimits, &buffer, &data->setting->state);
 
           if (F_status_is_error(data->setting->state.status)) {
-            fake_print_error(data->setting, data->main->error, macro_fake_f(f_fss_apply_delimit));
+            fake_print_error(&data->program->error, macro_fake_f(f_fss_apply_delimit));
           }
           else {
             fake_build_load_setting_process(data, F_true, path_file, modes_custom.used ? &modes_custom : 0, buffer, objects, contents, setting);
@@ -193,7 +193,7 @@ extern "C" {
       for (uint8_t i = 0; i < 1; ++i) {
 
         if (!settings[i]->used) {
-          fake_build_print_error_missing_required_setting(data->setting, data->main->warning, names[i], path_file);
+          fake_build_print_error_missing_required_setting(data->setting, data->program->warning, names[i], path_file);
 
           failed = F_true;
         }
@@ -215,12 +215,12 @@ extern "C" {
 #ifndef _di_fake_build_load_setting_process_
   void fake_build_load_setting_process(fake_data_t * const data, const bool checks, const f_string_static_t path_file, const f_string_statics_t * const modes_custom, const f_string_static_t buffer, const f_fss_objects_t objects, const f_fss_contents_t contents, fake_build_setting_t * const setting) {
 
-    if (!data || !data->main || !data->setting || !setting) return;
+    if (!data || !data->program || !data->setting || !setting) return;
     if (F_status_is_error(data->setting->state.status) && buffer.used) return;
 
-    if (!((++data->main->signal_check) % fake_signal_check_d)) {
-      if (fll_program_standard_signal_received(data->main)) {
-        fll_program_print_signal_received(data->main->warning, data->setting->line_first, data->main->signal_received);
+    if (!((++data->program->signal_check) % fake_signal_check_d)) {
+      if (fll_program_standard_signal_received(data->program)) {
+        fll_program_print_signal_received(data->program->warning, data->program->signal_received);
 
         data->setting->state.status = F_status_set_error(F_interrupt);
 
@@ -585,7 +585,7 @@ extern "C" {
         } // for
 
         if (found == F_false) {
-          fake_build_print_error_mode_invalid(data->setting, data->main->warning, modes->array[i], path_file);
+          fake_build_print_error_mode_invalid(data->setting, data->program->warning, modes->array[i], path_file);
 
           error_printed = F_true;
           data->setting->state.status = F_status_set_error(F_parameter);
@@ -669,10 +669,10 @@ extern "C" {
 
     if (F_status_is_error(data->setting->state.status)) {
       if (data->setting->state.status == F_status_set_error(F_string_too_large)) {
-        fake_build_print_error_setting_too_long(data->setting, data->main->warning, path_file);
+        fake_build_print_error_setting_too_long(data->setting, data->program->warning, path_file);
       }
       else if (!error_printed) {
-        fake_print_error(data->setting, data->main->error, function);
+        fake_print_error(&data->program->error, function);
       }
     }
     else {
@@ -1112,7 +1112,7 @@ extern "C" {
           data->setting->state.status = f_string_dynamic_append(settings_single_string_default[i], settings_single_destination[i]);
 
           if (F_status_is_error(data->setting->state.status)) {
-            fake_print_error(data->setting, data->main->error, macro_fake_f(f_string_dynamic_append));
+            fake_print_error(&data->program->error, macro_fake_f(f_string_dynamic_append));
 
             break;
           }
@@ -1130,7 +1130,7 @@ extern "C" {
           else {
             *settings_single_bool[i] = F_true;
 
-            fake_build_print_warning_setting_boolean_may_only_be(data->setting, data->main->warning, settings_single_name[i], path_file, settings_single_version_default_name[i]);
+            fake_build_print_warning_setting_boolean_may_only_be(data->setting, data->program->warning, settings_single_name[i], path_file, settings_single_version_default_name[i]);
           }
         }
         else if (settings_single_type[i] == 4) {
@@ -1146,7 +1146,7 @@ extern "C" {
           else {
             *settings_single_language[i] = fake_build_language_c_e;
 
-            fake_build_print_warning_setting_language_may_only_be(data->setting, data->main->warning, settings_single_name[i], path_file, fake_build_language_c_s);
+            fake_build_print_warning_setting_language_may_only_be(data->setting, data->program->warning, settings_single_name[i], path_file, fake_build_language_c_s);
           }
         }
         else if (settings_single_type[i] == 5) {
@@ -1165,7 +1165,7 @@ extern "C" {
           else {
             *settings_single_version[i] = settings_single_version_default[i];
 
-            fake_build_print_warning_setting_version_may_only_be(data->setting, data->main->warning, settings_single_name[i], path_file, settings_single_version_default_name[i]);
+            fake_build_print_warning_setting_version_may_only_be(data->setting, data->program->warning, settings_single_name[i], path_file, settings_single_version_default_name[i]);
           }
         }
         else if (settings_single_destination[i]) {
@@ -1177,7 +1177,7 @@ extern "C" {
             data->setting->state.status = f_path_directory_cleanup(settings_single_source[i]->array[settings_single_source[i]->used - 1], settings_single_destination[i]);
 
             if (F_status_is_error(data->setting->state.status)) {
-              fake_print_error(data->setting, data->main->error, macro_fake_f(f_path_directory_cleanup));
+              fake_print_error(&data->program->error, macro_fake_f(f_path_directory_cleanup));
 
               break;
             }
@@ -1186,7 +1186,7 @@ extern "C" {
             data->setting->state.status = f_string_dynamic_increase_by(settings_single_source[i]->array[settings_single_source[i]->used - 1].used + 1, settings_single_destination[i]);
 
             if (F_status_is_error(data->setting->state.status)) {
-              fake_print_error(data->setting, data->main->error, macro_fake_f(f_string_dynamic_increase_by));
+              fake_print_error(&data->program->error, macro_fake_f(f_string_dynamic_increase_by));
 
               break;
             }
@@ -1194,7 +1194,7 @@ extern "C" {
             data->setting->state.status = f_string_dynamic_append_nulless(settings_single_source[i]->array[settings_single_source[i]->used - 1], settings_single_destination[i]);
 
             if (F_status_is_error(data->setting->state.status)) {
-              fake_print_error(data->setting, data->main->error, macro_fake_f(f_string_dynamic_append_nulless));
+              fake_print_error(&data->program->error, macro_fake_f(f_string_dynamic_append_nulless));
 
               break;
             }
@@ -1206,13 +1206,13 @@ extern "C" {
         if (checks && !setting->version_file) {
           setting->version_file = fake_build_version_micro_e;
 
-          fake_build_print_warning_setting_required_default_to(data->setting, data->main->warning, fake_build_setting_name_version_file_s, path_file, fake_build_version_micro_s);
+          fake_build_print_warning_setting_required_default_to(data->setting, data->program->warning, fake_build_setting_name_version_file_s, path_file, fake_build_version_micro_s);
         }
 
         if (checks && !setting->version_target) {
           setting->version_target = fake_build_version_major_e;
 
-          fake_build_print_warning_setting_required_default_to(data->setting, data->main->warning, fake_build_setting_name_version_target_s, path_file, fake_build_version_major_s);
+          fake_build_print_warning_setting_required_default_to(data->setting, data->program->warning, fake_build_setting_name_version_target_s, path_file, fake_build_version_major_s);
         }
       }
     }
@@ -1263,22 +1263,22 @@ extern "C" {
 #ifndef _di_fake_build_load_setting_override_
   void fake_build_load_setting_override(fake_data_t * const data, fake_build_setting_t * const setting) {
 
-    if (!data || !data->main || !data->setting || !setting) return;
+    if (!data || !data->program || !data->setting || !setting) return;
     if (F_status_is_error(data->setting->state.status)) return;
 
-    if (data->main->parameters.array[fake_parameter_sources_e].result & f_console_result_value_e && setting->path_sources.used) {
+    if (data->program->parameters.array[fake_parameter_sources_e].result & f_console_result_value_e && setting->path_sources.used) {
       data->setting->state.status = f_string_dynamic_append_assure(f_path_separator_s, &setting->path_sources);
 
       if (F_status_is_error(data->setting->state.status)) {
-        fake_print_error(data->setting, data->main->error, macro_fake_f(f_string_dynamic_append_assure));
+        fake_print_error(&data->program->error, macro_fake_f(f_string_dynamic_append_assure));
 
         return;
       }
     }
 
-    if (data->main->parameters.array[fake_parameter_shared_disable_e].result & f_console_result_found_e) {
-      if (data->main->parameters.array[fake_parameter_shared_enable_e].result & f_console_result_found_e) {
-        if (data->main->parameters.array[fake_parameter_shared_enable_e].location > data->main->parameters.array[fake_parameter_shared_disable_e].location) {
+    if (data->program->parameters.array[fake_parameter_shared_disable_e].result & f_console_result_found_e) {
+      if (data->program->parameters.array[fake_parameter_shared_enable_e].result & f_console_result_found_e) {
+        if (data->program->parameters.array[fake_parameter_shared_enable_e].location > data->program->parameters.array[fake_parameter_shared_disable_e].location) {
           setting->build_shared = F_true;
           setting->search_shared = F_true;
         }
@@ -1287,21 +1287,21 @@ extern "C" {
           setting->search_shared = F_false;
         }
 
-        fake_build_print_warning_parameters_contradict(data->setting, data->main->warning, f_console_symbol_long_normal_s, fake_long_shared_disabled_s, f_console_symbol_long_normal_s, fake_long_shared_enabled_s, f_console_symbol_long_normal_s, setting->build_shared ? fake_long_shared_enabled_s : fake_long_shared_disabled_s);
+        fake_build_print_warning_parameters_contradict(data->setting, data->program->warning, f_console_symbol_long_normal_s, fake_long_shared_disabled_s, f_console_symbol_long_normal_s, fake_long_shared_enabled_s, f_console_symbol_long_normal_s, setting->build_shared ? fake_long_shared_enabled_s : fake_long_shared_disabled_s);
       }
       else {
         setting->build_shared = F_false;
         setting->search_shared = F_false;
       }
     }
-    else if (data->main->parameters.array[fake_parameter_shared_enable_e].result & f_console_result_found_e) {
+    else if (data->program->parameters.array[fake_parameter_shared_enable_e].result & f_console_result_found_e) {
       setting->build_shared = F_true;
       setting->search_shared = F_true;
     }
 
-    if (data->main->parameters.array[fake_parameter_static_disable_e].result & f_console_result_found_e) {
-      if (data->main->parameters.array[fake_parameter_static_enable_e].result & f_console_result_found_e) {
-        if (data->main->parameters.array[fake_parameter_static_enable_e].location > data->main->parameters.array[fake_parameter_static_disable_e].location) {
+    if (data->program->parameters.array[fake_parameter_static_disable_e].result & f_console_result_found_e) {
+      if (data->program->parameters.array[fake_parameter_static_enable_e].result & f_console_result_found_e) {
+        if (data->program->parameters.array[fake_parameter_static_enable_e].location > data->program->parameters.array[fake_parameter_static_disable_e].location) {
           setting->build_static = F_true;
           setting->search_static = F_true;
         }
@@ -1310,21 +1310,21 @@ extern "C" {
           setting->search_static = F_false;
         }
 
-        fake_build_print_warning_parameters_contradict(data->setting, data->main->warning, f_console_symbol_long_normal_s, fake_long_static_disabled_s, f_console_symbol_long_normal_s, fake_long_static_enabled_s, f_console_symbol_long_normal_s, setting->build_static ? fake_long_static_enabled_s : fake_long_static_disabled_s);
+        fake_build_print_warning_parameters_contradict(data->setting, data->program->warning, f_console_symbol_long_normal_s, fake_long_static_disabled_s, f_console_symbol_long_normal_s, fake_long_static_enabled_s, f_console_symbol_long_normal_s, setting->build_static ? fake_long_static_enabled_s : fake_long_static_disabled_s);
       }
       else {
         setting->build_static = F_false;
         setting->search_static = F_false;
       }
     }
-    else if (data->main->parameters.array[fake_parameter_static_enable_e].result & f_console_result_found_e) {
+    else if (data->program->parameters.array[fake_parameter_static_enable_e].result & f_console_result_found_e) {
       setting->build_static = F_true;
       setting->search_static = F_true;
     }
 
     if (setting->build_language == fake_build_language_c_e || setting->build_language == fake_build_language_cpp_e) {
       if (setting->build_shared == F_false && setting->build_static == F_false) {
-        fake_build_print_warning_setting_both_cannot_when_language(data->setting, data->main->warning, fake_build_setting_name_build_shared_s, fake_build_setting_name_build_static_s, setting->build_language == fake_build_language_c_e ? fake_build_language_c_s : fake_build_language_cpp_s);
+        fake_build_print_warning_setting_both_cannot_when_language(data->setting, data->program->warning, fake_build_setting_name_build_shared_s, fake_build_setting_name_build_static_s, setting->build_language == fake_build_language_c_e ? fake_build_language_c_s : fake_build_language_cpp_s);
 
         data->setting->state.status = F_status_set_error(F_failure);
       }
@@ -1335,12 +1335,12 @@ extern "C" {
 #ifndef _di_fake_build_load_stage_
   void fake_build_load_stage(fake_data_t * const data, const f_string_static_t settings_file, fake_build_stage_t * const stage) {
 
-    if (!data || !data->main || !data->setting || !stage) return;
+    if (!data || !data->program || !data->setting || !stage) return;
     if (F_status_is_error(data->setting->state.status)) return;
 
-    if (!((++data->main->signal_check) % fake_signal_check_d)) {
-      if (fll_program_standard_signal_received(data->main)) {
-        fll_program_print_signal_received(data->main->warning, data->setting->line_first, data->main->signal_received);
+    if (!((++data->program->signal_check) % fake_signal_check_d)) {
+      if (fll_program_standard_signal_received(data->program)) {
+        fll_program_print_signal_received(data->program->warning, data->program->signal_received);
 
         data->setting->state.status = F_status_set_error(F_interrupt);
 
@@ -1400,7 +1400,7 @@ extern "C" {
     }
 
     if (F_status_is_error(data->setting->state.status)) {
-      fake_print_error(data->setting, data->main->error, macro_fake_f(f_file_name_base));
+      fake_print_error(&data->program->error, macro_fake_f(f_file_name_base));
 
       return;
     }
@@ -1434,7 +1434,7 @@ extern "C" {
       }
 
       if (F_status_is_error(data->setting->state.status)) {
-        fake_print_error(data->setting, data->main->error, macro_fake_f(f_string_dynamic_append_nulless));
+        fake_print_error(&data->program->error, macro_fake_f(f_string_dynamic_append_nulless));
 
         break;
       }

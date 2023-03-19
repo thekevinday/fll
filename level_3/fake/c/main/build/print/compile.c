@@ -10,6 +10,7 @@ extern "C" {
     if (!setting) return F_status_set_error(F_output_not);
     if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
 
+    fll_print_dynamic_raw(f_string_eol_s, print.to);
     fake_print_context_important_simple(setting, print, "Compiling shared library");
 
     return F_none;
@@ -22,6 +23,7 @@ extern "C" {
     if (!setting) return F_status_set_error(F_output_not);
     if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
 
+    fll_print_dynamic_raw(f_string_eol_s, print.to);
     fake_print_context_important_simple(setting, print, "Compiling static library");
 
     return F_none;
@@ -34,6 +36,7 @@ extern "C" {
     if (!setting) return F_status_set_error(F_output_not);
     if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
 
+    fll_print_dynamic_raw(f_string_eol_s, print.to);
     fake_print_context_important_simple(setting, print, "Compiling shared object");
 
     return F_none;
@@ -46,6 +49,7 @@ extern "C" {
     if (!setting) return F_status_set_error(F_output_not);
     if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
 
+    fll_print_dynamic_raw(f_string_eol_s, print.to);
     fake_print_context_important_simple(setting, print, "Compiling static object");
 
     return F_none;
@@ -58,6 +62,7 @@ extern "C" {
     if (!setting) return F_status_set_error(F_output_not);
     if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
 
+    fll_print_dynamic_raw(f_string_eol_s, print.to);
     fake_print_context_important_simple(setting, print, "Compiling objects for static library");
 
     return F_none;
@@ -70,6 +75,7 @@ extern "C" {
     if (!setting) return F_status_set_error(F_output_not);
     if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
 
+    fll_print_dynamic_raw(f_string_eol_s, print.to);
     fake_print_context_important_simple(setting, print, "Compiling shared program");
 
     return F_none;
@@ -82,6 +88,7 @@ extern "C" {
     if (!setting) return F_status_set_error(F_output_not);
     if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
 
+    fll_print_dynamic_raw(f_string_eol_s, print.to);
     fake_print_context_important_simple(setting, print, "Compiling static program");
 
     return F_none;

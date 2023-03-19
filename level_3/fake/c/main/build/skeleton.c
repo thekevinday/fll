@@ -7,7 +7,7 @@ extern "C" {
 #ifndef _di_fake_build_skeleton_
   void fake_build_skeleton(fake_data_t * const data, fake_build_data_t * const data_build, const mode_t mode, const f_string_static_t file_stage) {
 
-    if (!data || !data->main || !data->setting || !data_build) return;
+    if (!data || !data->program || !data->setting || !data_build) return;
     if (F_status_is_error(data->setting->state.status) || data->setting->state.status == F_child) return;
     if (f_file_exists(file_stage, F_true) == F_true) return;
 
@@ -49,7 +49,7 @@ extern "C" {
       path_headers,
     };
 
-    fake_build_print_skeleton_build_base(data->setting, data->main->message);
+    fake_build_print_skeleton_build_base(data->setting, data->program->message);
 
     bool created = F_false;
     f_array_length_t j = 0;
@@ -64,9 +64,9 @@ extern "C" {
 
         if (f_path_separator_s.used && directorys[i].string[j] != f_path_separator_s.string[0]) continue;
 
-        if (!((++data->main->signal_check) % fake_signal_check_d)) {
-          if (fll_program_standard_signal_received(data->main)) {
-            fll_program_print_signal_received(data->main->warning, data->setting->line_first, data->main->signal_received);
+        if (!((++data->program->signal_check) % fake_signal_check_d)) {
+          if (fll_program_standard_signal_received(data->program)) {
+            fll_program_print_signal_received(data->program->warning, data->program->signal_received);
 
             data->setting->state.status = F_status_set_error(F_interrupt);
 
@@ -114,13 +114,13 @@ extern "C" {
           continue;
         }
 
-        fake_print_error_file(data->setting, data->main->error, macro_fake_f(f_directory_create), directorys[i], f_file_operation_create_s, fll_error_file_type_directory_e);
+        fake_print_error_file(data->setting, data->program->error, macro_fake_f(f_directory_create), directorys[i], f_file_operation_create_s, fll_error_file_type_directory_e);
 
         return;
       }
 
       if (created) {
-        fake_build_print_verbose_create_directory(data->setting, data->main->message, directorys[i]);
+        fake_build_print_verbose_create_directory(data->setting, data->program->message, directorys[i]);
       }
     } // for
 

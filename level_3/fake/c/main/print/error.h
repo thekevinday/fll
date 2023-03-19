@@ -19,12 +19,14 @@ extern "C" {
 /**
  * Print generic error message regarding a function failing in some way.
  *
- * @param setting
- *   The main program settings.
+ * This does not print a leading first line, better allowing it to be used while loading settings or before the normal first line is printed.
  *
- *   This does not alter setting.state.status.
  * @param print
  *   Designates the how and where to print.
+ *
+ *   This expects print.custom to be fake_setting_t.
+ *
+ *   This does not alter print.custom.state.status.
  * @param function
  *   The function name.
  *
@@ -39,7 +41,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_error_
-  extern f_status_t fake_print_error(fake_setting_t * const setting, const fl_print_t print, const f_string_t function);
+  extern f_status_t fake_print_error(fl_print_t * const print, const f_string_t function);
 #endif // _di_fake_print_error_
 
 /**
@@ -326,6 +328,30 @@ extern "C" {
 #ifndef _di_fake_print_error_directory_create_parent_missing_
   extern f_status_t fake_print_error_directory_create_parent_missing(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t path);
 #endif // _di_fake_print_error_directory_create_parent_missing_
+
+/**
+ * Print error message regarding program needed for execution is not found.
+ *
+ * @param setting
+ *   The main program settings.
+ *
+ *   This does not alter setting.state.status.
+ * @param print
+ *   Designates the how and where to print.
+ * @param program
+ *   The name of the not found program.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if setting is NULL.
+ *
+ * @see fake_print_context_simple_variable()
+ */
+#ifndef _di_fake_print_error_execute_program_not_found_
+  extern f_status_t fake_print_error_execute_program_not_found(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t program);
+#endif // _di_fake_print_error_execute_program_not_found_
 
 /**
  * Print file related error message regarding a function failing in some way.
@@ -743,6 +769,34 @@ extern "C" {
 #endif // _di_fake_print_error_parameter_not_empty_
 
 /**
+ * Print error message for when the directory parameter value is not found.
+ *
+ * @param setting
+ *   The main program settings.
+ *
+ *   This does not alter setting.state.status.
+ * @param print
+ *   Designates the how and where to print.
+ * @param symbol
+ *   The symbol of the parameter.
+ * @param name
+ *   The name of the parameter.
+ * @param value
+ *   The value that is not found.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if setting is NULL.
+ *
+ * @see fake_print_context_wrapped_parameter_value()
+ */
+#ifndef _di_fake_print_error_parameter_directory_not_found_path_
+  extern f_status_t fake_print_error_parameter_directory_not_found_path(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t value);
+#endif // _di_fake_print_error_parameter_directory_not_found_path_
+
+/**
  * Print error message for when the parameter value contains a non-word, non-minus, and non-plus character.
  *
  * @param setting
@@ -815,7 +869,7 @@ extern "C" {
  * @see fake_print_context_wrapped_parameter()
  */
 #ifndef _di_fake_print_error_parameter_too_many_
-  extern f_status_t fake_print_error_parameter_too_many(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t parameter);
+  extern f_status_t fake_print_error_parameter_too_many(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t symbol, const f_string_static_t parameter);
 #endif // _di_fake_print_error_parameter_too_many_
 
 /**

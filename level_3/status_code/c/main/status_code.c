@@ -10,19 +10,28 @@ extern "C" {
     if (!main || !setting) return;
 
     if (F_status_is_error(setting->state.status)) {
-      status_code_print_line_last(setting, main->message);
+      if ((setting->flag & status_code_main_flag_print_last_e) && main->message.verbosity > f_console_verbosity_error_e) {
+        fll_print_dynamic_raw(f_string_eol_s, main->message.to);
+      }
 
       return;
     }
 
-    if (!setting->status_string_from || !setting->status_string_to) {
+    if ((setting->flag & status_code_main_flag_print_first_e) && main->message.verbosity > f_console_verbosity_error_e) {
+      fll_print_dynamic_raw(f_string_eol_s, main->message.to);
+    }
 
+    if (!setting->status_string_from || !setting->status_string_to) {
       if (!setting->status_string_from) {
         status_code_print_error_invalid_callback(setting, main->error, macro_status_code_f(status_string_from));
       }
 
       if (!setting->status_string_to) {
         status_code_print_error_invalid_callback(setting, main->error, macro_status_code_f(status_string_to));
+      }
+
+      if ((setting->flag & status_code_main_flag_print_last_e) && main->message.verbosity > f_console_verbosity_error_e) {
+        fll_print_dynamic_raw(f_string_eol_s, main->message.to);
       }
 
       setting->state.status = F_status_set_error(F_parameter);
@@ -35,23 +44,31 @@ extern "C" {
     if (setting->flag & status_code_main_flag_help_e) {
       status_code_print_help(setting, main->message);
 
+      if ((setting->flag & status_code_main_flag_print_last_e) && main->message.verbosity > f_console_verbosity_error_e) {
+        fll_print_dynamic_raw(f_string_eol_s, main->message.to);
+      }
+
       return;
     }
 
     if (setting->flag & status_code_main_flag_version_e) {
-      fll_program_print_version(main->message, (setting->line_first.used ? 0x1 : 0x0) | (setting->line_last.used ? 0x2 : 0x0), status_code_program_version_s);
+      fll_program_print_version(main->message, status_code_program_version_s);
+
+      if ((setting->flag & status_code_main_flag_print_last_e) && main->message.verbosity > f_console_verbosity_error_e) {
+        fll_print_dynamic_raw(f_string_eol_s, main->message.to);
+      }
 
       return;
     }
 
     if (setting->flag & status_code_main_flag_copyright_e) {
-      fll_program_print_copyright(main->message, (setting->line_first.used ? 0x1 : 0x0) | (setting->line_last.used ? 0x2 : 0x0));
+      fll_program_print_copyright(main->message);
+
+      if ((setting->flag & status_code_main_flag_print_last_e) && main->message.verbosity > f_console_verbosity_error_e) {
+        fll_print_dynamic_raw(f_string_eol_s, main->message.to);
+      }
 
       return;
-    }
-
-    if (main->message.verbosity > f_console_verbosity_error_e) {
-      status_code_print_line_first(setting, main->message);
     }
 
     f_status_t status = F_none;
@@ -68,13 +85,9 @@ extern "C" {
 
           if (!((++main->signal_check) % status_code_signal_check_d)) {
             if (fll_program_standard_signal_received(main)) {
-              f_file_stream_unlock(main->output.to);
-
-              fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
-
               setting->state.status = F_status_set_error(F_interrupt);
 
-              return;
+              break;
             }
 
             main->signal_check = 0;
@@ -104,13 +117,9 @@ extern "C" {
 
           if (!((++main->signal_check) % status_code_signal_check_d)) {
             if (fll_program_standard_signal_received(main)) {
-              f_file_stream_unlock(main->output.to);
-
-              fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
-
               setting->state.status = F_status_set_error(F_interrupt);
 
-              return;
+              break;
             }
 
             main->signal_check = 0;
@@ -140,13 +149,9 @@ extern "C" {
 
           if (!((++main->signal_check) % status_code_signal_check_d)) {
             if (fll_program_standard_signal_received(main)) {
-              f_file_stream_unlock(main->output.to);
-
-              fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
-
               setting->state.status = F_status_set_error(F_interrupt);
 
-              return;
+              break;
             }
 
             main->signal_check = 0;
@@ -165,8 +170,12 @@ extern "C" {
       }
     }
 
-    if (F_status_is_error(setting->state.status) || main->message.verbosity > f_console_verbosity_error_e) {
-      status_code_print_line_last(setting, main->message);
+    if (setting->state.status == F_status_set_error(F_interrupt)) {
+      fll_program_print_signal_received(main->warning, main->signal_received);
+    }
+
+    if ((setting->flag & status_code_main_flag_print_last_e) && main->message.verbosity > f_console_verbosity_error_e) {
+      fll_print_dynamic_raw(f_string_eol_s, main->message.to);
     }
   }
 #endif // _di_status_code_main_

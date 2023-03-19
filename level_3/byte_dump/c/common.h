@@ -337,7 +337,7 @@ extern "C" {
   #define byte_dump_console_parameter_t_initialize \
     { \
       macro_f_console_parameter_t_initialize_3(f_console_standard_short_help_s,          f_console_standard_long_help_s,          0, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize_3(f_console_standard_short_copyright_s,     f_console_standard_long_copyright_s,     0, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(f_console_standard_short_copyright_s,     f_console_standard_long_copyright_s,     0, f_console_flag_inverse_e), \
       macro_f_console_parameter_t_initialize_3(f_console_standard_short_light_s,         f_console_standard_long_light_s,         0, f_console_flag_inverse_e), \
       macro_f_console_parameter_t_initialize_3(f_console_standard_short_dark_s,          f_console_standard_long_dark_s,          0, f_console_flag_inverse_e), \
       macro_f_console_parameter_t_initialize_3(f_console_standard_short_no_color_s,      f_console_standard_long_no_color_s,      0, f_console_flag_inverse_e), \
@@ -381,6 +381,8 @@ extern "C" {
  *   - file_to:       Using a specified destination file.
  *   - help:          Print help.
  *   - header:        Enable printing of headers.
+ *   - print_first:   When set, print new line to message output on program begin after loading settings.
+ *   - print_last:    When set, print new line to message output on program end.
  *   - separate:      Enable printing of separators.
  *   - strip_invalid: Using strip invalid character mode.
  *   - verify:        Using verify mode.
@@ -393,10 +395,12 @@ extern "C" {
     byte_dump_main_flag_file_to_e       = 0x2,
     byte_dump_main_flag_header_e        = 0x4,
     byte_dump_main_flag_help_e          = 0x8,
-    byte_dump_main_flag_separate_e      = 0x10,
-    byte_dump_main_flag_strip_invalid_e = 0x20,
-    byte_dump_main_flag_verify_e        = 0x40,
-    byte_dump_main_flag_version_e       = 0x80,
+    byte_dump_main_flag_print_first_e   = 0x10,
+    byte_dump_main_flag_print_last_e    = 0x20,
+    byte_dump_main_flag_separate_e      = 0x40,
+    byte_dump_main_flag_strip_invalid_e = 0x80,
+    byte_dump_main_flag_verify_e        = 0x100,
+    byte_dump_main_flag_version_e       = 0x200,
   }; // enum
 #endif // _di_byte_dump_main_flag_e_
 
@@ -409,26 +413,18 @@ extern "C" {
  * flag: Flags passed to the main function.
  *
  * state: The state information.
- *
- * line_first: A string expected to represent either "\n" or NULL to allow for easy handling of when to print first new line or not.
- * line_last:  A string expected to represent either "\n" or NULL to allow for easy handling of when to print last new line or not.
  */
 #ifndef _di_byte_dump_setting_t_
   typedef struct {
     uint16_t flag;
 
     f_state_t state;
-
-    f_string_static_t line_first;
-    f_string_static_t line_last;
   } byte_dump_setting_t;
 
   #define byte_dump_setting_t_initialize \
     { \
       byte_dump_main_flag_none_e, \
       f_state_t_initialize, \
-      f_string_static_t_initialize, \
-      f_string_static_t_initialize, \
     }
 #endif // _di_byte_dump_setting_t_
 

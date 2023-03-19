@@ -12,10 +12,6 @@ extern "C" {
 
     fss_write_setting_t * const setting = macro_fss_write_setting(void_setting);
 
-    if (main->message.verbosity > f_console_verbosity_error_e) {
-      fss_write_print_line_first(setting, main->message);
-    }
-
     if (setting->content) {
       fl_fss_basic_list_content_write(
         *setting->content,
@@ -53,10 +49,6 @@ extern "C" {
           fss_write_print_error(setting, main->error, macro_fss_write_f(f_string_dynamic_append));
         }
       }
-    }
-
-    if (F_status_is_error(setting->state.status) || main->message.verbosity > f_console_verbosity_error_e) {
-      fss_write_print_line_last(setting, main->message);
     }
   }
 #endif // _di_fss_write_basic_list_process_content_

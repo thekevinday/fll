@@ -7,7 +7,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_validate_
   void fake_make_operate_validate(fake_make_data_t * const data_make, const f_string_range_t section_name, fake_state_process_t * const state_process, f_array_lengths_t * const section_stack) {
 
-    if (!data_make || !data_make->main || !data_make->setting) return;
+    if (!data_make || !data_make->program || !data_make->setting) return;
     if (F_status_is_error(data_make->setting->state.status)) return;
 
     if (!section_stack) {

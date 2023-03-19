@@ -62,9 +62,6 @@ extern "C" {
  *
  * state:  The state data used when processing the FSS data.
  *
- * line_first: A string expected to represent either "\n" or NULL to allow for easy handling of when to print first new line or not.
- * line_last:  A string expected to represent either "\n" or NULL to allow for easy handling of when to print last new line or not.
- *
  * build:    The build directory.
  * data:     The data directory.
  * fakefile: The fakefile file path.
@@ -84,9 +81,6 @@ extern "C" {
 
     f_state_t state;
 
-    f_string_static_t line_first;
-    f_string_static_t line_last;
-
     f_string_dynamic_t build;
     f_string_dynamic_t data;
     f_string_dynamic_t documents;
@@ -105,10 +99,8 @@ extern "C" {
 
   #define fake_setting_t_initialize \
     { \
-      fake_main_flag_print_first_e, \
+      0, \
       f_state_t_initialize, \
-      f_string_static_t_initialize, \
-      f_string_static_t_initialize, \
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
@@ -125,11 +117,30 @@ extern "C" {
 #endif // _di_fake_setting_t_
 
 /**
+ * The main program data as a single structure.
+ *
+ * program: The main program data.
+ * setting: The settings data.
+ */
+#ifndef _di_fake_main_t_
+  typedef struct {
+    fll_program_data_t program;
+    fake_setting_t setting;
+  } fake_main_t;
+
+  #define fake_main_t_initialize \
+    { \
+      fll_program_data_t_initialize, \
+      fake_setting_t_initialize, \
+    }
+#endif // _di_fake_main_t_
+
+/**
  * The program data.
  *
  * operation: A code representing the currrent operation.
  *
- * main:    The main program data.
+ * program: The main program data.
  * setting: The settings data.
  *
  * path_build:                  The build path.
@@ -182,7 +193,7 @@ extern "C" {
   typedef struct {
     uint8_t operation;
 
-    fll_program_data_t *main;
+    fll_program_data_t *program;
     fake_setting_t *setting;
 
     f_string_dynamic_t path_build;
@@ -750,7 +761,7 @@ extern "C" {
 
     f_array_length_t id_main;
 
-    fll_program_data_t *main;
+    fll_program_data_t *program;
     fake_data_t *data;
     fake_setting_t *setting;
   } fake_make_data_t;

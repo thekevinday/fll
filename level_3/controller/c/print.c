@@ -10,8 +10,6 @@ extern "C" {
 
     controller_lock_print(print.to, 0);
 
-    f_print_dynamic_raw(setting->line_first, print.to);
-
     fll_program_print_help_header(print, *main->program_name_long, controller_program_version_s);
 
     fll_program_print_help_option_standard(print.to, context);
@@ -43,81 +41,11 @@ extern "C" {
 
     fl_print_format("  Specify an empty string for the %[%r%r%] parameter to disable pid file creation for this program.%r", print.to, print.set->notable, f_console_symbol_long_normal_s, controller_long_pid_s, print.set->notable, f_string_eol_s);
 
-    f_print_dynamic_raw(setting->line_last, print.to);
-
     controller_unlock_print_flush(print.to, 0);
 
     return F_none;
   }
 #endif // _di_controller_print_help_
-
-#ifndef _di_controller_print_line_first_locked_
-  f_status_t controller_print_line_first_locked(controller_setting_t * const setting, const fl_print_t print) {
-
-    if (!setting || print.verbosity < f_console_verbosity_error_e) return F_output_not;
-    if (setting->flag & controller_main_flag_verify_e) return;
-
-    if (F_status_is_error_not(setting->state.status)) {
-      if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
-      if (setting->flag & controller_main_flag_file_to_e) return F_output_not;
-    }
-
-    f_print_dynamic_raw(setting->line_first, print.to);
-
-    return F_none;
-  }
-#endif // _di_controller_print_line_first_locked_
-
-#ifndef _di_controller_print_line_first_unlocked_
-  f_status_t controller_print_line_first_unlocked(controller_setting_t * const setting, const fl_print_t print) {
-
-    if (!setting || print.verbosity < f_console_verbosity_error_e) return F_output_not;
-    if (setting->flag & controller_main_flag_verify_e) return;
-
-    if (F_status_is_error_not(setting->state.status)) {
-      if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
-      if (setting->flag & controller_main_flag_file_to_e) return F_output_not;
-    }
-
-    fll_print_dynamic_raw(setting->line_first, print.to);
-
-    return F_none;
-  }
-#endif // _di_controller_print_line_first_unlocked_
-
-#ifndef _di_controller_print_line_last_locked_
-  f_status_t controller_print_line_last_locked(controller_setting_t * const setting, const fl_print_t print) {
-
-    if (!setting || print.verbosity < f_console_verbosity_error_e) return F_output_not;
-    if (setting->flag & controller_main_flag_verify_e) return;
-
-    if (F_status_is_error_not(setting->state.status)) {
-      if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
-      if (setting->flag & controller_main_flag_file_to_e) return F_output_not;
-    }
-
-    fll_print_dynamic_raw(setting->line_last, print.to);
-
-    return F_none;
-  }
-#endif // _di_controller_print_line_last_locked_
-
-#ifndef _di_controller_print_line_last_unlocked_
-  f_status_t controller_print_line_last_unlocked(controller_setting_t * const setting, const fl_print_t print) {
-
-    if (!setting || print.verbosity < f_console_verbosity_error_e) return F_output_not;
-    if (setting->flag & controller_main_flag_verify_e) return;
-
-    if (F_status_is_error_not(setting->state.status)) {
-      if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
-      if (setting->flag & controller_main_flag_file_to_e) return F_output_not;
-    }
-
-    f_print_dynamic_raw(setting->line_last, print.to);
-
-    return F_none;
-  }
-#endif // _di_controller_print_line_last_unlocked_
 
 #ifdef __cplusplus
 } // extern "C"

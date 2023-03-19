@@ -7,7 +7,7 @@ extern "C" {
 #ifndef _di_fake_make_assure_inside_project_
   void fake_make_assure_inside_project(fake_make_data_t * const data_make, const f_string_static_t path) {
 
-    if (!data_make || !data_make->main || !data_make->setting) return;
+    if (!data_make || !data_make->program || !data_make->setting) return;
 
     data_make->cache_path.used = 0;
 
@@ -42,10 +42,10 @@ extern "C" {
 #ifndef _di_fake_make_get_id_
   f_number_unsigned_t fake_make_get_id(fake_make_data_t * const data_make, const bool is_owner, const f_string_static_t buffer) {
 
-    if (!data_make || !data_make->main || !data_make->setting) return 0;
+    if (!data_make || !data_make->program || !data_make->setting) return 0;
 
     if (!buffer.used) {
-      fake_print_error(data_make->setting, data_make->main->error, macro_fake_f(fake_make_get_id));
+      fake_print_error(&data_make->program->error, macro_fake_f(fake_make_get_id));
 
       data_make->setting->state.status = F_status_set_error(F_parameter);
 
@@ -72,17 +72,11 @@ extern "C" {
         }
 
         if (F_status_is_error(data_make->setting->state.status)) {
-          fake_print_error(
-            data_make->setting,
-            data_make->main->error,
-            is_owner
-              ? macro_fake_f(f_account_id_by_name)
-              : macro_fake_f(f_account_group_id_by_name)
-          );
+          fake_print_error(&data_make->program->error, is_owner ? macro_fake_f(f_account_id_by_name) : macro_fake_f(f_account_group_id_by_name));
         }
         else {
           if (data_make->setting->state.status == F_exist_not) {
-            fake_print_error_group_not_found(data_make->setting, data_make->main->error, buffer);
+            fake_print_error_group_not_found(data_make->setting, data_make->program->error, buffer);
 
             data_make->setting->state.status = F_status_set_error(F_exist_not);
           }
@@ -92,14 +86,14 @@ extern "C" {
         }
       }
       else {
-        fake_print_error(data_make->setting, data_make->main->error, macro_fake_f(fl_conversion_dynamic_to_unsigned_detect));
+        fake_print_error(&data_make->program->error, macro_fake_f(fl_conversion_dynamic_to_unsigned_detect));
       }
 
       return 0;
     }
 
     if (number > F_type_size_32_unsigned_d) {
-      fake_print_error_number_too_large(data_make->setting, data_make->main->error, buffer);
+      fake_print_error_number_too_large(data_make->setting, data_make->program->error, buffer);
 
       data_make->setting->state.status = F_status_set_error(F_failure);
 
@@ -113,24 +107,24 @@ extern "C" {
 #ifndef _di_fake_make_get_id_mode_
   void fake_make_get_id_mode(fake_make_data_t * const data_make, const f_string_static_t buffer, f_file_mode_t *mode, uint8_t *replace) {
 
-    if (!data_make || !data_make->main || !data_make->setting || !mode || !replace) return;
+    if (!data_make || !data_make->program || !data_make->setting || !mode || !replace) return;
 
     if (!buffer.used) {
-      fake_print_error(data_make->setting, data_make->main->error, macro_fake_f(fake_make_get_id_mode));
+      fake_print_error(&data_make->program->error, macro_fake_f(fake_make_get_id_mode));
 
       data_make->setting->state.status = F_status_set_error(F_parameter);
 
       return;
     }
 
-    data_make->setting->state.status = f_file_mode_from_string(buffer, data_make->main->umask, mode, replace);
+    data_make->setting->state.status = f_file_mode_from_string(buffer, data_make->program->umask, mode, replace);
 
     if (F_status_is_error(data_make->setting->state.status)) {
       if (F_status_set_fine(data_make->setting->state.status) == F_syntax) {
-        fake_print_error_mode_invalid(data_make->setting, data_make->main->error, buffer);
+        fake_print_error_mode_invalid(data_make->setting, data_make->program->error, buffer);
       }
       else {
-        fake_print_error(data_make->setting, data_make->main->error, macro_fake_f(fake_make_get_id_mode));
+        fake_print_error(&data_make->program->error, macro_fake_f(fake_make_get_id_mode));
       }
     }
     else {
@@ -142,7 +136,7 @@ extern "C" {
 #ifndef _di_fake_make_path_relative_
   void fake_make_path_relative(fake_make_data_t * const data_make, const f_string_static_t path) {
 
-    if (!data_make || !data_make->main || !data_make->setting) return;
+    if (!data_make || !data_make->program || !data_make->setting) return;
 
     data_make->cache_path.used = 0;
 

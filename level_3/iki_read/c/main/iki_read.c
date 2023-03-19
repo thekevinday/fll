@@ -10,9 +10,15 @@ extern "C" {
     if (!main || !setting) return;
 
     if (F_status_is_error(setting->state.status)) {
-      iki_read_print_line_last(setting, main->message);
+      if ((setting->flag & iki_read_main_flag_print_last_e) && main->message.verbosity > f_console_verbosity_error_e) {
+        fll_print_dynamic_raw(f_string_eol_s, main->message.to);
+      }
 
       return;
+    }
+
+    if ((setting->flag & iki_read_main_flag_print_first_e) && main->message.verbosity > f_console_verbosity_error_e) {
+      fll_print_dynamic_raw(f_string_eol_s, main->message.to);
     }
 
     setting->state.status = F_none;
@@ -20,22 +26,32 @@ extern "C" {
     if (setting->flag & iki_read_main_flag_help_e) {
       iki_read_print_help(setting, main->message);
 
+      if ((setting->flag & iki_read_main_flag_print_last_e) && main->message.verbosity > f_console_verbosity_error_e) {
+        fll_print_dynamic_raw(f_string_eol_s, main->message.to);
+      }
+
       return;
     }
 
     if (setting->flag & iki_read_main_flag_version_e) {
-      fll_program_print_version(main->message, (setting->line_first.used ? 0x1 : 0x0) | (setting->line_last.used ? 0x2 : 0x0), iki_read_program_version_s);
+      fll_program_print_version(main->message, iki_read_program_version_s);
+
+      if ((setting->flag & iki_read_main_flag_print_last_e) && main->message.verbosity > f_console_verbosity_error_e) {
+        fll_print_dynamic_raw(f_string_eol_s, main->message.to);
+      }
 
       return;
     }
 
     if (setting->flag & iki_read_main_flag_copyright_e) {
-      fll_program_print_copyright(main->message, (setting->line_first.used ? 0x1 : 0x0) | (setting->line_last.used ? 0x2 : 0x0));
+      fll_program_print_copyright(main->message);
+
+      if ((setting->flag & iki_read_main_flag_print_last_e) && main->message.verbosity > f_console_verbosity_error_e) {
+        fll_print_dynamic_raw(f_string_eol_s, main->message.to);
+      }
 
       return;
     }
-
-    iki_read_print_line_first(setting, main->message);
 
     if (main->pipe & fll_program_data_pipe_input_e) {
       f_file_t file = f_file_t_initialize;
@@ -64,7 +80,7 @@ extern "C" {
 
         if (!((++main->signal_check) % iki_read_signal_check_d)) {
           if (fll_program_standard_signal_received(main)) {
-            fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
+            fll_program_print_signal_received(main->warning, main->signal_received);
 
             setting->state.status = F_status_set_error(F_interrupt);
 
@@ -134,7 +150,7 @@ extern "C" {
 
           // The signal check is always performed on each pass.
           if (size_file > iki_read_block_max && fll_program_standard_signal_received(main)) {
-            fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
+            fll_program_print_signal_received(main->warning, main->signal_received);
 
             setting->state.status = F_status_set_error(F_interrupt);
 
@@ -168,8 +184,8 @@ extern "C" {
       }
     }
 
-    if (F_status_is_error(setting->state.status)) {
-      iki_read_print_line_last(setting, main->message);
+    if ((setting->flag & iki_read_main_flag_print_last_e) && main->message.verbosity > f_console_verbosity_error_e) {
+      fll_print_dynamic_raw(f_string_eol_s, main->message.to);
     }
   }
 #endif // _di_iki_read_main_

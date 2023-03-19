@@ -5,31 +5,48 @@ extern "C" {
 #endif
 
 #ifndef _di_fake_setting_load_
-  void fake_setting_load(const f_console_arguments_t arguments, fll_program_data_t * const main, fake_setting_t * const setting) {
+  void fake_setting_load(const f_console_arguments_t arguments, fake_main_t * const main) {
 
-    if (!main || !setting) return;
+    if (!main) return;
 
-    main->output.to.id = F_type_descriptor_output_d;
-    main->output.to.stream = F_type_output_d;
-    main->output.to.flag = F_file_flag_create_d | F_file_flag_write_only_d | F_file_flag_append_d;
+    main->program.output.to.id = F_type_descriptor_output_d;
+    main->program.output.to.stream = F_type_output_d;
+    main->program.output.to.flag = F_file_flag_create_d | F_file_flag_write_only_d | F_file_flag_append_d;
 
     {
-      const uint16_t step_original = setting->state.step_small;
+      const uint16_t step_original = main->setting.state.step_small;
       fake_data_t data = fake_data_t_initialize;
-      data.main = main;
-      data.setting = setting;
+      data.program = &main->program;
+      data.setting = &main->setting;
 
-      setting->state.step_small = 4;
+      main->setting.state.step_small = 4;
 
-      f_console_parameter_process(arguments, &main->parameters, &setting->state, (void *) &data);
+      f_console_parameter_process(arguments, &main->program.parameters, &main->setting.state, (void *) &data);
 
-      setting->state.step_small = step_original;
+      main->setting.state.step_small = step_original;
     }
 
-    if (F_status_is_error(setting->state.status)) {
-      fake_print_line_first(setting, main->message);
+    // Identify and pocess first/last parameters.
+    if (main->program.parameters.array[fake_parameter_line_first_no_e].result & f_console_result_found_e) {
+      main->setting.flag -= main->setting.flag & fake_main_flag_print_first_e;
+    }
+    else {
+      main->setting.flag |= fake_main_flag_print_first_e;
+    }
 
-      fake_print_error(setting, main->error, macro_fake_f(f_console_parameter_process));
+    if (main->program.parameters.array[fake_parameter_line_last_no_e].result & f_console_result_found_e) {
+      main->setting.flag -= main->setting.flag & fake_main_flag_print_last_e;
+    }
+    else {
+      main->setting.flag |= fake_main_flag_print_last_e;
+    }
+
+    if (F_status_is_error(main->setting.state.status)) {
+      if ((main->setting.flag & fake_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
+        fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
+      }
+
+      fake_print_error(&main->program.error, macro_fake_f(f_console_parameter_process));
 
       return;
     }
@@ -46,29 +63,17 @@ extern "C" {
 
         const uint8_t modes[3] = { f_color_mode_not_e, f_color_mode_light_e, f_color_mode_dark_e };
 
-        setting->state.status = fll_program_parameter_process_context(choices, modes, F_true, main);
+        main->setting.state.status = fll_program_parameter_process_context(choices, modes, F_true, &main->program);
 
-        if (F_status_is_error(setting->state.status)) {
-          fake_print_line_first(setting, main->message);
+        if (F_status_is_error(main->setting.state.status)) {
+          if ((main->setting.flag & fake_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
+            fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
+          }
 
-          fake_print_error(setting, main->error, macro_fake_f(fll_program_parameter_process_context));
+          fake_print_error(&main->program.error, macro_fake_f(fll_program_parameter_process_context));
 
           return;
         }
-      }
-
-      if (main->parameters.array[fake_parameter_line_first_no_e].result & f_console_result_found_e) {
-        setting->line_first = f_string_empty_s;
-      }
-      else {
-        setting->line_first = f_string_eol_s;
-      }
-
-      if (main->parameters.array[fake_parameter_line_last_no_e].result & f_console_result_found_e) {
-        setting->line_last = f_string_empty_s;
-      }
-      else {
-        setting->line_last = f_string_eol_s;
       }
 
       // Identify and prioritize "verbosity" parameters.
@@ -79,32 +84,34 @@ extern "C" {
 
         const uint8_t verbosity[5] = { f_console_verbosity_quiet_e, f_console_verbosity_error_e, f_console_verbosity_verbose_e, f_console_verbosity_debug_e, f_console_verbosity_normal_e };
 
-        setting->state.status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, main);
+        main->setting.state.status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, &main->program);
 
-        if (F_status_is_error(setting->state.status)) {
-          fake_print_line_first(setting, main->message);
+        if (F_status_is_error(main->setting.state.status)) {
+          if ((main->setting.flag & fake_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
+            fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
+          }
 
-          fake_print_error(setting, main->error, macro_fake_f(fll_program_parameter_process_verbosity));
+          fake_print_error(&main->program.error, macro_fake_f(fll_program_parameter_process_verbosity));
 
           return;
         }
       }
     }
 
-    if (main->parameters.array[fake_parameter_help_e].result & f_console_result_found_e) {
-      setting->flag |= fake_main_flag_help_e;
+    if (main->program.parameters.array[fake_parameter_help_e].result & f_console_result_found_e) {
+      main->setting.flag |= fake_main_flag_help_e;
 
       return;
     }
 
-    if (main->parameters.array[fake_parameter_version_e].result & f_console_result_found_e) {
-      setting->flag |= fake_main_flag_version_e;
+    if (main->program.parameters.array[fake_parameter_version_e].result & f_console_result_found_e) {
+      main->setting.flag |= fake_main_flag_version_e;
 
       return;
     }
 
-    if (main->parameters.array[fake_parameter_copyright_e].result & f_console_result_found_e) {
-      setting->flag |= fake_main_flag_copyright_e;
+    if (main->program.parameters.array[fake_parameter_copyright_e].result & f_console_result_found_e) {
+      main->setting.flag |= fake_main_flag_copyright_e;
 
       return;
     }
@@ -136,21 +143,21 @@ extern "C" {
 
         for (; i < 3; ++i) {
 
-          if (main->parameters.array[enables[i]].result & f_console_result_found_e) {
-            if (main->parameters.array[disables[i]].result & f_console_result_found_e) {
-              if (main->parameters.array[enables[i]].location < main->parameters.array[disables[i]].location) {
-                setting->flag -= setting->flag & flags[i];
+          if (main->program.parameters.array[enables[i]].result & f_console_result_found_e) {
+            if (main->program.parameters.array[disables[i]].result & f_console_result_found_e) {
+              if (main->program.parameters.array[enables[i]].location < main->program.parameters.array[disables[i]].location) {
+                main->setting.flag -= main->setting.flag & flags[i];
               }
               else {
-                setting->flag |= flags[i];
+                main->setting.flag |= flags[i];
               }
             }
             else {
-              setting->flag |= flags[i];
+              main->setting.flag |= flags[i];
             }
           }
-          else if (main->parameters.array[disables[i]].result & f_console_result_found_e) {
-            setting->flag -= setting->flag & flags[i];
+          else if (main->program.parameters.array[disables[i]].result & f_console_result_found_e) {
+            main->setting.flag -= main->setting.flag & flags[i];
           }
         } // for
       }
@@ -181,26 +188,26 @@ extern "C" {
         };
 
         f_string_dynamic_t * const variable[] = {
-          &setting->build,
-          &setting->data,
-          &setting->documents,
-          &setting->fakefile,
-          &setting->licenses,
-          &setting->process,
-          &setting->settings,
-          &setting->sources,
-          &setting->work,
+          &main->setting.build,
+          &main->setting.data,
+          &main->setting.documents,
+          &main->setting.fakefile,
+          &main->setting.licenses,
+          &main->setting.process,
+          &main->setting.settings,
+          &main->setting.sources,
+          &main->setting.work,
         };
 
-        setting->build.used = 0;
-        setting->data.used = 0;
-        setting->documents.used = 0;
-        setting->fakefile.used = 0;
-        setting->licenses.used = 0;
-        setting->process.used = 0;
-        setting->settings.used = 0;
-        setting->sources.used = 0;
-        setting->work.used = 0;
+        main->setting.build.used = 0;
+        main->setting.data.used = 0;
+        main->setting.documents.used = 0;
+        main->setting.fakefile.used = 0;
+        main->setting.licenses.used = 0;
+        main->setting.process.used = 0;
+        main->setting.settings.used = 0;
+        main->setting.sources.used = 0;
+        main->setting.work.used = 0;
 
         const f_string_static_t defaults[] = {
           fake_default_build_s,
@@ -228,43 +235,51 @@ extern "C" {
 
         for (i = 0; i < 9; ++i) {
 
-          if ((main->parameters.array[parameters[i]].result & f_console_result_found_e) && !(main->parameters.array[parameters[i]].result & f_console_result_value_e)) {
-            setting->state.status = F_status_set_error(F_parameter);
+          if ((main->program.parameters.array[parameters[i]].result & f_console_result_found_e) && !(main->program.parameters.array[parameters[i]].result & f_console_result_value_e)) {
+            main->setting.state.status = F_status_set_error(F_parameter);
 
-            if (main->error.verbosity > f_console_verbosity_quiet_e) {
-              fake_print_line_first(setting, main->message);
+            if ((main->setting.flag & fake_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
+              fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
+            }
 
-              fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, names[i]);
+            if (main->program.error.verbosity > f_console_verbosity_quiet_e) {
+              fll_program_print_error_parameter_missing_value(main->program.error, f_console_symbol_long_normal_s, names[i]);
             }
 
             return;
           }
 
-          if (main->parameters.array[parameters[i]].result & f_console_result_value_e) {
-            index = main->parameters.array[parameters[i]].values.array[main->parameters.array[parameters[i]].values.used - 1];
+          if (main->program.parameters.array[parameters[i]].result & f_console_result_value_e) {
+            index = main->program.parameters.array[parameters[i]].values.array[main->program.parameters.array[parameters[i]].values.used - 1];
 
-            if (main->parameters.arguments.array[index].used) {
+            if (main->program.parameters.arguments.array[index].used) {
               if (parameters[i] == fake_parameter_process_e) {
-                for (j = 0; j < main->parameters.arguments.array[index].used; ++j) {
+                for (j = 0; j < main->program.parameters.arguments.array[index].used; ++j) {
 
-                  setting->state.status = f_utf_is_word_dash_plus(main->parameters.arguments.array[index].string + j, main->parameters.arguments.array[index].used - j, F_false);
+                  main->setting.state.status = f_utf_is_word_dash_plus(main->program.parameters.arguments.array[index].string + j, main->program.parameters.arguments.array[index].used - j, F_false);
 
                   // @todo fix this to print an error about the actual invalid character so that it can be investigated.
 
-                  if (F_status_is_error(setting->state.status)) {
-                    fake_print_line_first(setting, main->message);
+                  if (F_status_is_error(main->setting.state.status)) {
+                    if ((main->setting.flag & fake_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
+                      fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
+                    }
 
-                    if (fake_print_error_fallback(setting, main->error, macro_fake_f(f_utf_is_word_dash_plus)) == F_false) {
-                      fll_program_print_error_parameter_process(main->error, f_console_symbol_long_normal_s, names[i]);
+                    if (fake_print_error_fallback(&main->setting, main->program.error, macro_fake_f(f_utf_is_word_dash_plus)) == F_false) {
+                      fll_program_print_error_parameter_process(main->program.error, f_console_symbol_long_normal_s, names[i]);
                     }
 
                     return;
                   }
 
-                  if (setting->state.status == F_false) {
-                    setting->state.status = F_status_set_error(F_parameter);
+                  if (main->setting.state.status == F_false) {
+                    main->setting.state.status = F_status_set_error(F_parameter);
 
-                    fake_print_error_parameter_not_word(setting, main->error, f_console_symbol_long_normal_s, names[i], main->parameters.arguments.array[index]);
+                    if ((main->setting.flag & fake_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
+                      fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
+                    }
+
+                    fake_print_error_parameter_not_word(&main->setting, main->program.error, f_console_symbol_long_normal_s, names[i], main->program.parameters.arguments.array[index]);
 
                     return;
                   }
@@ -272,17 +287,17 @@ extern "C" {
               }
 
               if (cleanups[i]) {
-                setting->state.status = f_path_directory_cleanup(main->parameters.arguments.array[index], variable[i]);
+                main->setting.state.status = f_path_directory_cleanup(main->program.parameters.arguments.array[index], variable[i]);
 
-                if (F_status_is_error(setting->state.status)) {
-                  fake_print_line_first(setting, main->message);
+                if (F_status_is_error(main->setting.state.status)) {
+                  if ((main->setting.flag & fake_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
+                    fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
+                  }
 
-                  if (main->error.verbosity > f_console_verbosity_quiet_e) {
-                    fake_print_line_first(setting, main->message);
-
-                    /*if (fake_print_error_fallback(setting, main->error, macro_fake_f(f_path_directory_cleanup)) == F_false) {
-                      fll_program_print_error_parameter_process(main->error, f_console_symbol_long_normal_s, names[i]);
-                    }*/
+                  if (main->program.error.verbosity > f_console_verbosity_quiet_e) {
+                    if (fake_print_error_fallback(&main->setting, main->program.error, macro_fake_f(f_path_directory_cleanup)) == F_false) {
+                      fll_program_print_error_parameter_process(main->program.error, f_console_symbol_long_normal_s, names[i]);
+                    }
                   }
 
                   return;
@@ -292,43 +307,51 @@ extern "C" {
 
                 // De-allocate memory before replacing it with a statically allocated string.
                 if (variable[i]->size) {
-                  setting->state.status = f_string_dynamic_resize(0, variable[i]);
+                  main->setting.state.status = f_string_dynamic_resize(0, variable[i]);
 
-                  if (F_status_is_error(setting->state.status)) {
-                    fake_print_line_first(setting, main->message);
+                  if (F_status_is_error(main->setting.state.status)) {
+                    if ((main->setting.flag & fake_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
+                      fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
+                    }
 
-                    fake_print_error(setting, main->error, macro_fake_f(f_string_dynamic_resize));
+                    fake_print_error(&main->program.error, macro_fake_f(f_string_dynamic_resize));
 
                     return;
                   }
                 }
 
-                variable[i]->string = main->parameters.arguments.array[index].string;
-                variable[i]->used = main->parameters.arguments.array[index].used;
+                variable[i]->string = main->program.parameters.arguments.array[index].string;
+                variable[i]->used = main->program.parameters.arguments.array[index].used;
                 variable[i]->size = 0;
               }
 
               if (!variable[i]->used) {
-                setting->state.status = F_status_set_error(F_parameter);
+                main->setting.state.status = F_status_set_error(F_parameter);
 
-                fake_print_error_parameter_not_empty(setting, main->error, f_console_symbol_long_normal_s, names[i], main->parameters.arguments.array[index]);
+                if ((main->setting.flag & fake_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
+                  fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
+                }
+
+                fake_print_error_parameter_not_empty(&main->setting, main->program.error, f_console_symbol_long_normal_s, names[i], main->program.parameters.arguments.array[index]);
 
                 return;
               }
 
-              setting->state.status = F_none;
+              main->setting.state.status = F_none;
             }
           }
           else {
 
             // De-allocate memory before replacing it with a statically allocated string.
             if (variable[i]->size) {
-              setting->state.status = f_string_dynamic_resize(0, variable[i]);
+              main->setting.state.status = f_string_dynamic_resize(0, variable[i]);
 
-              if (F_status_is_error(setting->state.status)) {
-                fake_print_line_first(setting, main->message);
+              if (F_status_is_error(main->setting.state.status)) {
+                if ((main->setting.flag & fake_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
+                  fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
+                }
 
-                fake_print_error(setting, main->error, macro_fake_f(f_string_dynamic_resize));
+                fake_print_error(&main->program.error, macro_fake_f(f_string_dynamic_resize));
 
                 return;
               }
@@ -353,63 +376,73 @@ extern "C" {
         };
 
         f_string_dynamics_t * const variable[] = {
-          &setting->defines,
-          &setting->modes,
+          &main->setting.defines,
+          &main->setting.modes,
         };
 
         f_array_length_t width_max = 0;
 
         for (i = 0; i < 2; ++i) {
 
-          if ((main->parameters.array[parameters[i]].result & f_console_result_found_e) && !(main->parameters.array[parameters[i]].result & f_console_result_value_e)) {
-            setting->state.status = F_status_set_error(F_parameter);
+          if ((main->program.parameters.array[parameters[i]].result & f_console_result_found_e) && !(main->program.parameters.array[parameters[i]].result & f_console_result_value_e)) {
+            main->setting.state.status = F_status_set_error(F_parameter);
 
-            if (main->error.verbosity > f_console_verbosity_quiet_e) {
-              fake_print_line_first(setting, main->message);
+            if (main->program.error.verbosity > f_console_verbosity_quiet_e) {
+              if ((main->setting.flag & fake_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
+                fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
+              }
 
-              fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, names[i]);
+              fll_program_print_error_parameter_missing_value(main->program.error, f_console_symbol_long_normal_s, names[i]);
             }
 
             return;
           }
 
-          if (main->parameters.array[parameters[i]].result & f_console_result_value_e) {
-            setting->state.status = fll_program_parameter_additional_rip(main->parameters.arguments.array, main->parameters.array[parameters[i]].values, variable[i]);
+          if (main->program.parameters.array[parameters[i]].result & f_console_result_value_e) {
+            main->setting.state.status = fll_program_parameter_additional_rip(main->program.parameters.arguments.array, main->program.parameters.array[parameters[i]].values, variable[i]);
 
-            if (F_status_is_error(setting->state.status)) {
-              if (main->error.verbosity > f_console_verbosity_quiet_e) {
-                fake_print_line_first(setting, main->message);
+            if (F_status_is_error(main->setting.state.status)) {
+              if ((main->setting.flag & fake_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
+                fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
+              }
 
-                /*if (fake_print_error_fallback(setting, main->error, macro_fake_f(fll_program_parameter_additional_rip)) == F_false) {
-                  fll_program_print_error_parameter_process(main->error, f_console_symbol_long_normal_s, names[i]);
-                }*/
+              if (main->program.error.verbosity > f_console_verbosity_quiet_e) {
+                if (fake_print_error_fallback(&main->setting, main->program.error, macro_fake_f(fll_program_parameter_additional_rip)) == F_false) {
+                  fll_program_print_error_parameter_process(main->program.error, f_console_symbol_long_normal_s, names[i]);
+                }
               }
 
               return;
             }
 
             if (parameters[i] == fake_parameter_mode_e) {
-              for (j = 0; j < main->parameters.arguments.array[i].used; ++j) {
+              for (j = 0; j < main->program.parameters.arguments.array[i].used; ++j) {
 
-                width_max = main->parameters.arguments.array[i].used - j;
+                width_max = main->program.parameters.arguments.array[i].used - j;
 
-                setting->state.status = f_utf_is_word_dash_plus(main->parameters.arguments.array[i].string + j, width_max, F_false);
+                main->setting.state.status = f_utf_is_word_dash_plus(main->program.parameters.arguments.array[i].string + j, width_max, F_false);
 
-                if (F_status_is_error(setting->state.status)) {
-                  fake_print_line_first(setting, main->message);
+                if (F_status_is_error(main->setting.state.status)) {
+                  if ((main->setting.flag & fake_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
+                    fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
+                  }
 
                   // @todo fix this to print an error about the actual invalid character so that it can be investigated.
-                  /*if (fake_print_error_fallback(setting, main->error, macro_fake_f(f_utf_is_word_dash_plus)) == F_false) {
-                    fll_program_print_error_parameter_process(main->error, f_console_symbol_long_normal_s, names[i]);
-                  }*/
+                  if (fake_print_error_fallback(&main->setting, main->program.error, macro_fake_f(f_utf_is_word_dash_plus)) == F_false) {
+                    fll_program_print_error_parameter_process(main->program.error, f_console_symbol_long_normal_s, names[i]);
+                  }
 
                   return;
                 }
 
-                if (setting->state.status == F_false) {
-                  setting->state.status = F_status_set_error(F_parameter);
+                if (main->setting.state.status == F_false) {
+                  main->setting.state.status = F_status_set_error(F_parameter);
 
-                  fake_print_error_parameter_not_word(setting, main->error, f_console_symbol_long_normal_s, names[i], main->parameters.arguments.array[i]);
+                  if ((main->setting.flag & fake_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
+                    fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
+                  }
+
+                  fake_print_error_parameter_not_word(&main->setting, main->program.error, f_console_symbol_long_normal_s, names[i], main->program.parameters.arguments.array[i]);
 
                   return;
                 }
@@ -420,24 +453,26 @@ extern "C" {
       }
     }
 
-    if (setting->operations.used) {
-      setting->flag |= fake_main_flag_operation_e;
+    if (main->setting.operations.used) {
+      main->setting.flag |= fake_main_flag_operation_e;
     }
     else {
-      setting->flag |= fake_main_flag_operation_make_e;
-      setting->flag -= setting->flag & fake_main_flag_operation_e;
+      main->setting.flag |= fake_main_flag_operation_make_e;
+      main->setting.flag -= main->setting.flag & fake_main_flag_operation_e;
 
-      setting->state.status = f_uint8s_increase_by(1, &setting->operations);
+      main->setting.state.status = f_uint8s_increase_by(1, &main->setting.operations);
 
-      if (F_status_is_error(setting->state.status)) {
-        fake_print_line_first(setting, main->message);
+      if (F_status_is_error(main->setting.state.status)) {
+      if ((main->setting.flag & fake_main_flag_print_first_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
+        fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
+      }
 
-        fake_print_error(setting, main->error, macro_fake_f(f_uint8s_increase_by));
+        fake_print_error(&main->program.error, macro_fake_f(f_uint8s_increase_by));
 
         return;
       }
 
-      setting->operations.array[setting->operations.used++] = fake_operation_make_e;
+      main->setting.operations.array[main->setting.operations.used++] = fake_operation_make_e;
     }
   }
 #endif // _di_fake_setting_load_
@@ -461,9 +496,7 @@ extern "C" {
     parameter_state->state->status = f_uint8s_increase(parameter_state->state->step_small, &data->setting->operations);
 
     if (F_status_is_error(parameter_state->state->status)) {
-      fake_print_line_first(data->setting, data->main->message);
-
-      fake_print_error(data->setting, data->main->error, macro_fake_f(f_uint8s_increase));
+      fake_print_error(&data->program->error, macro_fake_f(f_uint8s_increase));
 
       return;
     }
@@ -504,11 +537,11 @@ extern "C" {
 #endif // _di_fake_setting_load_parameter_callback_
 
 #ifndef _di_fake_setting_unload_
-  f_status_t fake_setting_unload(fll_program_data_t * const main, fake_setting_t * const setting) {
+  f_status_t fake_setting_unload(fake_main_t * const main) {
 
-    if (!main || !setting) return F_status_set_error(F_parameter);
+    if (!main) return F_status_set_error(F_parameter);
 
-    fake_setting_delete(setting);
+    fake_setting_delete(&main->setting);
 
     return F_none;
   }

@@ -8,6 +8,7 @@ extern "C" {
   const f_string_t iki_read_f_a[] = {
     "f_console_parameter_process",
     "f_file_descriptor",
+    "f_file_exists",
     "f_file_read",
     "f_file_size_by_id",
     "f_file_stream_open",

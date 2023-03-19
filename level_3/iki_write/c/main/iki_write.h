@@ -56,7 +56,7 @@
 #include <program/iki_write/main/common/type.h>
 #include <program/iki_write/main/common.h>
 #include <program/iki_write/main/print.h>
-#include <program/iki_write/main/print-error.h>
+#include <program/iki_write/main/print/error.h>
 #include <program/iki_write/main/process.h>
 
 #ifdef __cplusplus

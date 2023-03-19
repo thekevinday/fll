@@ -19,13 +19,13 @@ extern "C" {
 
     fake_data_t * const data = (fake_data_t *) recurse->state.custom;
 
-    if (data->main->message.verbosity < f_console_verbosity_verbose_e) {
+    if (data->program->message.verbosity < f_console_verbosity_verbose_e) {
       recurse->state.status = F_output_not;
 
       return;
     }
 
-    fake_print_wrapped_variables(data->setting, data->main->message, "Cloned ", source, " to ", destination, 0);
+    fake_print_wrapped_variables(data->setting, data->program->message, "Cloned ", source, " to ", destination, 0);
   }
 #endif // _di_fake_print_verbose_clone_
 
@@ -44,13 +44,13 @@ extern "C" {
 
     fake_data_t * const data = (fake_data_t *) recurse->state.custom;
 
-    if (data->main->message.verbosity < f_console_verbosity_verbose_e) {
+    if (data->program->message.verbosity < f_console_verbosity_verbose_e) {
       recurse->state.status = F_output_not;
 
       return;
     }
 
-    fake_print_wrapped_variables(data->setting, data->main->message, "Copied ", source, " to ", destination, 0);
+    fake_print_wrapped_variables(data->setting, data->program->message, "Copied ", source, " to ", destination, 0);
   }
 #endif // _di_fake_print_verbose_copy_
 
@@ -143,13 +143,13 @@ extern "C" {
 
     fake_data_t * const data = (fake_data_t *) recurse->state.custom;
 
-    if (data->main->message.verbosity < f_console_verbosity_verbose_e) {
+    if (data->program->message.verbosity < f_console_verbosity_verbose_e) {
       recurse->state.status = F_output_not;
 
       return;
     }
 
-    fake_print_wrapped_variables(data->setting, data->main->message, "Moved ", source, " to ", destination, 0);
+    fake_print_wrapped_variables(data->setting, data->program->message, "Moved ", source, " to ", destination, 0);
   }
 #endif // _di_fake_print_verbose_move_
 

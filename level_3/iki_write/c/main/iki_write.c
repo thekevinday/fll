@@ -10,9 +10,15 @@ extern "C" {
     if (!main || !setting) return;
 
     if (F_status_is_error(setting->state.status)) {
-      iki_write_print_line_last(setting, main->message);
+      if ((setting->flag & iki_write_main_flag_print_last_e) && main->message.verbosity > f_console_verbosity_error_e) {
+        fll_print_dynamic_raw(f_string_eol_s, main->message.to);
+      }
 
       return;
+    }
+
+    if ((setting->flag & iki_write_main_flag_print_first_e) && main->message.verbosity > f_console_verbosity_error_e) {
+      fll_print_dynamic_raw(f_string_eol_s, main->message.to);
     }
 
     setting->state.status = F_none;
@@ -20,23 +26,31 @@ extern "C" {
     if (setting->flag & iki_write_main_flag_help_e) {
       iki_write_print_help(setting, main->message);
 
+      if ((setting->flag & iki_write_main_flag_print_last_e) && main->message.verbosity > f_console_verbosity_error_e) {
+        fll_print_dynamic_raw(f_string_eol_s, main->message.to);
+      }
+
       return;
     }
 
     if (setting->flag & iki_write_main_flag_version_e) {
-      fll_program_print_version(main->message, (setting->line_first.used ? 0x1 : 0x0) | (setting->line_last.used ? 0x2 : 0x0), iki_write_program_version_s);
+      fll_program_print_version(main->message, iki_write_program_version_s);
+
+      if ((setting->flag & iki_write_main_flag_print_last_e) && main->message.verbosity > f_console_verbosity_error_e) {
+        fll_print_dynamic_raw(f_string_eol_s, main->message.to);
+      }
 
       return;
     }
 
     if (setting->flag & iki_write_main_flag_copyright_e) {
-      fll_program_print_copyright(main->message, (setting->line_first.used ? 0x1 : 0x0) | (setting->line_last.used ? 0x2 : 0x0));
+      fll_program_print_copyright(main->message);
+
+      if ((setting->flag & iki_write_main_flag_print_last_e) && main->message.verbosity > f_console_verbosity_error_e) {
+        fll_print_dynamic_raw(f_string_eol_s, main->message.to);
+      }
 
       return;
-    }
-
-    if (main->message.verbosity > f_console_verbosity_error_e) {
-      iki_write_print_line_first(setting, main->message);
     }
 
     setting->escaped.used = 0;
@@ -63,7 +77,9 @@ extern "C" {
           if (fll_program_standard_signal_received(main)) {
             setting->state.status = F_status_set_error(F_interrupt);
 
-            return;
+            object_ended = F_false;
+
+            break;
           }
 
           main->signal_check = 0;
@@ -76,18 +92,20 @@ extern "C" {
             setting->state.status = F_status_set_error(F_pipe);
 
             iki_write_print_error_file(setting, main->error, macro_iki_write_f(f_file_read), f_string_ascii_minus_s, f_file_operation_read_s, fll_error_file_type_pipe_e);
-            iki_write_print_line_last(setting, main->message);
 
-            return;
+            object_ended = F_false;
+
+            break;
           }
 
           if (!setting->buffer.used) {
             setting->state.status = F_status_set_error(F_parameter);
 
             fll_program_print_error_pipe_missing_content(main->error);
-            iki_write_print_line_last(setting, main->message);
 
-            return;
+            object_ended = F_false;
+
+            break;
           }
 
           range.stop = setting->buffer.used - 1;
@@ -103,16 +121,19 @@ extern "C" {
         if (F_status_is_error(setting->state.status)) {
           iki_write_print_error(setting, main->error, macro_iki_write_f(f_string_dynamic_seek_to));
 
-          return;
+          object_ended = F_false;
+
+          break;
         }
 
         if (object_ended && previous == range.start) {
           setting->state.status = F_status_set_error(F_parameter);
 
           fll_program_print_error_pipe_invalid_form_feed(main->error);
-          iki_write_print_line_last(setting, main->message);
 
-          return;
+          object_ended = F_false;
+
+          break;
         }
 
         range.stop = range.start - 1;
@@ -127,12 +148,19 @@ extern "C" {
             if (F_status_is_error(setting->state.status)) {
               iki_write_print_error(setting, main->error, macro_iki_write_f(f_string_dynamic_partial_append_nulless));
 
-              return;
+              object_ended = F_false;
+
+              break;
             }
           }
 
           iki_write_process(main, setting, setting->object, setting->content);
-          if (F_status_is_error(setting->state.status)) return;
+
+          if (F_status_is_error(setting->state.status)) {
+            object_ended = F_false;
+
+            break;
+          }
 
           fll_print_dynamic_raw(f_string_eol_s, main->output.to);
 
@@ -146,7 +174,9 @@ extern "C" {
           if (F_status_is_error(setting->state.status)) {
             iki_write_print_error(setting, main->error, macro_iki_write_f(f_string_dynamic_partial_append_nulless));
 
-            return;
+            object_ended = F_false;
+
+            break;
           }
 
           object_ended = F_true;
@@ -168,32 +198,31 @@ extern "C" {
         setting->state.status = F_status_set_error(F_parameter);
 
         fll_program_print_error_pipe_object_without_content(main->error);
-        iki_write_print_line_last(setting, main->message);
-
-        return;
       }
     }
 
-    for (f_array_length_t i = 0; i < setting->objects.used; ++i) {
+    if (F_status_is_error_not(setting->state.status) && F_status_set_fine(setting->state.status) != F_interrupt) {
+      for (f_array_length_t i = 0; i < setting->objects.used; ++i) {
 
-      if (!((++main->signal_check) % iki_write_signal_check_d)) {
-        if (fll_program_standard_signal_received(main)) {
-          setting->state.status = F_status_set_error(F_interrupt);
+        if (!((++main->signal_check) % iki_write_signal_check_d)) {
+          if (fll_program_standard_signal_received(main)) {
+            setting->state.status = F_status_set_error(F_interrupt);
 
-          break;
+            break;
+          }
+
+          main->signal_check = 0;
         }
 
-        main->signal_check = 0;
-      }
+        iki_write_process(main, setting, setting->objects.array[i], setting->contents.array[i]);
+        if (F_status_is_error(setting->state.status)) break;
 
-      iki_write_process(main, setting, setting->objects.array[i], setting->contents.array[i]);
-      if (F_status_is_error(setting->state.status)) break;
+        fll_print_dynamic_raw(f_string_eol_s, main->output.to);
+      } // for
+    }
 
-      fll_print_dynamic_raw(f_string_eol_s, main->output.to);
-    } // for
-
-    if (F_status_is_error(setting->state.status) || main->message.verbosity > f_console_verbosity_error_e) {
-      iki_write_print_line_last(setting, main->message);
+    if ((setting->flag & iki_write_main_flag_print_last_e) && main->message.verbosity > f_console_verbosity_error_e) {
+      fll_print_dynamic_raw(f_string_eol_s, main->message.to);
     }
   }
 #endif // _di_iki_write_main_

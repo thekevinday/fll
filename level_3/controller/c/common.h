@@ -473,6 +473,8 @@ extern "C" {
  *   - file_to:       Using a specified destination file.
  *   - help:          Print help.
  *   - header:        Enable printing of headers.
+ *   - print_first:   When set, print new line to message output on program begin after loading settings.
+ *   - print_last:    When set, print new line to message output on program end.
  *   - separate:      Enable printing of separators.
  *   - strip_invalid: Using strip invalid character mode.
  *   - verify:        Using verify mode.
@@ -486,10 +488,12 @@ extern "C" {
     controller_main_flag_file_to_e       = 0x4,
     controller_main_flag_header_e        = 0x8,
     controller_main_flag_help_e          = 0x10,
-    controller_main_flag_separate_e      = 0x20,
-    controller_main_flag_strip_invalid_e = 0x40,
-    controller_main_flag_verify_e        = 0x80,
-    controller_main_flag_version_e       = 0x100,
+    controller_main_flag_print_first_e   = 0x20,
+    controller_main_flag_print_last_e    = 0x40,
+    controller_main_flag_separate_e      = 0x80,
+    controller_main_flag_strip_invalid_e = 0x100,
+    controller_main_flag_verify_e        = 0x200,
+    controller_main_flag_version_e       = 0x400,
   }; // enum
 #endif // _di_controller_main_flag_e_
 
@@ -502,26 +506,18 @@ extern "C" {
  * flag: Flags passed to the main function.
  *
  * state: The state information.
- *
- * line_first: A string expected to represent either "\n" or NULL to allow for easy handling of when to print first new line or not.
- * line_last:  A string expected to represent either "\n" or NULL to allow for easy handling of when to print last new line or not.
  */
 #ifndef _di_controller_setting_t_
   typedef struct {
     uint16_t flag;
 
     f_state_t state;
-
-    f_string_static_t line_first;
-    f_string_static_t line_last;
   } controller_setting_t;
 
   #define controller_setting_t_initialize \
     { \
       controller_main_flag_none_e, \
       f_state_t_initialize, \
-      f_string_static_t_initialize, \
-      f_string_static_t_initialize, \
     }
 #endif // _di_controller_setting_t_
 

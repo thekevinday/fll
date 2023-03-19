@@ -62,8 +62,8 @@
 #include <program/utf8/main/bytesequence.h>
 #include <program/utf8/main/codepoint.h>
 #include <program/utf8/main/print.h>
-#include <program/utf8/main/print-data.h>
-#include <program/utf8/main/print-error.h>
+#include <program/utf8/main/print/data.h>
+#include <program/utf8/main/print/error.h>
 #include <program/utf8/main/process.h>
 
 #ifdef __cplusplus

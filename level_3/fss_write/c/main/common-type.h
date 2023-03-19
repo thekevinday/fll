@@ -62,7 +62,8 @@ extern "C" {
  *   - object:           The Object being written is specified.
  *   - object_open:      The Object open characters are to be printed.
  *   - partial:          Do not write end of Object/Content character.
- *   - print_first:      When set, the first character printing logic is to be processed (this is usually automatic).
+ *   - print_first:      When set, print new line to message output on program begin after loading settings.
+ *   - print_last:       When set, print new line to message output on program end.
  *   - trim:             Trim Object names.
  *   - version:          Print version.
  */
@@ -82,8 +83,9 @@ extern "C" {
     fss_write_main_flag_partial_e          = 0x400,
     fss_write_main_flag_prepend_e          = 0x800,
     fss_write_main_flag_print_first_e      = 0x1000,
-    fss_write_main_flag_trim_e             = 0x2000,
-    fss_write_main_flag_version_e          = 0x4000,
+    fss_write_main_flag_print_last_e       = 0x2000,
+    fss_write_main_flag_trim_e             = 0x4000,
+    fss_write_main_flag_version_e          = 0x8000,
   }; // enum
 #endif // _di_fss_write_main_flag_e_
 
@@ -168,9 +170,6 @@ extern "C" {
  * state: The state data used when processing the FSS data.
  * range: A range used as a buffer during processing.
  *
- * line_first: A string expected to represent either "\n" or NULL to allow for easy handling of when to print first new line or not.
- * line_last:  A string expected to represent either "\n" or NULL to allow for easy handling of when to print last new line or not.
- *
  * quote:    This holds the quote used during processing.
  * standard: A human-friendly string describing the standard in use, such as "FSS-0000 (Basic)".
  *
@@ -200,9 +199,6 @@ extern "C" {
 
     f_state_t state;
     f_string_range_t range;
-
-    f_string_static_t line_first;
-    f_string_static_t line_last;
 
     f_string_static_t quote;
     f_string_static_t standard;
@@ -234,7 +230,6 @@ extern "C" {
       fss_write_main_flag_none_e, \
       macro_f_state_t_initialize_1(fss_write_allocation_large_d, fss_write_allocation_small_d, F_none, 0, 0, &fll_program_standard_signal_handle, 0, 0, 0), \
       f_string_range_t_initialize, \
-      f_string_static_t_initialize, \
       f_string_static_t_initialize, \
       f_string_static_t_initialize, \
       f_string_dynamic_t_initialize, \

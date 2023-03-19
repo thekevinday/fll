@@ -215,11 +215,11 @@ extern "C" {
 
     f_file_stream_lock(print.to);
 
-    if (!setting->line_first.used || index) {
-      f_print_dynamic_raw(f_string_eol_s, print.to);
-    }
-
     if (setting->flag & utf8_main_flag_header_e) {
+      if (index) {
+        f_print_dynamic_raw(f_string_eol_s, print.to);
+      }
+
       fl_print_format("%[File%] ", print.to, print.set->title, print.set->title);
 
       if (setting->flag & utf8_main_flag_file_to_e) {

@@ -11,8 +11,6 @@ extern "C" {
 
     f_file_stream_lock(print.to);
 
-    f_print_dynamic_raw(setting->line_first, print.to);
-
     fll_program_print_help_header(print, fss_write_embedded_list_program_name_long_s, fss_write_program_version_s);
 
     fss_write_print_help(setting, print);
@@ -33,8 +31,6 @@ extern "C" {
     fl_print_format("  This parameter is not used for ignoring anything from the input pipe.%r", print.to, f_string_eol_s);
     fl_print_format("  This parameter must be specified after a '%[%r%r%]'", print.to, print.set->notable, f_console_symbol_long_normal_s, fss_write_long_content_s, print.set->notable);
     fl_print_format(" parameter and this applies only to the Content represented by that specific '%[%r%r%]' parameter.%r", print.to, print.set->notable, f_console_symbol_long_normal_s, fss_write_long_content_s, print.set->notable, f_string_eol_s);
-
-    f_print_dynamic_raw(setting->line_last, print.to);
 
     f_file_stream_flush(print.to);
     f_file_stream_unlock(print.to);

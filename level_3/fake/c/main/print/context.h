@@ -162,6 +162,45 @@ extern "C" {
 #endif // _di_fake_print_context_wrapped_parameter_
 
 /**
+ * Print a parameter context message with a before string, a middle string, an after string, a string symbol, a parameter name, and the parameter value.
+ *
+ * This is primarily used by numerous print functions to reduce code.
+ * This is not used for any print functions that has complex format structures.
+ *
+ * @param setting
+ *   The main program settings.
+ *   (Must be of type fake_setting_t.)
+ *
+ *   This does not alter setting.state.status.
+ * @param print
+ *   The output structure to print to.
+ * @param before
+ *   The string being printed before the variable.
+ *   Likely should have a space added at the end of the string.
+ *   Set to NULL to disable.
+ * @param symbol
+ *   The string representing the symbol for the parameter.
+ *   Set to f_string_empty_s to disable.
+ * @param name
+ *   The string representing the parameter name.
+ * @param between
+ *   The string being printed after the parameter name and before the parameter value.
+ * @param value
+ *   The value associated with the given parameter name.
+ * @param after
+ *   The string being printed after the variable.
+ *   Likely should have a space added at the start of the string.
+ *   Set to NULL to disable.
+ *
+ * @see f_file_stream_lock()
+ * @see f_file_stream_unlock()
+ * @see fl_print_format()
+ */
+#ifndef _di_fake_print_context_wrapped_parameter_value_
+  extern void fake_print_context_wrapped_parameter_value(fake_setting_t * const setting, const fl_print_t print, const f_string_t before, const f_string_static_t symbol, const f_string_static_t name, const f_string_t between, const f_string_static_t value, const f_string_t after);
+#endif // _di_fake_print_context_wrapped_parameter_value_
+
+/**
  * Print a parameter context message with a there parameters, with symbols, and wrapping strings.
  *
  * This is primarily used by numerous print functions to reduce code.

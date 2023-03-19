@@ -21,16 +21,12 @@ extern "C" {
  *
  * This prints error messages as appropriate.
  *
- * If either main or setting is NULL, then this immediately returns without doing anything.
- *
  * @param arguments
  *   The parameters passed to the process (often referred to as command line arguments).
  * @param main
- *   The main program data.
- * @param setting
- *   The main program settings.
+ *   The main program and setting data.
  *
- *   This alters setting.state.status:
+ *   This alters main.setting.state.status:
  *     F_none on success.
  *
  *     Errors (with error bit) from: f_console_parameter_process().
@@ -52,15 +48,13 @@ extern "C" {
  * @see fll_program_parameter_process_verbosity()
  */
 #ifndef _di_fake_setting_load_
-  extern void fake_setting_load(const f_console_arguments_t arguments, fll_program_data_t * const main, fake_setting_t * const setting);
+  extern void fake_setting_load(const f_console_arguments_t arguments, fake_main_t * const main);
 #endif // _di_fake_setting_load_
 
 /**
  * Callback used by f_console_parameter_process() for custom handling of parameters.
  *
  * This prints error messages as appropriate.
- *
- * If either main or setting is NULL, then this immediately returns without doing anything.
  *
  * @param arguments
  *   The parameters passed to the process (often referred to as command line arguments).
@@ -76,26 +70,24 @@ extern "C" {
  *     F_process on success, designating that processing should be performed (see f_console_parameter_process()).
  *
  *     Errors (with error bit) from: f_uint8s_increase().
- * @param data
- *   This must be of the type fake_setting_t.
+ * @param main
+ *   This must be of the type fake_main_t.
  *
  * @see f_console_parameter_process()
  * @see f_uint8s_increase()
  */
 #ifndef _di_fake_setting_load_parameter_callback_
-  extern void fake_setting_load_parameter_callback(const f_console_arguments_t arguments, void * const parameters, f_console_parameter_state_t * const parameter_state, void * const data);
+  extern void fake_setting_load_parameter_callback(const f_console_arguments_t arguments, void * const parameters, f_console_parameter_state_t * const parameter_state, void * const main);
 #endif // _di_fake_setting_load_parameter_callback_
 
 /**
  * Perform the standard program setting unload process.
  *
  * @param main
- *   The main program data.
- * @param setting
- *   The main program settings.
+ *   The main program and setting data.
  *   All buffers are deallocated.
  *
- *   This does not alter setting.state.status.
+ *   This does not alter main.setting.state.status.
  *
  * @return
  *   F_none on success.
@@ -107,7 +99,7 @@ extern "C" {
  * @see utf8_setting_delete()
  */
 #ifndef _di_fake_setting_unload_
-  extern f_status_t fake_setting_unload(fll_program_data_t * const main, fake_setting_t * const setting);
+  extern f_status_t fake_setting_unload(fake_main_t * const main);
 #endif // _di_fake_setting_unload_
 
 #ifdef __cplusplus

@@ -40,9 +40,11 @@ extern "C" {
         status = fll_program_parameter_process_context(choices, modes, F_true, main);
 
         if (F_status_is_error(status)) {
-          controller_print_line_first_locked(setting, main->error);
           fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process_context", fll_error_file_flag_fallback_e);
-          controller_print_line_last_locked(setting, main->error);
+
+          if (main->error.verbosity > f_console_verbosity_quiet_e) {
+            fll_print_dynamic_raw(f_string_eol_s, main->error);
+          }
 
           return;
         }
@@ -59,9 +61,11 @@ extern "C" {
         status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, main);
 
         if (F_status_is_error(status)) {
-          controller_print_line_first_locked(setting, main->error);
           fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process_verbosity", fll_error_file_flag_fallback_e);
-          controller_print_line_last_locked(setting, main->error);
+
+          if (main->error.verbosity > f_console_verbosity_quiet_e) {
+            fll_print_dynamic_raw(f_string_eol_s, main->error);
+          }
 
           return;
         }
@@ -75,13 +79,13 @@ extern "C" {
     }
 
     if (main->parameters.array[controller_parameter_version_e].result & f_console_result_found_e) {
-      fll_program_print_version(main->message, (setting->line_first.used ? 0x1 : 0x0) | (setting->line_last.used ? 0x2 : 0x0), controller_program_version_s);
+      fll_program_print_version(main->message, controller_program_version_s);
 
       return F_none;
     }
 
     if (main->parameters.array[controller_parameter_copyright_e].result & f_console_result_found_e) {
-      fll_program_print_copyright(main->message, (setting->line_first.used ? 0x1 : 0x0) | (setting->line_last.used ? 0x2 : 0x0));
+      fll_program_print_copyright(main->message);
 
       return F_none;
     }

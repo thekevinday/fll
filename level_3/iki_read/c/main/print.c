@@ -11,8 +11,6 @@ extern "C" {
 
     f_file_stream_lock(print.to);
 
-    f_print_dynamic_raw(setting->line_first, print.to);
-
     fll_program_print_help_header(print, iki_read_program_name_long_s, iki_read_program_version_s);
 
     fll_program_print_help_option_standard(print);
@@ -92,50 +90,12 @@ extern "C" {
 
     fl_print_format("  The default behavior is to only display Content portion of the IKI Variable.%r", print.to, f_string_eol_s);
 
-    f_print_dynamic_raw(setting->line_last, print.to);
-
     f_file_stream_flush(print.to);
     f_file_stream_unlock(print.to);
 
     return F_none;
   }
 #endif // _di_iki_read_print_help_
-
-#ifndef _di_iki_read_print_line_first_
-  f_status_t iki_read_print_line_first(iki_read_setting_t * const setting, const fl_print_t print) {
-
-    if (!setting) return F_status_set_error(F_output_not);
-    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
-
-    if (F_status_is_error_not(setting->state.status)) {
-      if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
-    }
-
-    if (setting->flag & iki_read_main_flag_print_first_e) {
-      fll_print_dynamic_raw(setting->line_first, print.to);
-
-      setting->flag -= iki_read_main_flag_print_first_e;
-    }
-
-    return F_none;
-  }
-#endif // _di_iki_read_print_line_first_
-
-#ifndef _di_iki_read_print_line_last_
-  f_status_t iki_read_print_line_last(iki_read_setting_t * const setting, const fl_print_t print) {
-
-    if (!setting) return F_status_set_error(F_output_not);
-    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
-
-    if (F_status_is_error_not(setting->state.status)) {
-      if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
-    }
-
-    fll_print_dynamic_raw(setting->line_last, print.to);
-
-    return F_none;
-  }
-#endif // _di_iki_read_print_line_last_
 
 #ifdef __cplusplus
 } // extern "C"

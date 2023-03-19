@@ -164,10 +164,6 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
             break;
           }
 
-          if (setting->state.status != F_status_set_error(F_parameter)) {
-            fss_write_print_line_first(setting, main->message);
-          }
-
           setting->state.status = F_status_set_error(F_parameter);
 
           fss_write_main_print_error_format_unknown(main->error, argv[index]);
@@ -191,7 +187,10 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
         return;
       }
 
-      fss_write_print_line_first(setting, main->message);
+      if (main->error.verbosity > f_console_verbosity_quiet_e) {
+        fll_print_dynamic_raw(f_string_eol_s, main->error.to);
+      }
+
       fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, fss_write_long_as_s);
 
       return;

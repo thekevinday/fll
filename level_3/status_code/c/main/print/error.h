@@ -33,8 +33,6 @@ extern "C" {
  *   F_output_not (with error bit) if setting is NULL.
  *
  * @see fll_error_print()
- *
- * @see status_code_print_line_first()
  */
 #ifndef _di_status_code_print_error_
   extern f_status_t status_code_print_error(status_code_setting_t * const setting, const fl_print_t print, const f_string_t function);

@@ -303,41 +303,45 @@ extern "C" {
  * Flags passed to the main function or program.
  *
  * fss_payload_read_main_flag_*_e:
- *   - none:       No flags set.
- *   - at:         Selecting at a specific index.
- *   - content:    Print Contents.
- *   - copyright:  Print copyright.
- *   - help:       Print help.
- *   - literal:    Print as literal data (printing entire variable).
- *   - line:       Selecting at a specific line.
- *   - name:       Selecting using a specific Vocabulary name.
- *   - object:     Print Objects.
- *   - replace:    Using re-assignments.
- *   - replace:    Using replacements.
- *   - substitute: Using substitutions.
- *   - total:      Enable printing of "total" count.
- *   - version:    Print version.
- *   - whole:      Print all data.
- *   - wrap:       Using wrapping.
+ *   - none:        No flags set.
+ *   - at:          Selecting at a specific index.
+ *   - content:     Print Contents.
+ *   - copyright:   Print copyright.
+ *   - help:        Print help.
+ *   - literal:     Print as literal data (printing entire variable).
+ *   - line:        Selecting at a specific line.
+ *   - name:        Selecting using a specific Vocabulary name.
+ *   - object:      Print Objects.
+ *   - print_first: When set, print new line to message output on program begin after loading settings.
+ *   - print_last:  When set, print new line to message output on program end.
+ *   - replace:     Using re-assignments.
+ *   - replace:     Using replacements.
+ *   - substitute:  Using substitutions.
+ *   - total:       Enable printing of "total" count.
+ *   - version:     Print version.
+ *   - whole:       Print all data.
+ *   - wrap:        Using wrapping.
  */
 #ifndef _di_fss_payload_read_main_flag_e_
   enum {
-    fss_payload_read_main_flag_none_e       = 0x0,
-    fss_payload_read_main_flag_at_e         = 0x1,
-    fss_payload_read_main_flag_content_e    = 0x2,
-    fss_payload_read_main_flag_copyright_e  = 0x4,
-    fss_payload_read_main_flag_help_e       = 0x8,
-    fss_payload_read_main_flag_literal_e    = 0x10,
-    fss_payload_read_main_flag_line_e       = 0x20,
-    fss_payload_read_main_flag_name_e       = 0x40,
-    fss_payload_read_main_flag_object_e     = 0x80,
-    fss_payload_read_main_flag_reassign_e   = 0x100,
-    fss_payload_read_main_flag_replace_e    = 0x200,
-    fss_payload_read_main_flag_substitute_e = 0x400,
-    fss_payload_read_main_flag_total_e      = 0x800,
-    fss_payload_read_main_flag_version_e    = 0x1000,
-    fss_payload_read_main_flag_whole_e      = 0x2000,
-    fss_payload_read_main_flag_wrap_e       = 0x4000,
+    fss_payload_read_main_flag_none_e        = 0x0,
+    fss_payload_read_main_flag_at_e          = 0x1,
+    fss_payload_read_main_flag_content_e     = 0x2,
+    fss_payload_read_main_flag_copyright_e   = 0x4,
+    fss_payload_read_main_flag_help_e        = 0x8,
+    fss_payload_read_main_flag_literal_e     = 0x10,
+    fss_payload_read_main_flag_line_e        = 0x20,
+    fss_payload_read_main_flag_name_e        = 0x40,
+    fss_payload_read_main_flag_object_e      = 0x80,
+    fss_payload_read_main_flag_print_first_e = 0x100,
+    fss_payload_read_main_flag_print_last_e  = 0x200,
+    fss_payload_read_main_flag_reassign_e    = 0x400,
+    fss_payload_read_main_flag_replace_e     = 0x800,
+    fss_payload_read_main_flag_substitute_e  = 0x1000,
+    fss_payload_read_main_flag_total_e       = 0x2000,
+    fss_payload_read_main_flag_version_e     = 0x4000,
+    fss_payload_read_main_flag_whole_e       = 0x8000,
+    fss_payload_read_main_flag_wrap_e        = 0x10000,
   }; // enum
 #endif // _di_fss_payload_read_main_flag_e_
 
@@ -350,26 +354,18 @@ extern "C" {
  * flag: Flags passed to the main function.
  *
  * state: The state information.
- *
- * line_first: A string expected to represent either "\n" or NULL to allow for easy handling of when to print first new line or not.
- * line_last:  A string expected to represent either "\n" or NULL to allow for easy handling of when to print last new line or not.
  */
 #ifndef _di_fss_payload_read_setting_t_
   typedef struct {
     uint16_t flag;
 
     f_state_t state;
-
-    f_string_static_t line_first;
-    f_string_static_t line_last;
   } fss_payload_read_setting_t;
 
   #define fss_payload_read_setting_t_initialize \
     { \
       fss_payload_read_main_flag_none_e, \
       f_state_t_initialize, \
-      f_string_static_t_initialize, \
-      f_string_static_t_initialize, \
     }
 #endif // _di_fss_payload_read_setting_t_
 

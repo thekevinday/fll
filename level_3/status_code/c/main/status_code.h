@@ -48,8 +48,8 @@
 #include <program/status_code/main/common.h>
 #include <program/status_code/main/convert.h>
 #include <program/status_code/main/print.h>
-#include <program/status_code/main/print-data.h>
-#include <program/status_code/main/print-error.h>
+#include <program/status_code/main/print/data.h>
+#include <program/status_code/main/print/error.h>
 #include <program/status_code/main/process.h>
 
 #ifdef __cplusplus

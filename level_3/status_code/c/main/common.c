@@ -24,7 +24,26 @@ extern "C" {
 
     setting->state.step_small = status_code_allocation_small_d;
 
+    // Identify and pocess first/last parameters.
+    if (main->parameters.array[status_code_parameter_line_first_no_e].result & f_console_result_found_e) {
+      setting->flag -= setting->flag & status_code_main_flag_print_first_e;
+    }
+    else {
+      setting->flag |= status_code_main_flag_print_first_e;
+    }
+
+    if (main->parameters.array[status_code_parameter_line_last_no_e].result & f_console_result_found_e) {
+      setting->flag -= setting->flag & status_code_main_flag_print_last_e;
+    }
+    else {
+      setting->flag |= status_code_main_flag_print_last_e;
+    }
+
     if (F_status_is_error(setting->state.status)) {
+      if ((setting->flag & status_code_main_flag_print_first_e) && main->message.verbosity > f_console_verbosity_error_e) {
+        fll_print_dynamic_raw(f_string_eol_s, main->message.to);
+      }
+
       status_code_print_error(setting, main->error, macro_status_code_f(f_console_parameter_process));
 
       return;
@@ -44,24 +63,14 @@ extern "C" {
         setting->state.status = fll_program_parameter_process_context(choices, modes, F_true, main);
 
         if (F_status_is_error(setting->state.status)) {
+          if ((setting->flag & status_code_main_flag_print_first_e) && main->message.verbosity > f_console_verbosity_error_e) {
+            fll_print_dynamic_raw(f_string_eol_s, main->message.to);
+          }
+
           status_code_print_error(setting, main->error, macro_status_code_f(fll_program_parameter_process_context));
 
           return;
         }
-      }
-
-      if (main->parameters.array[status_code_parameter_line_first_no_e].result & f_console_result_found_e) {
-        setting->line_first = f_string_empty_s;
-      }
-      else {
-        setting->line_first = f_string_eol_s;
-      }
-
-      if (main->parameters.array[status_code_parameter_line_last_no_e].result & f_console_result_found_e) {
-        setting->line_last = f_string_empty_s;
-      }
-      else {
-        setting->line_last = f_string_eol_s;
       }
 
       // Identify and prioritize "verbosity" parameters.
@@ -75,6 +84,10 @@ extern "C" {
         setting->state.status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, main);
 
         if (F_status_is_error(setting->state.status)) {
+          if ((setting->flag & status_code_main_flag_print_first_e) && main->message.verbosity > f_console_verbosity_error_e) {
+            fll_print_dynamic_raw(f_string_eol_s, main->message.to);
+          }
+
           status_code_print_error(setting, main->error, macro_status_code_f(fll_program_parameter_process_verbosity));
 
           return;
@@ -121,7 +134,10 @@ extern "C" {
         if (!(setting->flag & status_code_main_flag_number_e)) {
           setting->state.status = F_status_set_error(F_parameter);
 
-          status_code_print_line_first(setting, main->message);
+          if ((setting->flag & status_code_main_flag_print_first_e) && main->message.verbosity > f_console_verbosity_error_e) {
+            fll_print_dynamic_raw(f_string_eol_s, main->message.to);
+          }
+
           status_code_print_error_cannot_error_warning_number(setting, main->error);
 
           return;
@@ -131,7 +147,10 @@ extern "C" {
       if (setting->flag & status_code_main_flag_fine_e) {
         setting->state.status = F_status_set_error(F_parameter);
 
-        status_code_print_line_first(setting, main->message);
+        if ((setting->flag & status_code_main_flag_print_first_e) && main->message.verbosity > f_console_verbosity_error_e) {
+          fll_print_dynamic_raw(f_string_eol_s, main->message.to);
+        }
+
         fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_normal_s, f_console_symbol_long_normal_s, status_code_long_error_s, status_code_long_fine_s);
 
         return;
@@ -140,7 +159,10 @@ extern "C" {
     else if (setting->flag & status_code_main_flag_warning_e && setting->flag & status_code_main_flag_fine_e) {
       setting->state.status = F_status_set_error(F_parameter);
 
-      status_code_print_line_first(setting, main->message);
+      if ((setting->flag & status_code_main_flag_print_first_e) && main->message.verbosity > f_console_verbosity_error_e) {
+        fll_print_dynamic_raw(f_string_eol_s, main->message.to);
+      }
+
       fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_normal_s, f_console_symbol_long_normal_s, status_code_long_warning_s, status_code_long_fine_s);
 
       return;
@@ -149,7 +171,10 @@ extern "C" {
     if (main->parameters.remaining.used == 0 && !(main->pipe & fll_program_data_pipe_input_e)) {
       setting->state.status = F_status_set_error(F_parameter);
 
-      status_code_print_line_first(setting, main->message);
+      if ((setting->flag & status_code_main_flag_print_first_e) && main->message.verbosity > f_console_verbosity_error_e) {
+        fll_print_dynamic_raw(f_string_eol_s, main->message.to);
+      }
+
       status_code_print_error_no_status_codes(setting, main->error);
 
       return;

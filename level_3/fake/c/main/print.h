@@ -17,11 +17,36 @@ extern "C" {
 #endif
 
 /**
+ * Print a message about building.
+ *
+ * @param setting
+ *   The main program settings.
+ *
+ *   This does not alter setting.state.status.
+ * @param print
+ *   The output structure to print to.
+ * @param build_arguments
+ *   (optional) The build arguments.
+ * @param setting_build
+ *   The build setting data.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ *
+ * @see f_file_stream_lock()
+ * @see f_file_stream_unlock()
+ * @see fl_print_format()
+ */
+#ifndef _di_fake_print_building_
+  extern f_status_t fake_print_building(fake_setting_t * const setting, const fl_print_t print, const f_string_statics_t * const build_arguments, fake_build_setting_t * const setting_build);
+#endif // _di_fake_print_building_
+
+/**
  * Print a message about generating skeleton.
  *
  * @param setting
  *   The main program settings.
- *   (Must be of type fake_setting_t.)
  *
  *   This does not alter setting.state.status.
  * @param print
@@ -67,60 +92,6 @@ extern "C" {
 #ifndef _di_fake_print_help_
   extern f_status_t fake_print_help(fake_setting_t * const setting, const fl_print_t print);
 #endif // _di_fake_print_help_
-
-/**
- * Print first new line, unless verbosity says otherwise.
- *
- * This is generally either the first line in the program or the first line printed before an error message.
- *
- * Once the first line is processed (printed or not), then this will print new lines normally.
- *
- * This function locks and then unlocks the input stream when printing.
- *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.state.status.
- * @param print
- *   Designates the how and where to print.
- *
- * @return
- *   F_none on success.
- *   F_output_not on success, but no printing is performed.
- *
- *   F_output_not (with error bit) if setting is NULL.
- *
- * @see fll_print_dynamic_raw()
- */
-#ifndef _di_fake_print_line_first_
-  extern f_status_t fake_print_line_first(fake_setting_t * const setting, const fl_print_t print);
-#endif // _di_fake_print_line_first_
-
-/**
- * Print last new line when the main is complete, unless verbosity says otherwise.
- *
- * This is generally the very last line printed in the program.
- *
- * This function locks and then unlocks the input stream when printing.
- *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.state.status.
- * @param print
- *   Designates the how and where to print.
- *
- * @return
- *   F_none on success.
- *   F_output_not on success, but no printing is performed.
- *
- *   F_output_not (with error bit) if setting is NULL.
- *
- * @see fll_print_dynamic_raw()
- */
-#ifndef _di_fake_print_line_last_
-  extern f_status_t fake_print_line_last(fake_setting_t * const setting, const fl_print_t print);
-#endif // _di_fake_print_line_last_
 
 /**
  * Print simple message.

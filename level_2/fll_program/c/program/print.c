@@ -6,15 +6,11 @@ extern "C" {
 #endif
 
 #ifndef _di_fll_program_print_copyright_
-  f_status_t fll_program_print_copyright(const fl_print_t print, const uint8_t first_last) {
+  f_status_t fll_program_print_copyright(const fl_print_t print) {
 
     f_file_stream_lock(print.to);
 
-    if (first_last & 0x1) {
-      f_print_dynamic_raw(f_string_eol_s, print.to);
-    }
-
-    fl_print_format("Copyright © 2007-2023 Kevin Day.%r", print.to, f_string_eol_s);
+    fl_print_format("%rCopyright © 2007-2023 Kevin Day.%r", print.to, f_string_eol_s, f_string_eol_s);
 
     #ifndef _di_detailed_copyright_
       if (print.verbosity > f_console_verbosity_quiet_e) {
@@ -29,9 +25,7 @@ extern "C" {
       }
     #endif // _di_detailed_copyright_
 
-    if (first_last & 0x2) {
-      f_print_dynamic_raw(f_string_eol_s, print.to);
-    }
+    fl_print_format("%r", print.to, f_string_eol_s);
 
     f_file_stream_unlock(print.to);
 
@@ -46,7 +40,7 @@ extern "C" {
 
     f_file_stream_lock(print.to);
 
-    fl_print_format("%[%QNo files are specified.%]%r", print.to, print.set->error, print.prefix, print.set->error, f_string_eol_s);
+    fl_print_format("%r%[%QNo files are specified.%]%r", print.to, f_string_eol_s, print.set->error, print.prefix, print.set->error, f_string_eol_s);
 
     f_file_stream_unlock(print.to);
 
@@ -61,7 +55,7 @@ extern "C" {
 
     f_file_stream_lock(print.to);
 
-    fl_print_format("%[%QThe%] ", print.to, print.set->error, print.prefix, print.set->error);
+    fl_print_format("%r%[%QThe%] ", print.to, f_string_eol_s, print.set->error, print.prefix, print.set->error);
     fl_print_format("%[%Q%]", print.to, print.set->notable, variable, print.set->notable);
     fl_print_format("%[ is missing or has a length of%] ", print.to, print.set->error, print.set->error);
     fl_print_format("%[0%]", print.to, print.set->notable, print.set->notable);
@@ -80,7 +74,7 @@ extern "C" {
 
     f_file_stream_lock(print.to);
 
-    fl_print_format("%[%QThe '%]", print.to, print.set->error, print.prefix, print.set->error);
+    fl_print_format("%r%[%QThe '%]", print.to, f_string_eol_s, print.set->error, print.prefix, print.set->error);
     fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol_1, name_1, print.set->notable);
     fl_print_format("%[' parameter and the '%]", print.to, print.set->error, print.set->error);
     fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol_2, name_2, print.set->notable);
@@ -99,7 +93,7 @@ extern "C" {
 
     f_file_stream_lock(print.to);
 
-    fl_print_format("%[%QThe '%]", print.to, print.set->error, print.prefix, print.set->error);
+    fl_print_format("%r%[%QThe '%]", print.to, f_string_eol_s, print.set->error, print.prefix, print.set->error);
     fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol_1, name_1, print.set->notable);
     fl_print_format("%[' parameter and the '%]", print.to, print.set->error, print.set->error);
     fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol_2, name_2, print.set->notable);
@@ -120,7 +114,7 @@ extern "C" {
 
     f_file_stream_lock(print.to);
 
-    fl_print_format("%[%QCannot specify the '%]", print.to, print.set->error, print.prefix, print.set->error);
+    fl_print_format("%r%[%QCannot specify the '%]", print.to, f_string_eol_s, print.set->error, print.prefix, print.set->error);
     fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol_1, name_1, print.set->notable);
     fl_print_format("%[' parameter with the '%]", print.to, print.set->error, print.set->error);
     fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol_2, name_2, print.set->notable);
@@ -139,7 +133,7 @@ extern "C" {
 
     f_file_stream_lock(print.to);
 
-    fl_print_format("%[%QCannot specify the '%]", print.to, print.set->error, print.prefix, print.set->error);
+    fl_print_format("%r%[%QCannot specify the '%]", print.to, f_string_eol_s, print.set->error, print.prefix, print.set->error);
     fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol_1, name_1, print.set->notable);
     fl_print_format("%[' parameter with the '%]", print.to, print.set->error, print.set->error);
     fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol_2, name_2, print.set->notable);
@@ -160,7 +154,7 @@ extern "C" {
 
     f_file_stream_lock(print.to);
 
-    fl_print_format("%[%QCannot specify the '%]", print.to, print.set->error, print.prefix, print.set->error);
+    fl_print_format("%r%[%QCannot specify the '%]", print.to, f_string_eol_s, print.set->error, print.prefix, print.set->error);
     fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol, parameter, print.set->notable);
     fl_print_format("%[' when processing a pipe.%]%r", print.to, print.set->error, print.set->error, f_string_eol_s);
 
@@ -177,7 +171,7 @@ extern "C" {
 
     f_file_stream_lock(print.to);
 
-    fl_print_format("%[%QThe '%]", print.to, print.set->error, print.prefix, print.set->error);
+    fl_print_format("%r%[%QThe '%]", print.to, f_string_eol_s, print.set->error, print.prefix, print.set->error);
     fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol_1, name_1, print.set->notable);
     fl_print_format("%[' parameter only allows either the '%]", print.to, print.set->error, print.set->error);
     fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol_2, name_2, print.set->notable);
@@ -198,7 +192,7 @@ extern "C" {
 
     f_file_stream_lock(print.to);
 
-    fl_print_format("%[%QThe value '%]", print.to, print.set->error, print.prefix, print.set->error);
+    fl_print_format("%r%[%QThe value '%]", print.to, f_string_eol_s, print.set->error, print.prefix, print.set->error);
     fl_print_format("%[%Q%]", print.to, print.set->notable, value, print.set->notable);
     fl_print_format("%[' for the parameter '%]", print.to, print.set->error, print.set->error);
     fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol, name, print.set->notable);
@@ -217,7 +211,7 @@ extern "C" {
 
     f_file_stream_lock(print.to);
 
-    fl_print_format("%[%QThe value '%]", print.to, print.set->error, print.prefix, print.set->error);
+    fl_print_format("%r%[%QThe value '%]", print.to, f_string_eol_s, print.set->error, print.prefix, print.set->error);
     fl_print_format("%[%Q%]", print.to, print.set->notable, value, print.set->notable);
     fl_print_format("%[' for the parameter '%]", print.to, print.set->error, print.set->error);
     fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol, name, print.set->notable);
@@ -236,7 +230,7 @@ extern "C" {
 
     f_file_stream_lock(print.to);
 
-    fl_print_format("%[%QThe value '%]", print.to, print.set->error, print.prefix, print.set->error);
+    fl_print_format("%r%[%QThe value '%]", print.to, f_string_eol_s, print.set->error, print.prefix, print.set->error);
     fl_print_format("%[%Q%]", print.to, print.set->notable, value, print.set->notable);
     fl_print_format("%[' for the parameter '%]", print.to, print.set->error, print.set->error);
     fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol, name, print.set->notable);
@@ -255,7 +249,7 @@ extern "C" {
 
     f_file_stream_lock(print.to);
 
-    fl_print_format("%[%QThe parameter%] ", print.to, print.set->error, print.prefix, print.set->error);
+    fl_print_format("%r%[%QThe parameter%] ", print.to, f_string_eol_s, print.set->error, print.prefix, print.set->error);
     fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol, name, print.set->notable);
     fl_print_format(" %[is specified, but no value is given.%]%r", print.to, print.set->error, print.set->error, f_string_eol_s);
 
@@ -272,7 +266,7 @@ extern "C" {
 
     f_file_stream_lock(print.to);
 
-    fl_print_format("%[%QThe parameter%] ", print.to, print.set->error, print.prefix, print.set->error);
+    fl_print_format("%r%[%QThe parameter%] ", print.to, f_string_eol_s, print.set->error, print.prefix, print.set->error);
     fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol, name, print.set->notable);
     fl_print_format("%[ is specified, but%] ", print.to, print.set->error, print.set->error);
     fl_print_format("%[%Q%]", print.to, print.set->notable, amount, print.set->notable);
@@ -291,7 +285,7 @@ extern "C" {
 
     f_file_stream_lock(print.to);
 
-    fl_print_format("%[%QThe parameter '%]", print.to, print.set->error, print.prefix, print.set->error);
+    fl_print_format("%r%[%QThe parameter '%]", print.to, f_string_eol_s, print.set->error, print.prefix, print.set->error);
     fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol, name, print.set->notable);
     fl_print_format("%[' may only be specified once.%]%r", print.to, print.set->error, print.set->error, f_string_eol_s);
 
@@ -308,7 +302,7 @@ extern "C" {
 
     f_file_stream_lock(print.to);
 
-    fl_print_format("%[%QThe value '%]", print.to, print.set->error, print.prefix, print.set->error);
+    fl_print_format("%r%[%QThe value '%]", print.to, f_string_eol_s, print.set->error, print.prefix, print.set->error);
     fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol, value, print.set->notable);
     fl_print_format("%[' may only be specified once for the parameter '%]", print.to, print.set->error, print.set->error);
     fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol, name, print.set->notable);
@@ -327,7 +321,7 @@ extern "C" {
 
     f_file_stream_lock(print.to);
 
-    fl_print_format("%[%QFailure while processing the parameter '%]", print.to, print.set->error, print.prefix, print.set->error);
+    fl_print_format("%r%[%QFailure while processing the parameter '%]", print.to, f_string_eol_s, print.set->error, print.prefix, print.set->error);
     fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol, name, print.set->notable);
     fl_print_format("%['.%]%r", print.to, print.set->error, print.set->error, f_string_eol_s);
 
@@ -344,7 +338,7 @@ extern "C" {
 
     f_file_stream_lock(print.to);
 
-    fl_print_format("%[%QThe start range value '%]", print.to, print.set->error, print.prefix, print.set->error);
+    fl_print_format("%r%[%QThe start range value '%]", print.to, f_string_eol_s, print.set->error, print.prefix, print.set->error);
     fl_print_format("%[%Q%]", print.to, print.set->notable, value_start, print.set->notable);
     fl_print_format("%[' may not be greater than the stop value '%]", print.to, print.set->error, print.set->error);
     fl_print_format("%[%Q%]", print.to, print.set->notable, value_stop, print.set->notable);
@@ -365,7 +359,7 @@ extern "C" {
 
     f_file_stream_lock(print.to);
 
-    fl_print_format("%[%QThe value for the parameter '%]", print.to, print.set->error, print.prefix, print.set->error);
+    fl_print_format("%r%[%QThe value for the parameter '%]", print.to, f_string_eol_s, print.set->error, print.prefix, print.set->error);
     fl_print_format("%[%Q%Q%]", print.to, print.notable, symbol, name, print.notable);
     fl_print_format("%[' is too long.%]%r", print.to, print.set->error, print.set->error, f_string_eol_s);
 
@@ -382,7 +376,7 @@ extern "C" {
 
     f_file_stream_lock(print.to);
 
-    fl_print_format("%[%QThe pipe has incorrectly placed form-feed characters (\\f).%]%r", print.to, print.set->error, print.prefix, print.set->error, f_string_eol_s);
+    fl_print_format("%r%[%QThe pipe has incorrectly placed form-feed characters (\\f).%]%r", print.to, f_string_eol_s, print.set->error, print.prefix, print.set->error, f_string_eol_s);
 
     f_file_stream_unlock(print.to);
 
@@ -397,7 +391,7 @@ extern "C" {
 
     f_file_stream_lock(print.to);
 
-    fl_print_format("%[%QThe pipe has no content.%]%r", print.to, print.set->error, print.prefix, print.set->error, f_string_eol_s);
+    fl_print_format("%r%[%QThe pipe has no content.%]%r", print.to, f_string_eol_s, print.set->error, print.prefix, print.set->error, f_string_eol_s);
 
     f_file_stream_unlock(print.to);
 
@@ -412,7 +406,7 @@ extern "C" {
 
     f_file_stream_lock(print.to);
 
-    fl_print_format("%[%QThe pipe has an Object without Content.%]%r", print.to, print.set->error, print.prefix, print.set->error, f_string_eol_s);
+    fl_print_format("%r%[%QThe pipe has an Object without Content.%]%r", print.to, f_string_eol_s, print.set->error, print.prefix, print.set->error, f_string_eol_s);
 
     f_file_stream_unlock(print.to);
 
@@ -497,7 +491,7 @@ extern "C" {
 #endif // _di_fll_program_print_help_usage_
 
 #ifndef _di_fll_program_print_signal_received_
-  f_status_t fll_program_print_signal_received(const fl_print_t print, const f_string_static_t line_first, const uint32_t signal) {
+  f_status_t fll_program_print_signal_received(const fl_print_t print, const uint32_t signal) {
 
     if (print.verbosity != f_console_verbosity_verbose_e && print.verbosity != f_console_verbosity_debug_e) {
       return F_output_not;
@@ -508,7 +502,7 @@ extern "C" {
     // Must flush and reset color because the interrupt may have interrupted the middle of a print function.
     f_file_stream_flush(print.to);
 
-    fl_print_format("%]%r%[Received signal code %]", print.to, print.set->reset, line_first, print.set->warning, print.set->warning);
+    fl_print_format("%]%r%[Received signal code %]", print.to, print.set->reset, f_string_eol_s, print.set->warning, print.set->warning);
     fl_print_format("%[%u%]", print.to, print.set->notable, signal, print.set->notable);
     fl_print_format("%[.%]%r", print.to, print.set->warning, print.set->warning, f_string_eol_s);
 
@@ -519,20 +513,14 @@ extern "C" {
 #endif // _di_fll_program_print_signal_received_
 
 #ifndef _di_fll_program_print_version_
-  f_status_t fll_program_print_version(const fl_print_t print, const uint8_t first_last, const f_string_static_t version) {
+  f_status_t fll_program_print_version(const fl_print_t print, const f_string_static_t version) {
 
     f_file_stream_lock(print.to);
 
-    if (first_last & 0x1) {
-      f_print_dynamic_raw(f_string_eol_s, print.to);
-    }
-
+    f_print_dynamic_raw(f_string_eol_s, print.to);
     f_print_dynamic(version, print.to);
     f_print_dynamic_raw(f_string_eol_s, print.to);
-
-    if (first_last & 0x2) {
-      f_print_dynamic_raw(f_string_eol_s, print.to);
-    }
+    f_print_dynamic_raw(f_string_eol_s, print.to);
 
     f_file_stream_unlock(print.to);
 

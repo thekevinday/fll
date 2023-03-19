@@ -7,21 +7,21 @@ extern "C" {
 #ifndef _di_fake_clean_operate_
   void fake_clean_operate(fake_data_t * const data) {
 
-    if (!data || !data->main || !data->setting) return;
+    if (!data || !data->program || !data->setting) return;
 
-    if (data->main->message.verbosity != f_console_verbosity_quiet_e && data->main->message.verbosity != f_console_verbosity_error_e) {
-      f_file_stream_lock(data->main->message.to);
+    if (data->program->message.verbosity != f_console_verbosity_quiet_e && data->program->message.verbosity != f_console_verbosity_error_e) {
+      f_file_stream_lock(data->program->message.to);
 
-      fl_print_format("%[Deleting all files within build directory '%]", data->main->message.to, data->main->context.set.important, data->main->context.set.important);
-      fl_print_format("%[%Q%]", data->main->message.to, data->main->context.set.notable, data->setting->build, data->main->context.set.notable);
-      fl_print_format("%['.%]%r", data->main->message.to, data->main->context.set.important, data->main->context.set.important, f_string_eol_s);
+      fl_print_format("%[Deleting all files within build directory '%]", data->program->message.to, data->program->context.set.important, data->program->context.set.important);
+      fl_print_format("%[%Q%]", data->program->message.to, data->program->context.set.notable, data->setting->build, data->program->context.set.notable);
+      fl_print_format("%['.%]%r", data->program->message.to, data->program->context.set.important, data->program->context.set.important, f_string_eol_s);
 
-      f_file_stream_unlock(data->main->message.to);
+      f_file_stream_unlock(data->program->message.to);
     }
 
     data->setting->state.status = F_none;
 
-    if (data->main->error.verbosity >= f_console_verbosity_verbose_e) {
+    if (data->program->error.verbosity >= f_console_verbosity_verbose_e) {
       data->setting->state.status = f_directory_remove_custom(data->setting->build, F_directory_max_descriptors_d, F_true, fake_clean_remove_recursively_verbosely);
     }
     else {
@@ -29,15 +29,15 @@ extern "C" {
     }
 
     if (F_status_set_fine(data->setting->state.status) == F_file_found_not || F_status_set_fine(data->setting->state.status) == F_directory) {
-      if (data->main->error.verbosity >= f_console_verbosity_verbose_e) {
-        fll_print_format("The build directory '%[%Q%]' does not exist.%r", data->main->warning.to, data->main->context.set.notable, data->setting->build, data->main->context.set.notable, f_string_eol_s);
+      if (data->program->error.verbosity >= f_console_verbosity_verbose_e) {
+        fll_print_format("The build directory '%[%Q%]' does not exist.%r", data->program->warning.to, data->program->context.set.notable, data->setting->build, data->program->context.set.notable, f_string_eol_s);
       }
 
       data->setting->state.status = F_none;
     }
 
     if (F_status_is_error(data->setting->state.status)) {
-      fake_print_error_file(data->setting, data->main->error, macro_fake_f(f_directory_remove), data->setting->build, f_file_operation_delete_s, fll_error_file_type_directory_e);
+      fake_print_error_file(data->setting, data->program->error, macro_fake_f(f_directory_remove), data->setting->build, f_file_operation_delete_s, fll_error_file_type_directory_e);
     }
     else {
       data->setting->state.status = F_none;

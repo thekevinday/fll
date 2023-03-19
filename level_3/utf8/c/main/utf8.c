@@ -10,9 +10,15 @@ extern "C" {
     if (!main || !setting) return;
 
     if (F_status_is_error(setting->state.status)) {
-      utf8_print_line_last(setting, main->message);
+      if ((setting->flag & utf8_main_flag_print_last_e) && main->message.verbosity > f_console_verbosity_error_e) {
+        fll_print_dynamic_raw(f_string_eol_s, main->message.to);
+      }
 
       return;
+    }
+
+    if ((setting->flag & utf8_main_flag_print_first_e) && main->message.verbosity > f_console_verbosity_error_e) {
+      fll_print_dynamic_raw(f_string_eol_s, main->message.to);
     }
 
     setting->state.status = F_none;
@@ -24,19 +30,23 @@ extern "C" {
     }
 
     if (setting->flag & utf8_main_flag_version_e) {
-      fll_program_print_version(main->message, (setting->line_first.used ? 0x1 : 0x0) | (setting->line_last.used ? 0x2 : 0x0), utf8_program_version_s);
+      fll_program_print_version(main->message, utf8_program_version_s);
+
+      if ((setting->flag & utf8_main_flag_print_last_e) && main->message.verbosity > f_console_verbosity_error_e) {
+        fll_print_dynamic_raw(f_string_eol_s, main->message.to);
+      }
 
       return;
     }
 
     if (setting->flag & utf8_main_flag_copyright_e) {
-      fll_program_print_copyright(main->message, (setting->line_first.used ? 0x1 : 0x0) | (setting->line_last.used ? 0x2 : 0x0));
+      fll_program_print_copyright(main->message);
+
+      if ((setting->flag & utf8_main_flag_print_last_e) && main->message.verbosity > f_console_verbosity_error_e) {
+        fll_print_dynamic_raw(f_string_eol_s, main->message.to);
+      }
 
       return;
-    }
-
-    if (main->message.verbosity > f_console_verbosity_error_e) {
-      utf8_print_line_first(setting, main->message);
     }
 
     f_status_t valid = F_true;
@@ -121,16 +131,23 @@ extern "C" {
             }
           }
           else {
-            if (!(setting->flag & (utf8_main_flag_file_to_e | utf8_main_flag_header_e | utf8_main_flag_verify_e))) {
-              if (!(setting->flag & utf8_main_flag_separate_e)) {
-                fll_print_dynamic_raw(f_string_eol_s, main->output.to);
-              }
+            if (!(setting->flag & (utf8_main_flag_file_to_e | utf8_main_flag_header_e | utf8_main_flag_verify_e | utf8_main_flag_separate_e))) {
+              fll_print_dynamic_raw(f_string_eol_s, main->output.to);
             }
           }
         }
 
         if (F_status_is_error(setting->state.status) && F_status_set_fine(setting->state.status) != F_utf_fragment && F_status_set_fine(setting->state.status) != F_complete_not_utf) {
-          utf8_print_error_file(setting, main->error, setting->mode & utf8_mode_from_bytesequence_e ? macro_utf8_f(utf8_process_file_bytesequence) : macro_utf8_f(utf8_process_file_codepoint), setting->path_files_from.array[i], f_file_operation_process_s, fll_error_file_type_file_e);
+          utf8_print_error_file(
+            setting,
+            main->error,
+            (setting->mode & utf8_mode_from_bytesequence_e)
+              ? macro_utf8_f(utf8_process_file_bytesequence)
+              : macro_utf8_f(utf8_process_file_codepoint),
+            setting->path_files_from.array[i],
+            f_file_operation_process_s,
+            fll_error_file_type_file_e
+          );
 
           break;
         }
@@ -163,16 +180,18 @@ extern "C" {
       } // for
     }
 
-    if (F_status_set_fine(setting->state.status) == F_interrupt) return;
-
-    // Two lines are printed because the normal final end of line is never printed by design.
-    // If this is an error or the header flag is set, then the normal end of line is printed by design so do not print this second new line.
-    if (F_status_is_error_not(setting->state.status) && main->message.verbosity > f_console_verbosity_error_e && !(setting->flag & (utf8_main_flag_header_e | utf8_main_flag_separate_e))) {
+    if ((setting->flag & utf8_main_flag_print_last_e) && main->message.verbosity > f_console_verbosity_error_e) {
       fll_print_dynamic_raw(f_string_eol_s, main->message.to);
+
+      // The last line for data is not printed under certain circumstances, but when last line is printed to screen, print an extra last line.
+      if (F_status_is_error_not(setting->state.status) && F_status_set_fine(setting->state.status) != F_interrupt) {
+        if (!(setting->flag & (utf8_main_flag_file_to_e | utf8_main_flag_header_e | utf8_main_flag_separate_e))) {
+          fll_print_dynamic_raw(f_string_eol_s, main->message.to);
+        }
+      }
     }
 
-    utf8_print_line_last(setting, main->message);
-
+    if (F_status_set_fine(setting->state.status) == F_interrupt) return;
     if (F_status_is_error(setting->state.status)) return;
 
     if (setting->flag & utf8_main_flag_verify_e) {

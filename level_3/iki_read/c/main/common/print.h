@@ -41,6 +41,7 @@ extern "C" {
   enum {
     iki_read_f_f_console_parameter_process_e,
     iki_read_f_f_file_descriptor_e,
+    iki_read_f_f_file_exists_e,
     iki_read_f_f_file_read_e,
     iki_read_f_f_file_size_by_id_e,
     iki_read_f_f_file_stream_open_e,

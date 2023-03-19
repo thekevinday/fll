@@ -17,7 +17,33 @@ extern "C" {
 #endif
 
 /**
- * Print verbose message about creating a directory.
+ * Print verbose message about copying a file.
+ *
+ * @param setting
+ *   The main program settings.
+ *
+ *   This does not alter setting.state.status.
+ * @param print
+ *   Designates the how and where to print.
+ * @param source
+ *   The source file path.
+ * @param destination
+ *   The destination file path.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if setting is NULL.
+ *
+ * @see fake_print_wrapped_variables()
+ */
+#ifndef _di_fake_build_print_verbose_copied_file_
+  extern f_status_t fake_build_print_verbose_copied_file(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t source, const f_string_static_t destination);
+#endif // _di_fake_build_print_verbose_create_directory_
+
+/**
+ * Print verbose message about _di_fake_build_print_verbose_copied_file_ a directory.
  *
  * @param setting
  *   The main program settings.

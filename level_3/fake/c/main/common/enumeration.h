@@ -76,17 +76,17 @@ extern "C" {
       macro_f_console_parameter_t_initialize_3(f_console_standard_short_line_first_no_s, f_console_standard_long_line_first_no_s, 0, f_console_flag_inverse_e), \
       macro_f_console_parameter_t_initialize_3(f_console_standard_short_line_last_no_s,  f_console_standard_long_line_last_no_s,  0, f_console_flag_inverse_e), \
       \
-      macro_f_console_parameter_t_initialize_3(fake_short_build_s,     fake_long_build_s,         1, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize_3(fake_short_data_s,      fake_long_data_s,          1, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize_3(fake_short_define_s,    fake_long_define_s,        1, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize_3(fake_short_documents_s, fake_long_documents_s,     1, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize_3(fake_short_fakefile_s,  fake_long_fakefile_s,      1, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize_3(fake_short_licenses_s,  fake_long_licenses_s,      1, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize_3(fake_short_mode_s,      fake_long_mode_s,          1, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize_3(fake_short_process_s,   fake_long_process_s,       1, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize_3(fake_short_settings_s,  fake_long_settings_s,      1, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize_3(fake_short_sources_s,   fake_long_sources_s,       1, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize_3(fake_short_work_s,      fake_long_work_s,          1, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(fake_short_build_s,     fake_long_build_s,     1, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(fake_short_data_s,      fake_long_data_s,      1, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(fake_short_define_s,    fake_long_define_s,    1, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(fake_short_documents_s, fake_long_documents_s, 1, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(fake_short_fakefile_s,  fake_long_fakefile_s,  1, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(fake_short_licenses_s,  fake_long_licenses_s,  1, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(fake_short_mode_s,      fake_long_mode_s,      1, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(fake_short_process_s,   fake_long_process_s,   1, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(fake_short_settings_s,  fake_long_settings_s,  1, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(fake_short_sources_s,   fake_long_sources_s,   1, f_console_flag_normal_e), \
+      macro_f_console_parameter_t_initialize_3(fake_short_work_s,      fake_long_work_s,      1, f_console_flag_normal_e), \
       \
       macro_f_console_parameter_t_initialize_5(fake_long_documents_disabled_s, 0, f_console_flag_normal_e), \
       macro_f_console_parameter_t_initialize_5(fake_long_documents_enabled_s,  0, f_console_flag_normal_e), \
@@ -113,8 +113,6 @@ extern "C" {
  *   - enable_documents:   Enable documents, as in --enable-doc (not specifying means --disable-doc).
  *   - enable_shared:      Enable shared, as in --enable-shared (not specifying means --disable-shared).
  *   - enable_static:      Enable static, as in --enable-static (not specifying means --disable-static).
- *   - file_from:          Using a specified source file.
- *   - file_to:            Using a specified destination file.
  *   - header:             Enable printing of headers.
  *   - help:               Print help.
  *   - operation:          Designate that an operation is explicitly passed.
@@ -122,7 +120,8 @@ extern "C" {
  *   - operation_clean:    The clean operation is designated.
  *   - operation_make:     The make operation is designated (or enabled as default).
  *   - operation_skeleton: The skeleton operation is designated.
- *   - print_first:        When set, the first character printing logic is to be processed (this is usually automatic).
+ *   - print_first:        When set, print new line to message output on program begin after loading settings.
+ *   - print_last:         When set, print new line to message output on program end.
  *   - separate:           Enable printing of separators.
  *   - strip_invalid:      Using strip invalid character mode.
  *   - verify:             Using verify mode.
@@ -135,20 +134,19 @@ extern "C" {
     fake_main_flag_enable_documents_e   = 0x2,
     fake_main_flag_enable_shared_e      = 0x4,
     fake_main_flag_enable_static_e      = 0x8,
-    fake_main_flag_file_from_e          = 0x10,
-    fake_main_flag_file_to_e            = 0x20,
-    fake_main_flag_header_e             = 0x40,
-    fake_main_flag_help_e               = 0x80,
-    fake_main_flag_operation_e          = 0x100,
-    fake_main_flag_operation_build_e    = 0x200,
-    fake_main_flag_operation_clean_e    = 0x400,
-    fake_main_flag_operation_make_e     = 0x800,
-    fake_main_flag_operation_skeleton_e = 0x1000,
-    fake_main_flag_print_first_e        = 0x2000,
-    fake_main_flag_separate_e           = 0x4000,
-    fake_main_flag_strip_invalid_e      = 0x8000,
-    fake_main_flag_verify_e             = 0x10000,
-    fake_main_flag_version_e            = 0x20000,
+    fake_main_flag_header_e             = 0x10,
+    fake_main_flag_help_e               = 0x20,
+    fake_main_flag_operation_e          = 0x40,
+    fake_main_flag_operation_build_e    = 0x80,
+    fake_main_flag_operation_clean_e    = 0x100,
+    fake_main_flag_operation_make_e     = 0x200,
+    fake_main_flag_operation_skeleton_e = 0x400,
+    fake_main_flag_print_first_e        = 0x800,
+    fake_main_flag_print_last_e         = 0x1000,
+    fake_main_flag_separate_e           = 0x2000,
+    fake_main_flag_strip_invalid_e      = 0x4000,
+    fake_main_flag_verify_e             = 0x8000,
+    fake_main_flag_version_e            = 0x10000,
   }; // enum
 #endif // _di_fake_main_flag_e_
 
@@ -369,6 +367,30 @@ extern "C" {
     fake_condition_result_error_e,
   }; // enum
 #endif // _di_fake_condition_result_e_
+
+/**
+ * Flags for fine-tuned print control.
+ *
+ * fake_print_flag_*_e:
+ *   - none:      No flags set.
+ *   - debug:     Stream is for debug printing.
+ *   - error:     Stream is for error printing.
+ *   - message:   Stream is for message printing.
+ *   - warning:   Stream is for warning printing.
+ *   - file_to:   Stream is a destination file.
+ *   - file_from: Stream is a source file.
+ */
+#ifndef _di_fake_print_flag_e_
+  enum {
+    fake_print_flag_none_e       = 0x0,
+    fake_print_flag_debug_e      = 0x1,
+    fake_print_flag_error_e      = 0x2,
+    fake_print_flag_message_e    = 0x4,
+    fake_print_flag_warning_e    = 0x8,
+    fake_print_flag_file_to_e    = 0x10,
+    fake_print_flag_file_from_e  = 0x20,
+  }; // enum
+#endif // _di_fake_print_flag_e_
 
 #ifdef __cplusplus
 } // extern "C"

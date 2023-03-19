@@ -10,9 +10,15 @@ extern "C" {
     if (!main || !setting) return;
 
     if (F_status_is_error(setting->state.status)) {
-      fss_write_print_line_last(setting, main->error);
+      if ((setting->flag & fss_write_main_flag_print_last_e) && main->message.verbosity > f_console_verbosity_error_e) {
+        fll_print_dynamic_raw(f_string_eol_s, main->message.to);
+      }
 
       return;
+    }
+
+    if ((setting->flag & fss_write_main_flag_print_first_e) && main->message.verbosity > f_console_verbosity_error_e) {
+      fll_print_dynamic_raw(f_string_eol_s, main->message.to);
     }
 
     setting->state.status = F_none;
@@ -22,17 +28,29 @@ extern "C" {
         setting->process_help(main, (void *) setting);
       }
 
+      if ((setting->flag & fss_write_main_flag_print_last_e) && main->message.verbosity > f_console_verbosity_error_e) {
+        fll_print_dynamic_raw(f_string_eol_s, main->message.to);
+      }
+
       return;
     }
 
     if (setting->flag & fss_write_main_flag_version_e) {
-      fll_program_print_version(main->message, (setting->line_first.used ? 0x1 : 0x0) | (setting->line_last.used ? 0x2 : 0x0), fss_write_program_version_s);
+      fll_program_print_version(main->message, fss_write_program_version_s);
+
+      if ((setting->flag & fss_write_main_flag_print_last_e) && main->message.verbosity > f_console_verbosity_error_e) {
+        fll_print_dynamic_raw(f_string_eol_s, main->message.to);
+      }
 
       return;
     }
 
     if (setting->flag & fss_write_main_flag_copyright_e) {
-      fll_program_print_copyright(main->message, (setting->line_first.used ? 0x1 : 0x0) | (setting->line_last.used ? 0x2 : 0x0));
+      fll_program_print_copyright(main->message);
+
+      if ((setting->flag & fss_write_main_flag_print_last_e) && main->message.verbosity > f_console_verbosity_error_e) {
+        fll_print_dynamic_raw(f_string_eol_s, main->message.to);
+      }
 
       return;
     }
@@ -51,6 +69,10 @@ extern "C" {
           setting->process_normal(main, (void *) setting);
         }
       }
+    }
+
+    if ((setting->flag & fss_write_main_flag_print_last_e) && main->message.verbosity > f_console_verbosity_error_e) {
+      fll_print_dynamic_raw(f_string_eol_s, main->message.to);
     }
   }
 #endif // _di_fss_write_main_
@@ -132,7 +154,7 @@ extern "C" {
     if (!setting->process_set) return;
 
     if (main->message.verbosity > f_console_verbosity_error_e) {
-      fss_write_print_line_first(setting, main->message);
+      fll_print_dynamic_raw(f_string_eol_s, main->message.to);
     }
 
     const f_array_length_t used_objects = setting->objects.used;
@@ -203,7 +225,7 @@ extern "C" {
 
       if (!((++main->signal_check) % fss_write_signal_check_d)) {
         if (fll_program_standard_signal_received(main)) {
-          fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
+          fll_program_print_signal_received(main->warning, main->signal_received);
 
           setting->state.status = F_status_set_error(F_interrupt);
 
@@ -433,15 +455,6 @@ extern "C" {
 
     if (F_status_is_error_not(setting->state.status)) {
       setting->state.status = (flag & 0x1) ? F_none : F_data_not;
-    }
-
-    if (F_status_is_error(setting->state.status)) {
-      fss_write_print_line_last(setting, main->message);
-    }
-    else if (!(setting->flag & (fss_write_main_flag_object_e | fss_write_main_flag_content_e | fss_write_main_flag_object_open_e | fss_write_main_flag_content_next_e | fss_write_main_flag_content_end_e))) {
-      if (main->message.verbosity > f_console_verbosity_error_e) {
-        fss_write_print_line_last(setting, main->message);
-      }
     }
   }
 #endif // _di_fss_write_process_pipe_

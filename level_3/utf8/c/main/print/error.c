@@ -23,7 +23,7 @@ extern "C" {
     if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
     if (setting->flag & (utf8_main_flag_strip_invalid_e | utf8_main_flag_verify_e)) return F_output_not;
 
-    fl_print_format("%[%QFailed to decode character code '%]", print.to, print.set->error, print.prefix, print.set->error);
+    fl_print_format("%r%[%QFailed to decode character code '%]", print.to, f_string_eol_s, print.set->error, print.prefix, print.set->error);
 
     if (invalid.used) {
       fl_print_format("%[0x", print.to, print.set->notable);
@@ -61,7 +61,7 @@ extern "C" {
     if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
     if (setting->flag & (utf8_main_flag_strip_invalid_e | utf8_main_flag_verify_e)) return F_output_not;
 
-    fl_print_format("%[%QFailed to encode Unicode codepoint '%]", print.to, print.set->error, print.prefix, print.set->error);
+    fl_print_format("%r%[%QFailed to encode Unicode codepoint '%]", print.to, f_string_eol_s, print.set->error, print.prefix, print.set->error);
     fl_print_format("%[U+%_U%]", print.to, print.set->notable, codepoint, print.set->notable);
 
     if (F_status_set_fine(setting->state.status) == F_utf_not) {
@@ -95,7 +95,7 @@ extern "C" {
     if (!setting) return F_status_set_error(F_output_not);
     if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
 
-    fll_print_format("%[%QNo from sources are specified, please pipe data, designate a file, or add parameters.%]%r", print.to, print.set->error, print.prefix, print.set->error, f_string_eol_s);
+    fll_print_format("%r%[%QNo from sources are specified, please pipe data, designate a file, or add parameters.%]%r", print.to, f_string_eol_s, print.set->error, print.prefix, print.set->error, f_string_eol_s);
 
     return F_none;
   }

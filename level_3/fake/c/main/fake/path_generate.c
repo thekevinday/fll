@@ -7,7 +7,7 @@ extern "C" {
 #ifndef _di_fake_path_generate_
   void fake_path_generate(fake_data_t * const data) {
 
-    if (!data || !data->main || !data->setting) return;
+    if (!data || !data->program || !data->setting) return;
 
     data->setting->state.status = F_none;
     uint8_t i = 0;
@@ -58,7 +58,7 @@ extern "C" {
         fake_path_generate_string_dynamic(data, sources[i], values[i], parameters_size[i]);
 
         if (F_status_is_error(data->setting->state.status)) {
-          fake_print_error(data->setting, data->main->error, macro_fake_f(fake_path_generate_string_dynamic));
+          fake_print_error(&data->program->error, macro_fake_f(fake_path_generate_string_dynamic));
 
           return;
         }
@@ -103,7 +103,7 @@ extern "C" {
         data->setting->state.status = f_string_dynamic_append_nulless(sources[i], values[i]);
 
         if (F_status_is_error(data->setting->state.status)) {
-          fake_print_error(data->setting, data->main->error, macro_fake_f(f_string_dynamic_append_nulless));
+          fake_print_error(&data->program->error, macro_fake_f(f_string_dynamic_append_nulless));
 
           return;
         }
@@ -171,7 +171,7 @@ extern "C" {
         fake_path_generate_string_dynamic(data, sources[i], values[i], parameters_size[i]);
 
         if (F_status_is_error(data->setting->state.status)) {
-          fake_print_error(data->setting, data->main->error, macro_fake_f(fake_path_generate_string_dynamic));
+          fake_print_error(&data->program->error, macro_fake_f(fake_path_generate_string_dynamic));
 
           return;
         }
@@ -231,7 +231,7 @@ extern "C" {
         data->setting->state.status = f_string_dynamic_append_nulless(sources[i], values[i]);
 
         if (F_status_is_error(data->setting->state.status)) {
-          fake_print_error(data->setting, data->main->error, macro_fake_f(f_string_dynamic_append_nulless));
+          fake_print_error(&data->program->error, macro_fake_f(f_string_dynamic_append_nulless));
 
           return;
         }
@@ -253,7 +253,7 @@ extern "C" {
           data->setting->state.status = f_string_dynamic_append_nulless(data->setting->work, values[i]);
 
           if (F_status_is_error(data->setting->state.status)) {
-            fake_print_error(data->setting, data->main->error, macro_fake_f(f_string_dynamic_append_nulless));
+            fake_print_error(&data->program->error, macro_fake_f(f_string_dynamic_append_nulless));
 
             return;
           }
@@ -278,7 +278,7 @@ extern "C" {
           data->setting->state.status = f_string_dynamic_append_nulless(sources[i], values[i]);
 
           if (F_status_is_error(data->setting->state.status)) {
-            fake_print_error(data->setting, data->main->error, macro_fake_f(f_string_dynamic_append_nulless));
+            fake_print_error(&data->program->error, macro_fake_f(f_string_dynamic_append_nulless));
 
             return;
           }
@@ -318,7 +318,7 @@ extern "C" {
           fake_path_generate_string_dynamic(data, sources[i], values[i], parameters_size[i]);
 
           if (F_status_is_error(data->setting->state.status)) {
-            fake_print_error(data->setting, data->main->error, macro_fake_f(fake_path_generate_string_dynamic));
+            fake_print_error(&data->program->error, macro_fake_f(fake_path_generate_string_dynamic));
 
             return;
           }
@@ -349,7 +349,7 @@ extern "C" {
           data->setting->state.status = f_string_dynamic_append_nulless(sources[i], values[i]);
 
           if (F_status_is_error(data->setting->state.status)) {
-            fake_print_error(data->setting, data->main->error, macro_fake_f(f_string_dynamic_append_nulless));
+            fake_print_error(&data->program->error, macro_fake_f(f_string_dynamic_append_nulless));
 
             return;
           }
@@ -364,7 +364,7 @@ extern "C" {
 #ifndef _di_fake_path_generate_string_dynamic_
   void fake_path_generate_string_dynamic(fake_data_t * const data, const f_string_dynamic_t source, f_string_dynamic_t *destination[], const uint8_t length) {
 
-    if (!data || !data->main || !data->setting || !destination) return;
+    if (!data || !data->program || !data->setting || !destination) return;
 
     data->setting->state.status = F_none;
 

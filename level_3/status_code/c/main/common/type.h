@@ -51,7 +51,8 @@ extern "C" {
  *   - fine:        Check if status is "fine".
  *   - help:        Print help.
  *   - number:      Operate in number mode.
- *   - print_first: When set, the first character printing logic is to be processed (this is usually automatic).
+ *   - print_first: When set, print new line to message output on program begin after loading settings.
+ *   - print_last:  When set, print new line to message output on program end.
  *   - version:     Print version.
  *   - warning:     Check if status is "warning".
  */
@@ -64,8 +65,9 @@ extern "C" {
     status_code_main_flag_help_e        = 0x8,
     status_code_main_flag_number_e      = 0x10,
     status_code_main_flag_print_first_e = 0x20,
-    status_code_main_flag_version_e     = 0x40,
-    status_code_main_flag_warning_e     = 0x80,
+    status_code_main_flag_print_last_e  = 0x40,
+    status_code_main_flag_version_e     = 0x80,
+    status_code_main_flag_warning_e     = 0x100,
   }; // enum
 #endif // _di_status_code_main_flag_e_
 
@@ -129,9 +131,6 @@ extern "C" {
  *
  * state: The state information.
  *
- * line_first: A string expected to represent either "\n" or NULL to allow for easy handling of when to print first new line or not.
- * line_last:  A string expected to represent either "\n" or NULL to allow for easy handling of when to print last new line or not.
- *
  * status_string_from:        A pointer to the status string function (usually either fll_status_string_from() or fll_fss_status_string_from()).
  * status_string_to:          A pointer to the status string function (usually either f_status_string_to() or fll_fss_status_string_to()).
  * status_string_help_detail: Print additional, more detailed help, in the help page (The setting paramete must be of type status_code_setting_t).
@@ -141,9 +140,6 @@ extern "C" {
     uint16_t flag;
 
     f_state_t state;
-
-    f_string_static_t line_first;
-    f_string_static_t line_last;
 
     const f_string_static_t *program_name;
     const f_string_static_t *program_name_long;
@@ -155,10 +151,8 @@ extern "C" {
 
   #define status_code_setting_t_initialize \
     { \
-      status_code_main_flag_print_first_e, \
+      status_code_main_flag_none_e, \
       f_state_t_initialize, \
-      f_string_static_t_initialize, \
-      f_string_static_t_initialize, \
       0, \
       0, \
       0, \

@@ -10,8 +10,6 @@ extern "C" {
 
     f_file_stream_lock(print.to);
 
-    f_print_dynamic_raw(setting->line_first, print.to);
-
     fll_program_print_help_header(print, byte_dump_program_name_long_s, byte_dump_program_version_s);
 
     fll_program_print_help_option_standard(print);
@@ -52,9 +50,7 @@ extern "C" {
 
     fll_program_print_help_usage(print, byte_dump_program_name_s, fll_program_parameter_filenames_s);
 
-    //if (!(setting->flag & XXX_main_flag_line_last_no_e)) {
-      f_print_dynamic_raw(f_string_eol_s, print.to);
-    //}
+    f_print_dynamic_raw(f_string_eol_s, print.to);
 
     fl_print_format("  When using the %[%r%r%] option, some UTF-8 characters may be replaced by your instance and cause display alignment issues.%r%r", print.to, context.set.notable, f_console_symbol_long_normal_s, byte_dump_long_text_s, context.set.notable, f_string_eol_s, f_string_eol_s);
 
@@ -66,82 +62,12 @@ extern "C" {
 
     fl_print_format("  When using the %[%r%r%] option, invalid Unicode will fallback to being displayed using one of the other modes.%r", print.to, context.set.notable, f_console_symbol_long_normal_s, byte_dump_long_unicode_s, context.set.notable, f_string_eol_s);
 
-    f_print_dynamic_raw(setting->line_last, print.to);
-
     f_file_stream_flush(output);
     f_file_stream_unlock(print.to);
 
     return F_none;
   }
 #endif // _di_byte_dump_print_help_
-
-#ifndef _di_byte_dump_print_line_first_locked_
-  f_status_t byte_dump_print_line_first_locked(byte_dump_setting_t * const setting, const fl_print_t print) {
-
-    if (!setting || print.verbosity < f_console_verbosity_error_e) return F_output_not;
-    if (setting->flag & byte_dump_main_flag_verify_e) return;
-
-    if (F_status_is_error_not(setting->state.status)) {
-      if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
-      if (setting->flag & byte_dump_main_flag_file_to_e) return F_output_not;
-    }
-
-    f_print_dynamic_raw(setting->line_first, print.to);
-
-    return F_none;
-  }
-#endif // _di_byte_dump_print_line_first_locked_
-
-#ifndef _di_byte_dump_print_line_first_unlocked_
-  f_status_t byte_dump_print_line_first_unlocked(byte_dump_setting_t * const setting, const fl_print_t print) {
-
-    if (!setting || print.verbosity < f_console_verbosity_error_e) return F_output_not;
-    if (setting->flag & byte_dump_main_flag_verify_e) return;
-
-    if (F_status_is_error_not(setting->state.status)) {
-      if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
-      if (setting->flag & byte_dump_main_flag_file_to_e) return F_output_not;
-    }
-
-    fll_print_dynamic_raw(setting->line_first, print.to);
-
-    return F_none;
-  }
-#endif // _di_byte_dump_print_line_first_unlocked_
-
-#ifndef _di_byte_dump_print_line_last_locked_
-  f_status_t byte_dump_print_line_last_locked(byte_dump_setting_t * const setting, const fl_print_t print) {
-
-    if (!setting || print.verbosity < f_console_verbosity_error_e) return F_output_not;
-    if (setting->flag & byte_dump_main_flag_verify_e) return;
-
-    if (F_status_is_error_not(setting->state.status)) {
-      if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
-      if (setting->flag & byte_dump_main_flag_file_to_e) return F_output_not;
-    }
-
-    fll_print_dynamic_raw(setting->line_last, print.to);
-
-    return F_none;
-  }
-#endif // _di_byte_dump_print_line_last_locked_
-
-#ifndef _di_byte_dump_print_line_last_unlocked_
-  f_status_t byte_dump_print_line_last_unlocked(byte_dump_setting_t * const setting, const fl_print_t print) {
-
-    if (!setting || print.verbosity < f_console_verbosity_error_e) return F_output_not;
-    if (setting->flag & byte_dump_main_flag_verify_e) return;
-
-    if (F_status_is_error_not(setting->state.status)) {
-      if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
-      if (setting->flag & byte_dump_main_flag_file_to_e) return F_output_not;
-    }
-
-    f_print_dynamic_raw(setting->line_last, print.to);
-
-    return F_none;
-  }
-#endif // _di_byte_dump_print_line_last_unlocked_
 
 #ifdef __cplusplus
 } // extern "C"

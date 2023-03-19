@@ -22,17 +22,13 @@ extern "C" {
  * @param print
  *   The output structure to print to.
  *   The print.verbosity is used to determine how much detail is printed (except for when _di_detailed_copyright_ is set).
- * @param first_last
- *   Bitwise variable representing whether or not to print the first and last new line.
- *   Set bit 0x1 to printing first line.
- *   Set bit 0x2 to printing last line.
  *
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_fll_program_print_copyright_
-  extern f_status_t fll_program_print_copyright(const fl_print_t print, const uint8_t first_last);
+  extern f_status_t fll_program_print_copyright(const fl_print_t print);
 #endif // _di_fll_program_print_copyright_
 
 /**
@@ -812,8 +808,6 @@ extern "C" {
  *   The output structure to print to.
  *   This locks, uses, and unlocks the file stream.
  *   This requires print.set to be non-NULL.
- * @param line_first
- *   The first line character, which is expected to be set to either f_string_eol_s or f_string_empty_s.
  * @param signal
  *   The signal code received.
  *
@@ -822,7 +816,7 @@ extern "C" {
  *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_fll_program_print_signal_received_
-  extern f_status_t fll_program_print_signal_received(const fl_print_t print, const f_string_static_t line_first, const uint32_t signal);
+  extern f_status_t fll_program_print_signal_received(const fl_print_t print, const uint32_t signal);
 #endif // _di_fll_program_print_signal_received_
 
 /**
@@ -832,10 +826,6 @@ extern "C" {
  *   The output structure to print to.
  *   This uses but does not lock or unlock file stream.
  *   This requires print.set to be non-NULL.
- * @param first_last
- *   Bitwise variable representing whether or not to print the first and last new line.
- *   Set bit 0x1 to printing first line.
- *   Set bit 0x2 to printing last line.
  * @param version
  *   The version number of the program.
  *
@@ -846,7 +836,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fll_program_print_version_
-  extern f_status_t fll_program_print_version(const fl_print_t print, const uint8_t first_last, const f_string_static_t version);
+  extern f_status_t fll_program_print_version(const fl_print_t print, const f_string_static_t version);
 #endif // _di_fll_program_print_version_
 
 #ifdef __cplusplus

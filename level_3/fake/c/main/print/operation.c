@@ -12,7 +12,7 @@ extern "C" {
 
     f_file_stream_lock(print.to);
 
-    fl_print_format("All operations complete.%r", print.to, f_string_eol_s, f_string_eol_s);
+    fl_print_format("%rAll operations complete.%r", print.to, f_string_eol_s, f_string_eol_s);
 
     f_file_stream_flush(print.to);
     f_file_stream_unlock(print.to);

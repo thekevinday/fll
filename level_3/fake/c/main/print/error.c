@@ -5,12 +5,16 @@ extern "C" {
 #endif
 
 #ifndef _di_fake_print_error_
-  f_status_t fake_print_error(fake_setting_t * const setting, const fl_print_t print, const f_string_t function) {
+  f_status_t fake_print_error(fl_print_t * const print, const f_string_t function) {
 
-    if (!setting) return F_status_set_error(F_output_not);
-    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
+    if (!print) return F_status_set_error(F_output_not);
+    if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
-    fll_error_print(print, F_status_set_fine(setting->state.status), function, fll_error_file_flag_fallback_e);
+    fake_setting_t * const setting = (fake_setting_t *) print->custom;
+
+    if (setting) {
+      fll_error_print(*print, F_status_set_fine(setting->state.status), function, fll_error_file_flag_fallback_e);
+    }
 
     return F_none;
   }
@@ -226,6 +230,18 @@ extern "C" {
     return F_none;
   }
 #endif // _di_fake_print_error_directory_create_parent_missing_
+
+#ifndef _di_fake_print_error_execute_program_not_found_
+  f_status_t fake_print_error_execute_program_not_found(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t program) {
+
+    if (!setting) return F_status_set_error(F_output_not);
+    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
+
+    fake_print_context_simple_variable(setting, print, "Failed to find program ", program, " for executing");
+
+    return F_none;
+  }
+#endif // _di_fake_print_error_execute_program_not_found_
 
 #ifndef _di_fake_print_error_failure_operation_
   f_status_t fake_print_error_failure_operation(fake_setting_t * const setting, const fl_print_t print, const uint8_t operation) {
@@ -607,11 +623,23 @@ extern "C" {
     if (!setting) return F_status_set_error(F_output_not);
     if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
 
-    fake_print_context_wrapped_parameter(setting, print, "The ", f_console_symbol_long_normal_s, name, " parameter must not be empty and must not contain only white space");
+    fake_print_context_wrapped_parameter(setting, print, "The ", symbol, name, " parameter must not be empty and must not contain only white space");
 
     return F_none;
   }
 #endif // _di_fake_print_error_parameter_not_empty_
+
+#ifndef _di_fake_print_error_parameter_directory_not_found_path_
+  f_status_t fake_print_error_parameter_directory_not_found_path(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t value) {
+
+    if (!setting) return F_status_set_error(F_output_not);
+    if (print.verbosity == f_console_verbosity_quiet_e) return F_output_not;
+
+    fake_print_context_wrapped_parameter_value(setting, print, "The value of the directory parameter ", symbol, name, " has a path of ", value, " that is not found.");
+
+    return F_none;
+  }
+#endif // _di_fake_print_error_parameter_directory_not_found_path_
 
 #ifndef _di_fake_print_error_parameter_not_word_
   f_status_t fake_print_error_parameter_not_word(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t value) {
@@ -646,12 +674,12 @@ extern "C" {
 #endif // _di_fake_print_error_parameter_operation_not_with_
 
 #ifndef _di_fake_print_error_parameter_too_many_
-  f_status_t fake_print_error_parameter_too_many(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t parameter) {
+  f_status_t fake_print_error_parameter_too_many(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t symbol, const f_string_static_t parameter) {
 
     if (!setting) return F_status_set_error(F_output_not);
     if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
 
-    fake_print_context_wrapped_parameter(setting, print, "The parameter ", f_console_symbol_long_normal_s, parameter, " is specified too many times");
+    fake_print_context_wrapped_parameter(setting, print, "The parameter ", symbol, parameter, " is specified too many times");
 
     return F_none;
   }

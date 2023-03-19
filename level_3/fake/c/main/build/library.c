@@ -7,8 +7,8 @@ extern "C" {
 #ifndef _di_fake_build_library_script_
   int fake_build_library_script(fake_data_t * const data, fake_build_data_t * const data_build, const f_mode_t mode, const f_string_static_t file_stage) {
 
-    if (!data || !data->main || !data->setting) return 0;
-    if (data->setting->state.status == F_child) return data->main->child;
+    if (!data || !data->program || !data->setting) return 0;
+    if (data->setting->state.status == F_child) return data->program->child;
     if (F_status_is_error(data->setting->state.status) || f_file_exists(file_stage, F_true) == F_true) return 0;
 
     fake_build_touch(data, file_stage);
@@ -20,19 +20,19 @@ extern "C" {
 #ifndef _di_fake_build_library_shared_
   int fake_build_library_shared(fake_data_t * const data, fake_build_data_t * const data_build, const f_mode_t mode, const f_string_static_t file_stage) {
 
-    if (!data || !data->main || !data->setting || !data_build) return 0;
-    if (data->setting->state.status == F_child) return data->main->child;
+    if (!data || !data->program || !data->setting || !data_build) return 0;
+    if (data->setting->state.status == F_child) return data->program->child;
     if (F_status_is_error(data->setting->state.status) || f_file_exists(file_stage, F_true) == F_true) return 0;
     if (!data_build->setting.build_sources_library.used && !data_build->setting.build_sources_library_shared.used) return 0;
 
-    fake_build_print_compile_library_shared(data->setting, data->main->message);
+    fake_build_print_compile_library_shared(data->setting, data->program->message);
 
     f_string_dynamics_t arguments = f_string_dynamics_t_initialize;
 
     fake_build_objects_add(data, data_build, &data->path_build_objects_shared, &data_build->setting.build_objects_library, &data_build->setting.build_objects_library_shared, &arguments);
 
     if (F_status_is_error(data->setting->state.status)) {
-      fake_print_error(data->setting, data->main->error, macro_fake_f(fake_build_objects_add));
+      fake_print_error(&data->program->error, macro_fake_f(fake_build_objects_add));
 
       f_string_dynamics_resize(0, &arguments);
 
@@ -42,7 +42,7 @@ extern "C" {
     fake_build_sources_add(data, data_build, &data_build->setting.build_sources_library, &data_build->setting.build_sources_library_shared, &arguments);
 
     if (F_status_is_error(data->setting->state.status)) {
-      fake_print_error(data->setting, data->main->error, macro_fake_f(fake_build_sources_add));
+      fake_print_error(&data->program->error, macro_fake_f(fake_build_sources_add));
 
       f_string_dynamics_resize(0, &arguments);
 
@@ -297,7 +297,7 @@ extern "C" {
       fake_build_arguments_standard_add(data, data_build, F_true, fake_build_type_library_e, &arguments);
 
       if (F_status_is_error(data->setting->state.status)) {
-        fake_print_error(data->setting, data->main->error, macro_fake_f(fll_execute_arguments_add));
+        fake_print_error(&data->program->error, macro_fake_f(fll_execute_arguments_add));
 
         f_string_dynamics_resize(0, &arguments);
 
@@ -328,16 +328,16 @@ extern "C" {
       data->setting->state.status = f_file_link(parameter_file_name_major, parameter_file_path);
 
       if (F_status_is_error_not(data->setting->state.status)) {
-        fake_build_print_linked_file(data->setting, data->main->message, parameter_file_path, parameter_file_name_major);
+        fake_build_print_linked_file(data->setting, data->program->message, parameter_file_path, parameter_file_name_major);
       }
       else {
         if (F_status_set_fine(data->setting->state.status) == F_file_found) {
-          fake_print_error_file(data->setting, data->main->error, macro_fake_f(f_file_link), parameter_file_path, f_file_operation_link_s, fll_error_file_type_file_e);
+          fake_print_error_file(data->setting, data->program->error, macro_fake_f(f_file_link), parameter_file_path, f_file_operation_link_s, fll_error_file_type_file_e);
 
           return 0;
         }
 
-        fake_print_error_file(data->setting, data->main->error, macro_fake_f(f_file_link), parameter_file_name_major, f_file_operation_link_s, fll_error_file_type_file_e);
+        fake_print_error_file(data->setting, data->program->error, macro_fake_f(f_file_link), parameter_file_name_major, f_file_operation_link_s, fll_error_file_type_file_e);
 
         return 0;
       }
@@ -359,10 +359,10 @@ extern "C" {
         data->setting->state.status = f_file_link(parameter_file_name_minor, parameter_file_path);
 
         if (F_status_is_error_not(data->setting->state.status)) {
-          fake_build_print_linked_file(data->setting, data->main->message, parameter_file_path, parameter_file_name_minor);
+          fake_build_print_linked_file(data->setting, data->program->message, parameter_file_path, parameter_file_name_minor);
         }
         else {
-          fake_print_error_file(data->setting, data->main->error, macro_fake_f(f_file_link), F_status_set_fine(data->setting->state.status) == F_file_found ? parameter_file_path : parameter_file_name_minor, f_file_operation_link_s, fll_error_file_type_file_e);
+          fake_print_error_file(data->setting, data->program->error, macro_fake_f(f_file_link), F_status_set_fine(data->setting->state.status) == F_file_found ? parameter_file_path : parameter_file_name_minor, f_file_operation_link_s, fll_error_file_type_file_e);
 
           return 0;
         }
@@ -382,16 +382,16 @@ extern "C" {
           data->setting->state.status = f_file_link(parameter_file_name_micro, parameter_file_path);
 
           if (F_status_is_error_not(data->setting->state.status)) {
-            fake_build_print_linked_file(data->setting, data->main->message, parameter_file_path, parameter_file_name_micro);
+            fake_build_print_linked_file(data->setting, data->program->message, parameter_file_path, parameter_file_name_micro);
           }
           else {
             if (F_status_set_fine(data->setting->state.status) == F_file_found) {
-              fake_print_error_file(data->setting, data->main->error, macro_fake_f(f_file_link), parameter_file_path, f_file_operation_link_s, fll_error_file_type_file_e);
+              fake_print_error_file(data->setting, data->program->error, macro_fake_f(f_file_link), parameter_file_path, f_file_operation_link_s, fll_error_file_type_file_e);
 
               return 0;
             }
 
-            fake_print_error_file(data->setting, data->main->error, macro_fake_f(f_file_link), parameter_file_name_micro, f_file_operation_link_s, fll_error_file_type_file_e);
+            fake_print_error_file(data->setting, data->program->error, macro_fake_f(f_file_link), parameter_file_name_micro, f_file_operation_link_s, fll_error_file_type_file_e);
 
             return 0;
           }
@@ -410,16 +410,16 @@ extern "C" {
           data->setting->state.status = f_file_link(parameter_file_name_nano, parameter_file_path);
 
           if (F_status_is_error_not(data->setting->state.status)) {
-            fake_build_print_linked_file(data->setting, data->main->message, parameter_file_path, parameter_file_name_nano);
+            fake_build_print_linked_file(data->setting, data->program->message, parameter_file_path, parameter_file_name_nano);
           }
           else {
             if (F_status_set_fine(data->setting->state.status) == F_file_found) {
-              fake_print_error_file(data->setting, data->main->error, macro_fake_f(f_file_link), parameter_file_path, f_file_operation_link_s, fll_error_file_type_file_e);
+              fake_print_error_file(data->setting, data->program->error, macro_fake_f(f_file_link), parameter_file_path, f_file_operation_link_s, fll_error_file_type_file_e);
 
               return 0;
             }
 
-            fake_print_error_file(data->setting, data->main->error, macro_fake_f(f_file_link), parameter_file_name_nano, f_file_operation_link_s, fll_error_file_type_file_e);
+            fake_print_error_file(data->setting, data->program->error, macro_fake_f(f_file_link), parameter_file_name_nano, f_file_operation_link_s, fll_error_file_type_file_e);
 
             return 0;
           }
@@ -436,12 +436,12 @@ extern "C" {
 #ifndef _di_fake_build_library_static_
   int fake_build_library_static(fake_data_t * const data, fake_build_data_t * const data_build, const f_mode_t mode, const f_string_static_t file_stage) {
 
-    if (!data || !data->main || !data->setting || !data_build) return 0;
-    if (data->setting->state.status == F_child) return data->main->child;
+    if (!data || !data->program || !data->setting || !data_build) return 0;
+    if (data->setting->state.status == F_child) return data->program->child;
     if (F_status_is_error(data->setting->state.status) || f_file_exists(file_stage, F_true) == F_true) return 0;
     if (!data_build->setting.build_sources_library.used && !data_build->setting.build_sources_library_static.used) return 0;
 
-    fake_build_print_compile_library_static(data->setting, data->main->message);
+    fake_build_print_compile_library_static(data->setting, data->program->message);
 
     f_string_dynamic_t file_name = f_string_dynamic_t_initialize;
     f_string_dynamic_t source_path = f_string_dynamic_t_initialize;
@@ -500,7 +500,7 @@ extern "C" {
           fake_build_get_file_name_without_extension(data, sources[i]->array[j], &file_name);
 
           if (F_status_is_error(data->setting->state.status)) {
-            fake_print_error(data->setting, data->main->error, macro_fake_f(fake_build_get_file_name_without_extension));
+            fake_print_error(&data->program->error, macro_fake_f(fake_build_get_file_name_without_extension));
 
             break;
           }
@@ -508,7 +508,7 @@ extern "C" {
           data->setting->state.status = f_file_name_directory(sources[i]->array[j], &source_path);
 
           if (F_status_is_error(data->setting->state.status)) {
-            fake_print_error(data->setting, data->main->error, macro_fake_f(f_file_name_directory));
+            fake_print_error(&data->program->error, macro_fake_f(f_file_name_directory));
 
             break;
           }
@@ -517,7 +517,7 @@ extern "C" {
             data->setting->state.status = f_string_dynamic_prepend(data->path_build_objects, &source_path);
 
             if (F_status_is_error(data->setting->state.status)) {
-              fake_print_error(data->setting, data->main->error, macro_fake_f(f_string_dynamic_prepend));
+              fake_print_error(&data->program->error, macro_fake_f(f_string_dynamic_prepend));
 
               break;
             }
@@ -525,7 +525,7 @@ extern "C" {
             data->setting->state.status = f_string_dynamic_append_assure(f_path_separator_s, &source_path);
 
             if (F_status_is_error(data->setting->state.status)) {
-              fake_print_error(data->setting, data->main->error, macro_fake_f(f_string_dynamic_append_assure));
+              fake_print_error(&data->program->error, macro_fake_f(f_string_dynamic_append_assure));
 
               break;
             }
@@ -554,7 +554,7 @@ extern "C" {
           data->setting->state.status = fll_execute_arguments_add(source, &arguments);
 
           if (F_status_is_error(data->setting->state.status)) {
-            fake_print_error(data->setting, data->main->error, macro_fake_f(fll_execute_arguments_add));
+            fake_print_error(&data->program->error, macro_fake_f(fll_execute_arguments_add));
 
             break;
           }
@@ -562,7 +562,7 @@ extern "C" {
       } // for
     }
 
-    int result = data->main->child;
+    int result = data->program->child;
 
     if (F_status_is_error_not(data->setting->state.status)) {
       result = fake_execute(data, data_build->environment, data_build->setting.build_indexer, arguments);

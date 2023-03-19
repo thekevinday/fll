@@ -7,10 +7,10 @@ extern "C" {
 #ifndef _di_fake_make_load_parameters_
   void fake_make_load_parameters(fake_make_data_t * const data_make) {
 
-    if (!data_make || !data_make->main || !data_make->setting) return;
+    if (!data_make || !data_make->program || !data_make->setting) return;
     if (F_status_is_error(data_make->setting->state.status)) return;
 
-    if (data_make->main->context.mode != f_color_mode_none_e) {
+    if (data_make->program->context.mode != f_color_mode_none_e) {
       data_make->setting->state.status = f_string_dynamics_increase_by(fake_allocation_small_d, &data_make->parameter.color);
 
       if (F_status_is_error_not(data_make->setting->state.status)) {
@@ -18,16 +18,16 @@ extern "C" {
       }
 
       if (F_status_is_error(data_make->setting->state.status)) {
-        fake_print_error(data_make->setting, data_make->main->error, macro_fake_f(f_string_dynamics_increase_by));
+        fake_print_error(&data_make->program->error, macro_fake_f(f_string_dynamics_increase_by));
 
         return;
       }
 
-      if (data_make->main->context.mode == f_color_mode_not_e) {
-        if (data_make->main->parameters.array[fake_parameter_no_color_e].flag & f_console_flag_normal_e) {
+      if (data_make->program->context.mode == f_color_mode_not_e) {
+        if (data_make->program->parameters.array[fake_parameter_no_color_e].flag & f_console_flag_normal_e) {
           data_make->setting->state.status = f_string_dynamic_append(f_console_symbol_short_normal_s, &data_make->parameter.color.array[data_make->parameter.color.used]);
         }
-        else if (data_make->main->parameters.array[fake_parameter_no_color_e].flag & f_console_flag_normal_e) {
+        else if (data_make->program->parameters.array[fake_parameter_no_color_e].flag & f_console_flag_normal_e) {
           data_make->setting->state.status = f_string_dynamic_append(f_console_symbol_short_inverse_s, &data_make->parameter.color.array[data_make->parameter.color.used]);
         }
 
@@ -35,11 +35,11 @@ extern "C" {
           data_make->setting->state.status = f_string_dynamic_append(f_console_standard_short_no_color_s, &data_make->parameter.color.array[data_make->parameter.color.used]);
         }
       }
-      else if (data_make->main->context.mode == f_color_mode_dark_e) {
-        if (data_make->main->parameters.array[fake_parameter_dark_e].flag & f_console_flag_normal_e) {
+      else if (data_make->program->context.mode == f_color_mode_dark_e) {
+        if (data_make->program->parameters.array[fake_parameter_dark_e].flag & f_console_flag_normal_e) {
           data_make->setting->state.status = f_string_dynamic_append(f_console_symbol_short_normal_s, &data_make->parameter.color.array[data_make->parameter.color.used]);
         }
-        else if (data_make->main->parameters.array[fake_parameter_dark_e].flag & f_console_flag_normal_e) {
+        else if (data_make->program->parameters.array[fake_parameter_dark_e].flag & f_console_flag_normal_e) {
           data_make->setting->state.status = f_string_dynamic_append(f_console_symbol_short_inverse_s, &data_make->parameter.color.array[data_make->parameter.color.used]);
         }
 
@@ -48,10 +48,10 @@ extern "C" {
         }
       }
       else {
-        if (data_make->main->parameters.array[fake_parameter_light_e].flag & f_console_flag_normal_e) {
+        if (data_make->program->parameters.array[fake_parameter_light_e].flag & f_console_flag_normal_e) {
           data_make->setting->state.status = f_string_dynamic_append(f_console_symbol_short_normal_s, &data_make->parameter.color.array[data_make->parameter.color.used]);
         }
-        else if (data_make->main->parameters.array[fake_parameter_light_e].flag & f_console_flag_normal_e) {
+        else if (data_make->program->parameters.array[fake_parameter_light_e].flag & f_console_flag_normal_e) {
           data_make->setting->state.status = f_string_dynamic_append(f_console_symbol_short_inverse_s, &data_make->parameter.color.array[data_make->parameter.color.used]);
         }
 
@@ -65,7 +65,7 @@ extern "C" {
       }
 
       if (F_status_is_error(data_make->setting->state.status)) {
-        fake_print_error(data_make->setting, data_make->main->error, macro_fake_f(f_string_dynamic_append));
+        fake_print_error(&data_make->program->error, macro_fake_f(f_string_dynamic_append));
 
         return;
       }
@@ -74,7 +74,7 @@ extern "C" {
       ++data_make->parameter_option.color.used;
     }
 
-    if (data_make->main->error.verbosity != f_console_verbosity_normal_e) {
+    if (data_make->program->error.verbosity != f_console_verbosity_normal_e) {
       data_make->setting->state.status = f_string_dynamics_increase_by(fake_allocation_small_d, &data_make->parameter.verbosity);
 
       if (F_status_is_error_not(data_make->setting->state.status)) {
@@ -82,16 +82,16 @@ extern "C" {
       }
 
       if (F_status_is_error(data_make->setting->state.status)) {
-        fake_print_error(data_make->setting, data_make->main->error, macro_fake_f(f_string_dynamics_increase_by));
+        fake_print_error(&data_make->program->error, macro_fake_f(f_string_dynamics_increase_by));
 
         return;
       }
 
-      if (data_make->main->error.verbosity == f_console_verbosity_quiet_e) {
-        if (data_make->main->parameters.array[fake_parameter_verbosity_quiet_e].flag & f_console_flag_normal_e) {
+      if (data_make->program->error.verbosity == f_console_verbosity_quiet_e) {
+        if (data_make->program->parameters.array[fake_parameter_verbosity_quiet_e].flag & f_console_flag_normal_e) {
           data_make->setting->state.status = f_string_dynamic_append(f_console_symbol_short_normal_s, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
         }
-        else if (data_make->main->parameters.array[fake_parameter_verbosity_quiet_e].flag & f_console_flag_normal_e) {
+        else if (data_make->program->parameters.array[fake_parameter_verbosity_quiet_e].flag & f_console_flag_normal_e) {
           data_make->setting->state.status = f_string_dynamic_append(f_console_symbol_short_inverse_s, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
         }
 
@@ -99,11 +99,11 @@ extern "C" {
           data_make->setting->state.status = f_string_dynamic_append(f_console_standard_short_quiet_s, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
         }
       }
-      else if (data_make->main->error.verbosity == f_console_verbosity_error_e) {
-        if (data_make->main->parameters.array[fake_parameter_verbosity_error_e].flag & f_console_flag_normal_e) {
+      else if (data_make->program->error.verbosity == f_console_verbosity_error_e) {
+        if (data_make->program->parameters.array[fake_parameter_verbosity_error_e].flag & f_console_flag_normal_e) {
           data_make->setting->state.status = f_string_dynamic_append(f_console_symbol_short_normal_s, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
         }
-        else if (data_make->main->parameters.array[fake_parameter_verbosity_error_e].flag & f_console_flag_normal_e) {
+        else if (data_make->program->parameters.array[fake_parameter_verbosity_error_e].flag & f_console_flag_normal_e) {
           data_make->setting->state.status = f_string_dynamic_append(f_console_symbol_short_inverse_s, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
         }
 
@@ -111,11 +111,11 @@ extern "C" {
           data_make->setting->state.status = f_string_dynamic_append(f_console_standard_short_error_s, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
         }
       }
-      else if (data_make->main->error.verbosity >= f_console_verbosity_verbose_e) {
-        if (data_make->main->parameters.array[fake_parameter_verbosity_verbose_e].flag & f_console_flag_normal_e) {
+      else if (data_make->program->error.verbosity >= f_console_verbosity_verbose_e) {
+        if (data_make->program->parameters.array[fake_parameter_verbosity_verbose_e].flag & f_console_flag_normal_e) {
           data_make->setting->state.status = f_string_dynamic_append(f_console_symbol_short_normal_s, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
         }
-        else if (data_make->main->parameters.array[fake_parameter_verbosity_verbose_e].flag & f_console_flag_normal_e) {
+        else if (data_make->program->parameters.array[fake_parameter_verbosity_verbose_e].flag & f_console_flag_normal_e) {
           data_make->setting->state.status = f_string_dynamic_append(f_console_symbol_short_inverse_s, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
         }
 
@@ -124,10 +124,10 @@ extern "C" {
         }
       }
       else {
-        if (data_make->main->parameters.array[fake_parameter_verbosity_debug_e].flag & f_console_flag_normal_e) {
+        if (data_make->program->parameters.array[fake_parameter_verbosity_debug_e].flag & f_console_flag_normal_e) {
           data_make->setting->state.status = f_string_dynamic_append(f_console_symbol_short_normal_s, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
         }
-        else if (data_make->main->parameters.array[fake_parameter_verbosity_debug_e].flag & f_console_flag_normal_e) {
+        else if (data_make->program->parameters.array[fake_parameter_verbosity_debug_e].flag & f_console_flag_normal_e) {
           data_make->setting->state.status = f_string_dynamic_append(f_console_symbol_short_inverse_s, &data_make->parameter.verbosity.array[data_make->parameter.verbosity.used]);
         }
 
@@ -141,7 +141,7 @@ extern "C" {
       }
 
       if (F_status_is_error(data_make->setting->state.status)) {
-        fake_print_error(data_make->setting, data_make->main->error, macro_fake_f(f_string_dynamic_append));
+        fake_print_error(&data_make->program->error, macro_fake_f(f_string_dynamic_append));
 
         return;
       }
@@ -157,8 +157,8 @@ extern "C" {
       };
 
       const f_console_parameter_t *console[] = {
-        &data_make->main->parameters.array[fake_parameter_define_e],
-        &data_make->main->parameters.array[fake_parameter_mode_e],
+        &data_make->program->parameters.array[fake_parameter_define_e],
+        &data_make->program->parameters.array[fake_parameter_mode_e],
       };
 
       const f_string_dynamics_t source[] = {
@@ -193,7 +193,7 @@ extern "C" {
             data_make->setting->state.status = f_string_dynamics_increase_by(fake_allocation_small_d, destination[i]);
 
             if (F_status_is_error(data_make->setting->state.status)) {
-              fake_print_error(data_make->setting, data_make->main->error, macro_fake_f(f_string_dynamics_increase_by));
+              fake_print_error(&data_make->program->error, macro_fake_f(f_string_dynamics_increase_by));
 
               return;
             }
@@ -206,7 +206,7 @@ extern "C" {
           }
 
           if (F_status_is_error(data_make->setting->state.status)) {
-            fake_print_error(data_make->setting, data_make->main->error, macro_fake_f(f_string_dynamics_increase));
+            fake_print_error(&data_make->program->error, macro_fake_f(f_string_dynamics_increase));
 
             return;
           }
@@ -227,7 +227,7 @@ extern "C" {
           }
 
           if (F_status_is_error(data_make->setting->state.status)) {
-            fake_print_error(data_make->setting, data_make->main->error, macro_fake_f(f_string_dynamic_append_nulless));
+            fake_print_error(&data_make->program->error, macro_fake_f(f_string_dynamic_append_nulless));
 
             return;
           }
@@ -238,7 +238,7 @@ extern "C" {
           data_make->setting->state.status = f_string_dynamics_increase_by(fake_allocation_small_d, destination[i]);
 
           if (F_status_is_error(data_make->setting->state.status)) {
-            fake_print_error(data_make->setting, data_make->main->error, macro_fake_f(f_string_dynamics_increase_by));
+            fake_print_error(&data_make->program->error, macro_fake_f(f_string_dynamics_increase_by));
 
             return;
           }
@@ -250,7 +250,7 @@ extern "C" {
           }
 
           if (F_status_is_error(data_make->setting->state.status)) {
-            fake_print_error(data_make->setting, data_make->main->error, macro_fake_f(f_string_dynamic_append_nulless));
+            fake_print_error(&data_make->program->error, macro_fake_f(f_string_dynamic_append_nulless));
 
             return;
           }
@@ -275,15 +275,15 @@ extern "C" {
       };
 
       const f_console_parameter_t *console[] = {
-        &data_make->main->parameters.array[fake_parameter_build_e],
-        &data_make->main->parameters.array[fake_parameter_data_e],
-        &data_make->main->parameters.array[fake_parameter_documents_e],
-        &data_make->main->parameters.array[fake_parameter_fakefile_e],
-        &data_make->main->parameters.array[fake_parameter_licenses_e],
-        &data_make->main->parameters.array[fake_parameter_process_e],
-        &data_make->main->parameters.array[fake_parameter_settings_e],
-        &data_make->main->parameters.array[fake_parameter_sources_e],
-        &data_make->main->parameters.array[fake_parameter_work_e],
+        &data_make->program->parameters.array[fake_parameter_build_e],
+        &data_make->program->parameters.array[fake_parameter_data_e],
+        &data_make->program->parameters.array[fake_parameter_documents_e],
+        &data_make->program->parameters.array[fake_parameter_fakefile_e],
+        &data_make->program->parameters.array[fake_parameter_licenses_e],
+        &data_make->program->parameters.array[fake_parameter_process_e],
+        &data_make->program->parameters.array[fake_parameter_settings_e],
+        &data_make->program->parameters.array[fake_parameter_sources_e],
+        &data_make->program->parameters.array[fake_parameter_work_e],
       };
 
       const f_string_dynamic_t source[] = {
@@ -342,7 +342,7 @@ extern "C" {
           data_make->setting->state.status = f_string_dynamics_increase_by(fake_allocation_small_d, destination[i]);
 
           if (F_status_is_error(data_make->setting->state.status)) {
-            fake_print_error(data_make->setting, data_make->main->error, macro_fake_f(f_string_dynamics_increase_by));
+            fake_print_error(&data_make->program->error, macro_fake_f(f_string_dynamics_increase_by));
 
             return;
           }
@@ -355,7 +355,7 @@ extern "C" {
         }
 
         if (F_status_is_error(data_make->setting->state.status)) {
-          fake_print_error(data_make->setting, data_make->main->error, macro_fake_f(f_string_dynamics_increase));
+          fake_print_error(&data_make->program->error, macro_fake_f(f_string_dynamics_increase));
 
           return;
         }
@@ -376,7 +376,7 @@ extern "C" {
         }
 
         if (F_status_is_error(data_make->setting->state.status)) {
-          fake_print_error(data_make->setting, data_make->main->error, macro_fake_f(f_string_dynamic_append_nulless));
+          fake_print_error(&data_make->program->error, macro_fake_f(f_string_dynamic_append_nulless));
 
           return;
         }
@@ -387,7 +387,7 @@ extern "C" {
         data_make->setting->state.status = f_string_dynamics_increase_by(fake_allocation_small_d, destination[i]);
 
         if (F_status_is_error(data_make->setting->state.status)) {
-          fake_print_error(data_make->setting, data_make->main->error, macro_fake_f(f_string_dynamics_increase_by));
+          fake_print_error(&data_make->program->error, macro_fake_f(f_string_dynamics_increase_by));
 
           return;
         }
@@ -399,7 +399,7 @@ extern "C" {
         }
 
         if (F_status_is_error(data_make->setting->state.status)) {
-          fake_print_error(data_make->setting, data_make->main->error, macro_fake_f(f_string_dynamic_append_nulless));
+          fake_print_error(&data_make->program->error, macro_fake_f(f_string_dynamic_append_nulless));
 
           return;
         }

@@ -80,10 +80,27 @@ extern "C" {
 
     setting->state.step_small = fss_basic_read_allocation_small_d;
 
+    // Identify and pocess first/last parameters.
+    if (main->parameters.array[fss_basic_read_parameter_line_first_no_e].result & f_console_result_found_e) {
+      setting->flag -= setting->flag & fss_basic_read_main_flag_print_first_e;
+    }
+    else {
+      setting->flag |= fss_basic_read_main_flag_print_first_e;
+    }
+
+    if (main->parameters.array[fss_basic_read_parameter_line_last_no_e].result & f_console_result_found_e) {
+      setting->flag -= setting->flag & fss_basic_read_main_flag_print_last_e;
+    }
+    else {
+      setting->flag |= fss_basic_read_main_flag_print_last_e;
+    }
+
     if (F_status_is_error(setting->state.status)) {
-      fss_basic_read_print_line_first_locked(setting, main->error);
       fll_error_print(main->error, F_status_set_fine(setting->state.status), "f_console_parameter_process", fll_error_file_flag_fallback_e);
-      fss_basic_read_print_line_last_locked(setting, main->error);
+
+      if (main->error.verbosity > f_console_verbosity_quiet_e) {
+        fll_print_dynamic_raw(f_string_eol_s, main->error);
+      }
 
       return;
     }
@@ -103,26 +120,14 @@ extern "C" {
         setting->state.status = fll_program_parameter_process_context(choices, modes, F_true, main);
 
         if (F_status_is_error(setting->state.status)) {
-          fss_basic_read_print_line_first_locked(setting, main->error);
           fll_error_print(main->error, F_status_set_fine(setting->state.status), "fll_program_parameter_process_context", fll_error_file_flag_fallback_e);
-          fss_basic_read_print_line_last_locked(setting, main->error);
+
+          if (main->error.verbosity > f_console_verbosity_quiet_e) {
+            fll_print_dynamic_raw(f_string_eol_s, main->error);
+          }
 
           return;
         }
-      }
-
-      if (main->parameters.array[fss_basic_read_parameter_line_first_no_e].result & f_console_result_found_e) {
-        setting->line_first = f_string_empty_s;
-      }
-      else {
-        setting->line_first = f_string_eol_s;
-      }
-
-      if (main->parameters.array[fss_basic_read_parameter_line_last_no_e].result & f_console_result_found_e) {
-        setting->line_last = f_string_empty_s;
-      }
-      else {
-        setting->line_last = f_string_eol_s;
       }
 
       // Identify and prioritize "verbosity" parameters.
@@ -136,9 +141,11 @@ extern "C" {
         setting->state.status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, main);
 
         if (F_status_is_error(setting->state.status)) {
-          fss_basic_read_print_line_first_locked(setting, main->error);
           fll_error_print(main->error, F_status_set_fine(setting->state.status), "fll_program_parameter_process_verbosity", fll_error_file_flag_fallback_e);
-          fss_basic_read_print_line_last_locked(setting, main->error);
+
+          if (main->error.verbosity > f_console_verbosity_quiet_e) {
+            fll_print_dynamic_raw(f_string_eol_s, main->error);
+          }
 
           return;
         }

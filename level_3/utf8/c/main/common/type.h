@@ -71,18 +71,19 @@ extern "C" {
  * Flags passed to the main function or program.
  *
  * utf8_main_flag_*_e:
- *   - none:           No flags set.
- *   - copyright:      Print the copyright.
- *   - file_from:      Using a specified source file.
- *   - file_to:        Using a specified destination file.
- *   - header:         Enable printing of headers.
- *   - help:           Print help.
- *   - pipe:           Use the input pipe.
- *   - print_first:    When set, the first character printing logic is to be processed (this is usually automatic).
- *   - separate:       Enable printing of separators.
- *   - strip_invalid:  Using strip invalid character mode.
- *   - verify:         Using verify mode.
- *   - version:        Print version.
+ *   - none:          No flags set.
+ *   - copyright:     Print the copyright.
+ *   - file_from:     Using a specified source file.
+ *   - file_to:       Using a specified destination file.
+ *   - header:        Enable printing of headers.
+ *   - help:          Print help.
+ *   - pipe:          Use the input pipe.
+ *   - print_first:   When set, print new line to message output on program begin after loading settings.
+ *   - print_last:    When set, print new line to message output on program end.
+ *   - separate:      Enable printing of separators.
+ *   - strip_invalid: Using strip invalid character mode.
+ *   - verify:        Using verify mode.
+ *   - version:       Print version.
  */
 #ifndef _di_utf8_main_flag_e_
   enum {
@@ -94,10 +95,11 @@ extern "C" {
     utf8_main_flag_help_e          = 0x10,
     utf8_main_flag_pipe_e          = 0x20,
     utf8_main_flag_print_first_e   = 0x40,
-    utf8_main_flag_separate_e      = 0x80,
-    utf8_main_flag_strip_invalid_e = 0x100,
-    utf8_main_flag_verify_e        = 0x200,
-    utf8_main_flag_version_e       = 0x400,
+    utf8_main_flag_print_last_e    = 0x80,
+    utf8_main_flag_separate_e      = 0x100,
+    utf8_main_flag_strip_invalid_e = 0x200,
+    utf8_main_flag_verify_e        = 0x400,
+    utf8_main_flag_version_e       = 0x800,
   }; // enum
 #endif // _di_utf8_main_flag_e_
 
@@ -220,9 +222,6 @@ extern "C" {
  * append:  A string to append. A value of NULL results in not appending.
  * prepend: A string to prepend. A value of NULL results in not prepending.
  *
- * line_first: A string expected to represent either "\n" or NULL to allow for easy handling of when to print first new line or not.
- * line_last:  A string expected to represent either "\n" or NULL to allow for easy handling of when to print last new line or not.
- *
  * buffer: A buffer to use for printing output (generally for storing a block of input from an input file).
  * text:   A buffer for storing a series of characters for processing (generally for code point processing).
  *
@@ -243,9 +242,6 @@ extern "C" {
     f_string_static_t append;
     f_string_static_t prepend;
 
-    f_string_static_t line_first;
-    f_string_static_t line_last;
-
     f_string_dynamic_t buffer;
     f_string_dynamic_t text;
 
@@ -257,14 +253,12 @@ extern "C" {
   #define utf8_setting_t_initialize \
     { \
       utf8_mode_from_bytesequence_e | utf8_mode_to_codepoint_e, \
-      utf8_main_flag_print_first_e, \
+      utf8_main_flag_none_e, \
       f_state_t_initialize, \
       f_color_set_t_initialize, \
       f_color_set_t_initialize, \
       f_string_static_t_initialize, \
       f_string_static_t_initialize, \
-      f_string_eol_s, \
-      f_string_eol_s, \
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
       f_string_dynamics_t_initialize, \

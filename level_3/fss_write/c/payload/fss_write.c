@@ -88,7 +88,7 @@ extern "C" {
 
       if (!((++main->signal_check) % fss_write_signal_check_d)) {
         if (fll_program_standard_signal_received(main)) {
-          fll_program_print_signal_received(main->warning, setting->line_first, main->signal_received);
+          fll_program_print_signal_received(main->warning, main->signal_received);
 
           setting->state.status = F_status_set_error(F_interrupt);
 
@@ -193,7 +193,6 @@ extern "C" {
           if (!(setting->flag & fss_write_main_flag_content_multiple_e)) {
             setting->state.status = F_status_set_error(F_support_not);
 
-            fss_write_print_line_first(setting, main->message);
             fss_write_print_error_one_content_only(setting, main->error);
 
             break;
@@ -257,7 +256,6 @@ extern "C" {
               if (setting->block.string[range.start] == fss_write_pipe_content_start_s.string[0]) {
                 setting->state.status = F_status_set_error(F_support_not);
 
-                fss_write_print_line_first(setting, main->message);
                 fss_write_print_error_one_content_only(setting, main->error);
 
                 break;
@@ -412,7 +410,6 @@ extern "C" {
         if (F_status_set_fine(setting->state.status) == F_none_eol) {
           setting->state.status = F_status_set_error(F_support_not);
 
-          fss_write_print_line_first(setting, main->message);
           fss_write_print_error_unsupported_eol(setting, main->error);
 
           return;
@@ -452,7 +449,6 @@ extern "C" {
           if (F_status_set_fine(setting->state.status) == F_none_eol) {
             setting->state.status = F_status_set_error(F_support_not);
 
-            fss_write_print_line_first(setting, main->message);
             fss_write_print_error_unsupported_eol(setting, main->error);
 
             return;
@@ -558,7 +554,6 @@ extern "C" {
         if (fl_string_dynamic_compare(argv[values->array[i]], fss_write_payload_s) == F_equal_to && i + 1 < values->used) {
           setting->state.status = F_status_set_error(F_parameter);
 
-          fss_write_print_line_first(setting, main->message);
           fss_write_payload_print_error_payload_not_last(setting, main->error);
 
           return;

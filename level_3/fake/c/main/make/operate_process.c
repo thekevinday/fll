@@ -7,8 +7,8 @@ extern "C" {
 #ifndef _di_fake_make_operate_process_
   int fake_make_operate_process(fake_make_data_t * const data_make, const f_string_range_t section_name, fake_state_process_t * const state_process, f_array_lengths_t * const section_stack) {
 
-    if (!data_make || !data_make->main || !data_make->setting || !state_process || !section_stack) return 0;
-    if (data_make->setting->state.status == F_child) return data_make->data->main->child;
+    if (!data_make || !data_make->program || !data_make->setting || !state_process || !section_stack) return 0;
+    if (data_make->setting->state.status == F_child) return data_make->program->child;
 
     if (state_process->operation == fake_make_operation_type_break_e) {
       fake_make_operate_process_type_break(data_make);
@@ -117,7 +117,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_process_buffer_escape_
   void fake_make_operate_process_buffer_escape(fake_make_data_t * const data_make, const f_string_static_t source, f_string_dynamic_t * const destination) {
 
-    if (!data_make || !data_make->main || !data_make->setting || !destination) return;
+    if (!data_make || !data_make->program || !data_make->setting || !destination) return;
 
     if (!source.used) {
       data_make->setting->state.status = F_data_not;
@@ -278,7 +278,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_process_execute_
   void fake_make_operate_process_execute(fake_make_data_t * const data_make, const f_string_static_t program, const f_string_statics_t arguments, const bool as_shell) {
 
-    if (!data_make || !data_make->main || !data_make->setting) return;
+    if (!data_make || !data_make->program || !data_make->setting) return;
 
     if (!program.used && !arguments.used) {
       data_make->setting->state.status = F_data_not;
@@ -286,8 +286,8 @@ extern "C" {
       return;
     }
 
-    if (fll_program_standard_signal_received(data_make->main)) {
-      fll_program_print_signal_received(data_make->main->warning, data_make->data->setting->line_first, data_make->main->signal_received);
+    if (fll_program_standard_signal_received(data_make->program)) {
+      fll_program_print_signal_received(data_make->program->warning, data_make->program->signal_received);
 
       data_make->setting->state.status = F_status_set_error(F_interrupt);
 
@@ -307,7 +307,7 @@ extern "C" {
       data_make->setting->state.status = fl_environment_load_names(data_make->setting_build.environment, &data_make->environment);
 
       if (F_status_is_error(data_make->setting->state.status)) {
-        fake_print_error(data_make->setting, data_make->main->error, macro_fake_f(fl_environment_load_names));
+        fake_print_error(&data_make->program->error, macro_fake_f(fl_environment_load_names));
 
         return;
       }
@@ -316,13 +316,13 @@ extern "C" {
       data_make->setting->state.status = f_environment_get_all(&data_make->environment);
 
       if (F_status_is_error(data_make->setting->state.status)) {
-        fake_print_error(data_make->setting, data_make->main->error, macro_fake_f(f_environment_get_all));
+        fake_print_error(&data_make->program->error, macro_fake_f(f_environment_get_all));
 
         return;
       }
     }
 
-    fake_make_print_verbose_operate_program(data_make->setting, data_make->main->message, program, arguments);
+    fake_make_print_verbose_operate_program(data_make->setting, data_make->program->message, program, arguments);
 
     // Child processes should receive all signals, without blocking.
     f_signal_how_t signals = f_signal_how_t_initialize;
@@ -335,8 +335,8 @@ extern "C" {
 
     data_make->setting->state.status = fll_execute_program(program, arguments, &parameter, 0, (void *) &return_code);
 
-    if (fll_program_standard_signal_received(data_make->main)) {
-      fll_program_print_signal_received(data_make->main->warning, data_make->data->setting->line_first, data_make->main->signal_received);
+    if (fll_program_standard_signal_received(data_make->program)) {
+      fll_program_print_signal_received(data_make->program->warning, data_make->program->signal_received);
 
       data_make->setting->state.status = F_status_set_error(F_interrupt);
 
@@ -347,10 +347,10 @@ extern "C" {
       if (F_status_set_fine(data_make->setting->state.status) == F_interrupt) return;
 
       if (F_status_set_fine(data_make->setting->state.status) == F_file_found_not) {
-        fake_make_print_error_program_not_found(data_make->setting, data_make->main->error, program);
+        fake_make_print_error_program_not_found(data_make->setting, data_make->program->error, program);
       }
       else if (F_status_set_fine(data_make->setting->state.status) != F_failure) {
-        fake_print_error(data_make->setting, data_make->main->error, macro_fake_f(fll_execute_program));
+        fake_print_error(&data_make->program->error, macro_fake_f(fll_execute_program));
       }
     }
 
@@ -363,7 +363,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_process_return_
   void fake_make_operate_process_return(fake_make_data_t * const data_make, const int return_code) {
 
-    if (!data_make || !data_make->main || !data_make->setting) return;
+    if (!data_make || !data_make->program || !data_make->setting) return;
 
     const f_status_t status_original = data_make->setting->state.status;
 
@@ -375,7 +375,7 @@ extern "C" {
       data_make->setting->state.status = f_conversion_number_signed_to_string(WEXITSTATUS(return_code), f_conversion_data_base_10_c, &number);
 
       if (F_status_is_error(data_make->setting->state.status)) {
-        fake_print_error(data_make->setting, data_make->main->error, macro_fake_f(f_conversion_number_signed_to_string));
+        fake_print_error(&data_make->program->error, macro_fake_f(f_conversion_number_signed_to_string));
 
         f_string_dynamic_resize(0, &number);
 
@@ -387,12 +387,12 @@ extern "C" {
       f_string_dynamic_resize(0, &number);
 
       if (F_status_is_error(data_make->setting->state.status)) {
-        fake_print_error(data_make->setting, data_make->main->error, macro_fake_f(f_string_dynamic_append));
+        fake_print_error(&data_make->program->error, macro_fake_f(f_string_dynamic_append));
 
         return;
       }
 
-      fake_make_print_error_program_failed(data_make->setting, data_make->main->error, return_code);
+      fake_make_print_error_program_failed(data_make->setting, data_make->program->error, return_code);
 
       data_make->setting->state.status = (data_make->setting_make.fail == fake_make_operation_fail_exit_e) ? F_status_set_error(F_failure) : F_failure;
 
@@ -418,7 +418,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_process_run_
   void fake_make_operate_process_run(fake_make_data_t * const data_make, const bool as_shell) {
 
-    if (!data_make || !data_make->main || !data_make->setting) return;
+    if (!data_make || !data_make->program || !data_make->setting) return;
 
     if (!data_make->cache_arguments.used) {
       data_make->setting->state.status = F_data_not;

@@ -11,8 +11,6 @@ extern "C" {
 
     f_file_stream_lock(print.to);
 
-    f_print_dynamic_raw(setting->line_first, print.to);
-
     fll_program_print_help_header(
       print,
       setting->program_name_long
@@ -45,8 +43,6 @@ extern "C" {
       setting->status_string_help_detail(setting, print);
     }
 
-    f_print_dynamic_raw(setting->line_last, print.to);
-
     f_file_stream_flush(print.to);
     f_file_stream_unlock(print.to);
 
@@ -76,42 +72,6 @@ extern "C" {
     return F_none;
   }
 #endif // _di_status_code_print_help_detail_
-
-#ifndef _di_status_code_print_line_first_
-  f_status_t status_code_print_line_first(status_code_setting_t * const setting, const fl_print_t print) {
-
-    if (!setting) return F_status_set_error(F_output_not);
-    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
-
-    if (F_status_is_error_not(setting->state.status)) {
-      if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
-    }
-
-    if (setting->flag & status_code_main_flag_print_first_e) {
-      fll_print_dynamic_raw(setting->line_first, print.to);
-
-      setting->flag -= status_code_main_flag_print_first_e;
-    }
-
-    return F_none;
-  }
-#endif // _di_status_code_print_line_first_
-
-#ifndef _di_status_code_print_line_last_
-  f_status_t status_code_print_line_last(status_code_setting_t * const setting, const fl_print_t print) {
-
-    if (!setting) return F_status_set_error(F_output_not);
-    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
-
-    if (F_status_is_error_not(setting->state.status)) {
-      if (print.verbosity < f_console_verbosity_normal_e) return F_output_not;
-    }
-
-    fll_print_dynamic_raw(setting->line_last, print.to);
-
-    return F_none;
-  }
-#endif // _di_status_code_print_line_last_
 
 #ifdef __cplusplus
 } // extern "C"
