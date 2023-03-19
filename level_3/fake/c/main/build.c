@@ -194,7 +194,7 @@ extern "C" {
 
     memcpy(path_source.string, source.string, sizeof(f_char_t) * source.used);
 
-    f_directory_recurse_t recurse = f_directory_recurse_t_initialize; // @fixme this is memory leaking on recurse.listing.
+    f_directory_recurse_t recurse = f_directory_recurse_t_initialize;
     recurse.verbose = &fake_print_verbose_copy;
     //recurse.failures = &failures; // @fixme this now needs to be handled by a callback in recurse (recurse.state.handle)., maybe make this a callback on f_directory_recurse_t?
     recurse.mode = mode;

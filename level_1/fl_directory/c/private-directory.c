@@ -8,23 +8,36 @@ extern "C" {
 #if !defined(_di_fl_directory_copy_)
   void private_fl_directory_copy_recurse(f_directory_recurse_t * const recurse) {
 
-    f_string_dynamics_t directories = f_string_dynamics_t_initialize;
     f_string_dynamics_t directories_original = f_string_dynamics_t_initialize;
 
     directories_original.array = recurse->listing.directory.array;
     directories_original.used = recurse->listing.directory.used;
     directories_original.size = recurse->listing.directory.size;
 
-    recurse->listing.directory.array = directories.array;
-    recurse->listing.directory.used = directories.used;
-    recurse->listing.directory.size = directories.size;
+    recurse->listing.directory.array = 0;
+    recurse->listing.directory.used = 0;
+    recurse->listing.directory.size = 0;
+
+    // Use a clean set for each recursion.
+    recurse->listing.block.used = 0;
+    recurse->listing.character.used = 0;
+    recurse->listing.directory.used = 0;
+    recurse->listing.regular.used = 0;
+    recurse->listing.link.used = 0;
+    recurse->listing.fifo.used = 0;
+    recurse->listing.socket.used = 0;
+    recurse->listing.unknown.used = 0;
 
     recurse->state.status = private_fl_directory_list(*recurse->source, 0, 0, recurse->flag & f_directory_recurse_flag_dereference_e, &recurse->listing);
 
     if (F_status_is_error(recurse->state.status)) {
 
       // Only the directory is to be freed because all others are preserved between recursions.
-      f_string_dynamics_resize(0, &directories);
+      f_string_dynamics_resize(0, &recurse->listing.directory);
+
+      recurse->listing.directory.array = directories_original.array;
+      recurse->listing.directory.used = directories_original.used;
+      recurse->listing.directory.size = directories_original.size;
 
       return;
     }
@@ -204,11 +217,12 @@ extern "C" {
       } // for
     }
 
+    // Only the directory is to be freed because all others are preserved between recursions.
+    f_string_dynamics_resize(0, &recurse->listing.directory);
+
     recurse->listing.directory.array = directories_original.array;
     recurse->listing.directory.used = directories_original.used;
     recurse->listing.directory.size = directories_original.size;
-
-    f_string_dynamics_resize(0, &directories);
   }
 #endif // !defined(_di_fl_directory_copy_)
 
