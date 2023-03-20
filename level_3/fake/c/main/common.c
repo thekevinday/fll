@@ -16,8 +16,7 @@ extern "C" {
     {
       const uint16_t step_original = main->setting.state.step_small;
       fake_data_t data = fake_data_t_initialize;
-      data.program = &main->program;
-      data.setting = &main->setting;
+      data.main = main;
 
       main->setting.state.step_small = 4;
 
@@ -265,7 +264,7 @@ extern "C" {
                       fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
                     }
 
-                    if (fake_print_error_fallback(&main->setting, main->program.error, macro_fake_f(f_utf_is_word_dash_plus)) == F_false) {
+                    if (fake_print_error_fallback(&main->program.error, macro_fake_f(f_utf_is_word_dash_plus)) == F_false) {
                       fll_program_print_error_parameter_process(main->program.error, f_console_symbol_long_normal_s, names[i]);
                     }
 
@@ -279,7 +278,7 @@ extern "C" {
                       fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
                     }
 
-                    fake_print_error_parameter_not_word(&main->setting, main->program.error, f_console_symbol_long_normal_s, names[i], main->program.parameters.arguments.array[index]);
+                    fake_print_error_parameter_not_word(&main->program.error, f_console_symbol_long_normal_s, names[i], main->program.parameters.arguments.array[index]);
 
                     return;
                   }
@@ -295,7 +294,7 @@ extern "C" {
                   }
 
                   if (main->program.error.verbosity > f_console_verbosity_quiet_e) {
-                    if (fake_print_error_fallback(&main->setting, main->program.error, macro_fake_f(f_path_directory_cleanup)) == F_false) {
+                    if (fake_print_error_fallback(&main->program.error, macro_fake_f(f_path_directory_cleanup)) == F_false) {
                       fll_program_print_error_parameter_process(main->program.error, f_console_symbol_long_normal_s, names[i]);
                     }
                   }
@@ -332,7 +331,7 @@ extern "C" {
                   fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
                 }
 
-                fake_print_error_parameter_not_empty(&main->setting, main->program.error, f_console_symbol_long_normal_s, names[i], main->program.parameters.arguments.array[index]);
+                fake_print_error_parameter_not_empty(&main->program.error, f_console_symbol_long_normal_s, names[i], main->program.parameters.arguments.array[index]);
 
                 return;
               }
@@ -407,7 +406,7 @@ extern "C" {
               }
 
               if (main->program.error.verbosity > f_console_verbosity_quiet_e) {
-                if (fake_print_error_fallback(&main->setting, main->program.error, macro_fake_f(fll_program_parameter_additional_rip)) == F_false) {
+                if (fake_print_error_fallback(&main->program.error, macro_fake_f(fll_program_parameter_additional_rip)) == F_false) {
                   fll_program_print_error_parameter_process(main->program.error, f_console_symbol_long_normal_s, names[i]);
                 }
               }
@@ -428,7 +427,7 @@ extern "C" {
                   }
 
                   // @todo fix this to print an error about the actual invalid character so that it can be investigated.
-                  if (fake_print_error_fallback(&main->setting, main->program.error, macro_fake_f(f_utf_is_word_dash_plus)) == F_false) {
+                  if (fake_print_error_fallback(&main->program.error, macro_fake_f(f_utf_is_word_dash_plus)) == F_false) {
                     fll_program_print_error_parameter_process(main->program.error, f_console_symbol_long_normal_s, names[i]);
                   }
 
@@ -442,7 +441,7 @@ extern "C" {
                     fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
                   }
 
-                  fake_print_error_parameter_not_word(&main->setting, main->program.error, f_console_symbol_long_normal_s, names[i], main->program.parameters.arguments.array[i]);
+                  fake_print_error_parameter_not_word(&main->program.error, f_console_symbol_long_normal_s, names[i], main->program.parameters.arguments.array[i]);
 
                   return;
                 }
@@ -491,38 +490,38 @@ extern "C" {
     f_console_parameters_t * const parameters = (f_console_parameters_t * const) void_parameters;
     fake_data_t * const data = (fake_data_t * const) void_data;
 
-    if (!data->setting) return;
+    if (!data->main) return;
 
-    parameter_state->state->status = f_uint8s_increase(parameter_state->state->step_small, &data->setting->operations);
+    parameter_state->state->status = f_uint8s_increase(parameter_state->state->step_small, &data->main->setting.operations);
 
     if (F_status_is_error(parameter_state->state->status)) {
-      fake_print_error(&data->program->error, macro_fake_f(f_uint8s_increase));
+      fake_print_error(&data->main->program.error, macro_fake_f(f_uint8s_increase));
 
       return;
     }
 
     switch (parameter_state->at) {
       case fake_parameter_operation_build_e:
-        data->setting->operations.array[data->setting->operations.used++] = fake_operation_build_e;
-        data->setting->flag |= fake_main_flag_operation_build_e;
+        data->main->setting.operations.array[data->main->setting.operations.used++] = fake_operation_build_e;
+        data->main->setting.flag |= fake_main_flag_operation_build_e;
 
         break;
 
       case fake_parameter_operation_clean_e:
-        data->setting->operations.array[data->setting->operations.used++] = fake_operation_clean_e;
-        data->setting->flag |= fake_main_flag_operation_clean_e;
+        data->main->setting.operations.array[data->main->setting.operations.used++] = fake_operation_clean_e;
+        data->main->setting.flag |= fake_main_flag_operation_clean_e;
 
         break;
 
       case fake_parameter_operation_make_e:
-        data->setting->operations.array[data->setting->operations.used++] = fake_operation_make_e;
-        data->setting->flag |= fake_main_flag_operation_make_e;
+        data->main->setting.operations.array[data->main->setting.operations.used++] = fake_operation_make_e;
+        data->main->setting.flag |= fake_main_flag_operation_make_e;
 
         break;
 
       case fake_parameter_operation_skeleton_e:
-        data->setting->operations.array[data->setting->operations.used++] = fake_operation_skeleton_e;
-        data->setting->flag |= fake_main_flag_operation_skeleton_e;
+        data->main->setting.operations.array[data->main->setting.operations.used++] = fake_operation_skeleton_e;
+        data->main->setting.flag |= fake_main_flag_operation_skeleton_e;
 
         break;
 

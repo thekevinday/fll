@@ -19,13 +19,12 @@ extern "C" {
 /**
  * Print warning message when unable to change back to original path.
  *
- * @param setting
- *   The main program settings.
- *   (Must be of type fake_setting_t.)
- *
- *   This does not alter setting.state.status.
  * @param print
  *   The output structure to print to.
+ *
+ *   This requires print.custom to be fake_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param path
  *   The path that cannot be changed back to.
  *
@@ -40,19 +39,18 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fake_make_print_warning_cannot_change_back_
-  extern f_status_t fake_make_print_warning_cannot_change_back(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t path);
+  extern f_status_t fake_make_print_warning_cannot_change_back(fl_print_t * const print, const f_string_static_t path);
 #endif // _di_fake_make_print_warning_cannot_change_back_
 
 /**
  * Print warning about a setting name being already added.
  *
- * @param setting
- *   The main program settings.
- *   (Must be of type fake_setting_t.)
- *
- *   This does not alter setting.state.status.
  * @param print
  *   The output structure to print to.
+ *
+ *   This requires print.custom to be fake_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param name
  *   The name of the environment variable that is already added.
  *
@@ -65,19 +63,18 @@ extern "C" {
  * @see fake_print_context_simple_variable()
  */
 #ifndef _di_fake_make_print_warning_environment_name_already_added_
-  extern f_status_t fake_make_print_warning_environment_name_already_added(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t name);
+  extern f_status_t fake_make_print_warning_environment_name_already_added(fl_print_t * const print, const f_string_static_t name);
 #endif // _di_fake_make_print_warning_environment_name_already_added_
 
 /**
  * Print warning about a given environment name being invalid.
  *
- * @param setting
- *   The main program settings.
- *   (Must be of type fake_setting_t.)
- *
- *   This does not alter setting.state.status.
  * @param print
  *   The output structure to print to.
+ *
+ *   This requires print.custom to be fake_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param name
  *   The name of the environment variable that is invalid.
  *
@@ -90,19 +87,18 @@ extern "C" {
  * @see fake_print_context_simple_variable()
  */
 #ifndef _di_fake_make_print_warning_environment_name_invalid_
-  extern f_status_t fake_make_print_warning_environment_name_invalid(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t name);
+  extern f_status_t fake_make_print_warning_environment_name_invalid(fl_print_t * const print, const f_string_static_t name);
 #endif // _di_fake_make_print_warning_environment_name_invalid_
 
 /**
  * Print warning about a given fakefile being empty.
  *
- * @param setting
- *   The main program settings.
- *   (Must be of type fake_setting_t.)
- *
- *   This does not alter setting.state.status.
  * @param print
  *   The output structure to print to.
+ *
+ *   This requires print.custom to be fake_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param fakefile
  *   The name or path of the file that is empty.
  *
@@ -115,19 +111,18 @@ extern "C" {
  * @see fake_print_context_simple_variable()
  */
 #ifndef _di_fake_make_print_warning_fakefile_empty_
-  extern f_status_t fake_make_print_warning_fakefile_empty(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t fakefile);
+  extern f_status_t fake_make_print_warning_fakefile_empty(fl_print_t * const print, const f_string_static_t fakefile);
 #endif // _di_fake_make_print_warning_fakefile_empty_
 
 /**
  * Print warning about a file not being found.
  *
- * @param setting
- *   The main program settings.
- *   (Must be of type fake_setting_t.)
- *
- *   This does not alter setting.state.status.
  * @param print
  *   The output structure to print to.
+ *
+ *   This requires print.custom to be fake_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param file
  *   The name or path of the file that is not found.
  *
@@ -140,19 +135,18 @@ extern "C" {
  * @see fake_print_context_simple_variable()
  */
 #ifndef _di_fake_make_print_warning_file_not_found_
-  extern f_status_t fake_make_print_warning_file_not_found(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t file);
+  extern f_status_t fake_make_print_warning_file_not_found(fl_print_t * const print, const f_string_static_t file);
 #endif // _di_fake_make_print_warning_file_not_found_
 
 /**
  * Print message when fake settings content is empty.
  *
- * @param setting
- *   The main program settings.
- *   (Must be of type fake_setting_t.)
- *
- *   This does not alter setting.state.status.
  * @param print
  *   The output structure to print to.
+ *
+ *   This requires print.custom to be fake_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param fakefile
  *   The name or path of the file that is empty.
  * @param buffer
@@ -173,19 +167,18 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fake_make_print_warning_setting_content_empty_
-  extern f_status_t fake_make_print_warning_setting_content_empty(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t fakefile, const f_string_dynamic_t buffer, const f_string_range_t range, const f_string_static_t name);
+  extern f_status_t fake_make_print_warning_setting_content_empty(fl_print_t * const print, const f_string_static_t fakefile, const f_string_dynamic_t buffer, const f_string_range_t range, const f_string_static_t name);
 #endif // _di_fake_make_print_warning_setting_content_empty_
 
 /**
  * Print warning message when fake settings content is invalid.
  *
- * @param setting
- *   The main program settings.
- *   (Must be of type fake_setting_t.)
- *
- *   This does not alter setting.state.status.
  * @param print
  *   The output structure to print to.
+ *
+ *   This requires print.custom to be fake_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param fakefile
  *   The name or path of the file that is empty.
  * @param buffer
@@ -208,19 +201,18 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fake_make_print_warning_setting_content_invalid_
-  extern f_status_t fake_make_print_warning_setting_content_invalid(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t fakefile, const f_string_dynamic_t buffer, const f_string_range_t object, const f_string_range_t content, const f_string_static_t name);
+  extern f_status_t fake_make_print_warning_setting_content_invalid(fl_print_t * const print, const f_string_static_t fakefile, const f_string_dynamic_t buffer, const f_string_range_t object, const f_string_range_t content, const f_string_static_t name);
 #endif // _di_fake_make_print_warning_setting_content_invalid_
 
 /**
  * Print warning message when settings content has too many values.
  *
- * @param setting
- *   The main program settings.
- *   (Must be of type fake_setting_t.)
- *
- *   This does not alter setting.state.status.
  * @param print
  *   The output structure to print to.
+ *
+ *   This requires print.custom to be fake_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param fakefile
  *   The name or path of the file that is empty.
  * @param name
@@ -235,19 +227,18 @@ extern "C" {
  * @see fake_print_context_wrapped_variables()
  */
 #ifndef _di_fake_make_print_warning_setting_content_multiple_
-  extern f_status_t fake_make_print_warning_setting_content_multiple(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t fakefile, const f_string_static_t name);
+  extern f_status_t fake_make_print_warning_setting_content_multiple(fl_print_t * const print, const f_string_static_t fakefile, const f_string_static_t name);
 #endif // _di_fake_make_print_warning_setting_content_multiple_
 
 /**
  * Print warning message when fakefile has too many objects with the same name.
  *
- * @param setting
- *   The main program settings.
- *   (Must be of type fake_setting_t.)
- *
- *   This does not alter setting.state.status.
  * @param print
  *   The output structure to print to.
+ *
+ *   This requires print.custom to be fake_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param fakefile
  *   The name or path of the file that is empty.
  * @param name
@@ -262,7 +253,7 @@ extern "C" {
  * @see fake_print_context_wrapped_variables()
  */
 #ifndef _di_fake_make_print_warning_setting_object_multiple_
-  extern f_status_t fake_make_print_warning_setting_object_multiple(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t fakefile, const f_string_static_t name);
+  extern f_status_t fake_make_print_warning_setting_object_multiple(fl_print_t * const print, const f_string_static_t fakefile, const f_string_static_t name);
 #endif // _di_fake_make_print_warning_setting_object_multiple_
 
 #ifdef __cplusplus

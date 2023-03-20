@@ -27,7 +27,7 @@ extern "C" {
  * @param data
  *   The program data.
  *
- *   This alters data.setting.state.status:
+ *   This alters data.main->setting.state.status:
  *     F_none on success.
  *
  *     Errors (with error bit) from: fake_build_touch().
@@ -57,7 +57,7 @@ extern "C" {
  * @param data
  *   The program data.
  *
- *   This alters data.setting.state.status:
+ *   This alters data.main->setting.state.status:
  *     F_none on success.
  *
  *     Errors (with error bit) from: fll_execute_arguments_add().
@@ -93,7 +93,7 @@ extern "C" {
  * @param data
  *   The program data.
  *
- *   This alters data.setting.state.status:
+ *   This alters data.main->setting.state.status:
  *     F_none on success.
  *
  *     Errors (with error bit) from: fll_execute_arguments_add().

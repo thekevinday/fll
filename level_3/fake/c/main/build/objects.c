@@ -7,19 +7,19 @@ extern "C" {
 #ifndef _di_fake_build_objects_static_
   int fake_build_objects_static(fake_data_t * const data, fake_build_data_t * const data_build, const f_mode_t mode, const f_string_static_t file_stage) {
 
-    if (!data || !data->program || !data->setting) return 0;
-    if (data->setting->state.status == F_child) return data->program->child;
-    if (F_status_is_error(data->setting->state.status) || f_file_exists(file_stage, F_true) == F_true) return 0;
+    if (!data || !data->main) return 0;
+    if (data->main->setting.state.status == F_child) return data->main->program.child;
+    if (F_status_is_error(data->main->setting.state.status) || f_file_exists(file_stage, F_true) == F_true) return 0;
     if (!data_build->setting.build_sources_library.used) return 0;
 
-    fake_build_print_compile_object_static_library(data->setting, data->program->message);
+    fake_build_print_compile_object_static_library(&data->main->program.message);
 
     f_string_dynamics_t arguments = f_string_dynamics_t_initialize;
 
     fake_build_objects_add(data, data_build, &data->path_build_objects_static, &data_build->setting.build_objects_library, &data_build->setting.build_objects_library_static, &arguments);
 
-    if (F_status_is_error(data->setting->state.status)) {
-      fake_print_error(&data->program->error, macro_fake_f(fake_build_objects_add));
+    if (F_status_is_error(data->main->setting.state.status)) {
+      fake_print_error(&data->main->program.error, macro_fake_f(fake_build_objects_add));
 
       f_string_dynamics_resize(0, &arguments);
 
@@ -31,7 +31,7 @@ extern "C" {
     f_string_static_t destination = f_string_static_t_initialize;
     f_string_static_t source = f_string_static_t_initialize;
 
-    int result = data->program->child;
+    int result = data->main->program.child;
 
     const f_string_dynamics_t *sources[2] = {
       &data_build->setting.build_sources_library,
@@ -63,66 +63,66 @@ extern "C" {
 
         fake_build_get_file_name_without_extension(data, sources[i]->array[j], &file_name);
 
-        if (F_status_is_error(data->setting->state.status)) {
-          fake_print_error(&data->program->error, macro_fake_f(fake_build_get_file_name_without_extension));
+        if (F_status_is_error(data->main->setting.state.status)) {
+          fake_print_error(&data->main->program.error, macro_fake_f(fake_build_get_file_name_without_extension));
 
           break;
         }
 
-        data->setting->state.status = f_file_name_directory(sources[i]->array[j], &destination_path);
+        data->main->setting.state.status = f_file_name_directory(sources[i]->array[j], &destination_path);
 
-        if (F_status_is_error(data->setting->state.status)) {
-          fake_print_error(&data->program->error, macro_fake_f(f_file_name_directory));
+        if (F_status_is_error(data->main->setting.state.status)) {
+          fake_print_error(&data->main->program.error, macro_fake_f(f_file_name_directory));
 
           break;
         }
 
         if (destination_path.used) {
-          data->setting->state.status = f_string_dynamic_prepend(data->path_build_objects, &destination_path);
+          data->main->setting.state.status = f_string_dynamic_prepend(data->path_build_objects, &destination_path);
 
-          if (F_status_is_error(data->setting->state.status)) {
-            fake_print_error(&data->program->error, macro_fake_f(f_string_dynamic_prepend));
-
-            break;
-          }
-
-          data->setting->state.status = f_string_dynamic_append_assure(f_path_separator_s, &destination_path);
-
-          if (F_status_is_error(data->setting->state.status)) {
-            fake_print_error(&data->program->error, macro_fake_f(f_string_dynamic_append_assure));
+          if (F_status_is_error(data->main->setting.state.status)) {
+            fake_print_error(&data->main->program.error, macro_fake_f(f_string_dynamic_prepend));
 
             break;
           }
 
-          data->setting->state.status = f_directory_exists(destination_path);
+          data->main->setting.state.status = f_string_dynamic_append_assure(f_path_separator_s, &destination_path);
 
-          if (data->setting->state.status == F_false) {
-            fake_build_print_error_exist_not_directory(data->setting, data->program->message, destination_path);
-
-            data->setting->state.status = F_status_set_error(F_failure);
+          if (F_status_is_error(data->main->setting.state.status)) {
+            fake_print_error(&data->main->program.error, macro_fake_f(f_string_dynamic_append_assure));
 
             break;
           }
 
-          if (data->setting->state.status == F_file_found_not) {
-            data->setting->state.status = f_directory_create(destination_path, mode.directory);
+          data->main->setting.state.status = f_directory_exists(destination_path);
 
-            if (F_status_is_error(data->setting->state.status)) {
-              if (F_status_set_fine(data->setting->state.status) == F_file_found_not) {
-                fake_build_print_error_cannot_create_due_to_parent(data->setting, data->program->message, destination_path);
+          if (data->main->setting.state.status == F_false) {
+            fake_build_print_error_exist_not_directory(&data->main->program.message, destination_path);
+
+            data->main->setting.state.status = F_status_set_error(F_failure);
+
+            break;
+          }
+
+          if (data->main->setting.state.status == F_file_found_not) {
+            data->main->setting.state.status = f_directory_create(destination_path, mode.directory);
+
+            if (F_status_is_error(data->main->setting.state.status)) {
+              if (F_status_set_fine(data->main->setting.state.status) == F_file_found_not) {
+                fake_build_print_error_cannot_create_due_to_parent(&data->main->program.message, destination_path);
               }
               else {
-                fake_print_error_file(data->setting, data->program->error, macro_fake_f(f_directory_create), destination_path, f_file_operation_create_s, fll_error_file_type_directory_e);
+                fake_print_error_file(&data->main->program.error, macro_fake_f(f_directory_create), destination_path, f_file_operation_create_s, fll_error_file_type_directory_e);
               }
 
               break;
             }
 
-            fake_build_print_verbose_create_directory(data->setting, data->program->message, destination_path);
+            fake_build_print_verbose_create_directory(&data->main->program.message, destination_path);
           }
 
-          if (F_status_is_error(data->setting->state.status)) {
-            fake_print_error_file(data->setting, data->program->error, macro_fake_f(f_directory_exists), destination_path, f_file_operation_create_s, fll_error_file_type_directory_e);
+          if (F_status_is_error(data->main->setting.state.status)) {
+            fake_print_error_file(&data->main->program.error, macro_fake_f(f_directory_exists), destination_path, f_file_operation_create_s, fll_error_file_type_directory_e);
 
             break;
           }
@@ -160,14 +160,14 @@ extern "C" {
 
           if (!values[k].used) continue;
 
-          data->setting->state.status = fll_execute_arguments_add(values[k], &arguments);
-          if (F_status_is_error(data->setting->state.status)) break;
+          data->main->setting.state.status = fll_execute_arguments_add(values[k], &arguments);
+          if (F_status_is_error(data->main->setting.state.status)) break;
         } // for
 
         fake_build_arguments_standard_add(data, data_build, F_false, fake_build_type_library_e, &arguments);
 
-        if (F_status_is_error(data->setting->state.status)) {
-          fake_print_error(&data->program->error, macro_fake_f(fll_execute_arguments_add));
+        if (F_status_is_error(data->main->setting.state.status)) {
+          fake_print_error(&data->main->program.error, macro_fake_f(fll_execute_arguments_add));
 
           break;
         }
@@ -176,17 +176,17 @@ extern "C" {
 
         macro_f_string_dynamics_t_delete_simple(arguments);
 
-        if (F_status_is_error(data->setting->state.status) || data->setting->state.status == F_child) break;
+        if (F_status_is_error(data->main->setting.state.status) || data->main->setting.state.status == F_child) break;
       } // for
 
-      if (F_status_is_error(data->setting->state.status) || data->setting->state.status == F_child) break;
+      if (F_status_is_error(data->main->setting.state.status) || data->main->setting.state.status == F_child) break;
     } // for
 
     f_string_dynamic_resize(0, &file_name);
     f_string_dynamic_resize(0, &destination_path);
     f_string_dynamics_resize(0, &arguments);
 
-    if (F_status_is_error_not(data->setting->state.status) && data->setting->state.status != F_child) {
+    if (F_status_is_error_not(data->main->setting.state.status) && data->main->setting.state.status != F_child) {
       fake_build_touch(data, file_stage);
     }
 

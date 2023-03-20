@@ -7,8 +7,8 @@ extern "C" {
 #ifndef _di_fake_make_operate_process_
   int fake_make_operate_process(fake_make_data_t * const data_make, const f_string_range_t section_name, fake_state_process_t * const state_process, f_array_lengths_t * const section_stack) {
 
-    if (!data_make || !data_make->program || !data_make->setting || !state_process || !section_stack) return 0;
-    if (data_make->setting->state.status == F_child) return data_make->program->child;
+    if (!data_make || !data_make->main || !state_process || !section_stack) return 0;
+    if (data_make->main->setting.state.status == F_child) return data_make->main->program.child;
 
     if (state_process->operation == fake_make_operation_type_break_e) {
       fake_make_operate_process_type_break(data_make);
@@ -117,16 +117,16 @@ extern "C" {
 #ifndef _di_fake_make_operate_process_buffer_escape_
   void fake_make_operate_process_buffer_escape(fake_make_data_t * const data_make, const f_string_static_t source, f_string_dynamic_t * const destination) {
 
-    if (!data_make || !data_make->program || !data_make->setting || !destination) return;
+    if (!data_make || !data_make->main || !destination) return;
 
     if (!source.used) {
-      data_make->setting->state.status = F_data_not;
+      data_make->main->setting.state.status = F_data_not;
 
       return;
     }
 
-    data_make->setting->state.status = f_string_dynamic_increase_by(source.used, destination);
-    if (F_status_is_error(data_make->setting->state.status)) return;
+    data_make->main->setting.state.status = f_string_dynamic_increase_by(source.used, destination);
+    if (F_status_is_error(data_make->main->setting.state.status)) return;
 
     for (f_array_length_t i = 0; i < source.used; ++i) {
 
@@ -138,8 +138,8 @@ extern "C" {
         // A slash by itself at the end of the string is invalid.
         if (++i >= source.used) break;
 
-        data_make->setting->state.status = f_string_dynamic_increase_by(F_memory_default_allocation_small_d, destination);
-        if (F_status_is_error(data_make->setting->state.status)) return;
+        data_make->main->setting.state.status = f_string_dynamic_increase_by(F_memory_default_allocation_small_d, destination);
+        if (F_status_is_error(data_make->main->setting.state.status)) return;
 
         if (source.string[i] == f_string_ascii_slash_backward_s.string[0]) {
           destination->string[destination->used++] = f_string_ascii_slash_backward_s.string[0];
@@ -209,18 +209,18 @@ extern "C" {
             if (buffer.used > 2) {
               uint32_t codepoint = 0;
 
-              data_make->setting->state.status = f_utf_unicode_string_to(buffer.string, buffer.used, &codepoint);
+              data_make->main->setting.state.status = f_utf_unicode_string_to(buffer.string, buffer.used, &codepoint);
 
-              if (F_status_is_error(data_make->setting->state.status)) {
-                if (!(data_make->setting->state.status == F_failure || data_make->setting->state.status == F_utf_not || data_make->setting->state.status == F_complete_not_utf || data_make->setting->state.status == F_utf_fragment || data_make->setting->state.status == F_valid_not)) {
+              if (F_status_is_error(data_make->main->setting.state.status)) {
+                if (!(data_make->main->setting.state.status == F_failure || data_make->main->setting.state.status == F_utf_not || data_make->main->setting.state.status == F_complete_not_utf || data_make->main->setting.state.status == F_utf_fragment || data_make->main->setting.state.status == F_valid_not)) {
                   break;
                 }
               }
               else {
 
                 // Reserve 4-bytes (the max size of a Unicode UTF-8 sequence).
-                data_make->setting->state.status = f_string_dynamic_increase_by(4, destination);
-                if (F_status_is_error(data_make->setting->state.status)) return;
+                data_make->main->setting.state.status = f_string_dynamic_increase_by(4, destination);
+                if (F_status_is_error(data_make->main->setting.state.status)) return;
 
                 if (!codepoint) {
                   destination->string[destination->used++] = f_string_null_s.string[0];
@@ -229,10 +229,10 @@ extern "C" {
                   {
                     f_string_t address = destination->string + destination->used;
 
-                    data_make->setting->state.status = f_utf_unicode_from(codepoint, 4, &address);
+                    data_make->main->setting.state.status = f_utf_unicode_from(codepoint, 4, &address);
                   }
 
-                  if (F_status_is_error(data_make->setting->state.status)) {
+                  if (F_status_is_error(data_make->main->setting.state.status)) {
                     destination->string[destination->used] = 0;
                   }
                   else {
@@ -262,34 +262,34 @@ extern "C" {
         }
       }
       else {
-        data_make->setting->state.status = f_string_dynamic_increase_by(F_memory_default_allocation_small_d, destination);
-        if (F_status_is_error(data_make->setting->state.status)) return;
+        data_make->main->setting.state.status = f_string_dynamic_increase_by(F_memory_default_allocation_small_d, destination);
+        if (F_status_is_error(data_make->main->setting.state.status)) return;
 
         destination->string[destination->used++] = source.string[i];
       }
     } // for
 
-    if (F_status_is_error(data_make->setting->state.status)) return;
+    if (F_status_is_error(data_make->main->setting.state.status)) return;
 
-    data_make->setting->state.status = F_none;
+    data_make->main->setting.state.status = F_none;
   }
 #endif // _di_fake_make_operate_process_buffer_escape_
 
 #ifndef _di_fake_make_operate_process_execute_
   void fake_make_operate_process_execute(fake_make_data_t * const data_make, const f_string_static_t program, const f_string_statics_t arguments, const bool as_shell) {
 
-    if (!data_make || !data_make->program || !data_make->setting) return;
+    if (!data_make || !data_make->main) return;
 
     if (!program.used && !arguments.used) {
-      data_make->setting->state.status = F_data_not;
+      data_make->main->setting.state.status = F_data_not;
 
       return;
     }
 
-    if (fll_program_standard_signal_received(data_make->program)) {
-      fll_program_print_signal_received(data_make->program->warning, data_make->program->signal_received);
+    if (fll_program_standard_signal_received(&data_make->main->program)) {
+      fll_program_print_signal_received(data_make->main->program.warning, data_make->main->program.signal_received);
 
-      data_make->setting->state.status = F_status_set_error(F_interrupt);
+      data_make->main->setting.state.status = F_status_set_error(F_interrupt);
 
       return;
     }
@@ -304,25 +304,25 @@ extern "C" {
     data_make->environment.used = 0;
 
     if (data_make->setting_build.flag & data_build_setting_flag_has_environment_e) {
-      data_make->setting->state.status = fl_environment_load_names(data_make->setting_build.environment, &data_make->environment);
+      data_make->main->setting.state.status = fl_environment_load_names(data_make->setting_build.environment, &data_make->environment);
 
-      if (F_status_is_error(data_make->setting->state.status)) {
-        fake_print_error(&data_make->program->error, macro_fake_f(fl_environment_load_names));
+      if (F_status_is_error(data_make->main->setting.state.status)) {
+        fake_print_error(&data_make->main->program.error, macro_fake_f(fl_environment_load_names));
 
         return;
       }
     }
     else {
-      data_make->setting->state.status = f_environment_get_all(&data_make->environment);
+      data_make->main->setting.state.status = f_environment_get_all(&data_make->environment);
 
-      if (F_status_is_error(data_make->setting->state.status)) {
-        fake_print_error(&data_make->program->error, macro_fake_f(f_environment_get_all));
+      if (F_status_is_error(data_make->main->setting.state.status)) {
+        fake_print_error(&data_make->main->program.error, macro_fake_f(f_environment_get_all));
 
         return;
       }
     }
 
-    fake_make_print_verbose_operate_program(data_make->setting, data_make->program->message, program, arguments);
+    fake_make_print_verbose_operate_program(&data_make->main->program.message, program, arguments);
 
     // Child processes should receive all signals, without blocking.
     f_signal_how_t signals = f_signal_how_t_initialize;
@@ -333,24 +333,24 @@ extern "C" {
 
     int return_code = 0;
 
-    data_make->setting->state.status = fll_execute_program(program, arguments, &parameter, 0, (void *) &return_code);
+    data_make->main->setting.state.status = fll_execute_program(program, arguments, &parameter, 0, (void *) &return_code);
 
-    if (fll_program_standard_signal_received(data_make->program)) {
-      fll_program_print_signal_received(data_make->program->warning, data_make->program->signal_received);
+    if (fll_program_standard_signal_received(&data_make->main->program)) {
+      fll_program_print_signal_received(data_make->main->program.warning, data_make->main->program.signal_received);
 
-      data_make->setting->state.status = F_status_set_error(F_interrupt);
+      data_make->main->setting.state.status = F_status_set_error(F_interrupt);
 
       return;
     }
 
-    if (F_status_is_error(data_make->setting->state.status)) {
-      if (F_status_set_fine(data_make->setting->state.status) == F_interrupt) return;
+    if (F_status_is_error(data_make->main->setting.state.status)) {
+      if (F_status_set_fine(data_make->main->setting.state.status) == F_interrupt) return;
 
-      if (F_status_set_fine(data_make->setting->state.status) == F_file_found_not) {
-        fake_make_print_error_program_not_found(data_make->setting, data_make->program->error, program);
+      if (F_status_set_fine(data_make->main->setting.state.status) == F_file_found_not) {
+        fake_make_print_error_program_not_found(&data_make->main->program.error, program);
       }
-      else if (F_status_set_fine(data_make->setting->state.status) != F_failure) {
-        fake_print_error(&data_make->program->error, macro_fake_f(fll_execute_program));
+      else if (F_status_set_fine(data_make->main->setting.state.status) != F_failure) {
+        fake_print_error(&data_make->main->program.error, macro_fake_f(fll_execute_program));
       }
     }
 
@@ -363,54 +363,54 @@ extern "C" {
 #ifndef _di_fake_make_operate_process_return_
   void fake_make_operate_process_return(fake_make_data_t * const data_make, const int return_code) {
 
-    if (!data_make || !data_make->program || !data_make->setting) return;
+    if (!data_make || !data_make->main) return;
 
-    const f_status_t status_original = data_make->setting->state.status;
+    const f_status_t status_original = data_make->main->setting.state.status;
 
     data_make->setting_make.parameter.array[0].value.array[0].used = 0;
 
     if (return_code) {
       f_string_dynamic_t number = f_string_dynamic_t_initialize;
 
-      data_make->setting->state.status = f_conversion_number_signed_to_string(WEXITSTATUS(return_code), f_conversion_data_base_10_c, &number);
+      data_make->main->setting.state.status = f_conversion_number_signed_to_string(WEXITSTATUS(return_code), f_conversion_data_base_10_c, &number);
 
-      if (F_status_is_error(data_make->setting->state.status)) {
-        fake_print_error(&data_make->program->error, macro_fake_f(f_conversion_number_signed_to_string));
+      if (F_status_is_error(data_make->main->setting.state.status)) {
+        fake_print_error(&data_make->main->program.error, macro_fake_f(f_conversion_number_signed_to_string));
 
         f_string_dynamic_resize(0, &number);
 
         return;
       }
 
-      data_make->setting->state.status = f_string_dynamic_append(number, &data_make->setting_make.parameter.array[0].value.array[0]);
+      data_make->main->setting.state.status = f_string_dynamic_append(number, &data_make->setting_make.parameter.array[0].value.array[0]);
 
       f_string_dynamic_resize(0, &number);
 
-      if (F_status_is_error(data_make->setting->state.status)) {
-        fake_print_error(&data_make->program->error, macro_fake_f(f_string_dynamic_append));
+      if (F_status_is_error(data_make->main->setting.state.status)) {
+        fake_print_error(&data_make->main->program.error, macro_fake_f(f_string_dynamic_append));
 
         return;
       }
 
-      fake_make_print_error_program_failed(data_make->setting, data_make->program->error, return_code);
+      fake_make_print_error_program_failed(&data_make->main->program.error, return_code);
 
-      data_make->setting->state.status = (data_make->setting_make.fail == fake_make_operation_fail_exit_e) ? F_status_set_error(F_failure) : F_failure;
+      data_make->main->setting.state.status = (data_make->setting_make.fail == fake_make_operation_fail_exit_e) ? F_status_set_error(F_failure) : F_failure;
 
       return;
     }
 
     if (F_status_is_error(status_original)) {
-      data_make->setting->state.status = f_string_dynamic_append(f_string_ascii_1_s, &data_make->setting_make.parameter.array[0].value.array[0]);
+      data_make->main->setting.state.status = f_string_dynamic_append(f_string_ascii_1_s, &data_make->setting_make.parameter.array[0].value.array[0]);
     }
     else {
-      data_make->setting->state.status = f_string_dynamic_append(f_string_ascii_0_s, &data_make->setting_make.parameter.array[0].value.array[0]);
+      data_make->main->setting.state.status = f_string_dynamic_append(f_string_ascii_0_s, &data_make->setting_make.parameter.array[0].value.array[0]);
     }
 
-    if (F_status_is_error(data_make->setting->state.status)) {
-      fll_error_print(data_make->error, F_status_set_fine(data_make->setting->state.status), macro_fake_f(f_string_dynamic_append), F_true);
+    if (F_status_is_error(data_make->main->setting.state.status)) {
+      fll_error_print(data_make->error, F_status_set_fine(data_make->main->setting.state.status), macro_fake_f(f_string_dynamic_append), F_true);
     }
     else {
-      data_make->setting->state.status = F_none;
+      data_make->main->setting.state.status = F_none;
     }
   }
 #endif // _di_fake_make_operate_process_return_
@@ -418,10 +418,10 @@ extern "C" {
 #ifndef _di_fake_make_operate_process_run_
   void fake_make_operate_process_run(fake_make_data_t * const data_make, const bool as_shell) {
 
-    if (!data_make || !data_make->program || !data_make->setting) return;
+    if (!data_make || !data_make->main) return;
 
     if (!data_make->cache_arguments.used) {
-      data_make->setting->state.status = F_data_not;
+      data_make->main->setting.state.status = F_data_not;
 
       return;
     }

@@ -19,12 +19,12 @@ extern "C" {
 /**
  * Print message when compiling a shared library.
  *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.state.status.
  * @param print
- *   Designates the how and where to print.
+ *   The output structure to print to.
+ *
+ *   This requires print.custom to be fake_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
  *
  * @return
  *   F_none on success.
@@ -35,18 +35,18 @@ extern "C" {
  * @see fake_print_context_important_simple()
  */
 #ifndef _di_fake_build_print_compile_library_shared_
-  extern f_status_t fake_build_print_compile_library_shared(fake_setting_t * const setting, const fl_print_t print);
+  extern f_status_t fake_build_print_compile_library_shared(fl_print_t * const print);
 #endif // _di_fake_build_print_compile_library_shared_
 
 /**
  * Print message when compiling a static library.
  *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.state.status.
  * @param print
- *   Designates the how and where to print.
+ *   The output structure to print to.
+ *
+ *   This requires print.custom to be fake_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
  *
  * @return
  *   F_none on success.
@@ -57,18 +57,18 @@ extern "C" {
  * @see fake_print_context_important_simple()
  */
 #ifndef _di_fake_build_print_compile_library_static_
-  extern f_status_t fake_build_print_compile_library_static(fake_setting_t * const setting, const fl_print_t print);
+  extern f_status_t fake_build_print_compile_library_static(fl_print_t * const print);
 #endif // _di_fake_build_print_compile_library_static_
 
 /**
  * Print message when compiling a shared object.
  *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.state.status.
  * @param print
- *   Designates the how and where to print.
+ *   The output structure to print to.
+ *
+ *   This requires print.custom to be fake_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
  *
  * @return
  *   F_none on success.
@@ -79,18 +79,18 @@ extern "C" {
  * @see fake_print_context_important_simple()
  */
 #ifndef _di_fake_build_print_compile_object_shared_
-  extern f_status_t fake_build_print_compile_object_shared(fake_setting_t * const setting, const fl_print_t print);
+  extern f_status_t fake_build_print_compile_object_shared(fl_print_t * const print);
 #endif // _di_fake_build_print_compile_object_shared_
 
 /**
  * Print message when compiling a static object.
  *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.state.status.
  * @param print
- *   Designates the how and where to print.
+ *   The output structure to print to.
+ *
+ *   This requires print.custom to be fake_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
  *
  * @return
  *   F_none on success.
@@ -101,18 +101,18 @@ extern "C" {
  * @see fake_print_context_important_simple()
  */
 #ifndef _di_fake_build_print_compile_object_static_
-  extern f_status_t fake_build_print_compile_object_static(fake_setting_t * const setting, const fl_print_t print);
+  extern f_status_t fake_build_print_compile_object_static(fl_print_t * const print);
 #endif // _di_fake_build_print_compile_object_static_
 
 /**
  * Print message when compiling a static object for a library.
  *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.state.status.
  * @param print
- *   Designates the how and where to print.
+ *   The output structure to print to.
+ *
+ *   This requires print.custom to be fake_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
  *
  * @return
  *   F_none on success.
@@ -123,18 +123,18 @@ extern "C" {
  * @see fake_print_context_important_simple()
  */
 #ifndef _di_fake_build_print_compile_object_static_library_
-  extern f_status_t fake_build_print_compile_object_static_library(fake_setting_t * const setting, const fl_print_t print);
+  extern f_status_t fake_build_print_compile_object_static_library(fl_print_t * const print);
 #endif // _di_fake_build_print_compile_object_static_library_
 
 /**
  * Print message when compiling a shared program.
  *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.state.status.
  * @param print
- *   Designates the how and where to print.
+ *   The output structure to print to.
+ *
+ *   This requires print.custom to be fake_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
  *
  * @return
  *   F_none on success.
@@ -145,18 +145,18 @@ extern "C" {
  * @see fake_print_context_important_simple()
  */
 #ifndef _di_fake_build_print_compile_program_shared_
-  extern f_status_t fake_build_print_compile_program_shared(fake_setting_t * const setting, const fl_print_t print);
+  extern f_status_t fake_build_print_compile_program_shared(fl_print_t * const print);
 #endif // _di_fake_build_print_compile_program_shared_
 
 /**
  * Print message when compiling a static program.
  *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.state.status.
  * @param print
- *   Designates the how and where to print.
+ *   The output structure to print to.
+ *
+ *   This requires print.custom to be fake_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
  *
  * @return
  *   F_none on success.
@@ -167,7 +167,7 @@ extern "C" {
  * @see fake_print_context_important_simple()
  */
 #ifndef _di_fake_build_print_compile_program_static_
-  extern f_status_t fake_build_print_compile_program_static(fake_setting_t * const setting, const fl_print_t print);
+  extern f_status_t fake_build_print_compile_program_static(fl_print_t * const print);
 #endif // _di_fake_build_print_compile_program_static_
 
 #ifdef __cplusplus

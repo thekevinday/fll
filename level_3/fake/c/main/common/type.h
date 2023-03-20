@@ -140,9 +140,6 @@ extern "C" {
  *
  * operation: A code representing the currrent operation.
  *
- * program: The main program data.
- * setting: The settings data.
- *
  * path_build:                  The build path.
  * path_build_documentation:    The build documentation path.
  * path_build_documents:        The build documents path.
@@ -188,13 +185,12 @@ extern "C" {
  * file_data_build_settings:     The settings build file data.
  *
  * file_documents_readme: The documents readme file data.
+ *
+ * main: The main program and settings data.
  */
 #ifndef _di_fake_data_t_
   typedef struct {
     uint8_t operation;
-
-    fll_program_data_t *program;
-    fake_setting_t *setting;
 
     f_string_dynamic_t path_build;
     f_string_dynamic_t path_build_documentation;
@@ -241,52 +237,53 @@ extern "C" {
     f_string_dynamic_t file_data_build_settings;
 
     f_string_dynamic_t file_documents_readme;
+
+    fake_main_t *main;
   } fake_data_t;
 
   #define fake_data_t_initialize \
     { \
       0, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
       0, \
-      0, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
     }
 #endif // _di_fake_main_t_
 
@@ -723,7 +720,6 @@ extern "C" {
  * parameter_option: A set of parameters available for IKI option substitution.
  * parameter_value:  A set of parameters available for IKI value substitution.
  * path:             The path to the Fakefile.
- * error:            The error output print structure.
  * fakefile:         The loaded Fakefile.
  * buffer:           A buffer used during processing.
  * cache_1:          An additional buffer for caching purposes.
@@ -732,9 +728,8 @@ extern "C" {
  * cache_arguments:  A cache for expanded arguments.
  * cache_iki:        A cache for IKI data.
  * id_main:          Index of the "main" Section.
- * main:             The main program data.
+ * main:             The program and settings data.
  * data:             The Fake make program data.
- * setting:          The settings data.
  */
 #ifndef _di_fake_make_data_t_
   typedef struct {
@@ -761,9 +756,8 @@ extern "C" {
 
     f_array_length_t id_main;
 
-    fll_program_data_t *program;
+    fake_main_t *main;
     fake_data_t *data;
-    fake_setting_t *setting;
   } fake_make_data_t;
 
   #define fake_make_data_t_initialize { \
@@ -782,7 +776,6 @@ extern "C" {
     f_string_dynamic_t_initialize, \
     f_string_dynamics_t_initialize, \
     f_iki_data_t_initialize, \
-    0, \
     0, \
     0, \
     0, \
@@ -831,7 +824,7 @@ extern "C" {
  * @param data
  *   The program data.
  *
- *   This does not alter data.settings.state.status.
+ *   This does not alter data.main.settings.state.status.
  */
 #ifndef _di_fake_data_delete_
   extern void fake_data_delete(fake_data_t * const data);
@@ -843,7 +836,7 @@ extern "C" {
  * @param data_make
  *   The make data.
  *
- *   This does not alter data_make.setting.state.status.
+ *   This does not alter data_make.main.setting.state.status.
  */
 #ifndef _di_fake_make_data_delete_
   extern void fake_make_data_delete(fake_make_data_t * const data_make);
@@ -855,7 +848,7 @@ extern "C" {
  * @param setting_make
  *   The make setting data.
  *
- *   This does not alter data_make.setting.state.status.
+ *   This does not alter data_make.main.setting.state.status.
  */
 #ifndef _di_fake_make_setting_delete_
   extern void fake_make_setting_delete(fake_make_setting_t * const setting_make);

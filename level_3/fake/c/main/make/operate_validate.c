@@ -7,16 +7,16 @@ extern "C" {
 #ifndef _di_fake_make_operate_validate_
   void fake_make_operate_validate(fake_make_data_t * const data_make, const f_string_range_t section_name, fake_state_process_t * const state_process, f_array_lengths_t * const section_stack) {
 
-    if (!data_make || !data_make->program || !data_make->setting) return;
-    if (F_status_is_error(data_make->setting->state.status)) return;
+    if (!data_make || !data_make->main) return;
+    if (F_status_is_error(data_make->main->setting.state.status)) return;
 
     if (!section_stack) {
-      data_make->setting->state.status = F_status_set_error(F_parameter);
+      data_make->main->setting.state.status = F_status_set_error(F_parameter);
 
       return;
     }
 
-    data_make->setting->state.status = F_none;
+    data_make->main->setting.state.status = F_none;
 
     if (state_process->operation == fake_make_operation_type_break_e) {
       fake_make_operate_validate_type_break(data_make);

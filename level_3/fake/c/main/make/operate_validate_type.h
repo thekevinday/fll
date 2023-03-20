@@ -22,7 +22,7 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
- *   This alters data_make.setting.state:
+ *   This alters data_make.main->setting.state:
  *     F_none on success.
  *
  *     F_failure (with error bit) on any error.
@@ -37,7 +37,7 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
- *   This alters data_make.setting.state:
+ *   This alters data_make.main->setting.state:
  *     F_none on success.
  *
  *     F_failure (with error bit) on any error.
@@ -52,7 +52,7 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
- *   This alters data_make.setting.state:
+ *   This alters data_make.main->setting.state:
  *     F_none on success.
  *
  *     F_failure (with error bit) on any error.
@@ -67,7 +67,7 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
- *   This alters data_make.setting.state:
+ *   This alters data_make.main->setting.state:
  *     F_none on success.
  *
  *     F_failure (with error bit) on any error.
@@ -86,7 +86,7 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
- *   This alters data_make.setting.state:
+ *   This alters data_make.main->setting.state:
  *     F_none on success.
  *
  *     F_failure (with error bit) on any error.
@@ -104,7 +104,7 @@ extern "C" {
  *   The operation and if-condition operation states.
  *   This condition will be updated by this as appropriate.
  *
- *   This alters data_make.setting.state:
+ *   This alters data_make.main->setting.state:
  *     F_none on success.
  *
  *     F_failure (with error bit) on any error.
@@ -125,7 +125,7 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
- *   This alters data_make.setting.state:
+ *   This alters data_make.main->setting.state:
  *     F_none on success.
  *
  *     F_failure (with error bit) on any error.
@@ -145,7 +145,7 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
- *   This alters data_make.setting.state:
+ *   This alters data_make.main->setting.state:
  *     F_none on success.
  *
  *     F_failure (with error bit) on any error.
@@ -162,7 +162,7 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
- *   This alters data_make.setting.state:
+ *   This alters data_make.main->setting.state:
  *     F_none on success.
  *
  *     F_failure (with error bit) on any error.
@@ -182,7 +182,7 @@ extern "C" {
  *   The operation and if-condition operation states.
  *   This condition will be updated by this as appropriate.
  *
- *   This alters data_make.setting.state:
+ *   This alters data_make.main->setting.state:
  *     F_none on success.
  *
  *     F_failure (with error bit) on any error.
@@ -197,7 +197,7 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
- *   This alters data_make.setting.state:
+ *   This alters data_make.main->setting.state:
  *     F_none on success.
  *
  *     F_failure (with error bit) on any error.
@@ -212,7 +212,7 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
- *   This alters data_make.setting.state:
+ *   This alters data_make.main->setting.state:
  *     F_none on success.
  *
  *     F_failure (with error bit) on any error.
@@ -227,7 +227,7 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
- *   This alters data_make.setting.state:
+ *   This alters data_make.main->setting.state:
  *     F_none on success.
  *
  *     F_failure (with error bit) on any error.
@@ -242,7 +242,7 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
- *   This alters data_make.setting.state:
+ *   This alters data_make.main->setting.state:
  *     F_none on success.
  *
  *     F_failure (with error bit) on any error.
@@ -257,7 +257,7 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
- *   This alters data_make.setting.state:
+ *   This alters data_make.main->setting.state:
  *     F_none on success.
  *
  *     F_failure (with error bit) on any error.
@@ -280,7 +280,7 @@ extern "C" {
  * @param section_stack
  *   The current operation stack.
  *
- *   This alters data_make.setting.state:
+ *   This alters data_make.main->setting.state:
  *     F_none on success.
  *
  *     F_failure (with error bit) on any error.
@@ -295,7 +295,7 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
- *   This alters data_make.setting.state:
+ *   This alters data_make.main->setting.state:
  *     F_none on success.
  *
  *     F_failure (with error bit) on any error.
@@ -313,7 +313,7 @@ extern "C" {
  *   The operation and if-condition operation states.
  *   This condition will be updated by this as appropriate.
  *
- *   This alters data_make.setting.state:
+ *   This alters data_make.main->setting.state:
  *     F_none on success.
  *
  *     F_failure (with error bit) on any error.
@@ -330,7 +330,7 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
- *   This alters data_make.setting.state:
+ *   This alters data_make.main->setting.state:
  *     F_none on success.
  *
  *     F_failure (with error bit) on any error.
@@ -345,7 +345,7 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
- *   This alters data_make.setting.state:
+ *   This alters data_make.main->setting.state:
  *     F_none on success.
  *
  *     F_failure (with error bit) on any error.
@@ -360,7 +360,7 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
- *   This alters data_make.setting.state:
+ *   This alters data_make.main->setting.state:
  *     F_none on success.
  *
  *     F_failure (with error bit) on any error.
@@ -377,7 +377,7 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
- *   This alters data_make.setting.state:
+ *   This alters data_make.main->setting.state:
  *     F_none on success.
  *
  *     F_failure (with error bit) on any error.
@@ -394,7 +394,7 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
- *   This alters data_make.setting.state:
+ *   This alters data_make.main->setting.state:
  *     F_none on success.
  *
  *     F_failure (with error bit) on any error.

@@ -19,12 +19,12 @@ extern "C" {
 /**
  * Print error message regarding two parameters contradicting and designating a default fallback parameter.
  *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.state.status.
  * @param print
- *   Designates the how and where to print.
+ *   The output structure to print to.
+ *
+ *   This requires print.custom to be fake_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param symbol_1
  *   The symbol for the first parameter.
  * @param name_1
@@ -47,18 +47,18 @@ extern "C" {
  * @see fake_print_context_wrapped_parameters()
  */
 #ifndef _di_fake_build_print_warning_parameters_contradict_
-  extern f_status_t fake_build_print_warning_parameters_contradict(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t symbol_1, const f_string_static_t name_1, const f_string_static_t symbol_2, const f_string_static_t name_2, const f_string_static_t symbol_3, const f_string_static_t name_3);
+  extern f_status_t fake_build_print_warning_parameters_contradict(fl_print_t * const print, const f_string_static_t symbol_1, const f_string_static_t name_1, const f_string_static_t symbol_2, const f_string_static_t name_2, const f_string_static_t symbol_3, const f_string_static_t name_3);
 #endif // _di_fake_build_print_warning_parameters_contradict_
 
 /**
  * Print warning message that the setting may only be from a specific set of allowed boolean values.
  *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.state.status.
  * @param print
- *   Designates the how and where to print.
+ *   The output structure to print to.
+ *
+ *   This requires print.custom to be fake_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param name
  *   The name for the setting.
  * @param path
@@ -77,18 +77,18 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fake_build_print_warning_setting_boolean_may_only_be_
-  extern f_status_t fake_build_print_warning_setting_boolean_may_only_be(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t name, const f_string_static_t path, const f_string_static_t default_to);
+  extern f_status_t fake_build_print_warning_setting_boolean_may_only_be(fl_print_t * const print, const f_string_static_t name, const f_string_static_t path, const f_string_static_t default_to);
 #endif // _di_fake_build_print_warning_setting_boolean_may_only_be_
 
 /**
  * Print warning message regarding two parameters being both false when using a given language.
  *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.state.status.
  * @param print
- *   Designates the how and where to print.
+ *   The output structure to print to.
+ *
+ *   This requires print.custom to be fake_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param name_1
  *   The name for the first setting.
  * @param name_2
@@ -105,18 +105,18 @@ extern "C" {
  * @see fake_print_context_wrapped_parameters()
  */
 #ifndef _di_fake_build_print_error_settings_both_cannot_using_language_
-  extern f_status_t fake_build_print_warning_setting_both_cannot_when_language(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t name_1, const f_string_static_t name_2, const f_string_static_t name_3);
+  extern f_status_t fake_build_print_warning_setting_both_cannot_when_language(fl_print_t * const print, const f_string_static_t name_1, const f_string_static_t name_2, const f_string_static_t name_3);
 #endif // _di_fake_build_print_error_settings_both_cannot_using_language_
 
 /**
  * Print warning message that the setting may only be from a specific set of allowed language values.
  *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.state.status.
  * @param print
- *   Designates the how and where to print.
+ *   The output structure to print to.
+ *
+ *   This requires print.custom to be fake_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param name
  *   The name for the setting.
  * @param path
@@ -133,18 +133,18 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fake_build_print_warning_setting_language_may_only_be_
-  extern f_status_t fake_build_print_warning_setting_language_may_only_be(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t name, const f_string_static_t path, const f_string_static_t default_to);
+  extern f_status_t fake_build_print_warning_setting_language_may_only_be(fl_print_t * const print, const f_string_static_t name, const f_string_static_t path, const f_string_static_t default_to);
 #endif // _di_fake_build_print_warning_setting_language_may_only_be_
 
 /**
  * Print warning message regarding two parameters being both false when using a given language.
  *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.state.status.
  * @param print
- *   Designates the how and where to print.
+ *   The output structure to print to.
+ *
+ *   This requires print.custom to be fake_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param name_1
  *   The name for the first setting.
  * @param name_2
@@ -159,18 +159,18 @@ extern "C" {
  * @see fake_print_context_wrapped_parameters()
  */
 #ifndef _di_fake_build_print_warning_setting_required_default_to_
-  f_status_t fake_build_print_warning_setting_required_default_to(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t name, const f_string_static_t path, const f_string_static_t default_to);
+  f_status_t fake_build_print_warning_setting_required_default_to(fl_print_t * const print, const f_string_static_t name, const f_string_static_t path, const f_string_static_t default_to);
 #endif // _di_fake_build_print_warning_setting_required_default_to_
 
 /**
  * Print warning message that the setting may only be from a specific set of allowed version values.
  *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.state.status.
  * @param print
- *   Designates the how and where to print.
+ *   The output structure to print to.
+ *
+ *   This requires print.custom to be fake_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param name
  *   The name for the setting.
  * @param path
@@ -187,7 +187,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fake_build_print_warning_setting_version_may_only_be_
-  extern f_status_t fake_build_print_warning_setting_version_may_only_be(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t name, const f_string_static_t path, const f_string_static_t default_to);
+  extern f_status_t fake_build_print_warning_setting_version_may_only_be(fl_print_t * const print, const f_string_static_t name, const f_string_static_t path, const f_string_static_t default_to);
 #endif // _di_fake_build_print_warning_setting_version_may_only_be_
 
 #ifdef __cplusplus

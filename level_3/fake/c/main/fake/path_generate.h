@@ -22,7 +22,7 @@ extern "C" {
  * @param data
  *   The program data.
  *
- *   This alters data.setting.state.status:
+ *   This alters data.main->setting.state.status:
  *     F_none on success.
  *
  *     Errors (with error bit) from: f_string_dynamic_append_nulless().
@@ -44,7 +44,7 @@ extern "C" {
  * @param data
  *   The program data.
  *
- *   This alters data.setting.state.status:
+ *   This alters data.main->setting.state.status:
  *     F_none on success.
  *
  *     Errors (with error bit) from: f_string_dynamic_append_nulless().

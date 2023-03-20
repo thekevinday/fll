@@ -22,7 +22,7 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
- *   This alters data_make.setting.state.status:
+ *   This alters data_make.main->setting.state.status:
  *     F_none on success.
  *
  *     F_interrupt (with error bit) on interrupt signal received.
@@ -194,7 +194,7 @@ extern "C" {
 /**
  * Handle the return code, converting it to a standard return number and store it as a string.
  *
- * The return value is stored in: data_make.setting_make.parameter.array[0].value.array[0].
+ * The return value is stored in: data_make.main->setting_make.parameter.array[0].value.array[0].
  *
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.

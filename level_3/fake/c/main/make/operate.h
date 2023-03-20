@@ -25,7 +25,7 @@ extern "C" {
  * @param data
  *   The program data.
  *
- *   This alters data.setting.state.status:
+ *   This alters data.main->setting.state.status:
  *     F_none on success.
  *     F_data_not on success but fakefile is empty.
  *
@@ -62,7 +62,7 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
- *   This alters data_make.setting.state.status:
+ *   This alters data_make.main->setting.state.status:
  *     F_none on success.
  *     F_data_not on success but fakefile is empty.
  *
@@ -112,7 +112,7 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
- *   This alters data.setting.state.status:
+ *   This alters data.main->setting.state.status:
  *     F_data_not on success, but nothing is added (data length to append is 0).
  *     F_true on success and match expanded.
  *     F_false on no matches to expand.
@@ -141,7 +141,7 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
- *   This alters data.setting.state.status:
+ *   This alters data.main->setting.state.status:
  *     F_true on success and match expanded.
  *     F_false on no matches to expand.
  *
@@ -163,7 +163,7 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
- *   This alters data.setting.state.status:
+ *   This alters data.main->setting.state.status:
  *     F_data_not on success, but nothing is added (data length to append is 0).
  *     F_true on success and match expanded.
  *     F_false on no matches to expand.
@@ -194,7 +194,7 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
- *   This alters data_make.setting.state.status:
+ *   This alters data_make.main->setting.state.status:
  *     F_none on success.
  *     F_child on child process exiting.
  *     F_signal_abort on abort signal received.

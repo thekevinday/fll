@@ -25,7 +25,7 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
- *   This alters data_make.setting.status:
+ *   This alters data_make.main->setting.status:
  *     F_none on success.
  *
  *     F_parameter (with error bit) on invalid parameter.

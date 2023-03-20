@@ -110,9 +110,9 @@
 #include <program/fake/main/build/load.h>
 #include <program/fake/main/build/object.h>
 #include <program/fake/main/build/objects.h>
-#include <program/fake/main/build/print.h>
 #include <program/fake/main/build/print/compile.h>
 #include <program/fake/main/build/print/error.h>
+#include <program/fake/main/build/print/message.h>
 #include <program/fake/main/build/print/verbose.h>
 #include <program/fake/main/build/print/warning.h>
 #include <program/fake/main/build/program.h>
@@ -129,13 +129,14 @@
 #include <program/fake/main/make/operate_process_type.h>
 #include <program/fake/main/make/operate_validate.h>
 #include <program/fake/main/make/operate_validate_type.h>
-#include <program/fake/main/make/print.h>
 #include <program/fake/main/make/print/error.h>
+#include <program/fake/main/make/print/message.h>
 #include <program/fake/main/make/print/verbose.h>
 #include <program/fake/main/make/print/warning.h>
-#include <program/fake/main/print.h>
+#include <program/fake/main/print/common.h>
 #include <program/fake/main/print/context.h>
 #include <program/fake/main/print/error.h>
+#include <program/fake/main/print/message.h>
 #include <program/fake/main/print/operation.h>
 #include <program/fake/main/print/verbose.h>
 #include <program/fake/main/print/warning.h>
@@ -219,7 +220,7 @@ extern "C" {
  * @param data
  *   The program data.
  *
- *   This alters data.setting.state.status:
+ *   This alters data.main->setting.state.status:
  *     F_none on success.
  *     F_false on file not found and file is not required.
  *
@@ -256,7 +257,7 @@ extern "C" {
  * @param data
  *   The program data.
  *
- *   This alters data.setting.state.status:
+ *   This alters data.main->setting.state.status:
  *     F_none on success.
  *
  *     F_interrupt (with error bit) on interrupt signal received.
@@ -282,7 +283,7 @@ extern "C" {
  * @param data
  *   The program data.
  *
- *   This alters data.setting.state.status:
+ *   This alters data.main->setting.state.status:
  *     F_none on success.
  *
  *     F_interrupt (with error bit) on interrupt signal received.

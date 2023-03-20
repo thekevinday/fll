@@ -22,7 +22,7 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
- *   This alters data_make.setting.state.status:
+ *   This alters data_make.main->setting.state.status:
  *     F_none on success.
  *
  *     Errors (with error bit) from: f_string_dynamic_append().

@@ -37,7 +37,7 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
- *   This does not alter data_make.setting.state.status.
+ *   This does not alter data_make.main.setting.state.status.
  * @param last
  *   If TRUE, then this is the last line.
  *   If FALSE, then this is not the last line.

@@ -22,7 +22,7 @@ extern "C" {
  * @param data
  *   The program data.
  *
- *   This alters data.setting.state.status:
+ *   This alters data.main->setting.state.status:
  *     F_none on success.
  *
  *     Errors (with error bit) from: fll_execute_arguments_add()
@@ -48,7 +48,7 @@ extern "C" {
  * @param data
  *   The program data.
  *
- *   This alters data.setting.state.status:
+ *   This alters data.main->setting.state.status:
  *     F_none on success.
  *
  *     F_interrupt (with error bit) on interrupt signal received.
@@ -105,7 +105,7 @@ extern "C" {
  * @param data
  *   The program data.
  *
- *   This alters data.setting.state.status:
+ *   This alters data.main->setting.state.status:
  *     F_none on success.
  *
  *     Errors (with error bit) from: f_string_dynamic_append_nulless()
@@ -145,7 +145,7 @@ extern "C" {
  * @param data
  *   The program data.
  *
- *   This alters data.setting.state.status:
+ *   This alters data.main->setting.state.status:
  *     F_none on success.
  *
  *     Errors (with error bit) from: f_file_name_base()
@@ -166,7 +166,7 @@ extern "C" {
  * @param data
  *   The program data.
  *
- *   This alters data.setting.state.status:
+ *   This alters data.main->setting.state.status:
  *     F_none on success.
  *
  *     Errors (with error bit) from: fll_execute_arguments_add()
@@ -193,7 +193,7 @@ extern "C" {
  * @param data
  *   The program data.
  *
- *   This alters data.setting.state.status:
+ *   This alters data.main->setting.state.status:
  *     F_none on success.
  *
  *     F_interrupt (with error bit) on interrupt signal received.
@@ -260,7 +260,7 @@ extern "C" {
  * @param data
  *   The program data.
  *
- *   This does not alter data.setting.state.status.
+ *   This does not alter data.main->setting.state.status.
  * @param data_build
  *   The build data.
  * @param setting_path_source
@@ -281,7 +281,7 @@ extern "C" {
  * @param data
  *   The program data.
  *
- *   This does not alter data.setting.state.status.
+ *   This does not alter data.main->setting.state.status.
  * @param data_build
  *   The build data.
  * @param setting_path_source
@@ -302,7 +302,7 @@ extern "C" {
  * @param data
  *   The program data.
  *
- *   This alters data.setting.state.status:
+ *   This alters data.main->setting.state.status:
  *     F_none on success.
  *
  *     Errors (with error bit) from: fll_execute_arguments_add()
@@ -327,7 +327,7 @@ extern "C" {
  * @param data
  *   The program data.
  *
- *   This alters data.setting.state.status:
+ *   This alters data.main->setting.state.status:
  *     F_none on success.
  *
  *     Errors (with error bit) from: fll_execute_arguments_add()
@@ -352,7 +352,7 @@ extern "C" {
  * @param data
  *   The program data.
  *
- *   This alters data.setting.state.status:
+ *   This alters data.main->setting.state.status:
  *     F_none on success.
  *
  *     F_interrupt (with error bit) on interrupt signal received.

@@ -22,7 +22,7 @@ extern "C" {
  * @param data
  *   The program data.
  *
- *   This alters data.setting.state.status:
+ *   This alters data.main->setting.state.status:
  *     F_none on success.
  *
  *     F_interrupt (with error bit) on interrupt signal received.
@@ -43,7 +43,7 @@ extern "C" {
  * @param data
  *   The program data.
  *
- *   This alters data.setting.state.status:
+ *   This alters data.main->setting.state.status:
  *     F_none on success.
  *
  *     F_failure (with warning bit) on path exists but is not a directory.
@@ -66,7 +66,7 @@ extern "C" {
  * @param data
  *   The program data.
  *
- *   This alters data.setting.state.status:
+ *   This alters data.main->setting.state.status:
  *     F_none on success.
  *
  *     F_none (with warning bit) on file exists but is not a regular or a link.
@@ -98,7 +98,7 @@ extern "C" {
  * @param data
  *   The program data.
  *
- *   This does not alter data.setting.state.status.
+ *   This does not alter data.main->setting.state.status.
  * @param partial
  *   The partial path string, such as "bash".
  * @param source
@@ -117,7 +117,7 @@ extern "C" {
  * @param data
  *   The program data.
  *
- *   This does not alter data.setting.state.status.
+ *   This does not alter data.main->setting.state.status.
  * @param partial
  *   The partial path string, such as "bash".
  * @param source

@@ -22,21 +22,51 @@ extern "C" {
  * This is primarily used by numerous print functions to reduce code.
  * This is not used for any print functions that has complex format structures.
  *
- * @param setting
- *   The main program settings.
- *   (Must be of type fake_setting_t.)
- *
- *   This does not alter setting.state.status.
  * @param print
  *   The output structure to print to.
+ *
+ *   This requires print.custom to be fake_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param message
  *   The string to print.
  *
  * @see fake_print_context_simple()
  */
 #ifndef _di_fake_print_context_important_simple_
-  extern void fake_print_context_important_simple(fake_setting_t * const setting, const fl_print_t print, const f_string_t message);
+  extern void fake_print_context_important_simple(fl_print_t * const print, const f_string_t message);
 #endif // _di_fake_print_context_important_simple_
+
+/**
+ * Print a variable context message with a before string, an after string, and a string variable with context set to important but without prefix and suffix.
+ *
+ * This is primarily used by numerous print functions to reduce code.
+ * This is not used for any print functions that has complex format structures.
+ *
+ * @param print
+ *   The output structure to print to.
+ *
+ *   This requires print.custom to be fake_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
+ * @param before
+ *   The string being printed before the variable.
+ *   Likely should have a space added at the end of the string.
+ *   Set to NULL to disable.
+ * @param variable
+ *   The string representing the variable.
+ * @param after
+ *   The string being printed after the variable.
+ *   Likely should have a space added at the start of the string.
+ *   Set to NULL to disable.
+ *
+ * @see f_file_stream_lock()
+ * @see f_file_stream_unlock()
+ * @see fl_print_format()
+ */
+#ifndef _di_fake_print_context_important_simple_variable_
+  extern void fake_print_context_important_simple_variable(fl_print_t * const print, const f_string_t before, const f_string_static_t variable, const f_string_t after);
+#endif // _di_fake_print_context_important_simple_variable_
 
 /**
  * Print a simple context message with prefix and a single string message.
@@ -44,13 +74,12 @@ extern "C" {
  * This is primarily used by numerous print functions to reduce code.
  * This is not used for any print functions that has complex format structures.
  *
- * @param setting
- *   The main program settings.
- *   (Must be of type fake_setting_t.)
- *
- *   This does not alter setting.state.status.
  * @param print
  *   The output structure to print to.
+ *
+ *   This requires print.custom to be fake_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param message
  *   The string to print.
  *
@@ -59,7 +88,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_context_simple_
-  extern void fake_print_context_simple(fake_setting_t * const setting, const fl_print_t print, const f_string_t message);
+  extern void fake_print_context_simple(fl_print_t * const print, const f_string_t message);
 #endif // _di_fake_print_context_simple_
 
 /**
@@ -68,13 +97,12 @@ extern "C" {
  * This is primarily used by numerous print functions to reduce code.
  * This is not used for any print functions that has complex format structures.
  *
- * @param setting
- *   The main program settings.
- *   (Must be of type fake_setting_t.)
- *
- *   This does not alter setting.state.status.
  * @param print
  *   The output structure to print to.
+ *
+ *   This requires print.custom to be fake_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param before
  *   The string being printed before the variable.
  *   Likely should have a space added at the end of the string.
@@ -91,7 +119,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_context_simple_variable_
-  extern void fake_print_context_simple_variable(fake_setting_t * const setting, const fl_print_t print, const f_string_t before, const f_string_static_t variable, const f_string_t after);
+  extern void fake_print_context_simple_variable(fl_print_t * const print, const f_string_t before, const f_string_static_t variable, const f_string_t after);
 #endif // _di_fake_print_context_simple_variable_
 
 /**
@@ -100,13 +128,12 @@ extern "C" {
  * This is primarily used by numerous print functions to reduce code.
  * This is not used for any print functions that has complex format structures.
  *
- * @param setting
- *   The main program settings.
- *   (Must be of type fake_setting_t.)
- *
- *   This does not alter setting.state.status.
  * @param print
  *   The output structure to print to.
+ *
+ *   This requires print.custom to be fake_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param before
  *   The string being printed before the variable.
  *   Likely should have a space added at the end of the string.
@@ -123,7 +150,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_context_wrapped_number_
-  extern void fake_print_context_wrapped_number(fake_setting_t * const setting, const fl_print_t print, const f_string_t before, const f_number_unsigned_t number, const f_string_t after);
+  extern void fake_print_context_wrapped_number(fl_print_t * const print, const f_string_t before, const f_number_unsigned_t number, const f_string_t after);
 #endif // _di_fake_print_context_wrapped_number_
 
 /**
@@ -132,13 +159,12 @@ extern "C" {
  * This is primarily used by numerous print functions to reduce code.
  * This is not used for any print functions that has complex format structures.
  *
- * @param setting
- *   The main program settings.
- *   (Must be of type fake_setting_t.)
- *
- *   This does not alter setting.state.status.
  * @param print
  *   The output structure to print to.
+ *
+ *   This requires print.custom to be fake_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param before
  *   The string being printed before the variable.
  *   Likely should have a space added at the end of the string.
@@ -158,7 +184,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_context_wrapped_parameter_
-  extern void fake_print_context_wrapped_parameter(fake_setting_t * const setting, const fl_print_t print, const f_string_t before, const f_string_static_t symbol, const f_string_static_t name, const f_string_t after);
+  extern void fake_print_context_wrapped_parameter(fl_print_t * const print, const f_string_t before, const f_string_static_t symbol, const f_string_static_t name, const f_string_t after);
 #endif // _di_fake_print_context_wrapped_parameter_
 
 /**
@@ -167,13 +193,12 @@ extern "C" {
  * This is primarily used by numerous print functions to reduce code.
  * This is not used for any print functions that has complex format structures.
  *
- * @param setting
- *   The main program settings.
- *   (Must be of type fake_setting_t.)
- *
- *   This does not alter setting.state.status.
  * @param print
  *   The output structure to print to.
+ *
+ *   This requires print.custom to be fake_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param before
  *   The string being printed before the variable.
  *   Likely should have a space added at the end of the string.
@@ -197,7 +222,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_context_wrapped_parameter_value_
-  extern void fake_print_context_wrapped_parameter_value(fake_setting_t * const setting, const fl_print_t print, const f_string_t before, const f_string_static_t symbol, const f_string_static_t name, const f_string_t between, const f_string_static_t value, const f_string_t after);
+  extern void fake_print_context_wrapped_parameter_value(fl_print_t * const print, const f_string_t before, const f_string_static_t symbol, const f_string_static_t name, const f_string_t between, const f_string_static_t value, const f_string_t after);
 #endif // _di_fake_print_context_wrapped_parameter_value_
 
 /**
@@ -206,13 +231,12 @@ extern "C" {
  * This is primarily used by numerous print functions to reduce code.
  * This is not used for any print functions that has complex format structures.
  *
- * @param setting
- *   The main program settings.
- *   (Must be of type fake_setting_t.)
- *
- *   This does not alter setting.state.status.
  * @param print
  *   The output structure to print to.
+ *
+ *   This requires print.custom to be fake_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param before
  *   The string being printed before the variable.
  *   Likely should have a space added at the end of the string.
@@ -250,7 +274,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_context_wrapped_parameter_
-  extern void fake_print_context_wrapped_parameters(fake_setting_t * const setting, const fl_print_t print, const f_string_t before, const f_string_static_t symbol_1, const f_string_static_t name_1, const f_string_t between_1, const f_string_static_t symbol_2, const f_string_static_t name_2, const f_string_t between_2, const f_string_static_t symbol_3, const f_string_static_t name_3, const f_string_t after);
+  extern void fake_print_context_wrapped_parameters(fl_print_t * const print, const f_string_t before, const f_string_static_t symbol_1, const f_string_static_t name_1, const f_string_t between_1, const f_string_static_t symbol_2, const f_string_static_t name_2, const f_string_t between_2, const f_string_static_t symbol_3, const f_string_static_t name_3, const f_string_t after);
 #endif // _di_fake_print_context_wrapped_parameter_
 
 /**
@@ -259,13 +283,12 @@ extern "C" {
  * This is primarily used by numerous print functions to reduce code.
  * This is not used for any print functions that has complex format structures.
  *
- * @param setting
- *   The main program settings.
- *   (Must be of type fake_setting_t.)
- *
- *   This does not alter setting.state.status.
  * @param print
  *   The output structure to print to.
+ *
+ *   This requires print.custom to be fake_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param before
  *   The string being printed before the variable.
  *   Likely should have a space added at the end of the string.
@@ -282,7 +305,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_context_wrapped_variable_
-  extern void fake_print_context_wrapped_variable(fake_setting_t * const setting, const fl_print_t print, const f_string_t before, const f_string_static_t variable, const f_string_t after);
+  extern void fake_print_context_wrapped_variable(fl_print_t * const print, const f_string_t before, const f_string_static_t variable, const f_string_t after);
 #endif // _di_fake_print_context_wrapped_variable_
 
 /**
@@ -291,13 +314,12 @@ extern "C" {
  * This is primarily used by numerous print functions to reduce code.
  * This is not used for any print functions that has complex format structures.
  *
- * @param setting
- *   The main program settings.
- *   (Must be of type fake_setting_t.)
- *
- *   This does not alter setting.state.status.
  * @param print
  *   The output structure to print to.
+ *
+ *   This requires print.custom to be fake_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param before
  *   The string being printed before the variable.
  *   Likely should have a space added at the end of the string.
@@ -317,7 +339,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_context_wrapped_variables_
-  extern void fake_print_context_wrapped_variables(fake_setting_t * const setting, const fl_print_t print, const f_string_t before, const f_string_static_t first, const f_string_t between, const f_string_static_t second, const f_string_t after);
+  extern void fake_print_context_wrapped_variables(fl_print_t * const print, const f_string_t before, const f_string_static_t first, const f_string_t between, const f_string_static_t second, const f_string_t after);
 #endif // _di_fake_print_context_wrapped_variables_
 
 #ifdef __cplusplus

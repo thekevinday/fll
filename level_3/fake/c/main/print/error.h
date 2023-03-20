@@ -24,9 +24,9 @@ extern "C" {
  * @param print
  *   Designates the how and where to print.
  *
- *   This expects print.custom to be fake_setting_t.
+ *   This requires print.custom to be fake_main_t.
  *
- *   This does not alter print.custom.state.status.
+ *   This does not alter print.custom.setting.state.status.
  * @param function
  *   The function name.
  *
@@ -65,7 +65,7 @@ extern "C" {
  * @see fake_print_context_wrapped_number()
  */
 #ifndef _di_fake_print_error_argument_empty_
-  extern f_status_t fake_print_error_argument_empty(fake_setting_t * const setting, const fl_print_t print, const f_array_length_t index);
+  extern f_status_t fake_print_error_argument_empty(fl_print_t * const print, const f_array_length_t index);
 #endif // _di_fake_print_error_argument_empty_
 
 /**
@@ -103,7 +103,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_error_build_operation_file_
-  extern f_status_t fake_print_error_build_operation_file(fake_setting_t * const setting, const fl_print_t print, const f_string_t function, const f_string_static_t operation, const f_string_static_t source, const f_string_static_t destination, const f_string_static_t how, const bool fallback);
+  extern f_status_t fake_print_error_build_operation_file(fl_print_t * const print, const f_string_t function, const f_string_static_t operation, const f_string_static_t source, const f_string_static_t destination, const f_string_static_t how, const bool fallback);
 #endif // _di_fake_print_error_build_operation_file_
 
 /**
@@ -146,7 +146,7 @@ extern "C" {
  * @see fake_print_error_build_operation_file_partial()
  */
 #ifndef _di_fake_print_error_build_operation_file_full_
-  extern f_status_t fake_print_error_build_operation_file_full(fake_setting_t * const setting, const fl_print_t print, const f_string_t before, const f_string_static_t operation, const f_string_static_t source, const f_string_static_t destination, const f_string_static_t how, const f_string_t after);
+  extern f_status_t fake_print_error_build_operation_file_full(fl_print_t * const print, const f_string_t before, const f_string_static_t operation, const f_string_static_t source, const f_string_static_t destination, const f_string_static_t how, const f_string_t after);
 #endif // _di_fake_print_error_build_operation_file_full_
 
 /**
@@ -175,7 +175,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_error_build_operation_file_partial_
-  extern void fake_print_error_build_operation_file_partial(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t operation, const f_string_static_t source, const f_string_static_t destination, const f_string_static_t how);
+  extern void fake_print_error_build_operation_file_partial(fl_print_t * const print, const f_string_static_t operation, const f_string_static_t source, const f_string_static_t destination, const f_string_static_t how);
 #endif // _di_fake_print_error_build_operation_file_partial_
 
 /**
@@ -199,7 +199,7 @@ extern "C" {
  * @see fake_print_context_wrapped_variable()
  */
 #ifndef _di_fake_print_error_file_create_parent_missing_
-  extern f_status_t fake_print_error_file_create_parent_missing(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t path);
+  extern f_status_t fake_print_error_file_create_parent_missing(fl_print_t * const print, const f_string_static_t path);
 #endif // _di_fake_print_error_file_create_parent_missing_
 
 /**
@@ -225,7 +225,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_error_failure_operation_
-  extern f_status_t fake_print_error_failure_operation(fake_setting_t * const setting, const fl_print_t print, const uint8_t operation);
+  extern f_status_t fake_print_error_failure_operation(fl_print_t * const print, const uint8_t operation);
 #endif // _di_fake_print_error_failure_operation_
 
 /**
@@ -249,7 +249,7 @@ extern "C" {
  * @see fake_print_context_wrapped_variable()
  */
 #ifndef _di_fake_print_error_failure_script_
-  extern f_status_t fake_print_error_failure_script(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t script);
+  extern f_status_t fake_print_error_failure_script(fl_print_t * const print, const f_string_static_t script);
 #endif // _di_fake_print_error_failure_script_
 
 /**
@@ -274,7 +274,7 @@ extern "C" {
  * @see fll_error_file_print()
  */
 #ifndef _di_fake_print_error_fallback_
-  extern f_status_t fake_print_error_fallback(fake_setting_t * const setting, const fl_print_t print, const f_string_t function);
+  extern f_status_t fake_print_error_fallback(fl_print_t * const print, const f_string_t function);
 #endif // _di_fake_print_error_fallback_
 
 /**
@@ -302,7 +302,7 @@ extern "C" {
  * @see fll_error_file_print()
  */
 #ifndef _di_fake_print_error_file_
-  extern f_status_t fake_print_error_file(fake_setting_t * const setting, const fl_print_t print, const f_string_t function, const f_string_static_t name, const f_string_static_t operation, const uint8_t type);
+  extern f_status_t fake_print_error_file(fl_print_t * const print, const f_string_t function, const f_string_static_t name, const f_string_static_t operation, const uint8_t type);
 #endif // _di_fake_print_error_file_
 
 /**
@@ -326,7 +326,7 @@ extern "C" {
  * @see fake_print_context_wrapped_variable()
  */
 #ifndef _di_fake_print_error_directory_create_parent_missing_
-  extern f_status_t fake_print_error_directory_create_parent_missing(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t path);
+  extern f_status_t fake_print_error_directory_create_parent_missing(fl_print_t * const print, const f_string_static_t path);
 #endif // _di_fake_print_error_directory_create_parent_missing_
 
 /**
@@ -350,7 +350,7 @@ extern "C" {
  * @see fake_print_context_simple_variable()
  */
 #ifndef _di_fake_print_error_execute_program_not_found_
-  extern f_status_t fake_print_error_execute_program_not_found(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t program);
+  extern f_status_t fake_print_error_execute_program_not_found(fl_print_t * const print, const f_string_static_t program);
 #endif // _di_fake_print_error_execute_program_not_found_
 
 /**
@@ -380,7 +380,7 @@ extern "C" {
  * @see fll_error_file_print()
  */
 #ifndef _di_fake_print_error_file_simple_
-  extern f_status_t fake_print_error_file_simple(fake_setting_t * const setting, const fl_print_t print, const f_string_t function, const f_string_static_t name, const f_string_static_t operation, const uint8_t type);
+  extern f_status_t fake_print_error_file_simple(fl_print_t * const print, const f_string_t function, const f_string_static_t name, const f_string_static_t operation, const uint8_t type);
 #endif // _di_fake_print_error_file_simple_
 
 /**
@@ -415,7 +415,7 @@ extern "C" {
  * @see fake_print_error_fss_message()
  */
 #ifndef _di_fake_print_error_fss_
-  extern f_status_t fake_print_error_fss(fake_setting_t * const setting, const fl_print_t print, const f_string_t function, const f_string_static_t path_file, const f_string_range_t range, const bool fallback);
+  extern f_status_t fake_print_error_fss(fl_print_t * const print, const f_string_t function, const f_string_static_t path_file, const f_string_range_t range, const bool fallback);
 #endif // _di_fake_print_error_fss_
 
 /**
@@ -450,7 +450,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_error_fss_message_
-  extern f_status_t fake_print_error_fss_message(fake_setting_t * const setting, const fl_print_t print, const f_string_t prefix, const f_string_t before, const f_number_unsigned_t number, const f_string_t middle, const f_string_static_t variable, const f_string_t after);
+  extern f_status_t fake_print_error_fss_message(fl_print_t * const print, const f_string_t prefix, const f_string_t before, const f_number_unsigned_t number, const f_string_t middle, const f_string_static_t variable, const f_string_t after);
 #endif // _di_fake_print_error_fss_message_
 
 /**
@@ -474,7 +474,7 @@ extern "C" {
  * @see fake_print_context_wrapped_variable()
  */
 #ifndef _di_fake_print_error_group_not_found_
-  extern f_status_t fake_print_error_group_not_found(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t group);
+  extern f_status_t fake_print_error_group_not_found(fl_print_t * const print, const f_string_static_t group);
 #endif // _di_fake_print_error_group_not_found_
 
 /**
@@ -498,7 +498,7 @@ extern "C" {
  * @see fake_print_context_wrapped_variable()
  */
 #ifndef _di_fake_print_error_mode_invalid_
-  extern f_status_t fake_print_error_mode_invalid(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t mode);
+  extern f_status_t fake_print_error_mode_invalid(fl_print_t * const print, const f_string_static_t mode);
 #endif // _di_fake_print_error_mode_invalid_
 
 /**
@@ -522,7 +522,7 @@ extern "C" {
  * @see fake_print_context_wrapped_variable()
  */
 #ifndef _di_fake_print_error_number_too_large_
-  extern f_status_t fake_print_error_number_too_large(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t number);
+  extern f_status_t fake_print_error_number_too_large(fl_print_t * const print, const f_string_static_t number);
 #endif // _di_fake_print_error_number_too_large_
 
 /**
@@ -550,7 +550,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_error_operation_failed_
-  extern f_status_t fake_print_error_operation_failed(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name);
+  extern f_status_t fake_print_error_operation_failed(fl_print_t * const print, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name);
 #endif // _di_fake_print_error_operation_failed_
 
 /**
@@ -574,7 +574,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_error_operation_link_argument_unknown_
-  extern f_status_t fake_print_error_operation_link_argument_unknown(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t argument);
+  extern f_status_t fake_print_error_operation_link_argument_unknown(fl_print_t * const print, const f_string_static_t argument);
 #endif // _di_fake_print_error_operation_link_argument_unknown_
 
 /**
@@ -598,7 +598,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_error_operation_link_point_exists_
-  extern f_status_t fake_print_error_operation_link_point_exists(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t argument);
+  extern f_status_t fake_print_error_operation_link_point_exists(fl_print_t * const print, const f_string_static_t argument);
 #endif // _di_fake_print_error_operation_link_point_exists_
 
 /**
@@ -621,10 +621,10 @@ extern "C" {
  * @see f_file_stream_unlock()
  * @see fl_print_format()
  *
- * @see fake_print_wrapped_variable()
+ * @see fake_print_common_wrapped_variable()
  */
 #ifndef _di_fake_print_error_operation_link_target_exists_not_
-  extern f_status_t fake_print_error_operation_link_target_exists_not(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t argument);
+  extern f_status_t fake_print_error_operation_link_target_exists_not(fl_print_t * const print, const f_string_static_t argument);
 #endif // _di_fake_print_error_operation_link_target_exists_not_
 
 /**
@@ -651,7 +651,7 @@ extern "C" {
  * @see fll_error_file_print()
  */
 #ifndef _di_fake_print_error_operation_path_outside_
-  extern f_status_t fake_print_error_operation_path_outside(fake_setting_t * const setting, const fl_print_t print, const f_string_t function, const f_string_static_t path);
+  extern f_status_t fake_print_error_operation_path_outside(fl_print_t * const print, const f_string_t function, const f_string_static_t path);
 #endif // _fake_print_error_operation_path_outside_
 
 /**
@@ -679,7 +679,7 @@ extern "C" {
  * @see fll_error_file_print()
  */
 #ifndef _di_fake_print_error_operation_path_stack_max_
-  extern f_status_t fake_print_error_operation_path_stack_max(fake_setting_t * const setting, const fl_print_t print, const f_string_t function, const f_string_static_t path);
+  extern f_status_t fake_print_error_operation_path_stack_max(fl_print_t * const print, const f_string_t function, const f_string_static_t path);
 #endif // _di_fake_print_error_operation_path_stack_max_
 
 /**
@@ -709,7 +709,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_error_operation_stack_max_
-  extern f_status_t fake_print_error_operation_stack_max(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name, const f_array_length_t stack_max);
+  extern f_status_t fake_print_error_operation_stack_max(fl_print_t * const print, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name, const f_array_length_t stack_max);
 #endif // _di_fake_print_error_operation_stack_max_
 
 /**
@@ -737,7 +737,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_error_operation_unknown_
-  extern f_status_t fake_print_error_operation_unknown(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name);
+  extern f_status_t fake_print_error_operation_unknown(fl_print_t * const print, const f_string_static_t buffer, const f_string_range_t section_name, const f_string_range_t operation_name);
 #endif // _di_fake_print_error_operation_unknown_
 
 /**
@@ -765,7 +765,7 @@ extern "C" {
  * @see fake_print_context_wrapped_parameter()
  */
 #ifndef _di_fake_print_error_parameter_not_empty_
-  extern f_status_t fake_print_error_parameter_not_empty(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t value);
+  extern f_status_t fake_print_error_parameter_not_empty(fl_print_t * const print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t value);
 #endif // _di_fake_print_error_parameter_not_empty_
 
 /**
@@ -793,7 +793,7 @@ extern "C" {
  * @see fake_print_context_wrapped_parameter_value()
  */
 #ifndef _di_fake_print_error_parameter_directory_not_found_path_
-  extern f_status_t fake_print_error_parameter_directory_not_found_path(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t value);
+  extern f_status_t fake_print_error_parameter_directory_not_found_path(fl_print_t * const print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t value);
 #endif // _di_fake_print_error_parameter_directory_not_found_path_
 
 /**
@@ -823,7 +823,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_error_parameter_not_word_
-  extern f_status_t fake_print_error_parameter_not_word(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t value);
+  extern f_status_t fake_print_error_parameter_not_word(fl_print_t * const print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t value);
 #endif // _di_fake_print_error_parameter_not_word_
 
 /**
@@ -849,7 +849,7 @@ extern "C" {
  * @see fake_print_context_wrapped_variables()
  */
 #ifndef _di_fake_print_error_parameter_operation_not_with_
-  extern f_status_t fake_print_error_parameter_operation_not_with(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t operation_1, const f_string_static_t operation_2);
+  extern f_status_t fake_print_error_parameter_operation_not_with(fl_print_t * const print, const f_string_static_t operation_1, const f_string_static_t operation_2);
 #endif // _di_fake_print_error_parameter_operation_not_with_
 
 /**
@@ -869,7 +869,7 @@ extern "C" {
  * @see fake_print_context_wrapped_parameter()
  */
 #ifndef _di_fake_print_error_parameter_too_many_
-  extern f_status_t fake_print_error_parameter_too_many(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t symbol, const f_string_static_t parameter);
+  extern f_status_t fake_print_error_parameter_too_many(fl_print_t * const print, const f_string_static_t symbol, const f_string_static_t parameter);
 #endif // _di_fake_print_error_parameter_too_many_
 
 /**
@@ -887,7 +887,7 @@ extern "C" {
  * @see fake_print_context_simple()
  */
 #ifndef _di_fake_print_error_requires_more_arguments_
-  extern f_status_t fake_print_error_requires_more_arguments(fake_setting_t * const setting, const fl_print_t print);
+  extern f_status_t fake_print_error_requires_more_arguments(fl_print_t * const print);
 #endif // _di_fake_print_error_requires_more_arguments_
 
 /**
@@ -905,7 +905,7 @@ extern "C" {
  * @see fake_print_context_simple()
  */
 #ifndef _di_fake_print_error_too_many_arguments_
-  extern f_status_t fake_print_error_too_many_arguments(fake_setting_t * const setting, const fl_print_t print);
+  extern f_status_t fake_print_error_too_many_arguments(fl_print_t * const print);
 #endif // _di_fake_print_error_too_many_arguments_
 
 /**
@@ -929,7 +929,7 @@ extern "C" {
  * @see fake_print_context_wrapped_variable()
  */
 #ifndef _di_fake_print_error_user_not_found_
-  extern f_status_t fake_print_error_user_not_found(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t user);
+  extern f_status_t fake_print_error_user_not_found(fl_print_t * const print, const f_string_static_t user);
 #endif // _di_fake_print_error_user_not_found_
 
 #ifdef __cplusplus

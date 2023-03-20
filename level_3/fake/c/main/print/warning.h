@@ -17,14 +17,38 @@ extern "C" {
 #endif
 
 /**
+ * Print warning message about the build directory not being found.
+ *
+ * @param print
+ *   The output structure to print to.
+ *
+ *   This requires print.custom to be fake_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
+ * @param path
+ *   The path of the build directory.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if setting is NULL.
+ *
+ * @see fake_print_context_wrapped_variable()
+ */
+#ifndef _di_fake_print_warning_build_directory_not_directory_
+  extern f_status_t fake_print_warning_build_directory_not_directory(fl_print_t * const print, f_string_static_t path);
+#endif // _di_fake_print_warning_build_directory_not_directory_
+
+/**
  * Print warning message about path existing but is not a directory.
  *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.state.status.
  * @param print
- *   Designates the how and where to print.
+ *   The output structure to print to.
+ *
+ *   This requires print.custom to be fake_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param path
  *   The name of the file or directory.
  *
@@ -37,7 +61,7 @@ extern "C" {
  * @see fake_print_context_wrapped_variable()
  */
 #ifndef _di_fake_print_warning_path_exists_not_directory_
-  extern f_status_t fake_print_warning_path_exists_not_directory(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t path);
+  extern f_status_t fake_print_warning_path_exists_not_directory(fl_print_t * const print, const f_string_static_t path);
 #endif // _di_fake_print_warning_path_exists_not_directory_
 
 #ifdef __cplusplus

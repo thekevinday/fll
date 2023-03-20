@@ -24,7 +24,7 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
- *   This alters data_make.setting.state.status:
+ *   This alters data_make.main->setting.state.status:
  *     F_none on success.
  *
  *     F_interrupt (with error bit) on interrupt signal received.
@@ -82,7 +82,7 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
- *   This does not alter data_make.setting.state.status.
+ *   This does not alter data_make.main.setting.state.status.
  * @param object
  *   The setting object.
  * @param content
@@ -98,7 +98,7 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
- *   This does not alter data_make.setting.state.status.
+ *   This does not alter data_make.main.setting.state.status.
  * @param object
  *   The setting object.
  * @param content
@@ -116,7 +116,7 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
- *   This alters data_make.setting.state.status:
+ *   This alters data_make.main->setting.state.status:
  *     F_none on success.
  *
  *     Errors (with error bit) from: f_environment_set().
@@ -147,7 +147,7 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
- *   This alters data_make.setting.state.status:
+ *   This alters data_make.main->setting.state.status:
  *     F_none on success.
  *
  *     Errors (with error bit) from: f_string_dynamic_append().
@@ -174,7 +174,7 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
- *   This does not alter data_make.setting.state.status.
+ *   This does not alter data_make.main.setting.state.status.
  * @param object
  *   The setting object.
  * @param content
@@ -190,7 +190,7 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
- *   This does not alter data_make.setting.state.status.
+ *   This does not alter data_make.main.setting.state.status.
  * @param object
  *   The setting object.
  * @param content
@@ -211,7 +211,7 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
- *   This alters data_make.setting.state.status:
+ *   This alters data_make.main->setting.state.status:
  *     F_none on success.
  *
  *     Errors (with error bit) from: f_string_append_assure().

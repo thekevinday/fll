@@ -19,12 +19,12 @@ extern "C" {
 /**
  * Print message for when all operates successfully complete.
  *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.state.status.
  * @param print
- *   Designates the how and where to print.
+ *   The output structure to print to.
+ *
+ *   This requires print.custom to be fake_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
  *
  * @return
  *   F_none on success.
@@ -38,18 +38,18 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_operation_all_complete_
-  extern f_status_t fake_print_operation_all_complete(fake_setting_t * const setting, const fl_print_t print);
+  extern f_status_t fake_print_operation_all_complete(fl_print_t * const print);
 #endif // _di_fake_print_operation_all_complete_
 
 /**
  * Print message for when the operation is cancelled.
  *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.state.status.
  * @param print
- *   Designates the how and where to print.
+ *   The output structure to print to.
+ *
+ *   This requires print.custom to be fake_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param operation
  *   The identifier of the operation that failed.
  *
@@ -66,7 +66,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_fake_print_operation_cancelled_
-  extern f_status_t fake_print_operation_cancelled(fake_setting_t * const setting, const fl_print_t print, const uint8_t operation);
+  extern f_status_t fake_print_operation_cancelled(fl_print_t * const print, const uint8_t operation);
 #endif // _di_fake_print_operation_cancelled_
 
 #ifdef __cplusplus

@@ -23,7 +23,7 @@ extern "C" {
  *   All make related setting data, including data from the fakefile and the build settings file.
  *   The data_make.cache_path will be updated to reflect the full path to this file.
  *
- *   This alters data_make.setting.state.status:
+ *   This alters data_make.main->setting.state.status:
  *     F_true if inside the project.
  *     F_false (with error bit) if path exists outside of the root project path.
  *
@@ -46,7 +46,7 @@ extern "C" {
  *   All make related setting data, including data from the fakefile and the build settings file.
  *   The data_make.cache_path will be updated to reflect the full path to this file.
  *
- *   This alters data_make.setting.state.status:
+ *   This alters data_make.main->setting.state.status:
  *     F_none on success.
  *
  *     F_failure (with error bit) on any error.
@@ -66,7 +66,7 @@ extern "C" {
  *   The detected owner id or group id.
  *   When is_owner is TRUE, then this should be cast to type (uid_t *).
  *   When is_owner is TRUE, then this should be cast to type (gid_t *).
- *   This is set to 0 on any error, check data_make.setting.state.status for error.
+ *   This is set to 0 on any error, check data_make.main->setting.state.status for error.
  *
  * @see f_account_group_id_by_name()
  * @see f_account_id_by_name()
@@ -83,7 +83,7 @@ extern "C" {
  *   All make related setting data, including data from the fakefile and the build settings file.
  *   The data_make.cache_path will be updated to reflect the full path to this file.
  *
- *   This alters data_make.setting.state.status:
+ *   This alters data_make.main->setting.state.status:
  *     F_none on success.
  *
  *     F_failure (with error bit) on any error.
@@ -112,7 +112,7 @@ extern "C" {
  *   All make related setting data, including data from the fakefile and the build settings file.
  *   The relative path is stored in data_make.cache_path.
  *
- *   This alters data_make.setting.state.status:
+ *   This alters data_make.main->setting.state.status:
  *     F_none on success.
  *
  *     F_failure (with error bit) on any error.

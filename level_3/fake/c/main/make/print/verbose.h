@@ -19,13 +19,12 @@ extern "C" {
 /**
  * Print operate break verbose message.
  *
- * @param setting
- *   The main program settings.
- *   (Must be of type fake_setting_t.)
- *
- *   This does not alter setting.state.status.
  * @param print
  *   The output structure to print to.
+ *
+ *   This requires print.custom to be fake_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param arguments
  *   The arguments where the first argument, if defined, is the exiting as string.
  *   Set arguments.used to 0 to use the default "success" exiting as string.
@@ -37,19 +36,18 @@ extern "C" {
  *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_fake_make_print_verbose_operate_break_
-  extern f_status_t fake_make_print_verbose_operate_break(fake_setting_t * const setting, const fl_print_t print, const f_string_statics_t arguments);
+  extern f_status_t fake_make_print_verbose_operate_break(fl_print_t * const print, const f_string_statics_t arguments);
 #endif // _di_fake_make_print_verbose_operate_break_
 
 /**
  * Print operate copy verbose message.
  *
- * @param setting
- *   The main program settings.
- *   (Must be of type fake_setting_t.)
- *
- *   This does not alter setting.state.status.
  * @param print
  *   The output structure to print to.
+ *
+ *   This requires print.custom to be fake_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param clone
  *   If TRUE, then this is a clone operation.
  *   If FALSE< then this is a copy operation.
@@ -65,19 +63,18 @@ extern "C" {
  *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_fake_make_print_verbose_operate_copy_
-  extern f_status_t fake_make_print_verbose_operate_copy(fake_setting_t * const setting, const fl_print_t print, const bool clone, const f_string_static_t source, const f_string_static_t destination);
+  extern f_status_t fake_make_print_verbose_operate_copy(fl_print_t * const print, const bool clone, const f_string_static_t source, const f_string_static_t destination);
 #endif // _di_fake_make_print_verbose_operate_copy_
 
 /**
  * Print operate define verbose message.
  *
- * @param setting
- *   The main program settings.
- *   (Must be of type fake_setting_t.)
- *
- *   This does not alter setting.state.status.
  * @param print
  *   The output structure to print to.
+ *
+ *   This requires print.custom to be fake_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param variable
  *   The environment variable name.
  *
@@ -88,19 +85,18 @@ extern "C" {
  *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_fake_make_print_verbose_operate_define_
-  extern f_status_t fake_make_print_verbose_operate_define(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t variable);
+  extern f_status_t fake_make_print_verbose_operate_define(fl_print_t * const print, const f_string_static_t variable);
 #endif // _di_fake_make_print_verbose_operate_define_
 
 /**
  * Print operate delete verbose message.
  *
- * @param setting
- *   The main program settings.
- *   (Must be of type fake_setting_t.)
- *
- *   This does not alter setting.state.status.
  * @param print
  *   The output structure to print to.
+ *
+ *   This requires print.custom to be fake_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param path
  *   The path or file that is deleted.
  *
@@ -111,19 +107,18 @@ extern "C" {
  *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_fake_make_print_verbose_operate_delete_
-  extern f_status_t fake_make_print_verbose_operate_delete(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t path);
+  extern f_status_t fake_make_print_verbose_operate_delete(fl_print_t * const print, const f_string_static_t path);
 #endif // _di_fake_make_print_verbose_operate_delete_
 
 /**
  * Print operate exiting as verbose message.
  *
- * @param setting
- *   The main program settings.
- *   (Must be of type fake_setting_t.)
- *
- *   This does not alter setting.state.status.
  * @param print
  *   The output structure to print to.
+ *
+ *   This requires print.custom to be fake_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param arguments
  *   The arguments where the first argument, if defined, is the exiting as string.
  *   Set arguments.used to 0 to use the default "success" exiting as string.
@@ -135,19 +130,18 @@ extern "C" {
  *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_fake_make_print_verbose_operate_exiting_as_
-  extern f_status_t fake_make_print_verbose_operate_exiting_as(fake_setting_t * const setting, const fl_print_t print, const f_string_statics_t arguments);
+  extern f_status_t fake_make_print_verbose_operate_exiting_as(fl_print_t * const print, const f_string_statics_t arguments);
 #endif // _di_fake_make_print_verbose_operate_exiting_as_
 
 /**
  * Print operate file or directory not found verbose message.
  *
- * @param setting
- *   The main program settings.
- *   (Must be of type fake_setting_t.)
- *
- *   This does not alter setting.state.status.
  * @param print
  *   The output structure to print to.
+ *
+ *   This requires print.custom to be fake_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param is_directory
  *   If TRUE, then the file is type directory.
  *   If FALSE, then the file is type regular.
@@ -161,19 +155,18 @@ extern "C" {
  *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_fake_make_print_verbose_operate_file_not_found_
-  extern f_status_t fake_make_print_verbose_operate_file_not_found(fake_setting_t * const setting, const fl_print_t print, const bool is_directory, const f_string_static_t file);
+  extern f_status_t fake_make_print_verbose_operate_file_not_found(fl_print_t * const print, const bool is_directory, const f_string_static_t file);
 #endif // _di_fake_make_print_verbose_operate_file_not_found_
 
 /**
  * Print verbose program message.
  *
- * @param setting
- *   The main program settings.
- *   (Must be of type fake_setting_t.)
- *
- *   This does not alter setting.state.status.
  * @param print
  *   The output structure to print to.
+ *
+ *   This requires print.custom to be fake_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param program
  *   The program name.
  * @param arguments
@@ -186,19 +179,18 @@ extern "C" {
  *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_fake_make_print_verbose_operate_program_
-  extern f_status_t fake_make_print_verbose_operate_program(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t program, const f_string_statics_t arguments);
+  extern f_status_t fake_make_print_verbose_operate_program(fl_print_t * const print, const f_string_static_t program, const f_string_statics_t arguments);
 #endif // _di_fake_make_print_verbose_operate_program_
 
 /**
  * Print verbose message about setting failure state.
  *
- * @param setting
- *   The main program settings.
- *   (Must be of type fake_setting_t.)
- *
- *   This does not alter setting.state.status.
  * @param print
  *   The output structure to print to.
+ *
+ *   This requires print.custom to be fake_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param fail
  *   The failure state code being set to.
  *
@@ -209,19 +201,18 @@ extern "C" {
  *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_fake_make_print_verbose_operate_set_failure_state_
-  extern f_status_t fake_make_print_verbose_operate_set_failure_state(fake_setting_t * const setting, const fl_print_t print, const uint8_t fail);
+  extern f_status_t fake_make_print_verbose_operate_set_failure_state(fl_print_t * const print, const uint8_t fail);
 #endif // _di_fake_make_print_verbose_operate_set_failure_state_
 
 /**
  * Print verbose message about setting the file mode.
  *
- * @param setting
- *   The main program settings.
- *   (Must be of type fake_setting_t.)
- *
- *   This does not alter setting.state.status.
  * @param print
  *   The output structure to print to.
+ *
+ *   This requires print.custom to be fake_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param path
  *   The file path having the mode changed.
  * @param mode
@@ -234,19 +225,18 @@ extern "C" {
  *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_fake_make_print_verbose_operate_set_mode_
-  extern f_status_t fake_make_print_verbose_operate_set_mode(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t path, const mode_t mode);
+  extern f_status_t fake_make_print_verbose_operate_set_mode(fl_print_t * const print, const f_string_static_t path, const mode_t mode);
 #endif // _di_fake_make_print_verbose_operate_set_mode_
 
 /**
  * Print verbose message about changing the project path.
  *
- * @param setting
- *   The main program settings.
- *   (Must be of type fake_setting_t.)
- *
- *   This does not alter setting.state.status.
  * @param print
  *   The output structure to print to.
+ *
+ *   This requires print.custom to be fake_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param path
  *   The path being changed to.
  *
@@ -257,19 +247,18 @@ extern "C" {
  *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_fake_make_print_verbose_operate_set_path_
-  extern f_status_t fake_make_print_verbose_operate_set_path(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t path);
+  extern f_status_t fake_make_print_verbose_operate_set_path(fl_print_t * const print, const f_string_static_t path);
 #endif // _di_fake_make_print_verbose_operate_set_path_
 
 /**
  * Print verbose message about setting owner or group.
  *
- * @param setting
- *   The main program settings.
- *   (Must be of type fake_setting_t.)
- *
- *   This does not alter setting.state.status.
  * @param print
  *   The output structure to print to.
+ *
+ *   This requires print.custom to be fake_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param what
  *   Bitwise flags tweaking the message printed.
  *   - 0x1 = When set, print as recursive; When not set, print as non-recursive.
@@ -286,19 +275,18 @@ extern "C" {
  *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_fake_make_print_verbose_operate_set_role_
-  extern f_status_t fake_make_print_verbose_operate_set_role(fake_setting_t * const setting, const fl_print_t print, const uint8_t what, f_string_static_t role, f_number_unsigned_t id);
+  extern f_status_t fake_make_print_verbose_operate_set_role(fl_print_t * const print, const uint8_t what, f_string_static_t role, f_number_unsigned_t id);
 #endif // _di_fake_make_print_verbose_operate_set_role_
 
 /**
  * Print verbose message about create a symbolic link.
  *
- * @param setting
- *   The main program settings.
- *   (Must be of type fake_setting_t.)
- *
- *   This does not alter setting.state.status.
  * @param print
  *   The output structure to print to.
+ *
+ *   This requires print.custom to be fake_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param source
  *   A string the symbolic link is from.
  * @param destination
@@ -311,19 +299,18 @@ extern "C" {
  *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_fake_make_print_verbose_operate_symbolic_link_
-  extern f_status_t fake_make_print_verbose_operate_symbolic_link(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t source, const f_string_static_t destination);
+  extern f_status_t fake_make_print_verbose_operate_symbolic_link(fl_print_t * const print, const f_string_static_t source, const f_string_static_t destination);
 #endif // _di_fake_make_print_verbose_operate_symbolic_link_
 
 /**
  * Print verbose message about touching a file.
  *
- * @param setting
- *   The main program settings.
- *   (Must be of type fake_setting_t.)
- *
- *   This does not alter setting.state.status.
  * @param print
  *   The output structure to print to.
+ *
+ *   This requires print.custom to be fake_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param path
  *   The file path being touched.
  *
@@ -334,7 +321,7 @@ extern "C" {
  *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_fake_make_print_verbose_operate_touch_
-  extern f_status_t fake_make_print_verbose_operate_touch(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t path);
+  extern f_status_t fake_make_print_verbose_operate_touch(fl_print_t * const print, const f_string_static_t path);
 #endif // _di_fake_make_print_verbose_operate_touch_
 
 #ifdef __cplusplus

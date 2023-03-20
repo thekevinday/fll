@@ -19,12 +19,12 @@ extern "C" {
 /**
  * Print verbose message about copying a file.
  *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.state.status.
  * @param print
- *   Designates the how and where to print.
+ *   The output structure to print to.
+ *
+ *   This requires print.custom to be fake_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param source
  *   The source file path.
  * @param destination
@@ -36,21 +36,21 @@ extern "C" {
  *
  *   F_output_not (with error bit) if setting is NULL.
  *
- * @see fake_print_wrapped_variables()
+ * @see fake_print_common_wrapped_variables()
  */
 #ifndef _di_fake_build_print_verbose_copied_file_
-  extern f_status_t fake_build_print_verbose_copied_file(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t source, const f_string_static_t destination);
+  extern f_status_t fake_build_print_verbose_copied_file(fl_print_t * const print, const f_string_static_t source, const f_string_static_t destination);
 #endif // _di_fake_build_print_verbose_create_directory_
 
 /**
  * Print verbose message about _di_fake_build_print_verbose_copied_file_ a directory.
  *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.state.status.
  * @param print
- *   Designates the how and where to print.
+ *   The output structure to print to.
+ *
+ *   This requires print.custom to be fake_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param directory
  *   The directory created.
  *
@@ -60,11 +60,37 @@ extern "C" {
  *
  *   F_output_not (with error bit) if setting is NULL.
  *
- * @see fake_print_simple_variable()
+ * @see fake_print_common_simple_variable()
  */
 #ifndef _di_fake_build_print_verbose_create_directory_
-  extern f_status_t fake_build_print_verbose_create_directory(fake_setting_t * const setting, const fl_print_t print, const f_string_static_t directory);
+  extern f_status_t fake_build_print_verbose_create_directory(fl_print_t * const print, const f_string_static_t directory);
 #endif // _di_fake_build_print_verbose_create_directory_
+
+/**
+ * Print message about linking a file.
+ *
+ * @param print
+ *   The output structure to print to.
+ *
+ *   This requires print.custom to be fake_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
+ * @param from
+ *   The link source.
+ * @param to
+ *   The link destination.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if setting is NULL.
+ *
+ * @see fake_print_common_wrapped_variables()
+ */
+#ifndef _di_fake_build_print_verbose_linked_file_
+  extern f_status_t fake_build_print_verbose_linked_file(fl_print_t * const print, const f_string_static_t from, const f_string_static_t to);
+#endif // _di_fake_build_print_verbose_linked_file_
 
 #ifdef __cplusplus
 } // extern "C"

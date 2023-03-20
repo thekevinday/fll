@@ -25,7 +25,7 @@ extern "C" {
  * @param data
  *   The program data.
  *
- *   This alters data.settings.state.status:
+ *   This alters data.main->settings.state.status:
  *     F_none on success.
  *
  *     Errors (with error bit) from: f_directory_create().
