@@ -7,9 +7,9 @@
 #
 # The dependencies of this script are: bash and sed.
 #
-process_post_main(){
+process_post_main() {
   local grab_next=
-  local do_color=normal
+  local do_color=dark
   local i=0
   local p=
   local t=0
@@ -35,8 +35,7 @@ process_post_main(){
   local path_data=
   local path_sources=
   local path_work=
-  local verbosity=
-  local build_status=
+  local verbosity=normal
 
   # generated paths and standard paths.
   local path_directory_separator="/"
@@ -89,38 +88,38 @@ process_post_main(){
           if [[ $operation == "" ]] ; then
             operation=$p
           fi
-        elif [[ $p == "-d" ]] ; then
+        elif [[ $p == "-d" || $p == "--define" ]] ; then
           grab_next="defines"
-        elif [[ $p == "-m" ]] ; then
+        elif [[ $p == "-m" || $p == "--mode" ]] ; then
           grab_next="modes"
-        elif [[ $p == "-o" ]] ; then
+        elif [[ $p == "-p" || $p == "--process" ]] ; then
           grab_next="process"
-        elif [[ $p == "-s" ]] ; then
+        elif [[ $p == "-s" || $p == "--settings" ]] ; then
           grab_next="file_settings"
-        elif [[ $p == "-b" ]] ; then
+        elif [[ $p == "-b" || $p == "--build" ]] ; then
           grab_next="path_build"
-        elif [[ $p == "-D" ]] ; then
+        elif [[ $p == "-D" || $p == "--data" ]] ; then
           grab_next="path_data"
-        elif [[ $p == "-S" ]] ; then
+        elif [[ $p == "-S" || $p == "--sources" ]] ; then
           grab_next="path_sources"
-        elif [[ $p == "-w" ]] ; then
+        elif [[ $p == "-w" || $p == "--work" ]] ; then
           grab_next="path_work"
-        elif [[ $p == "+D" ]] ; then
+        elif [[ $p == "+D" || $p == "++debug" ]] ; then
           verbosity=debug
-        elif [[ $p == "+q" ]] ; then
+        elif [[ $p == "+E" || $p == "++error" ]] ; then
+          verbosity=error
+        elif [[ $p == "+N" || $p == "++normal" ]] ; then
+          verbosity=normal
+        elif [[ $p == "+Q" || $p == "++quiet" ]] ; then
           verbosity=quiet
-        elif [[ $p == "+V" ]] ; then
+        elif [[ $p == "+V" || $p == "++verbose" ]] ; then
           verbosity=verbose
-        elif [[ $p == "+l" ]] ; then
-          if [[ $do_color == "normal" ]] ; then
-            do_color=light
-          fi
-        elif [[ $p == "+n" ]] ; then
-          if [[ $do_color == "normal" ]] ; then
-            do_color=none
-          fi
-        elif [[ $p == "++status" ]] ; then
-          grab_next=build_status
+        elif [[ $p == "+l" || $p == "++light" ]] ; then
+          do_color=light
+        elif [[ $p == "+d" || $p == "++dark" ]] ; then
+          do_color=dark
+        elif [[ $p == "+n" || $p == "++no_color" ]] ; then
+          do_color=none
         fi
       else
         if [[ $grab_next == "defines" ]] ; then
@@ -157,8 +156,6 @@ process_post_main(){
           path_source_settings=$(process_post_path_fix $p)
         elif [[ $grab_next == "path_work" ]] ; then
           path_work=$(process_post_path_fix $p)
-        elif [[ $grab_next == "build_status" ]] ; then
-          build_status="$p"
         fi
 
         grab_next=
@@ -224,7 +221,7 @@ process_post_main(){
   file_data_build_settings="${path_data_build}settings"
   file_documents_readme="${path_documents}readme"
 
-  if [[ $verbosity != "quiet" ]] ; then
+  if [[ $verbosity != "quiet" && $verbosity != "error" ]] ; then
     echo
     echo -e "${c_title}Completed Operation: $c_reset$c_notice$operation$c_reset"
 
@@ -243,7 +240,7 @@ process_post_main(){
   return 0
 }
 
-process_post_path_fix(){
+process_post_path_fix() {
   echo -n $* | sed -e "s|^${path_directory_separator}${path_directory_separator}*|${path_directory_separator}|" -e "s|${path_directory_separator}*$|${path_directory_separator}|"
 }
 
