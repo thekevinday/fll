@@ -49,7 +49,7 @@ extern "C" {
           fl_print_format("%r%[%QThe values for the setting '%]", data->main->error.to.stream, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
           fl_print_format("%[%r%]", data->main->error.to.stream, data->main->error.notable, fake_build_setting_name_environment_s, data->main->error.notable);
           fl_print_format("%[' of setting file '%]", data->main->error.to.stream, data->main->error.context, data->main->error.context);
-          fl_print_format("%[%r%]", data->main->error.to.stream, data->main->error.notable, fake_build_setting_name_environment_s, data->main->error.notable);
+          fl_print_format("%[%r%]", data->main->error.to.stream, data->main->error.notable, data->file_data_build_settings, data->main->error.notable);
           fl_print_format("%[' is too large.%]%r", data->main->error.to.stream, data->main->error.context, data->main->error.context, f_string_eol_s);
 
           funlockfile(data->main->error.to.stream);
