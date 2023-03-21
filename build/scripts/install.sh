@@ -43,6 +43,7 @@ install_main() {
   local c_subtle="\\033[1;30m"
   local c_prefix="\\"
 
+  local failure=
   local operation=
   local operation_failure=
   local verbosity=normal
@@ -131,7 +132,7 @@ install_main() {
           verbose_common="-v"
         elif [[ $p == "+v" || $p == "++version" ]] ; then
           echo $version
-          return
+          return 0
         elif [[ $p == "-b" || $p == "--build" ]] ; then
           grab_next=path_build
         elif [[ $p == "-P" || $p == "--prefix" ]] ; then
@@ -222,6 +223,11 @@ install_main() {
     p=
   fi
 
+  if [[ $verbosity == "quiet" ]] ; then
+    print_line_first="no"
+    print_line_last="no"
+  fi
+
   install_handle_colors
 
   if [[ $do_help == "yes" ]] ; then
@@ -240,15 +246,11 @@ install_main() {
 
   if [[ $operation_failure == "fail-unsupported" ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      if [[ $print_line_first == "yes" ]] ; then
-        echo
-      fi
+      install_print_first
 
       echo -e "${c_error}ERROR: The operation ${c_notice}$operation${c_error} was not recognized.${c_reset}"
 
-      if [[ $print_line_last == "yes" ]] ; then
-        echo
-      fi
+      install_print_last
     fi
 
     install_cleanup
@@ -258,15 +260,11 @@ install_main() {
 
   if [[ ! -d $path_build ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      if [[ $print_line_first == "yes" ]] ; then
-        echo
-      fi
+      install_print_first
 
       echo -e "${c_error}ERROR: The build path ${c_notice}$path_build${c_error} is not a valid directory.${c_reset}"
 
-      if [[ $print_line_last == "yes" ]] ; then
-        echo
-      fi
+      install_print_last
     fi
 
     install_cleanup
@@ -276,15 +274,11 @@ install_main() {
 
   if [[ $work == "" && $destination_prefix != "" && ! -d $destination_prefix ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      if [[ $print_line_first == "yes" ]] ; then
-        echo
-      fi
+      install_print_first
 
       echo -e "${c_error}ERROR: The destination prefix ${c_notice}$destination_prefix${c_error} is not a valid directory.${c_reset}"
 
-      if [[ $print_line_last == "yes" ]] ; then
-        echo
-      fi
+      install_print_last
     fi
 
     install_cleanup
@@ -348,15 +342,11 @@ install_main() {
 
   if [[ $work != "" && ! -d $work ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      if [[ $print_line_first == "yes" ]] ; then
-        echo
-      fi
+      install_print_first
 
       echo -e "${c_error}ERROR: The work directory ${c_notice}$work${c_error} is not a valid directory.${c_reset}"
 
-      if [[ $print_line_last == "yes" ]] ; then
-        echo
-      fi
+      install_print_last
     fi
 
     install_cleanup
@@ -366,15 +356,11 @@ install_main() {
 
   if [[ $work == "" && -e $destination_programs && ! -d $destination_programs ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      if [[ $print_line_first == "yes" ]] ; then
-        echo
-      fi
+      install_print_first
 
       echo -e "${c_error}ERROR: The destination bindir ${c_notice}$destination_programs${c_error} is not a valid directory.${c_reset}"
 
-      if [[ $print_line_last == "yes" ]] ; then
-        echo
-      fi
+      install_print_last
     fi
 
     install_cleanup
@@ -384,15 +370,11 @@ install_main() {
 
   if [[ $work == "" && -e $destination_programs_static && ! -d $destination_programs_static ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      if [[ $print_line_first == "yes" ]] ; then
-        echo
-      fi
+      install_print_first
 
       echo -e "${c_error}ERROR: The destination (${c_notice}static${c_error}) bindir ${c_notice}$destination_programs_static${c_error} is not a valid directory.${c_reset}"
 
-      if [[ $print_line_last == "yes" ]] ; then
-        echo
-      fi
+      install_print_last
     fi
 
     install_cleanup
@@ -402,15 +384,11 @@ install_main() {
 
   if [[ $work == "" && -e $destination_programs_shared && ! -d $destination_programs_shared ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      if [[ $print_line_first == "yes" ]] ; then
-        echo
-      fi
+      install_print_first
 
       echo -e "${c_error}ERROR: The destination (${c_notice}shared${c_error}) bindir ${c_notice}$destination_programs_shared${c_error} is not a valid directory.${c_reset}"
 
-      if [[ $print_line_last == "yes" ]] ; then
-        echo
-      fi
+      install_print_last
     fi
 
     install_cleanup
@@ -420,15 +398,11 @@ install_main() {
 
   if [[ $work == "" && -e $destination_includes && ! -d $destination_includes ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      if [[ $print_line_first == "yes" ]] ; then
-        echo
-      fi
+      install_print_first
 
       echo -e "${c_error}ERROR: The destination incluedir ${c_notice}$destination_includes${c_error} is not a valid directory.${c_reset}"
 
-      if [[ $print_line_last == "yes" ]] ; then
-        echo
-      fi
+      install_print_last
     fi
 
     install_cleanup
@@ -438,15 +412,11 @@ install_main() {
 
   if [[ $work == "" && -e $destination_libraries_static && ! -d $destination_libraries_static ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      if [[ $print_line_first == "yes" ]] ; then
-        echo
-      fi
+      install_print_first
 
       echo -e "${c_error}ERROR: The destination (${c_notice}static${c_error}) libdir ${c_notice}$destination_libraries_static${c_error} is not a valid directory.${c_reset}"
 
-      if [[ $print_line_last == "yes" ]] ; then
-        echo
-      fi
+      install_print_last
     fi
 
     install_cleanup
@@ -456,15 +426,11 @@ install_main() {
 
   if [[ $work == "" && -e $destination_libraries_shared && ! -d $destination_libraries_shared ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
-      if [[ $print_line_first == "yes" ]] ; then
-        echo
-      fi
+      install_print_first
 
       echo -e "${c_error}ERROR: The destination (${c_notice}shared${c_error}) libdir ${c_notice}$destination_libraries_shared${c_error} is not a valid directory.${c_reset}"
 
-      if [[ $print_line_last == "yes" ]] ; then
-        echo
-      fi
+      install_print_last
     fi
 
     install_cleanup
@@ -474,9 +440,19 @@ install_main() {
 
   install_perform_install
 
+  if [[ $verbosity != "quiet" ]] ; then
+    if [[ $failure != "" || $verbosity != "error" ]] ; then
+      install_print_last
+    fi
+  fi
+
   install_cleanup
 
-  return 0
+  if [[ $failure == "" ]] ; then
+    return 0
+  fi
+
+  return 1
 }
 
 install_handle_colors() {
@@ -503,9 +479,7 @@ install_handle_colors() {
 
 install_help() {
 
-  if [[ $print_line_first == "yes" ]] ; then
-    echo
-  fi
+  install_print_first
 
   echo -e "${c_title}${public_name}${c_reset}"
   echo -e " ${c_notice}Version ${version}${c_reset}"
@@ -555,16 +529,12 @@ install_help() {
   echo -e " --${c_important}programs-static${c_reset}           Custom destination for static programs."
   echo -e " --${c_important}programs-shared${c_reset}           Custom destination for shared programs."
 
-  if [[ $print_line_last == "yes" ]] ; then
-    echo
-  fi
+  install_print_last
 }
 
 install_copyright() {
 
-  if [[ $print_line_first == "yes" ]] ; then
-    echo
-  fi
+  install_print_first
 
   echo "Copyright © 2007-2023 Kevin Day."
   echo
@@ -572,16 +542,13 @@ install_copyright() {
   echo "Standard and specification license open-standard-license-1.0."
   echo "Documentation license cc-by-sa-4.0."
 
-  if [[ $print_line_last == "yes" ]] ; then
-    echo
-  fi
+  install_print_last
 }
 
 install_perform_install() {
   local key=
   local i=
   local path=
-  local failure=
   local message=
 
   if [[ $enable_shared == "no" ]] ; then
@@ -610,21 +577,17 @@ install_perform_install() {
     destination_settings=${work}settings/
   fi
 
-  if [[ $verbosity != "quiet" && $print_line_first == "yes" ]] ; then
-    echo
-  fi
-
-  print_line_first="done"
-
   if [[ ! -d ${destination_prefix} ]] ; then
     mkdir $verbose_common ${destination_prefix}
 
     if [[ $? -ne 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
+        install_print_first
+
         echo -e "${c_error}ERROR: Failed to create install ${message} ${c_notice}${destination_prefix}${c_error}.${c_reset}"
       fi
 
-      failure=1
+      let failure=1
     fi
   fi
 
@@ -634,10 +597,12 @@ install_perform_install() {
 
       if [[ $? -ne 0 ]] ; then
         if [[ $verbosity != "quiet" ]] ; then
+          install_print_first
+
           echo -e "${c_error}ERROR: Failed to create install ${message} ${c_notice}${destination_programs}${c_error}.${c_reset}"
         fi
 
-        failure=1
+        let failure=1
       fi
     fi
 
@@ -646,10 +611,12 @@ install_perform_install() {
 
       if [[ $? -ne 0 ]] ; then
         if [[ $verbosity != "quiet" ]] ; then
+          install_print_first
+
           echo -e "${c_error}ERROR: Failed to create install ${message} ${c_notice}${destination_programs_shared}${c_error}.${c_reset}"
         fi
 
-        failure=1
+        let failure=1
       fi
     fi
 
@@ -658,10 +625,12 @@ install_perform_install() {
 
       if [[ $? -ne 0 ]] ; then
         if [[ $verbosity != "quiet" ]] ; then
+          install_print_first
+
           echo -e "${c_error}ERROR: Failed to create install ${message} ${c_notice}${destination_programs_static}${c_error}.${c_reset}"
         fi
 
-        failure=1
+        let failure=1
       fi
     fi
   fi
@@ -672,10 +641,12 @@ install_perform_install() {
 
       if [[ $? -ne 0 ]] ; then
         if [[ $verbosity != "quiet" ]] ; then
+          install_print_first
+
           echo -e "${c_error}ERROR: Failed to create install ${message} ${c_notice}${destination_libraries}${c_error}.${c_reset}"
         fi
 
-        failure=1
+        let failure=1
       fi
     fi
 
@@ -684,10 +655,12 @@ install_perform_install() {
 
       if [[ $? -ne 0 ]] ; then
         if [[ $verbosity != "quiet" ]] ; then
+          install_print_first
+
           echo -e "${c_error}ERROR: Failed to create ${message} ${c_notice}${destination_libraries_shared}${c_error}.${c_reset}"
         fi
 
-        failure=1
+        let failure=1
       fi
     fi
 
@@ -696,10 +669,12 @@ install_perform_install() {
 
       if [[ $? -ne 0 ]] ; then
         if [[ $verbosity != "quiet" ]] ; then
+          install_print_first
+
           echo -e "${c_error}ERROR: Failed to create ${message} ${c_notice}${destination_libraries_static}${c_error}.${c_reset}"
         fi
 
-        failure=1
+        let failure=1
       fi
     fi
   fi
@@ -710,10 +685,12 @@ install_perform_install() {
 
       if [[ $? -ne 0 ]] ; then
         if [[ $verbosity != "quiet" ]] ; then
+          install_print_first
+
           echo -e "${c_error}ERROR: Failed to create ${message} ${c_notice}${destination_includes}${c_error}.${c_reset}"
         fi
 
-        failure=1
+        let failure=1
       fi
     fi
   fi
@@ -724,10 +701,12 @@ install_perform_install() {
 
       if [[ $? -ne 0 ]] ; then
         if [[ $verbosity != "quiet" ]] ; then
+          install_print_first
+
           echo -e "${c_error}ERROR: Failed to create ${message} ${c_notice}${destination_documentation}${c_error}.${c_reset}"
         fi
 
-        failure=1
+        let failure=1
       fi
     fi
   fi
@@ -738,10 +717,12 @@ install_perform_install() {
 
       if [[ $? -ne 0 ]] ; then
         if [[ $verbosity != "quiet" ]] ; then
+          install_print_first
+
           echo -e "${c_error}ERROR: Failed to create ${message} ${c_notice}${destination_settings}${c_error}.${c_reset}"
         fi
 
-        failure=1
+        let failure=1
       fi
     fi
   fi
@@ -759,8 +740,8 @@ install_perform_install() {
     fi
 
     if [[ $file != "" ]] ; then
-      if [[ $verbosity != "quiet" ]] ; then
-        install_print_first
+      if [[ $verbosity != "quiet" && $verbosity != "error" ]] ; then
+        install_print_first_or_always
 
         echo -e "${c_highlight}Installing Includes to: ${c_reset}${c_notice}${destination_includes}${c_reset}${c_highlight}.${c_reset}"
       fi
@@ -769,10 +750,12 @@ install_perform_install() {
 
       if [[ $? -ne 0 ]] ; then
         if [[ $verbosity != "quiet" ]] ; then
+          install_print_first
+
           echo -e "${c_error}ERROR: Failed to copy include files from ${c_notice}${path_build}${path_includes}${c_error} to ${c_notice}${destination_includes}${c_error}.${c_reset}"
         fi
 
-        failure=1
+        let failure=1
       fi
     fi
   fi
@@ -791,8 +774,8 @@ install_perform_install() {
       fi
 
       if [[ $file != "" ]] ; then
-        if [[ $verbosity != "quiet" ]] ; then
-          install_print_first
+        if [[ $verbosity != "quiet" && $verbosity != "error" ]] ; then
+          install_print_first_or_always
 
           echo -e "${c_highlight}Installing (${c_notice}static${c_highlight}) Libraries to: ${c_reset}${c_notice}${destination_libraries_static}${c_reset}${c_highlight}.${c_reset}"
         fi
@@ -801,10 +784,12 @@ install_perform_install() {
 
         if [[ $? -ne 0 ]] ; then
           if [[ $verbosity != "quiet" ]] ; then
+            install_print_first
+
             echo -e "${c_error}ERROR: Failed to copy (${c_notice}static${c_error}) library files from ${c_notice}${path_build}${path_libraries}${path_static}${c_error} to ${c_notice}${destination_libraries_static}${c_error}.${c_reset}"
           fi
 
-          failure=1
+          let failure=1
         fi
       fi
     fi
@@ -822,8 +807,8 @@ install_perform_install() {
       fi
 
       if [[ $file != "" ]] ; then
-        if [[ $verbosity != "quiet" ]] ; then
-          install_print_first
+        if [[ $verbosity != "quiet" && $verbosity != "error" ]] ; then
+          install_print_first_or_always
 
           echo -e "${c_highlight}Installing (${c_notice}shared${c_highlight}) Libraries to: ${c_reset}${c_notice}${destination_libraries_shared}${c_reset}${c_highlight}.${c_reset}"
         fi
@@ -832,10 +817,12 @@ install_perform_install() {
 
         if [[ $? -ne 0 ]] ; then
           if [[ $verbosity != "quiet" ]] ; then
+            install_print_first
+
             echo -e "${c_error}ERROR: Failed to copy (${c_notice}shared${c_error}) library files from ${c_notice}${path_build}${path_libraries}${path_shared}${c_error} to ${c_notice}${destination_libraries_shared}${c_error}.${c_reset}"
           fi
 
-          failure=1
+          let failure=1
         fi
       fi
     fi
@@ -855,8 +842,8 @@ install_perform_install() {
       fi
 
       if [[ $file != "" && $enable_static_programs == "yes" ]] ; then
-        if [[ $verbosity != "quiet" ]] ; then
-          install_print_first
+        if [[ $verbosity != "quiet" && $verbosity != "error" ]] ; then
+          install_print_first_or_always
 
           echo -e "${c_highlight}Installing (${c_notice}static${c_highlight}) Programs to: ${c_reset}${c_notice}${destination_programs_static}${c_reset}${c_highlight}.${c_reset}"
         fi
@@ -865,10 +852,12 @@ install_perform_install() {
 
         if [[ $? -ne 0 ]] ; then
           if [[ $verbosity != "quiet" ]] ; then
+            install_print_first
+
             echo -e "${c_error}ERROR: failed to copy (${c_notice}static${c_error}) program files from ${c_notice}${path_build}${path_programs}${path_static}${c_error} to ${c_notice}${destination_programs_static}${c_error}.${c_reset}"
           fi
 
-          failure=1
+          let failure=1
         fi
       fi
     fi
@@ -886,8 +875,8 @@ install_perform_install() {
       fi
 
       if [[ $file != "" ]] ; then
-        if [[ $verbosity != "quiet" ]] ; then
-          install_print_first
+        if [[ $verbosity != "quiet" && $verbosity != "error" ]] ; then
+          install_print_first_or_always
 
           echo -e "${c_highlight}Installing (${c_notice}shared${c_highlight}) Programs to: ${c_reset}${c_notice}${destination_programs_shared}${c_reset}${c_highlight}.${c_reset}"
         fi
@@ -896,16 +885,18 @@ install_perform_install() {
 
         if [[ $? -ne 0 ]] ; then
           if [[ $verbosity != "quiet" ]] ; then
+            install_print_first
+
             echo -e "${c_error}ERROR: failed to copy (${c_notice}shared${c_error}) program files from ${c_notice}${path_build}${path_programs}${path_shared}${c_error} to ${c_notice}${destination_programs_shared}${c_error}.${c_reset}"
           fi
 
-          failure=1
+          let failure=1
         fi
       fi
     fi
   fi
 
-  if [[ $failure == "" && -d ${path_build}${path_settings} && $verbosity != "quiet" ]] ; then
+  if [[ $failure == "" && -d ${path_build}${path_settings} && $enable_settings == "yes" ]] ; then
     for i in ${path_build}${path_settings}* ; do
 
       file=$(echo $i | sed -e "s|^${path_build}${path_settings}||")
@@ -918,20 +909,22 @@ install_perform_install() {
     fi
 
     if [[ $file != "" ]] ; then
-      if [[ $verbosity != "quiet" ]] ; then
-        install_print_first
+      if [[ $verbosity != "quiet" && $verbosity != "error" ]] ; then
+        install_print_first_or_always
 
-        echo -e "${c_highlight}Installing Documentation to: ${c_reset}${c_notice}${destination_settings}${c_reset}${c_highlight}.${c_reset}"
+        echo -e "${c_highlight}Installing Settings to: ${c_reset}${c_notice}${destination_settings}${c_reset}${c_highlight}.${c_reset}"
       fi
 
       cp $verbose_common -R ${path_build}${path_settings}* ${destination_settings}
 
       if [[ $? -ne 0 ]] ; then
         if [[ $verbosity != "quiet" ]] ; then
-          echo -e "${c_error}ERROR: failed to copy documentation files from ${c_notice}${path_build}${path_programs}${path_static}${c_error} to ${c_notice}${destination_settings}${c_error}.${c_reset}"
+          install_print_first
+
+          echo -e "${c_error}ERROR: failed to copy settings files from ${c_notice}${path_build}${path_settings}${c_error} to ${c_notice}${destination_settings}${c_error}.${c_reset}"
         fi
 
-        failure=1
+        let failure=1
       fi
     fi
   fi
@@ -949,8 +942,8 @@ install_perform_install() {
     fi
 
     if [[ $file != "" ]] ; then
-      if [[ $verbosity != "quiet" ]] ; then
-        install_print_first
+      if [[ $verbosity != "quiet" && $verbosity != "error" ]] ; then
+        install_print_first_or_always
 
         echo -e "${c_highlight}Installing Documentation to: ${c_reset}${c_notice}${destination_documentation}${c_reset}${c_highlight}.${c_reset}"
       fi
@@ -959,30 +952,48 @@ install_perform_install() {
 
       if [[ $? -ne 0 ]] ; then
         if [[ $verbosity != "quiet" ]] ; then
-          echo -e "${c_error}ERROR: failed to copy documentation files from ${c_notice}${path_build}${path_programs}${path_static}${c_error} to ${c_notice}${destination_documentation}${c_error}.${c_reset}"
+          install_print_first
+
+          echo -e "${c_error}ERROR: failed to copy documentation files from ${c_notice}${path_build}${path_documentation}${c_error} to ${c_notice}${destination_documentation}${c_error}.${c_reset}"
         fi
 
-        failure=1
+        let failure=1
       fi
     fi
   fi
 
-  if [[ $verbosity != "quiet" && $print_line_last == "yes" ]] ; then
-    echo
+  if [[ $failure == "" ]] ; then
+    return 0
   fi
 
-  if [[ $failure != "" ]] ; then
-    install_cleanup
-
-    exit $failure
-  fi
+  return 1
 }
 
 install_print_first() {
 
-  if [[ $print_line_first == "done" ]] ; then
+  if [[ $print_line_first == "yes" ]] ; then
+    echo
+
+    print_line_first=
+  fi
+}
+
+install_print_first_or_always() {
+
+  if [[ $print_line_first == "yes" ]] ; then
+    echo
+
+    print_line_first=
+  elif [[ $print_line_first == "no" ]] ; then
     print_line_first=
   else
+    echo
+  fi
+}
+
+install_print_last() {
+
+  if [[ $print_line_last == "yes" ]] ; then
     echo
   fi
 }
@@ -995,7 +1006,8 @@ install_cleanup() {
   unset install_help
   unset install_perform_install
   unset install_print_first
-
+  unset install_print_first_or_always
+  unset install_print_last
   unset install_cleanup
 }
 

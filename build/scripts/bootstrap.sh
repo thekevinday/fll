@@ -26,6 +26,7 @@ bootstrap_main() {
   local grab_next=
   local do_color=dark
   local do_help=
+  local do_copyright=
   local i=0
   local m=
   local p=
@@ -43,6 +44,7 @@ bootstrap_main() {
 
   local key=
   local -A variables=()
+  local failure=
   local settings_name=settings
   local settings_file=
   local settings_defines=
@@ -59,6 +61,8 @@ bootstrap_main() {
   local path_sources=sources/
   local path_language=c/
   local path_work=
+  local print_line_first="yes"
+  local print_line_last="yes"
   local project_built=
   local project_built_shared=
   local project_built_static=
@@ -92,6 +96,8 @@ bootstrap_main() {
       if [[ $grab_next == "" ]] ; then
         if [[ $p == "-h" || $p == "--help" ]] ; then
           do_help=yes
+        elif [[ $p == "+C" || $p == "++copyright" ]] ; then
+          do_copyright="yes"
         elif [[ $p == "+d" || $p == "++dark" ]] ; then
           do_color=dark
           context="+d"
@@ -101,9 +107,13 @@ bootstrap_main() {
         elif [[ $p == "+n" || $p == "++no_color" ]] ; then
           do_color=none
           context="+n"
-        elif [[ $p == "+q" || $p == "++quiet" ]] ; then
+        elif [[ $p == "+Q" || $p == "++quiet" ]] ; then
           verbosity="quiet"
-          verbose="+q"
+          verbose="+Q"
+          verbose_common=
+        elif [[ $p == "+E" || $p == "++error" ]] ; then
+          verbosity="error"
+          verbose="+E"
           verbose_common=
         elif [[ $p == "+N" || $p == "++normal" ]] ; then
           verbosity=
@@ -119,7 +129,7 @@ bootstrap_main() {
           verbose_common="-v"
         elif [[ $p == "+v" || $p == "++version" ]] ; then
           echo $version
-          return
+          return 0
         elif [[ $p == "-d" || $p == "--define" ]] ; then
           grab_next=define_extra
         elif [[ $p == "-m" || $p == "--mode" ]] ; then
@@ -183,6 +193,11 @@ bootstrap_main() {
     p=
   fi
 
+  if [[ $verbosity == "quiet" ]] ; then
+    print_line_first="no"
+    print_line_last="no"
+  fi
+
   # If the settings_name has a directory separator, then assume it is a path to the settings file.
   if [[ $(echo $settings_name | grep -s -o '/') == "" ]] ; then
     settings_file="${path_data}build/$settings_name"
@@ -207,6 +222,13 @@ bootstrap_main() {
     return 0
   fi
 
+  if [[ $do_copyright == "yes" ]] ; then
+    bootstrap_copyright
+    bootstrap_cleanup
+
+    return 0
+  fi
+
   bootstrap_load_settings
 
   # FSS and Featurless Make supports more flexible mode names, but for the purpose of this bootstrap script and avoiding potential problems, keep it simple.
@@ -214,7 +236,11 @@ bootstrap_main() {
     for mode in $modes ; do
       if [[ $(echo "$mode" | grep -s -o "[^_[:alnum:]+-]") != "" ]] ; then
         if [[ $verbosity != "quiet" ]] ; then
+          bootstrap_print_first
+
           echo -e "${c_error}ERROR: The mode ${c_notice}${mode}${c_error} includes invalid characters, only alphanumeric, underscore, minus, and plus are allowed.${c_reset}"
+
+          bootstrap_print_last
         fi
 
         bootstrap_cleanup
@@ -250,7 +276,11 @@ bootstrap_main() {
   if [[ $modes_available == "" ]] ; then
     if [[ $modes != "" ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
+        bootstrap_print_first
+
         echo -e "${c_error}ERROR: The mode(s) ${c_notice}${modes}${c_error} are not a valid modes, there are no available modes.${c_error}${c_reset}"
+
+        bootstrap_print_last
       fi
 
       bootstrap_cleanup
@@ -275,7 +305,11 @@ bootstrap_main() {
 
     if [[ $i -eq 0 ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
+        bootstrap_print_first
+
         echo -e "${c_error}ERROR: The mode(s) ${c_notice}${modes}${c_error} are not valid modes, they must be one of: ${c_notice}$modes_available${c_error}.${c_reset}"
+
+        bootstrap_print_last
       fi
 
       bootstrap_cleanup
@@ -287,7 +321,11 @@ bootstrap_main() {
   bootstrap_id "build_name"
   if [[ ${variables[$key]} == "" ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
+      bootstrap_print_first
+
       echo -e "${c_error}ERROR: The required setting '${c_notice}build_name${c_error}' is not specified in the build settings file '${c_notice}${settings_file}${c_error}'.${c_reset}"
+
+      bootstrap_print_last
     fi
 
     bootstrap_cleanup
@@ -298,7 +336,11 @@ bootstrap_main() {
   bootstrap_id "version_major"
   if [[ ${variables[$key]} == "" ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
+      bootstrap_print_first
+
       echo -e "${c_error}ERROR: The required setting '${c_notice}version_major${c_error}' is not specified in the build settings file '${c_notice}${settings_file}${c_error}'.${c_reset}"
+
+      bootstrap_print_last
     fi
 
     bootstrap_cleanup
@@ -309,7 +351,11 @@ bootstrap_main() {
   bootstrap_id "version_minor"
   if [[ ${variables[$key]} == "" ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
+      bootstrap_print_first
+
       echo -e "${c_error}ERROR: The required setting '${c_notice}version_minor${c_error}' is not specified in the build settings file '${c_notice}${settings_file}${c_error}'.${c_reset}"
+
+      bootstrap_print_last
     fi
 
     bootstrap_cleanup
@@ -320,7 +366,11 @@ bootstrap_main() {
   bootstrap_id "version_micro"
   if [[ ${variables[$key]} == "" ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
+      bootstrap_print_first
+
       echo -e "${c_error}ERROR: The required setting '${c_notice}version_micro${c_error}' is not specified in the build settings file '${c_notice}${settings_file}${c_error}'.${c_reset}"
+
+      bootstrap_print_last
     fi
 
     bootstrap_cleanup
@@ -330,7 +380,11 @@ bootstrap_main() {
 
   if [[ $path_data == "" || ! -d $path_data ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
+      bootstrap_print_first
+
       echo -e "${c_error}ERROR: The data directory ${c_notice}${path_data}${c_error} is not a valid directory.${c_reset}"
+
+      bootstrap_print_last
     fi
 
     bootstrap_cleanup
@@ -340,7 +394,11 @@ bootstrap_main() {
 
   if [[ $path_sources == "" || ! -d $path_sources ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
+      bootstrap_print_first
+
       echo -e "${c_error}ERROR: The sources directory ${c_notice}${path_sources}${c_error} is not a valid directory.${c_reset}"
+
+      bootstrap_print_last
     fi
 
     bootstrap_cleanup
@@ -350,7 +408,11 @@ bootstrap_main() {
 
   if [[ $path_work != "" && ! -d $path_work ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
+      bootstrap_print_first
+
       echo -e "${c_error}ERROR: The work directory ${c_notice}${path_work}${c_error} is not a valid directory.${c_reset}"
+
+      bootstrap_print_last
     fi
 
     bootstrap_cleanup
@@ -378,15 +440,20 @@ bootstrap_main() {
 
   if [[ $operation_failure == "fail-multiple" ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
+      bootstrap_print_first
+
       echo -e "${c_error}ERROR: Only one operation may be specified at a time.${c_reset}"
+
+      bootstrap_print_last
     fi
 
     bootstrap_cleanup
 
     return 1
   elif [[ $operation == "build" ]] ; then
-    if [[ $verbosity != "quiet" ]] ; then
-      echo
+    if [[ $verbosity != "quiet" && $verbosity != "error" ]] ; then
+      bootstrap_print_first
+
       echo -e "${c_highlight}Building:${c_reset} ${c_notice}${project_label}${c_highlight}.${c_reset}"
     fi
 
@@ -408,14 +475,17 @@ bootstrap_main() {
       return 1
     fi
   elif [[ $operation == "clean" ]] ; then
-    if [[ $verbosity != "quiet" ]] ; then
-      echo
+    if [[ $verbosity != "quiet" && $verbosity != "error" ]] ; then
+      bootstrap_print_first
+
       echo -e "${c_highlight}Cleaning Project:${c_reset} ${c_notice}${project_label}${c_highlight}.${c_reset}"
     fi
 
     bootstrap_operation_clean
   elif [[ $operation == "" ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
+      bootstrap_print_first
+
       echo -e "${c_error}ERROR: No operation was given.${c_reset}"
     fi
 
@@ -424,12 +494,22 @@ bootstrap_main() {
     return 1
   else
     if [[ $verbosity != "quiet" ]] ; then
+      bootstrap_print_first
+
       echo -e "${c_error}ERROR: The operation ${c_notice}${operation}${c_error} was not recognized.${c_reset}"
+
+      bootstrap_print_last
     fi
 
     bootstrap_cleanup
 
     return 1
+  fi
+
+  if [[ $verbosity != "quiet" ]] ; then
+    if [[ $failure != "" || $verbosity != "error" ]] ; then
+      bootstrap_print_last
+    fi
   fi
 
   bootstrap_cleanup
@@ -461,7 +541,8 @@ bootstrap_handle_colors() {
 
 bootstrap_help() {
 
-  echo
+  bootstrap_print_first
+
   echo -e "${c_title}${public_name}${c_reset}"
   echo -e " ${c_notice}Version ${version}${c_reset}"
   echo
@@ -470,15 +551,17 @@ bootstrap_help() {
   echo -e " ${c_important}clean${c_reset}  Delete all build files."
   echo
   echo -e "${c_highlight}Options:${c_reset}"
-  echo -e " -${c_important}h${c_reset}, --${c_important}help${c_reset}      Print this help screen."
-  echo -e " +${c_important}d${c_reset}, ++${c_important}dark${c_reset}      Use color modes that show up better on dark backgrounds."
-  echo -e " +${c_important}l${c_reset}, ++${c_important}light${c_reset}     Use color modes that show up better on light backgrounds."
-  echo -e " +${c_important}n${c_reset}, ++${c_important}no_color${c_reset}  Do not use color."
-  echo -e " +${c_important}q${c_reset}, ++${c_important}quiet${c_reset}     Decrease verbosity, silencing most output."
-  echo -e " +${c_important}N${c_reset}, ++${c_important}normal${c_reset}    Set verbosity to normal."
-  echo -e " +${c_important}V${c_reset}, ++${c_important}verbose${c_reset}   Increase verbosity beyond normal output."
-  echo -e " +${c_important}D${c_reset}, ++${c_important}debug${c_reset}     Enable debugging, significantly increasing verbosity beyond normal output."
-  echo -e " +${c_important}v${c_reset}, ++${c_important}version${c_reset}   Print the version number of this program."
+  echo -e " -${c_important}h${c_reset}, --${c_important}help${c_reset}       Print this help message."
+  echo -e " +${c_important}C${c_reset}, ++${c_important}copyright${c_reset}  Print the copyright."
+  echo -e " +${c_important}d${c_reset}, ++${c_important}dark${c_reset}       Output using colors that show up better on dark backgrounds."
+  echo -e " +${c_important}l${c_reset}, ++${c_important}light${c_reset}      Output using colors that show up better on light backgrounds."
+  echo -e " +${c_important}n${c_reset}, ++${c_important}no_color${c_reset}   Do not print using color."
+  echo -e " +${c_important}Q${c_reset}, ++${c_important}quiet${c_reset}      Decrease verbosity, silencing most print.to."
+  echo -e " +${c_important}E${c_reset}, ++${c_important}error${c_reset}      Decrease verbosity, using only error print.to."
+  echo -e " +${c_important}N${c_reset}, ++${c_important}normal${c_reset}     Set verbosity to normal."
+  echo -e " +${c_important}V${c_reset}, ++${c_important}verbose${c_reset}    Increase verbosity beyond normal print.to."
+  echo -e " +${c_important}D${c_reset}, ++${c_important}debug${c_reset}      Enable debugging, significantly increasing verbosity beyond normal print.to."
+  echo -e " +${c_important}v${c_reset}, ++${c_important}version${c_reset}    Print only the version number."
   echo
   echo -e "${c_highlight}Bootstrap Options:${c_reset}"
   echo -e " -${c_important}d${c_reset}, --${c_important}define${c_reset}     Append an additional define after defines from settings file."
@@ -498,7 +581,21 @@ bootstrap_help() {
   echo -e " --${c_important}disable-shared${c_reset}  Forcibly do not build shared files."
   echo -e " --${c_important}enable-static${c_reset}   Forcibly do build static files."
   echo -e " --${c_important}disable-static${c_reset}  Forcibly do not build static files."
+
+  bootstrap_print_last
+}
+
+bootstrap_copyright() {
+
+  bootstrap_print_first
+
+  echo "Copyright © 2007-2023 Kevin Day."
   echo
+  echo "Source code license lgpl-2.1-or-later."
+  echo "Standard and specification license open-standard-license-1.0."
+  echo "Documentation license cc-by-sa-4.0."
+
+  bootstrap_print_last
 }
 
 bootstrap_id() {
@@ -733,26 +830,29 @@ bootstrap_id() {
 }
 
 bootstrap_load_settings() {
-  local -i failure=0
   local i=
   local key=
   local value=
 
   if [[ ! -d ${path_data}build/ ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
+      bootstrap_print_first
+
       echo -e "${c_error}ERROR: No build settings directory '${c_notice}${path_data}build/${c_error}' could not be found or is not a valid directory.${c_reset}"
     fi
 
     let failure=1
   elif [[ ! -f $settings_file ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
+      bootstrap_print_first
+
       echo -e "${c_error}ERROR: No settings file ${c_notice}${settings_file}${c_error} could not be found or is not a valid file.${c_reset}"
     fi
 
     let failure=1
   fi
 
-  if [[ $failure -eq 1 ]] ; then
+  if [[ $failure != "" ]] ; then
     return 1
   fi
 
@@ -775,7 +875,7 @@ bootstrap_load_settings() {
     bootstrap_id "$i"
 
     if [[ $key == "" ]] ; then
-      if [[ $verbosity != "quiet" ]] ; then
+      if [[ $verbosity != "quiet" && $verbosity != "error" ]] ; then
         echo -e "${c_warning}WARNING: Failed to find index for '${c_notice}${i}${c_warning}' when calling ${c_notice}bootstrap_id()${c_warning}.${c_reset}"
       fi
 
@@ -818,7 +918,7 @@ bootstrap_load_settings() {
     bootstrap_id "$i"
 
     if [[ $key == "" ]] ; then
-      if [[ $verbosity != "quiet" ]] ; then
+      if [[ $verbosity != "quiet" && $verbosity != "error" ]] ; then
         echo -e "${c_warning}WARNING: Failed to find index for '${c_notice}${i}${c_warning}' when calling ${c_notice}bootstrap_id()${c_warning}.${c_reset}"
       fi
 
@@ -870,7 +970,7 @@ bootstrap_load_settings_mode() {
       bootstrap_id "${i}-mode"
 
       if [[ $key == "" ]] ; then
-        if [[ $verbosity != "quiet" ]] ; then
+        if [[ $verbosity != "quiet" && $verbosity != "error" ]] ; then
           echo -e "${c_warning}WARNING: Failed to find index for '${c_notice}$i-$m${c_warning}' when calling ${c_notice}bootstrap_id()${c_warning}.${c_reset}"
         fi
 
@@ -913,7 +1013,7 @@ bootstrap_load_settings_mode() {
       bootstrap_id "${i}-mode"
 
       if [[ $key == "" ]] ; then
-        if [[ $verbosity != "quiet" ]] ; then
+        if [[ $verbosity != "quiet" && $verbosity != "error" ]] ; then
           echo -e "${c_warning}WARNING: Failed to find index for '${c_notice}${i}-${m}${c_warning}' when calling ${c_notice}bootstrap_id()${c_warning}.${c_reset}"
         fi
 
@@ -953,18 +1053,17 @@ bootstrap_load_settings_mode() {
 }
 
 bootstrap_prepare_build() {
-  local -i failure=0
   local alt=$1
   local i=
 
   mkdir $verbose_common -p ${path_build}{documents,includes,libraries/{script,shared,static},objects/{script,shared,static},programs/{script,shared,static},settings,stage} || failure=1
 
-  if [[ $failure -eq 1 ]] ; then
-    if [[ $verbosity != "quiet" ]] ; then
+  if [[ $failure != "" ]] ; then
+    if [[ $verbosity != "quiet" && $verbosity != "error" ]] ; then
       echo -e "${c_warning}WARNING: Failed to create build directories in '${c_notice}${path_build}${c_error}'.${c_reset}"
     fi
 
-    return $failure
+    return 1
   fi
 
   bootstrap_id "path_headers-mode"
@@ -978,19 +1077,24 @@ bootstrap_prepare_build() {
     fi
   fi
 
-  if [[ $failure -eq 1 ]] ; then
-    if [[ $verbosity != "quiet" ]] ; then
+  if [[ $failure != "" ]] ; then
+    if [[ $verbosity != "quiet" && $verbosity != "error" ]] ; then
       echo -e "${c_warning}WARNING: Failed to create ${c_notice}path_heades${c_error} build directories in '${c_notice}${path_build}${c_error}'.${c_reset}"
     fi
 
-    return $failure
+    return 1
   fi
 
   touch ${project_built}-${settings_name}.prepared
+
+  if [[ $failure == "" ]] ; then
+    return 0
+  fi
+
+  return 1
 }
 
 bootstrap_operation_build() {
-  local -i failure=0
   local i=
   local n=
   local version_file=
@@ -1260,7 +1364,7 @@ bootstrap_operation_build() {
   bootstrap_operation_build_prepare_remaining
 
   if [[ $build_shared == "yes" && -f ${project_built_shared}.built || $build_static == "yes" && -f ${project_built_static}.built ]] ; then
-    if [[ $verbosity != "quiet" ]] ; then
+    if [[ $verbosity != "quiet" && $verbosity != "error" ]] ; then
       echo -e "${c_warning}WARNING: This project has already been built.${c_reset}"
     fi
 
@@ -1287,7 +1391,7 @@ bootstrap_operation_build() {
 
   bootstrap_operation_build_validate_build
 
-  if [[ $failure -eq 1 ]] ; then
+  if [[ $failure != "" ]] ; then
     return 1
   fi
 
@@ -1300,7 +1404,7 @@ bootstrap_operation_build() {
       else
         mkdir $verbose_common -p ${path_build}documentation/${directory} || failure=1
 
-        if [[ $failure -eq 0 ]] ; then
+        if [[ $failure == "" ]] ; then
           cp $verbose_common -R ${path_documentation}${i} ${path_build}documentation/${directory}/ || failure=1
         fi
       fi
@@ -1316,14 +1420,14 @@ bootstrap_operation_build() {
       else
         mkdir $verbose_common -p ${path_build}settings/${directory} || failure=1
 
-        if [[ $failure -eq 0 ]] ; then
+        if [[ $failure == "" ]] ; then
           cp $verbose_common -R ${path_settings}${i} ${path_build}settings/${directory}/ || failure=1
         fi
       fi
     done
   fi
 
-  if [[ $failure -eq 0 && $sources_headers != "" ]] ; then
+  if [[ $failure == "" && $sources_headers != "" ]] ; then
     if [[ $preserve_path_headers == "yes" ]] ; then
       for i in $sources_headers ; do
         directory=$(dirname $i)
@@ -1335,7 +1439,7 @@ bootstrap_operation_build() {
             mkdir $verbose_common -p ${path_build}includes/${path_headers}${directory} || failure=1
           fi
 
-          if [[ $failure -eq 0 ]] ; then
+          if [[ $failure == "" ]] ; then
             cp $verbose_common -f ${path_sources}${path_language}${i} ${path_build}includes/${path_headers}${i} || failure=1
           fi
         fi
@@ -1347,7 +1451,7 @@ bootstrap_operation_build() {
     fi
   fi
 
-  if [[ $failure -eq 0 && $build_shared == "yes" && ! -f ${project_built_shared}.built ]] ; then
+  if [[ $failure == "" && $build_shared == "yes" && ! -f ${project_built_shared}.built ]] ; then
     if [[ $sources_object != "" || $sources_object_shared != "" ]] ; then
       sources=
       let count=0
@@ -1359,13 +1463,14 @@ bootstrap_operation_build() {
         done
 
         if [[ $count -gt 1 ]] ; then
-          if [[ $verbosity != "quiet" ]] ; then
+          if [[ $verbosity != "quiet" && $verbosity != "error" ]] ; then
             echo -e "${c_warning}WARNING: Multiple '${c_notice}sources_object_shared${c_warning}' found, only using the first one found is going to be used.${c_reset}"
           fi
         fi
 
         for i in $sources_object_shared ; do
           sources="${path_sources_object}${path_language}${i} "
+
           break
         done
       else
@@ -1374,13 +1479,14 @@ bootstrap_operation_build() {
         done
 
         if [[ $count -gt 1 ]] ; then
-          if [[ $verbosity != "quiet" ]] ; then
+          if [[ $verbosity != "quiet" && $verbosity != "error" ]] ; then
             echo -e "${c_warning}WARNING: Multiple '${c_notice}sources_object${c_warning}' found, only using the first one found is going to be used.${c_reset}"
           fi
         fi
 
         for i in $sources_object ; do
           sources="${path_sources_object}${path_language}${i} "
+
           break
         done
       fi
@@ -1411,20 +1517,20 @@ bootstrap_operation_build() {
 
       $build_compiler $sources -shared -Wl,-soname,lib${build_name}.so${version_target} -o ${path_build}libraries/${path_library_shared}lib${build_name}.so$version_file $arguments_shared $arguments_include $libraries $libraries_shared $flags $flags_shared $flags_library $flags_library_shared $defines $defines_shared $defines_library $defines_library_shared $define_extra || failure=1
 
-      if [[ $failure -eq 0 ]] ; then
+      if [[ $failure == "" ]] ; then
         if [[ $version_file_value != "major" ]] ; then
           if [[ $version_file_value == "minor" ]] ; then
             ln $verbose_common -sf lib${build_name}.so${version_file} ${path_build}libraries/${path_library_shared}lib${build_name}.so${version_major_prefix}${version_major} || failure=1
           else
             ln $verbose_common -sf lib${build_name}.so${version_major_prefix}${version_major}${version_minor_prefix}${version_minor} ${path_build}libraries/${path_library_shared}lib${build_name}.so${version_major_prefix}${version_major} || failure=1
 
-            if [[ $failure -eq 0 ]] ; then
+            if [[ $failure == "" ]] ; then
               if [[ $version_file_value == "micro" ]] ; then
                 ln $verbose_common -sf lib$build_name.so$version_file ${path_build}libraries/${path_library_shared}lib$build_name.so$version_major_prefix$version_major$version_minor_prefix$version_minor || failure=1
               else
                 ln $verbose_common -sf lib${build_name}.so${version_major_prefix}${version_major}${version_minor_prefix}${version_minor}${version_micro_prefix}${version_micro} ${path_build}libraries/${path_library_shared}lib${build_name}.so${version_major_prefix}${version_major}${version_minor_prefix}${version_minor} || failure=1
 
-                if [[ $failure -eq 0 ]] ; then
+                if [[ $failure == "" ]] ; then
                   ln $verbose_common -sf lib${build_name}.so${version_file} ${path_build}libraries/${path_library_shared}lib${build_name}.so${version_major_prefix}${version_major}${version_minor_prefix}${version_minor_prefix}${version_minor}${version_micro_prefix}${version_micro} || failure=1
                 fi
               fi
@@ -1432,13 +1538,13 @@ bootstrap_operation_build() {
           fi
         fi
 
-        if [[ $failure -eq 0 ]] ; then
+        if [[ $failure == "" ]] ; then
           ln ${verbose_common} -sf lib${build_name}.so${version_major_prefix}${version_major} ${path_build}libraries/${path_library_shared}lib${build_name}.so || failure=1
         fi
       fi
     fi
 
-    if [[ $failure -eq 0 && $sources_program != "" ]] ; then
+    if [[ $failure == "" && $sources_program != "" ]] ; then
       sources=
       links=
 
@@ -1463,12 +1569,12 @@ bootstrap_operation_build() {
       $build_compiler $sources -o ${path_build}programs/${path_program_shared}${build_name} $arguments_shared $arguments_include $links $libraries $libraries_shared $flags $flags_shared $flags_program $flags_program_shared $defines $defines_shared $defines_program $defines_program_shared $define_extra || failure=1
     fi
 
-    if [[ $failure -eq 0 ]] ; then
+    if [[ $failure == "" ]] ; then
       touch ${project_built_shared}-${settings_name}.built
     fi
   fi
 
-  if [[ $failure -eq 0 && $build_static == "yes" && ! -f ${project_built_static}.built ]] ; then
+  if [[ $failure == "" && $build_static == "yes" && ! -f ${project_built_static}.built ]] ; then
     if [[ $sources_object != "" || $sources_object_static != "" ]] ; then
       let count=0
 
@@ -1479,13 +1585,14 @@ bootstrap_operation_build() {
         done
 
         if [[ $count -gt 1 ]] ; then
-          if [[ $verbosity != "quiet" ]] ; then
+          if [[ $verbosity != "quiet" && $verbosity != "error" ]] ; then
             echo -e "${c_warning}WARNING: Multiple '${c_notice}sources_object_static${c_warning}' found, only using the first one found is going to be used.${c_reset}"
           fi
         fi
 
         for i in $sources_object_static ; do
           sources="${path_sources_object}${path_language}${i} "
+
           break
         done
       else
@@ -1494,13 +1601,14 @@ bootstrap_operation_build() {
         done
 
         if [[ $count -gt 1 ]] ; then
-          if [[ $verbosity != "quiet" ]] ; then
+          if [[ $verbosity != "quiet" && $verbosity != "error" ]] ; then
             echo -e "${c_warning}WARNING: Multiple '${c_notice}sources_object${c_warning}' found, only using the first one found is going to be used.${c_reset}"
           fi
         fi
 
         for i in $sources_object ; do
           sources="${path_sources_object}${path_language}${i} "
+
           break
         done
       fi
@@ -1544,12 +1652,12 @@ bootstrap_operation_build() {
 
         $build_compiler ${path_sources}${path_language}${i} -c -static -o ${path_build}objects/${directory}/${n}.o $arguments_static $arguments_include $libraries $libraries_static $flags $flags_static $flags_library $flags_library_static $defines $defines_static $defines_library $defines_library_static $define_extra || failure=1
 
-        if [[ $failure -eq 1 ]] ; then
+        if [[ $failure != "" ]] ; then
           break;
         fi
       done
 
-      if [[ $failure -eq 0 && ( $sources_library != "" || $sources_library_static != "" ) ]] ; then
+      if [[ $failure == "" && ( $sources_library != "" || $sources_library_static != "" ) ]] ; then
 
         if [[ $verbosity == "verbose" ]] ; then
           echo $build_indexer $build_indexer_arguments ${path_build}libraries/${path_library_static}lib${build_name}.a $sources
@@ -1559,7 +1667,7 @@ bootstrap_operation_build() {
       fi
     fi
 
-    if [[ $failure -eq 0 && $sources_program != "" ]] ; then
+    if [[ $failure == "" && $sources_program != "" ]] ; then
       sources=
       links=
 
@@ -1584,18 +1692,28 @@ bootstrap_operation_build() {
       $build_compiler $sources -static -o ${path_build}programs/${path_program_static}${build_name} $arguments_static $arguments_include $links $libraries $libraries_static $flags $flags_static $flags_program $flags_program_static $defines $defines_static $defines_program $defines_program_static $define_extra || failure=1
     fi
 
-    if [[ $failure -eq 0 ]] ; then
+    if [[ $failure == "" ]] ; then
       touch ${project_built_static}-${settings_name}.built
     fi
   fi
 
-  if [[ $failure -eq 1 ]] ; then
+  if [[ $failure != "" ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
+      bootstrap_print_first
+
       echo -e "${c_error}ERROR: Failed to build.${c_reset}"
     fi
 
+    let failure=1
+
     return 1
   fi
+
+  if [[ $failure == "" ]] ; then
+    return 0
+  fi
+
+  return 1
 }
 
 bootstrap_operation_build_prepare_defaults() {
@@ -2646,6 +2764,8 @@ bootstrap_operation_build_validate_build() {
 
   if [[ $build_compiler == "" ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
+      bootstrap_print_first
+
       echo -e "${c_error}ERROR: Cannot Build, no '${c_notice}build_compiler${c_error}' specified, such as '${c_notice}gcc${c_error}'.${c_reset}"
     fi
 
@@ -2654,30 +2774,48 @@ bootstrap_operation_build_validate_build() {
 
   if [[ $build_indexer == "" ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
+      bootstrap_print_first
+
       echo -e "${c_error}ERROR: Cannot Build, no '${c_notice}build_indexer${c_error}' specified, such as '${c_notice}ar${c_error}'.${c_reset}"
     fi
 
     let failure=1
   fi
+
+  if [[ $failure == "" ]] ; then
+    return 0
+  fi
+
+  return 1
 }
 
 bootstrap_operation_build_validate_paths() {
 
   if [[ $path_sources == "" || ! -d $path_sources ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
+      bootstrap_print_first
+
       echo -e "${c_error}ERROR: The sources directory ${c_notice}${path_sources}${c_error} is not a valid directory.${c_reset}"
     fi
 
     let failure=1
   fi
 
-  if [[ $failure -eq 0 && $path_sources_object != "" && ! -d $path_sources_object ]] ; then
+  if [[ $failure == "" && $path_sources_object != "" && ! -d $path_sources_object ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
+      bootstrap_print_first
+
       echo -e "${c_error}ERROR: The sources object directory ${c_notice}${path_sources_object}${c_error} is not a valid directory.${c_reset}"
     fi
 
     let failure=1
   fi
+
+  if [[ $failure == "" ]] ; then
+    return 0
+  fi
+
+  return 1
 }
 
 bootstrap_operation_build_validate_search() {
@@ -2692,6 +2830,8 @@ bootstrap_operation_build_validate_shared_static() {
 
   if [[ $build_shared != "yes" && $build_static != "yes" ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
+      bootstrap_print_first
+
       echo -e "${c_error}ERROR: Cannot Build, either build_shared or build_static must be set to 'yes'.${c_reset}"
     fi
 
@@ -2700,11 +2840,19 @@ bootstrap_operation_build_validate_shared_static() {
 
   if [[ $search_shared != "yes" && $search_static != "yes" ]] ; then
     if [[ $verbosity != "quiet" ]] ; then
+      bootstrap_print_first
+
       echo -e "${c_error}ERROR: Cannot Build, either search_shared or search_static must be set to 'yes'.${c_reset}"
     fi
 
     let failure=1
   fi
+
+  if [[ $failure == "" ]] ; then
+    return 0
+  fi
+
+  return 1
 }
 
 bootstrap_operation_build_validate_sources() {
@@ -2712,6 +2860,8 @@ bootstrap_operation_build_validate_sources() {
   for i in $sources_script ; do
     if [[ $i != "$(echo $i | sed -e 's|^//*||' -e 's|^\.\.//*||' -e 's|/*$||')" ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
+        bootstrap_print_first
+
         echo -e "${c_error}ERROR: Cannot Build, invalid build_sources_script path provided: '${i}'.${c_reset}"
       fi
 
@@ -2722,6 +2872,8 @@ bootstrap_operation_build_validate_sources() {
   for i in $sources_headers ; do
     if [[ $i != "$(echo $i | sed -e 's|^//*||' -e 's|^\.\.//*||' -e 's|/*$||')" ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
+        bootstrap_print_first
+
         echo -e "${c_error}ERROR: Cannot Build, invalid build_sources_headers path provided: '${i}'.${c_reset}"
       fi
 
@@ -2732,6 +2884,8 @@ bootstrap_operation_build_validate_sources() {
   for i in $sources_library ; do
     if [[ $i != "$(echo $i | sed -e 's|^//*||' -e 's|^\.\.//*||' -e 's|/*$||')" ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
+        bootstrap_print_first
+
         echo -e "${c_error}ERROR: Cannot Build, invalid build_sources_library path provided: '${i}'.${c_reset}"
       fi
 
@@ -2742,6 +2896,8 @@ bootstrap_operation_build_validate_sources() {
   for i in $sources_library_object ; do
     if [[ $i != "$(echo $i | sed -e 's|^//*||' -e 's|^\.\.//*||' -e 's|/*$||')" ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
+        bootstrap_print_first
+
         echo -e "${c_error}ERROR: Cannot Build, invalid build_sources_library_object path provided: '${i}'.${c_reset}"
       fi
 
@@ -2752,6 +2908,8 @@ bootstrap_operation_build_validate_sources() {
   for i in $sources_program_object ; do
     if [[ $i != "$(echo $i | sed -e 's|^//*||' -e 's|^\.\.//*||' -e 's|/*$||')" ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
+        bootstrap_print_first
+
         echo -e "${c_error}ERROR: Cannot Build, invalid build_sources_program_object path provided: '${i}'.${c_reset}"
       fi
 
@@ -2762,6 +2920,8 @@ bootstrap_operation_build_validate_sources() {
   for i in $sources_program ; do
     if [[ $i != "$(echo $i | sed -e 's|^//*||' -e 's|^\.\.//*||' -e 's|/*$||')" ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
+        bootstrap_print_first
+
         echo -e "${c_error}ERROR: Cannot Build, invalid build_sources_program path provided: '${i}'.${c_reset}"
       fi
 
@@ -2772,6 +2932,8 @@ bootstrap_operation_build_validate_sources() {
   for i in $sources_documentation ; do
     if [[ $i != "$(echo $i | sed -e 's|^//*||' -e 's|^\.\.//*||' -e 's|/*$||')" ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
+        bootstrap_print_first
+
         echo -e "${c_error}ERROR: Cannot Build, invalid build_sources_documentation path provided: '${i}'.${c_reset}"
       fi
 
@@ -2782,12 +2944,20 @@ bootstrap_operation_build_validate_sources() {
   for i in $sources_setting ; do
     if [[ $i != "$(echo $i | sed -e 's|^//*||' -e 's|^\.\.//*||' -e 's|/*$||')" ]] ; then
       if [[ $verbosity != "quiet" ]] ; then
+        bootstrap_print_first
+
         echo -e "${c_error}ERROR: Cannot Build, invalid build_sources_setting path provided: '${i}'.${c_reset}"
       fi
 
       let failure=1
     fi
   done
+
+  if [[ $failure == "" ]] ; then
+    return 0
+  fi
+
+  return 1
 }
 
 bootstrap_operation_build_prepare_versions() {
@@ -2871,8 +3041,25 @@ bootstrap_operation_clean() {
   fi
 }
 
+bootstrap_print_first() {
+
+  if [[ $print_line_first == "yes" ]] ; then
+    echo
+
+    print_line_first=
+  fi
+}
+
+bootstrap_print_last() {
+
+  if [[ $print_line_last == "yes" ]] ; then
+    echo
+  fi
+}
+
 bootstrap_cleanup() {
 
+  unset bootstrap_copyright
   unset bootstrap_main
   unset bootstrap_handle_colors
   unset bootstrap_help
@@ -2900,6 +3087,8 @@ bootstrap_cleanup() {
   unset bootstrap_operation_build_validate_shared_static
   unset bootstrap_operation_build_validate_sources
   unset bootstrap_operation_clean
+  unset bootstrap_print_first
+  unset bootstrap_print_last
   unset bootstrap_cleanup
 }
 
