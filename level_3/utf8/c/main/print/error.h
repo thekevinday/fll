@@ -19,12 +19,8 @@ extern "C" {
 /**
  * Print generic error message regarding a function failing in some way.
  *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.state.status.
  * @param print
- *   Designates the how and where to print.
+ *   The output structure to print to.
  *
  *   This does not alter print.custom.setting.state.status.
  *
@@ -43,12 +39,10 @@ extern "C" {
 /**
  * Print error message when attempt to decode the character failed.
  *
- * @param main
- *   The main program data.
- * @param setting
- *   The main program settings.
+ * @param print
+ *   The output structure to print to.
  *
- *   This does not alter setting.state.status.
+ *   This does not alter print.custom.setting.state.status.
  * @param invalid
  *   The byte sequence string or unicode codepoint string representing a single character to print.
  *
@@ -67,12 +61,8 @@ extern "C" {
 /**
  * Print error message when attempt to encode the character failed.
  *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.state.status.
  * @param print
- *   Designates the how and where to print.
+ *   The output structure to print to.
  *
  *   This does not alter print.custom.setting.state.status.
  * @param codepoint
@@ -93,12 +83,8 @@ extern "C" {
 /**
  * Print file related error or warning messages.
  *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.state.status.
  * @param print
- *   Designates how printing is to be performed.
+ *   The output structure to print to.
  *
  *   This does not alter print.custom.setting.state.status.
  * @param function
@@ -126,12 +112,8 @@ extern "C" {
 /**
  * Print error message for when no sources are provided.
  *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.state.status.
  * @param print
- *   Designates how printing is to be performed.
+ *   The output structure to print to.
  *
  *   This does not alter print.custom.setting.state.status.
  *
@@ -150,12 +132,8 @@ extern "C" {
 /**
  * Print error message for when the file parameter is an empty string.
  *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.state.status.
  * @param print
- *   Designates how printing is to be performed.
+ *   The output structure to print to.
  *
  *   This does not alter print.custom.setting.state.status.
  * @param index
@@ -178,12 +156,8 @@ extern "C" {
 /**
  * Print error message for when no sources are provided in the main program parameters.
  *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.state.status.
  * @param print
- *   Designates how printing is to be performed.
+ *   The output structure to print to.
  *
  *   This does not alter print.custom.setting.state.status.
  * @param from
@@ -209,12 +183,8 @@ extern "C" {
 /**
  * Print error message for when too many 'to' destinations are specified.
  *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.state.status.
  * @param print
- *   Designates how printing is to be performed.
+ *   The output structure to print to.
  *
  *   This does not alter print.custom.setting.state.status.
  *

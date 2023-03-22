@@ -242,7 +242,7 @@ extern "C" {
             }
 
             if (main->program.error.verbosity > f_console_verbosity_quiet_e) {
-              fll_program_print_error_parameter_missing_value(main->program.error, f_console_symbol_long_normal_s, names[i]);
+              fll_program_print_error_parameter_missing_value(&main->program.error, f_console_symbol_long_normal_s, names[i]);
             }
 
             return;
@@ -265,7 +265,7 @@ extern "C" {
                     }
 
                     if (fake_print_error_fallback(&main->program.error, macro_fake_f(f_utf_is_word_dash_plus)) == F_false) {
-                      fll_program_print_error_parameter_process(main->program.error, f_console_symbol_long_normal_s, names[i]);
+                      fll_program_print_error_parameter_process(&main->program.error, f_console_symbol_long_normal_s, names[i]);
                     }
 
                     return;
@@ -295,7 +295,7 @@ extern "C" {
 
                   if (main->program.error.verbosity > f_console_verbosity_quiet_e) {
                     if (fake_print_error_fallback(&main->program.error, macro_fake_f(f_path_directory_cleanup)) == F_false) {
-                      fll_program_print_error_parameter_process(main->program.error, f_console_symbol_long_normal_s, names[i]);
+                      fll_program_print_error_parameter_process(&main->program.error, f_console_symbol_long_normal_s, names[i]);
                     }
                   }
 
@@ -391,7 +391,7 @@ extern "C" {
                 fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
               }
 
-              fll_program_print_error_parameter_missing_value(main->program.error, f_console_symbol_long_normal_s, names[i]);
+              fll_program_print_error_parameter_missing_value(&main->program.error, f_console_symbol_long_normal_s, names[i]);
             }
 
             return;
@@ -407,7 +407,7 @@ extern "C" {
 
               if (main->program.error.verbosity > f_console_verbosity_quiet_e) {
                 if (fake_print_error_fallback(&main->program.error, macro_fake_f(fll_program_parameter_additional_rip)) == F_false) {
-                  fll_program_print_error_parameter_process(main->program.error, f_console_symbol_long_normal_s, names[i]);
+                  fll_program_print_error_parameter_process(&main->program.error, f_console_symbol_long_normal_s, names[i]);
                 }
               }
 
@@ -428,7 +428,7 @@ extern "C" {
 
                   // @todo fix this to print an error about the actual invalid character so that it can be investigated.
                   if (fake_print_error_fallback(&main->program.error, macro_fake_f(f_utf_is_word_dash_plus)) == F_false) {
-                    fll_program_print_error_parameter_process(main->program.error, f_console_symbol_long_normal_s, names[i]);
+                    fll_program_print_error_parameter_process(&main->program.error, f_console_symbol_long_normal_s, names[i]);
                   }
 
                   return;

@@ -18,7 +18,7 @@ extern "C" {
       f_thread_mutex_lock(&thread->lock.print);
     }
 
-    fll_error_print(*print, status, function, flag);
+    fll_error_print(print, status, function, flag);
 
     if (thread) {
       f_thread_mutex_unlock(&thread->lock.print);

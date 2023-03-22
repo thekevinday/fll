@@ -24,15 +24,13 @@ extern "C" {
  * This detects and prints any applicable substitution matching the vocabulary at the given index.
  * If there is no substitution, then this prints the given range at the given index.
  *
- * @param main
- *   The main program data.
- * @param setting
- *   The main program settings.
+ * @param print
+ *   The output structure to print to.
  *
  *   The setting.map_wraps is expected to be defined as a valid pointer to an array.
  *   The setting.map_replaces is expected to be defined as a valid pointer to an array.
  *
- *   This does not alter setting.state.status.
+ *   This does not alter print.custom.setting.state.status.
  * @param index
  *   The index used to identify the desired range in variable, content, and ranges.
  *
@@ -44,7 +42,7 @@ extern "C" {
  * @see iki_read_print_data_wrap_append()
  */
 #ifndef _di_iki_read_print_data_
-  extern void iki_read_print_data(fll_program_data_t * const main, iki_read_setting_t * const setting, const f_array_length_t index) F_attribute_visibility_internal_d;
+  extern void iki_read_print_data(fl_print_t * const print, const f_array_length_t index) F_attribute_visibility_internal_d;
 #endif // _di_iki_read_print_data_
 
 /**
@@ -52,19 +50,17 @@ extern "C" {
  *
  * This expects the caller to have the output locked appropriately.
  *
- * @param main
- *   The main program data.
- * @param setting
- *   The main program settings.
+ * @param print
+ *   The output structure to print to.
  *
- *   This does not alter setting.state.status.
+ *   This does not alter print.custom.setting.state.status.
  * @param index
  *   The index within the setting->map_wraps array to print.
  *
  * @see f_print_dynamic()
  */
 #ifndef _di_iki_read_print_data_wrap_append_
-  extern void iki_read_print_data_wrap_append(fll_program_data_t * const main, iki_read_setting_t * const setting, const f_array_length_t index) F_attribute_visibility_internal_d;
+  extern void iki_read_print_data_wrap_append(fl_print_t * const print, const f_array_length_t index) F_attribute_visibility_internal_d;
 #endif // _di_iki_read_print_data_wrap_append_
 
 /**
@@ -72,19 +68,17 @@ extern "C" {
  *
  * This expects the caller to have the output locked appropriately.
  *
- * @param main
- *   The main program data.
- * @param setting
- *   The main program settings.
+ * @param print
+ *   The output structure to print to.
  *
- *   This does not alter setting.state.status.
+ *   This does not alter print.custom.setting.state.status.
  * @param index
  *   The index within the setting->map_wraps array to print.
  *
  * @see f_print_dynamic()
  */
 #ifndef _di_iki_read_print_data_wrap_prepend_
-  extern void iki_read_print_data_wrap_prepend(fll_program_data_t * const main, iki_read_setting_t * const setting, const f_array_length_t index) F_attribute_visibility_internal_d;
+  extern void iki_read_print_data_wrap_prepend(fl_print_t * const print, const f_array_length_t index) F_attribute_visibility_internal_d;
 #endif // _di_iki_read_print_data_wrap_prepend_
 
 #ifdef __cplusplus

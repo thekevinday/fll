@@ -19,12 +19,10 @@ extern "C" {
 /**
  * Print generic error message regarding a function failing in some way.
  *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.state.status.
  * @param print
- *   Designates the how and where to print.
+ *   The output structure to print to.
+ *
+ *   This does not alter print.custom.setting.state.status.
  *
  * @return
  *   F_none on success.
@@ -35,18 +33,16 @@ extern "C" {
  * @see fll_error_print()
  */
 #ifndef _di_status_code_print_error_
-  extern f_status_t status_code_print_error(status_code_setting_t * const setting, const fl_print_t print, const f_string_t function);
+  extern f_status_t status_code_print_error(fl_print_t * const print, const f_string_t function);
 #endif // _di_status_code_print_error_
 
 /**
  * Print an error message when error parameter and warning parameter are specified without number parameter.
  *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.state.status.
  * @param print
- *   Designates the how and where to print.
+ *   The output structure to print to.
+ *
+ *   This does not alter print.custom.setting.state.status.
  *
  * @return
  *   F_none on success.
@@ -59,18 +55,16 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_status_code_print_error_cannot_error_warning_number_
-  extern f_status_t status_code_print_error_cannot_error_warning_number(status_code_setting_t * const setting, const fl_print_t print);
+  extern f_status_t status_code_print_error_cannot_error_warning_number(fl_print_t * const print);
 #endif // _di_status_code_print_error_cannot_error_warning_number_
 
 /**
  * Print an error message when no status codes are provided.
  *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.state.status.
  * @param print
- *   Designates the how and where to print.
+ *   The output structure to print to.
+ *
+ *   This does not alter print.custom.setting.state.status.
  *
  * @return
  *   F_none on success.
@@ -81,18 +75,16 @@ extern "C" {
  * @see fll_print_format()
  */
 #ifndef _di_status_code_print_error_no_status_codes_
-  extern f_status_t status_code_print_error_no_status_codes(status_code_setting_t * const setting, const fl_print_t print);
+  extern f_status_t status_code_print_error_no_status_codes(fl_print_t * const print);
 #endif // _di_status_code_print_error_no_status_codes_
 
 /**
  * Print an error message when a callback from status_code_setting_t is invalid.
  *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.state.status.
  * @param print
- *   Designates the how and where to print.
+ *   The output structure to print to.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param name
  *   The name of the callback setting that is invalid.
  *   This should either be 'status_string_from' or 'status_string_to'.
@@ -108,7 +100,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_status_code_print_error_invalid_callback_
-  extern f_status_t status_code_print_error_invalid_callback(status_code_setting_t * const setting, const fl_print_t print, const f_string_t name);
+  extern f_status_t status_code_print_error_invalid_callback(fl_print_t * const print, const f_string_t name);
 #endif // _di_status_code_print_error_invalid_callback_
 
 #ifdef __cplusplus

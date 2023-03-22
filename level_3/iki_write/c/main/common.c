@@ -68,7 +68,7 @@ extern "C" {
 
         const uint8_t modes[3] = { f_color_mode_not_e, f_color_mode_light_e, f_color_mode_dark_e };
 
-        setting->state.status = fll_program_parameter_process_context(choices, modes, F_true, main);
+        setting->state.status = fll_program_parameter_process_context(choices, modes, F_true, &main->program);
 
         if (F_status_is_error(setting->state.status)) {
           if ((setting->flag & iki_write_main_flag_print_first_e) && main->message.verbosity > f_console_verbosity_error_e) {
@@ -89,7 +89,7 @@ extern "C" {
 
         const uint8_t verbosity[5] = { f_console_verbosity_quiet_e, f_console_verbosity_error_e, f_console_verbosity_verbose_e, f_console_verbosity_debug_e, f_console_verbosity_normal_e };
 
-        setting->state.status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, main);
+        setting->state.status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, &main->program);
 
         if (F_status_is_error(setting->state.status)) {
           if ((setting->flag & iki_write_main_flag_print_first_e) && main->message.verbosity > f_console_verbosity_error_e) {
@@ -133,7 +133,7 @@ extern "C" {
           fll_print_dynamic_raw(f_string_eol_s, main->message.to);
         }
 
-        fll_program_print_error_parameter_must_specify_once(main->error, f_console_symbol_long_normal_s, iki_write_long_file_s);
+        fll_program_print_error_parameter_must_specify_once(&main->error, f_console_symbol_long_normal_s, iki_write_long_file_s);
 
         return;
       }
@@ -164,7 +164,7 @@ extern "C" {
         fll_print_dynamic_raw(f_string_eol_s, main->message.to);
       }
 
-      fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, iki_write_long_file_s);
+      fll_program_print_error_parameter_missing_value(&main->error, f_console_symbol_long_normal_s, iki_write_long_file_s);
 
       return;
     }
@@ -205,7 +205,7 @@ extern "C" {
         fll_print_dynamic_raw(f_string_eol_s, main->message.to);
       }
 
-      fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, iki_write_long_object_s);
+      fll_program_print_error_parameter_missing_value(&main->error, f_console_symbol_long_normal_s, iki_write_long_object_s);
 
       return;
     }
@@ -246,7 +246,7 @@ extern "C" {
         fll_print_dynamic_raw(f_string_eol_s, main->message.to);
       }
 
-      fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, iki_write_long_content_s);
+      fll_program_print_error_parameter_missing_value(&main->error, f_console_symbol_long_normal_s, iki_write_long_content_s);
 
       return;
     }

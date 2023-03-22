@@ -44,6 +44,8 @@
 #include <fll/level_2/program.h>
 
 // FSS Write includes.
+#include <program/fss_write/main/common/define.h>
+#include <program/fss_write/main/common/enumeration.h>
 #include <program/fss_write/main/common-print.h>
 #include <program/fss_write/main/common-string.h>
 #include <program/fss_write/main/common-type.h>

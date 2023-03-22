@@ -38,7 +38,7 @@ extern "C" {
  * @see fss_status_code_convert_number()
  */
 #ifndef _di_status_code_process_check_
-  extern void status_code_process_check(fll_program_data_t * const main, status_code_setting_t * const setting, const f_string_static_t value);
+  extern void status_code_process_check(status_code_main_t * const main, const f_string_static_t value);
 #endif // _di_status_code_process_check_
 
 /**
@@ -62,7 +62,7 @@ extern "C" {
  * @see fll_status_string_from()
  */
 #ifndef _di_status_code_process_number_
-  extern void status_code_process_number(fll_program_data_t * const main, status_code_setting_t * const setting, const f_string_static_t value);
+  extern void status_code_process_number(status_code_main_t * const main, const f_string_static_t value);
 #endif // _di_status_code_process_number_
 
 /**
@@ -91,7 +91,7 @@ extern "C" {
  * @see fss_status_code_convert_number()
  */
 #ifndef _di_status_code_process_normal_
-  extern void status_code_process_normal(fll_program_data_t * const main, status_code_setting_t * const setting, const f_string_static_t value);
+  extern void status_code_process_normal(status_code_main_t * const main, const f_string_static_t value);
 #endif // _di_status_code_process_normal_
 
 #ifdef __cplusplus

@@ -26,9 +26,11 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fll_program_print_copyright_
-  extern f_status_t fll_program_print_copyright(const fl_print_t print);
+  extern f_status_t fll_program_print_copyright(fl_print_t * const print);
 #endif // _di_fll_program_print_copyright_
 
 /**
@@ -48,9 +50,11 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fll_program_print_error_missing_file_
-  extern f_status_t fll_program_print_error_missing_file(const fl_print_t print);
+  extern f_status_t fll_program_print_error_missing_file(fl_print_t * const print);
 #endif // _di_fll_program_print_error_missing_file_
 
 /**
@@ -72,9 +76,11 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fll_program_print_error_missing_variable_not_zero_
-  extern f_status_t fll_program_print_error_missing_variable_not_zero(const fl_print_t print, const f_string_static_t variable);
+  extern f_status_t fll_program_print_error_missing_variable_not_zero(fl_print_t * const print, const f_string_static_t variable);
 #endif // _di_fll_program_print_error_missing_variable_not_zero_
 
 /**
@@ -104,9 +110,11 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fll_program_print_error_parameter_both_specified_same_amount_
-  extern f_status_t fll_program_print_error_parameter_both_specified_same_amount(const fl_print_t print, const f_string_static_t symbol_1, const f_string_static_t symbol_2, const f_string_static_t name_1, const f_string_static_t name_2);
+  extern f_status_t fll_program_print_error_parameter_both_specified_same_amount(fl_print_t * const print, const f_string_static_t symbol_1, const f_string_static_t symbol_2, const f_string_static_t name_1, const f_string_static_t name_2);
 #endif // _di_fll_program_print_error_parameter_both_specified_same_amount_
 
 /**
@@ -142,9 +150,11 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fll_program_print_error_parameter_both_specified_same_amount_without_
-  extern f_status_t fll_program_print_error_parameter_both_specified_same_amount_without(const fl_print_t print, const f_string_static_t symbol_1, const f_string_static_t symbol_2, const f_string_static_t symbol_3, const f_string_static_t name_1, const f_string_static_t name_2, const f_string_static_t name_3);
+  extern f_status_t fll_program_print_error_parameter_both_specified_same_amount_without(fl_print_t * const print, const f_string_static_t symbol_1, const f_string_static_t symbol_2, const f_string_static_t symbol_3, const f_string_static_t name_1, const f_string_static_t name_2, const f_string_static_t name_3);
 #endif // _di_fll_program_print_error_parameter_both_specified_same_amount_without_
 
 /**
@@ -174,9 +184,11 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fll_program_print_error_parameter_cannot_use_with_
-  extern f_status_t fll_program_print_error_parameter_cannot_use_with(const fl_print_t print, const f_string_static_t symbol_1, const f_string_static_t symbol_2, const f_string_static_t name_1, const f_string_static_t name_2);
+  extern f_status_t fll_program_print_error_parameter_cannot_use_with(fl_print_t * const print, const f_string_static_t symbol_1, const f_string_static_t symbol_2, const f_string_static_t name_1, const f_string_static_t name_2);
 #endif // _di_fll_program_print_error_parameter_cannot_use_with_
 
 /**
@@ -211,9 +223,11 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fll_program_print_error_parameter_cannot_use_with_without_
-  extern f_status_t fll_program_print_error_parameter_cannot_use_with_without(const fl_print_t print, const f_string_static_t symbol_1, const f_string_static_t symbol_2, const f_string_static_t symbol_3, const f_string_static_t name_1, const f_string_static_t name_2, const f_string_static_t name_3);
+  extern f_status_t fll_program_print_error_parameter_cannot_use_with_without(fl_print_t * const print, const f_string_static_t symbol_1, const f_string_static_t symbol_2, const f_string_static_t symbol_3, const f_string_static_t name_1, const f_string_static_t name_2, const f_string_static_t name_3);
 #endif // _di_fll_program_print_error_parameter_cannot_use_with_without_
 
 /**
@@ -238,9 +252,11 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fll_program_print_error_parameter_cannot_use_with_pipe_
-  extern f_status_t fll_program_print_error_parameter_cannot_use_with_pipe(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name);
+  extern f_status_t fll_program_print_error_parameter_cannot_use_with_pipe(fl_print_t * const print, const f_string_static_t symbol, const f_string_static_t name);
 #endif // _di_fll_program_print_error_parameter_cannot_use_with_pipe_
 
 /**
@@ -281,9 +297,11 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fll_program_print_error_parameter_allows_either_xor_
-  extern f_status_t fll_program_print_error_parameter_cannot_use_with_xor(const fl_print_t print, const f_string_static_t symbol_1, const f_string_static_t symbol_2, const f_string_static_t symbol_3, const f_string_static_t name_1, const f_string_static_t name_2, const f_string_static_t name_3);
+  extern f_status_t fll_program_print_error_parameter_cannot_use_with_xor(fl_print_t * const print, const f_string_static_t symbol_1, const f_string_static_t symbol_2, const f_string_static_t symbol_3, const f_string_static_t name_1, const f_string_static_t name_2, const f_string_static_t name_3);
 #endif // _di_fll_program_print_error_parameter_allows_either_xor_
 
 /**
@@ -311,9 +329,11 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fll_program_print_error_parameter_integer_not_
-  extern f_status_t fll_program_print_error_parameter_integer_not(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t value);
+  extern f_status_t fll_program_print_error_parameter_integer_not(fl_print_t * const print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t value);
 #endif // _di_fll_program_print_error_parameter_integer_not_
 
 /**
@@ -341,9 +361,11 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fll_program_print_error_parameter_integer_not_negative_
-  extern f_status_t fll_program_print_error_parameter_integer_not_negative(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t value);
+  extern f_status_t fll_program_print_error_parameter_integer_not_negative(fl_print_t * const print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t value);
 #endif // _di_fll_program_print_error_parameter_integer_not_negative_
 
 /**
@@ -371,9 +393,11 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fll_program_print_error_parameter_integer_not_positive_
-  extern f_status_t fll_program_print_error_parameter_integer_not_positive(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t value);
+  extern f_status_t fll_program_print_error_parameter_integer_not_positive(fl_print_t * const print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t value);
 #endif // _di_fll_program_print_error_parameter_integer_not_positive_
 
 /**
@@ -399,9 +423,11 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fll_program_print_error_parameter_missing_value_
-  extern f_status_t fll_program_print_error_parameter_missing_value(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name);
+  extern f_status_t fll_program_print_error_parameter_missing_value(fl_print_t * const print, const f_string_static_t symbol, const f_string_static_t name);
 #endif // _di_fll_program_print_error_parameter_missing_value_
 
 /**
@@ -429,9 +455,11 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fll_program_print_error_parameter_missing_value_requires_amount_
-  extern f_status_t fll_program_print_error_parameter_missing_value_requires_amount(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t amount);
+  extern f_status_t fll_program_print_error_parameter_missing_value_requires_amount(fl_print_t * const print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t amount);
 #endif // _di_fll_program_print_error_parameter_missing_value_requires_amount_
 
 /**
@@ -457,9 +485,11 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fll_program_print_error_parameter_must_specify_once_
-  extern f_status_t fll_program_print_error_parameter_must_specify_once(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name);
+  extern f_status_t fll_program_print_error_parameter_must_specify_once(fl_print_t * const print, const f_string_static_t symbol, const f_string_static_t name);
 #endif // _di_fll_program_print_error_parameter_must_specify_once_
 
 /**
@@ -487,9 +517,11 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fll_program_print_error_parameter_must_specify_once_value_
-  extern f_status_t fll_program_print_error_parameter_must_specify_once_value(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t value);
+  extern f_status_t fll_program_print_error_parameter_must_specify_once_value(fl_print_t * const print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t value);
 #endif // _di_fll_program_print_error_parameter_must_specify_once_value_
 
 /**
@@ -515,9 +547,11 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fll_program_print_error_parameter_process_
-  extern f_status_t fll_program_print_error_parameter_process(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name);
+  extern f_status_t fll_program_print_error_parameter_process(fl_print_t * const print, const f_string_static_t symbol, const f_string_static_t name);
 #endif // _di_fll_program_print_error_parameter_process_
 
 /**
@@ -547,9 +581,11 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fll_program_print_error_parameter_range_start_before_stop_
-  extern f_status_t fll_program_print_error_parameter_range_start_before_stop(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t value_start, const f_string_static_t value_stop);
+  extern f_status_t fll_program_print_error_parameter_range_start_before_stop(fl_print_t * const print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t value_start, const f_string_static_t value_stop);
 #endif // _di_fll_program_print_error_parameter_range_start_before_stop_
 
 /**
@@ -568,9 +604,11 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fll_program_print_error_parameter_value_too_long_
-  extern f_status_t fll_program_print_error_parameter_value_too_long(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name);
+  extern f_status_t fll_program_print_error_parameter_value_too_long(fl_print_t * const print, const f_string_static_t symbol, const f_string_static_t name);
 #endif // _di_fll_program_print_error_parameter_value_too_long_
 
 /**
@@ -590,9 +628,11 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fll_program_print_error_pipe_invalid_form_feed_
-  extern f_status_t fll_program_print_error_pipe_invalid_form_feed(const fl_print_t print);
+  extern f_status_t fll_program_print_error_pipe_invalid_form_feed(fl_print_t * const print);
 #endif // _di_fll_program_print_error_pipe_invalid_form_feed_
 
 /**
@@ -612,9 +652,11 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
  */
 #ifndef _di_fll_program_print_error_pipe_missing_content_
-  extern f_status_t fll_program_print_error_pipe_missing_content(const fl_print_t print);
+  extern f_status_t fll_program_print_error_pipe_missing_content(fl_print_t * const print);
 #endif // _di_fll_program_print_error_pipe_missing_content_
 
 /**
@@ -636,9 +678,15 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see f_file_stream_lock()
+ * @see f_file_stream_unlock()
+ * @see fl_print_format()
  */
 #ifndef _di_fll_program_print_error_pipe_object_without_content_
-  extern f_status_t fll_program_print_error_pipe_object_without_content(const fl_print_t print);
+  extern f_status_t fll_program_print_error_pipe_object_without_content(fl_print_t * const print);
 #endif // _di_fll_program_print_error_pipe_object_without_content_
 
 /**
@@ -659,11 +707,12 @@ extern "C" {
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
  *
- * @see f_print_terminated()
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
  * @see fl_print_format()
  */
 #ifndef _di_fll_program_print_help_header_
-  extern f_status_t fll_program_print_help_header(const fl_print_t print, const f_string_static_t name, const f_string_static_t version);
+  extern f_status_t fll_program_print_help_header(fl_print_t * const print, const f_string_static_t name, const f_string_static_t version);
 #endif // _di_fll_program_print_help_header_
 
 /**
@@ -690,11 +739,12 @@ extern "C" {
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
  *
- * @see f_print_terminated()
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
  * @see fl_print_format()
  */
 #ifndef _di_fll_program_print_help_option_
-  extern f_status_t fll_program_print_help_option(const fl_print_t print, const f_string_static_t option_short, const f_string_static_t option_long, const f_string_static_t symbol_short, const f_string_static_t symbol_long, const char *description);
+  extern f_status_t fll_program_print_help_option(fl_print_t * const print, const f_string_static_t option_short, const f_string_static_t option_long, const f_string_static_t symbol_short, const f_string_static_t symbol_long, const char *description);
 #endif // _di_fll_program_print_help_option_
 
 /**
@@ -717,11 +767,12 @@ extern "C" {
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
  *
- * @see f_print_terminated()
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
  * @see fl_print_format()
  */
 #ifndef _di_fll_program_print_help_option_long_
-  extern f_status_t fll_program_print_help_option_long(const fl_print_t print, const f_string_static_t option_long, const f_string_static_t symbol_long, const char *description);
+  extern f_status_t fll_program_print_help_option_long(fl_print_t * const print, const f_string_static_t option_long, const f_string_static_t symbol_long, const char *description);
 #endif // _di_fll_program_print_help_option_long_
 
 /**
@@ -742,11 +793,12 @@ extern "C" {
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
  *
- * @see f_print_terminated()
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
  * @see fl_print_format()
  */
 #ifndef _di_fll_program_print_help_option_other_
-  extern f_status_t fll_program_print_help_option_other(const fl_print_t print, const f_string_static_t option_other, const char *description);
+  extern f_status_t fll_program_print_help_option_other(fl_print_t * const print, const f_string_static_t option_other, const char *description);
 #endif // _di_fll_program_print_help_option_other_
 
 /**
@@ -765,11 +817,12 @@ extern "C" {
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
  *
- * @see f_print_terminated()
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
  * @see fl_print_format()
  */
 #ifndef _di_fll_program_print_help_option_standard_
-  extern f_status_t fll_program_print_help_option_standard(const fl_print_t print);
+  extern f_status_t fll_program_print_help_option_standard(fl_print_t * const print);
 #endif // _di_fll_program_print_help_option_standard_
 
 /**
@@ -792,11 +845,13 @@ extern "C" {
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
  *
- * @see f_print_terminated()
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see f_print_dynamic_raw()
  * @see fl_print_format()
  */
 #ifndef _di_fll_program_print_help_usage_
-  extern f_status_t fll_program_print_help_usage(const fl_print_t print, const f_string_static_t name, const f_string_static_t parameters);
+  extern f_status_t fll_program_print_help_usage(fl_print_t * const print, const f_string_static_t name, const f_string_static_t parameters);
 #endif // _di_fll_program_print_help_usage_
 
 /**
@@ -814,9 +869,15 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see f_file_stream_lock()
+ * @see f_file_stream_unlock()
+ * @see fl_print_format()
  */
 #ifndef _di_fll_program_print_signal_received_
-  extern f_status_t fll_program_print_signal_received(const fl_print_t print, const uint32_t signal);
+  extern f_status_t fll_program_print_signal_received(fl_print_t * const print, const uint32_t signal);
 #endif // _di_fll_program_print_signal_received_
 
 /**
@@ -833,10 +894,15 @@ extern "C" {
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
  *
- * @see fl_print_format()
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ * @see f_file_stream_lock()
+ * @see f_file_stream_unlock()
+ * @see f_print_dynamic()
+ * @see f_print_dynamic_raw()
  */
 #ifndef _di_fll_program_print_version_
-  extern f_status_t fll_program_print_version(const fl_print_t print, const f_string_static_t version);
+  extern f_status_t fll_program_print_version(fl_print_t * const print, const f_string_static_t version);
 #endif // _di_fll_program_print_version_
 
 #ifdef __cplusplus

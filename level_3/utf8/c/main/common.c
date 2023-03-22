@@ -283,7 +283,7 @@ extern "C" {
           fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
         }
 
-      fll_program_print_error_parameter_missing_value(main->program.error, f_console_symbol_long_normal_s, utf8_long_to_file_s);
+      fll_program_print_error_parameter_missing_value(&main->program.error, f_console_symbol_long_normal_s, utf8_long_to_file_s);
 
       return;
     }
@@ -324,7 +324,7 @@ extern "C" {
             fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
           }
 
-          fll_error_print(main->program.error, F_status_set_fine(main->setting.state.status), macro_utf8_f(f_string_dynamic_append_nulless), fll_error_file_flag_fallback_e);
+          fll_error_print(&main->program.error, F_status_set_fine(main->setting.state.status), macro_utf8_f(f_string_dynamic_append_nulless), fll_error_file_flag_fallback_e);
 
           break;
         }
@@ -364,7 +364,7 @@ extern "C" {
         fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
       }
 
-      fll_program_print_error_parameter_missing_value(main->program.error, f_console_symbol_long_normal_s, utf8_long_from_file_s);
+      fll_program_print_error_parameter_missing_value(&main->program.error, f_console_symbol_long_normal_s, utf8_long_from_file_s);
 
       return;
     }

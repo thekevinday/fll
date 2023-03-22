@@ -10,7 +10,7 @@ extern "C" {
     if (!object.used) {
       setting->state.status = F_status_set_error(F_failure);
 
-      fll_program_print_error_missing_variable_not_zero(main->error, iki_write_object_s);
+      fll_program_print_error_missing_variable_not_zero(&main->error, iki_write_object_s);
 
       return;
     }

@@ -42,15 +42,17 @@
 #include <fll/level_2/program.h>
 
 // Status Code includes.
+#include <program/status_code/main/common/define.h>
+#include <program/status_code/main/common/enumeration.h>
 #include <program/status_code/main/common/print.h>
 #include <program/status_code/main/common/string.h>
 #include <program/status_code/main/common/type.h>
 #include <program/status_code/main/common.h>
 #include <program/status_code/fss/common.h>
 #include <program/status_code/main/convert.h>
-#include <program/status_code/main/print.h>
 #include <program/status_code/main/print/data.h>
 #include <program/status_code/main/print/error.h>
+#include <program/status_code/main/print/message.h>
 #include <program/status_code/main/process.h>
 
 #ifdef __cplusplus

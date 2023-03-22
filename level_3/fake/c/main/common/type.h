@@ -5,7 +5,7 @@
  * API Version: 0.7
  * Licenses: lgpl-2.1-or-later
  *
- * Provides common type functionality.
+ * Provides common type structures.
  *
  * This is auto-included and should not need to be explicitly included.
  */

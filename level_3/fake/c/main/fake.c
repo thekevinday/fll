@@ -23,28 +23,17 @@ extern "C" {
 
     main->setting.state.status = F_none;
 
-    if (main->setting.flag & fake_main_flag_help_e) {
-      fake_print_message_help(&main->program.message);
+    if (main->setting.flag & (fake_main_flag_help_e | fake_main_flag_version_e | fake_main_flag_copyright_e)) {
 
-      if ((main->setting.flag & fake_main_flag_print_last_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
-        fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
+      if (main->setting.flag & fake_main_flag_help_e) {
+        fake_print_message_help(&main->program.message);
       }
-
-      return;
-    }
-
-    if (main->setting.flag & fake_main_flag_version_e) {
-      fll_program_print_version(main->program.message, fake_program_version_s);
-
-      if ((main->setting.flag & fake_main_flag_print_last_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
-        fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
+      else if (main->setting.flag & fake_main_flag_version_e) {
+        fll_program_print_version(&main->program.message, fake_program_version_s);
       }
-
-      return;
-    }
-
-    if (main->setting.flag & fake_main_flag_copyright_e) {
-      fll_program_print_copyright(main->program.message);
+      else if (main->setting.flag & fake_main_flag_copyright_e) {
+        fll_program_print_copyright(&main->program.message);
+      }
 
       if ((main->setting.flag & fake_main_flag_print_last_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
         fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
@@ -147,7 +136,7 @@ extern "C" {
 
           if (!((++main->program.signal_check) % fake_signal_check_short_d)) {
             if (fll_program_standard_signal_received(&main->program)) {
-              fll_program_print_signal_received(main->program.warning, main->program.signal_received);
+              fll_program_print_signal_received(&main->program.warning, main->program.signal_received);
 
               main->setting.state.status = F_status_set_error(F_interrupt);
 
@@ -220,7 +209,7 @@ extern "C" {
 
           if (!((++main->program.signal_check) % fake_signal_check_short_d)) {
             if (fll_program_standard_signal_received(&main->program)) {
-              fll_program_print_signal_received(main->program.warning, main->program.signal_received);
+              fll_program_print_signal_received(&main->program.warning, main->program.signal_received);
 
               main->setting.state.status = F_status_set_error(F_interrupt);
 
@@ -298,7 +287,7 @@ extern "C" {
 
       if (!((++data->main->program.signal_check) % fake_signal_check_d)) {
         if (fll_program_standard_signal_received(&data->main->program)) {
-          fll_program_print_signal_received(data->main->program.warning, data->main->program.signal_received);
+          fll_program_print_signal_received(&data->main->program.warning, data->main->program.signal_received);
 
           data->main->setting.state.status = F_status_set_error(F_interrupt);
 
@@ -335,7 +324,7 @@ extern "C" {
 
     if (!((++data->main->program.signal_check) % fake_signal_check_d)) {
       if (fll_program_standard_signal_received(&data->main->program)) {
-        fll_program_print_signal_received(data->main->program.warning, data->main->program.signal_received);
+        fll_program_print_signal_received(&data->main->program.warning, data->main->program.signal_received);
 
         data->main->setting.state.status = F_status_set_error(F_interrupt);
 
@@ -438,7 +427,7 @@ extern "C" {
     do {
       if (!((++data->main->program.signal_check) % fake_signal_check_d)) {
         if (fll_program_standard_signal_received(&data->main->program)) {
-          fll_program_print_signal_received(data->main->program.warning, data->main->program.signal_received);
+          fll_program_print_signal_received(&data->main->program.warning, data->main->program.signal_received);
 
           data->main->setting.state.status = F_status_set_error(F_interrupt);
 
@@ -466,7 +455,7 @@ extern "C" {
 
     if (!((++data->main->program.signal_check) % fake_signal_check_d)) {
       if (fll_program_standard_signal_received(&data->main->program)) {
-        fll_program_print_signal_received(data->main->program.warning, data->main->program.signal_received);
+        fll_program_print_signal_received(&data->main->program.warning, data->main->program.signal_received);
 
         data->main->setting.state.status = F_status_set_error(F_interrupt);
 

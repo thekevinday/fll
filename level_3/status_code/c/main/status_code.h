@@ -42,14 +42,16 @@
 #include <fll/level_2/status_string.h>
 
 // Status Code includes.
+#include <program/status_code/main/common/define.h>
+#include <program/status_code/main/common/enumeration.h>
 #include <program/status_code/main/common/print.h>
 #include <program/status_code/main/common/string.h>
 #include <program/status_code/main/common/type.h>
 #include <program/status_code/main/common.h>
 #include <program/status_code/main/convert.h>
-#include <program/status_code/main/print.h>
 #include <program/status_code/main/print/data.h>
 #include <program/status_code/main/print/error.h>
+#include <program/status_code/main/print/message.h>
 #include <program/status_code/main/process.h>
 
 #ifdef __cplusplus
@@ -81,7 +83,7 @@ extern "C" {
  *     F_parameter (with error bit) if main is NULL or setting is NULL.
  */
 #ifndef _di_status_code_main_
-  extern void status_code_main(fll_program_data_t * const main, status_code_setting_t * const setting);
+  extern void status_code_main(status_code_main_t * const main);
 #endif // _di_status_code_main_
 
 #ifdef __cplusplus

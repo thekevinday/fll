@@ -87,7 +87,7 @@ extern "C" {
     for (f_array_length_t i = 0; i < data->depths.used; ++i) {
 
       if (!((++main->signal_check) % fss_payload_read_signal_check_d)) {
-        if (fll_program_standard_signal_received(main)) {
+        if (fll_program_standard_signal_received(&main->program)) {
           fll_program_print_signal_received(main->warning, main->signal_received);
 
           return F_status_set_error(F_interrupt);
@@ -175,7 +175,7 @@ extern "C" {
       for (f_array_length_t j = i + 1; j < data->depths.used; ++j) {
 
         if (!((++main->signal_check) % fss_payload_read_signal_check_d)) {
-          if (fll_program_standard_signal_received(main)) {
+          if (fll_program_standard_signal_received(&main->program)) {
             fll_program_print_signal_received(main->warning, main->signal_received);
 
             return F_status_set_error(F_interrupt);
@@ -437,7 +437,7 @@ extern "C" {
       if (!names[i]) continue;
 
       if (!((++main->signal_check) % fss_payload_read_signal_check_d)) {
-        if (fll_program_standard_signal_received(main)) {
+        if (fll_program_standard_signal_received(&main->program)) {
           fll_program_print_signal_received(main->warning, main->signal_received);
 
           return F_status_set_error(F_interrupt);
@@ -488,7 +488,7 @@ extern "C" {
       if (!names[i]) continue;
 
       if (!((++main->signal_check) % fss_payload_read_signal_check_d)) {
-        if (fll_program_standard_signal_received(main)) {
+        if (fll_program_standard_signal_received(&main->program)) {
           fll_program_print_signal_received(main->warning, main->signal_received);
 
           return F_status_set_error(F_interrupt);
@@ -719,7 +719,7 @@ extern "C" {
       for (i = range.start; i <= range.stop; ++i) {
 
         if (!((++main->signal_check) % fss_payload_read_signal_check_d)) {
-          if (fll_program_standard_signal_received(main)) {
+          if (fll_program_standard_signal_received(&main->program)) {
             fll_program_print_signal_received(main->warning, main->signal_received);
 
             return F_status_set_error(F_interrupt);
@@ -802,7 +802,7 @@ extern "C" {
       if (!names[at]) continue;
 
       if (!((++main->signal_check) % fss_payload_read_signal_check_d)) {
-        if (fll_program_standard_signal_received(main)) {
+        if (fll_program_standard_signal_received(&main->program)) {
           fll_program_print_signal_received(main->warning, main->signal_received);
 
           return F_status_set_error(F_interrupt);
@@ -872,7 +872,7 @@ extern "C" {
       if (!names[i]) continue;
 
       if (!((++main->signal_check) % fss_payload_read_signal_check_d)) {
-        if (fll_program_standard_signal_received(main)) {
+        if (fll_program_standard_signal_received(&main->program)) {
           fll_program_print_signal_received(main->warning, main->signal_received);
 
           return F_status_set_error(F_interrupt);
@@ -1077,7 +1077,7 @@ extern "C" {
       if (!names[at]) continue;
 
       if (!((++main->signal_check) % fss_payload_read_signal_check_d)) {
-        if (fll_program_standard_signal_received(main)) {
+        if (fll_program_standard_signal_received(&main->program)) {
           fll_program_print_signal_received(main->warning, main->signal_received);
 
           return F_status_set_error(F_interrupt);

@@ -32,7 +32,7 @@ extern "C" {
 
         const uint8_t modes[3] = { f_color_mode_not_e, f_color_mode_light_e, f_color_mode_dark_e };
 
-        status = fll_program_parameter_process_context(choices, modes, F_true, main);
+        status = fll_program_parameter_process_context(choices, modes, F_true, &main->program);
 
         if (F_status_is_error(status)) {
           fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process_context", fll_error_file_flag_fallback_e);
@@ -53,7 +53,7 @@ extern "C" {
 
         const uint8_t verbosity[5] = { f_console_verbosity_quiet_e, f_console_verbosity_error_e, f_console_verbosity_verbose_e, f_console_verbosity_debug_e, f_console_verbosity_normal_e };
 
-        status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, main);
+        status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, &main->program);
 
         if (F_status_is_error(status)) {
           fll_error_print(main->error, F_status_set_fine(status), "fll_program_parameter_process_verbosity", fll_error_file_flag_fallback_e);
@@ -215,7 +215,7 @@ extern "C" {
         for (f_array_length_t i = 0; i < main->parameters.array[fss_extended_read_parameter_delimit_e].values.used; ++i) {
 
           if (!((++main->signal_check) % fss_extended_read_signal_check_d)) {
-            if (fll_program_standard_signal_received(main)) {
+            if (fll_program_standard_signal_received(&main->program)) {
               fll_program_print_signal_received(main->warning, main->signal_received);
 
               status = F_status_set_error(F_signal);
@@ -420,7 +420,7 @@ extern "C" {
         for (f_array_length_t i = 0; i < main->parameters.remaining.used; ++i) {
 
           if (!((++main->signal_check) % fss_extended_read_signal_check_d)) {
-            if (fll_program_standard_signal_received(main)) {
+            if (fll_program_standard_signal_received(&main->program)) {
               fll_program_print_signal_received(main->warning, main->signal_received);
 
               status = F_status_set_error(F_signal);
@@ -486,7 +486,7 @@ extern "C" {
             for (size_read = 0; size_read < size_file; size_read += size_block) {
 
               // The signal check is always performed on each pass.
-              if (size_file > fss_extended_read_block_max && fll_program_standard_signal_received(main)) {
+              if (size_file > fss_extended_read_block_max && fll_program_standard_signal_received(&main->program)) {
                 fll_program_print_signal_received(main->warning, main->signal_received);
 
                 status = F_status_set_error(F_interrupt);

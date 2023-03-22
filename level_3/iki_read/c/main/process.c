@@ -328,8 +328,8 @@ extern "C" {
       for (i = 0; i < main->parameters.array[iki_read_parameter_name_e].values.used; ++i) {
 
         if (!((++main->signal_check) % iki_read_signal_check_d)) {
-          if (fll_program_standard_signal_received(main)) {
-            fll_program_print_signal_received(main->warning, main->signal_received);
+          if (fll_program_standard_signal_received(&main->program)) {
+            fll_program_print_signal_received(&main->warning, main->signal_received);
 
             f_string_dynamic_resize(0, &name);
 

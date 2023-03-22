@@ -2,8 +2,17 @@
 
 int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
-  fll_program_data_t data = fll_program_data_t_initialize;
-  iki_write_setting_t setting = iki_write_setting_t_initialize;
+  iki_write_main_t data = iki_write_main_t_initialize;
+
+  data.program.debug.flag |= iki_write_print_flag_debug_e;
+  data.program.error.flag |= iki_write_print_flag_error_e;
+  data.program.message.flag |= iki_write_print_flag_message_e;
+  data.program.warning.flag |= iki_write_print_flag_warning_e;
+  data.program.message.custom = (void *) &data;
+  data.program.output.custom = (void *) &data;
+  data.program.error.custom = (void *) &data;
+  data.program.warning.custom = (void *) &data;
+  data.program.debug.custom = (void *) &data;
 
   f_console_parameter_t parameters[] = iki_write_console_parameter_t_initialize;
   data.parameters.array = parameters;

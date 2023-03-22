@@ -5,7 +5,7 @@ extern "C" {
 #endif
 
 #ifndef _di_iki_read_print_data_
-  void iki_read_print_data(fll_program_data_t * const main, iki_read_setting_t * const setting, const f_array_length_t index) {
+  void iki_read_print_data(fl_print_t * const print, const f_array_length_t index) {
 
     if (!setting) return;
 
@@ -128,7 +128,7 @@ extern "C" {
 #endif // _di_iki_read_print_data_
 
 #ifndef _di_iki_read_print_data_wrap_append_
-  void iki_read_print_data_wrap_append(fll_program_data_t * const main, iki_read_setting_t * const setting, const f_array_length_t index) {
+  void iki_read_print_data_wrap_append(fl_print_t * const print, const f_array_length_t index) {
 
     if (!setting) return;
 
@@ -148,7 +148,7 @@ extern "C" {
 #endif // _di_iki_read_print_data_wrap_append_
 
 #ifndef _di_iki_read_print_data_wrap_prepend_
-  void iki_read_print_data_wrap_prepend(fll_program_data_t * const main, iki_read_setting_t * const setting, const f_array_length_t index) {
+  void iki_read_print_data_wrap_prepend(fl_print_t * const print, const f_array_length_t index) {
 
     if (!setting) return;
 

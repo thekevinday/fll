@@ -257,8 +257,8 @@ extern "C" {
  *   - Closes standard inputs and outputs.
  *   - Closes the signal handler.
  *
- * @param main
- *   The main program data.
+ * @param program
+ *   The program data.
  *
  * @return
  *   F_none on success.
@@ -274,7 +274,7 @@ extern "C" {
  * @see f_signal_close()
  */
 #ifndef _di_fll_program_standard_set_down_
-  extern f_status_t fll_program_standard_set_down(fll_program_data_t * const main);
+  extern f_status_t fll_program_standard_set_down(fll_program_data_t * const program);
 #endif // _di_fll_program_standard_set_down_
 
 /**
@@ -283,8 +283,8 @@ extern "C" {
  * This does the following:
  *   - Handle signals so that program can cleanly exit, de-allocating as appropriate.
  *
- * @param main
- *   The main program data.
+ * @param program
+ *   The program data.
  *
  * @return
  *   F_none on success.
@@ -302,7 +302,7 @@ extern "C" {
  * @see f_signal_set_fill()
  */
 #ifndef _di_fll_program_standard_set_up_
-  extern f_status_t fll_program_standard_set_up(fll_program_data_t * const main);
+  extern f_status_t fll_program_standard_set_up(fll_program_data_t * const program);
 #endif // _di_fll_program_standard_set_up_
 
 /**
@@ -312,9 +312,9 @@ extern "C" {
  *
  * If no signals are blocked, then this always returns F_false.
  *
- * @param main
- *   The main program data.
- *   The main->signal must be used to designate blocked signals.
+ * @param program
+ *   The program data.
+ *   The program.signal must be used to designate blocked signals.
  *
  * @return
  *   A positive number representing a valid signal on signal received.
@@ -323,7 +323,7 @@ extern "C" {
  * @see f_signal_read()
  */
 #ifndef _di_fll_program_standard_signal_received_
-  extern uint32_t fll_program_standard_signal_received(fll_program_data_t * const main);
+  extern uint32_t fll_program_standard_signal_received(fll_program_data_t * const program);
 #endif // _di_fll_program_standard_signal_received_
 
 /**

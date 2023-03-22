@@ -41,7 +41,7 @@ extern "C" {
  * @see fl_console_parameter_to_number_unsigned()
  */
 #ifndef _di_status_code_convert_number_
-  extern void status_code_convert_number(fll_program_data_t * const main, status_code_setting_t * const setting, const f_string_static_t value, f_number_unsigned_t *number);
+  extern void status_code_convert_number(status_code_main_t * const main, const f_string_static_t value, f_number_unsigned_t *number);
 #endif // _di_status_code_convert_number_
 
 #ifdef __cplusplus

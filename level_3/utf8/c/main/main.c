@@ -15,6 +15,7 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
   data.program.debug.custom = (void *) &data;
 
   f_console_parameter_t parameters[] = utf8_console_parameter_t_initialize;
+
   data.program.parameters.array = parameters;
   data.program.parameters.used = utf8_total_parameters_d;
   data.program.environment = envp;

@@ -169,6 +169,25 @@ extern "C" {
     }
 #endif // _di_iki_write_setting_t_
 
+/**
+ * The main program data as a single structure.
+ *
+ * program: The main program data.
+ * setting: The settings data.
+ */
+#ifndef _di_iki_write_main_t_
+  typedef struct {
+    fll_program_data_t program;
+    iki_write_setting_t setting;
+  } iki_write_main_t;
+
+  #define iki_write_main_t_initialize \
+    { \
+      fll_program_data_t_initialize, \
+      iki_write_setting_t_initialize, \
+    }
+#endif // _di_iki_write_main_t_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

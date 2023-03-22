@@ -23,33 +23,20 @@ extern "C" {
 
     setting->state.status = F_none;
 
-    if (setting->flag & fss_write_main_flag_help_e) {
-      if (setting->process_help) {
-        setting->process_help(main, (void *) setting);
+    if (main->setting.flag & (fss_write_main_flag_help_e | fss_write_main_flag_version_e | fss_write_main_flag_copyright_e)) {
+
+      if (main->setting.flag & fss_write_main_flag_help_e) {
+        fss_write_print_message_help(&main->program.message);
+      }
+      else if (main->setting.flag & fss_write_main_flag_version_e) {
+        fll_program_print_version(&main->program.message, fss_write_program_version_s);
+      }
+      else if (main->setting.flag & fss_write_main_flag_copyright_e) {
+        fll_program_print_copyright(&main->program.message);
       }
 
-      if ((setting->flag & fss_write_main_flag_print_last_e) && main->message.verbosity > f_console_verbosity_error_e) {
-        fll_print_dynamic_raw(f_string_eol_s, main->message.to);
-      }
-
-      return;
-    }
-
-    if (setting->flag & fss_write_main_flag_version_e) {
-      fll_program_print_version(main->message, fss_write_program_version_s);
-
-      if ((setting->flag & fss_write_main_flag_print_last_e) && main->message.verbosity > f_console_verbosity_error_e) {
-        fll_print_dynamic_raw(f_string_eol_s, main->message.to);
-      }
-
-      return;
-    }
-
-    if (setting->flag & fss_write_main_flag_copyright_e) {
-      fll_program_print_copyright(main->message);
-
-      if ((setting->flag & fss_write_main_flag_print_last_e) && main->message.verbosity > f_console_verbosity_error_e) {
-        fll_print_dynamic_raw(f_string_eol_s, main->message.to);
+      if ((main->setting.flag & fss_write_main_flag_print_last_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
+        fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
       }
 
       return;
@@ -107,7 +94,7 @@ extern "C" {
 
         // @todo replace all signal checks with forked main process that independently checks and assigns main->signal_received.
         if (!((++main->signal_check) % fss_write_signal_check_d)) {
-          if (fll_program_standard_signal_received(main)) {
+          if (fll_program_standard_signal_received(&main->program)) {
             setting->state.status = F_status_set_error(F_interrupt);
 
             return;
@@ -224,8 +211,8 @@ extern "C" {
     for (;;) {
 
       if (!((++main->signal_check) % fss_write_signal_check_d)) {
-        if (fll_program_standard_signal_received(main)) {
-          fll_program_print_signal_received(main->warning, main->signal_received);
+        if (fll_program_standard_signal_received(&main->program)) {
+          fll_program_print_signal_received(&main->warning, main->signal_received);
 
           setting->state.status = F_status_set_error(F_interrupt);
 

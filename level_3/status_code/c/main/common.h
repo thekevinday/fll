@@ -43,9 +43,7 @@ extern "C" {
  * @param arguments
  *   The parameters passed to the process (often referred to as command line arguments).
  * @param main
- *   The main program data.
- * @param setting
- *   The main program settings.
+ *   The main program and settings data.
  *
  *   This alters setting.state.status:
  *     F_none on success.
@@ -57,7 +55,7 @@ extern "C" {
  * @see fll_program_parameter_process_context()
  */
 #ifndef _di_status_code_setting_load_
-  extern void status_code_setting_load(const f_console_arguments_t arguments, fll_program_data_t * const main, status_code_setting_t * const setting);
+  extern void status_code_setting_load(const f_console_arguments_t arguments, status_code_main_t * const main);
 #endif // _di_status_code_setting_load_
 
 /**

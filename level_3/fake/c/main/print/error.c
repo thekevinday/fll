@@ -12,7 +12,7 @@ extern "C" {
 
     fake_main_t * const main = (fake_main_t *) print->custom;
 
-    fll_error_print(*print, F_status_set_fine(main->setting.state.status), function, fll_error_file_flag_fallback_e);
+    fll_error_print(print, F_status_set_fine(main->setting.state.status), function, fll_error_file_flag_fallback_e);
 
     return F_none;
   }
@@ -159,7 +159,7 @@ extern "C" {
       return F_false;
     }
 
-    if (fll_error_print(*print, F_status_set_fine(main->setting.state.status), function, fll_error_file_flag_none_e) == F_known_not && fallback && print->verbosity > f_console_verbosity_quiet_e) {
+    if (fll_error_print(print, F_status_set_fine(main->setting.state.status), function, fll_error_file_flag_none_e) == F_known_not && fallback && print->verbosity > f_console_verbosity_quiet_e) {
       f_file_stream_lock(print->to);
 
       fl_print_format("%[UNKNOWN %Q(%]", print->to, print->context, print->prefix, print->context);
@@ -294,7 +294,7 @@ extern "C" {
 
     fake_main_t * const main = (fake_main_t *) print->custom;
 
-    if (fll_error_print(*print, F_status_set_fine(main->setting.state.status), function, fll_error_file_flag_none_e) == F_known_not) return F_false;
+    if (fll_error_print(print, F_status_set_fine(main->setting.state.status), function, fll_error_file_flag_none_e) == F_known_not) return F_false;
 
     return F_true;
   }
@@ -308,7 +308,7 @@ extern "C" {
 
     fake_main_t * const main = (fake_main_t *) print->custom;
 
-    fll_error_file_print(*print, F_status_set_fine(main->setting.state.status), function, fll_error_file_flag_fallback_e, name, operation, type);
+    fll_error_file_print(print, F_status_set_fine(main->setting.state.status), function, fll_error_file_flag_fallback_e, name, operation, type);
 
     return F_none;
   }
@@ -334,7 +334,7 @@ extern "C" {
 
     fake_main_t * const main = (fake_main_t *) print->custom;
 
-    fll_error_file_print(*print, F_status_set_fine(main->setting.state.status), function, fll_error_file_flag_simple_e, name, operation, type);
+    fll_error_file_print(print, F_status_set_fine(main->setting.state.status), function, fll_error_file_flag_simple_e, name, operation, type);
 
     return F_none;
   }
@@ -380,7 +380,7 @@ extern "C" {
       return F_false;
     }
 
-    if (fll_error_print(*print, main->setting.state.status, function, fll_error_file_flag_none_e) == F_known_not && fallback) {
+    if (fll_error_print(print, main->setting.state.status, function, fll_error_file_flag_none_e) == F_known_not && fallback) {
       if (print->verbosity > f_console_verbosity_quiet_e) {
         f_string_static_t function_s = f_string_static_t_initialize;
         function_s.string = function;

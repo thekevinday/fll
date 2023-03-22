@@ -28,7 +28,7 @@ extern "C" {
 
       if (!((++main->program.signal_check) % utf8_signal_check_d)) {
         if (fll_program_standard_signal_received(&main->program)) {
-          fll_program_print_signal_received(main->program.warning, main->program.signal_received);
+          fll_program_print_signal_received(&main->program.warning, main->program.signal_received);
 
           main->setting.state.status = F_status_set_error(F_interrupt);
 
@@ -47,7 +47,7 @@ extern "C" {
         utf8_detect_codepoint(main, text, &mode_codepoint);
 
         if (F_status_is_error(main->setting.state.status)) {
-          fll_error_print(main->program.error, F_status_set_fine(main->setting.state.status), macro_utf8_f(utf8_detect_codepoint), fll_error_file_flag_fallback_e);
+          fll_error_print(&main->program.error, F_status_set_fine(main->setting.state.status), macro_utf8_f(utf8_detect_codepoint), fll_error_file_flag_fallback_e);
 
           break;
         }

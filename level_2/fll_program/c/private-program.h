@@ -43,7 +43,7 @@ extern "C" {
  * @see fll_program_print_help_option_standard()
  */
 #if !defined(_di_fll_program_print_help_option_) || !defined(_di_fll_program_print_help_option_standard_)
-  extern f_status_t private_fll_program_print_help_option(const fl_print_t print, const f_string_static_t option_short, const f_string_static_t option_long, const f_string_static_t symbol_short, const f_string_static_t symbol_long, const char *description) F_attribute_visibility_internal_d;
+  extern f_status_t private_fll_program_print_help_option(fl_print_t * const print, const f_string_static_t option_short, const f_string_static_t option_long, const f_string_static_t symbol_short, const f_string_static_t symbol_long, const char *description) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fll_program_print_help_option_) || !defined(_di_fll_program_print_help_option_standard_)
 
 /**
@@ -51,8 +51,8 @@ extern "C" {
  *
  * Intended to be shared to each of the different implementation variations.
  *
- * @param main
- *   The main program data.
+ * @param program
+ *   The program data.
  *
  * @return
  *   A positive number representing a valid signal on signal received.
@@ -64,7 +64,7 @@ extern "C" {
  * @see fll_program_standard_signal_handle()
  */
 #if !defined(_di_fll_program_standard_signal_received_) || !defined(_di_fll_program_standard_signal_handle_)
-  uint32_t private_fll_program_standard_signal_received(fll_program_data_t * const main) F_attribute_visibility_internal_d;
+  uint32_t private_fll_program_standard_signal_received(fll_program_data_t * const program) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fll_program_standard_signal_received_) || !defined(_di_fll_program_standard_signal_handle_)
 
 /**

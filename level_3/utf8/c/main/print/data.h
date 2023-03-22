@@ -19,12 +19,10 @@ extern "C" {
 /**
  * Print the byte sequence character (such as '豸').
  *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.state.status.
  * @param print
- *   Designates how printing is to be performed.
+ *   The output structure to print to.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param sequence
  *   A byte sequences representing a single character to print.
  *
@@ -43,12 +41,10 @@ extern "C" {
  *
  * This handles whether or not the invalid character should be printed or not based on program parameters.
  *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.state.status.
  * @param print
- *   Designates how printing is to be performed.
+ *   The output structure to print to.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param invalid
  *   The byte sequence string or unicode codepoint string representing a single character to print.
  *
@@ -67,12 +63,10 @@ extern "C" {
 /**
  * Print the codepoint number as a codepoint string (such as U+8C78).
  *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.state.status.
  * @param print
- *   Designates how printing is to be performed.
+ *   The output structure to print to.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param codepoint
  *   The codepoint to print.
  *   This is the code that represents a single character.
@@ -90,12 +84,10 @@ extern "C" {
 /**
  * Print the width or combining state of the given character.
  *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.state.status.
  * @param print
- *   Designates how printing is to be performed.
+ *   The output structure to print to.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param sequence
  *   A byte sequences representing a single character to print.
  *
@@ -114,12 +106,10 @@ extern "C" {
 /**
  * Print an error regarding the width or combining state of a some character.
  *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.state.status.
  * @param print
- *   Designates how printing is to be performed.
+ *   The output structure to print to.
+ *
+ *   This does not alter print.custom.setting.state.status.
  *
  * @return
  *   F_none on success.
@@ -134,12 +124,10 @@ extern "C" {
 /**
  * Print the raw character data (binary / byte sequence).
  *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.state.status.
  * @param print
- *   Designates the how and where to print.
+ *   The output structure to print to.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param raw
  *   The raw string in integer format.
  * @param width
@@ -158,12 +146,10 @@ extern "C" {
 /**
  * Print the raw character data (codepoint).
  *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.state.status.
  * @param print
- *   Designates the how and where to print.
+ *   The output structure to print to.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param raw
  *   The raw string already in codepoint format.
  *
@@ -180,12 +166,10 @@ extern "C" {
 /**
  * Print the width or combining state of the for a raw character.
  *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.state.status.
  * @param print
- *   Designates the how and where to print.
+ *   The output structure to print to.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param width
  *   The pre-calculated width.
  *
@@ -204,12 +188,10 @@ extern "C" {
 /**
  * Print the input file section header.
  *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.state.status.
  * @param print
- *   Designates the how and where to print.
+ *   The output structure to print to.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param name
  *   The name of the file.
  * @param index
@@ -228,12 +210,10 @@ extern "C" {
 /**
  * Print the input parameter section header.
  *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.state.status.
  * @param print
- *   Designates the how and where to print.
+ *   The output structure to print to.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param index
  *   The index position of the parameter.
  *

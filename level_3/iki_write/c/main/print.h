@@ -33,7 +33,7 @@ extern "C" {
  *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_iki_write_print_help_
-  extern f_status_t iki_write_print_help(iki_write_setting_t * const setting, const fl_print_t print);
+  extern f_status_t iki_write_print_help(fl_print_t * const print);
 #endif // _di_iki_write_print_help_
 
 #ifdef __cplusplus

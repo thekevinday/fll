@@ -6,25 +6,25 @@ extern "C" {
 #endif
 
 #if !defined(_di_fll_program_print_help_option_) || !defined(_di_fll_program_print_help_option_standard_)
-  f_status_t private_fll_program_print_help_option(const fl_print_t print, const f_string_static_t option_short, const f_string_static_t option_long, const f_string_static_t symbol_short, const f_string_static_t symbol_long, const char *description) {
+  f_status_t private_fll_program_print_help_option(fl_print_t * const print, const f_string_static_t option_short, const f_string_static_t option_long, const f_string_static_t symbol_short, const f_string_static_t symbol_long, const char *description) {
 
-    fl_print_format("%r  %Q%[%Q%]", print.to, f_string_eol_s, symbol_short, print.set->standout, option_short, print.set->standout);
-    fl_print_format(", %Q%[%Q%]  %S", print.to, symbol_long, print.set->standout, option_long, print.set->standout, description);
+    fl_print_format("  %Q%[%Q%]", print->to, symbol_short, print->set->standout, option_short, print->set->standout);
+    fl_print_format(", %Q%[%Q%]  %S%r", print->to, symbol_long, print->set->standout, option_long, print->set->standout, description, f_string_eol_s);
 
     return F_none;
   }
 #endif // !defined(_di_fll_program_print_help_option_) || !defined(_di_fll_program_print_help_option_standard_)
 
 #if !defined(_di_fll_program_standard_signal_received_) || !defined(_di_fll_program_standard_signal_handle_)
-  uint32_t private_fll_program_standard_signal_received(fll_program_data_t * const main) {
+  uint32_t private_fll_program_standard_signal_received(fll_program_data_t * const program) {
 
-    if (!main || main->signal.id == -1) return 0;
+    if (!program || program->signal.id == -1) return 0;
 
     struct signalfd_siginfo information;
 
     memset(&information, 0, sizeof(struct signalfd_siginfo));
 
-    if (f_signal_read(main->signal, 0, &information) == F_signal) {
+    if (f_signal_read(program->signal, 0, &information) == F_signal) {
       switch (information.ssi_signo) {
         case F_signal_abort:
         case F_signal_broken_pipe:
@@ -32,7 +32,7 @@ extern "C" {
         case F_signal_interrupt:
         case F_signal_quit:
         case F_signal_termination:
-          main->signal_received = information.ssi_signo;
+          program->signal_received = information.ssi_signo;
 
           return information.ssi_signo;
       }

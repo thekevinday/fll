@@ -67,7 +67,7 @@ extern "C" {
 
     if (!((++data->main->program.signal_check) % fake_signal_check_d)) {
       if (fll_program_standard_signal_received(&data->main->program)) {
-        fll_program_print_signal_received(data->main->program.warning, data->main->program.signal_received);
+        fll_program_print_signal_received(&data->main->program.warning, data->main->program.signal_received);
 
         data->main->setting.state.status = F_status_set_error(F_interrupt);
 
@@ -210,7 +210,7 @@ extern "C" {
 
     if (!((++data->main->program.signal_check) % fake_signal_check_d)) {
       if (fll_program_standard_signal_received(&data->main->program)) {
-        fll_program_print_signal_received(data->main->program.warning, data->main->program.signal_received);
+        fll_program_print_signal_received(&data->main->program.warning, data->main->program.signal_received);
 
         data->main->setting.state.status = F_status_set_error(F_interrupt);
 
@@ -1330,7 +1330,7 @@ extern "C" {
 
     if (!((++data->main->program.signal_check) % fake_signal_check_d)) {
       if (fll_program_standard_signal_received(&data->main->program)) {
-        fll_program_print_signal_received(data->main->program.warning, data->main->program.signal_received);
+        fll_program_print_signal_received(&data->main->program.warning, data->main->program.signal_received);
 
         data->main->setting.state.status = F_status_set_error(F_interrupt);
 

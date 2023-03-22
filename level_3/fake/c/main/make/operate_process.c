@@ -287,7 +287,7 @@ extern "C" {
     }
 
     if (fll_program_standard_signal_received(&data_make->main->program)) {
-      fll_program_print_signal_received(data_make->main->program.warning, data_make->main->program.signal_received);
+      fll_program_print_signal_received(&data_make->main->program.warning, data_make->main->program.signal_received);
 
       data_make->main->setting.state.status = F_status_set_error(F_interrupt);
 
@@ -336,7 +336,7 @@ extern "C" {
     data_make->main->setting.state.status = fll_execute_program(program, arguments, &parameter, 0, (void *) &return_code);
 
     if (fll_program_standard_signal_received(&data_make->main->program)) {
-      fll_program_print_signal_received(data_make->main->program.warning, data_make->main->program.signal_received);
+      fll_program_print_signal_received(&data_make->main->program.warning, data_make->main->program.signal_received);
 
       data_make->main->setting.state.status = F_status_set_error(F_interrupt);
 
@@ -407,7 +407,7 @@ extern "C" {
     }
 
     if (F_status_is_error(data_make->main->setting.state.status)) {
-      fll_error_print(data_make->error, F_status_set_fine(data_make->main->setting.state.status), macro_fake_f(f_string_dynamic_append), F_true);
+      fll_error_print(&data_make->error, F_status_set_fine(data_make->main->setting.state.status), macro_fake_f(f_string_dynamic_append), F_true);
     }
     else {
       data_make->main->setting.state.status = F_none;

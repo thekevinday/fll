@@ -19,12 +19,10 @@ extern "C" {
 /**
  * Print generic code.
  *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.state.status.
  * @param print
- *   Designates the how and where to print.
+ *   The output structure to print to.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param code
  *   The code to print.
  *
@@ -37,18 +35,16 @@ extern "C" {
  * @see fll_print_format()
  */
 #ifndef _di_status_code_print_data_code_
-  extern f_status_t status_code_print_data_code(status_code_setting_t * const setting, const fl_print_t print, const uint16_t code);
+  extern f_status_t status_code_print_data_code(fl_print_t * const print, const uint16_t code);
 #endif // _di_status_code_print_data_code_
 
 /**
  * Print generic context wrapped value.
  *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.state.status.
  * @param print
- *   Designates the how and where to print.
+ *   The output structure to print to.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param context
  *   The context string to wrap the variable with.
  * @param value
@@ -63,7 +59,7 @@ extern "C" {
  * @see fll_print_format()
  */
 #ifndef _di_status_code_print_data_context_value_
-  extern f_status_t status_code_print_data_context_value(status_code_setting_t * const setting, const fl_print_t print, const f_color_set_t context, const f_string_static_t value);
+  extern f_status_t status_code_print_data_context_value(fl_print_t * const print, const f_color_set_t context, const f_string_static_t value);
 #endif // _di_status_code_print_data_context_value_
 
 #ifdef __cplusplus

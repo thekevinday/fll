@@ -6,446 +6,519 @@ extern "C" {
 #endif
 
 #ifndef _di_fll_program_print_copyright_
-  f_status_t fll_program_print_copyright(const fl_print_t print) {
+  f_status_t fll_program_print_copyright(fl_print_t * const print) {
+    #ifndef _di_level_2_parameter_checking_
+      if (!print) return F_status_set_error(F_parameter);
+    #endif // _di_level_2_parameter_checking_
 
-    f_file_stream_lock(print.to);
+    f_file_stream_lock(print->to);
 
-    fl_print_format("%rCopyright © 2007-2023 Kevin Day.%r", print.to, f_string_eol_s, f_string_eol_s);
+    fl_print_format("Copyright © 2007-2023 Kevin Day.%r", print->to, f_string_eol_s);
 
     #ifndef _di_detailed_copyright_
-      if (print.verbosity > f_console_verbosity_quiet_e) {
-        if (print.verbosity > f_console_verbosity_normal_e) {
-          fl_print_format("%rThis program comes with ABSOLUTELY NO WARRANTY.%r", print.to, f_string_eol_s, f_string_eol_s);
-          fl_print_format("This is free software, and you are welcome to modify or redistribute in accordance to the license.%r", print.to, f_string_eol_s);
+      if (print->verbosity > f_console_verbosity_quiet_e) {
+        if (print->verbosity > f_console_verbosity_normal_e) {
+          fl_print_format("%rThis program comes with ABSOLUTELY NO WARRANTY.%r", print->to, f_string_eol_s, f_string_eol_s);
+          fl_print_format("This is free software, and you are welcome to modify or redistribute in accordance to the license.%r", print->to, f_string_eol_s);
         }
 
-        fl_print_format("%rSource code license lgpl-2.1-or-later.%r", print.to, f_string_eol_s, f_string_eol_s);
-        fl_print_format("Standard and specification license open-standard-license-1.0.%r", print.to, f_string_eol_s);
-        fl_print_format("Documentation license cc-by-sa-4.0.%r", print.to, f_string_eol_s);
+        fl_print_format("%rSource code license lgpl-2.1-or-later.%r", print->to, f_string_eol_s, f_string_eol_s);
+        fl_print_format("Standard and specification license open-standard-license-1.0.%r", print->to, f_string_eol_s);
+        fl_print_format("Documentation license cc-by-sa-4.0.%r", print->to, f_string_eol_s);
       }
     #endif // _di_detailed_copyright_
 
-    fl_print_format("%r", print.to, f_string_eol_s);
-
-    f_file_stream_unlock(print.to);
+    f_file_stream_unlock(print->to);
 
     return F_none;
   }
 #endif // _di_fll_program_print_copyright_
 
 #ifndef _di_fll_program_print_error_missing_file_
-  f_status_t fll_program_print_error_missing_file(const fl_print_t print) {
+  f_status_t fll_program_print_error_missing_file(fl_print_t * const print) {
+    #ifndef _di_level_2_parameter_checking_
+      if (!print) return F_status_set_error(F_parameter);
+    #endif // _di_level_2_parameter_checking_
 
-    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
+    if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
-    f_file_stream_lock(print.to);
+    f_file_stream_lock(print->to);
 
-    fl_print_format("%r%[%QNo files are specified.%]%r", print.to, f_string_eol_s, print.set->error, print.prefix, print.set->error, f_string_eol_s);
+    fl_print_format("%[%QNo files are specified.%]%r", print->to, print->set->error, print->prefix, print->set->error, f_string_eol_s);
 
-    f_file_stream_unlock(print.to);
+    f_file_stream_unlock(print->to);
 
     return F_none;
   }
 #endif // _di_fll_program_print_error_missing_file_
 
 #ifndef _di_fll_program_print_error_missing_variable_not_zero_
-  f_status_t fll_program_print_error_missing_variable_not_zero(const fl_print_t print, const f_string_static_t variable) {
+  f_status_t fll_program_print_error_missing_variable_not_zero(fl_print_t * const print, const f_string_static_t variable) {
+    #ifndef _di_level_2_parameter_checking_
+      if (!print) return F_status_set_error(F_parameter);
+    #endif // _di_level_2_parameter_checking_
 
-    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
+    if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
-    f_file_stream_lock(print.to);
+    f_file_stream_lock(print->to);
 
-    fl_print_format("%r%[%QThe%] ", print.to, f_string_eol_s, print.set->error, print.prefix, print.set->error);
-    fl_print_format("%[%Q%]", print.to, print.set->notable, variable, print.set->notable);
-    fl_print_format("%[ is missing or has a length of%] ", print.to, print.set->error, print.set->error);
-    fl_print_format("%[0%]", print.to, print.set->notable, print.set->notable);
-    fl_print_format("%[.%]%r", print.to, print.set->error, print.set->error, f_string_eol_s);
+    fl_print_format("%[%QThe%] ", print->to, print->set->error, print->prefix, print->set->error);
+    fl_print_format("%[%Q%]", print->to, print->set->notable, variable, print->set->notable);
+    fl_print_format("%[ is missing or has a length of%] ", print->to, print->set->error, print->set->error);
+    fl_print_format("%[0%]", print->to, print->set->notable, print->set->notable);
+    fl_print_format("%[.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
 
-    f_file_stream_unlock(print.to);
+    f_file_stream_unlock(print->to);
 
     return F_none;
   }
 #endif // _di_fll_program_print_error_missing_variable_not_zero_
 
 #ifndef _di_fll_program_print_error_parameter_both_specified_same_amount_
-  f_status_t fll_program_print_error_parameter_both_specified_same_amount(const fl_print_t print, const f_string_static_t symbol_1, const f_string_static_t symbol_2, const f_string_static_t name_1, const f_string_static_t name_2) {
+  f_status_t fll_program_print_error_parameter_both_specified_same_amount(fl_print_t * const print, const f_string_static_t symbol_1, const f_string_static_t symbol_2, const f_string_static_t name_1, const f_string_static_t name_2) {
+    #ifndef _di_level_2_parameter_checking_
+      if (!print) return F_status_set_error(F_parameter);
+    #endif // _di_level_2_parameter_checking_
 
-    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
+    if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
-    f_file_stream_lock(print.to);
+    f_file_stream_lock(print->to);
 
-    fl_print_format("%r%[%QThe '%]", print.to, f_string_eol_s, print.set->error, print.prefix, print.set->error);
-    fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol_1, name_1, print.set->notable);
-    fl_print_format("%[' parameter and the '%]", print.to, print.set->error, print.set->error);
-    fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol_2, name_2, print.set->notable);
-    fl_print_format("%[' parameter must be specified the same number of times.%]%r", print.to, print.set->error, print.set->error, f_string_eol_s);
+    fl_print_format("%[%QThe '%]", print->to, print->set->error, print->prefix, print->set->error);
+    fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol_1, name_1, print->set->notable);
+    fl_print_format("%[' parameter and the '%]", print->to, print->set->error, print->set->error);
+    fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol_2, name_2, print->set->notable);
+    fl_print_format("%[' parameter must be specified the same number of times.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
 
-    f_file_stream_unlock(print.to);
+    f_file_stream_unlock(print->to);
 
     return F_none;
   }
 #endif // _di_fll_program_print_error_parameter_both_specified_same_amount_
 
 #ifndef _di_fll_program_print_error_parameter_both_specified_same_amount_without_
-  f_status_t fll_program_print_error_parameter_both_specified_same_amount_without(const fl_print_t print, const f_string_static_t symbol_1, const f_string_static_t symbol_2, const f_string_static_t symbol_3, const f_string_static_t name_1, const f_string_static_t name_2, const f_string_static_t name_3) {
+  f_status_t fll_program_print_error_parameter_both_specified_same_amount_without(fl_print_t * const print, const f_string_static_t symbol_1, const f_string_static_t symbol_2, const f_string_static_t symbol_3, const f_string_static_t name_1, const f_string_static_t name_2, const f_string_static_t name_3) {
+    #ifndef _di_level_2_parameter_checking_
+      if (!print) return F_status_set_error(F_parameter);
+    #endif // _di_level_2_parameter_checking_
 
-    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
+    if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
-    f_file_stream_lock(print.to);
+    f_file_stream_lock(print->to);
 
-    fl_print_format("%r%[%QThe '%]", print.to, f_string_eol_s, print.set->error, print.prefix, print.set->error);
-    fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol_1, name_1, print.set->notable);
-    fl_print_format("%[' parameter and the '%]", print.to, print.set->error, print.set->error);
-    fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol_2, name_2, print.set->notable);
-    fl_print_format("%[' parameter must be specified the same number of times when not specifying the '%]", print.to, print.set->error, print.set->error);
-    fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol_3, name_3, print.set->notable);
-    fl_print_format("%[' parameter.%]%r", print.to, print.set->error, print.set->error, f_string_eol_s);
+    fl_print_format("%[%QThe '%]", print->to, print->set->error, print->prefix, print->set->error);
+    fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol_1, name_1, print->set->notable);
+    fl_print_format("%[' parameter and the '%]", print->to, print->set->error, print->set->error);
+    fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol_2, name_2, print->set->notable);
+    fl_print_format("%[' parameter must be specified the same number of times when not specifying the '%]", print->to, print->set->error, print->set->error);
+    fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol_3, name_3, print->set->notable);
+    fl_print_format("%[' parameter.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
 
-    f_file_stream_unlock(print.to);
+    f_file_stream_unlock(print->to);
 
     return F_none;
   }
 #endif // _di_fll_program_print_error_parameter_both_specified_same_amount_without_
 
 #ifndef _di_fll_program_print_error_parameter_cannot_use_with_
-  f_status_t fll_program_print_error_parameter_cannot_use_with(const fl_print_t print, const f_string_static_t symbol_1, const f_string_static_t symbol_2, const f_string_static_t name_1, const f_string_static_t name_2) {
+  f_status_t fll_program_print_error_parameter_cannot_use_with(fl_print_t * const print, const f_string_static_t symbol_1, const f_string_static_t symbol_2, const f_string_static_t name_1, const f_string_static_t name_2) {
+    #ifndef _di_level_2_parameter_checking_
+      if (!print) return F_status_set_error(F_parameter);
+    #endif // _di_level_2_parameter_checking_
 
-    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
+    if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
-    f_file_stream_lock(print.to);
+    f_file_stream_lock(print->to);
 
-    fl_print_format("%r%[%QCannot specify the '%]", print.to, f_string_eol_s, print.set->error, print.prefix, print.set->error);
-    fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol_1, name_1, print.set->notable);
-    fl_print_format("%[' parameter with the '%]", print.to, print.set->error, print.set->error);
-    fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol_2, name_2, print.set->notable);
-    fl_print_format("%[' parameter.%]%r", print.to, print.set->error, print.set->error, f_string_eol_s);
+    fl_print_format("%[%QCannot specify the '%]", print->to, print->set->error, print->prefix, print->set->error);
+    fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol_1, name_1, print->set->notable);
+    fl_print_format("%[' parameter with the '%]", print->to, print->set->error, print->set->error);
+    fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol_2, name_2, print->set->notable);
+    fl_print_format("%[' parameter.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
 
-    f_file_stream_unlock(print.to);
+    f_file_stream_unlock(print->to);
 
     return F_none;
   }
 #endif // _di_fll_program_print_error_parameter_cannot_use_with_
 
 #ifndef _di_fll_program_print_error_parameter_cannot_use_with_without_
-  f_status_t fll_program_print_error_parameter_cannot_use_with_without(const fl_print_t print, const f_string_static_t symbol_1, const f_string_static_t symbol_2, const f_string_static_t symbol_3, const f_string_static_t name_1, const f_string_static_t name_2, const f_string_static_t name_3) {
+  f_status_t fll_program_print_error_parameter_cannot_use_with_without(fl_print_t * const print, const f_string_static_t symbol_1, const f_string_static_t symbol_2, const f_string_static_t symbol_3, const f_string_static_t name_1, const f_string_static_t name_2, const f_string_static_t name_3) {
+    #ifndef _di_level_2_parameter_checking_
+      if (!print) return F_status_set_error(F_parameter);
+    #endif // _di_level_2_parameter_checking_
 
-    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
+    if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
-    f_file_stream_lock(print.to);
+    f_file_stream_lock(print->to);
 
-    fl_print_format("%r%[%QCannot specify the '%]", print.to, f_string_eol_s, print.set->error, print.prefix, print.set->error);
-    fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol_1, name_1, print.set->notable);
-    fl_print_format("%[' parameter with the '%]", print.to, print.set->error, print.set->error);
-    fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol_2, name_2, print.set->notable);
-    fl_print_format("%[' parameter without the '%]", print.to, print.set->error, print.set->error);
-    fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol_3, name_3, print.set->notable);
-    fl_print_format("%[' parameter.%]%r", print.to, print.set->error, print.set->error, f_string_eol_s);
+    fl_print_format("%[%QCannot specify the '%]", print->to, print->set->error, print->prefix, print->set->error);
+    fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol_1, name_1, print->set->notable);
+    fl_print_format("%[' parameter with the '%]", print->to, print->set->error, print->set->error);
+    fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol_2, name_2, print->set->notable);
+    fl_print_format("%[' parameter without the '%]", print->to, print->set->error, print->set->error);
+    fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol_3, name_3, print->set->notable);
+    fl_print_format("%[' parameter.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
 
-    f_file_stream_unlock(print.to);
+    f_file_stream_unlock(print->to);
 
     return F_none;
   }
 #endif // _di_fll_program_print_error_parameter_cannot_use_with_without_
 
 #ifndef _di_fll_program_print_error_parameter_cannot_use_with_pipe_
-  f_status_t fll_program_print_error_parameter_cannot_use_with_pipe(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t parameter) {
+  f_status_t fll_program_print_error_parameter_cannot_use_with_pipe(fl_print_t * const print, const f_string_static_t symbol, const f_string_static_t parameter) {
+    #ifndef _di_level_2_parameter_checking_
+      if (!print) return F_status_set_error(F_parameter);
+    #endif // _di_level_2_parameter_checking_
 
-    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
+    if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
-    f_file_stream_lock(print.to);
+    f_file_stream_lock(print->to);
 
-    fl_print_format("%r%[%QCannot specify the '%]", print.to, f_string_eol_s, print.set->error, print.prefix, print.set->error);
-    fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol, parameter, print.set->notable);
-    fl_print_format("%[' when processing a pipe.%]%r", print.to, print.set->error, print.set->error, f_string_eol_s);
+    fl_print_format("%[%QCannot specify the '%]", print->to, print->set->error, print->prefix, print->set->error);
+    fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol, parameter, print->set->notable);
+    fl_print_format("%[' when processing a pipe.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
 
-    f_file_stream_unlock(print.to);
+    f_file_stream_unlock(print->to);
 
     return F_none;
   }
 #endif // _di_fll_program_print_error_parameter_cannot_use_with_pipe_
 
 #ifndef _di_fll_program_print_error_parameter_cannot_use_with_xor_
-  f_status_t fll_program_print_error_parameter_cannot_use_with_xor(const fl_print_t print, const f_string_static_t symbol_1, const f_string_static_t symbol_2, const f_string_static_t symbol_3, const f_string_static_t name_1, const f_string_static_t name_2, const f_string_static_t name_3) {
+  f_status_t fll_program_print_error_parameter_cannot_use_with_xor(fl_print_t * const print, const f_string_static_t symbol_1, const f_string_static_t symbol_2, const f_string_static_t symbol_3, const f_string_static_t name_1, const f_string_static_t name_2, const f_string_static_t name_3) {
+    #ifndef _di_level_2_parameter_checking_
+      if (!print) return F_status_set_error(F_parameter);
+    #endif // _di_level_2_parameter_checking_
 
-    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
+    if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
-    f_file_stream_lock(print.to);
+    f_file_stream_lock(print->to);
 
-    fl_print_format("%r%[%QThe '%]", print.to, f_string_eol_s, print.set->error, print.prefix, print.set->error);
-    fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol_1, name_1, print.set->notable);
-    fl_print_format("%[' parameter only allows either the '%]", print.to, print.set->error, print.set->error);
-    fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol_2, name_2, print.set->notable);
-    fl_print_format("%[' parameter or the '%]", print.to, print.set->error, print.set->error);
-    fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol_3, name_3, print.set->notable);
-    fl_print_format("%[' parameter, but not both.%]%r", print.to, print.set->error, print.set->error, f_string_eol_s);
+    fl_print_format("%[%QThe '%]", print->to, print->set->error, print->prefix, print->set->error);
+    fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol_1, name_1, print->set->notable);
+    fl_print_format("%[' parameter only allows either the '%]", print->to, print->set->error, print->set->error);
+    fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol_2, name_2, print->set->notable);
+    fl_print_format("%[' parameter or the '%]", print->to, print->set->error, print->set->error);
+    fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol_3, name_3, print->set->notable);
+    fl_print_format("%[' parameter, but not both.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
 
-    f_file_stream_unlock(print.to);
+    f_file_stream_unlock(print->to);
 
     return F_none;
   }
 #endif // _di_fll_program_print_error_parameter_cannot_use_with_xor_
 
 #ifndef _di_fll_program_print_error_parameter_integer_not_
-  f_status_t fll_program_print_error_parameter_integer_not(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t value) {
+  f_status_t fll_program_print_error_parameter_integer_not(fl_print_t * const print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t value) {
+    #ifndef _di_level_2_parameter_checking_
+      if (!print) return F_status_set_error(F_parameter);
+    #endif // _di_level_2_parameter_checking_
 
-    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
+    if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
-    f_file_stream_lock(print.to);
+    f_file_stream_lock(print->to);
 
-    fl_print_format("%r%[%QThe value '%]", print.to, f_string_eol_s, print.set->error, print.prefix, print.set->error);
-    fl_print_format("%[%Q%]", print.to, print.set->notable, value, print.set->notable);
-    fl_print_format("%[' for the parameter '%]", print.to, print.set->error, print.set->error);
-    fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol, name, print.set->notable);
-    fl_print_format("%[' is not a valid integer.%]%r", print.to, print.set->error, print.set->error, f_string_eol_s);
+    fl_print_format("%[%QThe value '%]", print->to, print->set->error, print->prefix, print->set->error);
+    fl_print_format("%[%Q%]", print->to, print->set->notable, value, print->set->notable);
+    fl_print_format("%[' for the parameter '%]", print->to, print->set->error, print->set->error);
+    fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol, name, print->set->notable);
+    fl_print_format("%[' is not a valid integer.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
 
-    f_file_stream_unlock(print.to);
+    f_file_stream_unlock(print->to);
 
     return F_none;
   }
 #endif // _di_fll_program_print_error_parameter_integer_not_
 
 #ifndef _di_fll_program_print_error_parameter_integer_not_negative_
-  f_status_t fll_program_print_error_parameter_integer_not_negative(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t value) {
+  f_status_t fll_program_print_error_parameter_integer_not_negative(fl_print_t * const print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t value) {
+    #ifndef _di_level_2_parameter_checking_
+      if (!print) return F_status_set_error(F_parameter);
+    #endif // _di_level_2_parameter_checking_
 
-    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
+    if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
-    f_file_stream_lock(print.to);
+    f_file_stream_lock(print->to);
 
-    fl_print_format("%r%[%QThe value '%]", print.to, f_string_eol_s, print.set->error, print.prefix, print.set->error);
-    fl_print_format("%[%Q%]", print.to, print.set->notable, value, print.set->notable);
-    fl_print_format("%[' for the parameter '%]", print.to, print.set->error, print.set->error);
-    fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol, name, print.set->notable);
-    fl_print_format("%[' is not a valid negative integer.%]%r", print.to, print.set->error, print.set->error, f_string_eol_s);
+    fl_print_format("%[%QThe value '%]", print->to, print->set->error, print->prefix, print->set->error);
+    fl_print_format("%[%Q%]", print->to, print->set->notable, value, print->set->notable);
+    fl_print_format("%[' for the parameter '%]", print->to, print->set->error, print->set->error);
+    fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol, name, print->set->notable);
+    fl_print_format("%[' is not a valid negative integer.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
 
-    f_file_stream_unlock(print.to);
+    f_file_stream_unlock(print->to);
 
     return F_none;
   }
 #endif // _di_fll_program_print_error_parameter_integer_not_negative_
 
 #ifndef _di_fll_program_print_error_parameter_integer_not_positive_
-  f_status_t fll_program_print_error_parameter_integer_not_positive(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t value) {
+  f_status_t fll_program_print_error_parameter_integer_not_positive(fl_print_t * const print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t value) {
+    #ifndef _di_level_2_parameter_checking_
+      if (!print) return F_status_set_error(F_parameter);
+    #endif // _di_level_2_parameter_checking_
 
-    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
+    if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
-    f_file_stream_lock(print.to);
+    f_file_stream_lock(print->to);
 
-    fl_print_format("%r%[%QThe value '%]", print.to, f_string_eol_s, print.set->error, print.prefix, print.set->error);
-    fl_print_format("%[%Q%]", print.to, print.set->notable, value, print.set->notable);
-    fl_print_format("%[' for the parameter '%]", print.to, print.set->error, print.set->error);
-    fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol, name, print.set->notable);
-    fl_print_format("%[' is not a valid positive integer.%]%r", print.to, print.set->error, print.set->error, f_string_eol_s);
+    fl_print_format("%[%QThe value '%]", print->to, print->set->error, print->prefix, print->set->error);
+    fl_print_format("%[%Q%]", print->to, print->set->notable, value, print->set->notable);
+    fl_print_format("%[' for the parameter '%]", print->to, print->set->error, print->set->error);
+    fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol, name, print->set->notable);
+    fl_print_format("%[' is not a valid positive integer.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
 
-    f_file_stream_unlock(print.to);
+    f_file_stream_unlock(print->to);
 
     return F_none;
   }
 #endif // _di_fll_program_print_error_parameter_integer_not_positive_
 
 #ifndef _di_fll_program_print_error_parameter_missing_value_
-  f_status_t fll_program_print_error_parameter_missing_value(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name) {
+  f_status_t fll_program_print_error_parameter_missing_value(fl_print_t * const print, const f_string_static_t symbol, const f_string_static_t name) {
+    #ifndef _di_level_2_parameter_checking_
+      if (!print) return F_status_set_error(F_parameter);
+    #endif // _di_level_2_parameter_checking_
 
-    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
+    if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
-    f_file_stream_lock(print.to);
+    f_file_stream_lock(print->to);
 
-    fl_print_format("%r%[%QThe parameter%] ", print.to, f_string_eol_s, print.set->error, print.prefix, print.set->error);
-    fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol, name, print.set->notable);
-    fl_print_format(" %[is specified, but no value is given.%]%r", print.to, print.set->error, print.set->error, f_string_eol_s);
+    fl_print_format("%[%QThe parameter%] ", print->to, print->set->error, print->prefix, print->set->error);
+    fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol, name, print->set->notable);
+    fl_print_format(" %[is specified, but no value is given.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
 
-    f_file_stream_unlock(print.to);
+    f_file_stream_unlock(print->to);
 
     return F_none;
   }
 #endif // _di_fll_program_print_error_parameter_missing_value_
 
 #ifndef _di_fll_program_print_error_parameter_missing_value_requires_amount_
-  f_status_t fll_program_print_error_parameter_missing_value_requires_amount(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t amount) {
+  f_status_t fll_program_print_error_parameter_missing_value_requires_amount(fl_print_t * const print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t amount) {
+    #ifndef _di_level_2_parameter_checking_
+      if (!print) return F_status_set_error(F_parameter);
+    #endif // _di_level_2_parameter_checking_
 
-    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
+    if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
-    f_file_stream_lock(print.to);
+    f_file_stream_lock(print->to);
 
-    fl_print_format("%r%[%QThe parameter%] ", print.to, f_string_eol_s, print.set->error, print.prefix, print.set->error);
-    fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol, name, print.set->notable);
-    fl_print_format("%[ is specified, but%] ", print.to, print.set->error, print.set->error);
-    fl_print_format("%[%Q%]", print.to, print.set->notable, amount, print.set->notable);
-    fl_print_format(" %[values are not given.%]%r", print.to, print.set->error, print.set->error, f_string_eol_s);
+    fl_print_format("%[%QThe parameter%] ", print->to, print->set->error, print->prefix, print->set->error);
+    fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol, name, print->set->notable);
+    fl_print_format("%[ is specified, but%] ", print->to, print->set->error, print->set->error);
+    fl_print_format("%[%Q%]", print->to, print->set->notable, amount, print->set->notable);
+    fl_print_format(" %[values are not given.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
 
-    f_file_stream_unlock(print.to);
+    f_file_stream_unlock(print->to);
 
     return F_none;
   }
 #endif // _di_fll_program_print_error_parameter_missing_value_requires_amount_
 
 #ifndef _di_fll_program_print_error_parameter_must_specify_once_
-  f_status_t fll_program_print_error_parameter_must_specify_once(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name) {
+  f_status_t fll_program_print_error_parameter_must_specify_once(fl_print_t * const print, const f_string_static_t symbol, const f_string_static_t name) {
+    #ifndef _di_level_2_parameter_checking_
+      if (!print) return F_status_set_error(F_parameter);
+    #endif // _di_level_2_parameter_checking_
 
-    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
+    if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
-    f_file_stream_lock(print.to);
+    f_file_stream_lock(print->to);
 
-    fl_print_format("%r%[%QThe parameter '%]", print.to, f_string_eol_s, print.set->error, print.prefix, print.set->error);
-    fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol, name, print.set->notable);
-    fl_print_format("%[' may only be specified once.%]%r", print.to, print.set->error, print.set->error, f_string_eol_s);
+    fl_print_format("%[%QThe parameter '%]", print->to, print->set->error, print->prefix, print->set->error);
+    fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol, name, print->set->notable);
+    fl_print_format("%[' may only be specified once.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
 
-    f_file_stream_unlock(print.to);
+    f_file_stream_unlock(print->to);
 
     return F_none;
   }
 #endif // _di_fll_program_print_error_parameter_must_specify_once_
 
 #ifndef _di_fll_program_print_error_parameter_must_specify_once_value_
-  f_status_t fll_program_print_error_parameter_must_specify_once_value(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t value) {
+  f_status_t fll_program_print_error_parameter_must_specify_once_value(fl_print_t * const print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t value) {
+    #ifndef _di_level_2_parameter_checking_
+      if (!print) return F_status_set_error(F_parameter);
+    #endif // _di_level_2_parameter_checking_
 
-    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
+    if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
-    f_file_stream_lock(print.to);
+    f_file_stream_lock(print->to);
 
-    fl_print_format("%r%[%QThe value '%]", print.to, f_string_eol_s, print.set->error, print.prefix, print.set->error);
-    fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol, value, print.set->notable);
-    fl_print_format("%[' may only be specified once for the parameter '%]", print.to, print.set->error, print.set->error);
-    fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol, name, print.set->notable);
-    fl_print_format("%['.%]%r", print.to, print.set->error, print.set->error, f_string_eol_s);
+    fl_print_format("%%[%QThe value '%]", print->to, print->set->error, print->prefix, print->set->error);
+    fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol, value, print->set->notable);
+    fl_print_format("%[' may only be specified once for the parameter '%]", print->to, print->set->error, print->set->error);
+    fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol, name, print->set->notable);
+    fl_print_format("%['.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
 
-    f_file_stream_unlock(print.to);
+    f_file_stream_unlock(print->to);
 
     return F_none;
   }
 #endif // _di_fll_program_print_error_parameter_must_specify_once_value_
 
 #ifndef _di_fll_program_print_error_parameter_process_
-  f_status_t fll_program_print_error_parameter_process(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name) {
+  f_status_t fll_program_print_error_parameter_process(fl_print_t * const print, const f_string_static_t symbol, const f_string_static_t name) {
+    #ifndef _di_level_2_parameter_checking_
+      if (!print) return F_status_set_error(F_parameter);
+    #endif // _di_level_2_parameter_checking_
 
-    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
+    if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
-    f_file_stream_lock(print.to);
+    f_file_stream_lock(print->to);
 
-    fl_print_format("%r%[%QFailure while processing the parameter '%]", print.to, f_string_eol_s, print.set->error, print.prefix, print.set->error);
-    fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol, name, print.set->notable);
-    fl_print_format("%['.%]%r", print.to, print.set->error, print.set->error, f_string_eol_s);
+    fl_print_format("%[%QFailure while processing the parameter '%]", print->to, print->set->error, print->prefix, print->set->error);
+    fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol, name, print->set->notable);
+    fl_print_format("%['.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
 
-    f_file_stream_unlock(print.to);
+    f_file_stream_unlock(print->to);
 
     return F_none;
   }
 #endif // _di_fll_program_print_error_parameter_process_
 
 #ifndef _di_fll_program_print_error_parameter_range_start_before_stop_
-  f_status_t fll_program_print_error_parameter_range_start_before_stop(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t value_start, const f_string_static_t value_stop) {
+  f_status_t fll_program_print_error_parameter_range_start_before_stop(fl_print_t * const print, const f_string_static_t symbol, const f_string_static_t name, const f_string_static_t value_start, const f_string_static_t value_stop) {
+    #ifndef _di_level_2_parameter_checking_
+      if (!print) return F_status_set_error(F_parameter);
+    #endif // _di_level_2_parameter_checking_
 
-    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
+    if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
-    f_file_stream_lock(print.to);
+    f_file_stream_lock(print->to);
 
-    fl_print_format("%r%[%QThe start range value '%]", print.to, f_string_eol_s, print.set->error, print.prefix, print.set->error);
-    fl_print_format("%[%Q%]", print.to, print.set->notable, value_start, print.set->notable);
-    fl_print_format("%[' may not be greater than the stop value '%]", print.to, print.set->error, print.set->error);
-    fl_print_format("%[%Q%]", print.to, print.set->notable, value_stop, print.set->notable);
-    fl_print_format("%[' for the parameter '%]", print.to, print.set->error, print.set->error);
-    fl_print_format("%[%Q%Q%]", print.to, print.set->notable, symbol, name, print.set->notable);
-    fl_print_format("%['.%]%r", print.to, print.set->error, print.set->error, f_string_eol_s);
+    fl_print_format("%[%QThe start range value '%]", print->to, print->set->error, print->prefix, print->set->error);
+    fl_print_format("%[%Q%]", print->to, print->set->notable, value_start, print->set->notable);
+    fl_print_format("%[' may not be greater than the stop value '%]", print->to, print->set->error, print->set->error);
+    fl_print_format("%[%Q%]", print->to, print->set->notable, value_stop, print->set->notable);
+    fl_print_format("%[' for the parameter '%]", print->to, print->set->error, print->set->error);
+    fl_print_format("%[%Q%Q%]", print->to, print->set->notable, symbol, name, print->set->notable);
+    fl_print_format("%['.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
 
-    f_file_stream_unlock(print.to);
+    f_file_stream_unlock(print->to);
 
     return F_none;
   }
 #endif // _di_fll_program_print_error_parameter_range_start_before_stop_
 
 #ifndef _di_fll_program_print_error_parameter_value_too_long_
-  f_status_t fll_program_print_error_parameter_value_too_long(const fl_print_t print, const f_string_static_t symbol, const f_string_static_t name) {
+  f_status_t fll_program_print_error_parameter_value_too_long(fl_print_t * const print, const f_string_static_t symbol, const f_string_static_t name) {
+    #ifndef _di_level_2_parameter_checking_
+      if (!print) return F_status_set_error(F_parameter);
+    #endif // _di_level_2_parameter_checking_
 
-    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
+    if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
-    f_file_stream_lock(print.to);
+    f_file_stream_lock(print->to);
 
-    fl_print_format("%r%[%QThe value for the parameter '%]", print.to, f_string_eol_s, print.set->error, print.prefix, print.set->error);
-    fl_print_format("%[%Q%Q%]", print.to, print.notable, symbol, name, print.notable);
-    fl_print_format("%[' is too long.%]%r", print.to, print.set->error, print.set->error, f_string_eol_s);
+    fl_print_format("%[%QThe value for the parameter '%]", print->to, print->set->error, print->prefix, print->set->error);
+    fl_print_format("%[%Q%Q%]", print->to, print->notable, symbol, name, print->notable);
+    fl_print_format("%[' is too long.%]%r", print->to, print->set->error, print->set->error, f_string_eol_s);
 
-    f_file_stream_unlock(print.to);
+    f_file_stream_unlock(print->to);
 
     return F_none;
   }
 #endif // _di_fll_program_print_error_parameter_value_too_long_
 
 #ifndef _di_fll_program_print_error_pipe_invalid_form_feed_
-  f_status_t fll_program_print_error_pipe_invalid_form_feed(const fl_print_t print) {
+  f_status_t fll_program_print_error_pipe_invalid_form_feed(fl_print_t * const print) {
+    #ifndef _di_level_2_parameter_checking_
+      if (!print) return F_status_set_error(F_parameter);
+    #endif // _di_level_2_parameter_checking_
 
-    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
+    if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
-    f_file_stream_lock(print.to);
+    f_file_stream_lock(print->to);
 
-    fl_print_format("%r%[%QThe pipe has incorrectly placed form-feed characters (\\f).%]%r", print.to, f_string_eol_s, print.set->error, print.prefix, print.set->error, f_string_eol_s);
+    fl_print_format("%[%QThe pipe has incorrectly placed form-feed characters (\\f).%]%r", print->to, print->set->error, print->prefix, print->set->error, f_string_eol_s);
 
-    f_file_stream_unlock(print.to);
+    f_file_stream_unlock(print->to);
 
     return F_none;
   }
 #endif // _di_fll_program_print_error_pipe_invalid_form_feed_
 
 #ifndef _di_fll_program_print_error_pipe_missing_content_
-  f_status_t fll_program_print_error_pipe_missing_content(const fl_print_t print) {
+  f_status_t fll_program_print_error_pipe_missing_content(fl_print_t * const print) {
+    #ifndef _di_level_2_parameter_checking_
+      if (!print) return F_status_set_error(F_parameter);
+    #endif // _di_level_2_parameter_checking_
 
-    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
+    if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
-    f_file_stream_lock(print.to);
+    f_file_stream_lock(print->to);
 
-    fl_print_format("%r%[%QThe pipe has no content.%]%r", print.to, f_string_eol_s, print.set->error, print.prefix, print.set->error, f_string_eol_s);
+    fl_print_format("%[%QThe pipe has no content.%]%r", print->to, print->set->error, print->prefix, print->set->error, f_string_eol_s);
 
-    f_file_stream_unlock(print.to);
+    f_file_stream_unlock(print->to);
 
     return F_none;
   }
 #endif // _di_fll_program_print_error_pipe_missing_content_
 
 #ifndef _di_fll_program_print_error_pipe_object_without_content_
-  f_status_t fll_program_print_error_pipe_object_without_content(const fl_print_t print) {
+  f_status_t fll_program_print_error_pipe_object_without_content(fl_print_t * const print) {
+    #ifndef _di_level_2_parameter_checking_
+      if (!print) return F_status_set_error(F_parameter);
+    #endif // _di_level_2_parameter_checking_
 
-    if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
+    if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
-    f_file_stream_lock(print.to);
+    f_file_stream_lock(print->to);
 
-    fl_print_format("%r%[%QThe pipe has an Object without Content.%]%r", print.to, f_string_eol_s, print.set->error, print.prefix, print.set->error, f_string_eol_s);
+    fl_print_format("%[%QThe pipe has an Object without Content.%]%r", print->to, print->set->error, print->prefix, print->set->error, f_string_eol_s);
 
-    f_file_stream_unlock(print.to);
+    f_file_stream_unlock(print->to);
 
     return F_none;
   }
 #endif // _di_fll_program_print_error_pipe_object_without_content_
 
 #ifndef _di_fll_program_print_help_header_
-  f_status_t fll_program_print_help_header(const fl_print_t print, const f_string_static_t name, const f_string_static_t version) {
+  f_status_t fll_program_print_help_header(fl_print_t * const print, const f_string_static_t name, const f_string_static_t version) {
+    #ifndef _di_level_2_parameter_checking_
+      if (!print) return F_status_set_error(F_parameter);
+    #endif // _di_level_2_parameter_checking_
 
-    fl_print_format(" %[%Q%]%r", print.to, print.set->title, name, print.set->title, f_string_eol_s);
-    fl_print_format("  %[Version %Q%]%r", print.to, print.set->notable, version, print.set->notable, f_string_eol_s);
+    fl_print_format(" %[%Q%]%r", print->to, print->set->title, name, print->set->title, f_string_eol_s);
+    fl_print_format("  %[Version %Q%]%r%r", print->to, print->set->notable, version, print->set->notable, f_string_eol_s, f_string_eol_s);
 
-    fl_print_format("%r %[Available Options:%] ", print.to, f_string_eol_s, print.set->important, print.set->important);
+    fl_print_format(" %[Available Options:%] %r", print->to, print->set->important, print->set->important, f_string_eol_s);
 
     return F_none;
   }
 #endif // _di_fll_program_print_help_header_
 
 #ifndef _di_fll_program_print_help_option_
-  f_status_t fll_program_print_help_option(const fl_print_t print, const f_string_static_t option_short, const f_string_static_t option_long, const f_string_static_t symbol_short, const f_string_static_t symbol_long, const char *description) {
+  f_status_t fll_program_print_help_option(fl_print_t * const print, const f_string_static_t option_short, const f_string_static_t option_long, const f_string_static_t symbol_short, const f_string_static_t symbol_long, const char *description) {
+    #ifndef _di_level_2_parameter_checking_
+      if (!print) return F_status_set_error(F_parameter);
+    #endif // _di_level_2_parameter_checking_
 
     return private_fll_program_print_help_option(print, option_short, option_long, symbol_short, symbol_long, description);
   }
 #endif // _di_fll_program_print_help_option_
 
 #ifndef _di_fll_program_print_help_option_standard_
-  f_status_t fll_program_print_help_option_standard(const fl_print_t print) {
+  f_status_t fll_program_print_help_option_standard(fl_print_t * const print) {
+    #ifndef _di_level_2_parameter_checking_
+      if (!print) return F_status_set_error(F_parameter);
+    #endif // _di_level_2_parameter_checking_
 
     private_fll_program_print_help_option(print, f_console_standard_short_help_s, f_console_standard_long_help_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "         Print this help message.");
     private_fll_program_print_help_option(print, f_console_standard_short_copyright_s, f_console_standard_long_copyright_s, f_console_symbol_short_inverse_s, f_console_symbol_long_inverse_s, "    Print the copyright.");
     private_fll_program_print_help_option(print, f_console_standard_short_dark_s, f_console_standard_long_dark_s, f_console_symbol_short_inverse_s, f_console_symbol_long_inverse_s, "         Output using colors that show up better on dark backgrounds.");
     private_fll_program_print_help_option(print, f_console_standard_short_light_s, f_console_standard_long_light_s, f_console_symbol_short_inverse_s, f_console_symbol_long_inverse_s, "        Output using colors that show up better on light backgrounds.");
     private_fll_program_print_help_option(print, f_console_standard_short_no_color_s, f_console_standard_long_no_color_s, f_console_symbol_short_inverse_s, f_console_symbol_long_inverse_s, "     Do not print using color.");
-    private_fll_program_print_help_option(print, f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, f_console_symbol_short_inverse_s, f_console_symbol_long_inverse_s, "        Decrease verbosity, silencing most print.to.");
-    private_fll_program_print_help_option(print, f_console_standard_short_error_s, f_console_standard_long_error_s, f_console_symbol_short_inverse_s, f_console_symbol_long_inverse_s, "        Decrease verbosity, using only error print.to.");
+    private_fll_program_print_help_option(print, f_console_standard_short_quiet_s, f_console_standard_long_quiet_s, f_console_symbol_short_inverse_s, f_console_symbol_long_inverse_s, "        Decrease verbosity, silencing most print->to.");
+    private_fll_program_print_help_option(print, f_console_standard_short_error_s, f_console_standard_long_error_s, f_console_symbol_short_inverse_s, f_console_symbol_long_inverse_s, "        Decrease verbosity, using only error print->to.");
     private_fll_program_print_help_option(print, f_console_standard_short_normal_s, f_console_standard_long_normal_s, f_console_symbol_short_inverse_s, f_console_symbol_long_inverse_s, "       Set verbosity to normal.");
-    private_fll_program_print_help_option(print, f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, f_console_symbol_short_inverse_s, f_console_symbol_long_inverse_s, "      Increase verbosity beyond normal print.to.");
-    private_fll_program_print_help_option(print, f_console_standard_short_debug_s, f_console_standard_long_debug_s, f_console_symbol_short_inverse_s, f_console_symbol_long_inverse_s, "        Enable debugging, significantly increasing verbosity beyond normal print.to.");
+    private_fll_program_print_help_option(print, f_console_standard_short_verbose_s, f_console_standard_long_verbose_s, f_console_symbol_short_inverse_s, f_console_symbol_long_inverse_s, "      Increase verbosity beyond normal print->to.");
+    private_fll_program_print_help_option(print, f_console_standard_short_debug_s, f_console_standard_long_debug_s, f_console_symbol_short_inverse_s, f_console_symbol_long_inverse_s, "        Enable debugging, significantly increasing verbosity beyond normal print->to.");
     private_fll_program_print_help_option(print, f_console_standard_short_version_s, f_console_standard_long_version_s, f_console_symbol_short_inverse_s, f_console_symbol_long_inverse_s, "      Print only the version number.");
     private_fll_program_print_help_option(print, f_console_standard_short_line_first_no_s, f_console_standard_long_line_first_no_s, f_console_symbol_short_inverse_s, f_console_symbol_long_inverse_s, "Disable printing of first line.");
     private_fll_program_print_help_option(print, f_console_standard_short_line_last_no_s, f_console_standard_long_line_last_no_s, f_console_symbol_short_inverse_s, f_console_symbol_long_inverse_s, " Disable printing of last line.");
@@ -455,74 +528,87 @@ extern "C" {
 #endif // _di_fll_program_print_help_option_standard_
 
 #ifndef _di_fll_program_print_help_option_long_
-  f_status_t fll_program_print_help_option_long(const fl_print_t print, const f_string_static_t option_long, const f_string_static_t symbol_long, const char *description) {
+  f_status_t fll_program_print_help_option_long(fl_print_t * const print, const f_string_static_t option_long, const f_string_static_t symbol_long, const char *description) {
+    #ifndef _di_level_2_parameter_checking_
+      if (!print) return F_status_set_error(F_parameter);
+    #endif // _di_level_2_parameter_checking_
 
-    fl_print_format("%r      %Q%[%Q%]  %S", print.to, f_string_eol_s, symbol_long, print.set->standout, option_long, print.set->standout, description);
+    fl_print_format("      %Q%[%Q%]  %S%r", print->to, symbol_long, print->set->standout, option_long, print->set->standout, description, f_string_eol_s);
 
     return F_none;
   }
 #endif // _di_fll_program_print_help_option_long_
 
 #ifndef _di_fll_program_print_help_option_other_
-  f_status_t fll_program_print_help_option_other(const fl_print_t print, const f_string_static_t option_other, const char *description) {
+  f_status_t fll_program_print_help_option_other(fl_print_t * const print, const f_string_static_t option_other, const char *description) {
+    #ifndef _di_level_2_parameter_checking_
+      if (!print) return F_status_set_error(F_parameter);
+    #endif // _di_level_2_parameter_checking_
 
-    fl_print_format("%r  %[%Q%]  %S", print.to, f_string_eol_s, print.set->standout, option_other, print.set->standout, description);
+    fl_print_format("  %[%Q%]  %S%r", print->to, print->set->standout, option_other, print->set->standout, description, f_string_eol_s);
 
     return F_none;
   }
 #endif // _di_fll_program_print_help_option_other_
 
 #ifndef _di_fll_program_print_help_usage_
-  f_status_t fll_program_print_help_usage(const fl_print_t print, const f_string_static_t name, const f_string_static_t parameters) {
+  f_status_t fll_program_print_help_usage(fl_print_t * const print, const f_string_static_t name, const f_string_static_t parameters) {
+    #ifndef _di_level_2_parameter_checking_
+      if (!print) return F_status_set_error(F_parameter);
+    #endif // _di_level_2_parameter_checking_
 
-    fl_print_format(" %[Usage:%]%r", print.to, print.set->important, print.set->important, f_string_eol_s);
+    fl_print_format(" %[Usage:%]%r", print->to, print->set->important, print->set->important, f_string_eol_s);
 
-    fl_print_format("  %[%Q%]", print.to, print.set->standout, name, print.set->standout);
-    fl_print_format(" %[[%] options %[]%]", print.to, print.set->notable, print.set->notable, print.set->notable, print.set->notable);
+    fl_print_format("  %[%Q%]", print->to, print->set->standout, name, print->set->standout);
+    fl_print_format(" %[[%] options %[]%]", print->to, print->set->notable, print->set->notable, print->set->notable, print->set->notable);
 
     if (parameters.used) {
-      fl_print_format(" %[[%] %Q %[]%]", print.to, print.set->notable, print.set->notable, parameters, print.set->notable, print.set->notable);
+      fl_print_format(" %[[%] %Q %[]%]", print->to, print->set->notable, print->set->notable, parameters, print->set->notable, print->set->notable);
     }
 
-    f_print_dynamic_raw(f_string_eol_s, print.to);
+    f_print_dynamic_raw(f_string_eol_s, print->to);
 
     return F_none;
   }
 #endif // _di_fll_program_print_help_usage_
 
 #ifndef _di_fll_program_print_signal_received_
-  f_status_t fll_program_print_signal_received(const fl_print_t print, const uint32_t signal) {
+  f_status_t fll_program_print_signal_received(fl_print_t * const print, const uint32_t signal) {
+    #ifndef _di_level_2_parameter_checking_
+      if (!print) return F_status_set_error(F_parameter);
+    #endif // _di_level_2_parameter_checking_
 
-    if (print.verbosity != f_console_verbosity_verbose_e && print.verbosity != f_console_verbosity_debug_e) {
+    if (print->verbosity != f_console_verbosity_verbose_e && print->verbosity != f_console_verbosity_debug_e) {
       return F_output_not;
     }
 
-    f_file_stream_lock(print.to);
+    f_file_stream_lock(print->to);
 
     // Must flush and reset color because the interrupt may have interrupted the middle of a print function.
-    f_file_stream_flush(print.to);
+    f_file_stream_flush(print->to);
 
-    fl_print_format("%]%r%[Received signal code %]", print.to, print.set->reset, f_string_eol_s, print.set->warning, print.set->warning);
-    fl_print_format("%[%u%]", print.to, print.set->notable, signal, print.set->notable);
-    fl_print_format("%[.%]%r", print.to, print.set->warning, print.set->warning, f_string_eol_s);
+    fl_print_format("%]%[Received signal code %]", print->to, print->set->reset, print->set->warning, print->set->warning);
+    fl_print_format("%[%u%]", print->to, print->set->notable, signal, print->set->notable);
+    fl_print_format("%[.%]%r", print->to, print->set->warning, print->set->warning, f_string_eol_s);
 
-    f_file_stream_unlock(print.to);
+    f_file_stream_unlock(print->to);
 
     return F_none;
   }
 #endif // _di_fll_program_print_signal_received_
 
 #ifndef _di_fll_program_print_version_
-  f_status_t fll_program_print_version(const fl_print_t print, const f_string_static_t version) {
+  f_status_t fll_program_print_version(fl_print_t * const print, const f_string_static_t version) {
+    #ifndef _di_level_2_parameter_checking_
+      if (!print) return F_status_set_error(F_parameter);
+    #endif // _di_level_2_parameter_checking_
 
-    f_file_stream_lock(print.to);
+    f_file_stream_lock(print->to);
 
-    f_print_dynamic_raw(f_string_eol_s, print.to);
-    f_print_dynamic(version, print.to);
-    f_print_dynamic_raw(f_string_eol_s, print.to);
-    f_print_dynamic_raw(f_string_eol_s, print.to);
+    f_print_dynamic(version, print->to);
+    f_print_dynamic_raw(f_string_eol_s, print->to);
 
-    f_file_stream_unlock(print.to);
+    f_file_stream_unlock(print->to);
 
     return F_none;
   }

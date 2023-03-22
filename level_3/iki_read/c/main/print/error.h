@@ -19,12 +19,10 @@ extern "C" {
 /**
  * Print generic error message regarding a function failing in some way.
  *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.state.status.
  * @param print
- *   Designates the how and where to print.
+ *   The output structure to print to.
+ *
+ *   This does not alter print.custom.setting.state.status.
  *
  * @return
  *   F_none on success.
@@ -35,18 +33,16 @@ extern "C" {
  * @see fll_error_print()
  */
 #ifndef _di_iki_read_print_error_
-  extern f_status_t iki_read_print_error(iki_read_setting_t * const setting, const fl_print_t print, const f_string_t function);
+  extern f_status_t iki_read_print_error(fl_print_t * const print, const f_string_t function);
 #endif // _di_iki_read_print_error_
 
 /**
  * Print file related error or warning messages.
  *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.state.status.
  * @param print
- *   Designates how printing is to be performed.
+ *   The output structure to print to.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param function
  *   The name of the function where the error happened.
  *   Set to 0 to disable.
@@ -66,7 +62,7 @@ extern "C" {
  * @see fll_error_file_print()
  */
 #ifndef _di_iki_read_print_error_file_
-  extern f_status_t iki_read_print_error_file(iki_read_setting_t * const setting, const fl_print_t print, const f_string_t function, const f_string_static_t name, const f_string_static_t operation, const uint8_t type);
+  extern f_status_t iki_read_print_error_file(fl_print_t * const print, const f_string_t function, const f_string_static_t name, const f_string_static_t operation, const uint8_t type);
 #endif // _di_iki_read_print_error_file_
 
 #ifdef __cplusplus

@@ -40,7 +40,7 @@ extern "C" {
  * @see fll_error_file_print()
  */
 #if !defined(_di_fll_error_print_) || !defined(_di_fll_error_file_print_)
-  extern f_status_t private_fll_error_print(const fl_print_t print, const f_status_t status, const f_string_t function, const uint8_t flag) F_attribute_visibility_internal_d;
+  extern f_status_t private_fll_error_print(fl_print_t * const print, const f_status_t status, const f_string_t function, const uint8_t flag) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fll_error_print_) || !defined(_di_fll_error_file_print_)
 
 /**
@@ -62,7 +62,7 @@ extern "C" {
  * @see fll_error_file_print()
  */
 #if !defined(_di_fll_error_print_) || !defined(_di_fll_error_file_print_)
-  extern void private_fll_error_print_function(const fl_print_t print, const f_string_t function) F_attribute_visibility_internal_d;
+  extern void private_fll_error_print_function(fl_print_t * const print, const f_string_t function) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fll_error_print_) || !defined(_di_fll_error_file_print_)
 
 /**
@@ -90,7 +90,7 @@ extern "C" {
  * @see fll_error_file_print()
  */
 #if !defined(_di_fll_error_print_) || !defined(_di_fll_error_file_print_)
-  extern void private_fll_error_print_unable_to(const fl_print_t print, const f_string_static_t operation, const f_string_static_t name, const f_string_static_t type_name, const f_string_t message) F_attribute_visibility_internal_d;
+  extern void private_fll_error_print_unable_to(fl_print_t * const print, const f_string_static_t operation, const f_string_static_t name, const f_string_static_t type_name, const f_string_t message) F_attribute_visibility_internal_d;
 #endif // !defined(_di_fll_error_print_) || !defined(_di_fll_error_file_print_)
 
 #ifdef __cplusplus

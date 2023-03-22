@@ -5,12 +5,12 @@
  * API Version: 0.7
  * Licenses: lgpl-2.1-or-later
  *
- * Provides the print functionality.
+ * Provides the print data functionality.
  *
  * This is auto-included and should not need to be explicitly included.
  */
-#ifndef _status_code_print_h
-#define _status_code_print_h
+#ifndef _status_code_print_message_h
+#define _status_code_print_message_h
 
 #ifdef __cplusplus
 extern "C" {
@@ -19,12 +19,10 @@ extern "C" {
 /**
  * Print help.
  *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.state.status.
  * @param print
  *   The output structure to print to.
+ *
+ *   This does not alter print.custom.setting.state.status.
  *
  * @return
  *   F_none on success.
@@ -43,23 +41,20 @@ extern "C" {
  * @see fll_program_print_help_option_standard()
  * @see fll_program_print_help_usage()
  */
-#ifndef _di_status_code_print_help_
-  extern f_status_t status_code_print_help(status_code_setting_t * const setting, const fl_print_t print);
-#endif // _di_status_code_print_help_
+#ifndef _di_status_code_print_message_help_
+  extern f_status_t status_code_print_message_help(fl_print_t * const print);
+#endif // _di_status_code_print_message_help_
 
 /**
  * Print help detailed part of the help.
  *
- * This is designed to be called from within status_code_print_help().
+ * This is designed to be called from within status_code_print_message_help().
  * This neither locks nor unlocks the stream and expects the stream to be unlocked.
  *
- * @param setting
- *   The main program settings.
- *   (Must be of type status_code_setting_t.)
- *
- *   This does not alter setting.state.status.
  * @param print
  *   The output structure to print to.
+ *
+ *   This does not alter print.custom.setting.state.status.
  *
  * @return
  *   F_none on success.
@@ -69,14 +64,14 @@ extern "C" {
  *
  * @see fl_print_format()
  *
- * @see status_code_print_help()
+ * @see status_code_print_message_help()
  */
-#ifndef _di_status_code_print_help_detail_
-  extern f_status_t status_code_print_help_detail(void * const setting, const fl_print_t print);
-#endif // _di_status_code_print_help_detail_
+#ifndef _di_status_code_print_message_help_detail_
+  extern f_status_t status_code_print_message_help_detail(fl_print_t * const print);
+#endif // _di_status_code_print_message_help_detail_
 
 #ifdef __cplusplus
 } // extern "C"
 #endif
 
-#endif // _status_code_print_h
+#endif // _status_code_print_message_h

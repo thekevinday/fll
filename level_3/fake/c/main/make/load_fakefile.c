@@ -11,7 +11,7 @@ extern "C" {
     if (F_status_is_error(data_make->main->setting.state.status)) return;
 
     if (fll_program_standard_signal_received(&data_make->main->program)) {
-      fll_program_print_signal_received(data_make->main->program.warning, data_make->main->program.signal_received);
+      fll_program_print_signal_received(&data_make->main->program.warning, data_make->main->program.signal_received);
 
       data_make->main->setting.state.status = F_status_set_error(F_interrupt);
 
@@ -105,7 +105,7 @@ extern "C" {
 
           if (!(i % fake_signal_check_short_d)) {
             if (fll_program_standard_signal_received(&data_make->main->program)) {
-              fll_program_print_signal_received(data_make->main->program.warning, data_make->main->program.signal_received);
+              fll_program_print_signal_received(&data_make->main->program.warning, data_make->main->program.signal_received);
 
               data_make->main->setting.state.status = F_status_set_error(F_interrupt);
 

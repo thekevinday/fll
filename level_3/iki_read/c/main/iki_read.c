@@ -23,31 +23,20 @@ extern "C" {
 
     setting->state.status = F_none;
 
-    if (setting->flag & iki_read_main_flag_help_e) {
-      iki_read_print_help(setting, main->message);
+    if (main->setting.flag & (iki_read_main_flag_help_e | iki_read_main_flag_version_e | iki_read_main_flag_copyright_e)) {
 
-      if ((setting->flag & iki_read_main_flag_print_last_e) && main->message.verbosity > f_console_verbosity_error_e) {
-        fll_print_dynamic_raw(f_string_eol_s, main->message.to);
+      if (main->setting.flag & iki_read_main_flag_help_e) {
+        iki_read_print_message_help(&main->program.message);
+      }
+      else if (main->setting.flag & iki_read_main_flag_version_e) {
+        fll_program_print_version(&main->program.message, iki_read_program_version_s);
+      }
+      else if (main->setting.flag & iki_read_main_flag_copyright_e) {
+        fll_program_print_copyright(&main->program.message);
       }
 
-      return;
-    }
-
-    if (setting->flag & iki_read_main_flag_version_e) {
-      fll_program_print_version(main->message, iki_read_program_version_s);
-
-      if ((setting->flag & iki_read_main_flag_print_last_e) && main->message.verbosity > f_console_verbosity_error_e) {
-        fll_print_dynamic_raw(f_string_eol_s, main->message.to);
-      }
-
-      return;
-    }
-
-    if (setting->flag & iki_read_main_flag_copyright_e) {
-      fll_program_print_copyright(main->message);
-
-      if ((setting->flag & iki_read_main_flag_print_last_e) && main->message.verbosity > f_console_verbosity_error_e) {
-        fll_print_dynamic_raw(f_string_eol_s, main->message.to);
+      if ((main->setting.flag & iki_read_main_flag_print_last_e) && main->program.message.verbosity > f_console_verbosity_error_e) {
+        fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
       }
 
       return;
@@ -79,8 +68,8 @@ extern "C" {
       for (f_array_length_t i = 0; i < setting->files.used; ++i) {
 
         if (!((++main->signal_check) % iki_read_signal_check_d)) {
-          if (fll_program_standard_signal_received(main)) {
-            fll_program_print_signal_received(main->warning, main->signal_received);
+          if (fll_program_standard_signal_received(&main->program)) {
+            fll_program_print_signal_received(&main->warning, main->signal_received);
 
             setting->state.status = F_status_set_error(F_interrupt);
 
@@ -149,8 +138,8 @@ extern "C" {
         for (size_read = 0; size_read < size_file; size_read += size_block) {
 
           // The signal check is always performed on each pass.
-          if (size_file > iki_read_block_max && fll_program_standard_signal_received(main)) {
-            fll_program_print_signal_received(main->warning, main->signal_received);
+          if (size_file > iki_read_block_max && fll_program_standard_signal_received(&main->program)) {
+            fll_program_print_signal_received(&main->warning, main->signal_received);
 
             setting->state.status = F_status_set_error(F_interrupt);
 

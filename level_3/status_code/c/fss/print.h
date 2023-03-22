@@ -19,16 +19,13 @@ extern "C" {
 /**
  * Print help detailed part of the help for fss_status_code.
  *
- * This is designed to be called from within status_code_print_help().
+ * This is designed to be called from within status_code_print_message_help().
  * This neither locks nor unlocks the stream and expects the stream to be unlocked.
  *
- * @param setting
- *   The main program settings.
- *   (Must be of type status_code_setting_t.)
- *
- *   This does not alter setting.state.status.
  * @param print
  *   The output structure to print to.
+ *
+ *   This does not alter print.custom.setting.state.status.
  *
  * @return
  *   F_none on success.
@@ -38,10 +35,10 @@ extern "C" {
  *
  * @see fl_print_format()
  *
- * @see status_code_print_help()
+ * @see status_code_print_message_help()
  */
 #ifndef _di_status_code_fss_print_help_detail_
-  extern f_status_t status_code_fss_print_help_detail(void * const setting, const fl_print_t print);
+  extern f_status_t status_code_fss_print_help_detail(fl_print_t * const print);
 #endif // _di_status_code_fss_print_help_detail_
 
 #ifdef __cplusplus

@@ -244,9 +244,9 @@ extern "C" {
 #endif // _di_fll_program_parameter_additional_rip_mash_
 
 #ifndef _di_fll_program_standard_set_down_
-  f_status_t fll_program_standard_set_down(fll_program_data_t * const main) {
+  f_status_t fll_program_standard_set_down(fll_program_data_t * const program) {
     #ifndef _di_level_2_parameter_checking_
-      if (!main) return F_status_set_error(F_parameter);
+      if (!program) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
     // The fclose() calls have undefined behavior when closing an already closed file.
@@ -255,76 +255,76 @@ extern "C" {
     // 0x20 = message descriptor, 0x40 = output descriptor, 0x80 = error descriptor, 0x100 = warning descriptor, 0x200 = debug descriptor.
     uint16_t flag = 0;
 
-    if (main->message.to.stream) {
-      if (main->message.to.stream != F_type_error_d && main->message.to.stream != F_type_input_d && main->message.to.stream != F_type_output_d) {
-        f_file_stream_flush(main->message.to);
+    if (program->message.to.stream) {
+      if (program->message.to.stream != F_type_error_d && program->message.to.stream != F_type_input_d && program->message.to.stream != F_type_output_d) {
+        f_file_stream_flush(program->message.to);
 
         flag |= 0x1;
       }
     }
 
-    if (main->message.to.id == -1) {
-      if (main->message.to.id != F_type_descriptor_error_d && main->message.to.id != F_type_descriptor_input_d && main->message.to.id != F_type_descriptor_output_d) {
-        f_file_flush(main->message.to);
+    if (program->message.to.id == -1) {
+      if (program->message.to.id != F_type_descriptor_error_d && program->message.to.id != F_type_descriptor_input_d && program->message.to.id != F_type_descriptor_output_d) {
+        f_file_flush(program->message.to);
 
         flag |= 0x20;
       }
     }
 
-    if (main->output.to.stream) {
-      if (main->output.to.stream != main->message.to.stream) {
-        if (main->output.to.stream != F_type_error_d && main->output.to.stream != F_type_input_d && main->output.to.stream != F_type_output_d) {
-          f_file_stream_flush(main->output.to);
+    if (program->output.to.stream) {
+      if (program->output.to.stream != program->message.to.stream) {
+        if (program->output.to.stream != F_type_error_d && program->output.to.stream != F_type_input_d && program->output.to.stream != F_type_output_d) {
+          f_file_stream_flush(program->output.to);
 
           flag |= 0x2;
         }
       }
     }
 
-    if (main->error.to.id != -1) {
-      if (main->output.to.id != main->message.to.id) {
-        if (main->output.to.id != F_type_descriptor_error_d && main->output.to.id != F_type_descriptor_input_d && main->output.to.id != F_type_descriptor_output_d) {
-          f_file_flush(main->output.to);
+    if (program->error.to.id != -1) {
+      if (program->output.to.id != program->message.to.id) {
+        if (program->output.to.id != F_type_descriptor_error_d && program->output.to.id != F_type_descriptor_input_d && program->output.to.id != F_type_descriptor_output_d) {
+          f_file_flush(program->output.to);
 
           flag |= 0x40;
         }
       }
     }
 
-    if (main->error.to.stream) {
-      if (main->error.to.stream != main->message.to.stream && main->error.to.stream != main->output.to.stream) {
-        if (main->error.to.stream != F_type_error_d && main->error.to.stream != F_type_input_d && main->error.to.stream != F_type_output_d) {
-          f_file_stream_flush(main->error.to);
+    if (program->error.to.stream) {
+      if (program->error.to.stream != program->message.to.stream && program->error.to.stream != program->output.to.stream) {
+        if (program->error.to.stream != F_type_error_d && program->error.to.stream != F_type_input_d && program->error.to.stream != F_type_output_d) {
+          f_file_stream_flush(program->error.to);
 
           flag |= 0x4;
         }
       }
     }
 
-    if (main->error.to.id != -1) {
-      if (main->error.to.id != main->message.to.id && main->error.to.id != main->output.to.id) {
-        if (main->error.to.id != F_type_descriptor_error_d && main->error.to.id != F_type_descriptor_input_d && main->error.to.id != F_type_descriptor_output_d) {
-          f_file_flush(main->error.to);
+    if (program->error.to.id != -1) {
+      if (program->error.to.id != program->message.to.id && program->error.to.id != program->output.to.id) {
+        if (program->error.to.id != F_type_descriptor_error_d && program->error.to.id != F_type_descriptor_input_d && program->error.to.id != F_type_descriptor_output_d) {
+          f_file_flush(program->error.to);
 
           flag |= 0x80;
         }
       }
     }
 
-    if (main->warning.to.stream) {
-      if (main->warning.to.stream != main->message.to.stream && main->warning.to.stream != main->output.to.stream && main->warning.to.stream != main->error.to.stream) {
-        if (main->warning.to.stream != F_type_error_d && main->warning.to.stream != F_type_input_d && main->warning.to.stream != F_type_output_d) {
-          f_file_stream_flush(main->warning.to);
+    if (program->warning.to.stream) {
+      if (program->warning.to.stream != program->message.to.stream && program->warning.to.stream != program->output.to.stream && program->warning.to.stream != program->error.to.stream) {
+        if (program->warning.to.stream != F_type_error_d && program->warning.to.stream != F_type_input_d && program->warning.to.stream != F_type_output_d) {
+          f_file_stream_flush(program->warning.to);
 
           flag |= 0x8;
         }
       }
     }
 
-    if (main->warning.to.id != -1) {
-      if (main->warning.to.id != main->message.to.id && main->warning.to.id != main->output.to.id && main->warning.to.id != main->error.to.id) {
-        if (main->warning.to.id != F_type_descriptor_error_d && main->warning.to.id != F_type_descriptor_input_d && main->warning.to.id != F_type_descriptor_output_d) {
-          f_file_flush(main->warning.to);
+    if (program->warning.to.id != -1) {
+      if (program->warning.to.id != program->message.to.id && program->warning.to.id != program->output.to.id && program->warning.to.id != program->error.to.id) {
+        if (program->warning.to.id != F_type_descriptor_error_d && program->warning.to.id != F_type_descriptor_input_d && program->warning.to.id != F_type_descriptor_output_d) {
+          f_file_flush(program->warning.to);
 
           flag |= 0x100;
         }
@@ -332,20 +332,20 @@ extern "C" {
     }
 
 
-    if (main->debug.to.stream) {
-      if (main->debug.to.stream != main->message.to.stream && main->debug.to.stream != main->output.to.stream && main->debug.to.stream != main->error.to.stream && main->debug.to.stream != main->warning.to.stream) {
-        if (main->debug.to.stream != F_type_error_d && main->debug.to.stream != F_type_input_d && main->debug.to.stream != F_type_output_d) {
-          f_file_stream_flush(main->debug.to);
+    if (program->debug.to.stream) {
+      if (program->debug.to.stream != program->message.to.stream && program->debug.to.stream != program->output.to.stream && program->debug.to.stream != program->error.to.stream && program->debug.to.stream != program->warning.to.stream) {
+        if (program->debug.to.stream != F_type_error_d && program->debug.to.stream != F_type_input_d && program->debug.to.stream != F_type_output_d) {
+          f_file_stream_flush(program->debug.to);
 
           flag |= 0x10;
         }
       }
     }
 
-    if (main->debug.to.id != -1) {
-      if (main->debug.to.id != main->message.to.id && main->debug.to.id != main->output.to.id && main->debug.to.id != main->error.to.id && main->debug.to.id != main->warning.to.id) {
-        if (main->debug.to.id != F_type_descriptor_error_d && main->debug.to.id != F_type_descriptor_input_d && main->debug.to.id != F_type_descriptor_output_d) {
-          f_file_flush(main->debug.to);
+    if (program->debug.to.id != -1) {
+      if (program->debug.to.id != program->message.to.id && program->debug.to.id != program->output.to.id && program->debug.to.id != program->error.to.id && program->debug.to.id != program->warning.to.id) {
+        if (program->debug.to.id != F_type_descriptor_error_d && program->debug.to.id != F_type_descriptor_input_d && program->debug.to.id != F_type_descriptor_output_d) {
+          f_file_flush(program->debug.to);
 
           flag |= 0x200;
         }
@@ -353,43 +353,43 @@ extern "C" {
     }
 
     if (flag & 0x1) {
-      f_file_stream_close(&main->message.to);
+      f_file_stream_close(&program->message.to);
     }
 
     if (flag & 0x2) {
-      f_file_stream_close(&main->output.to);
+      f_file_stream_close(&program->output.to);
     }
 
     if (flag & 0x4) {
-      f_file_stream_close(&main->error.to);
+      f_file_stream_close(&program->error.to);
     }
 
     if (flag & 0x8) {
-      f_file_stream_close(&main->warning.to);
+      f_file_stream_close(&program->warning.to);
     }
 
     if (flag & 0x10) {
-      f_file_stream_close(&main->debug.to);
+      f_file_stream_close(&program->debug.to);
     }
 
     if (flag & 0x20) {
-      f_file_close(&main->message.to);
+      f_file_close(&program->message.to);
     }
 
     if (flag & 0x40) {
-      f_file_close(&main->output.to);
+      f_file_close(&program->output.to);
     }
 
     if (flag & 0x80) {
-      f_file_close(&main->error.to);
+      f_file_close(&program->error.to);
     }
 
     if (flag & 0x100) {
-      f_file_close(&main->warning.to);
+      f_file_close(&program->warning.to);
     }
 
     if (flag & 0x200) {
-      f_file_close(&main->debug.to);
+      f_file_close(&program->debug.to);
     }
 
     // 0x1 = output stream, 0x2 = error stream, 0x4 = input stream.
@@ -479,7 +479,7 @@ extern "C" {
       f_file_close(&file);
     }
 
-    const f_status_t status = f_signal_close(&main->signal);
+    const f_status_t status = f_signal_close(&program->signal);
     if (F_status_is_error(status)) return status;
 
     return F_none;
@@ -487,44 +487,44 @@ extern "C" {
 #endif // _di_fll_program_standard_set_down_
 
 #ifndef _di_fll_program_standard_set_up_
-  f_status_t fll_program_standard_set_up(fll_program_data_t * const main) {
+  f_status_t fll_program_standard_set_up(fll_program_data_t * const program) {
     #ifndef _di_level_2_parameter_checking_
-      if (!main) return F_status_set_error(F_parameter);
+      if (!program) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    f_signal_set_empty(&main->signal.set);
-    f_signal_set_add(F_signal_abort, &main->signal.set);
-    f_signal_set_add(F_signal_broken_pipe, &main->signal.set);
-    f_signal_set_add(F_signal_hangup, &main->signal.set);
-    f_signal_set_add(F_signal_interrupt, &main->signal.set);
-    f_signal_set_add(F_signal_quit, &main->signal.set);
-    f_signal_set_add(F_signal_termination, &main->signal.set);
+    f_signal_set_empty(&program->signal.set);
+    f_signal_set_add(F_signal_abort, &program->signal.set);
+    f_signal_set_add(F_signal_broken_pipe, &program->signal.set);
+    f_signal_set_add(F_signal_hangup, &program->signal.set);
+    f_signal_set_add(F_signal_interrupt, &program->signal.set);
+    f_signal_set_add(F_signal_quit, &program->signal.set);
+    f_signal_set_add(F_signal_termination, &program->signal.set);
 
-    f_status_t status = f_signal_mask(SIG_BLOCK, &main->signal.set, 0);
+    f_status_t status = f_signal_mask(SIG_BLOCK, &program->signal.set, 0);
     if (F_status_is_error(status)) return status;
 
-    status = f_signal_open(&main->signal);
+    status = f_signal_open(&program->signal);
 
     // If there is an error opening a signal descriptor, then do not handle signals.
     if (F_status_is_error(status)) {
-      f_signal_mask(SIG_UNBLOCK, &main->signal.set, 0);
-      f_signal_close(&main->signal);
+      f_signal_mask(SIG_UNBLOCK, &program->signal.set, 0);
+      f_signal_close(&program->signal);
 
       return status;
     }
 
     // Unblock all other signals.
-    memset(&main->signal.set, 0, sizeof(sigset_t));
+    memset(&program->signal.set, 0, sizeof(sigset_t));
 
-    f_signal_set_fill(&main->signal.set);
-    f_signal_set_delete(F_signal_abort, &main->signal.set);
-    f_signal_set_delete(F_signal_broken_pipe, &main->signal.set);
-    f_signal_set_delete(F_signal_hangup, &main->signal.set);
-    f_signal_set_delete(F_signal_interrupt, &main->signal.set);
-    f_signal_set_delete(F_signal_quit, &main->signal.set);
-    f_signal_set_delete(F_signal_termination, &main->signal.set);
+    f_signal_set_fill(&program->signal.set);
+    f_signal_set_delete(F_signal_abort, &program->signal.set);
+    f_signal_set_delete(F_signal_broken_pipe, &program->signal.set);
+    f_signal_set_delete(F_signal_hangup, &program->signal.set);
+    f_signal_set_delete(F_signal_interrupt, &program->signal.set);
+    f_signal_set_delete(F_signal_quit, &program->signal.set);
+    f_signal_set_delete(F_signal_termination, &program->signal.set);
 
-    status = f_signal_mask(SIG_UNBLOCK, &main->signal.set, 0);
+    status = f_signal_mask(SIG_UNBLOCK, &program->signal.set, 0);
     if (F_status_is_error(status)) return status;
 
     return F_none;
@@ -532,12 +532,12 @@ extern "C" {
 #endif // _di_fll_program_standard_set_up_
 
 #ifndef _di_fll_program_standard_signal_received_
-  uint32_t fll_program_standard_signal_received(fll_program_data_t * const main) {
+  uint32_t fll_program_standard_signal_received(fll_program_data_t * const program) {
     #ifndef _di_level_2_parameter_checking_
-      if (!main) return 0;
+      if (!program) return 0;
     #endif // _di_level_2_parameter_checking_
 
-    return private_fll_program_standard_signal_received(main);
+    return private_fll_program_standard_signal_received(program);
   }
 #endif // _di_fll_program_standard_signal_received_
 
@@ -555,11 +555,11 @@ extern "C" {
       return;
     }
 
-    fll_program_data_t * const data = (fll_program_data_t *) state->custom;
+    fll_program_data_t * const program = (fll_program_data_t *) state->custom;
 
-    data->signal_received = private_fll_program_standard_signal_received(data);
+    program->signal_received = private_fll_program_standard_signal_received(program);
 
-    if (data->signal_received == F_signal_abort || data->signal_received == F_signal_broken_pipe || data->signal_received == F_signal_hangup || data->signal_received == F_signal_interrupt || data->signal_received == F_signal_quit || data->signal_received == F_signal_termination) {
+    if (program->signal_received == F_signal_abort || program->signal_received == F_signal_broken_pipe || program->signal_received == F_signal_hangup || program->signal_received == F_signal_interrupt || program->signal_received == F_signal_quit || program->signal_received == F_signal_termination) {
       state->status = F_status_set_error(F_interrupt);
     }
     else {

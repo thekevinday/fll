@@ -89,47 +89,46 @@ extern "C" {
 
     f_file_stream_lock(print->to);
 
-    fll_program_print_help_header(*print, fake_program_name_long_s, fake_program_version_s);
+    fll_program_print_help_header(print, fake_program_name_long_s, fake_program_version_s);
 
-    fll_program_print_help_option_standard(*print);
-
-    f_print_dynamic_raw(f_string_eol_s, print->to);
-
-    fll_program_print_help_option(*print, fake_short_define_s, fake_long_define_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "  Append an additional define after defines from settings file.");
-    fll_program_print_help_option(*print, fake_short_fakefile_s, fake_long_fakefile_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "Use this fakefile.");
-    fll_program_print_help_option(*print, fake_short_mode_s, fake_long_mode_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "    Use this mode when processing the build settings.");
-    fll_program_print_help_option(*print, fake_short_process_s, fake_long_process_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, " Process name for storing build states.");
-    fll_program_print_help_option(*print, fake_short_settings_s, fake_long_settings_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "Use this settings file.");
+    fll_program_print_help_option_standard(print);
 
     f_print_dynamic_raw(f_string_eol_s, print->to);
 
-    fll_program_print_help_option(*print, fake_short_build_s, fake_long_build_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "    Specify a custom build directory.");
-    fll_program_print_help_option(*print, fake_short_data_s, fake_long_data_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "     Specify a custom path to the data files.");
-    fll_program_print_help_option(*print, fake_short_documents_s, fake_long_documents_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "Specify a custom path to the documents files.");
-    fll_program_print_help_option(*print, fake_short_licenses_s, fake_long_licenses_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, " Specify a custom path to the licenses files.");
-    fll_program_print_help_option(*print, fake_short_sources_s, fake_long_sources_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "  Specify a custom path to the source files.");
-    fll_program_print_help_option(*print, fake_short_work_s, fake_long_work_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "     Use includes/libraries/programs from this directory instead of system.");
+    fll_program_print_help_option(print, fake_short_define_s, fake_long_define_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "  Append an additional define after defines from settings file.");
+    fll_program_print_help_option(print, fake_short_fakefile_s, fake_long_fakefile_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "Use this fakefile.");
+    fll_program_print_help_option(print, fake_short_mode_s, fake_long_mode_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "    Use this mode when processing the build settings.");
+    fll_program_print_help_option(print, fake_short_process_s, fake_long_process_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, " Process name for storing build states.");
+    fll_program_print_help_option(print, fake_short_settings_s, fake_long_settings_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "Use this settings file.");
+
+    f_print_dynamic_raw(f_string_eol_s, print->to);
+
+    fll_program_print_help_option(print, fake_short_build_s, fake_long_build_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "    Specify a custom build directory.");
+    fll_program_print_help_option(print, fake_short_data_s, fake_long_data_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "     Specify a custom path to the data files.");
+    fll_program_print_help_option(print, fake_short_documents_s, fake_long_documents_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "Specify a custom path to the documents files.");
+    fll_program_print_help_option(print, fake_short_licenses_s, fake_long_licenses_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, " Specify a custom path to the licenses files.");
+    fll_program_print_help_option(print, fake_short_sources_s, fake_long_sources_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "  Specify a custom path to the source files.");
+    fll_program_print_help_option(print, fake_short_work_s, fake_long_work_s, f_console_symbol_short_normal_s, f_console_symbol_long_normal_s, "     Use includes/libraries/programs from this directory instead of system.");
 
     fl_print_format("%r%r %[Special Options:%] ", print->to, f_string_eol_s, f_string_eol_s, print->set->important, print->set->important);
 
-    fll_program_print_help_option_long(*print, fake_long_documents_disabled_s, f_console_symbol_long_normal_s, "   Forcibly do not build documents files.");
-    fll_program_print_help_option_long(*print, fake_long_documents_enabled_s, f_console_symbol_long_normal_s, "    Forcibly do build documents files.");
-    fll_program_print_help_option_long(*print, fake_long_shared_disabled_s, f_console_symbol_long_normal_s, "Forcibly do not build shared files.");
-    fll_program_print_help_option_long(*print, fake_long_shared_enabled_s, f_console_symbol_long_normal_s, " Forcibly do build shared files.");
-    fll_program_print_help_option_long(*print, fake_long_static_disabled_s, f_console_symbol_long_normal_s, "Forcibly do not build static files.");
-    fll_program_print_help_option_long(*print, fake_long_static_enabled_s, f_console_symbol_long_normal_s, " Forcibly do build static files.");
+    fll_program_print_help_option_long(print, fake_long_documents_disabled_s, f_console_symbol_long_normal_s, "   Forcibly do not build documents files.");
+    fll_program_print_help_option_long(print, fake_long_documents_enabled_s, f_console_symbol_long_normal_s, "    Forcibly do build documents files.");
+    fll_program_print_help_option_long(print, fake_long_shared_disabled_s, f_console_symbol_long_normal_s, "Forcibly do not build shared files.");
+    fll_program_print_help_option_long(print, fake_long_shared_enabled_s, f_console_symbol_long_normal_s, " Forcibly do build shared files.");
+    fll_program_print_help_option_long(print, fake_long_static_disabled_s, f_console_symbol_long_normal_s, "Forcibly do not build static files.");
+    fll_program_print_help_option_long(print, fake_long_static_enabled_s, f_console_symbol_long_normal_s, " Forcibly do build static files.");
 
-    fl_print_format("%r%r %[Operations:%] ", print->to, f_string_eol_s, f_string_eol_s, print->set->important, print->set->important);
+    fl_print_format("%r %[Operations:%] ", print->to, f_string_eol_s, print->set->important, print->set->important);
 
-    fll_program_print_help_option_other(*print, fake_other_operation_build_s, "   Build or compile the code based on build settings file.");
-    fll_program_print_help_option_other(*print, fake_other_operation_clean_s, "   Delete all build files.");
-    fll_program_print_help_option_other(*print, fake_other_operation_make_s, "    Build or compile the code based on fakefile (default).");
-    fll_program_print_help_option_other(*print, fake_other_operation_skeleton_s, "Build a skeleton directory structure.");
+    fll_program_print_help_option_other(print, fake_other_operation_build_s, "   Build or compile the code based on build settings file.");
+    fll_program_print_help_option_other(print, fake_other_operation_clean_s, "   Delete all build files.");
+    fll_program_print_help_option_other(print, fake_other_operation_make_s, "    Build or compile the code based on fakefile (default).");
+    fll_program_print_help_option_other(print, fake_other_operation_skeleton_s, "Build a skeleton directory structure.");
 
     f_print_dynamic_raw(f_string_eol_s, print->to);
-    f_print_dynamic_raw(f_string_eol_s, print->to);
 
-    fll_program_print_help_usage(*print, fake_program_name_s, fake_program_help_parameters_s);
+    fll_program_print_help_usage(print, fake_program_name_s, fake_program_help_parameters_s);
 
     fl_print_format("%r  When performing the %[%r%] operation, the", print->to, f_string_eol_s, print->set->notable, fake_other_operation_build_s, print->set->notable);
     fl_print_format(" %[%r%r%] parameter specifies a name (limited to alpha-numeric, underscore, and dash) to be used in addition to the global.%r", print->to, print->set->notable, f_console_symbol_long_normal_s, fake_long_mode_s, print->set->notable, f_string_eol_s);

@@ -71,7 +71,7 @@ extern "C" {
 
         const uint8_t modes[3] = { f_color_mode_not_e, f_color_mode_light_e, f_color_mode_dark_e };
 
-        setting->state.status = fll_program_parameter_process_context(choices, modes, F_true, main);
+        setting->state.status = fll_program_parameter_process_context(choices, modes, F_true, &main->program);
 
         if (F_status_is_error(setting->state.status)) {
           if ((setting->flag & iki_read_main_flag_print_first_e) && main->message.verbosity > f_console_verbosity_error_e) {
@@ -92,7 +92,7 @@ extern "C" {
 
         const uint8_t verbosity[5] = { f_console_verbosity_quiet_e, f_console_verbosity_error_e, f_console_verbosity_verbose_e, f_console_verbosity_debug_e, f_console_verbosity_normal_e };
 
-        setting->state.status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, main);
+        setting->state.status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, &main->program);
 
         if (F_status_is_error(setting->state.status)) {
           if ((setting->flag & iki_read_main_flag_print_first_e) && main->message.verbosity > f_console_verbosity_error_e) {
@@ -131,7 +131,7 @@ extern "C" {
         fll_print_dynamic_raw(f_string_eol_s, main->message.to);
       }
 
-      fll_program_print_error_missing_file(main->error);
+      fll_program_print_error_missing_file(&main->error);
 
       return;
     }
@@ -144,7 +144,7 @@ extern "C" {
           fll_print_dynamic_raw(f_string_eol_s, main->message.to);
         }
 
-        fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_normal_s, f_console_symbol_long_normal_s, iki_read_long_at_s, iki_read_long_whole_s);
+        fll_program_print_error_parameter_cannot_use_with(&main->error, f_console_symbol_long_normal_s, f_console_symbol_long_normal_s, iki_read_long_at_s, iki_read_long_whole_s);
 
         return;
       }
@@ -162,7 +162,7 @@ extern "C" {
           fll_print_dynamic_raw(f_string_eol_s, main->message.to);
         }
 
-        fll_program_print_error_parameter_integer_not(main->error, f_console_symbol_long_normal_s, iki_read_long_at_s, main->parameters.arguments.array[index]);
+        fll_program_print_error_parameter_integer_not(&main->error, f_console_symbol_long_normal_s, iki_read_long_at_s, main->parameters.arguments.array[index]);
 
         return;
       }
@@ -176,7 +176,7 @@ extern "C" {
         fll_print_dynamic_raw(f_string_eol_s, main->message.to);
       }
 
-      fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, iki_read_long_at_s);
+      fll_program_print_error_parameter_missing_value(&main->error, f_console_symbol_long_normal_s, iki_read_long_at_s);
 
       return;
     }
@@ -195,7 +195,7 @@ extern "C" {
           fll_print_dynamic_raw(f_string_eol_s, main->message.to);
         }
 
-        fll_program_print_error_parameter_integer_not(main->error, f_console_symbol_long_normal_s, iki_read_long_line_s, main->parameters.arguments.array[index]);
+        fll_program_print_error_parameter_integer_not(&main->error, f_console_symbol_long_normal_s, iki_read_long_line_s, main->parameters.arguments.array[index]);
 
         return;
       }
@@ -209,7 +209,7 @@ extern "C" {
         fll_print_dynamic_raw(f_string_eol_s, main->message.to);
       }
 
-      fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, iki_read_long_line_s);
+      fll_program_print_error_parameter_missing_value(&main->error, f_console_symbol_long_normal_s, iki_read_long_line_s);
 
       return;
     }
@@ -273,7 +273,7 @@ extern "C" {
         fll_print_dynamic_raw(f_string_eol_s, main->message.to);
       }
 
-      fll_program_print_error_parameter_missing_value(main->error, f_console_symbol_long_normal_s, iki_read_long_name_s);
+      fll_program_print_error_parameter_missing_value(&main->error, f_console_symbol_long_normal_s, iki_read_long_name_s);
 
       return;
     }
@@ -286,7 +286,7 @@ extern "C" {
           fll_print_dynamic_raw(f_string_eol_s, main->message.to);
         }
 
-        fll_program_print_error_parameter_missing_value_requires_amount(main->error, f_console_symbol_long_normal_s, iki_read_long_replace_s, iki_read_string_two_s);
+        fll_program_print_error_parameter_missing_value_requires_amount(&main->error, f_console_symbol_long_normal_s, iki_read_long_replace_s, iki_read_string_two_s);
 
         return;
       }
@@ -381,7 +381,7 @@ extern "C" {
           fll_print_dynamic_raw(f_string_eol_s, main->message.to);
         }
 
-        fll_program_print_error_parameter_missing_value_requires_amount(main->error, f_console_symbol_long_normal_s, iki_read_long_wrap_s, iki_read_string_three_s);
+        fll_program_print_error_parameter_missing_value_requires_amount(&main->error, f_console_symbol_long_normal_s, iki_read_long_wrap_s, iki_read_string_three_s);
 
         return;
       }
@@ -488,7 +488,7 @@ extern "C" {
             fll_print_dynamic_raw(f_string_eol_s, main->message.to);
           }
 
-          fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_normal_s, f_console_symbol_long_normal_s, iki_read_long_literal_s, names[i]);
+          fll_program_print_error_parameter_cannot_use_with(&main->error, f_console_symbol_long_normal_s, f_console_symbol_long_normal_s, iki_read_long_literal_s, names[i]);
 
           return;
         }
@@ -516,7 +516,7 @@ extern "C" {
             fll_print_dynamic_raw(f_string_eol_s, main->message.to);
           }
 
-          fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_normal_s, f_console_symbol_long_normal_s, iki_read_long_object_s, names[i]);
+          fll_program_print_error_parameter_cannot_use_with(&main->error, f_console_symbol_long_normal_s, f_console_symbol_long_normal_s, iki_read_long_object_s, names[i]);
 
           return;
         }
@@ -532,7 +532,7 @@ extern "C" {
           fll_print_dynamic_raw(f_string_eol_s, main->message.to);
         }
 
-        fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_normal_s, f_console_symbol_long_normal_s, iki_read_long_content_s, iki_read_long_total_s);
+        fll_program_print_error_parameter_cannot_use_with(&main->error, f_console_symbol_long_normal_s, f_console_symbol_long_normal_s, iki_read_long_content_s, iki_read_long_total_s);
 
         return;
       }
@@ -547,7 +547,7 @@ extern "C" {
           fll_print_dynamic_raw(f_string_eol_s, main->message.to);
         }
 
-        fll_program_print_error_parameter_cannot_use_with(main->error, f_console_symbol_long_normal_s, f_console_symbol_long_normal_s, iki_read_long_total_s, iki_read_long_wrap_s);
+        fll_program_print_error_parameter_cannot_use_with(&main->error, f_console_symbol_long_normal_s, f_console_symbol_long_normal_s, iki_read_long_total_s, iki_read_long_wrap_s);
 
         return;
       }
@@ -632,7 +632,7 @@ extern "C" {
         fll_print_dynamic_raw(f_string_eol_s, main->message.to);
       }
 
-      fll_program_print_error_parameter_missing_value_requires_amount(main->error, f_console_symbol_long_normal_s, name, iki_read_string_three_s);
+      fll_program_print_error_parameter_missing_value_requires_amount(&main->error, f_console_symbol_long_normal_s, name, iki_read_string_three_s);
 
       return F_false;
     }
