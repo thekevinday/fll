@@ -35,7 +35,7 @@ extern "C" {
  *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_utf8_print_data_bytesequence_
-  extern f_status_t utf8_print_data_bytesequence(utf8_setting_t * const setting, const fl_print_t print, const f_string_static_t sequence);
+  extern f_status_t utf8_print_data_bytesequence(fl_print_t * const print, const f_string_static_t sequence);
 #endif // _di_utf8_print_data_bytesequence_
 
 /**
@@ -61,7 +61,7 @@ extern "C" {
  * @see utf8_print_combining_or_width()
  */
 #ifndef _di_utf8_print_data_character_invalid_
-  extern f_status_t utf8_print_data_character_invalid(utf8_setting_t * const setting, const fl_print_t print, const f_string_static_t invalid);
+  extern f_status_t utf8_print_data_character_invalid(fl_print_t * const print, const f_string_static_t invalid);
 #endif // _di_utf8_print_data_character_invalid_
 
 /**
@@ -84,7 +84,7 @@ extern "C" {
  *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_utf8_print_data_codepoint_
-  extern f_status_t utf8_print_data_codepoint(utf8_setting_t * const setting, const fl_print_t print, const uint32_t codepoint);
+  extern f_status_t utf8_print_data_codepoint(fl_print_t * const print, const uint32_t codepoint);
 #endif // _di_utf8_print_data_codepoint_
 
 /**
@@ -108,7 +108,7 @@ extern "C" {
  *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_utf8_print_data_combining_or_width_
-  extern f_status_t utf8_print_data_combining_or_width(utf8_setting_t * const setting, const fl_print_t print, const f_string_static_t sequence);
+  extern f_status_t utf8_print_data_combining_or_width(fl_print_t * const print, const f_string_static_t sequence);
 #endif // _di_utf8_print_data_combining_or_width_
 
 /**
@@ -128,7 +128,7 @@ extern "C" {
  *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_utf8_print_data_combining_or_width_invalid_
-  extern f_status_t utf8_print_data_combining_or_width_invalid(utf8_setting_t * const setting, const fl_print_t print);
+  extern f_status_t utf8_print_data_combining_or_width_invalid(fl_print_t * const print);
 #endif // _di_utf8_print_data_combining_or_width_invalid_
 
 /**
@@ -152,7 +152,7 @@ extern "C" {
  *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_utf8_print_data_raw_bytesequence_
-  extern f_status_t utf8_print_data_raw_bytesequence(utf8_setting_t * const setting, const fl_print_t print, const f_utf_char_t raw, const uint8_t width);
+  extern f_status_t utf8_print_data_raw_bytesequence(fl_print_t * const print, const f_utf_char_t raw, const uint8_t width);
 #endif // _di_utf8_print_data_raw_bytesequence_
 
 /**
@@ -174,7 +174,7 @@ extern "C" {
  *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_utf8_print_data_raw_codepoint_
-  extern f_status_t utf8_print_data_raw_codepoint(utf8_setting_t * const setting, const fl_print_t print, const f_string_static_t raw);
+  extern f_status_t utf8_print_data_raw_codepoint(fl_print_t * const print, const f_string_static_t raw);
 #endif // _di_utf8_print_data_raw_codepoint_
 
 /**
@@ -198,7 +198,7 @@ extern "C" {
  * @see utf8_print_data_width()
  */
 #ifndef _di_utf8_print_data_raw_combining_or_width_
-  extern f_status_t utf8_print_data_raw_combining_or_width(utf8_setting_t * const setting, const fl_print_t print, const uint8_t width);
+  extern f_status_t utf8_print_data_raw_combining_or_width(fl_print_t * const print, const uint8_t width);
 #endif // _di_utf8_print_data_raw_combining_or_width_
 
 /**
@@ -222,7 +222,7 @@ extern "C" {
  *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_utf8_print_data_section_header_file_
-  extern f_status_t utf8_print_data_section_header_file(utf8_setting_t * const setting, const fl_print_t print, const f_string_static_t name, const f_array_length_t index);
+  extern f_status_t utf8_print_data_section_header_file(fl_print_t * const print, const f_string_static_t name, const f_array_length_t index);
 #endif // _di_utf8_print_data_section_header_file_
 
 /**
@@ -244,18 +244,16 @@ extern "C" {
  *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_utf8_print_data_section_header_parameter_
-  extern f_status_t utf8_print_data_section_header_parameter(utf8_setting_t * const setting, const fl_print_t print, const f_array_length_t index);
+  extern f_status_t utf8_print_data_section_header_parameter(fl_print_t * const print, const f_array_length_t index);
 #endif // _di_utf8_print_data_section_header_parameter_
 
 /**
  * Print the input pipe section header.
  *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.state.status.
  * @param print
  *   Designates the how and where to print.
+ *
+ *   This does not alter print.custom.setting.state.status.
  *
  * @return
  *   F_none on success.
@@ -264,18 +262,16 @@ extern "C" {
  *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_utf8_print_data_section_header_pipe_
-  extern f_status_t utf8_print_data_section_header_pipe(utf8_setting_t * const setting, const fl_print_t print);
+  extern f_status_t utf8_print_data_section_header_pipe(fl_print_t * const print);
 #endif // _di_utf8_print_data_section_header_pipe_
 
 /**
  * Print the width of the given character.
  *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.state.status.
  * @param print
  *   Designates the how and where to print.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param sequence
  *   A byte sequences representing a single character whose width is to be printed.
  *
@@ -286,7 +282,7 @@ extern "C" {
  *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_utf8_print_data_width_
-  extern f_status_t utf8_print_data_width(utf8_setting_t * const setting, const fl_print_t print, const f_string_static_t sequence);
+  extern f_status_t utf8_print_data_width(fl_print_t * const print, const f_string_static_t sequence);
 #endif // _di_utf8_print_data_width_
 
 #ifdef __cplusplus

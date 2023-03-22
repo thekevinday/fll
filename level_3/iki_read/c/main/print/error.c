@@ -9,7 +9,7 @@ extern "C" {
 
     if (print.verbosity < f_console_verbosity_error_e) return F_output_not;
 
-    fll_error_print(print, F_status_set_fine(setting->state.status), function, fll_error_file_flag_fallback_e);
+    fll_error_print(*print, F_status_set_fine(setting->state.status), function, fll_error_file_flag_fallback_e);
 
     return F_none;
   }

@@ -55,15 +55,17 @@
 #include <fll/level_2/program.h>
 
 // UTF-8 includes.
+#include <program/utf8/main/common/define.h>
+#include <program/utf8/main/common/enumeration.h>
 #include <program/utf8/main/common/print.h>
 #include <program/utf8/main/common/string.h>
 #include <program/utf8/main/common/type.h>
 #include <program/utf8/main/common.h>
 #include <program/utf8/main/bytesequence.h>
 #include <program/utf8/main/codepoint.h>
-#include <program/utf8/main/print.h>
 #include <program/utf8/main/print/data.h>
 #include <program/utf8/main/print/error.h>
+#include <program/utf8/main/print/message.h>
 #include <program/utf8/main/process.h>
 
 #ifdef __cplusplus
@@ -82,11 +84,9 @@ extern "C" {
  *   - F_signal_termination
  *
  * @param main
- *   The main program data.
- * @param setting
- *   The main program settings.
+ *   The main program data and settings.
  *
- *   This alters setting.state.status:
+ *   This alters main.setting.state.status:
  *     F_none on success.
  *     F_true on success when performing verification and verify passed.
  *     F_false on success when performing verification and verify failed.
@@ -95,7 +95,7 @@ extern "C" {
  *     F_parameter (with error bit) if main is NULL or setting is NULL.
  */
 #ifndef _di_utf8_main_
-  extern void utf8_main(fll_program_data_t * const main, utf8_setting_t * const setting);
+  extern void utf8_main(utf8_main_t * const main);
 #endif // _di_utf8_main_
 
 #ifdef __cplusplus

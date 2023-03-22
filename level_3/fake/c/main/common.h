@@ -94,9 +94,9 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: utf8_setting_delete().
+ *   Errors (with error bit) from: fake_setting_delete().
  *
- * @see utf8_setting_delete()
+ * @see fake_setting_delete()
  */
 #ifndef _di_fake_setting_unload_
   extern f_status_t fake_setting_unload(fake_main_t * const main);

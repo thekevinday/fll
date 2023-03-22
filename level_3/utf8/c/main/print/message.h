@@ -9,8 +9,8 @@
  *
  * This is auto-included and should not need to be explicitly included.
  */
-#ifndef _utf8_print_h
-#define _utf8_print_h
+#ifndef _utf8_print_message_h
+#define _utf8_print_message_h
 
 #ifdef __cplusplus
 extern "C" {
@@ -19,12 +19,10 @@ extern "C" {
 /**
  * Print help.
  *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.state.status.
  * @param print
  *   The output structure to print to.
+ *
+ *   This does not alter print.custom.setting.state.status.
  *
  * @return
  *   F_none on success.
@@ -43,12 +41,12 @@ extern "C" {
  * @see fll_program_print_help_option_standard()
  * @see fll_program_print_help_usage()
  */
-#ifndef _di_utf8_print_help_
-  extern f_status_t utf8_print_help(utf8_setting_t * const setting, const fl_print_t print);
-#endif // _di_utf8_print_help_
+#ifndef _di_utf8_print_message_help_
+  extern f_status_t utf8_print_message_help(fl_print_t * const print);
+#endif // _di_utf8_print_message_help_
 
 #ifdef __cplusplus
 } // extern "C"
 #endif
 
-#endif // _utf8_print_h
+#endif // _utf8_print_message_h

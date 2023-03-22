@@ -108,24 +108,22 @@ extern "C" {
  * Perform the standard program setting unload process.
  *
  * @param main
- *   The main program data.
- * @param setting
- *   The main program settings.
+ *   The main program and setting data.
  *   All buffers are deallocated.
  *
- *   This does not alter setting.state.status.
+ *   This does not alter main.setting.state.status.
  *
  * @return
  *   F_none on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: utf8_setting_delete().
+ *   Errors (with error bit) from: iki_read_setting_delete().
  *
- * @see utf8_setting_delete()
+ * @see iki_read_setting_delete()
  */
 #ifndef _di_iki_read_setting_unload_
-  extern f_status_t iki_read_setting_unload(fll_program_data_t * const main, iki_read_setting_t * const setting);
+  extern f_status_t iki_read_setting_unload(iki_read_main_t * const main);
 #endif // _di_iki_read_setting_unload_
 
 #ifdef __cplusplus

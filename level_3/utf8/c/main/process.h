@@ -20,12 +20,7 @@ extern "C" {
  * Convert the text from one format to other another format or verify text.
  *
  * @param main
- *   The main program data.
- * @param setting
- *   The main program settings.
- * @param text
- *   This represent a single text data.
- *   This text is NULL terminated and can therefore not contain any NULLs.
+ *   The main program and settings data.
  *
  *   This alters setting.state.status:
  *     F_true on success and is valid.
@@ -35,6 +30,9 @@ extern "C" {
  *     Errors (with error bit) from: utf8_convert_bytesequence()
  *     Errors (with error bit) from: utf8_convert_codepoint()
  *     Errors (with error bit) from: utf8_detect_codepoint()
+ * @param text
+ *   This represent a single text data.
+ *   This text is NULL terminated and can therefore not contain any NULLs.
  *
  * @see utf8_convert_bytesequence()
  * @see utf8_convert_codepoint()
@@ -42,7 +40,7 @@ extern "C" {
  * @see utf8_signal_received()
  */
 #ifndef _di_utf8_process_text_
-  extern void utf8_process_text(fll_program_data_t * const main, utf8_setting_t * const setting, f_string_static_t text) F_attribute_visibility_internal_d;
+  extern void utf8_process_text(utf8_main_t * const main, f_string_static_t text) F_attribute_visibility_internal_d;
 #endif // _di_utf8_process_text_
 
 /**

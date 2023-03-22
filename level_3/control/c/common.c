@@ -293,11 +293,11 @@ extern "C" {
 #endif // _di_control_setting_load_
 
 #ifndef _di_control_setting_unload_
-  f_status_t control_setting_unload(fll_program_data_t * const main, control_setting_t * const setting) {
+  f_status_t control_setting_unload(control_main_t * const main) {
 
-    if (!main || !setting) return F_status_set_error(F_parameter);
+    if (!main) return F_status_set_error(F_parameter);
 
-    control_setting_delete(setting);
+    control_setting_delete(&control_main_t->setting);
 
     return F_none;
   }

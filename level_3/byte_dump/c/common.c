@@ -184,11 +184,11 @@ extern "C" {
 #endif // _di_byte_dump_setting_load_
 
 #ifndef _di_byte_dump_setting_unload_
-  f_status_t byte_dump_setting_unload(fll_program_data_t * const main, byte_dump_setting_t * const setting) {
+  f_status_t byte_dump_setting_unload(byte_dump_main_t * const main) {
 
-    if (!main || !setting) return F_status_set_error(F_parameter);
+    if (!main) return F_status_set_error(F_parameter);
 
-    byte_dump_setting_delete(setting);
+    byte_dump_setting_delete(&main->setting);
 
     return F_none;
   }

@@ -250,7 +250,7 @@ extern "C" {
     f_string_dynamic_t path_setting;
 
     f_color_context_t context;
-  } controller_main_t;
+  } controller_main_t; // @todo refactor this name, and create a controller_main_t that holds the program data, settings, and possibly this.
 
   #define controller_main_t_initialize \
     { \
@@ -760,24 +760,22 @@ extern "C" {
  * Perform the standard program setting unload process.
  *
  * @param main
- *   The main program data.
- * @param setting
- *   The main program settings.
+ *   The main program and setting data.
  *   All buffers are deallocated.
  *
- *   This does not alter setting.state.status.
+ *   This does not alter main.setting.state.status.
  *
  * @return
  *   F_none on success.
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: utf8_setting_delete().
+ *   Errors (with error bit) from: controller_setting_delete().
  *
- * @see utf8_setting_delete()
+ * @see controller_setting_delete()
  */
 #ifndef _di_controller_setting_unload_
-  extern f_status_t controller_setting_unload(fll_program_data_t * const main, controller_setting_t * const setting);
+  extern f_status_t controller_setting_unload(controller_main_t * const main);
 #endif // _di_controller_setting_unload_
 
 #ifdef __cplusplus

@@ -382,13 +382,13 @@ extern "C" {
  */
 #ifndef _di_fake_print_flag_e_
   enum {
-    fake_print_flag_none_e       = 0x0,
-    fake_print_flag_debug_e      = 0x1,
-    fake_print_flag_error_e      = 0x2,
-    fake_print_flag_message_e    = 0x4,
-    fake_print_flag_warning_e    = 0x8,
-    fake_print_flag_file_to_e    = 0x10,
-    fake_print_flag_file_from_e  = 0x20,
+    fake_print_flag_none_e      = 0x0,
+    fake_print_flag_debug_e     = 0x1,
+    fake_print_flag_error_e     = 0x2,
+    fake_print_flag_message_e   = 0x4,
+    fake_print_flag_warning_e   = 0x8,
+    fake_print_flag_file_to_e   = 0x10,
+    fake_print_flag_file_from_e = 0x20,
   }; // enum
 #endif // _di_fake_print_flag_e_
 

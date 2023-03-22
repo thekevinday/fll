@@ -26,6 +26,8 @@ extern "C" {
  * @param print
  *   Designates the how and where to print.
  *
+ *   This does not alter print.custom.setting.state.status.
+ *
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
@@ -35,7 +37,7 @@ extern "C" {
  * @see fll_error_print()
  */
 #ifndef _di_utf8_print_error_
-  extern f_status_t utf8_print_error(utf8_setting_t * const setting, const fl_print_t print, const f_string_t function);
+  extern f_status_t utf8_print_error(fl_print_t * const print, const f_string_t function);
 #endif // _di_utf8_print_error_
 
 /**
@@ -59,7 +61,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_utf8_print_error_decode_
-  extern f_status_t utf8_print_error_decode(utf8_setting_t * const setting, const fl_print_t print, const f_string_static_t invalid);
+  extern f_status_t utf8_print_error_decode(fl_print_t * const print, const f_string_static_t invalid);
 #endif // _di_utf8_print_error_decode_
 
 /**
@@ -71,6 +73,8 @@ extern "C" {
  *   This does not alter setting.state.status.
  * @param print
  *   Designates the how and where to print.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param codepoint
  *   The codepoint that is invalid.
  *
@@ -83,7 +87,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_utf8_print_error_encode_
-  extern f_status_t utf8_print_error_encode(utf8_setting_t * const setting, const fl_print_t print, const uint32_t codepoint);
+  extern f_status_t utf8_print_error_encode(fl_print_t * const print, const uint32_t codepoint);
 #endif // _di_utf8_print_error_encode_
 
 /**
@@ -95,6 +99,8 @@ extern "C" {
  *   This does not alter setting.state.status.
  * @param print
  *   Designates how printing is to be performed.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param function
  *   The name of the function where the error happened.
  *   Set to 0 to disable.
@@ -114,7 +120,7 @@ extern "C" {
  * @see fll_error_file_print()
  */
 #ifndef _di_utf8_print_error_file_
-  extern f_status_t utf8_print_error_file(utf8_setting_t * const setting, const fl_print_t print, const f_string_t function, const f_string_static_t name, const f_string_static_t operation, const uint8_t type);
+  extern f_status_t utf8_print_error_file(fl_print_t * const print, const f_string_t function, const f_string_static_t name, const f_string_static_t operation, const uint8_t type);
 #endif // _di_utf8_print_error_file_
 
 /**
@@ -127,6 +133,8 @@ extern "C" {
  * @param print
  *   Designates how printing is to be performed.
  *
+ *   This does not alter print.custom.setting.state.status.
+ *
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
@@ -136,7 +144,7 @@ extern "C" {
  * @see fll_error_file_print()
  */
 #ifndef _di_utf8_print_error_no_from_
-  extern f_status_t utf8_print_error_no_from(utf8_setting_t * const setting, const fl_print_t print);
+  extern f_status_t utf8_print_error_no_from(fl_print_t * const print);
 #endif // _di_utf8_print_error_no_from_
 
 /**
@@ -148,6 +156,8 @@ extern "C" {
  *   This does not alter setting.state.status.
  * @param print
  *   Designates how printing is to be performed.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param index
  *   The index within the argv[] array where the empty string is found.
  *
@@ -162,7 +172,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_utf8_print_error_parameter_file_name_empty_
-  extern f_status_t utf8_print_error_parameter_file_name_empty(utf8_setting_t * const setting, const fl_print_t print, const f_array_length_t index);
+  extern f_status_t utf8_print_error_parameter_file_name_empty(fl_print_t * const print, const f_array_length_t index);
 #endif // _di_utf8_print_error_parameter_file_name_empty_
 
 /**
@@ -174,6 +184,8 @@ extern "C" {
  *   This does not alter setting.state.status.
  * @param print
  *   Designates how printing is to be performed.
+ *
+ *   This does not alter print.custom.setting.state.status.
  * @param from
  *   If TRUE, then this is a from file (source file).
  *   If FALSE, then this is a to file (destination file).
@@ -191,7 +203,7 @@ extern "C" {
  * @see fl_print_format()
  */
 #ifndef _di_utf8_print_error_parameter_file_not_found_
-  extern f_status_t utf8_print_error_parameter_file_not_found(utf8_setting_t * const setting, const fl_print_t print, const bool from, const f_string_static_t name);
+  extern f_status_t utf8_print_error_parameter_file_not_found(fl_print_t * const print, const bool from, const f_string_static_t name);
 #endif // _di_utf8_print_error_parameter_file_not_found_
 
 /**
@@ -204,6 +216,8 @@ extern "C" {
  * @param print
  *   Designates how printing is to be performed.
  *
+ *   This does not alter print.custom.setting.state.status.
+ *
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
@@ -213,7 +227,7 @@ extern "C" {
  * @see fll_print_format()
  */
 #ifndef _di_utf8_print_error_parameter_file_to_too_many_
-  extern f_status_t utf8_print_error_parameter_file_to_too_many(utf8_setting_t * const setting, const fl_print_t print);
+  extern f_status_t utf8_print_error_parameter_file_to_too_many(fl_print_t * const print);
 #endif // _di_utf8_print_error_parameter_file_to_too_many_
 
 #ifdef __cplusplus
