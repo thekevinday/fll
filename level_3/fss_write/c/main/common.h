@@ -70,7 +70,7 @@ extern "C" {
  * @see fll_program_parameter_process_verbosity()
  */
 #ifndef _di_fss_write_setting_load_
-  extern void fss_write_setting_load(const f_console_arguments_t arguments, fll_program_data_t * const main, fss_write_setting_t * const setting, void (*callback)(const f_console_arguments_t arguments, fll_program_data_t * const main, fss_write_setting_t * const setting));
+  extern void fss_write_setting_load(const f_console_arguments_t arguments, fss_write_main_t * const main, void (*callback)(const f_console_arguments_t arguments, fss_write_main_t * const main));
 #endif // _di_fss_write_setting_load_
 
 /**

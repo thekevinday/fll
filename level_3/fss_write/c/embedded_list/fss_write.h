@@ -45,12 +45,13 @@
 // FSS Write includes.
 #include <program/fss_write/main/common/define.h>
 #include <program/fss_write/main/common/enumeration.h>
-#include <program/fss_write/main/common-print.h>
-#include <program/fss_write/main/common-string.h>
-#include <program/fss_write/main/common-type.h>
+#include <program/fss_write/main/common/print.h>
+#include <program/fss_write/main/common/string.h>
+#include <program/fss_write/main/common/type.h>
 #include <program/fss_write/main/common.h>
 #include <program/fss_write/embedded_list/common.h>
-#include <program/fss_write/main/print.h>
+#include <program/fss_write/main/print/error.h>
+#include <program/fss_write/main/print/message.h>
 #include <program/fss_write/embedded_list/print.h>
 
 #ifdef __cplusplus
@@ -61,54 +62,48 @@ extern "C" {
  * Process a single Content, printing the FSS-0008 (Embedded List) if valid or an error if invalid.
  *
  * @param main
- *   The main program data.
- * @param setting
- *   The main program settings.
- *   Must be of type (fss_write_setting_t *).
+ *   The program and settings data.
+ *   Must be of type fss_write_main_t.
  *
- *   This alters setting.status.
- *   This uses and alters setting.buffer.
+ *   This alters main.setting.state.status.
+ *   This uses and alters main.setting.buffer.
  * @param last
  *   If TRUE, then this is the last Content in the Content set.
  *   If FALSE, then this is not the last Content in the Content set.
  */
 #ifndef _di_fss_write_embedded_list_process_content_
-  extern void fss_write_embedded_list_process_content(fll_program_data_t * const main, void * const setting, const bool last);
+  extern void fss_write_embedded_list_process_content(void * const main, const bool last);
 #endif // _di_fss_write_embedded_list_process_content_
 
 /**
  * Process help for FSS-0008 (Embedded List).
  *
  * @param main
- *   The main program data.
- * @param setting
- *   The main program settings.
- *   Must be of type (fss_write_setting_t *).
+ *   The program and settings data.
+ *   Must be of type fss_write_main_t.
  *
- *   This does not alter setting.state.status.
+ *   This does not alter main.setting.state.status.
  *
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_fss_write_embedded_list_process_help_
-  extern void fss_write_embedded_list_process_help(fll_program_data_t * const main, void * const setting);
+  extern void fss_write_embedded_list_process_help(void * const main);
 #endif // _di_fss_write_embedded_list_process_help_
 
 /**
  * Process a single Object, printing the FSS-0008 (Embedded List) if valid or an error if invalid.
  *
  * @param main
- *   The main program data.
- * @param setting
- *   The main program settings.
- *   Must be of type (fss_write_setting_t *).
+ *   The program and settings data.
+ *   Must be of type fss_write_main_t.
  *
- *   This alters setting.status.
- *   This uses and alters setting.buffer.
+ *   This alters main.setting.state.status.
+ *   This uses and alters main.setting.buffer.
  */
 #ifndef _di_fss_write_embedded_list_process_object_
-  extern void fss_write_embedded_list_process_object(fll_program_data_t * const main, void * const setting);
+  extern void fss_write_embedded_list_process_object(void * const main);
 #endif // _di_fss_write_embedded_list_process_object_
 
 #ifdef __cplusplus

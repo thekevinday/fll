@@ -15,32 +15,30 @@ extern "C" {
 /**
  * Print error message about the "payload" not being specified last (when it is specified at all).
  *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.state.status.
  * @param print
- *   Designates the how and where to print.
+ *   The output structure to print to.
+ *
+ *   This does not alter print.custom.setting.state.status.
  *
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
  *
+ *   F_output_not (with error bit) if setting is NULL.
+ *
  * @see fll_error_print()
  */
 #ifndef _di_fss_write_payload_print_error_payload_not_last_
-  extern f_status_t fss_write_payload_print_error_payload_not_last(fss_write_setting_t * const setting, const fl_print_t print);
+  extern f_status_t fss_write_payload_print_error_payload_not_last(fl_print_t * const print);
 #endif // _di_fss_write_payload_print_error_payload_not_last_
 
 /**
  * Print help for FSS-000E (Payload).
  *
- * @param setting
- *   The main program settings.
- *
- *   This does not alter setting.state.status.
  * @param print
  *   The output structure to print to.
+ *
+ *   This does not alter print.custom.setting.state.status.
  *
  * @return
  *   F_none on success.
@@ -49,7 +47,7 @@ extern "C" {
  *   F_output_not (with error bit) if setting is NULL.
  */
 #ifndef _di_fss_write_payload_print_help_
-  extern f_status_t fss_write_payload_print_help(fss_write_setting_t * const setting, const fl_print_t print);
+  extern f_status_t fss_write_payload_print_help(fl_print_t * const print);
 #endif // _di_fss_write_payload_print_help_
 
 #ifdef __cplusplus

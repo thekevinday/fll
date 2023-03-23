@@ -292,9 +292,7 @@ extern "C" {
     if (!print || !print->custom) return F_status_set_error(F_output_not);
     if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
-    fake_main_t * const main = (fake_main_t *) print->custom;
-
-    if (fll_error_print(print, F_status_set_fine(main->setting.state.status), function, fll_error_file_flag_none_e) == F_known_not) return F_false;
+    if (fll_error_print(print, F_status_set_fine(((fake_main_t *) print->custom)->setting.state.status), function, fll_error_file_flag_none_e) == F_known_not) return F_false;
 
     return F_true;
   }

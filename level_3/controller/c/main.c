@@ -16,59 +16,59 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
   data.program.debug.custom = (void *) &data;
 
   f_console_parameter_t parameters[] = controller_console_parameter_t_initialize;
-  data.parameters.array = parameters;
-  data.parameters.used = controller_total_parameters_d;
-  data.environment = envp;
+  data.program.parameters.array = parameters;
+  data.program.parameters.used = controller_total_parameters_d;
+  data.program.environment = envp;
 
   if (f_pipe_input_exists()) {
-    data.pipe = fll_program_data_pipe_input_e;
+    data.program.pipe = fll_program_data_pipe_input_e;
   }
 
-  data.pid = getpid();
+  data.program.pid = getpid();
 
-  fll_program_standard_set_up(&data);
+  fll_program_standard_set_up(&data.program);
 
-  f_file_umask_get(&data.umask);
+  f_file_umask_get(&data.program.umask);
 
-  data.default_engine = &controller_default_engine_s;
-  data.default_path_setting = &controller_path_settings_s;
-  data.default_path_setting_init = &controller_path_settings_init_s;
-  data.default_path_pid = &controller_path_pid_s;
-  data.default_path_pid_init = &controller_path_pid_init_s;
-  data.default_path_pid_prefix = &controller_path_pid_prefix_s;
-  data.default_path_pid_suffix = &controller_path_pid_suffix_s;
-  data.default_path_socket = &controller_path_socket_s;
-  data.default_path_socket_init = &controller_path_socket_init_s;
-  data.default_path_socket_prefix = &controller_path_socket_prefix_s;
-  data.default_path_socket_suffix = &controller_path_socket_suffix_s;
-  data.program_name = &controller_program_name_s;
-  data.program_name_long = &controller_program_name_long_s;
+  data.program.default_engine = &controller_default_engine_s;
+  data.program.default_path_setting = &controller_path_settings_s;
+  data.program.default_path_setting_init = &controller_path_settings_init_s;
+  data.program.default_path_pid = &controller_path_pid_s;
+  data.program.default_path_pid_init = &controller_path_pid_init_s;
+  data.program.default_path_pid_prefix = &controller_path_pid_prefix_s;
+  data.program.default_path_pid_suffix = &controller_path_pid_suffix_s;
+  data.program.default_path_socket = &controller_path_socket_s;
+  data.program.default_path_socket_init = &controller_path_socket_init_s;
+  data.program.default_path_socket_prefix = &controller_path_socket_prefix_s;
+  data.program.default_path_socket_suffix = &controller_path_socket_suffix_s;
+  data.program.program_name = &controller_program_name_s;
+  data.program.program_name_long = &controller_program_name_long_s;
 
   // When run as "init" by default, provide the default system-level init path.
   #ifdef _controller_as_init_
-    data.as_init = F_true;
+    data.program.as_init = F_true;
   #else
-    data.as_init = F_false;
+    data.program.as_init = F_false;
   #endif // _controller_as_init_
 
   {
     const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize(argc, argv, envp);
 
-    controller_setting_load(arguments, &data, &setting);
+    controller_setting_load(arguments, &data);
   }
 
-  controller_main(&data, &setting);
+  controller_main(&data);
 
-  controller_setting_unload(&data, &setting);
+  controller_setting_unload(&data);
 
-  controller_main_delete(&data);
+  controller_main_delete(&data.program);
 
-  fll_program_standard_set_down(&data);
+  fll_program_standard_set_down(&data.program);
 
   // When the child process exits, it must return the code to the parent so the parent knows how to handle the exit.
   if (status == F_child) {
     exit(data.child);
   }
 
-  return F_status_is_error(status) ? 1 : 0;
+  return F_status_is_error(data.setting.state.status) ? 1 : 0;
 }

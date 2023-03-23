@@ -182,7 +182,7 @@ extern "C" {
 #ifndef _di_control_setting_load_
   void control_setting_load(const f_console_arguments_t arguments, fll_program_data_t * const main, control_setting_t * const setting) {
 
-    if (!main || !setting) return;
+    if (!main) return;
 
     setting->state.step_small = control_allocation_console_d;
 

@@ -43,7 +43,7 @@ extern "C" {
  * @param arguments
  *   The parameters passed to the process (often referred to as command line arguments).
  * @param main
- *   The main program and settings data.
+ *   The program and settings data.
  *
  *   This alters setting.state.status:
  *     F_none on success.

@@ -22,8 +22,8 @@ extern "C" {
  * This does not handle substitutions because substitutions must match both name and value (Object and Content).
  * This function does not know the value (Content).
  *
- * @param setting
- *   The main program settings.
+ * @param main
+ *   The program and settings data.
  * @param replaces
  *   A map to the last matching replacment or a value of setting->data.vocabulary.used if there is no matching replacement.
  *   Must be an array of length setting->data.vocabulary.used.
@@ -35,7 +35,7 @@ extern "C" {
  *   The matching setting->data.vocabulary index or if no match then setting->data.vocabulary.used.
  */
 #ifndef _di_iki_read_identify_alteration_
-  extern void iki_read_identify_alteration(iki_read_setting_t * const setting);
+  extern void iki_read_identify_alteration(iki_read_main_t * const main);
 #endif // _di_iki_read_identify_alteration_
 
 /**
@@ -43,8 +43,8 @@ extern "C" {
  *
  * This function expects appropriate sanity checks are performed on the reassignments or substitutions array before calling.
  *
- * @param setting
- *   The main program settings.
+ * @param main
+ *   The program and settings data.
  * @param name
  *   A range within setting->buffer representing the name (Object) to match.
  * @param value
@@ -57,7 +57,7 @@ extern "C" {
  *   The value of the triple.used is returned on no match.
  */
 #ifndef _di_iki_read_identify_substitution_
-  extern f_array_length_t iki_read_identify_substitution(iki_read_setting_t * const setting, const f_string_range_t name, const f_string_range_t value, f_string_triples_t *triple);
+  extern f_array_length_t iki_read_identify_substitution(iki_read_main_t * const main, const f_string_range_t name, const f_string_range_t value, f_string_triples_t *triple);
 #endif // _di_iki_read_identify_substitution_
 
 #ifdef __cplusplus

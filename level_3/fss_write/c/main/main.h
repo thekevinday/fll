@@ -35,19 +35,17 @@ extern int main(const int argc, const f_string_t *argv, const f_string_t *envp);
  * Process printing help for when not specifying "--as".
  *
  * @param main
- *   The main program data.
- * @param setting
- *   The main program settings.
- *   Must be of type (fss_write_setting_t *).
+ *   The program and settings data.
+ *   Must be of type fss_write_main_t.
  *
- *   This does not alter setting.state.status.
+ *   This does not alter main.setting.state.status.
  *
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_fss_write_main_process_help_
-  extern void fss_write_main_process_help(fll_program_data_t * const main, void * const setting);
+  extern void fss_write_main_process_help(void * const main);
 #endif // _di_fss_write_main_process_help_
 
 /**
@@ -60,13 +58,11 @@ extern int main(const int argc, const f_string_t *argv, const f_string_t *envp);
  * @param arguments
  *   The parameters passed to the process (often referred to as command line arguments).
  * @param main
- *   The main program data.
- * @param setting
- *   The main program settings.
+ *   The main program and settings data.
  *
- *   This alters setting.process_help, setting.process_normal, and setting.process_pipe.
+ *   This alters main.setting.process_help, main.setting.process_normal, and main.setting.process_pipe.
  *
- *   This alters setting.state.status:
+ *   This alters main.setting.state.status:
  *     F_none on success.
  *     F_interrupt on (exit) signal received.
  *
@@ -91,7 +87,7 @@ extern int main(const int argc, const f_string_t *argv, const f_string_t *envp);
  * @see fss_write_setting_load()
  */
 #ifndef _di_fss_write_main_setting_load_as_
-  extern void fss_write_main_setting_load_as(const f_console_arguments_t arguments, fll_program_data_t * const main, fss_write_setting_t * const setting);
+  extern void fss_write_main_setting_load_as(const f_console_arguments_t arguments, fss_write_main_t * const main);
 #endif // _di_fss_write_main_setting_load_as_
 
 #ifdef __cplusplus

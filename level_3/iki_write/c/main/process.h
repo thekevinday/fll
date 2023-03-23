@@ -20,11 +20,9 @@ extern "C" {
  * Process a given object and content, printing the IKI if valid or an error if invalid.
  *
  * @param main
- *   The main program data.
- * @param setting
- *   The main program settings.
+ *   The program and settings data.
  *
- *   This alters setting.state.status:
+ *   This alters main.setting.state.status:
  *     F_none on success.
  *
  *     Errors (with error bit) from: f_iki_object_is().
@@ -40,7 +38,7 @@ extern "C" {
  * @see fll_iki_content_escape()
  */
 #ifndef _di_iki_write_process_
-  extern void iki_write_process(fll_program_data_t * const main, iki_write_setting_t * const setting, const f_string_static_t object, const f_string_static_t content) F_attribute_visibility_internal_d;
+  extern void iki_write_process(iki_write_main_t * const main, const f_string_static_t object, const f_string_static_t content) F_attribute_visibility_internal_d;
 #endif // _di_iki_write_process_
 
 #ifdef __cplusplus

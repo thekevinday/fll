@@ -73,34 +73,34 @@ extern "C" {
 #ifndef _di_fss_payload_read_setting_load_
   void fss_payload_read_setting_load(const f_console_arguments_t arguments, fll_program_data_t * const main, fss_payload_read_setting_t * const setting) {
 
-    if (!main || !setting) return;
+    if (!main) return;
 
-    setting->state.step_small = fss_payload_read_allocation_console_d;
+    main->setting.state.step_small = fss_payload_read_allocation_console_d;
 
-    f_console_parameter_process(arguments, &main->parameters, &setting->state, 0);
+    f_console_parameter_process(arguments, &main->program.parameters, &main->setting.state, 0);
 
-    setting->state.step_small = fss_payload_read_allocation_small_d;
+    main->setting.state.step_small = fss_payload_read_allocation_small_d;
 
     // Identify and pocess first/last parameters.
-    if (main->parameters.array[payload_read_parameter_line_first_no_e].result & f_console_result_found_e) {
-      setting->flag -= setting->flag & payload_read_main_flag_print_first_e;
+    if (main->program.parameters.array[payload_read_parameter_line_first_no_e].result & f_console_result_found_e) {
+      main->setting.flag -= main->setting.flag & payload_read_main_flag_print_first_e;
     }
     else {
-      setting->flag |= payload_read_main_flag_print_first_e;
+      main->setting.flag |= payload_read_main_flag_print_first_e;
     }
 
-    if (main->parameters.array[payload_read_parameter_line_last_no_e].result & f_console_result_found_e) {
-      setting->flag -= setting->flag & payload_read_main_flag_print_last_e;
+    if (main->program.parameters.array[payload_read_parameter_line_last_no_e].result & f_console_result_found_e) {
+      main->setting.flag -= main->setting.flag & payload_read_main_flag_print_last_e;
     }
     else {
-      setting->flag |= payload_read_main_flag_print_last_e;
+      main->setting.flag |= payload_read_main_flag_print_last_e;
     }
 
-    if (F_status_is_error(setting->state.status)) {
-      fll_error_print(main->error, F_status_set_fine(setting->state.status), "f_console_parameter_process", fll_error_file_flag_fallback_e);
+    if (F_status_is_error(main->setting.state.status)) {
+      fll_error_print(&main->program.error, F_status_set_fine(main->setting.state.status), "f_console_parameter_process", fll_error_file_flag_fallback_e);
 
-      if (main->error.verbosity > f_console_verbosity_quiet_e) {
-        fll_print_dynamic_raw(f_string_eol_s, main->error);
+      if (main->program.error.verbosity > f_console_verbosity_quiet_e) {
+        fll_print_dynamic_raw(f_string_eol_s, main->program.error);
       }
 
       return;
@@ -118,13 +118,13 @@ extern "C" {
 
         const uint8_t modes[3] = { f_color_mode_not_e, f_color_mode_light_e, f_color_mode_dark_e };
 
-        setting->state.status = fll_program_parameter_process_context(choices, modes, F_true, &main->program);
+        main->setting.state.status = fll_program_parameter_process_context(choices, modes, F_true, &main->program);
 
-        if (F_status_is_error(setting->state.status)) {
-          fll_error_print(main->error, F_status_set_fine(setting->state.status), "fll_program_parameter_process_context", fll_error_file_flag_fallback_e);
+        if (F_status_is_error(main->setting.state.status)) {
+          fll_error_print(&main->program.error, F_status_set_fine(main->setting.state.status), "fll_program_parameter_process_context", fll_error_file_flag_fallback_e);
 
-          if (main->error.verbosity > f_console_verbosity_quiet_e) {
-            fll_print_dynamic_raw(f_string_eol_s, main->error);
+          if (main->program.error.verbosity > f_console_verbosity_quiet_e) {
+            fll_print_dynamic_raw(f_string_eol_s, main->program.error);
           }
 
           return;
@@ -139,13 +139,13 @@ extern "C" {
 
         const uint8_t verbosity[5] = { f_console_verbosity_quiet_e, f_console_verbosity_error_e, f_console_verbosity_verbose_e, f_console_verbosity_debug_e, f_console_verbosity_normal_e };
 
-        setting->state.status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, &main->program);
+        main->setting.state.status = fll_program_parameter_process_verbosity(choices, verbosity, F_true, &main->program);
 
-        if (F_status_is_error(setting->state.status)) {
-          fll_error_print(main->error, F_status_set_fine(setting->state.status), "fll_program_parameter_process_verbosity", fll_error_file_flag_fallback_e);
+        if (F_status_is_error(main->setting.state.status)) {
+          fll_error_print(&main->program.error, F_status_set_fine(main->setting.state.status), "fll_program_parameter_process_verbosity", fll_error_file_flag_fallback_e);
 
-          if (main->error.verbosity > f_console_verbosity_quiet_e) {
-            fll_print_dynamic_raw(f_string_eol_s, main->error);
+          if (main->program.error.verbosity > f_console_verbosity_quiet_e) {
+            fll_print_dynamic_raw(f_string_eol_s, main->program.error);
           }
 
           return;
@@ -153,32 +153,32 @@ extern "C" {
       }
     }
 
-    main->output.to.id = F_type_descriptor_output_d;
-    main->output.to.stream = F_type_output_d;
-    main->output.to.flag = F_file_flag_create_d | F_file_flag_write_only_d | F_file_flag_append_d;
+    main->program.output.to.id = F_type_descriptor_output_d;
+    main->program.output.to.stream = F_type_output_d;
+    main->program.output.to.flag = F_file_flag_create_d | F_file_flag_write_only_d | F_file_flag_append_d;
 
-    if (main->parameters.array[fss_payload_read_parameter_help_e].result & f_console_result_found_e) {
-      setting->flag |= fss_payload_read_main_flag_help_e;
-
-      return;
-    }
-
-    if (main->parameters.array[fss_payload_read_parameter_version_e].result & f_console_result_found_e) {
-      setting->flag |= fss_payload_read_main_flag_version_e;
+    if (main->program.parameters.array[fss_payload_read_parameter_help_e].result & f_console_result_found_e) {
+      main->setting.flag |= fss_payload_read_main_flag_help_e;
 
       return;
     }
 
-    if (main->parameters.array[fss_payload_read_parameter_copyright_e].result & f_console_result_found_e) {
-      setting->flag |= fss_payload_read_main_flag_copyright_e;
+    if (main->program.parameters.array[fss_payload_read_parameter_version_e].result & f_console_result_found_e) {
+      main->setting.flag |= fss_payload_read_main_flag_version_e;
 
       return;
     }
 
-    f_string_static_t * const args = main->parameters.arguments.array;
+    if (main->program.parameters.array[fss_payload_read_parameter_copyright_e].result & f_console_result_found_e) {
+      main->setting.flag |= fss_payload_read_main_flag_copyright_e;
 
-    if (main->parameters.array[fss_payload_read_parameter_strip_invalid_e].result & f_console_result_found_e) {
-      setting->flag |= fss_payload_read_main_flag_strip_invalid_e;
+      return;
+    }
+
+    f_string_static_t * const args = main->program.parameters.arguments.array;
+
+    if (main->program.parameters.array[fss_payload_read_parameter_strip_invalid_e].result & f_console_result_found_e) {
+      main->setting.flag |= fss_payload_read_main_flag_strip_invalid_e;
     }
   }
 #endif // _di_fss_payload_read_setting_load_

@@ -35,7 +35,7 @@ extern "C" {
  *   The range value to represent the --line values.
  */
 #ifndef _di_iki_read_process_line_
-  extern void iki_read_process_line(fll_program_data_t * const main, iki_read_setting_t * const setting, f_string_range_t *range);
+  extern void iki_read_process_line(iki_read_main_t * const main, f_string_range_t *range);
 #endif // _di_iki_read_process_line_
 
 /**
@@ -63,7 +63,7 @@ extern "C" {
  * @see iki_read_process_buffer_ranges_whole()
  */
 #ifndef _di_iki_read_process_buffer_
-  extern void iki_read_process_buffer(fll_program_data_t * const main, iki_read_setting_t * const setting);
+  extern void iki_read_process_buffer(iki_read_main_t * const main);
 #endif // _di_iki_read_process_buffer_
 
 /**
@@ -83,7 +83,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_iki_read_process_buffer_ranges_
-  extern void iki_read_process_buffer_ranges(fll_program_data_t * const main, iki_read_setting_t * const setting, f_string_range_t *buffer_range);
+  extern void iki_read_process_buffer_ranges(iki_read_main_t * const main, f_string_range_t *buffer_range);
 #endif // _di_iki_read_process_buffer_ranges_
 
 /**
@@ -105,7 +105,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_iki_read_process_buffer_ranges_whole_
-  extern void iki_read_process_buffer_ranges_whole(fll_program_data_t * const main, iki_read_setting_t * const setting, const f_string_range_t buffer_range);
+  extern void iki_read_process_buffer_ranges_whole(iki_read_main_t * const main, const f_string_range_t buffer_range);
 #endif // _di_iki_read_process_buffer_ranges_whole_
 
 /**
@@ -122,7 +122,7 @@ extern "C" {
  *   Status codes (with error bit) are returned on any problem.
  */
 #ifndef _di_iki_read_process_buffer_total_
-  extern void iki_read_process_buffer_total(fll_program_data_t * const main, iki_read_setting_t * const setting);
+  extern void iki_read_process_buffer_total(iki_read_main_t * const main);
 #endif // _di_iki_read_process_buffer_total_
 
 #ifdef __cplusplus

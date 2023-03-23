@@ -93,7 +93,7 @@ extern "C" {
  *     F_failure (with error bit) for any other failure.
  */
 #ifndef _di_iki_read_main_
-  extern void iki_read_main(fll_program_data_t * const main, iki_read_setting_t * const setting);
+  extern void iki_read_main(iki_read_main_t * const main);
 #endif // _di_iki_read_main_
 
 #ifdef __cplusplus

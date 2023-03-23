@@ -44,12 +44,15 @@
 #include <fll/level_2/program.h>
 
 // FSS Write includes.
-#include <program/fss_write/main/common-print.h>
-#include <program/fss_write/main/common-string.h>
-#include <program/fss_write/main/common-type.h>
+#include <program/fss_write/main/common/define.h>
+#include <program/fss_write/main/common/enumeration.h>
+#include <program/fss_write/main/common/print.h>
+#include <program/fss_write/main/common/string.h>
+#include <program/fss_write/main/common/type.h>
 #include <program/fss_write/main/common.h>
 #include <program/fss_write/payload/common.h>
-#include <program/fss_write/main/print.h>
+#include <program/fss_write/main/print/error.h>
+#include <program/fss_write/main/print/message.h>
 #include <program/fss_write/payload/print.h>
 
 #ifdef __cplusplus
@@ -60,31 +63,27 @@ extern "C" {
  * Process help for FSS-000E (Payload).
  *
  * @param main
- *   The main program data.
- * @param setting
- *   The main program settings.
- *   Must be of type (fss_write_setting_t *).
+ *   The program and settings data.
+ *   Must be of type fss_write_main_t.
  *
- *   This does not alter setting.state.status.
+ *   This does not alter main.setting.state.status.
  *
  * @return
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
  */
 #ifndef _di_fss_write_payload_process_help_
-  extern void fss_write_payload_process_help(fll_program_data_t * const main, void * const setting);
+  extern void fss_write_payload_process_help(void * const main);
 #endif // _di_fss_write_payload_process_help_
 
 /**
  * Process the pipe, reading from the pipe and writing to the output.
  *
  * @param main
- *   The main program data.
- * @param setting
- *   The main program settings.
- *   Must be of type (fss_write_setting_t *).
+ *   The program and settings data.
+ *   Must be of type fss_write_main_t.
  *
- *   This alters setting.state.status:
+ *   This alters main.setting.state.status:
  *     F_none on success.
  *     F_data_not on success but pipe contained no relevant data.
  *     F_payload on success and the payload has been printed.
@@ -93,26 +92,24 @@ extern "C" {
  *     F_parameter (with error bit) if main is NULL or setting is NULL.
  */
 #ifndef _di_fss_write_payload_process_pipe_
-  extern void fss_write_payload_process_pipe(fll_program_data_t * const main, void * const setting);
+  extern void fss_write_payload_process_pipe(void * const main);
 #endif // _di_fss_write_payload_process_pipe_
 
 /**
  * Process a given object and content, printing the FSS if valid or an error if invalid.
  *
  * @param main
- *   The main program data.
- * @param setting
- *   The main program settings.
- *   Must be of type (fss_write_setting_t *).
+ *   The program and settings data.
+ *   Must be of type fss_write_main_t.
  *
- *   This alters setting.state.status:
+ *   This alters main.setting.state.status:
  *     F_none on success.
  *     F_interrupt on (exit) signal received.
  *
  *     F_parameter (with error bit) if main is NULL or setting is NULL.
  */
 #ifndef _di_fss_write_payload_process_set_
-  extern void fss_write_payload_process_set(fll_program_data_t * const main, void * const setting);
+  extern void fss_write_payload_process_set(void * const main);
 #endif // _di_fss_write_payload_process_set_
 
 /**
@@ -145,7 +142,7 @@ extern "C" {
  * @see fss_write_setting_load()
  */
 #ifndef _di_fss_write_payload_setting_load_
-  extern void fss_write_payload_setting_load(const f_console_arguments_t arguments, fll_program_data_t * const main, fss_write_setting_t * const setting);
+  extern void fss_write_payload_setting_load(const f_console_arguments_t arguments, fss_write_main_t * const main);
 #endif // _di_fss_write_payload_setting_load_
 
 #ifdef __cplusplus

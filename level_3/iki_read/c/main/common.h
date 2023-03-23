@@ -43,11 +43,9 @@ extern "C" {
  * @param arguments
  *   The parameters passed to the process (often referred to as command line arguments).
  * @param main
- *   The main program data.
- * @param setting
- *   The main program settings.
+ *   The program and settings data.
  *
- *   This alters setting.state.status:
+ *   This alters main.setting.state.status:
  *     F_none on success.
  *
  *     Errors (with error bit) from: f_console_parameter_process().
@@ -69,7 +67,7 @@ extern "C" {
  * @see fll_program_parameter_process_verbosity()
  */
 #ifndef _di_iki_read_setting_load_
-  extern void iki_read_setting_load(const f_console_arguments_t arguments, fll_program_data_t * const main, iki_read_setting_t * const setting);
+  extern void iki_read_setting_load(const f_console_arguments_t arguments, iki_read_main_t * const main);
 #endif // _di_iki_read_setting_load_
 
 /**
@@ -78,11 +76,9 @@ extern "C" {
  * This prints error messages as appropriate.
  *
  * @param main
- *   The main program data.
- * @param setting
- *   The main program settings.
+ *   The program and settings data.
  *
- *   This alters setting.state.status:
+ *   This alters main.setting.state.status:
  *     F_none on success.
  *
  *     Errors (with error bit) from: f_string_dynamic_resize().
@@ -101,14 +97,15 @@ extern "C" {
  * @see f_string_triples_resize()
  */
 #ifndef _di_iki_read_setting_load_parameter_substitution_
-  extern f_status_t iki_read_setting_load_parameter_substitution(fll_program_data_t * const main, iki_read_setting_t * const setting, const f_console_parameter_t parameter, const f_string_static_t name, f_string_triples_t *triple);
+  extern f_status_t iki_read_setting_load_parameter_substitution(iki_read_main_t * const main, const f_console_parameter_t parameter, const f_string_static_t name, f_string_triples_t *triple);
 #endif // _di_iki_read_setting_load_parameter_substitution_
 
 /**
  * Perform the standard program setting unload process.
  *
  * @param main
- *   The main program and setting data.
+ *   The program and settings data.
+ *
  *   All buffers are deallocated.
  *
  *   This does not alter main.setting.state.status.

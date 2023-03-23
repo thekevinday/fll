@@ -77,11 +77,9 @@ extern "C" {
  *   - F_signal_termination
  *
  * @param main
- *   The main program data.
- * @param setting
- *   The main program settings.
+ *   The program and settings data.
  *
- *   This alters setting.state.status:
+ *   This alters main.setting.state.status:
  *     F_none on success.
  *     F_true on success when performing verification and verify passed.
  *     F_false on success when performing verification and verify failed.
@@ -97,7 +95,7 @@ extern "C" {
  * @see fll_iki_content_escape()
  */
 #ifndef _di_iki_write_main_
-  extern void iki_write_main(fll_program_data_t * const main, iki_write_setting_t * const setting);
+  extern void iki_write_main(iki_write_main_t * const main);
 #endif // _di_iki_write_main_
 
 #ifdef __cplusplus

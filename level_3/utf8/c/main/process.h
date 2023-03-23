@@ -20,7 +20,7 @@ extern "C" {
  * Convert the text from one format to other another format or verify text.
  *
  * @param main
- *   The main program and settings data.
+ *   The program and settings data.
  *
  *   This alters setting.state.status:
  *     F_true on success and is valid.

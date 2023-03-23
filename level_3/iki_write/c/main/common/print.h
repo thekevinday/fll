@@ -41,6 +41,7 @@ extern "C" {
   enum {
     iki_write_f_f_console_parameter_process_e,
     iki_write_f_f_file_read_e,
+    iki_write_f_f_file_stream_open_e,
     iki_write_f_f_iki_object_is_e,
     iki_write_f_f_string_dynamic_partial_append_nulless_e,
     iki_write_f_f_string_dynamic_seek_to_e,

@@ -15,29 +15,29 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
   data.program.debug.custom = (void *) &data;
 
   f_console_parameter_t parameters[] = fss_extended_list_read_console_parameter_t_initialize;
-  data.parameters.array = parameters;
-  data.parameters.used = fss_extended_list_read_total_parameters_d;
-  data.environment = envp;
+  data.program.parameters.array = parameters;
+  data.program.parameters.used = fss_extended_list_read_total_parameters_d;
+  data.program.environment = envp;
 
   if (f_pipe_input_exists()) {
-    data.pipe = fll_program_data_pipe_input_e;
+    data.program.pipe = fll_program_data_pipe_input_e;
   }
 
-  fll_program_standard_set_up(&data);
+  fll_program_standard_set_up(&data.program);
 
   {
     const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize(argc, argv, envp);
 
-    fss_extended_list_read_setting_load(arguments, &data, &setting);
+    fss_extended_list_read_setting_load(arguments, &data);
   }
 
-  fss_extended_list_read_main(&data, &setting);
+  fss_extended_list_read_main(&data);
 
-  fss_extended_list_read_setting_unload(&data, &setting);
+  fss_extended_list_read_setting_unload(&data);
 
-  fll_program_data_delete(&data);
+  fll_program_data_delete(&data.program);
 
-  fll_program_standard_set_down(&data);
+  fll_program_standard_set_down(&data.program);
 
-  return F_status_is_error(status) ? 1 : 0;
+  return F_status_is_error(data.setting.state.status) ? 1 : 0;
 }

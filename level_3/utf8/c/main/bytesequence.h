@@ -22,7 +22,7 @@ extern "C" {
  * This automatically determines the output format and is also handles the verify process.
  *
  * @param main
- *   The main program and settings data.
+ *   The program and settings data.
  *
  *   This alters setting.state.status:
  *     F_none on success.
@@ -43,7 +43,7 @@ extern "C" {
  * Process file as a bytesequence input, handling conversion or verification as appropriate.
  *
  * @param main
- *   The main program and settings data.
+ *   The program and settings data.
  *
  *   This alters setting.state.status:
  *     F_true on success and is valid.

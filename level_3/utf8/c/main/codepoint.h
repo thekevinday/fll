@@ -22,7 +22,7 @@ extern "C" {
  * This automatically determines the output format and also handles the verify process.
  *
  * @param main
- *   The main program and settings data.
+ *   The program and settings data.
  *
  *   This alters setting.state.status:
  *     F_none on success.
@@ -48,7 +48,7 @@ extern "C" {
  * This automatically determines the output format and also handles the verify process.
  *
  * @param main
- *   The main program and settings data.
+ *   The program and settings data.
  *
  *   This alters setting.state.status:
  *     F_none on success.
@@ -72,7 +72,7 @@ extern "C" {
  * Detect a codepoint character.
  *
  * @param main
- *   The main program and settings data.
+ *   The program and settings data.
  *
  *   This alters setting.state.status:
  *     F_none on success.
@@ -93,7 +93,7 @@ extern "C" {
  * Process file as a codepoint input, handling conversion or verification as appropriate.
  *
  * @param main
- *   The main program and settings data.
+ *   The program and settings data.
  *
  *   This alters setting.state.status:
  *     F_true on success and is valid.

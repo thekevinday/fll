@@ -24,7 +24,6 @@ extern "C" {
     main->setting.state.status = F_none;
 
     if (main->setting.flag & (utf8_main_flag_help_e | utf8_main_flag_version_e | utf8_main_flag_copyright_e)) {
-
       if (main->setting.flag & utf8_main_flag_help_e) {
         utf8_print_message_help(&main->program.message);
       }

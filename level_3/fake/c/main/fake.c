@@ -24,7 +24,6 @@ extern "C" {
     main->setting.state.status = F_none;
 
     if (main->setting.flag & (fake_main_flag_help_e | fake_main_flag_version_e | fake_main_flag_copyright_e)) {
-
       if (main->setting.flag & fake_main_flag_help_e) {
         fake_print_message_help(&main->program.message);
       }

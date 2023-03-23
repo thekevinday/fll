@@ -6,47 +6,47 @@ extern "C" {
 #endif
 
 #ifndef _di_fss_write_basic_list_process_content_
-  void fss_write_basic_list_process_content(fll_program_data_t * const main, void * const void_setting, const bool last) {
+  void fss_write_basic_list_process_content(void * const void_main, const bool last) {
 
-    if (!main || !void_setting) return;
+    if (!void_main) return;
 
-    fss_write_setting_t * const setting = macro_fss_write_setting(void_setting);
+    fss_write_main_t * const main = (fss_write_main_t *) void_main;
 
-    if (setting->content) {
+    if (main->setting.content) {
       fl_fss_basic_list_content_write(
-        *setting->content,
-        (setting->flag & fss_write_main_flag_partial_e)
+        *main->setting.content,
+        (main->setting.flag & fss_write_main_flag_partial_e)
           ? f_fss_complete_partial_e
-          : (setting->flag & fss_write_main_flag_trim_e)
+          : (main->setting.flag & fss_write_main_flag_trim_e)
             ? f_fss_complete_full_trim_e
             : f_fss_complete_full_e,
-        &setting->prepend,
-        &setting->range,
-        &setting->buffer,
-        &setting->state
+        &main->setting.prepend,
+        &main->setting.range,
+        &main->setting.buffer,
+        &main->setting.state
       );
 
-      if (F_status_set_fine(setting->state.status) == F_none_eol) {
-        setting->state.status = F_status_set_error(F_support_not);
+      if (F_status_set_fine(main->setting.state.status) == F_none_eol) {
+        main->setting.state.status = F_status_set_error(F_support_not);
 
-        fss_write_print_error_unsupported_eol(setting, main->error);
+        fss_write_print_error_unsupported_eol(&main->program.error);
 
         return;
       }
 
-      if (F_status_is_error(setting->state.status)) {
-        fss_write_print_error(setting, main->error, macro_fss_write_f(fl_fss_basic_list_content_write));
+      if (F_status_is_error(main->setting.state.status)) {
+        fss_write_print_error(&main->program.error, macro_fss_write_f(fl_fss_basic_list_content_write));
 
         return;
       }
     }
 
-    if ((setting->flag & fss_write_main_flag_partial_e) && !(setting->flag & fss_write_main_flag_object_e) || !(setting->flag & (fss_write_main_flag_object_e | fss_write_main_flag_content_e))) {
-      if (setting->flag & fss_write_main_flag_content_end_e) {
-        setting->state.status = f_string_dynamic_append(f_fss_basic_list_close_s, &setting->buffer);
+    if ((main->setting.flag & fss_write_main_flag_partial_e) && !(main->setting.flag & fss_write_main_flag_object_e) || !(main->setting.flag & (fss_write_main_flag_object_e | fss_write_main_flag_content_e))) {
+      if (main->setting.flag & fss_write_main_flag_content_end_e) {
+        main->setting.state.status = f_string_dynamic_append(f_fss_basic_list_close_s, &main->setting.buffer);
 
-        if (F_status_is_error(setting->state.status)) {
-          fss_write_print_error(setting, main->error, macro_fss_write_f(f_string_dynamic_append));
+        if (F_status_is_error(main->setting.state.status)) {
+          fss_write_print_error(&main->program.error, macro_fss_write_f(f_string_dynamic_append));
         }
       }
     }
@@ -54,61 +54,61 @@ extern "C" {
 #endif // _di_fss_write_basic_list_process_content_
 
 #ifndef _di_fss_write_basic_list_process_help_
-  void fss_write_basic_list_process_help(fll_program_data_t * const main, void * const void_setting) {
+  void fss_write_basic_list_process_help(void * const void_main) {
 
-    if (!main || !void_setting) return;
+    if (!void_main) return;
 
-    fss_write_basic_list_print_help(void_setting, main->message);
+    fss_write_basic_list_print_help(&((fss_write_main_t *) void_main)->program.message);
   }
 #endif // _di_fss_write_basic_list_process_help_
 
 #ifndef _di_fss_write_basic_list_process_object_
-  void fss_write_basic_list_process_object(fll_program_data_t * const main, void * const void_setting) {
+  void fss_write_basic_list_process_object(void * const void_main) {
 
-    if (!main || !void_setting) return;
+    if (!void_main) return;
 
-    fss_write_setting_t * const setting = macro_fss_write_setting(void_setting);
+    fss_write_main_t * const main = (fss_write_main_t *) void_main;
 
-    if (setting->object) {
+    if (main->setting.object) {
       fl_fss_basic_list_object_write(
-        *setting->object,
-        (setting->flag & fss_write_main_flag_partial_e)
-          ? (setting->flag & fss_write_main_flag_trim_e)
+        *main->setting.object,
+        (main->setting.flag & fss_write_main_flag_partial_e)
+          ? (main->setting.flag & fss_write_main_flag_trim_e)
             ? f_fss_complete_trim_e
             : f_fss_complete_none_e
-          : (setting->flag & fss_write_main_flag_trim_e)
+          : (main->setting.flag & fss_write_main_flag_trim_e)
             ? f_fss_complete_full_trim_e
             : f_fss_complete_full_e,
-        &setting->range,
-        &setting->buffer,
-        &setting->state
+        &main->setting.range,
+        &main->setting.buffer,
+        &main->setting.state
       );
 
-      if (F_status_set_fine(setting->state.status) == F_none_eol) {
-        setting->state.status = F_status_set_error(F_support_not);
+      if (F_status_set_fine(main->setting.state.status) == F_none_eol) {
+        main->setting.state.status = F_status_set_error(F_support_not);
 
-        fss_write_print_error_unsupported_eol(setting, main->error);
+        fss_write_print_error_unsupported_eol(&main->program.error);
 
         return;
       }
 
-      if (F_status_is_error(setting->state.status)) {
-        fss_write_print_error(setting, main->error, macro_fss_write_f(fl_fss_basic_list_object_write));
+      if (F_status_is_error(main->setting.state.status)) {
+        fss_write_print_error(&main->program.error, macro_fss_write_f(fl_fss_basic_list_object_write));
 
         return;
       }
     }
 
-    if ((setting->flag & fss_write_main_flag_partial_e) && !(setting->flag & fss_write_main_flag_content_e) || !(setting->flag & (fss_write_main_flag_object_e | fss_write_main_flag_content_e))) {
-      if (setting->flag & fss_write_main_flag_object_open_e) {
-        setting->state.status = f_string_dynamic_append(f_fss_basic_list_open_s, &setting->buffer);
+    if ((main->setting.flag & fss_write_main_flag_partial_e) && !(main->setting.flag & fss_write_main_flag_content_e) || !(main->setting.flag & (fss_write_main_flag_object_e | fss_write_main_flag_content_e))) {
+      if (main->setting.flag & fss_write_main_flag_object_open_e) {
+        main->setting.state.status = f_string_dynamic_append(f_fss_basic_list_open_s, &main->setting.buffer);
 
-        if (F_status_is_error_not(setting->state.status)) {
-          setting->state.status = f_string_dynamic_append(f_fss_basic_list_open_end_s, &setting->buffer);
+        if (F_status_is_error_not(main->setting.state.status)) {
+          main->setting.state.status = f_string_dynamic_append(f_fss_basic_list_open_end_s, &main->setting.buffer);
         }
 
-        if (F_status_is_error(setting->state.status)) {
-          fss_write_print_error(setting, main->error, macro_fss_write_f(f_string_dynamic_append));
+        if (F_status_is_error(main->setting.state.status)) {
+          fss_write_print_error(&main->program.error, macro_fss_write_f(f_string_dynamic_append));
         }
       }
     }

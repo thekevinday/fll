@@ -186,7 +186,7 @@ extern "C" {
  *
  * file_documents_readme: The documents readme file data.
  *
- * main: The main program and settings data.
+ * main: The program and settings data.
  */
 #ifndef _di_fake_data_t_
   typedef struct {

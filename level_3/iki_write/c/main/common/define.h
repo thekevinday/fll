@@ -16,6 +16,21 @@
 extern "C" {
 #endif
 
+/**
+ * The program defines.
+ *
+ * iki_write_*:
+ *   - allocation_console: An allocation step used for small buffers specifically for console parameter.
+ *   - allocation_large:   An allocation step used for buffers that are anticipated to have large buffers.
+ *   - allocation_small:   An allocation step used for buffers that are anticipated to have small buffers.
+ *   - signal_check:       Number of iterations before performing signal check in non-threaded signal handling.
+ */
+#ifndef _di_iki_write_d_
+  #define iki_write_allocation_console_d 4
+  #define iki_write_allocation_large_d   256
+  #define iki_write_allocation_small_d   16
+  #define iki_write_signal_check_d       20000
+#endif // _di_iki_write_d_
 
 #ifdef __cplusplus
 } // extern "C"

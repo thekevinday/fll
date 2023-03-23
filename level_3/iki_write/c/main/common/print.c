@@ -8,6 +8,7 @@ extern "C" {
   const f_string_t iki_write_f_a[] = {
     "f_console_parameter_process",
     "f_file_read",
+    "f_file_stream_open",
     "f_iki_object_is",
     "f_string_dynamic_partial_append_nulless",
     "f_string_dynamic_seek_to",
