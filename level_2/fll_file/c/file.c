@@ -15,7 +15,7 @@ extern "C" {
 #endif // _di_fll_file_mode_set_all_
 
 #ifndef _di_fll_file_move_
-  void fll_file_move(const f_string_static_t source, const f_string_static_t destination, f_directory_recurse_t * const recurse) {
+  void fll_file_move(const f_string_static_t source, const f_string_static_t destination, f_directory_recurse_copy_t * const recurse) {
     #ifndef _di_level_2_parameter_checking_
       if (!recurse) return;
     #endif // _di_level_2_parameter_checking_
@@ -47,7 +47,7 @@ extern "C" {
     if (recurse->state.status == F_true) {
       const uint8_t flag_original = recurse->flag;
 
-      recurse->flag = f_directory_recurse_flag_clone_e;
+      recurse->flag = f_directory_recurse_copy_flag_clone_e;
 
       fl_directory_copy(source, destination, recurse);
 

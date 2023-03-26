@@ -48,7 +48,7 @@ extern "C" {
 #endif // _di_fl_directory_create_
 
 #ifndef _di_fl_directory_copy_
-  void fl_directory_copy(const f_string_static_t source, const f_string_static_t destination, f_directory_recurse_t * const recurse) {
+  void fl_directory_copy(const f_string_static_t source, const f_string_static_t destination, f_directory_recurse_copy_t * const recurse) {
     #ifndef _di_level_1_parameter_checking_
       if (!recurse) return;
     #endif // _di_level_1_parameter_checking_
@@ -58,7 +58,6 @@ extern "C" {
     recurse->destination = recurse->destination_top;
     recurse->destination_top = &destination;
     recurse->depth = 0;
-    recurse->mode = recurse->mode;
     recurse->state.status = F_none;
     recurse->state.data = (void *) recurse;
 
@@ -86,13 +85,13 @@ extern "C" {
       return;
     }
 
-    if (recurse->flag & f_directory_recurse_flag_top_e) {
-      if (recurse->flag & f_directory_recurse_flag_clone_e) {
+    if (recurse->flag & f_directory_recurse_copy_flag_top_e) {
+      if (recurse->flag & f_directory_recurse_copy_flag_clone_e) {
         struct stat source_stat;
 
         memset(&source_stat, 0, sizeof(struct stat));
 
-        recurse->state.status = f_file_stat(*recurse->source_top, recurse->flag & f_directory_recurse_flag_dereference_e, &source_stat);
+        recurse->state.status = f_file_stat(*recurse->source_top, recurse->flag & f_directory_recurse_copy_flag_dereference_e, &source_stat);
 
         if (F_status_is_error_not(recurse->state.status)) {
           recurse->state.status = f_directory_exists(*recurse->destination_top);
@@ -100,7 +99,7 @@ extern "C" {
 
         if (F_status_is_error_not(recurse->state.status)) {
           if (recurse->state.status == F_true) {
-            if (recurse->flag & f_directory_recurse_flag_exclusive_e) {
+            if (recurse->flag & f_directory_recurse_copy_flag_exclusive_e) {
               recurse->state.status = F_status_set_error(F_directory_found);
             }
             else {
@@ -112,13 +111,13 @@ extern "C" {
           }
         }
 
-        if (F_status_is_error_not(recurse->state.status) && (recurse->flag & (f_directory_recurse_flag_group_e | f_directory_recurse_flag_owner_e))) {
-          recurse->state.status = f_file_role_change(*recurse->destination_top, (recurse->flag & f_directory_recurse_flag_owner_e) ? source_stat.st_uid : -1, (recurse->flag & f_directory_recurse_flag_group_e) ? source_stat.st_gid : -1, recurse->flag & f_directory_recurse_flag_dereference_e);
+        if (F_status_is_error_not(recurse->state.status) && (recurse->flag & (f_directory_recurse_copy_flag_group_e | f_directory_recurse_copy_flag_owner_e))) {
+          recurse->state.status = f_file_role_change(*recurse->destination_top, (recurse->flag & f_directory_recurse_copy_flag_owner_e) ? source_stat.st_uid : -1, (recurse->flag & f_directory_recurse_copy_flag_group_e) ? source_stat.st_gid : -1, recurse->flag & f_directory_recurse_copy_flag_dereference_e);
         }
       }
       else {
         if (recurse->state.status == F_true) {
-          if (recurse->flag & f_directory_recurse_flag_exclusive_e) {
+          if (recurse->flag & f_directory_recurse_copy_flag_exclusive_e) {
             recurse->state.status = F_status_set_error(F_directory_found);
           }
           else {
@@ -194,6 +193,96 @@ extern "C" {
     }
   }
 #endif // _di_fl_directory_copy_
+
+#ifndef _di_fl_directory_do_
+  void fl_directory_do(const f_string_static_t path, f_directory_recurse_do_t * const recurse) {
+    #ifndef _di_level_1_parameter_checking_
+      if (!recurse) return;
+
+      if (!recurse->action) {
+        recurse->state.status = F_status_set_error(F_parameter);
+        return;
+      }
+    #endif // _di_level_1_parameter_checking_
+
+    recurse->path = recurse->path_top;
+    recurse->path_top = &path;
+    recurse->depth = 0;
+    recurse->state.status = F_none;
+    recurse->state.data = (void *) recurse;
+
+    if (!recurse->path_top->used) {
+      recurse->state.status = F_data_not;
+
+      if (recurse->state.handle) {
+        recurse->state.handle(&recurse->state, (void *) recurse);
+      }
+
+      return;
+    }
+
+    recurse->state.status = f_directory_exists(*recurse->path_top);
+
+    if (recurse->state.status == F_false) {
+      recurse->state.status = F_status_set_error(F_directory_not);
+    }
+
+    if (F_status_is_error(recurse->state.status)) {
+      if (recurse->state.handle) {
+        recurse->state.handle(&recurse->state, (void *) recurse);
+      }
+
+      return;
+    }
+
+    if ((recurse->flag & f_directory_recurse_do_flag_top_e) && (recurse->flag & f_directory_recurse_do_flag_first_e)) {
+      recurse->action((void *) recurse, f_directory_recurse_do_flag_top_e | f_directory_recurse_do_flag_first_e);
+    }
+
+    if (F_status_is_error_not(recurse->state.status)) {
+      if (recurse->max_depth) {
+        f_array_length_t i = recurse->path_top->used;
+
+        // Do not allow null termination or trailing path separators in the string's length calculation.
+        for (; i > 0; --i) {
+
+          if (!recurse->path_top->string[i - 1]) continue;
+          if (recurse->path_top->string[i - 1] == f_path_separator_s.string[0]) continue;
+
+          break;
+        } // for
+
+        const f_string_static_t static_path = macro_f_string_static_t_initialize(recurse->path_top->string, recurse->path_top->size, i);
+
+        recurse->path = &static_path;
+        recurse->depth = 1;
+
+        private_fl_directory_do_recurse(recurse);
+
+        recurse->path = recurse->path_top;
+        recurse->depth = 0;
+      }
+      else {
+        recurse->state.status = F_none;
+      }
+    }
+
+    if (F_status_is_error_not(recurse->state.status)) {
+      if ((recurse->flag & f_directory_recurse_do_flag_top_e) && (recurse->flag & f_directory_recurse_do_flag_last_e)) {
+        recurse->action((void *) recurse, f_directory_recurse_do_flag_top_e | f_directory_recurse_do_flag_last_e);
+      }
+    }
+
+    if (F_status_is_error(recurse->state.status)) {
+      if (recurse->state.handle) {
+        recurse->state.handle(&recurse->state, (void *) &recurse);
+      }
+    }
+    else {
+      recurse->state.status = F_none;
+    }
+  }
+#endif // _di_fl_directory_do_
 
 #ifndef _di_fl_directory_list_
   f_status_t fl_directory_list(const f_string_static_t path, int (*filter)(const struct dirent *), int (*sort)(const struct dirent **, const struct dirent **), const bool dereference, f_directory_listing_t * const listing) {

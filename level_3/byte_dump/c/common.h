@@ -62,7 +62,7 @@ extern "C" {
 /**
  * The program defines.
  *
- * byte_dump_*:
+ * byte_dump_*_d:
  *   - allocation_console: An allocation step used for small buffers specifically for console parameter.
  *   - allocation_large:   An allocation step used for buffers that are anticipated to have large buffers.
  *   - allocation_small:   An allocation step used for buffers that are anticipated to have small buffers.
@@ -336,19 +336,7 @@ extern "C" {
 
   #define byte_dump_console_parameter_t_initialize \
     { \
-      macro_f_console_parameter_t_initialize_3(f_console_standard_short_help_s,          f_console_standard_long_help_s,          0, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize_3(f_console_standard_short_copyright_s,     f_console_standard_long_copyright_s,     0, f_console_flag_inverse_e), \
-      macro_f_console_parameter_t_initialize_3(f_console_standard_short_light_s,         f_console_standard_long_light_s,         0, f_console_flag_inverse_e), \
-      macro_f_console_parameter_t_initialize_3(f_console_standard_short_dark_s,          f_console_standard_long_dark_s,          0, f_console_flag_inverse_e), \
-      macro_f_console_parameter_t_initialize_3(f_console_standard_short_no_color_s,      f_console_standard_long_no_color_s,      0, f_console_flag_inverse_e), \
-      macro_f_console_parameter_t_initialize_3(f_console_standard_short_quiet_s,         f_console_standard_long_quiet_s,         0, f_console_flag_inverse_e), \
-      macro_f_console_parameter_t_initialize_3(f_console_standard_short_error_s,         f_console_standard_long_error_s,         0, f_console_flag_inverse_e), \
-      macro_f_console_parameter_t_initialize_3(f_console_standard_short_normal_s,        f_console_standard_long_normal_s,        0, f_console_flag_inverse_e), \
-      macro_f_console_parameter_t_initialize_3(f_console_standard_short_verbose_s,       f_console_standard_long_verbose_s,       0, f_console_flag_inverse_e), \
-      macro_f_console_parameter_t_initialize_3(f_console_standard_short_debug_s,         f_console_standard_long_debug_s,         0, f_console_flag_inverse_e), \
-      macro_f_console_parameter_t_initialize_3(f_console_standard_short_version_s,       f_console_standard_long_version_s,       0, f_console_flag_inverse_e), \
-      macro_f_console_parameter_t_initialize_3(f_console_standard_short_line_first_no_s, f_console_standard_long_line_first_no_s, 0, f_console_flag_inverse_e), \
-      macro_f_console_parameter_t_initialize_3(f_console_standard_short_line_last_no_s,  f_console_standard_long_line_last_no_s,  0, f_console_flag_inverse_e), \
+      macro_fll_program_console_parameter_standard_initialize, \
       \
       macro_f_console_parameter_t_initialize_3(byte_dump_short_binary_s,      byte_dump_long_binary_s,      0, f_console_flag_normal_e), \
       macro_f_console_parameter_t_initialize_3(byte_dump_short_decimal_s,     byte_dump_long_decimal_s,     0, f_console_flag_normal_e), \

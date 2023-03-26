@@ -127,7 +127,7 @@ extern "C" {
  * @see fl_directory_copy()
  */
 #ifndef _di_fll_file_move_
-  extern void fll_file_move(const f_string_static_t source, const f_string_static_t destination, f_directory_recurse_t * const recurse);
+  extern void fll_file_move(const f_string_static_t source, const f_string_static_t destination, f_directory_recurse_copy_t * const recurse);
 #endif // _di_fll_file_move_
 
 /**

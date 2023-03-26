@@ -194,9 +194,9 @@ extern "C" {
 
     memcpy(path_source.string, source.string, sizeof(f_char_t) * source.used);
 
-    f_directory_recurse_t recurse = f_directory_recurse_t_initialize;
+    f_directory_recurse_copy_t recurse = f_directory_recurse_copy_t_initialize;
     recurse.verbose = &fake_print_verbose_recursive_copy;
-    //recurse.failures = &failures; // @fixme this now needs to be handled by a callback in recurse (recurse.state.handle)., maybe make this a callback on f_directory_recurse_t?
+    //recurse.failures = &failures; // @fixme this now needs to be handled by a callback in recurse (recurse.state.handle)., maybe make this a callback on f_directory_recurse_copy_t?
     recurse.mode = mode;
 
     for (f_array_length_t i = 0; i < files.used; ++i) {
@@ -345,7 +345,7 @@ extern "C" {
       data->main->setting.state.status = F_none;
     } // for
 
-    f_directory_recurse_delete(&recurse);
+    f_directory_recurse_copy_delete(&recurse);
 
     f_string_dynamic_resize(0, &path_source);
     f_string_dynamic_resize(0, &destination_file);

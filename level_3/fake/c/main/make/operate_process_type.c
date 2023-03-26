@@ -199,7 +199,7 @@ extern "C" {
 
     const f_array_length_t total = data_make->cache_arguments.used - 1;
     f_string_static_t destination = f_string_static_t_initialize;
-    f_directory_recurse_t recurse = f_directory_recurse_t_initialize;
+    f_directory_recurse_copy_t recurse = f_directory_recurse_copy_t_initialize;
 
     if (data_make->main->program.error.verbosity > f_console_verbosity_normal_e) {
       recurse.state.custom = data_make->main;
@@ -230,7 +230,7 @@ extern "C" {
 
         data_make->main->setting.state.status = F_status_set_error(F_failure);
 
-        f_directory_recurse_delete(&recurse);
+        f_directory_recurse_copy_delete(&recurse);
 
         return;
       }
@@ -254,7 +254,7 @@ extern "C" {
 
           data_make->main->setting.state.status = F_status_set_error(F_failure);
 
-          f_directory_recurse_delete(&recurse);
+          f_directory_recurse_copy_delete(&recurse);
 
           return;
         }
@@ -290,10 +290,10 @@ extern "C" {
 
       if (data_make->main->setting.state.status == F_true) {
         if (clone) {
-          recurse.flag |= f_directory_recurse_flag_clone_e;
+          recurse.flag |= f_directory_recurse_copy_flag_clone_e;
         }
         else {
-          recurse.flag -= recurse.flag & f_directory_recurse_flag_clone_e;
+          recurse.flag -= recurse.flag & f_directory_recurse_copy_flag_clone_e;
         }
 
         fl_directory_copy(data_make->cache_arguments.array[i], destination, &recurse);
@@ -333,7 +333,7 @@ extern "C" {
       }
     } // for
 
-    f_directory_recurse_delete(&recurse);
+    f_directory_recurse_copy_delete(&recurse);
 
     if (F_status_is_error_not(data_make->main->setting.state.status)) {
       data_make->main->setting.state.status = F_none;
@@ -1451,7 +1451,7 @@ extern "C" {
 
     const f_array_length_t total = data_make->cache_arguments.used -1;
 
-    f_directory_recurse_t recurse = f_directory_recurse_t_initialize;
+    f_directory_recurse_copy_t recurse = f_directory_recurse_copy_t_initialize;
     f_string_static_t destination = f_string_static_t_initialize;
 
     if (data_make->main->program.error.verbosity > f_console_verbosity_normal_e) {
@@ -1471,7 +1471,7 @@ extern "C" {
 
         data_make->main->setting.state.status = F_status_set_error(F_failure);
 
-        f_directory_recurse_delete(&recurse);
+        f_directory_recurse_copy_delete(&recurse);
 
         return;
       }
@@ -1495,7 +1495,7 @@ extern "C" {
 
           data_make->main->setting.state.status = F_status_set_error(F_failure);
 
-          f_directory_recurse_delete(&recurse);
+          f_directory_recurse_copy_delete(&recurse);
 
           return;
         }
@@ -1535,13 +1535,13 @@ extern "C" {
 
         data_make->main->setting.state.status = F_status_set_error(F_failure);
 
-        f_directory_recurse_delete(&recurse);
+        f_directory_recurse_copy_delete(&recurse);
 
         return;
       }
     } // for
 
-    f_directory_recurse_delete(&recurse);
+    f_directory_recurse_copy_delete(&recurse);
 
     data_make->main->setting.state.status = F_none;
   }

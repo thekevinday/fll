@@ -5,15 +5,16 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
   fss_write_main_t data = fss_write_main_t_initialize;
 
-  data.program.debug.flag |= fss_write_print_flag_debug_e;
-  data.program.error.flag |= fss_write_print_flag_error_e;
-  data.program.message.flag |= fss_write_print_flag_message_e;
-  data.program.warning.flag |= fss_write_print_flag_warning_e;
+  data.program.debug.flag |= fss_write_print_flag_debug_e | fss_write_print_flag_out_e;
+  data.program.error.flag |= fss_write_print_flag_error_e | fss_write_print_flag_out_e;
+  data.program.output.flag |= fss_write_print_flag_out_e;
+  data.program.message.flag |= fss_write_print_flag_message_e | fss_write_print_flag_out_e;
+  data.program.warning.flag |= fss_write_print_flag_warning_e | fss_write_print_flag_out_e;
+  data.program.error.custom = (void *) &data;
+  data.program.debug.custom = (void *) &data;
   data.program.message.custom = (void *) &data;
   data.program.output.custom = (void *) &data;
-  data.program.error.custom = (void *) &data;
   data.program.warning.custom = (void *) &data;
-  data.program.debug.custom = (void *) &data;
 
   data.setting.state.custom = (void *) &data;
   data.setting.standard = fss_write_embedded_list_standard_s;

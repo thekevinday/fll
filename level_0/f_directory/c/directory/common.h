@@ -103,9 +103,9 @@ extern "C" {
 #endif // _di_f_directory_max_d_
 
 /**
- * Directory recurse flags.
+ * Directory recurse copy flags.
  *
- * f_directory_recurse_flag_*:
+ * f_directory_recurse_copy_flag_*_e:
  *   - none:        No flags are set.
  *   - clone:       Operate as clone instead of as copy, if applicable.
  *   - dereference: Dereference symbolic links rather than operating on the link itself.
@@ -114,17 +114,60 @@ extern "C" {
  *   - owner:       File flag representing copying the owner.
  *   - top:         Operate on top directory and not just inside the directory.
  */
-#ifndef _di_f_directory_recurse_flag_e_
+#ifndef _di_f_directory_recurse_copy_flag_e_
   enum {
-    f_directory_recurse_flag_none_e        = 0,
-    f_directory_recurse_flag_clone_e       = 0x1,
-    f_directory_recurse_flag_dereference_e = 0x2,
-    f_directory_recurse_flag_exclusive_e   = 0x4,
-    f_directory_recurse_flag_group_e       = 0x8,
-    f_directory_recurse_flag_owner_e       = 0x10,
-    f_directory_recurse_flag_top_e         = 0x20,
+    f_directory_recurse_copy_flag_none_e        = 0,
+    f_directory_recurse_copy_flag_clone_e       = 0x1,
+    f_directory_recurse_copy_flag_dereference_e = 0x2,
+    f_directory_recurse_copy_flag_exclusive_e   = 0x4,
+    f_directory_recurse_copy_flag_group_e       = 0x8,
+    f_directory_recurse_copy_flag_owner_e       = 0x10,
+    f_directory_recurse_copy_flag_top_e         = 0x20,
   }; // enum
-#endif // _di_f_directory_recurse_flag_e_
+#endif // _di_f_directory_recurse_copy_flag_e_
+
+/**
+ * Directory recurse do flags.
+ *
+ * f_directory_recurse_do_flag_*_e:
+ *   For the recurse flag property.
+ *   - none:        No flags are set.
+ *   - dereference: Dereference symbolic links rather than operating on the link itself.
+ *   - first:       Operate on directory first (before recursion).
+ *   - last:        Operate on directory last (after recursion).
+ *   - top:         Operate on top-most directory, or for the callback parameter, designate that this is the top path.
+ *
+ *   For the action callback parameter.
+ *   - block:      File is a block.
+ *   - character:  File is a character.
+ *   - directory:  File is a directory.
+ *   - fifo:       File is a file-in/file-out.
+ *   - link:       File is a link.
+ *   - regular:    File is a regular file.
+ *   - socket:     File is a socket.
+ *   - unknown:    File is an unknown type.
+ */
+#ifndef _di_f_directory_recurse_do_flag_e_
+  enum {
+
+    // For the recurse flag property.
+    f_directory_recurse_do_flag_none_e        = 0,
+    f_directory_recurse_do_flag_dereference_e = 0x1,
+    f_directory_recurse_do_flag_first_e       = 0x2,
+    f_directory_recurse_do_flag_last_e        = 0x4,
+    f_directory_recurse_do_flag_top_e         = 0x8,
+
+    // For the action callback parameter.
+    f_directory_recurse_do_flag_block_e     = 0x10,
+    f_directory_recurse_do_flag_character_e = 0x20,
+    f_directory_recurse_do_flag_directory_e = 0x40,
+    f_directory_recurse_do_flag_fifo_e      = 0x80,
+    f_directory_recurse_do_flag_link_e      = 0x100,
+    f_directory_recurse_do_flag_regular_e   = 0x200,
+    f_directory_recurse_do_flag_socket_e    = 0x400,
+    f_directory_recurse_do_flag_unknown_e   = 0x800,
+  }; // enum
+#endif // _di_f_directory_recurse_do_flag_e_
 
 #ifdef __cplusplus
 } // extern "C"

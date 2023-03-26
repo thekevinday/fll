@@ -70,11 +70,9 @@ extern "C" {
  *   - F_signal_termination
  *
  * @param main
- *   The main program data.
- * @param setting
- *   The main program settings.
+ *   The main program data and settings.
  *
- *   This alters setting.state.status:
+ *   This alters main.setting.state.status:
  *     F_none on success.
  *     F_true on success when performing verification and verify passed.
  *     F_false on success when performing verification and verify failed.

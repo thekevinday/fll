@@ -151,19 +151,7 @@ extern "C" {
 
   #define utf8_console_parameter_t_initialize \
     { \
-      macro_f_console_parameter_t_initialize_3(f_console_standard_short_help_s,          f_console_standard_long_help_s,          0, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize_3(f_console_standard_short_copyright_s,     f_console_standard_long_copyright_s,     0, f_console_flag_inverse_e), \
-      macro_f_console_parameter_t_initialize_3(f_console_standard_short_light_s,         f_console_standard_long_light_s,         0, f_console_flag_inverse_e), \
-      macro_f_console_parameter_t_initialize_3(f_console_standard_short_dark_s,          f_console_standard_long_dark_s,          0, f_console_flag_inverse_e), \
-      macro_f_console_parameter_t_initialize_3(f_console_standard_short_no_color_s,      f_console_standard_long_no_color_s,      0, f_console_flag_inverse_e), \
-      macro_f_console_parameter_t_initialize_3(f_console_standard_short_quiet_s,         f_console_standard_long_quiet_s,         0, f_console_flag_inverse_e), \
-      macro_f_console_parameter_t_initialize_3(f_console_standard_short_error_s,         f_console_standard_long_error_s,         0, f_console_flag_inverse_e), \
-      macro_f_console_parameter_t_initialize_3(f_console_standard_short_normal_s,        f_console_standard_long_normal_s,        0, f_console_flag_inverse_e), \
-      macro_f_console_parameter_t_initialize_3(f_console_standard_short_verbose_s,       f_console_standard_long_verbose_s,       0, f_console_flag_inverse_e), \
-      macro_f_console_parameter_t_initialize_3(f_console_standard_short_debug_s,         f_console_standard_long_debug_s,         0, f_console_flag_inverse_e), \
-      macro_f_console_parameter_t_initialize_3(f_console_standard_short_version_s,       f_console_standard_long_version_s,       0, f_console_flag_inverse_e), \
-      macro_f_console_parameter_t_initialize_3(f_console_standard_short_line_first_no_s, f_console_standard_long_line_first_no_s, 0, f_console_flag_inverse_e), \
-      macro_f_console_parameter_t_initialize_3(f_console_standard_short_line_last_no_s,  f_console_standard_long_line_last_no_s,  0, f_console_flag_inverse_e), \
+      macro_fll_program_console_parameter_standard_initialize, \
       \
       macro_f_console_parameter_t_initialize_3(utf8_short_from_bytesequence_s, utf8_long_from_bytesequence_s, 0, f_console_flag_normal_e), \
       macro_f_console_parameter_t_initialize_3(utf8_short_from_codepoint_s,    utf8_long_from_codepoint_s,    0, f_console_flag_normal_e), \
@@ -186,23 +174,24 @@ extern "C" {
  * Flags for fine-tuned print control.
  *
  * utf8_print_flag_*_e:
- *   - none:      No flags set.
- *   - debug:     Stream is for debug printing.
- *   - error:     Stream is for error printing.
- *   - message:   Stream is for message printing.
- *   - warning:   Stream is for warning printing.
- *   - file_to:   Stream is a destination file.
- *   - file_from: Stream is a source file.
+ *   - none:    No flags set.
+ *   - debug:   Stream is for debug printing.
+ *   - error:   Stream is for error printing.
+ *   - in:      Stream is a source file.
+ *   - message: Stream is for message printing.
+ *   - out:     Stream is a destination file.
+ *   - warning: Stream is for warning printing.
  */
 #ifndef _di_utf8_print_flag_e_
   enum {
-    utf8_print_flag_none_e      = 0x0,
-    utf8_print_flag_debug_e     = 0x1,
-    utf8_print_flag_error_e     = 0x2,
-    utf8_print_flag_message_e   = 0x4,
-    utf8_print_flag_warning_e   = 0x8,
-    utf8_print_flag_file_to_e   = 0x10,
-    utf8_print_flag_file_from_e = 0x20,
+    utf8_print_flag_none_e    = 0x0,
+    utf8_print_flag_debug_e   = 0x1,
+    utf8_print_flag_error_e   = 0x2,
+    utf8_print_flag_file_e    = 0x4,
+    utf8_print_flag_in_e      = 0x8,
+    utf8_print_flag_out_e     = 0x10,
+    utf8_print_flag_message_e = 0x20,
+    utf8_print_flag_warning_e = 0x40,
   }; // enum
 #endif // _di_utf8_print_flag_e_
 

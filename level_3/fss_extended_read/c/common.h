@@ -78,7 +78,7 @@ extern "C" {
 /**
  * The program pipe strings.
  *
- * fss_extended_read_pipe_*:
+ * fss_extended_read_pipe_*_d:
  *   - name:           A name used to represent the pipe when printing file names.
  *   - content_end:    A code used to represent the end of Content for use in binary formats.
  *   - content_ignore: A code used to represent the ignoring Content for use in binary formats.
@@ -231,19 +231,7 @@ extern "C" {
 
   #define fss_extended_read_console_parameter_t_initialize \
     { \
-      macro_f_console_parameter_t_initialize_3(f_console_standard_short_help_s,          f_console_standard_long_help_s,          0, f_console_flag_normal_e), \
-      macro_f_console_parameter_t_initialize_3(f_console_standard_short_copyright_s,     f_console_standard_long_copyright_s,     0, f_console_flag_inverse_e), \
-      macro_f_console_parameter_t_initialize_3(f_console_standard_short_light_s,         f_console_standard_long_light_s,         0, f_console_flag_inverse_e), \
-      macro_f_console_parameter_t_initialize_3(f_console_standard_short_dark_s,          f_console_standard_long_dark_s,          0, f_console_flag_inverse_e), \
-      macro_f_console_parameter_t_initialize_3(f_console_standard_short_no_color_s,      f_console_standard_long_no_color_s,      0, f_console_flag_inverse_e), \
-      macro_f_console_parameter_t_initialize_3(f_console_standard_short_quiet_s,         f_console_standard_long_quiet_s,         0, f_console_flag_inverse_e), \
-      macro_f_console_parameter_t_initialize_3(f_console_standard_short_error_s,         f_console_standard_long_error_s,         0, f_console_flag_inverse_e), \
-      macro_f_console_parameter_t_initialize_3(f_console_standard_short_normal_s,        f_console_standard_long_normal_s,        0, f_console_flag_inverse_e), \
-      macro_f_console_parameter_t_initialize_3(f_console_standard_short_verbose_s,       f_console_standard_long_verbose_s,       0, f_console_flag_inverse_e), \
-      macro_f_console_parameter_t_initialize_3(f_console_standard_short_debug_s,         f_console_standard_long_debug_s,         0, f_console_flag_inverse_e), \
-      macro_f_console_parameter_t_initialize_3(f_console_standard_short_version_s,       f_console_standard_long_version_s,       0, f_console_flag_inverse_e), \
-      macro_f_console_parameter_t_initialize_3(f_console_standard_short_line_first_no_s, f_console_standard_long_line_first_no_s, 0, f_console_flag_inverse_e), \
-      macro_f_console_parameter_t_initialize_3(f_console_standard_short_line_last_no_s,  f_console_standard_long_line_last_no_s,  0, f_console_flag_inverse_e), \
+      macro_fll_program_console_parameter_standard_initialize, \
       \
       macro_f_console_parameter_t_initialize_3(fss_extended_read_short_content_s, fss_extended_read_long_content_s, 0, 0, f_console_flag_normal_e), \
       macro_f_console_parameter_t_initialize_3(fss_extended_read_short_columns_s, fss_extended_read_long_columns_s, 0, 0, f_console_flag_normal_e), \

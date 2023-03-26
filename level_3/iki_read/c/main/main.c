@@ -4,15 +4,16 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
   iki_read_main_t data = iki_read_main_t_initialize;
 
-  data.program.debug.flag |= iki_read_print_flag_debug_e;
-  data.program.error.flag |= iki_read_print_flag_error_e;
-  data.program.message.flag |= iki_read_print_flag_message_e;
-  data.program.warning.flag |= iki_read_print_flag_warning_e;
+  data.program.debug.flag |= iki_read_print_flag_debug_e | iki_read_print_flag_out_e;
+  data.program.error.flag |= iki_read_print_flag_error_e | iki_read_print_flag_out_e;
+  data.program.output.flag |= iki_read_print_flag_out_e;
+  data.program.message.flag |= iki_read_print_flag_message_e | iki_read_print_flag_out_e;
+  data.program.warning.flag |= iki_read_print_flag_warning_e | iki_read_print_flag_out_e;
+  data.program.error.custom = (void *) &data;
+  data.program.debug.custom = (void *) &data;
   data.program.message.custom = (void *) &data;
   data.program.output.custom = (void *) &data;
-  data.program.error.custom = (void *) &data;
   data.program.warning.custom = (void *) &data;
-  data.program.debug.custom = (void *) &data;
 
   data.setting.state.custom = (void *) &data;
   data.setting.state.handle = &fll_program_standard_signal_handle;

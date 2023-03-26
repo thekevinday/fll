@@ -4,15 +4,16 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
   fss_extended_read_main_t data = fss_extended_read_main_t_initialize;
 
-  data.program.debug.flag |= fss_extended_read_print_flag_debug_e;
-  data.program.error.flag |= fss_extended_read_print_flag_error_e;
-  data.program.message.flag |= fss_extended_read_print_flag_message_e;
-  data.program.warning.flag |= fss_extended_read_print_flag_warning_e;
+  data.program.debug.flag |= fss_extended_read_print_flag_debug_e | fss_extended_read_print_flag_out_e;
+  data.program.error.flag |= fss_extended_read_print_flag_error_e | fss_extended_read_print_flag_out_e;
+  data.program.output.flag |= fss_extended_read_print_flag_out_e;
+  data.program.message.flag |= fss_extended_read_print_flag_message_e | fss_extended_read_print_flag_out_e;
+  data.program.warning.flag |= fss_extended_read_print_flag_warning_e | fss_extended_read_print_flag_out_e;
+  data.program.error.custom = (void *) &data;
+  data.program.debug.custom = (void *) &data;
   data.program.message.custom = (void *) &data;
   data.program.output.custom = (void *) &data;
-  data.program.error.custom = (void *) &data;
   data.program.warning.custom = (void *) &data;
-  data.program.debug.custom = (void *) &data;
 
   f_console_parameter_t parameters[] = fss_extended_read_console_parameter_t_initialize;
   data.program.parameters.array = parameters;

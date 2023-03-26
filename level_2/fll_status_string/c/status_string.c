@@ -540,6 +540,18 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_dynamic_compare(name, f_status_bottom_s) == F_equal_to) {
+        *code = F_bottom;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_bottom_not_s) == F_equal_to) {
+        *code = F_bottom_not;
+
+        return F_none;
+      }
+
       if (fl_string_dynamic_compare(name, f_status_bound_s) == F_equal_to) {
         *code = F_bound;
 
@@ -590,6 +602,18 @@ extern "C" {
 
       if (fl_string_dynamic_compare(name, f_status_child_s) == F_equal_to) {
         *code = F_child;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_character_s) == F_equal_to) {
+        *code = F_character;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_character_not_s) == F_equal_to) {
+        *code = F_character_not;
 
         return F_none;
       }
@@ -1008,6 +1032,18 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_dynamic_compare(name, f_status_fifo_s) == F_equal_to) {
+        *code = F_fifo;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_fifo_not_s) == F_equal_to) {
+        *code = F_fifo_not;
+
+        return F_none;
+      }
+
       if (fl_string_dynamic_compare(name, f_status_first_s) == F_equal_to) {
         *code = F_first;
 
@@ -1322,6 +1358,18 @@ extern "C" {
 
       if (fl_string_dynamic_compare(name, f_status_message_not_s) == F_equal_to) {
         *code = F_message_not;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_middle_s) == F_equal_to) {
+        *code = F_middle;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_middle_not_s) == F_equal_to) {
+        *code = F_middle_not;
 
         return F_none;
       }
@@ -1692,6 +1740,18 @@ extern "C" {
         return F_none;
       }
 
+      if (fl_string_dynamic_compare(name, f_status_regular_s) == F_equal_to) {
+        *code = F_regular;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_regular_not_s) == F_equal_to) {
+        *code = F_regular_not;
+
+        return F_none;
+      }
+
       if (fl_string_dynamic_compare(name, f_status_relative_s) == F_equal_to) {
         *code = F_relative;
 
@@ -2042,6 +2102,18 @@ extern "C" {
 
       if (fl_string_dynamic_compare(name, f_status_too_small_s) == F_equal_to) {
         *code = F_too_small;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_top_s) == F_equal_to) {
+        *code = F_top;
+
+        return F_none;
+      }
+
+      if (fl_string_dynamic_compare(name, f_status_top_not_s) == F_equal_to) {
+        *code = F_top_not;
 
         return F_none;
       }

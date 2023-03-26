@@ -55,6 +55,7 @@ search_shared yes
 search_static yes
 
 environment PATH LD_LIBRARY_PATH
+environment LANG LC_ALL LC_COLLATE LC_CTYPE LC_FASTMSG LC_MESSAGES LC_MONETARY LC_NUMERIC LC_TIME LOCPATH NLSPATH
 
 #defines -D_di_libcap_ -D_di_thread_support_
 defines -D_libcap_legacy_only_ -D_pthread_attr_unsupported_ -D_pthread_sigqueue_unsupported_

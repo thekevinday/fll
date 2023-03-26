@@ -94,16 +94,16 @@ extern "C" {
  * The source and destination must be NULL terminated.
  *
  * Symbolic links are by default not followed, they are copied as the symbolic link itself.
- * Set the f_directory_recurse_flag_dereference_e to follow the symbolic links rather than copying the link itself.
+ * Set the f_directory_recurse_copy_flag_dereference_e to follow the symbolic links rather than copying the link itself.
  *
  * This does not copy unknown file types.
  *
- * If recurse.flag has f_directory_recurse_flag_top_e set, then this operates on the top directory otherwise only the content within the directory is operated on.
+ * If recurse.flag has f_directory_recurse_copy_flag_top_e set, then this operates on the top directory otherwise only the content within the directory is operated on.
  *
- * If recurse.flag has f_directory_recurse_flag_clone_e set, then this operates a clone operation rather than a copy operation.
+ * If recurse.flag has f_directory_recurse_copy_flag_clone_e set, then this operates a clone operation rather than a copy operation.
  *
- * When using f_directory_recurse_flag_clone_e, the recurse.mode is not used.
- * When not using f_directory_recurse_flag_clone_e, the recurse.mode is used and should be set accordingly.
+ * When using f_directory_recurse_copy_flag_clone_e, the recurse.mode is not used.
+ * When not using f_directory_recurse_copy_flag_clone_e, the recurse.mode is used and should be set accordingly.
  * To not used recurse.mode, set the point to NULL.
  *
  * The recurse.state.handle() callback is used for processing and reporting errors.
@@ -150,8 +150,47 @@ extern "C" {
  * @see f_file_stat()
  */
 #ifndef _di_fl_directory_copy_
-  extern void fl_directory_copy(const f_string_static_t source, const f_string_static_t destination, f_directory_recurse_t * const recurse);
+  extern void fl_directory_copy(const f_string_static_t source, const f_string_static_t destination, f_directory_recurse_copy_t * const recurse);
 #endif // _di_fl_directory_copy_
+
+/**
+ * Perform a recursive action on some directory.
+ *
+ * This is intended to be used as an alternative to functions like fl_directory_list(), giving more control over the recursion process.
+ *
+ * @param path
+ *   The directory file path.
+ *   Must be NULL terminated.
+ * @param recurse
+ *   The directory recurse data.
+ *   This must not be NULL.
+ *
+ *   This alters recurse.state.status:
+ *     F_none on success.
+ *     F_data_not if source.used or destination.used is 0.
+ *
+ *     F_directory_not (with error bit) if the source directory does not exist.
+ *     F_failure (with error bit) for any other failure, failures might be populated with individual status codes.
+ *
+ *     Errors (with error bit) from: f_directory_create().
+ *     Errors (with error bit) from: f_directory_exists().
+ *     Errors (with error bit) from: f_string_dynamic_resize().
+ *     Errors (with error bit) from: f_string_dynamics_resize().
+ *     Errors (with error bit) from: f_file_mode_set().
+ *     Errors (with error bit) from: f_file_role_change().
+ *     Errors (with error bit) from: f_file_stat().
+ *
+ * @see f_directory_create()
+ * @see f_directory_exists()
+ * @see f_string_dynamic_resize()
+ * @see f_string_dynamics_resize()
+ * @see f_file_mode_set()
+ * @see f_file_role_change()
+ * @see f_file_stat()
+ */
+#ifndef _di_fl_directory_do_
+  extern void fl_directory_do(const f_string_static_t path, f_directory_recurse_do_t * const recurse);
+#endif // _di_fl_directory_do_
 
 /**
  * For some given path, print the names of each file and/or directory inside the directory, stored as a directory listing.

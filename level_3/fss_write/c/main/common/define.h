@@ -19,7 +19,7 @@ extern "C" {
 /**
  * The program default defines.
  *
- * fss_write_*:
+ * fss_write_*_d:
  *   - allocation_console: An allocation step used for small buffers specifically for console parameter.
  *   - allocation_large:   An allocation step used for buffers that are anticipated to have large buffers.
  *   - allocation_small:   An allocation step used for buffers that are anticipated to have small buffers.

@@ -295,10 +295,14 @@
 #define _di_f_directory_mode_
 //#define _di_f_directory_open_
 #define _di_f_directory_open_at_
-//#define _di_f_directory_recurse_delete_
-#define _di_f_directory_recurse_destroy_
-//#define _di_f_directory_recurse_flag_e_
-//#define _di_f_directory_recurse_t_
+//#define _di_f_directory_recurse_copy_delete_
+#define _di_f_directory_recurse_copy_destroy_
+//#define _di_f_directory_recurse_copy_flag_e_
+//#define _di_f_directory_recurse_copy_t_
+#define _di_f_directory_recurse_do_delete_
+#define _di_f_directory_recurse_do_destroy_
+#define _di_f_directory_recurse_do_flag_e_
+#define _di_f_directory_recurse_do_t_
 //#define _di_f_directory_remove_
 //#define _di_f_directory_remove_custom_
 #define _di_f_directory_s_
@@ -806,6 +810,7 @@
 
 //#define _di_fl_directory_copy_
 //#define _di_fl_directory_create_
+#define _di_fl_directory_do_
 //#define _di_fl_directory_list_
 #define _di_fl_directory_path_pop_
 #define _di_fl_directory_path_push_

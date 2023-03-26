@@ -83,7 +83,7 @@ extern "C" {
 
     if (!void_recurse) return;
 
-    f_directory_recurse_t * const recurse = (f_directory_recurse_t * const) void_recurse;
+    f_directory_recurse_copy_t * const recurse = (f_directory_recurse_copy_t * const) void_recurse;
 
     if (!recurse->state.custom) {
       recurse->state.status = F_output_not;
@@ -108,7 +108,7 @@ extern "C" {
 
     if (!void_recurse) return;
 
-    f_directory_recurse_t * const recurse = (f_directory_recurse_t * const) void_recurse;
+    f_directory_recurse_copy_t * const recurse = (f_directory_recurse_copy_t * const) void_recurse;
 
     if (!recurse->state.custom) {
       recurse->state.status = F_output_not;
@@ -133,7 +133,7 @@ extern "C" {
 
     if (!void_recurse) return;
 
-    f_directory_recurse_t * const recurse = (f_directory_recurse_t * const) void_recurse;
+    f_directory_recurse_copy_t * const recurse = (f_directory_recurse_copy_t * const) void_recurse;
 
     if (!recurse->state.custom) {
       recurse->state.status = F_output_not;

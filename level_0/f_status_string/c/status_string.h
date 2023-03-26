@@ -250,6 +250,8 @@ extern "C" {
     #define F_status_block_not_s         "F_block_not"
     #define F_status_body_s              "F_body"
     #define F_status_body_not_s          "F_body_not"
+    #define F_status_bottom_s            "F_bottom"
+    #define F_status_bottom_not_s        "F_bottom_not"
     #define F_status_bound_s             "F_bound"
     #define F_status_bound_not_s         "F_bound_not"
     #define F_status_break_s             "F_break"
@@ -258,6 +260,8 @@ extern "C" {
     #define F_status_call_not_s          "F_call_not"
     #define F_status_capability_s        "F_capability"
     #define F_status_capability_not_s    "F_capability_not"
+    #define F_status_character_s         "F_character"
+    #define F_status_character_not_s     "F_character_not"
     #define F_status_child_s             "F_child"
     #define F_status_child_not_s         "F_child_not"
     #define F_status_complete_s          "F_complete"
@@ -328,6 +332,8 @@ extern "C" {
     #define F_status_failure_not_s       "F_failure_not"
     #define F_status_family_s            "F_family"
     #define F_status_family_not_s        "F_family_not"
+    #define F_status_fifo_s              "F_fifo"
+    #define F_status_fifo_not_s          "F_fifo_not"
     #define F_status_first_s             "F_first"
     #define F_status_first_not_s         "F_first_not"
     #define F_status_footer_s            "F_footer"
@@ -381,6 +387,8 @@ extern "C" {
     #define F_status_memory_not_s        "F_memory_not"
     #define F_status_message_s           "F_message"
     #define F_status_message_not_s       "F_message_not"
+    #define F_status_middle_s            "F_middle"
+    #define F_status_middle_not_s        "F_middle_not"
     #define F_status_minor_s             "F_minor"
     #define F_status_minor_not_s         "F_minor_not"
     #define F_status_moderate_s          "F_moderate"
@@ -444,6 +452,8 @@ extern "C" {
     #define F_status_recover_not_s       "F_recover_not"
     #define F_status_recurse_s           "F_recurse"
     #define F_status_recurse_not_s       "F_recurse_not"
+    #define F_status_regular_s           "F_regular"
+    #define F_status_regular_not_s       "F_regular_not"
     #define F_status_relative_s          "F_relative"
     #define F_status_relative_not_s      "F_relative_not"
     #define F_status_remote_s            "F_remote"
@@ -499,12 +509,14 @@ extern "C" {
     #define F_status_time_out_s          "F_time_out"
     #define F_status_too_large_s         "F_too_large"
     #define F_status_too_small_s         "F_too_small"
+    #define F_status_top_s               "F_top"
+    #define F_status_top_not_s           "F_top_not"
     #define F_status_type_s              "F_type"
     #define F_status_type_not_s          "F_type_not"
     #define F_status_success_s           "F_success"
     #define F_status_success_not_s       "F_success_not"
-    #define F_status_support_s         "F_support"
-    #define F_status_support_not_s     "F_support_not"
+    #define F_status_support_s           "F_support"
+    #define F_status_support_not_s       "F_support_not"
     #define F_status_user_s              "F_user"
     #define F_status_user_not_s          "F_user_not"
     #define F_status_utf_s               "F_utf"
@@ -550,12 +562,16 @@ extern "C" {
     #define F_status_block_not_s_length         11
     #define F_status_body_s_length              6
     #define F_status_body_not_s_length          10
+    #define F_status_bottom_s_length            8
+    #define F_status_bottom_not_s_length        12
     #define F_status_bound_s_length             7
     #define F_status_bound_not_s_length         11
     #define F_status_call_s_length              6
     #define F_status_call_not_s_length          10
     #define F_status_capability_s_length        12
     #define F_status_capability_not_s_length    16
+    #define F_status_character_s_length         11
+    #define F_status_character_not_s_length     15
     #define F_status_child_s_length             7
     #define F_status_child_not_s_length         11
     #define F_status_complete_s_length          10
@@ -626,6 +642,8 @@ extern "C" {
     #define F_status_failure_not_s_length       13
     #define F_status_family_s_length            8
     #define F_status_family_not_s_length        12
+    #define F_status_fifo_s_length              6
+    #define F_status_fifo_not_s_length          10
     #define F_status_first_s_length             7
     #define F_status_first_not_s_length         11
     #define F_status_footer_s_length            8
@@ -679,6 +697,8 @@ extern "C" {
     #define F_status_memory_not_s_length        12
     #define F_status_message_s_length           9
     #define F_status_message_not_s_length       13
+    #define F_status_middle_s_length            8
+    #define F_status_middle_not_s_length        12
     #define F_status_minor_s_length             7
     #define F_status_minor_not_s_length         11
     #define F_status_moderate_s_length          10
@@ -742,6 +762,8 @@ extern "C" {
     #define F_status_recover_not_s_length       13
     #define F_status_recurse_s_length           9
     #define F_status_recurse_not_s_length       13
+    #define F_status_regular_s_length           9
+    #define F_status_regular_not_s_length       13
     #define F_status_relative_s_length          10
     #define F_status_relative_not_s_length      14
     #define F_status_remote_s_length            8
@@ -801,6 +823,8 @@ extern "C" {
     #define F_status_time_out_s_length          10
     #define F_status_too_large_s_length         11
     #define F_status_too_small_s_length         11
+    #define F_status_top_s_length               5
+    #define F_status_top_not_s_length           9
     #define F_status_type_s_length              6
     #define F_status_type_not_s_length          10
     #define F_status_user_s_length              6
@@ -846,6 +870,8 @@ extern "C" {
     extern const f_string_static_t f_status_block_not_s;
     extern const f_string_static_t f_status_body_s;
     extern const f_string_static_t f_status_body_not_s;
+    extern const f_string_static_t f_status_bottom_s;
+    extern const f_string_static_t f_status_bottom_not_s;
     extern const f_string_static_t f_status_bound_s;
     extern const f_string_static_t f_status_bound_not_s;
     extern const f_string_static_t f_status_break_s;
@@ -854,6 +880,8 @@ extern "C" {
     extern const f_string_static_t f_status_call_not_s;
     extern const f_string_static_t f_status_capability_s;
     extern const f_string_static_t f_status_capability_not_s;
+    extern const f_string_static_t f_status_character_s;
+    extern const f_string_static_t f_status_character_not_s;
     extern const f_string_static_t f_status_child_s;
     extern const f_string_static_t f_status_child_not_s;
     extern const f_string_static_t f_status_complete_s;
@@ -926,6 +954,8 @@ extern "C" {
     extern const f_string_static_t f_status_failure_not_s;
     extern const f_string_static_t f_status_family_s;
     extern const f_string_static_t f_status_family_not_s;
+    extern const f_string_static_t f_status_fifo_s;
+    extern const f_string_static_t f_status_fifo_not_s;
     extern const f_string_static_t f_status_first_s;
     extern const f_string_static_t f_status_first_not_s;
     extern const f_string_static_t f_status_footer_s;
@@ -979,6 +1009,8 @@ extern "C" {
     extern const f_string_static_t f_status_memory_not_s;
     extern const f_string_static_t f_status_message_s;
     extern const f_string_static_t f_status_message_not_s;
+    extern const f_string_static_t f_status_middle_s;
+    extern const f_string_static_t f_status_middle_not_s;
     extern const f_string_static_t f_status_minor_s;
     extern const f_string_static_t f_status_minor_not_s;
     extern const f_string_static_t f_status_moderate_s;
@@ -1042,6 +1074,8 @@ extern "C" {
     extern const f_string_static_t f_status_recover_not_s;
     extern const f_string_static_t f_status_recurse_s;
     extern const f_string_static_t f_status_recurse_not_s;
+    extern const f_string_static_t f_status_regular_s;
+    extern const f_string_static_t f_status_regular_not_s;
     extern const f_string_static_t f_status_relative_s;
     extern const f_string_static_t f_status_relative_not_s;
     extern const f_string_static_t f_status_remote_s;
@@ -1097,6 +1131,8 @@ extern "C" {
     extern const f_string_static_t f_status_time_out_s;
     extern const f_string_static_t f_status_too_large_s;
     extern const f_string_static_t f_status_too_small_s;
+    extern const f_string_static_t f_status_top_s;
+    extern const f_string_static_t f_status_top_not_s;
     extern const f_string_static_t f_status_type_s;
     extern const f_string_static_t f_status_type_not_s;
     extern const f_string_static_t f_status_success_s;

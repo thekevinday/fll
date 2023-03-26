@@ -181,8 +181,8 @@ extern "C" {
 /**
  * Helper function for performing a verbose print for a file clone operation.
  *
- * This is intended to be passed as a callback to f_directory_recurse_t.verbose.
- * The f_directory_recurse_t.state.custom must be the fake_data_t.
+ * This is intended to be passed as a callback to f_directory_recurse_copy_t.verbose.
+ * The f_directory_recurse_copy_t.state.custom must be the fake_data_t.
  *
  * @param source
  *   The source string.
@@ -204,8 +204,8 @@ extern "C" {
 /**
  * Helper function for performing a verbose print for a file copy operation.
  *
- * This is intended to be passed as a callback to f_directory_recurse_t.verbose.
- * The f_directory_recurse_t.state.custom must be the fake_data_t.
+ * This is intended to be passed as a callback to f_directory_recurse_copy_t.verbose.
+ * The f_directory_recurse_copy_t.state.custom must be the fake_data_t.
  *
  * @param source
  *   The source string.
@@ -227,8 +227,8 @@ extern "C" {
 /**
 * Print a verbose message for when a file is moved.
  *
- * This is intended to be passed as a callback to f_directory_recurse_t.verbose.
- * The f_directory_recurse_t.state.custom must be the fake_data_t.
+ * This is intended to be passed as a callback to f_directory_recurse_copy_t.verbose.
+ * The f_directory_recurse_copy_t.state.custom must be the fake_data_t.
  *
  * @param source
  *   The source string.
