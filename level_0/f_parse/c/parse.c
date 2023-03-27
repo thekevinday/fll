@@ -12,6 +12,7 @@ extern "C" {
 
     if (!buffer.used) return F_data_not;
     if (range->start > range->stop) return F_data_not_stop;
+    if (range->start >= buffer.used) return F_data_not_eos;
 
     const unsigned short seek_width = macro_f_utf_char_t_width(seek_to_this);
 
@@ -20,7 +21,7 @@ extern "C" {
     unsigned short width = 0;
     f_array_length_t width_max = 0;
 
-    while (range->start <= range->stop) {
+    while (range->start <= range->stop && range->start < buffer.used) {
 
       width_max = (range->stop - range->start) + 1;
       width = macro_f_utf_byte_width_is(buffer.string[range->start]);
@@ -37,6 +38,7 @@ extern "C" {
       }
       else {
         if (range->start + width > range->stop) return F_status_set_error(F_complete_not_utf_stop);
+        if (range->start + width >= buffer.used) return F_status_set_error(F_complete_not_utf_eos);
 
         if (width == seek_width) {
           f_utf_char_t character = 0;
@@ -50,6 +52,7 @@ extern "C" {
       range->start += width;
 
       if (range->start >= range->stop) return F_none_stop;
+      if (range->start > buffer.used) return F_none_eos;
     } // while
 
     return F_none_eos;
@@ -64,6 +67,7 @@ extern "C" {
 
     if (!buffer.used) return F_data_not;
     if (range->start > range->stop) return F_data_not_stop;
+    if (range->start >= buffer.used) return F_data_not_eos;
 
     f_status_t status = F_none;
     unsigned short width = 0;
@@ -87,11 +91,13 @@ extern "C" {
       }
       else {
         if (range->start + width > range->stop) return F_status_set_error(F_complete_not_utf_stop);
+        if (range->start + width >= buffer.used) return F_status_set_error(F_complete_not_utf_eos);
       }
 
       range->start += width;
 
       if (range->start > range->stop) return F_none_stop;
+      if (range->start >= buffer.used) return F_none_eos;
 
       width_max = (range->stop - range->start) + 1;
     } // while
@@ -110,6 +116,7 @@ extern "C" {
 
     if (!buffer.used) return F_data_not;
     if (range->start > range->stop) return F_data_not_stop;
+    if (range->start >= buffer.used) return F_data_not_eos;
 
     f_status_t status = F_none;
     unsigned short width = 0;
@@ -133,11 +140,13 @@ extern "C" {
       }
       else {
         if (range->start + width > range->stop) return F_status_set_error(F_complete_not_utf_stop);
+        if (range->start + width >= buffer.used) return F_status_set_error(F_complete_not_utf_eos);
       }
 
       range->start += width;
 
       if (range->start > range->stop) return F_none_stop;
+      if (range->start >= buffer.used) return F_none_eos;
 
       width_max = (range->stop - range->start) + 1;
     } // while
@@ -157,6 +166,7 @@ extern "C" {
     if (!buffer.used) return F_data_not;
 
     if (range->start > range->stop) return F_data_not_stop;
+    if (range->start > buffer.used) return F_data_not_eos;
 
     const unsigned short seek_width = macro_f_utf_char_t_width(seek_to_this);
 
@@ -166,7 +176,7 @@ extern "C" {
 
     f_array_length_t width_max = 0;
 
-    while (range->start <= range->stop) {
+    while (range->start <= range->stop && range->start < buffer.used) {
 
       width_max = (range->stop - range->start) + 1;
       width = macro_f_utf_byte_width_is(buffer.string[range->start]);
@@ -183,9 +193,8 @@ extern "C" {
         return F_status_set_error(F_complete_not_utf);
       }
       else {
-        if (range->start + width > range->stop) {
-          return F_status_set_error(F_complete_not_utf_stop);
-        }
+        if (range->start + width > range->stop) return F_status_set_error(F_complete_not_utf_stop);
+        if (range->start + width >= buffer.used) return F_status_set_error(F_complete_not_utf_eos);
 
         if (width == seek_width) {
           f_utf_char_t character = 0;
@@ -197,9 +206,9 @@ extern "C" {
       }
 
       range->start += width;
-
-      if (range->start >= range->stop) return F_none_stop;
     } // while
+
+    if (range->start >= range->stop) return F_none_stop;
 
     return F_none_eos;
   }
@@ -217,7 +226,7 @@ extern "C" {
     }
 
     // Skip past all leading NULLs.
-    for (; range->start <= range->stop; ++range->start) {
+    for (; range->start <= range->stop && range->start < buffer.used; ++range->start) {
       if (buffer.string[range->start]) break;
     } // for
 
@@ -229,7 +238,7 @@ extern "C" {
     if (range->stop - range->start < 5) {
 
       // Increment until stop, while taking into consideration UTF-8 character widths.
-      for (; range->start <= range->stop; ) {
+      for (; range->start <= range->stop && range->start < buffer.used; ) {
 
         if (buffer.string[range->start] == f_string_eol_s.string[0]) {
           ++range->start;
@@ -245,7 +254,7 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    for (; range->start <= range->stop; ) {
+    for (; range->start <= range->stop && range->start < buffer.used; ) {
 
       status = f_utf_is_whitespace(buffer.string + range->start, (range->stop - range->start) + 1, F_false);
 
@@ -274,14 +283,12 @@ extern "C" {
       range->start += macro_f_utf_byte_width(buffer.string[range->start]);
     } // for
 
-    if (range->start > range->stop) {
-      return F_found_not;
-    }
+    if (range->start > range->stop || range->start > buffer.used) return F_found_not;
 
     if (range->stop - range->start < 5) {
 
       // Increment until stop, while taking into consideration UTF-8 character widths.
-      for (; range->start <= range->stop; ) {
+      for (; range->start <= range->stop && range->start < buffer.used; ) {
 
         if (buffer.string[range->start] == f_string_eol_s.string[0]) {
           ++range->start;
@@ -297,7 +304,7 @@ extern "C" {
 
     f_array_length_t i = range->start;
 
-    for (; range->start <= range->stop; ) {
+    for (; range->start <= range->stop && range->start < buffer.used; ) {
 
       status = f_utf_is_word(buffer.string + range->start, (range->stop - range->start) + 1, F_true);
       if (F_status_is_error(status)) return status;
@@ -315,10 +322,10 @@ extern "C" {
       range->start += macro_f_utf_byte_width(buffer.string[range->start]);
     } // for
 
-    if (range->start > range->stop || buffer.string[range->start] != f_string_ascii_minus_s.string[0]) {
+    if (range->start > range->stop || range->start >= buffer.used || buffer.string[range->start] != f_string_ascii_minus_s.string[0]) {
 
       // Increment until stop, while taking into consideration UTF-8 character widths.
-      for (; range->start <= range->stop; ) {
+      for (; range->start <= range->stop && range->start < buffer.used; ) {
 
         if (buffer.string[range->start] == f_string_eol_s.string[0]) {
           ++range->start;
@@ -336,13 +343,13 @@ extern "C" {
       f_array_length_t j = 0;
       f_char_t number[5] = { 0, 0, 0, 0, 0 };
 
-      for (++range->start; range->start <= range->stop && j < 4; ++range->start, ++j) {
+      for (++range->start; range->start <= range->stop && range->start < buffer.used && j < 4; ++range->start, ++j) {
 
         // The hexidecimal representing the number may only be ASCII.
         if (macro_f_utf_byte_width_is(buffer.string[range->start])) {
 
           // Increment until stop, while taking into consideration UTF-8 character widths.
-          for (; range->start <= range->stop; ) {
+          for (; range->start <= range->stop && range->start < buffer.used; ) {
 
             if (buffer.string[range->start] == f_string_eol_s.string[0]) {
               ++range->start;
@@ -378,7 +385,7 @@ extern "C" {
       else {
 
         // Increment until stop, while taking into consideration UTF-8 character widths.
-        for (; range->start <= range->stop; ) {
+        for (; range->start <= range->stop && range->start < buffer.used; ) {
 
           if (buffer.string[range->start] == f_string_eol_s.string[0]) {
             ++range->start;
@@ -398,7 +405,7 @@ extern "C" {
     }
 
     // Skip past all NULLs.
-    for (; range->start <= range->stop; ++range->start) {
+    for (; range->start <= range->stop && range->start < buffer.used; ++range->start) {
       if (buffer.string[range->start]) break;
     } // for
 
@@ -417,7 +424,7 @@ extern "C" {
       if (status == F_false) {
 
         // Increment until stop, while taking into consideration UTF-8 character widths.
-        for (; range->start <= range->stop; ) {
+        for (; range->start <= range->stop && range->start < buffer.used; ) {
 
           if (buffer.string[range->start] == f_string_eol_s.string[0]) {
             ++range->start;
@@ -441,7 +448,7 @@ extern "C" {
     }
 
     if (id) {
-      for (f_array_length_t j = i, i = 0; j <= range->stop; ++j) {
+      for (f_array_length_t j = i, i = 0; j <= range->stop && j < buffer.used; ++j) {
 
         if (!buffer.string[j]) continue;
         if (buffer.string[j] == f_string_ascii_minus_s.string[0]) break;
@@ -466,9 +473,7 @@ extern "C" {
       if (!range) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (range->start > range->stop) {
-      return F_data_not_stop;
-    }
+    if (range->start > range->stop) return F_data_not_stop;
 
     const unsigned short seek_width = macro_f_utf_char_t_width(seek_to);
 
