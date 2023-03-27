@@ -10,20 +10,22 @@ f_type_array
 f_string
 f_utf
 f_color
+f_compare
 f_console
 f_conversion
 f_directory
 f_file
+f_parse
 f_path
 f_pipe
 f_print
+f_rip
 f_signal
 f_status_string
 
 fl_conversion
 fl_directory
 fl_print
-fl_string
 
 fll_error
 fll_print

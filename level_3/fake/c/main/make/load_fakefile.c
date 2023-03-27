@@ -115,7 +115,7 @@ extern "C" {
             data_make->main->program.signal_check = 0;
           }
 
-          if (fl_string_dynamic_partial_compare_string(fake_make_item_settings_s.string, data_make->buffer, fake_make_item_settings_s.used, list_objects.array[i]) == F_equal_to) {
+          if (f_compare_dynamic_partial_string(fake_make_item_settings_s.string, data_make->buffer, fake_make_item_settings_s.used, list_objects.array[i]) == F_equal_to) {
             if (!missing_settings) {
               fake_make_print_warning_setting_object_multiple(&data_make->main->program.warning, data_make->data->file_data_build_fakefile, fake_make_item_settings_s);
 
@@ -146,7 +146,7 @@ extern "C" {
             continue;
           }
 
-          if (fl_string_dynamic_partial_compare_string(fake_make_item_main_s.string, data_make->buffer, fake_make_item_main_s.used, list_objects.array[i]) == F_equal_to) {
+          if (f_compare_dynamic_partial_string(fake_make_item_main_s.string, data_make->buffer, fake_make_item_main_s.used, list_objects.array[i]) == F_equal_to) {
             if (!missing_main) {
               fake_make_print_warning_setting_object_multiple(&data_make->main->program.warning, data_make->data->file_data_build_fakefile, fake_make_item_main_s);
 
@@ -244,23 +244,23 @@ extern "C" {
       if (settings.objects.used) {
         for (f_array_length_t i = 0; i < settings.objects.used; ++i) {
 
-          if (fl_string_dynamic_partial_compare_string(fake_make_setting_load_build_s.string, data_make->buffer, fake_make_setting_load_build_s.used, settings.objects.array[i]) == F_equal_to) {
+          if (f_compare_dynamic_partial_string(fake_make_setting_load_build_s.string, data_make->buffer, fake_make_setting_load_build_s.used, settings.objects.array[i]) == F_equal_to) {
             fake_make_load_fakefile_setting_build(data_make, &settings.objects.array[i], &settings.contents.array[i]);
           }
-          else if (fl_string_dynamic_partial_compare_string(fake_make_setting_compiler_s.string, data_make->buffer, fake_make_setting_compiler_s.used, settings.objects.array[i]) == F_equal_to) {
+          else if (f_compare_dynamic_partial_string(fake_make_setting_compiler_s.string, data_make->buffer, fake_make_setting_compiler_s.used, settings.objects.array[i]) == F_equal_to) {
             fake_make_load_fakefile_setting_compiler(data_make, &settings.objects.array[i], &settings.contents.array[i], &range_compiler);
           }
-          else if (fl_string_dynamic_partial_compare_string(fake_make_setting_environment_s.string, data_make->buffer, fake_make_setting_environment_s.used, settings.objects.array[i]) == F_equal_to) {
+          else if (f_compare_dynamic_partial_string(fake_make_setting_environment_s.string, data_make->buffer, fake_make_setting_environment_s.used, settings.objects.array[i]) == F_equal_to) {
             fake_make_load_fakefile_setting_environment(data_make, &settings.contents.array[i]);
             if (F_status_is_error(data_make->main->setting.state.status)) break;
           }
-          else if (fl_string_dynamic_partial_compare_string(fake_make_setting_fail_s.string, data_make->buffer, fake_make_setting_fail_s.used, settings.objects.array[i]) == F_equal_to) {
+          else if (f_compare_dynamic_partial_string(fake_make_setting_fail_s.string, data_make->buffer, fake_make_setting_fail_s.used, settings.objects.array[i]) == F_equal_to) {
             fake_make_load_fakefile_setting_fail(data_make, &settings.objects.array[i], &settings.contents.array[i]);
           }
-          else if (fl_string_dynamic_partial_compare_string(fake_make_setting_indexer_s.string, data_make->buffer, fake_make_setting_indexer_s.used, settings.objects.array[i]) == F_equal_to) {
+          else if (f_compare_dynamic_partial_string(fake_make_setting_indexer_s.string, data_make->buffer, fake_make_setting_indexer_s.used, settings.objects.array[i]) == F_equal_to) {
             fake_make_load_fakefile_setting_indexer(data_make, &settings.objects.array[i], &settings.contents.array[i], &range_indexer);
           }
-          else if (fl_string_dynamic_partial_compare_string(fake_make_setting_parameter_s.string, data_make->buffer, fake_make_setting_parameter_s.used, settings.objects.array[i]) == F_equal_to) {
+          else if (f_compare_dynamic_partial_string(fake_make_setting_parameter_s.string, data_make->buffer, fake_make_setting_parameter_s.used, settings.objects.array[i]) == F_equal_to) {
             fake_make_load_fakefile_setting_parameter(data_make, &settings.objects.array[i], &settings.contents.array[i]);
             if (F_status_is_error(data_make->main->setting.state.status)) break;
           }
@@ -325,10 +325,10 @@ extern "C" {
     if (!data_make || !data_make->data || !data_make->main || !object || !content) return;
 
     if (content->used) {
-      if (fl_string_dynamic_partial_compare_string(fake_common_setting_bool_yes_s.string, data_make->buffer, fake_common_setting_bool_yes_s.used, content->array[0]) == F_equal_to) {
+      if (f_compare_dynamic_partial_string(fake_common_setting_bool_yes_s.string, data_make->buffer, fake_common_setting_bool_yes_s.used, content->array[0]) == F_equal_to) {
         data_make->setting_make.load_build = F_true;
       }
-      else if (fl_string_dynamic_partial_compare_string(fake_common_setting_bool_no_s.string, data_make->buffer, fake_common_setting_bool_no_s.used, content->array[0]) == F_equal_to) {
+      else if (f_compare_dynamic_partial_string(fake_common_setting_bool_no_s.string, data_make->buffer, fake_common_setting_bool_no_s.used, content->array[0]) == F_equal_to) {
         data_make->setting_make.load_build = F_false;
       }
       else {
@@ -474,7 +474,7 @@ extern "C" {
       // The environment settings are stored in the build settings rather than the make settings.
       if (fake_make_operate_validate_define_name(name_define) == F_true) {
         for (j = 0; j < data_make->setting_build.environment.used; ++j) {
-          if (fl_string_dynamic_compare(name_define, data_make->setting_build.environment.array[j]) == F_equal_to) break;
+          if (f_compare_dynamic(name_define, data_make->setting_build.environment.array[j]) == F_equal_to) break;
         } // for
 
         if (j == data_make->setting_build.environment.used) {
@@ -541,13 +541,13 @@ extern "C" {
     if (!data_make || !data_make->data || !data_make->data || !data_make->main || !object || !content) return;
 
     if (content->used) {
-      if (fl_string_dynamic_partial_compare_string(fake_make_operation_argument_exit_s.string, data_make->buffer, fake_make_operation_argument_exit_s.used, content->array[content->used - 1]) == F_equal_to) {
+      if (f_compare_dynamic_partial_string(fake_make_operation_argument_exit_s.string, data_make->buffer, fake_make_operation_argument_exit_s.used, content->array[content->used - 1]) == F_equal_to) {
         data_make->setting_make.fail = fake_make_operation_fail_exit_e;
       }
-      else if (fl_string_dynamic_partial_compare_string(fake_make_operation_argument_warn_s.string, data_make->buffer, fake_make_operation_argument_warn_s.used, content->array[content->used - 1]) == F_equal_to) {
+      else if (f_compare_dynamic_partial_string(fake_make_operation_argument_warn_s.string, data_make->buffer, fake_make_operation_argument_warn_s.used, content->array[content->used - 1]) == F_equal_to) {
         data_make->setting_make.fail = fake_make_operation_fail_warn_e;
       }
-      else if (fl_string_dynamic_partial_compare_string(fake_make_operation_argument_ignore_s.string, data_make->buffer, fake_make_operation_argument_ignore_s.used, content->array[content->used - 1]) == F_equal_to) {
+      else if (f_compare_dynamic_partial_string(fake_make_operation_argument_ignore_s.string, data_make->buffer, fake_make_operation_argument_ignore_s.used, content->array[content->used - 1]) == F_equal_to) {
         data_make->setting_make.fail = fake_make_operation_fail_ignore_e;
       }
       else {
@@ -588,7 +588,7 @@ extern "C" {
     if (!data_make || !data_make->data || !data_make->data || !data_make->main || !object || !content) return;
 
     if (content->used) {
-      if (fl_string_dynamic_partial_compare_string(fake_make_setting_return_s.string, data_make->buffer, fake_make_setting_return_s.used, content->array[0]) == F_equal_to) {
+      if (f_compare_dynamic_partial_string(fake_make_setting_return_s.string, data_make->buffer, fake_make_setting_return_s.used, content->array[0]) == F_equal_to) {
         if (content->used > 1) {
 
           // Each "return" define replaces the previous "return" define.

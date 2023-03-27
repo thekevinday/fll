@@ -177,10 +177,10 @@ extern "C" {
           depths->array[depths->used].value_name.used = 0;
 
           if (data->main->parameters.array[fss_embedded_list_read_parameter_trim_e].result & f_console_result_found_e) {
-            status = fl_string_dynamic_rip(argv[values_order[i]], &depths->array[depths->used].value_name);
+            status = f_rip_dynamic(argv[values_order[i]], &depths->array[depths->used].value_name);
 
             if (F_status_is_error(status)) {
-              fll_error_print(data->main->error, F_status_set_fine(status), "fl_string_dynamic_rip", fll_error_file_flag_fallback_e);
+              fll_error_print(data->main->error, F_status_set_fine(status), "f_rip_dynamic", fll_error_file_flag_fallback_e);
 
               return status;
             }
@@ -389,12 +389,12 @@ extern "C" {
 
             if (data->main->parameters.array[fss_embedded_list_read_parameter_trim_e].result & f_console_result_found_e) {
 
-              if (fl_string_dynamic_partial_compare_except_trim_dynamic(depths.array[depths_index].value_name, data->buffer, items->array[depths.array[depths_index].value_at].object, except_none, *objects_delimits) != F_equal_to) {
+              if (f_compare_dynamic_partial_except_trim_dynamic(depths.array[depths_index].value_name, data->buffer, items->array[depths.array[depths_index].value_at].object, except_none, *objects_delimits) != F_equal_to) {
                 skip[depths.array[depths_index].value_at] = F_true;
               }
             }
             else {
-              if (fl_string_dynamic_partial_compare_except_dynamic(depths.array[depths_index].value_name, data->buffer, items->array[depths.array[depths_index].value_at].object, except_none, *objects_delimits) != F_equal_to) {
+              if (f_compare_dynamic_partial_except_dynamic(depths.array[depths_index].value_name, data->buffer, items->array[depths.array[depths_index].value_at].object, except_none, *objects_delimits) != F_equal_to) {
                 skip[depths.array[depths_index].value_at] = F_true;
               }
             }
@@ -407,7 +407,7 @@ extern "C" {
 
             if (skip[i]) continue;
 
-            if (fl_string_dynamic_partial_compare_except_trim_dynamic(depths.array[depths_index].value_name, data->buffer, items->array[i].object, except_none, *objects_delimits) != F_equal_to) {
+            if (f_compare_dynamic_partial_except_trim_dynamic(depths.array[depths_index].value_name, data->buffer, items->array[i].object, except_none, *objects_delimits) != F_equal_to) {
               skip[i] = F_true;
             }
           } // for
@@ -417,7 +417,7 @@ extern "C" {
 
             if (skip[i]) continue;
 
-            if (fl_string_dynamic_partial_compare_except_dynamic(depths.array[depths_index].value_name, data->buffer, items->array[i].object, except_none, *objects_delimits) != F_equal_to) {
+            if (f_compare_dynamic_partial_except_dynamic(depths.array[depths_index].value_name, data->buffer, items->array[i].object, except_none, *objects_delimits) != F_equal_to) {
               skip[i] = F_true;
             }
           } // for

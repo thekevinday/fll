@@ -36,15 +36,15 @@ extern "C" {
 #ifndef _di_controller_control_payload_type_identify_
   uint8_t controller_control_payload_type_identify(const f_string_static_t payload) {
 
-    if (fl_string_dynamic_compare(payload, controller_controller_s) == F_equal_to) {
+    if (f_compare_dynamic(payload, controller_controller_s) == F_equal_to) {
       return controller_control_payload_type_controller_e;
     }
 
-    if (fl_string_dynamic_compare(payload, controller_error_s) == F_equal_to) {
+    if (f_compare_dynamic(payload, controller_error_s) == F_equal_to) {
       return controller_control_payload_type_error_e;
     }
 
-    if (fl_string_dynamic_compare(payload, controller_init_s) == F_equal_to) {
+    if (f_compare_dynamic(payload, controller_init_s) == F_equal_to) {
       return controller_control_payload_type_init_e;
     }
 
@@ -73,75 +73,75 @@ extern "C" {
 #ifndef _di_controller_entry_action_type_identify_
   uint8_t controller_entry_action_type_identify(const f_string_static_t action) {
 
-    if (fl_string_dynamic_compare(action, controller_consider_s) == F_equal_to) {
+    if (f_compare_dynamic(action, controller_consider_s) == F_equal_to) {
       return controller_entry_action_type_consider_e;
     }
 
-    if (fl_string_dynamic_compare(action, controller_execute_s) == F_equal_to) {
+    if (f_compare_dynamic(action, controller_execute_s) == F_equal_to) {
       return controller_entry_action_type_execute_e;
     }
 
-    if (fl_string_dynamic_compare(action, controller_failsafe_s) == F_equal_to) {
+    if (f_compare_dynamic(action, controller_failsafe_s) == F_equal_to) {
       return controller_entry_action_type_failsafe_e;
     }
 
-    if (fl_string_dynamic_compare(action, controller_freeze_s) == F_equal_to) {
+    if (f_compare_dynamic(action, controller_freeze_s) == F_equal_to) {
       return controller_entry_action_type_freeze_e;
     }
 
-    if (fl_string_dynamic_compare(action, controller_item_s) == F_equal_to) {
+    if (f_compare_dynamic(action, controller_item_s) == F_equal_to) {
       return controller_entry_action_type_item_e;
     }
 
-    if (fl_string_dynamic_compare(action, controller_kexec_s) == F_equal_to) {
+    if (f_compare_dynamic(action, controller_kexec_s) == F_equal_to) {
       return controller_entry_action_type_kexec_e;
     }
 
-    if (fl_string_dynamic_compare(action, controller_kill_s) == F_equal_to) {
+    if (f_compare_dynamic(action, controller_kill_s) == F_equal_to) {
       return controller_entry_action_type_kill_e;
     }
 
-    if (fl_string_dynamic_compare(action, controller_pause_s) == F_equal_to) {
+    if (f_compare_dynamic(action, controller_pause_s) == F_equal_to) {
       return controller_entry_action_type_pause_e;
     }
 
-    if (fl_string_dynamic_compare(action, controller_ready_s) == F_equal_to) {
+    if (f_compare_dynamic(action, controller_ready_s) == F_equal_to) {
       return controller_entry_action_type_ready_e;
     }
 
-    if (fl_string_dynamic_compare(action, controller_reboot_s) == F_equal_to) {
+    if (f_compare_dynamic(action, controller_reboot_s) == F_equal_to) {
       return controller_entry_action_type_reboot_e;
     }
 
-    if (fl_string_dynamic_compare(action, controller_reload_s) == F_equal_to) {
+    if (f_compare_dynamic(action, controller_reload_s) == F_equal_to) {
       return controller_entry_action_type_reload_e;
     }
 
-    if (fl_string_dynamic_compare(action, controller_restart_s) == F_equal_to) {
+    if (f_compare_dynamic(action, controller_restart_s) == F_equal_to) {
       return controller_entry_action_type_restart_e;
     }
 
-    if (fl_string_dynamic_compare(action, controller_resume_s) == F_equal_to) {
+    if (f_compare_dynamic(action, controller_resume_s) == F_equal_to) {
       return controller_entry_action_type_resume_e;
     }
 
-    if (fl_string_dynamic_compare(action, controller_shutdown_s) == F_equal_to) {
+    if (f_compare_dynamic(action, controller_shutdown_s) == F_equal_to) {
       return controller_entry_action_type_shutdown_e;
     }
 
-    if (fl_string_dynamic_compare(action, controller_start_s) == F_equal_to) {
+    if (f_compare_dynamic(action, controller_start_s) == F_equal_to) {
       return controller_entry_action_type_start_e;
     }
 
-    if (fl_string_dynamic_compare(action, controller_stop_s) == F_equal_to) {
+    if (f_compare_dynamic(action, controller_stop_s) == F_equal_to) {
       return controller_entry_action_type_stop_e;
     }
 
-    if (fl_string_dynamic_compare(action, controller_thaw_s) == F_equal_to) {
+    if (f_compare_dynamic(action, controller_thaw_s) == F_equal_to) {
       return controller_entry_action_type_thaw_e;
     }
 
-    if (fl_string_dynamic_compare(action, controller_timeout_s) == F_equal_to) {
+    if (f_compare_dynamic(action, controller_timeout_s) == F_equal_to) {
       return controller_entry_action_type_timeout_e;
     }
 
@@ -229,63 +229,63 @@ extern "C" {
 #ifndef _di_controller_rule_action_type_identify_
   uint8_t controller_rule_action_type_identify(const f_string_static_t action) {
 
-    if (fl_string_dynamic_compare(action, controller_freeze_s) == F_equal_to) {
+    if (f_compare_dynamic(action, controller_freeze_s) == F_equal_to) {
       return controller_rule_action_type_freeze_e;
     }
 
-    if (fl_string_dynamic_compare(action, controller_group_s) == F_equal_to) {
+    if (f_compare_dynamic(action, controller_group_s) == F_equal_to) {
       return controller_rule_action_type_group_e;
     }
 
-    if (fl_string_dynamic_compare(action, controller_kill_s) == F_equal_to) {
+    if (f_compare_dynamic(action, controller_kill_s) == F_equal_to) {
       return controller_rule_action_type_kill_e;
     }
 
-    if (fl_string_dynamic_compare(action, controller_pause_s) == F_equal_to) {
+    if (f_compare_dynamic(action, controller_pause_s) == F_equal_to) {
       return controller_rule_action_type_pause_e;
     }
 
-    if (fl_string_dynamic_compare(action, controller_pid_file_s) == F_equal_to) {
+    if (f_compare_dynamic(action, controller_pid_file_s) == F_equal_to) {
       return controller_rule_action_type_pid_file_e;
     }
 
-    if (fl_string_dynamic_compare(action, controller_reload_s) == F_equal_to) {
+    if (f_compare_dynamic(action, controller_reload_s) == F_equal_to) {
       return controller_rule_action_type_reload_e;
     }
 
-    if (fl_string_dynamic_compare(action, controller_rerun_s) == F_equal_to) {
+    if (f_compare_dynamic(action, controller_rerun_s) == F_equal_to) {
       return controller_rule_action_type_rerun_e;
     }
 
-    if (fl_string_dynamic_compare(action, controller_restart_s) == F_equal_to) {
+    if (f_compare_dynamic(action, controller_restart_s) == F_equal_to) {
       return controller_rule_action_type_restart_e;
     }
 
-    if (fl_string_dynamic_compare(action, controller_resume_s) == F_equal_to) {
+    if (f_compare_dynamic(action, controller_resume_s) == F_equal_to) {
       return controller_rule_action_type_resume_e;
     }
 
-    if (fl_string_dynamic_compare(action, controller_start_s) == F_equal_to) {
+    if (f_compare_dynamic(action, controller_start_s) == F_equal_to) {
       return controller_rule_action_type_start_e;
     }
 
-    if (fl_string_dynamic_compare(action, controller_stop_s) == F_equal_to) {
+    if (f_compare_dynamic(action, controller_stop_s) == F_equal_to) {
       return controller_rule_action_type_stop_e;
     }
 
-    if (fl_string_dynamic_compare(action, controller_start_s) == F_equal_to) {
+    if (f_compare_dynamic(action, controller_start_s) == F_equal_to) {
       return controller_rule_action_type_start_e;
     }
 
-    if (fl_string_dynamic_compare(action, controller_thaw_s) == F_equal_to) {
+    if (f_compare_dynamic(action, controller_thaw_s) == F_equal_to) {
       return controller_rule_action_type_thaw_e;
     }
 
-    if (fl_string_dynamic_compare(action, controller_user_s) == F_equal_to) {
+    if (f_compare_dynamic(action, controller_user_s) == F_equal_to) {
       return controller_rule_action_type_user_e;
     }
 
-    if (fl_string_dynamic_compare(action, controller_with_s) == F_equal_to) {
+    if (f_compare_dynamic(action, controller_with_s) == F_equal_to) {
       return controller_rule_action_type_with_e;
     }
 
@@ -347,39 +347,39 @@ extern "C" {
 #ifndef _di_controller_rule_action_execute_type_identify_
   uint8_t controller_rule_action_execute_type_identify(const f_string_static_t action) {
 
-    if (fl_string_dynamic_compare(action, controller_freeze_s) == F_equal_to) {
+    if (f_compare_dynamic(action, controller_freeze_s) == F_equal_to) {
       return controller_rule_action_execute_type_freeze_e;
     }
 
-    if (fl_string_dynamic_compare(action, controller_kill_s) == F_equal_to) {
+    if (f_compare_dynamic(action, controller_kill_s) == F_equal_to) {
       return controller_rule_action_execute_type_kill_e;
     }
 
-    if (fl_string_dynamic_compare(action, controller_pause_s) == F_equal_to) {
+    if (f_compare_dynamic(action, controller_pause_s) == F_equal_to) {
       return controller_rule_action_execute_type_pause_e;
     }
 
-    if (fl_string_dynamic_compare(action, controller_reload_s) == F_equal_to) {
+    if (f_compare_dynamic(action, controller_reload_s) == F_equal_to) {
       return controller_rule_action_execute_type_reload_e;
     }
 
-    if (fl_string_dynamic_compare(action, controller_restart_s) == F_equal_to) {
+    if (f_compare_dynamic(action, controller_restart_s) == F_equal_to) {
       return controller_rule_action_execute_type_restart_e;
     }
 
-    if (fl_string_dynamic_compare(action, controller_resume_s) == F_equal_to) {
+    if (f_compare_dynamic(action, controller_resume_s) == F_equal_to) {
       return controller_rule_action_execute_type_resume_e;
     }
 
-    if (fl_string_dynamic_compare(action, controller_start_s) == F_equal_to) {
+    if (f_compare_dynamic(action, controller_start_s) == F_equal_to) {
       return controller_rule_action_execute_type_start_e;
     }
 
-    if (fl_string_dynamic_compare(action, controller_stop_s) == F_equal_to) {
+    if (f_compare_dynamic(action, controller_stop_s) == F_equal_to) {
       return controller_rule_action_execute_type_stop_e;
     }
 
-    if (fl_string_dynamic_compare(action, controller_thaw_s) == F_equal_to) {
+    if (f_compare_dynamic(action, controller_thaw_s) == F_equal_to) {
       return controller_rule_action_execute_type_thaw_e;
     }
 
@@ -426,23 +426,23 @@ extern "C" {
 #ifndef _di_controller_rule_item_type_identify_
   uint8_t controller_rule_item_type_identify(const f_string_static_t item) {
 
-    if (fl_string_dynamic_compare(item, controller_command_s) == F_equal_to) {
+    if (f_compare_dynamic(item, controller_command_s) == F_equal_to) {
       return controller_rule_item_type_command_e;
     }
 
-    if (fl_string_dynamic_compare(item, controller_script_s) == F_equal_to) {
+    if (f_compare_dynamic(item, controller_script_s) == F_equal_to) {
       return controller_rule_item_type_script_e;
     }
 
-    if (fl_string_dynamic_compare(item, controller_service_s) == F_equal_to) {
+    if (f_compare_dynamic(item, controller_service_s) == F_equal_to) {
       return controller_rule_item_type_service_e;
     }
 
-    if (fl_string_dynamic_compare(item, controller_settings_s) == F_equal_to) {
+    if (f_compare_dynamic(item, controller_settings_s) == F_equal_to) {
       return controller_rule_item_type_settings_e;
     }
 
-    if (fl_string_dynamic_compare(item, controller_utility_s) == F_equal_to) {
+    if (f_compare_dynamic(item, controller_utility_s) == F_equal_to) {
       return controller_rule_item_type_utility_e;
     }
 
@@ -477,67 +477,67 @@ extern "C" {
 #ifndef _di_controller_rule_setting_limit_type_identify_
   uint8_t controller_rule_setting_limit_type_identify(const f_string_static_t limit) {
 
-    if (fl_string_dynamic_compare(limit, controller_as_s) == F_equal_to) {
+    if (f_compare_dynamic(limit, controller_as_s) == F_equal_to) {
       return controller_resource_limit_type_as_e;
     }
 
-    if (fl_string_dynamic_compare(limit, controller_core_s) == F_equal_to) {
+    if (f_compare_dynamic(limit, controller_core_s) == F_equal_to) {
       return controller_resource_limit_type_core_e;
     }
 
-    if (fl_string_dynamic_compare(limit, controller_cpu_s) == F_equal_to) {
+    if (f_compare_dynamic(limit, controller_cpu_s) == F_equal_to) {
       return controller_resource_limit_type_cpu_e;
     }
 
-    if (fl_string_dynamic_compare(limit, controller_data_s) == F_equal_to) {
+    if (f_compare_dynamic(limit, controller_data_s) == F_equal_to) {
       return controller_resource_limit_type_data_e;
     }
 
-    if (fl_string_dynamic_compare(limit, controller_fsize_s) == F_equal_to) {
+    if (f_compare_dynamic(limit, controller_fsize_s) == F_equal_to) {
       return controller_resource_limit_type_fsize_e;
     }
 
-    if (fl_string_dynamic_compare(limit, controller_locks_s) == F_equal_to) {
+    if (f_compare_dynamic(limit, controller_locks_s) == F_equal_to) {
       return controller_resource_limit_type_locks_e;
     }
 
-    if (fl_string_dynamic_compare(limit, controller_memlock_s) == F_equal_to) {
+    if (f_compare_dynamic(limit, controller_memlock_s) == F_equal_to) {
       return controller_resource_limit_type_memlock_e;
     }
 
-    if (fl_string_dynamic_compare(limit, controller_msgqueue_s) == F_equal_to) {
+    if (f_compare_dynamic(limit, controller_msgqueue_s) == F_equal_to) {
       return controller_resource_limit_type_msgqueue_e;
     }
 
-    if (fl_string_dynamic_compare(limit, controller_nice_s) == F_equal_to) {
+    if (f_compare_dynamic(limit, controller_nice_s) == F_equal_to) {
       return controller_resource_limit_type_nice_e;
     }
 
-    if (fl_string_dynamic_compare(limit, controller_nofile_s) == F_equal_to) {
+    if (f_compare_dynamic(limit, controller_nofile_s) == F_equal_to) {
       return controller_resource_limit_type_nofile_e;
     }
 
-    if (fl_string_dynamic_compare(limit, controller_nproc_s) == F_equal_to) {
+    if (f_compare_dynamic(limit, controller_nproc_s) == F_equal_to) {
       return controller_resource_limit_type_nproc_e;
     }
 
-    if (fl_string_dynamic_compare(limit, controller_rss_s) == F_equal_to) {
+    if (f_compare_dynamic(limit, controller_rss_s) == F_equal_to) {
       return controller_resource_limit_type_rss_e;
     }
 
-    if (fl_string_dynamic_compare(limit, controller_rtprio_s) == F_equal_to) {
+    if (f_compare_dynamic(limit, controller_rtprio_s) == F_equal_to) {
       return controller_resource_limit_type_rtprio_e;
     }
 
-    if (fl_string_dynamic_compare(limit, controller_rttime_s) == F_equal_to) {
+    if (f_compare_dynamic(limit, controller_rttime_s) == F_equal_to) {
       return controller_resource_limit_type_rttime_e;
     }
 
-    if (fl_string_dynamic_compare(limit, controller_sigpending_s) == F_equal_to) {
+    if (f_compare_dynamic(limit, controller_sigpending_s) == F_equal_to) {
       return controller_resource_limit_type_sigpending_e;
     }
 
-    if (fl_string_dynamic_compare(limit, controller_stack_s) == F_equal_to) {
+    if (f_compare_dynamic(limit, controller_stack_s) == F_equal_to) {
       return controller_resource_limit_type_stack_e;
     }
 

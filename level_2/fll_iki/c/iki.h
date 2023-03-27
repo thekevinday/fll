@@ -28,7 +28,6 @@
 
 // FLL-1 includes.
 #include <fll/level_1/iki.h>
-#include <fll/level_1/string.h>
 
 #ifdef __cplusplus
 extern "C" {

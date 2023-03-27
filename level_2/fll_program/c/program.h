@@ -23,10 +23,10 @@
 #include <fll/level_0/console.h>
 #include <fll/level_0/file.h>
 #include <fll/level_0/print.h>
+#include <fll/level_0/rip.h>
 #include <fll/level_0/signal.h>
 
 // FLL-1 includes.
-#include <fll/level_1/string.h>
 #include <fll/level_1/print.h>
 
 // FLL-2 program includes.
@@ -206,9 +206,9 @@ extern "C" {
  *   F_memory_not (with error bit) on out of memory.
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   Errors (with error bit) from: fl_string_dynamic_rip().
+ *   Errors (with error bit) from: f_rip_dynamic().
  *
- * @see fl_string_dynamic_rip()
+ * @see f_rip_dynamic()
  */
 #ifndef _di_fll_program_parameter_additional_rip_
   extern f_status_t fll_program_parameter_additional_rip(const f_string_static_t * const arguments, const f_array_lengths_t values, f_string_dynamics_t * const destination);
@@ -238,10 +238,10 @@ extern "C" {
  *   F_string_too_large (with error bit) if the combined string is too large.
  *
  *   Errors (with error bit) from: f_string_dynamic_mash().
- *   Errors (with error bit) from: fl_string_dynamic_rip().
+ *   Errors (with error bit) from: f_rip_dynamic().
  *
  * @see f_string_dynamic_mash()
- * @see fl_string_dynamic_rip()
+ * @see f_rip_dynamic()
  */
 #ifndef _di_fll_program_parameter_additional_rip_mash_
   extern f_status_t fll_program_parameter_additional_rip_mash(const f_string_static_t glue, const f_string_static_t *arguments, const f_array_lengths_t values, f_string_dynamic_t * const destination);

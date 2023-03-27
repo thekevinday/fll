@@ -28,7 +28,7 @@ extern "C" {
         }
 
         if (main->parameters.remaining.used > 3) {
-          if (fl_string_dynamic_compare(control_at_s, data->argv[main->parameters.remaining.array[3]]) == F_equal_to) {
+          if (f_compare_dynamic(control_at_s, data->argv[main->parameters.remaining.array[3]]) == F_equal_to) {
             if (main->parameters.remaining.used < 5) {
               control_print_error_parameter_action_rule_too_few_with(main, data->argv[main->parameters.remaining.array[0]], control_at_s);
 
@@ -41,14 +41,14 @@ extern "C" {
               return F_status_set_error(F_parameter);
             }
           }
-          else if (fl_string_dynamic_compare(control_in_s, data->argv[main->parameters.remaining.array[3]]) == F_equal_to) {
+          else if (f_compare_dynamic(control_in_s, data->argv[main->parameters.remaining.array[3]]) == F_equal_to) {
             if (main->parameters.remaining.used < 6) {
               control_print_error_parameter_action_rule_too_few_with(main, data->argv[main->parameters.remaining.array[0]], control_in_s);
 
               return F_status_set_error(F_parameter);
             }
           }
-          else if (fl_string_dynamic_compare(control_now_s, data->argv[main->parameters.remaining.array[3]]) == F_equal_to) {
+          else if (f_compare_dynamic(control_now_s, data->argv[main->parameters.remaining.array[3]]) == F_equal_to) {
             if (main->parameters.remaining.used > 4) {
               control_print_error_parameter_action_rule_too_many_with(main, data->argv[main->parameters.remaining.array[0]], control_now_s);
 
@@ -92,7 +92,7 @@ extern "C" {
           return F_status_set_error(F_parameter);
         }
 
-        if (fl_string_dynamic_compare(control_at_s, data->argv[main->parameters.remaining.array[1]]) == F_equal_to) {
+        if (f_compare_dynamic(control_at_s, data->argv[main->parameters.remaining.array[1]]) == F_equal_to) {
           if (main->parameters.remaining.used < 3) {
             control_print_error_parameter_action_rule_too_few_with(main, data->argv[main->parameters.remaining.array[0]], control_at_s);
 
@@ -105,14 +105,14 @@ extern "C" {
             return F_status_set_error(F_parameter);
           }
         }
-        else if (fl_string_dynamic_compare(control_in_s, data->argv[main->parameters.remaining.array[1]]) == F_equal_to) {
+        else if (f_compare_dynamic(control_in_s, data->argv[main->parameters.remaining.array[1]]) == F_equal_to) {
           if (main->parameters.remaining.used < 4) {
             control_print_error_parameter_action_rule_too_few_with(main, data->argv[main->parameters.remaining.array[0]], control_in_s);
 
             return F_status_set_error(F_parameter);
           }
         }
-        else if (fl_string_dynamic_compare(control_now_s, data->argv[main->parameters.remaining.array[1]]) == F_equal_to) {
+        else if (f_compare_dynamic(control_now_s, data->argv[main->parameters.remaining.array[1]]) == F_equal_to) {
           if (main->parameters.remaining.used > 2) {
             control_print_error_parameter_action_rule_too_many_with(main, data->argv[main->parameters.remaining.array[0]], control_now_s);
 
@@ -349,7 +349,7 @@ extern "C" {
 
         for (; i < data->cache.packet_objects.used; ++i) {
 
-          if (fl_string_dynamic_partial_compare_string(f_fss_header_s.string, data->cache.large, f_fss_header_s.used, data->cache.packet_objects.array[i]) == F_equal_to) {
+          if (f_compare_dynamic_partial_string(f_fss_header_s.string, data->cache.large, f_fss_header_s.used, data->cache.packet_objects.array[i]) == F_equal_to) {
 
             // The FSS-000E (Payload) standard does not prohibit multiple "header", but such cases are not supported by the controller and the control programs.
             if (content_header) {
@@ -360,7 +360,7 @@ extern "C" {
 
             content_header = &data->cache.packet_contents.array[i];
           }
-          else if (fl_string_dynamic_partial_compare_string(f_fss_payload_s.string, data->cache.large, f_fss_payload_s.used, data->cache.packet_objects.array[i]) == F_equal_to) {
+          else if (f_compare_dynamic_partial_string(f_fss_payload_s.string, data->cache.large, f_fss_payload_s.used, data->cache.packet_objects.array[i]) == F_equal_to) {
 
             // Only a single "payload" is supported by the FSS-000E (Payload) standard.
             if (content_payload) {
@@ -429,7 +429,7 @@ extern "C" {
 
         for (i = 0; i < data->cache.header_objects.used; ++i) {
 
-          if (fl_string_dynamic_partial_compare_string(control_action_s.string, data->cache.large, control_action_s.used, data->cache.header_objects.array[i]) == F_equal_to) {
+          if (f_compare_dynamic_partial_string(control_action_s.string, data->cache.large, control_action_s.used, data->cache.header_objects.array[i]) == F_equal_to) {
             if (!(found & 0x1)) {
               const f_array_length_t action_length = (data->cache.header_contents.array[i].array[0].stop - data->cache.header_contents.array[i].array[0].start) + 1;
               char action_string[action_length + 1];
@@ -454,7 +454,7 @@ extern "C" {
               control_print_warning_packet_header_duplicate_object(main, control_action_s);
             }
           }
-          else if (fl_string_dynamic_partial_compare_string(control_length_s.string, data->cache.large, control_length_s.used, data->cache.header_objects.array[i]) == F_equal_to) {
+          else if (f_compare_dynamic_partial_string(control_length_s.string, data->cache.large, control_length_s.used, data->cache.header_objects.array[i]) == F_equal_to) {
             if (!(found & 0x2)) {
               found |= 0x2;
               number = 0;
@@ -481,7 +481,7 @@ extern "C" {
               control_print_warning_packet_header_duplicate_object(main, control_length_s);
             }
           }
-          else if (fl_string_dynamic_partial_compare_string(control_status_s.string, data->cache.large, control_status_s.used, data->cache.header_objects.array[i]) == F_equal_to) {
+          else if (f_compare_dynamic_partial_string(control_status_s.string, data->cache.large, control_status_s.used, data->cache.header_objects.array[i]) == F_equal_to) {
             if (!(found & 0x4)) {
               found |= 0x4;
               number = 0;
@@ -530,16 +530,16 @@ extern "C" {
               control_print_warning_packet_header_duplicate_object(main, control_length_s);
             }
           }
-          else if (fl_string_dynamic_partial_compare_string(control_type_s.string, data->cache.large, control_type_s.used, data->cache.header_objects.array[i]) == F_equal_to) {
+          else if (f_compare_dynamic_partial_string(control_type_s.string, data->cache.large, control_type_s.used, data->cache.header_objects.array[i]) == F_equal_to) {
             if (!(found & 0x8)) {
               found |= 0x8;
 
               control_print_debug_packet_header_object_and_content(main, control_type_s, data->cache.large, data->cache.header_contents.array[i].array[0]);
 
-              if (fl_string_dynamic_partial_compare_string(control_controller_s.string, data->cache.large, control_controller_s.used, data->cache.header_contents.array[i].array[0]) == F_equal_to) {
+              if (f_compare_dynamic_partial_string(control_controller_s.string, data->cache.large, control_controller_s.used, data->cache.header_contents.array[i].array[0]) == F_equal_to) {
                 header->type = control_payload_type_controller_e;
               }
-              else if (fl_string_dynamic_partial_compare_string(control_error_s.string, data->cache.large, control_error_s.used, data->cache.header_contents.array[i].array[0]) == F_equal_to) {
+              else if (f_compare_dynamic_partial_string(control_error_s.string, data->cache.large, control_error_s.used, data->cache.header_contents.array[i].array[0]) == F_equal_to) {
                 header->type = control_payload_type_error_e;
               }
               else {
@@ -694,7 +694,7 @@ extern "C" {
 
             range.stop = parameter_names[j].used - 1;
 
-            if (fl_string_dynamic_partial_compare(parameter_names[j], data->cache.large, range, objects.array[i]) == F_equal_to) {
+            if (f_compare_dynamic_partial(parameter_names[j], data->cache.large, range, objects.array[i]) == F_equal_to) {
               parameter_hass[j] = F_true;
               parameter_ats[j] = i;
 

@@ -29,55 +29,55 @@ extern "C" {
 #ifndef _di_control_action_type_identify_
   uint8_t control_action_type_identify(const f_string_static_t action) {
 
-    if (fl_string_dynamic_compare(action, control_freeze_s) == F_equal_to) {
+    if (f_compare_dynamic(action, control_freeze_s) == F_equal_to) {
       return control_action_type_freeze_e;
     }
 
-    if (fl_string_dynamic_compare(action, control_kexec_s) == F_equal_to) {
+    if (f_compare_dynamic(action, control_kexec_s) == F_equal_to) {
       return control_action_type_kexec_e;
     }
 
-    if (fl_string_dynamic_compare(action, control_kill_s) == F_equal_to) {
+    if (f_compare_dynamic(action, control_kill_s) == F_equal_to) {
       return control_action_type_kill_e;
     }
 
-    if (fl_string_dynamic_compare(action, control_pause_s) == F_equal_to) {
+    if (f_compare_dynamic(action, control_pause_s) == F_equal_to) {
       return control_action_type_pause_e;
     }
 
-    if (fl_string_dynamic_compare(action, control_reboot_s) == F_equal_to) {
+    if (f_compare_dynamic(action, control_reboot_s) == F_equal_to) {
       return control_action_type_reboot_e;
     }
 
-    if (fl_string_dynamic_compare(action, control_reload_s) == F_equal_to) {
+    if (f_compare_dynamic(action, control_reload_s) == F_equal_to) {
       return control_action_type_reload_e;
     }
 
-    if (fl_string_dynamic_compare(action, control_rerun_s) == F_equal_to) {
+    if (f_compare_dynamic(action, control_rerun_s) == F_equal_to) {
       return control_action_type_rerun_e;
     }
 
-    if (fl_string_dynamic_compare(action, control_restart_s) == F_equal_to) {
+    if (f_compare_dynamic(action, control_restart_s) == F_equal_to) {
       return control_action_type_restart_e;
     }
 
-    if (fl_string_dynamic_compare(action, control_resume_s) == F_equal_to) {
+    if (f_compare_dynamic(action, control_resume_s) == F_equal_to) {
       return control_action_type_resume_e;
     }
 
-    if (fl_string_dynamic_compare(action, control_shutdown_s) == F_equal_to) {
+    if (f_compare_dynamic(action, control_shutdown_s) == F_equal_to) {
       return control_action_type_shutdown_e;
     }
 
-    if (fl_string_dynamic_compare(action, control_start_s) == F_equal_to) {
+    if (f_compare_dynamic(action, control_start_s) == F_equal_to) {
       return control_action_type_start_e;
     }
 
-    if (fl_string_dynamic_compare(action, control_stop_s) == F_equal_to) {
+    if (f_compare_dynamic(action, control_stop_s) == F_equal_to) {
       return control_action_type_stop_e;
     }
 
-    if (fl_string_dynamic_compare(action, control_thaw_s) == F_equal_to) {
+    if (f_compare_dynamic(action, control_thaw_s) == F_equal_to) {
       return control_action_type_thaw_e;
     }
 
@@ -136,15 +136,15 @@ extern "C" {
 #ifndef _di_control_payload_type_identify_
   uint8_t control_payload_type_identify(const f_string_static_t payload) {
 
-    if (fl_string_dynamic_compare(payload, control_controller_s) == F_equal_to) {
+    if (f_compare_dynamic(payload, control_controller_s) == F_equal_to) {
       return control_payload_type_controller_e;
     }
 
-    if (fl_string_dynamic_compare(payload, control_error_s) == F_equal_to) {
+    if (f_compare_dynamic(payload, control_error_s) == F_equal_to) {
       return control_payload_type_error_e;
     }
 
-    if (fl_string_dynamic_compare(payload, control_init_s) == F_equal_to) {
+    if (f_compare_dynamic(payload, control_init_s) == F_equal_to) {
       return control_payload_type_init_e;
     }
 

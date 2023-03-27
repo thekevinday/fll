@@ -1,6 +1,6 @@
 # fss-0001
 
-build_name fl_string
+build_name f_parse
 
 version_major 0
 version_minor 7
@@ -20,15 +20,15 @@ build_language c
 build_libraries -lc
 build_libraries-individual -lf_memory -lf_string -lf_utf
 
-build_sources_library string.c private-string.c
+build_sources_library parse.c parse/utf.c
 
-build_sources_headers string.h
+build_sources_headers parse.h parse/utf.h
 
 build_script yes
 build_shared yes
 build_static no
 
-path_headers fll/level_1
+path_headers fll/level_0
 path_library_script script
 path_library_shared shared
 path_library_static static

@@ -76,7 +76,7 @@ extern "C" {
  *     Errors (with error bit) from: f_string_dynamics_increase()
  *     Errors (with error bit) from: f_string_dynamics_increase_by()
  *     Errors (with error bit) from: fl_iki_read()
- *     Errors (with error bit) from: fl_string_dynamic_partial_compare_string()
+ *     Errors (with error bit) from: f_compare_dynamic_partial_string()
  *
  *     Errors (with error bit) from: fake_make_operate_expand_build()
  *     Errors (with error bit) from: fake_make_operate_expand_context()
@@ -96,7 +96,7 @@ extern "C" {
  * @see f_string_dynamics_increase()
  * @see f_string_dynamics_increase_by()
  * @see fl_iki_read()
- * @see fl_string_dynamic_partial_compare_string()
+ * @see f_compare_dynamic_partial_string()
  *
  * @see fake_make_operate_expand_build()
  * @see fake_make_operate_expand_context()

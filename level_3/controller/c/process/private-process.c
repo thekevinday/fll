@@ -20,7 +20,7 @@ extern "C" {
 
     for (f_array_length_t i = 0; i < processs.used; ++i) {
 
-      if (processs.array[i] && processs.array[i]->action == action && fl_string_dynamic_compare(alias, processs.array[i]->rule.alias) == F_equal_to) {
+      if (processs.array[i] && processs.array[i]->action == action && f_compare_dynamic(alias, processs.array[i]->rule.alias) == F_equal_to) {
         if (at) *at = i;
 
         return F_true;

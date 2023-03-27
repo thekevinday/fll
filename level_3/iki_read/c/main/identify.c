@@ -22,7 +22,7 @@ extern "C" {
           j = main->setting.replace.used - 1;
 
           do {
-            if (fl_string_dynamic_partial_compare_string(main->setting.replace.array[j].name.string, main->setting.buffer, main->setting.replace.array[j].name.used, main->setting.data.vocabulary.array[i]) == F_equal_to) {
+            if (f_compare_dynamic_partial_string(main->setting.replace.array[j].name.string, main->setting.buffer, main->setting.replace.array[j].name.used, main->setting.data.vocabulary.array[i]) == F_equal_to) {
               main->setting.map_replaces[i] = j;
 
               break;
@@ -37,7 +37,7 @@ extern "C" {
           j = main->setting.wrap.used - 1;
 
           do {
-            if (fl_string_dynamic_partial_compare_string(main->setting.wrap.array[j].a.string, main->setting.buffer, main->setting.wrap.array[j].a.used, main->setting.data.vocabulary.array[i]) == F_equal_to) {
+            if (f_compare_dynamic_partial_string(main->setting.wrap.array[j].a.string, main->setting.buffer, main->setting.wrap.array[j].a.used, main->setting.data.vocabulary.array[i]) == F_equal_to) {
               main->setting.map_wraps[i] = j;
 
               break;
@@ -68,8 +68,8 @@ extern "C" {
     f_array_length_t i = triple->used - 1;
 
     do {
-      if (fl_string_dynamic_partial_compare_string(triple->array[i].a.string, main->setting.buffer, triple->array[i].a.used, name) == F_equal_to) {
-        if (fl_string_dynamic_partial_compare_string(triple->array[i].b.string, main->setting.buffer, triple->array[i].b.used, value) == F_equal_to) {
+      if (f_compare_dynamic_partial_string(triple->array[i].a.string, main->setting.buffer, triple->array[i].a.used, name) == F_equal_to) {
+        if (f_compare_dynamic_partial_string(triple->array[i].b.string, main->setting.buffer, triple->array[i].b.used, value) == F_equal_to) {
           return i;
         }
       }

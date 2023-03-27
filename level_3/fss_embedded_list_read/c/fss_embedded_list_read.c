@@ -209,10 +209,10 @@ extern "C" {
 
             status = F_status_set_error(F_parameter);
           }
-          else if (fl_string_dynamic_compare_string(fss_embedded_list_read_delimit_mode_name_none_s.string, data.argv[index], fss_embedded_list_read_delimit_mode_name_none_s.used) == F_equal_to) {
+          else if (f_compare_dynamic_string(fss_embedded_list_read_delimit_mode_name_none_s.string, data.argv[index], fss_embedded_list_read_delimit_mode_name_none_s.used) == F_equal_to) {
             data.delimit_mode = fss_embedded_list_read_delimit_mode_none_e;
           }
-          else if (fl_string_dynamic_compare_string(fss_embedded_list_read_delimit_mode_name_all_s.string, data.argv[index], fss_embedded_list_read_delimit_mode_name_all_s.used) == F_equal_to) {
+          else if (f_compare_dynamic_string(fss_embedded_list_read_delimit_mode_name_all_s.string, data.argv[index], fss_embedded_list_read_delimit_mode_name_all_s.used) == F_equal_to) {
             data.delimit_mode = fss_embedded_list_read_delimit_mode_all_e;
           }
           else {

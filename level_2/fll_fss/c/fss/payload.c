@@ -36,7 +36,7 @@ extern "C" {
 
         if (range->start >= range->stop || range->start >= buffer.used) {
           if (state->status == F_fss_found_object || state->status == F_fss_found_object_content_not) {
-            if (fl_string_dynamic_partial_compare_string(f_fss_payload_s.string, buffer, f_fss_payload_s.used, objects->array[objects->used]) == F_equal_to) {
+            if (f_compare_dynamic_partial_string(f_fss_payload_s.string, buffer, f_fss_payload_s.used, objects->array[objects->used]) == F_equal_to) {
               state->status = F_fss_found_object_content_not;
             }
 
@@ -75,7 +75,7 @@ extern "C" {
 
           contents->array[contents->used].used = 0;
 
-          if (fl_string_dynamic_partial_compare_string(f_fss_payload_s.string, buffer, f_fss_payload_s.used, objects->array[objects->used]) == F_equal_to) {
+          if (f_compare_dynamic_partial_string(f_fss_payload_s.string, buffer, f_fss_payload_s.used, objects->array[objects->used]) == F_equal_to) {
             status = f_string_ranges_increase(state->step_small, &contents->array[contents->used]);
 
             if (F_status_is_error(status)) {
@@ -123,7 +123,7 @@ extern "C" {
 
           contents->array[contents->used].used = 0;
 
-          if (fl_string_dynamic_partial_compare_string(f_fss_payload_s.string, buffer, f_fss_payload_s.used, objects->array[objects->used]) == F_equal_to) {
+          if (f_compare_dynamic_partial_string(f_fss_payload_s.string, buffer, f_fss_payload_s.used, objects->array[objects->used]) == F_equal_to) {
             ++objects->used;
 
             status = f_string_ranges_increase(state->step_small, &contents->array[contents->used]);
@@ -232,7 +232,7 @@ extern "C" {
     }
 
     if (state->status == F_none || state->status == F_none_stop || state->status == F_none_eos || state->status == F_none_eol) {
-      if (fl_string_dynamic_compare(f_fss_payload_s, object) == F_equal_to) {
+      if (f_compare_dynamic(f_fss_payload_s, object) == F_equal_to) {
         state->status = f_string_dynamic_increase_by(content.used, destination);
         if (F_status_is_error(state->status)) return;
 

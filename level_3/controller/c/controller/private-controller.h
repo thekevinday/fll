@@ -158,11 +158,11 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_account_id_by_name().
  *   Errors (with error bit) from: fl_conversion_dynamic_partial_to_unsigned_detect().
- *   Errors (with error bit) from: fl_string_dynamic_partial_rip_nulless().
+ *   Errors (with error bit) from: f_rip_dynamic_partial_nulless().
  *
  * @see f_account_id_by_name()
  * @see fl_conversion_dynamic_partial_to_unsigned_detect()
- * @see fl_string_dynamic_partial_rip_nulless()
+ * @see f_rip_dynamic_partial_nulless()
  */
 #ifndef _di_controller_get_id_user_
   f_status_t controller_get_id_user(const f_string_static_t buffer, const f_string_range_t range, controller_cache_t * const cache, uid_t * const id) F_attribute_visibility_internal_d;
@@ -187,11 +187,11 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_account_group_id_by_name().
  *   Errors (with error bit) from: fl_conversion_dynamic_partial_to_unsigned_detect().
- *   Errors (with error bit) from: fl_string_dynamic_partial_rip_nulless().
+ *   Errors (with error bit) from: f_rip_dynamic_partial_nulless().
  *
  * @see f_account_group_id_by_name()
  * @see fl_conversion_dynamic_partial_to_unsigned_detect()
- * @see fl_string_dynamic_partial_rip_nulless()
+ * @see f_rip_dynamic_partial_nulless()
  */
 #ifndef _di_controller_get_id_group_
   f_status_t controller_get_id_group(const f_string_static_t buffer, const f_string_range_t range, controller_cache_t * const cache, gid_t * const id) F_attribute_visibility_internal_d;

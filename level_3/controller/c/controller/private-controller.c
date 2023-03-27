@@ -305,7 +305,7 @@ extern "C" {
       if (F_status_set_fine(status) == F_number) {
         cache->action.generic.used = 0;
 
-        status = fl_string_dynamic_partial_rip_nulless(buffer, range, &cache->action.generic);
+        status = f_rip_dynamic_partial_nulless(buffer, range, &cache->action.generic);
         if (F_status_is_error(status)) return status;
 
         status = f_account_id_by_name(cache->action.generic, id);
@@ -340,7 +340,7 @@ extern "C" {
       if (F_status_set_fine(status) == F_number) {
         cache->action.generic.used = 0;
 
-        status = fl_string_dynamic_partial_rip_nulless(buffer, range, &cache->action.generic);
+        status = f_rip_dynamic_partial_nulless(buffer, range, &cache->action.generic);
         if (F_status_is_error(status)) return status;
 
         status = f_account_group_id_by_name(cache->action.generic, id);
@@ -375,7 +375,7 @@ extern "C" {
     if (destination->used >= setting->path_current.used) {
       const f_string_range_t range = macro_f_string_range_t_initialize2(setting->path_current.used);
 
-      if (fl_string_dynamic_partial_compare_string(destination->string, setting->path_current, destination->used, range) == F_equal_to) {
+      if (f_compare_dynamic_partial_string(destination->string, setting->path_current, destination->used, range) == F_equal_to) {
         f_array_length_t length = destination->used - setting->path_current.used;
 
         if (length) {

@@ -47,6 +47,7 @@ extern "C" {
  * @see f_string_dynamic_partial_mash_nulless()
  * @see f_string_dynamic_partial_mish()
  * @see f_string_dynamic_partial_mish_nulless()
+ * @see f_string_dynamic_partial_prepend()
  * @see f_string_dynamics_append()
  * @see f_string_map_multis_append()
  * @see f_string_mash()

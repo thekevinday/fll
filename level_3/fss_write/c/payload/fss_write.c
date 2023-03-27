@@ -215,7 +215,7 @@ extern "C" {
         }
 
         // When payload is provided, all data at this point is part of the payload until the end of the pipe.
-        if (fl_string_dynamic_compare(f_fss_payload_s, *main->setting.object) == F_equal_to) {
+        if (f_compare_dynamic(f_fss_payload_s, *main->setting.object) == F_equal_to) {
           if (total > 1) {
             main->setting.state.status = f_string_dynamic_increase_by(total, &main->setting.contents->array[main->setting.contents->used]);
 
@@ -551,7 +551,7 @@ extern "C" {
 
       for (f_array_length_t i = 0; i < values->used; ++i) {
 
-        if (fl_string_dynamic_compare(argv[values->array[i]], fss_write_payload_s) == F_equal_to && i + 1 < values->used) {
+        if (f_compare_dynamic(argv[values->array[i]], fss_write_payload_s) == F_equal_to && i + 1 < values->used) {
           main->setting.state.status = F_status_set_error(F_parameter);
 
           fss_write_payload_print_error_payload_not_last(&main->program.error);

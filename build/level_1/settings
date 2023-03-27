@@ -30,8 +30,6 @@ build_sources_library iki.c
 build_sources_library path.c
 build_sources_library print.c private-print.c print/common.c
 build_sources_library signal.c
-build_sources_library string.c private-string.c
-build_sources_library utf.c private-utf.c
 build_sources_library utf_file.c private-utf_file.c
 
 build_sources_headers control_group.h
@@ -44,8 +42,6 @@ build_sources_headers iki.h
 build_sources_headers path.h
 build_sources_headers print.h print/common.h
 build_sources_headers signal.h signal/common.h
-build_sources_headers string.h
-build_sources_headers utf.h
 build_sources_headers utf_file.h
 
 build_script yes

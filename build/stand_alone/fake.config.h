@@ -3,8 +3,8 @@
 // To get the list of all possible functions, use something like: "grep -horP '\b_di_f_\w*\b' level_0/f_color/".
 //
 // Example: echo > /tmp/all.txt
-//          for i in f_type f_status f_memory f_type_array f_string f_utf f_account f_capability f_color f_console f_control_group f_conversion f_directory f_environment f_execute f_file f_fss f_iki f_limit f_path f_pipe f_print f_signal f_thread ; do grep -horP '\b_di_f_\w*\b' level_0/$i/c >> /tmp/all.txt ; grep -horP '\b_di_macro_\w*\b' level_0/$i/c >> /tmp/all.txt ; done
-//          for i in fl_control_group fl_conversion fl_directory fl_environment fl_execute fl_fss fl_iki fl_path fl_print fl_string ; do grep -horP '\b_di_fl_\w*\b' level_1/$i/c >> /tmp/all.txt ; grep -horP '\b_di_macro_\w*\b' level_1/$i/c >> /tmp/all.txt ; done
+//          for i in f_type f_status f_memory f_type_array f_string f_utf f_account f_capability f_color f_compare f_console f_control_group f_conversion f_directory f_environment f_execute f_file f_fss f_iki f_limit f_parse f_path f_pipe f_print f_rip f_signal f_thread ; do grep -horP '\b_di_f_\w*\b' level_0/$i/c >> /tmp/all.txt ; grep -horP '\b_di_macro_\w*\b' level_0/$i/c >> /tmp/all.txt ; done
+//          for i in fl_control_group fl_conversion fl_directory fl_environment fl_execute fl_fss fl_iki fl_path fl_print ; do grep -horP '\b_di_fl_\w*\b' level_1/$i/c >> /tmp/all.txt ; grep -horP '\b_di_macro_\w*\b' level_1/$i/c >> /tmp/all.txt ; done
 //          for i in fll_error fll_execute fll_file fll_fss fll_print fll_program ; do grep -horP '\b_di_fll_\w*\b' level_2/$i/c >> /tmp/all.txt ; grep -horP '\b_di_macro_\w*\b' level_2/$i/c >> /tmp/all.txt ; done
 //          sort /tmp/all.txt | uniq | sed -e 's|^_|#define &|g' > /tmp/sorted.txt
 
@@ -186,6 +186,37 @@
 //#define _di_f_color_terminal_s_
 //#define _di_f_color_terminal_value_linux_s_
 
+#define _di_f_compare_
+//#define _di_f_compare_dynamic_
+#define _di_f_compare_dynamic_except_
+#define _di_f_compare_dynamic_except_string_
+#define _di_f_compare_dynamic_except_trim_
+#define _di_f_compare_dynamic_except_trim_string_
+//#define _di_f_compare_dynamic_partial_
+//#define _di_f_compare_dynamic_partial_dynamic_
+#define _di_f_compare_dynamic_partial_except_
+#define _di_f_compare_dynamic_partial_except_dynamic_
+#define _di_f_compare_dynamic_partial_except_string_
+#define _di_f_compare_dynamic_partial_except_trim_
+#define _di_f_compare_dynamic_partial_except_trim_dynamic_
+#define _di_f_compare_dynamic_partial_except_trim_string_
+//#define _di_f_compare_dynamic_partial_string_
+#define _di_f_compare_dynamic_partial_trim_
+#define _di_f_compare_dynamic_partial_trim_dynamic_
+//#define _di_f_compare_dynamic_partial_trim_string_
+#define _di_f_compare_dynamic_string_
+//#define _di_f_compare_dynamic_trim_
+#define _di_f_compare_dynamic_trim_string_
+#define _di_f_compare_except_
+#define _di_f_compare_except_trim_
+#define _di_f_compare_trim_
+#define _di_f_compare_utf_
+#define _di_f_compare_utf_dynamic_
+#define _di_f_compare_utf_dynamic_partial_
+#define _di_f_compare_utf_dynamic_partial_trim_
+#define _di_f_compare_utf_dynamic_trim_
+#define _di_f_compare_utf_trim_
+
 //#define _di_f_console_arguments_t_
 #define _di_f_console_environment_process_
 //#define _di_f_console_flag_e_
@@ -262,11 +293,11 @@
 //#define _di_f_conversion_character_to_hexidecimal_
 //#define _di_f_conversion_character_to_octal_
 //#define _di_f_conversion_d_
-#define _di_f_conversion_data_base_2_c_
-#define _di_f_conversion_data_base_8_c_
 //#define _di_f_conversion_data_base_10_c_
 #define _di_f_conversion_data_base_12_c_
 #define _di_f_conversion_data_base_16_c_
+#define _di_f_conversion_data_base_2_c_
+#define _di_f_conversion_data_base_8_c_
 //#define _di_f_conversion_data_c_
 //#define _di_f_conversion_data_flag_d_
 //#define _di_f_conversion_data_t_
@@ -325,6 +356,7 @@
 #define _di_f_environment_secure_is_
 //#define _di_f_environment_set_
 #define _di_f_environment_unset_
+
 //#define _di_f_execute_e_
 #define _di_f_execute_result_t_
 //#define _di_f_execute_scheduler_t_
@@ -781,6 +813,7 @@
 #define _di_f_int8_t_
 
 //#define _di_fl_control_group_apply_
+
 //#define _di_fl_conversion_data_base_10_c_
 #define _di_fl_conversion_data_base_12_c_
 #define _di_fl_conversion_data_base_16_c_
@@ -833,12 +866,10 @@
 #define _di_fl_fss_basic_list_object_write_
 #define _di_fl_fss_basic_object_read_
 #define _di_fl_fss_basic_object_write_
-
 #define _di_fl_fss_embedded_list_content_read_
 #define _di_fl_fss_embedded_list_content_write_
 #define _di_fl_fss_embedded_list_object_read_
 #define _di_fl_fss_embedded_list_object_write_
-
 //#define _di_fl_fss_extended_content_read_
 #define _di_fl_fss_extended_content_write_
 #define _di_fl_fss_extended_list_content_read_
@@ -1115,46 +1146,6 @@
 #define _di_fl_print_trim_safely_
 //#define _di_fl_print_warning_s_
 
-#define _di_fl_string_compare_
-#define _di_fl_string_compare_except_
-#define _di_fl_string_compare_except_trim_
-#define _di_fl_string_compare_trim_
-//#define _di_fl_string_dynamic_compare_
-#define _di_fl_string_dynamic_compare_except_
-#define _di_fl_string_dynamic_compare_except_string_
-#define _di_fl_string_dynamic_compare_except_trim_
-#define _di_fl_string_dynamic_compare_except_trim_string_
-#define _di_fl_string_dynamic_compare_string_
-//#define _di_fl_string_dynamic_compare_trim_
-#define _di_fl_string_dynamic_compare_trim_string_
-//#define _di_fl_string_dynamic_partial_compare_
-//#define _di_fl_string_dynamic_partial_compare_dynamic_
-#define _di_fl_string_dynamic_partial_compare_except_
-#define _di_fl_string_dynamic_partial_compare_except_dynamic_
-#define _di_fl_string_dynamic_partial_compare_except_string_
-#define _di_fl_string_dynamic_partial_compare_except_trim_
-#define _di_fl_string_dynamic_partial_compare_except_trim_dynamic_
-#define _di_fl_string_dynamic_partial_compare_except_trim_string_
-//#define _di_fl_string_dynamic_partial_compare_string_
-#define _di_fl_string_dynamic_partial_compare_trim_
-#define _di_fl_string_dynamic_partial_compare_trim_dynamic_
-//#define _di_fl_string_dynamic_partial_compare_trim_string_
-#define _di_fl_string_dynamic_partial_fll_identify_
-#define _di_fl_string_dynamic_partial_rip_
-#define _di_fl_string_dynamic_partial_rip_nulless_
-//#define _di_fl_string_dynamic_rip_
-#define _di_fl_string_dynamic_rip_nulless_
-#define _di_fl_string_dynamic_seek_line_to_utf_character_
-#define _di_fl_string_dynamic_seek_line_until_graph_
-#define _di_fl_string_dynamic_seek_line_until_graph_non_
-#define _di_fl_string_dynamic_seek_to_utf_character_
-#define _di_fl_string_rip_
-#define _di_fl_string_rip_nulless_
-#define _di_fl_string_seek_line_to_utf_character_
-#define _di_fl_string_seek_line_until_graph_
-#define _di_fl_string_seek_line_until_graph_non_
-#define _di_fl_string_seek_to_utf_character_
-
 #define _di_f_memory_adjust_
 //#define _di_f_memory_default_d_
 //#define _di_f_memory_delete_
@@ -1171,9 +1162,29 @@
 
 //#define _di_f_mode_t_
 
+#define _di_f_parse_dynamic_partial_fll_identify_
+#define _di_f_parse_dynamic_seek_line_to_utf_character_
+#define _di_f_parse_dynamic_seek_line_until_graph_
+#define _di_f_parse_dynamic_seek_line_until_graph_non_
+#define _di_f_parse_dynamic_seek_to_utf_character_
+#define _di_f_parse_seek_line_to_utf_character_
+#define _di_f_parse_seek_line_until_graph_
+#define _di_f_parse_seek_line_until_graph_non_
+#define _di_f_parse_seek_to_utf_character_
+#define _di_f_parse_utf_dynamic_seek_line_to_char_
+#define _di_f_parse_utf_dynamic_seek_line_until_graph_
+#define _di_f_parse_utf_dynamic_seek_line_until_graph_non_
+#define _di_f_parse_utf_dynamic_seek_to_char_
+#define _di_f_parse_utf_seek_line_to_char_
+#define _di_f_parse_utf_seek_line_until_graph_
+#define _di_f_parse_utf_seek_line_until_graph_non_
+#define _di_f_parse_utf_seek_to_char_
+#define _di_f_parse_utf_seek_to_character_
+
 //#define _di_f_path_change_
 //#define _di_f_path_change_at_
 //#define _di_f_path_current_
+//#define _di_f_path_d_
 //#define _di_f_path_environment_s_
 //#define _di_f_path_extension_separator_s_
 #define _di_f_path_home_s_
@@ -1239,6 +1250,7 @@
 #define _di_f_path_user_settings_s_
 #define _di_f_path_user_shared_s_
 #define _di_f_path_user_temporary_s_
+
 #define _di_f_pipe_error_exists_
 //#define _di_f_pipe_input_exists_
 #define _di_f_pipe_output_exists_
@@ -1388,6 +1400,17 @@
 #define _di_f_print_to_safely_terminated_
 #define _di_f_print_to_terminated_
 //#define _di_f_print_write_max_d_
+
+#define _di_f_rip_
+//#define _di_f_rip_dynamic_
+#define _di_f_rip_dynamic_nulless_
+#define _di_f_rip_dynamic_partial_
+#define _di_f_rip_dynamic_partial_nulless_
+#define _di_f_rip_nulless_
+#define _di_f_rip_utf_
+#define _di_f_rip_utf_dynamic_
+#define _di_f_rip_utf_dynamic_nulless_
+#define _di_f_rip_utf_nulless_
 
 #define _di_f_signal_action_
 //#define _di_f_signal_close_
@@ -2099,6 +2122,7 @@
 #define _di_f_utf_space_separator_line_s_
 #define _di_f_utf_space_separator_paragraph_s_
 #define _di_f_utf_space_thin_s_
+
 #define _di_f_utf_string_append_
 #define _di_f_utf_string_append_assure_
 #define _di_f_utf_string_append_assure_nulless_

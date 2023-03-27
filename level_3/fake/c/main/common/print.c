@@ -73,7 +73,7 @@ extern "C" {
     "fl_environment_load_name",
     "fl_environment_load_names",
     "fl_iki_read",
-    "fl_string_dynamic_partial_compare",
+    "f_compare_dynamic_partial",
     "fll_execute_arguments_add",
     "fll_execute_arguments_add_parameter_set",
     "fll_execute_program",

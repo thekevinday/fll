@@ -1,0 +1,55 @@
+# fss-0005 iki-0002
+
+settings:
+  load_build yes
+  fail exit
+
+  environment PATH LD_LIBRARY_PATH
+  environment CMOCKA_XML_FILE CMOCKA_MESSAGE_OUTPUT CMOCKA_TEST_ABORT
+
+  # Cmcka is not fully thread-safe, set this to "1" to have cmocka call abort() on a test failure.
+  #CMOCKA_TEST_ABORT 1
+
+  # One of: STDOUT, SUBUNIT, TAP, or XML.
+  #define CMOCKA_MESSAGE_OUTPUT STDOUT
+
+  # When in "XML" output mode, output to this file rather than stdout.
+  #define CMOCKA_XML_FILE ./out.xml
+
+main:
+  build settings individual test
+  build settings-tests individual test
+
+  operate ld_library_path
+
+  if exist build/programs/shared/test-f_compare
+    shell build/programs/shared/test-f_compare
+
+  if exist build/programs/static/test-f_compare
+    shell build/programs/static/test-f_compare
+
+  if not exist build/programs/shared/test-f_compare
+  and not exist build/programs/static/test-f_compare
+    operate not_created
+
+not_created:
+  print
+  print 'context:"error"Failed to test due to being unable to find either a shared or static test binary to perform tests. context:"reset"'
+
+  exit failure
+
+ld_library_path:
+  if define LD_LIBRARY_PATH
+  and parameter work
+    define LD_LIBRARY_PATH 'build/libraries/shared:parameter:"work:value"libraries/shared:define:"LD_LIBRARY_PATH"'
+
+  else
+  if define LD_LIBRARY_PATH
+    define LD_LIBRARY_PATH 'build/libraries/shared:define:"LD_LIBRARY_PATH"'
+
+  else
+  if parameter work
+    define LD_LIBRARY_PATH 'build/libraries/shared:parameter:"work:value"libraries/shared'
+
+  else
+    define LD_LIBRARY_PATH build/libraries/shared

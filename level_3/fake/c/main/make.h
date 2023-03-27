@@ -27,12 +27,12 @@ extern "C" {
  *     F_true if inside the project.
  *     F_false (with error bit) if path exists outside of the root project path.
  *
- *     Errors (with error bit) from: fl_string_dynamic_partial_compare()
+ *     Errors (with error bit) from: f_compare_dynamic_partial()
  *     Errors (with error bit) from: fl_path_canonical()
  * @param path
  *   file path to get the real path of.
  *
- * @see fl_string_dynamic_partial_compare()
+ * @see f_compare_dynamic_partial()
  * @see fl_path_canonical()
  */
 #ifndef _di_fake_make_assure_inside_project_

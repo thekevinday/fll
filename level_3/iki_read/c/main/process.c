@@ -118,7 +118,7 @@ extern "C" {
 
         for (j = 0; j < main->setting.names.used; ++j) {
 
-          if (fl_string_dynamic_partial_compare_string(main->setting.names.array[j].string, main->setting.buffer, main->setting.names.array[j].used, main->setting.data.vocabulary.array[i]) == F_equal_to) {
+          if (f_compare_dynamic_partial_string(main->setting.names.array[j].string, main->setting.buffer, main->setting.names.array[j].used, main->setting.data.vocabulary.array[i]) == F_equal_to) {
             unmatched = F_false;
 
             if (main->setting.flag & iki_read_main_flag_at_e) {
@@ -251,7 +251,7 @@ extern "C" {
 
         if (main->setting.names.used) {
           for (k = 0; k < main->setting.names.used; ++k) {
-            if (fl_string_dynamic_partial_compare_string(main->setting.names.array[k].string, main->setting.buffer, main->setting.names.array[k].used, main->setting.data.vocabulary.array[j]) == F_equal_to) break;
+            if (f_compare_dynamic_partial_string(main->setting.names.array[k].string, main->setting.buffer, main->setting.names.array[k].used, main->setting.data.vocabulary.array[j]) == F_equal_to) break;
           } // for
 
           if (k < main->setting.names.used) {
@@ -358,7 +358,7 @@ extern "C" {
 
         for (j = 0; j < main->setting.data.vocabulary.used; ++j) {
 
-          main->setting.state.status = fl_string_dynamic_partial_compare(name, main->setting.buffer, range, main->setting.data.vocabulary.array[j]);
+          main->setting.state.status = f_compare_dynamic_partial(name, main->setting.buffer, range, main->setting.data.vocabulary.array[j]);
 
           if (main->setting.state.status == F_equal_to) ++total;
         } // for

@@ -189,7 +189,7 @@ extern "C" {
 
         destination->array[destination->used].used = 0;
 
-        status = fl_string_dynamic_rip(arguments[values.array[i]], &destination->array[destination->used]);
+        status = f_rip_dynamic(arguments[values.array[i]], &destination->array[destination->used]);
         if (F_status_is_error(status)) break;
 
         if (status == F_data_not) {
@@ -224,7 +224,7 @@ extern "C" {
       if (arguments[values.array[i]].used) {
         ripped.used = 0;
 
-        status = fl_string_dynamic_rip(arguments[values.array[i]], &ripped);
+        status = f_rip_dynamic(arguments[values.array[i]], &ripped);
         if (F_status_is_error(status)) break;
 
         if (ripped.used) {

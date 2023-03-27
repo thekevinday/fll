@@ -84,10 +84,10 @@ extern "C" {
  *   F_false on no match.
  *
  *   Errors (with error bit) from fl_conversion_dynamic_partial_to_hexidecimal_unsigned().
- *   Errors (with error bit) from fl_string_dynamic_compare_string().
+ *   Errors (with error bit) from f_compare_dynamic_string().
  *
  * @see fl_conversion_dynamic_partial_to_hexidecimal_unsigned()
- * @see fl_string_dynamic_compare_string()
+ * @see f_compare_dynamic_string()
  */
 #ifndef _di_fss_identify_process_name_compare_
   f_status_t fss_identify_process_name_compare(fss_identify_data_t * const data, const f_fll_id_t id, const uint8_t mode) F_attribute_visibility_internal_d;

@@ -178,15 +178,15 @@ extern "C" {
 
             index = main->parameters.remaining.array[i];
 
-            if (fl_string_dynamic_compare(firewall_show_nat_s, data.argv[index]) == F_equal_to) {
+            if (f_compare_dynamic(firewall_show_nat_s, data.argv[index]) == F_equal_to) {
               show_nat = F_true;
             }
             else {
-              if (fl_string_dynamic_compare(firewall_show_mangle_s, data.argv[index]) == F_equal_to) {
+              if (f_compare_dynamic(firewall_show_mangle_s, data.argv[index]) == F_equal_to) {
                 show_mangle = F_true;
               }
               else {
-                if (fl_string_dynamic_compare(firewall_show_ports_s, data.argv[index]) == F_equal_to) {
+                if (f_compare_dynamic(firewall_show_ports_s, data.argv[index]) == F_equal_to) {
                   show_ports = F_true;
                 }
                 else {
@@ -331,7 +331,7 @@ extern "C" {
 
         for (; i < data.devices.used; ++i) {
 
-          if (fl_string_dynamic_compare(firewall_device_loop_s, data.devices.array[i]) == F_equal_to) {
+          if (f_compare_dynamic(firewall_device_loop_s, data.devices.array[i]) == F_equal_to) {
             f_string_static_t swap_string = data.devices.array[i];
 
             --data.devices.used;
@@ -367,11 +367,11 @@ extern "C" {
 
         for (f_array_length_t i = 0; i < local.chain_objects.used; ++i) {
 
-          if (!reserved.has_stop && fl_string_dynamic_partial_compare_string(firewall_group_stop_s.string, local.buffer, firewall_group_stop_s.used, local.chain_objects.array[i]) == F_equal_to) {
+          if (!reserved.has_stop && f_compare_dynamic_partial_string(firewall_group_stop_s.string, local.buffer, firewall_group_stop_s.used, local.chain_objects.array[i]) == F_equal_to) {
             reserved.stop_at = i;
             reserved.has_stop = F_true;
           }
-          else if (!reserved.has_lock && fl_string_dynamic_partial_compare_string(firewall_group_lock_s.string, local.buffer, firewall_group_lock_s.used, local.chain_objects.array[i]) == F_equal_to) {
+          else if (!reserved.has_lock && f_compare_dynamic_partial_string(firewall_group_lock_s.string, local.buffer, firewall_group_lock_s.used, local.chain_objects.array[i]) == F_equal_to) {
             reserved.lock_at = i;
             reserved.has_lock = F_true;
           }

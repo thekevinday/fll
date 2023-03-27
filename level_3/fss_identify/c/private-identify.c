@@ -186,10 +186,10 @@ extern "C" {
         range.start = 0;
       }
 
-      return fl_string_dynamic_partial_compare_string((const f_string_t) id.name, data->name, id.used, range);
+      return f_compare_dynamic_partial_string((const f_string_t) id.name, data->name, id.used, range);
     }
 
-    return fl_string_dynamic_compare_string((const f_string_t) id.name, data->name, id.used);
+    return f_compare_dynamic_string((const f_string_t) id.name, data->name, id.used);
   }
 #endif // _di_fss_identify_process_name_compare_
 

@@ -48,7 +48,7 @@ extern "C" {
 
     for (f_array_length_t i = 0; i < rules.used; ++i) {
 
-      if (fl_string_dynamic_compare(alias, rules.array[i].alias) == F_equal_to) {
+      if (f_compare_dynamic(alias, rules.array[i].alias) == F_equal_to) {
         if (at) *at = i;
 
         return F_true;
@@ -395,41 +395,41 @@ extern "C" {
         else if (type == controller_rule_action_type_pid_file_e) {
           item->pid_file.used = 0;
 
-          status = fl_string_dynamic_partial_rip(cache->buffer_item, cache->content_action.array[0], &item->pid_file);
+          status = f_rip_dynamic_partial(cache->buffer_item, cache->content_action.array[0], &item->pid_file);
 
           if (F_status_is_error(status)) {
-            controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "fl_string_dynamic_partial_rip", F_true);
+            controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_rip_dynamic_partial", F_true);
           }
         }
         else if (type == controller_rule_action_type_rerun_e) {
           uint8_t type_rerun = 0;
 
           if (cache->content_action.used) {
-            if (fl_string_dynamic_partial_compare_string(controller_freeze_s.string, cache->buffer_item, controller_freeze_s.used, cache->content_action.array[0]) == F_equal_to) {
+            if (f_compare_dynamic_partial_string(controller_freeze_s.string, cache->buffer_item, controller_freeze_s.used, cache->content_action.array[0]) == F_equal_to) {
               type_rerun = controller_rule_action_execute_type_freeze_e;
             }
-            if (fl_string_dynamic_partial_compare_string(controller_kill_s.string, cache->buffer_item, controller_kill_s.used, cache->content_action.array[0]) == F_equal_to) {
+            if (f_compare_dynamic_partial_string(controller_kill_s.string, cache->buffer_item, controller_kill_s.used, cache->content_action.array[0]) == F_equal_to) {
               type_rerun = controller_rule_action_execute_type_kill_e;
             }
-            else if (fl_string_dynamic_partial_compare_string(controller_pause_s.string, cache->buffer_item, controller_pause_s.used, cache->content_action.array[0]) == F_equal_to) {
+            else if (f_compare_dynamic_partial_string(controller_pause_s.string, cache->buffer_item, controller_pause_s.used, cache->content_action.array[0]) == F_equal_to) {
               type_rerun = controller_rule_action_execute_type_pause_e;
             }
-            else if (fl_string_dynamic_partial_compare_string(controller_reload_s.string, cache->buffer_item, controller_reload_s.used, cache->content_action.array[0]) == F_equal_to) {
+            else if (f_compare_dynamic_partial_string(controller_reload_s.string, cache->buffer_item, controller_reload_s.used, cache->content_action.array[0]) == F_equal_to) {
               type_rerun = controller_rule_action_execute_type_reload_e;
             }
-            else if (fl_string_dynamic_partial_compare_string(controller_restart_s.string, cache->buffer_item, controller_restart_s.used, cache->content_action.array[0]) == F_equal_to) {
+            else if (f_compare_dynamic_partial_string(controller_restart_s.string, cache->buffer_item, controller_restart_s.used, cache->content_action.array[0]) == F_equal_to) {
               type_rerun = controller_rule_action_execute_type_restart_e;
             }
-            else if (fl_string_dynamic_partial_compare_string(controller_resume_s.string, cache->buffer_item, controller_resume_s.used, cache->content_action.array[0]) == F_equal_to) {
+            else if (f_compare_dynamic_partial_string(controller_resume_s.string, cache->buffer_item, controller_resume_s.used, cache->content_action.array[0]) == F_equal_to) {
               type_rerun = controller_rule_action_execute_type_resume_e;
             }
-            else if (fl_string_dynamic_partial_compare_string(controller_start_s.string, cache->buffer_item, controller_start_s.used, cache->content_action.array[0]) == F_equal_to) {
+            else if (f_compare_dynamic_partial_string(controller_start_s.string, cache->buffer_item, controller_start_s.used, cache->content_action.array[0]) == F_equal_to) {
               type_rerun = controller_rule_action_execute_type_start_e;
             }
-            else if (fl_string_dynamic_partial_compare_string(controller_stop_s.string, cache->buffer_item, controller_stop_s.used, cache->content_action.array[0]) == F_equal_to) {
+            else if (f_compare_dynamic_partial_string(controller_stop_s.string, cache->buffer_item, controller_stop_s.used, cache->content_action.array[0]) == F_equal_to) {
               type_rerun = controller_rule_action_execute_type_stop_e;
             }
-            else if (fl_string_dynamic_partial_compare_string(controller_thaw_s.string, cache->buffer_item, controller_thaw_s.used, cache->content_action.array[0]) == F_equal_to) {
+            else if (f_compare_dynamic_partial_string(controller_thaw_s.string, cache->buffer_item, controller_thaw_s.used, cache->content_action.array[0]) == F_equal_to) {
               type_rerun = controller_rule_action_execute_type_thaw_e;
             }
           }
@@ -465,11 +465,11 @@ extern "C" {
           controller_rule_rerun_item_t *rerun_item = 0;
 
           if (cache->content_action.used > 1) {
-            if (fl_string_dynamic_partial_compare_string(controller_failure_s.string, cache->buffer_item, controller_failure_s.used, cache->content_action.array[1]) == F_equal_to) {
+            if (f_compare_dynamic_partial_string(controller_failure_s.string, cache->buffer_item, controller_failure_s.used, cache->content_action.array[1]) == F_equal_to) {
               rerun_item = &item->reruns[type_rerun].failure;
               item->reruns[type_rerun].is |= controller_rule_rerun_is_failure_d;
             }
-            else if (fl_string_dynamic_partial_compare_string(controller_success_s.string, cache->buffer_item, controller_success_s.used, cache->content_action.array[1]) == F_equal_to) {
+            else if (f_compare_dynamic_partial_string(controller_success_s.string, cache->buffer_item, controller_success_s.used, cache->content_action.array[1]) == F_equal_to) {
               rerun_item = &item->reruns[type_rerun].success;
               item->reruns[type_rerun].is |= controller_rule_rerun_is_success_d;
             }
@@ -497,13 +497,13 @@ extern "C" {
 
           for (i = 2; i < cache->content_action.used; ++i) {
 
-            if (fl_string_dynamic_partial_compare_string(controller_delay_s.string, cache->buffer_item, controller_delay_s.used, cache->content_action.array[i]) == F_equal_to) {
+            if (f_compare_dynamic_partial_string(controller_delay_s.string, cache->buffer_item, controller_delay_s.used, cache->content_action.array[i]) == F_equal_to) {
               status = controller_rule_action_read_rerun_number(global, controller_delay_s.string, cache, &i, &rerun_item->delay);
             }
-            else if (fl_string_dynamic_partial_compare_string(controller_max_s.string, cache->buffer_item, controller_max_s.used, cache->content_action.array[i]) == F_equal_to) {
+            else if (f_compare_dynamic_partial_string(controller_max_s.string, cache->buffer_item, controller_max_s.used, cache->content_action.array[i]) == F_equal_to) {
               status = controller_rule_action_read_rerun_number(global, controller_max_s.string, cache, &i, &rerun_item->max);
             }
-            else if (fl_string_dynamic_partial_compare_string(controller_reset_s.string, cache->buffer_item, controller_reset_s.used, cache->content_action.array[i]) == F_equal_to) {
+            else if (f_compare_dynamic_partial_string(controller_reset_s.string, cache->buffer_item, controller_reset_s.used, cache->content_action.array[i]) == F_equal_to) {
               item->reruns[type_rerun].is |= rerun_item == &item->reruns[type_rerun].failure ? controller_rule_rerun_is_failure_reset_d : controller_rule_rerun_is_success_reset_d;
             }
             else {
@@ -528,10 +528,10 @@ extern "C" {
         else if (type == controller_rule_action_type_with_e) {
           for (i = 0; i < cache->content_action.used; ++i) {
 
-            if (fl_string_dynamic_partial_compare_string(controller_full_path_s.string, cache->buffer_item, controller_full_path_s.used, cache->content_action.array[i]) == F_equal_to) {
+            if (f_compare_dynamic_partial_string(controller_full_path_s.string, cache->buffer_item, controller_full_path_s.used, cache->content_action.array[i]) == F_equal_to) {
               item->with |= controller_with_full_path_d;
             }
-            else if (fl_string_dynamic_partial_compare_string(controller_session_new_s.string, cache->buffer_item, controller_session_new_s.used, cache->content_action.array[i]) == F_equal_to) {
+            else if (f_compare_dynamic_partial_string(controller_session_new_s.string, cache->buffer_item, controller_session_new_s.used, cache->content_action.array[i]) == F_equal_to) {
               item->with |= controller_with_session_new_d;
 
               // The "session_new" and "session_same" are mutually exclusive.
@@ -539,7 +539,7 @@ extern "C" {
                 item->with -= controller_with_session_same_d;
               }
             }
-            else if (fl_string_dynamic_partial_compare_string(controller_session_same_s.string, cache->buffer_item, controller_session_same_s.used, cache->content_action.array[i]) == F_equal_to) {
+            else if (f_compare_dynamic_partial_string(controller_session_same_s.string, cache->buffer_item, controller_session_same_s.used, cache->content_action.array[i]) == F_equal_to) {
               item->with |= controller_with_session_same_d;
 
               // The "session_new" and "session_same" are mutually exclusive.
@@ -1035,11 +1035,11 @@ extern "C" {
 
           for (j = 0; j < process->rule.environment.used; ++j) {
 
-            if (fl_string_dynamic_compare(entry->define.array[i].name, process->rule.environment.array[j]) == F_equal_to) {
+            if (f_compare_dynamic(entry->define.array[i].name, process->rule.environment.array[j]) == F_equal_to) {
 
               for (k = 0; k < environment.used; ++k) {
 
-                if (fl_string_dynamic_compare(entry->define.array[i].name, environment.array[k].name) == F_equal_to) {
+                if (f_compare_dynamic(entry->define.array[i].name, environment.array[k].name) == F_equal_to) {
 
                   environment.array[k].value.used = 0;
 
@@ -1076,11 +1076,11 @@ extern "C" {
 
         for (j = 0; j < process->rule.environment.used; ++j) {
 
-          if (fl_string_dynamic_compare(process->rule.define.array[i].name, process->rule.environment.array[j]) == F_equal_to) {
+          if (f_compare_dynamic(process->rule.define.array[i].name, process->rule.environment.array[j]) == F_equal_to) {
 
             for (k = 0; k < environment.used; ++k) {
 
-              if (fl_string_dynamic_compare(process->rule.define.array[i].name, environment.array[k].name) == F_equal_to) {
+              if (f_compare_dynamic(process->rule.define.array[i].name, environment.array[k].name) == F_equal_to) {
 
                 environment.array[k].value.used = 0;
 
@@ -2021,13 +2021,13 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    if (fl_string_dynamic_partial_compare_string(controller_define_s.string, source, controller_define_s.used, vocabulary) == F_equal_to) {
+    if (f_compare_dynamic_partial_string(controller_define_s.string, source, controller_define_s.used, vocabulary) == F_equal_to) {
       f_array_length_t i = 0;
 
       // First check to see if the environment variable is overwritten by a "define".
       for (; i < process->rule.define.used; ++i) {
 
-        if (fl_string_dynamic_partial_compare_string(process->rule.define.array[i].name.string, source, process->rule.define.array[i].name.used, content) == F_equal_to) {
+        if (f_compare_dynamic_partial_string(process->rule.define.array[i].name.string, source, process->rule.define.array[i].name.used, content) == F_equal_to) {
           status = f_string_dynamic_append(process->rule.define.array[i].value, destination);
           if (F_status_is_error(status)) return status;
 
@@ -2040,7 +2040,7 @@ extern "C" {
 
         for (i = 0; i < entry->define.used; ++i) {
 
-            if (fl_string_dynamic_partial_compare_string(entry->define.array[i].name.string, source, entry->define.array[i].name.used, content) == F_equal_to) {
+            if (f_compare_dynamic_partial_string(entry->define.array[i].name.string, source, entry->define.array[i].name.used, content) == F_equal_to) {
             status = f_string_dynamic_append(entry->define.array[i].value, destination);
             if (F_status_is_error(status)) return status;
 
@@ -2071,12 +2071,12 @@ extern "C" {
         if (F_status_is_error(status)) return status;
       }
     }
-    else if (fl_string_dynamic_partial_compare_string(controller_parameter_s.string, source, controller_parameter_s.used, vocabulary) == F_equal_to) {
+    else if (f_compare_dynamic_partial_string(controller_parameter_s.string, source, controller_parameter_s.used, vocabulary) == F_equal_to) {
       f_array_length_t i = 0;
 
       for (; i < process->rule.parameter.used; ++i) {
 
-        if (fl_string_dynamic_partial_compare_string(process->rule.parameter.array[i].name.string, source, process->rule.parameter.array[i].name.used, content) == F_equal_to) {
+        if (f_compare_dynamic_partial_string(process->rule.parameter.array[i].name.string, source, process->rule.parameter.array[i].name.used, content) == F_equal_to) {
           status = f_string_dynamic_append(process->rule.parameter.array[i].value, destination);
           if (F_status_is_error(status)) return status;
 
@@ -2089,7 +2089,7 @@ extern "C" {
 
         for (i = 0; i < entry->parameter.used; ++i) {
 
-            if (fl_string_dynamic_partial_compare_string(entry->parameter.array[i].name.string, source, entry->parameter.array[i].name.used, content) == F_equal_to) {
+            if (f_compare_dynamic_partial_string(entry->parameter.array[i].name.string, source, entry->parameter.array[i].name.used, content) == F_equal_to) {
             status = f_string_dynamic_append(entry->parameter.array[i].value, destination);
             if (F_status_is_error(status)) return status;
 
@@ -2098,7 +2098,7 @@ extern "C" {
         } // for
       }
     }
-    else if (fl_string_dynamic_partial_compare_string(controller_program_s.string, source, controller_program_s.used, vocabulary) == F_equal_to) {
+    else if (f_compare_dynamic_partial_string(controller_program_s.string, source, controller_program_s.used, vocabulary) == F_equal_to) {
       f_string_static_t * const argv = ((controller_main_t *) process->main_data)->parameters.arguments.array;
       f_console_parameters_t * const parameters = &((controller_main_t *) process->main_data)->parameters;
 
@@ -2215,7 +2215,7 @@ extern "C" {
 
       for (f_array_length_t i = 0; i < 17; ++i) {
 
-        if (fl_string_dynamic_partial_compare_string(options[i].string, source, options[i].used, content) == F_equal_to) {
+        if (f_compare_dynamic_partial_string(options[i].string, source, options[i].used, content) == F_equal_to) {
           if (values[i]) {
             if (parameters->array[codes[i]].result & f_console_result_value_e) {
               const f_array_length_t index = parameters->array[codes[i]].values.array[parameters->array[codes[i]].values.used - 1];
@@ -2262,7 +2262,7 @@ extern "C" {
           memcpy(buffer_string, options[i].string, sizeof(f_char_t) * options[i].used);
           memcpy(buffer_string + options[i].used, controller_parameter_map_option_s.string, sizeof(f_char_t) * controller_parameter_map_option_s.used);
 
-          if (fl_string_dynamic_partial_compare_string(buffer.string, source, buffer.used, content) == F_equal_to) {
+          if (f_compare_dynamic_partial_string(buffer.string, source, buffer.used, content) == F_equal_to) {
             if (values[i] && parameters->array[codes[i]].result & f_console_result_value_e || !values[i] && (parameters->array[codes[i]].result & f_console_result_found_e)) {
               status = f_string_dynamic_increase_by(symbols[i].used + expands[i].used + 1, destination);
               if (F_status_is_error(status)) return status;
@@ -2288,7 +2288,7 @@ extern "C" {
           memcpy(buffer_string, options[i].string, sizeof(f_char_t) * options[i].used);
           memcpy(buffer_string + options[i].used, controller_parameter_map_value_s.string, sizeof(f_char_t) * controller_parameter_map_value_s.used);
 
-          if (fl_string_dynamic_partial_compare_string(buffer.string, source, buffer.used, content) == F_equal_to) {
+          if (f_compare_dynamic_partial_string(buffer.string, source, buffer.used, content) == F_equal_to) {
             if (parameters->array[codes[i]].result & f_console_result_value_e) {
               const f_array_length_t index = parameters->array[codes[i]].values.array[parameters->array[codes[i]].values.used - 1];
 
@@ -2420,54 +2420,54 @@ extern "C" {
       cache->action.line_action += ++item->line;
       cache->action.name_action.used = 0;
 
-      status = fl_string_dynamic_partial_rip_nulless(cache->buffer_item, cache->range_action, &cache->action.name_action);
+      status = f_rip_dynamic_partial_nulless(cache->buffer_item, cache->range_action, &cache->action.name_action);
 
       if (F_status_is_error(status)) {
-        controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "fl_string_dynamic_partial_rip_nulless", F_true);
+        controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_rip_dynamic_partial_nulless", F_true);
 
         break;
       }
 
-      if (fl_string_dynamic_compare(controller_freeze_s, cache->action.name_action) == F_equal_to) {
+      if (f_compare_dynamic(controller_freeze_s, cache->action.name_action) == F_equal_to) {
         type = controller_rule_action_type_freeze_e;
       }
-      else if (fl_string_dynamic_compare(controller_group_s, cache->action.name_action) == F_equal_to) {
+      else if (f_compare_dynamic(controller_group_s, cache->action.name_action) == F_equal_to) {
         type = controller_rule_action_type_group_e;
       }
-      else if (fl_string_dynamic_compare(controller_kill_s, cache->action.name_action) == F_equal_to) {
+      else if (f_compare_dynamic(controller_kill_s, cache->action.name_action) == F_equal_to) {
         type = controller_rule_action_type_kill_e;
       }
-      else if (fl_string_dynamic_compare(controller_pause_s, cache->action.name_action) == F_equal_to) {
+      else if (f_compare_dynamic(controller_pause_s, cache->action.name_action) == F_equal_to) {
         type = controller_rule_action_type_pause_e;
       }
-      else if (fl_string_dynamic_compare(controller_pid_file_s, cache->action.name_action) == F_equal_to) {
+      else if (f_compare_dynamic(controller_pid_file_s, cache->action.name_action) == F_equal_to) {
         type = controller_rule_action_type_pid_file_e;
       }
-      else if (fl_string_dynamic_compare(controller_reload_s, cache->action.name_action) == F_equal_to) {
+      else if (f_compare_dynamic(controller_reload_s, cache->action.name_action) == F_equal_to) {
         type = controller_rule_action_type_reload_e;
       }
-      else if (fl_string_dynamic_compare(controller_rerun_s, cache->action.name_action) == F_equal_to) {
+      else if (f_compare_dynamic(controller_rerun_s, cache->action.name_action) == F_equal_to) {
         type = controller_rule_action_type_rerun_e;
       }
-      else if (fl_string_dynamic_compare(controller_restart_s, cache->action.name_action) == F_equal_to) {
+      else if (f_compare_dynamic(controller_restart_s, cache->action.name_action) == F_equal_to) {
         type = controller_rule_action_type_restart_e;
       }
-      else if (fl_string_dynamic_compare(controller_resume_s, cache->action.name_action) == F_equal_to) {
+      else if (f_compare_dynamic(controller_resume_s, cache->action.name_action) == F_equal_to) {
         type = controller_rule_action_type_resume_e;
       }
-      else if (fl_string_dynamic_compare(controller_start_s, cache->action.name_action) == F_equal_to) {
+      else if (f_compare_dynamic(controller_start_s, cache->action.name_action) == F_equal_to) {
         type = controller_rule_action_type_start_e;
       }
-      else if (fl_string_dynamic_compare(controller_stop_s, cache->action.name_action) == F_equal_to) {
+      else if (f_compare_dynamic(controller_stop_s, cache->action.name_action) == F_equal_to) {
         type = controller_rule_action_type_stop_e;
       }
-      else if (fl_string_dynamic_compare(controller_thaw_s, cache->action.name_action) == F_equal_to) {
+      else if (f_compare_dynamic(controller_thaw_s, cache->action.name_action) == F_equal_to) {
         type = controller_rule_action_type_thaw_e;
       }
-      else if (fl_string_dynamic_compare(controller_user_s, cache->action.name_action) == F_equal_to) {
+      else if (f_compare_dynamic(controller_user_s, cache->action.name_action) == F_equal_to) {
         type = controller_rule_action_type_user_e;
       }
-      else if (fl_string_dynamic_compare(controller_with_s, cache->action.name_action) == F_equal_to) {
+      else if (f_compare_dynamic(controller_with_s, cache->action.name_action) == F_equal_to) {
         type = controller_rule_action_type_with_e;
       }
       else {
@@ -3852,27 +3852,27 @@ extern "C" {
 
           rule->items.array[rule->items.used].line = ++cache->action.line_item;
 
-          status = fl_string_dynamic_partial_rip_nulless(cache->buffer_file, cache->object_items.array[i], &cache->action.name_item);
+          status = f_rip_dynamic_partial_nulless(cache->buffer_file, cache->object_items.array[i], &cache->action.name_item);
 
           if (F_status_is_error(status)) {
-            controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "fl_string_dynamic_partial_rip_nulless", F_true);
+            controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_rip_dynamic_partial_nulless", F_true);
 
             break;
           }
 
-          if (fl_string_dynamic_compare(controller_settings_s, cache->action.name_item) == F_equal_to) {
+          if (f_compare_dynamic(controller_settings_s, cache->action.name_item) == F_equal_to) {
             rule->items.array[rule->items.used].type = 0;
           }
-          else if (fl_string_dynamic_compare(controller_command_s, cache->action.name_item) == F_equal_to) {
+          else if (f_compare_dynamic(controller_command_s, cache->action.name_item) == F_equal_to) {
             rule->items.array[rule->items.used].type = controller_rule_item_type_command_e;
           }
-          else if (fl_string_dynamic_compare(controller_script_s, cache->action.name_item) == F_equal_to) {
+          else if (f_compare_dynamic(controller_script_s, cache->action.name_item) == F_equal_to) {
             rule->items.array[rule->items.used].type = controller_rule_item_type_script_e;
           }
-          else if (fl_string_dynamic_compare(controller_service_s, cache->action.name_item) == F_equal_to) {
+          else if (f_compare_dynamic(controller_service_s, cache->action.name_item) == F_equal_to) {
             rule->items.array[rule->items.used].type = controller_rule_item_type_service_e;
           }
-          else if (fl_string_dynamic_compare(controller_utility_s, cache->action.name_item) == F_equal_to) {
+          else if (f_compare_dynamic(controller_utility_s, cache->action.name_item) == F_equal_to) {
             rule->items.array[rule->items.used].type = controller_rule_item_type_utility_e;
           }
           else {
@@ -4016,53 +4016,53 @@ extern "C" {
 
       empty_disallow = F_true;
 
-      if (fl_string_dynamic_compare(controller_affinity_s, cache->action.name_item) == F_equal_to) {
+      if (f_compare_dynamic(controller_affinity_s, cache->action.name_item) == F_equal_to) {
         type = controller_rule_setting_type_affinity_e;
       }
-      else if (fl_string_dynamic_compare(controller_capability_s, cache->action.name_item) == F_equal_to) {
+      else if (f_compare_dynamic(controller_capability_s, cache->action.name_item) == F_equal_to) {
         type = controller_rule_setting_type_capability_e;
       }
-      else if (fl_string_dynamic_compare(controller_cgroup_s, cache->action.name_item) == F_equal_to) {
+      else if (f_compare_dynamic(controller_cgroup_s, cache->action.name_item) == F_equal_to) {
         type = controller_rule_setting_type_cgroup_e;
       }
-      else if (fl_string_dynamic_compare(controller_define_s, cache->action.name_item) == F_equal_to) {
+      else if (f_compare_dynamic(controller_define_s, cache->action.name_item) == F_equal_to) {
         type = controller_rule_setting_type_define_e;
       }
-      else if (fl_string_dynamic_compare(controller_engine_s, cache->action.name_item) == F_equal_to) {
+      else if (f_compare_dynamic(controller_engine_s, cache->action.name_item) == F_equal_to) {
         type = controller_rule_setting_type_engine_e;
       }
-      else if (fl_string_dynamic_compare(controller_environment_s, cache->action.name_item) == F_equal_to) {
+      else if (f_compare_dynamic(controller_environment_s, cache->action.name_item) == F_equal_to) {
         type = controller_rule_setting_type_environment_e;
         empty_disallow = F_false;
       }
-      else if (fl_string_dynamic_compare(controller_group_s, cache->action.name_item) == F_equal_to) {
+      else if (f_compare_dynamic(controller_group_s, cache->action.name_item) == F_equal_to) {
         type = controller_rule_setting_type_group_e;
       }
-      else if (fl_string_dynamic_compare(controller_limit_s, cache->action.name_item) == F_equal_to) {
+      else if (f_compare_dynamic(controller_limit_s, cache->action.name_item) == F_equal_to) {
         type = controller_rule_setting_type_limit_e;
       }
-      else if (fl_string_dynamic_compare(controller_name_s, cache->action.name_item) == F_equal_to) {
+      else if (f_compare_dynamic(controller_name_s, cache->action.name_item) == F_equal_to) {
         type = controller_rule_setting_type_name_e;
       }
-      else if (fl_string_dynamic_compare(controller_nice_s, cache->action.name_item) == F_equal_to) {
+      else if (f_compare_dynamic(controller_nice_s, cache->action.name_item) == F_equal_to) {
         type = controller_rule_setting_type_nice_e;
       }
-      else if (fl_string_dynamic_compare(controller_on_s, cache->action.name_item) == F_equal_to) {
+      else if (f_compare_dynamic(controller_on_s, cache->action.name_item) == F_equal_to) {
         type = controller_rule_setting_type_on_e;
       }
-      else if (fl_string_dynamic_compare(controller_parameter_s, cache->action.name_item) == F_equal_to) {
+      else if (f_compare_dynamic(controller_parameter_s, cache->action.name_item) == F_equal_to) {
         type = controller_rule_setting_type_parameter_e;
       }
-      else if (fl_string_dynamic_compare(controller_path_s, cache->action.name_item) == F_equal_to) {
+      else if (f_compare_dynamic(controller_path_s, cache->action.name_item) == F_equal_to) {
         type = controller_rule_setting_type_path_e;
       }
-      else if (fl_string_dynamic_compare(controller_scheduler_s, cache->action.name_item) == F_equal_to) {
+      else if (f_compare_dynamic(controller_scheduler_s, cache->action.name_item) == F_equal_to) {
         type = controller_rule_setting_type_scheduler_e;
       }
-      else if (fl_string_dynamic_compare(controller_timeout_s, cache->action.name_item) == F_equal_to) {
+      else if (f_compare_dynamic(controller_timeout_s, cache->action.name_item) == F_equal_to) {
         type = controller_rule_setting_type_timeout_e;
       }
-      else if (fl_string_dynamic_compare(controller_user_s, cache->action.name_item) == F_equal_to) {
+      else if (f_compare_dynamic(controller_user_s, cache->action.name_item) == F_equal_to) {
         type = controller_rule_setting_type_user_e;
       }
       else {
@@ -4334,10 +4334,10 @@ extern "C" {
           continue;
         }
 
-        if (fl_string_dynamic_partial_compare_string(controller_existing_s.string, cache->buffer_item, controller_existing_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
+        if (f_compare_dynamic_partial_string(controller_existing_s.string, cache->buffer_item, controller_existing_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
           rule->cgroup.as_new = F_false;
         }
-        else if (fl_string_dynamic_partial_compare_string(controller_new_s.string, cache->buffer_item, controller_new_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
+        else if (f_compare_dynamic_partial_string(controller_new_s.string, cache->buffer_item, controller_new_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
           rule->cgroup.as_new = F_true;
         }
         else {
@@ -4425,52 +4425,52 @@ extern "C" {
           continue;
         }
 
-        if (fl_string_dynamic_partial_compare_string(controller_as_s.string, cache->buffer_item, controller_as_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
+        if (f_compare_dynamic_partial_string(controller_as_s.string, cache->buffer_item, controller_as_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
           type = controller_resource_limit_type_as_e;
         }
-        else if (fl_string_dynamic_partial_compare_string(controller_core_s.string, cache->buffer_item, controller_core_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
+        else if (f_compare_dynamic_partial_string(controller_core_s.string, cache->buffer_item, controller_core_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
           type = controller_resource_limit_type_core_e;
         }
-        else if (fl_string_dynamic_partial_compare_string(controller_cpu_s.string, cache->buffer_item, controller_cpu_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
+        else if (f_compare_dynamic_partial_string(controller_cpu_s.string, cache->buffer_item, controller_cpu_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
           type = controller_resource_limit_type_cpu_e;
         }
-        else if (fl_string_dynamic_partial_compare_string(controller_data_s.string, cache->buffer_item, controller_data_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
+        else if (f_compare_dynamic_partial_string(controller_data_s.string, cache->buffer_item, controller_data_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
           type = controller_resource_limit_type_data_e;
         }
-        else if (fl_string_dynamic_partial_compare_string(controller_fsize_s.string, cache->buffer_item, controller_fsize_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
+        else if (f_compare_dynamic_partial_string(controller_fsize_s.string, cache->buffer_item, controller_fsize_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
           type = controller_resource_limit_type_fsize_e;
         }
-        else if (fl_string_dynamic_partial_compare_string(controller_locks_s.string, cache->buffer_item, controller_locks_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
+        else if (f_compare_dynamic_partial_string(controller_locks_s.string, cache->buffer_item, controller_locks_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
           type = controller_resource_limit_type_locks_e;
         }
-        else if (fl_string_dynamic_partial_compare_string(controller_memlock_s.string, cache->buffer_item, controller_memlock_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
+        else if (f_compare_dynamic_partial_string(controller_memlock_s.string, cache->buffer_item, controller_memlock_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
           type = controller_resource_limit_type_memlock_e;
         }
-        else if (fl_string_dynamic_partial_compare_string(controller_msgqueue_s.string, cache->buffer_item, controller_msgqueue_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
+        else if (f_compare_dynamic_partial_string(controller_msgqueue_s.string, cache->buffer_item, controller_msgqueue_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
           type = controller_resource_limit_type_msgqueue_e;
         }
-        else if (fl_string_dynamic_partial_compare_string(controller_nice_s.string, cache->buffer_item, controller_nice_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
+        else if (f_compare_dynamic_partial_string(controller_nice_s.string, cache->buffer_item, controller_nice_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
           type = controller_resource_limit_type_nice_e;
         }
-        else if (fl_string_dynamic_partial_compare_string(controller_nofile_s.string, cache->buffer_item, controller_nofile_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
+        else if (f_compare_dynamic_partial_string(controller_nofile_s.string, cache->buffer_item, controller_nofile_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
           type = controller_resource_limit_type_nofile_e;
         }
-        else if (fl_string_dynamic_partial_compare_string(controller_nproc_s.string, cache->buffer_item, controller_nproc_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
+        else if (f_compare_dynamic_partial_string(controller_nproc_s.string, cache->buffer_item, controller_nproc_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
           type = controller_resource_limit_type_nproc_e;
         }
-        else if (fl_string_dynamic_partial_compare_string(controller_rss_s.string, cache->buffer_item, controller_rss_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
+        else if (f_compare_dynamic_partial_string(controller_rss_s.string, cache->buffer_item, controller_rss_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
           type = controller_resource_limit_type_rss_e;
         }
-        else if (fl_string_dynamic_partial_compare_string(controller_rtprio_s.string, cache->buffer_item, controller_rtprio_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
+        else if (f_compare_dynamic_partial_string(controller_rtprio_s.string, cache->buffer_item, controller_rtprio_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
           type = controller_resource_limit_type_rtprio_e;
         }
-        else if (fl_string_dynamic_partial_compare_string(controller_rttime_s.string, cache->buffer_item, controller_rttime_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
+        else if (f_compare_dynamic_partial_string(controller_rttime_s.string, cache->buffer_item, controller_rttime_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
           type = controller_resource_limit_type_rttime_e;
         }
-        else if (fl_string_dynamic_partial_compare_string(controller_sigpending_s.string, cache->buffer_item, controller_sigpending_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
+        else if (f_compare_dynamic_partial_string(controller_sigpending_s.string, cache->buffer_item, controller_sigpending_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
           type = controller_resource_limit_type_sigpending_e;
         }
-        else if (fl_string_dynamic_partial_compare_string(controller_stack_s.string, cache->buffer_item, controller_stack_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
+        else if (f_compare_dynamic_partial_string(controller_stack_s.string, cache->buffer_item, controller_stack_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
           type = controller_resource_limit_type_stack_e;
         }
         else {
@@ -4644,7 +4644,7 @@ extern "C" {
         }
 
         if (type == controller_rule_setting_type_name_e || type == controller_rule_setting_type_engine_e) {
-          status = fl_string_dynamic_partial_rip_nulless(cache->buffer_item, cache->content_actions.array[i].array[0], setting_value);
+          status = f_rip_dynamic_partial_nulless(cache->buffer_item, cache->content_actions.array[i].array[0], setting_value);
 
           if (type == controller_rule_setting_type_engine_e) {
             rule->engine_arguments.used = 0;
@@ -4783,27 +4783,27 @@ extern "C" {
           continue;
         }
 
-        if (fl_string_dynamic_partial_compare_string(controller_batch_s.string, cache->buffer_item, controller_batch_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
+        if (f_compare_dynamic_partial_string(controller_batch_s.string, cache->buffer_item, controller_batch_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
           rule->scheduler.policy = SCHED_BATCH;
           rule->scheduler.priority = 0;
         }
-        else if (fl_string_dynamic_partial_compare_string(controller_deadline_s.string, cache->buffer_item, controller_deadline_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
+        else if (f_compare_dynamic_partial_string(controller_deadline_s.string, cache->buffer_item, controller_deadline_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
           rule->scheduler.policy = SCHED_DEADLINE;
           rule->scheduler.priority = 49;
         }
-        else if (fl_string_dynamic_partial_compare_string(controller_fifo_s.string, cache->buffer_item, controller_fifo_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
+        else if (f_compare_dynamic_partial_string(controller_fifo_s.string, cache->buffer_item, controller_fifo_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
           rule->scheduler.policy = SCHED_FIFO;
           rule->scheduler.priority = 49;
         }
-        else if (fl_string_dynamic_partial_compare_string(controller_idle_s.string, cache->buffer_item, controller_idle_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
+        else if (f_compare_dynamic_partial_string(controller_idle_s.string, cache->buffer_item, controller_idle_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
           rule->scheduler.policy = SCHED_IDLE;
           rule->scheduler.priority = 0;
         }
-        else if (fl_string_dynamic_partial_compare_string(controller_other_s.string, cache->buffer_item, controller_other_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
+        else if (f_compare_dynamic_partial_string(controller_other_s.string, cache->buffer_item, controller_other_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
           rule->scheduler.policy = SCHED_OTHER;
           rule->scheduler.priority = 0;
         }
-        else if (fl_string_dynamic_partial_compare_string(controller_round_robin_s.string, cache->buffer_item, controller_round_robin_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
+        else if (f_compare_dynamic_partial_string(controller_round_robin_s.string, cache->buffer_item, controller_round_robin_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
           rule->scheduler.policy = SCHED_RR;
           rule->scheduler.priority = 49;
         }
@@ -4906,13 +4906,13 @@ extern "C" {
 
         uint8_t timeout_code = 0;
 
-        if (fl_string_dynamic_partial_compare_string(controller_kill_s.string, cache->buffer_item, controller_kill_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
+        if (f_compare_dynamic_partial_string(controller_kill_s.string, cache->buffer_item, controller_kill_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
           timeout_code = controller_rule_timeout_code_kill_d;
         }
-        else if (fl_string_dynamic_partial_compare_string(controller_start_s.string, cache->buffer_item, controller_start_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
+        else if (f_compare_dynamic_partial_string(controller_start_s.string, cache->buffer_item, controller_start_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
           timeout_code = controller_rule_timeout_code_start_d;
         }
-        else if (fl_string_dynamic_partial_compare_string(controller_stop_s.string, cache->buffer_item, controller_stop_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
+        else if (f_compare_dynamic_partial_string(controller_stop_s.string, cache->buffer_item, controller_stop_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
           timeout_code = controller_rule_timeout_code_stop_d;
         }
         else {
@@ -5002,10 +5002,10 @@ extern "C" {
 
             cache->action.generic.used = 0;
 
-            status = fl_string_dynamic_partial_rip_nulless(cache->buffer_item, cache->content_actions.array[i].array[1], &cache->action.generic);
+            status = f_rip_dynamic_partial_nulless(cache->buffer_item, cache->content_actions.array[i].array[1], &cache->action.generic);
 
             if (F_status_is_error(status)) {
-              controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "fl_string_dynamic_partial_rip_nulless", F_true);
+              controller_print_error(global.thread, global.main->error, F_status_set_fine(status), "f_rip_dynamic_partial_nulless", F_true);
 
               break;
             }
@@ -5469,31 +5469,31 @@ extern "C" {
         continue;
       }
 
-      if (fl_string_dynamic_partial_compare_string(controller_freeze_s.string, cache->buffer_item, controller_freeze_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
+      if (f_compare_dynamic_partial_string(controller_freeze_s.string, cache->buffer_item, controller_freeze_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
         action = controller_rule_action_type_freeze_e;
       }
-      else if (fl_string_dynamic_partial_compare_string(controller_kill_s.string, cache->buffer_item, controller_kill_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
+      else if (f_compare_dynamic_partial_string(controller_kill_s.string, cache->buffer_item, controller_kill_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
         action = controller_rule_action_type_kill_e;
       }
-      else if (fl_string_dynamic_partial_compare_string(controller_pause_s.string, cache->buffer_item, controller_pause_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
+      else if (f_compare_dynamic_partial_string(controller_pause_s.string, cache->buffer_item, controller_pause_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
         action = controller_rule_action_type_pause_e;
       }
-      else if (fl_string_dynamic_partial_compare_string(controller_reload_s.string, cache->buffer_item, controller_reload_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
+      else if (f_compare_dynamic_partial_string(controller_reload_s.string, cache->buffer_item, controller_reload_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
         action = controller_rule_action_type_reload_e;
       }
-      else if (fl_string_dynamic_partial_compare_string(controller_restart_s.string, cache->buffer_item, controller_restart_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
+      else if (f_compare_dynamic_partial_string(controller_restart_s.string, cache->buffer_item, controller_restart_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
         action = controller_rule_action_type_restart_e;
       }
-      else if (fl_string_dynamic_partial_compare_string(controller_resume_s.string, cache->buffer_item, controller_resume_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
+      else if (f_compare_dynamic_partial_string(controller_resume_s.string, cache->buffer_item, controller_resume_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
         action = controller_rule_action_type_resume_e;
       }
-      else if (fl_string_dynamic_partial_compare_string(controller_start_s.string, cache->buffer_item, controller_start_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
+      else if (f_compare_dynamic_partial_string(controller_start_s.string, cache->buffer_item, controller_start_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
         action = controller_rule_action_type_start_e;
       }
-      else if (fl_string_dynamic_partial_compare_string(controller_stop_s.string, cache->buffer_item, controller_stop_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
+      else if (f_compare_dynamic_partial_string(controller_stop_s.string, cache->buffer_item, controller_stop_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
         action = controller_rule_action_type_stop_e;
       }
-      else if (fl_string_dynamic_partial_compare_string(controller_thaw_s.string, cache->buffer_item, controller_thaw_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
+      else if (f_compare_dynamic_partial_string(controller_thaw_s.string, cache->buffer_item, controller_thaw_s.used, cache->content_actions.array[i].array[0]) == F_equal_to) {
         action = controller_rule_action_type_thaw_e;
       }
       else {
@@ -5538,13 +5538,13 @@ extern "C" {
         controller_rule_print_error(global.thread, global.main->error, cache->action, F_status_set_fine(status), "controller_rule_ons_increase", F_true, F_false);
       }
       else {
-        if (fl_string_dynamic_partial_compare_string(controller_need_s.string, cache->buffer_item, controller_need_s.used, cache->content_actions.array[i].array[1]) == F_equal_to) {
+        if (f_compare_dynamic_partial_string(controller_need_s.string, cache->buffer_item, controller_need_s.used, cache->content_actions.array[i].array[1]) == F_equal_to) {
           setting_values = &rule->ons.array[j].need;
         }
-        else if (fl_string_dynamic_partial_compare_string(controller_want_s.string, cache->buffer_item, controller_want_s.used, cache->content_actions.array[i].array[1]) == F_equal_to) {
+        else if (f_compare_dynamic_partial_string(controller_want_s.string, cache->buffer_item, controller_want_s.used, cache->content_actions.array[i].array[1]) == F_equal_to) {
           setting_values = &rule->ons.array[j].want;
         }
-        else if (fl_string_dynamic_partial_compare_string(controller_wish_s.string, cache->buffer_item, controller_wish_s.used, cache->content_actions.array[i].array[1]) == F_equal_to) {
+        else if (f_compare_dynamic_partial_string(controller_wish_s.string, cache->buffer_item, controller_wish_s.used, cache->content_actions.array[i].array[1]) == F_equal_to) {
           setting_values = &rule->ons.array[j].wish;
         }
         else {

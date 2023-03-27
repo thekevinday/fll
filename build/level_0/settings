@@ -22,6 +22,7 @@ build_libraries -lc -lcap
 build_sources_library account.c private-account.c account/accounts.c account/private-accounts.c
 build_sources_library capability.c
 build_sources_library color.c private-color.c color/common.c
+build_sources_library compare.c compare/utf.c private-compare.c compare/private-utf.c
 build_sources_library console.c console/common.c private-console.c
 build_sources_library control_group.c control_group/common.c
 build_sources_library conversion.c private-conversion.c conversion/common.c
@@ -33,15 +34,30 @@ build_sources_library fss.c private-fss.c fss/common.c fss/named.c fss/nest.c fs
 build_sources_library iki.c iki/common.c iki/data.c private-iki.c iki/private-data.c
 build_sources_library limit.c limit/set.c limit/value.c limit/private-set.c limit/private-value.c
 build_sources_library memory.c private-memory.c memory/structure.c
+build_sources_library parse.c parse/utf.c
 build_sources_library path.c private-path.c path/common.c
 build_sources_library pipe.c
 build_sources_library print.c private-print.c print/common.c print/to.c print/private-to.c
+build_sources_library rip.c rip/utf.c private-rip.c rip/private-utf.c
 build_sources_library serialize.c private-serialize.c serialize/common.c
 build_sources_library signal.c
 build_sources_library socket.c
 build_sources_library status_string.c
-build_sources_library string.c private-string.c string/common.c string/private-dynamic.c string/private-dynamics.c string/private-dynamicss.c string/private-maps.c string/private-mapss.c string/private-map_multis.c string/private-map_multiss.c string/private-quantitys.c string/private-quantityss.c string/private-ranges.c string/private-rangess.c string/private-triples.c string/private-tripless.c
-build_sources_library string/dynamic.c string/dynamics.c string/dynamicss.c string/map.c string/maps.c string/mapss.c string/map_multi.c string/map_multis.c string/map_multiss.c string/quantity.c string/quantitys.c string/quantityss.c string/range.c string/ranges.c string/rangess.c string/static.c string/statics.c string/staticss.c string/triple.c string/triples.c string/tripless.c
+build_sources_library string.c
+build_sources_library private-string.c string/common.c
+build_sources_library string/private-dynamic.c string/private-dynamics.c string/private-dynamicss.c
+build_sources_library string/private-maps.c string/private-mapss.c
+build_sources_library string/private-map_multis.c string/private-map_multiss.c
+build_sources_library string/private-quantitys.c string/private-quantityss.c
+build_sources_library string/private-ranges.c string/private-rangess.c
+build_sources_library string/private-triples.c string/private-tripless.c
+build_sources_library string/dynamic.c string/dynamics.c string/dynamicss.c
+build_sources_library string/map.c string/maps.c string/mapss.c
+build_sources_library string/map_multi.c string/map_multis.c string/map_multiss.c
+build_sources_library string/quantity.c string/quantitys.c string/quantityss.c
+build_sources_library string/range.c string/ranges.c string/rangess.c
+build_sources_library string/static.c string/statics.c string/staticss.c
+build_sources_library string/triple.c string/triples.c string/tripless.c
 build_sources_library type_array/array_length.c type_array/cell.c type_array/fll_id.c type_array/int8.c type_array/int16.c type_array/int32.c type_array/int64.c type_array/int128.c type_array/state.c type_array/status.c type_array/uint8.c type_array/uint16.c type_array/uint32.c type_array/uint64.c type_array/uint128.c
 build_sources_library type_array/private-array_length.c type_array/private-cell.c type_array/private-fll_id.c type_array/private-int8.c type_array/private-int16.c type_array/private-int32.c type_array/private-int64.c type_array/private-int128.c type_array/private-state.c type_array/private-status.c type_array/private-uint8.c type_array/private-uint16.c type_array/private-uint32.c type_array/private-uint64.c type_array/private-uint128.c
 build_sources_library utf.c private-utf.c private-utf_alphabetic.c private-utf_combining.c private-utf_control.c private-utf_digit.c private-utf_emoji.c private-utf_numeric.c private-utf_phonetic.c private-utf_private.c private-utf_punctuation.c private-utf_subscript.c private-utf_superscript.c private-utf_symbol.c private-utf_unassigned.c private-utf_valid.c private-utf_whitespace.c private-utf_wide.c private-utf_word.c private-utf_zero_width.c
@@ -53,6 +69,7 @@ build_sources_library-level thread.c private-thread.c thread/attribute.c thread/
 build_sources_headers account.h account/accounts.h account/common.h
 build_sources_headers capability.h capability/common.h
 build_sources_headers color.h color/common.h
+build_sources_headers compare.h compare/utf.h
 build_sources_headers console.h console/common.h private-console.h
 build_sources_headers control_group.h control_group/common.h
 build_sources_headers conversion.h conversion/common.h
@@ -64,15 +81,24 @@ build_sources_headers fss.h fss/comment.h fss/common.h fss/delimit.h fss/named.h
 build_sources_headers iki.h iki/common.h iki/data.h
 build_sources_headers limit.h limit/set.h limit/value.h
 build_sources_headers memory.h memory/structure.h memory/common.h
+build_sources_headers parse.h parse/utf.h
 build_sources_headers path.h path/common.h
 build_sources_headers pipe.h
 build_sources_headers print.h print/to.h print/common.h
+build_sources_headers rip.h rip/utf.h
 build_sources_headers serialize.h serialize/common.h
 build_sources_headers signal.h signal/common.h
 build_sources_headers socket.h socket/common.h
 build_sources_headers status.h
 build_sources_headers status_string.h
-build_sources_headers string.h string/common.h string/dynamic.h string/dynamics.h string/dynamicss.h string/map.h string/maps.h string/mapss.h string/map_multi.h string/map_multis.h string/map_multiss.h string/quantity.h string/quantitys.h string/quantityss.h string/range.h string/ranges.h string/rangess.h string/static.h string/statics.h string/staticss.h string/triple.h string/triples.h string/tripless.h
+build_sources_headers string.h string/common.h
+build_sources_headers string/dynamic.h string/dynamics.h string/dynamicss.h
+build_sources_headers string/map.h string/maps.h string/mapss.h
+build_sources_headers string/map_multi.h string/map_multis.h string/map_multiss.h
+build_sources_headers string/quantity.h string/quantitys.h string/quantityss.h
+build_sources_headers string/range.h string/ranges.h string/rangess.h
+build_sources_headers string/static.h string/statics.h string/staticss.h
+build_sources_headers string/triple.h string/triples.h string/tripless.h
 build_sources_headers type.h type_file.h
 build_sources_headers type_array.h type_array/common.h
 build_sources_headers type_array/array_length.h type_array/cell.h type_array/fll_id.h type_array/int8.h type_array/int16.h type_array/int32.h type_array/int64.h type_array/int128.h type_array/state.h type_array/status.h type_array/uint8.h type_array/uint16.h type_array/uint32.h type_array/uint64.h type_array/uint128.h

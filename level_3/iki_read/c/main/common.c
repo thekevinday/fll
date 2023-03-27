@@ -237,7 +237,7 @@ extern "C" {
       for (; i < values->used; ++i) {
 
         for (j = 0; j < main->setting.names.used; ++j) {
-          if (fl_string_dynamic_compare(main->program.parameters.arguments.array[values->array[i]], main->setting.names.array[j]) == F_equal_to) break;
+          if (f_compare_dynamic(main->program.parameters.arguments.array[values->array[i]], main->setting.names.array[j]) == F_equal_to) break;
         } // for
 
         if (j < main->setting.names.used) continue;
@@ -317,7 +317,7 @@ extern "C" {
         // Replace any existing value so that each name exists only once.
         for (j = 0; j < main->setting.replace.used; ++j) {
 
-          if (fl_string_dynamic_compare(main->program.parameters.arguments.array[index], main->setting.replace.array[j].name) == F_equal_to) {
+          if (f_compare_dynamic(main->program.parameters.arguments.array[index], main->setting.replace.array[j].name) == F_equal_to) {
             break;
           }
         } // for
@@ -412,7 +412,7 @@ extern "C" {
         // Replace any existing values so that each name exists only once.
         for (j = 0; j < main->setting.wrap.used; ++j) {
 
-          if (fl_string_dynamic_compare(main->program.parameters.arguments.array[index], main->setting.wrap.array[j].a) == F_equal_to) {
+          if (f_compare_dynamic(main->program.parameters.arguments.array[index], main->setting.wrap.array[j].a) == F_equal_to) {
             break;
           }
         } // for
@@ -663,8 +663,8 @@ extern "C" {
       // Replace any existing values so that each name and value pair exists only once.
       for (j = 0; j < triple->used; ++j) {
 
-        if (fl_string_dynamic_compare(main->program.parameters.arguments.array[index], triple->array[j].a) == F_equal_to) {
-          if (fl_string_dynamic_compare(main->program.parameters.arguments.array[parameter.values.array[i + 1]], triple->array[j].b) == F_equal_to) {
+        if (f_compare_dynamic(main->program.parameters.arguments.array[index], triple->array[j].a) == F_equal_to) {
+          if (f_compare_dynamic(main->program.parameters.arguments.array[parameter.values.array[i + 1]], triple->array[j].b) == F_equal_to) {
             break;
           }
         }

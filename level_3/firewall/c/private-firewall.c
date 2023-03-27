@@ -83,7 +83,7 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
     ip_list.used = 0;
 
     // Process chain rule.
-    if (fl_string_dynamic_compare_string(local->buffer.string + local->rule_objects.array[i].start, firewall_chain_s, length) == F_equal_to) {
+    if (f_compare_dynamic_string(local->buffer.string + local->rule_objects.array[i].start, firewall_chain_s, length) == F_equal_to) {
       if (chain == firewall_chain_custom_id_e) {
 
         // Custom chains can only apply to themselves, so silently ignore chain commands specified within a custom chain.
@@ -97,22 +97,22 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
       if (local->rule_contents.array[i].used <= 0 || local->rule_contents.array[i].used > 1) {
         invalid = F_true;
       }
-      else if (fl_string_dynamic_compare_string(local->buffer.string + local->rule_contents.array[i].array[0].start, firewall_chain_input_s, length) == F_equal_to) {
+      else if (f_compare_dynamic_string(local->buffer.string + local->rule_contents.array[i].array[0].start, firewall_chain_input_s, length) == F_equal_to) {
         chain = firewall_chain_input_id_e;
       }
-      else if (fl_string_dynamic_compare_string(local->buffer.string + local->rule_contents.array[i].array[0].start, firewall_chain_output_s, length) == F_equal_to) {
+      else if (f_compare_dynamic_string(local->buffer.string + local->rule_contents.array[i].array[0].start, firewall_chain_output_s, length) == F_equal_to) {
         chain = firewall_chain_output_id_e;
       }
-      else if (fl_string_dynamic_compare_string(local->buffer.string + local->rule_contents.array[i].array[0].start, firewall_chain_forward_s, length) == F_equal_to) {
+      else if (f_compare_dynamic_string(local->buffer.string + local->rule_contents.array[i].array[0].start, firewall_chain_forward_s, length) == F_equal_to) {
         chain = firewall_chain_forward_id_e;
       }
-      else if (fl_string_dynamic_compare_string(local->buffer.string + local->rule_contents.array[i].array[0].start, firewall_chain_postrouting_s, length) == F_equal_to) {
+      else if (f_compare_dynamic_string(local->buffer.string + local->rule_contents.array[i].array[0].start, firewall_chain_postrouting_s, length) == F_equal_to) {
         chain = firewall_chain_postrouting_id_e;
       }
-      else if (fl_string_dynamic_compare_string(local->buffer.string + local->rule_contents.array[i].array[0].start, firewall_chain_prerouting_s, length) == F_equal_to) {
+      else if (f_compare_dynamic_string(local->buffer.string + local->rule_contents.array[i].array[0].start, firewall_chain_prerouting_s, length) == F_equal_to) {
         chain = firewall_chain_prerouting_id_e;
       }
-      else if (fl_string_dynamic_compare_string(local->buffer.string + local->rule_contents.array[i].array[0].start, firewall_chain_none_s, length) == F_equal_to) {
+      else if (f_compare_dynamic_string(local->buffer.string + local->rule_contents.array[i].array[0].start, firewall_chain_none_s, length) == F_equal_to) {
         chain = firewall_chain_none_id_e;
       }
       else {
@@ -123,19 +123,19 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
     }
 
     // Process direction rule
-    else if (fl_string_dynamic_compare_string(local->buffer.string + local->rule_objects.array[i].start, firewall_direction_s, length) == F_equal_to) {
+    else if (f_compare_dynamic_string(local->buffer.string + local->rule_objects.array[i].start, firewall_direction_s, length) == F_equal_to) {
       length = (local->rule_contents.array[i].array[0].stop - local->rule_contents.array[i].array[0].start) + 1;
 
       if (local->rule_contents.array[i].used <= 0 || local->rule_contents.array[i].used > 1) {
         invalid = F_true;
       }
-      else if (fl_string_dynamic_compare_string(local->buffer.string + local->rule_contents.array[i].array[0].start, firewall_direction_input_s, length) == F_equal_to) {
+      else if (f_compare_dynamic_string(local->buffer.string + local->rule_contents.array[i].array[0].start, firewall_direction_input_s, length) == F_equal_to) {
         direction = firewall_direction_input_id_e;
       }
-      else if (fl_string_dynamic_compare_string(local->buffer.string + local->rule_contents.array[i].array[0].start, firewall_direction_output_s, length) == F_equal_to) {
+      else if (f_compare_dynamic_string(local->buffer.string + local->rule_contents.array[i].array[0].start, firewall_direction_output_s, length) == F_equal_to) {
         direction = firewall_direction_output_id_e;
       }
-      else if (fl_string_dynamic_compare_string(local->buffer.string + local->rule_contents.array[i].array[0].start, firewall_direction_none_s, length) == F_equal_to) {
+      else if (f_compare_dynamic_string(local->buffer.string + local->rule_contents.array[i].array[0].start, firewall_direction_none_s, length) == F_equal_to) {
         direction = firewall_direction_none_id_e;
       }
       else {
@@ -148,18 +148,18 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
     }
 
     // Process device rule.
-    else if (fl_string_dynamic_compare_string(local->buffer.string + local->rule_objects.array[i].start, firewall_device_s, length) == F_equal_to) {
+    else if (f_compare_dynamic_string(local->buffer.string + local->rule_objects.array[i].start, firewall_device_s, length) == F_equal_to) {
       length = (local->rule_contents.array[i].array[0].stop - local->rule_contents.array[i].array[0].start) + 1;
 
       if (local->rule_contents.array[i].used <= 0 || local->rule_contents.array[i].used > 1) {
         invalid = F_true;
       }
-      else if (fl_string_dynamic_compare_string(local->buffer.string + local->rule_contents.array[i].array[0].start, firewall_device_all_s, length) == F_equal_to) {
+      else if (f_compare_dynamic_string(local->buffer.string + local->rule_contents.array[i].array[0].start, firewall_device_all_s, length) == F_equal_to) {
         f_string_dynamic_resize(0, &device);
 
         continue;
       }
-      else if (fl_string_dynamic_compare_string(local->buffer.string + local->rule_contents.array[i].array[0].start, firewall_device_this_s, length) == F_equal_to) {
+      else if (f_compare_dynamic_string(local->buffer.string + local->rule_contents.array[i].array[0].start, firewall_device_this_s, length) == F_equal_to) {
         if (data->devices.array[local->device].used) {
           if (data->devices.array[local->device].used > device.size) {
             status = f_string_dynamic_resize(data->devices.array[local->device].used, &device);
@@ -191,22 +191,22 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
     }
 
     // Process action rule.
-    else if (fl_string_dynamic_compare_string(local->buffer.string + local->rule_objects.array[i].start, firewall_action_s, length) == F_equal_to) {
+    else if (f_compare_dynamic_string(local->buffer.string + local->rule_objects.array[i].start, firewall_action_s, length) == F_equal_to) {
       length = (local->rule_contents.array[i].array[0].stop - local->rule_contents.array[i].array[0].start) + 1;
 
       if (local->rule_contents.array[i].used <= 0 || local->rule_contents.array[i].used > 1) {
         invalid = F_true;
       }
-      else if (fl_string_dynamic_compare_string(local->buffer.string + local->rule_contents.array[i].array[0].start, firewall_action_append_s, length) == F_equal_to) {
+      else if (f_compare_dynamic_string(local->buffer.string + local->rule_contents.array[i].array[0].start, firewall_action_append_s, length) == F_equal_to) {
         action = firewall_action_append_id_e;
       }
-      else if (fl_string_dynamic_compare_string(local->buffer.string + local->rule_contents.array[i].array[0].start, firewall_action_insert_s, length) == F_equal_to) {
+      else if (f_compare_dynamic_string(local->buffer.string + local->rule_contents.array[i].array[0].start, firewall_action_insert_s, length) == F_equal_to) {
         action = firewall_action_insert_id_e;
       }
-      else if (fl_string_dynamic_compare_string(local->buffer.string + local->rule_contents.array[i].array[0].start, firewall_action_policy_s, length) == F_equal_to) {
+      else if (f_compare_dynamic_string(local->buffer.string + local->rule_contents.array[i].array[0].start, firewall_action_policy_s, length) == F_equal_to) {
         action = firewall_action_policy_id_e;
       }
-      else if (fl_string_dynamic_compare_string(local->buffer.string + local->rule_contents.array[i].array[0].start, firewall_action_none_s, length) == F_equal_to) {
+      else if (f_compare_dynamic_string(local->buffer.string + local->rule_contents.array[i].array[0].start, firewall_action_none_s, length) == F_equal_to) {
         action = firewall_action_none_id_e;
       }
       else {
@@ -217,28 +217,28 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
     }
 
     // Process ip_list rule.
-    else if (fl_string_dynamic_compare_string(local->buffer.string + local->rule_objects.array[i].start, firewall_ip_list, length) == F_equal_to) {
+    else if (f_compare_dynamic_string(local->buffer.string + local->rule_objects.array[i].start, firewall_ip_list, length) == F_equal_to) {
       length = (local->rule_contents.array[i].array[0].stop - local->rule_contents.array[i].array[0].start) + 1;
       is_ip_list = F_true;
 
-      if (fl_string_dynamic_compare_string(local->buffer.string + local->rule_contents.array[i].array[0].start, firewall_ip_list_source_s, length) == F_equal_to) {
+      if (f_compare_dynamic_string(local->buffer.string + local->rule_contents.array[i].array[0].start, firewall_ip_list_source_s, length) == F_equal_to) {
         ip_list_direction = F_false;
       }
-      else if (fl_string_dynamic_compare_string(local->buffer.string + local->rule_contents.array[i].array[0].start, firewall_ip_list_destination_s, length) == F_equal_to) {
+      else if (f_compare_dynamic_string(local->buffer.string + local->rule_contents.array[i].array[0].start, firewall_ip_list_destination_s, length) == F_equal_to) {
         ip_list_direction = F_true;
       }
       else {
         invalid = F_true;
       }
     }
-    else if (fl_string_dynamic_compare_string(local->buffer.string + local->rule_objects.array[i].start, firewall_protocol_s, length) == F_equal_to) {
+    else if (f_compare_dynamic_string(local->buffer.string + local->rule_objects.array[i].start, firewall_protocol_s, length) == F_equal_to) {
       length = (local->rule_contents.array[i].array[0].stop - local->rule_contents.array[i].array[0].start) + 1;
 
       if (local->rule_contents.array[i].used <= 0 || local->rule_contents.array[i].used > 1) {
         invalid = F_true;
       }
       else {
-        if (fl_string_dynamic_compare_string(local->buffer.string + local->rule_contents.array[i].array[0].start, firewall_protocol_none_s, length) == F_equal_to) {
+        if (f_compare_dynamic_string(local->buffer.string + local->rule_contents.array[i].array[0].start, firewall_protocol_none_s, length) == F_equal_to) {
           use_protocol = F_false;
         }
         else if (length) {
@@ -259,24 +259,24 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
     }
 
     // Process tool rule.
-    else if (fl_string_dynamic_compare_string(local->buffer.string + local->rule_objects.array[i].start, firewall_tool_s, length) == F_equal_to) {
+    else if (f_compare_dynamic_string(local->buffer.string + local->rule_objects.array[i].start, firewall_tool_s, length) == F_equal_to) {
       length = (local->rule_contents.array[i].array[0].stop - local->rule_contents.array[i].array[0].start) + 1;
 
       if (local->rule_contents.array[i].used <= 0 || local->rule_contents.array[i].used > 1) {
         invalid = F_true;
       }
       else {
-        if (fl_string_dynamic_compare_string(local->buffer.string + local->rule_contents.array[i].array[0].start, firewall_tool_iptables_s, length) == F_equal_to) {
+        if (f_compare_dynamic_string(local->buffer.string + local->rule_contents.array[i].array[0].start, firewall_tool_iptables_s, length) == F_equal_to) {
           tool = firewall_program_iptables_e;
           current_tool = firewall_tool_iptables_s;
           repeat = 1;
         }
-        else if (fl_string_dynamic_compare_string(local->buffer.string + local->rule_contents.array[i].array[0].start, firewall_tool_ip6tables_s, length) == F_equal_to) {
+        else if (f_compare_dynamic_string(local->buffer.string + local->rule_contents.array[i].array[0].start, firewall_tool_ip6tables_s, length) == F_equal_to) {
           tool = firewall_program_ip6tables_e;
           current_tool = firewall_tool_ip6tables_s;
           repeat = 1;
         }
-        else if (fl_string_dynamic_compare_string(local->buffer.string + local->rule_contents.array[i].array[0].start, firewall_tool_ip46tables_s, length) == F_equal_to) {
+        else if (f_compare_dynamic_string(local->buffer.string + local->rule_contents.array[i].array[0].start, firewall_tool_ip46tables_s, length) == F_equal_to) {
           tool = firewall_program_ip46tables_e;
           current_tool = firewall_tool_iptables_s;
           repeat = 2;
@@ -290,7 +290,7 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
     }
 
     // If the remaining rule does not match as firewall_rule_s, then it is an invalid rule.
-    else if (fl_string_dynamic_compare_string(local->buffer.string + local->rule_objects.array[i].start, firewall_rule_s, length) == F_equal_to_not) {
+    else if (f_compare_dynamic_string(local->buffer.string + local->rule_objects.array[i].start, firewall_rule_s, length) == F_equal_to_not) {
       if (length) {
         f_file_stream_lock(data->main->warning.to);
 
@@ -406,7 +406,7 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
 
       // Add the device if and only if a non-none direction is specified.
       if (device.used && (direction == firewall_direction_input_id_e || direction == firewall_direction_output_id_e)) {
-        if (fl_string_dynamic_compare_string(local->buffer.string + local->rule_contents.array[i].array[0].start, firewall_device_all_s, length) == F_equal_to_not) {
+        if (f_compare_dynamic_string(local->buffer.string + local->rule_contents.array[i].array[0].start, firewall_device_all_s, length) == F_equal_to_not) {
 
           status = f_string_dynamics_increase(firewall_default_allocation_step_d, &arguments);
           if (F_status_is_error(status)) break;
@@ -832,35 +832,35 @@ f_status_t firewall_create_custom_chains(firewall_data_t * const data, firewall_
     }
 
     // Skip globally reserved chain name: main.
-    if (fl_string_dynamic_partial_compare_string(firewall_group_main_s.string, local->buffer, firewall_group_main_s.used, local->chain_objects.array[i]) == F_equal_to) {
+    if (f_compare_dynamic_partial_string(firewall_group_main_s.string, local->buffer, firewall_group_main_s.used, local->chain_objects.array[i]) == F_equal_to) {
       new_chain = F_false;
       reserved->has_main = F_true;
       reserved->main_at = i;
     }
 
     // Skip globally reserved chain name: stop.
-    if (fl_string_dynamic_partial_compare_string(firewall_group_stop_s.string, local->buffer, firewall_group_stop_s.used, local->chain_objects.array[i]) == F_equal_to) {
+    if (f_compare_dynamic_partial_string(firewall_group_stop_s.string, local->buffer, firewall_group_stop_s.used, local->chain_objects.array[i]) == F_equal_to) {
       new_chain = F_false;
       reserved->has_stop = F_true;
       reserved->stop_at = i;
     }
 
     // Skip globally reserved chain name: lock.
-    if (fl_string_dynamic_partial_compare_string(firewall_group_lock_s.string, local->buffer, firewall_group_lock_s.used, local->chain_objects.array[i]) == F_equal_to) {
+    if (f_compare_dynamic_partial_string(firewall_group_lock_s.string, local->buffer, firewall_group_lock_s.used, local->chain_objects.array[i]) == F_equal_to) {
       new_chain = F_false;
       reserved->has_lock = F_true;
       reserved->lock_at = i;
     }
 
     // Skip globally reserved chain name: none.
-    if (fl_string_dynamic_partial_compare_string(firewall_chain_none_s.string, local->buffer, firewall_chain_none_s.used, local->chain_objects.array[i]) == F_equal_to) {
+    if (f_compare_dynamic_partial_string(firewall_chain_none_s.string, local->buffer, firewall_chain_none_s.used, local->chain_objects.array[i]) == F_equal_to) {
       new_chain = F_false;
     }
 
     if (new_chain) {
       for (; j < data->chains.used; ++j) {
 
-        if (fl_string_dynamic_partial_compare_string(data->chains.array[j].string, local->buffer, data->chains.array[j].used, local->chain_objects.array[i]) == F_equal_to) {
+        if (f_compare_dynamic_partial_string(data->chains.array[j].string, local->buffer, data->chains.array[j].used, local->chain_objects.array[i]) == F_equal_to) {
           new_chain = F_false;
           local->chain_ids.array[i] = j;
 
@@ -899,19 +899,19 @@ f_status_t firewall_create_custom_chains(firewall_data_t * const data, firewall_
       arguments.array[1].string[arguments.array[1].used] = 0;
       data->chains.array[data->chains.used].string[data->chains.array[data->chains.used].used] = 0;
 
-      if (fl_string_dynamic_compare(arguments.array[1], firewall_chain_forward_s) == F_equal_to) {
+      if (f_compare_dynamic(arguments.array[1], firewall_chain_forward_s) == F_equal_to) {
         create_chain = F_false;
       }
-      else if (fl_string_dynamic_compare(arguments.array[1], firewall_chain_input_s) == F_equal_to) {
+      else if (f_compare_dynamic(arguments.array[1], firewall_chain_input_s) == F_equal_to) {
         create_chain = F_false;
       }
-      else if (fl_string_dynamic_compare(arguments.array[1], firewall_chain_output_s) == F_equal_to) {
+      else if (f_compare_dynamic(arguments.array[1], firewall_chain_output_s) == F_equal_to) {
         create_chain = F_false;
       }
-      else if (fl_string_dynamic_compare(arguments.array[1], firewall_chain_postrouting_s) == F_equal_to) {
+      else if (f_compare_dynamic(arguments.array[1], firewall_chain_postrouting_s) == F_equal_to) {
         create_chain = F_false;
       }
-      else if (fl_string_dynamic_compare(arguments.array[1], firewall_chain_prerouting_s) == F_equal_to) {
+      else if (f_compare_dynamic(arguments.array[1], firewall_chain_prerouting_s) == F_equal_to) {
         create_chain = F_false;
       }
 

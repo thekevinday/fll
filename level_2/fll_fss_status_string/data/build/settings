@@ -18,7 +18,7 @@ build_indexer_arguments rcs
 build_language c
 
 build_libraries -lc
-build_libraries-individual -lfl_string -lf_conversion -lf_fss -lf_memory -lf_status_string -lf_string -lf_type_array -lf_utf
+build_libraries-individual -lf_compare -lf_conversion -lf_fss -lf_parse -lf_memory -lf_status_string -lf_string -lf_type_array -lf_utf
 
 build_sources_library fss_status_string.c
 

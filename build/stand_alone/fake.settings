@@ -26,6 +26,7 @@ build_libraries -lc -lcap
 build_sources_program fll/level_0/account.c fll/level_0/private-account.c fll/level_0/account/accounts.c fll/level_0/account/private-accounts.c
 build_sources_program fll/level_0/capability.c
 build_sources_program fll/level_0/color.c fll/level_0/private-color.c fll/level_0/color/common.c
+build_sources_program fll/level_0/compare.c fll/level_0/compare/utf.c fll/level_0/private-compare.c fll/level_0/compare/private-utf.c
 build_sources_program fll/level_0/console.c fll/level_0/console/common.c fll/level_0/private-console.c
 build_sources_program fll/level_0/control_group.c fll/level_0/control_group/common.c
 build_sources_program fll/level_0/conversion.c fll/level_0/private-conversion.c fll/level_0/conversion/common.c
@@ -37,9 +38,11 @@ build_sources_program fll/level_0/fss.c fll/level_0/private-fss.c fll/level_0/fs
 build_sources_program fll/level_0/iki.c fll/level_0/private-iki.c fll/level_0/iki/common.c fll/level_0/iki/private-data.c fll/level_0/iki/data.c
 build_sources_program fll/level_0/limit.c fll/level_0/limit/set.c fll/level_0/limit/value.c fll/level_0/limit/private-set.c fll/level_0/limit/private-value.c
 build_sources_program fll/level_0/memory.c fll/level_0/private-memory.c fll/level_0/memory/structure.c
+build_sources_program fll/level_0/parse.c fll/level_0/parse/utf.c
 build_sources_program fll/level_0/path.c fll/level_0/private-path.c fll/level_0/path/common.c
 build_sources_program fll/level_0/pipe.c
 build_sources_program fll/level_0/print.c fll/level_0/private-print.c fll/level_0/print/common.c fll/level_0/print/to.c fll/level_0/print/private-to.c
+build_sources_program fll/level_0/rip.c fll/level_0/rip/utf.c fll/level_0/private-rip.c fll/level_0/rip/private-utf.c
 build_sources_program fll/level_0/signal.c
 build_sources_program fll/level_0/string.c fll/level_0/private-string.c fll/level_0/string/common.c fll/level_0/string/private-dynamic.c fll/level_0/string/private-dynamics.c fll/level_0/string/private-dynamicss.c fll/level_0/string/private-maps.c fll/level_0/string/private-mapss.c fll/level_0/string/private-map_multis.c fll/level_0/string/private-map_multiss.c fll/level_0/string/private-quantitys.c fll/level_0/string/private-quantityss.c fll/level_0/string/private-ranges.c fll/level_0/string/private-rangess.c fll/level_0/string/private-triples.c fll/level_0/string/private-tripless.c
 build_sources_program fll/level_0/string/dynamic.c fll/level_0/string/dynamics.c fll/level_0/string/dynamicss.c fll/level_0/string/map.c fll/level_0/string/maps.c fll/level_0/string/mapss.c fll/level_0/string/map_multi.c fll/level_0/string/map_multis.c fll/level_0/string/map_multiss.c fll/level_0/string/quantity.c fll/level_0/string/quantitys.c fll/level_0/string/quantityss.c fll/level_0/string/range.c fll/level_0/string/ranges.c fll/level_0/string/rangess.c fll/level_0/string/static.c fll/level_0/string/statics.c fll/level_0/string/staticss.c fll/level_0/string/triple.c fll/level_0/string/triples.c fll/level_0/string/tripless.c
@@ -58,7 +61,6 @@ build_sources_program fll/level_1/private-fss.c fll/level_1/fss/basic.c fll/leve
 build_sources_program fll/level_1/iki.c
 build_sources_program fll/level_1/path.c
 build_sources_program fll/level_1/print.c fll/level_1/private-print.c fll/level_1/print/common.c
-build_sources_program fll/level_1/string.c fll/level_1/private-string.c
 
 build_sources_program fll/level_2/error.c fll/level_2/private-error.c fll/level_2/error/common.c
 build_sources_program fll/level_2/execute.c fll/level_2/private-execute.c

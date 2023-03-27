@@ -55,13 +55,13 @@ extern "C" {
     }
 
     #ifndef _di_fll_fss_status_error_
-      if (fl_string_dynamic_compare(name, fll_fss_status_format_s) == F_equal_to) {
+      if (f_compare_dynamic(name, fll_fss_status_format_s) == F_equal_to) {
         *code = F_fss_format;
 
         return F_none;
       }
 
-      if (fl_string_dynamic_compare(name, fll_fss_status_format_eos_s) == F_equal_to) {
+      if (f_compare_dynamic(name, fll_fss_status_format_eos_s) == F_equal_to) {
         *code = F_fss_format_eos;
 
         return F_none;
@@ -69,13 +69,13 @@ extern "C" {
     #endif // _di_fll_fss_status_error_
 
     #ifndef _di_fll_fss_status_warning_
-      if (fl_string_dynamic_compare(name, fll_fss_status_accepted_invalid_s) == F_equal_to) {
+      if (f_compare_dynamic(name, fll_fss_status_accepted_invalid_s) == F_equal_to) {
         *code = F_fss_accepted_invalid;
 
         return F_none;
       }
 
-      if (fl_string_dynamic_compare(name, fll_fss_status_accepted_invalid_eos_s) == F_equal_to) {
+      if (f_compare_dynamic(name, fll_fss_status_accepted_invalid_eos_s) == F_equal_to) {
         *code = F_fss_accepted_invalid_eos;
 
         return F_none;
@@ -83,31 +83,31 @@ extern "C" {
     #endif // _di_fll_fss_status_warning_
 
     #ifndef _di_fll_fss_status_success_
-      if (fl_string_dynamic_compare(name, fll_fss_status_found_object_s) == F_equal_to) {
+      if (f_compare_dynamic(name, fll_fss_status_found_object_s) == F_equal_to) {
         *code = F_fss_found_object;
 
         return F_none;
       }
 
-      if (fl_string_dynamic_compare(name, fll_fss_status_found_content_s) == F_equal_to) {
+      if (f_compare_dynamic(name, fll_fss_status_found_content_s) == F_equal_to) {
         *code = F_fss_found_content;
 
         return F_none;
       }
 
-      if (fl_string_dynamic_compare(name, fll_fss_status_found_object_not_s) == F_equal_to) {
+      if (f_compare_dynamic(name, fll_fss_status_found_object_not_s) == F_equal_to) {
         *code = F_fss_found_object_not;
 
         return F_none;
       }
 
-      if (fl_string_dynamic_compare(name, fll_fss_status_found_content_not_s) == F_equal_to) {
+      if (f_compare_dynamic(name, fll_fss_status_found_content_not_s) == F_equal_to) {
         *code = F_fss_found_content_not;
 
         return F_none;
       }
 
-      if (fl_string_dynamic_compare(name, fll_fss_status_found_object_content_not_s) == F_equal_to) {
+      if (f_compare_dynamic(name, fll_fss_status_found_object_content_not_s) == F_equal_to) {
         *code = F_fss_found_object_content_not;
 
         return F_none;
@@ -115,20 +115,20 @@ extern "C" {
     #endif // _di_fll_fss_status_success_
 
     #ifndef _di_fll_fss_status_codes_
-      if (fl_string_dynamic_compare(name, fll_fss_status_found_comment_s) == F_equal_to) {
+      if (f_compare_dynamic(name, fll_fss_status_found_comment_s) == F_equal_to) {
         *code = F_fss_found_object;
 
         return F_none;
       }
     #endif // _di_fll_fss_status_codes_
 
-    if (fl_string_dynamic_compare(name, fll_fss_status_status_code_first_s) == F_equal_to) {
+    if (f_compare_dynamic(name, fll_fss_status_status_code_first_s) == F_equal_to) {
       *code = F_fss_status_code_first;
 
       return F_none;
     }
 
-    if (fl_string_dynamic_compare(name, fll_fss_status_status_code_last_s) == F_equal_to) {
+    if (f_compare_dynamic(name, fll_fss_status_status_code_last_s) == F_equal_to) {
       *code = F_fss_status_code_last;
 
       return F_none;

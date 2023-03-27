@@ -18,7 +18,7 @@ build_indexer_arguments rcs
 
 build_language c
 build_libraries -lc
-build_libraries-individual -lfl_print -lfl_string -lf_color -lf_console -lf_conversion -lf_file -lf_memory -lf_print -lf_signal -lf_string -lf_type_array -lf_utf
+build_libraries-individual -lfl_print -lf_color -lf_console -lf_conversion -lf_file -lf_rip -lf_memory -lf_print -lf_signal -lf_string -lf_type_array -lf_utf
 
 build_sources_library program.c program/common.c program/print.c private-program.c
 

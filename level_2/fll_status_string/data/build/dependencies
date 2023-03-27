@@ -5,6 +5,7 @@ f_status
 f_memory
 f_string
 f_utf
+f_compare
 f_conversion
+f_parse
 f_status_string
-fl_string

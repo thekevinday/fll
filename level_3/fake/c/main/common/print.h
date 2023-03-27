@@ -106,7 +106,7 @@ extern "C" {
     fake_f_fl_environment_load_name_e,
     fake_f_fl_environment_load_names_e,
     fake_f_fl_iki_read_e,
-    fake_f_fl_string_dynamic_partial_compare_e,
+    fake_f_f_compare_dynamic_partial_e,
     fake_f_fll_execute_arguments_add_e,
     fake_f_fll_execute_arguments_add_parameter_set_e,
     fake_f_fll_execute_program_e,

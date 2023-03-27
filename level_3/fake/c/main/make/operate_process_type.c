@@ -11,10 +11,10 @@ extern "C" {
 
     data_make->main->setting.state.status = F_none;
 
-    if (!data_make->cache_arguments.used || fl_string_dynamic_compare(fake_make_operation_argument_success_s, data_make->cache_arguments.array[0]) == F_equal_to) {
+    if (!data_make->cache_arguments.used || f_compare_dynamic(fake_make_operation_argument_success_s, data_make->cache_arguments.array[0]) == F_equal_to) {
       data_make->main->setting.state.status = F_signal_abort;
     }
-    else if (fl_string_dynamic_compare(fake_make_operation_argument_failure_s, data_make->cache_arguments.array[0]) == F_equal_to) {
+    else if (f_compare_dynamic(fake_make_operation_argument_failure_s, data_make->cache_arguments.array[0]) == F_equal_to) {
       data_make->main->setting.state.status = F_status_set_error(F_signal_abort);
     }
     else {
@@ -86,7 +86,7 @@ extern "C" {
 
       for (f_array_length_t i = 2; i < data_make->cache_arguments.used; ++i) {
 
-        if (fl_string_dynamic_compare(data_make->cache_arguments.array[1], data_make->cache_arguments.array[i]) == F_equal_to_not) {
+        if (f_compare_dynamic(data_make->cache_arguments.array[1], data_make->cache_arguments.array[i]) == F_equal_to_not) {
           state_process->condition_result = fake_condition_result_false_e;
 
           break;
@@ -103,7 +103,7 @@ extern "C" {
 
         for (j = i + 1; j < data_make->cache_arguments.used; ++j) {
 
-          if (fl_string_dynamic_compare(data_make->cache_arguments.array[i], data_make->cache_arguments.array[j]) == F_equal_to) {
+          if (f_compare_dynamic(data_make->cache_arguments.array[i], data_make->cache_arguments.array[j]) == F_equal_to) {
             state_process->condition_result = fake_condition_result_false_e;
             i = data_make->cache_arguments.used;
 
@@ -216,7 +216,7 @@ extern "C" {
     bool existing = F_true;
     f_array_length_t i = 0;
 
-    if (fl_string_dynamic_compare(fake_make_operation_argument_no_dereference_s, data_make->cache_arguments.array[i]) == F_equal_to) {
+    if (f_compare_dynamic(fake_make_operation_argument_no_dereference_s, data_make->cache_arguments.array[i]) == F_equal_to) {
       ++i;
       recurse.flag |= f_file_stat_flag_reference_e;
     }
@@ -450,10 +450,10 @@ extern "C" {
 
     data_make->main->setting.state.status = F_none;
 
-    if (!data_make->cache_arguments.used || fl_string_dynamic_compare(fake_make_operation_argument_success_s, data_make->cache_arguments.array[0]) == F_equal_to) {
+    if (!data_make->cache_arguments.used || f_compare_dynamic(fake_make_operation_argument_success_s, data_make->cache_arguments.array[0]) == F_equal_to) {
       data_make->main->setting.state.status = F_signal_quit;
     }
-    else if (fl_string_dynamic_compare(fake_make_operation_argument_failure_s, data_make->cache_arguments.array[0]) == F_equal_to) {
+    else if (f_compare_dynamic(fake_make_operation_argument_failure_s, data_make->cache_arguments.array[0]) == F_equal_to) {
       data_make->main->setting.state.status = F_status_set_error(F_signal_quit);
 
       // Forcing exit forces fail mode.
@@ -481,7 +481,7 @@ extern "C" {
 
     if (!data_make || !data_make->main) return;
 
-    if (fl_string_dynamic_compare(fake_make_operation_argument_exit_s, data_make->cache_arguments.array[0]) == F_equal_to) {
+    if (f_compare_dynamic(fake_make_operation_argument_exit_s, data_make->cache_arguments.array[0]) == F_equal_to) {
       data_make->setting_make.fail = fake_make_operation_fail_exit_e;
       data_make->error.prefix = fl_print_error_s;
       data_make->error.suffix = f_string_empty_s;
@@ -491,7 +491,7 @@ extern "C" {
       data_make->main->program.error.to.id = F_type_descriptor_error_d;
       data_make->error.set = &data_make->main->program.context.set;
     }
-    else if (fl_string_dynamic_compare(fake_make_operation_argument_warn_s, data_make->cache_arguments.array[0]) == F_equal_to) {
+    else if (f_compare_dynamic(fake_make_operation_argument_warn_s, data_make->cache_arguments.array[0]) == F_equal_to) {
       data_make->setting_make.fail = fake_make_operation_fail_warn_e;
       data_make->error.prefix = fl_print_warning_s;
       data_make->error.suffix = f_string_empty_s;
@@ -522,7 +522,7 @@ extern "C" {
 
     data_make->main->setting.state.status = F_none;
 
-    if (fl_string_dynamic_compare(fake_make_operation_argument_no_dereference_s, data_make->cache_arguments.array[i]) == F_equal_to) {
+    if (f_compare_dynamic(fake_make_operation_argument_no_dereference_s, data_make->cache_arguments.array[i]) == F_equal_to) {
       ++i;
       dereference = F_false;
     }
@@ -621,7 +621,7 @@ extern "C" {
 
     state_process->condition_result = fake_condition_result_true_e;
 
-    if (fl_string_dynamic_compare(fake_make_operation_argument_no_dereference_s, data_make->cache_arguments.array[i]) == F_equal_to) {
+    if (f_compare_dynamic(fake_make_operation_argument_no_dereference_s, data_make->cache_arguments.array[i]) == F_equal_to) {
       ++i;
       dereference = F_false;
     }
@@ -676,7 +676,7 @@ extern "C" {
 
     data_make->main->setting.state.status = F_none;
 
-    if (fl_string_dynamic_compare(fake_make_operation_argument_no_dereference_s, data_make->cache_arguments.array[i]) == F_equal_to) {
+    if (f_compare_dynamic(fake_make_operation_argument_no_dereference_s, data_make->cache_arguments.array[i]) == F_equal_to) {
       ++i;
       dereference = F_false;
     }
@@ -696,31 +696,31 @@ extern "C" {
 
     for (; i < data_make->cache_arguments.used; ++i) {
 
-      if (fl_string_dynamic_compare(fake_make_operation_argument_if_is_for_s, data_make->cache_arguments.array[i]) == F_equal_to) {
+      if (f_compare_dynamic(fake_make_operation_argument_if_is_for_s, data_make->cache_arguments.array[i]) == F_equal_to) {
         ++i;
 
         break;
       }
 
-      if (fl_string_dynamic_compare(f_file_type_name_block_s, data_make->cache_arguments.array[i]) == F_equal_to) {
+      if (f_compare_dynamic(f_file_type_name_block_s, data_make->cache_arguments.array[i]) == F_equal_to) {
         type |= 0x1;
       }
-      else if (fl_string_dynamic_compare(f_file_type_name_character_s, data_make->cache_arguments.array[i]) == F_equal_to) {
+      else if (f_compare_dynamic(f_file_type_name_character_s, data_make->cache_arguments.array[i]) == F_equal_to) {
         type |= 0x2;
       }
-      else if (fl_string_dynamic_compare(f_file_type_name_directory_s, data_make->cache_arguments.array[i]) == F_equal_to) {
+      else if (f_compare_dynamic(f_file_type_name_directory_s, data_make->cache_arguments.array[i]) == F_equal_to) {
         type |= 0x4;
       }
-      else if (fl_string_dynamic_compare(f_file_type_name_fifo_s, data_make->cache_arguments.array[i]) == F_equal_to) {
+      else if (f_compare_dynamic(f_file_type_name_fifo_s, data_make->cache_arguments.array[i]) == F_equal_to) {
         type |= 0x8;
       }
-      else if (fl_string_dynamic_compare(f_file_type_name_link_s, data_make->cache_arguments.array[i]) == F_equal_to) {
+      else if (f_compare_dynamic(f_file_type_name_link_s, data_make->cache_arguments.array[i]) == F_equal_to) {
         type |= 0x10;
       }
-      else if (fl_string_dynamic_compare(f_file_type_name_regular_s, data_make->cache_arguments.array[i]) == F_equal_to) {
+      else if (f_compare_dynamic(f_file_type_name_regular_s, data_make->cache_arguments.array[i]) == F_equal_to) {
         type |= 0x20;
       }
-      else if (fl_string_dynamic_compare(f_file_type_name_socket_s, data_make->cache_arguments.array[i]) == F_equal_to) {
+      else if (f_compare_dynamic(f_file_type_name_socket_s, data_make->cache_arguments.array[i]) == F_equal_to) {
         type |= 0x40;
       }
     } // for
@@ -943,7 +943,7 @@ extern "C" {
 
     data_make->main->setting.state.status = F_none;
 
-    if (fl_string_dynamic_compare(fake_make_operation_argument_no_dereference_s, data_make->cache_arguments.array[i]) == F_equal_to) {
+    if (f_compare_dynamic(fake_make_operation_argument_no_dereference_s, data_make->cache_arguments.array[i]) == F_equal_to) {
       ++i;
       dereference = F_false;
     }
@@ -1005,7 +1005,7 @@ extern "C" {
     mode_t mode_match = 0;
     bool is = F_false;
 
-    if (fl_string_dynamic_compare(fake_make_operation_argument_is_s, data_make->cache_arguments.array[if_not ? 2 : 1]) == F_equal_to) {
+    if (f_compare_dynamic(fake_make_operation_argument_is_s, data_make->cache_arguments.array[if_not ? 2 : 1]) == F_equal_to) {
       is = F_true;
     }
 
@@ -1104,7 +1104,7 @@ extern "C" {
 
     data_make->main->setting.state.status = F_none;
 
-    if (fl_string_dynamic_compare(fake_make_operation_argument_no_dereference_s, data_make->cache_arguments.array[i]) == F_equal_to) {
+    if (f_compare_dynamic(fake_make_operation_argument_no_dereference_s, data_make->cache_arguments.array[i]) == F_equal_to) {
       ++i;
       dereference = F_false;
     }
@@ -1247,7 +1247,7 @@ extern "C" {
 
       for (j = 0; j < 33; ++j) {
 
-        if (fl_string_dynamic_compare(reserved_name[j], data_make->cache_arguments.array[i]) == F_equal_to) {
+        if (f_compare_dynamic(reserved_name[j], data_make->cache_arguments.array[i]) == F_equal_to) {
           result = reserved_parameter[j] ? 2 : 1;
 
           break;
@@ -1257,7 +1257,7 @@ extern "C" {
       if (!result) {
         for (j = 0; j < data_make->setting_make.parameter.used; ++j) {
 
-          if (fl_string_dynamic_compare(data_make->cache_arguments.array[i], data_make->setting_make.parameter.array[j].name) == F_equal_to) {
+          if (f_compare_dynamic(data_make->cache_arguments.array[i], data_make->setting_make.parameter.array[j].name) == F_equal_to) {
             result = 2;
 
             break;
@@ -1319,18 +1319,18 @@ extern "C" {
     uint8_t flag = 0;
 
     if (data_make->cache_arguments.used > 2) {
-      if (fl_string_dynamic_compare(fake_make_operation_argument_force_s, data_make->cache_arguments.array[1]) != F_equal_to) {
+      if (f_compare_dynamic(fake_make_operation_argument_force_s, data_make->cache_arguments.array[1]) != F_equal_to) {
         flag |= 0x1;
       }
-      else if (fl_string_dynamic_compare(fake_make_operation_argument_strict_s, data_make->cache_arguments.array[1]) == F_equal_to) {
+      else if (f_compare_dynamic(fake_make_operation_argument_strict_s, data_make->cache_arguments.array[1]) == F_equal_to) {
         flag |= 0x2;
       }
 
       if (data_make->cache_arguments.used > 3) {
-        if (fl_string_dynamic_compare(fake_make_operation_argument_force_s, data_make->cache_arguments.array[2]) != F_equal_to) {
+        if (f_compare_dynamic(fake_make_operation_argument_force_s, data_make->cache_arguments.array[2]) != F_equal_to) {
           flag |= 0x1;
         }
-        else if (fl_string_dynamic_compare(fake_make_operation_argument_strict_s, data_make->cache_arguments.array[2]) == F_equal_to) {
+        else if (f_compare_dynamic(fake_make_operation_argument_strict_s, data_make->cache_arguments.array[2]) == F_equal_to) {
           flag |= 0x2;
         }
       }
@@ -1556,7 +1556,7 @@ extern "C" {
 
     for (; id_section < data_make->fakefile.used; ++id_section) {
 
-      if (fl_string_dynamic_partial_compare_string(data_make->cache_arguments.array[0].string, data_make->buffer, data_make->cache_arguments.array[0].used, data_make->fakefile.array[id_section].name) == F_equal_to) {
+      if (f_compare_dynamic_partial_string(data_make->cache_arguments.array[0].string, data_make->buffer, data_make->cache_arguments.array[0].used, data_make->fakefile.array[id_section].name) == F_equal_to) {
         break;
       }
     } // for
@@ -1586,7 +1586,7 @@ extern "C" {
     bool dereference = F_true;
     f_array_length_t i = 0;
 
-    if (fl_string_dynamic_compare(fake_make_operation_argument_no_dereference_s, data_make->cache_arguments.array[i]) == F_equal_to) {
+    if (f_compare_dynamic(fake_make_operation_argument_no_dereference_s, data_make->cache_arguments.array[i]) == F_equal_to) {
       ++i;
       dereference = F_false;
     }
@@ -1643,7 +1643,7 @@ extern "C" {
 
     for (; i < data_make->setting_make.parameter.used; ++i) {
 
-      if (fl_string_dynamic_compare(data_make->cache_arguments.array[0], data_make->setting_make.parameter.array[i].name) == F_equal_to) {
+      if (f_compare_dynamic(data_make->cache_arguments.array[0], data_make->setting_make.parameter.array[i].name) == F_equal_to) {
         found = F_true;
 
         break;
@@ -1967,7 +1967,7 @@ extern "C" {
 
     for (f_array_length_t i = 1; i < data_make->cache_arguments.used; ++i) {
 
-      if (fl_string_dynamic_compare(fake_make_operation_argument_file_s, data_make->cache_arguments.array[0]) == F_equal_to) {
+      if (f_compare_dynamic(fake_make_operation_argument_file_s, data_make->cache_arguments.array[0]) == F_equal_to) {
         data_make->main->setting.state.status = f_file_touch(data_make->cache_arguments.array[i], mode.regular, F_false);
 
         if (F_status_is_error(data_make->main->setting.state.status)) {
@@ -1983,7 +1983,7 @@ extern "C" {
           return;
         }
       }
-      else if (fl_string_dynamic_compare(fake_make_operation_argument_directory_s, data_make->cache_arguments.array[0]) == F_equal_to) {
+      else if (f_compare_dynamic(fake_make_operation_argument_directory_s, data_make->cache_arguments.array[0]) == F_equal_to) {
         data_make->main->setting.state.status = f_directory_touch(data_make->cache_arguments.array[i], mode.directory);
 
         if (F_status_is_error(data_make->main->setting.state.status)) {

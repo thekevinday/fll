@@ -127,7 +127,7 @@ extern "C" {
         range.stop = data->main->program.parameters.arguments.array[index].used - 1;
 
         for (j = 0; j < data_make.fakefile.used; ++j) {
-          if (fl_string_dynamic_partial_compare(data->main->program.parameters.arguments.array[index], data_make.buffer, range, data_make.fakefile.array[j].name) == F_equal_to) break;
+          if (f_compare_dynamic_partial(data->main->program.parameters.arguments.array[index], data_make.buffer, range, data_make.fakefile.array[j].name) == F_equal_to) break;
         } // for
 
         if (j == data_make.fakefile.used) {
@@ -151,7 +151,7 @@ extern "C" {
 
           for (j = 0; j < data_make.fakefile.used; ++j) {
 
-            if (fl_string_dynamic_partial_compare(data->main->program.parameters.arguments.array[index], data_make.buffer, range, data_make.fakefile.array[j].name) == F_equal_to) {
+            if (f_compare_dynamic_partial(data->main->program.parameters.arguments.array[index], data_make.buffer, range, data_make.fakefile.array[j].name) == F_equal_to) {
               {
                 int result = fake_make_operate_section(&data_make, j, &section_stack);
 
@@ -420,21 +420,21 @@ extern "C" {
 
           is = 0;
 
-          data_make->main->setting.state.status = fl_string_dynamic_partial_compare_string(vocabulary_define.string, data_make->buffer, vocabulary_define.used, iki_data->vocabulary.array[j]);
+          data_make->main->setting.state.status = f_compare_dynamic_partial_string(vocabulary_define.string, data_make->buffer, vocabulary_define.used, iki_data->vocabulary.array[j]);
 
           if (data_make->main->setting.state.status == F_equal_to) {
             is = 2;
             iki_type |= 0x2;
           }
           else if (data_make->main->setting.state.status == F_equal_to_not) {
-            data_make->main->setting.state.status = fl_string_dynamic_partial_compare_string(vocabulary_parameter.string, data_make->buffer, vocabulary_parameter.used, iki_data->vocabulary.array[j]);
+            data_make->main->setting.state.status = f_compare_dynamic_partial_string(vocabulary_parameter.string, data_make->buffer, vocabulary_parameter.used, iki_data->vocabulary.array[j]);
 
             if (data_make->main->setting.state.status == F_equal_to) {
               is = 1;
               iki_type |= 0x1;
             }
             else if (data_make->main->setting.state.status == F_equal_to_not) {
-              data_make->main->setting.state.status = fl_string_dynamic_partial_compare_string(vocabulary_context.string, data_make->buffer, vocabulary_context.used, iki_data->vocabulary.array[j]);
+              data_make->main->setting.state.status = f_compare_dynamic_partial_string(vocabulary_context.string, data_make->buffer, vocabulary_context.used, iki_data->vocabulary.array[j]);
 
               if (data_make->main->setting.state.status == F_equal_to) {
                 is = 3;
@@ -444,7 +444,7 @@ extern "C" {
           }
 
           if (F_status_is_error(data_make->main->setting.state.status)) {
-            fake_print_error(&data_make->main->program.error, macro_fake_f(fl_string_dynamic_partial_compare));
+            fake_print_error(&data_make->main->program.error, macro_fake_f(f_compare_dynamic_partial));
 
             break;
           }
@@ -453,7 +453,7 @@ extern "C" {
             unmatched = F_true;
 
             // Check against reserved parameter names and if matches use them instead.
-            if (fl_string_dynamic_partial_compare_string(fake_make_parameter_variable_return_s.string, data_make->buffer, fake_make_parameter_variable_return_s.used, iki_data->content.array[j]) == F_equal_to) {
+            if (f_compare_dynamic_partial_string(fake_make_parameter_variable_return_s.string, data_make->buffer, fake_make_parameter_variable_return_s.used, iki_data->content.array[j]) == F_equal_to) {
 
               if (data_make->setting_make.parameter.array[0].value.array[0].used) {
                 data_make->main->setting.state.status = f_string_dynamic_append_nulless(data_make->setting_make.parameter.array[0].value.array[0], &data_make->cache_arguments.array[data_make->cache_arguments.used]);
@@ -476,7 +476,7 @@ extern "C" {
 
               unmatched = F_false;
             }
-            else if (fl_string_dynamic_partial_compare_string(fake_make_parameter_variable_top_s.string, data_make->buffer, fake_make_parameter_variable_top_s.used, iki_data->content.array[j]) == F_equal_to) {
+            else if (f_compare_dynamic_partial_string(fake_make_parameter_variable_top_s.string, data_make->buffer, fake_make_parameter_variable_top_s.used, iki_data->content.array[j]) == F_equal_to) {
 
               if (data_make->path.stack.used) {
                 data_make->main->setting.state.status = f_string_dynamic_increase_by(data_make->path.stack.array[0].used + f_path_separator_s.used + 1, &data_make->cache_arguments.array[data_make->cache_arguments.used]);
@@ -507,7 +507,7 @@ extern "C" {
 
               unmatched = F_false;
             }
-            else if (fl_string_dynamic_partial_compare_string(fake_make_parameter_variable_current_s.string, data_make->buffer, fake_make_parameter_variable_current_s.used, iki_data->content.array[j]) == F_equal_to) {
+            else if (f_compare_dynamic_partial_string(fake_make_parameter_variable_current_s.string, data_make->buffer, fake_make_parameter_variable_current_s.used, iki_data->content.array[j]) == F_equal_to) {
 
               if (data_make->path.stack.used) {
                 data_make->main->setting.state.status = f_string_dynamic_increase_by(data_make->path.stack.array[data_make->path.stack.used - 1].used + f_path_separator_s.used + 1, &data_make->cache_arguments.array[data_make->cache_arguments.used]);
@@ -541,7 +541,7 @@ extern "C" {
             else {
               for (k = 0; k < 39; ++k) {
 
-                if (fl_string_dynamic_partial_compare_string(reserved_name[k].string, data_make->buffer, reserved_name[k].used, iki_data->content.array[j]) != F_equal_to) {
+                if (f_compare_dynamic_partial_string(reserved_name[k].string, data_make->buffer, reserved_name[k].used, iki_data->content.array[j]) != F_equal_to) {
                   continue;
                 }
 
@@ -639,7 +639,7 @@ extern "C" {
               for (k = 0; k < parameter->used; ++k) {
 
                 // Check against IKI variable list.
-                if (fl_string_dynamic_partial_compare_dynamic(parameter->array[k].name, data_make->buffer, iki_data->content.array[j]) != F_equal_to) {
+                if (f_compare_dynamic_partial_dynamic(parameter->array[k].name, data_make->buffer, iki_data->content.array[j]) != F_equal_to) {
                   continue;
                 }
 
@@ -853,7 +853,7 @@ extern "C" {
 
       for (; i < 3; ++i) {
 
-        data_make->main->setting.state.status = fl_string_dynamic_partial_compare_string(uint8_name[i].string, data_make->buffer, uint8_name[i].used, range_name);
+        data_make->main->setting.state.status = f_compare_dynamic_partial_string(uint8_name[i].string, data_make->buffer, uint8_name[i].used, range_name);
 
         if (data_make->main->setting.state.status == F_equal_to) {
           unmatched = F_false;
@@ -888,7 +888,7 @@ extern "C" {
 
       for (i = 0; i < 7; ++i) {
 
-        data_make->main->setting.state.status = fl_string_dynamic_partial_compare_string(bool_name[i].string, data_make->buffer, bool_name[i].used, range_name);
+        data_make->main->setting.state.status = f_compare_dynamic_partial_string(bool_name[i].string, data_make->buffer, bool_name[i].used, range_name);
 
         if (data_make->main->setting.state.status == F_equal_to) {
           unmatched = F_false;
@@ -948,7 +948,7 @@ extern "C" {
 
       for (i = 0; i < 17; ++i) {
 
-        data_make->main->setting.state.status = fl_string_dynamic_partial_compare_string(dynamic_name[i].string, data_make->buffer, dynamic_name[i].used, range_name);
+        data_make->main->setting.state.status = f_compare_dynamic_partial_string(dynamic_name[i].string, data_make->buffer, dynamic_name[i].used, range_name);
 
         if (data_make->main->setting.state.status == F_equal_to) {
           unmatched = F_false;
@@ -1082,7 +1082,7 @@ extern "C" {
 
       for (i = 0; i < 36; ++i) {
 
-        data_make->main->setting.state.status = fl_string_dynamic_partial_compare_string(dynamics_name[i].string, data_make->buffer, dynamics_name[i].used, range_name);
+        data_make->main->setting.state.status = f_compare_dynamic_partial_string(dynamics_name[i].string, data_make->buffer, dynamics_name[i].used, range_name);
 
         if (data_make->main->setting.state.status == F_equal_to) {
           unmatched = F_false;
@@ -1163,7 +1163,7 @@ extern "C" {
 
     for (f_array_length_t i = 0; i < 9; ++i) {
 
-      if (fl_string_dynamic_partial_compare_string(context_name[i].string, data_make->buffer, context_name[i].used, range_name) == F_equal_to) {
+      if (f_compare_dynamic_partial_string(context_name[i].string, data_make->buffer, context_name[i].used, range_name) == F_equal_to) {
         context = context_value[i].before;
 
         break;
@@ -1372,7 +1372,7 @@ extern "C" {
 
       for (j = 0; j < fake_max_operation_d; ++j) {
 
-        if (fl_string_dynamic_partial_compare_string(operations_name[j].string, data_make->buffer, operations_name[j].used, section->objects.array[i]) == F_equal_to) {
+        if (f_compare_dynamic_partial_string(operations_name[j].string, data_make->buffer, operations_name[j].used, section->objects.array[i]) == F_equal_to) {
           state_process.operation = operations_type[j];
 
           break;

@@ -7,19 +7,20 @@ f_type_array
 f_string
 f_utf
 f_color
+f_compare
 f_console
 f_conversion
 f_file
 f_iki
 f_pipe
 f_print
+f_rip
 f_signal
 
 fl_conversion
 fl_iki
 fl_print
 fl_signal
-fl_string
 
 fll_error
 fll_print

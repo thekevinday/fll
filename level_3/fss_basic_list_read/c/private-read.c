@@ -155,14 +155,14 @@ extern "C" {
           data->depths.array[i].index_name = main->parameters.array[fss_basic_list_read_parameter_name_e].values.array[position_name];
 
           if (main->parameters.array[fss_basic_list_read_parameter_trim_e].result & f_console_result_found_e) {
-            status = fl_string_dynamic_rip(data->argv[data->depths.array[i].index_name], &data->depths.array[i].value_name);
+            status = f_rip_dynamic(data->argv[data->depths.array[i].index_name], &data->depths.array[i].value_name);
           }
           else {
             status = f_string_dynamic_append(data->argv[data->depths.array[i].index_name], &data->depths.array[i].value_name);
           }
 
           if (F_status_is_error(status)) {
-            fll_error_print(main->error, F_status_set_fine(status), (main->parameters.array[fss_basic_list_read_parameter_trim_e].result & f_console_result_found_e) ? "fl_string_dynamic_rip" : "f_string_dynamic_append", fll_error_file_flag_fallback_e);
+            fll_error_print(main->error, F_status_set_fine(status), (main->parameters.array[fss_basic_list_read_parameter_trim_e].result & f_console_result_found_e) ? "f_rip_dynamic" : "f_string_dynamic_append", fll_error_file_flag_fallback_e);
 
             return status;
           }
@@ -650,7 +650,7 @@ extern "C" {
       // This standard should always treat selected names as trimmed.
       for (f_array_length_t i = 0; i < data->objects.used; ++i) {
 
-        if (fl_string_dynamic_partial_compare_except_trim_dynamic(data->depths.array[0].value_name, data->buffer, data->objects.array[i], except_none, data->delimits_object) == F_equal_to) {
+        if (f_compare_dynamic_partial_except_trim_dynamic(data->depths.array[0].value_name, data->buffer, data->objects.array[i], except_none, data->delimits_object) == F_equal_to) {
           names[i] = F_true;
         }
       } // for

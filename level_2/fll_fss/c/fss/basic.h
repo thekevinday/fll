@@ -21,7 +21,6 @@
 // FLL-1 includes.
 #include <fll/level_1/fss.h>
 #include <fll/level_1/fss/basic.h>
-#include <fll/level_1/string.h>
 
 #ifdef __cplusplus
 extern "C" {

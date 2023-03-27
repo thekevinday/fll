@@ -155,14 +155,14 @@ extern "C" {
           data->depths.array[i].index_name = main->parameters.array[fss_payload_read_parameter_name_e].values.array[position_name];
 
           if (main->parameters.array[fss_payload_read_parameter_trim_e].result & f_console_result_found_e) {
-            status = fl_string_dynamic_rip(data->argv[data->depths.array[i].index_name], &data->depths.array[i].value_name);
+            status = f_rip_dynamic(data->argv[data->depths.array[i].index_name], &data->depths.array[i].value_name);
           }
           else {
             status = f_string_dynamic_append(data->argv[data->depths.array[i].index_name], &data->depths.array[i].value_name);
           }
 
           if (F_status_is_error(status)) {
-            fll_error_print(main->error, F_status_set_fine(status), (main->parameters.array[fss_payload_read_parameter_trim_e].result & f_console_result_found_e) ? "fl_string_dynamic_rip" : "f_string_dynamic_append", fll_error_file_flag_fallback_e);
+            fll_error_print(main->error, F_status_set_fine(status), (main->parameters.array[fss_payload_read_parameter_trim_e].result & f_console_result_found_e) ? "f_rip_dynamic" : "f_string_dynamic_append", fll_error_file_flag_fallback_e);
 
             return status;
           }
@@ -277,7 +277,7 @@ extern "C" {
     // Load the "header" information.
     for (f_array_length_t i = 0; i < data->objects.used; ++i) {
 
-      if (fl_string_dynamic_partial_compare_string(F_fss_header_s, data->buffer, F_fss_string_header_s_length, data->objects.array[i]) == F_equal_to) {
+      if (f_compare_dynamic_partial_string(F_fss_header_s, data->buffer, F_fss_string_header_s_length, data->objects.array[i]) == F_equal_to) {
         f_string_range_t input_header = data->contents.array[i].array[0];
 
         status = fll_fss_extended_read(data->buffer, state, &input_header, &data->objects_header, &data->contents_header, &data->quotes_object_header, &data->quotes_content_header, &data->delimits_object_header, &data->delimits_content_header);
@@ -351,7 +351,7 @@ extern "C" {
       // For "headers" FSS-0001 Extended, only operate if the "header" name is true.
       for (f_array_length_t i = 0; i < data->objects.used; ++i) {
 
-        if (fl_string_dynamic_partial_compare_string(F_fss_header_s, data->buffer, F_fss_string_header_s_length, data->objects.array[i]) == F_equal_to) {
+        if (f_compare_dynamic_partial_string(F_fss_header_s, data->buffer, F_fss_string_header_s_length, data->objects.array[i]) == F_equal_to) {
           if (names[i]) break;
 
           if (main->parameters.array[fss_payload_read_parameter_total_e].result & f_console_result_found_e) {
@@ -446,7 +446,7 @@ extern "C" {
         main->signal_check = 0;
       }
 
-      is_payload = fl_string_dynamic_partial_compare_string(f_fss_payload_s.string, data->buffer, f_fss_payload_s.used, data->objects.array[i]) == F_equal_to;
+      is_payload = f_compare_dynamic_partial_string(f_fss_payload_s.string, data->buffer, f_fss_payload_s.used, data->objects.array[i]) == F_equal_to;
 
       fss_payload_read_print_at(main, is_payload, i, *delimits_object, *delimits_content, data);
     } // for
@@ -520,7 +520,7 @@ extern "C" {
           f_file_stream_unlock(main->output.to);
         }
         else {
-          is_payload = fl_string_dynamic_partial_compare_string(f_fss_payload_s.string, data->buffer, f_fss_payload_s.used, data->objects.array[i]) == F_equal_to;
+          is_payload = f_compare_dynamic_partial_string(f_fss_payload_s.string, data->buffer, f_fss_payload_s.used, data->objects.array[i]) == F_equal_to;
 
           fss_payload_read_print_at(main, is_payload, i, *delimits_object, *delimits_content, data);
         }
@@ -953,7 +953,7 @@ extern "C" {
       // This standard should always treat selected names as trimmed.
       for (i = 0; i < data->objects.used; ++i) {
 
-        if (fl_string_dynamic_partial_compare_except_trim_dynamic(data->depths.array[0].value_name, data->buffer, data->objects.array[i], except_none, data->delimits_object) == F_equal_to) {
+        if (f_compare_dynamic_partial_except_trim_dynamic(data->depths.array[0].value_name, data->buffer, data->objects.array[i], except_none, data->delimits_object) == F_equal_to) {
           names[i] = F_true;
         }
       } // for
@@ -979,7 +979,7 @@ extern "C" {
       if (data->option & fss_payload_read_data_option_trim_d) {
         for (i = 0; i < data->objects_header.used; ++i) {
 
-          if (fl_string_dynamic_partial_compare_except_trim_dynamic(data->depths.array[data->depths.used - 1].value_name, data->buffer, data->objects_header.array[i], except_none, data->delimits_object_header) == F_equal_to) {
+          if (f_compare_dynamic_partial_except_trim_dynamic(data->depths.array[data->depths.used - 1].value_name, data->buffer, data->objects_header.array[i], except_none, data->delimits_object_header) == F_equal_to) {
             names[i] = F_true;
           }
         } // for
@@ -987,7 +987,7 @@ extern "C" {
       else {
         for (i = 0; i < data->objects_header.used; ++i) {
 
-           if (fl_string_dynamic_partial_compare_except_dynamic(data->depths.array[data->depths.used - 1].value_name, data->buffer, data->objects_header.array[i], except_none, data->delimits_content_header) == F_equal_to) {
+           if (f_compare_dynamic_partial_except_dynamic(data->depths.array[data->depths.used - 1].value_name, data->buffer, data->objects_header.array[i], except_none, data->delimits_content_header) == F_equal_to) {
             names[i] = F_true;
           }
         } // for

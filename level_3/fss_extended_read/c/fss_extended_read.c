@@ -242,13 +242,13 @@ extern "C" {
 
             break;
           }
-          else if (fl_string_dynamic_compare(data.argv[index], fss_extended_read_delimit_mode_name_none_s) == F_equal_to) {
+          else if (f_compare_dynamic(data.argv[index], fss_extended_read_delimit_mode_name_none_s) == F_equal_to) {
             data.delimit_mode = fss_extended_read_delimit_mode_none_e;
           }
-          else if (fl_string_dynamic_compare(data.argv[index], fss_extended_read_delimit_mode_name_all_s) == F_equal_to) {
+          else if (f_compare_dynamic(data.argv[index], fss_extended_read_delimit_mode_name_all_s) == F_equal_to) {
             data.delimit_mode = fss_extended_read_delimit_mode_all_e;
           }
-          else if (fl_string_dynamic_compare(data.argv[index], fss_extended_read_delimit_mode_name_object_s) == F_equal_to) {
+          else if (f_compare_dynamic(data.argv[index], fss_extended_read_delimit_mode_name_object_s) == F_equal_to) {
             switch (data.delimit_mode) {
               case 0:
                 data.delimit_mode = fss_extended_read_delimit_mode_object_e;

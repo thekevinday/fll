@@ -115,7 +115,7 @@ extern "C" {
       }
 
       if (F_status_is_error_not(status)) {
-        status = fl_string_dynamic_partial_fll_identify(buffer, range, ids ? &ids->array[ids->used] : &id);
+        status = f_parse_dynamic_partial_fll_identify(buffer, range, ids ? &ids->array[ids->used] : &id);
       }
 
       if (F_status_is_error(status) || (status == F_found_not && !found_fss)) {
@@ -191,7 +191,7 @@ extern "C" {
 
         if (matched[j]) continue;
 
-        status = fl_string_dynamic_partial_compare_trim_string(names[j].string, buffer, names[j].used, objects.array[i]);
+        status = f_compare_dynamic_partial_trim_string(names[j].string, buffer, names[j].used, objects.array[i]);
 
         if (F_status_is_error(status)) return status;
         if (status == F_equal_to_not) continue;
@@ -240,7 +240,7 @@ extern "C" {
 
       for (j = 0; j < size; ++j) {
 
-        status = fl_string_dynamic_partial_compare_trim_string(names[j].string, buffer, names[j].used, objects.array[i]);
+        status = f_compare_dynamic_partial_trim_string(names[j].string, buffer, names[j].used, objects.array[i]);
         if (F_status_is_error(status)) return status;
 
         if (status == F_equal_to_not) continue;
@@ -312,7 +312,7 @@ extern "C" {
 
       for (j = 0; j < size; ++j) {
 
-        status = fl_string_dynamic_partial_compare_trim_string(names[j].string, buffer, names[j].used, objects.array[i]);
+        status = f_compare_dynamic_partial_trim_string(names[j].string, buffer, names[j].used, objects.array[i]);
 
         if (F_status_is_error(status)) return status;
         if (status == F_equal_to_not) continue;
@@ -329,7 +329,7 @@ extern "C" {
 
         for (k = 0; k < values[j]->used; ++k) {
 
-          status = fl_string_dynamic_partial_compare_trim_string(values[j]->array[k].name.string, buffer, values[j]->array[k].name.used, contents.array[i].array[0]);
+          status = f_compare_dynamic_partial_trim_string(values[j]->array[k].name.string, buffer, values[j]->array[k].name.used, contents.array[i].array[0]);
 
           if (F_status_is_error(status)) {
             f_string_dynamic_resize(0, &name);
@@ -452,7 +452,7 @@ extern "C" {
 
       for (j = 0; j < size; ++j) {
 
-        status = fl_string_dynamic_partial_compare_trim_string(names[j].string, buffer, names[j].used, objects.array[i]);
+        status = f_compare_dynamic_partial_trim_string(names[j].string, buffer, names[j].used, objects.array[i]);
 
         if (F_status_is_error(status)) return status;
         if (status == F_equal_to_not) continue;
@@ -526,7 +526,7 @@ extern "C" {
 
       for (j = 0; j < size; ++j) {
 
-        status = fl_string_dynamic_partial_compare_trim_string(names[j].string, buffer, names[j].used, objects.array[i]);
+        status = f_compare_dynamic_partial_trim_string(names[j].string, buffer, names[j].used, objects.array[i]);
 
         if (F_status_is_error(status)) return status;
         if (status == F_equal_to_not) continue;
@@ -598,7 +598,7 @@ extern "C" {
 
       for (j = 0; j < size; ++j) {
 
-        status = fl_string_dynamic_partial_compare_trim_string(names[j].string, buffer, names[j].used, objects.array[i]);
+        status = f_compare_dynamic_partial_trim_string(names[j].string, buffer, names[j].used, objects.array[i]);
 
         if (F_status_is_error(status)) return status;
         if (status == F_equal_to_not) continue;
@@ -619,7 +619,7 @@ extern "C" {
 
         for (k = 0; k < values[j]->used; ++k) {
 
-          status = fl_string_dynamic_partial_compare_trim_string(values[j]->array[k].name.string, buffer, values[j]->array[k].name.used, contents.array[i].array[0]);
+          status = f_compare_dynamic_partial_trim_string(values[j]->array[k].name.string, buffer, values[j]->array[k].name.used, contents.array[i].array[0]);
 
           if (F_status_is_error(status)) {
             f_string_dynamic_resize(0, &name);
@@ -715,7 +715,7 @@ extern "C" {
 
       for (j = 0; j < size; ++j) {
 
-        status = fl_string_dynamic_partial_compare_trim_string(names[j].string, buffer, names[j].used, objects.array[i]);
+        status = f_compare_dynamic_partial_trim_string(names[j].string, buffer, names[j].used, objects.array[i]);
 
         if (F_status_is_error(status)) return status;
         if (status == F_equal_to_not) continue;
@@ -736,7 +736,7 @@ extern "C" {
 
         for (k = 0; k < values[j]->used; ++k) {
 
-          status = fl_string_dynamic_partial_compare_trim_string(values[j]->array[k].name.string, buffer, values[j]->array[k].name.used, contents.array[i].array[0]);
+          status = f_compare_dynamic_partial_trim_string(values[j]->array[k].name.string, buffer, values[j]->array[k].name.used, contents.array[i].array[0]);
 
           if (F_status_is_error(status)) {
             f_string_dynamic_resize(0, &name);
@@ -828,7 +828,7 @@ extern "C" {
 
         if (matched[j]) continue;
 
-        status = fl_string_dynamic_partial_compare_trim_string(names[j].string, buffer, names[j].used, objects.array[i]);
+        status = f_compare_dynamic_partial_trim_string(names[j].string, buffer, names[j].used, objects.array[i]);
 
         if (F_status_is_error(status)) return status;
         if (status == F_equal_to_not) continue;
@@ -877,7 +877,7 @@ extern "C" {
 
       for (j = 0; j < size; ++j) {
 
-        status = fl_string_dynamic_partial_compare_trim_string(names[j].string, buffer, names[j].used, objects.array[i]);
+        status = f_compare_dynamic_partial_trim_string(names[j].string, buffer, names[j].used, objects.array[i]);
 
         if (F_status_is_error(status)) return status;
         if (status == F_equal_to_not) continue;
@@ -935,7 +935,7 @@ extern "C" {
 
       for (j = 0; j < size; ++j) {
 
-        status = fl_string_dynamic_partial_compare_trim_string(names[j].string, buffer, names[j].used, objects.array[i]);
+        status = f_compare_dynamic_partial_trim_string(names[j].string, buffer, names[j].used, objects.array[i]);
 
         if (F_status_is_error(status)) return status;
         if (status == F_equal_to_not) continue;

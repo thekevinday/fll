@@ -84,9 +84,9 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
         index = main->program.parameters.array[fss_write_parameter_as_e].values.array[i];
 
-        if (fl_string_dynamic_compare(argv[index], fss_write_format_code_short_0000_s) == F_equal_to ||
-            fl_string_dynamic_compare(argv[index], fss_write_format_code_long_0000_s) == F_equal_to ||
-            fl_string_dynamic_compare(argv[index], fss_write_format_code_human_0000_s) == F_equal_to) {
+        if (f_compare_dynamic(argv[index], fss_write_format_code_short_0000_s) == F_equal_to ||
+            f_compare_dynamic(argv[index], fss_write_format_code_long_0000_s) == F_equal_to ||
+            f_compare_dynamic(argv[index], fss_write_format_code_human_0000_s) == F_equal_to) {
 
           main->setting.standard = fss_write_basic_standard_s;
           main->setting.process_content = &fss_write_basic_process_content;
@@ -98,9 +98,9 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
           main->setting.flag -= main->setting.flag & fss_write_main_flag_ignore_e; // Not supported by basic.
           main->setting.flag -= main->setting.flag & fss_write_main_flag_content_multiple_e; // Not supported by basic.
         }
-        else if (fl_string_dynamic_compare(argv[index], fss_write_format_code_short_0001_s) == F_equal_to ||
-                 fl_string_dynamic_compare(argv[index], fss_write_format_code_long_0001_s) == F_equal_to ||
-                 fl_string_dynamic_compare(argv[index], fss_write_format_code_human_0001_s) == F_equal_to) {
+        else if (f_compare_dynamic(argv[index], fss_write_format_code_short_0001_s) == F_equal_to ||
+                 f_compare_dynamic(argv[index], fss_write_format_code_long_0001_s) == F_equal_to ||
+                 f_compare_dynamic(argv[index], fss_write_format_code_human_0001_s) == F_equal_to) {
 
           main->setting.standard = fss_write_extended_standard_s;
           main->setting.process_content = &fss_write_extended_process_content;
@@ -112,9 +112,9 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
           main->setting.flag -= main->setting.flag & fss_write_main_flag_ignore_e; // Not supported by extended.
           main->setting.flag |= fss_write_main_flag_content_multiple_e;
         }
-        else if (fl_string_dynamic_compare(argv[index], fss_write_format_code_short_0002_s) == F_equal_to ||
-                 fl_string_dynamic_compare(argv[index], fss_write_format_code_long_0002_s) == F_equal_to ||
-                 fl_string_dynamic_compare(argv[index], fss_write_format_code_human_0002_s) == F_equal_to) {
+        else if (f_compare_dynamic(argv[index], fss_write_format_code_short_0002_s) == F_equal_to ||
+                 f_compare_dynamic(argv[index], fss_write_format_code_long_0002_s) == F_equal_to ||
+                 f_compare_dynamic(argv[index], fss_write_format_code_human_0002_s) == F_equal_to) {
 
           main->setting.standard = fss_write_basic_list_standard_s;
           main->setting.process_content = &fss_write_basic_list_process_content;
@@ -126,9 +126,9 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
           main->setting.flag -= main->setting.flag & fss_write_main_flag_ignore_e; // Not supported by basic list.
           main->setting.flag -= main->setting.flag & fss_write_main_flag_content_multiple_e; // Not supported by basic list.
         }
-        else if (fl_string_dynamic_compare(argv[index], fss_write_format_code_short_0003_s) == F_equal_to ||
-                 fl_string_dynamic_compare(argv[index], fss_write_format_code_long_0003_s) == F_equal_to ||
-                 fl_string_dynamic_compare(argv[index], fss_write_format_code_human_0003_s) == F_equal_to) {
+        else if (f_compare_dynamic(argv[index], fss_write_format_code_short_0003_s) == F_equal_to ||
+                 f_compare_dynamic(argv[index], fss_write_format_code_long_0003_s) == F_equal_to ||
+                 f_compare_dynamic(argv[index], fss_write_format_code_human_0003_s) == F_equal_to) {
 
           main->setting.standard = fss_write_extended_list_standard_s;
           main->setting.process_content = &fss_write_extended_list_process_content;
@@ -140,9 +140,9 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
           main->setting.flag |= fss_write_main_flag_ignore_e;
           main->setting.flag -= main->setting.flag & fss_write_main_flag_content_multiple_e; // Not supported by extended list.
         }
-        else if (fl_string_dynamic_compare(argv[index], fss_write_format_code_short_0008_s) == F_equal_to ||
-                 fl_string_dynamic_compare(argv[index], fss_write_format_code_long_0008_s) == F_equal_to ||
-                 fl_string_dynamic_compare(argv[index], fss_write_format_code_human_0008_s) == F_equal_to) {
+        else if (f_compare_dynamic(argv[index], fss_write_format_code_short_0008_s) == F_equal_to ||
+                 f_compare_dynamic(argv[index], fss_write_format_code_long_0008_s) == F_equal_to ||
+                 f_compare_dynamic(argv[index], fss_write_format_code_human_0008_s) == F_equal_to) {
 
           main->setting.standard = fss_write_embedded_list_standard_s;
           main->setting.process_content = &fss_write_embedded_list_process_content;
@@ -154,9 +154,9 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
           main->setting.flag |= fss_write_main_flag_ignore_e;
           main->setting.flag |= fss_write_main_flag_content_multiple_e;
         }
-        else if (fl_string_dynamic_compare(argv[index], fss_write_format_code_short_000e_s) == F_equal_to ||
-                 fl_string_dynamic_compare(argv[index], fss_write_format_code_long_000e_s) == F_equal_to ||
-                 fl_string_dynamic_compare(argv[index], fss_write_format_code_human_000e_s) == F_equal_to) {
+        else if (f_compare_dynamic(argv[index], fss_write_format_code_short_000e_s) == F_equal_to ||
+                 f_compare_dynamic(argv[index], fss_write_format_code_long_000e_s) == F_equal_to ||
+                 f_compare_dynamic(argv[index], fss_write_format_code_human_000e_s) == F_equal_to) {
 
           main->setting.standard = fss_write_payload_standard_s;
           main->setting.process_content = 0; // Not used by payload.

@@ -9,6 +9,7 @@ f_utf
 f_account
 f_capability
 f_color
+f_compare
 f_console
 f_control_group
 f_conversion
@@ -18,9 +19,11 @@ f_execute
 f_file
 f_fss
 f_limit
+f_parse
 f_path
 f_pipe
 f_print
+f_rip
 f_status_string
 f_signal
 f_thread
@@ -30,7 +33,6 @@ fl_conversion
 fl_environment
 fl_fss
 fl_print
-fl_string
 
 fll_error
 fll_execute

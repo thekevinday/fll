@@ -67,7 +67,7 @@ test_main() {
   local verbose=
   local verbose_common=
 
-  local projects="f_type f_status f_memory f_type_array f_string f_utf f_account f_capability f_color f_console f_control_group f_conversion f_directory f_environment f_execute f_file f_fss f_iki f_limit f_path f_pipe f_print f_serialize f_signal f_socket f_status_string f_thread fl_control_group fl_conversion fl_directory fl_environment fl_execute fl_fss fl_iki fl_path fl_print fl_signal fl_string fl_utf fl_utf_file fll_control_group fll_error fll_execute fll_file fll_fss fll_fss_status_string fll_iki fll_print fll_program fll_status_string"
+  local projects="f_type f_status f_memory f_type_array f_string f_utf f_account f_capability f_color f_compare f_console f_control_group f_conversion f_directory f_environment f_execute f_file f_fss f_iki f_limit f_parse f_path f_pipe f_print f_rip f_serialize f_signal f_socket f_status_string f_thread fl_control_group fl_conversion fl_directory fl_environment fl_execute fl_fss fl_iki fl_path fl_print fl_signal fl_utf_file fll_control_group fll_error fll_execute fll_file fll_fss fll_fss_status_string fll_iki fll_print fll_program fll_status_string"
   local projects_no_tests="f_type"
 
   let failure=0

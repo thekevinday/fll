@@ -567,7 +567,7 @@ extern "C" {
 
         for (j = 0; j < setting->modes.used; ++j) {
 
-          if (fl_string_dynamic_compare_trim(modes->array[i], setting->modes.array[j]) == F_equal_to) {
+          if (f_compare_dynamic_trim(modes->array[i], setting->modes.array[j]) == F_equal_to) {
             found = F_true;
 
             break;
@@ -1111,10 +1111,10 @@ extern "C" {
         if (!settings_single_source[i]->used) continue;
 
         if (settings_single_type[i] == 1) {
-          if (fl_string_dynamic_compare_trim(settings_single_source[i]->array[settings_single_source[i]->used - 1], fake_common_setting_bool_yes_s) == F_equal_to) {
+          if (f_compare_dynamic_trim(settings_single_source[i]->array[settings_single_source[i]->used - 1], fake_common_setting_bool_yes_s) == F_equal_to) {
             *settings_single_bool[i] = F_true;
           }
-          else if (fl_string_dynamic_compare_trim(settings_single_source[i]->array[settings_single_source[i]->used - 1], fake_common_setting_bool_no_s) == F_equal_to) {
+          else if (f_compare_dynamic_trim(settings_single_source[i]->array[settings_single_source[i]->used - 1], fake_common_setting_bool_no_s) == F_equal_to) {
             *settings_single_bool[i] = F_false;
           }
           else {
@@ -1124,13 +1124,13 @@ extern "C" {
           }
         }
         else if (settings_single_type[i] == 4) {
-          if (fl_string_dynamic_compare_trim(settings_single_source[i]->array[settings_single_source[i]->used - 1], fake_build_language_bash_s) == F_equal_to) {
+          if (f_compare_dynamic_trim(settings_single_source[i]->array[settings_single_source[i]->used - 1], fake_build_language_bash_s) == F_equal_to) {
             *settings_single_language[i] = fake_build_language_bash_e;
           }
-          else if (fl_string_dynamic_compare_trim(settings_single_source[i]->array[settings_single_source[i]->used - 1], fake_build_language_c_s) == F_equal_to) {
+          else if (f_compare_dynamic_trim(settings_single_source[i]->array[settings_single_source[i]->used - 1], fake_build_language_c_s) == F_equal_to) {
             *settings_single_language[i] = fake_build_language_c_e;
           }
-          else if (fl_string_dynamic_compare_trim(settings_single_source[i]->array[settings_single_source[i]->used - 1], fake_build_language_cpp_s) == F_equal_to) {
+          else if (f_compare_dynamic_trim(settings_single_source[i]->array[settings_single_source[i]->used - 1], fake_build_language_cpp_s) == F_equal_to) {
             *settings_single_language[i] = fake_build_language_cpp_e;
           }
           else {
@@ -1140,16 +1140,16 @@ extern "C" {
           }
         }
         else if (settings_single_type[i] == 5) {
-          if (fl_string_dynamic_compare_trim(settings_single_source[i]->array[settings_single_source[i]->used - 1], fake_build_version_major_s) == F_equal_to) {
+          if (f_compare_dynamic_trim(settings_single_source[i]->array[settings_single_source[i]->used - 1], fake_build_version_major_s) == F_equal_to) {
             *settings_single_version[i] = fake_build_version_major_e;
           }
-          else if (fl_string_dynamic_compare_trim(settings_single_source[i]->array[settings_single_source[i]->used - 1], fake_build_version_minor_s) == F_equal_to) {
+          else if (f_compare_dynamic_trim(settings_single_source[i]->array[settings_single_source[i]->used - 1], fake_build_version_minor_s) == F_equal_to) {
             *settings_single_version[i] = fake_build_version_minor_e;
           }
-          else if (fl_string_dynamic_compare_trim(settings_single_source[i]->array[settings_single_source[i]->used - 1], fake_build_version_micro_s) == F_equal_to) {
+          else if (f_compare_dynamic_trim(settings_single_source[i]->array[settings_single_source[i]->used - 1], fake_build_version_micro_s) == F_equal_to) {
             *settings_single_version[i] = fake_build_version_micro_e;
           }
-          else if (fl_string_dynamic_compare_trim(settings_single_source[i]->array[settings_single_source[i]->used - 1], fake_build_version_nano_s) == F_equal_to) {
+          else if (f_compare_dynamic_trim(settings_single_source[i]->array[settings_single_source[i]->used - 1], fake_build_version_nano_s) == F_equal_to) {
             *settings_single_version[i] = fake_build_version_nano_e;
           }
           else {
