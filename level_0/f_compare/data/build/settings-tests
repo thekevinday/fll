@@ -26,7 +26,11 @@ build_libraries -lc -lcmocka
 build_libraries-individual -lf_memory -lf_string -lf_utf -lf_compare
 
 build_sources_program test-compare-.c test-compare-dynamic.c test-compare-dynamic_string.c
+build_sources_program test-compare-dynamic_partial.c test-compare-dynamic_partial_dynamic.c test-compare-dynamic_partial_string.c
+build_sources_program test-compare-dynamic_partial_trim.c test-compare-dynamic_partial_trim_dynamic.c test-compare-dynamic_partial_trim_string.c
+build_sources_program test-compare-trim.c test-compare-dynamic_trim.c test-compare-dynamic_trim_string.c
 build_sources_program test-compare.c
+build_sources_program test-compare-except.c
 
 build_script no
 build_shared yes

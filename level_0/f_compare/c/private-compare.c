@@ -72,9 +72,7 @@ extern "C" {
         continue;
       }
 
-      if (string1[i1] != string2[i2]) {
-        return F_equal_to_not;
-      }
+      if (string1[i1] != string2[i2]) return F_equal_to_not;
 
       ++i1;
       ++i2;
@@ -87,9 +85,7 @@ extern "C" {
       while (e1 < except1.used && except1.array[e1] < i1) ++e1;
       if (e1 < except1.used && except1.array[e1] == i1) continue;
 
-      if (string1[i1] != 0) {
-        return F_equal_to_not;
-      }
+      if (string1[i1]) return F_equal_to_not;
     } // for
 
     for (; i2 < stop2; ++i2) {
@@ -98,9 +94,7 @@ extern "C" {
       while (e2 < except2.used && except2.array[e2] < i2) ++e2;
       if (e2 < except2.used && except2.array[e2] == i2) continue;
 
-      if (string2[i2] != 0) {
-        return F_equal_to_not;
-      }
+      if (string2[i2]) return F_equal_to_not;
     } // for
 
     return F_equal_to;

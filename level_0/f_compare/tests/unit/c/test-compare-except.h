@@ -7,16 +7,16 @@
  *
  * Test the compare project.
  */
-#ifndef _TEST__F_compare__h
-#define _TEST__F_compare__h
+#ifndef _TEST__F_compare_except_h
+#define _TEST__F_compare_except_h
 
 // f_compare_() only returns memory failures.
 
 /**
  * Test that function works.
  *
- * @see f_compare()
+ * @see f_compare_except()
  */
-extern void test__f_compare___works(void **state);
+extern void test__f_compare_except__works(void **state);
 
-#endif // _TEST__F_compare__h
+#endif // _TEST__F_compare_except_h

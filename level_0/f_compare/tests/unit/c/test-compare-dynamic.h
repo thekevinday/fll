@@ -1,7 +1,7 @@
 /**
  * FLL - Level 0
  *
- * Project: Control Group
+ * Project: Compare
  * API Version: 0.7
  * Licenses: lgpl-2.1-or-later
  *
@@ -10,12 +10,12 @@
 #ifndef _TEST__F_compare_dynamic_h
 #define _TEST__F_compare_dynamic_h
 
-// f_compare_() only returns memory failures.
+// f_compare_dynamic() only returns memory failures.
 
 /**
  * Test that function works.
  *
- * @see f_compare()
+ * @see f_compare_dynamic()
  */
 extern void test__f_compare_dynamic__works(void **state);
 
