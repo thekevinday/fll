@@ -77,6 +77,7 @@ search_shared yes
 search_static yes
 
 environment PATH LD_LIBRARY_PATH
+environment LANG LC_ALL LC_COLLATE LC_CTYPE LC_FASTMSG LC_MESSAGES LC_MONETARY LC_NUMERIC LC_TIME LOCPATH NLSPATH
 
 #defines -D_di_libcap_ -D_di_thread_support_
 defines -include sources/c/config.h -I sources/c/
