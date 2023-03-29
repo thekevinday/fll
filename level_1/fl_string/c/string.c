@@ -316,7 +316,7 @@ extern "C" {
     } // while
 
     if (range->start > range->stop) return F_none_stop;
-    if (range->start > buffer.range) return F_none_eos;
+    if (range->start > buffer.used) return F_none_eos;
 
     return F_none_eos;
   }
