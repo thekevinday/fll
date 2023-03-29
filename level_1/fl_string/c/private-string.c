@@ -307,9 +307,7 @@ extern "C" {
         status = f_utf_is_whitespace(string2 + j, width_max, F_false);
 
         if (F_status_is_error(status)) {
-          if (F_status_set_fine(status) == F_maybe) {
-            return F_status_set_error(F_utf_not);
-          }
+          if (F_status_set_fine(status) == F_maybe) return F_status_set_error(F_utf_not);
 
           return status;
         }
@@ -322,71 +320,73 @@ extern "C" {
         }
       } // for
 
-      if (size1 != size2) {
-        return F_equal_to_not;
-      }
+      if (size1 != size2) return F_equal_to_not;
     }
 
-    while (i1 <= last1 && i2 <= last2) {
+    if (last1 < stop1 && last2 < stop2) {
+      while (i1 <= last1 && i2 <= last2) {
 
-      // Skip past NULL in string1.
-      while (i1 <= last1 && !string1[i1]) ++i1;
-      if (i1 > last1) break;
+        // Skip past NULL in string1.
+        while (i1 <= last1 && !string1[i1]) ++i1;
+        if (i1 > last1) break;
 
-      // Skip past NULL in string2.
-      while (i2 <= last2 && !string2[i2]) ++i2;
-      if (i2 > last2) break;
-
-      // Skip past except characters in string1.
-      while (e1 < except1.used && except1.array[e1] < i1) ++e1;
-
-      if (e1 < except1.used && except1.array[e1] == i1) {
-        ++i1;
-
-        continue;
-      }
-
-      // Skip past except characters in string2.
-      while (e2 < except2.used && except2.array[e2] < i2) ++e2;
-
-      if (e2 < except2.used && except2.array[e2] == i2) {
-        ++i2;
-
-        continue;
-      }
-
-      if (string1[i1] != string2[i2]) {
-        return F_equal_to_not;
-      }
-
-      ++i1;
-      ++i2;
-    } // while
-
-    // Only return F_equal_to if all remaining characters are NULL.
-    for (; i1 <= last1; ++i1) {
-
-      if (string1[i1] != 0) {
+        // Skip past NULL in string2.
+        while (i2 <= last2 && !string2[i2]) ++i2;
+        if (i2 > last2) break;
 
         // Skip past except characters in string1.
         while (e1 < except1.used && except1.array[e1] < i1) ++e1;
-        if (e1 < except1.used && except1.array[e1] == i1) continue;
 
-        return F_equal_to_not;
-      }
-    } // for
+        if (e1 < except1.used && except1.array[e1] == i1) {
+          ++i1;
 
-    for (; i2 <= last2; ++i2) {
+          continue;
+        }
 
-      if (string2[i2] != 0) {
-
-        // Skip past except characters in string1.
+        // Skip past except characters in string2.
         while (e2 < except2.used && except2.array[e2] < i2) ++e2;
-        if (e2 < except2.used && except2.array[e2] == i2) continue;
 
-        return F_equal_to_not;
-      }
-    } // for
+        if (e2 < except2.used && except2.array[e2] == i2) {
+          ++i2;
+
+          continue;
+        }
+
+        if (string1[i1] != string2[i2]) return F_equal_to_not;
+
+        ++i1;
+        ++i2;
+      } // while
+    }
+
+    // Only return F_equal_to if all remaining characters are NULL.
+    if (last1 < stop1) {
+      for (; i1 <= last1; ++i1) {
+
+        if (string1[i1] != 0) {
+
+          // Skip past except characters in string1.
+          while (e1 < except1.used && except1.array[e1] < i1) ++e1;
+          if (e1 < except1.used && except1.array[e1] == i1) continue;
+
+          return F_equal_to_not;
+        }
+      } // for
+    }
+
+    if (last2 < stop2) {
+      for (; i2 <= last2; ++i2) {
+
+        if (string2[i2] != 0) {
+
+          // Skip past except characters in string1.
+          while (e2 < except2.used && except2.array[e2] < i2) ++e2;
+          if (e2 < except2.used && except2.array[e2] == i2) continue;
+
+          return F_equal_to_not;
+        }
+      } // for
+    }
 
     return F_equal_to;
   }
@@ -572,34 +572,36 @@ extern "C" {
         }
       } // for
 
-      if (size1 != size2) {
-        return F_equal_to_not;
-      }
+      if (size1 != size2) return F_equal_to_not;
     }
 
-    for (; i1 < last1 && i2 < last2; ++i1, ++i2) {
+    if (last1 < stop1 && last2 < stop2) {
+      for (; i1 < last1 && i2 < last2; ++i1, ++i2) {
 
-      // Skip past NULL in string1.
-      while (i1 < last1 && !string1[i1]) ++i1;
-      if (i1 == last1) break;
+        // Skip past NULL in string1.
+        while (i1 < last1 && !string1[i1]) ++i1;
+        if (i1 == last1) break;
 
-      // Skip past NULL in string2.
-      while (i2 < last2 && !string2[i2]) ++i2;
-      if (i2 == last2) break;
+        // Skip past NULL in string2.
+        while (i2 < last2 && !string2[i2]) ++i2;
+        if (i2 == last2) break;
 
-      if (string1[i1] != string2[i2]) {
-        return F_equal_to_not;
-      }
-    } // for
+        if (string1[i1] != string2[i2]) return F_equal_to_not;
+      } // for
+    }
 
     // Only return F_equal_to if all remaining characters are NULL.
-    for (; i1 < last1; ++i1) {
-      if (string1[i1] != 0) return F_equal_to_not;
-    } // for
+    if (last1 < stop1) {
+      for (; i1 < last1; ++i1) {
+        if (string1[i1] != 0) return F_equal_to_not;
+      } // for
+    }
 
-    for (; i2 < last2; ++i2) {
-      if (string2[i2] != 0) return F_equal_to_not;
-    } // for
+    if (last2 < stop2) {
+      for (; i2 < last2; ++i2) {
+        if (string2[i2] != 0) return F_equal_to_not;
+      } // for
+    }
 
     return F_equal_to;
   }
