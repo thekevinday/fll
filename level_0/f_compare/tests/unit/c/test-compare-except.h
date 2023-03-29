@@ -10,7 +10,7 @@
 #ifndef _TEST__F_compare_except_h
 #define _TEST__F_compare_except_h
 
-// f_compare_() only returns memory failures.
+// f_compare_except() only returns memory failures.
 
 /**
  * Test that function works.

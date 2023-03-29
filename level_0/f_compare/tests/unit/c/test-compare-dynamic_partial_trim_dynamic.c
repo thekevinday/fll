@@ -8,8 +8,16 @@ extern "C" {
 void test__f_compare_dynamic_partial_trim_dynamic__works(void **state) {
 
   // A necessary work-around to to have "\01" with the "\0" being separate from the "1".
-  f_char_t null_before_one[] = {
+  f_char_t null_before_one_1[] = {
     '\0', '1'
+  };
+
+  f_char_t null_before_one_2[] = {
+    '\0', '1', ' ', '\0', '\t'
+  };
+
+  f_char_t null_before_one_3[] = {
+    '\0', ' ', '\0', '1'
   };
 
   const f_string_static_t string_1s[] = {
@@ -37,11 +45,11 @@ void test__f_compare_dynamic_partial_trim_dynamic__works(void **state) {
     // 3.
     macro_f_string_static_t_initialize(" 1", 0, 2),
     macro_f_string_static_t_initialize("\t1", 0, 2),
-    macro_f_string_static_t_initialize(null_before_one, 0, 2),
+    macro_f_string_static_t_initialize(null_before_one_1, 0, 2),
     macro_f_string_static_t_initialize("  1  ", 0, 5),
     macro_f_string_static_t_initialize("  1\t ", 0, 5),
-    macro_f_string_static_t_initialize("\01 \0\t", 0, 5),
-    macro_f_string_static_t_initialize("\0 \01", 0, 4),
+    macro_f_string_static_t_initialize(null_before_one_2, 0, 5),
+    macro_f_string_static_t_initialize(null_before_one_3, 0, 4),
     macro_f_string_static_t_initialize("1\0\0\t", 0, 4),
 
     // 4.
@@ -178,7 +186,6 @@ void test__f_compare_dynamic_partial_trim_dynamic__works(void **state) {
     macro_f_string_static_t_initialize("aaone\0", 0, 6),
   };
 
-  const f_string_range_t range_0 = macro_f_string_range_t_initialize(1, 0);
   f_string_range_t range_2 = macro_f_string_range_t_initialize(2, 0);
 
   const f_status_t expects[] = {
@@ -271,7 +278,7 @@ void test__f_compare_dynamic_partial_trim_dynamic__works(void **state) {
   for (; i < 8; ++i) {
 
     if (i % 8 == 0) {
-      status = f_compare_dynamic_partial_trim_dynamic(string_1s[i], string_2s[i], range_0);
+      status = f_compare_dynamic_partial_trim_dynamic(string_1s[i], string_2s[i], f_string_range_empty_c);
     }
     else {
       range_2.stop = string_2s[i].used - 1;
@@ -285,7 +292,7 @@ void test__f_compare_dynamic_partial_trim_dynamic__works(void **state) {
   for (; i < 64; ++i) {
 
     if (i % 8 == 0) {
-      status = f_compare_dynamic_partial_trim_dynamic(string_1s[i], string_2s[i], range_0);
+      status = f_compare_dynamic_partial_trim_dynamic(string_1s[i], string_2s[i], f_string_range_empty_c);
     }
     else {
       range_2.stop = string_2s[i].used - 1;

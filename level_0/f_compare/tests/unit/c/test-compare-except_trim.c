@@ -1,11 +1,24 @@
 #include "test-compare.h"
-#include "test-compare-except.h"
+#include "test-compare-except_trim.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void test__f_compare_except__works(void **state) {
+void test__f_compare_except_trim__works(void **state) {
+
+  // A necessary work-around to to have "\01" with the "\0" being separate from the "1".
+  f_char_t null_before_one_1[] = {
+    'S', 'K', 'I', 'P', '\0', '1'
+  };
+
+  f_char_t null_before_one_2[] = {
+    'S', 'K', 'I', 'P', '\0', '1', ' ', '\0', '\t'
+  };
+
+  f_char_t null_before_one_3[] = {
+    'S', 'K', 'I', 'P', '\0', ' ', '\0', '1'
+  };
 
   const f_string_static_t string_1s[] = {
 
@@ -20,74 +33,74 @@ void test__f_compare_except__works(void **state) {
     macro_f_string_static_t_initialize(0, 0, 0),
 
     // 2.
-    macro_f_string_static_t_initialize("SKIP", 0, 4),
-    macro_f_string_static_t_initialize("SKIP", 0, 4),
-    macro_f_string_static_t_initialize("SKIP", 0, 4),
-    macro_f_string_static_t_initialize("SKIP", 0, 4),
-    macro_f_string_static_t_initialize("SKIP", 0, 4),
-    macro_f_string_static_t_initialize("SKIP", 0, 4),
-    macro_f_string_static_t_initialize("SKIP", 0, 4),
-    macro_f_string_static_t_initialize("SKIP", 0, 4),
+    macro_f_string_static_t_initialize("SKIP ", 0, 5),
+    macro_f_string_static_t_initialize("SKIP\t", 0, 5),
+    macro_f_string_static_t_initialize("SKIP\0", 0, 5),
+    macro_f_string_static_t_initialize("SKIP    ", 0, 8),
+    macro_f_string_static_t_initialize("SKIP  \t ", 0, 8),
+    macro_f_string_static_t_initialize("SKIP\0 \0\t", 0, 8),
+    macro_f_string_static_t_initialize("SKIP\0 \0", 0, 7),
+    macro_f_string_static_t_initialize("SKIP\0\0\t", 0, 7),
 
     // 3.
-    macro_f_string_static_t_initialize("SKIP1", 0, 5),
-    macro_f_string_static_t_initialize("SKIP1", 0, 5),
-    macro_f_string_static_t_initialize("SKIP1", 0, 5),
-    macro_f_string_static_t_initialize("SKIP1", 0, 5),
-    macro_f_string_static_t_initialize("SKIP1", 0, 5),
-    macro_f_string_static_t_initialize("SKIP1", 0, 5),
-    macro_f_string_static_t_initialize("SKIP1", 0, 5),
-    macro_f_string_static_t_initialize("SKIP1", 0, 5),
+    macro_f_string_static_t_initialize("SKIP 1", 0, 6),
+    macro_f_string_static_t_initialize("SKIP\t1", 0, 6),
+    macro_f_string_static_t_initialize(null_before_one_1, 0, 6),
+    macro_f_string_static_t_initialize("SKIP  1  ", 0, 9),
+    macro_f_string_static_t_initialize("SKIP  1\t ", 0, 9),
+    macro_f_string_static_t_initialize(null_before_one_2, 0, 9),
+    macro_f_string_static_t_initialize(null_before_one_3, 0, 8),
+    macro_f_string_static_t_initialize("SKIP1\0\0\t", 0, 8),
 
     // 4.
-    macro_f_string_static_t_initialize("SKIPone", 0, 7),
-    macro_f_string_static_t_initialize("SKIPone", 0, 7),
-    macro_f_string_static_t_initialize("SKIPone", 0, 7),
-    macro_f_string_static_t_initialize("SKIPone", 0, 7),
-    macro_f_string_static_t_initialize("SKIPone", 0, 7),
-    macro_f_string_static_t_initialize("SKIPone", 0, 7),
-    macro_f_string_static_t_initialize("SKIPone", 0, 7),
-    macro_f_string_static_t_initialize("SKIPone", 0, 7),
+    macro_f_string_static_t_initialize("SKIP one", 0, 8),
+    macro_f_string_static_t_initialize("SKIP\tone", 0, 8),
+    macro_f_string_static_t_initialize("SKIP\0one", 0, 8),
+    macro_f_string_static_t_initialize("SKIP  one  ", 0, 11),
+    macro_f_string_static_t_initialize("SKIP  one\t ", 0, 11),
+    macro_f_string_static_t_initialize("SKIP\0one \0\t", 0, 11),
+    macro_f_string_static_t_initialize("SKIP\0 \0one", 0, 10),
+    macro_f_string_static_t_initialize("SKIPone\0\0\t", 0, 10),
 
     // 5.
-    macro_f_string_static_t_initialize("SKIPOne", 0, 7),
-    macro_f_string_static_t_initialize("SKIPOne", 0, 7),
-    macro_f_string_static_t_initialize("SKIPOne", 0, 7),
-    macro_f_string_static_t_initialize("SKIPOne", 0, 7),
-    macro_f_string_static_t_initialize("SKIPOne", 0, 7),
-    macro_f_string_static_t_initialize("SKIPOne", 0, 7),
-    macro_f_string_static_t_initialize("SKIPOne", 0, 7),
-    macro_f_string_static_t_initialize("SKIPOne", 0, 7),
+    macro_f_string_static_t_initialize("SKIP One", 0, 8),
+    macro_f_string_static_t_initialize("SKIP\tOne", 0, 8),
+    macro_f_string_static_t_initialize("SKIP\0One", 0, 8),
+    macro_f_string_static_t_initialize("SKIP  One  ", 0, 11),
+    macro_f_string_static_t_initialize("SKIP  One\t ", 0, 11),
+    macro_f_string_static_t_initialize("SKIP\0One \0\t", 0, 11),
+    macro_f_string_static_t_initialize("SKIP\0 \0One", 0, 10),
+    macro_f_string_static_t_initialize("SKIPOne\0\0\t", 0, 10),
 
     // 6.
-    macro_f_string_static_t_initialize("SKIP\0ne", 0, 7),
-    macro_f_string_static_t_initialize("SKIP\0ne", 0, 7),
-    macro_f_string_static_t_initialize("SKIP\0ne", 0, 7),
-    macro_f_string_static_t_initialize("SKIP\0ne", 0, 7),
-    macro_f_string_static_t_initialize("SKIP\0ne", 0, 7),
-    macro_f_string_static_t_initialize("SKIP\0ne", 0, 7),
-    macro_f_string_static_t_initialize("SKIP\0ne", 0, 7),
-    macro_f_string_static_t_initialize("SKIP\0ne", 0, 7),
+    macro_f_string_static_t_initialize("SKIP \0ne", 0, 8),
+    macro_f_string_static_t_initialize("SKIP\t\0ne", 0, 8),
+    macro_f_string_static_t_initialize("SKIP\0\0ne", 0, 8),
+    macro_f_string_static_t_initialize("SKIP  \0ne  ", 0, 11),
+    macro_f_string_static_t_initialize("SKIP  \0ne\t ", 0, 11),
+    macro_f_string_static_t_initialize("SKIP\0\0ne \0\t", 0, 11),
+    macro_f_string_static_t_initialize("SKIP\0 \0\0ne", 0, 10),
+    macro_f_string_static_t_initialize("SKIP\0ne\0\0\t", 0, 10),
 
     // 7.
-    macro_f_string_static_t_initialize("SKIPo\0ne", 0, 8),
-    macro_f_string_static_t_initialize("SKIPo\0ne", 0, 8),
-    macro_f_string_static_t_initialize("SKIPo\0ne", 0, 8),
-    macro_f_string_static_t_initialize("SKIPo\0ne", 0, 8),
-    macro_f_string_static_t_initialize("SKIPo\0ne", 0, 8),
-    macro_f_string_static_t_initialize("SKIPo\0ne", 0, 8),
-    macro_f_string_static_t_initialize("SKIPo\0ne", 0, 8),
-    macro_f_string_static_t_initialize("SKIPo\0ne", 0, 8),
+    macro_f_string_static_t_initialize("SKIP o\0ne", 0, 9),
+    macro_f_string_static_t_initialize("SKIP\to\0ne", 0, 9),
+    macro_f_string_static_t_initialize("SKIP\0o\0ne", 0, 9),
+    macro_f_string_static_t_initialize("SKIP  o\0ne  ", 0, 12),
+    macro_f_string_static_t_initialize("SKIP  o\0ne\t ", 0, 12),
+    macro_f_string_static_t_initialize("SKIP\0o\0ne \0\t", 0, 12),
+    macro_f_string_static_t_initialize("SKIP\0 \0o\0ne", 0, 11),
+    macro_f_string_static_t_initialize("SKIPo\0ne\0\0\t", 0, 11),
 
     // 8.
-    macro_f_string_static_t_initialize("SKIPone\0", 0, 8),
-    macro_f_string_static_t_initialize("SKIPone\0", 0, 8),
-    macro_f_string_static_t_initialize("SKIPone\0", 0, 8),
-    macro_f_string_static_t_initialize("SKIPone\0", 0, 8),
-    macro_f_string_static_t_initialize("SKIPone\0", 0, 8),
-    macro_f_string_static_t_initialize("SKIPone\0", 0, 8),
-    macro_f_string_static_t_initialize("SKIPone\0", 0, 8),
-    macro_f_string_static_t_initialize("SKIPone\0", 0, 8),
+    macro_f_string_static_t_initialize("SKIP one\0", 0, 9),
+    macro_f_string_static_t_initialize("SKIP\tone\0", 0, 9),
+    macro_f_string_static_t_initialize("SKIP\0one\0", 0, 9),
+    macro_f_string_static_t_initialize("SKIP  one\0  ", 0, 12),
+    macro_f_string_static_t_initialize("SKIP  one\0\t ", 0, 12),
+    macro_f_string_static_t_initialize("SKIP\0one\0 \0\t", 0, 12),
+    macro_f_string_static_t_initialize("SKIP\0 \0one\0", 0, 11),
+    macro_f_string_static_t_initialize("SKIPone\0\0\0\t", 0, 11),
   };
 
   const f_string_static_t string_2s[] = {
@@ -265,14 +278,14 @@ void test__f_compare_except__works(void **state) {
 
   for (; i < 64; ++i) {
 
-    const f_status_t status = f_compare_except(string_1s[i].string, string_2s[i].string, string_1s[i].used, string_2s[i].used, excepts_1, excepts_2);
+    const f_status_t status = f_compare_except_trim(string_1s[i].string, string_2s[i].string, string_1s[i].used, string_2s[i].used, excepts_1, excepts_2);
 
     assert_int_equal(status, expects[i]);
   } // for
 
   for (i = 0; i < 64; ++i) {
 
-    const f_status_t status = f_compare_except(string_2s[i].string, string_1s[i].string, string_2s[i].used, string_1s[i].used, excepts_2, excepts_1);
+    const f_status_t status = f_compare_except_trim(string_2s[i].string, string_1s[i].string, string_2s[i].used, string_1s[i].used, excepts_2, excepts_1);
 
     assert_int_equal(status, expects[i]);
   } // for

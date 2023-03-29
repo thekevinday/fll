@@ -1,11 +1,11 @@
 #include "test-compare.h"
-#include "test-compare-except.h"
+#include "test-compare-dynamic_except.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void test__f_compare_except__works(void **state) {
+void test__f_compare_dynamic_except__works(void **state) {
 
   const f_string_static_t string_1s[] = {
 
@@ -265,14 +265,14 @@ void test__f_compare_except__works(void **state) {
 
   for (; i < 64; ++i) {
 
-    const f_status_t status = f_compare_except(string_1s[i].string, string_2s[i].string, string_1s[i].used, string_2s[i].used, excepts_1, excepts_2);
+    const f_status_t status = f_compare_dynamic_except(string_1s[i], string_2s[i], excepts_1, excepts_2);
 
     assert_int_equal(status, expects[i]);
   } // for
 
   for (i = 0; i < 64; ++i) {
 
-    const f_status_t status = f_compare_except(string_2s[i].string, string_1s[i].string, string_2s[i].used, string_1s[i].used, excepts_2, excepts_1);
+    const f_status_t status = f_compare_dynamic_except(string_2s[i], string_1s[i], excepts_2, excepts_1);
 
     assert_int_equal(status, expects[i]);
   } // for
