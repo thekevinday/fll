@@ -363,6 +363,8 @@ extern "C" {
 
   #define f_utf_string_t_initialize 0
 
+  #define macro_f_utf_string_t_initialize(string) string
+
   #define macro_f_utf_string_t_clear(string) string = 0;
 
   #define macro_f_utf_string_t_resize(status, string, length_old, length_new) status = f_memory_resize(length_old, length_new, sizeof(f_utf_string_t), (void **) & string);
