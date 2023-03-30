@@ -44,77 +44,6 @@ extern "C" {
  *
  * This does not stop on NULL.
  * NULL characters are ignored.
- * All 1-byte characters in except1 and except2 are ignored.
- *
- * @param string1
- *   String to compare.
- * @param string2
- *   String to compare.
- * @param length1
- *   Length of string1.
- * @param length2
- *   Length of string2.
- * @param except1
- *   A set of locations within string1 to ignore.
- *   This assumes/requires that the locations be in linear order.
- * @param except2
- *   A set of locations within string2 to ignore.
- *   This assumes/requires that the locations be in linear order.
- *
- * @return
- *   F_equal_to when both strings equal.
- *   F_equal_to_not when both strings do not equal.
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_f_compare_utf_except_
-  extern f_status_t f_compare_utf_except(const f_utf_string_t string1, const f_utf_string_t string2, const f_array_length_t length1, const f_array_length_t length2, const f_array_lengths_t except1, const f_array_lengths_t except2);
-#endif // _di_f_compare_utf_except_
-
-/**
- * Compare two UTF-8 strings, similar to strncmp().
- *
- * This does not stop on NULL.
- * NULL characters are ignored.
- * Ignores leading and trailing whitespace.
- * All 1-byte characters in except1 and except2 are ignored.
- *
- * @param string1
- *   String to compare.
- * @param string2
- *   String to compare.
- * @param length1
- *   Length of string1.
- * @param length2
- *   Length of string2.
- * @param except1
- *   A set of locations within string1 to ignore.
- *   This assumes/requires that the locations be in linear order.
- * @param except2
- *   A set of locations within string2 to ignore.
- *   This assumes/requires that the locations be in linear order.
- *
- * @return
- *   F_equal_to when both strings equal.
- *   F_equal_to_not when both strings do not equal.
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: f_utf_character_is_combining().
- *   Errors (with error bit) from: f_utf_character_is_whitespace().
- *
- * @see f_utf_character_is_combining()
- * @see f_utf_character_is_whitespace()
- */
-#ifndef _di_f_compare_utf_except_trim_
-  extern f_status_t f_compare_utf_except_trim(const f_utf_string_t string1, const f_utf_string_t string2, const f_array_length_t length1, const f_array_length_t length2, const f_array_lengths_t except1, const f_array_lengths_t except2);
-#endif // _di_f_compare_utf_except_trim_
-
-/**
- * Compare two UTF-8 strings, similar to strncmp().
- *
- * This does not stop on NULL.
- * NULL characters are ignored.
  *
  * @param string1
  *   String to compare.
@@ -747,6 +676,77 @@ extern "C" {
 #ifndef _di_f_compare_utf_dynamic_partial_trim_string_
   extern f_status_t f_compare_utf_dynamic_partial_trim_string(const f_utf_string_t string1, const f_utf_string_static_t string2, const f_array_length_t length1, const f_string_range_t range2);
 #endif // _di_f_compare_utf_dynamic_partial_trim_string_
+
+/**
+ * Compare two UTF-8 strings, similar to strncmp().
+ *
+ * This does not stop on NULL.
+ * NULL characters are ignored.
+ * All 1-byte characters in except1 and except2 are ignored.
+ *
+ * @param string1
+ *   String to compare.
+ * @param string2
+ *   String to compare.
+ * @param length1
+ *   Length of string1.
+ * @param length2
+ *   Length of string2.
+ * @param except1
+ *   A set of locations within string1 to ignore.
+ *   This assumes/requires that the locations be in linear order.
+ * @param except2
+ *   A set of locations within string2 to ignore.
+ *   This assumes/requires that the locations be in linear order.
+ *
+ * @return
+ *   F_equal_to when both strings equal.
+ *   F_equal_to_not when both strings do not equal.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_f_compare_utf_except_
+  extern f_status_t f_compare_utf_except(const f_utf_string_t string1, const f_utf_string_t string2, const f_array_length_t length1, const f_array_length_t length2, const f_array_lengths_t except1, const f_array_lengths_t except2);
+#endif // _di_f_compare_utf_except_
+
+/**
+ * Compare two UTF-8 strings, similar to strncmp().
+ *
+ * This does not stop on NULL.
+ * NULL characters are ignored.
+ * Ignores leading and trailing whitespace.
+ * All 1-byte characters in except1 and except2 are ignored.
+ *
+ * @param string1
+ *   String to compare.
+ * @param string2
+ *   String to compare.
+ * @param length1
+ *   Length of string1.
+ * @param length2
+ *   Length of string2.
+ * @param except1
+ *   A set of locations within string1 to ignore.
+ *   This assumes/requires that the locations be in linear order.
+ * @param except2
+ *   A set of locations within string2 to ignore.
+ *   This assumes/requires that the locations be in linear order.
+ *
+ * @return
+ *   F_equal_to when both strings equal.
+ *   F_equal_to_not when both strings do not equal.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_utf_character_is_combining().
+ *   Errors (with error bit) from: f_utf_character_is_whitespace().
+ *
+ * @see f_utf_character_is_combining()
+ * @see f_utf_character_is_whitespace()
+ */
+#ifndef _di_f_compare_utf_except_trim_
+  extern f_status_t f_compare_utf_except_trim(const f_utf_string_t string1, const f_utf_string_t string2, const f_array_length_t length1, const f_array_length_t length2, const f_array_lengths_t except1, const f_array_lengths_t except2);
+#endif // _di_f_compare_utf_except_trim_
 
 /**
  * Compare two UTF-8 strings, similar to strncmp().

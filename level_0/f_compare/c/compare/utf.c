@@ -12,20 +12,6 @@ extern "C" {
   }
 #endif // _di_f_compare_utf_
 
-#ifndef _di_f_compare_utf_except_
-  f_status_t f_compare_utf_except(const f_utf_string_t string1, const f_utf_string_t string2, const f_array_length_t length1, const f_array_length_t length2, const f_array_lengths_t except1, const f_array_lengths_t except2) {
-
-    return private_f_compare_utf_except(string1, string2, 0, 0, length1, length2, except1, except2);
-  }
-#endif // _di_f_compare_utf_except_
-
-#ifndef _di_f_compare_utf_except_trim_
-  f_status_t f_compare_utf_except_trim(const f_utf_string_t string1, const f_utf_string_t string2, const f_array_length_t length1, const f_array_length_t length2, const f_array_lengths_t except1, const f_array_lengths_t except2) {
-
-    return private_f_compare_utf_except_trim(string1, string2, 0, 0, length1, length2, except1, except2);
-  }
-#endif // _di_f_compare_utf_except_trim_
-
 #ifndef _di_f_compare_utf_dynamic_
   f_status_t f_compare_utf_dynamic(const f_utf_string_static_t string1, const f_utf_string_static_t string2) {
 
@@ -293,6 +279,20 @@ extern "C" {
     );
   }
 #endif // _di_f_compare_utf_dynamic_partial_trim_string_
+
+#ifndef _di_f_compare_utf_except_
+  f_status_t f_compare_utf_except(const f_utf_string_t string1, const f_utf_string_t string2, const f_array_length_t length1, const f_array_length_t length2, const f_array_lengths_t except1, const f_array_lengths_t except2) {
+
+    return private_f_compare_utf_except(string1, string2, 0, 0, length1, length2, except1, except2);
+  }
+#endif // _di_f_compare_utf_except_
+
+#ifndef _di_f_compare_utf_except_trim_
+  f_status_t f_compare_utf_except_trim(const f_utf_string_t string1, const f_utf_string_t string2, const f_array_length_t length1, const f_array_length_t length2, const f_array_lengths_t except1, const f_array_lengths_t except2) {
+
+    return private_f_compare_utf_except_trim(string1, string2, 0, 0, length1, length2, except1, except2);
+  }
+#endif // _di_f_compare_utf_except_trim_
 
 #ifndef _di_f_compare_utf_trim_
   f_status_t f_compare_utf_trim(const f_utf_string_t string1, const f_utf_string_t string2, const f_array_length_t length1, const f_array_length_t length2) {
