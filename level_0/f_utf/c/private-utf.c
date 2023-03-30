@@ -15,31 +15,20 @@ extern "C" {
       return F_none;
     }
 
-    if (macro_f_utf_byte_width_is(*sequence) == 1) {
-      return F_status_set_error(F_utf_fragment);
-    }
-
-    if (macro_f_utf_byte_width_is(*sequence) > width_max) {
-      return F_status_set_error(F_complete_not_utf);
-    }
+    if (macro_f_utf_byte_width_is(*sequence) == 1) return F_status_set_error(F_utf_fragment);
+    if (macro_f_utf_byte_width_is(*sequence) > width_max) return F_status_set_error(F_complete_not_utf);
 
     *character_utf = macro_f_utf_char_t_from_char_1(sequence[0]);
 
-    if (macro_f_utf_byte_width_is(*sequence) < 2) {
-      return F_none;
-    }
+    if (macro_f_utf_byte_width_is(*sequence) < 2) return F_none;
 
     *character_utf |= macro_f_utf_char_t_from_char_2(sequence[1]);
 
-    if (macro_f_utf_byte_width_is(*sequence) == 2) {
-      return F_none;
-    }
+    if (macro_f_utf_byte_width_is(*sequence) == 2) return F_none;
 
     *character_utf |= macro_f_utf_char_t_from_char_3(sequence[2]);
 
-    if (macro_f_utf_byte_width_is(*sequence) == 3) {
-      return F_none;
-    }
+    if (macro_f_utf_byte_width_is(*sequence) == 3) return F_none;
 
     *character_utf |= macro_f_utf_char_t_from_char_4(sequence[3]);
 
@@ -50,13 +39,8 @@ extern "C" {
 #if !defined(_di_f_utf_unicode_to_) || !defined(_di_f_utf_character_unicode_to_)
   f_status_t private_f_utf_character_unicode_to(const f_utf_char_t sequence, uint32_t *codepoint) {
 
-    if (macro_f_utf_char_t_width_is(sequence) == 1) {
-      return F_status_set_error(F_utf_fragment);
-    }
-
-    if (private_f_utf_character_is_valid(sequence) == F_false) {
-      return F_status_set_error(F_utf_not);
-    }
+    if (macro_f_utf_char_t_width_is(sequence) == 1) return F_status_set_error(F_utf_fragment);
+    if (private_f_utf_character_is_valid(sequence) == F_false) return F_status_set_error(F_utf_not);
 
     // U+0000 -> U+007F (ASCII).
     if (macro_f_utf_char_t_width(sequence) == 1) {

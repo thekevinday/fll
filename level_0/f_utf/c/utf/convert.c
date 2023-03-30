@@ -12,13 +12,8 @@ extern "C" {
       if (!character_utf) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (macro_f_utf_byte_width_is(*character) > width_max) {
-      return F_status_set_error(F_failure);
-    }
-
-    if (macro_f_utf_byte_width_is(*character) == 1) {
-      return F_status_set_error(F_utf_fragment);
-    }
+    if (macro_f_utf_byte_width_is(*character) > width_max) return F_status_set_error(F_failure);
+    if (macro_f_utf_byte_width_is(*character) == 1) return F_status_set_error(F_utf_fragment);
 
     return private_f_utf_char_to_character(character, width_max, character_utf);
   }
@@ -33,9 +28,7 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     if (macro_f_utf_char_t_width_is(unicode)) {
-      if (macro_f_utf_char_t_width_is(unicode) == 1) {
-        return F_status_set_error(F_utf_fragment);
-      }
+      if (macro_f_utf_char_t_width_is(unicode) == 1) return F_status_set_error(F_utf_fragment);
 
       memcpy(*character, &unicode, sizeof(f_char_t) * macro_f_utf_char_t_width_is(unicode));
       /*#if __BYTE_ORDER == __LITTLE_ENDIAN
@@ -100,9 +93,7 @@ extern "C" {
       if (!character) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (unicode > 0x10ffff) {
-      return F_status_set_error(F_utf_not);
-    }
+    if (unicode > 0x10ffff) return F_status_set_error(F_utf_not);
 
     // U+0000 -> U+007F.
     if (unicode < 0x80) {
@@ -184,9 +175,7 @@ extern "C" {
       if (!string[i]) continue;
 
       // Only ASCII character numbers are allowed to represent
-      if (macro_f_utf_char_t_width_is(string[i])) {
-        return F_status_set_error(F_valid_not);
-      }
+      if (macro_f_utf_char_t_width_is(string[i])) return F_status_set_error(F_valid_not);
 
       value *= 16;
       character = macro_f_utf_char_t_to_char_1(string[i]);
@@ -217,9 +206,7 @@ extern "C" {
       if (width_max < 1) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (codepoint > 0x10ffff) {
-      return F_status_set_error(F_utf_not);
-    }
+    if (codepoint > 0x10ffff) return F_status_set_error(F_utf_not);
 
     if (codepoint < 0x80) {
 
@@ -239,9 +226,7 @@ extern "C" {
       }
     }
     else if (codepoint < 0x800) {
-      if (width_max < 2) {
-        return F_status_set_error(F_utf_not);
-      }
+      if (width_max < 2) return F_status_set_error(F_utf_not);
 
       // U+0080 -> U+07FF
       (*character)[0] = F_utf_byte_2_d | ((f_char_t) ((codepoint & 0x7c0) >> 6));
@@ -256,9 +241,7 @@ extern "C" {
       }
     }
     else if (codepoint < 0x10000) {
-      if (width_max < 3) {
-        return F_status_set_error(F_utf_not);
-      }
+      if (width_max < 3) return F_status_set_error(F_utf_not);
 
       // U+0800 -> U+FFFF
       (*character)[0] = F_utf_byte_3_d | ((f_char_t) ((codepoint & 0xf000) >> 12));
@@ -270,9 +253,7 @@ extern "C" {
       }
     }
     else {
-      if (width_max < 4) {
-        return F_status_set_error(F_utf_not);
-      }
+      if (width_max < 4) return F_status_set_error(F_utf_not);
 
       // U+10000 -> U+10FFFF
       (*character)[0] = F_utf_byte_4_d | ((f_char_t) ((codepoint & 0x1c0000) >> 18));
@@ -333,9 +314,7 @@ extern "C" {
       }
     }
 
-    if (i == length) {
-      return F_status_set_error(F_valid_not);
-    }
+    if (i == length) return F_status_set_error(F_valid_not);
 
     uint32_t value = 0;
 
@@ -359,9 +338,7 @@ extern "C" {
       }
     } // for
 
-    if (value > 0x10ffff) {
-      return F_status_set_error(F_valid_not);
-    }
+    if (value > 0x10ffff) return F_status_set_error(F_valid_not);
 
     *unicode = value;
 
