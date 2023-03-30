@@ -26,13 +26,6 @@ extern "C" {
   }
 #endif // _di_f_compare_except_trim_
 
-#ifndef _di_f_compare_trim_
-  f_status_t f_compare_trim(const f_string_t string1, const f_string_t string2, const f_array_length_t length1, const f_array_length_t length2) {
-
-    return private_f_compare_trim(string1, string2, 0, 0, length1, length2);
-  }
-#endif // _di_f_compare_trim_
-
 #ifndef _di_f_compare_dynamic_
   f_status_t f_compare_dynamic(const f_string_static_t string1, const f_string_static_t string2) {
 
@@ -300,6 +293,13 @@ extern "C" {
     );
   }
 #endif // _di_f_compare_dynamic_partial_trim_string_
+
+#ifndef _di_f_compare_trim_
+  f_status_t f_compare_trim(const f_string_t string1, const f_string_t string2, const f_array_length_t length1, const f_array_length_t length2) {
+
+    return private_f_compare_trim(string1, string2, 0, 0, length1, length2);
+  }
+#endif // _di_f_compare_trim_
 
 #ifdef __cplusplus
 } // extern "C"

@@ -113,8 +113,8 @@ extern "C" {
  *
  *   F_utf_not (with error bit) if a character is not valid UTF-8.
  *
- *   F_parameter (with error bit) from: f_utf_is_combining().
- *   F_parameter (with error bit) from: f_utf_is_whitespace().
+ *   Errors (with error bit) from: f_utf_is_combining().
+ *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see f_utf_is_combining()
  * @see f_utf_is_whitespace()
@@ -151,8 +151,8 @@ extern "C" {
  *
  *   F_utf_not (with error bit) if a character is not valid UTF-8.
  *
- *   F_parameter (with error bit) from: f_utf_is_combining().
- *   F_parameter (with error bit) from: f_utf_is_whitespace().
+ *   Errors (with error bit) from: f_utf_is_combining().
+ *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see f_utf_is_combining()
  * @see f_utf_is_whitespace()

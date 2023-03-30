@@ -112,8 +112,8 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   F_parameter (with error bit) from: f_utf_is_combining().
- *   F_parameter (with error bit) from: f_utf_is_whitespace().
+ *   Errors (with error bit) from: f_utf_is_combining().
+ *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see f_utf_is_combining()
  * @see f_utf_is_whitespace()
@@ -121,38 +121,6 @@ extern "C" {
 #ifndef _di_f_compare_except_trim_
   extern f_status_t f_compare_except_trim(const f_string_t string1, const f_string_t string2, const f_array_length_t length1, const f_array_length_t length2, const f_array_lengths_t except1, const f_array_lengths_t except2);
 #endif // _di_f_compare_except_trim_
-
-/**
- * Compare two strings, similar to strncmp().
- *
- * This does not stop on NULL.
- * NULL characters are ignored.
- * Ignores leading and trailing whitespace.
- *
- * @param string1
- *   String to compare.
- * @param string2
- *   String to compare.
- * @param length1
- *   Length of string1.
- * @param length2
- *   Length of string2.
- *
- * @return
- *   F_equal_to when both strings equal.
- *   F_equal_to_not when both strings do not equal.
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   F_parameter (with error bit) from: f_utf_is_combining().
- *   F_parameter (with error bit) from: f_utf_is_whitespace().
- *
- * @see f_utf_is_combining()
- * @see f_utf_is_whitespace()
- */
-#ifndef _di_f_compare_trim_
-  extern f_status_t f_compare_trim(const f_string_t string1, const f_string_t string2, const f_array_length_t length1, const f_array_length_t length2);
-#endif // _di_f_compare_trim_
 
 /**
  * Compare two strings, similar to strncmp().
@@ -210,7 +178,6 @@ extern "C" {
  *
  * This does not stop on NULL.
  * NULL characters are ignored.
- * Ignores leading and trailing whitespace.
  * All 1-byte characters in except1 and except2 are ignored.
  *
  * @param string1
@@ -232,8 +199,8 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   F_parameter (with error bit) from: f_utf_is_combining().
- *   F_parameter (with error bit) from: f_utf_is_whitespace().
+ *   Errors (with error bit) from: f_utf_is_combining().
+ *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see f_utf_is_combining()
  * @see f_utf_is_whitespace()
@@ -267,8 +234,8 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   F_parameter (with error bit) from: f_utf_is_combining().
- *   F_parameter (with error bit) from: f_utf_is_whitespace().
+ *   Errors (with error bit) from: f_utf_is_combining().
+ *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see f_utf_is_combining()
  * @see f_utf_is_whitespace()
@@ -306,8 +273,8 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   F_parameter (with error bit) from: f_utf_is_combining().
- *   F_parameter (with error bit) from: f_utf_is_whitespace().
+ *   Errors (with error bit) from: f_utf_is_combining().
+ *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see f_utf_is_combining()
  * @see f_utf_is_whitespace()
@@ -323,7 +290,6 @@ extern "C" {
  *
  * This does not stop on NULL.
  * NULL characters are ignored.
- * Ignores leading and trailing whitespace.
  *
  * @param string1
  *   String to compare.
@@ -338,8 +304,8 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   F_parameter (with error bit) from: f_utf_is_combining().
- *   F_parameter (with error bit) from: f_utf_is_whitespace().
+ *   Errors (with error bit) from: f_utf_is_combining().
+ *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see f_utf_is_combining()
  * @see f_utf_is_whitespace()
@@ -366,8 +332,8 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   F_parameter (with error bit) from: f_utf_is_combining().
- *   F_parameter (with error bit) from: f_utf_is_whitespace().
+ *   Errors (with error bit) from: f_utf_is_combining().
+ *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see f_utf_is_combining()
  * @see f_utf_is_whitespace()
@@ -398,8 +364,8 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   F_parameter (with error bit) from: f_utf_is_combining().
- *   F_parameter (with error bit) from: f_utf_is_whitespace().
+ *   Errors (with error bit) from: f_utf_is_combining().
+ *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see f_utf_is_combining()
  * @see f_utf_is_whitespace()
@@ -581,8 +547,8 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   F_parameter (with error bit) from: f_utf_is_combining().
- *   F_parameter (with error bit) from: f_utf_is_whitespace().
+ *   Errors (with error bit) from: f_utf_is_combining().
+ *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see f_utf_is_combining()
  * @see f_utf_is_whitespace()
@@ -618,8 +584,8 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   F_parameter (with error bit) from: f_utf_is_combining().
- *   F_parameter (with error bit) from: f_utf_is_whitespace().
+ *   Errors (with error bit) from: f_utf_is_combining().
+ *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see f_utf_is_combining()
  * @see f_utf_is_whitespace()
@@ -659,8 +625,8 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   F_parameter (with error bit) from: f_utf_is_combining().
- *   F_parameter (with error bit) from: f_utf_is_whitespace().
+ *   Errors (with error bit) from: f_utf_is_combining().
+ *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see f_utf_is_combining()
  * @see f_utf_is_whitespace()
@@ -718,8 +684,8 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   F_parameter (with error bit) from: f_utf_is_combining().
- *   F_parameter (with error bit) from: f_utf_is_whitespace().
+ *   Errors (with error bit) from: f_utf_is_combining().
+ *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see f_utf_is_combining()
  * @see f_utf_is_whitespace()
@@ -748,8 +714,8 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   F_parameter (with error bit) from: f_utf_is_combining().
- *   F_parameter (with error bit) from: f_utf_is_whitespace().
+ *   Errors (with error bit) from: f_utf_is_combining().
+ *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see f_utf_is_combining()
  * @see f_utf_is_whitespace()
@@ -782,8 +748,8 @@ extern "C" {
  *
  *   F_parameter (with error bit) if a parameter is invalid.
  *
- *   F_parameter (with error bit) from: f_utf_is_combining().
- *   F_parameter (with error bit) from: f_utf_is_whitespace().
+ *   Errors (with error bit) from: f_utf_is_combining().
+ *   Errors (with error bit) from: f_utf_is_whitespace().
  *
  * @see f_utf_is_combining()
  * @see f_utf_is_whitespace()
@@ -791,6 +757,38 @@ extern "C" {
 #ifndef _di_f_compare_dynamic_partial_trim_string_
   extern f_status_t f_compare_dynamic_partial_trim_string(const f_string_t string1, const f_string_static_t string2, const f_array_length_t length1, const f_string_range_t range2);
 #endif // _di_f_compare_dynamic_partial_trim_string_
+
+/**
+ * Compare two strings, similar to strncmp().
+ *
+ * This does not stop on NULL.
+ * NULL characters are ignored.
+ * Ignores leading and trailing whitespace.
+ *
+ * @param string1
+ *   String to compare.
+ * @param string2
+ *   String to compare.
+ * @param length1
+ *   Length of string1.
+ * @param length2
+ *   Length of string2.
+ *
+ * @return
+ *   F_equal_to when both strings equal.
+ *   F_equal_to_not when both strings do not equal.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ *
+ *   Errors (with error bit) from: f_utf_is_combining().
+ *   Errors (with error bit) from: f_utf_is_whitespace().
+ *
+ * @see f_utf_is_combining()
+ * @see f_utf_is_whitespace()
+ */
+#ifndef _di_f_compare_trim_
+  extern f_status_t f_compare_trim(const f_string_t string1, const f_string_t string2, const f_array_length_t length1, const f_array_length_t length2);
+#endif // _di_f_compare_trim_
 
 #ifdef __cplusplus
 } // extern "C"

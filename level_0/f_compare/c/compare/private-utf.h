@@ -16,7 +16,7 @@ extern "C" {
 #endif
 
 /**
- * Private implementation of fl_utf_compare().
+ * Private implementation of f_compare().
  *
  * Intended to be shared to each of the different implementation variations.
  *
@@ -37,15 +37,95 @@ extern "C" {
  *   F_equal_to when both strings equal.
  *   F_equal_to_not when both strings do not equal.
  *
- *   F_parameter (with error bit) if a parameter is invalid.
- *
  * @see f_compare_utf()
  * @see f_compare_utf_dynamic()
+ * @see f_compare_utf_dynamic_string()
  * @see f_compare_utf_dynamic_partial()
+ * @see f_compare_utf_dynamic_partial_dynamic()
  */
-#if !defined(_di_f_compare_utf_) || !defined(_di_f_compare_utf_dynamic_) || !defined(_di_f_compare_utf_dynamic_partial_)
+#if !defined(_di_f_compare_utf_) || !defined(_di_f_compare_utf_dynamic_) || !defined(_di_f_compare_utf_dynamic_string_) || !defined(_di_f_compare_utf_dynamic_partial_) || !defined(_di_f_compare_utf_dynamic_partial_dynamic_)
   extern f_status_t private_f_compare_utf(const f_utf_string_t string1, const f_utf_string_t string2, const f_array_length_t offset1, const f_array_length_t offset2, const f_array_length_t stop1, const f_array_length_t stop2) F_attribute_visibility_internal_d;
-#endif // !defined(_di_f_compare_utf_) || !defined(_di_f_compare_utf_dynamic_) || !defined(_di_f_compare_utf_dynamic_partial_)
+#endif // !defined(_di_f_compare_utf_) || !defined(_di_f_compare_utf_dynamic_) || !defined(_di_f_compare_utf_dynamic_string_) || !defined(_di_f_compare_utf_dynamic_partial_) || !defined(_di_f_compare_utf_dynamic_partial_dynamic_)
+
+/**
+ * Private implementation of f_compare_utf_except().
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param string1
+ *   String to compare.
+ * @param string2
+ *   String to compare.
+ * @param offset1
+ *   Offset of string1 to start at.
+ * @param offset2
+ *   Offset of string2 to start at.
+ * @param stop1
+ *   Exclusive stop position for string1.
+ * @param stop2
+ *   Exclusive stop position for string2.
+ * @param except1
+ *   A set of locations within string1 to ignore.
+ *   This assumes/requires that the locations be in linear order.
+ * @param except2
+ *   A set of locations within string2 to ignore.
+ *   This assumes/requires that the locations be in linear order.
+ *
+ * @return
+ *   F_equal_to when both strings equal.
+ *   F_equal_to_not when both strings do not equal.
+ *
+ * @see f_compare_utf_except()
+ * @see f_compare_utf_dynamic_except()
+ * @see f_compare_utf_dynamic_partial_except()
+ */
+#if !defined(_di_f_compare_utf_except_) || !defined(_di_f_compare_utf_dynamic_except_) || !defined(_di_f_compare_utf_dynamic_partial_except_)
+  extern f_status_t private_f_compare_utf_except(const f_utf_string_t string1, const f_utf_string_t string2, const f_array_length_t offset1, const f_array_length_t offset2, const f_array_length_t stop1, const f_array_length_t stop2, const f_array_lengths_t except1, const f_array_lengths_t except2) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_compare_utf_except_) || !defined(_di_f_compare_utf_dynamic_except_) || !defined(_di_f_compare_utf_dynamic_partial_except_)
+
+/**
+ * Private implementation of f_compare_utf_except_trim().
+ *
+ * Intended to be shared to each of the different implementation variations.
+ *
+ * @param string1
+ *   String to compare.
+ * @param string2
+ *   String to compare.
+ * @param offset1
+ *   Offset of string1 to start at.
+ * @param offset2
+ *   Offset of string2 to start at.
+ * @param stop1
+ *   Exclusive stop position for string1.
+ * @param stop2
+ *   Exclusive stop position for string2.
+ * @param except1
+ *   A set of locations within string1 to ignore.
+ *   This assumes/requires that the locations be in linear order.
+ * @param except2
+ *   A set of locations within string2 to ignore.
+ *   This assumes/requires that the locations be in linear order.
+ *
+ * @return
+ *   F_equal_to when both strings equal.
+ *   F_equal_to_not when both strings do not equal.
+ *
+ *   F_utf_not (with error bit) if a character is not valid UTF-8.
+ *
+ *   Errors (with error bit) from: f_utf_character_is_combining().
+ *   Errors (with error bit) from: f_utf_character_is_whitespace().
+ *
+ * @see f_utf_character_is_combining()
+ * @see f_utf_character_is_whitespace()
+ *
+ * @see f_compare_utf_except_trim()
+ * @see f_compare_utf_dynamic_except_trim()
+ * @see f_compare_utf_dynamic_partial_except_trim()
+ */
+#if !defined(_di_f_compare_utf_except_trim_) || !defined(_di_f_compare_utf_dynamic_except_trim_) || !defined(_di_f_compare_utf_dynamic_partial_except_trim_)
+  extern f_status_t private_f_compare_utf_except_trim(const f_utf_string_t string1, const f_utf_string_t string2, const f_array_length_t offset1, const f_array_length_t offset2, const f_array_length_t stop1, const f_array_length_t stop2, const f_array_lengths_t except1, const f_array_lengths_t except2) F_attribute_visibility_internal_d;
+#endif // !defined(_di_f_compare_utf_except_trim_) || !defined(_di_f_compare_utf_dynamic_except_trim_) || !defined(_di_f_compare_utf_dynamic_partial_except_trim_)
 
 /**
  * Private implementation of f_compare_utf_trim().
@@ -69,11 +149,14 @@ extern "C" {
  *   F_equal_to when both strings equal.
  *   F_equal_to_not when both strings do not equal.
  *
- *   F_parameter (with error bit) if a parameter is invalid.
+ *   F_utf_not (with error bit) if a character is not valid UTF-8.
  *
- *   Errors (with error bit) from: f_utf_character_is_whitespace()
+ *   Errors (with error bit) from: f_utf_character_is_combining().
+ *   Errors (with error bit) from: f_utf_character_is_whitespace().
  *
+ * @see f_utf_character_is_combining()
  * @see f_utf_character_is_whitespace()
+ *
  * @see f_compare_utf_trim()
  * @see f_compare_utf_dynamic_trim()
  * @see f_compare_utf_dynamic_partial_trim()
