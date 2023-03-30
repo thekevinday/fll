@@ -218,7 +218,6 @@ extern "C" {
  *
  * This does not stop on NULL.
  * NULL characters are ignored.
- * Ignores leading and trailing whitespace.
  * All 1-byte characters in except1 and except2 are ignored.
  *
  * @param string1
@@ -331,7 +330,6 @@ extern "C" {
  *
  * This does not stop on NULL.
  * NULL characters are ignored.
- * Ignores leading and trailing whitespace.
  *
  * @param string1
  *   String to compare.
