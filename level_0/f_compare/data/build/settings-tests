@@ -33,6 +33,16 @@ build_sources_program test-compare-dynamic_partial_except_trim.c test-compare-dy
 build_sources_program test-compare-except.c test-compare-dynamic_except.c test-compare-dynamic_except_string.c
 build_sources_program test-compare-trim.c test-compare-dynamic_trim.c test-compare-dynamic_trim_string.c
 build_sources_program test-compare-except_trim.c test-compare-dynamic_except_trim.c test-compare-dynamic_except_trim_string.c
+
+build_sources_program test-compare-utf.c test-compare-utf_dynamic.c test-compare-utf_dynamic_string.c
+build_sources_program test-compare-utf_dynamic_partial.c test-compare-utf_dynamic_partial_dynamic.c test-compare-utf_dynamic_partial_string.c
+build_sources_program test-compare-utf_dynamic_partial_trim.c test-compare-utf_dynamic_partial_trim_dynamic.c test-compare-utf_dynamic_partial_trim_string.c
+build_sources_program test-compare-utf_dynamic_partial_except.c test-compare-utf_dynamic_partial_except_dynamic.c test-compare-utf_dynamic_partial_except_string.c
+build_sources_program test-compare-utf_dynamic_partial_except_trim.c test-compare-utf_dynamic_partial_except_trim_dynamic.c test-compare-utf_dynamic_partial_except_trim_string.c
+build_sources_program test-compare-utf_except.c test-compare-utf_dynamic_except.c test-compare-utf_dynamic_except_string.c
+build_sources_program test-compare-utf_trim.c test-compare-utf_dynamic_trim.c test-compare-utf_dynamic_trim_string.c
+build_sources_program test-compare-utf_except_trim.c test-compare-utf_dynamic_except_trim.c test-compare-utf_dynamic_except_trim_string.c
+
 build_sources_program test-compare.c
 
 build_script no

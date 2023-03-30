@@ -20,6 +20,9 @@
 #include <cmocka.h>
 
 // FLL-0 includes.
+#include <fll/level_0/type.h>
+#include <fll/level_0/string.h>
+#include <fll/level_0/utf.h>
 #include <fll/level_0/compare.h>
 
 // Test includes.
@@ -47,6 +50,31 @@
 #include "test-compare-except.h"
 #include "test-compare-except_trim.h"
 #include "test-compare-trim.h"
+
+#include "test-compare-utf.h"
+#include "test-compare-utf_dynamic.h"
+#include "test-compare-utf_dynamic_partial.h"
+#include "test-compare-utf_dynamic_partial_dynamic.h"
+#include "test-compare-utf_dynamic_partial_except.h"
+#include "test-compare-utf_dynamic_partial_except_dynamic.h"
+#include "test-compare-utf_dynamic_partial_except_string.h"
+#include "test-compare-utf_dynamic_partial_except_trim.h"
+#include "test-compare-utf_dynamic_partial_except_trim_dynamic.h"
+#include "test-compare-utf_dynamic_partial_except_trim_string.h"
+#include "test-compare-utf_dynamic_partial_string.h"
+#include "test-compare-utf_dynamic_partial_trim.h"
+#include "test-compare-utf_dynamic_partial_trim_dynamic.h"
+#include "test-compare-utf_dynamic_partial_trim_string.h"
+#include "test-compare-utf_dynamic_string.h"
+#include "test-compare-utf_dynamic_trim.h"
+#include "test-compare-utf_dynamic_trim_string.h"
+#include "test-compare-utf_dynamic_except.h"
+#include "test-compare-utf_dynamic_except_string.h"
+#include "test-compare-utf_dynamic_except_trim.h"
+#include "test-compare-utf_dynamic_except_trim_string.h"
+#include "test-compare-utf_except.h"
+#include "test-compare-utf_except_trim.h"
+#include "test-compare-utf_trim.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -84,6 +112,25 @@ extern int setdown(void **state);
  * @see cmocka_unit_test()
  */
 extern int main(void);
+
+/**
+ * Helper function for converting an entire dynamic string to a complete utf dynamic string.
+ *
+ * @param dynamic
+ *   The source string.
+ * @param utf
+ *   The UTF destination string.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   Errors (with error bit) from: f_utf_char_to_character().
+ *   Errors (with error bit) from: f_utf_string_dynamic_resize().
+ *
+ * @see f_utf_char_to_character()
+ * @see f_utf_string_dynamic_resize()
+ */
+extern f_status_t test_convert_dynamic_to_utf(const f_string_static_t dynamic, f_utf_string_dynamic_t * const utf);
 
 #ifdef __cplusplus
 } // extern "C"
