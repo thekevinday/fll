@@ -8,7 +8,7 @@ settings:
   environment LANG LC_ALL LC_COLLATE LC_CTYPE LC_FASTMSG LC_MESSAGES LC_MONETARY LC_NUMERIC LC_TIME LOCPATH NLSPATH
   environment CMOCKA_XML_FILE CMOCKA_MESSAGE_OUTPUT CMOCKA_TEST_ABORT
 
-  # Cmcka is not fully thread-safe, set this to "1" to have cmocka call abort() on a test failure.
+  # Cmocka is not fully thread-safe, set this to "1" to have cmocka call abort() on a test failure.
   #CMOCKA_TEST_ABORT 1
 
   # One of: STDOUT, SUBUNIT, TAP, or XML.
