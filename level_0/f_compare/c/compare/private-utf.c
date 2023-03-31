@@ -564,7 +564,6 @@ extern "C" {
   }
 #endif // !defined(_di_f_compare_utf_dynamic_trim_) || !defined(_di_f_compare_utf_dynamic_trim_string_) || !defined(_di_f_compare_utf_dynamic_partial_trim_) || !defined(_di_f_compare_utf_dynamic_partial_trim_dynamic_) || !defined(_di_f_compare_utf_dynamic_partial_trim_string_) || !defined(_di_f_compare_utf_trim_)
 
-
 #ifdef __cplusplus
 } // extern "C"
 #endif
