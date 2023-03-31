@@ -212,24 +212,9 @@ extern "C" {
         return;
       }
 
+      // Set the id out of range to designate that it is missing.
       if (missing_main) {
-        if (data_make->main->error.verbosity != f_console_verbosity_quiet_e) {
-          flockfile(data_make->main->error.to.stream);
-
-          fl_print_format("%r%[%QThe fakefile '%]", data_make->main->error.to.stream, f_string_eol_s, data_make->main->error.context, data_make->main->error.prefix, data_make->main->error.context);
-          fl_print_format("%[%Q%]", data_make->main->error.to.stream, data_make->main->error.notable, data_make->data->file_data_build_fakefile, data_make->main->error.notable);
-          fl_print_format("%[' is missing the required '%]", data_make->main->error.to.stream, data_make->main->error.context, data_make->main->error.context);
-          fl_print_format("%[%r%]", data_make->main->error.to.stream, data_make->main->error.notable, fake_make_section_main_s, data_make->main->error.notable);
-          fl_print_format("%[' object.%]%r", data_make->main->error.to.stream, data_make->main->error.context, data_make->main->error.context, f_string_eol_s);
-
-          funlockfile(data_make->main->error.to.stream);
-        }
-
-        *status = F_status_set_error(F_failure);
-
-        macro_f_fss_set_t_delete_simple(settings);
-
-        return;
+        data_make->id_main = data_make->fakefile.used;
       }
 
       // Always have the parameter variable "return" map at index 0 and be pre-initialized.

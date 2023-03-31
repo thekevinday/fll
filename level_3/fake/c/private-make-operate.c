@@ -221,27 +221,44 @@ extern "C" {
       }
     }
     else {
-      {
-        const int result = fake_make_operate_section(&data_make, data_make.id_main, &section_stack, &status);
+      if (data_make.id_main == data_make.fakefile.used) {
+        if (data->main->error.verbosity != f_console_verbosity_quiet_e) {
+          flockfile(data->main->error.to.stream);
 
-        if (status == F_child) {
-          data->main->child = result;
+          fl_print_format("%r%[%QThe fakefile '%]", data->main->error.to.stream, f_string_eol_s, data->main->error.context, data->main->error.prefix, data->main->error.context);
+          fl_print_format("%[%Q%]", data->main->error.to.stream, data->main->error.notable, data->file_data_build_fakefile, data->main->error.notable);
+          fl_print_format("%[' is missing the required '%]", data->main->error.to.stream, data->main->error.context, data->main->error.context);
+          fl_print_format("%[%r%]", data->main->error.to.stream, data->main->error.notable, fake_make_section_main_s, data->main->error.notable);
+          fl_print_format("%[' object.%]%r", data->main->error.to.stream, data->main->error.context, data->main->error.context, f_string_eol_s);
+
+          funlockfile(data->main->error.to.stream);
         }
+
+        status = F_status_set_error(F_failure);
       }
+      else {
+        {
+          const int result = fake_make_operate_section(&data_make, data_make.id_main, &section_stack, &status);
 
-      if (status != F_child) {
-        const f_status_t status_path = f_path_change_at(data_make.path.top.id);
+          if (status == F_child) {
+            data->main->child = result;
+          }
+        }
 
-        if (F_status_is_error(status_path) && data->main->warning.verbosity >= f_console_verbosity_verbose_e) {
-          flockfile(data->main->warning.to.stream);
+        if (status != F_child) {
+          const f_status_t status_path = f_path_change_at(data_make.path.top.id);
 
-          fl_print_format("%r%[%QFailed change back to original path '%]", data->main->warning.to.stream, f_string_eol_s, data->main->warning.context, data->main->warning.prefix, data->main->warning.context);
-          fl_print_format("%[%Q%]", data->main->warning.to.stream, data->main->warning.notable, data_make.path.stack.array[0], data->main->warning.notable);
-          fl_print_format("%[', status code =%] ", data->main->warning.to.stream, data->main->warning.context, data->main->warning.context);
-          fl_print_format("%[%ui%]", data->main->warning.to.stream, data->main->warning.notable, F_status_set_fine(status_path), data->main->warning.notable);
-          fl_print_format("%['.%]%r", data->main->warning.to.stream, data->main->warning.context, data->main->warning.context, f_string_eol_s);
+          if (F_status_is_error(status_path) && data->main->warning.verbosity >= f_console_verbosity_verbose_e) {
+            flockfile(data->main->warning.to.stream);
 
-          funlockfile(data->main->warning.to.stream);
+            fl_print_format("%r%[%QFailed change back to original path '%]", data->main->warning.to.stream, f_string_eol_s, data->main->warning.context, data->main->warning.prefix, data->main->warning.context);
+            fl_print_format("%[%Q%]", data->main->warning.to.stream, data->main->warning.notable, data_make.path.stack.array[0], data->main->warning.notable);
+            fl_print_format("%[', status code =%] ", data->main->warning.to.stream, data->main->warning.context, data->main->warning.context);
+            fl_print_format("%[%ui%]", data->main->warning.to.stream, data->main->warning.notable, F_status_set_fine(status_path), data->main->warning.notable);
+            fl_print_format("%['.%]%r", data->main->warning.to.stream, data->main->warning.context, data->main->warning.context, f_string_eol_s);
+
+            funlockfile(data->main->warning.to.stream);
+          }
         }
       }
     }
