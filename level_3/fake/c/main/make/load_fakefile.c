@@ -197,14 +197,9 @@ extern "C" {
         return;
       }
 
+      // Set the id out of range to designate that it is missing.
       if (missing_main) {
-        fake_make_print_error_fakefile_section_missing(&data_make->main->program.warning, data_make->data->file_data_build_fakefile, fake_make_item_main_s);
-
-        data_make->main->setting.state.status = F_status_set_error(F_failure);
-
-        f_fss_set_resize(0, &settings);
-
-        return;
+        data_make->id_main = data_make->fakefile.used;
       }
 
       // Always have the parameter variable "return" map at index 0 and be pre-initialized.

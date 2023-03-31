@@ -183,24 +183,31 @@ extern "C" {
       }
     }
     else {
-      {
-        const int result = fake_make_operate_section(&data_make, data_make.id_main, &section_stack);
+      if (data_make.id_main == data_make.fakefile.used) {
+        fake_make_print_error_fakefile_section_missing(&data->main->program.error, data->file_data_build_fakefile, fake_make_item_main_s);
 
-        if (data->main->setting.state.status == F_child) {
-          data->main->program.child = result;
-        }
+        data->main->setting.state.status = F_status_set_error(F_failure);
       }
+      else {
+        {
+          const int result = fake_make_operate_section(&data_make, data_make.id_main, &section_stack);
 
-      if (data->main->setting.state.status != F_child) {
-        const f_status_t status = data->main->setting.state.status;
-
-        data->main->setting.state.status = f_path_change_at(data_make.path.top.id);
-
-        if (F_status_is_error(data->main->setting.state.status)) {
-          fake_make_print_warning_cannot_change_back(&data->main->program.warning, data_make.path.stack.array[0]);
+          if (data->main->setting.state.status == F_child) {
+            data->main->program.child = result;
+          }
         }
 
-        data->main->setting.state.status = status;
+        if (data->main->setting.state.status != F_child) {
+          const f_status_t status = data->main->setting.state.status;
+
+          data->main->setting.state.status = f_path_change_at(data_make.path.top.id);
+
+          if (F_status_is_error(data->main->setting.state.status)) {
+            fake_make_print_warning_cannot_change_back(&data->main->program.warning, data_make.path.stack.array[0]);
+          }
+
+          data->main->setting.state.status = status;
+        }
       }
     }
 
