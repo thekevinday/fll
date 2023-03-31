@@ -28,6 +28,7 @@ fl_conversion
 fl_directory
 fl_fss
 fl_print
+fl_status_string
 
 fll_error
 fll_fss_status_string

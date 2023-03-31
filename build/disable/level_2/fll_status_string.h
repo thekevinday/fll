@@ -1,4 +1,4 @@
-#define _di_fll_status_string_from_
+#define _di_fl_status_string_from_
 #define _di_f_status_access_s_
 #define _di_f_status_array_s_
 #define _di_f_status_available_s_

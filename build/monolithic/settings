@@ -73,6 +73,7 @@ build_sources_library level_1/iki.c
 build_sources_library level_1/path.c
 build_sources_library level_1/print.c level_1/private-print.c level_1/print/common.c
 build_sources_library level_1/signal.c
+build_sources_library level_1/status_string.c
 build_sources_library level_1/utf_file.c level_1/private-utf_file.c
 
 build_sources_library level_2/control_group.c
@@ -84,7 +85,6 @@ build_sources_library level_2/fss_status_string.c
 build_sources_library level_2/iki.c level_2/private-iki.c
 build_sources_library level_2/print.c
 build_sources_library level_2/program.c level_2/program/common.c level_2/program/print.c level_2/private-program.c
-build_sources_library level_2/status_string.c
 
 build_sources_library-monolithic level_0/thread.c level_0/private-thread.c level_0/thread/attribute.c level_0/thread/barrier.c level_0/thread/barrier_attribute.c level_0/thread/condition.c level_0/thread/condition_attribute.c level_0/thread/id.c level_0/thread/key.c level_0/thread/lock.c level_0/thread/lock_attribute.c level_0/thread/mutex.c level_0/thread/mutex_attribute.c level_0/thread/once.c level_0/thread/semaphore.c level_0/thread/set.c level_0/thread/spin.c
 
@@ -136,6 +136,7 @@ build_sources_headers level_1/iki.h
 build_sources_headers level_1/path.h
 build_sources_headers level_1/print.h level_1/print/common.h
 build_sources_headers level_1/signal.h level_1/signal/common.h
+build_sources_headers level_1/status_string.h
 build_sources_headers level_1/utf_file.h
 
 build_sources_headers level_2/control_group.h
@@ -147,7 +148,6 @@ build_sources_headers level_2/fss_status_string.h
 build_sources_headers level_2/iki.h
 build_sources_headers level_2/print.h
 build_sources_headers level_2/program.h level_2/program/common.h level_2/program/print.h
-build_sources_headers level_2/status_string.h
 
 build_sources_headers-monolithic level_0/thread.h level_0/thread/attribute.h level_0/thread/barrier.h level_0/thread/barrier_attribute.h level_0/thread/condition.h level_0/thread/condition_attribute.h level_0/thread/id.h level_0/thread/key.h level_0/thread/lock.h level_0/thread/lock_attribute.h level_0/thread/mutex.h level_0/thread/mutex_attribute.h level_0/thread/once.h level_0/thread/semaphore.h level_0/thread/set.h level_0/thread/spin.h
 

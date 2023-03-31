@@ -17,7 +17,7 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
   data.setting.program_name = &status_code_program_name_s;
   data.setting.program_name_long = &status_code_program_name_long_s;
-  data.setting.status_string_from = &fll_status_string_from;
+  data.setting.status_string_from = &fl_status_string_from;
   data.setting.status_string_to = &f_status_string_to;
   data.setting.status_string_help_detail = &status_code_print_message_help_detail;
 

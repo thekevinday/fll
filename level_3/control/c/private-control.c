@@ -501,7 +501,7 @@ extern "C" {
                 memcpy(name_string, data->cache.large.string + data->cache.header_contents.array[i].array[0].start, name_length);
                 name_string[name_length] = 0;
 
-                status = fll_status_string_from(name, &header->status);
+                status = fl_status_string_from(name, &header->status);
 
                 if (F_status_is_error(status)) {
                   control_print_debug_packet_message(main, "Failed to process %[" CONTROL_status_s "%] in the response packet, Content is:", &data->cache.large, &data->cache.header_contents.array[i].array[0], &status);

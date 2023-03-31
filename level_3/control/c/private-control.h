@@ -119,9 +119,9 @@ extern "C" {
  * @see f_string_dynamic_increase_by()
  * @see fl_conversion_dynamic_partial_to_unsigned_detect()
  * @see f_fss_apply_delimit()
+ * @see fl_status_string_from()
  * @see fll_fss_extended_read()
  * @see fll_fss_basic_list_read()
- * @see fll_status_string_from()
  */
 #ifndef _di_control_packet_receive_
   extern f_status_t control_packet_receive(const fll_program_data_t * const main, control_data_t * const data, control_payload_header_t * const header) F_attribute_visibility_internal_d;

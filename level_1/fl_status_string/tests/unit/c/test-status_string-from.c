@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-void test__fll_status_string_from__fails(void **state) {
+void test__fl_status_string_from__fails(void **state) {
 
   f_string_static_t invalids[] = {
     macro_f_string_static_t_initialize("X&87-", 0, 5),
@@ -17,33 +17,33 @@ void test__fll_status_string_from__fails(void **state) {
 
     f_status_t result = F_none;
 
-    const f_status_t status = fll_status_string_from(invalids[i], &result);
+    const f_status_t status = fl_status_string_from(invalids[i], &result);
 
     assert_int_equal(status, F_status_set_error(F_data));
   } // for
 }
 
-void test__fll_status_string_from__parameter_checking(void **state) {
+void test__fl_status_string_from__parameter_checking(void **state) {
 
   {
-    const f_status_t status = fll_status_string_from(f_string_empty_s, 0);
+    const f_status_t status = fl_status_string_from(f_string_empty_s, 0);
 
     assert_int_equal(F_status_set_fine(status), F_parameter);
   }
 }
 
-void test__fll_status_string_from__returns_data_not(void **state) {
+void test__fl_status_string_from__returns_data_not(void **state) {
 
   {
     f_status_t result = F_none;
 
-    const f_status_t status = fll_status_string_from(f_string_empty_s, &result);
+    const f_status_t status = fl_status_string_from(f_string_empty_s, &result);
 
     assert_int_equal(status, F_data_not);
   }
 }
 
-void test__fll_status_string_from__works(void **state) {
+void test__fl_status_string_from__works(void **state) {
 
   const f_status_t statuss[] = {
     F_false,
@@ -123,12 +123,16 @@ void test__fll_status_string_from__works(void **state) {
     F_ascii_not,
     F_atomic,
     F_atomic_not,
+    F_base,
+    F_base_not,
     F_begin,
     F_begin_not,
     F_block,
     F_block_not,
     F_body,
     F_body_not,
+    F_bottom,
+    F_bottom_not,
     F_bound,
     F_bound_not,
     F_break,
@@ -137,6 +141,8 @@ void test__fll_status_string_from__works(void **state) {
     F_call_not,
     F_capability,
     F_capability_not,
+    F_character,
+    F_character_not,
     F_child,
     F_child_not,
     F_complete,
@@ -207,6 +213,8 @@ void test__fll_status_string_from__works(void **state) {
     F_failure_not,
     F_family,
     F_family_not,
+    F_fifo,
+    F_fifo_not,
     F_first,
     F_first_not,
     F_footer,
@@ -260,6 +268,8 @@ void test__fll_status_string_from__works(void **state) {
     F_memory_not,
     F_message,
     F_message_not,
+    F_middle,
+    F_middle_not,
     F_minor,
     F_minor_not,
     F_moderate,
@@ -323,6 +333,8 @@ void test__fll_status_string_from__works(void **state) {
     F_recover_not,
     F_recurse,
     F_recurse_not,
+    F_regular,
+    F_regular_not,
     F_relative,
     F_relative_not,
     F_remote,
@@ -369,7 +381,7 @@ void test__fll_status_string_from__works(void **state) {
     F_string_too_small,
     F_success,
     F_success_not,
-    F_supported,
+    F_support,
     F_support_not,
     F_syntax,
     F_syntax_not,
@@ -382,6 +394,8 @@ void test__fll_status_string_from__works(void **state) {
     F_time_out,
     F_too_large,
     F_too_small,
+    F_top,
+    F_top_not,
     F_type,
     F_type_not,
     F_user,
@@ -488,12 +502,14 @@ void test__fll_status_string_from__works(void **state) {
     F_complete_not_utf_eof,
     F_complete_not_utf_eol,
     F_complete_not_utf_eos,
+    F_complete_not_utf_start,
     F_complete_not_utf_stop,
     F_none_block,
     F_none_eoa,
     F_none_eof,
     F_none_eol,
     F_none_eos,
+    F_none_start,
     F_none_stop,
     F_data,
     F_data_not,
@@ -502,6 +518,7 @@ void test__fll_status_string_from__works(void **state) {
     F_data_not_eof,
     F_data_not_eol,
     F_data_not_eos,
+    F_data_not_start,
     F_data_not_stop,
     F_end,
     F_end_not,
@@ -516,6 +533,7 @@ void test__fll_status_string_from__works(void **state) {
     F_end_not_group_eof,
     F_end_not_group_eol,
     F_end_not_group_eos,
+    F_end_not_group_start,
     F_end_not_group_stop,
     F_end_not_nest,
     F_end_not_nest_block,
@@ -523,7 +541,9 @@ void test__fll_status_string_from__works(void **state) {
     F_end_not_nest_eof,
     F_end_not_nest_eol,
     F_end_not_nest_eos,
+    F_end_not_nest_start,
     F_end_not_nest_stop,
+    F_end_not_start,
     F_end_not_stop,
     F_process,
     F_process_not,
@@ -590,7 +610,7 @@ void test__fll_status_string_from__works(void **state) {
     F_directory_purge,
     F_directory_read,
     F_directory_stream,
-    F_directory_supported_not,
+    F_directory_support_not,
     F_directory_synchronize,
     F_directory_utf,
     F_directory_utf_not,
@@ -717,12 +737,16 @@ void test__fll_status_string_from__works(void **state) {
     f_status_ascii_not_s,
     f_status_atomic_s,
     f_status_atomic_not_s,
+    f_status_base_s,
+    f_status_base_not_s,
     f_status_begin_s,
     f_status_begin_not_s,
     f_status_block_s,
     f_status_block_not_s,
     f_status_body_s,
     f_status_body_not_s,
+    f_status_bottom_s,
+    f_status_bottom_not_s,
     f_status_bound_s,
     f_status_bound_not_s,
     f_status_break_s,
@@ -731,6 +755,8 @@ void test__fll_status_string_from__works(void **state) {
     f_status_call_not_s,
     f_status_capability_s,
     f_status_capability_not_s,
+    f_status_character_s,
+    f_status_character_not_s,
     f_status_child_s,
     f_status_child_not_s,
     f_status_complete_s,
@@ -801,6 +827,8 @@ void test__fll_status_string_from__works(void **state) {
     f_status_failure_not_s,
     f_status_family_s,
     f_status_family_not_s,
+    f_status_fifo_s,
+    f_status_fifo_not_s,
     f_status_first_s,
     f_status_first_not_s,
     f_status_footer_s,
@@ -854,6 +882,8 @@ void test__fll_status_string_from__works(void **state) {
     f_status_memory_not_s,
     f_status_message_s,
     f_status_message_not_s,
+    f_status_middle_s,
+    f_status_middle_not_s,
     f_status_minor_s,
     f_status_minor_not_s,
     f_status_moderate_s,
@@ -917,6 +947,8 @@ void test__fll_status_string_from__works(void **state) {
     f_status_recover_not_s,
     f_status_recurse_s,
     f_status_recurse_not_s,
+    f_status_regular_s,
+    f_status_regular_not_s,
     f_status_relative_s,
     f_status_relative_not_s,
     f_status_remote_s,
@@ -963,8 +995,8 @@ void test__fll_status_string_from__works(void **state) {
     f_status_string_too_small_s,
     f_status_success_s,
     f_status_success_not_s,
-    f_status_supported_s,
-    f_status_supported_not_s,
+    f_status_support_s,
+    f_status_support_not_s,
     f_status_syntax_s,
     f_status_syntax_not_s,
     f_status_terminate_s,
@@ -976,6 +1008,8 @@ void test__fll_status_string_from__works(void **state) {
     f_status_time_out_s,
     f_status_too_large_s,
     f_status_too_small_s,
+    f_status_top_s,
+    f_status_top_not_s,
     f_status_type_s,
     f_status_type_not_s,
     f_status_user_s,
@@ -1082,12 +1116,14 @@ void test__fll_status_string_from__works(void **state) {
     f_status_complete_not_utf_eof_s,
     f_status_complete_not_utf_eol_s,
     f_status_complete_not_utf_eos_s,
+    f_status_complete_not_utf_start_s,
     f_status_complete_not_utf_stop_s,
     f_status_none_block_s,
     f_status_none_eoa_s,
     f_status_none_eof_s,
     f_status_none_eol_s,
     f_status_none_eos_s,
+    f_status_none_start_s,
     f_status_none_stop_s,
     f_status_data_s,
     f_status_data_not_s,
@@ -1096,6 +1132,7 @@ void test__fll_status_string_from__works(void **state) {
     f_status_data_not_eof_s,
     f_status_data_not_eol_s,
     f_status_data_not_eos_s,
+    f_status_data_not_start_s,
     f_status_data_not_stop_s,
     f_status_end_s,
     f_status_end_not_s,
@@ -1110,6 +1147,7 @@ void test__fll_status_string_from__works(void **state) {
     f_status_end_not_group_eof_s,
     f_status_end_not_group_eol_s,
     f_status_end_not_group_eos_s,
+    f_status_end_not_group_start_s,
     f_status_end_not_group_stop_s,
     f_status_end_not_nest_s,
     f_status_end_not_nest_block_s,
@@ -1117,7 +1155,9 @@ void test__fll_status_string_from__works(void **state) {
     f_status_end_not_nest_eof_s,
     f_status_end_not_nest_eol_s,
     f_status_end_not_nest_eos_s,
+    f_status_end_not_nest_start_s,
     f_status_end_not_nest_stop_s,
+    f_status_end_not_start_s,
     f_status_end_not_stop_s,
     f_status_process_s,
     f_status_process_not_s,
@@ -1184,7 +1224,7 @@ void test__fll_status_string_from__works(void **state) {
     f_status_directory_purge_s,
     f_status_directory_read_s,
     f_status_directory_stream_s,
-    f_status_directory_supported_not_s,
+    f_status_directory_support_not_s,
     f_status_directory_synchronize_s,
     f_status_directory_utf_s,
     f_status_directory_utf_not_s,
@@ -1233,11 +1273,11 @@ void test__fll_status_string_from__works(void **state) {
     f_status_status_code_last_s,
   };
 
-  for (uint16_t i = 0; i < 591; ++i) {
+  for (uint16_t i = 0; i < 611; ++i) {
 
     f_status_t result = F_none;
 
-    const f_status_t status = fll_status_string_from(status_strings[i], &result);
+    const f_status_t status = fl_status_string_from(status_strings[i], &result);
 
     assert_int_equal(status, F_none);
     assert_int_equal(result, statuss[i]);

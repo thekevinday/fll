@@ -26,7 +26,7 @@ extern "C" {
  *
  * state: The state information.
  *
- * status_string_from:        A pointer to the status string function (usually either fll_status_string_from() or fll_fss_status_string_from()).
+ * status_string_from:        A pointer to the status string function (usually either fl_status_string_from() or fll_fss_status_string_from()).
  * status_string_to:          A pointer to the status string function (usually either f_status_string_to() or fll_fss_status_string_to()).
  * status_string_help_detail: Print additional, more detailed help, in the help page.
  */

@@ -41,6 +41,7 @@
 #include <fll/level_1/conversion.h>
 #include <fll/level_1/fss.h>
 #include <fll/level_1/print.h>
+#include <fll/level_1/status_string.h>
 
 // FLL-2 includes.
 #include <fll/level_2/error.h>
@@ -49,7 +50,6 @@
 #include <fll/level_2/fss/payload.h>
 #include <fll/level_2/print.h>
 #include <fll/level_2/program.h>
-#include <fll/level_2/status_string.h>
 
 // Control includes.
 #include <program/control/common.h>

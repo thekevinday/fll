@@ -22,6 +22,9 @@
 #include <fll/level_0/parse.h>
 #include <fll/level_0/status_string.h>
 
+// FLL-1 includes.
+#include <fll/level_1/status_string.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -107,6 +110,9 @@ extern "C" {
  *   F_parameter (with error bit) if a parameter is invalid.
  *
  *   Errors (with error bit) from: f_conversion_character_is_decimal().
+ *   Errors (with error bit) from: fl_status_string_from().
+ *
+ * @see fl_status_string_from()
  */
 #ifndef _di_fll_fss_status_string_from_
   extern f_status_t fll_fss_status_string_from(const f_string_static_t name, f_status_t * const code);

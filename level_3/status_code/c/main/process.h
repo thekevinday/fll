@@ -54,12 +54,12 @@ extern "C" {
  *     F_data_not if string is empty.
  *
  *     Errors (with error bit) from: fl_console_parameter_to_number_unsigned().
+ *     Errors (with error bit) from: fl_status_string_from().
  *     Errors (with error bit) from: fll_fss_status_string_to().
- *     Errors (with error bit) from: fll_status_string_from().
  *
  * @see fl_console_parameter_to_number_unsigned()
+ * @see fl_status_string_from()
  * @see fll_fss_status_string_from()
- * @see fll_status_string_from()
  */
 #ifndef _di_status_code_process_number_
   extern void status_code_process_number(status_code_main_t * const main, const f_string_static_t value);

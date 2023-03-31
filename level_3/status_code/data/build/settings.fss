@@ -22,7 +22,7 @@ build_indexer_arguments rcs
 build_language c
 
 build_libraries -lc -lstatus_code
-build_libraries-individual -lfll_error -lfll_fss_status_string -lfll_print -lfll_program -lfll_status_string -lfl_conversion -lfl_directory -lfl_fss -lfl_print -lf_color -lf_compare -lf_console -lf_conversion -lf_directory -lf_file -lf_fss -lf_memory -lf_parse -lf_path -lf_pipe -lf_print -lf_rip -lf_signal -lf_status_string -lf_string -lf_type_array -lf_utf
+build_libraries-individual -lfll_error -lfll_fss_status_string -lfll_print -lfll_program -lfl_conversion -lfl_directory -lfl_fss -lfl_print -lfl_status_string -lf_color -lf_compare -lf_console -lf_conversion -lf_directory -lf_file -lf_fss -lf_memory -lf_parse -lf_path -lf_pipe -lf_print -lf_rip -lf_signal -lf_status_string -lf_string -lf_type_array -lf_utf
 build_libraries-level -lfll_2 -lfll_1 -lfll_0
 build_libraries-monolithic -lfll
 

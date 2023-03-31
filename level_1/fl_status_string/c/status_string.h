@@ -1,5 +1,5 @@
 /**
- * FLL - Level 2
+ * FLL - Level 1
  *
  * Project: Status
  * API Version: 0.7
@@ -7,8 +7,8 @@
  *
  * Provides status code functions, such as those that translate status codes into strings.
  */
-#ifndef _FLL_status_string_h
-#define _FLL_status_string_h
+#ifndef _FL_status_string_h
+#define _FL_status_string_h
 
 // FLL-0 includes.
 #include <fll/level_0/type.h>
@@ -46,12 +46,12 @@ extern "C" {
  *
  *   Errors (with error bit) from: f_conversion_character_is_decimal().
  */
-#ifndef _di_fll_status_string_from_
-  extern f_status_t fll_status_string_from(const f_string_static_t name, f_status_t * const code);
-#endif // _di_fll_status_string_to_
+#ifndef _di_fl_status_string_from_
+  extern f_status_t fl_status_string_from(const f_string_static_t name, f_status_t * const code);
+#endif // _di_fl_status_string_to_
 
 #ifdef __cplusplus
 } // extern "C"
 #endif
 
-#endif // _FLL_status_string_h
+#endif // _FL_status_string_h

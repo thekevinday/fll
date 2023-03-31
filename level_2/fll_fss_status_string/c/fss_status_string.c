@@ -39,20 +39,13 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    if (!name.used) {
-      return F_data_not;
-    }
+    if (!name.used) return F_data_not;
 
     // Numbers are not valid status code strings.
     status = f_conversion_character_is_decimal(name.string[0]);
 
-    if (status == F_true) {
-      return F_status_set_error(F_data);
-    }
-
-    if (F_status_is_error(status)) {
-      return status;
-    }
+    if (status == F_true) return F_status_set_error(F_data);
+    if (F_status_is_error(status)) return status;
 
     #ifndef _di_fll_fss_status_error_
       if (f_compare_dynamic(name, fll_fss_status_format_s) == F_equal_to) {
@@ -134,7 +127,7 @@ extern "C" {
       return F_none;
     }
 
-    return F_status_set_error(F_data);
+    return fl_status_string_from(name, code);
   }
 #endif // _di_fll_fss_status_string_from_
 
@@ -209,7 +202,7 @@ extern "C" {
 
     return F_none;
   }
-#endif // _di_fll_status_string_to_
+#endif // _di_fl_status_string_to_
 
 #ifdef __cplusplus
 } // extern "C"

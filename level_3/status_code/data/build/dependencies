@@ -26,6 +26,7 @@ f_status_string
 fl_conversion
 fl_directory
 fl_print
+fl_status_string
 
 fll_error
 fll_print

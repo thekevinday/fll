@@ -1,5 +1,5 @@
 /**
- * FLL - Level 2
+ * FLL - Level 1
  *
  * Project: Status
  * API Version: 0.7
@@ -7,8 +7,8 @@
  *
  * Test the status_string project.
  */
-#ifndef _TEST__FLL_status_string_h
-#define _TEST__FLL_status_string_h
+#ifndef _TEST__FL_status_string_h
+#define _TEST__FL_status_string_h
 
 // Libc includes.
 #include <stdarg.h>
@@ -19,8 +19,8 @@
 // cmocka includes.
 #include <cmocka.h>
 
-// FLL-2 includes.
-#include <fll/level_2/status_string.h>
+// FLL-1 includes.
+#include <fll/level_1/status_string.h>
 
 // Mock includes.
 
@@ -68,4 +68,4 @@ extern int main(void);
 } // extern "C"
 #endif
 
-#endif // _TEST__FLL_status_string_h
+#endif // _TEST__FL_status_string_h

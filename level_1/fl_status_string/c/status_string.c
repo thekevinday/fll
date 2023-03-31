@@ -4,26 +4,19 @@
 extern "C" {
 #endif
 
-#ifndef _di_fll_status_string_from_
-  f_status_t fll_status_string_from(const f_string_static_t name, f_status_t * const code) {
+#ifndef _di_fl_status_string_from_
+  f_status_t fl_status_string_from(const f_string_static_t name, f_status_t * const code) {
     #ifndef _di_level_2_parameter_checking_
       if (!code) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
     f_status_t status = F_none;
 
-    if (!name.used) {
-      return F_data_not;
-    }
+    if (!name.used) return F_data_not;
 
     // Numbers are not valid status code strings.
-    if ((status = f_conversion_character_is_decimal(name.string[0])) == F_true) {
-      return F_status_set_error(F_data);
-    }
-
-    if (F_status_is_error(status)) {
-      return status;
-    }
+    if ((status = f_conversion_character_is_decimal(name.string[0])) == F_true) return F_status_set_error(F_data);
+    if (F_status_is_error(status)) return status;
 
     #ifndef _di_f_status_boolean_s_
       if (f_compare_dynamic(name, f_status_false_s) == F_equal_to) {
@@ -1482,6 +1475,18 @@ extern "C" {
         return F_none;
       }
 
+      if (f_compare_dynamic(name, f_status_okay_s) == F_equal_to) {
+        *code = F_okay;
+
+        return F_none;
+      }
+
+      if (f_compare_dynamic(name, f_status_okay_not_s) == F_equal_to) {
+        *code = F_okay_not;
+
+        return F_none;
+      }
+
       if (f_compare_dynamic(name, f_status_once_s) == F_equal_to) {
         *code = F_once;
 
@@ -2768,6 +2773,12 @@ extern "C" {
         return F_none;
       }
 
+      if (f_compare_dynamic(name, f_status_complete_not_utf_start_s) == F_equal_to) {
+        *code = F_complete_not_utf_start;
+
+        return F_none;
+      }
+
       if (f_compare_dynamic(name, f_status_complete_not_utf_stop_s) == F_equal_to) {
         *code = F_complete_not_utf_stop;
 
@@ -2800,6 +2811,12 @@ extern "C" {
 
       if (f_compare_dynamic(name, f_status_none_eos_s) == F_equal_to) {
         *code = F_none_eos;
+
+        return F_none;
+      }
+
+      if (f_compare_dynamic(name, f_status_none_start_s) == F_equal_to) {
+        *code = F_none_start;
 
         return F_none;
       }
@@ -2848,6 +2865,12 @@ extern "C" {
 
       if (f_compare_dynamic(name, f_status_data_not_eos_s) == F_equal_to) {
         *code = F_data_not_eos;
+
+        return F_none;
+      }
+
+      if (f_compare_dynamic(name, f_status_data_not_start_s) == F_equal_to) {
+        *code = F_data_not_start;
 
         return F_none;
       }
@@ -2938,6 +2961,12 @@ extern "C" {
         return F_none;
       }
 
+      if (f_compare_dynamic(name, f_status_end_not_group_start_s) == F_equal_to) {
+        *code = F_end_not_group_start;
+
+        return F_none;
+      }
+
       if (f_compare_dynamic(name, f_status_end_not_group_stop_s) == F_equal_to) {
         *code = F_end_not_group_stop;
 
@@ -2980,8 +3009,20 @@ extern "C" {
         return F_none;
       }
 
+      if (f_compare_dynamic(name, f_status_end_not_nest_start_s) == F_equal_to) {
+        *code = F_end_not_nest_start;
+
+        return F_none;
+      }
+
       if (f_compare_dynamic(name, f_status_end_not_nest_stop_s) == F_equal_to) {
         *code = F_end_not_nest_stop;
+
+        return F_none;
+      }
+
+      if (f_compare_dynamic(name, f_status_end_not_start_s) == F_equal_to) {
+        *code = F_end_not_start;
 
         return F_none;
       }
@@ -3701,7 +3742,7 @@ extern "C" {
 
     return F_status_set_error(F_data);
   }
-#endif // _di_fll_status_string_from_
+#endif // _di_fl_status_string_from_
 
 #ifdef __cplusplus
 } // extern "C"
