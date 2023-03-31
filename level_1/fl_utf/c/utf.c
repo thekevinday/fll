@@ -31,10 +31,6 @@ extern "C" {
 
 #ifndef _di_fl_utf_string_dynamic_partial_compare_
   f_status_t fl_utf_string_dynamic_partial_compare(const f_utf_string_static_t string1, const f_utf_string_static_t string2, const f_string_range_t range1, const f_string_range_t range2) {
-    #ifndef _di_level_1_parameter_checking_
-      if (string1.used <= range1.stop) return F_status_set_error(F_parameter);
-      if (string2.used <= range2.stop) return F_status_set_error(F_parameter);
-    #endif // _di_level_1_parameter_checking_
 
     return private_fl_utf_string_compare(string1.string, string2.string, range1.start, range2.start, range1.stop + 1, range2.stop + 1);
   }
@@ -42,10 +38,6 @@ extern "C" {
 
 #ifndef _di_fl_utf_string_dynamic_partial_compare_trim_
   f_status_t fl_utf_string_dynamic_partial_compare_trim(const f_utf_string_static_t string1, const f_utf_string_static_t string2, const f_string_range_t range1, const f_string_range_t range2) {
-    #ifndef _di_level_1_parameter_checking_
-      if (string1.used <= range1.stop) return F_status_set_error(F_parameter);
-      if (string2.used <= range2.stop) return F_status_set_error(F_parameter);
-    #endif // _di_level_1_parameter_checking_
 
     return private_fl_utf_string_compare_trim(string1.string, string2.string, range1.start, range2.start, range1.stop + 1, range2.stop + 1);
   }
