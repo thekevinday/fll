@@ -15,6 +15,5 @@
 #define _di_f_color_set_string_empty_s_
 #define _di_f_color_set_t_
 #define _di_f_color_string_s_
-#define _di_f_color_strings_s_
 #define _di_f_color_t_
 #define _di_f_color_terminal_s_
