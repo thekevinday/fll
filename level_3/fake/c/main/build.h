@@ -33,13 +33,11 @@ extern "C" {
  *   Set to FALSE to designate that this is adding for a static library/program.
  * @param type
  *   A build type from the fake_build_type_* enumeration.
- * @param arguments
- *   The arguments array to append to.
  *
  * @see fll_execute_arguments_add()
  */
 #ifndef _di_fake_build_arguments_standard_add_
-  extern void fake_build_arguments_standard_add(fake_data_t * const data, fake_build_data_t * const data_build, const bool is_shared, const uint8_t type, f_string_dynamics_t *arguments);
+  extern void fake_build_arguments_standard_add(fake_data_t * const data, fake_build_data_t * const data_build, const bool is_shared, const uint8_t type);
 #endif // _di_fake_build_arguments_standard_add_
 
 /**
@@ -178,13 +176,11 @@ extern "C" {
  *   The generic sources to add.
  * @param specific
  *   The specific sources to add.
- * @param arguments
- *   The execute arguments array being updated.
  *
  * @see fll_execute_arguments_add()
  */
 #ifndef _di_fake_build_objects_add_
-  extern void fake_build_objects_add(fake_data_t * const data, fake_build_data_t * const data_build, const f_string_static_t *path, const f_string_statics_t *generic, const f_string_statics_t *specific, f_string_dynamics_t *arguments);
+  extern void fake_build_objects_add(fake_data_t * const data, fake_build_data_t * const data_build, const f_string_static_t *path, const f_string_statics_t *generic, const f_string_statics_t *specific);
 #endif // _di_fake_build_objects_add_
 
 /**
@@ -255,45 +251,31 @@ extern "C" {
 #endif // _di_fake_build_operate_
 
 /**
- * Calculate the length of the sources path so that it can be used to manually construct a static string.
- *
- * @param data
- *   The program data.
- *
- *   This does not alter data.main->setting.state.status.
- * @param data_build
- *   The build data.
- * @param setting_path_source
- *   The source path from the build settings file.
- * @param source
- *   The static string.
- *   The path_sources.string is not expected to be defined at this point.
- *   The path_sources.used is updated.
- *   The path_sources.size is ignored.
- */
-#ifndef _di_fake_build_path_source_length_
-  extern void fake_build_path_source_length(fake_data_t * const data, fake_build_data_t * const data_build, f_string_static_t * const setting_path_source, f_string_static_t * const source);
-#endif // _di_fake_build_path_source_length_
-
-/**
  * Construct a static string array of the sources path.
  *
  * @param data
  *   The program data.
  *
- *   This does not alter data.main->setting.state.status.
+ *   This alters data.main->setting.state.status:
+ *     F_none on success.
+ *
+ *     F_interrupt (with error bit) on interrupt signal received.
+ *
+ *     Errors (with error bit) from: f_string_dynamic_append_nulless()
  * @param data_build
  *   The build data.
  * @param setting_path_source
  *   The source path from the build settings file.
  * @param source
- *   The static string.
- *   The path_sources.string is expected to be defined and set to a size from path_sources.used + 1.
- *   The path_sources.used is updated.
- *   The path_sources.size is ignored.
+ *   The source string to append the build path source to.
+ *   This gets reset by fake_string_dynamics_reset().
+ *
+ * @see f_string_dynamic_append_nulless()
+ *
+ * @see fake_string_dynamics_reset()
  */
 #ifndef _di_fake_build_path_source_string_
-  extern void fake_build_path_source_string(fake_data_t * const data, fake_build_data_t * const data_build, f_string_static_t * const setting_path_source, f_string_static_t * const source);
+  extern void fake_build_path_source_string(fake_data_t * const data, fake_build_data_t * const data_build, f_string_static_t * const setting_path_source, f_string_dynamic_t * const source);
 #endif // _di_fake_build_path_source_string_
 
 /**
@@ -312,13 +294,11 @@ extern "C" {
  *   The generic sources to add.
  * @param specific
  *   The specific sources to add.
- * @param arguments
- *   The execute arguments array being updated.
  *
  * @see fll_execute_arguments_add()
  */
 #ifndef _di_fake_build_sources_add_
-  extern void fake_build_sources_add(fake_data_t * const data, fake_build_data_t * const data_build, const f_string_statics_t *generic, const f_string_statics_t *specific, f_string_dynamics_t *arguments);
+  extern void fake_build_sources_add(fake_data_t * const data, fake_build_data_t * const data_build, const f_string_statics_t *generic, const f_string_statics_t *specific);
 #endif // _di_fake_build_sources_add_
 
 /**
@@ -337,13 +317,11 @@ extern "C" {
  *   The generic sources to add.
  * @param specific
  *   The specific sources to add.
- * @param arguments
- *   The execute arguments array being updated.
  *
  * @see fll_execute_arguments_add()
  */
 #ifndef _di_fake_build_sources_object_add_
-  extern void fake_build_sources_object_add(fake_data_t * const data, fake_build_data_t * const data_build, const f_string_static_t *generic, const f_string_static_t *specific, f_string_dynamics_t *arguments);
+  extern void fake_build_sources_object_add(fake_data_t * const data, fake_build_data_t * const data_build, const f_string_static_t *generic, const f_string_static_t *specific);
 #endif // _di_fake_build_sources_object_add_
 
 /**

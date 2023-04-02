@@ -201,8 +201,6 @@ extern "C" {
  *   The environment variable data.
  * @param program
  *   The program to be executed.
- * @param arguments
- *   The arguments to be passed to the program.
  *
  * @return
  *   The return code result from execution.
@@ -212,7 +210,7 @@ extern "C" {
  * @see fll_program_standard_signal_received()
  */
 #ifndef _di_fake_execute_
-  extern int fake_execute(fake_data_t * const data, const f_string_maps_t environment, const f_string_static_t program, const f_string_statics_t arguments);
+  extern int fake_execute(fake_data_t * const data, const f_string_maps_t environment, const f_string_static_t program);
 #endif // _di_fake_execute_
 
 /**

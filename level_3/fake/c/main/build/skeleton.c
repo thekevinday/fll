@@ -11,21 +11,21 @@ extern "C" {
     if (F_status_is_error(data->main->setting.state.status) || data->main->setting.state.status == F_child) return;
     if (f_file_exists(file_stage, F_true) == F_true) return;
 
-    f_string_static_t path_headers = f_string_static_t_initialize;
-    path_headers.used = data->path_build_includes.used + data_build->setting.path_headers.used;
-
-    f_char_t path_headers_string[path_headers.used + 1];
-    path_headers.string = path_headers_string;
+    fake_string_dynamic_reset(&data->main->cache_argument);
 
     if (data_build->setting.path_headers.used) {
-      memcpy(path_headers_string, data->path_build_includes.string, sizeof(f_char_t) * data->path_build_includes.used);
-      memcpy(path_headers_string + data->path_build_includes.used, data_build->setting.path_headers.string, sizeof(f_char_t) * data_build->setting.path_headers.used);
-    }
-    else {
-      path_headers.used = 0;
-    }
+        data->main->setting.state.status = f_string_dynamic_append_nulless(data->path_build_includes, &data->main->cache_argument);
 
-    path_headers_string[path_headers.used] = 0;
+      if (F_status_is_error_not(data->main->setting.state.status)) {
+        data->main->setting.state.status = f_string_dynamic_append_nulless(data_build->setting.path_headers, &data->main->cache_argument);
+      }
+
+      if (F_status_is_error(data->main->setting.state.status)) {
+        fake_print_error(&data->main->program.error, macro_fake_f(f_string_dynamic_append_nulless));
+
+        return;
+      }
+    }
 
     const f_string_static_t directorys[] = {
       data->path_build,
@@ -46,7 +46,7 @@ extern "C" {
       data->path_build_programs_static,
       data->path_build_settings,
       data->path_build_stage,
-      path_headers,
+      data->main->cache_argument,
     };
 
     fake_build_print_message_skeleton_build_base(&data->main->program.message);
@@ -74,7 +74,7 @@ extern "C" {
           }
         }
 
-        directorys[i].string[j] = 0; // @fixme this is an error because static strings might be in use.
+        directorys[i].string[j] = 0;
 
         data->main->setting.state.status = f_directory_exists(directorys[i]);
 

@@ -137,12 +137,13 @@ extern "C" {
  *   - last:        Operate on directory last (after recursion).
  *   - top:         Operate on top-most directory, or for the callback parameter, designate that this is the top path.
  *
- *   For the action callback parameter.
+ *   For the actiona and handle callback parameter:
  *   - block:      File is a block.
  *   - character:  File is a character.
  *   - directory:  File is a directory.
  *   - fifo:       File is a file-in/file-out.
  *   - link:       File is a link.
+ *   - path:        The "name" represents a path rather than a file name (generally used for error handling or when not processing a recursed file).
  *   - regular:    File is a regular file.
  *   - socket:     File is a socket.
  *   - unknown:    File is an unknown type.
@@ -163,9 +164,10 @@ extern "C" {
     f_directory_recurse_do_flag_directory_e = 0x40,
     f_directory_recurse_do_flag_fifo_e      = 0x80,
     f_directory_recurse_do_flag_link_e      = 0x100,
-    f_directory_recurse_do_flag_regular_e   = 0x200,
-    f_directory_recurse_do_flag_socket_e    = 0x400,
-    f_directory_recurse_do_flag_unknown_e   = 0x800,
+    f_directory_recurse_do_flag_path_e      = 0x200,
+    f_directory_recurse_do_flag_regular_e   = 0x400,
+    f_directory_recurse_do_flag_socket_e    = 0x800,
+    f_directory_recurse_do_flag_unknown_e   = 0x1000,
   }; // enum
 #endif // _di_f_directory_recurse_do_flag_e_
 

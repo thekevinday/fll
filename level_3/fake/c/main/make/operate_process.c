@@ -420,7 +420,7 @@ extern "C" {
 
     if (!data_make || !data_make->main) return;
 
-    if (!data_make->cache_arguments.used) {
+    if (!data_make->main->cache_arguments.used) {
       data_make->main->setting.state.status = F_data_not;
 
       return;
@@ -428,13 +428,13 @@ extern "C" {
 
     f_string_statics_t args = f_string_statics_t_initialize;
 
-    if (data_make->cache_arguments.used > 1) {
-      args.array = data_make->cache_arguments.array + 1;
-      args.used = data_make->cache_arguments.used - 1;
+    if (data_make->main->cache_arguments.used > 1) {
+      args.array = data_make->main->cache_arguments.array + 1;
+      args.used = data_make->main->cache_arguments.used - 1;
       args.size = 0;
     }
 
-    fake_make_operate_process_execute(data_make, data_make->cache_arguments.used ? data_make->cache_arguments.array[0] : f_string_empty_s, args, as_shell);
+    fake_make_operate_process_execute(data_make, data_make->main->cache_arguments.used ? data_make->main->cache_arguments.array[0] : f_string_empty_s, args, as_shell);
   }
 #endif // _di_fake_make_operate_process_run_
 

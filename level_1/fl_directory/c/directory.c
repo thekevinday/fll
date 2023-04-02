@@ -201,6 +201,14 @@ extern "C" {
 
       if (!recurse->action) {
         recurse->state.status = F_status_set_error(F_parameter);
+
+        if (recurse->handle) {
+          recurse->handle((void *) recurse, path, f_directory_recurse_do_flag_top_e | f_directory_recurse_do_flag_path_e);
+        }
+        else if (recurse->state.handle) {
+          recurse->state.handle(&recurse->state, (void *) recurse);
+        }
+
         return;
       }
     #endif // _di_level_1_parameter_checking_
@@ -214,7 +222,10 @@ extern "C" {
     if (!recurse->path_top->used) {
       recurse->state.status = F_data_not;
 
-      if (recurse->state.handle) {
+      if (recurse->handle) {
+        recurse->handle((void *) recurse, path, f_directory_recurse_do_flag_top_e | f_directory_recurse_do_flag_path_e);
+      }
+      else if (recurse->state.handle) {
         recurse->state.handle(&recurse->state, (void *) recurse);
       }
 
@@ -228,7 +239,10 @@ extern "C" {
     }
 
     if (F_status_is_error(recurse->state.status)) {
-      if (recurse->state.handle) {
+      if (recurse->handle) {
+        recurse->handle((void *) recurse, path, f_directory_recurse_do_flag_top_e | f_directory_recurse_do_flag_path_e);
+      }
+      else if (recurse->state.handle) {
         recurse->state.handle(&recurse->state, (void *) recurse);
       }
 
@@ -236,7 +250,7 @@ extern "C" {
     }
 
     if ((recurse->flag & f_directory_recurse_do_flag_top_e) && (recurse->flag & f_directory_recurse_do_flag_first_e)) {
-      recurse->action((void *) recurse, f_directory_recurse_do_flag_top_e | f_directory_recurse_do_flag_first_e);
+      recurse->action((void *) recurse, path, f_directory_recurse_do_flag_top_e | f_directory_recurse_do_flag_first_e | f_directory_recurse_do_flag_path_e);
     }
 
     if (F_status_is_error_not(recurse->state.status)) {
@@ -269,13 +283,16 @@ extern "C" {
 
     if (F_status_is_error_not(recurse->state.status)) {
       if ((recurse->flag & f_directory_recurse_do_flag_top_e) && (recurse->flag & f_directory_recurse_do_flag_last_e)) {
-        recurse->action((void *) recurse, f_directory_recurse_do_flag_top_e | f_directory_recurse_do_flag_last_e);
+        recurse->action((void *) recurse, path, f_directory_recurse_do_flag_top_e | f_directory_recurse_do_flag_last_e | f_directory_recurse_do_flag_path_e);
       }
     }
 
     if (F_status_is_error(recurse->state.status)) {
-      if (recurse->state.handle) {
-        recurse->state.handle(&recurse->state, (void *) &recurse);
+      if (recurse->handle) {
+        recurse->handle((void *) recurse, path, f_directory_recurse_do_flag_top_e | f_directory_recurse_do_flag_path_e);
+      }
+      else if (recurse->state.handle) {
+        recurse->state.handle(&recurse->state, (void *) recurse);
       }
     }
     else {

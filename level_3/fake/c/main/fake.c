@@ -248,7 +248,7 @@ extern "C" {
 #endif // _di_fake_main_
 
 #ifndef _di_fake_execute_
-  int fake_execute(fake_data_t * const data, const f_string_maps_t environment, const f_string_static_t program, const f_string_statics_t arguments) {
+  int fake_execute(fake_data_t * const data, const f_string_maps_t environment, const f_string_static_t program) {
 
     if (!data || !data->main) return 1;
     if (F_status_is_error(data->main->setting.state.status)) return 1;
@@ -258,11 +258,11 @@ extern "C" {
 
       f_print_dynamic(program, data->main->program.message.to);
 
-      for (f_array_length_t i = 0; i < arguments.used; ++i) {
+      for (f_array_length_t i = 0; i < data->main->cache_arguments.used; ++i) {
 
-        if (!arguments.array[i].used) continue;
+        if (!data->main->cache_arguments.array[i].used) continue;
 
-        fl_print_format(" %Q", data->main->program.message.to, arguments.array[i]);
+        fl_print_format(" %Q", data->main->program.message.to, data->main->cache_arguments.array[i]);
       } // for
 
       f_print_dynamic_raw(f_string_eol_s, data->main->program.message.to);
@@ -282,7 +282,7 @@ extern "C" {
 
       fl_execute_parameter_t parameter = macro_fl_execute_parameter_t_initialize(0, 0, &environment, &signals, 0);
 
-      data->main->setting.state.status = fll_execute_program(program, arguments, &parameter, 0, (void *) &return_code);
+      data->main->setting.state.status = fll_execute_program(program, data->main->cache_arguments, &parameter, 0, (void *) &return_code);
 
       if (!((++data->main->program.signal_check) % fake_signal_check_d)) {
         if (fll_program_standard_signal_received(&data->main->program)) {

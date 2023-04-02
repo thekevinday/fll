@@ -179,6 +179,24 @@ extern "C" {
   }
 #endif // _di_fake_data_delete_
 
+#ifndef _di_fake_main_data_delete_
+  void fake_main_delete(fake_main_t * const main) {
+
+    if (!main) return;
+
+    fll_program_data_delete(&main->program);
+    fake_setting_delete(&main->setting);
+
+    f_string_dynamic_resize(0, &main->buffer);
+    f_string_dynamic_resize(0, &main->cache_1);
+    f_string_dynamic_resize(0, &main->cache_2);
+    f_string_dynamic_resize(0, &main->cache_argument);
+    f_string_dynamics_resize(0, &main->cache_arguments);
+
+    f_iki_data_delete(&main->cache_iki);
+  }
+#endif // _di_fake_main_data_delete_
+
 #ifndef _di_fake_make_data_delete_
   void fake_make_data_delete(fake_make_data_t * const data_make) {
 
@@ -234,15 +252,6 @@ extern "C" {
     f_string_dynamics_resize(0, &data_make->path.stack);
 
     f_fss_nameds_resize(0, &data_make->fakefile);
-
-    f_string_dynamic_resize(0, &data_make->buffer);
-    f_string_dynamic_resize(0, &data_make->cache_1);
-    f_string_dynamic_resize(0, &data_make->cache_2);
-    f_string_dynamic_resize(0, &data_make->cache_path);
-
-    f_string_dynamics_resize(0, &data_make->cache_arguments);
-
-    f_iki_data_delete(&data_make->cache_iki);
   }
 #endif // _di_fake_make_data_delete_
 

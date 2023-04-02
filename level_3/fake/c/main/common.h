@@ -81,26 +81,47 @@ extern "C" {
 #endif // _di_fake_setting_load_parameter_callback_
 
 /**
- * Perform the standard program setting unload process.
+ * Reset the string, performing an over-size check and shrinking if necessary.
  *
- * @param main
- *   The main program and setting data.
- *   All buffers are deallocated.
+ * This ignores errors when shrinking.
  *
- *   This does not alter main.setting.state.status.
+ * @param dynamic
+ *   The string to shrink.
  *
- * @return
- *   F_none on success.
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: fake_setting_delete().
- *
- * @see fake_setting_delete()
+ * @see f_string_dynamic_resize()
  */
-#ifndef _di_fake_setting_unload_
-  extern f_status_t fake_setting_unload(fake_main_t * const main);
-#endif // _di_fake_setting_unload_
+#ifndef _di_fake_string_dynamic_reset_
+  extern void fake_string_dynamic_reset(f_string_dynamic_t * const dynamic);
+#endif // _di_fake_string_dynamic_reset_
+
+/**
+ * Reset the array of strings, performing an over-size check and shrinking if necessary.
+ *
+ * This ignores errors when shrinking.
+ *
+ * @param dynamic
+ *   The string to shrink.
+ *
+ * @see f_string_dynamic_resize()
+ */
+#ifndef _di_fake_string_dynamics_reset_
+  extern void fake_string_dynamics_reset(f_string_dynamics_t * const dynamics);
+#endif // _di_fake_string_dynamics_reset_
+
+/**
+ * Reset the iki variable data, performing an over-size check and shrinking if necessary.
+ *
+ * This ignores errors when shrinking.
+ *
+ * @param iki_data
+ *   The iki data to shrink.
+ *
+ * @see f_array_lengths_resize()
+ * @see f_string_ranges_resize()
+ */
+#ifndef _di_fake_iki_data_reset_
+  extern void fake_iki_data_reset(f_iki_data_t * const iki_data);
+#endif // _di_fake_iki_data_reset_
 
 #ifdef __cplusplus
 } // extern "C"

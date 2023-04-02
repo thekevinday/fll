@@ -9,12 +9,12 @@ extern "C" {
 
     if (!data_make || !data_make->main) return;
 
-    data_make->cache_path.used = 0;
+    fake_string_dynamic_reset(&data_make->main->cache_argument);
 
-    data_make->main->setting.state.status = fl_path_canonical(path, &data_make->cache_path);
+    data_make->main->setting.state.status = fl_path_canonical(path, &data_make->main->cache_argument);
     if (F_status_is_error(data_make->main->setting.state.status)) return;
 
-    if (data_make->cache_path.used < data_make->path.stack.array[0].used) {
+    if (data_make->main->cache_argument.used < data_make->path.stack.array[0].used) {
       data_make->main->setting.state.status = F_status_set_error(F_false);
 
       return;
@@ -23,11 +23,11 @@ extern "C" {
     const f_string_range_t range = macro_f_string_range_t_initialize2(data_make->path.stack.array[0].used);
 
     if (range.start <= range.stop) {
-      data_make->main->setting.state.status = f_compare_dynamic_partial(data_make->path.stack.array[0], data_make->cache_path, range, range);
+      data_make->main->setting.state.status = f_compare_dynamic_partial(data_make->path.stack.array[0], data_make->main->cache_argument, range, range);
       if (F_status_is_error(data_make->main->setting.state.status)) return;
 
       if (data_make->main->setting.state.status) {
-        if (data_make->cache_path.used == data_make->path.stack.array[0].used || data_make->cache_path.string[data_make->path.stack.array[0].used] == f_path_separator_s.string[0]) {
+        if (data_make->main->cache_argument.used == data_make->path.stack.array[0].used || data_make->main->cache_argument.string[data_make->path.stack.array[0].used] == f_path_separator_s.string[0]) {
           data_make->main->setting.state.status = F_true;
 
           return;
@@ -138,7 +138,7 @@ extern "C" {
 
     if (!data_make || !data_make->main) return;
 
-    data_make->cache_path.used = 0;
+    fake_string_dynamic_reset(&data_make->main->cache_argument);
 
     if (!path.used || path.used == data_make->path.stack.array[0].used) {
       data_make->main->setting.state.status = F_none;
@@ -157,10 +157,10 @@ extern "C" {
     range.start = data_make->path.stack.array[0].used + 1;
     range.stop = range.start + (path.used - range.start) - 1;
 
-    data_make->main->setting.state.status = f_string_dynamic_partial_append(path, range, &data_make->cache_path);
+    data_make->main->setting.state.status = f_string_dynamic_partial_append(path, range, &data_make->main->cache_argument);
     if (F_status_is_error(data_make->main->setting.state.status)) return;
 
-    data_make->main->setting.state.status = f_string_dynamic_terminate(&data_make->cache_path);
+    data_make->main->setting.state.status = f_string_dynamic_terminate(&data_make->main->cache_argument);
     if (F_status_is_error(data_make->main->setting.state.status)) return;
 
     data_make->main->setting.state.status = F_none;

@@ -121,17 +121,37 @@ extern "C" {
  *
  * program: The main program data.
  * setting: The settings data.
+ *
+ * buffer:          A string buffer cache often used for files and often held longe than other caches.
+ * cache_1:         A string cache.
+ * cache_2:         A string cache.
+ * cache_argument:  A string cache for some argument.
+ * cache_argument:  A string cache for some path.
+ * cache_arguments: An array of strings cache for arguments.
  */
 #ifndef _di_fake_main_t_
   typedef struct {
     fll_program_data_t program;
     fake_setting_t setting;
+
+    f_string_dynamic_t buffer;
+    f_string_dynamic_t cache_1;
+    f_string_dynamic_t cache_2;
+    f_string_dynamic_t cache_argument;
+    f_string_dynamics_t cache_arguments;
+    f_iki_data_t cache_iki;
   } fake_main_t;
 
   #define fake_main_t_initialize \
     { \
       fll_program_data_t_initialize, \
       fake_setting_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamic_t_initialize, \
+      f_string_dynamics_t_initialize, \
+      f_iki_data_t_initialize, \
     }
 #endif // _di_fake_main_t_
 
@@ -747,13 +767,6 @@ extern "C" {
 
     f_fss_nameds_t fakefile;
 
-    f_string_dynamic_t buffer;
-    f_string_dynamic_t cache_1;
-    f_string_dynamic_t cache_2;
-    f_string_dynamic_t cache_path;
-    f_string_dynamics_t cache_arguments;
-    f_iki_data_t cache_iki;
-
     f_array_length_t id_main;
 
     fake_main_t *main;
@@ -770,12 +783,6 @@ extern "C" {
     fake_make_path_t_initialize, \
     fl_print_t_initialize, \
     f_fss_nameds_t_initialize, \
-    f_string_dynamic_t_initialize, \
-    f_string_dynamic_t_initialize, \
-    f_string_dynamic_t_initialize, \
-    f_string_dynamic_t_initialize, \
-    f_string_dynamics_t_initialize, \
-    f_iki_data_t_initialize, \
     0, \
     0, \
     0, \
@@ -841,6 +848,18 @@ extern "C" {
 #ifndef _di_fake_make_data_delete_
   extern void fake_make_data_delete(fake_make_data_t * const data_make);
 #endif // _di_fake_make_data_delete_
+
+/**
+ * Deallocate main program data.
+ *
+ * @param setting_make
+ *   The make setting data.
+ *
+ *   This does not alter data_make.main.setting.state.status.
+ */
+#ifndef _di_fake_main_data_delete_
+  extern void fake_main_delete(fake_main_t * const main);
+#endif // _di_fake_main_data_delete_
 
 /**
  * Deallocate make setting data.

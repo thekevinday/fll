@@ -44,9 +44,7 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
   fake_main(&data);
 
-  fake_setting_unload(&data);
-
-  fll_program_data_delete(&data.program);
+  fake_main_delete(&data);
 
   fll_program_standard_set_down(&data.program);
 

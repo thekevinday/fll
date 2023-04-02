@@ -535,16 +535,81 @@ extern "C" {
   }
 #endif // _di_fake_setting_load_parameter_callback_
 
-#ifndef _di_fake_setting_unload_
-  f_status_t fake_setting_unload(fake_main_t * const main) {
+#ifndef _di_fake_string_dynamic_reset_
+  void fake_string_dynamic_reset(f_string_dynamic_t * const dynamic) {
 
-    if (!main) return F_status_set_error(F_parameter);
+    if (!dynamic) return;
 
-    fake_setting_delete(&main->setting);
+    // Shrink an overly long string.
+    if (dynamic->size > fake_max_over_string_d) {
+      f_string_dynamic_resize(fake_allocation_large_d, dynamic);
+    }
 
-    return F_none;
+    dynamic->used = 0;
   }
-#endif // _di_fake_setting_unload_
+#endif // _di_fake_string_dynamic_reset_
+
+#ifndef _di_fake_string_dynamics_reset_
+  void fake_string_dynamics_reset(f_string_dynamics_t * const dynamics) {
+
+    if (!dynamics) return;
+
+    // Shrink an overly long array.
+    if (dynamics->size > fake_max_over_array_d) {
+      f_string_dynamics_resize(fake_allocation_large_d, dynamics);
+    }
+
+    while (dynamics->used) {
+      fake_string_dynamic_reset(&dynamics->array[--dynamics->used]);
+    } // while
+  }
+#endif // _di_fake_string_dynamics_reset_
+
+#ifndef _di_fake_iki_data_reset_
+  void fake_iki_data_reset(f_iki_data_t * const iki_data) {
+
+    if (!iki_data) return;
+
+    // Shrink an overly long array.
+    if (iki_data->content.used > fake_max_over_array_d) {
+      f_string_ranges_resize(fake_allocation_large_d, &iki_data->content);
+    }
+
+    if (iki_data->delimits.used > fake_max_over_array_d) {
+      f_array_lengths_resize(fake_allocation_large_d, &iki_data->delimits);
+    }
+
+    if (iki_data->variable.used > fake_max_over_array_d) {
+      f_string_ranges_resize(fake_allocation_large_d, &iki_data->variable);
+    }
+
+    if (iki_data->vocabulary.used > fake_max_over_array_d) {
+      f_string_ranges_resize(fake_allocation_large_d, &iki_data->vocabulary);
+    }
+
+    while (iki_data->content.used) {
+
+      iki_data->content.array[--iki_data->content.used].start = 1;
+      iki_data->content.array[iki_data->content.used].stop = 0;
+    } // while
+
+    while (iki_data->delimits.used) {
+      iki_data->delimits.array[--iki_data->delimits.used] = 0;
+    } // while
+
+    while (iki_data->variable.used) {
+
+      iki_data->variable.array[--iki_data->variable.used].start = 1;
+      iki_data->variable.array[iki_data->variable.used].stop = 0;
+    } // while
+
+    while (iki_data->vocabulary.used) {
+
+      iki_data->vocabulary.array[--iki_data->vocabulary.used].start = 1;
+      iki_data->vocabulary.array[iki_data->vocabulary.used].stop = 0;
+    } // while
+  }
+#endif // _di_fake_iki_data_reset_
 
 #ifdef __cplusplus
 } // extern "C"

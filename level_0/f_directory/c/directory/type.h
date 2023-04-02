@@ -223,18 +223,26 @@ extern "C" {
  * The callback must take care to properly modify the structure or they could cause security, integrity, or functionality problems.
  * The action callback may set any of the following on the state.status to have the following effects:
  *   - Any status (with error bit set): Immediately return as error.
- *   - F_break: Break out of the current loop.
- *   - F_continue: Skip to the next iteration in the current loop.
- *   - F_done: immedately return as success but do nothing else in this recursion.
+ *   - F_break:                         Break out of the current loop.
+ *   - F_continue:                      Skip to the next iteration in the current loop.
+ *   - F_done:                          Immedately return as success but do nothing else in this recursion.
+ * The action parameters are:
+ *   - recurse: Must be of type f_directory_recurse_do_t and represents this data.
+ *   - name:    The name of the file or directory the action is being performed on (does not have the directory path).
+ *   - flag:    A flag representing the particular action being performed.
+ *
+ * The state.handle() and state.interrupt() callbacks internal parameter must be of type f_directory_recurse_do_t.
+ * The state.handle() is called only when handle is NULL.
  *
  * max_depth: The maximum recursion depth to use.
  * depth:     A number representing the depth recursed thus far (generally assigned internally).
  * flag:      A set of flags used exclusively by the directory recurse process (not to be confused with state.flag).
- * state:     A pointer to the state information.
+ * state:     A pointer to the state information, where state.interrupt() and state.handle() are called appopriately.
  * listing:   A directory listing structure used internally to help reduce repeated memory allocation overhead.
  * path:      A pointer to the current path string, used for error handling and printing (generally assigned internally).
  * path_top:  A pointer to the top path string, used for error handling and printing (generally assigned internally).
  * action:    A callback used for performing some action (this is required to do anything).
+ * handle:    A callback used for performing error handling during recursion directly relating to a file.
  *
  * The macro_f_directory_recurse_do_t_initialize_1() all arguments.
  * The macro_f_directory_recurse_do_t_initialize_2() all arguments except for internally managed source, destination, mode, and depth.
@@ -243,7 +251,7 @@ extern "C" {
   typedef struct {
     f_number_unsigned_t max_depth;
     f_array_length_t depth;
-    uint8_t flag;
+    uint16_t flag;
 
     f_state_t state;
     f_directory_listing_t listing;
@@ -251,7 +259,8 @@ extern "C" {
     const f_string_static_t *path;
     const f_string_static_t *path_top;
 
-    void (*action)(void * const recurse, const uint16_t flag);
+    void (*action)(void * const recurse, const f_string_static_t name, const uint16_t flag);
+    void (*handle)(void * const recurse, const f_string_static_t name, const uint16_t flag);
   } f_directory_recurse_do_t;
 
   #define f_directory_recurse_do_t_initialize { \
@@ -263,9 +272,10 @@ extern "C" {
     0, \
     0, \
     0, \
+    0, \
   }
 
-  #define macro_f_directory_recurse_do_t_initialize_1(max_depth, depth, flag, state, listing, path, path_top, action) { \
+  #define macro_f_directory_recurse_do_t_initialize_1(max_depth, depth, flag, state, listing, path, path_top, action, handle) { \
     max_depth, \
     depth, \
     flag, \
@@ -274,9 +284,10 @@ extern "C" {
     path, \
     path_top, \
     action, \
+    handle, \
   }
 
-  #define macro_f_directory_recurse_do_t_initialize_2(max_depth, depth, flag, state, action) { \
+  #define macro_f_directory_recurse_do_t_initialize_2(max_depth, depth, flag, state, action, handle) { \
     max_depth, \
     depth,\
     flag, \
@@ -285,6 +296,7 @@ extern "C" {
     0, \
     0, \
     action, \
+    handle, \
   }
 #endif // _di_f_directory_recurse_do_t_
 

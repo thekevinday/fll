@@ -123,7 +123,7 @@ extern "C" {
  * @param quote
  *   The quote associated with the content.
  * @param range_name
- *   The range representing the variable content name string within the data_make->buffer.
+ *   The range representing the variable content name string within the data_make.main.buffer.
  *
  * @see f_string_dynamic_append_nulless()
  * @see f_string_dynamic_mash()
@@ -149,7 +149,7 @@ extern "C" {
  * @param quote
  *   The quote associated with the content.
  * @param range_name
- *   The range representing the variable content name string within the data_make->buffer.
+ *   The range representing the variable content name string within the data_make.main.buffer.
  *
  * @see f_string_dynamic_append_nulless()
  */
@@ -176,7 +176,7 @@ extern "C" {
  * @param quote
  *   The quote associated with the content.
  * @param range_name
- *   The range representing the variable content name string within the data_make->buffer.
+ *   The range representing the variable content name string within the data_make.main.buffer.
  *
  * @see f_environment_get()
  * @see f_string_dynamic_append_nulless()

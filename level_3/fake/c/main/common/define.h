@@ -52,12 +52,16 @@ extern "C" {
  * _di_fake_max_*_d:
  *   - initial_buffer:  Max size to maintain the buffer (to avoid buffer bloat after an overly large allocation) (131072 = 128k).
  *   - operation:       Maximum number of operations.
+ *   - over_array:      Max size when array is over this to shrink the array when done.
+ *   - over_string:     Max size when string is over this to shrink the string when done.
  *   - recursion_depth: Maximum recursion depth.
  *   - stack:           Maximum stack call depth.
  */
 #ifndef _di_fake_max_d_
   #define fake_max_initial_buffer_d  131072
   #define fake_max_operation_d       35
+  #define fake_max_over_array_d      4096
+  #define fake_max_over_string_d     65536
   #define fake_max_recursion_depth_d 65535
   #define fake_max_stack_d           8192
 #endif // _di_fake_max_d_
