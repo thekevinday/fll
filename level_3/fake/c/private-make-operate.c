@@ -1146,12 +1146,6 @@ extern "C" {
 
     status = f_string_dynamic_append_nulless(data_make->cache_1, &data_make->cache_arguments.array[data_make->cache_arguments.used]);
 
-    if (F_status_is_error_not(status) && !quote) {
-      ++data_make->cache_arguments.used;
-
-      status = f_string_dynamics_increase(fake_default_allocation_small_d, &data_make->cache_arguments);
-    }
-
     if (F_status_is_error(status)) return status;
     if (data_make->cache_1.used) return F_true;
 
@@ -1235,14 +1229,6 @@ extern "C" {
     }
 
     if (F_status_is_error(status)) return status;
-
-    if (!quote) {
-      ++data_make->cache_arguments.used;
-
-      status = f_string_dynamics_increase(fake_default_allocation_small_d, &data_make->cache_arguments);
-      if (F_status_is_error(status)) return status;
-    }
-
     if (data_make->cache_2.used) return F_true;
 
     return F_data_not;
