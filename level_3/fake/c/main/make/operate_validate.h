@@ -100,7 +100,7 @@ extern "C" {
  *   The variable name string to validate.
  *
  * @return
- *   F_none if there is no string to validate (used = 0).
+ *   F_data_not if there is no string to validate (used = 0).
  *   F_true on valid.
  *   F_false on invalid.
  *

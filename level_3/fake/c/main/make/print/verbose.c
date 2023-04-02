@@ -10,7 +10,7 @@ extern "C" {
     if (!print) return F_status_set_error(F_output_not);
     if (print->verbosity < f_console_verbosity_verbose_e) return F_output_not;
 
-    fake_print_context_simple_variable(print, "Breaking as", arguments.used ? arguments.array[0] : fake_make_operation_argument_success_s, 0);
+    fake_print_context_simple_variable(print, "Breaking as ", arguments.used ? arguments.array[0] : fake_make_operation_argument_success_s, 0);
 
     return F_none;
   }
@@ -39,7 +39,7 @@ extern "C" {
     if (!print) return F_status_set_error(F_output_not);
     if (print->verbosity < f_console_verbosity_verbose_e) return F_output_not;
 
-    fake_print_context_simple_variable(print, "Defined environment variable", variable, 0);
+    fake_print_context_simple_variable(print, "Defined environment variable ", variable, 0);
 
     return F_none;
   }
@@ -51,7 +51,7 @@ extern "C" {
     if (!print) return F_status_set_error(F_output_not);
     if (print->verbosity < f_console_verbosity_verbose_e) return F_output_not;
 
-    fake_print_context_simple_variable(print, "Removed", path, 0);
+    fake_print_context_simple_variable(print, "Removed ", path, 0);
 
     return F_none;
   }
@@ -63,7 +63,7 @@ extern "C" {
     if (!print) return F_status_set_error(F_output_not);
     if (print->verbosity < f_console_verbosity_verbose_e) return F_output_not;
 
-    fake_print_context_simple_variable(print, "Exiting as", arguments.used ? arguments.array[0] : fake_make_operation_argument_success_s, 0);
+    fake_print_context_simple_variable(print, "Exiting as ", arguments.used ? arguments.array[0] : fake_make_operation_argument_success_s, 0);
 
     return F_none;
   }
@@ -165,7 +165,7 @@ extern "C" {
     if (!print) return F_status_set_error(F_output_not);
     if (print->verbosity < f_console_verbosity_verbose_e) return F_output_not;
 
-    fake_print_context_simple_variable(print, "Changed project path to", path, 0);
+    fake_print_context_simple_variable(print, "Changed project path to ", path, 0);
 
     return F_none;
   }
@@ -211,7 +211,7 @@ extern "C" {
     if (!print) return F_status_set_error(F_output_not);
     if (print->verbosity < f_console_verbosity_verbose_e) return F_output_not;
 
-    fake_print_context_simple_variable(print, "Touched", path, 0);
+    fake_print_context_simple_variable(print, "Touched ", path, 0);
 
     return F_none;
   }

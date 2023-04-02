@@ -57,7 +57,9 @@ extern "C" {
 
     if (!data_make || !data_make->main || !state_process) return;
 
-    if (F_status_is_error(data_make->main->setting.state.status)) {
+    fake_main_t * const main = data_make->main;
+
+    if (F_status_is_error(main->setting.state.status)) {
       state_process->block_result = fake_condition_result_error_e;
       state_process->success_block = F_false;
 

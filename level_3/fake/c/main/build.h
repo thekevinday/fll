@@ -270,6 +270,7 @@ extern "C" {
  *   The source string to append the build path source to.
  *   This gets reset by fake_string_dynamics_reset().
  *
+ * @see f_string_dynamic_append_assure()
  * @see f_string_dynamic_append_nulless()
  *
  * @see fake_string_dynamics_reset()

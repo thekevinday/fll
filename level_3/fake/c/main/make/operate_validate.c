@@ -95,7 +95,7 @@ extern "C" {
 #ifndef _di_fake_make_operate_validate_define_name_
   f_status_t fake_make_operate_validate_define_name(const f_string_static_t name) {
 
-    if (!name.used) return F_none;
+    if (!name.used) return F_data_not;
     if (!isalpha(name.string[0]) && name.string[0] != '_') return F_false;
 
     for (f_array_length_t i = 1; i < name.used; ++i) {

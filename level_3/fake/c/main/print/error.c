@@ -458,8 +458,11 @@ extern "C" {
 
     f_array_length_t line = 1;
     f_state_t state = f_state_t_initialize;
+    const f_status_t status = main->setting.state.status;
 
     f_fss_count_lines(buffer, operation_name.start, &line, &main->setting.state);
+
+    main->setting.state.status = status;
 
     f_file_stream_lock(print->to);
 
@@ -584,8 +587,11 @@ extern "C" {
 
     f_array_length_t line = 1;
     f_state_t state = f_state_t_initialize;
+    const f_status_t status = main->setting.state.status;
 
     f_fss_count_lines(buffer, operation_name.start, &line, &main->setting.state);
+
+    main->setting.state.status = status;
 
     f_file_stream_lock(print->to);
 
@@ -615,8 +621,11 @@ extern "C" {
 
     f_array_length_t line = 1;
     f_state_t state = f_state_t_initialize;
+    const f_status_t status = main->setting.state.status;
 
     f_fss_count_lines(buffer, operation_name.start, &line, &main->setting.state);
+
+    main->setting.state.status = status;
 
     f_file_stream_lock(print->to);
 

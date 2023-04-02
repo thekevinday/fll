@@ -9,35 +9,37 @@ extern "C" {
 
     if (!data || !data->main) return;
 
-    if (!((++data->main->program.signal_check) % fake_signal_check_d)) {
-      if (fll_program_standard_signal_received(&data->main->program)) {
-        fll_program_print_signal_received(&data->main->program.warning, data->main->program.signal_received);
+    fake_main_t * const main = data->main;
 
-        data->main->setting.state.status = F_status_set_error(F_interrupt);
+    if (!((++main->program.signal_check) % fake_signal_check_d)) {
+      if (fll_program_standard_signal_received(&main->program)) {
+        fll_program_print_signal_received(&main->program.warning, main->program.signal_received);
+
+        main->setting.state.status = F_status_set_error(F_interrupt);
 
         return;
       }
     }
 
-    fake_make_print_message_now_making(&data->main->program.message, data->main->setting.fakefile);
+    fake_make_print_message_now_making(&main->program.message, main->setting.fakefile);
 
     f_array_lengths_t section_stack = f_array_lengths_t_initialize;
     fake_make_data_t data_make = fake_make_data_t_initialize;
 
     data_make.data = data;
-    data_make.main = data->main;
+    data_make.main = main;
 
-    data->main->setting.state.status = f_string_dynamics_increase(data->main->setting.state.step_small, &data_make.path.stack);
+    main->setting.state.status = f_string_dynamics_increase(main->setting.state.step_small, &data_make.path.stack);
 
-    if (F_status_is_error(data->main->setting.state.status)) {
+    if (F_status_is_error(main->setting.state.status)) {
       fake_print_error(&data_make.main->program.error, macro_fake_f(f_string_dynamics_increase));
 
       return;
     }
 
-    data->main->setting.state.status = f_path_current(F_true, &data_make.path.stack.array[0]);
+    main->setting.state.status = f_path_current(F_true, &data_make.path.stack.array[0]);
 
-    if (F_status_is_error(data->main->setting.state.status)) {
+    if (F_status_is_error(main->setting.state.status)) {
       fake_print_error(&data_make.main->program.error, macro_fake_f(f_path_current));
 
       fake_make_data_delete(&data_make);
@@ -45,9 +47,9 @@ extern "C" {
       return;
     }
 
-    data->main->setting.state.status = f_directory_open(data_make.path.stack.array[0], F_false, &data_make.path.top.id);
+    main->setting.state.status = f_directory_open(data_make.path.stack.array[0], F_false, &data_make.path.top.id);
 
-    if (F_status_is_error(data->main->setting.state.status)) {
+    if (F_status_is_error(main->setting.state.status)) {
       fake_print_error(&data_make.main->program.error, macro_fake_f(f_directory_open));
 
       fake_make_data_delete(&data_make);
@@ -59,9 +61,9 @@ extern "C" {
 
     fake_make_load_parameters(&data_make);
 
-    fake_make_load_fakefile(&data_make, data->main->program.pipe & fll_program_data_pipe_input_e);
+    fake_make_load_fakefile(&data_make, main->program.pipe & fll_program_data_pipe_input_e);
 
-    if (F_status_is_error(data->main->setting.state.status)) {
+    if (F_status_is_error(main->setting.state.status)) {
       fake_make_data_delete(&data_make);
 
       return;
@@ -70,7 +72,7 @@ extern "C" {
     if (!data_make.main->buffer.used) {
       fake_make_data_delete(&data_make);
 
-      data->main->setting.state.status = F_data_not;
+      main->setting.state.status = F_data_not;
 
       return;
     }
@@ -78,135 +80,135 @@ extern "C" {
     if (data_make.setting_make.fail == fake_make_operation_fail_exit_e) {
       data_make.error.prefix = fl_print_error_s;
       data_make.error.suffix = f_string_empty_s;
-      data_make.error.context = data->main->program.context.set.error;
-      data_make.error.notable = data->main->program.context.set.notable;
+      data_make.error.context = main->program.context.set.error;
+      data_make.error.notable = main->program.context.set.notable;
       data_make.error.to.stream = F_type_error_d;
       data_make.error.to.id = F_type_descriptor_error_d;
-      data_make.error.set = &data->main->program.context.set;
+      data_make.error.set = &main->program.context.set;
     }
     else if (data_make.setting_make.fail == fake_make_operation_fail_warn_e) {
       data_make.error.prefix = fl_print_warning_s;
       data_make.error.suffix = f_string_empty_s;
-      data_make.error.context = data->main->program.context.set.warning;
-      data_make.error.notable = data->main->program.context.set.notable;
+      data_make.error.context = main->program.context.set.warning;
+      data_make.error.notable = main->program.context.set.notable;
       data_make.error.to.stream = F_type_output_d;
       data_make.error.to.id = F_type_descriptor_output_d;
-      data_make.error.set = &data->main->program.context.set;
+      data_make.error.set = &main->program.context.set;
     }
     else {
       data_make.error.to.stream = 0;
       data_make.error.prefix = f_string_empty_s;
       data_make.error.suffix = f_string_empty_s;
       data_make.error.to.id = -1;
-      data_make.error.set = &data->main->program.context.set;
+      data_make.error.set = &main->program.context.set;
     }
 
-    data_make.error.verbosity = data->main->program.message.verbosity;
-    data_make.error.custom = data->main;
+    data_make.error.verbosity = main->program.message.verbosity;
+    data_make.error.custom = main;
 
-    if (data->main->program.parameters.remaining.used) {
+    if (main->program.parameters.remaining.used) {
       f_array_length_t i = 0;
       f_array_length_t j = 0;
       f_string_range_t range = f_string_range_t_initialize;
       f_array_length_t index = 0;
 
-      data->main->setting.state.status = F_none;
+      main->setting.state.status = F_none;
 
       // Validate the remaining parameters.
-      for (i = 0; i < data->main->program.parameters.remaining.used; ++i) {
+      for (i = 0; i < main->program.parameters.remaining.used; ++i) {
 
-        index = data->main->program.parameters.remaining.array[i];
+        index = main->program.parameters.remaining.array[i];
 
-        if (!data->main->program.parameters.arguments.array[index].used) {
-          data->main->setting.state.status = F_status_set_error(F_parameter);
+        if (!main->program.parameters.arguments.array[index].used) {
+          main->setting.state.status = F_status_set_error(F_parameter);
 
           break;
         }
 
         range.start = 0;
-        range.stop = data->main->program.parameters.arguments.array[index].used - 1;
+        range.stop = main->program.parameters.arguments.array[index].used - 1;
 
         for (j = 0; j < data_make.fakefile.used; ++j) {
-          if (f_compare_dynamic_partial(data->main->program.parameters.arguments.array[index], data_make.main->buffer, range, data_make.fakefile.array[j].name) == F_equal_to) break;
+          if (f_compare_dynamic_partial(main->program.parameters.arguments.array[index], data_make.main->buffer, range, data_make.fakefile.array[j].name) == F_equal_to) break;
         } // for
 
         if (j == data_make.fakefile.used) {
-          data->main->setting.state.status = F_status_set_error(F_parameter);
+          main->setting.state.status = F_status_set_error(F_parameter);
 
           break;
         }
       } // for
 
-      if (F_status_is_error(data->main->setting.state.status)) {
-        fake_make_print_error_argument_invalid_section(&data->main->program.error, data->main->program.parameters.arguments.array[data->main->program.parameters.remaining.array[i]]);
+      if (F_status_is_error(main->setting.state.status)) {
+        fake_make_print_error_argument_invalid_section(&main->program.error, main->program.parameters.arguments.array[main->program.parameters.remaining.array[i]]);
       }
       else {
         int result = 0;
 
-        for (i = 0; i < data->main->program.parameters.remaining.used; ++i) {
+        for (i = 0; i < main->program.parameters.remaining.used; ++i) {
 
-          index = data->main->program.parameters.remaining.array[i];
+          index = main->program.parameters.remaining.array[i];
           range.start = 0;
-          range.stop = data->main->program.parameters.arguments.array[index].used - 1;
+          range.stop = main->program.parameters.arguments.array[index].used - 1;
 
           for (j = 0; j < data_make.fakefile.used; ++j) {
 
-            if (f_compare_dynamic_partial(data->main->program.parameters.arguments.array[index], data_make.main->buffer, range, data_make.fakefile.array[j].name) == F_equal_to) {
+            if (f_compare_dynamic_partial(main->program.parameters.arguments.array[index], data_make.main->buffer, range, data_make.fakefile.array[j].name) == F_equal_to) {
               {
                 int result = fake_make_operate_section(&data_make, j, &section_stack);
 
-                if (data->main->setting.state.status == F_child) {
-                  data->main->program.child = result;
+                if (main->setting.state.status == F_child) {
+                  main->program.child = result;
 
                   break;
                 }
               }
 
-              const f_status_t status = data->main->setting.state.status;
+              const f_status_t status = main->setting.state.status;
 
-              data->main->setting.state.status = f_path_change_at(data_make.path.top.id);
+              main->setting.state.status = f_path_change_at(data_make.path.top.id);
 
-              if (F_status_is_error(data->main->setting.state.status)) {
-                fake_make_print_warning_cannot_change_back(&data->main->program.warning, data_make.path.stack.array[0]);
+              if (F_status_is_error(main->setting.state.status)) {
+                fake_make_print_warning_cannot_change_back(&main->program.warning, data_make.path.stack.array[0]);
               }
 
-              data->main->setting.state.status = status;
+              main->setting.state.status = status;
 
               break;
             }
 
-            if (F_status_is_error(data->main->setting.state.status)) break;
+            if (F_status_is_error(main->setting.state.status)) break;
           } // for
 
-          if (data->main->setting.state.status == F_child || F_status_is_error(data->main->setting.state.status)) break;
+          if (main->setting.state.status == F_child || F_status_is_error(main->setting.state.status)) break;
         } // for
       }
     }
     else {
       if (data_make.id_main == data_make.fakefile.used) {
-        fake_make_print_error_fakefile_section_missing(&data->main->program.error, data->file_data_build_fakefile, fake_make_item_main_s);
+        fake_make_print_error_fakefile_section_missing(&main->program.error, data->file_data_build_fakefile, fake_make_item_main_s);
 
-        data->main->setting.state.status = F_status_set_error(F_failure);
+        main->setting.state.status = F_status_set_error(F_failure);
       }
       else {
         {
           const int result = fake_make_operate_section(&data_make, data_make.id_main, &section_stack);
 
-          if (data->main->setting.state.status == F_child) {
-            data->main->program.child = result;
+          if (main->setting.state.status == F_child) {
+            main->program.child = result;
           }
         }
 
-        if (data->main->setting.state.status != F_child) {
-          const f_status_t status = data->main->setting.state.status;
+        if (main->setting.state.status != F_child) {
+          const f_status_t status = main->setting.state.status;
 
-          data->main->setting.state.status = f_path_change_at(data_make.path.top.id);
+          main->setting.state.status = f_path_change_at(data_make.path.top.id);
 
-          if (F_status_is_error(data->main->setting.state.status)) {
-            fake_make_print_warning_cannot_change_back(&data->main->program.warning, data_make.path.stack.array[0]);
+          if (F_status_is_error(main->setting.state.status)) {
+            fake_make_print_warning_cannot_change_back(&main->program.warning, data_make.path.stack.array[0]);
           }
 
-          data->main->setting.state.status = status;
+          main->setting.state.status = status;
         }
       }
     }
@@ -217,8 +219,8 @@ extern "C" {
     f_array_lengths_resize(0, &section_stack);
     fake_make_data_delete(&data_make);
 
-    if (F_status_is_error_not(data->main->setting.state.status)) {
-      data->main->setting.state.status = F_none;
+    if (F_status_is_error_not(main->setting.state.status)) {
+      main->setting.state.status = F_none;
     }
   }
 #endif // _di_fake_make_operate_
@@ -230,11 +232,13 @@ extern "C" {
     if (F_status_is_error(data_make->main->setting.state.status)) return;
     if (!content.used) return;
 
-    // Pre-allocate the known arguments size.
-    data_make->main->setting.state.status = f_string_dynamics_increase_by(content.used, &data_make->main->cache_arguments);
+    fake_main_t * const main = data_make->main;
 
-    if (F_status_is_error(data_make->main->setting.state.status) || data_make->main->setting.state.status == F_string_too_large) {
-      fake_print_error(&data_make->main->program.error, macro_fake_f(f_string_dynamics_increase_by));
+    // Pre-allocate the known arguments size.
+    main->setting.state.status = f_string_dynamics_increase_by(content.used, &main->cache_arguments);
+
+    if (F_status_is_error(main->setting.state.status) || main->setting.state.status == F_string_too_large) {
+      fake_print_error(&main->program.error, macro_fake_f(f_string_dynamics_increase_by));
 
       return;
     }
@@ -243,7 +247,7 @@ extern "C" {
     const f_string_static_t vocabulary_define = macro_f_string_static_t_initialize(F_iki_vocabulary_0002_define_s, 0, F_iki_vocabulary_0002_define_s_length);
     const f_string_static_t vocabulary_parameter = macro_f_string_static_t_initialize(F_iki_vocabulary_0002_parameter_s, 0, F_iki_vocabulary_0002_parameter_s_length);
 
-    f_iki_data_t *iki_data = &data_make->main->cache_iki;
+    f_iki_data_t *iki_data = &main->cache_iki;
 
     f_string_range_t range = f_string_range_t_initialize;
     f_string_map_multis_t *parameter = &data_make->setting_make.parameter;
@@ -348,19 +352,19 @@ extern "C" {
       &data_make->parameter_value.work,
     };
 
-    data_make->main->setting.state.flag = 0;
-    data_make->main->setting.state.handle = 0;
-    data_make->main->setting.state.data = 0;
+    main->setting.state.flag = 0;
+    main->setting.state.handle = 0;
+    main->setting.state.data = 0;
 
-    data_make->main->setting.state.status = f_string_dynamics_increase(data_make->main->setting.state.step_small, &data_make->main->cache_arguments);
+    main->setting.state.status = f_string_dynamics_increase(main->setting.state.step_small, &main->cache_arguments);
 
-    if (F_status_is_error(data_make->main->setting.state.status)) {
-      fake_print_error(&data_make->main->program.error, macro_fake_f(f_string_dynamics_increase));
+    if (F_status_is_error(main->setting.state.status)) {
+      fake_print_error(&main->program.error, macro_fake_f(f_string_dynamics_increase));
 
       return;
     }
 
-    data_make->main->cache_arguments.array[data_make->main->cache_arguments.used].used = 0;
+    main->cache_arguments.array[main->cache_arguments.used].used = 0;
 
     for (; i < content.used; ++i) {
 
@@ -369,17 +373,17 @@ extern "C" {
       // Skip content that is unused, but quoted content, even if empty, should remain.
       if (content.array[i].start > content.array[i].stop) {
         if (quotes.array[i]) {
-          ++data_make->main->cache_arguments.used;
+          ++main->cache_arguments.used;
 
-          data_make->main->setting.state.status = f_string_dynamics_increase(data_make->main->setting.state.step_small, &data_make->main->cache_arguments);
+          main->setting.state.status = f_string_dynamics_increase(main->setting.state.step_small, &main->cache_arguments);
 
-          if (F_status_is_error(data_make->main->setting.state.status)) {
-            fake_print_error(&data_make->main->program.error, macro_fake_f(f_string_dynamics_increase));
+          if (F_status_is_error(main->setting.state.status)) {
+            fake_print_error(&main->program.error, macro_fake_f(f_string_dynamics_increase));
 
             break;
           }
 
-          data_make->main->cache_arguments.array[data_make->main->cache_arguments.used].used = 0;
+          main->cache_arguments.array[main->cache_arguments.used].used = 0;
         }
 
         continue;
@@ -387,11 +391,11 @@ extern "C" {
 
       range = content.array[i];
 
-      fl_iki_read(&data_make->main->buffer, &range, iki_data, &data_make->main->setting.state);
+      fl_iki_read(&main->buffer, &range, iki_data, &main->setting.state);
 
-      if (F_status_is_error(data_make->main->setting.state.status)) {
-        if (F_status_set_fine(data_make->main->setting.state.status) != F_interrupt) {
-          fake_print_error(&data_make->main->program.error, macro_fake_f(fl_iki_read));
+      if (F_status_is_error(main->setting.state.status)) {
+        if (F_status_set_fine(main->setting.state.status) != F_interrupt) {
+          fake_print_error(&main->program.error, macro_fake_f(fl_iki_read));
         }
 
         break;
@@ -399,7 +403,7 @@ extern "C" {
 
       // Apply the IKI delimits to the buffer.
       for (j = 0; j < iki_data->delimits.used; ++j) {
-        data_make->main->buffer.string[iki_data->delimits.array[j]] = f_iki_syntax_placeholder_s.string[0];
+        main->buffer.string[iki_data->delimits.array[j]] = f_iki_syntax_placeholder_s.string[0];
       } // for
 
       if (iki_data->variable.used) {
@@ -409,10 +413,10 @@ extern "C" {
           range.start = content.array[i].start;
           range.stop = iki_data->variable.array[0].start - 1;
 
-          data_make->main->setting.state.status = f_string_dynamic_partial_append_nulless(data_make->main->buffer, range, &data_make->main->cache_arguments.array[data_make->main->cache_arguments.used]);
+          main->setting.state.status = f_string_dynamic_partial_append_nulless(main->buffer, range, &main->cache_arguments.array[main->cache_arguments.used]);
 
-          if (F_status_is_error(data_make->main->setting.state.status)) {
-            fake_print_error(&data_make->main->program.error, macro_fake_f(f_string_dynamic_partial_append_nulless));
+          if (F_status_is_error(main->setting.state.status)) {
+            fake_print_error(&main->program.error, macro_fake_f(f_string_dynamic_partial_append_nulless));
 
             break;
           }
@@ -424,31 +428,31 @@ extern "C" {
 
           is = 0;
 
-          data_make->main->setting.state.status = f_compare_dynamic_partial_string(vocabulary_define.string, data_make->main->buffer, vocabulary_define.used, iki_data->vocabulary.array[j]);
+          main->setting.state.status = f_compare_dynamic_partial_string(vocabulary_define.string, main->buffer, vocabulary_define.used, iki_data->vocabulary.array[j]);
 
-          if (data_make->main->setting.state.status == F_equal_to) {
+          if (main->setting.state.status == F_equal_to) {
             is = 2;
             iki_type |= 0x2;
           }
-          else if (data_make->main->setting.state.status == F_equal_to_not) {
-            data_make->main->setting.state.status = f_compare_dynamic_partial_string(vocabulary_parameter.string, data_make->main->buffer, vocabulary_parameter.used, iki_data->vocabulary.array[j]);
+          else if (main->setting.state.status == F_equal_to_not) {
+            main->setting.state.status = f_compare_dynamic_partial_string(vocabulary_parameter.string, main->buffer, vocabulary_parameter.used, iki_data->vocabulary.array[j]);
 
-            if (data_make->main->setting.state.status == F_equal_to) {
+            if (main->setting.state.status == F_equal_to) {
               is = 1;
               iki_type |= 0x1;
             }
-            else if (data_make->main->setting.state.status == F_equal_to_not) {
-              data_make->main->setting.state.status = f_compare_dynamic_partial_string(vocabulary_context.string, data_make->main->buffer, vocabulary_context.used, iki_data->vocabulary.array[j]);
+            else if (main->setting.state.status == F_equal_to_not) {
+              main->setting.state.status = f_compare_dynamic_partial_string(vocabulary_context.string, main->buffer, vocabulary_context.used, iki_data->vocabulary.array[j]);
 
-              if (data_make->main->setting.state.status == F_equal_to) {
+              if (main->setting.state.status == F_equal_to) {
                 is = 3;
                 iki_type |= 0x4;
               }
             }
           }
 
-          if (F_status_is_error(data_make->main->setting.state.status)) {
-            fake_print_error(&data_make->main->program.error, macro_fake_f(f_compare_dynamic_partial));
+          if (F_status_is_error(main->setting.state.status)) {
+            fake_print_error(&main->program.error, macro_fake_f(f_compare_dynamic_partial));
 
             break;
           }
@@ -457,53 +461,22 @@ extern "C" {
             unmatched = F_true;
 
             // Check against reserved parameter names and if matches use them instead.
-            if (f_compare_dynamic_partial_string(fake_make_parameter_variable_return_s.string, data_make->main->buffer, fake_make_parameter_variable_return_s.used, iki_data->content.array[j]) == F_equal_to) {
+            if (f_compare_dynamic_partial_string(fake_make_parameter_variable_return_s.string, main->buffer, fake_make_parameter_variable_return_s.used, iki_data->content.array[j]) == F_equal_to) {
 
               if (data_make->setting_make.parameter.array[0].value.array[0].used) {
-                data_make->main->setting.state.status = f_string_dynamic_append_nulless(data_make->setting_make.parameter.array[0].value.array[0], &data_make->main->cache_arguments.array[data_make->main->cache_arguments.used]);
+                main->setting.state.status = f_string_dynamic_append_nulless(data_make->setting_make.parameter.array[0].value.array[0], &main->cache_arguments.array[main->cache_arguments.used]);
 
-                if (F_status_is_error(data_make->main->setting.state.status)) {
-                  fake_print_error(&data_make->main->program.error, macro_fake_f(f_string_dynamic_append_nulless));
+                if (F_status_is_error(main->setting.state.status)) {
+                  fake_print_error(&main->program.error, macro_fake_f(f_string_dynamic_append_nulless));
 
                   break;
                 }
               }
               else {
-                data_make->main->setting.state.status = f_string_dynamic_append(f_string_ascii_0_s, &data_make->main->cache_arguments.array[data_make->main->cache_arguments.used]);
+                main->setting.state.status = f_string_dynamic_append(f_string_ascii_0_s, &main->cache_arguments.array[main->cache_arguments.used]);
 
-                if (F_status_is_error(data_make->main->setting.state.status)) {
-                  fake_print_error(&data_make->main->program.error, macro_fake_f(f_string_dynamic_append));
-
-                  break;
-                }
-              }
-
-              unmatched = F_false;
-            }
-            else if (f_compare_dynamic_partial_string(fake_make_parameter_variable_top_s.string, data_make->main->buffer, fake_make_parameter_variable_top_s.used, iki_data->content.array[j]) == F_equal_to) {
-
-              if (data_make->path.stack.used) {
-                data_make->main->setting.state.status = f_string_dynamic_increase_by(data_make->path.stack.array[0].used + f_path_separator_s.used + 1, &data_make->main->cache_arguments.array[data_make->main->cache_arguments.used]);
-
-                if (F_status_is_error(data_make->main->setting.state.status)) {
-                  fake_print_error(&data_make->main->program.error, macro_fake_f(f_string_dynamic_increase_by));
-
-                  break;
-                }
-
-                data_make->main->setting.state.status = f_string_dynamic_append(data_make->path.stack.array[0], &data_make->main->cache_arguments.array[data_make->main->cache_arguments.used]);
-
-                if (F_status_is_error(data_make->main->setting.state.status)) {
-                  fake_print_error(&data_make->main->program.error, macro_fake_f(f_string_dynamic_append));
-
-                  break;
-                }
-
-                // For safe path handling, always append the trailing slash.
-                data_make->main->setting.state.status = f_string_dynamic_append_assure(f_path_separator_s, &data_make->main->cache_arguments.array[data_make->main->cache_arguments.used]);
-
-                if (F_status_is_error(data_make->main->setting.state.status)) {
-                  fake_print_error(&data_make->main->program.error, macro_fake_f(f_string_dynamic_append_assure));
+                if (F_status_is_error(main->setting.state.status)) {
+                  fake_print_error(&main->program.error, macro_fake_f(f_string_dynamic_append));
 
                   break;
                 }
@@ -511,30 +484,61 @@ extern "C" {
 
               unmatched = F_false;
             }
-            else if (f_compare_dynamic_partial_string(fake_make_parameter_variable_current_s.string, data_make->main->buffer, fake_make_parameter_variable_current_s.used, iki_data->content.array[j]) == F_equal_to) {
+            else if (f_compare_dynamic_partial_string(fake_make_parameter_variable_top_s.string, main->buffer, fake_make_parameter_variable_top_s.used, iki_data->content.array[j]) == F_equal_to) {
 
               if (data_make->path.stack.used) {
-                data_make->main->setting.state.status = f_string_dynamic_increase_by(data_make->path.stack.array[data_make->path.stack.used - 1].used + f_path_separator_s.used + 1, &data_make->main->cache_arguments.array[data_make->main->cache_arguments.used]);
+                main->setting.state.status = f_string_dynamic_increase_by(data_make->path.stack.array[0].used + f_path_separator_s.used + 1, &main->cache_arguments.array[main->cache_arguments.used]);
 
-                if (F_status_is_error(data_make->main->setting.state.status)) {
-                  fake_print_error(&data_make->main->program.error, macro_fake_f(f_string_dynamic_increase_by));
+                if (F_status_is_error(main->setting.state.status)) {
+                  fake_print_error(&main->program.error, macro_fake_f(f_string_dynamic_increase_by));
 
                   break;
                 }
 
-                data_make->main->setting.state.status = f_string_dynamic_append(data_make->path.stack.array[data_make->path.stack.used - 1], &data_make->main->cache_arguments.array[data_make->main->cache_arguments.used]);
+                main->setting.state.status = f_string_dynamic_append(data_make->path.stack.array[0], &main->cache_arguments.array[main->cache_arguments.used]);
 
-                if (F_status_is_error(data_make->main->setting.state.status)) {
-                  fake_print_error(&data_make->main->program.error, macro_fake_f(f_string_dynamic_append));
+                if (F_status_is_error(main->setting.state.status)) {
+                  fake_print_error(&main->program.error, macro_fake_f(f_string_dynamic_append));
 
                   break;
                 }
 
                 // For safe path handling, always append the trailing slash.
-                data_make->main->setting.state.status = f_string_dynamic_append_assure(f_path_separator_s, &data_make->main->cache_arguments.array[data_make->main->cache_arguments.used]);
+                main->setting.state.status = f_string_dynamic_append_assure(f_path_separator_s, &main->cache_arguments.array[main->cache_arguments.used]);
 
-                if (F_status_is_error(data_make->main->setting.state.status)) {
-                  fake_print_error(&data_make->main->program.error, macro_fake_f(f_string_dynamic_append_assure));
+                if (F_status_is_error(main->setting.state.status)) {
+                  fake_print_error(&main->program.error, macro_fake_f(f_string_dynamic_append_assure));
+
+                  break;
+                }
+              }
+
+              unmatched = F_false;
+            }
+            else if (f_compare_dynamic_partial_string(fake_make_parameter_variable_current_s.string, main->buffer, fake_make_parameter_variable_current_s.used, iki_data->content.array[j]) == F_equal_to) {
+
+              if (data_make->path.stack.used) {
+                main->setting.state.status = f_string_dynamic_increase_by(data_make->path.stack.array[data_make->path.stack.used - 1].used + f_path_separator_s.used + 1, &main->cache_arguments.array[main->cache_arguments.used]);
+
+                if (F_status_is_error(main->setting.state.status)) {
+                  fake_print_error(&main->program.error, macro_fake_f(f_string_dynamic_increase_by));
+
+                  break;
+                }
+
+                main->setting.state.status = f_string_dynamic_append(data_make->path.stack.array[data_make->path.stack.used - 1], &main->cache_arguments.array[main->cache_arguments.used]);
+
+                if (F_status_is_error(main->setting.state.status)) {
+                  fake_print_error(&main->program.error, macro_fake_f(f_string_dynamic_append));
+
+                  break;
+                }
+
+                // For safe path handling, always append the trailing slash.
+                main->setting.state.status = f_string_dynamic_append_assure(f_path_separator_s, &main->cache_arguments.array[main->cache_arguments.used]);
+
+                if (F_status_is_error(main->setting.state.status)) {
+                  fake_print_error(&main->program.error, macro_fake_f(f_string_dynamic_append_assure));
 
                   break;
                 }
@@ -545,7 +549,7 @@ extern "C" {
             else {
               for (k = 0; k < 39; ++k) {
 
-                if (f_compare_dynamic_partial_string(reserved_name[k].string, data_make->main->buffer, reserved_name[k].used, iki_data->content.array[j]) != F_equal_to) {
+                if (f_compare_dynamic_partial_string(reserved_name[k].string, main->buffer, reserved_name[k].used, iki_data->content.array[j]) != F_equal_to) {
                   continue;
                 }
 
@@ -565,10 +569,10 @@ extern "C" {
                     } // for
                   } // for
 
-                  data_make->main->setting.state.status = f_string_dynamic_increase_by(l + f_string_space_s.used + 1, &data_make->main->cache_arguments.array[data_make->main->cache_arguments.used]);
+                  main->setting.state.status = f_string_dynamic_increase_by(l + f_string_space_s.used + 1, &main->cache_arguments.array[main->cache_arguments.used]);
 
-                  if (F_status_is_error(data_make->main->setting.state.status)) {
-                    fake_print_error(&data_make->main->program.error, macro_fake_f(f_string_dynamic_increase_by));
+                  if (F_status_is_error(main->setting.state.status)) {
+                    fake_print_error(&main->program.error, macro_fake_f(f_string_dynamic_increase_by));
 
                     break;
                   }
@@ -578,19 +582,19 @@ extern "C" {
                     if (!reserved_value[k]->array[l].used) continue;
 
                     if (separate) {
-                      data_make->main->setting.state.status = f_string_dynamic_append(f_string_space_s, &data_make->main->cache_arguments.array[data_make->main->cache_arguments.used]);
+                      main->setting.state.status = f_string_dynamic_append(f_string_space_s, &main->cache_arguments.array[main->cache_arguments.used]);
 
-                      if (F_status_is_error(data_make->main->setting.state.status)) {
-                        fake_print_error(&data_make->main->program.error, macro_fake_f(f_string_dynamic_append));
+                      if (F_status_is_error(main->setting.state.status)) {
+                        fake_print_error(&main->program.error, macro_fake_f(f_string_dynamic_append));
 
                         break;
                       }
                     }
 
-                    data_make->main->setting.state.status = f_string_dynamic_append_nulless(reserved_value[k]->array[l], &data_make->main->cache_arguments.array[data_make->main->cache_arguments.used]);
+                    main->setting.state.status = f_string_dynamic_append_nulless(reserved_value[k]->array[l], &main->cache_arguments.array[main->cache_arguments.used]);
 
-                    if (F_status_is_error(data_make->main->setting.state.status)) {
-                      fake_print_error(&data_make->main->program.error, macro_fake_f(f_string_dynamic_append_nulless));
+                    if (F_status_is_error(main->setting.state.status)) {
+                      fake_print_error(&main->program.error, macro_fake_f(f_string_dynamic_append_nulless));
 
                       break;
                     }
@@ -608,23 +612,23 @@ extern "C" {
 
                     // Unquoted use separate parameters rather then being separated by a space.
                     if (separate) {
-                      ++data_make->main->cache_arguments.used;
+                      ++main->cache_arguments.used;
 
-                      data_make->main->setting.state.status = f_string_dynamics_increase(data_make->main->setting.state.step_small, &data_make->main->cache_arguments);
+                      main->setting.state.status = f_string_dynamics_increase(main->setting.state.step_small, &main->cache_arguments);
 
-                      if (F_status_is_error(data_make->main->setting.state.status)) {
-                        fake_print_error(&data_make->main->program.error, macro_fake_f(f_string_dynamics_increase));
+                      if (F_status_is_error(main->setting.state.status)) {
+                        fake_print_error(&main->program.error, macro_fake_f(f_string_dynamics_increase));
 
                         break;
                       }
 
-                      data_make->main->cache_arguments.array[data_make->main->cache_arguments.used].used = 0;
+                      main->cache_arguments.array[main->cache_arguments.used].used = 0;
                     }
 
-                    data_make->main->setting.state.status = f_string_dynamic_append_nulless(reserved_value[k]->array[l], &data_make->main->cache_arguments.array[data_make->main->cache_arguments.used]);
+                    main->setting.state.status = f_string_dynamic_append_nulless(reserved_value[k]->array[l], &main->cache_arguments.array[main->cache_arguments.used]);
 
-                    if (F_status_is_error(data_make->main->setting.state.status)) {
-                      fake_print_error(&data_make->main->program.error, macro_fake_f(f_string_dynamic_append_nulless));
+                    if (F_status_is_error(main->setting.state.status)) {
+                      fake_print_error(&main->program.error, macro_fake_f(f_string_dynamic_append_nulless));
 
                       break;
                     }
@@ -636,14 +640,14 @@ extern "C" {
                 break;
               } // for
 
-              if (F_status_is_error(data_make->main->setting.state.status)) break;
+              if (F_status_is_error(main->setting.state.status)) break;
             }
 
-            if (unmatched && F_status_is_error_not(data_make->main->setting.state.status)) {
+            if (unmatched && F_status_is_error_not(main->setting.state.status)) {
               for (k = 0; k < parameter->used; ++k) {
 
                 // Check against IKI variable list.
-                if (f_compare_dynamic_partial_dynamic(parameter->array[k].name, data_make->main->buffer, iki_data->content.array[j]) != F_equal_to) {
+                if (f_compare_dynamic_partial_dynamic(parameter->array[k].name, main->buffer, iki_data->content.array[j]) != F_equal_to) {
                   continue;
                 }
 
@@ -663,10 +667,10 @@ extern "C" {
                       } // for
                     } // for
 
-                    data_make->main->setting.state.status = f_string_dynamic_increase_by(l + f_string_space_s.used + 1, &data_make->main->cache_arguments.array[data_make->main->cache_arguments.used]);
+                    main->setting.state.status = f_string_dynamic_increase_by(l + f_string_space_s.used + 1, &main->cache_arguments.array[main->cache_arguments.used]);
 
-                    if (F_status_is_error(data_make->main->setting.state.status)) {
-                      fake_print_error(&data_make->main->program.error, macro_fake_f(f_string_dynamic_increase_by));
+                    if (F_status_is_error(main->setting.state.status)) {
+                      fake_print_error(&main->program.error, macro_fake_f(f_string_dynamic_increase_by));
 
                       break;
                     }
@@ -678,10 +682,10 @@ extern "C" {
 
                     if (separate) {
                       if (quotes.array[i]) {
-                        data_make->main->setting.state.status = f_string_dynamic_append(f_string_space_s, &data_make->main->cache_arguments.array[data_make->main->cache_arguments.used]);
+                        main->setting.state.status = f_string_dynamic_append(f_string_space_s, &main->cache_arguments.array[main->cache_arguments.used]);
 
-                        if (F_status_is_error(data_make->main->setting.state.status)) {
-                          fake_print_error(&data_make->main->program.error, macro_fake_f(f_string_dynamic_append));
+                        if (F_status_is_error(main->setting.state.status)) {
+                          fake_print_error(&main->program.error, macro_fake_f(f_string_dynamic_append));
 
                           break;
                         }
@@ -689,24 +693,24 @@ extern "C" {
 
                       // Unquoted use separate parameters rather then being separated by a space.
                       else {
-                        ++data_make->main->cache_arguments.used;
+                        ++main->cache_arguments.used;
 
-                        data_make->main->setting.state.status = f_string_dynamics_increase(data_make->main->setting.state.step_small, &data_make->main->cache_arguments);
+                        main->setting.state.status = f_string_dynamics_increase(main->setting.state.step_small, &main->cache_arguments);
 
-                        if (F_status_is_error(data_make->main->setting.state.status)) {
-                          fake_print_error(&data_make->main->program.error, macro_fake_f(f_string_dynamics_increase));
+                        if (F_status_is_error(main->setting.state.status)) {
+                          fake_print_error(&main->program.error, macro_fake_f(f_string_dynamics_increase));
 
                           break;
                         }
 
-                        data_make->main->cache_arguments.array[data_make->main->cache_arguments.used].used = 0;
+                        main->cache_arguments.array[main->cache_arguments.used].used = 0;
                       }
                     }
 
-                    data_make->main->setting.state.status = f_string_dynamic_append_nulless(parameter->array[k].value.array[l], &data_make->main->cache_arguments.array[data_make->main->cache_arguments.used]);
+                    main->setting.state.status = f_string_dynamic_append_nulless(parameter->array[k].value.array[l], &main->cache_arguments.array[main->cache_arguments.used]);
 
-                    if (F_status_is_error(data_make->main->setting.state.status)) {
-                      fake_print_error(&data_make->main->program.error, macro_fake_f(f_string_dynamic_append_nulless));
+                    if (F_status_is_error(main->setting.state.status)) {
+                      fake_print_error(&main->program.error, macro_fake_f(f_string_dynamic_append_nulless));
 
                       break;
                     }
@@ -714,25 +718,25 @@ extern "C" {
                     separate = F_true;
                   } // for
 
-                  if (F_status_is_error(data_make->main->setting.state.status)) break;
+                  if (F_status_is_error(main->setting.state.status)) break;
                 }
 
                 break;
               } // for
             }
 
-            if (F_status_is_error(data_make->main->setting.state.status)) break;
+            if (F_status_is_error(main->setting.state.status)) break;
 
             if (unmatched) {
               fake_make_operate_expand_build(data_make, quotes.array[i], iki_data->content.array[j]);
 
-              if (F_status_is_error(data_make->main->setting.state.status)) {
-                fake_print_error(&data_make->main->program.error, macro_fake_f(fake_make_operate_expand_build));
+              if (F_status_is_error(main->setting.state.status)) {
+                fake_print_error(&main->program.error, macro_fake_f(fake_make_operate_expand_build));
 
                 break;
               }
 
-              if (data_make->main->setting.state.status == F_true) {
+              if (main->setting.state.status == F_true) {
                 iki_type |= 0x8;
               }
             }
@@ -740,21 +744,21 @@ extern "C" {
           else if (is == 2) {
             fake_make_operate_expand_environment(data_make, quotes.array[i], iki_data->content.array[j]);
 
-            if (F_status_is_error(data_make->main->setting.state.status)) {
-              fake_print_error(&data_make->main->program.error, macro_fake_f(fake_make_operate_expand_environment));
+            if (F_status_is_error(main->setting.state.status)) {
+              fake_print_error(&main->program.error, macro_fake_f(fake_make_operate_expand_environment));
 
               break;
             }
 
-            if (data_make->main->setting.state.status == F_true) {
+            if (main->setting.state.status == F_true) {
               iki_type |= 0x8;
             }
           }
           else if (is == 3) {
             fake_make_operate_expand_context(data_make, quotes.array[i], iki_data->content.array[j]);
 
-            if (F_status_is_error(data_make->main->setting.state.status)) {
-              fake_print_error(&data_make->main->program.error, macro_fake_f(fake_make_operate_expand_context));
+            if (F_status_is_error(main->setting.state.status)) {
+              fake_print_error(&main->program.error, macro_fake_f(fake_make_operate_expand_context));
 
               break;
             }
@@ -768,10 +772,10 @@ extern "C" {
               range.start = iki_data->variable.array[j].stop + 1;
               range.stop = iki_data->variable.array[j + 1].start - 1;
 
-              data_make->main->setting.state.status = f_string_dynamic_partial_append_nulless(data_make->main->buffer, range, &data_make->main->cache_arguments.array[data_make->main->cache_arguments.used]);
+              main->setting.state.status = f_string_dynamic_partial_append_nulless(main->buffer, range, &main->cache_arguments.array[main->cache_arguments.used]);
 
-              if (F_status_is_error(data_make->main->setting.state.status)) {
-                fake_print_error(&data_make->main->program.error, macro_fake_f(f_string_dynamic_partial_append_nulless));
+              if (F_status_is_error(main->setting.state.status)) {
+                fake_print_error(&main->program.error, macro_fake_f(f_string_dynamic_partial_append_nulless));
 
                 break;
               }
@@ -779,56 +783,56 @@ extern "C" {
           }
         } // for
 
-        if (F_status_is_error(data_make->main->setting.state.status)) break;
+        if (F_status_is_error(main->setting.state.status)) break;
 
         // Copy everything after the last IKI variable to the end of the content.
         if (iki_data->variable.used && content.array[i].stop > iki_data->variable.array[iki_data->variable.used - 1].stop) {
           range.start = iki_data->variable.array[iki_data->variable.used - 1].stop + 1;
           range.stop = content.array[i].stop;
 
-          data_make->main->setting.state.status = f_string_dynamic_partial_append_nulless(data_make->main->buffer, range, &data_make->main->cache_arguments.array[data_make->main->cache_arguments.used]);
+          main->setting.state.status = f_string_dynamic_partial_append_nulless(main->buffer, range, &main->cache_arguments.array[main->cache_arguments.used]);
 
-          if (F_status_is_error(data_make->main->setting.state.status)) {
-            fake_print_error(&data_make->main->program.error, macro_fake_f(f_string_dynamic_partial_append_nulless));
+          if (F_status_is_error(main->setting.state.status)) {
+            fake_print_error(&main->program.error, macro_fake_f(f_string_dynamic_partial_append_nulless));
 
             break;
           }
         }
 
         if (!(content.array[i].start == iki_data->variable.array[0].start && content.array[i].stop == iki_data->variable.array[0].stop && !quotes.array[i]) || (iki_type & 0xb) && !quotes.array[i] || i && content.used > 1 && i + 1 == content.used) {
-          ++data_make->main->cache_arguments.used;
+          ++main->cache_arguments.used;
 
-          data_make->main->setting.state.status = f_string_dynamics_increase(data_make->main->setting.state.step_small, &data_make->main->cache_arguments);
+          main->setting.state.status = f_string_dynamics_increase(main->setting.state.step_small, &main->cache_arguments);
 
-          if (F_status_is_error(data_make->main->setting.state.status)) {
-            fake_print_error(&data_make->main->program.error, macro_fake_f(f_string_dynamics_increase));
+          if (F_status_is_error(main->setting.state.status)) {
+            fake_print_error(&main->program.error, macro_fake_f(f_string_dynamics_increase));
 
             break;
           }
 
-          data_make->main->cache_arguments.array[data_make->main->cache_arguments.used].used = 0;
+          main->cache_arguments.array[main->cache_arguments.used].used = 0;
         }
       }
       else {
-        data_make->main->setting.state.status = f_string_dynamic_partial_append_nulless(data_make->main->buffer, content.array[i], &data_make->main->cache_arguments.array[data_make->main->cache_arguments.used]);
+        main->setting.state.status = f_string_dynamic_partial_append_nulless(main->buffer, content.array[i], &main->cache_arguments.array[main->cache_arguments.used]);
 
-        if (F_status_is_error(data_make->main->setting.state.status)) {
-          fake_print_error(&data_make->main->program.error, macro_fake_f(f_string_dynamic_partial_append_nulless));
-
-          break;
-        }
-
-        ++data_make->main->cache_arguments.used;
-
-        data_make->main->setting.state.status = f_string_dynamics_increase(data_make->main->setting.state.step_small, &data_make->main->cache_arguments);
-
-        if (F_status_is_error(data_make->main->setting.state.status)) {
-          fake_print_error(&data_make->main->program.error, macro_fake_f(f_string_dynamics_increase));
+        if (F_status_is_error(main->setting.state.status)) {
+          fake_print_error(&main->program.error, macro_fake_f(f_string_dynamic_partial_append_nulless));
 
           break;
         }
 
-        data_make->main->cache_arguments.array[data_make->main->cache_arguments.used].used = 0;
+        ++main->cache_arguments.used;
+
+        main->setting.state.status = f_string_dynamics_increase(main->setting.state.step_small, &main->cache_arguments);
+
+        if (F_status_is_error(main->setting.state.status)) {
+          fake_print_error(&main->program.error, macro_fake_f(f_string_dynamics_increase));
+
+          break;
+        }
+
+        main->cache_arguments.array[main->cache_arguments.used].used = 0;
       }
     } // for
   }
@@ -837,10 +841,15 @@ extern "C" {
 #ifndef _di_fake_make_operate_expand_build_
   void fake_make_operate_expand_build(fake_make_data_t * const data_make, const uint8_t quote, const f_string_range_t range_name) {
 
+    if (!data_make || !data_make->main) return;
+    if (F_status_is_error(data_make->main->setting.state.status)) return;
+
+    fake_main_t * const main = data_make->main;
+
     bool unmatched = F_true;
     uint8_t i = 0;
 
-    fake_string_dynamic_reset(&data_make->main->cache_1);
+    fake_string_dynamic_reset(&main->cache_1);
 
     {
       const f_string_static_t uint8_name[] = {
@@ -857,12 +866,12 @@ extern "C" {
 
       for (; i < 3; ++i) {
 
-        data_make->main->setting.state.status = f_compare_dynamic_partial_string(uint8_name[i].string, data_make->main->buffer, uint8_name[i].used, range_name);
+        main->setting.state.status = f_compare_dynamic_partial_string(uint8_name[i].string, main->buffer, uint8_name[i].used, range_name);
 
-        if (data_make->main->setting.state.status == F_equal_to) {
+        if (main->setting.state.status == F_equal_to) {
           unmatched = F_false;
 
-          data_make->main->setting.state.status = f_conversion_number_unsigned_to_string(uint8_value[i], f_conversion_data_base_10_c, &data_make->main->cache_1);
+          main->setting.state.status = f_conversion_number_unsigned_to_string(uint8_value[i], f_conversion_data_base_10_c, &main->cache_1);
 
           break;
         }
@@ -892,16 +901,16 @@ extern "C" {
 
       for (i = 0; i < 7; ++i) {
 
-        data_make->main->setting.state.status = f_compare_dynamic_partial_string(bool_name[i].string, data_make->main->buffer, bool_name[i].used, range_name);
+        main->setting.state.status = f_compare_dynamic_partial_string(bool_name[i].string, main->buffer, bool_name[i].used, range_name);
 
-        if (data_make->main->setting.state.status == F_equal_to) {
+        if (main->setting.state.status == F_equal_to) {
           unmatched = F_false;
 
           if (bool_value[i]) {
-            data_make->main->setting.state.status = f_string_dynamic_append(fake_common_setting_bool_yes_s, &data_make->main->cache_1);
+            main->setting.state.status = f_string_dynamic_append(fake_common_setting_bool_yes_s, &main->cache_1);
           }
           else {
-            data_make->main->setting.state.status = f_string_dynamic_append(fake_common_setting_bool_no_s, &data_make->main->cache_1);
+            main->setting.state.status = f_string_dynamic_append(fake_common_setting_bool_no_s, &main->cache_1);
           }
 
           break;
@@ -952,12 +961,12 @@ extern "C" {
 
       for (i = 0; i < 17; ++i) {
 
-        data_make->main->setting.state.status = f_compare_dynamic_partial_string(dynamic_name[i].string, data_make->main->buffer, dynamic_name[i].used, range_name);
+        main->setting.state.status = f_compare_dynamic_partial_string(dynamic_name[i].string, main->buffer, dynamic_name[i].used, range_name);
 
-        if (data_make->main->setting.state.status == F_equal_to) {
+        if (main->setting.state.status == F_equal_to) {
           unmatched = F_false;
 
-          data_make->main->setting.state.status = f_string_dynamic_append_nulless(dynamic_value[i], &data_make->main->cache_1);
+          main->setting.state.status = f_string_dynamic_append_nulless(dynamic_value[i], &main->cache_1);
 
           break;
         }
@@ -1086,15 +1095,15 @@ extern "C" {
 
       for (i = 0; i < 36; ++i) {
 
-        data_make->main->setting.state.status = f_compare_dynamic_partial_string(dynamics_name[i].string, data_make->main->buffer, dynamics_name[i].used, range_name);
+        main->setting.state.status = f_compare_dynamic_partial_string(dynamics_name[i].string, main->buffer, dynamics_name[i].used, range_name);
 
-        if (data_make->main->setting.state.status == F_equal_to) {
+        if (main->setting.state.status == F_equal_to) {
           unmatched = F_false;
 
           for (j = 0; j < dynamics_value[i].used; ++j) {
 
-            data_make->main->setting.state.status = f_string_dynamic_mash(f_string_space_s, dynamics_value[i].array[j], &data_make->main->cache_1);
-            if (F_status_is_error(data_make->main->setting.state.status)) break;
+            main->setting.state.status = f_string_dynamic_mash(f_string_space_s, dynamics_value[i].array[j], &main->cache_1);
+            if (F_status_is_error(main->setting.state.status)) break;
           } // for
 
           if (dynamics_flag[i]) {
@@ -1106,31 +1115,31 @@ extern "C" {
       } // for
     }
 
-    if (F_status_is_error(data_make->main->setting.state.status)) return;
+    if (F_status_is_error(main->setting.state.status)) return;
 
     if (unmatched) {
-      data_make->main->setting.state.status = F_false;
+      main->setting.state.status = F_false;
 
       return;
     }
 
-    data_make->main->setting.state.status = f_string_dynamic_append_nulless(data_make->main->cache_1, &data_make->main->cache_arguments.array[data_make->main->cache_arguments.used]);
+    main->setting.state.status = f_string_dynamic_append_nulless(main->cache_1, &main->cache_arguments.array[main->cache_arguments.used]);
 
-    if (F_status_is_error_not(data_make->main->setting.state.status) && !quote) {
-      ++data_make->main->cache_arguments.used;
+    if (F_status_is_error_not(main->setting.state.status) && !quote) {
+      ++main->cache_arguments.used;
 
-      data_make->main->setting.state.status = f_string_dynamics_increase(data_make->main->setting.state.step_small, &data_make->main->cache_arguments);
+      main->setting.state.status = f_string_dynamics_increase(main->setting.state.step_small, &main->cache_arguments);
     }
 
-    if (F_status_is_error(data_make->main->setting.state.status)) return;
+    if (F_status_is_error(main->setting.state.status)) return;
 
-    if (data_make->main->cache_1.used) {
-      data_make->main->setting.state.status = F_true;
+    if (main->cache_1.used) {
+      main->setting.state.status = F_true;
 
       return;
     }
 
-    data_make->main->setting.state.status = F_data_not;
+    main->setting.state.status = F_data_not;
   }
 #endif // _di_fake_make_operate_expand_build_
 
@@ -1138,6 +1147,8 @@ extern "C" {
   void fake_make_operate_expand_context(fake_make_data_t * const data_make, const uint8_t quote, const f_string_range_t range_name) {
 
     if (!data_make || !data_make->main) return;
+
+    fake_main_t * const main = data_make->main;
 
     const f_string_static_t *context = 0;
 
@@ -1154,20 +1165,20 @@ extern "C" {
     };
 
     const f_color_set_t context_value[] = {
-      data_make->main->program.context.set.error,
-      data_make->main->program.context.set.important,
-      data_make->main->program.context.set.normal,
-      data_make->main->program.context.set.notable,
-      data_make->main->program.context.set.reset,
-      data_make->main->program.context.set.standout,
-      data_make->main->program.context.set.success,
-      data_make->main->program.context.set.title,
-      data_make->main->program.context.set.warning,
+      main->program.context.set.error,
+      main->program.context.set.important,
+      main->program.context.set.normal,
+      main->program.context.set.notable,
+      main->program.context.set.reset,
+      main->program.context.set.standout,
+      main->program.context.set.success,
+      main->program.context.set.title,
+      main->program.context.set.warning,
     };
 
     for (f_array_length_t i = 0; i < 9; ++i) {
 
-      if (f_compare_dynamic_partial_string(context_name[i].string, data_make->main->buffer, context_name[i].used, range_name) == F_equal_to) {
+      if (f_compare_dynamic_partial_string(context_name[i].string, main->buffer, context_name[i].used, range_name) == F_equal_to) {
         context = context_value[i].before;
 
         break;
@@ -1175,11 +1186,11 @@ extern "C" {
     } // for
 
     if (context) {
-      data_make->main->setting.state.status = f_string_dynamic_append_nulless(*context, &data_make->main->cache_arguments.array[data_make->main->cache_arguments.used]);
-      if (F_status_is_error(data_make->main->setting.state.status)) return;
+      main->setting.state.status = f_string_dynamic_append_nulless(*context, &main->cache_arguments.array[main->cache_arguments.used]);
+      if (F_status_is_error(main->setting.state.status)) return;
     }
 
-    data_make->main->setting.state.status = F_true;
+    main->setting.state.status = F_true;
   }
 #endif // _di_fake_make_operate_expand_context_
 
@@ -1188,49 +1199,44 @@ extern "C" {
 
     if (!data_make || !data_make->main) return;
 
-    data_make->main->setting.state.status = F_none;
+    fake_main_t * const main = data_make->main;
 
-    fake_string_dynamic_reset(&data_make->main->cache_1);
-    fake_string_dynamic_reset(&data_make->main->cache_2);
+    main->setting.state.status = F_none;
 
-    data_make->main->setting.state.status = f_string_dynamic_increase_by((range_name.stop - range_name.start) + 2, &data_make->main->cache_1);
+    fake_string_dynamic_reset(&main->cache_1);
+    fake_string_dynamic_reset(&main->cache_2);
 
-    if (F_status_is_error_not(data_make->main->setting.state.status)) {
-      data_make->main->setting.state.status = f_string_dynamic_partial_append_nulless(data_make->main->buffer, range_name, &data_make->main->cache_1);
+    main->setting.state.status = f_string_dynamic_increase_by((range_name.stop - range_name.start) + 2, &main->cache_1);
+
+    if (F_status_is_error_not(main->setting.state.status)) {
+      main->setting.state.status = f_string_dynamic_partial_append_nulless(main->buffer, range_name, &main->cache_1);
     }
 
-    if (F_status_is_error_not(data_make->main->setting.state.status)) {
-      data_make->main->setting.state.status = f_environment_get(data_make->main->cache_1, &data_make->main->cache_2);
+    if (F_status_is_error_not(main->setting.state.status)) {
+      main->setting.state.status = f_environment_get(main->cache_1, &main->cache_2);
     }
 
-    if (F_status_is_error(data_make->main->setting.state.status)) return;
+    if (F_status_is_error(main->setting.state.status)) return;
 
-    if (data_make->main->setting.state.status == F_exist_not) {
-      data_make->main->setting.state.status = F_false;
+    if (main->setting.state.status == F_exist_not) {
+      main->setting.state.status = F_false;
 
       return;
     }
 
-    data_make->main->setting.state.status = f_string_dynamics_increase(data_make->main->setting.state.step_small, &data_make->main->cache_arguments);
+    main->setting.state.status = f_string_dynamics_increase(main->setting.state.step_small, &main->cache_arguments);
 
-    if (F_status_is_error_not(data_make->main->setting.state.status)) {
-      data_make->main->setting.state.status = f_string_dynamic_increase_by(data_make->main->cache_2.used + 1, &data_make->main->cache_arguments.array[data_make->main->cache_arguments.used]);
+    if (F_status_is_error_not(main->setting.state.status)) {
+      main->setting.state.status = f_string_dynamic_increase_by(main->cache_2.used + 1, &main->cache_arguments.array[main->cache_arguments.used]);
     }
 
-    if (F_status_is_error_not(data_make->main->setting.state.status)) {
-      data_make->main->setting.state.status = f_string_dynamic_append_nulless(data_make->main->cache_2, &data_make->main->cache_arguments.array[data_make->main->cache_arguments.used]);
+    if (F_status_is_error_not(main->setting.state.status)) {
+      main->setting.state.status = f_string_dynamic_append_nulless(main->cache_2, &main->cache_arguments.array[main->cache_arguments.used]);
     }
 
-    if (F_status_is_error(data_make->main->setting.state.status)) return;
+    if (F_status_is_error(main->setting.state.status)) return;
 
-    if (!quote) {
-      ++data_make->main->cache_arguments.used;
-
-      data_make->main->setting.state.status = f_string_dynamics_increase(data_make->main->setting.state.step_small, &data_make->main->cache_arguments);
-      if (F_status_is_error(data_make->main->setting.state.status)) return;
-    }
-
-    data_make->main->setting.state.status = data_make->main->cache_2.used ? F_true : F_data_not;
+    main->setting.state.status = main->cache_2.used ? F_true : F_data_not;
   }
 #endif // _di_fake_make_operate_expand_environment_
 
@@ -1240,8 +1246,10 @@ extern "C" {
     if (!data_make || !data_make->main || !section_stack) return 0;
     if (F_status_is_error(data_make->main->setting.state.status) || data_make->main->setting.state.status == F_child) return data_make->main->program.child;
 
+    fake_main_t * const main = data_make->main;
+
     if (id_section >= data_make->fakefile.used) {
-      data_make->main->setting.state.status = F_status_set_error(F_parameter);
+      main->setting.state.status = F_status_set_error(F_parameter);
 
       fake_print_error(&data_make->error, macro_fake_f(fake_make_operate_section));
 
@@ -1249,9 +1257,9 @@ extern "C" {
     }
 
     // Add the operation id to the operation stack.
-    data_make->main->setting.state.status = f_array_lengths_increase(data_make->main->setting.state.step_small, section_stack);
+    main->setting.state.status = f_array_lengths_increase(main->setting.state.step_small, section_stack);
 
-    if (F_status_is_error(data_make->main->setting.state.status)) {
+    if (F_status_is_error(main->setting.state.status)) {
       fake_print_error(&data_make->error, macro_fake_f(f_array_lengths_increase));
 
       return 0;
@@ -1261,7 +1269,7 @@ extern "C" {
 
     const f_fss_named_t *section = &data_make->fakefile.array[id_section];
 
-    fake_make_print_message_processing_section(&data_make->main->program.message, data_make->main->buffer, *section);
+    fake_make_print_message_processing_section(&main->program.message, main->buffer, *section);
 
     if (!section->objects.used) {
       --section_stack->used;
@@ -1350,34 +1358,30 @@ extern "C" {
     f_array_length_t i = 0;
     f_array_length_t j = 0;
 
-    for (i = 0; i < section->objects.used; ++i, data_make->main->setting.state.status = F_none) {
+    for (i = 0; i < section->objects.used; ++i, main->setting.state.status = F_none) {
 
-      for (j = 0; j < data_make->main->cache_arguments.size; ++j) {
-        data_make->main->cache_arguments.array[j].used = 0;
-      } // for
-
-      fake_string_dynamics_reset(&data_make->main->cache_arguments);
+      fake_string_dynamics_reset(&main->cache_arguments);
 
       state_process.condition = 0;
       state_process.condition_result = 0;
       state_process.operation_previous = state_process.operation;
       state_process.operation = 0;
 
-      if (!((++data_make->main->program.signal_check) % fake_signal_check_short_d)) {
-        if (fll_program_standard_signal_received(&data_make->main->program)) {
-          fll_program_print_signal_received(&data_make->main->program.warning, data_make->main->program.signal_received);
+      if (!((++main->program.signal_check) % fake_signal_check_short_d)) {
+        if (fll_program_standard_signal_received(&main->program)) {
+          fll_program_print_signal_received(&main->program.warning, main->program.signal_received);
 
-          data_make->main->setting.state.status = F_status_set_error(F_interrupt);
+          main->setting.state.status = F_status_set_error(F_interrupt);
 
           break;
         }
 
-        data_make->main->program.signal_check = 0;
+        main->program.signal_check = 0;
       }
 
       for (j = 0; j < fake_max_operation_d; ++j) {
 
-        if (f_compare_dynamic_partial_string(operations_name[j].string, data_make->main->buffer, operations_name[j].used, section->objects.array[i]) == F_equal_to) {
+        if (f_compare_dynamic_partial_string(operations_name[j].string, main->buffer, operations_name[j].used, section->objects.array[i]) == F_equal_to) {
           state_process.operation = operations_type[j];
 
           break;
@@ -1385,15 +1389,15 @@ extern "C" {
       } // for
 
       if (!state_process.operation) {
-        fake_print_error_operation_unknown(&data_make->error, data_make->main->buffer, section->name, section->objects.array[i]);
+        fake_print_error_operation_unknown(&data_make->error, main->buffer, section->name, section->objects.array[i]);
 
-        data_make->main->setting.state.status = F_status_set_error(F_valid_not);
+        main->setting.state.status = F_status_set_error(F_valid_not);
       }
       else if (state_process.operation == fake_make_operation_type_operate_e) {
         if (section_stack->used == fake_max_stack_d) {
-          fake_print_error_operation_stack_max(&data_make->error, data_make->main->buffer, section->name, section->objects.array[i], fake_max_stack_d);
+          fake_print_error_operation_stack_max(&data_make->error, main->buffer, section->name, section->objects.array[i], fake_max_stack_d);
 
-          data_make->main->setting.state.status = F_status_set_error(F_recurse);
+          main->setting.state.status = F_status_set_error(F_recurse);
         }
       }
 
@@ -1405,7 +1409,7 @@ extern "C" {
         fake_make_operate_validate(data_make, section->name, &state_process, section_stack);
       }
 
-      if (F_status_is_error(data_make->main->setting.state.status)) {
+      if (F_status_is_error(main->setting.state.status)) {
         if (state_process.block || state_process.operation == fake_make_operation_type_if_e || state_process.operation == fake_make_operation_type_and_e || state_process.operation == fake_make_operation_type_or_e) {
           state_process.success_block = F_false;
 
@@ -1418,38 +1422,38 @@ extern "C" {
       else {
         if (!state_process.block || state_process.block == fake_state_process_block_operate_e) {
           result = fake_make_operate_process(data_make, section->name, &state_process, section_stack);
-          if (data_make->main->setting.state.status == F_child) return result;
+          if (main->setting.state.status == F_child) return result;
         }
 
         fake_make_operate_block_postprocess(data_make, i == section->objects.used, &state_process);
       }
 
-      if (F_status_set_fine(data_make->main->setting.state.status) == F_interrupt) break;
+      if (F_status_set_fine(main->setting.state.status) == F_interrupt) break;
 
-      if (F_status_is_error(data_make->main->setting.state.status)) {
+      if (F_status_is_error(main->setting.state.status)) {
         state_process.success = F_false;
 
         // Break acts identical to fail when at the top of the stack.
-        if (F_status_set_fine(data_make->main->setting.state.status) == F_signal_abort && !section_stack->used) {
+        if (F_status_set_fine(main->setting.state.status) == F_signal_abort && !section_stack->used) {
           data_make->setting_make.fail = fake_make_operation_fail_exit_e;
           data_make->error.prefix = fl_print_error_s;
           data_make->error.suffix = f_string_empty_s;
-          data_make->error.context = data_make->main->program.context.set.error;
-          data_make->error.notable = data_make->main->program.context.set.notable;
-          data_make->main->program.error.to.stream = F_type_error_d;
-          data_make->main->program.error.to.id = F_type_descriptor_error_d;
-          data_make->error.set = &data_make->main->program.context.set;
+          data_make->error.context = main->program.context.set.error;
+          data_make->error.notable = main->program.context.set.notable;
+          main->program.error.to.stream = F_type_error_d;
+          main->program.error.to.id = F_type_descriptor_error_d;
+          data_make->error.set = &main->program.context.set;
         }
 
-        fake_print_error_operation_failed(&data_make->error, data_make->main->buffer, section->name, section->objects.array[i]);
+        fake_print_error_operation_failed(&data_make->error, main->buffer, section->name, section->objects.array[i]);
 
         // F_signal_abort is used by the break section operation.
-        if (F_status_set_fine(data_make->main->setting.state.status) == F_signal_abort) break;
+        if (F_status_set_fine(main->setting.state.status) == F_signal_abort) break;
 
         // F_signal_abort is used by the exit section operation.
-        if (F_status_set_fine(data_make->main->setting.state.status) == F_signal_quit) {
+        if (F_status_set_fine(main->setting.state.status) == F_signal_quit) {
           if (!section_stack->used) {
-            data_make->main->setting.state.status = F_status_set_error(F_failure);
+            main->setting.state.status = F_status_set_error(F_failure);
           }
 
           break;
@@ -1457,27 +1461,27 @@ extern "C" {
 
         if (data_make->setting_make.fail == fake_make_operation_fail_exit_e) break;
       }
-      else if (data_make->main->setting.state.status == F_signal_abort) {
+      else if (main->setting.state.status == F_signal_abort) {
         state_process.success = F_true;
 
         // F_signal_abort is used by the break section operation.
         break;
       }
-      else if (data_make->main->setting.state.status == F_signal_quit) {
+      else if (main->setting.state.status == F_signal_quit) {
         state_process.success = F_true;
 
         // F_signal_quit is used by the exit section operation.
         if (!section_stack->used) {
-          data_make->main->setting.state.status = F_none;
+          main->setting.state.status = F_none;
         }
 
         break;
       }
-      else if (data_make->main->setting.state.status == F_failure) {
+      else if (main->setting.state.status == F_failure) {
 
         // When F_failure (without the error bit) is returned, an error occured but the exit mode is not set to exit.
         // Record the success state and set the status to F_none.
-        data_make->main->setting.state.status = F_none;
+        main->setting.state.status = F_none;
         state_process.success = F_false;
       }
       else {
@@ -1485,19 +1489,19 @@ extern "C" {
       }
     } // for
 
-    if (F_status_set_error(data_make->main->setting.state.status) == F_interrupt) return 0;
+    if (F_status_set_error(main->setting.state.status) == F_interrupt) return 0;
 
-    if (i == section->objects.used && F_status_is_error_not(data_make->main->setting.state.status) && (state_process.operation == fake_make_operation_type_and_e || state_process.operation == fake_make_operation_type_else_e || state_process.operation == fake_make_operation_type_if_e || state_process.operation == fake_make_operation_type_or_e)) {
-      fake_make_print_error_operation_incomplete(&data_make->main->program.error, state_process.operation);
+    if (i == section->objects.used && F_status_is_error_not(main->setting.state.status) && (state_process.operation == fake_make_operation_type_and_e || state_process.operation == fake_make_operation_type_else_e || state_process.operation == fake_make_operation_type_if_e || state_process.operation == fake_make_operation_type_or_e)) {
+      fake_make_print_error_operation_incomplete(&main->program.error, state_process.operation);
 
-      fake_print_error_operation_failed(&data_make->error, data_make->main->buffer, section->name, section->objects.array[section->objects.used - 1]);
+      fake_print_error_operation_failed(&data_make->error, main->buffer, section->name, section->objects.array[section->objects.used - 1]);
 
-      data_make->main->setting.state.status = F_status_set_error(F_failure);
+      main->setting.state.status = F_status_set_error(F_failure);
     }
 
     // Ensure an error is returned during recursion if the last known section operation failed, except for the main operation.
-    if (state_process.success == F_false && F_status_is_error_not(data_make->main->setting.state.status) && section_stack->used > 1) {
-      data_make->main->setting.state.status = F_status_set_error(F_failure);
+    if (state_process.success == F_false && F_status_is_error_not(main->setting.state.status) && section_stack->used > 1) {
+      main->setting.state.status = F_status_set_error(F_failure);
     }
 
     --section_stack->used;

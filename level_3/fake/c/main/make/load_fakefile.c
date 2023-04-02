@@ -398,9 +398,7 @@ extern "C" {
 
       for (; i < define.used; ++i) {
 
-        fake_make_operate_validate_define_name(define.array[i].name);
-
-        if (data_make->main->setting.state.status) {
+        if (fake_make_operate_validate_define_name(define.array[i].name) == F_true) {
           combined.used = 0;
 
           for (j = 0; j < define.array[i].value.used; ++j) {
