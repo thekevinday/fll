@@ -66,18 +66,9 @@ extern "C" {
 
     if (!data || !data->main || !setting) return;
     if (F_status_is_error(data->main->setting.state.status)) return;
+    if (fake_signal_check(data->main)) return;
 
     fake_main_t * const main = data->main;
-
-    if (!((++main->program.signal_check) % fake_signal_check_d)) {
-      if (fll_program_standard_signal_received(&main->program)) {
-        fll_program_print_signal_received(&main->program.warning, main->program.signal_received);
-
-        main->setting.state.status = F_status_set_error(F_interrupt);
-
-        return;
-      }
-    }
 
     // Strip the build settings name from the build arguments to generate a list of modes.
     f_string_statics_t modes_custom = f_string_statics_t_initialize;
@@ -211,18 +202,9 @@ extern "C" {
 
     if (!data || !data->main || !setting) return;
     if (F_status_is_error(data->main->setting.state.status) && buffer.used) return;
+    if (fake_signal_check(data->main)) return;
 
     fake_main_t * const main = data->main;
-
-    if (!((++main->program.signal_check) % fake_signal_check_d)) {
-      if (fll_program_standard_signal_received(&main->program)) {
-        fll_program_print_signal_received(&main->program.warning, main->program.signal_received);
-
-        main->setting.state.status = F_status_set_error(F_interrupt);
-
-        return;
-      }
-    }
 
     bool error_printed = F_false;
 
@@ -1335,18 +1317,9 @@ extern "C" {
 
     if (!data || !data->main || !stage) return;
     if (F_status_is_error(data->main->setting.state.status)) return;
+    if (fake_signal_check(data->main)) return;
 
     fake_main_t * const main = data->main;
-
-    if (!((++main->program.signal_check) % fake_signal_check_d)) {
-      if (fll_program_standard_signal_received(&main->program)) {
-        fll_program_print_signal_received(&main->program.warning, main->program.signal_received);
-
-        main->setting.state.status = F_status_set_error(F_interrupt);
-
-        return;
-      }
-    }
 
     const f_string_static_t names[] = {
       fake_build_stage_library_script_s,

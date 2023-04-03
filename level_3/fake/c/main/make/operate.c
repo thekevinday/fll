@@ -8,18 +8,9 @@ extern "C" {
   void fake_make_operate(fake_data_t * const data) {
 
     if (!data || !data->main) return;
+    if (fake_signal_check(data->main)) return;
 
     fake_main_t * const main = data->main;
-
-    if (!((++main->program.signal_check) % fake_signal_check_d)) {
-      if (fll_program_standard_signal_received(&main->program)) {
-        fll_program_print_signal_received(&main->program.warning, main->program.signal_received);
-
-        main->setting.state.status = F_status_set_error(F_interrupt);
-
-        return;
-      }
-    }
 
     fake_make_print_message_now_making(&main->program.message, main->setting.fakefile);
 

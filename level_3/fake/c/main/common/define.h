@@ -36,14 +36,16 @@ extern "C" {
  * The program signal defines.
  *
  * fake_signal_*_d:
- *   - check:       Number of iterations before performing signal check in non-threaded signal handling.
- *   - check_tiny:  The tiny check.
- *   - check_short: The short signal check.
+ *   - check:          Number of iterations before performing signal check in non-threaded signal handling.
+ *   - check_failsafe: When using threads, how many consecutive failures to check signal before aborting (as a recursion failsafe).
+ *   - check_tiny:     The tiny check.
+ *   - check_short:    The short signal check.
  */
 #ifndef _di_fake_signal_d_
-  #define fake_signal_check_d       500000
-  #define fake_signal_check_tiny_d  4
-  #define fake_signal_check_short_d 16
+  #define fake_signal_check_d          500000
+  #define fake_signal_check_failsafe_d 20000
+  #define fake_signal_check_tiny_d     4
+  #define fake_signal_check_short_d    16
 #endif // _di_fake_signal_d_
 
 /**

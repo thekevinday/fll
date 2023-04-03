@@ -65,16 +65,7 @@ extern "C" {
       for (j = 0; j < directorys[i].used; ++j) {
 
         if (f_path_separator_s.used && directorys[i].string[j] != f_path_separator_s.string[0]) continue;
-
-        if (!((++main->program.signal_check) % fake_signal_check_d)) {
-          if (fll_program_standard_signal_received(&main->program)) {
-            fll_program_print_signal_received(&main->program.warning, main->program.signal_received);
-
-            main->setting.state.status = F_status_set_error(F_interrupt);
-
-            return;
-          }
-        }
+        if (fake_signal_check(data->main)) return;
 
         directorys[i].string[j] = 0;
 

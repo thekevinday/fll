@@ -27,7 +27,7 @@ build_libraries-individual -lf_account -lf_capability -lf_color -lf_compare -lf_
 build_libraries-level -lfll_2 -lfll_1 -lfll_0
 build_libraries-monolithic -lfll
 
-build_sources_library main/build.c main/clean.c main/common.c main/fake.c main/make.c main/print/common.c main/print/context.c main/print/error.c main/print/message.c main/print/operation.c main/print/warning.c main/print/verbose.c main/skeleton.c
+build_sources_library main/build.c main/clean.c main/common.c main/fake.c main/make.c main/print/common.c main/print/context.c main/print/error.c main/print/message.c main/print/operation.c main/print/warning.c main/print/verbose.c main/signal.c main/skeleton.c main/thread.c
 build_sources_library main/build/enumeration.c main/build/library.c main/build/load.c main/build/object.c main/build/objects.c main/build/print/compile.c main/build/print/error.c main/build/print/message.c main/build/print/verbose.c main/build/print/warning.c main/build/program.c main/build/skeleton.c main/build/string.c
 build_sources_library main/common/define.c main/common/enumeration.c main/common/print.c main/common/string.c main/common/type.c
 build_sources_library main/fake/path_generate.c
@@ -35,7 +35,7 @@ build_sources_library main/make/load_fakefile.c main/make/load_parameters.c main
 
 build_sources_program main/main.c
 
-build_sources_headers main/build.h main/clean.h main/common.h main/fake.h main/make.h main/print/common.h main/print/context.h main/print/error.h main/print/message.h main/print/operation.h main/print/warning.h main/print/verbose.h main/skeleton.h
+build_sources_headers main/build.h main/clean.h main/common.h main/fake.h main/make.h main/print/common.h main/print/context.h main/print/error.h main/print/message.h main/print/operation.h main/print/warning.h main/print/verbose.h main/signal.h main/skeleton.h main/thread.h
 build_sources_headers main/build/enumeration.h main/build/library.h main/build/load.h main/build/object.h main/build/objects.h main/build/print/compile.h main/build/print/error.h main/build/print/message.h main/build/print/verbose.h main/build/print/warning.h main/build/program.h main/build/skeleton.h main/build/string.h
 build_sources_headers main/common/define.h main/common/enumeration.h main/common/print.h main/common/string.h main/common/type.h
 build_sources_headers main/fake/path_generate.h

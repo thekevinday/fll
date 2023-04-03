@@ -60,7 +60,8 @@ extern "C" {
  *
  * flag: Flags passed to the main function.
  *
- * state:  The state data used when processing the FSS data.
+ * status_thread: A status used eclusively by the threaded signal handler.
+ * state:         The state data used when processing the FSS data.
  *
  * build:    The build directory.
  * data:     The data directory.
@@ -79,6 +80,7 @@ extern "C" {
   typedef struct {
     uint32_t flag;
 
+    f_status_t status_thread;
     f_state_t state;
 
     f_string_dynamic_t build;
@@ -100,6 +102,7 @@ extern "C" {
   #define fake_setting_t_initialize \
     { \
       0, \
+      F_none, \
       f_state_t_initialize, \
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \

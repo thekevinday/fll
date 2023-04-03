@@ -163,18 +163,9 @@ extern "C" {
     if (!data || !data->main) return;
     if (data->main->setting.state.status == F_child) return;
     if (F_status_is_error(data->main->setting.state.status) || f_file_exists(file_stage, F_true) == F_true) return;
+    if (fake_signal_check(data->main)) return;
 
     fake_main_t * const main = data->main;
-
-    if (!((++main->program.signal_check) % fake_signal_check_d)) {
-      if (fll_program_standard_signal_received(&main->program)) {
-        fll_program_print_signal_received(&main->program.warning, main->program.signal_received);
-
-        main->setting.state.status = F_status_set_error(F_interrupt);
-
-        return;
-      }
-    }
 
     f_directory_statuss_t failures = f_directory_statuss_t_initialize;
     f_string_dynamic_t path_source = f_string_dynamic_t_initialize; // @todo move this to a shared buffer.
@@ -531,12 +522,9 @@ extern "C" {
 
     main->setting.state.status = fll_execute_program(main->cache_argument, main->cache_arguments, &parameter, 0, (void *) &return_code);
 
-    if (!((++main->program.signal_check) % fake_signal_check_d) && fll_program_standard_signal_received(&main->program)) {
-      fll_program_print_signal_received(&main->program.warning, main->program.signal_received);
+    if (fake_signal_check(main)) return return_code;
 
-      main->setting.state.status = F_status_set_error(F_interrupt);
-    }
-    else if (main->setting.state.status != F_child) {
+    if (main->setting.state.status != F_child) {
       if (F_status_is_error(main->setting.state.status)) {
         if (F_status_set_fine(main->setting.state.status) == F_failure) {
           fake_print_error_failure_script(&main->program.error, main->cache_argument);
@@ -633,18 +621,9 @@ extern "C" {
   void fake_build_operate(fake_data_t * const data, const f_string_statics_t * const build_arguments, const bool process_pipe) {
 
     if (!data || !data->main) return;
+    if (fake_signal_check(data->main)) return;
 
     fake_main_t * const main = data->main;
-
-    if (!((++main->program.signal_check) % fake_signal_check_d)) {
-      if (fll_program_standard_signal_received(&main->program)) {
-        fll_program_print_signal_received(&main->program.warning, main->program.signal_received);
-
-        main->setting.state.status = F_status_set_error(F_interrupt);
-
-        return;
-      }
-    }
 
     main->setting.state.status = F_none;
 
@@ -875,18 +854,9 @@ extern "C" {
 
     if (!data || !data->main) return;
     if (F_status_is_error(data->main->setting.state.status)) return;
+    if (fake_signal_check(data->main)) return;
 
     fake_main_t * const main = data->main;
-
-    if (!((++main->program.signal_check) % fake_signal_check_d)) {
-      if (fll_program_standard_signal_received(&main->program)) {
-        fll_program_print_signal_received(&main->program.warning, main->program.signal_received);
-
-        main->setting.state.status = F_status_set_error(F_interrupt);
-
-        return;
-      }
-    }
 
     f_mode_t mode = f_mode_t_initialize;
 

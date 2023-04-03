@@ -285,17 +285,7 @@ extern "C" {
       fl_execute_parameter_t parameter = macro_fl_execute_parameter_t_initialize(0, 0, &environment, &signals, 0);
 
       main->setting.state.status = fll_execute_program(program, main->cache_arguments, &parameter, 0, (void *) &return_code);
-
-      if (!((++main->program.signal_check) % fake_signal_check_d)) {
-        if (fll_program_standard_signal_received(&main->program)) {
-          fll_program_print_signal_received(&main->program.warning, main->program.signal_received);
-
-          main->setting.state.status = F_status_set_error(F_interrupt);
-
-          return 0;
-        }
-      }
-
+      if (fake_signal_check(data->main)) return return_code;
       if (main->setting.state.status == F_child) return return_code;
     }
     else {
@@ -324,18 +314,9 @@ extern "C" {
   void fake_file_buffer(fake_data_t * const data, const f_string_static_t path_file, const bool required, f_string_dynamic_t * const buffer) {
 
     if (!data || !data->main || !buffer) return;
+    if (fake_signal_check(data->main)) return;
 
     fake_main_t * const main = data->main;
-
-    if (!((++main->program.signal_check) % fake_signal_check_d)) {
-      if (fll_program_standard_signal_received(&main->program)) {
-        fll_program_print_signal_received(&main->program.warning, main->program.signal_received);
-
-        main->setting.state.status = F_status_set_error(F_interrupt);
-
-        return;
-      }
-    }
 
     main->setting.state.status = f_file_exists(path_file, F_true);
 
@@ -432,15 +413,7 @@ extern "C" {
     clearerr(F_type_input_d);
 
     do {
-      if (!((++main->program.signal_check) % fake_signal_check_d)) {
-        if (fll_program_standard_signal_received(&main->program)) {
-          fll_program_print_signal_received(&main->program.warning, main->program.signal_received);
-
-          main->setting.state.status = F_status_set_error(F_interrupt);
-
-          return;
-        }
-      }
+      if (fake_signal_check(main)) return;
 
       main->setting.state.status = f_file_stream_read_block(file, buffer);
 
@@ -459,18 +432,9 @@ extern "C" {
   void fake_validate_parameter_paths(fake_data_t * const data) {
 
     if (!data || !data->main) return;
+    if (fake_signal_check(data->main)) return;
 
     fake_main_t * const main = data->main;
-
-    if (!((++main->program.signal_check) % fake_signal_check_d)) {
-      if (fll_program_standard_signal_received(&main->program)) {
-        fll_program_print_signal_received(&main->program.warning, main->program.signal_received);
-
-        main->setting.state.status = F_status_set_error(F_interrupt);
-
-        return;
-      }
-    }
 
     const f_string_static_t names[] = {
       fake_long_build_s,

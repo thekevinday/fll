@@ -141,7 +141,9 @@
 #include <program/fake/main/print/operation.h>
 #include <program/fake/main/print/verbose.h>
 #include <program/fake/main/print/warning.h>
+#include <program/fake/main/signal.h>
 #include <program/fake/main/skeleton.h>
+#include <program/fake/main/thread.h>
 
 #ifdef __cplusplus
 extern "C" {
