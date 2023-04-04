@@ -1,4 +1,16 @@
 # fss-0001
+#
+# Modes:
+#   - individual:        Compile using per project (individual) libraries, does not handle thread or threadless cases.
+#   - individual_thread: This is required when compiling in individual mode with "thread" mode.
+#   - level:             Compile using per level libraries.
+#   - monolithic:        Compile using per monolithic libraries.
+#   - clang:             Use clang rather than the default, which is generally gcc.
+#   - test:              Compile for a test, such as unit testing.
+#   - fanalyzer:         Compile using GCC's -fanalyzer compile time option.
+#   - thread:            Compile with thread support.
+#   - threadless:        Compile without thread support.
+#
 
 build_name fake
 
@@ -11,8 +23,8 @@ version_target minor
 process_pre process_pre.sh
 process_post process_post.sh
 
-modes individual level monolithic clang test fanalyzer
-modes_default monolithic
+modes individual individual_thread level monolithic clang test fanalyzer thread threadless
+modes_default monolithic thread
 
 build_compiler gcc
 build_compiler-clang clang
@@ -23,7 +35,8 @@ build_language c
 build_libraries -lc -lcap
 build_libraries-individual -lfll_error -lfll_execute -lfll_file -lfll_fss -lfll_path -lfll_print -lfll_program
 build_libraries-individual -lfl_control_group -lfl_conversion -lfl_directory -lfl_environment -lfl_fss -lfl_iki -lfl_print -lfl_string
-build_libraries-individual -lf_account -lf_capability -lf_color -lf_console -lf_control_group -lf_conversion -lf_directory -lf_environment -lf_execute -lf_file -lf_fss -lf_iki -lf_limit -lf_memory -lf_path -lf_pipe -lf_print -lf_signal -lf_status_string -lf_string -lf_thread -lf_type_array -lf_utf
+build_libraries-individual -lf_account -lf_capability -lf_color -lf_console -lf_control_group -lf_conversion -lf_directory -lf_environment -lf_execute -lf_file -lf_fss -lf_iki -lf_limit -lf_memory -lf_path -lf_pipe -lf_print -lf_signal -lf_status_string -lf_string -lf_type_array -lf_utf
+build_libraries-individual_thread -lf_thread
 build_libraries-level -lfll_2 -lfll_1 -lfll_0
 build_libraries-monolithic -lfll
 
@@ -66,8 +79,11 @@ environment PATH LD_LIBRARY_PATH
 
 #defines -D_di_libcap_ -D_di_thread_support_
 defines -D_libcap_legacy_only_ -D_pthread_attr_unsupported_ -D_pthread_sigqueue_unsupported_
+defines-threadless -D_di_thread_support_
+defines-thread -D_pthread_attr_unsupported_ -D_pthread_sigqueue_unsupported_
 
-flags -O2 -z now -g -pthread -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-parentheses -Wno-missing-braces
+flags -O2 -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-parentheses -Wno-missing-braces
+flags-thread -pthread
 flags-clang -Wno-logical-op-parentheses
 flags-test -O0 -fstack-protector -Wall
 flags-fanalyzer -fanalyzer
