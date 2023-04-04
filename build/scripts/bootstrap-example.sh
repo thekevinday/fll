@@ -39,11 +39,11 @@
 #   SHELL_ENGINE="zsh" zsh ./bootstrap-example.sh --help
 #
 
-if [[ $SHELL_ENGINE == "zsh" ]] ; then
+if [[ ${SHELL_ENGINE} == "zsh" ]] ; then
   emulate ksh
 fi
 
-path_original="$PWD/"
+path_original="${PWD}/"
 path_work="${path_original}fll/"
 
 verbose=
@@ -57,196 +57,228 @@ mode_part=
 mode_parameter=
 mode_path=
 mode_value=
+build_mode=
+build_mode_extra_param_1=
+build_mode_extra_value_1=
+build_mode_extra_param_2=
+build_mode_extra_value_2=
 shell_command=bash
 suppress_first="+F"
 
-if [[ $SHELL_ENGINE == "zsh" ]] ; then
+if [[ ${SHELL_ENGINE} == "zsh" ]] ; then
   shell_command=zsh
 fi
 
 let i=2
 p=
 
-while [[ $i -le $# ]] ; do
+while [[ ${i} -le $# ]] ; do
 
-  if [[ $SHELL_ENGINE == "zsh" ]] ; then
+  if [[ ${SHELL_ENGINE} == "zsh" ]] ; then
     p=${(P)i}
   else
     p=${!i}
   fi
 
-  if [[ $p == "+d" ]] ; then
+  if [[ ${p} == "+d" ]] ; then
     color="+d"
-  elif [[ $p == "+l" ]] ; then
+  elif [[ ${p} == "+l" ]] ; then
     color="+l"
-  elif [[ $p == "+n" ]] ; then
+  elif [[ ${p} == "+n" ]] ; then
     color="+n"
-  elif [[ $p == "+Q" ]] ; then
+  elif [[ ${p} == "+Q" ]] ; then
     verbose="+Q"
     verbose_common=
-  elif [[ $p == "+E" ]] ; then
+  elif [[ ${p} == "+E" ]] ; then
     verbose="+E"
     verbose_common=
-  elif [[ $p == "+N" ]] ; then
+  elif [[ ${p} == "+N" ]] ; then
     verbose="+N"
     verbose_common=
-  elif [[ $p == "+V" ]] ; then
+  elif [[ ${p} == "+V" ]] ; then
     verbose="+V"
     verbose_common="-v"
-  elif [[ $p == "+D" ]] ; then
+  elif [[ ${p} == "+D" ]] ; then
     verbose="+D"
     verbose_common="-v"
-  elif [[ $p == "--enable-static" ]] ; then
+  elif [[ ${p} == "--enable-static" ]] ; then
     static="--enable-static"
-  elif [[ $p == "--disable-static" ]] ; then
+  elif [[ ${p} == "--disable-static" ]] ; then
     static="--disable-static"
-  elif [[ $p == "--enable-shared" ]] ; then
+  elif [[ ${p} == "--enable-shared" ]] ; then
     shared="--enable-shared"
-  elif [[ $p == "--disable-shared" ]] ; then
+  elif [[ ${p} == "--disable-shared" ]] ; then
     shared="--disable-shared"
-  elif [[ $p == "clang" ]] ; then
+  elif [[ ${p} == "clang" ]] ; then
     clang="-m clang"
-  elif [[ $p == "-w" || $p == "--work" ]] ; then
+  elif [[ ${p} == "-w" || ${p} == "--work" ]] ; then
     let i++
 
-    if [[ $i -le $# ]] ; then
-      path_work=$p
+    if [[ ${i} -le $# ]] ; then
+      path_work=${p}
     fi
   fi
 
   let i++
 done
 
-if [[ ! -d $path_work ]] ; then
-  mkdir $verbose_common -p $path_work
+if [[ ! -d ${path_work} ]] ; then
+  mkdir ${verbose_common} -p ${path_work}
 fi
 
-if [[ $1 == "individual" ]] ; then
-  $shell_command build/scripts/package.sh $verbose $color rebuild -i
+if [[ ${1} == "individual" ]] ; then
+  ${shell_command} build/scripts/package.sh ${verbose} ${color} rebuild -i
 
-  if [[ $? -eq 0 ]] ; then
+  if [[ ${?} -eq 0 ]] ; then
     for i in f_type f_status f_memory f_type_array f_string f_utf f_account f_capability f_color f_compare f_console f_control_group f_conversion f_directory f_environment f_execute f_file f_fss f_iki f_limit f_parse f_path f_pipe f_print f_rip f_status_string f_serialize f_signal f_socket f_thread fl_control_group fl_conversion fl_directory fl_environment fl_execute fl_fss fl_iki fl_path fl_print fl_signal fl_status_string fl_utf_file fll_control_group fll_error fll_execute fll_file fll_fss fll_fss_status_string fll_iki fll_print fll_program ; do
-      echo && echo "Processing $i." &&
+      echo && echo "Processing ${i}." &&
 
-      cd package/individual/$i-$version/ &&
+      cd package/individual/${i}-${version}/ &&
 
-      $shell_command ./bootstrap.sh clean $verbose $color $suppress_first &&
+      ${shell_command} ./bootstrap.sh clean ${verbose} ${color} ${suppress_first} &&
 
-      $shell_command ./bootstrap.sh build $verbose $color $suppress_first $shared $static -w $path_work -m individual $clang &&
+      ${shell_command} ./bootstrap.sh build ${verbose} ${color} ${suppress_first} ${shared} ${static} -w ${path_work} -m individual -m individual_thread -m thread ${clang} &&
 
-      $shell_command ./install.sh $verbose $color $suppress_first $shared $static -w $path_work &&
+      ${shell_command} ./install.sh ${verbose} ${color} ${suppress_first} ${shared} ${static} -w ${path_work} &&
 
-      cd $path_original || break
+      cd ${path_original} || break
     done
   fi
 fi
 
-if [[ $1 == "level" ]] ; then
-  $shell_command build/scripts/package.sh $verbose $color rebuild -l &&
+if [[ ${1} == "level" ]] ; then
+  ${shell_command} build/scripts/package.sh ${verbose} ${color} rebuild -l &&
 
-  cd package/level/fll-level_0-$version/ &&
+  cd package/level/fll-level_0-${version}/ &&
 
-  $shell_command ./bootstrap.sh clean $verbose $color $suppress_first &&
+  ${shell_command} ./bootstrap.sh clean ${verbose} ${color} ${suppress_first} &&
 
-  $shell_command ./bootstrap.sh build $verbose $color $suppress_first $shared $static -w $path_work -m level $clang &&
+  ${shell_command} ./bootstrap.sh build ${verbose} ${color} ${suppress_first} ${shared} ${static} -w ${path_work} -m level -m thread ${clang} &&
 
-  $shell_command ./install.sh $verbose $color $suppress_first $shared $static -w $path_work &&
+  ${shell_command} ./install.sh ${verbose} ${color} ${suppress_first} ${shared} ${static} -w ${path_work} &&
 
-  cd $path_original &&
+  cd ${path_original} &&
 
-  cd package/level/fll-level_1-$version/ &&
+  cd package/level/fll-level_1-${version}/ &&
 
-  $shell_command ./bootstrap.sh clean $verbose $color $suppress_first &&
+  ${shell_command} ./bootstrap.sh clean ${verbose} ${color} ${suppress_first} &&
 
-  $shell_command ./bootstrap.sh build $verbose $color $suppress_first $shared $static -w $path_work -m level &&
+  ${shell_command} ./bootstrap.sh build ${verbose} ${color} ${suppress_first} ${shared} ${static} -w ${path_work} -m level -m thread &&
 
-  $shell_command ./install.sh $verbose $color $suppress_first $shared $static -w $path_work &&
+  ${shell_command} ./install.sh ${verbose} ${color} ${suppress_first} ${shared} ${static} -w ${path_work} &&
 
-  cd $path_original &&
+  cd ${path_original} &&
 
-  cd package/level/fll-level_2-$version/ &&
+  cd package/level/fll-level_2-${version}/ &&
 
-  $shell_command ./bootstrap.sh clean $verbose $color $suppress_first &&
+  ${shell_command} ./bootstrap.sh clean ${verbose} ${color} ${suppress_first} &&
 
-  $shell_command ./bootstrap.sh build $verbose $color $suppress_first $shared $static -w $path_work -m level &&
+  ${shell_command} ./bootstrap.sh build ${verbose} ${color} ${suppress_first} ${shared} ${static} -w ${path_work} -m level -m thread &&
 
-  $shell_command ./install.sh $verbose $color $suppress_first $shared $static -w $path_work
+  ${shell_command} ./install.sh ${verbose} ${color} ${suppress_first} ${shared} ${static} -w ${path_work}
 fi
 
-if [[ $1 == "monolithic" ]] ; then
-  $shell_command build/scripts/package.sh $verbose $color rebuild -m &&
+if [[ ${1} == "monolithic" ]] ; then
+  ${shell_command} build/scripts/package.sh ${verbose} ${color} rebuild -m &&
 
-  cd package/monolithic/fll-$version/ &&
+  cd package/monolithic/fll-${version}/ &&
 
-  $shell_command ./bootstrap.sh clean $verbose $color $suppress_first &&
+  ${shell_command} ./bootstrap.sh clean ${verbose} ${color} ${suppress_first} &&
 
-  $shell_command ./bootstrap.sh build $verbose $color $suppress_first $shared $static -w $path_work -m monolithic $clang &&
+  ${shell_command} ./bootstrap.sh build ${verbose} ${color} ${suppress_first} ${shared} ${static} -w ${path_work} -m monolithic -m thread ${clang} &&
 
-  $shell_command ./install.sh $verbose $color $shared $suppress_first $static -w $path_work
+  ${shell_command} ./install.sh ${verbose} ${color} ${shared} ${suppress_first} ${static} -w ${path_work}
 fi
 
 # The following in an example on building individual projects.
 for mode_part in fake utf8 ; do
-  if [[ $1 == "$mode_part-individual" || $1 == "$mode_part-level" || $1 == "$mode_part-monolithic" || $1 == "$mode_part-stand_alone" ]] ; then
+  if [[ ${1} == "${mode_part}-individual" || ${1} == "${mode_part}-level" || ${1} == "${mode_part}-monolithic" || ${1} == "${mode_part}-stand_alone" ]] ; then
     break;
   fi
 
   mode_part=
 done
 
-if [[ $mode_part != "" ]] ; then
+if [[ ${mode_part} != "" ]] ; then
   mode_parameter="-p"
   mode_path="program"
   mode_value=
+  build_mode_extra_param_1=
+  build_mode_extra_value_1=
+  build_mode_extra_param_2=
+  build_mode_extra_value_2=
 
-  if [[ $1 == "$mode_part-individual" ]] ; then
+  if [[ ${1} == "${mode_part}-individual" ]] ; then
     build_mode="individual"
-  elif [[ $1 == "$mode_part-level" ]] ; then
+    build_mode_extra_param_1="-m"
+    build_mode_extra_value_1="individual_thread"
+    build_mode_extra_param_2="-m"
+    build_mode_extra_value_2="thread"
+  elif [[ ${1} == "${mode_part}-level" ]] ; then
     build_mode="level"
-  elif [[ $1 == "$mode_part-monolithic" ]] ; then
+    build_mode_extra_param_1="-m"
+    build_mode_extra_value_1="thread"
+  elif [[ ${1} == "${mode_part}-monolithic" ]] ; then
     build_mode="monolithic"
-  elif [[ $1 == "$mode_part-stand_alone" ]] ; then
+    build_mode_extra_param_1="-m"
+    build_mode_extra_value_1="thread"
+  elif [[ ${1} == "${mode_part}-stand_alone" ]] ; then
     build_mode="stand_alone"
     mode_path="stand_alone"
     mode_parameter="-S"
-    mode_value="$mode_part"
+    mode_value="${mode_part}"
+    build_mode_extra_param_1="-m"
+    build_mode_extra_value_1="thread"
   fi
 
-  $shell_command build/scripts/package.sh $verbose $color rebuild $mode_parameter $mode_value &&
+  ${shell_command} build/scripts/package.sh ${verbose} ${color} rebuild ${mode_parameter} ${mode_value} &&
 
-  cd package/$mode_path/$mode_part-$version/ &&
+  cd package/${mode_path}/${mode_part}-${version}/ &&
 
-  $shell_command ./bootstrap.sh clean $verbose $color $suppress_first &&
+  ${shell_command} ./bootstrap.sh clean ${verbose} ${color} ${suppress_first} &&
 
-  $shell_command ./bootstrap.sh build $verbose $color $suppress_first $shared $static -w $path_work -m $build_mode &&
+  ${shell_command} ./bootstrap.sh build ${verbose} ${color} ${suppress_first} ${shared} ${static} -w ${path_work} -m ${build_mode} ${build_mode_extra_param_1} ${build_mode_extra_value_1} ${build_mode_extra_param_2} ${build_mode_extra_value_2} &&
 
-  $shell_command ./install.sh $verbose $color $suppress_first $shared $static -w $path_work
+  ${shell_command} ./install.sh ${verbose} ${color} ${suppress_first} ${shared} ${static} -w ${path_work}
 
 # The following in an example on building all FLL program projects using the project bootstrapped from above.
-elif [[ $1 == "programs-individual" || $1 == "programs-level" || $1 == "programs-monolithic" ]] ; then
-  if [[ $1 == "programs-individual" ]] ; then
+elif [[ ${1} == "programs-individual" || ${1} == "programs-level" || ${1} == "programs-monolithic" ]] ; then
+  build_mode_extra_param_1=
+  build_mode_extra_value_1=
+  build_mode_extra_param_2=
+  build_mode_extra_value_2=
+
+  if [[ ${1} == "programs-individual" ]] ; then
     build_mode="individual"
-  elif [[ $1 == "programs-level" ]] ; then
+    build_mode_extra_param_1="-m"
+    build_mode_extra_value_1="individual_thread"
+    build_mode_extra_param_2="-m"
+    build_mode_extra_value_2="thread"
+  elif [[ ${1} == "programs-level" ]] ; then
     build_mode="level"
-  elif [[ $1 == "programs-monolithic" ]] ; then
+    build_mode_extra_param_1="-m"
+    build_mode_extra_value_1="thread"
+  elif [[ ${1} == "programs-monolithic" ]] ; then
     build_mode="monolithic"
+    build_mode_extra_param_1="-m"
+    build_mode_extra_value_1="thread"
   fi
 
-  $shell_command build/scripts/package.sh $verbose $color rebuild -p &&
+  ${shell_command} build/scripts/package.sh ${verbose} ${color} rebuild -p &&
 
   cd package/program
 
-  if [[ $? -eq 0 ]] ; then
+  if [[ ${?} -eq 0 ]] ; then
 
     for i in * ; do
 
-      cd ${path_original}package/program/$i &&
+      cd ${path_original}package/program/${i} &&
 
-      $shell_command ./bootstrap.sh clean $verbose $color $suppress_first &&
+      ${shell_command} ./bootstrap.sh clean ${verbose} ${color} ${suppress_first} &&
 
-      $shell_command ./bootstrap.sh build $verbose $color $suppress_first $shared $static -w $path_work -m $build_mode &&
+      ${shell_command} ./bootstrap.sh build ${verbose} ${color} ${suppress_first} ${shared} ${static} -w ${path_work} -m ${build_mode} ${build_mode_extra_param_1} ${build_mode_extra_value_1} ${build_mode_extra_param_2} ${build_mode_extra_value_2} &&
 
-      $shell_command ./install.sh $verbose $color $suppress_first $shared $static -w $path_work ||
+      ${shell_command} ./install.sh ${verbose} ${color} ${suppress_first} ${shared} ${static} -w ${path_work} ||
 
       break
     done
@@ -255,11 +287,11 @@ elif [[ $1 == "programs-individual" || $1 == "programs-level" || $1 == "programs
     echo "ERROR: failed to change directory to 'package/program'."
     echo
   fi
-elif [[ $1 != "individual" && $1 != "level" && $1 != "monolithic" ]] ; then
+elif [[ ${1} != "individual" && ${1} != "level" && ${1} != "monolithic" ]] ; then
   echo
-  echo "ERROR: '$1' is not a supported build mode."
+  echo "ERROR: '${1}' is not a supported build mode."
   echo
 fi
 
 # Regardless of what happens always return to the starting directory.
-cd $path_original
+cd ${path_original}

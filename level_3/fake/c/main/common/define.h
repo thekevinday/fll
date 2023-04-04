@@ -17,20 +17,20 @@ extern "C" {
 #endif
 
 /**
- * The program defines.
+ * The program allocation defines.
  *
- * fake_*_d:
- *   - allocation_console: An allocation step used for small buffers specifically for console parameter.
- *   - allocation_large:   An allocation step used for buffers that are anticipated to have large buffers.
- *   - allocation_pipe:    A buffer size used for processing piped data.
- *   - allocation_small:   An allocation step used for buffers that are anticipated to have small buffers.
+ * fake_allocation_*_d:
+ *   - console: An allocation step used for small buffers specifically for console parameter.
+ *   - large:   An allocation step used for buffers that are anticipated to have large buffers.
+ *   - pipe:    A buffer size used for processing piped data.
+ *   - small:   An allocation step used for buffers that are anticipated to have small buffers.
  */
-#ifndef _di_fake_d_
+#ifndef _di_fake_allocation_d_
   #define fake_allocation_console_d 4
   #define fake_allocation_large_d   256
   #define fake_allocation_pipe_d    16384
   #define fake_allocation_small_d   16
-#endif // _di_fake_d_
+#endif // _di_fake_allocation_d_
 
 /**
  * The program signal defines.

@@ -21,6 +21,7 @@ extern "C" {
     "f_string_dynamics_resize",
     "f_string_maps_increase_by",
     "f_string_triples_increase_by",
+    "f_thread_create",
     "fl_iki_read",
     "fll_program_parameter_process_context",
     "fll_program_parameter_process_verbosity",

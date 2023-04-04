@@ -60,13 +60,6 @@ extern "C" {
 #endif // _di_iki_read_program_name_s_
 
 /**
- * The program defines.
- */
-#ifndef _di_iki_read_d_
-  #define iki_read_signal_check_d 20000
-#endif // _di_iki_read_d_
-
-/**
  * A collection of static strings associated with IKI Read.
  */
 #ifndef _di_iki_read_s_

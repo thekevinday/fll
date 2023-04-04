@@ -32,6 +32,10 @@
 #include <fll/level_0/signal.h>
 #include <fll/level_0/status_string.h>
 
+#ifndef _di_thread_support_
+  #include <fll/level_0/thread.h>
+#endif // _di_thread_support_
+
 // FLL-1 includes.
 #include <fll/level_1/conversion.h>
 #include <fll/level_1/print.h>
@@ -54,6 +58,8 @@
 #include <program/status_code/main/print/error.h>
 #include <program/status_code/main/print/message.h>
 #include <program/status_code/main/process.h>
+#include <program/status_code/main/signal.h>
+#include <program/status_code/main/thread.h>
 
 #ifdef __cplusplus
 extern "C" {

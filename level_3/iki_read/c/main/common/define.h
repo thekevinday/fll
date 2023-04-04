@@ -17,26 +17,50 @@ extern "C" {
 #endif
 
 /**
- * The program defines.
+ * The program allocation defines.
  *
- * iki_read_*_d:
- *   - allocation_console: An allocation step used for small buffers specifically for console parameter.
- *   - allocation_large:   An allocation step used for buffers that are anticipated to have large buffers.
- *   - allocation_small:   An allocation step used for buffers that are anticipated to have small buffers.
- *   - block_max:          The max block read size before checking for interrupt.
- *   - block_read_small:   The block read size for small files.
- *   - block_read_large:   The block read size for large files.
- *   - signal_check:       Number of iterations before performing signal check in non-threaded signal handling.
+ * iki_read_allocation_*_d:
+ *   - console: An allocation step used for small buffers specifically for console parameter.
+ *   - large:   An allocation step used for buffers that are anticipated to have large buffers.
+ *   - pipe:    A buffer size used for processing piped data.
+ *   - small:   An allocation step used for buffers that are anticipated to have small buffers.
  */
-#ifndef _di_iki_read_d_
+#ifndef _di_iki_read_allocation_d_
   #define iki_read_allocation_console_d 4
   #define iki_read_allocation_large_d   256
+  #define iki_read_allocation_pipe_d    16384
   #define iki_read_allocation_small_d   16
-  #define iki_read_block_max            16777216
-  #define iki_read_block_read_small     8192
-  #define iki_read_block_read_large     65536
-  #define iki_read_signal_check_d       20000
+#endif // _di_iki_read_allocation_d_
+
+/**
+ * The program block defines.
+ *
+ * iki_read_block_*_d:
+ *   - max:        The max block read size before checking for interrupt.
+ *   - read_small: The block read size for small files.
+ *   - read_large: The block read size for large files.
+ */
+#ifndef _di_iki_read_d_
+  #define iki_read_block_max_d        16777216
+  #define iki_read_block_read_small_d 8192
+  #define iki_read_block_read_large_d 65536
 #endif // _di_iki_read_d_
+
+/**
+ * The program signal defines.
+ *
+ * iki_read_signal_*_d:
+ *   - check:          Number of iterations before performing signal check in non-threaded signal handling.
+ *   - check_failsafe: When using threads, how many consecutive failures to check signal before aborting (as a recursion failsafe).
+ *   - check_tiny:     The tiny check.
+ *   - check_short:    The short signal check.
+ */
+#ifndef _di_iki_read_signal_d_
+  #define iki_read_signal_check_d          500000
+  #define iki_read_signal_check_failsafe_d 20000
+  #define iki_read_signal_check_tiny_d     4
+  #define iki_read_signal_check_short_d    16
+#endif // _di_iki_read_signal_d_
 
 #ifdef __cplusplus
 } // extern "C"

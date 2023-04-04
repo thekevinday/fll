@@ -4,26 +4,6 @@
 extern "C" {
 #endif
 
-#ifndef _di_iki_read_setting_delete_
-  f_status_t iki_read_setting_delete(iki_read_setting_t * const setting) {
-
-    if (!setting) return F_status_set_error(F_parameter);
-
-    f_string_dynamic_resize(0, &setting->buffer);
-    f_string_dynamics_resize(0, &setting->names);
-    f_string_dynamics_resize(0, &setting->files);
-
-    f_string_maps_resize(0, &setting->replace);
-    f_string_triples_resize(0, &setting->reassign);
-    f_string_triples_resize(0, &setting->substitute);
-    f_string_triples_resize(0, &setting->wrap);
-
-    f_iki_data_delete(&setting->data);
-
-    return F_none;
-  }
-#endif // _di_iki_read_setting_delete_
-
 #ifndef _di_iki_read_setting_load_
   void iki_read_setting_load(const f_console_arguments_t arguments, iki_read_main_t * const main) {
 
@@ -719,17 +699,6 @@ extern "C" {
     return F_true;
   }
 #endif // _di_iki_read_setting_load_parameter_substitution_
-
-#ifndef _di_iki_read_setting_unload_
-  f_status_t iki_read_setting_unload(iki_read_main_t * const main) {
-
-    if (!main) return F_status_set_error(F_parameter);
-
-    iki_read_setting_delete(&main->setting);
-
-    return F_none;
-  }
-#endif // _di_iki_read_setting_unload_
 
 #ifdef __cplusplus
 } // extern "C"

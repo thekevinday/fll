@@ -17,23 +17,6 @@ extern "C" {
 #endif
 
 /**
- * Delete the program main setting data.
- *
- * @param setting
- *   The program main setting data.
- *
- *   This does not alter setting.state.status.
- *
- * @return
- *   F_none on success.
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_utf8_setting_delete_
-  extern f_status_t utf8_setting_delete(utf8_setting_t * const setting);
-#endif // _di_utf8_setting_delete_
-
-/**
  * Perform the standard program setting load process.
  *
  * This prints error messages as appropriate.
@@ -57,28 +40,6 @@ extern "C" {
 #ifndef _di_utf8_setting_load_
   extern void utf8_setting_load(const f_console_arguments_t arguments, utf8_main_t * const main);
 #endif // _di_utf8_setting_load_
-
-/**
- * Perform the standard program setting unload process.
- *
- * @param main
- *   The main program and setting data.
- *   All buffers are deallocated.
- *
- *   This does not alter main.setting.state.status.
- *
- * @return
- *   F_none on success.
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: utf8_setting_delete().
- *
- * @see utf8_setting_delete()
- */
-#ifndef _di_utf8_setting_unload_
-  extern f_status_t utf8_setting_unload(utf8_main_t * const main);
-#endif // _di_utf8_setting_unload_
 
 #ifdef __cplusplus
 } // extern "C"

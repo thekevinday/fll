@@ -2,3 +2,8 @@
 #
 # Defines for the "fss_status_code" program.
 #
+
+_di_thread_support_ Disables thread support.
+
+_pthread_attr_unsupported_ Disable non-portable functionality associated with pthread_attr.
+_pthread_sigqueue_unsupported_ Disable GNU specific sigqueue().

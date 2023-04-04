@@ -1447,7 +1447,7 @@
 #define _di_f_signal_set_has_
 #define _di_f_signal_suspend_
 //#define _di_f_signal_t_
-#define _di_f_signal_wait_
+//#define _di_f_signal_wait_
 #define _di_f_signal_wait_until_
 
 #define _di_f_states_adjust_
@@ -1725,7 +1725,7 @@
 #define _di_f_thread_attribute_stack_set_
 #define _di_f_thread_attribute_stack_size_get_
 #define _di_f_thread_attribute_stack_size_set_
-#define _di_f_thread_attribute_t_
+//#define _di_f_thread_attribute_t_
 #define _di_f_thread_barrier_attribute_create_
 #define _di_f_thread_barrier_attribute_delete_
 #define _di_f_thread_barrier_attributes_adjust_
@@ -1752,8 +1752,8 @@
 #define _di_f_thread_barrier_t_
 #define _di_f_thread_barrier_wait_
 #define _di_f_thread_caller_
-#define _di_f_thread_cancel_
-#define _di_f_thread_cancel_state_set_
+//#define _di_f_thread_cancel_
+//#define _di_f_thread_cancel_state_set_
 #define _di_f_thread_cancel_test_
 #define _di_f_thread_cancel_type_set_
 #define _di_f_thread_clock_get_id_
@@ -1788,7 +1788,7 @@
 #define _di_f_thread_condition_t_
 #define _di_f_thread_condition_wait_
 #define _di_f_thread_condition_wait_timed_
-#define _di_f_thread_create_
+//#define _di_f_thread_create_
 #define _di_f_thread_detach_
 #define _di_f_thread_exit_
 #define _di_f_thread_ids_adjust_
@@ -1799,8 +1799,8 @@
 #define _di_f_thread_ids_increase_by_
 #define _di_f_thread_ids_resize_
 #define _di_f_thread_ids_t_
-#define _di_f_thread_id_t_
-#define _di_f_thread_join_
+//#define _di_f_thread_id_t_
+//#define _di_f_thread_join_
 #define _di_f_thread_join_timed_
 #define _di_f_thread_join_try_
 #define _di_f_thread_key_create_

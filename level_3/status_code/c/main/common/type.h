@@ -24,7 +24,8 @@ extern "C" {
  *
  * flag: Flags passed to the main function.
  *
- * state: The state information.
+ * status_thread: A status used eclusively by the threaded signal handler.
+ * state:         The state data used when processing the FSS data.
  *
  * status_string_from:        A pointer to the status string function (usually either fl_status_string_from() or fll_fss_status_string_from()).
  * status_string_to:          A pointer to the status string function (usually either f_status_string_to() or fll_fss_status_string_to()).
@@ -34,6 +35,7 @@ extern "C" {
   typedef struct {
     uint16_t flag;
 
+    f_status_t status_thread;
     f_state_t state;
 
     const f_string_static_t *program_name;
@@ -47,6 +49,7 @@ extern "C" {
   #define status_code_setting_t_initialize \
     { \
       status_code_main_flag_none_e, \
+      F_none, \
       f_state_t_initialize, \
       0, \
       0, \
@@ -74,6 +77,35 @@ extern "C" {
       status_code_setting_t_initialize, \
     }
 #endif // _di_status_code_main_t_
+
+/**
+ * Deallocate main program data.
+ *
+ * @param setting_make
+ *   The make setting data.
+ *
+ *   This does not alter data_make.main.setting.state.status.
+ */
+#ifndef _di_status_code_main_data_delete_
+  extern void status_code_main_delete(status_code_main_t * const main);
+#endif // _di_status_code_main_data_delete_
+
+/**
+ * Delete the program main setting data.
+ *
+ * @param setting
+ *   The program main setting data.
+ *
+ *   This does not alter setting.state.status.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_status_code_setting_delete_
+  extern f_status_t status_code_setting_delete(status_code_setting_t * const setting);
+#endif // _di_status_code_setting_delete_
 
 #ifdef __cplusplus
 } // extern "C"

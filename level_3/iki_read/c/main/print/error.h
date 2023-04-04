@@ -1,7 +1,7 @@
 /**
  * FLL - Level 3
  *
- * Project: UTF8
+ * Project: IKI Read
  * API Version: 0.7
  * Licenses: lgpl-2.1-or-later
  *

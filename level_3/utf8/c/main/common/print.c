@@ -11,6 +11,7 @@ extern "C" {
     "f_file_stream_open",
     "f_string_dynamic_append_nulless",
     "f_string_dynamics_increase_by",
+    "f_thread_create",
     "fll_program_parameter_process_context",
     "fll_program_parameter_process_verbosity",
     "utf8_detect_codepoint",

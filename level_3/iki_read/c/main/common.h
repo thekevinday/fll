@@ -17,23 +17,6 @@ extern "C" {
 #endif
 
 /**
- * Delete the program main setting data.
- *
- * @param setting
- *   The program main setting data.
- *
- *   This does not alter setting.state.status.
- *
- * @return
- *   F_none on success.
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- */
-#ifndef _di_iki_read_setting_delete_
-  extern f_status_t iki_read_setting_delete(iki_read_setting_t * const setting);
-#endif // _di_iki_read_setting_delete_
-
-/**
  * Perform the standard program setting load process.
  *
  * This prints error messages as appropriate.
@@ -99,29 +82,6 @@ extern "C" {
 #ifndef _di_iki_read_setting_load_parameter_substitution_
   extern f_status_t iki_read_setting_load_parameter_substitution(iki_read_main_t * const main, const f_console_parameter_t parameter, const f_string_static_t name, f_string_triples_t *triple);
 #endif // _di_iki_read_setting_load_parameter_substitution_
-
-/**
- * Perform the standard program setting unload process.
- *
- * @param main
- *   The program and settings data.
- *
- *   All buffers are deallocated.
- *
- *   This does not alter main.setting.state.status.
- *
- * @return
- *   F_none on success.
- *
- *   F_parameter (with error bit) if a parameter is invalid.
- *
- *   Errors (with error bit) from: iki_read_setting_delete().
- *
- * @see iki_read_setting_delete()
- */
-#ifndef _di_iki_read_setting_unload_
-  extern f_status_t iki_read_setting_unload(iki_read_main_t * const main);
-#endif // _di_iki_read_setting_unload_
 
 #ifdef __cplusplus
 } // extern "C"

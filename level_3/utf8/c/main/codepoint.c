@@ -15,7 +15,7 @@ extern "C" {
 
     if (*mode != utf8_codepoint_mode_end_e) {
       if (main->setting.text.used + unicode.used >= main->setting.text.size) {
-        main->setting.state.status = f_string_dynamic_increase_by(utf8_default_allocation_step_d, &main->setting.text);
+        main->setting.state.status = f_string_dynamic_increase_by(utf8_allocation_small_d, &main->setting.text);
         if (F_status_is_error(main->setting.state.status)) return;
       }
 
@@ -108,7 +108,7 @@ extern "C" {
 
     if (*mode != utf8_codepoint_mode_raw_end_e) {
       if (main->setting.text.used + hex.used >= main->setting.text.size) {
-        main->setting.state.status = f_string_dynamic_increase_by(utf8_default_allocation_step_d, &main->setting.text);
+        main->setting.state.status = f_string_dynamic_increase_by(utf8_allocation_small_d, &main->setting.text);
         if (F_status_is_error(main->setting.state.status)) return;
       }
 

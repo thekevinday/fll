@@ -45,6 +45,10 @@
 #include <fll/level_0/rip.h>
 #include <fll/level_0/signal.h>
 
+#ifndef _di_thread_support_
+  #include <fll/level_0/thread.h>
+#endif // _di_thread_support_
+
 // FLL-1 includes.
 #include <fll/level_1/conversion.h>
 #include <fll/level_1/print.h>
@@ -68,6 +72,8 @@
 #include <program/utf8/main/print/error.h>
 #include <program/utf8/main/print/message.h>
 #include <program/utf8/main/process.h>
+#include <program/utf8/main/signal.h>
+#include <program/utf8/main/thread.h>
 
 #ifdef __cplusplus
 extern "C" {

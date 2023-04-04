@@ -1,7 +1,7 @@
 /**
  * FLL - Level 3
  *
- * Project: IKI
+ * Project: IKI Read
  * API Version: 0.7
  * Licenses: lgpl-2.1-or-later
  *
@@ -39,6 +39,10 @@
 #include <fll/level_0/rip.h>
 #include <fll/level_0/signal.h>
 
+#ifndef _di_thread_support_
+  #include <fll/level_0/thread.h>
+#endif // _di_thread_support_
+
 // FLL-1 includes.
 #include <fll/level_1/conversion.h>
 #include <fll/level_1/iki.h>
@@ -63,6 +67,8 @@
 #include <program/iki_read/main/print/error.h>
 #include <program/iki_read/main/print/message.h>
 #include <program/iki_read/main/process.h>
+#include <program/iki_read/main/signal.h>
+#include <program/iki_read/main/thread.h>
 
 #ifdef __cplusplus
 extern "C" {

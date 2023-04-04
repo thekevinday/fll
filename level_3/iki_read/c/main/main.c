@@ -29,17 +29,45 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
   fll_program_standard_set_up(&data.program);
 
-  {
-    const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize(argc, argv, envp);
+  f_file_umask_get(&data.program.umask);
 
-    iki_read_setting_load(arguments, &data);
-  }
+  #ifdef _di_thread_support_
+    {
+      const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize(argc, argv, envp);
 
-  iki_read_main(&data);
+      iki_read_setting_load(arguments, &data);
+    }
 
-  iki_read_setting_unload(&data);
+    iki_read_main(&data);
+  #else
+    {
+      f_thread_id_t id_signal;
 
-  fll_program_data_delete(&data.program);
+      memset(&id_signal, 0, sizeof(f_thread_id_t));
+
+      data.setting.state.status = f_thread_create(0, &id_signal, &iki_read_thread_signal, (void *) &data);
+
+      if (F_status_is_error(data.setting.state.status)) {
+        iki_read_print_error(&data.program.error, macro_iki_read_f(f_thread_create));
+      }
+      else {
+        {
+          const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize(argc, argv, envp);
+
+          iki_read_setting_load(arguments, &data);
+        }
+
+        if (!iki_read_signal_check(&data)) {
+          iki_read_main(&data);
+        }
+
+        f_thread_cancel(id_signal);
+        f_thread_join(id_signal, 0);
+      }
+    }
+  #endif // _di_thread_support_
+
+  iki_read_main_delete(&data);
 
   fll_program_standard_set_down(&data.program);
 

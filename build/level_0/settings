@@ -1,4 +1,18 @@
 # fss-0001
+#
+# Modes:
+#   - individual:        Compile using per project (individual) libraries, does not handle thread or threadless cases.
+#   - individual_thread: This is required when compiling in individual mode with "thread" mode.
+#   - level:             Compile using per level libraries.
+#   - monolithic:        Compile using per monolithic libraries.
+#   - clang:             Use clang rather than the default, which is generally gcc.
+#   - test:              Compile for a test, such as unit testing.
+#   - fanalyzer:         Compile using GCC's -fanalyzer compile time option.
+#   - thread:            Compile with thread support.
+#   - threadless:        Compile without thread support.
+#
+# Note: This adds "individual" and "monolithic" for consistency reasons. This should never use "individual" or "monolithic".
+#
 
 build_name fll_0
 
@@ -8,8 +22,8 @@ version_micro 0
 version_file micro
 version_target minor
 
-modes level level_threadless clang test fanalyzer
-modes_default level
+modes individual individual_thread level monolithic clang test fanalyzer thread threadless
+modes_default level thread
 
 build_compiler gcc
 build_compiler-clang clang
@@ -64,7 +78,7 @@ build_sources_library utf.c private-utf.c private-utf_alphabetic.c private-utf_c
 build_sources_library utf/common.c utf/convert.c utf/dynamic.c utf/dynamics.c utf/dynamicss.c utf/is.c utf/is_character.c utf/map.c utf/maps.c utf/mapss.c utf/map_multi.c utf/map_multis.c utf/map_multiss.c utf/static.c utf/statics.c utf/staticss.c utf/string.c utf/triple.c utf/triples.c utf/tripless.c
 build_sources_library utf/private-dynamic.c utf/private-dynamics.c utf/private-dynamicss.c utf/private-maps.c utf/private-mapss.c utf/private-map_multis.c utf/private-map_multiss.c utf/private-string.c utf/private-triples.c utf/private-tripless.c
 
-build_sources_library-level thread.c private-thread.c thread/attribute.c thread/barrier.c thread/barrier_attribute.c thread/condition.c thread/condition_attribute.c thread/id.c thread/key.c thread/lock.c thread/lock_attribute.c thread/mutex.c thread/mutex_attribute.c thread/once.c thread/semaphore.c thread/set.c thread/spin.c
+build_sources_library-thread thread.c private-thread.c thread/attribute.c thread/barrier.c thread/barrier_attribute.c thread/condition.c thread/condition_attribute.c thread/id.c thread/key.c thread/lock.c thread/lock_attribute.c thread/mutex.c thread/mutex_attribute.c thread/once.c thread/semaphore.c thread/set.c thread/spin.c
 
 build_sources_headers account.h account/accounts.h account/common.h
 build_sources_headers capability.h capability/common.h
@@ -104,7 +118,7 @@ build_sources_headers type_array.h type_array/common.h
 build_sources_headers type_array/array_length.h type_array/cell.h type_array/fll_id.h type_array/int8.h type_array/int16.h type_array/int32.h type_array/int64.h type_array/int128.h type_array/state.h type_array/status.h type_array/uint8.h type_array/uint16.h type_array/uint32.h type_array/uint64.h type_array/uint128.h
 build_sources_headers utf.h utf/common.h utf/convert.h utf/dynamic.h utf/dynamics.h utf/dynamicss.h utf/is.h utf/is_character.h utf/map.h utf/maps.h utf/mapss.h utf/map_multi.h utf/map_multis.h utf/map_multiss.h utf/static.h utf/statics.h utf/staticss.h utf/string.h utf/triple.h utf/triples.h utf/tripless.h
 
-build_sources_headers-level thread.h thread/attribute.h thread/barrier.h thread/barrier_attribute.h thread/condition.h thread/condition_attribute.h thread/id.h thread/key.h thread/lock.h thread/lock_attribute.h thread/mutex.h thread/mutex_attribute.h thread/once.h thread/semaphore.h thread/set.h thread/spin.h
+build_sources_headers-thread thread.h thread/attribute.h thread/barrier.h thread/barrier_attribute.h thread/condition.h thread/condition_attribute.h thread/id.h thread/key.h thread/lock.h thread/lock_attribute.h thread/mutex.h thread/mutex_attribute.h thread/once.h thread/semaphore.h thread/set.h thread/spin.h
 
 build_script yes
 build_shared yes
@@ -133,15 +147,16 @@ environment LANG LC_ALL LC_COLLATE LC_CTYPE LC_FASTMSG LC_MESSAGES LC_MONETARY L
 
 #defines -D_di_libcap_
 #defines -D_f_file_rename_use_renameat2_
-defines -D_libcap_legacy_only_ -D_pthread_attr_unsupported_ -D_pthread_sigqueue_unsupported_
+defines -D_libcap_legacy_only_
 defines-clang -D_clang_not_a_compile_time_constant_workaround_
-defines-level_threadless -D_di_pthread_support_
+defines-threadless -D_di_thread_support_
+defines-thread -D_pthread_attr_unsupported_ -D_pthread_sigqueue_unsupported_
 
 flags -O2 -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-parentheses
+flags-thread -pthread
 flags-clang -Wno-logical-op-parentheses
 flags-test -fstack-protector -Wall
 flags-fanalyzer -fanalyzer
-flags-level -pthread
 
 flags_library -fPIC
 flags_object -fPIC

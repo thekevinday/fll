@@ -116,12 +116,12 @@ extern "C" {
         }
 
         // Enforce a max block read size to allow for interrupts to be processed between blocks.
-        if (size_file > iki_read_block_max) {
-          file.size_read = iki_read_block_read_large;
-          size_block = iki_read_block_max;
+        if (size_file > iki_read_block_max_d) {
+          file.size_read = iki_read_block_read_large_d;
+          size_block = iki_read_block_max_d;
         }
         else {
-          file.size_read = iki_read_block_read_small;
+          file.size_read = iki_read_block_read_small_d;
           size_block = size_file;
         }
 
@@ -137,7 +137,7 @@ extern "C" {
         for (size_read = 0; size_read < size_file; size_read += size_block) {
 
           // The signal check is always performed on each pass.
-          if (size_file > iki_read_block_max && fll_program_standard_signal_received(&main->program)) {
+          if (size_file > iki_read_block_max_d && fll_program_standard_signal_received(&main->program)) {
             fll_program_print_signal_received(&main->program.warning, main->program.signal_received);
 
             main->setting.state.status = F_status_set_error(F_interrupt);

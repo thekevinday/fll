@@ -1,4 +1,18 @@
 # fss-0001
+#
+# Modes:
+#   - individual:        Compile using per project (individual) libraries, does not handle thread or threadless cases.
+#   - individual_thread: This is required when compiling in individual mode with "thread" mode.
+#   - level:             Compile using per level libraries.
+#   - monolithic:        Compile using per monolithic libraries.
+#   - clang:             Use clang rather than the default, which is generally gcc.
+#   - test:              Compile for a test, such as unit testing.
+#   - fanalyzer:         Compile using GCC's -fanalyzer compile time option.
+#   - thread:            Compile with thread support.
+#   - threadless:        Compile without thread support.
+#
+# Note: This adds "individual" and "level" for consistency reasons. This should never use "individual" or "level".
+#
 
 build_name fll
 
@@ -8,8 +22,8 @@ version_micro 0
 version_file micro
 version_target minor
 
-modes monolithic monolithic_threadless clang test fanalyzer
-modes_default monolithic
+modes individual individual_thread level monolithic clang test fanalyzer thread threadless
+modes_default monolithic thread
 
 build_compiler gcc
 build_compiler-clang clang
@@ -86,7 +100,7 @@ build_sources_library level_2/iki.c level_2/private-iki.c
 build_sources_library level_2/print.c
 build_sources_library level_2/program.c level_2/program/common.c level_2/program/print.c level_2/private-program.c
 
-build_sources_library-monolithic level_0/thread.c level_0/private-thread.c level_0/thread/attribute.c level_0/thread/barrier.c level_0/thread/barrier_attribute.c level_0/thread/condition.c level_0/thread/condition_attribute.c level_0/thread/id.c level_0/thread/key.c level_0/thread/lock.c level_0/thread/lock_attribute.c level_0/thread/mutex.c level_0/thread/mutex_attribute.c level_0/thread/once.c level_0/thread/semaphore.c level_0/thread/set.c level_0/thread/spin.c
+build_sources_library-thread level_0/thread.c level_0/private-thread.c level_0/thread/attribute.c level_0/thread/barrier.c level_0/thread/barrier_attribute.c level_0/thread/condition.c level_0/thread/condition_attribute.c level_0/thread/id.c level_0/thread/key.c level_0/thread/lock.c level_0/thread/lock_attribute.c level_0/thread/mutex.c level_0/thread/mutex_attribute.c level_0/thread/once.c level_0/thread/semaphore.c level_0/thread/set.c level_0/thread/spin.c
 
 build_sources_headers level_0/account.h level_0/account/accounts.h level_0/account/common.h
 build_sources_headers level_0/capability.h level_0/capability/common.h
@@ -149,7 +163,7 @@ build_sources_headers level_2/iki.h
 build_sources_headers level_2/print.h
 build_sources_headers level_2/program.h level_2/program/common.h level_2/program/print.h
 
-build_sources_headers-monolithic level_0/thread.h level_0/thread/attribute.h level_0/thread/barrier.h level_0/thread/barrier_attribute.h level_0/thread/condition.h level_0/thread/condition_attribute.h level_0/thread/id.h level_0/thread/key.h level_0/thread/lock.h level_0/thread/lock_attribute.h level_0/thread/mutex.h level_0/thread/mutex_attribute.h level_0/thread/once.h level_0/thread/semaphore.h level_0/thread/set.h level_0/thread/spin.h
+build_sources_headers-thread level_0/thread.h level_0/thread/attribute.h level_0/thread/barrier.h level_0/thread/barrier_attribute.h level_0/thread/condition.h level_0/thread/condition_attribute.h level_0/thread/id.h level_0/thread/key.h level_0/thread/lock.h level_0/thread/lock_attribute.h level_0/thread/mutex.h level_0/thread/mutex_attribute.h level_0/thread/once.h level_0/thread/semaphore.h level_0/thread/set.h level_0/thread/spin.h
 
 build_script yes
 build_shared yes
@@ -178,15 +192,16 @@ environment LANG LC_ALL LC_COLLATE LC_CTYPE LC_FASTMSG LC_MESSAGES LC_MONETARY L
 
 #defines -D_di_libcap_
 #defines -D_f_file_rename_use_renameat2_
-defines -D_libcap_legacy_only_ -D_pthread_attr_unsupported_ -D_pthread_sigqueue_unsupported_
+defines -D_libcap_legacy_only_
 defines-clang -D_clang_not_a_compile_time_constant_workaround_
-defines-monolithic_threadless -D_di_pthread_support_
+defines-threadless -D_di_thread_support_
+defines-thread -D_pthread_attr_unsupported_ -D_pthread_sigqueue_unsupported_
 
 flags -O2 -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-parentheses
+flags-thread -pthread
 flags-clang -Wno-logical-op-parentheses
 flags-test -fstack-protector -Wall
 flags-fanalyzer -fanalyzer
-flags-monolithic -pthread
 
 flags_library -fPIC
 flags_object -fPIC

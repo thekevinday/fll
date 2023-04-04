@@ -27,17 +27,45 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
   fll_program_standard_set_up(&data.program);
 
-  {
-    const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize(argc, argv, envp);
+  f_file_umask_get(&data.program.umask);
 
-    utf8_setting_load(arguments, &data);
-  }
+  #ifdef _di_thread_support_
+    {
+      const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize(argc, argv, envp);
 
-  utf8_main(&data);
+      utf8_setting_load(arguments, &data);
+    }
 
-  utf8_setting_unload(&data);
+    utf8_main(&data);
+  #else
+    {
+      f_thread_id_t id_signal;
 
-  fll_program_data_delete(&data.program);
+      memset(&id_signal, 0, sizeof(f_thread_id_t));
+
+      data.setting.state.status = f_thread_create(0, &id_signal, &utf8_thread_signal, (void *) &data);
+
+      if (F_status_is_error(data.setting.state.status)) {
+        utf8_print_error(&data.program.error, macro_utf8_f(f_thread_create));
+      }
+      else {
+        {
+          const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize(argc, argv, envp);
+
+          utf8_setting_load(arguments, &data);
+        }
+
+        if (!utf8_signal_check(&data)) {
+          utf8_main(&data);
+        }
+
+        f_thread_cancel(id_signal);
+        f_thread_join(id_signal, 0);
+      }
+    }
+  #endif // _di_thread_support_
+
+  utf8_main_delete(&data);
 
   fll_program_standard_set_down(&data.program);
 

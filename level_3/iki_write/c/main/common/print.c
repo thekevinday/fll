@@ -13,6 +13,7 @@ extern "C" {
     "f_string_dynamic_partial_append_nulless",
     "f_string_dynamic_seek_to",
     "f_string_dynamics_resize",
+    "f_thread_create",
     "fll_iki_content_escape",
     "fll_program_parameter_process_context",
     "fll_program_parameter_process_verbosity",

@@ -26,7 +26,9 @@ extern "C" {
  *
  * flag: Flags passed to the main function.
  *
- * state: The state data used when processing the FSS data.
+ * status_thread: A status used eclusively by the threaded signal handler.
+ * state:         The state data used when processing the FSS data.
+ *
  * range: A range used as a buffer during processing.
  *
  * quote:    This holds the quote used during processing.
@@ -56,7 +58,9 @@ extern "C" {
   typedef struct {
     uint16_t flag;
 
+    f_status_t status_thread;
     f_state_t state;
+
     f_string_range_t range;
 
     f_string_static_t quote;
@@ -87,6 +91,7 @@ extern "C" {
   #define fss_write_setting_t_initialize \
     { \
       fss_write_main_flag_none_e, \
+      F_none, \
       macro_f_state_t_initialize_1(fss_write_allocation_large_d, fss_write_allocation_small_d, F_none, 0, 0, &fll_program_standard_signal_handle, 0, 0, 0), \
       f_string_range_t_initialize, \
       f_string_static_t_initialize, \
@@ -129,6 +134,35 @@ extern "C" {
       fss_write_setting_t_initialize, \
     }
 #endif // _di_fss_write_main_t_
+
+/**
+ * Deallocate main program data.
+ *
+ * @param setting_make
+ *   The make setting data.
+ *
+ *   This does not alter data_make.main.setting.state.status.
+ */
+#ifndef _di_fss_write_main_data_delete_
+  extern void fss_write_main_delete(fss_write_main_t * const main);
+#endif // _di_fss_write_main_data_delete_
+
+/**
+ * Delete the program main setting data.
+ *
+ * @param setting
+ *   The program main setting data.
+ *
+ *   This does not alter setting.state.status.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_parameter (with error bit) if a parameter is invalid.
+ */
+#ifndef _di_fss_write_setting_delete_
+  extern f_status_t fss_write_setting_delete(fss_write_setting_t * const setting);
+#endif // _di_fss_write_setting_delete_
 
 #ifdef __cplusplus
 } // extern "C"

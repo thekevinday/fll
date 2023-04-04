@@ -40,10 +40,11 @@ extern "C" {
 #ifndef _di_status_code_f_e_
   enum {
     status_code_f_f_console_parameter_process_e,
-    status_code_f_status_string_from_e,
-    status_code_f_status_string_to_e,
+    status_code_f_f_thread_create_e,
     status_code_f_fll_program_parameter_process_context_e,
     status_code_f_fll_program_parameter_process_verbosity_e,
+    status_code_f_status_string_from_e,
+    status_code_f_status_string_to_e,
   }; // enum
 #endif // _di_status_code_f_e_
 

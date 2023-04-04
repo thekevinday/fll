@@ -46,6 +46,7 @@ extern "C" {
     iki_write_f_f_string_dynamic_partial_append_nulless_e,
     iki_write_f_f_string_dynamic_seek_to_e,
     iki_write_f_f_string_dynamics_resize_e,
+    iki_write_f_f_thread_create_e,
     iki_write_f_fll_iki_content_escape_e,
     iki_write_f_fll_program_parameter_process_context_e,
     iki_write_f_fll_program_parameter_process_verbosity_e,

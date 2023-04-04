@@ -4,15 +4,6 @@
 extern "C" {
 #endif
 
-#ifndef _di_status_code_setting_delete_
-  f_status_t status_code_setting_delete(status_code_setting_t * const setting) {
-
-    if (!setting) return F_status_set_error(F_parameter);
-
-    return F_none;
-  }
-#endif // _di_status_code_setting_delete_
-
 #ifndef _di_status_code_setting_load_
   void status_code_setting_load(const f_console_arguments_t arguments, status_code_main_t * const main) {
 
@@ -181,17 +172,6 @@ extern "C" {
     }
   }
 #endif // _di_status_code_setting_load_
-
-#ifndef _di_status_code_setting_unload_
-  f_status_t status_code_setting_unload(status_code_main_t * const main) {
-
-    if (!main) return F_status_set_error(F_parameter);
-
-    status_code_setting_delete(&main->setting);
-
-    return F_none;
-  }
-#endif // _di_status_code_setting_unload_
 
 #ifdef __cplusplus
 } // extern "C"

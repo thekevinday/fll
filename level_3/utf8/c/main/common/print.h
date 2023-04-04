@@ -44,6 +44,7 @@ extern "C" {
     utf8_f_f_file_stream_open_e,
     utf8_f_f_string_dynamic_append_nulless_e,
     utf8_f_f_string_dynamics_increase_by_e,
+    utf8_f_f_thread_create_e,
     utf8_f_fll_program_parameter_process_context_e,
     utf8_f_fll_program_parameter_process_verbosity_e,
     utf8_f_utf8_detect_codepoint_e,

@@ -12,8 +12,8 @@ version_micro 0
 version_file micro
 version_target minor
 
-modes individual level monolithic clang test
-modes_default monolithic
+modes individual level monolithic clang test fanalyzer thread individual-thread threadless
+modes_default monolithic thread
 
 build_compiler gcc
 build_compiler-clang clang
@@ -23,6 +23,7 @@ build_language c
 
 build_libraries -lc -lfss_write
 build_libraries-individual -lfll_error -lfll_file -lfll_fss -lfll_print -lfll_program -lfl_conversion -lfl_directory -lfl_fss -lfl_print -lf_color -lf_compare -lf_console -lf_conversion -lf_directory -lf_environment -lf_file -lf_fss -lf_memory -lf_parse -lf_path -lf_pipe -lf_print -lf_rip -lf_signal -lf_status_string -lf_string -lf_type_array -lf_utf
+build_libraries-individual-thread -lf_thread
 build_libraries-level -lfll_2 -lfll_1 -lfll_0
 build_libraries-monolithic -lfll
 
@@ -46,10 +47,13 @@ search_static yes
 environment PATH LD_LIBRARY_PATH
 environment LANG LC_ALL LC_COLLATE LC_CTYPE LC_FASTMSG LC_MESSAGES LC_MONETARY LC_NUMERIC LC_TIME LOCPATH NLSPATH
 
-#defines -D_di_libcap_ -D_di_thread_support_
-defines -D_libcap_legacy_only_ -D_pthread_attr_unsupported_ -D_pthread_sigqueue_unsupported_
+#defines -D_di_libcap_
+defines-threadless -D_di_thread_support_
+defines-thread -D_pthread_attr_unsupported_ -D_pthread_sigqueue_unsupported_
+defines -D_libcap_legacy_only_
 
 flags -O2 -z now -g -fdiagnostics-color=always -Wno-logical-not-parentheses -Wno-parentheses -Wno-missing-braces
+flags-thread -pthread
 flags-clang -Wno-logical-op-parentheses
 flags-test -O0 -fstack-protector -Wall
 flags-coverage -O0 --coverage -fprofile-abs-path -fprofile-dir=build/coverage/
