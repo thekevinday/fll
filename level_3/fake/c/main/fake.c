@@ -133,17 +133,7 @@ extern "C" {
             break;
           }
 
-          if (!((++main->program.signal_check) % fake_signal_check_short_d)) {
-            if (fll_program_standard_signal_received(&main->program)) {
-              fll_program_print_signal_received(&main->program.warning, main->program.signal_received);
-
-              main->setting.state.status = F_status_set_error(F_interrupt);
-
-              break;
-            }
-
-            main->program.signal_check = 0;
-          }
+          if (fake_signal_check(main)) break;
         } // for
       }
 
@@ -205,19 +195,7 @@ extern "C" {
           }
 
           if (main->setting.state.status == F_child) break;
-
-          if (!((++main->program.signal_check) % fake_signal_check_short_d)) {
-            if (fll_program_standard_signal_received(&main->program)) {
-              fll_program_print_signal_received(&main->program.warning, main->program.signal_received);
-
-              main->setting.state.status = F_status_set_error(F_interrupt);
-
-              break;
-            }
-
-            main->program.signal_check = 0;
-          }
-
+          if (fake_signal_check(main)) break;
           if (F_status_is_error(main->setting.state.status)) break;
         } // for
       }

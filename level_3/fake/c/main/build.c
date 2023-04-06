@@ -198,18 +198,7 @@ extern "C" {
 
     for (f_array_length_t i = 0; i < files.used; ++i) {
 
-      if (!((++main->program.signal_check) % fake_signal_check_short_d)) {
-        if (fll_program_standard_signal_received(&main->program)) {
-          fll_program_print_signal_received(&main->program.warning, main->program.signal_received);
-
-          main->setting.state.status = F_status_set_error(F_interrupt);
-
-          break;
-        }
-
-        main->program.signal_check = 0;
-      }
-
+      if (fake_signal_check(main)) break;
       if (!files.array[i].used) continue;
 
       path_source.used = source.used;

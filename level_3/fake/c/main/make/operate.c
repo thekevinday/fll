@@ -1358,19 +1358,9 @@ extern "C" {
       state_process.operation_previous = state_process.operation;
       state_process.operation = 0;
 
-      if (!((++main->program.signal_check) % fake_signal_check_short_d)) {
-        if (fll_program_standard_signal_received(&main->program)) {
-          fll_program_print_signal_received(&main->program.warning, main->program.signal_received);
-
-          main->setting.state.status = F_status_set_error(F_interrupt);
-
-          break;
-        }
-
-        main->program.signal_check = 0;
-      }
-
       for (j = 0; j < fake_max_operation_d; ++j) {
+
+        if (fake_signal_check(main)) break;
 
         if (f_compare_dynamic_partial_string(operations_name[j].string, main->buffer, operations_name[j].used, section->objects.array[i]) == F_equal_to) {
           state_process.operation = operations_type[j];
