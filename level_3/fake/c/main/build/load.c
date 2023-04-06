@@ -1380,22 +1380,24 @@ extern "C" {
 
     for (uint8_t i = 0; i < fake_build_stage_total_d; ++i) {
 
+      values[i]->used = 0;
+
       main->setting.state.status = f_string_dynamic_append_nulless(data->path_build_stage, values[i]);
 
       if (F_status_is_error_not(main->setting.state.status) && main->setting.process.used) {
         main->setting.state.status = f_string_dynamic_append_nulless(main->setting.process, values[i]);
+
+        if (F_status_is_error_not(main->setting.state.status)) {
+          main->setting.state.status = f_string_dynamic_append_nulless(fake_build_stage_separate_s, values[i]);
+        }
       }
 
-      if (F_status_is_error_not(main->setting.state.status)) {
-        main->setting.state.status = f_string_dynamic_append_nulless(fake_build_stage_separate_s, values[i]);
-      }
-
-      if (F_status_is_error_not(main->setting.state.status)) {
+      if (F_status_is_error_not(main->setting.state.status) && names[i].used) {
         main->setting.state.status = f_string_dynamic_append_nulless(names[i], values[i]);
-      }
 
-      if (F_status_is_error_not(main->setting.state.status)) {
-        main->setting.state.status = f_string_dynamic_append_nulless(fake_build_stage_separate_s, values[i]);
+        if (F_status_is_error_not(main->setting.state.status)) {
+          main->setting.state.status = f_string_dynamic_append_nulless(fake_build_stage_separate_s, values[i]);
+        }
       }
 
       if (F_status_is_error_not(main->setting.state.status)) {
