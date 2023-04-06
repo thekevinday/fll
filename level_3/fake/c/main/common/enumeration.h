@@ -381,6 +381,20 @@ extern "C" {
   }; // enum
 #endif // _di_fake_print_flag_e_
 
+/**
+ * Flags for the code property in the f_state_t structure.
+ *
+ * fake_state_code_*_e:
+ *   - none:  No flags set.
+ *   - local: A flag designating that the state.custom is in fake_local_t rather than fake_main_t.
+ */
+#ifndef _di_fake_state_code_e_
+  enum {
+    fake_state_code_none_e  = 0x0,
+    fake_state_code_local_e = 0x1,
+  }; // enum
+#endif // _di_fake_state_code_e_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

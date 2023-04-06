@@ -108,6 +108,27 @@ extern "C" {
   }
 #endif // !defined(_di_fake_signal_handler_) && !defined(_di_thread_support_)
 
+#ifndef _di_fake_signal_handler_callback_
+  void fake_signal_handler_callback(void * const void_state, void * const void_internal) {
+
+    if (!void_state) return;
+
+    f_state_t * const state = (f_state_t *) void_state;
+
+    if (!state->custom) {
+      state->status = F_interrupt_not;
+
+      return;
+    }
+
+    fake_main_t * const main = (state->code & fake_state_code_local_e)
+      ? ((fake_local_t *) state->custom)->main
+      : (fake_main_t *) state->custom;
+
+    state->status = (fake_signal_check(main) == F_true) ? F_status_set_error(F_interrupt) : F_interrupt_not;
+  }
+#endif // _di_fake_signal_handler_callback_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

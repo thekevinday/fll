@@ -425,8 +425,11 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
+ *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_string_dynamic_resize().
+ *
+ *   @see f_memory_resize()
+ *   @see f_string_dynamic_resize()
  */
 #ifndef _di_f_directory_statuss_adjust_
   extern f_status_t f_directory_statuss_adjust(const f_array_length_t length, f_directory_statuss_t * const statuss);
@@ -448,8 +451,11 @@ extern "C" {
  *   F_none on success.
  *   F_data_not if amount is 0.
  *
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
+ *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_string_dynamic_resize().
+ *
+ *   @see f_memory_resize()
+ *   @see f_string_dynamic_resize()
  */
 #ifndef _di_f_directory_statuss_decimate_by_
   extern f_status_t f_directory_statuss_decimate_by(const f_array_length_t amount, f_directory_statuss_t * const statuss);
@@ -471,8 +477,11 @@ extern "C" {
  *   F_none on success.
  *   F_data_not if amount is 0.
  *
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
+ *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_string_dynamic_resize().
+ *
+ *   @see f_memory_resize()
+ *   @see f_string_dynamic_resize()
  */
 #ifndef _di_f_directory_statuss_decrease_by_
   extern f_status_t f_directory_statuss_decrease_by(const f_array_length_t amount, f_directory_statuss_t * const statuss);
@@ -494,9 +503,11 @@ extern "C" {
  *   F_none on success.
  *   F_data_not on success, but there is no reason to increase size (used + 1 <= size).
  *
- *   F_array_too_large (with error bit) if the new array length is too large.
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
+ *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_string_dynamic_resize().
+ *
+ *   @see f_memory_resize()
+ *   @see f_string_dynamic_resize()
  */
 #ifndef _di_f_directory_statuss_increase_
   extern f_status_t f_directory_statuss_increase(const f_array_length_t step, f_directory_statuss_t * const statuss);
@@ -518,9 +529,11 @@ extern "C" {
  *   F_none on success.
  *   F_data_not on success, but there is no reason to increase size (used + amount <= size).
  *
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
- *   F_array_too_large (with error bit) if the new array length is too large.
+ *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_string_dynamic_resize().
+ *
+ *   @see f_memory_resize()
+ *   @see f_string_dynamic_resize()
  */
 #ifndef _di_f_directory_statuss_increase_by_
   extern f_status_t f_directory_statuss_increase_by(const f_array_length_t amount, f_directory_statuss_t * const statuss);
@@ -537,8 +550,11 @@ extern "C" {
  * @return
  *   F_none on success.
  *
- *   F_memory_not (with error bit) on out of memory.
- *   F_parameter (with error bit) if a parameter is invalid.
+ *   Errors (with error bit) from: f_memory_resize().
+ *   Errors (with error bit) from: f_string_dynamic_resize().
+ *
+ *   @see f_memory_resize()
+ *   @see f_string_dynamic_resize()
  */
 #ifndef _di_f_directory_statuss_resize_
   extern f_status_t f_directory_statuss_resize(const f_array_length_t length, f_directory_statuss_t * const statuss);

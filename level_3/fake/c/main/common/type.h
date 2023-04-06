@@ -308,7 +308,36 @@ extern "C" {
       f_string_dynamic_t_initialize, \
       0, \
     }
-#endif // _di_fake_main_t_
+#endif // _di_fake_data_t_
+
+/**
+ * The program data for local operations so that custom data can be passed to functions.
+ *
+ * main:     The program and settings data.
+ * custom_1: Custom data that both the caller and the called function know to expect.
+ * custom_2: Custom data that both the caller and the called function know to expect.
+ */
+#ifndef _di_fake_local_t_
+  typedef struct {
+    fake_main_t *main;
+    void *custom_1;
+    void *custom_2;
+  } fake_local_t;
+
+  #define fake_local_t_initialize \
+    { \
+      0, \
+      0, \
+      0, \
+    }
+
+  #define macro_fake_local_t_initialize_1(main, custom_1, custom_2) \
+    { \
+      main, \
+      custom_1, \
+      custom_2, \
+    }
+#endif // _di_fake_local_t_
 
 /**
  * Build settings data.

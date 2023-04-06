@@ -172,6 +172,7 @@ extern "C" {
     f_string_dynamic_t destination_file = f_string_dynamic_t_initialize;
     f_string_dynamic_t destination_directory = f_string_dynamic_t_initialize;
     f_string_static_t buffer = f_string_static_t_initialize;
+    fake_local_t local = macro_fake_local_t_initialize_1(main, &failures, 0);
 
     if (main->program.message.verbosity != f_console_verbosity_quiet_e && main->program.message.verbosity != f_console_verbosity_error_e) {
       fll_print_format("%r%[Copying %Q.%]%r", main->program.message.to, f_string_eol_s, main->program.context.set.important, label, main->program.context.set.important, f_string_eol_s);
@@ -191,10 +192,11 @@ extern "C" {
 
     f_directory_recurse_copy_t recurse = f_directory_recurse_copy_t_initialize;
     recurse.verbose = &fake_print_verbose_recursive_copy;
-    recurse.state.custom = (void *) data;
-
-    //recurse.failures = &failures; // @fixme this now needs to be handled by a callback in recurse (recurse.state.handle)., maybe make this a callback on f_directory_recurse_copy_t?
+    recurse.state.custom = (void *) &local;
+    recurse.state.code = fake_state_code_local_e;
     recurse.mode = mode;
+
+    f_array_length_t j = 0;
 
     for (f_array_length_t i = 0; i < files.used; ++i) {
 
@@ -232,16 +234,16 @@ extern "C" {
           break;
         }
 
+        // @todo replace fl_directory_copy() with fl_directory_do() because it has better error handling.
+        // @todo once this is done, then consider removing fl_directory_copy() entirely.
+        // @todo consider providing a copy/clone/move callback in FLL in place of fl_directory_copy() that can be passed to fl_directory_do().
         fl_directory_copy(path_source, destination_directory, &recurse);
 
         if (F_status_is_error(main->setting.state.status)) {
           if (main->program.error.verbosity >= f_console_verbosity_verbose_e) {
-            /* // @fixme
-            for (f_array_length_t j = 0; j < failures.used; ++j) {
-
+            for (j = 0; j < failures.used; ++j) {
               fake_print_error_build_operation_file(&main->program.error, macro_fake_f(fl_directory_copy), fake_common_file_directory_copy_s, f_file_operation_to_s, path_source, destination_directory, F_true);
             } // for
-            */
 
             if (F_status_set_fine(main->setting.state.status) != F_failure) {
               fake_print_error(&main->program.error, macro_fake_f(fl_directory_copy));
@@ -336,6 +338,8 @@ extern "C" {
     f_string_dynamic_resize(0, &path_source);
     f_string_dynamic_resize(0, &destination_file);
     f_string_dynamic_resize(0, &destination_directory);
+
+    f_directory_statuss_resize(0, &failures);
 
     fake_build_touch(data, file_stage);
   }

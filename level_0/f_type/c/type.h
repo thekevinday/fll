@@ -95,7 +95,8 @@ extern "C" {
  *
  * step_large: The allocation step to use for large buffers.
  * step_small: The allocation step to use for small buffers.
- * flag:       A 32-bit digit intended for provided flags that are defined by the function.
+ * flag:       A 64-bit digit intended for provided flags that are defined by the function.
+ * code:       A 64-bit digit intended for provided flags that are defined by the caller.
  * status:     The status used while processing (This should hold the error passed to the handle callback and should be updated as necessary).
  * handle:     A function to call on a specific error (allowing for the error to be handled before function returns). May be NULL.
  * interrupt:  A function to call for checking to see if an interrupt is to be called. May be NULL.
@@ -109,6 +110,7 @@ extern "C" {
     uint16_t step_small;
     f_status_t status;
     uint64_t flag;
+    uint64_t code;
 
     void (*handle)(void * const state, void * const internal);
     void (*interrupt)(void * const state, void * const internal);
@@ -128,13 +130,15 @@ extern "C" {
     0, \
     0, \
     0, \
+    0, \
   }
 
-  #define macro_f_state_t_initialize_1(step_large, step_small, status, flag, handle, interrupt, callbacks, custom, data) { \
+  #define macro_f_state_t_initialize_1(step_large, step_small, status, flag, code, handle, interrupt, callbacks, custom, data) { \
     step_large, \
     step_small, \
     status, \
     flag, \
+    code, \
     handle, \
     interrupt, \
     callbacks, \
@@ -147,6 +151,7 @@ extern "C" {
     state.step_small = 0; \
     state.status = F_none; \
     state.flag = 0; \
+    state.code = 0; \
     state.handle = 0; \
     state.interrupt = 0; \
     state.callbacks = 0; \

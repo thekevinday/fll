@@ -9,14 +9,7 @@ extern "C" {
 
     if (!data_make || !data_make->data || !data_make->main) return;
     if (F_status_is_error(data_make->main->setting.state.status)) return;
-
-    if (fll_program_standard_signal_received(&data_make->main->program)) {
-      fll_program_print_signal_received(&data_make->main->program.warning, data_make->main->program.signal_received);
-
-      data_make->main->setting.state.status = F_status_set_error(F_interrupt);
-
-      return;
-    }
+    if (fake_signal_check(data_make->main)) return;
 
     data_make->fakefile.used = 0;
 
@@ -103,17 +96,7 @@ extern "C" {
 
         for (f_array_length_t i = 0; i < list_objects.used; ++i) {
 
-          if (!(i % fake_signal_check_short_d)) {
-            if (fll_program_standard_signal_received(&data_make->main->program)) {
-              fll_program_print_signal_received(&data_make->main->program.warning, data_make->main->program.signal_received);
-
-              data_make->main->setting.state.status = F_status_set_error(F_interrupt);
-
-              break;
-            }
-
-            data_make->main->program.signal_check = 0;
-          }
+          if (fake_signal_check(data_make->main)) break;
 
           if (f_compare_dynamic_partial_string(fake_make_item_settings_s.string, data_make->main->buffer, fake_make_item_settings_s.used, list_objects.array[i]) == F_equal_to) {
             if (!missing_settings) {

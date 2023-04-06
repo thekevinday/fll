@@ -195,7 +195,7 @@ extern "C" {
           }
 
           if (main->setting.state.status == F_child) break;
-          if (fake_signal_check(main)) break;
+          if (F_status_set_fine(main->setting.state.status) == F_interrupt || fake_signal_check(main)) break;
           if (F_status_is_error(main->setting.state.status)) break;
         } // for
       }

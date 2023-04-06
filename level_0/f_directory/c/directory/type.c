@@ -173,6 +173,16 @@ extern "C" {
   }
 #endif // _di_f_directory_statuss_increase_by_
 
+#ifndef _di_f_directory_statuss_resize_
+  f_status_t f_directory_statuss_resize(const f_array_length_t length, f_directory_statuss_t * const statuss) {
+    #ifndef _di_level_0_parameter_checking_
+      if (!statuss) return F_status_set_error(F_parameter);
+    #endif // _di_level_0_parameter_checking_
+
+    return private_f_directory_statuss_resize(length, statuss);
+  }
+#endif // _di_f_directory_statuss_resize_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

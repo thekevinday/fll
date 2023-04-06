@@ -91,7 +91,9 @@ extern "C" {
       return;
     }
 
-    fake_main_t * const main = (fake_main_t *) recurse->state.custom;
+    fake_main_t * const main = (recurse->state.code & fake_state_code_local_e)
+      ? ((fake_local_t *) recurse->state.custom)->main
+      : (fake_main_t *) recurse->state.custom;
 
     if (main->program.message.verbosity < f_console_verbosity_verbose_e) {
       recurse->state.status = F_output_not;
@@ -116,7 +118,9 @@ extern "C" {
       return;
     }
 
-    fake_main_t * const main = (fake_main_t *) recurse->state.custom;
+    fake_main_t * const main = (recurse->state.code & fake_state_code_local_e)
+      ? ((fake_local_t *) recurse->state.custom)->main
+      : (fake_main_t *) recurse->state.custom;
 
     if (main->program.message.verbosity < f_console_verbosity_verbose_e) {
       recurse->state.status = F_output_not;
@@ -141,7 +145,9 @@ extern "C" {
       return;
     }
 
-    fake_main_t * const main = (fake_main_t *) recurse->state.custom;
+    fake_main_t * const main = (recurse->state.code & fake_state_code_local_e)
+      ? ((fake_local_t *) recurse->state.custom)->main
+      : (fake_main_t *) recurse->state.custom;
 
     if (main->program.message.verbosity < f_console_verbosity_verbose_e) {
       recurse->state.status = F_output_not;

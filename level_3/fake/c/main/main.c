@@ -20,7 +20,9 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
   data.setting.flag |= fake_main_flag_enable_static_e;
   data.setting.state.step_large = fake_allocation_large_d;
   data.setting.state.step_small = fake_allocation_small_d;
-  data.setting.state.custom = (void *) &data.program;
+  data.setting.state.custom = (void *) &data;
+  data.setting.state.code = fake_state_code_none_e;
+  data.setting.state.interrupt = &fake_signal_handler_callback;
 
   f_console_parameter_t parameters[] = fake_console_parameter_t_initialize;
   data.program.parameters.array = parameters;

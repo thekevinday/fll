@@ -79,6 +79,26 @@ extern "C" {
   extern void fake_signal_handler(fake_main_t * const main);
 #endif // !defined(_di_fake_signal_handler_) && !defined(_di_thread_support_)
 
+/**
+ * A callback intended to be assigned to the state.interrupt.
+ *
+ * @param state
+ *   The f_state_t data.
+ *
+ *   The state.custom must be fake_main_t, except for when the code has the bit fake_state_code_local_e.
+ *   When the fake_state_code_local_e bit is set, then the state.custum must be fake_local_t.
+ *
+ *   This alters state.status:
+ *     F_interrupt_not if not interrupted.
+ *
+ *     F_interrupt (with error bit) if interrupted.
+ * @param internal
+ *   Not used.
+ */
+#ifndef _di_fake_signal_handler_callback_
+  extern void fake_signal_handler_callback(void * const state, void * const internal);
+#endif // _di_fake_signal_handler_callback_
+
 #ifdef __cplusplus
 } // extern "C"
 #endif
