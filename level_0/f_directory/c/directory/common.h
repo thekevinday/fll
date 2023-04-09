@@ -132,9 +132,9 @@ extern "C" {
  * f_directory_recurse_do_flag_*_e:
  *   For the recurse flag property.
  *   - none:        No flags are set.
+ *   - after:       Perform this action after recursion befo a single directory path.
+ *   - before:      Perform this action before recursion on a single directory path.
  *   - dereference: Dereference symbolic links rather than operating on the link itself.
- *   - first:       Operate on directory first (before recursion).
- *   - last:        Operate on directory last (after recursion).
  *   - top:         Operate on top-most directory, or for the callback parameter, designate that this is the top path.
  *
  *   For the actiona and handle callback parameter:
@@ -143,7 +143,7 @@ extern "C" {
  *   - directory:  File is a directory.
  *   - fifo:       File is a file-in/file-out.
  *   - link:       File is a link.
- *   - path:        The "name" represents a path rather than a file name (generally used for error handling or when not processing a recursed file).
+ *   - path:       The "name" represents a path rather than a file name (generally used for error handling or when not processing a recursed file).
  *   - regular:    File is a regular file.
  *   - socket:     File is a socket.
  *   - unknown:    File is an unknown type.
@@ -153,9 +153,9 @@ extern "C" {
 
     // For the recurse flag property.
     f_directory_recurse_do_flag_none_e        = 0,
-    f_directory_recurse_do_flag_dereference_e = 0x1,
-    f_directory_recurse_do_flag_first_e       = 0x2,
-    f_directory_recurse_do_flag_last_e        = 0x4,
+    f_directory_recurse_do_flag_after_e       = 0x1,
+    f_directory_recurse_do_flag_before_e      = 0x2,
+    f_directory_recurse_do_flag_dereference_e = 0x4,
     f_directory_recurse_do_flag_top_e         = 0x8,
 
     // For the action callback parameter.

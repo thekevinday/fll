@@ -193,6 +193,9 @@ extern "C" {
     f_string_dynamic_resize(0, &main->cache_argument);
     f_string_dynamics_resize(0, &main->cache_arguments);
 
+    f_string_dynamic_resize(0, &main->cache_map.name);
+    f_string_dynamic_resize(0, &main->cache_map.value);
+
     f_iki_data_delete(&main->cache_iki);
   }
 #endif // _di_fake_main_data_delete_

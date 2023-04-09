@@ -17,6 +17,30 @@ extern "C" {
 #endif
 
 /**
+ * Print message when copying.
+ *
+ * @param print
+ *   The output structure to print to.
+ *
+ *   This requires print.custom to be fake_main_t.
+ *
+ *   This does not alter print.custom.setting.state.status.
+ * @param path
+ *   The path being copied.
+ *
+ * @return
+ *   F_none on success.
+ *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if setting is NULL.
+ *
+ * @see fake_print_context_important_simple_variable()
+ */
+#ifndef _di_fake_build_print_message_copying_
+  extern f_status_t fake_build_print_message_copying(fl_print_t * const print, const f_string_static_t path);
+#endif // _di_fake_build_print_message_copying_
+
+/**
  * Print message when building base skeleton directories.
  *
  * @param print

@@ -72,6 +72,8 @@ extern "C" {
     "fl_conversion_dynamic_to_unsigned_detect",
     "fl_directory_copy",
     "fl_directory_create",
+    "fl_directory_do",
+    "fl_directory_list",
     "fl_environment_load_name",
     "fl_environment_load_names",
     "fl_iki_read",

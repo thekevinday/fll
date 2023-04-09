@@ -96,7 +96,7 @@ extern "C" {
  *   F_false is returned on successful print of known errors.
  *   F_output_not on success, but no printing is performed.
  *
- *   F_output_not (with error bit) if setting is NULL.
+ *   F_output_not (with error bit) if print is NULL.
  *
  * @see f_file_stream_lock()
  * @see f_file_stream_unlock()
@@ -137,7 +137,7 @@ extern "C" {
  *   F_none on success.
  *   F_output_not on success, but no printing is performed.
  *
- *   F_output_not (with error bit) if setting is NULL.
+ *   F_output_not (with error bit) if print is NULL.
  *
  * @see f_file_stream_lock()
  * @see f_file_stream_unlock()
@@ -177,6 +177,47 @@ extern "C" {
 #ifndef _di_fake_print_error_build_operation_file_partial_
   extern void fake_print_error_build_operation_file_partial(fl_print_t * const print, const f_string_static_t operation, const f_string_static_t source, const f_string_static_t destination, const f_string_static_t how);
 #endif // _di_fake_print_error_build_operation_file_partial_
+
+/**
+ * Print build operation file error messages for recursive functions that have separate path and name variables.
+ *
+ * @param setting
+ *   The main program settings.
+ *
+ *   This does not alter setting.state.status.
+ * @param print
+ *   Designates the how and where to print.
+ * @param function
+ *   The name of the function where the error happened.
+ * @param operation
+ *   The operation performed.
+ * @param source_path
+ *   The operation source directory path.
+ * @param source_name
+ *   The operation source base file name.
+ * @param destination_path
+ *   The operation destination directory name, if applicable.
+ *   Set destination_path.used and destination_name.used to 0 to disable.
+ * @param destination_name
+ *   The operation destination base file name, if applicable.
+ *   Set destination_path.used and destination_name.used to 0 to disable.
+ * @param how
+ *   The how the operation is perform, such as "to" in "copy" source "to" destination.
+ * @param fallback
+ *   Set to F_true to print the fallback error message for unknown errors.
+ *
+ * @return
+ *   F_true is returned if the status code has no print message.
+ *   F_false is returned on successful print of known errors.
+ *   F_output_not on success, but no printing is performed.
+ *
+ *   F_output_not (with error bit) if print is NULL.
+ *
+ * @see fake_print_error_build_operation_file()
+ */
+#ifndef _di_fake_print_error_build_operation_file_recurse_
+  extern f_status_t fake_print_error_build_operation_file_recurse(fl_print_t * const print, const f_string_t function, const f_string_static_t operation, const f_string_static_t source_path, const f_string_static_t source_name, const f_string_static_t destination_path, const f_string_static_t destination_name, const f_string_static_t how, const bool fallback);
+#endif // _di_fake_print_error_build_operation_file_recurse_
 
 /**
  * Print error message regarding file create directory failure due to a missing or invalid parent directory.

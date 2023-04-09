@@ -131,6 +131,8 @@ extern "C" {
  * cache_argument:  A string cache for some argument.
  * cache_argument:  A string cache for some path.
  * cache_arguments: An array of strings cache for arguments.
+ * cache_map:       A string map cache.
+ * cach_iki:        IKI data cache.
  */
 #ifndef _di_fake_main_t_
   typedef struct {
@@ -142,6 +144,7 @@ extern "C" {
     f_string_dynamic_t cache_2;
     f_string_dynamic_t cache_argument;
     f_string_dynamics_t cache_arguments;
+    f_string_map_t cache_map;
     f_iki_data_t cache_iki;
   } fake_main_t;
 
@@ -154,6 +157,7 @@ extern "C" {
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
       f_string_dynamics_t_initialize, \
+      f_string_map_t_initialize, \
       f_iki_data_t_initialize, \
     }
 #endif // _di_fake_main_t_

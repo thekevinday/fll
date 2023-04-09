@@ -33,7 +33,7 @@ extern "C" {
 #ifndef _di_fake_print_error_build_operation_file_
   f_status_t fake_print_error_build_operation_file(fl_print_t * const print, const f_string_t function, const f_string_static_t operation, const f_string_static_t source, const f_string_static_t destination, const f_string_static_t how, const bool fallback) {
 
-    if (!print->custom) return F_status_set_error(F_output_not);
+    if (!print || !print->custom) return F_status_set_error(F_output_not);
     if (print->verbosity < f_console_verbosity_error_e) return F_output_not;
 
     fake_main_t * const main = (fake_main_t *) print->custom;
@@ -205,6 +205,7 @@ extern "C" {
 #ifndef _di_fake_print_error_build_operation_file_partial_
   void fake_print_error_build_operation_file_partial(fl_print_t * const print, const f_string_static_t operation, const f_string_static_t source, const f_string_static_t destination, const f_string_static_t how) {
 
+    if (!print) return;
     if (print->verbosity < f_console_verbosity_error_e || !source.used) return;
 
     fl_print_format("%[while trying to %Q '%]", print->to, print->context, operation, print->context);
@@ -218,6 +219,37 @@ extern "C" {
     fl_print_format("%['", print->to, print->context, print->context);
   }
 #endif // _di_fake_print_error_build_operation_file_partial_
+
+#ifndef _di_fake_print_error_build_operation_file_recurse_
+  f_status_t fake_print_error_build_operation_file_recurse(fl_print_t * const print, const f_string_t function, const f_string_static_t operation, const f_string_static_t source_path, const f_string_static_t source_name, const f_string_static_t destination_path, const f_string_static_t destination_name, const f_string_static_t how, const bool fallback) {
+
+    if (!print) return F_status_set_error(F_output_not);
+
+    f_char_t source_array[source_path.used + source_name.used + 1];
+    source_array[source_path.used + source_name.used] = 0;
+
+    memcpy(source_array, source_path.string, source_path.used);
+    memcpy(source_array + source_path.used, f_path_separator_s.string, f_path_separator_s.used);
+    memcpy(source_array + source_path.used + f_path_separator_s.used, source_name.string, source_name.used);
+
+    const f_string_static_t source = macro_f_string_static_t_initialize(source_array, 0, source_path.used + f_path_separator_s.used + source_name.used);
+
+    if (destination_path.used || destination_name.used) {
+      f_char_t destination_array[destination_path.used + destination_name.used + 1];
+      destination_array[destination_path.used + destination_name.used] = 0;
+
+      memcpy(destination_array, destination_path.string, destination_path.used);
+      memcpy(destination_array + destination_path.used, f_path_separator_s.string, f_path_separator_s.used);
+      memcpy(destination_array + destination_path.used + f_path_separator_s.used, destination_name.string, destination_name.used);
+
+      const f_string_static_t destination = macro_f_string_static_t_initialize(source_array, 0, destination_path.used + f_path_separator_s.used + destination_name.used);
+
+      return fake_print_error_build_operation_file(print, function, operation, source, destination, how, fallback);
+    }
+
+    return fake_print_error_build_operation_file(print, function, operation, source, f_string_empty_s, how, fallback);
+  }
+#endif // _di_fake_print_error_build_operation_file_recurse_
 
 #ifndef _di_fake_print_error_directory_create_parent_missing_
   f_status_t fake_print_error_directory_create_parent_missing(fl_print_t * const print, const f_string_static_t path) {

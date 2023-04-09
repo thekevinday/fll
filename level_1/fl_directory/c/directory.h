@@ -158,6 +158,17 @@ extern "C" {
  *
  * This is intended to be used as an alternative to functions like fl_directory_list(), giving more control over the recursion process.
  *
+ * When recursing the directory, except for the top directory, handle() with the before and after flags set is called after the recurse.path is updated.
+ * For the top directory, handle() is called with the before and after flags set when the path is not updated (that is, the path should be
+ *
+ * This function is designed and intended to be used on directories.
+ * If depth is 0, the operations callacks are still called but done at the top level.
+ *
+ * The action callback must set the error bit to ensure that the handle callbacks are called or not set the error bit to prevent this behavior.
+ *
+ * This exists on error if, after the handle callback is called, that the recurse.state.status still has the error bit set.
+ * This allows for the caller to inform this function to effectively ignore any errors.
+ *
  * @param path
  *   The directory file path.
  *   Must be NULL terminated.
@@ -174,19 +185,25 @@ extern "C" {
  *
  *     Errors (with error bit) from: f_directory_create().
  *     Errors (with error bit) from: f_directory_exists().
- *     Errors (with error bit) from: f_string_dynamic_resize().
- *     Errors (with error bit) from: f_string_dynamics_resize().
  *     Errors (with error bit) from: f_file_mode_set().
  *     Errors (with error bit) from: f_file_role_change().
  *     Errors (with error bit) from: f_file_stat().
+ *     Errors (with error bit) from: f_string_dynamic_append_assure().
+ *     Errors (with error bit) from: f_string_dynamic_append_nulless().
+ *     Errors (with error bit) from: f_string_dynamic_increase_by().
+ *     Errors (with error bit) from: f_string_dynamic_resize().
+ *     Errors (with error bit) from: f_string_dynamics_resize().
  *
  * @see f_directory_create()
  * @see f_directory_exists()
- * @see f_string_dynamic_resize()
- * @see f_string_dynamics_resize()
  * @see f_file_mode_set()
  * @see f_file_role_change()
  * @see f_file_stat()
+ * @see f_string_dynamic_append_assure()
+ * @see f_string_dynamic_append_nulless()
+ * @see f_string_dynamic_increase_by()
+ * @see f_string_dynamic_resize()
+ * @see f_string_dynamics_resize()
  */
 #ifndef _di_fl_directory_do_
   extern void fl_directory_do(const f_string_static_t path, f_directory_recurse_do_t * const recurse);

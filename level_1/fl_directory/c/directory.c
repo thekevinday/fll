@@ -198,38 +198,30 @@ extern "C" {
   void fl_directory_do(const f_string_static_t path, f_directory_recurse_do_t * const recurse) {
     #ifndef _di_level_1_parameter_checking_
       if (!recurse) return;
-
-      if (!recurse->action) {
-        recurse->state.status = F_status_set_error(F_parameter);
-
-        if (recurse->handle) {
-          recurse->handle((void *) recurse, path, f_directory_recurse_do_flag_top_e | f_directory_recurse_do_flag_path_e);
-        }
-        else if (recurse->state.handle) {
-          recurse->state.handle(&recurse->state, (void *) recurse);
-        }
-
-        return;
-      }
     #endif // _di_level_1_parameter_checking_
 
-    recurse->path = recurse->path_top;
+    recurse->path.used = 0;
+    recurse->path_cache.used = 0;
     recurse->path_top = &path;
     recurse->depth = 0;
     recurse->state.status = F_none;
     recurse->state.data = (void *) recurse;
 
+    // Guarantee initialization even for parameter checking failures.
+    #ifndef _di_level_1_parameter_checking_
+      if (!recurse->action) {
+        recurse->state.status = F_status_set_error(F_parameter);
+
+        private_inline_fl_directory_do_handle(recurse, path, f_directory_recurse_do_flag_top_e | f_directory_recurse_do_flag_path_e);
+        if (F_status_is_error(recurse->state.status)) return;
+      }
+    #endif // _di_level_1_parameter_checking_
+
     if (!recurse->path_top->used) {
       recurse->state.status = F_data_not;
 
-      if (recurse->handle) {
-        recurse->handle((void *) recurse, path, f_directory_recurse_do_flag_top_e | f_directory_recurse_do_flag_path_e);
-      }
-      else if (recurse->state.handle) {
-        recurse->state.handle(&recurse->state, (void *) recurse);
-      }
-
-      return;
+      private_inline_fl_directory_do_handle(recurse, path, f_directory_recurse_do_flag_top_e | f_directory_recurse_do_flag_path_e);
+      if (F_status_is_error(recurse->state.status)) return;
     }
 
     recurse->state.status = f_directory_exists(*recurse->path_top);
@@ -239,65 +231,97 @@ extern "C" {
     }
 
     if (F_status_is_error(recurse->state.status)) {
-      if (recurse->handle) {
-        recurse->handle((void *) recurse, path, f_directory_recurse_do_flag_top_e | f_directory_recurse_do_flag_path_e);
-      }
-      else if (recurse->state.handle) {
-        recurse->state.handle(&recurse->state, (void *) recurse);
-      }
-
-      return;
+      private_inline_fl_directory_do_handle(recurse, path, f_directory_recurse_do_flag_top_e | f_directory_recurse_do_flag_path_e);
+      if (F_status_is_error(recurse->state.status)) return;
     }
 
-    if ((recurse->flag & f_directory_recurse_do_flag_top_e) && (recurse->flag & f_directory_recurse_do_flag_first_e)) {
-      recurse->action((void *) recurse, path, f_directory_recurse_do_flag_top_e | f_directory_recurse_do_flag_first_e | f_directory_recurse_do_flag_path_e);
-    }
+    if ((recurse->flag & f_directory_recurse_do_flag_top_e) && (recurse->flag & f_directory_recurse_do_flag_before_e)) {
+      recurse->state.status = F_none;
 
-    if (F_status_is_error_not(recurse->state.status)) {
-      if (recurse->max_depth) {
-        f_array_length_t i = recurse->path_top->used;
+      recurse->action((void *) recurse, path, f_directory_recurse_do_flag_top_e | f_directory_recurse_do_flag_path_e | f_directory_recurse_do_flag_before_e);
 
-        // Do not allow null termination or trailing path separators in the string's length calculation.
-        for (; i > 0; --i) {
-
-          if (!recurse->path_top->string[i - 1]) continue;
-          if (recurse->path_top->string[i - 1] == f_path_separator_s.string[0]) continue;
-
-          break;
-        } // for
-
-        const f_string_static_t static_path = macro_f_string_static_t_initialize(recurse->path_top->string, recurse->path_top->size, i);
-
-        recurse->path = &static_path;
-        recurse->depth = 1;
-
-        private_fl_directory_do_recurse(recurse);
-
-        recurse->path = recurse->path_top;
-        recurse->depth = 0;
+      if (F_status_is_error(recurse->state.status)) {
+        private_inline_fl_directory_do_handle(recurse, path, f_directory_recurse_do_flag_top_e | f_directory_recurse_do_flag_path_e | f_directory_recurse_do_flag_before_e);
+        if (F_status_is_error(recurse->state.status)) return;
       }
-      else {
+
+      if (recurse->state.status == F_done) {
         recurse->state.status = F_none;
+
+        return;
       }
     }
 
-    if (F_status_is_error_not(recurse->state.status)) {
-      if ((recurse->flag & f_directory_recurse_do_flag_top_e) && (recurse->flag & f_directory_recurse_do_flag_last_e)) {
-        recurse->action((void *) recurse, path, f_directory_recurse_do_flag_top_e | f_directory_recurse_do_flag_last_e | f_directory_recurse_do_flag_path_e);
-      }
-    }
+    if (recurse->depth_max) {
+      recurse->state.status = f_string_dynamic_append_nulless(path, &recurse->path);
 
-    if (F_status_is_error(recurse->state.status)) {
-      if (recurse->handle) {
-        recurse->handle((void *) recurse, path, f_directory_recurse_do_flag_top_e | f_directory_recurse_do_flag_path_e);
+      if (F_status_is_error(recurse->state.status)) {
+        private_inline_fl_directory_do_handle(recurse, path, f_directory_recurse_do_flag_top_e | f_directory_recurse_do_flag_path_e);
+        if (F_status_is_error(recurse->state.status)) return;
       }
-      else if (recurse->state.handle) {
-        recurse->state.handle(&recurse->state, (void *) recurse);
+
+      // Do not allow trailing path separators in the string's length calculation, except root directory '/'.
+      for (; recurse->path.used; --recurse->path.used) {
+        if (recurse->path_top->string[recurse->path.used - 1] != f_path_separator_s.string[0]) break;
+      } // for
+
+      recurse->depth = 1;
+
+      private_fl_directory_do_recurse(recurse);
+
+      recurse->path.used = path.used;
+      recurse->depth = 0;
+
+      if (F_status_is_error(recurse->state.status)) {
+        private_inline_fl_directory_do_handle(recurse, path, f_directory_recurse_do_flag_top_e | f_directory_recurse_do_flag_path_e | f_directory_recurse_do_flag_before_e);
+        if (F_status_is_error(recurse->state.status)) return;
       }
     }
     else {
+      recurse->state.status = f_directory_exists(path);
+
+      if (F_status_is_error_not(recurse->state.status) && recurse->state.status != F_true) {
+        if (recurse->state.status == F_false) {
+          recurse->state.status = F_status_set_error(F_directory_not);
+        }
+        else {
+          recurse->state.status = F_status_set_error(recurse->state.status);
+        }
+      }
+
+      if (F_status_is_error(recurse->state.status)) {
+        private_inline_fl_directory_do_handle(recurse, path, f_directory_recurse_do_flag_top_e | f_directory_recurse_do_flag_directory_e);
+        if (F_status_is_error(recurse->state.status)) return;
+      }
+
       recurse->state.status = F_none;
+
+      recurse->action((void *) recurse, path, f_directory_recurse_do_flag_top_e | f_directory_recurse_do_flag_directory_e);
+
+      if (F_status_is_error(recurse->state.status)) {
+        private_inline_fl_directory_do_handle(recurse, path, f_directory_recurse_do_flag_top_e | f_directory_recurse_do_flag_directory_e);
+        if (F_status_is_error(recurse->state.status)) return;
+      }
+
+      if (recurse->state.status == F_done) {
+        recurse->state.status = F_none;
+
+        return;
+      }
     }
+
+    if ((recurse->flag & f_directory_recurse_do_flag_top_e) && (recurse->flag & f_directory_recurse_do_flag_after_e)) {
+      recurse->state.status = F_none;
+
+      recurse->action((void *) recurse, path, f_directory_recurse_do_flag_top_e | f_directory_recurse_do_flag_path_e | f_directory_recurse_do_flag_after_e);
+    }
+
+    if (F_status_is_error(recurse->state.status)) {
+      private_inline_fl_directory_do_handle(recurse, path, f_directory_recurse_do_flag_top_e | f_directory_recurse_do_flag_path_e | f_directory_recurse_do_flag_after_e);
+      if (F_status_is_error(recurse->state.status)) return;
+    }
+
+    recurse->state.status = F_none;
   }
 #endif // _di_fl_directory_do_
 

@@ -75,6 +75,9 @@ extern "C" {
 
     f_directory_listing_delete(&recurse->listing);
 
+    f_string_dynamic_resize(0, &recurse->path);
+    f_string_dynamic_resize(0, &recurse->path_cache);
+
     return F_none;
   }
 #endif // _di_f_directory_recurse_do_delete_
@@ -86,6 +89,9 @@ extern "C" {
     #endif // _di_level_0_parameter_checking_
 
     f_directory_listing_destroy(&recurse->listing);
+
+    f_string_dynamic_adjust(0, &recurse->path);
+    f_string_dynamic_adjust(0, &recurse->path_cache);
 
     return F_none;
   }

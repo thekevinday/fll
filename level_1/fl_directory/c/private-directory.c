@@ -66,7 +66,7 @@ extern "C" {
             if (F_status_set_fine(recurse->state.status) == F_interrupt) break;
           }
 
-          private_fl_directory_copy_recurse_file(list[i]->array[j], recurse);
+          private_fl_directory_copy_recurse_file(list[j]->array[i], recurse);
         } // for
 
         list[i]->used = 0;
@@ -79,10 +79,10 @@ extern "C" {
 
         for (j = 0; j < list[i]->used; ++j) {
 
-          list[i]->array[j].used = 0;
+          list[j]->array[i].used = 0;
 
-          if (list[i]->array[j].size > F_directory_max_string_d) {
-            recurse->state.status = f_string_dynamic_resize(F_directory_max_string_d, &list[i]->array[j]);
+          if (list[j]->array[i].size > F_directory_max_string_d) {
+            recurse->state.status = f_string_dynamic_resize(F_directory_max_string_d, &list[j]->array[i]);
             if (F_status_is_error(recurse->state.status)) break;
           }
         } // for
@@ -322,27 +322,27 @@ extern "C" {
     recurse->listing.socket.used = 0;
     recurse->listing.unknown.used = 0;
 
-    recurse->state.status = private_fl_directory_list(*recurse->path, 0, 0, recurse->flag & f_directory_recurse_do_flag_dereference_e, &recurse->listing);
+    recurse->state.status = private_fl_directory_list(recurse->path, 0, 0, recurse->flag & f_directory_recurse_do_flag_dereference_e, &recurse->listing);
 
     if (F_status_is_error(recurse->state.status)) {
-      if (recurse->handle) {
-        recurse->handle((void *) recurse, *recurse->path, f_directory_recurse_do_flag_path_e);
-      }
-      else if (recurse->state.handle) {
-        recurse->state.handle(&recurse->state, (void *) recurse);
-      }
+      private_inline_fl_directory_do_handle(recurse, f_string_empty_s, f_directory_recurse_do_flag_path_e);
 
       // Only the directory is to be freed because all others are preserved between recursions.
-      f_string_dynamics_resize(0, &recurse->listing.directory);
+      if (F_status_is_error(recurse->state.status)) {
+        f_string_dynamics_resize(0, &recurse->listing.directory);
 
-      recurse->listing.directory.array = directories_original.array;
-      recurse->listing.directory.used = directories_original.used;
-      recurse->listing.directory.size = directories_original.size;
+        recurse->listing.directory.array = directories_original.array;
+        recurse->listing.directory.used = directories_original.used;
+        recurse->listing.directory.size = directories_original.size;
 
-      return;
+        return;
+      }
     }
 
     recurse->state.status = F_none;
+
+    f_array_length_t i = 0;
+    f_array_length_t used_original = 0;
 
     {
       f_string_dynamics_t * const list[] = {
@@ -365,165 +365,224 @@ extern "C" {
         f_directory_recurse_do_flag_unknown_e,
       };
 
-      f_array_length_t j = 0;
+      for (uint8_t j = 0; j < 7; ++j) {
 
-      for (uint8_t i = 0; i < 7; ++i) {
-
-        for (j = 0; j < list[i]->used; ++j) {
+        for (i = 0; i < list[j]->used; ++i) {
 
           if (recurse->state.interrupt) {
             recurse->state.interrupt((void *) &recurse->state, (void *) recurse);
             if (F_status_set_fine(recurse->state.status) == F_interrupt) break;
           }
 
+          used_original = recurse->path.used;
+
+          recurse->state.status = f_string_dynamic_increase_by(f_path_separator_s.used + list[j]->array[i].used + 1, &recurse->path);
+
+          if (F_status_is_error_not(recurse->state.status)) {
+            recurse->state.status = f_string_dynamic_append_assure(f_path_separator_s, &recurse->path);
+          }
+
+          if (F_status_is_error_not(recurse->state.status)) {
+            recurse->state.status = f_string_dynamic_append_nulless(list[j]->array[i], &recurse->path);
+          }
+
+          // Guarantee NULL termination.
+          recurse->path.string[recurse->path.used] = 0;
+
+          if (F_status_is_error(recurse->state.status)) {
+            private_inline_fl_directory_do_handle(recurse, list[j]->array[i], f_directory_recurse_do_flag_directory_e);
+            if (F_status_is_error(recurse->state.status)) break;
+          }
+
+          if (recurse->state.status == F_break || recurse->state.status == F_done) {
+            recurse->path.used = used_original;
+
+            break;
+          }
+
+          if (recurse->state.status == F_continue) {
+            recurse->path.used = used_original;
+
+            continue;
+          }
+
           recurse->state.status = F_none;
 
-          recurse->action((void *) recurse, list[i]->array[j], flags[i]);
+          recurse->action((void *) recurse, list[j]->array[i], flags[j]);
 
           if (F_status_is_error(recurse->state.status)) {
-            if (recurse->handle) {
-              recurse->handle((void *) recurse, list[i]->array[j], flags[i]);
-            }
-            else if (recurse->state.handle) {
-              recurse->state.handle(&recurse->state, (void *) recurse);
-            }
-
-            break;
-          }
-
-          if (recurse->state.status == F_break) break;
-          if (recurse->state.status == F_done) break;
-        } // for
-
-        if (F_status_is_error(recurse->state.status)) break;
-        if (recurse->state.status == F_done) break;
-
-        list[i]->used = 0;
-
-        // Use an upper limit when retaining memory between recursion calls.
-        if (list[i]->size > F_directory_max_list_d) {
-          recurse->state.status = f_string_dynamics_resize(F_directory_max_list_d, list[i]);
-
-          if (F_status_is_error(recurse->state.status)) {
-            if (recurse->handle) {
-              recurse->handle((void *) recurse, list[i]->array[j], flags[i]);
-            }
-            else if (recurse->state.handle) {
-              recurse->state.handle(&recurse->state, (void *) recurse);
-            }
-
-            break;
-          }
-        }
-
-        for (j = 0; j < list[i]->used; ++j) {
-
-          list[i]->array[j].used = 0;
-
-          if (list[i]->array[j].size > F_directory_max_string_d) {
-            recurse->state.status = f_string_dynamic_resize(F_directory_max_string_d, &list[i]->array[j]);
+            private_inline_fl_directory_do_handle(recurse, list[j]->array[i], flags[j]);
 
             if (F_status_is_error(recurse->state.status)) {
-              if (recurse->handle) {
-                recurse->handle((void *) recurse, list[i]->array[j], flags[i]);
-              }
-              else if (recurse->state.handle) {
-                recurse->state.handle(&recurse->state, (void *) recurse);
-              }
+              recurse->path.used = used_original;
 
               break;
             }
           }
+
+          recurse->path.used = used_original;
+
+          if (recurse->state.status == F_break || recurse->state.status == F_done || recurse->state.status == F_failure) break;
+          if (recurse->state.status == F_continue) continue;
         } // for
+
+        if (F_status_is_error(recurse->state.status) || recurse->state.status == F_done) break;
       } // for
     }
 
     if (recurse->state.status != F_done && F_status_is_error_not(recurse->state.status)) {
-      for (f_array_length_t i = 0; i < recurse->listing.directory.used; ++i) {
+      for (i = 0; i < recurse->listing.directory.used; ++i) {
 
         if (recurse->state.interrupt) {
           recurse->state.interrupt((void *) &recurse->state, (void *) recurse);
           if (F_status_set_fine(recurse->state.status) == F_interrupt) break;
         }
 
-        f_string_static_t path_sub = f_string_static_t_initialize;
+        used_original = recurse->path.used;
 
-        path_sub.used = recurse->path->used + recurse->listing.directory.array[i].used + 1;
-        path_sub.size = path_sub.used;
+        recurse->state.status = f_string_dynamic_increase_by(f_path_separator_s.used + recurse->listing.directory.array[i].used + 1, &recurse->path);
 
-        f_char_t path_full_sub[path_sub.used + 1];
+        if (F_status_is_error_not(recurse->state.status)) {
+          recurse->state.status = f_string_dynamic_append_assure(f_path_separator_s, &recurse->path);
+        }
 
-        memcpy(path_full_sub, recurse->path->string, sizeof(f_char_t) * recurse->path->used);
-        memcpy(path_full_sub + recurse->path->used + 1, recurse->listing.directory.array[i].string, sizeof(f_char_t) * recurse->listing.directory.array[i].used);
+        if (F_status_is_error_not(recurse->state.status)) {
+          recurse->state.status = f_string_dynamic_append_nulless(recurse->listing.directory.array[i], &recurse->path);
+        }
 
-        path_full_sub[recurse->path->used] = f_path_separator_s.string[0];
-        path_full_sub[path_sub.used] = 0;
+        // Guarantee NULL termination.
+        recurse->path.string[recurse->path.used] = 0;
 
-        path_sub.string = path_full_sub;
+        if (F_status_is_error_not(recurse->state.status)) {
+          recurse->state.status = f_directory_exists(recurse->path);
 
-        recurse->state.status = f_directory_exists(path_sub);
-
-        if (recurse->state.status == F_false) {
-          recurse->state.status = F_status_set_error(F_directory_not);
+          if (recurse->state.status == F_false) {
+            recurse->state.status = F_status_set_error(F_directory_not);
+          }
         }
 
         if (F_status_is_error(recurse->state.status)) {
-          if (recurse->handle) {
-            recurse->handle((void *) recurse, recurse->listing.directory.array[i], f_directory_recurse_do_flag_directory_e);
-          }
-          else if (recurse->state.handle) {
-            recurse->state.handle(&recurse->state, (void *) recurse);
-          }
+          private_inline_fl_directory_do_handle(recurse, recurse->listing.directory.array[i], f_directory_recurse_do_flag_directory_e);
 
-          break;
-        }
-
-        if (recurse->flag & f_directory_recurse_do_flag_first_e) {
-          recurse->action((void *) recurse, recurse->listing.directory.array[i], f_directory_recurse_do_flag_first_e);
-        }
-
-        if (recurse->depth < recurse->max_depth) {
-          recurse->path = (f_string_static_t * const) & path_sub;
-
-          ++recurse->depth;
-
-          private_fl_directory_do_recurse(recurse);
-
-          // Data must be restored after recursion.
-          recurse->path = (f_string_static_t * const) & path_sub;
-
-          // Success inside the recursed function is handled inside the recursed function, so handle at the current depth.
-          if (recurse->state.status == F_none) {
-            --recurse->depth;
-          }
-
-          // Errors in the recursed function are handled outside the recursed function here.
-          else if (F_status_is_error(recurse->state.status)) {
-            if (recurse->handle) {
-              recurse->handle((void *) recurse, recurse->listing.directory.array[i], f_directory_recurse_do_flag_directory_e);
-            }
-            else if (recurse->state.handle) {
-              recurse->state.handle(&recurse->state, (void *) recurse);
-            }
-
-            recurse->state.status = F_failure;
-          }
-
-          // Error is now handled or is done, so update the depth and exit.
-          if (recurse->state.status == F_done || recurse->state.status == F_failure) {
-            --recurse->depth;
+          if (F_status_is_error(recurse->state.status)) {
+            recurse->path.used = used_original;
 
             break;
           }
         }
 
-        recurse->state.status = F_none;
+        if (recurse->state.status == F_break || recurse->state.status == F_done) {
+          recurse->path.used = used_original;
 
-        if (recurse->flag & f_directory_recurse_do_flag_last_e) {
-          recurse->action((void *) recurse, recurse->listing.directory.array[i], f_directory_recurse_do_flag_last_e);
+          break;
+        }
+
+        if (recurse->state.status == F_continue) {
+          recurse->path.used = used_original;
+
+          continue;
+        }
+
+        if (recurse->flag & f_directory_recurse_do_flag_before_e) {
+          recurse->state.status = F_none;
+
+          recurse->action((void *) recurse, recurse->listing.directory.array[i], f_directory_recurse_do_flag_before_e | f_directory_recurse_do_flag_directory_e);
+
+          if (F_status_is_error(recurse->state.status)) {
+            private_inline_fl_directory_do_handle(recurse, recurse->listing.directory.array[i], f_directory_recurse_do_flag_before_e | f_directory_recurse_do_flag_directory_e);
+
+            if (F_status_is_error(recurse->state.status)) {
+              recurse->state.status = F_failure;
+
+              break;
+            }
+          }
+        }
+
+        if (recurse->state.status == F_break || recurse->state.status == F_done) {
+          recurse->path.used = used_original;
+
+          break;
+        }
+
+        if (recurse->state.status == F_continue) {
+          recurse->path.used = used_original;
+
+          continue;
+        }
+
+        if (recurse->depth < recurse->depth_max) {
+          ++recurse->depth;
+
+          private_fl_directory_do_recurse(recurse);
+
+          --recurse->depth;
+
+          if (recurse->state.status == F_done || recurse->state.status == F_failure) {
+            recurse->path.used = used_original;
+
+            break;
+          }
+        }
+        else {
+          recurse->state.status = F_none;
+
+          recurse->action((void *) recurse, recurse->listing.directory.array[i], f_directory_recurse_do_flag_directory_e);
+
+          if (F_status_is_error(recurse->state.status)) {
+            private_inline_fl_directory_do_handle(recurse, recurse->listing.directory.array[i], f_directory_recurse_do_flag_directory_e);
+
+            if (F_status_is_error(recurse->state.status)) {
+              recurse->path.used = used_original;
+
+              break;
+            }
+          }
+
+          if (recurse->state.status == F_break || recurse->state.status == F_done || recurse->state.status == F_failure) {
+            recurse->path.used = used_original;
+
+            break;
+          }
+
+          if (recurse->state.status == F_continue) {
+            recurse->path.used = used_original;
+
+            continue;
+          }
+        }
+
+        if (recurse->flag & f_directory_recurse_do_flag_after_e) {
+          recurse->state.status = F_none;
+
+          recurse->action((void *) recurse, recurse->listing.directory.array[i], f_directory_recurse_do_flag_after_e | f_directory_recurse_do_flag_directory_e);
+
+          if (F_status_is_error(recurse->state.status)) {
+            private_inline_fl_directory_do_handle(recurse, recurse->listing.directory.array[i], f_directory_recurse_do_flag_after_e | f_directory_recurse_do_flag_directory_e);
+
+            if (F_status_is_error(recurse->state.status)) {
+              recurse->state.status = F_failure;
+              recurse->path.used = used_original;
+
+              break;
+            }
+          }
+
+          if (recurse->state.status == F_break || recurse->state.status == F_done || recurse->state.status == F_failure) {
+            recurse->path.used = used_original;
+
+            break;
+          }
+
+          if (recurse->state.status == F_continue) {
+            recurse->path.used = used_original;
+
+            continue;
+          }
         }
 
         recurse->state.status = F_none;
+        recurse->path.used = used_original;
       } // for
     }
 

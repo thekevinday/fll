@@ -75,6 +75,34 @@ extern "C" {
 #endif // !defined(_di_fl_directory_do_)
 
 /**
+ * Private inline function for use by fl_directory_do().
+ *
+ * Intended to simplify code similar to using a macro function.
+ *
+ * This calls the handle callback as is appropriate.
+ *
+ * @param recurse
+ *   The directory recurse data.
+ *
+ * @return
+ *   F_none on success.
+ *
+ *   F_failure (with error bit) for any other failure, failures might be populated with individual status codes.
+ *
+ * @see fl_directory_do()
+ */
+#if !defined(_di_fl_directory_do_)
+  static inline void private_inline_fl_directory_do_handle(f_directory_recurse_do_t * const recurse, const f_string_static_t path, const uint16_t flag) {
+    if (recurse->handle) {
+      recurse->handle((void *) recurse, path, flag);
+    }
+    else if (recurse->state.handle) {
+      recurse->state.handle(&recurse->state, (void *) recurse);
+    }
+  }
+#endif // !defined(_di_fl_directory_do_)
+
+/**
  * A special function intended to be used directly by fl_directory_list().
  *
  * @param path

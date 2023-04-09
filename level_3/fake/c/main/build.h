@@ -56,10 +56,12 @@ extern "C" {
  *     Errors (with error bit) from: f_file_name_base()
  *     Errors (with error bit) from: f_file_name_directory()
  *     Errors (with error bit) from: f_string_append()
+ *     Errors (with error bit) from: f_string_dynamic_append()
  *     Errors (with error bit) from: f_string_dynamic_append_nulless()
  *     Errors (with error bit) from: f_string_dynamic_resize()
  *     Errors (with error bit) from: fl_directory_create()
  *     Errors (with error bit) from: fl_directory_copy()
+ *     Errors (with error bit) from: fl_directory_do()
  * @param mode
  *   The modes for each file type.
  * @param label
@@ -91,11 +93,59 @@ extern "C" {
  * @see f_string_dynamic_resize()
  * @see fl_directory_create()
  * @see fl_directory_copy()
+ * @see fl_directory_do()
  * @see fll_program_print_signal_received()
  */
 #ifndef _di_fake_build_copy_
   extern void fake_build_copy(fake_data_t * const data, const f_mode_t mode, const f_string_static_t label, const f_string_static_t source, const f_string_static_t destination, const f_string_statics_t files, const f_string_static_t file_stage, const f_array_length_t perserve_offset);
 #endif // _di_fake_build_copy_
+
+/**
+ * Callback for performing an action regarding the copy operation for fake_build_copy().
+ *
+ * @param recurse
+ *   The recuse structure.
+ *   Must be of type f_directory_recurse_do_t.
+ *
+ *   This does not alter local.main.setting.state.status.
+ *
+ *   This alters data.main->setting.state.status:
+ *     @todo document this.
+ * @param name
+ *   The directory name currently being process based on the flag.
+ * @param flag
+ *   The flags representing the action.
+ *
+ * @see f_string_dynamic_append()
+ * @see f_string_dynamic_increase_by()
+ *
+ * @see fake_build_copy()
+ */
+#ifndef _di_fake_build_copy_action_
+  extern void fake_build_copy_action(void * const recurse, const f_string_static_t name, const uint16_t flag);
+#endif // _di_fake_build_copy_action_
+
+/**
+ * Callback for handling an error regarding the copy operation for fake_build_copy().
+ *
+ * @param recurse
+ *   The recuse structure.
+ *   Must be of type f_directory_recurse_do_t.
+ *
+ *   This alters local.main.setting.state.status:
+ *     Assigns value from recurse.state.status.
+ *
+ *   This does not alter recurse.state.status.
+ * @param name
+ *   The directory name currently being process based on the flag.
+ * @param flag
+ *   The flags representing the action.
+ *
+ * @see fake_build_copy()
+ */
+#ifndef _di_fake_build_copy_handle_
+  extern void fake_build_copy_handle(void * const recurse, const f_string_static_t name, const uint16_t flag);
+#endif // _di_fake_build_copy_handle_
 
 /**
  * Execute the Pre-Process or Post-pocess build script.

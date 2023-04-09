@@ -105,6 +105,8 @@ extern "C" {
     fake_f_fl_conversion_dynamic_to_unsigned_detect_e,
     fake_f_fl_directory_copy_e,
     fake_f_fl_directory_create_e,
+    fake_f_fl_directory_do_e,
+    fake_f_fl_directory_list_e,
     fake_f_fl_environment_load_name_e,
     fake_f_fl_environment_load_names_e,
     fake_f_fl_iki_read_e,
