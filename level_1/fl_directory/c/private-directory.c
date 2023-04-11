@@ -693,10 +693,11 @@ extern "C" {
 
       names->array[names->used].used = 0;
 
-      status = f_string_dynamic_increase_by(name_directory.used, &names->array[names->used]);
+      status = f_string_dynamic_increase_by(name_directory.used + 1, &names->array[names->used]);
       if (F_status_is_error(status)) break;
 
       memcpy(names->array[names->used].string, name_directory.string, sizeof(f_char_t) * name_directory.used);
+      names->array[names->used].string[name_directory.used] = 0;
       names->array[names->used++].used = name_directory.used;
 
       f_memory_resize(1, 0, sizeof(f_char_t *), (void **) & entity[i]);
