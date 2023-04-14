@@ -63,12 +63,33 @@ extern "C" {
  * @param recurse
  *   The directory recurse data.
  *
- * @return
- *   F_none on success.
+ *   This alters recurse.state.status:
+ *     F_none on success.
+ *     F_done on success and instructed to end recursion.
  *
- *   F_failure (with error bit) for any other failure, failures might be populated with individual status codes.
+ *     F_interrupt (with error bit) if stopping due to an interrupt.
  *
+ *     Errors (with error bit) from: f_string_dynamic_append_assure().
+ *     Errors (with error bit) from: f_string_dynamic_append_nulless().
+ *     Errors (with error bit) from: f_string_dynamic_increase_by().
+ *     Errors (with error bit) from: fl_directory_list().
+ *
+ *     Errors (with error bit) from: private_fl_directory_list().
+ *     Errors (with error bit) from: private_inline_fl_directory_do_handle().
+ *
+ *     Errors (with error bit) from: recurse.action().
+ *     Errors (with error bit) from: recurse.handle().
+ *
+ * @see f_string_dynamic_append_assure()
+ * @see f_string_dynamic_append_nulless()
+ * @see f_string_dynamic_increase_by()
  * @see fl_directory_do()
+ *
+ * @see private_fl_directory_list()
+ * @see private_inline_fl_directory_do_handle()
+ *
+ * @see recurse.action()
+ * @see recurse.handle()
  */
 #if !defined(_di_fl_directory_do_)
   extern void private_fl_directory_do_recurse(f_directory_recurse_do_t * const recurse) F_attribute_visibility_internal_d;

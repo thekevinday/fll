@@ -212,22 +212,34 @@ extern "C" {
       if (!recurse->action) {
         recurse->state.status = F_status_set_error(F_parameter);
 
-        private_inline_fl_directory_do_handle(recurse, path, f_directory_recurse_do_flag_top_e | f_directory_recurse_do_flag_path_e);
+        private_inline_fl_directory_do_handle(recurse, path, f_directory_recurse_do_flag_top_e);
         if (F_status_is_error(recurse->state.status)) return;
       }
     #endif // _di_level_1_parameter_checking_
 
-    if (!recurse->path_top->used) {
+    if (!path.used) {
       recurse->state.status = F_data_not;
 
       private_inline_fl_directory_do_handle(recurse, path, f_directory_recurse_do_flag_top_e | f_directory_recurse_do_flag_path_e);
       if (F_status_is_error(recurse->state.status)) return;
     }
 
-    recurse->state.status = f_directory_exists(*recurse->path_top);
+    recurse->state.status = f_string_dynamic_append_nulless(path, &recurse->path);
 
-    if (recurse->state.status == F_false) {
-      recurse->state.status = F_status_set_error(F_directory_not);
+    if (F_status_is_error_not(recurse->state.status)) {
+
+      // Do not allow trailing path separators in the string's length calculation, except root directory '/'.
+      for (; recurse->path.used; --recurse->path.used) {
+        if (recurse->path.string[recurse->path.used - 1] != f_path_separator_s.string[0]) break;
+      } // for
+
+      recurse->path.string[recurse->path.used] = 0;
+
+      recurse->state.status = f_directory_exists(path);
+
+      if (recurse->state.status == F_false) {
+        recurse->state.status = F_status_set_error(F_directory_not);
+      }
     }
 
     if (F_status_is_error(recurse->state.status)) {
@@ -253,18 +265,6 @@ extern "C" {
     }
 
     if (recurse->depth_max) {
-      recurse->state.status = f_string_dynamic_append_nulless(path, &recurse->path);
-
-      if (F_status_is_error(recurse->state.status)) {
-        private_inline_fl_directory_do_handle(recurse, path, f_directory_recurse_do_flag_top_e | f_directory_recurse_do_flag_path_e);
-        if (F_status_is_error(recurse->state.status)) return;
-      }
-
-      // Do not allow trailing path separators in the string's length calculation, except root directory '/'.
-      for (; recurse->path.used; --recurse->path.used) {
-        if (recurse->path_top->string[recurse->path.used - 1] != f_path_separator_s.string[0]) break;
-      } // for
-
       recurse->depth = 1;
 
       private_fl_directory_do_recurse(recurse);

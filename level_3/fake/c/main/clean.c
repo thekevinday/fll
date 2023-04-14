@@ -8,6 +8,7 @@ extern "C" {
   void fake_clean_operate(fake_data_t * const data) {
 
     if (!data || !data->main) return;
+    if (F_status_is_error(data->main->setting.state.status)) return;
 
     fake_main_t * const main = data->main;
 

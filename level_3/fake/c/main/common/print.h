@@ -85,6 +85,7 @@ extern "C" {
     fake_f_f_path_current_e,
     fake_f_f_path_directory_cleanup_e,
     fake_f_f_string_append_e,
+    fake_f_f_string_append_nulless_e,
     fake_f_f_string_dynamic_append_e,
     fake_f_f_string_dynamic_append_assure_e,
     fake_f_f_string_dynamic_append_nulless_e,

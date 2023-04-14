@@ -14,7 +14,7 @@ extern "C" {
 
     f_file_stream_lock(print->to);
 
-    fl_print_format("%r%[Building%] ", print->to, f_string_eol_s, print->set->important, print->set->important);
+    fl_print_format("%[Building%] ", print->to, print->set->important, print->set->important);
     fl_print_format("%[%Q%]", print->to, print->set->notable, setting_build->build_name, print->set->notable);
     fl_print_format("%[ using '%]", print->to, print->set->important, print->set->important);
     fl_print_format("%[%Q%]", print->to, print->set->notable, main->setting.settings, print->set->notable);
@@ -76,7 +76,7 @@ extern "C" {
     if (!print) return F_status_set_error(F_output_not);
     if (print->verbosity < f_console_verbosity_normal_e) return F_output_not;
 
-    fake_print_common_simple(print, "Generating skeleton structure");
+    fake_print_context_important_simple(print, "Generating skeleton structure");
 
     return F_none;
   }

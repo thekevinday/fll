@@ -142,6 +142,10 @@ extern "C" {
 
         for (i = 0; i < main->setting.operations.used; ++i) {
 
+          if (i && main->program.message.verbosity > f_console_verbosity_error_e) {
+            fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
+          }
+
           data.operation = main->setting.operations.array[i];
 
           if (data.operation == fake_operation_build_e) {
@@ -151,18 +155,11 @@ extern "C" {
             }
 
             if (F_status_is_error_not(main->setting.state.status)) {
-              if (i && main->program.message.verbosity > f_console_verbosity_error_e) {
-                fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
-              }
-
               fake_build_operate(&data, 0, main->program.pipe & fll_program_data_pipe_input_e);
+              if (main->setting.state.status == F_child) break;
             }
           }
           else if (data.operation == fake_operation_clean_e) {
-            if (i && main->program.message.verbosity > f_console_verbosity_error_e) {
-              fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
-            }
-
             fake_clean_operate(&data);
 
             // Reset in case next operation needs files.
@@ -175,19 +172,11 @@ extern "C" {
             }
 
             if (F_status_is_error_not(main->setting.state.status)) {
-              if (i && main->program.message.verbosity > f_console_verbosity_error_e) {
-                fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
-              }
-
               fake_make_operate(&data);
               if (main->setting.state.status == F_child) break;
             }
           }
           else if (data.operation == fake_operation_skeleton_e) {
-            if (i && main->program.message.verbosity > f_console_verbosity_error_e) {
-              fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
-            }
-
             fake_skeleton_operate(&data);
 
             // Skeleton is supposed to guarantee these.

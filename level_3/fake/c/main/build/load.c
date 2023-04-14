@@ -135,9 +135,6 @@ extern "C" {
         f_string_range_t range = macro_f_string_range_t_initialize2(buffer.used);
         f_fss_delimits_t delimits = f_fss_delimits_t_initialize;
 
-        // @todo make sure main->setting.state.custom = (void *) main->program;
-        //f_state_t state = macro_f_state_t_initialize_1(fake_allocation_large_d, fake_allocation_small_d, F_none, 0, 0, 0, &fll_program_standard_signal_handle, 0, (void *) main->program, 0);
-
         fll_fss_extended_read(buffer, &range, &objects, &contents, 0, 0, &delimits, 0, &main->setting.state);
 
         if (F_status_is_error(main->setting.state.status)) {

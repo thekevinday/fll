@@ -167,15 +167,42 @@ extern "C" {
 
     fake_main_t * const main = data->main;
 
-    fake_string_dynamic_reset(&main->cache_argument);
-
     f_string_static_t buffer = f_string_static_t_initialize;
     f_status_t failed = F_none;
     fake_local_t local = macro_fake_local_t_initialize_1(main, &main->cache_map, &failed);
 
+    f_directory_recurse_do_t recurse = f_directory_recurse_do_t_initialize;
+    recurse.action = &fake_build_copy_action;
+    recurse.handle = &fake_build_copy_handle;
+    recurse.state.custom = (void *) &local;
+    recurse.state.code = fake_state_code_local_e;
+    recurse.flag = f_directory_recurse_do_flag_top_e | f_directory_recurse_do_flag_before_e | f_directory_recurse_do_flag_after_e;
+    recurse.mode = mode;
+
     fake_build_print_message_copying(&main->program.message, label);
 
-    main->setting.state.status = f_string_dynamic_append_nulless(source, &main->cache_argument);
+    main->setting.state.status = f_file_exists(source, F_false);
+
+    if (F_status_is_error(main->setting.state.status)) {
+      fake_print_error(&main->program.error, macro_fake_f(f_file_exists));
+
+      return;
+    }
+
+    if (main->setting.state.status != F_true) {
+      fake_build_touch(data, file_stage);
+
+      return;
+    }
+
+    fake_string_dynamic_reset(&main->cache_2);
+    fake_string_dynamic_reset(&main->cache_map.name);
+
+    main->setting.state.status = f_string_dynamic_append_nulless(source, &main->cache_2);
+
+    if (F_status_is_error_not(main->setting.state.status)) {
+      main->setting.state.status = f_string_dynamic_append_nulless(destination, &main->cache_map.name);
+    }
 
     if (F_status_is_error(main->setting.state.status)) {
       fake_print_error(&main->program.error, macro_fake_f(f_string_dynamic_append_nulless));
@@ -183,22 +210,19 @@ extern "C" {
       return;
     }
 
-    f_directory_recurse_do_t recurse = f_directory_recurse_do_t_initialize;
-    recurse.action = &fake_build_copy_action;
-    recurse.handle = &fake_build_copy_handle;
-    recurse.state.custom = (void *) &local;
-    recurse.state.code = fake_state_code_local_e;
-    recurse.flag = f_directory_recurse_do_flag_top_e & f_directory_recurse_do_flag_before_e & f_directory_recurse_do_flag_after_e;
-    recurse.mode = mode;
+    // @todo Consider binding the (non-existent) cache_3 for the recurse.path for more memory saving.
 
     for (f_array_length_t i = 0; i < files.used; ++i) {
 
       if (fake_signal_check(main)) break;
       if (!files.array[i].used) continue;
 
-      main->cache_argument.used = source.used;
+      fake_string_dynamic_reset(&main->cache_map.value);
 
-      main->setting.state.status = f_string_dynamic_append_nulless(files.array[i], &main->cache_argument);
+      main->cache_2.used = source.used;
+      main->cache_map.name.used = destination.used;
+
+      main->setting.state.status = f_string_dynamic_append_nulless(files.array[i], &main->cache_2);
 
       if (F_status_is_error(main->setting.state.status)) {
         fake_print_error(&main->program.error, macro_fake_f(f_string_dynamic_append_nulless));
@@ -206,20 +230,13 @@ extern "C" {
         break;
       }
 
-      main->setting.state.status = f_directory_is(main->cache_argument);
+      main->cache_2.string[main->cache_2.used] = 0;
+      main->cache_map.name.string[main->cache_map.name.used] = 0;
+
+      main->setting.state.status = f_directory_is(main->cache_2);
 
       if (main->setting.state.status == F_true) {
-        main->cache_map.name.used = 0;
-
-        main->setting.state.status = f_string_dynamic_append_nulless(destination, &main->cache_map.name);
-
-        if (F_status_is_error(main->setting.state.status)) {
-          fake_print_error(&main->program.error, macro_fake_f(f_string_dynamic_append_nulless));
-
-          break;
-        }
-
-        main->setting.state.status = f_file_name_base(main->cache_argument, &main->cache_map.name);
+        main->setting.state.status = f_file_name_base(main->cache_2, &main->cache_map.value);
 
         if (F_status_is_error(main->setting.state.status)) {
           fake_print_error(&main->program.error, macro_fake_f(f_file_name_base));
@@ -227,12 +244,43 @@ extern "C" {
           break;
         }
 
-        fl_directory_do(main->cache_argument, &recurse);
-        if (F_status_is_error(main->setting.state.status)) break;
+        main->setting.state.status = f_string_dynamic_append_nulless(main->cache_map.value, &main->cache_map.name);
+
+        if (F_status_is_error(main->setting.state.status)) {
+          fake_print_error(&main->program.error, macro_fake_f(f_string_dynamic_append_nulless));
+
+          break;
+        }
+
+        main->cache_map.name.string[main->cache_map.name.used] = 0;
+
+        fl_directory_do(main->cache_2, &recurse);
+        if (F_status_set_fine(main->setting.state.status) == F_interrupt) break;
+
+        // Always provide a finall error message to the copy message.
+        if (F_status_is_error(main->setting.state.status)) {
+
+          // The final message will be generic failure if a message is already printed, otherwise a more detailed message is printed.
+          if (F_status_is_error(failed)) {
+            failed = main->setting.state.status;
+            main->setting.state.status = F_status_set_error(F_failure);
+          }
+
+          fake_print_error_build_operation_file(&main->program.error, macro_fake_f(fl_directory_do), f_file_operation_copy_s, main->cache_2, main->cache_map.name, f_file_operation_to_s, F_true);
+
+          if (F_status_is_error(failed)) {
+            main->setting.state.status = failed;
+          }
+
+          break;
+        }
       }
       else if (main->setting.state.status == F_false) {
-        fake_string_dynamic_reset(&main->cache_map.name);
         fake_string_dynamic_reset(&main->cache_map.value);
+
+        if (main->cache_map.value.size) {
+          main->cache_map.value.string[0] = 0;
+        }
 
         main->setting.state.status = f_string_dynamic_append_nulless(destination, &main->cache_map.value);
 
@@ -242,17 +290,9 @@ extern "C" {
           break;
         }
 
-        if (perserve_offset && perserve_offset < main->cache_argument.used) {
-          main->setting.state.status = f_string_dynamic_append_nulless(destination, &main->cache_map.name);
-
-          if (F_status_is_error(main->setting.state.status)) {
-            fake_print_error(&main->program.error, macro_fake_f(f_string_dynamic_append_nulless));
-
-            break;
-          }
-
-          buffer.string = main->cache_argument.string + perserve_offset;
-          buffer.used = main->cache_argument.used - perserve_offset;
+        if (perserve_offset && perserve_offset < main->cache_2.used) {
+          buffer.string = main->cache_2.string + perserve_offset;
+          buffer.used = main->cache_2.used - perserve_offset;
 
           main->setting.state.status = f_file_name_directory(buffer, &main->cache_map.name);
 
@@ -270,16 +310,22 @@ extern "C" {
             break;
           }
 
-          main->setting.state.status = f_string_append(main->cache_argument.string + perserve_offset, main->cache_argument.used - perserve_offset, &main->cache_map.value);
+          main->setting.state.status = f_string_append_nulless(main->cache_2.string + perserve_offset, main->cache_2.used - perserve_offset, &main->cache_map.value);
 
           if (F_status_is_error(main->setting.state.status)) {
-            fake_print_error(&main->program.error, macro_fake_f(f_string_append));
+            fake_print_error(&main->program.error, macro_fake_f(f_string_append_nulless));
 
             break;
           }
         }
         else {
-          main->setting.state.status = f_file_name_base(main->cache_argument, &main->cache_map.value);
+          fake_string_dynamic_reset(&main->cache_map.name);
+
+          if (main->cache_map.name.size) {
+            main->cache_map.name.string[0] = 0;
+          }
+
+          main->setting.state.status = f_file_name_base(main->cache_2, &main->cache_map.value);
 
           if (F_status_is_error(main->setting.state.status)) {
             fake_print_error(&main->program.error, macro_fake_f(f_file_name_base));
@@ -288,28 +334,37 @@ extern "C" {
           }
         }
 
-        fake_build_print_verbose_copying(&main->program.message, main->cache_argument, main->cache_map.value);
+        fake_build_print_verbose_copying(&main->program.message, main->cache_2, main->cache_map.value);
 
-        main->setting.state.status = f_file_copy(main->cache_argument, main->cache_map.value, mode, F_file_default_read_size_d, f_file_stat_flag_reference_e);
+        main->setting.state.status = f_file_copy(main->cache_2, main->cache_map.value, mode, F_file_default_read_size_d, f_file_stat_flag_reference_e);
 
         if (F_status_is_error(main->setting.state.status)) {
-          fake_print_error_build_operation_file(&main->program.error, macro_fake_f(f_file_copy), f_file_operation_copy_s, f_file_operation_to_s, main->cache_argument, main->cache_map.value, F_true);
+          fake_print_error_build_operation_file(&main->program.error, macro_fake_f(f_file_copy), f_file_operation_copy_s, main->cache_2, main->cache_map.value, f_file_operation_to_s, F_true);
 
           break;
         }
+
+        // Restore the destination path in cases where it is changed.
+        if (!perserve_offset || perserve_offset >= main->cache_2.used) {
+          fake_string_dynamic_reset(&main->cache_map.name);
+
+          main->setting.state.status = f_string_dynamic_append_nulless(destination, &main->cache_map.name);
+
+          if (F_status_is_error(main->setting.state.status)) {
+            fake_print_error(&main->program.error, macro_fake_f(f_string_dynamic_append_nulless));
+
+            return;
+          }
+        }
       }
       else if (F_status_is_error(main->setting.state.status)) {
-        fake_print_error_file(&main->program.error, macro_fake_f(f_directory_is), main->cache_argument, f_file_operation_create_s, fll_error_file_type_file_e);
+        fake_print_error_file(&main->program.error, macro_fake_f(f_directory_is), main->cache_2, f_file_operation_create_s, fll_error_file_type_file_e);
 
         break;
       }
 
       main->setting.state.status = F_none;
     } // for
-
-    if (F_status_is_error(failed)) {
-      main->setting.state.status = F_status_set_error(F_failure);
-    }
 
     f_directory_recurse_do_delete(&recurse);
 
@@ -324,9 +379,9 @@ extern "C" {
 
     f_directory_recurse_do_t * const recurse = (f_directory_recurse_do_t *) void_recurse;
 
-    if (!recurse->custom) return;
+    if (!recurse->state.custom) return;
 
-    fake_local_t * const local = (fake_local_t *) recurse->custom;
+    fake_local_t * const local = (fake_local_t *) recurse->state.custom;
 
     if (!local->custom_1) {
       recurse->state.status = F_status_set_error(F_parameter);
@@ -334,91 +389,179 @@ extern "C" {
       return;
     }
 
-    f_string_map_t * const map_destination = (f_string_map_t *) local->custom_1;
-
-    if (flag & f_directory_recurse_do_flag_top_e) {
-      fake_string_dynamic_reset(&map_destination->value);
-
-      recurse->state.status = F_none;
-
-      return;
-    }
+    f_string_map_t * const map = (f_string_map_t *) local->custom_1;
 
     if (flag & f_directory_recurse_do_flag_before_e) {
+      if (flag & f_directory_recurse_do_flag_top_e) {
+        fake_build_print_verbose_copying(&local->main->program.message, *recurse->path_top, map->name);
 
-      // Push the name on the path stack (the destination path is expected to be pre-populated).
-      recurse->state.status = f_string_dynamic_increase_by(f_path_separator_s.used + name.used + 1, &map_destination->name);
+        recurse->state.status = f_directory_exists(map->name);
 
-      if (F_status_is_error_not(recurse->state.status)) {
-        recurse->state.status = f_string_dynamic_append(f_path_separator_s, &map_destination->name);
+        if (F_status_is_error(recurse->state.status)) {
+          local->main->setting.state.status = recurse->state.status;
+
+          fake_print_error_file(&local->main->program.error, macro_fake_f(fl_directory_create), map->value, f_file_operation_verify_s, fll_error_file_type_directory_e);
+
+          // Save the error status for when the error message is printed.
+          *((f_status_t *) local->custom_2) = recurse->state.status;
+        }
+        else if (recurse->state.status != F_true) {
+          recurse->state.status = fl_directory_create(map->name, F_file_mode_all_rwx_d);
+
+          if (F_status_is_error(recurse->state.status)) {
+            local->main->setting.state.status = recurse->state.status;
+
+            fake_print_error_file(&local->main->program.error, macro_fake_f(fl_directory_create), map->value, f_file_operation_create_s, fll_error_file_type_directory_e);
+
+            // Save the error status for when the error message is printed.
+            *((f_status_t *) local->custom_2) = recurse->state.status;
+          }
+        }
+
+        if (F_status_is_error_not(recurse->state.status)) {
+          fake_string_dynamic_reset(&recurse->path_cache);
+
+          // Pre-populate the destination into the path cache.
+          recurse->state.status = f_string_dynamic_append(map->name, &recurse->path_cache);
+
+          if (F_status_is_error_not(recurse->state.status)) {
+            recurse->state.status = F_none;
+
+            // Do not allow trailing path separators in the string's length calculation, except root directory '/'.
+            for (; recurse->path_cache.used; --recurse->path_cache.used) {
+              if (recurse->path_cache.string[recurse->path_cache.used - 1] != f_path_separator_s.string[0]) break;
+            } // for
+
+            recurse->path_cache.string[recurse->path_cache.used] = 0;
+          }
+        }
+
+        return;
       }
 
-      if (F_status_is_error_not(recurse->state.status)) {
-        recurse->state.status = f_string_dynamic_append_nulless(name, &map_destination->name);
-      }
+      if (flag & f_directory_recurse_do_flag_directory_e) {
 
-      // Guaranetee NULL terminated string.
-      map_destination->name.string[map_destination->name.used] = 0;
+        // Push the directory name on the path stack (the destination path is expected to be pre-populated).
+        recurse->state.status = f_string_dynamic_increase_by(f_path_separator_s.used + name.used + 1, &recurse->path_cache);
+
+        if (F_status_is_error_not(recurse->state.status)) {
+          recurse->state.status = f_string_dynamic_append(f_path_separator_s, &recurse->path_cache);
+        }
+
+        if (F_status_is_error_not(recurse->state.status)) {
+          recurse->state.status = f_string_dynamic_append_nulless(name, &recurse->path_cache);
+        }
+
+        // Guaranetee NULL terminated string.
+        recurse->path_cache.string[recurse->path_cache.used] = 0;
+
+        if (F_status_is_error(recurse->state.status)) return;
+
+        fake_build_print_verbose_copying(&local->main->program.message, recurse->path, recurse->path_cache);
+
+        recurse->state.status = f_directory_exists(recurse->path_cache);
+
+        if (F_status_is_error_not(recurse->state.status) && recurse->state.status != F_true) {
+          recurse->state.status = fl_directory_create(recurse->path_cache, F_file_mode_all_rwx_d);
+        }
+
+        if (F_status_is_error(recurse->state.status)) {
+          local->main->setting.state.status = recurse->state.status;
+
+          fake_print_error_file(&local->main->program.error, macro_fake_f(fl_directory_create), recurse->path_cache, f_file_operation_verify_s, fll_error_file_type_directory_e);
+
+          // Save the error status for when the error message is printed.
+          *((f_status_t *) local->custom_2) = recurse->state.status;
+        }
+        else if (recurse->state.status != F_true) {
+          recurse->state.status = fl_directory_create(recurse->path_cache, F_file_mode_all_rwx_d);
+
+          if (F_status_is_error(recurse->state.status)) {
+            local->main->setting.state.status = recurse->state.status;
+
+            fake_print_error_file(&local->main->program.error, macro_fake_f(fl_directory_create), recurse->path_cache, f_file_operation_create_s, fll_error_file_type_directory_e);
+
+            // Save the error status for when the error message is printed.
+            *((f_status_t *) local->custom_2) = recurse->state.status;
+          }
+        }
+      }
 
       return;
     }
 
     if (flag & f_directory_recurse_do_flag_after_e) {
+      if (flag & f_directory_recurse_do_flag_directory_e) {
 
-      // Pop the current path off of the path stack.
-      map_destination->name.used -= f_path_separator_s.used + name.used;
+        // Pop the current path off of the path stack.
+        if (F_status_is_error_not(recurse->state.status)) {
+          recurse->path_cache.used -= f_path_separator_s.used + name.used;
+        }
 
-      recurse->state.status = F_none;
-
-      return;
-    }
-
-    fake_string_dynamic_reset(&recurse->path_cache);
-    fake_string_dynamic_reset(&map_destination->value);
-
-    recurse->state.status = f_string_dynamic_increase_by(recurse->path.used + f_path_separator_s.used + name.used + 1, &recurse->path_cache);
-
-    if (F_status_is_error_not(recurse->state.status)) {
-      recurse->state.status = f_string_dynamic_append_nulless(map_destination->name, &recurse->path_cache);
-    }
-
-    if (F_status_is_error_not(recurse->state.status)) {
-      recurse->state.status = f_string_dynamic_append(f_path_separator_s, &recurse->path_cache);
-    }
-
-    if (F_status_is_error_not(recurse->state.status)) {
-      recurse->state.status = f_string_dynamic_append_nulless(name, &recurse->path_cache);
-    }
-
-    if (F_status_is_error_not(recurse->state.status)) {
-      recurse->state.status = f_string_dynamic_increase_by(map_destination->name.used + f_path_separator_s.used + name.used + 1, &map_destination->value);
-    }
-
-    if (F_status_is_error_not(recurse->state.status)) {
-      recurse->state.status = f_string_dynamic_append_nulless(map_destination->name, &map_destination->value);
-    }
-
-    if (F_status_is_error_not(recurse->state.status)) {
-      recurse->state.status = f_string_dynamic_append(f_path_separator_s, &map_destination->value);
-    }
-
-    if (F_status_is_error_not(recurse->state.status)) {
-      recurse->state.status = f_string_dynamic_append_nulless(name, &map_destination->value);
-    }
-
-    // Guaranetee NULL terminated strings.
-    recurse->path_cache.string[recurse->path_cache.used] = 0;
-    map_destination->value.string[map_destination->value.used] = 0;
-
-    if (F_status_is_error(recurse->state.status)) {
-      fake_string_dynamic_reset(&map_destination->value);
+        // Guaranetee NULL terminated string.
+        recurse->path_cache.string[recurse->path_cache.used] = 0;
+      }
 
       return;
     }
 
-    fake_build_print_verbose_copying(&local->main->program.message, recurse->path_cache, map_destination->value);
+    fake_string_dynamic_reset(&map->value);
 
-    recurse->state.status = f_file_copy(recurse->path_cache, map_destination->value, recurse->mode, F_file_default_read_size_d, f_file_stat_flag_reference_e);
+    recurse->state.status = f_string_dynamic_increase_by(recurse->path_cache.used + f_path_separator_s.used + name.used + 1, &map->value);
+
+    if (F_status_is_error_not(recurse->state.status)) {
+      recurse->state.status = f_string_dynamic_append_nulless(recurse->path_cache, &map->value);
+    }
+
+    if (F_status_is_error_not(recurse->state.status)) {
+      recurse->state.status = f_string_dynamic_append(f_path_separator_s, &map->value);
+    }
+
+    if (F_status_is_error_not(recurse->state.status)) {
+      recurse->state.status = f_string_dynamic_append_nulless(name, &map->value);
+    }
+
+    // Guaranetee NULL terminated string.
+    map->value.string[map->value.used] = 0;
+
+    if (F_status_is_error(recurse->state.status)) return;
+
+    fake_build_print_verbose_copying(&local->main->program.message, recurse->path, map->value);
+
+    if (flag & f_directory_recurse_do_flag_directory_e) {
+      if (F_status_is_error(recurse->state.status)) {
+        local->main->setting.state.status = recurse->state.status;
+
+        fake_print_error_file(&local->main->program.error, macro_fake_f(fl_directory_create), map->value, f_file_operation_verify_s, fll_error_file_type_directory_e);
+
+        // Save the error status for when the error message is printed.
+        *((f_status_t *) local->custom_2) = recurse->state.status;
+      }
+      else if (recurse->state.status != F_true) {
+        recurse->state.status = fl_directory_create(map->value, F_file_mode_all_rwx_d);
+
+        if (F_status_is_error(recurse->state.status)) {
+          local->main->setting.state.status = recurse->state.status;
+
+          fake_print_error_file(&local->main->program.error, macro_fake_f(fl_directory_create), map->value, f_file_operation_create_s, fll_error_file_type_directory_e);
+
+          // Save the error status for when the error message is printed.
+          *((f_status_t *) local->custom_2) = recurse->state.status;
+        }
+      }
+    }
+    else {
+      recurse->state.status = f_file_copy(recurse->path, map->value, recurse->mode, F_file_default_read_size_d, f_file_stat_flag_reference_e);
+
+      if (F_status_is_error(recurse->state.status)) {
+        local->main->setting.state.status = recurse->state.status;
+
+        fake_print_error_file(&local->main->program.error, macro_fake_f(f_file_copy), map->value, f_file_operation_create_s, fll_error_file_type_file_e);
+
+        // Save the error status for when the error message is printed.
+        *((f_status_t *) local->custom_2) = recurse->state.status;
+      }
+    }
   }
 #endif // _di_fake_build_copy_action_
 
@@ -432,62 +575,18 @@ extern "C" {
     // Do not print any errors on interrupts.
     if (F_status_set_fine(recurse->state.status) == F_interrupt) return;
 
-    if (!recurse->custom) return;
+    if (!recurse->state.custom) return;
 
-    fake_local_t * const local = (fake_local_t *) recurse->custom;
+    fake_local_t * const local = (fake_local_t *) recurse->state.custom;
 
     if (!local->main || !local->custom_1 || !local->custom_2) return;
 
-    *((f_status_t *) local->custom_2) = F_status_set_error(F_failure);
-
-    if (flag & f_directory_recurse_do_flag_top_e) {
+    if (F_status_is_error_not(*((f_status_t *) local->custom_2))) {
       local->main->setting.state.status = recurse->state.status;
 
-      if (flag == (f_directory_recurse_do_flag_top_e | f_directory_recurse_do_flag_path_e)) {
-        fake_print_error_file(&local->main->program.error, macro_fake_f(fl_directory_do), *recurse->path_top, f_file_operation_copy_s, fll_error_file_type_directory_e);
-      }
-      else if (flag == (f_directory_recurse_do_flag_top_e | f_directory_recurse_do_flag_before_e | f_directory_recurse_do_flag_path_e)) {
-        fake_print_error_file(&local->main->program.error, macro_fake_f(f_directory_exists), *recurse->path_top, f_file_operation_copy_s, fll_error_file_type_directory_e);
-      }
-      else if (flag == (f_directory_recurse_do_flag_top_e | f_directory_recurse_do_flag_after_e | f_directory_recurse_do_flag_path_e)) {
-        fake_print_error_file(&local->main->program.error, macro_fake_f(fl_directory_do), *recurse->path_top, f_file_operation_copy_s, fll_error_file_type_directory_e);
-      }
+      fake_print_error_build_operation_file(&local->main->program.error, macro_fake_f(fl_directory_do), f_file_operation_copy_s, *recurse->path_top, recurse->path_cache, f_file_operation_to_s, F_true);
 
-      return;
-    }
-
-    f_string_map_t * const map_destination = (f_string_map_t *) local->custom_1;
-
-    if (flag == (flag & f_directory_recurse_do_flag_path_e)) {
-      // @todo this is old and may not be correct anymore.
-      fake_print_error_build_operation_file_recurse(&local->main->program.error, macro_fake_f(fl_directory_list), f_file_operation_copy_s, f_file_operation_to_s, recurse->path, name, map_destination->name, name, F_true);
-
-      return;
-    }
-
-    if (flag & f_directory_recurse_do_flag_directory_e) {
-      // @todo
-
-      //fake_print_error_build_operation_file_recurse(&local->main->program.error, macro_fake_f(f_file_copy), f_file_operation_copy_s, f_file_operation_to_s, recurse->path, name, map_destination->name, name, F_true);
-
-      return;
-    }
-
-    // The value.used is set to 0 on allocation related failures so that better error messaging can be performed.
-    if (map_destination->value.used) {
-      fake_print_error_build_operation_file_recurse(&local->main->program.error, macro_fake_f(f_file_copy), f_file_operation_copy_s, f_file_operation_to_s, recurse->path, name, map_destination->name, name, F_true);
-    }
-    else if (map_destination->name.used) {
-      f_char_t destination[map_destination->name.used + f_path_separator_s.used + name.used];
-
-      memcpy(destination, map_destination->name.string, map_destination->name.used);
-      memcpy(destination + map_destination->name.used, f_path_separator_s.string, f_path_separator_s.used);
-      memcpy(destination + map_destination->name.used + f_path_separator_s.used, name.string, name.used);
-
-      fake_print_error_build_operation_file_recurse(&local->main->program.error, macro_fake_f(f_file_copy), f_file_operation_copy_s, f_file_operation_to_s, recurse->path, name, map_destination->name, name, F_true);
-    }
-    else {
-      fake_print_error_build_operation_file_recurse(&local->main->program.error, macro_fake_f(fl_directory_do), f_file_operation_copy_s, f_file_operation_to_s, recurse->path, name, f_string_empty_s, f_string_empty_s, F_true);
+      *((f_status_t *) local->custom_2) = recurse->state.status;
     }
   }
 #endif // _di_fake_build_copy_handle_
@@ -761,6 +860,7 @@ extern "C" {
   void fake_build_operate(fake_data_t * const data, const f_string_statics_t * const build_arguments, const bool process_pipe) {
 
     if (!data || !data->main) return;
+    if (F_status_is_error(data->main->setting.state.status)) return;
     if (fake_signal_check(data->main)) return;
 
     fake_main_t * const main = data->main;
@@ -776,7 +876,11 @@ extern "C" {
 
     fake_build_load_setting(data, build_arguments, process_pipe, &data_build.setting);
 
-    if (F_status_is_fine(main->setting.state.status)) {
+    if (F_status_is_fine(main->setting.state.status) && main->program.message.verbosity > f_console_verbosity_error_e) {
+      if (data->operation == fake_operation_make_e) {
+        fll_print_dynamic_raw(f_string_eol_s, main->program.message.to);
+      }
+
       fake_print_message_building(&main->program.message, build_arguments, &data_build.setting);
     }
 

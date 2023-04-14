@@ -194,7 +194,7 @@ extern "C" {
       fl_print_format("%[", print->to, print->context);
     }
 
-    fl_print_format("%S.%]%r", print->to, print->context, after, print->context, f_string_eol_s);
+    fl_print_format("%S.%]%r", print->to, after, print->context, f_string_eol_s);
 
     f_file_stream_unlock(print->to);
 
@@ -216,40 +216,9 @@ extern "C" {
       fl_print_format("%[%Q%]", print->to, print->notable, destination, print->notable);
     }
 
-    fl_print_format("%['", print->to, print->context, print->context);
+    fl_print_format("%['", print->to, print->context);
   }
 #endif // _di_fake_print_error_build_operation_file_partial_
-
-#ifndef _di_fake_print_error_build_operation_file_recurse_
-  f_status_t fake_print_error_build_operation_file_recurse(fl_print_t * const print, const f_string_t function, const f_string_static_t operation, const f_string_static_t source_path, const f_string_static_t source_name, const f_string_static_t destination_path, const f_string_static_t destination_name, const f_string_static_t how, const bool fallback) {
-
-    if (!print) return F_status_set_error(F_output_not);
-
-    f_char_t source_array[source_path.used + source_name.used + 1];
-    source_array[source_path.used + source_name.used] = 0;
-
-    memcpy(source_array, source_path.string, source_path.used);
-    memcpy(source_array + source_path.used, f_path_separator_s.string, f_path_separator_s.used);
-    memcpy(source_array + source_path.used + f_path_separator_s.used, source_name.string, source_name.used);
-
-    const f_string_static_t source = macro_f_string_static_t_initialize(source_array, 0, source_path.used + f_path_separator_s.used + source_name.used);
-
-    if (destination_path.used || destination_name.used) {
-      f_char_t destination_array[destination_path.used + destination_name.used + 1];
-      destination_array[destination_path.used + destination_name.used] = 0;
-
-      memcpy(destination_array, destination_path.string, destination_path.used);
-      memcpy(destination_array + destination_path.used, f_path_separator_s.string, f_path_separator_s.used);
-      memcpy(destination_array + destination_path.used + f_path_separator_s.used, destination_name.string, destination_name.used);
-
-      const f_string_static_t destination = macro_f_string_static_t_initialize(source_array, 0, destination_path.used + f_path_separator_s.used + destination_name.used);
-
-      return fake_print_error_build_operation_file(print, function, operation, source, destination, how, fallback);
-    }
-
-    return fake_print_error_build_operation_file(print, function, operation, source, f_string_empty_s, how, fallback);
-  }
-#endif // _di_fake_print_error_build_operation_file_recurse_
 
 #ifndef _di_fake_print_error_directory_create_parent_missing_
   f_status_t fake_print_error_directory_create_parent_missing(fl_print_t * const print, const f_string_static_t path) {

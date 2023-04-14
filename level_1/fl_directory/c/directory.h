@@ -180,30 +180,55 @@ extern "C" {
  *     F_none on success.
  *     F_data_not if source.used or destination.used is 0.
  *
+ *     F_directory_descriptor (with error bit) on directory file descriptor error.
  *     F_directory_not (with error bit) if the directory does not exist.
- *     F_failure (with error bit) for any other failure, failures might be populated with individual status codes.
+ *     F_directory_open (with error bit) on directory open error.
+ *     F_directory_stream (with error bit) on directory stream error.
+ *     F_directory_support_not (with error bit) on directory file descriptor not supported.
+ *     F_failure (with error bit) if failed to read directory information.
+ *     F_file_descriptor_max (with error bit) if max file descriptors is reached.
+ *     F_file_open_max (with error bit) too many open files.
+ *     F_interrupt (with error bit) if stopping due to an interrupt.
+ *     F_memory_not (with error bit) on out of memory.
+ *     F_parameter (with error bit) if a parameter is invalid.
+ *     F_string_too_large (with error bit) if appended string length is too large to store in the buffer.
  *
  *     Errors (with error bit) from: f_directory_create().
  *     Errors (with error bit) from: f_directory_exists().
  *     Errors (with error bit) from: f_file_mode_set().
  *     Errors (with error bit) from: f_file_role_change().
  *     Errors (with error bit) from: f_file_stat().
+ *     Errors (with error bit) from: f_file_stat_at().
  *     Errors (with error bit) from: f_string_dynamic_append_assure().
  *     Errors (with error bit) from: f_string_dynamic_append_nulless().
  *     Errors (with error bit) from: f_string_dynamic_increase_by().
  *     Errors (with error bit) from: f_string_dynamic_resize().
+ *     Errors (with error bit) from: f_string_dynamics_increase_by().
  *     Errors (with error bit) from: f_string_dynamics_resize().
+ *
+ *     Errors (with error bit) from: recurse.action().
+ *     Errors (with error bit) from: recurse.handle().
+ *
+ * @see alphasort()
+ * @see opendir()
+ * @see scandir()
+ * @see versionsort()
  *
  * @see f_directory_create()
  * @see f_directory_exists()
  * @see f_file_mode_set()
  * @see f_file_role_change()
  * @see f_file_stat()
+ * @see f_file_stat_at()
  * @see f_string_dynamic_append_assure()
  * @see f_string_dynamic_append_nulless()
  * @see f_string_dynamic_increase_by()
  * @see f_string_dynamic_resize()
+ * @see f_string_dynamics_increase_by()
  * @see f_string_dynamics_resize()
+ *
+ * @see recurse.action()
+ * @see recurse.handle()
  */
 #ifndef _di_fl_directory_do_
   extern void fl_directory_do(const f_string_static_t path, f_directory_recurse_do_t * const recurse);

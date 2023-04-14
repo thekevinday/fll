@@ -52,6 +52,7 @@ extern "C" {
     "f_path_current",
     "f_path_directory_cleanup",
     "f_string_append",
+    "f_string_append_nulless",
     "f_string_dynamic_append",
     "f_string_dynamic_append_assure",
     "f_string_dynamic_append_nulless",

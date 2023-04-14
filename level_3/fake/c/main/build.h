@@ -46,6 +46,9 @@ extern "C" {
  * @param data
  *   The program data.
  *
+ *   This modifies data.main->cache_2.
+ *   This modifies data.main->cache_map.
+ *
  *   This alters data.main->setting.state.status:
  *     F_none on success.
  *
@@ -53,6 +56,7 @@ extern "C" {
  *
  *     Errors (with error bit) from: f_directory_is()
  *     Errors (with error bit) from: f_file_copy()
+ *     Errors (with error bit) from: f_file_exists()
  *     Errors (with error bit) from: f_file_name_base()
  *     Errors (with error bit) from: f_file_name_directory()
  *     Errors (with error bit) from: f_string_append()
@@ -86,6 +90,7 @@ extern "C" {
  *
  * @see f_directory_is()
  * @see f_file_copy()
+ * @see f_file_exists()
  * @see f_file_name_base()
  * @see f_file_name_directory()
  * @see f_string_append()

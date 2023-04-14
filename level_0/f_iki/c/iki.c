@@ -103,7 +103,7 @@ extern "C" {
       while (range->start <= range->stop && range->start < buffer->used) {
 
         if (state->interrupt) {
-          state->interrupt((void * const) &state, 0);
+          state->interrupt((void * const) state, 0);
           if (F_status_set_fine(state->status) == F_interrupt) break;
         }
 
@@ -155,7 +155,7 @@ extern "C" {
       while (F_status_is_error_not(state->status) && range->start <= range->stop && range->start < buffer->used) {
 
         if (state->interrupt) {
-          state->interrupt((void * const) &state, 0);
+          state->interrupt((void * const) state, 0);
           if (F_status_set_fine(state->status) == F_interrupt) break;
         }
 
@@ -201,7 +201,7 @@ extern "C" {
           while (range->start <= range->stop && range->start < buffer->used) {
 
             if (state->interrupt) {
-              state->interrupt((void * const) &state, 0);
+              state->interrupt((void * const) state, 0);
               if (F_status_set_fine(state->status) == F_interrupt) break;
             }
 
@@ -311,7 +311,7 @@ extern "C" {
         while (range->start <= range->stop && range->start < buffer->used) {
 
           if (state->interrupt) {
-            state->interrupt((void * const) &state, 0);
+            state->interrupt((void * const) state, 0);
             if (F_status_set_fine(state->status) == F_interrupt) break;
           }
 

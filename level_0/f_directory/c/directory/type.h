@@ -249,8 +249,6 @@ extern "C" {
  * path_cache: A path-related cache made available for the caller to use, such as combining the path and the file name in the action callback.
  * path_top:   A pointer to the top path string, used for error handling and printing (generally assigned internally).
  *
- * custom: Custom data defined by and used by the caller. Set to NULL to not use.
- *
  * action: A callback used for performing some action (this is required to do anything).
  * handle: A callback used for performing error handling during recursion directly relating to a file.
  *
@@ -271,15 +269,13 @@ extern "C" {
     f_string_dynamic_t path_cache;
     const f_string_static_t *path_top;
 
-    void *custom;
-
     void (*action)(void * const recurse, const f_string_static_t name, const uint16_t flag);
     void (*handle)(void * const recurse, const f_string_static_t name, const uint16_t flag);
   } f_directory_recurse_do_t;
 
   #define f_directory_recurse_do_t_initialize { \
-    F_directory_max_recurse_depth_d, \
     0, \
+    F_directory_max_recurse_depth_d, \
     f_directory_recurse_do_flag_none_e, \
     f_mode_t_initialize, \
     f_state_t_initialize, \
@@ -289,10 +285,9 @@ extern "C" {
     0, \
     0, \
     0, \
-    0, \
   }
 
-  #define macro_f_directory_recurse_do_t_initialize_1(depth, depth_max, flag, mode, state, listing, path, path_cache, path_top, custom, action, handle) { \
+  #define macro_f_directory_recurse_do_t_initialize_1(depth, depth_max, flag, mode, state, listing, path, path_cache, path_top, action, handle) { \
     depth, \
     depth_max, \
     flag, \
@@ -302,12 +297,11 @@ extern "C" {
     path, \
     path_cache, \
     path_top, \
-    custom, \
     action, \
     handle, \
   }
 
-  #define macro_f_directory_recurse_do_t_initialize_2(depth, depth_max, flag, mode, state, custom, action, handle) { \
+  #define macro_f_directory_recurse_do_t_initialize_2(depth, depth_max, flag, mode, state, action, handle) { \
     depth,\
     depth_max \
     flag, \
@@ -317,7 +311,6 @@ extern "C" {
     f_string_dynamic_t_initialize, \
     f_string_dynamic_t_initialize, \
     0, \
-    custom, \
     action, \
     handle, \
   }
