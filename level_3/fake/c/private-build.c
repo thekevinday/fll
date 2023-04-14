@@ -501,10 +501,10 @@ const f_string_static_t fake_build_documentation_files_s = macro_f_string_static
             break;
           }
 
-          *status = f_string_append(path_source.string + perserve_offset, path_source.used - perserve_offset, &destination_file);
+          *status = f_string_append_nulless(path_source.string + perserve_offset, path_source.used - perserve_offset, &destination_file);
 
           if (F_status_is_error(*status)) {
-            fll_error_print(data->main->error, F_status_set_fine(*status), "f_string_append", F_true);
+            fll_error_print(data->main->error, F_status_set_fine(*status), "f_string_append_nulless", F_true);
 
             break;
           }
