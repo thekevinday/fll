@@ -386,12 +386,14 @@ extern "C" {
  *
  * fake_state_code_*_e:
  *   - none:  No flags set.
- *   - local: A flag designating that the state.custom is in fake_local_t rather than fake_main_t.
+ *   - clone: Designate that the operation is a clone operation (as opposed to a copy operation).
+ *   - local: Designate that the state.custom is in fake_local_t rather than fake_main_t.
  */
 #ifndef _di_fake_state_code_e_
   enum {
     fake_state_code_none_e  = 0x0,
-    fake_state_code_local_e = 0x1,
+    fake_state_code_clone_e = 0x1,
+    fake_state_code_local_e = 0x2,
   }; // enum
 #endif // _di_fake_state_code_e_
 

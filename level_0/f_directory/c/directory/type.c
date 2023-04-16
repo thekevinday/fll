@@ -43,30 +43,6 @@ extern "C" {
   }
 #endif // _di_f_directory_listing_destroy_
 
-#ifndef _di_f_directory_recurse_copy_delete_
-  f_status_t f_directory_recurse_copy_delete(f_directory_recurse_copy_t * const recurse) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!recurse) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    f_directory_listing_delete(&recurse->listing);
-
-    return F_none;
-  }
-#endif // _di_f_directory_recurse_copy_delete_
-
-#ifndef _di_f_directory_recurse_copy_destroy_
-  f_status_t f_directory_recurse_copy_destroy(f_directory_recurse_copy_t * const recurse) {
-    #ifndef _di_level_0_parameter_checking_
-      if (!recurse) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
-
-    f_directory_listing_destroy(&recurse->listing);
-
-    return F_none;
-  }
-#endif // _di_f_directory_recurse_copy_destroy_
-
 #ifndef _di_f_directory_recurse_do_delete_
   f_status_t f_directory_recurse_do_delete(f_directory_recurse_do_t * const recurse) {
     #ifndef _di_level_0_parameter_checking_

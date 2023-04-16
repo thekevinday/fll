@@ -210,16 +210,19 @@ extern "C" {
     fake_main_t * const main = data_make->main;
 
     const f_array_length_t total = main->cache_arguments.used - 1;
-    f_string_static_t destination = f_string_static_t_initialize;
-    f_directory_recurse_copy_t recurse = f_directory_recurse_copy_t_initialize;
+    f_status_t failed = F_none;
+    fake_local_t local = macro_fake_local_t_initialize_1(main, &main->cache_map, &failed);
 
-    if (main->program.error.verbosity > f_console_verbosity_normal_e) {
-      recurse.state.custom = main;
-      recurse.verbose = clone ? fake_print_verbose_recursive_clone : fake_print_verbose_recursive_copy;
-    }
+    f_directory_recurse_do_t recurse = f_directory_recurse_do_t_initialize;
+    recurse.action = &fake_do_copy_action;
+    recurse.handle = &fake_do_copy_handle;
+    recurse.state.custom = (void *) &local;
+    recurse.state.code = fake_state_code_local_e;
+    recurse.flag = f_directory_recurse_do_flag_top_e | f_directory_recurse_do_flag_before_e | f_directory_recurse_do_flag_after_e;
 
     if (clone) {
-      recurse.flag = f_file_stat_flag_group_e | f_file_stat_flag_owner_e;
+      recurse.state.code |= fake_state_code_clone_e;
+      recurse.flag = f_file_stat_flag_group_e | f_file_stat_flag_owner_e | f_directory_recurse_copy_flag_clone_e;
     }
     else {
       macro_f_mode_t_set_default_umask(recurse.mode, main->program.umask);
@@ -227,127 +230,114 @@ extern "C" {
 
     bool existing = F_true;
     f_array_length_t i = 0;
+    const f_string_t *function = 0;
+    const f_string_static_t *operation = 0;
+    uint8_t type = fll_error_file_type_path_e;
 
+    // The first argument may designate not to dereference links.
     if (f_compare_dynamic(fake_make_operation_argument_no_dereference_s, main->cache_arguments.array[i]) == F_equal_to) {
       ++i;
       recurse.flag |= f_file_stat_flag_reference_e;
     }
 
-    // In this case, the destination could be a file, so confirm this.
+    // Confirm if the destination is a file when there are three or more arguments (after the potential no dereference argument).
     if (main->cache_arguments.used == 2 + i) {
       main->setting.state.status = f_directory_is(main->cache_arguments.array[1]);
 
       if (F_status_is_error(main->setting.state.status)) {
-        fake_print_error_file(&main->program.error, macro_fake_f(f_directory_is), main->cache_arguments.array[1], f_file_operation_identify_s, fll_error_file_type_path_e);
-
-        main->setting.state.status = F_status_set_error(F_failure);
-
-        f_directory_recurse_copy_delete(&recurse);
-
-        return;
+        function = &macro_fake_f(f_directory_is);
+        operation = &f_file_operation_identify_s;
       }
-
-      if (main->setting.state.status == F_false || main->setting.state.status == F_file_found_not || main->setting.state.status == F_data_not) {
+      else if (main->setting.state.status == F_false || main->setting.state.status == F_file_found_not || main->setting.state.status == F_data_not) {
         existing = F_false;
       }
     }
 
-    for (; i < total; ++i) {
+    if (F_status_is_error_not(main->setting.state.status)) {
+      for (; i < total; ++i) {
 
-      destination.used = main->cache_arguments.array[total].used + 1;
+        fake_string_dynamic_reset(&main->cache_map.name);
 
-      if (existing) {
-        fake_string_dynamic_reset(&main->cache_argument);
-
-        main->setting.state.status = f_file_name_base(main->cache_arguments.array[i], &main->cache_argument);
+        main->setting.state.status = f_string_dynamic_append_nulless(main->cache_arguments.array[total], &main->cache_map.name);
 
         if (F_status_is_error(main->setting.state.status)) {
-          fake_print_error_file(&main->program.error, macro_fake_f(f_file_name_base), main->cache_arguments.array[i], f_file_operation_process_s, fll_error_file_type_path_e);
-
-          main->setting.state.status = F_status_set_error(F_failure);
-
-          f_directory_recurse_copy_delete(&recurse);
-
-          return;
-        }
-
-        destination.used += main->cache_argument.used + 1;
-      }
-
-      f_char_t destination_string[destination.used + 1];
-      destination.string = destination_string;
-      destination_string[destination.used] = 0;
-      destination_string[destination.used - 1] = 0;
-
-      if (existing) {
-        destination_string[destination.used - 2] = 0;
-      }
-
-      memcpy(destination_string, main->cache_arguments.array[total].string, sizeof(f_char_t) * main->cache_arguments.array[total].used);
-
-      if (existing) {
-        if (destination_string[main->cache_arguments.array[total].used - 1] == f_path_separator_s.string[0]) {
-          memcpy(destination_string + main->cache_arguments.array[total].used, main->cache_argument.string, sizeof(f_char_t) * main->cache_argument.used);
-
-          --destination.used;
-        }
-        else {
-          memcpy(destination_string + main->cache_arguments.array[total].used + 1, main->cache_argument.string, sizeof(f_char_t) * main->cache_arguments.array[i].used);
-
-          destination_string[main->cache_arguments.array[total].used] = f_path_separator_s.string[0];
-        }
-      }
-
-      main->setting.state.status = f_directory_is(main->cache_arguments.array[i]);
-
-      if (main->setting.state.status == F_true) {
-        if (clone) {
-          recurse.flag |= f_directory_recurse_copy_flag_clone_e;
-        }
-        else {
-          recurse.flag -= recurse.flag & f_directory_recurse_copy_flag_clone_e;
-        }
-
-        fl_directory_copy(main->cache_arguments.array[i], destination, &recurse);
-
-        if (F_status_is_error(recurse.state.status)) {
-          main->setting.state.status = recurse.state.status;
-
-          fake_print_error_file(&main->program.error, macro_fake_f(fl_directory_copy), main->cache_arguments.array[i], clone ? f_file_operation_clone_s : f_file_operation_copy_s, fll_error_file_type_directory_e);
-
-          main->setting.state.status = F_status_set_error(F_failure);
-        }
-      }
-      else if (main->setting.state.status == F_false) {
-        if (clone) {
-          main->setting.state.status = f_file_clone(main->cache_arguments.array[i], destination, recurse.size_block, recurse.flag);
-        }
-        else {
-          main->setting.state.status = f_file_copy(main->cache_arguments.array[i], destination, recurse.mode, recurse.size_block, recurse.flag);
-        }
-
-        if (F_status_is_error(main->setting.state.status)) {
-          fake_print_error_file(&main->program.error, clone ? macro_fake_f(f_file_clone) : macro_fake_f(f_file_copy), main->cache_arguments.array[i], clone ? f_file_operation_clone_s : f_file_operation_copy_s, fll_error_file_type_file_e);
-
-          main->setting.state.status = F_status_set_error(F_failure);
+          function = &macro_fake_f(f_string_dynamic_append_nulless);
+          operation = &f_file_operation_process_s;
 
           break;
         }
 
-        fake_make_print_verbose_operate_copy(&main->program.message, clone, main->cache_arguments.array[i], destination);
-      }
-      else if (F_status_is_error(main->setting.state.status)) {
-        fake_print_error_file(&main->program.error, macro_fake_f(f_directory_is), main->cache_arguments.array[i], f_file_operation_identify_s, fll_error_file_type_directory_e);
+        if (existing) {
+          main->setting.state.status = f_string_dynamic_append_assure(f_path_separator_s, &main->cache_map.name);
 
-        main->setting.state.status = F_status_set_error(F_failure);
+          if (F_status_is_error(main->setting.state.status)) {
+            function = &macro_fake_f(f_string_dynamic_append_assure);
+            operation = &f_file_operation_process_s;
 
-        break;
-      }
-    } // for
+            break;
+          }
 
-    f_directory_recurse_copy_delete(&recurse);
+          main->setting.state.status = f_file_name_base(main->cache_arguments.array[i], &main->cache_map.name);
 
-    if (F_status_is_error_not(main->setting.state.status)) {
+          if (F_status_is_error(main->setting.state.status)) {
+            function = &macro_fake_f(f_file_name_base);
+            operation = &f_file_operation_process_s;
+
+            break;
+          }
+        }
+
+        main->setting.state.status = f_directory_is(main->cache_arguments.array[i]);
+
+        if (main->setting.state.status == F_true) {
+          fl_directory_do(main->cache_arguments.array[i], &recurse);
+
+          if (F_status_is_error(recurse.state.status)) {
+            main->setting.state.status = recurse.state.status;
+
+            function = &macro_fake_f(fl_directory_do);
+            operation = clone ? &f_file_operation_clone_s : &f_file_operation_copy_s;
+            type = fll_error_file_type_directory_e;
+
+            break;
+          }
+        }
+        else if (main->setting.state.status == F_false) {
+          if (clone) {
+            main->setting.state.status = f_file_clone(main->cache_arguments.array[i], main->cache_map.name, F_file_default_write_size_d, F_file_flag_write_only_d);
+          }
+          else {
+            main->setting.state.status = f_file_copy(main->cache_arguments.array[i], main->cache_map.name, recurse.mode, F_file_default_write_size_d, F_file_flag_write_only_d);
+          }
+
+          if (F_status_is_error(main->setting.state.status)) {
+            function = clone ? &macro_fake_f(f_file_clone) : &macro_fake_f(f_file_copy);
+            operation = clone ? &f_file_operation_clone_s : &f_file_operation_copy_s;
+            type = fll_error_file_type_file_e;
+
+            break;
+          }
+
+          fake_make_print_verbose_operate_copy(&main->program.message, clone, main->cache_arguments.array[i], main->cache_map.name);
+        }
+        else if (F_status_is_error(main->setting.state.status)) {
+          function = &macro_fake_f(f_directory_is);
+          operation = &f_file_operation_identify_s;
+          type = fll_error_file_type_directory_e;
+
+          break;
+        }
+      } // for
+    }
+
+    f_directory_recurse_do_delete(&recurse);
+
+    if (F_status_is_error(main->setting.state.status)) {
+      fake_print_error_file(&main->program.error, *function, main->cache_arguments.array[1], *operation, fll_error_file_type_path_e);
+
+      main->setting.state.status = F_status_set_error(F_failure);
+    }
+    else {
       main->setting.state.status = F_none;
     }
   }
@@ -1495,16 +1485,9 @@ extern "C" {
 
     fake_main_t * const main = data_make->main;
 
-    const f_array_length_t total = main->cache_arguments.used -1;
+    const f_array_length_t total = main->cache_arguments.used - 1;
 
-    f_directory_recurse_copy_t recurse = f_directory_recurse_copy_t_initialize;
     f_string_static_t destination = f_string_static_t_initialize;
-
-    if (main->program.error.verbosity > f_console_verbosity_normal_e) {
-      recurse.state.custom = main;
-
-      recurse.verbose = fake_print_verbose_recursive_move;
-    }
 
     bool existing = F_true;
 
@@ -1517,8 +1500,6 @@ extern "C" {
 
         main->setting.state.status = F_status_set_error(F_failure);
 
-        f_directory_recurse_copy_delete(&recurse);
-
         return;
       }
 
@@ -1527,69 +1508,67 @@ extern "C" {
       }
     }
 
+    const f_string_t *function = 0;
+    const f_string_static_t *operation = 0;
+    f_string_static_t *file = 0;
+
     for (f_array_length_t i = 0; i < total; ++i) {
 
-      destination.used = main->cache_arguments.array[total].used;
+      fake_string_dynamic_reset(&main->cache_argument);
+
+      main->setting.state.status = f_string_dynamic_append_nulless(main->cache_arguments.array[total], &main->cache_argument);
+
+      if (F_status_is_error(main->setting.state.status)) {
+        function = &macro_fake_f(f_string_dynamic_append_nulless);
+        operation = &f_file_operation_process_s;
+        file = &main->cache_arguments.array[i];
+
+        break;
+      }
 
       if (existing) {
-        fake_string_dynamic_reset(&main->cache_argument);
+        main->setting.state.status = f_string_dynamic_append_assure(f_path_separator_s, &main->cache_argument);
+
+        if (F_status_is_error(main->setting.state.status)) {
+          function = &macro_fake_f(f_string_dynamic_append_assure);
+          operation = &f_file_operation_process_s;
+          file = &main->cache_arguments.array[i];
+
+          break;
+        }
 
         main->setting.state.status = f_file_name_base(main->cache_arguments.array[i], &main->cache_argument);
 
         if (F_status_is_error(main->setting.state.status)) {
-          fake_print_error_file(&main->program.error, macro_fake_f(f_file_name_base), main->cache_arguments.array[i], f_file_operation_process_s, fll_error_file_type_path_e);
-
-          main->setting.state.status = F_status_set_error(F_failure);
-
-          f_directory_recurse_copy_delete(&recurse);
+          function = &macro_fake_f(f_file_name_base);
+          operation = &f_file_operation_process_s;
+          file = &main->cache_arguments.array[i];
 
           return;
         }
-
-        destination.used += main->cache_argument.used + 1;
       }
 
-      f_char_t destination_string[destination.used + 1];
-      destination.string = destination_string;
-      destination_string[destination.used] = 0;
+      main->cache_argument.string[main->cache_argument.used] = 0;
 
-      if (existing) {
-        destination_string[destination.used - 1] = 0;
-      }
+      main->setting.state.status = f_file_rename(main->cache_arguments.array[i], main->cache_argument);
 
-      memcpy(destination_string, main->cache_arguments.array[total].string, sizeof(f_char_t) * main->cache_arguments.array[total].used);
+      if (F_status_is_error(main->setting.state.status)) {
+        function = &macro_fake_f(f_file_rename);
+        operation = &f_file_operation_move_s;
+        file = &main->cache_argument;
 
-      if (existing) {
-        if (destination_string[main->cache_arguments.array[total].used - 1] == f_path_separator_s.string[0]) {
-          memcpy(destination_string + main->cache_arguments.array[total].used, main->cache_argument.string, sizeof(f_char_t) * main->cache_argument.used);
-
-          --destination.used;
-        }
-        else {
-          memcpy(destination_string + main->cache_arguments.array[total].used + 1, main->cache_argument.string, sizeof(f_char_t) * main->cache_arguments.array[i].used);
-
-          destination_string[main->cache_arguments.array[total].used] = f_path_separator_s.string[0];
-        }
-      }
-
-      fll_file_move(main->cache_arguments.array[i], destination, &recurse);
-
-      if (F_status_is_error(recurse.state.status)) {
-        main->setting.state.status = recurse.state.status;
-
-        fake_print_error_file(&main->program.error, macro_fake_f(fll_file_move), main->cache_arguments.array[i], f_file_operation_move_s, fll_error_file_type_directory_e);
-
-        main->setting.state.status = F_status_set_error(F_failure);
-
-        f_directory_recurse_copy_delete(&recurse);
-
-        return;
+        break;
       }
     } // for
 
-    f_directory_recurse_copy_delete(&recurse);
+    if (F_status_is_error(main->setting.state.status)) {
+      fake_print_error_file(&main->program.error, *function, *file, *operation, fll_error_file_type_path_e);
 
-    main->setting.state.status = F_none;
+      main->setting.state.status = F_status_set_error(F_failure);
+    }
+    else {
+      main->setting.state.status = F_none;
+    }
   }
 #endif // _di_fake_make_operate_process_type_move_
 

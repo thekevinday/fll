@@ -131,18 +131,14 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
+ *   This modifies data.main.cache_map.
+ *
  *   This alters data_make.main->setting.state.status:
  *     F_none on success.
  *
  *     F_failure (with error bit) on any error.
  *
  *     F_interrupt (with error bit) on interrupt signal received.
- *
- *     Errors (with error bit) from: f_directory_is()
- *     Errors (with error bit) from: f_file_clone()
- *     Errors (with error bit) from: f_file_copy()
- *     Errors (with error bit) from: f_file_name_base()
- *     Errors (with error bit) from: fl_directory_copy()
  * @param clone
  *   If TRUE, perform a copy that is a clone (preserved timestamps, roles, and permissions).
  *   If FALSE, perforrm a normaly copy without preserving properties.
@@ -151,7 +147,9 @@ extern "C" {
  * @see f_file_clone()
  * @see f_file_copy()
  * @see f_file_name_base()
- * @see fl_directory_copy()
+ * @see fl_directory_do()
+ *
+ * @see fake_do_copy_action()
  */
 #ifndef _di_fake_make_operate_process_type_copy_
   extern void fake_make_operate_process_type_copy(fake_make_data_t * const data_make, const bool clone);
@@ -545,6 +543,8 @@ extern "C" {
  * @param data_make
  *   All make related setting data, including data from the fakefile and the build settings file.
  *
+ *   This modifies data.main.cache_argument.
+ *
  *   This alters data_make.main->setting.state.status:
  *     F_none on success.
  *
@@ -552,11 +552,11 @@ extern "C" {
  *
  *     Errors (with error bit) from: f_directory_is()
  *     Errors (with error bit) from: f_file_name_base()
- *     Errors (with error bit) from: fll_file_move()
+ *     Errors (with error bit) from: f_file_rename()
  *
  * @see f_directory_is()
  * @see f_file_name_base()
- * @see fll_file_move()
+ * @see f_file_rename()
  */
 #ifndef _di_fake_make_operate_process_type_move_
   extern void fake_make_operate_process_type_move(fake_make_data_t * const data_make);

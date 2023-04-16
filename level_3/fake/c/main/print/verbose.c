@@ -4,6 +4,30 @@
 extern "C" {
 #endif
 
+#ifndef _di_fake_print_verbose_cloning_
+  f_status_t fake_print_verbose_cloning(fl_print_t * const print, const f_string_static_t source, const f_string_static_t destination) {
+
+    if (!print) return F_status_set_error(F_output_not);
+    if (print->verbosity < f_console_verbosity_verbose_e) return F_output_not;
+
+    fake_print_common_wrapped_variables(print, "Cloning file ", source, " to ", destination, f_string_empty_s.string);
+
+    return F_none;
+  }
+#endif // _di_fake_print_verbose_cloning_
+
+#ifndef _di_fake_print_verbose_copying_
+  f_status_t fake_print_verbose_copying(fl_print_t * const print, const f_string_static_t source, const f_string_static_t destination) {
+
+    if (!print) return F_status_set_error(F_output_not);
+    if (print->verbosity < f_console_verbosity_verbose_e) return F_output_not;
+
+    fake_print_common_wrapped_variables(print, "Copying file ", source, " to ", destination, f_string_empty_s.string);
+
+    return F_none;
+  }
+#endif // _di_fake_print_verbose_copying_
+
 #ifndef _di_fake_print_verbose_create_directory_
   void fake_print_verbose_create_directory(fl_print_t * const print, const f_string_static_t path) {
 
@@ -78,86 +102,17 @@ extern "C" {
   }
 #endif // _di_fake_print_verbose_file_pre_populated_
 
-#ifndef _di_fake_print_verbose_recursive_clone_
-  void fake_print_verbose_recursive_clone(const f_string_static_t source, const f_string_static_t destination, void * const void_recurse) {
+#ifndef _di_fake_print_verbose_moving_
+  f_status_t fake_print_verbose_moving(fl_print_t * const print, const f_string_static_t source, const f_string_static_t destination) {
 
-    if (!void_recurse) return;
+    if (!print) return F_status_set_error(F_output_not);
+    if (print->verbosity < f_console_verbosity_verbose_e) return F_output_not;
 
-    f_directory_recurse_copy_t * const recurse = (f_directory_recurse_copy_t * const) void_recurse;
+    fake_print_common_wrapped_variables(print, "Moving file ", source, " to ", destination, f_string_empty_s.string);
 
-    if (!recurse->state.custom) {
-      recurse->state.status = F_output_not;
-
-      return;
-    }
-
-    fake_main_t * const main = (recurse->state.code & fake_state_code_local_e)
-      ? ((fake_local_t *) recurse->state.custom)->main
-      : (fake_main_t *) recurse->state.custom;
-
-    if (main->program.message.verbosity < f_console_verbosity_verbose_e) {
-      recurse->state.status = F_output_not;
-
-      return;
-    }
-
-    fake_print_common_wrapped_variables(&main->program.message, "Cloned ", source, " to ", destination, 0);
+    return F_none;
   }
-#endif // _di_fake_print_verbose_recursive_clone_
-
-#ifndef _di_fake_print_verbose_recursive_copy_
-  void fake_print_verbose_recursive_copy(const f_string_static_t source, const f_string_static_t destination, void * const void_recurse) {
-
-    if (!void_recurse) return;
-
-    f_directory_recurse_copy_t * const recurse = (f_directory_recurse_copy_t * const) void_recurse;
-
-    if (!recurse->state.custom) {
-      recurse->state.status = F_output_not;
-
-      return;
-    }
-
-    fake_main_t * const main = (recurse->state.code & fake_state_code_local_e)
-      ? ((fake_local_t *) recurse->state.custom)->main
-      : (fake_main_t *) recurse->state.custom;
-
-    if (main->program.message.verbosity < f_console_verbosity_verbose_e) {
-      recurse->state.status = F_output_not;
-
-      return;
-    }
-
-    fake_print_common_wrapped_variables(&main->program.message, "Copied ", source, " to ", destination, 0);
-  }
-#endif // _di_fake_print_verbose_recursive_copy_
-
-#ifndef _di_fake_print_verbose_recursive_move_
-  void fake_print_verbose_recursive_move(const f_string_static_t source, const f_string_static_t destination, void * const void_recurse) {
-
-    if (!void_recurse) return;
-
-    f_directory_recurse_copy_t * const recurse = (f_directory_recurse_copy_t * const) void_recurse;
-
-    if (!recurse->state.custom) {
-      recurse->state.status = F_output_not;
-
-      return;
-    }
-
-    fake_main_t * const main = (recurse->state.code & fake_state_code_local_e)
-      ? ((fake_local_t *) recurse->state.custom)->main
-      : (fake_main_t *) recurse->state.custom;
-
-    if (main->program.message.verbosity < f_console_verbosity_verbose_e) {
-      recurse->state.status = F_output_not;
-
-      return;
-    }
-
-    fake_print_common_wrapped_variables(&main->program.message, "Moved ", source, " to ", destination, 0);
-  }
-#endif // _di_fake_print_verbose_recursive_move_
+#endif // _di_fake_print_verbose_moving_
 
 #ifdef __cplusplus
 } // extern "C"

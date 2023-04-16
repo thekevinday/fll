@@ -15,47 +15,6 @@ extern "C" {
 #endif
 
 /**
- * Private implementation of fl_directory_copy().
- *
- * Intended to be shared to each of the different implementation variations.
- *
- * @param recurse
- *   The directory recurse data.
- *
- * @return
- *   F_none on success.
- *
- *   F_failure (with error bit) for any other failure, failures might be populated with individual status codes.
- *
- * @see fl_directory_copy()
- */
-#if !defined(_di_fl_directory_copy_)
-  extern void private_fl_directory_copy_recurse(f_directory_recurse_copy_t * const recurse) F_attribute_visibility_internal_d;
-#endif // !defined(_di_fl_directory_copy_)
-
-/**
- * A special function intended to be used directly by private_fl_directory_copy_recurse().
- *
- * Will only copy a single file and record any detected errors.
- *
- * @param file
- *   The name of the current file.
- * @param recurse
- *   The directory recurse data.
- *
- * @return
- *   F_none on success.
- *
- *   F_array_too_large (with error bit) if a buffer would exceed max length.
- *   F_failure (with error bit) for any other failure, failures might be populated with individual status codes.
- *
- * @see fl_directory_copy()
- */
-#if !defined(_di_fl_directory_copy_)
-  extern void private_fl_directory_copy_recurse_file(const f_string_static_t file, f_directory_recurse_copy_t * const recurse) F_attribute_visibility_internal_d;
-#endif // !defined(_di_fl_directory_copy_)
-
-/**
  * Private implementation of fl_directory_do().
  *
  * Intended to be shared to each of the different implementation variations.
@@ -162,13 +121,12 @@ extern "C" {
  * @see f_file_stat_at()
  * @see f_string_dynamics_increase_by()
  *
- * @see fl_directory_copy()
  * @see fl_directory_do()
  * @see fl_directory_list()
  */
-#if !defined(_di_fl_directory_copy_) || !defined(_di_fl_directory_do_) || !defined(_di_fl_directory_list_)
+#if !defined(_di_fl_directory_do_) || !defined(_di_fl_directory_list_)
   extern f_status_t private_fl_directory_list(const f_string_static_t path, int (*filter)(const struct dirent *), int (*sort)(const struct dirent **, const struct dirent **), const bool dereference, f_directory_listing_t * const listing) F_attribute_visibility_internal_d;
-#endif // !defined(_di_fl_directory_copy_) || !defined(_di_fl_directory_do_) || !defined(_di_fl_directory_list_)
+#endif // !defined(_di_fl_directory_do_) || !defined(_di_fl_directory_list_)
 
 /**
  * Private implementation of fl_directory_path_push().

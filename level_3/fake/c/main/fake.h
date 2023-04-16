@@ -124,6 +124,7 @@
 #include <program/fake/main/build/skeleton.h>
 #include <program/fake/main/build/string.h>
 #include <program/fake/main/clean.h>
+#include <program/fake/main/fake/do.h>
 #include <program/fake/main/fake/path_generate.h>
 #include <program/fake/main/make.h>
 #include <program/fake/main/make/load_fakefile.h>
