@@ -29,7 +29,7 @@ const f_string_static_t fake_build_documentation_files_s = macro_f_string_static
     if (F_status_is_error(*status)) return;
 
     {
-      f_array_length_t build_libraries_length = fake_build_parameter_library_link_path_s.used + data->path_build_libraries_shared.used;
+      f_array_length_t build_libraries_length = fake_build_parameter_library_link_path_s.used + (is_shared ? data->path_build_libraries_shared.used : data->path_build_libraries_static.used);
 
       f_char_t build_libraries[build_libraries_length + 1];
       build_libraries[build_libraries_length] = 0;
