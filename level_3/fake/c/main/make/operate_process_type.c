@@ -213,20 +213,21 @@ extern "C" {
     f_status_t failed = F_none;
     fake_local_t local = macro_fake_local_t_initialize_1(main, &main->cache_map, &failed);
 
-    f_directory_recurse_do_t recurse = f_directory_recurse_do_t_initialize;
-    recurse.action = &fake_do_copy_action;
-    recurse.handle = &fake_do_copy_handle;
-    recurse.state.custom = (void *) &local;
-    recurse.state.code = fake_state_code_local_e;
-    recurse.flag = f_directory_recurse_do_flag_top_e | f_directory_recurse_do_flag_before_e | f_directory_recurse_do_flag_after_e;
+    main->cache_recurse_do.action = &fake_do_copy_action;
+    main->cache_recurse_do.handle = &fake_do_copy_handle;
+    main->cache_recurse_do.state.custom = (void *) &local;
+    main->cache_recurse_do.state.code = fake_state_code_local_e;
+    main->cache_recurse_do.flag = f_directory_recurse_do_flag_top_e | f_directory_recurse_do_flag_before_e | f_directory_recurse_do_flag_after_e;
 
     if (clone) {
-      recurse.state.code |= fake_state_code_clone_e;
-      recurse.flag = f_file_stat_flag_group_e | f_file_stat_flag_owner_e | f_directory_recurse_copy_flag_clone_e;
+      main->cache_recurse_do.state.code |= fake_state_code_clone_e;
     }
     else {
-      macro_f_mode_t_set_default_umask(recurse.mode, main->program.umask);
+      macro_f_mode_t_set_default_umask(main->cache_recurse_do.mode, main->program.umask);
     }
+
+    fake_string_dynamic_reset(&main->cache_recurse_do.path);
+    fake_string_dynamic_reset(&main->cache_recurse_do.path_cache);
 
     bool existing = F_true;
     f_array_length_t i = 0;
@@ -237,7 +238,7 @@ extern "C" {
     // The first argument may designate not to dereference links.
     if (f_compare_dynamic(fake_make_operation_argument_no_dereference_s, main->cache_arguments.array[i]) == F_equal_to) {
       ++i;
-      recurse.flag |= f_file_stat_flag_reference_e;
+      main->cache_recurse_do.flag |= f_file_stat_flag_reference_e;
     }
 
     // Confirm if the destination is a file when there are three or more arguments (after the potential no dereference argument).
@@ -290,10 +291,10 @@ extern "C" {
         main->setting.state.status = f_directory_is(main->cache_arguments.array[i]);
 
         if (main->setting.state.status == F_true) {
-          fl_directory_do(main->cache_arguments.array[i], &recurse);
+          fl_directory_do(main->cache_arguments.array[i], &main->cache_recurse_do);
 
-          if (F_status_is_error(recurse.state.status)) {
-            main->setting.state.status = recurse.state.status;
+          if (F_status_is_error(main->cache_recurse_do.state.status)) {
+            main->setting.state.status = main->cache_recurse_do.state.status;
 
             function = &macro_fake_f(fl_directory_do);
             operation = clone ? &f_file_operation_clone_s : &f_file_operation_copy_s;
@@ -304,10 +305,10 @@ extern "C" {
         }
         else if (main->setting.state.status == F_false) {
           if (clone) {
-            main->setting.state.status = f_file_clone(main->cache_arguments.array[i], main->cache_map.name, F_file_default_write_size_d, F_file_flag_write_only_d);
+            main->setting.state.status = f_file_clone(main->cache_arguments.array[i], main->cache_map.name, F_file_default_write_size_d, f_file_stat_flag_group_e | f_file_stat_flag_owner_e | (f_directory_recurse_do_flag_dereference_e ? 0 : f_file_stat_flag_reference_e));
           }
           else {
-            main->setting.state.status = f_file_copy(main->cache_arguments.array[i], main->cache_map.name, recurse.mode, F_file_default_write_size_d, F_file_flag_write_only_d);
+            main->setting.state.status = f_file_copy(main->cache_arguments.array[i], main->cache_map.name, main->cache_recurse_do.mode, F_file_default_write_size_d, f_directory_recurse_do_flag_dereference_e ? 0 : f_file_stat_flag_reference_e);
           }
 
           if (F_status_is_error(main->setting.state.status)) {
@@ -329,8 +330,6 @@ extern "C" {
         }
       } // for
     }
-
-    f_directory_recurse_do_delete(&recurse);
 
     if (F_status_is_error(main->setting.state.status)) {
       fake_print_error_file(&main->program.error, *function, main->cache_arguments.array[1], *operation, fll_error_file_type_path_e);

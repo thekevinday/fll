@@ -72,6 +72,7 @@ extern "C" {
       } // for
     }
 
+    // The cache_argument should be safe at this point to be reset and reused by this function.
     fake_build_arguments_standard_add(data, data_build, F_true, fake_build_type_object_e);
 
     if (F_status_is_error(main->setting.state.status)) {
@@ -145,6 +146,7 @@ extern "C" {
       } // for
     }
 
+    // The cache_argument should be safe at this point to be reset and reused by this function.
     fake_build_arguments_standard_add(data, data_build, F_false, fake_build_type_object_e);
 
     if (F_status_is_error(main->setting.state.status)) {

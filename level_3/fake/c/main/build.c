@@ -12,85 +12,67 @@ extern "C" {
 
     fake_main_t * const main = data->main;
 
-    {
-      f_array_length_t build_libraries_length = fake_build_parameter_library_link_path_s.used + data->path_build_libraries_shared.used;
+    fake_string_dynamic_reset(&main->cache_argument);
 
-      f_char_t build_libraries[build_libraries_length + 1];
-      build_libraries[build_libraries_length] = 0;
+    main->setting.state.status = f_string_dynamic_append_nulless(fake_build_parameter_library_link_path_s, &main->cache_argument);
+    if (F_status_is_error(main->setting.state.status)) return;
 
-      memcpy(build_libraries, fake_build_parameter_library_link_path_s.string, sizeof(f_char_t) * fake_build_parameter_library_link_path_s.used);
+    main->setting.state.status = f_string_dynamic_append_nulless(is_shared ? data->path_build_libraries_shared : data->path_build_libraries_static, &main->cache_argument);
+    if (F_status_is_error(main->setting.state.status)) return;
 
-      if (is_shared) {
-        memcpy(build_libraries + fake_build_parameter_library_link_path_s.used, data->path_build_libraries_shared.string, sizeof(f_char_t) * data->path_build_libraries_shared.used);
-      }
-      else {
-        memcpy(build_libraries + fake_build_parameter_library_link_path_s.used, data->path_build_libraries_static.string, sizeof(f_char_t) * data->path_build_libraries_static.used);
-      }
+    if (main->cache_argument.used) {
+      main->setting.state.status = fll_execute_arguments_add(main->cache_argument, &main->cache_arguments);
+      if (F_status_is_error(main->setting.state.status)) return;
+    }
 
-      f_array_length_t build_includes_length = fake_build_parameter_library_include_s.used + data->path_build_includes.used;
+    fake_string_dynamic_reset(&main->cache_argument);
 
-      f_char_t build_includes[build_includes_length + 1];
-      build_includes[build_includes_length] = 0;
+    main->setting.state.status = f_string_dynamic_append_nulless(fake_build_parameter_library_include_s, &main->cache_argument);
+    if (F_status_is_error(main->setting.state.status)) return;
 
-      memcpy(build_includes, fake_build_parameter_library_include_s.string, sizeof(f_char_t) * fake_build_parameter_library_include_s.used);
-      memcpy(build_includes + fake_build_parameter_library_include_s.used, data->path_build_includes.string, sizeof(f_char_t) * data->path_build_includes.used);
+    main->setting.state.status = f_string_dynamic_append_nulless(data->path_build_includes, &main->cache_argument);
+    if (F_status_is_error(main->setting.state.status)) return;
 
-      const f_string_static_t values[] = {
-        macro_f_string_static_t_initialize(build_libraries, 0, build_libraries_length),
-        macro_f_string_static_t_initialize(build_includes, 0, build_includes_length),
-      };
-
-      for (uint8_t i = 0; i < 2; ++i) {
-
-        if (!values[i].used) continue;
-
-        main->setting.state.status = fll_execute_arguments_add(values[i], &main->cache_arguments);
-        if (F_status_is_error(main->setting.state.status)) return;
-      } // for
+    if (main->cache_argument.used) {
+      main->setting.state.status = fll_execute_arguments_add(main->cache_argument, &main->cache_arguments);
+      if (F_status_is_error(main->setting.state.status)) return;
     }
 
     if (main->setting.work.used) {
-      f_string_static_t buffer = f_string_static_t_initialize;
+      fake_string_dynamic_reset(&main->cache_argument);
 
-      {
-        buffer.used = fake_build_parameter_library_include_s.used + data->path_work_includes.used;
+      main->setting.state.status = f_string_dynamic_append_nulless(fake_build_parameter_library_include_s, &main->cache_argument);
+      if (F_status_is_error(main->setting.state.status)) return;
 
-        f_char_t buffer_string[buffer.used + 1];
-        buffer.string = buffer_string;
-        buffer_string[buffer.used] = 0;
+      main->setting.state.status = f_string_dynamic_append_nulless(data->path_work_includes, &main->cache_argument);
+      if (F_status_is_error(main->setting.state.status)) return;
 
-        memcpy(buffer_string, fake_build_parameter_library_include_s.string, sizeof(f_char_t) * fake_build_parameter_library_include_s.used);
-        memcpy(buffer_string + fake_build_parameter_library_include_s.used, data->path_work_includes.string, sizeof(f_char_t) * data->path_work_includes.used);
-
-        main->setting.state.status = fll_execute_arguments_add(buffer, &main->cache_arguments);
-        if (F_status_is_error(main->setting.state.status)) return;
-      }
+      main->setting.state.status = fll_execute_arguments_add(main->cache_argument, &main->cache_arguments);
+      if (F_status_is_error(main->setting.state.status)) return;
 
       if (data_build->setting.search_shared && (is_shared || !data_build->setting.search_exclusive)) {
-        buffer.used = fake_build_parameter_library_link_path_s.used + data->path_work_libraries_shared.used;
+        fake_string_dynamic_reset(&main->cache_argument);
 
-        f_char_t buffer_string[buffer.used + 1];
-        buffer.string = buffer_string;
-        buffer_string[buffer.used] = 0;
+        main->setting.state.status = f_string_dynamic_append_nulless(fake_build_parameter_library_link_path_s, &main->cache_argument);
+        if (F_status_is_error(main->setting.state.status)) return;
 
-        memcpy(buffer_string, fake_build_parameter_library_link_path_s.string, sizeof(f_char_t) * fake_build_parameter_library_link_path_s.used);
-        memcpy(buffer_string + fake_build_parameter_library_link_path_s.used, data->path_work_libraries_shared.string, sizeof(f_char_t) * data->path_work_libraries_shared.used);
+        main->setting.state.status = f_string_dynamic_append_nulless(data->path_work_libraries_shared, &main->cache_argument);
+        if (F_status_is_error(main->setting.state.status)) return;
 
-        main->setting.state.status = fll_execute_arguments_add(buffer, &main->cache_arguments);
+        main->setting.state.status = fll_execute_arguments_add(main->cache_argument, &main->cache_arguments);
         if (F_status_is_error(main->setting.state.status)) return;
       }
 
       if (data_build->setting.search_static && (!is_shared || !data_build->setting.search_exclusive)) {
-        buffer.used = fake_build_parameter_library_link_path_s.used + data->path_work_libraries_static.used;
+        fake_string_dynamic_reset(&main->cache_argument);
 
-        f_char_t buffer_string[buffer.used + 1];
-        buffer.string = buffer_string;
-        buffer_string[buffer.used] = 0;
+        main->setting.state.status = f_string_dynamic_append_nulless(fake_build_parameter_library_link_path_s, &main->cache_argument);
+        if (F_status_is_error(main->setting.state.status)) return;
 
-        memcpy(buffer_string, fake_build_parameter_library_link_path_s.string, sizeof(f_char_t) * fake_build_parameter_library_link_path_s.used);
-        memcpy(buffer_string + fake_build_parameter_library_link_path_s.used, data->path_work_libraries_static.string, sizeof(f_char_t) * data->path_work_libraries_static.used);
+        main->setting.state.status = f_string_dynamic_append_nulless(data->path_work_libraries_static, &main->cache_argument);
+        if (F_status_is_error(main->setting.state.status)) return;
 
-        main->setting.state.status = fll_execute_arguments_add(buffer, &main->cache_arguments);
+        main->setting.state.status = fll_execute_arguments_add(main->cache_argument, &main->cache_arguments);
         if (F_status_is_error(main->setting.state.status)) return;
       }
     }
@@ -171,29 +153,17 @@ extern "C" {
     f_status_t failed = F_none;
     fake_local_t local = macro_fake_local_t_initialize_1(main, &main->cache_map, &failed);
 
-    f_directory_recurse_do_t recurse = f_directory_recurse_do_t_initialize;
-    recurse.action = &fake_do_copy_action;
-    recurse.handle = &fake_do_copy_handle;
-    recurse.state.custom = (void *) &local;
-    recurse.state.code = fake_state_code_local_e;
-    recurse.flag = f_directory_recurse_do_flag_top_e | f_directory_recurse_do_flag_before_e | f_directory_recurse_do_flag_after_e;
-    recurse.mode = mode;
+    main->cache_recurse_do.action = &fake_do_copy_action;
+    main->cache_recurse_do.handle = &fake_do_copy_handle;
+    main->cache_recurse_do.state.custom = (void *) &local;
+    main->cache_recurse_do.state.code = fake_state_code_local_e;
+    main->cache_recurse_do.flag = f_directory_recurse_do_flag_top_e | f_directory_recurse_do_flag_before_e | f_directory_recurse_do_flag_after_e;
+    main->cache_recurse_do.mode = mode;
+
+    fake_string_dynamic_reset(&main->cache_recurse_do.path);
+    fake_string_dynamic_reset(&main->cache_recurse_do.path_cache);
 
     fake_build_print_message_copying(&main->program.message, label);
-
-    main->setting.state.status = f_file_exists(source, F_false);
-
-    if (F_status_is_error(main->setting.state.status)) {
-      fake_print_error(&main->program.error, macro_fake_f(f_file_exists));
-
-      return;
-    }
-
-    if (main->setting.state.status != F_true) {
-      fake_build_touch(data, file_stage);
-
-      return;
-    }
 
     fake_string_dynamic_reset(&main->cache_2);
     fake_string_dynamic_reset(&main->cache_map.name);
@@ -209,8 +179,6 @@ extern "C" {
 
       return;
     }
-
-    // @todo Consider binding the (non-existent) cache_3 for the recurse.path for more memory saving.
 
     for (f_array_length_t i = 0; i < files.used; ++i) {
 
@@ -246,7 +214,7 @@ extern "C" {
 
         main->cache_map.name.string[main->cache_map.name.used] = 0;
 
-        fl_directory_do(main->cache_2, &recurse);
+        fl_directory_do(main->cache_2, &main->cache_recurse_do);
         if (F_status_set_fine(main->setting.state.status) == F_interrupt) break;
 
         // Always provide a finall error message to the copy message.
@@ -337,7 +305,7 @@ extern "C" {
           if (F_status_is_error(main->setting.state.status)) {
             fake_print_error(&main->program.error, macro_fake_f(f_string_dynamic_append_nulless));
 
-            return;
+            break;
           }
         }
       }
@@ -349,8 +317,6 @@ extern "C" {
 
       main->setting.state.status = F_none;
     } // for
-
-    f_directory_recurse_do_delete(&recurse);
 
     fake_build_touch(data, file_stage);
   }
@@ -603,14 +569,13 @@ extern "C" {
 
         if (!sources[i]->array[j].used) continue;
 
-        source.used = path->used + sources[i]->array[j].used;
+        fake_string_dynamic_reset(&main->cache_argument);
 
-        f_char_t source_string[source.used + 1];
-        source.string = source_string;
-        source_string[source.used] = 0;
+        main->setting.state.status = f_string_dynamic_append_nulless(*path, &main->cache_argument);
+        if (F_status_is_error(main->setting.state.status)) return;
 
-        memcpy(source_string, path->string, sizeof(f_char_t) * path->used);
-        memcpy(source_string + path->used, sources[i]->array[j].string, sizeof(f_char_t) * sources[i]->array[j].used);
+        main->setting.state.status = f_string_dynamic_append_nulless(sources[i]->array[j], &main->cache_argument);
+        if (F_status_is_error(main->setting.state.status)) return;
 
         main->setting.state.status = fll_execute_arguments_add(source, &main->cache_arguments);
         if (F_status_is_error(main->setting.state.status)) return;
@@ -774,10 +739,10 @@ extern "C" {
       else if (data_build->setting.build_language == fake_build_language_bash_e) {
         main->setting.state.status = f_string_dynamic_append_nulless(fake_build_language_bash_s, source);
       }
-    }
 
-    if (F_status_is_error_not(main->setting.state.status)) {
-      main->setting.state.status = f_string_dynamic_append_assure(f_path_separator_s, source);
+      if (F_status_is_error_not(main->setting.state.status)) {
+        main->setting.state.status = f_string_dynamic_append_assure(f_path_separator_s, source);
+      }
     }
 
     if (F_status_is_error(main->setting.state.status)) {
@@ -806,6 +771,8 @@ extern "C" {
       for (j = 0; j < sources[i]->used; ++j) {
 
         if (!sources[i]->array[j].used) continue;
+
+        fake_string_dynamic_reset(&main->cache_argument);
 
         fake_build_path_source_string(data, data_build, &data_build->setting.path_sources, &main->cache_argument);
         if (F_status_is_error(main->setting.state.status)) return;
@@ -840,6 +807,8 @@ extern "C" {
 
     fake_main_t * const main = data->main;
 
+    fake_string_dynamic_reset(&main->cache_argument);
+
     fake_build_path_source_string(data, data_build, &data_build->setting.path_sources_object, &main->cache_argument);
     if (F_status_is_error(main->setting.state.status)) return;
 
@@ -852,7 +821,12 @@ extern "C" {
     }
 
     main->setting.state.status = fll_execute_arguments_add(main->cache_argument, &main->cache_arguments);
-    if (F_status_is_error(main->setting.state.status)) return;
+
+    if (F_status_is_error(main->setting.state.status)) {
+      fake_print_error(&main->program.error, macro_fake_f(f_string_dynamic_append_nulless));
+
+      return;
+    }
 
     main->setting.state.status = F_none;
   }

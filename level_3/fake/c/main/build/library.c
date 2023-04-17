@@ -103,9 +103,9 @@ extern "C" {
       &parameter_file_name_nano,
     };
 
-    {
-      uint8_t i = 0;
+    uint8_t i = 0;
 
+    {
       for (; i < strings_length; ++i) {
 
         memcpy(strings[i]->string, fake_build_parameter_library_name_prefix_s.string, sizeof(f_char_t) * fake_build_parameter_library_name_prefix_s.used);
@@ -207,92 +207,75 @@ extern "C" {
     }
 
     {
-      f_string_static_t parameter_file_path = f_string_static_t_initialize;
-      f_string_static_t parameter_linker = f_string_static_t_initialize;
+      main->setting.state.status = fll_execute_arguments_add(fake_build_parameter_library_shared_s, &main->cache_arguments);
 
-      parameter_file_path.used = data->path_build_libraries_shared.used;
-      parameter_linker.used = fake_build_parameter_library_shared_prefix_s.used;
+      if (F_status_is_error(main->setting.state.status)) {
+        fake_print_error(&main->program.error, macro_fake_f(fll_execute_arguments_add));
 
-      if (data_build->setting.version_file == fake_build_version_major_e) {
-        parameter_file_path.used += parameter_file_name_major.used;
-      }
-      else if (data_build->setting.version_file == fake_build_version_minor_e) {
-        parameter_file_path.used += parameter_file_name_minor.used;
-      }
-      else if (data_build->setting.version_file == fake_build_version_micro_e) {
-        parameter_file_path.used += parameter_file_name_micro.used;
-      }
-      else if (data_build->setting.version_file == fake_build_version_nano_e) {
-        parameter_file_path.used += parameter_file_name_nano.used;
+        return 0;
       }
 
-      if (data_build->setting.version_target == fake_build_version_major_e) {
-        parameter_linker.used += parameter_file_name_major.used;
-      }
-      else if (data_build->setting.version_target == fake_build_version_minor_e) {
-        parameter_linker.used += parameter_file_name_minor.used;
-      }
-      else if (data_build->setting.version_target == fake_build_version_micro_e) {
-        parameter_linker.used += parameter_file_name_micro.used;
-      }
-      else if (data_build->setting.version_target == fake_build_version_nano_e) {
-        parameter_linker.used += parameter_file_name_nano.used;
+      fake_string_dynamic_reset(&main->cache_argument);
+
+      main->setting.state.status = f_string_dynamic_append_nulless(fake_build_parameter_library_shared_prefix_s, &main->cache_argument);
+
+      if (F_status_is_error_not(main->setting.state.status)) {
+        if (data_build->setting.version_target == fake_build_version_major_e) {
+          main->setting.state.status = f_string_dynamic_append_nulless(parameter_file_name_major, &main->cache_argument);
+        }
+        else if (data_build->setting.version_target == fake_build_version_minor_e) {
+          main->setting.state.status = f_string_dynamic_append_nulless(parameter_file_name_minor, &main->cache_argument);
+        }
+        else if (data_build->setting.version_target == fake_build_version_micro_e) {
+          main->setting.state.status = f_string_dynamic_append_nulless(parameter_file_name_micro, &main->cache_argument);
+        }
+        else if (data_build->setting.version_target == fake_build_version_nano_e) {
+          main->setting.state.status = f_string_dynamic_append_nulless(parameter_file_name_nano, &main->cache_argument);
+        }
       }
 
-      f_char_t parameter_file_path_string[parameter_file_path.used + 1];
-      f_char_t parameter_linker_string[parameter_linker.used + 1];
+      if (F_status_is_error(main->setting.state.status)) {
+        fake_print_error(&main->program.error, macro_fake_f(f_string_dynamic_append_nulless));
 
-      parameter_file_path.string = parameter_file_path_string;
-      parameter_linker.string = parameter_linker_string;
-
-      parameter_file_path_string[parameter_file_path.used] = 0;
-      parameter_linker_string[parameter_linker.used] = 0;
-
-      memcpy(parameter_file_path_string, data->path_build_libraries_shared.string, sizeof(f_char_t) * data->path_build_libraries_shared.used);
-      memcpy(parameter_linker_string, fake_build_parameter_library_shared_prefix_s.string, sizeof(f_char_t) * fake_build_parameter_library_shared_prefix_s.used);
-
-      if (data_build->setting.version_file == fake_build_version_major_e) {
-        memcpy(parameter_file_path_string + data->path_build_libraries_shared.used, parameter_file_name_major_string, sizeof(f_char_t) * parameter_file_name_major.used);
-      }
-      else if (data_build->setting.version_file == fake_build_version_minor_e) {
-        memcpy(parameter_file_path_string + data->path_build_libraries_shared.used, parameter_file_name_minor_string, sizeof(f_char_t) * parameter_file_name_minor.used);
-      }
-      else if (data_build->setting.version_file == fake_build_version_micro_e) {
-        memcpy(parameter_file_path_string + data->path_build_libraries_shared.used, parameter_file_name_micro_string, sizeof(f_char_t) * parameter_file_name_micro.used);
-      }
-      else if (data_build->setting.version_file == fake_build_version_nano_e) {
-        memcpy(parameter_file_path_string + data->path_build_libraries_shared.used, parameter_file_name_nano_string, sizeof(f_char_t) * parameter_file_name_nano.used);
+        return 0;
       }
 
-      if (data_build->setting.version_target == fake_build_version_major_e) {
-        memcpy(parameter_linker_string + fake_build_parameter_library_shared_prefix_s.used, parameter_file_name_major_string, sizeof(f_char_t) * parameter_file_name_major.used);
-      }
-      else if (data_build->setting.version_target == fake_build_version_minor_e) {
-        memcpy(parameter_linker_string + fake_build_parameter_library_shared_prefix_s.used, parameter_file_name_minor_string, sizeof(f_char_t) * parameter_file_name_minor.used);
-      }
-      else if (data_build->setting.version_target == fake_build_version_micro_e) {
-        memcpy(parameter_linker_string + fake_build_parameter_library_shared_prefix_s.used, parameter_file_name_micro_string, sizeof(f_char_t) * parameter_file_name_micro.used);
-      }
-      else if (data_build->setting.version_target == fake_build_version_nano_e) {
-        memcpy(parameter_linker_string + fake_build_parameter_library_shared_prefix_s.used, parameter_file_name_nano_string, sizeof(f_char_t) * parameter_file_name_nano.used);
+      main->setting.state.status = fll_execute_arguments_add(main->cache_argument, &main->cache_arguments);
+
+      if (F_status_is_error_not(main->setting.state.status)) {
+        main->setting.state.status = fll_execute_arguments_add(fake_build_parameter_library_output_s, &main->cache_arguments);
       }
 
-      const f_string_static_t values[] = {
-        fake_build_parameter_library_shared_s,
-        parameter_linker,
-        fake_build_parameter_library_output_s,
-        parameter_file_path,
-      };
+      if (F_status_is_error(main->setting.state.status)) {
+        fake_print_error(&main->program.error, macro_fake_f(fll_execute_arguments_add));
 
-      for (uint8_t i = 0; i < 4; ++i) {
+        return 0;
+      }
 
-        if (!values[i].used) continue;
+      fake_string_dynamic_reset(&main->cache_argument);
 
-        main->setting.state.status = fll_execute_arguments_add(values[i], &main->cache_arguments);
-        if (F_status_is_error(main->setting.state.status)) break;
-      } // for
+      main->setting.state.status = f_string_dynamic_append_nulless(data->path_build_libraries_shared, &main->cache_argument);
 
-      fake_build_arguments_standard_add(data, data_build, F_true, fake_build_type_library_e);
+      if (F_status_is_error_not(main->setting.state.status)) {
+        if (data_build->setting.version_file == fake_build_version_major_e) {
+          main->setting.state.status = f_string_dynamic_append_nulless(parameter_file_name_major, &main->cache_argument);
+        }
+        else if (data_build->setting.version_file == fake_build_version_minor_e) {
+          main->setting.state.status = f_string_dynamic_append_nulless(parameter_file_name_minor, &main->cache_argument);
+        }
+        else if (data_build->setting.version_file == fake_build_version_micro_e) {
+          main->setting.state.status = f_string_dynamic_append_nulless(parameter_file_name_micro, &main->cache_argument);
+        }
+        else if (data_build->setting.version_file == fake_build_version_nano_e) {
+          main->setting.state.status = f_string_dynamic_append_nulless(parameter_file_name_nano, &main->cache_argument);
+        }
+      }
+
+      main->setting.state.status = fll_execute_arguments_add(main->cache_argument, &main->cache_arguments);
+
+      if (F_status_is_error_not(main->setting.state.status)) {
+        fake_build_arguments_standard_add(data, data_build, F_true, fake_build_type_library_e);
+      }
 
       if (F_status_is_error(main->setting.state.status)) {
         fake_print_error(&main->program.error, macro_fake_f(fll_execute_arguments_add));
@@ -308,117 +291,62 @@ extern "C" {
       if (main->setting.state.status == F_child) return result;
     }
 
-    if (parameter_file_name_major.used) {
-      f_string_static_t parameter_file_path = f_string_static_t_initialize;
-      parameter_file_path.used = data->path_build_libraries_shared.used + parameter_file_name.used;
+    {
+      bool dont_links[] = {
+        !parameter_file_name_major.used,
+        data_build->setting.version_file == fake_build_version_major_e || !parameter_file_name_major.used,
+        data_build->setting.version_file == fake_build_version_minor_e || !parameter_file_name_minor.used,
+        data_build->setting.version_file == fake_build_version_micro_e || !parameter_file_name_micro.used,
+      };
 
-      f_char_t parameter_file_path_string[parameter_file_path.used + 1];
-      parameter_file_path.string = parameter_file_path_string;
-      parameter_file_path_string[parameter_file_path.used] = 0;
+      const f_string_static_t points[] = {
+        parameter_file_name,
+        parameter_file_name_major,
+        parameter_file_name_minor,
+        parameter_file_name_micro,
+      };
 
-      memcpy(parameter_file_path_string, data->path_build_libraries_shared.string, sizeof(f_char_t) * data->path_build_libraries_shared.used);
-      memcpy(parameter_file_path_string + data->path_build_libraries_shared.used, parameter_file_name.string, sizeof(f_char_t) * parameter_file_name.used);
+      const f_string_static_t targets[] = {
+        parameter_file_name_major,
+        parameter_file_name_minor,
+        parameter_file_name_micro,
+        parameter_file_name_nano,
+      };
 
-      main->setting.state.status = f_file_link(parameter_file_name_major, parameter_file_path);
+      for (i = 0; i < 4; ++i) {
 
-      if (F_status_is_error_not(main->setting.state.status)) {
-        fake_build_print_verbose_linked_file(&main->program.message, parameter_file_path, parameter_file_name_major);
-      }
-      else {
-        if (F_status_set_fine(main->setting.state.status) == F_file_found) {
-          fake_print_error_file(&main->program.error, macro_fake_f(f_file_link), parameter_file_path, f_file_operation_link_s, fll_error_file_type_file_e);
+        if (dont_links[i]) break;
 
-          return 0;
-        }
+        fake_string_dynamic_reset(&main->cache_argument);
 
-        fake_print_error_file(&main->program.error, macro_fake_f(f_file_link), parameter_file_name_major, f_file_operation_link_s, fll_error_file_type_file_e);
-
-        return 0;
-      }
-    }
-
-    if (data_build->setting.version_file != fake_build_version_major_e && parameter_file_name_major.used) {
-      f_string_static_t parameter_file_path = f_string_static_t_initialize;
-
-      {
-        parameter_file_path.used = data->path_build_libraries_shared.used + parameter_file_name_major.used;
-
-        f_char_t parameter_file_path_string[parameter_file_path.used + 1];
-        parameter_file_path.string = parameter_file_path_string;
-        parameter_file_path_string[parameter_file_path.used] = 0;
-
-        memcpy(parameter_file_path_string, data->path_build_libraries_shared.string, sizeof(f_char_t) * data->path_build_libraries_shared.used);
-        memcpy(parameter_file_path_string + data->path_build_libraries_shared.used, parameter_file_name_major.string, sizeof(f_char_t) * parameter_file_name_major.used);
-
-        main->setting.state.status = f_file_link(parameter_file_name_minor, parameter_file_path);
+        main->setting.state.status = f_string_dynamic_append_nulless(data->path_build_libraries_shared, &main->cache_argument);
 
         if (F_status_is_error_not(main->setting.state.status)) {
-          fake_build_print_verbose_linked_file(&main->program.message, parameter_file_path, parameter_file_name_minor);
+          main->setting.state.status = f_string_dynamic_append_nulless(points[i], &main->cache_argument);
         }
-        else {
-          fake_print_error_file(&main->program.error, macro_fake_f(f_file_link), F_status_set_fine(main->setting.state.status) == F_file_found ? parameter_file_path : parameter_file_name_minor, f_file_operation_link_s, fll_error_file_type_file_e);
+
+        if (F_status_is_error(main->setting.state.status)) {
+          fake_print_error(&main->program.error, macro_fake_f(f_string_dynamic_append_nulless));
 
           return 0;
         }
-      }
 
-      if (data_build->setting.version_file != fake_build_version_minor_e && parameter_file_name_minor.used) {
-        {
-          parameter_file_path.used = data->path_build_libraries_shared.used + parameter_file_name_minor.used;
+        main->setting.state.status = f_file_link(targets[i], main->cache_argument);
 
-          f_char_t parameter_file_path_string[parameter_file_path.used + 1];
-          parameter_file_path.string = parameter_file_path_string;
-          parameter_file_path_string[parameter_file_path.used] = 0;
-
-          memcpy(parameter_file_path_string, data->path_build_libraries_shared.string, sizeof(f_char_t) * data->path_build_libraries_shared.used);
-          memcpy(parameter_file_path_string + data->path_build_libraries_shared.used, parameter_file_name_minor.string, sizeof(f_char_t) * parameter_file_name_minor.used);
-
-          main->setting.state.status = f_file_link(parameter_file_name_micro, parameter_file_path);
-
-          if (F_status_is_error_not(main->setting.state.status)) {
-            fake_build_print_verbose_linked_file(&main->program.message, parameter_file_path, parameter_file_name_micro);
+        if (F_status_is_error_not(main->setting.state.status)) {
+          fake_build_print_verbose_linked_file(&main->program.message, main->cache_argument, targets[i]);
+        }
+        else {
+          if (F_status_set_fine(main->setting.state.status) == F_file_found) {
+            fake_print_error_file(&main->program.error, macro_fake_f(f_file_link), main->cache_argument, f_file_operation_link_s, fll_error_file_type_file_e);
           }
           else {
-            if (F_status_set_fine(main->setting.state.status) == F_file_found) {
-              fake_print_error_file(&main->program.error, macro_fake_f(f_file_link), parameter_file_path, f_file_operation_link_s, fll_error_file_type_file_e);
-
-              return 0;
-            }
-
-            fake_print_error_file(&main->program.error, macro_fake_f(f_file_link), parameter_file_name_micro, f_file_operation_link_s, fll_error_file_type_file_e);
-
-            return 0;
+            fake_print_error_file(&main->program.error, macro_fake_f(f_file_link), targets[i], f_file_operation_link_s, fll_error_file_type_file_e);
           }
+
+          return 0;
         }
-
-        if (data_build->setting.version_file != fake_build_version_micro_e && parameter_file_name_micro.used) {
-          parameter_file_path.used = data->path_build_libraries_shared.used + parameter_file_name_micro.used;
-
-          f_char_t parameter_file_path_string[parameter_file_path.used + 1];
-          parameter_file_path.string = parameter_file_path_string;
-          parameter_file_path_string[parameter_file_path.used] = 0;
-
-          memcpy(parameter_file_path_string, data->path_build_libraries_shared.string, sizeof(f_char_t) * data->path_build_libraries_shared.used);
-          memcpy(parameter_file_path_string + data->path_build_libraries_shared.used, parameter_file_name_micro.string, sizeof(f_char_t) * parameter_file_name_micro.used);
-
-          main->setting.state.status = f_file_link(parameter_file_name_nano, parameter_file_path);
-
-          if (F_status_is_error_not(main->setting.state.status)) {
-            fake_build_print_verbose_linked_file(&main->program.message, parameter_file_path, parameter_file_name_nano);
-          }
-          else {
-            if (F_status_set_fine(main->setting.state.status) == F_file_found) {
-              fake_print_error_file(&main->program.error, macro_fake_f(f_file_link), parameter_file_path, f_file_operation_link_s, fll_error_file_type_file_e);
-
-              return 0;
-            }
-
-            fake_print_error_file(&main->program.error, macro_fake_f(f_file_link), parameter_file_name_nano, f_file_operation_link_s, fll_error_file_type_file_e);
-
-            return 0;
-          }
-        }
-      }
+      } // for
     }
 
     fake_build_touch(data, file_stage);
@@ -450,7 +378,12 @@ extern "C" {
       if (!data_build->setting.build_indexer_arguments.array[i].used) continue;
 
       main->setting.state.status = fll_execute_arguments_add(data_build->setting.build_indexer_arguments.array[i], &main->cache_arguments);
-      if (F_status_is_error(main->setting.state.status)) break;
+
+      if (F_status_is_error(main->setting.state.status)) {
+        fake_print_error(&main->program.error, macro_fake_f(fll_execute_arguments_add));
+
+        return 0;
+      }
     } // for
 
     if (F_status_is_error_not(main->setting.state.status)) {
@@ -473,6 +406,12 @@ extern "C" {
       }
       else {
         main->setting.state.status = fll_execute_arguments_add(main->cache_2, &main->cache_arguments);
+
+        if (F_status_is_error(main->setting.state.status)) {
+          fake_print_error(&main->program.error, macro_fake_f(fll_execute_arguments_add));
+
+          return 0;
+        }
       }
     }
 

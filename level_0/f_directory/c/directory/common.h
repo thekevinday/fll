@@ -103,30 +103,6 @@ extern "C" {
 #endif // _di_f_directory_max_d_
 
 /**
- * Directory recurse copy flags.
- *
- * f_directory_recurse_copy_flag_*_e:
- *   - none:        No flags are set.
- *   - clone:       Operate as clone instead of as copy, if applicable.
- *   - dereference: Dereference symbolic links rather than operating on the link itself.
- *   - exclusive:   File flag requiring that a file does not already exist.
- *   - group:       File flag representing copying the group.
- *   - owner:       File flag representing copying the owner.
- *   - top:         Operate on top directory and not just inside the directory.
- */
-#ifndef _di_f_directory_recurse_copy_flag_e_
-  enum {
-    f_directory_recurse_copy_flag_none_e        = 0,
-    f_directory_recurse_copy_flag_clone_e       = 0x1,
-    f_directory_recurse_copy_flag_dereference_e = 0x2,
-    f_directory_recurse_copy_flag_exclusive_e   = 0x4,
-    f_directory_recurse_copy_flag_group_e       = 0x8,
-    f_directory_recurse_copy_flag_owner_e       = 0x10,
-    f_directory_recurse_copy_flag_top_e         = 0x20,
-  }; // enum
-#endif // _di_f_directory_recurse_copy_flag_e_
-
-/**
  * Directory recurse do flags.
  *
  * f_directory_recurse_do_flag_*_e:

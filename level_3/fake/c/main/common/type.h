@@ -125,14 +125,15 @@ extern "C" {
  * program: The main program data.
  * setting: The settings data.
  *
- * buffer:          A string buffer cache often used for files and often held longe than other caches.
- * cache_1:         A string cache.
- * cache_2:         A string cache.
- * cache_argument:  A string cache for some argument.
- * cache_argument:  A string cache for some path.
- * cache_arguments: An array of strings cache for arguments.
- * cache_map:       A string map cache.
- * cach_iki:        IKI data cache.
+ * buffer:           A string buffer cache often used for files and often held longe than other caches.
+ * cache_1:          A string cache.
+ * cache_2:          A string cache.
+ * cache_argument:   A string cache for some argument.
+ * cache_argument:   A string cache for some path.
+ * cache_arguments:  An array of strings cache for arguments.
+ * cache_map:        A string map cache.
+ * cache_iki:        IKI data cache.
+ * cache_recurse_do: A cache for the directory recursion do function.
  */
 #ifndef _di_fake_main_t_
   typedef struct {
@@ -146,6 +147,7 @@ extern "C" {
     f_string_dynamics_t cache_arguments;
     f_string_map_t cache_map;
     f_iki_data_t cache_iki;
+    f_directory_recurse_do_t cache_recurse_do;
   } fake_main_t;
 
   #define fake_main_t_initialize \
@@ -159,6 +161,7 @@ extern "C" {
       f_string_dynamics_t_initialize, \
       f_string_map_t_initialize, \
       f_iki_data_t_initialize, \
+      f_directory_recurse_do_t_initialize, \
     }
 #endif // _di_fake_main_t_
 

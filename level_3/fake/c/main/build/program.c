@@ -144,55 +144,76 @@ extern "C" {
     }
 
     if (F_status_is_error_not(main->setting.state.status)) {
-      f_string_static_t source_library = f_string_static_t_initialize;
-      source_library.used = data->path_build_libraries_static.used + fake_build_parameter_library_name_prefix_s.used + data_build->setting.build_name.used + fake_build_parameter_library_name_suffix_static_s.used;
-
-      f_char_t source_library_string[source_library.used + 1];
-      source_library.string = source_library_string;
-      source_library_string[source_library.used] = 0;
-      source_library.used = 0;
 
       // Only include the library if there are sources that would result in it being built.
       if (data_build->setting.build_sources_library.used) {
-        memcpy(source_library_string, data->path_build_libraries_static.string, sizeof(f_char_t) * data->path_build_libraries_static.used);
-        source_library.used += data->path_build_libraries_static.used;
+        fake_string_dynamic_reset(&main->cache_argument);
 
-        memcpy(source_library_string + source_library.used, fake_build_parameter_library_name_prefix_s.string, sizeof(f_char_t) * fake_build_parameter_library_name_prefix_s.used);
-        source_library.used += fake_build_parameter_library_name_prefix_s.used;
+        main->setting.state.status = f_string_dynamic_append_nulless(fake_build_parameter_library_name_prefix_s, &main->cache_argument);
 
-        memcpy(source_library_string + source_library.used, data_build->setting.build_name.string, sizeof(f_char_t) * data_build->setting.build_name.used);
-        source_library.used += data_build->setting.build_name.used;
+        if (F_status_is_error_not(main->setting.state.status)) {
+          main->setting.state.status = f_string_dynamic_append_nulless(fake_build_parameter_library_name_prefix_s, &main->cache_argument);
+        }
 
-        memcpy(source_library_string + source_library.used, fake_build_parameter_library_name_suffix_static_s.string, sizeof(f_char_t) * fake_build_parameter_library_name_suffix_static_s.used);
-        source_library.used += fake_build_parameter_library_name_suffix_static_s.used;
+        if (F_status_is_error_not(main->setting.state.status)) {
+          main->setting.state.status = f_string_dynamic_append_nulless(data_build->setting.build_name, &main->cache_argument);
+        }
+
+        if (F_status_is_error_not(main->setting.state.status)) {
+          main->setting.state.status = f_string_dynamic_append_nulless(fake_build_parameter_library_name_suffix_static_s, &main->cache_argument);
+        }
+
+        if (F_status_is_error(main->setting.state.status)) {
+          fake_print_error(&main->program.error, macro_fake_f(f_string_dynamic_append_nulless));
+
+          return 0;
+        }
+
+        main->setting.state.status = fll_execute_arguments_add(main->cache_argument, &main->cache_arguments);
+
+        if (F_status_is_error(main->setting.state.status)) {
+          fake_print_error(&main->program.error, macro_fake_f(fll_execute_arguments_add));
+
+          return 0;
+        }
       }
 
-      f_string_static_t parameter_file_name_path = f_string_static_t_initialize;
-      parameter_file_name_path.used = data->path_build_programs_static.used + data_build->setting.build_name.used;
+      main->setting.state.status = fll_execute_arguments_add(fake_build_parameter_library_static_s, &main->cache_arguments);
 
-      f_char_t parameter_file_name_path_string[parameter_file_name_path.used + 1];
-      parameter_file_name_path.string = parameter_file_name_path_string;
-      parameter_file_name_path_string[parameter_file_name_path.used] = 0;
+      if (F_status_is_error_not(main->setting.state.status)) {
+        main->setting.state.status = fll_execute_arguments_add(fake_build_parameter_library_output_s, &main->cache_arguments);
+      }
 
-      memcpy(parameter_file_name_path_string, data->path_build_programs_static.string, sizeof(f_char_t) * data->path_build_programs_static.used);
-      memcpy(parameter_file_name_path_string + data->path_build_programs_static.used, data_build->setting.build_name.string, sizeof(f_char_t) * data_build->setting.build_name.used);
+      if (F_status_is_error(main->setting.state.status)) {
+        fake_print_error(&main->program.error, macro_fake_f(fll_execute_arguments_add));
 
-      const f_string_static_t values[] = {
-        source_library,
-        fake_build_parameter_library_static_s,
-        fake_build_parameter_library_output_s,
-        parameter_file_name_path,
-      };
+        return 0;
+      }
 
-      for (uint8_t i = 0; i < 4; ++i) {
+      fake_string_dynamic_reset(&main->cache_argument);
 
-        if (!values[i].used) continue;
+      main->setting.state.status = f_string_dynamic_append_nulless(data->path_build_programs_static, &main->cache_argument);
 
-        main->setting.state.status = fll_execute_arguments_add(values[i], &main->cache_arguments);
-        if (F_status_is_error(main->setting.state.status)) break;
-      } // for
+      if (F_status_is_error_not(main->setting.state.status)) {
+        main->setting.state.status = f_string_dynamic_append_nulless(data_build->setting.build_name, &main->cache_argument);
+      }
+
+      if (F_status_is_error(main->setting.state.status)) {
+        fake_print_error(&main->program.error, macro_fake_f(f_string_dynamic_append_nulless));
+
+        return 0;
+      }
+
+      main->setting.state.status = fll_execute_arguments_add(main->cache_argument, &main->cache_arguments);
+
+      if (F_status_is_error(main->setting.state.status)) {
+        fake_print_error(&main->program.error, macro_fake_f(fll_execute_arguments_add));
+
+        return 0;
+      }
     }
 
+    // The cache_argument should be safe at this point to be reset and reused by this function.
     fake_build_arguments_standard_add(data, data_build, F_false, fake_build_type_program_e);
 
     if (F_status_is_error(main->setting.state.status)) {

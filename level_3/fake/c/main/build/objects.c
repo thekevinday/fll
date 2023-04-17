@@ -162,6 +162,7 @@ extern "C" {
           if (F_status_is_error(main->setting.state.status)) break;
         } // for
 
+        // The cache_argument should be safe at this point to be reset and reused by this function.
         fake_build_arguments_standard_add(data, data_build, F_false, fake_build_type_library_e);
 
         if (F_status_is_error(main->setting.state.status)) {

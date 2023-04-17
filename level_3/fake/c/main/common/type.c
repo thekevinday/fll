@@ -197,6 +197,8 @@ extern "C" {
     f_string_dynamic_resize(0, &main->cache_map.value);
 
     f_iki_data_delete(&main->cache_iki);
+
+    f_directory_recurse_do_delete(&main->cache_recurse_do);
   }
 #endif // _di_fake_main_data_delete_
 

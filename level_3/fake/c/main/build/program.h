@@ -55,6 +55,9 @@ extern "C" {
  * @param data
  *   The program data.
  *
+ *   This modifies data.main.cache_argument.
+ *   This modifies data.main.cache_arguments.
+ *
  *   This alters data.main->setting.state.status:
  *     F_none on success.
  *
