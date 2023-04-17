@@ -18,18 +18,20 @@ extern "C" {
  * @see fwrite_unlocked()
  * @see ferror_unlocked()
  */
-static inline f_status_t private_inline_f_print_write_unlocked(const f_string_t string, const f_array_length_t total, const f_file_t file) {
+#if !defined(_di_f_print_character_) && !defined(_di_f_print_character_safely_)
+  static inline f_status_t private_inline_f_print_write_unlocked(const f_string_t string, const f_array_length_t total, const f_file_t file) {
 
-  f_array_length_t count = 0;
+    f_array_length_t count = 0;
 
-  do {
-    count += fwrite_unlocked(string, sizeof(f_char_t), total - count, file.stream);
-    if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
+    do {
+      count += fwrite_unlocked(string, sizeof(f_char_t), total - count, file.stream);
+      if (ferror_unlocked(file.stream)) return F_status_set_error(F_output);
 
-  } while (count < total);
+    } while (count < total);
 
-  return F_none;
-}
+    return F_none;
+  }
+#endif // !defined(_di_f_print_character_) && !defined(_di_f_print_character_safely_)
 
 #ifndef _di_f_print_
   f_status_t f_print(const f_string_t string, const f_array_length_t length, const f_file_t file) {
