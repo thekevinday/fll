@@ -146,7 +146,7 @@ extern "C" {
 
             if (f_compare_dynamic_partial(main->program.parameters.arguments.array[index], data_make.main->buffer, range, data_make.fakefile.array[j].name) == F_equal_to) {
               {
-                int result = fake_make_operate_section(&data_make, j, &section_stack);
+                result = fake_make_operate_section(&data_make, j, &section_stack);
 
                 if (main->setting.state.status == F_child) {
                   main->program.child = result;

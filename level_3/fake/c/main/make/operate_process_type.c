@@ -332,7 +332,7 @@ extern "C" {
     }
 
     if (F_status_is_error(main->setting.state.status)) {
-      fake_print_error_file(&main->program.error, *function, main->cache_arguments.array[1], *operation, fll_error_file_type_path_e);
+      fake_print_error_file(&main->program.error, *function, main->cache_arguments.array[1], *operation, type);
 
       main->setting.state.status = F_status_set_error(F_failure);
     }
@@ -1485,8 +1485,6 @@ extern "C" {
     fake_main_t * const main = data_make->main;
 
     const f_array_length_t total = main->cache_arguments.used - 1;
-
-    f_string_static_t destination = f_string_static_t_initialize;
 
     bool existing = F_true;
 

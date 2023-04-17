@@ -51,7 +51,6 @@ extern "C" {
     }
 
     {
-      f_array_length_t choice = 0;
       f_uint16s_t choices = f_uint16s_t_initialize;
 
       // Identify and prioritize "color context" parameters.
@@ -487,7 +486,6 @@ extern "C" {
       return;
     }
 
-    f_console_parameters_t * const parameters = (f_console_parameters_t * const) void_parameters;
     fake_data_t * const data = (fake_data_t * const) void_data;
 
     if (!data->main) return;

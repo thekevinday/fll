@@ -69,6 +69,8 @@ extern "C" {
     if (print->verbosity < f_console_verbosity_verbose_e) return F_output_not;
 
     fake_print_common_wrapped_variable(print, "File ", path, " already exists");
+
+    return F_none;
   }
 #endif // _di_fake_print_verbose_file_exists_
 
@@ -79,6 +81,8 @@ extern "C" {
     if (print->verbosity < f_console_verbosity_verbose_e) return F_output_not;
 
     fake_print_common_wrapped_variable(print, "File ", path, " already exists (as a symbolic link)");
+
+    return F_none;
   }
 #endif // _di_fake_print_verbose_file_exists_as_link_
 
@@ -89,6 +93,8 @@ extern "C" {
     if (print->verbosity < f_console_verbosity_verbose_e) return F_output_not;
 
     fake_print_common_wrapped_variable(print, "File ", path, " already exists but is not a regular file (or a symbolic link)");
+
+    return F_none;
   }
 #endif // _di_fake_print_verbose_file_exists_not_regular_or_link_
 
@@ -99,6 +105,8 @@ extern "C" {
     if (print->verbosity < f_console_verbosity_verbose_e) return F_output_not;
 
     fake_print_common_simple_variable(print, "Pre-populated file ", path);
+
+    return F_none;
   }
 #endif // _di_fake_print_verbose_file_pre_populated_
 

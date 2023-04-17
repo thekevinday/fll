@@ -458,7 +458,6 @@ extern "C" {
     fake_main_t * const main = (fake_main_t *) print->custom;
 
     f_array_length_t line = 1;
-    f_state_t state = f_state_t_initialize;
     const f_status_t status = main->setting.state.status;
 
     f_fss_count_lines(buffer, operation_name.start, &line, &main->setting.state);
@@ -587,7 +586,6 @@ extern "C" {
     fake_main_t * const main = (fake_main_t *) print->custom;
 
     f_array_length_t line = 1;
-    f_state_t state = f_state_t_initialize;
     const f_status_t status = main->setting.state.status;
 
     f_fss_count_lines(buffer, operation_name.start, &line, &main->setting.state);
@@ -621,7 +619,6 @@ extern "C" {
     fake_main_t * const main = (fake_main_t *) print->custom;
 
     f_array_length_t line = 1;
-    f_state_t state = f_state_t_initialize;
     const f_status_t status = main->setting.state.status;
 
     f_fss_count_lines(buffer, operation_name.start, &line, &main->setting.state);
