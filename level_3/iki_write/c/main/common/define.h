@@ -48,18 +48,6 @@ extern "C" {
   #define iki_write_signal_check_short_d    16
 #endif // _di_iki_write_signal_d_
 
-/**
- * Deallocate main program data.
- *
- * @param setting_make
- *   The make setting data.
- *
- *   This does not alter data_make.main.setting.state.status.
- */
-#ifndef _di_iki_write_main_data_delete_
-  extern void iki_write_main_delete(iki_write_main_t * const main);
-#endif // _di_iki_write_main_data_delete_
-
 #ifdef __cplusplus
 } // extern "C"
 #endif

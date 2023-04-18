@@ -56,6 +56,7 @@ extern "C" {
     fss_write_f_f_string_rangess_increase_e,
     fss_write_f_f_string_rangess_increase_by_e,
     fss_write_f_f_string_read_block_increase_e,
+    fss_write_f_f_thread_create_e,
     fss_write_f_fl_fss_basic_content_write_e,
     fss_write_f_fl_fss_basic_list_content_write_e,
     fss_write_f_fl_fss_basic_list_object_write_e,

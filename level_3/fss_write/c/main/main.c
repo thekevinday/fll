@@ -42,7 +42,7 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
     {
       const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize(argc, argv, envp);
 
-      fss_write_setting_load(arguments, &data);
+      fss_write_setting_load(arguments, &data, 0);
     }
 
     fss_write_main(&data);
@@ -61,7 +61,7 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
         {
           const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize(argc, argv, envp);
 
-          fss_write_setting_load(arguments, &data);
+          fss_write_setting_load(arguments, &data, &fss_write_main_setting_load_as);
         }
 
         if (!fss_write_signal_check(&data)) {
@@ -114,7 +114,8 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
         if (f_compare_dynamic(argv[index], fss_write_format_code_short_0000_s) == F_equal_to ||
             f_compare_dynamic(argv[index], fss_write_format_code_long_0000_s) == F_equal_to ||
-            f_compare_dynamic(argv[index], fss_write_format_code_human_0000_s) == F_equal_to) {
+            f_compare_dynamic(argv[index], fss_write_format_code_human_0000_s) == F_equal_to ||
+            f_compare_dynamic(argv[index], fss_write_format_code_machine_0000_s) == F_equal_to) {
 
           main->setting.standard = fss_write_basic_standard_s;
           main->setting.process_content = &fss_write_basic_process_content;
@@ -128,7 +129,8 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
         }
         else if (f_compare_dynamic(argv[index], fss_write_format_code_short_0001_s) == F_equal_to ||
                  f_compare_dynamic(argv[index], fss_write_format_code_long_0001_s) == F_equal_to ||
-                 f_compare_dynamic(argv[index], fss_write_format_code_human_0001_s) == F_equal_to) {
+                 f_compare_dynamic(argv[index], fss_write_format_code_human_0001_s) == F_equal_to ||
+                 f_compare_dynamic(argv[index], fss_write_format_code_machine_0001_s) == F_equal_to) {
 
           main->setting.standard = fss_write_extended_standard_s;
           main->setting.process_content = &fss_write_extended_process_content;
@@ -142,7 +144,8 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
         }
         else if (f_compare_dynamic(argv[index], fss_write_format_code_short_0002_s) == F_equal_to ||
                  f_compare_dynamic(argv[index], fss_write_format_code_long_0002_s) == F_equal_to ||
-                 f_compare_dynamic(argv[index], fss_write_format_code_human_0002_s) == F_equal_to) {
+                 f_compare_dynamic(argv[index], fss_write_format_code_human_0002_s) == F_equal_to ||
+                 f_compare_dynamic(argv[index], fss_write_format_code_machine_0002_s) == F_equal_to) {
 
           main->setting.standard = fss_write_basic_list_standard_s;
           main->setting.process_content = &fss_write_basic_list_process_content;
@@ -156,7 +159,8 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
         }
         else if (f_compare_dynamic(argv[index], fss_write_format_code_short_0003_s) == F_equal_to ||
                  f_compare_dynamic(argv[index], fss_write_format_code_long_0003_s) == F_equal_to ||
-                 f_compare_dynamic(argv[index], fss_write_format_code_human_0003_s) == F_equal_to) {
+                 f_compare_dynamic(argv[index], fss_write_format_code_human_0003_s) == F_equal_to ||
+                 f_compare_dynamic(argv[index], fss_write_format_code_machine_0003_s) == F_equal_to) {
 
           main->setting.standard = fss_write_extended_list_standard_s;
           main->setting.process_content = &fss_write_extended_list_process_content;
@@ -170,7 +174,8 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
         }
         else if (f_compare_dynamic(argv[index], fss_write_format_code_short_0008_s) == F_equal_to ||
                  f_compare_dynamic(argv[index], fss_write_format_code_long_0008_s) == F_equal_to ||
-                 f_compare_dynamic(argv[index], fss_write_format_code_human_0008_s) == F_equal_to) {
+                 f_compare_dynamic(argv[index], fss_write_format_code_human_0008_s) == F_equal_to ||
+                 f_compare_dynamic(argv[index], fss_write_format_code_machine_0008_s) == F_equal_to) {
 
           main->setting.standard = fss_write_embedded_list_standard_s;
           main->setting.process_content = &fss_write_embedded_list_process_content;
@@ -184,7 +189,8 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
         }
         else if (f_compare_dynamic(argv[index], fss_write_format_code_short_000e_s) == F_equal_to ||
                  f_compare_dynamic(argv[index], fss_write_format_code_long_000e_s) == F_equal_to ||
-                 f_compare_dynamic(argv[index], fss_write_format_code_human_000e_s) == F_equal_to) {
+                 f_compare_dynamic(argv[index], fss_write_format_code_human_000e_s) == F_equal_to ||
+                 f_compare_dynamic(argv[index], fss_write_format_code_machine_000e_s) == F_equal_to) {
 
           main->setting.standard = fss_write_payload_standard_s;
           main->setting.process_content = 0; // Not used by payload.

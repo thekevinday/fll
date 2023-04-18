@@ -73,11 +73,11 @@ extern "C" {
     { \
       iki_read_main_flag_none_e, \
       F_none, \
-      macro_f_state_t_initialize_1(iki_read_allocation_large_d, iki_read_allocation_small_d, F_none, 0, 0, 0, 0, 0, 0), \
+      macro_f_state_t_initialize_1(iki_read_allocation_large_d, iki_read_allocation_small_d, F_none, 0, 0, 0, 0, 0, 0, 0), \
       0, \
       0, \
       f_string_dynamic_t_initialize, \
-      f_string_dynamic_t_initialize, \
+      f_string_dynamics_t_initialize, \
       f_string_dynamics_t_initialize, \
       f_string_maps_t_initialize, \
       f_string_triples_t_initialize, \

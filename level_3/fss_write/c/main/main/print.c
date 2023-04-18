@@ -60,37 +60,40 @@ extern "C" {
     fl_print_format("    - As %[%r%]         format: ", print->to, print->set->notable, fss_write_basic_standard_s, print->set->notable);
     fl_print_format("'%[%r%]', ", print->to, print->set->notable, fss_write_format_code_short_0000_s, print->set->notable);
     fl_print_format("'%[%r%]', or ", print->to, print->set->notable, fss_write_format_code_long_0000_s, print->set->notable);
-    fl_print_format("'%[%r%]'.%r", print->to, print->set->notable, fss_write_format_code_human_0000_s, print->set->notable, f_string_eol_s);
+    fl_print_format("'%[%r%]'.%r", print->to, print->set->notable, fss_write_format_code_machine_0000_s, print->set->notable, f_string_eol_s);
 
     // FSS-0001 (Extended)
     fl_print_format("    - As %[%r%]      format: ", print->to, print->set->notable, fss_write_extended_standard_s, print->set->notable);
     fl_print_format("'%[%r%]', ", print->to, print->set->notable, fss_write_format_code_short_0001_s, print->set->notable);
     fl_print_format("'%[%r%]', or ", print->to, print->set->notable, fss_write_format_code_long_0001_s, print->set->notable);
-    fl_print_format("'%[%r%]'.%r", print->to, print->set->notable, fss_write_format_code_human_0001_s, print->set->notable, f_string_eol_s);
+    fl_print_format("'%[%r%]'.%r", print->to, print->set->notable, fss_write_format_code_machine_0001_s, print->set->notable, f_string_eol_s);
 
     // FSS-0002 (Basic List)
     fl_print_format("    - As %[%r%]    format: ", print->to, print->set->notable, fss_write_basic_list_standard_s, print->set->notable);
     fl_print_format("'%[%r%]', ", print->to, print->set->notable, fss_write_format_code_short_0002_s, print->set->notable);
-    fl_print_format("'%[%r%]', or ", print->to, print->set->notable, fss_write_format_code_long_0002_s, print->set->notable);
-    fl_print_format("'%[%r%]'.%r", print->to, print->set->notable, fss_write_format_code_human_0002_s, print->set->notable, f_string_eol_s);
+    fl_print_format("'%[%r%]', ", print->to, print->set->notable, fss_write_format_code_long_0002_s, print->set->notable);
+    fl_print_format("'%[%r%]', or ", print->to, print->set->notable, fss_write_format_code_human_0002_s, print->set->notable);
+    fl_print_format("'%[%r%]'.%r", print->to, print->set->notable, fss_write_format_code_machine_0002_s, print->set->notable, f_string_eol_s);
 
     // FSS-0003 (Extended List)
     fl_print_format("    - As %[%r%] format: ", print->to, print->set->notable, fss_write_extended_list_standard_s, print->set->notable);
     fl_print_format("'%[%r%]', ", print->to, print->set->notable, fss_write_format_code_short_0003_s, print->set->notable);
     fl_print_format("'%[%r%]', or ", print->to, print->set->notable, fss_write_format_code_long_0003_s, print->set->notable);
-    fl_print_format("'%[%r%]'.%r", print->to, print->set->notable, fss_write_format_code_human_0003_s, print->set->notable, f_string_eol_s);
+    fl_print_format("'%[%r%]', ", print->to, print->set->notable, fss_write_format_code_human_0003_s, print->set->notable);
+    fl_print_format("'%[%r%]'.%r", print->to, print->set->notable, fss_write_format_code_machine_0003_s, print->set->notable, f_string_eol_s);
 
     // FSS-0008 (Embedded List)
     fl_print_format("    - As %[%r%] format: ", print->to, print->set->notable, fss_write_embedded_list_standard_s, print->set->notable);
     fl_print_format("'%[%r%]', ", print->to, print->set->notable, fss_write_format_code_short_0008_s, print->set->notable);
-    fl_print_format("'%[%r%]', or ", print->to, print->set->notable, fss_write_format_code_long_0008_s, print->set->notable);
-    fl_print_format("'%[%r%]'.%r", print->to, print->set->notable, fss_write_format_code_human_0008_s, print->set->notable, f_string_eol_s);
+    fl_print_format("'%[%r%]', ", print->to, print->set->notable, fss_write_format_code_long_0008_s, print->set->notable);
+    fl_print_format("'%[%r%]', or ", print->to, print->set->notable, fss_write_format_code_human_0008_s, print->set->notable);
+    fl_print_format("'%[%r%]'.%r", print->to, print->set->notable, fss_write_format_code_machine_0008_s, print->set->notable, f_string_eol_s);
 
     // FSS-000E (Payload)
     fl_print_format("    - As %[%r%]       format: ", print->to, print->set->notable, fss_write_payload_standard_s, print->set->notable);
     fl_print_format("'%[%r%]', ", print->to, print->set->notable, fss_write_format_code_short_000e_s, print->set->notable);
     fl_print_format("'%[%r%]', or ", print->to, print->set->notable, fss_write_format_code_long_000e_s, print->set->notable);
-    fl_print_format("'%[%r%]'.%r", print->to, print->set->notable, fss_write_format_code_human_000e_s, print->set->notable, f_string_eol_s);
+    fl_print_format("'%[%r%]'.%r", print->to, print->set->notable, fss_write_format_code_machine_000e_s, print->set->notable, f_string_eol_s);
 
     f_print_dynamic_raw(f_string_eol_s, print->to);
 

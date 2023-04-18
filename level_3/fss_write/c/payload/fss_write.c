@@ -548,7 +548,6 @@ extern "C" {
     f_string_static_t * const argv = main->program.parameters.arguments.array;
 
     if ((main->program.parameters.array[fss_write_parameter_object_e].result & f_console_result_value_e) && values->used) {
-
       for (f_array_length_t i = 0; i < values->used; ++i) {
 
         if (f_compare_dynamic(argv[values->array[i]], fss_write_payload_s) == F_equal_to && i + 1 < values->used) {

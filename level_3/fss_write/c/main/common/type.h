@@ -92,7 +92,7 @@ extern "C" {
     { \
       fss_write_main_flag_none_e, \
       F_none, \
-      macro_f_state_t_initialize_1(fss_write_allocation_large_d, fss_write_allocation_small_d, F_none, 0, 0, &fll_program_standard_signal_handle, 0, 0, 0), \
+      macro_f_state_t_initialize_1(fss_write_allocation_large_d, fss_write_allocation_small_d, F_none, 0, 0, &fll_program_standard_signal_handle, 0, 0, 0, 0), \
       f_string_range_t_initialize, \
       f_string_static_t_initialize, \
       f_string_static_t_initialize, \

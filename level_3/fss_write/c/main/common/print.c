@@ -23,6 +23,7 @@ extern "C" {
     "f_string_rangess_increase",
     "f_string_rangess_increase_by",
     "f_string_read_block_increase",
+    "f_thread_create",
     "fl_fss_basic_content_write",
     "fl_fss_basic_list_content_write",
     "fl_fss_basic_list_object_write",

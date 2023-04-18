@@ -49,7 +49,7 @@ extern "C" {
 
     if (!print) return;
 
-    fl_print_format("  The pipe uses the Backspace character '%[\\b%]' (%[U+0008%]) to designate the start of a Content.%r", print->to, print->set->notable, print->set->notable, print->set->notable, print->set->notable, f_string_eol_s);
+    fl_print_format("%r  The pipe uses the Backspace character '%[\\b%]' (%[U+0008%]) to designate the start of a Content.%r", print->to, f_string_eol_s, print->set->notable, print->set->notable, print->set->notable, print->set->notable, f_string_eol_s);
     fl_print_format("  The pipe uses the Form Feed character '%[\\f%]' (%[U+000C%]) to designate the end of the last Content.%r", print->to, print->set->notable, print->set->notable, print->set->notable, print->set->notable, f_string_eol_s);
     fl_print_format("  The pipe uses the Vertical Line character '%[\\v%]' (%[U+000B%]) is used to ignore a Content range (use this both before and after the range).%r", print->to, print->set->notable, print->set->notable, print->set->notable, print->set->notable, f_string_eol_s);
     fl_print_format("  For the pipe, an Object is terminated by either a Backspace character '%[\\b%]' (%[U+0008%])", print->to, print->set->notable, print->set->notable, print->set->notable, print->set->notable);

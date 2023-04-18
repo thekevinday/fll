@@ -60,6 +60,7 @@ extern "C" {
       iki_write_main_flag_none_e, \
       F_none, \
       f_state_t_initialize, \
+      f_string_static_t_initialize, \
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
       f_string_dynamic_t_initialize, \
