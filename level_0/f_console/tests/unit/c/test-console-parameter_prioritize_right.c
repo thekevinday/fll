@@ -8,12 +8,12 @@ extern "C" {
 void test__f_console_parameter_prioritize_right__fails(void **state) {
 
   f_console_parameters_t parameters = f_console_parameters_t_initialize;
-  f_console_parameter_ids_t choices = f_console_parameter_ids_t_initialize;
-  f_console_parameter_id_t decision = f_console_parameter_id_t_initialize;
+  f_uint16s_t choices = f_uint16s_t_initialize;
+  f_array_length_t decision = f_array_length_t_initialize;
 
   {
-    f_console_parameter_id_t ids_array[1] = { 20 };
-    choices.id = ids_array;
+    uint16_t choices_array[1] = { 20 };
+    choices.array = choices_array;
     choices.used = 1;
 
     f_console_parameter_t parameter = f_console_parameter_t_initialize;
@@ -32,7 +32,7 @@ void test__f_console_parameter_prioritize_right__fails(void **state) {
 void test__f_console_parameter_prioritize_right__parameter_checking(void **state) {
 
   f_console_parameters_t parameters = f_console_parameters_t_initialize;
-  f_console_parameter_ids_t choices = f_console_parameter_ids_t_initialize;
+  f_uint16s_t choices = f_uint16s_t_initialize;
 
   {
     const f_status_t status = f_console_parameter_prioritize_right(parameters, choices, 0);
@@ -41,8 +41,8 @@ void test__f_console_parameter_prioritize_right__parameter_checking(void **state
   }
 
   {
-    f_console_parameter_id_t ids_array[1] = { f_console_parameter_id_t_initialize };
-    choices.id = ids_array;
+    uint16_t choices_array[1] = { f_array_length_t_initialize };
+    choices.array = choices_array;
 
     const f_status_t status = f_console_parameter_prioritize_right(parameters, choices, 0);
 
@@ -55,12 +55,12 @@ void test__f_console_parameter_prioritize_right__parameter_checking(void **state
 void test__f_console_parameter_prioritize_right__works(void **state) {
 
   f_console_parameters_t parameters = f_console_parameters_t_initialize;
-  f_console_parameter_ids_t choices = f_console_parameter_ids_t_initialize;
-  f_console_parameter_id_t decision = f_console_parameter_id_t_initialize;
+  f_uint16s_t choices = f_uint16s_t_initialize;
+  f_array_length_t decision = f_array_length_t_initialize;
 
   {
-    f_console_parameter_id_t ids_array[1] = { 0 };
-    choices.id = ids_array;
+    uint16_t choices_array[1] = { 0 };
+    choices.array = choices_array;
 
     const f_status_t status = f_console_parameter_prioritize_right(parameters, choices, &decision);
 
@@ -68,8 +68,8 @@ void test__f_console_parameter_prioritize_right__works(void **state) {
   }
 
   {
-    f_console_parameter_id_t ids_array[1] = { 0 };
-    choices.id = ids_array;
+    uint16_t choices_array[1] = { 0 };
+    choices.array = choices_array;
     choices.used = 1;
 
     f_console_parameter_t parameter = f_console_parameter_t_initialize;
@@ -83,8 +83,8 @@ void test__f_console_parameter_prioritize_right__works(void **state) {
   }
 
   {
-    f_console_parameter_id_t ids_array[2] = { 0, 1 };
-    choices.id = ids_array;
+    uint16_t choices_array[2] = { 0, 1 };
+    choices.array = choices_array;
     choices.used = 2;
 
     f_console_parameter_t parameter_1 = f_console_parameter_t_initialize;

@@ -13,26 +13,40 @@ void test__f_console_parameter_process__incomplete_arguments(void **state) {
     0,
   };
 
+  const f_string_static_t s_f = macro_f_string_static_t_initialize("f", 0, 1);
+  const f_string_static_t s_s = macro_f_string_static_t_initialize("s", 0, 1);
+  const f_string_static_t s_t = macro_f_string_static_t_initialize("t", 0, 1);
+  const f_string_static_t s_F = macro_f_string_static_t_initialize("F", 0, 1);
+  const f_string_static_t s_N = macro_f_string_static_t_initialize("N", 0, 1);
+  const f_string_static_t s_second = macro_f_string_static_t_initialize("second", 0, 6);
+  const f_string_static_t s_third = macro_f_string_static_t_initialize("third", 0, 5);
+  const f_string_static_t s_fifth = macro_f_string_static_t_initialize("fifth", 0, 5);
+  const f_string_static_t s_sixth = macro_f_string_static_t_initialize("sixth", 0, 5);
+  const f_string_static_t s_seventh = macro_f_string_static_t_initialize("seventh", 0, 7);
+  const f_string_static_t s_not_found = macro_f_string_static_t_initialize("not_found", 0, 9);
+  const f_string_static_t s_other = macro_f_string_static_t_initialize("other", 0, 5);
+
   const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize(2, argv, 0);
 
   f_console_parameter_t parameter[] = {
-    macro_f_console_parameter_t_initialize("f", 0, 0, 1, f_console_type_normal_e),
-    macro_f_console_parameter_t_initialize("s", "second", 0, 1, f_console_type_normal_e),
-    macro_f_console_parameter_t_initialize("t", "third", 0, 1, f_console_type_normal_e),
-    macro_f_console_parameter_t_initialize("F", 0, 0, 0, f_console_type_inverse_e),
-    macro_f_console_parameter_t_initialize(0, "fifth", 0, 1, f_console_type_inverse_e),
-    macro_f_console_parameter_t_initialize(0, "sixth", 0, 1, f_console_type_normal_e),
-    macro_f_console_parameter_t_initialize(0, "seventh", 0, 2, f_console_type_normal_e),
-    macro_f_console_parameter_t_initialize("N", "not_found", 0, 0, f_console_type_normal_e),
-    macro_f_console_parameter_t_initialize(0, 0, "other", 0, f_console_type_other_e),
+    macro_f_console_parameter_t_initialize_2(s_f, f_string_empty_s, f_string_empty_s, 1, f_console_flag_normal_e),
+    macro_f_console_parameter_t_initialize_2(s_s, s_second, f_string_empty_s, 1, f_console_flag_normal_e),
+    macro_f_console_parameter_t_initialize_2(s_t, s_third, f_string_empty_s, 1, f_console_flag_normal_e),
+    macro_f_console_parameter_t_initialize_2(s_F, f_string_empty_s, f_string_empty_s, 0, f_console_flag_inverse_e),
+    macro_f_console_parameter_t_initialize_2(f_string_empty_s, s_fifth, f_string_empty_s, 1, f_console_flag_inverse_e),
+    macro_f_console_parameter_t_initialize_2(f_string_empty_s, s_sixth, f_string_empty_s, 1, f_console_flag_normal_e),
+    macro_f_console_parameter_t_initialize_2(f_string_empty_s, s_seventh, f_string_empty_s, 2, f_console_flag_normal_e),
+    macro_f_console_parameter_t_initialize_2(s_N, s_not_found, f_string_empty_s, 0, f_console_flag_normal_e),
+    macro_f_console_parameter_t_initialize_2(f_string_empty_s, f_string_empty_s, s_other, 0, f_console_flag_simple_e),
   };
 
-  f_console_parameters_t parameters = macro_f_console_parameters_t_initialize(parameter, 9);
+  f_console_parameters_t parameters = macro_f_console_parameters_t_initialize(parameter, 9, 0);
 
   {
-    const f_status_t status = f_console_parameter_process(arguments, &parameters);
+    f_state_t state = f_state_t_initialize;
+    f_console_parameter_process(arguments, &parameters, &state, 0);
 
-    assert_int_equal(status, F_complete_not);
+    assert_int_equal(state.status, F_complete_not);
 
     assert_int_equal(parameter[0].result, f_console_result_none_e);
     assert_int_equal(parameter[0].locations.used, 0);
@@ -41,7 +55,7 @@ void test__f_console_parameter_process__incomplete_arguments(void **state) {
     assert_int_equal(parameter[0].location, 0);
     assert_int_equal(parameter[0].location_sub, 0);
 
-    assert_int_equal(parameter[1].result, f_console_result_found_e);
+    assert_int_equal(parameter[1].result & f_console_result_found_e, f_console_result_found_e);
     assert_int_equal(parameter[1].locations.used, 1);
     assert_int_equal(parameter[1].locations_sub.used, 1);
     assert_int_equal(parameter[1].values.used, 0);
@@ -111,29 +125,43 @@ void test__f_console_parameter_process__no_arguments_no_program(void **state) {
     0,
   };
 
+  const f_string_static_t s_f = macro_f_string_static_t_initialize("f", 0, 1);
+  const f_string_static_t s_s = macro_f_string_static_t_initialize("s", 0, 1);
+  const f_string_static_t s_t = macro_f_string_static_t_initialize("t", 0, 1);
+  const f_string_static_t s_F = macro_f_string_static_t_initialize("F", 0, 1);
+  const f_string_static_t s_N = macro_f_string_static_t_initialize("N", 0, 1);
+  const f_string_static_t s_second = macro_f_string_static_t_initialize("second", 0, 6);
+  const f_string_static_t s_third = macro_f_string_static_t_initialize("third", 0, 5);
+  const f_string_static_t s_fifth = macro_f_string_static_t_initialize("fifth", 0, 5);
+  const f_string_static_t s_sixth = macro_f_string_static_t_initialize("sixth", 0, 5);
+  const f_string_static_t s_seventh = macro_f_string_static_t_initialize("seventh", 0, 7);
+  const f_string_static_t s_not_found = macro_f_string_static_t_initialize("not_found", 0, 9);
+  const f_string_static_t s_other = macro_f_string_static_t_initialize("other", 0, 5);
+
   // Test both a valid and an invalid argc.
   for (uint8_t argc = 0; argc < 2; ++argc) {
 
     const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize(argc, argv, 0);
 
     f_console_parameter_t parameter[] = {
-      macro_f_console_parameter_t_initialize("f", 0, 0, 1, f_console_type_normal_e),
-      macro_f_console_parameter_t_initialize("s", "second", 0, 1, f_console_type_normal_e),
-      macro_f_console_parameter_t_initialize("t", "third", 0, 1, f_console_type_normal_e),
-      macro_f_console_parameter_t_initialize("F", 0, 0, 0, f_console_type_inverse_e),
-      macro_f_console_parameter_t_initialize(0, "fifth", 0, 1, f_console_type_inverse_e),
-      macro_f_console_parameter_t_initialize(0, "sixth", 0, 1, f_console_type_normal_e),
-      macro_f_console_parameter_t_initialize(0, "seventh", 0, 2, f_console_type_normal_e),
-      macro_f_console_parameter_t_initialize("N", "not_found", 0, 0, f_console_type_normal_e),
-      macro_f_console_parameter_t_initialize(0, 0, "other", 0, f_console_type_other_e),
+      macro_f_console_parameter_t_initialize_2(s_f, f_string_empty_s, f_string_empty_s, 1, f_console_flag_normal_e),
+      macro_f_console_parameter_t_initialize_2(s_s, s_second, f_string_empty_s, 1, f_console_flag_normal_e),
+      macro_f_console_parameter_t_initialize_2(s_t, s_third, f_string_empty_s, 1, f_console_flag_normal_e),
+      macro_f_console_parameter_t_initialize_2(s_F, f_string_empty_s, f_string_empty_s, 0, f_console_flag_inverse_e),
+      macro_f_console_parameter_t_initialize_2(f_string_empty_s, s_fifth, f_string_empty_s, 1, f_console_flag_inverse_e),
+      macro_f_console_parameter_t_initialize_2(f_string_empty_s, s_sixth, f_string_empty_s, 1, f_console_flag_normal_e),
+      macro_f_console_parameter_t_initialize_2(f_string_empty_s, s_seventh, f_string_empty_s, 2, f_console_flag_normal_e),
+      macro_f_console_parameter_t_initialize_2(s_N, s_not_found, f_string_empty_s, 0, f_console_flag_normal_e),
+      macro_f_console_parameter_t_initialize_2(f_string_empty_s, f_string_empty_s, s_other, 0, f_console_flag_simple_e),
     };
 
-    f_console_parameters_t parameters = macro_f_console_parameters_t_initialize(parameter, 9);
+    f_console_parameters_t parameters = macro_f_console_parameters_t_initialize(parameter, 9, 0);
 
     {
-      const f_status_t status = f_console_parameter_process(arguments, &parameters);
+      f_state_t state = f_state_t_initialize;
+      f_console_parameter_process(arguments, &parameters, &state, 0);
 
-      assert_int_equal(status, F_data_not);
+      assert_int_equal(state.status, F_data_not);
 
       assert_int_equal(parameter[0].result, f_console_result_none_e);
       assert_int_equal(parameter[0].locations.used, 0);
@@ -203,29 +231,43 @@ void test__f_console_parameter_process__no_arguments(void **state) {
     0,
   };
 
+  const f_string_static_t s_f = macro_f_string_static_t_initialize("f", 0, 1);
+  const f_string_static_t s_s = macro_f_string_static_t_initialize("s", 0, 1);
+  const f_string_static_t s_t = macro_f_string_static_t_initialize("t", 0, 1);
+  const f_string_static_t s_F = macro_f_string_static_t_initialize("F", 0, 1);
+  const f_string_static_t s_N = macro_f_string_static_t_initialize("N", 0, 1);
+  const f_string_static_t s_second = macro_f_string_static_t_initialize("second", 0, 6);
+  const f_string_static_t s_third = macro_f_string_static_t_initialize("third", 0, 5);
+  const f_string_static_t s_fifth = macro_f_string_static_t_initialize("fifth", 0, 5);
+  const f_string_static_t s_sixth = macro_f_string_static_t_initialize("sixth", 0, 5);
+  const f_string_static_t s_seventh = macro_f_string_static_t_initialize("seventh", 0, 7);
+  const f_string_static_t s_not_found = macro_f_string_static_t_initialize("not_found", 0, 9);
+  const f_string_static_t s_other = macro_f_string_static_t_initialize("other", 0, 5);
+
   // Test both valid and invalid argc.
   for (uint8_t argc = 0; argc < 2; ++argc) {
 
     const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize(argc, argv, 0);
 
     f_console_parameter_t parameter[] = {
-      macro_f_console_parameter_t_initialize("f", 0, 0, 1, f_console_type_normal_e),
-      macro_f_console_parameter_t_initialize("s", "second", 0, 1, f_console_type_normal_e),
-      macro_f_console_parameter_t_initialize("t", "third", 0, 1, f_console_type_normal_e),
-      macro_f_console_parameter_t_initialize("F", 0, 0, 0, f_console_type_inverse_e),
-      macro_f_console_parameter_t_initialize(0, "fifth", 0, 1, f_console_type_inverse_e),
-      macro_f_console_parameter_t_initialize(0, "sixth", 0, 1, f_console_type_normal_e),
-      macro_f_console_parameter_t_initialize(0, "seventh", 0, 2, f_console_type_normal_e),
-      macro_f_console_parameter_t_initialize("N", "not_found", 0, 0, f_console_type_normal_e),
-      macro_f_console_parameter_t_initialize(0, 0, "other", 0, f_console_type_other_e),
+      macro_f_console_parameter_t_initialize_2(s_f, f_string_empty_s, f_string_empty_s, 1, f_console_flag_normal_e),
+      macro_f_console_parameter_t_initialize_2(s_s, s_second, f_string_empty_s, 1, f_console_flag_normal_e),
+      macro_f_console_parameter_t_initialize_2(s_t, s_third, f_string_empty_s, 1, f_console_flag_normal_e),
+      macro_f_console_parameter_t_initialize_2(s_F, f_string_empty_s, f_string_empty_s, 0, f_console_flag_inverse_e),
+      macro_f_console_parameter_t_initialize_2(f_string_empty_s, s_fifth, f_string_empty_s, 1, f_console_flag_inverse_e),
+      macro_f_console_parameter_t_initialize_2(f_string_empty_s, s_sixth, f_string_empty_s, 1, f_console_flag_normal_e),
+      macro_f_console_parameter_t_initialize_2(f_string_empty_s, s_seventh, f_string_empty_s, 2, f_console_flag_normal_e),
+      macro_f_console_parameter_t_initialize_2(s_N, s_not_found, f_string_empty_s, 0, f_console_flag_normal_e),
+      macro_f_console_parameter_t_initialize_2(f_string_empty_s, f_string_empty_s, s_other, 0, f_console_flag_simple_e),
     };
 
-    f_console_parameters_t parameters = macro_f_console_parameters_t_initialize(parameter, 9);
+    f_console_parameters_t parameters = macro_f_console_parameters_t_initialize(parameter, 9, 0);
 
     {
-      const f_status_t status = f_console_parameter_process(arguments, &parameters);
+      f_state_t state = f_state_t_initialize;
+      f_console_parameter_process(arguments, &parameters, &state, 0);
 
-      assert_int_equal(status, argc ? F_none : F_data_not);
+      assert_int_equal(state.status, argc ? F_none : F_data_not);
 
       assert_int_equal(parameter[0].result, f_console_result_none_e);
       assert_int_equal(parameter[0].locations.used, 0);
@@ -301,28 +343,42 @@ void test__f_console_parameter_process__null_arguments(void **state) {
 
   const f_string_t *argv = 0;
 
+  const f_string_static_t s_f = macro_f_string_static_t_initialize("f", 0, 1);
+  const f_string_static_t s_s = macro_f_string_static_t_initialize("s", 0, 1);
+  const f_string_static_t s_t = macro_f_string_static_t_initialize("t", 0, 1);
+  const f_string_static_t s_F = macro_f_string_static_t_initialize("F", 0, 1);
+  const f_string_static_t s_N = macro_f_string_static_t_initialize("N", 0, 1);
+  const f_string_static_t s_second = macro_f_string_static_t_initialize("second", 0, 6);
+  const f_string_static_t s_third = macro_f_string_static_t_initialize("third", 0, 5);
+  const f_string_static_t s_fifth = macro_f_string_static_t_initialize("fifth", 0, 5);
+  const f_string_static_t s_sixth = macro_f_string_static_t_initialize("sixth", 0, 5);
+  const f_string_static_t s_seventh = macro_f_string_static_t_initialize("seventh", 0, 7);
+  const f_string_static_t s_not_found = macro_f_string_static_t_initialize("not_found", 0, 9);
+  const f_string_static_t s_other = macro_f_string_static_t_initialize("other", 0, 5);
+
   // Test both a valid and an invalid argc.
   for (uint8_t argc = 0; argc < 2; ++argc) {
     const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize(argc, argv, 0);
 
     f_console_parameter_t parameter[] = {
-      macro_f_console_parameter_t_initialize("f", 0, 0, 1, f_console_type_normal_e),
-      macro_f_console_parameter_t_initialize("s", "second", 0, 1, f_console_type_normal_e),
-      macro_f_console_parameter_t_initialize("t", "third", 0, 1, f_console_type_normal_e),
-      macro_f_console_parameter_t_initialize("F", 0, 0, 0, f_console_type_inverse_e),
-      macro_f_console_parameter_t_initialize(0, "fifth", 0, 1, f_console_type_inverse_e),
-      macro_f_console_parameter_t_initialize(0, "sixth", 0, 1, f_console_type_normal_e),
-      macro_f_console_parameter_t_initialize(0, "seventh", 0, 2, f_console_type_normal_e),
-      macro_f_console_parameter_t_initialize("N", "not_found", 0, 0, f_console_type_normal_e),
-      macro_f_console_parameter_t_initialize(0, 0, "other", 0, f_console_type_other_e),
+      macro_f_console_parameter_t_initialize_2(s_f, f_string_empty_s, f_string_empty_s, 1, f_console_flag_normal_e),
+      macro_f_console_parameter_t_initialize_2(s_s, s_second, f_string_empty_s, 1, f_console_flag_normal_e),
+      macro_f_console_parameter_t_initialize_2(s_t, s_third, f_string_empty_s, 1, f_console_flag_normal_e),
+      macro_f_console_parameter_t_initialize_2(s_F, f_string_empty_s, f_string_empty_s, 0, f_console_flag_inverse_e),
+      macro_f_console_parameter_t_initialize_2(f_string_empty_s, s_fifth, f_string_empty_s, 1, f_console_flag_inverse_e),
+      macro_f_console_parameter_t_initialize_2(f_string_empty_s, s_sixth, f_string_empty_s, 1, f_console_flag_normal_e),
+      macro_f_console_parameter_t_initialize_2(f_string_empty_s, s_seventh, f_string_empty_s, 2, f_console_flag_normal_e),
+      macro_f_console_parameter_t_initialize_2(s_N, s_not_found, f_string_empty_s, 0, f_console_flag_normal_e),
+      macro_f_console_parameter_t_initialize_2(f_string_empty_s, f_string_empty_s, s_other, 0, f_console_flag_simple_e),
     };
 
-    f_console_parameters_t parameters = macro_f_console_parameters_t_initialize(parameter, 9);
+    f_console_parameters_t parameters = macro_f_console_parameters_t_initialize(parameter, 9, 0);
 
     {
-      const f_status_t status = f_console_parameter_process(arguments, &parameters);
+      f_state_t state = f_state_t_initialize;
+      f_console_parameter_process(arguments, &parameters, &state, 0);
 
-      assert_int_equal(status, F_data_not);
+      assert_int_equal(state.status, F_data_not);
 
       assert_int_equal(parameter[0].result, f_console_result_none_e);
       assert_int_equal(parameter[0].locations.used, 0);
@@ -419,28 +475,42 @@ void test__f_console_parameter_process__only_remaining(void **state) {
     0,
   };
 
+  const f_string_static_t s_f = macro_f_string_static_t_initialize("f", 0, 1);
+  const f_string_static_t s_s = macro_f_string_static_t_initialize("s", 0, 1);
+  const f_string_static_t s_t = macro_f_string_static_t_initialize("t", 0, 1);
+  const f_string_static_t s_F = macro_f_string_static_t_initialize("F", 0, 1);
+  const f_string_static_t s_N = macro_f_string_static_t_initialize("N", 0, 1);
+  const f_string_static_t s_second = macro_f_string_static_t_initialize("second", 0, 6);
+  const f_string_static_t s_third = macro_f_string_static_t_initialize("third", 0, 5);
+  const f_string_static_t s_fifth = macro_f_string_static_t_initialize("fifth", 0, 5);
+  const f_string_static_t s_sixth = macro_f_string_static_t_initialize("sixth", 0, 5);
+  const f_string_static_t s_seventh = macro_f_string_static_t_initialize("seventh", 0, 7);
+  const f_string_static_t s_not_found = macro_f_string_static_t_initialize("not_found", 0, 9);
+  const f_string_static_t s_other = macro_f_string_static_t_initialize("other", 0, 5);
+
   const int total = 19;
 
   const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize(total, argv, 0);
 
   f_console_parameter_t parameter[] = {
-    macro_f_console_parameter_t_initialize("f", 0, 0, 1, f_console_type_normal_e),
-    macro_f_console_parameter_t_initialize("s", "second", 0, 1, f_console_type_normal_e),
-    macro_f_console_parameter_t_initialize("t", "third", 0, 1, f_console_type_normal_e),
-    macro_f_console_parameter_t_initialize("F", 0, 0, 0, f_console_type_inverse_e),
-    macro_f_console_parameter_t_initialize(0, "fifth", 0, 1, f_console_type_inverse_e),
-    macro_f_console_parameter_t_initialize(0, "sixth", 0, 1, f_console_type_normal_e),
-    macro_f_console_parameter_t_initialize(0, "seventh", 0, 2, f_console_type_normal_e),
-    macro_f_console_parameter_t_initialize("N", "not_found", 0, 0, f_console_type_normal_e),
-    macro_f_console_parameter_t_initialize(0, 0, "other", 0, f_console_type_other_e),
+    macro_f_console_parameter_t_initialize_2(s_f, f_string_empty_s, f_string_empty_s, 1, f_console_flag_normal_e),
+    macro_f_console_parameter_t_initialize_2(s_s, s_second, f_string_empty_s, 1, f_console_flag_normal_e),
+    macro_f_console_parameter_t_initialize_2(s_t, s_third, f_string_empty_s, 1, f_console_flag_normal_e),
+    macro_f_console_parameter_t_initialize_2(s_F, f_string_empty_s, f_string_empty_s, 0, f_console_flag_inverse_e),
+    macro_f_console_parameter_t_initialize_2(f_string_empty_s, s_fifth, f_string_empty_s, 1, f_console_flag_inverse_e),
+    macro_f_console_parameter_t_initialize_2(f_string_empty_s, s_sixth, f_string_empty_s, 1, f_console_flag_normal_e),
+    macro_f_console_parameter_t_initialize_2(f_string_empty_s, s_seventh, f_string_empty_s, 2, f_console_flag_normal_e),
+    macro_f_console_parameter_t_initialize_2(s_N, s_not_found, f_string_empty_s, 0, f_console_flag_normal_e),
+    macro_f_console_parameter_t_initialize_2(f_string_empty_s, f_string_empty_s, s_other, 0, f_console_flag_simple_e),
   };
 
-  f_console_parameters_t parameters = macro_f_console_parameters_t_initialize(parameter, 9);
+  f_console_parameters_t parameters = macro_f_console_parameters_t_initialize(parameter, 9, 0);
 
   {
-    const f_status_t status = f_console_parameter_process(arguments, &parameters);
+    f_state_t state = f_state_t_initialize;
+    f_console_parameter_process(arguments, &parameters, &state, 0);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(state.status, F_none);
 
     assert_int_equal(parameter[0].result, f_console_result_none_e);
     assert_int_equal(parameter[0].locations.used, 0);
@@ -525,9 +595,27 @@ void test__f_console_parameter_process__parameter_checking(void **state) {
   const f_console_arguments_t arguments = f_console_arguments_t_initialize;
 
   {
-    const f_status_t status = f_console_parameter_process(arguments, 0);
+    f_console_parameter_process(arguments, 0, 0, 0);
 
-    assert_int_equal(status, F_status_set_error(F_parameter));
+    // In this case, because there is no state, status cannot be checked.
+    // The only thing that can be tested here is that it does not randomly crash.
+  }
+
+  {
+    f_console_parameter_t parameter[] = {};
+    f_console_parameters_t parameters = macro_f_console_parameters_t_initialize(parameter, 0, 0);
+
+    f_console_parameter_process(arguments, &parameters, 0, 0);
+
+    // In this case, because there is no state, status cannot be checked.
+    // The only thing that can be tested here is that it does not randomly crash.
+  }
+
+  {
+    f_state_t state = f_state_t_initialize;
+    f_console_parameter_process(arguments, 0, &state, 0);
+
+    assert_int_equal(state.status, F_status_set_error(F_parameter));
   }
 }
 
@@ -561,31 +649,51 @@ void test__f_console_parameter_process__works(void **state) {
     0,
   };
 
+  const f_string_static_t s_f = macro_f_string_static_t_initialize("f", 0, 1);
+  const f_string_static_t s_s = macro_f_string_static_t_initialize("s", 0, 1);
+  const f_string_static_t s_t = macro_f_string_static_t_initialize("t", 0, 1);
+  const f_string_static_t s_F = macro_f_string_static_t_initialize("F", 0, 1);
+  const f_string_static_t s_N = macro_f_string_static_t_initialize("N", 0, 1);
+  const f_string_static_t s_m = macro_f_string_static_t_initialize("m", 0, 1);
+  const f_string_static_t s_M = macro_f_string_static_t_initialize("M", 0, 1);
+  const f_string_static_t s_x = macro_f_string_static_t_initialize("x", 0, 1);
+  const f_string_static_t s_second = macro_f_string_static_t_initialize("second", 0, 6);
+  const f_string_static_t s_third = macro_f_string_static_t_initialize("third", 0, 5);
+  const f_string_static_t s_fifth = macro_f_string_static_t_initialize("fifth", 0, 5);
+  const f_string_static_t s_sixth = macro_f_string_static_t_initialize("sixth", 0, 5);
+  const f_string_static_t s_seventh = macro_f_string_static_t_initialize("seventh", 0, 7);
+  const f_string_static_t s_not_found = macro_f_string_static_t_initialize("not_found", 0, 9);
+  const f_string_static_t s_mixed_1 = macro_f_string_static_t_initialize("mixed_1", 0, 7);
+  const f_string_static_t s_mixed_2 = macro_f_string_static_t_initialize("mixed_2", 0, 7);
+  const f_string_static_t s_mixed_3 = macro_f_string_static_t_initialize("mixed_3", 0, 7);
+  const f_string_static_t s_other = macro_f_string_static_t_initialize("other", 0, 5);
+
   const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize(24, argv, 0);
 
   f_console_parameter_t parameter[] = {
-    macro_f_console_parameter_t_initialize("f", 0, 0, 1, f_console_type_normal_e),
-    macro_f_console_parameter_t_initialize("s", "second", 0, 1, f_console_type_normal_e),
-    macro_f_console_parameter_t_initialize("t", "third", 0, 1, f_console_type_normal_e),
-    macro_f_console_parameter_t_initialize("F", 0, 0, 0, f_console_type_inverse_e),
-    macro_f_console_parameter_t_initialize(0, "fifth", 0, 1, f_console_type_inverse_e),
-    macro_f_console_parameter_t_initialize(0, "sixth", 0, 1, f_console_type_normal_e),
-    macro_f_console_parameter_t_initialize(0, "seventh", 0, 2, f_console_type_normal_e),
-    macro_f_console_parameter_t_initialize("N", "not_found", 0, 0, f_console_type_normal_e),
-    macro_f_console_parameter_t_initialize("m", "mixed_1", 0, 1, f_console_type_normal_e),
-    macro_f_console_parameter_t_initialize("M", "mixed_2", 0, 2, f_console_type_normal_e),
-    macro_f_console_parameter_t_initialize("x", "mixed_3", 0, 0, f_console_type_normal_e),
-    macro_f_console_parameter_t_initialize(0, 0, "other", 0, f_console_type_other_e),
+    macro_f_console_parameter_t_initialize_2(s_f, f_string_empty_s, f_string_empty_s, 1, f_console_flag_normal_e),
+    macro_f_console_parameter_t_initialize_2(s_s, s_second, f_string_empty_s, 1, f_console_flag_normal_e),
+    macro_f_console_parameter_t_initialize_2(s_t, s_third, f_string_empty_s, 1, f_console_flag_normal_e),
+    macro_f_console_parameter_t_initialize_2(s_F, f_string_empty_s, f_string_empty_s, 0, f_console_flag_inverse_e),
+    macro_f_console_parameter_t_initialize_2(f_string_empty_s, s_fifth, f_string_empty_s, 1, f_console_flag_inverse_e),
+    macro_f_console_parameter_t_initialize_2(f_string_empty_s, s_sixth, f_string_empty_s, 1, f_console_flag_normal_e),
+    macro_f_console_parameter_t_initialize_2(f_string_empty_s, s_seventh, f_string_empty_s, 2, f_console_flag_normal_e),
+    macro_f_console_parameter_t_initialize_2(s_N, s_not_found, f_string_empty_s, 0, f_console_flag_normal_e),
+    macro_f_console_parameter_t_initialize_2(s_m, s_mixed_1, f_string_empty_s, 1, f_console_flag_normal_e),
+    macro_f_console_parameter_t_initialize_2(s_M, s_mixed_2, f_string_empty_s, 2, f_console_flag_normal_e),
+    macro_f_console_parameter_t_initialize_2(s_x, s_mixed_3, f_string_empty_s, 0, f_console_flag_normal_e),
+    macro_f_console_parameter_t_initialize_2(f_string_empty_s, f_string_empty_s, s_other, 0, f_console_flag_simple_e),
   };
 
-  f_console_parameters_t parameters = macro_f_console_parameters_t_initialize(parameter, 12);
+  f_console_parameters_t parameters = macro_f_console_parameters_t_initialize(parameter, 12, 0);
 
   {
-    const f_status_t status = f_console_parameter_process(arguments, &parameters);
+    f_state_t state = f_state_t_initialize;
+    f_console_parameter_process(arguments, &parameters, &state, 0);
 
-    assert_int_equal(status, F_none);
+    assert_int_equal(state.status, F_none);
 
-    assert_int_equal(parameter[0].result, f_console_result_additional_e);
+    assert_int_equal(parameter[0].result & f_console_result_value_e, f_console_result_value_e);
     assert_int_equal(parameter[0].locations.used, 1);
     assert_int_equal(parameter[0].locations_sub.used, 1);
     assert_int_equal(parameter[0].values.used, 1);
@@ -595,7 +703,7 @@ void test__f_console_parameter_process__works(void **state) {
     assert_int_equal(parameter[0].locations_sub.array[0], 1);
     assert_string_equal(argv[parameter[0].values.array[0]], argv[2]);
 
-    assert_int_equal(parameter[1].result, f_console_result_additional_e);
+    assert_int_equal(parameter[1].result & f_console_result_value_e, f_console_result_value_e);
     assert_int_equal(parameter[1].locations.used, 1);
     assert_int_equal(parameter[1].locations_sub.used, 1);
     assert_int_equal(parameter[1].values.used, 1);
@@ -605,7 +713,7 @@ void test__f_console_parameter_process__works(void **state) {
     assert_int_equal(parameter[1].locations_sub.array[0], 1);
     assert_string_equal(argv[parameter[1].values.array[0]], argv[4]);
 
-    assert_int_equal(parameter[2].result, f_console_result_additional_e);
+    assert_int_equal(parameter[2].result & f_console_result_value_e, f_console_result_value_e);
     assert_int_equal(parameter[2].locations.used, 1);
     assert_int_equal(parameter[2].locations_sub.used, 1);
     assert_int_equal(parameter[2].values.used, 1);
@@ -615,7 +723,7 @@ void test__f_console_parameter_process__works(void **state) {
     assert_int_equal(parameter[2].locations_sub.array[0], 2);
     assert_string_equal(argv[parameter[2].values.array[0]], argv[5]);
 
-    assert_int_equal(parameter[3].result, f_console_result_found_e);
+    assert_int_equal(parameter[3].result & f_console_result_found_e, f_console_result_found_e);
     assert_int_equal(parameter[3].locations.used, 1);
     assert_int_equal(parameter[3].locations_sub.used, 1);
     assert_int_equal(parameter[3].values.used, 0);
@@ -624,7 +732,7 @@ void test__f_console_parameter_process__works(void **state) {
     assert_int_equal(parameter[3].locations.array[0], 7);
     assert_int_equal(parameter[3].locations_sub.array[0], 1);
 
-    assert_int_equal(parameter[4].result, f_console_result_additional_e);
+    assert_int_equal(parameter[4].result & f_console_result_value_e, f_console_result_value_e);
     assert_int_equal(parameter[4].locations.used, 1);
     assert_int_equal(parameter[4].locations_sub.used, 1);
     assert_int_equal(parameter[4].values.used, 1);
@@ -634,7 +742,7 @@ void test__f_console_parameter_process__works(void **state) {
     assert_int_equal(parameter[4].locations_sub.array[0], 0);
     assert_string_equal(argv[parameter[4].values.array[0]], argv[9]);
 
-    assert_int_equal(parameter[5].result, f_console_result_additional_e);
+    assert_int_equal(parameter[5].result & f_console_result_value_e, f_console_result_value_e);
     assert_int_equal(parameter[5].locations.used, 1);
     assert_int_equal(parameter[5].locations_sub.used, 1);
     assert_int_equal(parameter[5].values.used, 1);
@@ -644,7 +752,7 @@ void test__f_console_parameter_process__works(void **state) {
     assert_int_equal(parameter[5].locations_sub.array[0], 0);
     assert_string_equal(argv[parameter[5].values.array[0]], argv[11]);
 
-    assert_int_equal(parameter[6].result, f_console_result_additional_e);
+    assert_int_equal(parameter[6].result & f_console_result_value_e, f_console_result_value_e);
     assert_int_equal(parameter[6].locations.used, 1);
     assert_int_equal(parameter[6].locations_sub.used, 1);
     assert_int_equal(parameter[6].values.used, 2);
@@ -662,7 +770,7 @@ void test__f_console_parameter_process__works(void **state) {
     assert_int_equal(parameter[7].location, 0);
     assert_int_equal(parameter[7].location_sub, 0);
 
-    assert_int_equal(parameter[8].result, f_console_result_additional_e);
+    assert_int_equal(parameter[8].result & f_console_result_value_e, f_console_result_value_e);
     assert_int_equal(parameter[8].locations.used, 1);
     assert_int_equal(parameter[8].locations_sub.used, 1);
     assert_int_equal(parameter[8].values.used, 1);
@@ -672,7 +780,7 @@ void test__f_console_parameter_process__works(void **state) {
     assert_int_equal(parameter[8].locations_sub.array[0], 1);
     assert_string_equal(argv[parameter[8].values.array[0]], argv[21]);
 
-    assert_int_equal(parameter[9].result, f_console_result_additional_e);
+    assert_int_equal(parameter[9].result & f_console_result_value_e, f_console_result_value_e);
     assert_int_equal(parameter[9].locations.used, 1);
     assert_int_equal(parameter[9].locations_sub.used, 1);
     assert_int_equal(parameter[9].values.used, 2);
@@ -683,7 +791,7 @@ void test__f_console_parameter_process__works(void **state) {
     assert_string_equal(argv[parameter[9].values.array[0]], argv[22]);
     assert_string_equal(argv[parameter[9].values.array[1]], argv[23]);
 
-    assert_int_equal(parameter[10].result, f_console_result_found_e);
+    assert_int_equal(parameter[10].result & f_console_result_found_e, f_console_result_found_e);
     assert_int_equal(parameter[10].locations.used, 1);
     assert_int_equal(parameter[10].locations_sub.used, 2);
     assert_int_equal(parameter[10].values.used, 0);
@@ -693,7 +801,7 @@ void test__f_console_parameter_process__works(void **state) {
     assert_int_equal(parameter[10].locations_sub.array[0], 3);
     assert_int_equal(parameter[10].locations_sub.array[1], 4);
 
-    assert_int_equal(parameter[11].result, f_console_result_found_e);
+    assert_int_equal(parameter[11].result & f_console_result_found_e, f_console_result_found_e);
     assert_int_equal(parameter[11].locations.used, 2);
     assert_int_equal(parameter[11].locations_sub.used, 2);
     assert_int_equal(parameter[11].values.used, 0);

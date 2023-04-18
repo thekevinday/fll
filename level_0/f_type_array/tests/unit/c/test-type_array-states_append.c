@@ -22,7 +22,7 @@ void test__f_type_array_states_append__works(void **state) {
   int fake_2 = 2;
   int fake_3 = 3;
 
-  const f_state_t source = macro_f_state_t_initialize(12, 6, 0, 0, 0, (void *) &fake_1, (void *) &fake_2, (void *) &fake_3);
+  const f_state_t source = macro_f_state_t_initialize_1(12, 6, 0, 0, 0, 0, 0, (void *) &fake_1, (void *) &fake_2, (void *) &fake_3);
   f_states_t destination = f_states_t_initialize;
 
   {
