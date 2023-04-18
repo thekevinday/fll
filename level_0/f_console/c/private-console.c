@@ -51,7 +51,7 @@ extern "C" {
         }
       }
       else {
-        *result = f_console_result_short_e | f_console_result_alone_e;
+        *result |= f_console_result_short_e | f_console_result_alone_e;
       }
     }
 

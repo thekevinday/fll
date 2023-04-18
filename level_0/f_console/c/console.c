@@ -273,7 +273,8 @@ extern "C" {
             if (parameters->array[i].flag & f_console_flag_disable_e) continue;
             if ((process.result & f_console_result_normal_e) && !(parameters->array[i].flag & f_console_flag_normal_e)) continue;
             if ((process.result & f_console_result_inverse_e) && !(parameters->array[i].flag & f_console_flag_inverse_e)) continue;
-            if (!parameters->array[i].match_short.used && !parameters->array[i].match_short.string) continue;
+            if (!parameters->array[i].match_short.used) continue;
+            if (!parameters->array[i].match_short.string) continue;
             if (arguments.argv[process.location][process.location_sub] != *parameters->array[i].match_short.string) continue;
 
             process.width = macro_f_utf_byte_width_is(arguments.argv[process.location][process.location_sub]);
@@ -392,7 +393,8 @@ extern "C" {
               if (parameters->array[i].flag & f_console_flag_disable_e) continue;
               if ((process.result & f_console_result_normal_e) && !(parameters->array[i].flag & f_console_flag_normal_e)) continue;
               if ((process.result & f_console_result_inverse_e) && !(parameters->array[i].flag & f_console_flag_inverse_e)) continue;
-              if (!parameters->array[i].match_short.used && !parameters->array[i].match_short.string) continue;
+              if (!parameters->array[i].match_short.used) continue;
+              if (!parameters->array[i].match_short.string) continue;
               if (arguments.argv[process.location][process.location_sub] != *parameters->array[i].match_short.string) continue;
 
               if (parameters->callback) {
@@ -493,7 +495,8 @@ extern "C" {
             if (parameters->array[i].flag & f_console_flag_disable_e) continue;
             if ((process.result & f_console_result_normal_e) && !(parameters->array[i].flag & f_console_flag_normal_e)) continue;
             if ((process.result & f_console_result_inverse_e) && !(parameters->array[i].flag & f_console_flag_inverse_e)) continue;
-            if (!parameters->array[i].match_long.used && !parameters->array[i].match_long.string) continue;
+            if (!parameters->array[i].match_long.used) continue;
+            if (!parameters->array[i].match_long.string) continue;
             if (strncmp(&arguments.argv[process.location][process.location_sub], parameters->array[i].match_long.string, parameters->array[i].match_long.used + 1)) continue;
 
             if (parameters->callback) {
@@ -581,7 +584,7 @@ extern "C" {
           continue;
         }
 
-        if (state->status == F_process && process.found) {
+        if (state->status == F_process && process.found && i < parameters->used) {
           state->status = f_array_lengths_increase(state->step_small, &parameters->array[i].locations);
           if (F_status_is_error(state->status)) break;
 
