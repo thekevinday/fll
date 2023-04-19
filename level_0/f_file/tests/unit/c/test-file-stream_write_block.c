@@ -27,7 +27,7 @@ void test__f_file_stream_write_block__fails(void **state) {
 
 void test__f_file_stream_write_block__parameter_checking(void **state) {
 
-  f_file_t file = f_file_t_initialize;
+  f_file_t file = macro_f_file_t_initialize2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
   file.size_write = 0;
 
   {
@@ -37,21 +37,20 @@ void test__f_file_stream_write_block__parameter_checking(void **state) {
   }
 }
 
-void test__f_file_stream_write_block__returns_file_closed(void **state) {
+void test__f_file_stream_write_block__returns_stream_not(void **state) {
 
   const f_file_t file = f_file_t_initialize;
 
   {
     const f_status_t status = f_file_stream_write_block(file, f_string_empty_s, 0);
 
-    assert_int_equal(F_status_set_fine(status), F_file_closed);
+    assert_int_equal(F_status_set_fine(status), F_stream_not);
   }
 }
 
 void test__f_file_stream_write_block__returns_data_not(void **state) {
 
-  f_file_t file = f_file_t_initialize;
-  file.stream = F_type_input_d;
+  f_file_t file = macro_f_file_t_initialize2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
 
   {
     const f_status_t status = f_file_stream_write_block(file, f_string_empty_s, 0);
@@ -76,9 +75,8 @@ void test__f_file_stream_write_block__works(void **state) {
   {
     f_array_length_t written = 0;
 
-    f_file_t file = f_file_t_initialize;
+    f_file_t file = macro_f_file_t_initialize2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
     file.size_write = 1;
-    file.stream = F_type_input_d;
 
     // The letter 't'.
     will_return(__wrap_fwrite_unlocked, false);
@@ -122,9 +120,8 @@ void test__f_file_stream_write_block__works(void **state) {
   }
 
   {
-    f_file_t file = f_file_t_initialize;
+    f_file_t file = macro_f_file_t_initialize2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
     file.size_write = test.used;
-    file.stream = F_type_input_d;
 
     will_return(__wrap_fwrite_unlocked, false);
     will_return(__wrap_fwrite_unlocked, test.used);

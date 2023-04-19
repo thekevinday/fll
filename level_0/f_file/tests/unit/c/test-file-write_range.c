@@ -51,7 +51,7 @@ void test__f_file_write_range__fails(void **state) {
 
 void test__f_file_write_range__parameter_checking(void **state) {
 
-  f_file_t file = f_file_t_initialize;
+  f_file_t file = macro_f_file_t_initialize2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
   file.size_write = 0;
 
   const f_string_range_t range = f_string_range_t_initialize;
@@ -63,7 +63,7 @@ void test__f_file_write_range__parameter_checking(void **state) {
   }
 }
 
-void test__f_file_write_range__returns_file_closed(void **state) {
+void test__f_file_write_range__returns_file_descriptor_not(void **state) {
 
   f_file_t file = f_file_t_initialize;
   const f_string_range_t range = f_string_range_t_initialize;
@@ -73,14 +73,13 @@ void test__f_file_write_range__returns_file_closed(void **state) {
   {
     const f_status_t status = f_file_write_range(file, f_string_empty_s, range, 0);
 
-    assert_int_equal(F_status_set_fine(status), F_file_closed);
+    assert_int_equal(F_status_set_fine(status), F_file_descriptor_not);
   }
 }
 
 void test__f_file_write_range__returns_data_not(void **state) {
 
-  f_file_t file = f_file_t_initialize;
-  file.id = 0;
+  const f_file_t file = macro_f_file_t_initialize2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
 
   {
     const f_string_range_t range = f_string_range_t_initialize;

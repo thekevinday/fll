@@ -25,6 +25,13 @@ extern void test__f_file_descriptor__fails(void **state);
 extern void test__f_file_descriptor__parameter_checking(void **state);
 
 /**
+ * Test that function works but the stream is not valid.
+ *
+ * @see f_file_descriptor()
+ */
+extern void test__f_file_descriptor__returns_stream_not(void **state);
+
+/**
  * Test that function works.
  *
  * @see f_file_descriptor()

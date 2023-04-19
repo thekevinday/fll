@@ -5,72 +5,7 @@
 extern "C" {
 #endif
 
-void test__f_file_stream_close__fails_for_file_descriptor(void **state) {
-
-  int errno_flushs[] = {
-    EBADF,
-    EDQUOT,
-    EINVAL,
-    EIO,
-    ENOSPC,
-    EROFS,
-  };
-
-  int errno_closes[] = {
-    EBADF,
-    EDQUOT,
-    EINTR,
-    EIO,
-    ENOSPC,
-    mock_errno_generic,
-  };
-
-  f_status_t status_closes[] = {
-    F_file_descriptor,
-    F_filesystem_quota_block,
-    F_interrupt,
-    F_input_output,
-    F_space_not,
-    F_file_close,
-  };
-
-  for (uint8_t flush = 0; flush < 2; ++flush) {
-
-    for (int i = 0; i < 6; ++i) {
-
-      f_file_t file = f_file_t_initialize;
-      file.id = 0;
-      file.stream = 0;
-
-      if (flush) {
-        if (flush == 1) {
-          will_return(__wrap_fsync, true);
-          will_return(__wrap_fsync, errno_flushs[i]);
-        }
-        else {
-          will_return(__wrap_fsync, false);
-          will_return(__wrap_fsync, 0);
-        }
-
-        will_return(__wrap_close, true);
-        will_return(__wrap_close, errno_closes[i]);
-      }
-      else {
-        will_return(__wrap_close, true);
-        will_return(__wrap_close, errno_closes[i]);
-      }
-
-      const f_status_t status = f_file_stream_close(flush, &file);
-
-      assert_int_equal(F_status_set_fine(status), status_closes[i]);
-
-      assert_int_equal(file.id, -1);
-      assert_int_equal(file.stream, 0);
-    } // for
-  } // for
-}
-
-void test__f_file_stream_close__fails_for_stream(void **state) {
+void test__f_file_stream_close__fails(void **state) {
 
   int errnos[] = {
     EACCES,
@@ -116,54 +51,44 @@ void test__f_file_stream_close__fails_for_stream(void **state) {
     F_file_close,
   };
 
-  for (uint8_t flush = 0; flush < 2; ++flush) {
+  for (int i = 0; i < 19; ++i) {
 
-    for (int i = 0; i < 19; ++i) {
+    f_file_t file = macro_f_file_t_initialize2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
 
-      f_file_t file = f_file_t_initialize;
-      file.id = 0;
-      file.stream = F_type_input_d;
+    will_return(__wrap_fclose, true);
+    will_return(__wrap_fclose, errnos[i]);
 
-      if (flush) {
-        if (flush == 1) {
-          will_return(__wrap_fflush, true);
-          will_return(__wrap_fflush, errnos[i]);
-        }
-        else {
-          will_return(__wrap_fflush, false);
-          will_return(__wrap_fflush, 0);
-        }
+    const f_status_t status = f_file_stream_close(&file);
 
-        will_return(__wrap_fclose, true);
-        will_return(__wrap_fclose, errnos[i]);
-      }
-      else {
-        will_return(__wrap_fclose, true);
-        will_return(__wrap_fclose, errnos[i]);
-      }
-
-      const f_status_t status = f_file_stream_close(flush, &file);
-
-      assert_int_equal(F_status_set_fine(status), status_closes[i]);
-      assert_int_equal(file.id, -1);
-      assert_int_equal(file.stream, 0);
-    } // for
+    assert_int_equal(F_status_set_fine(status), status_closes[i]);
+    assert_int_equal(file.stream, 0);
   } // for
 }
 
 void test__f_file_stream_close__parameter_checking(void **state) {
 
   {
-    const f_status_t status = f_file_stream_close(F_false, 0);
+    const f_status_t status = f_file_stream_close(0);
 
     assert_int_equal(status, F_status_set_error(F_parameter));
+  }
+}
+
+void test__f_file_stream_close__returns_stream_not(void **state) {
+
+  f_file_t file = macro_f_file_t_initialize2(0, F_type_descriptor_output_d, F_file_flag_write_only_d);
+
+  {
+    const f_status_t status = f_file_stream_close(&file);
+
+    assert_int_equal(status, F_stream_not);
   }
 }
 
 void test__f_file_stream_close__works(void **state) {
 
   {
-    f_file_t file = f_file_t_initialize;
+    f_file_t file = macro_f_file_t_initialize2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
 
     file.id = 0;
     file.stream = F_type_input_d;
@@ -171,64 +96,9 @@ void test__f_file_stream_close__works(void **state) {
     will_return(__wrap_fclose, false);
     will_return(__wrap_fclose, 0);
 
-    const f_status_t status = f_file_stream_close(F_false, &file);
+    const f_status_t status = f_file_stream_close(&file);
 
     assert_int_equal(status, F_none);
-    assert_int_equal(file.id, -1);
-    assert_int_equal(file.stream, 0);
-  }
-
-  {
-    f_file_t file = f_file_t_initialize;
-
-    file.id = 0;
-    file.stream = 0;
-
-    will_return(__wrap_close, false);
-    will_return(__wrap_close, 0);
-
-    const f_status_t status = f_file_stream_close(F_false, &file);
-
-    assert_int_equal(status, F_none);
-    assert_int_equal(file.id, -1);
-    assert_int_equal(file.stream, 0);
-  }
-
-  {
-    f_file_t file = f_file_t_initialize;
-
-    file.id = 0;
-    file.stream = F_type_input_d;
-
-    will_return(__wrap_fflush, false);
-    will_return(__wrap_fflush, 0);
-
-    will_return(__wrap_fclose, false);
-    will_return(__wrap_fclose, 0);
-
-    const f_status_t status = f_file_stream_close(F_true, &file);
-
-    assert_int_equal(status, F_none);
-    assert_int_equal(file.id, -1);
-    assert_int_equal(file.stream, 0);
-  }
-
-  {
-    f_file_t file = f_file_t_initialize;
-
-    file.id = 0;
-    file.stream = 0;
-
-    will_return(__wrap_fsync, false);
-    will_return(__wrap_fsync, 0);
-
-    will_return(__wrap_close, false);
-    will_return(__wrap_close, 0);
-
-    const f_status_t status = f_file_stream_close(F_true, &file);
-
-    assert_int_equal(status, F_none);
-    assert_int_equal(file.id, -1);
     assert_int_equal(file.stream, 0);
   }
 }

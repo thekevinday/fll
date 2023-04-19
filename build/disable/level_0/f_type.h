@@ -30,7 +30,7 @@
 #define _di_f_status_t_
 #define _di_f_time_spec_t_
 #define _di_f_time_t_
-#define _di_f_type_file_defaults_
+#define _di_f_type_file_defaults_d_
 #define _di_f_type_input_output_d_
 #define _di_f_type_number_64_t_
 #define _di_f_type_sizes_d_

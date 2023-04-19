@@ -18,6 +18,13 @@
 extern void test__f_file_flush__fails(void **state);
 
 /**
+ * Test that function works but the descriptor is not valid.
+ *
+ * @see f_file_flush()
+ */
+extern void test__f_file_flush__returns_file_descriptor_not(void **state);
+
+/**
  * Test that function works.
  *
  * @see f_file_flush()

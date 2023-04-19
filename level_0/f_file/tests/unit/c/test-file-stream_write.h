@@ -25,11 +25,11 @@ extern void test__f_file_stream_write__fails(void **state);
 extern void test__f_file_stream_write__parameter_checking(void **state);
 
 /**
- * Test that function works but the file stream is closed.
+ * Test that function works but the stream is not valid.
  *
  * @see f_file_stream_write()
  */
-extern void test__f_file_stream_write__returns_file_closed(void **state);
+extern void test__f_file_stream_write__returns_stream_not(void **state);
 
 /**
  * Test that function works but the path is empty.

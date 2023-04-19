@@ -7,6 +7,7 @@ extern "C" {
 
 void test__f_file_is_at__fails(void **state) {
 
+  const f_file_t file = macro_f_file_t_initialize2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
   const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
 
   int errnos[] = {
@@ -53,7 +54,7 @@ void test__f_file_is_at__fails(void **state) {
       will_return(__wrap_fstatat, true);
       will_return(__wrap_fstatat, errnos[i]);
 
-      const f_status_t status = f_file_is_at(0, path, types[j], 0);
+      const f_status_t status = f_file_is_at(file, path, types[j], 0);
 
       assert_int_equal(status, statuss[i]);
     } // for
@@ -62,15 +63,29 @@ void test__f_file_is_at__fails(void **state) {
 
 void test__f_file_is_at__returns_data_not(void **state) {
 
+  const f_file_t file = macro_f_file_t_initialize2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
+
   {
-    const f_status_t status = f_file_is_at(0, f_string_empty_s, 0, 0);
+    const f_status_t status = f_file_is_at(file, f_string_empty_s, 0, 0);
 
     assert_int_equal(status, F_data_not);
   }
 }
 
+void test__f_file_is_at__returns_file_descriptor_not(void **state) {
+
+  const f_file_t file = macro_f_file_t_initialize2(F_type_output_d, -1, F_file_flag_write_only_d);
+
+  {
+    const f_status_t status = f_file_is_at(file, f_string_empty_s, 0, 0);
+
+    assert_int_equal(status, F_file_descriptor_not);
+  }
+}
+
 void test__f_file_is_at__returns_false(void **state) {
 
+  const f_file_t file = macro_f_file_t_initialize2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
   const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
 
   f_status_t types[] = {
@@ -101,7 +116,7 @@ void test__f_file_is_at__returns_false(void **state) {
       will_return(__wrap_fstatat, &statistics);
       will_return(__wrap_fstatat, 0);
 
-      const f_status_t status = f_file_is_at(0, path, types[i], 0);
+      const f_status_t status = f_file_is_at(file, path, types[i], 0);
 
       assert_int_equal(status, F_false);
     } // for
@@ -110,6 +125,7 @@ void test__f_file_is_at__returns_false(void **state) {
 
 void test__f_file_is_at__returns_true(void **state) {
 
+  const f_file_t file = macro_f_file_t_initialize2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
   const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
 
   f_status_t types[] = {
@@ -140,7 +156,7 @@ void test__f_file_is_at__returns_true(void **state) {
       will_return(__wrap_fstatat, &statistics);
       will_return(__wrap_fstatat, 0);
 
-      const f_status_t status = f_file_is_at(0, path, types[i], 0);
+      const f_status_t status = f_file_is_at(file, path, types[i], 0);
 
       assert_int_equal(status, F_true);
     } // for

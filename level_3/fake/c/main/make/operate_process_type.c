@@ -305,10 +305,10 @@ extern "C" {
         }
         else if (main->setting.state.status == F_false) {
           if (clone) {
-            main->setting.state.status = f_file_clone(main->cache_arguments.array[i], main->cache_map.name, F_file_default_write_size_d, f_file_stat_flag_group_e | f_file_stat_flag_owner_e | (f_directory_recurse_do_flag_dereference_e ? 0 : f_file_stat_flag_reference_e));
+            main->setting.state.status = f_file_clone(main->cache_arguments.array[i], main->cache_map.name, F_file_default_size_write_d, f_file_stat_flag_group_e | f_file_stat_flag_owner_e | (f_directory_recurse_do_flag_dereference_e ? 0 : f_file_stat_flag_reference_e));
           }
           else {
-            main->setting.state.status = f_file_copy(main->cache_arguments.array[i], main->cache_map.name, main->cache_recurse_do.mode, F_file_default_write_size_d, f_directory_recurse_do_flag_dereference_e ? 0 : f_file_stat_flag_reference_e);
+            main->setting.state.status = f_file_copy(main->cache_arguments.array[i], main->cache_map.name, main->cache_recurse_do.mode, F_file_default_size_write_d, f_directory_recurse_do_flag_dereference_e ? 0 : f_file_stat_flag_reference_e);
           }
 
           if (F_status_is_error(main->setting.state.status)) {

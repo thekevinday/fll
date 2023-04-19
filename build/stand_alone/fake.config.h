@@ -397,7 +397,6 @@
 #define _di_f_file_descriptor_
 //#define _di_f_file_exists_
 #define _di_f_file_exists_at_
-//#define _di_f_file_flag_d_
 //#define _di_f_file_flush_
 //#define _di_f_file_group_read_
 //#define _di_f_file_is_
@@ -1941,7 +1940,8 @@
 #define _di_f_time_t_
 
 //#define _di_f_type_d_
-//#define _di_f_type_file_defaults_
+//#define _di_f_type_file_defaults_d_
+//#define _di_f_type_file_flag_d_
 //#define _di_f_type_number_64_t_
 //#define _di_f_type_sizes_d_
 

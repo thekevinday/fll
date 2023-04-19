@@ -32,6 +32,13 @@ extern void test__f_file_stat_at__parameter_checking(void **state);
 extern void test__f_file_stat_at__returns_data_not(void **state);
 
 /**
+ * Test that function works but the descriptor is not valid.
+ *
+ * @see f_file_stat_at()
+ */
+extern void test__f_file_stat_at__returns_file_descriptor_not(void **state);
+
+/**
  * Test that function works.
  *
  * @see f_file_stat_at()

@@ -25,11 +25,11 @@ extern void test__f_file_stat_by_id__fails(void **state);
 extern void test__f_file_stat_by_id__parameter_checking(void **state);
 
 /**
- * Test that function works but the file is closed.
+ * Test that function works but the descriptor is not valid.
  *
  * @see f_file_stat_by_id()
  */
-extern void test__f_file_stat_by_id__returns_file_closed(void **state);
+extern void test__f_file_stat_by_id__returns_file_descriptor_not(void **state);
 
 /**
  * Test that function works.

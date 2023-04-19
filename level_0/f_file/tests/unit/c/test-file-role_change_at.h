@@ -32,6 +32,13 @@ extern void test__f_file_role_change_at__fails_for_reference(void **state);
 extern void test__f_file_role_change_at__returns_data_not(void **state);
 
 /**
+ * Test that function works but the descriptor is not valid.
+ *
+ * @see f_file_role_change_at()
+ */
+extern void test__f_file_role_change_at__returns_file_descriptor_not(void **state);
+
+/**
  * Test that function works for dereferenced files.
  *
  * @see f_file_role_change_at()

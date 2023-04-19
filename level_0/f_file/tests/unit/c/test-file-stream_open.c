@@ -107,15 +107,12 @@ void test__f_file_stream_open__returns_data_not(void **state) {
 void test__f_file_stream_open__works(void **state) {
 
   const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
-  const int id = 1;
 
   {
     f_file_t file = f_file_t_initialize;
 
     will_return(__wrap_fopen, false);
     will_return(__wrap_fopen, F_type_output_d);
-
-    will_return(__wrap_fileno, id);
 
     const f_status_t status = f_file_stream_open(path, path, &file);
 
@@ -128,8 +125,6 @@ void test__f_file_stream_open__works(void **state) {
 
     will_return(__wrap_fopen, false);
     will_return(__wrap_fopen, F_type_output_d);
-
-    will_return(__wrap_fileno, id);
 
     const f_status_t status = f_file_stream_open(path, f_string_empty_s, &file);
 

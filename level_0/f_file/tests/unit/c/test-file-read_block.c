@@ -81,7 +81,7 @@ void test__f_file_read_block__parameter_checking(void **state) {
   f_string_dynamic_resize(0, &buffer);
 }
 
-void test__f_file_read_block__returns_file_closed(void **state) {
+void test__f_file_read_block__returns_file_descriptor_not(void **state) {
 
   f_file_t file = f_file_t_initialize;
   f_string_dynamic_t buffer = f_string_dynamic_t_initialize;
@@ -89,7 +89,7 @@ void test__f_file_read_block__returns_file_closed(void **state) {
   {
     const f_status_t status = f_file_read_block(file, &buffer);
 
-    assert_int_equal(F_status_set_fine(status), F_file_closed);
+    assert_int_equal(F_status_set_fine(status), F_file_descriptor_not);
   }
 
   f_string_dynamic_resize(0, &buffer);

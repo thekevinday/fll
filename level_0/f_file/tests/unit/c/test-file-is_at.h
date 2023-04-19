@@ -25,6 +25,13 @@ extern void test__f_file_is_at__fails(void **state);
 extern void test__f_file_is_at__returns_data_not(void **state);
 
 /**
+ * Test that function works but the path is empty.
+ *
+ * @see f_file_is_at()
+ */
+extern void test__f_file_is_at__returns_file_descriptor_not(void **state);
+
+/**
  * Test that function works and returns F_false.
  *
  * @see f_file_is_at()

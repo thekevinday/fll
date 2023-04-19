@@ -11,13 +11,6 @@
 #define _TEST__F_file_is_stat_h
 
 /**
- * Test that function fails.
- *
- * @see f_file_is_stat()
- */
-extern void test__f_file_is_stat__fails(void **state);
-
-/**
  * Test that function works and returns F_false.
  *
  * @see f_file_is_stat()

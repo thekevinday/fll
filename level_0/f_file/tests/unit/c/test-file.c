@@ -25,6 +25,7 @@ int main(void) {
 
     cmocka_unit_test(test__f_file_access_at__fails),
     cmocka_unit_test(test__f_file_access_at__returns_data_not),
+    cmocka_unit_test(test__f_file_access_at__returns_file_descriptor_not),
     cmocka_unit_test(test__f_file_access_at__works),
 
     cmocka_unit_test(test__f_file_clone__fails_during_read_write),
@@ -36,12 +37,8 @@ int main(void) {
     cmocka_unit_test(test__f_file_clone__works_for_link),
 
     cmocka_unit_test(test__f_file_close__fails),
+    cmocka_unit_test(test__f_file_close__returns_file_descriptor_not),
     cmocka_unit_test(test__f_file_close__works),
-    cmocka_unit_test(test__f_file_close__works_already_closed),
-
-    cmocka_unit_test(test__f_file_close_flush__fails),
-    cmocka_unit_test(test__f_file_close_flush__works),
-    cmocka_unit_test(test__f_file_close_flush__works_already_closed),
 
     cmocka_unit_test(test__f_file_copy__fails_during_read_write),
     cmocka_unit_test(test__f_file_copy__fails_for_block),
@@ -66,6 +63,7 @@ int main(void) {
 
     cmocka_unit_test(test__f_file_create_at__fails),
     cmocka_unit_test(test__f_file_create_at__returns_data_not),
+    cmocka_unit_test(test__f_file_create_at__returns_file_descriptor_not),
     cmocka_unit_test(test__f_file_create_at__works),
 
     cmocka_unit_test(test__f_file_create_device__fails),
@@ -75,6 +73,7 @@ int main(void) {
 
     cmocka_unit_test(test__f_file_create_device_at__fails),
     cmocka_unit_test(test__f_file_create_device_at__returns_data_not),
+    cmocka_unit_test(test__f_file_create_device_at__returns_file_descriptor_not),
     cmocka_unit_test(test__f_file_create_device_at__returns_supported_not),
     cmocka_unit_test(test__f_file_create_device_at__works),
 
@@ -84,6 +83,7 @@ int main(void) {
 
     cmocka_unit_test(test__f_file_create_fifo_at__fails),
     cmocka_unit_test(test__f_file_create_fifo_at__returns_data_not),
+    cmocka_unit_test(test__f_file_create_fifo_at__returns_file_descriptor_not),
     cmocka_unit_test(test__f_file_create_fifo_at__works),
 
     cmocka_unit_test(test__f_file_create_node__fails),
@@ -93,10 +93,12 @@ int main(void) {
 
     cmocka_unit_test(test__f_file_create_node_at__fails),
     cmocka_unit_test(test__f_file_create_node_at__returns_data_not),
+    cmocka_unit_test(test__f_file_create_node_at__returns_file_descriptor_not),
     cmocka_unit_test(test__f_file_create_node_at__returns_supported_not),
     cmocka_unit_test(test__f_file_create_node_at__works),
 
     cmocka_unit_test(test__f_file_descriptor__fails),
+    cmocka_unit_test(test__f_file_descriptor__returns_stream_not),
     cmocka_unit_test(test__f_file_descriptor__works),
 
     cmocka_unit_test(test__f_file_exists__fails),
@@ -105,9 +107,11 @@ int main(void) {
 
     cmocka_unit_test(test__f_file_exists_at__fails),
     cmocka_unit_test(test__f_file_exists_at__returns_data_not),
+    cmocka_unit_test(test__f_file_exists_at__returns_file_descriptor_not),
     cmocka_unit_test(test__f_file_exists_at__works),
 
     cmocka_unit_test(test__f_file_flush__fails),
+    cmocka_unit_test(test__f_file_flush__returns_file_descriptor_not),
     cmocka_unit_test(test__f_file_flush__works),
 
     cmocka_unit_test(test__f_file_group_read__fails),
@@ -121,10 +125,10 @@ int main(void) {
 
     cmocka_unit_test(test__f_file_is_at__fails),
     cmocka_unit_test(test__f_file_is_at__returns_data_not),
+    cmocka_unit_test(test__f_file_is_at__returns_file_descriptor_not),
     cmocka_unit_test(test__f_file_is_at__returns_false),
     cmocka_unit_test(test__f_file_is_at__returns_true),
 
-    cmocka_unit_test(test__f_file_is_stat__fails),
     cmocka_unit_test(test__f_file_is_stat__returns_false),
     cmocka_unit_test(test__f_file_is_stat__returns_true),
 
@@ -134,6 +138,7 @@ int main(void) {
 
     cmocka_unit_test(test__f_file_link_at__fails),
     cmocka_unit_test(test__f_file_link_at__returns_data_not),
+    cmocka_unit_test(test__f_file_link_at__returns_file_descriptor_not),
     cmocka_unit_test(test__f_file_link_at__works),
 
     cmocka_unit_test(test__f_file_link_hard__fails),
@@ -142,6 +147,7 @@ int main(void) {
 
     cmocka_unit_test(test__f_file_link_hard_at__fails),
     cmocka_unit_test(test__f_file_link_hard_at__returns_data_not),
+    cmocka_unit_test(test__f_file_link_hard_at__returns_file_descriptor_not),
     cmocka_unit_test(test__f_file_link_hard_at__works),
 
     cmocka_unit_test(test__f_file_link_read__fails),
@@ -150,6 +156,7 @@ int main(void) {
 
     cmocka_unit_test(test__f_file_link_read_at__fails),
     cmocka_unit_test(test__f_file_link_read_at__returns_data_not),
+    cmocka_unit_test(test__f_file_link_read_at__returns_file_descriptor_not),
     cmocka_unit_test(test__f_file_link_read_at__works),
 
     cmocka_unit_test(test__f_file_mode_determine__works_basic),
@@ -166,6 +173,7 @@ int main(void) {
 
     cmocka_unit_test(test__f_file_mode_read_at__fails),
     cmocka_unit_test(test__f_file_mode_read_at__returns_data_not),
+    cmocka_unit_test(test__f_file_mode_read_at__returns_file_descriptor_not),
     cmocka_unit_test(test__f_file_mode_read_at__works),
 
     cmocka_unit_test(test__f_file_mode_set__fails),
@@ -174,6 +182,7 @@ int main(void) {
 
     cmocka_unit_test(test__f_file_mode_set_at__fails),
     cmocka_unit_test(test__f_file_mode_set_at__returns_data_not),
+    cmocka_unit_test(test__f_file_mode_set_at__returns_file_descriptor_not),
     cmocka_unit_test(test__f_file_mode_set_at__works),
 
     cmocka_unit_test(test__f_file_mode_to_mode__works),
@@ -190,6 +199,7 @@ int main(void) {
 
     cmocka_unit_test(test__f_file_open_at__fails),
     cmocka_unit_test(test__f_file_open_at__returns_data_not),
+    cmocka_unit_test(test__f_file_open_at__returns_file_descriptor_not),
     cmocka_unit_test(test__f_file_open_at__works),
 
     cmocka_unit_test(test__f_file_owner_read__fails),
@@ -197,15 +207,15 @@ int main(void) {
     cmocka_unit_test(test__f_file_owner_read__works),
 
     cmocka_unit_test(test__f_file_read__fails),
-    cmocka_unit_test(test__f_file_read__returns_file_closed),
+    cmocka_unit_test(test__f_file_read__returns_file_descriptor_not),
     cmocka_unit_test(test__f_file_read__works),
 
     cmocka_unit_test(test__f_file_read_block__fails),
-    cmocka_unit_test(test__f_file_read_block__returns_file_closed),
+    cmocka_unit_test(test__f_file_read_block__returns_file_descriptor_not),
     cmocka_unit_test(test__f_file_read_block__works),
 
     cmocka_unit_test(test__f_file_read_until__fails),
-    cmocka_unit_test(test__f_file_read_until__returns_file_closed),
+    cmocka_unit_test(test__f_file_read_until__returns_file_descriptor_not),
     cmocka_unit_test(test__f_file_read_until__works),
 
     cmocka_unit_test(test__f_file_remove__fails),
@@ -214,6 +224,7 @@ int main(void) {
 
     cmocka_unit_test(test__f_file_remove_at__fails),
     cmocka_unit_test(test__f_file_remove_at__returns_data_not),
+    cmocka_unit_test(test__f_file_remove_at__returns_file_descriptor_not),
     cmocka_unit_test(test__f_file_remove_at__works),
 
     cmocka_unit_test(test__f_file_rename__fails),
@@ -222,6 +233,7 @@ int main(void) {
 
     cmocka_unit_test(test__f_file_rename_at__fails),
     cmocka_unit_test(test__f_file_rename_at__returns_data_not),
+    cmocka_unit_test(test__f_file_rename_at__returns_file_descriptor_not),
     cmocka_unit_test(test__f_file_rename_at__works),
 
     cmocka_unit_test(test__f_file_role_change__fails_for_dereference),
@@ -233,10 +245,12 @@ int main(void) {
     cmocka_unit_test(test__f_file_role_change_at__fails_for_dereference),
     cmocka_unit_test(test__f_file_role_change_at__fails_for_reference),
     cmocka_unit_test(test__f_file_role_change_at__returns_data_not),
+    cmocka_unit_test(test__f_file_role_change_at__returns_file_descriptor_not),
     cmocka_unit_test(test__f_file_role_change_at__works_for_dereference),
     cmocka_unit_test(test__f_file_role_change_at__works_for_reference),
 
     cmocka_unit_test(test__f_file_seek__fails),
+    cmocka_unit_test(test__f_file_seek__returns_file_descriptor_not),
     cmocka_unit_test(test__f_file_seek__works),
 
     cmocka_unit_test(test__f_file_size__fails),
@@ -245,10 +259,11 @@ int main(void) {
 
     cmocka_unit_test(test__f_file_size_at__fails),
     cmocka_unit_test(test__f_file_size_at__returns_data_not),
+    cmocka_unit_test(test__f_file_size_at__returns_file_descriptor_not),
     cmocka_unit_test(test__f_file_size_at__works),
 
-    cmocka_unit_test(test__f_file_size_by_id__fails),
-    cmocka_unit_test(test__f_file_size_by_id__returns_file_closed),
+    cmocka_unit_test(test__f_file_stat_by_id__fails),
+    cmocka_unit_test(test__f_file_size_by_id__returns_file_descriptor_not),
     cmocka_unit_test(test__f_file_size_by_id__works),
 
     cmocka_unit_test(test__f_file_stat__fails),
@@ -257,14 +272,15 @@ int main(void) {
 
     cmocka_unit_test(test__f_file_stat_at__fails),
     cmocka_unit_test(test__f_file_stat_at__returns_data_not),
+    cmocka_unit_test(test__f_file_stat_at__returns_file_descriptor_not),
     cmocka_unit_test(test__f_file_stat_at__works),
 
     cmocka_unit_test(test__f_file_stat_by_id__fails),
-    cmocka_unit_test(test__f_file_stat_by_id__returns_file_closed),
+    cmocka_unit_test(test__f_file_stat_by_id__returns_file_descriptor_not),
     cmocka_unit_test(test__f_file_stat_by_id__works),
 
-    cmocka_unit_test(test__f_file_stream_close__fails_for_file_descriptor),
-    cmocka_unit_test(test__f_file_stream_close__fails_for_stream),
+    cmocka_unit_test(test__f_file_stream_close__fails),
+    cmocka_unit_test(test__f_file_stream_close__returns_stream_not),
     cmocka_unit_test(test__f_file_stream_close__works),
 
     // __wrap_fdopen does not appear to be working.
@@ -276,15 +292,15 @@ int main(void) {
     cmocka_unit_test(test__f_file_stream_open__works),
 
     cmocka_unit_test(test__f_file_stream_read__fails),
-    cmocka_unit_test(test__f_file_stream_read__returns_file_closed),
+    cmocka_unit_test(test__f_file_stream_read__returns_stream_not),
     cmocka_unit_test(test__f_file_stream_read__works),
 
     cmocka_unit_test(test__f_file_stream_read_block__fails),
-    cmocka_unit_test(test__f_file_stream_read_block__returns_file_closed),
+    cmocka_unit_test(test__f_file_stream_read_block__returns_stream_not),
     cmocka_unit_test(test__f_file_stream_read_block__works),
 
     cmocka_unit_test(test__f_file_stream_read_until__fails),
-    cmocka_unit_test(test__f_file_stream_read_until__returns_file_closed),
+    cmocka_unit_test(test__f_file_stream_read_until__returns_stream_not),
     cmocka_unit_test(test__f_file_stream_read_until__works),
 
     cmocka_unit_test(test__f_file_stream_reopen__fails),
@@ -292,23 +308,23 @@ int main(void) {
     cmocka_unit_test(test__f_file_stream_reopen__works),
 
     cmocka_unit_test(test__f_file_stream_write__fails),
-    cmocka_unit_test(test__f_file_stream_write__returns_file_closed),
     cmocka_unit_test(test__f_file_stream_write__returns_data_not),
+    cmocka_unit_test(test__f_file_stream_write__returns_stream_not),
     cmocka_unit_test(test__f_file_stream_write__works),
 
     cmocka_unit_test(test__f_file_stream_write_block__fails),
-    cmocka_unit_test(test__f_file_stream_write_block__returns_file_closed),
     cmocka_unit_test(test__f_file_stream_write_block__returns_data_not),
+    cmocka_unit_test(test__f_file_stream_write_block__returns_stream_not),
     cmocka_unit_test(test__f_file_stream_write_block__works),
 
     cmocka_unit_test(test__f_file_stream_write_range__fails),
-    cmocka_unit_test(test__f_file_stream_write_range__returns_file_closed),
     cmocka_unit_test(test__f_file_stream_write_range__returns_data_not),
+    cmocka_unit_test(test__f_file_stream_write_range__returns_stream_not),
     cmocka_unit_test(test__f_file_stream_write_range__works),
 
     cmocka_unit_test(test__f_file_stream_write_until__fails),
-    cmocka_unit_test(test__f_file_stream_write_until__returns_file_closed),
     cmocka_unit_test(test__f_file_stream_write_until__returns_data_not),
+    cmocka_unit_test(test__f_file_stream_write_until__returns_stream_not),
     cmocka_unit_test(test__f_file_stream_write_until__works),
 
     cmocka_unit_test(test__f_file_touch__fails),
@@ -317,6 +333,7 @@ int main(void) {
 
     cmocka_unit_test(test__f_file_touch_at__fails),
     cmocka_unit_test(test__f_file_touch_at__returns_data_not),
+    cmocka_unit_test(test__f_file_touch_at__returns_file_descriptor_not),
     cmocka_unit_test(test__f_file_touch_at__works),
 
     cmocka_unit_test(test__f_file_type__fails),
@@ -325,6 +342,7 @@ int main(void) {
 
     cmocka_unit_test(test__f_file_type_at__fails),
     cmocka_unit_test(test__f_file_type_at__returns_data_not),
+    cmocka_unit_test(test__f_file_type_at__returns_file_descriptor_not),
     cmocka_unit_test(test__f_file_type_at__works),
 
     cmocka_unit_test(test__f_file_umask_get__works),
@@ -332,22 +350,22 @@ int main(void) {
     cmocka_unit_test(test__f_file_umask_set__works),
 
     cmocka_unit_test(test__f_file_write__fails),
-    cmocka_unit_test(test__f_file_write__returns_file_closed),
+    cmocka_unit_test(test__f_file_write__returns_file_descriptor_not),
     cmocka_unit_test(test__f_file_write__returns_data_not),
     cmocka_unit_test(test__f_file_write__works),
 
     cmocka_unit_test(test__f_file_write_block__fails),
-    cmocka_unit_test(test__f_file_write_block__returns_file_closed),
+    cmocka_unit_test(test__f_file_write_block__returns_file_descriptor_not),
     cmocka_unit_test(test__f_file_write_block__returns_data_not),
     cmocka_unit_test(test__f_file_write_block__works),
 
     cmocka_unit_test(test__f_file_write_range__fails),
-    cmocka_unit_test(test__f_file_write_range__returns_file_closed),
+    cmocka_unit_test(test__f_file_write_range__returns_file_descriptor_not),
     cmocka_unit_test(test__f_file_write_range__returns_data_not),
     cmocka_unit_test(test__f_file_write_range__works),
 
     cmocka_unit_test(test__f_file_write_until__fails),
-    cmocka_unit_test(test__f_file_write_until__returns_file_closed),
+    cmocka_unit_test(test__f_file_write_until__returns_file_descriptor_not),
     cmocka_unit_test(test__f_file_write_until__returns_data_not),
     cmocka_unit_test(test__f_file_write_until__works),
 
@@ -356,7 +374,6 @@ int main(void) {
       // f_file_access_at() doesn't use parameter checking.
       // f_file_clone() doesn't use parameter checking.
       cmocka_unit_test(test__f_file_close__parameter_checking),
-      cmocka_unit_test(test__f_file_close_flush__parameter_checking),
       // f_file_copy() doesn't use parameter checking.
       // f_file_create() doesn't use parameter checking.
       // f_file_create_at() doesn't use parameter checking.

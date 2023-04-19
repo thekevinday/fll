@@ -25,17 +25,17 @@ extern void test__f_file_close__fails(void **state);
 extern void test__f_file_close__parameter_checking(void **state);
 
 /**
+ * Test that function works but the descriptor is not valid.
+ *
+ * @see f_file_close()
+ */
+extern void test__f_file_close__returns_file_descriptor_not(void **state);
+
+/**
  * Test that function works.
  *
  * @see f_file_close()
  */
 extern void test__f_file_close__works(void **state);
-
-/**
- * Test that function works when already closed.
- *
- * @see f_file_close()
- */
-extern void test__f_file_close__works_already_closed(void **state);
 
 #endif // _TEST__F_file_close_h

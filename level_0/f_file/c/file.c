@@ -92,7 +92,7 @@ extern "C" {
         if (F_status_is_error(status)) return status;
       }
 
-      return private_f_file_copy_content(source, destination, size_block == 0 ? F_file_default_read_size_d : size_block);
+      return private_f_file_copy_content(source, destination, size_block == 0 ? F_file_default_size_read_d : size_block);
     }
 
     if (macro_f_file_type_is_link(source_stat.st_mode)) {
@@ -152,7 +152,7 @@ extern "C" {
       status = private_f_file_mode_set(destination, (~F_file_type_mask_d) & mode.regular);
       if (F_status_is_error(status)) return status;
 
-      return private_f_file_copy_content(source, destination, size_block == 0 ? F_file_default_read_size_d : size_block);
+      return private_f_file_copy_content(source, destination, size_block == 0 ? F_file_default_size_read_d : size_block);
     }
 
     if (macro_f_file_type_is_directory(source_stat.st_mode)) {

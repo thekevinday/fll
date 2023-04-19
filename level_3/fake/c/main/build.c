@@ -288,7 +288,7 @@ extern "C" {
 
         fake_print_verbose_copying(&main->program.message, main->cache_2, main->cache_map.value);
 
-        main->setting.state.status = f_file_copy(main->cache_2, main->cache_map.value, mode, F_file_default_read_size_d, f_file_stat_flag_reference_e);
+        main->setting.state.status = f_file_copy(main->cache_2, main->cache_map.value, mode, F_file_default_size_read_d, f_file_stat_flag_reference_e);
 
         if (F_status_is_error(main->setting.state.status)) {
           fake_print_error_build_operation_file(&main->program.error, macro_fake_f(f_file_copy), f_file_operation_copy_s, main->cache_2, main->cache_map.value, f_file_operation_to_s, F_true);

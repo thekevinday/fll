@@ -61,12 +61,12 @@ void test__f_file_open_at__fails(void **state) {
 
   for (int i = 0; i < 22; ++i) {
 
-    f_file_t file = f_file_t_initialize;
+    f_file_t file = macro_f_file_t_initialize2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
 
     will_return(__wrap_openat, true);
     will_return(__wrap_openat, errnos[i]);
 
-    const f_status_t status = f_file_open_at(0, path, 0, &file);
+    const f_status_t status = f_file_open_at(file, path, 0, &file);
 
     assert_int_equal(status, F_status_set_error(statuss[i]));
   } // for
@@ -75,7 +75,9 @@ void test__f_file_open_at__fails(void **state) {
 void test__f_file_open_at__parameter_checking(void **state) {
 
   {
-    const f_status_t status = f_file_open_at(0, f_string_empty_s, 0, 0);
+    f_file_t file = macro_f_file_t_initialize2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
+
+    const f_status_t status = f_file_open_at(file, f_string_empty_s, 0, 0);
 
     assert_int_equal(status, F_status_set_error(F_parameter));
   }
@@ -84,11 +86,22 @@ void test__f_file_open_at__parameter_checking(void **state) {
 void test__f_file_open_at__returns_data_not(void **state) {
 
   {
-    f_file_t file = f_file_t_initialize;
+    f_file_t file = macro_f_file_t_initialize2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
 
-    const f_status_t status = f_file_open_at(0, f_string_empty_s, 0, &file);
+    const f_status_t status = f_file_open_at(file, f_string_empty_s, 0, &file);
 
     assert_int_equal(status, F_data_not);
+  }
+}
+
+void test__f_file_open_at__returns_file_descriptor_not(void **state) {
+
+  {
+    f_file_t file = macro_f_file_t_initialize2(F_type_output_d, -1, F_file_flag_write_only_d);
+
+    const f_status_t status = f_file_open_at(file, f_string_empty_s, 0, &file);
+
+    assert_int_equal(status, F_file_descriptor_not);
   }
 }
 
@@ -97,12 +110,12 @@ void test__f_file_open_at__works(void **state) {
   const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
 
   {
-    f_file_t file = f_file_t_initialize;
+    f_file_t file = macro_f_file_t_initialize2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
 
     will_return(__wrap_openat, false);
     will_return(__wrap_openat, 5);
 
-    const f_status_t status = f_file_open_at(0, path, F_false, &file);
+    const f_status_t status = f_file_open_at(file, path, F_false, &file);
 
     assert_int_equal(status, F_none);
     assert_int_equal(file.id, 5);

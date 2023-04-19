@@ -25,6 +25,13 @@ extern void test__f_file_create_device_at__fails(void **state);
 extern void test__f_file_create_device_at__returns_data_not(void **state);
 
 /**
+ * Test that function works but the descriptor is not valid.
+ *
+ * @see f_file_create_device_at()
+ */
+extern void test__f_file_create_device_at__returns_file_descriptor_not(void **state);
+
+/**
  * Test that function works but the file type is not supported (specified via mode).
  *
  * @see f_file_create_device_at()
