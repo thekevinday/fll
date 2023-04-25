@@ -18,13 +18,6 @@
 extern void test__f_file_write__fails(void **state);
 
 /**
- * Test that parameter checking works as expected.
- *
- * @see f_file_write()
- */
-extern void test__f_file_write__parameter_checking(void **state);
-
-/**
  * Test that function works but the descriptor is not valid.
  *
  * @see f_file_write()

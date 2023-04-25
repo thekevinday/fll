@@ -1999,7 +1999,7 @@ extern "C" {
 #ifndef _di_f_file_touch_at_
   f_status_t f_file_touch_at(const f_file_t directory, const f_string_static_t path, const mode_t mode, const int flag) {
 
-    if (directory.id == -1) return F_stream_not;
+    if (directory.id == -1) return F_file_descriptor_not;
     if (!path.used) return F_data_not;
 
     struct stat stat_file;
@@ -2065,7 +2065,7 @@ extern "C" {
       if (!type) return F_status_set_error(F_parameter);
     #endif // _di_level_0_parameter_checking_
 
-    if (directory.id == -1) return F_stream_not;
+    if (directory.id == -1) return F_file_descriptor_not;
     if (!path.used) return F_data_not;
 
     struct stat stat_file;
@@ -2114,7 +2114,7 @@ extern "C" {
     if (file.id == -1 || !buffer.used || !file.size_write) {
       if (written) *written = 0;
 
-      return file.id == -1 ? F_stream_not : F_data_not;
+      return file.id == -1 ? F_file_descriptor_not : F_data_not;
     }
 
     if (written) {
@@ -2142,7 +2142,7 @@ extern "C" {
     if (file.id == -1 || !buffer.used || !file.size_write) {
       if (written) *written = 0;
 
-      return file.id == -1 ? F_stream_not : F_data_not;
+      return file.id == -1 ? F_file_descriptor_not : F_data_not;
     }
 
     const f_array_length_t write_max = file.size_write > buffer.used ? buffer.used : file.size_write;
@@ -2178,7 +2178,7 @@ extern "C" {
     if (file.id == -1 || !buffer.used || !total || !file.size_write) {
       if (written) *written = 0;
 
-      return file.id == -1 ? F_stream_not : F_data_not;
+      return file.id == -1 ? F_file_descriptor_not : F_data_not;
     }
 
     const f_array_length_t write_max = total > buffer.used ? buffer.used : total;
@@ -2216,7 +2216,7 @@ extern "C" {
         *written = 0;
       }
 
-      return file.id == -1 ? F_stream_not : F_data_not;
+      return file.id == -1 ? F_file_descriptor_not : F_data_not;
     }
 
     const f_array_length_t write_max = (range.stop - range.start) + 1 > buffer.used ? buffer.used : (range.stop - range.start) + 1;

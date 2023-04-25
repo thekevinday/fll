@@ -2126,10 +2126,10 @@ extern "C" {
  *
  * @return
  *   F_none on success.
+ *   F_file_descriptor_not if file.id is -1.
+ *
  *   F_access_denied (with error bit) on access denied.
  *   F_buffer (with error bit) if the buffer is invalid.
- *   F_stream_not if file.stream is NULL.
- *
  *   F_busy (with error bit) if file system is too busy to perform write.
  *   F_directory_descriptor (with error bit) when at_id is not a valid file descriptor (at_id must point to a directory).
  *   F_directory_not (with error bit) if a supposed directory in path is not actually a directory.
@@ -2200,8 +2200,8 @@ extern "C" {
  *
  * @return
  *   F_none if path was found and and the type was loaded in the type parameter.
+ *   F_file_descriptor_not if file.id is -1.
  *   F_file_found_not if the path was not found.
- *   F_stream_not if file.stream is NULL.
  *
  *   F_access_denied (with error bit) if access to the file was denied.
  *   F_directory_descriptor (with error bit) when at_id is not a valid file descriptor (at_id must point to a directory).
@@ -2269,7 +2269,7 @@ extern "C" {
  *   F_none on success.
  *   F_none_eos on success and wrote up to buffer.used.
  *   F_data_not if buffer.used is 0 or range.start > range.stop.
- *   F_stream_not if file.id is -1.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -2304,7 +2304,7 @@ extern "C" {
  *   F_none_stop on success and wrote up to stop point.
  *   F_none_eos on success and wrote up to buffer.used (buffer.used is reached before stop point).
  *   F_data_not if buffer.used is 0 or range.start > range.stop.
- *   F_stream_not if file.id is -1.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -2339,7 +2339,7 @@ extern "C" {
  *   F_none_stop on success and wrote up to stop point.
  *   F_none_eos on success and wrote up to buffer.used (buffer.used is reached before stop point).
  *   F_data_not if buffer.used is 0 or range.start > range.stop.
- *   F_stream_not if file.id is -1.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -2374,7 +2374,7 @@ extern "C" {
  *   F_none_stop on success and wrote up to stop point.
  *   F_none_eos on success and wrote up to buffer.used (buffer.used is reached before stop point).
  *   F_data_not if buffer.used is 0 or range.start > range.stop.
- *   F_stream_not if file.id is -1.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.

@@ -425,18 +425,22 @@ extern "C" {
       return file.stream ? F_data_not : F_stream_not;
     }
 
+    f_status_t status = F_none;
+
     if (written) {
-      const f_status_t status = private_f_file_stream_write_until(file, buffer, buffer.used, written);
+      status = private_f_file_stream_write_until(file, buffer, buffer.used, written);
 
       if (status == F_none && *written == buffer.used) return F_none_eos;
     }
     else {
       f_array_length_t written_local = 0;
 
-      const f_status_t status = private_f_file_stream_write_until(file, buffer, buffer.used, &written_local);
+      status = private_f_file_stream_write_until(file, buffer, buffer.used, &written_local);
 
       if (status == F_none && written_local == buffer.used) return F_none_eos;
     }
+
+    if (F_status_is_error(status)) return status;
 
     return F_none;
   }
@@ -455,8 +459,10 @@ extern "C" {
 
     const f_array_length_t write_max = file.size_write > buffer.used ? buffer.used : file.size_write;
 
+    f_status_t status = F_none;
+
     if (written) {
-      const f_status_t status = private_f_file_stream_write_until(file, buffer, write_max, written);
+      status = private_f_file_stream_write_until(file, buffer, write_max, written);
 
       if (status == F_none) {
         if (*written == buffer.used) return F_none_eos;
@@ -466,13 +472,15 @@ extern "C" {
     else {
       f_array_length_t written_local = 0;
 
-      const f_status_t status = private_f_file_stream_write_until(file, buffer, write_max, &written_local);
+      status = private_f_file_stream_write_until(file, buffer, write_max, &written_local);
 
       if (status == F_none) {
         if (written_local == buffer.used) return F_none_eos;
         if (written_local == write_max) return F_none_stop;
       }
     }
+
+    if (F_status_is_error(status)) return status;
 
     return F_none;
   }
@@ -491,8 +499,10 @@ extern "C" {
 
     const f_array_length_t write_max = total > buffer.used ? buffer.used : total;
 
+    f_status_t status = F_none;
+
     if (written) {
-      const f_status_t status = private_f_file_stream_write_until(file, buffer, write_max, written);
+      status = private_f_file_stream_write_until(file, buffer, write_max, written);
 
       if (status == F_none) {
         if (*written == buffer.used) return F_none_eos;
@@ -502,13 +512,15 @@ extern "C" {
     else {
       f_array_length_t written_local = 0;
 
-      const f_status_t status = private_f_file_stream_write_until(file, buffer, buffer.used, &written_local);
+      status = private_f_file_stream_write_until(file, buffer, buffer.used, &written_local);
 
       if (status == F_none) {
         if (written_local == buffer.used) return F_none_eos;
         if (written_local == write_max) return F_none_stop;
       }
     }
+
+    if (F_status_is_error(status)) return status;
 
     return F_none;
   }
@@ -526,11 +538,12 @@ extern "C" {
     }
 
     const f_array_length_t write_max = (range.stop - range.start) + 1 > buffer.used ? buffer.used : (range.stop - range.start) + 1;
+    const f_string_static_t buffer_adjusted = macro_f_string_static_t_initialize_1(buffer.string + range.start, 0, buffer.used - range.start);
+
+    f_status_t status = F_none;
 
     if (written) {
-      const f_string_static_t buffer_adjusted = macro_f_string_static_t_initialize_1(buffer.string + range.start, 0, buffer.used - range.start);
-
-      const f_status_t status = private_f_file_stream_write_until(file, buffer_adjusted, write_max, written);
+      status = private_f_file_stream_write_until(file, buffer_adjusted, write_max, written);
 
       if (status == F_none) {
         if (range.start + *written == buffer.used) return F_none_eos;
@@ -538,16 +551,17 @@ extern "C" {
       }
     }
     else {
-      const f_string_static_t buffer_adjusted = macro_f_string_static_t_initialize_1(buffer.string + range.start, 0, buffer.used - range.start);
       f_array_length_t written_local = 0;
 
-      const f_status_t status = private_f_file_stream_write_until(file, buffer_adjusted, write_max, &written_local);
+      status = private_f_file_stream_write_until(file, buffer_adjusted, write_max, &written_local);
 
       if (status == F_none) {
         if (range.start + written_local == buffer.used) return F_none_eos;
         if (range.start + written_local == write_max) return F_none_stop;
       }
     }
+
+    if (F_status_is_error(status)) return status;
 
     return F_none;
   }

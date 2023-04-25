@@ -49,20 +49,6 @@ void test__f_file_write_range__fails(void **state) {
   } // for
 }
 
-void test__f_file_write_range__parameter_checking(void **state) {
-
-  f_file_t file = macro_f_file_t_initialize_2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
-  file.size_write = 0;
-
-  const f_string_range_t range = f_string_range_t_initialize;
-
-  {
-    const f_status_t status = f_file_write_range(file, f_string_empty_s, range, 0);
-
-    assert_int_equal(status, F_status_set_error(F_parameter));
-  }
-}
-
 void test__f_file_write_range__returns_file_descriptor_not(void **state) {
 
   f_file_t file = f_file_t_initialize;

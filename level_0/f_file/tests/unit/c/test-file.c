@@ -432,20 +432,20 @@ int main(void) {
       cmocka_unit_test(test__f_file_stream_read_block__parameter_checking),
       cmocka_unit_test(test__f_file_stream_read_until__parameter_checking),
       cmocka_unit_test(test__f_file_stream_reopen__parameter_checking),
-      cmocka_unit_test(test__f_file_stream_write__parameter_checking),
-      cmocka_unit_test(test__f_file_stream_write_block__parameter_checking),
-      cmocka_unit_test(test__f_file_stream_write_until__parameter_checking),
-      cmocka_unit_test(test__f_file_stream_write_range__parameter_checking),
+      // f_file_stream_write() doesn't use parameter checking.
+      // f_file_stream_write_block() doesn't use parameter checking.
+      // f_file_stream_write_until() doesn't use parameter checking.
+      // f_file_stream_write_range() doesn't use parameter checking.
       // f_file_touch() doesn't use parameter checking.
       // f_file_touch_at() doesn't use parameter checking.
       cmocka_unit_test(test__f_file_type__parameter_checking),
       cmocka_unit_test(test__f_file_type_at__parameter_checking),
       cmocka_unit_test(test__f_file_umask_get__parameter_checking),
       // f_file_umask_set() doesn't use parameter checking.
-      cmocka_unit_test(test__f_file_write__parameter_checking),
-      cmocka_unit_test(test__f_file_write_block__parameter_checking),
-      cmocka_unit_test(test__f_file_write_until__parameter_checking),
-      cmocka_unit_test(test__f_file_write_range__parameter_checking),
+      // f_file_write() doesn't use parameter checking.
+      // f_file_write_block() doesn't use parameter checking.
+      // f_file_write_until() doesn't use parameter checking.
+      // f_file_write_range() doesn't use parameter checking.
     #endif // _di_level_0_parameter_checking_
   };
 

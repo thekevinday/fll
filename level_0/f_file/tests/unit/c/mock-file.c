@@ -290,7 +290,7 @@ size_t __wrap_fwrite_unlocked(const void *ptr, size_t size, size_t nmemb, FILE *
   const bool failure = mock_type(bool);
 
   if (failure) {
-    return mock_type(int);
+    return mock_type(size_t);
   }
 
   return mock_type(size_t);

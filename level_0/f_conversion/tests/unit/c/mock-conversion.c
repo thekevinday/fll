@@ -14,7 +14,7 @@ size_t __wrap_fwrite_unlocked(const void * const ptr, size_t size, size_t nmemb,
   const bool failure = mock_type(bool);
 
   if (failure) {
-    return mock_type(int);
+    return mock_type(size_t);
   }
 
   const bool check_ptr = mock_type(bool);
