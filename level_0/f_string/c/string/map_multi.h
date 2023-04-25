@@ -30,7 +30,7 @@ extern "C" {
 
   #define f_string_map_multi_t_initialize { f_string_dynamic_t_initialize, f_string_dynamics_t_initialize }
 
-  #define macro_f_string_map_t_initialize(name, value) { name, value }
+  #define macro_f_string_map_multi_t_initialize(name, value) { name, value }
 
   #define macro_f_string_map_multi_t_clear(map) \
     macro_f_string_dynamic_t_clear(map.name) \
