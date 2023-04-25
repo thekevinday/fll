@@ -821,7 +821,7 @@
 #define _di_f_string_append_assure_
 #define _di_f_string_append_assure_nulless_
 #define _di_f_string_append_mash_
-#define _di_f_string_append_nulless_
+//#define _di_f_string_append_nulless_
 //#define _di_f_string_ascii_s_
 #define _di_f_string_constant_t_
 #define _di_f_string_dynamic_adjust_
