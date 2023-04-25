@@ -13,8 +13,8 @@ void test__f_string_dynamicss_append_all__works(void **state) {
   f_string_dynamicss_t destination = f_string_dynamicss_t_initialize;
 
   const f_string_static_t test_names[] = {
-    macro_f_string_static_t_initialize("test1", 0, 5),
-    macro_f_string_static_t_initialize("test2", 0, 5),
+    macro_f_string_static_t_initialize_1("test1", 0, 5),
+    macro_f_string_static_t_initialize_1("test2", 0, 5),
   };
 
   {

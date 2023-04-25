@@ -53,7 +53,7 @@ void test__f_file_stream_close__fails(void **state) {
 
   for (int i = 0; i < 19; ++i) {
 
-    f_file_t file = macro_f_file_t_initialize2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
+    f_file_t file = macro_f_file_t_initialize_2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
 
     will_return(__wrap_fclose, true);
     will_return(__wrap_fclose, errnos[i]);
@@ -76,7 +76,7 @@ void test__f_file_stream_close__parameter_checking(void **state) {
 
 void test__f_file_stream_close__returns_stream_not(void **state) {
 
-  f_file_t file = macro_f_file_t_initialize2(0, F_type_descriptor_output_d, F_file_flag_write_only_d);
+  f_file_t file = macro_f_file_t_initialize_2(0, F_type_descriptor_output_d, F_file_flag_write_only_d);
 
   {
     const f_status_t status = f_file_stream_close(&file);
@@ -88,7 +88,7 @@ void test__f_file_stream_close__returns_stream_not(void **state) {
 void test__f_file_stream_close__works(void **state) {
 
   {
-    f_file_t file = macro_f_file_t_initialize2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
+    f_file_t file = macro_f_file_t_initialize_2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
 
     file.id = 0;
     file.stream = F_type_input_d;

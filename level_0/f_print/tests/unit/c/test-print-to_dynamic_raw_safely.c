@@ -7,7 +7,7 @@ extern "C" {
 
 void test__f_print_to_dynamic_raw_safely__fails(void **state) {
 
-  const f_string_static_t test = macro_f_string_static_t_initialize("test", 0, 4);
+  const f_string_static_t test = macro_f_string_static_t_initialize_1("test", 0, 4);
 
   int errnos[] = {
     EAGAIN,
@@ -56,7 +56,7 @@ void test__f_print_to_dynamic_raw_safely__fails(void **state) {
 
 void test__f_print_to_dynamic_raw_safely__parameter_checking(void **state) {
 
-  const f_string_static_t test = macro_f_string_static_t_initialize("test", 0, 4);
+  const f_string_static_t test = macro_f_string_static_t_initialize_1("test", 0, 4);
 
   {
     const f_status_t status = f_print_to_dynamic_raw_safely(test, -1);
@@ -76,7 +76,7 @@ void test__f_print_to_dynamic_raw_safely__returns_data_not(void **state) {
 
 void test__f_print_to_dynamic_raw_safely__works(void **state) {
 
-  const f_string_static_t test = macro_f_string_static_t_initialize("test", 0, 4);
+  const f_string_static_t test = macro_f_string_static_t_initialize_1("test", 0, 4);
 
   {
     will_return(__wrap_write, false);

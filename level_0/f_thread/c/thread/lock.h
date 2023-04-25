@@ -27,7 +27,7 @@ extern "C" {
 
   #define f_thread_lock_t_initialize PTHREAD_RWLOCK_INITIALIZER
 
-  #define macro_f_thread_lock_t_initialize(lock) lock
+  #define macro_f_thread_lock_t_initialize_1(lock) lock
 
   #define macro_f_thread_lock_t_delete_simple(lock) f_thread_lock_delete(&lock);
 #endif // _di_f_thread_lock_t_
@@ -49,8 +49,8 @@ extern "C" {
 
   #define f_thread_locks_t_initialize { 0, 0, 0 }
 
-  #define macro_f_thread_locks_t_initialize(array, size, used) { array, size, used }
-  #define macro_f_thread_locks_t_initialize2(array, length) { array, length, length }
+  #define macro_f_thread_locks_t_initialize_1(array, size, used) { array, size, used }
+  #define macro_f_thread_locks_t_initialize_2(array, length) { array, length, length }
 
   #define macro_f_thread_locks_t_resize(status, locks, length) macro_f_memory_structure_resize(status, locks, f_thread_lock_t, length)
   #define macro_f_thread_locks_t_adjust(status, locks, length) macro_f_memory_structure_adjust(status, locks, f_thread_lock_t, length)

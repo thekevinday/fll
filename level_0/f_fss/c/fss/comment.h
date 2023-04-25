@@ -24,7 +24,7 @@ extern "C" {
 
   #define f_fss_comment_t_initialize f_string_range_t_initialize
 
-  #define macro_f_fss_comment_t_initialize(length) macro_f_string_range_t_initialize2(length)
+  #define macro_f_fss_comment_t_initialize_1(length) macro_f_string_range_t_initialize_2(length)
 
   #define macro_f_fss_comment_t_clear(comment) macro_f_string_range_t_clear(comment)
 #endif // _di_f_fss_comment_t_
@@ -41,8 +41,8 @@ extern "C" {
 
   #define f_fss_comments_t_initialize f_string_ranges_t_initialize
 
-  #define macro_f_fss_comments_t_initialize(array, size, used) macro_f_string_ranges_t_initialize(array, size, used)
-  #define macro_f_fss_comments_t_initialize2(array, length)    macro_f_string_ranges_t_initialize2(array, length)
+  #define macro_f_fss_comments_t_initialize_1(array, size, used) macro_f_string_ranges_t_initialize_1(array, size, used)
+  #define macro_f_fss_comments_t_initialize_2(array, length)     macro_f_string_ranges_t_initialize_2(array, length)
 
   #define f_fss_comments_t_clear(comments) macro_f_string_ranges_t_clear(comments)
 
@@ -70,8 +70,8 @@ extern "C" {
 
   #define f_fss_commentss_t_initialize f_string_rangess_t_initialize
 
-  #define macro_f_fss_commentss_t_initialize(array, size, used) macro_f_string_rangess_t_initialize(array, size, used)
-  #define macro_f_fss_commentss_t_initialize2(array, length)    macro_f_string_rangess_t_initialize2(array, length)
+  #define macro_f_fss_commentss_t_initialize_1(array, size, used) macro_f_string_rangess_t_initialize_1(array, size, used)
+  #define macro_f_fss_commentss_t_initialize_2(array, length)     macro_f_string_rangess_t_initialize_2(array, length)
 
   #define macro_f_fss_commentss_t_clear(commentss) macro_f_string_rangess_t_clear(commentss)
 

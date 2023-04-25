@@ -26,7 +26,7 @@ extern "C" {
 
   #define f_thread_spin_t_initialize ((pthread_spinlock_t) 0xFFFFFFFF)
 
-  #define macro_f_thread_spin_t_initialize(spin) spin
+  #define macro_f_thread_spin_t_initialize_1(spin) spin
 
   #define macro_f_thread_spin_t_delete_simple(spin) f_thread_spin_delete(&spin);
 #endif // _di_f_thread_spin_t_
@@ -48,8 +48,8 @@ extern "C" {
 
   #define f_thread_spins_t_initialize { 0, 0, 0 }
 
-  #define macro_f_thread_spins_t_initialize(array, size, used) { array, size, used }
-  #define macro_f_thread_spins_t_initialize2(array, length) { array, length, length }
+  #define macro_f_thread_spins_t_initialize_1(array, size, used) { array, size, used }
+  #define macro_f_thread_spins_t_initialize_2(array, length) { array, length, length }
 
   #define macro_f_thread_spins_t_clear(spins) macro_f_memory_structure_clear(spins)
 

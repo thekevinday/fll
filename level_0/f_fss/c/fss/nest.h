@@ -41,7 +41,7 @@ extern "C" {
 
   #define f_fss_item_t_initialize { f_fss_object_t_initialize, f_fss_content_t_initialize, 0 }
 
-  #define macro_f_fss_item_t_initialize(object, content, parent) macro_f_array_lengths_t_initialize(object, content, parent)
+  #define macro_f_fss_item_t_initialize_1(object, content, parent) macro_f_array_lengths_t_initialize_1(object, content, parent)
 
   #define macro_f_fss_item_t_clear(item) \
     macro_f_fss_object_t_clear(item.object); \
@@ -98,8 +98,8 @@ extern "C" {
 
   #define f_fss_items_t_initialize { 0, 0, 0 }
 
-  #define macro_f_fss_items_t_initialize(array, size, used) { array, size, used }
-  #define macro_f_fss_items_t_initialize2(array, length)    { array, length, length }
+  #define macro_f_fss_items_t_initialize_1(array, size, used) { array, size, used }
+  #define macro_f_fss_items_t_initialize_2(array, length)     { array, length, length }
 
   #define macro_f_fss_items_t_clear(items) macro_f_memory_structure_clear(items)
 
@@ -136,8 +136,8 @@ extern "C" {
 
   #define f_fss_nest_t_initialize { 0, 0, 0 }
 
-  #define macro_f_fss_nest_t_initialize(depth, size, used) { depth, size, used }
-  #define macro_f_fss_nest_t_initialize2(depth, length)    { depth, length, length }
+  #define macro_f_fss_nest_t_initialize_1(depth, size, used) { depth, size, used }
+  #define macro_f_fss_nest_t_initialize_2(depth, length)     { depth, length, length }
 
   #define macro_f_fss_nest_t_clear(nest) macro_f_memory_structures_clear(nest)
 
@@ -170,8 +170,8 @@ extern "C" {
 
   #define f_fss_nests_t_initialize { 0, 0, 0 }
 
-  #define macro_f_fss_nests_t_initialize(array, size, used) { array, size, used }
-  #define macro_f_fss_nests_t_initialize2(array, length)    { array, length, length }
+  #define macro_f_fss_nests_t_initialize_1(array, size, used) { array, size, used }
+  #define macro_f_fss_nests_t_initialize_2(array, length)     { array, length, length }
 
   #define macro_f_fss_nests_t_clear(nests) macro_f_memory_structures_clear(nests)
 

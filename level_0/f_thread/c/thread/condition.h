@@ -27,7 +27,7 @@ extern "C" {
 
   #define f_thread_condition_t_initialize PTHREAD_COND_INITIALIZER
 
-  #define macro_f_thread_condition_t_initialize(condition) { condition }
+  #define macro_f_thread_condition_t_initialize_1(condition) { condition }
 
   #define macro_f_thread_condition_t_delete_simple(condition) f_thread_condition_delete(&condition);
 #endif // _di_f_thread_condition_t_
@@ -49,8 +49,8 @@ extern "C" {
 
   #define f_thread_conditions_t_initialize { 0, 0, 0 }
 
-  #define macro_f_thread_conditions_t_initialize(array, size, used) { array, size, used }
-  #define macro_f_thread_conditions_t_initialize2(array, length) { array, length, length }
+  #define macro_f_thread_conditions_t_initialize_1(array, size, used) { array, size, used }
+  #define macro_f_thread_conditions_t_initialize_2(array, length) { array, length, length }
 
   #define macro_f_thread_conditions_t_clear(conditions) macro_f_memory_structure_clear(conditions)
 

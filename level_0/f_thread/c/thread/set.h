@@ -32,7 +32,7 @@ extern "C" {
 
   #define f_thread_set_t_initialize { f_thread_attribute_t_initialize, f_thread_id_t_initialize, 0 }
 
-  #define macro_f_thread_set_t_initialize(attribute, id, result) { attribute, id, result }
+  #define macro_f_thread_set_t_initialize_1(attribute, id, result) { attribute, id, result }
 
   #define macro_f_thread_set_t_clear(thread) \
     macro_f_thread_attribute_t_clear(thread.attribute) \
@@ -59,8 +59,8 @@ extern "C" {
 
   #define f_thread_sets_t_initialize { 0, 0, 0 }
 
-  #define macro_f_thread_sets_t_initialize(array, size, used) { array, size, used }
-  #define macro_f_thread_sets_t_initialize2(array, length) { array, length, length }
+  #define macro_f_thread_sets_t_initialize_1(array, size, used) { array, size, used }
+  #define macro_f_thread_sets_t_initialize_2(array, length) { array, length, length }
 
   #define macro_f_thread_sets_t_clear(sets) macro_f_memory_structure_clear(sets)
 

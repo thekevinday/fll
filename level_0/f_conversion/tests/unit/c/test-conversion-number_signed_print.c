@@ -7,10 +7,10 @@ extern "C" {
 
 void test__f_conversion_number_signed_print__fails(void **state) {
 
-  const f_file_t output = macro_f_file_t_initialize2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
+  const f_file_t output = macro_f_file_t_initialize_2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
 
   {
-    const f_conversion_data_t data = macro_f_conversion_data_t_initialize(10, 0, 1);
+    const f_conversion_data_t data = macro_f_conversion_data_t_initialize_1(10, 0, 1);
 
     will_return(__wrap_fwrite_unlocked, true);
     will_return(__wrap_fwrite_unlocked, 0);
@@ -24,10 +24,10 @@ void test__f_conversion_number_signed_print__fails(void **state) {
 
 void test__f_conversion_number_signed_print__fails_for_prepend(void **state) {
 
-  const f_file_t output = macro_f_file_t_initialize2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
+  const f_file_t output = macro_f_file_t_initialize_2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
 
   {
-    const f_conversion_data_t data = macro_f_conversion_data_t_initialize(10, F_conversion_data_flag_base_prepend_d, 0);
+    const f_conversion_data_t data = macro_f_conversion_data_t_initialize_1(10, F_conversion_data_flag_base_prepend_d, 0);
 
     will_return(__wrap_fwrite_unlocked, true);
     will_return(__wrap_fwrite_unlocked, 0);
@@ -41,10 +41,10 @@ void test__f_conversion_number_signed_print__fails_for_prepend(void **state) {
 
 void test__f_conversion_number_signed_print__fails_for_zero(void **state) {
 
-  const f_file_t output = macro_f_file_t_initialize2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
+  const f_file_t output = macro_f_file_t_initialize_2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
 
   {
-    const f_conversion_data_t data = macro_f_conversion_data_t_initialize(10, 0, 1);
+    const f_conversion_data_t data = macro_f_conversion_data_t_initialize_1(10, 0, 1);
 
     will_return(__wrap_fwrite_unlocked, true);
     will_return(__wrap_fwrite_unlocked, 0);
@@ -58,10 +58,10 @@ void test__f_conversion_number_signed_print__fails_for_zero(void **state) {
 
 void test__f_conversion_number_signed_print__parameter_checking(void **state) {
 
-  f_file_t output = macro_f_file_t_initialize2(0, F_type_descriptor_output_d, F_file_flag_write_only_d);
+  f_file_t output = macro_f_file_t_initialize_2(0, F_type_descriptor_output_d, F_file_flag_write_only_d);
 
   {
-    const f_conversion_data_t data = macro_f_conversion_data_t_initialize(2, 0, 0);
+    const f_conversion_data_t data = macro_f_conversion_data_t_initialize_1(2, 0, 0);
 
     const f_status_t status = f_conversion_number_signed_print(0, data, output);
 
@@ -69,7 +69,7 @@ void test__f_conversion_number_signed_print__parameter_checking(void **state) {
   }
 
   {
-    const f_conversion_data_t data = macro_f_conversion_data_t_initialize(1, 0, 0);
+    const f_conversion_data_t data = macro_f_conversion_data_t_initialize_1(1, 0, 0);
 
     output.stream = F_type_output_d;
 
@@ -81,10 +81,10 @@ void test__f_conversion_number_signed_print__parameter_checking(void **state) {
 
 void test__f_conversion_number_signed_print__works(void **state) {
 
-  const f_file_t output = macro_f_file_t_initialize2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
+  const f_file_t output = macro_f_file_t_initialize_2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
 
   {
-    const f_conversion_data_t data = macro_f_conversion_data_t_initialize(10, 0, 1);
+    const f_conversion_data_t data = macro_f_conversion_data_t_initialize_1(10, 0, 1);
 
     will_return(__wrap_fwrite_unlocked, false);
     will_return(__wrap_fwrite_unlocked, 1);
@@ -100,10 +100,10 @@ void test__f_conversion_number_signed_print__works(void **state) {
 
 void test__f_conversion_number_signed_print__works_for_zero(void **state) {
 
-  const f_file_t output = macro_f_file_t_initialize2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
+  const f_file_t output = macro_f_file_t_initialize_2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
 
   {
-    const f_conversion_data_t data = macro_f_conversion_data_t_initialize(10, 0, 1);
+    const f_conversion_data_t data = macro_f_conversion_data_t_initialize_1(10, 0, 1);
 
     will_return(__wrap_fwrite_unlocked, false);
     will_return(__wrap_fwrite_unlocked, 1);
@@ -119,10 +119,10 @@ void test__f_conversion_number_signed_print__works_for_zero(void **state) {
 
 void test__f_conversion_number_signed_print__works_for_zero_with_width_zero(void **state) {
 
-  const f_file_t output = macro_f_file_t_initialize2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
+  const f_file_t output = macro_f_file_t_initialize_2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
 
   {
-    const f_conversion_data_t data = macro_f_conversion_data_t_initialize(10, 0, 0);
+    const f_conversion_data_t data = macro_f_conversion_data_t_initialize_1(10, 0, 0);
 
     const f_status_t status = f_conversion_number_signed_print(0, data, output);
 

@@ -316,7 +316,7 @@ extern "C" {
 
   #define f_socket_t_initialize { -1, 0, 0, 0, F_socket_default_read_size_d, F_socket_default_write_size_d, 0, 0 }
 
-  #define macro_f_socket_t_initialize(address) { -1, 0, 0, 0, F_socket_default_read_size_d, F_socket_default_write_size_d, address, 0 }
+  #define macro_f_socket_t_initialize_1(address) { -1, 0, 0, 0, F_socket_default_read_size_d, F_socket_default_write_size_d, address, 0 }
 
   #define macro_f_socket_t_clear(file) \
     file.id = -1; \

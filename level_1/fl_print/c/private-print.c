@@ -985,7 +985,7 @@ extern "C" {
             }
           }
 
-          f_conversion_data_t conversion_data = macro_f_conversion_data_t_initialize(base, 0, 1);
+          f_conversion_data_t conversion_data = macro_f_conversion_data_t_initialize_1(base, 0, 1);
 
           if (flag & F_print_format_flag_align_left_d) {
             conversion_data.flag |= F_conversion_data_flag_align_left_d;

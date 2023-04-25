@@ -8,7 +8,7 @@ extern "C" {
 void test__f_color_save_3_parameter_checking(void **state) {
 
   const f_color_format_t format = f_color_format_t_initialize;
-  const f_string_static_t color = macro_f_string_static_t_initialize2("color", 5);
+  const f_string_static_t color = macro_f_string_static_t_initialize_2("color", 5);
 
   {
     const f_status_t status = f_color_save_3(format, color, color, color, 0);
@@ -22,9 +22,9 @@ void test__f_color_save_3_works(void **state) {
   f_color_context_t context = f_color_context_t_initialize;
   f_string_dynamic_t buffer = f_string_dynamic_t_initialize;
   const f_color_format_t format = f_color_format_t_initialize;
-  const f_string_static_t color1 = macro_f_string_static_t_initialize2("color1", 6);
-  const f_string_static_t color2 = macro_f_string_static_t_initialize2("color2", 6);
-  const f_string_static_t color3 = macro_f_string_static_t_initialize2("color3", 6);
+  const f_string_static_t color1 = macro_f_string_static_t_initialize_2("color1", 6);
+  const f_string_static_t color2 = macro_f_string_static_t_initialize_2("color2", 6);
+  const f_string_static_t color3 = macro_f_string_static_t_initialize_2("color3", 6);
 
   {
     f_status_t status = F_none;

@@ -7,8 +7,8 @@ extern "C" {
 
 void test__f_file_role_change_at__fails_for_dereference(void **state) {
 
-  const f_file_t file = macro_f_file_t_initialize2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
-  const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
+  const f_file_t file = macro_f_file_t_initialize_2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
+  const f_string_static_t path = macro_f_string_static_t_initialize_1("test", 0, 4);
 
   int errnos[] = {
     EACCES,
@@ -101,8 +101,8 @@ void test__f_file_role_change_at__fails_for_dereference(void **state) {
 
 void test__f_file_role_change_at__fails_for_reference(void **state) {
 
-  const f_file_t file = macro_f_file_t_initialize2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
-  const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
+  const f_file_t file = macro_f_file_t_initialize_2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
+  const f_string_static_t path = macro_f_string_static_t_initialize_1("test", 0, 4);
 
   int errnos[] = {
     EACCES,
@@ -195,8 +195,8 @@ void test__f_file_role_change_at__fails_for_reference(void **state) {
 
 void test__f_file_role_change_at__returns_data_not(void **state) {
 
-  const f_file_t file = macro_f_file_t_initialize2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
-  const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
+  const f_file_t file = macro_f_file_t_initialize_2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
+  const f_string_static_t path = macro_f_string_static_t_initialize_1("test", 0, 4);
 
   {
     const f_status_t status = f_file_role_change_at(file, f_string_empty_s, -1, -1, 0);
@@ -219,8 +219,8 @@ void test__f_file_role_change_at__returns_data_not(void **state) {
 
 void test__f_file_role_change_at__returns_file_descriptor_not(void **state) {
 
-  const f_file_t file = macro_f_file_t_initialize2(F_type_output_d, -1, F_file_flag_write_only_d);
-  const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
+  const f_file_t file = macro_f_file_t_initialize_2(F_type_output_d, -1, F_file_flag_write_only_d);
+  const f_string_static_t path = macro_f_string_static_t_initialize_1("test", 0, 4);
 
   {
     const f_status_t status = f_file_role_change_at(file, path, 0, 0, 0);
@@ -231,8 +231,8 @@ void test__f_file_role_change_at__returns_file_descriptor_not(void **state) {
 
 void test__f_file_role_change_at__works_for_dereference(void **state) {
 
-  const f_file_t file = macro_f_file_t_initialize2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
-  const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
+  const f_file_t file = macro_f_file_t_initialize_2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
+  const f_string_static_t path = macro_f_string_static_t_initialize_1("test", 0, 4);
 
   {
     will_return(__wrap_fchownat, false);
@@ -267,8 +267,8 @@ void test__f_file_role_change_at__works_for_dereference(void **state) {
 
 void test__f_file_role_change_at__works_for_reference(void **state) {
 
-  const f_file_t file = macro_f_file_t_initialize2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
-  const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
+  const f_file_t file = macro_f_file_t_initialize_2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
+  const f_string_static_t path = macro_f_string_static_t_initialize_1("test", 0, 4);
 
   {
     will_return(__wrap_fchownat, false);

@@ -7,7 +7,7 @@ extern "C" {
 
 void test__f_path_directory_cleanup__parameter_checking(void **state) {
 
-  const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
+  const f_string_static_t path = macro_f_string_static_t_initialize_1("test", 0, 4);
 
   {
     const f_status_t status = f_path_directory_cleanup(path, 0);
@@ -19,37 +19,37 @@ void test__f_path_directory_cleanup__parameter_checking(void **state) {
 void test__f_path_directory_cleanup__works(void **state) {
 
   const f_string_static_t paths[] = {
-    macro_f_string_static_t_initialize("path", 0, 4),
-    macro_f_string_static_t_initialize("also path", 0, 9),
-    macro_f_string_static_t_initialize("", 0, 0),
-    macro_f_string_static_t_initialize("/", 0, 1),
-    macro_f_string_static_t_initialize("///", 0, 3),
-    macro_f_string_static_t_initialize("///path", 0, 7),
-    macro_f_string_static_t_initialize("///path////", 0, 11),
-    macro_f_string_static_t_initialize("///also////path", 0, 15),
-    macro_f_string_static_t_initialize("../", 0, 3),
-    macro_f_string_static_t_initialize("..///", 0, 3),
-    macro_f_string_static_t_initialize("..///path", 0, 9),
-    macro_f_string_static_t_initialize("..///path////", 0, 11),
-    macro_f_string_static_t_initialize("..///also////path", 0, 17),
-    macro_f_string_static_t_initialize("also///..//path", 0, 15),
+    macro_f_string_static_t_initialize_1("path", 0, 4),
+    macro_f_string_static_t_initialize_1("also path", 0, 9),
+    macro_f_string_static_t_initialize_1("", 0, 0),
+    macro_f_string_static_t_initialize_1("/", 0, 1),
+    macro_f_string_static_t_initialize_1("///", 0, 3),
+    macro_f_string_static_t_initialize_1("///path", 0, 7),
+    macro_f_string_static_t_initialize_1("///path////", 0, 11),
+    macro_f_string_static_t_initialize_1("///also////path", 0, 15),
+    macro_f_string_static_t_initialize_1("../", 0, 3),
+    macro_f_string_static_t_initialize_1("..///", 0, 3),
+    macro_f_string_static_t_initialize_1("..///path", 0, 9),
+    macro_f_string_static_t_initialize_1("..///path////", 0, 11),
+    macro_f_string_static_t_initialize_1("..///also////path", 0, 17),
+    macro_f_string_static_t_initialize_1("also///..//path", 0, 15),
   };
 
   const f_string_static_t expecteds[] = {
-    macro_f_string_static_t_initialize("path/", 0, 5),
-    macro_f_string_static_t_initialize("also path/", 0, 10),
-    macro_f_string_static_t_initialize("", 0, 0),
-    macro_f_string_static_t_initialize("/", 0, 1),
-    macro_f_string_static_t_initialize("/", 0, 1),
-    macro_f_string_static_t_initialize("/path/", 0, 6),
-    macro_f_string_static_t_initialize("/path/", 0, 6),
-    macro_f_string_static_t_initialize("/also/path/", 0, 11),
-    macro_f_string_static_t_initialize("../", 0, 3),
-    macro_f_string_static_t_initialize("../", 0, 3),
-    macro_f_string_static_t_initialize("../path/", 0, 8),
-    macro_f_string_static_t_initialize("../path/", 0, 8),
-    macro_f_string_static_t_initialize("../also/path/", 0, 13),
-    macro_f_string_static_t_initialize("also/../path/", 0, 13),
+    macro_f_string_static_t_initialize_1("path/", 0, 5),
+    macro_f_string_static_t_initialize_1("also path/", 0, 10),
+    macro_f_string_static_t_initialize_1("", 0, 0),
+    macro_f_string_static_t_initialize_1("/", 0, 1),
+    macro_f_string_static_t_initialize_1("/", 0, 1),
+    macro_f_string_static_t_initialize_1("/path/", 0, 6),
+    macro_f_string_static_t_initialize_1("/path/", 0, 6),
+    macro_f_string_static_t_initialize_1("/also/path/", 0, 11),
+    macro_f_string_static_t_initialize_1("../", 0, 3),
+    macro_f_string_static_t_initialize_1("../", 0, 3),
+    macro_f_string_static_t_initialize_1("../path/", 0, 8),
+    macro_f_string_static_t_initialize_1("../path/", 0, 8),
+    macro_f_string_static_t_initialize_1("../also/path/", 0, 13),
+    macro_f_string_static_t_initialize_1("also/../path/", 0, 13),
   };
 
   f_string_dynamic_t destination = f_string_dynamic_t_initialize;

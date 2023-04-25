@@ -43,7 +43,7 @@ extern "C" {
     triple.c.size = 0; \
     triple.c.used = 0;
 
-  #define macro_f_string_triple_t_initialize(a, b, c) { a, b, c }
+  #define macro_f_string_triple_t_initialize_1(a, b, c) { a, b, c }
 
   #define macro_f_string_triple_t_delete_simple(triple) \
     macro_f_string_dynamic_t_delete_simple(triple.a) \

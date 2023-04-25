@@ -7,8 +7,8 @@ extern "C" {
 
 void test__f_file_link_read_at__fails(void **state) {
 
-  const f_file_t file = macro_f_file_t_initialize2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
-  const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
+  const f_file_t file = macro_f_file_t_initialize_2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
+  const f_string_static_t path = macro_f_string_static_t_initialize_1("test", 0, 4);
 
   int errnos[] = {
     EACCES,
@@ -65,7 +65,7 @@ void test__f_file_link_read_at__fails(void **state) {
 
 void test__f_file_link_read_at__parameter_checking(void **state) {
 
-  const f_file_t file = macro_f_file_t_initialize2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
+  const f_file_t file = macro_f_file_t_initialize_2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
   f_string_dynamic_t buffer = f_string_dynamic_t_initialize;
 
   {
@@ -79,7 +79,7 @@ void test__f_file_link_read_at__parameter_checking(void **state) {
 
 void test__f_file_link_read_at__returns_data_not(void **state) {
 
-  const f_file_t file = macro_f_file_t_initialize2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
+  const f_file_t file = macro_f_file_t_initialize_2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
   f_string_dynamic_t buffer = f_string_dynamic_t_initialize;
 
   {
@@ -93,7 +93,7 @@ void test__f_file_link_read_at__returns_data_not(void **state) {
 
 void test__f_file_link_read_at__returns_file_descriptor_not(void **state) {
 
-  const f_file_t file = macro_f_file_t_initialize2(F_type_output_d, -1, F_file_flag_write_only_d);
+  const f_file_t file = macro_f_file_t_initialize_2(F_type_output_d, -1, F_file_flag_write_only_d);
   f_string_dynamic_t buffer = f_string_dynamic_t_initialize;
 
   {
@@ -107,8 +107,8 @@ void test__f_file_link_read_at__returns_file_descriptor_not(void **state) {
 
 void test__f_file_link_read_at__works(void **state) {
 
-  const f_file_t file = macro_f_file_t_initialize2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
-  const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
+  const f_file_t file = macro_f_file_t_initialize_2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
+  const f_string_static_t path = macro_f_string_static_t_initialize_1("test", 0, 4);
 
   struct stat statistics;
 

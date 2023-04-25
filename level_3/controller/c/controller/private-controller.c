@@ -214,7 +214,7 @@ extern "C" {
 
     if (F_status_is_error_not(status)) {
       f_number_unsigned_t number = 0;
-      f_string_range_t range = macro_f_string_range_t_initialize2(pid_buffer.used);
+      f_string_range_t range = macro_f_string_range_t_initialize_2(pid_buffer.used);
 
       for (; range.start < pid_buffer.used; ++range.start) {
         if (!isspace(pid_buffer.string[range.start])) break;
@@ -271,7 +271,7 @@ extern "C" {
 
     if (F_status_is_error_not(status)) {
       f_number_unsigned_t number = 0;
-      f_string_range_t range = macro_f_string_range_t_initialize2(pid_buffer.used);
+      f_string_range_t range = macro_f_string_range_t_initialize_2(pid_buffer.used);
 
       for (; range.start < pid_buffer.used; ++range.start) {
         if (!isspace(pid_buffer.string[range.start])) break;
@@ -373,7 +373,7 @@ extern "C" {
     }
 
     if (destination->used >= setting->path_current.used) {
-      const f_string_range_t range = macro_f_string_range_t_initialize2(setting->path_current.used);
+      const f_string_range_t range = macro_f_string_range_t_initialize_2(setting->path_current.used);
 
       if (f_compare_dynamic_partial_string(destination->string, setting->path_current, destination->used, range) == F_equal_to) {
         f_array_length_t length = destination->used - setting->path_current.used;

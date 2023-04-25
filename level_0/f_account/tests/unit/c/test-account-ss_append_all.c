@@ -49,17 +49,17 @@ void test__f_accountss_append_all__works(void **state) {
   f_accountss_t source = f_accountss_t_initialize;
   f_accountss_t destination = f_accountss_t_initialize;
 
-  f_string_static_t home_0 = macro_f_string_static_t_initialize("home_0", 0, 6);
-  f_string_static_t label_0 = macro_f_string_static_t_initialize("label_0", 0, 7);
-  f_string_static_t name_0 = macro_f_string_static_t_initialize("name_0", 0, 6);
-  f_string_static_t password_0 = macro_f_string_static_t_initialize("password_0", 0, 10);
-  f_string_static_t shell_0 = macro_f_string_static_t_initialize("shell_0", 0, 7);
+  f_string_static_t home_0 = macro_f_string_static_t_initialize_1("home_0", 0, 6);
+  f_string_static_t label_0 = macro_f_string_static_t_initialize_1("label_0", 0, 7);
+  f_string_static_t name_0 = macro_f_string_static_t_initialize_1("name_0", 0, 6);
+  f_string_static_t password_0 = macro_f_string_static_t_initialize_1("password_0", 0, 10);
+  f_string_static_t shell_0 = macro_f_string_static_t_initialize_1("shell_0", 0, 7);
 
-  f_string_static_t home_1 = macro_f_string_static_t_initialize("home_1", 0, 6);
-  f_string_static_t label_1 = macro_f_string_static_t_initialize("label_1", 0, 7);
-  f_string_static_t name_1 = macro_f_string_static_t_initialize("name_1", 0, 6);
-  f_string_static_t password_1 = macro_f_string_static_t_initialize("password_1", 0, 10);
-  f_string_static_t shell_1 = macro_f_string_static_t_initialize("shell_1", 0, 7);
+  f_string_static_t home_1 = macro_f_string_static_t_initialize_1("home_1", 0, 6);
+  f_string_static_t label_1 = macro_f_string_static_t_initialize_1("label_1", 0, 7);
+  f_string_static_t name_1 = macro_f_string_static_t_initialize_1("name_1", 0, 6);
+  f_string_static_t password_1 = macro_f_string_static_t_initialize_1("password_1", 0, 10);
+  f_string_static_t shell_1 = macro_f_string_static_t_initialize_1("shell_1", 0, 7);
 
   const f_account_t account_0 = { .home = home_0, .label = label_0, .name = name_0, .password = password_0, .shell = shell_0 };
   const f_account_t account_1 = { .home = home_1, .label = label_1, .name = name_1, .password = password_1, .shell = shell_1 };

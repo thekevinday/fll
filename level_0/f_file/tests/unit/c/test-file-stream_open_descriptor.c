@@ -7,7 +7,7 @@ extern "C" {
 
 void test__f_file_stream_open_descriptor__fails(void **state) {
 
-  const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
+  const f_string_static_t path = macro_f_string_static_t_initialize_1("test", 0, 4);
 
   int errnos[] = {
     EACCES,
@@ -91,7 +91,7 @@ void test__f_file_stream_open_descriptor__parameter_checking(void **state) {
 
 void test__f_file_stream_open_descriptor__works(void **state) {
 
-  const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
+  const f_string_static_t path = macro_f_string_static_t_initialize_1("test", 0, 4);
   const int id = 1;
 
   {

@@ -7,7 +7,7 @@ extern "C" {
 
 void test__f_utf_dynamics_append__works(void **state) {
 
-  const f_utf_string_static_t source = macro_f_utf_string_static_t_initialize((f_utf_string_t) "\0\0\0t\0\0\0e\0\0\0\0\0\0\0s\0\0\0t", 0, 5);
+  const f_utf_string_static_t source = macro_f_utf_string_static_t_initialize_1((f_utf_string_t) "\0\0\0t\0\0\0e\0\0\0\0\0\0\0s\0\0\0t", 0, 5);
   f_utf_string_dynamics_t destination = f_utf_string_dynamics_t_initialize;
 
   {

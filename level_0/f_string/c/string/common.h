@@ -32,7 +32,7 @@ extern "C" {
 
   #define f_char_t_initialize 0
 
-  #define macro_f_char_t_initialize(character) character
+  #define macro_f_char_t_initialize_1(character) character
 
   #define macro_f_char_t_clear(character) character = 0;
 #endif // _di_f_char_t_
@@ -55,7 +55,7 @@ extern "C" {
 
   #define f_string_t_initialize 0
 
-  #define macro_f_string_t_initialize(string) string
+  #define macro_f_string_t_initialize_1(string) string
 
   #define macro_f_string_t_clear(string) string = 0;
 
@@ -86,7 +86,7 @@ extern "C" {
 
   #define f_string_constant_t_initialize 0
 
-  #define macro_f_string_constant_t_initialize(string) string
+  #define macro_f_string_constant_t_initialize_1(string) string
 
   #define macro_f_string_constant_t_clear(string) string = 0;
 #endif // _di_f_string_constant_t_

@@ -8,7 +8,7 @@ extern "C" {
 void test__f_conversion_number_unsigned_to_string__parameter_checking(void **state) {
 
   {
-    const f_conversion_data_t data = macro_f_conversion_data_t_initialize(2, 0, 0);
+    const f_conversion_data_t data = macro_f_conversion_data_t_initialize_1(2, 0, 0);
 
     const f_status_t status = f_conversion_number_unsigned_to_string(0, data, 0);
 
@@ -17,7 +17,7 @@ void test__f_conversion_number_unsigned_to_string__parameter_checking(void **sta
 
   {
     f_string_dynamic_t string;
-    const f_conversion_data_t data = macro_f_conversion_data_t_initialize(1, 0, 0);
+    const f_conversion_data_t data = macro_f_conversion_data_t_initialize_1(1, 0, 0);
 
     const f_status_t status = f_conversion_number_unsigned_to_string(0, data, &string);
 
@@ -30,7 +30,7 @@ void test__f_conversion_number_unsigned_to_string__works(void **state) {
   f_string_dynamic_t destination = f_string_dynamic_t_initialize;
 
   {
-    const f_conversion_data_t data = macro_f_conversion_data_t_initialize(10, 0, 0);
+    const f_conversion_data_t data = macro_f_conversion_data_t_initialize_1(10, 0, 0);
 
     const f_status_t status = f_conversion_number_unsigned_to_string(1, data, &destination);
 
@@ -46,7 +46,7 @@ void test__f_conversion_number_unsigned_to_string__works_for_prepend(void **stat
   f_string_dynamic_t destination = f_string_dynamic_t_initialize;
 
   {
-    const f_conversion_data_t data = macro_f_conversion_data_t_initialize(2, F_conversion_data_flag_base_prepend_d, 0);
+    const f_conversion_data_t data = macro_f_conversion_data_t_initialize_1(2, F_conversion_data_flag_base_prepend_d, 0);
 
     const f_status_t status = f_conversion_number_unsigned_to_string(1, data, &destination);
 
@@ -58,7 +58,7 @@ void test__f_conversion_number_unsigned_to_string__works_for_prepend(void **stat
   memset(destination.string, 0, sizeof(f_char_t) * destination.size);
 
   {
-    const f_conversion_data_t data = macro_f_conversion_data_t_initialize(2, F_conversion_data_flag_base_prepend_d | F_conversion_data_flag_base_upper_d, 0);
+    const f_conversion_data_t data = macro_f_conversion_data_t_initialize_1(2, F_conversion_data_flag_base_prepend_d | F_conversion_data_flag_base_upper_d, 0);
 
     const f_status_t status = f_conversion_number_unsigned_to_string(1, data, &destination);
 
@@ -70,7 +70,7 @@ void test__f_conversion_number_unsigned_to_string__works_for_prepend(void **stat
   memset(destination.string, 0, sizeof(f_char_t) * destination.size);
 
   {
-    const f_conversion_data_t data = macro_f_conversion_data_t_initialize(8, F_conversion_data_flag_base_prepend_d, 0);
+    const f_conversion_data_t data = macro_f_conversion_data_t_initialize_1(8, F_conversion_data_flag_base_prepend_d, 0);
 
     const f_status_t status = f_conversion_number_unsigned_to_string(1, data, &destination);
 
@@ -82,7 +82,7 @@ void test__f_conversion_number_unsigned_to_string__works_for_prepend(void **stat
   memset(destination.string, 0, sizeof(f_char_t) * destination.size);
 
   {
-    const f_conversion_data_t data = macro_f_conversion_data_t_initialize(8, F_conversion_data_flag_base_prepend_d | F_conversion_data_flag_base_upper_d, 0);
+    const f_conversion_data_t data = macro_f_conversion_data_t_initialize_1(8, F_conversion_data_flag_base_prepend_d | F_conversion_data_flag_base_upper_d, 0);
 
     const f_status_t status = f_conversion_number_unsigned_to_string(1, data, &destination);
 
@@ -94,7 +94,7 @@ void test__f_conversion_number_unsigned_to_string__works_for_prepend(void **stat
   memset(destination.string, 0, sizeof(f_char_t) * destination.size);
 
   {
-    const f_conversion_data_t data = macro_f_conversion_data_t_initialize(10, F_conversion_data_flag_base_prepend_d, 0);
+    const f_conversion_data_t data = macro_f_conversion_data_t_initialize_1(10, F_conversion_data_flag_base_prepend_d, 0);
 
     const f_status_t status = f_conversion_number_unsigned_to_string(1, data, &destination);
 
@@ -106,7 +106,7 @@ void test__f_conversion_number_unsigned_to_string__works_for_prepend(void **stat
   memset(destination.string, 0, sizeof(f_char_t) * destination.size);
 
   {
-    const f_conversion_data_t data = macro_f_conversion_data_t_initialize(10, F_conversion_data_flag_base_prepend_d | F_conversion_data_flag_base_upper_d, 0);
+    const f_conversion_data_t data = macro_f_conversion_data_t_initialize_1(10, F_conversion_data_flag_base_prepend_d | F_conversion_data_flag_base_upper_d, 0);
 
     const f_status_t status = f_conversion_number_unsigned_to_string(1, data, &destination);
 
@@ -118,7 +118,7 @@ void test__f_conversion_number_unsigned_to_string__works_for_prepend(void **stat
   memset(destination.string, 0, sizeof(f_char_t) * destination.size);
 
   {
-    const f_conversion_data_t data = macro_f_conversion_data_t_initialize(12, F_conversion_data_flag_base_prepend_d, 0);
+    const f_conversion_data_t data = macro_f_conversion_data_t_initialize_1(12, F_conversion_data_flag_base_prepend_d, 0);
 
     const f_status_t status = f_conversion_number_unsigned_to_string(1, data, &destination);
 
@@ -130,7 +130,7 @@ void test__f_conversion_number_unsigned_to_string__works_for_prepend(void **stat
   memset(destination.string, 0, sizeof(f_char_t) * destination.size);
 
   {
-    const f_conversion_data_t data = macro_f_conversion_data_t_initialize(12, F_conversion_data_flag_base_prepend_d | F_conversion_data_flag_base_upper_d, 0);
+    const f_conversion_data_t data = macro_f_conversion_data_t_initialize_1(12, F_conversion_data_flag_base_prepend_d | F_conversion_data_flag_base_upper_d, 0);
 
     const f_status_t status = f_conversion_number_unsigned_to_string(1, data, &destination);
 
@@ -142,7 +142,7 @@ void test__f_conversion_number_unsigned_to_string__works_for_prepend(void **stat
   memset(destination.string, 0, sizeof(f_char_t) * destination.size);
 
   {
-    const f_conversion_data_t data = macro_f_conversion_data_t_initialize(16, F_conversion_data_flag_base_prepend_d, 0);
+    const f_conversion_data_t data = macro_f_conversion_data_t_initialize_1(16, F_conversion_data_flag_base_prepend_d, 0);
 
     const f_status_t status = f_conversion_number_unsigned_to_string(1, data, &destination);
 
@@ -154,7 +154,7 @@ void test__f_conversion_number_unsigned_to_string__works_for_prepend(void **stat
   memset(destination.string, 0, sizeof(f_char_t) * destination.size);
 
   {
-    const f_conversion_data_t data = macro_f_conversion_data_t_initialize(16, F_conversion_data_flag_base_prepend_d | F_conversion_data_flag_base_upper_d, 0);
+    const f_conversion_data_t data = macro_f_conversion_data_t_initialize_1(16, F_conversion_data_flag_base_prepend_d | F_conversion_data_flag_base_upper_d, 0);
 
     const f_status_t status = f_conversion_number_unsigned_to_string(1, data, &destination);
 
@@ -170,7 +170,7 @@ void test__f_conversion_number_unsigned_to_string__works_for_zero(void **state) 
   f_string_dynamic_t destination = f_string_dynamic_t_initialize;
 
   {
-    const f_conversion_data_t data = macro_f_conversion_data_t_initialize(10, 0, 0);
+    const f_conversion_data_t data = macro_f_conversion_data_t_initialize_1(10, 0, 0);
 
     const f_status_t status = f_conversion_number_unsigned_to_string(0, data, &destination);
 
@@ -182,7 +182,7 @@ void test__f_conversion_number_unsigned_to_string__works_for_zero(void **state) 
   memset(destination.string, 0, sizeof(f_char_t) * destination.size);
 
   {
-    const f_conversion_data_t data = macro_f_conversion_data_t_initialize(10, 0, 1);
+    const f_conversion_data_t data = macro_f_conversion_data_t_initialize_1(10, 0, 1);
 
     const f_status_t status = f_conversion_number_unsigned_to_string(0, data, &destination);
 
@@ -194,7 +194,7 @@ void test__f_conversion_number_unsigned_to_string__works_for_zero(void **state) 
   memset(destination.string, 0, sizeof(f_char_t) * destination.size);
 
   {
-    const f_conversion_data_t data = macro_f_conversion_data_t_initialize(10, F_conversion_data_flag_zeros_leading_d, 1);
+    const f_conversion_data_t data = macro_f_conversion_data_t_initialize_1(10, F_conversion_data_flag_zeros_leading_d, 1);
 
     const f_status_t status = f_conversion_number_unsigned_to_string(0, data, &destination);
 
@@ -206,7 +206,7 @@ void test__f_conversion_number_unsigned_to_string__works_for_zero(void **state) 
   memset(destination.string, 0, sizeof(f_char_t) * destination.size);
 
   {
-    const f_conversion_data_t data = macro_f_conversion_data_t_initialize(10, 0, 2);
+    const f_conversion_data_t data = macro_f_conversion_data_t_initialize_1(10, 0, 2);
 
     const f_status_t status = f_conversion_number_unsigned_to_string(0, data, &destination);
 
@@ -218,7 +218,7 @@ void test__f_conversion_number_unsigned_to_string__works_for_zero(void **state) 
   memset(destination.string, 0, sizeof(f_char_t) * destination.size);
 
   {
-    const f_conversion_data_t data = macro_f_conversion_data_t_initialize(10, F_conversion_data_flag_zeros_leading_d, 2);
+    const f_conversion_data_t data = macro_f_conversion_data_t_initialize_1(10, F_conversion_data_flag_zeros_leading_d, 2);
 
     const f_status_t status = f_conversion_number_unsigned_to_string(0, data, &destination);
 
@@ -230,7 +230,7 @@ void test__f_conversion_number_unsigned_to_string__works_for_zero(void **state) 
   memset(destination.string, 0, sizeof(f_char_t) * destination.size);
 
   {
-    const f_conversion_data_t data = macro_f_conversion_data_t_initialize(10, F_conversion_data_flag_sign_pad_d, 0);
+    const f_conversion_data_t data = macro_f_conversion_data_t_initialize_1(10, F_conversion_data_flag_sign_pad_d, 0);
 
     const f_status_t status = f_conversion_number_unsigned_to_string(0, data, &destination);
 
@@ -242,7 +242,7 @@ void test__f_conversion_number_unsigned_to_string__works_for_zero(void **state) 
   memset(destination.string, 0, sizeof(f_char_t) * destination.size);
 
   {
-    const f_conversion_data_t data = macro_f_conversion_data_t_initialize(10, F_conversion_data_flag_sign_pad_d, 1);
+    const f_conversion_data_t data = macro_f_conversion_data_t_initialize_1(10, F_conversion_data_flag_sign_pad_d, 1);
 
     const f_status_t status = f_conversion_number_unsigned_to_string(0, data, &destination);
 
@@ -254,7 +254,7 @@ void test__f_conversion_number_unsigned_to_string__works_for_zero(void **state) 
   memset(destination.string, 0, sizeof(f_char_t) * destination.size);
 
   {
-    const f_conversion_data_t data = macro_f_conversion_data_t_initialize(10, F_conversion_data_flag_sign_always_d, 0);
+    const f_conversion_data_t data = macro_f_conversion_data_t_initialize_1(10, F_conversion_data_flag_sign_always_d, 0);
 
     const f_status_t status = f_conversion_number_unsigned_to_string(0, data, &destination);
 
@@ -266,7 +266,7 @@ void test__f_conversion_number_unsigned_to_string__works_for_zero(void **state) 
   memset(destination.string, 0, sizeof(f_char_t) * destination.size);
 
   {
-    const f_conversion_data_t data = macro_f_conversion_data_t_initialize(10, F_conversion_data_flag_sign_always_d, 1);
+    const f_conversion_data_t data = macro_f_conversion_data_t_initialize_1(10, F_conversion_data_flag_sign_always_d, 1);
 
     const f_status_t status = f_conversion_number_unsigned_to_string(0, data, &destination);
 
@@ -278,7 +278,7 @@ void test__f_conversion_number_unsigned_to_string__works_for_zero(void **state) 
   memset(destination.string, 0, sizeof(f_char_t) * destination.size);
 
   {
-    const f_conversion_data_t data = macro_f_conversion_data_t_initialize(10, F_conversion_data_flag_sign_always_d | F_conversion_data_flag_zeros_leading_d, 2);
+    const f_conversion_data_t data = macro_f_conversion_data_t_initialize_1(10, F_conversion_data_flag_sign_always_d | F_conversion_data_flag_zeros_leading_d, 2);
 
     const f_status_t status = f_conversion_number_unsigned_to_string(0, data, &destination);
 

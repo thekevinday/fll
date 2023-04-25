@@ -484,7 +484,7 @@ extern "C" {
 
   #define controller_global_t_initialize { 0, 0, 0 }
 
-  #define macro_controller_global_t_initialize(main, setting, thread) { \
+  #define macro_controller_global_t_initialize_1(main, setting, thread) { \
     main, \
     setting, \
     thread, \
@@ -505,7 +505,7 @@ extern "C" {
 
   #define controller_main_entry_t_initialize { 0, 0 }
 
-  #define macro_controller_main_entry_t_initialize(global, setting) { \
+  #define macro_controller_main_entry_t_initialize_1(global, setting) { \
     global, \
     setting, \
   }

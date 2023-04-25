@@ -12,12 +12,12 @@ void test__f_string_map_multis_append__works(void **state) {
   f_string_map_multis_t destination = f_string_map_multis_t_initialize;
 
   f_string_static_t test_value_array[] = {
-    macro_f_string_static_t_initialize("test_value1", 0, 11),
-    macro_f_string_static_t_initialize("test_value2", 0, 11),
+    macro_f_string_static_t_initialize_1("test_value1", 0, 11),
+    macro_f_string_static_t_initialize_1("test_value2", 0, 11),
   };
 
-  const f_string_static_t test_name = macro_f_string_static_t_initialize("test_name", 0, 9);
-  const f_string_statics_t test_value = macro_f_string_statics_t_initialize(test_value_array, 0, length_values);
+  const f_string_static_t test_name = macro_f_string_static_t_initialize_1("test_name", 0, 9);
+  const f_string_statics_t test_value = macro_f_string_statics_t_initialize_1(test_value_array, 0, length_values);
 
   {
     f_status_t status = f_string_dynamic_append(test_name, &source.name);

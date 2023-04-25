@@ -47,7 +47,7 @@ void test__f_limit_process__parameter_checking(void **state) {
 
 void test__f_limit_process__works(void **state) {
 
-  const f_limit_value_t value = macro_f_limit_value_t_initialize(1, 2);
+  const f_limit_value_t value = macro_f_limit_value_t_initialize_1(1, 2);
   f_limit_value_t destination = f_limit_value_t_initialize;
 
   {

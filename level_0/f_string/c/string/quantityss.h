@@ -33,8 +33,8 @@ extern "C" {
 
   #define f_string_quantityss_t_initialize { 0, 0, 0 }
 
-  #define macro_f_string_quantityss_t_initialize(array, size, used) { array, size, used }
-  #define macro_f_string_quantityss_t_initialize2(array, length) { array, length, length }
+  #define macro_f_string_quantityss_t_initialize_1(array, size, used) { array, size, used }
+  #define macro_f_string_quantityss_t_initialize_2(array, length) { array, length, length }
 
   #define macro_f_string_quantityss_t_clear(quantityss) macro_f_memory_structures_clear(quantityss)
 

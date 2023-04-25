@@ -8,31 +8,31 @@ extern "C" {
 void test__f_iki_content_partial_is__returns_false(void **state) {
 
   const f_string_static_t contents[] = {
-    macro_f_string_static_t_initialize("xxxx' falsexxxx", 0, 15),
-    macro_f_string_static_t_initialize("xxxx'falsexxxx", 0, 14),
-    macro_f_string_static_t_initialize("xxxxfalse'xxxx", 0, 14),
-    macro_f_string_static_t_initialize("xxxxfa'l'sexxxx", 0, 15),
-    macro_f_string_static_t_initialize("xxxxf'alsexxxx", 0, 14),
-    macro_f_string_static_t_initialize("xxxx'false'xxxx", 0, 15),
-    macro_f_string_static_t_initialize("xxxx\"falsexxxx", 0, 14),
-    macro_f_string_static_t_initialize("xxxxfalse\"xxxx", 0, 14),
-    macro_f_string_static_t_initialize("xxxxfa\"l\"sexxxx", 0, 15),
-    macro_f_string_static_t_initialize("xxxxf\"alsexxxx", 0, 14),
-    macro_f_string_static_t_initialize("xxxx\"false\"xxxx", 0, 15),
+    macro_f_string_static_t_initialize_1("xxxx' falsexxxx", 0, 15),
+    macro_f_string_static_t_initialize_1("xxxx'falsexxxx", 0, 14),
+    macro_f_string_static_t_initialize_1("xxxxfalse'xxxx", 0, 14),
+    macro_f_string_static_t_initialize_1("xxxxfa'l'sexxxx", 0, 15),
+    macro_f_string_static_t_initialize_1("xxxxf'alsexxxx", 0, 14),
+    macro_f_string_static_t_initialize_1("xxxx'false'xxxx", 0, 15),
+    macro_f_string_static_t_initialize_1("xxxx\"falsexxxx", 0, 14),
+    macro_f_string_static_t_initialize_1("xxxxfalse\"xxxx", 0, 14),
+    macro_f_string_static_t_initialize_1("xxxxfa\"l\"sexxxx", 0, 15),
+    macro_f_string_static_t_initialize_1("xxxxf\"alsexxxx", 0, 14),
+    macro_f_string_static_t_initialize_1("xxxx\"false\"xxxx", 0, 15),
   };
 
   const f_string_range_t ranges[] = {
-    macro_f_string_range_t_initialize(4, 10),
-    macro_f_string_range_t_initialize(4, 9),
-    macro_f_string_range_t_initialize(4, 9),
-    macro_f_string_range_t_initialize(4, 10),
-    macro_f_string_range_t_initialize(4, 9),
-    macro_f_string_range_t_initialize(4, 5),
-    macro_f_string_range_t_initialize(4, 9),
-    macro_f_string_range_t_initialize(4, 9),
-    macro_f_string_range_t_initialize(4, 10),
-    macro_f_string_range_t_initialize(4, 9),
-    macro_f_string_range_t_initialize(4, 5),
+    macro_f_string_range_t_initialize_1(4, 10),
+    macro_f_string_range_t_initialize_1(4, 9),
+    macro_f_string_range_t_initialize_1(4, 9),
+    macro_f_string_range_t_initialize_1(4, 10),
+    macro_f_string_range_t_initialize_1(4, 9),
+    macro_f_string_range_t_initialize_1(4, 5),
+    macro_f_string_range_t_initialize_1(4, 9),
+    macro_f_string_range_t_initialize_1(4, 9),
+    macro_f_string_range_t_initialize_1(4, 10),
+    macro_f_string_range_t_initialize_1(4, 9),
+    macro_f_string_range_t_initialize_1(4, 5),
   };
 
   const f_string_static_t quotes[] = {
@@ -82,7 +82,7 @@ void test__f_iki_content_partial_is__returns_data_not(void **state) {
 void test__f_iki_content_partial_is__returns_data_not_eos(void **state) {
 
   {
-    const f_string_range_t range = macro_f_string_range_t_initialize(f_string_ascii_a_s.used, f_string_ascii_a_s.used);
+    const f_string_range_t range = macro_f_string_range_t_initialize_1(f_string_ascii_a_s.used, f_string_ascii_a_s.used);
 
     const f_status_t status = f_iki_content_partial_is(f_string_ascii_a_s, range, f_string_ascii_quote_single_s);
 
@@ -104,25 +104,25 @@ void test__f_iki_content_partial_is__returns_data_not_stop(void **state) {
 void test__f_iki_content_partial_is__returns_true(void **state) {
 
   const f_string_static_t contents[] = {
-    macro_f_string_static_t_initialize("xxxxworksxxxx", 0, 13),
-    macro_f_string_static_t_initialize("xxxxalso worksxxxx", 0, 18),
-    macro_f_string_static_t_initialize("xxxx\\'works\\'xxxx", 0, 17),
-    macro_f_string_static_t_initialize("xxxx\\'wor ks\\'xxxx", 0, 18),
-    macro_f_string_static_t_initialize("xxxx\\'work\\'s\\'xxxx", 0, 19),
-    macro_f_string_static_t_initialize("xxxx\\\"works\\\"xxxx", 0, 17),
-    macro_f_string_static_t_initialize("xxxx\\\"wor ks\\\"xxxx", 0, 18),
-    macro_f_string_static_t_initialize("xxxx\\\"work\\\"s\\\"xxxx", 0, 19),
+    macro_f_string_static_t_initialize_1("xxxxworksxxxx", 0, 13),
+    macro_f_string_static_t_initialize_1("xxxxalso worksxxxx", 0, 18),
+    macro_f_string_static_t_initialize_1("xxxx\\'works\\'xxxx", 0, 17),
+    macro_f_string_static_t_initialize_1("xxxx\\'wor ks\\'xxxx", 0, 18),
+    macro_f_string_static_t_initialize_1("xxxx\\'work\\'s\\'xxxx", 0, 19),
+    macro_f_string_static_t_initialize_1("xxxx\\\"works\\\"xxxx", 0, 17),
+    macro_f_string_static_t_initialize_1("xxxx\\\"wor ks\\\"xxxx", 0, 18),
+    macro_f_string_static_t_initialize_1("xxxx\\\"work\\\"s\\\"xxxx", 0, 19),
   };
 
   const f_string_range_t ranges[] = {
-    macro_f_string_range_t_initialize(4, 8),
-    macro_f_string_range_t_initialize(4, 13),
-    macro_f_string_range_t_initialize(4, 12),
-    macro_f_string_range_t_initialize(4, 13),
-    macro_f_string_range_t_initialize(4, 14),
-    macro_f_string_range_t_initialize(4, 12),
-    macro_f_string_range_t_initialize(4, 13),
-    macro_f_string_range_t_initialize(4, 14),
+    macro_f_string_range_t_initialize_1(4, 8),
+    macro_f_string_range_t_initialize_1(4, 13),
+    macro_f_string_range_t_initialize_1(4, 12),
+    macro_f_string_range_t_initialize_1(4, 13),
+    macro_f_string_range_t_initialize_1(4, 14),
+    macro_f_string_range_t_initialize_1(4, 12),
+    macro_f_string_range_t_initialize_1(4, 13),
+    macro_f_string_range_t_initialize_1(4, 14),
   };
 
   const f_string_static_t quotes[] = {

@@ -7,7 +7,7 @@ extern "C" {
 
 void test__f_directory_exists__fails(void **state) {
 
-  const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
+  const f_string_static_t path = macro_f_string_static_t_initialize_1("test", 0, 4);
 
   int errnos[] = {
     EACCES,
@@ -55,7 +55,7 @@ void test__f_directory_exists__returns_data_not(void **state) {
 
 void test__f_directory_exists__returns_false(void **state) {
 
-  const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
+  const f_string_static_t path = macro_f_string_static_t_initialize_1("test", 0, 4);
 
   struct stat statistics;
 
@@ -74,7 +74,7 @@ void test__f_directory_exists__returns_false(void **state) {
 
 void test__f_directory_exists__returns_true(void **state) {
 
-  const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
+  const f_string_static_t path = macro_f_string_static_t_initialize_1("test", 0, 4);
 
   struct stat statistics;
 

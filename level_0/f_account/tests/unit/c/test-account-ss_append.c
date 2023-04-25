@@ -48,11 +48,11 @@ void test__f_accountss_append__works(void **state) {
   f_accounts_t sources = f_accounts_t_initialize;
   f_accountss_t destination = f_accountss_t_initialize;
 
-  f_string_static_t home = macro_f_string_static_t_initialize("home", 0, 4);
-  f_string_static_t label = macro_f_string_static_t_initialize("label", 0, 5);
-  f_string_static_t name = macro_f_string_static_t_initialize("name", 0, 4);
-  f_string_static_t password = macro_f_string_static_t_initialize("password", 0, 8);
-  f_string_static_t shell = macro_f_string_static_t_initialize("shell", 0, 5);
+  f_string_static_t home = macro_f_string_static_t_initialize_1("home", 0, 4);
+  f_string_static_t label = macro_f_string_static_t_initialize_1("label", 0, 5);
+  f_string_static_t name = macro_f_string_static_t_initialize_1("name", 0, 4);
+  f_string_static_t password = macro_f_string_static_t_initialize_1("password", 0, 8);
+  f_string_static_t shell = macro_f_string_static_t_initialize_1("shell", 0, 5);
 
   const f_account_t source = { .home = home, .label = label, .name = name, .password = password, .shell = shell };
 

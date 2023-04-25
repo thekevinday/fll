@@ -28,8 +28,8 @@ extern "C" {
 
   #define f_utf_string_dynamics_t_initialize f_utf_string_statics_t_initialize
 
-  #define macro_f_utf_string_dynamics_t_initialize(array, size, used) { array, size, used }
-  #define macro_f_utf_string_dynamics_t_initialize2(array, length) { array, length, length }
+  #define macro_f_utf_string_dynamics_t_initialize_1(array, size, used) { array, size, used }
+  #define macro_f_utf_string_dynamics_t_initialize_2(array, length) { array, length, length }
 
   #define macro_f_utf_string_dynamics_t_clear(dynamics) macro_f_utf_string_statics_t_clear(dynamics)
 

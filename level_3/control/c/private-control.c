@@ -170,7 +170,7 @@ extern "C" {
     const f_state_t state = macro_f_state_t_initialize_1(control_allocation_large_d, control_allocation_small_d, F_none, 0, 0, 0, &fll_program_standard_signal_handle, 0, (void *) main, 0);
 
     f_string_static_t contents_array[main->parameters.remaining.used];
-    f_string_statics_t contents = macro_f_string_statics_t_initialize(contents_array, 0, main->parameters.remaining.used);
+    f_string_statics_t contents = macro_f_string_statics_t_initialize_1(contents_array, 0, main->parameters.remaining.used);
 
     // The Packet Control Block.
     {
@@ -319,7 +319,7 @@ extern "C" {
 
     {
       f_state_t state = macro_f_state_t_initialize_1(control_allocation_large_d, control_allocation_small_d, F_none, 0, 0, 0, &fll_program_standard_signal_handle, 0, (void *) main, 0);
-      f_string_range_t range_packet = macro_f_string_range_t_initialize2(data->cache.large.used);
+      f_string_range_t range_packet = macro_f_string_range_t_initialize_2(data->cache.large.used);
 
       status = fll_fss_basic_list_read(data->cache.large, state, &range_packet, &data->cache.packet_objects, &data->cache.packet_contents, &data->cache.delimits, 0, 0);
 
@@ -433,7 +433,7 @@ extern "C" {
             if (!(found & 0x1)) {
               const f_array_length_t action_length = (data->cache.header_contents.array[i].array[0].stop - data->cache.header_contents.array[i].array[0].start) + 1;
               char action_string[action_length + 1];
-              const f_string_static_t action = macro_f_string_static_t_initialize(action_string, 0, action_length);
+              const f_string_static_t action = macro_f_string_static_t_initialize_1(action_string, 0, action_length);
 
               memcpy(action_string, data->cache.large.string + data->cache.header_contents.array[i].array[0].start, action_length);
               action_string[action_length] = 0;
@@ -496,7 +496,7 @@ extern "C" {
                 // Not a number, so attempt get by status string name.
                 const f_array_length_t name_length = (data->cache.header_contents.array[i].array[0].stop - data->cache.header_contents.array[i].array[0].start) + 1;
                 char name_string[name_length + 1];
-                const f_string_static_t name = macro_f_string_static_t_initialize(name_string, 0, name_length);
+                const f_string_static_t name = macro_f_string_static_t_initialize_1(name_string, 0, name_length);
 
                 memcpy(name_string, data->cache.large.string + data->cache.header_contents.array[i].array[0].start, name_length);
                 name_string[name_length] = 0;

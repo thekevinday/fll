@@ -219,7 +219,7 @@ extern "C" {
         // Have the parent perform all appropriate access controls and then send either '0' for no error or '1' for error to the child.
         {
           const f_string_static_t *string_result = &f_string_ascii_0_s;
-          const f_file_t file = macro_f_file_t_initialize2(0, descriptors[1], F_file_flag_write_only_d);
+          const f_file_t file = macro_f_file_t_initialize_2(0, descriptors[1], F_file_flag_write_only_d);
 
           const f_status_t status = private_fll_execute_as_parent(*as, id_process, parameter, string_result);
 
@@ -267,7 +267,7 @@ extern "C" {
 
       f_string_dynamic_t response = f_string_dynamic_t_initialize;
 
-      const f_file_t file = macro_f_file_t_initialize(0, descriptors[0], F_file_flag_read_only_d, 1, 1);
+      const f_file_t file = macro_f_file_t_initialize_1(0, descriptors[0], F_file_flag_read_only_d, 1, 1);
 
       f_file_read_block(file, &response);
 
@@ -390,7 +390,7 @@ extern "C" {
       {
         const f_string_static_t *string_result = &f_string_ascii_0_s;
 
-        const f_file_t file = macro_f_file_t_initialize2(0, descriptors[1], F_file_flag_write_only_d);
+        const f_file_t file = macro_f_file_t_initialize_2(0, descriptors[1], F_file_flag_write_only_d);
 
         f_status_t status = F_none;
 
@@ -449,7 +449,7 @@ extern "C" {
     if (as) {
       f_string_dynamic_t response = f_string_dynamic_t_initialize;
 
-      const f_file_t file = macro_f_file_t_initialize(0, descriptors[0], F_file_flag_read_only_d, 1, 1);
+      const f_file_t file = macro_f_file_t_initialize_1(0, descriptors[0], F_file_flag_read_only_d, 1, 1);
 
       f_file_read_block(file, &response);
 

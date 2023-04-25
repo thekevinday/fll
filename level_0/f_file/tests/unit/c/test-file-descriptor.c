@@ -8,7 +8,7 @@ extern "C" {
 void test__f_file_descriptor__fails(void **state) {
 
   {
-    f_file_t file = macro_f_file_t_initialize2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
+    f_file_t file = macro_f_file_t_initialize_2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
 
     will_return(__wrap_fileno, -1);
 
@@ -29,7 +29,7 @@ void test__f_file_descriptor__parameter_checking(void **state) {
 
 void test__f_file_descriptor__returns_stream_not(void **state) {
 
-  f_file_t file = macro_f_file_t_initialize2(0, F_type_descriptor_output_d, F_file_flag_write_only_d);
+  f_file_t file = macro_f_file_t_initialize_2(0, F_type_descriptor_output_d, F_file_flag_write_only_d);
 
   {
     const f_status_t status = f_file_descriptor(&file);
@@ -41,7 +41,7 @@ void test__f_file_descriptor__returns_stream_not(void **state) {
 void test__f_file_descriptor__works(void **state) {
 
   {
-    f_file_t file = macro_f_file_t_initialize2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
+    f_file_t file = macro_f_file_t_initialize_2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
 
     will_return(__wrap_fileno, F_type_descriptor_output_d);
 

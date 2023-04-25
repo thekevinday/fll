@@ -50,7 +50,7 @@ extern "C" {
       return;
     }
 
-    f_string_range_t buffer_range = macro_f_string_range_t_initialize2(main->setting.buffer.used);
+    f_string_range_t buffer_range = macro_f_string_range_t_initialize_2(main->setting.buffer.used);
 
     iki_read_process_line(main, &buffer_range);
 
@@ -281,7 +281,7 @@ extern "C" {
 #ifndef _di_iki_read_process_buffer_total_
   void iki_read_process_buffer_total(iki_read_main_t * const main) {
 
-    f_string_range_t range = macro_f_string_range_t_initialize2(main->setting.buffer.used);
+    f_string_range_t range = macro_f_string_range_t_initialize_2(main->setting.buffer.used);
 
     iki_read_process_line(main, &range);
 

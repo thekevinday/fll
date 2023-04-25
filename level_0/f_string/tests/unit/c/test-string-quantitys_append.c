@@ -7,7 +7,7 @@ extern "C" {
 
 void test__f_string_quantitys_append__works(void **state) {
 
-  const f_string_quantity_t source = macro_f_string_quantity_t_initialize(1, 2);
+  const f_string_quantity_t source = macro_f_string_quantity_t_initialize_1(1, 2);
   f_string_quantitys_t destination = f_string_quantitys_t_initialize;
 
   {

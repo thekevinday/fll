@@ -15,7 +15,7 @@ void test__f_console_environment_process__data_not(void **state) {
 
     f_string_maps_t maps = f_string_maps_t_initialize;
 
-    const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize(argc, argv, envp);
+    const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize_1(argc, argv, envp);
 
     {
       const f_status_t status = f_console_environment_process(arguments, &maps);
@@ -71,7 +71,7 @@ void test__f_console_environment_process__works(void **state) {
 
   f_string_maps_t maps = f_string_maps_t_initialize;
 
-  const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize(argc, argv, envp);
+  const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize_1(argc, argv, envp);
 
   {
     const f_status_t status = f_console_environment_process(arguments, &maps);

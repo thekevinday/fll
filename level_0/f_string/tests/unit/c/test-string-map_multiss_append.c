@@ -13,23 +13,23 @@ void test__f_string_map_multiss_append__works(void **state) {
   f_string_map_multiss_t destination = f_string_map_multiss_t_initialize;
 
   f_string_static_t test_value_array1[] = {
-    macro_f_string_static_t_initialize("test_value1", 0, 11),
-    macro_f_string_static_t_initialize("test_value2", 0, 11),
+    macro_f_string_static_t_initialize_1("test_value1", 0, 11),
+    macro_f_string_static_t_initialize_1("test_value2", 0, 11),
   };
 
   f_string_static_t test_value_array2[] = {
-    macro_f_string_static_t_initialize("test_value3", 0, 11),
-    macro_f_string_static_t_initialize("test_value4", 0, 11),
+    macro_f_string_static_t_initialize_1("test_value3", 0, 11),
+    macro_f_string_static_t_initialize_1("test_value4", 0, 11),
   };
 
   const f_string_static_t test_names[] = {
-    macro_f_string_static_t_initialize("test_name1", 0, 10),
-    macro_f_string_static_t_initialize("test_name2", 0, 10),
+    macro_f_string_static_t_initialize_1("test_name1", 0, 10),
+    macro_f_string_static_t_initialize_1("test_name2", 0, 10),
   };
 
   const f_string_statics_t test_values[] = {
-    macro_f_string_statics_t_initialize(test_value_array1, 0, length_values),
-    macro_f_string_statics_t_initialize(test_value_array2, 0, length_values),
+    macro_f_string_statics_t_initialize_1(test_value_array1, 0, length_values),
+    macro_f_string_statics_t_initialize_1(test_value_array2, 0, length_values),
   };
 
   {

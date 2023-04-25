@@ -31,7 +31,7 @@ extern "C" {
 #if !defined(_di_fl_fss_basic_list_object_write_) || !defined(_di_fl_fss_extended_list_object_write_)
   void private_fl_fss_basic_list_write_object_trim(const f_array_length_t used_start, f_string_dynamic_t * const destination, f_state_t * const state) {
 
-    f_string_range_t destination_range = macro_f_string_range_t_initialize2(destination->used);
+    f_string_range_t destination_range = macro_f_string_range_t_initialize_2(destination->used);
     f_array_length_t i = 0;
     uint8_t width = 0;
 
@@ -1115,7 +1115,7 @@ extern "C" {
 #if !defined(_di_fl_fss_basic_object_write_) || !defined(_di_fl_fss_extended_object_write_)
   void private_fl_fss_basic_write_object_trim(const uint8_t quote, const f_array_length_t used_start, f_string_dynamic_t * const destination, f_state_t * const state) {
 
-    f_string_range_t destination_range = macro_f_string_range_t_initialize2(destination->used);
+    f_string_range_t destination_range = macro_f_string_range_t_initialize_2(destination->used);
     f_array_length_t i = 0;
 
     uint8_t width = 0;

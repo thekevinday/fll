@@ -7,7 +7,7 @@ extern "C" {
 
 void test__f_thread_semaphore_file_delete__fails(void **state) {
 
-  f_string_static_t name = macro_f_string_static_t_initialize("test", 0, 4);
+  f_string_static_t name = macro_f_string_static_t_initialize_1("test", 0, 4);
 
   int errnos[] = {
     EACCES,
@@ -38,7 +38,7 @@ void test__f_thread_semaphore_file_delete__fails(void **state) {
 
 void test__f_thread_semaphore_file_delete__works(void **state) {
 
-  f_string_static_t name = macro_f_string_static_t_initialize("test", 0, 4);
+  f_string_static_t name = macro_f_string_static_t_initialize_1("test", 0, 4);
 
   {
     will_return(__wrap_sem_unlink, false);

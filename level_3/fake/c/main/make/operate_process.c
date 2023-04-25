@@ -178,7 +178,7 @@ extern "C" {
 
             // The max Unicode sequence length is "U+XXXXXX".
             char buffer_string[9] = { f_string_ascii_U_s.string[0], f_string_ascii_plus_s.string[0], 0, 0, 0, 0, 0, 0, 0 };
-            f_string_static_t buffer = macro_f_string_static_t_initialize(buffer_string, 0, 2);
+            f_string_static_t buffer = macro_f_string_static_t_initialize_1(buffer_string, 0, 2);
 
             for (uint8_t j = 2; i < source.used && j < 8; ) {
 
@@ -333,7 +333,7 @@ extern "C" {
     f_signal_set_empty(&signals.block);
     f_signal_set_fill(&signals.block_not);
 
-    fl_execute_parameter_t parameter = macro_fl_execute_parameter_t_initialize(as_shell ? 0 : FL_execute_parameter_option_path_d, 0, &data_make->environment, &signals, 0);
+    fl_execute_parameter_t parameter = macro_fl_execute_parameter_t_initialize_1(as_shell ? 0 : FL_execute_parameter_option_path_d, 0, &data_make->environment, &signals, 0);
 
     int return_code = 0;
 

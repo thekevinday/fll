@@ -12,13 +12,13 @@ void test__f_string_mapss_append__works(void **state) {
   f_string_mapss_t destination = f_string_mapss_t_initialize;
 
   const f_string_static_t test_names[] = {
-    macro_f_string_static_t_initialize("test_name1", 0, 10),
-    macro_f_string_static_t_initialize("test_name2", 0, 10),
+    macro_f_string_static_t_initialize_1("test_name1", 0, 10),
+    macro_f_string_static_t_initialize_1("test_name2", 0, 10),
   };
 
   const f_string_static_t test_values[] = {
-    macro_f_string_static_t_initialize("test_value1", 0, 11),
-    macro_f_string_static_t_initialize("test_value2", 0, 11),
+    macro_f_string_static_t_initialize_1("test_value1", 0, 11),
+    macro_f_string_static_t_initialize_1("test_value2", 0, 11),
   };
 
   {

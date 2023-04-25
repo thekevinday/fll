@@ -92,7 +92,7 @@ extern "C" {
       0, \
     }
 
-  #define macro_fss_embedded_list_read_skip_t_initialize(skip, used) \
+  #define macro_fss_embedded_list_read_skip_t_initialize_1(skip, used) \
     { \
       skip, \
       used, \

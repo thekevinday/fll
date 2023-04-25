@@ -2222,7 +2222,7 @@ extern "C" {
     const f_array_length_t write_max = (range.stop - range.start) + 1 > buffer.used ? buffer.used : (range.stop - range.start) + 1;
 
     if (written) {
-      const f_string_static_t buffer_adjusted = macro_f_string_static_t_initialize(buffer.string + range.start, 0, buffer.used - range.start);
+      const f_string_static_t buffer_adjusted = macro_f_string_static_t_initialize_1(buffer.string + range.start, 0, buffer.used - range.start);
 
       const f_status_t status = private_f_file_write_until(file, buffer_adjusted, write_max, written);
       if (F_status_is_error(status)) return status;
@@ -2233,7 +2233,7 @@ extern "C" {
       }
     }
     else {
-      const f_string_static_t buffer_adjusted = macro_f_string_static_t_initialize(buffer.string + range.start, 0, buffer.used - range.start);
+      const f_string_static_t buffer_adjusted = macro_f_string_static_t_initialize_1(buffer.string + range.start, 0, buffer.used - range.start);
       f_array_length_t written_local = 0;
 
       const f_status_t status = private_f_file_write_until(file, buffer_adjusted, write_max, &written_local);

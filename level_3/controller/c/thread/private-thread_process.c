@@ -357,7 +357,7 @@ extern "C" {
         f_thread_create(0, &global->thread->id_signal, &controller_thread_signal_other, (void *) global);
       }
 
-      const controller_main_entry_t entry = macro_controller_main_entry_t_initialize(global, global->setting);
+      const controller_main_entry_t entry = macro_controller_main_entry_t_initialize_1(global, global->setting);
 
       f_status_t status = f_thread_create(0, &global->thread->id_entry, &controller_thread_exit, (void *) &entry);
 

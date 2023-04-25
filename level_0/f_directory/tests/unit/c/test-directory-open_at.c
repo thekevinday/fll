@@ -8,7 +8,7 @@ extern "C" {
 void test__f_directory_open_at__fails(void **state) {
 
   const int at = 1;
-  const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
+  const f_string_static_t path = macro_f_string_static_t_initialize_1("test", 0, 4);
 
   int errnos[] = {
     EACCES,
@@ -65,7 +65,7 @@ void test__f_directory_open_at__fails(void **state) {
 
 void test__f_directory_open_at__parameter_checking(void **state) {
 
-  const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
+  const f_string_static_t path = macro_f_string_static_t_initialize_1("test", 0, 4);
 
   {
     const f_status_t status = f_directory_open_at(0, path, 0, 0);
@@ -91,7 +91,7 @@ void test__f_directory_open_at__works(void **state) {
 
   const int at = 1;
 
-  const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
+  const f_string_static_t path = macro_f_string_static_t_initialize_1("test", 0, 4);
 
   {
     int id = 0;

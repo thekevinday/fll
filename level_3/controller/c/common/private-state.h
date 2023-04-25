@@ -30,7 +30,7 @@ extern "C" {
     0, \
   }
 
-  #define macro_controller_state_interrupt_t_initialize(is_normal, thread) { \
+  #define macro_controller_state_interrupt_t_initialize_1(is_normal, thread) { \
     is_normal, \
     thread, \
   }

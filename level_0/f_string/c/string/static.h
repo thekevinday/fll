@@ -24,8 +24,8 @@ extern "C" {
  *
  * If size is set to some value other than 0 for a static string, then take special care not to intermix it with f_string_dynamic_t.
  *
- * A special macro_f_string_static_t_initialize() is provided to easily initialize a static string.
- * A special macro_f_string_static_t_initialize2() is provided to easily initialize a static string with an identical used and size.
+ * A special macro_f_string_static_t_initialize_1() is provided to easily initialize a static string.
+ * A special macro_f_string_static_t_initialize_2() is provided to easily initialize a static string with an identical used and size.
  *
  * string: The string.
  * size:   Total amount of space available.
@@ -41,8 +41,8 @@ extern "C" {
 
   #define f_string_static_t_initialize { 0, 0, 0 }
 
-  #define macro_f_string_static_t_initialize(string, size, used) { string, size, used }
-  #define macro_f_string_static_t_initialize2(string, length) { string, length, length }
+  #define macro_f_string_static_t_initialize_1(string, size, used) { string, size, used }
+  #define macro_f_string_static_t_initialize_2(string, length) { string, length, length }
 
   #define macro_f_string_static_t_clear(string_static) \
     string_static.string = 0; \

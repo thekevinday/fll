@@ -7,11 +7,11 @@ extern "C" {
 
 void test__f_utf_seek_to__after_newline(void **state) {
 
-  const f_utf_string_static_t to = macro_f_utf_string_static_t_initialize((f_utf_string_t) "\0\0\0X", 0, 1);
-  const f_utf_string_static_t source = macro_f_utf_string_static_t_initialize((f_utf_string_t) "\0\0\0t\0\0\0e\0\0\0\n\0\0\0X\0\0\0s\0\0\0t", 0, 6);
+  const f_utf_string_static_t to = macro_f_utf_string_static_t_initialize_1((f_utf_string_t) "\0\0\0X", 0, 1);
+  const f_utf_string_static_t source = macro_f_utf_string_static_t_initialize_1((f_utf_string_t) "\0\0\0t\0\0\0e\0\0\0\n\0\0\0X\0\0\0s\0\0\0t", 0, 6);
 
   {
-    f_string_range_t range = macro_f_string_range_t_initialize(0, source.used - 1);
+    f_string_range_t range = macro_f_string_range_t_initialize_1(0, source.used - 1);
 
     const f_status_t status = f_utf_string_seek_to(source.string, to.string[0], &range);
 
@@ -24,11 +24,11 @@ void test__f_utf_seek_to__after_newline(void **state) {
 
 void test__f_utf_seek_to__before_newline(void **state) {
 
-  const f_utf_string_static_t to = macro_f_utf_string_static_t_initialize((f_utf_string_t) "\0\0\0X", 0, 1);
-  const f_utf_string_static_t source = macro_f_utf_string_static_t_initialize((f_utf_string_t) "\0\0\0t\0\0\0e\0\0\0X\0\0\0\n\0\0\0s\0\0\0t", 0, 6);
+  const f_utf_string_static_t to = macro_f_utf_string_static_t_initialize_1((f_utf_string_t) "\0\0\0X", 0, 1);
+  const f_utf_string_static_t source = macro_f_utf_string_static_t_initialize_1((f_utf_string_t) "\0\0\0t\0\0\0e\0\0\0X\0\0\0\n\0\0\0s\0\0\0t", 0, 6);
 
   {
-    f_string_range_t range = macro_f_string_range_t_initialize(0, source.used - 1);
+    f_string_range_t range = macro_f_string_range_t_initialize_1(0, source.used - 1);
 
     const f_status_t status = f_utf_string_seek_to(source.string, to.string[0], &range);
 
@@ -41,8 +41,8 @@ void test__f_utf_seek_to__before_newline(void **state) {
 
 void test__f_utf_seek_to__returns_data_not_stop(void **state) {
 
-  const f_utf_string_static_t to = macro_f_utf_string_static_t_initialize((f_utf_string_t) "\0\0\0X", 0, 1);
-  const f_utf_string_static_t source = macro_f_utf_string_static_t_initialize((f_utf_string_t) "\0\0\0t\0\0\0e\0\0\0s\0\0\0t\0\0\0\n\0\0\0a\0\0\0f\0\0\0t\0\0\0e\0\0\0r", 0, 10);
+  const f_utf_string_static_t to = macro_f_utf_string_static_t_initialize_1((f_utf_string_t) "\0\0\0X", 0, 1);
+  const f_utf_string_static_t source = macro_f_utf_string_static_t_initialize_1((f_utf_string_t) "\0\0\0t\0\0\0e\0\0\0s\0\0\0t\0\0\0\n\0\0\0a\0\0\0f\0\0\0t\0\0\0e\0\0\0r", 0, 10);
 
   {
     f_string_range_t range = f_string_range_t_initialize;
@@ -55,11 +55,11 @@ void test__f_utf_seek_to__returns_data_not_stop(void **state) {
 
 void test__f_utf_seek_to__returns_none_stop(void **state) {
 
-  const f_utf_string_static_t to = macro_f_utf_string_static_t_initialize((f_utf_string_t) "\0\0\0X", 0, 1);
-  const f_utf_string_static_t source = macro_f_utf_string_static_t_initialize((f_utf_string_t) "\0\0\0t\0\0\0e\0\0\0s\0\0\0t\0\0\0\n\0\0\0a\0\0\0f\0\0\0t\0\0\0e\0\0\0r", 0, 10);
+  const f_utf_string_static_t to = macro_f_utf_string_static_t_initialize_1((f_utf_string_t) "\0\0\0X", 0, 1);
+  const f_utf_string_static_t source = macro_f_utf_string_static_t_initialize_1((f_utf_string_t) "\0\0\0t\0\0\0e\0\0\0s\0\0\0t\0\0\0\n\0\0\0a\0\0\0f\0\0\0t\0\0\0e\0\0\0r", 0, 10);
 
   {
-    f_string_range_t range = macro_f_string_range_t_initialize(0, source.used - 1);
+    f_string_range_t range = macro_f_string_range_t_initialize_1(0, source.used - 1);
 
     const f_status_t status = f_utf_string_seek_to(source.string, to.string[0], &range);
 
@@ -72,8 +72,8 @@ void test__f_utf_seek_to__returns_none_stop(void **state) {
 
 void test__f_utf_seek_to__parameter_checking(void **state) {
 
-  const f_utf_string_static_t to = macro_f_utf_string_static_t_initialize((f_utf_string_t) "\0\0\0X", 0, 1);
-  const f_utf_string_static_t source = macro_f_utf_string_static_t_initialize((f_utf_string_t) "\0\0\0t\0\0\0e\0\0\0X\0\0\0\n\0\0\0s\0\0\0t", 0, 6);
+  const f_utf_string_static_t to = macro_f_utf_string_static_t_initialize_1((f_utf_string_t) "\0\0\0X", 0, 1);
+  const f_utf_string_static_t source = macro_f_utf_string_static_t_initialize_1((f_utf_string_t) "\0\0\0t\0\0\0e\0\0\0X\0\0\0\n\0\0\0s\0\0\0t", 0, 6);
 
   {
     const f_status_t status = f_utf_string_seek_to(source.string, to.string[0], 0);

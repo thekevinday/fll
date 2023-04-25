@@ -26,7 +26,7 @@ extern "C" {
 
   #define f_thread_once_t_initialize PTHREAD_ONCE_INIT
 
-  #define macro_f_thread_once_t_initialize(once) once
+  #define macro_f_thread_once_t_initialize_1(once) once
 #endif // _di_f_thread_once_t_
 
 /**
@@ -46,11 +46,11 @@ extern "C" {
 
   #define f_thread_onces_t_initialize { 0, 0, 0 }
 
-  #define macro_f_thread_onces_t_initialize(array, size, used) { array, size, used }
-  #define macro_f_thread_onces_t_initialize2(array, length) { array, length, length }
+  #define macro_f_thread_onces_t_initialize_1(array, size, used) { array, size, used }
+  #define macro_f_thread_onces_t_initialize_2(array, length) { array, length, length }
 
-  #define macro_f_thread_onces_t_initialize(array, size, used) { array, size, used }
-  #define macro_f_thread_onces_t_initialize2(array, length) { array, length, length }
+  #define macro_f_thread_onces_t_initialize_1(array, size, used) { array, size, used }
+  #define macro_f_thread_onces_t_initialize_2(array, length) { array, length, length }
 
   #define macro_f_thread_onces_t_clear(onces) macro_f_memory_structure_clear(onces)
 

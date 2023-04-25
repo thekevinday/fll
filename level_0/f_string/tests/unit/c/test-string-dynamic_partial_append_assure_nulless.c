@@ -7,9 +7,9 @@ extern "C" {
 
 void test__f_string_dynamic_partial_append_assure_nulless__works(void **state) {
 
-  const f_string_static_t source = macro_f_string_static_t_initialize("_te\0st_", 0, 7);
-  const f_string_static_t expected = macro_f_string_static_t_initialize("test", 0, 4);
-  const f_string_range_t partial = macro_f_string_range_t_initialize(1, 5);
+  const f_string_static_t source = macro_f_string_static_t_initialize_1("_te\0st_", 0, 7);
+  const f_string_static_t expected = macro_f_string_static_t_initialize_1("test", 0, 4);
+  const f_string_range_t partial = macro_f_string_range_t_initialize_1(1, 5);
   f_string_dynamic_t destination = f_string_dynamic_t_initialize;
 
   {

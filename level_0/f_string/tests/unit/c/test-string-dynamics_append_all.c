@@ -12,8 +12,8 @@ void test__f_string_dynamics_append_all__works(void **state) {
   f_string_dynamics_t destination = f_string_dynamics_t_initialize;
 
   const f_string_static_t test_sources[] = {
-    macro_f_string_static_t_initialize("te\0st1", 0, 6),
-    macro_f_string_static_t_initialize("test2", 0, 5),
+    macro_f_string_static_t_initialize_1("te\0st1", 0, 6),
+    macro_f_string_static_t_initialize_1("test2", 0, 5),
   };
 
   {

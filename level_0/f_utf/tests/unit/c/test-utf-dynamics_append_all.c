@@ -12,8 +12,8 @@ void test__f_utf_dynamics_append_all__works(void **state) {
   f_utf_string_dynamics_t destination = f_utf_string_dynamics_t_initialize;
 
   const f_utf_string_static_t test_sources[] = {
-    macro_f_utf_string_static_t_initialize((f_utf_string_t) "t\0\0\0e\0\0\0\0\0\0\0s\0\0\0t\0\0\01\0\0\0", 0, 6),
-    macro_f_utf_string_static_t_initialize((f_utf_string_t) "t\0\0\0e\0\0\0s\0\0\0t\0\0\02\0\0\0", 0, 5),
+    macro_f_utf_string_static_t_initialize_1((f_utf_string_t) "t\0\0\0e\0\0\0\0\0\0\0s\0\0\0t\0\0\01\0\0\0", 0, 6),
+    macro_f_utf_string_static_t_initialize_1((f_utf_string_t) "t\0\0\0e\0\0\0s\0\0\0t\0\0\02\0\0\0", 0, 5),
   };
 
   {

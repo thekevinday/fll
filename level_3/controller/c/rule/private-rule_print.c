@@ -7,7 +7,7 @@
 extern "C" {
 #endif
 #ifndef _di_controller_rule_print_string_s_
-  const f_string_static_t controller_rule_print_control_groups_prepare_s = macro_f_string_static_t_initialize(CONTROLLER_rule_print_control_groups_prepare_s, 0, CONTROLLER_rule_print_control_groups_prepare_s_length);
+  const f_string_static_t controller_rule_print_control_groups_prepare_s = macro_f_string_static_t_initialize_1(CONTROLLER_rule_print_control_groups_prepare_s, 0, CONTROLLER_rule_print_control_groups_prepare_s_length);
 #endif // _di_controller_rule_print_string_s_
 
 #ifndef _di_controller_rule_print_error_

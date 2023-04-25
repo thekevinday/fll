@@ -30,7 +30,7 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
 
   #ifdef _di_thread_support_
     {
-      const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize(argc, argv, envp);
+      const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize_1(argc, argv, envp);
 
       iki_write_setting_load(arguments, &data);
     }
@@ -49,7 +49,7 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
       }
       else {
         {
-          const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize(argc, argv, envp);
+          const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize_1(argc, argv, envp);
 
           iki_write_setting_load(arguments, &data);
         }

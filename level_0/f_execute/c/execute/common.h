@@ -166,7 +166,7 @@ extern "C" {
 
   #define f_execute_scheduler_t_initialize { 0, 0 }
 
-  #define macro_f_execute_scheduler_t_initialize(policy, priority) { policy, priority }
+  #define macro_f_execute_scheduler_t_initialize_1(policy, priority) { policy, priority }
 
   #define f_execute_scheduler_t_clear(scheduler) \
     scheduler.policy = 0; \
@@ -190,7 +190,7 @@ extern "C" {
 
   #define f_execute_result_t_initialize { 0 }
 
-  #define macro_f_execute_result_t_initialize(status, pid) { status, pid }
+  #define macro_f_execute_result_t_initialize_1(status, pid) { status, pid }
 
   #define f_execute_result_t_clear(execute_result) \
     execute_result.status = 0; \

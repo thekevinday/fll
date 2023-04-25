@@ -488,7 +488,7 @@ extern "C" {
     f_signal_set_empty(&signals.block);
     f_signal_set_fill(&signals.block_not);
 
-    fl_execute_parameter_t parameter = macro_fl_execute_parameter_t_initialize(FL_execute_parameter_option_path_d, 0, &data_build->environment, &signals, 0);
+    fl_execute_parameter_t parameter = macro_fl_execute_parameter_t_initialize_1(FL_execute_parameter_option_path_d, 0, &data_build->environment, &signals, 0);
 
     main->setting.state.status = fll_execute_program(main->cache_argument, main->cache_arguments, &parameter, 0, (void *) &return_code);
 

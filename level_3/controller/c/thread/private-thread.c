@@ -200,7 +200,7 @@ extern "C" {
     f_status_t status = F_none;
 
     controller_thread_t thread = controller_thread_t_initialize;
-    controller_global_t global = macro_controller_global_t_initialize(main, setting, &thread);
+    controller_global_t global = macro_controller_global_t_initialize_1(main, setting, &thread);
 
     // The global locks must be initialized, but only once, so initialize immediately upon allocation.
     status = controller_lock_create(&thread.lock);
@@ -249,7 +249,7 @@ extern "C" {
         }
       }
       else if (global.setting->name_entry.used) {
-        const controller_main_entry_t entry = macro_controller_main_entry_t_initialize(&global, global.setting);
+        const controller_main_entry_t entry = macro_controller_main_entry_t_initialize_1(&global, global.setting);
 
         status = f_thread_create(0, &thread.id_entry, &controller_thread_entry, (void *) &entry);
 

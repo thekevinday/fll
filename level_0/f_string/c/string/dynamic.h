@@ -35,8 +35,8 @@ extern "C" {
 
   #define f_string_dynamic_t_initialize f_string_static_t_initialize
 
-  #define macro_f_string_dynamic_t_initialize(array, size, used) { array, size, used }
-  #define macro_f_string_dynamic_t_initialize2(array, length) { array, length, length }
+  #define macro_f_string_dynamic_t_initialize_1(array, size, used) { array, size, used }
+  #define macro_f_string_dynamic_t_initialize_2(array, length) { array, length, length }
 
   #define macro_f_string_dynamic_t_clear(dynamic) macro_f_string_static_t_clear(dynamic)
 

@@ -13,20 +13,20 @@ void test__f_console_parameter_process__incomplete_arguments(void **state) {
     0,
   };
 
-  const f_string_static_t s_f = macro_f_string_static_t_initialize("f", 0, 1);
-  const f_string_static_t s_s = macro_f_string_static_t_initialize("s", 0, 1);
-  const f_string_static_t s_t = macro_f_string_static_t_initialize("t", 0, 1);
-  const f_string_static_t s_F = macro_f_string_static_t_initialize("F", 0, 1);
-  const f_string_static_t s_N = macro_f_string_static_t_initialize("N", 0, 1);
-  const f_string_static_t s_second = macro_f_string_static_t_initialize("second", 0, 6);
-  const f_string_static_t s_third = macro_f_string_static_t_initialize("third", 0, 5);
-  const f_string_static_t s_fifth = macro_f_string_static_t_initialize("fifth", 0, 5);
-  const f_string_static_t s_sixth = macro_f_string_static_t_initialize("sixth", 0, 5);
-  const f_string_static_t s_seventh = macro_f_string_static_t_initialize("seventh", 0, 7);
-  const f_string_static_t s_not_found = macro_f_string_static_t_initialize("not_found", 0, 9);
-  const f_string_static_t s_other = macro_f_string_static_t_initialize("other", 0, 5);
+  const f_string_static_t s_f = macro_f_string_static_t_initialize_1("f", 0, 1);
+  const f_string_static_t s_s = macro_f_string_static_t_initialize_1("s", 0, 1);
+  const f_string_static_t s_t = macro_f_string_static_t_initialize_1("t", 0, 1);
+  const f_string_static_t s_F = macro_f_string_static_t_initialize_1("F", 0, 1);
+  const f_string_static_t s_N = macro_f_string_static_t_initialize_1("N", 0, 1);
+  const f_string_static_t s_second = macro_f_string_static_t_initialize_1("second", 0, 6);
+  const f_string_static_t s_third = macro_f_string_static_t_initialize_1("third", 0, 5);
+  const f_string_static_t s_fifth = macro_f_string_static_t_initialize_1("fifth", 0, 5);
+  const f_string_static_t s_sixth = macro_f_string_static_t_initialize_1("sixth", 0, 5);
+  const f_string_static_t s_seventh = macro_f_string_static_t_initialize_1("seventh", 0, 7);
+  const f_string_static_t s_not_found = macro_f_string_static_t_initialize_1("not_found", 0, 9);
+  const f_string_static_t s_other = macro_f_string_static_t_initialize_1("other", 0, 5);
 
-  const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize(2, argv, 0);
+  const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize_1(2, argv, 0);
 
   f_console_parameter_t parameter[] = {
     macro_f_console_parameter_t_initialize_2(s_f, f_string_empty_s, f_string_empty_s, 1, f_console_flag_normal_e),
@@ -40,7 +40,7 @@ void test__f_console_parameter_process__incomplete_arguments(void **state) {
     macro_f_console_parameter_t_initialize_2(f_string_empty_s, f_string_empty_s, s_other, 0, f_console_flag_simple_e),
   };
 
-  f_console_parameters_t parameters = macro_f_console_parameters_t_initialize(parameter, 9, 0);
+  f_console_parameters_t parameters = macro_f_console_parameters_t_initialize_1(parameter, 9, 0);
 
   {
     f_state_t state = f_state_t_initialize;
@@ -125,23 +125,23 @@ void test__f_console_parameter_process__no_arguments_no_program(void **state) {
     0,
   };
 
-  const f_string_static_t s_f = macro_f_string_static_t_initialize("f", 0, 1);
-  const f_string_static_t s_s = macro_f_string_static_t_initialize("s", 0, 1);
-  const f_string_static_t s_t = macro_f_string_static_t_initialize("t", 0, 1);
-  const f_string_static_t s_F = macro_f_string_static_t_initialize("F", 0, 1);
-  const f_string_static_t s_N = macro_f_string_static_t_initialize("N", 0, 1);
-  const f_string_static_t s_second = macro_f_string_static_t_initialize("second", 0, 6);
-  const f_string_static_t s_third = macro_f_string_static_t_initialize("third", 0, 5);
-  const f_string_static_t s_fifth = macro_f_string_static_t_initialize("fifth", 0, 5);
-  const f_string_static_t s_sixth = macro_f_string_static_t_initialize("sixth", 0, 5);
-  const f_string_static_t s_seventh = macro_f_string_static_t_initialize("seventh", 0, 7);
-  const f_string_static_t s_not_found = macro_f_string_static_t_initialize("not_found", 0, 9);
-  const f_string_static_t s_other = macro_f_string_static_t_initialize("other", 0, 5);
+  const f_string_static_t s_f = macro_f_string_static_t_initialize_1("f", 0, 1);
+  const f_string_static_t s_s = macro_f_string_static_t_initialize_1("s", 0, 1);
+  const f_string_static_t s_t = macro_f_string_static_t_initialize_1("t", 0, 1);
+  const f_string_static_t s_F = macro_f_string_static_t_initialize_1("F", 0, 1);
+  const f_string_static_t s_N = macro_f_string_static_t_initialize_1("N", 0, 1);
+  const f_string_static_t s_second = macro_f_string_static_t_initialize_1("second", 0, 6);
+  const f_string_static_t s_third = macro_f_string_static_t_initialize_1("third", 0, 5);
+  const f_string_static_t s_fifth = macro_f_string_static_t_initialize_1("fifth", 0, 5);
+  const f_string_static_t s_sixth = macro_f_string_static_t_initialize_1("sixth", 0, 5);
+  const f_string_static_t s_seventh = macro_f_string_static_t_initialize_1("seventh", 0, 7);
+  const f_string_static_t s_not_found = macro_f_string_static_t_initialize_1("not_found", 0, 9);
+  const f_string_static_t s_other = macro_f_string_static_t_initialize_1("other", 0, 5);
 
   // Test both a valid and an invalid argc.
   for (uint8_t argc = 0; argc < 2; ++argc) {
 
-    const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize(argc, argv, 0);
+    const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize_1(argc, argv, 0);
 
     f_console_parameter_t parameter[] = {
       macro_f_console_parameter_t_initialize_2(s_f, f_string_empty_s, f_string_empty_s, 1, f_console_flag_normal_e),
@@ -155,7 +155,7 @@ void test__f_console_parameter_process__no_arguments_no_program(void **state) {
       macro_f_console_parameter_t_initialize_2(f_string_empty_s, f_string_empty_s, s_other, 0, f_console_flag_simple_e),
     };
 
-    f_console_parameters_t parameters = macro_f_console_parameters_t_initialize(parameter, 9, 0);
+    f_console_parameters_t parameters = macro_f_console_parameters_t_initialize_1(parameter, 9, 0);
 
     {
       f_state_t state = f_state_t_initialize;
@@ -231,23 +231,23 @@ void test__f_console_parameter_process__no_arguments(void **state) {
     0,
   };
 
-  const f_string_static_t s_f = macro_f_string_static_t_initialize("f", 0, 1);
-  const f_string_static_t s_s = macro_f_string_static_t_initialize("s", 0, 1);
-  const f_string_static_t s_t = macro_f_string_static_t_initialize("t", 0, 1);
-  const f_string_static_t s_F = macro_f_string_static_t_initialize("F", 0, 1);
-  const f_string_static_t s_N = macro_f_string_static_t_initialize("N", 0, 1);
-  const f_string_static_t s_second = macro_f_string_static_t_initialize("second", 0, 6);
-  const f_string_static_t s_third = macro_f_string_static_t_initialize("third", 0, 5);
-  const f_string_static_t s_fifth = macro_f_string_static_t_initialize("fifth", 0, 5);
-  const f_string_static_t s_sixth = macro_f_string_static_t_initialize("sixth", 0, 5);
-  const f_string_static_t s_seventh = macro_f_string_static_t_initialize("seventh", 0, 7);
-  const f_string_static_t s_not_found = macro_f_string_static_t_initialize("not_found", 0, 9);
-  const f_string_static_t s_other = macro_f_string_static_t_initialize("other", 0, 5);
+  const f_string_static_t s_f = macro_f_string_static_t_initialize_1("f", 0, 1);
+  const f_string_static_t s_s = macro_f_string_static_t_initialize_1("s", 0, 1);
+  const f_string_static_t s_t = macro_f_string_static_t_initialize_1("t", 0, 1);
+  const f_string_static_t s_F = macro_f_string_static_t_initialize_1("F", 0, 1);
+  const f_string_static_t s_N = macro_f_string_static_t_initialize_1("N", 0, 1);
+  const f_string_static_t s_second = macro_f_string_static_t_initialize_1("second", 0, 6);
+  const f_string_static_t s_third = macro_f_string_static_t_initialize_1("third", 0, 5);
+  const f_string_static_t s_fifth = macro_f_string_static_t_initialize_1("fifth", 0, 5);
+  const f_string_static_t s_sixth = macro_f_string_static_t_initialize_1("sixth", 0, 5);
+  const f_string_static_t s_seventh = macro_f_string_static_t_initialize_1("seventh", 0, 7);
+  const f_string_static_t s_not_found = macro_f_string_static_t_initialize_1("not_found", 0, 9);
+  const f_string_static_t s_other = macro_f_string_static_t_initialize_1("other", 0, 5);
 
   // Test both valid and invalid argc.
   for (uint8_t argc = 0; argc < 2; ++argc) {
 
-    const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize(argc, argv, 0);
+    const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize_1(argc, argv, 0);
 
     f_console_parameter_t parameter[] = {
       macro_f_console_parameter_t_initialize_2(s_f, f_string_empty_s, f_string_empty_s, 1, f_console_flag_normal_e),
@@ -261,7 +261,7 @@ void test__f_console_parameter_process__no_arguments(void **state) {
       macro_f_console_parameter_t_initialize_2(f_string_empty_s, f_string_empty_s, s_other, 0, f_console_flag_simple_e),
     };
 
-    f_console_parameters_t parameters = macro_f_console_parameters_t_initialize(parameter, 9, 0);
+    f_console_parameters_t parameters = macro_f_console_parameters_t_initialize_1(parameter, 9, 0);
 
     {
       f_state_t state = f_state_t_initialize;
@@ -343,22 +343,22 @@ void test__f_console_parameter_process__null_arguments(void **state) {
 
   const f_string_t *argv = 0;
 
-  const f_string_static_t s_f = macro_f_string_static_t_initialize("f", 0, 1);
-  const f_string_static_t s_s = macro_f_string_static_t_initialize("s", 0, 1);
-  const f_string_static_t s_t = macro_f_string_static_t_initialize("t", 0, 1);
-  const f_string_static_t s_F = macro_f_string_static_t_initialize("F", 0, 1);
-  const f_string_static_t s_N = macro_f_string_static_t_initialize("N", 0, 1);
-  const f_string_static_t s_second = macro_f_string_static_t_initialize("second", 0, 6);
-  const f_string_static_t s_third = macro_f_string_static_t_initialize("third", 0, 5);
-  const f_string_static_t s_fifth = macro_f_string_static_t_initialize("fifth", 0, 5);
-  const f_string_static_t s_sixth = macro_f_string_static_t_initialize("sixth", 0, 5);
-  const f_string_static_t s_seventh = macro_f_string_static_t_initialize("seventh", 0, 7);
-  const f_string_static_t s_not_found = macro_f_string_static_t_initialize("not_found", 0, 9);
-  const f_string_static_t s_other = macro_f_string_static_t_initialize("other", 0, 5);
+  const f_string_static_t s_f = macro_f_string_static_t_initialize_1("f", 0, 1);
+  const f_string_static_t s_s = macro_f_string_static_t_initialize_1("s", 0, 1);
+  const f_string_static_t s_t = macro_f_string_static_t_initialize_1("t", 0, 1);
+  const f_string_static_t s_F = macro_f_string_static_t_initialize_1("F", 0, 1);
+  const f_string_static_t s_N = macro_f_string_static_t_initialize_1("N", 0, 1);
+  const f_string_static_t s_second = macro_f_string_static_t_initialize_1("second", 0, 6);
+  const f_string_static_t s_third = macro_f_string_static_t_initialize_1("third", 0, 5);
+  const f_string_static_t s_fifth = macro_f_string_static_t_initialize_1("fifth", 0, 5);
+  const f_string_static_t s_sixth = macro_f_string_static_t_initialize_1("sixth", 0, 5);
+  const f_string_static_t s_seventh = macro_f_string_static_t_initialize_1("seventh", 0, 7);
+  const f_string_static_t s_not_found = macro_f_string_static_t_initialize_1("not_found", 0, 9);
+  const f_string_static_t s_other = macro_f_string_static_t_initialize_1("other", 0, 5);
 
   // Test both a valid and an invalid argc.
   for (uint8_t argc = 0; argc < 2; ++argc) {
-    const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize(argc, argv, 0);
+    const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize_1(argc, argv, 0);
 
     f_console_parameter_t parameter[] = {
       macro_f_console_parameter_t_initialize_2(s_f, f_string_empty_s, f_string_empty_s, 1, f_console_flag_normal_e),
@@ -372,7 +372,7 @@ void test__f_console_parameter_process__null_arguments(void **state) {
       macro_f_console_parameter_t_initialize_2(f_string_empty_s, f_string_empty_s, s_other, 0, f_console_flag_simple_e),
     };
 
-    f_console_parameters_t parameters = macro_f_console_parameters_t_initialize(parameter, 9, 0);
+    f_console_parameters_t parameters = macro_f_console_parameters_t_initialize_1(parameter, 9, 0);
 
     {
       f_state_t state = f_state_t_initialize;
@@ -475,22 +475,22 @@ void test__f_console_parameter_process__only_remaining(void **state) {
     0,
   };
 
-  const f_string_static_t s_f = macro_f_string_static_t_initialize("f", 0, 1);
-  const f_string_static_t s_s = macro_f_string_static_t_initialize("s", 0, 1);
-  const f_string_static_t s_t = macro_f_string_static_t_initialize("t", 0, 1);
-  const f_string_static_t s_F = macro_f_string_static_t_initialize("F", 0, 1);
-  const f_string_static_t s_N = macro_f_string_static_t_initialize("N", 0, 1);
-  const f_string_static_t s_second = macro_f_string_static_t_initialize("second", 0, 6);
-  const f_string_static_t s_third = macro_f_string_static_t_initialize("third", 0, 5);
-  const f_string_static_t s_fifth = macro_f_string_static_t_initialize("fifth", 0, 5);
-  const f_string_static_t s_sixth = macro_f_string_static_t_initialize("sixth", 0, 5);
-  const f_string_static_t s_seventh = macro_f_string_static_t_initialize("seventh", 0, 7);
-  const f_string_static_t s_not_found = macro_f_string_static_t_initialize("not_found", 0, 9);
-  const f_string_static_t s_other = macro_f_string_static_t_initialize("other", 0, 5);
+  const f_string_static_t s_f = macro_f_string_static_t_initialize_1("f", 0, 1);
+  const f_string_static_t s_s = macro_f_string_static_t_initialize_1("s", 0, 1);
+  const f_string_static_t s_t = macro_f_string_static_t_initialize_1("t", 0, 1);
+  const f_string_static_t s_F = macro_f_string_static_t_initialize_1("F", 0, 1);
+  const f_string_static_t s_N = macro_f_string_static_t_initialize_1("N", 0, 1);
+  const f_string_static_t s_second = macro_f_string_static_t_initialize_1("second", 0, 6);
+  const f_string_static_t s_third = macro_f_string_static_t_initialize_1("third", 0, 5);
+  const f_string_static_t s_fifth = macro_f_string_static_t_initialize_1("fifth", 0, 5);
+  const f_string_static_t s_sixth = macro_f_string_static_t_initialize_1("sixth", 0, 5);
+  const f_string_static_t s_seventh = macro_f_string_static_t_initialize_1("seventh", 0, 7);
+  const f_string_static_t s_not_found = macro_f_string_static_t_initialize_1("not_found", 0, 9);
+  const f_string_static_t s_other = macro_f_string_static_t_initialize_1("other", 0, 5);
 
   const int total = 19;
 
-  const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize(total, argv, 0);
+  const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize_1(total, argv, 0);
 
   f_console_parameter_t parameter[] = {
     macro_f_console_parameter_t_initialize_2(s_f, f_string_empty_s, f_string_empty_s, 1, f_console_flag_normal_e),
@@ -504,7 +504,7 @@ void test__f_console_parameter_process__only_remaining(void **state) {
     macro_f_console_parameter_t_initialize_2(f_string_empty_s, f_string_empty_s, s_other, 0, f_console_flag_simple_e),
   };
 
-  f_console_parameters_t parameters = macro_f_console_parameters_t_initialize(parameter, 9, 0);
+  f_console_parameters_t parameters = macro_f_console_parameters_t_initialize_1(parameter, 9, 0);
 
   {
     f_state_t state = f_state_t_initialize;
@@ -603,7 +603,7 @@ void test__f_console_parameter_process__parameter_checking(void **state) {
 
   {
     f_console_parameter_t parameter[] = {};
-    f_console_parameters_t parameters = macro_f_console_parameters_t_initialize(parameter, 0, 0);
+    f_console_parameters_t parameters = macro_f_console_parameters_t_initialize_1(parameter, 0, 0);
 
     f_console_parameter_process(arguments, &parameters, 0, 0);
 
@@ -649,26 +649,26 @@ void test__f_console_parameter_process__works(void **state) {
     0,
   };
 
-  const f_string_static_t s_f = macro_f_string_static_t_initialize("f", 0, 1);
-  const f_string_static_t s_s = macro_f_string_static_t_initialize("s", 0, 1);
-  const f_string_static_t s_t = macro_f_string_static_t_initialize("t", 0, 1);
-  const f_string_static_t s_F = macro_f_string_static_t_initialize("F", 0, 1);
-  const f_string_static_t s_N = macro_f_string_static_t_initialize("N", 0, 1);
-  const f_string_static_t s_m = macro_f_string_static_t_initialize("m", 0, 1);
-  const f_string_static_t s_M = macro_f_string_static_t_initialize("M", 0, 1);
-  const f_string_static_t s_x = macro_f_string_static_t_initialize("x", 0, 1);
-  const f_string_static_t s_second = macro_f_string_static_t_initialize("second", 0, 6);
-  const f_string_static_t s_third = macro_f_string_static_t_initialize("third", 0, 5);
-  const f_string_static_t s_fifth = macro_f_string_static_t_initialize("fifth", 0, 5);
-  const f_string_static_t s_sixth = macro_f_string_static_t_initialize("sixth", 0, 5);
-  const f_string_static_t s_seventh = macro_f_string_static_t_initialize("seventh", 0, 7);
-  const f_string_static_t s_not_found = macro_f_string_static_t_initialize("not_found", 0, 9);
-  const f_string_static_t s_mixed_1 = macro_f_string_static_t_initialize("mixed_1", 0, 7);
-  const f_string_static_t s_mixed_2 = macro_f_string_static_t_initialize("mixed_2", 0, 7);
-  const f_string_static_t s_mixed_3 = macro_f_string_static_t_initialize("mixed_3", 0, 7);
-  const f_string_static_t s_other = macro_f_string_static_t_initialize("other", 0, 5);
+  const f_string_static_t s_f = macro_f_string_static_t_initialize_1("f", 0, 1);
+  const f_string_static_t s_s = macro_f_string_static_t_initialize_1("s", 0, 1);
+  const f_string_static_t s_t = macro_f_string_static_t_initialize_1("t", 0, 1);
+  const f_string_static_t s_F = macro_f_string_static_t_initialize_1("F", 0, 1);
+  const f_string_static_t s_N = macro_f_string_static_t_initialize_1("N", 0, 1);
+  const f_string_static_t s_m = macro_f_string_static_t_initialize_1("m", 0, 1);
+  const f_string_static_t s_M = macro_f_string_static_t_initialize_1("M", 0, 1);
+  const f_string_static_t s_x = macro_f_string_static_t_initialize_1("x", 0, 1);
+  const f_string_static_t s_second = macro_f_string_static_t_initialize_1("second", 0, 6);
+  const f_string_static_t s_third = macro_f_string_static_t_initialize_1("third", 0, 5);
+  const f_string_static_t s_fifth = macro_f_string_static_t_initialize_1("fifth", 0, 5);
+  const f_string_static_t s_sixth = macro_f_string_static_t_initialize_1("sixth", 0, 5);
+  const f_string_static_t s_seventh = macro_f_string_static_t_initialize_1("seventh", 0, 7);
+  const f_string_static_t s_not_found = macro_f_string_static_t_initialize_1("not_found", 0, 9);
+  const f_string_static_t s_mixed_1 = macro_f_string_static_t_initialize_1("mixed_1", 0, 7);
+  const f_string_static_t s_mixed_2 = macro_f_string_static_t_initialize_1("mixed_2", 0, 7);
+  const f_string_static_t s_mixed_3 = macro_f_string_static_t_initialize_1("mixed_3", 0, 7);
+  const f_string_static_t s_other = macro_f_string_static_t_initialize_1("other", 0, 5);
 
-  const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize(24, argv, 0);
+  const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize_1(24, argv, 0);
 
   f_console_parameter_t parameter[] = {
     macro_f_console_parameter_t_initialize_2(s_f, f_string_empty_s, f_string_empty_s, 1, f_console_flag_normal_e),
@@ -685,7 +685,7 @@ void test__f_console_parameter_process__works(void **state) {
     macro_f_console_parameter_t_initialize_2(f_string_empty_s, f_string_empty_s, s_other, 0, f_console_flag_simple_e),
   };
 
-  f_console_parameters_t parameters = macro_f_console_parameters_t_initialize(parameter, 12, 0);
+  f_console_parameters_t parameters = macro_f_console_parameters_t_initialize_1(parameter, 12, 0);
 
   {
     f_state_t state = f_state_t_initialize;

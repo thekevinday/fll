@@ -10,20 +10,20 @@ void test__f_fss_is_zero_width__works(void **state) {
   f_state_t state_data = f_state_t_initialize;
 
   f_string_static_t tests[] = {
-    macro_f_string_static_t_initialize("\0", 0, 1),
-    macro_f_string_static_t_initialize("\a", 0, 1),
-    macro_f_string_static_t_initialize("\t", 0, 1),
-    macro_f_string_static_t_initialize("\n", 0, 1),
-    macro_f_string_static_t_initialize(" ", 0, 1),
-    macro_f_string_static_t_initialize("⸙", 0, 3),
-    macro_f_string_static_t_initialize("t", 0, 1),
-    macro_f_string_static_t_initialize("全", 0, 3),
-    macro_f_string_static_t_initialize("$", 0, 1),
-    macro_f_string_static_t_initialize(".", 0, 1),
-    macro_f_string_static_t_initialize(" ́", 0, 3), // Space followed by a combining character (U+0020 U+0301).
-    macro_f_string_static_t_initialize(" ॐ", 0, 5), // Space followed by a printing character (U+0020 U+0061).
-    macro_f_string_static_t_initialize("​", 0, 3), // Zero-width space (U+200B).
-    macro_f_string_static_t_initialize("a b", 0, 3),
+    macro_f_string_static_t_initialize_1("\0", 0, 1),
+    macro_f_string_static_t_initialize_1("\a", 0, 1),
+    macro_f_string_static_t_initialize_1("\t", 0, 1),
+    macro_f_string_static_t_initialize_1("\n", 0, 1),
+    macro_f_string_static_t_initialize_1(" ", 0, 1),
+    macro_f_string_static_t_initialize_1("⸙", 0, 3),
+    macro_f_string_static_t_initialize_1("t", 0, 1),
+    macro_f_string_static_t_initialize_1("全", 0, 3),
+    macro_f_string_static_t_initialize_1("$", 0, 1),
+    macro_f_string_static_t_initialize_1(".", 0, 1),
+    macro_f_string_static_t_initialize_1(" ́", 0, 3), // Space followed by a combining character (U+0020 U+0301).
+    macro_f_string_static_t_initialize_1(" ॐ", 0, 5), // Space followed by a printing character (U+0020 U+0061).
+    macro_f_string_static_t_initialize_1("​", 0, 3), // Zero-width space (U+200B).
+    macro_f_string_static_t_initialize_1("a b", 0, 3),
   };
 
   f_status_t expects[] = {
@@ -77,7 +77,7 @@ void test__f_fss_is_zero_width__works(void **state) {
   }
 
   {
-    const f_string_range_t range = macro_f_string_range_t_initialize(0, 2);
+    const f_string_range_t range = macro_f_string_range_t_initialize_1(0, 2);
 
     const f_status_t status = f_fss_is_zero_width(state_data, f_string_empty_s, range);
 
@@ -85,7 +85,7 @@ void test__f_fss_is_zero_width__works(void **state) {
   }
 
   {
-    const f_string_static_t test = macro_f_string_static_t_initialize("test", 0, 4);
+    const f_string_static_t test = macro_f_string_static_t_initialize_1("test", 0, 4);
     const f_string_range_t range = f_string_range_t_initialize;
 
     const f_status_t status = f_fss_is_zero_width(state_data, test, range);

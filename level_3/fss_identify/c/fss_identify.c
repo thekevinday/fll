@@ -145,7 +145,7 @@ extern "C" {
       else if (main->parameters.array[fss_identify_parameter_name_e].result & f_console_result_value_e) {
         const f_array_length_t index = main->parameters.array[fss_identify_parameter_name_e].values.array[main->parameters.array[fss_identify_parameter_name_e].values.used - 1];
         const f_array_length_t length = data.argv[index].used;
-        const f_string_range_t range = macro_f_string_range_t_initialize2(length);
+        const f_string_range_t range = macro_f_string_range_t_initialize_2(length);
 
         if (length == 0) {
           f_file_stream_lock(main->error.to);

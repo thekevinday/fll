@@ -18,7 +18,7 @@ void test__f_limit_sets_append__parameter_checking(void **state) {
 
 void test__f_limit_sets_append__works(void **state) {
 
-  const f_limit_set_t source = macro_f_limit_set_t_initialize(1, macro_f_limit_value_t_initialize(2, 3));
+  const f_limit_set_t source = macro_f_limit_set_t_initialize_1(1, macro_f_limit_value_t_initialize_1(2, 3));
   f_limit_sets_t destination = f_limit_sets_t_initialize;
 
   {

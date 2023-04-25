@@ -214,7 +214,7 @@ extern "C" {
     f_string_ranges_t_initialize, \
   }
 
-  #define macro_f_iki_data_t_initialize(content, delimits, variable, vocabulary) { content, delimits, variable, vocabulary }
+  #define macro_f_iki_data_t_initialize_1(content, delimits, variable, vocabulary) { content, delimits, variable, vocabulary }
 
   #define macro_f_iki_data_t_clear(data) \
     f_string_ranges_t_clear(data.content) \
@@ -243,8 +243,8 @@ extern "C" {
 
   #define f_iki_datas_t_initialize { 0, 0, 0 }
 
-  #define macro_f_iki_datas_t_initialize(content, size, used) { array, size, used }
-  #define macro_f_iki_datas_t_initialize2(array, length) { array, length, length }
+  #define macro_f_iki_datas_t_initialize_1(content, size, used) { array, size, used }
+  #define macro_f_iki_datas_t_initialize_2(array, length) { array, length, length }
 
   #define macro_f_iki_datas_t_clear(datas) macro_f_memory_structure_clear(datas)
 
@@ -277,8 +277,8 @@ extern "C" {
 
   #define f_iki_datass_t_initialize { 0, 0, 0 }
 
-  #define macro_f_iki_datass_t_initialize(content, size, used) { array, size, used }
-  #define macro_f_iki_datass_t_initialize2(array, length) { array, length, length }
+  #define macro_f_iki_datass_t_initialize_1(content, size, used) { array, size, used }
+  #define macro_f_iki_datass_t_initialize_2(array, length) { array, length, length }
 
   #define macro_f_iki_datass_t_clear(datas) macro_f_memory_structure_clear(datas)
 

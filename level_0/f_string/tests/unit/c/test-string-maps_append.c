@@ -10,8 +10,8 @@ void test__f_string_maps_append__works(void **state) {
   f_string_map_t source = f_string_map_t_initialize;
   f_string_maps_t destination = f_string_maps_t_initialize;
 
-  const f_string_static_t test_name = macro_f_string_static_t_initialize("test_name", 0, 9);
-  const f_string_static_t test_value = macro_f_string_static_t_initialize("test_value", 0, 10);
+  const f_string_static_t test_name = macro_f_string_static_t_initialize_1("test_name", 0, 9);
+  const f_string_static_t test_value = macro_f_string_static_t_initialize_1("test_value", 0, 10);
 
   {
     f_status_t status = f_string_dynamic_append(test_name, &source.name);

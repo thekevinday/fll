@@ -28,7 +28,7 @@ extern "C" {
 
   #define f_thread_semaphore_t_initialize { (long) 0 }
 
-  #define macro_f_thread_semaphore_t_initialize(semaphore) semaphore
+  #define macro_f_thread_semaphore_t_initialize_1(semaphore) semaphore
 
   #define macro_f_thread_semaphore_t_delete_simple(semaphore) f_thread_semaphore_delete(&semaphore);
 #endif // _di_f_thread_semaphore_t_
@@ -50,8 +50,8 @@ extern "C" {
 
   #define f_thread_semaphores_t_initialize { 0, 0, 0 }
 
-  #define macro_f_thread_semaphores_t_initialize(array, size, used) { array, size, used }
-  #define macro_f_thread_semaphores_t_initialize2(array, length) { array, length, length }
+  #define macro_f_thread_semaphores_t_initialize_1(array, size, used) { array, size, used }
+  #define macro_f_thread_semaphores_t_initialize_2(array, length) { array, length, length }
 
   #define macro_f_thread_semaphores_t_clear(semaphores) macro_f_memory_structure_clear(semaphores)
 

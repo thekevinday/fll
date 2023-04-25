@@ -7,10 +7,10 @@ extern "C" {
 
 void test__f_string_mash_nulless__works(void **state) {
 
-  const f_string_static_t glue = macro_f_string_static_t_initialize(":", 0, 1);
-  const f_string_static_t source = macro_f_string_static_t_initialize("te\0st", 0, 5);
-  const f_string_static_t expected1 = macro_f_string_static_t_initialize("test", 0, 4);
-  const f_string_static_t expected2 = macro_f_string_static_t_initialize("test:test", 0, 9);
+  const f_string_static_t glue = macro_f_string_static_t_initialize_1(":", 0, 1);
+  const f_string_static_t source = macro_f_string_static_t_initialize_1("te\0st", 0, 5);
+  const f_string_static_t expected1 = macro_f_string_static_t_initialize_1("test", 0, 4);
+  const f_string_static_t expected2 = macro_f_string_static_t_initialize_1("test:test", 0, 9);
   f_string_dynamic_t destination = f_string_dynamic_t_initialize;
 
   {
@@ -37,8 +37,8 @@ void test__f_string_mash_nulless__works(void **state) {
 
 void test__f_string_mash_nulless__parameter_checking(void **state) {
 
-  const f_string_static_t glue = macro_f_string_static_t_initialize(":", 0, 1);
-  const f_string_static_t source = macro_f_string_static_t_initialize("te\0st", 0, 5);
+  const f_string_static_t glue = macro_f_string_static_t_initialize_1(":", 0, 1);
+  const f_string_static_t source = macro_f_string_static_t_initialize_1("te\0st", 0, 5);
 
   {
     const f_status_t status = f_string_mash_nulless(glue.string, glue.used, source.string, source.used, 0);

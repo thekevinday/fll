@@ -249,7 +249,7 @@ extern "C" {
       f_signal_set_empty(&signals.block);
       f_signal_set_fill(&signals.block_not);
 
-      fl_execute_parameter_t parameter = macro_fl_execute_parameter_t_initialize(0, 0, &environment, &signals, 0);
+      fl_execute_parameter_t parameter = macro_fl_execute_parameter_t_initialize_1(0, 0, &environment, &signals, 0);
 
       main->setting.state.status = fll_execute_program(program, main->cache_arguments, &parameter, 0, (void *) &return_code);
       if (fake_signal_check(data->main)) return return_code;
@@ -312,7 +312,7 @@ extern "C" {
         main->setting.state.status = f_string_dynamic_increase_by(size_file, buffer);
 
         if (F_status_is_error(main->setting.state.status)) {
-          const f_string_static_t message = macro_f_string_static_t_initialize("allocate buffer size for", 0, 24);
+          const f_string_static_t message = macro_f_string_static_t_initialize_1("allocate buffer size for", 0, 24);
 
           fake_print_error_file(&main->program.error, macro_fake_f(f_string_dynamic_increase_by), path_file, message, fll_error_file_type_file_e);
 
@@ -370,7 +370,7 @@ extern "C" {
     main->setting.state.status = f_string_dynamic_increase_by(fake_max_initial_buffer_d, buffer);
 
     if (F_status_is_error(main->setting.state.status)) {
-      const f_string_static_t message = macro_f_string_static_t_initialize("allocate buffer size for", 0, 24);
+      const f_string_static_t message = macro_f_string_static_t_initialize_1("allocate buffer size for", 0, 24);
       fake_print_error_file(&main->program.error, macro_fake_f(f_string_dynamic_increase_by), f_string_ascii_minus_s, message, fll_error_file_type_file_e);
 
       return;

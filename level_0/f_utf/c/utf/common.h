@@ -248,7 +248,7 @@ extern "C" {
 
   #define f_utf_char_t_initialize 0
 
-  #define macro_f_utf_char_t_initialize(code) code
+  #define macro_f_utf_char_t_initialize_1(code) code
 
   // Big Endian.
   #define F_utf_char_mask_byte_1_be_d 0xff000000 // 1111 1111, 0000 0000, 0000 0000, 0000 0000
@@ -363,7 +363,7 @@ extern "C" {
 
   #define f_utf_string_t_initialize 0
 
-  #define macro_f_utf_string_t_initialize(string) string
+  #define macro_f_utf_string_t_initialize_1(string) string
 
   #define macro_f_utf_string_t_clear(string) string = 0;
 

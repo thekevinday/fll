@@ -74,7 +74,7 @@ extern "C" {
     {
       uint16_t choices_array[5] = { byte_dump_parameter_hexidecimal_e, byte_dump_parameter_duodecimal_e, byte_dump_parameter_octal_e, byte_dump_parameter_binary_e, byte_dump_parameter_decimal_e };
       f_array_length_t choice = 0;
-      const f_uint16s_t choices = macro_f_uint16s_t_initialize(choices_array, 0, 5);
+      const f_uint16s_t choices = macro_f_uint16s_t_initialize_1(choices_array, 0, 5);
 
       status = f_console_parameter_prioritize_right(main->parameters, choices, &choice);
 
@@ -105,7 +105,7 @@ extern "C" {
     {
       uint16_t choices_array[3] = { byte_dump_parameter_normal_e, byte_dump_parameter_simple_e, byte_dump_parameter_classic_e };
       f_array_length_t choice = 0;
-      const f_uint16s_t choices = macro_f_uint16s_t_initialize(choices_array, 0, 3);
+      const f_uint16s_t choices = macro_f_uint16s_t_initialize_1(choices_array, 0, 3);
 
       status = f_console_parameter_prioritize_right(main->parameters, choices, &choice);
 
@@ -130,7 +130,7 @@ extern "C" {
     {
       uint16_t choices_array[2] = { byte_dump_parameter_narrow_e, byte_dump_parameter_wide_e };
       f_array_length_t choice = byte_dump_parameter_wide_e;
-      const f_uint16s_t choices = macro_f_uint16s_t_initialize(choices_array, 0, 2);
+      const f_uint16s_t choices = macro_f_uint16s_t_initialize_1(choices_array, 0, 2);
 
       status = f_console_parameter_prioritize_right(main->parameters, choices, &choice);
 

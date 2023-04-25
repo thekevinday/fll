@@ -8,16 +8,16 @@ extern "C" {
 void test__f_iki_content_is__returns_false(void **state) {
 
   const f_string_static_t contents[] = {
-    macro_f_string_static_t_initialize("'false", 0, 6),
-    macro_f_string_static_t_initialize("false'", 0, 6),
-    macro_f_string_static_t_initialize("fa'l'se", 0, 7),
-    macro_f_string_static_t_initialize("f'alse", 0, 6),
-    macro_f_string_static_t_initialize("'false'", 0, 2),
-    macro_f_string_static_t_initialize("\"false", 0, 6),
-    macro_f_string_static_t_initialize("false\"", 0, 6),
-    macro_f_string_static_t_initialize("fa\"l\"se", 0, 7),
-    macro_f_string_static_t_initialize("f\"alse", 0, 6),
-    macro_f_string_static_t_initialize("\"false\"", 0, 2),
+    macro_f_string_static_t_initialize_1("'false", 0, 6),
+    macro_f_string_static_t_initialize_1("false'", 0, 6),
+    macro_f_string_static_t_initialize_1("fa'l'se", 0, 7),
+    macro_f_string_static_t_initialize_1("f'alse", 0, 6),
+    macro_f_string_static_t_initialize_1("'false'", 0, 2),
+    macro_f_string_static_t_initialize_1("\"false", 0, 6),
+    macro_f_string_static_t_initialize_1("false\"", 0, 6),
+    macro_f_string_static_t_initialize_1("fa\"l\"se", 0, 7),
+    macro_f_string_static_t_initialize_1("f\"alse", 0, 6),
+    macro_f_string_static_t_initialize_1("\"false\"", 0, 2),
   };
 
   const f_string_static_t quotes[] = {
@@ -62,14 +62,14 @@ void test__f_iki_content_is__returns_data_not(void **state) {
 void test__f_iki_content_is__returns_true(void **state) {
 
   const f_string_static_t contents[] = {
-    macro_f_string_static_t_initialize("works", 0, 5),
-    macro_f_string_static_t_initialize("also works", 0, 10),
-    macro_f_string_static_t_initialize("\\'works\\'", 0, 9),
-    macro_f_string_static_t_initialize("\\'wor ks\\'", 0, 10),
-    macro_f_string_static_t_initialize("\\'work\\'s\\'", 0, 11),
-    macro_f_string_static_t_initialize("\\\"works\\\"", 0, 9),
-    macro_f_string_static_t_initialize("\\\"wor ks\\\"", 0, 10),
-    macro_f_string_static_t_initialize("\\\"work\\\"s\\\"", 0, 11),
+    macro_f_string_static_t_initialize_1("works", 0, 5),
+    macro_f_string_static_t_initialize_1("also works", 0, 10),
+    macro_f_string_static_t_initialize_1("\\'works\\'", 0, 9),
+    macro_f_string_static_t_initialize_1("\\'wor ks\\'", 0, 10),
+    macro_f_string_static_t_initialize_1("\\'work\\'s\\'", 0, 11),
+    macro_f_string_static_t_initialize_1("\\\"works\\\"", 0, 9),
+    macro_f_string_static_t_initialize_1("\\\"wor ks\\\"", 0, 10),
+    macro_f_string_static_t_initialize_1("\\\"work\\\"s\\\"", 0, 11),
   };
 
   const f_string_static_t quotes[] = {

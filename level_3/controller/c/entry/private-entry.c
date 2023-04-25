@@ -94,7 +94,7 @@ extern "C" {
     } // while
 
     {
-      controller_state_interrupt_t custom = macro_controller_state_interrupt_t_initialize(is_entry, global.thread);
+      controller_state_interrupt_t custom = macro_controller_state_interrupt_t_initialize_1(is_entry, global.thread);
       f_state_t state = macro_f_state_t_initialize_1(controller_common_allocation_large_d, controller_common_allocation_small_d, F_none, 0, 0, 0, &controller_thread_signal_state_fss, 0, (void *) &custom, 0);
       f_string_range_t range = content_range;
 
@@ -1131,7 +1131,7 @@ extern "C" {
 
           const f_array_length_t id_rule_length = entry_action->parameters.array[0].used + entry_action->parameters.array[1].used + 1;
           f_char_t id_rule_name[id_rule_length + 1];
-          const f_string_static_t alias_rule = macro_f_string_static_t_initialize(id_rule_name, 0, id_rule_length);
+          const f_string_static_t alias_rule = macro_f_string_static_t_initialize_1(id_rule_name, 0, id_rule_length);
 
           memcpy(id_rule_name, entry_action->parameters.array[0].string, sizeof(f_char_t) * entry_action->parameters.array[0].used);
           memcpy(id_rule_name + entry_action->parameters.array[0].used + 1, entry_action->parameters.array[1].string, sizeof(f_char_t) * entry_action->parameters.array[1].used);
@@ -1576,9 +1576,9 @@ extern "C" {
 
     if (F_status_is_error_not(status)) {
       if (cache->buffer_file.used) {
-        controller_state_interrupt_t custom = macro_controller_state_interrupt_t_initialize(is_entry, global.thread);
+        controller_state_interrupt_t custom = macro_controller_state_interrupt_t_initialize_1(is_entry, global.thread);
         f_state_t state = macro_f_state_t_initialize_1(controller_common_allocation_large_d, controller_common_allocation_small_d, F_none, 0, 0, 0, &controller_thread_signal_state_fss, 0, (void *) &custom, 0);
-        f_string_range_t range = macro_f_string_range_t_initialize2(cache->buffer_file.used);
+        f_string_range_t range = macro_f_string_range_t_initialize_2(cache->buffer_file.used);
 
         status = fll_fss_basic_list_read(cache->buffer_file, state, &range, &cache->object_items, &cache->content_items, &cache->delimits, 0, &cache->comments);
 
@@ -1875,7 +1875,7 @@ extern "C" {
     f_status_t status = F_none;
 
     {
-      controller_state_interrupt_t custom = macro_controller_state_interrupt_t_initialize(is_entry, global.thread);
+      controller_state_interrupt_t custom = macro_controller_state_interrupt_t_initialize_1(is_entry, global.thread);
       f_state_t state = macro_f_state_t_initialize_1(controller_common_allocation_large_d, controller_common_allocation_small_d, F_none, 0, 0, 0, &controller_thread_signal_state_fss, 0, (void *) &custom, 0);
       f_string_range_t range = content_range;
 

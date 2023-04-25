@@ -10,11 +10,11 @@ void test__f_string_rangess_append__works(void **state) {
   const int length_sources = 2;
 
   f_string_range_t sources_array[] = {
-    macro_f_string_range_t_initialize(1, 2),
-    macro_f_string_range_t_initialize(3, 4),
+    macro_f_string_range_t_initialize_1(1, 2),
+    macro_f_string_range_t_initialize_1(3, 4),
   };
 
-  const f_string_ranges_t source = macro_f_string_ranges_t_initialize(sources_array, 0, length_sources);
+  const f_string_ranges_t source = macro_f_string_ranges_t_initialize_1(sources_array, 0, length_sources);
   f_string_rangess_t destination = f_string_rangess_t_initialize;
 
   {

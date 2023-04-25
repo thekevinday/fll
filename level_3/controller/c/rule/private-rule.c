@@ -16,9 +16,9 @@ extern "C" {
 #endif
 
 #ifndef _di_controller_rule_string_s_
-  const f_string_static_t controller_rule_needed_s = macro_f_string_static_t_initialize(CONTROLLER_rule_needed_s, 0, CONTROLLER_rule_needed_s_length);
-  const f_string_static_t controller_rule_wanted_s = macro_f_string_static_t_initialize(CONTROLLER_rule_wanted_s, 0, CONTROLLER_rule_wanted_s_length);
-  const f_string_static_t controller_rule_wished_s = macro_f_string_static_t_initialize(CONTROLLER_rule_wished_s, 0, CONTROLLER_rule_wished_s_length);
+  const f_string_static_t controller_rule_needed_s = macro_f_string_static_t_initialize_1(CONTROLLER_rule_needed_s, 0, CONTROLLER_rule_needed_s_length);
+  const f_string_static_t controller_rule_wanted_s = macro_f_string_static_t_initialize_1(CONTROLLER_rule_wanted_s, 0, CONTROLLER_rule_wanted_s_length);
+  const f_string_static_t controller_rule_wished_s = macro_f_string_static_t_initialize_1(CONTROLLER_rule_wished_s, 0, CONTROLLER_rule_wished_s_length);
 #endif // _di_controller_rule_print_string_s_
 
 #ifndef _di_controller_rule_action_method_name_
@@ -221,7 +221,7 @@ extern "C" {
 
     f_status_t status = F_none;
 
-    controller_state_interrupt_t custom = macro_controller_state_interrupt_t_initialize(is_normal, global.thread);
+    controller_state_interrupt_t custom = macro_controller_state_interrupt_t_initialize_1(is_normal, global.thread);
     f_state_t state = macro_f_state_t_initialize_1(controller_common_allocation_large_d, controller_common_allocation_small_d, F_none, 0, 0, 0, &controller_thread_signal_state_fss, 0, (void *) &custom, 0);
 
     f_array_length_t i = 0;
@@ -303,7 +303,7 @@ extern "C" {
             state.step_small = controller_common_allocation_iki_small_d;
             state.interrupt = &controller_thread_signal_state_iki;
 
-            f_string_range_t range_iki = macro_f_string_range_t_initialize2(actions->array[actions->used].parameters.array[0].used);
+            f_string_range_t range_iki = macro_f_string_range_t_initialize_2(actions->array[actions->used].parameters.array[0].used);
 
             status = fl_iki_read(&actions->array[actions->used].parameters.array[0], &range_iki, &actions->array[actions->used].ikis.array[0], state);
 
@@ -608,7 +608,7 @@ extern "C" {
             state.step_small = controller_common_allocation_iki_small_d;
             state.interrupt = &controller_thread_signal_state_iki;
 
-            f_string_range_t range_iki = macro_f_string_range_t_initialize2(actions->array[actions->used].parameters.array[0].used);
+            f_string_range_t range_iki = macro_f_string_range_t_initialize_2(actions->array[actions->used].parameters.array[0].used);
 
             status = fl_iki_read(&actions->array[actions->used].parameters.array[0], &range_iki, &actions->array[actions->used].ikis.array[0], state);
 
@@ -962,7 +962,7 @@ extern "C" {
 
     f_string_maps_t environment = f_string_maps_t_initialize;
 
-    controller_execute_set_t execute_set = macro_controller_execute_set_t_initialize(0, 0, &environment, &signals, 0, fl_execute_as_t_initialize);
+    controller_execute_set_t execute_set = macro_controller_execute_set_t_initialize_1(0, 0, &environment, &signals, 0, fl_execute_as_t_initialize);
 
     if (process->rule.affinity.used) {
       execute_set.as.affinity = &process->rule.affinity;
@@ -1469,7 +1469,7 @@ extern "C" {
       }
 
       if (F_status_set_fine(status) != F_interrupt) {
-        fl_execute_parameter_t simulated_parameter = macro_fl_execute_parameter_t_initialize(execute_set->parameter.option, execute_set->parameter.wait, process->rule.has & controller_rule_has_environment_d ? execute_set->parameter.environment : 0, execute_set->parameter.signals, &f_string_empty_s);
+        fl_execute_parameter_t simulated_parameter = macro_fl_execute_parameter_t_initialize_1(execute_set->parameter.option, execute_set->parameter.wait, process->rule.has & controller_rule_has_environment_d ? execute_set->parameter.environment : 0, execute_set->parameter.signals, &f_string_empty_s);
 
         status = fll_execute_program(*main->default_engine, process->rule.engine_arguments, &simulated_parameter, &execute_set->as, (void *) &result);
       }
@@ -1726,7 +1726,7 @@ extern "C" {
 
       if (F_status_set_fine(status) != F_interrupt) {
         const f_string_statics_t simulated_arguments = f_string_statics_t_initialize;
-        fl_execute_parameter_t simulated_parameter = macro_fl_execute_parameter_t_initialize(execute_set->parameter.option, execute_set->parameter.wait, process->rule.has & controller_rule_has_environment_d ? execute_set->parameter.environment : 0, execute_set->parameter.signals, &f_string_empty_s);
+        fl_execute_parameter_t simulated_parameter = macro_fl_execute_parameter_t_initialize_1(execute_set->parameter.option, execute_set->parameter.wait, process->rule.has & controller_rule_has_environment_d ? execute_set->parameter.environment : 0, execute_set->parameter.signals, &f_string_empty_s);
 
         status = fll_execute_program(*main->default_engine, simulated_arguments, &simulated_parameter, &execute_set->as, (void *) &result);
       }
@@ -2359,9 +2359,9 @@ extern "C" {
   f_status_t controller_rule_item_read(const controller_global_t global, const bool is_normal, controller_cache_t * const cache, controller_rule_item_t * const item) {
 
     f_status_t status = F_none;
-    controller_state_interrupt_t custom = macro_controller_state_interrupt_t_initialize(is_normal, global.thread);
+    controller_state_interrupt_t custom = macro_controller_state_interrupt_t_initialize_1(is_normal, global.thread);
     f_state_t state = macro_f_state_t_initialize_1(controller_common_allocation_large_d, controller_common_allocation_small_d, F_none, 0, 0, 0, &controller_thread_signal_state_fss, 0, (void *) &custom, 0);
-    f_string_range_t range = macro_f_string_range_t_initialize2(cache->buffer_item.used);
+    f_string_range_t range = macro_f_string_range_t_initialize_2(cache->buffer_item.used);
     f_array_length_t last = 0;
 
     uint8_t type = 0;
@@ -3336,7 +3336,7 @@ extern "C" {
 
     f_status_t status_lock = F_none;
 
-    controller_global_t global = macro_controller_global_t_initialize((controller_main_t *) process->main_data, (controller_setting_t *) process->main_setting, (controller_thread_t *) process->main_thread);
+    controller_global_t global = macro_controller_global_t_initialize_1((controller_main_t *) process->main_data, (controller_setting_t *) process->main_setting, (controller_thread_t *) process->main_thread);
 
     // The process and active locks shall be held for the duration of this processing (aside from switching between read to/from write).
     if (options_force & controller_process_option_asynchronous_d) {
@@ -3784,9 +3784,9 @@ extern "C" {
       rule->timestamp = cache->timestamp;
 
       if (cache->buffer_file.used) {
-        controller_state_interrupt_t custom = macro_controller_state_interrupt_t_initialize(is_normal, global.thread);
+        controller_state_interrupt_t custom = macro_controller_state_interrupt_t_initialize_1(is_normal, global.thread);
         f_state_t state = macro_f_state_t_initialize_1(controller_common_allocation_large_d, controller_common_allocation_small_d, F_none, 0, 0, 0, &controller_thread_signal_state_fss, 0, (void *) &custom, 0);
-        f_string_range_t range = macro_f_string_range_t_initialize2(cache->buffer_file.used);
+        f_string_range_t range = macro_f_string_range_t_initialize_2(cache->buffer_file.used);
 
         status = fll_fss_basic_list_read(cache->buffer_file, state, &range, &cache->object_items, &cache->content_items, &cache->delimits, 0, &cache->comments);
 
@@ -3947,10 +3947,10 @@ extern "C" {
     f_status_t status = F_none;
     f_status_t status_return = F_none;
 
-    f_string_range_t range = macro_f_string_range_t_initialize2(cache->buffer_item.used);
+    f_string_range_t range = macro_f_string_range_t_initialize_2(cache->buffer_item.used);
     f_string_range_t range2 = f_string_range_t_initialize;
 
-    controller_state_interrupt_t custom = macro_controller_state_interrupt_t_initialize(is_normal, global.thread);
+    controller_state_interrupt_t custom = macro_controller_state_interrupt_t_initialize_1(is_normal, global.thread);
     f_state_t state = macro_f_state_t_initialize_1(controller_common_allocation_large_d, controller_common_allocation_small_d, F_none, 0, 0, 0, &controller_thread_signal_state_fss, 0, (void *) &custom, 0);
 
     status = fll_fss_extended_read(cache->buffer_item, state, &range, &cache->object_actions, &cache->content_actions, 0, 0, &cache->delimits, 0);

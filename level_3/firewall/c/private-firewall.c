@@ -616,7 +616,7 @@ f_status_t firewall_perform_commands(firewall_data_t * const data, firewall_loca
 
               {
                 f_state_t state = f_state_t_initialize;
-                f_string_range_t input = macro_f_string_range_t_initialize2(local_buffer.used);
+                f_string_range_t input = macro_f_string_range_t_initialize_2(local_buffer.used);
 
                 status = fll_fss_basic_read(local_buffer, state, &input, &basic_objects, &basic_contents, 0, &delimits, 0);
               }
@@ -1206,7 +1206,7 @@ f_status_t firewall_buffer_rules(firewall_data_t * const data, const f_string_st
   f_state_t state = f_state_t_initialize;
 
   {
-    f_string_range_t input = macro_f_string_range_t_initialize2(local->buffer.used);
+    f_string_range_t input = macro_f_string_range_t_initialize_2(local->buffer.used);
 
     status = fll_fss_basic_list_read(local->buffer, state, &input, &local->chain_objects, &local->chain_contents, &delimits, 0, &comments);
   }

@@ -8,10 +8,10 @@ extern "C" {
 void test__f_path_is_absolute__returns_false(void **state) {
 
   const f_string_static_t paths[] = {
-    macro_f_string_static_t_initialize("'fa/lse", 0, 7),
-    macro_f_string_static_t_initialize("false'/", 0, 7),
-    macro_f_string_static_t_initialize("f a l s e", 0, 9),
-    macro_f_string_static_t_initialize("0+-12,/ false", 0, 13),
+    macro_f_string_static_t_initialize_1("'fa/lse", 0, 7),
+    macro_f_string_static_t_initialize_1("false'/", 0, 7),
+    macro_f_string_static_t_initialize_1("f a l s e", 0, 9),
+    macro_f_string_static_t_initialize_1("0+-12,/ false", 0, 13),
   };
 
   for (uint8_t i = 0; i < 4; ++i) {
@@ -34,10 +34,10 @@ void test__f_path_is_absolute__returns_data_not(void **state) {
 void test__f_path_is_absolute__returns_true(void **state) {
 
   const f_string_static_t paths[] = {
-    macro_f_string_static_t_initialize("/'true/", 0, 7),
-    macro_f_string_static_t_initialize("/true'", 0, 6),
-    macro_f_string_static_t_initialize("/t /r u e", 0, 9),
-    macro_f_string_static_t_initialize("/0+-12,/ true", 0, 13),
+    macro_f_string_static_t_initialize_1("/'true/", 0, 7),
+    macro_f_string_static_t_initialize_1("/true'", 0, 6),
+    macro_f_string_static_t_initialize_1("/t /r u e", 0, 9),
+    macro_f_string_static_t_initialize_1("/0+-12,/ true", 0, 13),
   };
 
   for (uint8_t i = 0; i < 4; ++i) {

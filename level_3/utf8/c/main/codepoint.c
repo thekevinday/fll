@@ -51,7 +51,7 @@ extern "C" {
         }
         else {
           f_char_t byte[4] = { 0, 0, 0, 0 };
-          f_string_static_t unicode = macro_f_string_static_t_initialize(byte, 0, 4);
+          f_string_static_t unicode = macro_f_string_static_t_initialize_1(byte, 0, 4);
 
           main->setting.state.status = f_utf_unicode_from(codepoint, 4, &unicode.string);
 
@@ -315,7 +315,7 @@ extern "C" {
     f_array_length_t j = 0;
 
     f_char_t block[5] = { 0, 0, 0, 0, 0 };
-    f_string_static_t sequence = macro_f_string_static_t_initialize(block, 0, 0);
+    f_string_static_t sequence = macro_f_string_static_t_initialize_1(block, 0, 0);
 
     do {
       main->setting.state.status = f_file_stream_read_block(file, &main->setting.buffer);

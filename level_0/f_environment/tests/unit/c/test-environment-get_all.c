@@ -16,8 +16,8 @@ void test__f_environment_get_all__parameter_checking(void **state) {
 
 void test__f_environment_get_all__works(void **state) {
 
-  const f_string_static_t name = macro_f_string_static_t_initialize("test", 0, 4);
-  const f_string_static_t value = macro_f_string_static_t_initialize("works", 0, 5);
+  const f_string_static_t name = macro_f_string_static_t_initialize_1("test", 0, 4);
+  const f_string_static_t value = macro_f_string_static_t_initialize_1("works", 0, 5);
 
   f_string_maps_t environment = f_string_maps_t_initialize;
 

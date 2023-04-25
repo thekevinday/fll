@@ -24,13 +24,13 @@ extern "C" {
     fl_execute_as_t as;
   } controller_execute_set_t;
 
-  #define controller_execute_set_t_initialize { \
+  #define controller_execute_set_t_initialize_1 { \
     fl_execute_parameter_t_initialize, \
     fl_execute_as_t_initialize \
   }
 
-  #define macro_controller_execute_set_t_initialize(option, wait, environment, signals, main, as) { \
-    macro_fl_execute_parameter_t_initialize(option, wait, environment, signals, main), \
+  #define macro_controller_execute_set_t_initialize_1(option, wait, environment, signals, main, as) { \
+    macro_fl_execute_parameter_t_initialize_1(option, wait, environment, signals, main), \
     as, \
   }
 #endif // _di_controller_execute_set_t_

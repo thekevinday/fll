@@ -436,7 +436,7 @@ extern "C" {
     f_color_medium_s \
   }
 
-  #define macro_f_color_format_t_initialize(begin, end, medium) { begin, end, medium }
+  #define macro_f_color_format_t_initialize_1(begin, end, medium) { begin, end, medium }
 
   #define macro_f_color_format_t_clear(format) \
     macro_f_string_static_t_clear(format.begin) \
@@ -805,7 +805,7 @@ extern "C" {
 
   #define f_color_set_t_initialize { 0, 0 }
 
-  #define macro_f_color_set_t_initialize(before, after) { before, after }
+  #define macro_f_color_set_t_initialize_1(before, after) { before, after }
 
   #define macro_f_color_set_t_clear(set) \
     set.before = 0; \
@@ -862,7 +862,18 @@ extern "C" {
     f_color_set_t_initialize \
   }
 
-  #define macro_f_color_set_context_t_initialize(error, important, normal, normal_reset, notable, reset, standout, success, title, warning) { error, important, normal, normal_reset, notable, reset, standout, success, title, warning }
+  #define macro_f_color_set_context_t_initialize_1(error, important, normal, normal_reset, notable, reset, standout, success, title, warning) { \
+    error, \
+    important, \
+    normal, \
+    normal_reset, \
+    notable, \
+    reset, \
+    standout, \
+    success, \
+    title, \
+    warning \
+  }
 
   #define macro_f_color_set_context_t_clear(set) \
     macro_f_color_set_t_clear(set.error) \

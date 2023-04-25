@@ -27,7 +27,7 @@ int main(const int argc, const f_string_t *argv, const f_string_t *envp) {
   fll_program_standard_set_up(&data.program);
 
   {
-    const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize(argc, argv, envp);
+    const f_console_arguments_t arguments = macro_f_console_arguments_t_initialize_1(argc, argv, envp);
 
     fss_embedded_list_read_setting_load(arguments, &data);
   }

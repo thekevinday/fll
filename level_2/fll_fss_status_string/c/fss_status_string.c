@@ -6,29 +6,29 @@ extern "C" {
 
 #ifndef _di_fll_fss_status_string_
   #ifndef _di_fll_fss_status_error_
-    const f_string_static_t fll_fss_status_format_s = macro_f_string_static_t_initialize(FLL_fss_status_format_s, 0, FLL_fss_status_format_s_length);
-    const f_string_static_t fll_fss_status_format_eos_s = macro_f_string_static_t_initialize(FLL_fss_status_format_eos_s, 0, FLL_fss_status_format_eos_s_length);
+    const f_string_static_t fll_fss_status_format_s = macro_f_string_static_t_initialize_1(FLL_fss_status_format_s, 0, FLL_fss_status_format_s_length);
+    const f_string_static_t fll_fss_status_format_eos_s = macro_f_string_static_t_initialize_1(FLL_fss_status_format_eos_s, 0, FLL_fss_status_format_eos_s_length);
   #endif // _di_fll_fss_status_error_
 
   #ifndef _di_fll_fss_status_warning_
-    const f_string_static_t fll_fss_status_accepted_invalid_s = macro_f_string_static_t_initialize(FLL_fss_status_accepted_invalid_s, 0, FLL_fss_status_accepted_invalid_s_length);
-    const f_string_static_t fll_fss_status_accepted_invalid_eos_s = macro_f_string_static_t_initialize(FLL_fss_status_accepted_invalid_eos_s, 0, FLL_fss_status_accepted_invalid_eos_s_length);
+    const f_string_static_t fll_fss_status_accepted_invalid_s = macro_f_string_static_t_initialize_1(FLL_fss_status_accepted_invalid_s, 0, FLL_fss_status_accepted_invalid_s_length);
+    const f_string_static_t fll_fss_status_accepted_invalid_eos_s = macro_f_string_static_t_initialize_1(FLL_fss_status_accepted_invalid_eos_s, 0, FLL_fss_status_accepted_invalid_eos_s_length);
   #endif // _di_fll_fss_status_warning_
 
   #ifndef _di_fll_fss_status_success_
-    const f_string_static_t fll_fss_status_found_content_s = macro_f_string_static_t_initialize(FLL_fss_status_found_content_s, 0, FLL_fss_status_found_content_s_length);
-    const f_string_static_t fll_fss_status_found_content_not_s = macro_f_string_static_t_initialize(FLL_fss_status_found_content_not_s, 0, FLL_fss_status_found_content_not_s_length);
-    const f_string_static_t fll_fss_status_found_object_s = macro_f_string_static_t_initialize(FLL_fss_status_found_object_s, 0, FLL_fss_status_found_object_s_length);
-    const f_string_static_t fll_fss_status_found_object_content_not_s = macro_f_string_static_t_initialize(FLL_fss_status_found_object_content_not_s, 0, FLL_fss_status_found_object_content_not_s_length);
-    const f_string_static_t fll_fss_status_found_object_not_s = macro_f_string_static_t_initialize(FLL_fss_status_found_object_not_s, 0, FLL_fss_status_found_object_not_s_length);
+    const f_string_static_t fll_fss_status_found_content_s = macro_f_string_static_t_initialize_1(FLL_fss_status_found_content_s, 0, FLL_fss_status_found_content_s_length);
+    const f_string_static_t fll_fss_status_found_content_not_s = macro_f_string_static_t_initialize_1(FLL_fss_status_found_content_not_s, 0, FLL_fss_status_found_content_not_s_length);
+    const f_string_static_t fll_fss_status_found_object_s = macro_f_string_static_t_initialize_1(FLL_fss_status_found_object_s, 0, FLL_fss_status_found_object_s_length);
+    const f_string_static_t fll_fss_status_found_object_content_not_s = macro_f_string_static_t_initialize_1(FLL_fss_status_found_object_content_not_s, 0, FLL_fss_status_found_object_content_not_s_length);
+    const f_string_static_t fll_fss_status_found_object_not_s = macro_f_string_static_t_initialize_1(FLL_fss_status_found_object_not_s, 0, FLL_fss_status_found_object_not_s_length);
   #endif // _di_fll_fss_status_success_
 
   #ifndef _di_fll_fss_status_codes_
-    const f_string_static_t fll_fss_status_found_comment_s = macro_f_string_static_t_initialize(FLL_fss_status_found_comment_s, 0, FLL_fss_status_found_comment_s_length);
+    const f_string_static_t fll_fss_status_found_comment_s = macro_f_string_static_t_initialize_1(FLL_fss_status_found_comment_s, 0, FLL_fss_status_found_comment_s_length);
   #endif // _di_fll_fss_status_codes_
 
-  const f_string_static_t fll_fss_status_status_code_first_s = macro_f_string_static_t_initialize(FLL_fss_status_status_code_first_s, 0, FLL_fss_status_status_code_first_s_length);
-  const f_string_static_t fll_fss_status_status_code_last_s = macro_f_string_static_t_initialize(FLL_fss_status_status_code_last_s, 0, FLL_fss_status_status_code_last_s_length);
+  const f_string_static_t fll_fss_status_status_code_first_s = macro_f_string_static_t_initialize_1(FLL_fss_status_status_code_first_s, 0, FLL_fss_status_status_code_first_s_length);
+  const f_string_static_t fll_fss_status_status_code_last_s = macro_f_string_static_t_initialize_1(FLL_fss_status_status_code_last_s, 0, FLL_fss_status_status_code_last_s_length);
 #endif // _di_FLL_fss_status_string_
 
 #ifndef _di_fll_fss_status_string_from_

@@ -30,7 +30,7 @@ extern "C" {
 
   #define f_limit_set_t_initialize { 0, f_limit_value_t_initialize }
 
-  #define macro_f_limit_set_t_initialize(type, value) { type, value }
+  #define macro_f_limit_set_t_initialize_1(type, value) { type, value }
 
   #define macro_f_limit_set_t_clear(set) \
     set.type = 0; \
@@ -54,8 +54,8 @@ extern "C" {
 
   #define f_limit_sets_t_initialize { 0, 0, 0 }
 
-  #define macro_f_limit_sets_t_initialize(array, size, used) { array, size, used }
-  #define macro_f_limit_sets_t_initialize2(array, length) { array, length, length }
+  #define macro_f_limit_sets_t_initialize_1(array, size, used) { array, size, used }
+  #define macro_f_limit_sets_t_initialize_2(array, length) { array, length, length }
 
   #define macro_f_limit_sets_t_clear(sets) macro_f_memory_structure_clear(sets)
 
@@ -88,8 +88,8 @@ extern "C" {
 
   #define f_limit_setss_t_initialize { 0, 0, 0 }
 
-  #define macro_f_limit_setss_t_initialize(array, size, used) { array, size, used }
-  #define macro_f_limit_setss_t_initialize2(array, length) { array, length, length }
+  #define macro_f_limit_setss_t_initialize_1(array, size, used) { array, size, used }
+  #define macro_f_limit_setss_t_initialize_2(array, length) { array, length, length }
 
   #define macro_f_limit_setss_t_clear(setss) macro_f_memory_structure_clear(setss);
 

@@ -91,8 +91,8 @@ extern "C" {
 
   #define f_accounts_t_initialize { 0, 0, 0 }
 
-  #define macro_f_accounts_t_initialize(array, size, used) { array, size, used }
-  #define macro_f_accounts_t_initialize2(array, length) { array, length, length }
+  #define macro_f_accounts_t_initialize_1(array, size, used) { array, size, used }
+  #define macro_f_accounts_t_initialize_2(array, length) { array, length, length }
 
   #define macro_f_accounts_t_clear(accounts) macro_f_memory_structures_clear(accounts)
 
@@ -125,8 +125,8 @@ extern "C" {
 
   #define f_accountss_t_initialize { 0, 0, 0 }
 
-  #define macro_f_accountss_t_initialize(array, size, used) { array, size, used }
-  #define macro_f_accountss_t_initialize2(array, length) { array, length, length }
+  #define macro_f_accountss_t_initialize_1(array, size, used) { array, size, used }
+  #define macro_f_accountss_t_initialize_2(array, length) { array, length, length }
 
   #define macro_f_accountss_t_clear(accountss) macro_f_memory_structures_clear(accountss)
 

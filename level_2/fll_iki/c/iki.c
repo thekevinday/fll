@@ -13,7 +13,7 @@ extern "C" {
       if (escaped->used > escaped->size) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    const f_string_range_t range = macro_f_string_range_t_initialize2(content.used);
+    const f_string_range_t range = macro_f_string_range_t_initialize_2(content.used);
 
     return private_fll_iki_content_partial_escape(content, range, quote.string[0], escaped);
   }
@@ -55,7 +55,7 @@ extern "C" {
       if (unescaped->used > unescaped->size) return F_status_set_error(F_parameter);
     #endif // _di_level_2_parameter_checking_
 
-    const f_string_range_t range = macro_f_string_range_t_initialize2(content.used);
+    const f_string_range_t range = macro_f_string_range_t_initialize_2(content.used);
 
     return private_fll_iki_content_partial_unescape(content, range, quote.string[0], unescaped);
   }

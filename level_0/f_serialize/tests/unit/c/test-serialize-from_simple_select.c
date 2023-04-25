@@ -7,7 +7,7 @@ extern "C" {
 
 void test__f_serialize_from_simple_select__parameter_checking(void **state) {
 
-  const f_string_static_t source = macro_f_string_static_t_initialize("test", 0, 4);
+  const f_string_static_t source = macro_f_string_static_t_initialize_1("test", 0, 4);
 
   {
     const f_status_t status = f_serialize_from_simple_select(source, 0, 0);
@@ -29,7 +29,7 @@ void test__f_serialize_from_simple_select__returns_data_not(void **state) {
 
 void test__f_serialize_from_simple_select__works(void **state) {
 
-  const f_string_static_t source = macro_f_string_static_t_initialize("test:2::other:им:蠇:м:", 0, 26);
+  const f_string_static_t source = macro_f_string_static_t_initialize_1("test:2::other:им:蠇:м:", 0, 26);
 
   const f_string_range_t ranges[] = {
     { 0, 3 },

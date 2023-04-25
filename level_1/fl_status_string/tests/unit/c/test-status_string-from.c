@@ -8,9 +8,9 @@ extern "C" {
 void test__fl_status_string_from__fails(void **state) {
 
   f_string_static_t invalids[] = {
-    macro_f_string_static_t_initialize("X&87-", 0, 5),
-    macro_f_string_static_t_initialize("123", 0, 3),
-    macro_f_string_static_t_initialize(".", 0, 1),
+    macro_f_string_static_t_initialize_1("X&87-", 0, 5),
+    macro_f_string_static_t_initialize_1("123", 0, 3),
+    macro_f_string_static_t_initialize_1(".", 0, 1),
   };
 
   for (uint8_t i = 0; i < 3; ++i) {

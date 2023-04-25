@@ -8,20 +8,20 @@ extern "C" {
 void test__f_iki_object_is__returns_false(void **state) {
 
   const f_string_static_t objects[] = {
-    macro_f_string_static_t_initialize("fa lse", 0, 6),
-    macro_f_string_static_t_initialize("filse@", 0, 6),
-    macro_f_string_static_t_initialize("fa;lse", 0, 6),
-    macro_f_string_static_t_initialize("/false", 0, 6),
-    macro_f_string_static_t_initialize("'false", 0, 6),
-    macro_f_string_static_t_initialize("false'", 0, 6),
-    macro_f_string_static_t_initialize("fa'l'se", 0, 7),
-    macro_f_string_static_t_initialize("f'alse", 0, 6),
-    macro_f_string_static_t_initialize("'false'", 0, 7),
-    macro_f_string_static_t_initialize("\"false", 0, 7),
-    macro_f_string_static_t_initialize("false\"", 0, 7),
-    macro_f_string_static_t_initialize("fa\"l\"se", 0, 7),
-    macro_f_string_static_t_initialize("f\"alse", 0, 6),
-    macro_f_string_static_t_initialize("'false'", 0, 7),
+    macro_f_string_static_t_initialize_1("fa lse", 0, 6),
+    macro_f_string_static_t_initialize_1("filse@", 0, 6),
+    macro_f_string_static_t_initialize_1("fa;lse", 0, 6),
+    macro_f_string_static_t_initialize_1("/false", 0, 6),
+    macro_f_string_static_t_initialize_1("'false", 0, 6),
+    macro_f_string_static_t_initialize_1("false'", 0, 6),
+    macro_f_string_static_t_initialize_1("fa'l'se", 0, 7),
+    macro_f_string_static_t_initialize_1("f'alse", 0, 6),
+    macro_f_string_static_t_initialize_1("'false'", 0, 7),
+    macro_f_string_static_t_initialize_1("\"false", 0, 7),
+    macro_f_string_static_t_initialize_1("false\"", 0, 7),
+    macro_f_string_static_t_initialize_1("fa\"l\"se", 0, 7),
+    macro_f_string_static_t_initialize_1("f\"alse", 0, 6),
+    macro_f_string_static_t_initialize_1("'false'", 0, 7),
   };
 
   for (uint8_t i = 0; i < 14; ++i) {
@@ -44,11 +44,11 @@ void test__f_iki_object_is__returns_data_not(void **state) {
 void test__f_iki_object_is__returns_true(void **state) {
 
   const f_string_static_t objects[] = {
-    macro_f_string_static_t_initialize("works", 0, 5),
-    macro_f_string_static_t_initialize("wor_ks", 0, 6),
-    macro_f_string_static_t_initialize("work-s", 0, 6),
-    macro_f_string_static_t_initialize("wor++ks", 0, 7),
-    macro_f_string_static_t_initialize("w_-+s", 0, 5),
+    macro_f_string_static_t_initialize_1("works", 0, 5),
+    macro_f_string_static_t_initialize_1("wor_ks", 0, 6),
+    macro_f_string_static_t_initialize_1("work-s", 0, 6),
+    macro_f_string_static_t_initialize_1("wor++ks", 0, 7),
+    macro_f_string_static_t_initialize_1("w_-+s", 0, 5),
   };
 
   for (uint8_t i = 0; i < 5; ++i) {

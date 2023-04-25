@@ -7,7 +7,7 @@ extern "C" {
 
 void test__f_path_real__fails(void **state) {
 
-  const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
+  const f_string_static_t path = macro_f_string_static_t_initialize_1("test", 0, 4);
 
   f_string_dynamic_t destination = f_string_dynamic_t_initialize;
 
@@ -50,7 +50,7 @@ void test__f_path_real__fails(void **state) {
 
 void test__f_path_real__parameter_checking(void **state) {
 
-  const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
+  const f_string_static_t path = macro_f_string_static_t_initialize_1("test", 0, 4);
 
   {
     const f_status_t status = f_path_real(path, 0);
@@ -61,8 +61,8 @@ void test__f_path_real__parameter_checking(void **state) {
 
 void test__f_path_real__works(void **state) {
 
-  const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
-  const f_string_static_t path_real = macro_f_string_static_t_initialize("/test", 0, 5);
+  const f_string_static_t path = macro_f_string_static_t_initialize_1("test", 0, 4);
+  const f_string_static_t path_real = macro_f_string_static_t_initialize_1("/test", 0, 5);
 
   f_string_dynamic_t destination = f_string_dynamic_t_initialize;
 

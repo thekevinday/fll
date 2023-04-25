@@ -7,7 +7,7 @@ extern "C" {
 
 void test__f_directory_list__fails(void **state) {
 
-  const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
+  const f_string_static_t path = macro_f_string_static_t_initialize_1("test", 0, 4);
 
   f_string_dynamics_t names = f_string_dynamics_t_initialize;
 
@@ -39,7 +39,7 @@ void test__f_directory_list__fails(void **state) {
 
 void test__f_directory_list__parameter_checking(void **state) {
 
-  const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
+  const f_string_static_t path = macro_f_string_static_t_initialize_1("test", 0, 4);
 
   {
     const f_status_t status = f_directory_list(path, 0, 0, 0);
@@ -64,7 +64,7 @@ void test__f_directory_list__returns_data_not(void **state) {
 void test__f_directory_list__returns_directory_empty(void **state) {
 
   f_string_dynamics_t names = f_string_dynamics_t_initialize;
-  const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
+  const f_string_static_t path = macro_f_string_static_t_initialize_1("test", 0, 4);
 
   {
     struct dirent **directories;
@@ -87,7 +87,7 @@ void test__f_directory_list__returns_directory_empty(void **state) {
 void test__f_directory_list__works(void **state) {
 
   f_string_dynamics_t names = f_string_dynamics_t_initialize;
-  const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
+  const f_string_static_t path = macro_f_string_static_t_initialize_1("test", 0, 4);
 
   {
     struct dirent **directories;

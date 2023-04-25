@@ -24,7 +24,7 @@ extern "C" {
 
   #define f_thread_condition_attribute_t_initialize { 0 };
 
-  #define macro_f_thread_condition_attribute_t_initialize(array, size, used) attribute
+  #define macro_f_thread_condition_attribute_t_initialize_1(array, size, used) attribute
 
   // This does not clear the thread.attributes.__size array (may need to memset() against a sizeof(pthread_attr_t)).
   #define macro_f_thread_condition_attribute_t_clear(attribute) attribute.__align = 0;
@@ -49,8 +49,8 @@ extern "C" {
 
   #define f_thread_condition_attributes_t_initialize { 0, 0, 0 }
 
-  #define macro_f_thread_condition_attributes_t_initialize(array, size, used) { array, size, used }
-  #define macro_f_thread_condition_attributes_t_initialize2(array, length) { array, length, length }
+  #define macro_f_thread_condition_attributes_t_initialize_1(array, size, used) { array, size, used }
+  #define macro_f_thread_condition_attributes_t_initialize_2(array, length) { array, length, length }
 
   #define macro_f_thread_condition_attributes_t_clear(attributes) macro_f_memory_structure_clear(attributes)
 

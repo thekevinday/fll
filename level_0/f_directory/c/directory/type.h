@@ -53,7 +53,7 @@ extern "C" {
     f_string_dynamics_t_initialize, \
   }
 
-  #define macro_f_directory_listing_t_initialize(block, character, directory, regular, link, fifo, socket, unknown) { \
+  #define macro_f_directory_listing_t_initialize_1(block, character, directory, regular, link, fifo, socket, unknown) { \
     block, \
     character, \
     directory, \

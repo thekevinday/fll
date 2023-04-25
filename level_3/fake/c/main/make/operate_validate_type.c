@@ -461,7 +461,7 @@ extern "C" {
                   memcpy(message, "not ", 4 * sizeof(f_char_t));
                   memcpy(message + 4, fake_make_operation_mode_s.string, fake_make_operation_mode_s.used * sizeof(f_char_t));
 
-                  f_string_static_t message_s = macro_f_string_static_t_initialize(message, 0, 4 + fake_make_operation_mode_s.used);
+                  f_string_static_t message_s = macro_f_string_static_t_initialize_1(message, 0, 4 + fake_make_operation_mode_s.used);
 
                   fake_make_print_error_unsupported_type(&main->program.error, message_s, main->cache_arguments.array[k]);
                 }
@@ -1013,7 +1013,7 @@ extern "C" {
 
           // The cache_path contains the full path to the point file, save this so that the cache_path can be re-used.
           f_char_t full_string[main->cache_argument.used + 1];
-          f_string_static_t full = macro_f_string_static_t_initialize(full_string, 0, main->cache_argument.used);
+          f_string_static_t full = macro_f_string_static_t_initialize_1(full_string, 0, main->cache_argument.used);
 
           memcpy(full_string, main->cache_argument.string, sizeof(f_char_t) * main->cache_argument.used);
           full_string[main->cache_argument.used] = 0;
@@ -1050,7 +1050,7 @@ extern "C" {
 
               // The cache_path is used by fake_make_assure_inside_project(), so copy the contents into another buffer.
               f_char_t target_string[main->cache_argument.used + 1];
-              f_string_static_t target = macro_f_string_static_t_initialize(target_string, 0, main->cache_argument.used);
+              f_string_static_t target = macro_f_string_static_t_initialize_1(target_string, 0, main->cache_argument.used);
 
               memcpy(target_string, main->cache_argument.string, sizeof(f_char_t) * main->cache_argument.used);
               target_string[main->cache_argument.used] = 0;

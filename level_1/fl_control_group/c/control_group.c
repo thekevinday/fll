@@ -21,7 +21,7 @@ extern "C" {
       }
     }
 
-    f_file_t file = macro_f_file_t_initialize2(0, -1, F_file_flag_write_only_d);
+    f_file_t file = macro_f_file_t_initialize_2(0, -1, F_file_flag_write_only_d);
     f_status_t status = F_none;
     f_string_static_t path = f_string_static_t_initialize;
 

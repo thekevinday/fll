@@ -7,7 +7,7 @@ extern "C" {
 
 void test__f_string_seek_line__returns_data_not_stop(void **state) {
 
-  const f_string_static_t source = macro_f_string_static_t_initialize("test\nafter", 0, 10);
+  const f_string_static_t source = macro_f_string_static_t_initialize_1("test\nafter", 0, 10);
 
   {
     f_string_range_t range = f_string_range_t_initialize;
@@ -20,10 +20,10 @@ void test__f_string_seek_line__returns_data_not_stop(void **state) {
 
 void test__f_string_seek_line__returns_none_stop(void **state) {
 
-  const f_string_static_t source = macro_f_string_static_t_initialize("test", 0, 4);
+  const f_string_static_t source = macro_f_string_static_t_initialize_1("test", 0, 4);
 
   {
-    f_string_range_t range = macro_f_string_range_t_initialize(0, source.used - 1);
+    f_string_range_t range = macro_f_string_range_t_initialize_1(0, source.used - 1);
 
     const f_status_t status = f_string_seek_line(source.string, &range);
 
@@ -36,10 +36,10 @@ void test__f_string_seek_line__returns_none_stop(void **state) {
 
 void test__f_string_seek_line__works(void **state) {
 
-  const f_string_static_t source = macro_f_string_static_t_initialize("test\nafter", 0, 10);
+  const f_string_static_t source = macro_f_string_static_t_initialize_1("test\nafter", 0, 10);
 
   {
-    f_string_range_t range = macro_f_string_range_t_initialize(0, source.used - 1);
+    f_string_range_t range = macro_f_string_range_t_initialize_1(0, source.used - 1);
 
     const f_status_t status = f_string_seek_line(source.string, &range);
 
@@ -52,7 +52,7 @@ void test__f_string_seek_line__works(void **state) {
 
 void test__f_string_seek_line__parameter_checking(void **state) {
 
-  const f_string_static_t source = macro_f_string_static_t_initialize("teX\nst", 0, 6);
+  const f_string_static_t source = macro_f_string_static_t_initialize_1("teX\nst", 0, 6);
 
   {
     const f_status_t status = f_string_seek_line(source.string, 0);

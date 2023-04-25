@@ -36,7 +36,7 @@ extern "C" {
 
   #define f_string_quantity_t_initialize { 0, 0 }
 
-  #define macro_f_string_quantity_t_initialize(start, total) { start, total }
+  #define macro_f_string_quantity_t_initialize_1(start, total) { start, total }
 
   #define macro_f_string_quantity_t_clear(quantity) \
     quantity.start = 0; \

@@ -133,7 +133,7 @@ extern "C" {
 
     if (main->setting.flag & (utf8_main_flag_strip_invalid_e | utf8_main_flag_verify_e)) return F_output_not;
 
-    f_string_static_t character = macro_f_string_static_t_initialize(0, 0, width);
+    f_string_static_t character = macro_f_string_static_t_initialize_1(0, 0, width);
 
     f_char_t byte[character.used + 1];
     character.string = byte;

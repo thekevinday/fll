@@ -21,8 +21,8 @@ extern "C" {
  *
  * The f_utf_string_static_t type should never be directly allocated or deallocated.
  *
- * A special macro_f_utf_string_static_t_initialize() is provided for the special purpose of easily initialize a static string.
- * A special macro_f_utf_string_static_t_initialize2() is provided for the special purpose of easily initialize a static string with an identical used and size.
+ * A special macro_f_utf_string_static_t_initialize_1() is provided for the special purpose of easily initialize a static string.
+ * A special macro_f_utf_string_static_t_initialize_2() is provided for the special purpose of easily initialize a static string with an identical used and size.
  *
  * string: The string.
  * size:   Total amount of space available.
@@ -38,8 +38,8 @@ extern "C" {
 
   #define f_utf_string_static_t_initialize { 0, 0, 0 }
 
-  #define macro_f_utf_string_static_t_initialize(string, size, used) { string, size, used }
-  #define macro_f_utf_string_static_t_initialize2(string, length) { string, length, length }
+  #define macro_f_utf_string_static_t_initialize_1(string, size, used) { string, size, used }
+  #define macro_f_utf_string_static_t_initialize_2(string, length) { string, length, length }
 
   #define macro_f_utf_string_static_t_clear(string_static) \
     string_static.string = 0; \

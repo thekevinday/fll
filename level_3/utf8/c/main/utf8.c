@@ -44,7 +44,7 @@ extern "C" {
     f_status_t valid = F_true;
 
     if (main->program.pipe & fll_program_data_pipe_input_e) {
-      const f_file_t file = macro_f_file_t_initialize(F_type_input_d, F_type_descriptor_input_d, F_file_flag_read_only_d, 32768, F_file_default_size_write_d);
+      const f_file_t file = macro_f_file_t_initialize_1(F_type_input_d, F_type_descriptor_input_d, F_file_flag_read_only_d, 32768, F_file_default_size_write_d);
 
       utf8_print_data_section_header_pipe(&main->program.output);
 
@@ -73,7 +73,7 @@ extern "C" {
 
     // Process "from" files.
     if (F_status_is_error_not(main->setting.state.status) && (main->setting.flag & utf8_main_flag_file_from_e)) {
-      f_file_t file = macro_f_file_t_initialize(0, -1, F_file_flag_read_only_d, 32768, F_file_default_size_write_d);
+      f_file_t file = macro_f_file_t_initialize_1(0, -1, F_file_flag_read_only_d, 32768, F_file_default_size_write_d);
 
       for (f_array_length_t i = 0; i < main->setting.path_files_from.used && F_status_is_error_not(main->setting.state.status); ++i) {
 

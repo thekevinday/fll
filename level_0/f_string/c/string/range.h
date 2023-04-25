@@ -34,8 +34,8 @@ extern "C" {
 
   #define f_string_range_t_initialize { 1, 0 }
 
-  #define macro_f_string_range_t_initialize(start, stop) { start, stop }
-  #define macro_f_string_range_t_initialize2(length) { length ? 0 : 1, length ? length - 1 : 0 }
+  #define macro_f_string_range_t_initialize_1(start, stop) { start, stop }
+  #define macro_f_string_range_t_initialize_2(length) { length ? 0 : 1, length ? length - 1 : 0 }
 
   #define macro_f_string_range_t_clear(range) \
     range.start = 1; \

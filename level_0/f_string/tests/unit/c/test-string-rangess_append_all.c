@@ -11,21 +11,21 @@ void test__f_string_rangess_append_all__works(void **state) {
   const int length_sources_set = 2;
 
   f_string_range_t sources_array1[] = {
-    macro_f_string_range_t_initialize(1, 2),
-    macro_f_string_range_t_initialize(3, 4),
+    macro_f_string_range_t_initialize_1(1, 2),
+    macro_f_string_range_t_initialize_1(3, 4),
   };
 
   f_string_range_t sources_array2[] = {
-    macro_f_string_range_t_initialize(5, 6),
-    macro_f_string_range_t_initialize(7, 8),
+    macro_f_string_range_t_initialize_1(5, 6),
+    macro_f_string_range_t_initialize_1(7, 8),
   };
 
   f_string_ranges_t sources_set_array[] = {
-    macro_f_string_ranges_t_initialize(sources_array1, 0, length_sources),
-    macro_f_string_ranges_t_initialize(sources_array2, 0, length_sources),
+    macro_f_string_ranges_t_initialize_1(sources_array1, 0, length_sources),
+    macro_f_string_ranges_t_initialize_1(sources_array2, 0, length_sources),
   };
 
-  const f_string_rangess_t source = macro_f_string_rangess_t_initialize(sources_set_array, 0, length_sources_set);
+  const f_string_rangess_t source = macro_f_string_rangess_t_initialize_1(sources_set_array, 0, length_sources_set);
   f_string_rangess_t destination = f_string_rangess_t_initialize;
 
   {

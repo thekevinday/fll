@@ -27,7 +27,7 @@ extern "C" {
 
   #define f_limit_value_t_initialize { 0, 0 }
 
-  #define macro_f_limit_value_t_initialize(current, max) { current, max }
+  #define macro_f_limit_value_t_initialize_1(current, max) { current, max }
 
   #define macro_f_limit_value_t_clear(value) \
     value.rlim_cur = 0; \
@@ -51,8 +51,8 @@ extern "C" {
 
   #define f_limit_values_t_initialize { 0, 0, 0 }
 
-  #define macro_f_limit_values_t_initialize(content, size, used) { array, size, used }
-  #define macro_f_limit_values_t_initialize2(array, length) { array, length, length }
+  #define macro_f_limit_values_t_initialize_1(content, size, used) { array, size, used }
+  #define macro_f_limit_values_t_initialize_2(array, length) { array, length, length }
 
   #define macro_f_limit_values_t_clear(values) macro_f_memory_structure_clear(values)
 
@@ -85,8 +85,8 @@ extern "C" {
 
   #define f_limit_valuess_t_initialize { 0, 0, 0 }
 
-  #define macro_f_limit_valuess_t_initialize(array, size, used) { array, size, used }
-  #define macro_f_limit_valuess_t_initialize2(array, length) { array, length, length }
+  #define macro_f_limit_valuess_t_initialize_1(array, size, used) { array, size, used }
+  #define macro_f_limit_valuess_t_initialize_2(array, length) { array, length, length }
 
   #define macro_f_limit_valuess_t_clear(valuess) macro_f_memory_structure_clear(valuess);
 

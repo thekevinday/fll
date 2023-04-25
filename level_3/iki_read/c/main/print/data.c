@@ -22,7 +22,7 @@ extern "C" {
         f_print_dynamic(main->setting.reassign.array[at].c, main->program.output.to);
       }
       else {
-        f_string_range_t range = macro_f_string_range_t_initialize(main->setting.data.variable.array[index].start, main->setting.data.content.array[index].start - 1);
+        f_string_range_t range = macro_f_string_range_t_initialize_1(main->setting.data.variable.array[index].start, main->setting.data.content.array[index].start - 1);
 
         f_print_dynamic_partial(main->setting.buffer, range, main->program.output.to);
 
@@ -52,7 +52,7 @@ extern "C" {
         iki_read_print_data_wrap_append(&main->program.output, index);
       }
       else {
-        f_string_range_t range = macro_f_string_range_t_initialize(main->setting.data.variable.array[index].start, main->setting.data.content.array[index].start - 1);
+        f_string_range_t range = macro_f_string_range_t_initialize_1(main->setting.data.variable.array[index].start, main->setting.data.content.array[index].start - 1);
 
         f_print_dynamic_partial(main->setting.buffer, range, main->program.output.to);
 
@@ -80,7 +80,7 @@ extern "C" {
         f_print_dynamic(main->setting.replace.array[main->setting.map_replaces[index]].name, main->program.output.to);
       }
       else {
-        f_string_range_t range = macro_f_string_range_t_initialize(main->setting.data.variable.array[index].start, main->setting.data.content.array[index].start - 1);
+        f_string_range_t range = macro_f_string_range_t_initialize_1(main->setting.data.variable.array[index].start, main->setting.data.content.array[index].start - 1);
 
         f_print_dynamic_partial(main->setting.buffer, range, main->program.output.to);
 
@@ -107,7 +107,7 @@ extern "C" {
       f_print_dynamic_partial(main->setting.buffer, main->setting.data.vocabulary.array[index], main->program.output.to);
     }
     else {
-      f_string_range_t range = macro_f_string_range_t_initialize(main->setting.data.variable.array[index].start, main->setting.data.content.array[index].start - 1);
+      f_string_range_t range = macro_f_string_range_t_initialize_1(main->setting.data.variable.array[index].start, main->setting.data.content.array[index].start - 1);
 
       f_print_dynamic_partial(main->setting.buffer, range, main->program.output.to);
 

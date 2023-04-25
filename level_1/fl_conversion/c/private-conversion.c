@@ -450,7 +450,7 @@ extern "C" {
       return F_status_set_error(F_number);
     }
 
-    fl_conversion_data_t data = macro_fl_conversion_data_t_initialize(mode, flag);
+    fl_conversion_data_t data = macro_fl_conversion_data_t_initialize_1(mode, flag);
 
     if (vector == -1) {
       data.flag |= fl_conversion_data_flag_negative_e;
@@ -594,7 +594,7 @@ extern "C" {
       return F_status_set_error(F_number);
     }
 
-    fl_conversion_data_t data = macro_fl_conversion_data_t_initialize(mode, flag);
+    fl_conversion_data_t data = macro_fl_conversion_data_t_initialize_1(mode, flag);
 
     if (data.flag & fl_conversion_data_flag_negative_e) {
       data.flag -= fl_conversion_data_flag_negative_e;

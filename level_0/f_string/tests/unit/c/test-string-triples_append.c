@@ -7,11 +7,11 @@ extern "C" {
 
 void test__f_string_triples_append__works(void **state) {
 
-  const f_string_static_t test_a = macro_f_string_static_t_initialize("a", 0, 1);
-  const f_string_static_t test_b = macro_f_string_static_t_initialize("b", 0, 1);
-  const f_string_static_t test_c = macro_f_string_static_t_initialize("c", 0, 1);
+  const f_string_static_t test_a = macro_f_string_static_t_initialize_1("a", 0, 1);
+  const f_string_static_t test_b = macro_f_string_static_t_initialize_1("b", 0, 1);
+  const f_string_static_t test_c = macro_f_string_static_t_initialize_1("c", 0, 1);
 
-  const f_string_triple_t source = macro_f_string_triple_t_initialize(test_a, test_b, test_c);
+  const f_string_triple_t source = macro_f_string_triple_t_initialize_1(test_a, test_b, test_c);
   f_string_triples_t destination = f_string_triples_t_initialize;
 
   {

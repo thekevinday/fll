@@ -30,7 +30,7 @@ extern "C" {
 
   #define fl_conversion_data_t_initialize { 10, 0 }
 
-  #define macro_fl_conversion_data_t_initialize(base, flag) { base, flag }
+  #define macro_fl_conversion_data_t_initialize_1(base, flag) { base, flag }
 
   #define macro_fl_conversion_data_t_clear(data) \
     data.base = 0; \

@@ -33,7 +33,7 @@ extern "C" {
 
   #define f_fss_set_t_initialize { f_fss_objects_t_initialize, f_fss_contents_t_initialize }
 
-  #define macro_f_fss_set_t_initialize(objects, contents) { objects, contents }
+  #define macro_f_fss_set_t_initialize_1(objects, contents) { objects, contents }
 
   #define macro_f_fss_set_t_clear(set) \
     macro_f_fss_objects_t_clear(set.objects) \
@@ -68,8 +68,8 @@ extern "C" {
 
   #define f_fss_sets_t_initialize { 0, 0, 0 }
 
-  #define macro_f_fss_sets_t_initialize(array, size, used) { array, size, used }
-  #define macro_f_fss_sets_t_initialize2(array, length) { array, length, length }
+  #define macro_f_fss_sets_t_initialize_1(array, size, used) { array, size, used }
+  #define macro_f_fss_sets_t_initialize_2(array, length) { array, length, length }
 
   #define macro_f_fss_sets_t_clear(sets) macro_f_memory_structure_t_clear(set.objects)
 
@@ -107,7 +107,7 @@ extern "C" {
 
   #define f_fss_set_quote_t_initialize { f_fss_objects_t_initialize, f_fss_contents_t_initialize, f_uint8s_t_initialize, f_uint8ss_t_initialize }
 
-  #define macro_f_fss_set_quote_t_initialize(objects, contents, objects_quote, contents_quote) { objects, contents, objects_quote, contents_quote }
+  #define macro_f_fss_set_quote_t_initialize_1(objects, contents, objects_quote, contents_quote) { objects, contents, objects_quote, contents_quote }
 
   #define macro_f_fss_set_quote_t_clear(set) \
     macro_f_fss_objects_t_clear(set.objects) \
@@ -144,8 +144,8 @@ extern "C" {
 
   #define f_fss_set_quotes_t_initialize { 0, 0, 0 }
 
-  #define macro_f_fss_set_quotes_t_initialize(array, size, used) { array, size, used }
-  #define macro_f_fss_set_quotes_t_initialize2(array, length)    { array, length, length }
+  #define macro_f_fss_set_quotes_t_initialize_1(array, size, used) { array, size, used }
+  #define macro_f_fss_set_quotes_t_initialize_2(array, length)     { array, length, length }
 
   #define macro_f_fss_set_quotes_t_clear(nameds) macro_f_memory_structure_clear(nameds)
 

@@ -124,7 +124,7 @@ extern "C" {
       f_color_context_t_initialize, \
     }
 
-  #define macro_fll_program_data_t_initialize(parameters, environment, umask, pid, child, pipe, signal_received, signal_check, signal, message, output, error, warning, debug, context) { \
+  #define macro_fll_program_data_t_initialize_1(parameters, environment, umask, pid, child, pipe, signal_received, signal_check, signal, message, output, error, warning, debug, context) { \
     parameters, \
     environment, \
     umask, \

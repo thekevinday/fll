@@ -7,7 +7,7 @@ extern "C" {
 
 void test__f_thread_semaphore_file_open__fails(void **state) {
 
-  f_string_static_t name = macro_f_string_static_t_initialize("test", 0, 4);
+  f_string_static_t name = macro_f_string_static_t_initialize_1("test", 0, 4);
   f_thread_semaphore_t semaphore = f_thread_semaphore_t_initialize;
   f_thread_semaphore_t *semaphore_ptr = &semaphore;
   int flag = 0;
@@ -65,7 +65,7 @@ void test__f_thread_semaphore_file_open__fails(void **state) {
 
 void test__f_thread_semaphore_file_open__parameter_checking(void **state) {
 
-  f_string_static_t name = macro_f_string_static_t_initialize("test", 0, 4);
+  f_string_static_t name = macro_f_string_static_t_initialize_1("test", 0, 4);
   int flag = 0;
   mode_t mode = 0;
   unsigned value = 0;
@@ -79,7 +79,7 @@ void test__f_thread_semaphore_file_open__parameter_checking(void **state) {
 
 void test__f_thread_semaphore_file_open__works(void **state) {
 
-  f_string_static_t name = macro_f_string_static_t_initialize("test", 0, 4);
+  f_string_static_t name = macro_f_string_static_t_initialize_1("test", 0, 4);
   f_thread_semaphore_t semaphore = f_thread_semaphore_t_initialize;
   f_thread_semaphore_t *semaphore_ptr = &semaphore;
   int flag = 0;

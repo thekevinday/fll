@@ -10,7 +10,7 @@ extern "C" {
     if (!print) return;
 
     // Swap the color context, whatever it may be, with the important context.
-    fl_print_t important = macro_fl_print_t_initialize(print->to, print->verbosity, print->flag, f_string_empty_s, f_string_empty_s, print->set->important, print->set->notable, print->set, print->custom);
+    fl_print_t important = macro_fl_print_t_initialize_1(print->to, print->verbosity, print->flag, f_string_empty_s, f_string_empty_s, print->set->important, print->set->notable, print->set, print->custom);
 
     fake_print_context_simple(&important, message);
 
@@ -24,7 +24,7 @@ extern "C" {
     if (!print) return;
 
     // Swap the color context, whatever it may be, with the important context.
-    fl_print_t important = macro_fl_print_t_initialize(print->to, print->verbosity, print->flag, f_string_empty_s, f_string_empty_s, print->set->important, print->set->notable, print->set, print->custom);
+    fl_print_t important = macro_fl_print_t_initialize_1(print->to, print->verbosity, print->flag, f_string_empty_s, f_string_empty_s, print->set->important, print->set->notable, print->set, print->custom);
 
     fake_print_context_simple_variable(&important, before, variable, after);
 

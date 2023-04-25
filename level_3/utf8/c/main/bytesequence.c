@@ -70,7 +70,7 @@ extern "C" {
     f_array_length_t j = 0;
 
     f_char_t block[4] = { 0, 0, 0, 0 };
-    f_string_static_t sequence = macro_f_string_static_t_initialize(block, 0, 4);
+    f_string_static_t sequence = macro_f_string_static_t_initialize_1(block, 0, 4);
 
     do {
       main->setting.state.status = f_file_stream_read_block(file, &main->setting.buffer);

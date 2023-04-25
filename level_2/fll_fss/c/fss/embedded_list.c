@@ -130,7 +130,7 @@ extern "C" {
       if (!state) return;
     #endif // _di_level_2_parameter_checking_
 
-    f_string_range_t range = macro_f_string_range_t_initialize2(object.used);
+    f_string_range_t range = macro_f_string_range_t_initialize_2(object.used);
 
     fl_fss_embedded_list_object_write(object, f_fss_complete_full_e, &range, destination, state);
 

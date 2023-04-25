@@ -7,7 +7,7 @@ extern "C" {
 
 void test__f_file_seek__fails(void **state) {
 
-  const f_file_t file = macro_f_file_t_initialize2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
+  const f_file_t file = macro_f_file_t_initialize_2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
 
   int errnos[] = {
     EBADF,
@@ -42,7 +42,7 @@ void test__f_file_seek__fails(void **state) {
 
 void test__f_file_seek__parameter_checking(void **state) {
 
-  const f_file_t file = macro_f_file_t_initialize2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
+  const f_file_t file = macro_f_file_t_initialize_2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
   off_t seeked = 0;
 
   {
@@ -66,7 +66,7 @@ void test__f_file_seek__parameter_checking(void **state) {
 
 void test__f_file_seek__returns_file_descriptor_not(void **state) {
 
-  const f_file_t file = macro_f_file_t_initialize2(F_type_output_d, -1, F_file_flag_write_only_d);
+  const f_file_t file = macro_f_file_t_initialize_2(F_type_output_d, -1, F_file_flag_write_only_d);
 
   {
     off_t seeked = 0;
@@ -79,7 +79,7 @@ void test__f_file_seek__returns_file_descriptor_not(void **state) {
 
 void test__f_file_seek__works(void **state) {
 
-  const f_file_t file = macro_f_file_t_initialize2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
+  const f_file_t file = macro_f_file_t_initialize_2(F_type_output_d, F_type_descriptor_output_d, F_file_flag_write_only_d);
 
   {
     off_t seeked = 0;

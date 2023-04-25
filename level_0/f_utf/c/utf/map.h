@@ -30,7 +30,7 @@ extern "C" {
 
   #define f_utf_string_map_t_initialize { f_utf_string_dynamic_t_initialize, f_utf_string_dynamic_t_initialize }
 
-  #define macro_f_utf_string_map_t_initialize(name, value) { name, value }
+  #define macro_f_utf_string_map_t_initialize_1(name, value) { name, value }
 
   #define macro_f_utf_string_map_t_clear(map) \
     macro_f_utf_string_dynamic_t_clear(map.name) \

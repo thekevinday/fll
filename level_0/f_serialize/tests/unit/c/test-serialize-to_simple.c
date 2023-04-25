@@ -7,7 +7,7 @@ extern "C" {
 
 void test__f_serialize_to_simple__parameter_checking(void **state) {
 
-  const f_string_static_t source = macro_f_string_static_t_initialize("test", 0, 4);
+  const f_string_static_t source = macro_f_string_static_t_initialize_1("test", 0, 4);
 
   {
     const f_status_t status = f_serialize_to_simple(source, 0);
@@ -33,8 +33,8 @@ void test__f_serialize_to_simple__returns_data_not(void **state) {
 
 void test__f_serialize_to_simple__works(void **state) {
 
-  const f_string_static_t source = macro_f_string_static_t_initialize("test", 0, 4);
-  const f_string_static_t multiple = macro_f_string_static_t_initialize("test:test", 0, 9);
+  const f_string_static_t source = macro_f_string_static_t_initialize_1("test", 0, 4);
+  const f_string_static_t multiple = macro_f_string_static_t_initialize_1("test:test", 0, 9);
 
   f_string_dynamic_t destination = f_string_dynamic_t_initialize;
 

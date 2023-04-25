@@ -29,7 +29,7 @@ extern "C" {
 
   #define f_thread_mutex_t_initialize PTHREAD_MUTEX_INITIALIZER
 
-  #define macro_f_thread_mutex_t_initialize(mutex) mutex
+  #define macro_f_thread_mutex_t_initialize_1(mutex) mutex
 
   #define macro_f_thread_mutex_t_delete_simple(mutex) f_thread_mutex_delete(&mutex);
 #endif // _di_f_thread_mutex_t_
@@ -51,8 +51,8 @@ extern "C" {
 
   #define f_thread_mutexs_t_initialize { 0, 0, 0 }
 
-  #define macro_f_thread_mutexs_t_initialize(array, size, used) { array, size, used }
-  #define macro_f_thread_mutexs_t_initialize2(array, length) { array, length, length }
+  #define macro_f_thread_mutexs_t_initialize_1(array, size, used) { array, size, used }
+  #define macro_f_thread_mutexs_t_initialize_2(array, length) { array, length, length }
 
   #define macro_f_thread_mutexs_t_clear(mutexs) macro_f_memory_structure_clear(mutexs)
 

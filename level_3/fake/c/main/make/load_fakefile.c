@@ -41,7 +41,7 @@ extern "C" {
     f_fss_delimits_t delimits = f_fss_delimits_t_initialize;
 
     {
-      f_string_range_t range = macro_f_string_range_t_initialize2(data_make->main->buffer.used);
+      f_string_range_t range = macro_f_string_range_t_initialize_2(data_make->main->buffer.used);
       f_fss_comments_t comments = f_fss_comments_t_initialize;
 
       fll_fss_basic_list_read(data_make->main->buffer, &range, &list_objects, &list_contents, &delimits, 0, &comments, &data_make->main->setting.state);

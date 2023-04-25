@@ -7,7 +7,7 @@ extern "C" {
 
 void test__f_serialize_from_simple__parameter_checking(void **state) {
 
-  const f_string_static_t source = macro_f_string_static_t_initialize("test", 0, 4);
+  const f_string_static_t source = macro_f_string_static_t_initialize_1("test", 0, 4);
 
   {
     const f_status_t status = f_serialize_from_simple(source, 0);
@@ -34,25 +34,25 @@ void test__f_serialize_from_simple__returns_data_not(void **state) {
 void test__f_serialize_from_simple__works(void **state) {
 
   f_string_static_t sources[] = {
-    macro_f_string_static_t_initialize("", 0, 1),
-    macro_f_string_static_t_initialize("first", 0, 5),
-    macro_f_string_static_t_initialize(".:", 0, 2),
-    macro_f_string_static_t_initialize(":cc", 0, 3),
-    macro_f_string_static_t_initialize("first:2::蠇", 0, 12),
-    macro_f_string_static_t_initialize("им:蠇", 0, 8),
-    macro_f_string_static_t_initialize("им:?", 0, 6),
+    macro_f_string_static_t_initialize_1("", 0, 1),
+    macro_f_string_static_t_initialize_1("first", 0, 5),
+    macro_f_string_static_t_initialize_1(".:", 0, 2),
+    macro_f_string_static_t_initialize_1(":cc", 0, 3),
+    macro_f_string_static_t_initialize_1("first:2::蠇", 0, 12),
+    macro_f_string_static_t_initialize_1("им:蠇", 0, 8),
+    macro_f_string_static_t_initialize_1("им:?", 0, 6),
   };
 
   f_string_static_t individuals[] = {
     f_string_empty_s,
-    macro_f_string_static_t_initialize("", 0, 1),
-    macro_f_string_static_t_initialize("first", 0, 5),
-    macro_f_string_static_t_initialize(".", 0, 1),
-    macro_f_string_static_t_initialize("?", 0, 1),
-    macro_f_string_static_t_initialize("cc", 0, 2),
-    macro_f_string_static_t_initialize("2", 0, 1),
-    macro_f_string_static_t_initialize("蠇", 0, 3),
-    macro_f_string_static_t_initialize("им", 0, 4),
+    macro_f_string_static_t_initialize_1("", 0, 1),
+    macro_f_string_static_t_initialize_1("first", 0, 5),
+    macro_f_string_static_t_initialize_1(".", 0, 1),
+    macro_f_string_static_t_initialize_1("?", 0, 1),
+    macro_f_string_static_t_initialize_1("cc", 0, 2),
+    macro_f_string_static_t_initialize_1("2", 0, 1),
+    macro_f_string_static_t_initialize_1("蠇", 0, 3),
+    macro_f_string_static_t_initialize_1("им", 0, 4),
   };
 
   f_string_static_t expected_array_0[] = { individuals[1] };
@@ -64,13 +64,13 @@ void test__f_serialize_from_simple__works(void **state) {
   f_string_static_t expected_array_6[] = { individuals[8], individuals[4] };
 
   f_string_statics_t expecteds[] = {
-    macro_f_string_statics_t_initialize(expected_array_0, 0, 1),
-    macro_f_string_statics_t_initialize(expected_array_1, 0, 1),
-    macro_f_string_statics_t_initialize(expected_array_2, 0, 2),
-    macro_f_string_statics_t_initialize(expected_array_3, 0, 2),
-    macro_f_string_statics_t_initialize(expected_array_4, 0, 4),
-    macro_f_string_statics_t_initialize(expected_array_5, 0, 2),
-    macro_f_string_statics_t_initialize(expected_array_6, 0, 2),
+    macro_f_string_statics_t_initialize_1(expected_array_0, 0, 1),
+    macro_f_string_statics_t_initialize_1(expected_array_1, 0, 1),
+    macro_f_string_statics_t_initialize_1(expected_array_2, 0, 2),
+    macro_f_string_statics_t_initialize_1(expected_array_3, 0, 2),
+    macro_f_string_statics_t_initialize_1(expected_array_4, 0, 4),
+    macro_f_string_statics_t_initialize_1(expected_array_5, 0, 2),
+    macro_f_string_statics_t_initialize_1(expected_array_6, 0, 2),
   };
 
   f_string_dynamics_t destination = f_string_dynamics_t_initialize;
@@ -96,8 +96,8 @@ void test__f_serialize_from_simple__works(void **state) {
 
   {
     const f_string_static_t incompletes[] = {
-      macro_f_string_static_t_initialize("蠇", 0, 2),
-      macro_f_string_static_t_initialize("蠇", 0, 1),
+      macro_f_string_static_t_initialize_1("蠇", 0, 2),
+      macro_f_string_static_t_initialize_1("蠇", 0, 1),
     };
 
     for (uint8_t i = 0; i < 2; ++i) {

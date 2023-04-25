@@ -93,7 +93,7 @@ extern "C" {
 
   #define f_conversion_data_t_initialize { 10, 0, 1 }
 
-  #define macro_f_conversion_data_t_initialize(base, flag, width) { base, flag, width }
+  #define macro_f_conversion_data_t_initialize_1(base, flag, width) { base, flag, width }
 
   #define macro_f_conversion_data_t_clear(data) \
     data.base = 0; \

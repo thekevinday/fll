@@ -220,7 +220,7 @@ extern "C" {
       }
 
       f_array_length_t stub_object_array[1] = { 0 };
-      f_array_lengths_t stub_object = macro_f_array_lengths_t_initialize(stub_object_array, 0, 1);
+      f_array_lengths_t stub_object = macro_f_array_lengths_t_initialize_1(stub_object_array, 0, 1);
 
       f_array_lengths_t * const values_content = &main->program.parameters.array[fss_write_parameter_content_e].values;
       f_array_lengths_t * const values_object = main->program.parameters.array[fss_write_parameter_object_e].values.used
@@ -322,7 +322,7 @@ extern "C" {
       }
 
       if (main->program.parameters.arguments.array[index].used) {
-        f_string_range_t range = macro_f_string_range_t_initialize2(main->program.parameters.arguments.array[index].used);
+        f_string_range_t range = macro_f_string_range_t_initialize_2(main->program.parameters.arguments.array[index].used);
 
         for (; range.start < main->program.parameters.arguments.array[index].used; range.start++) {
 
@@ -375,7 +375,7 @@ extern "C" {
       // Only process if the standard designates that the ingore is supported.
       if (main->setting.flag & fss_write_main_flag_ignore_e) {
         f_array_length_t stub_data_array[1] = { 0 };
-        f_array_lengths_t stub_data = macro_f_array_lengths_t_initialize(stub_data_array, 0, 1);
+        f_array_lengths_t stub_data = macro_f_array_lengths_t_initialize_1(stub_data_array, 0, 1);
 
         f_array_lengths_t * const values_ignore = &main->program.parameters.array[fss_write_parameter_ignore_e].values;
         f_array_lengths_t * const values_data = main->program.parameters.array[fss_write_parameter_object_e].values.used

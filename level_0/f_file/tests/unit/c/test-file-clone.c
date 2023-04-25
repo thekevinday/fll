@@ -7,7 +7,7 @@ extern "C" {
 
 void test__f_file_clone__fails_during_read_write(void **state) {
 
-  const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
+  const f_string_static_t path = macro_f_string_static_t_initialize_1("test", 0, 4);
 
   {
     struct stat statistics;
@@ -70,7 +70,7 @@ void test__f_file_clone__fails_during_read_write(void **state) {
 
 void test__f_file_clone__fails_for_link(void **state) {
 
-  const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
+  const f_string_static_t path = macro_f_string_static_t_initialize_1("test", 0, 4);
 
   {
     int errnos[] = {
@@ -337,7 +337,7 @@ void test__f_file_clone__fails_for_link(void **state) {
 
 void test__f_file_clone__fails_for_other(void **state) {
 
-  const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
+  const f_string_static_t path = macro_f_string_static_t_initialize_1("test", 0, 4);
 
   {
     int types[] = {
@@ -374,7 +374,7 @@ void test__f_file_clone__fails_for_other(void **state) {
 
 void test__f_file_clone__fails_for_regular(void **state) {
 
-  const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
+  const f_string_static_t path = macro_f_string_static_t_initialize_1("test", 0, 4);
 
   {
     int errnos[] = {
@@ -1068,7 +1068,7 @@ void test__f_file_clone__fails_for_regular(void **state) {
 
 void test__f_file_clone__returns_data_not(void **state) {
 
-  const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
+  const f_string_static_t path = macro_f_string_static_t_initialize_1("test", 0, 4);
 
   {
     const f_status_t status = f_file_clone(f_string_empty_s, f_string_empty_s, 0, 0);
@@ -1091,7 +1091,7 @@ void test__f_file_clone__returns_data_not(void **state) {
 
 void test__f_file_clone__works_for_link(void **state) {
 
-  const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
+  const f_string_static_t path = macro_f_string_static_t_initialize_1("test", 0, 4);
 
   {
     struct stat statistics;
@@ -1118,7 +1118,7 @@ void test__f_file_clone__works_for_link(void **state) {
 
 void test__f_file_clone__works_for_regular(void **state) {
 
-  const f_string_static_t path = macro_f_string_static_t_initialize("test", 0, 4);
+  const f_string_static_t path = macro_f_string_static_t_initialize_1("test", 0, 4);
 
   {
     struct stat statistics;

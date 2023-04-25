@@ -7,7 +7,7 @@ extern "C" {
 
 void test__f_print_to_except_raw_safely__fails(void **state) {
 
-  const f_string_static_t test = macro_f_string_static_t_initialize("test", 0, 4);
+  const f_string_static_t test = macro_f_string_static_t_initialize_1("test", 0, 4);
   const f_array_lengths_t except = f_array_lengths_t_initialize;
 
   int errnos[] = {
@@ -57,7 +57,7 @@ void test__f_print_to_except_raw_safely__fails(void **state) {
 
 void test__f_print_to_except_raw_safely__parameter_checking(void **state) {
 
-  const f_string_static_t test = macro_f_string_static_t_initialize("test", 0, 4);
+  const f_string_static_t test = macro_f_string_static_t_initialize_1("test", 0, 4);
   const f_array_lengths_t except = f_array_lengths_t_initialize;
 
   {
@@ -69,7 +69,7 @@ void test__f_print_to_except_raw_safely__parameter_checking(void **state) {
 
 void test__f_print_to_except_raw_safely__returns_data_not(void **state) {
 
-  const f_string_static_t test = macro_f_string_static_t_initialize("test", 0, 4);
+  const f_string_static_t test = macro_f_string_static_t_initialize_1("test", 0, 4);
   const f_array_lengths_t except = f_array_lengths_t_initialize;
 
   {
@@ -93,7 +93,7 @@ void test__f_print_to_except_raw_safely__returns_data_not(void **state) {
 
 void test__f_print_to_except_raw_safely__works(void **state) {
 
-  const f_string_static_t test = macro_f_string_static_t_initialize("test", 0, 4);
+  const f_string_static_t test = macro_f_string_static_t_initialize_1("test", 0, 4);
 
   {
     const f_array_lengths_t except = f_array_lengths_t_initialize;
@@ -119,7 +119,7 @@ void test__f_print_to_except_raw_safely__works(void **state) {
 
   {
     f_array_length_t lengths[] = { 3 };
-    const f_array_lengths_t except = macro_f_array_lengths_t_initialize(lengths, 0, 1);
+    const f_array_lengths_t except = macro_f_array_lengths_t_initialize_1(lengths, 0, 1);
 
     will_return(__wrap_write, false);
     will_return(__wrap_write, test.used);

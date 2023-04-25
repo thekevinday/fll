@@ -7,9 +7,9 @@ extern "C" {
 
 void test__f_string_dynamic_mash__works(void **state) {
 
-  const f_string_static_t glue = macro_f_string_static_t_initialize(":", 0, 1);
-  const f_string_static_t source = macro_f_string_static_t_initialize("te\0st", 0, 5);
-  const f_string_static_t expected = macro_f_string_static_t_initialize("te\0st:te\0st", 0, 11);
+  const f_string_static_t glue = macro_f_string_static_t_initialize_1(":", 0, 1);
+  const f_string_static_t source = macro_f_string_static_t_initialize_1("te\0st", 0, 5);
+  const f_string_static_t expected = macro_f_string_static_t_initialize_1("te\0st:te\0st", 0, 11);
   f_string_dynamic_t destination = f_string_dynamic_t_initialize;
 
   {
@@ -39,8 +39,8 @@ void test__f_string_dynamic_mash__works(void **state) {
 
 void test__f_string_dynamic_mash__parameter_checking(void **state) {
 
-  const f_string_static_t glue = macro_f_string_static_t_initialize(":", 0, 1);
-  const f_string_static_t source = macro_f_string_static_t_initialize("te\0st", 0, 5);
+  const f_string_static_t glue = macro_f_string_static_t_initialize_1(":", 0, 1);
+  const f_string_static_t source = macro_f_string_static_t_initialize_1("te\0st", 0, 5);
 
   {
     const f_status_t status = f_string_dynamic_mash(glue, source, 0);

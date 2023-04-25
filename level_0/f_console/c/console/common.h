@@ -210,7 +210,7 @@ extern "C" {
  * argv: An array of strings representing arguments passed to some program.
  * envp: Any array of strings representing all environment variables at the time the program is called.
  *
- * macro_f_console_arguments_t_initialize() initializes the structure.
+ * macro_f_console_arguments_t_initialize_1() initializes the structure.
  */
 #ifndef _di_f_console_arguments_t_
   typedef struct {
@@ -222,7 +222,7 @@ extern "C" {
 
   #define f_console_arguments_t_initialize { 0, 0, 0 }
 
-  #define macro_f_console_arguments_t_initialize(argc, argv, envp) { argc, argv, envp }
+  #define macro_f_console_arguments_t_initialize_1(argc, argv, envp) { argc, argv, envp }
 #endif // _di_f_console_arguments_t_
 
 /**
@@ -539,7 +539,7 @@ extern "C" {
     0 \
   }
 
-  #define macro_f_console_parameters_t_initialize(parameters, used, callback) { \
+  #define macro_f_console_parameters_t_initialize_1(parameters, used, callback) { \
     parameters, \
     f_string_dynamics_t_initialize, \
     f_array_lengths_t_initialize, \
