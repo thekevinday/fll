@@ -2554,6 +2554,20 @@ package_operation_stand_alone() {
       break
     fi
 
+    cp $verbose_common -R ${path_build}stand_alone/${name}.fakefile ${package}data/build/fakefile
+
+    if [[ $? -ne 0 ]] ; then
+      if [[ $verbosity != "quiet" ]] ; then
+        package_print_first
+
+        echo -e "${c_error}ERROR: Failed to copy file ${c_notice}${path_build}stand_alone/${name}.fakefile${c_error} to ${c_notice}${package}data/build/fakefile${c_error}.${c_reset}"
+      fi
+
+      let failure=1
+
+      break
+    fi
+
     if [[ ! -d ${package}sources/c/program/${name}/ ]] ; then
       mkdir $verbose_common -p ${package}sources/c/program/$name/
 
