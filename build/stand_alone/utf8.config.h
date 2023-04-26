@@ -163,10 +163,9 @@
 #define _di_f_memory_structure_increase_by_
 #define _di_f_memory_structure_resize_
 
-#define _di_f_pipe_debug_exists_
 #define _di_f_pipe_error_exists_
 //#define _di_f_pipe_input_exists_
-#define _di_f_pipe_warning_exists_
+#define _di_f_pipe_output_exists_
 
 //#define _di_f_print_
 #define _di_f_print_character_

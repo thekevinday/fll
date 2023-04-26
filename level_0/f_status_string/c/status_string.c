@@ -1620,6 +1620,16 @@ extern "C" {
 
           break;
 
+        case F_help:
+          *name = f_status_help_s;
+
+          break;
+
+        case F_help_not:
+          *name = f_status_help_not_s;
+
+          break;
+
         case F_ignore:
           *name = f_status_ignore_s;
 

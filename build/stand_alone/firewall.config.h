@@ -410,10 +410,9 @@
 #define _di_f_path_tree_hierarchy_standard_d_
 #define _di_f_path_tree_kevux_standard_d_
 
-#define _di_f_pipe_debug_exists_
 #define _di_f_pipe_error_exists_
 //#define _di_f_pipe_input_exists_
-#define _di_f_pipe_warning_exists_
+#define _di_f_pipe_output_exists_
 
 //#define _di_f_print_
 #define _di_f_print_character_

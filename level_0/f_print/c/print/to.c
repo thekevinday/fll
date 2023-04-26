@@ -34,10 +34,8 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 
 #ifndef _di_f_print_to_
   f_status_t f_print_to(const f_string_t string, const f_array_length_t length, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (file.id == -1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
+    if (file.id == -1) return F_file_descriptor_not;
     if (!length || !string) return F_data_not;
 
     return private_f_print_to(string, length, file.id);
@@ -46,9 +44,8 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 
 #ifndef _di_f_print_to_character_
   f_status_t f_print_to_character(const f_char_t character, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (file.id == -1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+
+    if (file.id == -1) return F_file_descriptor_not;
 
     if (write(file.id, &character, 1) == -1) {
       return private_inline_f_print_to_error();
@@ -60,9 +57,8 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 
 #ifndef _di_f_print_to_character_safely_
   f_status_t f_print_to_character_safely(const f_char_t character, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (file.id == -1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
+
+    if (file.id == -1) return F_file_descriptor_not;
 
     return private_f_print_to_character_safely(character, file.id);
   }
@@ -70,10 +66,8 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 
 #ifndef _di_f_print_to_dynamic_
   f_status_t f_print_to_dynamic(const f_string_static_t buffer, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (file.id == -1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
+    if (file.id == -1) return F_file_descriptor_not;
     if (!buffer.used || !buffer.string) return F_data_not;
 
     return private_f_print_to(buffer.string, buffer.used, file.id);
@@ -82,13 +76,9 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 
 #ifndef _di_f_print_to_dynamic_partial_
   f_status_t f_print_to_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (file.id == -1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) {
-      return F_data_not;
-    }
+    if (file.id == -1) return F_file_descriptor_not;
+    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) return F_data_not;
 
     f_array_length_t length = (range.stop - range.start) + 1;
 
@@ -102,13 +92,9 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 
 #ifndef _di_f_print_to_dynamic_partial_raw_
   f_status_t f_print_to_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (file.id == -1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) {
-      return F_data_not;
-    }
+    if (file.id == -1) return F_file_descriptor_not;
+    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) return F_data_not;
 
     f_array_length_t length = (range.stop - range.start) + 1;
 
@@ -122,13 +108,9 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 
 #ifndef _di_f_print_to_dynamic_partial_raw_safely_
   f_status_t f_print_to_dynamic_partial_raw_safely(const f_string_static_t buffer, const f_string_range_t range, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (file.id == -1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) {
-      return F_data_not;
-    }
+    if (file.id == -1) return F_file_descriptor_not;
+    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) return F_data_not;
 
     f_array_length_t length = (range.stop - range.start) + 1;
 
@@ -142,13 +124,9 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 
 #ifndef _di_f_print_to_dynamic_partial_safely_
   f_status_t f_print_to_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (file.id == -1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) {
-      return F_data_not;
-    }
+    if (file.id == -1) return F_file_descriptor_not;
+    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) return F_data_not;
 
     f_array_length_t length = (range.stop - range.start) + 1;
 
@@ -162,10 +140,8 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 
 #ifndef _di_f_print_to_dynamic_raw_
   f_status_t f_print_to_dynamic_raw(const f_string_static_t buffer, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (file.id == -1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
+    if (file.id == -1) return F_file_descriptor_not;
     if (!buffer.used || !buffer.string) return F_data_not;
 
     return private_f_print_to_raw(buffer.string, buffer.used, file.id);
@@ -174,10 +150,8 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 
 #ifndef _di_f_print_to_dynamic_raw_safely_
   f_status_t f_print_to_dynamic_raw_safely(const f_string_static_t buffer, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (file.id == -1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
+    if (file.id == -1) return F_file_descriptor_not;
     if (!buffer.used || !buffer.string) return F_data_not;
 
     return private_f_print_to_raw_safely(buffer.string, buffer.used, file.id);
@@ -186,10 +160,8 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 
 #ifndef _di_f_print_to_dynamic_safely_
   f_status_t f_print_to_dynamic_safely(const f_string_static_t buffer, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (file.id == -1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
+    if (file.id == -1) return F_file_descriptor_not;
     if (!buffer.used || !buffer.string) return F_data_not;
 
     return private_f_print_to_safely(buffer.string, buffer.used, file.id);
@@ -198,10 +170,8 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 
 #ifndef _di_f_print_to_except_
   f_status_t f_print_to_except(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (file.id == -1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
+    if (file.id == -1) return F_file_descriptor_not;
     if (!length || !string) return F_data_not;
 
     return private_f_print_to_except(string, offset, length, except, file.id);
@@ -210,10 +180,8 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 
 #ifndef _di_f_print_to_except_dynamic_
   f_status_t f_print_to_except_dynamic(const f_string_static_t buffer, const f_array_lengths_t except, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (file.id == -1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
+    if (file.id == -1) return F_file_descriptor_not;
     if (!buffer.used || !buffer.string) return F_data_not;
 
     return private_f_print_to_except(buffer.string, 0, buffer.used, except, file.id);
@@ -222,10 +190,8 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 
 #ifndef _di_f_print_to_except_dynamic_partial_
   f_status_t f_print_to_except_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (file.id == -1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
+    if (file.id == -1) return F_file_descriptor_not;
     if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) {
       return F_data_not;
     }
@@ -242,10 +208,8 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 
 #ifndef _di_f_print_to_except_dynamic_partial_raw_
   f_status_t f_print_to_except_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (file.id == -1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
+    if (file.id == -1) return F_file_descriptor_not;
     if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) {
       return F_data_not;
     }
@@ -262,10 +226,8 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 
 #ifndef _di_f_print_to_except_dynamic_partial_raw_safely_
   f_status_t f_print_to_except_dynamic_partial_raw_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (file.id == -1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
+    if (file.id == -1) return F_file_descriptor_not;
     if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) {
       return F_data_not;
     }
@@ -282,10 +244,8 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 
 #ifndef _di_f_print_to_except_dynamic_partial_safely_
   f_status_t f_print_to_except_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (file.id == -1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
+    if (file.id == -1) return F_file_descriptor_not;
     if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) {
       return F_data_not;
     }
@@ -302,10 +262,8 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 
 #ifndef _di_f_print_to_except_dynamic_raw_
   f_status_t f_print_to_except_dynamic_raw(const f_string_static_t buffer, const f_array_lengths_t except, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (file.id == -1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
+    if (file.id == -1) return F_file_descriptor_not;
     if (!buffer.used || !buffer.string) return F_data_not;
 
     return private_f_print_to_except_raw(buffer.string, 0, buffer.used, except, file.id);
@@ -314,10 +272,8 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 
 #ifndef _di_f_print_to_except_dynamic_raw_safely_
   f_status_t f_print_to_except_dynamic_raw_safely(const f_string_static_t buffer, const f_array_lengths_t except, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (file.id == -1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
+    if (file.id == -1) return F_file_descriptor_not;
     if (!buffer.used || !buffer.string) return F_data_not;
 
     return private_f_print_to_except_raw_safely(buffer.string, 0, buffer.used, except, file.id);
@@ -326,10 +282,8 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 
 #ifndef _di_f_print_to_except_dynamic_safely_
   f_status_t f_print_to_except_dynamic_safely(const f_string_static_t buffer, const f_array_lengths_t except, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (file.id == -1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
+    if (file.id == -1) return F_file_descriptor_not;
     if (!buffer.used || !buffer.string) return F_data_not;
 
     return private_f_print_to_except_safely(buffer.string, 0, buffer.used, except, file.id);
@@ -338,10 +292,8 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 
 #ifndef _di_f_print_to_except_in_
   f_status_t f_print_to_except_in(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (file.id == -1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
+    if (file.id == -1) return F_file_descriptor_not;
     if (!length || !string) return F_data_not;
 
     return private_f_print_to_except_in(string, offset, length, except_at, except_in, file.id);
@@ -350,10 +302,8 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 
 #ifndef _di_f_print_to_except_in_dynamic_
   f_status_t f_print_to_except_in_dynamic(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (file.id == -1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
+    if (file.id == -1) return F_file_descriptor_not;
     if (!buffer.string || !buffer.used) return F_data_not;
 
     return private_f_print_to_except_in(buffer.string, 0, buffer.used, except_at, except_in, file.id);
@@ -362,10 +312,8 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 
 #ifndef _di_f_print_to_except_in_dynamic_partial_
   f_status_t f_print_to_except_in_dynamic_partial(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (file.id == -1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
+    if (file.id == -1) return F_file_descriptor_not;
     if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) {
       return F_data_not;
     }
@@ -382,10 +330,8 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 
 #ifndef _di_f_print_to_except_in_dynamic_partial_raw_
   f_status_t f_print_to_except_in_dynamic_partial_raw(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (file.id == -1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
+    if (file.id == -1) return F_file_descriptor_not;
     if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) {
       return F_data_not;
     }
@@ -402,13 +348,9 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 
 #ifndef _di_f_print_to_except_in_dynamic_partial_raw_safely_
   f_status_t f_print_to_except_in_dynamic_partial_raw_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (file.id == -1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) {
-      return F_data_not;
-    }
+    if (file.id == -1) return F_file_descriptor_not;
+    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) return F_data_not;
 
     f_array_length_t length = (range.stop - range.start) + 1;
 
@@ -422,13 +364,9 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 
 #ifndef _di_f_print_to_except_in_dynamic_partial_safely_
   f_status_t f_print_to_except_in_dynamic_partial_safely(const f_string_static_t buffer, const f_string_range_t range, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (file.id == -1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
-    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) {
-      return F_data_not;
-    }
+    if (file.id == -1) return F_file_descriptor_not;
+    if (!buffer.used || range.start > range.stop || range.start >= buffer.used || !buffer.string) return F_data_not;
 
     f_array_length_t length = (range.stop - range.start) + 1;
 
@@ -442,10 +380,8 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 
 #ifndef _di_f_print_to_except_in_dynamic_raw_
   f_status_t f_print_to_except_in_dynamic_raw(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (file.id == -1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
+    if (file.id == -1) return F_file_descriptor_not;
     if (!buffer.used || !buffer.string) return F_data_not;
 
     return private_f_print_to_except_in_raw(buffer.string, 0, buffer.used, except_at, except_in, file.id);
@@ -454,10 +390,8 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 
 #ifndef _di_f_print_to_except_in_dynamic_raw_safely_
   f_status_t f_print_to_except_in_dynamic_raw_safely(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (file.id == -1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
+    if (file.id == -1) return F_file_descriptor_not;
     if (!buffer.used || !buffer.string) return F_data_not;
 
     return private_f_print_to_except_in_raw_safely(buffer.string, 0, buffer.used, except_at, except_in, file.id);
@@ -466,10 +400,8 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 
 #ifndef _di_f_print_to_except_in_dynamic_safely_
   f_status_t f_print_to_except_in_dynamic_safely(const f_string_static_t buffer, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (file.id == -1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
+    if (file.id == -1) return F_file_descriptor_not;
     if (!buffer.used || !buffer.string) return F_data_not;
 
     return private_f_print_to_except_in_safely(buffer.string, 0, buffer.used, except_at, except_in, file.id);
@@ -478,10 +410,8 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 
 #ifndef _di_f_print_to_except_in_raw_
   f_status_t f_print_to_except_in_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (file.id == -1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
+    if (file.id == -1) return F_file_descriptor_not;
     if (!length || !string) return F_data_not;
 
     return private_f_print_to_except_in_raw(string, offset, length, except_at, except_in, file.id);
@@ -490,10 +420,8 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 
 #ifndef _di_f_print_to_except_in_raw_safely_
   f_status_t f_print_to_except_in_raw_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (file.id == -1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
+    if (file.id == -1) return F_file_descriptor_not;
     if (!length || !string) return F_data_not;
 
     return private_f_print_to_except_in_raw_safely(string, offset, length, except_at, except_in, file.id);
@@ -502,10 +430,8 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 
 #ifndef _di_f_print_to_except_in_safely_
   f_status_t f_print_to_except_in_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except_at, const f_string_ranges_t except_in, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (file.id == -1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
+    if (file.id == -1) return F_file_descriptor_not;
     if (!length || !string) return F_data_not;
 
     return private_f_print_to_except_in_safely(string, offset, length, except_at, except_in, file.id);
@@ -514,10 +440,8 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 
 #ifndef _di_f_print_to_except_raw_
   f_status_t f_print_to_except_raw(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (file.id == -1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
+    if (file.id == -1) return F_file_descriptor_not;
     if (!length || !string) return F_data_not;
 
     return private_f_print_to_except_raw(string, offset, length, except, file.id);
@@ -526,10 +450,8 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 
 #ifndef _di_f_print_to_except_raw_safely_
   f_status_t f_print_to_except_raw_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (file.id == -1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
+    if (file.id == -1) return F_file_descriptor_not;
     if (!length || !string) return F_data_not;
 
     return private_f_print_to_except_raw_safely(string, offset, length, except, file.id);
@@ -538,10 +460,8 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 
 #ifndef _di_f_print_to_except_safely_
   f_status_t f_print_to_except_safely(const f_string_t string, const f_array_length_t offset, const f_array_length_t length, const f_array_lengths_t except, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (file.id == -1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
+    if (file.id == -1) return F_file_descriptor_not;
     if (!length || !string) return F_data_not;
 
     return private_f_print_to_except_safely(string, offset, length, except, file.id);
@@ -550,10 +470,8 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 
 #ifndef _di_f_print_to_raw_
   f_status_t f_print_to_raw(const f_string_t string, const f_array_length_t length, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (file.id == -1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
+    if (file.id == -1) return F_file_descriptor_not;
     if (!length || !string) return F_data_not;
 
     return private_f_print_to_raw(string, length, file.id);
@@ -562,10 +480,8 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 
 #ifndef _di_f_print_to_raw_safely_
   f_status_t f_print_to_raw_safely(const f_string_t string, const f_array_length_t length, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (file.id == -1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
+    if (file.id == -1) return F_file_descriptor_not;
     if (!length || !string) return F_data_not;
 
     return private_f_print_to_raw_safely(string, length, file.id);
@@ -574,11 +490,9 @@ static inline f_status_t private_inline_f_print_to_error(void) {
 
 #ifndef _di_f_print_to_raw_terminated_
   f_status_t f_print_to_raw_terminated(const f_string_t string, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (file.id == -1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
-if (!string) return F_data_not;
+    if (file.id == -1) return F_file_descriptor_not;
+    if (!string) return F_data_not;
 
     // The f_print_raw_terminated() and f_print_terminated() are functionality identical due to being NULL terminated.
     return private_f_print_to_terminated(string, file.id);
@@ -587,10 +501,8 @@ if (!string) return F_data_not;
 
 #ifndef _di_f_print_to_safely_
   f_status_t f_print_to_safely(const f_string_t string, const f_array_length_t length, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (file.id == -1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
+    if (file.id == -1) return F_file_descriptor_not;
     if (!length || !string) return F_data_not;
 
     return private_f_print_to_safely(string, length, file.id);
@@ -599,10 +511,8 @@ if (!string) return F_data_not;
 
 #ifndef _di_f_print_to_safely_terminated_
   f_status_t f_print_to_safely_terminated(const f_string_t string, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (file.id == -1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
+    if (file.id == -1) return F_file_descriptor_not;
     if (!string) return F_data_not;
 
     f_array_length_t start = 0;
@@ -691,10 +601,8 @@ if (!string) return F_data_not;
 
 #ifndef _di_f_print_to_terminated_
   f_status_t f_print_to_terminated(const f_string_t string, const f_file_t file) {
-    #ifndef _di_level_0_parameter_checking_
-      if (file.id == -1) return F_status_set_error(F_parameter);
-    #endif // _di_level_0_parameter_checking_
 
+    if (file.id == -1) return F_file_descriptor_not;
     if (!string) return F_data_not;
 
     return private_f_print_to_terminated(string, file.id);

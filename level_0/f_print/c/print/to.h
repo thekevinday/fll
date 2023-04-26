@@ -35,6 +35,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if there is nothing to print.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -71,6 +72,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if there is nothing to print.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -111,6 +113,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if there is nothing to print.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -149,6 +152,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if there is nothing to print.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -189,6 +193,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if there is nothing to print.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -231,6 +236,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if there is nothing to print.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -278,6 +284,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if there is nothing to print.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -321,6 +328,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if there is nothing to print.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -357,6 +365,7 @@ extern "C" {
  *   The string to output.
  * @param file
  *   The file structure containing the file descriptor to output to.
+ *   F_file_descriptor_not if file.id is -1.
  *
  * @return
  *   F_none on success.
@@ -406,6 +415,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if there is nothing to print.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -447,6 +457,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if there is nothing to print.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -493,6 +504,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if there is nothing to print.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -535,6 +547,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if there is nothing to print.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -579,6 +592,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if there is nothing to print.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -625,6 +639,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if there is nothing to print.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -676,6 +691,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if there is nothing to print.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -723,6 +739,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if there is nothing to print.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -767,6 +784,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if there is nothing to print.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -816,6 +834,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if there is nothing to print.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -861,6 +880,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if there is nothing to print.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -915,6 +935,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if there is nothing to print.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -963,6 +984,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if there is nothing to print.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -1013,6 +1035,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if there is nothing to print.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -1065,6 +1088,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if there is nothing to print.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -1117,6 +1141,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if there is nothing to print.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -1167,6 +1192,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if there is nothing to print.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -1219,6 +1245,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if there is nothing to print.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -1272,6 +1299,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if there is nothing to print.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -1323,6 +1351,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if there is nothing to print.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -1381,6 +1410,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if there is nothing to print.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -1440,6 +1470,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if there is nothing to print.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -1497,6 +1528,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if there is nothing to print.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -1547,6 +1579,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if there is nothing to print.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -1600,6 +1633,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if there is nothing to print.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -1649,6 +1683,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if there is nothing to print.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -1691,6 +1726,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if there is nothing to print.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -1738,6 +1774,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if there is nothing to print.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -1778,6 +1815,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if there is nothing to print.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -1821,6 +1859,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if there is nothing to print.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -1863,6 +1902,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if there is nothing to print.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
@@ -1904,6 +1944,7 @@ extern "C" {
  * @return
  *   F_none on success.
  *   F_data_not if there is nothing to print.
+ *   F_file_descriptor_not if file.id is -1.
  *
  *   F_block (with error bit) if file descriptor is set to non-block and the write would result in a blocking operation.
  *   F_buffer (with error bit) if the buffer is invalid.
